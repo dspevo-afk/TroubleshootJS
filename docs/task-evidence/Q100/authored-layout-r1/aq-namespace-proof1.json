@@ -1,0 +1,464 @@
+{
+  "schema": "troubleshootjs-aq-namespace-proof-v1",
+  "status": "EVIDENCE_CURATED_FINAL_GATES_PENDING",
+  "scope": "AQ early RunRoot ValidateTree removal with bounded filesystem, namespace, cleanup, and terminal-proof evidence",
+  "repository": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "candidate": "AQ_NAMESPACE_8A7",
+    "candidateModuleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77"
+  },
+  "sourceLineage": {
+    "baselineModuleSha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024",
+    "baselineMeasurementDriverSha256": "8ed76cbcb83aece5b90211cc3e4a2709434f4b7382504aa39e2a1710241a5bd6",
+    "prospectiveModuleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "prospectiveCensusDriverSha256": "3f2d3c20eda6048980ec5e18279597c1a498286c048c33da1667c1746b87130b",
+    "prospectiveHostDriverSha256": "3f2d3c20eda6048980ec5e18279597c1a498286c048c33da1667c1746b87130b",
+    "namespaceContractSha256": "6e7881b68b25d86da8c33e63b4278c8c1a3366096d902c21848e737cb61153b8",
+    "cleanupCanaryWrapperSha256": "90bf32f432f93851bc94d540fbe0a6918a6f34714f60280fd7b845066648f8d5",
+    "terminalProofContractSha256": "9c76e514fc6e00ca5359fe477f6c61f2a6851a308df4882328fdef3d5ecf8440",
+    "adoption": {
+      "status": "ADOPTED_PENDING_FULL_STRESS_AND_FINAL_SOURCE_GATES",
+      "beforeModuleSha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024",
+      "afterModuleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+      "exactScope": "Remove only early RunRoot ValidateTree; ownership, later tree, pre/post manifest and deletion checks retained."
+    }
+  },
+  "baselineMeasurement": {
+    "status": "PASS_MEASUREMENT_ONLY",
+    "moduleSha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024",
+    "profileFileCount": 2048,
+    "evidenceArtifactCount": 62,
+    "evidenceArtifactBytes": 6934,
+    "setupMs": 149440.328,
+    "finalContextCleanupMs": 6967.045700000001,
+    "profileFixtureRemovalMs": 12274.1355,
+    "samples": [
+      {
+        "phase": "OWNERLESS_IMMUTABLE_2048_FILE_UPPER_BOUND_NOT_LIVE_BROWSER",
+        "sample": 0,
+        "wholeContextMs": 25061.252,
+        "earlyOwnershipAndTreeMs": 11835.207,
+        "laterTreeMs": 11853.543300000001
+      },
+      {
+        "phase": "OWNERLESS_IMMUTABLE_2048_FILE_UPPER_BOUND_NOT_LIVE_BROWSER",
+        "sample": 1,
+        "wholeContextMs": 25783.1597,
+        "earlyOwnershipAndTreeMs": 11817.0957,
+        "laterTreeMs": 11987.535800000001
+      },
+      {
+        "phase": "OWNERLESS_IMMUTABLE_2048_FILE_UPPER_BOUND_NOT_LIVE_BROWSER",
+        "sample": 2,
+        "wholeContextMs": 25131.1474,
+        "earlyOwnershipAndTreeMs": 11701.7206,
+        "laterTreeMs": 11641.1573
+      },
+      {
+        "phase": "POST_PROFILE_REMOVAL_62_ARTIFACTS",
+        "sample": 0,
+        "wholeContextMs": 2083.6724,
+        "earlyOwnershipAndTreeMs": 332.53290000000004,
+        "laterTreeMs": 318.0212
+      },
+      {
+        "phase": "POST_PROFILE_REMOVAL_62_ARTIFACTS",
+        "sample": 1,
+        "wholeContextMs": 2080.436,
+        "earlyOwnershipAndTreeMs": 337.8813,
+        "laterTreeMs": 313.3881
+      },
+      {
+        "phase": "POST_PROFILE_REMOVAL_62_ARTIFACTS",
+        "sample": 2,
+        "wholeContextMs": 2098.3264,
+        "earlyOwnershipAndTreeMs": 334.62690000000003,
+        "laterTreeMs": 322.17940000000004
+      }
+    ],
+    "limits": [
+      "Baseline-only run; prospective module not loaded.",
+      "No browser, preview, or process was started.",
+      "The 2048-file ownerless measurement is an upper bound, not the mutable browser-profile path.",
+      "Filesystem census timings are not cleanup or runtime qualification."
+    ],
+    "originalCombinedDriverAttempt": "AV_BLOCKED_NOT_RUN; baseline-only measurement was run without bypassing AV."
+  },
+  "prospectiveMeasurement": {
+    "status": "PASS_MEASUREMENT_ONLY",
+    "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "baselineReferenceModuleSha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024",
+    "profileFileCount": 2048,
+    "evidenceArtifactCount": 62,
+    "evidenceArtifactBytes": 6934,
+    "setupMs": 130612.5025,
+    "finalContextCleanupMs": 6097.9111,
+    "profileFixtureRemovalMs": 11857.7965,
+    "postProfileRemovalSamples": [
+      {
+        "phase": "POST_PROFILE_REMOVAL_62_ARTIFACTS",
+        "sample": 0,
+        "wholeContextMs": 1786.7279,
+        "earlyOwnershipAndTreeMs": 346.40180000000004,
+        "laterTreeMs": 327.47020000000003
+      },
+      {
+        "phase": "POST_PROFILE_REMOVAL_62_ARTIFACTS",
+        "sample": 1,
+        "wholeContextMs": 1811.5457000000001,
+        "earlyOwnershipAndTreeMs": 337.7162,
+        "laterTreeMs": 321.1394
+      },
+      {
+        "phase": "POST_PROFILE_REMOVAL_62_ARTIFACTS",
+        "sample": 2,
+        "wholeContextMs": 1809.506,
+        "earlyOwnershipAndTreeMs": 339.73990000000003,
+        "laterTreeMs": 321.3207
+      }
+    ],
+    "hostExecution": {
+      "exitCode": 0,
+      "elapsedMs": 158561.18,
+      "watchdogMs": 600000,
+      "inputAudit": "PASS_BEFORE_AND_AFTER",
+      "terminationProven": true,
+      "nativeExitCode": 0,
+      "driverSha256": "3f2d3c20eda6048980ec5e18279597c1a498286c048c33da1667c1746b87130b",
+      "candidateSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77"
+    },
+    "limits": [
+      "Census times only the post-profile-removal 62-artifact state.",
+      "The 2048-file state is created and removed by the host proof; it is not the actual live mutable browser path.",
+      "Module initialization side effects are outside the census measurement.",
+      "This is filesystem census evidence, not full cleanup or runtime qualification."
+    ]
+  },
+  "namespaceContract": {
+    "status": "PASS",
+    "assertions": 57,
+    "cases": [
+      "descendant",
+      "runroot",
+      "ancestor"
+    ],
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "inputCount": 3,
+    "candidateModuleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "heldBaselineModuleSha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024",
+    "contractSourceSha256": "6e7881b68b25d86da8c33e63b4278c8c1a3366096d902c21848e737cb61153b8",
+    "elapsedMs": 4108.9418000000005,
+    "cleanupMs": 699,
+    "terminationProven": true,
+    "nativeExitCode": 0,
+    "witnessed": [
+      "Owned moves and link removal use namespace-aware validation.",
+      "Sentinels remain unchanged.",
+      "Restoration checks pass.",
+      "The exact cases are descendant, RunRoot, and ancestor junction behavior."
+    ]
+  },
+  "cleanupStress": {
+    "status": "PASS",
+    "wrapperProtocol": "troubleshootjs-browser-cleanup-wrapper-v2",
+    "childProtocol": "troubleshootjs-browser-cleanup-child-observation-v1",
+    "wrapperExitCode": 0,
+    "childExitCode": 0,
+    "elapsedMs": 276967.0,
+    "boundedCallElapsedMs": 276523.0,
+    "terminationProven": true,
+    "rawChildCapturePersisted": true,
+    "rawReportWritten": true,
+    "cleanupElapsedMs": 115235.0,
+    "cleanupLimitMs": 120000,
+    "profileFilesExercised": 2048,
+    "evidenceArtifacts": {
+      "status": "PASS",
+      "requested": 62,
+      "registered": 62,
+      "count": 62,
+      "bytes": 6934
+    },
+    "listenerTransport": {
+      "forcedTcpRequested": false,
+      "observedOwnerKind": "kernel-transport"
+    },
+    "ownerProof": {
+      "complete": true,
+      "wrapperOwnerProofComplete": true,
+      "previewProcessAbsent": true,
+      "browserProcessAbsent": true,
+      "previewClaimAbsent": true,
+      "browserClaimAbsent": true,
+      "previewListenerAbsent": true,
+      "browserListenerAbsent": true,
+      "browserProfileAbsent": true
+    },
+    "nestedShutdown": {
+      "elapsedMs": 9967,
+      "limitMs": 15000,
+      "failurePhase": "",
+      "protectedDescendants": 7,
+      "processRecords": 8,
+      "waitLoops": 2,
+      "naturalExitProofCalls": 9,
+      "naturalExitProofReuse": 7,
+      "absenceProofs": 8,
+      "absenceObservations": 16,
+      "lateParentQueries": 8,
+      "jobPolls": 1
+    },
+    "phaseAggregatesMs": {
+      "browserSession": 82232.0,
+      "preview": 26535.0,
+      "finalProof": 4771.0,
+      "attribution": "Aggregate timings only; no measured cause assigned."
+    },
+    "preservedPriorFailure": {
+      "file": "docs/task-evidence/Q100/authored-layout-r1/aq-cleanup-limit1.json",
+      "sha256": "2aa4e4e5132bdecf0f0cb132d4a7fc9638b34d423cece2e62a93a5aab5ccd517",
+      "status": "CLEANUP_LIMIT_FAILURE_CAPTURED_NO_OWNER_PROOF",
+      "cleanupElapsedMs": 124401,
+      "cleanupLimitMs": 120000,
+      "ownerProofDisposition": "NOT_RUN_OR_NOT_ESTABLISHED"
+    }
+  },
+  "terminalProof": {
+    "status": "PASS",
+    "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "contractSha256": "9c76e514fc6e00ca5359fe477f6c61f2a6851a308df4882328fdef3d5ecf8440",
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "inputCount": 2,
+    "elapsedMs": 16161.336800000001,
+    "shutdownLimitMs": 15000,
+    "aggregateCleanupLimitMs": 120000,
+    "exitCode": 0,
+    "nativeExitCode": 0,
+    "terminationProven": true,
+    "assertions": 19,
+    "realJobTree": true,
+    "staggeredNaturalExit": true,
+    "naturalExitProofReuseCount": 142,
+    "terminalIdentityCount": 2,
+    "absenceProofAttempts": 2,
+    "currentAbsenceObservations": 4,
+    "positiveProofMs": 7757,
+    "taskCleanupMs": 85,
+    "liveJobMemberBlocked": true,
+    "transientRetry": true,
+    "wrongIdentityRejected": true,
+    "limitsUnchanged": true,
+    "sourceAge": "Fresh terminal proof on candidate module 8a7; this does not reuse the earlier AP3 source-77 proof."
+  },
+  "limitsAndNonClaims": [
+    "AQ adoption record remains pending full stress and final-source gates; this packet is evidence curation, not the final gate.",
+    "The 62-artifact, 2048-profile-file cleanup stress passed with complete owner proof, but the earlier same-fixture run exceeded the unchanged 120000ms full-run limit and remains preserved as a failure.",
+    "The initial combined driver attempt was AV-blocked and not run; no AV bypass was used.",
+    "The native33 gate failed its legacy oracle and remains under investigation; no native33 PASS is claimed.",
+    "Current Player privacy on candidate 8a7 was not run. No full current25, saved72 admission, or playable-100 qualification is claimed.",
+    "No fixture reduction, budget increase, source snapshot 3, or early-check waiver was made.",
+    "Raw logs, raw reports, absolute paths, process IDs/start ticks, and capability tokens are not embedded. Protected HARD data was not read or run."
+  ],
+  "artifacts": [
+    {
+      "file": "aq-baseline-census-1/result.json",
+      "bytes": 2964,
+      "sha256": "782b8eadda2de63283cadd3b0696503f04c16b2bd04e1c6150e362e8f93c038e"
+    },
+    {
+      "file": "aq-baseline-census-1/run.ps1",
+      "bytes": 4634,
+      "sha256": "8ed76cbcb83aece5b90211cc3e4a2709434f4b7382504aa39e2a1710241a5bd6"
+    },
+    {
+      "file": "aq-baseline-census-1/launcher.json",
+      "bytes": 185,
+      "sha256": "7a8ea626ead07424e7c8e01081bbac6288ced283134bd93ef1324adcba6f93fc"
+    },
+    {
+      "file": "aq-prospective-census-1/result.json",
+      "bytes": 2147,
+      "sha256": "2b4541a9c37cdf0caf0a116965c43e1783ee046534f62a2326f9e3b139ab7785"
+    },
+    {
+      "file": "aq-prospective-census-1/run.ps1",
+      "bytes": 8725,
+      "sha256": "3f2d3c20eda6048980ec5e18279597c1a498286c048c33da1667c1746b87130b"
+    },
+    {
+      "file": "aq-prospective-census-1/launcher.json",
+      "bytes": 160,
+      "sha256": "a3be4fdf1921872dcad79ac5de0fc41448e9bf2bc2bb381b144ef17e0a227dff"
+    },
+    {
+      "file": "aq-prospective-host-1/result.json",
+      "bytes": 790,
+      "sha256": "320ec36f44221f698aa7242c6eca46603d02e7bbd5a6d462e96330d1575df473"
+    },
+    {
+      "file": "aq-prospective-host-1/run.ps1",
+      "bytes": 3561,
+      "sha256": "f3f19f6622e88e5e4f37918425313e1956f6f459e7ceb2836ef7899a554c9720"
+    },
+    {
+      "file": "aq-prospective-host-1/launcher.json",
+      "bytes": 185,
+      "sha256": "b954ea8331a78da2adf67b0df50779cd42fce2899a59e7e50ef602840f394301"
+    },
+    {
+      "file": "aq-prospective-host-1/stdout.txt",
+      "bytes": 55,
+      "sha256": "1ca8aeac75b960f4454fa5a1cb509ee61159b845d4737595d1e8873c60fcd466"
+    },
+    {
+      "file": "aq-prospective-host-1/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "aq-reparse-gate-1/result.json",
+      "bytes": 955,
+      "sha256": "90f343132b03034f3993937ab203e33e89d6442aabfc9c37d26e15d3ff91e38c"
+    },
+    {
+      "file": "aq-reparse-gate-1/run.ps1",
+      "bytes": 3913,
+      "sha256": "4b534e6ec4acc257a61b9b429f88c0ec49452d7b6924a547f3f7552d45a16e9c"
+    },
+    {
+      "file": "aq-reparse-gate-1/namespace-census-reparse.ps1",
+      "bytes": 14237,
+      "sha256": "6e7881b68b25d86da8c33e63b4278c8c1a3366096d902c21848e737cb61153b8"
+    },
+    {
+      "file": "aq-reparse-gate-1/launcher.json",
+      "bytes": 182,
+      "sha256": "edade798e40cfc2387bf91a418873f6b6bc2815a07847cad38c8ba59767c2b74"
+    },
+    {
+      "file": "aq-reparse-gate-1/stdout.txt",
+      "bytes": 174,
+      "sha256": "f9ddcb6343d0d111c17b01d5186bd81ac0e4e25f1591fa0d56b03527c36dea25"
+    },
+    {
+      "file": "aq-reparse-gate-1/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "aq-reparse-gate-1/VerifierIsolation.candidate.psm1",
+      "bytes": 890076,
+      "sha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77"
+    },
+    {
+      "file": "aq-reparse-gate-1/VerifierIsolation.held.psm1",
+      "bytes": 890105,
+      "sha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024"
+    },
+    {
+      "file": "aq-adoption-1/adoption.json",
+      "bytes": 359,
+      "sha256": "228c3edf116ab422ec5fc7eade789c6f921b25a043c7d37b97f6d58194b3ee69"
+    },
+    {
+      "file": "ao-cleanup-canary-3/result.json",
+      "bytes": 10607,
+      "sha256": "225b937a709126bb8d5dc12dd2bed53371c681d9ceb18887cf5c74f78140546a"
+    },
+    {
+      "file": "ao-cleanup-canary-3/child-result.json",
+      "bytes": 682,
+      "sha256": "856cb215ecb8b39129fa4249e40ecf43b696a81b099c35ae368aede183cd4e3e"
+    },
+    {
+      "file": "ao-cleanup-canary-3/launch.json",
+      "bytes": 2352,
+      "sha256": "8a57196d1124693911f03eb74ee2da759397204c1eb069b5f821b46cecfcfaa1"
+    },
+    {
+      "file": "ao-cleanup-canary-3/run-browser-cleanup-canary.ps1",
+      "bytes": 20141,
+      "sha256": "90bf32f432f93851bc94d540fbe0a6918a6f34714f60280fd7b845066648f8d5"
+    },
+    {
+      "file": "ao-cleanup-canary-3/stdout.raw.txt",
+      "bytes": 623,
+      "sha256": "f0a1b337b3b0a6628b371a748b44d766d707ea0b06011e825e5a0933fdd57977"
+    },
+    {
+      "file": "ao-cleanup-canary-3/stderr.raw.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "ao-cleanup-canary-3/stdout.log",
+      "bytes": 596,
+      "sha256": "60d95883d26e6f8797b63fa9c5e0e8e43e446485cd87af5555d4681e04185023"
+    },
+    {
+      "file": "ao-cleanup-canary-3/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "ap-terminal-proof-gate-4/result.json",
+      "bytes": 983,
+      "sha256": "68e9043a2278b3a1b4c9f57a2b4a2e14bb07be19fe9d0407390ec1fc8b1e8dd2"
+    },
+    {
+      "file": "ap-terminal-proof-gate-4/source-pins.json",
+      "bytes": 332,
+      "sha256": "83f56dbdbbf7131134d14244631eedb2e7f8d3b50ed5955ec3341dbcf840ae8d"
+    },
+    {
+      "file": "ap-terminal-proof-gate-4/run.ps1",
+      "bytes": 4298,
+      "sha256": "a0573b205074de4e6997461e5b0038e83e5e3fc893cf2899cf1801581531bd71"
+    },
+    {
+      "file": "ap-terminal-proof-gate-4/browser-natural-exit-reuse.ps1",
+      "bytes": 30353,
+      "sha256": "9c76e514fc6e00ca5359fe477f6c61f2a6851a308df4882328fdef3d5ecf8440"
+    },
+    {
+      "file": "ap-terminal-proof-gate-4/VerifierIsolation.psm1",
+      "bytes": 890076,
+      "sha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77"
+    },
+    {
+      "file": "ap-terminal-proof-gate-4/launcher.json",
+      "bytes": 188,
+      "sha256": "61ba4a293a6ddef1d62521a479e799b051c0ecbe3d14672453bdd6050756d724"
+    },
+    {
+      "file": "ap-terminal-proof-gate-4/stdout.txt",
+      "bytes": 731,
+      "sha256": "6137336d7b05642322ca299ff92442205582bdfc7a984d90134a97c5eaf40e50"
+    },
+    {
+      "file": "ap-terminal-proof-gate-4/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "TroubleshootJS/verify/browser-cleanup-budget-8bab6eb2c0dc47ba9bf7aa6e0bca3d23/browser-cleanup-budget-report.json",
+      "bytes": 10128,
+      "sha256": "18d739aace7c0b62c2180dc076797f6f122d2efb04f8200da4480e0f254942d5"
+    },
+    {
+      "file": "docs/task-evidence/Q100/authored-layout-r1/aq-cleanup-limit1.json",
+      "bytes": 7413,
+      "sha256": "2aa4e4e5132bdecf0f0cb132d4a7fc9638b34d423cece2e62a93a5aab5ccd517"
+    }
+  ],
+  "sanitization": {
+    "status": "SANITIZED_METADATA_ONLY",
+    "rawLogContentsEmbedded": false,
+    "rawReportContentsEmbedded": false,
+    "absolutePathsEmbedded": false,
+    "processIdsOrStartTicksEmbedded": false,
+    "capabilityTokensEmbedded": false,
+    "scratchReferences": "Relative task-owned leaf names only; external raw-report path is a safe logical path."
+  }
+}

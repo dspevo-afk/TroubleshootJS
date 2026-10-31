@@ -1,0 +1,115 @@
+{
+  "schema": "p07-saved-paired-route-probe-observation-v1",
+  "status": "FAIL_COMPILE_TEST_SOURCE",
+  "scope": "TEST_ONLY_OBSERVATION_NOT_ACCEPTANCE",
+  "adoption": false,
+  "layoutQualification": false,
+  "q100Qualification": false,
+  "productionCodeChanged": false,
+  "interpretation": "The first native attempt failed during Java compilation because the temporary test-source override declared a static constructor. No test cases ran, so this is a test-fixture compile failure and not a production behavior result.",
+  "sourceBinding": {
+    "protocol": "p07-saved-paired-route-probe-input-seal-v1",
+    "inputSnapshotDirectory": "saved-paired-route-probe-inputs-1",
+    "parentInputCount": 1059,
+    "parentPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+    "inputCount": 1059,
+    "inputPinsSha256": "9406bee11f50c3480082c071155a1d86494086003e0bf487e7176ccef910effa",
+    "unchangedInputCount": 1058,
+    "changedInputs": [
+      {
+        "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+        "beforeSha256": "0c97dd4f0e1c3f4c18c34f80ca9c827f00639d17fa0599048ba9cf0c319f8867",
+        "afterSha256": "38857a8f8c19d9d82852859aef23d5b386438865410283f864387d39ac1527bf"
+      }
+    ],
+    "pins": {
+      "file": "saved-paired-route-probe-sealed-pins.json",
+      "bytes": 204437,
+      "sha256": "9406bee11f50c3480082c071155a1d86494086003e0bf487e7176ccef910effa"
+    },
+    "seal": {
+      "file": "saved-paired-route-probe-inputs-sealed1.json",
+      "bytes": 912,
+      "sha256": "12a42f071254a38bf0c4a17d5ab59562ae32b50331d144fcb7d1d01cc9473fb1"
+    },
+    "testSource": {
+      "file": "P07BranchDiagnosticsContractTest.java",
+      "bytes": 40014,
+      "sha256": "38857a8f8c19d9d82852859aef23d5b386438865410283f864387d39ac1527bf",
+      "invalidConstruct": {
+        "line": 55,
+        "source": "private static P07BranchDiagnosticsContractTest() { }",
+        "sanitizedCompilerDiagnostic": "P07BranchDiagnosticsContractTest.java:55: error: modifier static not allowed here"
+      }
+    },
+    "harnessSpec": {
+      "file": "spec.json",
+      "bytes": 7967,
+      "sha256": "86a89659d15a33a8bd888b0d38f9571204360048adfa208e2f8e4b839acb3a13"
+    },
+    "sourceReadme": {
+      "file": "README.md",
+      "bytes": 2324,
+      "sha256": "715023b8d2c7c69e016a03dfb337822a1bdcc4dc57d31b1e89705bec39740023"
+    },
+    "runner": {
+      "file": "run-saved-paired-route-probe.ps1",
+      "bytes": 4338,
+      "sha256": "a5cce68c6b301f48b910f2948006c50d77bdbbd859c2f4211f115667f3e3fff2"
+    },
+    "nativeChildLimitMs": 60000,
+    "outerWatchdogMs": 600000
+  },
+  "attempt": {
+    "attemptId": "saved-paired-route-probe-1",
+    "source": "current",
+    "suite": "P07BranchDiagnosticsContractTest",
+    "helperExitCode": 2,
+    "javaCompileExitCode": 1,
+    "helperElapsedSeconds": 6.7329667,
+    "terminationProven": true,
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "inputRevision": 3,
+    "sourceSnapshotRevision": 1,
+    "inputCount": 1059,
+    "inputPinsSha256": "9406bee11f50c3480082c071155a1d86494086003e0bf487e7176ccef910effa",
+    "compileDiagnosticOutput": {
+      "file": "saved-paired-route-probe-1-console.txt",
+      "bytes": 1432,
+      "sha256": "a6e8742d2889738ed14d64fd1c17bb74c8dbaa343d276caf7c9f238c27220f85",
+      "compilerMessage": "modifier static not allowed here"
+    },
+    "cleanup": {
+      "status": "PASS_MARKER_OBSERVED",
+      "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+      "elapsedSeconds": null,
+      "timing": "Cleanup-only duration was not separately reported."
+    },
+    "plannedCases": 2,
+    "caseFrames": 0,
+    "branchRecords": 0,
+    "caseRecords": 0,
+    "summaryRecords": 0,
+    "casesNotRun": 2,
+    "expectedOutcomesValidated": 0,
+    "successReceiptPresent": false,
+    "artifacts": [
+      { "file": "saved-paired-route-probe-1-result.json", "bytes": 781, "sha256": "ca47b0b8196280b205421db2ec1bc80213a6f283c7ed0a5196b8f3f51c4167a5" },
+      { "file": "saved-paired-route-probe-1-launcher.json", "bytes": 231, "sha256": "2e77249ce0c821ab0b727aa18ead752fbc46dcb21f6cbc79baf2a4f7b22d4041" },
+      { "file": "saved-paired-route-probe-1-console.txt", "bytes": 1432, "sha256": "a6e8742d2889738ed14d64fd1c17bb74c8dbaa343d276caf7c9f238c27220f85" },
+      { "file": "saved-paired-route-probe-1-stderr.txt", "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" },
+      { "file": "saved-paired-route-probe-1-receipt.txt", "present": false }
+    ]
+  },
+  "limitations": [
+    "Both planned probe cases are NOT RUN because compilation stopped first; no expected route or layout outcome was validated.",
+    "This failure is isolated to the test-source constructor declaration and does not establish a production defect or pass.",
+    "The failed v1 source and raw-result artifact references are retained; any later source correction is a separate variant and does not replace this record."
+  ],
+  "sanitization": {
+    "rawConsoleContentsEmbedded": false,
+    "absoluteMachinePathsIncluded": false,
+    "processIdentifiersIncluded": false,
+    "artifactReferences": "Basenames, byte counts and SHA-256 values only; the compiler diagnostic is path-sanitized."
+  }
+}

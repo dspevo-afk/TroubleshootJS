@@ -11,6 +11,7 @@ $ast = [Management.Automation.Language.Parser]::ParseFile($source, [ref]$tokens,
 if ($parseErrors.Count -ne 0) { throw 'Browser report reader has syntax errors.' }
 # Load only pure report/route functions; never execute preview/browser setup.
 foreach ($name in @('Get-ExactReportText', 'Test-JsonReport', 'Test-A04Report', 'Test-A06Report', 'Test-ControlledReport',
+        'Test-NormalWorkbenchReady',
         'Test-A07FiniteNumber', 'Test-A07Report', 'Test-A08Report', 'Test-RouteReady', 'Get-RouteDefinitions')) {
     $found = @($ast.FindAll({ param($node)
         $node -is [Management.Automation.Language.FunctionDefinitionAst] -and
@@ -35,17 +36,17 @@ $valid = [ordered]@{
     protocol = 'TSJ-A04-CONSTRUCTION-1'; status = 'PASS'
     contractAssertions = 1; runtimeAssertions = 1; candidateCleanup = 'PASS'
     cases = @(
-        @{ route = 'resistive'; seed = '1'; generatorVersion = 5;
+        @{ route = 'resistive'; seed = '1'; generatorVersion = 6;
             replayVerified = $true; ownerRestored = $true; elapsedMs = 1; assemblyMs = 0 },
-        @{ route = 'resistive'; seed = '2'; generatorVersion = 5;
+        @{ route = 'resistive'; seed = '2'; generatorVersion = 6;
             replayVerified = $true; ownerRestored = $true; elapsedMs = 2; assemblyMs = 1 },
-        @{ route = 'resistive'; seed = '3'; generatorVersion = 5;
+        @{ route = 'resistive'; seed = '3'; generatorVersion = 6;
             replayVerified = $true; ownerRestored = $true; elapsedMs = 3; assemblyMs = 2 },
-        @{ route = 'controlled'; seed = '1'; generatorVersion = 5;
+        @{ route = 'controlled'; seed = '1'; generatorVersion = 6;
             replayVerified = $true; ownerRestored = $true; elapsedMs = 4; assemblyMs = 2 },
-        @{ route = 'controlled'; seed = '2'; generatorVersion = 5;
+        @{ route = 'controlled'; seed = '2'; generatorVersion = 6;
             replayVerified = $true; ownerRestored = $true; elapsedMs = 5; assemblyMs = 3 },
-        @{ route = 'controlled'; seed = '3'; generatorVersion = 5;
+        @{ route = 'controlled'; seed = '3'; generatorVersion = 6;
             replayVerified = $true; ownerRestored = $true; elapsedMs = 6; assemblyMs = 3 })
 }
 foreach ($flag in $flags) { $valid[$flag] = $true }
@@ -97,12 +98,14 @@ $copy = Copy-Report $valid; $copy.cases[0].replayVerified = $false
 Assert-ReportContract (Test-ReportRejected (Encode-Report $copy)) 'Unverified replay was accepted.'
 $copy = Copy-Report $valid; $copy.cases[0].ownerRestored = $false
 Assert-ReportContract (Test-ReportRejected (Encode-Report $copy)) 'Unrestored owner was accepted.'
-foreach ($value in @(0, 3, 4, 6, '5', 1.5, $null)) {
+foreach ($value in @(0, 3, 4, 7, '5', '6', 1.5, $true, $null)) {
     $copy = Copy-Report $valid; $copy.cases[0].generatorVersion = $value
-    Assert-ReportContract (Test-ReportRejected (Encode-Report $copy)) 'Invalid generator version was accepted.'
+    Assert-ReportContract (Test-ReportRejected (Encode-Report $copy)) 'Invalid generator version value was accepted.'
 }
+$copy = Copy-Report $valid; $copy.cases[0].generatorVersion = 5
+Assert-ReportContract (Test-ReportRejected (Encode-Report $copy)) 'Retired generator version 5 was accepted.'
 $copy = Copy-Report $valid; $copy.cases[0].generatorVersion = 2
-Assert-ReportContract (Test-ReportRejected (Encode-Report $copy)) 'Duplicate version was accepted.'
+Assert-ReportContract (Test-ReportRejected (Encode-Report $copy)) 'Wrong numeric generator version 2 was accepted.'
 $copy = Copy-Report $valid; $copy.cases = @($copy.cases[0], $copy.cases[1])
 Assert-ReportContract (Test-ReportRejected (Encode-Report $copy)) 'Missing construction case was accepted.'
 $copy = Copy-Report $valid; $copy.cases = $null
@@ -112,7 +115,8 @@ foreach ($value in @('', '{', 'null', '[]', '{}')) {
 }
 $reports = [pscustomobject]@{
     verification = 'PASS:a04'; a04 = (Encode-Report $valid)
-    normalReady = [pscustomobject]@{ programReady = $true; retestCustomerReady = $true }
+    normalReady = [pscustomobject]@{ workbenchNavigationReady = $true; programReady = $true;
+        retestCustomerReady = $true; boardPowerReady = $true; boardPowerLabel = 'Board Power: ON' }
 }
 Assert-ReportContract (Test-RouteReady 'a04' $reports) 'Positive A04 route was rejected.'
 $reports.verification = 'FAIL:a04:a04-explicit-failure-canary'; $reports.a04 = ''
@@ -121,6 +125,25 @@ $reports.a04 = Encode-Report $valid
 Assert-ReportContract (-not (Test-RouteReady 'a04-forced' $reports)) 'Forced failure accepted a success receipt.'
 $reports.verification = ''; $reports.a04 = ''
 Assert-ReportContract (Test-RouteReady 'a04-debugoff' $reports) 'Debug-off route was rejected.'
+$validNormalReady = Copy-Report $reports.normalReady
+foreach ($field in @('workbenchNavigationReady', 'boardPowerReady', 'boardPowerLabel')) {
+    $copy = Copy-Report $validNormalReady; $copy.PSObject.Properties.Remove($field)
+    $reports.normalReady = $copy
+    Assert-ReportContract (-not (Test-RouteReady 'a04-debugoff' $reports)) "Missing normal readiness $field was accepted."
+}
+foreach ($field in @('workbenchNavigationReady', 'boardPowerReady')) {
+    foreach ($value in @($false, 'true', 1, $null)) {
+        $copy = Copy-Report $validNormalReady; $copy.$field = $value
+        $reports.normalReady = $copy
+        Assert-ReportContract (-not (Test-RouteReady 'a04-debugoff' $reports)) "Malformed normal readiness $field was accepted."
+    }
+}
+foreach ($value in @('', 'ON', 'Board Power: UNKNOWN', $true, 1, $null)) {
+    $copy = Copy-Report $validNormalReady; $copy.boardPowerLabel = $value
+    $reports.normalReady = $copy
+    Assert-ReportContract (-not (Test-RouteReady 'a04-debugoff' $reports)) 'Malformed normal readiness boardPowerLabel was accepted.'
+}
+$reports.normalReady = $validNormalReady
 $reports.verification = 'RUNNING:a04'
 Assert-ReportContract (-not (Test-RouteReady 'a04-debugoff' $reports)) 'Debug-off accepted A04 execution.'
 $reports.verification = ''; $reports.a04 = Encode-Report $valid
@@ -384,7 +407,8 @@ Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Missing actu
 $bad=Copy-Report $execution;$bad.scale[0].physicalPackages=20
 Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Synthetic scaling promoted to physical qualification.'
 $executionReports=[pscustomobject]@{verification='PASS:a07';a07=(Encode-Report $execution);
-    normalReady=@{programReady=$true;retestCustomerReady=$true}}
+    normalReady=@{workbenchNavigationReady=$true;programReady=$true;retestCustomerReady=$true;
+        boardPowerReady=$true;boardPowerLabel='Board Power: ON'}}
 Assert-ReportContract (Test-RouteReady 'a07' $executionReports) 'Valid actual A07 route rejected.'
 $executionReports.verification='RUNNING:a07'
 Assert-ReportContract (-not (Test-RouteReady 'a07' $executionReports)) 'Unfinished A07 route accepted.'
@@ -467,7 +491,8 @@ Assert-ReportContract (-not (Test-A08Report (Encode-Report $bad))) 'Impossible A
 $bad=Copy-Report $mutation;$bad.maxFailedMutationMs=1001
 Assert-ReportContract (-not (Test-A08Report (Encode-Report $bad))) 'Impossible A08 failed-operation duration accepted.'
 $mutationReports=[pscustomobject]@{verification='PASS:a08';a08=(Encode-Report $mutation);
-    normalReady=[pscustomobject]@{programReady=$true;retestCustomerReady=$true}}
+    normalReady=[pscustomobject]@{workbenchNavigationReady=$true;programReady=$true;
+        retestCustomerReady=$true;boardPowerReady=$true;boardPowerLabel='Board Power: ON'}}
 Assert-ReportContract (Test-RouteReady 'a08' $mutationReports) 'Valid A08 route rejected.'
 $mutationReports.verification='RUNNING:a08'
 Assert-ReportContract (-not (Test-RouteReady 'a08' $mutationReports)) 'Unfinished A08 route accepted.'
@@ -477,13 +502,18 @@ $mutationReports.verification='FAIL:a08:unexpected'
 Assert-ReportContract (-not (Test-RouteReady 'a08-forced' $mutationReports)) 'Unexpected A08 failure credited as negative proof.'
 $mutationReports.verification=''
 Assert-ReportContract (Test-RouteReady 'a08-debugoff' $mutationReports) 'Ready A08 debug-off player route rejected.'
-foreach ($field in @('programReady','retestCustomerReady')) {
+foreach ($field in @('workbenchNavigationReady','programReady','retestCustomerReady','boardPowerReady')) {
     foreach ($value in @('false','true',1,$null,$false)) {
         $mutationReports.normalReady.$field=$value
         Assert-ReportContract (-not (Test-RouteReady 'a08-debugoff' $mutationReports)) "Untyped/false A08 readiness accepted: $field"
     }
     $mutationReports.normalReady.$field=$true
 }
+foreach ($value in @('', 'ON', 'Board Power: UNKNOWN', $true, 1, $null)) {
+    $mutationReports.normalReady.boardPowerLabel=$value
+    Assert-ReportContract (-not (Test-RouteReady 'a08-debugoff' $mutationReports)) 'Untyped A08 board-power label accepted.'
+}
+$mutationReports.normalReady.boardPowerLabel='Board Power: ON'
 $mutationReports.a08=Encode-Report $mutation
 Assert-ReportContract (-not (Test-RouteReady 'a08-debugoff' $mutationReports)) 'A08 private developer evidence leaked to player route.'
 Assert-ReportContract (@(Get-RouteDefinitions 'A08' $false).Count -eq 14) 'A08 affected route selection changed.'

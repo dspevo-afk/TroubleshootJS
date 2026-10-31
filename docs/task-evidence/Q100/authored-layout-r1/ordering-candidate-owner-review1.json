@@ -1,0 +1,135 @@
+{
+  "schema": "troubleshootjs-q100-ordering-owner-source-review-v1",
+  "status": "SOURCE_ONLY_PREPARATION_NO_NATIVE_PROOF",
+  "target": {
+    "family": "RB56_CONTROL",
+    "caseId": "SAVED7_ROOT42_CANDIDATE4",
+    "topology": "RB56_CH2_SHARED_HYSTERETIC_A_NMOS_B_BJT_S5_true_S12_true_F2_O0_B5_false",
+    "rootSeed": "42",
+    "placementSeed": "5526715536693200536",
+    "routingSeed": "4493419427463069983",
+    "planVersion": 1,
+    "placementInterpretationVersion": 7,
+    "placementDensityVersion": 7,
+    "placementPackingVersion": 1,
+    "traceWidthProfile": "UNIFORM_TRACE@1",
+    "packageCount": 54,
+    "padCount": 131,
+    "candidateAttempt": 4,
+    "plannerCandidate": 4,
+    "rawRequestCandidate": 4,
+    "inputMaterializedGeometrySha256": "52c34368cef8518181ea6b338cb1473ad3bfbd76518b730e9cf144ba958f5f13",
+    "inputMaterializedGeometryLength": 134269,
+    "rawRequestProducer": "SeededPcbLayoutGenerator.advanceMediumRoute",
+    "rawRequestPostprocessing": "NONE",
+    "rawRequestMaterializeAndRouteCallsMatchProduction": true,
+    "layoutVersion": 24,
+    "dependencyEpoch": "tsj-generation-dependencies-v25",
+    "scope": "OBSERVATIONAL_FIXED_SAVED7_ROUTE_COMPARISON_ONLY",
+    "resultStatus": "OBSERVATION_ONLY"
+  },
+  "frameBinding": {
+    "consoleBasename": "lazy-bound-regression-u-1-console.txt",
+    "tag": "P07_FIXED_REGRESSION_ROUTE_PROBE_FRAME",
+    "matchingLineNumber": 16,
+    "matchingOccurrences": 1,
+    "lineHashDefinition": "SHA-256 over exact tagged-line bytes excluding line terminator",
+    "consoleSha256": "6b32ca294bfb10560b4a2d7fc62452d09a0fbba62b2681c168b8ad0f40197149",
+    "taggedLineBytes": 2964,
+    "taggedLineSha256": "427a85e8d8eee69616f29320c4dd3e1678a277477469264db7edae6a106b2bd4",
+    "jsonPayloadBytes": 2925,
+    "jsonPayloadSha256": "4c115d964d9f4770000e7ca2cd9dacf3377f9dceb5ec307cfbfb206f51fbd0e7"
+  },
+  "actualOwnerAdapter": {
+    "planConstruction": "Rb56Plan.reference(42).withPlacementVersion(7)",
+    "boardConstruction": "plan.board()",
+    "boardConstraintOwner": "Rb56Placement.create(plan)",
+    "expectedConstraintIdentity": "MEDIUM_BOARD@1; density=7; packing=1; requiresTwoLayerRouting=true; traceWidthProfile=UNIFORM_TRACE",
+    "sessionConstruction": "new SeededPcbLayoutGenerator().begin(board, plan.layoutSeed, plan.routingSeed)",
+    "candidatePlanConstruction": "new PcbPlacementPlanner(StandardPcbFootprintProviders.createRegistry()).plan(board, board.getPlacementConstraints(), plan.layoutSeed, 4)",
+    "placementCandidateConstruction": "new MediumBoardPhysicalPolicy.PlacementCandidate(board, 4, candidatePlan)",
+    "placementCandidateMembers": [
+      "attempt:int",
+      "plan:PcbPlacementPlanner.Plan",
+      "score:MediumBoardPhysicalPolicy.PlacementScore",
+      "cheapScore:long"
+    ],
+    "candidateFinalizer": "private RoutedCandidate finishMediumTwoLayerRoute(TroubleshootBoard,long,PlacementCandidate,PcbLayerRoutingPrototype.Result)",
+    "candidateComparator": "private void considerMediumLayout(Session,PlacementCandidate,RoutedCandidate,boolean)",
+    "routedCandidateMembers": [
+      "plan:PcbPlacementPlanner.Plan",
+      "layout:PcbBoardLayout"
+    ],
+    "selectionSessionFields": [
+      "mediumTwoLayerLayout",
+      "mediumTwoLayerQuality",
+      "mediumTwoLayerArea",
+      "mediumTwoLayerPlacementAttempt",
+      "mediumTwoLayerPlacementScore"
+    ],
+    "selectionRequirements": [
+      "Use accepted P07 Results only.",
+      "Bind each Result to inputMaterializedGeometrySha256 before finalization.",
+      "Use one initially empty medium Session and pass each finalized candidate to considerMediumLayout with twoLayer=true.",
+      "Do not fabricate GenerationStatistics, placement/routing counters, or shared-budget evidence."
+    ],
+    "nonApplicableLaterStages": [
+      "density-14-only selected-border trim",
+      "packing-version-4-only connected-pocket packing probe"
+    ]
+  },
+  "sourceHashes": {
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "84fbbadb24b585a10dcd01af81b8be9109df99ca9b3b337391836c75424c467d",
+    "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java": "ac2713b172c186292a9b1bd6f877358647f8b22da1e4c83d716cca5dce451cb5",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java": "f30032aeec5dc29d5866fa64d2003fd9ea20f80857bbb156d95c4072e6b03d0c",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java": "1144f0575cbbae802db890100a460fda9a8541c79459629c06769a4ee9d6fceb",
+    "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java": "5a3ea41332c85ff1ea263fd3952963fda1c845e9d9359460abcc271fdcd4d180",
+    "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java": "9dcf4917692f32071574ef5adf8f75aa55ef0e6a9a3159d3011549be2b4fbda3",
+    "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java": "6eb32ebea70a37084700d89451b0d3eb3c5da2dc2320e9d90014a369fcbb8a31",
+    "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java": "b04f9906d726117412d62b6022ea5b8e2f26bf111063292b0d7560f51b0fb8cf",
+    "src/com/lushprojects/circuitjs1/client/PcbTraceClearance.java": "19984434852043ce9ef961ae4483cae36028e6deb444ae79fb1488b1c61ad5d4",
+    "src/com/lushprojects/circuitjs1/client/StandardPcbFootprintProviders.java": "c6ccf67ecba6392f94c4a8bac948458aa3cb1fc48b516cea7c9ce67c44ad5da5",
+    "src/com/lushprojects/circuitjs1/client/Rb56Plan.java": "a2a89ab38adde72985550da8af623c8bd4b7b2fbd19ef86db1876388d3d4bd8a",
+    "src/com/lushprojects/circuitjs1/client/Rb56Placement.java": "101ce980d753db359a9ed26fb66fed626d9f3945dcc4edc6350d8b8b8853cdfc"
+  },
+  "sourceEvidence": [
+    {
+      "file": "review-v2.md",
+      "sha256": "ef0ef9a4697e3280bd0f19eeaf048a91d825db69c14f8adac9af4f89aa6898f9",
+      "bytes": 4782
+    },
+    {
+      "file": "identity-correction-v2.json",
+      "sha256": "3b346bcc304475a726dddd3fd7bbbbc971a6e0649687acd2949d95339248c813",
+      "bytes": 6428
+    },
+    {
+      "file": "NOTES.md",
+      "sha256": "af19559f0ad5a5836c7eb8b617b754e66cc7e109409cfc99d05cc7a21a977cff",
+      "bytes": 8175
+    }
+  ],
+  "preservedPriorNote": {
+    "file": "review.md",
+    "status": "WRONG_TARGET_AND_TRUNCATED_SEEDS_NOT_USED_AS_TARGET_EVIDENCE",
+    "preserved": true
+  },
+  "sessionAudit": {
+    "sharedBudgetOwner": "PcbLayerRoutingPrototype.Session",
+    "currentSuccessBehavior": "Retires on first fully validated success.",
+    "futureCollectionFeasibility": "At most three validated private geometry variants from the same template and shared request budget; not implemented or accepted.",
+    "generatorAccounting": "Count route request/outcome once per placement candidate; per-order metadata must not inflate countMediumSuccesses.",
+    "errors": "Only current typed route-quality rejection is a pass rejection. Unexpected validation/runtime/observer/deadline/cancel/stale errors must abort and drop stored routes.",
+    "capBoundary": "Current no-success cap exhaustion rejects. Any best-valid result after optional collection cap needs separate explicit scope and incomplete-comparison status; no decision here.",
+    "forcedOrdering": "Reflect pass before first advance; advanceSlice(1); stop on pass increment before fallthrough; Result.orderings is pass count, not forced index."
+  },
+  "limitations": [
+    "No native run or build occurred for this identity/adapter audit.",
+    "No production qualification or normal-player admission is implied.",
+    "Separately forced order runs do not prove shared route-expansion budget behavior.",
+    "The adapter does not run placement-candidate ranking or the full medium-session scheduler.",
+    "No production ordering-collection change, cap/oracle waiver, epoch adoption or qualified Q100 follows."
+  ],
+  "nativeRun": false,
+  "adopted": false
+}

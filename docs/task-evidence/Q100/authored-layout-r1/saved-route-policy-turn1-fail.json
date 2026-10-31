@@ -1,0 +1,188 @@
+{
+  "schema": "troubleshootjs-saved-route-policy-turn-ablation-failure-v1",
+  "scope": "Scratch-only TURN_UNIFORM ablation for SAVED_7_8_REP; this is a failed diagnostic run, not a production policy or acceptance run.",
+  "status": "FAIL",
+  "variant": "TURN_UNIFORM",
+  "selector": "SAVED_7_8_REP",
+  "suite": "P07GeometryEpochDiagnosticContractTest",
+  "run": {
+    "helperExitCode": 2,
+    "nativeChildExitCode": 1,
+    "helperElapsedSeconds": 58.764204899999996,
+    "observationsCompleted": 11,
+    "observationsExpected": 12,
+    "completedObservationOracles": "PASS for the eleven completed observations",
+    "remainingCase": {
+      "profile": "SAVED_PROFILE_8",
+      "rootSeed": "42",
+      "candidateIdentity": "NOT_IDENTIFIED_BY_CURRENT_CONSOLE"
+    },
+    "error": {
+      "type": "java.lang.IllegalStateException",
+      "message": "PCB board outline leaves workbench canvas",
+      "thrownAt": "PcbBoardLayout.validateRoutingGeometry:229",
+      "propagatedThrough": "SeededPcbLayoutGenerator.finishRoutedPlan:1223"
+    },
+    "rawResult": {
+      "file": "fixed-route-policy-turn-7-8-1-result.json",
+      "bytes": 1014,
+      "sha256": "b9acd914a631d802e9e6cc5b3aba07eb2a28f0ccc047b8d1d52cbca26f6a5352"
+    },
+    "console": {
+      "file": "fixed-route-policy-turn-7-8-1-console.txt",
+      "bytes": 6155246,
+      "sha256": "f5da697d62ee9604742121e3bce6730a442f17bc2e2301df30a0edd23a97ab36"
+    },
+    "stderr": {
+      "file": "fixed-route-policy-turn-7-8-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "launcher": {
+      "file": "fixed-route-policy-turn-7-8-1-launcher.json",
+      "bytes": 274,
+      "sha256": "284f517a8ac5ec0ae6d1dabab48697151fa6b5a9d4d507f7858636f1e2415510"
+    },
+    "receipt": {
+      "present": false,
+      "status": "NOT_EMITTED",
+      "reason": "Native child failed before a final receipt was produced."
+    }
+  },
+  "cleanup": {
+    "status": "PASS",
+    "terminationProven": true,
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "inputCount": 1059,
+    "inputPinsSha256": "7d66df0178094295c6b9d9b564e4e00d0d0a0377d710eb4008efed7f7678e3fc",
+    "inputAuditScope": "Before/after source input audit",
+    "elapsedSeconds": null,
+    "separateTiming": "OPERATION_AND_CLEANUP_DURATIONS_NOT_REPORTED_SEPARATELY"
+  },
+  "budgets": {
+    "nativeChildLimitMs": 180000,
+    "outerWatchdogMs": 600000
+  },
+  "ablationBinding": {
+    "runSealSha256": "8746267237258786353079d0c709c9469ff91afd473b5434822cd4904213d598",
+    "runInputPinsSha256": "7d66df0178094295c6b9d9b564e4e00d0d0a0377d710eb4008efed7f7678e3fc",
+    "sourceSnapshot": "saved-profile-current-inputs-2",
+    "sourceInputRevision": 2,
+    "sourceInputCount": 1059,
+    "sourcePins": {
+      "file": "saved-profile-current-v2-sealed-pins.json",
+      "bytes": 224560,
+      "sha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e"
+    },
+    "sourceSeal": {
+      "file": "saved-profile-inputs-sealed2.json",
+      "bytes": 1036,
+      "sha256": "d49c8054e1358e9ccf408727f039cc4c20336bab542c306d5d7dcd759a9864ba"
+    },
+    "turnUniformVariantManifest": {
+      "file": "saved-route-probe-turn-uniform-manifest.json",
+      "bytes": 218518,
+      "sha256": "b888a0a266a5f9a4d8269a8942524e42383d2ffebfd2e678998545b44020ca9f"
+    },
+    "turnUniformVariantPins": {
+      "file": "saved-route-probe-turn-uniform-sealed-v1-pins.json",
+      "bytes": 199139,
+      "sha256": "7d66df0178094295c6b9d9b564e4e00d0d0a0377d710eb4008efed7f7678e3fc"
+    },
+    "planner": {
+      "relativePath": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sourceBytes": 51853,
+      "sourceSha256": "de80bb530f8dc4c246f95649875ebb4afe2428ae278513caa8963102e67c6c34",
+      "variantBytes": 51662,
+      "variantSha256": "312710146c69ec01b38dd3a5ffe4a42fafdd00716cf9fa7d8b735edfd331f996",
+      "changedInputs": [
+        "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java"
+      ],
+      "otherInputsByteIdentical": 1058,
+      "edits": [
+        {
+          "change": "remove only roleWidths guard in turnBoundWorkspace()",
+          "occurrences": 1
+        },
+        {
+          "change": "enable existing TurnLowerBound for uniform-width branches",
+          "occurrences": 1
+        }
+      ]
+    },
+    "preservedControls": {
+      "roleWidthsFlagUnchanged": true,
+      "failedNetPromotionUnchanged": true,
+      "edgeCostAndCapsUnchanged": true,
+      "physicalPredicatesUnchanged": true
+    },
+    "sourceChecks": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "currentWorktreeSha256": "de80bb530f8dc4c246f95649875ebb4afe2428ae278513caa8963102e67c6c34",
+        "sourceSnapshotSha256": "de80bb530f8dc4c246f95649875ebb4afe2428ae278513caa8963102e67c6c34",
+        "turnUniformVariantSha256": "312710146c69ec01b38dd3a5ffe4a42fafdd00716cf9fa7d8b735edfd331f996",
+        "worktreeMatchesSourceSnapshot": true,
+        "variantDiffIsDeclaredPlannerInput": true,
+        "variantBytes": 51662,
+        "sourceBytes": 51853
+      },
+      {
+        "path": "tests/contracts/P07GeometryEpochDiagnosticContractTest.java",
+        "currentWorktreeSha256": "3c36b320364c39a162349cf814d9f1e0860586829b98f5956d19d7905e0caa46",
+        "sourceSnapshotSha256": "3c36b320364c39a162349cf814d9f1e0860586829b98f5956d19d7905e0caa46",
+        "turnUniformVariantSha256": "3c36b320364c39a162349cf814d9f1e0860586829b98f5956d19d7905e0caa46",
+        "worktreeMatchesSourceSnapshot": true,
+        "variantDiffIsDeclaredPlannerInput": false,
+        "variantBytes": 55735,
+        "sourceBytes": 55735
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+        "currentWorktreeSha256": "7bf84a2d6c4c5077638d44d1239530a694d7015106010a72840df69c8dc7d4b0",
+        "sourceSnapshotSha256": "7bf84a2d6c4c5077638d44d1239530a694d7015106010a72840df69c8dc7d4b0",
+        "turnUniformVariantSha256": "7bf84a2d6c4c5077638d44d1239530a694d7015106010a72840df69c8dc7d4b0",
+        "worktreeMatchesSourceSnapshot": true,
+        "variantDiffIsDeclaredPlannerInput": false,
+        "variantBytes": 96127,
+        "sourceBytes": 96127
+      }
+    ]
+  },
+  "partialObservationContext": {
+    "reportedBy": "Coordinator summary of the completed observations; not copied from console text",
+    "areas": [
+      {
+        "profile": "SAVED_PROFILE_7",
+        "rootSeed": "42",
+        "boardOutlineArea": 6371585,
+        "note": "Reported restored area from completed observation context."
+      },
+      {
+        "profile": "SAVED_PROFILE_8",
+        "rootSeed": "-1022",
+        "boardOutlineArea": 6553200,
+        "comparisonNote": "Reported below the third bound; exact threshold is not restated here."
+      }
+    ]
+  },
+  "limits": [
+    "No qualification, adoption, or automatic golden seal is claimed.",
+    "No production source fix was selected. The declared TURN_UNIFORM input change is confined to the scratch variant.",
+    "The failed candidate identity is not established; do not infer it from the final profile/seed alone.",
+    "The original saved-profile comparative failure remains FAIL_RETAINED_BOUNDS and is linked below, not replaced by this ablation."
+  ],
+  "preservedComparativeFailure": {
+    "file": "saved-profile-census1.json",
+    "sha256": "1519943e950b0edfd4f5c37f7f8174495a9fd8da4964e8252d6f538f0d244e24",
+    "bytes": 59612,
+    "status": "FAIL_RETAINED_BOUNDS",
+    "exitCode": 2
+  },
+  "sanitization": {
+    "consoleAndStderrContents": "Not embedded; hashes and byte counts only",
+    "absoluteMachinePaths": "None included",
+    "processIdentifiers": "Omitted",
+    "receipt": "Absent; not synthesized"
+  }
+}

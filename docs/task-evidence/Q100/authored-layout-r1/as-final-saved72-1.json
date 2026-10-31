@@ -1,0 +1,906 @@
+{
+  "schema": "troubleshootjs-as-final-saved-profile-comparison-observation-v1",
+  "status": "PASS_COMPARISON_ONLY_PUBLICATION_HELD",
+  "repository": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "candidate": "AO_FINAL_LAYOUT25_DEP26"
+  },
+  "scope": {
+    "description": "Record the final six-cohort saved-profile native observation and its maintained strict comparison reader result.",
+    "comparisonOnly": true,
+    "layoutQualification": false,
+    "adopted": false,
+    "automaticGoldenSeal": false,
+    "actual100Accepted": 0,
+    "protectedHardData": "NOT_READ_OR_RUN"
+  },
+  "sourceContext": {
+    "artifact": {
+      "file": "ao-final-source-context-5.json",
+      "bytes": 2478,
+      "sha256": "f4996e6488e288140950399c91bb3caceb42998e82724b9a40c9dc288087032b"
+    },
+    "sha256": "f4996e6488e288140950399c91bb3caceb42998e82724b9a40c9dc288087032b",
+    "candidateId": "AO_FINAL_LAYOUT25_DEP26",
+    "contexts": {
+      "baseline": {
+        "contextId": "BASELINE_LAYOUT22_DEP23",
+        "layoutVersion": 22,
+        "dependencyEpoch": "tsj-generation-dependencies-v23",
+        "inputRevision": 2,
+        "sourceSnapshotRevision": 1,
+        "inputCount": 1059,
+        "pinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+      },
+      "current": {
+        "contextId": "AO_FINAL_LAYOUT25_DEP26",
+        "layoutVersion": 25,
+        "dependencyEpoch": "tsj-generation-dependencies-v26",
+        "inputRevision": 3,
+        "sourceSnapshotRevision": 5,
+        "inputCount": 1061,
+        "pinsSha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81"
+      },
+      "reference": {
+        "contextId": "QUALIFIED_AN_LAYOUT24_DEP25",
+        "layoutVersion": 24,
+        "dependencyEpoch": "tsj-generation-dependencies-v25",
+        "inputRevision": 3,
+        "sourceSnapshotRevision": 2,
+        "inputCount": 1059,
+        "pinsSha256": "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69"
+      }
+    },
+    "referenceQualificationEvidenceSha256": {
+      "geometryComparisonSha256": "4f4fe1330c703f9b700ba3ef31a5d048b5278b43af08117ef0cdc1d0984990ee",
+      "savedProfileComparisonSha256": "505a7a0bf7d653fba1d316195e705c3e22e23dbb0676621fb8f67cdd8ae35c3e"
+    },
+    "currentSourceTreeBytes": 85502668,
+    "currentSourcePinsArtifact": {
+      "file": "ao-final-native-v5-sealed-pins.json",
+      "bytes": 199503,
+      "sha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81"
+    },
+    "currentSourceSealArtifact": {
+      "file": "ao-final-native-inputs-sealed5.json",
+      "bytes": 2087,
+      "sha256": "4560a56dae95e1775a5f6fcecb89943a84acebc676aaf1ba86f71006c16479a5"
+    },
+    "currentSourceAuditArtifact": {
+      "file": "ao-final-native-copy-audit5.json",
+      "bytes": 2072,
+      "sha256": "6575f85b4b8db5bb6bf19278b3e2b56fe545155a559a7df210ec2508555935cf"
+    },
+    "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77"
+  },
+  "nativeSavedProfileObservation": {
+    "status": "PASS_SIX_COHORTS",
+    "suite": "P07GeometryEpochDiagnosticContractTest",
+    "cohortCount": 6,
+    "casesPerCohort": 12,
+    "currentCaseCount": 72,
+    "inputCount": 1061,
+    "sourceSnapshotRevision": 5,
+    "inputRevision": 3,
+    "layoutVersion": 25,
+    "dependencyEpoch": "tsj-generation-dependencies-v26",
+    "pinsSha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81",
+    "inputAudit": "PASS_BEFORE_AND_AFTER_FOR_EACH_COHORT",
+    "terminationProvenForEachCohort": true,
+    "cleanupStatusForEachCohort": "PASS_MARKER_REPORTED_ONCE",
+    "cleanupDurationMeasured": false,
+    "nativeChildLimitMs": 180000,
+    "outerWatchdogMs": 600000,
+    "cohorts": [
+      {
+        "cohortId": "SAVED_3_4_REP",
+        "casesPerSource": 12,
+        "baseline": {
+          "source": "FROZEN_BASELINE",
+          "attempt": 2,
+          "nativeElapsedMs": 33123,
+          "terminationProven": true,
+          "pinSetSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+          "artifacts": {
+            "result": {
+              "file": "saved-profile-baseline-3-4-rep-2-result.json",
+              "bytes": 784,
+              "sha256": "d376921a189a90ab1ec920e0220571a1c2d162386187a7d3d2dc10490ccad876"
+            },
+            "receipt": {
+              "file": "saved-profile-baseline-3-4-rep-2-receipt.txt",
+              "bytes": 6885036,
+              "sha256": "8a1a47a36773f7eed2304fa085fb3dab29c85716e12aa500c873f85c9b428e8d"
+            },
+            "console": {
+              "file": "saved-profile-baseline-3-4-rep-2-console.txt",
+              "bytes": 6886176,
+              "sha256": "ae9d3a888b7be4382493982a5c36c0e5bd0d4e9b93017f3459d9417fba72de00"
+            },
+            "pins": {
+              "file": "saved-profile-baseline-v2-sealed-pins.json",
+              "bytes": 224612,
+              "sha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+            },
+            "stderr": {
+              "file": "saved-profile-baseline-3-4-rep-2-stderr.txt",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "launcher": {
+              "file": "saved-profile-baseline-3-4-rep-2-launcher.json",
+              "bytes": 273,
+              "sha256": "f209e38d21ae43e8cb4a5c9fc443845448d026eb20ac22236cf774316ba1f9ba"
+            }
+          }
+        },
+        "current": {
+          "source": "CURRENT_LAYOUT25_DEP26",
+          "attempt": 1,
+          "status": "PASS",
+          "wrapperElapsedSeconds": 69.8305367,
+          "helperElapsedSeconds": 68.80465629999999,
+          "exitCode": 0,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "layoutVersion": 25,
+          "dependencyEpoch": "tsj-generation-dependencies-v26",
+          "inputRevision": 3,
+          "sourceSnapshotRevision": 5,
+          "inputCount": 1061,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "terminationProven": true,
+          "cleanupStatus": "PASS_MARKER_REPORTED_ONCE",
+          "cleanupDurationMs": null,
+          "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+          "pinSetSha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81",
+          "artifacts": {
+            "result": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-3-4-rep-1-result.json",
+              "bytes": 1359,
+              "sha256": "ee0fff597fe04da798c9ac10cd7c55fe8fc17f93d73b83d7720493d2a0f9321d"
+            },
+            "receipt": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-3-4-rep-1-receipt.txt",
+              "bytes": 6799451,
+              "sha256": "b88d5daf8a7702126071c4808c3a825f66219eb26e3e521f75545d490035f79c"
+            },
+            "console": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-3-4-rep-1-console.txt",
+              "bytes": 6800591,
+              "sha256": "caf5bcb39e3def4204aaae9c2f5f8c3d5327552079b5460572307e7855eae99f"
+            },
+            "pins": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-3-4-rep-1-pins.json",
+              "bytes": 199503,
+              "sha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81"
+            },
+            "stderr": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-3-4-rep-1-stderr.txt",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "launcher": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-3-4-rep-1-launcher.json",
+              "bytes": 456,
+              "sha256": "8f82a7c22fe4b03e1b78466af7093a3057c3dccc95a0632dfc6a1688a612f153"
+            }
+          }
+        }
+      },
+      {
+        "cohortId": "SAVED_5_6_REP",
+        "casesPerSource": 12,
+        "baseline": {
+          "source": "FROZEN_BASELINE",
+          "attempt": 1,
+          "nativeElapsedMs": 29455,
+          "terminationProven": true,
+          "pinSetSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+          "artifacts": {
+            "result": {
+              "file": "saved-profile-baseline-5-6-rep-1-result.json",
+              "bytes": 792,
+              "sha256": "b97756483681ecf80801bcf3951c5227e393ed4cfb65b267b6126f97409abe68"
+            },
+            "receipt": {
+              "file": "saved-profile-baseline-5-6-rep-1-receipt.txt",
+              "bytes": 6888919,
+              "sha256": "19566ad3bcafb9590e1b1673a4b5927f82965076276c2cdd50c23bf6d38573e5"
+            },
+            "console": {
+              "file": "saved-profile-baseline-5-6-rep-1-console.txt",
+              "bytes": 6890059,
+              "sha256": "e7b32c751940c4712b437e38eef17ac10f952260a0933243aaecd989feadb035"
+            },
+            "pins": {
+              "file": "saved-profile-baseline-v2-sealed-pins.json",
+              "bytes": 224612,
+              "sha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+            },
+            "stderr": {
+              "file": "saved-profile-baseline-5-6-rep-1-stderr.txt",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "launcher": {
+              "file": "saved-profile-baseline-5-6-rep-1-launcher.json",
+              "bytes": 273,
+              "sha256": "eb0bc50372799e3d32e03382c3f1d2c4c4de7f38581ea57096d0975979a2fb69"
+            }
+          }
+        },
+        "current": {
+          "source": "CURRENT_LAYOUT25_DEP26",
+          "attempt": 1,
+          "status": "PASS",
+          "wrapperElapsedSeconds": 66.1667961,
+          "helperElapsedSeconds": 65.1264103,
+          "exitCode": 0,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "layoutVersion": 25,
+          "dependencyEpoch": "tsj-generation-dependencies-v26",
+          "inputRevision": 3,
+          "sourceSnapshotRevision": 5,
+          "inputCount": 1061,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "terminationProven": true,
+          "cleanupStatus": "PASS_MARKER_REPORTED_ONCE",
+          "cleanupDurationMs": null,
+          "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+          "pinSetSha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81",
+          "artifacts": {
+            "result": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-5-6-rep-1-result.json",
+              "bytes": 1350,
+              "sha256": "d7db93df2e1843206b11d275d7a79291b1493737204b942a7f7741b5456bf712"
+            },
+            "receipt": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-5-6-rep-1-receipt.txt",
+              "bytes": 6803194,
+              "sha256": "e66102587c7997848f5240fe9f18251769f299c70e331f029e4d58ba9b7cfbf6"
+            },
+            "console": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-5-6-rep-1-console.txt",
+              "bytes": 6804334,
+              "sha256": "c41f91e4217598d219bf09622bf7039ee13df8e3d225d6aee44449b12f488940"
+            },
+            "pins": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-5-6-rep-1-pins.json",
+              "bytes": 199503,
+              "sha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81"
+            },
+            "stderr": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-5-6-rep-1-stderr.txt",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "launcher": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-5-6-rep-1-launcher.json",
+              "bytes": 456,
+              "sha256": "e41d3ef9c5f83bb7780c5afb225fd143c7b5e38acd2162a14e5f155d22d1ddb6"
+            }
+          }
+        }
+      },
+      {
+        "cohortId": "SAVED_7_8_REP",
+        "casesPerSource": 12,
+        "baseline": {
+          "source": "FROZEN_BASELINE",
+          "attempt": 1,
+          "nativeElapsedMs": 28435,
+          "terminationProven": true,
+          "pinSetSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+          "artifacts": {
+            "result": {
+              "file": "saved-profile-baseline-7-8-rep-1-result.json",
+              "bytes": 784,
+              "sha256": "ed8730a0fa712c31ceabec5d0fd7851641bc13ccc8a4ab370eece283377f4593"
+            },
+            "receipt": {
+              "file": "saved-profile-baseline-7-8-rep-1-receipt.txt",
+              "bytes": 6869528,
+              "sha256": "fdeef2b21f120f44f3469062c1168f3d6c3a1f59972151391e6d128a32b2d2bc"
+            },
+            "console": {
+              "file": "saved-profile-baseline-7-8-rep-1-console.txt",
+              "bytes": 6870668,
+              "sha256": "5518eb3173195a3bc2a64b50793e1207bacfebaa678d639e363e87db53b4b5ce"
+            },
+            "pins": {
+              "file": "saved-profile-baseline-v2-sealed-pins.json",
+              "bytes": 224612,
+              "sha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+            },
+            "stderr": {
+              "file": "saved-profile-baseline-7-8-rep-1-stderr.txt",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "launcher": {
+              "file": "saved-profile-baseline-7-8-rep-1-launcher.json",
+              "bytes": 273,
+              "sha256": "6327b23d9a6778e0e9b8a8c456bd6e7d1a1e1c5bf64080112fce5343612762d7"
+            }
+          }
+        },
+        "current": {
+          "source": "CURRENT_LAYOUT25_DEP26",
+          "attempt": 1,
+          "status": "PASS",
+          "wrapperElapsedSeconds": 60.7934524,
+          "helperElapsedSeconds": 59.7576277,
+          "exitCode": 0,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "layoutVersion": 25,
+          "dependencyEpoch": "tsj-generation-dependencies-v26",
+          "inputRevision": 3,
+          "sourceSnapshotRevision": 5,
+          "inputCount": 1061,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "terminationProven": true,
+          "cleanupStatus": "PASS_MARKER_REPORTED_ONCE",
+          "cleanupDurationMs": null,
+          "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+          "pinSetSha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81",
+          "artifacts": {
+            "result": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-7-8-rep-1-result.json",
+              "bytes": 1351,
+              "sha256": "6d67f6630c063c7771445eb1f44270400d0e3677f768b2b0608ea5ca968c678e"
+            },
+            "receipt": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-7-8-rep-1-receipt.txt",
+              "bytes": 6802500,
+              "sha256": "2d28913400b467d763960bfd6cf1e6e86aea2caed1feb38dae6eb1e2d64a1f77"
+            },
+            "console": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-7-8-rep-1-console.txt",
+              "bytes": 6803640,
+              "sha256": "2bf877223ac6f5be825a20af8fdf7d615135351edb8d5d45b023cff327de7f2b"
+            },
+            "pins": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-7-8-rep-1-pins.json",
+              "bytes": 199503,
+              "sha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81"
+            },
+            "stderr": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-7-8-rep-1-stderr.txt",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "launcher": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-7-8-rep-1-launcher.json",
+              "bytes": 456,
+              "sha256": "5f8d158dfa7b24066ba6e9a58c8662445ad7f9e2bd138dc40fdd754251070524"
+            }
+          }
+        }
+      },
+      {
+        "cohortId": "SAVED_9_10_REP",
+        "casesPerSource": 12,
+        "baseline": {
+          "source": "FROZEN_BASELINE",
+          "attempt": 1,
+          "nativeElapsedMs": 27752,
+          "terminationProven": true,
+          "pinSetSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+          "artifacts": {
+            "result": {
+              "file": "saved-profile-baseline-9-10-rep-1-result.json",
+              "bytes": 793,
+              "sha256": "51650f4ce7da33c9dd787861353f5ef86d68bbe700ec63c77a11182f6ac9891f"
+            },
+            "receipt": {
+              "file": "saved-profile-baseline-9-10-rep-1-receipt.txt",
+              "bytes": 6851453,
+              "sha256": "c0b36617f6d408ab7a2813169c4d82299d3032689c05cb656e063f04d478e937"
+            },
+            "console": {
+              "file": "saved-profile-baseline-9-10-rep-1-console.txt",
+              "bytes": 6852593,
+              "sha256": "5625c85d75d12b36a96161815f49502c6c31d034a8d1ddf19742f0a72c8038da"
+            },
+            "pins": {
+              "file": "saved-profile-baseline-v2-sealed-pins.json",
+              "bytes": 224612,
+              "sha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+            },
+            "stderr": {
+              "file": "saved-profile-baseline-9-10-rep-1-stderr.txt",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "launcher": {
+              "file": "saved-profile-baseline-9-10-rep-1-launcher.json",
+              "bytes": 275,
+              "sha256": "d64968ed5bd7125feef2e20d7882f454cf2bc87785ee4466a6a00b17bf401e29"
+            }
+          }
+        },
+        "current": {
+          "source": "CURRENT_LAYOUT25_DEP26",
+          "attempt": 1,
+          "status": "PASS",
+          "wrapperElapsedSeconds": 61.660006499999994,
+          "helperElapsedSeconds": 60.667091199999994,
+          "exitCode": 0,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "layoutVersion": 25,
+          "dependencyEpoch": "tsj-generation-dependencies-v26",
+          "inputRevision": 3,
+          "sourceSnapshotRevision": 5,
+          "inputCount": 1061,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "terminationProven": true,
+          "cleanupStatus": "PASS_MARKER_REPORTED_ONCE",
+          "cleanupDurationMs": null,
+          "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+          "pinSetSha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81",
+          "artifacts": {
+            "result": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-9-10-rep-1-result.json",
+              "bytes": 1368,
+              "sha256": "40cba3204f96d6d688f3f178ada836b1aae11369f622c913deef99e3423a8c57"
+            },
+            "receipt": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-9-10-rep-1-receipt.txt",
+              "bytes": 6786996,
+              "sha256": "b94529ca95a43fdc70a3080db67e5a9c84a632ab3229fb4668941f25645da05f"
+            },
+            "console": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-9-10-rep-1-console.txt",
+              "bytes": 6788136,
+              "sha256": "55259ddcb8a188f041d03204e234e688a32b9bf237b48809a9debe27fc5d212b"
+            },
+            "pins": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-9-10-rep-1-pins.json",
+              "bytes": 199503,
+              "sha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81"
+            },
+            "stderr": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-9-10-rep-1-stderr.txt",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "launcher": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-9-10-rep-1-launcher.json",
+              "bytes": 457,
+              "sha256": "4ec26c58842f02a6500bd8e9bbc4f42726845ec7aad8bc630ceba549acaf1e9d"
+            }
+          }
+        }
+      },
+      {
+        "cohortId": "SAVED_11_12_REP",
+        "casesPerSource": 12,
+        "baseline": {
+          "source": "FROZEN_BASELINE",
+          "attempt": 1,
+          "nativeElapsedMs": 27497,
+          "terminationProven": true,
+          "pinSetSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+          "artifacts": {
+            "result": {
+              "file": "saved-profile-baseline-11-12-rep-1-result.json",
+              "bytes": 786,
+              "sha256": "e1b53c4e261626c68cb44d90d0260bb3ff345c05a8d5890b8739ee7728947e4c"
+            },
+            "receipt": {
+              "file": "saved-profile-baseline-11-12-rep-1-receipt.txt",
+              "bytes": 6898792,
+              "sha256": "25633e106e1f73ffdd40883a64bc60904577ddb7ca65a87f0f682d0285df9de2"
+            },
+            "console": {
+              "file": "saved-profile-baseline-11-12-rep-1-console.txt",
+              "bytes": 6899932,
+              "sha256": "609fad9baa08c2f9e9f8cec5e108c8c5ac573410c7220f1f3b01804f4818584c"
+            },
+            "pins": {
+              "file": "saved-profile-baseline-v2-sealed-pins.json",
+              "bytes": 224612,
+              "sha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+            },
+            "stderr": {
+              "file": "saved-profile-baseline-11-12-rep-1-stderr.txt",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "launcher": {
+              "file": "saved-profile-baseline-11-12-rep-1-launcher.json",
+              "bytes": 276,
+              "sha256": "b45ed6ce00d850d9d95a08d47f9bb23b7dbe50a36d4816ba54e52803f6237539"
+            }
+          }
+        },
+        "current": {
+          "source": "CURRENT_LAYOUT25_DEP26",
+          "attempt": 1,
+          "status": "PASS",
+          "wrapperElapsedSeconds": 60.3983019,
+          "helperElapsedSeconds": 59.399962699999996,
+          "exitCode": 0,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "layoutVersion": 25,
+          "dependencyEpoch": "tsj-generation-dependencies-v26",
+          "inputRevision": 3,
+          "sourceSnapshotRevision": 5,
+          "inputCount": 1061,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "terminationProven": true,
+          "cleanupStatus": "PASS_MARKER_REPORTED_ONCE",
+          "cleanupDurationMs": null,
+          "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+          "pinSetSha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81",
+          "artifacts": {
+            "result": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-11-12-rep-1-result.json",
+              "bytes": 1361,
+              "sha256": "27ef5c81d3ba157f4b57057ddb1e9734d3e7d468755faa031badfc28b20e15f1"
+            },
+            "receipt": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-11-12-rep-1-receipt.txt",
+              "bytes": 6807866,
+              "sha256": "809db087e745780b9225abbfd0e55172be5f61680bbd332cf80161397a9637be"
+            },
+            "console": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-11-12-rep-1-console.txt",
+              "bytes": 6809006,
+              "sha256": "6af9612d97ea8d69d1070f256930cb45a4a7bdc1f85359cc1947e05d45ea5dad"
+            },
+            "pins": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-11-12-rep-1-pins.json",
+              "bytes": 199503,
+              "sha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81"
+            },
+            "stderr": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-11-12-rep-1-stderr.txt",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "launcher": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-11-12-rep-1-launcher.json",
+              "bytes": 457,
+              "sha256": "b71a402b5abcf03a55490bb5f8616b889e812055a4ff8c435c507f9d9fb98b74"
+            }
+          }
+        }
+      },
+      {
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "casesPerSource": 12,
+        "baseline": {
+          "source": "FROZEN_BASELINE",
+          "attempt": 1,
+          "nativeElapsedMs": 38036,
+          "terminationProven": true,
+          "pinSetSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+          "artifacts": {
+            "result": {
+              "file": "saved-profile-baseline-10-11-12-holdout-1-result.json",
+              "bytes": 799,
+              "sha256": "361098374bbc2dbbc3963e8ad87124dd43813650bfd5f197f3cfcee5de9fb472"
+            },
+            "receipt": {
+              "file": "saved-profile-baseline-10-11-12-holdout-1-receipt.txt",
+              "bytes": 7153789,
+              "sha256": "f4b3c16c457a2463b59c2eb05c75d07581f800cb5637fbaffce5204aa87052b9"
+            },
+            "console": {
+              "file": "saved-profile-baseline-10-11-12-holdout-1-console.txt",
+              "bytes": 7154929,
+              "sha256": "3d78f39ab571afad12c32614996970327e571b131860a5cbdc01ca1082b16975"
+            },
+            "pins": {
+              "file": "saved-profile-baseline-v2-sealed-pins.json",
+              "bytes": 224612,
+              "sha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+            },
+            "stderr": {
+              "file": "saved-profile-baseline-10-11-12-holdout-1-stderr.txt",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "launcher": {
+              "file": "saved-profile-baseline-10-11-12-holdout-1-launcher.json",
+              "bytes": 291,
+              "sha256": "465630a2a02cdd292d0ea4fd3042ec3974235b72b69bf99d7c2dbf2141eed3ef"
+            }
+          }
+        },
+        "current": {
+          "source": "CURRENT_LAYOUT25_DEP26",
+          "attempt": 1,
+          "status": "PASS",
+          "wrapperElapsedSeconds": 70.6386216,
+          "helperElapsedSeconds": 69.5752785,
+          "exitCode": 0,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "layoutVersion": 25,
+          "dependencyEpoch": "tsj-generation-dependencies-v26",
+          "inputRevision": 3,
+          "sourceSnapshotRevision": 5,
+          "inputCount": 1061,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "terminationProven": true,
+          "cleanupStatus": "PASS_MARKER_REPORTED_ONCE",
+          "cleanupDurationMs": null,
+          "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+          "pinSetSha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81",
+          "artifacts": {
+            "result": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-10-11-12-holdout-1-result.json",
+              "bytes": 1360,
+              "sha256": "049436e480e1959eadbbf1bdc20d441bb60bd6b0f0b26bff355f0eb25e73b839"
+            },
+            "receipt": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-10-11-12-holdout-1-receipt.txt",
+              "bytes": 7083267,
+              "sha256": "c8f3ff6157b70d29a50636e764da41320a303576cd2d7a5f937b4e20d5f51f5d"
+            },
+            "console": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-10-11-12-holdout-1-console.txt",
+              "bytes": 7084407,
+              "sha256": "ebb2c9a787b2243f31087015d20a6fe0fea96ad8ef98e9b69de9b0144912189c"
+            },
+            "pins": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-10-11-12-holdout-1-pins.json",
+              "bytes": 199503,
+              "sha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81"
+            },
+            "stderr": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-10-11-12-holdout-1-stderr.txt",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "launcher": {
+              "file": "ao-saved-profile-final-observations-4/saved-profile-current-10-11-12-holdout-1-launcher.json",
+              "bytes": 465,
+              "sha256": "97454a12c8b669a59890b0f42ddae3553fa0e1dff46dd58b78d6e1da2bee3a53"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "strictComparisonReader": {
+    "status": "PASS_COMPARISON_ONLY",
+    "scope": "FRESH_FINAL_SOURCE_FULL_SIX_COHORT_SAVED_PROFILE_COMPARISON",
+    "comparisonExitCode": 0,
+    "readerSource": {
+      "path": "tests/qualification/rb100-layout/read_saved_profile_current.py",
+      "sha256": "998d81a381011aa8614bf47d6d78e82221acefee00cf73d0463a6a9ab71638b5",
+      "helperPath": "tests/qualification/rb100-layout/read_saved_profile_transition.py",
+      "helperSha256": "390acf30090bd5a3e29b64dcfc212d30fc26c6d1f590d49fd72ebb4d9aa51670"
+    },
+    "readerSpecRevisionDirectory": "ao-final-reader-specs-9",
+    "runnerTaskLabelAsRecorded": "ao-final-saved-profile-reader-3",
+    "runnerTaskLabelNote": "The execution record is stored in reader-specs-9 but retains its task label verbatim; its source-context, run-spec, reader, output hashes and envelope are independently bound here.",
+    "execution": {
+      "status": "READER_PASS_MARKER_AND_OUTPUT_CAPTURED",
+      "runnerExitCode": 0,
+      "readerExitCode": 0,
+      "helperReturned": true,
+      "helperTerminationProven": true,
+      "helperTimeoutMs": 600000,
+      "helperElapsedSeconds": 2.6290251,
+      "stdoutBytes": 111,
+      "stdoutSha256": "ce6693441286d0d88be0f1d674d87af63664ad5fcf18994026555256fc0adb1a",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+      "sourceContextSha256": "f4996e6488e288140950399c91bb3caceb42998e82724b9a40c9dc288087032b",
+      "runSpecSha256": "64534d474ffe12721caaed1ad7a81075f6ad8fc73ffbcec7e9508a1589c96dfc",
+      "outputProtocol": "p07-final-source-saved-profile-context-v1",
+      "outputStatus": "PASS_COMPARISON_ONLY",
+      "outputRetainedBoundFailures": 0,
+      "outputEnvelopeValidated": true
+    },
+    "comparison": {
+      "cohortSelection": "ALL_SIX_COHORTS",
+      "cohortCount": 6,
+      "caseCountPerSource": 72,
+      "baselineLayoutVersion": 22,
+      "baselineDependencyEpoch": "tsj-generation-dependencies-v23",
+      "referenceLayoutVersion": 24,
+      "referenceDependencyEpoch": "tsj-generation-dependencies-v25",
+      "currentLayoutVersion": 25,
+      "currentDependencyEpoch": "tsj-generation-dependencies-v26",
+      "baselineInputRevision": 2,
+      "referenceInputRevision": 3,
+      "currentInputRevision": 3,
+      "sourceContextSha256": "f4996e6488e288140950399c91bb3caceb42998e82724b9a40c9dc288087032b",
+      "runSpecSha256": "1d91e678bff0d48ff1eb1eeb6868641d749519b2b48ddd87e43715b849086569",
+      "catalogSha256": "57b20a02b9f1f17671dd89a5a032cafbb792b76384cedbc85b5d69dc748d62a9",
+      "retainedBoundFailuresCount": 0,
+      "sameSideSaved10ComparisonCount": 20,
+      "sameSideSaved10ComparisonsComplete": true,
+      "sameSideSaved10ComparisonsPassed": true,
+      "sameSideSaved10PassedBySide": {
+        "baseline": 10,
+        "current": 10
+      },
+      "currentExactMetricReview": {
+        "status": "CHANGED_CURRENT_EXACT_METRIC_REQUIRES_REVIEW",
+        "changeCount": 18,
+        "automaticGoldenSeal": false
+      },
+      "currentExactGeometryReview": {
+        "status": "CHANGED_CURRENT_EXACT_GEOMETRY_REQUIRES_REVIEW",
+        "changeCount": 71,
+        "automaticGoldenSeal": false
+      },
+      "layoutQualification": false,
+      "adopted": false,
+      "adoption": false,
+      "automaticGoldenSeal": false
+    },
+    "artifacts": {
+      "readerSpec": {
+        "file": "ao-final-reader-specs-9/saved-profile-reader-9.json",
+        "bytes": 4188,
+        "sha256": "64534d474ffe12721caaed1ad7a81075f6ad8fc73ffbcec7e9508a1589c96dfc"
+      },
+      "execution": {
+        "file": "ao-final-reader-specs-9/saved-profile-reader-9-execution.json",
+        "bytes": 2012,
+        "sha256": "cf105ce7ffcabe9110a5b9c8566c52039fa88bf296244425dcb1e2e84248fa1e"
+      },
+      "stdout": {
+        "file": "ao-final-reader-specs-9/saved-profile-reader-9-stdout.txt",
+        "bytes": 111,
+        "sha256": "ce6693441286d0d88be0f1d674d87af63664ad5fcf18994026555256fc0adb1a"
+      },
+      "stderr": {
+        "file": "ao-final-reader-specs-9/saved-profile-reader-9-stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "comparisonOutput": {
+        "file": "ao-final-saved-profile-comparison-reader-9.json",
+        "bytes": 354285,
+        "sha256": "434c0c9b166aa1a250ed50bc43ac527f895a86780c020c4e79f6bf072d5f3101"
+      },
+      "runSpec": {
+        "file": "ao-saved-profile-current-runs-v5.json",
+        "bytes": 9301,
+        "sha256": "1d91e678bff0d48ff1eb1eeb6868641d749519b2b48ddd87e43715b849086569"
+      }
+    }
+  },
+  "readerFailureAndCorrection": {
+    "reader8": {
+      "status": "FAIL_READER_NAME_ERROR",
+      "runnerExitCode": 1,
+      "readerExitCode": 1,
+      "helperReturned": true,
+      "helperTerminationProven": true,
+      "helperTimeoutMs": 600000,
+      "helperElapsedSeconds": 2.7155332,
+      "stderrBytes": 1436,
+      "stderrSha256": "f870fedaa10509e835d4a864606e05f6485d0922e771420dd8ae1eb48348abff",
+      "error": "NameError: name 'REFERENCE_LAYOUT' is not defined",
+      "comparisonOutputProduced": false,
+      "artifacts": {
+        "readerSpec": {
+          "file": "ao-final-reader-specs-8/saved-profile-reader-8.json",
+          "bytes": 4188,
+          "sha256": "e2393ece5f15f3cda2bb1eca9a9310321ea1287d5b92676a0b83a6c97b9207ff"
+        },
+        "execution": {
+          "file": "ao-final-reader-specs-8/saved-profile-reader-8-execution.json",
+          "bytes": 1886,
+          "sha256": "2e62a00e8cf9bf2154000453109605ea2d4b3ebe93b73f04dcf1c8ec4d964fe6"
+        },
+        "stdout": {
+          "file": "ao-final-reader-specs-8/saved-profile-reader-8-stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "file": "ao-final-reader-specs-8/saved-profile-reader-8-stderr.txt",
+          "bytes": 1436,
+          "sha256": "f870fedaa10509e835d4a864606e05f6485d0922e771420dd8ae1eb48348abff"
+        }
+      }
+    },
+    "readerCorrection": {
+      "changeScope": "TEST_READER_ONLY",
+      "change": "Added REFERENCE_LAYOUT = current_context.REFERENCE_LAYOUT so the current-context preflight has its referenced constant.",
+      "preFixSha256": "062629d22bd138b79ec7e74c32269bc53d1c624c0e2ddbee19fce97b78dacee5",
+      "preFixPreservedCopy": {
+        "file": "ao-saved-reader-fix-1/read_saved_profile_current.pre-fix.py",
+        "bytes": 33759,
+        "sha256": "062629d22bd138b79ec7e74c32269bc53d1c624c0e2ddbee19fce97b78dacee5"
+      },
+      "correctedSha256": "998d81a381011aa8614bf47d6d78e82221acefee00cf73d0463a6a9ab71638b5",
+      "productionOrNativeSourceChangedByCorrection": false,
+      "reader9ConsumesCorrectedSource": true
+    },
+    "focusedBoundedCanary": {
+      "status": "PASS_FOCUSED_CANARY_ONLY",
+      "scope": "receipt, stdout, wrapper identity, and source-pin binding plus current reader negative canaries for all six captured cohort inputs; no full comparison, native gate, or build launched",
+      "cohortCount": 6,
+      "caseCountPerSource": 72,
+      "negativeCanaryCount": 96,
+      "negativeCanariesPerCohort": 16,
+      "helperTimeoutMs": 60000,
+      "helperElapsedSeconds": 1.9876775999999998,
+      "childExitCode": 0,
+      "helperTerminationProven": true,
+      "readerSha256": "998d81a381011aa8614bf47d6d78e82221acefee00cf73d0463a6a9ab71638b5",
+      "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+      "artifacts": {
+        "canaryResult": {
+          "file": "ao-saved-reader-fix-1/focused-canary-six-cohorts-1.json",
+          "bytes": 10864,
+          "sha256": "de736a3a02e2182cb0690d1eb371f75f47201115fd897ac5d7f7ffaf5b4a7ab2"
+        },
+        "execution": {
+          "file": "ao-saved-reader-fix-1/focused-canary-six-cohorts-1-execution.json",
+          "bytes": 1223,
+          "sha256": "9303da68d0d440cf0e2c622f8bc768d1a13f00a0d8b995b56350cd364c835680"
+        },
+        "driver": {
+          "file": "ao-saved-reader-fix-1/focused-canary-six-cohorts-1.py",
+          "bytes": 7450,
+          "sha256": "9f7463dde3b7d97d8e738430fde40e3642c5aa8532893a29264dda1aef4a4b0b"
+        },
+        "stdout": {
+          "file": "ao-saved-reader-fix-1/focused-canary-six-cohorts-1.stdout.txt",
+          "bytes": 101,
+          "sha256": "2070cc4bd9c3864f909d6e38a96e57314df435450883b82db2e276594f9d8a5b"
+        }
+      }
+    },
+    "preBoundedDirectProbe": {
+      "status": "PRESERVED_NOT_COUNTED_IN_VALIDATION",
+      "note": "A separate one-cohort direct reader probe preceded the bounded wrapper run; it was a worker-instruction deviation and is excluded from every pass count, output comparison, and qualification claim in this packet."
+    }
+  },
+  "finalDisposition": {
+    "actual100Accepted": 0,
+    "q100Admission": "NOT_ESTABLISHED",
+    "fullNativeMatrix": "NOT_CLAIMED",
+    "finalPlayerAttempt5": {
+      "status": "FAIL",
+      "shutdownElapsedMs": 16237,
+      "shutdownLimitMs": 15000,
+      "source": "Root-reported finalPlayer5 gate; not part of the saved-profile comparison reader."
+    },
+    "otherFinalGates": "PENDING",
+    "publication": "HELD",
+    "limitations": [
+      "The comparison is limited to the six frozen cohorts and 72 cases per source.",
+      "Twenty same-side saved-10 comparisons passed; this does not auto-seal the 18 current exact metric changes or 71 exact geometry changes.",
+      "The result grants no layout qualification, admission, playable100, repair, or production timing claim.",
+      "The final Player shutdown exceeded its 15000 ms limit and remaining gates are pending."
+    ]
+  },
+  "relatedPriorEvidence": {
+    "finalNativeGeometryPacket": {
+      "file": "docs/task-evidence/Q100/authored-layout-r1/as-final-native-geometry1.json",
+      "bytes": 13419,
+      "sha256": "4b44c70657a2e9e53e46dac4ca30f73db1f27fa8b716e0381abafa1c3a511705"
+    },
+    "note": "Related prior packet is source5/context5; its saved-profile gate was pending at that time and is superseded here only for the saved-profile comparison result."
+  },
+  "sanitization": {
+    "status": "SANITIZED_ARTIFACT_METADATA_ONLY",
+    "rawLogContentsEmbedded": false,
+    "absolutePathsEmbedded": false,
+    "personalPathsEmbedded": false,
+    "processIdsOrStartTicksEmbedded": false,
+    "commandLinesEmbedded": false,
+    "capabilityTokensEmbedded": false,
+    "artifactReferences": "Scratch-relative leaves and repository-relative source/evidence paths only."
+  }
+}

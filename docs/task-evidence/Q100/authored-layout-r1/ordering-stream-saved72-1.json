@@ -1,0 +1,714 @@
+{
+  "schema": "troubleshootjs-q100-saved-profile-ordering-stream-saved72-pre-adoption-v1",
+  "status": "PASS_COMPARATIVE_OBSERVATIONS_ONLY",
+  "repo": {
+    "branch": "codex/q100-physical-feasibility",
+    "baseHead": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "productionLayoutVersion": 24,
+    "productionDependencyEpoch": "tsj-generation-dependencies-v25"
+  },
+  "scope": {
+    "description": "Curated record of six native current-side saved-profile cohorts (72 cases) and their independent strict comparison reader. This is a pre-adoption scratch observation only.",
+    "nativeEvidence": "All six named cohorts were executed from the sealed input2 snapshot and independently rehashed before and after by the maintained runner.",
+    "productionSourceEpochAdopted": false,
+    "orderingStreamApiQualification": false,
+    "layoutQualification": false,
+    "q100Qualification": "NOT_ESTABLISHED",
+    "publicAdmission": false,
+    "normalPlayerOrPlayable100Qualification": "NOT_ESTABLISHED"
+  },
+  "input": {
+    "snapshotLeaf": "ordering-stream-inputs-2",
+    "snapshotRevision": 2,
+    "inputRevision": 3,
+    "harnessRevision": 4,
+    "fileCount": 1059,
+    "bytes": 85489324,
+    "pins": {
+      "file": "ordering-stream-v2-sealed-pins.json",
+      "bytes": 204439,
+      "sha256": "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69"
+    },
+    "seal": {
+      "file": "ordering-stream-inputs-sealed2.json",
+      "bytes": 1614,
+      "sha256": "e705aa5609fa2dfabbc520581d8343b20d1f262d9e920dd4bb6be1baedf7429a"
+    },
+    "copyAudit": {
+      "file": "ordering-stream-inputs2-audit.json",
+      "bytes": 2275,
+      "sha256": "9dc4360a7ecdf2e0cab3010fcb78d85ee37fbbc2cb117d6d72fb76b6a2de0e58"
+    },
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "unchangedFromCorrectedU": 1053,
+    "changedFromCorrectedU": 6,
+    "changedSourcesAgainstCorrectedU": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java",
+        "bytes": 36800,
+        "sha256": "395158f6695226c8f326e46d8c2de4a6065fbbcc3b000bae858dd2750e0bd2d7"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "bytes": 81651,
+        "sha256": "d8d176503f12338230d75e5a8477fac13395821d124a3f1aadb7fadba95338c9"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "bytes": 86193,
+        "sha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+        "bytes": 101405,
+        "sha256": "0601b6d58c6958788774c66168f13d7c19044567015676e1429ceea832fbb7c5"
+      },
+      {
+        "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+        "bytes": 159757,
+        "sha256": "6cb7f210606fb1836e4a183734a040f8c2418030cb3379f991ec71c74f64fbf4"
+      },
+      {
+        "path": "tests/contracts/Rb100PhysicalDiagnostics.java",
+        "bytes": 185834,
+        "sha256": "763c5367162644e73c75f582fed5175d402b56053950a3e06007389af643c583"
+      }
+    ],
+    "correctedUPins": {
+      "file": "saved-profile-corrected-v1-sealed-pins.json",
+      "bytes": 199140,
+      "sha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717"
+    },
+    "baselinePins": {
+      "file": "saved-profile-baseline-v2-sealed-pins.json",
+      "bytes": 224612,
+      "sha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+    },
+    "priorSnapshotPinsSha256": "ebfa9a8fed74f1c618823872592536bb4bc01e4280f3e87c7a8d4d2b1e854ea6",
+    "allSourceChangesAreScratchSnapshotInputs": true
+  },
+  "sourcePins": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "bytes": 101405,
+      "sha256": "0601b6d58c6958788774c66168f13d7c19044567015676e1429ceea832fbb7c5"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java",
+      "bytes": 36800,
+      "sha256": "395158f6695226c8f326e46d8c2de4a6065fbbcc3b000bae858dd2750e0bd2d7"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "bytes": 81651,
+      "sha256": "d8d176503f12338230d75e5a8477fac13395821d124a3f1aadb7fadba95338c9"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "bytes": 86193,
+      "sha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a"
+    },
+    {
+      "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+      "bytes": 159757,
+      "sha256": "6cb7f210606fb1836e4a183734a040f8c2418030cb3379f991ec71c74f64fbf4"
+    },
+    {
+      "path": "tests/contracts/Rb100PhysicalDiagnostics.java",
+      "bytes": 185834,
+      "sha256": "763c5367162644e73c75f582fed5175d402b56053950a3e06007389af643c583"
+    }
+  ],
+  "native": {
+    "suite": "P07GeometryEpochDiagnosticContractTest",
+    "protocol": "p07-saved-profile-epoch-v1",
+    "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+    "status": "PASS_SIX_COHORT_OBSERVATION_ONLY",
+    "selectedCohorts": [
+      "SAVED_3_4_REP",
+      "SAVED_5_6_REP",
+      "SAVED_7_8_REP",
+      "SAVED_9_10_REP",
+      "SAVED_11_12_REP",
+      "SAVED_10_11_12_HOLDOUT"
+    ],
+    "cohortCount": 6,
+    "caseCount": 72,
+    "assertionCount": 1121894,
+    "sumOfNativeDiagnosticElapsedMs": 208095,
+    "sumTimingNote": "Sum across six cohort diagnostics; not a production timing measure.",
+    "limits": {
+      "nativeChildMs": 180000,
+      "outerWatchdogMs": 600000
+    },
+    "cleanup": {
+      "status": "PASS_FOR_ALL_SIX_TERMINAL_MARKERS",
+      "elapsedSeconds": null,
+      "elapsedTimeNote": "No per-cohort cleanup duration was reported. Native diagnostic and bounded runner elapsed values are recorded separately."
+    },
+    "cohorts": [
+      {
+        "cohortId": "SAVED_3_4_REP",
+        "placementVersions": [
+          3,
+          4
+        ],
+        "rootSeeds": [
+          "-1017",
+          "-1004",
+          "-1022",
+          "0",
+          "17",
+          "42"
+        ],
+        "caseCount": 12,
+        "assertions": 185151,
+        "nativeDiagnosticElapsedMs": 39622,
+        "nativeDiagnosticTimingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "runnerElapsedSeconds": 68.4828271,
+        "runnerElapsedScope": "bounded native runner elapsed; not cleanup-only duration",
+        "runId": "8bad8fb6-2fe2-4b82-a314-0f8c686931a0",
+        "layoutVersion": 24,
+        "dependencyEpoch": "tsj-generation-dependencies-v25",
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "prePostInputFileCount": 1059,
+        "inputRevision": 3,
+        "sourceSnapshotRevision": 2,
+        "inputPinsSha256": "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69",
+        "cleanup": {
+          "status": "PASS_TERMINAL_CLEANUP_MARKER",
+          "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+          "elapsedSeconds": null,
+          "elapsedTimeNote": "Cleanup duration was not separately reported; runner elapsed is kept separate."
+        },
+        "consolePreamble": {
+          "bytes": 976,
+          "lineCount": 15,
+          "sha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5"
+        },
+        "receiptFrameCount": 1,
+        "receiptCaseCount": 12,
+        "whitespaceAuxiliaryRecordCount": 6,
+        "receiptSummaryCount": 1,
+        "receiptFooter": "PASS",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-current-3-4-rep-1-result.json",
+            "bytes": 930,
+            "sha256": "054cb922e79f1d23aa94bb384bdf05ba7a4d78eddce705685e7764cb4dc2a324"
+          },
+          "console": {
+            "file": "saved-profile-current-3-4-rep-1-console.txt",
+            "bytes": 6800592,
+            "sha256": "88ca29d86f0966b9f7f84db67b1382013050167d13bf058f62625bd3b59478bf"
+          },
+          "nativeReceipt": {
+            "file": "saved-profile-current-3-4-rep-1-receipt.txt",
+            "bytes": 6799452,
+            "sha256": "75e95237527c0dd08438b5b36ee5980dac422454b6f20395775e9ebdf158d33e"
+          },
+          "stderr": {
+            "file": "saved-profile-current-3-4-rep-1-stderr.txt",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "launcherRecord": {
+            "file": "saved-profile-current-3-4-rep-1-launcher.json",
+            "bytes": 271,
+            "sha256": "3baca9053661de69dfafec53e2d2a34041d7e76e3a1bce8eab9d24430cdb0056"
+          }
+        }
+      },
+      {
+        "cohortId": "SAVED_5_6_REP",
+        "placementVersions": [
+          5,
+          6
+        ],
+        "rootSeeds": [
+          "-1017",
+          "-1004",
+          "-1022",
+          "0",
+          "17",
+          "42"
+        ],
+        "caseCount": 12,
+        "assertions": 185193,
+        "nativeDiagnosticElapsedMs": 33840,
+        "nativeDiagnosticTimingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "runnerElapsedSeconds": 62.606580099999995,
+        "runnerElapsedScope": "bounded native runner elapsed; not cleanup-only duration",
+        "runId": "83152a58-fdb4-4a92-b7e3-7e3beadbc7e3",
+        "layoutVersion": 24,
+        "dependencyEpoch": "tsj-generation-dependencies-v25",
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "prePostInputFileCount": 1059,
+        "inputRevision": 3,
+        "sourceSnapshotRevision": 2,
+        "inputPinsSha256": "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69",
+        "cleanup": {
+          "status": "PASS_TERMINAL_CLEANUP_MARKER",
+          "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+          "elapsedSeconds": null,
+          "elapsedTimeNote": "Cleanup duration was not separately reported; runner elapsed is kept separate."
+        },
+        "consolePreamble": {
+          "bytes": 976,
+          "lineCount": 15,
+          "sha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5"
+        },
+        "receiptFrameCount": 1,
+        "receiptCaseCount": 12,
+        "whitespaceAuxiliaryRecordCount": 12,
+        "receiptSummaryCount": 1,
+        "receiptFooter": "PASS",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-current-5-6-rep-1-result.json",
+            "bytes": 938,
+            "sha256": "382934c64ae520ec953926a690a2716c993e6afbc8332e43fab5de4be2d1f46f"
+          },
+          "console": {
+            "file": "saved-profile-current-5-6-rep-1-console.txt",
+            "bytes": 6804333,
+            "sha256": "02fd9949a5d4dd6e7e12280eeff720094b330bd1d5c656e19ac60b1b957c24e4"
+          },
+          "nativeReceipt": {
+            "file": "saved-profile-current-5-6-rep-1-receipt.txt",
+            "bytes": 6803193,
+            "sha256": "1c3ce930ce7fa5baafebe8f99d29f1eb31a4228b9b4b5451f73c5d0d51b22316"
+          },
+          "stderr": {
+            "file": "saved-profile-current-5-6-rep-1-stderr.txt",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "launcherRecord": {
+            "file": "saved-profile-current-5-6-rep-1-launcher.json",
+            "bytes": 271,
+            "sha256": "8acb79b90c2586868a6369a1c836746953edcf47ca4679ad47ff6ceab646fce6"
+          }
+        }
+      },
+      {
+        "cohortId": "SAVED_7_8_REP",
+        "placementVersions": [
+          7,
+          8
+        ],
+        "rootSeeds": [
+          "-1017",
+          "-1004",
+          "-1022",
+          "0",
+          "17",
+          "42"
+        ],
+        "caseCount": 12,
+        "assertions": 185142,
+        "nativeDiagnosticElapsedMs": 28877,
+        "nativeDiagnosticTimingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "runnerElapsedSeconds": 57.3011853,
+        "runnerElapsedScope": "bounded native runner elapsed; not cleanup-only duration",
+        "runId": "4ed560f3-6fc0-41a3-bae8-4e22a8f9d453",
+        "layoutVersion": 24,
+        "dependencyEpoch": "tsj-generation-dependencies-v25",
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "prePostInputFileCount": 1059,
+        "inputRevision": 3,
+        "sourceSnapshotRevision": 2,
+        "inputPinsSha256": "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69",
+        "cleanup": {
+          "status": "PASS_TERMINAL_CLEANUP_MARKER",
+          "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+          "elapsedSeconds": null,
+          "elapsedTimeNote": "Cleanup duration was not separately reported; runner elapsed is kept separate."
+        },
+        "consolePreamble": {
+          "bytes": 976,
+          "lineCount": 15,
+          "sha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5"
+        },
+        "receiptFrameCount": 1,
+        "receiptCaseCount": 12,
+        "whitespaceAuxiliaryRecordCount": 12,
+        "receiptSummaryCount": 1,
+        "receiptFooter": "PASS",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-current-7-8-rep-1-result.json",
+            "bytes": 930,
+            "sha256": "8a7624d716aa09dcb429f8e931a22f9fc91e14e056aa08db23d4f2f3b45f5aef"
+          },
+          "console": {
+            "file": "saved-profile-current-7-8-rep-1-console.txt",
+            "bytes": 6803639,
+            "sha256": "08b05ea6a5b2c345792d84554df882a9795ca4d65041fe768862e50f53816218"
+          },
+          "nativeReceipt": {
+            "file": "saved-profile-current-7-8-rep-1-receipt.txt",
+            "bytes": 6802499,
+            "sha256": "a8bb007245631004f331f4836ef6ddc00b8e0212de474768a3c0201bef8f17fb"
+          },
+          "stderr": {
+            "file": "saved-profile-current-7-8-rep-1-stderr.txt",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "launcherRecord": {
+            "file": "saved-profile-current-7-8-rep-1-launcher.json",
+            "bytes": 271,
+            "sha256": "d819b5159cb96d1d195f6dec28fcc86efc6d75280fb36b70619757f9cbe7a7c2"
+          }
+        }
+      },
+      {
+        "cohortId": "SAVED_9_10_REP",
+        "placementVersions": [
+          9,
+          10
+        ],
+        "rootSeeds": [
+          "-1017",
+          "-1004",
+          "-1022",
+          "0",
+          "17",
+          "42"
+        ],
+        "caseCount": 12,
+        "assertions": 185076,
+        "nativeDiagnosticElapsedMs": 32100,
+        "nativeDiagnosticTimingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "runnerElapsedSeconds": 60.917734599999996,
+        "runnerElapsedScope": "bounded native runner elapsed; not cleanup-only duration",
+        "runId": "e85228d0-fefd-4f9f-b880-e9f730da1943",
+        "layoutVersion": 24,
+        "dependencyEpoch": "tsj-generation-dependencies-v25",
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "prePostInputFileCount": 1059,
+        "inputRevision": 3,
+        "sourceSnapshotRevision": 2,
+        "inputPinsSha256": "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69",
+        "cleanup": {
+          "status": "PASS_TERMINAL_CLEANUP_MARKER",
+          "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+          "elapsedSeconds": null,
+          "elapsedTimeNote": "Cleanup duration was not separately reported; runner elapsed is kept separate."
+        },
+        "consolePreamble": {
+          "bytes": 976,
+          "lineCount": 15,
+          "sha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5"
+        },
+        "receiptFrameCount": 1,
+        "receiptCaseCount": 12,
+        "whitespaceAuxiliaryRecordCount": 12,
+        "receiptSummaryCount": 1,
+        "receiptFooter": "PASS",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-current-9-10-rep-1-result.json",
+            "bytes": 939,
+            "sha256": "c70b903e96158ea704739cd92fa406f019507ed42d46eeb3863d14fcaca4883d"
+          },
+          "console": {
+            "file": "saved-profile-current-9-10-rep-1-console.txt",
+            "bytes": 6788137,
+            "sha256": "3c0fbf2ef56126d7be63504b122925b5fa1e76183d0f644eb0ab06f36efdedd0"
+          },
+          "nativeReceipt": {
+            "file": "saved-profile-current-9-10-rep-1-receipt.txt",
+            "bytes": 6786997,
+            "sha256": "ce616841a405c4767451b8f590b9fc0b58e5c803db581ba0871ad6cca9e427ae"
+          },
+          "stderr": {
+            "file": "saved-profile-current-9-10-rep-1-stderr.txt",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "launcherRecord": {
+            "file": "saved-profile-current-9-10-rep-1-launcher.json",
+            "bytes": 273,
+            "sha256": "324da7bcf098aa6559e65ea5743f2191ad34f4209e5097b7beb2275930309ef0"
+          }
+        }
+      },
+      {
+        "cohortId": "SAVED_11_12_REP",
+        "placementVersions": [
+          11,
+          12
+        ],
+        "rootSeeds": [
+          "-1017",
+          "-1004",
+          "-1022",
+          "0",
+          "17",
+          "42"
+        ],
+        "caseCount": 12,
+        "assertions": 185085,
+        "nativeDiagnosticElapsedMs": 32429,
+        "nativeDiagnosticTimingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "runnerElapsedSeconds": 61.3158683,
+        "runnerElapsedScope": "bounded native runner elapsed; not cleanup-only duration",
+        "runId": "61b0ceb9-723b-41ad-bc0d-56c551116867",
+        "layoutVersion": 24,
+        "dependencyEpoch": "tsj-generation-dependencies-v25",
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "prePostInputFileCount": 1059,
+        "inputRevision": 3,
+        "sourceSnapshotRevision": 2,
+        "inputPinsSha256": "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69",
+        "cleanup": {
+          "status": "PASS_TERMINAL_CLEANUP_MARKER",
+          "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+          "elapsedSeconds": null,
+          "elapsedTimeNote": "Cleanup duration was not separately reported; runner elapsed is kept separate."
+        },
+        "consolePreamble": {
+          "bytes": 976,
+          "lineCount": 15,
+          "sha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5"
+        },
+        "receiptFrameCount": 1,
+        "receiptCaseCount": 12,
+        "whitespaceAuxiliaryRecordCount": 12,
+        "receiptSummaryCount": 1,
+        "receiptFooter": "PASS",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-current-11-12-rep-1-result.json",
+            "bytes": 932,
+            "sha256": "9adfacb4412c0a76d181da090fcca106bb45100c6be404af57caf605de1d5701"
+          },
+          "console": {
+            "file": "saved-profile-current-11-12-rep-1-console.txt",
+            "bytes": 6809006,
+            "sha256": "09c5111b23b262b2fe4cb9fbc7b9ddc73cf7f089d03293c44e0f0f34c8b0f3f0"
+          },
+          "nativeReceipt": {
+            "file": "saved-profile-current-11-12-rep-1-receipt.txt",
+            "bytes": 6807866,
+            "sha256": "e2f9882fe7fab829d6fe585f8d42108a5e88133a6f5f0c5bbb7c4eb1999053ab"
+          },
+          "stderr": {
+            "file": "saved-profile-current-11-12-rep-1-stderr.txt",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "launcherRecord": {
+            "file": "saved-profile-current-11-12-rep-1-launcher.json",
+            "bytes": 275,
+            "sha256": "7888e852411117f670ee20faac0d1ff07b96a69fb41d4df1fa37e3774b49cfc3"
+          }
+        }
+      },
+      {
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "placementVersions": [
+          10,
+          11,
+          12
+        ],
+        "rootSeeds": [
+          "1",
+          "7",
+          "5",
+          "14"
+        ],
+        "caseCount": 12,
+        "assertions": 196247,
+        "nativeDiagnosticElapsedMs": 41227,
+        "nativeDiagnosticTimingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "runnerElapsedSeconds": 70.0890198,
+        "runnerElapsedScope": "bounded native runner elapsed; not cleanup-only duration",
+        "runId": "05eefaca-9718-46b7-b226-97bf9d98e896",
+        "layoutVersion": 24,
+        "dependencyEpoch": "tsj-generation-dependencies-v25",
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "prePostInputFileCount": 1059,
+        "inputRevision": 3,
+        "sourceSnapshotRevision": 2,
+        "inputPinsSha256": "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69",
+        "cleanup": {
+          "status": "PASS_TERMINAL_CLEANUP_MARKER",
+          "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+          "elapsedSeconds": null,
+          "elapsedTimeNote": "Cleanup duration was not separately reported; runner elapsed is kept separate."
+        },
+        "consolePreamble": {
+          "bytes": 976,
+          "lineCount": 15,
+          "sha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5"
+        },
+        "receiptFrameCount": 1,
+        "receiptCaseCount": 12,
+        "whitespaceAuxiliaryRecordCount": 12,
+        "receiptSummaryCount": 1,
+        "receiptFooter": "PASS",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-current-10-11-12-holdout-1-result.json",
+            "bytes": 939,
+            "sha256": "b5b29628c3315ab6887a4e6b9b9757d024f99e2a5a2805b96e998c689e56b0d8"
+          },
+          "console": {
+            "file": "saved-profile-current-10-11-12-holdout-1-console.txt",
+            "bytes": 7084407,
+            "sha256": "901042920dc041af48000d25ab3195ef166fd23e915ec21b79e9a1373ba8aa6f"
+          },
+          "nativeReceipt": {
+            "file": "saved-profile-current-10-11-12-holdout-1-receipt.txt",
+            "bytes": 7083267,
+            "sha256": "c3221405f7dbddb7fec9e3aa1ed6b28211d8dc231442c262dbddf5913bbd26c2"
+          },
+          "stderr": {
+            "file": "saved-profile-current-10-11-12-holdout-1-stderr.txt",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "launcherRecord": {
+            "file": "saved-profile-current-10-11-12-holdout-1-launcher.json",
+            "bytes": 289,
+            "sha256": "11be7d15b938966d06ad64c887896c7f7dd445843b714d8f7b14358ba4a7b641"
+          }
+        }
+      }
+    ],
+    "terminalReceiptCounts": {
+      "frames": 6,
+      "cases": 72,
+      "summaries": 6,
+      "footers": 6
+    },
+    "stderrBytesTotal": 0
+  },
+  "strictReader": {
+    "status": "PASS_COMPARATIVE_OBSERVATIONS_ONLY",
+    "scope": "AN_ORDERING_STREAM_SAVED_PROFILE_SCRATCH_OBSERVATION_ONLY",
+    "readerExitCode": 0,
+    "fullSixCohortEvaluated": true,
+    "casesEvaluated": 72,
+    "coverage": [
+      {
+        "cohortId": "SAVED_3_4_REP",
+        "status": "EVALUATED"
+      },
+      {
+        "cohortId": "SAVED_5_6_REP",
+        "status": "EVALUATED"
+      },
+      {
+        "cohortId": "SAVED_7_8_REP",
+        "status": "EVALUATED"
+      },
+      {
+        "cohortId": "SAVED_9_10_REP",
+        "status": "EVALUATED"
+      },
+      {
+        "cohortId": "SAVED_11_12_REP",
+        "status": "EVALUATED"
+      },
+      {
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "status": "EVALUATED"
+      }
+    ],
+    "retainedBoundFailures": 0,
+    "sameSideSaved10To11Comparisons": {
+      "total": 10,
+      "allPass": true,
+      "operator": "<="
+    },
+    "historicalExactHashStatuses": {
+      "CHANGED_CURRENT_EXACT_GEOMETRY_REQUIRES_REVIEW": 71,
+      "NO_EXACT_LITERAL_SOURCE": 1
+    },
+    "sampledProtectedVoidStatuses": {
+      "NOT_CLAIMED_NO_SAVED_V3_ORACLE": 6,
+      "CURRENT_SAMPLED_COMPARATIVE_BOUNDS_ENFORCED_EXACT_CHANGES_REQUIRE_REVIEW": 66
+    },
+    "oldExactChangesDisposition": "REVIEW_ONLY; no new hashes or exact baselines are blessed by this packet.",
+    "sourceCatalogSha256": "57b20a02b9f1f17671dd89a5a032cafbb792b76384cedbc85b5d69dc748d62a9",
+    "baselineInputPinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+    "readerInputPinsSha256": "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69",
+    "correctedUInputPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+    "layoutVersion": 24,
+    "dependencyEpoch": "tsj-generation-dependencies-v25",
+    "sourceSnapshotRevision": 2,
+    "readerSource": {
+      "file": "read-saved-profile-ordering-stream-v2.py",
+      "bytes": 15767,
+      "sha256": "da3a3cc91ac945a39baf1110b8fef5404d9a68f6c0b72c6d3f3de252c363efca",
+      "coreReaderSha256": "390acf30090bd5a3e29b64dcfc212d30fc26c6d1f590d49fd72ebb4d9aa51670",
+      "priorAdapterSha256": "3b45818db9a5bf4b94b5a4ccbe181d8bc3f612157d4e5de91a496d47c5ffb9fd",
+      "nativeWrapperSha256": "8fffbe843373cf99ca734be3fa3d7c4feb640e52bf804d4f73ed7ec0e529d28d"
+    },
+    "readerOutput": {
+      "file": "saved-profile-ordering-stream-6cohorts-attempt1-reader2.json",
+      "bytes": 1218048,
+      "sha256": "505a7a0bf7d653fba1d316195e705c3e22e23dbb0676621fb8f67cdd8ae35c3e"
+    },
+    "executionRecord": {
+      "file": "saved-profile-ordering-stream-reader-v3-6cohorts-attempt1-execution.json",
+      "bytes": 2967,
+      "sha256": "5434dbd1295dae3043dcf5d3366c486be772ecfe95011fe87ed4292508af745a"
+    },
+    "capturedStdout": {
+      "file": "saved-profile-ordering-stream-reader-v3-6cohorts-attempt1-stdout.txt",
+      "bytes": 414,
+      "sha256": "bd74b28862d9ead14d49135ea9c0df965b3e4b628d868eec9516fd40dfedcdcc"
+    },
+    "capturedStderr": {
+      "file": "saved-profile-ordering-stream-reader-v3-6cohorts-attempt1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "launcherRecord": {
+      "file": "saved-profile-ordering-stream-reader-v3-6cohorts-attempt1-launcher.json",
+      "bytes": 1092,
+      "sha256": "eb5e17e40d3cc55ad47b0d59aa1a3bc19691599a10d7391848c525c54113c487"
+    },
+    "readerElapsedSeconds": 1.2470695,
+    "readerElapsedScope": "Invoke-VerifierBoundedProcess call, including capture and owned helper-log cleanup; not reader-only duration",
+    "cleanupElapsedSeconds": null,
+    "cleanupNote": "Reader helper elapsed scope includes bounded capture and owned helper-log cleanup; no separate cleanup duration is reported."
+  },
+  "limitations": {
+    "oldHashChanges": "71 cases report CHANGED_CURRENT_EXACT_GEOMETRY_REQUIRES_REVIEW; one case has NO_EXACT_LITERAL_SOURCE. Historical exact geometry changes remain review items.",
+    "savedV3WhitespaceOracle": "Six v3 cases explicitly make no protected-empty-rectangle claim; the remaining 66 retain their sampled comparative bounds.",
+    "notRun": [
+      "Q6",
+      "final-source build/gates",
+      "normal-player gates",
+      "production preview/runtime",
+      "full Q100 acceptance"
+    ],
+    "timing": "Native diagnostic timings and runner elapsed seconds are not production 90s/640/5s performance evidence.",
+    "claimBoundary": "No ordering-stream production adoption, source epoch adoption, public admission, or playable authored-100 qualification is established."
+  },
+  "packetSanitization": {
+    "artifactReferences": "Portable leaf names or repo-relative paths only.",
+    "rawConsoleOrReceiptEmbedded": false,
+    "processIdsIncluded": false,
+    "privateAbsolutePathsIncluded": false,
+    "onlyOwnedRepoFile": "docs/task-evidence/Q100/authored-layout-r1/ordering-stream-saved72-1.json"
+  }
+}

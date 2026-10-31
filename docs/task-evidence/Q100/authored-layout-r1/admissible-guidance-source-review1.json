@@ -1,0 +1,133 @@
+{
+  "schema": "troubleshootjs-q100-admissible-guidance-source-review-v1",
+  "status": "READ_ONLY_SOURCE_FEASIBILITY_REVIEW",
+  "scope": "AH fixed-prefix search guidance; no implementation or gate",
+  "branch": "codex/q100-physical-feasibility",
+  "baseHead": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+  "sources": {
+    "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java": "6eb32ebea70a37084700d89451b0d3eb3c5da2dc2320e9d90014a369fcbb8a31",
+    "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java": "564adf46dc3b2d7951edb19cc2e661ca5a8c2e62cd7a19a9ecb54b94e3e9f102",
+    "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java": "b04f9906d726117412d62b6022ea5b8e2f26bf111063292b0d7560f51b0fb8cf",
+    "src/com/lushprojects/circuitjs1/client/PcbTraceRules.java": "ffd7848e0016bc726d9098d583ba958c49395a72d95648250a2f6209e9f65149",
+    "src/com/lushprojects/circuitjs1/client/GenerationWorkScope.java": "8d1ecdc2d8463d4fe1ab738950c94e2eda4ce3d4a1b25b63031203c32e6cf632",
+    "src/com/lushprojects/circuitjs1/client/GenerationJob.java": "4cf11060780742584431c29acf0da2a7f97650643ee5851a5edc348f4051c1f6",
+    "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java": "84fbbadb24b585a10dcd01af81b8be9109df99ca9b3b337391836c75424c467d"
+  },
+  "sourceAudit": {
+    "reviewFile": "review.md",
+    "reviewSha256": "4c0e44d2b8e09f804b2b9731644e390586218004bcc767020c49585b935721c9",
+    "reviewBytes": 14116,
+    "specFile": "spec.json",
+    "specSha256": "59b235ec6ff1d1b5cea3dab8fc3f629d524744d7e3758afb57d242d8d8d23481",
+    "specBytes": 3827,
+    "rawFilesCopied": false
+  },
+  "parentWitness": "controlled-zero-via-path1.json",
+  "candidate": {
+    "method": "Per-branch reverse directed Dijkstra over exact ordinary edges and locally permitted relaxed via edges; max with the existing TurnLowerBound.",
+    "costs": {
+      "primaryStep": 10,
+      "secondaryStep": 12,
+      "via": 60,
+      "turnOmitted": 35
+    },
+    "goalAuthority": "Exact per-face branch goal bits, including published tree cells and permitted reached PTH endpoints.",
+    "incomingEdges": "Test actual forward predecessor u-to-v; geometry predicates are directed.",
+    "relaxations": [
+      "turn charges",
+      "direction-4 via eligibility",
+      "transition-count cap",
+      "global via count",
+      "via path history/spacing"
+    ],
+    "effectBoundary": "Router queries mutate caches/work/conflicts. New owner-provided isolated snapshots must preserve live state and effect parity; no production clone API exists yet.",
+    "lifetime": "Computed fields are branch-local and invalid after publication or pass/candidate change. Only scratch arrays may be reused.",
+    "queueBoundary": "Node heuristic is final and heap priorities are cached. Precompute before seeding, or explicitly reprioritize and reheapify for late activation.",
+    "admissibility": "Every actual fixed-prefix route is represented at no greater cost in the relaxed model. A same-face-only bound is invalid while usable via capacity remains.",
+    "unreachableHandling": "No production pruning or sentinel behavior is selected by this review.",
+    "activation": "No measured early-trigger criterion is established. Unconditional precomputation charges every branch.",
+    "runtimeAccounting": "Preprocessing must yield through the existing Session work/deadline boundary; count separately from route expansions without increasing any existing cap."
+  },
+  "estimatesOnly": {
+    "captured": {
+      "cells": 58100,
+      "faceCellStates": 116200,
+      "ordinaryPredicateProbesUpperBound": 464800,
+      "viaPredicateProbesUpperBound": 116200,
+      "threeIntegerArraysBytes": 1394400
+    },
+    "admittedCeiling": {
+      "cells": 250000,
+      "faceCellStates": 500000,
+      "ordinaryPredicateProbesUpperBound": 2000000,
+      "viaPredicateProbesUpperBound": 500000,
+      "threeIntegerArraysBytes": 6000000
+    },
+    "excludedMemory": "Router snapshot occupancy, reservations, caches, objects and other existing workspaces.",
+    "actualGwtCost": "NOT_MEASURED"
+  },
+  "alternatives": [
+    {
+      "method": "Same-face reverse BFS",
+      "limit": "Admissible only once no further via is legal; not a bound for initial witnessed states with remaining via capacity."
+    },
+    {
+      "method": "Zero-via-first scheduling",
+      "limit": "Returning its first route changes the existing mixed-face f-cost search order; a separate prepass must honestly share expansion and wall-work budgets."
+    },
+    {
+      "method": "Count-only via dominance",
+      "limit": "Unsound because prior via locations affect future legality."
+    }
+  ],
+  "rootClarification": "The source audit uses shortest-cost-contract language. This review preserves the existing f-cost ordering as a design choice; it does not claim global optimality is a product acceptance requirement or proved by the current history-omitting state key and first-found quality checks.",
+  "nextMeasurement": "AI offline lower-bound values on the three already captured graphs; no native frontier was exported, so frontier uplift cannot be measured from these inputs.",
+  "unchangedLimits": {
+    "cells": 250000,
+    "faceCellStates": 500000,
+    "expansionsTotal": 1000000,
+    "expansionsPerBranch": 100000,
+    "orderings": 3,
+    "policyTransitions": 4,
+    "policyVias": 48,
+    "fullerViaCost": 60,
+    "fullerSecondaryStepCost": 12,
+    "primaryStepCost": 10,
+    "turnCost": 35,
+    "advances": 640,
+    "maxStepMillis": 5000,
+    "maxJobMillis": 90000
+  },
+  "qualification": {
+    "implementationAdopted": false,
+    "nativeRun": false,
+    "buildRun": false,
+    "physicalRouteAccepted": false,
+    "q100Qualified": false,
+    "newEpoch": false
+  },
+  "subsequentLazyRefreshReview": {
+    "status": "READ_ONLY_LOCAL_PRIORITY_FEASIBILITY",
+    "reviewSha256": "ca07c1770448634fe0dc26a2aa26c7c6bce5ce1b8644bc82c0a3de81e26b941c",
+    "reviewBytes": 9276,
+    "specSha256": "2d17a71d88695513f5698bf997f59191de4f4b01a67abb5c9a679e6bc3860bb6",
+    "specBytes": 1737,
+    "scope": "A local pop-time refresh can avoid global heap mutation/reheapification. This remains a source proof, not native acceptance.",
+    "guards": [
+      "stale best-identity, scope and cap checks precede refresh",
+      "strictly higher admissible bound only",
+      "same key, g, serial and concrete previous path",
+      "replace exact best mapping directly before requeue",
+      "return before incrementing expansion or accepting a goal",
+      "new nodes immediately use max(old, finite new bound)",
+      "fixed branch-local field; no cross-publication reuse",
+      "unreachable entries retain old bound, with no pruning"
+    ],
+    "accounting": "Each refresh consumes existing Session slice work; actual expansion counters and serial allocation stay unchanged. At most one refresh per raised queued node.",
+    "trigger": "32768 actual branch expansions is a new experimental trigger based on WORK_QUANTUM; runtime benefit and overhead remain unmeasured.",
+    "limits": "Via-history aliasing remains; no global optimality or completeness claim. Native lifecycle, identity, bounds, physical and timing checks remain required.",
+    "implementationRun": false,
+    "nativeRun": false,
+    "adopted": false
+  }
+}

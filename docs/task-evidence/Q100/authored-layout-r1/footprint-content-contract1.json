@@ -1,0 +1,87 @@
+{
+  "protocol": "p07-footprint-content-contract-evidence-v1",
+  "scope": "SCRATCH_ONLY_NOT_ADOPTED",
+  "candidate": {
+    "getter": "PcbFootprint.getOccupiedContentBounds()",
+    "visibility": "package-private",
+    "returnContract": "defensive com.lushprojects.circuitjs1.client.Rectangle copy of cached occupied-content bounds",
+    "sourceSnapshotRevision": 1,
+    "inputRevision": 3
+  },
+  "inputSeal": {
+    "snapshot": "footprint-content-contract-inputs-1",
+    "inputCount": 1059,
+    "unchangedInputCount": 1056,
+    "pinsSha256": "4d45e424e27a4853c3eaa8b446f95c55dceff48bf69e7ec21e78330a0559ff3a",
+    "sealSha256": "01e3966862b673dcfe98e04085ac3c17bbb449cab2781a670c4d830c24d78f95",
+    "parentPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+    "audit": "PASS_BEFORE_AND_AFTER",
+    "changedInputs": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbFootprint.java",
+        "beforeSha256": "605b7fdc9d915b5cc87e1dfb5156bd8f7a5f74d6d8c2fdd9fc0cb66466affcc0",
+        "afterSha256": "3a5ca2643d8a6e003464263eb46c96eb6d8529d0a59b7f9cb73cd7f807970023"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+        "beforeSha256": "f30032aeec5dc29d5866fa64d2003fd9ea20f80857bbb156d95c4072e6b03d0c",
+        "afterSha256": "ee739abc0f093e6b71dd393f10d265dca19a3d13cb7f8cbb9b92b1de3488540b"
+      },
+      {
+        "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+        "beforeSha256": "0c97dd4f0e1c3f4c18c34f80ca9c827f00639d17fa0599048ba9cf0c319f8867",
+        "afterSha256": "82c2e7c82447cb73bc187a8c747622da7bcffd51c2e5fd65a9f60f52a8dca363"
+      }
+    ]
+  },
+  "focusedNativeRun": {
+    "suite": "P07BranchDiagnosticsContractTest",
+    "source": "current",
+    "exitCode": 0,
+    "elapsedSeconds": 30.4045469,
+    "nativeChildLimitMs": 60000,
+    "outerWatchdogMs": 600000,
+    "terminationProven": true,
+    "stdoutBytes": 1194,
+    "stdoutSha256": "1c507c8dc1a635a3d1dccf2fe92e7cf9c4b767b0b5edad238e38c8253101dabf",
+    "stderrBytes": 0,
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "receipt": {
+      "text": "PASS: P07 branch diagnostics contracts assertions=57",
+      "bytes": 54,
+      "sha256": "d847393cb91c46e849279c5609f494cad828afa847f44c7075de81dbee2180e9"
+    },
+    "resultSha256": "87e843723bb1dc035dda032f26372a6c59f3881d5aa98659eb199899c59ac552",
+    "cleanupMarkerObserved": true,
+    "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed."
+  },
+  "assertionAccounting": {
+    "total": 57,
+    "existingP07BranchContracts": 30,
+    "footprintContentBoundsContract": 27
+  },
+  "observedContract": {
+    "fixtures": [
+      "AXIAL_FUSE fixed-default geometry, top side, 0 degrees",
+      "DEV_SMD_SOT23 fixed-default geometry, top side, 180 degrees",
+      "DEV_SMD_SOT23 fixed-default geometry, bottom side, 90 degrees"
+    ],
+    "independentOracle": "Materialized one-footprint PcbBoardLayout occupied-content bounds; this existing layout owner does not call the new PcbFootprint getter.",
+    "checks": [
+      "Getter bounds equal the independently materialized layout oracle for all three fixtures.",
+      "Axial-fuse drag envelope extends beyond its routing courtyard, and connected and lifted lead bounds differ.",
+      "Bottom-side transformed pose is declared supported by the fixed package geometry.",
+      "Mutating a returned Rectangle does not change the cached result; a subsequent call returns a distinct matching Rectangle.",
+      "Translated footprint bounds move by the exact x/y delta with width and height unchanged.",
+      "Footprint/layout fingerprints, conductor graph canonical state, and board/component pad identity and ordering remain unchanged."
+    ]
+  },
+  "limits": {
+    "status": "PASS_FOCUSED_CONTRACT_ONLY",
+    "fullMatrix": "NOT_RUN",
+    "independentP08LayeredClearanceOracles": "NOT_RUN",
+    "fullPhysicalLayoutQualification": "NOT_CLAIMED",
+    "generationAcceptance": "NOT_CLAIMED",
+    "adoption": false
+  }
+}

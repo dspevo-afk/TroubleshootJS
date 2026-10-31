@@ -1,0 +1,620 @@
+{
+  "schema": "troubleshootjs-q100-saved-consumers-failure-preservation",
+  "schemaVersion": 1,
+  "scope": "FAILURE_PRESERVATION_AND_SOURCE_BINDING_ONLY; DOES_NOT_SEAL_CURRENT_HASHES",
+  "sourceBase": {
+    "branch": "codex/q100-physical-feasibility",
+    "commit": "8a2c12446b2c46bde32b32537dec58a15a65d3b9"
+  },
+  "attempt": {
+    "id": "final-saved-consumers-1",
+    "suite": "PcbSavedRoleWidthGeometryContractTest",
+    "status": "FAIL",
+    "observedProfile": {
+      "placementVersion": 12,
+      "layoutVersion": "NOT_EMITTED_IN_RETAINED_RECEIPT",
+      "dependencyEpoch": "NOT_EMITTED_IN_RETAINED_RECEIPT"
+    },
+    "phaseElapsedSeconds": 36.301665,
+    "cleanup": {
+      "status": "PASS",
+      "evidence": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+      "cleanupElapsedSeconds": "NOT_SEPARATELY_EMITTED"
+    },
+    "exitCodes": {
+      "outerHost": {
+        "value": 1,
+        "evidence": "task owner recorded host exit"
+      },
+      "nativeHelper": {
+        "value": 2,
+        "source": "final-saved-consumers-1-result.json"
+      },
+      "contractChild": {
+        "value": 1,
+        "source": "CURRENT_CONTRACT_FAILURE log line"
+      }
+    },
+    "summary": {
+      "representativeCases": 6,
+      "areasPassed": 6,
+      "normalizedPhysicalHashAssertionsFailed": 6,
+      "cleanupStatus": "PASS",
+      "failureType": "AssertionError",
+      "aggregateFailureMessage": "saved12 representative failures=6",
+      "qualification": "FAIL; current saved-profile hash transition remains unresolved"
+    },
+    "cases": [
+      {
+        "seed": "-1017",
+        "placementVersion": 12,
+        "caseId": "representative-v12-seed--1017",
+        "phase": "PcbFunctionalGroupingContractTest.verifySavedRoleWidthRepresentatives -> measure(version=12)",
+        "assertionOrder": [
+          "boardOutlineArea == SAVED12_AREA[index] : PASS",
+          "PcbCompactnessContractTest.physicalGeometrySha256(layout) == SAVED12_GEOMETRY_SHA256[index] : FAIL"
+        ],
+        "area": {
+          "observed": 4529785,
+          "sourceLiteral": 4529785,
+          "sourceConstant": "SAVED12_AREA[0]",
+          "result": "PASS_EXACT_EQUALITY"
+        },
+        "normalizedPhysicalHash": {
+          "expectedSourceLiteral": "336375553fed29d898602e94b0b36fe923358b407873ffa204ad302abcce0488",
+          "sourceConstant": "SAVED12_GEOMETRY_SHA256[0]",
+          "comparisonMethod": "PcbCompactnessContractTest.physicalGeometrySha256(layout)",
+          "result": "FAIL",
+          "observedValue": "NOT_EMITTED_BY_RETAINED_FAILURE_LOG"
+        },
+        "exactFailureMessage": "published12 representative physical geometry remains exact apart from reference x/y and epoch: -1017"
+      },
+      {
+        "seed": "-1004",
+        "placementVersion": 12,
+        "caseId": "representative-v12-seed--1004",
+        "phase": "PcbFunctionalGroupingContractTest.verifySavedRoleWidthRepresentatives -> measure(version=12)",
+        "assertionOrder": [
+          "boardOutlineArea == SAVED12_AREA[index] : PASS",
+          "PcbCompactnessContractTest.physicalGeometrySha256(layout) == SAVED12_GEOMETRY_SHA256[index] : FAIL"
+        ],
+        "area": {
+          "observed": 4466664,
+          "sourceLiteral": 4466664,
+          "sourceConstant": "SAVED12_AREA[1]",
+          "result": "PASS_EXACT_EQUALITY"
+        },
+        "normalizedPhysicalHash": {
+          "expectedSourceLiteral": "b326fa69d40439e6fd6fc42599731240726650a763fd5f1aabf292f75a8d73f5",
+          "sourceConstant": "SAVED12_GEOMETRY_SHA256[1]",
+          "comparisonMethod": "PcbCompactnessContractTest.physicalGeometrySha256(layout)",
+          "result": "FAIL",
+          "observedValue": "NOT_EMITTED_BY_RETAINED_FAILURE_LOG"
+        },
+        "exactFailureMessage": "published12 representative physical geometry remains exact apart from reference x/y and epoch: -1004"
+      },
+      {
+        "seed": "-1022",
+        "placementVersion": 12,
+        "caseId": "representative-v12-seed--1022",
+        "phase": "PcbFunctionalGroupingContractTest.verifySavedRoleWidthRepresentatives -> measure(version=12)",
+        "assertionOrder": [
+          "boardOutlineArea == SAVED12_AREA[index] : PASS",
+          "PcbCompactnessContractTest.physicalGeometrySha256(layout) == SAVED12_GEOMETRY_SHA256[index] : FAIL"
+        ],
+        "area": {
+          "observed": 6943752,
+          "sourceLiteral": 6943752,
+          "sourceConstant": "SAVED12_AREA[2]",
+          "result": "PASS_EXACT_EQUALITY"
+        },
+        "normalizedPhysicalHash": {
+          "expectedSourceLiteral": "f17fd40c1c76239df91b335b81ff1c7ab5e89bd50b1148d2b9b1bff2b81b831d",
+          "sourceConstant": "SAVED12_GEOMETRY_SHA256[2]",
+          "comparisonMethod": "PcbCompactnessContractTest.physicalGeometrySha256(layout)",
+          "result": "FAIL",
+          "observedValue": "NOT_EMITTED_BY_RETAINED_FAILURE_LOG"
+        },
+        "exactFailureMessage": "published12 representative physical geometry remains exact apart from reference x/y and epoch: -1022"
+      },
+      {
+        "seed": "0",
+        "placementVersion": 12,
+        "caseId": "representative-v12-seed-0",
+        "phase": "PcbFunctionalGroupingContractTest.verifySavedRoleWidthRepresentatives -> measure(version=12)",
+        "assertionOrder": [
+          "boardOutlineArea == SAVED12_AREA[index] : PASS",
+          "PcbCompactnessContractTest.physicalGeometrySha256(layout) == SAVED12_GEOMETRY_SHA256[index] : FAIL"
+        ],
+        "area": {
+          "observed": 4358809,
+          "sourceLiteral": 4358809,
+          "sourceConstant": "SAVED12_AREA[3]",
+          "result": "PASS_EXACT_EQUALITY"
+        },
+        "normalizedPhysicalHash": {
+          "expectedSourceLiteral": "cc58e0d94ceba987204d0479d67348e543f711c5fb25a084269f14430e1023da",
+          "sourceConstant": "SAVED12_GEOMETRY_SHA256[3]",
+          "comparisonMethod": "PcbCompactnessContractTest.physicalGeometrySha256(layout)",
+          "result": "FAIL",
+          "observedValue": "NOT_EMITTED_BY_RETAINED_FAILURE_LOG"
+        },
+        "exactFailureMessage": "published12 representative physical geometry remains exact apart from reference x/y and epoch: 0"
+      },
+      {
+        "seed": "17",
+        "placementVersion": 12,
+        "caseId": "representative-v12-seed-17",
+        "phase": "PcbFunctionalGroupingContractTest.verifySavedRoleWidthRepresentatives -> measure(version=12)",
+        "assertionOrder": [
+          "boardOutlineArea == SAVED12_AREA[index] : PASS",
+          "PcbCompactnessContractTest.physicalGeometrySha256(layout) == SAVED12_GEOMETRY_SHA256[index] : FAIL"
+        ],
+        "area": {
+          "observed": 5814368,
+          "sourceLiteral": 5814368,
+          "sourceConstant": "SAVED12_AREA[4]",
+          "result": "PASS_EXACT_EQUALITY"
+        },
+        "normalizedPhysicalHash": {
+          "expectedSourceLiteral": "c10a7bba145424a7c644150a303b3095d2f4b90683ac5a187d447e31938a1d04",
+          "sourceConstant": "SAVED12_GEOMETRY_SHA256[4]",
+          "comparisonMethod": "PcbCompactnessContractTest.physicalGeometrySha256(layout)",
+          "result": "FAIL",
+          "observedValue": "NOT_EMITTED_BY_RETAINED_FAILURE_LOG"
+        },
+        "exactFailureMessage": "published12 representative physical geometry remains exact apart from reference x/y and epoch: 17"
+      },
+      {
+        "seed": "42",
+        "placementVersion": 12,
+        "caseId": "representative-v12-seed-42",
+        "phase": "PcbFunctionalGroupingContractTest.verifySavedRoleWidthRepresentatives -> measure(version=12)",
+        "assertionOrder": [
+          "boardOutlineArea == SAVED12_AREA[index] : PASS",
+          "PcbCompactnessContractTest.physicalGeometrySha256(layout) == SAVED12_GEOMETRY_SHA256[index] : FAIL"
+        ],
+        "area": {
+          "observed": 6036952,
+          "sourceLiteral": 6036952,
+          "sourceConstant": "SAVED12_AREA[5]",
+          "result": "PASS_EXACT_EQUALITY"
+        },
+        "normalizedPhysicalHash": {
+          "expectedSourceLiteral": "7b7dfd023a7e8817dcf05d2b66855740a06e23504c7cd3aad28c285ad1edcfc7",
+          "sourceConstant": "SAVED12_GEOMETRY_SHA256[5]",
+          "comparisonMethod": "PcbCompactnessContractTest.physicalGeometrySha256(layout)",
+          "result": "FAIL",
+          "observedValue": "NOT_EMITTED_BY_RETAINED_FAILURE_LOG"
+        },
+        "exactFailureMessage": "published12 representative physical geometry remains exact apart from reference x/y and epoch: 42"
+      }
+    ]
+  },
+  "sourceBindings": [
+    {
+      "id": "PcbFunctionalGroupingContractTest",
+      "path": "tests/contracts/PcbFunctionalGroupingContractTest.java",
+      "sha256": "c9396d0e93b9d042098f9e61efa0fa450e085fff96ae700b9690ebb64091a8d3",
+      "bytes": 44549,
+      "gitBlobAtBase": "7c785be2130b9fa50a126e117a97fc5fb78d7f6b",
+      "worktreeEqualsBase": true,
+      "consumerMethods": [
+        "measure(long seed,int index,int version)",
+        "measureHoldout(long seed,int index,int version,boolean exactSaved12)",
+        "reportWhitespace(TroubleshootBoard board,PcbBoardLayout layout,long seed,int version)",
+        "verifySavedRealismGeometry",
+        "verifySavedDensityGeometry",
+        "verifySavedLargeGeometry",
+        "verifySavedSingleGroupGeometry",
+        "verifySavedGuardedGeometry",
+        "verifySavedNarrowGeometry",
+        "verifySavedConnectedGeometry",
+        "verifySavedRoleWidthRepresentatives",
+        "verifySavedRoleWidthHoldouts"
+      ],
+      "literalArrayNames": [
+        "ROOTS",
+        "SAVED3_GEOMETRY_SHA256",
+        "SAVED4_GEOMETRY_SHA256",
+        "SAVED5_GEOMETRY_SHA256",
+        "SAVED6_GEOMETRY_SHA256",
+        "SAVED6_AREA",
+        "SAVED7_AREA",
+        "SAVED8_AREA",
+        "SAVED8_GEOMETRY_SHA256",
+        "SAVED9_AREA",
+        "SAVED11_AREA",
+        "SAVED12_AREA",
+        "SAVED12_GEOMETRY_SHA256",
+        "SAVED12_LARGEST_VOID",
+        "ROLE_WIDTH_HOLDOUT_SEEDS",
+        "SAVED12_HOLDOUT_AREA",
+        "SAVED12_HOLDOUT_LARGEST_VOID",
+        "SAVED12_HOLDOUT_GEOMETRY_SHA256"
+      ]
+    },
+    {
+      "id": "PcbPocketPackingContractTest",
+      "path": "tests/contracts/PcbPocketPackingContractTest.java",
+      "sha256": "1c8085b2d0b22c1d1a8d2a388ed663da1a2f8200d7261d26a2dbe962777d6c0f",
+      "bytes": 6225,
+      "gitBlobAtBase": "a3a7c88bcb85141f2a8a24b6c3eca849d3f81cfc",
+      "worktreeEqualsBase": true,
+      "consumerMethods": [
+        "main -> measure(0,6,...)",
+        "verifyHoldouts -> measure(6,10,...)",
+        "measure(int first,int end,String label)"
+      ],
+      "literalArrayNames": [
+        "roots",
+        "baselineAreas",
+        "saved11Areas",
+        "baselineHashes",
+        "saved11Hashes"
+      ]
+    }
+  ],
+  "sourcePinManifest": {
+    "artifact": "freeze-final-saved-consumers-1/pins.json",
+    "sha256": "133bdd8a03d0b7bc3ad44d4c331f54c10f718d687d3b01d8338c493df948b2f2",
+    "bytes": 14068,
+    "recordCount": 78,
+    "records": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "sha256": "a49048c5ed2a5529315d28a951ad13c693b4ff7a828af4f87daee33f9523c06e"
+      },
+      {
+        "path": "docs/CODEX_TASK_REPORT.md",
+        "sha256": "99c3d4304fcd5e49d3008d9602c8babf4dbe843968574ea0d3093e3a23f90955"
+      },
+      {
+        "path": "docs/ROADMAP.md",
+        "sha256": "91be776a752973f755fe0ccb022c30a5a0df55cb26f924ff476faef9a18714b0"
+      },
+      {
+        "path": "docs/task-evidence/E06/accepted-state-r1/README.md",
+        "sha256": "dc035962caa453dbac167d8e6c90a627ae2e3e151a69ad1ed6d6ef6ff007a236"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/PLAN.md",
+        "sha256": "19811e2b67d5a7cc16c0c3946ac650dc998e53c14625881493cf957b6a0c3a14"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/README.md",
+        "sha256": "8dcb0920631e815941bf2d903211be7a6e3415d6b8160efcec9018e57b51a88e"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/screenshots-final1/01-medium-ticket.jpg",
+        "sha256": "867224399858a25d208d45e13cbc0496c15e4ccbb939c209b3fc171485899d90"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/screenshots-final1/02-unrepaired-retest.jpg",
+        "sha256": "500e5401949b2605f2b7a668e0d70c34381d46e777752f65496f8f44c84f2046"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/screenshots-final1/03-isolated-renac.jpg",
+        "sha256": "fc195efa319a7255d3941e95d637dba915cf5b8cf4d48c27b9378d6cab997759"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/screenshots-final1/04-repaired-retest-pass.jpg",
+        "sha256": "9ad0b0b0a0dca946495ba6d07017f4f4e253af56a448f7087fb5b6319187d8a1"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/screenshots-final1/05-restored-retest-pass.jpg",
+        "sha256": "9ad0b0b0a0dca946495ba6d07017f4f4e253af56a448f7087fb5b6319187d8a1"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/visible-negative-replacement1.tsjsave",
+        "sha256": "fd9c1399eeb1d5c5f31220ee501d74a86ee541036fe6dfc3dfd1802f08e00563"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/visible-renac-pristine1.tsjsave",
+        "sha256": "aa993698c025abd94956c3a2ce3c59d2893d36fabf1cbc6a755e135eb194bd23"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/visible-renac-repaired1.tsjsave",
+        "sha256": "b64c6ea482aa8cda169725a7af7c446152f682bc3d77d6ae24821968b680067d"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/visible-renac-restored1.tsjsave",
+        "sha256": "b40a2a49963d976b33b2263550ae3bca0cfbc7d256754d2a57bca9a5259e9398"
+      },
+      {
+        "path": "scripts/VerifierIsolation.psm1",
+        "sha256": "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5"
+      },
+      {
+        "path": "scripts/verify-a03-browser.ps1",
+        "sha256": "235b73c338de139b498f4011bc707bed5b9f5dc8ffbee177c89c518ad49a7b7d"
+      },
+      {
+        "path": "scripts/verify-current-contracts.ps1",
+        "sha256": "3169fdf3ba19eea25882c8e8d79b956b69cc28dfe0641b7fe18f582ad36bf6cd"
+      },
+      {
+        "path": "scripts/verify-e06-accepted-evidence.ps1",
+        "sha256": "2f7ab435e009d49d699abfc30ae3054fcbe712461abc1f13ef4cae3ac9bd1dc4"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/ArchitectureDeveloperVerifier.java",
+        "sha256": "a16cf236e59a411773e88e812bafc731d7f300d5e0c970d903ca9e8f20ffd981"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/CircuitElm.java",
+        "sha256": "b18eaa79c0f2591c7e9ec32722710b8e83476be1abd2a0c596caec5e43eb51a2"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+        "sha256": "615d0b9518c1d012623c0beec7cb4720674b1549936e4b5f34341223e9038773"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+        "sha256": "f9cd87619349c2c7818c928cd75603885057961618a4cf1b9ebcf29a045a3e83"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/E06ConverterContract.java",
+        "sha256": "60a83ea8f564edf9d95d69678454ad2eb3b6554fc346057dbe253b546ad4ecf8"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/E06ConverterFixtures.java",
+        "sha256": "baffe05592371ebc6298a87f50b30d8e53577b746e697287ad76d68d48997645"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+        "sha256": "74d5cb8453e233c0c8b7ee9407558d366a6b8eb2a328aab8850568e083d927a5"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java",
+        "sha256": "ac2713b172c186292a9b1bd6f877358647f8b22da1e4c83d716cca5dce451cb5"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbAccessPlanner.java",
+        "sha256": "6615906eb5df6fcf322e084fc7a32f83c5eda1c7b09a32d6bb2c2343eb0396e2"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java",
+        "sha256": "5a3ea41332c85ff1ea263fd3952963fda1c845e9d9359460abcc271fdcd4d180"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbConductorGraph.java",
+        "sha256": "a5c84942c07c5d7f01caa3fe12b7700235132fbc81f4cb86b3718029b216c972"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "sha256": "de80bb530f8dc4c246f95649875ebb4afe2428ae278513caa8963102e67c6c34"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "sha256": "564adf46dc3b2d7951edb19cc2e661ca5a8c2e62cd7a19a9ecb54b94e3e9f102"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+        "sha256": "f30032aeec5dc29d5866fa64d2003fd9ea20f80857bbb156d95c4072e6b03d0c"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbRoutingWork.java",
+        "sha256": "20409e00ad33953c57bb043103e676866f2f5248ad2ed1ab93f6882ca9450031"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PrivateSolverContext.java",
+        "sha256": "18ffe705ae80a014de929ed08b315178336cfdb8fc924a04a44009caa5192580"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/ProceduralPcbLayout.java",
+        "sha256": "da9a5512b3a47e22951e6e1dc2b45e432c65c5e5f01b5c177d73a7d016d4e308"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Rb100ElectricalPilot.java",
+        "sha256": "ff5d32ea24def3bcfe5ffdedf17d393951c8283ff3403eab5677a27a14c0fe2f"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Rb100Placement.java",
+        "sha256": "b22b4499846ec5e4e56622f5dad518d01d60bdf1e948e761ae7235b74c3fce15"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Rb100Plan.java",
+        "sha256": "631da559598faf50b738ccca74b726688f0533aee69108155c553727dd8f53d5"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+        "sha256": "101ce980d753db359a9ed26fb66fed626d9f3945dcc4edc6350d8b8b8853cdfc"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Rb56PowerStageAssembly.java",
+        "sha256": "18487b2b224ef37b28484a0c46386d2550f0e99f532b36b073e68936c0374471"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/RelayOutputGenerator.java",
+        "sha256": "70b4ebbcf783f0e3e6b79e3d30b01ada3d52b62bf3400a005f0ba1f96f41492b"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+        "sha256": "7bf84a2d6c4c5077638d44d1239530a694d7015106010a72840df69c8dc7d4b0"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/SupportedEnvelope.java",
+        "sha256": "6f0b0b36ce6ad91ec4dfb6b4581e5b8e2cd514ed36eed3e53905a32a2f7994cc"
+      },
+      {
+        "path": "tests/contracts/D01DiagnosticContractTest.java",
+        "sha256": "80bd0225451e4e1686d63d393d378eb065b49bdef13dab46e4167335cb9261ad"
+      },
+      {
+        "path": "tests/contracts/E04DecisionMemoryContractTest.java",
+        "sha256": "c351fa5ab2319f6e893d38a400bd4da97d0dd181e45e54caba6829c3229aec5a"
+      },
+      {
+        "path": "tests/contracts/MediumBoardFloorplanningContractTest.java",
+        "sha256": "c74e0644765301e1919c37816665754ffb6108feb9d0b18007efef0a462aa84a"
+      },
+      {
+        "path": "tests/contracts/P03PlacementContractTest.java",
+        "sha256": "812cde6db3f806e7a5c6a516721ed7c51d5deed31ea4332e387adc15df37e8ba"
+      },
+      {
+        "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+        "sha256": "0c97dd4f0e1c3f4c18c34f80ca9c827f00639d17fa0599048ba9cf0c319f8867"
+      },
+      {
+        "path": "tests/contracts/P07GeometryEpochDiagnosticContractTest.java",
+        "sha256": "8df2d7ba251573ad7978518c8c90e63dc0fe79cf91cdb130e01197c920ed9681"
+      },
+      {
+        "path": "tests/contracts/P07GridEligibilityContractTest.java",
+        "sha256": "44934f9bc1001c63cd1fdeb04fd278991b56ddd7fc16a67c69775e6d55dfcad3"
+      },
+      {
+        "path": "tests/contracts/P07LayeredRasterOracle.java",
+        "sha256": "66d0e40594165ce5620b5c28f58132ac7d8d882f532fafd4d4b77510ec3561a2"
+      },
+      {
+        "path": "tests/contracts/P07LayeredRasterOracleContractTest.java",
+        "sha256": "f67e2bb55a2f1773fb7237fccf2f8ec90bd0ec53b64f1d9547ee0dfb34cc8789"
+      },
+      {
+        "path": "tests/contracts/P07ReachedPthContractTest.java",
+        "sha256": "d384192be627929dd331e761bfb7323ac70b37f11bac061053540b34c72a5533"
+      },
+      {
+        "path": "tests/contracts/P08ReferenceConductorBuilder.java",
+        "sha256": "dbdde865a191c06e267bdbe7bae78144fa520189d652ee7d0e6458aac17586e6"
+      },
+      {
+        "path": "tests/contracts/P08ReferenceWidthContractTest.java",
+        "sha256": "b1ac3b8029f468828a4beb19a1be12cb6e236a408c5b79e083fa1c44154826e5"
+      },
+      {
+        "path": "tests/contracts/P08ScalabilityContractTest.java",
+        "sha256": "5ec454bf6b2161907aca24f150934f243b3f1854d4d3a53be7473960b025c3c6"
+      },
+      {
+        "path": "tests/contracts/PcbCompactnessContractTest.java",
+        "sha256": "f4c5af0c55088a1ff5b2962af9fb0bf497a9056934714f74544f5b56ca11a578"
+      },
+      {
+        "path": "tests/contracts/PcbCorridorOrientationContractTest.java",
+        "sha256": "0df73ef620fca954170da335b2a2ac3a53dca05e9f111a16a71cd323349705e8"
+      },
+      {
+        "path": "tests/contracts/PcbNormalPackingIdentityContractTest.java",
+        "sha256": "1b585cbf56d8524040e79b795694e855ddf00dc0304fd14ee5496883cd66a0b3"
+      },
+      {
+        "path": "tests/contracts/PcbPlacementDiagnosticsContractTest.java",
+        "sha256": "9aff05f9e73057f84c88442b0b7488d0406c3f57d40e78902da09d1e3832f373"
+      },
+      {
+        "path": "tests/contracts/Rb100ElectricalPilotContractTest.java",
+        "sha256": "f7b8afc70c1c63af754e79f577ddc172533d0acda564cd16f6442c946ad691b4"
+      },
+      {
+        "path": "tests/contracts/Rb100P07BranchDiagnosticContractTest.java",
+        "sha256": "590f56fa8f7418aafa77becfbe93792694bb30617a2d1b542fe1f77b50d95330"
+      },
+      {
+        "path": "tests/contracts/Rb100P07PolicyDiagnosticContractTest.java",
+        "sha256": "e348a9bcca842b91b08c87d2c7985ef313c8608e1b813a03db1b84b66f5dffbf"
+      },
+      {
+        "path": "tests/contracts/Rb100PhysicalDiagnostics.java",
+        "sha256": "024b0b5e0354a209d3e11f0aead31a5b8f895ce628071ddd6d0e8d17d129e058"
+      },
+      {
+        "path": "tests/contracts/Rb100PhysicalReference.java",
+        "sha256": "d0d7021e1585ac475941c8d2fb13f423abe18ff260bca6bb22c6315af60963c3"
+      },
+      {
+        "path": "tests/contracts/Rb100PlanContractTest.java",
+        "sha256": "73d98092ca1692709a362f165d6efe974cd0f99a34403d17fb61b46defedf3aa"
+      },
+      {
+        "path": "tests/contracts/Rb56ManifestContractTest.java",
+        "sha256": "ce6fa6c4cc23ea4b8ad5c8902430937fbabf4ec5b63c43789e6f1ff3d2821ce9"
+      },
+      {
+        "path": "tests/contracts/Rb56ModelIdentityContractTest.java",
+        "sha256": "119c5f2757600ceb3efbb4fcc839509fb09fc5535e8ff64ef58a09bf6ffdfa76"
+      },
+      {
+        "path": "tests/contracts/RelBSessionIdentityContractTest.java",
+        "sha256": "656f843368e21d1f1f3fa87295b94d744d3370880d046983ad222d910d0ed64c"
+      },
+      {
+        "path": "tests/contracts/U06SessionSaveContractTest.java",
+        "sha256": "213c1da6597ade5ccc3d32ae37df5accd50bd874bb51afdac9a74fa1295bd333"
+      },
+      {
+        "path": "tests/qualification/rb100-layout/read_diagnostic.py",
+        "sha256": "31f65be5e11472c7b09e8141292402c641df6b735787d32eb4c904ae098981e7"
+      },
+      {
+        "path": "tests/qualification/rb100-layout/read_geometry_transition.py",
+        "sha256": "05d970c24b811ac066774daa5f750464a9334830f17550ded0222a8ca99f255c"
+      },
+      {
+        "path": "tests/qualification/rb100-layout/read_p07_branches.py",
+        "sha256": "73fb2ac73aabaa13a54713f572ff04467320a8c13cee29b29eb591f5da28febf"
+      },
+      {
+        "path": "tests/qualification/rb100-layout/read_p07_policy.py",
+        "sha256": "d8e0187d35d7b24370dec1526f850610d98b8df727fce3c66aa7afbfeb96f1e3"
+      },
+      {
+        "path": "tests/qualification/rb100-layout/read_routing_diagnostic.py",
+        "sha256": "389e937ccec44bf13c7de19732e6bd9fdf7906dfb815e4b04a9c8dc691cdfdba"
+      },
+      {
+        "path": "tests/qualification/rb56-medium/read_qualification.py",
+        "sha256": "3562c3777f4cabb0dc7dc2909984d3f1228fd85d42586a8d04e877aa48ed8900"
+      },
+      {
+        "path": "tests/qualification/rb56-medium/test_read_qualification.py",
+        "sha256": "609fb3fecd4c483b4ffc2f63215ef9f16409793a8c45aa4a2e2e98c7711df136"
+      }
+    ]
+  },
+  "rawArtifacts": [
+    {
+      "artifact": "final-saved-consumers-1-launcher.json",
+      "sha256": "e4f4c560aea381751cce6930e3607f149bf450cbe3c54d7afca711033e7cf67b",
+      "bytes": 201,
+      "contentsEmbedded": false
+    },
+    {
+      "artifact": "final-saved-consumers-1-result.json",
+      "sha256": "7daaebf66b2076e2cbef29f9b3631abaf1580ce759d977bf527d3cdd7caee805",
+      "bytes": 158,
+      "contentsEmbedded": false
+    },
+    {
+      "artifact": "final-saved-consumers-1.log",
+      "sha256": "9e067e479b325599641224b68ed14c5e4bdf05db1d68fc1c1b1911e2a6557421",
+      "bytes": 17257,
+      "contentsEmbedded": false
+    },
+    {
+      "artifact": "freeze-final-saved-consumers-1/pins.json",
+      "sha256": "133bdd8a03d0b7bc3ad44d4c331f54c10f718d687d3b01d8338c493df948b2f2",
+      "bytes": 14068,
+      "contentsEmbeddedAs": "sourcePinManifest.records"
+    }
+  ],
+  "receipt": {
+    "status": "NOT_PRESENT_IN_FROZEN_ATTEMPT_DIRECTORY",
+    "availableEvidence": [
+      "launcher metadata",
+      "runner result JSON",
+      "frozen task log",
+      "source pins manifest"
+    ]
+  },
+  "rawLogsEmbedded": false,
+  "personalAbsolutePathsEmbedded": false,
+  "limitations": [
+    "The exact normalized observed hash values are not printed by the retained failure log; they are recorded as not emitted.",
+    "The separately printed PlayerSessionFingerprint geometrySha256 field is a different output field and is not treated as the normalized comparator result.",
+    "This attempt does not resolve the saved-profile consumer failure, and no replacement hash is sealed."
+  ]
+}

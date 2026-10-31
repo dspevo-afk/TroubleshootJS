@@ -129,6 +129,17 @@ public final class RelBSessionIdentityContractTest {
             check(original.encode().equals(parsed.encode()) &&
                 PlayerSessionReplay.parse(parsed.replay).matches(request),
                 "placement-15 private identity survives the unchanged bounded session codec: " + seed);
+            for (final String priorEpoch : new String[] {
+                    "tsj-generation-dependencies-v25",
+                    "tsj-generation-dependencies-v24",
+                    "tsj-generation-dependencies-v23",
+                    "tsj-generation-dependencies-v22" }) {
+                final String priorDependencyIdentity = identity.canonical().replace(
+                    GenerationDependencyContext.INTERPRETATION_EPOCH, priorEpoch);
+                reject(new Attempt() { public void run() {
+                    PlayerSessionReplay.parse(priorDependencyIdentity);
+                } }, priorEpoch + " replay derived from the captured current v26 identity is rejected: " + seed);
+            }
             GenerationRequest canvasRequest = request.withRb56PlacementInterpretationVersion(
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CANVAS);
             String canvasExpected = "tsj-private-session/14/" +
@@ -300,6 +311,7 @@ public final class RelBSessionIdentityContractTest {
                 "tsj-private-session/14/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-15/RB56_CONTROL/1",
                 "tsj-private-session/15/tsj-generation-dependencies-v19/rb56-placement-15/RB56_CONTROL/1",
                 "tsj-private-session/15/tsj-generation-dependencies-v20/rb56-placement-15/RB56_CONTROL/1",
+                "tsj-private-session/15/tsj-generation-dependencies-v21/rb56-placement-15/RB56_CONTROL/1",
                 "tsj-private-session/15/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-15/RB56_CONTROL/1/extra",
                 "tsj-private-session/16/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-16/RB56_CONTROL/1",
                 "tsj-private-session/7/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/1",
@@ -347,6 +359,7 @@ public final class RelBSessionIdentityContractTest {
             GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, 41);
         final PlayerSessionSave saved = emptySave(
             PlayerSessionReplay.forQualification(savedRequest).canonical());
+        verifyPriorEpochIntakeBeforeCoordinatorStart(sim, coordinator, 41L);
         final GenerationRequest wrongSeed =
             GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, 42);
         reject(new Attempt() { public void run() {
@@ -425,6 +438,92 @@ public final class RelBSessionIdentityContractTest {
         } }, "missing debug scope rejects before cancellation");
         check(coordinator.getJob() == null,
             "scope mismatch leaves idle coordinator without a job");
+    }
+
+    /**
+     * Prior dependency-epoch save bytes are rejected by the current parser,
+     * before the restore coordinator can be entered. This identity contract
+     * fixture has no installed generated-board owner; runtime-owner restoration
+     * remains covered by the separate U06 developer-verifier path.
+     */
+    private static void verifyPriorEpochIntakeBeforeCoordinatorStart(CirSim sim,
+            GenerationCoordinator coordinator, long seed) {
+        check("tsj-generation-dependencies-v26".equals(
+                GenerationDependencyContext.INTERPRETATION_EPOCH),
+            "prior-v25 intake cases are derived from the current v26 identity");
+        for (final int placementVersion : new int[] {
+                GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LEGACY,
+                GenerationRequest.RB56_PLACEMENT_INTERPRETATION_COMPACT }) {
+            final GenerationRequest request = GenerationRequest.forFamilyQualification(
+                Rb56Plan.FAMILY_ID, seed).withRb56PlacementInterpretationVersion(placementVersion);
+            final String currentReplay = PlayerSessionReplay.forQualification(request).canonical();
+            final PlayerSessionSave currentSave = emptySave(currentReplay);
+            final String currentWire = currentSave.encode();
+            check(currentReplay.equals(PlayerSessionReplay.parse(currentReplay).canonical()) &&
+                    currentWire.equals(PlayerSessionSave.parse(currentWire).encode()),
+                "current-v26 private placement " + placementVersion +
+                    " remains accepted by the actual replay and save parsers");
+
+            final String priorReplay = currentReplay.replace(
+                GenerationDependencyContext.INTERPRETATION_EPOCH,
+                "tsj-generation-dependencies-v25");
+            final String priorWire = currentWire.replace(currentReplay, priorReplay);
+            check(!priorReplay.equals(currentReplay) &&
+                    priorWire.replace(priorReplay, currentReplay).equals(currentWire),
+                "prior-v25 placement " + placementVersion +
+                    " changes only the epoch in a valid current replay and save");
+
+            final GenerationJob beforeJob = coordinator.getJob();
+            final GeneratedBoardInstance beforeOwner = sim.getGeneratedBoardInstance();
+            final Object beforeElements = sim.elmList;
+            final PlayerSessionHistory beforeHistory = beforeOwner == null ||
+                beforeOwner.getPhysicalBoardRuntime() == null ? null :
+                beforeOwner.getPhysicalBoardRuntime().getSessionHistory();
+            final Vector<PlayerSessionSave.Operation> beforeHistoryOperations =
+                beforeHistory == null ? null : beforeHistory.operations();
+            RuntimeException replayFailure = null;
+            try { PlayerSessionReplay.parse(priorReplay); }
+            catch (RuntimeException expected) { replayFailure = expected; }
+            check(replayFailure instanceof IllegalArgumentException &&
+                    replayFailure.getMessage() != null && replayFailure.getMessage().contains("epoch"),
+                "actual replay parser rejects prior-v25 private placement " + placementVersion);
+
+            RuntimeException saveFailure = null;
+            boolean coordinatorEntered = false;
+            try {
+                PlayerSessionSave parsed = PlayerSessionSave.parse(priorWire);
+                coordinatorEntered = true;
+                coordinator.startSessionRestoreForQualification(request, parsed);
+            } catch (RuntimeException expected) { saveFailure = expected; }
+            check(saveFailure instanceof IllegalArgumentException &&
+                    saveFailure.getMessage() != null && saveFailure.getMessage().contains("epoch") &&
+                    !coordinatorEntered,
+                "actual save parser rejects prior-v25 placement " + placementVersion +
+                    " before coordinator restore entry");
+            check(sim.generationCoordinator == coordinator && coordinator.getJob() == beforeJob &&
+                    sim.getGeneratedBoardInstance() == beforeOwner && sim.elmList == beforeElements,
+                "prior-v25 placement " + placementVersion +
+                    " intake preserves the existing coordinator, job and graph owner");
+            final PlayerSessionHistory afterHistory = beforeOwner == null ||
+                beforeOwner.getPhysicalBoardRuntime() == null ? null :
+                beforeOwner.getPhysicalBoardRuntime().getSessionHistory();
+            check(beforeHistory == afterHistory && (beforeHistory == null ||
+                    sameOperations(beforeHistoryOperations, afterHistory.operations())),
+                "prior-v25 placement " + placementVersion +
+                    " intake preserves any existing owner's session history");
+        }
+    }
+
+    private static boolean sameOperations(Vector<PlayerSessionSave.Operation> left,
+            Vector<PlayerSessionSave.Operation> right) {
+        if (left == null || right == null) return left == right;
+        if (left.size() != right.size()) return false;
+        for (int index = 0; index < left.size(); index++) {
+            PlayerSessionSave.Operation a = left.get(index), b = right.get(index);
+            if (!a.kind.equals(b.kind) || !a.owner.equals(b.owner) ||
+                    !a.argument.equals(b.argument) || !a.result.equals(b.result)) return false;
+        }
+        return true;
     }
 
     private static PlayerSessionSave emptySave(String replay) {

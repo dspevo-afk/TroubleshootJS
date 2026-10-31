@@ -1,0 +1,588 @@
+{
+  "schema": "q100-visible-player1-evidence-v1",
+  "status": "PASS_SCOPED_KNOWN_R3_REPAIR_AND_SAVE_ROUNDTRIP_WITH_PRESERVED_NEGATIVE",
+  "scope": {
+    "scenario": "PUBLIC_NORMAL_RB56",
+    "placementInterpretation": 15,
+    "dependencyEpoch": 24,
+    "compiledPlayerBuild": "player-final1",
+    "compiledPrivacyEvidence": "SEPARATE; see final-player-privacy1.json",
+    "q100RouteQualification": false,
+    "all100PartQualification": false,
+    "privatePlacement1Or2RuntimeQualification": false,
+    "allSeedQualification": false,
+    "betaQualification": false,
+    "playerPopulationQualification": "NOT CLAIMED"
+  },
+  "interactionEvidence": {
+    "inputMethod": "Actual visible player controls with read-only DOM/screenshot inspection",
+    "injectedControllerCalls": false,
+    "cdpUsed": false,
+    "cdpDocumentationReadOnly": true,
+    "screenshotReview": "Root inspected all five actual captures; this curation verified file presence, JPEG signature and hash.",
+    "timing": {
+      "prepareElapsed": "NOT MEASURED",
+      "restoreElapsed": "NOT MEASURED",
+      "strictTransportWrapperClaim": false,
+      "humanQualificationClaim": false
+    }
+  },
+  "visibleSequence": {
+    "negativeHistoricalReplay": {
+      "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/532281179137453497",
+      "ticketAccepted": true,
+      "initialRetest": "FAIL",
+      "powerOffSources": [
+        "MAINAC",
+        "LOAD12",
+        "SENSOR_A",
+        "SENSOR_B"
+      ],
+      "pickerSelection": "RENAC",
+      "removedPart": "RENAC / part 10",
+      "shopItem": "10,000 ohm medium-spacing resistor",
+      "catalogOwner": "RDB",
+      "acquiredCatalogEntry": "R_CATALOG_10000",
+      "acquiredPart": "RDB_CATALOG_PART_0",
+      "installedAs": "RENAC",
+      "poweredOnAndSettled": true,
+      "finalRetest": "FAIL",
+      "classification": "PRESERVED_NEGATIVE_UNRESOLVED_REPAIR_RESULT",
+      "interpretation": "The attempted RENAC repair was initially matched to the wrong historical seed; do not treat this as a diagnostic PASS or as a product defect.",
+      "screenshotRefs": [
+        "screenshots-final1/01-medium-ticket.jpg",
+        "screenshots-final1/02-unrepaired-retest.jpg",
+        "screenshots-final1/03-isolated-renac.jpg"
+      ]
+    },
+    "knownR3Replay": {
+      "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-6794211680707017382",
+      "ticketAccepted": true,
+      "initialRetest": "FAIL",
+      "pristineExportHistoryCount": 0,
+      "powerOffSources": [
+        "MAINAC",
+        "LOAD12",
+        "SENSOR_A",
+        "SENSOR_B"
+      ],
+      "pickerSelection": "RENAC",
+      "removedPart": "RENAC / part 10",
+      "shopItem": "10,000 ohm medium-spacing resistor",
+      "catalogOwner": "RDA",
+      "acquiredCatalogEntry": "R_CATALOG_10000",
+      "acquiredPart": "RDA_CATALOG_PART_0",
+      "installedAs": "RENAC",
+      "onlyPartInstalled": true,
+      "poweredOnAndSettled": true,
+      "repairedRetest": "PASS",
+      "repairedExport": "visible-renac-repaired1.tsjsave",
+      "repairedHistoryCount": 11,
+      "actualFileChooserLoad": "visible-renac-repaired-1.tsjsave",
+      "stagedRestoreTerminal": "Session restored. Transient behavior restarted; retest the board.",
+      "freshPostRestoreRetest": "PASS",
+      "restoredExport": "visible-renac-restored1.tsjsave",
+      "restoredHistoryCount": 11,
+      "screenshotRefs": [
+        "screenshots-final1/04-repaired-retest-pass.jpg",
+        "screenshots-final1/05-restored-retest-pass.jpg"
+      ],
+      "repairedSourceExport": "visible-renac-repaired-1.tsjsave",
+      "restoredSourceExport": "visible-renac-restored-1.tsjsave"
+    }
+  },
+  "sessionExports": [
+    {
+      "destination": "visible-negative-replacement1.tsjsave",
+      "source": "visible-negative-replacement-1.tsjsave",
+      "bytes": 2094,
+      "sha256": "fd9c1399eeb1d5c5f31220ee501d74a86ee541036fe6dfc3dfd1802f08e00563",
+      "byteIdenticalToDestination": true,
+      "format": {
+        "schema": "tsj-session/1",
+        "model": "tsj-session-model/1",
+        "dynamics": "restart",
+        "framingParse": "PASS_READONLY_LENGTH_DELIMITED_SECTION_ORDER",
+        "trailingData": false,
+        "characters": 2094
+      },
+      "replayIdentity": "tsj-alpha/7/MEDIUM/RB56_CONTROL/532281179137453497",
+      "seed": "532281179137453497",
+      "buildFieldSha256": "c2fa64972fcfea7d34e07792f2918ec4bcc5480c925426dcbbadadc5f3fd6daf",
+      "realizationFieldSha256": "c46d2b1b77e403fb15d8a2518577bf8901ccc229d5df5cd71dd00ec7f3ffa2e7",
+      "stateSignatureSha256": "37eb0f65d8988d71526dfb9f6cf6b9b77fc3e1d14ebe6a747ae553f24cc8e9cd",
+      "historyCount": 11,
+      "historyHash": "c47c226e1d81bcca78a496edc0b4d9e152549212398132434731f7f2635f08ee",
+      "historyOperations": [
+        {
+          "kind": "SOURCE",
+          "owner": "MAINAC",
+          "argument": "DISCONNECTED",
+          "result": "NONE"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "LOAD12",
+          "argument": "DISCONNECTED",
+          "result": "0.25"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "SENSOR_A",
+          "argument": "DISCONNECTED",
+          "result": "0.25"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "SENSOR_B",
+          "argument": "DISCONNECTED",
+          "result": "0.25"
+        },
+        {
+          "kind": "REMOVE",
+          "owner": "RENAC",
+          "argument": "RENAC",
+          "result": ""
+        },
+        {
+          "kind": "ACQUIRE",
+          "owner": "RDB",
+          "argument": "R_CATALOG_10000",
+          "result": "RDB_CATALOG_PART_0"
+        },
+        {
+          "kind": "INSTALL",
+          "owner": "RENAC",
+          "argument": "RDB_CATALOG_PART_0",
+          "result": ""
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "MAINAC",
+          "argument": "CONNECTED",
+          "result": "NONE"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "LOAD12",
+          "argument": "CONNECTED",
+          "result": "0.25"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "SENSOR_A",
+          "argument": "CONNECTED",
+          "result": "0.25"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "SENSOR_B",
+          "argument": "CONNECTED",
+          "result": "0.25"
+        }
+      ],
+      "sourceCount": 4,
+      "sourceHash": "fa1facf7a2e0e5e0075558edf3405ba819c41944d2b904029de63a01b8a1cb0a",
+      "sources": [
+        {
+          "id": "LOAD12",
+          "connection": "CONNECTED",
+          "limit": "3fd0000000000000"
+        },
+        {
+          "id": "MAINAC",
+          "connection": "CONNECTED",
+          "limit": "NONE"
+        },
+        {
+          "id": "SENSOR_A",
+          "connection": "CONNECTED",
+          "limit": "3fd0000000000000"
+        },
+        {
+          "id": "SENSOR_B",
+          "connection": "CONNECTED",
+          "limit": "3fd0000000000000"
+        }
+      ],
+      "stressCount": 23,
+      "stressHash": "93dc9da0f8110e51f49259210b2cc7ce5503753c3fe2945a0565cbfe1a3ca6c4",
+      "fuseCount": 1,
+      "fuseHash": "ffa3fb562e4f8e603a96125b8318acab5bda13dba6fa16fa8a19ddea8cc40368",
+      "routeRole": "NEGATIVE_WRONG_HISTORICAL_REPAIR"
+    },
+    {
+      "destination": "visible-renac-pristine1.tsjsave",
+      "source": "visible-renac-pristine-1.tsjsave",
+      "bytes": 1483,
+      "sha256": "aa993698c025abd94956c3a2ce3c59d2893d36fabf1cbc6a755e135eb194bd23",
+      "byteIdenticalToDestination": true,
+      "format": {
+        "schema": "tsj-session/1",
+        "model": "tsj-session-model/1",
+        "dynamics": "restart",
+        "framingParse": "PASS_READONLY_LENGTH_DELIMITED_SECTION_ORDER",
+        "trailingData": false,
+        "characters": 1483
+      },
+      "replayIdentity": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-6794211680707017382",
+      "seed": "-6794211680707017382",
+      "buildFieldSha256": "c2fa64972fcfea7d34e07792f2918ec4bcc5480c925426dcbbadadc5f3fd6daf",
+      "realizationFieldSha256": "6c58c448181465e016dd8418f0a27777f07335e0fe58dcbaf11099a0b772cc43",
+      "stateSignatureSha256": "a3a11ef35c39934ce5c183918f35976b2274b418db08aa0a51f9a049e64ecb31",
+      "historyCount": 0,
+      "historyHash": "45938c4e98195c56c3f674b0e0408a6fdf966f87b1a105855e98e6ab9c5bf291",
+      "historyOperations": [],
+      "sourceCount": 4,
+      "sourceHash": "fa1facf7a2e0e5e0075558edf3405ba819c41944d2b904029de63a01b8a1cb0a",
+      "sources": [
+        {
+          "id": "LOAD12",
+          "connection": "CONNECTED",
+          "limit": "3fd0000000000000"
+        },
+        {
+          "id": "MAINAC",
+          "connection": "CONNECTED",
+          "limit": "NONE"
+        },
+        {
+          "id": "SENSOR_A",
+          "connection": "CONNECTED",
+          "limit": "3fd0000000000000"
+        },
+        {
+          "id": "SENSOR_B",
+          "connection": "CONNECTED",
+          "limit": "3fd0000000000000"
+        }
+      ],
+      "stressCount": 20,
+      "stressHash": "c4a61112990d73265bc52ee528c46cfa4ff87b4f760c425c32b6f5156aa33e11",
+      "fuseCount": 1,
+      "fuseHash": "764910097172af685d4c4d317bfaaa74fdca850538cb4a50f6f3aafea4f96508",
+      "routeRole": "KNOWN_RENAC_FIXTURE_PRISTINE"
+    },
+    {
+      "destination": "visible-renac-repaired1.tsjsave",
+      "source": "visible-renac-repaired-1.tsjsave",
+      "bytes": 1979,
+      "sha256": "b64c6ea482aa8cda169725a7af7c446152f682bc3d77d6ae24821968b680067d",
+      "byteIdenticalToDestination": true,
+      "format": {
+        "schema": "tsj-session/1",
+        "model": "tsj-session-model/1",
+        "dynamics": "restart",
+        "framingParse": "PASS_READONLY_LENGTH_DELIMITED_SECTION_ORDER",
+        "trailingData": false,
+        "characters": 1979
+      },
+      "replayIdentity": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-6794211680707017382",
+      "seed": "-6794211680707017382",
+      "buildFieldSha256": "c2fa64972fcfea7d34e07792f2918ec4bcc5480c925426dcbbadadc5f3fd6daf",
+      "realizationFieldSha256": "6c58c448181465e016dd8418f0a27777f07335e0fe58dcbaf11099a0b772cc43",
+      "stateSignatureSha256": "0078b87ec28f8fb25699bb8b0033d26788d7d4b6d5ca14e398b465c27b8f0732",
+      "historyCount": 11,
+      "historyHash": "899f4d3203bca617f87f9c71f104ee7caf8581fc966362b351cbfbbebe40175d",
+      "historyOperations": [
+        {
+          "kind": "SOURCE",
+          "owner": "MAINAC",
+          "argument": "DISCONNECTED",
+          "result": "NONE"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "LOAD12",
+          "argument": "DISCONNECTED",
+          "result": "0.25"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "SENSOR_A",
+          "argument": "DISCONNECTED",
+          "result": "0.25"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "SENSOR_B",
+          "argument": "DISCONNECTED",
+          "result": "0.25"
+        },
+        {
+          "kind": "REMOVE",
+          "owner": "RENAC",
+          "argument": "RENAC",
+          "result": ""
+        },
+        {
+          "kind": "ACQUIRE",
+          "owner": "RDA",
+          "argument": "R_CATALOG_10000",
+          "result": "RDA_CATALOG_PART_0"
+        },
+        {
+          "kind": "INSTALL",
+          "owner": "RENAC",
+          "argument": "RDA_CATALOG_PART_0",
+          "result": ""
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "MAINAC",
+          "argument": "CONNECTED",
+          "result": "NONE"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "LOAD12",
+          "argument": "CONNECTED",
+          "result": "0.25"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "SENSOR_A",
+          "argument": "CONNECTED",
+          "result": "0.25"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "SENSOR_B",
+          "argument": "CONNECTED",
+          "result": "0.25"
+        }
+      ],
+      "sourceCount": 4,
+      "sourceHash": "fa1facf7a2e0e5e0075558edf3405ba819c41944d2b904029de63a01b8a1cb0a",
+      "sources": [
+        {
+          "id": "LOAD12",
+          "connection": "CONNECTED",
+          "limit": "3fd0000000000000"
+        },
+        {
+          "id": "MAINAC",
+          "connection": "CONNECTED",
+          "limit": "NONE"
+        },
+        {
+          "id": "SENSOR_A",
+          "connection": "CONNECTED",
+          "limit": "3fd0000000000000"
+        },
+        {
+          "id": "SENSOR_B",
+          "connection": "CONNECTED",
+          "limit": "3fd0000000000000"
+        }
+      ],
+      "stressCount": 21,
+      "stressHash": "f22673ca903d2048623c1dab7b8b88a758a5acec61e9836851c393aa1c801394",
+      "fuseCount": 1,
+      "fuseHash": "3c7b4080d26790e771d0a41369e65fcb46a9571dc28a93da24615db70934bf5c",
+      "routeRole": "KNOWN_RENAC_FIXTURE_REPAIRED"
+    },
+    {
+      "destination": "visible-renac-restored1.tsjsave",
+      "source": "visible-renac-restored-1.tsjsave",
+      "bytes": 1979,
+      "sha256": "b40a2a49963d976b33b2263550ae3bca0cfbc7d256754d2a57bca9a5259e9398",
+      "byteIdenticalToDestination": true,
+      "format": {
+        "schema": "tsj-session/1",
+        "model": "tsj-session-model/1",
+        "dynamics": "restart",
+        "framingParse": "PASS_READONLY_LENGTH_DELIMITED_SECTION_ORDER",
+        "trailingData": false,
+        "characters": 1979
+      },
+      "replayIdentity": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-6794211680707017382",
+      "seed": "-6794211680707017382",
+      "buildFieldSha256": "c2fa64972fcfea7d34e07792f2918ec4bcc5480c925426dcbbadadc5f3fd6daf",
+      "realizationFieldSha256": "6c58c448181465e016dd8418f0a27777f07335e0fe58dcbaf11099a0b772cc43",
+      "stateSignatureSha256": "e2df1eb086b0d1b12784601417570105756ee57726468172a1d6c3392a2cfe68",
+      "historyCount": 11,
+      "historyHash": "899f4d3203bca617f87f9c71f104ee7caf8581fc966362b351cbfbbebe40175d",
+      "historyOperations": [
+        {
+          "kind": "SOURCE",
+          "owner": "MAINAC",
+          "argument": "DISCONNECTED",
+          "result": "NONE"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "LOAD12",
+          "argument": "DISCONNECTED",
+          "result": "0.25"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "SENSOR_A",
+          "argument": "DISCONNECTED",
+          "result": "0.25"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "SENSOR_B",
+          "argument": "DISCONNECTED",
+          "result": "0.25"
+        },
+        {
+          "kind": "REMOVE",
+          "owner": "RENAC",
+          "argument": "RENAC",
+          "result": ""
+        },
+        {
+          "kind": "ACQUIRE",
+          "owner": "RDA",
+          "argument": "R_CATALOG_10000",
+          "result": "RDA_CATALOG_PART_0"
+        },
+        {
+          "kind": "INSTALL",
+          "owner": "RENAC",
+          "argument": "RDA_CATALOG_PART_0",
+          "result": ""
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "MAINAC",
+          "argument": "CONNECTED",
+          "result": "NONE"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "LOAD12",
+          "argument": "CONNECTED",
+          "result": "0.25"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "SENSOR_A",
+          "argument": "CONNECTED",
+          "result": "0.25"
+        },
+        {
+          "kind": "SOURCE",
+          "owner": "SENSOR_B",
+          "argument": "CONNECTED",
+          "result": "0.25"
+        }
+      ],
+      "sourceCount": 4,
+      "sourceHash": "fa1facf7a2e0e5e0075558edf3405ba819c41944d2b904029de63a01b8a1cb0a",
+      "sources": [
+        {
+          "id": "LOAD12",
+          "connection": "CONNECTED",
+          "limit": "3fd0000000000000"
+        },
+        {
+          "id": "MAINAC",
+          "connection": "CONNECTED",
+          "limit": "NONE"
+        },
+        {
+          "id": "SENSOR_A",
+          "connection": "CONNECTED",
+          "limit": "3fd0000000000000"
+        },
+        {
+          "id": "SENSOR_B",
+          "connection": "CONNECTED",
+          "limit": "3fd0000000000000"
+        }
+      ],
+      "stressCount": 21,
+      "stressHash": "684fb675063e5ced15294f2102222c74205f1428cfebc3ceb9b754534ed80895",
+      "fuseCount": 1,
+      "fuseHash": "3c7b4080d26790e771d0a41369e65fcb46a9571dc28a93da24615db70934bf5c",
+      "routeRole": "KNOWN_RENAC_FIXTURE_RESTORED"
+    }
+  ],
+  "repairedRestoreComparison": {
+    "repairedAndRestoredReplayEqual": true,
+    "repairedAndRestoredBuildFieldEqual": true,
+    "repairedAndRestoredRealizationFieldEqual": true,
+    "repairedAndRestoredHistoryEqual": true,
+    "repairedAndRestoredSourcesEqual": true,
+    "repairedAndRestoredSourceRecordsEqual": true,
+    "repairedAndRestoredStateSignatureEqual": false,
+    "repairedAndRestoredStressSectionEqual": false,
+    "byteIdenticalSaveRequired": false,
+    "note": "Replay/build/realization/history/source identity matched; the saved state signature may change with allowed stress progression."
+  },
+  "screenshotArtifacts": [
+    {
+      "path": "screenshots-final1/01-medium-ticket.jpg",
+      "role": "first replay: accepted ticket",
+      "bytes": 68680,
+      "sha256": "867224399858a25d208d45e13cbc0496c15e4ccbb939c209b3fc171485899d90",
+      "jpegSignature": "FFD8FF",
+      "signatureValid": true,
+      "rootInspected": true
+    },
+    {
+      "path": "screenshots-final1/02-unrepaired-retest.jpg",
+      "role": "first replay: unrepaired retest FAIL",
+      "bytes": 103507,
+      "sha256": "500e5401949b2605f2b7a668e0d70c34381d46e777752f65496f8f44c84f2046",
+      "jpegSignature": "FFD8FF",
+      "signatureValid": true,
+      "rootInspected": true
+    },
+    {
+      "path": "screenshots-final1/03-isolated-renac.jpg",
+      "role": "first replay: isolated RENAC after power off",
+      "bytes": 113626,
+      "sha256": "fc195efa319a7255d3941e95d637dba915cf5b8cf4d48c27b9378d6cab997759",
+      "jpegSignature": "FFD8FF",
+      "signatureValid": true,
+      "rootInspected": true
+    },
+    {
+      "path": "screenshots-final1/04-repaired-retest-pass.jpg",
+      "role": "known R3 replay: repaired retest PASS",
+      "bytes": 72305,
+      "sha256": "9ad0b0b0a0dca946495ba6d07017f4f4e253af56a448f7087fb5b6319187d8a1",
+      "jpegSignature": "FFD8FF",
+      "signatureValid": true,
+      "rootInspected": true
+    },
+    {
+      "path": "screenshots-final1/05-restored-retest-pass.jpg",
+      "role": "known R3 replay: restored-session retest PASS",
+      "bytes": 72305,
+      "sha256": "9ad0b0b0a0dca946495ba6d07017f4f4e253af56a448f7087fb5b6319187d8a1",
+      "jpegSignature": "FFD8FF",
+      "signatureValid": true,
+      "rootInspected": true
+    }
+  ],
+  "screenshotCaptureNote": "04 and 05 are distinct captures from separate visible interactions, although their encoded JPEG bytes and SHA-256 are identical.",
+  "previewCleanup": {
+    "maintainedPreviewPort": 8949,
+    "tabClosed": true,
+    "stopPreviewExitCode": 0,
+    "stopPreviewResult": "Positively released port 8949",
+    "ownedPreviewCurrentlyLive": false
+  },
+  "formatParseBoundary": {
+    "result": "PASS_READONLY_LENGTH_DELIMITED_SECTION_ORDER",
+    "parserBasis": "PlayerSessionSave current wire schema, section ordering, canonical decimal lengths/counts, field/count ceilings and no-trailing-data rule",
+    "productParserExecuted": false,
+    "runtimeReconstructionExecuted": false
+  },
+  "provenance": {
+    "buildIdentityProtocol": "troubleshootjs-production-build-identity-v1",
+    "buildVariant": "Player",
+    "buildStyle": "OBF",
+    "buildInputDigest": "ec046715efbdc5fde13e5f0a86e89b1bedf2641eb45f72061e00847caf764bca",
+    "buildOutputDigest": "1619931b4085bb98881de35639e843dbc4d17e7786e32067f2a2d63f3c2b7914",
+    "buildOutputFileCount": 357,
+    "saveExportsByteIdentical": true,
+    "screenshotSourceFilesModified": false
+  }
+}

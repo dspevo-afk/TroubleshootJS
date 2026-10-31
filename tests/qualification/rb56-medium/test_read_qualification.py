@@ -23,7 +23,7 @@ def artifact():
 
 def normal_manifest(seed, search):
     return ("tsj-generation-request/5;advanced-control@2;native;fixture;"
-            f"replay=tsj-alpha/7/MEDIUM/RB56_CONTROL/{seed};quickPlay=false;layout=20;"
+            f"replay=tsj-alpha/7/MEDIUM/RB56_CONTROL/{seed};quickPlay=false;layout=25;"
             "plan=fixture;"
             "parts=[R1:RESISTOR:PASSIVE:RES_10K:0.0:channel:input|pads]"
             "[C1:CAPACITOR:PASSIVE:CAP_1UF:4.7E-5:channel:input|pads]"
@@ -101,7 +101,7 @@ def capture(normal=False, partition=None, partition_ordinal=0):
         scope="NORMAL_MEDIUM_COLD_POPULATION" if normal else "PRIVATE_SHARED_WORKBENCH",
         phase="RESTORED", rootSeed=root, normalRequest=normal, normalCatalogEnabled=True,
         sourceEpoch=reader.EPOCHS["dependency"], modelEpoch=reader.EPOCHS["model"],
-        replayEpoch=reader.EPOCHS["replay"], layoutVersion=20, packages=packages,
+        replayEpoch=reader.EPOCHS["replay"], layoutVersion=25, packages=packages,
         requestManifest=request, acceptedManifest=attempts[-1]["manifest"], candidateAttempts=attempts,
         difficultyFeatures=features, normalProfileAssessment=features.replace(
             "tsj-difficulty-calibration/1;status=UNCALIBRATED", "difficulty/3;profile=MEDIUM"),
@@ -266,6 +266,16 @@ class ReaderContracts(unittest.TestCase):
             for key, value in mutations.items():
                 bad = copy.deepcopy(item); bad["report"][key] = value
                 with self.subTest(normal=normal, key=key), self.assertRaises(ValueError):
+                    reader.check_capture(bad, plan, item["partition"], 0)
+            for key, value in (("sourceEpoch", "tsj-generation-dependencies-v25"),
+                               ("sourceEpoch", "tsj-generation-dependencies-v24"),
+                               ("sourceEpoch", "tsj-generation-dependencies-v23"),
+                               ("sourceEpoch", "tsj-generation-dependencies-v22"),
+                               ("sourceEpoch", "tsj-generation-dependencies-v21"),
+                               ("layoutVersion", 24), ("layoutVersion", 23), ("layoutVersion", 22),
+                               ("layoutVersion", 21), ("layoutVersion", 20)):
+                bad = copy.deepcopy(item); bad["report"][key] = value
+                with self.subTest(normal=normal, prior_epoch_field=key), self.assertRaises(ValueError):
                     reader.check_capture(bad, plan, item["partition"], 0)
             for alter in (
                 lambda r: r["proofRows"].pop(),

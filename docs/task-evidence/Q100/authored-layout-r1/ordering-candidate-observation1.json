@@ -1,0 +1,573 @@
+{
+  "schema": "troubleshootjs-q100-ordering-candidate-observation-v1",
+  "status": "PASS_OBSERVATION_ONLY_NO_LAYOUT_QUALIFICATION",
+  "evidence": "AM_P07_EXISTING_ORDER_CANDIDATE_OBSERVATION",
+  "scope": {
+    "description": "Three existing P07 ordering choices for one fixed saved seed-42 candidate; each trial is independently materialized, routed, and finalized through the exact Medium owner adapter.",
+    "layoutQualification": false,
+    "productionAdopted": false,
+    "fullGeneratorSessionQualification": false,
+    "sharedProductionBudgetProof": false,
+    "productionTimingClaim": false,
+    "full72Cohort": "NOT_RUN",
+    "q100Qualification": "NOT_CLAIMED",
+    "generationCancellationObserverExercised": false,
+    "attemptObserver": "NOOP_ATTEMPT_OBSERVER",
+    "ownerAdapterSessionCount": 1,
+    "ownerAdapterSessionInterpretation": "One unadvanced test Medium owner session is reused for three sequential finalizer/comparator calls. Per-order owner flags describe the immediate call; the final suite owner state matches ordering 2, not a full population search."
+  },
+  "identity": {
+    "caseId": "SAVED7_ROOT42_CANDIDATE4",
+    "familyId": "RB56_CONTROL",
+    "rootSeed": "42",
+    "placementInterpretationVersion": 7,
+    "placementSeed": "5526715536693200536",
+    "routingSeed": "4493419427463069983",
+    "routingSeedRole": "PLAN_IDENTITY_METADATA; P07_BACKEND_DOES_NOT_CONSUME_ROUTING_SEED",
+    "candidateAttempt": 4,
+    "topology": "RB56_CH2_SHARED_HYSTERETIC_A_NMOS_B_BJT_S5_true_S12_true_F2_O0_B5_false",
+    "packages": 54,
+    "pads": 131,
+    "logicalInventoryCanonicalSha256": "731fea0da4d7f9fd2404cc2979013ce41062d99d534324220a59ece71afa4b7e",
+    "logicalInventoryCanonicalLength": 4632,
+    "logicalBoardIdentitySha256": "6b87db36bf3bdeb5f615ac38e6eb7fc5fef92e6b9c059b79c7be9945d335205a",
+    "logicalBoardIdentityLength": 5061,
+    "materializedInputGeometrySha256": "52c34368cef8518181ea6b338cb1473ad3bfbd76518b730e9cf144ba958f5f13",
+    "materializedInputGeometryLength": 134269,
+    "planVersion": 1,
+    "layoutVersion": 24,
+    "dependencyEpoch": "tsj-generation-dependencies-v25",
+    "physicalPolicyId": "MEDIUM_BOARD",
+    "physicalPolicyVersion": 1,
+    "placementDensityVersion": 7,
+    "placementPackingVersion": 1,
+    "routingLayer": "BOTTOM",
+    "requiresTwoLayerRouting": true,
+    "traceWidthProfile": "UNIFORM_TRACE@1",
+    "ownerCandidateCheapScore": 1840738,
+    "ownerCandidateCanonicalSha256": "8cefb257de48ca03d9495e0e63c44617cc971c3adcad234515568e93f368f974",
+    "ownerCandidateCanonicalLength": 125
+  },
+  "request": {
+    "producer": "SeededPcbLayoutGenerator.advanceMediumRoute",
+    "routeName": "P07_FULLER_TWO_LAYER",
+    "backendPolicy": "FULLER_TWO_LAYER",
+    "orderingIndices": [
+      0,
+      1,
+      2
+    ],
+    "orderingSelectionMechanism": "TEST_ONLY_REFLECTION_SET_PRIVATE_SESSION_PASS_BEFORE_FIRST_ADVANCE",
+    "postprocessing": "NONE",
+    "ownerFinalizer": "finishMediumTwoLayerRoute(board,plan.layoutSeed,actualPlacementCandidate,completedRouteResult)",
+    "ownerComparator": "considerMediumLayout(testOnlyMediumSession,actualPlacementCandidate,actualRoutedCandidate,true)",
+    "ownerAdapterScope": "EXACT_EXISTING_RB56_FINISHER_AND_DENSITY_7_COMPARATOR; TEST SESSION ONLY",
+    "totalExpansionLimitPerIndependentTrial": 1000000,
+    "branchExpansionLimit": 100000,
+    "gridCellLimit": 250000,
+    "maxOrderings": 3,
+    "maxVias": 48,
+    "budgetsAreIndependent": true,
+    "materializeAndRouteCallSequenceMatchesProduction": true,
+    "eachTrialStartsFromFreshIdenticalPlannerMaterialization": true
+  },
+  "sourceAndInputs": {
+    "snapshotRevision": 1,
+    "inputRevision": 3,
+    "inputCount": 1059,
+    "inputBytes": 85387749,
+    "pinsSha256": "0cde024baf712b2bd7cc0f736a6c851cb12fe78f7d1294d62b7b75c08b564607",
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "unchangedInputsRelativeParent": 1058,
+    "changedInputCount": 1,
+    "changedInputPath": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+    "changedInputBeforeSha256": "634565ed093983d74f15e292299cb5477ba5daaed02b5d387a7bde49bd558dd8",
+    "changedInputAfterSha256": "6e1dd174442915e92b56ec16098b9e9991d0d8ae194c1fa2c16938596f947481",
+    "overlayAuditSha256": "50e5785bc8aca360b61ae256ba8eed0b959a96cca0bf673a2002d414fabe2fa9",
+    "parentCopyAudit": "PASS_BYTE_IDENTICAL_PENDING_OVERLAY",
+    "parentCopyPathCount": 1059,
+    "parentPostCopyStatus": "PASS_UNCHANGED",
+    "productionSourceChanged": false,
+    "queryPcbNetRouterSha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a",
+    "sourceHarnessRevision": 2,
+    "pinnedPcbLayerRoutingPrototypeSha256": "b0be7e2c553eca09df2109ab242676434324615ef45721024d11491731ffac5d"
+  },
+  "suite": {
+    "status": "PASS_OBSERVATION_ONLY",
+    "caseCount": 1,
+    "frameCount": 3,
+    "branchRecordCount": 291,
+    "caseRecordCount": 3,
+    "forcedOrderings": [
+      0,
+      1,
+      2
+    ],
+    "orderStatuses": [
+      {
+        "ordering": 0,
+        "rawOutcome": "SUCCESS",
+        "finalization": "FINALIZED_AND_CONSIDERED_BY_EXISTING_OWNER"
+      },
+      {
+        "ordering": 1,
+        "rawOutcome": "SUCCESS",
+        "finalization": "FINALIZED_AND_CONSIDERED_BY_EXISTING_OWNER"
+      },
+      {
+        "ordering": 2,
+        "rawOutcome": "SUCCESS",
+        "finalization": "FINALIZED_AND_CONSIDERED_BY_EXISTING_OWNER"
+      }
+    ],
+    "diagnosticTrialCount": 3,
+    "diagnosticsDisabledParityTrialCount": 3,
+    "diagnosticTrialExpansionSum": 683850,
+    "diagnosticsDisabledTrialExpansionSum": 683850,
+    "allMeasuredTrialExpansionSum": 1367700,
+    "rawAcceptedOrderCount": 3,
+    "finalizedAndConsideredOrderCount": 3,
+    "sharedProductionBudgetClaim": false,
+    "assertions": 13847643,
+    "nativeElapsedMs": 4704,
+    "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+    "ownerWinner": {
+      "attempt": 4,
+      "area": 6371585,
+      "qualityMilli": 276930281,
+      "bounds": {
+        "x": 40,
+        "y": 25,
+        "width": 3131,
+        "height": 2035
+      },
+      "geometrySha256": "4486304d0971a5e8dbf574bb163f3a02c8c33a6151e851a8329ad93bdbc2f83a",
+      "matchingFinalizedOrderingIndex": 2
+    },
+    "ownerWinnerInterpretation": "Final test-session owner state after the sequential three calls; not evidence of full generator population selection."
+  },
+  "orderingResults": [
+    {
+      "index": 0,
+      "result": {
+        "diagnosticOutcome": "SUCCESS",
+        "diagnosticAccepted": true,
+        "diagnosticSessionComplete": true,
+        "diagnosticExpansions": 300782,
+        "diagnosticResultOrderings": 1,
+        "branches": 97,
+        "branchExpandedTotal": 300782,
+        "vias": 48,
+        "diagnosticsDisabledOutcome": "SUCCESS",
+        "diagnosticsDisabledAccepted": true,
+        "diagnosticsDisabledExpansions": 300782,
+        "diagnosticsDisabledResultOrderings": 1,
+        "diagnosticParity": true
+      },
+      "rawOutput": {
+        "geometrySha256": "e29cfd686e110d9be45815b10e590a5bb6e8b369c0def3a3ec0b6477dff623c1",
+        "traceGeometrySha256": "37aca52815e73724a72100edd91f360da6e9f9a1f9b8d7f394a27935350dacc3",
+        "p08CanonicalSha256": "998bd02cde33d034aad49e4095be8d3c2697134fede04b498f426c4c816b9785",
+        "validation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "orderedPadPairs": 17161,
+        "referenceClearancePairs": 18899,
+        "exactClearancePairs": 0,
+        "potentialClearancePairs": 30628,
+        "rasterOrderedPadPairs": 17161,
+        "p08Segments": 248,
+        "p08Lands": 358,
+        "viaCount": 48,
+        "viaHoleCount": 48,
+        "holeCount": 48,
+        "rasterViaBarrels": 48
+      },
+      "finalizedOutput": {
+        "finalizationStatus": "FINALIZED_AND_CONSIDERED_BY_EXISTING_OWNER",
+        "finalizerInvoked": true,
+        "consideredByExistingOwner": true,
+        "candidateCurrentOwnerWinnerInTestSession": true,
+        "geometrySha256": "d30c178744295381a174cfb58f9e20b22bf5cdd812847c5d24f598b15fb3cdb4",
+        "area": 6524231,
+        "qualityMilli": 279700731,
+        "bounds": {
+          "x": 40,
+          "y": 9,
+          "width": 3181,
+          "height": 2051
+        },
+        "p08CanonicalSha256": "a3b5cab5dffd2bac566ba395a8bc3dbaa3f63f39b5eafa1a58d54eb82b5f4026",
+        "validation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "orderedPadPairs": 17161,
+        "referenceClearancePairs": 18899,
+        "exactClearancePairs": 0,
+        "potentialClearancePairs": 30628,
+        "rasterOrderedPadPairs": 17161,
+        "p08Segments": 248,
+        "p08Lands": 358,
+        "rasterViaBarrels": 48
+      },
+      "identityAndState": {
+        "diagnosticAndDisabledInputGeometryEqual": true,
+        "diagnosticInputMatchesCallerPlacement": true,
+        "disabledInputMatchesCallerPlacement": true,
+        "callerPlanUnchanged": true,
+        "logicalBoardIdentityBefore": "6b87db36bf3bdeb5f615ac38e6eb7fc5fef92e6b9c059b79c7be9945d335205a",
+        "logicalBoardIdentityAfter": "6b87db36bf3bdeb5f615ac38e6eb7fc5fef92e6b9c059b79c7be9945d335205a"
+      },
+      "nativeDiagnosticElapsedMs": 929,
+      "diagnosticsDisabledElapsedMs": 593
+    },
+    {
+      "index": 1,
+      "result": {
+        "diagnosticOutcome": "SUCCESS",
+        "diagnosticAccepted": true,
+        "diagnosticSessionComplete": true,
+        "diagnosticExpansions": 244723,
+        "diagnosticResultOrderings": 1,
+        "branches": 97,
+        "branchExpandedTotal": 244723,
+        "vias": 46,
+        "diagnosticsDisabledOutcome": "SUCCESS",
+        "diagnosticsDisabledAccepted": true,
+        "diagnosticsDisabledExpansions": 244723,
+        "diagnosticsDisabledResultOrderings": 1,
+        "diagnosticParity": true
+      },
+      "rawOutput": {
+        "geometrySha256": "995574d95bcad50479868d58c7a021df90cf83df72c4569bae532bcc91cda352",
+        "traceGeometrySha256": "b1b8f59c7edb0c8199d403876f1e354aad4a9b819799432f56c7cfd0007afe7e",
+        "p08CanonicalSha256": "2f35739a507de50485a909541fce18a360f01d1f3e9b627854994b4f00dff228",
+        "validation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "orderedPadPairs": 17161,
+        "referenceClearancePairs": 18336,
+        "exactClearancePairs": 0,
+        "potentialClearancePairs": 29890,
+        "rasterOrderedPadPairs": 17161,
+        "p08Segments": 245,
+        "p08Lands": 354,
+        "viaCount": 46,
+        "viaHoleCount": 46,
+        "holeCount": 46,
+        "rasterViaBarrels": 46
+      },
+      "finalizedOutput": {
+        "finalizationStatus": "FINALIZED_AND_CONSIDERED_BY_EXISTING_OWNER",
+        "finalizerInvoked": true,
+        "consideredByExistingOwner": true,
+        "candidateCurrentOwnerWinnerInTestSession": true,
+        "geometrySha256": "36e8d1a293b850e8533e731028547f273995ff448ba2b08bc61fb4d247739501",
+        "area": 6524231,
+        "qualityMilli": 279037635,
+        "bounds": {
+          "x": 40,
+          "y": 9,
+          "width": 3181,
+          "height": 2051
+        },
+        "p08CanonicalSha256": "ca51a21cc1ad06c370be7e289e2280f4b50c3ba3efb955ce83ac98c4cdfc521a",
+        "validation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "orderedPadPairs": 17161,
+        "referenceClearancePairs": 18336,
+        "exactClearancePairs": 0,
+        "potentialClearancePairs": 29890,
+        "rasterOrderedPadPairs": 17161,
+        "p08Segments": 245,
+        "p08Lands": 354,
+        "rasterViaBarrels": 46
+      },
+      "identityAndState": {
+        "diagnosticAndDisabledInputGeometryEqual": true,
+        "diagnosticInputMatchesCallerPlacement": true,
+        "disabledInputMatchesCallerPlacement": true,
+        "callerPlanUnchanged": true,
+        "logicalBoardIdentityBefore": "6b87db36bf3bdeb5f615ac38e6eb7fc5fef92e6b9c059b79c7be9945d335205a",
+        "logicalBoardIdentityAfter": "6b87db36bf3bdeb5f615ac38e6eb7fc5fef92e6b9c059b79c7be9945d335205a"
+      },
+      "nativeDiagnosticElapsedMs": 602,
+      "diagnosticsDisabledElapsedMs": 564
+    },
+    {
+      "index": 2,
+      "result": {
+        "diagnosticOutcome": "SUCCESS",
+        "diagnosticAccepted": true,
+        "diagnosticSessionComplete": true,
+        "diagnosticExpansions": 138345,
+        "diagnosticResultOrderings": 1,
+        "branches": 97,
+        "branchExpandedTotal": 138345,
+        "vias": 48,
+        "diagnosticsDisabledOutcome": "SUCCESS",
+        "diagnosticsDisabledAccepted": true,
+        "diagnosticsDisabledExpansions": 138345,
+        "diagnosticsDisabledResultOrderings": 1,
+        "diagnosticParity": true
+      },
+      "rawOutput": {
+        "geometrySha256": "5d414c56407f2b8f572f25f804301cd8438676140bd00dc8c0c303280eb3bc25",
+        "traceGeometrySha256": "52d1daf7c4bab09ecf311f79ab332b4e4e4cdcfcd4f624ac53ec6af33728ba20",
+        "p08CanonicalSha256": "3235b09379e77e2f5f502073f1c6a2bdf2d917ff516618e62fec9fe644217dca",
+        "validation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "orderedPadPairs": 17161,
+        "referenceClearancePairs": 16186,
+        "exactClearancePairs": 0,
+        "potentialClearancePairs": 27028,
+        "rasterOrderedPadPairs": 17161,
+        "p08Segments": 233,
+        "p08Lands": 358,
+        "viaCount": 48,
+        "viaHoleCount": 48,
+        "holeCount": 48,
+        "rasterViaBarrels": 48
+      },
+      "finalizedOutput": {
+        "finalizationStatus": "FINALIZED_AND_CONSIDERED_BY_EXISTING_OWNER",
+        "finalizerInvoked": true,
+        "consideredByExistingOwner": true,
+        "candidateCurrentOwnerWinnerInTestSession": true,
+        "geometrySha256": "4486304d0971a5e8dbf574bb163f3a02c8c33a6151e851a8329ad93bdbc2f83a",
+        "area": 6371585,
+        "qualityMilli": 276930281,
+        "bounds": {
+          "x": 40,
+          "y": 25,
+          "width": 3131,
+          "height": 2035
+        },
+        "p08CanonicalSha256": "22fbb88b0cb848694eaafb1d3ab50b5a520a22a4110c33e1d7759651bca11aca",
+        "validation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "orderedPadPairs": 17161,
+        "referenceClearancePairs": 16186,
+        "exactClearancePairs": 0,
+        "potentialClearancePairs": 27028,
+        "rasterOrderedPadPairs": 17161,
+        "p08Segments": 233,
+        "p08Lands": 358,
+        "rasterViaBarrels": 48
+      },
+      "identityAndState": {
+        "diagnosticAndDisabledInputGeometryEqual": true,
+        "diagnosticInputMatchesCallerPlacement": true,
+        "disabledInputMatchesCallerPlacement": true,
+        "callerPlanUnchanged": true,
+        "logicalBoardIdentityBefore": "6b87db36bf3bdeb5f615ac38e6eb7fc5fef92e6b9c059b79c7be9945d335205a",
+        "logicalBoardIdentityAfter": "6b87db36bf3bdeb5f615ac38e6eb7fc5fef92e6b9c059b79c7be9945d335205a"
+      },
+      "nativeDiagnosticElapsedMs": 377,
+      "diagnosticsDisabledElapsedMs": 354
+    }
+  ],
+  "nativeExecution": {
+    "helperExitCode": 0,
+    "elapsedSeconds": 33.8997573,
+    "nativeElapsedMs": 4704,
+    "cleanupProof": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+    "cleanupDurationSeconds": "NOT_REPORTED_SEPARATELY",
+    "terminationProven": true,
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "nativeChildLimitMs": 60000,
+    "outerWatchdogMs": 600000,
+    "stdoutBytes": 382901,
+    "stdoutSha256": "1ed9ff077ef4acfad3bfe17812d281690c36ebfe2e259d8fbb6bafb2f51a60dc",
+    "stderrBytes": 0,
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "jdk": "javac 1.8.0_502"
+  },
+  "strictReader": {
+    "status": "PASS",
+    "summary": "ordering-candidate-reader-1/ordering-candidate-summary.json",
+    "summarySha256": "c298e547b008f5b30e0a29c85afe15f91f67e7f2605c97a99e7f0a63012e4466",
+    "summaryBytes": 4235,
+    "source": "ordering-candidate-reader-1/read_ordering_candidate.ps1",
+    "sourceSha256": "ef1209394d8982919a26b607ee42372693317c4ad7148013ff48d2a0d512e8b2",
+    "sourceBytes": 21103,
+    "executionExitCode": 0,
+    "elapsedSeconds": "NOT_REPORTED",
+    "stderr": "NOT_REPORTED",
+    "checks": [
+      "Final strict reader status PASS; it validates the 1,059-input pre/post audit and pinned harness.",
+      "Full typed stream census: 3 frames, 291 branch records, 3 cases, and 1 suite.",
+      "Frame and case identity binding against the corrected U witness and fixed seed-42/v7/attempt-4 identity.",
+      "Three complete forced orderings; raw and finalized output checks passed, including P08, reference clearance, and layered raster checks.",
+      "Per-order P08 land and via/hole/barrel counts are observed and checked, not assumed constant."
+    ],
+    "identityWitness": {
+      "file": "lazy-bound-regression-observations-1/lazy-bound-regression-u-1-console.txt",
+      "sha256": "6b32ca294bfb10560b4a2d7fc62452d09a0fbba62b2681c168b8ad0f40197149"
+    },
+    "readerAttemptHistory": [
+      {
+        "attempt": "earlier fixed-land-count draft",
+        "outcome": "FAILED: it rejected ordering 1 because the actual valid output had 354 P08 lands and 46 vias, rather than an assumed 358 lands.",
+        "correction": "Final reader checks each observed positive P08 land count with independent validation and actual via/hole/barrel equality and caps.",
+        "intermediateArtifactsRetained": false
+      },
+      {
+        "attempt": "interim reader schema/assertion drafts",
+        "outcome": "FAILED: initial command syntax before file creation, then pin-array handling, scalar suite-array handling, and a frame-only layoutVersion assertion on case records; corrected before final strict reader.",
+        "intermediateArtifactsRetained": false
+      }
+    ],
+    "retainedReaderArtifactsAreOnlyFinalSourceAndSummary": true
+  },
+  "sourceReview": {
+    "v2ReviewStatus": "PASS_NO_OTHER_MATERIAL_BLOCKERS",
+    "scope": "Read-only source review of v2 harness before native run; no compile/native run was performed by reviewer.",
+    "sourceSha256": "6e1dd174442915e92b56ec16098b9e9991d0d8ae194c1fa2c16938596f947481",
+    "reviewSha256": "3d38cbfa1fe4678fb82e9329303929be86470d7e726704d262191cbacb12060f",
+    "v1History": "NOT_RUN: rawGeometrySha256 argument was incorrectly populated by diagnosticInputSha256.",
+    "v2Correction": "One Java argument now passes rawGeometrySha256; corrected owner-map sidecar path; no other Java changes.",
+    "identityBinding": "Final strict reader compares case identity hashes and frame census."
+  },
+  "limitations": [
+    "Only the pinned saved layout and candidate were observed; this does not qualify the full generator session or population.",
+    "The 683850 diagnostic expansion total sums three independent ordering trials. It is not one shared production budget; the diagnostics-disabled controls add another 683850.",
+    "The NOOP attempt observer and unexercised generation-cancellation observer do not prove production 90-second, 640-work, or 5-second budgets.",
+    "Native diagnostic elapsed values are not production timing.",
+    "Intermediate rejected reader source versions and output files were not retained; their failures are reported from the worker tool transcript. Only the final reader source and summary are hash-bound here; its elapsed time and separate stderr channel were not retained.",
+    "No layout qualification, source epoch adoption, golden sealing, full72 cohort, or Q100 qualification is claimed."
+  ],
+  "artifacts": [
+    {
+      "name": "ordering-candidate-v1-sealed-pins.json",
+      "role": "SEALED_1059_INPUT_PINS",
+      "bytes": 204437,
+      "sha256": "0cde024baf712b2bd7cc0f736a6c851cb12fe78f7d1294d62b7b75c08b564607",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "ordering-candidate-inputs-sealed1.json",
+      "role": "INPUT_SEAL",
+      "bytes": 1636,
+      "sha256": "7c81a224611cf0eba904630af9e49bda0b5171fb2cbcd3cc5d600ba4e1a3cc5d",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "ordering-candidate-copy1.json",
+      "role": "PARENT_COPY_AUDIT",
+      "bytes": 1085,
+      "sha256": "afe85afd12b4e67518c62e47af52ed2d348dc3aa44fc414a0da0d70662de84d3",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "ordering-candidate-overlay-audit1.json",
+      "role": "SINGLE_FILE_OVERLAY_AUDIT",
+      "bytes": 1680,
+      "sha256": "50e5785bc8aca360b61ae256ba8eed0b959a96cca0bf673a2002d414fabe2fa9",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "ordering-candidate-probe-source-v2/P07BranchDiagnosticsContractTest.java",
+      "role": "V2_TEST_HARNESS",
+      "bytes": 82702,
+      "sha256": "6e1dd174442915e92b56ec16098b9e9991d0d8ae194c1fa2c16938596f947481",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "ordering-candidate-probe-source-v2/P07BranchDiagnosticsContractTest.base.java",
+      "role": "PARENT_TEST_HARNESS",
+      "bytes": 55698,
+      "sha256": "634565ed093983d74f15e292299cb5477ba5daaed02b5d387a7bde49bd558dd8",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "ordering-candidate-probe-source-v2/P07BranchDiagnosticsContractTest.am-v2.diff",
+      "role": "V2_TEST_HARNESS_DIFF",
+      "bytes": 86418,
+      "sha256": "b72d09c02eda40f4843555d385a5a9882f5524300fff68de95f3f4b1af10de9d",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "ordering-candidate-probe-source-v2/P07BranchDiagnosticsContractTest.am-spec2.json",
+      "role": "V2_TEST_SPEC",
+      "bytes": 7124,
+      "sha256": "78262eb76fb936e223bab2a44f3fb08a3b8ae40284a6a73e15b0b18d0a697032",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "ordering-candidate-review-1/review.md",
+      "role": "SOURCE_ONLY_REVIEW",
+      "bytes": 4940,
+      "sha256": "3d38cbfa1fe4678fb82e9329303929be86470d7e726704d262191cbacb12060f",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-bound-ordering-owner-map-1/review-v2.md",
+      "role": "CORRECTED_OWNER_MAP",
+      "bytes": 4782,
+      "sha256": "ef0ef9a4697e3280bd0f19eeaf048a91d825db69c14f8adac9af4f89aa6898f9",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-bound-ordering-owner-map-1/identity-correction-v2.json",
+      "role": "IDENTITY_CORRECTION",
+      "bytes": 6428,
+      "sha256": "3b346bcc304475a726dddd3fd7bbbbc971a6e0649687acd2949d95339248c813",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "run-ordering-candidate-probe.ps1",
+      "role": "NATIVE_RUN_WRAPPER",
+      "bytes": 4405,
+      "sha256": "489f86f28a71d4163461f95fe18e1c723597f95153d0e5abb652d1489f94fc1f",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "ordering-candidate-observations-1/ordering-candidate-1-result.json",
+      "role": "NATIVE_RUN_RESULT",
+      "bytes": 894,
+      "sha256": "96d8463002a26c0272b071b3e5563239b29c48b94d501a5e54e8b2e475d6ec52",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "ordering-candidate-observations-1/ordering-candidate-1-console.txt",
+      "role": "NATIVE_RUN_STDOUT",
+      "bytes": 382901,
+      "sha256": "1ed9ff077ef4acfad3bfe17812d281690c36ebfe2e259d8fbb6bafb2f51a60dc",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "ordering-candidate-observations-1/ordering-candidate-1-receipt.txt",
+      "role": "NATIVE_EVENT_RECEIPT",
+      "bytes": 381761,
+      "sha256": "0ff80f94afbd817932f1fa980645c0c0ab1dde2b659c62e7f5203c9b5fe039af",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "ordering-candidate-observations-1/ordering-candidate-1-stderr.txt",
+      "role": "NATIVE_RUN_STDERR",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "ordering-candidate-observations-1/ordering-candidate-1-launcher.json",
+      "role": "LAUNCHER_METADATA_HASH_ONLY",
+      "bytes": 225,
+      "sha256": "5db84e70e374f443b39724967ef4a105ffe5ca25ec09bbd5a4b82cec552bc204",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "ordering-candidate-reader-1/read_ordering_candidate.ps1",
+      "role": "STRICT_READER_SOURCE",
+      "bytes": 21103,
+      "sha256": "ef1209394d8982919a26b607ee42372693317c4ad7148013ff48d2a0d512e8b2",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "ordering-candidate-reader-1/ordering-candidate-summary.json",
+      "role": "STRICT_READER_SUMMARY",
+      "bytes": 4235,
+      "sha256": "c298e547b008f5b30e0a29c85afe15f91f67e7f2605c97a99e7f0a63012e4466",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-bound-regression-observations-1/lazy-bound-regression-u-1-console.txt",
+      "role": "U_IDENTITY_WITNESS",
+      "bytes": 288495,
+      "sha256": "6b32ca294bfb10560b4a2d7fc62452d09a0fbba62b2681c168b8ad0f40197149",
+      "rawContentsIncluded": false
+    }
+  ]
+}

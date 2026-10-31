@@ -1,0 +1,278 @@
+{
+  "schema": "troubleshootjs-q100-relaxed-branch-graph-observation-v1",
+  "evidenceId": "controlled-relaxed-branch-graph1",
+  "status": "PASS_READ_ONLY_GRAPH_ANALYSIS_ONLY",
+  "scope": "Three fixed-prefix branch-cut graph captures from the saved paired seed-5 v11 candidate; read-only relaxed transition analysis and retained AD2 route-record parity.",
+  "qualification": {
+    "physicalRouteAccepted": false,
+    "layoutQualified": false,
+    "q100Qualified": false,
+    "adopted": false,
+    "all72ProfilesRun": false,
+    "fullRouteMatrixRun": false,
+    "fullBuildRun": false
+  },
+  "interpretation": "All three relaxed graph checks classify UNKNOWN_WITHIN_RELAXED_TRANSITION_BOUND with relaxed minimum via transitions 0. The result is an inconclusive model bound; it proves neither fixed-prefix impossibility nor a physical route, route quality, or acceptance.",
+  "inputBinding": {
+    "inputRevision": 3,
+    "sourceSnapshotRevision": 1,
+    "inputCount": 1059,
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "pinsFile": "relaxed-branch-graph-sealed-pins.json",
+    "pinsSha256": "247a3760efed869ab1490c05eeb8b8017e33e508b81c1a9fe3a934cef4fe1f0c",
+    "pinsBytes": 204437,
+    "sealFile": "relaxed-branch-graph-inputs-sealed1.json",
+    "sealSha256": "5f59e9bd74f8f20b8c6725a3848de11c14bc7edb84dffd7980372264165fdbf7",
+    "sealBytes": 1606,
+    "relativeToAD2": {
+      "parentPinsSha256": "f8187ae204daa48aaa41aa49627a936d7b825665ffe343783632538d747ecbcc",
+      "changedInputCount": 2,
+      "unchangedInputCount": 1057,
+      "changedInputs": [
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+          "beforeSha256": "6eb32ebea70a37084700d89451b0d3eb3c5da2dc2320e9d90014a369fcbb8a31",
+          "afterSha256": "ac2e0bf511e9bd1e2a53848e278ab7faf8a07f68382d1ea6b3ca2b93ed2db2ba"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+          "beforeSha256": "564adf46dc3b2d7951edb19cc2e661ca5a8c2e62cd7a19a9ecb54b94e3e9f102",
+          "afterSha256": "d8d834ee36ef8e6d424fdc2b81d29142aade5f6eaacb5c8f42dcf8beb5889723"
+        }
+      ],
+      "unchangedHarnessSha256": "d1b2572682c1a1751a266643dd1bbc33cdc84e4e4ecbeb3a1a01663a60be563e"
+    },
+    "relativeToU3": {
+      "baseInputPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+      "changedInputCount": 3
+    },
+    "temporarySourceOverlays": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "sha256": "ac2e0bf511e9bd1e2a53848e278ab7faf8a07f68382d1ea6b3ca2b93ed2db2ba",
+        "bytes": 76043,
+        "specSha256": "f9a7efe08973347315fa7ab5e611cf45d22bb2c5e9bec8db2f072a7b6f185291",
+        "specBytes": 9225,
+        "diffSha256": "7b3e6caf018f76bf728cc6b73940b9ff72e08c3966a2c206465b0d92c583d6ac",
+        "diffBytes": 27119
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "sha256": "d8d834ee36ef8e6d424fdc2b81d29142aade5f6eaacb5c8f42dcf8beb5889723",
+        "bytes": 81659,
+        "specSha256": "127034c1f3101712e164b28466991837a46f4784ef239bc44ea4128710c2e966",
+        "specBytes": 2519,
+        "diffSha256": "c872c8a76a7cd5b152761e62d311b4c37a12b56e2661875e87fa11442304f27a",
+        "diffBytes": 11394
+      }
+    ],
+    "unchangedTestHarness": {
+      "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+      "sha256": "d1b2572682c1a1751a266643dd1bbc33cdc84e4e4ecbeb3a1a01663a60be563e",
+      "bytes": 40007
+    },
+    "expectedCuts": {
+      "file": "relaxed-branch-expected-cuts1.json",
+      "sha256": "5bbd76209cb3b2c6986e7812ca3b8dbf6f6e7913ecaabb7f014ba77727943f73",
+      "bytes": 2742
+    }
+  },
+  "nativeRun": {
+    "suite": "P07BranchDiagnosticsContractTest",
+    "source": "current",
+    "treatment": "RELAXED_FIXED_GRAPH_DIAGNOSTIC",
+    "exitCode": 0,
+    "elapsedSeconds": 34.0157326,
+    "nativeChildLimitMs": 60000,
+    "outerWatchdogMs": 600000,
+    "terminationProven": true,
+    "cleanup": {
+      "status": "PASS_MARKER_OBSERVED",
+      "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+      "cleanupOnlyDurationSeconds": "NOT_REPORTED"
+    },
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "productionSearchChanged": false,
+    "productionSearchChangedInterpretation": "Reader-reported route-behavior flag; it does not mean there were no source-byte differences. The two temporary diagnostic overlays are separately pinned above.",
+    "electricalSolverRun": false,
+    "baseEpochLabelsAdopted": false
+  },
+  "readerResults": {
+    "reader1": {
+      "status": "REJECTED_PARENT_RESULT_BOM",
+      "exitCode": 2,
+      "elapsedSeconds": 0.1015527,
+      "readerSha256": "487cb7bfb1df3703dfe234e07d8284606c46406ce3b8b2767225fa115fb79b3e",
+      "syntheticCanaries": {"passed": 29, "failed": 0, "scope": "SYNTHETIC_READER_CANARIES_ONLY"},
+      "parentNativeResultPrefixHex": "efbbbf7b0d0a",
+      "cause": "The native result is valid PowerShell 5 UTF-8 JSON with a leading BOM; reader1's strict parent-result parser rejected it.",
+      "actualAnalysisResult": "NOT_EMITTED",
+      "stdoutBytes": 0,
+      "stderrBytes": 61
+    },
+    "reader2": {
+      "status": "READ_ONLY_RELAXED_GRAPH_ANALYSIS",
+      "exitCode": 0,
+      "elapsedSeconds": 0.2324928,
+      "readerSha256": "13e492d0e9543ce81ed59cd25bb6b218e3114ff4747b8ceb93f81ea15bfad8e3",
+      "syntheticCanaries": {"passed": 35, "failed": 0, "previous29Retained": true, "scope": "SYNTHETIC_READER_CANARIES_ONLY"},
+      "parentResultBomPolicy": "Accept exactly one leading UTF-8 BOM only for the byte-hash-bound parent result; graph and route-probe JSON remain BOM-forbidden.",
+      "nativeRerun": false,
+      "stdoutBytes": 243,
+      "stderrBytes": 0,
+      "analysisResultFile": "relaxed-branch-graph-reader-result2.json",
+      "analysisResultSha256": "c5745f173b255a5203f739f89c2feb5adc81882cad0887a0c332b9fe2c4ac416",
+      "analysisResultBytes": 3618
+    }
+  },
+  "savedRouteProbeParity": {
+    "status": "PASS_AFTER_EXACT_VOLATILE_FIELD_ALLOWLIST",
+    "baselineEvidenceFile": "saved-paired-route-observations2.json",
+    "baselineEvidenceSha256": "dbec009653c10669298e768153c48ce4d5ebc83b46dac0c8d7b2a79f39fe0e88",
+    "baselineConsoleSha256": "d5c146e3f9c51afe1766cf6c604090d1a6a2c4a1e94573a06d92d915ee2ef2e3",
+    "baselineConsoleBytes": 238452,
+    "recordCount": 368,
+    "tagCounts": {
+      "P07_SAVED_PAIRED_ROUTE_PROBE_BRANCH": 363,
+      "P07_SAVED_PAIRED_ROUTE_PROBE_CASE": 2,
+      "P07_SAVED_PAIRED_ROUTE_PROBE_FRAME": 2,
+      "P07_SAVED_PAIRED_ROUTE_PROBE_SUITE": 1
+    },
+    "allOtherKeysAndValuesMatched": true,
+    "normalizedBaselineSha256": "96df0c73715a08b7b4470daf61284e54bf8bdfb13748c13a684accf66ba878cf",
+    "normalizedCurrentSha256": "96df0c73715a08b7b4470daf61284e54bf8bdfb13748c13a684accf66ba878cf",
+    "onlyExcludedTopLevelFields": [
+      "baselineElapsedMs",
+      "caseElapsedMs",
+      "diagnosticElapsedMs",
+      "frameId",
+      "nativeElapsedMs",
+      "runId"
+    ],
+    "nestedExclusionsRejected": true,
+    "sourceFrameAndCallbackParity": "ROOT_VALIDATED_SEPARATELY"
+  },
+  "graphAnalysis": {
+    "graphLineCount": 3,
+    "expectedCutsSha256": "5bbd76209cb3b2c6986e7812ca3b8dbf6f6e7913ecaabb7f014ba77727943f73",
+    "method": "Independent 0-1 BFS over cell-face states: directed ordinary-step mask edges cost 0 and local-geometry via-mask edges cost 1.",
+    "relaxations": [
+      "direction-4 eligibility",
+      "prefix via spacing and history",
+      "global via-count budget"
+    ],
+    "graphs": [
+      {
+        "cutSequence": 1,
+        "branchSearchLimitTerminalOrdinal": 1,
+        "routePass": 0,
+        "netId": "OUT_A",
+        "startPadId": "RLEDOUT_A.1",
+        "rootPadId": "JOA.1",
+        "prefixCensus": {"holes": 27, "reachedPads": 2, "vias": 27},
+        "goalCensus": {"top": 4, "bottom": 137},
+        "projectedInitialManhattanDistance": 1410,
+        "trustedBaselineInitialManhattanDistance": 1410,
+        "relaxedMinimumViaTransitions": 0,
+        "classification": "UNKNOWN_WITHIN_RELAXED_TRANSITION_BOUND",
+        "fixedPrefixSearchPathProvenImpossible": false,
+        "physicalRouteAccepted": false,
+        "counterSnapshotUnchanged": true,
+        "faceParityAndEffectsStable": true
+      },
+      {
+        "cutSequence": 2,
+        "branchSearchLimitTerminalOrdinal": 2,
+        "routePass": 1,
+        "netId": "OUT_A",
+        "startPadId": "RLEDOUT_A.1",
+        "rootPadId": "JOA.1",
+        "prefixCensus": {"holes": 40, "reachedPads": 2, "vias": 40},
+        "goalCensus": {"top": 2, "bottom": 140},
+        "projectedInitialManhattanDistance": 1410,
+        "trustedBaselineInitialManhattanDistance": 1410,
+        "relaxedMinimumViaTransitions": 0,
+        "classification": "UNKNOWN_WITHIN_RELAXED_TRANSITION_BOUND",
+        "fixedPrefixSearchPathProvenImpossible": false,
+        "physicalRouteAccepted": false,
+        "counterSnapshotUnchanged": true,
+        "faceParityAndEffectsStable": true
+      },
+      {
+        "cutSequence": 3,
+        "branchSearchLimitTerminalOrdinal": 3,
+        "routePass": 2,
+        "netId": "OUT_B",
+        "startPadId": "RLEDOUT_B.1",
+        "rootPadId": "JOB.1",
+        "prefixCensus": {"holes": 6, "reachedPads": 2, "vias": 6},
+        "goalCensus": {"top": 23, "bottom": 75},
+        "projectedInitialManhattanDistance": 2050,
+        "trustedBaselineInitialManhattanDistance": 2050,
+        "relaxedMinimumViaTransitions": 0,
+        "classification": "UNKNOWN_WITHIN_RELAXED_TRANSITION_BOUND",
+        "fixedPrefixSearchPathProvenImpossible": false,
+        "physicalRouteAccepted": false,
+        "counterSnapshotUnchanged": true,
+        "faceParityAndEffectsStable": true
+      }
+    ]
+  },
+  "artifacts": {
+    "nativeCapture": [
+      {"file": "relaxed-branch-graph-1-result.json", "bytes": 869, "sha256": "0995e2a1d1ee40aa3d26dd605485efdfdf9881ef885b77f94395d75a2d11b991", "copied": false, "rawPrefixHex": "efbbbf7b0d0a"},
+      {"file": "relaxed-branch-graph-1-console.txt", "bytes": 959270, "sha256": "c3803886880aa3f48ebc6ba18a2589416ea5bccfe33257a0e963cfaae26d3a71", "copied": false},
+      {"file": "relaxed-branch-graph-1-receipt.txt", "bytes": 958130, "sha256": "13d9943ad4d7e73cefeb143501a100aa4a713d51837240dc584d898ef41d06b0", "copied": false},
+      {"file": "relaxed-branch-graph-1-launcher.json", "bytes": 227, "sha256": "427360641f2b407da986a14588963121b061615c0c2d67383b776c0681df840e", "copied": false, "contentWithheld": "Contains host process metadata."},
+      {"file": "relaxed-branch-graph-1-stderr.txt", "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+    ],
+    "graphAndReaderOutputs": [
+      {"file": "relaxed-branch-graph-frames1.jsonl", "bytes": 720818, "sha256": "ee0c06218d0c6c02982b4ff910e26facc793663ccd56f676b5ea03099e2b0d7b", "copied": false, "contentWithheld": "Contains graph masks; only the byte binding and derived census are retained."},
+      {"file": "relaxed-branch-expected-cuts1.json", "bytes": 2742, "sha256": "5bbd76209cb3b2c6986e7812ca3b8dbf6f6e7913ecaabb7f014ba77727943f73", "copied": false},
+      {"file": "relaxed-branch-graph-reader-result2.json", "bytes": 3618, "sha256": "c5745f173b255a5203f739f89c2feb5adc81882cad0887a0c332b9fe2c4ac416"},
+      {"file": "relaxed-branch-graph-sealed-pins.json", "bytes": 204437, "sha256": "247a3760efed869ab1490c05eeb8b8017e33e508b81c1a9fe3a934cef4fe1f0c", "copied": false},
+      {"file": "relaxed-branch-graph-inputs-sealed1.json", "bytes": 1606, "sha256": "5f59e9bd74f8f20b8c6725a3848de11c14bc7edb84dffd7980372264165fdbf7", "copied": false},
+      {"file": "run-relaxed-branch-graph.ps1", "bytes": 4393, "sha256": "8d6d8cfe57f9def19eb034b8a6e9badd2c5db3084be334b48e8ec0b096110e69"}
+    ],
+    "reader1": [
+      {"file": "relaxed-branch-reader-1.py", "bytes": 60123, "sha256": "487cb7bfb1df3703dfe234e07d8284606c46406ce3b8b2767225fa115fb79b3e"},
+      {"file": "synthetic-test-spec.json", "bytes": 4699, "sha256": "01d6b0ca8176691a398423f84c8b728a6fec1a8ea692c423ac61995fdfba1f4d"},
+      {"file": "synthetic-test-results.json", "bytes": 1891, "sha256": "93c2aad7cbb257537c2ea5d602070bdf75e3585a71ac1e6336290461c7ea19f6"},
+      {"file": "relaxed-branch-graph-reader1-launch.json", "bytes": 726, "sha256": "28f605ed3f823058b75314f105b7914737b99f2f6b416cb03932a4e8e6f32226", "copied": false, "contentWithheld": "Contains host process metadata."},
+      {"file": "relaxed-branch-graph-reader1-stdout.txt", "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+      {"file": "relaxed-branch-graph-reader1-stderr.txt", "bytes": 61, "sha256": "01f50ac6b7215cbdac9c739bc5949caa0ab3b3f7bca997e3b48581438a631ef4"},
+      {"analysisResult": "NOT_EMITTED"}
+    ],
+    "reader2": [
+      {"file": "relaxed-branch-reader-2.py", "bytes": 60271, "sha256": "13e492d0e9543ce81ed59cd25bb6b218e3114ff4747b8ceb93f81ea15bfad8e3"},
+      {"file": "synthetic-test-spec.json", "bytes": 5281, "sha256": "4c17423a8266c926afe0f53105bdef5928a7e8fdbdef2610c4bb20e15fe01c4f"},
+      {"file": "synthetic-test-results.json", "bytes": 2267, "sha256": "b26951dc26b36f5cd2684cdb27bfb4bb043f20e3540e48f20c8a17c1637d2efb"},
+      {"file": "relaxed-branch-graph-reader2-launch.json", "bytes": 728, "sha256": "bd97ead7bc3cf2244f8297d8b001bb4ee94a9749192cc77285eed562e5a91e45", "copied": false, "contentWithheld": "Contains host process metadata."},
+      {"file": "relaxed-branch-graph-reader2-stdout.txt", "bytes": 243, "sha256": "cef23e0e168591c5be772df817e9c84f4deb778b29467c92971ed978f69057e5"},
+      {"file": "relaxed-branch-graph-reader2-stderr.txt", "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+    ],
+    "sourceOverlayFiles": [
+      {"file": "PcbLayerRoutingPrototype.java", "bytes": 76043, "sha256": "ac2e0bf511e9bd1e2a53848e278ab7faf8a07f68382d1ea6b3ca2b93ed2db2ba"},
+      {"file": "PcbNetRouter.java", "bytes": 81659, "sha256": "d8d834ee36ef8e6d424fdc2b81d29142aade5f6eaacb5c8f42dcf8beb5889723"},
+      {"file": "P07BranchDiagnosticsContractTest.java", "bytes": 40007, "sha256": "d1b2572682c1a1751a266643dd1bbc33cdc84e4e4ecbeb3a1a01663a60be563e"}
+    ],
+    "ad2BaselineReference": {
+      "file": "saved-paired-route-observations2.json",
+      "bytes": 15202,
+      "sha256": "dbec009653c10669298e768153c48ce4d5ebc83b46dac0c8d7b2a79f39fe0e88"
+    }
+  },
+  "limitations": [
+    "The 0-1 BFS relaxes direction-4 eligibility, prefix via spacing/history, and the global via-count budget. Its zero-via result is not physical reachability or route acceptance.",
+    "All three cuts remain UNKNOWN; fixed-prefix impossibility is not established for any cut.",
+    "The reader's 35 synthetic canaries are parser/model checks only, not native or production evidence.",
+    "No 72-profile cohort, Q100 route matrix, current build, or broader release qualification was run."
+  ],
+  "sanitization": {
+    "absolutePathsCopied": false,
+    "processIdsCopied": false,
+    "rawLogsCopied": false,
+    "rawMasksCopied": false,
+    "hostMetadataCopied": false
+  }
+}

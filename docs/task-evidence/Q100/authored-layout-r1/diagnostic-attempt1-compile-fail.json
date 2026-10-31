@@ -1,0 +1,18 @@
+{
+  "protocol": "rb100-placement-diagnostic-attempt-v1",
+  "status": "FAIL_COMPILE",
+  "attempt": 1,
+  "helper": {
+    "exitCode": 2,
+    "elapsedSeconds": 20.8233517,
+    "suites": [
+      "Rb100LayoutPlacementDiagnosticContractTest"
+    ]
+  },
+  "cases": "NOT RUN",
+  "hostCleanup": "PASS",
+  "error": "verifyFailureSnapshot requires board,snapshot,long; call supplied an extraneous fourth boolean argument. Removed only that argument; all helper assertions retained.",
+  "rawLogSha256": "a1d57aeeb75f682c8be18388e77f449eabd29ff1a299b76fbb32f8c990cd162b",
+  "rawConsoleSha256": "f5f641b8196e646c16d6a4a80ce671c26582bd8a98faace3632fe60660403637",
+  "sourcePins": "diagnostic-attempt1-source-pins.json"
+}

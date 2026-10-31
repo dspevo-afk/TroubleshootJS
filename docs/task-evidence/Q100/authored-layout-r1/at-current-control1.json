@@ -1,0 +1,130 @@
+{
+  "schema": "tsj-q100-current-off-control-evidence-v1",
+  "recordedUtc": "2026-10-31T13:57:07.235Z",
+  "candidate": {
+    "driverSha256": "C9F097320FF4EA157E1C4050C49EEA93B6FEB9521BAABED5F79EACE87D1075F9",
+    "isolationModuleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "sameSourceAsCurrentOnTrace": true,
+    "JavaChanges": false,
+    "GwtChanges": false,
+    "isolationModuleChanges": false
+  },
+  "control": {
+    "status": "PASS",
+    "traceMode": "OFF",
+    "totalElapsedSeconds": 249.5116503,
+    "exitCode": 0,
+    "canonicalRouteCount": 9,
+    "canonicalOrderPreserved": true,
+    "cleanupSucceeded": true,
+    "browserShutdownMilliseconds": 9165,
+    "routeTimingFieldPresent": false,
+    "routeTimingDataRequiredForPass": false,
+    "sourceDigestAndCountFieldsCompared": 7,
+    "sourceDigestAndCountFieldsEqualTo": {
+      "basename": "at-compiled-current-trace1.json",
+      "sha256": "d43b4024ef7e8db035a18e5e76eb108724193890ff0c03627205887bf0ebcd1e"
+    },
+    "reportBasename": "at-compiled-current-control1.json",
+    "reportSha256": "2697cb0febadf1f71769794b86ecb87fb98722fce78890f773ff4334f4af4d7a",
+    "supportingCaptureKinds": [
+      "result",
+      "launcher",
+      "host"
+    ]
+  },
+  "interpretation": {
+    "finiteCurrentOffControlPass": true,
+    "rootCauseCuredClaim": false,
+    "hostRobustnessClaim": false,
+    "additionalCurrentRepeatNeededWithoutSourceChanges": false,
+    "note": "The control passed without routeTiming data. This does not explain or cure the historical timeouts or the separate lease proof failure."
+  },
+  "preservedFailures": [
+    {
+      "attempt": "Current1 and Current3",
+      "status": "historical-infrastructure-timeouts",
+      "deadlineSeconds": 90,
+      "rootCause": "unexplained",
+      "curedByThisControl": false
+    },
+    {
+      "attempt": "Current2",
+      "status": "separate-lease-proof-failure",
+      "preserved": true,
+      "curedByThisControl": false
+    }
+  ],
+  "preparation": {
+    "preservedPreEditArtifacts": [
+      {
+        "candidatePrefix": "ECD9",
+        "basename": "verify-a03-browser.pre-edit.ps1"
+      },
+      {
+        "candidatePrefix": "D512",
+        "basename": "verify-a03-browser.pre-recorder-guard.ps1"
+      }
+    ],
+    "staticCheckArtifactBasename": "static-check.json",
+    "metadataCheckScriptBasename": "metadata-check-recorder-guard.ps1",
+    "scope": "Static/parser and pure metadata checks only; no unretained test stdout or runtime proof asserted.",
+    "prep4Status": "STALE",
+    "templatePrep5Status": "NOT_RUN"
+  },
+  "relatedValidation": {
+    "physicalNative5AndQ72ReuseAudit": "Previously referenced; no new run or expanded claim in this packet.",
+    "currentOnTrace": {
+      "status": "PASS",
+      "basename": "at-compiled-current-trace1.json",
+      "elapsedSeconds": 254.1979193,
+      "sha256": "d43b4024ef7e8db035a18e5e76eb108724193890ff0c03627205887bf0ebcd1e"
+    },
+    "priorSupplementBasename": "at-route-timing1.json"
+  },
+  "remainingAcceptance": {
+    "playerPrivacyRefresh": "PENDING",
+    "e06State10": "PENDING",
+    "normal3": "PENDING",
+    "publication": "HELD",
+    "protectedScope": "UNREAD",
+    "protectedScopeNoteBasename": "search-scope1",
+    "hardGate": "NOT_RUN"
+  },
+  "evidenceReferences": [
+    {
+      "label": "current-off-control-report",
+      "basename": "at-compiled-current-control1.json",
+      "sha256": "2697cb0febadf1f71769794b86ecb87fb98722fce78890f773ff4334f4af4d7a"
+    },
+    {
+      "label": "current-on-comparison",
+      "basename": "at-compiled-current-trace1.json",
+      "sha256": "d43b4024ef7e8db035a18e5e76eb108724193890ff0c03627205887bf0ebcd1e"
+    },
+    {
+      "label": "route-timing-supplement",
+      "basename": "at-route-timing1.json"
+    },
+    {
+      "label": "static-check",
+      "basename": "static-check.json"
+    },
+    {
+      "label": "metadata-check-script",
+      "basename": "metadata-check-recorder-guard.ps1"
+    },
+    {
+      "label": "scope-boundary",
+      "basename": "search-scope1"
+    }
+  ],
+  "omittedFields": [
+    "absolute paths",
+    "raw logs",
+    "URLs",
+    "private parameters",
+    "tokens",
+    "raw trace payloads"
+  ]
+}

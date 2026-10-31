@@ -1,0 +1,335 @@
+{
+  "schema": "troubleshootjs-as-final-native-geometry-observation-v1",
+  "status": "NATIVE33_AND_SIX_CASE_GEOMETRY_COMPARISON_PASS_QUALIFICATION_PENDING",
+  "scope": "Record integrated native source5, current geometry observation, and strict six-case comparison-only reader result.",
+  "repository": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "candidate": "AO_FINAL_LAYOUT25_DEP26"
+  },
+  "integratedNative": {
+    "status": "PASS",
+    "phase": "AFFECTED_FINAL_SOURCE_NATIVE",
+    "elapsedSeconds": 184.1820165,
+    "exitCode": 0,
+    "nativeExitCode": 0,
+    "selectedSuiteCount": 33,
+    "scope": "Exact selected 33-suite native contract set, not the full matrix",
+    "sourceSnapshotRevision": 5,
+    "sourcePinsSha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81",
+    "inputCount": 1061,
+    "inputBytes": 85502668,
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "terminationProven": true,
+    "cleanupStatus": "PASS",
+    "manifest30": {
+      "status": "PASS_30_ROWS",
+      "rows": 30,
+      "expectedRows": 30,
+      "sha256": "5d94cd9470643f931e32a9d51d657917443f1e4f58a43803cee670bcee0c3d87"
+    }
+  },
+  "geometryProducer": {
+    "status": "PASS",
+    "source": "current",
+    "suite": "P07GeometryEpochDiagnosticContractTest",
+    "elapsedSeconds": 54.8440954,
+    "helperElapsedSeconds": 53.8542646,
+    "layoutVersion": 25,
+    "dependencyEpoch": "tsj-generation-dependencies-v26",
+    "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "sourceSnapshotRevision": 5,
+    "inputCount": 1061,
+    "inputPinsSha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81",
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "cleanupStatus": "PASS_MARKER_REPORTED_ONCE",
+    "terminationProven": true,
+    "exitCode": 0,
+    "resultSha256": "2890433b9903cf99a8447d1900a2345ae5c9ff92ecf653651317c5da8f04e59d",
+    "receiptSha256": "68404f31cfb60b7972aaedea8db51fb4ebe76bd0a8674c1b3722567efe4168a6"
+  },
+  "geometryReader": {
+    "status": "PASS_COMPARISON_ONLY",
+    "scope": "FRESH_FINAL_SOURCE_SIX_BOARD_LAYOUT22_TO_LAYOUT25_COMPARISON",
+    "readerOutputSha256": "cbc6397405da8846cd3c0889000a3a54d465037a71df465bcc103129f3d72d85",
+    "readerOutputBytes": 7657700,
+    "readerSourceSha256": "814b0d74e8b245ed04ec85d8b2396cac3cec861e704ada962ea2828a57dbccb4",
+    "readerExecutionStatus": "READER_PASS_MARKER_AND_OUTPUT_CAPTURED",
+    "readerExitCode": 0,
+    "runnerExitCode": 0,
+    "helperElapsedSeconds": 1.6425395999999999,
+    "helperReturned": true,
+    "helperTerminationProven": true,
+    "outputEnvelopeValidated": true,
+    "outputProtocol": "p07-final-source-six-board-context-v1",
+    "sourceContextSha256": "f4996e6488e288140950399c91bb3caceb42998e82724b9a40c9dc288087032b",
+    "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "comparisonCount": 6,
+    "cases": [
+      {
+        "seed": "-1017",
+        "placementInterpretation": 1,
+        "physicalAndPartitionWitness": "PASS_NATIVE_BOTH_SOURCES",
+        "placementCanonicalUnchanged": true
+      },
+      {
+        "seed": "-1004",
+        "placementInterpretation": 1,
+        "physicalAndPartitionWitness": "PASS_NATIVE_BOTH_SOURCES",
+        "placementCanonicalUnchanged": true
+      },
+      {
+        "seed": "-1022",
+        "placementInterpretation": 1,
+        "physicalAndPartitionWitness": "PASS_NATIVE_BOTH_SOURCES",
+        "placementCanonicalUnchanged": true
+      },
+      {
+        "seed": "-1017",
+        "placementInterpretation": 2,
+        "physicalAndPartitionWitness": "PASS_NATIVE_BOTH_SOURCES",
+        "placementCanonicalUnchanged": true
+      },
+      {
+        "seed": "-1004",
+        "placementInterpretation": 2,
+        "physicalAndPartitionWitness": "PASS_NATIVE_BOTH_SOURCES",
+        "placementCanonicalUnchanged": true
+      },
+      {
+        "seed": "-1022",
+        "placementInterpretation": 2,
+        "physicalAndPartitionWitness": "PASS_NATIVE_BOTH_SOURCES",
+        "placementCanonicalUnchanged": false
+      }
+    ],
+    "allPhysicalAndPartitionWitnessesPass": true,
+    "sameLogicalDeclarationsAndStreams": true,
+    "currentCompact2HashesMatchAuditedQ": true,
+    "nativeResultBindings": {
+      "baselineResultSha256": "1b1da740bd6803b91042f906728ae69c7fd8ed3466d8bc7d347347c953b4cfbd",
+      "baselineResultBytes": 1981,
+      "currentResultSha256": "2890433b9903cf99a8447d1900a2345ae5c9ff92ecf653651317c5da8f04e59d",
+      "currentResultBytes": 1956
+    },
+    "mode": {
+      "layoutQualification": false,
+      "adopted": false,
+      "automaticGoldenSeal": false,
+      "coreMainInvoked": false,
+      "coreConstantsPatched": false
+    },
+    "canaryCounts": {
+      "geometry": 1,
+      "wrapper": 1,
+      "stdout": 1
+    }
+  },
+  "sourceContext": {
+    "sha256": "f4996e6488e288140950399c91bb3caceb42998e82724b9a40c9dc288087032b",
+    "baseline": {
+      "layoutVersion": 22,
+      "dependencyEpoch": "tsj-generation-dependencies-v23",
+      "sourceSnapshotRevision": 1,
+      "inputCount": 1059,
+      "pinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+    },
+    "qualifiedReference": {
+      "layoutVersion": 24,
+      "dependencyEpoch": "tsj-generation-dependencies-v25",
+      "sourceSnapshotRevision": 2,
+      "inputCount": 1059,
+      "pinsSha256": "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69"
+    },
+    "current": {
+      "layoutVersion": 25,
+      "dependencyEpoch": "tsj-generation-dependencies-v26",
+      "sourceSnapshotRevision": 5,
+      "inputCount": 1061,
+      "pinsSha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81"
+    }
+  },
+  "preservedPriorFailures": [
+    {
+      "file": "docs/task-evidence/Q100/authored-layout-r1/ap-cleanup-failures1.json",
+      "bytes": 19213,
+      "sha256": "dc439d7b9264139773e1208b185f0d8d3dfd7613ad2440ef8942a06f93f78f74"
+    },
+    {
+      "file": "docs/task-evidence/Q100/authored-layout-r1/aq-cleanup-limit1.json",
+      "bytes": 7413,
+      "sha256": "2aa4e4e5132bdecf0f0cb132d4a7fc9638b34d423cece2e62a93a5aab5ccd517"
+    },
+    {
+      "file": "docs/task-evidence/Q100/authored-layout-r1/ao-legacy-geometry-migration1.json",
+      "bytes": 17524,
+      "sha256": "aca594e1a7013e8e62c3d9541655a24d9de58d5b055ac4df54721bcb5b7d388c",
+      "integratedNative2": "FAIL"
+    },
+    {
+      "file": "docs/task-evidence/Q100/authored-layout-r1/ar-branch-unit-proof1.json",
+      "bytes": 12941,
+      "sha256": "2eb9dabbe0ecec351832d8a6bcebfca771877f53ea0be1eaf4653e433347e50b",
+      "integratedNative3": "FAIL"
+    }
+  ],
+  "q100": {
+    "actual100Accepted": 0,
+    "saved72Gate": "PENDING_NOT_RUN",
+    "runtimeQualification": "PENDING",
+    "fullNativeMatrix": "NOT_CLAIMED"
+  },
+  "limitsAndNonClaims": [
+    "The native result covers exactly 33 selected suites and is not a full matrix result.",
+    "The geometry reader is PASS_COMPARISON_ONLY for six fixed cases; it does not grant admission, update a golden, or qualify production timing, repair, saved72, or playable100.",
+    "Q100 authored actual100 accepted count is zero; no actual100 acceptance is claimed.",
+    "Prior cleanup/AP and integrated native2/native3 failures remain referenced as separate preserved packets.",
+    "No raw log contents, absolute paths, process IDs/start ticks, command lines, or capability tokens are embedded. Protected HARD data was not read or run."
+  ],
+  "artifacts": [
+    {
+      "file": "ao-native-integrated-4/ao-final-native-v5-sealed-pins.json",
+      "bytes": 199503,
+      "sha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81"
+    },
+    {
+      "file": "ao-native-integrated-4/ao-native-integrated-4-result.json",
+      "bytes": 3886,
+      "sha256": "15103b0087ba8457c9f8ff181b6122334cf9789f6f74af6f6d1024c4f8d1d038"
+    },
+    {
+      "file": "ao-native-integrated-4/ao-native-integrated-4-manifest.json",
+      "bytes": 3415,
+      "sha256": "ab25f70b356a5f166f390fd0e09186c36721cbcec381af5306d28e9dde541dd4"
+    },
+    {
+      "file": "ao-native-integrated-4/ao-native-integrated-4-rb56-manifest30.txt",
+      "bytes": 14617,
+      "sha256": "5d94cd9470643f931e32a9d51d657917443f1e4f58a43803cee670bcee0c3d87"
+    },
+    {
+      "file": "ao-native-integrated-4/ao-native-integrated-4-stdout.txt",
+      "bytes": 4473140,
+      "sha256": "12c6ad404887218cbf2a9ff02b767513c6c2fbc5169e44b6a784aabdc9e4080b"
+    },
+    {
+      "file": "ao-native-integrated-4/ao-native-integrated-4-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "ao-native-integrated-4/ao-native-integrated-4-launcher.json",
+      "bytes": 611,
+      "sha256": "5617df436a3abcb667da2708a5381764aab2f5aed338cec675bd1bc6d1c4505f"
+    },
+    {
+      "file": "ao-native-integrated-4/ao-native-integrated-4-receipt.txt",
+      "bytes": 4455695,
+      "sha256": "36dc91c42b76bd00054fa46587b2e940d449c3027f6762053d94217010730cbd"
+    },
+    {
+      "file": "ao-native-integrated-4/preparation.json",
+      "bytes": 5368,
+      "sha256": "4f5fbbe099828e001c810e849f36208d9786631fee1e0570c140ab33a8a2461b"
+    },
+    {
+      "file": "ao-native-integrated-4/ao-native-integrated-call-4.ps1",
+      "bytes": 1210,
+      "sha256": "f097599ae17f93f7a99c3be8508e07eeae02d43826b0cd71b22d686ba05602ce"
+    },
+    {
+      "file": "ao-native-integrated-4/run-ao-native-integrated-4.ps1",
+      "bytes": 8180,
+      "sha256": "4f0f2ab32c48bc76e8d1c993c1d2a1b5a89b98894aa6feaf2786da471a495d40"
+    },
+    {
+      "file": "ao-geometry-final-observations-4/geometry-current-1-result.json",
+      "bytes": 1956,
+      "sha256": "2890433b9903cf99a8447d1900a2345ae5c9ff92ecf653651317c5da8f04e59d"
+    },
+    {
+      "file": "ao-geometry-final-observations-4/geometry-current-1-full-inputs.json",
+      "bytes": 199503,
+      "sha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81"
+    },
+    {
+      "file": "ao-geometry-final-observations-4/geometry-current-1-launcher.json",
+      "bytes": 443,
+      "sha256": "5fb10d26147a1b4e501bf48dcf0ced877713f5266e9dbdc948d136bc287f8e8a"
+    },
+    {
+      "file": "ao-geometry-final-observations-4/geometry-current-1-receipt.txt",
+      "bytes": 3289448,
+      "sha256": "68404f31cfb60b7972aaedea8db51fb4ebe76bd0a8674c1b3722567efe4168a6"
+    },
+    {
+      "file": "ao-geometry-final-observations-4/geometry-current-1-console.txt",
+      "bytes": 3290588,
+      "sha256": "1fd00eb83673499f6c8db995fdbe892221389cd72887e33844db71fa4843ab18"
+    },
+    {
+      "file": "ao-geometry-final-observations-4/geometry-current-1-stdout.txt",
+      "bytes": 3290588,
+      "sha256": "1fd00eb83673499f6c8db995fdbe892221389cd72887e33844db71fa4843ab18"
+    },
+    {
+      "file": "ao-geometry-final-observations-4/geometry-current-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "ao-geometry-final-observations-4/geometry-current-1.log",
+      "bytes": 3290588,
+      "sha256": "1fd00eb83673499f6c8db995fdbe892221389cd72887e33844db71fa4843ab18"
+    },
+    {
+      "file": "ao-final-reader-specs-8/geometry-reader-8-execution.json",
+      "bytes": 1995,
+      "sha256": "15718f659e0c4ff56b92e599307b1e58bd51810a30635421019538fa1117465c"
+    },
+    {
+      "file": "ao-final-reader-specs-8/geometry-reader-8-execution-launcher.json",
+      "bytes": 870,
+      "sha256": "3e50481793d4e8d3195e16641110a84059c05874c7fe3a45bbae51434c136521"
+    },
+    {
+      "file": "ao-final-reader-specs-8/geometry-reader-8-stdout.txt",
+      "bytes": 90,
+      "sha256": "c407cd09c9bf99760c2c09d3a2cab9d2e1f58e7aac2be7617ba28be1879e5278"
+    },
+    {
+      "file": "ao-final-reader-specs-8/geometry-reader-8-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "ao-final-reader-specs-8/geometry-reader-8.json",
+      "bytes": 5486,
+      "sha256": "09fec7392bd657e118ce737c12150d0dc50736e295d62349ca7c7bc22680639b"
+    },
+    {
+      "file": "ao-final-geometry-comparison-reader-8.json",
+      "bytes": 7657700,
+      "sha256": "cbc6397405da8846cd3c0889000a3a54d465037a71df465bcc103129f3d72d85"
+    },
+    {
+      "file": "repository/scripts/VerifierIsolation.psm1",
+      "bytes": 890076,
+      "sha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77"
+    },
+    {
+      "file": "repository/tests/qualification/rb100-layout/read_geometry_current.py",
+      "bytes": 66184,
+      "sha256": "814b0d74e8b245ed04ec85d8b2396cac3cec861e704ada962ea2828a57dbccb4"
+    }
+  ],
+  "sanitization": {
+    "status": "SANITIZED_ARTIFACT_METADATA_ONLY",
+    "rawLogContentsEmbedded": false,
+    "absolutePathsEmbedded": false,
+    "processIdsOrStartTicksEmbedded": false,
+    "commandLinesEmbedded": false,
+    "capabilityTokensEmbedded": false,
+    "artifactReferences": "Relative scratch leaves and repository-relative source/prior-packet paths only."
+  }
+}

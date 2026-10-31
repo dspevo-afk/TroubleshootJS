@@ -1,0 +1,860 @@
+{
+    "schema":  "q100-controlled-six-board-geometry-epoch-observation-v1",
+    "status":  "PASS_CONTROLLED_NATIVE_AND_STRICT_READER",
+    "scope":  "Six fixed RB56_CONTROL source-epoch observations; diagnostic comparison only.",
+    "repo":  {
+                 "branch":  "codex/q100-physical-feasibility",
+                 "baseHead":  "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+                 "packetPath":  "docs/task-evidence/Q100/authored-layout-r1/ordering-stream-q6-1.json"
+             },
+    "sourcePair":  {
+                       "baseline":  {
+                                        "name":  "baseline",
+                                        "layoutVersion":  22,
+                                        "dependencyEpoch":  "tsj-generation-dependencies-v23",
+                                        "inputRevision":  2,
+                                        "snapshotRevision":  1,
+                                        "fileCount":  1059,
+                                        "totalBytes":  85299082,
+                                        "pinsSha256":  "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+                                        "fullInputsArtifact":  {
+                                                                   "file":  "geometry-ordering-stream-observations-1/geometry-baseline-1-full-inputs.json",
+                                                                   "bytes":  224612,
+                                                                   "sha256":  "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+                                                               }
+                                    },
+                       "an":  {
+                                  "name":  "AN_snapshot",
+                                  "wrapperSourceLabel":  "current",
+                                  "layoutVersion":  24,
+                                  "dependencyEpoch":  "tsj-generation-dependencies-v25",
+                                  "inputRevision":  3,
+                                  "snapshotRevision":  2,
+                                  "fileCount":  1059,
+                                  "totalBytes":  85489324,
+                                  "pinsSha256":  "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69",
+                                  "fullInputsArtifact":  {
+                                                             "file":  "geometry-ordering-stream-observations-1/geometry-current-1-full-inputs.json",
+                                                             "bytes":  204439,
+                                                             "sha256":  "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69"
+                                                         }
+                              },
+                       "intermediateU":  {
+                                             "name":  "U_reference_input_audit_only",
+                                             "pinsSha256":  "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+                                             "fileCount":  1059,
+                                             "totalBytes":  85283604,
+                                             "nativeRun":  "NOT INCLUDED"
+                                         },
+                       "subsequentCurrentMain":  {
+                                                     "layoutVersion":  25,
+                                                     "dependencyEpoch":  "tsj-generation-dependencies-v26",
+                                                     "status":  "NOT_COVERED_BY_THIS_PACKET"
+                                                 }
+                   },
+    "nativeRuns":  {
+                       "baseline":  {
+                                        "sourceLabel":  "baseline",
+                                        "status":  "PASS_OBSERVATION_ONLY",
+                                        "suite":  "P07GeometryEpochDiagnosticContractTest",
+                                        "layoutVersion":  22,
+                                        "dependencyEpoch":  "tsj-generation-dependencies-v23",
+                                        "inputRevision":  2,
+                                        "sourceSnapshotRevision":  1,
+                                        "inputFileCount":  1059,
+                                        "inputPinsSha256":  "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+                                        "assertions":  86480,
+                                        "caseCount":  6,
+                                        "elapsedSeconds":  47.6984958,
+                                        "helperElapsedSeconds":  46.659505499999995,
+                                        "nativeTestElapsedMs":  18576,
+                                        "terminationProven":  true,
+                                        "cleanupStatus":  "PASS_MARKER_REPORTED_ONCE",
+                                        "cleanupDurationMs":  null,
+                                        "cleanupDurationScope":  "NOT_REPORTED_BY_MAINTAINED_SUITE",
+                                        "inputAudit":  "PASS_BEFORE_AND_AFTER",
+                                        "prePostFileCount":  1059,
+                                        "nativeChildLimitMs":  180000,
+                                        "outerWatchdogMs":  600000,
+                                        "moduleSha256":  "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+                                        "footer":  "PASS: P07 geometry epoch diagnostic contracts assertions=86480 cases=6 layout=22 dependency=tsj-generation-dependencies-v23 scope=OBSERVATIONAL_SIX_BOARD_EPOCH_TRANSITION",
+                                        "artifacts":  [
+                                                          {
+                                                              "file":  "geometry-ordering-stream-observations-1/geometry-baseline-1-result.json",
+                                                              "bytes":  1981,
+                                                              "sha256":  "1b1da740bd6803b91042f906728ae69c7fd8ed3466d8bc7d347347c953b4cfbd"
+                                                          },
+                                                          {
+                                                              "file":  "geometry-ordering-stream-observations-1/geometry-baseline-1-console.txt",
+                                                              "bytes":  3327926,
+                                                              "sha256":  "bd8d692981ee745f8c7362ccc8e61130b93cd198ca278de56960999bfb0bf3d9"
+                                                          },
+                                                          {
+                                                              "file":  "geometry-ordering-stream-observations-1/geometry-baseline-1-receipt.txt",
+                                                              "bytes":  3325680,
+                                                              "sha256":  "82761cc2ba97f0e307f9ad2ccb7f6c3eeb3949ccc98f63b6af3b50fd67ac8426"
+                                                          },
+                                                          {
+                                                              "file":  "geometry-ordering-stream-observations-1/geometry-baseline-1-stdout.txt",
+                                                              "bytes":  3326820,
+                                                              "sha256":  "f68069477384f0057f57e8cb91dae3c5790277b60ae7f97c3179dc02fdd19019"
+                                                          },
+                                                          {
+                                                              "file":  "geometry-ordering-stream-observations-1/geometry-baseline-1-stderr.txt",
+                                                              "bytes":  0,
+                                                              "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                                                          },
+                                                          {
+                                                              "file":  "geometry-ordering-stream-observations-1/geometry-baseline-1-launcher.json",
+                                                              "bytes":  773,
+                                                              "sha256":  "474cad5d050c06f18ea52858ddf609ec556897fe28c8030eba9b728debe5b1e4"
+                                                          },
+                                                          {
+                                                              "file":  "geometry-ordering-stream-observations-1/geometry-baseline-1-full-inputs.json",
+                                                              "bytes":  224612,
+                                                              "sha256":  "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+                                                          },
+                                                          {
+                                                              "file":  "geometry-ordering-stream-observations-1/geometry-baseline-1.log",
+                                                              "bytes":  3327929,
+                                                              "sha256":  "7a80ef5e35036692a77def34b2a59dc20330fab66d6e798e7ba1f89c81e2e6c5"
+                                                          }
+                                                      ]
+                                    },
+                       "an":  {
+                                  "sourceLabel":  "AN_snapshot (wrapper source label: current)",
+                                  "status":  "PASS_OBSERVATION_ONLY",
+                                  "suite":  "P07GeometryEpochDiagnosticContractTest",
+                                  "layoutVersion":  24,
+                                  "dependencyEpoch":  "tsj-generation-dependencies-v25",
+                                  "inputRevision":  3,
+                                  "sourceSnapshotRevision":  2,
+                                  "inputFileCount":  1059,
+                                  "inputPinsSha256":  "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69",
+                                  "assertions":  86480,
+                                  "caseCount":  6,
+                                  "elapsedSeconds":  54.2523383,
+                                  "helperElapsedSeconds":  53.2328139,
+                                  "nativeTestElapsedMs":  24937,
+                                  "terminationProven":  true,
+                                  "cleanupStatus":  "PASS_MARKER_REPORTED_ONCE",
+                                  "cleanupDurationMs":  null,
+                                  "cleanupDurationScope":  "NOT_REPORTED_BY_MAINTAINED_SUITE",
+                                  "inputAudit":  "PASS_BEFORE_AND_AFTER",
+                                  "prePostFileCount":  1059,
+                                  "nativeChildLimitMs":  180000,
+                                  "outerWatchdogMs":  600000,
+                                  "moduleSha256":  "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+                                  "footer":  "PASS: P07 geometry epoch diagnostic contracts assertions=86480 cases=6 layout=24 dependency=tsj-generation-dependencies-v25 scope=OBSERVATIONAL_SIX_BOARD_EPOCH_TRANSITION",
+                                  "artifacts":  [
+                                                    {
+                                                        "file":  "geometry-ordering-stream-observations-1/geometry-current-1-result.json",
+                                                        "bytes":  1958,
+                                                        "sha256":  "07cdc1f0783ce069af10d0200d1d17c11b19037434b9649b12af06204d044803"
+                                                    },
+                                                    {
+                                                        "file":  "geometry-ordering-stream-observations-1/geometry-current-1-console.txt",
+                                                        "bytes":  3291692,
+                                                        "sha256":  "df8715b1f3b92a68e85f74011e681b36c150e81ff3611271c741384347b195cb"
+                                                    },
+                                                    {
+                                                        "file":  "geometry-ordering-stream-observations-1/geometry-current-1-receipt.txt",
+                                                        "bytes":  3289448,
+                                                        "sha256":  "ce6103286a0bb433ab13e7bcfcbd95e7dc79d473c0e1963532e59e02f339dce4"
+                                                    },
+                                                    {
+                                                        "file":  "geometry-ordering-stream-observations-1/geometry-current-1-stdout.txt",
+                                                        "bytes":  3290588,
+                                                        "sha256":  "00925139edc474824505d878d2cf76446f8c40e9dd588f3c92b61ed74ffa2481"
+                                                    },
+                                                    {
+                                                        "file":  "geometry-ordering-stream-observations-1/geometry-current-1-stderr.txt",
+                                                        "bytes":  0,
+                                                        "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                                                    },
+                                                    {
+                                                        "file":  "geometry-ordering-stream-observations-1/geometry-current-1-launcher.json",
+                                                        "bytes":  764,
+                                                        "sha256":  "1a901471bba105ac4fb80aa0a587e75aa2b5765b5f41286e2fc8771dbe29073f"
+                                                    },
+                                                    {
+                                                        "file":  "geometry-ordering-stream-observations-1/geometry-current-1-full-inputs.json",
+                                                        "bytes":  204439,
+                                                        "sha256":  "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69"
+                                                    },
+                                                    {
+                                                        "file":  "geometry-ordering-stream-observations-1/geometry-current-1.log",
+                                                        "bytes":  3291695,
+                                                        "sha256":  "483c105d415847575cc71bba4c748ede706a8e0602892c18d060e968f92bd9be"
+                                                    }
+                                                ]
+                              }
+                   },
+    "controlledCases":  [
+                            {
+                                "rootSeed":  "-1017",
+                                "placementInterpretationVersion":  1,
+                                "placementInterpretation":  "LEGACY1",
+                                "placementSeed":  "8535299046786058855",
+                                "routingSeed":  "-2738316251575122434",
+                                "topology":  "RB56_CH1_SEPARATE_DIRECT_A_BJT_S5_true_S12_false_F1_O0_B5_false",
+                                "logicalDeclarationsAndSeedStreamsUnchanged":  true,
+                                "placementCanonicalUnchanged":  true,
+                                "changedComponentMappingCount":  0,
+                                "independentPhysicalAndPartitionWitnesses":  "PASS_NATIVE_BOTH_SOURCES",
+                                "baseline":  {
+                                                 "layoutVersion":  22,
+                                                 "dependencyEpoch":  "tsj-generation-dependencies-v23",
+                                                 "selectedAttempt":  0,
+                                                 "physicalSha256":  "27f9389815a080fc6d50890f868585b5e0ed7bd14f75644c041dff948d6d1f1a",
+                                                 "boardArea":  6374950,
+                                                 "utilization":  0.91063459321249562,
+                                                 "outline":  {
+                                                                 "x":  70,
+                                                                 "y":  50,
+                                                                 "width":  4322,
+                                                                 "height":  1475
+                                                             },
+                                                 "viaCount":  34,
+                                                 "traceSegmentCount":  167
+                                             },
+                                "an":  {
+                                           "layoutVersion":  24,
+                                           "dependencyEpoch":  "tsj-generation-dependencies-v25",
+                                           "selectedAttempt":  0,
+                                           "physicalSha256":  "81e93a9f0a80a711d9eb0c527b7dbdfcfa455b11920977ea46622c1aedefee41",
+                                           "boardArea":  6374950,
+                                           "utilization":  0.91063459321249562,
+                                           "outline":  {
+                                                           "x":  70,
+                                                           "y":  50,
+                                                           "width":  4322,
+                                                           "height":  1475
+                                                       },
+                                           "viaCount":  33,
+                                           "traceSegmentCount":  167
+                                       }
+                            },
+                            {
+                                "rootSeed":  "-1004",
+                                "placementInterpretationVersion":  1,
+                                "placementInterpretation":  "LEGACY1",
+                                "placementSeed":  "-6149459120783346325",
+                                "routingSeed":  "-1137963182477054582",
+                                "topology":  "RB56_CH1_SHARED_HYSTERETIC_A_BJT_S5_true_S12_true_F1_O0_B5_true",
+                                "logicalDeclarationsAndSeedStreamsUnchanged":  true,
+                                "placementCanonicalUnchanged":  true,
+                                "changedComponentMappingCount":  0,
+                                "independentPhysicalAndPartitionWitnesses":  "PASS_NATIVE_BOTH_SOURCES",
+                                "baseline":  {
+                                                 "layoutVersion":  22,
+                                                 "dependencyEpoch":  "tsj-generation-dependencies-v23",
+                                                 "selectedAttempt":  2,
+                                                 "physicalSha256":  "582064e2986b77ff92348024814f01fc0581c8f2273bd37ca695a26a3008574d",
+                                                 "boardArea":  8093904,
+                                                 "utilization":  0.90322964048004517,
+                                                 "outline":  {
+                                                                 "x":  70,
+                                                                 "y":  50,
+                                                                 "width":  4251,
+                                                                 "height":  1904
+                                                             },
+                                                 "viaCount":  37,
+                                                 "traceSegmentCount":  185
+                                             },
+                                "an":  {
+                                           "layoutVersion":  24,
+                                           "dependencyEpoch":  "tsj-generation-dependencies-v25",
+                                           "selectedAttempt":  2,
+                                           "physicalSha256":  "fbf29057aed8d0bb4b0dca7e4dbf68a323dd05e5108dddd0a265c27dcb03ecbf",
+                                           "boardArea":  8093904,
+                                           "utilization":  0.90322964048004517,
+                                           "outline":  {
+                                                           "x":  70,
+                                                           "y":  50,
+                                                           "width":  4251,
+                                                           "height":  1904
+                                                       },
+                                           "viaCount":  33,
+                                           "traceSegmentCount":  183
+                                       }
+                            },
+                            {
+                                "rootSeed":  "-1022",
+                                "placementInterpretationVersion":  1,
+                                "placementInterpretation":  "LEGACY1",
+                                "placementSeed":  "-5634176660316136309",
+                                "routingSeed":  "-3812824227946713686",
+                                "topology":  "RB56_CH2_SHARED_HYSTERETIC_A_BJT_B_NMOS_S5_true_S12_true_F3_O3_B5_true",
+                                "logicalDeclarationsAndSeedStreamsUnchanged":  true,
+                                "placementCanonicalUnchanged":  true,
+                                "changedComponentMappingCount":  0,
+                                "independentPhysicalAndPartitionWitnesses":  "PASS_NATIVE_BOTH_SOURCES",
+                                "baseline":  {
+                                                 "layoutVersion":  22,
+                                                 "dependencyEpoch":  "tsj-generation-dependencies-v23",
+                                                 "selectedAttempt":  0,
+                                                 "physicalSha256":  "17b1b0d0452d64332d636c46833b2be44348380303a8b66f539216ecac59f7d4",
+                                                 "boardArea":  11290629,
+                                                 "utilization":  0.91042128830909241,
+                                                 "outline":  {
+                                                                 "x":  70,
+                                                                 "y":  50,
+                                                                 "width":  6041,
+                                                                 "height":  1869
+                                                             },
+                                                 "viaCount":  46,
+                                                 "traceSegmentCount":  274
+                                             },
+                                "an":  {
+                                           "layoutVersion":  24,
+                                           "dependencyEpoch":  "tsj-generation-dependencies-v25",
+                                           "selectedAttempt":  0,
+                                           "physicalSha256":  "ade3126987e5d4ef4529d0d171f68f8977ac8b0174efa47a43b63f196c0fe3a9",
+                                           "boardArea":  11290629,
+                                           "utilization":  0.91042128830909241,
+                                           "outline":  {
+                                                           "x":  70,
+                                                           "y":  50,
+                                                           "width":  6041,
+                                                           "height":  1869
+                                                       },
+                                           "viaCount":  44,
+                                           "traceSegmentCount":  264
+                                       }
+                            },
+                            {
+                                "rootSeed":  "-1017",
+                                "placementInterpretationVersion":  2,
+                                "placementInterpretation":  "COMPACT2",
+                                "placementSeed":  "8535299046786058855",
+                                "routingSeed":  "-2738316251575122434",
+                                "topology":  "RB56_CH1_SEPARATE_DIRECT_A_BJT_S5_true_S12_false_F1_O0_B5_false",
+                                "logicalDeclarationsAndSeedStreamsUnchanged":  true,
+                                "placementCanonicalUnchanged":  true,
+                                "changedComponentMappingCount":  0,
+                                "independentPhysicalAndPartitionWitnesses":  "PASS_NATIVE_BOTH_SOURCES",
+                                "baseline":  {
+                                                 "layoutVersion":  22,
+                                                 "dependencyEpoch":  "tsj-generation-dependencies-v23",
+                                                 "selectedAttempt":  4,
+                                                 "physicalSha256":  "279e83fea450e4b4be6767a56bf2ba748bba5c6dd7817f60b07f48ff6906c378",
+                                                 "boardArea":  5445700,
+                                                 "utilization":  0.90695411058266162,
+                                                 "outline":  {
+                                                                 "x":  70,
+                                                                 "y":  50,
+                                                                 "width":  3692,
+                                                                 "height":  1475
+                                                             },
+                                                 "viaCount":  34,
+                                                 "traceSegmentCount":  167
+                                             },
+                                "an":  {
+                                           "layoutVersion":  24,
+                                           "dependencyEpoch":  "tsj-generation-dependencies-v25",
+                                           "selectedAttempt":  4,
+                                           "physicalSha256":  "02a69383d57ee6951e5c50f5dffe20dd5b2555ae7154b128f42d27f2b0dcd072",
+                                           "boardArea":  5445700,
+                                           "utilization":  0.90695411058266162,
+                                           "outline":  {
+                                                           "x":  70,
+                                                           "y":  50,
+                                                           "width":  3692,
+                                                           "height":  1475
+                                                       },
+                                           "viaCount":  33,
+                                           "traceSegmentCount":  167
+                                       }
+                            },
+                            {
+                                "rootSeed":  "-1004",
+                                "placementInterpretationVersion":  2,
+                                "placementInterpretation":  "COMPACT2",
+                                "placementSeed":  "-6149459120783346325",
+                                "routingSeed":  "-1137963182477054582",
+                                "topology":  "RB56_CH1_SHARED_HYSTERETIC_A_BJT_S5_true_S12_true_F1_O0_B5_true",
+                                "logicalDeclarationsAndSeedStreamsUnchanged":  true,
+                                "placementCanonicalUnchanged":  true,
+                                "changedComponentMappingCount":  0,
+                                "independentPhysicalAndPartitionWitnesses":  "PASS_NATIVE_BOTH_SOURCES",
+                                "baseline":  {
+                                                 "layoutVersion":  22,
+                                                 "dependencyEpoch":  "tsj-generation-dependencies-v23",
+                                                 "selectedAttempt":  0,
+                                                 "physicalSha256":  "15bb054ccc9a57f1dc111800127901b90d829d36fec5886ea4212e3f38b8b328",
+                                                 "boardArea":  6757504,
+                                                 "utilization":  0.89236410366904706,
+                                                 "outline":  {
+                                                                 "x":  70,
+                                                                 "y":  50,
+                                                                 "width":  4061,
+                                                                 "height":  1664
+                                                             },
+                                                 "viaCount":  25,
+                                                 "traceSegmentCount":  173
+                                             },
+                                "an":  {
+                                           "layoutVersion":  24,
+                                           "dependencyEpoch":  "tsj-generation-dependencies-v25",
+                                           "selectedAttempt":  0,
+                                           "physicalSha256":  "b76292d8d3b597ff80b95f736bd23cddde49c4c48cb1c62af43d694be97ed35d",
+                                           "boardArea":  6757504,
+                                           "utilization":  0.89236410366904706,
+                                           "outline":  {
+                                                           "x":  70,
+                                                           "y":  50,
+                                                           "width":  4061,
+                                                           "height":  1664
+                                                       },
+                                           "viaCount":  25,
+                                           "traceSegmentCount":  177
+                                       }
+                            },
+                            {
+                                "rootSeed":  "-1022",
+                                "placementInterpretationVersion":  2,
+                                "placementInterpretation":  "COMPACT2",
+                                "placementSeed":  "-5634176660316136309",
+                                "routingSeed":  "-3812824227946713686",
+                                "topology":  "RB56_CH2_SHARED_HYSTERETIC_A_BJT_B_NMOS_S5_true_S12_true_F3_O3_B5_true",
+                                "logicalDeclarationsAndSeedStreamsUnchanged":  true,
+                                "placementCanonicalUnchanged":  false,
+                                "changedComponentMappingCount":  60,
+                                "independentPhysicalAndPartitionWitnesses":  "PASS_NATIVE_BOTH_SOURCES",
+                                "baseline":  {
+                                                 "layoutVersion":  22,
+                                                 "dependencyEpoch":  "tsj-generation-dependencies-v23",
+                                                 "selectedAttempt":  4,
+                                                 "physicalSha256":  "f42fbd62199a8b254964cd256f7e45ebf4b9b6d06eef3ad89911ed8ecb32f375",
+                                                 "boardArea":  9982329,
+                                                 "utilization":  0.9077970681992148,
+                                                 "outline":  {
+                                                                 "x":  70,
+                                                                 "y":  50,
+                                                                 "width":  5341,
+                                                                 "height":  1869
+                                                             },
+                                                 "viaCount":  46,
+                                                 "traceSegmentCount":  274
+                                             },
+                                "an":  {
+                                           "layoutVersion":  24,
+                                           "dependencyEpoch":  "tsj-generation-dependencies-v25",
+                                           "selectedAttempt":  0,
+                                           "physicalSha256":  "a713acba0dac5dbafd6835830fb8a3685561a591fdf35686495b81d263c0d502",
+                                           "boardArea":  8527739,
+                                           "utilization":  0.92729608633660121,
+                                           "outline":  {
+                                                           "x":  70,
+                                                           "y":  50,
+                                                           "width":  4331,
+                                                           "height":  1969
+                                                       },
+                                           "viaCount":  48,
+                                           "traceSegmentCount":  278
+                                       }
+                            }
+                        ],
+    "sourceTransitionAudit":  {
+                                  "comparedCommonInputCount":  1055,
+                                  "inputAudits":  {
+                                                      "baseline":  {
+                                                                       "fileCount":  1059,
+                                                                       "totalBytes":  85299082,
+                                                                       "allBytesMatchSealedPins":  true
+                                                                   },
+                                                      "uReference":  {
+                                                                         "fileCount":  1059,
+                                                                         "totalBytes":  85283604,
+                                                                         "allBytesMatchSealedPins":  true
+                                                                     },
+                                                      "an":  {
+                                                                 "fileCount":  1059,
+                                                                 "totalBytes":  85489324,
+                                                                 "allBytesMatchSealedPins":  true
+                                                             },
+                                                      "baselineRunResultSha256":  "1b1da740bd6803b91042f906728ae69c7fd8ed3466d8bc7d347347c953b4cfbd",
+                                                      "anRunResultSha256":  "07cdc1f0783ce069af10d0200d1d17c11b19037434b9649b12af06204d044803",
+                                                      "baselinePostRunManifestSha256":  "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+                                                      "anPostRunManifestSha256":  "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69"
+                                                  },
+                                  "baselineToU":  {
+                                                      "changedCommonPaths":  [
+                                                                                 "scripts/verify-current-contracts.ps1",
+                                                                                 "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+                                                                                 "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+                                                                                 "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+                                                                                 "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+                                                                                 "tests/contracts/D01DiagnosticContractTest.java",
+                                                                                 "tests/contracts/P07GeometryEpochDiagnosticContractTest.java",
+                                                                                 "tests/contracts/PcbCanvasBoundaryContractTest.java",
+                                                                                 "tests/contracts/PcbCompactnessContractTest.java",
+                                                                                 "tests/contracts/PcbCorridorOrientationContractTest.java",
+                                                                                 "tests/contracts/PcbNormalPackingIdentityContractTest.java",
+                                                                                 "tests/contracts/Rb100P07BranchDiagnosticContractTest.java",
+                                                                                 "tests/contracts/Rb100P07PolicyDiagnosticContractTest.java",
+                                                                                 "tests/contracts/Rb56ModelIdentityContractTest.java",
+                                                                                 "tests/contracts/RelBSessionIdentityContractTest.java"
+                                                                             ],
+                                                      "retiredBaselinePaths":  [
+                                                                                   "tests/contracts/Rb100LayoutFeasibilityContractTest.java",
+                                                                                   "tests/contracts/Rb100LayoutFirstRoutingDiagnosticContractTest.java",
+                                                                                   "tests/contracts/Rb100LayoutPlacementDiagnosticContractTest.java",
+                                                                                   "tests/contracts/Rb100LayoutRoutingDiagnosticContractTest.java"
+                                                                               ],
+                                                      "addedUPaths":  [
+                                                                          "tests/contracts/P07ReachedPthContractTest.java",
+                                                                          "tests/contracts/PcbPlacementDiagnosticsContractTest.java",
+                                                                          "tests/contracts/Rb100PhysicalDiagnostics.java",
+                                                                          "tests/contracts/Rb100PhysicalReference.java"
+                                                                      ],
+                                                      "unchangedAuditMatches":  true
+                                                  },
+                                  "uToAn":  {
+                                                "changedCount":  6,
+                                                "changedPaths":  [
+                                                                     "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java",
+                                                                     "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+                                                                     "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+                                                                     "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+                                                                     "tests/contracts/P07BranchDiagnosticsContractTest.java",
+                                                                     "tests/contracts/Rb100PhysicalDiagnostics.java"
+                                                                 ]
+                                            },
+                                  "baselineToAn":  {
+                                                       "changedCommonPaths":  [
+                                                                                  "scripts/verify-current-contracts.ps1",
+                                                                                  "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+                                                                                  "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java",
+                                                                                  "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+                                                                                  "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+                                                                                  "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+                                                                                  "tests/contracts/D01DiagnosticContractTest.java",
+                                                                                  "tests/contracts/P07BranchDiagnosticsContractTest.java",
+                                                                                  "tests/contracts/P07GeometryEpochDiagnosticContractTest.java",
+                                                                                  "tests/contracts/PcbCanvasBoundaryContractTest.java",
+                                                                                  "tests/contracts/PcbCompactnessContractTest.java",
+                                                                                  "tests/contracts/PcbCorridorOrientationContractTest.java",
+                                                                                  "tests/contracts/PcbNormalPackingIdentityContractTest.java",
+                                                                                  "tests/contracts/Rb100P07BranchDiagnosticContractTest.java",
+                                                                                  "tests/contracts/Rb100P07PolicyDiagnosticContractTest.java",
+                                                                                  "tests/contracts/Rb56ModelIdentityContractTest.java",
+                                                                                  "tests/contracts/RelBSessionIdentityContractTest.java"
+                                                                              ],
+                                                       "retiredBaselinePaths":  [
+                                                                                    "tests/contracts/Rb100LayoutFeasibilityContractTest.java",
+                                                                                    "tests/contracts/Rb100LayoutFirstRoutingDiagnosticContractTest.java",
+                                                                                    "tests/contracts/Rb100LayoutPlacementDiagnosticContractTest.java",
+                                                                                    "tests/contracts/Rb100LayoutRoutingDiagnosticContractTest.java"
+                                                                                ],
+                                                       "addedCurrentPaths":  [
+                                                                                 "tests/contracts/P07ReachedPthContractTest.java",
+                                                                                 "tests/contracts/PcbPlacementDiagnosticsContractTest.java",
+                                                                                 "tests/contracts/Rb100PhysicalDiagnostics.java",
+                                                                                 "tests/contracts/Rb100PhysicalReference.java"
+                                                                             ],
+                                                       "unchangedOracleInputs":  [
+                                                                                     ".tools/gwt-2.7.0/gwt-dev-2.7.0.jar",
+                                                                                     ".tools/gwt-2.7.0/gwt-user-2.7.0.jar",
+                                                                                     "scripts/VerifierIsolation.psm1",
+                                                                                     "tests/contracts/P07LayeredRasterOracle.java",
+                                                                                     "tests/contracts/P08ReferenceConductorBuilder.java",
+                                                                                     "tests/contracts/P08ScalabilityContractTest.java",
+                                                                                     "tests/contracts/PcbFunctionalGroupingContractTest.java",
+                                                                                     "tests/contracts/PcbPocketPackingContractTest.java"
+                                                                                 ],
+                                                       "comparedJarInputs":  2
+                                                   }
+                              },
+    "strictReader":  {
+                         "version":  3,
+                         "status":  "PASS_STRICT_COMPARISON_READER_ONLY",
+                         "scope":  "STRICT_READER_AND_COMPARISON_ONLY",
+                         "runtime":  "Python reader invoked by maintained Windows PowerShell wrapper",
+                         "exitCode":  0,
+                         "elapsedSeconds":  1.705509,
+                         "recordsValidated":  6,
+                         "negativeCanaries":  38,
+                         "currentInputFilesRehashed":  1059,
+                         "source":  {
+                                        "file":  "read-geometry-ordering-stream-v3.py",
+                                        "bytes":  31255,
+                                        "sha256":  "0446dea0e9d2dbc33cea66bb360fd2574d101b8a199aa6dfeed74ebef2acda7c"
+                                    },
+                         "runner":  {
+                                        "file":  "run-geometry-ordering-stream-reader-v3.ps1",
+                                        "bytes":  11236,
+                                        "sha256":  "fedfd37f3e5e9ad1b99f9098fe5502d4bda96c2082964165c82bdcff50bfb0c5"
+                                    },
+                         "output":  {
+                                        "file":  "geometry-ordering-stream-comparison-v3-1.json",
+                                        "bytes":  7651527,
+                                        "sha256":  "4f4fe1330c703f9b700ba3ef31a5d048b5278b43af08117ef0cdc1d0984990ee"
+                                    },
+                         "adapterSha256":  "0446dea0e9d2dbc33cea66bb360fd2574d101b8a199aa6dfeed74ebef2acda7c",
+                         "boundedModuleSha256":  "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+                         "wrapperCanaries":  {
+                                                 "protocol":  "strict-native-footer-v2",
+                                                 "baselineEnvelope":  "powershell-transcript-end",
+                                                 "anEnvelope":  "powershell-transcript-end",
+                                                 "positiveAcceptedPerSide":  6,
+                                                 "negativeRejectedPerSide":  9,
+                                                 "totalSuffixFixtures":  30,
+                                                 "positiveNames":  [
+                                                                       "captured-powershell-transcript-end",
+                                                                       "legacy-transcript-path",
+                                                                       "powershell-transcript-end",
+                                                                       "blank-spaced-legacy-suffix",
+                                                                       "blank-spaced-powershell-suffix",
+                                                                       "result-transcript-binding"
+                                                                   ],
+                                                 "negativeNames":  [
+                                                                       "unexpected-failure-suffix",
+                                                                       "missing-cleanup-marker",
+                                                                       "missing-transcript-end",
+                                                                       "trailing-unknown-text",
+                                                                       "wrong-source-attempt-basename",
+                                                                       "malformed-end-time",
+                                                                       "empty-suffix",
+                                                                       "duplicate-native-footer",
+                                                                       "wrong-result-transcript-binding"
+                                                                   ],
+                                                 "suffixRules":  [
+                                                                     "Exact three-line PASS/cleanup/transcript-path suffix with source/attempt basename.",
+                                                                     "Exact six-line Windows PowerShell transcript-end suffix with 14-digit End time.",
+                                                                     "No extra suffix lines; receipt/console parsed observations must match exactly."
+                                                                 ],
+                                                 "consoleReceiptRecordsMustMatch":  true
+                                             },
+                         "artifacts":  [
+                                           {
+                                               "file":  "geometry-ordering-stream-reader-executions-v3/geometry-ordering-stream-reader-v3-1-execution.json",
+                                               "bytes":  1722,
+                                               "sha256":  "95d2f0e73c4198dddf5b7ec4a93c2d7ee4e19c96db0da9556cb479fd3ae22e3c"
+                                           },
+                                           {
+                                               "file":  "geometry-ordering-stream-reader-executions-v3/geometry-ordering-stream-reader-v3-1-launcher.json",
+                                               "bytes":  713,
+                                               "sha256":  "71b4a09c41eaf95a22c1c6ec9f702fc1a3a01d741a75d0dc3580cc048a9add7b"
+                                           },
+                                           {
+                                               "file":  "geometry-ordering-stream-reader-executions-v3/geometry-ordering-stream-reader-v3-1-stdout.txt",
+                                               "bytes":  103,
+                                               "sha256":  "f316e9e00a0edc55e11de83ca3c7bbbbdee2e149529b46570a86c56066e18794"
+                                           },
+                                           {
+                                               "file":  "geometry-ordering-stream-reader-executions-v3/geometry-ordering-stream-reader-v3-1-stderr.txt",
+                                               "bytes":  0,
+                                               "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                                           }
+                                       ],
+                         "attempts":  [
+                                          {
+                                              "version":  1,
+                                              "status":  "READER_EXIT_2_CAPTURED",
+                                              "exitCode":  2,
+                                              "elapsedSeconds":  1.0333283,
+                                              "note":  "failed on blank-line handling; preserved, not reused",
+                                              "source":  {
+                                                             "file":  "read-geometry-ordering-stream.py",
+                                                             "bytes":  21200,
+                                                             "sha256":  "f8c89afdbbf666f713a2fb71a0b317e4bcb5ea7bd91549427082365312d50619"
+                                                         },
+                                              "runner":  {
+                                                             "file":  "run-geometry-ordering-stream-reader.ps1",
+                                                             "bytes":  10923,
+                                                             "sha256":  "98e8fe1ca5b6199e68fc7666a934a54615c5faa484ba047116695a38c9f9c09a"
+                                                         },
+                                              "outputBytes":  0,
+                                              "outputSha256":  null,
+                                              "stdoutBytes":  60,
+                                              "stdoutSha256":  "25e8a3c13a79492bc4d7bcdcab9b701783e713a89c4d682f928ebcf82bd02a04",
+                                              "stderrBytes":  0,
+                                              "stderrSha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                              "artifacts":  [
+                                                                {
+                                                                    "file":  "geometry-ordering-stream-reader-executions-1/geometry-ordering-stream-reader-1-execution.json",
+                                                                    "bytes":  1602,
+                                                                    "sha256":  "fe87e5cdf63f5f3333988d2d17438f6604c93255c4139c042236d629657bbb70"
+                                                                },
+                                                                {
+                                                                    "file":  "geometry-ordering-stream-reader-executions-1/geometry-ordering-stream-reader-1-launcher.json",
+                                                                    "bytes":  707,
+                                                                    "sha256":  "9b9ff79cbbd1cdf229ce61c5e40019a711d3c551b0064db316b2321c59892dba"
+                                                                },
+                                                                {
+                                                                    "file":  "geometry-ordering-stream-reader-executions-1/geometry-ordering-stream-reader-1-stdout.txt",
+                                                                    "bytes":  60,
+                                                                    "sha256":  "25e8a3c13a79492bc4d7bcdcab9b701783e713a89c4d682f928ebcf82bd02a04"
+                                                                },
+                                                                {
+                                                                    "file":  "geometry-ordering-stream-reader-executions-1/geometry-ordering-stream-reader-1-stderr.txt",
+                                                                    "bytes":  0,
+                                                                    "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                                                                }
+                                                            ]
+                                          },
+                                          {
+                                              "version":  2,
+                                              "status":  "READER_EXIT_2_CAPTURED",
+                                              "exitCode":  2,
+                                              "elapsedSeconds":  1.1008725,
+                                              "note":  "same blank-line handling failure; preserved, not reused",
+                                              "source":  {
+                                                             "file":  "read-geometry-ordering-stream-v2.py",
+                                                             "bytes":  29875,
+                                                             "sha256":  "0e1e47d23dfc4af512bcf5d8cb8e0a81cbfeb4086755fac92eda5224e6655987"
+                                                         },
+                                              "runner":  {
+                                                             "file":  "run-geometry-ordering-stream-reader-v2.ps1",
+                                                             "bytes":  11236,
+                                                             "sha256":  "117355e08cc8a1fb0112afa16271796c8e986bd2b7511ef1f0062f235dbab7b7"
+                                                         },
+                                              "outputBytes":  0,
+                                              "outputSha256":  null,
+                                              "stdoutBytes":  60,
+                                              "stdoutSha256":  "740fd84025789dbe046a5c9820374cd287ccae8e81fe9ab00566a3ace04a07d0",
+                                              "stderrBytes":  0,
+                                              "stderrSha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                              "artifacts":  [
+                                                                {
+                                                                    "file":  "geometry-ordering-stream-reader-executions-v2/geometry-ordering-stream-reader-v2-1-execution.json",
+                                                                    "bytes":  1613,
+                                                                    "sha256":  "7337909eda999f8f2018815c0ac39cb4226b4fe4a6586e274b49b04a961fb553"
+                                                                },
+                                                                {
+                                                                    "file":  "geometry-ordering-stream-reader-executions-v2/geometry-ordering-stream-reader-v2-1-launcher.json",
+                                                                    "bytes":  713,
+                                                                    "sha256":  "28e0c0aa2b6ee7de8b0c5f4bbacd90ba2b5e516117956cb14f632b4c21a63141"
+                                                                },
+                                                                {
+                                                                    "file":  "geometry-ordering-stream-reader-executions-v2/geometry-ordering-stream-reader-v2-1-stdout.txt",
+                                                                    "bytes":  60,
+                                                                    "sha256":  "740fd84025789dbe046a5c9820374cd287ccae8e81fe9ab00566a3ace04a07d0"
+                                                                },
+                                                                {
+                                                                    "file":  "geometry-ordering-stream-reader-executions-v2/geometry-ordering-stream-reader-v2-1-stderr.txt",
+                                                                    "bytes":  0,
+                                                                    "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                                                                }
+                                                            ]
+                                          },
+                                          {
+                                              "version":  3,
+                                              "status":  "READER_EXIT_0_CAPTURED",
+                                              "exitCode":  0,
+                                              "elapsedSeconds":  1.705509,
+                                              "note":  "strict six-row comparison only; no goldens updated",
+                                              "source":  {
+                                                             "file":  "read-geometry-ordering-stream-v3.py",
+                                                             "bytes":  31255,
+                                                             "sha256":  "0446dea0e9d2dbc33cea66bb360fd2574d101b8a199aa6dfeed74ebef2acda7c"
+                                                         },
+                                              "runner":  {
+                                                             "file":  "run-geometry-ordering-stream-reader-v3.ps1",
+                                                             "bytes":  11236,
+                                                             "sha256":  "fedfd37f3e5e9ad1b99f9098fe5502d4bda96c2082964165c82bdcff50bfb0c5"
+                                                         },
+                                              "outputBytes":  7651527,
+                                              "outputSha256":  "4f4fe1330c703f9b700ba3ef31a5d048b5278b43af08117ef0cdc1d0984990ee",
+                                              "stdoutBytes":  103,
+                                              "stdoutSha256":  "f316e9e00a0edc55e11de83ca3c7bbbbdee2e149529b46570a86c56066e18794",
+                                              "stderrBytes":  0,
+                                              "stderrSha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                              "artifacts":  [
+                                                                {
+                                                                    "file":  "geometry-ordering-stream-reader-executions-v3/geometry-ordering-stream-reader-v3-1-execution.json",
+                                                                    "bytes":  1722,
+                                                                    "sha256":  "95d2f0e73c4198dddf5b7ec4a93c2d7ee4e19c96db0da9556cb479fd3ae22e3c"
+                                                                },
+                                                                {
+                                                                    "file":  "geometry-ordering-stream-reader-executions-v3/geometry-ordering-stream-reader-v3-1-launcher.json",
+                                                                    "bytes":  713,
+                                                                    "sha256":  "71b4a09c41eaf95a22c1c6ec9f702fc1a3a01d741a75d0dc3580cc048a9add7b"
+                                                                },
+                                                                {
+                                                                    "file":  "geometry-ordering-stream-reader-executions-v3/geometry-ordering-stream-reader-v3-1-stdout.txt",
+                                                                    "bytes":  103,
+                                                                    "sha256":  "f316e9e00a0edc55e11de83ca3c7bbbbdee2e149529b46570a86c56066e18794"
+                                                                },
+                                                                {
+                                                                    "file":  "geometry-ordering-stream-reader-executions-v3/geometry-ordering-stream-reader-v3-1-stderr.txt",
+                                                                    "bytes":  0,
+                                                                    "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                                                                }
+                                                            ]
+                                          }
+                                      ],
+                         "qProducerNote":  "Separate QProducer parse-only v1 was NOT RUN; the separately noted v2 character-code spelling is treated as equivalent, not as a correction, and neither is counted as evidence here."
+                     },
+    "sourceBoundaries":  {
+                             "baselineAndAnNormalizer":  {
+                                                             "baselineSourceSha256":  "6f39a6b890ba6857e9c2edd533fcacecbd375c0d8467cd05c97801389d73c38c",
+                                                             "anSourceSha256":  "f0328acef81e7fd225d45bb87a7fd5f16d6e115e089e8fd1a1d4c017c691804f",
+                                                             "baselineLayoutVersion":  22,
+                                                             "anLayoutVersion":  24,
+                                                             "baselineEpochNeutralCalledBlockSha256":  "448386678b8176fa37d48f1c48372c01362771b9ae15678adbbd5880203d2747",
+                                                             "anEpochNeutralCalledBlockSha256":  "448386678b8176fa37d48f1c48372c01362771b9ae15678adbbd5880203d2747",
+                                                             "sameCalledLogicAfterExplicitEpochLiterals":  true,
+                                                             "explicitEpochLiteralCount":  4
+                                                         },
+                             "diagnosticContract":  {
+                                                        "relativePath":  "tests/contracts/P07GeometryEpochDiagnosticContractTest.java",
+                                                        "baselineBytes":  55735,
+                                                        "baselineRawSha256":  "3c36b320364c39a162349cf814d9f1e0860586829b98f5956d19d7905e0caa46",
+                                                        "anBytes":  55735,
+                                                        "anRawSha256":  "3037bf6e7b7611184a312b36e0ef8924271b448d316dbce0d812078ddc38b889",
+                                                        "baselineEpochNeutralSha256":  "89063a57ce046b2aef59a267c02f9f23ef40ed04fcfacf874ae268d6b1d38a61",
+                                                        "anEpochNeutralSha256":  "89063a57ce046b2aef59a267c02f9f23ef40ed04fcfacf874ae268d6b1d38a61",
+                                                        "sameLogicAfterLiteralAdapters":  true,
+                                                        "sourceLogicMutationCanary":  "PASS_REJECTED",
+                                                        "allowedLiteralDifferences":  [
+                                                                                          {
+                                                                                              "name":  "current-layout-guard",
+                                                                                              "baselineLiteral":  "layoutVersion == 23",
+                                                                                              "currentLiteral":  "layoutVersion == 24",
+                                                                                              "occurrences":  2
+                                                                                          },
+                                                                                          {
+                                                                                              "name":  "current-dependency-epoch",
+                                                                                              "baselineLiteral":  "tsj-generation-dependencies-v24",
+                                                                                              "currentLiteral":  "tsj-generation-dependencies-v25",
+                                                                                              "occurrences":  2
+                                                                                          },
+                                                                                          {
+                                                                                              "name":  "current-epoch-error-label",
+                                                                                              "baselineLiteral":  "layout23/dependency24",
+                                                                                              "currentLiteral":  "layout24/dependency25",
+                                                                                              "occurrences":  2
+                                                                                          }
+                                                                                      ]
+                                                    },
+                             "independentCore":  {
+                                                     "relativePath":  "tests/qualification/rb100-layout/read_geometry_transition.py",
+                                                     "sha256":  "3aa4fa311908c87ba9f68485048fee1d1a2680192e06679eb66c2b68c01779f5",
+                                                     "diagnosticSha256":  "31f65be5e11472c7b09e8141292402c641df6b735787d32eb4c904ae098981e7",
+                                                     "mainReused":  false,
+                                                     "coreMainInvoked":  false,
+                                                     "coreConstantsPatched":  false
+                                                 }
+                         },
+    "qualificationLimits":  [
+                                "Observation covers only root seeds -1017, -1004, and -1022 under two placement interpretations; six fixed boards total.",
+                                "Five placement canonical identities remain unchanged. COMPACT2 seed -1022 changes selected attempt 4 to 0, board area 9982329 to 8527739, and 60 component mappings; all six logical declarations and seed streams remain unchanged.",
+                                "Native P08/reference physical partition checks passed in both pinned sources. No golden was updated.",
+                                "The AN snapshot is layout24/dependency25 and predates the later current-main layout25/dependency26 source; this packet does not cover that current-main gate.",
+                                "No full 30-root census, Q100 route acceptance, all-100-part routes, player runtime, production timing, or adoption claim follows from these six observations.",
+                                "The six-row P08/reference/raster claims are native-suite assertions; the strict reader validated sealed inputs, output records, and source bindings but did not independently run those physical oracles.",
+                                "Separate QProducer parse-only v1 was NOT RUN; the separately noted v2 character-code spelling is treated as equivalent, not a correction, and neither is evidence here."
+                            ],
+    "packetSanitization":  {
+                               "artifactReferences":  "portable scratch-leaf relative filenames only",
+                               "rawConsoleEmbedded":  false,
+                               "rawReceiptEmbedded":  false,
+                               "fullInputManifestContentsEmbedded":  false,
+                               "absolutePathsEmbedded":  false,
+                               "processIdsOrStartTicksIncluded":  false,
+                               "status":  "SANITIZED_FOR_PORTABLE_EVIDENCE"
+                           }
+}

@@ -1,0 +1,75 @@
+{
+  "protocol": "q100-paired-placement-source-review-v1",
+  "scope": "READ_ONLY_SOURCE_REVIEW",
+  "sourceState": "Shared worktree source reviewed at root U/F300 planner state; exact file hashes below.",
+  "findingSupportPair": {
+    "conclusion": "For the declared RB56 output-indicator topology, RLEDOUT_A and RLEDOUT_B cannot receive a PcbSupportPairPlacement.Pair. This is a source-derived topology result, not a runtime observation from the failed profiles.",
+    "eligibility": "find() requires a distinct placed non-connector peer with at least three pads, matching each of the two source nets on the same placement domain.",
+    "declaredTopology": [
+      "When enabled by outputIndicatorMask, RLEDOUT_X connects OUT_X to LED_OUT_X_FEED.",
+      "LEDOUT_X is a two-terminal LED joining LED_OUT_X_FEED to LOAD_RETURN, so it is excluded by the peer minimum-pad rule.",
+      "KX carries OUT_X but not LED_OUT_X_FEED.",
+      "JOX carries OUT_X and LOAD_RETURN but is a two-terminal connector.",
+      "The source declaration introduces LED_OUT_X_FEED only for the resistor and its LED; no eligible multi-pad peer carries both resistor nets."
+    ],
+    "placedOrder": "find() searches only already-placed peers, so support selection can generally depend on placement order; for these output-indicator resistor nets, even the complete declared inventory contains no eligible peer.",
+    "runtimeAttribution": "NOT_OBSERVED"
+  },
+  "findingVacancyPocket": {
+    "conclusion": "PcbVacancyTargets.targets() chooses one largest conservative coarse-grid Pocket and returns up to five origins for that pocket (center and corners). The planner's min/max reconstruction describes that one pocket; it does not combine separate empty regions or bridge blocked cells.",
+    "reconstruction": "The returned origins place the same source envelope inside the selected pocket. Reconstructing min/max origin coordinates with the envelope's pose-relative offset and dimensions restores the pocket bounds; if invalid origins are filtered, the remaining bounds stay within that same pocket.",
+    "resolutionAndAuthority": "The pocket is conservative on a 40-unit grid. Vacancy targets and overlap score are advisory; candidate fits remain authoritative.",
+    "genericScoreInteraction": "For other eligible components, mediumPlace suppresses vacancyPreference when a support pair exists, but still constructs vacancyPocket, substitutes vacancy origins into ring-zero trials, adds pair endpoint-span cost, and subtracts pocket-overlap reward. This permits objective competition in general; no runtime data here shows that it moved a particular component or caused a route failure.",
+    "bugFinding": "NO_SOURCE_BUG_INDICATED_FOR_MULTI_REGION_RECONSTRUCTION"
+  },
+  "sourceEvidence": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbSupportPairPlacement.java",
+      "bytes": 4621,
+      "sha256": "81abbb2af4a0dfb0f5774a331e42221da15323297483c65646e4237fe6173b23",
+      "lines": [28, 35, 40, 43, 47, 51, 65, 67],
+      "supports": "Source and peer eligibility, same-net/same-domain matching, and same-region/distance tie selection."
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb56Plan.java",
+      "bytes": 20000,
+      "sha256": "a2a89ab38adde72985550da8af623c8bd4b7b2fbd19ef86db1876388d3d4bd8a",
+      "lines": [215, 263, 265, 279, 280],
+      "supports": "Indicator resistor/LED endpoints and optional mask-controlled RLEDOUT_X inventory; relay and connector output endpoints."
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+      "bytes": 9170,
+      "sha256": "101ce980d753db359a9ed26fb66fed626d9f3945dcc4edc6350d8b8b8853cdfc",
+      "lines": [87, 94, 110],
+      "supports": "RB56 net-domain and output-indicator region mapping."
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+      "bytes": 115662,
+      "sha256": "f30032aeec5dc29d5866fa64d2003fd9ea20f80857bbb156d95c4072e6b03d0c",
+      "lines": [557, 1257, 1259, 1285, 1296, 1300, 1306, 1322, 1337, 1340, 1377, 1380],
+      "supports": "Candidate-1 pin-local gate, support-target override, vacancy enumeration, preference/pocket construction, trial substitution and score terms."
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbVacancyTargets.java",
+      "bytes": 15626,
+      "sha256": "abe5f9b8ac436aaf1d3c6bbe8cc1b434e812ef06d8d330fe10d9b493b80f8560",
+      "lines": [5, 30, 38, 164, 204, 209, 226, 229],
+      "supports": "One selected largest grid pocket and the center/corner envelope-origin construction."
+    },
+    {
+      "path": "tests/contracts/PcbVacancyTargetsContractTest.java",
+      "bytes": 14724,
+      "sha256": "38395d173962a76624806965573a21846d2143c6350ba0f1642951471b872b01",
+      "lines": [21, 37, 108, 117],
+      "supports": "Literal five-origin expectation for one pocket and deterministic selection among tied pocket candidates."
+    }
+  ],
+  "validation": {
+    "testsRunByReviewer": "NOT_RUN",
+    "gatesRunByReviewer": "NOT_RUN",
+    "runtimeObservation": "NONE",
+    "scopeLimit": "Source-level hypothesis map only; no placement or routing causality is claimed."
+  }
+}

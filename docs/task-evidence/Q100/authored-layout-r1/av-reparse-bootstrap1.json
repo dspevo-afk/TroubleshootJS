@@ -1,0 +1,131 @@
+{
+  "protocol": "q100-av-reparse-dotnet-bootstrap-host-contract-v1",
+  "status": "PASS_FOCUSED_HOST_CONTRACT",
+  "qualification": "TEST_ONLY",
+  "acceptance": "NOT_EVALUATED",
+  "source": {
+    "path": "tests/contracts/namespace-census-reparse.ps1",
+    "preBootstrapSha256": "48129123da36f7d07c371aae5b5b44f4947a654f5a6c61ad961fae4f2d7e08b2",
+    "preBootstrapBytes": 14236,
+    "finalSha256": "76cbb38835e08d0fd7d6f69e20beaecff50de31b51e52eb94cdf460689becf2a",
+    "finalBytes": 14471,
+    "change": "Only replaced initial Get-FileHash module bootstrap with SHA256.Create plus File.OpenRead and nested finally disposal; existing missing-file guard, exact expected hash, mismatch rejection, fixtures and 57 assertions retained.",
+    "diffVsPreBootstrap": "bootstrap block only",
+    "testsContractChangedOnly": true
+  },
+  "backup": {
+    "leaf": "namespace-census-reparse.before-dotnet-bootstrap.ps1",
+    "sha256": "48129123da36f7d07c371aae5b5b44f4947a654f5a6c61ad961fae4f2d7e08b2",
+    "bytes": 14236
+  },
+  "module": {
+    "path": "scripts/VerifierIsolation.psm1",
+    "sha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "unchanged": true
+  },
+  "runtime": {
+    "executable": "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "version": "5.1.26100.9711",
+    "invocation": "-NoProfile -File tests/contracts/namespace-census-reparse.ps1 -ModulePath scripts/VerifierIsolation.psm1",
+    "startTranscript": false
+  },
+  "cases": [
+    {
+      "name": "missing-file-negative",
+      "outcome": "PASS_EXPECTED_REJECTION",
+      "exitCode": 1,
+      "totalElapsedMs": 276,
+      "assertions": 0,
+      "cleanupMs": null,
+      "cleanupProven": null,
+      "process": {
+        "pid": 7192,
+        "creationTimeUtcTicks": 639290629786394823,
+        "executablePath": "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+        "executablePathSource": "ProcessStartInfo.FileName; MainModule.FileName matched at capture"
+      },
+      "expectedRejection": "The prospective verifier module does not exist.",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 455,
+        "sha256": "28d72f4e0c35f9c7f131a38db1fe34258acae2252ca7f0924c69a1037e618b7d"
+      },
+      "resultLeaf": "namespace-census-missing-file.result.json",
+      "launcherLeaf": "namespace-census-missing-file.launcher.json"
+    },
+    {
+      "name": "wrong-content-negative",
+      "outcome": "PASS_EXPECTED_REJECTION",
+      "exitCode": 1,
+      "totalElapsedMs": 263,
+      "assertions": 0,
+      "cleanupMs": null,
+      "cleanupProven": null,
+      "process": {
+        "pid": 33880,
+        "creationTimeUtcTicks": 639290629789331924,
+        "executablePath": "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+        "executablePathSource": "ProcessStartInfo.FileName; fast child exit prevented MainModule.FileName sampling"
+      },
+      "expectedRejection": "The prospective verifier module differs from the registered candidate.",
+      "wrongFixture": {
+        "leaf": "wrong-content-candidate.psm1",
+        "bytes": 41,
+        "sha256": "da6d4e89171c0a32eb69e8e1bd51836064ef960fa26d1df02bd56633aeec8d07"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 525,
+        "sha256": "768837e0ab885d51a78949ffd45d76325b94051954536c01dc85f087a09703cd"
+      },
+      "resultLeaf": "namespace-census-wrong-content.result.json",
+      "launcherLeaf": "namespace-census-wrong-content.launcher.json"
+    },
+    {
+      "name": "registered-module-host-contract",
+      "outcome": "PASS",
+      "exitCode": 0,
+      "totalElapsedMs": 3786,
+      "assertions": 57,
+      "cleanupMs": 729,
+      "cleanupProven": true,
+      "reportedModuleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+      "process": {
+        "pid": 21112,
+        "creationTimeUtcTicks": 639290629792053417,
+        "executablePath": "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+        "executablePathSource": "ProcessStartInfo.FileName; fast child exit prevented MainModule.FileName sampling"
+      },
+      "stdout": {
+        "bytes": 174,
+        "sha256": "436d9c128d0ccd918109284fb1103b7fb1332c52e9b728cf088b5c9490583442"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "resultLeaf": "namespace-census-valid-module.result.json",
+      "launcherLeaf": "namespace-census-valid-module.launcher.json"
+    }
+  ],
+  "previousFailure": {
+    "packet": "av-reparse-eof1.json",
+    "sha256": "6ecf32724cfa3950ade8d75d87978af9d7681cbcf831c01cf9fb5077bd008d50",
+    "status": "FAIL",
+    "cause": "WinPS5 Get-FileHash unresolved before first assertion",
+    "preserved": true
+  },
+  "boundaries": [
+    "The old WinPS5 failure and exact pre-bootstrap source bytes remain preserved in the prior scratch/evidence.",
+    "Missing-file and wrong-content negatives both exited nonzero before context setup; no namespace fixture was created for those cases.",
+    "The valid module contract completed all 57 assertions and printed the registered module hash with cleanupMs=729; process exited 0 with empty stderr.",
+    "This is a tests/contracts/*.ps1-only change; Native5, GWT, and browser inputs do not consume this file.",
+    "No module, production source, native, GWT, browser, or broader gate was changed or run."
+  ]
+}

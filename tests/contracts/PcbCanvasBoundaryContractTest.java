@@ -4,12 +4,10 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
-/** Locks seed 4's canvas rejection to the final routed-layout boundary. */
+/** Positive regression for routed-board containment at the workbench canvas boundary. */
 public final class PcbCanvasBoundaryContractTest {
     private static final long SEED = 4L;
     private static final int VERSION = 13;
-    private static final String MESSAGE = "PCB board outline leaves workbench canvas";
-    private static final String PHASE = "finishRoutedPlan";
     private static int assertions;
 
     private PcbCanvasBoundaryContractTest() { }
@@ -17,32 +15,83 @@ public final class PcbCanvasBoundaryContractTest {
     public static void main(String[] args) {
         Rb56Plan plan = Rb56Plan.resolve(SEED, VERSION);
         check(plan.seed == SEED && plan.placementInterpretationVersion == VERSION,
-            "explicit saved13 source identity");
+            "explicit placement interpretation identity");
         TroubleshootBoard board = plan.board();
+        check(board.getPlacementConstraints().placementDensityVersion == 12,
+            "interpretation13 retains its declared density12 mapping");
+        check(board.getPlacementConstraints().requiresTwoLayerRouting,
+            "seed4 retains its required two-layer routing contract");
         verifyBoardAgainstPlan(plan, board);
         String sourceBefore = sourcePlanSha256(plan);
         String graphBefore = liveGraphSha256(board);
 
-        IllegalStateException failure = null;
-        try {
-            new SeededPcbLayoutGenerator().generateWithPolicyResult(
-                board, plan.layoutSeed, plan.routingSeed);
-        } catch (IllegalStateException expected) {
-            failure = expected;
-        }
+        MediumBoardPhysicalPolicy.Result route = new SeededPcbLayoutGenerator()
+            .generateWithPolicyResult(board, plan.layoutSeed, plan.routingSeed);
+        check(route != null && route.accepted() && route.getFailure() == null &&
+                route.getLayout() != null,
+            "seed4 returns an accepted routed layout" +
+                (route == null ? "" : " " + route.toCanonical()));
+        PcbBoardLayout layout = route.getLayout();
+        GeneratedPhysicalAdmission admission = MediumBoardNormalAdmission.fromAcceptedRb56Route(
+            board, route, plan.layoutSeed, plan.routingSeed);
+        admission.requireConstruction(board, layout);
+
+        Rectangle outline = layout.getBoardOutline();
+        Rectangle tray = layout.getPartsTray();
+        check(withinCanvas(outline, layout.getWidth(), layout.getHeight()),
+            "returned board outline fits the workbench canvas using long bounds");
+        check(withinCanvas(tray, layout.getWidth(), layout.getHeight()),
+            "returned parts tray fits the workbench canvas using long bounds");
+        check(disjoint(outline, tray), "returned board outline and parts tray are disjoint");
+
+        String routedGeometryBefore = layout.geometryFingerprint();
+        layout.validateGeometry(board);
+        layout.validateRoutingGeometry(board);
+        layout.validateRouteQuality();
+        new PcbTwoLayerRules(board, layout).validate(layout);
+        PcbTraceClearance.validate(layout.getTraces());
+        P08ScalabilityContractTest.referenceClearance(layout.getTraces());
+        PcbConductorGraph referenceGraph = P08ReferenceConductorBuilder.capture(board, layout);
+        PcbConductorGraph.Snapshot referencePartition = referenceGraph.pristine();
+        referencePartition.requirePristineNetConnectivity(board);
+        PcbConductorGraph productionGraph = layout.captureConductorGraph(board);
+        check(referenceGraph.toCanonical().equals(productionGraph.toCanonical()),
+            "independent P08 graph matches the production conductor graph");
+        P07LayeredRasterOracle.Metrics layered = P07LayeredRasterOracle.verify(layout, board);
+        long padCount = board.getPadIds().size();
+        check(layered.getOrderedPadPairs() == padCount * padCount,
+            "layered raster oracle checks every ordered pad pair");
+        check(layered.getPlatedPadBarrels() > 0,
+            "layered raster oracle sees the routed board's plated pad barrels");
+        check(routedGeometryBefore.equals(layout.geometryFingerprint()),
+            "geometry validation and independent copper oracles preserve the routed layout");
 
         verifyBoardAgainstPlan(plan, board);
         String sourceAfter = sourcePlanSha256(plan);
         String graphAfter = liveGraphSha256(board);
-        StackTraceElement phase = failure == null ? null : firstGeneratorFrame(failure);
-        check(failure != null, "seed4 must retain its canvas-boundary rejection");
-        check(MESSAGE.equals(failure.getMessage()), "exact canvas-boundary failure message");
-        check(phase != null && PHASE.equals(phase.getMethodName()) && phase.getLineNumber() > 0,
-            "identified generator frame with source line: " + phase);
         check(sourceBefore.equals(sourceAfter), "RB56 source plan remains unchanged");
-        check(graphBefore.equals(graphAfter), "board graph remains unchanged after rejection");
-        System.out.println("PASS: PCB canvas boundary contracts version=13 seed=4 identifiedPhase=" +
-            phase.toString() + " assertions=" + assertions);
+        check(graphBefore.equals(graphAfter), "board graph remains unchanged after routing");
+        System.out.println("PASS: PCB canvas boundary contracts currentContainment=true version=13 seed=4 " +
+            "acceptedRoute=true assertions=" + assertions);
+    }
+
+    private static boolean withinCanvas(Rectangle bounds, int canvasWidth, int canvasHeight) {
+        if (bounds == null || bounds.x < 0 || bounds.y < 0 ||
+                bounds.width <= 0 || bounds.height <= 0) return false;
+        long right = (long) bounds.x + bounds.width;
+        long bottom = (long) bounds.y + bounds.height;
+        return right <= canvasWidth && bottom <= canvasHeight;
+    }
+
+    private static boolean disjoint(Rectangle first, Rectangle second) {
+        if (first == null || second == null || first.width <= 0 || first.height <= 0 ||
+                second.width <= 0 || second.height <= 0) return false;
+        long firstRight = (long) first.x + first.width;
+        long firstBottom = (long) first.y + first.height;
+        long secondRight = (long) second.x + second.width;
+        long secondBottom = (long) second.y + second.height;
+        return firstRight <= second.x || secondRight <= first.x ||
+            firstBottom <= second.y || secondBottom <= first.y;
     }
 
     static void verifyBoardAgainstPlan(Rb56Plan plan, TroubleshootBoard board) {
@@ -108,12 +157,6 @@ public final class PcbCanvasBoundaryContractTest {
 
     static String liveGraphSha256(TroubleshootBoard board) {
         return PlayerSessionFingerprint.of(boardGraph(board));
-    }
-
-    private static StackTraceElement firstGeneratorFrame(IllegalStateException failure) {
-        for (StackTraceElement frame : failure.getStackTrace())
-            if (SeededPcbLayoutGenerator.class.getName().equals(frame.getClassName())) return frame;
-        return null;
     }
 
     private static String boardGraph(TroubleshootBoard board) {

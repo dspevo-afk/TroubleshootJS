@@ -1,0 +1,359 @@
+{
+  "schema": "troubleshootjs-q100-u-holdout-paired-bound-failure",
+  "schemaVersion": 1,
+  "scope": "CURRENT_SAVED10_SAVED11_HOLDOUT_OBSERVATION_AND_STRICT_BOUND_FAILURE_PRESERVATION_ONLY; NO_ADOPTION_OR_GOLDEN_SEALING",
+  "candidateBase": {
+    "branch": "codex/q100-physical-feasibility",
+    "commit": "8a2c12446b2c46bde32b32537dec58a15a65d3b9"
+  },
+  "inputSnapshot": {
+    "current": {
+      "directory": "saved-profile-corrected-inputs-1",
+      "inputRevision": 1,
+      "inputCount": 1059,
+      "pinsFile": "saved-profile-corrected-v1-sealed-pins.json",
+      "pinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+      "pinsBytes": 199140,
+      "sealFile": "saved-profile-corrected-inputs-sealed1.json",
+      "sealSha256": "6545858c4802b67fab1fbcbdae7e2f012f6dbfeaf387541bf8ba6f69166c8cf2",
+      "sealBytes": 4976,
+      "pinnedBytes": 85283604
+    },
+    "previousCurrent": {
+      "directory": "saved-profile-current-inputs-2",
+      "inputRevision": 2,
+      "pinsFile": "saved-profile-current-v2-sealed-pins.json",
+      "pinsSha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e"
+    },
+    "preservedBaseline": {
+      "pinsFile": "saved-profile-baseline-v2-sealed-pins.json",
+      "pinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+      "inputCount": 1059
+    },
+    "sourceDeltasFromPreviousCurrent": {
+      "changedCount": 10,
+      "unchangedCount": 1049,
+      "changedInputs": [
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+          "priorBytes": 80566,
+          "priorSha256": "74d5cb8453e233c0c8b7ee9407558d366a6b8eb2a328aab8850568e083d927a5",
+          "currentBytes": 80552,
+          "currentSha256": "cc2b961fc2bdc5c5293285b8cc5d8bd7d4b309f9974eaac4b561fb749c8dc8ad"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+          "priorBytes": 51853,
+          "priorSha256": "de80bb530f8dc4c246f95649875ebb4afe2428ae278513caa8963102e67c6c34",
+          "currentBytes": 51805,
+          "currentSha256": "6eb32ebea70a37084700d89451b0d3eb3c5da2dc2320e9d90014a369fcbb8a31"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+          "priorBytes": 96127,
+          "priorSha256": "7bf84a2d6c4c5077638d44d1239530a694d7015106010a72840df69c8dc7d4b0",
+          "currentBytes": 95965,
+          "currentSha256": "84fbbadb24b585a10dcd01af81b8be9109df99ca9b3b337391836c75424c467d"
+        },
+        {
+          "path": "tests/contracts/D01DiagnosticContractTest.java",
+          "priorBytes": 67579,
+          "priorSha256": "80bd0225451e4e1686d63d393d378eb065b49bdef13dab46e4167335cb9261ad",
+          "currentBytes": 67635,
+          "currentSha256": "78002e72e755bacecccd74b32bf2de5ed8bf119f5d4f8ac16bfda7a3014a879c"
+        },
+        {
+          "path": "tests/contracts/P07GeometryEpochDiagnosticContractTest.java",
+          "priorBytes": 55735,
+          "priorSha256": "3c36b320364c39a162349cf814d9f1e0860586829b98f5956d19d7905e0caa46",
+          "currentBytes": 55735,
+          "currentSha256": "3037bf6e7b7611184a312b36e0ef8924271b448d316dbce0d812078ddc38b889"
+        },
+        {
+          "path": "tests/contracts/PcbCanvasBoundaryContractTest.java",
+          "priorBytes": 9670,
+          "priorSha256": "f71e4b153070b4679fe88cbeea5765f13300a0555b7d992ca02822f21795b72d",
+          "currentBytes": 12529,
+          "currentSha256": "27024759015971ccd3eeb3f3b79d22dd6d930bb560e89ec791637efc38e9a657"
+        },
+        {
+          "path": "tests/contracts/PcbCompactnessContractTest.java",
+          "priorBytes": 32200,
+          "priorSha256": "f4c5af0c55088a1ff5b2962af9fb0bf497a9056934714f74544f5b56ca11a578",
+          "currentBytes": 32285,
+          "currentSha256": "f0328acef81e7fd225d45bb87a7fd5f16d6e115e089e8fd1a1d4c017c691804f"
+        },
+        {
+          "path": "tests/contracts/PcbNormalPackingIdentityContractTest.java",
+          "priorBytes": 10095,
+          "priorSha256": "1b585cbf56d8524040e79b795694e855ddf00dc0304fd14ee5496883cd66a0b3",
+          "currentBytes": 10095,
+          "currentSha256": "6827860f9ab3ec318bb7e1b4210715b76db1991d5c2bb95bd03d6d7988ed6af7"
+        },
+        {
+          "path": "tests/contracts/Rb56ModelIdentityContractTest.java",
+          "priorBytes": 16963,
+          "priorSha256": "119c5f2757600ceb3efbb4fcc839509fb09fc5535e8ff64ef58a09bf6ffdfa76",
+          "currentBytes": 16963,
+          "currentSha256": "5baed20d670a05cd82adf21ab7e276bd062eff8830e94316381bf5dd3854ac5b"
+        },
+        {
+          "path": "tests/contracts/RelBSessionIdentityContractTest.java",
+          "priorBytes": 41391,
+          "priorSha256": "656f843368e21d1f1f3fa87295b94d744d3370880d046983ad222d910d0ed64c",
+          "currentBytes": 41447,
+          "currentSha256": "3dce9b11cfaf74e6e5fe7d571ec6681e946b9f48424dd910c6cb7d08434f1dcd"
+        }
+      ],
+      "pathMembershipUnchanged": true,
+      "prePostHashAudit": "PASS",
+      "copyHashAudit": "PASS",
+      "symlinksReparsePointsHardlinksOrExtraFiles": "NONE"
+    }
+  },
+  "sourceBindings": {
+    "nativeSuite": {
+      "path": "tests/contracts/P07GeometryEpochDiagnosticContractTest.java",
+      "bytes": 55735,
+      "sha256": "3037bf6e7b7611184a312b36e0ef8924271b448d316dbce0d812078ddc38b889"
+    },
+    "strictReader": {
+      "path": "tests/qualification/rb100-layout/read_saved_profile_transition.py",
+      "bytes": 122630,
+      "sha256": "390acf30090bd5a3e29b64dcfc212d30fc26c6d1f590d49fd72ebb4d9aa51670"
+    },
+    "normalizedGeometryHelper": {
+      "path": "tests/qualification/rb100-layout/read_geometry_transition.py",
+      "bytes": 35616,
+      "sha256": "3aa4fa311908c87ba9f68485048fee1d1a2680192e06679eb66c2b68c01779f5"
+    },
+    "savedProfileCatalog": {
+      "path": "docs/task-evidence/Q100/authored-layout-r1/saved-profile-baseline-catalog.json",
+      "bytes": 269099,
+      "sha256": "57b20a02b9f1f17671dd89a5a032cafbb792b76384cedbc85b5d69dc748d62a9",
+      "caseId": "holdout-v11-seed-5",
+      "consumer": "PcbPocketPackingContractTest",
+      "areaComparisons": [
+        {
+          "metric": "boardOutlineArea",
+          "operator": "<=",
+          "literal": "previousArea from same seed version10 result",
+          "value": 9445744,
+          "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal"
+        },
+        {
+          "metric": "boardOutlineArea",
+          "operator": "==",
+          "literal": "saved11Areas[8]",
+          "value": 9445744,
+          "sourceCondition": "version==11"
+        }
+      ]
+    }
+  },
+  "nativeRun": {
+    "source": "current",
+    "runId": "0183b57b-100a-433a-9245-eba4c4cd75ba",
+    "suite": "P07GeometryEpochDiagnosticContractTest",
+    "cohortId": "SAVED_10_11_12_HOLDOUT",
+    "placementVersions": [
+      10,
+      11,
+      12
+    ],
+    "rootSeeds": [
+      "1",
+      "7",
+      "5",
+      "14"
+    ],
+    "cases": 12,
+    "assertions": 196241,
+    "nativeDiagnosticElapsedMs": 31673,
+    "wrapperElapsedSeconds": 65.3728794,
+    "nativeChildLimitMs": 180000,
+    "outerWatchdogMs": 600000,
+    "layoutVersion": 24,
+    "dependencyEpoch": "tsj-generation-dependencies-v25",
+    "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+    "layoutQualification": false,
+    "adopted": false,
+    "adoption": false,
+    "inputRevision": 3,
+    "sourceSnapshotRevision": 1,
+    "inputCount": 1059,
+    "inputPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "process": {
+      "pid": 22636,
+      "startTicks": "639290067055721233",
+      "terminationProven": true,
+      "launcherPid": 14368,
+      "launcherCreatedUtc": "2026-10-31T01:25:04.0220880Z",
+      "launcherExecutable": "powershell.exe"
+    },
+    "nativeFooter": {
+      "status": "PASS",
+      "line": "PASS: P07 geometry epoch diagnostic contracts savedProfileEpoch=true cohortId=SAVED_10_11_12_HOLDOUT assertions=196241 cases=12 layout=24 dependency=tsj-generation-dependencies-v25 layoutQualification=false adoption=false scope=OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION"
+    },
+    "cleanup": {
+      "status": "PASS",
+      "line": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+      "elapsedSeconds": "NOT_SEPARATELY_REPORTED"
+    },
+    "inputPrePostAudit": {
+      "status": "PASS_BEFORE_AND_AFTER",
+      "inputCount": 1059,
+      "inputPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717"
+    },
+    "holdoutSeed5Pair": {
+      "10": {
+        "caseOrdinal": 3,
+        "rootSeed": "5",
+        "placementInterpretationVersion": 10,
+        "expectedPackages": 54,
+        "expectedPads": 131,
+        "layoutVersion": 24,
+        "dependencyEpoch": "tsj-generation-dependencies-v25",
+        "boardArea": 6090714,
+        "boardOutline": {
+          "x": 60,
+          "y": 6,
+          "width": 3321,
+          "height": 1834
+        },
+        "selectedPlacementAttempt": 1,
+        "viaCount": 48,
+        "routeAccepted": true,
+        "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+        "placementSeed": "-7630701392004902526",
+        "routingSeed": "-9106650364266936003",
+        "layoutGeometrySha256": "2a68bb932226a99713b24dbc9a56c4a1a3b0dfd68889e9a8936a1dc27fec14f8",
+        "normalizedPhysicalSha256": "4f7c08a1d13934a3f22c447584eb63b803b95f6976b2d0bb1c6defc696a15bd4",
+        "status": "PASS_OBSERVATION_ONLY",
+        "policyStatistics": {
+          "canonicalSha256": "f0f58f16b50382232e8c90d6bf9b768b9c665d2ac67b8f332736138957f6660b",
+          "selectedScore": 1633482,
+          "routeOutcomes": [
+            "P07_FULLER_TWO_LAYER@4=SUCCESS",
+            "P07_FULLER_TWO_LAYER@3=SUCCESS",
+            "P07_FULLER_TWO_LAYER@1=SUCCESS"
+          ],
+          "placementAttempt1TotalScore": 1633482,
+          "placementAttempt1OutlineScore": 5860800
+        }
+      },
+      "11": {
+        "caseOrdinal": 7,
+        "rootSeed": "5",
+        "placementInterpretationVersion": 11,
+        "expectedPackages": 54,
+        "expectedPads": 131,
+        "layoutVersion": 24,
+        "dependencyEpoch": "tsj-generation-dependencies-v25",
+        "boardArea": 6107220,
+        "boardOutline": {
+          "x": 60,
+          "y": 6,
+          "width": 3330,
+          "height": 1834
+        },
+        "selectedPlacementAttempt": 3,
+        "viaCount": 41,
+        "routeAccepted": true,
+        "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+        "placementSeed": "-7630701392004902526",
+        "routingSeed": "-9106650364266936003",
+        "layoutGeometrySha256": "82ab033ea97c249c3899f7b7afda9e99cd2bb7e7e476acd18791d674bee47166",
+        "normalizedPhysicalSha256": "1af587390a2c67addd933845680658c2fac36a2385293a8acbe2ea6d003761b8",
+        "status": "PASS_OBSERVATION_ONLY",
+        "policyStatistics": {
+          "canonicalSha256": "d1db595e75c85dc2fe4bd01635eb998c2bf22ed856714966b68c3b4b74dd6b81",
+          "selectedScore": 1657242,
+          "routeOutcomes": [
+            "P07_FULLER_TWO_LAYER@4=SUCCESS",
+            "P07_FULLER_TWO_LAYER@3=SUCCESS",
+            "P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:OUT_B:BRANCH_SEARCH_LIMIT"
+          ],
+          "placementAttempt1TotalScore": 1951174,
+          "placementAttempt1OutlineScore": 5860800
+        }
+      }
+    }
+  },
+  "readerRun": {
+    "status": "FAIL",
+    "exitCode": 2,
+    "source": "current",
+    "cohortId": "SAVED_10_11_12_HOLDOUT",
+    "error": "FAIL: current violates retained source metric same-seed saved10 observed board area",
+    "failingCase": {
+      "placementVersion": 11,
+      "rootSeed": "5",
+      "sourceMetric": "same-seed saved10 observed board area",
+      "operator": "<=",
+      "expectedDynamicBound": 6090714,
+      "observedBoardArea": 6107220,
+      "deltaArea": 16506,
+      "currentSaved10SelectedPlacementAttempt": 1,
+      "currentSaved10ViaCount": 48,
+      "currentSaved11SelectedPlacementAttempt": 3,
+      "currentSaved11ViaCount": 41,
+      "reason": "current saved11 area exceeds its same-seed current saved10 observed-area bound"
+    },
+    "readerOutputJson": {
+      "artifact": "saved-profile-corrected-holdouts-reader-1.json",
+      "status": "NOT_EMITTED"
+    },
+    "elapsedSeconds": "NOT_SEPARATELY_MEASURED",
+    "unifiedToolTiming": "NOT_REPORTED"
+  },
+  "rawArtifacts": [
+    {
+      "source": "current",
+      "artifact": "saved-profile-corrected-observations-1/saved-profile-current-10-11-12-holdout-1-launcher.json",
+      "sha256": "1b61cc53875613a114d86c10797d0fdeb2660b6b5b1ada3e2e6891776de362da",
+      "bytes": 289,
+      "contentsEmbedded": false
+    },
+    {
+      "source": "current",
+      "artifact": "saved-profile-corrected-observations-1/saved-profile-current-10-11-12-holdout-1-result.json",
+      "sha256": "9d7d2f2eb0b6f1dee655d73da867bded5b98ec3ef57aa62acf08aa049170cc29",
+      "bytes": 827,
+      "contentsEmbedded": false
+    },
+    {
+      "source": "current",
+      "artifact": "saved-profile-corrected-observations-1/saved-profile-current-10-11-12-holdout-1-receipt.txt",
+      "sha256": "33fda46b0413c8d5c8926a566704c9c12c74ce493873a762ce04d5aec7f0641e",
+      "bytes": 7082067,
+      "contentsEmbedded": false
+    },
+    {
+      "source": "current",
+      "artifact": "saved-profile-corrected-observations-1/saved-profile-current-10-11-12-holdout-1-console.txt",
+      "sha256": "1bef513978178786efa1f482e0617f95ac99e71a2bff7f8d3a66975847565c66",
+      "bytes": 7083207,
+      "contentsEmbedded": false
+    },
+    {
+      "source": "current",
+      "artifact": "saved-profile-corrected-observations-1/saved-profile-current-10-11-12-holdout-1-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "contentsEmbedded": false
+    }
+  ],
+  "resultJsonEmittedByReader": false,
+  "rawConsoleOrReceiptContentsEmbedded": false,
+  "personalAbsolutePathsEmbedded": false,
+  "limitations": [
+    "The native current-only 12-case observation and parent cleanup passed; this is not qualification.",
+    "The strict current reader rejected the same-seed saved11-versus-saved10 observed-area bound for holdout seed 5.",
+    "The v11 selected layout was routed successfully at placement attempt 3; an earlier attempt-1 route outcome was OUT_B:BRANCH_SEARCH_LIMIT.",
+    "The candidate-score context is observational only; investigation is ongoing and no fix or bound change is selected.",
+    "No adoption, golden sealing, or new acceptance claim is made.",
+    "Reader output JSON was not emitted and reader elapsed time was not separately measured."
+  ]
+}

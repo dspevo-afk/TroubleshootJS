@@ -1,0 +1,494 @@
+{
+  "schema": "troubleshootjs-crop-extent-observation-v2",
+  "status": "PASS_TWO_CASE_OBSERVATION_ONLY",
+  "scope": "Test-only final occupied-bounds attribution probe; both cases are observations, not layout acceptance.",
+  "nativeRun": {
+    "suite": "P07BranchDiagnosticsContractTest",
+    "exitCode": 0,
+    "elapsedSeconds": 38.0046962,
+    "timingScope": "Helper/wrapper elapsed from result; not production timing.",
+    "nativeChildLimitMs": 60000,
+    "outerWatchdogMs": 600000,
+    "nativeCaseCount": 2,
+    "nativeAssertions": 4171,
+    "nativeDiagnosticElapsedMs": 6520,
+    "nativeTimingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+    "runId": "7dea4397-d7bd-44a6-9ca9-6ba422b218c1",
+    "layoutVersion": 24,
+    "dependencyEpoch": "tsj-generation-dependencies-v25",
+    "layoutQualification": false,
+    "adoption": false,
+    "inputRevision": 3,
+    "sourceSnapshotRevision": 2,
+    "inputCount": 1059,
+    "inputPinsSha256": "57ede738c10f8a3653960a16dd0605bb9f4cdac018b21e71b5b48c99fd2bcf1f",
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "terminationProven": true,
+    "cleanup": {
+      "status": "PASS",
+      "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+      "elapsedSeconds": null,
+      "timing": "Cleanup-only duration not separately reported."
+    },
+    "receipt": {
+      "present": true,
+      "file": "crop-extent-probe-2-receipt.txt",
+      "bytes": 9910,
+      "sha256": "8521e0dea966707738a1c6a8545db15bec3af451f156bcd499e28c4985366f68",
+      "footer": "PASS: P07 branch diagnostics contracts cropExtentProbe=true cases=2 layout=24 dependency=tsj-generation-dependencies-v25 layoutQualification=false adoption=false scope=OBSERVATIONAL_FIXED_SEED_CROP_EXTENT"
+    }
+  },
+  "cases": [
+    {
+      "caseOrdinal": 1,
+      "caseCount": 2,
+      "status": "PASS_OBSERVATION_ONLY",
+      "scope": "OBSERVATIONAL_FIXED_SEED_CROP_EXTENT",
+      "rootSeed": "5",
+      "placementInterpretationVersion": 10,
+      "placementSeed": "-7630701392004902526",
+      "routingSeed": "-9106650364266936003",
+      "topology": "RB56_CH2_SHARED_DIRECT_A_BJT_B_NMOS_S5_true_S12_false_F1_O3_B5_false",
+      "packages": 54,
+      "pads": 131,
+      "planSha256": "6fa70718324689757eb36cec7a3f5afff1cd3e0d96606929d6df9273f6784ff5",
+      "boardGraphSha256Before": "02a2e1b695eec23c2e8f15dbd8bed9850c496e5a8455cdb23b74b793dffedcb5",
+      "boardGraphSha256After": "02a2e1b695eec23c2e8f15dbd8bed9850c496e5a8455cdb23b74b793dffedcb5",
+      "boardGraphStable": true,
+      "layoutVersion": 24,
+      "dependencyEpoch": "tsj-generation-dependencies-v25",
+      "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+      "selectedPlacementAttempt": 1,
+      "layoutGeometrySha256": "2a68bb932226a99713b24dbc9a56c4a1a3b0dfd68889e9a8936a1dc27fec14f8",
+      "layoutGeometrySha256AfterRead": "2a68bb932226a99713b24dbc9a56c4a1a3b0dfd68889e9a8936a1dc27fec14f8",
+      "layoutGeometryStable": true,
+      "layoutWidth": 3600,
+      "layoutHeight": 1840,
+      "boardOutline": {
+        "x": 60,
+        "y": 6,
+        "width": 3321,
+        "height": 1834
+      },
+      "occupiedContentBounds": {
+        "x": 125,
+        "y": 71,
+        "width": 3191,
+        "height": 1704
+      },
+      "partsTray": {
+        "x": 3405,
+        "y": 6,
+        "width": 180,
+        "height": 300
+      },
+      "boardArea": 6090714,
+      "occupiedArea": 5437464,
+      "edgeMargins": {
+        "left": 65,
+        "top": 65,
+        "right": 65,
+        "bottom": 65
+      },
+      "sourceRectangleCount": 1678,
+      "sourceRectangleSha256": "2c080c9f29c7694db7eead1829eedc2694b15e1158ba1c4244298ac564c224c2",
+      "sourceRectangleCountsByKind": {
+        "component-board-probe": 131,
+        "component-body": 54,
+        "component-connected-lead": 131,
+        "component-connected-lead-probe": 131,
+        "component-courtyard": 54,
+        "component-drag": 54,
+        "component-keepout": 54,
+        "component-lifted-lead": 131,
+        "component-lifted-lead-probe": 131,
+        "component-pad": 131,
+        "component-selection": 54,
+        "hole:VIA": 48,
+        "layout-pad": 131,
+        "layout-pad-probe": 131,
+        "silkscreen-label": 63,
+        "trace-stroke:BOTTOM": 183,
+        "trace-stroke:TOP": 66
+      },
+      "extrema": {
+        "minX": {
+          "edge": 125,
+          "tieCount": 2,
+          "contributorsTruncated": false,
+          "contributors": [
+            {
+              "kind": "component-drag",
+              "id": "D2",
+              "bounds": {
+                "x": 125,
+                "y": 295,
+                "width": 240,
+                "height": 56
+              }
+            },
+            {
+              "kind": "component-drag",
+              "id": "D4",
+              "bounds": {
+                "x": 125,
+                "y": 425,
+                "width": 240,
+                "height": 56
+              }
+            }
+          ]
+        },
+        "maxX": {
+          "edge": 3316,
+          "tieCount": 6,
+          "contributorsTruncated": true,
+          "contributors": [
+            {
+              "kind": "component-drag",
+              "id": "JSA",
+              "bounds": {
+                "x": 3195,
+                "y": 384,
+                "width": 121,
+                "height": 142
+              }
+            },
+            {
+              "kind": "component-drag",
+              "id": "JSB",
+              "bounds": {
+                "x": 3195,
+                "y": 624,
+                "width": 121,
+                "height": 142
+              }
+            },
+            {
+              "kind": "component-drag",
+              "id": "JLOAD",
+              "bounds": {
+                "x": 3195,
+                "y": 1024,
+                "width": 121,
+                "height": 142
+              }
+            },
+            {
+              "kind": "component-courtyard",
+              "id": "JSA",
+              "bounds": {
+                "x": 3204,
+                "y": 384,
+                "width": 112,
+                "height": 142
+              }
+            }
+          ]
+        },
+        "minY": {
+          "edge": 71,
+          "tieCount": 1,
+          "contributorsTruncated": false,
+          "contributors": [
+            {
+              "kind": "silkscreen-label",
+              "id": "board-title",
+              "bounds": {
+                "x": 132,
+                "y": 71,
+                "width": 225,
+                "height": 18
+              }
+            }
+          ]
+        },
+        "maxY": {
+          "edge": 1775,
+          "tieCount": 1,
+          "contributorsTruncated": false,
+          "contributors": [
+            {
+              "kind": "component-courtyard",
+              "id": "RLED",
+              "bounds": {
+                "x": 1122,
+                "y": 1715,
+                "width": 216,
+                "height": 60
+              }
+            }
+          ]
+        }
+      },
+      "independentUnionMatchesProduction": true,
+      "readOnlyStateStable": true,
+      "nativeElapsedMs": 3481,
+      "nativeTimingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING"
+    },
+    {
+      "caseOrdinal": 2,
+      "caseCount": 2,
+      "status": "PASS_OBSERVATION_ONLY",
+      "scope": "OBSERVATIONAL_FIXED_SEED_CROP_EXTENT",
+      "rootSeed": "5",
+      "placementInterpretationVersion": 11,
+      "placementSeed": "-7630701392004902526",
+      "routingSeed": "-9106650364266936003",
+      "topology": "RB56_CH2_SHARED_DIRECT_A_BJT_B_NMOS_S5_true_S12_false_F1_O3_B5_false",
+      "packages": 54,
+      "pads": 131,
+      "planSha256": "1ffc2a9c6f98ddafa5a6a0cdeb334968281b8bd8910ab80bedf478d56fcd7f57",
+      "boardGraphSha256Before": "8f4a62fb2b571d4ebe6aa8b5fe6aca3be6cf56061dd5f6c0053e9f0c015f8881",
+      "boardGraphSha256After": "8f4a62fb2b571d4ebe6aa8b5fe6aca3be6cf56061dd5f6c0053e9f0c015f8881",
+      "boardGraphStable": true,
+      "layoutVersion": 24,
+      "dependencyEpoch": "tsj-generation-dependencies-v25",
+      "selectedRoutePolicy": "P07_FULLER_TWO_LAYER",
+      "selectedPlacementAttempt": 3,
+      "layoutGeometrySha256": "82ab033ea97c249c3899f7b7afda9e99cd2bb7e7e476acd18791d674bee47166",
+      "layoutGeometrySha256AfterRead": "82ab033ea97c249c3899f7b7afda9e99cd2bb7e7e476acd18791d674bee47166",
+      "layoutGeometryStable": true,
+      "layoutWidth": 3600,
+      "layoutHeight": 1840,
+      "boardOutline": {
+        "x": 60,
+        "y": 6,
+        "width": 3330,
+        "height": 1834
+      },
+      "occupiedContentBounds": {
+        "x": 125,
+        "y": 71,
+        "width": 3200,
+        "height": 1704
+      },
+      "partsTray": {
+        "x": 3414,
+        "y": 6,
+        "width": 180,
+        "height": 300
+      },
+      "boardArea": 6107220,
+      "occupiedArea": 5452800,
+      "edgeMargins": {
+        "left": 65,
+        "top": 65,
+        "right": 65,
+        "bottom": 65
+      },
+      "sourceRectangleCount": 1674,
+      "sourceRectangleSha256": "7f84e5b75479a50a88914c65030eacdc6584ef50973d8c1cd7062fbcffced530",
+      "sourceRectangleCountsByKind": {
+        "component-board-probe": 131,
+        "component-body": 54,
+        "component-connected-lead": 131,
+        "component-connected-lead-probe": 131,
+        "component-courtyard": 54,
+        "component-drag": 54,
+        "component-keepout": 54,
+        "component-lifted-lead": 131,
+        "component-lifted-lead-probe": 131,
+        "component-pad": 131,
+        "component-selection": 54,
+        "hole:VIA": 41,
+        "layout-pad": 131,
+        "layout-pad-probe": 131,
+        "silkscreen-label": 63,
+        "trace-stroke:BOTTOM": 191,
+        "trace-stroke:TOP": 61
+      },
+      "extrema": {
+        "minX": {
+          "edge": 125,
+          "tieCount": 2,
+          "contributorsTruncated": false,
+          "contributors": [
+            {
+              "kind": "component-drag",
+              "id": "D1",
+              "bounds": {
+                "x": 125,
+                "y": 585,
+                "width": 220,
+                "height": 56
+              }
+            },
+            {
+              "kind": "component-drag",
+              "id": "D2",
+              "bounds": {
+                "x": 125,
+                "y": 245,
+                "width": 240,
+                "height": 56
+              }
+            }
+          ]
+        },
+        "maxX": {
+          "edge": 3325,
+          "tieCount": 1,
+          "contributorsTruncated": false,
+          "contributors": [
+            {
+              "kind": "component-drag",
+              "id": "DB",
+              "bounds": {
+                "x": 3105,
+                "y": 235,
+                "width": 220,
+                "height": 56
+              }
+            }
+          ]
+        },
+        "minY": {
+          "edge": 71,
+          "tieCount": 1,
+          "contributorsTruncated": false,
+          "contributors": [
+            {
+              "kind": "silkscreen-label",
+              "id": "board-title",
+              "bounds": {
+                "x": 132,
+                "y": 71,
+                "width": 225,
+                "height": 18
+              }
+            }
+          ]
+        },
+        "maxY": {
+          "edge": 1775,
+          "tieCount": 1,
+          "contributorsTruncated": false,
+          "contributors": [
+            {
+              "kind": "component-courtyard",
+              "id": "RLEDOUT_B",
+              "bounds": {
+                "x": 1942,
+                "y": 1715,
+                "width": 236,
+                "height": 60
+              }
+            }
+          ]
+        }
+      },
+      "independentUnionMatchesProduction": true,
+      "readOnlyStateStable": true,
+      "nativeElapsedMs": 3039,
+      "nativeTimingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING"
+    }
+  ],
+  "geometryComparison": {
+    "version10OccupiedRightEdge": 3316,
+    "version11OccupiedRightEdge": 3325,
+    "rightEdgeDelta": 9,
+    "version10OccupiedWidth": 3191,
+    "version11OccupiedWidth": 3200,
+    "occupiedWidthDelta": 9,
+    "boardAreaDelta": 16506,
+    "sameLayoutHeight": true,
+    "sameOccupiedHeight": true,
+    "bothHave65PixelMargins": true,
+    "v10MaxXAttribution": "Six-way tie, including JSA/JSB/JLOAD connector drag rectangles and JSA courtyard.",
+    "v11MaxXAttribution": "DB connector drag rectangle is the unique rightmost contributor."
+  },
+  "sourceBinding": {
+    "sealFile": "crop-extent-probe-inputs-sealed2.json",
+    "sealBytes": 780,
+    "sealSha256": "bb41d7462f4bef1635f5106b28c8a78dd87d730754aa59ff348a1bea593f6d5a",
+    "sourceSnapshotDirectory": "crop-extent-probe-inputs-2",
+    "variantPinsFile": "crop-extent-probe-v2-sealed-pins.json",
+    "variantPinsSha256": "57ede738c10f8a3653960a16dd0605bb9f4cdac018b21e71b5b48c99fd2bcf1f",
+    "variantPinsBytes": 0,
+    "inputCount": 1059,
+    "parentPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+    "parentInputCount": 1059,
+    "unchangedInputCount": 1058,
+    "changedPath": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+    "testHarnessSha256": "e7795df7321744b1f9a44b3fc259954a404892dfe5c72d79520988a92fa171bc",
+    "fixtureCorrection": "Exact v11 expected hash copied from bound U receipt; 64-hex startup guard added; previous failed source/input/output preserved.",
+    "productionSourceChanged": false,
+    "baseEpochLabelsAdopted": false
+  },
+  "preservedZ1Failure": {
+    "file": "crop-extent-probe1-fail.json",
+    "sha256": "fe1a2eb24e594c0079d89d79f9376571a94891b4e02f2ec6f28e2aaa5fc8ac1e",
+    "status": "FAIL_INCOMPLETE_TWO_CASE_CENSUS",
+    "plannedCases": 2,
+    "completedCases": 1,
+    "failedCases": 1,
+    "casesAfterFailureNotRun": 0,
+    "malformedExpectedHashLength": 63,
+    "note": "The prior v1 fixture typo failure remains preserved separately; this v2 run uses the corrected fixture."
+  },
+  "limitations": [
+    "The two-case native probe passed as a bounded observation only; it does not qualify layout acceptance, the full routing population, or Q100 playability.",
+    "The 9-pixel occupied-right-edge difference is attributed to the v10 connector drag/courtyard tie and the v11 DB connector drag rectangle; it is not an acceptance or golden update.",
+    "This v2 test-harness overlay changed one test input while 1,058 parent-pinned inputs remained unchanged; no production source was changed.",
+    "The prior Z1 incomplete failure is retained and not replaced by this observation."
+  ],
+  "rawArtifacts": [
+    {
+      "file": "crop-extent-probe-2-result.json",
+      "bytes": 774,
+      "sha256": "5fce8bb4aca090547cce628f7eda49ac79ff7b31af97c0b76a79cb3115202a9e"
+    },
+    {
+      "file": "crop-extent-probe-2-receipt.txt",
+      "bytes": 9910,
+      "sha256": "8521e0dea966707738a1c6a8545db15bec3af451f156bcd499e28c4985366f68"
+    },
+    {
+      "file": "crop-extent-probe-2-console.txt",
+      "bytes": 11050,
+      "sha256": "376d913a46e2819c8c13fa3166a949b590a44b947c41f5f2ad93d7c2beab0b43"
+    },
+    {
+      "file": "crop-extent-probe-2-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "crop-extent-probe-2-launcher.json",
+      "bytes": 224,
+      "sha256": "40ff27fbd436163860d09129c9a7a3f6798331557c3135b6b11bd2f135dddcb8"
+    },
+    {
+      "file": "crop-extent-probe-inputs-sealed2.json",
+      "bytes": 780,
+      "sha256": "bb41d7462f4bef1635f5106b28c8a78dd87d730754aa59ff348a1bea593f6d5a"
+    },
+    {
+      "file": "crop-extent-probe-v2-sealed-pins.json",
+      "bytes": 199140,
+      "sha256": "57ede738c10f8a3653960a16dd0605bb9f4cdac018b21e71b5b48c99fd2bcf1f"
+    },
+    {
+      "file": "crop-extent-probe-prepared-pins.json",
+      "bytes": 199140,
+      "sha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717"
+    },
+    {
+      "file": "crop-extent-probe-inputs-2/tests/contracts/P07BranchDiagnosticsContractTest.java",
+      "bytes": 30273,
+      "sha256": "e7795df7321744b1f9a44b3fc259954a404892dfe5c72d79520988a92fa171bc"
+    },
+    {
+      "file": "run-crop-extent-probe-v2.ps1",
+      "bytes": 4244,
+      "sha256": "3d3c3b7fbbf1e202f4749770f3fa69c2d3ee7a3c102081f8d2c4c2fa6fc7f594"
+    }
+  ],
+  "sanitization": {
+    "rawConsoleOrReceiptContentsEmbedded": false,
+    "absoluteMachinePathsIncluded": false,
+    "processIdentifiersIncluded": false,
+    "artifactReferences": "Basenames, byte counts, and SHA-256 only."
+  }
+}

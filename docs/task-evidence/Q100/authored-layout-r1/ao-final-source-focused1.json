@@ -1,0 +1,368 @@
+{
+    "schema":  "troubleshootjs-ao-final-source-focused-observation-v1",
+    "status":  "PARTIAL_FOCUSED_EVIDENCE_PRIVACY_GATE_INFRA_FAILURE",
+    "scope":  "Snapshot-specific focused native retry, captured Player artifact identity, and one Q100 Player privacy attempt.",
+    "repository":  {
+                       "branch":  "codex/q100-physical-feasibility",
+                       "head":  "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+                       "candidate":  "AO_FINAL_LAYOUT25_DEP26"
+                   },
+    "snapshots":  {
+                      "snapshot1":  {
+                                        "revision":  1,
+                                        "status":  "SEALED_THEN_FOCUSED_COMPILE_FAILED",
+                                        "layoutVersion":  25,
+                                        "dependencyEpoch":  "tsj-generation-dependencies-v26",
+                                        "inputCount":  1061,
+                                        "inputPinsSha256":  "27d11e116818ae9c520f7e28b9e78b629fdd85f6e98dac3295e50baca53b8a09",
+                                        "focusedAttempt":  {
+                                                               "status":  "FAIL_COMPILE",
+                                                               "exitCode":  2,
+                                                               "elapsedSeconds":  27.1402764,
+                                                               "suites":  [
+                                                                              "P07OrderingCandidatesContractTest",
+                                                                              "P07RelaxedDistanceBoundContractTest"
+                                                                          ],
+                                                               "compileErrorCount":  6,
+                                                               "missingSymbol":  "verifyBoundAgainstReference(SyntheticGraph,boolean[],int)",
+                                                               "stdoutTerminal":  "CURRENT_CONTRACT_FAILURE: Current production-class compilation failed, exit 1",
+                                                               "cleanupMarker":  "CLEANUP: current JVM contract classes and task-owned scratch removed",
+                                                               "inputAudit":  "PASS_BEFORE_AND_AFTER",
+                                                               "terminationProven":  true,
+                                                               "artifacts":  [
+                                                                                 {
+                                                                                     "file":  "ao-native-focused-1-launcher.json",
+                                                                                     "bytes":  236,
+                                                                                     "sha256":  "c48f6f7c9f26ead992f28dbc2ad5d32e79af803ddcaac91f2c711357e99d87c0"
+                                                                                 },
+                                                                                 {
+                                                                                     "file":  "ao-native-focused-1-result.json",
+                                                                                     "bytes":  881,
+                                                                                     "sha256":  "8b788ace98ba2faeeaec90b4f7a99a406b7623addc6f8e50a87bd021832a3c66"
+                                                                                 },
+                                                                                 {
+                                                                                     "file":  "ao-native-focused-1-stdout.txt",
+                                                                                     "bytes":  3143,
+                                                                                     "sha256":  "02b286b63d808e96cd979c0c6d5a49b94d530d174aad30d82ff33ea9e0b963bd"
+                                                                                 },
+                                                                                 {
+                                                                                     "file":  "ao-native-focused-1-stderr.txt",
+                                                                                     "bytes":  0,
+                                                                                     "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                                                                                 },
+                                                                                 {
+                                                                                     "file":  "ao-native-focused-call-1.ps1",
+                                                                                     "bytes":  392,
+                                                                                     "sha256":  "48514f4ee6f3fe2bfa2cd1bb01bd11fabc52804d917b31440edc77f6db89fc8c"
+                                                                                 },
+                                                                                 {
+                                                                                     "file":  "run-ao-native-focused-1.ps1",
+                                                                                     "bytes":  3609,
+                                                                                     "sha256":  "1cd411c04f4a531d9e0721ed73e080005b2cfaa024c98ee1d28af032be0317b8"
+                                                                                 }
+                                                                             ]
+                                                           },
+                                        "testSource":  {
+                                                           "relativePath":  "tests/contracts/P07RelaxedDistanceBoundContractTest.java",
+                                                           "sha256":  "f4bf5f21828f06723115a55cad28a1659b48085e48f942e91410d4498ac6d58e",
+                                                           "methodAbsent":  true
+                                                       },
+                                        "artifacts":  [
+                                                          {
+                                                              "file":  "ao-final-native-inputs-sealed1.json",
+                                                              "bytes":  8036,
+                                                              "sha256":  "3227dc7603b7bc35dd5fb44a95015a72f5b5cf10a5bcc52975e928b853bc9771"
+                                                          },
+                                                          {
+                                                              "file":  "ao-final-native-v1-sealed-pins.json",
+                                                              "bytes":  204810,
+                                                              "sha256":  "27d11e116818ae9c520f7e28b9e78b629fdd85f6e98dac3295e50baca53b8a09"
+                                                          },
+                                                          {
+                                                              "file":  "ao-final-native-copy-audit1.json",
+                                                              "bytes":  8470,
+                                                              "sha256":  "1ab15a8fc0efc97354512a1ca2bf3d27baf81b2b7739adcfce35aa37ba464a5e"
+                                                          },
+                                                          {
+                                                              "file":  "ao-final-native-inputs-1/tests/contracts/P07RelaxedDistanceBoundContractTest.java",
+                                                              "bytes":  43554,
+                                                              "sha256":  "f4bf5f21828f06723115a55cad28a1659b48085e48f942e91410d4498ac6d58e"
+                                                          }
+                                                      ]
+                                    },
+                      "snapshot2":  {
+                                        "revision":  2,
+                                        "status":  "SEALED_RESTORED_TEST_SOURCE_FOCUSED_NATIVE_PASS",
+                                        "layoutVersion":  25,
+                                        "dependencyEpoch":  "tsj-generation-dependencies-v26",
+                                        "inputCount":  1061,
+                                        "inputPinsSha256":  "5b6f39b40fe22bcb68616b32cf01631819d3a7c10b27295aa6245d2ee14c5c61",
+                                        "copyAudit":  {
+                                                          "status":  "PASS_COPY_AND_SINGLE_TEST_SOURCE_OVERLAY_NOT_RUN",
+                                                          "sourceOverlayAudit":  "PASS_1061_EXACT_CENSUS_1060_UNCHANGED_1_EXPECTED_CHANGE",
+                                                          "unchangedInputs":  1060,
+                                                          "changedInputs":  1,
+                                                          "onlyChangedTest":  "tests/contracts/P07RelaxedDistanceBoundContractTest.java",
+                                                          "beforeSha256":  "f4bf5f21828f06723115a55cad28a1659b48085e48f942e91410d4498ac6d58e",
+                                                          "afterSha256":  "90608e438b7f45dc54a0691f0a86c1f6f2d11a556cc56915a7e7829be2ca2764",
+                                                          "restoredMethod":  "verifyBoundAgainstReference",
+                                                          "restoredMethodSha256":  "ffa52e4ad1383c08d6b3600af27b629042b21eb6ec26216434da3233738c220e",
+                                                          "copyAuditGateRun":  false,
+                                                          "copyAuditAdopted":  false
+                                                      },
+                                        "focusedAttempt":  {
+                                                               "status":  "PASS_TWO_FOCUSED_SUITES",
+                                                               "exitCode":  0,
+                                                               "elapsedSeconds":  51.9111724,
+                                                               "assertions":  {
+                                                                                  "P07OrderingCandidatesContractTest":  445935,
+                                                                                  "P07RelaxedDistanceBoundContractTest":  2026,
+                                                                                  "total":  447961
+                                                                              },
+                                                               "inputAudit":  "PASS_BEFORE_AND_AFTER",
+                                                               "terminationProven":  true,
+                                                               "cleanupMarker":  "CLEANUP: current JVM contract classes and task-owned scratch removed",
+                                                               "suites":  [
+                                                                              "P07OrderingCandidatesContractTest",
+                                                                              "P07RelaxedDistanceBoundContractTest"
+                                                                          ],
+                                                               "artifacts":  [
+                                                                                 {
+                                                                                     "file":  "ao-native-focused-2-launcher.json",
+                                                                                     "bytes":  236,
+                                                                                     "sha256":  "46da6690e280a25151093918e68f233487e367bb9371c154a9c577a97e385bfb"
+                                                                                 },
+                                                                                 {
+                                                                                     "file":  "ao-native-focused-2-result.json",
+                                                                                     "bytes":  875,
+                                                                                     "sha256":  "4b11c9319379a068ac7a9b9437d11eb09ff584512f44c6ee3dcebff08e4f95e0"
+                                                                                 },
+                                                                                 {
+                                                                                     "file":  "ao-native-focused-2-receipt.txt",
+                                                                                     "bytes":  790765,
+                                                                                     "sha256":  "1e3020db3245661f2bd98f5909d4a8632401c03adb2cb96979f4ba1b0467cc4b"
+                                                                                 },
+                                                                                 {
+                                                                                     "file":  "ao-native-focused-2-stdout.txt",
+                                                                                     "bytes":  791904,
+                                                                                     "sha256":  "8628f84eaa8bb638d7039ab6e5fc091762d7ea2da01811419ef7fb780895d367"
+                                                                                 },
+                                                                                 {
+                                                                                     "file":  "ao-native-focused-2-stderr.txt",
+                                                                                     "bytes":  0,
+                                                                                     "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                                                                                 },
+                                                                                 {
+                                                                                     "file":  "ao-native-focused-call-2.ps1",
+                                                                                     "bytes":  392,
+                                                                                     "sha256":  "9a5c7476cdbf5ffc1ba1afad305f29d865d4fc494b5cddba4a4764ea95b95ac6"
+                                                                                 },
+                                                                                 {
+                                                                                     "file":  "run-ao-native-focused-2.ps1",
+                                                                                     "bytes":  3609,
+                                                                                     "sha256":  "81b5d3339fd9421823b8fe355a2e322c68ef35f8545c4efa46ba46218bb6d3f3"
+                                                                                 }
+                                                                             ]
+                                                           },
+                                        "testSource":  {
+                                                           "relativePath":  "tests/contracts/P07RelaxedDistanceBoundContractTest.java",
+                                                           "sha256":  "90608e438b7f45dc54a0691f0a86c1f6f2d11a556cc56915a7e7829be2ca2764",
+                                                           "methodPresent":  true
+                                                       },
+                                        "artifacts":  [
+                                                          {
+                                                              "file":  "ao-final-native-inputs-sealed2.json",
+                                                              "bytes":  7403,
+                                                              "sha256":  "ed0e36b3a0885014e775d64c136070814828fa868e6489120bfb027230fd10ad"
+                                                          },
+                                                          {
+                                                              "file":  "ao-final-native-v2-sealed-pins.json",
+                                                              "bytes":  204810,
+                                                              "sha256":  "5b6f39b40fe22bcb68616b32cf01631819d3a7c10b27295aa6245d2ee14c5c61"
+                                                          },
+                                                          {
+                                                              "file":  "ao-final-native-copy-audit2.json",
+                                                              "bytes":  7421,
+                                                              "sha256":  "eeb741c106092187cb7db052db3d69f036545dfd0d30d644198fccfad3487e71"
+                                                          },
+                                                          {
+                                                              "file":  "ao-final-native-inputs-2/tests/contracts/P07RelaxedDistanceBoundContractTest.java",
+                                                              "bytes":  45382,
+                                                              "sha256":  "90608e438b7f45dc54a0691f0a86c1f6f2d11a556cc56915a7e7829be2ca2764"
+                                                          },
+                                                          {
+                                                              "file":  "ao-field-test-compile-fix-1/P07RelaxedDistanceBoundContractTest.failed-v1.java",
+                                                              "bytes":  43554,
+                                                              "sha256":  "f4bf5f21828f06723115a55cad28a1659b48085e48f942e91410d4498ac6d58e"
+                                                          },
+                                                          {
+                                                              "file":  "ao-field-test-compile-fix-1/source-only-diff.patch",
+                                                              "bytes":  2344,
+                                                              "sha256":  "63142a9636e679a249698a03f73e6ba958d16db43dc71ebc3c7b331f20dacd37"
+                                                          },
+                                                          {
+                                                              "file":  "ao-field-test-compile-fix-1/source-only-review.json",
+                                                              "bytes":  1113,
+                                                              "sha256":  "312b3cf0ee8366941ea56c9f21468c29eb9f9c6103684b34e9f6e29066b4ab2d"
+                                                          }
+                                                      ]
+                                    }
+                  },
+    "playerBuild":  {
+                        "status":  "PASS_CAPTURED_PLAYER_BUILD",
+                        "buildId":  "Player build 101",
+                        "exitCode":  0,
+                        "elapsedSeconds":  102.2853874,
+                        "variant":  "Player",
+                        "style":  "OBF",
+                        "inputDigest":  "45654010ddaf068b1cb30a193d43084b80eed0dbfb84f3dcf5f50b6f21df0d1f",
+                        "inputFileCount":  1199,
+                        "outputDigest":  "e3cef7636468142ce9a8a6ea1707622343cc876407cb3bc1312c158da4b3c0e5",
+                        "outputFileCount":  357,
+                        "capturedArtifactIdentityMatchesBuildIdentity":  true,
+                        "restorationScope":  "Native-test source only; no separate production rebuild after that test restoration is claimed.",
+                        "artifacts":  [
+                                          {
+                                              "file":  "build-player-101-result.json",
+                                              "bytes":  97,
+                                              "sha256":  "a2e61b6cabce2eb62690bc21181cefc152cd8e80f9b142b8a5618cc778e93071"
+                                          },
+                                          {
+                                              "file":  "build-player-101-identity.json",
+                                              "bytes":  361,
+                                              "sha256":  "25023db3e6866db81d14d82f806f817a9f91eedcb02ec14f2ef3361fa19a8bf7"
+                                          },
+                                          {
+                                              "file":  "build-player-101-launcher.json",
+                                              "bytes":  194,
+                                              "sha256":  "0d6e8f4ac317d36001c95e8b10328b9bf9bafb757774b26cf212c349bceefed0"
+                                          },
+                                          {
+                                              "file":  "build-player-101.log",
+                                              "bytes":  2501,
+                                              "sha256":  "5422db8184a6611a66e58552e13a52111dfcf3c9236a4584d3ee818458c30467"
+                                          },
+                                          {
+                                              "file":  "player-ao-1-identity.json",
+                                              "bytes":  361,
+                                              "sha256":  "25023db3e6866db81d14d82f806f817a9f91eedcb02ec14f2ef3361fa19a8bf7"
+                                          },
+                                          {
+                                              "file":  "player-ao-1-inventory.json",
+                                              "bytes":  60778,
+                                              "sha256":  "d3fb6e6d6b502db679fc67802eda5d6aa42a770a6b67ec632c2d5ad4bb11abff"
+                                          },
+                                          {
+                                              "file":  "player-ao-1-size.json",
+                                              "bytes":  1479,
+                                              "sha256":  "d824bf193ecd9db543b540c5004a344fe0b576d279be6722dddfa708921397e5"
+                                          },
+                                          {
+                                              "file":  "ao-build-player-101-host.txt",
+                                              "bytes":  3596,
+                                              "sha256":  "516c1d65cf13535516485a09452f2499a4972c0f219b7ab3dd82a3d3548c66f6"
+                                          }
+                                      ]
+                    },
+    "privacyAttempt":  {
+                           "status":  "INFRASTRUCTURE_FAILURE",
+                           "exitCode":  2,
+                           "elapsedSeconds":  57.3026631,
+                           "gate":  "Q100Player",
+                           "runId":  "d6121212199d4b7d8a7d1272f3cc27fb",
+                           "route":  {
+                                         "name":  "q100-player-debug-query",
+                                         "kind":  "q100-player",
+                                         "status":  "PASS",
+                                         "workbenchReady":  true,
+                                         "programReady":  true,
+                                         "customerRetestReady":  true,
+                                         "boardPowerReady":  true,
+                                         "ordinaryTicketEntryStatus":  "PASS",
+                                         "developerAttributesCount":  0,
+                                         "q100ReportAttributePresent":  false
+                                     },
+                           "privacyNegativeCanary":  {
+                                                         "status":  "PASS",
+                                                         "sentinels":  [
+                                                                           "data-tsj-q100-fault",
+                                                                           "data-tsj-future-answer"
+                                                                       ],
+                                                         "caseCount":  2,
+                                                         "finalPlayerPrivacy":  "PASS",
+                                                         "sentinelRemovalStatus":  "PASS"
+                                                     },
+                           "playerArtifactProof":  {
+                                                       "protocol":  "troubleshootjs-q100-player-artifact-proof-v1",
+                                                       "variant":  "Player",
+                                                       "style":  "OBF",
+                                                       "inputDigest":  "45654010ddaf068b1cb30a193d43084b80eed0dbfb84f3dcf5f50b6f21df0d1f",
+                                                       "inputFileCount":  1199,
+                                                       "outputDigest":  "e3cef7636468142ce9a8a6ea1707622343cc876407cb3bc1312c158da4b3c0e5",
+                                                       "outputFileCount":  357,
+                                                       "developerMarkerScan":  "PASS"
+                                                   },
+                           "cleanup":  {
+                                           "success":  false,
+                                           "status":  "FAIL",
+                                           "elapsedMs":  25722,
+                                           "limitMs":  120000,
+                                           "phase":  "cleanup",
+                                           "shutdownElapsedMs":  15702,
+                                           "shutdownInnerLimitMs":  15000,
+                                           "failurePhase":  "containmentJobEmptyProof",
+                                           "failure":  "OpenExistingError2; natural shutdown did not establish containment job-empty proof.",
+                                           "workerReadOnlyResourceQuery":  {
+                                                                               "recordedProcessesAndListeners":  "ABSENT",
+                                                                               "provenance":  "Root-reported read-only worker query; no persisted query artifact was supplied.",
+                                                                               "cleanupJobEmptyProof":  "NOT_PROVED"
+                                                                           },
+                                           "resourceDisposition":  "Run profile and port claim retained in quarantine; absolute resource paths omitted."
+                                       },
+                           "artifacts":  [
+                                             {
+                                                 "file":  "ao-compiled-q100player-1-result.json",
+                                                 "bytes":  229,
+                                                 "sha256":  "e8753a56a1a099fcd093d98c3415249a0983a5cebf2959b234432cb7169b9b88"
+                                             },
+                                             {
+                                                 "file":  "ao-compiled-q100player-1-launcher.json",
+                                                 "bytes":  205,
+                                                 "sha256":  "ff2a9a1e09e129fb2bf76451a1cdd7a9629c6edec43c7010eb2b43bf2eb623cf"
+                                             },
+                                             {
+                                                 "file":  "ao-compiled-q100player-1.json",
+                                                 "bytes":  17630,
+                                                 "sha256":  "8cc4cb6ca46b38685e910beb8891f7d73571a4fe3eacf511a7612091bf2650f0"
+                                             },
+                                             {
+                                                 "file":  "ao-compiled-q100player-1.log",
+                                                 "bytes":  19350,
+                                                 "sha256":  "e845dc973b10ceae56716011406d16548d9724124470a0dde5fefcf74bbaa5e9"
+                                             },
+                                             {
+                                                 "file":  "ao-compiled-q100player-1-host.txt",
+                                                 "bytes":  788,
+                                                 "sha256":  "e95b4fd57cf4aa9798239df9943bb74e0e10bb212297f6a9aaf48ae1e59e18a0"
+                                             }
+                                         ]
+                       },
+    "overallLimits":  [
+                          "Snapshot 2 seal and copy audit are provenance records; the focused retry is separately bound to the same snapshot-2 pin and passed two suites only.",
+                          "Player build 101 is a captured OBF Player artifact identity with 1199 inputs. Its identity matches the artifact proof in the privacy report; no separate post-restoration production build is claimed.",
+                          "The privacy route, readiness, DOM negative canaries, and sentinel cleanup passed, but the aggregate Q100Player attempt exited 2 because cleanup failed. This is not a privacy-gate PASS.",
+                          "The shutdown phase exceeded its 15-second inner limit (15702 ms), while wrapper cleanup elapsed 25722 ms under its 120000 ms outer bound; the containment job-empty proof remains unproved.",
+                          "A read-only worker query reported recorded processes and listeners absent; this does not prove the cleanup job empty or release the retained profile/claim quarantine.",
+                          "Full final source gates are not complete. No 100-route playability or Q100 electrical qualification is established by this packet.",
+                          "Protected HARD data was not read or run. Raw reports, logs, paths, process IDs, and start ticks are not embedded."
+                      ],
+    "packetSanitization":  {
+                               "artifactReferences":  "relative scratch-leaf names only",
+                               "rawLogsEmbedded":  false,
+                               "rawReportsEmbedded":  false,
+                               "absolutePathsEmbedded":  false,
+                               "processIdsOrStartTicksIncluded":  false,
+                               "privateProfileOrClaimPathsIncluded":  false,
+                               "status":  "SANITIZED_PORTABLE_METADATA_ONLY"
+                           }
+}

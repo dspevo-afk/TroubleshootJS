@@ -1,0 +1,534 @@
+{
+  "schema": "troubleshootjs-as-visible-player-evidence-v1",
+  "status": "PASS_VISIBLE_REPAIR_AND_FRESH_RESTORE_RETEST",
+  "recordedDate": "2026-10-31",
+  "repository": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "candidate": "AO_FINAL_LAYOUT25_DEP26"
+  },
+  "scope": {
+    "evidenceType": "ACTUAL_VISIBLE_PLAYER_INPUT_AND_SAVE_RELOAD",
+    "surface": "IN_APP_BROWSER",
+    "inputMethod": "Manual CUA visible UI input; no injected controller calls, page evaluation, or page-state mutation.",
+    "actual100Accepted": 0,
+    "q100Qualification": "NOT_ESTABLISHED",
+    "protectedHardData": "NOT_READ_OR_RUN"
+  },
+  "playerBuild": {
+    "playerAttempt": "Player101",
+    "identity": "player-ao-1",
+    "variant": "Player",
+    "style": "OBF",
+    "inputDigest": "45654010ddaf068b1cb30a193d43084b80eed0dbfb84f3dcf5f50b6f21df0d1f",
+    "inputFileCount": 1199,
+    "outputDigest": "e3cef7636468142ce9a8a6ea1707622343cc876407cb3bc1312c158da4b3c0e5",
+    "outputFileCount": 357,
+    "hostModuleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "reuseAuditStatus": "PASS_REUSE_INPUT_BOUNDARY_AUDIT_ONLY",
+    "reuseAuditScope": "Input-boundary audit only; no new build was run by the audit.",
+    "consumedSets": [
+      "src",
+      "scripts/build.ps1",
+      "GWT classpath jars"
+    ],
+    "artifacts": {
+      "identity": {
+        "file": "player-ao-1-identity.json",
+        "bytes": 361,
+        "sha256": "25023db3e6866db81d14d82f806f817a9f91eedcb02ec14f2ef3361fa19a8bf7"
+      },
+      "reuseAudit": {
+        "file": "ap-player-build-reuse-audit-2.json",
+        "bytes": 1105,
+        "sha256": "5b22b4593fac778eb60751521e5ae9724dacc1abd8494dc5ec1af3a5311cef96"
+      },
+      "inventory": {
+        "file": "player-ao-1-inventory.json",
+        "bytes": 60778,
+        "sha256": "d3fb6e6d6b502db679fc67802eda5d6aa42a770a6b67ec632c2d5ad4bb11abff"
+      }
+    }
+  },
+  "challenge": {
+    "route": "/circuitjs.html?tsjChallenge=isolated-ac-control&seed=-6794211680707017382&difficulty=MEDIUM",
+    "challengeId": "isolated-ac-control",
+    "seed": "-6794211680707017382",
+    "seedTransport": "Exact signed 64-bit decimal string",
+    "difficulty": "MEDIUM"
+  },
+  "visibleInteractionSequence": [
+    {
+      "step": 1,
+      "action": "Accept customer ticket in the actual UI.",
+      "result": "Preparation began."
+    },
+    {
+      "step": 2,
+      "action": "Run customer retest before repair.",
+      "result": "FAIL."
+    },
+    {
+      "step": 3,
+      "action": "Turn board power OFF; explicitly disconnect supplies 2, 3, and 4.",
+      "result": "Board isolated."
+    },
+    {
+      "step": 4,
+      "action": "Search shop for 10000; add 10000 ohm, ±5%, Medium-lead resistor.",
+      "result": "New part 56 appears in tray."
+    },
+    {
+      "step": 5,
+      "action": "Click the actual board at x=377,y=375.",
+      "result": "Popup identifies installed RENAC, 10 kΩ, 0.25 W."
+    },
+    {
+      "step": 6,
+      "action": "Remove RENAC; choose tray part 56 and install it as an isolated converter at RENAC.",
+      "result": "Repair installed through visible player controls."
+    },
+    {
+      "step": 7,
+      "action": "Turn power ON and run customer retest.",
+      "result": "PASS."
+    },
+    {
+      "step": 8,
+      "action": "Return to board, open Main Menu, and save through browser download.",
+      "result": "Repaired save downloaded."
+    },
+    {
+      "step": 9,
+      "action": "Load the freshly repaired save through visible file chooser.",
+      "result": "Preparation returns with notice: “Session restored. Transient behavior restarted; retest the board.”"
+    },
+    {
+      "step": 10,
+      "action": "Run a fresh customer retest after restore; download the restored save.",
+      "result": "PASS."
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "docs/task-evidence/Q100/authored-layout-r1/as-player-unrepaired1.jpg",
+      "bytes": 98867,
+      "sha256": "4db7a56990d59379f02a6b98c6fd357c1adbf2b2dbd2547a14c3e4c84c4f76cd",
+      "phase": "initial-unrepaired-retest-failed",
+      "width": 1280,
+      "height": 720,
+      "inspectedByRoot": true
+    },
+    {
+      "file": "docs/task-evidence/Q100/authored-layout-r1/as-player-isolated-removed1.jpg",
+      "bytes": 111514,
+      "sha256": "ac1dd01d5dc46fb3395e97b4ed8c8ea8dc871282114e545822821cc5c839cc58",
+      "phase": "RENAC-isolated-and-removed",
+      "width": 1280,
+      "height": 720,
+      "inspectedByRoot": true
+    },
+    {
+      "file": "docs/task-evidence/Q100/authored-layout-r1/as-player-repaired-pass1.jpg",
+      "bytes": 72246,
+      "sha256": "5b9e2c756d4ed33237a63f21a323943cea70f219835df0116d5067c39e236c52",
+      "phase": "replacement-retest-pass",
+      "width": 1280,
+      "height": 720,
+      "inspectedByRoot": true
+    },
+    {
+      "file": "docs/task-evidence/Q100/authored-layout-r1/as-player-restored-before-retest1.jpg",
+      "bytes": 99084,
+      "sha256": "78a59940a88bca4c7fec008ad990e2dc704be390a4982e969bc47942018bc652",
+      "phase": "fresh-load-restoration-notice-before-retest",
+      "width": 1280,
+      "height": 720,
+      "inspectedByRoot": true
+    },
+    {
+      "file": "docs/task-evidence/Q100/authored-layout-r1/as-player-restored-pass1.jpg",
+      "bytes": 72246,
+      "sha256": "5b9e2c756d4ed33237a63f21a323943cea70f219835df0116d5067c39e236c52",
+      "phase": "fresh-load-retest-pass",
+      "width": 1280,
+      "height": 720,
+      "inspectedByRoot": true
+    }
+  ],
+  "saveRoundTripAudit": {
+    "status": "PASS_FRAME_AND_SEMANTIC_FIELD_AUDIT_WITH_RECORDED_TIME_DELTA",
+    "scope": "READ_ONLY_PUBLIC_SAVE_AUDIT; NOT A JAVA RESTORE, PLAYER QUALIFICATION, OR FUNCTIONAL GATE",
+    "model": {
+      "schema": "tsj-session/1",
+      "model": "tsj-session-model/1",
+      "dynamicMode": "restart"
+    },
+    "customFrameReader": {
+      "method": "UTF-8 decode; Java UTF-16-code-unit length framing; section/count checks; exact consumption through END.",
+      "notPerformed": [
+        "PlayerSessionSave.parse",
+        "Runtime object reconstruction",
+        "Java restore test"
+      ],
+      "sourceFiles": [
+        {
+          "leaf": "PlayerSessionSave.java",
+          "relevantLines": "21-23, 140-213",
+          "sha256": "eee7f8b3326138b4087122cd4cc1d01722dc4690dcc434777edc2b0d69ff76c3"
+        },
+        {
+          "leaf": "PlayerSessionState.java",
+          "relevantLines": "523-600",
+          "sha256": "956bc629d48c3753c130d624b4445acf6c4e86e18fde323aa39e2c312b84d524"
+        }
+      ],
+      "artifact": {
+        "file": "as-visible-save-audit3.py",
+        "bytes": 9171,
+        "sha256": "09b8f75cc42a239f28437d178222850ee2b240ad1ac5537bb8b10876e147bc26"
+      }
+    },
+    "repaired": {
+      "artifact": {
+        "file": "as-visible-repaired1.tsjsave",
+        "bytes": 1979,
+        "sha256": "f062c37985abcdd7c0bbe8e2d943a64493100f8f6248176e945c0846165b79d5"
+      },
+      "frameStatus": "PASS",
+      "identityStatus": "PASS",
+      "build": "F76D1F592D9C3787EBBCDB127CF1AB25",
+      "realization": "1cb70696fd60ee8dd2bd8f73ade722639f7cfc1d4e26acc889fa86b4cc712559",
+      "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-6794211680707017382",
+      "stateSignature": "ccbaa55717d05ce4af101ba31979bc2bf5bd1d50eb9208755f6bc680b5fb906c"
+    },
+    "restored": {
+      "artifact": {
+        "file": "as-visible-restored1.tsjsave",
+        "bytes": 1979,
+        "sha256": "aa0d8e3b3ec027c5fd09f0b7b2fee63d82a3fef1ef5c3479010b055d1a8183cd"
+      },
+      "frameStatus": "PASS",
+      "identityStatus": "FAIL",
+      "expectedIdentityMatches": {
+        "build": true,
+        "realization": true,
+        "replay": true,
+        "stateSignature": false
+      },
+      "build": "F76D1F592D9C3787EBBCDB127CF1AB25",
+      "realization": "1cb70696fd60ee8dd2bd8f73ade722639f7cfc1d4e26acc889fa86b4cc712559",
+      "replay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-6794211680707017382",
+      "stateSignature": "0fff5a3ba23def76af564a1b8929aa890cf7799343cf70d399ded2a2b933a9f5"
+    },
+    "semanticComparison": {
+      "buildEqual": true,
+      "realizationEqual": true,
+      "replayEqual": true,
+      "sourceRowsEqual": true,
+      "sourceRows": [
+        [
+          "LOAD12",
+          "CONNECTED",
+          "3fd0000000000000"
+        ],
+        [
+          "MAINAC",
+          "CONNECTED",
+          "NONE"
+        ],
+        [
+          "SENSOR_A",
+          "CONNECTED",
+          "3fd0000000000000"
+        ],
+        [
+          "SENSOR_B",
+          "CONNECTED",
+          "3fd0000000000000"
+        ]
+      ],
+      "damageFailureStateAndFailureTimeEqual": true,
+      "fuseRecordsEqual": true,
+      "operationCountEach": 11,
+      "operations": [
+        [
+          "SOURCE",
+          "MAINAC",
+          "DISCONNECTED",
+          "NONE"
+        ],
+        [
+          "SOURCE",
+          "LOAD12",
+          "DISCONNECTED",
+          "0.25"
+        ],
+        [
+          "SOURCE",
+          "SENSOR_A",
+          "DISCONNECTED",
+          "0.25"
+        ],
+        [
+          "SOURCE",
+          "SENSOR_B",
+          "DISCONNECTED",
+          "0.25"
+        ],
+        [
+          "ACQUIRE",
+          "RDA",
+          "R_CATALOG_10000",
+          "RDA_CATALOG_PART_0"
+        ],
+        [
+          "REMOVE",
+          "RENAC",
+          "RENAC",
+          ""
+        ],
+        [
+          "INSTALL",
+          "RENAC",
+          "RDA_CATALOG_PART_0",
+          ""
+        ],
+        [
+          "SOURCE",
+          "MAINAC",
+          "CONNECTED",
+          "NONE"
+        ],
+        [
+          "SOURCE",
+          "LOAD12",
+          "CONNECTED",
+          "0.25"
+        ],
+        [
+          "SOURCE",
+          "SENSOR_A",
+          "CONNECTED",
+          "0.25"
+        ],
+        [
+          "SOURCE",
+          "SENSOR_B",
+          "CONNECTED",
+          "0.25"
+        ]
+      ],
+      "allFourSourcesConnectedAtEnd": true,
+      "stressCountEach": 21,
+      "fuseCountEach": 1,
+      "fuseRecords": [
+        [
+          "F1",
+          "0",
+          "INTACT"
+        ]
+      ]
+    },
+    "serviceTime": {
+      "changedRows": 20,
+      "minDeltaSeconds": 1.9961999999997806,
+      "maxDeltaSeconds": 1.9961999999997815,
+      "stateSignatureEqual": false,
+      "interpretation": "PlayerSessionState.signature includes stress serviceTime, so the observed time advances are consistent with the differing stateSignature; raw save-byte equality is not required.",
+      "rawSaveByteEqualityClaimed": false,
+      "wholeStateEqualityClaimed": false
+    },
+    "actualRuntimeRestore": {
+      "status": "PASS_VISIBLE_RELOAD_AND_FRESH_RETEST",
+      "notice": "Session restored. Transient behavior restarted; retest the board.",
+      "freshCustomerRetest": "PASS",
+      "evidenceBoundary": "Observed separately through the real player UI and file chooser; static frame parsing does not certify runtime restore."
+    },
+    "artifacts": {
+      "comparison": {
+        "file": "as-visible-save-comparison1.json",
+        "bytes": 5159,
+        "sha256": "4573b9ed715fb06e5f4e2324936021b6fdc52b7e869ca68b58a9dfc088b19f2c"
+      },
+      "repairedFrameAudit": {
+        "file": "as-visible-repaired-audit3.json",
+        "bytes": 2473,
+        "sha256": "2e9f4e871923122a7a1dec412487ed26ff87b020bf9a4675287a043ba7af61e7"
+      },
+      "restoredFrameAudit": {
+        "file": "as-visible-restored-audit3.json",
+        "bytes": 2474,
+        "sha256": "09cfaf865c3f0852293192a9b0c511bf24ceeeadf82d401924ed140cedf78dd6"
+      },
+      "earlierRepairedFrameAudit": {
+        "file": "as-visible-repaired-audit1.json",
+        "bytes": 3696,
+        "sha256": "eb0000a1625372543ccba3d815e3e37e02c084d70b621431526635e177d6dfeb"
+      }
+    }
+  },
+  "previewAndBrowserLifecycle": {
+    "launchMethod": "Maintained preview PowerShell script with default HTTP listener.",
+    "scriptLeaf": "preview.ps1",
+    "port": 8957,
+    "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "identityProtocol": "troubleshootjs-preview-identity-v2",
+    "sourceDigest": "0cbe64a449e761ce25194c017fa0bc32f0539d598d4cc4e76a71062ede15e059",
+    "scriptDigest": "d78bc0fcbe8154b4abd5dcdf17603453bfba6435808297329b3845bfe73dee91",
+    "webDigest": "fb7f0c7ef36b0eff88fb5728529db59b6f16344e6446ab684156c116945f5865",
+    "executionDigest": "6fc712852181997ee81a1fd5c5859c24dc96cf7b1110006c259bc16b6225247a",
+    "executionFileCount": 1597,
+    "ownershipAuditStatus": "PASS",
+    "identityChecksExactWithinEachApi": true,
+    "initialReadOnlyProbeFailures": [
+      "String formatting comparison failed after JSON date parsing.",
+      "Cross-API tick comparison failed: CIM has microsecond resolution."
+    ],
+    "browser": {
+      "surface": "IAB",
+      "closeMethod": "Actual CUA browser API",
+      "tabClosed": true,
+      "postCloseTabInventoryCount": 0
+    },
+    "teardown": {
+      "status": "PASS_OWNED_PREVIEW_PROCESS_AND_LISTENER_ABSENCE_ONLY",
+      "method": "Revalidated owned identity, Ctrl-C, then final HTTP identity request released synchronous wait.",
+      "ptyExitCode": 1,
+      "ptyExitInterpretation": "Intentional interrupt exit after Ctrl-C.",
+      "absenceObservations": 2,
+      "listenerAbsentAtPort8957": true,
+      "scopeLimit": "Manual preview process/listener absence only; not CDP-wrapper or kernel-job certification.",
+      "priorHelperAttempt": "Custom helper write was blocked by execution policy; no helper file or process was created. Maintained direct foreground preview was used without a security bypass."
+    },
+    "artifacts": {
+      "launcher": {
+        "file": "as-visible-preview-1-launcher.json",
+        "bytes": 430,
+        "sha256": "2a8367976b6ad343af57429cc8f79cad03b1606a7fbde4be2e6f0932c51838f7"
+      },
+      "identity": {
+        "file": "as-visible-preview-1-identity.json",
+        "bytes": 1041,
+        "sha256": "a31c602f161fea38284b5669c1e7a81d6186fec041a1dab5bd31bc3f5016959c"
+      },
+      "ownership": {
+        "file": "as-visible-preview-1-ownership-audit.json",
+        "bytes": 652,
+        "sha256": "5b6dd329fd91ab2fdc4d0c04927af05dcf8e8058d7b4ddf00c3b388a98377f60"
+      },
+      "closure": {
+        "file": "as-visible-preview-1-closure.json",
+        "bytes": 738,
+        "sha256": "528927524e5805e18b8f66335f7bce4107ffd260b10f381b78e225d200488d8c"
+      }
+    }
+  },
+  "qualificationBoundary": {
+    "visibleRepairFlow": "PASS",
+    "visibleSaveReloadAndFreshRetest": "PASS",
+    "actual100Accepted": 0,
+    "q100Admission": "NOT_ESTABLISHED",
+    "fullNativeMatrix": "NOT_CLAIMED",
+    "developer101": "RUNNING_AT_PACKET_CAPTURE",
+    "current9": "PENDING",
+    "e06State10": "PENDING",
+    "normal3": "PENDING",
+    "priorFinalPlayer5Failure": {
+      "status": "FAIL",
+      "shutdownElapsedMs": 16237,
+      "shutdownLimitMs": 15000
+    },
+    "publication": "HELD",
+    "limits": [
+      "One seeded visible player flow only.",
+      "The frame audit is custom/read-only, not PlayerSessionSave.parse or runtime-object equivalence.",
+      "Service time advanced on 20 rows; raw save bytes and state signatures are not claimed equal.",
+      "Preview teardown is not CDP or kernel-job proof.",
+      "No actual100 acceptance, public admission, full native matrix, or publication is claimed."
+    ]
+  },
+  "artifacts": {
+    "screenshots": [
+      {
+        "file": "docs/task-evidence/Q100/authored-layout-r1/as-player-unrepaired1.jpg",
+        "bytes": 98867,
+        "sha256": "4db7a56990d59379f02a6b98c6fd357c1adbf2b2dbd2547a14c3e4c84c4f76cd",
+        "phase": "initial-unrepaired-retest-failed",
+        "width": 1280,
+        "height": 720,
+        "inspectedByRoot": true
+      },
+      {
+        "file": "docs/task-evidence/Q100/authored-layout-r1/as-player-isolated-removed1.jpg",
+        "bytes": 111514,
+        "sha256": "ac1dd01d5dc46fb3395e97b4ed8c8ea8dc871282114e545822821cc5c839cc58",
+        "phase": "RENAC-isolated-and-removed",
+        "width": 1280,
+        "height": 720,
+        "inspectedByRoot": true
+      },
+      {
+        "file": "docs/task-evidence/Q100/authored-layout-r1/as-player-repaired-pass1.jpg",
+        "bytes": 72246,
+        "sha256": "5b9e2c756d4ed33237a63f21a323943cea70f219835df0116d5067c39e236c52",
+        "phase": "replacement-retest-pass",
+        "width": 1280,
+        "height": 720,
+        "inspectedByRoot": true
+      },
+      {
+        "file": "docs/task-evidence/Q100/authored-layout-r1/as-player-restored-before-retest1.jpg",
+        "bytes": 99084,
+        "sha256": "78a59940a88bca4c7fec008ad990e2dc704be390a4982e969bc47942018bc652",
+        "phase": "fresh-load-restoration-notice-before-retest",
+        "width": 1280,
+        "height": 720,
+        "inspectedByRoot": true
+      },
+      {
+        "file": "docs/task-evidence/Q100/authored-layout-r1/as-player-restored-pass1.jpg",
+        "bytes": 72246,
+        "sha256": "5b9e2c756d4ed33237a63f21a323943cea70f219835df0116d5067c39e236c52",
+        "phase": "fresh-load-retest-pass",
+        "width": 1280,
+        "height": 720,
+        "inspectedByRoot": true
+      }
+    ],
+    "rawSavesScratchOnly": true,
+    "rawSaveArtifactRefs": [
+      {
+        "file": "as-visible-repaired1.tsjsave",
+        "bytes": 1979,
+        "sha256": "f062c37985abcdd7c0bbe8e2d943a64493100f8f6248176e945c0846165b79d5"
+      },
+      {
+        "file": "as-visible-restored1.tsjsave",
+        "bytes": 1979,
+        "sha256": "aa0d8e3b3ec027c5fd09f0b7b2fee63d82a3fef1ef5c3479010b055d1a8183cd"
+      }
+    ],
+    "playerIdentity": {
+      "file": "player-ao-1-identity.json",
+      "bytes": 361,
+      "sha256": "25023db3e6866db81d14d82f806f817a9f91eedcb02ec14f2ef3361fa19a8bf7"
+    },
+    "playerReuseAudit": {
+      "file": "ap-player-build-reuse-audit-2.json",
+      "bytes": 1105,
+      "sha256": "5b22b4593fac778eb60751521e5ae9724dacc1abd8494dc5ec1af3a5311cef96"
+    }
+  },
+  "sanitization": {
+    "status": "SANITIZED_ARTIFACT_METADATA_ONLY",
+    "rawSaveContentsEmbedded": false,
+    "rawLogsEmbedded": false,
+    "absolutePathsEmbedded": false,
+    "processIdsOrStartTicksEmbedded": false,
+    "verifierRunIdsOrNoncesEmbedded": false,
+    "commandLinesEmbedded": false,
+    "capabilityTokensEmbedded": false,
+    "artifactReferences": "Repository-relative screenshot paths and scratch-relative leaf names only."
+  }
+}

@@ -1,0 +1,216 @@
+{
+  "schema": "q100-au-normal3-plan-evidence/1",
+  "status": "PLAN_FROZEN; NORMAL3_ACTIVE_NOT_COMPLETE_AT_CUTOFF",
+  "cutoff": {
+    "normal3Qualification": "ACTIVE_NOT_COMPLETE (reported by root at cutoff)",
+    "fullNormalPopulationComplete": false,
+    "e06StatePass": false,
+    "physicalQualification": false,
+    "published": false
+  },
+  "repository": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9"
+  },
+  "sourceSnapshot": {
+    "status": "PREBUILD_SOURCE_SNAPSHOT_ONLY",
+    "inputFileCount": 1263,
+    "sourceBinding": "35069d615bfe680048fcc17fba7cb42a13d0f1045b94da4c5bb9c3c1c4e50784",
+    "pinManifestSha256": "883c8ef97840ec307484d4da6146b4590a43fd3a2be6b234b48e8a66f42cdea3",
+    "partition": "development",
+    "roots": [
+      "-2230691771308388107",
+      "6702341860553104274",
+      "-8360266000248569150"
+    ],
+    "epochs": {
+      "replay": "tsj-alpha/7",
+      "dependency": "tsj-generation-dependencies-v26",
+      "model": "circuitjs-source-load-model-inputs-no-transient-dump-v7",
+      "layout": 25,
+      "placement": 15,
+      "plan": 1,
+      "assessment": 3,
+      "program": 2
+    }
+  },
+  "planFreeze": {
+    "preparerWrapperStatus": "FAIL_PREP5_CAPTURE_OR_PLAN_FREEZE",
+    "wrapperFailure": "PowerShell postcheck did not match the exact pass marker in CRLF stdout; the marker was present once.",
+    "planChildExitCode": 0,
+    "planChildTerminationProven": true,
+    "planChildStatus": "PASS_PLAN_FROZEN_FROM_ACTUAL_CURRENT_ARTIFACTS",
+    "planSha256": "ad0aaca6a7d221535802ac677e98c787c7d8d64d9c3c2e709771da7c2e071668",
+    "sourceBinding": "35069d615bfe680048fcc17fba7cb42a13d0f1045b94da4c5bb9c3c1c4e50784",
+    "nativeInputPins": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81",
+    "nativeInputCount": 1061,
+    "manifestStatus": "PASS_30_ROWS",
+    "manifestRows": 30,
+    "actualBuildOutputsUsed": true,
+    "layoutQualification": false,
+    "qualification": "NOT_RUN",
+    "nativePinSummaryLine": "count=1061 subsetOfAO=PASS",
+    "nativeSourceAccounting": {
+      "normalSourceOverlapCount": 852,
+      "nativeOnlyContractTestCount": 209,
+      "nativeOnlyInputsAreTests": true
+    }
+  },
+  "plan": {
+    "artifact": "ao-normal3-gate-prep5/normal-ao3-plan.json",
+    "schema": "tsj-r12-medium-plan/5",
+    "sha256": "ad0aaca6a7d221535802ac677e98c787c7d8d64d9c3c2e709771da7c2e071668",
+    "sourceBinding": "35069d615bfe680048fcc17fba7cb42a13d0f1045b94da4c5bb9c3c1c4e50784",
+    "budgets": {
+      "jobMillis": 90000,
+      "jobWork": 640,
+      "unitMillis": 5000,
+      "maximumCandidates": 4,
+      "browserCaseTimeoutSeconds": 115,
+      "cleanupLimitMs": 120000
+    },
+    "layoutQualification": false
+  },
+  "native4": {
+    "result": "ao-native-integrated-4/ao-native-integrated-4-result.json",
+    "resultSha256": "15103b0087ba8457c9f8ff181b6122334cf9789f6f74af6f6d1024c4f8d1d038",
+    "phase": "AFFECTED_FINAL_SOURCE_NATIVE",
+    "exitCode": 0,
+    "elapsedSeconds": 184.1820165,
+    "suiteCount": 33,
+    "suiteManifestSha256": "ab25f70b356a5f166f390fd0e09186c36721cbcec381af5306d28e9dde541dd4",
+    "inputSnapshotRevision": 5,
+    "inputCount": 1061,
+    "inputBytes": 85502668,
+    "inputPinsSha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81",
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "terminationProven": true,
+    "cleanupStatus": "PASS",
+    "manifest30": {
+      "status": "PASS_30_ROWS",
+      "rows": 30,
+      "sidecar": "ao-native-integrated-4-rb56-manifest30.txt",
+      "sha256": "5d94cd9470643f931e32a9d51d657917443f1e4f58a43803cee670bcee0c3d87"
+    },
+    "normalInputOverlapCount": 852,
+    "nativeOnlyContractTestCount": 209
+  },
+  "buildReceipts": {
+    "provenance": "Actual existing Developer and Player build receipts were consumed and revalidated by the plan freezer and validator; builds were not rerun for this packet.",
+    "developer": {
+      "inputFileCount": 1199,
+      "inputDigest": "5c9e0f811d28a51e13d5e3c603d7e8b855e62c8d098fa64761776cbc3d1199b0",
+      "outputFileCount": 357,
+      "outputDigest": "38a2cba1decd94769ec36f56fd023216d1fd8e6b96546285849e18ba5b579f2e",
+      "receiptSha256": "d26dfc8ee66b98f61c3b81fd05c77151db037fb68637312b3f2bf70682a78d06",
+      "sizeSha256": "fe5d8117f1027e6a11862474f23b62e8cee5792c75330cf33745efc3e42d7a81",
+      "inventorySha256": "7721c85a2981e5915e3f2b49bc4cb37ca1f75e46805194356a1861db74dfb6dd"
+    },
+    "player": {
+      "inputFileCount": 1199,
+      "inputDigest": "45654010ddaf068b1cb30a193d43084b80eed0dbfb84f3dcf5f50b6f21df0d1f",
+      "outputFileCount": 357,
+      "outputDigest": "e3cef7636468142ce9a8a6ea1707622343cc876407cb3bc1312c158da4b3c0e5",
+      "receiptSha256": "25023db3e6866db81d14d82f806f817a9f91eedcb02ec14f2ef3361fa19a8bf7",
+      "sizeSha256": "d824bf193ecd9db543b540c5004a344fe0b576d279be6722dddfa708921397e5",
+      "inventorySha256": "d3fb6e6d6b502db679fc67802eda5d6aa42a770a6b67ec632c2d5ad4bb11abff"
+    }
+  },
+  "validationHistory": [
+    {
+      "version": 1,
+      "disposition": "NOT_RUN_REVIEW_ONLY",
+      "note": "Static review found validator defects before launch; this is not a runtime failure."
+    },
+    {
+      "version": 2,
+      "result": "ao-normal3-prep5-validation-2-result.json",
+      "resultSha256": "24ad5e9b3767930c8b1241dde42824d8d649e7d50805107149276a19dda90354",
+      "status": "FAIL_READONLY_PREP5_OUTPUT_VALIDATION",
+      "helperExitCode": 1,
+      "terminationProven": true,
+      "elapsedMilliseconds": 1858.628,
+      "cause": "Validator incorrectly equated aggregate native receipt bytes with the separate 30-row manifest sidecar length."
+    },
+    {
+      "version": 3,
+      "result": "ao-normal3-prep5-validation-3-result.json",
+      "resultSha256": "bfd4fb9b0f36d152e9507a43e82f4a72e0f201ee07bb13c10d9c21633b654bb0",
+      "validatorSha256": "8b66ab7b79eda033c58db6b3d7ca5fe974f8722bf9537b8f2defb712ac9bb223",
+      "status": "PASS_READONLY_PREP5_OUTPUT_VALIDATION",
+      "helperExitCode": 0,
+      "terminationProven": true,
+      "elapsedMilliseconds": 2225.809,
+      "qualification": "NOT_RUN"
+    }
+  ],
+  "keyArtifacts": [
+    {
+      "name": "ao-normal3-prep5-run-result.json",
+      "bytes": 432,
+      "sha256": "59f3c6f66be5ca1abfad9aa0dacfa065ef6044fa1c061cbee0e0eeed33e9d0d1"
+    },
+    {
+      "name": "ao-normal3-prep5-plan-stdout.txt",
+      "bytes": 330,
+      "sha256": "722ca2b0b00609b7923ed196e8ec519b6926a2a8f98fa4fd7867b2b021c2289a"
+    },
+    {
+      "name": "ao-normal3-prep5-plan-launcher.json",
+      "bytes": 3913,
+      "sha256": "763bf3cb290d4ec831584fbbe30459d4199e6da582ebf941837e5f50b11cbaa5"
+    },
+    {
+      "name": "ao-normal3-gate-prep5/prebuild-source-pins-v5.json",
+      "bytes": 176693,
+      "sha256": "883c8ef97840ec307484d4da6146b4590a43fd3a2be6b234b48e8a66f42cdea3"
+    },
+    {
+      "name": "ao-normal3-gate-prep5/normal-ao3-manifests.json",
+      "bytes": 16357,
+      "sha256": "7cd9a462b147bbb74178fb38fdaa17c4345d7c90e84448c0fc4ad8970bb36a86"
+    },
+    {
+      "name": "ao-normal3-gate-prep5/normal-ao3-plan-freeze-result.json",
+      "bytes": 2086,
+      "sha256": "275c659d37f7cf9e479a734dbc3cd59dc8deabe81003f27afb6dedc991613b5f"
+    },
+    {
+      "name": "ao-normal3-prep5-validation-2-result.json",
+      "bytes": 10084,
+      "sha256": "24ad5e9b3767930c8b1241dde42824d8d649e7d50805107149276a19dda90354"
+    },
+    {
+      "name": "ao-normal3-prep5-validation-3-result.json",
+      "bytes": 13026,
+      "sha256": "bfd4fb9b0f36d152e9507a43e82f4a72e0f201ee07bb13c10d9c21633b654bb0"
+    },
+    {
+      "name": "ao-native-integrated-4/ao-native-integrated-4-result.json",
+      "bytes": 3886,
+      "sha256": "15103b0087ba8457c9f8ff181b6122334cf9789f6f74af6f6d1024c4f8d1d038"
+    },
+    {
+      "name": "ao-native-integrated-4/ao-final-native-v5-sealed-pins.json",
+      "bytes": 199503,
+      "sha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81"
+    },
+    {
+      "name": "ao-native-integrated-4/ao-native-integrated-4-stdout.txt",
+      "bytes": 4473140,
+      "sha256": "12c6ad404887218cbf2a9ff02b767513c6c2fbc5169e44b6a784aabdc9e4080b"
+    },
+    {
+      "name": "ao-native-integrated-4/ao-native-integrated-4-rb56-manifest30.txt",
+      "bytes": 14617,
+      "sha256": "5d94cd9470643f931e32a9d51d657917443f1e4f58a43803cee670bcee0c3d87"
+    }
+  ],
+  "limitations": [
+    "Plan freeze and read-only prep validation do not certify Normal3 qualification.",
+    "The Normal3 gate was active and incomplete at the recorded cutoff; no terminal result is asserted.",
+    "The plan records layoutQualification=false.",
+    "No E06State PASS, public qualification, physical/layout qualification, or publication is established by this packet.",
+    "Native4 is an affected-source contract run; the full normal population was not renewed by that run."
+  ]
+}

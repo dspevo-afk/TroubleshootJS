@@ -1,0 +1,130 @@
+{
+  "schema": "troubleshootjs-q100-current-task48-focused-observation-v1",
+  "status": "FOCUSED_TASK48_PASS_CURRENT1_INFRASTRUCTURE_FAILURE_PRESERVED",
+  "scope": {
+    "gate": "Current",
+    "focusedGate": "Task48",
+    "focusedRoute": "task48",
+    "focusedQuery": "tsjChallenge=led&seed=3&tsjVerifyTask48=true&tsjTask48Seed=3&tsjDebug=true&running=true",
+    "routeDeadlineMs": 90000,
+    "sameSourceFixtureAndBudgetBetweenComparedRuns": true,
+    "productionAdmissionOrQualificationClaim": "NOT_ASSESSED",
+    "q100AcceptedStepsClaim": "NONE"
+  },
+  "consumedInputAudit": {
+    "artifact": "as-task48-same-input-audit1.json",
+    "sha256": "ffba77ee3c7d60dbe39256952488c884abd360beb1829e12f10c86d23489fe04",
+    "status": "PASS_SAME_CONSUMED_DIGESTS",
+    "allSevenFieldsEqual": true,
+    "fields": {
+      "verifierIsolation": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+      "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+      "sourceDigest": "0cbe64a449e761ce25194c017fa0bc32f0539d598d4cc4e76a71062ede15e059",
+      "scriptDigest": "d78bc0fcbe8154b4abd5dcdf17603453bfba6435808297329b3845bfe73dee91",
+      "webDigest": "cdf4eeb48553ed65fd76b1d423b8efee2eac1f9968750eeb4c22c7c767d1d61c",
+      "executionDigest": "d2ed6dfa210beb9ccbc22f03958b7dc501893cc641f090d33fb62299558f7980",
+      "executionFileCount": 1597
+    }
+  },
+  "observations": [
+    {
+      "name": "Current attempt 1",
+      "reportArtifact": {
+        "file": "ao-compiled-current-1.json",
+        "bytes": 545882,
+        "sha256": "5c7d7d510235b56a9d7761d503295f10bf69a543fa33bfa57e2cc307720dbccf"
+      },
+      "resultArtifact": {
+        "file": "ao-compiled-current-1-result.json",
+        "bytes": 231,
+        "sha256": "d8352a74194bb42aa87fafb4cc1438141c142597ba6f1aed9abdafde75e3c237"
+      },
+      "status": "INFRASTRUCTURE_FAILURE",
+      "exitCode": 2,
+      "totalElapsedSeconds": 200.3607368,
+      "layoutVersion": 25,
+      "dependencyEpoch": "tsj-generation-dependencies-v26",
+      "recordedRoutes": [
+        {"name": "a03", "status": "PASS", "verification": "PASS:a03"},
+        {"name": "task46", "status": "PASS", "verification": "PASS:task46"},
+        {"name": "task47", "status": "PASS", "verification": "PASS:task47"}
+      ],
+      "failure": {
+        "kind": "infrastructure",
+        "phase": "browser",
+        "operation": "route-task48",
+        "transport": "CDP receive canceled",
+        "elapsedMs": 90044,
+        "remainingDeadlineMs": 0
+      },
+      "task48RouteRecord": "NOT_RETAINED",
+      "laterRoutes": "NOT_RUN",
+      "cleanup": {
+        "success": true,
+        "browserShutdownMs": 9793
+      }
+    },
+    {
+      "name": "Focused Task48 attempt 1",
+      "reportArtifact": {
+        "file": "as-compiled-task48-1.json",
+        "bytes": 187662,
+        "sha256": "ee04e1fd09f924690f9ee06238d9129a47752a37328afccebe4f0e1db3d6a63a"
+      },
+      "resultArtifact": {
+        "file": "as-compiled-task48-1-result.json",
+        "bytes": 340,
+        "sha256": "6efdd5f1195a5b380b35216114704465b471a78dba96dc9c25f2cdee407d8117"
+      },
+      "gate": "Task48",
+      "status": "PASS",
+      "exitCode": 0,
+      "totalElapsedSeconds": 123.8758288,
+      "layoutVersion": 25,
+      "dependencyEpoch": "tsj-generation-dependencies-v26",
+      "routeCount": 1,
+      "route": {
+        "name": "task48",
+        "status": "PASS",
+        "verification": "PASS:task48",
+        "elapsedMs": "NOT_REPORTED"
+      },
+      "routeDeadlineMs": 90000,
+      "cleanup": {
+        "success": true,
+        "browserShutdownMs": 8466
+      }
+    }
+  ],
+  "comparison": {
+    "focusedInputAudit": "The seven consumed digests match Current attempt 1 exactly; no source, fixture assertion, or budget change was made between the two runs.",
+    "interpretation": "The focused pass shows this Task48 route completed in a single-route run on the same consumed inputs. It does not attribute the Current attempt 1 timeout to product execution versus CDP/renderer scheduling because the host record does not retain the pending CDP method or route-local elapsed time.",
+    "currentRouteDeadlineMeaning": "The 90000ms bound spans navigation and report polling. A canceled receive establishes that no matching CDP response arrived before that host deadline; it is not a Task48 producer-completion report.",
+    "historicalCurrentPass": {
+      "reportArtifact": {
+        "file": "final-compiled-current-1.json",
+        "bytes": 938097,
+        "sha256": "eb128f369cbce98f15142c7ab0cd8ca180e50cd998cf8adf07b5225a0d160593"
+      },
+      "resultArtifact": {
+        "file": "final-compiled-current-1-result.json",
+        "bytes": 229,
+        "sha256": "2d81878f134808a553af1f1bc10b0cbd91bf0940e42fbbde2bf38d0179ad5fc8"
+      },
+      "status": "PASS",
+      "elapsedSeconds": 243.3856663,
+      "task48Verification": "PASS:task48",
+      "task48ElapsedMs": "NOT_REPORTED",
+      "sameInputBaseline": false,
+      "note": "Five of seven consumed source-digest fields differ from Current attempt 1; the historical total runtime is not a comparable Task48 timing."
+    }
+  },
+  "cutoffAndLimitations": {
+    "currentAttempt2": "ROOT_RUN_IN_PROGRESS_AT_CAPTURE; no result consumed",
+    "fullCurrentGate": "NOT_PASSED_BY_THIS_PACKET",
+    "q100ElectricalAcceptance": "NOT_ESTABLISHED",
+    "rawUrlsOrLogsIncluded": false,
+    "method": "Exact named structured reports/results and same-input audit only; no raw logs or URL fields were copied.",
+    "toolingDisclosure": "An earlier broad scratch-tree rg search emitted truncated tool output; it was not saved or copied. Findings in this packet derive from exact named artifacts and bounded source inspection."
+  }
+}

@@ -1,0 +1,669 @@
+{
+  "packetVersion": 1,
+  "evidence": "P07_LAZY_BOUND_FIXED_SAVED7_ROOT42_CANDIDATE4_U_AJ_PAIRED_ROUTE_OBSERVATION",
+  "status": "OBSERVATION_ONLY_BOTH_DIRECT_ROUTES_SUCCEEDED_NOT_LAYOUT_QUALIFICATION",
+  "caseIdentity": {
+    "caseId": "SAVED7_ROOT42_CANDIDATE4",
+    "scope": "OBSERVATIONAL_FIXED_SAVED7_ROUTE_COMPARISON_ONLY",
+    "rootSeed": "42",
+    "placementSeed": "5526715536693200536",
+    "routingSeed": "4493419427463069983",
+    "routingSeedRole": "PLAN_IDENTITY_METADATA; P07_BACKEND_DOES_NOT_CONSUME_ROUTING_SEED",
+    "placementInterpretationVersion": 7,
+    "layoutVersion": 24,
+    "dependencyEpoch": "tsj-generation-dependencies-v25",
+    "planVersion": 1,
+    "familyId": "RB56_CONTROL",
+    "topology": "RB56_CH2_SHARED_HYSTERETIC_A_NMOS_B_BJT_S5_true_S12_true_F2_O0_B5_false",
+    "logicalInventoryCanonicalSha256": "731fea0da4d7f9fd2404cc2979013ce41062d99d534324220a59ece71afa4b7e",
+    "logicalInventoryCanonicalLength": 4632,
+    "logicalBoardIdentitySha256": "6b87db36bf3bdeb5f615ac38e6eb7fc5fef92e6b9c059b79c7be9945d335205a",
+    "logicalBoardIdentityLength": 5061,
+    "packageCount": 54,
+    "padCount": 131,
+    "packageCensus": {
+      "AXIAL_DIODE": 8,
+      "AXIAL_FUSE": 1,
+      "AXIAL_RESISTOR": 20,
+      "E04_DECISION_CONTROL_5": 2,
+      "ISOLATED_CONVERTER_7": 1,
+      "OPTOCOUPLER_4": 1,
+      "RADIAL_CERAMIC_CAPACITOR": 4,
+      "RADIAL_ELECTROLYTIC_CAPACITOR": 3,
+      "RADIAL_INDUCTOR_2": 1,
+      "RELAY_SPDT": 2,
+      "THROUGH_HOLE_CONNECTOR_2": 4,
+      "THROUGH_HOLE_LED": 2,
+      "THROUGH_HOLE_OUTPUT_HEADER_2": 2,
+      "TO220_REGULATOR_4": 1,
+      "TO92_NMOS": 1,
+      "TO92_NPN": 1
+    },
+    "candidateAttempt": 4,
+    "plannerCandidate": 4,
+    "inputOutline": {
+      "x": 20,
+      "y": 20,
+      "width": 4350,
+      "height": 1980
+    },
+    "inputMaterializedGeometrySha256": "52c34368cef8518181ea6b338cb1473ad3bfbd76518b730e9cf144ba958f5f13",
+    "inputMaterializedGeometryLength": 134269
+  },
+  "sourceComparison": {
+    "auditScope": "SOURCE_INPUT_BINDING_ONLY_RAW_GEOMETRY_COMPARISON_PENDING",
+    "nativeRunPerformedByCrossAudit": false,
+    "inputCount": 1059,
+    "sharedInputs": 1057,
+    "changedInputCount": 2,
+    "changedInputs": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "uSha256": "6eb32ebea70a37084700d89451b0d3eb3c5da2dc2320e9d90014a369fcbb8a31",
+        "ajSha256": "3bc90241eea99c3982e6a1200b45ec8102ba47242f53784694ee23eb74e36402",
+        "uBytes": 51805,
+        "ajBytes": 71354
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "uSha256": "564adf46dc3b2d7951edb19cc2e661ca5a8c2e62cd7a19a9ecb54b94e3e9f102",
+        "ajSha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a",
+        "uBytes": 70885,
+        "ajBytes": 86193
+      }
+    ],
+    "sameHarnessSha256": "634565ed093983d74f15e292299cb5477ba5daaed02b5d387a7bde49bd558dd8",
+    "snapshots": {
+      "u": {
+        "pinsSha256": "fce62ff2a5f2c533756e80860f8ccb0c8ab57bc6f7a0472bd2a86a78f8930aee",
+        "sealSha256": "17b5b3adec2803641e579e9cd4e63ace4bde9f5982b5a36e0a7275b8454cabd0",
+        "wrapperSha256": "aa81b09d9074e632fe287aee1304442d19922ba4c96552ee37f778136c50e30f",
+        "fileCount": 1059,
+        "totalBytes": 85325866,
+        "inputRevision": 1,
+        "sourceSnapshotRevision": 1
+      },
+      "aj": {
+        "pinsSha256": "2dcce815d99f5c4f34b3d3cffaf3b4a77a9dccb71b241ec8104a0d20635346a3",
+        "sealSha256": "d1ef9d0882fc15ade0bb32897fbe233946d6c292ea94a75f4c2b4807a86a4668",
+        "wrapperSha256": "8e00ebbb5ef18545596c3e8fab49a18c791b0d3edba09f0e2916372a11b3c0c7",
+        "fileCount": 1059,
+        "totalBytes": 85360723,
+        "inputRevision": 1,
+        "sourceSnapshotRevision": 1
+      }
+    },
+    "crossAuditArtifact": {
+      "name": "lazy-bound-regression-input-audit1.json",
+      "role": "U_AJ_SOURCE_BINDING_CROSSAUDIT",
+      "bytes": 1531,
+      "sha256": "4d40489b749481238744cd0bf276b2b423a3e6b340613d20f36d90f11f4ee9a5",
+      "rawContentsIncluded": false
+    }
+  },
+  "request": {
+    "producer": "SeededPcbLayoutGenerator.advanceMediumRoute",
+    "sequence": "candidate.plan.materialize() then PcbLayerRoutingPrototype.begin(board,placement,FULLER_TWO_LAYER,observer)",
+    "candidate": 4,
+    "adapterEquivalence": "plan(board,constraints,placementSeed,4).materialize() then direct raw FULLER_TWO_LAYER begin; no postprocessing",
+    "materializeAndRouteCallsMatchProduction": true,
+    "postprocessing": "NONE",
+    "routeName": "P07_FULLER_TWO_LAYER",
+    "backendPolicy": "FULLER_TWO_LAYER",
+    "expectedSavedProductionRouteOutcome": "P07_FULLER_TWO_LAYER@4=SUCCESS",
+    "attemptObserverU": "NOOP_ATTEMPT_OBSERVER",
+    "attemptObserverAJ": "NOOP_ATTEMPT_OBSERVER",
+    "generationCancellationObserverExercisedU": false,
+    "generationCancellationObserverExercisedAJ": false,
+    "qualificationClaims": "NONE; FIXED RAW SINGLE-CANDIDATE REQUEST; OBSERVATION ONLY"
+  },
+  "routeConfiguration": {
+    "routingLayer": "BOTTOM",
+    "requiresTwoLayerRouting": true,
+    "physicalPolicyId": "MEDIUM_BOARD",
+    "placementDensityVersion": 7,
+    "placementPackingVersion": 1,
+    "traceWidthProfile": "UNIFORM_TRACE@1",
+    "maximumTotalExpansions": 1000000,
+    "maximumBranchExpansions": 100000,
+    "maximumGridCells": 250000,
+    "gridOrderingCount": 3,
+    "maximumVias": 48,
+    "actualGridWidth": 434,
+    "actualGridHeight": 197,
+    "actualGridCells": 85498,
+    "actualGridEligible": true
+  },
+  "runs": {
+    "u": {
+      "status": "PASS_OBSERVATION_ONLY",
+      "execution": {
+        "helperExitCode": 0,
+        "outerSequenceExitCode": 0,
+        "helperElapsedSeconds": 32.3226912,
+        "inputRevision": 1,
+        "sourceSnapshotRevision": 1,
+        "sourcePinsSha256": "fce62ff2a5f2c533756e80860f8ccb0c8ab57bc6f7a0472bd2a86a78f8930aee",
+        "inputCount": 1059,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "processTerminationProven": true,
+        "cleanupStatus": "PASS_EXPLICIT_MARKER",
+        "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "cleanupElapsedSeconds": "NOT_REPORTED_SEPARATELY",
+        "nativeChildLimitMs": 60000,
+        "outerWatchdogMs": 600000,
+        "suite": "P07BranchDiagnosticsContractTest",
+        "suiteStatus": "PASS_OBSERVATION_ONLY",
+        "suiteAssertions": 20933,
+        "nativeCaseAssertions": 20933,
+        "nativeSuiteElapsedMs": 3187,
+        "nativeCaseElapsedMs": 3174,
+        "routeDiagnosticElapsedMs": 1481,
+        "baselineRouteElapsedMs": 1013,
+        "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "recordTypeCounts": {
+          "frame": 1,
+          "case": 1,
+          "branch": 250,
+          "suite": 1
+        }
+      },
+      "route": {
+        "accepted": true,
+        "outcome": "SUCCESS",
+        "expansions": 523098,
+        "orderings": 3,
+        "vias": 48,
+        "links": 0,
+        "branchCount": 250,
+        "branchExpandedTotal": 523098,
+        "sessionSlices": 19,
+        "terminalReasons": {
+          "FOUND": 248,
+          "BRANCH_SEARCH_LIMIT": 2
+        },
+        "acceptedGeometrySha256": "5d414c56407f2b8f572f25f804301cd8438676140bd00dc8c0c303280eb3bc25",
+        "acceptedGeometryLength": 148800,
+        "acceptedTraceGeometrySha256": "52d1daf7c4bab09ecf311f79ab332b4e4e4cdcfcd4f624ac53ec6af33728ba20",
+        "acceptedP08CanonicalSha256": "3235b09379e77e2f5f502073f1c6a2bdf2d917ff516618e62fec9fe644217dca",
+        "acceptedOutputValidation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "acceptedOrderedPadPairs": 17161,
+        "acceptedRasterOrderedPadPairs": 17161,
+        "acceptedP08SourceSegmentCount": 233,
+        "acceptedP08SourceLandCount": 358,
+        "acceptedReferenceClearancePairs": 16186,
+        "acceptedClearanceExactPairs": 0,
+        "acceptedClearancePotentialPairs": 27028,
+        "acceptedRawTraceCount": 142,
+        "acceptedRawTraceSegmentCount": 233,
+        "acceptedRawTracePointCount": 375,
+        "acceptedRawTraceEndpointBounds": {
+          "minX": 190,
+          "minY": 120,
+          "maxX": 4280,
+          "maxY": 1910
+        },
+        "acceptedRawViaHoleCount": 48
+      },
+      "baselineComparison": {
+        "accepted": true,
+        "outcome": "SUCCESS",
+        "expansions": 523098,
+        "orderings": 3,
+        "vias": 48,
+        "links": 0,
+        "sessionSlices": 19,
+        "diagnosticsDoNotChangeBaselineRoute": true,
+        "diagnosticAndNullObserverInputGeometryEqual": true,
+        "diagnosticInputGeometryStillMatchesCallerPlacement": true,
+        "inputPlacementUnchanged": true,
+        "logicalPlanUnchanged": true,
+        "logicalBoardIdentitySha256After": "6b87db36bf3bdeb5f615ac38e6eb7fc5fef92e6b9c059b79c7be9945d335205a",
+        "logicalBoardUnchanged": true
+      }
+    },
+    "aj": {
+      "status": "PASS_OBSERVATION_ONLY",
+      "execution": {
+        "helperExitCode": 0,
+        "outerSequenceExitCode": 0,
+        "helperElapsedSeconds": 31.6287411,
+        "inputRevision": 1,
+        "sourceSnapshotRevision": 1,
+        "sourcePinsSha256": "2dcce815d99f5c4f34b3d3cffaf3b4a77a9dccb71b241ec8104a0d20635346a3",
+        "inputCount": 1059,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "processTerminationProven": true,
+        "cleanupStatus": "PASS_EXPLICIT_MARKER",
+        "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "cleanupElapsedSeconds": "NOT_REPORTED_SEPARATELY",
+        "nativeChildLimitMs": 60000,
+        "outerWatchdogMs": 600000,
+        "suite": "P07BranchDiagnosticsContractTest",
+        "suiteStatus": "PASS_OBSERVATION_ONLY",
+        "suiteAssertions": 20935,
+        "nativeCaseAssertions": 20935,
+        "nativeSuiteElapsedMs": 2067,
+        "nativeCaseElapsedMs": 2057,
+        "routeDiagnosticElapsedMs": 982,
+        "baselineRouteElapsedMs": 580,
+        "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "recordTypeCounts": {
+          "frame": 1,
+          "case": 1,
+          "branch": 97,
+          "suite": 1
+        }
+      },
+      "route": {
+        "accepted": true,
+        "outcome": "SUCCESS",
+        "expansions": 269665,
+        "orderings": 1,
+        "vias": 48,
+        "links": 0,
+        "branchCount": 97,
+        "branchExpandedTotal": 269665,
+        "sessionSlices": 25,
+        "terminalReasons": {
+          "FOUND": 97,
+          "BRANCH_SEARCH_LIMIT": 0
+        },
+        "acceptedGeometrySha256": "2ed69fdacb2496648755081f7e81740b79ad0f629ca300ec569e6f21410a3750",
+        "acceptedGeometryLength": 148861,
+        "acceptedTraceGeometrySha256": "8bbc92ab72db263ee61b6940e7a895a3cfda9f766b863074ac46c362ed952ff6",
+        "acceptedP08CanonicalSha256": "c43799b0174cd8076a1effb3101abf968a38b0f175d77ae4579ce9db0c40ddfb",
+        "acceptedOutputValidation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "acceptedOrderedPadPairs": 17161,
+        "acceptedRasterOrderedPadPairs": 17161,
+        "acceptedP08SourceSegmentCount": 248,
+        "acceptedP08SourceLandCount": 358,
+        "acceptedReferenceClearancePairs": 18899,
+        "acceptedClearanceExactPairs": 0,
+        "acceptedClearancePotentialPairs": 30628,
+        "acceptedRawTraceCount": 143,
+        "acceptedRawTraceSegmentCount": 248,
+        "acceptedRawTracePointCount": 391,
+        "acceptedRawTraceEndpointBounds": {
+          "minX": 190,
+          "minY": 120,
+          "maxX": 4280,
+          "maxY": 1910
+        },
+        "acceptedRawViaHoleCount": 48
+      },
+      "baselineComparison": {
+        "accepted": true,
+        "outcome": "SUCCESS",
+        "expansions": 269665,
+        "orderings": 1,
+        "vias": 48,
+        "links": 0,
+        "sessionSlices": 25,
+        "diagnosticsDoNotChangeBaselineRoute": true,
+        "diagnosticAndNullObserverInputGeometryEqual": true,
+        "diagnosticInputGeometryStillMatchesCallerPlacement": true,
+        "inputPlacementUnchanged": true,
+        "logicalPlanUnchanged": true,
+        "logicalBoardIdentitySha256After": "6b87db36bf3bdeb5f615ac38e6eb7fc5fef92e6b9c059b79c7be9945d335205a",
+        "logicalBoardUnchanged": true
+      },
+      "optionalBranchMetrics": {
+        "supported": true,
+        "branchEventCount": 97,
+        "startedBranches": 2,
+        "completedBranches": 2,
+        "workUnits": 489366,
+        "ordinaryProbes": 492336,
+        "viaProbes": 123655,
+        "refreshes": 23703,
+        "observationCheckedBranches": 2,
+        "liveLayoutStableBranches": 2,
+        "routerStateStableBranches": 2,
+        "routerEffectsStableBranches": 2,
+        "startedBranchDetails": [
+          {
+            "ordinal": 69,
+            "pass": 0,
+            "netId": "PRE_L",
+            "startPadId": "L1.1",
+            "rootPadId": "DFREE.K",
+            "branchExpanded": 33495,
+            "terminalReason": "FOUND",
+            "workUnits": 237547,
+            "ordinaryProbes": 247870,
+            "viaProbes": 62253,
+            "refreshes": 4290,
+            "observationChecked": true,
+            "liveLayoutStable": true,
+            "routerStateStable": true,
+            "routerEffectsStable": true
+          },
+          {
+            "ordinal": 78,
+            "pass": 0,
+            "netId": "B_CMD",
+            "startPadId": "U2B.OUTPUT",
+            "rootPadId": "RDB.1",
+            "branchExpanded": 53980,
+            "terminalReason": "FOUND",
+            "workUnits": 251819,
+            "ordinaryProbes": 244466,
+            "viaProbes": 61402,
+            "refreshes": 19413,
+            "observationChecked": true,
+            "liveLayoutStable": true,
+            "routerStateStable": true,
+            "routerEffectsStable": true
+          }
+        ]
+      }
+    }
+  },
+  "comparisons": {
+    "pinnedIdentity": {
+      "frameFieldsComparedExcept": [
+        "runId",
+        "frameId"
+      ],
+      "allOtherFrameFieldsEqual": true,
+      "stableCaseFieldsEqual": true,
+      "packageCensusEqual": true,
+      "logicalInventoryAndBoardIdentityEqual": true,
+      "inputMaterializedGeometryEqual": true,
+      "requestAndGridConfigurationEqual": true
+    },
+    "branchPrefix": {
+      "orderedPrefixRecordsCompared": 68,
+      "corePropertySetEqual": true,
+      "coreFieldsEqualForPrefix": true,
+      "differingCoreFieldsInPrefix": 0,
+      "ignoredFields": [
+        "runId",
+        "optionalAjBranchMetricsSupported",
+        "optionalAjRelaxedBoundStarted",
+        "optionalAjRelaxedBoundComplete",
+        "optionalAjRelaxedBoundWorkUnits",
+        "optionalAjRelaxedBoundOrdinaryProbes",
+        "optionalAjRelaxedBoundViaProbes",
+        "optionalAjRelaxedBoundRefreshes",
+        "optionalAjRelaxedBoundObservationChecked",
+        "optionalAjRelaxedBoundLiveLayoutStable",
+        "optionalAjRelaxedBoundRouterStateStable",
+        "optionalAjRelaxedBoundRouterEffectsStable"
+      ],
+      "note": "Comparison stops at the first differing branch record. Run identifiers and AJ-only optional metrics are excluded; no global all-record parity is claimed.",
+      "uBranchEvents": 250,
+      "ajBranchEvents": 97,
+      "uTerminalReasons": {
+        "FOUND": 248,
+        "BRANCH_SEARCH_LIMIT": 2
+      },
+      "ajTerminalReasons": {
+        "FOUND": 97,
+        "BRANCH_SEARCH_LIMIT": 0
+      },
+      "uHighExpansionBranches": [
+        {
+          "ordinal": 69,
+          "pass": 0,
+          "netId": "PRE_L",
+          "expanded": 41407,
+          "terminalReason": "FOUND"
+        },
+        {
+          "ordinal": 78,
+          "pass": 0,
+          "netId": "B_CMD",
+          "expanded": 100000,
+          "terminalReason": "BRANCH_SEARCH_LIMIT"
+        },
+        {
+          "ordinal": 153,
+          "pass": 1,
+          "netId": "B_CMD",
+          "expanded": 100000,
+          "terminalReason": "BRANCH_SEARCH_LIMIT"
+        }
+      ],
+      "uOtherBranchCount": 247,
+      "uMaximumExpandedAmongOtherBranches": 30622,
+      "firstDivergence": {
+        "ordinal": 69,
+        "pass": 0,
+        "netId": "PRE_L",
+        "startPadId": "L1.1",
+        "rootPadId": "DFREE.K",
+        "goalsTop": 1,
+        "goalsBottom": 1,
+        "prefixViaCount": 24,
+        "initialManhattanDistance": 570,
+        "terminalReasonU": "FOUND",
+        "terminalReasonAJ": "FOUND",
+        "u": {
+          "branchExpanded": 41407,
+          "totalExpanded": 126950,
+          "expandedTop": 20859,
+          "expandedBottom": 20548,
+          "frontierCount": 22433,
+          "bestStateCount": 60053
+        },
+        "aj": {
+          "branchExpanded": 33495,
+          "totalExpanded": 119038,
+          "expandedTop": 16770,
+          "expandedBottom": 16725,
+          "frontierCount": 14674,
+          "bestStateCount": 46649
+        },
+        "differingCoreFields": [
+          "branchExpanded",
+          "totalExpanded",
+          "expandedTop",
+          "expandedBottom",
+          "frontierCount",
+          "bestStateCount"
+        ]
+      },
+      "uBcmdLimitBranches": [
+        {
+          "ordinal": 78,
+          "pass": 0,
+          "branchExpanded": 100000,
+          "terminalReason": "BRANCH_SEARCH_LIMIT"
+        },
+        {
+          "ordinal": 153,
+          "pass": 1,
+          "branchExpanded": 100000,
+          "terminalReason": "BRANCH_SEARCH_LIMIT"
+        }
+      ],
+      "ajRelaxedBoundStartedBranches": [
+        {
+          "ordinal": 69,
+          "pass": 0,
+          "netId": "PRE_L",
+          "startPadId": "L1.1",
+          "rootPadId": "DFREE.K",
+          "branchExpanded": 33495,
+          "terminalReason": "FOUND",
+          "workUnits": 237547,
+          "ordinaryProbes": 247870,
+          "viaProbes": 62253,
+          "refreshes": 4290,
+          "observationChecked": true,
+          "liveLayoutStable": true,
+          "routerStateStable": true,
+          "routerEffectsStable": true
+        },
+        {
+          "ordinal": 78,
+          "pass": 0,
+          "netId": "B_CMD",
+          "startPadId": "U2B.OUTPUT",
+          "rootPadId": "RDB.1",
+          "branchExpanded": 53980,
+          "terminalReason": "FOUND",
+          "workUnits": 251819,
+          "ordinaryProbes": 244466,
+          "viaProbes": 61402,
+          "refreshes": 19413,
+          "observationChecked": true,
+          "liveLayoutStable": true,
+          "routerStateStable": true,
+          "routerEffectsStable": true
+        }
+      ],
+      "ajRelaxedBoundTotals": {
+        "startedBranches": 2,
+        "completedBranches": 2,
+        "workUnits": 489366,
+        "ordinaryProbes": 492336,
+        "viaProbes": 123655,
+        "refreshes": 23703,
+        "observationCheckedBranches": 2,
+        "liveLayoutStableBranches": 2,
+        "routerStateStableBranches": 2,
+        "routerEffectsStableBranches": 2
+      }
+    },
+    "rawOutputComparison": {
+      "inputMaterializedGeometrySha256Equal": true,
+      "inputMaterializedGeometryLengthEqual": true,
+      "acceptedGeometrySha256Equal": false,
+      "acceptedGeometrySha256U": "5d414c56407f2b8f572f25f804301cd8438676140bd00dc8c0c303280eb3bc25",
+      "acceptedGeometrySha256AJ": "2ed69fdacb2496648755081f7e81740b79ad0f629ca300ec569e6f21410a3750",
+      "acceptedTraceCounts": {
+        "u": 142,
+        "aj": 143
+      },
+      "acceptedTraceSegmentCounts": {
+        "u": 233,
+        "aj": 248
+      },
+      "rawTraceEndpointExtremaU": {
+        "minX": 190,
+        "minY": 120,
+        "maxX": 4280,
+        "maxY": 1910
+      },
+      "rawTraceEndpointExtremaAJ": {
+        "minX": 190,
+        "minY": 120,
+        "maxX": 4280,
+        "maxY": 1910
+      },
+      "rawTraceEndpointExtremaEqual": true,
+      "rawViaHoleCounts": {
+        "u": 48,
+        "aj": 48
+      },
+      "rawViaHoleIdentitySetsEqual": false,
+      "sharedRawViaHoleIdentityCount": 0,
+      "uOnlyRawViaHoleIdentityCount": 48,
+      "ajOnlyRawViaHoleIdentityCount": 48,
+      "viaHoleIdentityValuesIncluded": false,
+      "note": "Equal endpoint extrema do not mean equal route geometry. Trace and segment counts, accepted geometry digests, and via-hole identities differ; no raw geometry is embedded."
+    }
+  },
+  "interpretation": {
+    "observation": "The first differing core branch record is ordinal 69 (PRE_L). The paired route receipts show changed branch expansion and a different later route event census.",
+    "causation": "NOT_ESTABLISHED; this pair does not prove that a lazy-bound trigger caused a later board-area difference.",
+    "postCompactionBoardArea": "NOT_REMEASURED_HERE; the separate saved-profile 72-case census retains its own result."
+  },
+  "limitations": [
+    "The source cross-audit binds 1059 input files and reports 1057 shared files with only the router prototype and PcbNetRouter changed. Its own scope is source-input binding; paired native receipts separately bind each run to its source pin digest.",
+    "Both selected fixed raw-route observations returned SUCCESS and passed selected P08, layered raster, and reference clearance checks. These are observation results, not layout qualification or normal admission.",
+    "The actual AttemptObserver was NOOP_ATTEMPT_OBSERVER and the generation-cancellation observer was not exercised. The 90-second, 640-work-unit, and 5-second production observer budgets are not demonstrated by this pair.",
+    "Native case and helper elapsed times are separate from cleanup. Cleanup has an explicit marker, but its duration was not reported separately. Native diagnostic timings are not production timings.",
+    "Only the first 68 branch records were compared for core-field equality. The streams diverge at branch 69 and have different total lengths; no global event parity or single-cause inference is claimed.",
+    "Equal raw trace endpoint extrema do not imply equal raw copper. Trace and segment counts, accepted geometry digests, and via-hole identity sets differ. No component maps, raw route geometry, or via IDs are included.",
+    "The paired route observations do not remeasure post-compaction board area and do not supersede the separate lazy-fixed-bound72-fail1.json census.",
+    "No production fix, threshold selection, adoption, new golden, Q100 qualification, or full matrix is established. The full matrix and independent-oracle campaign remain NOT RUN.",
+    "No absolute paths, OS process identifiers, raw route event rows, component mappings, via identity values, or full logs are included."
+  ],
+  "artifacts": [
+    {
+      "name": "lazy-bound-regression-input-audit1.json",
+      "role": "U_AJ_SOURCE_BINDING_CROSSAUDIT",
+      "bytes": 1531,
+      "sha256": "4d40489b749481238744cd0bf276b2b423a3e6b340613d20f36d90f11f4ee9a5",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-bound-regression-observations-1/lazy-bound-regression-u-1-result.json",
+      "role": "U_RUN_RESULT",
+      "bytes": 867,
+      "sha256": "7b7ea7192de2ac1eeb94c2431102cfbd1f93afbdafb4b046de878905a4343a38",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-bound-regression-observations-1/lazy-bound-regression-u-1-console.txt",
+      "role": "U_RUN_STDOUT",
+      "bytes": 288495,
+      "sha256": "6b32ca294bfb10560b4a2d7fc62452d09a0fbba62b2681c168b8ad0f40197149",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-bound-regression-observations-1/lazy-bound-regression-u-1-receipt.txt",
+      "role": "U_EVENT_RECEIPT",
+      "bytes": 287355,
+      "sha256": "5e445d71c9edb3bbf7a8421e0539b1270a5151307a2f69e27b43672b138cf2d9",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-bound-regression-observations-1/lazy-bound-regression-u-1-stderr.txt",
+      "role": "U_RUN_STDERR",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-bound-regression-observations-1/lazy-bound-regression-u-1-launcher.json",
+      "role": "U_LAUNCHER_METADATA_HASH_ONLY",
+      "bytes": 224,
+      "sha256": "9e71fbb50580eb443a19045da04b5151d7fbdb0f6df753779d588881a46564e3",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-bound-regression-observations-1/lazy-bound-regression-aj-1-result.json",
+      "role": "AJ_RUN_RESULT",
+      "bytes": 868,
+      "sha256": "868f799d800c0441e5293813dcb2490290f4e5ef5ea95dab59a5bacb60727530",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-bound-regression-observations-1/lazy-bound-regression-aj-1-console.txt",
+      "role": "AJ_RUN_STDOUT",
+      "bytes": 118947,
+      "sha256": "2e0d0b109faa452153f8b7dee64a0540ba0c7f7b40f22e5bb6de79acf5d49dd7",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-bound-regression-observations-1/lazy-bound-regression-aj-1-receipt.txt",
+      "role": "AJ_EVENT_RECEIPT",
+      "bytes": 117807,
+      "sha256": "8134ab50cf4ff0f29a4b5d10bc2b269b47195e4a3ba70d9e3ab60a419bcfae3e",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-bound-regression-observations-1/lazy-bound-regression-aj-1-stderr.txt",
+      "role": "AJ_RUN_STDERR",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-bound-regression-observations-1/lazy-bound-regression-aj-1-launcher.json",
+      "role": "AJ_LAUNCHER_METADATA_HASH_ONLY",
+      "bytes": 226,
+      "sha256": "269869bd43dcc20b652320cc99d9b74acf80521029c9de48b5f3c676b30289bc",
+      "rawContentsIncluded": false
+    }
+  ]
+}

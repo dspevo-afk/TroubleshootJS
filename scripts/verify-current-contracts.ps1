@@ -404,6 +404,15 @@ final class PhysicalSpecificationDeveloperVerifier {
 '@, (New-Object Text.UTF8Encoding($false)))
     $needsQ30NativeLoggerBridge = $Suite.Count -eq 0 -or $Suite -contains 'U05DifficultyContractTest' -or $Suite -contains 'ControlledSourceDerivativeContractTest' -or
         $Suite -contains 'Rb100ElectricalPilotContractTest' -or
+        $Suite -contains 'PcbPlacementDiagnosticsContractTest' -or
+        $Suite -contains 'Rb100P07PolicyDiagnosticContractTest' -or
+        $Suite -contains 'Rb100P07BranchDiagnosticContractTest' -or
+        $Suite -contains 'P07BranchDiagnosticsContractTest' -or
+        $Suite -contains 'P07OrderingCandidatesContractTest' -or
+        $Suite -contains 'P07RelaxedDistanceBoundContractTest' -or
+        $Suite -contains 'P07GeometryEpochDiagnosticContractTest' -or
+        $Suite -contains 'PcbCorridorOrientationContractTest' -or
+        $Suite -contains 'P07GridEligibilityContractTest' -or
         $Suite -contains 'PhysicalServiceabilityContractTest' -or
         $Suite -contains 'PcbRoleWidthOwnerIdentityContractTest' -or
         $Suite -contains 'InductorAcceptedStateContractTest' -or
@@ -441,6 +450,15 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'SensorControlFamilyContractTest'
     $needsE06NativeBridge = $Suite.Count -eq 0 -or $Suite -contains 'U05DifficultyContractTest' -or $Suite -contains 'ControlledSourceDerivativeContractTest' -or $Suite -contains 'E06ConverterPilotContractTest' -or $Suite -contains 'E06AcceptedStateContractTest' -or
         $Suite -contains 'Rb100ElectricalPilotContractTest' -or
+        $Suite -contains 'PcbPlacementDiagnosticsContractTest' -or
+        $Suite -contains 'Rb100P07PolicyDiagnosticContractTest' -or
+        $Suite -contains 'Rb100P07BranchDiagnosticContractTest' -or
+        $Suite -contains 'P07BranchDiagnosticsContractTest' -or
+        $Suite -contains 'P07OrderingCandidatesContractTest' -or
+        $Suite -contains 'P07RelaxedDistanceBoundContractTest' -or
+        $Suite -contains 'P07GeometryEpochDiagnosticContractTest' -or
+        $Suite -contains 'PcbCorridorOrientationContractTest' -or
+        $Suite -contains 'P07GridEligibilityContractTest' -or
         $Suite -contains 'PhysicalServiceabilityContractTest' -or
         $Suite -contains 'PcbRoleWidthOwnerIdentityContractTest' -or
         $Suite -contains 'Rb56PowerStageContractTest' -or $Suite -contains 'Rb56ModelIdentityContractTest' -or
@@ -770,6 +788,10 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         @{ Name = 'Rb56PowerStageContractTest'; Marker = 'RB56 power-stage contracts ' },
         @{ Name = 'Rb100PlanContractTest'; Marker = 'RB100 plan contracts ' },
         @{ Name = 'Rb100ElectricalPilotContractTest'; Marker = 'RB100 electrical pilot contracts ' },
+        @{ Name = 'PcbPlacementDiagnosticsContractTest'; Marker = 'PCB placement diagnostics contracts ' },
+        @{ Name = 'Rb100P07PolicyDiagnosticContractTest'; Marker = 'RB100 P07 policy diagnostic contracts ' },
+        @{ Name = 'Rb100P07BranchDiagnosticContractTest'; Marker = 'RB100 P07 branch diagnostic contracts ' },
+        @{ Name = 'PcbCorridorOrientationContractTest'; Marker = 'PCB corridor orientation contracts ' },
         @{ Name = 'Rb56ModelIdentityContractTest'; Marker = 'RB56 model-identity contracts ' },
         @{ Name = 'PowerResistorCatalogContractTest'; Marker = 'power resistor catalog contracts ' },
         @{ Name = 'ConverterPhysicalPartContractTest'; Marker = 'converter physical-part contracts ' },
@@ -847,8 +869,16 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         @{ Name = 'P05RoutingContractTest'; Marker = 'P05 routing contracts ' },
         @{ Name = 'P06FactoryLinkContractTest'; Marker = 'P06 factory-link contracts ' },
         @{ Name = 'P07TwoLayerContractTest'; Marker = 'P07 two-layer contracts ' },
+        @{ Name = 'P07GridEligibilityContractTest'; Marker = 'P07 grid eligibility contracts ' },
+        @{ Name = 'P07BranchDiagnosticsContractTest'; Marker = 'P07 branch diagnostics contracts ' },
+        @{ Name = 'P07OrderingCandidatesContractTest'; Marker = 'P07 ordering candidates contracts ' },
+        @{ Name = 'P07RelaxedDistanceBoundContractTest'; Marker = 'P07 relaxed bound contracts ' },
+        @{ Name = 'P07GeometryEpochDiagnosticContractTest'; Marker = 'P07 geometry epoch diagnostic contracts ' },
+        @{ Name = 'P07ReachedPthContractTest'; Marker = 'P07 reached PTH contracts ' },
+        @{ Name = 'P07LayeredRasterOracleContractTest'; Marker = 'P07 layered raster oracle contracts ' },
         @{ Name = 'PcbLayerRoutingResumptionContractTest'; Marker = 'Pcb layer routing resumption contracts ' },
         @{ Name = 'P08ScalabilityContractTest'; Marker = 'P08 scalable physical contracts ' },
+        @{ Name = 'P08ReferenceWidthContractTest'; Marker = 'P08 reference width contracts ' },
         @{ Name = 'P09EnvelopeCorpus'; Marker = 'P09 physical envelope corpus ' },
         @{ Name = 'QuickPlayGateCorpus'; Marker = 'Quick Play gate corpus ' },
         @{ Name = 'QuickPlayGateHoldoutCorpus'; Marker = 'Quick Play gate corpus ' },
@@ -876,6 +906,9 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
     $argumentsFile = Join-Path $taskRoot 'sources.txt'
     $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/P03StructuralFixtures.java')
     $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/P08ReferenceConductorBuilder.java')
+    $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/P07LayeredRasterOracle.java')
+    $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/Rb100PhysicalDiagnostics.java')
+    $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/Rb100PhysicalReference.java')
     $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/P08StructuralFixtures.java')
     $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/HeldFamilyCatalogFixture.java')
     [IO.File]::WriteAllLines($argumentsFile, @($sourcePaths | ForEach-Object {
@@ -1445,7 +1478,9 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         # The NEW P07 54-row structural comparison has its own explicit ten-minute budget.
         # Dense packing deliberately keeps two separate 60s children (maximum 120s logical census).
         # Existing suites retain their original one-minute bounds.
-        $testBudget = if ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100FaultMatrix) { 1200000 } elseif ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100DiagnosticFault) { 240000 } elseif ($testClass -eq 'P07LayerCorpus') { 600000 } elseif ($testClass -in @('P09EnvelopeCorpus','QuickPlayPhysicalMatrixContractTest')) { 180000 } elseif ($testClass -in @('QuickPlayGateCorpus','QuickPlayGateHoldoutCorpus')) { 600000 } else { 60000 }
+        # Each current private P07 observation has two independently bounded
+        # 90s operations and 120s cleanups; the aggregate allowance changes no case limit.
+        $testBudget = if ($testClass -eq 'P07GeometryEpochDiagnosticContractTest') { 180000 } elseif ($testClass -in @('Rb100P07PolicyDiagnosticContractTest','Rb100P07BranchDiagnosticContractTest')) { 480000 } elseif ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100FaultMatrix) { 1200000 } elseif ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100DiagnosticFault) { 240000 } elseif ($testClass -eq 'P07LayerCorpus') { 600000 } elseif ($testClass -in @('P09EnvelopeCorpus','QuickPlayPhysicalMatrixContractTest')) { 180000 } elseif ($testClass -in @('QuickPlayGateCorpus','QuickPlayGateHoldoutCorpus')) { 600000 } else { 60000 }
         $tested = Invoke-VerifierBoundedProcess $java $testArguments $testBudget
         Write-Host $tested.Stdout
         if ($tested.Stderr) { Write-Host $tested.Stderr }

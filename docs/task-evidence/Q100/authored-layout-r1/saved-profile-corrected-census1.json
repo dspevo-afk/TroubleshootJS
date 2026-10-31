@@ -1,0 +1,719 @@
+{
+  "schema": "troubleshootjs-saved-profile-corrected-census-evidence-v1",
+  "status": "FAIL_RETAINED_BOUNDS",
+  "scope": "Six-cohort saved-profile source comparison; full independent reader collected all 72 cases per source and retained the single current same-side area-bound failure.",
+  "readerRun": {
+    "mode": "COLLECT_BOUND_FAILURES",
+    "exitCode": 2,
+    "elapsedSeconds": 1.8662355,
+    "status": "FAIL_RETAINED_BOUNDS",
+    "cohortSelection": "ALL_SIX_COHORTS",
+    "cohortCount": 6,
+    "caseCountPerSource": 72,
+    "negativeCanaries": 32,
+    "readerOutput": {
+      "file": "saved-profile-corrected-census1-reader.json",
+      "bytes": 363343,
+      "sha256": "e284a6c6a26296187b7970279b5d388d43a7616f15bf5e6efa8ad5d8af0623d4"
+    },
+    "readerResult": {
+      "file": "saved-profile-corrected-all-reader-1-result.json",
+      "bytes": 383,
+      "sha256": "4262cbbc5fd2a56fbf6d4f2d30ddadcfd17cb22ff6b8afa2c08d9ae7cb8247c4"
+    },
+    "readerConsole": {
+      "file": "saved-profile-corrected-all-reader-1-console.txt",
+      "bytes": 190,
+      "sha256": "4d955aa2cad2688c0cbf3845a346518f02d797900d0cba6cbfdaccd98fedf861"
+    },
+    "readerSourceSha256": "390acf30090bd5a3e29b64dcfc212d30fc26c6d1f590d49fd72ebb4d9aa51670",
+    "helperSourceSha256": {
+      "read_diagnostic.py": "31f65be5e11472c7b09e8141292402c641df6b735787d32eb4c904ae098981e7",
+      "read_geometry_transition.py": "3aa4fa311908c87ba9f68485048fee1d1a2680192e06679eb66c2b68c01779f5"
+    },
+    "runSpec": {
+      "file": "saved-profile-runs-corrected-v1.json",
+      "bytes": 11445,
+      "sha256": "c8a5ba520af9e1bc7e9cb5edbe97974a4eb5e53529ef02a61312110891549901"
+    },
+    "catalogSha256": "57b20a02b9f1f17671dd89a5a032cafbb792b76384cedbc85b5d69dc748d62a9"
+  },
+  "nativeProofs": {
+    "baselineS2ProofsReused": 6,
+    "currentRevision3ProofsFresh": 6,
+    "totalProofRows": 12,
+    "caseCountPerProof": 12,
+    "proofs": [
+      {
+        "source": "baseline",
+        "provenance": "REUSED_UNCHANGED_BASELINE_S2",
+        "cohortId": "SAVED_3_4_REP",
+        "runId": "2e15b2c5-a72d-433e-a01d-2b8a849aa104",
+        "caseCount": 12,
+        "assertions": 185139,
+        "nativeDiagnosticElapsedMs": 33123,
+        "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "layoutVersion": 22,
+        "dependencyEpoch": "tsj-generation-dependencies-v23",
+        "helperElapsedSeconds": 66.6852957,
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputRevision": 2,
+        "inputPinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-baseline-3-4-rep-2-result.json",
+            "bytes": 784,
+            "sha256": "d376921a189a90ab1ec920e0220571a1c2d162386187a7d3d2dc10490ccad876"
+          },
+          "receipt": {
+            "file": "saved-profile-baseline-3-4-rep-2-receipt.txt",
+            "bytes": 6885036,
+            "sha256": "8a1a47a36773f7eed2304fa085fb3dab29c85716e12aa500c873f85c9b428e8d"
+          },
+          "console": {
+            "file": "saved-profile-baseline-3-4-rep-2-console.txt",
+            "bytes": 6886176,
+            "sha256": "ae9d3a888b7be4382493982a5c36c0e5bd0d4e9b93017f3459d9417fba72de00"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "pins": {
+            "file": "saved-profile-baseline-v2-sealed-pins.json",
+            "sha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+          }
+        }
+      },
+      {
+        "source": "current",
+        "provenance": "FRESH_CURRENT_REVISION_3",
+        "cohortId": "SAVED_3_4_REP",
+        "runId": "27f6ee7e-8b76-4e46-a0b3-9360b05c6566",
+        "caseCount": 12,
+        "assertions": 185151,
+        "nativeDiagnosticElapsedMs": 32334,
+        "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "layoutVersion": 24,
+        "dependencyEpoch": "tsj-generation-dependencies-v25",
+        "helperElapsedSeconds": 65.4894637,
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputRevision": 3,
+        "inputPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-current-3-4-rep-1-result.json",
+            "bytes": 818,
+            "sha256": "fac2d3220d6f51d41ce637fdce99ff0c9fdc9c2a79032203cc77ad466768fbc0"
+          },
+          "receipt": {
+            "file": "saved-profile-current-3-4-rep-1-receipt.txt",
+            "bytes": 6792364,
+            "sha256": "e17b9fcc5c384aba10dcf75722b8f955ae1f6a14521d3d1eec62b2554a208a17"
+          },
+          "console": {
+            "file": "saved-profile-current-3-4-rep-1-console.txt",
+            "bytes": 6793504,
+            "sha256": "0d3a368e90f9c613d593ec9672d727a7b303ca0afbdccc92c294eb9921a23cf7"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "pins": {
+            "file": "saved-profile-corrected-v1-sealed-pins.json",
+            "sha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717"
+          }
+        }
+      },
+      {
+        "source": "baseline",
+        "provenance": "REUSED_UNCHANGED_BASELINE_S2",
+        "cohortId": "SAVED_5_6_REP",
+        "runId": "60c2ec44-cfc6-4dc3-8d2d-2550439c41ee",
+        "caseCount": 12,
+        "assertions": 185175,
+        "nativeDiagnosticElapsedMs": 29455,
+        "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "layoutVersion": 22,
+        "dependencyEpoch": "tsj-generation-dependencies-v23",
+        "helperElapsedSeconds": 61.518241599999996,
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputRevision": 2,
+        "inputPinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-baseline-5-6-rep-1-result.json",
+            "bytes": 792,
+            "sha256": "b97756483681ecf80801bcf3951c5227e393ed4cfb65b267b6126f97409abe68"
+          },
+          "receipt": {
+            "file": "saved-profile-baseline-5-6-rep-1-receipt.txt",
+            "bytes": 6888919,
+            "sha256": "19566ad3bcafb9590e1b1673a4b5927f82965076276c2cdd50c23bf6d38573e5"
+          },
+          "console": {
+            "file": "saved-profile-baseline-5-6-rep-1-console.txt",
+            "bytes": 6890059,
+            "sha256": "e7b32c751940c4712b437e38eef17ac10f952260a0933243aaecd989feadb035"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "pins": {
+            "file": "saved-profile-baseline-v2-sealed-pins.json",
+            "sha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+          }
+        }
+      },
+      {
+        "source": "current",
+        "provenance": "FRESH_CURRENT_REVISION_3",
+        "cohortId": "SAVED_5_6_REP",
+        "runId": "9f5e69cc-cde3-45e7-9059-aacbb741f96f",
+        "caseCount": 12,
+        "assertions": 185193,
+        "nativeDiagnosticElapsedMs": 30553,
+        "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "layoutVersion": 24,
+        "dependencyEpoch": "tsj-generation-dependencies-v25",
+        "helperElapsedSeconds": 63.4835803,
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputRevision": 3,
+        "inputPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-current-5-6-rep-1-result.json",
+            "bytes": 817,
+            "sha256": "628714c9cf967b5dcaa32e31003e940dfaa42f0582cb26ae5180617fe995e331"
+          },
+          "receipt": {
+            "file": "saved-profile-current-5-6-rep-1-receipt.txt",
+            "bytes": 6793581,
+            "sha256": "69ed0e8cff6ac30bea899a37d22e221201c8af20c777cb00667a02baabd15371"
+          },
+          "console": {
+            "file": "saved-profile-current-5-6-rep-1-console.txt",
+            "bytes": 6794721,
+            "sha256": "d13d9125b2ce28bf6ff3e071cc6953361f821d736fdd6291de8ac5495ac046b4"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "pins": {
+            "file": "saved-profile-corrected-v1-sealed-pins.json",
+            "sha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717"
+          }
+        }
+      },
+      {
+        "source": "baseline",
+        "provenance": "REUSED_UNCHANGED_BASELINE_S2",
+        "cohortId": "SAVED_7_8_REP",
+        "runId": "ffce8d30-1d1f-4731-be65-3cfa7e644ae0",
+        "caseCount": 12,
+        "assertions": 185118,
+        "nativeDiagnosticElapsedMs": 28435,
+        "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "layoutVersion": 22,
+        "dependencyEpoch": "tsj-generation-dependencies-v23",
+        "helperElapsedSeconds": 60.7252953,
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputRevision": 2,
+        "inputPinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-baseline-7-8-rep-1-result.json",
+            "bytes": 784,
+            "sha256": "ed8730a0fa712c31ceabec5d0fd7851641bc13ccc8a4ab370eece283377f4593"
+          },
+          "receipt": {
+            "file": "saved-profile-baseline-7-8-rep-1-receipt.txt",
+            "bytes": 6869528,
+            "sha256": "fdeef2b21f120f44f3469062c1168f3d6c3a1f59972151391e6d128a32b2d2bc"
+          },
+          "console": {
+            "file": "saved-profile-baseline-7-8-rep-1-console.txt",
+            "bytes": 6870668,
+            "sha256": "5518eb3173195a3bc2a64b50793e1207bacfebaa678d639e363e87db53b4b5ce"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "pins": {
+            "file": "saved-profile-baseline-v2-sealed-pins.json",
+            "sha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+          }
+        }
+      },
+      {
+        "source": "current",
+        "provenance": "FRESH_CURRENT_REVISION_3",
+        "cohortId": "SAVED_7_8_REP",
+        "runId": "663b78d8-9348-4331-8a6d-b374bb88b81f",
+        "caseCount": 12,
+        "assertions": 185142,
+        "nativeDiagnosticElapsedMs": 27222,
+        "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "layoutVersion": 24,
+        "dependencyEpoch": "tsj-generation-dependencies-v25",
+        "helperElapsedSeconds": 60.643105999999996,
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputRevision": 3,
+        "inputPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-current-7-8-rep-1-result.json",
+            "bytes": 826,
+            "sha256": "56d80e389d62cbeaef89588fef523961b764f1267e0a4c3e812d1d18f9a20819"
+          },
+          "receipt": {
+            "file": "saved-profile-current-7-8-rep-1-receipt.txt",
+            "bytes": 6793001,
+            "sha256": "c1120552261080b25dbfaf24a16ddce954680a9f20a463f69ce360f143d850ca"
+          },
+          "console": {
+            "file": "saved-profile-current-7-8-rep-1-console.txt",
+            "bytes": 6794141,
+            "sha256": "f80c8c9647f8744b6b89c791d67fb9607aa6fe5edc6310fc414d659df7179bc6"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "pins": {
+            "file": "saved-profile-corrected-v1-sealed-pins.json",
+            "sha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717"
+          }
+        }
+      },
+      {
+        "source": "baseline",
+        "provenance": "REUSED_UNCHANGED_BASELINE_S2",
+        "cohortId": "SAVED_9_10_REP",
+        "runId": "36d73806-2ff6-4172-8881-b616d071f93e",
+        "caseCount": 12,
+        "assertions": 185058,
+        "nativeDiagnosticElapsedMs": 27752,
+        "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "layoutVersion": 22,
+        "dependencyEpoch": "tsj-generation-dependencies-v23",
+        "helperElapsedSeconds": 61.300590199999995,
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputRevision": 2,
+        "inputPinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-baseline-9-10-rep-1-result.json",
+            "bytes": 793,
+            "sha256": "51650f4ce7da33c9dd787861353f5ef86d68bbe700ec63c77a11182f6ac9891f"
+          },
+          "receipt": {
+            "file": "saved-profile-baseline-9-10-rep-1-receipt.txt",
+            "bytes": 6851453,
+            "sha256": "c0b36617f6d408ab7a2813169c4d82299d3032689c05cb656e063f04d478e937"
+          },
+          "console": {
+            "file": "saved-profile-baseline-9-10-rep-1-console.txt",
+            "bytes": 6852593,
+            "sha256": "5625c85d75d12b36a96161815f49502c6c31d034a8d1ddf19742f0a72c8038da"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "pins": {
+            "file": "saved-profile-baseline-v2-sealed-pins.json",
+            "sha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+          }
+        }
+      },
+      {
+        "source": "current",
+        "provenance": "FRESH_CURRENT_REVISION_3",
+        "cohortId": "SAVED_9_10_REP",
+        "runId": "a2db6ee3-7d82-4e80-832b-e2e0bc396b7d",
+        "caseCount": 12,
+        "assertions": 185085,
+        "nativeDiagnosticElapsedMs": 26593,
+        "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "layoutVersion": 24,
+        "dependencyEpoch": "tsj-generation-dependencies-v25",
+        "helperElapsedSeconds": 60.067542599999996,
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputRevision": 3,
+        "inputPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-current-9-10-rep-1-result.json",
+            "bytes": 827,
+            "sha256": "e8bd780b49dae8efdf28f534e35cfc84540f3bb00d61a8fe91e76c01eda4b5ca"
+          },
+          "receipt": {
+            "file": "saved-profile-current-9-10-rep-1-receipt.txt",
+            "bytes": 6791112,
+            "sha256": "3241b03aa26b4177b8f7deb65904c276c973ca8fd8b504c0842dc62f672d40b1"
+          },
+          "console": {
+            "file": "saved-profile-current-9-10-rep-1-console.txt",
+            "bytes": 6792252,
+            "sha256": "745617d24b6970620ef772e1748ac4308300de7ae73b91bd9482e950580f9604"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "pins": {
+            "file": "saved-profile-corrected-v1-sealed-pins.json",
+            "sha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717"
+          }
+        }
+      },
+      {
+        "source": "baseline",
+        "provenance": "REUSED_UNCHANGED_BASELINE_S2",
+        "cohortId": "SAVED_11_12_REP",
+        "runId": "04c8c027-2016-4857-a299-3f84e713918d",
+        "caseCount": 12,
+        "assertions": 185097,
+        "nativeDiagnosticElapsedMs": 27497,
+        "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "layoutVersion": 22,
+        "dependencyEpoch": "tsj-generation-dependencies-v23",
+        "helperElapsedSeconds": 60.7214719,
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputRevision": 2,
+        "inputPinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-baseline-11-12-rep-1-result.json",
+            "bytes": 786,
+            "sha256": "e1b53c4e261626c68cb44d90d0260bb3ff345c05a8d5890b8739ee7728947e4c"
+          },
+          "receipt": {
+            "file": "saved-profile-baseline-11-12-rep-1-receipt.txt",
+            "bytes": 6898792,
+            "sha256": "25633e106e1f73ffdd40883a64bc60904577ddb7ca65a87f0f682d0285df9de2"
+          },
+          "console": {
+            "file": "saved-profile-baseline-11-12-rep-1-console.txt",
+            "bytes": 6899932,
+            "sha256": "609fad9baa08c2f9e9f8cec5e108c8c5ac573410c7220f1f3b01804f4818584c"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "pins": {
+            "file": "saved-profile-baseline-v2-sealed-pins.json",
+            "sha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+          }
+        }
+      },
+      {
+        "source": "current",
+        "provenance": "FRESH_CURRENT_REVISION_3",
+        "cohortId": "SAVED_11_12_REP",
+        "runId": "7c9162af-9248-4451-a7d1-ee654fc4b296",
+        "caseCount": 12,
+        "assertions": 185076,
+        "nativeDiagnosticElapsedMs": 26023,
+        "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "layoutVersion": 24,
+        "dependencyEpoch": "tsj-generation-dependencies-v25",
+        "helperElapsedSeconds": 58.965893599999994,
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputRevision": 3,
+        "inputPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-current-11-12-rep-1-result.json",
+            "bytes": 828,
+            "sha256": "321de2951a45e4f92c29f172230b1ec3de9225505f63c44a1e33dfe6807c77da"
+          },
+          "receipt": {
+            "file": "saved-profile-current-11-12-rep-1-receipt.txt",
+            "bytes": 6791407,
+            "sha256": "17c5404d4c97e8b94be0419cda9b6074740130387d179932127b039bad10585e"
+          },
+          "console": {
+            "file": "saved-profile-current-11-12-rep-1-console.txt",
+            "bytes": 6792547,
+            "sha256": "22e4c1ad0a6d171b03c497b28ab7b83f53c3b0d0b0cd326d30d05cb471bb84be"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "pins": {
+            "file": "saved-profile-corrected-v1-sealed-pins.json",
+            "sha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717"
+          }
+        }
+      },
+      {
+        "source": "baseline",
+        "provenance": "REUSED_UNCHANGED_BASELINE_S2",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "runId": "6f65a4c9-a2a7-48eb-bb22-20794de78593",
+        "caseCount": 12,
+        "assertions": 196124,
+        "nativeDiagnosticElapsedMs": 38036,
+        "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "layoutVersion": 22,
+        "dependencyEpoch": "tsj-generation-dependencies-v23",
+        "helperElapsedSeconds": 74.97254319999999,
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputRevision": 2,
+        "inputPinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-baseline-10-11-12-holdout-1-result.json",
+            "bytes": 799,
+            "sha256": "361098374bbc2dbbc3963e8ad87124dd43813650bfd5f197f3cfcee5de9fb472"
+          },
+          "receipt": {
+            "file": "saved-profile-baseline-10-11-12-holdout-1-receipt.txt",
+            "bytes": 7153789,
+            "sha256": "f4b3c16c457a2463b59c2eb05c75d07581f800cb5637fbaffce5204aa87052b9"
+          },
+          "console": {
+            "file": "saved-profile-baseline-10-11-12-holdout-1-console.txt",
+            "bytes": 7154929,
+            "sha256": "3d78f39ab571afad12c32614996970327e571b131860a5cbdc01ca1082b16975"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "pins": {
+            "file": "saved-profile-baseline-v2-sealed-pins.json",
+            "sha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+          }
+        }
+      },
+      {
+        "source": "current",
+        "provenance": "FRESH_CURRENT_REVISION_3",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "runId": "0183b57b-100a-433a-9245-eba4c4cd75ba",
+        "caseCount": 12,
+        "assertions": 196241,
+        "nativeDiagnosticElapsedMs": 31673,
+        "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+        "layoutVersion": 24,
+        "dependencyEpoch": "tsj-generation-dependencies-v25",
+        "helperElapsedSeconds": 65.3728794,
+        "exitCode": 0,
+        "terminationProven": true,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputRevision": 3,
+        "inputPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+        "artifacts": {
+          "result": {
+            "file": "saved-profile-current-10-11-12-holdout-1-result.json",
+            "bytes": 827,
+            "sha256": "9d7d2f2eb0b6f1dee655d73da867bded5b98ec3ef57aa62acf08aa049170cc29"
+          },
+          "receipt": {
+            "file": "saved-profile-current-10-11-12-holdout-1-receipt.txt",
+            "bytes": 7082067,
+            "sha256": "33fda46b0413c8d5c8926a566704c9c12c74ce493873a762ce04d5aec7f0641e"
+          },
+          "console": {
+            "file": "saved-profile-current-10-11-12-holdout-1-console.txt",
+            "bytes": 7083207,
+            "sha256": "1bef513978178786efa1f482e0617f95ac99e71a2bff7f8d3a66975847565c66"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "pins": {
+            "file": "saved-profile-corrected-v1-sealed-pins.json",
+            "sha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717"
+          }
+        }
+      }
+    ]
+  },
+  "sourceBinding": {
+    "baselineLayoutVersion": 22,
+    "baselineDependencyEpoch": "tsj-generation-dependencies-v23",
+    "baselineInputRevision": 2,
+    "currentLayoutVersion": 24,
+    "currentDependencyEpoch": "tsj-generation-dependencies-v25",
+    "currentInputRevision": 3,
+    "sourceInputTransition": {
+      "baselinePinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+      "currentPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+      "baselineCount": 1059,
+      "currentCount": 1059,
+      "allowedCommonChanges": [
+        "scripts/verify-current-contracts.ps1",
+        "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+        "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+        "tests/contracts/D01DiagnosticContractTest.java",
+        "tests/contracts/P07GeometryEpochDiagnosticContractTest.java",
+        "tests/contracts/PcbCanvasBoundaryContractTest.java",
+        "tests/contracts/PcbCompactnessContractTest.java",
+        "tests/contracts/PcbCorridorOrientationContractTest.java",
+        "tests/contracts/PcbNormalPackingIdentityContractTest.java",
+        "tests/contracts/Rb100P07BranchDiagnosticContractTest.java",
+        "tests/contracts/Rb100P07PolicyDiagnosticContractTest.java",
+        "tests/contracts/Rb56ModelIdentityContractTest.java",
+        "tests/contracts/RelBSessionIdentityContractTest.java"
+      ],
+      "allowedAddedCurrentTests": [
+        "tests/contracts/P07ReachedPthContractTest.java",
+        "tests/contracts/PcbPlacementDiagnosticsContractTest.java",
+        "tests/contracts/Rb100PhysicalDiagnostics.java",
+        "tests/contracts/Rb100PhysicalReference.java"
+      ],
+      "allowedRemovedBaselineTests": [
+        "tests/contracts/Rb100LayoutFeasibilityContractTest.java",
+        "tests/contracts/Rb100LayoutFirstRoutingDiagnosticContractTest.java",
+        "tests/contracts/Rb100LayoutPlacementDiagnosticContractTest.java",
+        "tests/contracts/Rb100LayoutRoutingDiagnosticContractTest.java"
+      ]
+    },
+    "inputNormalizerChecks": {
+      "equalInputsCount": 10,
+      "unchangedJarCount": 2,
+      "sameCalledLogicAfterFourEpochLiterals": true,
+      "mutationCanaryRejected": true,
+      "wrongEpochCanaryRejected": true,
+      "sameLogicAfterSixVersionLiteralAdapters": true,
+      "sourceLogicMutationCanary": "PASS_REJECTED"
+    },
+    "baselineSourceCatalogBinding": {
+      "sourceRootConsistentAcrossSelectedCohorts": true,
+      "sourceExpectationsReadFrom": "BASELINE_NORMALIZER_SNAPSHOT_ROOT",
+      "sourceFiles": [
+        {
+          "sourceId": "PcbFunctionalGroupingContractTest",
+          "path": "tests/contracts/PcbFunctionalGroupingContractTest.java",
+          "sha256": "c9396d0e93b9d042098f9e61efa0fa450e085fff96ae700b9690ebb64091a8d3",
+          "bytes": 44549,
+          "boundToBaselineInputPins": true
+        },
+        {
+          "sourceId": "PcbPocketPackingContractTest",
+          "path": "tests/contracts/PcbPocketPackingContractTest.java",
+          "sha256": "1c8085b2d0b22c1d1a8d2a388ed663da1a2f8200d7261d26a2dbe962777d6c0f",
+          "bytes": 6225,
+          "boundToBaselineInputPins": true
+        }
+      ]
+    }
+  },
+  "audit": {
+    "physicalAuditScope": "FULL_SIX_COHORTS_72_CASES_PER_SOURCE; INPUTS_FRAMING_GEOMETRY_ELECTRICAL_IDENTITY_AND_INDEPENDENT_PHYSICAL_ORACLES_COMPLETED; RETAINED_BOUND_FAILURES_REPORTED",
+    "retainedBoundFailureCount": 1,
+    "retainedBoundFailures": [
+      {
+        "failureKind": "SAME_SIDE_SAVED11_TO_SAVED10_AREA",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "caseOrdinal": 7,
+        "sourceId": "PcbPocketPackingContractTest",
+        "metric": "boardOutlineArea",
+        "literal": "previousArea from same seed version10 result",
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "side": "current",
+        "profile": null,
+        "placementInterpretationVersion": 11,
+        "placementDensityVersion": null,
+        "seed": "5",
+        "actual": 6107220,
+        "operator": "<=",
+        "expected": 6090714,
+        "status": "FAIL_RETAINED_BOUND"
+      }
+    ],
+    "sameSideSaved10": {
+      "complete": true,
+      "comparisonCount": 20,
+      "passed": 19,
+      "failed": 1,
+      "failedComparison": {
+        "side": "current",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "5",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 9445744,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 6090714,
+        "saved11Area": 6107220,
+        "operator": "<=",
+        "status": "FAIL_RETAINED_BOUND"
+      }
+    },
+    "historicalAreaInequalities": "PASS",
+    "currentExactMetricReview": {
+      "status": "CHANGED_CURRENT_EXACT_METRIC_REQUIRES_REVIEW",
+      "required": true,
+      "changesCount": 16
+    },
+    "currentExactGeometryReview": {
+      "status": "CHANGED_CURRENT_EXACT_GEOMETRY_REQUIRES_REVIEW",
+      "required": true,
+      "changesCount": 71
+    },
+    "layoutQualification": false,
+    "adoption": false,
+    "automaticGoldenSeal": false
+  },
+  "limitations": [
+    "The collector returned FAIL_RETAINED_BOUNDS and exit code 2 because current SAVED_10_11_12_HOLDOUT, version 11, seed 5 has boardOutlineArea 6,107,220 > same-source version 10 area 6,090,714 (excess 16,506).",
+    "All historical area inequalities passed; 19 of 20 same-side SAVED11-to-SAVED10 comparisons passed and one failed as reported.",
+    "Current exact metric and geometry reviews report changed values requiring review; this result does not seal expectations or golden outputs.",
+    "No source adoption, layout qualification, or 100-route qualification is claimed.",
+    "Current GWT/build/runtime evidence was not renewed in this packet."
+  ],
+  "rawArtifactPolicy": {
+    "rawConsoleOrReceiptContentsEmbedded": false,
+    "absoluteMachinePathsIncluded": false,
+    "processIdentifiersIncluded": false,
+    "nativeProofArtifacts": "Result, receipt, console, stderr, and pin references are represented by safe basenames and hashes/bytes where available."
+  }
+}

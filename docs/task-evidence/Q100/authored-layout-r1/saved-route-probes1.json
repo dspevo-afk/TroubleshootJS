@@ -1,0 +1,1961 @@
+{
+  "acceptance": "NOT_CLAIMED",
+  "expectedRowCount": 8,
+  "interpretation": {
+    "acceptanceLimit": "This packet is not Q100 layout qualification, area acceptance, root-cause proof, or algorithm selection.",
+    "causalityLimit": "Each row is a whole fixed-input routing attempt. Changed greedy prefixes can alter later branches, so variant differences do not isolate a single causal factor.",
+    "harness": "PASS means the registered native diagnostic suite, receipt checks, sealed-input audit, and cleanup marker passed.",
+    "route": "routeAccepted/routeOutcome report only the fixed candidate; rejection is preserved as data."
+  },
+  "pendingRows": [],
+  "rowCount": 8,
+  "rows": [
+    {
+      "artifacts": {
+        "console": {
+          "bytes": 306372,
+          "name": "fixed-route-current-v8_neg1022_attempt0-1-console.txt",
+          "sha256": "5a6e5b78b6ceaad0d1810f61d6650b12789520f325fa7b0e1c4392a7fe432b03"
+        },
+        "launcher": {
+          "bytes": 288,
+          "name": "fixed-route-current-v8_neg1022_attempt0-1-launcher.json",
+          "sha256": "8db0f851e20590cb8662cbb99c53b7d29b46259d7826c7901337a8fce94393b0"
+        },
+        "receipt": {
+          "bytes": 305232,
+          "name": "fixed-route-current-v8_neg1022_attempt0-1-receipt.txt",
+          "sha256": "a0e84b5f5d794ef070f5e24964319dfe0660c05f0017a9e00215b245e4170e9c"
+        },
+        "result": {
+          "bytes": 959,
+          "name": "fixed-route-current-v8_neg1022_attempt0-1-result.json",
+          "sha256": "26a0a11cd3c668e35bc650b6511396b42a9017699897aa2f6fac0d56fc8a1994"
+        },
+        "stderr": {
+          "bytes": 0,
+          "name": "fixed-route-current-v8_neg1022_attempt0-1-stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "branchesByPass": {
+        "0": {
+          "branchCount": 81,
+          "branchExpanded": 229881,
+          "largestBranches": [
+            {
+              "branchExpanded": 100000,
+              "branchOrdinal": 81,
+              "expandedBottom": 49148,
+              "expandedTop": 50852,
+              "netId": "A_DRIVE",
+              "prefixViaCount": 31,
+              "reachedPadCount": 2,
+              "rootPadId": "QA.B",
+              "startPadId": "RDA.2",
+              "terminalReason": "BRANCH_SEARCH_LIMIT"
+            },
+            {
+              "branchExpanded": 30710,
+              "branchOrdinal": 49,
+              "expandedBottom": 20438,
+              "expandedTop": 10272,
+              "netId": "LOAD12",
+              "prefixViaCount": 8,
+              "reachedPadCount": 1,
+              "rootPadId": "JLOAD.1",
+              "startPadId": "KA.COM",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 11691,
+              "branchOrdinal": 75,
+              "expandedBottom": 6220,
+              "expandedTop": 5471,
+              "netId": "OUT_B",
+              "prefixViaCount": 25,
+              "reachedPadCount": 2,
+              "rootPadId": "JOB.1",
+              "startPadId": "RLEDOUT_B.1",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "BRANCH_SEARCH_LIMIT": 1,
+            "FOUND": 80
+          }
+        },
+        "1": {
+          "branchCount": 82,
+          "branchExpanded": 264127,
+          "largestBranches": [
+            {
+              "branchExpanded": 100000,
+              "branchOrdinal": 163,
+              "expandedBottom": 54797,
+              "expandedTop": 45203,
+              "netId": "A_DRIVE",
+              "prefixViaCount": 35,
+              "reachedPadCount": 2,
+              "rootPadId": "QA.B",
+              "startPadId": "RDA.2",
+              "terminalReason": "BRANCH_SEARCH_LIMIT"
+            },
+            {
+              "branchExpanded": 27268,
+              "branchOrdinal": 132,
+              "expandedBottom": 16007,
+              "expandedTop": 11261,
+              "netId": "A_SENSE",
+              "prefixViaCount": 13,
+              "reachedPadCount": 4,
+              "rootPadId": "CFLT_A.1",
+              "startPadId": "RSA.2",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 15532,
+              "branchOrdinal": 111,
+              "expandedBottom": 8700,
+              "expandedTop": 6832,
+              "netId": "RAIL5",
+              "prefixViaCount": 4,
+              "reachedPadCount": 7,
+              "rootPadId": "C5.1",
+              "startPadId": "DB.K",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "BRANCH_SEARCH_LIMIT": 1,
+            "FOUND": 81
+          }
+        },
+        "2": {
+          "branchCount": 79,
+          "branchExpanded": 505992,
+          "largestBranches": [
+            {
+              "branchExpanded": 98056,
+              "branchOrdinal": 221,
+              "expandedBottom": 50671,
+              "expandedTop": 47385,
+              "netId": "LOAD12",
+              "prefixViaCount": 25,
+              "reachedPadCount": 1,
+              "rootPadId": "JLOAD.1",
+              "startPadId": "KA.COM",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 92540,
+              "branchOrdinal": 204,
+              "expandedBottom": 50621,
+              "expandedTop": 41919,
+              "netId": "RAIL5",
+              "prefixViaCount": 11,
+              "reachedPadCount": 1,
+              "rootPadId": "C5.1",
+              "startPadId": "DA.K",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 87813,
+              "branchOrdinal": 188,
+              "expandedBottom": 50557,
+              "expandedTop": 37256,
+              "netId": "A_SENSE",
+              "prefixViaCount": 2,
+              "reachedPadCount": 3,
+              "rootPadId": "CFLT_A.1",
+              "startPadId": "RSA.2",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "FOUND": 78,
+            "TOTAL_SEARCH_LIMIT": 1
+          }
+        }
+      },
+      "candidate": {
+        "candidateAttempt": 0,
+        "dependencyEpoch": "tsj-generation-dependencies-v24",
+        "layoutVersion": 23,
+        "placementInterpretationVersion": 8,
+        "placementSeed": "-5634176660316136309",
+        "planVersion": 1,
+        "rootSeed": "-1022",
+        "routingSeed": "-3812824227946713686"
+      },
+      "caps": {
+        "gridOrderingCount": 3,
+        "maximumBranchExpansions": 100000,
+        "maximumGridCells": 250000,
+        "maximumTotalExpansions": 1000000,
+        "maximumVias": 48
+      },
+      "harnessStatus": "PASS_NATIVE_DIAGNOSTIC_AND_CLEANUP",
+      "inputCensus": {
+        "actualGridCells": 74571,
+        "actualGridEligible": true,
+        "actualGridHeight": 201,
+        "actualGridWidth": 371,
+        "componentIdsSha256": "2ee3c1ff41752203bfe9fba4a7f616ac649d7769147986568c0a15c3f83c71cc",
+        "inputGeometrySha256": "fd5fd891a2035ee6b40679a384b151bd6783dea4afa08f2c8dfea846fdbef193",
+        "inputGeometryUtf8Bytes": 145778,
+        "inputOutline": {
+          "height": 2020,
+          "width": 3720,
+          "x": 20,
+          "y": 20
+        },
+        "logicalInventorySha256": "2264d679601cfd8d68033e39ddffda2a4ada7b6fbcf047c52a612568cf6350f5",
+        "logicalInventoryUtf8Bytes": 5111,
+        "packageCount": 60,
+        "padCount": 143,
+        "padIdsSha256": "4c9abc261957c0d30da07bbcfa19ad6056e19ee7e8f868d75c18c2a056a23926"
+      },
+      "measurement": {
+        "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "elapsedSeconds": 34.099637,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputPinsSha256": "5f739f5dce412fba46fedbaa2c69a68df184a3c9b6f1ebd0e95898c2d448664b",
+        "launcherOwnershipRecordPresent": true,
+        "nativeChildLimitMs": 60000,
+        "outerWatchdogMs": 600000,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 306372,
+        "stdoutSha256": "5a6e5b78b6ceaad0d1810f61d6650b12789520f325fa7b0e1c4392a7fe432b03",
+        "terminationProven": true
+      },
+      "receiptFooter": "PASS: P07 branch diagnostics contracts savedRouteProbe=true selector=V8_NEG1022_ATTEMPT0 branches=242 routeOutcome=HV_RETURN:TOTAL_SEARCH_LIMIT scope=OBSERVATIONAL_FIXED_SAVED_ROUTE_ONLY",
+      "routeOutcome": "HV_RETURN:TOTAL_SEARCH_LIMIT",
+      "routeStatus": "ROUTE_REJECTED_WITHIN_DIAGNOSTIC_ONLY_PROBE",
+      "routeSummary": {
+        "acceptedClearanceExactPairs": null,
+        "acceptedClearancePotentialPairs": null,
+        "acceptedGeometrySha256": null,
+        "acceptedOrderedPadPairs": null,
+        "acceptedOutputValidation": "NOT_APPLICABLE_ROUTE_REJECTED",
+        "acceptedP08CanonicalSha256": null,
+        "acceptedP08SourceLandCount": null,
+        "acceptedP08SourceSegmentCount": null,
+        "acceptedRasterOrderedPadPairs": null,
+        "acceptedRasterPointCount": null,
+        "acceptedRasterViaBarrels": null,
+        "acceptedReferenceClearancePairs": null,
+        "acceptedTraceGeometrySha256": null,
+        "assertions": 943,
+        "branchCount": 242,
+        "branchExpandedTotal": 1000000,
+        "expansions": 1000000,
+        "links": 0,
+        "nativeDiagnosticElapsedMs": 2088,
+        "orderings": 3,
+        "routeAccepted": false,
+        "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+        "vias": 0
+      },
+      "selectedRoute": {
+        "backendPolicy": "FULLER_TWO_LAYER",
+        "physicalPolicyId": "MEDIUM_BOARD",
+        "requiresTwoLayerRouting": true,
+        "routeName": "P07_FULLER_TWO_LAYER",
+        "routingLayer": "BOTTOM",
+        "traceWidthProfile": "UNIFORM_TRACE@1"
+      },
+      "selector": "V8_NEG1022_ATTEMPT0",
+      "variant": "CURRENT"
+    },
+    {
+      "artifacts": {
+        "console": {
+          "bytes": 252186,
+          "name": "fixed-route-current-v7_42_attempt4-1-console.txt",
+          "sha256": "b1b7dacc25087dfbf15ea721a1f533fc8db2517ea1477aa54f14a1665bb3c3d9"
+        },
+        "launcher": {
+          "bytes": 277,
+          "name": "fixed-route-current-v7_42_attempt4-1-launcher.json",
+          "sha256": "2dc920d6dea6f74d8f679ee53ae0265ef4248fddb278b83f2bc7dca4ff6d1e8e"
+        },
+        "receipt": {
+          "bytes": 251046,
+          "name": "fixed-route-current-v7_42_attempt4-1-receipt.txt",
+          "sha256": "4b04079d91516f6c484ad29103221cd6b9e531b51244327a8d88661f6d2c0283"
+        },
+        "result": {
+          "bytes": 963,
+          "name": "fixed-route-current-v7_42_attempt4-1-result.json",
+          "sha256": "1b9d716f8e52b13aaf070ad34d9240b29ff56b0b484bec83016c3ed001ee65bd"
+        },
+        "stderr": {
+          "bytes": 0,
+          "name": "fixed-route-current-v7_42_attempt4-1-stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "branchesByPass": {
+        "0": {
+          "branchCount": 78,
+          "branchExpanded": 305672,
+          "largestBranches": [
+            {
+              "branchExpanded": 100000,
+              "branchOrdinal": 78,
+              "expandedBottom": 47325,
+              "expandedTop": 52675,
+              "netId": "B_CMD",
+              "prefixViaCount": 29,
+              "reachedPadCount": 1,
+              "rootPadId": "RDB.1",
+              "startPadId": "U2B.OUTPUT",
+              "terminalReason": "BRANCH_SEARCH_LIMIT"
+            },
+            {
+              "branchExpanded": 63539,
+              "branchOrdinal": 45,
+              "expandedBottom": 33280,
+              "expandedTop": 30259,
+              "netId": "LOAD12",
+              "prefixViaCount": 10,
+              "reachedPadCount": 1,
+              "rootPadId": "JLOAD.1",
+              "startPadId": "KB.COM",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 34344,
+              "branchOrdinal": 44,
+              "expandedBottom": 18214,
+              "expandedTop": 16130,
+              "netId": "HV_POS",
+              "prefixViaCount": 8,
+              "reachedPadCount": 4,
+              "rootPadId": "CBULK.+",
+              "startPadId": "UAC.IN+",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "BRANCH_SEARCH_LIMIT": 1,
+            "FOUND": 77
+          }
+        },
+        "1": {
+          "branchCount": 97,
+          "branchExpanded": 341198,
+          "largestBranches": [
+            {
+              "branchExpanded": 58484,
+              "branchOrdinal": 153,
+              "expandedBottom": 32069,
+              "expandedTop": 26415,
+              "netId": "B_CMD",
+              "prefixViaCount": 22,
+              "reachedPadCount": 1,
+              "rootPadId": "RDB.1",
+              "startPadId": "U2B.OUTPUT",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 47775,
+              "branchOrdinal": 175,
+              "expandedBottom": 21402,
+              "expandedTop": 26373,
+              "netId": "SENSE_ZENER",
+              "prefixViaCount": 40,
+              "reachedPadCount": 1,
+              "rootPadId": "DZ1.K",
+              "startPadId": "RSENSE.2",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 41510,
+              "branchOrdinal": 159,
+              "expandedBottom": 20086,
+              "expandedTop": 21424,
+              "netId": "LOAD12",
+              "prefixViaCount": 28,
+              "reachedPadCount": 1,
+              "rootPadId": "JLOAD.1",
+              "startPadId": "KB.COM",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "FOUND": 97
+          }
+        }
+      },
+      "candidate": {
+        "candidateAttempt": 4,
+        "dependencyEpoch": "tsj-generation-dependencies-v24",
+        "layoutVersion": 23,
+        "placementInterpretationVersion": 7,
+        "placementSeed": "5526715536693200536",
+        "planVersion": 1,
+        "rootSeed": "42",
+        "routingSeed": "4493419427463069983"
+      },
+      "caps": {
+        "gridOrderingCount": 3,
+        "maximumBranchExpansions": 100000,
+        "maximumGridCells": 250000,
+        "maximumTotalExpansions": 1000000,
+        "maximumVias": 48
+      },
+      "harnessStatus": "PASS_NATIVE_DIAGNOSTIC_AND_CLEANUP",
+      "inputCensus": {
+        "actualGridCells": 85498,
+        "actualGridEligible": true,
+        "actualGridHeight": 197,
+        "actualGridWidth": 434,
+        "componentIdsSha256": "2fde778ea2d70732c1d810d45e78e6214a730af2b8ece77cac9fcedf4ae9cd32",
+        "inputGeometrySha256": "6a7939339e5387d9c7d3a2d5e7c10ba75f98ff18280117300080fe67143be4a3",
+        "inputGeometryUtf8Bytes": 134269,
+        "inputOutline": {
+          "height": 1980,
+          "width": 4350,
+          "x": 20,
+          "y": 20
+        },
+        "logicalInventorySha256": "731fea0da4d7f9fd2404cc2979013ce41062d99d534324220a59ece71afa4b7e",
+        "logicalInventoryUtf8Bytes": 4632,
+        "packageCount": 54,
+        "padCount": 131,
+        "padIdsSha256": "27ded107d45736d1eead223c879067488b43b00f30846eadf87afd55a92343e4"
+      },
+      "measurement": {
+        "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "elapsedSeconds": 35.070137599999995,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputPinsSha256": "5f739f5dce412fba46fedbaa2c69a68df184a3c9b6f1ebd0e95898c2d448664b",
+        "launcherOwnershipRecordPresent": true,
+        "nativeChildLimitMs": 60000,
+        "outerWatchdogMs": 600000,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 252186,
+        "stdoutSha256": "b1b7dacc25087dfbf15ea721a1f533fc8db2517ea1477aa54f14a1665bb3c3d9",
+        "terminationProven": true
+      },
+      "receiptFooter": "PASS: P07 branch diagnostics contracts savedRouteProbe=true selector=V7_42_ATTEMPT4 branches=175 routeOutcome=SUCCESS scope=OBSERVATIONAL_FIXED_SAVED_ROUTE_ONLY",
+      "routeOutcome": "SUCCESS",
+      "routeStatus": "ROUTE_ACCEPTED_WITHIN_DIAGNOSTIC_ONLY_PROBE",
+      "routeSummary": {
+        "acceptedClearanceExactPairs": 0,
+        "acceptedClearancePotentialPairs": 29161,
+        "acceptedGeometrySha256": "b228422e5dbf97d40b674e2b6728b60e71b61f9a1418e2b5c4f798b315e94a97",
+        "acceptedOrderedPadPairs": 17161,
+        "acceptedOutputValidation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "acceptedP08CanonicalSha256": "72aaee1e678a5d9b94ebada78840a995f05afa257703e1a01a0b1046d2a95ec3",
+        "acceptedP08SourceLandCount": 346,
+        "acceptedP08SourceSegmentCount": 242,
+        "acceptedRasterOrderedPadPairs": 17161,
+        "acceptedRasterPointCount": 44637,
+        "acceptedRasterViaBarrels": 42,
+        "acceptedReferenceClearancePairs": 18128,
+        "acceptedTraceGeometrySha256": "23dbf3c7709b27a733239c8cf72b8e0f56c5a4e72b56b21fa11903a9ab029939",
+        "assertions": 18023,
+        "branchCount": 175,
+        "branchExpandedTotal": 646870,
+        "expansions": 646870,
+        "links": 0,
+        "nativeDiagnosticElapsedMs": 1713,
+        "orderings": 2,
+        "routeAccepted": true,
+        "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+        "vias": 42
+      },
+      "selectedRoute": {
+        "backendPolicy": "FULLER_TWO_LAYER",
+        "physicalPolicyId": "MEDIUM_BOARD",
+        "requiresTwoLayerRouting": true,
+        "routeName": "P07_FULLER_TWO_LAYER",
+        "routingLayer": "BOTTOM",
+        "traceWidthProfile": "UNIFORM_TRACE@1"
+      },
+      "selector": "V7_42_ATTEMPT4",
+      "variant": "CURRENT"
+    },
+    {
+      "artifacts": {
+        "console": {
+          "bytes": 298333,
+          "name": "fixed-route-goals_off-v8_neg1022_attempt0-1-console.txt",
+          "sha256": "6bb3983da85c646cc6b01640ac1855e72a01f578a703c584fdaa3b361e0d6663"
+        },
+        "launcher": {
+          "bytes": 292,
+          "name": "fixed-route-goals_off-v8_neg1022_attempt0-1-launcher.json",
+          "sha256": "86a099a02e2c9d1ca91318c65a83ccb34b24817dc7f6592c1b4a8f002ce9065a"
+        },
+        "receipt": {
+          "bytes": 297193,
+          "name": "fixed-route-goals_off-v8_neg1022_attempt0-1-receipt.txt",
+          "sha256": "c2125c0589761cdbae1d9e2356ff93ec68a3e4af13d93ed466356b2df7debe6e"
+        },
+        "result": {
+          "bytes": 962,
+          "name": "fixed-route-goals_off-v8_neg1022_attempt0-1-result.json",
+          "sha256": "f9f0aa933180789450d8a9f47e79c6ec5f7fddcd4527801d224757f2ae6e0dfe"
+        },
+        "stderr": {
+          "bytes": 0,
+          "name": "fixed-route-goals_off-v8_neg1022_attempt0-1-stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "branchesByPass": {
+        "0": {
+          "branchCount": 81,
+          "branchExpanded": 283086,
+          "largestBranches": [
+            {
+              "branchExpanded": 100000,
+              "branchOrdinal": 81,
+              "expandedBottom": 49148,
+              "expandedTop": 50852,
+              "netId": "A_DRIVE",
+              "prefixViaCount": 31,
+              "reachedPadCount": 2,
+              "rootPadId": "QA.B",
+              "startPadId": "RDA.2",
+              "terminalReason": "BRANCH_SEARCH_LIMIT"
+            },
+            {
+              "branchExpanded": 59687,
+              "branchOrdinal": 63,
+              "expandedBottom": 32021,
+              "expandedTop": 27666,
+              "netId": "RAIL5",
+              "prefixViaCount": 17,
+              "reachedPadCount": 6,
+              "rootPadId": "C5.1",
+              "startPadId": "RBLEED5.1",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 30710,
+              "branchOrdinal": 49,
+              "expandedBottom": 20438,
+              "expandedTop": 10272,
+              "netId": "LOAD12",
+              "prefixViaCount": 8,
+              "reachedPadCount": 1,
+              "rootPadId": "JLOAD.1",
+              "startPadId": "KA.COM",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "BRANCH_SEARCH_LIMIT": 1,
+            "FOUND": 80
+          }
+        },
+        "1": {
+          "branchCount": 82,
+          "branchExpanded": 266811,
+          "largestBranches": [
+            {
+              "branchExpanded": 100000,
+              "branchOrdinal": 163,
+              "expandedBottom": 54797,
+              "expandedTop": 45203,
+              "netId": "A_DRIVE",
+              "prefixViaCount": 34,
+              "reachedPadCount": 2,
+              "rootPadId": "QA.B",
+              "startPadId": "RDA.2",
+              "terminalReason": "BRANCH_SEARCH_LIMIT"
+            },
+            {
+              "branchExpanded": 27268,
+              "branchOrdinal": 132,
+              "expandedBottom": 16007,
+              "expandedTop": 11261,
+              "netId": "A_SENSE",
+              "prefixViaCount": 12,
+              "reachedPadCount": 4,
+              "rootPadId": "CFLT_A.1",
+              "startPadId": "RSA.2",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 15532,
+              "branchOrdinal": 111,
+              "expandedBottom": 8700,
+              "expandedTop": 6832,
+              "netId": "RAIL5",
+              "prefixViaCount": 4,
+              "reachedPadCount": 7,
+              "rootPadId": "C5.1",
+              "startPadId": "DB.K",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "BRANCH_SEARCH_LIMIT": 1,
+            "FOUND": 81
+          }
+        },
+        "2": {
+          "branchCount": 66,
+          "branchExpanded": 450103,
+          "largestBranches": [
+            {
+              "branchExpanded": 98056,
+              "branchOrdinal": 221,
+              "expandedBottom": 50671,
+              "expandedTop": 47385,
+              "netId": "LOAD12",
+              "prefixViaCount": 25,
+              "reachedPadCount": 1,
+              "rootPadId": "JLOAD.1",
+              "startPadId": "KA.COM",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 92540,
+              "branchOrdinal": 204,
+              "expandedBottom": 50621,
+              "expandedTop": 41919,
+              "netId": "RAIL5",
+              "prefixViaCount": 11,
+              "reachedPadCount": 1,
+              "rootPadId": "C5.1",
+              "startPadId": "DA.K",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 87813,
+              "branchOrdinal": 188,
+              "expandedBottom": 50557,
+              "expandedTop": 37256,
+              "netId": "A_SENSE",
+              "prefixViaCount": 2,
+              "reachedPadCount": 3,
+              "rootPadId": "CFLT_A.1",
+              "startPadId": "RSA.2",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "FOUND": 65,
+            "TOTAL_SEARCH_LIMIT": 1
+          }
+        }
+      },
+      "candidate": {
+        "candidateAttempt": 0,
+        "dependencyEpoch": "tsj-generation-dependencies-v24",
+        "layoutVersion": 23,
+        "placementInterpretationVersion": 8,
+        "placementSeed": "-5634176660316136309",
+        "planVersion": 1,
+        "rootSeed": "-1022",
+        "routingSeed": "-3812824227946713686"
+      },
+      "caps": {
+        "gridOrderingCount": 3,
+        "maximumBranchExpansions": 100000,
+        "maximumGridCells": 250000,
+        "maximumTotalExpansions": 1000000,
+        "maximumVias": 48
+      },
+      "harnessStatus": "PASS_NATIVE_DIAGNOSTIC_AND_CLEANUP",
+      "inputCensus": {
+        "actualGridCells": 74571,
+        "actualGridEligible": true,
+        "actualGridHeight": 201,
+        "actualGridWidth": 371,
+        "componentIdsSha256": "2ee3c1ff41752203bfe9fba4a7f616ac649d7769147986568c0a15c3f83c71cc",
+        "inputGeometrySha256": "fd5fd891a2035ee6b40679a384b151bd6783dea4afa08f2c8dfea846fdbef193",
+        "inputGeometryUtf8Bytes": 145778,
+        "inputOutline": {
+          "height": 2020,
+          "width": 3720,
+          "x": 20,
+          "y": 20
+        },
+        "logicalInventorySha256": "2264d679601cfd8d68033e39ddffda2a4ada7b6fbcf047c52a612568cf6350f5",
+        "logicalInventoryUtf8Bytes": 5111,
+        "packageCount": 60,
+        "padCount": 143,
+        "padIdsSha256": "4c9abc261957c0d30da07bbcfa19ad6056e19ee7e8f868d75c18c2a056a23926"
+      },
+      "measurement": {
+        "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "elapsedSeconds": 38.6300155,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputPinsSha256": "7492999e28f65f01efe3d20003ede73495257f76d8b6db69282c602268b0bbbf",
+        "launcherOwnershipRecordPresent": true,
+        "nativeChildLimitMs": 60000,
+        "outerWatchdogMs": 600000,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 298333,
+        "stdoutSha256": "6bb3983da85c646cc6b01640ac1855e72a01f578a703c584fdaa3b361e0d6663",
+        "terminationProven": true
+      },
+      "receiptFooter": "PASS: P07 branch diagnostics contracts savedRouteProbe=true selector=V8_NEG1022_ATTEMPT0 branches=229 routeOutcome=BIAS_AC:TOTAL_SEARCH_LIMIT scope=OBSERVATIONAL_FIXED_SAVED_ROUTE_ONLY",
+      "routeOutcome": "BIAS_AC:TOTAL_SEARCH_LIMIT",
+      "routeStatus": "ROUTE_REJECTED_WITHIN_DIAGNOSTIC_ONLY_PROBE",
+      "routeSummary": {
+        "acceptedClearanceExactPairs": null,
+        "acceptedClearancePotentialPairs": null,
+        "acceptedGeometrySha256": null,
+        "acceptedOrderedPadPairs": null,
+        "acceptedOutputValidation": "NOT_APPLICABLE_ROUTE_REJECTED",
+        "acceptedP08CanonicalSha256": null,
+        "acceptedP08SourceLandCount": null,
+        "acceptedP08SourceSegmentCount": null,
+        "acceptedRasterOrderedPadPairs": null,
+        "acceptedRasterPointCount": null,
+        "acceptedRasterViaBarrels": null,
+        "acceptedReferenceClearancePairs": null,
+        "acceptedTraceGeometrySha256": null,
+        "assertions": 943,
+        "branchCount": 229,
+        "branchExpandedTotal": 1000000,
+        "expansions": 1000000,
+        "links": 0,
+        "nativeDiagnosticElapsedMs": 2096,
+        "orderings": 3,
+        "routeAccepted": false,
+        "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+        "vias": 0
+      },
+      "selectedRoute": {
+        "backendPolicy": "FULLER_TWO_LAYER",
+        "physicalPolicyId": "MEDIUM_BOARD",
+        "requiresTwoLayerRouting": true,
+        "routeName": "P07_FULLER_TWO_LAYER",
+        "routingLayer": "BOTTOM",
+        "traceWidthProfile": "UNIFORM_TRACE@1"
+      },
+      "selector": "V8_NEG1022_ATTEMPT0",
+      "variant": "GOALS_OFF"
+    },
+    {
+      "artifacts": {
+        "console": {
+          "bytes": 252156,
+          "name": "fixed-route-goals_off-v7_42_attempt4-1-console.txt",
+          "sha256": "cde242bd887f8252e6db2916ea03bff289ba2aceb9fc46f05039ec98272c0597"
+        },
+        "launcher": {
+          "bytes": 282,
+          "name": "fixed-route-goals_off-v7_42_attempt4-1-launcher.json",
+          "sha256": "5ca57482f883d0cc94beda4818a75525c3ab7ce7526188a16c20c116d1abbce5"
+        },
+        "receipt": {
+          "bytes": 251016,
+          "name": "fixed-route-goals_off-v7_42_attempt4-1-receipt.txt",
+          "sha256": "3da1809d98e9910751be899ff3c540dd4aa340b84a27e5d7466939d646664bfe"
+        },
+        "result": {
+          "bytes": 957,
+          "name": "fixed-route-goals_off-v7_42_attempt4-1-result.json",
+          "sha256": "ec6a380e372749bd88dc98c2349329e973826e28d265ed3007fa8d2d4011d020"
+        },
+        "stderr": {
+          "bytes": 0,
+          "name": "fixed-route-goals_off-v7_42_attempt4-1-stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "branchesByPass": {
+        "0": {
+          "branchCount": 78,
+          "branchExpanded": 314158,
+          "largestBranches": [
+            {
+              "branchExpanded": 100000,
+              "branchOrdinal": 78,
+              "expandedBottom": 48374,
+              "expandedTop": 51626,
+              "netId": "B_CMD",
+              "prefixViaCount": 29,
+              "reachedPadCount": 1,
+              "rootPadId": "RDB.1",
+              "startPadId": "U2B.OUTPUT",
+              "terminalReason": "BRANCH_SEARCH_LIMIT"
+            },
+            {
+              "branchExpanded": 63539,
+              "branchOrdinal": 45,
+              "expandedBottom": 33280,
+              "expandedTop": 30259,
+              "netId": "LOAD12",
+              "prefixViaCount": 10,
+              "reachedPadCount": 1,
+              "rootPadId": "JLOAD.1",
+              "startPadId": "KB.COM",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 34344,
+              "branchOrdinal": 44,
+              "expandedBottom": 18214,
+              "expandedTop": 16130,
+              "netId": "HV_POS",
+              "prefixViaCount": 8,
+              "reachedPadCount": 4,
+              "rootPadId": "CBULK.+",
+              "startPadId": "UAC.IN+",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "BRANCH_SEARCH_LIMIT": 1,
+            "FOUND": 77
+          }
+        },
+        "1": {
+          "branchCount": 97,
+          "branchExpanded": 339055,
+          "largestBranches": [
+            {
+              "branchExpanded": 59701,
+              "branchOrdinal": 153,
+              "expandedBottom": 31831,
+              "expandedTop": 27870,
+              "netId": "B_CMD",
+              "prefixViaCount": 25,
+              "reachedPadCount": 1,
+              "rootPadId": "RDB.1",
+              "startPadId": "U2B.OUTPUT",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 47775,
+              "branchOrdinal": 175,
+              "expandedBottom": 21402,
+              "expandedTop": 26373,
+              "netId": "SENSE_ZENER",
+              "prefixViaCount": 45,
+              "reachedPadCount": 1,
+              "rootPadId": "DZ1.K",
+              "startPadId": "RSENSE.2",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 39844,
+              "branchOrdinal": 159,
+              "expandedBottom": 19367,
+              "expandedTop": 20477,
+              "netId": "LOAD12",
+              "prefixViaCount": 31,
+              "reachedPadCount": 1,
+              "rootPadId": "JLOAD.1",
+              "startPadId": "KB.COM",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "FOUND": 97
+          }
+        }
+      },
+      "candidate": {
+        "candidateAttempt": 4,
+        "dependencyEpoch": "tsj-generation-dependencies-v24",
+        "layoutVersion": 23,
+        "placementInterpretationVersion": 7,
+        "placementSeed": "5526715536693200536",
+        "planVersion": 1,
+        "rootSeed": "42",
+        "routingSeed": "4493419427463069983"
+      },
+      "caps": {
+        "gridOrderingCount": 3,
+        "maximumBranchExpansions": 100000,
+        "maximumGridCells": 250000,
+        "maximumTotalExpansions": 1000000,
+        "maximumVias": 48
+      },
+      "harnessStatus": "PASS_NATIVE_DIAGNOSTIC_AND_CLEANUP",
+      "inputCensus": {
+        "actualGridCells": 85498,
+        "actualGridEligible": true,
+        "actualGridHeight": 197,
+        "actualGridWidth": 434,
+        "componentIdsSha256": "2fde778ea2d70732c1d810d45e78e6214a730af2b8ece77cac9fcedf4ae9cd32",
+        "inputGeometrySha256": "6a7939339e5387d9c7d3a2d5e7c10ba75f98ff18280117300080fe67143be4a3",
+        "inputGeometryUtf8Bytes": 134269,
+        "inputOutline": {
+          "height": 1980,
+          "width": 4350,
+          "x": 20,
+          "y": 20
+        },
+        "logicalInventorySha256": "731fea0da4d7f9fd2404cc2979013ce41062d99d534324220a59ece71afa4b7e",
+        "logicalInventoryUtf8Bytes": 4632,
+        "packageCount": 54,
+        "padCount": 131,
+        "padIdsSha256": "27ded107d45736d1eead223c879067488b43b00f30846eadf87afd55a92343e4"
+      },
+      "measurement": {
+        "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "elapsedSeconds": 35.0750963,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputPinsSha256": "7492999e28f65f01efe3d20003ede73495257f76d8b6db69282c602268b0bbbf",
+        "launcherOwnershipRecordPresent": true,
+        "nativeChildLimitMs": 60000,
+        "outerWatchdogMs": 600000,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 252156,
+        "stdoutSha256": "cde242bd887f8252e6db2916ea03bff289ba2aceb9fc46f05039ec98272c0597",
+        "terminationProven": true
+      },
+      "receiptFooter": "PASS: P07 branch diagnostics contracts savedRouteProbe=true selector=V7_42_ATTEMPT4 branches=175 routeOutcome=SUCCESS scope=OBSERVATIONAL_FIXED_SAVED_ROUTE_ONLY",
+      "routeOutcome": "SUCCESS",
+      "routeStatus": "ROUTE_ACCEPTED_WITHIN_DIAGNOSTIC_ONLY_PROBE",
+      "routeSummary": {
+        "acceptedClearanceExactPairs": 0,
+        "acceptedClearancePotentialPairs": 29161,
+        "acceptedGeometrySha256": "83a9e6bff39ded4286edaf99439174045246e2d1b2eea4bd5e07b5f6cb6883c6",
+        "acceptedOrderedPadPairs": 17161,
+        "acceptedOutputValidation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "acceptedP08CanonicalSha256": "de3bd6c3087aa98fec44220b293be17217a0887ff9be2808ef1650ea6d298fce",
+        "acceptedP08SourceLandCount": 356,
+        "acceptedP08SourceSegmentCount": 242,
+        "acceptedRasterOrderedPadPairs": 17161,
+        "acceptedRasterPointCount": 44752,
+        "acceptedRasterViaBarrels": 47,
+        "acceptedReferenceClearancePairs": 18415,
+        "acceptedTraceGeometrySha256": "203aeafb783e38bae66d52ce8be89c47d33b954feb282054af665dfc57212c12",
+        "assertions": 18023,
+        "branchCount": 175,
+        "branchExpandedTotal": 653213,
+        "expansions": 653213,
+        "links": 0,
+        "nativeDiagnosticElapsedMs": 1739,
+        "orderings": 2,
+        "routeAccepted": true,
+        "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+        "vias": 47
+      },
+      "selectedRoute": {
+        "backendPolicy": "FULLER_TWO_LAYER",
+        "physicalPolicyId": "MEDIUM_BOARD",
+        "requiresTwoLayerRouting": true,
+        "routeName": "P07_FULLER_TWO_LAYER",
+        "routingLayer": "BOTTOM",
+        "traceWidthProfile": "UNIFORM_TRACE@1"
+      },
+      "selector": "V7_42_ATTEMPT4",
+      "variant": "GOALS_OFF"
+    },
+    {
+      "artifacts": {
+        "console": {
+          "bytes": 273380,
+          "name": "fixed-route-access_off-v8_neg1022_attempt0-1-console.txt",
+          "sha256": "4ae35e8616e567e56713c4903b8fad7d33bd227842e82f1d030689bf8428c9d2"
+        },
+        "launcher": {
+          "bytes": 294,
+          "name": "fixed-route-access_off-v8_neg1022_attempt0-1-launcher.json",
+          "sha256": "e7b4f91684ed27fa7c5f03eb0f7202199aeeda1ef584f426888f810077f8f8a0"
+        },
+        "receipt": {
+          "bytes": 272240,
+          "name": "fixed-route-access_off-v8_neg1022_attempt0-1-receipt.txt",
+          "sha256": "2b6dcbb44fb01ca11e4fe84a5ceea85edd70bd636eb9b1d8cad53293f003c211"
+        },
+        "result": {
+          "bytes": 963,
+          "name": "fixed-route-access_off-v8_neg1022_attempt0-1-result.json",
+          "sha256": "1ee907ec1bb3a34186ca24321c25d768575d4926bf0c7c2965610222e67958d1"
+        },
+        "stderr": {
+          "bytes": 0,
+          "name": "fixed-route-access_off-v8_neg1022_attempt0-1-stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "branchesByPass": {
+        "0": {
+          "branchCount": 81,
+          "branchExpanded": 238223,
+          "largestBranches": [
+            {
+              "branchExpanded": 100000,
+              "branchOrdinal": 81,
+              "expandedBottom": 47375,
+              "expandedTop": 52625,
+              "netId": "A_DRIVE",
+              "prefixViaCount": 27,
+              "reachedPadCount": 2,
+              "rootPadId": "QA.B",
+              "startPadId": "RDA.2",
+              "terminalReason": "BRANCH_SEARCH_LIMIT"
+            },
+            {
+              "branchExpanded": 17451,
+              "branchOrdinal": 64,
+              "expandedBottom": 9804,
+              "expandedTop": 7647,
+              "netId": "RAIL5",
+              "prefixViaCount": 16,
+              "reachedPadCount": 7,
+              "rootPadId": "C5.1",
+              "startPadId": "DB.K",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 12301,
+              "branchOrdinal": 61,
+              "expandedBottom": 6662,
+              "expandedTop": 5639,
+              "netId": "RAIL5",
+              "prefixViaCount": 12,
+              "reachedPadCount": 4,
+              "rootPadId": "C5.1",
+              "startPadId": "DA.K",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "BRANCH_SEARCH_LIMIT": 1,
+            "FOUND": 80
+          }
+        },
+        "1": {
+          "branchCount": 107,
+          "branchExpanded": 348596,
+          "largestBranches": [
+            {
+              "branchExpanded": 72658,
+              "branchOrdinal": 170,
+              "expandedBottom": 38802,
+              "expandedTop": 33856,
+              "netId": "LOAD12",
+              "prefixViaCount": 40,
+              "reachedPadCount": 1,
+              "rootPadId": "JLOAD.1",
+              "startPadId": "KA.COM",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 52366,
+              "branchOrdinal": 163,
+              "expandedBottom": 28388,
+              "expandedTop": 23978,
+              "netId": "A_DRIVE",
+              "prefixViaCount": 33,
+              "reachedPadCount": 2,
+              "rootPadId": "QA.B",
+              "startPadId": "RDA.2",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 20791,
+              "branchOrdinal": 168,
+              "expandedBottom": 10110,
+              "expandedTop": 10681,
+              "netId": "B_DRIVE",
+              "prefixViaCount": 39,
+              "reachedPadCount": 1,
+              "rootPadId": "QB.G",
+              "startPadId": "RPDB.1",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "FOUND": 107
+          }
+        }
+      },
+      "candidate": {
+        "candidateAttempt": 0,
+        "dependencyEpoch": "tsj-generation-dependencies-v24",
+        "layoutVersion": 23,
+        "placementInterpretationVersion": 8,
+        "placementSeed": "-5634176660316136309",
+        "planVersion": 1,
+        "rootSeed": "-1022",
+        "routingSeed": "-3812824227946713686"
+      },
+      "caps": {
+        "gridOrderingCount": 3,
+        "maximumBranchExpansions": 100000,
+        "maximumGridCells": 250000,
+        "maximumTotalExpansions": 1000000,
+        "maximumVias": 48
+      },
+      "harnessStatus": "PASS_NATIVE_DIAGNOSTIC_AND_CLEANUP",
+      "inputCensus": {
+        "actualGridCells": 74571,
+        "actualGridEligible": true,
+        "actualGridHeight": 201,
+        "actualGridWidth": 371,
+        "componentIdsSha256": "2ee3c1ff41752203bfe9fba4a7f616ac649d7769147986568c0a15c3f83c71cc",
+        "inputGeometrySha256": "fd5fd891a2035ee6b40679a384b151bd6783dea4afa08f2c8dfea846fdbef193",
+        "inputGeometryUtf8Bytes": 145778,
+        "inputOutline": {
+          "height": 2020,
+          "width": 3720,
+          "x": 20,
+          "y": 20
+        },
+        "logicalInventorySha256": "2264d679601cfd8d68033e39ddffda2a4ada7b6fbcf047c52a612568cf6350f5",
+        "logicalInventoryUtf8Bytes": 5111,
+        "packageCount": 60,
+        "padCount": 143,
+        "padIdsSha256": "4c9abc261957c0d30da07bbcfa19ad6056e19ee7e8f868d75c18c2a056a23926"
+      },
+      "measurement": {
+        "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "elapsedSeconds": 36.3028805,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputPinsSha256": "ad2ea7f674581c387153e27db7875ab002a05ec6359a522b33d5c81037af86e1",
+        "launcherOwnershipRecordPresent": true,
+        "nativeChildLimitMs": 60000,
+        "outerWatchdogMs": 600000,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 273380,
+        "stdoutSha256": "4ae35e8616e567e56713c4903b8fad7d33bd227842e82f1d030689bf8428c9d2",
+        "terminationProven": true
+      },
+      "receiptFooter": "PASS: P07 branch diagnostics contracts savedRouteProbe=true selector=V8_NEG1022_ATTEMPT0 branches=188 routeOutcome=SUCCESS scope=OBSERVATIONAL_FIXED_SAVED_ROUTE_ONLY",
+      "routeOutcome": "SUCCESS",
+      "routeStatus": "ROUTE_ACCEPTED_WITHIN_DIAGNOSTIC_ONLY_PROBE",
+      "routeSummary": {
+        "acceptedClearanceExactPairs": 0,
+        "acceptedClearancePotentialPairs": 36856,
+        "acceptedGeometrySha256": "a75e025311b7db8f283867b6f02f42f9f4ecbf63b7dc5c7f9f4e6bed0f34fe0d",
+        "acceptedOrderedPadPairs": 20449,
+        "acceptedOutputValidation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "acceptedP08CanonicalSha256": "4fae87a582b0a204d3551d02d626479a10e9b88adf776024b63b82ecd25ef990",
+        "acceptedP08SourceLandCount": 382,
+        "acceptedP08SourceSegmentCount": 272,
+        "acceptedRasterOrderedPadPairs": 20449,
+        "acceptedRasterPointCount": 45357,
+        "acceptedRasterViaBarrels": 48,
+        "acceptedReferenceClearancePairs": 22447,
+        "acceptedTraceGeometrySha256": "1c8d4f60a487ed7da341b6043c06f52fd6873f3221c95ffdddf7454a54bf273e",
+        "assertions": 21395,
+        "branchCount": 188,
+        "branchExpandedTotal": 586819,
+        "expansions": 586819,
+        "links": 0,
+        "nativeDiagnosticElapsedMs": 1747,
+        "orderings": 2,
+        "routeAccepted": true,
+        "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+        "vias": 48
+      },
+      "selectedRoute": {
+        "backendPolicy": "FULLER_TWO_LAYER",
+        "physicalPolicyId": "MEDIUM_BOARD",
+        "requiresTwoLayerRouting": true,
+        "routeName": "P07_FULLER_TWO_LAYER",
+        "routingLayer": "BOTTOM",
+        "traceWidthProfile": "UNIFORM_TRACE@1"
+      },
+      "selector": "V8_NEG1022_ATTEMPT0",
+      "variant": "ACCESS_OFF"
+    },
+    {
+      "artifacts": {
+        "console": {
+          "bytes": 252299,
+          "name": "fixed-route-access_off-v7_42_attempt4-1-console.txt",
+          "sha256": "66401db657e7e18b23b203d8fdb8cadba07f108156854a2f3238025e41e5323e"
+        },
+        "launcher": {
+          "bytes": 284,
+          "name": "fixed-route-access_off-v7_42_attempt4-1-launcher.json",
+          "sha256": "91400be948e8296abf4e115777392e552977dfb948d46a19e9fddbf70a97c3a2"
+        },
+        "receipt": {
+          "bytes": 251159,
+          "name": "fixed-route-access_off-v7_42_attempt4-1-receipt.txt",
+          "sha256": "8959035cacbeab917038b23602d223dab11da0032607f9527cee9bcc43e44a80"
+        },
+        "result": {
+          "bytes": 956,
+          "name": "fixed-route-access_off-v7_42_attempt4-1-result.json",
+          "sha256": "e268a406e647d57272187c419cff92ede44d32be2b4e89af72956516c36219f7"
+        },
+        "stderr": {
+          "bytes": 0,
+          "name": "fixed-route-access_off-v7_42_attempt4-1-stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "branchesByPass": {
+        "0": {
+          "branchCount": 78,
+          "branchExpanded": 328264,
+          "largestBranches": [
+            {
+              "branchExpanded": 100000,
+              "branchOrdinal": 78,
+              "expandedBottom": 48313,
+              "expandedTop": 51687,
+              "netId": "B_CMD",
+              "prefixViaCount": 29,
+              "reachedPadCount": 1,
+              "rootPadId": "RDB.1",
+              "startPadId": "U2B.OUTPUT",
+              "terminalReason": "BRANCH_SEARCH_LIMIT"
+            },
+            {
+              "branchExpanded": 63378,
+              "branchOrdinal": 45,
+              "expandedBottom": 33130,
+              "expandedTop": 30248,
+              "netId": "LOAD12",
+              "prefixViaCount": 10,
+              "reachedPadCount": 1,
+              "rootPadId": "JLOAD.1",
+              "startPadId": "KB.COM",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 35881,
+              "branchOrdinal": 44,
+              "expandedBottom": 19533,
+              "expandedTop": 16348,
+              "netId": "HV_POS",
+              "prefixViaCount": 8,
+              "reachedPadCount": 4,
+              "rootPadId": "CBULK.+",
+              "startPadId": "UAC.IN+",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "BRANCH_SEARCH_LIMIT": 1,
+            "FOUND": 77
+          }
+        },
+        "1": {
+          "branchCount": 97,
+          "branchExpanded": 356150,
+          "largestBranches": [
+            {
+              "branchExpanded": 60292,
+              "branchOrdinal": 153,
+              "expandedBottom": 31868,
+              "expandedTop": 28424,
+              "netId": "B_CMD",
+              "prefixViaCount": 25,
+              "reachedPadCount": 1,
+              "rootPadId": "RDB.1",
+              "startPadId": "U2B.OUTPUT",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 47018,
+              "branchOrdinal": 175,
+              "expandedBottom": 21061,
+              "expandedTop": 25957,
+              "netId": "SENSE_ZENER",
+              "prefixViaCount": 45,
+              "reachedPadCount": 1,
+              "rootPadId": "DZ1.K",
+              "startPadId": "RSENSE.2",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 39691,
+              "branchOrdinal": 159,
+              "expandedBottom": 19325,
+              "expandedTop": 20366,
+              "netId": "LOAD12",
+              "prefixViaCount": 31,
+              "reachedPadCount": 1,
+              "rootPadId": "JLOAD.1",
+              "startPadId": "KB.COM",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "FOUND": 97
+          }
+        }
+      },
+      "candidate": {
+        "candidateAttempt": 4,
+        "dependencyEpoch": "tsj-generation-dependencies-v24",
+        "layoutVersion": 23,
+        "placementInterpretationVersion": 7,
+        "placementSeed": "5526715536693200536",
+        "planVersion": 1,
+        "rootSeed": "42",
+        "routingSeed": "4493419427463069983"
+      },
+      "caps": {
+        "gridOrderingCount": 3,
+        "maximumBranchExpansions": 100000,
+        "maximumGridCells": 250000,
+        "maximumTotalExpansions": 1000000,
+        "maximumVias": 48
+      },
+      "harnessStatus": "PASS_NATIVE_DIAGNOSTIC_AND_CLEANUP",
+      "inputCensus": {
+        "actualGridCells": 85498,
+        "actualGridEligible": true,
+        "actualGridHeight": 197,
+        "actualGridWidth": 434,
+        "componentIdsSha256": "2fde778ea2d70732c1d810d45e78e6214a730af2b8ece77cac9fcedf4ae9cd32",
+        "inputGeometrySha256": "6a7939339e5387d9c7d3a2d5e7c10ba75f98ff18280117300080fe67143be4a3",
+        "inputGeometryUtf8Bytes": 134269,
+        "inputOutline": {
+          "height": 1980,
+          "width": 4350,
+          "x": 20,
+          "y": 20
+        },
+        "logicalInventorySha256": "731fea0da4d7f9fd2404cc2979013ce41062d99d534324220a59ece71afa4b7e",
+        "logicalInventoryUtf8Bytes": 4632,
+        "packageCount": 54,
+        "padCount": 131,
+        "padIdsSha256": "27ded107d45736d1eead223c879067488b43b00f30846eadf87afd55a92343e4"
+      },
+      "measurement": {
+        "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "elapsedSeconds": 35.46523,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputPinsSha256": "ad2ea7f674581c387153e27db7875ab002a05ec6359a522b33d5c81037af86e1",
+        "launcherOwnershipRecordPresent": true,
+        "nativeChildLimitMs": 60000,
+        "outerWatchdogMs": 600000,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 252299,
+        "stdoutSha256": "66401db657e7e18b23b203d8fdb8cadba07f108156854a2f3238025e41e5323e",
+        "terminationProven": true
+      },
+      "receiptFooter": "PASS: P07 branch diagnostics contracts savedRouteProbe=true selector=V7_42_ATTEMPT4 branches=175 routeOutcome=SUCCESS scope=OBSERVATIONAL_FIXED_SAVED_ROUTE_ONLY",
+      "routeOutcome": "SUCCESS",
+      "routeStatus": "ROUTE_ACCEPTED_WITHIN_DIAGNOSTIC_ONLY_PROBE",
+      "routeSummary": {
+        "acceptedClearanceExactPairs": 0,
+        "acceptedClearancePotentialPairs": 29646,
+        "acceptedGeometrySha256": "75eb34c66a3dc74c48569ab876070ef78f6066ae8b2e1e2efa63d4749f72a3ae",
+        "acceptedOrderedPadPairs": 17161,
+        "acceptedOutputValidation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "acceptedP08CanonicalSha256": "9f46b72a4d0f7852c24bf77e628bf72524d32f3c19c2a43dff7a2121cf4efa97",
+        "acceptedP08SourceLandCount": 356,
+        "acceptedP08SourceSegmentCount": 244,
+        "acceptedRasterOrderedPadPairs": 17161,
+        "acceptedRasterPointCount": 44892,
+        "acceptedRasterViaBarrels": 47,
+        "acceptedReferenceClearancePairs": 18890,
+        "acceptedTraceGeometrySha256": "89c8a49d6f4f30a6361d4c02a0b7f651d1c684365256f1108afed828d2788f4e",
+        "assertions": 18023,
+        "branchCount": 175,
+        "branchExpandedTotal": 684414,
+        "expansions": 684414,
+        "links": 0,
+        "nativeDiagnosticElapsedMs": 1789,
+        "orderings": 2,
+        "routeAccepted": true,
+        "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+        "vias": 47
+      },
+      "selectedRoute": {
+        "backendPolicy": "FULLER_TWO_LAYER",
+        "physicalPolicyId": "MEDIUM_BOARD",
+        "requiresTwoLayerRouting": true,
+        "routeName": "P07_FULLER_TWO_LAYER",
+        "routingLayer": "BOTTOM",
+        "traceWidthProfile": "UNIFORM_TRACE@1"
+      },
+      "selector": "V7_42_ATTEMPT4",
+      "variant": "ACCESS_OFF"
+    },
+    {
+      "artifacts": {
+        "console": {
+          "bytes": 273016,
+          "name": "fixed-route-turn_uniform-v8_neg1022_attempt0-1-console.txt",
+          "sha256": "89d7fe89b8148fafb31a0386a551d6fd8fabcd145d70da316694a8da4d2d8385"
+        },
+        "launcher": {
+          "bytes": 297,
+          "name": "fixed-route-turn_uniform-v8_neg1022_attempt0-1-launcher.json",
+          "sha256": "d9d8e262def96eeffae0a33be18c518422419f66d30090134c41671ea8d8b408"
+        },
+        "receipt": {
+          "bytes": 271876,
+          "name": "fixed-route-turn_uniform-v8_neg1022_attempt0-1-receipt.txt",
+          "sha256": "0c40b05ea5b55dfe52c0df291a3415ac3564db4dcb4fbc3dbd4defff5f2e9acc"
+        },
+        "result": {
+          "bytes": 965,
+          "name": "fixed-route-turn_uniform-v8_neg1022_attempt0-1-result.json",
+          "sha256": "63abdb60361c1f65f090aa76ec257247c98de3973917f586a70e19525aca3ed8"
+        },
+        "stderr": {
+          "bytes": 0,
+          "name": "fixed-route-turn_uniform-v8_neg1022_attempt0-1-stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "branchesByPass": {
+        "0": {
+          "branchCount": 81,
+          "branchExpanded": 149667,
+          "largestBranches": [
+            {
+              "branchExpanded": 100000,
+              "branchOrdinal": 81,
+              "expandedBottom": 48965,
+              "expandedTop": 51035,
+              "netId": "A_DRIVE",
+              "prefixViaCount": 29,
+              "reachedPadCount": 2,
+              "rootPadId": "QA.B",
+              "startPadId": "RDA.2",
+              "terminalReason": "BRANCH_SEARCH_LIMIT"
+            },
+            {
+              "branchExpanded": 5662,
+              "branchOrdinal": 64,
+              "expandedBottom": 3699,
+              "expandedTop": 1963,
+              "netId": "RAIL5",
+              "prefixViaCount": 16,
+              "reachedPadCount": 7,
+              "rootPadId": "C5.1",
+              "startPadId": "DB.K",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 4913,
+              "branchOrdinal": 75,
+              "expandedBottom": 2541,
+              "expandedTop": 2372,
+              "netId": "OUT_B",
+              "prefixViaCount": 23,
+              "reachedPadCount": 2,
+              "rootPadId": "JOB.1",
+              "startPadId": "RLEDOUT_B.1",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "BRANCH_SEARCH_LIMIT": 1,
+            "FOUND": 80
+          }
+        },
+        "1": {
+          "branchCount": 107,
+          "branchExpanded": 286352,
+          "largestBranches": [
+            {
+              "branchExpanded": 81282,
+              "branchOrdinal": 163,
+              "expandedBottom": 44787,
+              "expandedTop": 36495,
+              "netId": "A_DRIVE",
+              "prefixViaCount": 35,
+              "reachedPadCount": 2,
+              "rootPadId": "QA.B",
+              "startPadId": "RDA.2",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 43187,
+              "branchOrdinal": 170,
+              "expandedBottom": 23715,
+              "expandedTop": 19472,
+              "netId": "LOAD12",
+              "prefixViaCount": 46,
+              "reachedPadCount": 1,
+              "rootPadId": "JLOAD.1",
+              "startPadId": "KA.COM",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 19810,
+              "branchOrdinal": 168,
+              "expandedBottom": 10143,
+              "expandedTop": 9667,
+              "netId": "B_DRIVE",
+              "prefixViaCount": 41,
+              "reachedPadCount": 1,
+              "rootPadId": "QB.G",
+              "startPadId": "RPDB.1",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "FOUND": 107
+          }
+        }
+      },
+      "candidate": {
+        "candidateAttempt": 0,
+        "dependencyEpoch": "tsj-generation-dependencies-v24",
+        "layoutVersion": 23,
+        "placementInterpretationVersion": 8,
+        "placementSeed": "-5634176660316136309",
+        "planVersion": 1,
+        "rootSeed": "-1022",
+        "routingSeed": "-3812824227946713686"
+      },
+      "caps": {
+        "gridOrderingCount": 3,
+        "maximumBranchExpansions": 100000,
+        "maximumGridCells": 250000,
+        "maximumTotalExpansions": 1000000,
+        "maximumVias": 48
+      },
+      "harnessStatus": "PASS_NATIVE_DIAGNOSTIC_AND_CLEANUP",
+      "inputCensus": {
+        "actualGridCells": 74571,
+        "actualGridEligible": true,
+        "actualGridHeight": 201,
+        "actualGridWidth": 371,
+        "componentIdsSha256": "2ee3c1ff41752203bfe9fba4a7f616ac649d7769147986568c0a15c3f83c71cc",
+        "inputGeometrySha256": "fd5fd891a2035ee6b40679a384b151bd6783dea4afa08f2c8dfea846fdbef193",
+        "inputGeometryUtf8Bytes": 145778,
+        "inputOutline": {
+          "height": 2020,
+          "width": 3720,
+          "x": 20,
+          "y": 20
+        },
+        "logicalInventorySha256": "2264d679601cfd8d68033e39ddffda2a4ada7b6fbcf047c52a612568cf6350f5",
+        "logicalInventoryUtf8Bytes": 5111,
+        "packageCount": 60,
+        "padCount": 143,
+        "padIdsSha256": "4c9abc261957c0d30da07bbcfa19ad6056e19ee7e8f868d75c18c2a056a23926"
+      },
+      "measurement": {
+        "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "elapsedSeconds": 34.0922035,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputPinsSha256": "7d66df0178094295c6b9d9b564e4e00d0d0a0377d710eb4008efed7f7678e3fc",
+        "launcherOwnershipRecordPresent": true,
+        "nativeChildLimitMs": 60000,
+        "outerWatchdogMs": 600000,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 273016,
+        "stdoutSha256": "89d7fe89b8148fafb31a0386a551d6fd8fabcd145d70da316694a8da4d2d8385",
+        "terminationProven": true
+      },
+      "receiptFooter": "PASS: P07 branch diagnostics contracts savedRouteProbe=true selector=V8_NEG1022_ATTEMPT0 branches=188 routeOutcome=SUCCESS scope=OBSERVATIONAL_FIXED_SAVED_ROUTE_ONLY",
+      "routeOutcome": "SUCCESS",
+      "routeStatus": "ROUTE_ACCEPTED_WITHIN_DIAGNOSTIC_ONLY_PROBE",
+      "routeSummary": {
+        "acceptedClearanceExactPairs": 0,
+        "acceptedClearancePotentialPairs": 37401,
+        "acceptedGeometrySha256": "ae6c4a0eee546bc8dfde3e96b07785229d37221b39ee3af06b1fd7835e53e328",
+        "acceptedOrderedPadPairs": 20449,
+        "acceptedOutputValidation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "acceptedP08CanonicalSha256": "ac5461ec68c1a6ded66882d8d1cae44988e5ea54474e0e2815ccf22cb7240dd8",
+        "acceptedP08SourceLandCount": 382,
+        "acceptedP08SourceSegmentCount": 274,
+        "acceptedRasterOrderedPadPairs": 20449,
+        "acceptedRasterPointCount": 45647,
+        "acceptedRasterViaBarrels": 48,
+        "acceptedReferenceClearancePairs": 20701,
+        "acceptedTraceGeometrySha256": "58faa8139d88757e8f666736c29f71f2ba7668dd71810171347e50594ab1848e",
+        "assertions": 21395,
+        "branchCount": 188,
+        "branchExpandedTotal": 436019,
+        "expansions": 436019,
+        "links": 0,
+        "nativeDiagnosticElapsedMs": 1881,
+        "orderings": 2,
+        "routeAccepted": true,
+        "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+        "vias": 48
+      },
+      "selectedRoute": {
+        "backendPolicy": "FULLER_TWO_LAYER",
+        "physicalPolicyId": "MEDIUM_BOARD",
+        "requiresTwoLayerRouting": true,
+        "routeName": "P07_FULLER_TWO_LAYER",
+        "routingLayer": "BOTTOM",
+        "traceWidthProfile": "UNIFORM_TRACE@1"
+      },
+      "selector": "V8_NEG1022_ATTEMPT0",
+      "variant": "TURN_UNIFORM"
+    },
+    {
+      "artifacts": {
+        "console": {
+          "bytes": 297796,
+          "name": "fixed-route-turn_uniform-v7_42_attempt4-1-console.txt",
+          "sha256": "7e328f1b00d3bf75415cf74f6576dc6a677f817506305f151835a046503cdf60"
+        },
+        "launcher": {
+          "bytes": 288,
+          "name": "fixed-route-turn_uniform-v7_42_attempt4-1-launcher.json",
+          "sha256": "9babc8f105279477318cc2c78355eab5365a908f64dd7bd50d7469ccb51dd91d"
+        },
+        "receipt": {
+          "bytes": 296656,
+          "name": "fixed-route-turn_uniform-v7_42_attempt4-1-receipt.txt",
+          "sha256": "3c45616d54f0162ccf8e1e4773492189504949e0d394782b247cda7933b28c6e"
+        },
+        "result": {
+          "bytes": 960,
+          "name": "fixed-route-turn_uniform-v7_42_attempt4-1-result.json",
+          "sha256": "adfb03179548f78a89c7d7b1c3bc765348a0c8ce4a12447b1127c31662e15bd6"
+        },
+        "stderr": {
+          "bytes": 0,
+          "name": "fixed-route-turn_uniform-v7_42_attempt4-1-stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "branchesByPass": {
+        "0": {
+          "branchCount": 78,
+          "branchExpanded": 244579,
+          "largestBranches": [
+            {
+              "branchExpanded": 100000,
+              "branchOrdinal": 78,
+              "expandedBottom": 53014,
+              "expandedTop": 46986,
+              "netId": "B_CMD",
+              "prefixViaCount": 29,
+              "reachedPadCount": 1,
+              "rootPadId": "RDB.1",
+              "startPadId": "U2B.OUTPUT",
+              "terminalReason": "BRANCH_SEARCH_LIMIT"
+            },
+            {
+              "branchExpanded": 41407,
+              "branchOrdinal": 69,
+              "expandedBottom": 20548,
+              "expandedTop": 20859,
+              "netId": "PRE_L",
+              "prefixViaCount": 24,
+              "reachedPadCount": 1,
+              "rootPadId": "DFREE.K",
+              "startPadId": "L1.1",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 28642,
+              "branchOrdinal": 45,
+              "expandedBottom": 13355,
+              "expandedTop": 15287,
+              "netId": "LOAD12",
+              "prefixViaCount": 13,
+              "reachedPadCount": 1,
+              "rootPadId": "JLOAD.1",
+              "startPadId": "KB.COM",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "BRANCH_SEARCH_LIMIT": 1,
+            "FOUND": 77
+          }
+        },
+        "1": {
+          "branchCount": 75,
+          "branchExpanded": 140174,
+          "largestBranches": [
+            {
+              "branchExpanded": 100000,
+              "branchOrdinal": 153,
+              "expandedBottom": 52914,
+              "expandedTop": 47086,
+              "netId": "B_CMD",
+              "prefixViaCount": 21,
+              "reachedPadCount": 1,
+              "rootPadId": "RDB.1",
+              "startPadId": "U2B.OUTPUT",
+              "terminalReason": "BRANCH_SEARCH_LIMIT"
+            },
+            {
+              "branchExpanded": 9943,
+              "branchOrdinal": 130,
+              "expandedBottom": 6853,
+              "expandedTop": 3090,
+              "netId": "HV_POS",
+              "prefixViaCount": 9,
+              "reachedPadCount": 4,
+              "rootPadId": "CBULK.+",
+              "startPadId": "UAC.IN+",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 7909,
+              "branchOrdinal": 147,
+              "expandedBottom": 5119,
+              "expandedTop": 2790,
+              "netId": "A_CMD",
+              "prefixViaCount": 19,
+              "reachedPadCount": 1,
+              "rootPadId": "RDA.1",
+              "startPadId": "RFB_A.1",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "BRANCH_SEARCH_LIMIT": 1,
+            "FOUND": 74
+          }
+        },
+        "2": {
+          "branchCount": 97,
+          "branchExpanded": 138345,
+          "largestBranches": [
+            {
+              "branchExpanded": 30622,
+              "branchOrdinal": 179,
+              "expandedBottom": 20339,
+              "expandedTop": 10283,
+              "netId": "A_CMD",
+              "prefixViaCount": 3,
+              "reachedPadCount": 1,
+              "rootPadId": "RDA.1",
+              "startPadId": "RFB_A.1",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 23368,
+              "branchOrdinal": 190,
+              "expandedBottom": 12507,
+              "expandedTop": 10861,
+              "netId": "RAIL5",
+              "prefixViaCount": 15,
+              "reachedPadCount": 2,
+              "rootPadId": "C5.1",
+              "startPadId": "DB.K",
+              "terminalReason": "FOUND"
+            },
+            {
+              "branchExpanded": 19658,
+              "branchOrdinal": 205,
+              "expandedBottom": 9778,
+              "expandedTop": 9880,
+              "netId": "LOAD12",
+              "prefixViaCount": 27,
+              "reachedPadCount": 1,
+              "rootPadId": "JLOAD.1",
+              "startPadId": "KA.COM",
+              "terminalReason": "FOUND"
+            }
+          ],
+          "terminalReasons": {
+            "FOUND": 97
+          }
+        }
+      },
+      "candidate": {
+        "candidateAttempt": 4,
+        "dependencyEpoch": "tsj-generation-dependencies-v24",
+        "layoutVersion": 23,
+        "placementInterpretationVersion": 7,
+        "placementSeed": "5526715536693200536",
+        "planVersion": 1,
+        "rootSeed": "42",
+        "routingSeed": "4493419427463069983"
+      },
+      "caps": {
+        "gridOrderingCount": 3,
+        "maximumBranchExpansions": 100000,
+        "maximumGridCells": 250000,
+        "maximumTotalExpansions": 1000000,
+        "maximumVias": 48
+      },
+      "harnessStatus": "PASS_NATIVE_DIAGNOSTIC_AND_CLEANUP",
+      "inputCensus": {
+        "actualGridCells": 85498,
+        "actualGridEligible": true,
+        "actualGridHeight": 197,
+        "actualGridWidth": 434,
+        "componentIdsSha256": "2fde778ea2d70732c1d810d45e78e6214a730af2b8ece77cac9fcedf4ae9cd32",
+        "inputGeometrySha256": "6a7939339e5387d9c7d3a2d5e7c10ba75f98ff18280117300080fe67143be4a3",
+        "inputGeometryUtf8Bytes": 134269,
+        "inputOutline": {
+          "height": 1980,
+          "width": 4350,
+          "x": 20,
+          "y": 20
+        },
+        "logicalInventorySha256": "731fea0da4d7f9fd2404cc2979013ce41062d99d534324220a59ece71afa4b7e",
+        "logicalInventoryUtf8Bytes": 4632,
+        "packageCount": 54,
+        "padCount": 131,
+        "padIdsSha256": "27ded107d45736d1eead223c879067488b43b00f30846eadf87afd55a92343e4"
+      },
+      "measurement": {
+        "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "elapsedSeconds": 35.8386875,
+        "inputAudit": "PASS_BEFORE_AND_AFTER",
+        "inputCount": 1059,
+        "inputPinsSha256": "7d66df0178094295c6b9d9b564e4e00d0d0a0377d710eb4008efed7f7678e3fc",
+        "launcherOwnershipRecordPresent": true,
+        "nativeChildLimitMs": 60000,
+        "outerWatchdogMs": 600000,
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 297796,
+        "stdoutSha256": "7e328f1b00d3bf75415cf74f6576dc6a677f817506305f151835a046503cdf60",
+        "terminationProven": true
+      },
+      "receiptFooter": "PASS: P07 branch diagnostics contracts savedRouteProbe=true selector=V7_42_ATTEMPT4 branches=250 routeOutcome=SUCCESS scope=OBSERVATIONAL_FIXED_SAVED_ROUTE_ONLY",
+      "routeOutcome": "SUCCESS",
+      "routeStatus": "ROUTE_ACCEPTED_WITHIN_DIAGNOSTIC_ONLY_PROBE",
+      "routeSummary": {
+        "acceptedClearanceExactPairs": 0,
+        "acceptedClearancePotentialPairs": 27028,
+        "acceptedGeometrySha256": "9851a23a8ca0e595ce37aace8a67a71bbf13f66996db38c60cbcf411c590e6c7",
+        "acceptedOrderedPadPairs": 17161,
+        "acceptedOutputValidation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "acceptedP08CanonicalSha256": "3235b09379e77e2f5f502073f1c6a2bdf2d917ff516618e62fec9fe644217dca",
+        "acceptedP08SourceLandCount": 358,
+        "acceptedP08SourceSegmentCount": 233,
+        "acceptedRasterOrderedPadPairs": 17161,
+        "acceptedRasterPointCount": 45043,
+        "acceptedRasterViaBarrels": 48,
+        "acceptedReferenceClearancePairs": 16186,
+        "acceptedTraceGeometrySha256": "52d1daf7c4bab09ecf311f79ab332b4e4e4cdcfcd4f624ac53ec6af33728ba20",
+        "assertions": 18023,
+        "branchCount": 250,
+        "branchExpandedTotal": 523098,
+        "expansions": 523098,
+        "links": 0,
+        "nativeDiagnosticElapsedMs": 1968,
+        "orderings": 3,
+        "routeAccepted": true,
+        "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+        "vias": 48
+      },
+      "selectedRoute": {
+        "backendPolicy": "FULLER_TWO_LAYER",
+        "physicalPolicyId": "MEDIUM_BOARD",
+        "requiresTwoLayerRouting": true,
+        "routeName": "P07_FULLER_TWO_LAYER",
+        "routingLayer": "BOTTOM",
+        "traceWidthProfile": "UNIFORM_TRACE@1"
+      },
+      "selector": "V7_42_ATTEMPT4",
+      "variant": "TURN_UNIFORM"
+    }
+  ],
+  "schema": "q100-saved-route-probes-curated-v1",
+  "scope": "OBSERVATIONAL_FIXED_SAVED_ROUTE_ONLY",
+  "sealedInputs": {
+    "preparerSha256": "1a911d92f01c9734850f05ea04a9a4f4c4bc4b41b19fc2192331551ff26fecc4",
+    "seal": {
+      "bytes": 2732,
+      "file": "saved-route-probe-sealed-v1.json",
+      "harnessSha256": "c95b1f6354c47e19e8499fcbc30565395190553e8d6a2fbce10de69ceb74f69c",
+      "scope": "SCRATCH_ONLY_FIXED_ROUTE_ABLATIONS; NOT_ACCEPTANCE",
+      "sha256": "8746267237258786353079d0c709c9469ff91afd473b5434822cd4904213d598",
+      "sourceSnapshot": "saved-profile-current-inputs-2"
+    },
+    "sourceSeal2Sha256": "d49c8054e1358e9ccf408727f039cc4c20336bab542c306d5d7dcd759a9864ba",
+    "variants": {
+      "ACCESS_OFF": {
+        "changedInputs": [
+          "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java"
+        ],
+        "inputCount": 1059,
+        "inputDirectory": "saved-route-probe-access-off",
+        "otherInputsByteIdentical": 1058,
+        "plannerBytes": 51846,
+        "plannerPath": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "plannerSourceSha256": "de80bb530f8dc4c246f95649875ebb4afe2428ae278513caa8963102e67c6c34",
+        "plannerVariantSha256": "5a41e21d53c2dcae4037a404bd37fb6fc4205f1a69eab1b488c5e7340c020084",
+        "preparedManifestBytes": 218009,
+        "preparedManifestHarnessOverlay": {
+          "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+          "preparedSha256": "0c97dd4f0e1c3f4c18c34f80ca9c827f00639d17fa0599048ba9cf0c319f8867",
+          "sealedBytes": 28055,
+          "sealedSha256": "c95b1f6354c47e19e8499fcbc30565395190553e8d6a2fbce10de69ceb74f69c"
+        },
+        "preparedManifestSha256": "9e8459192abb8e3a6ebfcdd050cace2b3d2d586e5d07dcfdad5da74b213cbf3c",
+        "sealedPinsBytes": 199139,
+        "sealedPinsSha256": "ad2ea7f674581c387153e27db7875ab002a05ec6359a522b33d5c81037af86e1"
+      },
+      "CURRENT": {
+        "changedInputs": [],
+        "inputCount": 1059,
+        "inputDirectory": "saved-route-probe-current",
+        "otherInputsByteIdentical": 1059,
+        "plannerBytes": 51853,
+        "plannerPath": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "plannerSourceSha256": "de80bb530f8dc4c246f95649875ebb4afe2428ae278513caa8963102e67c6c34",
+        "plannerVariantSha256": "de80bb530f8dc4c246f95649875ebb4afe2428ae278513caa8963102e67c6c34",
+        "preparedManifestBytes": 216936,
+        "preparedManifestHarnessOverlay": {
+          "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+          "preparedSha256": "0c97dd4f0e1c3f4c18c34f80ca9c827f00639d17fa0599048ba9cf0c319f8867",
+          "sealedBytes": 28055,
+          "sealedSha256": "c95b1f6354c47e19e8499fcbc30565395190553e8d6a2fbce10de69ceb74f69c"
+        },
+        "preparedManifestSha256": "a097e4ab9978290d8ab0f853f917e57a95f1cd1af07fa8331f64703aa1045c44",
+        "sealedPinsBytes": 199139,
+        "sealedPinsSha256": "5f739f5dce412fba46fedbaa2c69a68df184a3c9b6f1ebd0e95898c2d448664b"
+      },
+      "GOALS_OFF": {
+        "changedInputs": [
+          "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java"
+        ],
+        "inputCount": 1059,
+        "inputDirectory": "saved-route-probe-goals-off",
+        "otherInputsByteIdentical": 1058,
+        "plannerBytes": 51534,
+        "plannerPath": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "plannerSourceSha256": "de80bb530f8dc4c246f95649875ebb4afe2428ae278513caa8963102e67c6c34",
+        "plannerVariantSha256": "4bbcf478a4716b63d8575210d379c463c93a1ce6b99f5f36ad04c53cc7c63e09",
+        "preparedManifestBytes": 217966,
+        "preparedManifestHarnessOverlay": {
+          "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+          "preparedSha256": "0c97dd4f0e1c3f4c18c34f80ca9c827f00639d17fa0599048ba9cf0c319f8867",
+          "sealedBytes": 28055,
+          "sealedSha256": "c95b1f6354c47e19e8499fcbc30565395190553e8d6a2fbce10de69ceb74f69c"
+        },
+        "preparedManifestSha256": "4e210224a9ef1abe5883ad03ebf9223fc261ecd0d6563c28135b228de8217754",
+        "sealedPinsBytes": 199139,
+        "sealedPinsSha256": "7492999e28f65f01efe3d20003ede73495257f76d8b6db69282c602268b0bbbf"
+      },
+      "TURN_UNIFORM": {
+        "changedInputs": [
+          "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java"
+        ],
+        "inputCount": 1059,
+        "inputDirectory": "saved-route-probe-turn-uniform",
+        "otherInputsByteIdentical": 1058,
+        "plannerBytes": 51662,
+        "plannerPath": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "plannerSourceSha256": "de80bb530f8dc4c246f95649875ebb4afe2428ae278513caa8963102e67c6c34",
+        "plannerVariantSha256": "312710146c69ec01b38dd3a5ffe4a42fafdd00716cf9fa7d8b735edfd331f996",
+        "preparedManifestBytes": 218518,
+        "preparedManifestHarnessOverlay": {
+          "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+          "preparedSha256": "0c97dd4f0e1c3f4c18c34f80ca9c827f00639d17fa0599048ba9cf0c319f8867",
+          "sealedBytes": 28055,
+          "sealedSha256": "c95b1f6354c47e19e8499fcbc30565395190553e8d6a2fbce10de69ceb74f69c"
+        },
+        "preparedManifestSha256": "b888a0a266a5f9a4d8269a8942524e42383d2ffebfd2e678998545b44020ca9f",
+        "sealedPinsBytes": 199139,
+        "sealedPinsSha256": "7d66df0178094295c6b9d9b564e4e00d0d0a0377d710eb4008efed7f7678e3fc"
+      }
+    }
+  },
+  "status": "PASS_DIAGNOSTIC_EVIDENCE_CENSUS_ONLY"
+}

@@ -1,0 +1,121 @@
+{
+  "status": "PASS_DESCRIPTIVE_COMPARISON_ONLY",
+  "layoutQualification": false,
+  "adoption": false,
+  "singleChangedPinnedProductionFile": [
+    "src/com/lushprojects/circuitjs1/client/Rb100Placement.java"
+  ],
+  "unchangedPinnedProductionFiles": 23,
+  "candidate": 0,
+  "baselineReceiptSha256": "bd37ba4cf0aa91c90d84f463283343cae081a959512ef8b09628c57f55358213",
+  "treatmentReceiptSha256": "fa0972d05cd3618c7cc4e0a195486adb3380ce618c6f8b2740770fd715a702d2",
+  "scope": "Actual same-candidate observations; smaller area is not routing qualification",
+  "cases": [
+    {
+      "variant": "SHARED_HYSTERETIC_LINEAR",
+      "baselineOutline": {
+        "x": 20,
+        "y": 20,
+        "width": 9300,
+        "height": 6440
+      },
+      "treatmentOutline": {
+        "x": 20,
+        "y": 20,
+        "width": 5090,
+        "height": 3330
+      },
+      "baselineArea": 59892000,
+      "treatmentArea": 16949700,
+      "baselineBlockedNet": "AC_FUSED",
+      "treatmentBlockedNet": "CTRL_RETURN",
+      "baselineRoutingStats": {
+        "outcome": "EXHAUSTED",
+        "rejectionReason": "SEARCH_LIMIT",
+        "routeAttempts": 4,
+        "branchSearches": 54,
+        "orderingPasses": 1,
+        "ripUpPasses": 0,
+        "rippedNets": 0,
+        "reroutedNets": 0,
+        "expansions": 1000000,
+        "candidateFailures": 1,
+        "rawSegments": 2278,
+        "congestionRejections": 2409,
+        "decisionsLength": 634,
+        "decisionsJavaHash": "90c3fa99",
+        "decisions": "order[0]=9:AC_RETURN,11:CTRL_RETURN,9:HV_RETURN,8:AC_FUSED,7:AC_LINE,5:A_RAW,7:BIAS_AC,5:B_RAW,5:C_RAW,5:D_RAW,6:HV_POS,6:LOAD12,6:RAIL12,7:RAIL3V3,5:RAIL5,10:AUX_RETURN,10:A_COIL_LOW,10:B_COIL_LOW,10:C_COIL_LOW,10:D_COIL_LOW,7:E_DRAIN,7:F_DRAIN,9:MON_SENSE,5:OUT_A,5:OUT_B,5:OUT_C,5:OUT_D,5:OUT_E,5:OUT_F,8:AUX_BASE,8:AUX_GATE,5:A_CMD,7:A_DRIVE,7:A_SENSE,5:B_CMD,7:B_DRIVE,7:B_SENSE,5:C_CMD,7:C_DRIVE,7:C_SENSE,5:D_CMD,7:D_DRIVE,7:D_SENSE,3:EN5,9:ENABLE_AC,7:E_DRIVE,5:FB_AC,7:F_DRIVE,7:MON_CMD,10:MON_FILTER,7:MON_REF,5:PRE_L,10:REF_SHARED,9:SENSE_LED,11:SENSE_ZENER,4:NC_A,4:NC_B,4:NC_C,4:NC_D,tree=0;reject[SEARCH_LIMIT:AC_FUSED];"
+      },
+      "treatmentRoutingStats": {
+        "outcome": "EXHAUSTED",
+        "rejectionReason": "SEARCH_LIMIT",
+        "routeAttempts": 14,
+        "branchSearches": 77,
+        "orderingPasses": 1,
+        "ripUpPasses": 2,
+        "rippedNets": 4,
+        "reroutedNets": 5,
+        "expansions": 1000000,
+        "candidateFailures": 1,
+        "rawSegments": 3318,
+        "congestionRejections": 13532,
+        "decisionsLength": 724,
+        "decisionsJavaHash": "a6a36c7",
+        "decisions": "order[0]=9:AC_RETURN,11:CTRL_RETURN,9:HV_RETURN,8:AC_FUSED,7:AC_LINE,5:A_RAW,7:BIAS_AC,5:B_RAW,5:C_RAW,5:D_RAW,6:HV_POS,6:LOAD12,6:RAIL12,7:RAIL3V3,5:RAIL5,10:AUX_RETURN,10:A_COIL_LOW,10:B_COIL_LOW,10:C_COIL_LOW,10:D_COIL_LOW,7:E_DRAIN,7:F_DRAIN,9:MON_SENSE,5:OUT_A,5:OUT_B,5:OUT_C,5:OUT_D,5:OUT_E,5:OUT_F,8:AUX_BASE,8:AUX_GATE,5:A_CMD,7:A_DRIVE,7:A_SENSE,5:B_CMD,7:B_DRIVE,7:B_SENSE,5:C_CMD,7:C_DRIVE,7:C_SENSE,5:D_CMD,7:D_DRIVE,7:D_SENSE,3:EN5,9:ENABLE_AC,7:E_DRIVE,5:FB_AC,7:F_DRIVE,7:MON_CMD,10:MON_FILTER,7:MON_REF,5:PRE_L,10:REF_SHARED,9:SENSE_LED,11:SENSE_ZENER,4:NC_A,4:NC_B,4:NC_C,4:NC_D,tree=0;rip[BIAS_AC]=[AC_RETURN, HV_RETURN];recovered[BIAS_AC];rip[C_RAW]=[CTRL_RETURN, A_RAW];reject[SEARCH_LIMIT:CTRL_RETURN];"
+      }
+    },
+    {
+      "variant": "SEPARATE_DIRECT_SWITCHING",
+      "baselineOutline": {
+        "x": 20,
+        "y": 20,
+        "width": 9300,
+        "height": 6440
+      },
+      "treatmentOutline": {
+        "x": 20,
+        "y": 20,
+        "width": 5090,
+        "height": 3330
+      },
+      "baselineArea": 59892000,
+      "treatmentArea": 16949700,
+      "baselineBlockedNet": "CTRL_RETURN",
+      "treatmentBlockedNet": "CTRL_RETURN",
+      "baselineRoutingStats": {
+        "outcome": "EXHAUSTED",
+        "rejectionReason": "SEARCH_LIMIT",
+        "routeAttempts": 2,
+        "branchSearches": 44,
+        "orderingPasses": 1,
+        "ripUpPasses": 0,
+        "rippedNets": 0,
+        "reroutedNets": 0,
+        "expansions": 1000000,
+        "candidateFailures": 1,
+        "rawSegments": 1800,
+        "congestionRejections": 0,
+        "decisionsLength": 639,
+        "decisionsJavaHash": "1fa5e36",
+        "decisions": "order[0]=9:AC_RETURN,11:CTRL_RETURN,9:HV_RETURN,8:AC_FUSED,7:AC_LINE,5:A_RAW,7:BIAS_AC,5:B_RAW,5:C_RAW,5:D_RAW,6:HV_POS,6:LOAD12,6:RAIL12,7:RAIL3V3,5:RAIL5,10:AUX_RETURN,10:A_COIL_LOW,10:B_COIL_LOW,10:C_COIL_LOW,10:D_COIL_LOW,7:E_DRAIN,7:F_DRAIN,9:MON_SENSE,5:OUT_A,5:OUT_B,5:OUT_C,5:OUT_D,5:OUT_E,5:OUT_F,8:AUX_BASE,8:AUX_GATE,5:A_CMD,7:A_DRIVE,5:A_REF,7:A_SENSE,5:B_CMD,7:B_DRIVE,5:B_REF,7:B_SENSE,5:C_CMD,7:C_DRIVE,7:C_SENSE,5:D_CMD,7:D_DRIVE,7:D_SENSE,3:EN5,9:ENABLE_AC,7:E_DRIVE,5:FB_AC,7:F_DRIVE,7:MON_CMD,10:MON_FILTER,7:MON_REF,5:PRE_L,9:SENSE_LED,11:SENSE_ZENER,4:NC_A,4:NC_B,4:NC_C,4:NC_D,tree=0;reject[SEARCH_LIMIT:CTRL_RETURN];"
+      },
+      "treatmentRoutingStats": {
+        "outcome": "EXHAUSTED",
+        "rejectionReason": "SEARCH_LIMIT",
+        "routeAttempts": 12,
+        "branchSearches": 98,
+        "orderingPasses": 1,
+        "ripUpPasses": 1,
+        "rippedNets": 2,
+        "reroutedNets": 2,
+        "expansions": 1000000,
+        "candidateFailures": 1,
+        "rawSegments": 3636,
+        "congestionRejections": 11694,
+        "decisionsLength": 671,
+        "decisionsJavaHash": "bd245375",
+        "decisions": "order[0]=9:AC_RETURN,11:CTRL_RETURN,9:HV_RETURN,8:AC_FUSED,7:AC_LINE,5:A_RAW,7:BIAS_AC,5:B_RAW,5:C_RAW,5:D_RAW,6:HV_POS,6:LOAD12,6:RAIL12,7:RAIL3V3,5:RAIL5,10:AUX_RETURN,10:A_COIL_LOW,10:B_COIL_LOW,10:C_COIL_LOW,10:D_COIL_LOW,7:E_DRAIN,7:F_DRAIN,9:MON_SENSE,5:OUT_A,5:OUT_B,5:OUT_C,5:OUT_D,5:OUT_E,5:OUT_F,8:AUX_BASE,8:AUX_GATE,5:A_CMD,7:A_DRIVE,5:A_REF,7:A_SENSE,5:B_CMD,7:B_DRIVE,5:B_REF,7:B_SENSE,5:C_CMD,7:C_DRIVE,7:C_SENSE,5:D_CMD,7:D_DRIVE,7:D_SENSE,3:EN5,9:ENABLE_AC,7:E_DRIVE,5:FB_AC,7:F_DRIVE,7:MON_CMD,10:MON_FILTER,7:MON_REF,5:PRE_L,9:SENSE_LED,11:SENSE_ZENER,4:NC_A,4:NC_B,4:NC_C,4:NC_D,tree=0;rip[D_RAW]=[CTRL_RETURN, B_RAW];reject[SEARCH_LIMIT:CTRL_RETURN];"
+      }
+    }
+  ]
+}

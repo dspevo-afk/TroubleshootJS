@@ -1,0 +1,130 @@
+{
+  "packetVersion": 1,
+  "evidence": "Q100_P07_ROLE_WIDTH_COMPILE_FAILURE",
+  "attempt": "p07-role-width-1",
+  "status": "FAIL_COMPILE",
+  "execution": {
+    "helperExitCode": 2,
+    "elapsedSeconds": 27.3663615,
+    "phase": "COMPILE",
+    "processFullyExited": true,
+    "cleanupStatus": "PASS",
+    "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+    "configuredSuites": [
+      "Rb100PlanContractTest",
+      "PcbRoleWidthTurnBoundContractTest",
+      "P08ReferenceWidthContractTest",
+      "P07LayeredRasterOracleContractTest",
+      "P08ScalabilityContractTest",
+      "Rb100P07PolicyDiagnosticContractTest"
+    ],
+    "executedSuiteCount": 0,
+    "executedSuites": [],
+    "p07Measurement": "NOT RUN",
+    "sanitizedLauncher": {
+      "pid": 32596,
+      "createdUtc": "2026-10-30T21:08:07.911954Z",
+      "executableLeaf": "powershell.exe",
+      "task": "p07-role-width-1",
+      "absoluteExecutablePathIncluded": false
+    }
+  },
+  "compilation": {
+    "status": "FAIL",
+    "compiler": "javac 1.8.0_502",
+    "sourceLevel": "1.7",
+    "bootstrapClassPathWarning": "warning: [options] bootstrap class path not set in conjunction with -source 1.7",
+    "diagnosticCount": 6,
+    "diagnostics": [
+      {
+        "source": "tests/contracts/P08ReferenceWidthContractTest.java",
+        "line": 236,
+        "message": "local variable missing is accessed from within inner class; needs to be declared final",
+        "capturedVariable": "missing"
+      },
+      {
+        "source": "tests/contracts/P08ReferenceWidthContractTest.java",
+        "line": 236,
+        "message": "local variable fixture is accessed from within inner class; needs to be declared final",
+        "capturedVariable": "fixture"
+      },
+      {
+        "source": "tests/contracts/P08ReferenceWidthContractTest.java",
+        "line": 239,
+        "message": "local variable production is accessed from within inner class; needs to be declared final",
+        "capturedVariable": "production"
+      },
+      {
+        "source": "tests/contracts/P08ReferenceWidthContractTest.java",
+        "line": 239,
+        "message": "local variable fixture is accessed from within inner class; needs to be declared final",
+        "capturedVariable": "fixture"
+      },
+      {
+        "source": "tests/contracts/P08ReferenceWidthContractTest.java",
+        "line": 242,
+        "message": "local variable reference is accessed from within inner class; needs to be declared final",
+        "capturedVariable": "reference"
+      },
+      {
+        "source": "tests/contracts/P08ReferenceWidthContractTest.java",
+        "line": 242,
+        "message": "local variable fixture is accessed from within inner class; needs to be declared final",
+        "capturedVariable": "fixture"
+      }
+    ],
+    "distinctCapturedVariables": [
+      "fixture",
+      "missing",
+      "production",
+      "reference"
+    ],
+    "failureSummary": "Java 7 compilation rejected four captured local variables in the rejectMissingVias fixture: missing, fixture, production, and reference; fixture is reported at three anonymous-inner-class sites.",
+    "compilerAndRunnerMarkers": [
+      "JDK: javac 1.8.0_502",
+      "warning: [options] bootstrap class path not set in conjunction with -source 1.7",
+      "PASS: current-contract runner pass detection assertions=16"
+    ]
+  },
+  "native": {
+    "status": "NOT RUN",
+    "javaSuitesExecuted": 0,
+    "p07Measurement": "NOT RUN",
+    "layoutQualification": "NOT RUN",
+    "runnerReportedSuiteListIsConfigurationOnly": true
+  },
+  "rawInputs": [
+    {
+      "file": "p07-role-width-1-result.json",
+      "sha256": "C1E6A483E7EED5454456F5F2F3AB1C97A1527EDDC91F47BCAAA2EB2F1A662455",
+      "bytes": 421
+    },
+    {
+      "file": "p07-role-width-1-console.txt",
+      "sha256": "EE8F7FA5BD090987A45B08E7FFF28F1B87A6356791F6DD92A901ADD5A8D36268",
+      "bytes": 3850,
+      "rawContentsIncluded": false
+    },
+    {
+      "file": "p07-role-width-1-launcher.json",
+      "sha256": "FA721F6C40C8EF856E0AE80B599493879C542773C0613E540A184F51AFC4517D",
+      "bytes": 194,
+      "contentIncluded": false,
+      "personalAbsolutePathsOmitted": true
+    }
+  ],
+  "sourcePins": {
+    "file": "p07-role-width1-source-pins.json",
+    "sha256": "A8E167349FAF1CE7B892C0E1D1256278AA9C20E175A2429C0C99605292797B90",
+    "count": 64,
+    "pathsRelative": true
+  },
+  "interpretation": {
+    "compileFailedBeforeTestExecution": true,
+    "actualSemanticsMeasured": false,
+    "layoutQualified": false,
+    "adopted": false,
+    "scope": "COMPILE_PRECONDITION_ONLY",
+    "cleanup": "PASS_EXPLICIT_CONSOLE_MARKER"
+  }
+}

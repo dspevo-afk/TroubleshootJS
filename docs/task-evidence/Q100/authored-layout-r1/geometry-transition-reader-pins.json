@@ -1,0 +1,126 @@
+{
+  "packetVersion": 1,
+  "evidence": "Q100_P07_GEOMETRY_EPOCH_TRANSITION_READER_PINS",
+  "finalReader": {
+    "file": "geometry-transition-reader-5.json",
+    "sha256": "e56dc672a8d86496c2142b7bf354e6ccc461131f98564b7b5c30c3f0d9f70a30",
+    "bytes": 7625887,
+    "protocol": "p07-six-board-epoch-transition-v1",
+    "status": "PASS_COMPARISON_ONLY",
+    "scope": "OBSERVATIONAL_SIX_BOARD_EPOCH_TRANSITION",
+    "layoutQualification": false,
+    "adopted": false,
+    "goldensUpdated": false,
+    "negativeCanaries": 38,
+    "comparedInputCount": 1059,
+    "comparisonInputScope": "1059_COMMON_BASELINE_CURRENT_NATIVE_INPUTS",
+    "consumedCurrentPinsAudited": 54,
+    "consumedCurrentNonCommonPaths": [
+      "docs/ARCHITECTURE.md",
+      "docs/CODEX_TASK_REPORT.md",
+      "docs/ROADMAP.md",
+      "docs/task-evidence/E06/accepted-state-r1/README.md",
+      "docs/task-evidence/Q100/authored-layout-r1/PLAN.md",
+      "docs/task-evidence/Q100/authored-layout-r1/README.md",
+      "scripts/verify-a03-browser.ps1",
+      "scripts/verify-e06-accepted-evidence.ps1",
+      "tests/contracts/P07ReachedPthContractTest.java",
+      "tests/qualification/rb100-layout/read_diagnostic.py",
+      "tests/qualification/rb100-layout/read_p07_branches.py",
+      "tests/qualification/rb100-layout/read_p07_policy.py",
+      "tests/qualification/rb100-layout/read_routing_diagnostic.py",
+      "tests/qualification/rb56-medium/read_qualification.py",
+      "tests/qualification/rb56-medium/test_read_qualification.py"
+    ],
+    "readerSha256": "05d970c24b811ac066774daa5f750464a9334830f17550ded0222a8ca99f255c",
+    "helperSha256": {
+      "read_diagnostic.py": "31f65be5e11472c7b09e8141292402c641df6b735787d32eb4c904ae098981e7"
+    },
+    "strictReaderBoundaries": {
+      "receiptFooterMustBeTerminal": true,
+      "consoleBoundToExactFocusPassCleanupAndTranscriptMarkers": true,
+      "transcriptGeometryBasenameSuffixRequired": true,
+      "trailingFailureCanaryPerEpoch": true,
+      "nonCommonProductionAndJarPinsRejected": true,
+      "negativeCanaries": 38
+    }
+  },
+  "readerSources": [
+    {
+      "repositoryPath": "tests/qualification/rb100-layout/read_geometry_transition.py",
+      "snapshotPath": "read_geometry_transition.py",
+      "bytes": 25903,
+      "sha256": "05d970c24b811ac066774daa5f750464a9334830f17550ded0222a8ca99f255c",
+      "reader5MetadataMatch": true,
+      "byteIdenticalSnapshot": true
+    },
+    {
+      "repositoryPath": "tests/qualification/rb100-layout/read_diagnostic.py",
+      "snapshotPath": "read_diagnostic.py",
+      "bytes": 10910,
+      "sha256": "31f65be5e11472c7b09e8141292402c641df6b735787d32eb4c904ae098981e7",
+      "reader5MetadataMatch": true,
+      "byteIdenticalSnapshot": true
+    }
+  ],
+  "readerSnapshot": {
+    "directory": "geometry-comparison-reader5-inputs",
+    "pinsFile": "pins.json",
+    "pinsSha256": "10b03f17b043a3a45fcfa4092e2774eadfea2b36539a4142ec6142f00f3cfc89",
+    "pinsBytes": 310,
+    "filesByteIdenticalToRepository": true
+  },
+  "preliminaryReader4": {
+    "file": "geometry-transition-reader-4.json",
+    "sha256": "724f9d0045681a894bcc9956a094d0f15314baa9ec6a4cfc922aa4985835c7eb",
+    "bytes": 7625001,
+    "status": "PRELIMINARY_SUPERSEDED_NOT_FINAL_TRANSPORT_VALIDATION",
+    "negativeCanaries": 36,
+    "readerSha256": "baf5dd1b89a5d2aa3690f37ef5c14739620896f45a230252f30243e1ac774b5c",
+    "reason": "Reader4 did not include the final receipt-footer, exact console transcript binding, and trailing-failure canary for each epoch. Reader5 is final; reader4 output remains preserved."
+  },
+  "preliminarySnapshotDisposition": "Reader4 temp snapshot remains untouched and is not used or claimed as reader4-source-matched; reader5 has its own exact verified snapshot.",
+  "nativeOutputBindings": {
+    "baseline2": {
+      "receiptSha256": "44b1f2ec5233392a5f89eb7ff8844670001189daf578694931cf2255c4ff38d9",
+      "receiptBytes": 3325680,
+      "consoleSha256": "472022eb3a3257ae0f58506145fd1be4bab41d8f9e049d1c03753a4a1bc1c6df",
+      "consoleBytes": 3327121
+    },
+    "current1": {
+      "receiptSha256": "e73585d4405c824b8a53e3cc02d9049fd5778ac0a5259807b6fc90995b745ba9",
+      "receiptBytes": 3280967,
+      "consoleSha256": "063ccf1de3a2c1dc0c0f6f23bc50456d672542df422e25ad55946ddc159608c3",
+      "consoleBytes": 3283086
+    }
+  },
+  "inputPins": {
+    "baseline2": {
+      "file": "geometry-baseline2-source-pins.json",
+      "sha256": "7c9089cbd57ea6a05e6324546309dc345e612fa89cb737c0763b4efb1a9affdf",
+      "bytes": 224612,
+      "count": 1059
+    },
+    "current1Full": {
+      "file": "geometry-current1-source-pins.json",
+      "sha256": "5b4e699a9154ce126d1b72c54479cc8df6cdf18be2c766926111f860da8ecb93",
+      "bytes": 204488,
+      "count": 1059
+    },
+    "current1Consumed": {
+      "file": "geometry-current1-consumed-pins.json",
+      "sha256": "d34c97a3d72a39b293840cdaa1dc38b1a7b0e5aec766041bfd6971f4634fdee7",
+      "bytes": 12262,
+      "count": 69,
+      "auditedCommonCount": 54,
+      "nonCommonCount": 15
+    }
+  },
+  "pathAndContentHandling": {
+    "readerOutputAbsolutePathPatternMatches": 0,
+    "pinPathsRelative": true,
+    "rawReceiptContentsIncluded": false,
+    "rawConsoleContentsIncluded": false,
+    "uncontrolledLogsIncluded": false
+  }
+}

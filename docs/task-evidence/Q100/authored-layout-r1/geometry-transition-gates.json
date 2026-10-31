@@ -1,0 +1,248 @@
+{
+  "packetVersion": 1,
+  "evidence": "Q100_P07_GEOMETRY_EPOCH_TRANSITION_GATES",
+  "status": "FINAL_PAIR_AND_READER_PASS_WITH_RETAINED_BASELINE_COMPILE_FAILURE",
+  "scope": "OBSERVATIONAL_SIX_BOARD_EPOCH_TRANSITION",
+  "layoutQualification": false,
+  "adopted": false,
+  "fullMatrix": "NOT RUN",
+  "jdk": "javac 1.8.0_502",
+  "attempts": [
+    {
+      "attempt": "geometry-baseline-1",
+      "status": "FAIL",
+      "phase": "COMPILE_BEFORE_NATIVE",
+      "source": "PRE_P_FROZEN_NATIVE_SNAPSHOT",
+      "helperExitCode": 2,
+      "helperElapsedSeconds": 24.8865765,
+      "jdk": "javac 1.8.0_502",
+      "suite": "P07GeometryEpochDiagnosticContractTest",
+      "nativeCases": 0,
+      "cleanupStatus": "PASS",
+      "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+      "failureNote": "Compilation failed before any of the six native geometry cases ran.",
+      "archivedFailureSource": {
+        "file": "geometry-baseline-1-failed-contract.java",
+        "bytes": 29350,
+        "sha256": "a0300a6689d4f8c70633d0ee189033f922bcf860a832884c554ce998587c15b7",
+        "contentIncluded": false
+      },
+      "sourcePins": {
+        "file": "geometry-baseline-1-pins.json",
+        "bytes": 224612,
+        "sha256": "9b33433070d66ce5e2d90346f57ac51c306b9342d6c2eed00e2472145fe00c81",
+        "contentIncluded": false
+      },
+      "result": {
+        "file": "geometry-baseline-1-result.json",
+        "bytes": 257,
+        "sha256": "49094ded10cc9acd6e1f3a96740de364da52fd85f1aa527d05481e76af668843",
+        "contentIncluded": false
+      },
+      "console": {
+        "file": "geometry-baseline-1-console.txt",
+        "bytes": 2348,
+        "sha256": "7ac52d72545ccb687b65751693ce397165ef20c9c159d28503caf68fac818d08",
+        "contentIncluded": false
+      }
+    },
+    {
+      "candidate": "FROZEN_PRE_P_SOURCE",
+      "helperExitCode": 0,
+      "helperElapsedSeconds": 43.842552999999995,
+      "suiteNames": [
+        "P07GeometryEpochDiagnosticContractTest"
+      ],
+      "caseCount": 6,
+      "assertions": 86480,
+      "nativeDiagnosticElapsedMs": 18068,
+      "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+      "layoutVersion": 22,
+      "dependencyEpoch": "tsj-generation-dependencies-v23",
+      "runId": "33f1995b-c666-49b7-bf19-a6add4938591",
+      "cleanupStatus": "PASS",
+      "processFullyExited": true,
+      "receipt": {
+        "file": "geometry-baseline-2-receipt.txt",
+        "bytes": 3325680,
+        "sha256": "44b1f2ec5233392a5f89eb7ff8844670001189daf578694931cf2255c4ff38d9",
+        "contentIncluded": false
+      },
+      "console": {
+        "file": "geometry-baseline-2-console.txt",
+        "bytes": 3327121,
+        "sha256": "472022eb3a3257ae0f58506145fd1be4bab41d8f9e049d1c03753a4a1bc1c6df",
+        "contentIncluded": false
+      },
+      "result": {
+        "file": "geometry-baseline-2-result.json",
+        "bytes": 265,
+        "sha256": "042c6b7a91a2bf09a123999bf228be1e6b3589524daf94dc9e1764b06bbeac03",
+        "contentIncluded": false
+      },
+      "sourcePins": {
+        "file": "geometry-baseline2-source-pins.json",
+        "bytes": 224612,
+        "sha256": "7c9089cbd57ea6a05e6324546309dc345e612fa89cb737c0763b4efb1a9affdf",
+        "count": 1059,
+        "byteIdenticalCopy": true
+      },
+      "status": "PASS",
+      "phase": "NATIVE_SUITE"
+    },
+    {
+      "candidate": "CURRENT_P_SOURCE",
+      "helperExitCode": 0,
+      "helperElapsedSeconds": 43.132230899999996,
+      "suiteNames": [
+        "P07GeometryEpochDiagnosticContractTest"
+      ],
+      "caseCount": 6,
+      "assertions": 86480,
+      "nativeDiagnosticElapsedMs": 17213,
+      "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+      "layoutVersion": 23,
+      "dependencyEpoch": "tsj-generation-dependencies-v24",
+      "runId": "01498c31-6baf-4b38-9738-5b7aded864ab",
+      "cleanupStatus": "PASS",
+      "processFullyExited": true,
+      "receipt": {
+        "file": "geometry-current-1-receipt.txt",
+        "bytes": 3280967,
+        "sha256": "e73585d4405c824b8a53e3cc02d9049fd5778ac0a5259807b6fc90995b745ba9",
+        "contentIncluded": false
+      },
+      "console": {
+        "file": "geometry-current-1-console.txt",
+        "bytes": 3283086,
+        "sha256": "063ccf1de3a2c1dc0c0f6f23bc50456d672542df422e25ad55946ddc159608c3",
+        "contentIncluded": false
+      },
+      "result": {
+        "file": "geometry-current-1-result.json",
+        "bytes": 168,
+        "sha256": "b105db3fd812a53e58a3fbba7c499e4925f91d0f83f99b2927db0676b1fbd546",
+        "contentIncluded": false
+      },
+      "fullInputPins": {
+        "file": "geometry-current1-source-pins.json",
+        "bytes": 204488,
+        "sha256": "5b4e699a9154ce126d1b72c54479cc8df6cdf18be2c766926111f860da8ecb93",
+        "count": 1059,
+        "byteIdenticalCopy": true
+      },
+      "consumedPins": {
+        "file": "geometry-current1-consumed-pins.json",
+        "bytes": 12262,
+        "sha256": "d34c97a3d72a39b293840cdaa1dc38b1a7b0e5aec766041bfd6971f4634fdee7",
+        "count": 69,
+        "byteIdenticalCopy": true,
+        "readerAuditedCommonCount": 54
+      },
+      "status": "PASS",
+      "phase": "NATIVE_SUITE"
+    }
+  ],
+  "finalReader": {
+    "file": "geometry-transition-reader-5.json",
+    "sha256": "e56dc672a8d86496c2142b7bf354e6ccc461131f98564b7b5c30c3f0d9f70a30",
+    "bytes": 7625887,
+    "protocol": "p07-six-board-epoch-transition-v1",
+    "status": "PASS_COMPARISON_ONLY",
+    "scope": "OBSERVATIONAL_SIX_BOARD_EPOCH_TRANSITION",
+    "layoutQualification": false,
+    "adopted": false,
+    "goldensUpdated": false,
+    "negativeCanaries": 38,
+    "comparedInputCount": 1059,
+    "comparisonInputScope": "1059_COMMON_BASELINE_CURRENT_NATIVE_INPUTS",
+    "consumedCurrentPinsAudited": 54,
+    "consumedCurrentNonCommonPaths": [
+      "docs/ARCHITECTURE.md",
+      "docs/CODEX_TASK_REPORT.md",
+      "docs/ROADMAP.md",
+      "docs/task-evidence/E06/accepted-state-r1/README.md",
+      "docs/task-evidence/Q100/authored-layout-r1/PLAN.md",
+      "docs/task-evidence/Q100/authored-layout-r1/README.md",
+      "scripts/verify-a03-browser.ps1",
+      "scripts/verify-e06-accepted-evidence.ps1",
+      "tests/contracts/P07ReachedPthContractTest.java",
+      "tests/qualification/rb100-layout/read_diagnostic.py",
+      "tests/qualification/rb100-layout/read_p07_branches.py",
+      "tests/qualification/rb100-layout/read_p07_policy.py",
+      "tests/qualification/rb100-layout/read_routing_diagnostic.py",
+      "tests/qualification/rb56-medium/read_qualification.py",
+      "tests/qualification/rb56-medium/test_read_qualification.py"
+    ],
+    "readerSha256": "05d970c24b811ac066774daa5f750464a9334830f17550ded0222a8ca99f255c",
+    "helperSha256": {
+      "read_diagnostic.py": "31f65be5e11472c7b09e8141292402c641df6b735787d32eb4c904ae098981e7"
+    },
+    "strictReaderBoundaries": {
+      "receiptFooterMustBeTerminal": true,
+      "consoleBoundToExactFocusPassCleanupAndTranscriptMarkers": true,
+      "transcriptGeometryBasenameSuffixRequired": true,
+      "trailingFailureCanaryPerEpoch": true,
+      "nonCommonProductionAndJarPinsRejected": true,
+      "negativeCanaries": 38
+    }
+  },
+  "validation": {
+    "baseline1CompileFailureRetained": true,
+    "baseline2NativeStatus": "PASS",
+    "current1NativeStatus": "PASS",
+    "reader5Status": "PASS_COMPARISON_ONLY",
+    "nativeCaseCountPerEpoch": 6,
+    "nativeAssertionCountPerEpoch": 86480,
+    "independentPhysicalAndPartitionWitnesses": "PASS for all 12 native cases",
+    "finiteWidthClearanceAndLayeredRasterChecks": "Included in each actual native contract case",
+    "goldenUpdate": "NONE",
+    "newGeometryGoldensSealed": false,
+    "readerStrictBoundaries": {
+      "receiptFooterMustBeTerminal": true,
+      "consoleBoundToExactFocusPassCleanupAndTranscriptMarkers": true,
+      "transcriptGeometryBasenameSuffixRequired": true,
+      "trailingFailureCanaryPerEpoch": true,
+      "nonCommonProductionAndJarPinsRejected": true,
+      "negativeCanaries": 38
+    }
+  },
+  "limits": {
+    "actualRb100Qualification": "NOT RUN",
+    "normalAdmission": "NOT CLAIMED",
+    "nativePrivacy": "NOT CLAIMED",
+    "productionTiming": "NOT CLAIMED"
+  },
+  "rawInputs": {
+    "baseline2Pins": {
+      "file": "geometry-baseline-2-pins.json",
+      "bytes": 224612,
+      "sha256": "7c9089cbd57ea6a05e6324546309dc345e612fa89cb737c0763b4efb1a9affdf",
+      "contentIncluded": false
+    },
+    "current1FullInputs": {
+      "file": "geometry-current-1-full-inputs.json",
+      "bytes": 204488,
+      "sha256": "5b4e699a9154ce126d1b72c54479cc8df6cdf18be2c766926111f860da8ecb93",
+      "contentIncluded": false
+    },
+    "current1ConsumedPins": {
+      "file": "freeze-geometry-current-1/pins.json",
+      "bytes": 12262,
+      "sha256": "d34c97a3d72a39b293840cdaa1dc38b1a7b0e5aec766041bfd6971f4634fdee7",
+      "contentIncluded": false
+    },
+    "reader5": {
+      "file": "geometry-transition-reader-5.json",
+      "bytes": 7625887,
+      "sha256": "e56dc672a8d86496c2142b7bf354e6ccc461131f98564b7b5c30c3f0d9f70a30",
+      "contentIncluded": false
+    },
+    "reader4Preliminary": {
+      "file": "geometry-transition-reader-4.json",
+      "bytes": 7625001,
+      "sha256": "724f9d0045681a894bcc9956a094d0f15314baa9ec6a4cfc922aa4985835c7eb",
+      "contentIncluded": false
+    }
+  }
+}

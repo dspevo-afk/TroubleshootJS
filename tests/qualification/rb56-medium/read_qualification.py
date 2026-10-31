@@ -23,9 +23,9 @@ REPLACEMENT_BLIND_2 = ["-2157433570835955452", "1325853684799777255", "-37981513
 PARTITIONS = {"profile": PROFILE, "development": DEVELOPMENT, "holdout": HOLDOUT,
               "replacement-blind": REPLACEMENT_BLIND,
               "replacement-blind-2": REPLACEMENT_BLIND_2}
-EPOCHS = {"replay": "tsj-alpha/7", "dependency": "tsj-generation-dependencies-v21",
+EPOCHS = {"replay": "tsj-alpha/7", "dependency": "tsj-generation-dependencies-v26",
           "model": "circuitjs-source-load-model-inputs-no-transient-dump-v7",
-          "layout": 20, "placement": 15, "plan": 1, "assessment": 3, "program": 2}
+          "layout": 25, "placement": 15, "plan": 1, "assessment": 3, "program": 2}
 LIMITS = {"jobMillis": 90000, "jobWork": 640, "unitMillis": 5000, "maximumCandidates": 4}
 MANIFEST_ORACLE = "tests/contracts/Rb56ManifestContractTest.java"
 MANIFEST_HASH_PROTOCOL = "rb56-part-decimal-value/1"
@@ -430,7 +430,7 @@ def check_capture(envelope, plan, partition, ordinal):
          "canonical request manifest differs from native oracle")
     if normal:
         need(request_manifest.startswith("tsj-generation-request/5;advanced-control@2;native;") and
-             f";replay=tsj-alpha/7/MEDIUM/RB56_CONTROL/{root};quickPlay=false;layout=20;" in request_manifest and
+             f";replay=tsj-alpha/7/MEDIUM/RB56_CONTROL/{root};quickPlay=false;layout=25;" in request_manifest and
              request_manifest.endswith(";search=true;difficulty=MEDIUM@1;assessment=3"),
              "normal request manifest differs")
     else:
@@ -454,7 +454,7 @@ def check_capture(envelope, plan, partition, ordinal):
              "canonical candidate manifest differs from native oracle")
         if normal:
             need(manifest.startswith(f"candidate=0{index};tsj-generation-request/5;advanced-control@2;native;") and
-                 f";replay=tsj-alpha/7/MEDIUM/RB56_CONTROL/{expected_seed};quickPlay=false;layout=20;" in manifest and
+                 f";replay=tsj-alpha/7/MEDIUM/RB56_CONTROL/{expected_seed};quickPlay=false;layout=25;" in manifest and
                  manifest.endswith(";search=false;difficulty=MEDIUM@1;assessment=3"),
                  "exact candidate manifest differs")
         else:

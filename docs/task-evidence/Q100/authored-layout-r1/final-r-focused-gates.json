@@ -1,0 +1,905 @@
+{
+  "schema": "troubleshootjs-q100-amendment-r-focused-native-gates",
+  "schemaVersion": 1,
+  "scope": "TEST_DIAGNOSTIC_CLEANUP_ONLY",
+  "candidate": {
+    "layoutVersion": 23,
+    "dependencyEpoch": "tsj-generation-dependencies-v24",
+    "planVersion": 1,
+    "modelVersion": 4,
+    "physicalIntentVersion": 9,
+    "placementDensityVersion": 14,
+    "physicalPolicy": "MEDIUM_BOARD@1",
+    "traceWidthProfile": "ROLE_TRACE@1"
+  },
+  "sourcePins": [
+    {
+      "attempt": 1,
+      "frozenSource": "freeze-final-r-focused-1/pins.json",
+      "publishedArtifact": "final-r-focused1-source-pins.json",
+      "byteExactCopyVerified": true,
+      "sha256": "be8163111bf8e7d818fdce2f5f8e83c326144bae89653c7c7e4c8f232cc90a01",
+      "bytes": 13270,
+      "pinRecords": 74
+    },
+    {
+      "attempt": 2,
+      "frozenSource": "freeze-final-r-focused-2/pins.json",
+      "publishedArtifact": "final-r-focused2-source-pins.json",
+      "byteExactCopyVerified": true,
+      "sha256": "0fda63f298384cc8c24ed17819c3667166fb34e1c45c5a3a7dcb436c8a42b8c2",
+      "bytes": 14068,
+      "pinRecords": 78
+    },
+    {
+      "attempt": 3,
+      "frozenSource": "freeze-final-r-focused-3/pins.json",
+      "publishedArtifact": "final-r-focused3-source-pins.json",
+      "byteExactCopyVerified": true,
+      "sha256": "769e1514f785fe999faf4621123b08a6d91293b866bf0225547836432dfd03aa",
+      "bytes": 14068,
+      "pinRecords": 78
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "FAIL",
+      "sourcePinArtifact": "final-r-focused1-source-pins.json",
+      "sourcePinSha256": "be8163111bf8e7d818fdce2f5f8e83c326144bae89653c7c7e4c8f232cc90a01",
+      "sourcePinRecords": 74,
+      "focusedRunnerExitCode": 2,
+      "contractChildExitCode": 1,
+      "outerHostExitCode": 1,
+      "elapsedSeconds": 26.7390314,
+      "requestedSuites": [
+        "PcbPlacementDiagnosticsContractTest",
+        "PcbCorridorOrientationContractTest"
+      ],
+      "contracts": [
+        {
+          "name": "PcbPlacementDiagnosticsContractTest",
+          "status": "FAIL",
+          "diagnosticObjects": [
+            {
+              "status": "PASS",
+              "facts": {
+                "fixture": "MEDIUM_GENERIC_EDGE_REGION_20_PART",
+                "subject": "STRUCTURAL_CONTROL",
+                "seed": "0",
+                "candidate": 0,
+                "components": 20,
+                "pads": 40,
+                "nets": 10,
+                "nullOutcome": "ACCEPTED",
+                "retryOutcome": "ACCEPTED",
+                "layoutVersion": 23,
+                "dependencyEpoch": "tsj-generation-dependencies-v24",
+                "planVersion": 1,
+                "modelVersion": 4,
+                "physicalIntentVersion": 9,
+                "observedOutcome": "ACCEPTED",
+                "nullGeometryKey": "d5e4a467/41787",
+                "observedGeometryKey": "d5e4a467/41787",
+                "retryGeometryKey": "d5e4a467/41787",
+                "firstFitOutcomeCount": 2556,
+                "firstFitOutcomes": {
+                  "outline": 0,
+                  "accessEnvelopeOverlap": 1646,
+                  "interDomainBarrier": 0,
+                  "globalCorridor": 0,
+                  "accepted": 910
+                },
+                "failureSnapshot": null,
+                "callbackExceptionPropagated": true,
+                "callbackAbortCallbacks": 1
+              },
+              "phase": "FINAL_REPORT_PREPARATION",
+              "operationMs": 1067,
+              "cleanupMs": 0,
+              "cleanupStatus": "PASS",
+              "workUnits": 13,
+              "maxUnitMs": 637,
+              "failurePhase": "",
+              "failureType": "none",
+              "failure": "",
+              "cleanupFailureType": "none",
+              "cleanupFailure": "",
+              "scope": "CURRENT_PLACEMENT_DIAGNOSTICS_ONLY"
+            },
+            {
+              "status": "FAIL",
+              "facts": {
+                "fixture": "MEDIUM_ISOLATION_CORRIDOR_WITNESS_20_PART",
+                "subject": "RIGHT_ANCHORED_PRIMARY",
+                "seed": "0",
+                "candidate": 0,
+                "components": 0,
+                "pads": 0,
+                "nets": 0,
+                "nullOutcome": "NOT_RUN",
+                "retryOutcome": "NOT_RUN",
+                "layoutVersion": 23,
+                "dependencyEpoch": "tsj-generation-dependencies-v24",
+                "planVersion": 1,
+                "modelVersion": 4,
+                "physicalIntentVersion": 9,
+                "observedOutcome": "NOT_RUN",
+                "nullGeometryKey": "NOT_AVAILABLE",
+                "observedGeometryKey": "NOT_AVAILABLE",
+                "retryGeometryKey": "NOT_AVAILABLE",
+                "firstFitOutcomeCount": 0,
+                "firstFitOutcomes": {
+                  "outline": 0,
+                  "accessEnvelopeOverlap": 0,
+                  "interDomainBarrier": 0,
+                  "globalCorridor": 0,
+                  "accepted": 0
+                },
+                "failureSnapshot": null,
+                "callbackExceptionPropagated": false,
+                "callbackAbortCallbacks": 0
+              },
+              "phase": "FINAL_REPORT_PREPARATION",
+              "operationMs": 29,
+              "cleanupMs": 0,
+              "cleanupStatus": "PASS",
+              "workUnits": 3,
+              "maxUnitMs": 9,
+              "failurePhase": "DETERMINISTIC_CORRIDOR_FIXTURE",
+              "failureType": "IllegalArgumentException",
+              "failure": "java.lang.IllegalArgumentException: One conductive net crosses isolated physical domains",
+              "cleanupFailureType": "none",
+              "cleanupFailure": "",
+              "scope": "CURRENT_PLACEMENT_DIAGNOSTICS_ONLY"
+            }
+          ],
+          "summary": {
+            "status": "FAIL",
+            "cases": 2,
+            "expectedCases": 2,
+            "failures": 1,
+            "assertions": 14,
+            "suiteMs": 1109,
+            "layoutVersion": 23,
+            "dependencyEpoch": "tsj-generation-dependencies-v24",
+            "planVersion": 1,
+            "modelVersion": 4,
+            "physicalIntentVersion": 9
+          },
+          "assertions": 14
+        },
+        {
+          "name": "PcbCorridorOrientationContractTest",
+          "status": "NOT_RUN",
+          "scope": null,
+          "summary": null,
+          "assertions": null,
+          "notRunReason": "The runner stopped after the preceding placement suite failed."
+        }
+      ],
+      "failure": [
+        {
+          "phase": "DETERMINISTIC_CORRIDOR_FIXTURE",
+          "type": "IllegalArgumentException",
+          "message": "java.lang.IllegalArgumentException: One conductive net crosses isolated physical domains",
+          "interpretation": "The fixture connected two UAC secondary nets to primary-domain resistor packages, so the board constraint validator rejected the netlist before planner entry."
+        }
+      ],
+      "cleanup": {
+        "status": "PASS",
+        "evidence": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "everyPlacementDiagnosticCaseCleanupPassed": true
+      },
+      "sourceArtifacts": [
+        {
+          "artifact": "final-r-focused-1-result.json",
+          "sha256": "4707e1943b735e3c0d6600bcc6783a269c6265d36ca52669babf7be710c318f8",
+          "bytes": 223
+        },
+        {
+          "artifact": "final-r-focused-1.log",
+          "sha256": "36a8add7b126ea66009f0e43dc7c85239b424348fe99ddb9a244d08175681cb9",
+          "bytes": 5055
+        }
+      ]
+    },
+    {
+      "attempt": 2,
+      "status": "FAIL",
+      "sourcePinArtifact": "final-r-focused2-source-pins.json",
+      "sourcePinSha256": "0fda63f298384cc8c24ed17819c3667166fb34e1c45c5a3a7dcb436c8a42b8c2",
+      "sourcePinRecords": 78,
+      "focusedRunnerExitCode": 2,
+      "contractChildExitCode": 1,
+      "outerHostExitCode": 1,
+      "elapsedSeconds": 26.3941996,
+      "requestedSuites": [
+        "PcbPlacementDiagnosticsContractTest",
+        "PcbCorridorOrientationContractTest"
+      ],
+      "contracts": [
+        {
+          "name": "PcbPlacementDiagnosticsContractTest",
+          "status": "FAIL",
+          "diagnosticObjects": [
+            {
+              "status": "PASS",
+              "facts": {
+                "fixture": "MEDIUM_GENERIC_EDGE_REGION_20_PART",
+                "subject": "STRUCTURAL_CONTROL",
+                "seed": "0",
+                "candidate": 0,
+                "components": 20,
+                "pads": 40,
+                "nets": 10,
+                "nullOutcome": "ACCEPTED",
+                "retryOutcome": "ACCEPTED",
+                "layoutVersion": 23,
+                "dependencyEpoch": "tsj-generation-dependencies-v24",
+                "planVersion": 1,
+                "modelVersion": 4,
+                "physicalIntentVersion": 9,
+                "observedOutcome": "ACCEPTED",
+                "nullGeometryKey": "d5e4a467/41787",
+                "observedGeometryKey": "d5e4a467/41787",
+                "retryGeometryKey": "d5e4a467/41787",
+                "firstFitOutcomeCount": 2556,
+                "firstFitOutcomes": {
+                  "outline": 0,
+                  "accessEnvelopeOverlap": 1646,
+                  "interDomainBarrier": 0,
+                  "globalCorridor": 0,
+                  "accepted": 910
+                },
+                "failureSnapshot": null,
+                "callbackExceptionPropagated": true,
+                "callbackAbortCallbacks": 1
+              },
+              "phase": "FINAL_REPORT_PREPARATION",
+              "operationMs": 814,
+              "cleanupMs": 0,
+              "cleanupStatus": "PASS",
+              "workUnits": 13,
+              "maxUnitMs": 494,
+              "failurePhase": "",
+              "failureType": "none",
+              "failure": "",
+              "cleanupFailureType": "none",
+              "cleanupFailure": "",
+              "scope": "CURRENT_PLACEMENT_DIAGNOSTICS_ONLY"
+            },
+            {
+              "status": "FAIL",
+              "facts": {
+                "fixture": "MEDIUM_ISOLATION_CORRIDOR_WITNESS_20_PART",
+                "subject": "RIGHT_ANCHORED_PRIMARY",
+                "seed": "0",
+                "candidate": 0,
+                "components": 20,
+                "pads": 45,
+                "nets": 38,
+                "nullOutcome": "PLACEMENT_MEDIUM_COMPONENT_PACKING",
+                "retryOutcome": "NOT_RUN",
+                "layoutVersion": 23,
+                "dependencyEpoch": "tsj-generation-dependencies-v24",
+                "planVersion": 1,
+                "modelVersion": 4,
+                "physicalIntentVersion": 9,
+                "observedOutcome": "PLACEMENT_MEDIUM_COMPONENT_PACKING",
+                "nullGeometryKey": "NOT_AVAILABLE",
+                "observedGeometryKey": "NOT_AVAILABLE",
+                "retryGeometryKey": "NOT_AVAILABLE",
+                "firstFitOutcomeCount": 1109,
+                "firstFitOutcomes": {
+                  "outline": 0,
+                  "accessEnvelopeOverlap": 137,
+                  "interDomainBarrier": 12,
+                  "globalCorridor": 835,
+                  "accepted": 125
+                },
+                "failureSnapshot": {
+                  "componentId": "UAC",
+                  "domainId": "PRIMARY",
+                  "regionId": "fixture",
+                  "outline": {
+                    "x": 20,
+                    "y": 20,
+                    "width": 1800,
+                    "height": 1410
+                  },
+                  "gridBounds": {
+                    "minOriginX": 70,
+                    "maxOriginX": 1350,
+                    "minOriginY": 60,
+                    "maxOriginY": 1080
+                  },
+                  "placedCount": 1,
+                  "evaluationCount": 984,
+                  "planEvaluationCount": 1109,
+                  "firstFitCauseCounts": {
+                    "outline": 0,
+                    "accessEnvelopeOverlap": 137,
+                    "interDomainBarrier": 12,
+                    "globalCorridor": 835,
+                    "accepted": 0
+                  },
+                  "firstGlobalCorridorWitness": {
+                    "barrier": {
+                      "firstDomain": "PRIMARY",
+                      "secondDomain": "SECONDARY",
+                      "clearance": 80
+                    },
+                    "trial": {
+                      "componentId": "UAC",
+                      "geometryId": "ISOLATED_CONVERTER_7",
+                      "geometryVariantKey": "DEFAULT",
+                      "geometryTransformKey": "IDENTITY",
+                      "x": 1130,
+                      "y": 560,
+                      "rotation": "DEG_0",
+                      "side": "TOP"
+                    },
+                    "trialDomainCourtyards": {
+                      "first": {
+                        "domainId": "PRIMARY",
+                        "present": true,
+                        "x": 1140,
+                        "y": 570,
+                        "width": 105,
+                        "height": 310,
+                        "extremaComponents": {
+                          "minX": "UAC",
+                          "maxX": "UAC",
+                          "minY": "UAC",
+                          "maxY": "UAC"
+                        }
+                      },
+                      "second": {
+                        "domainId": "SECONDARY",
+                        "present": true,
+                        "x": 1435,
+                        "y": 570,
+                        "width": 105,
+                        "height": 310,
+                        "extremaComponents": {
+                          "minX": "UAC",
+                          "maxX": "UAC",
+                          "minY": "UAC",
+                          "maxY": "UAC"
+                        }
+                      }
+                    },
+                    "preTrialAggregateBounds": {
+                      "first": {
+                        "domainId": "PRIMARY",
+                        "present": true,
+                        "x": 1634,
+                        "y": 654,
+                        "width": 112,
+                        "height": 142,
+                        "extremaComponents": {
+                          "minX": "JRIGHT",
+                          "maxX": "JRIGHT",
+                          "minY": "JRIGHT",
+                          "maxY": "JRIGHT"
+                        }
+                      },
+                      "second": {
+                        "domainId": "SECONDARY",
+                        "present": false,
+                        "x": 0,
+                        "y": 0,
+                        "width": 0,
+                        "height": 0,
+                        "extremaComponents": {
+                          "minX": "",
+                          "maxX": "",
+                          "minY": "",
+                          "maxY": ""
+                        }
+                      }
+                    },
+                    "postUnionAggregateBounds": {
+                      "first": {
+                        "domainId": "PRIMARY",
+                        "present": true,
+                        "x": 1140,
+                        "y": 570,
+                        "width": 606,
+                        "height": 310,
+                        "extremaComponents": {
+                          "minX": "UAC",
+                          "maxX": "JRIGHT",
+                          "minY": "UAC",
+                          "maxY": "UAC"
+                        }
+                      },
+                      "second": {
+                        "domainId": "SECONDARY",
+                        "present": true,
+                        "x": 1435,
+                        "y": 570,
+                        "width": 105,
+                        "height": 310,
+                        "extremaComponents": {
+                          "minX": "UAC",
+                          "maxX": "UAC",
+                          "minY": "UAC",
+                          "maxY": "UAC"
+                        }
+                      }
+                    },
+                    "signedMargins": {
+                      "meaning": "positive=clearance-shortfall; zero-or-negative=satisfies-orientation",
+                      "firstToSecondXMargin": 391,
+                      "secondToFirstXMargin": 480,
+                      "firstToSecondYMargin": 390,
+                      "secondToFirstYMargin": 390
+                    },
+                    "orientationMasks": {
+                      "appliedAllowed": 1,
+                      "appliedAllowedNames": [
+                        "firstLeftSecond"
+                      ],
+                      "unconstrainedSeparating": 0,
+                      "unconstrainedSeparatingNames": []
+                    }
+                  },
+                  "firstRequiredOrientationPruneWitness": null
+                },
+                "callbackExceptionPropagated": false,
+                "callbackAbortCallbacks": 0
+              },
+              "phase": "FINAL_REPORT_PREPARATION",
+              "operationMs": 119,
+              "cleanupMs": 0,
+              "cleanupStatus": "PASS",
+              "workUnits": 9,
+              "maxUnitMs": 49,
+              "failurePhase": "INDEPENDENT_FAILURE_SNAPSHOT_AND_WITNESS_CHECKS",
+              "failureType": "AssertionError",
+              "failure": "java.lang.AssertionError: RB100 physical diagnostics: actual selected UAC footprint emits the expected immutable orientation-prune witness",
+              "cleanupFailureType": "none",
+              "cleanupFailure": "",
+              "scope": "CURRENT_PLACEMENT_DIAGNOSTICS_ONLY"
+            }
+          ],
+          "summary": {
+            "status": "FAIL",
+            "cases": 2,
+            "expectedCases": 2,
+            "failures": 1,
+            "assertions": 138,
+            "suiteMs": 934,
+            "layoutVersion": 23,
+            "dependencyEpoch": "tsj-generation-dependencies-v24",
+            "planVersion": 1,
+            "modelVersion": 4,
+            "physicalIntentVersion": 9
+          },
+          "assertions": 138
+        },
+        {
+          "name": "PcbCorridorOrientationContractTest",
+          "status": "NOT_RUN",
+          "scope": null,
+          "summary": null,
+          "assertions": null,
+          "notRunReason": "The runner stopped after the preceding placement suite failed."
+        }
+      ],
+      "failure": [
+        {
+          "phase": "INDEPENDENT_FAILURE_SNAPSHOT_AND_WITNESS_CHECKS",
+          "type": "AssertionError",
+          "message": "java.lang.AssertionError: RB100 physical diagnostics: actual selected UAC footprint emits the expected immutable orientation-prune witness",
+          "interpretation": "The corrected fixture reached the planner and produced a first global-corridor witness with unconstrained mask 0. Its fixed UAC pose plus the right-side primary prefix admits no separating axis; the test incorrectly expected an orientation-prune witness."
+        }
+      ],
+      "cleanup": {
+        "status": "PASS",
+        "evidence": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "everyPlacementDiagnosticCaseCleanupPassed": true
+      },
+      "sourceArtifacts": [
+        {
+          "artifact": "final-r-focused-2-result.json",
+          "sha256": "242e138c0cc3460acdc56b0c3656102a1c7dff4a50332ab3eae6dc9b4a47c448",
+          "bytes": 215
+        },
+        {
+          "artifact": "final-r-focused-2.log",
+          "sha256": "e06911a47fdff70e35b1e5d46febca3cbb1ae847c2052e5d9eda26248cf41be8",
+          "bytes": 7305
+        }
+      ]
+    },
+    {
+      "attempt": 3,
+      "status": "PASS",
+      "sourcePinArtifact": "final-r-focused3-source-pins.json",
+      "sourcePinSha256": "769e1514f785fe999faf4621123b08a6d91293b866bf0225547836432dfd03aa",
+      "sourcePinRecords": 78,
+      "focusedRunnerExitCode": 0,
+      "contractChildExitCode": 0,
+      "outerHostExitCode": 0,
+      "elapsedSeconds": 26.524987099999997,
+      "requestedSuites": [
+        "PcbPlacementDiagnosticsContractTest",
+        "PcbCorridorOrientationContractTest"
+      ],
+      "contracts": [
+        {
+          "name": "PcbPlacementDiagnosticsContractTest",
+          "status": "PASS",
+          "diagnosticObjects": [
+            {
+              "status": "PASS",
+              "facts": {
+                "fixture": "MEDIUM_GENERIC_EDGE_REGION_20_PART",
+                "subject": "STRUCTURAL_CONTROL",
+                "seed": "0",
+                "candidate": 0,
+                "components": 20,
+                "pads": 40,
+                "nets": 10,
+                "nullOutcome": "ACCEPTED",
+                "retryOutcome": "ACCEPTED",
+                "layoutVersion": 23,
+                "dependencyEpoch": "tsj-generation-dependencies-v24",
+                "planVersion": 1,
+                "modelVersion": 4,
+                "physicalIntentVersion": 9,
+                "observedOutcome": "ACCEPTED",
+                "nullGeometryKey": "d5e4a467/41787",
+                "observedGeometryKey": "d5e4a467/41787",
+                "retryGeometryKey": "d5e4a467/41787",
+                "firstFitOutcomeCount": 2556,
+                "firstFitOutcomes": {
+                  "outline": 0,
+                  "accessEnvelopeOverlap": 1646,
+                  "interDomainBarrier": 0,
+                  "globalCorridor": 0,
+                  "accepted": 910
+                },
+                "failureSnapshot": null,
+                "callbackExceptionPropagated": true,
+                "callbackAbortCallbacks": 1
+              },
+              "phase": "FINAL_REPORT_PREPARATION",
+              "operationMs": 822,
+              "cleanupMs": 0,
+              "cleanupStatus": "PASS",
+              "workUnits": 13,
+              "maxUnitMs": 470,
+              "failurePhase": "",
+              "failureType": "none",
+              "failure": "",
+              "cleanupFailureType": "none",
+              "cleanupFailure": "",
+              "scope": "CURRENT_PLACEMENT_DIAGNOSTICS_ONLY"
+            },
+            {
+              "status": "PASS",
+              "facts": {
+                "fixture": "MEDIUM_ISOLATION_CORRIDOR_WITNESS_20_PART",
+                "subject": "RIGHT_ANCHORED_PRIMARY",
+                "seed": "0",
+                "candidate": 0,
+                "components": 20,
+                "pads": 45,
+                "nets": 38,
+                "nullOutcome": "PLACEMENT_MEDIUM_COMPONENT_PACKING",
+                "retryOutcome": "PLACEMENT_MEDIUM_COMPONENT_PACKING",
+                "layoutVersion": 23,
+                "dependencyEpoch": "tsj-generation-dependencies-v24",
+                "planVersion": 1,
+                "modelVersion": 4,
+                "physicalIntentVersion": 9,
+                "observedOutcome": "PLACEMENT_MEDIUM_COMPONENT_PACKING",
+                "nullGeometryKey": "NOT_AVAILABLE",
+                "observedGeometryKey": "NOT_AVAILABLE",
+                "retryGeometryKey": "NOT_AVAILABLE",
+                "firstFitOutcomeCount": 1109,
+                "firstFitOutcomes": {
+                  "outline": 0,
+                  "accessEnvelopeOverlap": 137,
+                  "interDomainBarrier": 12,
+                  "globalCorridor": 835,
+                  "accepted": 125
+                },
+                "failureSnapshot": {
+                  "componentId": "UAC",
+                  "domainId": "PRIMARY",
+                  "regionId": "fixture",
+                  "outline": {
+                    "x": 20,
+                    "y": 20,
+                    "width": 1800,
+                    "height": 1410
+                  },
+                  "gridBounds": {
+                    "minOriginX": 70,
+                    "maxOriginX": 1350,
+                    "minOriginY": 60,
+                    "maxOriginY": 1080
+                  },
+                  "placedCount": 1,
+                  "evaluationCount": 984,
+                  "planEvaluationCount": 1109,
+                  "firstFitCauseCounts": {
+                    "outline": 0,
+                    "accessEnvelopeOverlap": 137,
+                    "interDomainBarrier": 12,
+                    "globalCorridor": 835,
+                    "accepted": 0
+                  },
+                  "firstGlobalCorridorWitness": {
+                    "barrier": {
+                      "firstDomain": "PRIMARY",
+                      "secondDomain": "SECONDARY",
+                      "clearance": 80
+                    },
+                    "trial": {
+                      "componentId": "UAC",
+                      "geometryId": "ISOLATED_CONVERTER_7",
+                      "geometryVariantKey": "DEFAULT",
+                      "geometryTransformKey": "IDENTITY",
+                      "x": 1130,
+                      "y": 560,
+                      "rotation": "DEG_0",
+                      "side": "TOP"
+                    },
+                    "trialDomainCourtyards": {
+                      "first": {
+                        "domainId": "PRIMARY",
+                        "present": true,
+                        "x": 1140,
+                        "y": 570,
+                        "width": 105,
+                        "height": 310,
+                        "extremaComponents": {
+                          "minX": "UAC",
+                          "maxX": "UAC",
+                          "minY": "UAC",
+                          "maxY": "UAC"
+                        }
+                      },
+                      "second": {
+                        "domainId": "SECONDARY",
+                        "present": true,
+                        "x": 1435,
+                        "y": 570,
+                        "width": 105,
+                        "height": 310,
+                        "extremaComponents": {
+                          "minX": "UAC",
+                          "maxX": "UAC",
+                          "minY": "UAC",
+                          "maxY": "UAC"
+                        }
+                      }
+                    },
+                    "preTrialAggregateBounds": {
+                      "first": {
+                        "domainId": "PRIMARY",
+                        "present": true,
+                        "x": 1634,
+                        "y": 654,
+                        "width": 112,
+                        "height": 142,
+                        "extremaComponents": {
+                          "minX": "JRIGHT",
+                          "maxX": "JRIGHT",
+                          "minY": "JRIGHT",
+                          "maxY": "JRIGHT"
+                        }
+                      },
+                      "second": {
+                        "domainId": "SECONDARY",
+                        "present": false,
+                        "x": 0,
+                        "y": 0,
+                        "width": 0,
+                        "height": 0,
+                        "extremaComponents": {
+                          "minX": "",
+                          "maxX": "",
+                          "minY": "",
+                          "maxY": ""
+                        }
+                      }
+                    },
+                    "postUnionAggregateBounds": {
+                      "first": {
+                        "domainId": "PRIMARY",
+                        "present": true,
+                        "x": 1140,
+                        "y": 570,
+                        "width": 606,
+                        "height": 310,
+                        "extremaComponents": {
+                          "minX": "UAC",
+                          "maxX": "JRIGHT",
+                          "minY": "UAC",
+                          "maxY": "UAC"
+                        }
+                      },
+                      "second": {
+                        "domainId": "SECONDARY",
+                        "present": true,
+                        "x": 1435,
+                        "y": 570,
+                        "width": 105,
+                        "height": 310,
+                        "extremaComponents": {
+                          "minX": "UAC",
+                          "maxX": "UAC",
+                          "minY": "UAC",
+                          "maxY": "UAC"
+                        }
+                      }
+                    },
+                    "signedMargins": {
+                      "meaning": "positive=clearance-shortfall; zero-or-negative=satisfies-orientation",
+                      "firstToSecondXMargin": 391,
+                      "secondToFirstXMargin": 480,
+                      "firstToSecondYMargin": 390,
+                      "secondToFirstYMargin": 390
+                    },
+                    "orientationMasks": {
+                      "appliedAllowed": 1,
+                      "appliedAllowedNames": [
+                        "firstLeftSecond"
+                      ],
+                      "unconstrainedSeparating": 0,
+                      "unconstrainedSeparatingNames": []
+                    }
+                  },
+                  "firstRequiredOrientationPruneWitness": null
+                },
+                "callbackExceptionPropagated": true,
+                "callbackAbortCallbacks": 1
+              },
+              "phase": "FINAL_REPORT_PREPARATION",
+              "operationMs": 84,
+              "cleanupMs": 0,
+              "cleanupStatus": "PASS",
+              "workUnits": 10,
+              "maxUnitMs": 34,
+              "failurePhase": "",
+              "failureType": "none",
+              "failure": "",
+              "cleanupFailureType": "none",
+              "cleanupFailure": "",
+              "scope": "CURRENT_PLACEMENT_DIAGNOSTICS_ONLY"
+            }
+          ],
+          "summary": {
+            "status": "PASS",
+            "cases": 2,
+            "fixtures": [
+              "MEDIUM_GENERIC_EDGE_REGION_20_PART",
+              "MEDIUM_ISOLATION_CORRIDOR_WITNESS_20_PART"
+            ],
+            "layoutVersion": 23,
+            "dependencyEpoch": "tsj-generation-dependencies-v24",
+            "planVersion": 1,
+            "modelVersion": 4,
+            "physicalIntentVersion": 9,
+            "assertions": 278,
+            "suiteMs": 907,
+            "scope": "CURRENT_PLANNER_DIAGNOSTIC_CONTROLS_ONLY"
+          },
+          "assertions": 278
+        },
+        {
+          "name": "PcbCorridorOrientationContractTest",
+          "status": "PASS",
+          "scope": "PLANNER_ORIENTATION_GEOMETRY_ONLY",
+          "summary": {
+            "status": "PASS",
+            "cases": 5,
+            "layoutVersion": 23,
+            "dependencyEpoch": "tsj-generation-dependencies-v24",
+            "planVersion": 1,
+            "modelVersion": 4,
+            "physicalIntentVersion": 9,
+            "assertions": 19,
+            "elapsedMs": 16,
+            "scope": "PLANNER_ORIENTATION_GEOMETRY_ONLY"
+          },
+          "assertions": 19,
+          "notRunReason": null
+        }
+      ],
+      "failure": [],
+      "cleanup": {
+        "status": "PASS",
+        "evidence": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "everyPlacementDiagnosticCaseCleanupPassed": true
+      },
+      "sourceArtifacts": [
+        {
+          "artifact": "final-r-focused-3-result.json",
+          "sha256": "6d1535887a7dd6629e8ea513ba3864e9cea8540a82af28e17facf254595c40e4",
+          "bytes": 223
+        },
+        {
+          "artifact": "final-r-focused-3.log",
+          "sha256": "7844acb01e166be70866db5d6e3c2709434d4ca53e0c0cab2ac686d202a8950f",
+          "bytes": 7156
+        },
+        {
+          "artifact": "final-r-focused-3-receipt.txt",
+          "sha256": "9704271519fe6bce82966c1fc2e6d94970c8b953488f474fe4acc8dee1057389",
+          "bytes": 4887
+        }
+      ]
+    }
+  ],
+  "finalPassingCounts": {
+    "attempt": 3,
+    "PcbPlacementDiagnosticsContractTest": 278,
+    "PcbCorridorOrientationContractTest": 19
+  },
+  "corrections": [
+    {
+      "attempt": 1,
+      "classification": "FAIL_FIXTURE_INPUT",
+      "cause": "The fixture connected UAC.PRE_L+ and UAC.OUT- (secondary domain) through primary-domain resistor packages. The real placement-constraint validator rejected those conductive nets before planner execution.",
+      "fix": "Assign the linked resistors to the same domain as each UAC terminal; retain all seven UAC terminal-domain declarations and direct topology links."
+    },
+    {
+      "attempt": 2,
+      "classification": "FAIL_EXPECTED_WITNESS_KIND",
+      "cause": "The real planner emitted a global-corridor witness with unconstrained orientation mask 0. The fixed UAC geometry and right-anchored primary prefix leave no separating axis, so no required-orientation-prune witness exists.",
+      "fix": "Require the global-corridor witness, require the prune witness to be null, and independently recompute the post-union bounds and all four positive clearance margins from literal UAC courtyards plus JRIGHT pretrial bounds."
+    },
+    {
+      "attempt": 3,
+      "classification": "PASS_FOCUSED_R_GATE",
+      "cause": "The placement diagnostics and pure corridor-orientation controls passed with the corrected real fixture and preserved independent checks.",
+      "limits": "This is placement diagnostics and planner-orientation evidence only; it does not qualify an authored routed layout or player admission."
+    }
+  ],
+  "retiredEntryPointArchives": [
+    {
+      "source": "tests/contracts/Rb100LayoutFeasibilityContractTest.java",
+      "archiveRef": "amendment-r-pre-prune-20261030/Rb100LayoutFeasibilityContractTest.java",
+      "sha256": "E324DAA97B55376F11A92302F7A303BCEE888EE1D42059844ECBA4D29CE06A67",
+      "bytes": 238470,
+      "result": "RETIRED_SOURCE_ARCHIVE_ONLY_NOT_A_PASS"
+    },
+    {
+      "source": "tests/contracts/Rb100LayoutPlacementDiagnosticContractTest.java",
+      "archiveRef": "amendment-r-pre-prune-20261030/Rb100LayoutPlacementDiagnosticContractTest.java",
+      "sha256": "60C8C3A0AA97DB40EE7E55E16E0996CCF003B0407F3E9C1CB1A70F33D6ABB4EE",
+      "bytes": 493,
+      "result": "RETIRED_SOURCE_ARCHIVE_ONLY_NOT_A_PASS"
+    },
+    {
+      "source": "tests/contracts/Rb100LayoutRoutingDiagnosticContractTest.java",
+      "archiveRef": "amendment-r-pre-prune-20261030/Rb100LayoutRoutingDiagnosticContractTest.java",
+      "sha256": "1674B69A98DD9474D29B45F8B3B79F7DAA974E2D53F4E8D601CB037E036791FA",
+      "bytes": 481,
+      "result": "RETIRED_SOURCE_ARCHIVE_ONLY_NOT_A_PASS"
+    },
+    {
+      "source": "tests/contracts/Rb100LayoutFirstRoutingDiagnosticContractTest.java",
+      "archiveRef": "amendment-r-pre-prune-20261030/Rb100LayoutFirstRoutingDiagnosticContractTest.java",
+      "sha256": "DEE2396E3E0D2490B97823AA723772B87D2526187ADAF03C89068E2C30A3B05F",
+      "bytes": 490,
+      "result": "RETIRED_SOURCE_ARCHIVE_ONLY_NOT_A_PASS"
+    }
+  ],
+  "qualification": {
+    "Q100": "IN_PROGRESS_UNQUALIFIED",
+    "fourFreshCurrentLayeredLayouts": "OPEN_NOT_RUN_BY_THIS_GATE",
+    "familyAdmission": "NOT_GRANTED",
+    "retiredLegacyFailures": "PRESERVED_NOT_RECLASSIFIED_AS_PASS"
+  },
+  "rawLogsIncluded": false,
+  "personalAbsolutePathsIncluded": false
+}

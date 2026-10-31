@@ -1,0 +1,787 @@
+{
+  "packetVersion": 1,
+  "evidence": "P07_LATE_BOUND_FOCUSED_SINGLE_EXPRESSION_ROUTE_EXPERIMENT",
+  "status": "FOCUSED_NATIVE_OBSERVATION_PASS_NOT_ADOPTED",
+  "scope": {
+    "description": "Two-seed-5 saved-route cases (v10/v11 candidate 1) and one seed-42 v7 candidate-4 regression case under an isolated late-bound prototype.",
+    "layoutQualification": false,
+    "productionAdopted": false,
+    "sourceEpochLabelsNotAdopted": true,
+    "fullMatrix": "NOT_RUN",
+    "normalAdmission": "NOT_CLAIMED",
+    "currentGenerator78AreaCohort": "SEPARATE_NATIVE_PASS; READER_REJECTED_TYPED_ENVELOPE; SELECTED_RETAINED_AREA_FAIL; see late-bound-7-8-envelope-fail1.json; not adopted"
+  },
+  "sourceChange": {
+    "baselinePrototypeSha256": "3bc90241eea99c3982e6a1200b45ec8102ba47242f53784694ee23eb74e36402",
+    "variantPrototypeSha256": "b0be7e2c553eca09df2109ab242676434324615ef45721024d11491731ffac5d",
+    "diffSha256": "f92ee0a3b3292252a8d51b8209832115201c080099ebd4a3f1331e66b2f6f049",
+    "changedExpression": {
+      "before": "expanded>=WORK_QUANTUM",
+      "after": "expanded>=MAX_BRANCH_EXPANSIONS-WORK_QUANTUM"
+    },
+    "maximumBranchExpansions": 100000,
+    "workQuantum": 32768,
+    "reservedExpansionCount": 32768,
+    "activationExpansionCount": 67232,
+    "sourceDiffCount": 1,
+    "otherCodeOrBudgetChange": false,
+    "thresholdSweep": false,
+    "unchangedAreas": [
+      "costs and geometry predicates",
+      "field/clone/refresh logic",
+      "expansion and work accounting",
+      "goals and queue ties",
+      "caps and oracles",
+      "RESTRICTED policy",
+      "PcbNetRouter query source"
+    ],
+    "queryPcbNetRouterSha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a",
+    "sourceSpecClaimsAdopted": false
+  },
+  "inputs": {
+    "parentCopyAudit": {
+      "status": "COPIED_TWO_APPROVED_PARENTS_BYTE_IDENTICALLY_PENDING_OVERLAY",
+      "commonRelativePathMembership": "PASS_1059",
+      "caseDataEmbedded": false,
+      "hostAbsolutePathsEmbedded": false,
+      "overlayPendingAtCopyAudit": true
+    },
+    "pair": {
+      "inputCount": 1059,
+      "inputBytes": 85389181,
+      "pinsSha256": "953fe0d3858029dff25837e4afba180e8b9e719969bf4d6544dc37bd8ffa4aac",
+      "parentPinsSha256": "ffaefa62bbbc3a9722a9f18c350b9b2cec157ffe8875377f9b52d7819f46ea85",
+      "unchangedInputsRelativeParent": 1058,
+      "changedInputsRelativeParent": [
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+          "beforeSha256": "3bc90241eea99c3982e6a1200b45ec8102ba47242f53784694ee23eb74e36402",
+          "afterSha256": "b0be7e2c553eca09df2109ab242676434324615ef45721024d11491731ffac5d"
+        }
+      ],
+      "prototypeSha256": "b0be7e2c553eca09df2109ab242676434324615ef45721024d11491731ffac5d",
+      "routerSha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a",
+      "testHarnessSha256": "f3430bc9d1599595eb99add56d6a45536d0d67efb00aafdc789e4b4be794d611"
+    },
+    "regression": {
+      "inputCount": 1059,
+      "inputBytes": 85360745,
+      "pinsSha256": "8558e66a00b3a0952f7941cb0d02a798dfbddd8427d2394045dd539aefac6ed6",
+      "parentPinsSha256": "2dcce815d99f5c4f34b3d3cffaf3b4a77a9dccb71b241ec8104a0d20635346a3",
+      "unchangedInputsRelativeParent": 1058,
+      "changedInputsRelativeParent": [
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+          "beforeSha256": "3bc90241eea99c3982e6a1200b45ec8102ba47242f53784694ee23eb74e36402",
+          "afterSha256": "b0be7e2c553eca09df2109ab242676434324615ef45721024d11491731ffac5d"
+        }
+      ],
+      "prototypeSha256": "b0be7e2c553eca09df2109ab242676434324615ef45721024d11491731ffac5d",
+      "routerSha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a",
+      "testHarnessSha256": "634565ed093983d74f15e292299cb5477ba5daaed02b5d387a7bde49bd558dd8"
+    },
+    "harnessNote": "Pair suite uses its source-pinned f343... harness; single-case regression uses the same 634... harness as the AK U and parent AJ reference receipts."
+  },
+  "request": {
+    "producer": "SeededPcbLayoutGenerator.advanceMediumRoute",
+    "sequence": "candidate.plan.materialize() then PcbLayerRoutingPrototype.begin(board,placement,FULLER_TWO_LAYER,observer)",
+    "postprocessing": "NONE",
+    "rawRequestMaterializeAndRouteCallsMatchProduction": true,
+    "attemptObserver": "NOOP_ATTEMPT_OBSERVER",
+    "generationCancellationObserverExercised": false,
+    "routingSeedRole": "PLAN_IDENTITY_METADATA; P07_BACKEND_DOES_NOT_CONSUME_ROUTING_SEED",
+    "operationalBudgetQualification": false,
+    "qualificationClaims": "NONE"
+  },
+  "pairRun": {
+    "status": "PASS_SCRATCH_LAZY_BOUND_FOCUSED_VIABILITY",
+    "caseCount": 2,
+    "caseOrder": [
+      "SEED5_V10_CANDIDATE1",
+      "SEED5_V11_CANDIDATE1"
+    ],
+    "execution": {
+      "helperExitCode": 0,
+      "outerSequenceExitCode": 0,
+      "elapsedSeconds": 33.945982,
+      "inputPinsSha256": "953fe0d3858029dff25837e4afba180e8b9e719969bf4d6544dc37bd8ffa4aac",
+      "inputCount": 1059,
+      "inputAudit": "PASS_BEFORE_AND_AFTER",
+      "terminationProven": true,
+      "cleanupStatus": "PASS_EXPLICIT_MARKER",
+      "cleanupElapsedSeconds": "NOT_REPORTED_SEPARATELY",
+      "nativeChildLimitMs": 60000,
+      "outerWatchdogMs": 600000,
+      "assertions": 43778,
+      "nativeElapsedMs": 4470,
+      "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "recordTypes": {
+        "frame": 2,
+        "case": 2,
+        "branch": 283,
+        "cloneCanary": 2,
+        "suite": 1
+      }
+    },
+    "cases": [
+      {
+        "caseId": "SEED5_V10_CANDIDATE1",
+        "rootSeed": "5",
+        "version": 10,
+        "attempt": 1,
+        "placementSeed": "-7630701392004902526",
+        "routingSeed": "-9106650364266936003",
+        "logicalInventorySha256": "6fa70718324689757eb36cec7a3f5afff1cd3e0d96606929d6df9273f6784ff5",
+        "logicalBoardIdentitySha256": "ec43708a0839757177a6e89aa9d87b54edb2ae829b1a65a78862d38db9c2049e",
+        "inputGeometrySha256": "1c6136104db257aebfa692c2c6689fe620a658276062d783f36fbef10dd3cc19",
+        "expectedInputGeometryMatches": true,
+        "inputGeometryBytes": 133536,
+        "routeOutcome": "SUCCESS",
+        "accepted": true,
+        "expansions": 523756,
+        "orderings": 2,
+        "vias": 48,
+        "links": 0,
+        "branchCount": 187,
+        "branchExpandedTotal": 523756,
+        "relaxedBoundStartedBranches": 0,
+        "relaxedBoundCompleteBranches": 0,
+        "relaxedBoundEvidenceComplete": false,
+        "acceptedGeometrySha256": "e828d0e87587cc1189218dcf6f8677f929e194507b65d40f821787d7fe397255",
+        "acceptedGeometryLength": 148025,
+        "acceptedTraceGeometrySha256": "7001ea96577815e96e88094d8fa3e8210fab03cabd8aced57d39f0039b074c60",
+        "acceptedP08CanonicalSha256": "2bbc37b81215327a5941757593bcdd71d7b8c9636685a045d1de15d83a3c4297",
+        "acceptedOutputValidation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "orderedPadPairs": 17161,
+        "rasterOrderedPadPairs": 17161,
+        "p08SourceSegments": 249,
+        "p08SourceLands": 358,
+        "referenceClearancePairs": 17471,
+        "clearanceExactPairs": 0,
+        "assertions": 22390,
+        "routeDiagnosticMs": 1087,
+        "baselineRouteMs": 833,
+        "caseElapsedMs": 2602,
+        "diagnosticsDoNotChangeBaselineRoute": true,
+        "inputPlacementUnchanged": true,
+        "logicalPlanUnchanged": true,
+        "logicalBoardUnchanged": true
+      },
+      {
+        "caseId": "SEED5_V11_CANDIDATE1",
+        "rootSeed": "5",
+        "version": 11,
+        "attempt": 1,
+        "placementSeed": "-7630701392004902526",
+        "routingSeed": "-9106650364266936003",
+        "logicalInventorySha256": "1ffc2a9c6f98ddafa5a6a0cdeb334968281b8bd8910ab80bedf478d56fcd7f57",
+        "logicalBoardIdentitySha256": "ec43708a0839757177a6e89aa9d87b54edb2ae829b1a65a78862d38db9c2049e",
+        "inputGeometrySha256": "b21527ea02b45b9fdfb6233fb116d42a32077da84709674efe3b59b36e15c43f",
+        "expectedInputGeometryMatches": true,
+        "inputGeometryBytes": 133367,
+        "routeOutcome": "SUCCESS",
+        "accepted": true,
+        "expansions": 371901,
+        "orderings": 1,
+        "vias": 48,
+        "links": 0,
+        "branchCount": 96,
+        "branchExpandedTotal": 371901,
+        "relaxedBoundStartedBranches": 2,
+        "relaxedBoundCompleteBranches": 2,
+        "relaxedBoundWorkUnits": 452504,
+        "relaxedBoundPreprocessingWorkUnits": 380116,
+        "relaxedBoundOrdinaryProbes": 588140,
+        "relaxedBoundViaProbes": 147700,
+        "relaxedBoundRefreshes": 72388,
+        "relaxedBoundObservationCheckedBranches": 2,
+        "relaxedBoundLiveLayoutStableBranches": 2,
+        "relaxedBoundRouterStateStableBranches": 2,
+        "relaxedBoundRouterEffectsStableBranches": 2,
+        "relaxedBoundIncompleteStartedBranches": 0,
+        "relaxedBoundEvidenceComplete": true,
+        "acceptedGeometrySha256": "da26385cf2e7984293e6fe67c14cf4fedd299de996377d0a916f66d1055c0352",
+        "acceptedGeometryLength": 147974,
+        "acceptedTraceGeometrySha256": "80fc936f50ba09970d3b487f69b2899525e652d7bb15a177b32409f09e70e8ae",
+        "acceptedP08CanonicalSha256": "473e2b2430a76a5ae335a8166627ec7ea26daf6c95af97f16dec5ad52ec05a0a",
+        "acceptedOutputValidation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "orderedPadPairs": 17161,
+        "rasterOrderedPadPairs": 17161,
+        "p08SourceSegments": 274,
+        "p08SourceLands": 358,
+        "referenceClearancePairs": 19202,
+        "clearanceExactPairs": 0,
+        "assertions": 43774,
+        "routeDiagnosticMs": 818,
+        "baselineRouteMs": 768,
+        "caseElapsedMs": 1768,
+        "diagnosticsDoNotChangeBaselineRoute": true,
+        "inputPlacementUnchanged": true,
+        "logicalPlanUnchanged": true,
+        "logicalBoardUnchanged": true
+      }
+    ],
+    "boundBranches": [
+      {
+        "caseId": "SEED5_V11_CANDIDATE1",
+        "branchOrdinal": 68,
+        "pass": 0,
+        "netId": "OUT_A",
+        "startPadId": "RLEDOUT_A.1",
+        "rootPadId": "JOA.1",
+        "branchExpanded": 72908,
+        "totalExpanded": 212501,
+        "terminalReason": "FOUND",
+        "started": true,
+        "complete": true,
+        "workUnits": 208793,
+        "preprocessingWorkUnits": 190285,
+        "ordinaryProbes": 294978,
+        "viaProbes": 74077,
+        "refreshes": 18508,
+        "observationChecked": true,
+        "liveLayoutStable": true,
+        "routerStateStable": true,
+        "routerEffectsStable": true
+      },
+      {
+        "caseId": "SEED5_V11_CANDIDATE1",
+        "branchOrdinal": 70,
+        "pass": 0,
+        "netId": "OUT_B",
+        "startPadId": "RLEDOUT_B.1",
+        "rootPadId": "JOB.1",
+        "branchExpanded": 67972,
+        "totalExpanded": 313842,
+        "terminalReason": "FOUND",
+        "started": true,
+        "complete": true,
+        "workUnits": 243711,
+        "preprocessingWorkUnits": 189831,
+        "ordinaryProbes": 293162,
+        "viaProbes": 73623,
+        "refreshes": 53880,
+        "observationChecked": true,
+        "liveLayoutStable": true,
+        "routerStateStable": true,
+        "routerEffectsStable": true
+      }
+    ],
+    "cloneCanaries": [
+      {
+        "caseId": "SEED5_V10_CANDIDATE1",
+        "profile": "SAVED_PROFILE_V10",
+        "checkpointOrdinal": 6,
+        "observedCallbacks": 6,
+        "sentinelPropagated": true,
+        "partialCloneDiscarded": true,
+        "throwKind": "RuntimeException",
+        "expectedThrowableClass": "java.lang.IllegalStateException",
+        "sourceCloneStateParity": true,
+        "cacheWarmMethod": "freeLayerCell",
+        "cacheWarmNetId": "BIAS_AC",
+        "cacheWarmFreeCellResult": true,
+        "queryCacheWarmed": true,
+        "queryActiveNetMatchesWarmNet": true,
+        "queryActiveTraceWidthPositive": true,
+        "liveActiveNetRemainsNull": true,
+        "cacheDifferenceScope": "DERIVED_CURRENT_NET_PREPARATION_STATE",
+        "livePristineStableAfterQueryWarm": true,
+        "liveWarmedQueryDiffers": true,
+        "pristineWarmedQueryDiffers": true,
+        "liveEffectsStableAfterQueryWarm": true,
+        "pristineEffectsStableAfterQueryWarm": true,
+        "inputLayoutStableAfterQueryWarm": true,
+        "liveStateUnchanged": true,
+        "liveEffectsUnchanged": true,
+        "elapsedMs": 0,
+        "observerArmScope": "AFTER_CONSTRUCTION_AND_PRISTINE_COPY",
+        "timingScope": "NATIVE_CLONE_CHECKPOINT_ONLY_NOT_GWT_DEADLINE_PROOF"
+      },
+      {
+        "caseId": "SEED5_V11_CANDIDATE1",
+        "profile": "SAVED_PROFILE_V11",
+        "checkpointOrdinal": 6,
+        "observedCallbacks": 6,
+        "sentinelPropagated": true,
+        "partialCloneDiscarded": true,
+        "throwKind": "RuntimeException",
+        "expectedThrowableClass": "java.lang.IllegalStateException",
+        "sourceCloneStateParity": true,
+        "cacheWarmMethod": "freeLayerCell",
+        "cacheWarmNetId": "BIAS_AC",
+        "cacheWarmFreeCellResult": true,
+        "queryCacheWarmed": true,
+        "queryActiveNetMatchesWarmNet": true,
+        "queryActiveTraceWidthPositive": true,
+        "liveActiveNetRemainsNull": true,
+        "cacheDifferenceScope": "DERIVED_CURRENT_NET_PREPARATION_STATE",
+        "livePristineStableAfterQueryWarm": true,
+        "liveWarmedQueryDiffers": true,
+        "pristineWarmedQueryDiffers": true,
+        "liveEffectsStableAfterQueryWarm": true,
+        "pristineEffectsStableAfterQueryWarm": true,
+        "inputLayoutStableAfterQueryWarm": true,
+        "liveStateUnchanged": true,
+        "liveEffectsUnchanged": true,
+        "elapsedMs": 0,
+        "observerArmScope": "AFTER_CONSTRUCTION_AND_PRISTINE_COPY",
+        "timingScope": "NATIVE_CLONE_CHECKPOINT_ONLY_NOT_GWT_DEADLINE_PROOF"
+      }
+    ]
+  },
+  "regressionRun": {
+    "status": "PASS_OBSERVATION_ONLY",
+    "caseCount": 1,
+    "caseOrder": [
+      "SAVED7_ROOT42_CANDIDATE4"
+    ],
+    "execution": {
+      "helperExitCode": 0,
+      "outerSequenceExitCode": 0,
+      "elapsedSeconds": 30.5481972,
+      "inputPinsSha256": "8558e66a00b3a0952f7941cb0d02a798dfbddd8427d2394045dd539aefac6ed6",
+      "inputCount": 1059,
+      "inputAudit": "PASS_BEFORE_AND_AFTER",
+      "terminationProven": true,
+      "cleanupStatus": "PASS_EXPLICIT_MARKER",
+      "cleanupElapsedSeconds": "NOT_REPORTED_SEPARATELY",
+      "nativeChildLimitMs": 60000,
+      "outerWatchdogMs": 600000,
+      "assertions": 20935,
+      "nativeElapsedMs": 2064,
+      "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "recordTypes": {
+        "frame": 1,
+        "case": 1,
+        "branch": 97,
+        "suite": 1
+      }
+    },
+    "identity": {
+      "caseId": "SAVED7_ROOT42_CANDIDATE4",
+      "rootSeed": "42",
+      "placementSeed": "5526715536693200536",
+      "routingSeed": "4493419427463069983",
+      "version": 7,
+      "candidateAttempt": 4,
+      "layoutVersion": 24,
+      "dependencyEpoch": "tsj-generation-dependencies-v25",
+      "inputMaterializedGeometrySha256": "52c34368cef8518181ea6b338cb1473ad3bfbd76518b730e9cf144ba958f5f13",
+      "inputGeometryLength": 134269,
+      "logicalInventoryCanonicalSha256": "731fea0da4d7f9fd2404cc2979013ce41062d99d534324220a59ece71afa4b7e",
+      "logicalBoardIdentitySha256": "6b87db36bf3bdeb5f615ac38e6eb7fc5fef92e6b9c059b79c7be9945d335205a"
+    },
+    "route": {
+      "accepted": true,
+      "outcome": "SUCCESS",
+      "expansions": 300782,
+      "orderings": 1,
+      "vias": 48,
+      "links": 0,
+      "branchCount": 97,
+      "branchExpandedTotal": 300782,
+      "sessionSlices": 19,
+      "relaxedBoundStartedBranches": 1,
+      "relaxedBoundCompletedBranches": 1,
+      "relaxedBoundWorkUnits": 252561,
+      "relaxedBoundOrdinaryProbes": 244442,
+      "relaxedBoundViaProbes": 61396,
+      "relaxedBoundRefreshes": 20161,
+      "relaxedBoundObservationCheckedBranches": 1,
+      "relaxedBoundLiveLayoutStableBranches": 1,
+      "relaxedBoundRouterStateStableBranches": 1,
+      "relaxedBoundRouterEffectsStableBranches": 1,
+      "relaxedBoundIncompleteStartedBranches": 0,
+      "acceptedGeometrySha256": "e29cfd686e110d9be45815b10e590a5bb6e8b369c0def3a3ec0b6477dff623c1",
+      "acceptedGeometryLength": 148861,
+      "acceptedTraceGeometrySha256": "37aca52815e73724a72100edd91f360da6e9f9a1f9b8d7f394a27935350dacc3",
+      "acceptedP08CanonicalSha256": "998bd02cde33d034aad49e4095be8d3c2697134fede04b498f426c4c816b9785",
+      "acceptedOutputValidation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+      "orderedPadPairs": 17161,
+      "rasterOrderedPadPairs": 17161,
+      "p08SourceSegments": 248,
+      "p08SourceLands": 358,
+      "referenceClearancePairs": 18899,
+      "clearanceExactPairs": 0,
+      "assertions": 20935,
+      "routeDiagnosticMs": 971,
+      "baselineRouteMs": 557,
+      "caseElapsedMs": 2034,
+      "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+      "diagnosticsDoNotChangeBaselineRoute": true,
+      "inputPlacementUnchanged": true,
+      "logicalPlanUnchanged": true,
+      "logicalBoardUnchanged": true
+    },
+    "boundBranch": {
+      "ordinal": 78,
+      "pass": 0,
+      "netId": "B_CMD",
+      "startPadId": "U2B.OUTPUT",
+      "rootPadId": "RDB.1",
+      "branchExpanded": 77202,
+      "totalExpanded": 221781,
+      "terminalReason": "FOUND",
+      "started": true,
+      "complete": true,
+      "workUnits": 252561,
+      "preprocessingWorkUnits": null,
+      "ordinaryProbes": 244442,
+      "viaProbes": 61396,
+      "refreshes": 20161,
+      "observationChecked": true,
+      "liveLayoutStable": true,
+      "routerStateStable": true,
+      "routerEffectsStable": true
+    }
+  },
+  "baselineReferences": {
+    "akU": {
+      "sourcePinsSha256": "fce62ff2a5f2c533756e80860f8ccb0c8ab57bc6f7a0472bd2a86a78f8930aee",
+      "harnessSha256": "634565ed093983d74f15e292299cb5477ba5daaed02b5d387a7bde49bd558dd8",
+      "identity": {
+        "caseId": "SAVED7_ROOT42_CANDIDATE4",
+        "rootSeed": "42",
+        "version": 7,
+        "candidateAttempt": 4,
+        "inputMaterializedGeometrySha256": "52c34368cef8518181ea6b338cb1473ad3bfbd76518b730e9cf144ba958f5f13"
+      },
+      "route": {
+        "accepted": true,
+        "outcome": "SUCCESS",
+        "expansions": 523098,
+        "orderings": 3,
+        "vias": 48,
+        "branchCount": 250,
+        "acceptedGeometrySha256": "5d414c56407f2b8f572f25f804301cd8438676140bd00dc8c0c303280eb3bc25",
+        "acceptedTraceGeometrySha256": "52d1daf7c4bab09ecf311f79ab332b4e4e4cdcfcd4f624ac53ec6af33728ba20",
+        "acceptedP08CanonicalSha256": "3235b09379e77e2f5f502073f1c6a2bdf2d917ff516618e62fec9fe644217dca"
+      },
+      "branch69": {
+        "ordinal": 69,
+        "pass": 0,
+        "netId": "PRE_L",
+        "startPadId": "L1.1",
+        "rootPadId": "DFREE.K",
+        "branchExpanded": 41407,
+        "totalExpanded": 126950,
+        "goalsTop": 1,
+        "goalsBottom": 1,
+        "prefixViaCount": 24,
+        "terminalReason": "FOUND",
+        "optionalMetricsSupported": false,
+        "optionalStartValue": null
+      }
+    },
+    "parentAj": {
+      "sourcePinsSha256": "2dcce815d99f5c4f34b3d3cffaf3b4a77a9dccb71b241ec8104a0d20635346a3",
+      "parentPrototypeSha256": "3bc90241eea99c3982e6a1200b45ec8102ba47242f53784694ee23eb74e36402",
+      "queryRouterSha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a",
+      "harnessSha256": "634565ed093983d74f15e292299cb5477ba5daaed02b5d387a7bde49bd558dd8",
+      "identity": {
+        "caseId": "SAVED7_ROOT42_CANDIDATE4",
+        "rootSeed": "42",
+        "version": 7,
+        "candidateAttempt": 4,
+        "inputMaterializedGeometrySha256": "52c34368cef8518181ea6b338cb1473ad3bfbd76518b730e9cf144ba958f5f13"
+      },
+      "route": {
+        "accepted": true,
+        "outcome": "SUCCESS",
+        "expansions": 269665,
+        "orderings": 1,
+        "vias": 48,
+        "branchCount": 97,
+        "acceptedGeometrySha256": "2ed69fdacb2496648755081f7e81740b79ad0f629ca300ec569e6f21410a3750",
+        "acceptedTraceGeometrySha256": "8bbc92ab72db263ee61b6940e7a895a3cfda9f766b863074ac46c362ed952ff6",
+        "acceptedP08CanonicalSha256": "c43799b0174cd8076a1effb3101abf968a38b0f175d77ae4579ce9db0c40ddfb"
+      },
+      "triggerBranches": [
+        {
+          "ordinal": 69,
+          "pass": 0,
+          "netId": "PRE_L",
+          "branchExpanded": 33495,
+          "started": true,
+          "complete": true,
+          "workUnits": 237547
+        },
+        {
+          "ordinal": 78,
+          "pass": 0,
+          "netId": "B_CMD",
+          "branchExpanded": 53980,
+          "started": true,
+          "complete": true,
+          "workUnits": 251819
+        }
+      ]
+    }
+  },
+  "comparisons": {
+    "akUPrefixToLateRegression": {
+      "commonHarnessSha256": "634565ed093983d74f15e292299cb5477ba5daaed02b5d387a7bde49bd558dd8",
+      "oldBranchEvents": 250,
+      "newBranchEvents": 97,
+      "orderedPrefixRecordsCompared": 69,
+      "corePropertySetEqual": true,
+      "coreFieldsEqual": true,
+      "differenceCount": 0,
+      "excludedFields": [
+        "runId",
+        "frameId",
+        "optionalAjBranchMetricsSupported",
+        "optionalAjRelaxedBoundStarted",
+        "optionalAjRelaxedBoundComplete",
+        "optionalAjRelaxedBoundWorkUnits",
+        "optionalAjRelaxedBoundOrdinaryProbes",
+        "optionalAjRelaxedBoundViaProbes",
+        "optionalAjRelaxedBoundRefreshes",
+        "optionalAjRelaxedBoundObservationChecked",
+        "optionalAjRelaxedBoundLiveLayoutStable",
+        "optionalAjRelaxedBoundRouterStateStable",
+        "optionalAjRelaxedBoundRouterEffectsStable"
+      ],
+      "note": "Only branch records 1-69 are compared. U and AL full-route outcomes differ; this is a prefix comparison, not full-stream parity.",
+      "branch69Old": {
+        "branchExpanded": 41407,
+        "totalExpanded": 126950,
+        "optionalMetricsSupported": false,
+        "optionalStartValue": null
+      },
+      "branch69Late": {
+        "branchExpanded": 41407,
+        "totalExpanded": 126950,
+        "optionalMetricsSupported": true,
+        "optionalStartValue": false,
+        "optionalWorkUnits": 0
+      }
+    },
+    "parentAjToLateRegression": {
+      "sameCaseIdentity": true,
+      "sameInputGeometrySha256": true,
+      "changedProductionInputCount": 1,
+      "changedProductionPath": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "parentFirstBound": {
+        "ordinal": 69,
+        "netId": "PRE_L",
+        "branchExpanded": 33495
+      },
+      "lateFirstBound": {
+        "ordinal": 78,
+        "netId": "B_CMD",
+        "branchExpanded": 77202
+      },
+      "parentStartedBranches": 2,
+      "lateStartedBranches": 1,
+      "routeOutputsDiffer": true,
+      "causalConclusion": "NOT_ESTABLISHED"
+    }
+  },
+  "artifacts": [
+    {
+      "name": "late-bound-copy1.json",
+      "role": "PARENT_COPY_AUDIT",
+      "bytes": 1762,
+      "sha256": "7722b9b2022e891795dda9af123a964ebc63a4006d6ce7e894783239fc58da6f",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-bound-pair-inputs-sealed1.json",
+      "role": "PAIR_INPUT_SEAL",
+      "bytes": 1257,
+      "sha256": "91432173280351d2472e3401c393bd081e95570f08c6f513da9e0ce90e0eb143",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-bound-pair-sealed-pins1.json",
+      "role": "PAIR_SOURCE_PINS",
+      "bytes": 199140,
+      "sha256": "953fe0d3858029dff25837e4afba180e8b9e719969bf4d6544dc37bd8ffa4aac",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-bound-regression-inputs-sealed1.json",
+      "role": "REGRESSION_INPUT_SEAL",
+      "bytes": 1275,
+      "sha256": "b152e831700783f764b0e1aa04183a4612b789753015d10bdd48d5ab68fe1479",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-bound-regression-sealed-pins1.json",
+      "role": "REGRESSION_SOURCE_PINS",
+      "bytes": 199140,
+      "sha256": "8558e66a00b3a0952f7941cb0d02a798dfbddd8427d2394045dd539aefac6ed6",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-fixed-bound-router-source-1/PcbLayerRoutingPrototype.java",
+      "role": "LATE_BOUND_ROUTER_PROTOTYPE",
+      "bytes": 71376,
+      "sha256": "b0be7e2c553eca09df2109ab242676434324615ef45721024d11491731ffac5d",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-fixed-bound-router-source-1/diff.patch",
+      "role": "ONE_EXPRESSION_SOURCE_DIFF",
+      "bytes": 556,
+      "sha256": "f92ee0a3b3292252a8d51b8209832115201c080099ebd4a3f1331e66b2f6f049",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-fixed-bound-router-source-1/spec.json",
+      "role": "SOURCE_CHANGE_SPEC",
+      "bytes": 1345,
+      "sha256": "14309def50a4de67dbe3b0ce82ee74524f3713cbfb675c3304769548befaa576",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-bound-observations-1/late-bound-pair-1-result.json",
+      "role": "PAIR_RUN_RESULT",
+      "bytes": 869,
+      "sha256": "f3e66e0670d961b56de378e818d751d05d8d8c7614bf26b285c55fa9dc539db1",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-bound-observations-1/late-bound-pair-1-console.txt",
+      "role": "PAIR_RUN_STDOUT",
+      "bytes": 299481,
+      "sha256": "f0ddeb2a5c1da4ec1abd273d1ff84b23746e59ccc2e5754f995995e41d038565",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-bound-observations-1/late-bound-pair-1-receipt.txt",
+      "role": "PAIR_EVENT_RECEIPT",
+      "bytes": 298341,
+      "sha256": "adbcc84e8fdf309b1545a68f2c545443a20f062080677bf78fa86cc31c7b9045",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-bound-observations-1/late-bound-pair-1-stderr.txt",
+      "role": "PAIR_RUN_STDERR",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-bound-observations-1/late-bound-pair-1-launcher.json",
+      "role": "PAIR_LAUNCHER_METADATA_HASH_ONLY",
+      "bytes": 224,
+      "sha256": "64a52da17efdf397343d383ca99c2e25c334d1e1ee43fec7e4ce2231b6e04685",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-bound-observations-1/late-bound-regression-1-result.json",
+      "role": "REGRESSION_RUN_RESULT",
+      "bytes": 890,
+      "sha256": "4f8328958b41af0d0c2a58009740d9d075be8c109b40413940a9944ef4d633db",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-bound-observations-1/late-bound-regression-1-console.txt",
+      "role": "REGRESSION_RUN_STDOUT",
+      "bytes": 118935,
+      "sha256": "49e70ada569a68597c62abc70c5aac00af34220803641ed87e9a59b5f07ea69f",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-bound-observations-1/late-bound-regression-1-receipt.txt",
+      "role": "REGRESSION_EVENT_RECEIPT",
+      "bytes": 117795,
+      "sha256": "f06b48a0cce211810ee7fa5fed3ab5461c391c9e7dd775953ad602d2ed996413",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-bound-observations-1/late-bound-regression-1-stderr.txt",
+      "role": "REGRESSION_RUN_STDERR",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "late-bound-observations-1/late-bound-regression-1-launcher.json",
+      "role": "REGRESSION_LAUNCHER_METADATA_HASH_ONLY",
+      "bytes": 236,
+      "sha256": "9cdd27179aa67a779ed013b9704a65f9f6eda2af5b4b62a73adae9f8268d366a",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-bound-regression-observations-1/lazy-bound-regression-u-1-result.json",
+      "role": "AK_U_PREFIX_REFERENCE_RESULT",
+      "bytes": 867,
+      "sha256": "7b7ea7192de2ac1eeb94c2431102cfbd1f93afbdafb4b046de878905a4343a38",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-bound-regression-observations-1/lazy-bound-regression-u-1-receipt.txt",
+      "role": "AK_U_PREFIX_REFERENCE_RECEIPT",
+      "bytes": 287355,
+      "sha256": "5e445d71c9edb3bbf7a8421e0539b1270a5151307a2f69e27b43672b138cf2d9",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-bound-regression-observations-1/lazy-bound-regression-aj-1-result.json",
+      "role": "PARENT_AJ_REFERENCE_RESULT",
+      "bytes": 868,
+      "sha256": "868f799d800c0441e5293813dcb2490290f4e5ef5ea95dab59a5bacb60727530",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-bound-regression-observations-1/lazy-bound-regression-aj-1-receipt.txt",
+      "role": "PARENT_AJ_REFERENCE_RECEIPT",
+      "bytes": 117807,
+      "sha256": "8134ab50cf4ff0f29a4b5d10bc2b269b47195e4a3ba70d9e3ab60a419bcfae3e",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "docs/task-evidence/Q100/authored-layout-r1/lazy-bound-regression1.json",
+      "role": "AK_CURATED_REFERENCE_PACKET",
+      "bytes": 25762,
+      "sha256": "578216b8b052c08e2e56154460a004996ee044b4320353c1421183c9bc790455",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "docs/task-evidence/Q100/authored-layout-r1/late-bound-7-8-envelope-fail1.json",
+      "role": "SEPARATE_GENERATOR_7_8_ENVELOPE_AND_RETAINED_AREA_FAILURE",
+      "bytes": 3259,
+      "sha256": "4d15649e40803e86bea18b6a2a2d5960eb29fb8b3aa03a7da651c54aa38d93be",
+      "rawContentsIncluded": false
+    }
+  ],
+  "relatedGenerator78Followup": {
+    "packet": "docs/task-evidence/Q100/authored-layout-r1/late-bound-7-8-envelope-fail1.json",
+    "packetSha256": "4d15649e40803e86bea18b6a2a2d5960eb29fb8b3aa03a7da651c54aa38d93be",
+    "packetBytes": 3259,
+    "status": "NOT_ACCEPTED_TYPED_ENVELOPE_AND_RETAINED_METRIC_VIOLATION",
+    "nativeStatus": "PASS_NATIVE_OBSERVATIONS_ONLY",
+    "inputPinsSha256": "953fe0d3858029dff25837e4afba180e8b9e719969bf4d6544dc37bd8ffa4aac",
+    "readerError": "Producer inputRevision=1; maintained current-side envelope requires inputRevision=3; comparison output not emitted",
+    "case": "saved7/root42/version7/candidate4",
+    "retainedArea": {
+      "operator": "<=",
+      "expected": 6371585,
+      "actual": 6524231,
+      "delta": 152646,
+      "status": "FAIL_OBSERVED_METRIC_NOT_WHOLE_COHORT_ACCEPTANCE"
+    },
+    "adoption": false,
+    "full72": "NOT_RUN",
+    "qComparison": "NOT_RUN",
+    "productionBuild": "NOT_RUN",
+    "native": {
+      "status": "PASS_NATIVE_OBSERVATIONS_ONLY",
+      "assertions": 185151,
+      "elapsedSeconds": 50.6086008,
+      "cleanup": "PASS_MARKER_OBSERVED",
+      "cleanupOnlyDuration": "NOT_REPORTED",
+      "terminationProven": true,
+      "inputCount": 1059,
+      "inputAudit": "PASS_BEFORE_AND_AFTER"
+    }
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "schema": "tsj-q100-kernel-lease-canary-v1",
+  "recordedUtc": "2026-10-31T13:01:31.186Z",
+  "candidate": {
+    "sourceFile": "VerifierIsolation.psm1",
+    "sourceSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "previewSourceFile": "preview.ps1",
+    "productionOrModuleChangesForCanary": false,
+    "budgetChanges": false
+  },
+  "kernelCanary": {
+    "status": "PASS",
+    "harnessFile": "run-kernel-proof-canary.ps1",
+    "harnessSha256": "902acbc30926d63d795e4d2cd4b41f180459a6c6a0269e9e2624cad0ff5f10aa",
+    "resultFile": "result.json",
+    "resultSha256": "0d811373fea560d2cab4c0f4befd9f4d474cbb8ee4dd5eb7eaefcae7f77f9caf",
+    "requestedTransport": "default; ForceTcpListener=false",
+    "proof": {
+      "stage": "kernel-semantic-authorization",
+      "listenerOwnerKind": "kernel-transport",
+      "listenerSourceKind": "netstat",
+      "listenerCount": 1,
+      "externalElapsedMilliseconds": 217.966,
+      "moduleReportedElapsedMilliseconds": 207,
+      "fullCallUnder500Milliseconds": true,
+      "opaqueAuthorizationProofPresent": true,
+      "opaqueAuthorizationProofStored": false,
+      "positiveOwnedListenerAccepted": true,
+      "wrongStartIdentityRejected": true,
+      "exactStartIdentityRestored": true,
+      "restoredPositiveAccepted": true
+    },
+    "cleanup": {
+      "success": true,
+      "state": "complete",
+      "elapsedMilliseconds": 5975.524,
+      "budgetMilliseconds": 120000,
+      "withinBudget": true,
+      "processTerminationProven": true,
+      "processAbsent": true,
+      "listenerInspectionProven": true,
+      "listenerAbsent": true,
+      "leaseCount": 1,
+      "claimHandlesOpen": 0,
+      "claimGuardsPassed": true,
+      "errorCount": 0
+    },
+    "boundedOuter": {
+      "resultFile": "bounded2-result.json",
+      "exitCode": 0,
+      "terminationProven": true,
+      "elapsedSeconds": 20.2048588,
+      "timeoutMilliseconds": 240000
+    }
+  },
+  "selectedHostPreflight": {
+    "resultFile": "preflight-bounded-result-2.json",
+    "result": "PASS",
+    "childRuntime": "Windows PowerShell 5.1.26100.9711",
+    "parentRuntime": "PowerShell Core 7.6.5",
+    "boundedChildExitCode": 0,
+    "boundedChildTerminationProven": true,
+    "pinnedModuleImported": true,
+    "getFileHashAvailable": false,
+    "getFileHashFailureId": "CommandNotFoundException",
+    "getProcessAndExecutableIdentityAvailable": true,
+    "dotNetSha256MatchedPinnedModule": true,
+    "missingFileHashRejected": true,
+    "boundedTimeoutMilliseconds": 45000
+  },
+  "preservedFailures": [
+    {
+      "attempt": "kernel-canary1",
+      "status": "FAIL",
+      "failureStage": "preflight",
+      "failureId": "CommandNotFoundException",
+      "cause": "Get-FileHash unavailable in selected Windows PowerShell 5 child",
+      "harnessSha256": "d7f93854ad1618005379bbbe9e4115c42f28373739aac5fab2cdbc6d67133541",
+      "boundedRecord": "bounded1-result.json",
+      "boundedHelperExitCode": 2,
+      "boundedHelperTerminationProven": true,
+      "elapsedSeconds": 0.8920735,
+      "contextCreated": false,
+      "previewStarted": false,
+      "cleanupAttempted": false
+    },
+    {
+      "attempt": "kernel-canary1-preflight-wrapper-v1",
+      "status": "FAIL",
+      "cause": "Wrapper JSON parse returned null because module import warning preceded child JSON",
+      "childPreflightResult": "PASS",
+      "resultFile": "preflight-bounded-result.json",
+      "retained": true
+    },
+    {
+      "attempt": "current2",
+      "status": "FAIL",
+      "elapsedSeconds": 19.5291,
+      "failureStage": "kernel-semantic-authorization",
+      "observedProofExpiryMilliseconds": 587,
+      "allRoutesRun": false,
+      "cleanupSucceeded": true,
+      "interpretation": "Cumulative proof exceeded 500 ms; named-stage expiry does not isolate the sole cost."
+    }
+  ],
+  "relatedCoverage": {
+    "defaultA03Smoke": {
+      "status": "PASS",
+      "elapsedSeconds": 65.6969382,
+      "explicitKernelTransportProof": false,
+      "reason": "Identity report omitted transport, and default preview can fall back to TCP."
+    },
+    "qualificationBoundary": "One selected-host HTTP.sys/kernel-transport lease canary passed with unchanged proof and cleanup budgets. This is finite boundary evidence, not a host-robustness claim or current9 acceptance."
+  },
+  "evidenceReferences": [
+    {
+      "label": "kernel-canary2-inner-result",
+      "basename": "result.json",
+      "sha256": "0d811373fea560d2cab4c0f4befd9f4d474cbb8ee4dd5eb7eaefcae7f77f9caf"
+    },
+    {
+      "label": "kernel-canary2-bounded-result",
+      "basename": "bounded2-result.json"
+    },
+    {
+      "label": "kernel-canary1-failure-result",
+      "basename": "result.json"
+    },
+    {
+      "label": "kernel-canary1-bounded-result",
+      "basename": "bounded1-result.json"
+    },
+    {
+      "label": "selected-host-preflight-v1-wrapper-failure",
+      "basename": "preflight-bounded-result.json"
+    },
+    {
+      "label": "selected-host-preflight-v2-pass",
+      "basename": "preflight-bounded-result-2.json"
+    }
+  ],
+  "omittedFields": [
+    "absolute paths",
+    "raw logs",
+    "URLs",
+    "run identifiers",
+    "process identifiers and ports",
+    "opaque authorization-proof object"
+  ]
+}

@@ -1,0 +1,317 @@
+{
+  "schema": "troubleshootjs-q100-route-return-queue-observation-v1",
+  "evidenceId": "controlled-route-return-queue1-fail",
+  "status": "FAIL_EXPECTED_V11_SUCCESS_NOT_REACHED",
+  "scope": "Fixed saved paired raw-route observation for seed 5, candidate 1, placement interpretations v10 and v11; diagnostic-only queue-return experiment.",
+  "qualification": {
+    "layoutQualified": false,
+    "q100Qualified": false,
+    "adopted": false,
+    "productionChangeApproved": false,
+    "baseEpochLabelsAdopted": false,
+    "all72ProfilesRun": false,
+    "fullBuildOrMatrixRun": false
+  },
+  "candidate": {
+    "productionFile": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+    "productionSha256": "2ecd43db488f3a926e9f1dbefceaa6740a2fab373308a211656516ff0ef3cc9f",
+    "productionBytes": 52376,
+    "changeSummary": "Search.offer keeps the exact-key best.put update, then skips queue.add for a same-layer two-step return when the predecessor chain has no transition change, the grandparent direction is not 4, and the new node returns to the grandparent cell.",
+    "diffSha256": "1ccfba33f64b2cc7e02a522da67ede85aeed984941970f5465e5abb80ae87b1a",
+    "diffBytes": 1414,
+    "testFile": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+    "testSha256": "ec0b54fa9677c6b5b8d4712565901f4d92a273b73df98a0079497e636a75ad22",
+    "testBytes": 58454,
+    "testSpecSha256": "2c2a6df29cc00346aea20519b23089ff5e724446632acc428b24c0e0cd72ed8d",
+    "testSpecBytes": 13422,
+    "expectedDirectRawRoute": [
+      {
+        "caseId": "SEED5_V10_CANDIDATE1",
+        "expectedAccepted": true,
+        "expectedOutcome": "SUCCESS"
+      },
+      {
+        "caseId": "SEED5_V11_CANDIDATE1",
+        "expectedAccepted": true,
+        "expectedOutcome": "SUCCESS"
+      }
+    ]
+  },
+  "inputBinding": {
+    "inputRevision": 3,
+    "sourceSnapshotRevision": 1,
+    "inputCount": 1059,
+    "unchangedInputCount": 1057,
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "pinsFile": "route-return-queue-sealed-pins.json",
+    "pinsSha256": "2456e6f8eea4a9da0d817c67066e4d8d303a000ce0e3ac5c0ebef406c19534c8",
+    "pinsBytes": 204437,
+    "sealFile": "route-return-queue-inputs-sealed1.json",
+    "sealSha256": "aef24704855bfbcfb3edcc815968572079a33f2a2b966aa74da0c3ec65f42cfe",
+    "sealBytes": 1395,
+    "changedInputs": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "beforeSha256": "6eb32ebea70a37084700d89451b0d3eb3c5da2dc2320e9d90014a369fcbb8a31",
+        "afterSha256": "2ecd43db488f3a926e9f1dbefceaa6740a2fab373308a211656516ff0ef3cc9f"
+      },
+      {
+        "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+        "beforeSha256": "0c97dd4f0e1c3f4c18c34f80ca9c827f00639d17fa0599048ba9cf0c319f8867",
+        "afterSha256": "ec0b54fa9677c6b5b8d4712565901f4d92a273b73df98a0079497e636a75ad22"
+      }
+    ],
+    "sourceSpecSha256": "54c19d535831c890332ec5f2522f18d72511b85e85e262b88517bd5fb0bf0b1d",
+    "sourceSpecBytes": 1866
+  },
+  "preRunHistory": {
+    "testV1": {
+      "status": "NOT_RUN",
+      "reason": "The first fixture placed the return on an unreachable path; that fixture issue was preserved and the return was moved into the v2 positive path while retaining negative fixtures."
+    },
+    "sourceSpecBindingAttempt": {
+      "status": "FAIL_PIN_BINDING_SETUP",
+      "nativeRun": "NOT_RUN",
+      "preRootBindingSpecSha256": "2dc1442653d6e99d966f6a4689944880a6c917aa00ee47a83dbeabacfeadc709",
+      "specifiedProductionSha256": "2ecd43db488f3a926e9f1dbefceaa6740a2fab373308a211656516ff0ef3ccf9",
+      "actualProductionSha256": "2ecd43db488f3a926e9f1dbefceaa6740a2fab373308a211656516ff0ef3cc9f",
+      "cause": "The sidecar transposed the final two production-hash characters. The corrected spec and sealed source were used for the actual run."
+    }
+  },
+  "request": {
+    "rootSeed": "5",
+    "placementVersions": [10, 11],
+    "candidateAttempt": 1,
+    "plannerCandidate": 1,
+    "routeName": "P07_FULLER_TWO_LAYER",
+    "backendPolicy": "FULLER_TWO_LAYER",
+    "layoutVersion": 24,
+    "dependencyEpoch": "tsj-generation-dependencies-v25",
+    "planVersion": 1,
+    "familyId": "RB56_CONTROL",
+    "routingLayer": "BOTTOM",
+    "requiresTwoLayerRouting": true,
+    "placementPackingVersion": 1,
+    "traceWidthProfile": "UNIFORM_TRACE@1",
+    "grid": {
+      "width": 332,
+      "height": 175,
+      "cells": 58100,
+      "eligible": true
+    },
+    "unchangedBudgets": {
+      "maximumTotalExpansions": 1000000,
+      "maximumBranchExpansions": 100000,
+      "maximumGridCells": 250000,
+      "gridOrderingCount": 3,
+      "maximumVias": 48
+    },
+    "callChain": "SeededPcbLayoutGenerator.advanceMediumRoute -> candidate.plan.materialize() -> PcbLayerRoutingPrototype.begin(board, placement, FULLER_TWO_LAYER, observer)",
+    "materializeAndRouteCallsMatchProduction": true,
+    "postprocessing": "NONE",
+    "attemptObserver": "NOOP_ATTEMPT_OBSERVER",
+    "generationCancellationObserverExercised": false,
+    "inputGeometry": [
+      {
+        "caseId": "SEED5_V10_CANDIDATE1",
+        "sha256": "1c6136104db257aebfa692c2c6689fe620a658276062d783f36fbef10dd3cc19",
+        "bytes": 133536
+      },
+      {
+        "caseId": "SEED5_V11_CANDIDATE1",
+        "sha256": "b21527ea02b45b9fdfb6233fb116d42a32077da84709674efe3b59b36e15c43f",
+        "bytes": 133367
+      }
+    ]
+  },
+  "run": {
+    "suite": "P07BranchDiagnosticsContractTest",
+    "source": "current",
+    "treatment": "ROUTE_RETURN_QUEUE_SCRATCH_ONLY",
+    "resultStatus": "FAIL",
+    "helperExitCode": 2,
+    "nativeChildExitCode": 1,
+    "elapsedSeconds": 32.5344372,
+    "nativeChildLimitMs": 60000,
+    "outerWatchdogMs": 600000,
+    "terminationProven": true,
+    "cleanup": {
+      "status": "PASS_MARKER_OBSERVED",
+      "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+      "cleanupOnlyDurationSeconds": "NOT_REPORTED"
+    },
+    "assertionFailure": "fixed raw request reproduces the recorded selected-candidate route outcome",
+    "suiteRecord": "NOT_EMITTED",
+    "qualifiedReceipt": "NOT_EMITTED",
+    "inputAudit": "PASS_BEFORE_AND_AFTER"
+  },
+  "observations": {
+    "streamCensus": {
+      "frameRecords": 2,
+      "completeCaseRecords": 1,
+      "branchRecords": 363,
+      "suiteRecords": 0,
+      "branchTerminalReasons": {
+        "FOUND": 360,
+        "BRANCH_SEARCH_LIMIT": 3
+      },
+      "v10CaseRecordOnly": true,
+      "v11CaseRecord": "NOT_EMITTED_AFTER_EXPECTED_SUCCESS_ASSERTION",
+      "v11NullReplay": "NOT_RUN",
+      "v11BaselineRerun": "NOT_RUN",
+      "v11PhysicalOracles": "NOT_RUN_ROUTE_DID_NOT_PASS"
+    },
+    "assertions": {
+      "preFirstFrameReferenceLemmaCheckCounts": [96, 192, 48, 144],
+      "preFirstFrameCountsSource": "All four reference-lemma check loops complete before first frame emission; no standalone aggregate was emitted.",
+      "completedV10CaseAssertions": 25805,
+      "suiteAssertionTotal": "NOT_EMITTED_DO_NOT_INFER"
+    },
+    "cases": [
+      {
+        "caseId": "SEED5_V10_CANDIDATE1",
+        "status": "PASS_EXPERIMENTAL_RAW_ROUTE",
+        "baselineSavedProductionOutcome": "P07_FULLER_TWO_LAYER@1=SUCCESS",
+        "expectedDirectOutcome": "SUCCESS",
+        "diagnosticRouteAccepted": true,
+        "diagnosticRouteOutcome": "SUCCESS",
+        "branchCount": 187,
+        "branchPasses": [
+          {"pass": 0, "count": 91, "found": 91, "expanded": 200476},
+          {"pass": 1, "count": 96, "found": 96, "expanded": 268497}
+        ],
+        "diagnosticExpansions": 468973,
+        "diagnosticOrderings": 2,
+        "diagnosticVias": 48,
+        "baselineRerunOutcome": "SUCCESS",
+        "nullReplayParity": "PASS",
+        "inputPlacementUnchanged": true,
+        "logicalPlanUnchanged": true,
+        "logicalBoardUnchanged": true,
+        "acceptedGeometrySha256": "e828d0e87587cc1189218dcf6f8677f929e194507b65d40f821787d7fe397255",
+        "acceptedTraceGeometrySha256": "7001ea96577815e96e88094d8fa3e8210fab03cabd8aced57d39f0039b074c60",
+        "acceptedP08CanonicalSha256": "2bbc37b81215327a5941757593bcdd71d7b8c9636685a045d1de15d83a3c4297",
+        "acceptedOrderedPadPairs": 17161,
+        "acceptedOutputValidation": "PASS_P08_CLEARANCE_LAYERED_RASTER"
+      },
+      {
+        "caseId": "SEED5_V11_CANDIDATE1",
+        "status": "FAIL_EXPECTED_SUCCESS_NOT_EMITTED",
+        "expectedDirectOutcome": "SUCCESS",
+        "expectedAccepted": true,
+        "previousSavedProductionOutcome": "P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:OUT_B:BRANCH_SEARCH_LIMIT",
+        "branchCount": 176,
+        "foundBranches": 173,
+        "branchSearchLimitCount": 3,
+        "branchPasses": [
+          {"pass": 0, "count": 68, "found": 67, "limited": 1, "expanded": 227740},
+          {"pass": 1, "count": 80, "found": 79, "limited": 1, "expanded": 255935},
+          {"pass": 2, "count": 28, "found": 27, "limited": 1, "expanded": 120402}
+        ],
+        "observedBranchTerminalOutcome": "BRANCH_SEARCH_LIMIT",
+        "diagnosticExpansionsThroughFinalBranch": 604077,
+        "expectedRouteSuccessAchieved": false,
+        "caseRecord": "NOT_EMITTED",
+        "baselineRerun": "NOT_RUN",
+        "nullReplay": "NOT_RUN",
+        "physicalAcceptanceChecks": "NOT_RUN"
+      }
+    ],
+    "v11LimitBranches": [
+      {
+        "pass": 0,
+        "netId": "OUT_A",
+        "startPadId": "RLEDOUT_A.1",
+        "rootPadId": "JOA.1",
+        "branchExpanded": 100000,
+        "minimumExploredManhattanDistance": 280,
+        "prefixViaCount": 27,
+        "frontierCount": 14874,
+        "bestStateCount": 128743
+      },
+      {
+        "pass": 1,
+        "netId": "OUT_A",
+        "startPadId": "RLEDOUT_A.1",
+        "rootPadId": "JOA.1",
+        "branchExpanded": 100000,
+        "minimumExploredManhattanDistance": 280,
+        "prefixViaCount": 40,
+        "frontierCount": 14753,
+        "bestStateCount": 128551
+      },
+      {
+        "pass": 2,
+        "netId": "OUT_B",
+        "startPadId": "RLEDOUT_B.1",
+        "rootPadId": "JOB.1",
+        "branchExpanded": 100000,
+        "minimumExploredManhattanDistance": 420,
+        "prefixViaCount": 6,
+        "frontierCount": 63242,
+        "bestStateCount": 177006
+      }
+    ],
+    "comparisonWithRetainedAD2": {
+      "evidenceFile": "saved-paired-route-observations2.json",
+      "evidenceSha256": "dbec009653c10669298e768153c48ce4d5ebc83b46dac0c8d7b2a79f39fe0e88",
+      "v10": {
+        "priorExpansions": 523756,
+        "currentExpansions": 468973,
+        "observedDelta": -54783,
+        "priorAndCurrentRouteOutcome": "SUCCESS",
+        "physicalGeometryTraceAndP08HashesMatch": true,
+        "priorAcceptedGeometrySha256": "e828d0e87587cc1189218dcf6f8677f929e194507b65d40f821787d7fe397255",
+        "priorAcceptedTraceGeometrySha256": "7001ea96577815e96e88094d8fa3e8210fab03cabd8aced57d39f0039b074c60",
+        "priorAcceptedP08CanonicalSha256": "2bbc37b81215327a5941757593bcdd71d7b8c9636685a045d1de15d83a3c4297",
+        "physicalOraclePairs": 17161
+      },
+      "v11": {
+        "priorExpansions": 633544,
+        "currentExpansionsThroughFinalBranch": 604077,
+        "observedDelta": -29467,
+        "priorAndCurrentTerminalPattern": "Three 100000-expansion branch caps on OUT_A, OUT_A, OUT_B; required direct SUCCESS was not achieved.",
+        "priorFrontierCounts": [20529, 18584, 80715],
+        "currentFrontierCounts": [14874, 14753, 63242]
+      },
+      "interpretation": "These fixed observations show fewer expansions and smaller frontiers on the capped branches, but the v11 expected-success case still fails. This is not a performance qualification, legal-route proof, or adoption basis."
+    }
+  },
+  "rawArtifacts": [
+    {
+      "file": "route-return-queue-1-result.json",
+      "bytes": 870,
+      "sha256": "663320d93a483659cbd0a24692d4127b921ec474c9f1ef5fab8ba1620430ef9c"
+    },
+    {
+      "file": "route-return-queue-1-console.txt",
+      "bytes": 236438,
+      "sha256": "b0d20d9d9f119a6ea65ce74f3302b3a93a542c2a8ea80de87263b8a85ca04b9d",
+      "copied": false
+    },
+    {
+      "file": "route-return-queue-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "route-return-queue-1-launcher.json",
+      "bytes": 225,
+      "sha256": "22822d20db6a89ce36327ebcd8ff102a0c7139e30114e6816b0c2e6cf10b1ac5",
+      "copied": false,
+      "contentWithheld": "Contains host process metadata; only its digest and byte count are retained."
+    }
+  ],
+  "limitations": [
+    "The native command failed its v11 expected-success assertion and emitted no v11 CASE, SUITE, or qualified receipt.",
+    "Only the v10 route completed the independent P08, layered-raster, and null-replay checks; no v11 physical result is established.",
+    "The AD2 comparison is limited to its retained two-case observation and the raw values summarized above.",
+    "No 72-profile cohort, full Q100 route matrix, full build, or broader release qualification was run."
+  ],
+  "sanitization": {
+    "personalAbsolutePathsCopied": false,
+    "processIdsCopied": false,
+    "rawLogsCopied": false,
+    "uncontrolledOutputCopied": false
+  }
+}

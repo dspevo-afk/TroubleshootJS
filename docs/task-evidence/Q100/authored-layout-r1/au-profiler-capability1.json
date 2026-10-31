@@ -1,0 +1,386 @@
+{
+  "schema": "troubleshootjs-q100-profiler-capability-diagnostic-v1",
+  "scope": "Finite selected-host profiler capability diagnostic. This is protocol evidence only; it is not an E06, electrical, physical-player, Q100 qualification, or publication result.",
+  "candidate": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "productionDriverSha256": "c9f097320ff4ea157e1c4050c49eea93b6feb9521baabed5f79eace87d1075f9",
+    "verifierIsolationSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "layoutVersion": 25,
+    "dependencyVersion": 26,
+    "productionJavaOrGwtChanged": false
+  },
+  "hostResults": [
+    {
+      "attempt": 1,
+      "resultFile": "capability-output/capability-result.json",
+      "sha256": "2e9e20b7f84aed41b46b7ad22b65221246629b0c4df164b4dcc916cd30f5b408",
+      "processExitCode": 0,
+      "status": "NONQUALIFYING_DIAGNOSTIC",
+      "capabilityState": "CAPABILITY_NOT_PROVEN",
+      "capabilityProven": false,
+      "failureClass": "initial hex-case/protocol preflight did not establish observer socket",
+      "requestedBusyMilliseconds": 4000,
+      "observedBusyMilliseconds": null,
+      "cleanup": {
+        "success": false,
+        "elapsedMs": 38127,
+        "limitMs": 120000,
+        "browserShutdownElapsedMs": 10812,
+        "browserShutdownLimitMs": 15000,
+        "observerSuccess": false
+      }
+    },
+    {
+      "attempt": 2,
+      "resultFile": "capability-output2/capability-result.json",
+      "sha256": "8e9de0d820d29417eb67209669836f31b337fb1372369ee397485f9a34e17465",
+      "processExitCode": null,
+      "status": "NONQUALIFYING_DIAGNOSTIC",
+      "capabilityState": "CAPABILITY_NOT_PROVEN",
+      "capabilityProven": false,
+      "failureClass": "TaskVoid contaminated the stop response",
+      "requestedBusyMilliseconds": 4000,
+      "observedBusyMilliseconds": null,
+      "cleanup": {
+        "success": false,
+        "elapsedMs": 27669,
+        "limitMs": 120000,
+        "browserShutdownElapsedMs": 10906,
+        "browserShutdownLimitMs": 15000,
+        "moduleCleanupSuccess": true,
+        "observerCleanupSuccess": false
+      }
+    },
+    {
+      "attempt": 3,
+      "resultFile": "capability-output3/capability-result.json",
+      "sha256": "4c667ceb9d2c644f59c70dc59b29b4db23e236af7750a499924d547a71ea31eb",
+      "processExitCode": null,
+      "status": "NONQUALIFYING_DIAGNOSTIC",
+      "capabilityState": "CAPABILITY_NOT_PROVEN",
+      "capabilityProven": false,
+      "failureClass": "PowerShell pre-stop condition prevented the stop request",
+      "requestedBusyMilliseconds": 4000,
+      "observedBusyMilliseconds": 4002,
+      "cleanup": {
+        "success": true,
+        "elapsedMs": 38748,
+        "limitMs": 120000,
+        "browserShutdownElapsedMs": 10839,
+        "browserShutdownLimitMs": 15000,
+        "moduleCleanupSuccess": true,
+        "observerCleanupSuccess": true
+      }
+    },
+    {
+      "attempt": 4,
+      "resultFile": "capability-output4/capability-result.json",
+      "sha256": "7815c0d99e9865954c11c6bead3da6e0c9e9981f66225d0840f8727425423619",
+      "processExitCode": null,
+      "status": "NONQUALIFYING_DIAGNOSTIC",
+      "capabilityState": "CAPABILITY_NOT_PROVEN",
+      "capabilityProven": false,
+      "failureClass": "stop response timed out while the four-second busy loop remained active",
+      "requestedBusyMilliseconds": 4000,
+      "observedBusyMilliseconds": 4002,
+      "cleanup": {
+        "success": true,
+        "elapsedMs": 40204,
+        "limitMs": 120000,
+        "browserShutdownElapsedMs": 11530,
+        "browserShutdownLimitMs": 15000,
+        "moduleCleanupSuccess": true,
+        "observerCleanupSuccess": true
+      },
+      "stopResponseTimeoutMilliseconds": 3000
+    },
+    {
+      "attempt": 5,
+      "resultFile": "capability-output5/capability-result.json",
+      "sha256": "f8ada1d633b7d7f2f8884df2e26b280174b9a5c46287704d09ab1e966f01f9ea",
+      "processExitCode": 2,
+      "status": "NONQUALIFYING_DIAGNOSTIC",
+      "capabilityState": "CAPABILITY_NOT_PROVEN",
+      "capabilityProven": false,
+      "failureClass": "summary heuristic missed an anonymous empty-URL JavaScript function although pause, profile, and resume completed",
+      "requestedBusyMilliseconds": 4000,
+      "observedBusyMilliseconds": 4003,
+      "stopResponseElapsedMs": 548,
+      "pauseResume": {
+        "pauseResponseReceived": true,
+        "pauseEventObserved": true,
+        "resumeResponseReceived": true,
+        "resumeEventObserved": true,
+        "resumeConfirmed": true,
+        "recoveryRequired": false,
+        "pauseEventCount": 1,
+        "resumeEventCount": 1
+      },
+      "profile": {
+        "nodeCount": 5,
+        "sampleCount": 57,
+        "summaryJavaScriptNodeCount": 0,
+        "summaryJavaScriptScriptCount": 0,
+        "rawSampleHitsForSingleScript": 53,
+        "anonymousEmptyUrlFunctionObserved": true,
+        "sha256": "8f9d70ad7550965197fb55add0fa443e96d00711f8ed032172adf0a146b2295a"
+      },
+      "cleanup": {
+        "success": true,
+        "elapsedMs": 39709,
+        "limitMs": 120000,
+        "browserShutdownElapsedMs": 11389,
+        "browserShutdownLimitMs": 15000,
+        "moduleCleanupSuccess": true,
+        "observerCleanupSuccess": true
+      }
+    },
+    {
+      "attempt": 6,
+      "resultFile": "capability-output6/capability-result.json",
+      "sha256": "0e786137a2276481748af663018240ada30f5d76e089819ff980feb16bfb2978",
+      "processExitCode": 0,
+      "status": "NONQUALIFYING_DIAGNOSTIC",
+      "acceptance": "NOT_EVALUATED",
+      "capabilityState": "CAPABILITY_OBSERVED",
+      "capabilityProven": true,
+      "failureClass": null,
+      "syntheticBusyWork": {
+        "requestedMs": 4000,
+        "observedMs": 4003
+      },
+      "stopResponseElapsedMs": 548,
+      "profile": {
+        "status": "CAPTURED",
+        "nodeCount": 5,
+        "sampleCount": 56,
+        "durationMicroseconds": 558627,
+        "javaScriptNodeCount": 2,
+        "javaScriptFunctionCount": 1,
+        "javaScriptFunctionLocationCount": 2,
+        "javaScriptScriptCount": 1,
+        "sampledJavaScriptSampleCount": 54,
+        "sha256": "41e223d8fc353d34b6eea9a2eaad23c0f30aef245712110bc7c0c498ffacfb75"
+      },
+      "pauseResume": {
+        "pauseResponseReceived": true,
+        "pauseEventObserved": true,
+        "resumeResponseReceived": true,
+        "resumeEventObserved": true,
+        "resumeConfirmed": true,
+        "recoveryRequired": false,
+        "pauseEventCount": 1,
+        "resumeEventCount": 1
+      },
+      "negativeCanaries": {
+        "invalidTargetRejected": true,
+        "invalidProtocolRejected": true,
+        "protocolErrorWellFormed": true,
+        "malformedStopResponseRejected": true
+      },
+      "resourceProof": {
+        "targetIdentityVerified": true,
+        "workerObjectsDisposed": true,
+        "observerSocketDisposed": true,
+        "moduleCleanupSuccess": true,
+        "observerCleanupSuccess": true
+      },
+      "cleanup": {
+        "success": true,
+        "elapsedMs": 39175,
+        "limitMs": 120000,
+        "browserShutdownElapsedMs": 10899,
+        "browserShutdownLimitMs": 15000
+      }
+    }
+  ],
+  "purePreflight": {
+    "fixtures": [
+      {
+        "file": "preflight-capability5-3.json",
+        "sha256": "6faa178504c60eb13e4bc050cb5e05969464a2a96d6b79d56c0bbbde3268d1c3",
+        "status": "PASS_PURE_LOGIC_ONLY",
+        "assertions": 17,
+        "passed": 17,
+        "browserOrCircuitJsLaunched": false,
+        "acceptance": "NOT_EVALUATED",
+        "workerSha256": "52d2f9c77f1d2afbe4406e27cd1263f532708d9f1fc489726af056edd295b0fb"
+      },
+      {
+        "file": "preflight-capability5-4.json",
+        "sha256": "d36a925a7eb9a98211ac87b0582f1f009fa8669bbfcd2de374137b752ee0deb3",
+        "status": "PASS_PURE_LOGIC_ONLY",
+        "assertions": 18,
+        "passed": 18,
+        "browserOrCircuitJsLaunched": false,
+        "acceptance": "NOT_EVALUATED",
+        "workerSha256": "e52da1e20ec9dd19e8f59c4cf702906c27c593b8e8e1e4a37df8fe770431b159"
+      }
+    ],
+    "classifierRule": "The correction recognizes script identifiers greater than zero and nonnegative source coordinates. The retained raw-profile scalar summary and pure fixtures support this rule; no assertions were waived.",
+    "scope": "JavaScript profiler sample classification only; this does not establish Wasm behavior."
+  },
+  "earlierHarnessFailures": [
+    {
+      "file": "au-debugger-state-5-host.txt",
+      "sha256": "c2e832fb5f85af6a15efe993203d5e7e9fd03dea917ec372e6425585384285c7",
+      "failureClass": "PowerShell parameter default/PSScriptRoot bootstrap failure; no raw log copied"
+    },
+    {
+      "file": "au-debugger-state-5-2-host.txt",
+      "sha256": "4e822de4ca57dc528192ed21ae49a0e2db3f058f67d8ddb3016d77742fe1c8dc",
+      "failureClass": "PowerShell singleton-array unrolling failure; no raw log copied"
+    }
+  ],
+  "sourceBackupFingerprints": [
+    {
+      "snapshot": "pre-capability2-sourcebackup",
+      "files": [
+        {
+          "name": "profile-observer-controller.ps1",
+          "sha256": "d5f5aae8abcbd230b4e6332b38dbae5c2a1e580b10c364bf69a556ad5f01bef3"
+        },
+        {
+          "name": "profile-observer-worker.ps1",
+          "sha256": "1ea895d28e5cd43647f2207f701bb4320c69a3a9ebe4aeda06c57c3ed5276ef6"
+        },
+        {
+          "name": "profiler-capability-canary.ps1",
+          "sha256": "0f75b7ee2ed943435e1bf7ee0f49619e9c9424f4c3d3bda2528b7ffc08caee99"
+        },
+        {
+          "name": "verify-a03-browser-cpu-profile.ps1",
+          "sha256": "c34fe6be3f46b6cdc702f635365b7017196bc23f62145e97503ca8d3e61e57e1"
+        }
+      ]
+    },
+    {
+      "snapshot": "pre-capability3-sourcebackup",
+      "files": [
+        {
+          "name": "profile-observer-controller.ps1",
+          "sha256": "d5f5aae8abcbd230b4e6332b38dbae5c2a1e580b10c364bf69a556ad5f01bef3"
+        },
+        {
+          "name": "profile-observer-worker.ps1",
+          "sha256": "faef254068276cf4f373cf8bcb579bbac7895277118a7533393bca70f7483fea"
+        },
+        {
+          "name": "profiler-capability-canary.ps1",
+          "sha256": "be7cf9024f96efba95ef7bdea983347894adae97f8b702caf4a5cc573b5630e6"
+        },
+        {
+          "name": "verify-a03-browser-cpu-profile.ps1",
+          "sha256": "c34fe6be3f46b6cdc702f635365b7017196bc23f62145e97503ca8d3e61e57e1"
+        }
+      ]
+    },
+    {
+      "snapshot": "pre-capability4-sourcebackup",
+      "files": [
+        {
+          "name": "profile-observer-controller.ps1",
+          "sha256": "d5f5aae8abcbd230b4e6332b38dbae5c2a1e580b10c364bf69a556ad5f01bef3"
+        },
+        {
+          "name": "profile-observer-worker.ps1",
+          "sha256": "abbd3b6d9f27c4c7b931ab9abe4bfa3cf133704a196af77f2a720003ca436228"
+        },
+        {
+          "name": "profiler-capability-canary.ps1",
+          "sha256": "b952583397f2bc6e60b0fb43a9a1fc9c4266f51e46e6a77c2e5a22ce96630820"
+        },
+        {
+          "name": "verify-a03-browser-cpu-profile.ps1",
+          "sha256": "c34fe6be3f46b6cdc702f635365b7017196bc23f62145e97503ca8d3e61e57e1"
+        }
+      ]
+    },
+    {
+      "snapshot": "pre-capability5-sourcebackup",
+      "files": [
+        {
+          "name": "profile-observer-controller.ps1",
+          "sha256": "d5f5aae8abcbd230b4e6332b38dbae5c2a1e580b10c364bf69a556ad5f01bef3"
+        },
+        {
+          "name": "profile-observer-worker.ps1",
+          "sha256": "0e42ea114f085c8fa40ff65e27c1949b98cacbfc225c40c493b0d69cc5cefa8a"
+        },
+        {
+          "name": "profiler-capability-canary.ps1",
+          "sha256": "8f111bb8164561bf00f7f7fefab65f984c7f892f1b3100d9355687e6edb47b38"
+        },
+        {
+          "name": "verify-a03-browser-cpu-profile.ps1",
+          "sha256": "c34fe6be3f46b6cdc702f635365b7017196bc23f62145e97503ca8d3e61e57e1"
+        }
+      ]
+    },
+    {
+      "snapshot": "pre-capability6-sourcebackup",
+      "files": [
+        {
+          "name": "debugger-state-canary.ps1",
+          "sha256": "167b31dff26089dbf25afa3241b34a4fc39dbc336a857a4109cf89dccc34a26e"
+        },
+        {
+          "name": "profile-observer-controller.ps1",
+          "sha256": "40c0a1e18657384924aa8e2ef5fe79ba52a84405f28720a2c28e544252599aad"
+        },
+        {
+          "name": "profile-observer-worker.ps1",
+          "sha256": "52d2f9c77f1d2afbe4406e27cd1263f532708d9f1fc489726af056edd295b0fb"
+        },
+        {
+          "name": "profiler-capability-canary.ps1",
+          "sha256": "c4d7932e9b69869aa331bddd21885ae7574b6abc3407bcce0dcc367a1fbb7ce3"
+        },
+        {
+          "name": "verify-a03-browser-cpu-profile.ps1",
+          "sha256": "ba740ec4174f9f0bf43d9f35689f1af1f9246c532be3fa6448ecea846f583ebd"
+        }
+      ]
+    },
+    {
+      "snapshot": "pre-singleframe-fix-sourcebackup",
+      "files": [
+        {
+          "name": "debugger-state-canary.ps1",
+          "sha256": "480ce92b4853769ddf3c07496d3273a24c890269583bfac29e05928ca831d8a1"
+        },
+        {
+          "name": "profile-observer-worker.ps1",
+          "sha256": "e2c7419b3d3020f4d4e99d8ad9108fc2024a342ef20801968cd0cc788eecb669"
+        }
+      ]
+    },
+    {
+      "snapshot": "pre-resultobject-review1-sourcebackup",
+      "files": [
+        {
+          "name": "debugger-state-canary.ps1",
+          "sha256": "9db4490f40cc06c6642a9a629450a163644f52e66b9d87ae77ab95e8d66fe229"
+        },
+        {
+          "name": "profile-observer-worker.ps1",
+          "sha256": "3bbbbb05a7118ee5e9be8b768fb833d77f1696216f5c07cbf4aaedaf4ea3cfb0"
+        }
+      ]
+    }
+  ],
+  "limitsAndDisposition": {
+    "mainThreadBusyRequestMilliseconds": 4000,
+    "cleanupLimitMilliseconds": 120000,
+    "browserShutdownLimitMilliseconds": 15000,
+    "activeSeparateCpuProfileRunIncluded": false,
+    "circuitJsLoaded": false,
+    "electricalClaim": false,
+    "e06Qualification": "NOT ESTABLISHED",
+    "physicalPlayerQualification": "NOT ESTABLISHED",
+    "q100Qualification": "NOT ESTABLISHED",
+    "hardProtectedScope": "NOT ESTABLISHED",
+    "publication": "NOT AUTHORIZED BY THIS EVIDENCE"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "tsj-q100-scoped-source-reviews/1",
+  "baseCommit": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+  "status": "NO_ACTIONABLE_SOURCE_BLOCKER_IN_REVIEWED_SCOPE",
+  "runtimeQualification": false,
+  "reviews": [
+    {
+      "reviewer": "q100_cleanup_owner",
+      "scope": "Integrated production diff and direct physical-intent callers",
+      "files": ["PcbLayerRoutingPrototype.java", "PcbNetRouter.java", "PcbPlacementPlanner.java", "SeededPcbLayoutGenerator.java", "MediumBoardPhysicalPolicy.java", "GenerationDependencyContext.java", "Rb100Placement.java", "Rb100Plan.java", "ProceduralPcbLayout.java", "Rb56Placement.java", "Rb100ElectricalPilot.java"],
+      "result": "NO_ACTIONABLE_SOURCE_BLOCKER",
+      "findings": ["All-PTH input rejection and policy face limits remain enforced", "Each reached endpoint uses the complete existing access and collision predicate", "Failure callbacks retire owned routing state and rethrow on retry", "Selected mixed-package orientations constrain partial placement while final corridor validation remains", "Required-P07 grid filtering follows priority and precedes the unchanged three-call cap", "Layout23/dependency24 and private physical-intent identity are bound through existing owners"],
+      "limits": "Read-only source review; no gates or builds run by reviewer"
+    },
+    {
+      "reviewer": "q100_p07_oracle_map",
+      "scope": "Amendment R current diagnostic helper, extracted reference code, wrappers and maintained native registrations after the R1 fixture correction",
+      "files": ["Rb100PhysicalDiagnostics.java", "Rb100PhysicalReference.java", "PcbPlacementDiagnosticsContractTest.java", "PcbCorridorOrientationContractTest.java", "Rb100P07PolicyDiagnosticContractTest.java", "Rb100P07BranchDiagnosticContractTest.java", "verify-current-contracts.ps1"],
+      "result": "NO_ACTIONABLE_SOURCE_BLOCKER",
+      "findings": ["Seven literal UAC/resistor links retain one physical domain per conductive net", "Generic20 and corridor controls retain null/observer/retry parity, exact callback abort, immutable witnesses and identity checks", "No active caller of the retired feasibility entrypoint was found", "P07 observations remain explicitly layoutQualification=false", "The retained strict single-face reference has no active callsite in these wrappers and is not current accepted-route evidence"],
+      "limits": "Read-only source review after the R1 domain correction and before the R3 witness-type correction; not a peer review of that later oracle change"
+    }
+  ],
+  "geometryReaderReview": {
+    "reviewer": "q100_p07_oracle_map",
+    "resolvedBeforeFinalReader5": ["Bind normalizer source bytes and allow only four audited epoch literal changes in the called helper block", "Require terminal receipt footer and reject trailing failure text"],
+    "inputAuditLimit": "1059 common input paths; current consumed audit explicitly distinguishes 54 common entries and 15 noncommon entries, not full consumed-input equality",
+    "finalReaderEvidence": "geometry-transition-gates.json"
+  },
+  "rootFinalIntegration": {
+    "scope": "Integrated diff, current source/runner bindings, independent literal GLOBAL-corridor union and four-margin derivation, final evidence and gate outcomes",
+    "r3AcceptanceEvidence": "final-r-focused-gates.json",
+    "result": "A_R_SCOPED_GATES_PASS_PUBLICATION_HELD_FOR_S",
+    "limits": "No accepted authored100 route; additional maintained saved-profile hashes fail under S. No reuse of the earlier peer review as a review of the changed R3 witness expectation"
+  },
+  "adoption": "Q100_IN_PROGRESS_UNQUALIFIED",
+  "fullNativeMatrix": "NOT RUN"
+}

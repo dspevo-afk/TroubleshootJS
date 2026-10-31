@@ -1,0 +1,131 @@
+{
+  "schema": "tsj-q100-player-refresh-evidence-v1",
+  "recordedUtc": "2026-10-31T14:07:38.053Z",
+  "source": {
+    "gateScriptBasename": "verify-a03-browser.ps1",
+    "gateScriptSha256": "c9f097320ff4ea157e1c4050c49eea93b6feb9521baabed5f79eace87d1075f9",
+    "verifierIsolationBasename": "VerifierIsolation.psm1",
+    "verifierIsolationSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "reportVerifierIsolationDigestMatches": true,
+    "productionSourceChangesForRefresh": false
+  },
+  "refresh": {
+    "candidate": "Player",
+    "style": "OBF",
+    "gate": "Q100Player",
+    "status": "PASS",
+    "resultExitCode": 0,
+    "elapsedSeconds": 82.8042522,
+    "reportBasename": "ao-compiled-q100player-7.json",
+    "reportSha256": "45133a861bf964cb258bf7806b80b7c677edc469463cc928a8392883afbc2f56",
+    "resultBasename": "ao-compiled-q100player-7-result.json",
+    "resultSha256": "c5079f75d7e6f44288f9d2d95b64354d12e8043e11cd8ad9bacb2717d4d84c99",
+    "headed": false,
+    "smoke": false,
+    "routeCount": 1,
+    "routeStatus": "PASS",
+    "routeName": "q100-player-debug-query",
+    "operationElapsedMilliseconds": 30142,
+    "operationLimitMilliseconds": 6000000
+  },
+  "build": {
+    "resultBasename": "build-player-102-result.json",
+    "resultSha256": "43a0408d10d57a74276f09643a58b6fa0f8f7c686deabb74ad3298d77ec4cfb5",
+    "exitCode": 0,
+    "elapsedSeconds": 99.1353182,
+    "variant": "Player",
+    "inputDigest": "45654010ddaf068b1cb30a193d43084b80eed0dbfb84f3dcf5f50b6f21df0d1f",
+    "inputFileCount": 1199,
+    "outputDigest": "e3cef7636468142ce9a8a6ea1707622343cc876407cb3bc1312c158da4b3c0e5",
+    "outputFileCount": 357,
+    "compiledJavaScriptFileCount": 7,
+    "identityMatchesGateArtifact": true,
+    "identityMatchesPriorPlayerBuild": true
+  },
+  "buildEvidence": {
+    "currentIdentityBasename": "player-at-1-identity.json",
+    "currentIdentitySha256": "25023db3e6866db81d14d82f806f817a9f91eedcb02ec14f2ef3361fa19a8bf7",
+    "priorIdentityBasename": "player-ao-1-identity.json",
+    "priorIdentitySha256": "25023db3e6866db81d14d82f806f817a9f91eedcb02ec14f2ef3361fa19a8bf7",
+    "identityFieldsExactEqual": true,
+    "currentSizeBasename": "player-at-1-size.json",
+    "currentSizeSha256": "8d6928067ab1d87f212203709a175711f8edf9586e03b72fd07067c3a25a7d61",
+    "priorSizeBasename": "player-ao-1-size.json",
+    "priorSizeSha256": "d824bf193ecd9db543b540c5004a344fe0b576d279be6722dddfa708921397e5",
+    "cacheFileSetExactEqual": true,
+    "cacheCount": 5,
+    "cacheBytes": 9513277,
+    "currentInventoryBasename": "player-at-1-inventory.json",
+    "currentInventorySha256": "d3fb6e6d6b502db679fc67802eda5d6aa42a770a6b67ec632c2d5ad4bb11abff",
+    "priorInventoryBasename": "player-ao-1-inventory.json",
+    "priorInventorySha256": "d3fb6e6d6b502db679fc67802eda5d6aa42a770a6b67ec632c2d5ad4bb11abff",
+    "inventorySetExactEqual": true,
+    "inventoryFileCount": 357,
+    "inventoryBytes": 10253704,
+    "priorCacheCount": 5,
+    "priorCacheBytes": 9513277
+  },
+  "cleanup": {
+    "reportStatus": "PASS",
+    "reportSuccess": true,
+    "resourceSuccess": true,
+    "elapsedMilliseconds": 52578,
+    "limitMilliseconds": 120000,
+    "withinLimit": true,
+    "browserShutdownRecordCount": 1,
+    "browserShutdownTotalMilliseconds": 14722,
+    "browserShutdownFailurePhase": "",
+    "errorFieldShape": "empty PSCustomObject after parsing, with zero property names",
+    "diagnosticClassification": "No diagnostic message/member; not classifiable as terminal proof failure or recovered retry",
+    "interpretation": "Maintained Complete-VerifierRun.Success requires errors.Count == 0 after the manifest catch, resourceSuccess propagates that result, and false maps to exit 2. The gate/report PASS and exit 0 therefore carry the maintained zero-error success semantic; the parsed empty-object errors shape itself is not reconstructed or counted as a serialized entry.",
+    "serializedErrorEntryCount": "NOT_ESTABLISHED",
+    "independentPayloadReconstruction": false,
+    "maintainedCompleteRunSuccessRule": "Complete-VerifierRun.Success requires errors.Count == 0 after manifest catch",
+    "resourceSuccessPropagation": "The gate propagates Complete-VerifierRun.Success; false maps to exit code 2",
+    "maintainedSuccessSemanticsProveActualErrorCountZero": true,
+    "reportAndOuterExitConsistent": true,
+    "cleanupLimitMilliseconds": 120000,
+    "browserShutdownLimitMilliseconds": 15000,
+    "browserShutdownMilliseconds": 14722,
+    "browserShutdownWithinLimit": true,
+    "overallGateExitCode": 0
+  },
+  "reportArtifactIdentity": {
+    "inputDigest": "45654010ddaf068b1cb30a193d43084b80eed0dbfb84f3dcf5f50b6f21df0d1f",
+    "inputFileCount": 1199,
+    "outputDigest": "e3cef7636468142ce9a8a6ea1707622343cc876407cb3bc1312c158da4b3c0e5",
+    "outputFileCount": 357,
+    "matchesCurrentAndPriorIdentity": true
+  },
+  "scopeBoundary": {
+    "claim": "Finite selected Player Q100 refresh and cleanup result only",
+    "robustHostClaim": false,
+    "q100QualificationClaim": false,
+    "visiblePlayerFlowClaim": false,
+    "note": "headed=false and smoke=false; this is not visible/manual player-flow evidence. Cleanup is reported against its 120000 ms limit, distinct from the operation limit.",
+    "routeTimingOperationElapsedMilliseconds": 30142,
+    "routeTimingOperationLimitMilliseconds": 6000000,
+    "browserShutdownLimitMilliseconds": 15000
+  },
+  "preservedFailureReferences": [
+    {
+      "basename": "as-player-privacy1.json",
+      "kind": "prior privacy packet"
+    },
+    {
+      "basename": "at-current-control1.json",
+      "kind": "prior current-off control packet"
+    }
+  ],
+  "omittedFields": [
+    "absolute paths",
+    "run IDs",
+    "PIDs",
+    "ports",
+    "URLs",
+    "raw logs",
+    "developer-marker scan payload",
+    "cleanup error payload",
+    "credentials or tokens"
+  ]
+}

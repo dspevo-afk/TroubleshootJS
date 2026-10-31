@@ -1,0 +1,178 @@
+{
+  "schema": "troubleshootjs-aq-cleanup-limit-observation-v1",
+  "status": "CLEANUP_LIMIT_FAILURE_CAPTURED_NO_OWNER_PROOF",
+  "scope": "Second bounded cleanup-contract stress run with persisted raw child capture.",
+  "repository": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "candidate": "AO_FINAL_LAYOUT25_DEP26"
+  },
+  "sourceContext": {
+    "apMemo": "memo77",
+    "verifierIsolationModuleSha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024",
+    "browserCleanupContractSha256": "25844607cb8afb9c17b678ad6a650886e89fd05c2fa49d8fba759fc9d63630fd",
+    "previewScriptSha256": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+    "existingPreviewArtifactSha256": "257e773ff1a4d8397fbfaeac0f48b35f8a563404573444db693d8ef2d2b946ba",
+    "cleanupCanaryWrapperSha256": "e1daff887205e1003713abe9fcb867fbcfdbcffdc6a3c0a0f4f724ef95659722",
+    "previousApProofPacket": {
+      "file": "authored-layout-r1/ap-terminal-proof1.json",
+      "bytes": 19009,
+      "sha256": "b579f0b908104e715e451e7312915be0a42a6210b718a6e3424ed74ebc08c735"
+    },
+    "budgetsMs": {
+      "innerShutdown": 15000,
+      "completeRun": 120000
+    }
+  },
+  "wrapper": {
+    "status": "FAIL",
+    "protocol": "troubleshootjs-browser-cleanup-wrapper-v2",
+    "scope": "unchanged-maintained-about-blank-browser-cleanup-contract",
+    "exitCode": 2,
+    "childExitCode": 2,
+    "wallElapsedMs": 281526,
+    "boundedCallElapsedMs": 281113,
+    "terminationProven": true,
+    "rawChildCapturePersisted": true,
+    "childReportWritten": true,
+    "artifacts": [
+      {
+        "file": "ao-cleanup-canary-2/result.json",
+        "bytes": 8906,
+        "sha256": "4d017048e50d43ff778ec94abb95f1199eb52743f29260cb4e6dd601b1ca8496"
+      },
+      {
+        "file": "ao-cleanup-canary-2/child-result.json",
+        "bytes": 684,
+        "sha256": "6366c921bd1ca83595a9b9df4845570d50c9023c220a05a308dd34fedc6c0f5f"
+      },
+      {
+        "file": "ao-cleanup-canary-2/launch.json",
+        "bytes": 2352,
+        "sha256": "1cf80d00f7e9e78521c2e6cb50b23b681ec72c6211c76fad504e27ad3359fd29"
+      }
+    ]
+  },
+  "childCleanupContract": {
+    "protocol": "troubleshootjs-browser-cleanup-budget-v1",
+    "scope": "about-blank-browser-resource-cleanup",
+    "status": "FAIL",
+    "stage": "owner-proof",
+    "errorType": "InvalidOperationException",
+    "error": "complete-run-budget",
+    "cleanupAttempted": true,
+    "cleanupSucceeded": true,
+    "resourceSuccess": true,
+    "completeRunElapsedMs": 124401,
+    "completeRunLimitMs": 120000,
+    "overBudgetMs": 4401,
+    "ownerProof": {
+      "rawFieldPresent": false,
+      "wrapperValueIsNull": true,
+      "complete": false,
+      "disposition": "NOT_RUN_OR_NOT_ESTABLISHED"
+    },
+    "fixture": {
+      "profileFiles": 2048,
+      "evidenceArtifactCount": 62,
+      "evidenceArtifactBytes": 6934
+    },
+    "nestedShutdown": {
+      "elapsedMs": 10058,
+      "innerLimitMs": 15000,
+      "failurePhase": "",
+      "protectedDescendantCount": 7,
+      "rootAndDescendantRecordCount": 8,
+      "waitLoopPassCount": 2,
+      "naturalExitProofCalls": 11,
+      "naturalExitProofReuseCount": 5,
+      "currentAbsenceProofCount": 8,
+      "currentAbsenceObservationCount": 16,
+      "lateDescendantParentQueryCount": 8,
+      "containmentJobPollCount": 1
+    },
+    "phaseAggregatesMs": {
+      "browserSession": 85466,
+      "preview": 31335,
+      "finalProof": 5805,
+      "attribution": "Aggregate phases only; no measured root cause assigned."
+    },
+    "artifacts": [
+      {
+        "file": "ao-cleanup-canary-2/result.json",
+        "bytes": 8906,
+        "sha256": "4d017048e50d43ff778ec94abb95f1199eb52743f29260cb4e6dd601b1ca8496"
+      },
+      {
+        "file": "ao-cleanup-canary-2/child-result.json",
+        "bytes": 684,
+        "sha256": "6366c921bd1ca83595a9b9df4845570d50c9023c220a05a308dd34fedc6c0f5f"
+      },
+      {
+        "file": "ao-cleanup-canary-2/launch.json",
+        "bytes": 2352,
+        "sha256": "1cf80d00f7e9e78521c2e6cb50b23b681ec72c6211c76fad504e27ad3359fd29"
+      },
+      {
+        "file": "ao-cleanup-canary-2/stdout.raw.txt",
+        "bytes": 482,
+        "sha256": "1dadb7af35dbf0848b0b9127f1b471eab7114d246eb8cbe4f160acd9d61becbf"
+      },
+      {
+        "file": "ao-cleanup-canary-2/stderr.raw.txt",
+        "bytes": 398,
+        "sha256": "d2448636ded0e198d3ccd25052893869d204da3faca738e8d949579cb32e2b0b"
+      },
+      {
+        "file": "ao-cleanup-canary-2/stdout.log",
+        "bytes": 455,
+        "sha256": "702f49491766a43c089307fbfe187922c68484d5a79945b1807b77d698c5730a"
+      },
+      {
+        "file": "ao-cleanup-canary-2/stderr.log",
+        "bytes": 385,
+        "sha256": "abcb1d78f8ba0d94ab6961925b390758d4c61d771c6069a2995645c30cd7a652"
+      },
+      {
+        "file": "ao-cleanup-canary-2/run-browser-cleanup-canary.ps1",
+        "bytes": 20141,
+        "sha256": "e1daff887205e1003713abe9fcb867fbcfdbcffdc6a3c0a0f4f724ef95659722"
+      },
+      {
+        "file": "TroubleshootJS/verify/browser-cleanup-budget-report.json",
+        "bytes": 7865,
+        "sha256": "c4b07a6d449cfbb197450c01b1a30a68cdc306078882eda5a1275045c03ec1e7"
+      }
+    ]
+  },
+  "sourceAndPlanStatus": {
+    "apHostMemo77PreviouslyPassedPlayer4": true,
+    "priorApPacketStatus": "AP_TERMINAL_PROOF_AND_PLAYER4_PASS_WITH_PRIOR_FAILURES_PRESERVED",
+    "same2048File62ArtifactFixture": true,
+    "aqPlan": {
+      "status": "FROZEN_SCRATCH_ONLY_PROBE_PLANNED_NOT_RUN",
+      "probe": "Real filesystem context probe on the same fixture count to measure duplicate RunRoot sweeps before adoption.",
+      "earlyValidateTreeRemoval": "NOT_ADOPTED",
+      "benchmarkRun": false,
+      "budgetChange": false
+    }
+  },
+  "limits": [
+    "This stress run failed the complete-run owner-proof contract by 4401ms. The nested 10.058-second shutdown was within its 15-second limit, but the full 124.401-second operation exceeded the unchanged 120-second limit.",
+    "The raw contract reports cleanupSucceeded=true and resourceSuccess=true, but ownerProof was absent and the wrapper captured it as null/incomplete. This is not a cleanup PASS.",
+    "The raw child capture was persisted before parsing; wrapper and child exit codes are both recorded as 2 with termination proven.",
+    "BrowserSession, Preview, and FinalProof values are aggregate phase timings and do not identify a measured cause.",
+    "No reduced fixture waiver, budget increase, source snapshot 3, full native33/current25 saved72 gate, other full gate, or playable-100 claim is made.",
+    "The scratch-only real-filesystem probe has not run; no early-ValidateTree removal or benchmark adoption is claimed.",
+    "Protected HARD data was not read or run. Raw log contents, absolute paths, PIDs, process start ticks, and capability data are not embedded."
+  ],
+  "packetSanitization": {
+    "artifactReferences": "Relative scratch leaf names and safe logical report filename only",
+    "rawLogContentsEmbedded": false,
+    "rawReportContentsEmbedded": false,
+    "absolutePathsEmbedded": false,
+    "pidsOrStartTicksIncluded": false,
+    "capabilityTokensIncluded": false,
+    "status": "SANITIZED_METADATA_ONLY"
+  }
+}

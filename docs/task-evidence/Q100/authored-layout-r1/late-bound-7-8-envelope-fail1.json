@@ -1,0 +1,90 @@
+{
+  "schema": "troubleshootjs-q100-late-guidance-generated-case-failure-v1",
+  "status": "NOT_ACCEPTED_TYPED_ENVELOPE_AND_RETAINED_METRIC_VIOLATION",
+  "scope": "AL saved7/8 generator observation; no accepted comparison",
+  "native": {
+    "status": "PASS_NATIVE_OBSERVATIONS_ONLY",
+    "assertions": 185151,
+    "exitCode": 0,
+    "elapsedSeconds": 50.6086008,
+    "cleanup": "PASS_MARKER_OBSERVED",
+    "cleanupOnlyDuration": "NOT_REPORTED",
+    "terminationProven": true,
+    "inputCount": 1059,
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "pinsSha256": "953fe0d3858029dff25837e4afba180e8b9e719969bf4d6544dc37bd8ffa4aac"
+  },
+  "reader": {
+    "observedChildExitCode": 1,
+    "observedChildElapsedMs": 244,
+    "toolExitCode": 1,
+    "toolWallTimeSeconds": 0.3704812,
+    "errorType": "ValueError",
+    "errorMessage": "current maintained child result/termination/input audit differs",
+    "cause": "Producer inputRevision=1; maintained current-side envelope requires inputRevision=3. sourceSnapshotRevision remains1.",
+    "comparisonOutputEmitted": false
+  },
+  "selectedCase": {
+    "rootSeed": "42",
+    "placementInterpretationVersion": 7,
+    "placementSeed": "5526715536693200536",
+    "routingSeed": "4493419427463069983",
+    "selectedPlacementAttempt": 4,
+    "topology": "RB56_CH2_SHARED_HYSTERETIC_A_NMOS_B_BJT_S5_true_S12_true_F2_O0_B5_false",
+    "boardOutline": {
+      "x": 40,
+      "y": 9,
+      "width": 3181,
+      "height": 2051
+    },
+    "boardArea": 6524231,
+    "layoutGeometrySha256": "d30c178744295381a174cfb58f9e20b22bf5cdd812847c5d24f598b15fb3cdb4"
+  },
+  "retainedAreaCheck": {
+    "operator": "<=",
+    "expected": 6371585,
+    "actual": 6524231,
+    "delta": 152646,
+    "status": "FAIL_OBSERVED_METRIC_NOT_WHOLE_COHORT_ACCEPTANCE"
+  },
+  "source": {
+    "routerSha256": "b0be7e2c553eca09df2109ab242676434324615ef45721024d11491731ffac5d",
+    "querySha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a",
+    "onlyChangeFromAJ": "Activation at maximum branch expansions minus one existing work quantum."
+  },
+  "artifacts": [
+    {
+      "file": "saved-profile-current-7-8-rep-1-result.json",
+      "bytes": 908,
+      "sha256": "0a3d97345ced6ce396d95a9fc8d8c5ccd50ca937f5723ebfd3de5da1a0792205"
+    },
+    {
+      "file": "saved-profile-current-7-8-rep-1-console.txt",
+      "bytes": 6794024,
+      "sha256": "c88711967741bea430052181d4c651f204c4b273076f6b93ca2d9bdeb339d8d0"
+    },
+    {
+      "file": "late-bound-7-8-reader-rejection1.json",
+      "sha256": "24dba2345bad5c6bd4573a344f80037072aa505137ad9e718a465e8083fc69a8"
+    },
+    {
+      "file": "run-saved-profile-late-bound.ps1",
+      "sha256": "e515e2c71c0b1e8e71b82499b356affbb250542123c36fdf67e4682eae7912ab"
+    },
+    {
+      "file": "run-saved-profile-late-bound-v2.ps1",
+      "sha256": "290b1fd4e6ae828c6cf4d6fc8af82fb981153537cfe2b5a55e7727d006d3131d",
+      "run": false
+    }
+  ],
+  "limits": {
+    "holdouts": "NOT_RUN_FOR_AL",
+    "full72": "NOT_RUN_FOR_AL",
+    "qComparison": "NOT_RUN",
+    "productionBuild": "NOT_RUN",
+    "adopted": false,
+    "goldensSealed": false,
+    "q100Qualified": false,
+    "thresholdSweep": false
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "packetVersion": 1,
+  "evidence": "Q100 authored-layout focused native contract run",
+  "attempt": "orientation-focused-1",
+  "status": "PASS",
+  "branch": "codex/q100-physical-feasibility",
+  "sourceHead": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+  "helper": {
+    "exitCode": 0,
+    "elapsedSeconds": 55.7862289,
+    "suites": [
+      "PcbCorridorOrientationContractTest",
+      "Rb100PlanContractTest",
+      "D01DiagnosticContractTest",
+      "Rb56ModelIdentityContractTest",
+      "RelBSessionIdentityContractTest",
+      "MediumBoardFloorplanningContractTest",
+      "P08ScalabilityContractTest",
+      "PcbNormalPackingIdentityContractTest",
+      "PcbCompactnessContractTest"
+    ],
+    "suiteCount": 9,
+    "runnerMarker": "PASS: current-contract runner pass detection assertions=16",
+    "selectedNativeMarkers": [
+      {
+        "suite": "PcbCompactnessContractTest",
+        "marker": "PASS: actual RB56 geometry report 602 assertions cases=3 mode=report scope=NO_DENSITY_ACCEPTANCE_THRESHOLD"
+      },
+      {
+        "suite": "PcbNormalPackingIdentityContractTest",
+        "marker": "PASS: PCB normal packing identity contracts assertions=25 packing=4 replay=tsj-alpha/7"
+      },
+      {
+        "suite": "RelBSessionIdentityContractTest",
+        "marker": "PASS: REL-B session identity contracts assertions=206 scope=IDENTITY_AND_ADMISSION_ONLY ownerRoundTrip=false"
+      },
+      {
+        "suite": "Rb100PlanContractTest",
+        "marker": "PASS: RB100 plan contracts assertions=4964 packages=100 variants=2 scope=INVENTORY_AND_PHYSICAL_INTENT"
+      },
+      {
+        "suite": "PcbCorridorOrientationContractTest",
+        "marker": "PASS: PCB corridor orientation contracts {\"status\":\"PASS\",\"cases\":5,\"layoutVersion\":21,\"dependencyEpoch\":\"tsj-generation-dependencies-v22\",\"planVersion\":1,\"modelVersion\":4,\"physicalIntentVersion\":1,\"assertions\":19,\"elapsedMs\":17,\"scope\":\"PLANNER_ORIENTATION_GEOMETRY_ONLY\"}"
+      },
+      {
+        "suite": "Rb56ModelIdentityContractTest",
+        "marker": "PASS: RB56 model-identity contracts assertions=123"
+      },
+      {
+        "suite": "MediumBoardFloorplanningContractTest",
+        "marker": "PASS: medium board floorplanning contracts assertions=90483 historicalFixture=rb30-p1-physical-seed0@1;board=RB30_CONTROL_BOARD;topology=RB30_SEPARATE_DIRECT_A_BJT_B_BJT;layout=-5811592868239938363;packages=33;pads=82;status=RLED+LED1;inputPullDowns=none historicalNetMst=26650 historicalNetEdges=57 configuredScalePackages=20/29/40/40 regressionRecipes=33/35/37"
+      },
+      {
+        "suite": "D01DiagnosticContractTest",
+        "marker": "PASS: D01 diagnostic contracts assertions=176"
+      },
+      {
+        "suite": "P08ScalabilityContractTest",
+        "marker": "PASS: P08 scalable physical contracts assertions=2022"
+      }
+    ],
+    "overallMarker": "PASS: focused current contracts; 9 Java suites. Full matrix and independent oracles NOT RUN.",
+    "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed."
+  },
+  "limits": {
+    "fullMatrix": "NOT_RUN",
+    "independentOracles": "NOT_RUN",
+    "layoutQualified": false,
+    "scope": "Focused current native contracts only; these checks do not qualify an authored layout."
+  },
+  "rawInputs": [
+    {
+      "file": "orientation-focused-1-result.json",
+      "sha256": "0C208AAC6AC20ED5D4AA5241264844413CBC8DB33812DDAC78B4FFDD9999D123"
+    },
+    {
+      "file": "orientation-focused-1-console.txt",
+      "sha256": "BA272FA883BF87FE61BBD0B24130D3B4AA030380D304DE68A24EE169CFD8A6CB"
+    },
+    {
+      "file": "orientation-focused-1-receipt.txt",
+      "sha256": "65B0D3C246A95C87354D47099DA9FEEA6E6FC10AEAF360FC2F27148CFC572EB9"
+    }
+  ],
+  "sourcePins": {
+    "file": "orientation-focused1-source-pins.json",
+    "sha256": "033F7D64681A055F2378E6907E2A6E90A54A69F03F43EF6F8DED3769A186E128",
+    "count": 53,
+    "pathsRelative": true
+  }
+}

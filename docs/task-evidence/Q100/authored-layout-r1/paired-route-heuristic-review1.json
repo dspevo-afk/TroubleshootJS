@@ -1,0 +1,91 @@
+{
+  "schema": "troubleshootjs-q100-paired-route-heuristic-review",
+  "reviewId": "paired-route-heuristic-review1",
+  "status": "READ_ONLY_REVIEW_NO_DEMONSTRATED_DEFECT",
+  "reviewBasis": "SOURCE_ONLY",
+  "sourceBindings": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sha256": "6eb32ebea70a37084700d89451b0d3eb3c5da2dc2320e9d90014a369fcbb8a31",
+      "role": "reviewed production search source"
+    },
+    {
+      "path": "tests/contracts/PcbRoleWidthTurnBoundContractTest.java",
+      "sha256": "434643a0d60bd80b15dbc69253e50e9247476a47ecff4357977c6f8778b54b40",
+      "role": "existing independent lower-bound contract source"
+    }
+  ],
+  "reportedCaseContext": {
+    "case": "RB56 seed 5, profile 11, candidate 1, OUT_B branch",
+    "reportedOutcome": "branch expansion limit at 100000; profile 10 candidate 1 reportedly succeeds",
+    "reproducedByThisReview": false,
+    "attribution": "root-provided context only; no execution performed"
+  },
+  "findings": [
+    {
+      "id": "multi-goal-lower-bound",
+      "result": "No demonstrated admissibility or consistency defect",
+      "sourceReferences": [
+        { "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java", "line": 403, "symbol": "TurnLowerBound" },
+        { "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java", "line": 519, "symbol": "TurnLowerBound.value/cardinalValue" },
+        { "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java", "line": 694, "symbol": "Search.lowerBound" },
+        { "path": "tests/contracts/PcbRoleWidthTurnBoundContractTest.java", "line": 57, "symbol": "literalExpectations/multipleGoals" },
+        { "path": "tests/contracts/PcbRoleWidthTurnBoundContractTest.java", "line": 174, "symbol": "verifyAgainstDijkstra" }
+      ],
+      "detail": "The search first computes Manhattan distance to the union of goal cells projected across faces, then builds directional ray and half-plane minima from that same union. The implementation does not retain a named goal for every intermediate minimum, so it is not an explicit per-goal min(Manhattan+turns) table. It also does not simply add separately minimized Manhattan and turn counts: the directional sweeps couple forward travel with a goal ray, and the final estimate is checked against the independent shortest-path oracle. The contract includes competing goals on different faces and checks admissibility and edge consistency on its bounded synthetic graphs."
+    },
+    {
+      "id": "goal-identity-and-face-stop",
+      "result": "Current RB56 THT root use is coherent; no current wrong-root bug demonstrated",
+      "sourceReferences": [
+        { "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java", "line": 657, "symbol": "Search.reachedPthTerminals" },
+        { "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java", "line": 677, "symbol": "Search.goals" },
+        { "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java", "line": 766, "symbol": "BranchSearch.terminalAt" },
+        { "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java", "line": 813, "symbol": "BranchSearch.advanceOne goal test" }
+      ],
+      "detail": "Each branch targets its fixed root, existing same-net routed copper, and already reached plated-through-hole terminals on policy-permitted faces. The heuristic is face-relaxed, but route termination still checks the goal bit for the node's actual layer. Root coordinates are seeded on transition-permitted faces; for the scoped RB56 through-hole roots this matches available copper. If a future caller permits a non-plated root, root-goal seeding should be reviewed against terminalAt's face-copper check; that is a future reuse guard, not a defect demonstrated for this RB56 case."
+    },
+    {
+      "id": "determinism-and-ties",
+      "result": "Deterministic tie handling; no state-alias or unstable-order defect found",
+      "sourceReferences": [
+        { "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java", "line": 283, "symbol": "Node" },
+        { "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java", "line": 292, "symbol": "Node.compareTo" },
+        { "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java", "line": 940, "symbol": "Search.offer" },
+        { "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java", "line": 20, "symbol": "MAX_BRANCH_EXPANSIONS" }
+      ],
+      "detail": "Queue order is f-cost, heuristic, full state key, then insertion serial. The key includes transition count, layer, direction, and cell; equal-cost arrivals to one state retain the first predecessor. Fixed neighbor order and serial tie-breaking make this stable. Tie order can affect which states consume the unchanged branch cap, but the source shows no nondeterministic ordering."
+    },
+    {
+      "id": "profile-difference",
+      "result": "The reported profile comparison is not explained by a profile-specific FULLER heuristic",
+      "sourceReferences": [
+        { "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java", "line": 745, "symbol": "BranchSearch heuristic construction" },
+        { "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java", "line": 775, "symbol": "BranchSearch.heuristic" }
+      ],
+      "detail": "FULLER_TWO_LAYER always constructs TurnLowerBound, independent of placement density version. Thus the reported profile-10/profile-11 outcome difference is consistent with their different selected placement geometry and resulting obstacles/goals; this review found no search-weight or cap change keyed to those profiles."
+    }
+  ],
+  "existingContractScope": {
+    "sourceReferences": [
+      { "path": "tests/contracts/PcbRoleWidthTurnBoundContractTest.java", "line": 71, "symbol": "independentDijkstraChecks" },
+      { "path": "tests/contracts/PcbRoleWidthTurnBoundContractTest.java", "line": 91, "symbol": "workspaceReuseChecks" },
+      { "path": "tests/contracts/PcbRoleWidthTurnBoundContractTest.java", "line": 126, "symbol": "cancelledWorkspaceReinitializes" },
+      { "path": "tests/contracts/PcbRoleWidthTurnBoundContractTest.java", "line": 154, "symbol": "negativeOriginTranslation" }
+    ],
+    "covers": "synthetic multi-goal/multiface shortest paths, via costs 60 and 160, secondary-face step cost, a blocked-face case, full-state admissibility/consistency checks, workspace reuse/cancellation, and translated negative coordinates",
+    "executionByThisReview": "NOT RUN",
+    "assertionCountContext": "approximately 169632 was supplied as prior context; not freshly verified"
+  },
+  "optimization": {
+    "selected": false,
+    "detail": "The session already reuses turn-bound scratch arrays across sequential branches. This source review found no evidence-backed generic optimization that should be selected without changing weights, tie policy, caps, route requests, or physics."
+  },
+  "actions": {
+    "productionChanges": "NONE",
+    "testsOrGatesRun": "NONE",
+    "filesChangedByReview": [
+      "docs/task-evidence/Q100/authored-layout-r1/paired-route-heuristic-review1.json"
+    ]
+  }
+}

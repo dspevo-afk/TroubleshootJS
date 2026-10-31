@@ -13,8 +13,8 @@ public final class PcbNormalPackingIdentityContractTest {
         verifyProceduralDeclarationAndFaceConversion();
         verifyNormalAndPrivateProviders();
         verifyPublicReplayEpochAndSignedSeeds();
-        check(SeededPcbLayoutGenerator.CURRENT_VERSION == 20,
-            "current layout algorithm identity is not 20");
+        check(SeededPcbLayoutGenerator.CURRENT_VERSION == 25,
+            "current layout algorithm identity is 25");
         System.out.println("PASS: PCB normal packing identity contracts assertions=" + assertions +
             " packing=" + PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION +
             " replay=" + PlayerLaunchRequest.EPOCH);

@@ -1,0 +1,195 @@
+{
+  "schema": "tsj-q100-route-timing-evidence-v1",
+  "recordedUtc": "2026-10-31T13:52:36.586Z",
+  "candidate": {
+    "frozenDriverSha256": "C9F097320FF4EA157E1C4050C49EEA93B6FEB9521BAABED5F79EACE87D1075F9",
+    "isolationModuleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "productionSourceChanges": false,
+    "JavaChanges": false,
+    "GwtChanges": false,
+    "isolationModuleChanges": false
+  },
+  "preparation": {
+    "retainedPreparationBasename": "at-route-timing-prep1",
+    "preservedPreEditInputPrefixes": [
+      "ECD9",
+      "D512"
+    ],
+    "staticParserAndPureMetadata": {
+      "scope": "Static/parser and pure-metadata checks only",
+      "exactArtifactBasenamesSupplied": false,
+      "retainedLogProofClaimed": false,
+      "runtimeTimingProofClaimed": false
+    }
+  },
+  "rootTraceTask48": {
+    "status": "PASS",
+    "totalElapsedSeconds": 124.7013778,
+    "routeElapsedMilliseconds": 58669,
+    "navigationReadinessMilliseconds": 506,
+    "reportPollMilliseconds": 57225,
+    "longestRuntimeEvaluateMilliseconds": 56786,
+    "runtimeEvaluateCalls": 8,
+    "heapSnapshots": 2,
+    "traceStatus": "COMPLETE",
+    "traceErrors": 0,
+    "droppedEvents": 0,
+    "cleanupSucceeded": true,
+    "traceArtifactBasename": "at-compiled-task48-trace1.json",
+    "supportingCaptureKinds": [
+      "result",
+      "launcher",
+      "host"
+    ]
+  },
+  "actualCurrentTrace": {
+    "status": "PASS",
+    "totalElapsedSeconds": 254.1979193,
+    "traceArtifactBasename": "at-compiled-current-trace1.json",
+    "reportSha256": "d43b4024ef7e8db035a18e5e76eb108724193890ff0c03627205887bf0ebcd1e",
+    "canonicalRouteCount": 9,
+    "canonicalOrderPreserved": true,
+    "assertionsAndCasesPassed": true,
+    "deadlineSeconds": 90,
+    "cleanupSucceeded": true,
+    "browserShutdownMilliseconds": 9992,
+    "routeTiming": {
+      "status": "COMPLETE",
+      "rows": 9,
+      "errors": 0,
+      "dropped": 0,
+      "heapSnapshotsPerRoute": 2
+    },
+    "routeElapsedMillisecondsByKey": [
+      {
+        "route": "a031",
+        "elapsedMilliseconds": 8895
+      },
+      {
+        "route": "task46",
+        "elapsedMilliseconds": 2112
+      },
+      {
+        "route": "task47",
+        "elapsedMilliseconds": 4723
+      },
+      {
+        "route": "task48",
+        "elapsedMilliseconds": 60919
+      },
+      {
+        "route": "task49",
+        "elapsedMilliseconds": 63279
+      },
+      {
+        "route": "a02",
+        "elapsedMilliseconds": 2566
+      },
+      {
+        "route": "a04",
+        "elapsedMilliseconds": 16537
+      },
+      {
+        "route": "a04-forced",
+        "elapsedMilliseconds": 2392
+      },
+      {
+        "route": "a04-debug-off",
+        "elapsedMilliseconds": 2875
+      }
+    ]
+  },
+  "currentTraceOffControl": {
+    "status": "RUNNING_AT_PACKET_CUTOFF",
+    "resultPending": true,
+    "acceptanceClaimed": false,
+    "note": "No current-off acceptance claim."
+  },
+  "heapInterpretation": {
+    "rawHeapFieldsAreObservational": true,
+    "representsOperatingSystemRss": false,
+    "leakProof": false,
+    "embedderMetricApproximateEarlier": "~3.2bn",
+    "embedderMetricApproximateLaterA04": "~4.7mn",
+    "note": "These raw embedder values are observational; units and leak semantics are not established."
+  },
+  "preservedHistoricalResults": {
+    "untracedCurrent1AndCurrent3": {
+      "status": "TIMEOUTS_PRESERVED",
+      "explainedByOnePass": false,
+      "curedByOnePass": false
+    },
+    "earlierDriverAndRecorderGuard": {
+      "identities": [
+        "ECD9",
+        "D512"
+      ],
+      "retainedPreparationBasename": "at-route-timing-prep1",
+      "supersededByFrozenCandidate": true
+    }
+  },
+  "validationScope": {
+    "native5Pins": {
+      "baseCount": 1061,
+      "selectedCount": 33,
+      "browserDriverIncluded": false
+    },
+    "gwtPins": {
+      "count": 1199,
+      "browserDriverIncluded": false
+    },
+    "normalPins": {
+      "count": 1263,
+      "newBrowserDriverIncluded": true
+    },
+    "prep4Status": "STALE",
+    "prep5Status": "TEMPLATES_READY",
+    "strictA04Fixture": {
+      "count": 510,
+      "status": "PURE_PASS",
+      "evidencePacketBasename": "at-report-contract1"
+    },
+    "allNativeSuiteClaimed": false,
+    "fullPopulationClaimed": false,
+    "hardGateClaimed": false,
+    "scopeNoteBasename": "search-scope1",
+    "coverageScope": "Finite named checks only; broad search scope remains unknown."
+  },
+  "qualificationBoundary": "The completed traces record one current on-mode pass and one task48 trace pass. They do not explain or cure the historical untraced Current1/3 timeouts. Current-off acceptance remains pending until the separate control returns.",
+  "evidenceReferences": [
+    {
+      "label": "task48-trace",
+      "basename": "at-compiled-task48-trace1.json"
+    },
+    {
+      "label": "current-trace",
+      "basename": "at-compiled-current-trace1.json",
+      "sha256": "d43b4024ef7e8db035a18e5e76eb108724193890ff0c03627205887bf0ebcd1e"
+    },
+    {
+      "label": "current-off-control",
+      "status": "pending",
+      "basenamePrefix": "at-compiled-current-control1"
+    },
+    {
+      "label": "strict-A04-report-contract",
+      "basename": "at-report-contract1"
+    },
+    {
+      "label": "scope-boundary",
+      "basename": "search-scope1"
+    },
+    {
+      "label": "preserved-preparation",
+      "basename": "at-route-timing-prep1"
+    }
+  ],
+  "omittedFields": [
+    "absolute paths",
+    "raw logs",
+    "URLs",
+    "query parameters",
+    "tokens",
+    "heap trace payloads"
+  ]
+}

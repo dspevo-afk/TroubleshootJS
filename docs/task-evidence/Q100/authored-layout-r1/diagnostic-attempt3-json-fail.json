@@ -1,0 +1,19 @@
+{
+  "protocol": "rb100-placement-diagnostic-attempt-v1",
+  "status": "FAIL_REPORT_JSON",
+  "attempt": 3,
+  "helper": {
+    "exitCode": 0,
+    "elapsedSeconds": 29.2569433,
+    "suites": [
+      "Rb100LayoutPlacementDiagnosticContractTest"
+    ]
+  },
+  "internalNativeAssertions": "PASS; export is not accepted",
+  "casePayloads": "REJECTED malformed JSON",
+  "hostCleanup": "PASS",
+  "error": "Domain-bounds extrema maxY string lacks closing JSON quote. Receiver fails around first witness. Source fix adds only missing quote; a fresh actual receipt is required.",
+  "rawLogSha256": "146179dfe15068cb2da4d1127ccb887d6126ecd04b1e23bb50e7d825906be89d",
+  "rawConsoleSha256": "c5d41d0e69b4751716d02315ae4a820957a256fe546b33ea8c764f7331b8bad1",
+  "sourcePins": "diagnostic-attempt3-source-pins.json"
+}

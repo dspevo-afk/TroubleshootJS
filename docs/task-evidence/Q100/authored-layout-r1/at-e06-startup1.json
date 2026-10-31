@@ -1,0 +1,173 @@
+{
+  "schema": "tsj-q100-e06-startup-evidence-v1",
+  "recordedUtc": "2026-10-31T14:14:51.462Z",
+  "candidate": {
+    "gateDriver": "verify-a03-browser.ps1",
+    "gateDriverSha256": "c9f097320ff4ea157e1c4050c49eea93b6feb9521baabed5f79eace87d1075f9",
+    "isolationModule": "VerifierIsolation.psm1",
+    "isolationModuleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "layoutVersion": 25,
+    "dependencyEpoch": "tsj-generation-dependencies-v26",
+    "productionSourceChanges": false
+  },
+  "developerBuild": {
+    "resultBasename": "build-developer-102-result.json",
+    "resultSha256": "ae2ccd5dfe29667fa3b624941e69950c23c229945072e1cb2dffe5dd6612dde7",
+    "exitCode": 0,
+    "elapsedSeconds": 132.080144,
+    "variant": "Developer",
+    "inputDigest": "5c9e0f811d28a51e13d5e3c603d7e8b855e62c8d098fa64761776cbc3d1199b0",
+    "inputFileCount": 1199,
+    "outputDigest": "38a2cba1decd94769ec36f56fd023216d1fd8e6b96546285849e18ba5b579f2e",
+    "outputFileCount": 357,
+    "matchesDeveloperAt1": true,
+    "matchesDeveloperAo1": true
+  },
+  "buildIdentityEvidence": {
+    "currentIdentityBasename": "developer-at-1-identity.json",
+    "currentIdentitySha256": "d26dfc8ee66b98f61c3b81fd05c77151db037fb68637312b3f2bf70682a78d06",
+    "priorIdentityBasename": "developer-ao-1-identity.json",
+    "priorIdentitySha256": "d26dfc8ee66b98f61c3b81fd05c77151db037fb68637312b3f2bf70682a78d06",
+    "identityFieldsExactEqual": true,
+    "currentSizeBasename": "developer-at-1-size.json",
+    "currentSizeSha256": "23a6da6ace8f44baf631e9fc0283dc1501584745bf3d283bfdf95aa3eccdb1d3",
+    "priorSizeBasename": "developer-ao-1-size.json",
+    "priorSizeSha256": "fe5d8117f1027e6a11862474f23b62e8cee5792c75330cf33745efc3e42d7a81",
+    "cacheFileSetExactEqual": true,
+    "currentCacheCount": 5,
+    "priorCacheCount": 5,
+    "currentCacheBytes": 17964162,
+    "priorCacheBytes": 17964162,
+    "currentInventoryBasename": "developer-at-1-inventory.json",
+    "currentInventorySha256": "7721c85a2981e5915e3f2b49bc4cb37ca1f75e46805194356a1861db74dfb6dd",
+    "priorInventoryBasename": "developer-ao-1-inventory.json",
+    "priorInventorySha256": "7721c85a2981e5915e3f2b49bc4cb37ca1f75e46805194356a1861db74dfb6dd",
+    "inventorySetExactEqual": true,
+    "currentInventoryCount": 357,
+    "priorInventoryCount": 357,
+    "currentInventoryBytes": 18704589,
+    "priorInventoryBytes": 18704589
+  },
+  "e06Result": {
+    "status": "INFRASTRUCTURE_FAILURE",
+    "resultExitCode": 2,
+    "elapsedSeconds": 168.5558768,
+    "resultBasename": "ao-compiled-e06state-1-result.json",
+    "resultSha256": "de541b5f9f84f0f1cf7d36def4e34ecf9f76467ebd292bcb4a5af3c580a0ace3",
+    "reportBasename": "ao-compiled-e06state-1.json",
+    "reportSha256": "5dd817ef61a87b232213689a54e3801f3a0f9a2a9937d7510ffade2e3e4f4cf4",
+    "gate": "E06State",
+    "reportStatus": "INFRASTRUCTURE_FAILURE",
+    "routeCount": 0,
+    "firstFailureBoundary": "e06-late-callback",
+    "firstFailureOperation": "CDP receive",
+    "firstFailureElapsedMilliseconds": 90040,
+    "laterRoutesNotRun": 9,
+    "reportLayoutVersion": 25,
+    "reportDependencyEpoch": "tsj-generation-dependencies-v26",
+    "moduleDigestMatchesCurrent": true,
+    "reportBuildArtifactIdentity": "NOT_PRESENT_IN_E06_REPORT"
+  },
+  "lastReportSnapshot": {
+    "ready": "complete",
+    "verificationIsEmpty": true,
+    "verificationPresent": false,
+    "q100Present": false,
+    "e06AcceptancePresent": false,
+    "developerAttributesObjectEmpty": true,
+    "reportedNormalReady": {
+      "workbenchNavigationReady": false,
+      "programReady": false,
+      "retestCustomerReady": false,
+      "boardPowerReady": true
+    },
+    "scope": "Serialized last-report snapshot only; no route completed and no current normal-state inference."
+  },
+  "cleanup": {
+    "reportStatus": "PASS",
+    "success": true,
+    "resourceSuccess": true,
+    "elapsedMilliseconds": 59955,
+    "limitMilliseconds": 120000,
+    "withinLimit": true,
+    "errorsFieldShape": "empty PSCustomObject with no members",
+    "diagnosticPayloadCopied": false,
+    "reportSourceModuleDigestMatches": true
+  },
+  "operation": {
+    "elapsedMilliseconds": 108514,
+    "limitMilliseconds": 6000000
+  },
+  "cutoff": {
+    "trace1Status": "NOT_COMPLETE_AT_PACKET_CUTOFF",
+    "resultInferred": false,
+    "publication": "HELD",
+    "note": "A trace was active at cutoff; this packet records no outcome from it."
+  },
+  "scopeBoundary": {
+    "claim": "One failed E06 startup attempt with verified build identity and reported cleanup result",
+    "hostRobustnessClaim": false,
+    "q100QualificationClaim": false,
+    "visiblePlayerFlowClaim": false,
+    "note": "The E06 startup failed before any route completed. A ready marker in the last report snapshot is not a route pass."
+  },
+  "evidenceReferences": [
+    {
+      "label": "E06 report",
+      "basename": "ao-compiled-e06state-1.json",
+      "sha256": "5dd817ef61a87b232213689a54e3801f3a0f9a2a9937d7510ffade2e3e4f4cf4"
+    },
+    {
+      "label": "E06 result",
+      "basename": "ao-compiled-e06state-1-result.json",
+      "sha256": "de541b5f9f84f0f1cf7d36def4e34ecf9f76467ebd292bcb4a5af3c580a0ace3"
+    },
+    {
+      "label": "Developer build result",
+      "basename": "build-developer-102-result.json",
+      "sha256": "ae2ccd5dfe29667fa3b624941e69950c23c229945072e1cb2dffe5dd6612dde7"
+    },
+    {
+      "label": "Developer current identity",
+      "basename": "developer-at-1-identity.json",
+      "sha256": "d26dfc8ee66b98f61c3b81fd05c77151db037fb68637312b3f2bf70682a78d06"
+    },
+    {
+      "label": "Developer prior identity",
+      "basename": "developer-ao-1-identity.json",
+      "sha256": "d26dfc8ee66b98f61c3b81fd05c77151db037fb68637312b3f2bf70682a78d06"
+    },
+    {
+      "label": "Developer current size",
+      "basename": "developer-at-1-size.json",
+      "sha256": "23a6da6ace8f44baf631e9fc0283dc1501584745bf3d283bfdf95aa3eccdb1d3"
+    },
+    {
+      "label": "Developer prior size",
+      "basename": "developer-ao-1-size.json",
+      "sha256": "fe5d8117f1027e6a11862474f23b62e8cee5792c75330cf33745efc3e42d7a81"
+    },
+    {
+      "label": "Developer current inventory",
+      "basename": "developer-at-1-inventory.json",
+      "sha256": "7721c85a2981e5915e3f2b49bc4cb37ca1f75e46805194356a1861db74dfb6dd"
+    },
+    {
+      "label": "Developer prior inventory",
+      "basename": "developer-ao-1-inventory.json",
+      "sha256": "7721c85a2981e5915e3f2b49bc4cb37ca1f75e46805194356a1861db74dfb6dd"
+    }
+  ],
+  "omittedFields": [
+    "absolute paths",
+    "run IDs",
+    "PIDs",
+    "ports",
+    "URLs",
+    "query/capability parameters",
+    "raw events",
+    "raw logs",
+    "tokens",
+    "private payloads"
+  ]
+}

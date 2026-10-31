@@ -40,7 +40,7 @@ function New-E06CanaryFixture([string]$Canary) {
     return [pscustomobject][ordered]@{
         protocol='tsj-e06-acceptance-boundary-canary-v1'
         status='PASS_E06_ACCEPTANCE_BOUNDARY_CANARY'
-        epoch='tsj-generation-dependencies-v21'
+        epoch='tsj-generation-dependencies-v26'
         canary=$Canary; family='RB56_CONTROL'; seed='-8360266000248569150'
         cleanup='PASS'; cleanupError=$null; error=$null
         quickPlaySelectionVerified=$true; fixedStepVerified=$true

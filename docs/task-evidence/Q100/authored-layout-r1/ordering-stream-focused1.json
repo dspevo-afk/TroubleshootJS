@@ -1,0 +1,443 @@
+{
+  "schema": "q100-an-focused-controlled-packet-v1",
+  "status": "PASS_FOCUSED_NATIVE_AND_STRICT_READER",
+  "repo": {
+    "branch": "codex/q100-physical-feasibility",
+    "baseHead": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "scope": "AN focused shared ordering stream and bounded saved-profile generator contract"
+  },
+  "input": {
+    "snapshotLeaf": "ordering-stream-inputs-2",
+    "snapshotRevision": 2,
+    "inputRevision": 3,
+    "harnessRevision": 4,
+    "fileCount": 1059,
+    "bytes": 85489324,
+    "unchangedFromSealedInput1": 1058,
+    "changedFromSealedInput1": 1,
+    "onlyChangedPath": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+    "beforeBytes": 159467,
+    "beforeSha256": "e159c306c216467ad45cbb21e5a6f62101bbda7bd3a19f8936ab953384ad5d53",
+    "afterBytes": 159757,
+    "afterSha256": "6cb7f210606fb1836e4a183734a040f8c2418030cb3379f991ec71c74f64fbf4",
+    "input1Disposition": "SEALED_AND_UNCHANGED_NOT_RUN",
+    "input2CopyAudit": {
+      "status": "PASS_COPY_AND_SINGLE_V4_HARNESS_OVERLAY",
+      "unchangedFromInput1": 1058,
+      "changedFromInput1": 1,
+      "reparsePoints": 0,
+      "hostAbsolutePathsEmbedded": false,
+      "auditSha256": "9dc4360a7ecdf2e0cab3010fcb78d85ee37fbbc2cb117d6d72fb76b6a2de0e58"
+    },
+    "pins": {
+      "file": "ordering-stream-v2-sealed-pins.json",
+      "bytes": 204439,
+      "sha256": "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69"
+    },
+    "seal": {
+      "file": "ordering-stream-inputs-sealed2.json",
+      "bytes": 1614,
+      "sha256": "e705aa5609fa2dfabbc520581d8343b20d1f262d9e920dd4bb6be1baedf7429a"
+    },
+    "sourcePinsVerifiedAgainstInput2": true
+  },
+  "native": {
+    "artifactLeaf": "ordering-stream-observations-2",
+    "suite": "P07BranchDiagnosticsContractTest",
+    "scope": "FOCUSED_SHARED_ORDERING_STREAM_CONTRACT_ONLY",
+    "status": "PASS_FOCUSED_CONTRACT_ONLY",
+    "exitCode": 0,
+    "elapsedSeconds": 48.1684687,
+    "assertions": 445934,
+    "terminationProven": true,
+    "cleanupStatus": "PASS",
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "prePostFileCount": 1059,
+    "treatment": "GUIDANCE_INTERVENED_SHARED_ORDERING_STREAM_NOT_ADOPTED",
+    "baseEpochLabelsNotAdopted": true,
+    "recordCounts": {
+      "FRAME": 8,
+      "BRANCH": 809,
+      "ORDER": 11,
+      "CASE": 7,
+      "CANARY": 6,
+      "GENERATOR": 1,
+      "SUITE": 1,
+      "totalTaggedRecords": 843
+    },
+    "runId": "20c48f5e-bf8c-4a30-a63e-7462711985e9",
+    "nativeLimits": {
+      "javaChildMs": 60000,
+      "outerWatchdogMs": 600000,
+      "expansionsPerRequest": 1000000,
+      "branchExpansions": 100000,
+      "gridCells": 250000,
+      "orderings": 3,
+      "vias": 48
+    },
+    "sourcePins": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "bytes": 81651,
+        "sha256": "d8d176503f12338230d75e5a8477fac13395821d124a3f1aadb7fadba95338c9"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "bytes": 86193,
+        "sha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+        "bytes": 101405,
+        "sha256": "0601b6d58c6958788774c66168f13d7c19044567015676e1429ceea832fbb7c5"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java",
+        "bytes": 36800,
+        "sha256": "395158f6695226c8f326e46d8c2de4a6065fbbcc3b000bae858dd2750e0bd2d7"
+      },
+      {
+        "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+        "bytes": 159757,
+        "sha256": "6cb7f210606fb1836e4a183734a040f8c2418030cb3379f991ec71c74f64fbf4"
+      },
+      {
+        "path": "tests/contracts/Rb100PhysicalDiagnostics.java",
+        "bytes": 185834,
+        "sha256": "763c5367162644e73c75f582fed5175d402b56053950a3e06007389af643c583"
+      }
+    ],
+    "observedControls": {
+      "amSeed": "9007199254740993",
+      "amCandidateAttempt": 4,
+      "amSharedExpansions": 683850,
+      "amYieldedOrderings": 3,
+      "amBranchCallbacks": 291,
+      "amSelectedOrdering": 2,
+      "amWinnerArea": 6371585,
+      "amWinnerQualityMilli": 276930281,
+      "seed5PlacementSeed": "-7630701392004902526",
+      "seed5RoutingSeed": "-9106650364266936003",
+      "seed5Profiles": [
+        {
+          "profileVersion": 10,
+          "termination": "FIRST_SUCCESS_UNGUIDED",
+          "expansions": 523756,
+          "acceptedRoutes": 1
+        },
+        {
+          "profileVersion": 11,
+          "termination": "TOTAL_SEARCH_LIMIT",
+          "expansions": 1000000,
+          "acceptedRoutes": 1,
+          "rawGeometrySha256": "da26385cf2e7984299e3fe67c14cf4fedd299de996377d0a916f66d1055c0352",
+          "traceGeometrySha256": "80fc936f50ba09970d3b487f69b2899525e652d7bb15a177b32409f09e70e8ae",
+          "p08CanonicalSha256": "473e2b2430a76a5ae335a8166627ec7ea26daf6c95af97f16dec5ad52ec05a0a"
+        }
+      ],
+      "wrongModePendingDuplicateAndLatchCanaries": "PASS",
+      "totalCapWithoutRoute": "PASS",
+      "totalCapAfterValidYield": "PASS",
+      "p08ReferenceClearanceAndLayeredRasterAssertions": "PASS_IN_FOCUSED_NATIVE_SUITE"
+    },
+    "actualSavedProfileGeneratorProbe": {
+      "accepted": true,
+      "workUnits": 141,
+      "observerCalls": 7240458,
+      "routeAttempts": 3,
+      "routeSuccesses": 3,
+      "routingOrdersAcrossRequests": 7,
+      "routingExpansionsAcrossRequests": 1771613,
+      "generatedLayoutSha256": "4486304d0971a5e8dbf574bb163f3a02c8c33a6151e851a8329ad93bdbc2f83a",
+      "requestReceipts": [
+        "attempt=4;startedOrderings=3;completedOrderings=3;yieldedOrderings=3;finalizedOrderings=3;selectedOrdering=2;expansions=683850;guidanceStarted=true;comparisonComplete=true;termination=ORDERINGS_COMPLETE",
+        "attempt=2;startedOrderings=1;completedOrderings=1;yieldedOrderings=1;finalizedOrderings=1;selectedOrdering=-1;expansions=168757;guidanceStarted=false;comparisonComplete=false;termination=FIRST_SUCCESS_UNGUIDED",
+        "attempt=3;startedOrderings=3;completedOrderings=3;yieldedOrderings=1;finalizedOrderings=1;selectedOrdering=-1;expansions=919006;guidanceStarted=true;comparisonComplete=true;termination=ORDERINGS_COMPLETE"
+      ],
+      "routeOutcomes": [
+        "P07_FULLER_TWO_LAYER@4=SUCCESS",
+        "P07_FULLER_TWO_LAYER@2=SUCCESS",
+        "P07_FULLER_TWO_LAYER@3=SUCCESS"
+      ],
+      "budgetInterpretation": "The 1,771,613 total sums three separate request-local searches; it is not one request exceeding the unchanged 1,000,000 cap."
+    },
+    "artifacts": [
+      {
+        "file": "ordering-stream-2-result.json",
+        "bytes": 893,
+        "sha256": "9f882f887051683f38ace4d998bcbc40527237ee603ccf85d667ef9a1f6214b4"
+      },
+      {
+        "file": "ordering-stream-2-console.txt",
+        "bytes": 783103,
+        "sha256": "f1f30d111e4252018361a914018116458deb6f504073bf6c33fa45e5fe65ffca"
+      },
+      {
+        "file": "ordering-stream-2-receipt.txt",
+        "bytes": 781963,
+        "sha256": "bcc74da59e5e081bb88d52f05bc69f90d3efff58c589170da2ff80b9908db65a"
+      },
+      {
+        "file": "ordering-stream-2-stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "file": "ordering-stream-2-launcher.json",
+        "bytes": 222,
+        "sha256": "283b4cb8bfaa0453996551017551278ed6bf6447155ec3be02db320575184c99"
+      }
+    ],
+    "limitations": [
+      "Focused harness result only; no full72 census, full Q acceptance, current U layout24/dependency25 gate, GWT build, Player/runtime 90-second/640-work-unit gate, playable RB100 qualification, or adoption.",
+      "This focused saved-profile generator probe accepts one bounded fixture; it does not qualify authored 100-part routes. Actual 100-part layouts remain unqualified and no playable100 claim follows.",
+      "P08 reference, clearance, and layered raster checks are test-harness assertions. The strict reader only reconciles the tagged records and sealed source/input evidence; it did not independently execute physical oracles."
+    ],
+    "layoutQualification": false,
+    "adoption": false
+  },
+  "strictReader": {
+    "artifactLeaf": "ordering-stream-focused-reader-1",
+    "status": "PASS_FOCUSED_NATIVE_READER",
+    "readerVersion": 9,
+    "scope": "STRICT_READER_ONLY",
+    "runtime": "Windows PowerShell 5.1",
+    "exitCode": 0,
+    "elapsedMilliseconds": 3799,
+    "recordsValidatedInConsoleOrder": 843,
+    "inputFilesRehashed": 1059,
+    "sourceSha256": "6cb7f210606fb1836e4a183734a040f8c2418030cb3379f991ec71c74f64fbf4",
+    "sealSha256": "e705aa5609fa2dfabbc520581d8343b20d1f262d9e920dd4bb6be1baedf7429a",
+    "pinsSha256": "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69",
+    "nativeRunId": "20c48f5e-bf8c-4a30-a63e-7462711985e9",
+    "readerSource": {
+      "file": "reader-v9.ps1",
+      "bytes": 31766,
+      "sha256": "2666fa860a81826adf280a04679ba7c12d0069c725972eb721eefde2adad5786"
+    },
+    "readerRun": {
+      "file": "reader-v9.run.json",
+      "bytes": 392,
+      "sha256": "1b419ea7816170685ea9c1e0485ec7b73b948b2901a52fa34fd9f9ebc490bde7"
+    },
+    "stdout": {
+      "file": "reader-v9.stdout.txt",
+      "bytes": 1143,
+      "sha256": "17abbdcd1ea59f550e2a2f5ef591acc0fc1f7d793dc60fdb84b2184b6b8b5cde"
+    },
+    "stderr": {
+      "file": "reader-v9.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "analysis": {
+      "file": "analysis-v1.json",
+      "bytes": 2142,
+      "sha256": "3e04a012dfc839edd13c40acbc080b179d6363ab1fdf8b6550b96bd676f386c1"
+    },
+    "analysisText": {
+      "file": "analysis.md",
+      "bytes": 5464,
+      "sha256": "249812bd82f814cabcf8e09fd24aad5d6772ee79d5e4fe736cb51af53b2dc804"
+    },
+    "consumedNativeOutput": {
+      "resultSha256": "9f882f887051683f38ace4d998bcbc40527237ee603ccf85d667ef9a1f6214b4",
+      "consoleSha256": "f1f30d111e4252018361a914018116458deb6f504073bf6c33fa45e5fe65ffca",
+      "receiptSha256": "bcc74da59e5e081bb88d52f05bc69f90d3efff58c589170da2ff80b9908db65a",
+      "pinsSha256": "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69",
+      "sealSha256": "e705aa5609fa2dfabbc520581d8343b20d1f262d9e920dd4bb6be1baedf7429a"
+    },
+    "attempts": [
+      {
+        "version": 1,
+        "status": "FAIL_EXIT_1",
+        "elapsedMs": 452,
+        "sourceBytes": 31667,
+        "sourceSha256": "9393867db3952836049b8b37e458d0624ae4ac687caf8bdfe086887c9737c58d",
+        "runBytes": 390,
+        "runSha256": "8ae7e3c697cb7bf2a5b9530884e53a18251f097228dfd302fe878d04b8608d75",
+        "stdoutBytes": 0,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrBytes": 553,
+        "stderrSha256": "95b30cf29f2ad2971898db58954e7a35db0acea358a345c9f12cafc4e8a84dd9",
+        "note": "initial source capture/completeness/census gaps; preserved, not reused"
+      },
+      {
+        "version": 2,
+        "status": "FAIL_EXIT_1",
+        "elapsedMs": 3135,
+        "sourceBytes": 31691,
+        "sourceSha256": "e7b251079b1d4cc715de6b82c213327dee33d7e4f4756740d7c48f2d53602e34",
+        "runBytes": 391,
+        "runSha256": "2cc65d07c3b5c2e3c1b6243f89a28a8ea3bd1cba1df6aa468fb72e576f82eece",
+        "stdoutBytes": 0,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrBytes": 545,
+        "stderrSha256": "8ff2fa206b634c625d936e846afe03885528f72f85e2a9b8bdfc41f4fdf2a98d",
+        "note": "one-byte route hash mismatch; preserved, not reused"
+      },
+      {
+        "version": 3,
+        "status": "NOT_RUN",
+        "sourceBytes": 31611,
+        "sourceSha256": "48debd39c206c50e390b6d0c489fd552b01d78ecf6eae64c0940e1ab8acc2e5e",
+        "note": "four-operation fixture prepared before actual expansion; no execution result claimed"
+      },
+      {
+        "version": 4,
+        "status": "FAIL_EXIT_1",
+        "elapsedMs": 3085,
+        "sourceBytes": 31602,
+        "sourceSha256": "241e770676f594f1ab279046c1eb47d58f3663b8cbf2ef250d88b7fa273aaed1",
+        "runBytes": 391,
+        "runSha256": "743e1b1943c5a039dec8e2fb3383c8dbf9cfcc7fc472a7ed9108ce7a25335c6d",
+        "stdoutBytes": 0,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrBytes": 545,
+        "stderrSha256": "89e770752668ae91a6fcbca9e05827601b38c7d165e370f07fecd686e78a4506",
+        "note": "loop correction only; prior census handling still failed"
+      },
+      {
+        "version": 5,
+        "status": "FAIL_EXIT_1",
+        "elapsedMs": 3140,
+        "sourceBytes": 31601,
+        "sourceSha256": "d634fdc427c7be801e20ea96de70dc02fda5f756aadee9538398ecd1965dcc42",
+        "runBytes": 391,
+        "runSha256": "cfd03acc4b81c477f8f49bcc76a68a98d8fa88f2ba024fa9cb6e115d0433c96d",
+        "stdoutBytes": 0,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrBytes": 539,
+        "stderrSha256": "82553a17f465755f0458d0d656cb71476a585b9fc628419be1c68a0e92102f48",
+        "note": "PowerShell single-record count handling failed"
+      },
+      {
+        "version": 6,
+        "status": "FAIL_EXIT_1",
+        "elapsedMs": 3367,
+        "sourceBytes": 31616,
+        "sourceSha256": "4ca520b1a3208af597255e0a6466e6358af80504967981d2dd45c1a905fd6a1d",
+        "runBytes": 391,
+        "runSha256": "d429098aad8da015118c695dc011572440a07c9dbac48dbbf8289685e405c16f",
+        "stdoutBytes": 0,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrBytes": 827,
+        "stderrSha256": "2b31c48eaa2063a05ef41702a789c1d21bb47aacd5fda0313df7c7f8cbfe46e9",
+        "note": "profile topology expectation failed"
+      },
+      {
+        "version": 7,
+        "status": "FAIL_EXIT_1",
+        "elapsedMs": 3431,
+        "sourceBytes": 31765,
+        "sourceSha256": "677559f88c7ccc9d0ec19f20309b735f943d56dd2ab58baa7e3c162b8f1564ea",
+        "runBytes": 391,
+        "runSha256": "0941781b2e785531f76383e5302adfcd4c16a0c385e9efab52c0db0dd8f38dca",
+        "stdoutBytes": 0,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrBytes": 563,
+        "stderrSha256": "db38615ca8ff2938419d192ee08d6e33b65a44f13f26e3f97d14a7ae5caaa1c0",
+        "note": "cap-after-yield diagnostic mode failed"
+      },
+      {
+        "version": 8,
+        "status": "FAIL_EXIT_1",
+        "elapsedMs": 3642,
+        "sourceBytes": 31838,
+        "sourceSha256": "1301ed5c514a2a4d52211c253f2301708233ef05e3e3578706c545063f2276a6",
+        "runBytes": 391,
+        "runSha256": "6c517b4c78735ada395cf43b34bb5a8e204260ef0c01f353fea1d884ec477a52",
+        "stdoutBytes": 0,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrBytes": 559,
+        "stderrSha256": "f6eacb3f8ad080c633f7f674940fc3c0213c07c1cad735776ef2c18b1369d6fa",
+        "note": "no-route canary has no branch callback"
+      },
+      {
+        "version": 9,
+        "status": "PASS_FOCUSED_NATIVE_READER",
+        "elapsedMs": 3799,
+        "sourceBytes": 31766,
+        "sourceSha256": "2666fa860a81826adf280a04679ba7c12d0069c725972eb721eefde2adad5786",
+        "runBytes": 392,
+        "runSha256": "1b419ea7816170685ea9c1e0485ec7b73b948b2901a52fa34fd9f9ebc490bde7",
+        "stdoutBytes": 1143,
+        "stdoutSha256": "17abbdcd1ea59f550e2a2f5ef591acc0fc1f7d793dc60fdb84b2184b6b8b5cde",
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "allAttemptArtifactsPreserved": true,
+    "earlierResultsReused": false
+  },
+  "sourceOnlyReviews": [
+    {
+      "component": "PcbLayerRoutingPrototype",
+      "reviewScope": "SOURCE_ONLY_NOT_NATIVE",
+      "v1Status": "BLOCKER_FOUND_UNRUN",
+      "v1SourceSha256": "78171ce39bc43b905e34a650b55157fa78378d01434cdd2f6981560d9f2209d7",
+      "v1Review": {
+        "file": "ordering-stream-router-review-1/review.md",
+        "sha256": "24b73558fa5590806c3802acea935cab9d9571d8448541e55965cb554e1d00a4"
+      },
+      "v1Findings": "observer checks could be bypassed at ready/complete/take/summary boundaries; duplicated pass/search work paths",
+      "v2Status": "NO_BLOCKER_FOUND_SOURCE_REVIEW_ONLY",
+      "v2SourceSha256": "d8d176503f12338230d75e5a8477fac13395821d124a3f1aadb7fadba95338c9",
+      "v2Review": {
+        "file": "ordering-stream-router-review-2/review.md",
+        "sha256": "0f2ee108a33c1dc2317c3ee20d7671aa6e9d195705393f4a22ecaa4e9ff78ab5"
+      },
+      "v2ReviewLimits": "Static review only; generator integration, tests, and runtime were outside review."
+    },
+    {
+      "component": "P07BranchDiagnosticsContractTest",
+      "reviewScope": "SOURCE_ONLY_NOT_NATIVE",
+      "v1Status": "BLOCKERS_FOUND_UNRUN",
+      "v1SourceSha256": "578baee19cf13dc56a5f2d04184470fa39cb8efd5c7e992114e3582017d9481f",
+      "v1Review": {
+        "file": "ordering-stream-test-review-1/review.md",
+        "sha256": "15832ad251b8d17331aa2f3311b29132808171ac1464f3f9327a54531fa4304a"
+      },
+      "v3Status": "NO_BLOCKER_FOUND_SOURCE_REVIEW_ONLY",
+      "v3SourceSha256": "e159c306c216467ad45cbb21e5a6f62101bbda7bd3a19f8936ab953384ad5d53",
+      "v3Review": {
+        "file": "ordering-stream-test-review-2/review.md",
+        "sha256": "7fe5d763e66f6713a28f50fe9b2d64d1ac4b4e985b2806c0fca803eecb3dd54c"
+      },
+      "nativeHarnessVersion": 4,
+      "v3VersusV4": "V4 input overlay changed only the authorized harness after V3 review; native evidence is for V4, not V3."
+    },
+    {
+      "component": "MediumBoardPhysicalPolicy receipt validation",
+      "reviewScope": "AUTHOR_SOURCE_DELTA_AND_NATIVE_CONSUMPTION; NO_INDEPENDENT_REVIEW_CLAIM",
+      "v1Status": "NOT_RUN",
+      "v1SourceSha256": "98559bf155f6c199b353ea456ff96b060d0a9cb067c1214b1d7ac61f5e365b7f",
+      "v2Status": "SOURCE_CORRECTION_CONSUMED_BY_NATIVE_V4",
+      "v2SourceSha256": "395158f6695226c8f326e46d8c2de4a6065fbbcc3b000bae858dd2750e0bd2d7",
+      "v2SpecFile": "ordering-stream-owner-source-v2/spec.json",
+      "v2SpecSha256": "18e583a9706d8e120788edd51d4b3dc160f34dddd568d70ba75ee2525b7137c3",
+      "v2DiffFile": "ordering-stream-owner-source-v2/diff.patch",
+      "v2DiffSha256": "6b22be264150bed52e0fc51fd8587916991286c5e8b58db6a427cdebed36afe4",
+      "correction": "terminal comparison/cap cross-fields and nonempty receipt-vector census were corrected; generator remained byte-identical"
+    }
+  ],
+  "qualificationLimits": {
+    "full72Census": "NOT_RUN",
+    "fullQAcceptance": "NOT_RUN",
+    "currentWorktreeLayout24Dependency25": "NOT_RUN; native used layout23/dependency24 snapshot",
+    "gwtBuild": "NOT_RUN",
+    "playerRuntimeAnd90s640Gate": "NOT_RUN",
+    "playableAuthored100Qualification": "NOT_ESTABLISHED",
+    "productionAdoption": false,
+    "publicAdmission": false,
+    "all100PartRoutes": "FULL_AUTHORED_SEARCH_EXHAUSTED; no accepted route; the focused generator fixture is separate",
+    "note": "A focused saved-profile generator fixture accepted; this does not qualify an authored 100-part board or change any product envelope."
+  },
+  "packetSanitization": {
+    "artifactPaths": "portable leaf-relative basenames only",
+    "rawConsoleOrReceiptEmbedded": false,
+    "processIdsIncluded": false,
+    "privateAbsolutePathsIncluded": false,
+    "onlyOwnedRepoFile": "docs/task-evidence/Q100/authored-layout-r1/ordering-stream-focused1.json"
+  }
+}

@@ -39,6 +39,20 @@ not add physical packages. `Rb100PilotFaults` owns the complete electrical-refer
 population; `Rb100PilotReference` runs the bounded six-context fault/repair/retest
 sequence on that graph. `Q100ElectricalPilotDeveloperVerifier` borrows exclusive
 solver authority through `PrivateSolverContext` and restores the exact predecessor.
+`Rb100Placement` supplies private family physical intent from that same inventory:
+the existing RB56 primary/secondary net classifier and drawing-space barrier,
+family channel/purpose/interface region hints, unchanged margins and the existing
+MEDIUM_BOARD@1 policy requiring bounded P07 routing with current density14.
+The current private experiment selects the existing role-width interpretation;
+this supplies physical widths and its existing P07 search choices together.
+Physical intent declares primary
+connectors LEFT and secondary connectors RIGHT before package variant selection;
+nonconnectors retain NONE. The versioned private intent binds these inputs without
+granting qualification. It selects the
+bottom/connected-pocket demand before the board's immutable first attachment.
+Its separate physical-intent version does not change numerical models or grant
+P09 admission, a generated physical runtime or Player authority. Qualification
+and private layout experiments remain scoped by the roadmap.
 Reference v3 uses the existing owned temporal advance operation with fixed
 100/50 us healthy and 50 us fault timesteps, exact accepted-step/time witnesses
 and at most 64 steps per unit. Its operation deadline is 5 s; the executor's
@@ -48,7 +62,87 @@ do not qualify the current protocol.
 These owners grant no normal catalog, physical admission, production D01 proof,
 session capacity or playable-family authority. The roadmap records their evidence.
 
-Dependency interpretation v21 invalidates earlier proof keys after the E06
+Dependency interpretation v26 binds layout algorithm25, including shared
+medium-placement corridor pruning and required-P07 grid admission before the
+bounded route subset. Each medium plan
+intersects the separating orientations supported by all selected mixed isolation
+footprints before packing, including unplaced packages, then requires partial
+domain aggregates to retain a compatible orientation. Empty intersections reject
+explicitly. Pairwise clearance and full aggregate validation remain required.
+Optional per-call diagnostics copy immutable failure bounds and distinguish an
+unconstrained corridor failure from required-orientation pruning; they grant no
+layout or electrical authority. Required P07 routing uses the backend's same
+grid-admission arithmetic to filter prioritized placements before choosing at
+most three actual requests. Original ranked scores remain intact; copied eligible
+attempts and GRID_LIMIT skips have separate canonical receipts. Optional routing
+keeps its existing selector. P07 snapshots the actual previously published PTH
+tree endpoints for each branch and recognizes their permitted copper faces.
+The router applies its complete existing endpoint/escape/collision predicates to
+each actual target; unconnected same-net pads gain no endpoint authority. Final
+strips identify the reached pad they actually contact. Restricted-policy face
+limits remain separate from FULLER's two-face PTH capability. A nullable per-request
+diagnostic copies terminal branch counters; sink failures retire that request
+and rethrow on retry without publishing its private routing prefix.
+The existing width-independent turn lower bound also orders uniform FULLER
+requests; uniform RESTRICTED keeps its original bound, and the role-width flag
+still owns failed-net promotion. Difficult FULLER branches may construct a
+directed fixed-obstacle distance bound once only one existing branch-work quantum
+remains. Per-face Router query copies preserve the live layout, reservations and
+prepared-net state. The field relaxes path history and global via restrictions;
+it supplies search guidance, not electrical behavior or a completeness promise.
+Staged field construction and immutable pop-time priority refresh consume Session
+work; unreachable relaxed states retain the existing bound rather than pruning.
+
+The Medium owner opts into a one-slot ordering stream. An unguided request keeps
+its ordinary first success; once stronger guidance has intervened, the same
+Session may consider its remaining existing orderings under one unchanged
+expansion/via budget. Every yield passes routing guards before the generator
+compacts, checks its envelope and applies the existing physical comparator.
+P07 owns neither compaction nor scoring. Default first-success callers, including
+the separate packing probe, retain their own API. One placement request still
+produces one outcome/counter event; separate immutable ordering receipts record
+actual work, request-local selections and comparison completeness. A valid
+finalized candidate may survive a deterministic optional-comparison cap with
+explicit incomplete status. Observer, cancellation and unexpected failures latch
+and retire the stream; later calls cannot revive a pending route or complete a
+failed job. Current replay/cache identities include the new interpretation.
+
+`VerifierIsolation` owns browser shutdown proof separately from generation. Its
+bound-receipt wait retains a completed natural-exit proof only within that wait,
+bound to the same record, retained attestation, process handle, PID and creation
+ticks. First proof still requires two independent current absence observations;
+reuse revalidates the retained capability. Live/transient results are retried.
+Later descendant, kernel job, profile and listener proofs remain separate. This
+host optimization does not change the15s shutdown or120s aggregate cleanup limits,
+or any electrical/layout interpretation. Qualification stays in the task report.
+
+Namespace validation proves RunRoot ownership and ancestors before its later
+complete descendant reparse sweep. Nonmutable RunRoot no longer receives the
+same recursive sweep twice in one census. Separate evidence/lease checks, both
+censuses bracketing manifest writes, and final deletion checks remain required.
+The mutable browser-profile path keeps its existing rules.
+
+The existing browser-report runner owns optional `TraceRouteTiming` diagnostics.
+It records monotonic route/phase/CDP request timing and read-only heap samples
+inside the original route deadline. Per-route collections and the route list
+are bounded at64 entries, with explicit totals, truncation and collection status.
+Metadata excludes CDP parameters, expressions, URLs and response payloads. The
+default path makes no extra diagnostic calls. Recorder failures preserve the
+primary transport result/error; neither timings nor heap metrics establish a
+generation phase, retained-memory cause or acceptance result by themselves.
+
+After compacting a Medium route and positioning
+its parts tray, the canvas owner completes board containment for every selected
+Medium policy. It extends workbench dimensions without changing the board, tray
+or conductive geometry. The roadmap records qualification of these changes.
+The native `Rb100PhysicalDiagnostics` helper owns only the current policy/branch
+observations and focused placement controls. Its thin entrypoints do not grant
+physical qualification. Obsolete single-face experiment entrypoints are retired;
+`Rb100PhysicalReference` retains strict test-only physical oracles for future
+explicit callers. Retaining those routines is not evidence that an authored100
+layout passed them. A separate layered raster and finite-width P08 reference
+check connectivity/geometry without replacing CircuitJS electrical behavior.
+The published E06 candidate used v21 for its
 accepted-memory boundary change. The published Q100-1 candidate used v20 for
 the earlier E02/E04/E06 solver-policy corrections. The context binds declared
 inputs rather than source bytes, so explicit epochs carry changed interpretation.
@@ -94,7 +188,7 @@ Each layered routing search branch owns a primitive-key best-state index. Its
 values are the same Node references consumed by offer and stale-pop checks;
 replacements, serials, heap order and expansion accounting retain their owners.
 It does not supply iteration order or retain state across branches.
-The routing Session lazily owns six scratch arrays for role-width turn bounds.
+The routing Session lazily owns six scratch arrays for FULLER turn bounds.
 Each sequential branch fully refills them after the preceding search and path
 publisher stop reading its bound; Manhattan distances remain branch-owned.
 Sessions do not share this storage and release it on accepted/rejected completion.
@@ -6137,11 +6231,14 @@ nets have one width; this does not promise arbitrary mixed-width taper unions.
 Widths do not add ampacity, material resistance or manufacturing dimensions.
 CircuitJS remains electrical truth with its existing ideal-copper model.
 
-Only ROLE routing uses the relaxed-plane turn lower bound, active failed-net
-promotion into the next existing P07 ordering, and nearest-to-reached branches
-on all three orderings. The helper reuses four directional arrays plus an axial
-minimum and one construction scratch array. Uniform routing keeps its prior
-decisions. Candidate, branch, shared-expansion and host budgets are unchanged.
+ROLE routing owns active failed-net promotion into the next existing P07 ordering
+and nearest-to-reached branches on all three orderings. Current FULLER routing,
+including uniform-width requests, uses the relaxed-plane turn lower bound; uniform
+RESTRICTED retains its prior estimate. The helper reuses four directional arrays
+plus an axial minimum and one construction scratch array. Both profiles use the
+current reached-PTH endpoint contract. Candidate, branch, shared-expansion and host
+budgets are unchanged. The current execution-boundary section above describes the
+later bounded fixed-obstacle guidance and opt-in ordering stream.
 Qualification and retained trial failures are tracked separately in the
 [current evidence packet](task-evidence/PCB/role-widths-r1/README.md); implementation
 ownership alone is not a normal advanced, performance or manufacturing release.

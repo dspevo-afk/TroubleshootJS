@@ -1,0 +1,205 @@
+{
+  "schema": "troubleshootjs-crop-extent-probe-incomplete-failure-v1",
+  "status": "FAIL_INCOMPLETE_TWO_CASE_CENSUS",
+  "scope": "Test-only final occupied-bounds attribution probe; retained failure caused by malformed copied expected hash.",
+  "run": {
+    "suite": "P07BranchDiagnosticsContractTest",
+    "helperExitCode": 2,
+    "nativeChildExitCode": 1,
+    "helperElapsedSeconds": 38.2488326,
+    "nativeChildLimitMs": 60000,
+    "outerWatchdogMs": 600000,
+    "terminationProven": true,
+    "inputRevision": 3,
+    "sourceSnapshotRevision": 1,
+    "inputCount": 1059,
+    "inputPinsSha256": "83735dd90503ce87d9c3da30574044c5b68818dbc7542646615b8ec7a9452cbe",
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "cleanup": {
+      "status": "PASS",
+      "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+      "elapsedSeconds": null,
+      "timing": "Cleanup-only duration is not separately reported."
+    }
+  },
+  "caseProgress": {
+    "plannedCases": 2,
+    "completedCases": 1,
+    "failedCases": 1,
+    "casesAfterFailureNotRun": 0,
+    "caseCensusComplete": false,
+    "successSummaryProduced": false,
+    "receiptProduced": false,
+    "failure": {
+      "caseOrdinal": 2,
+      "placementInterpretationVersion": 11,
+      "failureKind": "ASSERTION",
+      "message": "actual layout exactly matches its immutable U geometry SHA-256 pin",
+      "cause": "The copied v1 fixture expected hash has 63 hexadecimal characters; the independently measured v11 hash has 64 and contains one additional 7."
+    }
+  },
+  "malformedFixture": {
+    "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+    "sourceHarnessSha256": "4aea7aaf9a6cfb27b11c4c70bfa3acc1046f7dd685c531270cb1beba897597e7",
+    "parentPinnedHarnessSha256": "0c97dd4f0e1c3f4c18c34f80ca9c827f00639d17fa0599048ba9cf0c319f8867",
+    "malformedExpectedHash": "82ab033ea97c249c3899f7bafda9e99cd2bb7e7e476acd18791d674bee47166",
+    "characterCount": 63,
+    "malformedExpectedHashLengthIsValidSha256": false,
+    "actualV11Hash": {
+      "value": "82ab033ea97c249c3899f7b7afda9e99cd2bb7e7e476acd18791d674bee47166",
+      "length": 64,
+      "source": "Independent raw SC measurement; coordinator-confirmed"
+    },
+    "actualHashDiffersOnlyByMissingDigit": "7",
+    "diagnostic": "The expected literal is malformed; this probe failure is not evidence of a production determinism defect.",
+    "missingCharacter": "7",
+    "missingCharacterIndexZeroBased": 23
+  },
+  "completedV10Observation": {
+    "status": "PASS_OBSERVATION_ONLY",
+    "caseOrdinal": 1,
+    "plannedCaseCount": 2,
+    "rootSeed": "5",
+    "placementInterpretationVersion": 10,
+    "planSha256": "6fa70718324689757eb36cec7a3f5afff1cd3e0d96606929d6df9273f6784ff5",
+    "layoutGeometrySha256": "2a68bb932226a99713b24dbc9a56c4a1a3b0dfd68889e9a8936a1dc27fec14f8",
+    "layoutGeometrySha256AfterRead": "2a68bb932226a99713b24dbc9a56c4a1a3b0dfd68889e9a8936a1dc27fec14f8",
+    "boardGraphStable": true,
+    "independentUnionMatchesProduction": true,
+    "readOnlyStateStable": true,
+    "occupiedContentBounds": {
+      "x": 125,
+      "y": 71,
+      "width": 3191,
+      "height": 1704
+    },
+    "boardOutline": {
+      "x": 60,
+      "y": 6,
+      "width": 3321,
+      "height": 1834
+    },
+    "layout": {
+      "width": 3600,
+      "height": 1840,
+      "boardArea": 6090714,
+      "occupiedArea": 5437464,
+      "edgeMargins": {
+        "left": 65,
+        "top": 65,
+        "right": 65,
+        "bottom": 65
+      }
+    },
+    "sourceRectangleCount": 1678,
+    "sourceRectangleSha256": "2c080c9f29c7694db7eead1829eedc2694b15e1158ba1c4244298ac564c224c2",
+    "extrema": {
+      "minX": 125,
+      "maxX": 3316,
+      "maxXContributorKinds": [
+        "component-drag",
+        "component-courtyard"
+      ],
+      "rightmostConnectorNames": [
+        "JSA",
+        "JSB",
+        "JLOAD"
+      ]
+    }
+  },
+  "sourceBinding": {
+    "variant": "TEST_ONLY_FINAL_OCCUPIED_BOUNDS_ATTRIBUTION; NOT_ACCEPTANCE",
+    "sourceSnapshotDirectory": "crop-extent-probe-inputs-1",
+    "variantPinsFile": "crop-extent-probe-sealed-v1-pins.json",
+    "variantPinsSha256": "83735dd90503ce87d9c3da30574044c5b68818dbc7542646615b8ec7a9452cbe",
+    "variantPinsBytes": 199140,
+    "inputCount": 1059,
+    "parentPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+    "parentPinsCount": 1059,
+    "unchangedInputCount": 1058,
+    "changedPath": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+    "harnessSha256": "4aea7aaf9a6cfb27b11c4c70bfa3acc1046f7dd685c531270cb1beba897597e7",
+    "preparedParentSnapshotStatus": "PREPARED_COPY_ONLY",
+    "preparedParentPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+    "preparedParentTreeExactMembership": true,
+    "preparedParentAllHashesVerified": true,
+    "productionSourceChanged": false,
+    "baseLayoutVersion": 24,
+    "baseDependencyEpoch": "tsj-generation-dependencies-v25",
+    "baseEpochLabelsAdopted": false
+  },
+  "receipt": {
+    "present": false,
+    "status": "NOT_EMITTED",
+    "reason": "Native child exited on the second case before emitting a success receipt."
+  },
+  "rawArtifacts": [
+    {
+      "file": "crop-extent-probe-1-result.json",
+      "bytes": 772,
+      "sha256": "460304eac4e386855fa25835a2955f66ee211a84ba6f1aeb4950e4656b14f760"
+    },
+    {
+      "file": "crop-extent-probe-1-console.txt",
+      "bytes": 6702,
+      "sha256": "85320eca602357bf370ed4b5100f3c055fa120b7045381116814254202ffbbbb"
+    },
+    {
+      "file": "crop-extent-probe-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "crop-extent-probe-1-launcher.json",
+      "bytes": 224,
+      "sha256": "28dd2bf0b445d0d5e082f6d93974b836db67e3c08fbfaa997a11e052ab8203d8"
+    },
+    {
+      "file": "crop-extent-probe-inputs-sealed1.json",
+      "bytes": 626,
+      "sha256": "d3fbafa4803d8adf9449c5fd5607a6359615e689268debc2f97f18fbccbf77fc"
+    },
+    {
+      "file": "crop-extent-probe-sealed-v1-pins.json",
+      "bytes": 199140,
+      "sha256": "83735dd90503ce87d9c3da30574044c5b68818dbc7542646615b8ec7a9452cbe"
+    },
+    {
+      "file": "crop-extent-probe-prepared-seal.json",
+      "bytes": 1719,
+      "sha256": "941702e29f433e41ef3bea8e00b8a705283f5abe314d84146aa5834a4c532a2a"
+    },
+    {
+      "file": "crop-extent-probe-prepared-pins.json",
+      "bytes": 199140,
+      "sha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717"
+    },
+    {
+      "file": "crop-extent-probe-source/P07BranchDiagnosticsContractTest.java",
+      "bytes": 30096,
+      "sha256": "4aea7aaf9a6cfb27b11c4c70bfa3acc1046f7dd685c531270cb1beba897597e7"
+    },
+    {
+      "file": "run-crop-extent-probe.ps1",
+      "bytes": 4244,
+      "sha256": "e9cf0acdbea80b7239ba40ccf8f7a8a77a360a45490970973df24ece1864893a"
+    },
+    {
+      "file": "prepare-crop-extent-probe.py",
+      "bytes": 8074,
+      "sha256": "167fe94d894ebcf957e68ae7eb79eba5e18ea1bca4093be68f80f09359826c34"
+    }
+  ],
+  "limitations": [
+    "The two-case census is incomplete: one v10 observation passed and the next v11 assertion failed; no later cases were run.",
+    "The v10 geometry and independent union evidence apply only to case 1; they do not establish v11 extrema or a complete census.",
+    "The failure is attributable to a 63-character copied fixture literal versus a 64-character observed source hash; it is not a production determinism bug claim.",
+    "No production adoption, repaired fixture PASS, full geometry acceptance, or Q100 playability claim is made."
+  ],
+  "sanitization": {
+    "rawConsoleContentsEmbedded": false,
+    "absoluteMachinePathsIncluded": false,
+    "processIdentifiersIncluded": false,
+    "receipt": "Absent; not synthesized."
+  }
+}

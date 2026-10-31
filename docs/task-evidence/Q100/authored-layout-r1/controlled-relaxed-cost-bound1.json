@@ -1,0 +1,241 @@
+{
+  "schema": "troubleshootjs-q100-relaxed-cost-bound-observation-v1",
+  "evidenceId": "controlled-relaxed-cost-bound1",
+  "status": "PASS_OFFLINE_GRAPH_COST_ANALYSIS_ONLY",
+  "claimScope": "FIXED_CAPTURED_GRAPH_ADMISSIBLE_COST_BOUND_ONLY",
+  "qualification": {
+    "physicalRouteAccepted": false,
+    "productionRouteSelected": false,
+    "frontierUpliftClaim": false,
+    "layoutQualified": false,
+    "q100Qualified": false,
+    "adopted": false,
+    "globalNoPathClaim": false,
+    "nativeOrProductionGateRerun": false
+  },
+  "interpretation": "The offline reader computed graph-local relaxed cost fields and compared their source-state values with the prior direction-4 bound for three captured branch graphs. The source-state values are not production frontier states; no frontier uplift or route-search improvement is established.",
+  "agIdentity": {
+    "rootSeed": "5",
+    "placementInterpretationVersion": 11,
+    "candidateAttempt": 1,
+    "plannerCandidate": 1,
+    "caseId": "SEED5_V11_CANDIDATE1",
+    "placementSeed": "-7630701392004902526",
+    "routingSeed": "-9106650364266936003",
+    "inputMaterializedGeometrySha256": "b21527ea02b45b9fdfb6233fb116d42a32077da84709674efe3b59b36e15c43f",
+    "routeName": "P07_FULLER_TWO_LAYER"
+  },
+  "parentGraphBinding": {
+    "evidenceFile": "controlled-relaxed-branch-graph1.json",
+    "evidenceBytes": 15140,
+    "evidenceSha256": "61e648f1a932abaf2700255766326983f403e456fc7db87950d7250cc5ca3722",
+    "graphFramesSha256": "ee0c06218d0c6c02982b4ff910e26facc793663ccd56f676b5ea03099e2b0d7b",
+    "reader2SourceSha256": "13e492d0e9543ce81ed59cd25bb6b218e3114ff4747b8ceb93f81ea15bfad8e3",
+    "reader2ValidationResultSha256": "c5745f173b255a5203f739f89c2feb5adc81882cad0887a0c332b9fe2c4ac416",
+    "reader2ClaimScope": "FIXED_PREFIX_SEARCH_MODEL_ONLY",
+    "savedRouteProbeRecordCount": 368,
+    "sourceFrameAndCallbackParity": "ROOT_VALIDATED_SEPARATELY"
+  },
+  "relaxedModel": {
+    "method": "Independent reverse Dijkstra on (cell, face), seeding each exact goal cell-face state at cost zero.",
+    "ordinaryEdges": "Directed according to the source cell's exact outgoing mask bit.",
+    "ordinaryStepCosts": {"BOTTOM": 10, "TOP": 12},
+    "viaEdges": "Symmetric local-mask edges with cost 60.",
+    "relaxedConstraints": [
+      "turn costs",
+      "direction/heading state and direction-4 start",
+      "transition-count limit",
+      "global via cap",
+      "via spacing and history"
+    ],
+    "bellmanConsistency": "Checked on all directed ordinary and local via edges; each graph was consistent with zero violations and zero heuristic value at every goal state.",
+    "infinitySemantics": "None represents positive infinity; infinity <= infinity and finite <= infinity are true, while infinity <= finite is false.",
+    "oldDirection4BoundFormula": "min(unionManhattanDistance + 35, axisAlignedClosestUnionGoalDistance)",
+    "weightedPathWitnessCostsConsumedByAnalysis": false,
+    "frontierStatesCaptured": false,
+    "frontierUpliftClaim": false,
+    "productionSearchChanged": false,
+    "physicalRouteAccepted": false
+  },
+  "sourceStateComparisons": [
+    {
+      "pass": 0,
+      "netId": "OUT_A",
+      "startPadId": "RLEDOUT_A.1",
+      "rootPadId": "JOA.1",
+      "fieldSha256": "08302f8c583e7a9e607d8129a2c92a4a3f8d46f80cc6cbf7faa7c1a3e3b0e303",
+      "oldDirection4Bound": 1445,
+      "unionManhattan": 1410,
+      "top": {"hNew": 1954, "upliftOverOld": 509, "initialG": 2, "gPlusMaxOldNew": 1956, "noViaBfsSteps": 214, "noViaWeightedCost": 2568},
+      "bottom": {"hNew": 1992, "upliftOverOld": 547, "initialG": 0, "gPlusMaxOldNew": 1992, "noViaBfsSteps": 322, "noViaWeightedCost": 3220},
+      "ordinaryDirectedEdgesChecked": 274112,
+      "viaDirectedEdgesChecked": 58616,
+      "bellmanViolations": 0,
+      "goalStatesChecked": 141,
+      "allGoalValuesZero": true,
+      "consistent": true
+    },
+    {
+      "pass": 1,
+      "netId": "OUT_A",
+      "startPadId": "RLEDOUT_A.1",
+      "rootPadId": "JOA.1",
+      "fieldSha256": "9691c322f89a99dcfe14fcbaba02a28097991f9bbdca79cec4c166151c1fec4c",
+      "oldDirection4Bound": 1445,
+      "unionManhattan": 1410,
+      "top": {"hNew": 2276, "upliftOverOld": 831, "initialG": 2, "gPlusMaxOldNew": 2278, "noViaBfsSteps": 217, "noViaWeightedCost": 2604},
+      "bottom": {"hNew": 2150, "upliftOverOld": 705, "initialG": 0, "gPlusMaxOldNew": 2150, "noViaBfsSteps": 322, "noViaWeightedCost": 3220},
+      "ordinaryDirectedEdgesChecked": 269835,
+      "viaDirectedEdgesChecked": 57594,
+      "bellmanViolations": 0,
+      "goalStatesChecked": 142,
+      "allGoalValuesZero": true,
+      "consistent": true
+    },
+    {
+      "pass": 2,
+      "netId": "OUT_B",
+      "startPadId": "RLEDOUT_B.1",
+      "rootPadId": "JOB.1",
+      "fieldSha256": "d8b83269a725ae3c2fffb618da5ebaa9e076b058031d71065eb1025c07a79091",
+      "oldDirection4Bound": 2085,
+      "unionManhattan": 2050,
+      "top": {"hNew": 2306, "upliftOverOld": 221, "initialG": 2, "gPlusMaxOldNew": 2308, "noViaBfsSteps": 211, "noViaWeightedCost": 2532},
+      "bottom": {"hNew": 2298, "upliftOverOld": 213, "initialG": 0, "gPlusMaxOldNew": 2298, "noViaBfsSteps": 238, "noViaWeightedCost": 2380},
+      "ordinaryDirectedEdgesChecked": 287145,
+      "viaDirectedEdgesChecked": 63232,
+      "bellmanViolations": 0,
+      "goalStatesChecked": 98,
+      "allGoalValuesZero": true,
+      "consistent": true
+    }
+  ],
+  "execution": {
+    "metadataRecord": "execution-record1.json",
+    "metadataRecordBytes": 8754,
+    "metadataRecordSha256": "75d598e63c86e75953150a4a9b1c57bf18ebcf6da77a32d54c96c7b913545734",
+    "nativeOrProductionGateRerun": false,
+    "finalSyntheticSelfTest": {
+      "childExitCode": 0,
+      "childElapsedSeconds": 0.0641573,
+      "childStderrBytes": 0,
+      "outerExitCode": 0,
+      "outerWallTimeSeconds": 0.2186913,
+      "stdoutSummary": "synthetic-tests=13/13 reader-sha256=1a7f551a9d3d3726e4c7bff63bc5efeb8cf0d7e2c1e889ec5296c7a002dae5e2"
+    },
+    "finalAnalysis": {
+      "childExitCode": 0,
+      "childElapsedSeconds": 1.0846148,
+      "childStderrBytes": 0,
+      "outerExitCode": 0,
+      "outerWallTimeSeconds": 1.2675641,
+      "stdoutSummary": [
+        "graphs=3 bellman-consistent=true h-goals-zero=true",
+        "output-sha256=29fdc185fc8ff404c92abedce6be5227f74fa459207da40df31c80b81e58b028 receipt-sha256=987cbcd06eda9914534ae9252d406a0cf259c2f98776136b5973d2d20a90e1cf"
+      ]
+    },
+    "timingBoundary": "Child wall times and outer exec_command wall times are recorded separately; neither is a production routing performance measurement."
+  },
+  "failureNotes": {
+    "file": "setup-failure-notes1.json",
+    "bytes": 5049,
+    "sha256": "6f0c7d0d1546b7b63705e48f3dbd57236c06dfcc63efffcb68f18a9c4a668d88",
+    "historicalFailures": [
+      {
+        "attempt": "initial synthetic self-test",
+        "childExitCode": 2,
+        "childElapsedSeconds": 0.0653957,
+        "stdoutBytes": 0,
+        "stderrBytes": 73,
+        "launcherRecordSha256": "ad23a9521f54f8eab3541e1706dbc4a1df8e7dc900b4e39ed22eadf79e602ad7",
+        "cause": "The directed-asymmetry fixture used flat indexes 0 and 1, which address TOP cells; the intended BOTTOM states were indexes 2 and 3.",
+        "correction": "Changed only the fixture assertion to indexes 2 and 3; the directed edge, bottom goal, Floyd-Warshall comparison, and intended semantics stayed unchanged."
+      },
+      {
+        "attempt": "first analysis digest check",
+        "childExitCode": 2,
+        "childElapsedSeconds": 0.0655381,
+        "stdoutBytes": 0,
+        "stderrBytes": 70,
+        "launcherRecordSha256": "4ae76f69449d2b5cc8caa6a5b7c84438f67388546fe7aee8fedaf3a44bab53b1",
+        "cause": "An optional expected source pin of None was treated as a required CLI digest and rejected the unpinned synthetic-results input.",
+        "correction": "Compare with the source pin only when one exists; retain the validated CLI digest for raw-byte comparison."
+      },
+      {
+        "attempt": "second analysis digest check",
+        "childExitCode": 2,
+        "childElapsedSeconds": 0.064041,
+        "stdoutBytes": 0,
+        "stderrBytes": 47,
+        "launcherRecordSha256": "1b147808512e6e457ad9a1c39afd1ed414ff3f23da43ac1c0af09fae29fb554c",
+        "cause": "The raw synthetic-results bytes were still compared with None instead of the validated CLI digest.",
+        "correction": "Compare raw bytes with the validated CLI digest."
+      }
+    ],
+    "intermediateSourceFingerprintsOnly": [
+      {"stage": "after directed-fixture correction, before pin fixes", "sha256": "b92144a049b176c0f1113ca45e08e4b0bec07c326fcfd0714bc8d1ba1dd7513c"},
+      {"stage": "after optional-pin fix, before raw-digest fix", "sha256": "f684c337d2b18967ea14dfa1076f13bfb695f31829bad7495fbb242df750d441"}
+    ],
+    "preFixSourceBytes": "NOT_RETAINED; only the two intermediate fingerprints above are recorded, so this packet does not claim the historical source bytes are preserved.",
+    "finalCanaries": {
+      "passed": 13,
+      "failed": 0,
+      "specAndResultNamesExactlyMatch": true,
+      "weakenedOrRemoved": false,
+      "names": [
+        "directed-asymmetry-and-floyd-reference",
+        "top-bottom-step-costs-12-and-10",
+        "multi-goal-face-exact-seeds",
+        "via-shortcut-beats-same-face-route",
+        "symmetric-via-cost-is-60",
+        "unreachable-states-and-floyd-reference",
+        "directed-bellman-consistency-and-zero-goals",
+        "costs-bellman-consistency-and-zero-goals",
+        "multigoal-bellman-consistency-and-zero-goals",
+        "via-shortcut-bellman-consistency-and-zero-goals",
+        "single-via-bellman-consistency-and-zero-goals",
+        "unreachable-bellman-consistency-and-zero-goals",
+        "old-direction4-lower-bound-formula"
+      ]
+    },
+    "selfReferenceAvoidance": "Reader-2 source, graph frames, and reader-2 result remain hard-pinned. The final synthetic-results raw bytes are checked against the validated CLI digest, and their embedded reader hash matches the final source without a source/results hash cycle."
+  },
+  "artifacts": [
+    {"file": "relaxed-cost-bound-reader-1.py", "bytes": 41694, "sha256": "1a7f551a9d3d3726e4c7bff63bc5efeb8cf0d7e2c1e889ec5296c7a002dae5e2"},
+    {"file": "synthetic-test-spec.json", "bytes": 1537, "sha256": "9059a5811c4c4a3e76d00c9cc71060ce75dffdfdc9e5936fe86fbffa1d8507cf"},
+    {"file": "synthetic-test-results3.json", "bytes": 1115, "sha256": "f8b5e7d7493e0fda52ebab325118efb12fba6655378c49e1d276afab69262e12"},
+    {"file": "analysis1.json", "bytes": 4882670, "sha256": "29fdc185fc8ff404c92abedce6be5227f74fa459207da40df31c80b81e58b028", "copied": false, "contentWithheld": "Contains large per-cell cost fields; this packet retains source-state summaries and field hashes only."},
+    {"file": "receipt1.json", "bytes": 716, "sha256": "987cbcd06eda9914534ae9252d406a0cf259c2f98776136b5973d2d20a90e1cf"},
+    {"file": "execution-record1.json", "bytes": 8754, "sha256": "75d598e63c86e75953150a4a9b1c57bf18ebcf6da77a32d54c96c7b913545734"},
+    {"file": "setup-failure-notes1.json", "bytes": 5049, "sha256": "6f0c7d0d1546b7b63705e48f3dbd57236c06dfcc63efffcb68f18a9c4a668d88"},
+    {"file": "metadata-launcher.py", "bytes": 2158, "sha256": "33d8e5fa6728939f3b19bdc78caa07e10ee7445f194e31300880cbcabf34fb51"},
+    {"file": "relaxed-branch-graph-frames1.jsonl", "bytes": 720818, "sha256": "ee0c06218d0c6c02982b4ff910e26facc793663ccd56f676b5ea03099e2b0d7b", "copied": false, "contentWithheld": "Contains graph masks; only the parent hash binding is retained."},
+    {"file": "relaxed-branch-reader-2.py", "bytes": 60271, "sha256": "13e492d0e9543ce81ed59cd25bb6b218e3114ff4747b8ceb93f81ea15bfad8e3"},
+    {"file": "relaxed-branch-graph-reader-result2.json", "bytes": 3618, "sha256": "c5745f173b255a5203f739f89c2feb5adc81882cad0887a0c332b9fe2c4ac416"},
+    {"file": "analysis4-launch.json", "bytes": 1439, "sha256": "0c1c8f04ae8b1d04bf1911fcdeb9ac7a6323db3f00ec4a8acd42e7c1eb39ed4b", "copied": false, "contentWithheld": "Contains host process metadata."},
+    {"file": "analysis4.stdout.txt", "bytes": 212, "sha256": "ee97b28b88934df4a78b9529ebe6d0e6d6a2db9f9567970962c784d369544ff1", "copied": false},
+    {"file": "analysis4.stderr.txt", "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+    {"file": "self-test4-launch.json", "bytes": 691, "sha256": "050da95529edf6f5a85ea1c247fcd364813a9bac27f934a2cb541570024595a3", "copied": false, "contentWithheld": "Contains host process metadata."},
+    {"file": "self-test4.stdout.txt", "bytes": 102, "sha256": "2b819b43d52a3029c7dfc566f57b8214584b41b86131e1400c1eb57e50e4ae24", "copied": false},
+    {"file": "self-test4.stderr.txt", "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+    {"file": "self-test-launch.json", "bytes": 658, "sha256": "ad23a9521f54f8eab3541e1706dbc4a1df8e7dc900b4e39ed22eadf79e602ad7", "copied": false, "contentWithheld": "Contains host process metadata."},
+    {"file": "self-test.stderr.txt", "bytes": 73, "sha256": "28310d9d5f69dc1f712ee67d795cb43a40af1116db53fc57081d6dd91be2669f", "copied": false},
+    {"file": "analysis-launch.json", "bytes": 1292, "sha256": "4ae76f69449d2b5cc8caa6a5b7c84438f67388546fe7aee8fedaf3a44bab53b1", "copied": false, "contentWithheld": "Contains host process metadata."},
+    {"file": "analysis.stderr.txt", "bytes": 70, "sha256": "8630a3777eb97ac1e67e921c9d155ad66cbe06252b0eaf45c9ccdb676b908b5b", "copied": false},
+    {"file": "analysis2-launch.json", "bytes": 1271, "sha256": "1b147808512e6e457ad9a1c39afd1ed414ff3f23da43ac1c0af09fae29fb554c", "copied": false, "contentWithheld": "Contains host process metadata."},
+    {"file": "analysis2.stderr.txt", "bytes": 47, "sha256": "b72507e826b8e04c83e659ac8396b1109ac09b61d0f794d990b20320643f97da", "copied": false}
+  ],
+  "limitations": [
+    "The bound is graph-local and omits turn, heading/initial-direction, transition-count, global-via, and via-history constraints; it is not the production search state or budget.",
+    "No production frontier snapshots were captured. Source-state uplifts cannot be called frontier uplifts or runtime improvements.",
+    "The analysis did not consume relaxed path witness costs and did not establish Publisher acceptance, physical clearance, electrical connectivity, or physical route acceptance.",
+    "Intermediate pre-fix reader source bytes were not retained; historical failures are summarized from the hash-bound execution and failure-note records."
+  ],
+  "sanitization": {
+    "absolutePathsCopied": false,
+    "processIdsCopied": false,
+    "rawLogsCopied": false,
+    "fullCellCostFieldsCopied": false,
+    "graphMasksCopied": false
+  }
+}

@@ -1,0 +1,166 @@
+{
+  "schema": "Q100_AV_READER_QA_1",
+  "observedAtUtc": "2026-10-31T16:48:27.844966Z",
+  "status": "READER_TEST_PASS_PACKET_QA_PRELIMINARY_PASS",
+  "repository": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "sourceState": "Final source snapshot 5; this QA packet is a preliminary documentation-tree snapshot."
+  },
+  "readerTest": {
+    "status": "PASS",
+    "command": "python.exe -B tests/qualification/rb56-medium/test_read_qualification.py",
+    "pythonVersion": "3.13.14",
+    "pythonIdentity": "Requested PythonSoftwareFoundation.Python.3.13 WindowsApps app-execution alias; version and sys.executable were printed by the child. Alias is a zero-byte reparse point and has no file SHA-256.",
+    "boundedProcess": {
+      "wrapper": "Invoke-VerifierBoundedProcess from scripts/VerifierIsolation.psm1",
+      "timeoutMs": 60000,
+      "processId": 13592,
+      "processStartTicks": "639290618211731935",
+      "exitCode": 0,
+      "terminationProven": true,
+      "unittestSummary": "Ran 9 tests in 4.247s; OK",
+      "stdoutBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrBytes": 112,
+      "stderrSha256": "6505bb0652460911640e7b15f95c04e919da80090f0c0a6d8c441194e832bf54",
+      "scratchLeaf": "av-reader-final-qa1",
+      "processCaptureSha256": "51d98961242a60ee4304d6386f7bdb804f8a4a1e7686ccccef0b8bda1ea1b133"
+    },
+    "versionPreflight": {
+      "timeoutMs": 15000,
+      "processId": 27592,
+      "processStartTicks": "639290618206360009",
+      "exitCode": 0,
+      "terminationProven": true,
+      "output": "3.13.14; sys.executable matched the requested WindowsApps alias"
+    },
+    "sourcePins": [
+      {
+        "path": "tests/qualification/rb56-medium/test_read_qualification.py",
+        "bytes": 32538,
+        "sha256": "16ba5ce07fdde7a50ab9c90f1b0a8ad36f5add24b0e54748c6ed9879434ab473"
+      },
+      {
+        "path": "tests/qualification/rb56-medium/read_qualification.py",
+        "bytes": 31144,
+        "sha256": "5c803fc382863711959e478552341dc8b11da831bcb1af90c09b844e5257de85"
+      },
+      {
+        "path": "tests/qualification/rb56-medium/freeze_plan.py",
+        "bytes": 11172,
+        "sha256": "4346789b59effdd3f45bd890c896a48219390e908ab2b6a57754f4af3819dc8b"
+      },
+      {
+        "path": "scripts/VerifierIsolation.psm1",
+        "bytes": 890076,
+        "sha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77"
+      }
+    ],
+    "importScopeAudit": "Imports and test helpers use synthetic captures/manifests; source binding reads src, eligible war assets, scripts, GWT jars, this qualification directory, and named U05/REL-B/replacement-blind plan inputs. No HARD/PSYCHOTIC evidence or old scratch was read or run.",
+    "initialCaptureNote": "First outer capture script used unsupported New-Item -LiteralPath. Both bounded child calls completed and returned exact captures; they were preserved from the tool return into task-owned scratch. The test was not rerun.",
+    "sourcePinsTiming": "Hashes captured after the bounded test run; they describe the post-run worktree snapshot and are not a pre-launch source seal."
+  },
+  "packetTreeQa": {
+    "status": "PRELIMINARY_PASS_SCOPED",
+    "scope": "Recursive scan of docs/task-evidence/Q100/authored-layout-r1 as it existed before this QA packet was added.",
+    "fileCount": 203,
+    "totalBytes": 19257598,
+    "treeManifestSha256": "a155f2eb6e8fd881d422a6b787e9acd1c71c9887f570cefa1d9ab4db5dd9a15b",
+    "json": {
+      "count": 187,
+      "passed": 187,
+      "failed": [],
+      "duplicateKeys": 0,
+      "nonFiniteConstants": 0,
+      "leadingUtf8BomCount": 43,
+      "bomHandling": "One leading BOM is accepted by utf-8-sig, matching read_qualification.strict_json and freeze_plan.parse_manifest_oracle; duplicate keys and non-finite constants remain rejected."
+    },
+    "markdownLinks": {
+      "count": 63,
+      "localPassed": 62,
+      "unresolved": 0,
+      "externalNotFetched": 0,
+      "outsidePacketCount": 1,
+      "outsidePacketLink": "README.md -> ../../../CODEX_TASK_REPORT.md",
+      "outsidePacketTargetExists": true,
+      "targetCheck": "Existence metadata only; target content was not read."
+    },
+    "privacy": {
+      "absolutePersonalPathFindings": 0,
+      "tokenShapeFindings": 0,
+      "invalidUtf8TextFiles": 0,
+      "reparsePoints": 0,
+      "pathPatternCanaries": {
+        "status": "PASS",
+        "rawPositiveCases": 6,
+        "negativeCases": 4,
+        "decodedJsonPositiveCases": 3,
+        "matchedValuesEmitted": false
+      },
+      "scope": "Raw UTF-8 text scan plus recursively decoded JSON string keys/values; binary image metadata is not inspected."
+    },
+    "treeManifest": {
+      "scratchLeaf": "av-reader-final-qa1",
+      "reportSha256": "bf76c486a252c012985ae3ad0a6f9f01a759f1849b9bfb2099fef2c38361e6cf",
+      "reportBytes": 28053,
+      "runnerExitCode": 0,
+      "runnerTerminationProven": true,
+      "runnerProcessId": 23984,
+      "runnerProcessStartTicks": "639290623360590834"
+    },
+    "checkerHistory": [
+      {
+        "status": "FAIL_CHECKER_SYNTAX",
+        "runnerExitCode": 1,
+        "processId": 27028,
+        "scratchRecordSha256": "e6c187a6027292650555ddeeaa3f3f0d2fcbc188604ff8f6dcd7eb2c7a1b0905",
+        "note": "QA script syntax error; no repository packet issue."
+      },
+      {
+        "status": "FAIL_CHECKER_POLICY",
+        "runnerExitCode": 0,
+        "processId": 18544,
+        "scratchRecordSha256": "0dad42965fff77abf2310a2387a5ff220681cbda2dc5ea97d503a1b820b8c047",
+        "note": "First scanner version rejected 43 leading BOMs; corrected to maintained utf-8-sig behavior."
+      },
+      {
+        "status": "PASS",
+        "runnerExitCode": 0,
+        "processId": 29376,
+        "scratchRecordSha256": "187e860412dbf83ff5cfebf6b760afbfbbcd40d5a18e10172aa223fdb83eff31"
+      },
+      {
+        "status": "PASS_PRIVACY_PATTERN_FIX",
+        "runnerExitCode": 0,
+        "processId": 23984,
+        "scratchRecordSha256": "e2e98b132366cfee51ba488ffb3a5196567b95d7ca53a196886f2b32e1040a73",
+        "note": "Final narrow packet scan passes 187 JSON files, local links and positive/negative raw/decoded-JSON privacy path canaries."
+      }
+    ],
+    "limitation": "Root documentation writers were active. This is a preliminary snapshot; root should rerun the recursive QA after the packet folder is frozen. The QA packet itself is not included in the recorded file count/tree hash.",
+    "privacyPatternCorrection": {
+      "status": "FIXED_IN_SCRATCH_SCANNER_ONLY",
+      "issue": "Prior Windows path expression expected incorrect slash escaping; its character class also excluded literal s rather than whitespace. Raw scan missed ordinary and JSON-escaped personal path spellings.",
+      "correction": "Added single-separator and JSON-double-separator Windows/UNC patterns, corrected whitespace classes, and scans recursively decoded JSON string keys and values while retaining raw text scanning.",
+      "originalScannerSha256": "937cac9a0a146b7d2859bbb7746541771a48f448eb572d82d1b83f95bdd35366",
+      "finalScannerSha256": "7bf7fe8189c71009b589da9b367ad0e7ddc7146cf87c88d1029d1e46c14ef0ec",
+      "canaries": "PASS: six raw/escaped Windows, UNC, Unix positive examples; four ordinary repository-relative/temp/URL negatives; three decoded JSON string positives. Output contains categories/counts only, no matched values.",
+      "scratchBackup": "qa/qa_packet-v1-privacy-pattern-defect.py",
+      "finalQaRun": "packet-qa-privacyfix-run.json",
+      "finalQaStdout": "packet-qa-privacyfix.stdout.json",
+      "finalQaStderr": "packet-qa-privacyfix.stderr.txt",
+      "finalQaSnapshotIncludesPreviousPacketRevision": true,
+      "rootMustRerunAfterDocumentationFreeze": true
+    }
+  },
+  "scratchArtifacts": {
+    "leaf": "av-reader-final-qa1",
+    "processRun": "process-run.json",
+    "testStdout": "test_read_qualification.stdout.txt",
+    "testStderr": "test_read_qualification.stderr.txt",
+    "finalPacketQaOutput": "packet-qa-final.stdout.json",
+    "finalPacketQaScript": "qa/qa_packet.py",
+    "scratchIsOutsideRepository": true
+  }
+}

@@ -1,0 +1,472 @@
+{
+  "schema": "troubleshootjs-u-focused-native-contract-evidence-v1",
+  "status": "PASS_FOCUSED_NATIVE_CONTRACTS",
+  "scope": "Initial-U focused native contract suites only; not a full matrix, Qt, Q100, GWT, or runtime qualification.",
+  "run": {
+    "runner": "scripts/run-native.ps1",
+    "invocation": "verify-current-contracts -Suite 11",
+    "exitCode": 0,
+    "elapsedSeconds": 44.1227003,
+    "elapsedScope": "Full helper/wrapper interval; operation and cleanup durations are not separately reported.",
+    "jdk": "javac 1.8.0_502",
+    "suiteCount": 11,
+    "suites": [
+      "P07ReachedPthContractTest",
+      "P07BranchDiagnosticsContractTest",
+      "P07TwoLayerContractTest",
+      "PcbLayerRoutingResumptionContractTest",
+      "PcbRoleWidthTurnBoundContractTest",
+      "PcbCanvasBoundaryContractTest",
+      "PcbCanvasOwnerBoundsContractTest",
+      "PcbNormalPackingIdentityContractTest",
+      "Rb56ModelIdentityContractTest",
+      "D01DiagnosticContractTest",
+      "RelBSessionIdentityContractTest"
+    ],
+    "suiteAssertions": [
+      {
+        "suite": "PcbCanvasBoundaryContractTest",
+        "assertions": 1607
+      },
+      {
+        "suite": "PcbCanvasOwnerBoundsContractTest",
+        "assertions": 23
+      },
+      {
+        "suite": "PcbRoleWidthTurnBoundContractTest",
+        "assertions": 169632
+      },
+      {
+        "suite": "PcbNormalPackingIdentityContractTest",
+        "assertions": 25
+      },
+      {
+        "suite": "RelBSessionIdentityContractTest",
+        "assertions": 231
+      },
+      {
+        "suite": "Rb56ModelIdentityContractTest",
+        "assertions": 123
+      },
+      {
+        "suite": "D01DiagnosticContractTest",
+        "assertions": 190
+      },
+      {
+        "suite": "P07TwoLayerContractTest",
+        "assertions": 13091
+      },
+      {
+        "suite": "P07BranchDiagnosticsContractTest",
+        "assertions": 30
+      },
+      {
+        "suite": "P07ReachedPthContractTest",
+        "assertions": 39
+      },
+      {
+        "suite": "PcbLayerRoutingResumptionContractTest",
+        "assertions": 1185
+      }
+    ],
+    "sumOfSuiteAssertions": 186176,
+    "layoutVersion": 24,
+    "dependencyEpoch": "tsj-generation-dependencies-v25",
+    "cleanup": {
+      "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+      "status": "PASS_MARKER_ONLY",
+      "elapsedSeconds": null,
+      "timing": "No cleanup-only duration reported."
+    }
+  },
+  "sourcePins": {
+    "file": "freeze-u-focused-native-1/pins.json",
+    "bytes": 14431,
+    "sha256": "66f5062029538d6ad1c7cd7c835f601ebb7d8ff87ace81d048cf95e8c11d68c1",
+    "entryCount": 80,
+    "coverage": "PARTIAL_SELECTED_PATHS",
+    "description": "Selected changed or untracked paths plus selected stable paths; not a complete inventory of all 1,059 consumed compile inputs.",
+    "automaticPrePostUnchangedAudit": false,
+    "records": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "sha256": "a49048c5ed2a5529315d28a951ad13c693b4ff7a828af4f87daee33f9523c06e"
+      },
+      {
+        "path": "docs/CODEX_TASK_REPORT.md",
+        "sha256": "bb24fa87152f5c341d3f3c884fd91246f2dc509f4afb4b5a752b13f525000518"
+      },
+      {
+        "path": "docs/ROADMAP.md",
+        "sha256": "e1cc857d938b6b2ea250a658aaea526dca190ec5c615499cc6a8807fee4ca8c1"
+      },
+      {
+        "path": "docs/task-evidence/E06/accepted-state-r1/README.md",
+        "sha256": "dc035962caa453dbac167d8e6c90a627ae2e3e151a69ad1ed6d6ef6ff007a236"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/PLAN.md",
+        "sha256": "3c79847cb438f0aaf7863c141f87f1ec5ceb47b4e03e71c9856d58bc485e1b3a"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/README.md",
+        "sha256": "58ba1840227d4063de359021b4b3a009753a9b79b799dbfa8e054ccc13cd6ff9"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/screenshots-final1/01-medium-ticket.jpg",
+        "sha256": "867224399858a25d208d45e13cbc0496c15e4ccbb939c209b3fc171485899d90"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/screenshots-final1/02-unrepaired-retest.jpg",
+        "sha256": "500e5401949b2605f2b7a668e0d70c34381d46e777752f65496f8f44c84f2046"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/screenshots-final1/03-isolated-renac.jpg",
+        "sha256": "fc195efa319a7255d3941e95d637dba915cf5b8cf4d48c27b9378d6cab997759"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/screenshots-final1/04-repaired-retest-pass.jpg",
+        "sha256": "9ad0b0b0a0dca946495ba6d07017f4f4e253af56a448f7087fb5b6319187d8a1"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/screenshots-final1/05-restored-retest-pass.jpg",
+        "sha256": "9ad0b0b0a0dca946495ba6d07017f4f4e253af56a448f7087fb5b6319187d8a1"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/visible-negative-replacement1.tsjsave",
+        "sha256": "fd9c1399eeb1d5c5f31220ee501d74a86ee541036fe6dfc3dfd1802f08e00563"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/visible-renac-pristine1.tsjsave",
+        "sha256": "aa993698c025abd94956c3a2ce3c59d2893d36fabf1cbc6a755e135eb194bd23"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/visible-renac-repaired1.tsjsave",
+        "sha256": "b64c6ea482aa8cda169725a7af7c446152f682bc3d77d6ae24821968b680067d"
+      },
+      {
+        "path": "docs/task-evidence/Q100/authored-layout-r1/visible-renac-restored1.tsjsave",
+        "sha256": "b40a2a49963d976b33b2263550ae3bca0cfbc7d256754d2a57bca9a5259e9398"
+      },
+      {
+        "path": "scripts/VerifierIsolation.psm1",
+        "sha256": "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5"
+      },
+      {
+        "path": "scripts/verify-a03-browser.ps1",
+        "sha256": "235b73c338de139b498f4011bc707bed5b9f5dc8ffbee177c89c518ad49a7b7d"
+      },
+      {
+        "path": "scripts/verify-current-contracts.ps1",
+        "sha256": "3169fdf3ba19eea25882c8e8d79b956b69cc28dfe0641b7fe18f582ad36bf6cd"
+      },
+      {
+        "path": "scripts/verify-e06-accepted-evidence.ps1",
+        "sha256": "2f7ab435e009d49d699abfc30ae3054fcbe712461abc1f13ef4cae3ac9bd1dc4"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/ArchitectureDeveloperVerifier.java",
+        "sha256": "a16cf236e59a411773e88e812bafc731d7f300d5e0c970d903ca9e8f20ffd981"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/CircuitElm.java",
+        "sha256": "b18eaa79c0f2591c7e9ec32722710b8e83476be1abd2a0c596caec5e43eb51a2"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+        "sha256": "615d0b9518c1d012623c0beec7cb4720674b1549936e4b5f34341223e9038773"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+        "sha256": "f9cd87619349c2c7818c928cd75603885057961618a4cf1b9ebcf29a045a3e83"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/E06ConverterContract.java",
+        "sha256": "60a83ea8f564edf9d95d69678454ad2eb3b6554fc346057dbe253b546ad4ecf8"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/E06ConverterFixtures.java",
+        "sha256": "baffe05592371ebc6298a87f50b30d8e53577b746e697287ad76d68d48997645"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+        "sha256": "cc2b961fc2bdc5c5293285b8cc5d8bd7d4b309f9974eaac4b561fb749c8dc8ad"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java",
+        "sha256": "ac2713b172c186292a9b1bd6f877358647f8b22da1e4c83d716cca5dce451cb5"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbAccessPlanner.java",
+        "sha256": "6615906eb5df6fcf322e084fc7a32f83c5eda1c7b09a32d6bb2c2343eb0396e2"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java",
+        "sha256": "5a3ea41332c85ff1ea263fd3952963fda1c845e9d9359460abcc271fdcd4d180"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbConductorGraph.java",
+        "sha256": "a5c84942c07c5d7f01caa3fe12b7700235132fbc81f4cb86b3718029b216c972"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "sha256": "6eb32ebea70a37084700d89451b0d3eb3c5da2dc2320e9d90014a369fcbb8a31"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "sha256": "564adf46dc3b2d7951edb19cc2e661ca5a8c2e62cd7a19a9ecb54b94e3e9f102"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+        "sha256": "f30032aeec5dc29d5866fa64d2003fd9ea20f80857bbb156d95c4072e6b03d0c"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbRoutingWork.java",
+        "sha256": "20409e00ad33953c57bb043103e676866f2f5248ad2ed1ab93f6882ca9450031"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PrivateSolverContext.java",
+        "sha256": "18ffe705ae80a014de929ed08b315178336cfdb8fc924a04a44009caa5192580"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/ProceduralPcbLayout.java",
+        "sha256": "da9a5512b3a47e22951e6e1dc2b45e432c65c5e5f01b5c177d73a7d016d4e308"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Rb100ElectricalPilot.java",
+        "sha256": "ff5d32ea24def3bcfe5ffdedf17d393951c8283ff3403eab5677a27a14c0fe2f"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Rb100Placement.java",
+        "sha256": "b22b4499846ec5e4e56622f5dad518d01d60bdf1e948e761ae7235b74c3fce15"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Rb100Plan.java",
+        "sha256": "631da559598faf50b738ccca74b726688f0533aee69108155c553727dd8f53d5"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+        "sha256": "101ce980d753db359a9ed26fb66fed626d9f3945dcc4edc6350d8b8b8853cdfc"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/Rb56PowerStageAssembly.java",
+        "sha256": "18487b2b224ef37b28484a0c46386d2550f0e99f532b36b073e68936c0374471"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/RelayOutputGenerator.java",
+        "sha256": "70b4ebbcf783f0e3e6b79e3d30b01ada3d52b62bf3400a005f0ba1f96f41492b"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+        "sha256": "84fbbadb24b585a10dcd01af81b8be9109df99ca9b3b337391836c75424c467d"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/SupportedEnvelope.java",
+        "sha256": "6f0b0b36ce6ad91ec4dfb6b4581e5b8e2cd514ed36eed3e53905a32a2f7994cc"
+      },
+      {
+        "path": "tests/contracts/D01DiagnosticContractTest.java",
+        "sha256": "78002e72e755bacecccd74b32bf2de5ed8bf119f5d4f8ac16bfda7a3014a879c"
+      },
+      {
+        "path": "tests/contracts/E04DecisionMemoryContractTest.java",
+        "sha256": "c351fa5ab2319f6e893d38a400bd4da97d0dd181e45e54caba6829c3229aec5a"
+      },
+      {
+        "path": "tests/contracts/MediumBoardFloorplanningContractTest.java",
+        "sha256": "c74e0644765301e1919c37816665754ffb6108feb9d0b18007efef0a462aa84a"
+      },
+      {
+        "path": "tests/contracts/P03PlacementContractTest.java",
+        "sha256": "812cde6db3f806e7a5c6a516721ed7c51d5deed31ea4332e387adc15df37e8ba"
+      },
+      {
+        "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+        "sha256": "0c97dd4f0e1c3f4c18c34f80ca9c827f00639d17fa0599048ba9cf0c319f8867"
+      },
+      {
+        "path": "tests/contracts/P07GeometryEpochDiagnosticContractTest.java",
+        "sha256": "3037bf6e7b7611184a312b36e0ef8924271b448d316dbce0d812078ddc38b889"
+      },
+      {
+        "path": "tests/contracts/P07GridEligibilityContractTest.java",
+        "sha256": "44934f9bc1001c63cd1fdeb04fd278991b56ddd7fc16a67c69775e6d55dfcad3"
+      },
+      {
+        "path": "tests/contracts/P07LayeredRasterOracle.java",
+        "sha256": "66d0e40594165ce5620b5c28f58132ac7d8d882f532fafd4d4b77510ec3561a2"
+      },
+      {
+        "path": "tests/contracts/P07LayeredRasterOracleContractTest.java",
+        "sha256": "f67e2bb55a2f1773fb7237fccf2f8ec90bd0ec53b64f1d9547ee0dfb34cc8789"
+      },
+      {
+        "path": "tests/contracts/P07ReachedPthContractTest.java",
+        "sha256": "d384192be627929dd331e761bfb7323ac70b37f11bac061053540b34c72a5533"
+      },
+      {
+        "path": "tests/contracts/P08ReferenceConductorBuilder.java",
+        "sha256": "dbdde865a191c06e267bdbe7bae78144fa520189d652ee7d0e6458aac17586e6"
+      },
+      {
+        "path": "tests/contracts/P08ReferenceWidthContractTest.java",
+        "sha256": "b1ac3b8029f468828a4beb19a1be12cb6e236a408c5b79e083fa1c44154826e5"
+      },
+      {
+        "path": "tests/contracts/P08ScalabilityContractTest.java",
+        "sha256": "5ec454bf6b2161907aca24f150934f243b3f1854d4d3a53be7473960b025c3c6"
+      },
+      {
+        "path": "tests/contracts/PcbCanvasBoundaryContractTest.java",
+        "sha256": "27024759015971ccd3eeb3f3b79d22dd6d930bb560e89ec791637efc38e9a657"
+      },
+      {
+        "path": "tests/contracts/PcbCompactnessContractTest.java",
+        "sha256": "f0328acef81e7fd225d45bb87a7fd5f16d6e115e089e8fd1a1d4c017c691804f"
+      },
+      {
+        "path": "tests/contracts/PcbCorridorOrientationContractTest.java",
+        "sha256": "0df73ef620fca954170da335b2a2ac3a53dca05e9f111a16a71cd323349705e8"
+      },
+      {
+        "path": "tests/contracts/PcbNormalPackingIdentityContractTest.java",
+        "sha256": "6827860f9ab3ec318bb7e1b4210715b76db1991d5c2bb95bd03d6d7988ed6af7"
+      },
+      {
+        "path": "tests/contracts/PcbPlacementDiagnosticsContractTest.java",
+        "sha256": "9aff05f9e73057f84c88442b0b7488d0406c3f57d40e78902da09d1e3832f373"
+      },
+      {
+        "path": "tests/contracts/Rb100ElectricalPilotContractTest.java",
+        "sha256": "f7b8afc70c1c63af754e79f577ddc172533d0acda564cd16f6442c946ad691b4"
+      },
+      {
+        "path": "tests/contracts/Rb100P07BranchDiagnosticContractTest.java",
+        "sha256": "590f56fa8f7418aafa77becfbe93792694bb30617a2d1b542fe1f77b50d95330"
+      },
+      {
+        "path": "tests/contracts/Rb100P07PolicyDiagnosticContractTest.java",
+        "sha256": "e348a9bcca842b91b08c87d2c7985ef313c8608e1b813a03db1b84b66f5dffbf"
+      },
+      {
+        "path": "tests/contracts/Rb100PhysicalDiagnostics.java",
+        "sha256": "024b0b5e0354a209d3e11f0aead31a5b8f895ce628071ddd6d0e8d17d129e058"
+      },
+      {
+        "path": "tests/contracts/Rb100PhysicalReference.java",
+        "sha256": "d0d7021e1585ac475941c8d2fb13f423abe18ff260bca6bb22c6315af60963c3"
+      },
+      {
+        "path": "tests/contracts/Rb100PlanContractTest.java",
+        "sha256": "73d98092ca1692709a362f165d6efe974cd0f99a34403d17fb61b46defedf3aa"
+      },
+      {
+        "path": "tests/contracts/Rb56ManifestContractTest.java",
+        "sha256": "ce6fa6c4cc23ea4b8ad5c8902430937fbabf4ec5b63c43789e6f1ff3d2821ce9"
+      },
+      {
+        "path": "tests/contracts/Rb56ModelIdentityContractTest.java",
+        "sha256": "5baed20d670a05cd82adf21ab7e276bd062eff8830e94316381bf5dd3854ac5b"
+      },
+      {
+        "path": "tests/contracts/RelBSessionIdentityContractTest.java",
+        "sha256": "3dce9b11cfaf74e6e5fe7d571ec6681e946b9f48424dd910c6cb7d08434f1dcd"
+      },
+      {
+        "path": "tests/contracts/U06SessionSaveContractTest.java",
+        "sha256": "213c1da6597ade5ccc3d32ae37df5accd50bd874bb51afdac9a74fa1295bd333"
+      },
+      {
+        "path": "tests/qualification/rb100-layout/read_diagnostic.py",
+        "sha256": "31f65be5e11472c7b09e8141292402c641df6b735787d32eb4c904ae098981e7"
+      },
+      {
+        "path": "tests/qualification/rb100-layout/read_geometry_transition.py",
+        "sha256": "05d970c24b811ac066774daa5f750464a9334830f17550ded0222a8ca99f255c"
+      },
+      {
+        "path": "tests/qualification/rb100-layout/read_p07_branches.py",
+        "sha256": "73fb2ac73aabaa13a54713f572ff04467320a8c13cee29b29eb591f5da28febf"
+      },
+      {
+        "path": "tests/qualification/rb100-layout/read_p07_policy.py",
+        "sha256": "d8e0187d35d7b24370dec1526f850610d98b8df727fce3c66aa7afbfeb96f1e3"
+      },
+      {
+        "path": "tests/qualification/rb100-layout/read_routing_diagnostic.py",
+        "sha256": "389e937ccec44bf13c7de19732e6bd9fdf7906dfb815e4b04a9c8dc691cdfdba"
+      },
+      {
+        "path": "tests/qualification/rb100-layout/read_saved_profile_transition.py",
+        "sha256": "cb712b8f3fcf94513891c2dea4cf8459fb7fb7c40dd320b2af67caaa83920581"
+      },
+      {
+        "path": "tests/qualification/rb56-medium/read_qualification.py",
+        "sha256": "a92ac3daa267ea65bdd4018f076106b1c92b9ac5d55e672ea5012678740e1b4a"
+      },
+      {
+        "path": "tests/qualification/rb56-medium/test_read_qualification.py",
+        "sha256": "91edc39dad86873d5060d8e677ccdcac101ed64539404f71d60a979e35354351"
+      }
+    ]
+  },
+  "highlightedSourceBindings": [
+    {
+      "path": "tests/contracts/PcbCanvasBoundaryContractTest.java",
+      "sha256": "27024759015971ccd3eeb3f3b79d22dd6d930bb560e89ec791637efc38e9a657",
+      "suite": "PcbCanvasBoundaryContractTest",
+      "assertions": 1607
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java",
+      "sha256": "5a3ea41332c85ff1ea263fd3952963fda1c845e9d9359460abcc271fdcd4d180"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sha256": "6eb32ebea70a37084700d89451b0d3eb3c5da2dc2320e9d90014a369fcbb8a31"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "sha256": "84fbbadb24b585a10dcd01af81b8be9109df99ca9b3b337391836c75424c467d"
+    }
+  ],
+  "qualificationLimits": [
+    "The 80-entry freeze is partial and does not prove all 1,059 consumed compile inputs remained unchanged before and after the run.",
+    "A separate corrected 1,059-input S snapshot is outside this evidence record and was not consumed by this run.",
+    "No full native matrix, independent oracle set, Qt, Q100, GWT, browser, or runtime qualification is claimed.",
+    "The focused PASS is evidence for these 11 native contract suites only; it is not a general release or layout qualification."
+  ],
+  "rawArtifacts": [
+    {
+      "file": "u-focused-native-1-result.json",
+      "bytes": 694,
+      "sha256": "eb72034a6f87b6f78d0649b719b72c3ad954fbb7addb8772e2a10a67752b1543"
+    },
+    {
+      "file": "u-focused-native-1-receipt.txt",
+      "bytes": 1697,
+      "sha256": "2f87f798c967eedaa3aa0e8a247d50f508ca0a7155967fcffffc33141affd63c"
+    },
+    {
+      "file": "u-focused-native-1-launcher.json",
+      "bytes": 195,
+      "sha256": "91c53c1d174bb2d90b238b2e7992eda330239e45dafe11edb5e93f9e181ac5c6"
+    },
+    {
+      "file": "u-focused-native-1.log",
+      "bytes": 4222,
+      "sha256": "8d0a9201abe3b9adcd7f5f57455a0ed4a1648f21e7cdf9e2a2ff3f4e5ce958dc"
+    },
+    {
+      "file": "freeze-u-focused-native-1/pins.json",
+      "bytes": 14431,
+      "sha256": "66f5062029538d6ad1c7cd7c835f601ebb7d8ff87ace81d048cf95e8c11d68c1"
+    }
+  ],
+  "sanitization": {
+    "rawLogOrReceiptContentsEmbedded": false,
+    "absoluteMachinePathsIncluded": false,
+    "processIdentifiersIncluded": false,
+    "artifactReferences": "Basenames, byte counts, and SHA-256 only."
+  }
+}

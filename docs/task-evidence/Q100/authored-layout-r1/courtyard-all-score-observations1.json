@@ -1,0 +1,256 @@
+{
+  "schema": "p07-courtyard-all-score-observation-v1",
+  "status": "FAIL_REPRESENTATIVE_COHORT",
+  "scope": "COURTYARD_ALL_SCORE_SCRATCH_ONLY_NOT_S_SOURCE_ACCEPTANCE",
+  "adoption": false,
+  "layoutQualification": false,
+  "q100Qualification": false,
+  "overallInterpretation": "The 12-case saved-profile holdout completed as an observational PASS and its scoped same-source reader passed four paired area comparisons. The separate representative cohort failed at version 11, seed 17, after four completed cases; seven cases did not run. This experiment is not adopted or qualified.",
+  "sourceBinding": {
+    "protocol": "p07-courtyard-all-score-input-seal-v1",
+    "treatment": "COURTYARD_ALL_SCORE_SCRATCH_ONLY",
+    "baseEpochLabelsAdopted": false,
+    "sourceSnapshotId": "U_CORRECTED_1059_INPUT_PINSET_F7EE",
+    "parentInputCount": 1059,
+    "parentPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+    "inputCount": 1059,
+    "inputPinsSha256": "0280223e685bdf0c8784d90a3e66adc4b3dfa4cb77e18f01909a50502a12e40b",
+    "unchangedInputCount": 1058,
+    "changedProductionInputs": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+        "beforeSha256": "f30032aeec5dc29d5866fa64d2003fd9ea20f80857bbb156d95c4072e6b03d0c",
+        "afterSha256": "be26f43175ee971629c6de0f90a52ee88997c78d6a50af197859344098589dc0"
+      }
+    ],
+    "sharedFootprintInput": {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbFootprint.java",
+      "sha256": "3a5ca2643d8a6e003464263eb46c96eb6d8529d0a59b7f9cb73cd7f807970023",
+      "bytes": 13226,
+      "relation": "Same cached occupied-content-bounds implementation as the earlier AA full-footprint-score variant; this courtyard comparison changes only the planner input pin."
+    },
+    "plannerEdit": {
+      "owner": "PcbPlacementPlanner.mediumPlacementScore",
+      "geometryMetric": "routing courtyard",
+      "areaDeltaWeight": 800,
+      "scoreGate": "scoreWholeContent remains unchanged",
+      "candidateConnectorScoreGateRemoved": true,
+      "placedConnectorFilterRemoved": true,
+      "otherScoreTermsChanged": false,
+      "candidateCountOrderAndRankingBudgetsChanged": false,
+      "routeSubsetsOrRouterLimitsChanged": false
+    },
+    "layoutVersion": 24,
+    "dependencyEpoch": "tsj-generation-dependencies-v25",
+    "seal": {
+      "file": "saved-profile-courtyard-all-score-inputs-sealed1.json",
+      "bytes": 832,
+      "sha256": "0c60afc4a54636f0f45c67c0d847de1906d8809b41fd7ca71db6461f3be52456"
+    },
+    "variantPins": {
+      "file": "saved-profile-courtyard-all-score-sealed-pins.json",
+      "bytes": 204437,
+      "sha256": "0280223e685bdf0c8784d90a3e66adc4b3dfa4cb77e18f01909a50502a12e40b"
+    },
+    "sourceSpec": {
+      "file": "spec.json",
+      "bytes": 1418,
+      "sha256": "774a597039e36a03865947d69eb9ce1cb2bebd16c969c9e5ac088c3588b443a4"
+    },
+    "sourceDiff": {
+      "file": "diff.patch",
+      "bytes": 1331,
+      "sha256": "662d8f796f4b596283ccb6e51fb65574d168c4111ce45cbaf70802316f71fe8a"
+    },
+    "plannerSource": {
+      "file": "PcbPlacementPlanner.java",
+      "bytes": 115503,
+      "sha256": "be26f43175ee971629c6de0f90a52ee88997c78d6a50af197859344098589dc0"
+    },
+    "runner": {
+      "file": "run-saved-profile-courtyard-all-score.ps1",
+      "bytes": 4821,
+      "sha256": "29ee8f783c5cf70099d9c8d5dc6155a9426f9e2e04a4a83adc2974857dd55466"
+    },
+    "nativeChildLimitMs": 180000,
+    "outerWatchdogMs": 600000
+  },
+  "nativeRuns": [
+    {
+      "cohortId": "SAVED_10_11_12_HOLDOUT",
+      "source": "current",
+      "suite": "P07GeometryEpochDiagnosticContractTest",
+      "status": "PASS_OBSERVATION_ONLY",
+      "helperExitCode": 0,
+      "helperElapsedSeconds": 60.0994973,
+      "nativeAssertions": 196214,
+      "nativeCases": 12,
+      "nativeDiagnosticElapsedMs": 31103,
+      "nativeTimingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+      "layoutVersion": 24,
+      "dependencyEpoch": "tsj-generation-dependencies-v25",
+      "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+      "layoutQualification": false,
+      "adoption": false,
+      "inputAudit": "PASS_BEFORE_AND_AFTER",
+      "inputRevision": 3,
+      "sourceSnapshotRevision": 1,
+      "inputCount": 1059,
+      "inputPinsSha256": "0280223e685bdf0c8784d90a3e66adc4b3dfa4cb77e18f01909a50502a12e40b",
+      "terminationProven": true,
+      "cleanup": {
+        "status": "PASS_MARKER_OBSERVED",
+        "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "elapsedSeconds": null,
+        "timing": "Cleanup-only duration was not separately reported."
+      },
+      "artifacts": [
+        { "file": "saved-profile-current-10-11-12-holdout-1-result.json", "bytes": 931, "sha256": "cfb590259e6bca979932d9e91f94bceb43ccf3476ae3b15d06903d069728b017" },
+        { "file": "saved-profile-current-10-11-12-holdout-1-launcher.json", "bytes": 289, "sha256": "ed16ca7de8eea0091da18ac1d98bb9928ad9806e6431769ef6c8f766770ba989" },
+        { "file": "saved-profile-current-10-11-12-holdout-1-console.txt", "bytes": 7063045, "sha256": "564e42a3bef569e3973f01df2fd17bf927d336c18e5f07a0f1a8a3709cd99781" },
+        { "file": "saved-profile-current-10-11-12-holdout-1-receipt.txt", "bytes": 7061905, "sha256": "e95f3f478a754cf19c92f4b24999421e0cafc51f8b7f6c3d70fb5f83e2ffeb2a" },
+        { "file": "saved-profile-current-10-11-12-holdout-1-stderr.txt", "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" }
+      ]
+    },
+    {
+      "cohortId": "SAVED_11_12_REP",
+      "source": "current",
+      "suite": "P07GeometryEpochDiagnosticContractTest",
+      "status": "FAIL_INCOMPLETE_REPRESENTATIVE_COHORT",
+      "helperExitCode": 2,
+      "helperElapsedSeconds": 40.7576059,
+      "plannedCases": 12,
+      "completedCases": 4,
+      "failedCases": 1,
+      "failedCase": {
+        "ordinal": 5,
+        "rootSeed": "17",
+        "placementInterpretationVersion": 11,
+        "assertion": "the targeted primary-side void shrinks by at least half",
+        "baselinePrimarySideVoidArea": 1186500,
+        "requiredMaximumArea": 593250,
+        "observedTargetedPrimarySideVoidArea": null,
+        "note": "The failing assertion did not emit its targeted-side measured value. The separate PCB_WHITESPACE_CASE rectangle metric below is not substituted for that value."
+      },
+      "separateWhitespaceObservation": {
+        "sourceRecord": "PCB_WHITESPACE_CASE",
+        "rootSeed": "17",
+        "placementInterpretationVersion": 11,
+        "parts": 53,
+        "gridUnits": 10,
+        "sampledCells": 71441,
+        "packageAccessOccupiedCells": 28085,
+        "protectedFreeCells": 36706,
+        "protectedFreeFraction": 0.5137945997396453,
+        "largestProtectedEmptyRectangle": {
+          "x": 60,
+          "y": 1160,
+          "width": 1330,
+          "height": 850,
+          "area": 1130500
+        }
+      },
+      "casesAfterFailureNotRun": 7,
+      "successReceiptPresent": false,
+      "inputAudit": "PASS_BEFORE_AND_AFTER",
+      "inputRevision": 3,
+      "sourceSnapshotRevision": 1,
+      "inputCount": 1059,
+      "inputPinsSha256": "0280223e685bdf0c8784d90a3e66adc4b3dfa4cb77e18f01909a50502a12e40b",
+      "terminationProven": true,
+      "cleanup": {
+        "status": "PASS_MARKER_OBSERVED",
+        "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "elapsedSeconds": null,
+        "timing": "Cleanup-only duration was not separately reported."
+      },
+      "artifacts": [
+        { "file": "saved-profile-current-11-12-rep-1-result.json", "bytes": 916, "sha256": "48f0a872f16a77964e58b648abaa1a9a342db51c6f706e662bc308b0f236bc20" },
+        { "file": "saved-profile-current-11-12-rep-1-launcher.json", "bytes": 275, "sha256": "253f1393397250d1a46a0f9918de9e520b899c62ac883c14896349e34dbb0205" },
+        { "file": "saved-profile-current-11-12-rep-1-console.txt", "bytes": 2150311, "sha256": "4f856f6f560769ec1f2fe0ae543d46ff342c84d76b532d3aecc7fc9dab859366" },
+        { "file": "saved-profile-current-11-12-rep-1-stderr.txt", "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" },
+        { "file": "saved-profile-current-11-12-rep-1-receipt.txt", "present": false }
+      ]
+    }
+  ],
+  "holdoutReader": {
+    "status": "PASS_SCOPED_COMPARATIVE_OBSERVATIONS_ONLY",
+    "scope": "COURTYARD_ALL_SCORE_SCRATCH_ONLY_NOT_S_SOURCE_ACCEPTANCE",
+    "adoption": false,
+    "layoutQualification": false,
+    "baseEpochLabelsNotAdopted": true,
+    "caseCount": 12,
+    "sameSourceComparisonCount": 4,
+    "oracleCatalogSha256": "57b20a02b9f1f17671dd89a5a032cafbb792b76384cedbc85b5d69dc748d62a9",
+    "comparisons": [
+      { "rootSeed": "1", "saved10Area": 4530550, "saved11Area": 4530550, "baselineLiteralCeiling": 4615974, "operator": "<=", "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION" },
+      { "rootSeed": "7", "saved10Area": 6308302, "saved11Area": 6308302, "baselineLiteralCeiling": 6587808, "operator": "<=", "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION" },
+      { "rootSeed": "5", "saved10Area": 6219360, "saved11Area": 6219360, "baselineLiteralCeiling": 9445744, "operator": "<=", "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION" },
+      { "rootSeed": "14", "saved10Area": 6459864, "saved11Area": 6459864, "baselineLiteralCeiling": 8585034, "operator": "<=", "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION" }
+    ],
+    "failures": [],
+    "readerScript": {
+      "file": "read-courtyard-all-score-observation.py",
+      "bytes": 3437,
+      "sha256": "905262b17c251c031b9e6a47c66194c44c0455fbe2aa90a81fd7245a391c7c4d"
+    },
+    "readerOutput": {
+      "file": "courtyard-all-score-holdout-reader1.json",
+      "bytes": 210189,
+      "sha256": "ffa63e140dc6b4dc879107e56d7cd974c355106ea17bb19e7586e957908a400e"
+    }
+  },
+  "caseRecordParityAgainstAAFullFootprintScore": {
+    "scope": "Only actual P07_SAVED_PROFILE_EPOCH_CASE JSON records emitted in the two native console outputs; not a population-wide claim.",
+    "pairingKey": ["cohortId", "caseOrdinal"],
+    "fieldsExcludedFromEqualityCheck": ["runId", "frameId", "nativeDiagnosticElapsedMs"],
+    "allOtherFieldsCompared": true,
+    "layoutGeometrySha256RequiredPresentAndEqual": true,
+    "holdout": { "candidateRecords": 12, "aaRecords": 12, "pairedRecordsEqual": 12, "layoutGeometryHashesPresentAndEqual": 12 },
+    "representativeCompletedPrefix": { "candidateRecords": 4, "aaRecords": 4, "pairedRecordsEqual": 4, "layoutGeometryHashesPresentAndEqual": 4 },
+    "records": [
+      { "cohort": "SAVED_10_11_12_HOLDOUT", "caseOrdinal": 1, "rootSeed": "1", "placementVersion": 10, "layoutGeometrySha256": "fddc6076d0ddd8d6daa5549e3abc3e662ba8cc54d41594b04b5e171055f24c0e", "equal": true },
+      { "cohort": "SAVED_10_11_12_HOLDOUT", "caseOrdinal": 2, "rootSeed": "7", "placementVersion": 10, "layoutGeometrySha256": "354da3b38c74382c32fe32a4b3b7a3369fa53c780c36df54d648f574a80bb38d", "equal": true },
+      { "cohort": "SAVED_10_11_12_HOLDOUT", "caseOrdinal": 3, "rootSeed": "5", "placementVersion": 10, "layoutGeometrySha256": "0c32d5d8afd66d60f495fdd8899df0e2405735c1618d5ccb95802d40b20e89e7", "equal": true },
+      { "cohort": "SAVED_10_11_12_HOLDOUT", "caseOrdinal": 4, "rootSeed": "14", "placementVersion": 10, "layoutGeometrySha256": "a3c064d683eef2726904012ba3fdf97a01b57690fb23f7741bf761fcbbe96fa5", "equal": true },
+      { "cohort": "SAVED_10_11_12_HOLDOUT", "caseOrdinal": 5, "rootSeed": "1", "placementVersion": 11, "layoutGeometrySha256": "fddc6076d0ddd8d6daa5549e3abc3e662ba8cc54d41594b04b5e171055f24c0e", "equal": true },
+      { "cohort": "SAVED_10_11_12_HOLDOUT", "caseOrdinal": 6, "rootSeed": "7", "placementVersion": 11, "layoutGeometrySha256": "354da3b38c74382c32fe32a4b3b7a3369fa53c780c36df54d648f574a80bb38d", "equal": true },
+      { "cohort": "SAVED_10_11_12_HOLDOUT", "caseOrdinal": 7, "rootSeed": "5", "placementVersion": 11, "layoutGeometrySha256": "0c32d5d8afd66d60f495fdd8899df0e2405735c1618d5ccb95802d40b20e89e7", "equal": true },
+      { "cohort": "SAVED_10_11_12_HOLDOUT", "caseOrdinal": 8, "rootSeed": "14", "placementVersion": 11, "layoutGeometrySha256": "a3c064d683eef2726904012ba3fdf97a01b57690fb23f7741bf761fcbbe96fa5", "equal": true },
+      { "cohort": "SAVED_10_11_12_HOLDOUT", "caseOrdinal": 9, "rootSeed": "1", "placementVersion": 12, "layoutGeometrySha256": "32f26071c372b2c038c1a5fe0271e926953d5d39742b7f39ca14af3a8cf8da67", "equal": true },
+      { "cohort": "SAVED_10_11_12_HOLDOUT", "caseOrdinal": 10, "rootSeed": "7", "placementVersion": 12, "layoutGeometrySha256": "7bcf243d85947dc003a43dac27dad0984bc5b00e821624c9820ee747ea1f7c0f", "equal": true },
+      { "cohort": "SAVED_10_11_12_HOLDOUT", "caseOrdinal": 11, "rootSeed": "5", "placementVersion": 12, "layoutGeometrySha256": "e73d627cae8587f988e8409e5bf2f83a096851b59cc4a1aec1dd1d4d5d567ae1", "equal": true },
+      { "cohort": "SAVED_10_11_12_HOLDOUT", "caseOrdinal": 12, "rootSeed": "14", "placementVersion": 12, "layoutGeometrySha256": "0a3242edc6207bb9e5b80cfb9dbb3aeff8b12b335c251a2480588e5ed6681997", "equal": true },
+      { "cohort": "SAVED_11_12_REP", "caseOrdinal": 1, "rootSeed": "-1017", "placementVersion": 11, "layoutGeometrySha256": "69e17966a4045793b019451af18e9a3e93818f864bff008945bbfcf65549b566", "equal": true },
+      { "cohort": "SAVED_11_12_REP", "caseOrdinal": 2, "rootSeed": "-1004", "placementVersion": 11, "layoutGeometrySha256": "450fb969e475ae8daf7892ffdbcc2086515daeeb5f21fe72c72aa79f9e73fc55", "equal": true },
+      { "cohort": "SAVED_11_12_REP", "caseOrdinal": 3, "rootSeed": "-1022", "placementVersion": 11, "layoutGeometrySha256": "ea1eea194797fbe765193039e5cbb5280f53ee1757b5e6be3e8fd25fab8ed674", "equal": true },
+      { "cohort": "SAVED_11_12_REP", "caseOrdinal": 4, "rootSeed": "0", "placementVersion": 11, "layoutGeometrySha256": "a510c034beb90047ae72f487e7de93a15c3869875684474215db82f4f6f01102", "equal": true }
+    ],
+    "comparedConsoleArtifacts": [
+      { "variant": "AA_FULL_FOOTPRINT_SCORE", "cohort": "SAVED_10_11_12_HOLDOUT", "file": "saved-profile-current-10-11-12-holdout-1-console.txt", "bytes": 7063046, "sha256": "ed7733cdd136799aedabcd9076383016981627ba3f4cac3844bee92da070caa6" },
+      { "variant": "AC_COURTYARD_ALL_SCORE", "cohort": "SAVED_10_11_12_HOLDOUT", "file": "saved-profile-current-10-11-12-holdout-1-console.txt", "bytes": 7063045, "sha256": "564e42a3bef569e3973f01df2fd17bf927d336c18e5f07a0f1a8a3709cd99781" },
+      { "variant": "AA_FULL_FOOTPRINT_SCORE", "cohort": "SAVED_11_12_REP", "file": "saved-profile-current-11-12-rep-1-console.txt", "bytes": 2150311, "sha256": "301895178a15f90286d414f63da544e4163a96bca36dd31a454f83c76483ec4e" },
+      { "variant": "AC_COURTYARD_ALL_SCORE", "cohort": "SAVED_11_12_REP", "file": "saved-profile-current-11-12-rep-1-console.txt", "bytes": 2150311, "sha256": "4f856f6f560769ec1f2fe0ae543d46ff342c84d76b532d3aecc7fc9dab859366" }
+    ],
+    "limitation": "Parity covers only the 12 emitted holdout records and four completed representative records. It does not establish all profiles or the failed and unrun representative cases."
+  },
+  "unrunWork": {
+    "representativeCasesAfterFailure": 7,
+    "fullSavedProfileCensus": "NOT_RUN",
+    "currentQSuite": "NOT_RUN",
+    "sourceBuild": "NOT_RUN",
+    "broaderQ100Qualification": "NOT_RUN"
+  },
+  "limitations": [
+    "The holdout native and reader PASS results are scoped observations; they do not qualify or adopt this planner variant.",
+    "The representative cohort failed on its fifth case and is incomplete; its seven remaining cases were not run.",
+    "The completed case-record parity check covers only the emitted holdout records and the four completed representative records. It is not proof over all profiles or future routing runs.",
+    "No full saved-profile census, full Q100 matrix, current-Q suite, source build, or adoption was performed for this variant."
+  ],
+  "sanitization": {
+    "rawConsoleOrReceiptContentsEmbedded": false,
+    "absoluteMachinePathsIncluded": false,
+    "processIdentifiersIncluded": false,
+    "artifactReferences": "Basenames, byte counts and SHA-256 values only."
+  }
+}

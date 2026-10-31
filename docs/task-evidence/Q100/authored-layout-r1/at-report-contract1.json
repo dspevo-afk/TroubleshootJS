@@ -1,0 +1,121 @@
+{
+  "schema": "troubleshootjs-a04-report-contract-evidence-v1",
+  "status": "PASS_PURE_REPORT_AND_ROUTE_CONTRACTS",
+  "scope": "Pure Windows PowerShell report and route-reader contract fixture. No browser, preview, native, build, or production gate was launched.",
+  "fixture": {
+    "file": "tests/contracts/a04-report-contract.ps1",
+    "sha256": "5ba004b708c81491ec98cf72f942540655dcc29bbf2e36534b8731a7327df1cf",
+    "changes": [
+      "Moved the six valid A04 report cases to the independently expected generatorVersion 6.",
+      "Kept all six route/seed cases, report fields, flags, and route census assertions.",
+      "Added explicit rejection for retired numeric version 5 and malformed numeric, string, floating-point, Boolean, and null values.",
+      "Loaded only the pure Test-NormalWorkbenchReady helper required by Test-RouteReady.",
+      "Updated the A04, A07, and A08 normalReady test fixtures to the current five-field readiness shape.",
+      "Added missing and malformed readiness checks for workbenchNavigationReady, boardPowerReady, and boardPowerLabel without relaxing debug-off route checks."
+    ],
+    "validA04CaseCensus": {
+      "count": 6,
+      "resistiveSeeds": ["1", "2", "3"],
+      "controlledSeeds": ["1", "2", "3"],
+      "generatorVersion": 6
+    },
+    "rejectedGeneratorVersionValues": [
+      {"type": "number", "value": 5, "reason": "retired version"},
+      {"type": "number", "value": 0},
+      {"type": "number", "value": 3},
+      {"type": "number", "value": 4},
+      {"type": "number", "value": 7},
+      {"type": "string", "value": "5"},
+      {"type": "string", "value": "6"},
+      {"type": "number", "value": 1.5},
+      {"type": "boolean", "value": true},
+      {"type": "null", "value": null}
+    ],
+    "validNormalReadyFixture": {
+      "workbenchNavigationReady": true,
+      "programReady": true,
+      "retestCustomerReady": true,
+      "boardPowerReady": true,
+      "boardPowerLabel": "Board Power: ON"
+    },
+    "readinessRejectVectors": {
+      "missing": ["workbenchNavigationReady", "boardPowerReady", "boardPowerLabel"],
+      "malformedBooleanValues": [false, "true", 1, null],
+      "malformedBoardPowerLabels": ["", "ON", "Board Power: UNKNOWN", true, 1, null],
+      "allowedBoardPowerLabels": ["Board Power: ON", "Board Power: OFF"]
+    }
+  },
+  "producerAndReaderBinding": {
+    "generatorVersion": {
+      "constant": {
+        "file": "src/com/lushprojects/circuitjs1/client/BoundedAssemblyRequest.java",
+        "line": 18,
+        "symbol": "BoundedAssemblyRequest.GENERATOR_VERSION",
+        "value": 6,
+        "sha256": "ce1150bfdd63eb771067efc94631dfae4eda4bc74265d678aa755710612efae9"
+      },
+      "a04Verifier": {
+        "file": "src/com/lushprojects/circuitjs1/client/A04ConstructionDeveloperVerifier.java",
+        "assertsDescriptorVersionEqualsConstantAtLine": 130,
+        "serializesDescriptorGeneratorVersionAtLines": [171, 1038],
+        "sha256": "5637fc140de39583276ec0b004e1f1bbb60d4b18c53b8a5ca131eaf03e708579"
+      }
+    },
+    "strictReportReader": {
+      "file": "scripts/verify-a03-browser.ps1",
+      "a04GeneratorVersionLiteralAtLine": 1040,
+      "acceptedIntegralValue": 6,
+      "sha256": "c9f097320ff4ea157e1c4050c49eea93b6feb9521baabed5f79eace87d1075f9"
+    },
+    "normalReadinessContract": {
+      "file": "scripts/verify-a03-browser.ps1",
+      "actualReadinessObjectLines": [706, 707, 708],
+      "pureValidatorLines": [1641, 1657],
+      "requiredFields": ["workbenchNavigationReady", "programReady", "retestCustomerReady", "boardPowerReady", "boardPowerLabel"],
+      "sha256": "c9f097320ff4ea157e1c4050c49eea93b6feb9521baabed5f79eace87d1075f9"
+    },
+    "boundedProcessModuleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "javaOrGwtSourceChanged": false
+  },
+  "preservedAttempts": [
+    {
+      "status": "FAIL",
+      "reason": "Initial valid A04 fixture used version 5; the unchanged strict reader requires 6.",
+      "preFixFixture": {"file": "a04-report-contract.pre-fix.ps1", "bytes": 35052, "sha256": "f19c6dc575bd52eb1d838912fb6185f8556793a256e74e185d14e88a2eda42ec"},
+      "result": {"file": "at-a04-report-contract1-result.json", "bytes": 194, "sha256": "82ed8f552cd5ad878312eff57252a2da2e2356b2e6bf94592d50b44ad55d439f"},
+      "stdout": {"file": "at-a04-report-contract1-stdout.txt", "bytes": 672, "sha256": "a52f61b506ff5dbf03dc5416653ef996bb26287effcd4f54a9a45f7dcb92856d"},
+      "exitCode": 1,
+      "elapsedSeconds": 1.3640118
+    },
+    {
+      "status": "FAIL",
+      "reason": "After the version-6 fixture was accepted, the pure route test reached Test-NormalWorkbenchReady, which was not loaded by the test AST harness; its readiness fixture also lacked the current five fields.",
+      "version6Fixture": {"file": "a04-report-contract.version6-pre-harness-fix.ps1", "bytes": 35262, "sha256": "d03f715ecdbdea3fd7126c2faf107e674aa01455c819213b713ac818dc0fe8d1"},
+      "result": {"file": "a04-report-contract1-version6-harness-fail-result.json", "bytes": 861, "sha256": "cc251f5907d8bde060406d4afe098eb5deda3458b9cc99aea58af4190421ed50"},
+      "stdout": {"file": "a04-report-contract1-version6-harness-fail-stdout.txt", "bytes": 303, "sha256": "7b1e6bc988eea2b0b7444cc75208e21e5fe63f60abf2c9f2464b2793109d1f5f"},
+      "stderr": {"file": "a04-report-contract1-version6-harness-fail-stderr.txt", "bytes": 526, "sha256": "d3254c07197ccf79ef9c015a1dee0fa2e8fbaad83e01de0bd6e0b7ce1719e263"},
+      "exitCode": 1,
+      "elapsedSeconds": 1.4742975
+    }
+  ],
+  "verification": {
+    "command": "powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File tests/contracts/a04-report-contract.ps1",
+    "host": "Windows PowerShell",
+    "status": "PASS",
+    "exitCode": 0,
+    "elapsedSeconds": 6.187536,
+    "assertions": 510,
+    "result": {"file": "at-a04-report-contract2-result.json", "bytes": 843, "sha256": "84ad2d4994c4340a95461279ab8ef60c58c455d327f9c0645ac4730f78bd11b6"},
+    "stdout": {"file": "at-a04-report-contract2-stdout.txt", "bytes": 346, "sha256": "c8cd9fcb1a40125deb15336ca368277a41b0ebddd4cf9bfd9ae337e485ce8ff0"},
+    "stderr": {"file": "at-a04-report-contract2-stderr.txt", "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+    "driverSha256": "c9f097320ff4ea157e1c4050c49eea93b6feb9521baabed5f79eace87d1075f9",
+    "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "scope": "PURE_REPORT_AND_ROUTE_CONTRACTS_ONLY; NO_PREVIEW_OR_BROWSER"
+  },
+  "acceptanceBoundary": {
+    "proves": "Current report shape and A04/A06/A07/A08 route-reader fixtures are checked under the pure Windows PowerShell contract.",
+    "doesNotProve": ["A04 runtime execution", "native/browser/generation behavior", "full Current browser acceptance", "layout or publication acceptance"],
+    "publication": "HELD outside this packet; the broader Current default-control gate remains separately pending.",
+    "hardGate": "UNRUN; protected unread boundary remains UNKNOWN per as-search-scope1; this packet makes no read/certification claim."
+  }
+}

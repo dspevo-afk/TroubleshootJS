@@ -1,0 +1,227 @@
+{
+    "schema":  "troubleshootjs-ap-cleanup-failure-observation-v1",
+    "status":  "CLEANUP_FAILURES_PRESERVED_NOT_QUALIFIED",
+    "scope":  "Two Q100Player privacy attempts with cleanup failures plus one bounded cleanup-contract stress failure and offline replay.",
+    "repository":  {
+                       "branch":  "codex/q100-physical-feasibility",
+                       "head":  "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+                       "candidate":  "AO_FINAL_LAYOUT25_DEP26"
+                   },
+    "sourceContext":  {
+                          "player2VerifierIsolationSha256":  "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+                          "stressVerifierIsolationModuleSha256":  "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+                          "stressBrowserCleanupContractSha256":  "25844607cb8afb9c17b678ad6a650886e89fd05c2fa49d8fba759fc9d63630fd",
+                          "stressPreviewScriptSha256":  "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+                          "stressExistingPreviewArtifactSha256":  "257e773ff1a4d8397fbfaeac0f48b35f8a563404573444db693d8ef2d2b946ba",
+                          "hostFixDisposition":  "A later AP host fix is identified; neither captured run validates it.",
+                          "preservedBudgets":  {
+                                                   "innerShutdownMs":  15000,
+                                                   "outerCleanupMs":  120000
+                                               }
+                      },
+    "playerPrivacyAttempts":  [
+                                  {
+                                      "attempt":  1,
+                                      "runId":  "d6121212199d4b7d8a7d1272f3cc27fb",
+                                      "status":  "QUARANTINE_PRESERVED",
+                                      "evidencePacket":  {
+                                                             "file":  "authored-layout-r1/ao-final-source-focused1.json",
+                                                             "bytes":  32543,
+                                                             "sha256":  "11269f72e5dca172baf7bc3708c5fddd06a8e0e219e79155d49d6dad7f8693b0"
+                                                         },
+                                      "note":  "Earlier route/canary passed but aggregate attempt failed cleanup; details remain in the referenced prior packet."
+                                  },
+                                  {
+                                      "attempt":  2,
+                                      "runId":  "336f4f628b934dc784e828d69595d4eb",
+                                      "status":  "INFRASTRUCTURE_FAILURE",
+                                      "exitCode":  2,
+                                      "elapsedSeconds":  56.6394098,
+                                      "route":  {
+                                                    "name":  "q100-player-debug-query",
+                                                    "kind":  "q100-player",
+                                                    "status":  "PASS",
+                                                    "privacyCanary":  "PASS",
+                                                    "sentinelCases":  2,
+                                                    "sentinelCleanup":  "PASS"
+                                                },
+                                      "moduleIdentity":  {
+                                                             "verifierIsolationSha256":  "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+                                                             "sourceDigest":  "0cbe64a449e761ce25194c017fa0bc32f0539d598d4cc4e76a71062ede15e059",
+                                                             "scriptDigest":  "a4b86f0c9f9c497fde8b3abbe6a4c72aa1019e96e54b92501345e2e0b364f75e",
+                                                             "webDigest":  "fb7f0c7ef36b0eff88fb5728529db59b6f16344e6446ab684156c116945f5865",
+                                                             "executionDigest":  "6c337d95d02905f087793f4b8bab9f5fc936ed76ee0105334fe83b1457891156",
+                                                             "executionFileCount":  1597
+                                                         },
+                                      "cleanup":  {
+                                                      "success":  false,
+                                                      "status":  "FAIL",
+                                                      "elapsedMs":  25647,
+                                                      "limitMs":  120000,
+                                                      "innerShutdownMs":  15956,
+                                                      "innerLimitMs":  15000,
+                                                      "failurePhase":  "containmentJobEmptyProof",
+                                                      "protectedDescendantCount":  16,
+                                                      "rootAndDescendantRecordCount":  17,
+                                                      "waitLoopPassCount":  2,
+                                                      "naturalExitProofCalls":  34,
+                                                      "currentAbsenceProofs":  32,
+                                                      "currentAbsenceObservations":  64
+                                                  },
+                                      "artifactProof":  {
+                                                            "protocol":  "troubleshootjs-q100-player-artifact-proof-v1",
+                                                            "variant":  "Player",
+                                                            "style":  "OBF",
+                                                            "inputDigest":  "45654010ddaf068b1cb30a193d43084b80eed0dbfb84f3dcf5f50b6f21df0d1f",
+                                                            "outputDigest":  "e3cef7636468142ce9a8a6ea1707622343cc876407cb3bc1312c158da4b3c0e5",
+                                                            "developerMarkerScan":  "PASS"
+                                                        },
+                                      "artifacts":  [
+                                                        {
+                                                            "file":  "ao-compiled-q100player-2.json",
+                                                            "bytes":  17630,
+                                                            "sha256":  "99a55c765c1ae7b149eafbcfd599a941d0bfef9b9c72deaf7aa5f547f92a9ae3"
+                                                        },
+                                                        {
+                                                            "file":  "ao-compiled-q100player-2-result.json",
+                                                            "bytes":  237,
+                                                            "sha256":  "cdf55d17ddea9031e0b61d01a36e43384f26997dd3cb3a3a11884a349615e229"
+                                                        },
+                                                        {
+                                                            "file":  "ao-compiled-q100player-2-launcher.json",
+                                                            "bytes":  205,
+                                                            "sha256":  "ff8aa10888eb61bd0fcc3e4583b3d172c717b93e6e7554f7177e11061178156c"
+                                                        },
+                                                        {
+                                                            "file":  "ao-compiled-q100player-2.log",
+                                                            "bytes":  19363,
+                                                            "sha256":  "d45c414567089bebd73a5c69862431dae831a13ee519c429f513f72c91a4f9a1"
+                                                        },
+                                                        {
+                                                            "file":  "ao-compiled-q100player-2-host.txt",
+                                                            "bytes":  788,
+                                                            "sha256":  "bc9fc3be174f1ea8849bcb9223480c3ef35a3da39a416fc89f3cad7634f1dbd9"
+                                                        }
+                                                    ]
+                                  }
+                              ],
+    "cleanupContractStress":  {
+                                  "status":  "FAIL_OWNER_PROOF_AND_RUN_BUDGET",
+                                  "reportProtocol":  "troubleshootjs-browser-cleanup-budget-v1",
+                                  "stage":  "owner-proof",
+                                  "errorType":  "InvalidOperationException",
+                                  "error":  "complete-run-budget",
+                                  "cleanupElapsedMs":  125175,
+                                  "cleanupLimitMs":  120000,
+                                  "overBudgetMs":  5175,
+                                  "cleanupSucceeded":  true,
+                                  "resourceSuccess":  true,
+                                  "ownerProofPresent":  false,
+                                  "previewTransportPresent":  false,
+                                  "innerShutdownMs":  11387,
+                                  "innerShutdownLimitMs":  15000,
+                                  "innerProtectedDescendantCount":  7,
+                                  "innerRootAndDescendantRecordCount":  8,
+                                  "profileFilesExercised":  2048,
+                                  "evidenceArtifacts":  62,
+                                  "aggregatePhaseMs":  {
+                                                           "browserSession":  86101,
+                                                           "preview":  31604,
+                                                           "finalProof":  5651,
+                                                           "attribution":  "Aggregate phase timings only; no phase-cost cause is established."
+                                                       },
+                                  "sourceArtifacts":  [
+                                                          {
+                                                              "file":  "ao-cleanup-canary-1/result.json",
+                                                              "bytes":  2360,
+                                                              "sha256":  "22da5a86d7be10f662c4fbd2315749b68c45c33cb737ac68e37ab9cd37debeb9"
+                                                          },
+                                                          {
+                                                              "file":  "ao-cleanup-canary-1/launcher.json",
+                                                              "bytes":  234,
+                                                              "sha256":  "33eb628ee7d6bb5469e178da219be7bcf3c7fdb86f0583ef4d598cbdcb4d284e"
+                                                          },
+                                                          {
+                                                              "file":  "ao-cleanup-canary-1/stdout.log",
+                                                              "bytes":  455,
+                                                              "sha256":  "babb7b77c2c0ac026fe4b6c051a919373f09fd5872680763dfcd9f8b45fb40e7"
+                                                          },
+                                                          {
+                                                              "file":  "ao-cleanup-canary-1/stderr.log",
+                                                              "bytes":  385,
+                                                              "sha256":  "abcb1d78f8ba0d94ab6961925b390758d4c61d771c6069a2995645c30cd7a652"
+                                                          },
+                                                          {
+                                                              "file":  "ao-cleanup-canary-1/run-browser-cleanup-canary.ps1",
+                                                              "bytes":  12820,
+                                                              "sha256":  "279c8d4cc75dd6cf9731f0df67bfc2a7f802e135ad17668fe2d347002ff73af3"
+                                                          },
+                                                          {
+                                                              "file":  "TroubleshootJS/verify/browser-cleanup-budget-report.json",
+                                                              "bytes":  7757,
+                                                              "sha256":  "d809bab08379c75c3d5ab61dd9837091fa962c22a75e5b72830cf114226d2c43"
+                                                          },
+                                                          {
+                                                              "file":  "ao-cleanup-canary-report-replay-1/replay-result.json",
+                                                              "bytes":  5342,
+                                                              "sha256":  "21dabdcdab175b72d824b2108f473008557764810bd55caeeb3cdd90bc5abb4d"
+                                                          },
+                                                          {
+                                                              "file":  "ao-cleanup-canary-report-replay-1/replay-cleanup-canary-report.ps1",
+                                                              "bytes":  8503,
+                                                              "sha256":  "c5936c23b47eabdb611d9a209c1b1a9837b1f4dc4cd7daa746e4c3be35fbb9b8"
+                                                          }
+                                                      ],
+                                  "offlineReplay":  {
+                                                        "status":  "FAIL",
+                                                        "offlineOnly":  true,
+                                                        "launchedProcesses":  false,
+                                                        "liveHostInspected":  false,
+                                                        "childExitCode":  2,
+                                                        "childExitWasDirectlyStored":  false,
+                                                        "outerWrapperType":  "PropertyNotFoundException",
+                                                        "outerWrapperMessage":  "The property \u0027previewTransport\u0027 cannot be found on this object. Verify that the property exists.",
+                                                        "outerExitCode":  2,
+                                                        "outerElapsedMs":  282609,
+                                                        "limitation":  "Replay reconstructs child exit from the captured contract report; original wrapper did not store a separate childExitCode."
+                                                    }
+                              },
+    "postRunResourceObservation":  {
+                                       "processIdentities":  "ABSENT according to a scoped read-only worker query.",
+                                       "listenerPorts":  [
+                                                             49172,
+                                                             58271
+                                                         ],
+                                       "listenerStatus":  "ABSENT according to the same scoped read-only query.",
+                                       "queryArtifactPersisted":  false,
+                                       "cleanupJobEmptyProof":  "NOT_PROVED",
+                                       "cleanupRecoveryOrSuccess":  "NOT_CLAIMED",
+                                       "quarantine":  {
+                                                          "status":  "PRESERVED",
+                                                          "attemptRunIds":  [
+                                                                                "d6121212199d4b7d8a7d1272f3cc27fb",
+                                                                                "336f4f628b934dc784e828d69595d4eb"
+                                                                            ],
+                                                          "profileAndClaimPathsEmbedded":  false
+                                                      }
+                                   },
+    "limits":  [
+                   "Player 2 was built from the captured prior verifier-isolation module; the later AP host fix is not qualified by this evidence.",
+                   "Player 2\u0027s route, privacy canaries, and sentinel cleanup passed, but the aggregate privacy attempt is INFRASTRUCTURE_FAILURE because shutdown owner proof failed.",
+                   "The stress cleanup contract reports cleanupSucceeded=true and resourceSuccess=true, but fails its complete-run budget by 5175ms and has no ownerProof; this is not an owner-proof PASS.",
+                   "The outer cleanup wrapper separately failed reading missing previewTransport. Offline replay preserves the child contract failure but did not launch a process or inspect the live host.",
+                   "Read-only process/listener absence does not establish job-empty owner proof, release quarantined claims, or convert either cleanup result to PASS.",
+                   "Aggregate BrowserSession, Preview, and FinalProof times are not causally attributed; repeated tree checks are not established as the cause.",
+                   "No current AP-fix qualification, full final gate completion, playable 100-route claim, or Q100 electrical qualification is established.",
+                   "Protected HARD data was not read or run. Raw reports/logs, absolute paths, PIDs, and process start ticks are not embedded."
+               ],
+    "packetSanitization":  {
+                               "artifactReferences":  "Relative scratch leafnames or safe logical report filename only",
+                               "rawReportsEmbedded":  false,
+                               "rawLogsEmbedded":  false,
+                               "absolutePathsEmbedded":  false,
+                               "pidsOrStartTicksIncluded":  false,
+                               "profileClaimPathsIncluded":  false,
+                               "status":  "SANITIZED_METADATA_ONLY"
+                           }
+}

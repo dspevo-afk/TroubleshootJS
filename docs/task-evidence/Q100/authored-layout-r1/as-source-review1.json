@@ -1,0 +1,89 @@
+{
+  "schema": "q100-controlled-source-review-v1",
+  "repository": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "reviewBase": "8a2c12446b2c46bde32b32537dec58a15a65d3b9"
+  },
+  "reviewedGateContextReportedByRoot": {
+    "integratedNative": {
+      "status": "PASS",
+      "selectedSuiteCount": 33,
+      "elapsedSeconds": 184.1820165,
+      "rerunByReviewers": false
+    },
+    "independentGeometryReader": {
+      "status": "PASS",
+      "comparisonCount": 6,
+      "scope": "comparison-only",
+      "rerunByReviewers": false
+    },
+    "actual100AcceptedLayouts": 0,
+    "layoutQualificationGranted": false,
+    "protectedHardDataReadOrRun": false
+  },
+  "reviews": [
+    {
+      "reviewer": "q100_p07_oracle_map",
+      "mode": "read-only-source-review",
+      "scope": [
+        "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+        "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java",
+        "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+        "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java"
+      ],
+      "sourcePins": [
+        {"path":"src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java","bytes":81651,"sha256":"d8d176503f12338230d75e5a8477fac13395821d124a3f1aadb7fadba95338c9"},
+        {"path":"src/com/lushprojects/circuitjs1/client/PcbNetRouter.java","bytes":86193,"sha256":"67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a"},
+        {"path":"src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java","bytes":101381,"sha256":"b9fa34db5b55b6937865ef70249476ad71458048982979cc0713a95fe63e634e"},
+        {"path":"src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java","bytes":36800,"sha256":"de9a9a70f05b4998607f196a90ac0d5696879c8da0c615369a80f3b3733d9657"},
+        {"path":"src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java","bytes":115662,"sha256":"f30032aeec5dc29d5866fa64d2003fd9ea20f80857bbb156d95c4072e6b03d0c"},
+        {"path":"src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java","bytes":80561,"sha256":"ba62d50ae3d91f81aafdd0429f8274e6e2fbf2ce38959cb84c83f57dce7223c9"}
+      ],
+      "findings": {
+        "status": "NO_ACTIONABLE_BLOCKER_FOUND",
+        "summary": "The P07 ordering stream is opt-in for FULLER_TWO_LAYER; legacy advanceSlice behavior remains on its legacy path. Relaxed guidance uses directed fixed-graph predicates on isolated router copies and adds a bound without pruning. Stream yields are finalized by the existing generator owner before one request-level outcome and receipt are recorded. The shared request retains the existing expansion/order/grid/via caps. Current identity is layout 25/dependency 26.",
+        "limitations": [
+          "Source review only; no tests or gates were rerun or independently certified.",
+          "No actual100 layout acceptance or qualification is established."
+        ]
+      }
+    },
+    {
+      "reviewer": "a03_operational_state_fix",
+      "mode": "read-only-source-review",
+      "scope": [
+        "src/com/lushprojects/circuitjs1/client/Rb100Placement.java",
+        "src/com/lushprojects/circuitjs1/client/Rb100Plan.java",
+        "tests/contracts/Rb100PlanContractTest.java",
+        "tests/contracts/P08ReferenceConductorBuilder.java",
+        "tests/contracts/P08ReferenceWidthContractTest.java",
+        "tests/contracts/P08ScalabilityContractTest.java",
+        "tests/contracts/PcbCanvasBoundaryContractTest.java",
+        "tests/contracts/PcbCompactnessContractTest.java"
+      ],
+      "sourcePins": [
+        {"path":"src/com/lushprojects/circuitjs1/client/Rb100Placement.java","bytes":13902,"sha256":"b22b4499846ec5e4e56622f5dad518d01d60bdf1e948e761ae7235b74c3fce15"},
+        {"path":"src/com/lushprojects/circuitjs1/client/Rb100Plan.java","bytes":22555,"sha256":"631da559598faf50b738ccca74b726688f0533aee69108155c553727dd8f53d5"},
+        {"path":"tests/contracts/Rb100PlanContractTest.java","bytes":41968,"sha256":"73d98092ca1692709a362f165d6efe974cd0f99a34403d17fb61b46defedf3aa"},
+        {"path":"tests/contracts/P08ReferenceConductorBuilder.java","bytes":20359,"sha256":"dbdde865a191c06e267bdbe7bae78144fa520189d652ee7d0e6458aac17586e6"},
+        {"path":"tests/contracts/P08ReferenceWidthContractTest.java","bytes":18348,"sha256":"b1ac3b8029f468828a4beb19a1be12cb6e236a408c5b79e083fa1c44154826e5"},
+        {"path":"tests/contracts/P08ScalabilityContractTest.java","bytes":26529,"sha256":"5ec454bf6b2161907aca24f150934f243b3f1854d4d3a53be7473960b025c3c6"},
+        {"path":"tests/contracts/PcbCanvasBoundaryContractTest.java","bytes":12529,"sha256":"27024759015971ccd3eeb3f3b79d22dd6d930bb560e89ec791637efc38e9a657"},
+        {"path":"tests/contracts/PcbCompactnessContractTest.java","bytes":35702,"sha256":"e39ef8bd2a53e035141f03ec8705a26bbae109cd2b47b7bb578af57d3e12162a"}
+      ],
+      "findings": {
+        "status": "NO_MATERIAL_BLOCKER_OR_ORACLE_WEAKENING_FOUND",
+        "summary": "Literal plan mappings, all-pairs width-bearing oracle, literal 9/11/13 clearance cases, wrong-net/missing-via/mixed-width negatives, canvas graph/raster and source immutability, and retained old-layout-23/current-layout-25 strict fingerprints were reviewed.",
+        "nonblockingNote": "The P08 routed-width expectation calls production widthFor; independent literal mapping tests in RB100 plan and CanvasOwnerFit provide complementary coverage.",
+        "limitations": [
+          "Source review only; no gates were run.",
+          "HARD data was not read or run.",
+          "This review grants no layout qualification or actual100 admission."
+        ]
+      }
+    }
+  ]
+}

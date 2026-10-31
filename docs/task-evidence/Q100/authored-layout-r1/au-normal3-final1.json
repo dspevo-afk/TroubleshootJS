@@ -1,0 +1,286 @@
+{
+  "schema": "troubleshootjs-q100-au-normal3-final-evidence-v1",
+  "scope": "Finite R12 normal3 partition postprocessing from a retained browser capture. This packet records the original wrapper failure separately; it does not establish release acceptance or Q100 qualification.",
+  "candidate": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "driverSha256": "c9f097320ff4ea157e1c4050c49eea93b6feb9521baabed5f79eace87d1075f9",
+    "verifierIsolationSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "layoutVersion": 25,
+    "dependencyVersion": 26,
+    "planSha256": "ad0aaca6a7d221535802ac677e98c787c7d8d64d9c3c2e709771da7c2e071668",
+    "sourceBinding": {
+      "fileCount": 1263,
+      "sha256": "35069d615bfe680048fcc17fba7cb42a13d0f1045b94da4c5bb9c3c1c4e50784"
+    },
+    "developerOutput": {
+      "fileCount": 357,
+      "sha256": "38a2cba1decd94769ec36f56fd023216d1fd8e6b96546285849e18ba5b579f2e",
+      "unchanged": true
+    }
+  },
+  "originalRun": {
+    "wrapper": {
+      "status": "FAIL",
+      "exitCode": 2,
+      "elapsedSeconds": 178.53707639989443,
+      "browserPhase": {
+        "exitCode": 0,
+        "seconds": 178.49390950007364
+      },
+      "wrapPhase": {
+        "exitCode": 2,
+        "seconds": 0.0418225999455899,
+        "failureClass": "required companion absent when wrap phase ran"
+      },
+      "firstBlind8Released": false,
+      "resultSha256": "ede79a378cea16ff94dc6fcc73b9324c3d358d93783409a5b53a78bdaa6d4300"
+    },
+    "parent": {
+      "status": "FAIL",
+      "exitCode": 2,
+      "elapsedSeconds": 179.16172219999999,
+      "predecessorExitCode": 0,
+      "resultSha256": "2992d40922caa6d3dbd1ec2a3c7ffc7edfc8ea8dbcc864e5fe0e32b0dba37682"
+    },
+    "wrapperFailurePreserved": true
+  },
+  "retainedBrowserCapture": {
+    "resultFile": "qualification-development-r3-v2/result.json",
+    "resultSha256": "46c731a9608e17faee18f4a0e8342025d5d02903170ac0d56e1fcc49b96dbfb6",
+    "status": "PASS",
+    "caseCount": 3,
+    "caseErrorCount": 0,
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 1.2082013001199812,
+      "serverStopped": true,
+      "ownedSurvivorCount": 0,
+      "errorCount": 0
+    },
+    "inputAudit": {
+      "status": "PASS",
+      "fileCountBefore": 1575,
+      "fileCountAfter": 1575,
+      "inputSetSha256Before": "d16fda11631019305b80fa419c22f7019ac398e7ab04df6c3c5dead71d078413",
+      "inputSetSha256After": "d16fda11631019305b80fa419c22f7019ac398e7ab04df6c3c5dead71d078413",
+      "sourceSha256Before": "8ff0cc7e5005227d17204d1acf143e892fe2387a19776c4420992625d9f0e5fb",
+      "sourceSha256After": "8ff0cc7e5005227d17204d1acf143e892fe2387a19776c4420992625d9f0e5fb",
+      "webSha256Before": "965b2aeebceeaba6a7af54f78fd3bdea8d3d70c6e308512673b6a05ef3b0245d",
+      "webSha256After": "965b2aeebceeaba6a7af54f78fd3bdea8d3d70c6e308512673b6a05ef3b0245d",
+      "runnerSha256Before": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+      "runnerSha256After": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a"
+    },
+    "cases": [
+      {
+        "name": "development-0",
+        "qualificationRootSeed": "-2230691771308388107",
+        "captureFixtureSeed": 3,
+        "captureFixture": "LEDBOOT",
+        "operationSeconds": 73.80116109992377,
+        "outcome": "PASS",
+        "terminalReached": true,
+        "observedState": "PASS:rb56",
+        "timedOut": false,
+        "reportValid": true,
+        "reportMatches": true,
+        "reportFile": "001-development-0.report.json",
+        "reportBytes": 32596,
+        "reportSha256": "5e35faf0bdcb17dcd6a489d83cae18bc7bfe9bdc7e5a7c1d7e1f2d64196ca0c5",
+        "errorCounts": {
+          "page": 0,
+          "http": 0,
+          "console": 0,
+          "attributeRead": 0,
+          "observer": 0,
+          "listenerCleanup": 0
+        },
+        "observation": {
+          "stateEvents": 2,
+          "compiledScriptsHeld": 1,
+          "currentDocuments": 2,
+          "finalStateReadRequired": true,
+          "terminalScopeVerified": true
+        }
+      },
+      {
+        "name": "development-1",
+        "qualificationRootSeed": "6702341860553104274",
+        "captureFixtureSeed": 3,
+        "captureFixture": "LEDBOOT",
+        "operationSeconds": 65.46560180000961,
+        "outcome": "PASS",
+        "terminalReached": true,
+        "observedState": "PASS:rb56",
+        "timedOut": false,
+        "reportValid": true,
+        "reportMatches": true,
+        "reportFile": "002-development-1.report.json",
+        "reportBytes": 31200,
+        "reportSha256": "9e7632ec8a073fe588437209303f6c0fc5aa87e0749e16d67f8338a6c520ae52",
+        "errorCounts": {
+          "page": 0,
+          "http": 0,
+          "console": 0,
+          "attributeRead": 0,
+          "observer": 0,
+          "listenerCleanup": 0
+        },
+        "observation": {
+          "stateEvents": 2,
+          "compiledScriptsHeld": 1,
+          "currentDocuments": 2,
+          "finalStateReadRequired": true,
+          "terminalScopeVerified": true
+        }
+      },
+      {
+        "name": "development-2",
+        "qualificationRootSeed": "-8360266000248569150",
+        "captureFixtureSeed": 3,
+        "captureFixture": "LEDBOOT",
+        "operationSeconds": 31.46034360001795,
+        "outcome": "PASS",
+        "terminalReached": true,
+        "observedState": "PASS:rb56",
+        "timedOut": false,
+        "reportValid": true,
+        "reportMatches": true,
+        "reportFile": "003-development-2.report.json",
+        "reportBytes": 28340,
+        "reportSha256": "4e538e01c4e45a907a383ad7eb4b5d70ed32823606893b807236244f3337a844",
+        "errorCounts": {
+          "page": 0,
+          "http": 0,
+          "console": 0,
+          "attributeRead": 0,
+          "observer": 0,
+          "listenerCleanup": 0
+        },
+        "observation": {
+          "stateEvents": 2,
+          "compiledScriptsHeld": 1,
+          "currentDocuments": 2,
+          "finalStateReadRequired": true,
+          "terminalScopeVerified": true
+        }
+      }
+    ],
+    "seedNote": "The capture URL seed=3 identifies the LEDBOOT fixture. It is distinct from each qualificationRootSeed listed above."
+  },
+  "postprocess": {
+    "resultFile": "au-normal3-postprocess1-result.json",
+    "resultSha256": "9284e785450aa4b77982788a9406aa14d0c7a23347b90a17cb3e4a0398873e5f",
+    "scriptSha256": "ecfdacdd0add050546c75e3f322e857055a8a725b33535ce432d2cba8afda3d7",
+    "status": "PASS_NORMAL3_FROM_RETAINED_BROWSER_CAPTURE",
+    "elapsedMilliseconds": 4059.1941,
+    "planSha256": "ad0aaca6a7d221535802ac677e98c787c7d8d64d9c3c2e709771da7c2e071668",
+    "originalWrapperStatus": "FAIL",
+    "browserRerun": false,
+    "reducedFile": "qualification-development-r3-v2-reduced.json",
+    "reducedSha256": "8ce67a87da5e52e71509a133401d64a3dbdf0abdab0b8cff2f7397ddcf5f7129",
+    "phases": [
+      {
+        "phase": "before",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stderrEmpty": true,
+        "elapsedMilliseconds": 906.7404,
+        "timeoutMilliseconds": 600000
+      },
+      {
+        "phase": "wrap",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stderrEmpty": true,
+        "elapsedMilliseconds": 1062.6283,
+        "timeoutMilliseconds": 600000
+      },
+      {
+        "phase": "reader",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stderrEmpty": true,
+        "elapsedMilliseconds": 1091.1288,
+        "timeoutMilliseconds": 600000
+      },
+      {
+        "phase": "after",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stderrEmpty": true,
+        "elapsedMilliseconds": 631.2264,
+        "timeoutMilliseconds": 600000
+      }
+    ]
+  },
+  "finiteR12Partition": {
+    "file": "qualification-development-r3-v2-reduced.json",
+    "sha256": "8ce67a87da5e52e71509a133401d64a3dbdf0abdab0b8cff2f7397ddcf5f7129",
+    "status": "PASS_FINITE_R12_PARTITION",
+    "partition": "development",
+    "normalReleaseAcceptance": false,
+    "roots": [
+      {
+        "seed": "-2230691771308388107",
+        "packages": 58,
+        "generationMillis": 72453,
+        "generationWork": 506,
+        "maxUnitMillis": 1362,
+        "operationMillis": 72879,
+        "cleanupMillis": 5,
+        "attempts": 1,
+        "readings": 2,
+        "repairClasses": 5,
+        "captureSha256": "8153a1909940b72983f3154cbb3396cd221440b2835ccebea56d812fe6e09ed6"
+      },
+      {
+        "seed": "6702341860553104274",
+        "packages": 52,
+        "generationMillis": 64225,
+        "generationWork": 503,
+        "maxUnitMillis": 1376,
+        "operationMillis": 64655,
+        "cleanupMillis": 4,
+        "attempts": 1,
+        "readings": 2,
+        "repairClasses": 5,
+        "captureSha256": "dbb24aebd2682bbefc5938808c0c34dd81cebaf57e56f12b79ae80791ebb3927"
+      },
+      {
+        "seed": "-8360266000248569150",
+        "packages": 42,
+        "generationMillis": 30238,
+        "generationWork": 392,
+        "maxUnitMillis": 760,
+        "operationMillis": 30551,
+        "cleanupMillis": 3,
+        "attempts": 1,
+        "readings": 2,
+        "repairClasses": 5,
+        "captureSha256": "23261484b7ffa2f993bad6e216ae32115423f609264ccbc1da5e00d64f610e41"
+      }
+    ]
+  },
+  "lateCompanion": {
+    "file": "wrap_captures_r3_v2.py",
+    "sha256": "180cc07d34d0ae83e966f08625d5ce1901ed6245b2f44cc7ed9457ea87005b21",
+    "copiedAfterOriginalBrowserPassAndWrapFailure": true,
+    "metadataFile": "au-normal3-companion-copy1.json",
+    "metadataSha256": "7c9f5c671eabdd7069eb96a9d64c2b44ab00e159aa4845975b67e99e77f66ab1",
+    "correctionFile": "au-normal3-companion-copy1-correction.json",
+    "correctionSha256": "549ff95dd04cc7807c916596fb83adda8e157e7d0f21a6de0bd50702b2a15876",
+    "originalMetadataPreserved": true,
+    "correctionMarksBrowserActiveAndBeforeWrapClaims": "INCORRECT"
+  },
+  "disposition": {
+    "e06": "FAIL; remains an unresolved acceptance prerequisite",
+    "publication": "HELD",
+    "fullThirtyCaseMatrix": "NOT ESTABLISHED BY THIS PACKET",
+    "twoByThirtyOneMatrix": "NOT ESTABLISHED BY THIS PACKET",
+    "hardProtectedScope": "NOT ESTABLISHED BY THIS PACKET",
+    "q100Qualification": "NOT ESTABLISHED",
+    "normalReleaseAcceptance": "NOT ESTABLISHED",
+    "limitsChanged": false
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "schema": "q100-authored-layout-at-host-review-v1",
+  "reviewedAtUtc": "2026-10-31T14:09:07Z",
+  "repository": {
+    "baseCommit": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "reviewHead": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "branch": "codex/q100-physical-feasibility"
+  },
+  "review": {
+    "mode": "read-only source review",
+    "status": "NO_MATERIAL_BLOCKER_FOUND",
+    "scope": [
+      "scripts/verify-a03-browser.ps1",
+      "scripts/VerifierIsolation.psm1",
+      "tests/contracts/browser-natural-exit-reuse.ps1",
+      "tests/contracts/namespace-census-reparse.ps1"
+    ],
+    "gatesRunByReviewer": false,
+    "testsRunByReviewer": false,
+    "qualificationGranted": false,
+    "protectedData": "HARD data unavailable; not read or run"
+  },
+  "files": [
+    {
+      "path": "scripts/verify-a03-browser.ps1",
+      "statusAtReview": "modified from base",
+      "sha256": "c9f097320ff4ea157e1c4050c49eea93b6feb9521baabed5f79eace87d1075f9",
+      "reviewedLines": [
+        "15",
+        "294-302",
+        "324-357",
+        "374-414",
+        "417-468",
+        "471-545",
+        "547-643",
+        "2441-2459",
+        "2594-2660",
+        "2758-2780"
+      ]
+    },
+    {
+      "path": "scripts/VerifierIsolation.psm1",
+      "statusAtReview": "modified from base",
+      "sha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+      "reviewedLines": [
+        "711-749",
+        "752-770",
+        "11638-11732",
+        "11735-11859",
+        "11982-12072",
+        "12932-13016",
+        "13019-13052",
+        "5422-5501",
+        "14105-14131",
+        "14818-14826"
+      ]
+    },
+    {
+      "path": "tests/contracts/browser-natural-exit-reuse.ps1",
+      "statusAtReview": "untracked new file",
+      "sha256": "9c76e514fc6e00ca5359fe477f6c61f2a6851a308df4882328fdef3d5ecf8440",
+      "reviewedLines": [
+        "247-279",
+        "280-366",
+        "368-432",
+        "434-465",
+        "466-525",
+        "527-625"
+      ]
+    },
+    {
+      "path": "tests/contracts/namespace-census-reparse.ps1",
+      "statusAtReview": "untracked new file",
+      "sha256": "6e7881b68b25d86da8c33e63b4278c8c1a3366096d902c21848e737cb61153b8",
+      "reviewedLines": [
+        "11-18",
+        "152-191",
+        "193-237",
+        "239-283",
+        "284-313"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "area": "natural-exit-proof-cache",
+      "status": "NO_BLOCKER",
+      "details": "The cache is local to one bounded wait and is populated only after a successful terminal natural-exit result whose flags, PID, start ticks, and attestation reference match the retained record. Reuse rechecks exact Record, Attestation, Process references and PID/start ticks; Get-VerifierBrowserDrainAttestation revalidates the scope marker, immutable identity tuple, retained handle, and record binding. The proof itself requires the exact retained handle to have exited and two current native/WMI absence observations; transient views retry and present or unreadable views fail. The caller still performs late-descendant absence, containment-job-empty, profile-quiescence, final-listener-absence, and shared-deadline checks.",
+      "sourceRefs": [
+        "scripts/VerifierIsolation.psm1:11638-11732",
+        "scripts/VerifierIsolation.psm1:11735-11859",
+        "scripts/VerifierIsolation.psm1:11982-12072",
+        "scripts/VerifierIsolation.psm1:12932-13016",
+        "scripts/VerifierIsolation.psm1:14105-14131",
+        "tests/contracts/browser-natural-exit-reuse.ps1:368-432",
+        "tests/contracts/browser-natural-exit-reuse.ps1:434-525"
+      ]
+    },
+    {
+      "area": "route-timing",
+      "status": "NO_BLOCKER",
+      "details": "TraceRouteTiming is opt-in. The default Invoke-Cdp branch retains the ordinary Send-Cdp/Receive-Cdp path, and routeTiming is omitted unless enabled. Timing records are bounded to 64 entries; request records contain IDs, fixed method names, state, phase and elapsed values, while heap samples retain only validated size metrics. Samples use the existing route deadline and do not extend it. The failure handler saves the original ErrorRecord before timing finalization and builds the failure diagnostic from that saved record even if timing finalization fails.",
+      "sourceRefs": [
+        "scripts/verify-a03-browser.ps1:15",
+        "scripts/verify-a03-browser.ps1:294-302",
+        "scripts/verify-a03-browser.ps1:374-414",
+        "scripts/verify-a03-browser.ps1:417-468",
+        "scripts/verify-a03-browser.ps1:547-643",
+        "scripts/verify-a03-browser.ps1:2441-2459",
+        "scripts/verify-a03-browser.ps1:2594-2660",
+        "scripts/verify-a03-browser.ps1:2758-2780"
+      ],
+      "limitsPreserved": [
+        "The existing route deadline assignment and Q100 matrix deadline are not extended by timing instrumentation.",
+        "An opt-in heap sample consumes the route's existing time budget; failed, skipped, or truncated collection is reported as partial or incomplete."
+      ]
+    },
+    {
+      "area": "nonmutable-namespace-census",
+      "status": "NO_BLOCKER",
+      "details": "The module diff removes only the duplicate ValidateTree walk from the nonmutable RunNamespaceRoot-to-RunRoot ownership check. Assert-VerifierPhysicalOwnedPath still validates canonical paths, ancestors, and physical containment; the nonmutable context census retains a full RunRoot reparse-tree scan and profile-tree checks. The new contract covers a descendant junction, a replaced RunRoot junction, and an ancestor namespace junction, with external sentinels checked for preservation.",
+      "sourceRefs": [
+        "scripts/VerifierIsolation.psm1:711-749",
+        "scripts/VerifierIsolation.psm1:5422-5501",
+        "tests/contracts/namespace-census-reparse.ps1:152-191",
+        "tests/contracts/namespace-census-reparse.ps1:193-237",
+        "tests/contracts/namespace-census-reparse.ps1:239-283"
+      ]
+    }
+  ],
+  "limitations": [
+    "The two contract scripts were reviewed but not run by this reviewer.",
+    "This source review grants no Q100 layout, admission, or product qualification.",
+    "No runtime gate, build, or process-state inspection was performed."
+  ],
+  "relatedReferences": [
+    {
+      "path": "docs/task-evidence/Q100/authored-layout-r1/at-current-control1.json",
+      "sha256": "a0ff7c0c765603c443c74eef18094cd06d8f701d30014b3093b7b81a4e8e79b7",
+      "relation": "reference only; no gate rerun or renewed claim"
+    },
+    {
+      "path": "docs/task-evidence/Q100/authored-layout-r1/as-source-review1.json",
+      "sha256": "19088b438ceffff10cf643e80e87c29f16b09a97fbf222a866de5485d7193ca1",
+      "relation": "reference only; no gate rerun or renewed claim"
+    }
+  ]
+}

@@ -1,0 +1,411 @@
+{
+  "schema": "troubleshootjs-q100-au-e06-host-controls-v1",
+  "scope": "Finite host diagnostic and three task-local controls. The observations are limited to this PowerShell host and these wrapper variants; they do not establish a universal PowerShell mechanism or a product fix.",
+  "candidate": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "productionDriverSha256": "c9f097320ff4ea157e1c4050c49eea93b6feb9521baabed5f79eace87d1075f9",
+    "verifierIsolationSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "layoutVersion": 25,
+    "dependencyVersion": 26,
+    "javaOrGwtChanged": false
+  },
+  "closedProfilerDiagnostic": {
+    "reportFile": "diagnostic-report.json",
+    "reportSha256": "57326aac297ca13d294d1c305bacf0f36d76866e6ffff405faf4d9fd793c2f82",
+    "status": "NONQUALIFYING_DIAGNOSTIC",
+    "acceptanceStatus": "NOT_EVALUATED",
+    "capturedRoute": {
+      "status": "PASS",
+      "elapsedMilliseconds": 32911
+    },
+    "pauseAndProfile": {
+      "stopResponseElapsedMilliseconds": 33249,
+      "stopResponseReceived": true,
+      "profileWriteElapsedMilliseconds": 206,
+      "profileWriteBeforeDeadline": true,
+      "routeCompletedBeforeStopResponse": true,
+      "originalStallCaptured": false,
+      "cureEstablished": false,
+      "debuggerPauseResponse": true,
+      "debuggerPauseEvent": true,
+      "debuggerResumeResponse": true,
+      "debuggerResumeEvent": true,
+      "debuggerResumeConfirmed": true,
+      "recoveryRequired": false
+    },
+    "cpuProfile": {
+      "status": "CAPTURED",
+      "nodeCount": 5957,
+      "sampleCount": 4270,
+      "durationMicroseconds": 32875456,
+      "sha256": "d6e111b1ba27b4c9fa5d49f4b92e412161a1dd16719a815280f7f8d1b8e65743",
+      "noJavaResolutionClaim": true
+    },
+    "routeTiming": {
+      "status": "PARTIAL",
+      "collectionStatus": "PARTIAL",
+      "cdpCallCount": 90,
+      "droppedCallCount": 26,
+      "perRouteLimit": 64,
+      "routeCount": 1
+    },
+    "cleanup": {
+      "success": true,
+      "status": "PASS",
+      "resourceSuccess": true,
+      "observerSuccess": true,
+      "elapsedMilliseconds": 47126,
+      "limitMilliseconds": 120000,
+      "browserShutdownMilliseconds": 8157,
+      "serializedErrorsArrayCount": 1,
+      "serializedErrorEntryIsEmptyObject": true,
+      "errorEntryHasDiagnosticFields": false,
+      "interpretation": "The report records one empty object and no error details; it is not represented as zero errors or independently reconstructed."
+    }
+  },
+  "profileAnalysis": {
+    "hotspotReportFile": "profile-hotspots-v2.json",
+    "hotspotReportSha256": "0f32c1177465dc0396603d2dd2cfbe35a227dd9185b7c1a28f0b5c9980ad32f7",
+    "bundleAttributionFile": "bundle-attribution-v3.json",
+    "bundleAttributionSha256": "10b85dc6022cc80c14cf0f7656d7e48f07d9783687822e8359b7d2ac504a6127",
+    "readmeFile": "README-v3.md",
+    "readmeSha256": "a14a3c1b95b43f9f8bc3fe48d93727879c165bba0dc62ec92640fe2e3728b4d2",
+    "rawProfileSha256": "d6e111b1ba27b4c9fa5d49f4b92e412161a1dd16719a815280f7f8d1b8e65743",
+    "profileSummary": {
+      "nodeCount": 5957,
+      "sampleCount": 4270,
+      "durationMicroseconds": 32875456,
+      "sampledJavaScriptEventsAnyFrame": 3969,
+      "sampledJavaScriptLeafEvents": 3936,
+      "sampledJavaScriptLeafTimeMicroseconds": 29558447,
+      "pureNonJavaScriptEvents": 301,
+      "pureNonJavaScriptTimeMicroseconds": 3006275,
+      "treeValidation": "PASS",
+      "scriptSummaryCount": 4
+    },
+    "selectedAsset": {
+      "cacheName": "57568FB031102F1FF6163ABC9631CE03.cache.js",
+      "claimLevel": "UNIQUE_COMPILED_JAVASCRIPT_ASSET_ONLY",
+      "bytes": 3611863,
+      "sha256": "e8c07ec966acddf2197b7e13029a0f5363ae3aac233e022d5f515db66d65d96a",
+      "decodedStringSegments": 122,
+      "frameLocations": 12,
+      "exactLineMatches": 12,
+      "lineAndCallColumnMatches": 12
+    },
+    "candidateComparison": {
+      "rows": 6,
+      "rowsWithTwelveExactMatches": 1,
+      "rowsWithZeroExactMatches": 5,
+      "reportCountUsed": "Exact serialized JSON counts: six distinct rows, one with twelve exact matches and five with zero."
+    },
+    "javaMethodMapping": "NOT_CLAIMED",
+    "rawProfileSamplesEmbedded": false
+  },
+  "controls": [
+    {
+      "id": "direct-no-profiler",
+      "resultFile": "control-result.json",
+      "resultSha256": "451aa881d9e8e8d0632a2c592ac5fbc2d6a12d6aa79b5c1ffa6df402f1395a36",
+      "controlStatus": "NONQUALIFYING_CONTROL",
+      "acceptanceMatrix": "NOT_EVALUATED",
+      "route": {
+        "status": "PASS",
+        "elapsedMilliseconds": 32312,
+        "originalRouteCount": 10,
+        "evaluatedRouteCount": 1,
+        "notEvaluatedRouteCount": 9,
+        "visibilityState": "visible",
+        "hidden": false,
+        "hasFocus": false
+      },
+      "routeTimingStatus": "PARTIAL",
+      "cleanup": {
+        "success": true,
+        "status": "PASS",
+        "resourceSuccess": true,
+        "elapsedMilliseconds": 45257,
+        "limitMilliseconds": 120000
+      },
+      "passiveJavascriptDialogs": {
+        "count": 0,
+        "events": 0
+      },
+      "intentionalNonqualifyingExitCode": 2,
+      "wrapperAndMetadata": [
+        {
+          "file": "verify-e06-noprofiler-control.ps1",
+          "sha256": "a2afd1dec3669c15651c011b9488bcf509e8df10482c18aa863c7de5a36a3319"
+        },
+        {
+          "file": "spec.json",
+          "sha256": "bbdd35ad52143b94e76c65149288a71795efc290c1aa59c2ce4f70a1ce19ab71"
+        }
+      ]
+    },
+    {
+      "id": "nested-transcribed-wrapper",
+      "resultFile": "control-result.json",
+      "resultSha256": "4a735de228ce965d7b8f0d76e4ecd42daba08ab6198fc8e48925377e17761d49",
+      "controlStatus": "NONQUALIFYING_CONTROL_FAILED",
+      "acceptanceMatrix": "NOT_EVALUATED",
+      "route": {
+        "status": "NOT_REACHED",
+        "routeCount": 0,
+        "routeAttemptElapsedMilliseconds": 90017,
+        "reportRouteTimingStatus": "INCOMPLETE",
+        "originalRouteCount": 10,
+        "evaluatedRouteCount": 0,
+        "notEvaluatedRouteCount": 9,
+        "failedOperationElapsedMilliseconds": 90022
+      },
+      "cleanup": {
+        "success": true,
+        "status": "PASS",
+        "resourceSuccess": true,
+        "elapsedMilliseconds": 51076,
+        "limitMilliseconds": 120000
+      },
+      "passiveJavascriptDialogs": {
+        "count": 0,
+        "events": 0
+      },
+      "outerInvocation": {
+        "exitCode": 2,
+        "elapsedSeconds": 159.5251144,
+        "launcherMetadataSha256": "92431fdd0ef7cfbf0e55e07c51b36a3441862681c7ce47f08a1a754d3f420d77",
+        "resultMetadataSha256": "a12acbb64ef4907a1b0e5652be83e3679e37078db44944e6d4a5671a3dac1f33"
+      },
+      "wrapperAndMetadata": [
+        {
+          "file": "run-original-wrapper-source.ps1",
+          "sha256": "91f72323ab9ba86acf617ee288261eb0561cf1eb17355e3ba6fa9b2c72106c1e"
+        },
+        {
+          "file": "run-wrapped-control.ps1",
+          "sha256": "e7fcb2813e14b7ebd337ec60ddfff370fe463376105270360fcbc44bb3e45f28"
+        },
+        {
+          "file": "verify-e06-noprofiler-control.ps1",
+          "sha256": "a2afd1dec3669c15651c011b9488bcf509e8df10482c18aa863c7de5a36a3319"
+        },
+        {
+          "file": "ao-compiled-e06state-1-launcher.json",
+          "sha256": "92431fdd0ef7cfbf0e55e07c51b36a3441862681c7ce47f08a1a754d3f420d77"
+        },
+        {
+          "file": "ao-compiled-e06state-1-result.json",
+          "sha256": "a12acbb64ef4907a1b0e5652be83e3679e37078db44944e6d4a5671a3dac1f33"
+        }
+      ]
+    },
+    {
+      "id": "nested-no-transcript-wrapper",
+      "resultFile": "control-result.json",
+      "resultSha256": "9ae9b20e291ce3f32c3917e052acd579f33868d3f5d510dece7d38cbd0fc8e30",
+      "controlStatus": "NONQUALIFYING_CONTROL",
+      "acceptanceMatrix": "NOT_EVALUATED",
+      "route": {
+        "status": "PASS",
+        "elapsedMilliseconds": 32119,
+        "originalRouteCount": 10,
+        "evaluatedRouteCount": 1,
+        "notEvaluatedRouteCount": 9,
+        "visibilityState": "visible",
+        "hidden": false,
+        "hasFocus": false
+      },
+      "routeTimingStatus": "PARTIAL",
+      "cleanup": {
+        "success": true,
+        "status": "PASS",
+        "resourceSuccess": true,
+        "elapsedMilliseconds": 43708,
+        "limitMilliseconds": 120000
+      },
+      "passiveJavascriptDialogs": {
+        "count": 0,
+        "events": 0
+      },
+      "intentionalNonqualifyingExitCode": 2,
+      "outerInvocation": {
+        "exitCode": 2,
+        "elapsedSeconds": 93.4686579,
+        "launcherMetadataSha256": "81e1861c0078c79605f3cbf1017496fd11ff1c67fe6d52e939220cab138f6339",
+        "resultMetadataSha256": "7879ce68c4f7823478d3e328339555d8913366aeb843a6612172d613053a9541"
+      },
+      "wrapperAndMetadata": [
+        {
+          "file": "run-nested-notranscript-control.ps1",
+          "sha256": "306a48329ee6a7324eb4c577663334cc33f2e05d97bb273386c1c7abe46359ef"
+        },
+        {
+          "file": "run-wrapped-transcribed-source.ps1",
+          "sha256": "e7fcb2813e14b7ebd337ec60ddfff370fe463376105270360fcbc44bb3e45f28"
+        },
+        {
+          "file": "verify-e06-noprofiler-control.ps1",
+          "sha256": "a2afd1dec3669c15651c011b9488bcf509e8df10482c18aa863c7de5a36a3319"
+        },
+        {
+          "file": "ao-compiled-e06state-1-launcher.json",
+          "sha256": "81e1861c0078c79605f3cbf1017496fd11ff1c67fe6d52e939220cab138f6339"
+        },
+        {
+          "file": "ao-compiled-e06state-1-result.json",
+          "sha256": "7879ce68c4f7823478d3e328339555d8913366aeb843a6612172d613053a9541"
+        }
+      ]
+    }
+  ],
+  "controlEquivalence": {
+    "verifierRunnerSha256": "a2afd1dec3669c15651c011b9488bcf509e8df10482c18aa863c7de5a36a3319",
+    "verifierIsolationSha256": "8A7EFF1639E973E6E4ADE9A72716274FCD95CAECE0074F19EDE72817D01F2E77",
+    "sourceDigestFieldCount": 7,
+    "allSevenSourceDigestMapsEqualAcrossClosedDiagnosticAndControls": true,
+    "canonicalSourceDigestMapSha256": "46ba1b7897ffc3bf6f7b79c6a98191168ab4133577eb9d25eaf4d765802a08e0",
+    "previewIdentityDigestValuesEqualAcrossControls": true,
+    "wrappedTranscriptCommands": {
+      "StartTranscriptPresent": true,
+      "StopTranscriptPresent": true
+    },
+    "nestedNoTranscriptCommands": {
+      "StartTranscriptPresent": false,
+      "StopTranscriptPresent": false
+    },
+    "wrapperSourceHashesDiffer": true,
+    "interpretation": "The verifier and seven reported source digests stayed equal. The host reports reproduce a difference between the transcribed and no-transcript wrapper variants; they do not prove a universal mechanism or a production cause."
+  },
+  "retainedArtifacts": {
+    "outputLogContentsEmbedded": false,
+    "outputAndMetadataRetained": true,
+    "scratchTranscriptRetired": true,
+    "rawProfileSamplesEmbedded": false,
+    "priorScopePackets": [
+      "au-profiler-capability1.json",
+      "au-normal3-final1.json"
+    ]
+  },
+  "disposition": {
+    "activeE06Gate": "CLOSED; this section records the maintained E06State PASS; no result is inferred for other gates.",
+    "e06Acceptance": "PASS for this maintained E06State run only; not an overall Q100 or publication result",
+    "q100Qualification": "NOT ESTABLISHED BY THIS PACKET",
+    "publication": "PENDING_ROOT_FINAL_REVIEW_AND_NORMAL_PUBLICATION",
+    "globalLoggingOrSecuritySettingsChanged": false
+  },
+  "maintainedE06Run": {
+    "classification": "REQUIRED_MAINTAINED_E06STATE_GATE",
+    "resultFile": "au-compiled-e06state-1-result.json",
+    "resultSha256": "3c10def40ec8200cb4b2493d35f9909d2bbdb54d8c1a4325eb03c4883faa7149",
+    "outerExitCode": 0,
+    "outerElapsedSeconds": 417.60867429999996,
+    "reportFile": "au-compiled-e06state-1.json",
+    "reportSha256": "3950fa0bf786e9bdf812d4026042bd316e625ae7417fff973dc2bc57eebae195",
+    "reportGate": "E06State",
+    "reportStatus": "PASS",
+    "headed": false,
+    "routeCount": 10,
+    "routeStatuses": [
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS"
+    ],
+    "routeReadinessSummary": {
+      "workbenchNavigationReadyCount": 0,
+      "programReadyCount": 0,
+      "retestCustomerReadyCount": 0,
+      "boardPowerReadyCount": 10
+    },
+    "operation": {
+      "elapsedMilliseconds": 356878,
+      "limitMilliseconds": 6000000
+    },
+    "cleanup": {
+      "success": true,
+      "status": "PASS",
+      "resourceSuccess": true,
+      "elapsedMilliseconds": 60611,
+      "limitMilliseconds": 120000,
+      "serializedErrorsArrayCount": 1,
+      "serializedErrorEntryIsEmptyObject": true,
+      "errorEntryHasDiagnosticFields": false,
+      "interpretation": "The report contains one empty object with no error details; do not relabel the serialized array as empty.",
+      "browserShutdownTotalMilliseconds": 9333,
+      "browserShutdownLimitMilliseconds": 15000
+    },
+    "sourceDigestFields": 7,
+    "sourceDigestMapSha256": "46ba1b7897ffc3bf6f7b79c6a98191168ab4133577eb9d25eaf4d765802a08e0",
+    "sourceDigestMapMatchesDiagnosticAndControls": true,
+    "sourceDigests": {
+      "verifierIsolation": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+      "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+      "sourceDigest": "0cbe64a449e761ce25194c017fa0bc32f0539d598d4cc4e76a71062ede15e059",
+      "scriptDigest": "e9799a7f641bff597eabd8b70da11f8026ad6c3a764d5d06d44c0f36b1a0593c",
+      "webDigest": "cdf4eeb48553ed65fd76b1d423b8efee2eac1f9968750eeb4c22c7c767d1d61c",
+      "executionDigest": "c9d9120f51804ef4e36e97f095a45679cfc5e4fdf82cbec01e8ccb7530e0e46c",
+      "executionFileCount": 1597
+    },
+    "executionMetadata": {
+      "transcription": false,
+      "launcherFile": "au-compiled-e06state-1-launcher.json",
+      "launcherSha256": "c6f76c982ce5837a67bdca6f98f81c3634856ce74c5d241f2866ea9ca6438e35",
+      "executableBasename": "powershell.exe",
+      "processIdRecorded": true,
+      "creationTimeRecorded": true,
+      "taskIdentityRecorded": true,
+      "launcherScript": "run-au-compiled-no-transcript.ps1",
+      "launcherScriptSha256": "86eb101568c011dac86bcbeadba07f61edc12c7f52f43a55473507e52e8bc9e8"
+    },
+    "earlierNonqualifyingDiagnosticAndControlsPreserved": true,
+    "canonicalRouteResults": [
+      {
+        "name": "e06-late-callback",
+        "status": "PASS"
+      },
+      {
+        "name": "e06-event-failure",
+        "status": "PASS"
+      },
+      {
+        "name": "q100-healthy-SHARED_HYSTERETIC_LINEAR-100us",
+        "status": "PASS"
+      },
+      {
+        "name": "q100-healthy-SHARED_HYSTERETIC_LINEAR-50us",
+        "status": "PASS"
+      },
+      {
+        "name": "q100-healthy-SEPARATE_DIRECT_SWITCHING-100us",
+        "status": "PASS"
+      },
+      {
+        "name": "q100-healthy-SEPARATE_DIRECT_SWITCHING-50us",
+        "status": "PASS"
+      },
+      {
+        "name": "q100-fault-SHARED_HYSTERETIC_LINEAR-RENAC_RESISTANCE",
+        "status": "PASS"
+      },
+      {
+        "name": "q100-fault-SHARED_HYSTERETIC_LINEAR-CIN33_SHUNT",
+        "status": "PASS"
+      },
+      {
+        "name": "q100-fault-SEPARATE_DIRECT_SWITCHING-RENAC_RESISTANCE",
+        "status": "PASS"
+      },
+      {
+        "name": "q100-fault-SEPARATE_DIRECT_SWITCHING-CIN33_SHUNT",
+        "status": "PASS"
+      }
+    ]
+  }
+}

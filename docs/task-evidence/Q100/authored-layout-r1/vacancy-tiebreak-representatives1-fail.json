@@ -1,0 +1,186 @@
+{
+  "schema": "troubleshootjs-vacancy-tiebreak-representatives-failure-v1",
+  "status": "FAIL_INCOMPLETE_REPRESENTATIVE_RUN",
+  "scope": "Scratch-only V vacancy-tiebreak representative cohort; retained failure, not adoption or qualification.",
+  "run": {
+    "source": "current",
+    "cohortId": "SAVED_11_12_REP",
+    "suite": "P07GeometryEpochDiagnosticContractTest",
+    "treatment": "VACANCY_TIEBREAK_SCRATCH_ONLY",
+    "helperExitCode": 2,
+    "nativeChildExitCode": 1,
+    "helperElapsedSeconds": 45.2077214,
+    "nativeChildLimitMs": 180000,
+    "outerWatchdogMs": 600000,
+    "terminationProven": true,
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "inputCount": 1059,
+    "inputRevision": 3,
+    "sourceSnapshotRevision": 1,
+    "inputPinsSha256": "d423fda86dacacf57507db01b21f0045ebaecf5302e912df2118b90ae17c6cdb",
+    "baseEpochLabelsNotAdopted": true,
+    "cleanup": {
+      "status": "PASS",
+      "terminationProven": true,
+      "inputAudit": "PASS_BEFORE_AND_AFTER",
+      "elapsedSeconds": null,
+      "timing": "Cleanup-only duration not separately reported.",
+      "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+      "evidenceSource": "Captured console cleanup marker; separate cleanup duration not reported."
+    }
+  },
+  "caseProgress": {
+    "plannedCases": 12,
+    "completedCases": 5,
+    "failedNextCase": {
+      "profile": 11,
+      "rootSeed": "42",
+      "failureKind": "ASSERTION",
+      "message": "vacancy probes improve the frozen10 protected empty rectangle"
+    },
+    "failedCases": 1,
+    "casesAfterFailureNotRun": 6,
+    "includesAllVersion12Representatives": true,
+    "caseCensusComplete": false,
+    "successSummaryProduced": false,
+    "receiptProduced": false
+  },
+  "failedObservation": {
+    "auxiliaryWhitespaceSCrowArea": 725400,
+    "strictProtectedEmptyRectangleArea": 327600,
+    "comparison": "The measured protected empty rectangle area 725400 violates the retained requirement area < 327600.",
+    "interpretation": "The retained representative-purpose assertion failed; these values are preserved as observations, not converted into an acceptance threshold."
+  },
+  "receipt": {
+    "present": false,
+    "status": "NOT_EMITTED",
+    "reason": "The native child failed before a completed case census or final success receipt."
+  },
+  "sourceBinding": {
+    "sourceSealFile": "saved-profile-vacancy-tiebreak-inputs-sealed1.json",
+    "sourceSealSha256": "d3e7afddd8cc9a5340dde9728a3b14c03567572d28333b1e88aec3e01df083ab",
+    "sourceCandidate": {
+      "branch": "codex/q100-physical-feasibility",
+      "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9"
+    },
+    "variant": "PRIMARY_MEDIUM_PLACEMENT_SCORE_WITH_VACANCY_AS_SECONDARY_TIEBREAK",
+    "parentSnapshot": "saved-profile-corrected-inputs-1",
+    "parentInputPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+    "parentInputCount": 1059,
+    "variantSnapshot": "saved-profile-vacancy-tiebreak-inputs-1",
+    "variantInputPinsFile": "saved-profile-vacancy-tiebreak-sealed-pins.json",
+    "variantInputPinsSha256": "d423fda86dacacf57507db01b21f0045ebaecf5302e912df2118b90ae17c6cdb",
+    "variantInputCount": 1059,
+    "changedInputCount": 1,
+    "unchangedInputCount": 1058,
+    "changedSource": {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+      "bytesBefore": 115662,
+      "sha256Before": "f30032aeec5dc29d5866fa64d2003fd9ea20f80857bbb156d95c4072e6b03d0c",
+      "bytesAfter": 116254,
+      "sha256After": "550341584b7a6c167e310857da0b5db3d8f20487da65a65ed48cf3514d74822c",
+      "changedMethod": "mediumPlace"
+    },
+    "baseLayoutVersion": 24,
+    "baseDependencyEpoch": "tsj-generation-dependencies-v25",
+    "baseEpochLabelsAdopted": false,
+    "copyAndChangeAudit": {
+      "parentPinsHashVerifiedBeforeAndAfter": true,
+      "parentSnapshotPinnedInputsVerifiedBeforeCopy": true,
+      "copiedInputsHashVerified": true,
+      "destinationExactMembership": true,
+      "destinationReparsePoints": 0,
+      "nonPlannerInputsByteIdentical": true,
+      "sourceAndDestinationSeparateDirectories": true,
+      "placementWorkRecounted": false,
+      "trialOrderChanged": false,
+      "plannerCounterOrCapChanged": false,
+      "extraPlacementCandidates": false,
+      "extraRoutingCalls": false,
+      "historicalBoundsEvaluated": false
+    }
+  },
+  "declaredPolicy": {
+    "status": "SCRATCH_ONLY_NOT_ADOPTED",
+    "primaryRule": "Select the legal trial with the lowest unchanged local placement score including support span; vacancy advice breaks exact primary ties.",
+    "changedMethod": "mediumPlace",
+    "noAdditionalTrials": true,
+    "noAdditionalRoutingCalls": true,
+    "trialOrderChanged": false,
+    "plannerCounterOrCapChanged": false,
+    "placementWorkRecounted": false,
+    "productionSourceAdopted": false,
+    "reviewNote": "Source inspection found no implementation bug; this representative experiment failed its retained purpose assertion."
+  },
+  "separateHoldoutEvidence": {
+    "file": "vacancy-tiebreak-holdouts1.json",
+    "sha256": "e2915c64fdfcf49fb683682fb89647f33a85f36efa8b99a1991a7afed3045e38",
+    "bytes": 24399,
+    "nativeStatus": "PASS",
+    "cases": 12,
+    "scope": "SCRATCH_VACANCY_TIEBREAK_HOLDOUT_OBSERVATION_AND_COMPARATIVE_BOUNDS_ONLY; NOT_PRODUCTION_ADOPTION_OR_QUALIFICATION",
+    "adoption": false,
+    "qualification": false,
+    "relationship": "Separate 12-case holdout PASS; it does not replace this representative FAIL or justify production adoption."
+  },
+  "rawArtifacts": [
+    {
+      "file": "saved-profile-current-11-12-rep-1-result.json",
+      "bytes": 913,
+      "sha256": "a8a127fcff8019a5613789abf53f32a25f95c1da0fff39183f7d01f88fdfd739"
+    },
+    {
+      "file": "saved-profile-current-11-12-rep-1-console.txt",
+      "bytes": 2751614,
+      "sha256": "eb08675f7853bf3b025e8cf84e4d40b70db74b09eaff16f260e99548e7c6b03b"
+    },
+    {
+      "file": "saved-profile-current-11-12-rep-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "saved-profile-current-11-12-rep-1-launcher.json",
+      "bytes": 275,
+      "sha256": "702012d8d2a081dbec8f565311fc972d754b3d62beb432c7e4f449987b794fd8"
+    },
+    {
+      "file": "saved-profile-vacancy-tiebreak-inputs-sealed1.json",
+      "bytes": 1842,
+      "sha256": "d3e7afddd8cc9a5340dde9728a3b14c03567572d28333b1e88aec3e01df083ab"
+    },
+    {
+      "file": "saved-profile-vacancy-tiebreak-sealed-pins.json",
+      "bytes": 204437,
+      "sha256": "d423fda86dacacf57507db01b21f0045ebaecf5302e912df2118b90ae17c6cdb"
+    },
+    {
+      "file": "saved-profile-corrected-v1-sealed-pins.json",
+      "bytes": 199140,
+      "sha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717"
+    },
+    {
+      "file": "run-saved-profile-vacancy-tiebreak.ps1",
+      "bytes": 4753,
+      "sha256": "5f50cd10b28c61d0106873bb2a7fc4a479bd528dd0d2e355eb3137f568d646fe"
+    },
+    {
+      "file": "prepare-saved-profile-vacancy-tiebreak.ps1",
+      "bytes": 13374,
+      "sha256": "c7865527aaa3d75e77999cbb22c51fe49b35ac0abf08d9c11bb0824ffa02f6d4"
+    }
+  ],
+  "limitations": [
+    "Of 12 representative cases, five completed and version 11 seed 42 failed the whitespace assertion; the six version 12 cases were not run.",
+    "There is no sixth-case completion, complete cohort summary, or success receipt for this run.",
+    "The separate holdout PASS is distinct and does not qualify or justify adoption of V.",
+    "No production source adoption, expected-metric change, automatic golden seal, full saved-profile transition acceptance, or Q100 playability claim is made."
+  ],
+  "sanitization": {
+    "rawConsoleContentsEmbedded": false,
+    "rawLogContentsEmbedded": false,
+    "absoluteMachinePathsIncluded": false,
+    "processIdentifiersIncluded": false,
+    "receipt": "Absent; not synthesized."
+  }
+}

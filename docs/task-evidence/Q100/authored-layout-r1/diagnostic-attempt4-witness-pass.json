@@ -1,0 +1,432 @@
+{
+  "protocol": "rb100-placement-diagnostic-reader-v1",
+  "status": "PASS_OBSERVATION_ONLY",
+  "scope": "OBSERVATIONAL_FIXED_ATTEMPT_ONLY",
+  "layoutQualification": false,
+  "receiptSha256": "1f87a884248c0e25f4aae81c7c2182e20263f29dfe9b5197af528fbc126fa8ce",
+  "readerSha256": "48b93f9a1383f614e56f172c8b59608732ec07d12d9e808e9b703edf9143083d",
+  "negativeCanaries": 9,
+  "summary": {
+    "status": "PASS",
+    "cases": 3,
+    "authoredVariants": 2,
+    "control": "MEDIUM_GENERIC_EDGE_REGION_20_PART",
+    "seed": "-6587958367974952701",
+    "candidate": 79,
+    "assertions": 5349,
+    "suiteMs": 4122,
+    "scope": "OBSERVATIONAL_FIXED_ATTEMPT_ONLY"
+  },
+  "cases": [
+    {
+      "status": "PASS",
+      "facts": {
+        "fixture": "AUTHORED_RB100",
+        "subject": "SHARED_HYSTERETIC_LINEAR",
+        "seed": "-6587958367974952701",
+        "candidate": 79,
+        "components": 100,
+        "pads": 246,
+        "nets": 59,
+        "nullOutcome": "PLACEMENT_MEDIUM_COMPONENT_PACKING",
+        "observedOutcome": "PLACEMENT_MEDIUM_COMPONENT_PACKING",
+        "nullGeometryKey": "NOT_AVAILABLE",
+        "observedGeometryKey": "NOT_AVAILABLE",
+        "retryGeometryKey": "NOT_AVAILABLE",
+        "firstFitOutcomeCount": 38772,
+        "firstFitOutcomes": {
+          "outline": 0,
+          "accessEnvelopeOverlap": 7420,
+          "interDomainBarrier": 217,
+          "globalCorridor": 28769,
+          "accepted": 2366
+        },
+        "failureSnapshot": {
+          "componentId": "UAC",
+          "domainId": "PRIMARY",
+          "regionId": "circuit",
+          "outline": {
+            "x": 20,
+            "y": 20,
+            "width": 12440,
+            "height": 4730
+          },
+          "gridBounds": {
+            "minOriginX": 70,
+            "maxOriginX": 11990,
+            "minOriginY": 60,
+            "maxOriginY": 4400
+          },
+          "placedCount": 44,
+          "evaluationCount": 32717,
+          "planEvaluationCount": 38772,
+          "firstFitCauseCounts": {
+            "outline": 0,
+            "accessEnvelopeOverlap": 4679,
+            "interDomainBarrier": 208,
+            "globalCorridor": 27830,
+            "accepted": 0
+          },
+          "firstGlobalCorridorWitness": {
+            "barrier": {
+              "firstDomain": "PRIMARY",
+              "secondDomain": "SECONDARY",
+              "clearance": 80
+            },
+            "trial": {
+              "componentId": "UAC",
+              "geometryId": "ISOLATED_CONVERTER_7",
+              "geometryVariantKey": "DEFAULT",
+              "geometryTransformKey": "IDENTITY",
+              "x": 2520,
+              "y": 1610,
+              "rotation": "DEG_0",
+              "side": "TOP"
+            },
+            "trialDomainCourtyards": {
+              "first": {
+                "domainId": "PRIMARY",
+                "present": true,
+                "x": 2530,
+                "y": 1620,
+                "width": 105,
+                "height": 310,
+                "extremaComponents": {
+                  "minX": "UAC",
+                  "maxX": "UAC",
+                  "minY": "UAC",
+                  "maxY": "UAC"
+                }
+              },
+              "second": {
+                "domainId": "SECONDARY",
+                "present": true,
+                "x": 2825,
+                "y": 1620,
+                "width": 105,
+                "height": 310,
+                "extremaComponents": {
+                  "minX": "UAC",
+                  "maxX": "UAC",
+                  "minY": "UAC",
+                  "maxY": "UAC"
+                }
+              }
+            },
+            "preTrialAggregateBounds": {
+              "first": {
+                "domainId": "PRIMARY",
+                "present": true,
+                "x": 94,
+                "y": 2784,
+                "width": 594,
+                "height": 142,
+                "extremaComponents": {
+                  "minX": "JAC",
+                  "maxX": "F1",
+                  "minY": "JAC",
+                  "maxY": "JAC"
+                }
+              },
+              "second": {
+                "domainId": "SECONDARY",
+                "present": true,
+                "x": 55,
+                "y": 75,
+                "width": 12331,
+                "height": 2591,
+                "extremaComponents": {
+                  "minX": "UMON",
+                  "maxX": "JLOAD",
+                  "minY": "UMON",
+                  "maxY": "JSC"
+                }
+              }
+            },
+            "postUnionAggregateBounds": {
+              "first": {
+                "domainId": "PRIMARY",
+                "present": true,
+                "x": 94,
+                "y": 1620,
+                "width": 2541,
+                "height": 1306,
+                "extremaComponents": {
+                  "minX": "JAC",
+                  "maxX": "UAC",
+                  "minY": "UAC",
+                  "maxY": "JAC"
+                }
+              },
+              "second": {
+                "domainId": "SECONDARY",
+                "present": true,
+                "x": 55,
+                "y": 75,
+                "width": 12331,
+                "height": 2591,
+                "extremaComponents": {
+                  "minX": "UMON",
+                  "maxX": "JLOAD",
+                  "minY": "UMON",
+                  "maxY": "JSC"
+                }
+              }
+            },
+            "signedMargins": {
+              "meaning": "positive=clearance-shortfall; zero-or-negative=satisfies-orientation",
+              "firstToSecondXMargin": 2660,
+              "secondToFirstXMargin": 12372,
+              "firstToSecondYMargin": 2931,
+              "secondToFirstYMargin": 1126
+            }
+          }
+        },
+        "callbackExceptionPropagated": false,
+        "callbackAbortCallbacks": 0
+      },
+      "phase": "FINAL_REPORT_PREPARATION",
+      "operationMs": 2384,
+      "cleanupMs": 1,
+      "cleanupStatus": "PASS",
+      "workUnits": 11,
+      "maxUnitMs": 872,
+      "failurePhase": "",
+      "failureType": "none",
+      "failure": "",
+      "cleanupFailureType": "none",
+      "cleanupFailure": "",
+      "scope": "OBSERVATIONAL_FIXED_ATTEMPT_ONLY"
+    },
+    {
+      "status": "PASS",
+      "facts": {
+        "fixture": "AUTHORED_RB100",
+        "subject": "SEPARATE_DIRECT_SWITCHING",
+        "seed": "-6587958367974952701",
+        "candidate": 79,
+        "components": 100,
+        "pads": 246,
+        "nets": 60,
+        "nullOutcome": "PLACEMENT_MEDIUM_COMPONENT_PACKING",
+        "observedOutcome": "PLACEMENT_MEDIUM_COMPONENT_PACKING",
+        "nullGeometryKey": "NOT_AVAILABLE",
+        "observedGeometryKey": "NOT_AVAILABLE",
+        "retryGeometryKey": "NOT_AVAILABLE",
+        "firstFitOutcomeCount": 46421,
+        "firstFitOutcomes": {
+          "outline": 0,
+          "accessEnvelopeOverlap": 7963,
+          "interDomainBarrier": 228,
+          "globalCorridor": 35548,
+          "accepted": 2682
+        },
+        "failureSnapshot": {
+          "componentId": "UAC",
+          "domainId": "PRIMARY",
+          "regionId": "circuit",
+          "outline": {
+            "x": 20,
+            "y": 20,
+            "width": 12440,
+            "height": 4730
+          },
+          "gridBounds": {
+            "minOriginX": 70,
+            "maxOriginX": 11990,
+            "minOriginY": 60,
+            "maxOriginY": 4400
+          },
+          "placedCount": 50,
+          "evaluationCount": 32717,
+          "planEvaluationCount": 46421,
+          "firstFitCauseCounts": {
+            "outline": 0,
+            "accessEnvelopeOverlap": 4807,
+            "interDomainBarrier": 219,
+            "globalCorridor": 27691,
+            "accepted": 0
+          },
+          "firstGlobalCorridorWitness": {
+            "barrier": {
+              "firstDomain": "PRIMARY",
+              "secondDomain": "SECONDARY",
+              "clearance": 80
+            },
+            "trial": {
+              "componentId": "UAC",
+              "geometryId": "ISOLATED_CONVERTER_7",
+              "geometryVariantKey": "DEFAULT",
+              "geometryTransformKey": "IDENTITY",
+              "x": 2910,
+              "y": 1580,
+              "rotation": "DEG_0",
+              "side": "TOP"
+            },
+            "trialDomainCourtyards": {
+              "first": {
+                "domainId": "PRIMARY",
+                "present": true,
+                "x": 2920,
+                "y": 1590,
+                "width": 105,
+                "height": 310,
+                "extremaComponents": {
+                  "minX": "UAC",
+                  "maxX": "UAC",
+                  "minY": "UAC",
+                  "maxY": "UAC"
+                }
+              },
+              "second": {
+                "domainId": "SECONDARY",
+                "present": true,
+                "x": 3215,
+                "y": 1590,
+                "width": 105,
+                "height": 310,
+                "extremaComponents": {
+                  "minX": "UAC",
+                  "maxX": "UAC",
+                  "minY": "UAC",
+                  "maxY": "UAC"
+                }
+              }
+            },
+            "preTrialAggregateBounds": {
+              "first": {
+                "domainId": "PRIMARY",
+                "present": true,
+                "x": 94,
+                "y": 2784,
+                "width": 594,
+                "height": 142,
+                "extremaComponents": {
+                  "minX": "JAC",
+                  "maxX": "F1",
+                  "minY": "JAC",
+                  "maxY": "JAC"
+                }
+              },
+              "second": {
+                "domainId": "SECONDARY",
+                "present": true,
+                "x": 92,
+                "y": 75,
+                "width": 12294,
+                "height": 2591,
+                "extremaComponents": {
+                  "minX": "ROUT",
+                  "maxX": "JLOAD",
+                  "minY": "ROUT",
+                  "maxY": "JSC"
+                }
+              }
+            },
+            "postUnionAggregateBounds": {
+              "first": {
+                "domainId": "PRIMARY",
+                "present": true,
+                "x": 94,
+                "y": 1590,
+                "width": 2931,
+                "height": 1336,
+                "extremaComponents": {
+                  "minX": "JAC",
+                  "maxX": "UAC",
+                  "minY": "UAC",
+                  "maxY": "JAC"
+                }
+              },
+              "second": {
+                "domainId": "SECONDARY",
+                "present": true,
+                "x": 92,
+                "y": 75,
+                "width": 12294,
+                "height": 2591,
+                "extremaComponents": {
+                  "minX": "ROUT",
+                  "maxX": "JLOAD",
+                  "minY": "ROUT",
+                  "maxY": "JSC"
+                }
+              }
+            },
+            "signedMargins": {
+              "meaning": "positive=clearance-shortfall; zero-or-negative=satisfies-orientation",
+              "firstToSecondXMargin": 3013,
+              "secondToFirstXMargin": 12372,
+              "firstToSecondYMargin": 2931,
+              "secondToFirstYMargin": 1156
+            }
+          }
+        },
+        "callbackExceptionPropagated": false,
+        "callbackAbortCallbacks": 0
+      },
+      "phase": "FINAL_REPORT_PREPARATION",
+      "operationMs": 1645,
+      "cleanupMs": 0,
+      "cleanupStatus": "PASS",
+      "workUnits": 11,
+      "maxUnitMs": 835,
+      "failurePhase": "",
+      "failureType": "none",
+      "failure": "",
+      "cleanupFailureType": "none",
+      "cleanupFailure": "",
+      "scope": "OBSERVATIONAL_FIXED_ATTEMPT_ONLY"
+    },
+    {
+      "status": "PASS",
+      "facts": {
+        "fixture": "MEDIUM_GENERIC_EDGE_REGION_20_PART",
+        "subject": "STRUCTURAL_CONTROL",
+        "seed": "0",
+        "candidate": 0,
+        "components": 20,
+        "pads": 40,
+        "nets": 10,
+        "nullOutcome": "ACCEPTED",
+        "observedOutcome": "ACCEPTED",
+        "nullGeometryKey": "d0ca6b24/41787",
+        "observedGeometryKey": "d0ca6b24/41787",
+        "retryGeometryKey": "d0ca6b24/41787",
+        "firstFitOutcomeCount": 2556,
+        "firstFitOutcomes": {
+          "outline": 0,
+          "accessEnvelopeOverlap": 1646,
+          "interDomainBarrier": 0,
+          "globalCorridor": 0,
+          "accepted": 910
+        },
+        "failureSnapshot": null,
+        "callbackExceptionPropagated": true,
+        "callbackAbortCallbacks": 1
+      },
+      "phase": "FINAL_REPORT_PREPARATION",
+      "operationMs": 89,
+      "cleanupMs": 0,
+      "cleanupStatus": "PASS",
+      "workUnits": 13,
+      "maxUnitMs": 23,
+      "failurePhase": "",
+      "failureType": "none",
+      "failure": "",
+      "cleanupFailureType": "none",
+      "cleanupFailure": "",
+      "scope": "OBSERVATIONAL_FIXED_ATTEMPT_ONLY"
+    }
+  ],
+  "nativeHelper": {
+    "exitCode": 0,
+    "elapsedSeconds": 28.9308837,
+    "suites": [
+      "Rb100LayoutPlacementDiagnosticContractTest"
+    ]
+  },
+  "hostCleanup": "PASS",
+  "rawLogSha256": "20fd3761b9fb8dc42f0254aad6466593bab89a508cc4b06dabf4f852b1069ca3",
+  "sourcePins": "diagnostic-attempt4-source-pins.json"
+}

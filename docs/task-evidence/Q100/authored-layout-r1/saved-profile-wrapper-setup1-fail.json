@@ -1,0 +1,70 @@
+{
+  "schema": "troubleshootjs-q100-saved-profile-wrapper-setup-failure",
+  "schemaVersion": 1,
+  "scope": "PRE_NATIVE_WRAPPER_SETUP_AND_TRACE_FAILURE_ONLY; NO_JAVA_CASES_OR_CLEANUP",
+  "candidateBase": {
+    "branch": "codex/q100-physical-feasibility",
+    "commit": "8a2c12446b2c46bde32b32537dec58a15a65d3b9"
+  },
+  "status": "FAIL_SETUP_BEFORE_NATIVE",
+  "host": "WindowsPowerShell5",
+  "preNativeAttemptCount": 2,
+  "events": [
+    {
+      "ordinal": 1,
+      "kind": "wrapper-setup",
+      "status": "FAIL_SETUP_BEFORE_NATIVE",
+      "nativeCases": 0,
+      "childLaunched": false,
+      "cause": "Extra array enclosure around ConvertFrom-Json retained a nested array; ChildPath received Object[]",
+      "cleanup": "NOT_APPLICABLE_NO_CHILD_LAUNCHED"
+    },
+    {
+      "ordinal": 2,
+      "kind": "focused-host-trace",
+      "status": "CAUSE_LOCALIZED",
+      "nativeCases": 0,
+      "childLaunched": false,
+      "diagnosis": "Focused host probe identified Assert-TaskInputs line10",
+      "cleanup": "NOT_APPLICABLE_NO_CHILD_LAUNCHED"
+    }
+  ],
+  "evidenceBoundary": {
+    "retainedSetupRecord": "saved-profile-wrapper-setup1-fail.json",
+    "standaloneTraceArtifact": "NOT_RETAINED; diagnosis recorded in setup failure JSON",
+    "twoEventCount": "task-owner supplied; setup JSON records failure and focused-trace diagnosis, but no second raw log is embedded",
+    "cleanupStatus": "NOT_APPLICABLE_NO_CHILD_LAUNCHED"
+  },
+  "causeDetail": {
+    "exactCause": "Extra array enclosure around ConvertFrom-Json retained a nested array; ChildPath received Object[]",
+    "diagnostic": "Focused host probe identified Assert-TaskInputs line10",
+    "sourceFile": "run-saved-profile-pre-input-flatten.ps1",
+    "sourceSha256": "fb780a11759e6166bd75729a1c743dfbff91837e89226f84339058a7fbf4e4ad",
+    "failureLocation": "Assert-TaskInputs line 10",
+    "inputValueAtChildPath": "Object[]"
+  },
+  "rawArtifacts": [
+    {
+      "artifact": "saved-profile-wrapper-setup1-fail.json",
+      "sha256": "26068a3298f63405f513b65dd3c0b13e3a189c10914c8289e76a61a654275a06",
+      "bytes": 512,
+      "contentsEmbedded": false
+    },
+    {
+      "artifact": "run-saved-profile-pre-input-flatten.ps1",
+      "sha256": "fb780a11759e6166bd75729a1c743dfbff91837e89226f84339058a7fbf4e4ad",
+      "bytes": 4481,
+      "contentsEmbedded": false
+    },
+    {
+      "artifact": "run-saved-profile-native-footer1.ps1",
+      "sha256": "34945199efb499765b47af5bb19e66249d33b84a093b3f788429a02317e33f52",
+      "bytes": 4593,
+      "contentsEmbedded": false,
+      "role": "ARCHIVED_ACTUAL_NATIVE_WRAPPER"
+    }
+  ],
+  "rawLogsEmbedded": false,
+  "personalAbsolutePathsEmbedded": false,
+  "qualificationBoundary": "No native cases ran; this packet is not a native PASS/FAIL and does not affect the separately preserved footer failure."
+}

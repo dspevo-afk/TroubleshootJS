@@ -1,0 +1,351 @@
+{
+  "schema": "q100-packing-owner-budget-audit-v1",
+  "status": "READ_ONLY_AUDIT_NO_ADOPTION",
+  "scope": "PACKING_OWNER_AND_BUDGET_REUSE_BOUNDARY",
+  "interpretation": {
+    "layoutGeneratorVersion": 24,
+    "dependencyEpoch": "tsj-generation-dependencies-v25",
+    "rb56PlacementVersion": 15,
+    "rb56CurrentDensityVersion": 14,
+    "connectedPocketPackingVersion": 4,
+    "meaning": "These are separate version axes. Placement version 15 / density 14 / packing 1 is not packing version 4."
+  },
+  "decisionBoundary": {
+    "currentMode": "RB56 current-15 normal census retains placementPackingVersion=1 and has no packing-probe receipt.",
+    "packing4": "A distinct constraint option that gates connected-vacancy compaction plus one post-selection route probe. It is not registered as an RB56 placement-version profile.",
+    "optIn": "No packing4 opt-in, new call path, budget increase, model change, or metric/oracle relaxation is recorded or authorized by this audit.",
+    "density10Packing4": "The constraints constructor accepts density 10 with packing version 4 as a type-valid tuple, but Rb56Placement does not register that tuple. It cannot be represented as unchanged placement version 10, 11, or 12; the generation dependency canonical records non-default packing identity.",
+    "replayInterpretation": "The reported replay match is evidence about the packing-mode gap if a new mode is introduced. It does not establish a bug in the current packing-1 path."
+  },
+  "currentPacking4Flow": {
+    "selectedSource": "The already selected routed incumbent for the same generation request.",
+    "beforeAdditionalRoute": [
+      "PcbPlacementCompactor.compact applies existing strip compaction and, for packing version 4, connected-vacancy compaction.",
+      "PcbPlacementCompactor.compactPairedVacancies applies the existing connected-pair candidate and rechecks strips.",
+      "No additional route is made if the compacted plan is geometrically identical to the source."
+    ],
+    "probe": "At most one additional P07 route request after selection, using the same board and remaining request ledger. The original routed incumbent is fingerprint-checked and retained unless the new routed candidate passes the strict metric comparison.",
+    "metricSelection": "A candidate is selected only when area is strictly smaller and copper length, via count, and protected-void count are each no greater than the same-request incumbent. Ties and any regression keep the incumbent.",
+    "metricLimit": "This compares the candidate only to that request's selected incumbent. It does not enforce an inequality between different placement versions or profiles."
+  },
+  "unchangedWorkBounds": {
+    "mediumPlacement": {
+      "placementAttempts": 6,
+      "plannerEvaluationsPerPlanMaximum": 60000,
+      "routeCandidatesAfterRankingMaximum": 3,
+      "source": "Six planner calls are collected before routing; the route subset is then capped at three."
+    },
+    "optionalProbe": {
+      "requestsMaximum": 1,
+      "router": "P07_FULLER_TWO_LAYER",
+      "orderingsMaximum": 3,
+      "expansionsPerRequestMaximum": 1000000,
+      "mediumAggregateExpansionLedgerMaximum": 6000000,
+      "ledgerFormula": "ROUTING_CANDIDATES(3) * 2 * PcbRoutingWork.Limits.MAX_EXPANSIONS(1000000)",
+      "headroomRule": "The generator checks required ordering and residual expansion headroom, then passes min(P07 request maximum, remaining medium ledger) to the route request."
+    },
+    "otherExistingCeilings": {
+      "p07BranchExpansionsMaximum": 100000,
+      "p07GridCellsMaximum": 250000,
+      "supportedEnvelopeRouteAttemptsMaximum": 800,
+      "supportedEnvelopeTotalExpansionsMaximum": 160000000,
+      "generationJobMillisMaximum": 90000,
+      "generationJobStepsMaximum": 640,
+      "generationStepMillisMaximum": 5000,
+      "changed": false
+    }
+  },
+  "observationsFromRootMessages": {
+    "source": "Root-supplied A03/oracle-map observations; not rerun for this read-only curation task.",
+    "WNearestAll": {
+      "rb56PlacementVersion": 11,
+      "profile": "UNIFORM_TRACE",
+      "representativesComplete": 6,
+      "seed42": {
+        "status": "PASS",
+        "area": 5519502,
+        "protectedVoid": 204400,
+        "protectedVoidBound": 327600
+      }
+    },
+    "WRoleDensity11Representative": {
+      "rb56PlacementVersion": 12,
+      "profile": "ROLE_TRACE",
+      "otherFiveRepresentatives": "PASS",
+      "seed42": {
+        "status": "FAIL",
+        "protectedVoid": 725400,
+        "protectedVoidBound": 327600
+      }
+    },
+    "UOriginalRoleSeed42": {
+      "rb56PlacementVersion": 12,
+      "targetChoice": "original first vacancy preference",
+      "status": "PASS",
+      "area": 6036952,
+      "protectedVoid": 217300
+    },
+    "WAdditionalRoleHoldout": {
+      "status": "PASS_NATIVE",
+      "scope": "One reported additional holdout; does not clear the preserved seed-42 representative failure."
+    },
+    "PairedUniformSeed5": {
+      "rb56PlacementVersion": 11,
+      "status": "FAIL",
+      "reportedArea": 6107220,
+      "comparisonV10Area": 6090714,
+      "note": "Root reports the same U-side area-bound failure. Preserve the comparison and failure; do not interpret as a cross-profile preservation guarantee from PcbPackingMetrics."
+    },
+    "XNarrowNearestUniform": {
+      "status": "NOT_IMPLEMENTED",
+      "disposition": "Rejected as insufficient: the paired uniform seed-5 area failure remains."
+    }
+  },
+  "nextBoundedWork": {
+    "id": "Y",
+    "action": "Scratch-only source experiment using the existing FULLER failed-net promotion and its two existing guards, within current caps.",
+    "status": "NOT_RUN_BY_THIS_AUDIT",
+    "integration": "No incumbent integration or packing4 opt-in."
+  },
+  "evidenceLimits": [
+    "This packet is a source-boundary audit plus root-supplied observations; it is not a new gate result.",
+    "PcbPackingMetrics proves same-request incumbent retention under its four metrics; it does not prove cross-version or cross-profile area monotonicity.",
+    "A density-10 / packing-4 configuration would be a distinct generation identity, not evidence that current density-10 or density-11 behavior was already using the compactor/probe.",
+    "The reported W observations do not establish root cause or global bounds for all seeds."
+  ],
+  "sourcePins": [
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+      "sha256": "101CE980D753DB359A9ED26FB66FED626D9F3945DCC4EDC6350D8B8B8853CDFC",
+      "bytes": 9170,
+      "lineRefs": [
+        {
+          "start": 5,
+          "end": 36,
+          "claim": "RB56 placement version 15, density mapping, and width-profile mapping."
+        },
+        {
+          "start": 70,
+          "end": 84,
+          "claim": "RB56 constraint construction passes density and profile without selecting packing version 4."
+        }
+      ]
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementConstraints.java",
+      "sha256": "1144F0575CBBAE802DB890100A460FDA9A8541C79459629C06769A4EE9D6FCEB",
+      "bytes": 16737,
+      "lineRefs": [
+        {
+          "start": 13,
+          "end": 13,
+          "claim": "Connected-pocket packing identity is version 4."
+        },
+        {
+          "start": 91,
+          "end": 123,
+          "claim": "Default constructor path uses packing version 1; constructor permits only packing 1 or 4."
+        },
+        {
+          "start": 152,
+          "end": 157,
+          "claim": "withConnectedPocketPacking creates an explicit version-4 constraint while preserving other declared inputs."
+        }
+      ]
+    },
+    {
+      "path": "tests/contracts/PcbNormalPackingCensusContractTest.java",
+      "sha256": "4064587ACE9EF48E1BB22DA4FAC9AE12640CD7E5A41929B27158A7840A33595C",
+      "bytes": 29488,
+      "lineRefs": [
+        {
+          "start": 186,
+          "end": 207,
+          "claim": "The declared RB56 current-layout case asserts packing version 1 and no probe receipt; packing-4 cases require a receipt."
+        }
+      ]
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/ProceduralPcbLayout.java",
+      "sha256": "DA9A5512B3A47E22951E6E1DC2B45E432C65C5E5F01B5C177D73A7D016D4E308",
+      "bytes": 2861,
+      "lineRefs": [
+        {
+          "start": 12,
+          "end": 32,
+          "claim": "Top-face normal declarations select packing 4 before conversion; bottom-face declarations must already select it."
+        }
+      ]
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementCompactor.java",
+      "sha256": "9DCF4917692F32071574EF5ADF8F75AA55EF0E6A9A3159D3011549BE2B4FBDA3",
+      "bytes": 11292,
+      "lineRefs": [
+        {
+          "start": 12,
+          "end": 49,
+          "claim": "Version 4 enables connected-vacancy and paired-vacancy compaction; optional work stays bounded and physical validation remains in force."
+        }
+      ]
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "sha256": "84FBBADB24B585A10DCD01AF81B8BE9109DF99CA9B3B337391836C75424C467D",
+      "bytes": 95965,
+      "lineRefs": [
+        {
+          "start": 12,
+          "end": 12,
+          "claim": "Layout generator current version 24."
+        },
+        {
+          "start": 246,
+          "end": 314,
+          "claim": "Packing-version gate, post-selection candidate compaction, no-change/headroom checks, one bounded P07 request, and 6-million medium aggregate ledger."
+        },
+        {
+          "start": 351,
+          "end": 400,
+          "claim": "Candidate metrics are compared to the same-request incumbent; selection requires strict improvement and incumbent fingerprint is checked."
+        },
+        {
+          "start": 423,
+          "end": 460,
+          "claim": "Six placement attempts are accumulated before candidate ranking."
+        },
+        {
+          "start": 481,
+          "end": 482,
+          "claim": "Routing candidate count is capped by the policy's three-candidate subset."
+        }
+      ]
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPackingMetrics.java",
+      "sha256": "2CF54D62AF0854BAC706EB2BCA88DF3B7AF647DF26A1EA130C7E571F93A9F19B",
+      "bytes": 16129,
+      "lineRefs": [
+        {
+          "start": 10,
+          "end": 35,
+          "claim": "Packing metrics and strict area/copper/vias/protected-void selection predicate."
+        }
+      ]
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+      "sha256": "F30032AEEC5DC29D5866FA64D2003FD9EA20F80857BBB156D95C4072E6B03D0C",
+      "bytes": 115662,
+      "lineRefs": [
+        {
+          "start": 11,
+          "end": 25,
+          "claim": "Placement bounds and 60,000 medium evaluation cap."
+        },
+        {
+          "start": 1325,
+          "end": 1366,
+          "claim": "Medium local candidate evaluation counting and cap enforcement."
+        }
+      ]
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java",
+      "sha256": "AC2713B172C186292A9B1BD6F877358647F8B22DA1E4C83D716CCA5DCE451CB5",
+      "bytes": 29556,
+      "lineRefs": [
+        {
+          "start": 22,
+          "end": 27,
+          "claim": "Six bounded placement attempts and three ranked route candidates."
+        }
+      ]
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "sha256": "6EB32EBEA70A37084700D89451B0D3EB3C5DA2DC2320E9D90014A369FCBB8A31",
+      "bytes": 51805,
+      "lineRefs": [
+        {
+          "start": 19,
+          "end": 20,
+          "claim": "P07 grid, total expansion, branch expansion, and three-ordering ceilings."
+        },
+        {
+          "start": 149,
+          "end": 157,
+          "claim": "The request API rejects expansion limits above the one-million cap."
+        }
+      ]
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/SupportedEnvelope.java",
+      "sha256": "6F0B0B36CE6AD91EC4DFB6B4581E5B8E2CD514ED36EED3E53905A32A2F7994CC",
+      "bytes": 11280,
+      "lineRefs": [
+        {
+          "start": 15,
+          "end": 15,
+          "claim": "Supported placement, route-attempt, and total-expansion ceilings."
+        },
+        {
+          "start": 100,
+          "end": 109,
+          "claim": "Runtime accounting rejects exceeded route and expansion totals."
+        },
+        {
+          "start": 136,
+          "end": 147,
+          "claim": "Envelope canonical includes route, job, unit, and work limits."
+        }
+      ]
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbRoutingWork.java",
+      "sha256": "20409E00AD33953C57BB043103E676866F2F5248AD2ED1AB93F6882CA9450031",
+      "bytes": 4203,
+      "lineRefs": [
+        {
+          "start": 8,
+          "end": 16,
+          "claim": "Existing one-face routing budget used by the medium aggregate expansion ledger."
+        }
+      ]
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationCoordinator.java",
+      "sha256": "C6558434C297F3FE75177F34A182626764C7EDF6EA85FEEF91E4761E602A3D0F",
+      "bytes": 60420,
+      "lineRefs": [
+        {
+          "start": 11,
+          "end": 16,
+          "claim": "Unchanged 90-second job, 640-step, and 5-second per-step limits."
+        }
+      ]
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+      "sha256": "CC2B961FC2BDC5C5293285B8CC5D8BD7D4B309F9974EAAC4B561FB749C8DC8AD",
+      "bytes": 80552,
+      "lineRefs": [
+        {
+          "start": 22,
+          "end": 27,
+          "claim": "Current dependency interpretation epoch is v25."
+        },
+        {
+          "start": 137,
+          "end": 138,
+          "claim": "Layout generator version participates in dependency identity."
+        },
+        {
+          "start": 263,
+          "end": 272,
+          "claim": "Non-default placement density/packing and role-width profile are canonical identity inputs."
+        }
+      ]
+    }
+  ]
+}

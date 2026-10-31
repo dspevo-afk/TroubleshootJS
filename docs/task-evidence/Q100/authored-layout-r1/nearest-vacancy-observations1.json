@@ -1,0 +1,272 @@
+{
+  "schema": "troubleshootjs-nearest-vacancy-observation-v1",
+  "status": "FAIL_RETAINED_REPRESENTATIVE_AND_PAIRED_AREA_BOUND",
+  "scope": "Scratch-only nearest-vacancy placement preference observation; both native cohorts and the paired comparison are recorded, with failures retained and no adoption.",
+  "variant": {
+    "status": "SCRATCH_ONLY_NOT_ADOPTED",
+    "policyId": "DENSITY_INDEPENDENT_NEAREST_VACANCY_PREFERENCE",
+    "sourceCandidate": {
+      "branch": "codex/q100-physical-feasibility",
+      "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9"
+    },
+    "sourceSealFile": "saved-profile-nearest-vacancy-inputs-sealed1.json",
+    "sourceSealBytes": 1974,
+    "sourceSealSha256": "e75c627867c9b7815eb3a2806ba717fc6cf1a97ebcf7cb85db4543bb7e41526d",
+    "parentSnapshot": "saved-profile-corrected-inputs-1",
+    "parentPinsFile": "saved-profile-corrected-v1-sealed-pins.json",
+    "parentPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+    "variantSnapshot": "saved-profile-nearest-vacancy-inputs-1",
+    "variantPinsFile": "saved-profile-nearest-vacancy-sealed-pins.json",
+    "variantPinsBytes": 204437,
+    "variantPinsSha256": "ab0c87124b67b11ec5ed3ebfe278d4cbf36f52ae8bfce131a2101cef0f1bf1d9",
+    "inputCount": 1059,
+    "unchangedInputCount": 1058,
+    "changedSource": {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+      "bytesBefore": 115662,
+      "sha256Before": "f30032aeec5dc29d5866fa64d2003fd9ea20f80857bbb156d95c4072e6b03d0c",
+      "bytesAfter": 115619,
+      "sha256After": "19fa22f3b760f7542777db145d70263dd7b4cbe3b0698215c81cb58af5aa91eb",
+      "changedMethod": "mediumPlace",
+      "changedExpression": {
+        "before": "if(constraints.placementDensityVersion>=12 && vacancyPreference!=null)",
+        "after": "if(vacancyPreference!=null)"
+      }
+    },
+    "copyAudit": {
+      "parentPinnedInputsHashVerifiedBeforeAndAfter": true,
+      "copiedInputsHashVerified": true,
+      "destinationExactMembership": true,
+      "destinationReparsePoints": 0,
+      "nonPlannerInputsByteIdentical": true,
+      "sourceAndDestinationSeparateDirectories": true,
+      "trialPointsOrderFitsCountersAndCapsUnchanged": true,
+      "nearestTargetCalculationPreserved": true,
+      "plannerScoringUnchanged": true,
+      "extraPlacementCandidates": false,
+      "extraRoutingCalls": false,
+      "historicalBoundsEvaluated": false
+    },
+    "baseLayoutVersion": 24,
+    "baseDependencyEpoch": "tsj-generation-dependencies-v25",
+    "baseEpochLabelsAdopted": false
+  },
+  "representativeRun": {
+    "source": "current",
+    "cohortId": "SAVED_11_12_REP",
+    "suite": "P07GeometryEpochDiagnosticContractTest",
+    "treatment": "NEAREST_VACANCY_SCRATCH_ONLY",
+    "helperExitCode": 2,
+    "nativeChildExitCode": 1,
+    "helperElapsedSeconds": 61.586089099999995,
+    "nativeChildLimitMs": 180000,
+    "outerWatchdogMs": 600000,
+    "terminationProven": true,
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "inputCount": 1059,
+    "inputRevision": 3,
+    "sourceSnapshotRevision": 1,
+    "inputPinsSha256": "ab0c87124b67b11ec5ed3ebfe278d4cbf36f52ae8bfce131a2101cef0f1bf1d9",
+    "cleanup": {
+      "status": "PASS",
+      "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+      "elapsedSeconds": null,
+      "timing": "Cleanup-only duration not separately reported."
+    },
+    "caseProgress": {
+      "plannedCases": 12,
+      "completedCases": 11,
+      "failedCases": 1,
+      "casesAfterFailureNotRun": 0,
+      "failedFinalCase": {
+        "placementInterpretationVersion": 12,
+        "rootSeed": "42",
+        "observedProtectedEmptyRectangleArea": 725400,
+        "operator": "<",
+        "strictProtectedEmptyRectangleTarget": 327600,
+        "status": "FAIL"
+      },
+      "version11RepresentativesCompleted": 6,
+      "version11Seed42": {
+        "boardArea": 5519502,
+        "protectedEmptyRectangleArea": 204400
+      },
+      "caseCensusComplete": false,
+      "successSummaryProduced": false,
+      "receiptProduced": false
+    }
+  },
+  "holdoutRun": {
+    "source": "current",
+    "cohortId": "SAVED_10_11_12_HOLDOUT",
+    "suite": "P07GeometryEpochDiagnosticContractTest",
+    "treatment": "NEAREST_VACANCY_SCRATCH_ONLY",
+    "helperExitCode": 0,
+    "helperElapsedSeconds": 64.7471211,
+    "nativeCaseCount": 12,
+    "nativeAssertions": 196238,
+    "nativeDiagnosticElapsedMs": 30645,
+    "nativeTimingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+    "layoutVersion": 24,
+    "dependencyEpoch": "tsj-generation-dependencies-v25",
+    "adoption": false,
+    "layoutQualification": false,
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "inputCount": 1059,
+    "inputRevision": 3,
+    "inputPinsSha256": "ab0c87124b67b11ec5ed3ebfe278d4cbf36f52ae8bfce131a2101cef0f1bf1d9",
+    "terminationProven": true,
+    "cleanup": {
+      "status": "PASS",
+      "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+      "elapsedSeconds": null,
+      "timing": "Cleanup-only duration not separately reported."
+    },
+    "receipt": {
+      "file": "saved-profile-current-10-11-12-holdout-1-receipt.txt",
+      "bytes": 7080291,
+      "sha256": "ec91a448d99de2ea1aab6d26286b97d8d82ec55220c1873642602ea980680eca"
+    },
+    "nativeStatus": "PASS",
+    "nativePassFooterEvidence": "PASS footer in captured holdout receipt; exit code 0, 12 cases, 196238 assertions."
+  },
+  "pairedComparison": {
+    "file": "nearest-vacancy-holdout-comparison1.json",
+    "bytes": 3185,
+    "sha256": "e0fdc7cf121ed0f2ae862a37303e72a30f828387e209424db3340288449dfae7",
+    "reportGenerationExitCode": 0,
+    "status": "FAIL_PAIRED_AREA_BOUND",
+    "scope": "NEAREST_VACANCY_SCRATCH_ABLATION_ONLY; NOT_ADOPTED",
+    "comparisonCount": 4,
+    "passed": 3,
+    "failed": 1,
+    "failure": {
+      "failureKind": "SAME_SIDE_SAVED11_TO_SAVED10_AREA",
+      "cohortId": "SAVED_10_11_12_HOLDOUT",
+      "caseOrdinal": 7,
+      "sourceId": "PcbPocketPackingContractTest",
+      "metric": "boardOutlineArea",
+      "literal": "previousArea from same seed version10 result",
+      "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+      "side": "current",
+      "profile": "SAVED_PROFILE_11",
+      "placementInterpretationVersion": 11,
+      "placementDensityVersion": 11,
+      "seed": "5",
+      "actual": 6107220,
+      "operator": "<=",
+      "expected": 6090714,
+      "status": "FAIL_RETAINED_BOUND"
+    },
+    "receiptSha256": "ec91a448d99de2ea1aab6d26286b97d8d82ec55220c1873642602ea980680eca",
+    "acceptanceGate": false,
+    "caseCount": 12
+  },
+  "nonAdoption": {
+    "productionChangeAdopted": false,
+    "expectedMetricUpdates": false,
+    "automaticGoldenSeal": false,
+    "layoutQualification": false,
+    "q100Acceptance": false,
+    "uniformOnlyNearestProposal": "NOT_RUN; W already has a retained paired uniform failure, so this proposed follow-up is not represented as tested or accepted."
+  },
+  "priorVFailure": {
+    "file": "vacancy-tiebreak-representatives1-fail.json",
+    "sha256": "4ab0e1b2d9263e89bc7c65e6b6bf0b5c7ada331cf28ce7386256feda59af515e",
+    "status": "FAIL_INCOMPLETE_REPRESENTATIVE_RUN",
+    "plannedCases": 12,
+    "completedCases": 5,
+    "failedCases": 1,
+    "casesAfterFailureNotRun": 6
+  },
+  "rawArtifacts": [
+    {
+      "file": "saved-profile-current-11-12-rep-1-result.json",
+      "bytes": 920,
+      "sha256": "ab36c01a3bd552aeb63b74f51088d62f928ea5cb5ef19df35fe7b788413f2c11"
+    },
+    {
+      "file": "saved-profile-current-11-12-rep-1-console.txt",
+      "bytes": 6159535,
+      "sha256": "268a2b4661abca4800175d53fcc083157726faba85751fe68fc3df89f8ada935"
+    },
+    {
+      "file": "saved-profile-current-11-12-rep-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "saved-profile-current-11-12-rep-1-launcher.json",
+      "bytes": 275,
+      "sha256": "1157a12014a6d6082c44593239d6ce778121e648ecea71609173ea2d9c65f5ae"
+    },
+    {
+      "file": "saved-profile-current-10-11-12-holdout-1-result.json",
+      "bytes": 919,
+      "sha256": "131b7af1ea12c8fcc4f4ee773a75832f2cbe4a61a9adbb7876c9add5eea38595"
+    },
+    {
+      "file": "saved-profile-current-10-11-12-holdout-1-console.txt",
+      "bytes": 7081431,
+      "sha256": "52b47f768a293a9e98fa3c9eb0ea605084133ae1436fd9b022a8f980830413c2"
+    },
+    {
+      "file": "saved-profile-current-10-11-12-holdout-1-receipt.txt",
+      "bytes": 7080291,
+      "sha256": "ec91a448d99de2ea1aab6d26286b97d8d82ec55220c1873642602ea980680eca"
+    },
+    {
+      "file": "saved-profile-current-10-11-12-holdout-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "saved-profile-current-10-11-12-holdout-1-launcher.json",
+      "bytes": 289,
+      "sha256": "34ac90fb0351c3513b1aec8786267af412c8b807b7ea0de5121291a85a37731e"
+    },
+    {
+      "file": "saved-profile-nearest-vacancy-inputs-sealed1.json",
+      "bytes": 1974,
+      "sha256": "e75c627867c9b7815eb3a2806ba717fc6cf1a97ebcf7cb85db4543bb7e41526d"
+    },
+    {
+      "file": "saved-profile-nearest-vacancy-sealed-pins.json",
+      "bytes": 204437,
+      "sha256": "ab0c87124b67b11ec5ed3ebfe278d4cbf36f52ae8bfce131a2101cef0f1bf1d9"
+    },
+    {
+      "file": "saved-profile-corrected-v1-sealed-pins.json",
+      "bytes": 199140,
+      "sha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717"
+    },
+    {
+      "file": "nearest-vacancy-holdout-comparison1.json",
+      "bytes": 3185,
+      "sha256": "e0fdc7cf121ed0f2ae862a37303e72a30f828387e209424db3340288449dfae7"
+    },
+    {
+      "file": "run-saved-profile-nearest-vacancy.ps1",
+      "bytes": 4748,
+      "sha256": "230d28c151b7cb86591ab3ed5b8206f99885c5245a53c5c9f41c4fcdcb3db4c5"
+    },
+    {
+      "file": "prepare-saved-profile-nearest-vacancy.ps1",
+      "bytes": 9174,
+      "sha256": "8fca25688e66cec20607121c4e9d14b6030f476f50e4c74ffec58632108cb808"
+    }
+  ],
+  "limitations": [
+    "The W representative run completed 11 of 12 cases; the final version 12 seed 42 case failed the strict protected-empty-rectangle rule 725400 < 327600. It has no success summary or receipt.",
+    "The W holdout native cohort passed 12 cases and 196,238 assertions, but its paired report fails one of four same-side version 11 to version 10 area comparisons: seed 5 is 6,107,220 > 6,090,714.",
+    "The holdout native PASS does not erase the representative failure or the paired area-bound failure.",
+    "The prior V experiment remains a separate retained failure; its corrected packet is linked above by its current hash.",
+    "No production adoption, golden sealing, full saved-profile acceptance, or Q100 playability qualification is claimed."
+  ],
+  "sanitization": {
+    "rawConsoleOrReceiptContentsEmbedded": false,
+    "absoluteMachinePathsIncluded": false,
+    "processIdentifiersIncluded": false,
+    "rawArtifacts": "Basenames, byte counts, and SHA-256 only; receipts are explicitly present only for the holdout run."
+  }
+}

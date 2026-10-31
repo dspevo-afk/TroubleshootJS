@@ -1,0 +1,75 @@
+{
+  "packetVersion": 1,
+  "evidence": "Q100 authored-layout regions-treatment classification run",
+  "attempt": "routing-regions-treatment-2",
+  "status": "FAIL",
+  "helper": {
+    "exitCode": 2,
+    "elapsedSeconds": 25.2865783,
+    "selectedSuites": [
+      "Rb100PlanContractTest",
+      "PcbCorridorOrientationContractTest",
+      "Rb100LayoutFirstRoutingDiagnosticContractTest"
+    ],
+    "cleanupStatus": "PASS",
+    "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+    "processFullyExited": true
+  },
+  "compilation": {
+    "status": "PASS",
+    "jdkMarker": "JDK: javac 1.8.0_502",
+    "runnerPassMarker": "PASS: current-contract runner pass detection assertions=16"
+  },
+  "failure": {
+    "suite": "Rb100PlanContractTest",
+    "childExitCode": 1,
+    "message": "Exception in thread \"main\" java.lang.IllegalStateException: RB100 part has no authored functional region: RSA channel=null input=null purpose=SENSOR_SERIES_RESISTOR",
+    "contractFailureMarker": "CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: Rb100PlanContractTest, exit 1",
+    "classification": "Plan classification rejected an imported base passive with a null channel because the current mapping assumed a channel.",
+    "importedPartId": "RSA",
+    "channel": null,
+    "input": null,
+    "purpose": "SENSOR_SERIES_RESISTOR",
+    "authoritativeInputKind": "BASE_PASSIVE",
+    "authoredRegionChannelMayBeNull": true
+  },
+  "boundedCorrectionContext": {
+    "plannedResolution": "Use a bounded authored-ID fallback for region selection.",
+    "metadataChanged": false,
+    "graphChanged": false,
+    "preserveLiteral100Oracle": true,
+    "postFixVerificationIncluded": false
+  },
+  "executionBoundary": {
+    "planContractPassed": false,
+    "orientationSuiteExecuted": false,
+    "firstRoutingSuiteExecuted": false,
+    "routeAttempted": false,
+    "layoutQualified": false,
+    "note": "The first selected suite failed; later selected suites did not execute."
+  },
+  "rawInputs": [
+    {
+      "file": "routing-regions-treatment-2-result.json",
+      "sha256": "C3DA92ED8E1EC32AC2215FD09CCD803F8FD3481B01771141D08C4A0B4B6AE318",
+      "bytes": 270
+    },
+    {
+      "file": "routing-regions-treatment-2-console.txt",
+      "sha256": "998121AA8AA9B4BFB6B31EC2E07C6A2BC3433503AF1E7245CA788C645150A181",
+      "bytes": 2874
+    },
+    {
+      "file": "routing-regions-treatment-2.log",
+      "sha256": "5EA73E8EDAD013FE328ABD0496DFAAB07A67E06470B5735F1822334E4720109E",
+      "bytes": 3060,
+      "contentIncluded": false
+    }
+  ],
+  "sourcePins": {
+    "file": "routing-regions-treatment2-source-pins.json",
+    "sha256": "6BD4002875D9626B006996FFBC1A4138BD458F7AD872B7ABD6789C56B7116D0A",
+    "count": 57,
+    "pathsRelative": true
+  }
+}

@@ -132,15 +132,16 @@ public final class P08ScalabilityContractTest {
         reject(new Runnable(){public void run(){diagonal.layout.validateTraceClearance();}},"malformed lone segment cannot bypass broad phase");
         for(int offset:new int[]{-1,0,1}) {
             Fixture f=new Fixture(4);Vector<PcbTraceGeometry> traces=f.layout.getTraces();
-            int y=200+PcbTraceRules.MIN_CENTERLINE_CLEARANCE+offset;
+            int y=200+15+offset;
             traces.add(new PcbTraceGeometry("boundary","N1",null,null,PcbCopperLayer.TOP,
                 PcbCopperAccess.Exposure.EXPOSED,new int[]{250,550},new int[]{y,y}));
             f.layout.replaceTraces(traces);compare(f.board,f.layout);
         }
     }
-    private static long referenceClearance(List<PcbTraceGeometry> traces) {
-        long pairs=0,minimum=(long)PcbTraceRules.MIN_CENTERLINE_CLEARANCE*PcbTraceRules.MIN_CENTERLINE_CLEARANCE;
+    static long referenceClearance(List<PcbTraceGeometry> traces) {
+        long pairs=0;
         for(PcbTraceGeometry trace:traces) {
+            referenceWidth(trace.getWidth());
             int[] x=trace.getXPoints(),y=trace.getYPoints();
             for(int i=1;i<x.length;i++)if(x[i]!=x[i-1] && y[i]!=y[i-1])
                 throw new IllegalStateException("Independent non-Manhattan rejection");
@@ -148,6 +149,8 @@ public final class P08ScalabilityContractTest {
         for(int a=0;a<traces.size();a++)for(int b=a+1;b<traces.size();b++) {
             PcbTraceGeometry first=traces.get(a),second=traces.get(b);
             if(first.getLayer()!=second.getLayer() || first.getNetId().equals(second.getNetId()))continue;
+            int required=(first.getWidth()+second.getWidth()+1)/2+6;
+            long minimum=(long)required*required;
             int[] ax=first.getXPoints(),ay=first.getYPoints(),bx=second.getXPoints(),by=second.getYPoints();
             for(int i=1;i<ax.length;i++)for(int j=1;j<bx.length;j++) {
                 pairs++;
@@ -159,6 +162,10 @@ public final class P08ScalabilityContractTest {
             }
         }
         return pairs;
+    }
+    private static void referenceWidth(int width) {
+        if(width<9 || width>63 || (width&1)==0)
+            throw new IllegalArgumentException("Independent trace width is invalid: "+width);
     }
     private static PcbConductorGraph.Surface traceSurface(PcbConductorGraph graph) {
         for(PcbConductorGraph.Surface s:graph.getSurfaces())if(s.edgeId!=null)return s;
@@ -338,6 +345,9 @@ public final class P08ScalabilityContractTest {
         PcbConductorGraph reference=P08ReferenceConductorBuilder.capture(board,layout);
         long referenceNanos=System.nanoTime()-start,referenceBytes=allocated()-memory;
         require(fast.toCanonical().equals(reference.toCanonical()),"dense shared provenance exact parity");
+        require(P08ReferenceConductorBuilder.sourceSegmentCount==128 &&
+            P08ReferenceConductorBuilder.sourceLandCount==0,
+            "reference oracle exposes its independently collected dense source census");
         require(stats.exactPairs()==8128 && stats.referencePairs==8128,"dense all-pairs worst case remains explicit");
         System.out.println("P08_DENSE segments=128 exactContacts="+stats.exactPairs()+" referenceContacts="+stats.referencePairs+
             " broadPhaseBoxTests="+stats.broadPhaseBoxTests+" references="+stats.references+

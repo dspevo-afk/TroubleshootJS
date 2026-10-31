@@ -1,0 +1,81 @@
+{
+  "packetVersion": 1,
+  "evidence": "Q100 authored-layout regions-treatment classification run",
+  "attempt": "routing-regions-treatment-3",
+  "status": "FAIL",
+  "helper": {
+    "exitCode": 2,
+    "elapsedSeconds": 25.9729112,
+    "selectedSuites": [
+      "Rb100PlanContractTest",
+      "PcbCorridorOrientationContractTest",
+      "Rb100LayoutFirstRoutingDiagnosticContractTest"
+    ],
+    "cleanupStatus": "PASS",
+    "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+    "unifiedExecSessionId": 63188,
+    "launcherPid": 36748,
+    "launcherCreatedUtc": "2026-10-30T19:36:24.9240360Z",
+    "launcherRecord": "routing-regions-treatment-3-launcher.json",
+    "processFullyExited": true,
+    "exitProof": "Unified exec session completed and recorded launcher PID was absent at root inspection.",
+    "curationCorrection": "63188 was an exec session identifier, not an OS PID. Raw failure evidence is unchanged."
+  },
+  "compilation": {
+    "status": "PASS",
+    "jdkMarker": "JDK: javac 1.8.0_502",
+    "runnerPassMarker": "PASS: current-contract runner pass detection assertions=16"
+  },
+  "failure": {
+    "suite": "Rb100PlanContractTest",
+    "childExitCode": 1,
+    "message": "Exception in thread \"main\" java.lang.IllegalStateException: RB100 part has no authored functional region: JOC channel=C input=null purpose=EXTERNAL_DC_LOAD_BUS_RESISTIVE_OUTPUT_INTERFACE",
+    "contractFailureMarker": "CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: Rb100PlanContractTest, exit 1",
+    "classification": "The output-interface region guard expected EXTERNAL_CONTROLLED_OUTPUT, while the authoritative R100Plan outputHeader(C/D) declares RESISTIVE_OUTPUT_INTERFACE.",
+    "importedPartId": "JOC",
+    "channel": "C",
+    "input": null,
+    "actualPurpose": "EXTERNAL_DC_LOAD_BUS_RESISTIVE_OUTPUT_INTERFACE",
+    "declaredPurpose": "RESISTIVE_OUTPUT_INTERFACE",
+    "guardExpectedPurpose": "EXTERNAL_CONTROLLED_OUTPUT"
+  },
+  "boundedCorrectionContext": {
+    "plannedResolution": "Match the region-selection purpose guard to the explicit purpose declared by R100Plan.outputHeader(C/D).",
+    "metadataChanged": false,
+    "graphChanged": false,
+    "preserveLiteral100Oracle": true,
+    "postFixVerificationIncluded": false
+  },
+  "executionBoundary": {
+    "planContractPassed": false,
+    "orientationSuiteExecuted": false,
+    "firstRoutingSuiteExecuted": false,
+    "routeAttempted": false,
+    "layoutQualified": false,
+    "note": "The first selected suite failed; later selected suites did not execute."
+  },
+  "rawInputs": [
+    {
+      "file": "routing-regions-treatment-3-result.json",
+      "sha256": "AB380E5BE9992B40B3D67EB0E1045F86D65BBEC27888D21477B787DACE6972A6",
+      "bytes": 270
+    },
+    {
+      "file": "routing-regions-treatment-3-console.txt",
+      "sha256": "DA667AB8F1BBB170D0995720326F542A3C9A1DA242C9138744402F3670DA8071",
+      "bytes": 2998
+    },
+    {
+      "file": "routing-regions-treatment-3.log",
+      "sha256": "FD7D85BDC3FBAC100253CEFAF59460D469CDEC669DACEDF2CE0037716DF8ED39",
+      "bytes": 3184,
+      "contentIncluded": false
+    }
+  ],
+  "sourcePins": {
+    "file": "routing-regions-treatment3-source-pins.json",
+    "sha256": "C6B64159E9AE96449D65C96ABB70B151D98A8E63A133806D37EB35E2E1327531",
+    "count": 57,
+    "pathsRelative": true
+  }
+}

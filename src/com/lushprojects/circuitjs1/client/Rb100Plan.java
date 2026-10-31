@@ -159,10 +159,18 @@ final class Rb100Plan {
             "load-topology=shared-LOAD12-positive+CTRL_RETURN-common-non-isolated+E-F-low-side;" +
             "external-loads=relay-resistors-and-two-DC-RL-loads-not-board-packages;");
         for (Part part : inventory) out.append('[').append(part.canonical()).append(']');
+        out.append(";physical-intent=").append(Rb100Placement.INTENT_VERSION)
+            .append(";physical-policy=").append(Rb100Placement.PHYSICAL_POLICY_ID)
+            .append('@').append(Rb100Placement.PHYSICAL_POLICY_VERSION)
+            .append(";physical-density=").append(Rb100Placement.PLACEMENT_DENSITY_VERSION)
+            .append(";physical-requires-two-layer=")
+            .append(Rb100Placement.REQUIRES_TWO_LAYER_ROUTING)
+            .append(";physical-trace-profile=")
+            .append(Rb100Placement.TRACE_WIDTH_PROFILE.getIdentity());
         return out.toString();
     }
 
-    /** Basic board identity only; placement and player admission remain separate owners. */
+    /** Declares family-owned placement intent without granting player admission. */
     TroubleshootBoard board() {
         TroubleshootBoard board = new TroubleshootBoard(FAMILY_ID + "_BOARD");
         TreeMap<String, BoardNet.RoutingRole> nets = new TreeMap<String, BoardNet.RoutingRole>();
@@ -179,6 +187,7 @@ final class Rb100Plan {
                     part.id + "." + terminals[0], part.id + "." + terminals[1],
                     netIds[0], netIds[1]));
         }
+        board.setPlacementConstraints(Rb100Placement.create(this));
         board.validate();
         return board;
     }
@@ -396,7 +405,8 @@ final class Rb100Plan {
     }
 
     private static BoardNet.RoutingRole role(String net) {
-        if ("AUX_RETURN".equals(net) || "MON_SENSE".equals(net)) return BoardNet.RoutingRole.HIGH_CURRENT;
+        if ("AUX_RETURN".equals(net) || "MON_SENSE".equals(net) ||
+                "PRE_L".equals(net)) return BoardNet.RoutingRole.HIGH_CURRENT;
         if (net.endsWith("RETURN")) return BoardNet.RoutingRole.RETURN;
         if (net.startsWith("OUT_") || net.endsWith("_COIL_LOW") || net.endsWith("_DRAIN"))
             return BoardNet.RoutingRole.HIGH_CURRENT;

@@ -1,0 +1,759 @@
+{
+  "schema": "troubleshootjs-q100-ordering-stream-field-observation-v1",
+  "status": "PASS_LEGACY_GATE_AND_STRUCTURED_MATCH_STREAM_API_UNQUALIFIED",
+  "evidence": "AN_LEGACY_FIELD_GATE_WITH_AL_LEGACY_OUTPUT_COMPARISON",
+  "scope": {
+    "description": "Scratch-only ordering-stream source overlays were included in a focused native run of the existing P07BranchDiagnosticsContractTest. The run exercises the existing legacy first-success field and clone fixtures on two saved seed-5 cases. Its complete legacy tagged output was independently compared against the earlier AL legacy run.",
+    "legacyFieldAndCloneGate": "PASS",
+    "legacyOutputRegressionComparison": "PASS_AFTER_EXPLICIT_NORMALIZATION",
+    "orderingStreamApiPositiveValidation": "NOT_RUN",
+    "generatorStreamIntegrationQualification": false,
+    "sourceEpochAdopted": false,
+    "layoutQualification": false,
+    "fullGeneratorSessionQualification": false,
+    "full72Cohort": "NOT_RUN",
+    "q100Qualification": "NOT_CLAIMED",
+    "productionAdoption": false,
+    "normalPlayerOrPlayable100Claim": false
+  },
+  "identity": {
+    "suite": "P07BranchDiagnosticsContractTest",
+    "caseOrder": [
+      "SEED5_V10_CANDIDATE1",
+      "SEED5_V11_CANDIDATE1"
+    ],
+    "rootSeed": "5",
+    "candidateAttempt": 1,
+    "placementSeed": "-7630701392004902526",
+    "routingSeed": "-9106650364266936003",
+    "inputGeometrySha256": {
+      "SEED5_V10_CANDIDATE1": "1c6136104db257aebfa692c2c6689fe620a658276062d783f36fbef10dd3cc19",
+      "SEED5_V11_CANDIDATE1": "b21527ea02b45b9fdfb6233fb116d42a32077da84709674efe3b59b36e15c43f"
+    },
+    "sameTestHarnessAsBaseline": true,
+    "testHarnessSha256": "f3430bc9d1599595eb99add56d6a45536d0d67efb00aafdc789e4b4be794d611",
+    "samePcbNetRouterQueryAsBaseline": true,
+    "pcbNetRouterSha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a"
+  },
+  "inputs": {
+    "currentAN": {
+      "snapshot": "ordering-stream-field-inputs-1",
+      "inputRevision": 3,
+      "snapshotRevision": 1,
+      "inputCount": 1059,
+      "inputBytes": 85412140,
+      "pinsSha256": "e6eab43749a61115b0ed8822303efd6e89f8d123a76836c94dc7ce17a9d85928",
+      "audit": "PASS_BEFORE_AND_AFTER",
+      "parent": "ordering-candidate-inputs-1",
+      "parentPinsSha256": "0cde024baf712b2bd7cc0f736a6c851cb12fe78f7d1294d62b7b75c08b564607",
+      "unchangedInputsRelativeToParent": 1055,
+      "changedInputsRelativeToParent": 4,
+      "adopted": false
+    },
+    "baselineAL": {
+      "snapshot": "late-bound-pair-inputs-1",
+      "inputRevision": 1,
+      "snapshotRevision": 1,
+      "inputCount": 1059,
+      "inputBytes": 85389181,
+      "pinsSha256": "953fe0d3858029dff25837e4afba180e8b9e719969bf4d6544dc37bd8ffa4aac",
+      "audit": "PASS_BEFORE_AND_AFTER",
+      "adopted": false
+    },
+    "directComparisonBetweenSnapshots": {
+      "sameInputCount": 1059,
+      "unchangedInputs": 1056,
+      "changedInputs": 3,
+      "changes": [
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+          "baselineBytes": 71376,
+          "baselineSha256": "b0be7e2c553eca09df2109ab242676434324615ef45721024d11491731ffac5d",
+          "currentBytes": 81651,
+          "currentSha256": "d8d176503f12338230d75e5a8477fac13395821d124a3f1aadb7fadba95338c9"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+          "baselineBytes": 95965,
+          "baselineSha256": "84fbbadb24b585a10dcd01af81b8be9109df99ca9b3b337391836c75424c467d",
+          "currentBytes": 101405,
+          "currentSha256": "0601b6d58c6958788774c66168f13d7c19044567015676e1429ceea832fbb7c5"
+        },
+        {
+          "path": "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java",
+          "baselineBytes": 29556,
+          "baselineSha256": "ac2713b172c186292a9b1bd6f877358647f8b22da1e4c83d716cca5dce451cb5",
+          "currentBytes": 36800,
+          "currentSha256": "395158f6695226c8f326e46d8c2de4a6065fbbcc3b000bae858dd2750e0bd2d7"
+        }
+      ],
+      "sameTestHarness": true,
+      "samePcbNetRouter": true,
+      "comparisonBasis": "The two sealed 1,059-entry pin manifests were compared by relative path, byte length, and SHA-256. Exactly the three production paths above differ; the test harness and PcbNetRouter are byte-identical."
+    }
+  },
+  "sourceHistory": {
+    "orderingStreamRouter": {
+      "v1": {
+        "sha256": "78171ce39bc43b905e34a650b55157fa78378d01434cdd2f6981560d9f2209d7",
+        "status": "NOT_RUN",
+        "review": "BLOCKED_SOURCE_REVIEW",
+        "finding": "The initial stream implementation had observer checks after ready/complete early returns and omitted checks in take/summary transfer paths."
+      },
+      "v2": {
+        "sha256": "d8d176503f12338230d75e5a8477fac13395821d124a3f1aadb7fadba95338c9",
+        "status": "INCLUDED_IN_AN_SNAPSHOT",
+        "review": "STATIC_REVIEW_NO_BLOCKER",
+        "summary": "Adds observer checks and failure latching at stream progress, handoff, and summary boundaries; uses one bounded work loop shared with the legacy path.",
+        "streamApiPositiveTest": "NOT_RUN"
+      }
+    },
+    "ownerIntegration": {
+      "v1": {
+        "generatorSha256": "0601b6d58c6958788774c66168f13d7c19044567015676e1429ceea832fbb7c5",
+        "policySha256": "98559bf155f6c199b353ea456ff96b060d0a9cb067c1214b1d7ac61f5e365b7f",
+        "status": "SCRATCH_SOURCE_NOT_RUN"
+      },
+      "v2": {
+        "generatorSha256": "0601b6d58c6958788774c66168f13d7c19044567015676e1429ceea832fbb7c5",
+        "policySha256": "395158f6695226c8f326e46d8c2de4a6065fbbcc3b000bae858dd2750e0bd2d7",
+        "status": "INCLUDED_IN_AN_SNAPSHOT",
+        "summary": "Generator is byte-identical to v1. Policy v2 adds receipt cross-field checks for complete ordering counts, terminal semantics, and nonempty receipt-vector cardinality.",
+        "streamApiPositiveTest": "NOT_RUN"
+      }
+    },
+    "nativeHarness": {
+      "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+      "sha256": "f3430bc9d1599595eb99add56d6a45536d0d67efb00aafdc789e4b4be794d611",
+      "bytes": 84134,
+      "relationship": "Identical in AL and AN snapshots; this run is the legacy P07 test, not a positive invocation of beginOrderingCandidates/advanceOrderingSlice/takeReadyOrdering/orderingSummary."
+    },
+    "separateOrderingStreamTestSource": {
+      "path": "ordering-stream-test-source-1/P07BranchDiagnosticsContractTest.java",
+      "sha256": "578baee19cf13dc56a5f2d04184470fa39cb8efd5c7e992114e3582017d9481f",
+      "bytes": 155193,
+      "status": "NOT_INCLUDED_IN_AN_SNAPSHOT; NOT_RUN"
+    }
+  },
+  "nativeRun": {
+    "status": "PASS_SCRATCH_LAZY_BOUND_FOCUSED_VIABILITY",
+    "helperExitCode": 0,
+    "elapsedSeconds": 33.9209141,
+    "nativeChildLimitMs": 60000,
+    "outerWatchdogMs": 600000,
+    "terminationProven": true,
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "cleanupStatus": "PASS_EXPLICIT_MARKER",
+    "cleanupProof": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+    "cleanupDurationSeconds": "NOT_REPORTED_SEPARATELY",
+    "assertions": 43778,
+    "nativeElapsedMs": 4595,
+    "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+    "recordCounts": {
+      "frame": 2,
+      "case": 2,
+      "branch": 283,
+      "cloneCanary": 2,
+      "suite": 1
+    },
+    "relaxedBoundField": {
+      "startedBranches": 2,
+      "completedBranches": 2,
+      "workUnits": 452504,
+      "preprocessingWorkUnits": 380116,
+      "ordinaryProbes": 588140,
+      "viaProbes": 147700,
+      "refreshes": 72388,
+      "observerChecks": 2,
+      "liveLayoutStableBranches": 2,
+      "routerStateStableBranches": 2,
+      "routerEffectsStableBranches": 2,
+      "incompleteStartedBranches": 0
+    },
+    "cases": [
+      {
+        "caseId": "SEED5_V10_CANDIDATE1",
+        "routeOutcome": "SUCCESS",
+        "accepted": true,
+        "expansions": 523756,
+        "orderings": 2,
+        "branches": 187,
+        "vias": 48,
+        "relaxedBoundStartedBranches": 0,
+        "relaxedBoundCompletedBranches": 0,
+        "relaxedBoundEvidenceComplete": false,
+        "orderedPadPairs": 17161,
+        "outputValidation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "inputPlacementUnchanged": true,
+        "logicalPlanUnchanged": true,
+        "logicalBoardUnchanged": true
+      },
+      {
+        "caseId": "SEED5_V11_CANDIDATE1",
+        "routeOutcome": "SUCCESS",
+        "accepted": true,
+        "expansions": 371901,
+        "orderings": 1,
+        "branches": 96,
+        "vias": 48,
+        "relaxedBoundStartedBranches": 2,
+        "relaxedBoundCompletedBranches": 2,
+        "relaxedBoundWorkUnits": 452504,
+        "relaxedBoundRefreshes": 72388,
+        "relaxedBoundEvidenceComplete": true,
+        "orderedPadPairs": 17161,
+        "outputValidation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "inputPlacementUnchanged": true,
+        "logicalPlanUnchanged": true,
+        "logicalBoardUnchanged": true
+      }
+    ]
+  },
+  "baselineComparison": {
+    "baseline": {
+      "label": "AL_LEGACY_BOUND_PAIR",
+      "status": "PASS_SCRATCH_LAZY_BOUND_FOCUSED_VIABILITY",
+      "inputPinsSha256": "953fe0d3858029dff25837e4afba180e8b9e719969bf4d6544dc37bd8ffa4aac",
+      "helperExitCode": 0,
+      "elapsedSeconds": 33.945982,
+      "cleanupStatus": "PASS_EXPLICIT_MARKER",
+      "cleanupDurationSeconds": "NOT_REPORTED_SEPARATELY"
+    },
+    "comparisonReader": {
+      "version": 2,
+      "status": "STRUCTURED_MATCH_AFTER_DECLARED_NORMALIZATION",
+      "readerExitCode": 0,
+      "readerElapsedSeconds": 9.0737486,
+      "readerTimingScope": "PowerShell startup and structured parsing; not product runtime",
+      "totalTaggedRecordsPerRun": 290,
+      "tagCounts": {
+        "P07_LAZY_BOUND_QUERY_CLONE_CANARY": 2,
+        "P07_SAVED_PAIRED_ROUTE_PROBE_BRANCH": 283,
+        "P07_SAVED_PAIRED_ROUTE_PROBE_CASE": 2,
+        "P07_SAVED_PAIRED_ROUTE_PROBE_FRAME": 2,
+        "P07_SAVED_PAIRED_ROUTE_PROBE_SUITE": 1
+      },
+      "recordTypeOrderEqual": true,
+      "consoleReceiptParityBothRuns": true,
+      "allTaggedFieldsCompared": true,
+      "nonNormalizedFieldDifferences": 0,
+      "unrecognizedTags": 0,
+      "suppressedFields": false,
+      "normalizedFields": [
+        "runId",
+        "frameId",
+        "elapsedMs",
+        "baselineElapsedMs",
+        "caseElapsedMs",
+        "diagnosticElapsedMs",
+        "nativeElapsedMs"
+      ],
+      "identifierChanges": {
+        "runIdRecords": 290,
+        "frameIdRecords": 4
+      },
+      "timingChanges": [
+        {
+          "tag": "P07_SAVED_PAIRED_ROUTE_PROBE_CASE",
+          "caseOrdinal": 1,
+          "field": "baselineElapsedMs",
+          "baseline": 833,
+          "current": 801,
+          "delta": -32
+        },
+        {
+          "tag": "P07_SAVED_PAIRED_ROUTE_PROBE_CASE",
+          "caseOrdinal": 1,
+          "field": "caseElapsedMs",
+          "baseline": 2602,
+          "current": 2679,
+          "delta": 77
+        },
+        {
+          "tag": "P07_SAVED_PAIRED_ROUTE_PROBE_CASE",
+          "caseOrdinal": 1,
+          "field": "diagnosticElapsedMs",
+          "baseline": 1087,
+          "current": 1098,
+          "delta": 11
+        },
+        {
+          "tag": "P07_SAVED_PAIRED_ROUTE_PROBE_CASE",
+          "caseOrdinal": 2,
+          "field": "baselineElapsedMs",
+          "baseline": 768,
+          "current": 747,
+          "delta": -21
+        },
+        {
+          "tag": "P07_SAVED_PAIRED_ROUTE_PROBE_CASE",
+          "caseOrdinal": 2,
+          "field": "caseElapsedMs",
+          "baseline": 1768,
+          "current": 1790,
+          "delta": 22
+        },
+        {
+          "tag": "P07_SAVED_PAIRED_ROUTE_PROBE_CASE",
+          "caseOrdinal": 2,
+          "field": "diagnosticElapsedMs",
+          "baseline": 818,
+          "current": 863,
+          "delta": 45
+        },
+        {
+          "tag": "P07_SAVED_PAIRED_ROUTE_PROBE_SUITE",
+          "caseOrdinal": 1,
+          "field": "nativeElapsedMs",
+          "baseline": 4470,
+          "current": 4595,
+          "delta": 125
+        }
+      ],
+      "allAdditionalTimingFieldsRecognized": true
+    },
+    "readerAttemptHistory": [
+      {
+        "attempt": "initial scratch-directory setup",
+        "status": "FAILED_BEFORE_READER_SOURCE_WRITE",
+        "error": "New-Item -LiteralPath is unsupported by the active Windows PowerShell version.",
+        "readerLaunched": false,
+        "artifact": "ordering-stream-field-comparison-setup-attempt1.json"
+      },
+      {
+        "attempt": "comparison reader v1",
+        "status": "FAILED_READER_ERROR",
+        "exitCode": 1,
+        "elapsedSeconds": 10.0608896,
+        "error": "System.Object[] did not contain a ToArray method during summary construction.",
+        "stderrBytes": 95,
+        "stdoutBytes": 0,
+        "artifact": "ordering-stream-field-comparison-reader-1/comparison-reader-result-v1.json"
+      },
+      {
+        "attempt": "comparison reader v2",
+        "status": "PASS",
+        "exitCode": 0,
+        "elapsedSeconds": 9.0737486,
+        "stderrBytes": 0,
+        "stdoutBytes": 0,
+        "artifact": "ordering-stream-field-comparison-reader-1/comparison-reader-result-v2.json"
+      }
+    ],
+    "interpretation": "The comparator checks only emitted legacy P07 diagnostic/case/clone fields. Matching legacy records is a bounded regression result and does not validate the newly added ordering-stream API or generator/Medium stream integration."
+  },
+  "limitations": [
+    "The native run compiles the selected AN snapshot and validates the existing legacy first-success field and clone fixtures, but it does not positively call the stream API or validate its pending-result handoff, terminal summary, observer cancellation, or generator receipt admission.",
+    "The direct output comparison changes only run/frame identifiers and the listed elapsed-time fields; it is restricted to the 290 tagged records emitted by the fixed two-case legacy suite.",
+    "Only two fixed saved seed-5 candidate-1 routes were tested; no full generator population, held-out cohort, full72 matrix, GWT build, browser/player run, or Q100 qualification is established.",
+    "The source overlays and source epoch labels are scratch-only and remain unadopted. This packet does not imply production route or layout qualification."
+  ],
+  "artifacts": [
+    {
+      "path": "ordering-stream-field-v1-sealed-pins.json",
+      "role": "AN_1059_INPUT_PINS",
+      "bytes": 204438,
+      "sha256": "e6eab43749a61115b0ed8822303efd6e89f8d123a76836c94dc7ce17a9d85928",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-inputs-sealed1.json",
+      "role": "AN_INPUT_SEAL",
+      "bytes": 2880,
+      "sha256": "69c15c9988e936e5ed040b2f52140e36dd12594db6f7a1324f67cc552283d00e",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-copy-overlay-audit1.json",
+      "role": "AN_COPY_AND_OVERLAY_AUDIT",
+      "bytes": 3181,
+      "sha256": "b7353143cfefdf3c3c4d854dc050e34bc0f027db3e12105d557e2745b3c30eb7",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-router-source-1/PcbLayerRoutingPrototype.java",
+      "role": "ROUTER_V1_SOURCE_NOT_RUN",
+      "bytes": 82717,
+      "sha256": "78171ce39bc43b905e34a650b55157fa78378d01434cdd2f6981560d9f2209d7",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-router-source-1/diff.patch",
+      "role": "ROUTER_V1_DIFF",
+      "bytes": 16150,
+      "sha256": "d17ceab28f34ab5017605650ec18887a9d0568087109bce84244a43a93fefd3a",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-router-source-1/spec.json",
+      "role": "ROUTER_V1_SPEC",
+      "bytes": 4177,
+      "sha256": "5a2021f5ecf935cc89533640458434eba622d234584f942810ffb4ec86d8f0eb",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-router-review-1/review.md",
+      "role": "ROUTER_V1_BLOCKING_STATIC_REVIEW",
+      "bytes": 3323,
+      "sha256": "24b73558fa5590806c3802acea935cab9d9571d8448541e55965cb554e1d00a4",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-router-source-2/PcbLayerRoutingPrototype.java",
+      "role": "ROUTER_V2_SOURCE_INCLUDED_IN_SNAPSHOT",
+      "bytes": 81651,
+      "sha256": "d8d176503f12338230d75e5a8477fac13395821d124a3f1aadb7fadba95338c9",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-router-source-2/diff.patch",
+      "role": "ROUTER_V2_DIFF",
+      "bytes": 17312,
+      "sha256": "d3338347a4dd62b073161a334ebea311b46453725bb2dcf1c025ddeba6262f2b",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-router-source-2/spec.json",
+      "role": "ROUTER_V2_SPEC",
+      "bytes": 4580,
+      "sha256": "a306f92f34bfca5f9b2147bf6fb6572a87964ac2ccbf37aaede031b4d91051e3",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-router-review-2/review.md",
+      "role": "ROUTER_V2_STATIC_REVIEW",
+      "bytes": 4570,
+      "sha256": "0f2ee108a33c1dc2317c3ee20d7671aa6e9d195705393f4a22ecaa4e9ff78ab5",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-owner-source-1/SeededPcbLayoutGenerator.java",
+      "role": "OWNER_V1_GENERATOR_SOURCE",
+      "bytes": 101405,
+      "sha256": "0601b6d58c6958788774c66168f13d7c19044567015676e1429ceea832fbb7c5",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-owner-source-1/MediumBoardPhysicalPolicy.java",
+      "role": "OWNER_V1_POLICY_SOURCE",
+      "bytes": 36442,
+      "sha256": "98559bf155f6c199b353ea456ff96b060d0a9cb067c1214b1d7ac61f5e365b7f",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-owner-source-1/diff.patch",
+      "role": "OWNER_V1_DIFF",
+      "bytes": 23359,
+      "sha256": "8f9ea8878fa8870f176a3840f27c650155850132bf1b29aeccbec16d6197e8e0",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-owner-source-1/spec.json",
+      "role": "OWNER_V1_SPEC",
+      "bytes": 3538,
+      "sha256": "37492f2f0992a8b223433b12c4269f34fcabc73e1455b8443849a5d5a3208939",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-owner-source-v2/SeededPcbLayoutGenerator.java",
+      "role": "OWNER_V2_GENERATOR_SOURCE",
+      "bytes": 101405,
+      "sha256": "0601b6d58c6958788774c66168f13d7c19044567015676e1429ceea832fbb7c5",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-owner-source-v2/MediumBoardPhysicalPolicy.java",
+      "role": "OWNER_V2_POLICY_SOURCE_INCLUDED_IN_SNAPSHOT",
+      "bytes": 36800,
+      "sha256": "395158f6695226c8f326e46d8c2de4a6065fbbcc3b000bae858dd2750e0bd2d7",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-owner-source-v2/diff.patch",
+      "role": "OWNER_V2_DIFF",
+      "bytes": 2188,
+      "sha256": "6b22be264150bed52e0fc51fd8587916991286c5e8b58db6a427cdebed36afe4",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-owner-source-v2/spec.json",
+      "role": "OWNER_V2_SPEC",
+      "bytes": 2235,
+      "sha256": "18e583a9706d8e120788edd51d4b3dc160f34dddd568d70ba75ee2525b7137c3",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-inputs-1/src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "role": "AN_SNAPSHOT_ROUTER_SOURCE",
+      "bytes": 81651,
+      "sha256": "d8d176503f12338230d75e5a8477fac13395821d124a3f1aadb7fadba95338c9",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-inputs-1/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "role": "AN_SNAPSHOT_GENERATOR_SOURCE",
+      "bytes": 101405,
+      "sha256": "0601b6d58c6958788774c66168f13d7c19044567015676e1429ceea832fbb7c5",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-inputs-1/src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java",
+      "role": "AN_SNAPSHOT_POLICY_SOURCE",
+      "bytes": 36800,
+      "sha256": "395158f6695226c8f326e46d8c2de4a6065fbbcc3b000bae858dd2750e0bd2d7",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-inputs-1/src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "role": "AN_SNAPSHOT_UNCHANGED_QUERY_SOURCE",
+      "bytes": 86193,
+      "sha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-inputs-1/tests/contracts/P07BranchDiagnosticsContractTest.java",
+      "role": "AN_NATIVE_TEST_HARNESS",
+      "bytes": 84134,
+      "sha256": "f3430bc9d1599595eb99add56d6a45536d0d67efb00aafdc789e4b4be794d611",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-test-source-1/P07BranchDiagnosticsContractTest.java",
+      "role": "SEPARATE_STREAM_TEST_SOURCE_NOT_RUN",
+      "bytes": 155193,
+      "sha256": "578baee19cf13dc56a5f2d04184470fa39cb8efd5c7e992114e3582017d9481f",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-test-source-1/P07BranchDiagnosticsContractTest.spec.json",
+      "role": "SEPARATE_STREAM_TEST_SPEC_NOT_RUN",
+      "bytes": 3526,
+      "sha256": "b2364b3cb5fff8799552c47121349a0d128b2a9f5c4d243a21088b8789f7685a",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "run-ordering-stream-field-probe.ps1",
+      "role": "AN_NATIVE_RUN_WRAPPER",
+      "bytes": 4432,
+      "sha256": "461ba47a1d4608ee16185d2029012481b4fcc2995526d5a34e829e5f97280a3d",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-observations-1/ordering-stream-field-1-result.json",
+      "role": "AN_NATIVE_RESULT",
+      "bytes": 906,
+      "sha256": "c9842fb64753ab387df34cc03d916d8c2c8d8ca9837d465e4dcbcd13d00959c2",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-observations-1/ordering-stream-field-1-console.txt",
+      "role": "AN_NATIVE_STDOUT",
+      "bytes": 299481,
+      "sha256": "3b073b851dc1a9106fd374e5bb35f43712c4aaa0660eb0ca1b6215de7856cbc9",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-observations-1/ordering-stream-field-1-receipt.txt",
+      "role": "AN_NATIVE_RECEIPT",
+      "bytes": 298341,
+      "sha256": "8df92d49ee507e0e2cd983ffb717f23d2b6e0d1856cfc705e685a64767f30511",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-observations-1/ordering-stream-field-1-stderr.txt",
+      "role": "AN_NATIVE_STDERR",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-observations-1/ordering-stream-field-1-launcher.json",
+      "role": "AN_LAUNCHER_METADATA_HASH_ONLY",
+      "bytes": 228,
+      "sha256": "2d2764ae8b4b929601fed5dde8e542bce237d8e379c4e445249214482e8a993d",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "late-bound-pair-sealed-pins1.json",
+      "role": "AL_1059_INPUT_PINS",
+      "bytes": 199140,
+      "sha256": "953fe0d3858029dff25837e4afba180e8b9e719969bf4d6544dc37bd8ffa4aac",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "late-bound-pair-inputs-sealed1.json",
+      "role": "AL_INPUT_SEAL",
+      "bytes": 1257,
+      "sha256": "91432173280351d2472e3401c393bd081e95570f08c6f513da9e0ce90e0eb143",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "late-bound-copy1.json",
+      "role": "AL_COPY_AUDIT",
+      "bytes": 1762,
+      "sha256": "7722b9b2022e891795dda9af123a964ebc63a4006d6ce7e894783239fc58da6f",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "late-bound-pair-inputs-1/src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "role": "AL_BASELINE_ROUTER_SOURCE",
+      "bytes": 71376,
+      "sha256": "b0be7e2c553eca09df2109ab242676434324615ef45721024d11491731ffac5d",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "late-bound-pair-inputs-1/src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "role": "AL_BASELINE_GENERATOR_SOURCE",
+      "bytes": 95965,
+      "sha256": "84fbbadb24b585a10dcd01af81b8be9109df99ca9b3b337391836c75424c467d",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "late-bound-pair-inputs-1/src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java",
+      "role": "AL_BASELINE_POLICY_SOURCE",
+      "bytes": 29556,
+      "sha256": "ac2713b172c186292a9b1bd6f877358647f8b22da1e4c83d716cca5dce451cb5",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "late-bound-pair-inputs-1/src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "role": "AL_BASELINE_UNCHANGED_QUERY_SOURCE",
+      "bytes": 86193,
+      "sha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "late-bound-pair-inputs-1/tests/contracts/P07BranchDiagnosticsContractTest.java",
+      "role": "AL_NATIVE_TEST_HARNESS",
+      "bytes": 84134,
+      "sha256": "f3430bc9d1599595eb99add56d6a45536d0d67efb00aafdc789e4b4be794d611",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "late-bound-observations-1/late-bound-pair-1-result.json",
+      "role": "AL_NATIVE_RESULT",
+      "bytes": 869,
+      "sha256": "f3e66e0670d961b56de378e818d751d05d8d8c7614bf26b285c55fa9dc539db1",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "late-bound-observations-1/late-bound-pair-1-console.txt",
+      "role": "AL_NATIVE_STDOUT",
+      "bytes": 299481,
+      "sha256": "f0ddeb2a5c1da4ec1abd273d1ff84b23746e59ccc2e5754f995995e41d038565",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "late-bound-observations-1/late-bound-pair-1-receipt.txt",
+      "role": "AL_NATIVE_RECEIPT",
+      "bytes": 298341,
+      "sha256": "adbcc84e8fdf309b1545a68f2c545443a20f062080677bf78fa86cc31c7b9045",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "late-bound-observations-1/late-bound-pair-1-stderr.txt",
+      "role": "AL_NATIVE_STDERR",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "late-bound-observations-1/late-bound-pair-1-launcher.json",
+      "role": "AL_LAUNCHER_METADATA_HASH_ONLY",
+      "bytes": 224,
+      "sha256": "64a52da17efdf397343d383ca99c2e25c334d1e1ee43fec7e4ce2231b6e04685",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-comparison-setup-attempt1.json",
+      "role": "COMPARATOR_SETUP_FAILURE_RECORD",
+      "bytes": 595,
+      "sha256": "51cce6f193e5469039d479ebc0c4fe474589721b6a28cca989132d118e347de1",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-comparison-reader-1/compare_ordering_stream_fields_v1.ps1",
+      "role": "COMPARATOR_V1_SOURCE_FAILED",
+      "bytes": 14707,
+      "sha256": "68145ecf81f5488a470022b1a3088ef85b4cf0d9f1b0c31e0cef0154b9dbb2bf",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-comparison-reader-1/run_comparison_reader_v1.ps1",
+      "role": "COMPARATOR_V1_RUNNER",
+      "bytes": 2710,
+      "sha256": "7cbefac14401b5f77bfc1ef60f91a9532865108399220550d38170556c1ee22c",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-comparison-reader-1/comparison-reader-v1-execution.json",
+      "role": "COMPARATOR_V1_EXECUTION",
+      "bytes": 903,
+      "sha256": "07d7218e0dbfe6f414f0d4e37ee61c6a48eabebde0032582373d2a2baba2bdc2",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-comparison-reader-1/comparison-reader-v1-stdout.txt",
+      "role": "COMPARATOR_V1_STDOUT",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-comparison-reader-1/comparison-reader-v1-stderr.txt",
+      "role": "COMPARATOR_V1_STDERR",
+      "bytes": 95,
+      "sha256": "761a035a9910f599e36258a272268ab242fe27633ed479f3be210b6657328e6c",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-comparison-reader-1/comparison-reader-result-v1.json",
+      "role": "COMPARATOR_V1_FAILED_RESULT",
+      "bytes": 617,
+      "sha256": "8bef07d7a482dbaa726b9ae9cf15724391a4680a2765bfe815f196cedac3de3c",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-comparison-reader-1/compare_ordering_stream_fields_v2.ps1",
+      "role": "COMPARATOR_V2_SOURCE_PASS",
+      "bytes": 14687,
+      "sha256": "196d47ba71cd77013416d3c8d67f05f293aa4ebd832efca1b0e33a2891541103",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-comparison-reader-1/run_comparison_reader_v2.ps1",
+      "role": "COMPARATOR_V2_RUNNER",
+      "bytes": 2710,
+      "sha256": "53e338d28d478fa706e4949e05e1a15333a27556636e188c095493556524bcdf",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-comparison-reader-1/comparison-reader-v2-execution.json",
+      "role": "COMPARATOR_V2_EXECUTION",
+      "bytes": 903,
+      "sha256": "6a6f5496eea118e8eb89c1ddaf9886ffabd7f0340495321bc1ca522cbf326614",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-comparison-reader-1/comparison-reader-v2-stdout.txt",
+      "role": "COMPARATOR_V2_STDOUT",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-comparison-reader-1/comparison-reader-v2-stderr.txt",
+      "role": "COMPARATOR_V2_STDERR",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "path": "ordering-stream-field-comparison-reader-1/comparison-reader-result-v2.json",
+      "role": "COMPARATOR_V2_STRUCTURED_RESULT",
+      "bytes": 14012,
+      "sha256": "907ab06c30076505bdf42cefcd0de4b7b04ea28231d933509a7f528cb0c98cc0",
+      "rawContentsIncluded": false
+    }
+  ]
+}

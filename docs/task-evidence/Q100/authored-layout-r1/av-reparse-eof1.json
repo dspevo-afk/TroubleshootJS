@@ -1,0 +1,81 @@
+{
+  "protocol": "q100-a04-namespace-reparse-eof-host-check-v1",
+  "status": "FAIL",
+  "qualification": "FOCUSED_HOST_CONTRACT_ONLY",
+  "acceptance": "NOT_EVALUATED",
+  "source": {
+    "path": "tests/contracts/namespace-census-reparse.ps1",
+    "preFixSha256": "6e7881b68b25d86da8c33e63b4278c8c1a3366096d902c21848e737cb61153b8",
+    "preFixBytes": 14237,
+    "postFixSha256": "48129123da36f7d07c371aae5b5b44f4947a654f5a6c61ad961fae4f2d7e08b2",
+    "postFixBytes": 14236,
+    "change": "Removed exactly one extra final LF byte; retained the final LF and all preceding bytes",
+    "diff": "0 additions, 1 deletion; git diff --check clean"
+  },
+  "module": {
+    "path": "scripts/VerifierIsolation.psm1",
+    "expectedSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "observedBeforeLaunchSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77"
+  },
+  "contract": {
+    "assertionsExpected": 57,
+    "assertionsObserved": null,
+    "assertionsCompleted": 0,
+    "markerSeen": false,
+    "cleanupMs": null,
+    "cleanupProven": false,
+    "exitCode": 1,
+    "elapsedMs": 328,
+    "failure": "WinPS5 could not resolve Get-FileHash; contract terminated during module-hash preflight before assertions or context setup",
+    "stdout": {
+      "leaf": "namespace-census-reparse.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "leaf": "namespace-census-reparse.stderr.txt",
+      "bytes": 515,
+      "sha256": "26429dab73bd45e68dec77555504040bac3270abcffe28038c4e7ba5945a7ff5"
+    },
+    "process": {
+      "executable": "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+      "pid": 7460,
+      "creationTimeUtcTicks": 639290627619993100,
+      "arguments": "-NoProfile -File tests/contracts/namespace-census-reparse.ps1 -ModulePath scripts/VerifierIsolation.psm1",
+      "processExited": true
+    }
+  },
+  "focusedDiagnosis": {
+    "status": "DIAG_COMPLETE",
+    "powershellVersion": "5.1.26100.9711",
+    "exitCode": 0,
+    "elapsedMs": 256,
+    "process": {
+      "executable": "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+      "pid": 34224,
+      "creationTimeUtcTicks": 639290628013119143
+    },
+    "observations": [
+      "PSModulePath included the Windows PowerShell v1.0 Modules directory; no path/environment modification was made.",
+      "Microsoft.PowerShell.Utility was listed as available in two locations, but Get-FileHash did not resolve in the NoProfile child.",
+      "No contract retry or alternate invocation was performed."
+    ]
+  },
+  "evidence": {
+    "originalSourceBackup": "namespace-census-reparse.before-eof-fix.ps1",
+    "originalBackupSha256": "6e7881b68b25d86da8c33e63b4278c8c1a3366096d902c21848e737cb61153b8",
+    "stdoutLeaf": "namespace-census-reparse.stdout.txt",
+    "stderrLeaf": "namespace-census-reparse.stderr.txt",
+    "launcherLeaf": "namespace-census-reparse.launcher.json",
+    "failedRunResultLeaf": "namespace-census-reparse.result.json",
+    "diagnosisScriptLeaf": "winps5-getfilehash-diagnostic.ps1",
+    "diagnosisStdoutLeaf": "winps5-getfilehash-diagnostic.stdout.txt",
+    "diagnosisStderrLeaf": "winps5-getfilehash-diagnostic.stderr.txt",
+    "diagnosisResultLeaf": "winps5-getfilehash-diagnostic.result.json"
+  },
+  "limits": [
+    "No assertion, fixture, or module was changed to work around the missing cmdlet.",
+    "This FAIL does not establish the contract outcome; the 57-assertion host check remains unverified.",
+    "No browser, native, build, or broader gate was run."
+  ]
+}

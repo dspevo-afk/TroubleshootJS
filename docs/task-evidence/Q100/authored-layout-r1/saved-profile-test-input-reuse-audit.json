@@ -1,0 +1,251 @@
+{
+  "schema": "troubleshootjs-q100-saved-profile-test-input-reuse-audit-v1",
+  "status": "PASS_INPUT_REUSE_AUDIT_ONLY",
+  "recordedDate": "2026-10-30",
+  "candidate": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9"
+  },
+  "scope": "Read-only audit of whether S test and reader changes invalidate previously captured production, browser, normal-plan, or native evidence.",
+  "acceptanceEffect": "NONE",
+  "notA": [
+    "new gate",
+    "S acceptance",
+    "Q100 physical qualification",
+    "fresh strict normal-plan reader result"
+  ],
+  "normalPlan": {
+    "path": "docs/task-evidence/Q100/authored-layout-r1/normal-final-plan.json",
+    "sha256": "90df2a5daf84942256a31038fca7cc7ca825e0bfac989fdebd4cfed0e25e4712",
+    "schema": "tsj-r12-medium-plan/5",
+    "baseCommit": "bd846017be5c9f46b1fce3fc9fc90438318cac28",
+    "sourceBinding": "51baad3c6002cb88974ffbc5399dca707049c3aaa735d90a5b3c52246a78e40f",
+    "reader": {
+      "path": "tests/qualification/rb56-medium/read_qualification.py",
+      "sha256": "3562c3777f4cabb0dc7dc2909984d3f1228fd85d42586a8d04e877aa48ed8900",
+      "matchesPlanReaderSha256": true
+    },
+    "inputCount": 1263,
+    "currentHashAudit": {
+      "srcFilesCompared": 1189,
+      "srcMismatches": 0,
+      "scriptsCompared": 21,
+      "scriptMismatches": 0,
+      "gwtJarsCompared": 9,
+      "gwtJarMismatches": 0,
+      "changedWorkingTreeInputHashMismatches": 0
+    },
+    "sPathsPresentInManifest": false,
+    "includedTestContractPaths": [
+      "tests/contracts/Rb56ManifestContractTest.java"
+    ],
+    "readerExecutedDuringThisAudit": false,
+    "reuseConclusion": "S test files and the nested RB100 reader are outside input_paths(); the unchanged enumerated source inputs match their frozen hashes. The plan's source-input binding appears reusable, but this record does not claim a fresh strict-reader PASS."
+  },
+  "sTestInputs": {
+    "p07GeometryEpochDiagnostic": {
+      "path": "tests/contracts/P07GeometryEpochDiagnosticContractTest.java",
+      "currentSha256": "3c36b320364c39a162349cf814d9f1e0860586829b98f5956d19d7905e0caa46",
+      "currentBytes": 55735,
+      "native27PinnedSha256": "8df2d7ba251573ad7978518c8c90e63dc0fe79cf91cdb130e01197c920ed9681",
+      "native27PinDiffersFromCurrent": true,
+      "currentSavedProfileDiagnosticObserved": true
+    },
+    "savedProfileReader": {
+      "path": "tests/qualification/rb100-layout/read_saved_profile_transition.py",
+      "currentSha256": "b2b2c8721e5f852fb9e4cdd74b313dddc28d12792c8ead9e115710b21b8ac613",
+      "currentBytes": 109386,
+      "sha256RecordedByComparativeReaderEvidence": "b2b2c8721e5f852fb9e4cdd74b313dddc28d12792c8ead9e115710b21b8ac613",
+      "inNormalPlanInputs": false,
+      "inNative27SourcePins": false
+    },
+    "functionalGroupingContract": {
+      "path": "tests/contracts/PcbFunctionalGroupingContractTest.java",
+      "currentSha256": "c9396d0e93b9d042098f9e61efa0fa450e085fff96ae700b9690ebb64091a8d3",
+      "currentBytes": 44549,
+      "worktreeChangedSinceNative27": false,
+      "native27PerFilePinPresent": false,
+      "native27BehaviorExecuted": false
+    },
+    "pocketPackingContract": {
+      "path": "tests/contracts/PcbPocketPackingContractTest.java",
+      "currentSha256": "1c8085b2d0b22c1d1a8d2a388ed663da1a2f8200d7261d26a2dbe962777d6c0f",
+      "currentBytes": 6225,
+      "worktreeChangedSinceNative27": false,
+      "native27PerFilePinPresent": false,
+      "native27BehaviorExecuted": false
+    },
+    "helperCalls": [
+      {
+        "caller": "tests/contracts/P07GeometryEpochDiagnosticContractTest.java:269",
+        "callee": "PcbFunctionalGroupingContractTest.reportWhitespace"
+      },
+      {
+        "caller": "tests/contracts/PcbPocketPackingContractTest.java:53",
+        "callee": "PcbFunctionalGroupingContractTest.verifySavedUniformTraceWidths"
+      },
+      {
+        "caller": "tests/contracts/PcbPocketPackingContractTest.java:74",
+        "callee": "PcbFunctionalGroupingContractTest.reportWhitespace"
+      }
+    ]
+  },
+  "productionBuildReuse": {
+    "compilerInputDefinition": "All src files, scripts/build.ps1, and nine .tools/gwt-2.7.0 JARs; contract tests and tests/qualification scripts are excluded.",
+    "sourceFiles": 1189,
+    "buildScriptSha256": "746e3327ae4599dbaab1ea6c6eabf697fd6e9396ebacf9094f6075cf31e38f7e",
+    "verifierIsolationSha256": "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+    "verifyCurrentContractsSha256": "3169fdf3ba19eea25882c8e8d79b956b69cc28dfe0641b7fe18f582ad36bf6cd",
+    "layoutInterpretation": 23,
+    "dependencyEpoch": "tsj-generation-dependencies-v24",
+    "player": {
+      "inputFileCount": 1199,
+      "inputDigest": "ec046715efbdc5fde13e5f0a86e89b1bedf2641eb45f72061e00847caf764bca",
+      "outputFileCount": 357,
+      "outputBytes": 10200856,
+      "outputDigest": "1619931b4085bb98881de35639e843dbc4d17e7786e32067f2a2d63f3c2b7914"
+    },
+    "developer": {
+      "inputFileCount": 1199,
+      "inputDigest": "c49bc264266411f7ba1f98b80394f0f4b80ccdc94ec673866141cf2b67ac6e09",
+      "outputFileCount": 357,
+      "outputBytes": 18638683,
+      "outputDigest": "9ac5c80563f35c6c3c60158b9fbbe63424d29b396c7615426dcc52f4e0b0726e",
+      "currentWarInventoryMatches": true
+    },
+    "freshGwtBuildRequiredForSOnlyEdits": false,
+    "futureProductionSourceChangesInvalidate": true
+  },
+  "browserEvidenceReuse": {
+    "compiledCurrent": {
+      "evidencePath": "docs/task-evidence/Q100/authored-layout-r1/final-compiled-current1.json",
+      "sha256": "5a75d7e63cf56a8cc2e2b7cb7d763eddf96dbcdbb903def063fae13f079afd3e",
+      "status": "PASS",
+      "executionFileCount": 1597,
+      "provenanceCovers": [
+        "src",
+        "scripts",
+        "war"
+      ],
+      "testPathsInProvenance": false
+    },
+    "compiledE06State": {
+      "evidencePath": "docs/task-evidence/Q100/authored-layout-r1/final-compiled-e06state1.json",
+      "sha256": "add2abc9ec947261577b0221e3f7d8843a5202b69c7c29ecdbfff06d78b40d2e",
+      "status": "PASS",
+      "executionFileCount": 1597,
+      "provenanceCovers": [
+        "src",
+        "scripts",
+        "war"
+      ],
+      "testPathsInProvenance": false
+    },
+    "playerPrivacy": {
+      "evidencePath": "docs/task-evidence/Q100/authored-layout-r1/final-player-privacy1.json",
+      "sha256": "3924daf69a2434902bddac6a2f4fe5398d42c5de146952274b88304b9b7e5040",
+      "status": "PASS",
+      "playerOutputFileCount": 357,
+      "playerOutputDigest": "1619931b4085bb98881de35639e843dbc4d17e7786e32067f2a2d63f3c2b7914",
+      "playerBuildIdentityMatchesArtifact": true,
+      "testPathsInProvenance": false
+    }
+  },
+  "native27Boundary": {
+    "evidencePath": "docs/task-evidence/Q100/authored-layout-r1/final-native27.json",
+    "evidenceSha256": "4338ee76a087d921e5f88c8205b20a1bb7ff669a6bbe0ef9872d2731a28f1ca9",
+    "sourcePinsPath": "docs/task-evidence/Q100/authored-layout-r1/final-native27-source-pins.json",
+    "sourcePinsSha256": "769e1514f785fe999faf4621123b08a6d91293b866bf0225547836432dfd03aa",
+    "status": "PASS",
+    "selectedSuiteCount": 27,
+    "allContractSourcesCompiled": true,
+    "targetBehaviorSelected": {
+      "P07GeometryEpochDiagnosticContractTest": false,
+      "PcbFunctionalGroupingContractTest": false,
+      "PcbPocketPackingContractTest": false
+    },
+    "currentSavedProfileDiagnosticHadNotYetRun": true,
+    "compileEnumeration": {
+      "runner": "scripts/verify-current-contracts.ps1",
+      "runnerSha256": "3169fdf3ba19eea25882c8e8d79b956b69cc28dfe0641b7fe18f582ad36bf6cd",
+      "allClassSourcesAddedBeforeJavac": true,
+      "contractClassDefinitionLines": {
+        "PcbFunctionalGroupingContractTest": 694,
+        "PcbPocketPackingContractTest": 734,
+        "P07GeometryEpochDiagnosticContractTest": 870
+      },
+      "sourceListLines": {
+        "allTestClassSources": "893-899",
+        "javacInvocation": "908-913"
+      }
+    },
+    "interpretation": "Native27 compiled these test sources using pre-current S diagnostic bytes; only its 27 selected suites provide behavioral results. Grouping and Pocket were not behaviorally exercised."
+  },
+  "currentSavedProfileObservation": {
+    "evidencePath": "docs/task-evidence/Q100/authored-layout-r1/saved-profile-7-8-comparative-fail.json",
+    "evidenceSha256": "8db32b02f70ea4ffc44a23d51b3a54dcbef4d4d3d54c660972b12bf2d2d082d0",
+    "diagnostic": {
+      "status": "PASS_OBSERVATION_ONLY",
+      "suite": "P07GeometryEpochDiagnosticContractTest",
+      "runId": "e9a29d29-bc16-4a94-b1eb-66d47b66fcd2",
+      "cases": 12,
+      "assertions": 185085,
+      "layoutVersion": 23,
+      "dependencyEpoch": "tsj-generation-dependencies-v24",
+      "inputCount": 1059,
+      "inputPinsSha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e",
+      "inputAudit": "PASS_BEFORE_AND_AFTER",
+      "footerMarker": "PASS: P07 geometry epoch diagnostic contracts savedProfileEpoch=true cohortId=SAVED_7_8_REP assertions=185085 cases=12 layout=23 dependency=tsj-generation-dependencies-v24 layoutQualification=false adoption=false scope=OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION"
+    },
+    "baselineObservation": {
+      "layoutVersion": 22,
+      "dependencyEpoch": "tsj-generation-dependencies-v23",
+      "cases": 12,
+      "inputCount": 1059,
+      "inputPinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+      "inputAudit": "PASS_BEFORE_AND_AFTER"
+    },
+    "comparativeReader": {
+      "status": "FAIL",
+      "exitCode": 2,
+      "error": "FAIL: current violates retained source metric SAVED6_AREA[5]",
+      "outputJson": "NOT_EMITTED"
+    },
+    "adoptionOrGoldenSealing": "NONE"
+  },
+  "jdk": {
+    "currentEnvironmentRelease": "21.0.8",
+    "currentImplementor": "JetBrains s.r.o.",
+    "currentJavaExeBytes": 33432,
+    "currentJavaExeSha256": "5d3f7288ebd653721e1f2ef79b9623484cbf16ad8bb2e4b57567cde7f0a01d03",
+    "currentReleaseFileSha256": "018864009c44761bed2e2f23c993f7186364034dd0d3bdb5940762ff1aba7c0e",
+    "buildScriptRequiresJdk8": true,
+    "capturedBuildJdkBinaryHash": "NOT_RECORDED",
+    "capturedJdkMatchesCurrent": "UNVERIFIED"
+  },
+  "limitations": [
+    "This audit ran no tests, reader, gates, builds, or protected HARD data.",
+    "Current and baseline saved-profile diagnostics are observational; the separate comparative reader failed, so no S hash adoption or S acceptance follows.",
+    "The saved-profile pin bundles record aggregate 1059-input digests; this audit does not claim a per-file retained manifest for each helper source.",
+    "The current JDK 21 hash is not evidence of which JDK 8 executable produced the saved GWT artifacts.",
+    "Future changes under src, scripts/build.ps1, or the pinned GWT classpath invalidate the production input identity."
+  ],
+  "evidenceFiles": [
+    {
+      "path": "docs/task-evidence/Q100/authored-layout-r1/normal-final-plan.json",
+      "sha256": "90df2a5daf84942256a31038fca7cc7ca825e0bfac989fdebd4cfed0e25e4712"
+    },
+    {
+      "path": "docs/task-evidence/Q100/authored-layout-r1/final-source-builds.json",
+      "sha256": "ee1d2b095e0c4ba1a778103a122f4e70b6ac9ddba476f4aa095f96a25b76ab50"
+    },
+    {
+      "path": "docs/task-evidence/Q100/authored-layout-r1/final-native27.json",
+      "sha256": "4338ee76a087d921e5f88c8205b20a1bb7ff669a6bbe0ef9872d2731a28f1ca9"
+    },
+    {
+      "path": "docs/task-evidence/Q100/authored-layout-r1/saved-profile-7-8-comparative-fail.json",
+      "sha256": "8db32b02f70ea4ffc44a23d51b3a54dcbef4d4d3d54c660972b12bf2d2d082d0"
+    }
+  ]
+}

@@ -1,0 +1,255 @@
+{
+  "schema": "p07-full-footprint-score-observation-v1",
+  "status": "FAIL_REPRESENTATIVE_COHORT",
+  "scope": "SCRATCH_ONLY_FULL_FOOTPRINT_SCORE_PROTOTYPE",
+  "adoption": false,
+  "layoutQualification": false,
+  "q100Qualification": false,
+  "overallInterpretation": "The 12-case saved-profile holdout passed and its corrected scoped reader passed four same-source comparisons. The representative cohort failed at case 5 of 12; seven cases did not run. The initial reader attempt failed setup and produced no comparison. This packet does not establish prototype acceptance.",
+  "sourceBinding": {
+    "protocol": "p07-full-footprint-score-input-seal-v1",
+    "treatment": "FULL_FOOTPRINT_SCORE_SCRATCH_ONLY",
+    "baseEpochLabelsAdopted": false,
+    "parentInputCount": 1059,
+    "parentPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+    "inputCount": 1059,
+    "inputPinsSha256": "454f45032c02f28053b44c6ae2f8dc079fa1bcffe9c2985ddb132454b51960c5",
+    "unchangedInputCount": 1057,
+    "changedProductionInputs": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbFootprint.java",
+        "beforeSha256": "605b7fdc9d915b5cc87e1dfb5156bd8f7a5f74d6d8c2fdd9fc0cb66466affcc0",
+        "afterSha256": "3a5ca2643d8a6e003464263eb46c96eb6d8529d0a59b7f9cb73cd7f807970023"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+        "beforeSha256": "f30032aeec5dc29d5866fa64d2003fd9ea20f80857bbb156d95c4072e6b03d0c",
+        "afterSha256": "458925ad6d2577dbeee9b04103784ddc71135c42f2c5e16acafdc7b1233d27bb"
+      }
+    ],
+    "experimentalChange": {
+      "footprintAccessor": "PcbFootprint.getOccupiedContentBounds",
+      "accessorReturnsCopy": true,
+      "computedAtConstruction": true,
+      "scoreOwner": "PcbPlacementPlanner.mediumPlacementScore",
+      "areaDeltaWeight": 800,
+      "scoreGate": "existing scoreWholeContent only",
+      "connectorFootprintsIncluded": true,
+      "placementEnvelopeChanged": false,
+      "otherScoreTermsAndCandidateOrderChanged": false,
+      "routingCandidateSubsetsOrLimitsChanged": false,
+      "boundsIncluded": [
+        "component body, keepout, routing courtyard, selection and drag envelopes",
+        "physical terminal pads and board-pad probes",
+        "connected and lifted lead bounds and their component-lead probes",
+        "placed pads and pad probes"
+      ],
+      "boundsExcluded": [
+        "routing traces",
+        "holes and vias",
+        "silkscreen labels",
+        "separate escape-endpoint or access reservations"
+      ]
+    },
+    "layoutVersion": 24,
+    "dependencyEpoch": "tsj-generation-dependencies-v25",
+    "seal": {
+      "file": "saved-profile-full-footprint-score-inputs-sealed1.json",
+      "bytes": 1184,
+      "sha256": "d92d06a83b22ddc96f69385a04580c99d54c0dac90f2924e8d4f5fd6da18596d"
+    },
+    "variantPins": {
+      "file": "saved-profile-full-footprint-score-sealed-pins.json",
+      "bytes": 204437,
+      "sha256": "454f45032c02f28053b44c6ae2f8dc079fa1bcffe9c2985ddb132454b51960c5"
+    },
+    "sourceSpec": {
+      "file": "spec.json",
+      "bytes": 2261,
+      "sha256": "582bb91ccb29e14378cfddc7fe3f5e01707a48dbc27622c01c3b25ec9a4ea0dc"
+    },
+    "sourceDiff": {
+      "file": "diff.patch",
+      "bytes": 5102,
+      "sha256": "5e03fcf8387141c5111a07891ad3a6ab9735cdaddd4464fdd0dc0da0d2e1fe81"
+    },
+    "sourceFiles": [
+      {
+        "file": "PcbFootprint.java",
+        "bytes": 13226,
+        "sha256": "3a5ca2643d8a6e003464263eb46c96eb6d8529d0a59b7f9cb73cd7f807970023"
+      },
+      {
+        "file": "PcbPlacementPlanner.java",
+        "bytes": 115484,
+        "sha256": "458925ad6d2577dbeee9b04103784ddc71135c42f2c5e16acafdc7b1233d27bb"
+      }
+    ],
+    "runner": {
+      "file": "run-saved-profile-full-footprint-score.ps1",
+      "bytes": 4826,
+      "sha256": "06d0c09918d3b09ee70611e697df3b3b21d288105bbe25830ae2163b18967bdb"
+    },
+    "nativeChildLimitMs": 180000,
+    "outerWatchdogMs": 600000
+  },
+  "nativeRuns": [
+    {
+      "cohortId": "SAVED_10_11_12_HOLDOUT",
+      "source": "current",
+      "suite": "P07GeometryEpochDiagnosticContractTest",
+      "status": "PASS_OBSERVATION_ONLY",
+      "helperExitCode": 0,
+      "helperElapsedSeconds": 68.4789149,
+      "nativeReceipt": {
+        "assertions": 196214,
+        "cases": 12,
+        "layoutVersion": 24,
+        "dependencyEpoch": "tsj-generation-dependencies-v25",
+        "layoutQualification": false,
+        "adoption": false,
+        "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION"
+      },
+      "inputAudit": "PASS_BEFORE_AND_AFTER",
+      "inputCount": 1059,
+      "inputPinsSha256": "454f45032c02f28053b44c6ae2f8dc079fa1bcffe9c2985ddb132454b51960c5",
+      "terminationProven": true,
+      "cleanup": {
+        "status": "PASS",
+        "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "elapsedSeconds": null,
+        "timing": "Cleanup-only duration was not separately reported."
+      },
+      "artifacts": [
+        { "file": "saved-profile-current-10-11-12-holdout-1-result.json", "bytes": 932, "sha256": "47bb912852e619b8643888671847c35559f07098f707c65a5145413da03d39ae" },
+        { "file": "saved-profile-current-10-11-12-holdout-1-launcher.json", "bytes": 289, "sha256": "24b510cbf1a06d10760e921a12a5d14ec756f82e40a7793ab91e6a14bd5359ee" },
+        { "file": "saved-profile-current-10-11-12-holdout-1-console.txt", "bytes": 7063046, "sha256": "ed7733cdd136799aedabcd9076383016981627ba3f4cac3844bee92da070caa6" },
+        { "file": "saved-profile-current-10-11-12-holdout-1-receipt.txt", "bytes": 7061906, "sha256": "e2cdc4715df31a3559e24096c1d9fc270249799bdd9e1fe2a3a371ea06f3019e" },
+        { "file": "saved-profile-current-10-11-12-holdout-1-stderr.txt", "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" }
+      ]
+    },
+    {
+      "cohortId": "SAVED_11_12_REP",
+      "source": "current",
+      "suite": "P07GeometryEpochDiagnosticContractTest",
+      "status": "FAIL_INCOMPLETE_REPRESENTATIVE_COHORT",
+      "helperExitCode": 2,
+      "helperElapsedSeconds": 50.3686351,
+      "plannedCases": 12,
+      "completedCases": 4,
+      "failedCases": 1,
+      "failedCase": {
+        "ordinal": 5,
+        "rootSeed": "17",
+        "placementInterpretationVersion": 11,
+        "assertion": "the targeted primary-side void shrinks by at least half",
+        "baselinePrimarySideVoidArea": 1186500,
+        "requiredMaximumArea": 593250,
+        "observedTargetedPrimarySideVoidArea": null,
+        "note": "The failing assertion did not emit the targeted-side measured value. The separate PCB_WHITESPACE_CASE observation below is a different, broader rectangle metric and is not used as a substitute."
+      },
+      "separateWhitespaceObservation": {
+        "sourceRecord": "PCB_WHITESPACE_CASE",
+        "rootSeed": "17",
+        "placementInterpretationVersion": 11,
+        "parts": 53,
+        "gridUnits": 10,
+        "sampledCells": 71441,
+        "packageAccessOccupiedCells": 28085,
+        "protectedFreeCells": 36706,
+        "protectedFreeFraction": 0.5137945997396453,
+        "largestProtectedEmptyRectangle": {
+          "x": 60,
+          "y": 1160,
+          "width": 1330,
+          "height": 850,
+          "area": 1130500
+        }
+      },
+      "casesAfterFailureNotRun": 7,
+      "successReceiptPresent": false,
+      "inputAudit": "PASS_BEFORE_AND_AFTER",
+      "inputCount": 1059,
+      "inputPinsSha256": "454f45032c02f28053b44c6ae2f8dc079fa1bcffe9c2985ddb132454b51960c5",
+      "terminationProven": true,
+      "cleanup": {
+        "status": "PASS",
+        "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+        "elapsedSeconds": null,
+        "timing": "Cleanup-only duration was not separately reported."
+      },
+      "artifacts": [
+        { "file": "saved-profile-current-11-12-rep-1-result.json", "bytes": 917, "sha256": "67a1d76ffad0312a341e05f5b2b19dd5a69cd787e490247b49ec9e32bb42da8d" },
+        { "file": "saved-profile-current-11-12-rep-1-launcher.json", "bytes": 275, "sha256": "2d41e9b2ab9bece7da5f41fc0d1750816d1e0024cdd86a695e743a3442dcc00d" },
+        { "file": "saved-profile-current-11-12-rep-1-console.txt", "bytes": 2150311, "sha256": "301895178a15f90286d414f63da544e4163a96bca36dd31a454f83c76483ec4e" },
+        { "file": "saved-profile-current-11-12-rep-1-stderr.txt", "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" },
+        { "file": "saved-profile-current-11-12-rep-1-receipt.txt", "present": false }
+      ]
+    }
+  ],
+  "comparativeReaders": {
+    "firstAttempt": {
+      "status": "FAIL_READER_SETUP",
+      "exitCode": 1,
+      "cause": "The reader requested the catalog from a nonexistent scratch leaf; the frozen catalog was in the controlled evidence packet. No comparative result was produced.",
+      "nativeRerun": false,
+      "readerSha256": "96739910c2fcffd055cc2c20b987a55ff478260142c142924dd84f972f4e4e06",
+      "artifact": {
+        "file": "full-footprint-score-reader1-setup-fail.json",
+        "bytes": 355,
+        "sha256": "a40367626939eb9ddc07924306c6cba4c94a2838316b40558ee7d57ce3af845b"
+      },
+      "readerScript": {
+        "file": "read-full-footprint-score-observation.py",
+        "bytes": 3397,
+        "sha256": "96739910c2fcffd055cc2c20b987a55ff478260142c142924dd84f972f4e4e06"
+      }
+    },
+    "correctedHoldoutReader": {
+      "status": "PASS_SCOPED_COMPARATIVE_OBSERVATIONS_ONLY",
+      "scope": "FULL_FOOTPRINT_SCORE_SCRATCH_ONLY_NOT_S_SOURCE_ACCEPTANCE",
+      "adoption": false,
+      "layoutQualification": false,
+      "baseEpochLabelsNotAdopted": true,
+      "caseCount": 12,
+      "sameSourceComparisonCount": 4,
+      "oracleCatalogSha256": "57b20a02b9f1f17671dd89a5a032cafbb792b76384cedbc85b5d69dc748d62a9",
+      "comparisons": [
+        { "rootSeed": "1", "saved10Area": 4530550, "saved11Area": 4530550, "baselineLiteralCeiling": 4615974, "operator": "<=", "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION" },
+        { "rootSeed": "7", "saved10Area": 6308302, "saved11Area": 6308302, "baselineLiteralCeiling": 6587808, "operator": "<=", "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION" },
+        { "rootSeed": "5", "saved10Area": 6219360, "saved11Area": 6219360, "baselineLiteralCeiling": 9445744, "operator": "<=", "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION" },
+        { "rootSeed": "14", "saved10Area": 6459864, "saved11Area": 6459864, "baselineLiteralCeiling": 8585034, "operator": "<=", "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION" }
+      ],
+      "failures": [],
+      "readerScript": {
+        "file": "read-full-footprint-score-observation-v2.py",
+        "bytes": 3437,
+        "sha256": "dea5444bd057153d8ff8b17d378a151edabd5cac81c2ee15566e39d5202cd648"
+      },
+      "readerOutput": {
+        "file": "full-footprint-score-holdout-reader2.json",
+        "bytes": 210323,
+        "sha256": "8c51bd522d7a58db547311472ed0e4038d31cada1f3b29bddd7ada1166796075"
+      }
+    }
+  },
+  "sourceArtifacts": [
+    { "file": "PcbFootprint.java", "bytes": 13226, "sha256": "3a5ca2643d8a6e003464263eb46c96eb6d8529d0a59b7f9cb73cd7f807970023" },
+    { "file": "PcbPlacementPlanner.java", "bytes": 115484, "sha256": "458925ad6d2577dbeee9b04103784ddc71135c42f2c5e16acafdc7b1233d27bb" },
+    { "file": "spec.json", "bytes": 2261, "sha256": "582bb91ccb29e14378cfddc7fe3f5e01707a48dbc27622c01c3b25ec9a4ea0dc" },
+    { "file": "diff.patch", "bytes": 5102, "sha256": "5e03fcf8387141c5111a07891ad3a6ab9735cdaddd4464fdd0dc0da0d2e1fe81" }
+  ],
+  "limitations": [
+    "The representative cohort failed before its 12-case run completed; its seven unrun cases remain unevaluated.",
+    "The corrected reader covers only 12 holdout rows and four same-source area comparisons; it does not repair or qualify the failed representative cohort.",
+    "The initial reader setup failure remains recorded separately; its exit code is not a native test result.",
+    "No full saved-profile census, current-Q suite, source build, or broader Q100 qualification was renewed by these observations.",
+    "A local pre-route occupied-content score term does not by itself guarantee a better final outline or retained protected-void geometry."
+  ],
+  "sanitization": {
+    "rawConsoleOrReceiptContentsEmbedded": false,
+    "absoluteMachinePathsIncluded": false,
+    "processIdentifiersIncluded": false,
+    "artifactReferences": "Basenames, byte counts and SHA-256 values only."
+  }
+}

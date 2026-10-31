@@ -1,0 +1,84 @@
+{
+  "schema": "troubleshootjs-q100-final-source-bind-audit-v1",
+  "status": "PASS_SOURCE_BINDING_AUDIT_ONLY",
+  "repository": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "worktreeClean": false,
+    "interpretation": "Compared current consumed inputs with accepted snapshots, not base HEAD."
+  },
+  "audit": {
+    "native5": {
+      "status": "PASS_CURRENT_FILES_MATCH_ALL_PINNED_INPUTS",
+      "sourceRevision": 5,
+      "inputCount": 1061,
+      "pinsSha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81",
+      "currentMatches": 1061,
+      "changed": 0,
+      "missing": 0,
+      "passingRunSha256": "15103b0087ba8457c9f8ff181b6122334cf9789f6f74af6f6d1024c4f8d1d038",
+      "suiteCount": 33,
+      "cleanupStatus": "PASS"
+    },
+    "gwtBuildInputs": {
+      "status": "PASS_CURRENT_INPUT_IDENTITIES_MATCH_SAVED_BUILDS",
+      "inputFileCountPerVariant": 1199,
+      "developerInputDigest": "5c9e0f811d28a51e13d5e3c603d7e8b855e62c8d098fa64761776cbc3d1199b0",
+      "playerInputDigest": "45654010ddaf068b1cb30a193d43084b80eed0dbfb84f3dcf5f50b6f21df0d1f",
+      "playerRefreshStatus": "PASS",
+      "supportPins": {
+        "sha256": "ad54ff0466bd396da5c778e65eba51644a151b7a50c25105530435cf99bc4e72",
+        "entryCount": 70,
+        "srcMatched": 8,
+        "scriptsMatched": 4,
+        "testsMatched": 38,
+        "docsMatched": 15,
+        "docsCount": 20,
+        "changedDocumentation": [
+          "docs/ARCHITECTURE.md",
+          "docs/CODEX_TASK_REPORT.md",
+          "docs/ROADMAP.md",
+          "docs/task-evidence/Q100/authored-layout-r1/PLAN.md",
+          "docs/task-evidence/Q100/authored-layout-r1/README.md"
+        ]
+      }
+    },
+    "currentAndE06ExecutionTree": {
+      "status": "PASS_CURRENT_EXECUTION_TREE_MATCHES_REPORTS",
+      "sourceDigest": "0cbe64a449e761ce25194c017fa0bc32f0539d598d4cc4e76a71062ede15e059",
+      "scriptDigest": "e9799a7f641bff597eabd8b70da11f8026ad6c3a764d5d06d44c0f36b1a0593c",
+      "webDigest": "cdf4eeb48553ed65fd76b1d423b8efee2eac1f9968750eeb4c22c7c767d1d61c",
+      "executionDigest": "c9d9120f51804ef4e36e97f095a45679cfc5e4fdf82cbec01e8ccb7530e0e46c",
+      "fileCount": 1597,
+      "currentTraceOffRoutes": 9,
+      "currentTraceOffStatus": "PASS",
+      "closedE06Routes": 10,
+      "closedE06Status": "PASS",
+      "closedE06Cleanup": "PASS"
+    },
+    "hostSource": {
+      "verifierIsolationSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+      "browserDriverSha256": "c9f097320ff4ea157e1c4050c49eea93b6feb9521baabed5f79eace87d1075f9",
+      "previewScriptSha256": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+      "currentVerifierModuleMatchesReports": true,
+      "browserDriverMatchesPlayerAndCurrentControl": true
+    }
+  },
+  "disposition": {
+    "changedConsumedInputsRequiringRerun": [],
+    "documentationOnlyPinDifferences": 5,
+    "conclusion": "No changed consumed production, native, GWT-input, or host execution-tree input was found against the named passing snapshots.",
+    "limitations": [
+      "Read-only source-binding audit; no gates or builds were run.",
+      "The shared current compiled-output directory contains the Developer build. The Player output identity is bound by the saved Player refresh artifact.",
+      "No full Q100 population qualification is asserted."
+    ]
+  },
+  "evidence": {
+    "scratchResult": "av-final-source-bind1/result.json",
+    "native5PinsSha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81",
+    "currentTraceOffReportSha256": "2697cb0febadf1f71769794b86ecb87fb98722fce78890f773ff4334f4af4d7a",
+    "currentTraceOnReportSha256": "d43b4024ef7e8db035a18e5e76eb108724193890ff0c03627205887bf0ebcd1e",
+    "e06StateReportSha256": "3950fa0bf786e9bdf812d4026042bd316e625ae7417fff973dc2bc57eebae195"
+  }
+}

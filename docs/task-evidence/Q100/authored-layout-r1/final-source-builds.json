@@ -1,0 +1,712 @@
+{
+  "schema": "troubleshootjs-q100-source-build-evidence-v1",
+  "scope": "Final-source Player and Developer production builds, plus binding to the separately captured Current compiled route gate. This packet does not qualify all 100 physical routes or normal-player population.",
+  "status": "PASS",
+  "performanceClaim": false,
+  "builds": [
+    {
+      "variant": "Player",
+      "status": "PASS",
+      "exitCode": 0,
+      "helperElapsedSeconds": 93.9583418,
+      "phaseTimes": {
+        "compileSeconds": 59.97,
+        "linkSeconds": 1.136,
+        "timingBasis": "GWT compiler log reported these phases separately; they are not asserted additive to helper elapsed."
+      },
+      "cleanup": {
+        "status": "PASS_BY_SUCCESSFUL_HELPER_EXIT",
+        "exitCode": 0,
+        "durationSeconds": null,
+        "durationMeasurement": "NOT_SEPARATELY_MEASURED"
+      },
+      "buildIdentity": {
+        "protocol": "troubleshootjs-production-build-identity-v1",
+        "variant": "Player",
+        "style": "OBF",
+        "inputDigest": "ec046715efbdc5fde13e5f0a86e89b1bedf2641eb45f72061e00847caf764bca",
+        "inputFileCount": 1199,
+        "outputDigest": "1619931b4085bb98881de35639e843dbc4d17e7786e32067f2a2d63f3c2b7914",
+        "outputFileCount": 357
+      },
+      "outputInventory": {
+        "capture": {
+          "file": "player-final1-inventory.json",
+          "bytes": 60778,
+          "sha256": "aec2f838478359af61c12dbccb11e897be5af8ff6797f3ae9d19f03c277b61ac"
+        },
+        "fileCount": 357,
+        "totalBytes": 10200856,
+        "cacheCount": 5,
+        "cacheBytes": 9460429,
+        "cacheFiles": [
+          {
+            "file": "3CBAE0C6FA351043E50CF4E0286E50E2.cache.js",
+            "foundExactlyOnce": true
+          },
+          {
+            "file": "3F9204CFA5CB5D4D4F2B4DA9ED94310B.cache.js",
+            "foundExactlyOnce": true
+          },
+          {
+            "file": "4C91B3F19DE38AD5CD7120F65AF57325.cache.js",
+            "foundExactlyOnce": true
+          },
+          {
+            "file": "93A9C849EE6E487AA6B80FA420BB7C34.cache.js",
+            "foundExactlyOnce": true
+          },
+          {
+            "file": "E1FC9B7128D8D37A5B08207B38F46570.cache.js",
+            "foundExactlyOnce": true
+          }
+        ]
+      },
+      "captures": [
+        {
+          "file": "player-final1-identity.json",
+          "bytes": 361,
+          "sha256": "519c8ad1bd13f381d500a81dda4f593e2576f0b59e8c603896646f500724d2e6"
+        },
+        {
+          "file": "player-final1-size.json",
+          "bytes": 1471,
+          "sha256": "0d6ded71d622e2190498b2bf90fed52ff7be485c3ef8352232d8f754b9d463ee"
+        },
+        {
+          "file": "player-final1-inventory.json",
+          "bytes": 60778,
+          "sha256": "aec2f838478359af61c12dbccb11e897be5af8ff6797f3ae9d19f03c277b61ac"
+        }
+      ],
+      "rawRunArtifacts": {
+        "result": {
+          "file": "build-player-1-result.json",
+          "bytes": 89,
+          "sha256": "29fabe9e48a817752ff98874abba03e27d294a24d59b379d0ea834f3b70bddf8"
+        },
+        "launcher": {
+          "file": "build-player-1-launcher.json",
+          "bytes": 191,
+          "sha256": "2dffe272482ce7a83cb3b7d6e979b3d0d4c0e2b4f0c408b48a426ff80d4fe227"
+        },
+        "log": {
+          "file": "build-player-1.log",
+          "bytes": 2496,
+          "sha256": "7ae56b9787f93927e34eb1385ae61167b56c8a61bff33ca5cb8a1d6bdac2bc0c"
+        },
+        "launcherMetadata": {
+          "pid": 3732,
+          "createdUtc": "2026-10-30T22:58:48.013308Z",
+          "executableBasename": "powershell.exe",
+          "task": "build-player-1"
+        }
+      },
+      "frozenInputs": {
+        "manifest": {
+          "file": "freeze-build-player-1/pins.json",
+          "bytes": 8263,
+          "sha256": "0c3cf3c89dc4e90dd2406d1d77130c74a6e366b7059b581107210f1240c4c7f8"
+        },
+        "entries": [
+          {
+            "path": "docs/ARCHITECTURE.md",
+            "sha256": "468a3cff4edef7ae8d0f4f5345000c3e60ef7c01f39a90ced289739ccbfb3299"
+          },
+          {
+            "path": "docs/CODEX_TASK_REPORT.md",
+            "sha256": "3182863ecf87d33f9076b12c93c1f14cc2e2551ea9180b5d328e16dee3000914"
+          },
+          {
+            "path": "docs/ROADMAP.md",
+            "sha256": "365a97c363654ba3a038088a1bf624df87787347753c62889da243677ac4dc46"
+          },
+          {
+            "path": "docs/task-evidence/E06/accepted-state-r1/README.md",
+            "sha256": "dc035962caa453dbac167d8e6c90a627ae2e3e151a69ad1ed6d6ef6ff007a236"
+          },
+          {
+            "path": "docs/task-evidence/Q100/authored-layout-r1/PLAN.md",
+            "sha256": "2b6d4e8b02916c909752843ada018909987ae9b0511f8ebe397367d360b9a2d4"
+          },
+          {
+            "path": "docs/task-evidence/Q100/authored-layout-r1/README.md",
+            "sha256": "506837cc51aabb1532671e83dbe19aecd1f48dd71bdca1da989f14fd5d38daa5"
+          },
+          {
+            "path": "scripts/verify-a03-browser.ps1",
+            "sha256": "235b73c338de139b498f4011bc707bed5b9f5dc8ffbee177c89c518ad49a7b7d"
+          },
+          {
+            "path": "scripts/verify-current-contracts.ps1",
+            "sha256": "246cbabcbedf7929b119a9682944f41ef91375d0e2a4e1dea3a05bd2bd36d0e7"
+          },
+          {
+            "path": "scripts/verify-e06-accepted-evidence.ps1",
+            "sha256": "2f7ab435e009d49d699abfc30ae3054fcbe712461abc1f13ef4cae3ac9bd1dc4"
+          },
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+            "sha256": "74d5cb8453e233c0c8b7ee9407558d366a6b8eb2a328aab8850568e083d927a5"
+          },
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java",
+            "sha256": "ac2713b172c186292a9b1bd6f877358647f8b22da1e4c83d716cca5dce451cb5"
+          },
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+            "sha256": "de80bb530f8dc4c246f95649875ebb4afe2428ae278513caa8963102e67c6c34"
+          },
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+            "sha256": "564adf46dc3b2d7951edb19cc2e661ca5a8c2e62cd7a19a9ecb54b94e3e9f102"
+          },
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+            "sha256": "f30032aeec5dc29d5866fa64d2003fd9ea20f80857bbb156d95c4072e6b03d0c"
+          },
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/Rb100Placement.java",
+            "sha256": "b22b4499846ec5e4e56622f5dad518d01d60bdf1e948e761ae7235b74c3fce15"
+          },
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/Rb100Plan.java",
+            "sha256": "631da559598faf50b738ccca74b726688f0533aee69108155c553727dd8f53d5"
+          },
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+            "sha256": "7bf84a2d6c4c5077638d44d1239530a694d7015106010a72840df69c8dc7d4b0"
+          },
+          {
+            "path": "tests/contracts/D01DiagnosticContractTest.java",
+            "sha256": "80bd0225451e4e1686d63d393d378eb065b49bdef13dab46e4167335cb9261ad"
+          },
+          {
+            "path": "tests/contracts/MediumBoardFloorplanningContractTest.java",
+            "sha256": "c74e0644765301e1919c37816665754ffb6108feb9d0b18007efef0a462aa84a"
+          },
+          {
+            "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+            "sha256": "0c97dd4f0e1c3f4c18c34f80ca9c827f00639d17fa0599048ba9cf0c319f8867"
+          },
+          {
+            "path": "tests/contracts/P07GeometryEpochDiagnosticContractTest.java",
+            "sha256": "8df2d7ba251573ad7978518c8c90e63dc0fe79cf91cdb130e01197c920ed9681"
+          },
+          {
+            "path": "tests/contracts/P07GridEligibilityContractTest.java",
+            "sha256": "44934f9bc1001c63cd1fdeb04fd278991b56ddd7fc16a67c69775e6d55dfcad3"
+          },
+          {
+            "path": "tests/contracts/P07LayeredRasterOracle.java",
+            "sha256": "66d0e40594165ce5620b5c28f58132ac7d8d882f532fafd4d4b77510ec3561a2"
+          },
+          {
+            "path": "tests/contracts/P07LayeredRasterOracleContractTest.java",
+            "sha256": "f67e2bb55a2f1773fb7237fccf2f8ec90bd0ec53b64f1d9547ee0dfb34cc8789"
+          },
+          {
+            "path": "tests/contracts/P07ReachedPthContractTest.java",
+            "sha256": "d384192be627929dd331e761bfb7323ac70b37f11bac061053540b34c72a5533"
+          },
+          {
+            "path": "tests/contracts/P08ReferenceConductorBuilder.java",
+            "sha256": "dbdde865a191c06e267bdbe7bae78144fa520189d652ee7d0e6458aac17586e6"
+          },
+          {
+            "path": "tests/contracts/P08ReferenceWidthContractTest.java",
+            "sha256": "b1ac3b8029f468828a4beb19a1be12cb6e236a408c5b79e083fa1c44154826e5"
+          },
+          {
+            "path": "tests/contracts/P08ScalabilityContractTest.java",
+            "sha256": "5ec454bf6b2161907aca24f150934f243b3f1854d4d3a53be7473960b025c3c6"
+          },
+          {
+            "path": "tests/contracts/PcbCompactnessContractTest.java",
+            "sha256": "f4c5af0c55088a1ff5b2962af9fb0bf497a9056934714f74544f5b56ca11a578"
+          },
+          {
+            "path": "tests/contracts/PcbCorridorOrientationContractTest.java",
+            "sha256": "ebc6192eed79fd937c4cd1e77c2c18fa57bea505a9fe83fe87ffd20b00949db9"
+          },
+          {
+            "path": "tests/contracts/PcbNormalPackingIdentityContractTest.java",
+            "sha256": "1b585cbf56d8524040e79b795694e855ddf00dc0304fd14ee5496883cd66a0b3"
+          },
+          {
+            "path": "tests/contracts/Rb100LayoutFeasibilityContractTest.java",
+            "sha256": "e324daa97b55376f11a92302f7a303bcee888ee1d42059844ecba4d29ce06a67"
+          },
+          {
+            "path": "tests/contracts/Rb100LayoutFirstRoutingDiagnosticContractTest.java",
+            "sha256": "dee2396e3e0d2490b97823aa723772b87d2526187adaf03c89068e2c30a3b05f"
+          },
+          {
+            "path": "tests/contracts/Rb100LayoutPlacementDiagnosticContractTest.java",
+            "sha256": "60c8c3a0aa97db40ee7e55e16e0996ccf003b0407f3e9c1cb1a70f33d6abb4ee"
+          },
+          {
+            "path": "tests/contracts/Rb100LayoutRoutingDiagnosticContractTest.java",
+            "sha256": "1674b69a98dd9474d29b45f8b3b79f7daa974e2d53f4e8d601cb037e036791fa"
+          },
+          {
+            "path": "tests/contracts/Rb100P07BranchDiagnosticContractTest.java",
+            "sha256": "85de5a799b021c9dca58cd6ff06bfefba8250bdcfdecce6221cb6abf0dafe190"
+          },
+          {
+            "path": "tests/contracts/Rb100P07PolicyDiagnosticContractTest.java",
+            "sha256": "0a0fdce2af8f71d00eacde34d84adbe994b71426784c05ec1b55e007b2901b27"
+          },
+          {
+            "path": "tests/contracts/Rb100PlanContractTest.java",
+            "sha256": "73d98092ca1692709a362f165d6efe974cd0f99a34403d17fb61b46defedf3aa"
+          },
+          {
+            "path": "tests/contracts/Rb56ModelIdentityContractTest.java",
+            "sha256": "119c5f2757600ceb3efbb4fcc839509fb09fc5535e8ff64ef58a09bf6ffdfa76"
+          },
+          {
+            "path": "tests/contracts/RelBSessionIdentityContractTest.java",
+            "sha256": "656f843368e21d1f1f3fa87295b94d744d3370880d046983ad222d910d0ed64c"
+          },
+          {
+            "path": "tests/qualification/rb100-layout/read_diagnostic.py",
+            "sha256": "31f65be5e11472c7b09e8141292402c641df6b735787d32eb4c904ae098981e7"
+          },
+          {
+            "path": "tests/qualification/rb100-layout/read_geometry_transition.py",
+            "sha256": "05d970c24b811ac066774daa5f750464a9334830f17550ded0222a8ca99f255c"
+          },
+          {
+            "path": "tests/qualification/rb100-layout/read_p07_branches.py",
+            "sha256": "73fb2ac73aabaa13a54713f572ff04467320a8c13cee29b29eb591f5da28febf"
+          },
+          {
+            "path": "tests/qualification/rb100-layout/read_p07_policy.py",
+            "sha256": "d8e0187d35d7b24370dec1526f850610d98b8df727fce3c66aa7afbfeb96f1e3"
+          },
+          {
+            "path": "tests/qualification/rb100-layout/read_routing_diagnostic.py",
+            "sha256": "389e937ccec44bf13c7de19732e6bd9fdf7906dfb815e4b04a9c8dc691cdfdba"
+          },
+          {
+            "path": "tests/qualification/rb56-medium/read_qualification.py",
+            "sha256": "3562c3777f4cabb0dc7dc2909984d3f1228fd85d42586a8d04e877aa48ed8900"
+          },
+          {
+            "path": "tests/qualification/rb56-medium/test_read_qualification.py",
+            "sha256": "609fb3fecd4c483b4ffc2f63215ef9f16409793a8c45aa4a2e2e98c7711df136"
+          }
+        ],
+        "currentWorktreeAudit": {
+          "pinnedEntryCount": 47,
+          "currentWorktreeMatchedCount": 34,
+          "currentWorktreeChangedCount": 9,
+          "currentWorktreeMissingCount": 4,
+          "productionSrcPinnedCount": 8,
+          "productionSrcMatchedCount": 8,
+          "productionSrcChangedPaths": [],
+          "otherChangedRelativePaths": [
+            "docs/ARCHITECTURE.md",
+            "docs/CODEX_TASK_REPORT.md",
+            "docs/ROADMAP.md",
+            "docs/task-evidence/Q100/authored-layout-r1/PLAN.md",
+            "docs/task-evidence/Q100/authored-layout-r1/README.md",
+            "scripts/verify-current-contracts.ps1",
+            "tests/contracts/PcbCorridorOrientationContractTest.java",
+            "tests/contracts/Rb100P07BranchDiagnosticContractTest.java",
+            "tests/contracts/Rb100P07PolicyDiagnosticContractTest.java"
+          ],
+          "missingRelativePaths": [
+            "tests/contracts/Rb100LayoutFeasibilityContractTest.java",
+            "tests/contracts/Rb100LayoutFirstRoutingDiagnosticContractTest.java",
+            "tests/contracts/Rb100LayoutPlacementDiagnosticContractTest.java",
+            "tests/contracts/Rb100LayoutRoutingDiagnosticContractTest.java"
+          ],
+          "interpretation": "Frozen build inputs are identified by the pin manifest. In the later worktree comparison, all pinned src/* files match; remaining differences are outside production src/."
+        }
+      }
+    },
+    {
+      "variant": "Developer",
+      "status": "PASS",
+      "exitCode": 0,
+      "helperElapsedSeconds": 121.7473675,
+      "phaseTimes": {
+        "compileSeconds": 90.259,
+        "linkSeconds": 1.495,
+        "timingBasis": "GWT compiler log reported these phases separately; they are not asserted additive to helper elapsed."
+      },
+      "cleanup": {
+        "status": "PASS_BY_SUCCESSFUL_HELPER_EXIT",
+        "exitCode": 0,
+        "durationSeconds": null,
+        "durationMeasurement": "NOT_SEPARATELY_MEASURED"
+      },
+      "buildIdentity": {
+        "protocol": "troubleshootjs-production-build-identity-v1",
+        "variant": "Developer",
+        "style": "OBF",
+        "inputDigest": "c49bc264266411f7ba1f98b80394f0f4b80ccdc94ec673866141cf2b67ac6e09",
+        "inputFileCount": 1199,
+        "outputDigest": "9ac5c80563f35c6c3c60158b9fbbe63424d29b396c7615426dcc52f4e0b0726e",
+        "outputFileCount": 357
+      },
+      "outputInventory": {
+        "capture": {
+          "file": "developer-final1-inventory.json",
+          "bytes": 60779,
+          "sha256": "b1a1c670c2195f4fc375d0ce9982bbcebdc53b17cb8ae347697e85906d761a0d"
+        },
+        "fileCount": 357,
+        "totalBytes": 18638683,
+        "cacheCount": 5,
+        "cacheBytes": 17898256,
+        "cacheFiles": [
+          {
+            "file": "2F70500B7D19B0F5CD498C97CABFD624.cache.js",
+            "foundExactlyOnce": true
+          },
+          {
+            "file": "745F12A13F220C1FA317948B307F9777.cache.js",
+            "foundExactlyOnce": true
+          },
+          {
+            "file": "A42DC8364FA5295D6EA20DCD774D072D.cache.js",
+            "foundExactlyOnce": true
+          },
+          {
+            "file": "D3261E73D766AF529E8B9D0625CB8527.cache.js",
+            "foundExactlyOnce": true
+          },
+          {
+            "file": "D54159E2D03BE80836AC6FFD18FC9E9E.cache.js",
+            "foundExactlyOnce": true
+          }
+        ]
+      },
+      "captures": [
+        {
+          "file": "developer-final1-identity.json",
+          "bytes": 364,
+          "sha256": "3ab83020ec867da0cbc8ce3f17c492aa1a0b02ad88111dc85078658fd8f23ddd"
+        },
+        {
+          "file": "developer-final1-size.json",
+          "bytes": 1477,
+          "sha256": "55cd3b9347afaa9582f071dfb62549b2227e1bb8198cea4a1fdcbb006952d7a5"
+        },
+        {
+          "file": "developer-final1-inventory.json",
+          "bytes": 60779,
+          "sha256": "b1a1c670c2195f4fc375d0ce9982bbcebdc53b17cb8ae347697e85906d761a0d"
+        }
+      ],
+      "rawRunArtifacts": {
+        "result": {
+          "file": "build-developer-1-result.json",
+          "bytes": 93,
+          "sha256": "135cc989f36e50b0c34916d5d2479b525e6244805e5a317dea80181cf1a65d7a"
+        },
+        "launcher": {
+          "file": "build-developer-1-launcher.json",
+          "bytes": 195,
+          "sha256": "a9ba2c27c6808197c7e91eda0890634dd3d7462ea67b304a89d02488564d99f3"
+        },
+        "log": {
+          "file": "build-developer-1.log",
+          "bytes": 2505,
+          "sha256": "1870d47937ccda17977df0b58ed2d67899cb85d65fc6e6070f8bb5af7c2c7050"
+        },
+        "launcherMetadata": {
+          "pid": 33920,
+          "createdUtc": "2026-10-30T23:14:41.016328Z",
+          "executableBasename": "powershell.exe",
+          "task": "build-developer-1"
+        }
+      },
+      "frozenInputs": {
+        "manifest": {
+          "file": "freeze-build-developer-1/pins.json",
+          "bytes": 9087,
+          "sha256": "8c952c4a726ccfcd551b862a4c29a96485d0842b28ffc9318a4a8aa2ddca1774"
+        },
+        "entries": [
+          {
+            "path": "docs/ARCHITECTURE.md",
+            "sha256": "468a3cff4edef7ae8d0f4f5345000c3e60ef7c01f39a90ced289739ccbfb3299"
+          },
+          {
+            "path": "docs/CODEX_TASK_REPORT.md",
+            "sha256": "37e427e938031d1475878faed41176ec69c3bf1295102047d154721adb472b11"
+          },
+          {
+            "path": "docs/ROADMAP.md",
+            "sha256": "18881ad3e9c2e13d7c99197a12923cbd15f0e92eb119a51633e4e06e35b6b37a"
+          },
+          {
+            "path": "docs/task-evidence/E06/accepted-state-r1/README.md",
+            "sha256": "dc035962caa453dbac167d8e6c90a627ae2e3e151a69ad1ed6d6ef6ff007a236"
+          },
+          {
+            "path": "docs/task-evidence/Q100/authored-layout-r1/PLAN.md",
+            "sha256": "2b6d4e8b02916c909752843ada018909987ae9b0511f8ebe397367d360b9a2d4"
+          },
+          {
+            "path": "docs/task-evidence/Q100/authored-layout-r1/README.md",
+            "sha256": "ec25a227fcea15c43c6d8977b9eba5d686a728cbafdb792fd03369830e515fa1"
+          },
+          {
+            "path": "docs/task-evidence/Q100/authored-layout-r1/screenshots-final1/01-medium-ticket.jpg",
+            "sha256": "867224399858a25d208d45e13cbc0496c15e4ccbb939c209b3fc171485899d90"
+          },
+          {
+            "path": "docs/task-evidence/Q100/authored-layout-r1/screenshots-final1/02-unrepaired-retest.jpg",
+            "sha256": "500e5401949b2605f2b7a668e0d70c34381d46e777752f65496f8f44c84f2046"
+          },
+          {
+            "path": "docs/task-evidence/Q100/authored-layout-r1/screenshots-final1/03-isolated-renac.jpg",
+            "sha256": "fc195efa319a7255d3941e95d637dba915cf5b8cf4d48c27b9378d6cab997759"
+          },
+          {
+            "path": "docs/task-evidence/Q100/authored-layout-r1/screenshots-final1/04-repaired-retest-pass.jpg",
+            "sha256": "9ad0b0b0a0dca946495ba6d07017f4f4e253af56a448f7087fb5b6319187d8a1"
+          },
+          {
+            "path": "docs/task-evidence/Q100/authored-layout-r1/screenshots-final1/05-restored-retest-pass.jpg",
+            "sha256": "9ad0b0b0a0dca946495ba6d07017f4f4e253af56a448f7087fb5b6319187d8a1"
+          },
+          {
+            "path": "scripts/verify-a03-browser.ps1",
+            "sha256": "235b73c338de139b498f4011bc707bed5b9f5dc8ffbee177c89c518ad49a7b7d"
+          },
+          {
+            "path": "scripts/verify-current-contracts.ps1",
+            "sha256": "3169fdf3ba19eea25882c8e8d79b956b69cc28dfe0641b7fe18f582ad36bf6cd"
+          },
+          {
+            "path": "scripts/verify-e06-accepted-evidence.ps1",
+            "sha256": "2f7ab435e009d49d699abfc30ae3054fcbe712461abc1f13ef4cae3ac9bd1dc4"
+          },
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+            "sha256": "74d5cb8453e233c0c8b7ee9407558d366a6b8eb2a328aab8850568e083d927a5"
+          },
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java",
+            "sha256": "ac2713b172c186292a9b1bd6f877358647f8b22da1e4c83d716cca5dce451cb5"
+          },
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+            "sha256": "de80bb530f8dc4c246f95649875ebb4afe2428ae278513caa8963102e67c6c34"
+          },
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+            "sha256": "564adf46dc3b2d7951edb19cc2e661ca5a8c2e62cd7a19a9ecb54b94e3e9f102"
+          },
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+            "sha256": "f30032aeec5dc29d5866fa64d2003fd9ea20f80857bbb156d95c4072e6b03d0c"
+          },
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/Rb100Placement.java",
+            "sha256": "b22b4499846ec5e4e56622f5dad518d01d60bdf1e948e761ae7235b74c3fce15"
+          },
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/Rb100Plan.java",
+            "sha256": "631da559598faf50b738ccca74b726688f0533aee69108155c553727dd8f53d5"
+          },
+          {
+            "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+            "sha256": "7bf84a2d6c4c5077638d44d1239530a694d7015106010a72840df69c8dc7d4b0"
+          },
+          {
+            "path": "tests/contracts/D01DiagnosticContractTest.java",
+            "sha256": "80bd0225451e4e1686d63d393d378eb065b49bdef13dab46e4167335cb9261ad"
+          },
+          {
+            "path": "tests/contracts/MediumBoardFloorplanningContractTest.java",
+            "sha256": "c74e0644765301e1919c37816665754ffb6108feb9d0b18007efef0a462aa84a"
+          },
+          {
+            "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+            "sha256": "0c97dd4f0e1c3f4c18c34f80ca9c827f00639d17fa0599048ba9cf0c319f8867"
+          },
+          {
+            "path": "tests/contracts/P07GeometryEpochDiagnosticContractTest.java",
+            "sha256": "8df2d7ba251573ad7978518c8c90e63dc0fe79cf91cdb130e01197c920ed9681"
+          },
+          {
+            "path": "tests/contracts/P07GridEligibilityContractTest.java",
+            "sha256": "44934f9bc1001c63cd1fdeb04fd278991b56ddd7fc16a67c69775e6d55dfcad3"
+          },
+          {
+            "path": "tests/contracts/P07LayeredRasterOracle.java",
+            "sha256": "66d0e40594165ce5620b5c28f58132ac7d8d882f532fafd4d4b77510ec3561a2"
+          },
+          {
+            "path": "tests/contracts/P07LayeredRasterOracleContractTest.java",
+            "sha256": "f67e2bb55a2f1773fb7237fccf2f8ec90bd0ec53b64f1d9547ee0dfb34cc8789"
+          },
+          {
+            "path": "tests/contracts/P07ReachedPthContractTest.java",
+            "sha256": "d384192be627929dd331e761bfb7323ac70b37f11bac061053540b34c72a5533"
+          },
+          {
+            "path": "tests/contracts/P08ReferenceConductorBuilder.java",
+            "sha256": "dbdde865a191c06e267bdbe7bae78144fa520189d652ee7d0e6458aac17586e6"
+          },
+          {
+            "path": "tests/contracts/P08ReferenceWidthContractTest.java",
+            "sha256": "b1ac3b8029f468828a4beb19a1be12cb6e236a408c5b79e083fa1c44154826e5"
+          },
+          {
+            "path": "tests/contracts/P08ScalabilityContractTest.java",
+            "sha256": "5ec454bf6b2161907aca24f150934f243b3f1854d4d3a53be7473960b025c3c6"
+          },
+          {
+            "path": "tests/contracts/PcbCompactnessContractTest.java",
+            "sha256": "f4c5af0c55088a1ff5b2962af9fb0bf497a9056934714f74544f5b56ca11a578"
+          },
+          {
+            "path": "tests/contracts/PcbCorridorOrientationContractTest.java",
+            "sha256": "0df73ef620fca954170da335b2a2ac3a53dca05e9f111a16a71cd323349705e8"
+          },
+          {
+            "path": "tests/contracts/PcbNormalPackingIdentityContractTest.java",
+            "sha256": "1b585cbf56d8524040e79b795694e855ddf00dc0304fd14ee5496883cd66a0b3"
+          },
+          {
+            "path": "tests/contracts/PcbPlacementDiagnosticsContractTest.java",
+            "sha256": "9aff05f9e73057f84c88442b0b7488d0406c3f57d40e78902da09d1e3832f373"
+          },
+          {
+            "path": "tests/contracts/Rb100P07BranchDiagnosticContractTest.java",
+            "sha256": "590f56fa8f7418aafa77becfbe93792694bb30617a2d1b542fe1f77b50d95330"
+          },
+          {
+            "path": "tests/contracts/Rb100P07PolicyDiagnosticContractTest.java",
+            "sha256": "e348a9bcca842b91b08c87d2c7985ef313c8608e1b813a03db1b84b66f5dffbf"
+          },
+          {
+            "path": "tests/contracts/Rb100PhysicalDiagnostics.java",
+            "sha256": "91c3347c8f0b318e4c33bd4f92328b099dc559b4b79786fd8dd82715cb8bb841"
+          },
+          {
+            "path": "tests/contracts/Rb100PhysicalReference.java",
+            "sha256": "d0d7021e1585ac475941c8d2fb13f423abe18ff260bca6bb22c6315af60963c3"
+          },
+          {
+            "path": "tests/contracts/Rb100PlanContractTest.java",
+            "sha256": "73d98092ca1692709a362f165d6efe974cd0f99a34403d17fb61b46defedf3aa"
+          },
+          {
+            "path": "tests/contracts/Rb56ModelIdentityContractTest.java",
+            "sha256": "119c5f2757600ceb3efbb4fcc839509fb09fc5535e8ff64ef58a09bf6ffdfa76"
+          },
+          {
+            "path": "tests/contracts/RelBSessionIdentityContractTest.java",
+            "sha256": "656f843368e21d1f1f3fa87295b94d744d3370880d046983ad222d910d0ed64c"
+          },
+          {
+            "path": "tests/qualification/rb100-layout/read_diagnostic.py",
+            "sha256": "31f65be5e11472c7b09e8141292402c641df6b735787d32eb4c904ae098981e7"
+          },
+          {
+            "path": "tests/qualification/rb100-layout/read_geometry_transition.py",
+            "sha256": "05d970c24b811ac066774daa5f750464a9334830f17550ded0222a8ca99f255c"
+          },
+          {
+            "path": "tests/qualification/rb100-layout/read_p07_branches.py",
+            "sha256": "73fb2ac73aabaa13a54713f572ff04467320a8c13cee29b29eb591f5da28febf"
+          },
+          {
+            "path": "tests/qualification/rb100-layout/read_p07_policy.py",
+            "sha256": "d8e0187d35d7b24370dec1526f850610d98b8df727fce3c66aa7afbfeb96f1e3"
+          },
+          {
+            "path": "tests/qualification/rb100-layout/read_routing_diagnostic.py",
+            "sha256": "389e937ccec44bf13c7de19732e6bd9fdf7906dfb815e4b04a9c8dc691cdfdba"
+          },
+          {
+            "path": "tests/qualification/rb56-medium/read_qualification.py",
+            "sha256": "3562c3777f4cabb0dc7dc2909984d3f1228fd85d42586a8d04e877aa48ed8900"
+          },
+          {
+            "path": "tests/qualification/rb56-medium/test_read_qualification.py",
+            "sha256": "609fb3fecd4c483b4ffc2f63215ef9f16409793a8c45aa4a2e2e98c7711df136"
+          }
+        ],
+        "currentWorktreeAudit": {
+          "pinnedEntryCount": 51,
+          "currentWorktreeMatchedCount": 46,
+          "currentWorktreeChangedCount": 5,
+          "currentWorktreeMissingCount": 0,
+          "productionSrcPinnedCount": 8,
+          "productionSrcMatchedCount": 8,
+          "productionSrcChangedPaths": [],
+          "otherChangedRelativePaths": [
+            "docs/ARCHITECTURE.md",
+            "docs/CODEX_TASK_REPORT.md",
+            "docs/task-evidence/Q100/authored-layout-r1/PLAN.md",
+            "docs/task-evidence/Q100/authored-layout-r1/README.md",
+            "tests/contracts/Rb100PhysicalDiagnostics.java"
+          ],
+          "missingRelativePaths": [],
+          "interpretation": "Frozen build inputs are identified by the pin manifest. In the later worktree comparison, all pinned src/* files match; remaining differences are outside production src/."
+        }
+      }
+    }
+  ],
+  "currentCompiledGateBuildBinding": {
+    "gate": "Current",
+    "frozenPinManifest": {
+      "file": "freeze-final-compiled-current-1/pins.json",
+      "bytes": 643,
+      "sha256": "885febf6cde3ce5564d439453484c1f3f251f3747bdb7f27633fe7a081fa2fde"
+    },
+    "frozenPins": [
+      {
+        "path": "scripts/verify-a03-browser.ps1",
+        "sha256": "235b73c338de139b498f4011bc707bed5b9f5dc8ffbee177c89c518ad49a7b7d"
+      },
+      {
+        "path": "scripts/verify-q100-evidence.ps1",
+        "sha256": "ba725f9dcd9dad4fef8b538de38ed902ba55cd88a86c46b9eed109df93b48d2e"
+      },
+      {
+        "path": "scripts/VerifierIsolation.psm1",
+        "sha256": "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5"
+      },
+      {
+        "path": ".tools/gwt-2.7.0/production-build-identity.json",
+        "sha256": "3ab83020ec867da0cbc8ce3f17c492aa1a0b02ad88111dc85078658fd8f23ddd"
+      }
+    ],
+    "currentWorktreeAudit": {
+      "pinnedEntryCount": 4,
+      "currentWorktreeMatchedCount": 4,
+      "currentWorktreeChangedCount": 0,
+      "currentWorktreeMissingCount": 0,
+      "productionSrcPinnedCount": 0,
+      "productionSrcMatchedCount": 0,
+      "productionSrcChangedPaths": [],
+      "otherChangedRelativePaths": [],
+      "missingRelativePaths": [],
+      "interpretation": "Frozen build inputs are identified by the pin manifest. In the later worktree comparison, all pinned src/* files match; remaining differences are outside production src/."
+    },
+    "productionIdentityBinding": {
+      "currentPinnedProductionIdentitySha256": "3ab83020ec867da0cbc8ce3f17c492aa1a0b02ad88111dc85078658fd8f23ddd",
+      "developerCaptureIdentitySha256": "3ab83020ec867da0cbc8ce3f17c492aa1a0b02ad88111dc85078658fd8f23ddd",
+      "matchesDeveloperCapture": true,
+      "playerCaptureIdentitySha256": "519c8ad1bd13f381d500a81dda4f593e2576f0b59e8c603896646f500724d2e6",
+      "matchesPlayerCapture": false
+    },
+    "currentGateEvidenceFile": "final-compiled-current1.json"
+  },
+  "caveats": [
+    "Build helper elapsed is distinct from compiler and linker log timings.",
+    "Build cleanup duration was not separately measured; successful helper exit is recorded without inventing a cleanup duration.",
+    "Frozen input digests and pin manifests identify the consumed build inputs. Subsequent worktree comparison shows all eight pinned src/* files unchanged for each build; the complete frozen pin sets include later documentation/test/verifier edits and, for Player, four retired test files."
+  ]
+}

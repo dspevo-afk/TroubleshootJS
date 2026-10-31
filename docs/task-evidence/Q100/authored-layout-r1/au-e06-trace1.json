@@ -1,0 +1,126 @@
+{
+  "schema": "tsj-q100-e06-route-trace-evidence-v1",
+  "recordedUtc": "2026-10-31T14:20:45.279Z",
+  "candidate": {
+    "driverSha256": "c9f097320ff4ea157e1c4050c49eea93b6feb9521baabed5f79eace87d1075f9",
+    "isolationModuleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "developerOutputCount": 357,
+    "developerOutputDigest": "38a2cba1decd94769ec36f56fd023216d1fd8e6b96546285849e18ba5b579f2e",
+    "sourceChanged": false
+  },
+  "trace": {
+    "status": "FAIL",
+    "gate": "E06State",
+    "resultExitCode": 2,
+    "totalElapsedSeconds": 159.8236478,
+    "layoutVersion": 25,
+    "dependencyEpoch": "tsj-generation-dependencies-v26",
+    "reportBasename": "at-compiled-e06state-trace1.json",
+    "reportSha256": "f5364342b74e4ccb22baa095caa059195d26233843e8a316553d8284cc270b66",
+    "resultBasename": "at-compiled-e06state-trace1-result.json",
+    "resultSha256": "cebbab33faf7b1dd52a7875f0fa4a88387869b0ec4707f8490a724a320c9acf6",
+    "routeTiming": {
+      "status": "INCOMPLETE",
+      "routeCount": 1,
+      "routeTruncatedCount": 0,
+      "recorderFailureCount": 0,
+      "routeName": "e06-late-callback",
+      "routeOutcome": "FAILED",
+      "collectionStatus": "PARTIAL",
+      "routeElapsedMilliseconds": 90017,
+      "activePhaseAtEnd": "report-poll",
+      "outerWaitElapsedMilliseconds": 90022,
+      "completedLaterRoutes": 0,
+      "laterRoutesNotRun": 9,
+      "cdpCallTruncatedCount": 0,
+      "sampleFailureCount": 0,
+      "sampleSkippedCount": 1,
+      "navigationReadinessElapsedMilliseconds": 1369,
+      "readinessRouteElapsedMilliseconds": 1483,
+      "reportPollElapsedMilliseconds": 88533,
+      "deadlineRemainingAtRouteStartMilliseconds": 89996,
+      "cdpEvaluateObservations": [
+        {
+          "routeOffsetMilliseconds": 7405,
+          "callDurationMilliseconds": 8551,
+          "waitElapsedMilliseconds": 8550,
+          "state": "completed"
+        },
+        {
+          "routeOffsetMilliseconds": 16217,
+          "waitElapsedMilliseconds": 73790,
+          "deadlineRemainingMilliseconds": 0,
+          "state": "failed"
+        }
+      ],
+      "afterRouteHeapSample": "SKIPPED",
+      "afterRouteHeapSkipReason": "route-failed-before-boundary",
+      "cdpCallCount": 17
+    }
+  },
+  "cleanup": {
+    "reportStatus": "PASS",
+    "success": true,
+    "resourceSuccess": true,
+    "elapsedMilliseconds": 51084,
+    "limitMilliseconds": 120000,
+    "withinLimit": true,
+    "browserShutdownMilliseconds": 9597,
+    "errorsFieldShape": "empty PSCustomObject with no members",
+    "diagnosticPayloadCopied": false
+  },
+  "interpretation": {
+    "rootCauseClaimed": false,
+    "cureClaimed": false,
+    "priorFailureBasename": "at-e06-startup1.json",
+    "unchangedFullRetryRecommended": false,
+    "note": "The trace records timing and failure boundaries only; it does not establish a root cause or cure."
+  },
+  "sourceAuditContext": {
+    "callPath": "CirSim deterministic QuickPlay index 11 -> RB56_CONTROL seed -8360266000248569150 -> generic four-candidate job -> controller-ready/runtime-settled -> Q100ElectricalPilotDeveloperVerifier.E06BoundaryCanaryRunner.begin private install/analyze -> first RUNNING canary",
+    "sourceReferenceBasenames": [
+      "CirSim.java",
+      "GenerationCoordinator.java",
+      "GenerationJob.java",
+      "PrivateSolverContext.java",
+      "Task41SimulationSnapshot.java",
+      "Q100ElectricalPilotDeveloperVerifier.java"
+    ],
+    "cirSimReferenceLines": "1224-1235",
+    "debugRouteHasPlayerSessionController": false,
+    "normalNavigationOrRetestAbsenceExpected": true,
+    "privateContextSwapMayDetachPredecessor": true,
+    "globalPowerDomMayBeStale": true,
+    "theseAreContextualCaveatsNotFailureCause": true,
+    "lastCompletedEvaluationRouteEndMilliseconds": 15956,
+    "lastReadinessSnapshotAge": "NOT_ESTABLISHED"
+  },
+  "qualificationBoundary": {
+    "planAmendmentAU": "FROZEN",
+    "noUnchangedFullRetry": true,
+    "currentTraceOutcome": "COMPLETED_FAIL_EXIT2",
+    "currentTraceOutcomeInferred": false,
+    "publication": "HELD",
+    "remainingGates": [
+      "normal3",
+      "E06 required"
+    ],
+    "hostRobustnessClaim": false,
+    "q100QualificationClaim": false,
+    "currentTraceOutcomeConfirmedByResult": true,
+    "cpuDiagnosticStatus": "NOT_RUN"
+  },
+  "omittedFields": [
+    "absolute paths",
+    "run IDs",
+    "PIDs",
+    "ports",
+    "URLs",
+    "query and capability parameters",
+    "raw CDP request/response payloads",
+    "raw events",
+    "raw logs",
+    "tokens",
+    "private DOM/power values"
+  ]
+}

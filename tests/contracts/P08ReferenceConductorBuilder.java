@@ -11,6 +11,7 @@ import java.util.TreeSet;
 /** Test-only independent all-pairs physical oracle. Keep current exact contact semantics; no runtime use. */
 final class P08ReferenceConductorBuilder {
     static long segmentPairs, segmentLandPairs, landPairs;
+    static long sourceSegmentCount, sourceLandCount;
     private final TroubleshootBoard board;
     private final PcbBoardLayout layout;
     private final List<Segment> segments = new ArrayList<Segment>();
@@ -25,6 +26,7 @@ final class P08ReferenceConductorBuilder {
     }
     static PcbConductorGraph capture(TroubleshootBoard board, PcbBoardLayout layout) {
         segmentPairs=segmentLandPairs=landPairs=0;
+        sourceSegmentCount=sourceLandCount=0;
         return new P08ReferenceConductorBuilder(board, layout).build();
     }
     private static String key(PcbCopperLayer layer, int x, int y) { return layer + ":" + x + ":" + y; }
@@ -41,13 +43,14 @@ final class P08ReferenceConductorBuilder {
         final String source, net;
         final PcbCopperLayer layer;
         final PcbCopperAccess.Exposure exposure;
+        final int width;
         final int x1, y1, x2, y2;
         final boolean horizontal;
         final TreeSet<Integer> splits = new TreeSet<Integer>();
         Segment(PcbTraceGeometry trace, int ax, int ay, int bx, int by) {
             if ((ax == bx) == (ay == by)) throw new IllegalArgumentException("Invalid copper segment");
             source = trace.getSourceId(); net = trace.getNetId(); layer = trace.getLayer();
-            exposure = trace.getExposure(); horizontal = ay == by;
+            exposure = trace.getExposure(); width = requireWidth(trace.getWidth()); horizontal = ay == by;
             x1 = Math.min(ax,bx); x2 = Math.max(ax,bx); y1 = Math.min(ay,by); y2 = Math.max(ay,by);
             splits.add(horizontal ? x1 : y1); splits.add(horizontal ? x2 : y2);
         }
@@ -57,7 +60,7 @@ final class P08ReferenceConductorBuilder {
         String supportingLine() { return layer + (horizontal ? ":H:" + y1 : ":V:" + x1); }
         int x(int value) { return horizontal ? value : x1; }
         int y(int value) { return horizontal ? y1 : value; }
-        Rectangle bounds() { return stroke(x1,y1,x2,y2); }
+        Rectangle bounds() { return stroke(x1,y1,x2,y2,width); }
         boolean contains(int x, int y) {
             return x >= x1 && x <= x2 && y >= y1 && y <= y2;
         }
@@ -65,12 +68,14 @@ final class P08ReferenceConductorBuilder {
     private static final class Link {
         final String first, second, net;
         final PcbConductorGraph.Kind kind;
+        final int width;
         final TreeSet<String> sources = new TreeSet<String>();
         PcbCopperAccess.Exposure exposure;
-        Link(Node a, Node b, PcbConductorGraph.Kind kind, PcbCopperAccess.Exposure exposure) {
+        Link(Node a, Node b, PcbConductorGraph.Kind kind, PcbCopperAccess.Exposure exposure,
+                int width) {
             first = a.key.compareTo(b.key) < 0 ? a.key : b.key;
             second = a.key.compareTo(b.key) < 0 ? b.key : a.key;
-            net = a.net; this.kind = kind; this.exposure = exposure;
+            net = a.net; this.kind = kind; this.exposure = exposure; this.width = width;
         }
     }
     private static final class Land {
@@ -92,21 +97,37 @@ final class P08ReferenceConductorBuilder {
     }
     private void link(Node a, Node b, PcbConductorGraph.Kind kind, String source,
             PcbCopperAccess.Exposure exposure) {
+        link(a,b,kind,source,exposure,9);
+    }
+    private void link(Node a, Node b, PcbConductorGraph.Kind kind, String source,
+            PcbCopperAccess.Exposure exposure, int width) {
         sameNet(a.net,b.net);
         if (a == b) return;
-        Link next = new Link(a,b,kind,exposure);
+        if (kind == PcbConductorGraph.Kind.TRACE) requireWidth(width);
+        else if (width != 9) throw new IllegalArgumentException("Non-trace copper cannot declare a trace width");
+        Link next = new Link(a,b,kind,exposure,width);
         String key = kind + PcbConductorGraph.field(next.first) + PcbConductorGraph.field(next.second);
         Link old = links.get(key);
         if (old == null) { old = next; links.put(key,old); }
         if (old.exposure != exposure) throw new IllegalArgumentException("Conflicting copper exposure");
+        if (old.width != width) throw new IllegalStateException("Mixed trace widths share one copper span");
         old.sources.add(source);
     }
     private static void sameNet(String a, String b) {
         if (!a.equals(b)) throw new IllegalStateException("Unrelated PCB conductors share copper: " + a + " / " + b);
     }
     private PcbConductorGraph build() {
+        TreeMap<String,Integer> widths = new TreeMap<String,Integer>();
+        for (PcbTraceGeometry trace : layout.getTraces()) {
+            int width = requireWidth(trace.getWidth());
+            Integer previous = widths.put(trace.getNetId(), Integer.valueOf(width));
+            if (previous != null && previous.intValue() != width)
+                throw new IllegalStateException("Independent mixed trace widths on one net");
+        }
         layout.validateAgainst(board);
         addPadsAndHoles(); addRoutes();
+        sourceSegmentCount = segments.size();
+        sourceLandCount = lands.size();
         for (int i=0; i<segments.size(); i++) {
             Segment a = segments.get(i);
             for (int j=i+1; j<segments.size(); j++) contact(a,segments.get(j));
@@ -127,7 +148,8 @@ final class P08ReferenceConductorBuilder {
             Integer previous = null;
             for (Integer at : s.splits) {
                 if (previous != null) link(node(s.net,s.layer,s.x(previous),s.y(previous)),
-                    node(s.net,s.layer,s.x(at),s.y(at)),PcbConductorGraph.Kind.TRACE,s.source,s.exposure);
+                    node(s.net,s.layer,s.x(at),s.y(at)),PcbConductorGraph.Kind.TRACE,s.source,
+                    s.exposure,s.width);
                 previous = at;
             }
         }
@@ -290,11 +312,12 @@ final class P08ReferenceConductorBuilder {
         serial=0;
         for (Link link : links.values()) {
             String id="edge/"+(++serial); Node a=nodes.get(link.first), b=nodes.get(link.second);
-            es.add(new PcbConductorGraph.Edge(id,a.id,b.id,link.net,link.kind,link.sources));
+            es.add(new PcbConductorGraph.Edge(id,a.id,b.id,link.net,link.kind,link.sources,
+                link.width));
             if (link.kind == PcbConductorGraph.Kind.TRACE) {
                 String surfaceId="copper/"+id;
                 surfaces.put(surfaceId,new PcbConductorGraph.Surface(surfaceId,a.id,id,null,
-                    a.layer,link.exposure,stroke(a.x,a.y,b.x,b.y)));
+                    a.layer,link.exposure,stroke(a.x,a.y,b.x,b.y,link.width)));
             }
         }
         for (Land land : lands.values()) surfaces.put(land.id,new PcbConductorGraph.Surface(
@@ -311,13 +334,22 @@ final class P08ReferenceConductorBuilder {
     }
     /** Same closed, finite-width Manhattan copper envelope as the current layout validator. */
     static Rectangle stroke(int x1, int y1, int x2, int y2) {
+        return stroke(x1,y1,x2,y2,9);
+    }
+    static Rectangle stroke(int x1, int y1, int x2, int y2, int width) {
         if ((x1 == x2) == (y1 == y2)) throw new IllegalArgumentException("Invalid copper stroke");
-        int half=PcbTraceRules.TRACE_WIDTH/2;
+        requireWidth(width);
+        int half=width/2;
         Rectangle r=new Rectangle(PcbCoordinateSystem.checkedInt((long)Math.min(x1,x2)-half),
             PcbCoordinateSystem.checkedInt((long)Math.min(y1,y2)-half),
-            PcbCoordinateSystem.checkedInt(Math.abs((long)x2-x1)+PcbTraceRules.TRACE_WIDTH),
-            PcbCoordinateSystem.checkedInt(Math.abs((long)y2-y1)+PcbTraceRules.TRACE_WIDTH));
+            PcbCoordinateSystem.checkedInt(Math.abs((long)x2-x1)+width),
+            PcbCoordinateSystem.checkedInt(Math.abs((long)y2-y1)+width));
         PcbCoordinateSystem.requireBoardRectangle(r); return r;
+    }
+    private static int requireWidth(int width) {
+        if (width < 9 || width > 63 || (width & 1) == 0)
+            throw new IllegalArgumentException("Invalid independent PCB trace width: " + width);
+        return width;
     }
     static boolean touch(Rectangle a, Rectangle b) {
         return (long)a.x+a.width >= b.x && (long)b.x+b.width >= a.x &&

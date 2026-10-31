@@ -1,0 +1,259 @@
+{
+  "schema": "p07-saved-paired-route-probe-v2-observation-v1",
+  "status": "PASS_OBSERVATION_ONLY",
+  "scope": "OBSERVATIONAL_FIXED_SAVED_PAIRED_ROUTE_ONLY",
+  "adoption": false,
+  "layoutQualification": false,
+  "q100Qualification": false,
+  "overallInterpretation": "The v2 native contract compiled and passed its two-case observation contract. The version-10 candidate routed successfully and passed its emitted P08/layered-raster checks. The version-11 candidate produced the expected bounded branch-search rejection at OUT_B. The result is a fixed-candidate observation, not a routeability or production qualification.",
+  "sourceBinding": {
+    "protocol": "p07-saved-paired-route-probe-input-seal-v1",
+    "scope": "TEST_ONLY_OBSERVATION_NOT_ACCEPTANCE",
+    "sourceSnapshotDirectory": "saved-paired-route-probe-inputs-2",
+    "parentInputCount": 1059,
+    "parentPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+    "inputCount": 1059,
+    "inputPinsSha256": "f8187ae204daa48aaa41aa49627a936d7b825665ffe343783632538d747ecbcc",
+    "unchangedInputCount": 1058,
+    "changedInputs": [
+      {
+        "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+        "beforeBaseSnapshotSha256": "0c97dd4f0e1c3f4c18c34f80ca9c827f00639d17fa0599048ba9cf0c319f8867",
+        "afterV2Sha256": "d1b2572682c1a1751a266643dd1bbc33cdc84e4e4ecbeb3a1a01663a60be563e"
+      }
+    ],
+    "fixtureCorrectionFromV1": {
+      "v1SourceSha256": "38857a8f8c19d9d82852859aef23d5b386438865410283f864387d39ac1527bf",
+      "v1SourceBytes": 40014,
+      "v2SourceSha256": "d1b2572682c1a1751a266643dd1bbc33cdc84e4e4ecbeb3a1a01663a60be563e",
+      "v2SourceBytes": 40007,
+      "change": "Removed the invalid static modifier from the private constructor.",
+      "v1Line55": "private static P07BranchDiagnosticsContractTest() { }",
+      "v2Line55": "private P07BranchDiagnosticsContractTest() { }",
+      "onlyStaticModifierRemovalMatchesAllOtherBytes": true
+    },
+    "seal": {
+      "file": "saved-paired-route-probe-inputs-sealed2.json",
+      "bytes": 1055,
+      "sha256": "e556df0f25634d97025d365af09da430a4eaff23170217c50043d415b444380c"
+    },
+    "variantPins": {
+      "file": "saved-paired-route-probe-v2-sealed-pins.json",
+      "bytes": 204437,
+      "sha256": "f8187ae204daa48aaa41aa49627a936d7b825665ffe343783632538d747ecbcc"
+    },
+    "harnessSpec": {
+      "file": "spec.json",
+      "bytes": 8282,
+      "sha256": "1c5118f03ce4842bd5cff115bf2d147841eff1690079a4e19dd72a12753f9c85"
+    },
+    "sourceReadme": {
+      "file": "README.md",
+      "bytes": 2509,
+      "sha256": "5044111a6d831269b5218379cc18d941cf4e7a513da6ca63a956189a530fef43"
+    },
+    "testSource": {
+      "file": "P07BranchDiagnosticsContractTest.java",
+      "bytes": 40007,
+      "sha256": "d1b2572682c1a1751a266643dd1bbc33cdc84e4e4ecbeb3a1a01663a60be563e"
+    },
+    "runner": {
+      "file": "run-saved-paired-route-probe-v2.ps1",
+      "bytes": 4338,
+      "sha256": "021a95334768b513b91b8b2e835b266120088c49799fc08081df84f56a9fcf3f"
+    },
+    "nativeChildLimitMs": 60000,
+    "outerWatchdogMs": 600000
+  },
+  "request": {
+    "rootSeed": "5",
+    "placementSeed": "-7630701392004902526",
+    "routingSeed": "-9106650364266936003",
+    "routingSeedRole": "PLAN_IDENTITY_METADATA; P07_BACKEND_DOES_NOT_CONSUME_ROUTING_SEED",
+    "placementVersions": [10, 11],
+    "candidateAttempt": 1,
+    "plannerCandidate": 1,
+    "routeName": "P07_FULLER_TWO_LAYER",
+    "backendPolicy": "FULLER_TWO_LAYER",
+    "layoutVersion": 24,
+    "dependencyEpoch": "tsj-generation-dependencies-v25",
+    "planVersion": 1,
+    "familyId": "RB56_CONTROL",
+    "routingLayer": "BOTTOM",
+    "requiresTwoLayerRouting": true,
+    "physicalPolicyId": "MEDIUM_BOARD",
+    "placementPackingVersion": 1,
+    "traceWidthProfile": "UNIFORM_TRACE@1",
+    "gridWidth": 332,
+    "gridHeight": 175,
+    "gridCells": 58100,
+    "gridEligible": true,
+    "budgets": {
+      "maximumTotalExpansions": 1000000,
+      "maximumBranchExpansions": 100000,
+      "maximumGridCells": 250000,
+      "gridOrderingCount": 3,
+      "maximumVias": 48
+    },
+    "callChain": {
+      "producer": "SeededPcbLayoutGenerator.advanceMediumRoute",
+      "sequence": "candidate.plan.materialize() then PcbLayerRoutingPrototype.begin(board,placement,FULLER_TWO_LAYER,observer)",
+      "materializeAndRouteCallsMatchProduction": true,
+      "postprocessing": "NONE"
+    },
+    "observers": {
+      "attemptObserverByBothFrames": "NOOP_ATTEMPT_OBSERVER",
+      "generationCancellationObserverExercised": false
+    },
+    "inputMaterializedGeometry": [
+      { "caseId": "SEED5_V10_CANDIDATE1", "sha256": "1c6136104db257aebfa692c2c6689fe620a658276062d783f36fbef10dd3cc19", "bytes": 133536 },
+      { "caseId": "SEED5_V11_CANDIDATE1", "sha256": "b21527ea02b45b9fdfb6233fb116d42a32077da84709674efe3b59b36e15c43f", "bytes": 133367 }
+    ]
+  },
+  "nativeRun": {
+    "suite": "P07BranchDiagnosticsContractTest",
+    "status": "PASS_OBSERVATION_ONLY",
+    "helperExitCode": 0,
+    "helperElapsedSeconds": 33.1814324,
+    "suiteCaseCount": 2,
+    "suiteAssertions": 24038,
+    "nativeElapsedMs": 4738,
+    "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "inputRevision": 3,
+    "sourceSnapshotRevision": 2,
+    "inputCount": 1059,
+    "inputPinsSha256": "f8187ae204daa48aaa41aa49627a936d7b825665ffe343783632538d747ecbcc",
+    "terminationProven": true,
+    "cleanup": {
+      "status": "PASS_MARKER_OBSERVED",
+      "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+      "elapsedSeconds": null,
+      "timing": "Cleanup-only duration was not separately reported."
+    },
+    "caseResults": [
+      {
+        "caseId": "SEED5_V10_CANDIDATE1",
+        "caseOrdinal": 1,
+        "rootSeed": "5",
+        "placementInterpretationVersion": 10,
+        "expectedSavedProductionRouteOutcome": "P07_FULLER_TWO_LAYER@1=SUCCESS",
+        "expectedDirectRawRouteOutcome": "SUCCESS",
+        "diagnosticRouteAccepted": true,
+        "diagnosticRouteOutcome": "SUCCESS",
+        "diagnosticExpansions": 523756,
+        "diagnosticOrderings": 2,
+        "diagnosticVias": 48,
+        "diagnosticLinks": 0,
+        "diagnosticBranchCount": 187,
+        "diagnosticBranchExpandedTotal": 523756,
+        "diagnosticSessionSlices": 19,
+        "baselineRouteOutcome": "SUCCESS",
+        "diagnosticsDoNotChangeBaselineRoute": true,
+        "acceptedOutputValidation": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "acceptedOrderedPadPairs": 17161,
+        "acceptedP08SourceSegmentCount": 249,
+        "acceptedP08SourceLandCount": 358,
+        "acceptedReferenceClearancePairs": 17471,
+        "acceptedClearanceExactPairs": 0,
+        "acceptedClearancePotentialPairs": 30876,
+        "acceptedRasterOrderedPadPairs": 17161,
+        "acceptedRasterPointCount": 41684,
+        "acceptedRasterViaBarrels": 48
+      },
+      {
+        "caseId": "SEED5_V11_CANDIDATE1",
+        "caseOrdinal": 2,
+        "rootSeed": "5",
+        "placementInterpretationVersion": 11,
+        "expectedSavedProductionRouteOutcome": "P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:OUT_B:BRANCH_SEARCH_LIMIT",
+        "expectedDirectRawRouteOutcome": "OUT_B:BRANCH_SEARCH_LIMIT",
+        "diagnosticRouteAccepted": false,
+        "diagnosticRouteOutcome": "OUT_B:BRANCH_SEARCH_LIMIT",
+        "diagnosticExpansions": 633544,
+        "diagnosticOrderings": 3,
+        "diagnosticVias": 0,
+        "diagnosticLinks": 0,
+        "diagnosticBranchCount": 176,
+        "diagnosticBranchExpandedTotal": 633544,
+        "diagnosticSessionSlices": 23,
+        "baselineRouteOutcome": "OUT_B:BRANCH_SEARCH_LIMIT",
+        "diagnosticsDoNotChangeBaselineRoute": true,
+        "acceptedOutputValidation": "NOT_APPLICABLE_ROUTE_REJECTED",
+        "acceptedPhysicalOracle": null
+      }
+    ]
+  },
+  "branchCensus": {
+    "scope": "Complete aggregate census over every emitted branch record; successful-branch endpoint and canonical detail is omitted. The three branch-limit rows retain their public net/pad identifiers.",
+    "recordCount": 363,
+    "terminalReasonCounts": { "FOUND": 360, "BRANCH_SEARCH_LIMIT": 3 },
+    "cases": [
+      { "caseId": "SEED5_V10_CANDIDATE1", "branchCount": 187, "branchOrdinalRange": [1, 187], "found": 187, "branchSearchLimit": 0, "branchExpandedSum": 523756, "caseReportedExpandedTotal": 523756 },
+      { "caseId": "SEED5_V11_CANDIDATE1", "branchCount": 176, "branchOrdinalRange": [1, 176], "found": 173, "branchSearchLimit": 3, "branchExpandedSum": 633544, "caseReportedExpandedTotal": 633544 }
+    ],
+    "passTerminalMatrix": [
+      { "caseId": "SEED5_V10_CANDIDATE1", "pass": 0, "terminalReason": "FOUND", "branchCount": 91, "branchOrdinalRange": [1, 91], "branchExpandedSum": 222262, "expandedTopSum": 93975, "expandedBottomSum": 128287, "prefixViaCountRange": [0, 44], "prefixViaDistinctCount": 28, "faceExpansionSumsConserved": true },
+      { "caseId": "SEED5_V10_CANDIDATE1", "pass": 1, "terminalReason": "FOUND", "branchCount": 96, "branchOrdinalRange": [92, 187], "branchExpandedSum": 301494, "expandedTopSum": 131410, "expandedBottomSum": 170084, "prefixViaCountRange": [0, 48], "prefixViaDistinctCount": 29, "faceExpansionSumsConserved": true },
+      { "caseId": "SEED5_V11_CANDIDATE1", "pass": 0, "terminalReason": "FOUND", "branchCount": 67, "branchOrdinalRange": [1, 67], "branchExpandedSum": 139593, "expandedTopSum": 55300, "expandedBottomSum": 84293, "prefixViaCountRange": [0, 26], "prefixViaDistinctCount": 18, "faceExpansionSumsConserved": true },
+      { "caseId": "SEED5_V11_CANDIDATE1", "pass": 0, "terminalReason": "BRANCH_SEARCH_LIMIT", "branchCount": 1, "branchOrdinalRange": [68, 68], "branchExpandedSum": 100000, "expandedTopSum": 49909, "expandedBottomSum": 50091, "prefixViaCountRange": [27, 27], "prefixViaDistinctCount": 1, "faceExpansionSumsConserved": true },
+      { "caseId": "SEED5_V11_CANDIDATE1", "pass": 1, "terminalReason": "FOUND", "branchCount": 79, "branchOrdinalRange": [69, 147], "branchExpandedSum": 172659, "expandedTopSum": 68597, "expandedBottomSum": 104062, "prefixViaCountRange": [0, 40], "prefixViaDistinctCount": 27, "faceExpansionSumsConserved": true },
+      { "caseId": "SEED5_V11_CANDIDATE1", "pass": 1, "terminalReason": "BRANCH_SEARCH_LIMIT", "branchCount": 1, "branchOrdinalRange": [148, 148], "branchExpandedSum": 100000, "expandedTopSum": 51007, "expandedBottomSum": 48993, "prefixViaCountRange": [40, 40], "prefixViaDistinctCount": 1, "faceExpansionSumsConserved": true },
+      { "caseId": "SEED5_V11_CANDIDATE1", "pass": 2, "terminalReason": "FOUND", "branchCount": 27, "branchOrdinalRange": [149, 175], "branchExpandedSum": 21292, "expandedTopSum": 7275, "expandedBottomSum": 14017, "prefixViaCountRange": [0, 4], "prefixViaDistinctCount": 3, "faceExpansionSumsConserved": true },
+      { "caseId": "SEED5_V11_CANDIDATE1", "pass": 2, "terminalReason": "BRANCH_SEARCH_LIMIT", "branchCount": 1, "branchOrdinalRange": [176, 176], "branchExpandedSum": 100000, "expandedTopSum": 48215, "expandedBottomSum": 51785, "prefixViaCountRange": [6, 6], "prefixViaDistinctCount": 1, "faceExpansionSumsConserved": true }
+    ],
+    "limitBranches": [
+      { "caseId": "SEED5_V11_CANDIDATE1", "branchOrdinal": 68, "pass": 0, "netId": "OUT_A", "startPadId": "RLEDOUT_A.1", "rootPadId": "JOA.1", "branchExpanded": 100000, "minimumExploredManhattanDistance": 280, "prefixViaCount": 27, "expandedTop": 49909, "expandedBottom": 50091, "frontierCount": 20529, "bestStateCount": 115976 },
+      { "caseId": "SEED5_V11_CANDIDATE1", "branchOrdinal": 148, "pass": 1, "netId": "OUT_A", "startPadId": "RLEDOUT_A.1", "rootPadId": "JOA.1", "branchExpanded": 100000, "minimumExploredManhattanDistance": 280, "prefixViaCount": 40, "expandedTop": 51007, "expandedBottom": 48993, "frontierCount": 18584, "bestStateCount": 114045 },
+      { "caseId": "SEED5_V11_CANDIDATE1", "branchOrdinal": 176, "pass": 2, "netId": "OUT_B", "startPadId": "RLEDOUT_B.1", "rootPadId": "JOB.1", "branchExpanded": 100000, "minimumExploredManhattanDistance": 420, "prefixViaCount": 6, "expandedTop": 48215, "expandedBottom": 51785, "frontierCount": 80715, "bestStateCount": 164560 }
+    ],
+    "invariantChecks": {
+      "frameRecords": 2,
+      "caseRecords": 2,
+      "suiteRecords": 1,
+      "frameCaseKeyCorrespondenceMatched": true,
+      "allEventRunIdsMatchSuite": true,
+      "eventFramingOrderMatched": true,
+      "branchRecords": 363,
+      "caseDeclaredBranchCountsMatched": true,
+      "branchOrdinalsContiguousPerCase": true,
+      "branchReasonCensusComplete": true,
+      "allCountersNonnegativeIntegers": true,
+      "expandedTopPlusBottomEqualsBranchExpanded": "363_of_363",
+      "cumulativeTotalExpandedEqualsBranchExpansionPrefixSum": "363_of_363",
+      "caseBranchExpansionSumsEqualCaseTotals": true,
+      "unknownTerminalReasons": 0
+    }
+  },
+  "priorCompileFailure": {
+    "file": "saved-paired-route-probe1-compile-fail.json",
+    "bytes": 5243,
+    "sha256": "6e3384e417fc01bd65a90f34653c53f7b3ce9b4e342613e6028e5c0ff00fcf3c",
+    "status": "FAIL_COMPILE_TEST_SOURCE",
+    "compileExitCode": 1,
+    "nativeOutcomeValidated": false,
+    "note": "The v1 compile failure is preserved as a separate result; v2 does not reclassify or overwrite it."
+  },
+  "rawArtifacts": [
+    { "file": "saved-paired-route-probe-2-result.json", "bytes": 775, "sha256": "1b854b2844eda9b9c6eedea71dd66e26fca8921cefbf02d67416d4857362b7c8" },
+    { "file": "saved-paired-route-probe-2-launcher.json", "bytes": 231, "sha256": "95777ae9860c03545894a06a5478946f4ae4dbae0c08dc257605d6dbd9575c40" },
+    { "file": "saved-paired-route-probe-2-console.txt", "bytes": 238452, "sha256": "d5c146e3f9c51afe1766cf6c604090d1a6a2c4a1e94573a06d92d915ee2ef2e3" },
+    { "file": "saved-paired-route-probe-2-receipt.txt", "bytes": 237312, "sha256": "97dc15b1e2ef13cf0843a01d6a4f5c331dbed873907e5bc2098544f9cb667766" },
+    { "file": "saved-paired-route-probe-2-stderr.txt", "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" }
+  ],
+  "limitations": [
+    "The native PASS validates these two fixed observations and their captured branch summaries only; it does not qualify routing across seeds, candidate populations, or production generation timing.",
+    "The version-11 result is a bounded BRANCH_SEARCH_LIMIT rejection with nonempty frontiers, not proof that no possible route exists.",
+    "Both attempt observers were NOOP and generation cancellation observation was not exercised; this does not qualify attempt-observer or cancellation timing behavior.",
+    "Version 11 was rejected, so accepted P08 and raster physical-oracle fields are not applicable for that case.",
+    "No full saved-profile census, full Q100 matrix, source build, or broader routeability qualification was run."
+  ],
+  "sanitization": {
+    "rawConsoleOrReceiptContentsEmbedded": false,
+    "absoluteMachinePathsIncluded": false,
+    "processIdentifiersIncluded": false,
+    "runIdsOrFrameIdsIncluded": false,
+    "privateCanonicalIdentityDigestsIncluded": false,
+    "artifactReferences": "Basenames, byte counts and SHA-256 values only."
+  }
+}

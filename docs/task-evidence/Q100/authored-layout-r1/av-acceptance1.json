@@ -1,0 +1,168 @@
+{
+  "schema": "troubleshootjs-q100-shared-groundwork-root-acceptance-v1",
+  "status": "ACCEPTED_SHARED_GROUNDWORK_ONLY",
+  "recordedAtUtc": "2026-10-31T16:55:50.304876+00:00",
+  "repository": {
+    "branch": "codex/q100-physical-feasibility",
+    "precommitHead": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "candidate": "LAYOUT25_DEPENDENCY26",
+    "binding": "Accepted consumed bytes, not the unmodified base HEAD"
+  },
+  "scope": [
+    "mixed-footprint corridor orientation pruning",
+    "required-P07 grid admission",
+    "correct reached-PTH face authority and canvas containment",
+    "bounded relaxed-distance guidance and owner-finalized shared-budget ordering candidates",
+    "private authored100 intent and truthful rejected diagnostics",
+    "call-local completed natural-exit proof reuse and duplicate namespace census removal",
+    "opt-in bounded browser timing preserving default transport and primary errors"
+  ],
+  "requiredGates": {
+    "native": "PASS selected33; not full matrix",
+    "geometry": "PASS six independent comparisons; no100 admission",
+    "savedProfiles": "PASS72/source and all20 paired retained comparisons",
+    "gwt": "PASS actual JDK8 build.ps1 Player102 and Developer102; exact101/102 inventories",
+    "current": "PASS9 trace-on and trace-off on equal consumed digests",
+    "playerPrivacy": "PASS; shutdown14722/15000ms and cleanup52578/120000ms",
+    "visiblePlayer": "PASS actual repair/save/load/fresh retest exact MEDIUM seed -6794211680707017382",
+    "normal3": "PASS finite3 roots via bounded strict postprocess of unchanged captures; failed original wrapper remains FAIL",
+    "e06State": "PASS maintained10/10; exit0;417.6086743s;operation356878ms;cleanup60611/120000ms;shutdown9333/15000ms",
+    "host": "PASS helper19, fresh final-source reparse57 with cleanup729ms, stress2048files62artifacts, kernel positive+wrongidentity under retained caps",
+    "reportReaders": "PASS pureA04 510 and focused Python9/9"
+  },
+  "rootReview": {
+    "integratedDiff": "REVIEWED_NO_ACTIONABLE_BLOCKER",
+    "independentReviews": "READ_ONLY_SOURCE_ONLY; no gates certified by reviewers",
+    "sourceReuse": "PASS named consumed-byte audit; documentation-only differences do not require rebuild",
+    "debuggerDiagnosticFollowup": {
+      "status": "PASS_SOURCE_AND_PURE_LOGIC_ONLY",
+      "reviewArtifactSha256": "90f74b48864a8a0f6cc1569866908d46d3be088a84e7f90324e486e603203c98",
+      "hostCanary": "Separately proven in capability6; not run by reviewer"
+    },
+    "postAuditTestFixture": {
+      "path": "tests/contracts/namespace-census-reparse.ps1",
+      "sha256": "76cbb38835e08d0fd7d6f69e20beaecff50de31b51e52eb94cdf460689becf2a",
+      "scope": "Only initial test SHA256 bootstrap replaced with disposed .NET stream/hash; final extra blank line removed. Pin/fixtures/assertions unchanged.",
+      "freshWinPS5": "PASS missing-file rejection, wrong-file rejection and valid57/cleanup; earlier preassertionFAIL preserved",
+      "consumedBoundary": "Absent Native5 1061 and normal3 prep5 1263; excluded GWT1199 and browser1597 roots and reader input_paths.",
+      "supporting70Pins": "Historical for this one changed test fixture; fresh host receipt binds final bytes. Other production/native/GWT/browser/reader inputs unchanged."
+    }
+  },
+  "limits": {
+    "actual100AcceptedLayouts": 0,
+    "playableQ100": false,
+    "fullNativeMatrixRenewed": false,
+    "full30RootRenewed": false,
+    "full2By31Renewed": false,
+    "hardOrPsychoticAvailableOrRun": false,
+    "protectedHardUnreadBoundary": "UNCERTAIN; prior overbroad old-scratch search disclosed; filename metadata is insufficient",
+    "ci": "NOT_RUN; accepted self-hosted Windows runner registration prerequisite",
+    "hostMargin": "Player shutdown margin278ms; no broad endurance/reliability claim",
+    "diagnostics": "Profile/controls nonqualifying; no original stall capture or universal PowerShell mechanism claimed",
+    "priorFailures": "Preserved; no timeout/exit2/failed cleanup reclassified"
+  },
+  "resources": {
+    "finalMaintainedGate": "CLOSED with cleanup proof",
+    "launcher32876": "Absent in two root observations25ms apart after exit0",
+    "manualPreviewAndIab": "Previously closed with scoped identity/absence evidence",
+    "preserved": "Separate Desktop checkout, unrelated work, failure claims/profiles and task scratch",
+    "currentBuild": "Developer102"
+  },
+  "publication": {
+    "statusAtCapture": "NOT_YET_COMMITTED_OR_PUSHED",
+    "condition": "Final scoped packet QA and staged/unstaged diff checks before normal commit/push; exact remote SHA before one Gmail",
+    "nextUnstartedMilestone": "Bounded actual100 fixed-prefix graph diagnosis; four fresh layered layouts/runtime-solvability remain pending"
+  },
+  "evidence": [
+    {
+      "file": "as-final-native-geometry1.json",
+      "bytes": 13419,
+      "sha256": "4b44c70657a2e9e53e46dac4ca30f73db1f27fa8b716e0381abafa1c3a511705"
+    },
+    {
+      "file": "as-final-saved72-1.json",
+      "bytes": 40282,
+      "sha256": "186394480f3e29de4096896bf3a1fc124ba39e857f6db6f8a354bfaab5f09dbc"
+    },
+    {
+      "file": "as-source-review1.json",
+      "bytes": 5888,
+      "sha256": "19088b438ceffff10cf643e80e87c29f16b09a97fbf222a866de5485d7193ca1"
+    },
+    {
+      "file": "as-visible-player1.json",
+      "bytes": 18327,
+      "sha256": "e633336f02c1ae836f7d51d07e758e95766fa706e60c36bd19d57257e2cfb82e"
+    },
+    {
+      "file": "as-kernel-lease1.json",
+      "bytes": 5363,
+      "sha256": "e29672b04295ca8aa546ab8fe939d276ec19739bd949f4947fffba75e4506aee"
+    },
+    {
+      "file": "as-search-scope1.json",
+      "bytes": 3208,
+      "sha256": "c203300d474275c4229ca870df9b04dfcaa0562261de2b8f23fa51a2fea7f7a9"
+    },
+    {
+      "file": "at-current-control1.json",
+      "bytes": 4310,
+      "sha256": "a0ff7c0c765603c443c74eef18094cd06d8f701d30014b3093b7b81a4e8e79b7"
+    },
+    {
+      "file": "at-route-timing1.json",
+      "bytes": 5732,
+      "sha256": "4bd08e5fbe4238c89e5de1e0cf65ab3c9afd60fad7ed64bfa639d5803fc25cfe"
+    },
+    {
+      "file": "at-player-refresh1.json",
+      "bytes": 5982,
+      "sha256": "fc7ca102aed89c39ecb9b36568ec8b916851556d8aacb756160d86cfee93bea8"
+    },
+    {
+      "file": "at-report-contract1.json",
+      "bytes": 7113,
+      "sha256": "2f4b1d51ffddcdb49440960170ec6cea9bffce67f6ac442606e653b063234299"
+    },
+    {
+      "file": "at-host-review1.json",
+      "bytes": 6703,
+      "sha256": "4375471967ba8f23355ca53d5b257e3270a1951989c9c09f623fc5c4dc18d01d"
+    },
+    {
+      "file": "au-normal3-final1.json",
+      "bytes": 10604,
+      "sha256": "dc38eb483c4bd7413749d6ff8ff92cdf626a188b44a03bfd4d9507172874e44e"
+    },
+    {
+      "file": "au-profiler-capability1.json",
+      "bytes": 14484,
+      "sha256": "eff2217a0b3726c895571397b96eae5a223bf1603ce16ee4ee6019503b6f2741"
+    },
+    {
+      "file": "au-e06-host-controls1.json",
+      "bytes": 15777,
+      "sha256": "5fc23bc4eb35c33f5edf4942286260e70b33e835b113d837cd7efd32a9c0a081"
+    },
+    {
+      "file": "av-reader-qa1.json",
+      "bytes": 8370,
+      "sha256": "6321ad6a877a8302bdddaad9060e5be9c1e0684720b425736a6d7652381ac1a0"
+    },
+    {
+      "file": "av-final-source-bind1.json",
+      "bytes": 3883,
+      "sha256": "782b12d979b57bb21b3852612c524f465dc5bfa5d14adc45fe5c326db731c319"
+    },
+    {
+      "file": "av-reparse-eof1.json",
+      "bytes": 3683,
+      "sha256": "6ecf32724cfa3950ade8d75d87978af9d7681cbcf831c01cf9fb5077bd008d50"
+    },
+    {
+      "file": "av-reparse-bootstrap1.json",
+      "bytes": 5738,
+      "sha256": "01d27fdd03b6233723b236ae488062ae77d2de8c5f540edb3f8bf54e149a0f5a"
+    }
+  ]
+}

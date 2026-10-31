@@ -1,0 +1,465 @@
+{
+  "schema": "troubleshootjs-ap-terminal-proof-observation-v1",
+  "status": "AP_TERMINAL_PROOF_AND_PLAYER4_PASS_WITH_PRIOR_FAILURES_PRESERVED",
+  "scope": "Current AP memo77 source/proof, exact root-owned terminal proof helper contract, retained Player 3 failure/resource closure, and one Player 4 Q100Player pass.",
+  "repository": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "candidate": "AO_FINAL_LAYOUT25_DEP26"
+  },
+  "apHostMemo": {
+    "identifier": "memo77",
+    "moduleSha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024",
+    "rootIntegratedOsContractSha256": "9c76e514fc6e00ca5359fe477f6c61f2a6851a308df4882328fdef3d5ecf8440",
+    "budgetsMs": {
+      "innerShutdown": 15000,
+      "aggregateCleanup": 120000,
+      "outerWatchdog": 600000
+    },
+    "contractSemantics": "Compare the root-owned process/job identity for natural termination, then reuse valid terminal and absence proof under the same budgets."
+  },
+  "terminalProofHelperRuns": [
+    {
+      "attempt": 1,
+      "status": "FAIL_PREFLIGHT",
+      "exitCode": 2,
+      "phase": "REAL_HOST_TERMINAL_NATURAL_EXIT_REUSE_CONTRACT",
+      "elapsedSeconds": 0.9555641,
+      "assertions": 0,
+      "inputAudit": "PASS_BEFORE_AND_AFTER",
+      "inputCount": 2,
+      "moduleSha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024",
+      "helperContractSha256": "55762c706e0306607cd2c17028c8bfbddbbb6c29be348fd3a6ea435b4f46631b",
+      "limits": {
+        "outerWatchdogMs": 600000,
+        "innerShutdownMs": 15000,
+        "aggregateCleanupMs": 120000
+      },
+      "interpretation": "Failed preflight: the required equality is against the owned root, not its child.",
+      "artifacts": [
+        {
+          "file": "ap-terminal-proof-gate-1/result.json",
+          "bytes": 992,
+          "sha256": "88b909726d5a4eb80dc7a0102eab150bdc6f69c6f4125d8f0c7b6b2ba358404f"
+        },
+        {
+          "file": "ap-terminal-proof-gate-1/launcher.json",
+          "bytes": 189,
+          "sha256": "43b6b7dcf1658aa6ddcdcff5fca34632723fce3deebf0c6808059f8296289d07"
+        },
+        {
+          "file": "ap-terminal-proof-gate-1/source-pins.json",
+          "bytes": 332,
+          "sha256": "a28d96852ea9f478f1005dbbae35547df168947063ceb53c2db4e2f490ac121b"
+        },
+        {
+          "file": "ap-terminal-proof-gate-1/stdout.txt",
+          "bytes": 482,
+          "sha256": "0575662a044f56344dd70255482293c1bbb311bda8ac75c8edf9a5c755a424ba"
+        },
+        {
+          "file": "ap-terminal-proof-gate-1/stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "file": "ap-terminal-proof-gate-1/run.ps1",
+          "bytes": 4298,
+          "sha256": "0827cb2821762592943230b86b9c2a2b792e0144af0f763c88d4cddc23b75b67"
+        },
+        {
+          "file": "ap-terminal-proof-gate-1/browser-natural-exit-reuse.ps1",
+          "bytes": 30248,
+          "sha256": "55762c706e0306607cd2c17028c8bfbddbbb6c29be348fd3a6ea435b4f46631b"
+        },
+        {
+          "file": "ap-terminal-proof-gate-1/VerifierIsolation.psm1",
+          "bytes": 890105,
+          "sha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024"
+        }
+      ]
+    },
+    {
+      "attempt": 2,
+      "status": "FAIL_ASSERTIONS",
+      "exitCode": 2,
+      "phase": "REAL_HOST_TERMINAL_NATURAL_EXIT_REUSE_CONTRACT",
+      "elapsedSeconds": 9.1280576,
+      "assertions": 2,
+      "inputAudit": "PASS_BEFORE_AND_AFTER",
+      "inputCount": 2,
+      "moduleSha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024",
+      "helperContractSha256": "da778b8a0edc75d19c43e7f8498fdb695cc141435a577a218689dffb44bd1d28",
+      "limits": {
+        "outerWatchdogMs": 600000,
+        "innerShutdownMs": 15000,
+        "aggregateCleanupMs": 120000
+      },
+      "interpretation": "Failed the copied negative case because its expected prefix was wrong; it was corrected without weakening the assertion.",
+      "artifacts": [
+        {
+          "file": "ap-terminal-proof-gate-2/result.json",
+          "bytes": 984,
+          "sha256": "590bb72ef940045f1621f6db1a04090b372b4f6a24a5a323db3c8ede7a3a0b07"
+        },
+        {
+          "file": "ap-terminal-proof-gate-2/launcher.json",
+          "bytes": 189,
+          "sha256": "db04054f33705018a5451977ed1b3441b3a232240da8b26c0061c6187eb64638"
+        },
+        {
+          "file": "ap-terminal-proof-gate-2/source-pins.json",
+          "bytes": 332,
+          "sha256": "b4cbff88f9e997f3455c897f836f14cb0f4096d8a440664400b4eb38e962a2a1"
+        },
+        {
+          "file": "ap-terminal-proof-gate-2/stdout.txt",
+          "bytes": 605,
+          "sha256": "2b247dc2300443901595f93f6a69bf4d6bd70e6664ede357f322b8532439e88b"
+        },
+        {
+          "file": "ap-terminal-proof-gate-2/stderr.txt",
+          "bytes": 303,
+          "sha256": "225ece70c2ada7b7504184b1e66681791492a2b4c9e53c6b071b0dfe15836200"
+        },
+        {
+          "file": "ap-terminal-proof-gate-2/run.ps1",
+          "bytes": 4298,
+          "sha256": "d08e2748cc678badaf06381943ac0a20bcdb8286ae2ac684827a18abb884dd3b"
+        },
+        {
+          "file": "ap-terminal-proof-gate-2/browser-natural-exit-reuse.ps1",
+          "bytes": 30278,
+          "sha256": "da778b8a0edc75d19c43e7f8498fdb695cc141435a577a218689dffb44bd1d28"
+        },
+        {
+          "file": "ap-terminal-proof-gate-2/VerifierIsolation.psm1",
+          "bytes": 890105,
+          "sha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024"
+        }
+      ]
+    },
+    {
+      "attempt": 3,
+      "status": "PASS",
+      "exitCode": 0,
+      "phase": "REAL_HOST_TERMINAL_NATURAL_EXIT_REUSE_CONTRACT",
+      "elapsedSeconds": 16.064278299999998,
+      "assertions": 19,
+      "inputAudit": "PASS_BEFORE_AND_AFTER",
+      "inputCount": 2,
+      "moduleSha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024",
+      "helperContractSha256": "9c76e514fc6e00ca5359fe477f6c61f2a6851a308df4882328fdef3d5ecf8440",
+      "limits": {
+        "outerWatchdogMs": 600000,
+        "innerShutdownMs": 15000,
+        "aggregateCleanupMs": 120000
+      },
+      "interpretation": "Passed the corrected root-owner equality contract with all 19 assertions.",
+      "artifacts": [
+        {
+          "file": "ap-terminal-proof-gate-3/result.json",
+          "bytes": 991,
+          "sha256": "d912026334e9a8ed1e4ee759f64c71355c3a2063e31f7e8d1ae16ce11872506a"
+        },
+        {
+          "file": "ap-terminal-proof-gate-3/launcher.json",
+          "bytes": 188,
+          "sha256": "bacba8fac387c101b1da51ac6e273fb528d9869a59a2a8c2392a7c2bfc168a6d"
+        },
+        {
+          "file": "ap-terminal-proof-gate-3/source-pins.json",
+          "bytes": 332,
+          "sha256": "dc35c4559d9f5eca8000539b224fcb57f2428fa655027adf0294f4adbf579af9"
+        },
+        {
+          "file": "ap-terminal-proof-gate-3/stdout.txt",
+          "bytes": 731,
+          "sha256": "fa81812f8a326eb44b1bbdfd90bf38f1e7bb15cae150afd647a01e2baeb8e2bf"
+        },
+        {
+          "file": "ap-terminal-proof-gate-3/stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "file": "ap-terminal-proof-gate-3/run.ps1",
+          "bytes": 4298,
+          "sha256": "38452a17fcb59334fb680daa2c3acc8fb41f54ce68ede3890efc1e690dcc9f89"
+        },
+        {
+          "file": "ap-terminal-proof-gate-3/browser-natural-exit-reuse.ps1",
+          "bytes": 30353,
+          "sha256": "9c76e514fc6e00ca5359fe477f6c61f2a6851a308df4882328fdef3d5ecf8440"
+        },
+        {
+          "file": "ap-terminal-proof-gate-3/VerifierIsolation.psm1",
+          "bytes": 890105,
+          "sha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024"
+        }
+      ],
+      "realNestedJobEvidence": {
+        "nestedJobObserved": true,
+        "reuseCount": 143,
+        "terminalIdentityCount": 2,
+        "absenceProofAttempts": 2,
+        "currentAbsenceObservations": 4,
+        "positiveProofMs": 7790,
+        "taskCleanupMs": 74,
+        "contractScope": "Real nested-job terminal proof in the host helper. The helper does not exercise a browser profile, preview lease, or application claim."
+      }
+    }
+  ],
+  "refusedPrelaunchPin": {
+    "status": "NOT_RUN_REFUSED_BEFORE_LAUNCH",
+    "reason": "An extra-hex-digit root pin was refused before launch; the pin literal is not included.",
+    "actualContractSha256": "55762c706e0306607cd2c17028c8bfbddbbb6c29be348fd3a6ea435b4f46631b",
+    "moduleSha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024",
+    "artifacts": [
+      {
+        "file": "ap-terminal-proof-gate-1/prelaunch-pin-correction.json",
+        "bytes": 299,
+        "sha256": "5110ec64a1d59077ece12476fd2fc5e65da9665b73896ebdd677aa4950951ff1"
+      },
+      {
+        "file": "ap-terminal-proof-gate-1/run-pin-refused-before-launch.ps1",
+        "bytes": 4299,
+        "sha256": "7d00a60992235e80653478f6b70054134ad682637fcda64a34a6055db06b79e8"
+      }
+    ]
+  },
+  "buildReuseAudit": {
+    "status": "PASS_REUSE_INPUT_BOUNDARY_AUDIT_ONLY",
+    "variant": "Player",
+    "style": "OBF",
+    "inputDigest": "45654010ddaf068b1cb30a193d43084b80eed0dbfb84f3dcf5f50b6f21df0d1f",
+    "inputFileCount": 1199,
+    "outputDigest": "e3cef7636468142ce9a8a6ea1707622343cc876407cb3bc1312c158da4b3c0e5",
+    "outputFileCount": 357,
+    "hostModuleSha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024",
+    "buildReuseClaim": "Identity audit only: the captured Player artifact identity is reused; no new Player build was performed.",
+    "sourceChangeClaim": "No Java/GWT source change is included in this reuse audit.",
+    "artifacts": [
+      {
+        "file": "ap-player-build-reuse-audit-1.json",
+        "bytes": 1105,
+        "sha256": "90d0d704a15aa99f1b18c229654987516eb8387181bd87c915c659821a8ca1c4"
+      }
+    ]
+  },
+  "player3": {
+    "gate": {
+      "status": "INFRASTRUCTURE_FAILURE",
+      "exitCode": 2,
+      "elapsedSeconds": 46.1624442,
+      "runId": "91bbc8ff21ec4928a4576ed7486afd57",
+      "quarantinedPort": 52860,
+      "routeStatus": "PASS",
+      "privacyCanaryStatus": "PASS",
+      "cleanupStatus": "FAIL",
+      "shutdownFailurePhase": "protectedHelperCensus",
+      "preMemoChildExitDuringHandleEstablishment": true
+    },
+    "recovery": {
+      "status": "REFUSED_ACTIVE_PREVIEW_MANIFEST",
+      "exitCode": 2,
+      "success": false,
+      "beforeAfterManifestSha256": "6299963abcd38014df9ebcc5a7196749b7fd40907be17cbcc448f7f611c49dfb",
+      "artifacts": [
+        {
+          "file": "ap-player3-recovery-1/result.json",
+          "bytes": 738,
+          "sha256": "2ab085593efaf789851b75004b63394c97043aa43ac4f51b35ae8511b0610d26"
+        },
+        {
+          "file": "ap-player3-recovery-1/launcher.json",
+          "bytes": 186,
+          "sha256": "db15ef82fd3f46c0251a4b6b84140dad1cbf0a3603f2d6c9d6fde93e2bbbe611"
+        },
+        {
+          "file": "ap-player3-recovery-1/manifest-before.json",
+          "bytes": 20601,
+          "sha256": "6299963abcd38014df9ebcc5a7196749b7fd40907be17cbcc448f7f611c49dfb"
+        },
+        {
+          "file": "ap-player3-recovery-1/manifest-after.json",
+          "bytes": 20601,
+          "sha256": "6299963abcd38014df9ebcc5a7196749b7fd40907be17cbcc448f7f611c49dfb"
+        },
+        {
+          "file": "ap-player3-recovery-1/run.ps1",
+          "bytes": 2325,
+          "sha256": "04aceffac3e2343d0157b33fc010dc23bed3753cc1439cf0eededf3c8b535599"
+        },
+        {
+          "file": "ap-player3-owned-close-1/result.json",
+          "bytes": 623,
+          "sha256": "74ca35eef4552fec83191a2d0388344dbbe1a79f473319f8f559ef05b8cf6390"
+        },
+        {
+          "file": "ap-player3-owned-close-1/launcher.json",
+          "bytes": 189,
+          "sha256": "297363362efaff9bc129b67a3aac5c617ebf114681b3ebb679678d5b14192d61"
+        },
+        {
+          "file": "ap-player3-owned-close-1/manifest-original.json",
+          "bytes": 20601,
+          "sha256": "6299963abcd38014df9ebcc5a7196749b7fd40907be17cbcc448f7f611c49dfb"
+        },
+        {
+          "file": "ap-player3-owned-close-1/run.ps1",
+          "bytes": 4291,
+          "sha256": "299fee864f4a815d2473b46977d245c2749296fc0a0f3f7b83c732be1902fab3"
+        }
+      ]
+    },
+    "ownedClose": {
+      "status": "RESOURCE_CLOSURE_ONLY_NOT_GATE_PASS",
+      "method": "Existing module Browser.close endpoint and acknowledgement",
+      "exitCode": 0,
+      "elapsedSeconds": 1.2111259,
+      "closeAcknowledged": true,
+      "rootHandleExited": true,
+      "originalManifestUnchanged": true,
+      "profileLeaseManifestDeleted": false,
+      "postCloseMarkedEdgeOrListeners": "ABSENT according to root observation; no persisted query artifact supplied.",
+      "sourceDeleted": false,
+      "manifestDeleted": false,
+      "leaseDeleted": false,
+      "profileDeleted": false,
+      "claimDeleted": false,
+      "originalFailureStatePreserved": true
+    },
+    "artifacts": [
+      {
+        "file": "ao-compiled-q100player-3.json",
+        "bytes": 16372,
+        "sha256": "637f8cf2bb2ea3385c13ed5e6fb5e754b63ea8004ee6128f7534da10d7061168"
+      },
+      {
+        "file": "ao-compiled-q100player-3-result.json",
+        "bytes": 237,
+        "sha256": "bae6bae07f9ed273084481d63bc21066e4930b78d35abb3b0ebcaa39812996fc"
+      },
+      {
+        "file": "ao-compiled-q100player-3-launcher.json",
+        "bytes": 204,
+        "sha256": "c18685a2f3c803c76576aeceea3b31fd8a2f77098bd398531149a889814e7727"
+      },
+      {
+        "file": "ao-compiled-q100player-3.log",
+        "bytes": 5091,
+        "sha256": "6c94b7986cfc550c6e9e8c458cd288be2775b7ed2a4e5b07ad347c1661fa99a0"
+      },
+      {
+        "file": "ao-compiled-q100player-3-host.txt",
+        "bytes": 788,
+        "sha256": "7f15b2cd99e9ba44da257287799e89bfbca540718497c474e92157b352619b36"
+      }
+    ]
+  },
+  "player4": {
+    "status": "PASS",
+    "exitCode": 0,
+    "elapsedSeconds": 84.166013,
+    "route": {
+      "name": "q100-player-debug-query",
+      "kind": "q100-player",
+      "status": "PASS",
+      "privacyCanary": "PASS",
+      "sentinelCases": 2,
+      "sentinelCleanup": "PASS"
+    },
+    "cleanup": {
+      "status": "PASS",
+      "aggregateMs": 53496,
+      "aggregateLimitMs": 120000,
+      "innerShutdownMs": 14435,
+      "innerShutdownLimitMs": 15000,
+      "descendantCount": 16,
+      "rootAndDescendantRecordCount": 17,
+      "waitLoopPassCount": 2,
+      "naturalExitProofCalls": 19,
+      "naturalExitProofReuseCount": 15,
+      "currentAbsenceProofCount": 17,
+      "currentAbsenceObservationCount": 34,
+      "lateDescendantParentQueryCount": 17,
+      "containmentJobPollCount": 1
+    },
+    "source": {
+      "verifierIsolationModuleSha256": "7744ea730811a36253642933a178d621d326f79a7b01503ebeac6018a9676024",
+      "sourceDigest": "0cbe64a449e761ce25194c017fa0bc32f0539d598d4cc4e76a71062ede15e059",
+      "scriptDigest": "c8283ed4b0c692063f976112548feabe6d0df446577a430e5857a00413f32e51",
+      "webDigest": "fb7f0c7ef36b0eff88fb5728529db59b6f16344e6446ab684156c116945f5865",
+      "executionDigest": "bad385afa7dd52ad5fd6acd8b57bec21e3753b89c3c09b8295f9fbcabeda9967",
+      "executionFileCount": 1597,
+      "q100PlayerInputDigest": "45654010ddaf068b1cb30a193d43084b80eed0dbfb84f3dcf5f50b6f21df0d1f",
+      "q100PlayerOutputDigest": "e3cef7636468142ce9a8a6ea1707622343cc876407cb3bc1312c158da4b3c0e5",
+      "developerMarkerScan": "PASS"
+    },
+    "artifacts": [
+      {
+        "file": "ao-compiled-q100player-4.json",
+        "bytes": 16625,
+        "sha256": "f249c07dcd04fed686e23aed0350653008c90787cfde09f3a12c3ba2aba7f4d4"
+      },
+      {
+        "file": "ao-compiled-q100player-4-result.json",
+        "bytes": 237,
+        "sha256": "50898ea6acaa425f9ae2268d2d89d79387f037f668589324088056bd61bd7615"
+      },
+      {
+        "file": "ao-compiled-q100player-4-launcher.json",
+        "bytes": 205,
+        "sha256": "4d54e89f947391a7eb61a18e5853aa7269eb55f97ec9bb78700496097db8d79c"
+      },
+      {
+        "file": "ao-compiled-q100player-4.log",
+        "bytes": 11742,
+        "sha256": "1df4b2bc54ff6e35da885f60e6fbb24ead662ffb35881e4ee7b8465d5b371f5e"
+      },
+      {
+        "file": "ao-compiled-q100player-4-host.txt",
+        "bytes": 769,
+        "sha256": "d23754faba69af10733d20f13a700146bbe2e600408487909f9abed27bbd7353"
+      }
+    ]
+  },
+  "limits": [
+    "The AP terminal proof helper has no actual browser profile, preview lease, or application claim; its nested-job assertions establish only the tested root-owned host contract.",
+    "Player 3 remains an infrastructure failure from the protected-census child exit during handle establishment. The later owned Browser.close operation is resource closure only; the original manifest and quarantine state remain preserved.",
+    "Player 4 passed the Q100Player privacy route with cleanup inside the existing 15-second/120-second bounds. This does not establish the post-fix 2048-profile-file/62-artifact stress result.",
+    "No other full gate, native33/current25 saved-profile72 suite, or playable 100-route qualification is included.",
+    "The additional Player build reuse audit confirms 1199-file input and output identities; it is not a new build.",
+    "Protected HARD data was not read or run. Raw logs, manifests, absolute paths, PIDs, start ticks, argv, and capability tokens are not embedded."
+  ],
+  "packetSanitization": {
+    "artifactReferences": "Relative scratch leaf names and prior packet relative name only",
+    "rawLogsEmbedded": false,
+    "rawReportsEmbedded": false,
+    "rawManifestsEmbedded": false,
+    "absolutePathsEmbedded": false,
+    "pidsOrStartTicksIncluded": false,
+    "argvOrCapabilityTokensIncluded": false,
+    "profileLeasePathsIncluded": false,
+    "status": "SANITIZED_METADATA_ONLY"
+  },
+  "priorQuarantineClaims": {
+    "status": "PRESERVED",
+    "attemptRunIds": [
+      "d6121212199d4b7d8a7d1272f3cc27fb",
+      "336f4f628b934dc784e828d69595d4eb"
+    ],
+    "listenerPorts": [
+      49172,
+      58271
+    ],
+    "listenerStatus": "ABSENT according to the same scoped read-only query.",
+    "priorPacket": {
+      "file": "authored-layout-r1/ap-cleanup-failures1.json",
+      "bytes": 19213,
+      "sha256": "dc439d7b9264139773e1208b185f0d8d3dfd7613ad2440ef8942a06f93f78f74"
+    },
+    "profileClaimPathsIncluded": false
+  }
+}

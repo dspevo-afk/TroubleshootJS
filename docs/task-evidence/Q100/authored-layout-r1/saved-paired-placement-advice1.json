@@ -1,0 +1,330 @@
+{
+  "schema": "p07-saved-paired-placement-advice-observation-v1",
+  "status": "PASS_OBSERVATION_ONLY",
+  "scope": "OBSERVATIONAL_PLACEMENT_ADVICE_ONLY",
+  "adoption": false,
+  "layoutQualification": false,
+  "q100Qualification": false,
+  "overallInterpretation": "The two fixed route-probe cases and 108 pre-compaction advice rows were observed. The route records match AD2 on every compared field except the six listed run/timing fields. This does not qualify placement or routing across profiles, nor explain the earlier route difference causally.",
+  "sourceBinding": {
+    "protocol": "p07-saved-paired-placement-advice-input-seal-v1",
+    "scope": "TEST_ONLY_OBSERVATION_NOT_ADOPTED",
+    "inputSnapshotDirectory": "saved-paired-placement-advice-inputs-1",
+    "parentRouteProbePinsSha256": "f8187ae204daa48aaa41aa49627a936d7b825665ffe343783632538d747ecbcc",
+    "baseUInputPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+    "inputCount": 1059,
+    "inputPinsSha256": "ed044fe854362e12d1afb7a9eb7ce60d7fd800ccc09bef6f4d2a77c58c28ade2",
+    "changedInputsFromRouteProbeSnapshot": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+        "beforeSha256": "f30032aeec5dc29d5866fa64d2003fd9ea20f80857bbb156d95c4072e6b03d0c",
+        "afterSha256": "743e2f19c7f3ffc74c04de375dbc7e2a6e7acfbca8cd12ce2bd02ae02f9cb476"
+      }
+    ],
+    "unchangedInputCountFromRouteProbeSnapshot": 1058,
+    "routeProbeHarnessSha256Unchanged": "d1b2572682c1a1751a266643dd1bbc33cdc84e4e4ecbeb3a1a01663a60be563e",
+    "baseUOverlayChangedInputCount": 2,
+    "preservedSourceSpecMetadataCorrection": {
+      "field": "cases[].algorithmCandidate",
+      "specifiedValue": 1,
+      "observedValue": 0,
+      "candidateAttempt": 1,
+      "basis": "All 108 emitted rows report algorithmCandidate=0; the actual planner maps the requested attempt 1 to algorithm 0 for these profiles.",
+      "effect": "Unconsumed sidecar label only; the consumed Java, input pins, raw results and original spec bytes remain unchanged."
+    },
+    "combinedOverlayInputsFromBaseU": [
+      { "path": "tests/contracts/P07BranchDiagnosticsContractTest.java", "sha256": "d1b2572682c1a1751a266643dd1bbc33cdc84e4e4ecbeb3a1a01663a60be563e", "role": "unchanged AD2 v2 harness carried in overlay" },
+      { "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java", "sha256": "743e2f19c7f3ffc74c04de375dbc7e2a6e7acfbca8cd12ce2bd02ae02f9cb476", "role": "placement-advice instrumentation variant" }
+    ],
+
+    "sourceSeal": {
+      "file": "saved-paired-placement-advice-inputs-sealed1.json",
+      "bytes": 1157,
+      "sha256": "dff14da0576d0d39068cd321885001a05fe6687185b7c18dc0cfa13f4607e640"
+    },
+    "variantPins": {
+      "file": "saved-paired-placement-advice-sealed-pins.json",
+      "bytes": 204437,
+      "sha256": "ed044fe854362e12d1afb7a9eb7ce60d7fd800ccc09bef6f4d2a77c58c28ade2"
+    },
+    "sourceSpec": {
+      "file": "spec.json",
+      "bytes": 3198,
+      "sha256": "181d9b1d35cae4d3fa9c04e1966a286e9974d1efa9ec07086dddbb599b9a154d"
+    },
+    "plannerSource": {
+      "file": "PcbPlacementPlanner.java",
+      "bytes": 123396,
+      "sha256": "743e2f19c7f3ffc74c04de375dbc7e2a6e7acfbca8cd12ce2bd02ae02f9cb476"
+    },
+    "sourceDiff": {
+      "file": "diff.patch",
+      "bytes": 12234,
+      "sha256": "eaefe6a8d66eb24705ad9d2b53181c31e17967074a9e31e1395c98dcda5538fd"
+    },
+    "sourceReadme": {
+      "file": "README.md",
+      "bytes": 3194,
+      "sha256": "aa296b80e870de68b484dd27ecdd742202b305bde9d057edeff147c6c59700e9"
+    },
+    "runner": {
+      "file": "run-saved-paired-placement-advice.ps1",
+      "bytes": 4363,
+      "sha256": "543fa6753da1431c49e3df2b6754d846061f72a109c6aac62f748f06c65f59cc"
+    },
+    "behavioralBoundary": [
+      "The instrumentation source specifies no additional candidate, legal-trial, fits, routing, or score-evaluation calls.",
+      "Existing score arithmetic, advice order, tie rule, and returned placement are specified as unchanged.",
+      "The primary-only minimum is a shadow observation over the same visited legal trials and does not feed selection."
+    ]
+  },
+  "nativeRun": {
+    "suite": "P07BranchDiagnosticsContractTest",
+    "status": "PASS_OBSERVATION_ONLY",
+    "helperExitCode": 0,
+    "helperElapsedSeconds": 33.2135269,
+    "caseCount": 2,
+    "assertions": 24038,
+    "nativeElapsedMs": 4731,
+    "timingScope": "NATIVE_DIAGNOSTIC_ONLY_NOT_PRODUCTION_TIMING",
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "inputRevision": 3,
+    "sourceSnapshotRevision": 1,
+    "inputCount": 1059,
+    "inputPinsSha256": "ed044fe854362e12d1afb7a9eb7ce60d7fd800ccc09bef6f4d2a77c58c28ade2",
+    "terminationProven": true,
+    "cleanup": {
+      "status": "PASS_MARKER_OBSERVED",
+      "marker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+      "elapsedSeconds": null,
+      "timing": "Cleanup-only duration was not separately reported."
+    }
+  },
+  "fixedCases": {
+    "rootSeed": "5",
+    "placementSeed": "-7630701392004902526",
+    "routingSeed": "-9106650364266936003",
+    "routingSeedRole": "PLAN_IDENTITY_METADATA; P07_BACKEND_DOES_NOT_CONSUME_ROUTING_SEED",
+    "candidateAttempt": 1,
+    "routeName": "P07_FULLER_TWO_LAYER",
+    "backendPolicy": "FULLER_TWO_LAYER",
+    "layoutVersion": 24,
+    "dependencyEpoch": "tsj-generation-dependencies-v25",
+    "callChain": {
+      "producer": "SeededPcbLayoutGenerator.advanceMediumRoute",
+      "sequence": "candidate.plan.materialize() then PcbLayerRoutingPrototype.begin(board,placement,FULLER_TWO_LAYER,observer)",
+      "materializeAndRouteCallsMatchProduction": true,
+      "postprocessing": "NONE",
+      "attemptObserver": "NOOP_ATTEMPT_OBSERVER",
+      "generationCancellationObserverExercised": false
+    },    "inputMaterializedGeometry": [
+      { "caseId": "SEED5_V10_CANDIDATE1", "placementDensityVersion": 10, "sha256": "1c6136104db257aebfa692c2c6689fe620a658276062d783f36fbef10dd3cc19", "bytes": 133536 },
+      { "caseId": "SEED5_V11_CANDIDATE1", "placementDensityVersion": 11, "sha256": "b21527ea02b45b9fdfb6233fb116d42a32077da84709674efe3b59b36e15c43f", "bytes": 133367 }
+    ],
+    "routeOutcomesAndWork": [
+      {
+        "caseId": "SEED5_V10_CANDIDATE1",
+        "expectedOutcome": "SUCCESS",
+        "diagnosticOutcome": "SUCCESS",
+        "diagnosticExpansions": 523756,
+        "orderings": 2,
+        "vias": 48,
+        "branchCount": 187,
+        "baselineOutcome": "SUCCESS",
+        "acceptedPhysicalOracle": "PASS_P08_CLEARANCE_LAYERED_RASTER",
+        "orderedPadPairs": 17161,
+        "referenceClearancePairs": 17471,
+        "rasterOrderedPadPairs": 17161,
+        "rasterPointCount": 41684,
+        "rasterViaBarrels": 48
+      },
+      {
+        "caseId": "SEED5_V11_CANDIDATE1",
+        "expectedOutcome": "OUT_B:BRANCH_SEARCH_LIMIT",
+        "diagnosticOutcome": "OUT_B:BRANCH_SEARCH_LIMIT",
+        "diagnosticExpansions": 633544,
+        "orderings": 3,
+        "vias": 0,
+        "branchCount": 176,
+        "baselineOutcome": "OUT_B:BRANCH_SEARCH_LIMIT",
+        "acceptedPhysicalOracle": null
+      }
+    ]
+  },
+  "routeRecordParityAgainstAD2": {
+    "scope": "The filtered typed route-probe records from the current console compared with AD2 v2; advice records are separate.",
+    "ad2InputPinsSha256": "f8187ae204daa48aaa41aa49627a936d7b825665ffe343783632538d747ecbcc",
+    "routeRecordsCompared": 368,
+    "recordCounts": { "FRAME": 2, "BRANCH": 363, "CASE": 2, "SUITE": 1 },
+    "pairing": {
+      "frameAndCase": ["caseId", "caseOrdinal"],
+      "branch": ["caseId", "branchOrdinal"],
+      "suite": "single matching suite record"
+    },
+    "excludedFieldsOnly": [
+      "runId",
+      "frameId",
+      "diagnosticElapsedMs",
+      "baselineElapsedMs",
+      "caseElapsedMs",
+      "nativeElapsedMs"
+    ],
+    "allOtherFieldsEqual": true,
+    "recordOrderAndKeysEqual": true,
+    "mismatchCount": 0,
+    "baselineArtifacts": [
+      { "file": "saved-paired-route-probe-2-console.txt", "bytes": 238452, "sha256": "d5c146e3f9c51afe1766cf6c604090d1a6a2c4a1e94573a06d92d915ee2ef2e3" },
+      { "file": "saved-paired-route-observations2.json", "bytes": 15202, "sha256": "dbec009653c10669298e768153c48ce4d5ebc83b46dac0c8d7b2a79f39fe0e88" }
+    ]
+  },
+  "adviceCensus": {
+    "protocol": "p07-saved-paired-placement-advice-v1",
+    "recordCount": 108,
+    "allStatus": "OBSERVATION_ONLY",
+    "scope": "OBSERVATIONAL_PLACEMENT_ADVICE_ONLY",
+    "stage": "PRE_COMPACTION",
+    "recordOrdinal": "Derived from emitted order, zero-based within each density; not an input field.",
+    "allScoresFinite": true,
+    "scoreDecomposition": "actualWinnerFinalScore == actualWinnerPrimaryScoreBeforeVacancyAdvice + actualWinnerVacancyDistanceAdvice - actualWinnerVacancyPocketAdvice for 108/108 rows (double evaluation).",
+    "primaryScoreComparison": "actual winner primary score was at least the primary-only minimum over the same visited legal trials for 108/108 rows.",
+    "byDensity": [
+      {
+        "placementDensityVersion": 10,
+        "rows": 54,
+        "uniqueComponents": 54,
+        "recordOrdinalRange": [0, 53],
+        "positivePrimaryDeltaCount": 0,
+        "legalTrialCount": { "min": 1, "max": 126, "sum": 2291 },
+        "evaluatedTrialCount": { "min": 125, "max": 171, "sum": 6845 }
+      },
+      {
+        "placementDensityVersion": 11,
+        "rows": 54,
+        "uniqueComponents": 54,
+        "recordOrdinalRange": [0, 53],
+        "positivePrimaryDeltaCount": 10,
+        "legalTrialCount": { "min": 5, "max": 126, "sum": 2688 },
+        "evaluatedTrialCount": { "min": 125, "max": 126, "sum": 6800 }
+      }
+    ],
+    "primaryWorsenedRows": [
+      { "placementDensityVersion": 11, "recordOrdinal": 8, "componentId": "RSENSE", "actualWinnerPrimaryScore": "1408.9367179205599", "minimumPrimaryOnlyScore": "715.98671792056", "primaryDeltaFromSerializedValues": "692.9499999999999" },
+      { "placementDensityVersion": 11, "recordOrdinal": 9, "componentId": "RSA", "actualWinnerPrimaryScore": "2159.9455000000003", "minimumPrimaryOnlyScore": "2090.4954999999995", "primaryDeltaFromSerializedValues": "69.4500000000008" },
+      { "placementDensityVersion": 11, "recordOrdinal": 11, "componentId": "RFB", "actualWinnerPrimaryScore": "4249.7838090855785", "minimumPrimaryOnlyScore": "3354.5777963459727", "primaryDeltaFromSerializedValues": "895.2060127396058" },
+      { "placementDensityVersion": 11, "recordOrdinal": 14, "componentId": "F1", "actualWinnerPrimaryScore": "888.4905000000001", "minimumPrimaryOnlyScore": "592.9595", "primaryDeltaFromSerializedValues": "295.5310000000001" },
+      { "placementDensityVersion": 11, "recordOrdinal": 18, "componentId": "RPRIMARY", "actualWinnerPrimaryScore": "3927.8905", "minimumPrimaryOnlyScore": "3815.228", "primaryDeltaFromSerializedValues": "112.6625" },
+      { "placementDensityVersion": 11, "recordOrdinal": 21, "componentId": "U2B", "actualWinnerPrimaryScore": "804.7778214285713", "minimumPrimaryOnlyScore": "723.494488095238", "primaryDeltaFromSerializedValues": "81.2833333333333" },
+      { "placementDensityVersion": 11, "recordOrdinal": 22, "componentId": "RDB", "actualWinnerPrimaryScore": "1312.6355", "minimumPrimaryOnlyScore": "679.028", "primaryDeltaFromSerializedValues": "633.6075" },
+      { "placementDensityVersion": 11, "recordOrdinal": 30, "componentId": "U1", "actualWinnerPrimaryScore": "2511.128306860468", "minimumPrimaryOnlyScore": "789.4287242276513", "primaryDeltaFromSerializedValues": "1721.6995826328167" },
+      { "placementDensityVersion": 11, "recordOrdinal": 31, "componentId": "REN", "actualWinnerPrimaryScore": "3288.5604497176114", "minimumPrimaryOnlyScore": "2478.9925925747543", "primaryDeltaFromSerializedValues": "809.5678571428571" },
+      { "placementDensityVersion": 11, "recordOrdinal": 35, "componentId": "L1", "actualWinnerPrimaryScore": "1604.0669669226718", "minimumPrimaryOnlyScore": "835.5082706099315", "primaryDeltaFromSerializedValues": "768.5586963127403" }
+    ],
+    "routeEndpointRows": [
+      {
+        "placementDensityVersion": 10,
+        "recordOrdinal": 50,
+        "componentId": "RLEDOUT_B",
+        "stage": "PRE_COMPACTION",
+        "hasSupport": false,
+        "support": null,
+        "actualWinner": { "x": 2800, "y": 1550 },
+        "minimumPrimaryOnlyPose": { "x": 2800, "y": 1550, "score": "893.0613333333333" },
+        "winnerEqualsPrimaryMinimumPose": true,
+        "primaryDeltaFromSerializedValues": "0",
+        "actualWinnerFinalScore": "893.0613333333333",
+        "actualWinnerDistanceAdvice": "0",
+        "actualWinnerPocketAdvice": "0",
+        "vacancyCount": 0,
+        "legalTrialCount": 11,
+        "evaluatedTrialCount": 126
+      },
+      {
+        "placementDensityVersion": 10,
+        "recordOrdinal": 53,
+        "componentId": "RLEDOUT_A",
+        "stage": "PRE_COMPACTION",
+        "hasSupport": false,
+        "support": null,
+        "actualWinner": { "x": 1080, "y": 1470 },
+        "minimumPrimaryOnlyPose": { "x": 1080, "y": 1470, "score": "81832.813" },
+        "winnerEqualsPrimaryMinimumPose": true,
+        "primaryDeltaFromSerializedValues": "0",
+        "actualWinnerFinalScore": "81832.813",
+        "actualWinnerDistanceAdvice": "0",
+        "actualWinnerPocketAdvice": "0",
+        "vacancyCount": 0,
+        "legalTrialCount": 1,
+        "evaluatedTrialCount": 171
+      },
+      {
+        "placementDensityVersion": 11,
+        "recordOrdinal": 50,
+        "componentId": "RLEDOUT_B",
+        "stage": "PRE_COMPACTION",
+        "hasSupport": false,
+        "support": null,
+        "actualWinner": { "x": 3020, "y": 1270 },
+        "minimumPrimaryOnlyPose": { "x": 3020, "y": 1270, "score": "17846.490333333335" },
+        "winnerEqualsPrimaryMinimumPose": true,
+        "primaryDeltaFromSerializedValues": "0",
+        "actualWinnerFinalScore": "16896.490333333335",
+        "actualWinnerDistanceAdvice": "115",
+        "actualWinnerPocketAdvice": "1065",
+        "vacancyCount": 5,
+        "legalTrialCount": 5,
+        "evaluatedTrialCount": 126
+      },
+      {
+        "placementDensityVersion": 11,
+        "recordOrdinal": 53,
+        "componentId": "RLEDOUT_A",
+        "stage": "PRE_COMPACTION",
+        "hasSupport": false,
+        "support": null,
+        "actualWinner": { "x": 1700, "y": 1590 },
+        "minimumPrimaryOnlyPose": { "x": 1700, "y": 1590, "score": "24558.55883333333" },
+        "winnerEqualsPrimaryMinimumPose": true,
+        "primaryDeltaFromSerializedValues": "0",
+        "actualWinnerFinalScore": "25031.05883333333",
+        "actualWinnerDistanceAdvice": "472.5",
+        "actualWinnerPocketAdvice": "0",
+        "vacancyCount": 5,
+        "legalTrialCount": 23,
+        "evaluatedTrialCount": 126
+      }
+    ]
+  },
+  "priorAD2Reference": {
+    "scope": "AD2 fixed route-probe v2 observation; this placement-advice run does not replace it.",
+    "file": "saved-paired-route-observations2.json",
+    "bytes": 15202,
+    "sha256": "dbec009653c10669298e768153c48ce4d5ebc83b46dac0c8d7b2a79f39fe0e88",
+    "ad2Console": {
+      "file": "saved-paired-route-probe-2-console.txt",
+      "bytes": 238452,
+      "sha256": "d5c146e3f9c51afe1766cf6c604090d1a6a2c4a1e94573a06d92d915ee2ef2e3"
+    }
+  },
+  "rawArtifacts": [
+    { "file": "saved-paired-placement-advice-1-result.json", "bytes": 774, "sha256": "64058338d29c3926d9166ff6ebd70685abc246dc498b3fcc14abf6992fb8f52d" },
+    { "file": "saved-paired-placement-advice-1-launcher.json", "bytes": 236, "sha256": "25800b8955b905139576cffd900a5c01ac625d061a33d39ce56b9a46ef6ea702" },
+    { "file": "saved-paired-placement-advice-1-console.txt", "bytes": 357275, "sha256": "713d8864eef9cf93c12ecbb5e517d548dc54649c2697f8ee126b72ebd8f57e55" },
+    { "file": "saved-paired-placement-advice-1-receipt.txt", "bytes": 356135, "sha256": "26a55494007b0a446a0c04f05447f3c32c92b9e8204101d0febd31a54877f41b" },
+    { "file": "saved-paired-placement-advice-1-stderr.txt", "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" }
+  ],
+  "limitations": [
+    "The 108 advice records cover only the two fixed seed-5 density cases and their PRE_COMPACTION observations.",
+    "The four RLEDOUT_A/RLEDOUT_B rows have no support pair and their selected poses equal the primary-only minima. These rows do not confirm a direct score-override explanation for those route endpoints.",
+    "The earlier layout and trial context differs; no causal explanation or repair is inferred from this observation.",
+    "The AD2 frame does not report planner-evaluation counts, so no planner-evaluation-count comparison is claimed.",
+    "The instrumented planner source is a scratch test overlay and is not adopted or qualified. No full saved-profile census, current-Q suite, source build, or broader Q100 qualification was run."
+  ],
+  "sanitization": {
+    "rawConsoleOrReceiptContentsEmbedded": false,
+    "absoluteMachinePathsIncluded": false,
+    "processIdentifiersIncluded": false,
+    "runIdsOrFrameIdsIncluded": false,
+    "privateCanonicalIdentityDigestsIncluded": false,
+    "artifactReferences": "Basenames, byte counts and SHA-256 values only."
+  }
+}

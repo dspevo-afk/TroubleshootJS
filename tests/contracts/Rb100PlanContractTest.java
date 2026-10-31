@@ -1,13 +1,18 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
 /** Independent exact-inventory contract; it does not construct or power CircuitJS elements. */
 public final class Rb100PlanContractTest {
     private static int assertions;
+    private static final Set<String> EXPECTED_PRIMARY_NETS = new HashSet<String>(
+        Arrays.asList(new String[] {"AC_LINE", "AC_RETURN", "AC_FUSED", "HV_POS",
+            "HV_RETURN", "ENABLE_AC", "FB_AC", "BIAS_AC"}));
 
     public static void main(String[] args) {
         Rb100Plan shared = Rb100Plan.create(123456789012345L,
@@ -23,12 +28,14 @@ public final class Rb100PlanContractTest {
         verifyBaseImportOverrides(separate);
         verifyElectricalDeclarations(shared);
         verifyElectricalDeclarations(separate);
+        verifyPhysicalIntent(shared);
+        verifyPhysicalIntent(separate);
         verifyDefensiveCopies(shared);
         verifyRejectsInvalidLookups(shared);
         verifyExactLongSeeds();
         verifyPlayerCatalogIsolation();
         System.out.println("PASS: RB100 plan contracts assertions=" + assertions +
-            " packages=100 variants=2 scope=INVENTORY_AND_DECLARATION_ONLY");
+            " packages=100 variants=2 scope=INVENTORY_PHYSICAL_INTENT_ROLES_AND_TRACE_WIDTHS");
     }
 
     private static void verifyIdentityAndVariants(Rb100Plan shared, Rb100Plan sharedAgain,
@@ -87,6 +94,242 @@ public final class Rb100PlanContractTest {
             require(canonical.contains(contract), "Canonical identity pins model bound: " + contract);
         require(canonical.contains(";electrical-model=4;CIN33-series-ESR=1.0;"),
             "Explicit capacitor ESR model revision does not alter topology seed derivation");
+        String physicalIdentity = ";physical-intent=9;physical-policy=MEDIUM_BOARD@1" +
+            ";physical-density=14;physical-requires-two-layer=true" +
+            ";physical-trace-profile=ROLE_TRACE@1";
+        require(canonical.endsWith(physicalIdentity) &&
+                separate.canonical().endsWith(physicalIdentity) &&
+                Rb100Plan.PLAN_VERSION == 1 && Rb100Plan.MODEL_VERSION == 4,
+            "Private physical intent canonically binds the medium policy, density and two-layer requirement");
+    }
+
+    private static void verifyPhysicalIntent(Rb100Plan plan) {
+        TroubleshootBoard board = plan.board();
+        verifyRoutingRoleFidelity(plan, plan.base.board(), board);
+        PcbPlacementConstraints constraints = board.getPlacementConstraints();
+        require(board.getComponentIds().size() == 100 && constraints.getParts().size() == 100 &&
+                board.getPadIds().size() == 246,
+            "Physical intent covers the exact plan-derived 100 components and 246 pads");
+        require(constraints.routingLayer == PcbCopperLayer.BOTTOM &&
+                "MEDIUM_BOARD".equals(constraints.getPhysicalPolicyId()) &&
+                constraints.getPhysicalPolicyVersion() == 1 &&
+                constraints.placementDensityVersion == 14 &&
+                constraints.getPlacementPackingVersion() == 4 &&
+                constraints.getPlacementPackingVersion() ==
+                    PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION &&
+                constraints.requiresTwoLayerRouting &&
+                "ROLE_TRACE@1".equals(constraints.getTraceWidthProfile().getIdentity()),
+            "RB100 intent9 selects MEDIUM_BOARD@1/P07 at current density14 with the existing role-width profile and packing4");
+
+        Vector<PcbPlacementConstraints.Barrier> barriers = constraints.getBarriers();
+        require(barriers.size() == 1 && "PRIMARY".equals(barriers.get(0).firstDomain) &&
+                "SECONDARY".equals(barriers.get(0).secondDomain) &&
+                barriers.get(0).clearance == 80,
+            "Physical intent has exactly the existing 80-unit primary/secondary barrier");
+
+        Set<String> expectedParts = new HashSet<String>();
+        Set<String> expectedNets = new HashSet<String>();
+        Set<String> actualPrimaryNets = new HashSet<String>();
+        Set<String> actualMixedParts = new HashSet<String>();
+        Map<String, String> expectedRegions = expectedFunctionalRegions(plan);
+        Set<String> actualPartIds = new HashSet<String>();
+        Set<String> expectedRegionIds = new HashSet<String>(expectedRegions.values());
+        require(expectedRegions.size() == Rb100Plan.PACKAGE_COUNT &&
+                expectedRegionIds.size() == (plan.variant ==
+                    Rb100Plan.Variant.SHARED_HYSTERETIC_LINEAR ? 13 : 12),
+            "Literal family region memberships cover100 unique parts in13 shared/12 separate regions");
+        Set<String> expectedPrimaryConnectors = new HashSet<String>(Arrays.asList(
+            new String[] { "JAC" }));
+        Set<String> expectedSecondaryConnectors = new HashSet<String>(Arrays.asList(
+            new String[] { "JLOAD", "JSA", "JSB", "JSC", "JSD" }));
+        Set<String> expectedConnectors = new HashSet<String>(expectedPrimaryConnectors);
+        expectedConnectors.addAll(expectedSecondaryConnectors);
+        Set<String> actualConnectors = new HashSet<String>();
+        int primaryOnlyParts = 0, secondaryOnlyParts = 0;
+        for (Rb100Plan.Part part : plan.parts()) {
+            expectedParts.add(part.id);
+            actualPartIds.add(part.id);
+            PcbPlacementConstraints.Part demand = constraints.get(part.id);
+            require(demand != null && expectedRegions.get(part.id) != null &&
+                    expectedRegions.get(part.id).equals(demand.regionId) &&
+                    "Circuit".equals(demand.regionLabel) && demand.accessMargin == 20,
+                "Physical intent matches the literal family region and preserves label/margin: " + part.id);
+            if (part.physicalPackage.isConnector()) actualConnectors.add(part.id);
+            if (expectedPrimaryConnectors.contains(part.id))
+                require(part.physicalPackage.isConnector() &&
+                    "PRIMARY".equals(demand.domainId) &&
+                    demand.anchor == PcbPlacementConstraints.Anchor.LEFT,
+                    "Literal primary connector uses the left family anchor: " + part.id);
+            else if (expectedSecondaryConnectors.contains(part.id))
+                require(part.physicalPackage.isConnector() &&
+                    "SECONDARY".equals(demand.domainId) &&
+                    demand.anchor == PcbPlacementConstraints.Anchor.RIGHT,
+                    "Literal secondary connector uses the right family anchor: " + part.id);
+            else
+                require(!part.physicalPackage.isConnector() &&
+                    demand.anchor == PcbPlacementConstraints.Anchor.NONE,
+                    "Nonconnector retains no anchor: " + part.id);
+
+            String[] terminals = part.terminalIds();
+            String[] nets = part.netIds();
+            boolean hasPrimary = false, hasSecondary = false;
+            for (int index = 0; index < terminals.length; index++) {
+                expectedNets.add(nets[index]);
+                String expectedDomain = EXPECTED_PRIMARY_NETS.contains(nets[index]) ?
+                    "PRIMARY" : "SECONDARY";
+                if ("PRIMARY".equals(expectedDomain)) {
+                    actualPrimaryNets.add(nets[index]);
+                    hasPrimary = true;
+                } else {
+                    hasSecondary = true;
+                }
+                require(expectedDomain.equals(demand.terminalDomain(terminals[index])),
+                    "Terminal domain matches the independent literal net partition: " +
+                        part.id + "." + terminals[index]);
+                BoardPad pad = board.getPad(part.id + "." + terminals[index]);
+                require(pad != null && part.id.equals(pad.getComponentId()) &&
+                        terminals[index].equals(pad.getTerminalId()) &&
+                        nets[index].equals(pad.getNetId()),
+                    "Physical domain preserves plan-to-board terminal/net mapping: " +
+                        part.id + "." + terminals[index]);
+            }
+            String expectedPackingDomain = hasPrimary ? "PRIMARY" : "SECONDARY";
+            require(expectedPackingDomain.equals(demand.domainId),
+                "Part packing domain follows its declared terminals: " + part.id);
+            if (hasPrimary && hasSecondary) {
+                actualMixedParts.add(part.id);
+                require(demand.getTerminalDomains().size() == terminals.length,
+                    "Mixed isolating part declares every terminal domain: " + part.id);
+            } else {
+                if (hasPrimary) primaryOnlyParts++;
+                else secondaryOnlyParts++;
+                require(demand.getTerminalDomains().isEmpty(),
+                    "Single-domain part retains its single packing-domain fallback: " + part.id);
+            }
+        }
+        require(actualPartIds.equals(expectedRegions.keySet()),
+            "Independent region memberships account for the exact authored component IDs");
+        require(new HashSet<String>(board.getComponentIds()).equals(expectedParts) &&
+                new HashSet<String>(board.getNetIds()).equals(expectedNets) &&
+                actualPrimaryNets.equals(EXPECTED_PRIMARY_NETS),
+            "Physical intent preserves exact component/net inventories and literal primary-net set");
+        require(actualConnectors.equals(expectedConnectors),
+            "Connector inventory exactly matches the independent literal side-intent sets");
+        require(primaryOnlyParts == 12 && secondaryOnlyParts == 86 &&
+                actualMixedParts.equals(new HashSet<String>(Arrays.asList(
+                    new String[] {"UAC", "UFB"}))),
+            "Domains are 12 primary-only, 86 secondary-only, and only UAC/UFB mixed");
+
+        for (Rb100Plan.Part part : plan.tailParts()) {
+            PcbPlacementConstraints.Part demand = constraints.get(part.id);
+            require("SECONDARY".equals(demand.domainId),
+                "Every added tail part remains in the secondary physical domain: " + part.id);
+            for (String terminal : part.terminalIds())
+                require("SECONDARY".equals(demand.terminalDomain(terminal)),
+                    "Every added tail terminal remains secondary: " + part.id + "." + terminal);
+        }
+        require(plan.tailParts().size() == 80,
+            "RB100 physical intent derives the unchanged 80-part tail from the plan");
+
+        expectTerminalDomain(constraints, "UAC", "IN+", "PRIMARY");
+        expectTerminalDomain(constraints, "UAC", "IN-", "PRIMARY");
+        expectTerminalDomain(constraints, "UAC", "EN", "PRIMARY");
+        expectTerminalDomain(constraints, "UAC", "FB", "PRIMARY");
+        expectTerminalDomain(constraints, "UAC", "BIAS", "PRIMARY");
+        expectTerminalDomain(constraints, "UAC", "PRE_L+", "SECONDARY");
+        expectTerminalDomain(constraints, "UAC", "OUT-", "SECONDARY");
+        expectTerminalDomain(constraints, "UFB", "A", "SECONDARY");
+        expectTerminalDomain(constraints, "UFB", "K", "SECONDARY");
+        expectTerminalDomain(constraints, "UFB", "C", "PRIMARY");
+        expectTerminalDomain(constraints, "UFB", "E", "PRIMARY");
+    }
+
+    private static void verifyRoutingRoleFidelity(Rb100Plan plan,
+            TroubleshootBoard baseBoard, TroubleshootBoard rb100Board) {
+        verifyTraceWidthProfile(baseBoard, false);
+        verifyTraceWidthProfile(rb100Board, true);
+        expectNetRole(baseBoard, "PRE_L", BoardNet.RoutingRole.HIGH_CURRENT);
+        expectNetRole(rb100Board, "PRE_L", BoardNet.RoutingRole.HIGH_CURRENT);
+        expectNetRole(baseBoard, "CTRL_RETURN", BoardNet.RoutingRole.RETURN);
+        expectNetRole(rb100Board, "CTRL_RETURN", BoardNet.RoutingRole.RETURN);
+        expectNetRole(baseBoard, "LOAD_RETURN", BoardNet.RoutingRole.RETURN);
+        require(rb100Board.getNet("LOAD_RETURN") == null &&
+                !rb100Board.getNetIds().contains("LOAD_RETURN"),
+            "RB100 keeps the intentional CTRL_RETURN load wiring without the old LOAD_RETURN net");
+
+        for (String channel : new String[] {"A", "B"}) {
+            expectNetRole(baseBoard, "NC_" + channel, BoardNet.RoutingRole.SIGNAL);
+            expectNetRole(baseBoard, "OUT_" + channel, BoardNet.RoutingRole.HIGH_CURRENT);
+            expectNetRole(baseBoard, channel + "_COIL_LOW", BoardNet.RoutingRole.HIGH_CURRENT);
+        }
+        for (String channel : new String[] {"A", "B", "C", "D"}) {
+            expectNetRole(rb100Board, "NC_" + channel, BoardNet.RoutingRole.SIGNAL);
+            expectNetRole(rb100Board, channel + "_COIL_LOW", BoardNet.RoutingRole.HIGH_CURRENT);
+        }
+        for (String channel : new String[] {"A", "B", "C", "D", "E", "F"})
+            expectNetRole(rb100Board, "OUT_" + channel, BoardNet.RoutingRole.HIGH_CURRENT);
+        expectNetRole(rb100Board, "E_DRAIN", BoardNet.RoutingRole.HIGH_CURRENT);
+        expectNetRole(rb100Board, "F_DRAIN", BoardNet.RoutingRole.HIGH_CURRENT);
+        expectNetRole(rb100Board, "AUX_RETURN", BoardNet.RoutingRole.HIGH_CURRENT);
+        expectNetRole(rb100Board, "MON_SENSE", BoardNet.RoutingRole.HIGH_CURRENT);
+
+        for (String net : new String[] {"D_CMD", "C_CMD", "A_SENSE", "MON_FILTER", "AUX_BASE"})
+            expectNetRole(rb100Board, net, BoardNet.RoutingRole.CONTROL);
+
+        TroubleshootBoard currentRb56Board = plan.base.withPlacementVersion(
+            Rb56Placement.CURRENT_VERSION).board();
+        expectNetRole(currentRb56Board, "PRE_L", BoardNet.RoutingRole.HIGH_CURRENT);
+        verifyTraceWidthProfile(currentRb56Board, true);
+    }
+
+    private static void verifyTraceWidthProfile(TroubleshootBoard board, boolean roleWidths) {
+        PcbTraceWidthProfile profile = board.getPlacementConstraints().getTraceWidthProfile();
+        String expectedIdentity = roleWidths ? "ROLE_TRACE@1" : "UNIFORM_TRACE@1";
+        int expectedMaximum = roleWidths ? 13 : 9;
+        require(expectedIdentity.equals(profile.getIdentity()) &&
+                profile.maximumWidth() == expectedMaximum,
+            "Actual board declaration selects " + expectedIdentity + " with maximum width " +
+                expectedMaximum + ": " + board.getId());
+        for (BoardNet.RoutingRole role : BoardNet.RoutingRole.values()) {
+            int expectedWidth = roleWidths ? literalRoleWidth(role) : 9;
+            require(profile.widthFor(role) == expectedWidth,
+                "Independent literal trace width for " + role + " is " + expectedWidth +
+                    " on " + board.getId());
+        }
+        for (String netId : board.getNetIds()) {
+            BoardNet net = board.getNet(netId);
+            int expectedWidth = roleWidths ? literalRoleWidth(net.getRoutingRole()) : 9;
+            require(profile.widthFor(net.getRoutingRole()) == expectedWidth,
+                "Actual net role selects its independent trace width: " + board.getId() + "/" +
+                    netId);
+        }
+    }
+
+    private static int literalRoleWidth(BoardNet.RoutingRole role) {
+        switch (role) {
+        case HIGH_CURRENT: return 13;
+        case SUPPLY:
+        case RETURN: return 11;
+        case CONTROL:
+        case SIGNAL: return 9;
+        default: throw new AssertionError("Unknown routing role: " + role);
+        }
+    }
+
+    private static void expectNetRole(TroubleshootBoard board, String netId,
+            BoardNet.RoutingRole expectedRole) {
+        BoardNet net = board.getNet(netId);
+        require(net != null && net.getRoutingRole() == expectedRole,
+            "Literal routing-role oracle for " + board.getId() + ": " + netId + " is " +
+                expectedRole);
+    }
+
+    private static void expectTerminalDomain(PcbPlacementConstraints constraints,
+            String componentId, String terminalId, String expectedDomain) {
+        PcbPlacementConstraints.Part demand = constraints.get(componentId);
+        require(demand != null && expectedDomain.equals(demand.terminalDomain(terminalId)),
+            "Isolation-body terminal has its literal physical domain: " + componentId + "." +
+                terminalId);
     }
 
     private static void verifyInventory(Rb100Plan plan) {
@@ -387,6 +630,49 @@ public final class Rb100PlanContractTest {
         BoardPad pad = board.getPad(padId);
         require(pad != null && expectedNet.equals(pad.getNetId()),
             "Independent expected net for " + padId + " is " + expectedNet);
+    }
+
+    private static Map<String, String> expectedFunctionalRegions(Rb100Plan plan) {
+        Map<String, String> expected = new HashMap<String, String>();
+        addExpectedRegion(expected, "ac-entry", "JAC", "F1", "D1", "D2", "D3", "D4",
+            "CBULK", "RPRIMARY");
+        addExpectedRegion(expected, "isolated-conversion", "UAC", "RENAC", "CBIAS", "DFREE",
+            "L1", "COUT", "ROUT", "UFB", "DZ1", "RSENSE", "RFB", "CFB");
+        addExpectedRegion(expected, "regulation", "U1", "REN", "CIN", "C5", "U33",
+            "CIN33", "C33");
+        addExpectedRegion(expected, "channel-A", "JSA", "U2A", "RSA", "RPIN_A", "CFLT_A",
+            "RDA", "RPDA", "QA", "DA", "KA");
+        addExpectedRegion(expected, "channel-B", "JSB", "U2B", "RSB", "RPIN_B", "CFLT_B",
+            "RDB", "RPDB", "QB", "DB", "KB");
+        if (plan.variant == Rb100Plan.Variant.SHARED_HYSTERETIC_LINEAR) {
+            addExpectedRegion(expected, "channel-A", "RFB_A");
+            addExpectedRegion(expected, "channel-B", "RFB_B");
+            addExpectedRegion(expected, "sensor-reference", "RREF_H", "RREF_L");
+        } else {
+            addExpectedRegion(expected, "channel-A", "RREF_HA", "RREF_LA");
+            addExpectedRegion(expected, "channel-B", "RREF_HB", "RREF_LB");
+        }
+        addExpectedRegion(expected, "channel-C", "JSC", "U2C", "RSC", "RPIN_C", "CFLT_C",
+            "RDC", "RPD_C", "QC", "DC", "KC");
+        addExpectedRegion(expected, "channel-D", "JSD", "U2D", "RSD", "RPIN_D", "CFLT_D",
+            "RDD", "RPD_D", "QD", "DD", "KD");
+        addExpectedRegion(expected, "external-interfaces", "JLOAD", "JOA", "JOB", "JOC",
+            "JOD", "JOE", "JOF");
+        addExpectedRegion(expected, "output-E", "RDE", "RPD_E", "QE", "DE", "RSH_E",
+            "CSTORE_E");
+        addExpectedRegion(expected, "output-F", "RDF", "RPD_F", "QF", "DF", "RSH_F",
+            "CSTORE_F");
+        addExpectedRegion(expected, "monitor", "RMON", "RMON_IN", "UMON", "CMON", "RMON_H",
+            "RMON_L");
+        addExpectedRegion(expected, "interlock", "RBAUX", "RPUAUX", "QINV", "QAUX");
+        return expected;
+    }
+
+    private static void addExpectedRegion(Map<String, String> expected, String regionId,
+            String... componentIds) {
+        for (String componentId : componentIds)
+            require(expected.put(componentId, regionId) == null,
+                "Literal region oracle assigns each component once: " + componentId);
     }
 
     private static void require(boolean condition, String message) {

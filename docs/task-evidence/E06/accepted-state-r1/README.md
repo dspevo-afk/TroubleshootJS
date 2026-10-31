@@ -2,7 +2,9 @@
 
 Status: **ACCEPTED for the declared E06 boundary and finite regressions.** Base
 `9c74c46bdcf99dc62d3b7f7d35b71eb5ba9b3acf`, branch `codex/e06-accepted-state`.
-The immutable [plan](PLAN.md) predates measurement. This packet does not grant
+Published as `8a2c12446b2c46bde32b32537dec58a15a65d3b9` on
+`origin/codex/e06-accepted-state`, exact remote SHA verified. Completion Gmail
+`1a18dac12eb38e7c` was sent once. The immutable [plan](PLAN.md) predates measurement. This packet does not grant
 playable RB100 admission or broad converter fidelity.
 
 The E06 element stages its validated receipt, next controller state and numerical

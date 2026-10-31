@@ -1,0 +1,33 @@
+﻿{
+    "variant":  "Developer",
+    "elapsedSeconds":  121.7473675,
+    "cacheCount":  5,
+    "cacheBytes":  17898256,
+    "files":  [
+                  {
+                      "name":  "2F70500B7D19B0F5CD498C97CABFD624.cache.js",
+                      "bytes":  3598689,
+                      "sha256":  "d728ef8ad0d18c24f624415cc34ede3e3305ead12d756164d291252cd64fa10f"
+                  },
+                  {
+                      "name":  "745F12A13F220C1FA317948B307F9777.cache.js",
+                      "bytes":  3599594,
+                      "sha256":  "594f4d92f624b5f5bf54eb8fccde5fcaf447df07dcc18a38235d32d1bda7c7d6"
+                  },
+                  {
+                      "name":  "A42DC8364FA5295D6EA20DCD774D072D.cache.js",
+                      "bytes":  3501626,
+                      "sha256":  "1192564520311c38907e1735999239695f780de19623c0c071db4b7191149c48"
+                  },
+                  {
+                      "name":  "D3261E73D766AF529E8B9D0625CB8527.cache.js",
+                      "bytes":  3600040,
+                      "sha256":  "dba72fb44cdc8c8f8228d61253edec240c935045de6a8ee189479a4b005be1f4"
+                  },
+                  {
+                      "name":  "D54159E2D03BE80836AC6FFD18FC9E9E.cache.js",
+                      "bytes":  3598307,
+                      "sha256":  "b1002b048aa8b340830850696ccee56fd40b7de8d89751247a62e60586064084"
+                  }
+              ]
+}

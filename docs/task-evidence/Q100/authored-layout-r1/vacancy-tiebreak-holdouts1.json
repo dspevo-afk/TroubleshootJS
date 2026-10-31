@@ -1,0 +1,664 @@
+{
+  "schema": "troubleshootjs-q100-vacancy-tiebreak-holdouts-observation",
+  "schemaVersion": 1,
+  "scope": "SCRATCH_VACANCY_TIEBREAK_HOLDOUT_OBSERVATION_AND_COMPARATIVE_BOUNDS_ONLY; NOT_PRODUCTION_ADOPTION_OR_QUALIFICATION",
+  "candidateBase": {
+    "branch": "codex/q100-physical-feasibility",
+    "commit": "8a2c12446b2c46bde32b32537dec58a15a65d3b9"
+  },
+  "variant": {
+    "status": "SCRATCH_ONLY_NOT_ADOPTED",
+    "policyId": "PRIMARY_MEDIUM_PLACEMENT_SCORE_WITH_VACANCY_AS_SECONDARY_TIEBREAK",
+    "primaryRule": "Select the legal trial with the lowest unchanged local placement score including support span; vacancy advice breaks exact primary ties.",
+    "parentSourceSnapshot": "saved-profile-corrected-inputs-1",
+    "parentPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+    "variantSourceSnapshot": "saved-profile-vacancy-tiebreak-inputs-1",
+    "variantPinsFile": "saved-profile-vacancy-tiebreak-sealed-pins.json",
+    "variantPinsSha256": "d423fda86dacacf57507db01b21f0045ebaecf5302e912df2118b90ae17c6cdb",
+    "variantPinsBytes": 204437,
+    "variantSealFile": "saved-profile-vacancy-tiebreak-inputs-sealed1.json",
+    "variantSealSha256": "d3e7afddd8cc9a5340dde9728a3b14c03567572d28333b1e88aec3e01df083ab",
+    "inputCount": 1059,
+    "plannerChange": {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+      "bytesBefore": 115662,
+      "sha256Before": "f30032aeec5dc29d5866fa64d2003fd9ea20f80857bbb156d95c4072e6b03d0c",
+      "bytesAfter": 116254,
+      "sha256After": "550341584b7a6c167e310857da0b5db3d8f20487da65a65ed48cf3514d74822c",
+      "changedMethod": "mediumPlace"
+    },
+    "unchangedInputCount": 1058,
+    "copyAudit": {
+      "parentPinsHashVerifiedBeforeAndAfter": true,
+      "parentSnapshotPinnedInputsVerifiedBeforeCopy": true,
+      "copiedInputsHashVerified": true,
+      "destinationExactMembership": true,
+      "destinationReparsePoints": 0,
+      "nonPlannerInputsByteIdentical": true,
+      "sourceAndDestinationSeparateDirectories": true,
+      "placementWorkRecounted": false,
+      "trialOrderChanged": false,
+      "plannerCounterOrCapChanged": false,
+      "extraPlacementCandidates": false,
+      "extraRoutingCalls": false,
+      "historicalBoundsEvaluated": false
+    },
+    "noExtraPlacementTrials": true,
+    "noExtraRoutingCalls": true,
+    "trialOrderChanged": false,
+    "placementWorkRecounted": false,
+    "globalMonotonicity": "NOT_PROVEN",
+    "baseEpochLabelsNotAdopted": true
+  },
+  "nativeRun": {
+    "sourceLabel": "current",
+    "treatment": "VACANCY_TIEBREAK_SCRATCH_ONLY",
+    "runId": "9a40fd33-edca-4467-926e-88292ebd2703",
+    "suite": "P07GeometryEpochDiagnosticContractTest",
+    "cohortId": "SAVED_10_11_12_HOLDOUT",
+    "placementVersions": [
+      10,
+      11,
+      12
+    ],
+    "rootSeeds": [
+      "1",
+      "7",
+      "5",
+      "14"
+    ],
+    "cases": 12,
+    "assertions": 196256,
+    "nativeDiagnosticElapsedMs": 28981,
+    "wrapperElapsedSeconds": 62.553430399999996,
+    "nativeChildLimitMs": 180000,
+    "outerWatchdogMs": 600000,
+    "layoutVersion": 24,
+    "dependencyEpoch": "tsj-generation-dependencies-v25",
+    "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+    "layoutQualification": false,
+    "adopted": false,
+    "adoption": false,
+    "baseEpochLabelsNotAdopted": true,
+    "inputRevision": 3,
+    "sourceSnapshotRevision": 1,
+    "inputCount": 1059,
+    "inputPinsSha256": "d423fda86dacacf57507db01b21f0045ebaecf5302e912df2118b90ae17c6cdb",
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "process": {
+      "pid": 29108,
+      "startTicks": "639290073070211456",
+      "terminationProven": true,
+      "launcherPid": 26480,
+      "launcherCreatedUtc": "2026-10-31T01:35:05.4686950Z",
+      "launcherExecutable": "powershell.exe"
+    },
+    "nativeFooter": {
+      "status": "PASS",
+      "line": "PASS: P07 geometry epoch diagnostic contracts savedProfileEpoch=true cohortId=SAVED_10_11_12_HOLDOUT assertions=196256 cases=12 layout=24 dependency=tsj-generation-dependencies-v25 layoutQualification=false adoption=false scope=OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION"
+    },
+    "parentRunnerFooter": "PASS: focused current contracts; 1 Java suites. Full matrix and independent oracles NOT RUN.",
+    "cleanup": {
+      "status": "PASS",
+      "line": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+      "elapsedSeconds": "NOT_SEPARATELY_REPORTED"
+    },
+    "routeAcceptedCases": 12,
+    "physicalChecks": {
+      "layoutGeometryValidation": {
+        "passCases": 12,
+        "caseCount": 12
+      },
+      "productionFiniteWidthClearance": {
+        "passCases": 12,
+        "caseCount": 12
+      },
+      "independentReferenceClearance": {
+        "passCases": 12,
+        "caseCount": 12
+      },
+      "independentP08Partition": {
+        "passCases": 12,
+        "caseCount": 12
+      },
+      "layeredCenterline": {
+        "passCases": 12,
+        "caseCount": 12
+      },
+      "twoLayerRulesValidation": {
+        "passCases": 12,
+        "caseCount": 12
+      },
+      "traceWidthValidation": {
+        "passCases": 12,
+        "caseCount": 12
+      }
+    },
+    "caseCensus": [
+      {
+        "caseOrdinal": 1,
+        "rootSeed": "1",
+        "placementInterpretationVersion": 10,
+        "boardArea": 4615974,
+        "selectedPlacementAttempt": 1,
+        "viaCount": 38,
+        "routeAccepted": true,
+        "status": "PASS_OBSERVATION_ONLY"
+      },
+      {
+        "caseOrdinal": 2,
+        "rootSeed": "7",
+        "placementInterpretationVersion": 10,
+        "boardArea": 6144960,
+        "selectedPlacementAttempt": 0,
+        "viaCount": 48,
+        "routeAccepted": true,
+        "status": "PASS_OBSERVATION_ONLY"
+      },
+      {
+        "caseOrdinal": 3,
+        "rootSeed": "5",
+        "placementInterpretationVersion": 10,
+        "boardArea": 6090714,
+        "selectedPlacementAttempt": 1,
+        "viaCount": 48,
+        "routeAccepted": true,
+        "status": "PASS_OBSERVATION_ONLY"
+      },
+      {
+        "caseOrdinal": 4,
+        "rootSeed": "14",
+        "placementInterpretationVersion": 10,
+        "boardArea": 6102705,
+        "selectedPlacementAttempt": 3,
+        "viaCount": 48,
+        "routeAccepted": true,
+        "status": "PASS_OBSERVATION_ONLY"
+      },
+      {
+        "caseOrdinal": 5,
+        "rootSeed": "1",
+        "placementInterpretationVersion": 11,
+        "boardArea": 4615974,
+        "selectedPlacementAttempt": 1,
+        "viaCount": 38,
+        "routeAccepted": true,
+        "status": "PASS_OBSERVATION_ONLY"
+      },
+      {
+        "caseOrdinal": 6,
+        "rootSeed": "7",
+        "placementInterpretationVersion": 11,
+        "boardArea": 6144960,
+        "selectedPlacementAttempt": 0,
+        "viaCount": 48,
+        "routeAccepted": true,
+        "status": "PASS_OBSERVATION_ONLY"
+      },
+      {
+        "caseOrdinal": 7,
+        "rootSeed": "5",
+        "placementInterpretationVersion": 11,
+        "boardArea": 5878170,
+        "selectedPlacementAttempt": 1,
+        "viaCount": 48,
+        "routeAccepted": true,
+        "status": "PASS_OBSERVATION_ONLY"
+      },
+      {
+        "caseOrdinal": 8,
+        "rootSeed": "14",
+        "placementInterpretationVersion": 11,
+        "boardArea": 6102705,
+        "selectedPlacementAttempt": 3,
+        "viaCount": 48,
+        "routeAccepted": true,
+        "status": "PASS_OBSERVATION_ONLY"
+      },
+      {
+        "caseOrdinal": 9,
+        "rootSeed": "1",
+        "placementInterpretationVersion": 12,
+        "boardArea": 4615974,
+        "selectedPlacementAttempt": 1,
+        "viaCount": 39,
+        "routeAccepted": true,
+        "status": "PASS_OBSERVATION_ONLY"
+      },
+      {
+        "caseOrdinal": 10,
+        "rootSeed": "7",
+        "placementInterpretationVersion": 12,
+        "boardArea": 6144960,
+        "selectedPlacementAttempt": 0,
+        "viaCount": 48,
+        "routeAccepted": true,
+        "status": "PASS_OBSERVATION_ONLY"
+      },
+      {
+        "caseOrdinal": 11,
+        "rootSeed": "5",
+        "placementInterpretationVersion": 12,
+        "boardArea": 5878170,
+        "selectedPlacementAttempt": 1,
+        "viaCount": 44,
+        "routeAccepted": true,
+        "status": "PASS_OBSERVATION_ONLY"
+      },
+      {
+        "caseOrdinal": 12,
+        "rootSeed": "14",
+        "placementInterpretationVersion": 12,
+        "boardArea": 6102705,
+        "selectedPlacementAttempt": 3,
+        "viaCount": 48,
+        "routeAccepted": true,
+        "status": "PASS_OBSERVATION_ONLY"
+      }
+    ],
+    "seed10To11Comparisons": [
+      {
+        "side": "current",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "1",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 4615974,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 4615974,
+        "saved11Area": 4615974,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "current",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "7",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 6587808,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 6144960,
+        "saved11Area": 6144960,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "current",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "5",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 9445744,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 6090714,
+        "saved11Area": 5878170,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "current",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "14",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 8585034,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 6102705,
+        "saved11Area": 6102705,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      }
+    ],
+    "rootSeed5Pair": {
+      "rootSeed": "5",
+      "saved10": {
+        "placementInterpretationVersion": 10,
+        "boardArea": 6090714,
+        "selectedPlacementAttempt": 1,
+        "viaCount": 48,
+        "routeAccepted": true,
+        "status": "PASS_OBSERVATION_ONLY"
+      },
+      "saved11": {
+        "placementInterpretationVersion": 11,
+        "boardArea": 5878170,
+        "selectedPlacementAttempt": 1,
+        "viaCount": 48,
+        "routeAccepted": true,
+        "status": "PASS_OBSERVATION_ONLY"
+      },
+      "saved11MinusSaved10Area": -212544
+    }
+  },
+  "comparativeChecks": {
+    "artifact": "vacancy-tiebreak-holdout-comparison1.json",
+    "bytes": 8570,
+    "sha256": "0f908c3467494b435018a6e675c6738d0dbf135ea2079d80c11596829218fb20",
+    "status": "PASS_12_HOLDOUT_COMPARATIVE_CHECKS_ONLY",
+    "scope": "VACANCY_TIEBREAK_SCRATCH_ABLATION_ONLY; NOT_S_CURRENT_SOURCE_ACCEPTANCE",
+    "caseCount": 12,
+    "sameSideComparisons": [
+      {
+        "side": "current",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "1",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 4615974,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 4615974,
+        "saved11Area": 4615974,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "current",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "7",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 6587808,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 6144960,
+        "saved11Area": 6144960,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "current",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "5",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 9445744,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 6090714,
+        "saved11Area": 5878170,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "current",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "14",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 8585034,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 6102705,
+        "saved11Area": 6102705,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      }
+    ],
+    "retainedMetricCount": 20,
+    "retainedMetricStatusCounts": {
+      "CURRENT_EXACT_METRIC_MATCH_NOT_ADOPTED": 4,
+      "CHANGED_CURRENT_EXACT_METRIC_REQUIRES_REVIEW": 12,
+      "DEFERRED_TO_SAME_SIDE_SAVED10_OBSERVATION": 4
+    },
+    "retainedMetrics": [
+      {
+        "sourceId": "PcbPocketPackingContractTest",
+        "metric": "boardOutlineArea",
+        "operator": "==",
+        "literal": "baselineAreas[6]",
+        "expected": 4615974,
+        "actual": 4615974,
+        "status": "CURRENT_EXACT_METRIC_MATCH_NOT_ADOPTED"
+      },
+      {
+        "sourceId": "PcbPocketPackingContractTest",
+        "metric": "boardOutlineArea",
+        "operator": "==",
+        "literal": "baselineAreas[7]",
+        "expected": 6587808,
+        "actual": 6144960,
+        "status": "CHANGED_CURRENT_EXACT_METRIC_REQUIRES_REVIEW"
+      },
+      {
+        "sourceId": "PcbPocketPackingContractTest",
+        "metric": "boardOutlineArea",
+        "operator": "==",
+        "literal": "baselineAreas[8]",
+        "expected": 9445744,
+        "actual": 6090714,
+        "status": "CHANGED_CURRENT_EXACT_METRIC_REQUIRES_REVIEW"
+      },
+      {
+        "sourceId": "PcbPocketPackingContractTest",
+        "metric": "boardOutlineArea",
+        "operator": "==",
+        "literal": "baselineAreas[9]",
+        "expected": 8585034,
+        "actual": 6102705,
+        "status": "CHANGED_CURRENT_EXACT_METRIC_REQUIRES_REVIEW"
+      },
+      {
+        "sourceId": "PcbPocketPackingContractTest",
+        "metric": "boardOutlineArea",
+        "operator": "<=",
+        "literal": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 4615974,
+        "actual": 4615974,
+        "status": "DEFERRED_TO_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "sourceId": "PcbPocketPackingContractTest",
+        "metric": "boardOutlineArea",
+        "operator": "==",
+        "literal": "saved11Areas[6]",
+        "expected": 4615974,
+        "actual": 4615974,
+        "status": "CURRENT_EXACT_METRIC_MATCH_NOT_ADOPTED"
+      },
+      {
+        "sourceId": "PcbPocketPackingContractTest",
+        "metric": "boardOutlineArea",
+        "operator": "<=",
+        "literal": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 6587808,
+        "actual": 6144960,
+        "status": "DEFERRED_TO_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "sourceId": "PcbPocketPackingContractTest",
+        "metric": "boardOutlineArea",
+        "operator": "==",
+        "literal": "saved11Areas[7]",
+        "expected": 6587808,
+        "actual": 6144960,
+        "status": "CHANGED_CURRENT_EXACT_METRIC_REQUIRES_REVIEW"
+      },
+      {
+        "sourceId": "PcbPocketPackingContractTest",
+        "metric": "boardOutlineArea",
+        "operator": "<=",
+        "literal": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 9445744,
+        "actual": 5878170,
+        "status": "DEFERRED_TO_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "sourceId": "PcbPocketPackingContractTest",
+        "metric": "boardOutlineArea",
+        "operator": "==",
+        "literal": "saved11Areas[8]",
+        "expected": 9445744,
+        "actual": 5878170,
+        "status": "CHANGED_CURRENT_EXACT_METRIC_REQUIRES_REVIEW"
+      },
+      {
+        "sourceId": "PcbPocketPackingContractTest",
+        "metric": "boardOutlineArea",
+        "operator": "<=",
+        "literal": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 8585034,
+        "actual": 6102705,
+        "status": "DEFERRED_TO_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "sourceId": "PcbPocketPackingContractTest",
+        "metric": "boardOutlineArea",
+        "operator": "==",
+        "literal": "saved11Areas[9]",
+        "expected": 8585034,
+        "actual": 6102705,
+        "status": "CHANGED_CURRENT_EXACT_METRIC_REQUIRES_REVIEW"
+      },
+      {
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "boardOutlineArea",
+        "operator": "==",
+        "literal": "SAVED12_HOLDOUT_AREA[0]",
+        "expected": 4615974,
+        "actual": 4615974,
+        "status": "CURRENT_EXACT_METRIC_MATCH_NOT_ADOPTED"
+      },
+      {
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "largestProtectedEmptyRectangleArea",
+        "operator": "==",
+        "literal": "SAVED12_HOLDOUT_LARGEST_VOID[0]",
+        "expected": 474000,
+        "actual": 474000,
+        "status": "CURRENT_EXACT_METRIC_MATCH_NOT_ADOPTED"
+      },
+      {
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "boardOutlineArea",
+        "operator": "==",
+        "literal": "SAVED12_HOLDOUT_AREA[1]",
+        "expected": 6397152,
+        "actual": 6144960,
+        "status": "CHANGED_CURRENT_EXACT_METRIC_REQUIRES_REVIEW"
+      },
+      {
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "largestProtectedEmptyRectangleArea",
+        "operator": "==",
+        "literal": "SAVED12_HOLDOUT_LARGEST_VOID[1]",
+        "expected": 965600,
+        "actual": 943200,
+        "status": "CHANGED_CURRENT_EXACT_METRIC_REQUIRES_REVIEW"
+      },
+      {
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "boardOutlineArea",
+        "operator": "==",
+        "literal": "SAVED12_HOLDOUT_AREA[2]",
+        "expected": 9445744,
+        "actual": 5878170,
+        "status": "CHANGED_CURRENT_EXACT_METRIC_REQUIRES_REVIEW"
+      },
+      {
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "largestProtectedEmptyRectangleArea",
+        "operator": "==",
+        "literal": "SAVED12_HOLDOUT_LARGEST_VOID[2]",
+        "expected": 1367100,
+        "actual": 202500,
+        "status": "CHANGED_CURRENT_EXACT_METRIC_REQUIRES_REVIEW"
+      },
+      {
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "boardOutlineArea",
+        "operator": "==",
+        "literal": "SAVED12_HOLDOUT_AREA[3]",
+        "expected": 7347009,
+        "actual": 6102705,
+        "status": "CHANGED_CURRENT_EXACT_METRIC_REQUIRES_REVIEW"
+      },
+      {
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "largestProtectedEmptyRectangleArea",
+        "operator": "==",
+        "literal": "SAVED12_HOLDOUT_LARGEST_VOID[3]",
+        "expected": 894600,
+        "actual": 401800,
+        "status": "CHANGED_CURRENT_EXACT_METRIC_REQUIRES_REVIEW"
+      }
+    ],
+    "adoption": false,
+    "layoutQualification": false,
+    "baseEpochLabelsNotAdopted": true
+  },
+  "sourceBindings": {
+    "nativeSuite": {
+      "path": "tests/contracts/P07GeometryEpochDiagnosticContractTest.java",
+      "bytes": 55735,
+      "sha256": "3037bf6e7b7611184a312b36e0ef8924271b448d316dbce0d812078ddc38b889"
+    },
+    "strictReaderReference": {
+      "path": "tests/qualification/rb100-layout/read_saved_profile_transition.py",
+      "bytes": 122630,
+      "sha256": "390acf30090bd5a3e29b64dcfc212d30fc26c6d1f590d49fd72ebb4d9aa51670",
+      "fullStrictTransition": "NOT_RUN"
+    },
+    "comparisonGeometryHelper": {
+      "path": "tests/qualification/rb100-layout/read_geometry_transition.py",
+      "bytes": 35616,
+      "sha256": "3aa4fa311908c87ba9f68485048fee1d1a2680192e06679eb66c2b68c01779f5"
+    },
+    "savedProfileCatalog": {
+      "path": "docs/task-evidence/Q100/authored-layout-r1/saved-profile-baseline-catalog.json",
+      "bytes": 269099,
+      "sha256": "57b20a02b9f1f17671dd89a5a032cafbb792b76384cedbc85b5d69dc748d62a9"
+    }
+  },
+  "rawArtifacts": [
+    {
+      "artifact": "saved-profile-vacancy-tiebreak-observations-1/saved-profile-current-10-11-12-holdout-1-launcher.json",
+      "sha256": "88fd2239ca23b6bb3bc6a2e408dfc5429b8c78528e60de6039d1e6b701d02aee",
+      "bytes": 289,
+      "contentsEmbedded": false
+    },
+    {
+      "artifact": "saved-profile-vacancy-tiebreak-observations-1/saved-profile-current-10-11-12-holdout-1-result.json",
+      "sha256": "d1c3ace7bb860a872848d78dac8bfd4a51b0cf1d5c280f5e9bc664e93c36a3a4",
+      "bytes": 928,
+      "contentsEmbedded": false
+    },
+    {
+      "artifact": "saved-profile-vacancy-tiebreak-observations-1/saved-profile-current-10-11-12-holdout-1-receipt.txt",
+      "sha256": "39fcffb9ea4f317f597e6db5a16a12a0b71b4b78af85e24b974db651c3519e38",
+      "bytes": 7080190,
+      "contentsEmbedded": false
+    },
+    {
+      "artifact": "saved-profile-vacancy-tiebreak-observations-1/saved-profile-current-10-11-12-holdout-1-console.txt",
+      "sha256": "64743aee8755933150ed4ac9096a8b59104621192d077c415e83e01a69ef25d6",
+      "bytes": 7081330,
+      "contentsEmbedded": false
+    },
+    {
+      "artifact": "saved-profile-vacancy-tiebreak-observations-1/saved-profile-current-10-11-12-holdout-1-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "contentsEmbedded": false
+    },
+    {
+      "artifact": "vacancy-tiebreak-holdout-comparison1.json",
+      "sha256": "0f908c3467494b435018a6e675c6738d0dbf135ea2079d80c11596829218fb20",
+      "bytes": 8570,
+      "contentsEmbedded": false
+    }
+  ],
+  "strictReaderFullTransition": "NOT_RUN",
+  "rawConsoleOrReceiptContentsEmbedded": false,
+  "personalAbsolutePathsEmbedded": false,
+  "limitations": [
+    "This is a scratch-only placement tie-break observation; production continues to use its existing planner and base interpretation labels are not adopted.",
+    "The 12 native cases and scoped physical checks passed, but no full saved-profile reader transition or qualification was run.",
+    "All four current same-seed version11 <= version10 area checks passed; exact historic source metric differences remain review-only and unsealed.",
+    "The seed-5 version11 area is lower than the same-seed version10 observation; this does not prove global monotonicity.",
+    "No additional placement candidates, routing calls, trial reorder, planner-counter changes, or cap changes were used.",
+    "No production change, expected-metric update, golden sealing, acceptance, or Q100 playability claim is made.",
+    "Prior saved-consumer and U bound failures remain preserved in their separate evidence packets."
+  ],
+  "preservedPriorFailurePackets": [
+    "saved-consumers1-failure.json",
+    "u-holdout-paired-bound1-fail.json"
+  ]
+}

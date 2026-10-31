@@ -1,0 +1,1300 @@
+{
+  "packetVersion": 1,
+  "evidence": "Q100_LAZY_FIXED_BOUND_FULL72_RETAINED_BOUND_FAILURE",
+  "attempt": "lazy-fixed-bound-6cohorts-reader2",
+  "status": "FAIL_RETAINED_BOUNDS",
+  "nativeCohortCount": 6,
+  "nativeCaseCount": 72,
+  "nativeCohorts": [
+    {
+      "cohortId": "SAVED_3_4_REP",
+      "artifactBase": "saved-profile-current-3-4-rep-1",
+      "nativeStatus": "PASS",
+      "helperExitCode": 0,
+      "outerInvocationExitCode": 0,
+      "processTerminationProven": true,
+      "cleanupStatus": "PASS_EXPLICIT_MARKER",
+      "prePostInputAudit": {
+        "status": "PASS",
+        "fileCount": 1059
+      },
+      "elapsedSeconds": 54.5786768,
+      "cleanupElapsedSeconds": "NOT_REPORTED_SEPARATELY",
+      "caseCount": 12,
+      "assertions": 185172,
+      "nativeDiagnosticElapsedMs": 25905,
+      "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+      "placementVersions": [
+        3,
+        4
+      ],
+      "rootSeeds": [
+        "-1017",
+        "-1004",
+        "-1022",
+        "0",
+        "17",
+        "42"
+      ],
+      "layoutVersion": 24,
+      "dependencyEpoch": "tsj-generation-dependencies-v25",
+      "sourceSnapshotRevision": 3,
+      "inputRevision": 3,
+      "inputCount": 1059,
+      "inputPinsSha256": "ffaefa62bbbc3a9722a9f18c350b9b2cec157ffe8875377f9b52d7819f46ea85",
+      "passMarkerPresent": true,
+      "cleanupMarkerPresent": true,
+      "fullMatrixAndIndependentOracleFooter": "NOT RUN",
+      "artifacts": [
+        {
+          "name": "saved-profile-current-3-4-rep-1-result.json",
+          "bytes": 913,
+          "sha256": "5bb14e5e30cd69bcb71b746cdf376a9bebdf44e319d687c1aa4e835074aa5ff2",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-3-4-rep-1-console.txt",
+          "bytes": 6795840,
+          "sha256": "0c406ac97b39cd2840943319361118bd11b50f6b0cd8fe98e608f5f15bc031ed",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-3-4-rep-1-receipt.txt",
+          "bytes": 6794700,
+          "sha256": "43f577f67afd6b17abf0fbb02211c5c00065f8f8cd2fc4eadd89012bb911ae89",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-3-4-rep-1-stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-3-4-rep-1-launcher.json",
+          "bytes": 271,
+          "sha256": "3bb1fa99abb61b811a54dd3d2d8fd94f7ecc7650a2310fde10b809efd021367b",
+          "rawContentsIncluded": false
+        }
+      ]
+    },
+    {
+      "cohortId": "SAVED_5_6_REP",
+      "artifactBase": "saved-profile-current-5-6-rep-1",
+      "nativeStatus": "PASS",
+      "helperExitCode": 0,
+      "outerInvocationExitCode": 0,
+      "processTerminationProven": true,
+      "cleanupStatus": "PASS_EXPLICIT_MARKER",
+      "prePostInputAudit": {
+        "status": "PASS",
+        "fileCount": 1059
+      },
+      "elapsedSeconds": 53.693851099999996,
+      "cleanupElapsedSeconds": "NOT_REPORTED_SEPARATELY",
+      "caseCount": 12,
+      "assertions": 185199,
+      "nativeDiagnosticElapsedMs": 25454,
+      "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+      "placementVersions": [
+        5,
+        6
+      ],
+      "rootSeeds": [
+        "-1017",
+        "-1004",
+        "-1022",
+        "0",
+        "17",
+        "42"
+      ],
+      "layoutVersion": 24,
+      "dependencyEpoch": "tsj-generation-dependencies-v25",
+      "sourceSnapshotRevision": 3,
+      "inputRevision": 3,
+      "inputCount": 1059,
+      "inputPinsSha256": "ffaefa62bbbc3a9722a9f18c350b9b2cec157ffe8875377f9b52d7819f46ea85",
+      "passMarkerPresent": true,
+      "cleanupMarkerPresent": true,
+      "fullMatrixAndIndependentOracleFooter": "NOT RUN",
+      "artifacts": [
+        {
+          "name": "saved-profile-current-5-6-rep-1-result.json",
+          "bytes": 921,
+          "sha256": "b7e222f0e1000c616528ebfb3f5dc52e472397834470a73d41312876959f460f",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-5-6-rep-1-console.txt",
+          "bytes": 6800834,
+          "sha256": "fa37204ade4bca56683b0e16151bda32bdf9abc805a76454485ba57fbbead467",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-5-6-rep-1-receipt.txt",
+          "bytes": 6799694,
+          "sha256": "9d81dd5a523980f4efa5872be6b058b853c65e5d3c9d785d3349fceabaa580e5",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-5-6-rep-1-stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-5-6-rep-1-launcher.json",
+          "bytes": 271,
+          "sha256": "29164b3223515cb72e9077a9297a4944fe6945d09b6359f9e286b92acd2fb6b1",
+          "rawContentsIncluded": false
+        }
+      ]
+    },
+    {
+      "cohortId": "SAVED_7_8_REP",
+      "artifactBase": "saved-profile-current-7-8-rep-1",
+      "nativeStatus": "PASS",
+      "helperExitCode": 0,
+      "outerInvocationExitCode": 0,
+      "processTerminationProven": true,
+      "cleanupStatus": "PASS_EXPLICIT_MARKER",
+      "prePostInputAudit": {
+        "status": "PASS",
+        "fileCount": 1059
+      },
+      "elapsedSeconds": 51.5542886,
+      "cleanupElapsedSeconds": "NOT_REPORTED_SEPARATELY",
+      "caseCount": 12,
+      "assertions": 185151,
+      "nativeDiagnosticElapsedMs": 23053,
+      "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+      "placementVersions": [
+        7,
+        8
+      ],
+      "rootSeeds": [
+        "-1017",
+        "-1004",
+        "-1022",
+        "0",
+        "17",
+        "42"
+      ],
+      "layoutVersion": 24,
+      "dependencyEpoch": "tsj-generation-dependencies-v25",
+      "sourceSnapshotRevision": 3,
+      "inputRevision": 3,
+      "inputCount": 1059,
+      "inputPinsSha256": "ffaefa62bbbc3a9722a9f18c350b9b2cec157ffe8875377f9b52d7819f46ea85",
+      "passMarkerPresent": true,
+      "cleanupMarkerPresent": true,
+      "fullMatrixAndIndependentOracleFooter": "NOT RUN",
+      "artifacts": [
+        {
+          "name": "saved-profile-current-7-8-rep-1-result.json",
+          "bytes": 912,
+          "sha256": "4ccf1f56bcb3975aec61e8131192fd2824e3428ac25fa2580f164d603f9bfd6b",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-7-8-rep-1-console.txt",
+          "bytes": 6794256,
+          "sha256": "5ad7a007bb6cb6c3e54f59ebaa40a73adc0a0e1f2c95136982a7175c70a854af",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-7-8-rep-1-receipt.txt",
+          "bytes": 6793116,
+          "sha256": "b186deb56c53c63c9ac32e2ac6127dabd686e2fbcee9aebae99bd5658c4934d8",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-7-8-rep-1-stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-7-8-rep-1-launcher.json",
+          "bytes": 271,
+          "sha256": "0218b5715db3bbce05d1471ca2e07169f05c0546ec8dbf98e0366da181e66d09",
+          "rawContentsIncluded": false
+        }
+      ]
+    },
+    {
+      "cohortId": "SAVED_9_10_REP",
+      "artifactBase": "saved-profile-current-9-10-rep-1",
+      "nativeStatus": "PASS",
+      "helperExitCode": 0,
+      "outerInvocationExitCode": 0,
+      "processTerminationProven": true,
+      "cleanupStatus": "PASS_EXPLICIT_MARKER",
+      "prePostInputAudit": {
+        "status": "PASS",
+        "fileCount": 1059
+      },
+      "elapsedSeconds": 49.597884699999994,
+      "cleanupElapsedSeconds": "NOT_REPORTED_SEPARATELY",
+      "caseCount": 12,
+      "assertions": 185082,
+      "nativeDiagnosticElapsedMs": 20695,
+      "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+      "placementVersions": [
+        9,
+        10
+      ],
+      "rootSeeds": [
+        "-1017",
+        "-1004",
+        "-1022",
+        "0",
+        "17",
+        "42"
+      ],
+      "layoutVersion": 24,
+      "dependencyEpoch": "tsj-generation-dependencies-v25",
+      "sourceSnapshotRevision": 3,
+      "inputRevision": 3,
+      "inputCount": 1059,
+      "inputPinsSha256": "ffaefa62bbbc3a9722a9f18c350b9b2cec157ffe8875377f9b52d7819f46ea85",
+      "passMarkerPresent": true,
+      "cleanupMarkerPresent": true,
+      "fullMatrixAndIndependentOracleFooter": "NOT RUN",
+      "artifacts": [
+        {
+          "name": "saved-profile-current-9-10-rep-1-result.json",
+          "bytes": 922,
+          "sha256": "30f5c529ab56c53cdadf8aaea8d9c7a6461e5884550aeaf5565d085b8daac916",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-9-10-rep-1-console.txt",
+          "bytes": 6775705,
+          "sha256": "208f4ffb25041315305636991856de2025c2ae95e44c9105d20f72756c42b412",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-9-10-rep-1-receipt.txt",
+          "bytes": 6774565,
+          "sha256": "86c990b6d6795a2361f350c922559f57f4a255f17ffde6d56095044a43d6b2ca",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-9-10-rep-1-stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-9-10-rep-1-launcher.json",
+          "bytes": 273,
+          "sha256": "668897bc5e515818a24f682e6b7caa5587e1ca5b800504fc0897807fb0399fbc",
+          "rawContentsIncluded": false
+        }
+      ]
+    },
+    {
+      "cohortId": "SAVED_11_12_REP",
+      "artifactBase": "saved-profile-current-11-12-rep-1",
+      "nativeStatus": "PASS",
+      "helperExitCode": 0,
+      "outerInvocationExitCode": 0,
+      "processTerminationProven": true,
+      "cleanupStatus": "PASS_EXPLICIT_MARKER",
+      "prePostInputAudit": {
+        "status": "PASS",
+        "fileCount": 1059
+      },
+      "elapsedSeconds": 53.6473325,
+      "cleanupElapsedSeconds": "NOT_REPORTED_SEPARATELY",
+      "caseCount": 12,
+      "assertions": 185082,
+      "nativeDiagnosticElapsedMs": 24943,
+      "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+      "placementVersions": [
+        11,
+        12
+      ],
+      "rootSeeds": [
+        "-1017",
+        "-1004",
+        "-1022",
+        "0",
+        "17",
+        "42"
+      ],
+      "layoutVersion": 24,
+      "dependencyEpoch": "tsj-generation-dependencies-v25",
+      "sourceSnapshotRevision": 3,
+      "inputRevision": 3,
+      "inputCount": 1059,
+      "inputPinsSha256": "ffaefa62bbbc3a9722a9f18c350b9b2cec157ffe8875377f9b52d7819f46ea85",
+      "passMarkerPresent": true,
+      "cleanupMarkerPresent": true,
+      "fullMatrixAndIndependentOracleFooter": "NOT RUN",
+      "artifacts": [
+        {
+          "name": "saved-profile-current-11-12-rep-1-result.json",
+          "bytes": 914,
+          "sha256": "06b16c9fc52f319f990830b15a60351a12ad5778da92a4a3e164ee111163a3b2",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-11-12-rep-1-console.txt",
+          "bytes": 6796372,
+          "sha256": "daf399e05c9c6675804c7c60f613fd63437a3ec120fb9d1b5d8842579954c3a5",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-11-12-rep-1-receipt.txt",
+          "bytes": 6795232,
+          "sha256": "5a9ff902d4287088dce54be607fd56672be0de5290679e3d9bdedebfcd1fcad7",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-11-12-rep-1-stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-11-12-rep-1-launcher.json",
+          "bytes": 275,
+          "sha256": "0c81d86171f8d56d7fdcede06e677a4ad32379adf842e130d39b0dfb0647f542",
+          "rawContentsIncluded": false
+        }
+      ]
+    },
+    {
+      "cohortId": "SAVED_10_11_12_HOLDOUT",
+      "artifactBase": "saved-profile-current-10-11-12-holdout-1",
+      "nativeStatus": "PASS",
+      "helperExitCode": 0,
+      "outerInvocationExitCode": 0,
+      "processTerminationProven": true,
+      "cleanupStatus": "PASS_EXPLICIT_MARKER",
+      "prePostInputAudit": {
+        "status": "PASS",
+        "fileCount": 1059
+      },
+      "elapsedSeconds": 56.6566458,
+      "cleanupElapsedSeconds": "NOT_REPORTED_SEPARATELY",
+      "caseCount": 12,
+      "assertions": 196262,
+      "nativeDiagnosticElapsedMs": 27559,
+      "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+      "placementVersions": [
+        10,
+        11,
+        12
+      ],
+      "rootSeeds": [
+        "1",
+        "7",
+        "5",
+        "14"
+      ],
+      "layoutVersion": 24,
+      "dependencyEpoch": "tsj-generation-dependencies-v25",
+      "sourceSnapshotRevision": 3,
+      "inputRevision": 3,
+      "inputCount": 1059,
+      "inputPinsSha256": "ffaefa62bbbc3a9722a9f18c350b9b2cec157ffe8875377f9b52d7819f46ea85",
+      "passMarkerPresent": true,
+      "cleanupMarkerPresent": true,
+      "fullMatrixAndIndependentOracleFooter": "NOT RUN",
+      "artifacts": [
+        {
+          "name": "saved-profile-current-10-11-12-holdout-1-result.json",
+          "bytes": 922,
+          "sha256": "32bd4dd845468248bd1c1dfda8ec9e59eac76a033f9f51a0beffacee1949041b",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-10-11-12-holdout-1-console.txt",
+          "bytes": 7101153,
+          "sha256": "9c2fbeb64c79092b6b1e4aec555aa9f08f761758dd8f5d569041891d60588dc0",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-10-11-12-holdout-1-receipt.txt",
+          "bytes": 7100013,
+          "sha256": "d507358a250e5d2c20dd719d40f724698b9ea9987189ddfd830d1a8640e1496f",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-10-11-12-holdout-1-stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "rawContentsIncluded": false
+        },
+        {
+          "name": "saved-profile-current-10-11-12-holdout-1-launcher.json",
+          "bytes": 289,
+          "sha256": "809d6b39b0749158f7126b156ad1d4eb8634845cb8594d5fa20ff3ccf7c02b17",
+          "rawContentsIncluded": false
+        }
+      ]
+    }
+  ],
+  "fullReader": {
+    "status": "FAIL_RETAINED_BOUNDS",
+    "scope": "LAZY_RELAXED_BOUND_SCRATCH_ONLY_NOT_S_SOURCE_ACCEPTANCE",
+    "outputCaseCount": 72,
+    "failureCount": 1,
+    "failures": [
+      {
+        "failureKind": "RETAINED_BOARD_AREA_BOUND",
+        "cohortId": "SAVED_7_8_REP",
+        "caseOrdinal": 6,
+        "profile": "SAVED_PROFILE_7",
+        "placementInterpretationVersion": 7,
+        "placementDensityVersion": 7,
+        "rootSeed": "42",
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "sourceLiteral": "SAVED6_AREA[5]",
+        "sourceCondition": "version==7",
+        "metric": "boardOutlineArea",
+        "side": "current",
+        "actual": 6524231,
+        "operator": "<=",
+        "expected": 6371585,
+        "delta": 152646,
+        "status": "FAIL_RETAINED_BOUND"
+      }
+    ],
+    "sameSourceComparisonCount": 10,
+    "sameSourceComparisonPassCount": 10,
+    "sameSourceComparisons": [
+      {
+        "cohortId": "SAVED_11_12_REP",
+        "side": "current",
+        "rootSeed": "-1017",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 4529785,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 4529785,
+        "saved11Area": 4529785,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "cohortId": "SAVED_11_12_REP",
+        "side": "current",
+        "rootSeed": "-1004",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 4466664,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 4466664,
+        "saved11Area": 4466664,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "cohortId": "SAVED_11_12_REP",
+        "side": "current",
+        "rootSeed": "-1022",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 6943752,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 6319512,
+        "saved11Area": 6310794,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "cohortId": "SAVED_11_12_REP",
+        "side": "current",
+        "rootSeed": "0",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 4358809,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 4358809,
+        "saved11Area": 4358809,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "cohortId": "SAVED_11_12_REP",
+        "side": "current",
+        "rootSeed": "17",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 5814368,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 5814368,
+        "saved11Area": 5814368,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "cohortId": "SAVED_11_12_REP",
+        "side": "current",
+        "rootSeed": "42",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 6103992,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 5941269,
+        "saved11Area": 5924664,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "side": "current",
+        "rootSeed": "1",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 4615974,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 4615974,
+        "saved11Area": 4615974,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "side": "current",
+        "rootSeed": "7",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 6587808,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 5713720,
+        "saved11Area": 5713720,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "side": "current",
+        "rootSeed": "5",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 9445744,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 6090714,
+        "saved11Area": 6037578,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "side": "current",
+        "rootSeed": "14",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 8585034,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 6102705,
+        "saved11Area": 6102705,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      }
+    ],
+    "sourcePinsSha256": "ffaefa62bbbc3a9722a9f18c350b9b2cec157ffe8875377f9b52d7819f46ea85",
+    "changedInputCount": 3,
+    "changedInputs": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "sha256": "3bc90241eea99c3982e6a1200b45ec8102ba47242f53784694ee23eb74e36402"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "sha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a"
+      },
+      {
+        "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+        "sha256": "f3430bc9d1599595eb99add56d6a45536d0d67efb00aafdc789e4b4be794d611"
+      }
+    ],
+    "unchangedInputCount": 1056,
+    "oracleCatalogSha256": "57b20a02b9f1f17671dd89a5a032cafbb792b76384cedbc85b5d69dc748d62a9",
+    "sourceCatalogBindings": [
+      {
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "path": "tests/contracts/PcbFunctionalGroupingContractTest.java",
+        "sha256": "c9396d0e93b9d042098f9e61efa0fa450e085fff96ae700b9690ebb64091a8d3",
+        "bytes": 44549,
+        "boundToBaselineInputPins": true
+      },
+      {
+        "sourceId": "PcbPocketPackingContractTest",
+        "path": "tests/contracts/PcbPocketPackingContractTest.java",
+        "sha256": "1c8085b2d0b22c1d1a8d2a388ed663da1a2f8200d7261d26a2dbe962777d6c0f",
+        "bytes": 6225,
+        "boundToBaselineInputPins": true
+      }
+    ],
+    "sourceCatalogsBoundToBaselinePins": true,
+    "oracleWaiver": false,
+    "adoption": false,
+    "layoutQualification": false,
+    "baseEpochLabelsNotAdopted": true,
+    "automaticGoldenSeal": false
+  },
+  "readerExecution": {
+    "status": "FAIL_RETAINED_BOUNDS",
+    "toolInvocationExitCode": 1,
+    "toolWallSeconds": 0.9798109,
+    "readerChildExitCode": "NOT_REPORTED_SEPARATELY",
+    "outputFile": "lazy-fixed-bound-6cohorts-reader2.json",
+    "outputSha256": "3e6dcce93f132ff82cacf357935a014f6e0d07ae42008ad3dba56e5da0f02fcc",
+    "sourceCore": {
+      "path": "tests/qualification/rb100-layout/read_saved_profile_transition.py",
+      "sha256": "390acf30090bd5a3e29b64dcfc212d30fc26c6d1f590d49fd72ebb4d9aa51670"
+    },
+    "adapterV2": {
+      "file": "read-lazy-fixed-bound-observation-v2.py",
+      "sha256": "3b45818db9a5bf4b94b5a4ccbe181d8bc3f612157d4e5de91a496d47c5ffb9fd",
+      "onlyOutputFilenameDiffFromAdapterV1": true
+    },
+    "adapterV1Sha256": "f54ce7222a754cc5937e51661a703ae1b43543c73a2a0a544dec57ac75b2b316",
+    "adapterV2SpecSha256": "58e0910047ec9e262c570e8b7776fa82e941be8d1d6e60e8cb7536333691cc3d",
+    "readerOutputIsFull72": true
+  },
+  "sourceFrame": {
+    "scope": "SCRATCH_PROTOTYPE_NOT_ADOPTED",
+    "sourceSnapshotRevision": 3,
+    "inputCount": 1059,
+    "inputPinsSha256": "ffaefa62bbbc3a9722a9f18c350b9b2cec157ffe8875377f9b52d7819f46ea85",
+    "unchangedInputCount": 1056,
+    "changedInputCount": 3,
+    "currentChangedInputs": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "sha256": "3bc90241eea99c3982e6a1200b45ec8102ba47242f53784694ee23eb74e36402"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "sha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a"
+      },
+      {
+        "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+        "sha256": "f3430bc9d1599595eb99add56d6a45536d0d67efb00aafdc789e4b4be794d611"
+      }
+    ],
+    "changedFromUPinCount": 3,
+    "changedFromUPins": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "beforeSha256": "6eb32ebea70a37084700d89451b0d3eb3c5da2dc2320e9d90014a369fcbb8a31",
+        "afterSha256": "3bc90241eea99c3982e6a1200b45ec8102ba47242f53784694ee23eb74e36402"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "beforeSha256": "564adf46dc3b2d7951edb19cc2e661ca5a8c2e62cd7a19a9ecb54b94e3e9f102",
+        "afterSha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a"
+      },
+      {
+        "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+        "beforeSha256": "0c97dd4f0e1c3f4c18c34f80ca9c827f00639d17fa0599048ba9cf0c319f8867",
+        "afterSha256": "f3430bc9d1599595eb99add56d6a45536d0d67efb00aafdc789e4b4be794d611"
+      }
+    ],
+    "uSourceSnapshotRevision": 1,
+    "uSourcePinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+    "currentLayoutVersion": 24,
+    "currentDependencyEpoch": "tsj-generation-dependencies-v25",
+    "baseEpochLabelsNotAdopted": true,
+    "worktreeProductionAdopted": false,
+    "sourceCatalogsBoundToBaselineInputPins": true,
+    "oldBaselineCatalogAndPinsUnchanged": true,
+    "automaticGoldenSeal": false
+  },
+  "failure": {
+    "kind": "RETAINED_BOARD_AREA_BOUND",
+    "cohortId": "SAVED_7_8_REP",
+    "caseOrdinal": 6,
+    "profile": "SAVED_PROFILE_7",
+    "placementInterpretationVersion": 7,
+    "placementDensityVersion": 7,
+    "rootSeed": "42",
+    "sourceId": "PcbFunctionalGroupingContractTest",
+    "sourceLiteral": "SAVED6_AREA[5]",
+    "sourceCondition": "version==7",
+    "metric": "boardOutlineArea",
+    "actual": 6524231,
+    "operator": "<=",
+    "expected": 6371585,
+    "delta": 152646,
+    "status": "FAIL_RETAINED_BOUND",
+    "caseHashes": {
+      "logicalInventorySha256": "731fea0da4d7f9fd2404cc2979013ce41062d99d534324220a59ece71afa4b7e",
+      "componentTerminalIdentitySha256": "d510aa2c4fbedc3a082bc173c0a1a3ff5e4505ad4689d77a2c7f05ed8acf8594",
+      "declaredNetsSha256": "e41aca5ec138d188ab01215c59ba66a24a7e806e7512a44c0ab4ccb7f223092c",
+      "routingRolesSha256": "516d4e7afa60d381688379151ce37be7a4053791f50be97959f78acc3ec8ada9",
+      "layoutGeometrySha256": "a3f6d0fb79c3f94f79e6458eba3e75326c7a6b5545a66b5a6c805c4d96f98840",
+      "normalizedPhysicalSha256": "066cebe57ef0b9a25833fc34b7480f917120bc43b15e75be1d623edbbfc62b5f",
+      "oldHash": "4215c18b10349ff0049c19c43f40b78a710ea17de52d00a1a973bb0c7160eff7",
+      "placementCanonicalSha256": "870e035c94ee33d104fc8e2949106ad0715b82d30486f5aff1f9372e1ecf460e",
+      "traceGeometrySha256": "67355884b8ec6c23dc47946f34b4e13c6b34c258a5dc76f3f9a7c709d77a3ddd",
+      "p08CanonicalSha256": "ed06b744ec3a79f55da898888d75210a050fa20dfe812cdc1224a95675a58ee2",
+      "policyStatisticsSha256": "4fb4da9534d7892094d11ff52854c1cf78aa3e100cc9c7b143c1429019d75716"
+    }
+  },
+  "controlledUComparison": {
+    "identity": {
+      "cohortId": "SAVED_7_8_REP",
+      "caseOrdinal": 6,
+      "fixtureIdentity": "RB56_CONTROL/SAVED_7_8_REP/42/placement-7",
+      "placementInterpretationVersion": 7,
+      "rootSeed": "42",
+      "layoutVersion": 24,
+      "dependencyEpoch": "tsj-generation-dependencies-v25",
+      "placementSeed": "5526715536693200536",
+      "routingSeed": "4493419427463069983",
+      "placementSeedSame": true,
+      "routingSeedSame": true,
+      "uSourceSnapshotRevision": 1,
+      "uSourcePinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+      "ajSourceSnapshotRevision": 3,
+      "ajSourcePinsSha256": "ffaefa62bbbc3a9722a9f18c350b9b2cec157ffe8875377f9b52d7819f46ea85"
+    },
+    "componentPoseComparison": {
+      "basis": "componentMappings from the completed U and AJ raw case receipt events",
+      "componentMappingCountU": 54,
+      "componentMappingCountAJ": 54,
+      "componentIdSetsSame": true,
+      "poseXDeltaDrawingUnits": 50,
+      "componentPoseXDeltaCount": 54,
+      "componentPoseYSameCount": 54,
+      "rotationsSameCount": 54,
+      "mountingSideSameCount": 54,
+      "selectedNonPoseAttributesSameCount": 54,
+      "selectedNonPoseAttributes": [
+        "type",
+        "kind",
+        "physicalPackage",
+        "value",
+        "channel",
+        "inputId",
+        "geometryVariant",
+        "geometryContractVersion",
+        "boardType"
+      ],
+      "terminalCountU": 131,
+      "terminalCountAJ": 131.0,
+      "componentTerminalCountsSameComponents": 54,
+      "terminalIdentityAndNetSameCount": 131,
+      "terminalXDeltaDrawingUnits": 50,
+      "terminalXDeltaCount": 131,
+      "terminalYSameCount": 131
+    },
+    "declaredConfigurationComparison": {
+      "matchingPolicyFieldCount": 16,
+      "policyFieldCount": 16,
+      "policyFields": [
+        "topology",
+        "routingLayer",
+        "requiresTwoLayerRouting",
+        "physicalPolicyId",
+        "physicalPolicyVersion",
+        "placementDensityVersion",
+        "placementPackingVersion",
+        "traceWidthProfile",
+        "traceWidthValidation",
+        "traceWidthRule",
+        "clearanceEdgeRuleDrawingUnits",
+        "clearanceRuleBasis",
+        "selectedRoutePolicy",
+        "packageCensus",
+        "expectedPackages",
+        "expectedPads"
+      ],
+      "declaredNetsSame": true,
+      "declaredRoutingRolesSame": true,
+      "routeAcceptedU": true,
+      "routeAcceptedAJ": true,
+      "layoutGeometryValidationU": "PASS",
+      "layoutGeometryValidationAJ": "PASS",
+      "twoLayerRulesValidationU": "PASS",
+      "twoLayerRulesValidationAJ": "PASS",
+      "finiteWidthClearanceU": "PASS",
+      "finiteWidthClearanceAJ": "PASS",
+      "independentReferenceClearanceU": "PASS",
+      "independentReferenceClearanceAJ": "PASS",
+      "independentP08U": "PASS",
+      "independentP08AJ": "PASS",
+      "normalAdmissionU": "NOT CLAIMED",
+      "normalAdmissionAJ": "NOT CLAIMED"
+    },
+    "measurements": {
+      "packageCountU": 54,
+      "packageCountAJ": 54,
+      "padsU": 131,
+      "padsAJ": 131,
+      "boardAreaU": 6371585,
+      "boardAreaAJ": 6524231,
+      "boardAreaDelta": 152646,
+      "outlineU": {
+        "x": 40,
+        "y": 25,
+        "width": 3131,
+        "height": 2035
+      },
+      "outlineAJ": {
+        "x": 40,
+        "y": 9,
+        "width": 3181,
+        "height": 2051
+      },
+      "selectedAttemptU": 4,
+      "selectedAttemptAJ": 4,
+      "tracePolylineCountU": 142,
+      "tracePolylineCountAJ": 143,
+      "traceSegmentCountU": 233,
+      "traceSegmentCountAJ": 248,
+      "viaCountU": 48,
+      "viaCountAJ": 48,
+      "traceCountsByLayerU": {
+        "BOTTOM": 105,
+        "TOP": 37
+      },
+      "traceCountsByLayerAJ": {
+        "BOTTOM": 107,
+        "TOP": 36
+      },
+      "nativeDiagnosticElapsedMsU": 4177,
+      "nativeDiagnosticElapsedMsAJ": 3506
+    },
+    "hashes": {
+      "u": {
+        "layoutGeometrySha256": "4486304d0971a5e8dbf574bb163f3a02c8c33a6151e851a8329ad93bdbc2f83a",
+        "normalizedPhysicalSha256": "ab29410c572f9681a721ee1832ed577a297d65ca91213532d9283c7e7b83e06c",
+        "placementCanonicalSha256": "81378fee0c685b5f963725be090ede008718c61176f99697bd22dae05bb79307",
+        "traceGeometrySha256": "7652adc97d498cd2d7349ab02e9b40fb0ed47d63366f3457445a14d6f0bb5c1f",
+        "p08CanonicalSha256": "22fbb88b0cb848694eaafb1d3ab50b5a520a22a4110c33e1d7759651bca11aca"
+      },
+      "aj": {
+        "layoutGeometrySha256": "a3f6d0fb79c3f94f79e6458eba3e75326c7a6b5545a66b5a6c805c4d96f98840",
+        "normalizedPhysicalSha256": "066cebe57ef0b9a25833fc34b7480f917120bc43b15e75be1d623edbbfc62b5f",
+        "placementCanonicalSha256": "870e035c94ee33d104fc8e2949106ad0715b82d30486f5aff1f9372e1ecf460e",
+        "traceGeometrySha256": "67355884b8ec6c23dc47946f34b4e13c6b34c258a5dc76f3f9a7c709d77a3ddd",
+        "p08CanonicalSha256": "ed06b744ec3a79f55da898888d75210a050fa20dfe812cdc1224a95675a58ee2"
+      }
+    }
+  },
+  "controlledUReference": {
+    "scope": "SAVED_7_8_REP_VERSION7_SEED42_PRIOR_CONTROLLED_SOURCE",
+    "sourceSnapshotRevision": 1,
+    "inputPinsSha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+    "consoleSha256": "f80c8c9647f8744b6b89c791d67fb9607aa6fe5edc6310fc414d659df7179bc6",
+    "receiptSha256": "c1120552261080b25dbfaf24a16ddce954680a9f20a463f69ce360f143d850ca",
+    "fullReaderFile": "saved-profile-corrected-all-reader-1.json",
+    "statusInterpretation": "REFERENCE_MEASUREMENT_ONLY; NOT A PASS OR ADOPTION CLAIM",
+    "artifacts": [
+      {
+        "name": "saved-profile-current-7-8-rep-1-result.json",
+        "bytes": 826,
+        "sha256": "56d80e389d62cbeaef89588fef523961b764f1267e0a4c3e812d1d18f9a20819",
+        "rawContentsIncluded": false
+      },
+      {
+        "name": "saved-profile-current-7-8-rep-1-console.txt",
+        "bytes": 6794141,
+        "sha256": "f80c8c9647f8744b6b89c791d67fb9607aa6fe5edc6310fc414d659df7179bc6",
+        "rawContentsIncluded": false
+      },
+      {
+        "name": "saved-profile-current-7-8-rep-1-receipt.txt",
+        "bytes": 6793001,
+        "sha256": "c1120552261080b25dbfaf24a16ddce954680a9f20a463f69ce360f143d850ca",
+        "rawContentsIncluded": false
+      },
+      {
+        "name": "saved-profile-current-7-8-rep-1-stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "rawContentsIncluded": false
+      },
+      {
+        "name": "saved-profile-current-7-8-rep-1-launcher.json",
+        "bytes": 271,
+        "sha256": "2a4227d771694fa85b67b66a8142636e76810620aa0acb41dafe7e09b3714e72",
+        "rawContentsIncluded": false
+      },
+      {
+        "name": "saved-profile-corrected-v1-sealed-pins.json",
+        "bytes": 199140,
+        "sha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+        "rawContentsIncluded": false
+      },
+      {
+        "name": "saved-profile-corrected-inputs-sealed1.json",
+        "bytes": 4976,
+        "sha256": "6545858c4802b67fab1fbcbdae7e2f012f6dbfeaf387541bf8ba6f69166c8cf2",
+        "rawContentsIncluded": false
+      },
+      {
+        "name": "saved-profile-corrected-all-reader-1.json",
+        "bytes": 363343,
+        "sha256": "e284a6c6a26296187b7970279b5d388d43a7616f15bf5e6efa8ad5d8af0623d4",
+        "rawContentsIncluded": false
+      },
+      {
+        "name": "run-saved-profile-corrected.ps1",
+        "bytes": 4655,
+        "sha256": "8b5079cd93ba78b763726c1516ed896f58fc52f69c4c3e7ff800ad84d7409002",
+        "rawContentsIncluded": false
+      }
+    ]
+  },
+  "currentSourceSnapshotComparedToU": {
+    "currentPinsSha256": "ffaefa62bbbc3a9722a9f18c350b9b2cec157ffe8875377f9b52d7819f46ea85",
+    "inputCount": 1059,
+    "changedFileCount": 3,
+    "unchangedFileCount": 1056,
+    "changedFiles": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "beforeSha256": "6eb32ebea70a37084700d89451b0d3eb3c5da2dc2320e9d90014a369fcbb8a31",
+        "afterSha256": "3bc90241eea99c3982e6a1200b45ec8102ba47242f53784694ee23eb74e36402"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "beforeSha256": "564adf46dc3b2d7951edb19cc2e661ca5a8c2e62cd7a19a9ecb54b94e3e9f102",
+        "afterSha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a"
+      },
+      {
+        "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+        "beforeSha256": "0c97dd4f0e1c3f4c18c34f80ca9c827f00639d17fa0599048ba9cf0c319f8867",
+        "afterSha256": "f3430bc9d1599595eb99add56d6a45536d0d67efb00aafdc789e4b4be794d611"
+      }
+    ],
+    "sourceSnapshotScope": "SCRATCH PROTOTYPE; NO WORKTREE ADOPTION"
+  },
+  "limitations": [
+    "The six native 12-case cohorts all passed their selected Java suites, cleanup marker, process termination, and 1059-file pre/post audit; the independent 72-case retained-bound reader still fails on the single profile-7, seed-42 board-area bound.",
+    "The reader failure is retained and not waived: current board area 6524231 exceeds literal 6371585 by 152646.",
+    "All ten same-source version-10-to-11 area comparisons passed; this does not make the full 72-case reader pass.",
+    "The U comparison confirms a 50-unit X translation for all 54 matched component poses and all 131 matched terminals, with Y, rotation, mounting side, component identity fields, terminal IDs/nets, and declared route configuration unchanged. The board area and trace counts still differ; no cause is inferred.",
+    "The full cohort is not adopted and no new golden was sealed. Q100, final build, and other publication gates are NOT RUN.",
+    "The full matrix and independent-oracle campaign are NOT RUN; selected native physical checks and the strict retained-bound reader are represented separately.",
+    "The reader tool invocation exited 1 after reporting FAIL_RETAINED_BOUNDS; its child process exit code was not reported separately.",
+    "Native operation elapsed values are total helper times; cleanup duration was not reported separately. The 180-second native child and 600-second host limits apply.",
+    "The in-progress representative cohort was not inspected or included. Raw geometry, component mappings, route masks, full logs, process identifiers, and personal absolute paths are omitted."
+  ],
+  "nextStatus": "PUBLICATION_HELD_PENDING_ALL_COMPARISONS_AND_FINAL_GATES",
+  "interpretation": {
+    "nativeCohortsPassed": 6,
+    "nativeCasesPassed": 72,
+    "independentReaderStatus": "FAIL_RETAINED_BOUNDS",
+    "retainedBoundFailureCount": 1,
+    "sameSourceV10ToV11ComparisonsPassed": 10,
+    "fullCensusPassed": false,
+    "adopted": false,
+    "newGoldenSealed": false,
+    "q100Qualified": false,
+    "publicationHeld": true,
+    "scope": "FULL72_SCOPED_PROTOTYPE_OBSERVATION_WITH_RETAINED_BOUND_FAILURE"
+  },
+  "rawArtifacts": [
+    {
+      "name": "lazy-fixed-bound-6cohorts-reader2.json",
+      "bytes": 1214186,
+      "sha256": "3e6dcce93f132ff82cacf357935a014f6e0d07ae42008ad3dba56e5da0f02fcc",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "read-lazy-fixed-bound-observation-v2.py",
+      "bytes": 3633,
+      "sha256": "3b45818db9a5bf4b94b5a4ccbe181d8bc3f612157d4e5de91a496d47c5ffb9fd",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "read-lazy-fixed-bound-observation-v2-spec.json",
+      "bytes": 520,
+      "sha256": "58e0910047ec9e262c570e8b7776fa82e941be8d1d6e60e8cb7536333691cc3d",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "run-lazy-fixed-bound-v2.ps1",
+      "bytes": 4371,
+      "sha256": "b207b854e7c4d5039200b47bfc38973db0a0fd7a7ab8a301de96527f5a2632cd",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "read-lazy-fixed-bound-observation.py",
+      "bytes": 3674,
+      "sha256": "f54ce7222a754cc5937e51661a703ae1b43543c73a2a0a544dec57ac75b2b316",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "tests/qualification/rb100-layout/read_saved_profile_transition.py",
+      "bytes": 122630,
+      "sha256": "390acf30090bd5a3e29b64dcfc212d30fc26c6d1f590d49fd72ebb4d9aa51670",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-fixed-bound-v3-sealed-pins.json",
+      "bytes": 199140,
+      "sha256": "ffaefa62bbbc3a9722a9f18c350b9b2cec157ffe8875377f9b52d7819f46ea85",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-fixed-bound-inputs-sealed3.json",
+      "bytes": 2862,
+      "sha256": "2cc706d5225135c5045788675e75adde0f71440d69f839cae93c6e653c103f63",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-fixed-bound-copy3.json",
+      "bytes": 121861,
+      "sha256": "663d55f0d931be61b54eb9797051f2973671a7ee6dbb59b15ba589cbf8f07fab",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-corrected-v1-sealed-pins.json",
+      "bytes": 199140,
+      "sha256": "f7eea4e90710a8fb958fbf5ca039367c0abfaf6d5385dd529eae81e1eb9a6717",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-corrected-inputs-sealed1.json",
+      "bytes": 4976,
+      "sha256": "6545858c4802b67fab1fbcbdae7e2f012f6dbfeaf387541bf8ba6f69166c8cf2",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-corrected-all-reader-1.json",
+      "bytes": 363343,
+      "sha256": "e284a6c6a26296187b7970279b5d388d43a7616f15bf5e6efa8ad5d8af0623d4",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "run-saved-profile-corrected.ps1",
+      "bytes": 4655,
+      "sha256": "8b5079cd93ba78b763726c1516ed896f58fc52f69c4c3e7ff800ad84d7409002",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "tests/contracts/PcbFunctionalGroupingContractTest.java",
+      "bytes": 44549,
+      "sha256": "c9396d0e93b9d042098f9e61efa0fa450e085fff96ae700b9690ebb64091a8d3",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "tests/contracts/PcbPocketPackingContractTest.java",
+      "bytes": 6225,
+      "sha256": "1c8085b2d0b22c1d1a8d2a388ed663da1a2f8200d7261d26a2dbe962777d6c0f",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-3-4-rep-1-result.json",
+      "bytes": 913,
+      "sha256": "5bb14e5e30cd69bcb71b746cdf376a9bebdf44e319d687c1aa4e835074aa5ff2",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-3-4-rep-1-console.txt",
+      "bytes": 6795840,
+      "sha256": "0c406ac97b39cd2840943319361118bd11b50f6b0cd8fe98e608f5f15bc031ed",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-3-4-rep-1-receipt.txt",
+      "bytes": 6794700,
+      "sha256": "43f577f67afd6b17abf0fbb02211c5c00065f8f8cd2fc4eadd89012bb911ae89",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-3-4-rep-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-3-4-rep-1-launcher.json",
+      "bytes": 271,
+      "sha256": "3bb1fa99abb61b811a54dd3d2d8fd94f7ecc7650a2310fde10b809efd021367b",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-5-6-rep-1-result.json",
+      "bytes": 921,
+      "sha256": "b7e222f0e1000c616528ebfb3f5dc52e472397834470a73d41312876959f460f",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-5-6-rep-1-console.txt",
+      "bytes": 6800834,
+      "sha256": "fa37204ade4bca56683b0e16151bda32bdf9abc805a76454485ba57fbbead467",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-5-6-rep-1-receipt.txt",
+      "bytes": 6799694,
+      "sha256": "9d81dd5a523980f4efa5872be6b058b853c65e5d3c9d785d3349fceabaa580e5",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-5-6-rep-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-5-6-rep-1-launcher.json",
+      "bytes": 271,
+      "sha256": "29164b3223515cb72e9077a9297a4944fe6945d09b6359f9e286b92acd2fb6b1",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-7-8-rep-1-result.json",
+      "bytes": 912,
+      "sha256": "4ccf1f56bcb3975aec61e8131192fd2824e3428ac25fa2580f164d603f9bfd6b",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-7-8-rep-1-console.txt",
+      "bytes": 6794256,
+      "sha256": "5ad7a007bb6cb6c3e54f59ebaa40a73adc0a0e1f2c95136982a7175c70a854af",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-7-8-rep-1-receipt.txt",
+      "bytes": 6793116,
+      "sha256": "b186deb56c53c63c9ac32e2ac6127dabd686e2fbcee9aebae99bd5658c4934d8",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-7-8-rep-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-7-8-rep-1-launcher.json",
+      "bytes": 271,
+      "sha256": "0218b5715db3bbce05d1471ca2e07169f05c0546ec8dbf98e0366da181e66d09",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-9-10-rep-1-result.json",
+      "bytes": 922,
+      "sha256": "30f5c529ab56c53cdadf8aaea8d9c7a6461e5884550aeaf5565d085b8daac916",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-9-10-rep-1-console.txt",
+      "bytes": 6775705,
+      "sha256": "208f4ffb25041315305636991856de2025c2ae95e44c9105d20f72756c42b412",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-9-10-rep-1-receipt.txt",
+      "bytes": 6774565,
+      "sha256": "86c990b6d6795a2361f350c922559f57f4a255f17ffde6d56095044a43d6b2ca",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-9-10-rep-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-9-10-rep-1-launcher.json",
+      "bytes": 273,
+      "sha256": "668897bc5e515818a24f682e6b7caa5587e1ca5b800504fc0897807fb0399fbc",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-11-12-rep-1-result.json",
+      "bytes": 914,
+      "sha256": "06b16c9fc52f319f990830b15a60351a12ad5778da92a4a3e164ee111163a3b2",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-11-12-rep-1-console.txt",
+      "bytes": 6796372,
+      "sha256": "daf399e05c9c6675804c7c60f613fd63437a3ec120fb9d1b5d8842579954c3a5",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-11-12-rep-1-receipt.txt",
+      "bytes": 6795232,
+      "sha256": "5a9ff902d4287088dce54be607fd56672be0de5290679e3d9bdedebfcd1fcad7",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-11-12-rep-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-11-12-rep-1-launcher.json",
+      "bytes": 275,
+      "sha256": "0c81d86171f8d56d7fdcede06e677a4ad32379adf842e130d39b0dfb0647f542",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-10-11-12-holdout-1-result.json",
+      "bytes": 922,
+      "sha256": "32bd4dd845468248bd1c1dfda8ec9e59eac76a033f9f51a0beffacee1949041b",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-10-11-12-holdout-1-console.txt",
+      "bytes": 7101153,
+      "sha256": "9c2fbeb64c79092b6b1e4aec555aa9f08f761758dd8f5d569041891d60588dc0",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-10-11-12-holdout-1-receipt.txt",
+      "bytes": 7100013,
+      "sha256": "d507358a250e5d2c20dd719d40f724698b9ea9987189ddfd830d1a8640e1496f",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-10-11-12-holdout-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-10-11-12-holdout-1-launcher.json",
+      "bytes": 289,
+      "sha256": "809d6b39b0749158f7126b156ad1d4eb8634845cb8594d5fa20ff3ccf7c02b17",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-7-8-rep-1-result.json",
+      "bytes": 826,
+      "sha256": "56d80e389d62cbeaef89588fef523961b764f1267e0a4c3e812d1d18f9a20819",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-7-8-rep-1-console.txt",
+      "bytes": 6794141,
+      "sha256": "f80c8c9647f8744b6b89c791d67fb9607aa6fe5edc6310fc414d659df7179bc6",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-7-8-rep-1-receipt.txt",
+      "bytes": 6793001,
+      "sha256": "c1120552261080b25dbfaf24a16ddce954680a9f20a463f69ce360f143d850ca",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-7-8-rep-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "saved-profile-current-7-8-rep-1-launcher.json",
+      "bytes": 271,
+      "sha256": "2a4227d771694fa85b67b66a8142636e76810620aa0acb41dafe7e09b3714e72",
+      "rawContentsIncluded": false
+    }
+  ]
+}

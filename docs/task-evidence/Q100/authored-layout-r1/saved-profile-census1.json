@@ -1,0 +1,1461 @@
+{
+  "schema": "troubleshootjs-saved-profile-census-evidence-v1",
+  "scope": "Independent saved-profile baseline/current census across six cohorts and 72 cases per source. Observational comparison only.",
+  "status": "FAIL_RETAINED_BOUNDS",
+  "readerExitCode": 2,
+  "readerElapsedSeconds": 1.7354669,
+  "readerMode": "COLLECT_BOUND_FAILURES",
+  "acceptance": {
+    "layoutQualification": false,
+    "adopted": false,
+    "adoption": false,
+    "automaticGoldenSeal": false,
+    "normalReleaseAcceptance": false,
+    "fullSavedProfileAcceptance": "FAIL",
+    "failureMode": "COLLECT_AND_EXIT_2"
+  },
+  "readerBinding": {
+    "protocol": "p07-saved-profile-epoch-reader-v1",
+    "reportFile": {
+      "file": "saved-profile-census1-reader.json",
+      "bytes": 358314,
+      "sha256": "4f4f1213e8450d3eda60b543258fea65563d592a25f6c716ec032b1abf4f4276"
+    },
+    "readerSourceSha256": "cb712b8f3fcf94513891c2dea4cf8459fb7fb7c40dd320b2af67caaa83920581",
+    "helperSourceSha256": {
+      "read_diagnostic.py": "31f65be5e11472c7b09e8141292402c641df6b735787d32eb4c904ae098981e7",
+      "read_geometry_transition.py": "05d970c24b811ac066774daa5f750464a9334830f17550ded0222a8ca99f255c"
+    },
+    "catalogSha256": "57b20a02b9f1f17671dd89a5a032cafbb792b76384cedbc85b5d69dc748d62a9",
+    "runSpecSha256": "1ee41c126f87e074425bc0bb277f313e46864f329fd83b65808ab2c6f89f8bf5",
+    "resultFile": {
+      "file": "saved-profile-all-reader-census1-result.json",
+      "bytes": 296,
+      "sha256": "ba3589c1107d89f23f4c26bd57fa50cc01bdffbf999228567cfa054e00c7f126"
+    },
+    "consoleFile": {
+      "file": "saved-profile-all-reader-census1-console.txt",
+      "bytes": 191,
+      "sha256": "b8a0b159f871b8cc7cd500fdd8dc57b5be86c0818d29fac43ff0e98d4b951723"
+    },
+    "consoleSha256FromResult": "b8a0b159f871b8cc7cd500fdd8dc57b5be86c0818d29fac43ff0e98d4b951723",
+    "resultConsoleHashMatchesFile": true,
+    "consolePreamble": {
+      "exactRecognizedHostPrefix": true,
+      "bytesIdenticalBaselineCurrent": true,
+      "lineCount": 15
+    }
+  },
+  "coverage": {
+    "cohortSelection": "ALL_SIX_COHORTS",
+    "cohortCount": 6,
+    "casesPerSource": 72,
+    "baselineNativeRunCount": 6,
+    "currentNativeRunCount": 6,
+    "totalNativeRunCount": 12,
+    "caseCountPerCohort": 12,
+    "physicalAuditScope": "FULL_SIX_COHORTS_72_CASES_PER_SOURCE; INPUTS_FRAMING_GEOMETRY_ELECTRICAL_IDENTITY_AND_INDEPENDENT_PHYSICAL_ORACLES_COMPLETED; RETAINED_BOUND_FAILURES_REPORTED",
+    "baselineLayoutVersion": 22,
+    "baselineDependencyEpoch": "tsj-generation-dependencies-v23",
+    "currentLayoutVersion": 23,
+    "currentDependencyEpoch": "tsj-generation-dependencies-v24",
+    "nativeRuns": [
+      {
+        "cohortId": "SAVED_3_4_REP",
+        "side": "baseline",
+        "source": "baseline",
+        "summary": {
+          "protocol": "p07-saved-profile-epoch-v1",
+          "runId": "2e15b2c5-a72d-433e-a01d-2b8a849aa104",
+          "caseCount": 12,
+          "caseOrder": "PLACEMENT_VERSION_MAJOR_THEN_EXPLICIT_SEED_ORDER",
+          "placementVersions": [
+            3,
+            4
+          ],
+          "rootSeeds": [
+            "-1017",
+            "-1004",
+            "-1022",
+            "0",
+            "17",
+            "42"
+          ],
+          "assertions": 185139,
+          "nativeDiagnosticElapsedMs": 33123,
+          "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+          "layoutVersion": 22,
+          "dependencyEpoch": "tsj-generation-dependencies-v23",
+          "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+          "layoutQualification": false,
+          "adopted": false,
+          "adoption": false,
+          "baselineExpected": "EXTERNAL_SAVED_PROFILE_CATALOG"
+        },
+        "processResult": {
+          "exitCode": 0,
+          "helperElapsedSeconds": 66.6852957,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "terminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "inputCount": 1059,
+          "inputRevision": 2,
+          "inputPinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+          "stdoutBytes": 6886176,
+          "stdoutSha256": "ae9d3a888b7be4382493982a5c36c0e5bd0d4e9b93017f3459d9417fba72de00",
+          "stderrBytes": 0,
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "cleanupEvidence": {
+          "processTerminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "separateCleanupElapsedMs": null,
+          "separateCleanupElapsedStatus": "NOT_REPORTED_IN_NATIVE_RUN_RESULT"
+        },
+        "rawEvidence": {
+          "receiptSha256": "8a1a47a36773f7eed2304fa085fb3dab29c85716e12aa500c873f85c9b428e8d",
+          "receiptBytes": 6885036,
+          "consoleSha256": "ae9d3a888b7be4382493982a5c36c0e5bd0d4e9b93017f3459d9417fba72de00",
+          "consoleBytes": 6886176,
+          "consolePreambleSha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5",
+          "consolePreambleBytes": 976,
+          "consolePreambleLineCount": 15,
+          "pinFileSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+        }
+      },
+      {
+        "cohortId": "SAVED_3_4_REP",
+        "side": "current",
+        "source": "current",
+        "summary": {
+          "protocol": "p07-saved-profile-epoch-v1",
+          "runId": "aa76d2aa-6f01-4259-9944-138330040e1d",
+          "caseCount": 12,
+          "caseOrder": "PLACEMENT_VERSION_MAJOR_THEN_EXPLICIT_SEED_ORDER",
+          "placementVersions": [
+            3,
+            4
+          ],
+          "rootSeeds": [
+            "-1017",
+            "-1004",
+            "-1022",
+            "0",
+            "17",
+            "42"
+          ],
+          "assertions": 185100,
+          "nativeDiagnosticElapsedMs": 28540,
+          "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+          "layoutVersion": 23,
+          "dependencyEpoch": "tsj-generation-dependencies-v24",
+          "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+          "layoutQualification": false,
+          "adopted": false,
+          "adoption": false,
+          "baselineExpected": "EXTERNAL_SAVED_PROFILE_CATALOG"
+        },
+        "processResult": {
+          "exitCode": 0,
+          "helperElapsedSeconds": 61.3888967,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "terminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "inputCount": 1059,
+          "inputRevision": 2,
+          "inputPinsSha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e",
+          "stdoutBytes": 6784343,
+          "stdoutSha256": "222a90447b1c2bb4945be44609b0d033fed1c3ad95b3319ea677ab27f6356255",
+          "stderrBytes": 0,
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "cleanupEvidence": {
+          "processTerminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "separateCleanupElapsedMs": null,
+          "separateCleanupElapsedStatus": "NOT_REPORTED_IN_NATIVE_RUN_RESULT"
+        },
+        "rawEvidence": {
+          "receiptSha256": "e4baab69819702ee06d314b9c221f254b4a4c497cdf2a84bb2a6fbb7fb9e5a92",
+          "receiptBytes": 6783203,
+          "consoleSha256": "222a90447b1c2bb4945be44609b0d033fed1c3ad95b3319ea677ab27f6356255",
+          "consoleBytes": 6784343,
+          "consolePreambleSha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5",
+          "consolePreambleBytes": 976,
+          "consolePreambleLineCount": 15,
+          "pinFileSha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e"
+        }
+      },
+      {
+        "cohortId": "SAVED_5_6_REP",
+        "side": "baseline",
+        "source": "baseline",
+        "summary": {
+          "protocol": "p07-saved-profile-epoch-v1",
+          "runId": "60c2ec44-cfc6-4dc3-8d2d-2550439c41ee",
+          "caseCount": 12,
+          "caseOrder": "PLACEMENT_VERSION_MAJOR_THEN_EXPLICIT_SEED_ORDER",
+          "placementVersions": [
+            5,
+            6
+          ],
+          "rootSeeds": [
+            "-1017",
+            "-1004",
+            "-1022",
+            "0",
+            "17",
+            "42"
+          ],
+          "assertions": 185175,
+          "nativeDiagnosticElapsedMs": 29455,
+          "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+          "layoutVersion": 22,
+          "dependencyEpoch": "tsj-generation-dependencies-v23",
+          "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+          "layoutQualification": false,
+          "adopted": false,
+          "adoption": false,
+          "baselineExpected": "EXTERNAL_SAVED_PROFILE_CATALOG"
+        },
+        "processResult": {
+          "exitCode": 0,
+          "helperElapsedSeconds": 61.518241599999996,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "terminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "inputCount": 1059,
+          "inputRevision": 2,
+          "inputPinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+          "stdoutBytes": 6890059,
+          "stdoutSha256": "e7b32c751940c4712b437e38eef17ac10f952260a0933243aaecd989feadb035",
+          "stderrBytes": 0,
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "cleanupEvidence": {
+          "processTerminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "separateCleanupElapsedMs": null,
+          "separateCleanupElapsedStatus": "NOT_REPORTED_IN_NATIVE_RUN_RESULT"
+        },
+        "rawEvidence": {
+          "receiptSha256": "19566ad3bcafb9590e1b1673a4b5927f82965076276c2cdd50c23bf6d38573e5",
+          "receiptBytes": 6888919,
+          "consoleSha256": "e7b32c751940c4712b437e38eef17ac10f952260a0933243aaecd989feadb035",
+          "consoleBytes": 6890059,
+          "consolePreambleSha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5",
+          "consolePreambleBytes": 976,
+          "consolePreambleLineCount": 15,
+          "pinFileSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+        }
+      },
+      {
+        "cohortId": "SAVED_5_6_REP",
+        "side": "current",
+        "source": "current",
+        "summary": {
+          "protocol": "p07-saved-profile-epoch-v1",
+          "runId": "4f08c89d-a172-4a86-bada-eb37acfed0eb",
+          "caseCount": 12,
+          "caseOrder": "PLACEMENT_VERSION_MAJOR_THEN_EXPLICIT_SEED_ORDER",
+          "placementVersions": [
+            5,
+            6
+          ],
+          "rootSeeds": [
+            "-1017",
+            "-1004",
+            "-1022",
+            "0",
+            "17",
+            "42"
+          ],
+          "assertions": 185151,
+          "nativeDiagnosticElapsedMs": 25608,
+          "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+          "layoutVersion": 23,
+          "dependencyEpoch": "tsj-generation-dependencies-v24",
+          "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+          "layoutQualification": false,
+          "adopted": false,
+          "adoption": false,
+          "baselineExpected": "EXTERNAL_SAVED_PROFILE_CATALOG"
+        },
+        "processResult": {
+          "exitCode": 0,
+          "helperElapsedSeconds": 57.884268899999995,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "terminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "inputCount": 1059,
+          "inputRevision": 2,
+          "inputPinsSha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e",
+          "stdoutBytes": 6784426,
+          "stdoutSha256": "9e72f23bc50999722eb14dad66d27e9380575ea4094164097b82fdc0c4943689",
+          "stderrBytes": 0,
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "cleanupEvidence": {
+          "processTerminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "separateCleanupElapsedMs": null,
+          "separateCleanupElapsedStatus": "NOT_REPORTED_IN_NATIVE_RUN_RESULT"
+        },
+        "rawEvidence": {
+          "receiptSha256": "040d857497e74492086c39691b92ac0eb3aa167a433a6b122195f8c98df9e3b4",
+          "receiptBytes": 6783286,
+          "consoleSha256": "9e72f23bc50999722eb14dad66d27e9380575ea4094164097b82fdc0c4943689",
+          "consoleBytes": 6784426,
+          "consolePreambleSha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5",
+          "consolePreambleBytes": 976,
+          "consolePreambleLineCount": 15,
+          "pinFileSha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e"
+        }
+      },
+      {
+        "cohortId": "SAVED_7_8_REP",
+        "side": "baseline",
+        "source": "baseline",
+        "summary": {
+          "protocol": "p07-saved-profile-epoch-v1",
+          "runId": "ffce8d30-1d1f-4731-be65-3cfa7e644ae0",
+          "caseCount": 12,
+          "caseOrder": "PLACEMENT_VERSION_MAJOR_THEN_EXPLICIT_SEED_ORDER",
+          "placementVersions": [
+            7,
+            8
+          ],
+          "rootSeeds": [
+            "-1017",
+            "-1004",
+            "-1022",
+            "0",
+            "17",
+            "42"
+          ],
+          "assertions": 185118,
+          "nativeDiagnosticElapsedMs": 28435,
+          "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+          "layoutVersion": 22,
+          "dependencyEpoch": "tsj-generation-dependencies-v23",
+          "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+          "layoutQualification": false,
+          "adopted": false,
+          "adoption": false,
+          "baselineExpected": "EXTERNAL_SAVED_PROFILE_CATALOG"
+        },
+        "processResult": {
+          "exitCode": 0,
+          "helperElapsedSeconds": 60.7252953,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "terminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "inputCount": 1059,
+          "inputRevision": 2,
+          "inputPinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+          "stdoutBytes": 6870668,
+          "stdoutSha256": "5518eb3173195a3bc2a64b50793e1207bacfebaa678d639e363e87db53b4b5ce",
+          "stderrBytes": 0,
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "cleanupEvidence": {
+          "processTerminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "separateCleanupElapsedMs": null,
+          "separateCleanupElapsedStatus": "NOT_REPORTED_IN_NATIVE_RUN_RESULT"
+        },
+        "rawEvidence": {
+          "receiptSha256": "fdeef2b21f120f44f3469062c1168f3d6c3a1f59972151391e6d128a32b2d2bc",
+          "receiptBytes": 6869528,
+          "consoleSha256": "5518eb3173195a3bc2a64b50793e1207bacfebaa678d639e363e87db53b4b5ce",
+          "consoleBytes": 6870668,
+          "consolePreambleSha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5",
+          "consolePreambleBytes": 976,
+          "consolePreambleLineCount": 15,
+          "pinFileSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+        }
+      },
+      {
+        "cohortId": "SAVED_7_8_REP",
+        "side": "current",
+        "source": "current",
+        "summary": {
+          "protocol": "p07-saved-profile-epoch-v1",
+          "runId": "e9a29d29-bc16-4a94-b1eb-66d47b66fcd2",
+          "caseCount": 12,
+          "caseOrder": "PLACEMENT_VERSION_MAJOR_THEN_EXPLICIT_SEED_ORDER",
+          "placementVersions": [
+            7,
+            8
+          ],
+          "rootSeeds": [
+            "-1017",
+            "-1004",
+            "-1022",
+            "0",
+            "17",
+            "42"
+          ],
+          "assertions": 185085,
+          "nativeDiagnosticElapsedMs": 27559,
+          "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+          "layoutVersion": 23,
+          "dependencyEpoch": "tsj-generation-dependencies-v24",
+          "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+          "layoutQualification": false,
+          "adopted": false,
+          "adoption": false,
+          "baselineExpected": "EXTERNAL_SAVED_PROFILE_CATALOG"
+        },
+        "processResult": {
+          "exitCode": 0,
+          "helperElapsedSeconds": 59.885540899999995,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "terminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "inputCount": 1059,
+          "inputRevision": 2,
+          "inputPinsSha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e",
+          "stdoutBytes": 6776471,
+          "stdoutSha256": "0108979cfb8d39b5df6b350bd21e778ba64e860f32b540f15837911fb07367c0",
+          "stderrBytes": 0,
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "cleanupEvidence": {
+          "processTerminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "separateCleanupElapsedMs": null,
+          "separateCleanupElapsedStatus": "NOT_REPORTED_IN_NATIVE_RUN_RESULT"
+        },
+        "rawEvidence": {
+          "receiptSha256": "c6dedc6c4350dd8dd8a2ed50c5d38c8a90285e8e29ee1919494157baf141a5e8",
+          "receiptBytes": 6775331,
+          "consoleSha256": "0108979cfb8d39b5df6b350bd21e778ba64e860f32b540f15837911fb07367c0",
+          "consoleBytes": 6776471,
+          "consolePreambleSha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5",
+          "consolePreambleBytes": 976,
+          "consolePreambleLineCount": 15,
+          "pinFileSha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e"
+        }
+      },
+      {
+        "cohortId": "SAVED_9_10_REP",
+        "side": "baseline",
+        "source": "baseline",
+        "summary": {
+          "protocol": "p07-saved-profile-epoch-v1",
+          "runId": "36d73806-2ff6-4172-8881-b616d071f93e",
+          "caseCount": 12,
+          "caseOrder": "PLACEMENT_VERSION_MAJOR_THEN_EXPLICIT_SEED_ORDER",
+          "placementVersions": [
+            9,
+            10
+          ],
+          "rootSeeds": [
+            "-1017",
+            "-1004",
+            "-1022",
+            "0",
+            "17",
+            "42"
+          ],
+          "assertions": 185058,
+          "nativeDiagnosticElapsedMs": 27752,
+          "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+          "layoutVersion": 22,
+          "dependencyEpoch": "tsj-generation-dependencies-v23",
+          "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+          "layoutQualification": false,
+          "adopted": false,
+          "adoption": false,
+          "baselineExpected": "EXTERNAL_SAVED_PROFILE_CATALOG"
+        },
+        "processResult": {
+          "exitCode": 0,
+          "helperElapsedSeconds": 61.300590199999995,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "terminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "inputCount": 1059,
+          "inputRevision": 2,
+          "inputPinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+          "stdoutBytes": 6852593,
+          "stdoutSha256": "5625c85d75d12b36a96161815f49502c6c31d034a8d1ddf19742f0a72c8038da",
+          "stderrBytes": 0,
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "cleanupEvidence": {
+          "processTerminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "separateCleanupElapsedMs": null,
+          "separateCleanupElapsedStatus": "NOT_REPORTED_IN_NATIVE_RUN_RESULT"
+        },
+        "rawEvidence": {
+          "receiptSha256": "c0b36617f6d408ab7a2813169c4d82299d3032689c05cb656e063f04d478e937",
+          "receiptBytes": 6851453,
+          "consoleSha256": "5625c85d75d12b36a96161815f49502c6c31d034a8d1ddf19742f0a72c8038da",
+          "consoleBytes": 6852593,
+          "consolePreambleSha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5",
+          "consolePreambleBytes": 976,
+          "consolePreambleLineCount": 15,
+          "pinFileSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+        }
+      },
+      {
+        "cohortId": "SAVED_9_10_REP",
+        "side": "current",
+        "source": "current",
+        "summary": {
+          "protocol": "p07-saved-profile-epoch-v1",
+          "runId": "670cb8b9-f988-4df4-8a76-9f6844d99a9a",
+          "caseCount": 12,
+          "caseOrder": "PLACEMENT_VERSION_MAJOR_THEN_EXPLICIT_SEED_ORDER",
+          "placementVersions": [
+            9,
+            10
+          ],
+          "rootSeeds": [
+            "-1017",
+            "-1004",
+            "-1022",
+            "0",
+            "17",
+            "42"
+          ],
+          "assertions": 185043,
+          "nativeDiagnosticElapsedMs": 27321,
+          "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+          "layoutVersion": 23,
+          "dependencyEpoch": "tsj-generation-dependencies-v24",
+          "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+          "layoutQualification": false,
+          "adopted": false,
+          "adoption": false,
+          "baselineExpected": "EXTERNAL_SAVED_PROFILE_CATALOG"
+        },
+        "processResult": {
+          "exitCode": 0,
+          "helperElapsedSeconds": 60.295595899999995,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "terminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "inputCount": 1059,
+          "inputRevision": 2,
+          "inputPinsSha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e",
+          "stdoutBytes": 6769746,
+          "stdoutSha256": "6d3aa2a6b6d6224df19ba5fd93ccc047d7de07dc9a5f3b2a422b1af8ed757c89",
+          "stderrBytes": 0,
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "cleanupEvidence": {
+          "processTerminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "separateCleanupElapsedMs": null,
+          "separateCleanupElapsedStatus": "NOT_REPORTED_IN_NATIVE_RUN_RESULT"
+        },
+        "rawEvidence": {
+          "receiptSha256": "fed49fed8029ad204453f174a96c9c883e89bfa76d1d006bb87256fc505c4e5e",
+          "receiptBytes": 6768606,
+          "consoleSha256": "6d3aa2a6b6d6224df19ba5fd93ccc047d7de07dc9a5f3b2a422b1af8ed757c89",
+          "consoleBytes": 6769746,
+          "consolePreambleSha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5",
+          "consolePreambleBytes": 976,
+          "consolePreambleLineCount": 15,
+          "pinFileSha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e"
+        }
+      },
+      {
+        "cohortId": "SAVED_11_12_REP",
+        "side": "baseline",
+        "source": "baseline",
+        "summary": {
+          "protocol": "p07-saved-profile-epoch-v1",
+          "runId": "04c8c027-2016-4857-a299-3f84e713918d",
+          "caseCount": 12,
+          "caseOrder": "PLACEMENT_VERSION_MAJOR_THEN_EXPLICIT_SEED_ORDER",
+          "placementVersions": [
+            11,
+            12
+          ],
+          "rootSeeds": [
+            "-1017",
+            "-1004",
+            "-1022",
+            "0",
+            "17",
+            "42"
+          ],
+          "assertions": 185097,
+          "nativeDiagnosticElapsedMs": 27497,
+          "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+          "layoutVersion": 22,
+          "dependencyEpoch": "tsj-generation-dependencies-v23",
+          "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+          "layoutQualification": false,
+          "adopted": false,
+          "adoption": false,
+          "baselineExpected": "EXTERNAL_SAVED_PROFILE_CATALOG"
+        },
+        "processResult": {
+          "exitCode": 0,
+          "helperElapsedSeconds": 60.7214719,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "terminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "inputCount": 1059,
+          "inputRevision": 2,
+          "inputPinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+          "stdoutBytes": 6899932,
+          "stdoutSha256": "609fad9baa08c2f9e9f8cec5e108c8c5ac573410c7220f1f3b01804f4818584c",
+          "stderrBytes": 0,
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "cleanupEvidence": {
+          "processTerminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "separateCleanupElapsedMs": null,
+          "separateCleanupElapsedStatus": "NOT_REPORTED_IN_NATIVE_RUN_RESULT"
+        },
+        "rawEvidence": {
+          "receiptSha256": "25633e106e1f73ffdd40883a64bc60904577ddb7ca65a87f0f682d0285df9de2",
+          "receiptBytes": 6898792,
+          "consoleSha256": "609fad9baa08c2f9e9f8cec5e108c8c5ac573410c7220f1f3b01804f4818584c",
+          "consoleBytes": 6899932,
+          "consolePreambleSha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5",
+          "consolePreambleBytes": 976,
+          "consolePreambleLineCount": 15,
+          "pinFileSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+        }
+      },
+      {
+        "cohortId": "SAVED_11_12_REP",
+        "side": "current",
+        "source": "current",
+        "summary": {
+          "protocol": "p07-saved-profile-epoch-v1",
+          "runId": "20317bb0-9746-42b3-ab9f-1cb8a019cdf8",
+          "caseCount": 12,
+          "caseOrder": "PLACEMENT_VERSION_MAJOR_THEN_EXPLICIT_SEED_ORDER",
+          "placementVersions": [
+            11,
+            12
+          ],
+          "rootSeeds": [
+            "-1017",
+            "-1004",
+            "-1022",
+            "0",
+            "17",
+            "42"
+          ],
+          "assertions": 185064,
+          "nativeDiagnosticElapsedMs": 27152,
+          "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+          "layoutVersion": 23,
+          "dependencyEpoch": "tsj-generation-dependencies-v24",
+          "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+          "layoutQualification": false,
+          "adopted": false,
+          "adoption": false,
+          "baselineExpected": "EXTERNAL_SAVED_PROFILE_CATALOG"
+        },
+        "processResult": {
+          "exitCode": 0,
+          "helperElapsedSeconds": 63.385982199999994,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "terminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "inputCount": 1059,
+          "inputRevision": 2,
+          "inputPinsSha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e",
+          "stdoutBytes": 6779125,
+          "stdoutSha256": "140b90e756b864e52cb31603c965e3258126d0990e660139d4b48096540246bf",
+          "stderrBytes": 0,
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "cleanupEvidence": {
+          "processTerminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "separateCleanupElapsedMs": null,
+          "separateCleanupElapsedStatus": "NOT_REPORTED_IN_NATIVE_RUN_RESULT"
+        },
+        "rawEvidence": {
+          "receiptSha256": "31729d837d7da116e4b15eac10b8b8797d48ccbac4a0c43f02685593efda0f9a",
+          "receiptBytes": 6777985,
+          "consoleSha256": "140b90e756b864e52cb31603c965e3258126d0990e660139d4b48096540246bf",
+          "consoleBytes": 6779125,
+          "consolePreambleSha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5",
+          "consolePreambleBytes": 976,
+          "consolePreambleLineCount": 15,
+          "pinFileSha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e"
+        }
+      },
+      {
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "side": "baseline",
+        "source": "baseline",
+        "summary": {
+          "protocol": "p07-saved-profile-epoch-v1",
+          "runId": "6f65a4c9-a2a7-48eb-bb22-20794de78593",
+          "caseCount": 12,
+          "caseOrder": "PLACEMENT_VERSION_MAJOR_THEN_EXPLICIT_SEED_ORDER",
+          "placementVersions": [
+            10,
+            11,
+            12
+          ],
+          "rootSeeds": [
+            "1",
+            "7",
+            "5",
+            "14"
+          ],
+          "assertions": 196124,
+          "nativeDiagnosticElapsedMs": 38036,
+          "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+          "layoutVersion": 22,
+          "dependencyEpoch": "tsj-generation-dependencies-v23",
+          "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+          "layoutQualification": false,
+          "adopted": false,
+          "adoption": false,
+          "baselineExpected": "EXTERNAL_SAVED_PROFILE_CATALOG"
+        },
+        "processResult": {
+          "exitCode": 0,
+          "helperElapsedSeconds": 74.97254319999999,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "terminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "inputCount": 1059,
+          "inputRevision": 2,
+          "inputPinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+          "stdoutBytes": 7154929,
+          "stdoutSha256": "3d78f39ab571afad12c32614996970327e571b131860a5cbdc01ca1082b16975",
+          "stderrBytes": 0,
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "cleanupEvidence": {
+          "processTerminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "separateCleanupElapsedMs": null,
+          "separateCleanupElapsedStatus": "NOT_REPORTED_IN_NATIVE_RUN_RESULT"
+        },
+        "rawEvidence": {
+          "receiptSha256": "f4b3c16c457a2463b59c2eb05c75d07581f800cb5637fbaffce5204aa87052b9",
+          "receiptBytes": 7153789,
+          "consoleSha256": "3d78f39ab571afad12c32614996970327e571b131860a5cbdc01ca1082b16975",
+          "consoleBytes": 7154929,
+          "consolePreambleSha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5",
+          "consolePreambleBytes": 976,
+          "consolePreambleLineCount": 15,
+          "pinFileSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+        }
+      },
+      {
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "side": "current",
+        "source": "current",
+        "summary": {
+          "protocol": "p07-saved-profile-epoch-v1",
+          "runId": "df4ced0c-efa5-4739-8ab2-5dd2b9f91a8d",
+          "caseCount": 12,
+          "caseOrder": "PLACEMENT_VERSION_MAJOR_THEN_EXPLICIT_SEED_ORDER",
+          "placementVersions": [
+            10,
+            11,
+            12
+          ],
+          "rootSeeds": [
+            "1",
+            "7",
+            "5",
+            "14"
+          ],
+          "assertions": 196214,
+          "nativeDiagnosticElapsedMs": 37917,
+          "timingScope": "NATIVE_TEST_ONLY_NOT_PRODUCTION_TIMING",
+          "layoutVersion": 23,
+          "dependencyEpoch": "tsj-generation-dependencies-v24",
+          "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+          "layoutQualification": false,
+          "adopted": false,
+          "adoption": false,
+          "baselineExpected": "EXTERNAL_SAVED_PROFILE_CATALOG"
+        },
+        "processResult": {
+          "exitCode": 0,
+          "helperElapsedSeconds": 72.9979355,
+          "nativeChildLimitMs": 180000,
+          "outerWatchdogMs": 600000,
+          "terminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "inputCount": 1059,
+          "inputRevision": 2,
+          "inputPinsSha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e",
+          "stdoutBytes": 7058453,
+          "stdoutSha256": "f9d52378f4d558f846d399175cae22a42a3dce9d538a6985a2c2d6a63af3b605",
+          "stderrBytes": 0,
+          "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "cleanupEvidence": {
+          "processTerminationProven": true,
+          "inputAudit": "PASS_BEFORE_AND_AFTER",
+          "separateCleanupElapsedMs": null,
+          "separateCleanupElapsedStatus": "NOT_REPORTED_IN_NATIVE_RUN_RESULT"
+        },
+        "rawEvidence": {
+          "receiptSha256": "c63628b4a482aae801da738d9d0fe30bb6afeeb1d102588dd7208c65635ff5d7",
+          "receiptBytes": 7057313,
+          "consoleSha256": "f9d52378f4d558f846d399175cae22a42a3dce9d538a6985a2c2d6a63af3b605",
+          "consoleBytes": 7058453,
+          "consolePreambleSha256": "5cac9a41367827f70365d8ecc37874499d4aae5228de8824f560fa70865ae3c5",
+          "consolePreambleBytes": 976,
+          "consolePreambleLineCount": 15,
+          "pinFileSha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e"
+        }
+      }
+    ]
+  },
+  "retainedBounds": {
+    "failureCount": 12,
+    "uniqueProfileCount": 5,
+    "uniqueProfiles": [
+      "SAVED_PROFILE_7",
+      "SAVED_PROFILE_8",
+      "SAVED_PROFILE_9",
+      "SAVED_PROFILE_10",
+      "SAVED_PROFILE_11"
+    ],
+    "uniqueSeedCount": 2,
+    "uniqueSeeds": [
+      "42",
+      "-1022"
+    ],
+    "pattern": "v7 / seed 42; v8-v11 / seed -1022",
+    "failures": [
+      {
+        "failureKind": "RETAINED_BOARD_AREA_BOUND",
+        "cohortId": "SAVED_7_8_REP",
+        "caseOrdinal": 6,
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "boardOutlineArea",
+        "literal": "SAVED6_AREA[5]",
+        "sourceCondition": "version==7",
+        "side": "current",
+        "profile": "SAVED_PROFILE_7",
+        "placementInterpretationVersion": 7,
+        "placementDensityVersion": 7,
+        "seed": "42",
+        "actual": 6524231,
+        "operator": "<=",
+        "expected": 6371585,
+        "status": "FAIL_RETAINED_BOUND"
+      },
+      {
+        "failureKind": "RETAINED_BOARD_AREA_BOUND",
+        "cohortId": "SAVED_7_8_REP",
+        "caseOrdinal": 9,
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "boardOutlineArea",
+        "literal": "SAVED7_AREA[2]",
+        "sourceCondition": "version>=8",
+        "side": "current",
+        "profile": "SAVED_PROFILE_8",
+        "placementInterpretationVersion": 8,
+        "placementDensityVersion": 8,
+        "seed": "-1022",
+        "actual": 8443994,
+        "operator": "<=",
+        "expected": 7395541,
+        "status": "FAIL_RETAINED_BOUND"
+      },
+      {
+        "failureKind": "RETAINED_BOARD_AREA_BOUND",
+        "cohortId": "SAVED_7_8_REP",
+        "caseOrdinal": 9,
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "boardOutlineArea",
+        "literal": "SAVED7_AREA[2]",
+        "sourceCondition": "version>=8 && index in {0,1,2,4,5}",
+        "side": "current",
+        "profile": "SAVED_PROFILE_8",
+        "placementInterpretationVersion": 8,
+        "placementDensityVersion": 8,
+        "seed": "-1022",
+        "actual": 8443994,
+        "operator": "<",
+        "expected": 7395541,
+        "status": "FAIL_RETAINED_BOUND"
+      },
+      {
+        "failureKind": "RETAINED_BOARD_AREA_BOUND",
+        "cohortId": "SAVED_9_10_REP",
+        "caseOrdinal": 3,
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "boardOutlineArea",
+        "literal": "SAVED7_AREA[2]",
+        "sourceCondition": "version>=8",
+        "side": "current",
+        "profile": "SAVED_PROFILE_9",
+        "placementInterpretationVersion": 9,
+        "placementDensityVersion": 9,
+        "seed": "-1022",
+        "actual": 8443994,
+        "operator": "<=",
+        "expected": 7395541,
+        "status": "FAIL_RETAINED_BOUND"
+      },
+      {
+        "failureKind": "RETAINED_BOARD_AREA_BOUND",
+        "cohortId": "SAVED_9_10_REP",
+        "caseOrdinal": 3,
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "boardOutlineArea",
+        "literal": "SAVED7_AREA[2]",
+        "sourceCondition": "version>=8 && index in {0,1,2,4,5}",
+        "side": "current",
+        "profile": "SAVED_PROFILE_9",
+        "placementInterpretationVersion": 9,
+        "placementDensityVersion": 9,
+        "seed": "-1022",
+        "actual": 8443994,
+        "operator": "<",
+        "expected": 7395541,
+        "status": "FAIL_RETAINED_BOUND"
+      },
+      {
+        "failureKind": "RETAINED_BOARD_AREA_BOUND",
+        "cohortId": "SAVED_9_10_REP",
+        "caseOrdinal": 3,
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "boardOutlineArea",
+        "literal": "SAVED8_AREA[2]",
+        "sourceCondition": "version==9",
+        "side": "current",
+        "profile": "SAVED_PROFILE_9",
+        "placementInterpretationVersion": 9,
+        "placementDensityVersion": 9,
+        "seed": "-1022",
+        "actual": 8443994,
+        "operator": "<=",
+        "expected": 6943752,
+        "status": "FAIL_RETAINED_BOUND"
+      },
+      {
+        "failureKind": "RETAINED_BOARD_AREA_BOUND",
+        "cohortId": "SAVED_9_10_REP",
+        "caseOrdinal": 9,
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "boardOutlineArea",
+        "literal": "SAVED7_AREA[2]",
+        "sourceCondition": "version>=8",
+        "side": "current",
+        "profile": "SAVED_PROFILE_10",
+        "placementInterpretationVersion": 10,
+        "placementDensityVersion": 10,
+        "seed": "-1022",
+        "actual": 8443994,
+        "operator": "<=",
+        "expected": 7395541,
+        "status": "FAIL_RETAINED_BOUND"
+      },
+      {
+        "failureKind": "RETAINED_BOARD_AREA_BOUND",
+        "cohortId": "SAVED_9_10_REP",
+        "caseOrdinal": 9,
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "boardOutlineArea",
+        "literal": "SAVED7_AREA[2]",
+        "sourceCondition": "version>=8 && index in {0,1,2,4,5}",
+        "side": "current",
+        "profile": "SAVED_PROFILE_10",
+        "placementInterpretationVersion": 10,
+        "placementDensityVersion": 10,
+        "seed": "-1022",
+        "actual": 8443994,
+        "operator": "<",
+        "expected": 7395541,
+        "status": "FAIL_RETAINED_BOUND"
+      },
+      {
+        "failureKind": "RETAINED_BOARD_AREA_BOUND",
+        "cohortId": "SAVED_9_10_REP",
+        "caseOrdinal": 9,
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "boardOutlineArea",
+        "literal": "SAVED9_AREA[2]",
+        "sourceCondition": "version==10",
+        "side": "current",
+        "profile": "SAVED_PROFILE_10",
+        "placementInterpretationVersion": 10,
+        "placementDensityVersion": 10,
+        "seed": "-1022",
+        "actual": 8443994,
+        "operator": "<=",
+        "expected": 6943752,
+        "status": "FAIL_RETAINED_BOUND"
+      },
+      {
+        "failureKind": "RETAINED_BOARD_AREA_BOUND",
+        "cohortId": "SAVED_11_12_REP",
+        "caseOrdinal": 3,
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "boardOutlineArea",
+        "literal": "SAVED7_AREA[2]",
+        "sourceCondition": "version>=8",
+        "side": "current",
+        "profile": "SAVED_PROFILE_11",
+        "placementInterpretationVersion": 11,
+        "placementDensityVersion": 11,
+        "seed": "-1022",
+        "actual": 8443994,
+        "operator": "<=",
+        "expected": 7395541,
+        "status": "FAIL_RETAINED_BOUND"
+      },
+      {
+        "failureKind": "RETAINED_BOARD_AREA_BOUND",
+        "cohortId": "SAVED_11_12_REP",
+        "caseOrdinal": 3,
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "boardOutlineArea",
+        "literal": "SAVED7_AREA[2]",
+        "sourceCondition": "version>=8 && index in {0,1,2,4,5}",
+        "side": "current",
+        "profile": "SAVED_PROFILE_11",
+        "placementInterpretationVersion": 11,
+        "placementDensityVersion": 11,
+        "seed": "-1022",
+        "actual": 8443994,
+        "operator": "<",
+        "expected": 7395541,
+        "status": "FAIL_RETAINED_BOUND"
+      },
+      {
+        "failureKind": "RETAINED_BOARD_AREA_BOUND",
+        "cohortId": "SAVED_11_12_REP",
+        "caseOrdinal": 3,
+        "sourceId": "PcbFunctionalGroupingContractTest",
+        "metric": "boardOutlineArea",
+        "literal": "SAVED9_AREA[2]",
+        "sourceCondition": "version==11; index==5 uses inline 6103992, otherwise SAVED9_AREA[index]",
+        "side": "current",
+        "profile": "SAVED_PROFILE_11",
+        "placementInterpretationVersion": 11,
+        "placementDensityVersion": 11,
+        "seed": "-1022",
+        "actual": 8443994,
+        "operator": "<=",
+        "expected": 6943752,
+        "status": "FAIL_RETAINED_BOUND"
+      }
+    ]
+  },
+  "oldHashReproduction": {
+    "baselineStatusCounts": [
+      {
+        "status": "BASELINE_OLD_LITERAL_MATCH",
+        "count": 71
+      },
+      {
+        "status": "NO_EXACT_LITERAL_SOURCE",
+        "count": 1
+      }
+    ],
+    "currentStatusCounts": [
+      {
+        "status": "CHANGED_CURRENT_EXACT_GEOMETRY_REQUIRES_REVIEW",
+        "count": 71
+      },
+      {
+        "status": "NO_EXACT_LITERAL_SOURCE",
+        "count": 1
+      }
+    ],
+    "baselineOldHashesReproducedCount": 71,
+    "baselineNoExactLiteralCount": 1,
+    "noExactLiteralCases": [
+      {
+        "cohortId": "SAVED_9_10_REP",
+        "caseOrdinal": 4,
+        "placementInterpretationVersion": 9,
+        "rootSeed": "0",
+        "baselineStatus": "NO_EXACT_LITERAL_SOURCE",
+        "currentStatus": "NO_EXACT_LITERAL_SOURCE",
+        "baselineNormalizedPhysicalSha256": "293b1b1d72df8fce71b5f0d490d4fe7e42dd58c2de0569dc236da11c7e0a2374",
+        "currentNormalizedPhysicalSha256": "7a2d4c6791b329edf1cdfb3736bcf899faccd9fb1269fe7df197bc4440f5195f"
+      }
+    ],
+    "normalizedPhysicalIdentityChangedCount": 72,
+    "geometryExactReview": {
+      "status": "CHANGED_CURRENT_EXACT_GEOMETRY_REQUIRES_REVIEW",
+      "changeCount": 71,
+      "automaticGoldenSeal": false
+    },
+    "metricExactReview": {
+      "status": "CHANGED_CURRENT_EXACT_METRIC_REQUIRES_REVIEW",
+      "changeCount": 14,
+      "automaticGoldenSeal": false
+    }
+  },
+  "sameSideSaved10": {
+    "comparisonCount": 20,
+    "baselineCount": 10,
+    "currentCount": 10,
+    "passedCount": 20,
+    "complete": true,
+    "allPassed": true,
+    "negativeCanariesReported": 31,
+    "negativeCanaryResultDetail": "Reader reports a count of 31; individual negative-canary rows are not enumerated in this receipt.",
+    "comparisons": [
+      {
+        "side": "baseline",
+        "cohortId": "SAVED_11_12_REP",
+        "rootSeed": "-1017",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 4529785,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 4529785,
+        "saved11Area": 4529785,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "baseline",
+        "cohortId": "SAVED_11_12_REP",
+        "rootSeed": "-1004",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 4466664,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 4466664,
+        "saved11Area": 4466664,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "baseline",
+        "cohortId": "SAVED_11_12_REP",
+        "rootSeed": "-1022",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 6943752,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 6943752,
+        "saved11Area": 6943752,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "baseline",
+        "cohortId": "SAVED_11_12_REP",
+        "rootSeed": "0",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 4358809,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 4358809,
+        "saved11Area": 4358809,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "baseline",
+        "cohortId": "SAVED_11_12_REP",
+        "rootSeed": "17",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 5814368,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 5814368,
+        "saved11Area": 5814368,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "baseline",
+        "cohortId": "SAVED_11_12_REP",
+        "rootSeed": "42",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 6103992,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 6103992,
+        "saved11Area": 6036952,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "baseline",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "1",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 4615974,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 4615974,
+        "saved11Area": 4615974,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "baseline",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "7",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 6587808,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 6587808,
+        "saved11Area": 6587808,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "baseline",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "5",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 9445744,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 9445744,
+        "saved11Area": 9445744,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "baseline",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "14",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 8585034,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 8585034,
+        "saved11Area": 8585034,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "current",
+        "cohortId": "SAVED_11_12_REP",
+        "rootSeed": "-1017",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 4529785,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 4529785,
+        "saved11Area": 4529785,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "current",
+        "cohortId": "SAVED_11_12_REP",
+        "rootSeed": "-1004",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 4466664,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 4466664,
+        "saved11Area": 4466664,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "current",
+        "cohortId": "SAVED_11_12_REP",
+        "rootSeed": "-1022",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 6943752,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 8443994,
+        "saved11Area": 8443994,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "current",
+        "cohortId": "SAVED_11_12_REP",
+        "rootSeed": "0",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 4358809,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 4358809,
+        "saved11Area": 4358809,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "current",
+        "cohortId": "SAVED_11_12_REP",
+        "rootSeed": "17",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 5814368,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 5814368,
+        "saved11Area": 5814368,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "current",
+        "cohortId": "SAVED_11_12_REP",
+        "rootSeed": "42",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 6103992,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 6078240,
+        "saved11Area": 5924664,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "current",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "1",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 4615974,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 4615974,
+        "saved11Area": 4615974,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "current",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "7",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 6587808,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 6858222,
+        "saved11Area": 6858222,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "current",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "5",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 9445744,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 7234409,
+        "saved11Area": 7234409,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      },
+      {
+        "side": "current",
+        "cohortId": "SAVED_10_11_12_HOLDOUT",
+        "rootSeed": "14",
+        "sourceId": "PcbPocketPackingContractTest",
+        "sourceLiteral": "previousArea from same seed version10 result",
+        "baselineLiteralCeiling": 8585034,
+        "sourceCondition": "version==11; previousArea is observed version10 area, whose same source case has exact baselineAreas literal",
+        "saved10Area": 8585034,
+        "saved11Area": 8585034,
+        "operator": "<=",
+        "status": "PASS_SAME_SIDE_SAVED10_OBSERVATION"
+      }
+    ]
+  },
+  "sourceInputTransition": {
+    "baselinePinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+    "currentPinsSha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e",
+    "baselineCount": 1059,
+    "currentCount": 1059,
+    "allowedCommonChanges": [
+      "scripts/verify-current-contracts.ps1",
+      "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+      "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "tests/contracts/D01DiagnosticContractTest.java",
+      "tests/contracts/PcbCompactnessContractTest.java",
+      "tests/contracts/PcbCorridorOrientationContractTest.java",
+      "tests/contracts/PcbNormalPackingIdentityContractTest.java",
+      "tests/contracts/Rb100P07BranchDiagnosticContractTest.java",
+      "tests/contracts/Rb100P07PolicyDiagnosticContractTest.java",
+      "tests/contracts/Rb56ModelIdentityContractTest.java",
+      "tests/contracts/RelBSessionIdentityContractTest.java"
+    ],
+    "allowedAddedCurrentTests": [
+      "tests/contracts/P07ReachedPthContractTest.java",
+      "tests/contracts/PcbPlacementDiagnosticsContractTest.java",
+      "tests/contracts/Rb100PhysicalDiagnostics.java",
+      "tests/contracts/Rb100PhysicalReference.java"
+    ],
+    "allowedRemovedBaselineTests": [
+      "tests/contracts/Rb100LayoutFeasibilityContractTest.java",
+      "tests/contracts/Rb100LayoutFirstRoutingDiagnosticContractTest.java",
+      "tests/contracts/Rb100LayoutPlacementDiagnosticContractTest.java",
+      "tests/contracts/Rb100LayoutRoutingDiagnosticContractTest.java"
+    ]
+  },
+  "historicalLiteralOwners": [
+    {
+      "path": "tests/contracts/PcbFunctionalGroupingContractTest.java",
+      "headBlob": "7c785be2130b9fa50a126e117a97fc5fb78d7f6b",
+      "worktreeBlob": "7c785be2130b9fa50a126e117a97fc5fb78d7f6b",
+      "byteEqualHead": true,
+      "sha256": "c9396d0e93b9d042098f9e61efa0fa450e085fff96ae700b9690ebb64091a8d3",
+      "listedInTransitionChanges": false
+    },
+    {
+      "path": "tests/contracts/PcbPocketPackingContractTest.java",
+      "headBlob": "a3a7c88bcb85141f2a8a24b6c3eca849d3f81cfc",
+      "worktreeBlob": "a3a7c88bcb85141f2a8a24b6c3eca849d3f81cfc",
+      "byteEqualHead": true,
+      "sha256": "1c8085b2d0b22c1d1a8d2a388ed663da1a2f8200d7261d26a2dbe962777d6c0f",
+      "listedInTransitionChanges": false
+    }
+  ],
+  "limitations": [
+    "All six selected cohorts were executed, but only the 72-case-per-source observational census is established; this is not adoption or acceptance.",
+    "Baseline side reproduced 71 prior exact literal hashes; version 9 seed 0 has no exact historical literal source, and its normalized physical identity changed.",
+    "Current exact metric review reports 14 differences and current exact geometry review reports 71 changes; 72 of 72 cases have changed normalized physical identity.",
+    "The retained area-bound failures are preserved and cause the independent reader status FAIL_RETAINED_BOUNDS with exit code 2.",
+    "This packet does not qualify or adopt the public 100-route population."
+  ],
+  "runBudgets": {
+    "nativeChildLimitMs": 180000,
+    "outerWatchdogMs": 600000,
+    "source": "Per-run result records; all twelve runs retain these limits."
+  },
+  "readerReport": {
+    "file": "saved-profile-census1-reader.json",
+    "bytes": 358314,
+    "sha256": "4f4f1213e8450d3eda60b543258fea65563d592a25f6c716ec032b1abf4f4276"
+  },
+  "readerResult": {
+    "exitCode": 2,
+    "elapsedSeconds": 1.7354669,
+    "readerSha256": "cb712b8f3fcf94513891c2dea4cf8459fb7fb7c40dd320b2af67caaa83920581",
+    "mode": "COLLECT_BOUND_FAILURES",
+    "caseCountPerSource": 72,
+    "consoleSha256": "b8a0b159f871b8cc7cd500fdd8dc57b5be86c0818d29fac43ff0e98d4b951723"
+  }
+}

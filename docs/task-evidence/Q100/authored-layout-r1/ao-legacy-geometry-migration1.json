@@ -1,0 +1,398 @@
+{
+  "schema": "troubleshootjs-ao-legacy-geometry-migration-observation-v1",
+  "status": "LEGACY_EXPECTATION_MIGRATED_TEST_ONLY_INTEGRATED3_ACTIVE",
+  "scope": "Record the layout23 legacy-vector mismatch, current layout25 geometry comparison, and bounded test-only expectation migration.",
+  "repository": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "candidate": "AO_FINAL_LAYOUT25_DEP26"
+  },
+  "integratedNative2": {
+    "status": "FAIL",
+    "phase": "AFFECTED_FINAL_SOURCE_NATIVE",
+    "elapsedSeconds": 33.1956646,
+    "exitCode": 2,
+    "nativeExitCode": 2,
+    "sourceSnapshotRevision": 3,
+    "sourcePinsSha256": "5e79aa4cd2496c6f64f4a8bb63fc0e3c3624cc5669ab31d7798588c92d72502d",
+    "inputCount": 1061,
+    "inputBytes": 85501152,
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "terminationProven": true,
+    "cleanupStatus": "PASS",
+    "selectedSuiteCount": 33,
+    "reportedFirstFailure": {
+      "suite": "PcbCompactnessContractTest",
+      "method": "verifyLegacyGeometry",
+      "rootSeed": "-1017",
+      "placementInterpretation": 1,
+      "message": "audited layout23 geometry/text/dimensions remain exact apart from reference x/y and epoch for -1017",
+      "oldLayout23ExpectedHash": "8e55d14562bac9f7b78bd4e0d0c4d386766c905944223f85aa693bbbadcf2873",
+      "currentLayout25Q3Hash": "81e93a9f0a80a711d9eb0c527b7dbdfcfa455b11920977ea46622c1aedefee41"
+    },
+    "remainingSelectedSuites": 32,
+    "remainingExecutionStatus": "NOT_RUN_AFTER_FIRST_FAILURE",
+    "manifest30Sidecar": {
+      "expectedRows": 30,
+      "rowsProduced": 0,
+      "status": "FAIL_ROW_OR_MARKER_COUNT",
+      "hashProduced": false
+    },
+    "sourceAuditSha256": "5b2731c5aaade79aac1b580b8919e24b0e2c90f8cd1fff92d0107325df87c097",
+    "sourceSealSha256": "d0ef563a828575111bc63a481f15b7f9c3946e0388e0606d72e76d51338fe028",
+    "suiteManifestSha256": "87f3cac7d68f4cc3d33ece64df03ce8efe7a242228ef0d167c3ead5ad00c1621",
+    "limitation": "Selected registry count was 33; failure stopped qualification before all selected entries or the 30-row manifest sidecar completed."
+  },
+  "q3Comparison": {
+    "status": "PASS_COMPARISON_ONLY",
+    "scope": "FRESH_FINAL_SOURCE_SIX_BOARD_LAYOUT22_TO_LAYOUT25_COMPARISON",
+    "outputSha256": "2d0507114df5849a6805381fd438f5c9acb49a505b3a51fe30b59772643dabd9",
+    "outputBytes": 7655051,
+    "readerSourceSha256": "ab04a671ee052e197a921d86bc335953946e1b509bc627b5aa99081a9f2b6a2d",
+    "baseline": {
+      "layoutVersion": 22,
+      "dependencyEpoch": "tsj-generation-dependencies-v23",
+      "sourceRevision": 1,
+      "inputCount": 1059,
+      "pinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da"
+    },
+    "qualifiedReference": {
+      "layoutVersion": 24,
+      "dependencyEpoch": "tsj-generation-dependencies-v25",
+      "sourceRevision": 2,
+      "inputCount": 1059,
+      "pinsSha256": "42e4739fb5baf1c124e38db2e9f4713c28c53e93cdbba92eba554d0a10a1cb69"
+    },
+    "current": {
+      "layoutVersion": 25,
+      "dependencyEpoch": "tsj-generation-dependencies-v26",
+      "sourceRevision": 3,
+      "inputCount": 1061,
+      "pinsSha256": "5e79aa4cd2496c6f64f4a8bb63fc0e3c3624cc5669ab31d7798588c92d72502d",
+      "contextSha256": "77dc328282a4d0466b3c7aeb28b645002bbe0358ba889d294a010a0aec4c23d8"
+    },
+    "sixCaseCount": 6,
+    "cases": [
+      {
+        "seed": "-1017",
+        "placementInterpretation": 1,
+        "placementCanonicalUnchanged": true,
+        "independentPhysicalAndPartitionWitnesses": "PASS_NATIVE_BOTH_SOURCES"
+      },
+      {
+        "seed": "-1004",
+        "placementInterpretation": 1,
+        "placementCanonicalUnchanged": true,
+        "independentPhysicalAndPartitionWitnesses": "PASS_NATIVE_BOTH_SOURCES"
+      },
+      {
+        "seed": "-1022",
+        "placementInterpretation": 1,
+        "placementCanonicalUnchanged": true,
+        "independentPhysicalAndPartitionWitnesses": "PASS_NATIVE_BOTH_SOURCES"
+      },
+      {
+        "seed": "-1017",
+        "placementInterpretation": 2,
+        "placementCanonicalUnchanged": true,
+        "independentPhysicalAndPartitionWitnesses": "PASS_NATIVE_BOTH_SOURCES"
+      },
+      {
+        "seed": "-1004",
+        "placementInterpretation": 2,
+        "placementCanonicalUnchanged": true,
+        "independentPhysicalAndPartitionWitnesses": "PASS_NATIVE_BOTH_SOURCES"
+      },
+      {
+        "seed": "-1022",
+        "placementInterpretation": 2,
+        "placementCanonicalUnchanged": false,
+        "independentPhysicalAndPartitionWitnesses": "PASS_NATIVE_BOTH_SOURCES"
+      }
+    ],
+    "allPhysicalAndPartitionWitnessesPass": true,
+    "legacyPlacement1": {
+      "caseCount": 3,
+      "placementCanonicalStable": true,
+      "selectedAttemptsUnchanged": true,
+      "changedComponentMappings": 0,
+      "oldLayout23ExpectedHashes": [
+        "8e55d14562bac9f7b78bd4e0d0c4d386766c905944223f85aa693bbbadcf2873",
+        "291d1d12ab5ed4e5379bc7a359a5ddc6977bf6cdcbb970196beba9eee00b8028",
+        "08e13b77a5639a33a81783c6a083dea3d266446d047f9194225c0a24c78f24b7"
+      ],
+      "currentLayout25ExpectedHashes": [
+        "81e93a9f0a80a711d9eb0c527b7dbdfcfa455b11920977ea46622c1aedefee41",
+        "fbf29057aed8d0bb4b0dca7e4dbf68a323dd05e5108dddd0a265c27dcb03ecbf",
+        "ade3126987e5d4ef4529d0d171f68f8977ac8b0174efa47a43b63f196c0fe3a9"
+      ]
+    },
+    "sameLogicalDeclarationsAndStreams": true,
+    "currentCompact2HashesMatchAuditedQ": true,
+    "nativeResultBindings": {
+      "baselineResultSha256": "1b1da740bd6803b91042f906728ae69c7fd8ed3466d8bc7d347347c953b4cfbd",
+      "baselineResultBytes": 1981,
+      "currentResultSha256": "e64cb4802ad5d3b33bc2f2697d3c1bd7e1c4fc7b86ea1e78790fdf38709afdbd",
+      "currentResultBytes": 1955
+    },
+    "mode": {
+      "layoutQualification": false,
+      "adopted": false,
+      "automaticGoldenSeal": false,
+      "coreMainInvoked": false,
+      "coreConstantsPatched": false
+    },
+    "readerCanaryCounts": {
+      "geometry": 1,
+      "wrapper": 1,
+      "currentStdout": 1
+    }
+  },
+  "geometryObservation": {
+    "status": "PASS",
+    "source": "current",
+    "suite": "P07GeometryEpochDiagnosticContractTest",
+    "layoutVersion": 25,
+    "dependencyEpoch": "tsj-generation-dependencies-v26",
+    "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "elapsedSeconds": 55.668459,
+    "helperElapsedSeconds": 54.6753929,
+    "helperElapsedScope": "Invoke-VerifierBoundedProcess call; native child completion and helper-owned process-log cleanup",
+    "inputRevision": 3,
+    "sourceSnapshotRevision": 3,
+    "inputCount": 1061,
+    "inputPinsSha256": "5e79aa4cd2496c6f64f4a8bb63fc0e3c3624cc5669ab31d7798588c92d72502d",
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "cleanupStatus": "PASS_MARKER_REPORTED_ONCE",
+    "terminationProven": true,
+    "exitCode": 0,
+    "receiptBytes": 3289448,
+    "receiptSha256": "9ac103d89bee3e89b965c065eddf610d4e760484faafe7580e97f8c69c9a7777",
+    "consoleBytes": 3290588,
+    "consoleSha256": "abb6ee24b7f0bbc850061d196cb8859792c1de7de9acb5c33d0f6bb61262d25f"
+  },
+  "testOnlyMigration": {
+    "file": "tests/contracts/PcbCompactnessContractTest.java",
+    "preEditSha256": "ba2f0f21cdfd12c316e91bc69e37377f1ddabcebd099baa2c1f45c5b90d32012",
+    "postEditSha256": "e39ef8bd2a53e035141f03ec8705a26bbae109cd2b47b7bb578af57d3e12162a",
+    "preEditSourceMatchesSnapshot3": true,
+    "oldLayout23Legacy1References": [
+      "8e55d14562bac9f7b78bd4e0d0c4d386766c905944223f85aa693bbbadcf2873",
+      "291d1d12ab5ed4e5379bc7a359a5ddc6977bf6cdcbb970196beba9eee00b8028",
+      "08e13b77a5639a33a81783c6a083dea3d266446d047f9194225c0a24c78f24b7"
+    ],
+    "currentLayout25Legacy1Expected": [
+      "81e93a9f0a80a711d9eb0c527b7dbdfcfa455b11920977ea46622c1aedefee41",
+      "fbf29057aed8d0bb4b0dca7e4dbf68a323dd05e5108dddd0a265c27dcb03ecbf",
+      "ade3126987e5d4ef4529d0d171f68f8977ac8b0174efa47a43b63f196c0fe3a9"
+    ],
+    "oldVectorPreserved": true,
+    "currentVectorMatchesQ3": true,
+    "existingLayout23Compact2ReferencesUnchanged": true,
+    "existingCurrentLayout25Compact2ExpectedUnchanged": true,
+    "changedMethods": [
+      {
+        "name": "physicalGeometrySha256",
+        "beforeSha256": "4d5add7602b6d366e1d3672e775f573711decc704edc55724ba8d20fc1426848",
+        "afterSha256": "4d5add7602b6d366e1d3672e775f573711decc704edc55724ba8d20fc1426848",
+        "unchanged": true
+      },
+      {
+        "name": "layout24PrefixReferenceSha256",
+        "beforeSha256": "2ea63ba9d9b0293cb4f6687165b7bc37aeff3eb9101cf3d517adbc390ab5d70d",
+        "afterSha256": "2ea63ba9d9b0293cb4f6687165b7bc37aeff3eb9101cf3d517adbc390ab5d70d",
+        "unchanged": true
+      },
+      {
+        "name": "normalizeReferencePositions",
+        "beforeSha256": "33ac4d6a8cdd57d8db233ad1bae2836dae6ab48a2ed96a87b92fea0c9d24bb23",
+        "afterSha256": "33ac4d6a8cdd57d8db233ad1bae2836dae6ab48a2ed96a87b92fea0c9d24bb23",
+        "unchanged": true
+      },
+      {
+        "name": "verifyMatchedViaCompaction",
+        "beforeSha256": "eaab5e1aa42618ca8a462057650ecf29f8e741468d24a906ca6ef23e687421db",
+        "afterSha256": "eaab5e1aa42618ca8a462057650ecf29f8e741468d24a906ca6ef23e687421db",
+        "unchanged": true
+      }
+    ],
+    "externalHelperCallersUntouched": [
+      "PcbFunctionalGroupingContractTest.java",
+      "PcbPocketPackingContractTest.java",
+      "P07GeometryEpochDiagnosticContractTest.java",
+      "P07OrderingCandidatesContractTest.java",
+      "P07RelaxedDistanceBoundContractTest.java"
+    ],
+    "onlyRepositoryFileEdited": "tests/contracts/PcbCompactnessContractTest.java",
+    "testsRunAtStaticReview": false,
+    "gateRunAtStaticReview": false,
+    "staticGitDiffCheck": "PASS",
+    "sourceSnapshot4": {
+      "status": "SEALED_FOR_ACTIVE_NATIVE_INTEGRATED3_NO_RESULT_INCLUDED",
+      "preparationArtifactStatus": "PREPARED_NOT_RUN",
+      "sourceSnapshotRevision": 4,
+      "pinCount": 1061,
+      "sourceBytes": 85502574,
+      "pinsSha256": "6d94be7160b49bff6291b2544bf439b4374fda0eb77f13e84f7bb9c7725b028f",
+      "auditSha256": "3f4991c42f4e089c8f8d3c965ec1f9e08e8ec5ee5449fefdb0bc16926dcbd17a",
+      "sealSha256": "00a19fa467428eca38707011329116eb13e0f87406f6234762ae893b5bbab9aa",
+      "changedPinCount": 1,
+      "changedPaths": [
+        "tests/contracts/PcbCompactnessContractTest.java"
+      ],
+      "addedPathCount": 0,
+      "removedPathCount": 0
+    },
+    "testChangedNoProductionFiles": true,
+    "migrationDescription": "Retains the three named layout23 legacy references and both layout23/current25 compact2 vectors. Adds exact current25 legacy1 hashes from the six-case Q3 comparison; no oracle masking, new bounds, or production source change is represented."
+  },
+  "limitsAndNonClaims": [
+    "Integrated native2 is an overall FAIL despite input-audit, cleanup, and termination PASS; the legacy assertion stopped the selected run before all 33 selected suites and manifest30 completion.",
+    "Q3 is a six-case comparison-only result. It does not qualify admission, a golden seal, full native33, current72, or final source acceptance.",
+    "Integrated native3 was active at curation time. Only its sealed snapshot4 preparation and pins are recorded; no native3 result is read or claimed.",
+    "The current4 Q saved72 gate is NOT RUN. No production build, admission, or playable-100 qualification is claimed.",
+    "The test source migration had static review and diff check only before integrated native3; no separate test or gate is claimed here.",
+    "Raw logs, absolute paths, PIDs/start ticks, command-line arguments, and tokens are omitted. Protected HARD data was not read or run."
+  ],
+  "artifacts": [
+    {
+      "file": "ao-native-integrated-2/ao-final-native-v3-sealed-pins.json",
+      "bytes": 199503,
+      "sha256": "5e79aa4cd2496c6f64f4a8bb63fc0e3c3624cc5669ab31d7798588c92d72502d"
+    },
+    {
+      "file": "ao-native-integrated-2/ao-native-integrated-2-manifest.json",
+      "bytes": 3415,
+      "sha256": "87f3cac7d68f4cc3d33ece64df03ce8efe7a242228ef0d167c3ead5ad00c1621"
+    },
+    {
+      "file": "ao-native-integrated-2/ao-native-integrated-2-result.json",
+      "bytes": 3709,
+      "sha256": "fe30f0070a5a63224c58a2fee4a8982c907cf0957248e3e3e83b1a53ca117319"
+    },
+    {
+      "file": "ao-native-integrated-2/ao-native-integrated-2-stdout.txt",
+      "bytes": 2620,
+      "sha256": "2563388829d3a19adc014230ac6cdae42ebacf11c8f2075818a49bbd278eae11"
+    },
+    {
+      "file": "ao-native-integrated-2/ao-native-integrated-2-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "ao-native-integrated-2/ao-native-integrated-2-launcher.json",
+      "bytes": 612,
+      "sha256": "e77eaf0dc8034ebcec36699aedc07192d9dba9da04fd77b0d65940e2c2e0431b"
+    },
+    {
+      "file": "ao-native-integrated-2/preparation.json",
+      "bytes": 4803,
+      "sha256": "dcfd8726d65fff78ee0b7294bd0e3405e5dde83818b2a47bb0341651d6494e0b"
+    },
+    {
+      "file": "ao-native-integrated-2/ao-native-integrated-call-2.ps1",
+      "bytes": 1210,
+      "sha256": "455e0d64fc3b66a3c9385dca9bd0229c0f4710dcb2c50d8479cdb8ef406bd366"
+    },
+    {
+      "file": "ao-native-integrated-2/run-ao-native-integrated-2.ps1",
+      "bytes": 8178,
+      "sha256": "c5e7cfc5b56815230b147d81cd3eea8046784ddc0e541df34bda3894f1b64e93"
+    },
+    {
+      "file": "ao-geometry-final-observations-2/geometry-current-1-result.json",
+      "bytes": 1955,
+      "sha256": "e64cb4802ad5d3b33bc2f2697d3c1bd7e1c4fc7b86ea1e78790fdf38709afdbd"
+    },
+    {
+      "file": "ao-geometry-final-observations-2/geometry-current-1-full-inputs.json",
+      "bytes": 199503,
+      "sha256": "5e79aa4cd2496c6f64f4a8bb63fc0e3c3624cc5669ab31d7798588c92d72502d"
+    },
+    {
+      "file": "ao-geometry-final-observations-2/geometry-current-1-launcher.json",
+      "bytes": 442,
+      "sha256": "e859186ae038aa2cef7afb6acc7ff9cb4a8c0f747a0b53eba9ad9e79c27ce445"
+    },
+    {
+      "file": "ao-geometry-final-observations-2/geometry-current-1-receipt.txt",
+      "bytes": 3289448,
+      "sha256": "9ac103d89bee3e89b965c065eddf610d4e760484faafe7580e97f8c69c9a7777"
+    },
+    {
+      "file": "ao-geometry-final-observations-2/geometry-current-1-console.txt",
+      "bytes": 3290588,
+      "sha256": "abb6ee24b7f0bbc850061d196cb8859792c1de7de9acb5c33d0f6bb61262d25f"
+    },
+    {
+      "file": "ao-geometry-final-observations-2/geometry-current-1-stdout.txt",
+      "bytes": 3290588,
+      "sha256": "abb6ee24b7f0bbc850061d196cb8859792c1de7de9acb5c33d0f6bb61262d25f"
+    },
+    {
+      "file": "ao-geometry-final-observations-2/geometry-current-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "ao-geometry-final-observations-2/geometry-current-1.log",
+      "bytes": 3290588,
+      "sha256": "abb6ee24b7f0bbc850061d196cb8859792c1de7de9acb5c33d0f6bb61262d25f"
+    },
+    {
+      "file": "compactness-legacy1-transition-review-1/ao-final-geometry-comparison-reader-6.json",
+      "bytes": 7655051,
+      "sha256": "2d0507114df5849a6805381fd438f5c9acb49a505b3a51fe30b59772643dabd9"
+    },
+    {
+      "file": "compactness-legacy1-transition-review-1/review-evidence.json",
+      "bytes": 3380,
+      "sha256": "2ef17b0c80a4ca125fce55e0aa02758207a7c307ba87551ea8f5bea91feb265b"
+    },
+    {
+      "file": "compactness-legacy1-transition-review-1/PcbCompactnessContractTest-prefx-ba2f0f21.java",
+      "bytes": 34280,
+      "sha256": "ba2f0f21cdfd12c316e91bc69e37377f1ddabcebd099baa2c1f45c5b90d32012"
+    },
+    {
+      "file": "ao-native-integrated-3/ao-final-native-v4-sealed-pins.json",
+      "bytes": 199503,
+      "sha256": "6d94be7160b49bff6291b2544bf439b4374fda0eb77f13e84f7bb9c7725b028f"
+    },
+    {
+      "file": "ao-native-integrated-3/ao-native-integrated-3-manifest.json",
+      "bytes": 3415,
+      "sha256": "e5c91e22d87890e6c8c11b572421a50706e1fec2322fcff3cb0ad93addaf0d20"
+    },
+    {
+      "file": "ao-native-integrated-3/preparation.json",
+      "bytes": 5111,
+      "sha256": "02d7fa6fe0f37c154e23921863560f796067901aaa3b5aef09f4384e0669fe1e"
+    },
+    {
+      "file": "ao-native-integrated-3/ao-native-integrated-call-3.ps1",
+      "bytes": 1210,
+      "sha256": "5d55dcc05fa100c9fcb544c694a14e71c29b88380063c9cfb754e28387729a8f"
+    },
+    {
+      "file": "ao-native-integrated-3/run-ao-native-integrated-3.ps1",
+      "bytes": 8180,
+      "sha256": "960c7db076a855a5f70fc1244b1855d0798fbd667aa6702ec8f246578b4863d9"
+    },
+    {
+      "file": "repository/tests/contracts/PcbCompactnessContractTest.java",
+      "bytes": 35702,
+      "sha256": "e39ef8bd2a53e035141f03ec8705a26bbae109cd2b47b7bb578af57d3e12162a"
+    }
+  ],
+  "sanitization": {
+    "status": "SANITIZED_ARTIFACT_METADATA_ONLY",
+    "rawLogContentsEmbedded": false,
+    "absolutePathsEmbedded": false,
+    "processIdsOrStartTicksEmbedded": false,
+    "commandLinesEmbedded": false,
+    "tokensEmbedded": false,
+    "artifactReferences": "Relative scratch leaf paths and one repository-relative test path."
+  }
+}

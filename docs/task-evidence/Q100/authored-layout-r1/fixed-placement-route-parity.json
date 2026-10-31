@@ -1,0 +1,20 @@
+{
+  "status": "PASS_DESCRIPTIVE_PARITY_ONLY",
+  "layoutQualification": false,
+  "diagnostic7ReceiptSha256": "7941e92a24dfb3006751164a3f992ab74e25b7a4267643482592f590fc6565b5",
+  "routingDiagnostic2ReceiptSha256": "260a39ff664e1997d45845814e5f407c91eaaeadd61d1c5e85c84d1052f145ae",
+  "cases": [
+    {
+      "variant": "SHARED_HYSTERETIC_LINEAR",
+      "placementKey": "b11fff4/256981",
+      "placementUtf8Sha256": "b859e2c00f4c09e757d16f2fbc0e37eb5aefbf1b42731ed905fa3b6a9faf144b",
+      "exactFingerprintKeyParity": true
+    },
+    {
+      "variant": "SEPARATE_DIRECT_SWITCHING",
+      "placementKey": "12d9a4b0/257223",
+      "placementUtf8Sha256": "52245b7c6dbbbfde96602f4fb4230079e45eb9cb956ef25f19dbe2abe55d6f11",
+      "exactFingerprintKeyParity": true
+    }
+  ]
+}

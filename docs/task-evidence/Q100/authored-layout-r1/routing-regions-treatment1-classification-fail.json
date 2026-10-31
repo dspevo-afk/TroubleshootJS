@@ -1,0 +1,75 @@
+{
+  "packetVersion": 1,
+  "evidence": "Q100 authored-layout regions-treatment classification run",
+  "attempt": "routing-regions-treatment-1",
+  "status": "FAIL",
+  "helper": {
+    "exitCode": 2,
+    "elapsedSeconds": 26.1905246,
+    "selectedSuites": [
+      "Rb100PlanContractTest",
+      "PcbCorridorOrientationContractTest",
+      "Rb100LayoutFirstRoutingDiagnosticContractTest"
+    ],
+    "cleanupStatus": "PASS",
+    "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+    "processFullyExited": true
+  },
+  "compilation": {
+    "status": "PASS",
+    "jdkMarker": "JDK: javac 1.8.0_502",
+    "runnerPassMarker": "PASS: current-contract runner pass detection assertions=16"
+  },
+  "failure": {
+    "suite": "Rb100PlanContractTest",
+    "childExitCode": 1,
+    "message": "Exception in thread \"main\" java.lang.IllegalStateException: RB100 part has no authored functional region: JLOAD channel=null input=LOAD12 purpose=EXTERNAL_DC_LOAD_BUS_INPUT",
+    "contractFailureMarker": "CURRENT_CONTRACT_FAILURE: Current contract did not provide a qualified result: Rb100PlanContractTest, exit 1",
+    "classification": "Plan classification rejected an imported source kind because the guard required POWER.",
+    "importedPartId": "JLOAD",
+    "channel": null,
+    "input": "LOAD12",
+    "purpose": "EXTERNAL_DC_LOAD_BUS_INPUT",
+    "guardExpectedKind": "POWER",
+    "authoritativeImportedKind": "SOURCE"
+  },
+  "executionBoundary": {
+    "planContractPassed": false,
+    "orientationSuiteExecuted": false,
+    "firstRoutingSuiteExecuted": false,
+    "routeAttempted": false,
+    "layoutQualified": false,
+    "note": "The first selected suite failed; later selected suites did not execute."
+  },
+  "postRunCorrection": {
+    "guardChangedFrom": "POWER",
+    "guardChangedTo": "SOURCE",
+    "timing": "after this run cleanup",
+    "thisPacketIsPreFix": true,
+    "postFixVerificationIncluded": false
+  },
+  "rawInputs": [
+    {
+      "file": "routing-regions-treatment-1-result.json",
+      "sha256": "359EFF18861CFE265C7BCA7D6AD5AA84B146B80F4D2A9692CBB75A927AD1F066",
+      "bytes": 270
+    },
+    {
+      "file": "routing-regions-treatment-1-console.txt",
+      "sha256": "3875AE1CF3F1C61464E6F36C58A39E7F9CAB8B2EBC8C5C2B0B0A6E7C8D2DAFB0",
+      "bytes": 2882
+    },
+    {
+      "file": "routing-regions-treatment-1.log",
+      "sha256": "9E11C9AAB99BCB33BFB3B26EF60C8832F82B76DB8889DDDCDF2F7F7088FF7558",
+      "bytes": 3068,
+      "contentIncluded": false
+    }
+  ],
+  "sourcePins": {
+    "file": "routing-regions-treatment1-source-pins.json",
+    "sha256": "2D2B7B13C1B862B770FB60694AD7316DDC03F552DCE45179180B44CA229B6D5A",
+    "count": 57,
+    "pathsRelative": true
+  }
+}

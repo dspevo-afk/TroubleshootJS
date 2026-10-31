@@ -1,0 +1,160 @@
+{
+  "packetVersion": 1,
+  "evidence": "Q100 private P07 grid focused native controls",
+  "attempt": "p07-grid-focused-1",
+  "status": "PASS_FOCUSED_NATIVE",
+  "execution": {
+    "helperExitCode": 0,
+    "elapsedSeconds": 61.4345961,
+    "suites": [
+      "P07GridEligibilityContractTest",
+      "P07TwoLayerContractTest",
+      "MediumBoardPhysicalPolicyContractTest",
+      "D01DiagnosticContractTest",
+      "Rb56ModelIdentityContractTest",
+      "RelBSessionIdentityContractTest",
+      "PcbNormalPackingIdentityContractTest",
+      "PcbCompactnessContractTest"
+    ],
+    "cleanupStatus": "PASS",
+    "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+    "processFullyExited": true
+  },
+  "compilation": {
+    "status": "PASS",
+    "jdkMarker": "JDK: javac 1.8.0_502",
+    "runnerPassMarker": "PASS: current-contract runner pass detection assertions=16"
+  },
+  "native": {
+    "status": "PASS",
+    "suiteCount": 8,
+    "suiteStatuses": [
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS"
+    ],
+    "suiteMarkers": [
+      {
+        "suite": "P07GridEligibilityContractTest",
+        "status": "PASS",
+        "assertions": 17,
+        "marker": "PASS: P07 grid eligibility contracts assertions=17"
+      },
+      {
+        "suite": "P07TwoLayerContractTest",
+        "status": "PASS",
+        "assertions": 13091,
+        "marker": "PASS: P07 two-layer contracts assertions=13091"
+      },
+      {
+        "suite": "MediumBoardPhysicalPolicyContractTest",
+        "status": "PASS",
+        "assertions": 74,
+        "marker": "PASS: medium physical policy contracts assertions=74 receipt=MEDIUM_BOARD@1;outcome=SUCCESS;selected=P07_FULLER_TWO_LAYER;placements=6;placementRejects=0;placementEvaluations=26701;routes=3;routingWork=5/822300;p05=0/0;p07=3/3;selectedAttempt=1;ranked=[2, 5, 1, 4, 3, 0];placementScores=[2{total=1046719;electrical=118020;region=9647;connector=6160;corridor=1351;outline=8030400;courtyard=608612;demand=2161511}, 5{total=1054417;electrical=118470;region=8957;connector=5200;corridor=2392;outline=8160000;courtyard=607412;demand=2158311}, 1{total=1072552;electrical=120950;region=9175;connector=5800;corridor=1860;outline=8367600;courtyard=607412;demand=2158311}, 4{total=1160444;electrical=131360;region=10120;connector=6240;corridor=1706;outline=8367400;courtyard=618212;demand=2187111}, 3{total=1181416;electrical=132210;region=9820;connector=7710;corridor=2262;outline=8261100;courtyard=614612;demand=2177511}, 0{total=1223733;electrical=137760;region=11215;connector=6500;corridor=2240;outline=8126600;courtyard=613412;demand=2174311}];selectedScore=964499;selectedQualityMilli=146075499;routeOutcomes=[P07_FULLER_TWO_LAYER@2=SUCCESS, P07_FULLER_TWO_LAYER@5=SUCCESS, P07_FULLER_TWO_LAYER@1=SUCCESS];routeEligiblePlacementAttempts=[2, 5, 1, 4, 3, 0];routeEligibilitySkips=[];packingProbe=normal-packing@3;attempts=1;orderings=1;expansions=136114;millis=438;route=P07_FULLER_TWO_LAYER;disposition=SELECTED;baseline=372633258de1d54fc7f3341932714fdd00fccc636393497440d1d73fac88846b;selected=d801bafdb37417fc6fce941c36e86949cd32c2eac89db7e8a3ac0ccdbb9cbc79;failure=null"
+      },
+      {
+        "suite": "D01DiagnosticContractTest",
+        "status": "PASS",
+        "assertions": 182,
+        "marker": "PASS: D01 diagnostic contracts assertions=182"
+      },
+      {
+        "suite": "Rb56ModelIdentityContractTest",
+        "status": "PASS",
+        "assertions": 123,
+        "marker": "PASS: RB56 model-identity contracts assertions=123"
+      },
+      {
+        "suite": "RelBSessionIdentityContractTest",
+        "status": "PASS",
+        "assertions": 210,
+        "marker": "PASS: REL-B session identity contracts assertions=210 scope=IDENTITY_AND_ADMISSION_ONLY ownerRoundTrip=false"
+      },
+      {
+        "suite": "PcbNormalPackingIdentityContractTest",
+        "status": "PASS",
+        "assertions": 25,
+        "marker": "PASS: PCB normal packing identity contracts assertions=25 packing=4 replay=tsj-alpha/7"
+      },
+      {
+        "suite": "PcbCompactnessContractTest",
+        "status": "PASS",
+        "assertions": 603,
+        "cases": 3,
+        "scope": "NO_DENSITY_ACCEPTANCE_THRESHOLD",
+        "marker": "PASS: actual RB56 geometry report 603 assertions cases=3 mode=report scope=NO_DENSITY_ACCEPTANCE_THRESHOLD",
+        "legacyGeometryMarker": "PASS: exact legacy RB56 physical geometry retained (reference x/y and epoch excluded) for three fixed saved-board interpretations"
+      }
+    ],
+    "currentEpochChecks": {
+      "layoutVersion": 22,
+      "dependencyEpoch": "tsj-generation-dependencies-v23",
+      "layoutIdentitySuite": "PcbNormalPackingIdentityContractTest",
+      "dependencyIdentitySuite": "Rb56ModelIdentityContractTest",
+      "diagnosticContextSuite": "D01DiagnosticContractTest"
+    },
+    "receiptSha256": "AA6BB9F0F518A0B4468796918013FD20068D65C7D7A90EAA74DDCC5766A77022"
+  },
+  "interpretation": {
+    "p07GridEligibilityAssertions": 17,
+    "p07TwoLayerControlAssertions": 13091,
+    "identityAndDiagnosticSuites": [
+      {
+        "suite": "D01DiagnosticContractTest",
+        "assertions": 182
+      },
+      {
+        "suite": "Rb56ModelIdentityContractTest",
+        "assertions": 123
+      },
+      {
+        "suite": "RelBSessionIdentityContractTest",
+        "assertions": 210
+      },
+      {
+        "suite": "PcbNormalPackingIdentityContractTest",
+        "assertions": 25
+      }
+    ],
+    "fixedSavedGeometryCases": 3,
+    "layoutQualified": false,
+    "adopted": false,
+    "scope": "Focused native policy/eligibility/identity/legacy-geometry contracts; not Q100 layout qualification.",
+    "fullMatrix": "NOT RUN",
+    "independentOracles": "NOT RUN"
+  },
+  "rawInputs": [
+    {
+      "file": "p07-grid-focused-1-result.json",
+      "sha256": "D400019D78A5D17ACDCF1D959A271661E7F747DD45DB373EF8484AE0A0177230",
+      "bytes": 527
+    },
+    {
+      "file": "p07-grid-focused-1-receipt.txt",
+      "sha256": "AA6BB9F0F518A0B4468796918013FD20068D65C7D7A90EAA74DDCC5766A77022",
+      "bytes": 19630
+    },
+    {
+      "file": "p07-grid-focused-1-console.txt",
+      "sha256": "03469790C38FDC4123F58AF6312E6563C38FE4FD602B9E02F4615A7679EB6051",
+      "bytes": 21749
+    },
+    {
+      "file": "p07-grid-focused-1.log",
+      "sha256": "12793E74794756D9DA27417CB916B2301E3C5EF59E90BD7B886360EC1553493E",
+      "bytes": 22063,
+      "contentIncluded": false
+    }
+  ],
+  "sourcePins": {
+    "file": "p07-grid-focused1-source-pins.json",
+    "sha256": "C917D87106C66396B7D52382ABE53C15BF0D4AB3F6C3D78F6C0E206C7338DBE0",
+    "count": 61,
+    "pathsRelative": true
+  }
+}

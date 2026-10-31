@@ -1,0 +1,313 @@
+{
+  "schema": "troubleshootjs-ar-branch-unit-diagnostic-observation-v1",
+  "status": "FOCUSED_DIAGNOSTIC_PASS_ROUTE_REJECTIONS_REMAIN_NO_ADMISSION",
+  "scope": "Record a diagnostic-unit accounting correction, preserved integrated failure, and focused native branch results.",
+  "repository": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "candidate": "AO_FINAL_LAYOUT25_DEP26"
+  },
+  "integratedNative3": {
+    "status": "FAIL",
+    "phase": "AFFECTED_FINAL_SOURCE_NATIVE",
+    "elapsedSeconds": 106.97780089999999,
+    "exitCode": 2,
+    "nativeExitCode": 2,
+    "selectedSuiteCount": 33,
+    "sourceSnapshotRevision": 4,
+    "sourcePinsSha256": "6d94be7160b49bff6291b2544bf439b4374fda0eb77f13e84f7bb9c7725b028f",
+    "inputCount": 1061,
+    "inputBytes": 85502574,
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "terminationProven": true,
+    "cleanupStatus": "PASS",
+    "manifest30": {
+      "status": "PASS_30_ROWS",
+      "rows": 30,
+      "expectedRows": 30,
+      "passed": true
+    },
+    "diagnosticCases": [
+      {
+        "caseIndex": 1,
+        "status": "FAIL",
+        "phase": "FIXED_P07_SESSION_ADVANCE",
+        "failureType": "BUDGET_WORK_LIMIT",
+        "failure": "WORK_LIMIT in p07-branch-session-advance-628",
+        "workUnits": 640,
+        "operationMs": 2613,
+        "observedMaxUnitMs": 383,
+        "cleanupMs": 1,
+        "cleanupStatus": "PASS"
+      },
+      {
+        "caseIndex": 2,
+        "status": "FAIL",
+        "phase": "FIXED_P07_SESSION_ADVANCE",
+        "failureType": "BUDGET_WORK_LIMIT",
+        "failure": "WORK_LIMIT in p07-branch-session-advance-628",
+        "workUnits": 640,
+        "operationMs": 2106,
+        "observedMaxUnitMs": 180,
+        "cleanupMs": 0,
+        "cleanupStatus": "PASS"
+      }
+    ],
+    "distinction": "The selected suite list had 33 suites, but the overall native result is FAIL; manifest30 passed, not the full 33-suite run."
+  },
+  "diagnosticUnitCorrection": {
+    "sourcePath": "tests/contracts/Rb100PhysicalDiagnostics.java",
+    "preEditSha256": "6a760356410ccd3de76384dbbbae27f9dbc86ac96653d7fbd9c0db1e995c9036",
+    "postEditSha256": "0621772088d4a42ce40ad35f45e0933fe54cdf0380bd410adf7def9667227b85",
+    "cause": "The fixed diagnostic advanced with advanceSlice(2048) while production routing uses the default 32768-step slice; its outer work-unit accounting therefore hit 640 at step 628.",
+    "exactChange": "One fixed-branch call changed from advanceSlice(2048) to the production default advanceSlice(); one explanatory comment was added.",
+    "sourceTransformVerified": true,
+    "priorSourcePreserved": true,
+    "limitsUnchanged": {
+      "diagnosticWorkUnits": 640,
+      "diagnosticCaseMs": 90000,
+      "diagnosticUnitMs": 5000,
+      "p07Expansions": 1000000,
+      "p07BranchExpansions": 100000,
+      "p07GridCells": 250000,
+      "p07Orderings": 3,
+      "p07Vias": 48
+    },
+    "note": "The 383ms and 180ms native3 values and 711ms and 362ms focused values are observed maxima, not the 5000ms configured unit limit."
+  },
+  "focusedNative": {
+    "status": "PASS",
+    "phase": "FOCUSED_RB100_P07_BRANCH_DIAGNOSTIC_NATIVE",
+    "scope": "FOCUSED_RB100_P07_BRANCH_DIAGNOSTIC_CONTRACT_ONLY",
+    "elapsedSeconds": 39.2253184,
+    "exitCode": 0,
+    "nativeExitCode": 0,
+    "suite": "Rb100P07BranchDiagnosticContractTest",
+    "suiteCount": 1,
+    "assertions": 12415,
+    "cases": 2,
+    "authoredVariants": [
+      "SHARED_HYSTERETIC_LINEAR",
+      "SEPARATE_DIRECT_SWITCHING"
+    ],
+    "seed": "9007199254740993",
+    "placementSeed": "-6587958367974952701",
+    "routingSeed": "8445301674744508279",
+    "fixedPlacementAttempt": 4,
+    "sourceSnapshotRevision": 5,
+    "sourcePinsSha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81",
+    "inputCount": 1061,
+    "inputBytes": 85502668,
+    "sourceAuditSha256": "6575f85b4b8db5bb6bf19278b3e2b56fe545155a559a7df210ec2508555935cf",
+    "sourceSealSha256": "4560a56dae95e1775a5f6fcecb89943a84acebc676aaf1ba86f71006c16479a5",
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "terminationProven": true,
+    "cleanupStatus": "PASS",
+    "layoutQualification": false,
+    "fullQualificationClaim": false,
+    "variantObservations": [
+      {
+        "status": "PASS",
+        "variant": "SHARED_HYSTERETIC_LINEAR",
+        "operationMs": 6822,
+        "cleanupMs": 1,
+        "cleanupStatus": "PASS",
+        "workUnits": 139,
+        "observedMaxUnitMs": 711,
+        "configuredUnitLimitMs": 5000,
+        "configuredWorkLimit": 640,
+        "branchCount": 299,
+        "routeAccepted": false,
+        "routeOutcome": "OUT_B:TOTAL_SEARCH_LIMIT",
+        "routeExpansions": 1000000,
+        "layoutQualification": false
+      },
+      {
+        "status": "PASS",
+        "variant": "SEPARATE_DIRECT_SWITCHING",
+        "operationMs": 3832,
+        "cleanupMs": 0,
+        "cleanupStatus": "PASS",
+        "workUnits": 107,
+        "observedMaxUnitMs": 362,
+        "configuredUnitLimitMs": 5000,
+        "configuredWorkLimit": 640,
+        "branchCount": 308,
+        "routeAccepted": false,
+        "routeOutcome": "A_COIL_LOW:NO_PATH",
+        "routeExpansions": 918222,
+        "layoutQualification": false
+      }
+    ],
+    "interpretation": "PASS means the two fixed diagnostics completed and emitted truthful evidence. Both route outcomes remain rejected; this is not a route-cap pass or layout acceptance."
+  },
+  "sourceSnapshotTransition": {
+    "source4": {
+      "revision": 4,
+      "inputCount": 1061,
+      "sourceBytes": 85502574,
+      "pinsSha256": "6d94be7160b49bff6291b2544bf439b4374fda0eb77f13e84f7bb9c7725b028f",
+      "auditSha256": "3f4991c42f4e089c8f8d3c965ec1f9e08e8ec5ee5449fefdb0bc16926dcbd17a",
+      "sealSha256": "00a19fa467428eca38707011329116eb13e0f87406f6234762ae893b5bbab9aa"
+    },
+    "source5": {
+      "revision": 5,
+      "inputCount": 1061,
+      "sourceBytes": 85502668,
+      "pinsSha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81",
+      "auditSha256": "6575f85b4b8db5bb6bf19278b3e2b56fe545155a559a7df210ec2508555935cf",
+      "sealSha256": "4560a56dae95e1775a5f6fcecb89943a84acebc676aaf1ba86f71006c16479a5"
+    },
+    "changedPinCount": 1,
+    "changedPaths": [
+      "tests/contracts/Rb100PhysicalDiagnostics.java"
+    ],
+    "addedPathCount": 0,
+    "removedPathCount": 0,
+    "testOnlyChange": true,
+    "preEditSourceSha256": "6a760356410ccd3de76384dbbbae27f9dbc86ac96653d7fbd9c0db1e995c9036",
+    "postEditSourceSha256": "0621772088d4a42ce40ad35f45e0933fe54cdf0380bd410adf7def9667227b85"
+  },
+  "finalBroadGate": {
+    "state": "ACTIVE_AT_CURATION",
+    "result": "NOT_READ_NOT_CLAIMED"
+  },
+  "limitsAndNonClaims": [
+    "The focused diagnostic pass does not imply an accepted route: SHARED_HYSTERETIC_LINEAR still reports OUT_B:TOTAL_SEARCH_LIMIT at 1000000 expansions and 299 branches; SEPARATE_DIRECT_SWITCHING reports A_COIL_LOW:NO_PATH at 918222 expansions and 308 branches.",
+    "No routing budget, diagnostic budget, branch oracle, authored input, parity check, or physical oracle was raised or weakened.",
+    "Source snapshot5 changes only the branch diagnostic helper relative to snapshot4; production Java/GWT source is unchanged in that transition.",
+    "The final broad source gate was active, but no result is included or claimed. Current Q saved72 was NOT RUN. No layout admission or authored100 acceptance is claimed.",
+    "Raw log contents, absolute paths, process IDs/start ticks, command lines, and tokens are omitted. Protected HARD data was not read or run."
+  ],
+  "artifacts": [
+    {
+      "file": "branch-diagnostic-unit-review-1/edit-review.json",
+      "bytes": 1585,
+      "sha256": "157a4384d373c6781150f7c9dd4dbc0e05668e314bba94b424b1db61069f43de"
+    },
+    {
+      "file": "branch-diagnostic-unit-review-1/preservation.json",
+      "bytes": 1890,
+      "sha256": "a951e4cce4915b9ca306468044f10c5128cbe606ac18502f226b8ee731aa609b"
+    },
+    {
+      "file": "branch-diagnostic-unit-review-1/native-integrated-3/ao-final-native-v4-sealed-pins.json",
+      "bytes": 199503,
+      "sha256": "6d94be7160b49bff6291b2544bf439b4374fda0eb77f13e84f7bb9c7725b028f"
+    },
+    {
+      "file": "branch-diagnostic-unit-review-1/native-integrated-3/ao-native-integrated-3-result.json",
+      "bytes": 3769,
+      "sha256": "305687285bc7d62f363c356b6ae1439a47195200d2ef2ca64e20bd8b7b9ce84f"
+    },
+    {
+      "file": "branch-diagnostic-unit-review-1/native-integrated-3/ao-native-integrated-3-stdout.txt",
+      "bytes": 79561,
+      "sha256": "530bd040e06e5848588e6fb531c085dd2323dd8c4e788b12cd623c2f9c7b6103"
+    },
+    {
+      "file": "branch-diagnostic-unit-review-1/pre-edit-source/Rb100PhysicalDiagnostics.java",
+      "bytes": 185834,
+      "sha256": "6a760356410ccd3de76384dbbbae27f9dbc86ac96653d7fbd9c0db1e995c9036"
+    },
+    {
+      "file": "ao-native-integrated-3/ao-final-native-v4-sealed-pins.json",
+      "bytes": 199503,
+      "sha256": "6d94be7160b49bff6291b2544bf439b4374fda0eb77f13e84f7bb9c7725b028f"
+    },
+    {
+      "file": "ao-native-integrated-3/ao-native-integrated-3-result.json",
+      "bytes": 3769,
+      "sha256": "305687285bc7d62f363c356b6ae1439a47195200d2ef2ca64e20bd8b7b9ce84f"
+    },
+    {
+      "file": "ao-native-integrated-3/ao-native-integrated-3-manifest.json",
+      "bytes": 3415,
+      "sha256": "e5c91e22d87890e6c8c11b572421a50706e1fec2322fcff3cb0ad93addaf0d20"
+    },
+    {
+      "file": "ao-native-integrated-3/ao-native-integrated-3-rb56-manifest30.txt",
+      "bytes": 14617,
+      "sha256": "5d94cd9470643f931e32a9d51d657917443f1e4f58a43803cee670bcee0c3d87"
+    },
+    {
+      "file": "ao-native-integrated-3/ao-native-integrated-3-stdout.txt",
+      "bytes": 79561,
+      "sha256": "530bd040e06e5848588e6fb531c085dd2323dd8c4e788b12cd623c2f9c7b6103"
+    },
+    {
+      "file": "ao-native-integrated-3/ao-native-integrated-3-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "ao-native-integrated-3/ao-native-integrated-3-launcher.json",
+      "bytes": 612,
+      "sha256": "f5e704b6d79c900d3be56bbdb99f0db50b79deba755fc521d3ab052b1d874967"
+    },
+    {
+      "file": "ar-branch-focused-1/ao-final-native-v5-sealed-pins.json",
+      "bytes": 199503,
+      "sha256": "d4645b50fc04666572c971becebacc104c0ed25f8562477998340ee29bd92d81"
+    },
+    {
+      "file": "ar-branch-focused-1/ar-branch-focused-1-manifest.json",
+      "bytes": 890,
+      "sha256": "5ad53c9514b45008bff8fe02b68525eb3343b56502eb8e65d7e2ade0aa9bcb9a"
+    },
+    {
+      "file": "ar-branch-focused-1/ar-branch-focused-1-result.json",
+      "bytes": 1660,
+      "sha256": "72dcce16bf92f93292ede70804ca6af509062910c13f4404484cafeece438b57"
+    },
+    {
+      "file": "ar-branch-focused-1/ar-branch-focused-1-stdout.txt",
+      "bytes": 276519,
+      "sha256": "1c7ef9e27a8fa3bacad04202e9494ea0a31935664d10fc0cc86e4c5720741fad"
+    },
+    {
+      "file": "ar-branch-focused-1/ar-branch-focused-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "ar-branch-focused-1/ar-branch-focused-1-receipt.txt",
+      "bytes": 275379,
+      "sha256": "0bd59f15594f09679112259a864eb96f66834e7397fa98529bc2dcae2c92609c"
+    },
+    {
+      "file": "ar-branch-focused-1/ar-branch-focused-1-launcher.json",
+      "bytes": 420,
+      "sha256": "b7cd654aed5e9ead2e658e5ef862547181607e18736bc77a1932eac1bcaf7e6e"
+    },
+    {
+      "file": "ar-branch-focused-1/preparation.json",
+      "bytes": 2577,
+      "sha256": "6c1fb25557da5def78ed5b65e8c745b7cabb6667ede46bbfc43dec4bf8454fa0"
+    },
+    {
+      "file": "ar-branch-focused-1/ar-branch-focused-call-1.ps1",
+      "bytes": 1242,
+      "sha256": "bd38ecfd92fe912a71e76577dfaecdf937abab91cbf66d2ddc1f199b68dd9492"
+    },
+    {
+      "file": "ar-branch-focused-1/run-ar-branch-focused-1.ps1",
+      "bytes": 6866,
+      "sha256": "4b885d21547c7f8c13fb8ee4c12ea7a8179b7794babd684919312035568fb58f"
+    },
+    {
+      "file": "repository/tests/contracts/Rb100PhysicalDiagnostics.java",
+      "bytes": 185928,
+      "sha256": "0621772088d4a42ce40ad35f45e0933fe54cdf0380bd410adf7def9667227b85"
+    }
+  ],
+  "sanitization": {
+    "status": "SANITIZED_ARTIFACT_METADATA_ONLY",
+    "rawLogContentsEmbedded": false,
+    "absolutePathsEmbedded": false,
+    "processIdsOrStartTicksEmbedded": false,
+    "commandLinesEmbedded": false,
+    "tokensEmbedded": false,
+    "artifactReferences": "Relative task-owned leaf paths and one repository-relative Java source path."
+  }
+}

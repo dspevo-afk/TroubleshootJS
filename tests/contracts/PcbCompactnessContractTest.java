@@ -16,7 +16,31 @@ public final class PcbCompactnessContractTest {
         new RootCase(-1004L, 44, 104),
         new RootCase(-1022L, 60, 143)
     };
+    private static final long[] FIXED_GEOMETRY_GOLDEN_SEEDS = new long[] {-1017L,-1004L,-1022L};
+    // Frozen layout23 compact references remain context; current values are from the source-bound Q v3 comparison.
+    private static final String[] LAYOUT23_COMPACT2_REFERENCE_SHA256 = new String[] {
+        "7b9578e0e69baf894457283f76148968700ed0a4d53101dc2e2a59d317dbb5d9",
+        "1d8cbdfe7d82502f8a94be04abdff08db48aaeb7929f04a8a8234fd9b98a2201",
+        "ecfdf23e36593b585f71b02dc56d37d2920a80e6d1192dca44223ec377be8087"
+    };
+    private static final String[] CURRENT_LAYOUT25_COMPACT2_EXPECTED_SHA256 = new String[] {
+        "02a69383d57ee6951e5c50f5dffe20dd5b2555ae7154b128f42d27f2b0dcd072",
+        "b76292d8d3b597ff80b95f736bd23cddde49c4c48cb1c62af43d694be97ed35d",
+        "a713acba0dac5dbafd6835830fb8a3685561a591fdf35686495b81d263c0d502"
+    };
 
+    // Historical generator-layout23 hash for placement interpretation v1; retained as reference context.
+    private static final String[] LAYOUT23_LEGACY1_REFERENCE_SHA256 = new String[] {
+        "8e55d14562bac9f7b78bd4e0d0c4d386766c905944223f85aa693bbbadcf2873",
+        "291d1d12ab5ed4e5379bc7a359a5ddc6977bf6cdcbb970196beba9eee00b8028",
+        "08e13b77a5639a33a81783c6a083dea3d266446d047f9194225c0a24c78f24b7"
+    };
+    // Current generator-layout25 geometry for placement interpretation v1 from Q3 (reader SHA-256 ab04a671ee052e197a921d86bc335953946e1b509bc627b5aa99081a9f2b6a2d; pins 5e79aa4cd2496c6f64f4a8bb63fc0e3c3624cc5669ab31d7798588c92d72502d).
+    private static final String[] CURRENT_LAYOUT25_LEGACY1_EXPECTED_SHA256 = new String[] {
+        "81e93a9f0a80a711d9eb0c527b7dbdfcfa455b11920977ea46622c1aedefee41",
+        "fbf29057aed8d0bb4b0dca7e4dbf68a323dd05e5108dddd0a265c27dcb03ecbf",
+        "ade3126987e5d4ef4529d0d171f68f8977ac8b0174efa47a43b63f196c0fe3a9"
+    };
     private static final class RootCase {
         final long seed;
         final int packages, pads;
@@ -28,8 +52,8 @@ public final class PcbCompactnessContractTest {
     /** Accepted-source physical oracle: only reference x/y and the epoch are masked. */
     static String physicalGeometrySha256(PcbBoardLayout layout) {
         if (layout == null) throw new IllegalArgumentException("Missing PCB layout");
-        if (SeededPcbLayoutGenerator.CURRENT_VERSION != 20)
-            throw new AssertionError("Physical geometry oracle requires layout version 20");
+        if (SeededPcbLayoutGenerator.CURRENT_VERSION != 25)
+            throw new AssertionError("Physical geometry oracle requires layout version 25");
         String before = layout.geometryFingerprint();
         Vector<PcbSilkscreenLabel> labels = layout.getSilkscreenLabels();
         TreeSet<String> expectedReferences = new TreeSet<String>();
@@ -52,10 +76,25 @@ public final class PcbCompactnessContractTest {
         return PlayerSessionFingerprint.of(normalized);
     }
 
+    /** Historical full-layout comparison projection; only the current layout prefix is changed. */
+    static String layout24PrefixReferenceSha256(PcbBoardLayout layout) {
+        if (layout == null) throw new IllegalArgumentException("Missing PCB layout");
+        if (SeededPcbLayoutGenerator.CURRENT_VERSION != 25)
+            throw new AssertionError("Historical geometry projection requires current layout version 25");
+        String before = layout.geometryFingerprint();
+        String currentPrefix = "layout=25|";
+        if (before == null || !before.startsWith(currentPrefix))
+            throw new AssertionError("Expected actual current layout=25 geometry fingerprint");
+        String projected = "layout=24|" + before.substring(currentPrefix.length());
+        if (!before.equals(layout.geometryFingerprint()))
+            throw new AssertionError("Historical geometry projection changed bytes beyond the layout prefix");
+        return PlayerSessionFingerprint.of(projected);
+    }
+
     static String normalizeReferencePositions(String fingerprint, Vector<PcbSilkscreenLabel> labels) {
-        String prefix = "layout=20|";
+        String prefix = "layout=25|";
         if (fingerprint == null || !fingerprint.startsWith(prefix))
-            throw new AssertionError("Expected actual layout=20 geometry fingerprint");
+            throw new AssertionError("Expected actual layout=25 geometry fingerprint");
         String normalized = "layout=<LAYOUT_EPOCH>|" + fingerprint.substring(prefix.length());
         TreeSet<String> ids = new TreeSet<String>();
         for (PcbSilkscreenLabel label : labels) {
@@ -115,7 +154,12 @@ public final class PcbCompactnessContractTest {
                 fixtureLabels(changed,reference))), "nonreference positions and text remain exact");
         expectNormalizationFailure(raw.replace(labelRecord(reference),""), labels);
         expectNormalizationFailure(raw + labelRecord(reference), labels);
-        expectNormalizationFailure(raw.replace("layout=20|","layout=19|"), labels);
+        expectNormalizationFailure(raw.replace("layout=25|","layout=24|"), labels);
+        expectNormalizationFailure(raw.replace("layout=25|","layout=23|"), labels);
+        expectNormalizationFailure(raw.replace("layout=25|","layout=22|"), labels);
+        expectNormalizationFailure(raw.replace("layout=25|","layout=21|"), labels);
+        expectNormalizationFailure(raw.replace("layout=25|","layout=20|"), labels);
+        expectNormalizationFailure(raw.replace("layout=25|","layout=19|"), labels);
         Vector<PcbSilkscreenLabel> duplicate = fixtureLabels(title,reference); duplicate.add(reference);
         expectNormalizationFailure(raw, duplicate);
     }
@@ -127,7 +171,7 @@ public final class PcbCompactnessContractTest {
     }
 
     private static String normalizationFixture(PcbSilkscreenLabel title, PcbSilkscreenLabel reference) {
-        return "layout=20|body=20,30,40,50;P:R1.1@100,200;" + labelRecord(title) +
+        return "layout=25|body=20,30,40,50;P:R1.1@100,200;" + labelRecord(title) +
             labelRecord(reference) + "T:net-a@1,2,3,4;";
     }
 
@@ -144,7 +188,18 @@ public final class PcbCompactnessContractTest {
             ",\"rootSeeds\":[\"-1017\",\"-1004\",\"-1022\"]," +
             "\"packages\":[40,44,60],\"pads\":[96,104,143]," +
             "\"routingPolicy\":\"MEDIUM_BOARD@1\",\"admission\":\"RB56_BOARD_NORMAL@1\"," +
-            "\"densityThreshold\":null,\"scope\":\"FIXED_ACTUAL_RB56_GEOMETRY_REPORT_ONLY\"}");
+            "\"densityThreshold\":null,\"compactGoldenAppliesTo\":\"report\"," +
+            "\"layout23Compact2ReferenceHashes\":" + fixedSeedHashPairsJson(LAYOUT23_COMPACT2_REFERENCE_SHA256) +
+            ",\"currentLayout25Compact2ExpectedHashes\":" +
+            fixedSeedHashPairsJson(CURRENT_LAYOUT25_COMPACT2_EXPECTED_SHA256) +
+            ",\"layout23Legacy1ReferenceHashes\":" + fixedSeedHashPairsJson(LAYOUT23_LEGACY1_REFERENCE_SHA256) +
+            ",\"currentLayout25Legacy1ExpectedHashes\":" +
+            fixedSeedHashPairsJson(CURRENT_LAYOUT25_LEGACY1_EXPECTED_SHA256) +
+            ",\"legacy1CurrentVectorComparisonSha256\":\"2d0507114df5849a6805381fd438f5c9acb49a505b3a51fe30b59772643dabd9\"" +
+            ",\"legacy1CurrentVectorReaderSha256\":\"ab04a671ee052e197a921d86bc335953946e1b509bc627b5aa99081a9f2b6a2d\"" +
+            ",\"legacy1CurrentVectorPinsSha256\":\"5e79aa4cd2496c6f64f4a8bb63fc0e3c3624cc5669ab31d7798588c92d72502d\"" +
+            ",\"legacy1CurrentVectorScope\":\"PASS_COMPARISON_ONLY;layoutQualification=false;adopted=false\"" +
+            ",\"scope\":\"FIXED_ACTUAL_RB56_GEOMETRY_REPORT_ONLY\"}");
         if ("report".equals(mode)) verifyLegacyGeometry();
         for (RootCase root : ROOTS) runCase(root, mode);
         System.out.println("PASS: actual RB56 geometry report " + assertions +
@@ -152,24 +207,25 @@ public final class PcbCompactnessContractTest {
             " scope=NO_DENSITY_ACCEPTANCE_THRESHOLD");
     }
 
-    /** Accepted-source physical geometry; only reference x/y and epoch may differ. */
+    /** Current layout25 output for the fixed legacy-v1 placement interpretations.
+     * The layout23 vector remains report context; only reference x/y and epoch are normalized. */
     private static void verifyLegacyGeometry() {
         long[] seeds = new long[] {-1017L, -1004L, -1022L};
-        String[] expected = new String[] {"27f9389815a080fc6d50890f868585b5e0ed7bd14f75644c041dff948d6d1f1a","582064e2986b77ff92348024814f01fc0581c8f2273bd37ca695a26a3008574d","17b1b0d0452d64332d636c46833b2be44348380303a8b66f539216ecac59f7d4"};
+
         for (int i=0; i<seeds.length; i++) {
             Rb56Plan plan=Rb56Plan.resolve(seeds[i],Rb56Placement.LEGACY_VERSION);
             MediumBoardPhysicalPolicy.Result result=new SeededPcbLayoutGenerator()
                 .generateWithPolicyResult(plan.board(),plan.layoutSeed,plan.routingSeed);
             require(result.accepted(),"legacy fixed saved-layout route remains accepted");
-            require(expected[i].equals(physicalGeometrySha256(result.getLayout())),
-                "legacy physical geometry/text/dimensions remain exact apart from reference x/y and epoch for "+seeds[i]);
+            require(CURRENT_LAYOUT25_LEGACY1_EXPECTED_SHA256[i].equals(physicalGeometrySha256(result.getLayout())),
+                "current layout25 legacy-v1 geometry remains exact apart from component reference x/y for "+seeds[i]);
             if (seeds[i] == -1022L) verifyMatchedViaCompaction(plan.board(), result.getLayout());
             boolean refused=false;
             try { Rb56Placement.create(plan,Rb56Placement.CURRENT_VERSION); }
             catch (IllegalArgumentException expectedMismatch) { refused=true; }
             require(refused,"plan and constraints cannot carry different placement interpretations");
         }
-        System.out.println("PASS: exact legacy RB56 physical geometry retained (reference x/y and epoch excluded) for three fixed saved-board interpretations");
+        System.out.println("PASS: current layout25 RB56 legacy-v1 geometry matches Q3 references; layout23 hashes retained separately");
     }
 
     /** One already-routed golden board; no new routing search or synthetic copper. */
@@ -214,6 +270,22 @@ public final class PcbCompactnessContractTest {
         return args[0];
     }
 
+    private static int compact2GoldenIndex(long seed) {
+        for (int index=0; index<FIXED_GEOMETRY_GOLDEN_SEEDS.length; index++)
+            if (FIXED_GEOMETRY_GOLDEN_SEEDS[index] == seed) return index;
+        return -1;
+    }
+
+    private static String fixedSeedHashPairsJson(String[] hashes) {
+        StringBuilder out=new StringBuilder("[");
+        for (int index=0; index<hashes.length; index++) {
+            if (index>0) out.append(',');
+            out.append("{\"rootSeed\":").append(quote(Long.toString(FIXED_GEOMETRY_GOLDEN_SEEDS[index])))
+                .append(",\"sha256\":").append(quote(hashes[index])).append('}');
+        }
+        return out.append(']').toString();
+    }
+
     private static void runCase(RootCase root, String mode) {
         Rb56Plan plan = Rb56Plan.resolve(root.seed, "baseline".equals(mode) ?
             Rb56Placement.LEGACY_VERSION : Rb56Placement.COMPACT_VERSION);
@@ -254,9 +326,10 @@ public final class PcbCompactnessContractTest {
 
         PcbBoardLayout layout = result.getLayout();
         if ("report".equals(mode)) {
-            if(root.seed==-1017L) require("279e83fea450e4b4be6767a56bf2ba748bba5c6dd7817f60b07f48ff6906c378".equals(physicalGeometrySha256(layout)),"saved compact2 physical oracle (reference x/y and epoch excluded) remains exact for -1017");
-            if(root.seed==-1004L) require("15bb054ccc9a57f1dc111800127901b90d829d36fec5886ea4212e3f38b8b328".equals(physicalGeometrySha256(layout)),"saved compact2 physical oracle (reference x/y and epoch excluded) remains exact for -1004");
-            if(root.seed==-1022L) require("f42fbd62199a8b254964cd256f7e45ebf4b9b6d06eef3ad89911ed8ecb32f375".equals(physicalGeometrySha256(layout)),"saved compact2 physical oracle (reference x/y and epoch excluded) remains exact for -1022");
+            int goldenIndex=compact2GoldenIndex(root.seed);
+            if(goldenIndex>=0) require(CURRENT_LAYOUT25_COMPACT2_EXPECTED_SHA256[goldenIndex]
+                    .equals(physicalGeometrySha256(layout)),
+                "source-bound current layout25 compact2 physical golden remains exact for " + root.seed);
         }
         layout.validateGeometry(board);
         new PcbTwoLayerRules(board, layout).validate(layout);

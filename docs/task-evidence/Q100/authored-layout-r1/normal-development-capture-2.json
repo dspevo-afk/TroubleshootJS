@@ -1,0 +1,702 @@
+{
+  "schema": "tsj-r12-medium-capture/1",
+  "partition": "development",
+  "ordinal": 2,
+  "build": "2F70500B7D19B0F5CD498C97CABFD624",
+  "sourceBinding": "51baad3c6002cb88974ffbc5399dca707049c3aaa735d90a5b3c52246a78e40f",
+  "report": {
+    "protocol": "TSJ-RB56-NORMAL-QUALIFICATION-1",
+    "scope": "NORMAL_MEDIUM_COLD_POPULATION",
+    "family": "RB56_CONTROL",
+    "seed": "-8360266000248569150",
+    "rootSeed": "-8360266000248569150",
+    "normalRequest": true,
+    "requestManifest": "tsj-generation-request/5;advanced-control@2;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB56_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=-8360266000248569150;replay=tsj-alpha/7/MEDIUM/RB56_CONTROL/-8360266000248569150;quickPlay=false;layout=23;planEpoch=1;plan=rb56-plan@1;family=RB56_CONTROL;seed=-8360266000248569150;layout=-3894011031058596056;routing=1147593817059423343;topology=RB56_CH1_SEPARATE_DIRECT_A_NMOS_S5_true_S12_false_F1_O1_B5_false;packages=42;power=E05-AC/E06-averaged;regulator=E02-linear5V;control=E04;relay=E03-5V;tail-capacitors=Q60-BE0@1;sensor-commands=Q60-EXTERNAL-LOW:0.0,HIGH:5.0;single-channel-minimum=sensor-filter,5V-status;scope=UNQUALIFIED_DEVICE_INTENT;placement-interpretation=15;[JAC:CONNECTOR:POWER:THROUGH_HOLE_CONNECTOR_2:120:-:MAINAC|1=AC_LINE|2=AC_RETURN][F1:FUSE:POWER:AXIAL_FUSE:0.1:-:-|1=AC_LINE|2=AC_FUSED][D1:DIODE:POWER:AXIAL_DIODE:0:-:-|A=AC_FUSED|K=HV_POS][D2:DIODE:POWER:AXIAL_DIODE:0:-:-|A=AC_RETURN|K=HV_POS][D3:DIODE:POWER:AXIAL_DIODE:0:-:-|A=HV_RETURN|K=AC_FUSED][D4:DIODE:POWER:AXIAL_DIODE:0:-:-|A=HV_RETURN|K=AC_RETURN][CBULK:CAPACITOR:POWER:RADIAL_ELECTROLYTIC_CAPACITOR:0.000047:-:-|+=HV_POS|-=HV_RETURN][RPRIMARY:RESISTOR:POWER:AXIAL_RESISTOR:4700:-:-|1=HV_POS|2=HV_RETURN][UAC:CONVERTER:POWER:ISOLATED_CONVERTER_7:0:-:-|IN+=HV_POS|IN-=HV_RETURN|PRE_L+=PRE_L|OUT-=CTRL_RETURN|EN=ENABLE_AC|FB=FB_AC|BIAS=BIAS_AC][RENAC:RESISTOR:POWER:AXIAL_RESISTOR:10000:-:-|1=BIAS_AC|2=ENABLE_AC][CBIAS:CAPACITOR:POWER:RADIAL_CERAMIC_CAPACITOR:0.000001:-:-|1=BIAS_AC|2=HV_RETURN][DFREE:DIODE:POWER:AXIAL_DIODE:0:-:-|A=CTRL_RETURN|K=PRE_L][L1:INDUCTOR:POWER:RADIAL_INDUCTOR_2:0.02:-:-|1=PRE_L|2=RAIL12][COUT:CAPACITOR:POWER:RADIAL_ELECTROLYTIC_CAPACITOR:0.00047:-:-|+=RAIL12|-=CTRL_RETURN][ROUT:RESISTOR:POWER:AXIAL_RESISTOR:1000:-:-|1=RAIL12|2=CTRL_RETURN][UFB:OPTOCOUPLER:POWER:OPTOCOUPLER_4:0:-:-|A=SENSE_LED|K=CTRL_RETURN|C=FB_AC|E=HV_RETURN][DZ1:ZENER:POWER:AXIAL_DIODE:10.7:-:-|A=SENSE_LED|K=SENSE_ZENER][RSENSE:RESISTOR:POWER:AXIAL_RESISTOR:680:-:-|1=RAIL12|2=SENSE_ZENER][RFB:RESISTOR:POWER:AXIAL_RESISTOR:10000:-:-|1=BIAS_AC|2=FB_AC][CFB:CAPACITOR:POWER:RADIAL_CERAMIC_CAPACITOR:0.000001:-:-|1=FB_AC|2=HV_RETURN][U1:REGULATOR:REGULATOR:TO220_REGULATOR_4:5:-:-|INPUT=RAIL12|OUTPUT=RAIL5|RETURN=CTRL_RETURN|ENABLE=EN5][REN:RESISTOR:RESISTOR:AXIAL_RESISTOR:10000:-:-|1=RAIL12|2=EN5][CIN:CAPACITOR:CAPACITOR:RADIAL_ELECTROLYTIC_CAPACITOR:0.000022:-:-|+=RAIL12|-=CTRL_RETURN][C5:CAPACITOR:CAPACITOR:RADIAL_CERAMIC_CAPACITOR:0.000001:-:-|1=RAIL5|2=CTRL_RETURN][JLOAD:CONNECTOR:SOURCE:THROUGH_HOLE_CONNECTOR_2:12:-:LOAD12|1=LOAD12|2=LOAD_RETURN][JSA:CONNECTOR:SOURCE:THROUGH_HOLE_CONNECTOR_2:5:A:SENSOR_A|1=A_RAW|2=CTRL_RETURN][U2A:SENSOR_CONTROL:DECISION:E04_DECISION_CONTROL_5:0:A:-|SENSOR=A_SENSE|REFERENCE=A_REF|RAIL=RAIL5|OUTPUT=A_CMD|RETURN=CTRL_RETURN][RSA:RESISTOR:RESISTOR:AXIAL_RESISTOR:10000:-:-|1=A_RAW|2=A_SENSE][RPIN_A:RESISTOR:RESISTOR:AXIAL_RESISTOR:100000:-:-|1=A_SENSE|2=CTRL_RETURN][CFLT_A:CAPACITOR:CAPACITOR:RADIAL_CERAMIC_CAPACITOR:1e-7:-:-|1=A_SENSE|2=CTRL_RETURN][RDA:RESISTOR:RESISTOR:AXIAL_RESISTOR:1000:-:-|1=A_CMD|2=A_DRIVE][RPDA:RESISTOR:RESISTOR:AXIAL_RESISTOR:100000:-:-|1=A_DRIVE|2=CTRL_RETURN][QA:NMOS:DRIVER:TO92_NMOS:0:A:-|G=A_DRIVE|D=A_COIL_LOW|S=CTRL_RETURN][DA:DIODE:DIODE:AXIAL_DIODE:0:A:-|A=A_COIL_LOW|K=RAIL5][KA:RELAY:RELAY:RELAY_SPDT:5:A:-|A1=RAIL5|A2=A_COIL_LOW|COM=LOAD12|NC=NC_A|NO=OUT_A][JOA:OUTPUT_HEADER:OUTPUT_HEADER:THROUGH_HOLE_OUTPUT_HEADER_2:180:A:-|1=OUT_A|2=LOAD_RETURN][RREF_HA:RESISTOR:RESISTOR:AXIAL_RESISTOR:10000:-:-|1=RAIL5|2=A_REF][RREF_LA:RESISTOR:RESISTOR:AXIAL_RESISTOR:10000:-:-|1=A_REF|2=CTRL_RETURN][RLED:RESISTOR:RESISTOR:AXIAL_RESISTOR:3300:-:-|1=RAIL5|2=LED_FEED][LED1:LED:LED:THROUGH_HOLE_LED:0:-:-|A=LED_FEED|K=CTRL_RETURN][RLEDOUT_A:RESISTOR:RESISTOR:AXIAL_RESISTOR:10000:-:-|1=OUT_A|2=LED_OUT_A_FEED][LEDOUT_A:LED:LED:THROUGH_HOLE_LED:0:-:-|A=LED_OUT_A_FEED|K=LOAD_RETURN];route=MEDIUM_BOARD@1;physicalAdmission=RB56_BOARD_NORMAL@1;executionPolicy=RB56_EXECUTION@1;physical=RB56_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB56_CONTROL;candidateProfile=MEDIUM@1;policy=RB56_EXECUTION@1;physical=RB56_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=RB56_BOARD_NORMAL@1;admission=4;search=true;difficulty=MEDIUM@1;assessment=3",
+    "layoutVersion": 23,
+    "replayEpoch": "tsj-alpha/7",
+    "sourceEpoch": "tsj-generation-dependencies-v24",
+    "modelEpoch": "circuitjs-source-load-model-inputs-no-transient-dump-v7",
+    "planVersion": 1,
+    "maxJobMillis": 90000,
+    "maxJobSteps": 640,
+    "maxUnitMillis": 5000,
+    "forcedAfterPublish": false,
+    "normalCatalogEnabled": true,
+    "status": "PASS",
+    "phase": "RESTORED",
+    "acceptedOrdinal": 0,
+    "publicReplay": "tsj-alpha/7/MEDIUM/RB56_CONTROL/-8360266000248569150",
+    "acceptedManifest": "candidate=00;tsj-generation-request/5;advanced-control@2;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB56_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=-8360266000248569150;replay=tsj-alpha/7/MEDIUM/RB56_CONTROL/-8360266000248569150;quickPlay=false;layout=23;planEpoch=1;plan=rb56-plan@1;family=RB56_CONTROL;seed=-8360266000248569150;layout=-3894011031058596056;routing=1147593817059423343;topology=RB56_CH1_SEPARATE_DIRECT_A_NMOS_S5_true_S12_false_F1_O1_B5_false;packages=42;power=E05-AC/E06-averaged;regulator=E02-linear5V;control=E04;relay=E03-5V;tail-capacitors=Q60-BE0@1;sensor-commands=Q60-EXTERNAL-LOW:0.0,HIGH:5.0;single-channel-minimum=sensor-filter,5V-status;scope=UNQUALIFIED_DEVICE_INTENT;placement-interpretation=15;[JAC:CONNECTOR:POWER:THROUGH_HOLE_CONNECTOR_2:120:-:MAINAC|1=AC_LINE|2=AC_RETURN][F1:FUSE:POWER:AXIAL_FUSE:0.1:-:-|1=AC_LINE|2=AC_FUSED][D1:DIODE:POWER:AXIAL_DIODE:0:-:-|A=AC_FUSED|K=HV_POS][D2:DIODE:POWER:AXIAL_DIODE:0:-:-|A=AC_RETURN|K=HV_POS][D3:DIODE:POWER:AXIAL_DIODE:0:-:-|A=HV_RETURN|K=AC_FUSED][D4:DIODE:POWER:AXIAL_DIODE:0:-:-|A=HV_RETURN|K=AC_RETURN][CBULK:CAPACITOR:POWER:RADIAL_ELECTROLYTIC_CAPACITOR:0.000047:-:-|+=HV_POS|-=HV_RETURN][RPRIMARY:RESISTOR:POWER:AXIAL_RESISTOR:4700:-:-|1=HV_POS|2=HV_RETURN][UAC:CONVERTER:POWER:ISOLATED_CONVERTER_7:0:-:-|IN+=HV_POS|IN-=HV_RETURN|PRE_L+=PRE_L|OUT-=CTRL_RETURN|EN=ENABLE_AC|FB=FB_AC|BIAS=BIAS_AC][RENAC:RESISTOR:POWER:AXIAL_RESISTOR:10000:-:-|1=BIAS_AC|2=ENABLE_AC][CBIAS:CAPACITOR:POWER:RADIAL_CERAMIC_CAPACITOR:0.000001:-:-|1=BIAS_AC|2=HV_RETURN][DFREE:DIODE:POWER:AXIAL_DIODE:0:-:-|A=CTRL_RETURN|K=PRE_L][L1:INDUCTOR:POWER:RADIAL_INDUCTOR_2:0.02:-:-|1=PRE_L|2=RAIL12][COUT:CAPACITOR:POWER:RADIAL_ELECTROLYTIC_CAPACITOR:0.00047:-:-|+=RAIL12|-=CTRL_RETURN][ROUT:RESISTOR:POWER:AXIAL_RESISTOR:1000:-:-|1=RAIL12|2=CTRL_RETURN][UFB:OPTOCOUPLER:POWER:OPTOCOUPLER_4:0:-:-|A=SENSE_LED|K=CTRL_RETURN|C=FB_AC|E=HV_RETURN][DZ1:ZENER:POWER:AXIAL_DIODE:10.7:-:-|A=SENSE_LED|K=SENSE_ZENER][RSENSE:RESISTOR:POWER:AXIAL_RESISTOR:680:-:-|1=RAIL12|2=SENSE_ZENER][RFB:RESISTOR:POWER:AXIAL_RESISTOR:10000:-:-|1=BIAS_AC|2=FB_AC][CFB:CAPACITOR:POWER:RADIAL_CERAMIC_CAPACITOR:0.000001:-:-|1=FB_AC|2=HV_RETURN][U1:REGULATOR:REGULATOR:TO220_REGULATOR_4:5:-:-|INPUT=RAIL12|OUTPUT=RAIL5|RETURN=CTRL_RETURN|ENABLE=EN5][REN:RESISTOR:RESISTOR:AXIAL_RESISTOR:10000:-:-|1=RAIL12|2=EN5][CIN:CAPACITOR:CAPACITOR:RADIAL_ELECTROLYTIC_CAPACITOR:0.000022:-:-|+=RAIL12|-=CTRL_RETURN][C5:CAPACITOR:CAPACITOR:RADIAL_CERAMIC_CAPACITOR:0.000001:-:-|1=RAIL5|2=CTRL_RETURN][JLOAD:CONNECTOR:SOURCE:THROUGH_HOLE_CONNECTOR_2:12:-:LOAD12|1=LOAD12|2=LOAD_RETURN][JSA:CONNECTOR:SOURCE:THROUGH_HOLE_CONNECTOR_2:5:A:SENSOR_A|1=A_RAW|2=CTRL_RETURN][U2A:SENSOR_CONTROL:DECISION:E04_DECISION_CONTROL_5:0:A:-|SENSOR=A_SENSE|REFERENCE=A_REF|RAIL=RAIL5|OUTPUT=A_CMD|RETURN=CTRL_RETURN][RSA:RESISTOR:RESISTOR:AXIAL_RESISTOR:10000:-:-|1=A_RAW|2=A_SENSE][RPIN_A:RESISTOR:RESISTOR:AXIAL_RESISTOR:100000:-:-|1=A_SENSE|2=CTRL_RETURN][CFLT_A:CAPACITOR:CAPACITOR:RADIAL_CERAMIC_CAPACITOR:1e-7:-:-|1=A_SENSE|2=CTRL_RETURN][RDA:RESISTOR:RESISTOR:AXIAL_RESISTOR:1000:-:-|1=A_CMD|2=A_DRIVE][RPDA:RESISTOR:RESISTOR:AXIAL_RESISTOR:100000:-:-|1=A_DRIVE|2=CTRL_RETURN][QA:NMOS:DRIVER:TO92_NMOS:0:A:-|G=A_DRIVE|D=A_COIL_LOW|S=CTRL_RETURN][DA:DIODE:DIODE:AXIAL_DIODE:0:A:-|A=A_COIL_LOW|K=RAIL5][KA:RELAY:RELAY:RELAY_SPDT:5:A:-|A1=RAIL5|A2=A_COIL_LOW|COM=LOAD12|NC=NC_A|NO=OUT_A][JOA:OUTPUT_HEADER:OUTPUT_HEADER:THROUGH_HOLE_OUTPUT_HEADER_2:180:A:-|1=OUT_A|2=LOAD_RETURN][RREF_HA:RESISTOR:RESISTOR:AXIAL_RESISTOR:10000:-:-|1=RAIL5|2=A_REF][RREF_LA:RESISTOR:RESISTOR:AXIAL_RESISTOR:10000:-:-|1=A_REF|2=CTRL_RETURN][RLED:RESISTOR:RESISTOR:AXIAL_RESISTOR:3300:-:-|1=RAIL5|2=LED_FEED][LED1:LED:LED:THROUGH_HOLE_LED:0:-:-|A=LED_FEED|K=CTRL_RETURN][RLEDOUT_A:RESISTOR:RESISTOR:AXIAL_RESISTOR:10000:-:-|1=OUT_A|2=LED_OUT_A_FEED][LEDOUT_A:LED:LED:THROUGH_HOLE_LED:0:-:-|A=LED_OUT_A_FEED|K=LOAD_RETURN];route=MEDIUM_BOARD@1;physicalAdmission=RB56_BOARD_NORMAL@1;executionPolicy=RB56_EXECUTION@1;physical=RB56_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB56_CONTROL;candidateProfile=MEDIUM@1;policy=RB56_EXECUTION@1;physical=RB56_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=RB56_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=3",
+    "proofRows": [
+      {
+        "ordinal": 0,
+        "hypothesisDigest": "f7d59c28d9a680d22419f4c897d98f2818b91d10eec90e71059a7b17b9ea0267",
+        "repairSemanticsDigest": "e0749db15972cd8499683d79c843bc28691378839da93cc6f89dbffdc168279e",
+        "family": "RB56_CONTROL",
+        "seed": "-8360266000248569150",
+        "repairReachable": true,
+        "customerRetestPassed": true,
+        "stateIsolated": true,
+        "unaffectedFunctionRetested": true,
+        "result": "PASS",
+        "rejection": "NONE",
+        "repairActions": [
+          "REMOVE",
+          "CATALOG_INSTALL"
+        ],
+        "sampleIds": [
+          "RECTIFIED_INPUT",
+          "PRIMARY_BIAS",
+          "PRIMARY_ENABLE",
+          "ISOLATED_12V",
+          "REGULATOR_ENABLE",
+          "REGULATED_5V",
+          "SENSOR_A_CONDITIONED",
+          "DRIVER_A_COMMAND",
+          "DRIVER_A_INPUT",
+          "RELAY_COIL_RETURN",
+          "OUTPUT_A",
+          "DRIVER_A_RESISTANCE"
+        ]
+      },
+      {
+        "ordinal": 1,
+        "hypothesisDigest": "fe950ce40b1a04495d3453e9ce892d3e53e721bb5161d5bb6473544c8aee4a6c",
+        "repairSemanticsDigest": "679253ba93e48a19e86d5dbb56effe0c5a7329bf63b70643d9ac307adea8241f",
+        "family": "RB56_CONTROL",
+        "seed": "-8360266000248569150",
+        "repairReachable": true,
+        "customerRetestPassed": true,
+        "stateIsolated": true,
+        "unaffectedFunctionRetested": true,
+        "result": "PASS",
+        "rejection": "NONE",
+        "repairActions": [
+          "REMOVE",
+          "CATALOG_INSTALL"
+        ],
+        "sampleIds": [
+          "RECTIFIED_INPUT",
+          "PRIMARY_BIAS",
+          "PRIMARY_ENABLE",
+          "ISOLATED_12V",
+          "REGULATOR_ENABLE",
+          "REGULATED_5V",
+          "SENSOR_A_CONDITIONED",
+          "DRIVER_A_COMMAND",
+          "DRIVER_A_INPUT",
+          "RELAY_COIL_RETURN",
+          "OUTPUT_A",
+          "DRIVER_A_RESISTANCE"
+        ]
+      },
+      {
+        "ordinal": 2,
+        "hypothesisDigest": "2d800b2bd4e455acbd4c46182b85a1d377c22a35dd62e3b82d3b10b62a714e8b",
+        "repairSemanticsDigest": "6fee279d305361cf60e4a2ec50db7f61a75e5ad725973dc030ecc64ab8534af6",
+        "family": "RB56_CONTROL",
+        "seed": "-8360266000248569150",
+        "repairReachable": true,
+        "customerRetestPassed": true,
+        "stateIsolated": true,
+        "unaffectedFunctionRetested": true,
+        "result": "PASS",
+        "rejection": "NONE",
+        "repairActions": [
+          "REMOVE",
+          "CATALOG_INSTALL"
+        ],
+        "sampleIds": [
+          "RECTIFIED_INPUT",
+          "PRIMARY_BIAS",
+          "PRIMARY_ENABLE",
+          "ISOLATED_12V",
+          "REGULATOR_ENABLE",
+          "REGULATED_5V",
+          "SENSOR_A_CONDITIONED",
+          "DRIVER_A_COMMAND",
+          "DRIVER_A_INPUT",
+          "RELAY_COIL_RETURN",
+          "OUTPUT_A",
+          "DRIVER_A_RESISTANCE"
+        ]
+      },
+      {
+        "ordinal": 3,
+        "hypothesisDigest": "d72ca12a71c00b1261849ffb698d88a4861058057eb785dd9f938e880a95da0e",
+        "repairSemanticsDigest": "32b70b6e538f80334aeaa1d7bc8b41629b97d53b40ae72cd3654599e8eba1fd1",
+        "family": "RB56_CONTROL",
+        "seed": "-8360266000248569150",
+        "repairReachable": true,
+        "customerRetestPassed": true,
+        "stateIsolated": true,
+        "unaffectedFunctionRetested": true,
+        "result": "PASS",
+        "rejection": "NONE",
+        "repairActions": [
+          "REMOVE",
+          "CATALOG_INSTALL"
+        ],
+        "sampleIds": [
+          "RECTIFIED_INPUT",
+          "PRIMARY_BIAS",
+          "PRIMARY_ENABLE",
+          "ISOLATED_12V",
+          "REGULATOR_ENABLE",
+          "REGULATED_5V",
+          "SENSOR_A_CONDITIONED",
+          "DRIVER_A_COMMAND",
+          "DRIVER_A_INPUT",
+          "RELAY_COIL_RETURN",
+          "OUTPUT_A",
+          "DRIVER_A_RESISTANCE"
+        ]
+      },
+      {
+        "ordinal": 4,
+        "hypothesisDigest": "f4edf66116e240a431c2dd25684773c20531e5cf75a09346f8fe903551a9ca82",
+        "repairSemanticsDigest": "72966be69ce2f19bdc63e43c04887de0358937ba639dc4a892760659a0f38e65",
+        "family": "RB56_CONTROL",
+        "seed": "-8360266000248569150",
+        "repairReachable": true,
+        "customerRetestPassed": true,
+        "stateIsolated": true,
+        "unaffectedFunctionRetested": true,
+        "result": "PASS",
+        "rejection": "NONE",
+        "repairActions": [
+          "REMOVE",
+          "CATALOG_INSTALL"
+        ],
+        "sampleIds": [
+          "RECTIFIED_INPUT",
+          "PRIMARY_BIAS",
+          "PRIMARY_ENABLE",
+          "ISOLATED_12V",
+          "REGULATOR_ENABLE",
+          "REGULATED_5V",
+          "SENSOR_A_CONDITIONED",
+          "DRIVER_A_COMMAND",
+          "DRIVER_A_INPUT",
+          "RELAY_COIL_RETURN",
+          "OUTPUT_A",
+          "DRIVER_A_RESISTANCE"
+        ]
+      }
+    ],
+    "proofWorkUnits": 340,
+    "requiredProofWorkUnits": 485,
+    "proofWarmReuse": false,
+    "proofCachePolicy": "BYPASS",
+    "proofCacheHitsDelta": 0,
+    "proofCacheMissesDelta": 0,
+    "planCacheHitsDelta": 0,
+    "planCacheMissesDelta": 1,
+    "packages": 42,
+    "hypotheses": 5,
+    "solverSamples": 60,
+    "generationStages": 6,
+    "generationWork": 389,
+    "generationMillis": 28882,
+    "maxManualUnitMillis": 730,
+    "physicalAdmission": "RB56_BOARD_NORMAL@1",
+    "normalPhysicalAdmission": true,
+    "fullProductionD01": true,
+    "coldProof": true,
+    "generationReceiptDigest": "6531e7eaa670d90b8d6b588c65c887d4ba47f83c870503fbae3e8f9cc6877c84",
+    "diagnosticContextDigest": "4b9c47d6ccc96d50a9959d317831450e4dfe7a47e3724d81daa466347f216a67",
+    "diagnosticProgramDigest": "6de5c0080a5ac4b8c54b3815661cc56b7e8391804be40054a480a31783d8e55a",
+    "difficultyFeatures": "tsj-difficulty-calibration/1;status=UNCALIBRATED;parts=42;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=2;executedEvidenceDepth=9-9;legalWitnessActions=23-23;modes=2;inputs=3;railTargets=7;temporal=4;parallel=false",
+    "difficultyFeatureStatus": "UNCALIBRATED",
+    "difficultyFeatureVersion": 1,
+    "difficultyFeatureExtractionMillis": 24,
+    "normalProfileAssessment": "difficulty/3;profile=MEDIUM;parts=42;hypotheses=5;repairs=5;owners=5;readings=2;singleRemaining=2;executedEvidenceDepth=9-9;legalWitnessActions=23-23;modes=2;inputs=3;railTargets=7;temporal=4;parallel=false",
+    "normalProfileAssessmentVersion": 3,
+    "normalProfileValidated": "MEDIUM",
+    "normalPublicationGranted": true,
+    "calibrationObservationFormat": 1,
+    "diagnosticProgramVersion": 2,
+    "calibrationObservations": [
+      {
+        "ordinal": 0,
+        "repairClass": 0,
+        "hypothesisDigest": "f7d59c28d9a680d22419f4c897d98f2818b91d10eec90e71059a7b17b9ea0267",
+        "repairSemanticsDigest": "e0749db15972cd8499683d79c843bc28691378839da93cc6f89dbffdc168279e",
+        "samples": [
+          {
+            "id": "RECTIFIED_INPUT",
+            "outcome": "NUMERIC",
+            "value": 158.8930828994234,
+            "tolerance": 3.177861657988468
+          },
+          {
+            "id": "PRIMARY_BIAS",
+            "outcome": "NUMERIC",
+            "value": 9.958893064071834,
+            "tolerance": 0.1991778612814367
+          },
+          {
+            "id": "PRIMARY_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 9.850884395082534,
+            "tolerance": 0.1970176879016507
+          },
+          {
+            "id": "ISOLATED_12V",
+            "outcome": "NUMERIC",
+            "value": 11.209714695460832,
+            "tolerance": 0.22419429390921664
+          },
+          {
+            "id": "REGULATOR_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 11.09490217934011,
+            "tolerance": 0.2218980435868022
+          },
+          {
+            "id": "REGULATED_5V",
+            "outcome": "NUMERIC",
+            "value": 4.999866081163944,
+            "tolerance": 0.09999732162327889
+          },
+          {
+            "id": "SENSOR_A_CONDITIONED",
+            "outcome": "NUMERIC",
+            "value": 4.543272569329951,
+            "tolerance": 0.09086545138659903
+          },
+          {
+            "id": "DRIVER_A_COMMAND",
+            "outcome": "NUMERIC",
+            "value": 4.8498175749875365,
+            "tolerance": 0.09699635149975074
+          },
+          {
+            "id": "DRIVER_A_INPUT",
+            "outcome": "NUMERIC",
+            "value": 4.801324211019527,
+            "tolerance": 0.09602648422039055
+          },
+          {
+            "id": "RELAY_COIL_RETURN",
+            "outcome": "NUMERIC",
+            "value": 5.664730906573823e-10,
+            "tolerance": 0.01
+          },
+          {
+            "id": "OUTPUT_A",
+            "outcome": "NUMERIC",
+            "value": 2.159960356223132e-06,
+            "tolerance": 0.01
+          },
+          {
+            "id": "DRIVER_A_RESISTANCE",
+            "outcome": "NUMERIC",
+            "value": 990.9909747533159,
+            "tolerance": 19.81981949506632
+          }
+        ]
+      },
+      {
+        "ordinal": 1,
+        "repairClass": 1,
+        "hypothesisDigest": "fe950ce40b1a04495d3453e9ce892d3e53e721bb5161d5bb6473544c8aee4a6c",
+        "repairSemanticsDigest": "679253ba93e48a19e86d5dbb56effe0c5a7329bf63b70643d9ac307adea8241f",
+        "samples": [
+          {
+            "id": "RECTIFIED_INPUT",
+            "outcome": "NUMERIC",
+            "value": 158.893816024154,
+            "tolerance": 3.17787632048308
+          },
+          {
+            "id": "PRIMARY_BIAS",
+            "outcome": "NUMERIC",
+            "value": 9.958896485423676,
+            "tolerance": 0.1991779297084735
+          },
+          {
+            "id": "PRIMARY_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 9.850886378203004,
+            "tolerance": 0.19701772756406008
+          },
+          {
+            "id": "ISOLATED_12V",
+            "outcome": "NUMERIC",
+            "value": 11.209769440631392,
+            "tolerance": 0.22419538881262785
+          },
+          {
+            "id": "REGULATOR_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 11.094960829328807,
+            "tolerance": 0.22189921658657613
+          },
+          {
+            "id": "REGULATED_5V",
+            "outcome": "NUMERIC",
+            "value": 4.999870861106037,
+            "tolerance": 0.09999741722212074
+          },
+          {
+            "id": "SENSOR_A_CONDITIONED",
+            "outcome": "NUMERIC",
+            "value": 4.543272569329955,
+            "tolerance": 0.0908654513865991
+          },
+          {
+            "id": "DRIVER_A_COMMAND",
+            "outcome": "NUMERIC",
+            "value": 4.849870368069698,
+            "tolerance": 0.09699740736139396
+          },
+          {
+            "id": "DRIVER_A_INPUT",
+            "outcome": "NUMERIC",
+            "value": 0.0004801376993892603,
+            "tolerance": 0.01
+          },
+          {
+            "id": "RELAY_COIL_RETURN",
+            "outcome": "NUMERIC",
+            "value": 4.999780660977274,
+            "tolerance": 0.09999561321954549
+          },
+          {
+            "id": "OUTPUT_A",
+            "outcome": "NUMERIC",
+            "value": 2.159960356223132e-06,
+            "tolerance": 0.01
+          },
+          {
+            "id": "DRIVER_A_RESISTANCE",
+            "outcome": "NUMERIC",
+            "value": 109987.70138220715,
+            "tolerance": 2199.7540276441428
+          }
+        ]
+      },
+      {
+        "ordinal": 2,
+        "repairClass": 2,
+        "hypothesisDigest": "2d800b2bd4e455acbd4c46182b85a1d377c22a35dd62e3b82d3b10b62a714e8b",
+        "repairSemanticsDigest": "6fee279d305361cf60e4a2ec50db7f61a75e5ad725973dc030ecc64ab8534af6",
+        "samples": [
+          {
+            "id": "RECTIFIED_INPUT",
+            "outcome": "NUMERIC",
+            "value": 158.9302710576313,
+            "tolerance": 3.1786054211526262
+          },
+          {
+            "id": "PRIMARY_BIAS",
+            "outcome": "NUMERIC",
+            "value": 9.95889815676,
+            "tolerance": 0.1991779631352
+          },
+          {
+            "id": "PRIMARY_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 9.85088529110918,
+            "tolerance": 0.1970177058221836
+          },
+          {
+            "id": "ISOLATED_12V",
+            "outcome": "NUMERIC",
+            "value": 11.209775368244603,
+            "tolerance": 0.22419550736489208
+          },
+          {
+            "id": "REGULATOR_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 0.010187981341221786,
+            "tolerance": 0.01
+          },
+          {
+            "id": "REGULATED_5V",
+            "outcome": "NUMERIC",
+            "value": -4.851763435453904e-11,
+            "tolerance": 0.01
+          },
+          {
+            "id": "SENSOR_A_CONDITIONED",
+            "outcome": "NUMERIC",
+            "value": 4.543272569329955,
+            "tolerance": 0.0908654513865991
+          },
+          {
+            "id": "DRIVER_A_COMMAND",
+            "outcome": "NUMERIC",
+            "value": -1.2434497875801753e-14,
+            "tolerance": 0.01
+          },
+          {
+            "id": "DRIVER_A_INPUT",
+            "outcome": "NUMERIC",
+            "value": 1.9539925233402755e-14,
+            "tolerance": 0.01
+          },
+          {
+            "id": "RELAY_COIL_RETURN",
+            "outcome": "NUMERIC",
+            "value": -4.913580653465033e-11,
+            "tolerance": 0.01
+          },
+          {
+            "id": "OUTPUT_A",
+            "outcome": "NUMERIC",
+            "value": 2.159960356223132e-06,
+            "tolerance": 0.01
+          },
+          {
+            "id": "DRIVER_A_RESISTANCE",
+            "outcome": "NUMERIC",
+            "value": 990.9909747635736,
+            "tolerance": 19.81981949527147
+          }
+        ]
+      },
+      {
+        "ordinal": 3,
+        "repairClass": 3,
+        "hypothesisDigest": "d72ca12a71c00b1261849ffb698d88a4861058057eb785dd9f938e880a95da0e",
+        "repairSemanticsDigest": "32b70b6e538f80334aeaa1d7bc8b41629b97d53b40ae72cd3654599e8eba1fd1",
+        "samples": [
+          {
+            "id": "RECTIFIED_INPUT",
+            "outcome": "NUMERIC",
+            "value": 158.89381609623348,
+            "tolerance": 3.1778763219246695
+          },
+          {
+            "id": "PRIMARY_BIAS",
+            "outcome": "NUMERIC",
+            "value": 9.958896485766392,
+            "tolerance": 0.19917792971532783
+          },
+          {
+            "id": "PRIMARY_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 9.850886378399245,
+            "tolerance": 0.1970177275679849
+          },
+          {
+            "id": "ISOLATED_12V",
+            "outcome": "NUMERIC",
+            "value": 11.209769445985819,
+            "tolerance": 0.22419538891971638
+          },
+          {
+            "id": "REGULATOR_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 11.09496083506237,
+            "tolerance": 0.2218992167012474
+          },
+          {
+            "id": "REGULATED_5V",
+            "outcome": "NUMERIC",
+            "value": 4.999870861575967,
+            "tolerance": 0.09999741723151934
+          },
+          {
+            "id": "SENSOR_A_CONDITIONED",
+            "outcome": "NUMERIC",
+            "value": 0.0004988887692238819,
+            "tolerance": 0.01
+          },
+          {
+            "id": "DRIVER_A_COMMAND",
+            "outcome": "NUMERIC",
+            "value": 4.545213642792589e-05,
+            "tolerance": 0.01
+          },
+          {
+            "id": "DRIVER_A_INPUT",
+            "outcome": "NUMERIC",
+            "value": 4.49984700807704e-05,
+            "tolerance": 0.01
+          },
+          {
+            "id": "RELAY_COIL_RETURN",
+            "outcome": "NUMERIC",
+            "value": 4.999780661447187,
+            "tolerance": 0.09999561322894375
+          },
+          {
+            "id": "OUTPUT_A",
+            "outcome": "NUMERIC",
+            "value": 2.159960356223132e-06,
+            "tolerance": 0.01
+          },
+          {
+            "id": "DRIVER_A_RESISTANCE",
+            "outcome": "NUMERIC",
+            "value": 990.9909747578588,
+            "tolerance": 19.819819495157176
+          }
+        ]
+      },
+      {
+        "ordinal": 4,
+        "repairClass": 4,
+        "hypothesisDigest": "f4edf66116e240a431c2dd25684773c20531e5cf75a09346f8fe903551a9ca82",
+        "repairSemanticsDigest": "72966be69ce2f19bdc63e43c04887de0358937ba639dc4a892760659a0f38e65",
+        "samples": [
+          {
+            "id": "RECTIFIED_INPUT",
+            "outcome": "NUMERIC",
+            "value": 159.1465113997857,
+            "tolerance": 3.182930227995714
+          },
+          {
+            "id": "PRIMARY_BIAS",
+            "outcome": "NUMERIC",
+            "value": 9.998913166311347,
+            "tolerance": 0.19997826332622695
+          },
+          {
+            "id": "PRIMARY_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 0.009081750677398581,
+            "tolerance": 0.01
+          },
+          {
+            "id": "ISOLATED_12V",
+            "outcome": "NUMERIC",
+            "value": 3.115507234508564,
+            "tolerance": 0.062310144690171286
+          },
+          {
+            "id": "REGULATOR_ENABLE",
+            "outcome": "NUMERIC",
+            "value": 3.0707797601534517,
+            "tolerance": 0.06141559520306904
+          },
+          {
+            "id": "REGULATED_5V",
+            "outcome": "NUMERIC",
+            "value": 2.2936084497188163,
+            "tolerance": 0.04587216899437633
+          },
+          {
+            "id": "SENSOR_A_CONDITIONED",
+            "outcome": "NUMERIC",
+            "value": 4.543272569329957,
+            "tolerance": 0.09086545138659916
+          },
+          {
+            "id": "DRIVER_A_COMMAND",
+            "outcome": "NUMERIC",
+            "value": 2.0652970228240974e-05,
+            "tolerance": 0.01
+          },
+          {
+            "id": "DRIVER_A_INPUT",
+            "outcome": "NUMERIC",
+            "value": 2.0349559727961264e-05,
+            "tolerance": 0.01
+          },
+          {
+            "id": "RELAY_COIL_RETURN",
+            "outcome": "NUMERIC",
+            "value": 2.25025540970655,
+            "tolerance": 0.045005108194131005
+          },
+          {
+            "id": "OUTPUT_A",
+            "outcome": "NUMERIC",
+            "value": 2.159960356223132e-06,
+            "tolerance": 0.01
+          },
+          {
+            "id": "DRIVER_A_RESISTANCE",
+            "outcome": "NUMERIC",
+            "value": 990.9909747577487,
+            "tolerance": 19.819819495154974
+          }
+        ]
+      }
+    ],
+    "calibrationTemporalWaits": [
+      [
+        "HIGH_INPUT_SETTLED@0",
+        "SERVICE_DECAY_1@1",
+        "SERVICE_DECAY_2@0.8",
+        "SERVICE_DECAY_3@0"
+      ],
+      [
+        "HIGH_INPUT_SETTLED@0",
+        "SERVICE_DECAY_1@1",
+        "SERVICE_DECAY_2@0.8",
+        "SERVICE_DECAY_3@0"
+      ],
+      [
+        "HIGH_INPUT_SETTLED@0",
+        "SERVICE_DECAY_1@1",
+        "SERVICE_DECAY_2@1",
+        "SERVICE_DECAY_3@0"
+      ],
+      [
+        "HIGH_INPUT_SETTLED@0",
+        "SERVICE_DECAY_1@1",
+        "SERVICE_DECAY_2@0.8",
+        "SERVICE_DECAY_3@0"
+      ],
+      [
+        "HIGH_INPUT_SETTLED@0",
+        "SERVICE_DECAY_1@1",
+        "SERVICE_DECAY_2@0.4",
+        "SERVICE_DECAY_3@0"
+      ]
+    ],
+    "candidateAttempts": [
+      {
+        "ordinal": 0,
+        "seed": "-8360266000248569150",
+        "manifest": "candidate=00;tsj-generation-request/5;advanced-control@2;native;tsj-challenge/2\nconstraints=tsj-constraints/1;blocks=~;components=~;diagnostic-depth=~;domains=~;input-transitions=~;instruments=~;isolation-actions=~;parallel-ambiguity=~;plausible-owners=~;purposeful-auxiliaries=~;temporal-evidence=~;temporal-samples=~\ndevice-intent=RB56_CONTROL@1\ndifficulty-profile=quick-play@1\ngenerator=leaf@1\ngeometry=3\nroot-seed=-8360266000248569150;replay=tsj-alpha/7/MEDIUM/RB56_CONTROL/-8360266000248569150;quickPlay=false;layout=23;planEpoch=1;plan=rb56-plan@1;family=RB56_CONTROL;seed=-8360266000248569150;layout=-3894011031058596056;routing=1147593817059423343;topology=RB56_CH1_SEPARATE_DIRECT_A_NMOS_S5_true_S12_false_F1_O1_B5_false;packages=42;power=E05-AC/E06-averaged;regulator=E02-linear5V;control=E04;relay=E03-5V;tail-capacitors=Q60-BE0@1;sensor-commands=Q60-EXTERNAL-LOW:0.0,HIGH:5.0;single-channel-minimum=sensor-filter,5V-status;scope=UNQUALIFIED_DEVICE_INTENT;placement-interpretation=15;[JAC:CONNECTOR:POWER:THROUGH_HOLE_CONNECTOR_2:120:-:MAINAC|1=AC_LINE|2=AC_RETURN][F1:FUSE:POWER:AXIAL_FUSE:0.1:-:-|1=AC_LINE|2=AC_FUSED][D1:DIODE:POWER:AXIAL_DIODE:0:-:-|A=AC_FUSED|K=HV_POS][D2:DIODE:POWER:AXIAL_DIODE:0:-:-|A=AC_RETURN|K=HV_POS][D3:DIODE:POWER:AXIAL_DIODE:0:-:-|A=HV_RETURN|K=AC_FUSED][D4:DIODE:POWER:AXIAL_DIODE:0:-:-|A=HV_RETURN|K=AC_RETURN][CBULK:CAPACITOR:POWER:RADIAL_ELECTROLYTIC_CAPACITOR:0.000047:-:-|+=HV_POS|-=HV_RETURN][RPRIMARY:RESISTOR:POWER:AXIAL_RESISTOR:4700:-:-|1=HV_POS|2=HV_RETURN][UAC:CONVERTER:POWER:ISOLATED_CONVERTER_7:0:-:-|IN+=HV_POS|IN-=HV_RETURN|PRE_L+=PRE_L|OUT-=CTRL_RETURN|EN=ENABLE_AC|FB=FB_AC|BIAS=BIAS_AC][RENAC:RESISTOR:POWER:AXIAL_RESISTOR:10000:-:-|1=BIAS_AC|2=ENABLE_AC][CBIAS:CAPACITOR:POWER:RADIAL_CERAMIC_CAPACITOR:0.000001:-:-|1=BIAS_AC|2=HV_RETURN][DFREE:DIODE:POWER:AXIAL_DIODE:0:-:-|A=CTRL_RETURN|K=PRE_L][L1:INDUCTOR:POWER:RADIAL_INDUCTOR_2:0.02:-:-|1=PRE_L|2=RAIL12][COUT:CAPACITOR:POWER:RADIAL_ELECTROLYTIC_CAPACITOR:0.00047:-:-|+=RAIL12|-=CTRL_RETURN][ROUT:RESISTOR:POWER:AXIAL_RESISTOR:1000:-:-|1=RAIL12|2=CTRL_RETURN][UFB:OPTOCOUPLER:POWER:OPTOCOUPLER_4:0:-:-|A=SENSE_LED|K=CTRL_RETURN|C=FB_AC|E=HV_RETURN][DZ1:ZENER:POWER:AXIAL_DIODE:10.7:-:-|A=SENSE_LED|K=SENSE_ZENER][RSENSE:RESISTOR:POWER:AXIAL_RESISTOR:680:-:-|1=RAIL12|2=SENSE_ZENER][RFB:RESISTOR:POWER:AXIAL_RESISTOR:10000:-:-|1=BIAS_AC|2=FB_AC][CFB:CAPACITOR:POWER:RADIAL_CERAMIC_CAPACITOR:0.000001:-:-|1=FB_AC|2=HV_RETURN][U1:REGULATOR:REGULATOR:TO220_REGULATOR_4:5:-:-|INPUT=RAIL12|OUTPUT=RAIL5|RETURN=CTRL_RETURN|ENABLE=EN5][REN:RESISTOR:RESISTOR:AXIAL_RESISTOR:10000:-:-|1=RAIL12|2=EN5][CIN:CAPACITOR:CAPACITOR:RADIAL_ELECTROLYTIC_CAPACITOR:0.000022:-:-|+=RAIL12|-=CTRL_RETURN][C5:CAPACITOR:CAPACITOR:RADIAL_CERAMIC_CAPACITOR:0.000001:-:-|1=RAIL5|2=CTRL_RETURN][JLOAD:CONNECTOR:SOURCE:THROUGH_HOLE_CONNECTOR_2:12:-:LOAD12|1=LOAD12|2=LOAD_RETURN][JSA:CONNECTOR:SOURCE:THROUGH_HOLE_CONNECTOR_2:5:A:SENSOR_A|1=A_RAW|2=CTRL_RETURN][U2A:SENSOR_CONTROL:DECISION:E04_DECISION_CONTROL_5:0:A:-|SENSOR=A_SENSE|REFERENCE=A_REF|RAIL=RAIL5|OUTPUT=A_CMD|RETURN=CTRL_RETURN][RSA:RESISTOR:RESISTOR:AXIAL_RESISTOR:10000:-:-|1=A_RAW|2=A_SENSE][RPIN_A:RESISTOR:RESISTOR:AXIAL_RESISTOR:100000:-:-|1=A_SENSE|2=CTRL_RETURN][CFLT_A:CAPACITOR:CAPACITOR:RADIAL_CERAMIC_CAPACITOR:1e-7:-:-|1=A_SENSE|2=CTRL_RETURN][RDA:RESISTOR:RESISTOR:AXIAL_RESISTOR:1000:-:-|1=A_CMD|2=A_DRIVE][RPDA:RESISTOR:RESISTOR:AXIAL_RESISTOR:100000:-:-|1=A_DRIVE|2=CTRL_RETURN][QA:NMOS:DRIVER:TO92_NMOS:0:A:-|G=A_DRIVE|D=A_COIL_LOW|S=CTRL_RETURN][DA:DIODE:DIODE:AXIAL_DIODE:0:A:-|A=A_COIL_LOW|K=RAIL5][KA:RELAY:RELAY:RELAY_SPDT:5:A:-|A1=RAIL5|A2=A_COIL_LOW|COM=LOAD12|NC=NC_A|NO=OUT_A][JOA:OUTPUT_HEADER:OUTPUT_HEADER:THROUGH_HOLE_OUTPUT_HEADER_2:180:A:-|1=OUT_A|2=LOAD_RETURN][RREF_HA:RESISTOR:RESISTOR:AXIAL_RESISTOR:10000:-:-|1=RAIL5|2=A_REF][RREF_LA:RESISTOR:RESISTOR:AXIAL_RESISTOR:10000:-:-|1=A_REF|2=CTRL_RETURN][RLED:RESISTOR:RESISTOR:AXIAL_RESISTOR:3300:-:-|1=RAIL5|2=LED_FEED][LED1:LED:LED:THROUGH_HOLE_LED:0:-:-|A=LED_FEED|K=CTRL_RETURN][RLEDOUT_A:RESISTOR:RESISTOR:AXIAL_RESISTOR:10000:-:-|1=OUT_A|2=LED_OUT_A_FEED][LEDOUT_A:LED:LED:THROUGH_HOLE_LED:0:-:-|A=LED_OUT_A_FEED|K=LOAD_RETURN];route=MEDIUM_BOARD@1;physicalAdmission=RB56_BOARD_NORMAL@1;executionPolicy=RB56_EXECUTION@1;physical=RB56_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;familyExecution=PLAYER_FAMILY_EXECUTION@1;family=RB56_CONTROL;candidateProfile=MEDIUM@1;policy=RB56_EXECUTION@1;physical=RB56_BOARD_NORMAL@1;maxJobMillis=90000;maxJobSteps=640;maxUnitMillis=5000;candidateBudget=shared;clock=foreground;physicalAdmission=RB56_BOARD_NORMAL@1;admission=4;search=false;difficulty=MEDIUM@1;assessment=3",
+        "stage": "PUBLISH",
+        "outcome": "PASS",
+        "workUnits": 389,
+        "proofUnits": 340
+      }
+    ],
+    "jobOutcome": "PASS",
+    "jobStage": "PUBLISH",
+    "jobWork": 389,
+    "jobMillis": 28990,
+    "manualUnitMaxMillis": 730,
+    "routingMillis": 2449,
+    "proofMillis": 21963,
+    "jobStageMillis": {
+      "RESOLVE": 1,
+      "HEALTHY": 6704,
+      "PHYSICAL": 107,
+      "HYPOTHESES": 22018,
+      "SYMPTOM": 9,
+      "PUBLISH": 108
+    },
+    "jobStageWork": {
+      "RESOLVE": 1,
+      "HEALTHY": 45,
+      "PHYSICAL": 1,
+      "HYPOTHESES": 340,
+      "SYMPTOM": 1,
+      "PUBLISH": 1
+    },
+    "diagnosticWorkTimings": {},
+    "qualifiedPublication": true,
+    "ownerRestored": true,
+    "candidateDisposed": true,
+    "temporaryMeterClean": true,
+    "debugRestored": true,
+    "coordinatorReleased": true,
+    "ordinaryCustomerRetestPassed": false,
+    "cleanupPending": false,
+    "playerSessionReleased": true,
+    "playerBridgeReleased": true,
+    "wallMillis": 29191,
+    "operationMillis": 29187,
+    "cleanupMillis": 4
+  }
+}

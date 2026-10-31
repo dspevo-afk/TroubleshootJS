@@ -1,0 +1,632 @@
+{
+  "packetVersion": 1,
+  "evidence": "Q100 private P07 physical-policy observation run",
+  "attempt": "p07-policy-3",
+  "status": "PASS_OBSERVATION_ONLY",
+  "execution": {
+    "helperExitCode": 0,
+    "elapsedSeconds": 37.7685034,
+    "suites": [
+      "Rb100P07PolicyDiagnosticContractTest"
+    ],
+    "cleanupStatus": "PASS",
+    "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+    "processFullyExited": true
+  },
+  "compilation": {
+    "status": "PASS",
+    "jdkMarker": "JDK: javac 1.8.0_502",
+    "runnerPassMarker": "PASS: current-contract runner pass detection assertions=16"
+  },
+  "native": {
+    "status": "PASS",
+    "caseRows": 2,
+    "caseStatuses": [
+      "PASS",
+      "PASS"
+    ],
+    "suiteSummary": {
+      "status": "PASS",
+      "cases": 2,
+      "authoredVariants": 2,
+      "variants": [
+        "SHARED_HYSTERETIC_LINEAR",
+        "SEPARATE_DIRECT_SWITCHING"
+      ],
+      "protocolVersion": 2,
+      "runId": "0bd7b0db-7028-4916-b036-c0833533fcca",
+      "seed": "9007199254740993",
+      "placementSeed": "-6587958367974952701",
+      "routingSeed": "8445301674744508279",
+      "layoutVersion": 22,
+      "dependencyEpoch": "tsj-generation-dependencies-v23",
+      "planVersion": 1,
+      "modelVersion": 4,
+      "physicalIntentVersion": 5,
+      "physicalPolicyId": "MEDIUM_BOARD",
+      "physicalPolicyVersion": 1,
+      "placementDensityVersion": 2,
+      "routingLayer": "BOTTOM",
+      "traceWidthProfile": "UNIFORM_TRACE@1",
+      "placementPackingVersion": 4,
+      "requiresTwoLayerRouting": true,
+      "assertions": 5302,
+      "suiteMs": 12595,
+      "scope": "OBSERVATIONAL_PRIVATE_P07_POLICY_ONLY",
+      "layoutQualification": false
+    },
+    "suiteMarkers": [
+      {
+        "suite": "Rb100P07PolicyDiagnosticContractTest",
+        "status": "PASS",
+        "summary": {
+          "status": "PASS",
+          "cases": 2,
+          "authoredVariants": 2,
+          "variants": [
+            "SHARED_HYSTERETIC_LINEAR",
+            "SEPARATE_DIRECT_SWITCHING"
+          ],
+          "protocolVersion": 2,
+          "runId": "0bd7b0db-7028-4916-b036-c0833533fcca",
+          "seed": "9007199254740993",
+          "placementSeed": "-6587958367974952701",
+          "routingSeed": "8445301674744508279",
+          "layoutVersion": 22,
+          "dependencyEpoch": "tsj-generation-dependencies-v23",
+          "planVersion": 1,
+          "modelVersion": 4,
+          "physicalIntentVersion": 5,
+          "physicalPolicyId": "MEDIUM_BOARD",
+          "physicalPolicyVersion": 1,
+          "placementDensityVersion": 2,
+          "routingLayer": "BOTTOM",
+          "traceWidthProfile": "UNIFORM_TRACE@1",
+          "placementPackingVersion": 4,
+          "requiresTwoLayerRouting": true,
+          "assertions": 5302,
+          "suiteMs": 12595,
+          "scope": "OBSERVATIONAL_PRIVATE_P07_POLICY_ONLY",
+          "layoutQualification": false
+        }
+      }
+    ],
+    "receiptSha256": "AD024C371B71E974A2DA45004122042F935A50ABF048BEDE90C208A1851C6696",
+    "readerReceiptMatches": true
+  },
+  "reader": {
+    "file": "p07-reader-3.json",
+    "status": "PASS_OBSERVATION_ONLY",
+    "protocol": "rb100-p07-policy-reader-v2",
+    "scope": "OBSERVATIONAL_PRIVATE_P07_POLICY_ONLY",
+    "layoutQualification": false,
+    "sha256": "32A3EDFBC3D9CE5D51A530A4DC0C46C39223F5E097F16C0BFC3E09DD53AD0E40",
+    "bytes": 16380,
+    "sourceReaderSha256": "f2d176f9d9ca7c3a2f88dc130b5898577088f5d437a6eea0d9970afd78834d96",
+    "negativeCanaries": 31,
+    "embeddedJsonWhitespacePreserved": false,
+    "embeddedDataNote": "Full parsed JSON object is included; original byte length/SHA-256 are recorded. JSON whitespace/key formatting is not byte-identical to the source.",
+    "helperSha256": {
+      "read_diagnostic.py": "31f65be5e11472c7b09e8141292402c641df6b735787d32eb4c904ae098981e7",
+      "read_routing_diagnostic.py": "389e937ccec44bf13c7de19732e6bd9fdf7906dfb815e4b04a9c8dc691cdfdba"
+    }
+  },
+  "readerOutput": {
+    "protocol": "rb100-p07-policy-reader-v2",
+    "status": "PASS_OBSERVATION_ONLY",
+    "scope": "OBSERVATIONAL_PRIVATE_P07_POLICY_ONLY",
+    "layoutQualification": false,
+    "receiptSha256": "ad024c371b71e974a2da45004122042f935a50abf048bede90c208a1851c6696",
+    "readerSha256": "f2d176f9d9ca7c3a2f88dc130b5898577088f5d437a6eea0d9970afd78834d96",
+    "helperSha256": {
+      "read_diagnostic.py": "31f65be5e11472c7b09e8141292402c641df6b735787d32eb4c904ae098981e7",
+      "read_routing_diagnostic.py": "389e937ccec44bf13c7de19732e6bd9fdf7906dfb815e4b04a9c8dc691cdfdba"
+    },
+    "negativeCanaries": 31,
+    "syntheticTransportFixtures": {
+      "ROUTED": "PASS_TRANSPORT_ONLY",
+      "NO_CHANGE_PROBE": "PASS_TRANSPORT_ONLY",
+      "SELECTED_PROBE": "PASS_TRANSPORT_ONLY"
+    },
+    "summary": {
+      "status": "PASS",
+      "cases": 2,
+      "authoredVariants": 2,
+      "variants": [
+        "SHARED_HYSTERETIC_LINEAR",
+        "SEPARATE_DIRECT_SWITCHING"
+      ],
+      "protocolVersion": 2,
+      "runId": "0bd7b0db-7028-4916-b036-c0833533fcca",
+      "seed": "9007199254740993",
+      "placementSeed": "-6587958367974952701",
+      "routingSeed": "8445301674744508279",
+      "layoutVersion": 22,
+      "dependencyEpoch": "tsj-generation-dependencies-v23",
+      "planVersion": 1,
+      "modelVersion": 4,
+      "physicalIntentVersion": 5,
+      "physicalPolicyId": "MEDIUM_BOARD",
+      "physicalPolicyVersion": 1,
+      "placementDensityVersion": 2,
+      "routingLayer": "BOTTOM",
+      "traceWidthProfile": "UNIFORM_TRACE@1",
+      "placementPackingVersion": 4,
+      "requiresTwoLayerRouting": true,
+      "assertions": 5302,
+      "suiteMs": 12595,
+      "scope": "OBSERVATIONAL_PRIVATE_P07_POLICY_ONLY",
+      "layoutQualification": false
+    },
+    "cases": [
+      {
+        "protocolVersion": 2,
+        "runId": "0bd7b0db-7028-4916-b036-c0833533fcca",
+        "status": "PASS",
+        "phase": "FINAL_REPORT_PREPARATION",
+        "operationMs": 7021,
+        "cleanupMs": 1,
+        "cleanupStatus": "PASS",
+        "workUnits": 106,
+        "maxUnitMs": 488,
+        "failurePhase": "",
+        "failureType": "none",
+        "failure": "",
+        "cleanupFailureType": "none",
+        "cleanupFailure": "",
+        "scope": "OBSERVATIONAL_PRIVATE_P07_POLICY_ONLY",
+        "layoutQualification": false,
+        "reportFacts": {
+          "protocolVersion": 2,
+          "runId": "0bd7b0db-7028-4916-b036-c0833533fcca",
+          "fixture": "AUTHORED_RB100",
+          "variant": "SHARED_HYSTERETIC_LINEAR",
+          "layoutVersion": 22,
+          "dependencyEpoch": "tsj-generation-dependencies-v23",
+          "planVersion": 1,
+          "modelVersion": 4,
+          "physicalIntentVersion": 5,
+          "physicalPolicyId": "MEDIUM_BOARD",
+          "physicalPolicyVersion": 1,
+          "placementDensityVersion": 2,
+          "routingLayer": "BOTTOM",
+          "traceWidthProfile": "UNIFORM_TRACE@1",
+          "placementPackingVersion": 4,
+          "requiresTwoLayerRouting": true,
+          "seed": "9007199254740993",
+          "placementSeed": "-6587958367974952701",
+          "routingSeed": "8445301674744508279",
+          "components": 100,
+          "pads": 246,
+          "nets": 59,
+          "boardIdentityStatus": "PASS",
+          "solverGraphIdentityStatus": "PASS",
+          "sessionTerminalStatus": "EXHAUSTED",
+          "sessionException": {
+            "type": "PcbRoutingRejectedException",
+            "kind": "ROUTING",
+            "attemptIndex": 9,
+            "attemptCount": 10,
+            "seed": "-6587958367974952701",
+            "exhausted": true,
+            "message": "Unable to generate a routed PCB after 10 deterministic attempts for seed -6587958367974952701: PCB routing candidate rejected at attempt 8: P07_FULLER_TWO_LAYER:A_SENSE:TOTAL_SEARCH_LIMIT"
+          },
+          "advanceCalls": 95,
+          "observerChecks": 2101842,
+          "limits": {
+            "placementCandidates": 6,
+            "routeCandidates": 3,
+            "p07Expansions": 1000000,
+            "p07BranchExpansions": 100000,
+            "p07GridCells": 250000,
+            "p07Orderings": 3,
+            "p07Vias": 48,
+            "outerPlacements": 80,
+            "outerRouteAttempts": 800,
+            "outerRouteExpansions": 160000000,
+            "outerAccessCells": 700000,
+            "operationMs": 90000,
+            "workUnits": 640,
+            "unitMs": 5000,
+            "cleanupMs": 120000
+          },
+          "primaryRoutingOrders": 8,
+          "primaryRoutingExpansions": 2391325,
+          "policyFailure": "PCB routing candidate rejected at attempt 8: P07_FULLER_TWO_LAYER:A_SENSE:TOTAL_SEARCH_LIMIT",
+          "policyStatistics": {
+            "policyIdentity": "MEDIUM_BOARD@1",
+            "outcome": "REJECTED",
+            "selectedRoutePolicy": null,
+            "placementCandidates": 6,
+            "placementRejections": 0,
+            "placementEvaluations": 83988,
+            "routeAttempts": 3,
+            "oneFaceAttempts": 0,
+            "oneFaceSuccesses": 0,
+            "twoLayerAttempts": 3,
+            "twoLayerSuccesses": 0,
+            "selectedPlacementAttempt": -1,
+            "rankedPlacementCount": 6,
+            "rankedPlacementAttempts": [
+              2,
+              0,
+              4,
+              1,
+              5,
+              3
+            ],
+            "placementScoreCount": 6,
+            "placementScores": [
+              "2{total=4200329;electrical=445480;region=42923;connector=7110;corridor=33121;outline=16673200;courtyard=1777404;demand=6235592}",
+              "0{total=4251773;electrical=471080;region=38120;connector=5940;corridor=22504;outline=16949700;courtyard=1778604;demand=6238792}",
+              "4{total=4347984;electrical=490760;region=39170;connector=8250;corridor=12318;outline=59892000;courtyard=1778604;demand=6238792}",
+              "1{total=4416280;electrical=485060;region=44463;connector=6670;corridor=24467;outline=16348000;courtyard=1767804;demand=6209992}",
+              "5{total=4668829;electrical=519200;region=40673;connector=10250;corridor=18685;outline=58841200;courtyard=1767804;demand=6209992}",
+              "3{total=4752066;electrical=513320;region=43843;connector=6400;corridor=33903;outline=16856200;courtyard=1785804;demand=6257992}"
+            ],
+            "routeOutcomesCount": 3,
+            "routeOutcomes": [
+              "P07_FULLER_TWO_LAYER@2=REJECTED:P07_FULLER_TWO_LAYER:D_DRIVE:BRANCH_SEARCH_LIMIT",
+              "P07_FULLER_TWO_LAYER@0=REJECTED:P07_FULLER_TWO_LAYER:C_CMD:BRANCH_SEARCH_LIMIT",
+              "P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:A_SENSE:TOTAL_SEARCH_LIMIT"
+            ],
+            "routeEligiblePlacementAttemptCount": 4,
+            "routeEligiblePlacementAttempts": [
+              2,
+              0,
+              1,
+              3
+            ],
+            "routeEligibilitySkipCount": 2,
+            "routeEligibilitySkips": [
+              "attempt=4;width=929;height=643;cells=597347;reason=GRID_LIMIT",
+              "attempt=5;width=1243;height=472;cells=586696;reason=GRID_LIMIT"
+            ],
+            "routingOrders": 8,
+            "routingExpansions": 2391325,
+            "selectedPlacementScore": -1,
+            "selectedRouteQualityMilli": -1,
+            "canonicalLength": 1481,
+            "canonicalJavaHash": "12479722",
+            "canonical": "MEDIUM_BOARD@1;outcome=REJECTED;selected=null;placements=6;placementRejects=0;placementEvaluations=83988;routes=3;routingWork=8/2391325;p05=0/0;p07=3/0;selectedAttempt=-1;ranked=[2, 0, 4, 1, 5, 3];placementScores=[2{total=4200329;electrical=445480;region=42923;connector=7110;corridor=33121;outline=16673200;courtyard=1777404;demand=6235592}, 0{total=4251773;electrical=471080;region=38120;connector=5940;corridor=22504;outline=16949700;courtyard=1778604;demand=6238792}, 4{total=4347984;electrical=490760;region=39170;connector=8250;corridor=12318;outline=59892000;courtyard=1778604;demand=6238792}, 1{total=4416280;electrical=485060;region=44463;connector=6670;corridor=24467;outline=16348000;courtyard=1767804;demand=6209992}, 5{total=4668829;electrical=519200;region=40673;connector=10250;corridor=18685;outline=58841200;courtyard=1767804;demand=6209992}, 3{total=4752066;electrical=513320;region=43843;connector=6400;corridor=33903;outline=16856200;courtyard=1785804;demand=6257992}];selectedScore=-1;selectedQualityMilli=-1;routeOutcomes=[P07_FULLER_TWO_LAYER@2=REJECTED:P07_FULLER_TWO_LAYER:D_DRIVE:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@0=REJECTED:P07_FULLER_TWO_LAYER:C_CMD:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:A_SENSE:TOTAL_SEARCH_LIMIT];routeEligiblePlacementAttempts=[2, 0, 1, 3];routeEligibilitySkips=[attempt=4;width=929;height=643;cells=597347;reason=GRID_LIMIT, attempt=5;width=1243;height=472;cells=586696;reason=GRID_LIMIT]"
+          },
+          "packingProbe": null,
+          "layoutOutput": {
+            "layoutReturned": false,
+            "zeroOutput": true,
+            "fingerprint": null,
+            "outline": null,
+            "rawSegments": 0,
+            "topTraceCount": 0,
+            "bottomTraceCount": 0,
+            "totalTraceCount": 0,
+            "holeCount": 0,
+            "viaCount": 0,
+            "platedHoleCount": 0,
+            "nonPlatedHoleCount": 0
+          },
+          "layoutQualification": false
+        }
+      },
+      {
+        "protocolVersion": 2,
+        "runId": "0bd7b0db-7028-4916-b036-c0833533fcca",
+        "status": "PASS",
+        "phase": "FINAL_REPORT_PREPARATION",
+        "operationMs": 5433,
+        "cleanupMs": 0,
+        "cleanupStatus": "PASS",
+        "workUnits": 113,
+        "maxUnitMs": 324,
+        "failurePhase": "",
+        "failureType": "none",
+        "failure": "",
+        "cleanupFailureType": "none",
+        "cleanupFailure": "",
+        "scope": "OBSERVATIONAL_PRIVATE_P07_POLICY_ONLY",
+        "layoutQualification": false,
+        "reportFacts": {
+          "protocolVersion": 2,
+          "runId": "0bd7b0db-7028-4916-b036-c0833533fcca",
+          "fixture": "AUTHORED_RB100",
+          "variant": "SEPARATE_DIRECT_SWITCHING",
+          "layoutVersion": 22,
+          "dependencyEpoch": "tsj-generation-dependencies-v23",
+          "planVersion": 1,
+          "modelVersion": 4,
+          "physicalIntentVersion": 5,
+          "physicalPolicyId": "MEDIUM_BOARD",
+          "physicalPolicyVersion": 1,
+          "placementDensityVersion": 2,
+          "routingLayer": "BOTTOM",
+          "traceWidthProfile": "UNIFORM_TRACE@1",
+          "placementPackingVersion": 4,
+          "requiresTwoLayerRouting": true,
+          "seed": "9007199254740993",
+          "placementSeed": "-6587958367974952701",
+          "routingSeed": "8445301674744508279",
+          "components": 100,
+          "pads": 246,
+          "nets": 60,
+          "boardIdentityStatus": "PASS",
+          "solverGraphIdentityStatus": "PASS",
+          "sessionTerminalStatus": "EXHAUSTED",
+          "sessionException": {
+            "type": "PcbRoutingRejectedException",
+            "kind": "ROUTING",
+            "attemptIndex": 9,
+            "attemptCount": 10,
+            "seed": "-6587958367974952701",
+            "exhausted": true,
+            "message": "Unable to generate a routed PCB after 10 deterministic attempts for seed -6587958367974952701: PCB routing candidate rejected at attempt 8: P07_FULLER_TWO_LAYER:D_CMD:BRANCH_SEARCH_LIMIT"
+          },
+          "advanceCalls": 102,
+          "observerChecks": 2424183,
+          "limits": {
+            "placementCandidates": 6,
+            "routeCandidates": 3,
+            "p07Expansions": 1000000,
+            "p07BranchExpansions": 100000,
+            "p07GridCells": 250000,
+            "p07Orderings": 3,
+            "p07Vias": 48,
+            "outerPlacements": 80,
+            "outerRouteAttempts": 800,
+            "outerRouteExpansions": 160000000,
+            "outerAccessCells": 700000,
+            "operationMs": 90000,
+            "workUnits": 640,
+            "unitMs": 5000,
+            "cleanupMs": 120000
+          },
+          "primaryRoutingOrders": 9,
+          "primaryRoutingExpansions": 2570942,
+          "policyFailure": "PCB routing candidate rejected at attempt 8: P07_FULLER_TWO_LAYER:D_CMD:BRANCH_SEARCH_LIMIT",
+          "policyStatistics": {
+            "policyIdentity": "MEDIUM_BOARD@1",
+            "outcome": "REJECTED",
+            "selectedRoutePolicy": null,
+            "placementCandidates": 6,
+            "placementRejections": 0,
+            "placementEvaluations": 112050,
+            "routeAttempts": 3,
+            "oneFaceAttempts": 0,
+            "oneFaceSuccesses": 0,
+            "twoLayerAttempts": 3,
+            "twoLayerSuccesses": 0,
+            "selectedPlacementAttempt": -1,
+            "rankedPlacementCount": 6,
+            "rankedPlacementAttempts": [
+              1,
+              3,
+              5,
+              4,
+              2,
+              0
+            ],
+            "placementScoreCount": 6,
+            "placementScores": [
+              "1{total=4019784;electrical=428880;region=38730;connector=7610;corridor=30320;outline=16348000;courtyard=1767804;demand=6209992}",
+              "3{total=4200674;electrical=457560;region=42970;connector=8240;corridor=24498;outline=16856200;courtyard=1785804;demand=6257992}",
+              "5{total=4337069;electrical=487100;region=35460;connector=9720;corridor=14441;outline=58841200;courtyard=1767804;demand=6209992}",
+              "4{total=4504684;electrical=499380;region=39178;connector=8610;corridor=19447;outline=59892000;courtyard=1778604;demand=6238792}",
+              "2{total=4720209;electrical=510320;region=47050;connector=6130;corridor=32332;outline=16673200;courtyard=1777404;demand=6235592}",
+              "0{total=4960277;electrical=497260;region=41140;connector=6270;corridor=62921;outline=16949700;courtyard=1778604;demand=6238792}"
+            ],
+            "routeOutcomesCount": 3,
+            "routeOutcomes": [
+              "P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:AUX_GATE:BRANCH_SEARCH_LIMIT",
+              "P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:AUX_BASE:TOTAL_SEARCH_LIMIT",
+              "P07_FULLER_TWO_LAYER@2=REJECTED:P07_FULLER_TWO_LAYER:D_CMD:BRANCH_SEARCH_LIMIT"
+            ],
+            "routeEligiblePlacementAttemptCount": 4,
+            "routeEligiblePlacementAttempts": [
+              1,
+              3,
+              2,
+              0
+            ],
+            "routeEligibilitySkipCount": 2,
+            "routeEligibilitySkips": [
+              "attempt=5;width=1243;height=472;cells=586696;reason=GRID_LIMIT",
+              "attempt=4;width=929;height=643;cells=597347;reason=GRID_LIMIT"
+            ],
+            "routingOrders": 9,
+            "routingExpansions": 2570942,
+            "selectedPlacementScore": -1,
+            "selectedRouteQualityMilli": -1,
+            "canonicalLength": 1483,
+            "canonicalJavaHash": "9aee883a",
+            "canonical": "MEDIUM_BOARD@1;outcome=REJECTED;selected=null;placements=6;placementRejects=0;placementEvaluations=112050;routes=3;routingWork=9/2570942;p05=0/0;p07=3/0;selectedAttempt=-1;ranked=[1, 3, 5, 4, 2, 0];placementScores=[1{total=4019784;electrical=428880;region=38730;connector=7610;corridor=30320;outline=16348000;courtyard=1767804;demand=6209992}, 3{total=4200674;electrical=457560;region=42970;connector=8240;corridor=24498;outline=16856200;courtyard=1785804;demand=6257992}, 5{total=4337069;electrical=487100;region=35460;connector=9720;corridor=14441;outline=58841200;courtyard=1767804;demand=6209992}, 4{total=4504684;electrical=499380;region=39178;connector=8610;corridor=19447;outline=59892000;courtyard=1778604;demand=6238792}, 2{total=4720209;electrical=510320;region=47050;connector=6130;corridor=32332;outline=16673200;courtyard=1777404;demand=6235592}, 0{total=4960277;electrical=497260;region=41140;connector=6270;corridor=62921;outline=16949700;courtyard=1778604;demand=6238792}];selectedScore=-1;selectedQualityMilli=-1;routeOutcomes=[P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:AUX_GATE:BRANCH_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:AUX_BASE:TOTAL_SEARCH_LIMIT, P07_FULLER_TWO_LAYER@2=REJECTED:P07_FULLER_TWO_LAYER:D_CMD:BRANCH_SEARCH_LIMIT];routeEligiblePlacementAttempts=[1, 3, 2, 0];routeEligibilitySkips=[attempt=5;width=1243;height=472;cells=586696;reason=GRID_LIMIT, attempt=4;width=929;height=643;cells=597347;reason=GRID_LIMIT]"
+          },
+          "packingProbe": null,
+          "layoutOutput": {
+            "layoutReturned": false,
+            "zeroOutput": true,
+            "fingerprint": null,
+            "outline": null,
+            "rawSegments": 0,
+            "topTraceCount": 0,
+            "bottomTraceCount": 0,
+            "totalTraceCount": 0,
+            "holeCount": 0,
+            "viaCount": 0,
+            "platedHoleCount": 0,
+            "nonPlatedHoleCount": 0
+          },
+          "layoutQualification": false
+        }
+      }
+    ]
+  },
+  "caseSummaries": [
+    {
+      "variant": "SHARED_HYSTERETIC_LINEAR",
+      "caseStatus": "PASS",
+      "phase": "FINAL_REPORT_PREPARATION",
+      "operationMs": 7021,
+      "cleanupMs": 1,
+      "cleanupStatus": "PASS",
+      "fixture": "AUTHORED_RB100",
+      "protocolVersion": 2,
+      "layoutVersion": 22,
+      "dependencyEpoch": "tsj-generation-dependencies-v23",
+      "physicalIntentVersion": 5,
+      "physicalPolicyId": "MEDIUM_BOARD",
+      "placementDensityVersion": 2,
+      "components": 100,
+      "pads": 246,
+      "nets": 59,
+      "boardIdentityStatus": "PASS",
+      "solverGraphIdentityStatus": "PASS",
+      "sessionTerminalStatus": "EXHAUSTED",
+      "sessionException": {
+        "type": "PcbRoutingRejectedException",
+        "kind": "ROUTING",
+        "attemptIndex": 9,
+        "attemptCount": 10,
+        "seed": "-6587958367974952701",
+        "exhausted": true,
+        "message": "Unable to generate a routed PCB after 10 deterministic attempts for seed -6587958367974952701: PCB routing candidate rejected at attempt 8: P07_FULLER_TWO_LAYER:A_SENSE:TOTAL_SEARCH_LIMIT"
+      },
+      "actualPolicyOutcome": "REJECTED",
+      "routeAttempts": 3,
+      "twoLayerSuccesses": 0,
+      "routeOutcomes": [
+        "P07_FULLER_TWO_LAYER@2=REJECTED:P07_FULLER_TWO_LAYER:D_DRIVE:BRANCH_SEARCH_LIMIT",
+        "P07_FULLER_TWO_LAYER@0=REJECTED:P07_FULLER_TWO_LAYER:C_CMD:BRANCH_SEARCH_LIMIT",
+        "P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:A_SENSE:TOTAL_SEARCH_LIMIT"
+      ],
+      "routeEligiblePlacementAttempts": [
+        2,
+        0,
+        1,
+        3
+      ],
+      "routeEligibilitySkips": [
+        "attempt=4;width=929;height=643;cells=597347;reason=GRID_LIMIT",
+        "attempt=5;width=1243;height=472;cells=586696;reason=GRID_LIMIT"
+      ],
+      "primaryRoutingOrders": 8,
+      "primaryRoutingExpansions": 2391325,
+      "layoutReturned": false,
+      "layoutQualification": false
+    },
+    {
+      "variant": "SEPARATE_DIRECT_SWITCHING",
+      "caseStatus": "PASS",
+      "phase": "FINAL_REPORT_PREPARATION",
+      "operationMs": 5433,
+      "cleanupMs": 0,
+      "cleanupStatus": "PASS",
+      "fixture": "AUTHORED_RB100",
+      "protocolVersion": 2,
+      "layoutVersion": 22,
+      "dependencyEpoch": "tsj-generation-dependencies-v23",
+      "physicalIntentVersion": 5,
+      "physicalPolicyId": "MEDIUM_BOARD",
+      "placementDensityVersion": 2,
+      "components": 100,
+      "pads": 246,
+      "nets": 60,
+      "boardIdentityStatus": "PASS",
+      "solverGraphIdentityStatus": "PASS",
+      "sessionTerminalStatus": "EXHAUSTED",
+      "sessionException": {
+        "type": "PcbRoutingRejectedException",
+        "kind": "ROUTING",
+        "attemptIndex": 9,
+        "attemptCount": 10,
+        "seed": "-6587958367974952701",
+        "exhausted": true,
+        "message": "Unable to generate a routed PCB after 10 deterministic attempts for seed -6587958367974952701: PCB routing candidate rejected at attempt 8: P07_FULLER_TWO_LAYER:D_CMD:BRANCH_SEARCH_LIMIT"
+      },
+      "actualPolicyOutcome": "REJECTED",
+      "routeAttempts": 3,
+      "twoLayerSuccesses": 0,
+      "routeOutcomes": [
+        "P07_FULLER_TWO_LAYER@1=REJECTED:P07_FULLER_TWO_LAYER:AUX_GATE:BRANCH_SEARCH_LIMIT",
+        "P07_FULLER_TWO_LAYER@3=REJECTED:P07_FULLER_TWO_LAYER:AUX_BASE:TOTAL_SEARCH_LIMIT",
+        "P07_FULLER_TWO_LAYER@2=REJECTED:P07_FULLER_TWO_LAYER:D_CMD:BRANCH_SEARCH_LIMIT"
+      ],
+      "routeEligiblePlacementAttempts": [
+        1,
+        3,
+        2,
+        0
+      ],
+      "routeEligibilitySkips": [
+        "attempt=5;width=1243;height=472;cells=586696;reason=GRID_LIMIT",
+        "attempt=4;width=929;height=643;cells=597347;reason=GRID_LIMIT"
+      ],
+      "primaryRoutingOrders": 9,
+      "primaryRoutingExpansions": 2570942,
+      "layoutReturned": false,
+      "layoutQualification": false
+    }
+  ],
+  "profile": {
+    "layoutVersion": 22,
+    "dependencyEpoch": "tsj-generation-dependencies-v23",
+    "planVersion": 1,
+    "modelVersion": 4,
+    "physicalIntentVersion": 5,
+    "physicalPolicyId": "MEDIUM_BOARD",
+    "physicalPolicyVersion": 1,
+    "placementDensityVersion": 2,
+    "routingLayer": "BOTTOM",
+    "traceWidthProfile": "UNIFORM_TRACE@1",
+    "placementPackingVersion": 4,
+    "requiresTwoLayerRouting": true
+  },
+  "observation": {
+    "layoutQualified": false,
+    "adopted": false,
+    "authoredCases": 2,
+    "protocolVersion": 2,
+    "runId": "0bd7b0db-7028-4916-b036-c0833533fcca",
+    "seed": "9007199254740993",
+    "placementSeed": "-6587958367974952701",
+    "routingSeed": "8445301674744508279",
+    "outcome": "Both actual authored cases rejected all three P07 route requests and returned no layout; this is an observation only.",
+    "scope": "OBSERVATIONAL_PRIVATE_P07_POLICY_ONLY",
+    "fullMatrix": "NOT RUN",
+    "independentOracles": "NOT RUN"
+  },
+  "coverageNote": "The current protocol records four route-eligible placement attempts and two GRID_LIMIT skips per actual case. The three route requests reject through branch/total-search limits; no layout is qualified.",
+  "rawInputs": [
+    {
+      "file": "p07-policy-3-result.json",
+      "sha256": "01CCD508555B01312401DB0F333D699A748C97B0B73C9C56964279E9BF48D32D",
+      "bytes": 158
+    },
+    {
+      "file": "p07-policy-3-receipt.txt",
+      "sha256": "AD024C371B71E974A2DA45004122042F935A50ABF048BEDE90C208A1851C6696",
+      "bytes": 12261
+    },
+    {
+      "file": "p07-policy-3-console.txt",
+      "sha256": "0DB8F9AB26444F6F96146429DE5B622B116392DB923870FB9ACFA45BAB1EE686",
+      "bytes": 14368
+    },
+    {
+      "file": "p07-policy-3.log",
+      "sha256": "BDB4B620308BC966033AB41D9EB309D6CB6C1D462B626DB94124CADB12CA320D",
+      "bytes": 14487,
+      "contentIncluded": false
+    },
+    {
+      "file": "p07-reader-3.json",
+      "sha256": "32A3EDFBC3D9CE5D51A530A4DC0C46C39223F5E097F16C0BFC3E09DD53AD0E40",
+      "bytes": 16380,
+      "embeddedAsFullParsedJson": true
+    }
+  ],
+  "sourcePins": {
+    "file": "p07-policy3-source-pins.json",
+    "sha256": "30404C334328E908C0F2E63305CAEB8674F151EE2F0F39AE1A401A5933DC2C66",
+    "count": 61,
+    "pathsRelative": true
+  }
+}

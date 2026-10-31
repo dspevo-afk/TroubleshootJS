@@ -1,0 +1,270 @@
+﻿[
+    {
+        "path":  "docs/ARCHITECTURE.md",
+        "sha256":  "6b27b629d329b5a2d52dbf6dbeee64b8856289d292d18b16c04920343b4f650b"
+    },
+    {
+        "path":  "docs/CODEX_TASK_REPORT.md",
+        "sha256":  "7657002bfc07b5050f32accb34332be924074e62dfa7ce76d46f6bfeae6b1a92"
+    },
+    {
+        "path":  "docs/ROADMAP.md",
+        "sha256":  "f21898d6da4b7766052d38b90c0376847a36fe4815d2dad41a0635346f11ee96"
+    },
+    {
+        "path":  "docs/task-evidence/E06/accepted-state-r1/README.md",
+        "sha256":  "dc035962caa453dbac167d8e6c90a627ae2e3e151a69ad1ed6d6ef6ff007a236"
+    },
+    {
+        "path":  "docs/task-evidence/Q100/authored-layout-r1/PLAN.md",
+        "sha256":  "391a31fedb4a7f2b391e2bde00c0e044753e10b53b677c3e3b5ab3ec013d3bba"
+    },
+    {
+        "path":  "docs/task-evidence/Q100/authored-layout-r1/README.md",
+        "sha256":  "506837cc51aabb1532671e83dbe19aecd1f48dd71bdca1da989f14fd5d38daa5"
+    },
+    {
+        "path":  "scripts/VerifierIsolation.psm1",
+        "sha256":  "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5"
+    },
+    {
+        "path":  "scripts/verify-a03-browser.ps1",
+        "sha256":  "c5752f3e5779021b4f92738cc9f82a4ac4552ced6b256c9301fab7da63f91a0b"
+    },
+    {
+        "path":  "scripts/verify-current-contracts.ps1",
+        "sha256":  "f27064fea98773709ab3fbaed23c439f6c20ea43ba7636dfaae210f7e49d1bd7"
+    },
+    {
+        "path":  "scripts/verify-e06-accepted-evidence.ps1",
+        "sha256":  "b46a9cb7974f3f432e68c283bb3633c90a7eb9cdbcd03fcae3967919983a98c7"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/ArchitectureDeveloperVerifier.java",
+        "sha256":  "a16cf236e59a411773e88e812bafc731d7f300d5e0c970d903ca9e8f20ffd981"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/CircuitElm.java",
+        "sha256":  "b18eaa79c0f2591c7e9ec32722710b8e83476be1abd2a0c596caec5e43eb51a2"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/CircuitSolverExecutor.java",
+        "sha256":  "615d0b9518c1d012623c0beec7cb4720674b1549936e4b5f34341223e9038773"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/E04SensorControlModel.java",
+        "sha256":  "f9cd87619349c2c7818c928cd75603885057961618a4cf1b9ebcf29a045a3e83"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/E06ConverterContract.java",
+        "sha256":  "60a83ea8f564edf9d95d69678454ad2eb3b6554fc346057dbe253b546ad4ecf8"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/E06ConverterFixtures.java",
+        "sha256":  "baffe05592371ebc6298a87f50b30d8e53577b746e697287ad76d68d48997645"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/GenerationDependencyContext.java",
+        "sha256":  "0707cfbb8416516a0f9be2c627f3930718aa9d1beec93d45762778b2f26cd5ae"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/MediumBoardPhysicalPolicy.java",
+        "sha256":  "ac2713b172c186292a9b1bd6f877358647f8b22da1e4c83d716cca5dce451cb5"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/PcbAccessPlanner.java",
+        "sha256":  "6615906eb5df6fcf322e084fc7a32f83c5eda1c7b09a32d6bb2c2343eb0396e2"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java",
+        "sha256":  "5a3ea41332c85ff1ea263fd3952963fda1c845e9d9359460abcc271fdcd4d180"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/PcbConductorGraph.java",
+        "sha256":  "a5c84942c07c5d7f01caa3fe12b7700235132fbc81f4cb86b3718029b216c972"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "sha256":  "9f71c2eeddd3bb078a4705fbd087931ac9a5897f0aac8c87fc26a7eca1f7773e"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "sha256":  "f8807fdb7f1bf30225a44ab04aafe4226e9f0db0bd43810b80465da9424f7a64"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/PcbPlacementPlanner.java",
+        "sha256":  "f30032aeec5dc29d5866fa64d2003fd9ea20f80857bbb156d95c4072e6b03d0c"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/PcbRoutingWork.java",
+        "sha256":  "20409e00ad33953c57bb043103e676866f2f5248ad2ed1ab93f6882ca9450031"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/PrivateSolverContext.java",
+        "sha256":  "18ffe705ae80a014de929ed08b315178336cfdb8fc924a04a44009caa5192580"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/ProceduralPcbLayout.java",
+        "sha256":  "da9a5512b3a47e22951e6e1dc2b45e432c65c5e5f01b5c177d73a7d016d4e308"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/Rb100ElectricalPilot.java",
+        "sha256":  "ff5d32ea24def3bcfe5ffdedf17d393951c8283ff3403eab5677a27a14c0fe2f"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/Rb100Placement.java",
+        "sha256":  "b22b4499846ec5e4e56622f5dad518d01d60bdf1e948e761ae7235b74c3fce15"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/Rb100Plan.java",
+        "sha256":  "631da559598faf50b738ccca74b726688f0533aee69108155c553727dd8f53d5"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/Rb56Placement.java",
+        "sha256":  "101ce980d753db359a9ed26fb66fed626d9f3945dcc4edc6350d8b8b8853cdfc"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/Rb56PowerStageAssembly.java",
+        "sha256":  "18487b2b224ef37b28484a0c46386d2550f0e99f532b36b073e68936c0374471"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/RelayOutputGenerator.java",
+        "sha256":  "70b4ebbcf783f0e3e6b79e3d30b01ada3d52b62bf3400a005f0ba1f96f41492b"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+        "sha256":  "a4594073dd3b3a0ddb1cc98c98cab93735d663a46ab5a6ba94f7d0ce366db300"
+    },
+    {
+        "path":  "src/com/lushprojects/circuitjs1/client/SupportedEnvelope.java",
+        "sha256":  "6f0b0b36ce6ad91ec4dfb6b4581e5b8e2cd514ed36eed3e53905a32a2f7994cc"
+    },
+    {
+        "path":  "tests/contracts/D01DiagnosticContractTest.java",
+        "sha256":  "0d7369559ca4cae41f835b493345589c98f4e3d17e0e641338e7e744aab445dc"
+    },
+    {
+        "path":  "tests/contracts/E04DecisionMemoryContractTest.java",
+        "sha256":  "c351fa5ab2319f6e893d38a400bd4da97d0dd181e45e54caba6829c3229aec5a"
+    },
+    {
+        "path":  "tests/contracts/MediumBoardFloorplanningContractTest.java",
+        "sha256":  "c74e0644765301e1919c37816665754ffb6108feb9d0b18007efef0a462aa84a"
+    },
+    {
+        "path":  "tests/contracts/P03PlacementContractTest.java",
+        "sha256":  "812cde6db3f806e7a5c6a516721ed7c51d5deed31ea4332e387adc15df37e8ba"
+    },
+    {
+        "path":  "tests/contracts/P07BranchDiagnosticsContractTest.java",
+        "sha256":  "e9bf4b7a42a00effd50056a2ac1e6f6edd1a077a1f25ab867fcfd8d2e9f4a8c3"
+    },
+    {
+        "path":  "tests/contracts/P07GridEligibilityContractTest.java",
+        "sha256":  "44934f9bc1001c63cd1fdeb04fd278991b56ddd7fc16a67c69775e6d55dfcad3"
+    },
+    {
+        "path":  "tests/contracts/P07LayeredRasterOracle.java",
+        "sha256":  "66d0e40594165ce5620b5c28f58132ac7d8d882f532fafd4d4b77510ec3561a2"
+    },
+    {
+        "path":  "tests/contracts/P07LayeredRasterOracleContractTest.java",
+        "sha256":  "f67e2bb55a2f1773fb7237fccf2f8ec90bd0ec53b64f1d9547ee0dfb34cc8789"
+    },
+    {
+        "path":  "tests/contracts/P08ReferenceConductorBuilder.java",
+        "sha256":  "dbdde865a191c06e267bdbe7bae78144fa520189d652ee7d0e6458aac17586e6"
+    },
+    {
+        "path":  "tests/contracts/P08ReferenceWidthContractTest.java",
+        "sha256":  "b1ac3b8029f468828a4beb19a1be12cb6e236a408c5b79e083fa1c44154826e5"
+    },
+    {
+        "path":  "tests/contracts/P08ScalabilityContractTest.java",
+        "sha256":  "5ec454bf6b2161907aca24f150934f243b3f1854d4d3a53be7473960b025c3c6"
+    },
+    {
+        "path":  "tests/contracts/PcbCompactnessContractTest.java",
+        "sha256":  "6f39a6b890ba6857e9c2edd533fcacecbd375c0d8467cd05c97801389d73c38c"
+    },
+    {
+        "path":  "tests/contracts/PcbCorridorOrientationContractTest.java",
+        "sha256":  "ebc6192eed79fd937c4cd1e77c2c18fa57bea505a9fe83fe87ffd20b00949db9"
+    },
+    {
+        "path":  "tests/contracts/PcbNormalPackingIdentityContractTest.java",
+        "sha256":  "83f5f0f98d8404ee567b8adb6783d8072e9c9392081c999c37f92f9f0235d24c"
+    },
+    {
+        "path":  "tests/contracts/Rb100ElectricalPilotContractTest.java",
+        "sha256":  "f7b8afc70c1c63af754e79f577ddc172533d0acda564cd16f6442c946ad691b4"
+    },
+    {
+        "path":  "tests/contracts/Rb100LayoutFeasibilityContractTest.java",
+        "sha256":  "502bc114f77cae4f7d2ef50f46fb2e7cabe62911a008e5a97ddff7b8df1bb11a"
+    },
+    {
+        "path":  "tests/contracts/Rb100LayoutFirstRoutingDiagnosticContractTest.java",
+        "sha256":  "dee2396e3e0d2490b97823aa723772b87d2526187adaf03c89068e2c30a3b05f"
+    },
+    {
+        "path":  "tests/contracts/Rb100LayoutPlacementDiagnosticContractTest.java",
+        "sha256":  "60c8c3a0aa97db40ee7e55e16e0996ccf003b0407f3e9c1cb1a70f33d6abb4ee"
+    },
+    {
+        "path":  "tests/contracts/Rb100LayoutRoutingDiagnosticContractTest.java",
+        "sha256":  "1674b69a98dd9474d29b45f8b3b79f7daa974e2d53f4e8d601cb037e036791fa"
+    },
+    {
+        "path":  "tests/contracts/Rb100P07BranchDiagnosticContractTest.java",
+        "sha256":  "85de5a799b021c9dca58cd6ff06bfefba8250bdcfdecce6221cb6abf0dafe190"
+    },
+    {
+        "path":  "tests/contracts/Rb100P07PolicyDiagnosticContractTest.java",
+        "sha256":  "0a0fdce2af8f71d00eacde34d84adbe994b71426784c05ec1b55e007b2901b27"
+    },
+    {
+        "path":  "tests/contracts/Rb100PlanContractTest.java",
+        "sha256":  "73d98092ca1692709a362f165d6efe974cd0f99a34403d17fb61b46defedf3aa"
+    },
+    {
+        "path":  "tests/contracts/Rb56ManifestContractTest.java",
+        "sha256":  "ce6fa6c4cc23ea4b8ad5c8902430937fbabf4ec5b63c43789e6f1ff3d2821ce9"
+    },
+    {
+        "path":  "tests/contracts/Rb56ModelIdentityContractTest.java",
+        "sha256":  "506321d8c11bfbbacb77b4bfeb85acb53649fe5b458b5970b65fbd635b2a78b0"
+    },
+    {
+        "path":  "tests/contracts/RelBSessionIdentityContractTest.java",
+        "sha256":  "90b526d43a7f9118539bf67030dcc54004614d6c1a113290f2f7eceac3182e58"
+    },
+    {
+        "path":  "tests/contracts/U06SessionSaveContractTest.java",
+        "sha256":  "213c1da6597ade5ccc3d32ae37df5accd50bd874bb51afdac9a74fa1295bd333"
+    },
+    {
+        "path":  "tests/qualification/rb100-layout/read_diagnostic.py",
+        "sha256":  "31f65be5e11472c7b09e8141292402c641df6b735787d32eb4c904ae098981e7"
+    },
+    {
+        "path":  "tests/qualification/rb100-layout/read_p07_branches.py",
+        "sha256":  "29b62bc071a971ee221ee6b3268a37c0238fc16cb891a438f8a0438515db1264"
+    },
+    {
+        "path":  "tests/qualification/rb100-layout/read_p07_policy.py",
+        "sha256":  "033690642a814f2747540e61d1ef03b4483b8ca09344b731c8ba893882845051"
+    },
+    {
+        "path":  "tests/qualification/rb100-layout/read_routing_diagnostic.py",
+        "sha256":  "389e937ccec44bf13c7de19732e6bd9fdf7906dfb815e4b04a9c8dc691cdfdba"
+    },
+    {
+        "path":  "tests/qualification/rb56-medium/read_qualification.py",
+        "sha256":  "3fa334191bf63db413c7fbb73463d1118e837a8cff46e69fc162ecd4bc468d9e"
+    },
+    {
+        "path":  "tests/qualification/rb56-medium/test_read_qualification.py",
+        "sha256":  "27f9069d3721c3192d816e3f9ef01add6529825927426423453e2e4db8fe5b31"
+    }
+]

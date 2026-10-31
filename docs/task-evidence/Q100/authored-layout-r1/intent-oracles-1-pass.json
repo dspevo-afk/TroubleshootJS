@@ -1,0 +1,19 @@
+{
+  "protocol": "rb100-intent-oracle-native-v1",
+  "status": "PASS",
+  "helper": {
+    "exitCode": 0,
+    "elapsedSeconds": 26.539064,
+    "suites": [
+      "Rb100PlanContractTest",
+      "P08ScalabilityContractTest"
+    ]
+  },
+  "assertions": {
+    "Rb100PlanPhysicalIntent": 4964,
+    "P08Scalability": 2022
+  },
+  "cleanup": "PASS",
+  "rawReceiptSha256": "68c26dd1e2683d0870c8a99c42dc3b111a3a44d6651f858fc9de07bf4a33bad7",
+  "limitation": "Intent and reused P08 regression only; does not qualify actual authored100layout."
+}

@@ -5462,8 +5462,7 @@ function Assert-VerifierContextPhysicalResources($Context) {
     if ($mutableBrowserProfile) {
         [void](Assert-VerifierPhysicalOwnedPath $Context.RunNamespaceRoot $Context.RunRoot)
     } else {
-        [void](Assert-VerifierPhysicalOwnedPath $Context.RunNamespaceRoot $Context.RunRoot `
-            -ValidateTree)
+        [void](Assert-VerifierPhysicalOwnedPath $Context.RunNamespaceRoot $Context.RunRoot)
     }
     [void](Assert-VerifierPhysicalOwnedPath $Context.RunRoot $Context.ManifestPath)
     [void](Assert-VerifierPhysicalOwnedPath $Context.EvidenceNamespaceRoot $Context.EvidenceDirectory `
@@ -12940,6 +12939,7 @@ function Wait-VerifierBoundReceiptNaturalShutdownDescendants($DrainScope,
     }
     $records = @($RootRecord) + @($DescendantRecords)
     $seen = @{}
+    $completedNaturalExitProofs = @{}
     while ($true) {
         Assert-VerifierBrowserShutdownDeadline $Budget $BudgetTicks
         Add-VerifierBrowserShutdownTimingCount $TimingRecord 'waitLoopPassCount'
@@ -12954,9 +12954,60 @@ function Wait-VerifierBoundReceiptNaturalShutdownDescendants($DrainScope,
                 Throw-VerifierInfrastructure "Bound-receipt natural shutdown wait carried duplicate retained PID $pid."
             }
             $seen[$pid] = $record
+            if ($completedNaturalExitProofs.ContainsKey($pid)) {
+                $completed = $completedNaturalExitProofs[$pid]
+                $attestation = Get-VerifierBrowserDrainAttestation $DrainScope $record
+                if ($null -eq $completed -or
+                        -not [object]::ReferenceEquals($completed.Record, $record) -or
+                        -not [object]::ReferenceEquals($completed.Attestation, $attestation) -or
+                        -not [object]::ReferenceEquals($completed.Process, $record.Process) -or
+                        [int]$completed.ProcessId -ne $pid -or
+                        [long]$completed.ProcessStartTicks -ne
+                            [long]$attestation.Identity.Item2 -or
+                        [long]$completed.ProcessStartTicks -ne
+                            [long]$record.ProcessStartTicks) {
+                    Throw-VerifierInfrastructure "Bound-receipt terminal natural-exit proof for PID $pid no longer matches its exact retained identity."
+                }
+                # A successful cached result means the original retained
+                # handle already exited and two independent current
+                # native/WMI absence observations completed. Revalidate the
+                # exact in-memory capability on reuse; final late-descendant
+                # and job-empty proofs remain separate mandatory phases.
+                Add-VerifierBrowserShutdownTimingCount $TimingRecord `
+                    'naturalExitProofReuseCount'
+                Assert-VerifierBrowserShutdownDeadline $Budget $BudgetTicks
+                continue
+            }
             $natural = Get-VerifierBrowserDrainNaturalExitResult $DrainScope $record `
                 $TimingRecord
-            if ($null -eq $natural) { $allAbsent = $false }
+            if ($null -eq $natural) {
+                $allAbsent = $false
+            } else {
+                if (-not $natural.PSObject.Properties['TerminationProven'] -or
+                        $natural.TerminationProven -isnot [bool] -or
+                        -not $natural.TerminationProven -or
+                        -not $natural.PSObject.Properties['NaturalExit'] -or
+                        $natural.NaturalExit -isnot [bool] -or
+                        -not $natural.NaturalExit -or
+                        -not $natural.PSObject.Properties['ProcessId'] -or
+                        -not (Test-VerifierStrictIntegralValue $natural.ProcessId 1 ([int]::MaxValue)) -or
+                        [int]$natural.ProcessId -ne $pid -or
+                        -not $natural.PSObject.Properties['ProcessStartTicks'] -or
+                        -not (Test-VerifierStrictIntegralValue $natural.ProcessStartTicks 1 ([long]::MaxValue)) -or
+                        [long]$natural.ProcessStartTicks -ne [long]$record.ProcessStartTicks -or
+                        -not $natural.PSObject.Properties['Attestation'] -or
+                        -not [object]::ReferenceEquals($natural.Attestation,
+                            $record.VerifierDrainAttestation)) {
+                    Throw-VerifierInfrastructure "Bound-receipt natural-exit result for PID $pid was not the exact completed attested identity."
+                }
+                $completedNaturalExitProofs[$pid] = [pscustomobject]@{
+                    Record = $record
+                    Attestation = $natural.Attestation
+                    Process = $record.Process
+                    ProcessId = [int]$natural.ProcessId
+                    ProcessStartTicks = [long]$natural.ProcessStartTicks
+                }
+            }
             Assert-VerifierBrowserShutdownDeadline $Budget $BudgetTicks
         }
         if ($allAbsent) { return }

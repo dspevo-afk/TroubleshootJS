@@ -1,0 +1,361 @@
+{
+  "schema": "troubleshootjs-r12-medium-finite-development-evidence-v1",
+  "scope": "One finite development partition with three actual candidate roots, using current dependency/layout/placement epochs; not full campaign or release qualification.",
+  "status": "PASS_FINITE_R12_PARTITION",
+  "partition": "development",
+  "normalReleaseAcceptance": false,
+  "run": {
+    "exitCode": 0,
+    "helperElapsedSeconds": 166.7533819,
+    "browserWrapperReaderExitPhases": [
+      {
+        "phase": "browser",
+        "exit": 0,
+        "seconds": 164.19877969985828
+      },
+      {
+        "phase": "wrap",
+        "exit": 0,
+        "seconds": 0.953129000030458
+      },
+      {
+        "phase": "reader",
+        "exit": 0,
+        "seconds": 0.9267739998176694
+      }
+    ],
+    "wrapperReportedTotalSeconds": 166.12872580019757,
+    "rawLauncher": {
+      "osPid": 33616,
+      "createdUtc": "2026-10-30T23:32:41.811481Z",
+      "executableBasename": "powershell.exe",
+      "task": "normal-final-development1"
+    }
+  },
+  "plan": {
+    "schema": "tsj-r12-medium-plan/5",
+    "file": "normal-final-plan.json",
+    "sha256": "90df2a5daf84942256a31038fca7cc7ca825e0bfac989fdebd4cfed0e25e4712",
+    "bytes": 311461,
+    "historicalBaseCommit": "bd846017be5c9f46b1fce3fc9fc90438318cac28",
+    "baseCommitInterpretation": "Historical campaign protocol anchor; not the current repository base.",
+    "sourceBinding": "51baad3c6002cb88974ffbc5399dca707049c3aaa735d90a5b3c52246a78e40f",
+    "manifestHashProtocol": "rb56-part-decimal-value/1",
+    "readerSha256": "3562c3777f4cabb0dc7dc2909984d3f1228fd85d42586a8d04e877aa48ed8900",
+    "epochs": {
+      "replay": "tsj-alpha/7",
+      "dependency": "tsj-generation-dependencies-v24",
+      "model": "circuitjs-source-load-model-inputs-no-transient-dump-v7",
+      "layout": 23,
+      "placement": 15,
+      "plan": 1,
+      "assessment": 3,
+      "program": 2
+    },
+    "budgets": {
+      "jobMillis": 90000,
+      "jobWork": 640,
+      "unitMillis": 5000,
+      "maximumCandidates": 4
+    },
+    "partitionIdentityCounts": [
+      {
+        "partition": "development",
+        "identityCount": 3
+      },
+      {
+        "partition": "holdout",
+        "identityCount": 8
+      },
+      {
+        "partition": "profile",
+        "identityCount": 3
+      },
+      {
+        "partition": "replacement-blind",
+        "identityCount": 8
+      },
+      {
+        "partition": "replacement-blind-2",
+        "identityCount": 8
+      }
+    ],
+    "selectedDevelopmentRoots": [
+      "-2230691771308388107",
+      "6702341860553104274",
+      "-8360266000248569150"
+    ],
+    "identityManifestCount": 30
+  },
+  "manifestFile": {
+    "file": "normal-manifests.json",
+    "sha256": "22a8ca603c08ab574c15b84aa9e08e2596ec0b43585ec8f84f2f8d0b8cd4c89f",
+    "bytes": 16357,
+    "identityOnlyEntryCount": 30,
+    "partitionIdentityCounts": [
+      {
+        "partition": "development",
+        "identityCount": 3
+      },
+      {
+        "partition": "holdout",
+        "identityCount": 8
+      },
+      {
+        "partition": "profile",
+        "identityCount": 3
+      },
+      {
+        "partition": "replacement-blind",
+        "identityCount": 8
+      },
+      {
+        "partition": "replacement-blind-2",
+        "identityCount": 8
+      }
+    ]
+  },
+  "selectedBuildBindings": [
+    {
+      "variant": "Player",
+      "identitySha256": "519c8ad1bd13f381d500a81dda4f593e2576f0b59e8c603896646f500724d2e6",
+      "inputDigest": "ec046715efbdc5fde13e5f0a86e89b1bedf2641eb45f72061e00847caf764bca",
+      "outputDigest": "1619931b4085bb98881de35639e843dbc4d17e7786e32067f2a2d63f3c2b7914",
+      "sizeCaptureSha256": "0d6ded71d622e2190498b2bf90fed52ff7be485c3ef8352232d8f754b9d463ee",
+      "inventoryCaptureSha256": "aec2f838478359af61c12dbccb11e897be5af8ff6797f3ae9d19f03c277b61ac"
+    },
+    {
+      "variant": "Developer",
+      "identitySha256": "3ab83020ec867da0cbc8ce3f17c492aa1a0b02ad88111dc85078658fd8f23ddd",
+      "inputDigest": "c49bc264266411f7ba1f98b80394f0f4b80ccdc94ec673866141cf2b67ac6e09",
+      "outputDigest": "9ac5c80563f35c6c3c60158b9fbbe63424d29b396c7615426dcc52f4e0b0726e",
+      "sizeCaptureSha256": "55cd3b9347afaa9582f071dfb62549b2227e1bb8198cea4a1fdcbb006952d7a5",
+      "inventoryCaptureSha256": "b1a1c670c2195f4fc375d0ce9982bbcebdc53b17cb8ae347697e85906d761a0d"
+    }
+  ],
+  "captures": [
+    {
+      "file": "normal-development-capture-0.json",
+      "bytes": 40459,
+      "sha256": "a333f3d392c802572a50192a1b07aad81a15c2ddc11273540366e795d9928e4c"
+    },
+    {
+      "file": "normal-development-capture-1.json",
+      "bytes": 39066,
+      "sha256": "d31a947ac617afe557c2551b75d2a97bb8232a4be596f8afbb1228342f3b01fb"
+    },
+    {
+      "file": "normal-development-capture-2.json",
+      "bytes": 35781,
+      "sha256": "3ad858159e7febc375e502e6230d70fa5fa9b77bffee094971b788c7be05e093"
+    }
+  ],
+  "readerOutput": {
+    "status": "PASS_FINITE_R12_PARTITION",
+    "partition": "development",
+    "planSha256": "90df2a5daf84942256a31038fca7cc7ca825e0bfac989fdebd4cfed0e25e4712",
+    "sourceBinding": "51baad3c6002cb88974ffbc5399dca707049c3aaa735d90a5b3c52246a78e40f",
+    "cases": [
+      {
+        "root": "-2230691771308388107",
+        "seed": "-2230691771308388107",
+        "packages": 58,
+        "readings": 2,
+        "repairClasses": 5,
+        "generationMillis": 64389,
+        "generationWork": 457,
+        "maxUnitMillis": 1306,
+        "operationMillis": 64807,
+        "cleanupMillis": 4,
+        "attempts": 1,
+        "naturalWaitSeconds": [
+          1.8,
+          1.7,
+          2.1,
+          1.7,
+          1.4
+        ],
+        "captureSha256": "a333f3d392c802572a50192a1b07aad81a15c2ddc11273540366e795d9928e4c"
+      },
+      {
+        "root": "6702341860553104274",
+        "seed": "6702341860553104274",
+        "packages": 52,
+        "readings": 2,
+        "repairClasses": 5,
+        "generationMillis": 59672,
+        "generationWork": 459,
+        "maxUnitMillis": 1240,
+        "operationMillis": 60197,
+        "cleanupMillis": 4,
+        "attempts": 1,
+        "naturalWaitSeconds": [
+          1.7,
+          1.7,
+          2.0,
+          1.7,
+          1.4
+        ],
+        "captureSha256": "d31a947ac617afe557c2551b75d2a97bb8232a4be596f8afbb1228342f3b01fb"
+      },
+      {
+        "root": "-8360266000248569150",
+        "seed": "-8360266000248569150",
+        "packages": 42,
+        "readings": 2,
+        "repairClasses": 5,
+        "generationMillis": 28882,
+        "generationWork": 389,
+        "maxUnitMillis": 730,
+        "operationMillis": 29187,
+        "cleanupMillis": 4,
+        "attempts": 1,
+        "naturalWaitSeconds": [
+          1.8,
+          1.8,
+          2.0,
+          1.8,
+          1.4
+        ],
+        "captureSha256": "3ad858159e7febc375e502e6230d70fa5fa9b77bffee094971b788c7be05e093"
+      }
+    ],
+    "normalReleaseAcceptance": false
+  },
+  "wrapper": {
+    "schema": "tsj-r12-r3-v2-partition-run/1",
+    "partition": "development",
+    "planSha256": "90df2a5daf84942256a31038fca7cc7ca825e0bfac989fdebd4cfed0e25e4712",
+    "sourceBinding": "51baad3c6002cb88974ffbc5399dca707049c3aaa735d90a5b3c52246a78e40f",
+    "firstBlind8Released": false,
+    "status": "PASS",
+    "phases": [
+      {
+        "phase": "browser",
+        "exit": 0,
+        "seconds": 164.19877969985828
+      },
+      {
+        "phase": "wrap",
+        "exit": 0,
+        "seconds": 0.953129000030458
+      },
+      {
+        "phase": "reader",
+        "exit": 0,
+        "seconds": 0.9267739998176694
+      }
+    ],
+    "wrapperSeconds": 166.12872580019757
+  },
+  "browserRun": {
+    "schema": 1,
+    "outcome": "PASS",
+    "caseCount": 3,
+    "cleanup": {
+      "status": "PASS",
+      "seconds": 0.9110485999844968,
+      "serverStopped": true,
+      "ownedSurvivors": [],
+      "errors": []
+    },
+    "inputAudit": {
+      "status": "PASS",
+      "beforeSha256": "38bdfb81a13a3a09b3501c198b34c22a6350f8ff4e2d1d6cc7f5468411d8b243",
+      "afterSha256": "38bdfb81a13a3a09b3501c198b34c22a6350f8ff4e2d1d6cc7f5468411d8b243",
+      "sourceSha256Before": "dcf6f0f34170cfc431774e7ac49161c6577409b2a3c7c6c053fe97a7adb9ec06",
+      "sourceSha256After": "dcf6f0f34170cfc431774e7ac49161c6577409b2a3c7c6c053fe97a7adb9ec06",
+      "webSha256Before": "298e805e7d8fb764660a89eb4ab2d45cc0a142896b2a955665967427c185e6ac",
+      "webSha256After": "298e805e7d8fb764660a89eb4ab2d45cc0a142896b2a955665967427c185e6ac",
+      "runnerBeforeSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+      "runnerAfterSha256": "f0d46920ee2d980a5902ac90b823a95e3fca90be2f4d24684c054a0ac8e76f9a",
+      "fileCountBefore": 1575,
+      "fileCountAfter": 1575,
+      "seconds": 0.3573690999764949
+    }
+  },
+  "supportingRawArtifacts": [
+    {
+      "file": "qualification-development-r3-v2-reduced.json",
+      "bytes": 1858,
+      "sha256": "ab64c82ee4449aa59944a8e24110759058e8425e9bd312f2ab49b6650c37f7b7"
+    },
+    {
+      "file": "qualification-development-r3-v2-wrapper.json",
+      "bytes": 656,
+      "sha256": "001efecbdcfa415d6ec1aa4b7139feb6782d4d5964c0cab35dcc48650a5d630a"
+    },
+    {
+      "file": "qualification-development-r3-v2/result.json",
+      "bytes": 11976,
+      "sha256": "a6fdae4a0bc0dcc557e956a057e3fcaaf8daaf9a571accd4614f581abb72d9c2"
+    },
+    {
+      "file": "normal-final-development1-result.json",
+      "bytes": 347,
+      "sha256": "e80875ec49e2ee5a7d058c69e064e6951ee0341dc2c4ade5db5015f1f4c04def"
+    },
+    {
+      "file": "normal-final-development1-launcher.json",
+      "bytes": 203,
+      "sha256": "8764b7a5060f62422bd3bb53e10385b4f934b5d28cb6de6febfe045f7b8a6157"
+    },
+    {
+      "file": "normal-final-development1.log",
+      "bytes": 1034,
+      "sha256": "b4d6d5707ab7d364c044a8806fe5e4800b84ba38d82af4c2c8b9273da1a3c1db"
+    },
+    {
+      "file": "run-normal-final1.ps1",
+      "bytes": 1940,
+      "sha256": "5e2a2ab4b86213f38d0ab27cea0151d750e9d83eb23ac8841df3960b747646d6"
+    },
+    {
+      "file": "qualification-development-r3-v2/spec.json",
+      "bytes": 1228,
+      "sha256": "11075e7ce3a25f48cad0ff7dc2b9a3967cc74fbb7a74f3e12262bdd143cf0f4b"
+    },
+    {
+      "file": "qualification-development-r3-v2/identity.json",
+      "bytes": 1857,
+      "sha256": "6038f337d134993246a76ebf0a057f307a9d85d8dfd0b7c691f5d85c20ebaf00"
+    },
+    {
+      "file": "qualification-development-r3-v2/input-manifest-before.json",
+      "bytes": 301214,
+      "sha256": "a0a18aaecc33da419446cf9cee471f365ad8afa8dd2685f05e1d2b3281e7d80e"
+    },
+    {
+      "file": "qualification-development-r3-v2/input-manifest-after.json",
+      "bytes": 301214,
+      "sha256": "e4874af38f9e6b335e1e660b4459f3f2e682d7d97a3bbac93e2b462e22207a50"
+    },
+    {
+      "file": "qualification-development-r3-v2-browser.log",
+      "bytes": 103,
+      "sha256": "0684ce4ef84be157449aa188a83ccf71a7af6b199ea3829866fcdb874c5dd75d"
+    },
+    {
+      "file": "qualification-development-r3-v2-wrap.log",
+      "bytes": 897,
+      "sha256": "edc86bc2903ae40648d6df82a1aae4fe4b6b6cf88a69a835e625dd3c1ac8b159"
+    },
+    {
+      "file": "qualification-development-r3-v2-reader.log",
+      "bytes": 90,
+      "sha256": "83a4b4f21729d3c5d2c54eb2db77fc1e5bd454010ef53516aa6e23cfba6dddeb"
+    }
+  ],
+  "qualificationLimits": [
+    "Only the three development identities were executed from the 30 identity-only manifests.",
+    "The full 30-identity campaign was NOT RUN and is not renewed by this run.",
+    "The full 2-by-31 campaign was NOT RUN and is not renewed by this run.",
+    "normalReleaseAcceptance remains false.",
+    "This evidence makes no claim of 100-route physical qualification, layout admission, or visible human-player experience."
+  ],
+  "sanitization": {
+    "copiedPlanManifestCaptures": "Byte-exact copies; scans found no personal absolute paths in these five artifacts.",
+    "rawLogs": "Not embedded; hashes and byte counts only.",
+    "machinePaths": "Not copied into summary"
+  }
+}

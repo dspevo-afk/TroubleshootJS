@@ -401,6 +401,92 @@ final class MediumBoardPhysicalPolicy {
         return right <= left || bottom <= top ? 0 : (right - left) * (bottom - top);
     }
 
+    /** Immutable bounded receipt for one opt-in P07 ordering stream request. */
+    static final class OrderingSearchReceipt {
+        final int attempt;
+        final int startedOrderings;
+        final int completedOrderings;
+        final int yieldedOrderings;
+        final int finalizedOrderings;
+        final int selectedOrdering;
+        final int expansions;
+        final boolean guidanceStarted;
+        final boolean comparisonComplete;
+        final String termination;
+
+        OrderingSearchReceipt(int attempt, int startedOrderings, int completedOrderings,
+                int yieldedOrderings, int finalizedOrderings, int selectedOrdering,
+                int expansions, boolean guidanceStarted, boolean comparisonComplete,
+                String termination) {
+            if (attempt < 0 || attempt >= PLACEMENT_CANDIDATES ||
+                    startedOrderings < 1 || startedOrderings > PcbLayerRoutingPrototype.ORDERINGS ||
+                    completedOrderings < 1 || completedOrderings > startedOrderings ||
+                    yieldedOrderings < 0 || yieldedOrderings > completedOrderings ||
+                    finalizedOrderings < 0 || finalizedOrderings > yieldedOrderings ||
+                    selectedOrdering < -1 || selectedOrdering >= PcbLayerRoutingPrototype.ORDERINGS ||
+                    (selectedOrdering >= startedOrderings) ||
+                    (selectedOrdering >= 0 && finalizedOrderings == 0) ||
+                    expansions < 0 || expansions > PcbLayerRoutingPrototype.MAX_EXPANSIONS ||
+                    termination == null || termination.length() == 0 || termination.length() > 256 ||
+                    (comparisonComplete && completedOrderings != PcbLayerRoutingPrototype.ORDERINGS) ||
+                    (comparisonComplete && startedOrderings != PcbLayerRoutingPrototype.ORDERINGS) ||
+                    (comparisonComplete && "TOTAL_SEARCH_LIMIT".equals(termination)) ||
+                    ("ORDERINGS_COMPLETE".equals(termination) &&
+                        (!comparisonComplete ||
+                            startedOrderings != PcbLayerRoutingPrototype.ORDERINGS ||
+                            completedOrderings != PcbLayerRoutingPrototype.ORDERINGS ||
+                            yieldedOrderings == 0)) ||
+                    ("FIRST_SUCCESS_UNGUIDED".equals(termination) &&
+                        (guidanceStarted || comparisonComplete || yieldedOrderings != 1)))
+                throw new IllegalArgumentException("Invalid P07 ordering-search receipt");
+            this.attempt = attempt;
+            this.startedOrderings = startedOrderings;
+            this.completedOrderings = completedOrderings;
+            this.yieldedOrderings = yieldedOrderings;
+            this.finalizedOrderings = finalizedOrderings;
+            this.selectedOrdering = selectedOrdering;
+            this.expansions = expansions;
+            this.guidanceStarted = guidanceStarted;
+            this.comparisonComplete = comparisonComplete;
+            this.termination = termination;
+        }
+
+        String toCanonical() {
+            return "attempt=" + attempt +
+                ";startedOrderings=" + startedOrderings +
+                ";completedOrderings=" + completedOrderings +
+                ";yieldedOrderings=" + yieldedOrderings +
+                ";finalizedOrderings=" + finalizedOrderings +
+                ";selectedOrdering=" + selectedOrdering +
+                ";expansions=" + expansions +
+                ";guidanceStarted=" + guidanceStarted +
+                ";comparisonComplete=" + comparisonComplete +
+                ";termination=" + canonicalTermination(termination);
+        }
+
+        private static String canonicalTermination(String value) {
+            StringBuilder result = new StringBuilder(value.length());
+            final char[] hex = "0123456789abcdef".toCharArray();
+            for (int index = 0; index < value.length(); index++) {
+                char ch = value.charAt(index);
+                if ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') ||
+                        (ch >= '0' && ch <= '9') || ch == '_' || ch == '-' ||
+                        ch == '.' || ch == ':') {
+                    result.append(ch);
+                } else {
+                    result.append('\\').append('u')
+                        .append(hex[(ch >>> 12) & 15])
+                        .append(hex[(ch >>> 8) & 15])
+                        .append(hex[(ch >>> 4) & 15])
+                        .append(hex[ch & 15]);
+                }
+            }
+            return result.toString();
+        }
+
+        public String toString() { return toCanonical(); }
+    }
+
     /** Immutable route/generation receipt for a structural corpus harness. */
     static final class Statistics {
         final String policyIdentity;
@@ -420,9 +506,12 @@ final class MediumBoardPhysicalPolicy {
         final Vector<String> placementScores;
         final long placementEvaluations;
         final Vector<String> routeOutcomes;
+        final Vector<Integer> routeEligiblePlacementAttempts;
+        final Vector<String> routeEligibilitySkips;
         final long selectedPlacementScore;
         final long selectedRouteQualityMilli;
         final PcbPackingProbeReceipt packingProbe;
+        final Vector<OrderingSearchReceipt> orderingSearchReceipts;
 
         Statistics(String outcome, String selectedRoutePolicy,
                 int placementCandidates, int placementRejections, int routeAttempts,
@@ -473,6 +562,47 @@ final class MediumBoardPhysicalPolicy {
                 int routingOrders, int routingExpansions,
                 long selectedPlacementScore, long selectedRouteQualityMilli,
                 PcbPackingProbeReceipt packingProbe) {
+            this(outcome,selectedRoutePolicy,placementCandidates,placementRejections,routeAttempts,
+                oneFaceAttempts,oneFaceSuccesses,twoLayerAttempts,twoLayerSuccesses,
+                selectedPlacementAttempt,rankedPlacementAttempts,placementScores,routeOutcomes,
+                placementEvaluations,routingOrders,routingExpansions,selectedPlacementScore,
+                selectedRouteQualityMilli,packingProbe,new Vector<Integer>(),new Vector<String>());
+        }
+
+        /** Append-only P07 preflight receipt; route counters still count actual router calls. */
+        Statistics(String outcome, String selectedRoutePolicy,
+                int placementCandidates, int placementRejections, int routeAttempts,
+                int oneFaceAttempts, int oneFaceSuccesses, int twoLayerAttempts,
+                int twoLayerSuccesses, int selectedPlacementAttempt,
+                Vector<Integer> rankedPlacementAttempts, Vector<String> placementScores,
+                Vector<String> routeOutcomes, long placementEvaluations,
+                int routingOrders, int routingExpansions,
+                long selectedPlacementScore, long selectedRouteQualityMilli,
+                PcbPackingProbeReceipt packingProbe,
+                Vector<Integer> routeEligiblePlacementAttempts,
+                Vector<String> routeEligibilitySkips) {
+            this(outcome, selectedRoutePolicy, placementCandidates, placementRejections,
+                routeAttempts, oneFaceAttempts, oneFaceSuccesses, twoLayerAttempts,
+                twoLayerSuccesses, selectedPlacementAttempt, rankedPlacementAttempts,
+                placementScores, routeOutcomes, placementEvaluations, routingOrders,
+                routingExpansions, selectedPlacementScore, selectedRouteQualityMilli,
+                packingProbe, routeEligiblePlacementAttempts, routeEligibilitySkips,
+                new Vector<OrderingSearchReceipt>());
+        }
+
+        /** Full append-only receipt overload; legacy overloads retain an empty receipt vector. */
+        Statistics(String outcome, String selectedRoutePolicy,
+                int placementCandidates, int placementRejections, int routeAttempts,
+                int oneFaceAttempts, int oneFaceSuccesses, int twoLayerAttempts,
+                int twoLayerSuccesses, int selectedPlacementAttempt,
+                Vector<Integer> rankedPlacementAttempts, Vector<String> placementScores,
+                Vector<String> routeOutcomes, long placementEvaluations,
+                int routingOrders, int routingExpansions,
+                long selectedPlacementScore, long selectedRouteQualityMilli,
+                PcbPackingProbeReceipt packingProbe,
+                Vector<Integer> routeEligiblePlacementAttempts,
+                Vector<String> routeEligibilitySkips,
+                Vector<OrderingSearchReceipt> orderingSearchReceipts) {
             if (outcome == null || placementCandidates < 0 || placementRejections < 0 ||
                     routeAttempts < 0 || oneFaceAttempts < 0 || oneFaceSuccesses < 0 ||
                     twoLayerAttempts < 0 || twoLayerSuccesses < 0 ||
@@ -500,11 +630,37 @@ final class MediumBoardPhysicalPolicy {
             this.placementEvaluations = placementEvaluations;
             this.routeOutcomes = routeOutcomes == null ?
                 new Vector<String>() : new Vector<String>(routeOutcomes);
+            this.routeEligiblePlacementAttempts = routeEligiblePlacementAttempts == null ?
+                new Vector<Integer>() : new Vector<Integer>(routeEligiblePlacementAttempts);
+            this.routeEligibilitySkips = routeEligibilitySkips == null ?
+                new Vector<String>() : new Vector<String>(routeEligibilitySkips);
+            for(Integer attempt:this.routeEligiblePlacementAttempts)
+                if(attempt==null || attempt.intValue()<0 || attempt.intValue()>=placementCandidates)
+                    throw new IllegalArgumentException("Invalid P07 grid-eligible placement attempt");
+            for(String skip:this.routeEligibilitySkips)
+                if(skip==null || skip.length()==0)
+                    throw new IllegalArgumentException("Invalid P07 grid-eligibility skip");
             this.selectedPlacementScore = selectedPlacementScore;
             this.selectedRouteQualityMilli = selectedRouteQualityMilli;
             this.packingProbe = packingProbe;
-        }
 
+            Vector<OrderingSearchReceipt> receipts = orderingSearchReceipts == null ?
+                new Vector<OrderingSearchReceipt>() :
+                new Vector<OrderingSearchReceipt>(orderingSearchReceipts);
+            if (receipts.size() > ROUTING_CANDIDATES)
+                throw new IllegalArgumentException("Too many P07 ordering-search receipts");
+            if (!receipts.isEmpty() && receipts.size() != twoLayerAttempts)
+                throw new IllegalArgumentException("P07 ordering-search receipt count does not match physical requests");
+            for (int index = 0; index < receipts.size(); index++) {
+                OrderingSearchReceipt receipt = receipts.get(index);
+                if (receipt == null || receipt.attempt >= placementCandidates)
+                    throw new IllegalArgumentException("Invalid P07 ordering-search receipt owner");
+                for (int prior = 0; prior < index; prior++)
+                    if (receipts.get(prior).attempt == receipt.attempt)
+                        throw new IllegalArgumentException("Duplicate P07 ordering-search receipt owner");
+            }
+            this.orderingSearchReceipts = receipts;
+        }
         String toCanonical() {
             StringBuilder result = new StringBuilder(policyIdentity);
             result.append(";outcome=").append(outcome);
@@ -523,8 +679,18 @@ final class MediumBoardPhysicalPolicy {
             result.append(";selectedScore=").append(selectedPlacementScore);
             result.append(";selectedQualityMilli=").append(selectedRouteQualityMilli);
             result.append(";routeOutcomes=").append(routeOutcomes);
+            result.append(";routeEligiblePlacementAttempts=").append(routeEligiblePlacementAttempts);
+            result.append(";routeEligibilitySkips=").append(routeEligibilitySkips);
             if (packingProbe != null)
                 result.append(";packingProbe=").append(packingProbe.toCanonical());
+            if (!orderingSearchReceipts.isEmpty()) {
+                result.append(";orderingSearchReceipts=[");
+                for (int index = 0; index < orderingSearchReceipts.size(); index++) {
+                    if (index > 0) result.append(',');
+                    result.append(orderingSearchReceipts.get(index).toCanonical());
+                }
+                result.append(']');
+            }
             return result.toString();
         }
     }

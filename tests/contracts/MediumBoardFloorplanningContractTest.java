@@ -125,7 +125,7 @@ public final class MediumBoardFloorplanningContractTest {
             "six deterministic generic candidates include opposing same-region anchors");
     }
 
-    private static TroubleshootBoard genericTwentyPartBoard() {
+    static TroubleshootBoard genericTwentyPartBoard() {
         TroubleshootBoard board = new TroubleshootBoard("MEDIUM_GENERIC_EDGE_REGION");
         board.addNet(new BoardNet("SUPPLY", BoardNet.RoutingRole.SUPPLY));
         board.addNet(new BoardNet("RETURN", BoardNet.RoutingRole.RETURN));

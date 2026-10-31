@@ -1,0 +1,236 @@
+{
+  "schema": "troubleshootjs-q100-authored-player-privacy-evidence-v1",
+  "recordedUtc": "2026-10-31T12:18:21.1133970Z",
+  "candidate": {
+    "branch": "codex/q100-physical-feasibility",
+    "head": "8a2c12446b2c46bde32b32537dec58a15a65d3b9",
+    "layoutVersion": 25,
+    "dependencyEpoch": "tsj-generation-dependencies-v26",
+    "verifierIsolationSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "previewScriptSha256": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34"
+  },
+  "playerBuildIdentity": {
+    "protocol": "troubleshootjs-production-build-identity-v1",
+    "variant": "Player",
+    "style": "OBF",
+    "inputDigest": "45654010ddaf068b1cb30a193d43084b80eed0dbfb84f3dcf5f50b6f21df0d1f",
+    "inputFileCount": 1199,
+    "outputDigest": "e3cef7636468142ce9a8a6ea1707622343cc876407cb3bc1312c158da4b3c0e5",
+    "outputFileCount": 357,
+    "compiledJavaScriptFileCount": 7,
+    "developerMarkerScan": "PASS"
+  },
+  "sourceIdentity": {
+    "sourceDigest": "0cbe64a449e761ce25194c017fa0bc32f0539d598d4cc4e76a71062ede15e059",
+    "scriptDigest": "d78bc0fcbe8154b4abd5dcdf17603453bfba6435808297329b3845bfe73dee91",
+    "webDigest": "fb7f0c7ef36b0eff88fb5728529db59b6f16344e6446ab684156c116945f5865",
+    "executionDigest": "6fc712852181997ee81a1fd5c5859c24dc96cf7b1110006c259bc16b6225247a",
+    "executionFileCount": 1597,
+    "moduleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "previewScriptSha256": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+    "attempts5And6ConsumedDigestsEqual": true
+  },
+  "buildReuseAudit": {
+    "artifact": "ap-player-build-reuse-audit-2.json",
+    "sha256": "5b22b4593fac778eb60751521e5ae9724dacc1abd8494dc5ec1af3a5311cef96",
+    "status": "PASS_REUSE_INPUT_BOUNDARY_AUDIT_ONLY",
+    "hostModuleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "build": "player-ao-1",
+    "consumedSets": [
+      "src",
+      "scripts/build.ps1",
+      "GWT classpath jars"
+    ],
+    "buildIdentityMatchesPlayerGate": true,
+    "newBuildRunByAudit": false,
+    "gwtBuildRunBetweenAttempts5And6": false,
+    "limitation": "Reuse boundary only; no new GWT build was performed."
+  },
+  "finalAttempt6": {
+    "status": "PASS",
+    "exitCode": 0,
+    "elapsedSeconds": 72.2737221,
+    "headed": false,
+    "gate": "Q100Player",
+    "routes": [
+      {
+        "name": "q100-player-debug-query",
+        "status": "PASS"
+      }
+    ],
+    "ordinaryTicketEntry": "PASS",
+    "privacyNegativeCanary": "PASS",
+    "finalPlayerPrivacy": "PASS",
+    "sentinelCleanup": "PASS",
+    "cleanup": {
+      "status": "PASS",
+      "success": true,
+      "resourceSuccess": true,
+      "elapsedMs": 41883,
+      "budgetMs": 120000
+    },
+    "browserShutdown": {
+      "lane": "boundReceipt",
+      "status": "PASS",
+      "elapsedMs": 14839,
+      "budgetMs": 15000,
+      "remainingMarginMs": 161,
+      "failurePhase": null,
+      "protectedDescendantCount": 16,
+      "rootAndDescendantRecordCount": 17,
+      "waitLoopPassCount": 2,
+      "naturalExitProofCallCount": 18,
+      "naturalExitProofReuseCount": 16,
+      "currentAbsenceProofCount": 17,
+      "currentAbsenceObservationCount": 34,
+      "lateDescendantParentQueryCount": 17,
+      "containmentJobPollCount": 1,
+      "majorPhaseMs": {
+        "protectedHelperCensus": 5576,
+        "retainedProcessNaturalExitProof": 3375,
+        "lateDescendantAbsenceProof": 1453,
+        "finalListenerAbsenceProof": 114
+      }
+    },
+    "limitations": [
+      "The 161 ms inner-shutdown margin is narrow and does not establish host robustness.",
+      "This headless route does not establish visible interaction, repair, or broader authored-layout qualification."
+    ]
+  },
+  "preservedAttempt5Failure": {
+    "status": "INFRASTRUCTURE_FAILURE",
+    "exitCode": 2,
+    "elapsedSeconds": 58.3629411,
+    "cleanupStatus": "FAIL",
+    "cleanupElapsedMs": 26388,
+    "cleanupBudgetMs": 120000,
+    "browserShutdownElapsedMs": 16237,
+    "browserShutdownBudgetMs": 15000,
+    "failurePhase": "finalListenerAbsenceProof",
+    "sourceModuleSha256": "8a7eff1639e973e6e4ade9a72716274fcd95caece0074f19ede72817d01f2e77",
+    "sameReportedConsumedSourceDigestsAsAttempt6": true,
+    "shutdownCounts": {
+      "protectedDescendantCount": 16,
+      "rootAndDescendantRecordCount": 17,
+      "waitLoopPassCount": 2,
+      "naturalExitProofCallCount": 21,
+      "naturalExitProofReuseCount": 13,
+      "currentAbsenceProofCount": 17,
+      "currentAbsenceObservationCount": 34,
+      "lateDescendantParentQueryCount": 17,
+      "containmentJobPollCount": 1
+    },
+    "phaseMs": {
+      "protectedHelperCensus": 6493,
+      "retainedProcessNaturalExitProof": 3707,
+      "lateDescendantAbsenceProof": 1578,
+      "finalListenerAbsenceProof": 88
+    },
+    "resourceCensus": {
+      "receiptStateAtFailure": "bound",
+      "closeAttempted": true,
+      "browserProfileProcessScanCompletedAtFailure": false,
+      "currentProcessTuples": [
+        {
+          "role": "recorded-browser-root",
+          "pid": 26024,
+          "startTicks": 639290452003993799,
+          "recordedExecutableBasename": "msedge.exe",
+          "currentState": "absent"
+        },
+        {
+          "role": "recorded-browser-parent",
+          "pid": 24188,
+          "startTicks": 639290451758886126,
+          "currentState": "absent",
+          "executableEvidence": "not-recorded-in-preserved-report"
+        },
+        {
+          "role": "recorded-preview",
+          "pid": 34824,
+          "startTicks": 639290451854963949,
+          "currentState": "absent",
+          "executableEvidence": "not-recorded-in-preserved-report"
+        }
+      ],
+      "exactRecordedDirectChildQueries": [
+        {
+          "parentPid": 26024,
+          "currentChildren": "none"
+        },
+        {
+          "parentPid": 24188,
+          "currentChildren": "none"
+        }
+      ],
+      "listeners": [
+        {
+          "port": 65274,
+          "currentState": "absent",
+          "method": "IPGlobalProperties.GetActiveTcpListeners"
+        },
+        {
+          "port": 51236,
+          "currentState": "absent",
+          "method": "IPGlobalProperties.GetActiveTcpListeners"
+        }
+      ],
+      "currentResources": {
+        "runRoot": "present",
+        "browserProfile": "present",
+        "browserClaimPort65274": "present",
+        "previewClaimPort51236": "absent"
+      },
+      "descendantIdentityLimit": "The preserved report has no individual identities for its 16 protected descendants; the exact current root/parent child queries do not establish the full descendant set absent.",
+      "quarantineUnchanged": true,
+      "cleanupOrRecoveryAttempted": false,
+      "interpretation": "Later process and listener absence does not erase the recorded cleanup failure or prove profile/claim release."
+    },
+    "evidence": [
+      {
+        "artifact": "ao-compiled-q100player-5.json",
+        "sha256": "d9cf954299c03202a5440fc2a11b787f57a773edbf596afab150a6f7b6f031a5"
+      },
+      {
+        "artifact": "manifest.json",
+        "sha256": "1a835c51b3e8c03abe337e985fabedac0b601fccd9032130132a09097c33b909",
+        "note": "Hash only; manifest contents are not included."
+      }
+    ]
+  },
+  "timingReview": {
+    "comparison": "Attempt5 exceeded attempt4 PASS by 1802 ms with the same descendant/absence/query counts.",
+    "largestObservedDeltasMs": {
+      "protectedHelperCensus": 967,
+      "retainedProcessNaturalExitProof": 391,
+      "lateDescendantAbsenceProof": 371
+    },
+    "safeProofDeduplicationFound": false,
+    "interpretation": "Timing variation under the unchanged bounds; no proof was waived."
+  },
+  "qualificationBoundary": {
+    "acceptedAuthored100Layouts": 0,
+    "publication": "HELD",
+    "pending": [
+      "visible player-flow validation",
+      "actual Developer build",
+      "compiled Current9",
+      "compiled E06State10",
+      "normal three-root regression"
+    ]
+  },
+  "evidenceReferences": [
+    {
+      "artifact": "ao-compiled-q100player-6.json",
+      "sha256": "041a97a1459758346ff4fe968757eb34c8b376d53a37fd797c67c57e0cf860ea"
+    },
+    {
+      "artifact": "ao-compiled-q100player-6-result.json",
+      "sha256": "59784146daac4641283e81d0bfb11213409c6ad2646821d91b0e1ea3f2e71d10"
+    },
+    {
+      "artifact": "ap-player-build-reuse-audit-2.json",
+      "sha256": "5b22b4593fac778eb60751521e5ae9724dacc1abd8494dc5ec1af3a5311cef96"
+    }
+  ]
+}

@@ -28,6 +28,299 @@ final class PcbPlacementPlanner {
         final String reason;
         Rejected(String reason) { super(reason); this.reason=reason; }
     }
+    static final int CORRIDOR_FIRST_LEFT_SECOND=1;
+    static final int CORRIDOR_SECOND_LEFT_FIRST=2;
+    static final int CORRIDOR_FIRST_ABOVE_SECOND=4;
+    static final int CORRIDOR_SECOND_ABOVE_FIRST=8;
+    static final int CORRIDOR_ALL_ORIENTATIONS=15;
+    /** ACCEPTED means this trial passed fits; it is not a committed placement. */
+    enum FitOutcome { OUTLINE, ACCESS_ENVELOPE_OVERLAP, INTER_DOMAIN_BARRIER,
+        GLOBAL_CORRIDOR, ACCEPTED }
+    /** Optional per-call observer; it is never retained by the planner. */
+    interface DiagnosticSink {
+        void onFitOutcome(FitOutcome outcome);
+        void onPlacementFailure(PlacementFailureSnapshot snapshot);
+    }
+    /** Immutable primitive snapshot of one mediumPlace call that returned null. */
+    static final class PlacementFailureSnapshot {
+        private final String componentId,domainId,regionId;
+        private final int outlineX,outlineY,outlineWidth,outlineHeight;
+        private final int gridMinOriginX,gridMaxOriginX,gridMinOriginY,gridMaxOriginY;
+        private final int placedCount;
+        private final long evaluationCount,planEvaluationCount;
+        private final long outlineRejectCount,accessEnvelopeOverlapCount;
+        private final long interDomainBarrierCount,globalCorridorCount,acceptedCount;
+        private final CorridorWitnessSnapshot firstGlobalCorridorWitness;
+        private final CorridorWitnessSnapshot firstRequiredOrientationPruneWitness;
+        private PlacementFailureSnapshot(Item item,Rectangle outline,
+                int gridMinOriginX,int gridMaxOriginX,int gridMinOriginY,int gridMaxOriginY,
+                int placedCount,long evaluationCount,long planEvaluationCount,long[] outcomeCounts,
+                CorridorWitnessSnapshot firstGlobalCorridorWitness,
+                CorridorWitnessSnapshot firstRequiredOrientationPruneWitness) {
+            componentId=item.demand.componentId;
+            domainId=item.demand.domainId;
+            regionId=item.demand.regionId;
+            outlineX=outline.x; outlineY=outline.y;
+            outlineWidth=outline.width; outlineHeight=outline.height;
+            this.gridMinOriginX=gridMinOriginX; this.gridMaxOriginX=gridMaxOriginX;
+            this.gridMinOriginY=gridMinOriginY; this.gridMaxOriginY=gridMaxOriginY;
+            this.placedCount=placedCount; this.evaluationCount=evaluationCount;
+            this.planEvaluationCount=planEvaluationCount;
+            outlineRejectCount=outcomeCounts[FitOutcome.OUTLINE.ordinal()];
+            accessEnvelopeOverlapCount=outcomeCounts[FitOutcome.ACCESS_ENVELOPE_OVERLAP.ordinal()];
+            interDomainBarrierCount=outcomeCounts[FitOutcome.INTER_DOMAIN_BARRIER.ordinal()];
+            globalCorridorCount=outcomeCounts[FitOutcome.GLOBAL_CORRIDOR.ordinal()];
+            acceptedCount=outcomeCounts[FitOutcome.ACCEPTED.ordinal()];
+            this.firstGlobalCorridorWitness=firstGlobalCorridorWitness;
+            this.firstRequiredOrientationPruneWitness=firstRequiredOrientationPruneWitness;
+        }
+        String getComponentId() { return componentId; }
+        String getDomainId() { return domainId; }
+        String getRegionId() { return regionId; }
+        int getOutlineX() { return outlineX; }
+        int getOutlineY() { return outlineY; }
+        int getOutlineWidth() { return outlineWidth; }
+        int getOutlineHeight() { return outlineHeight; }
+        int getGridMinOriginX() { return gridMinOriginX; }
+        int getGridMaxOriginX() { return gridMaxOriginX; }
+        int getGridMinOriginY() { return gridMinOriginY; }
+        int getGridMaxOriginY() { return gridMaxOriginY; }
+        int getPlacedCount() { return placedCount; }
+        long getEvaluationCount() { return evaluationCount; }
+        long getPlanEvaluationCount() { return planEvaluationCount; }
+        long getOutlineRejectCount() { return outlineRejectCount; }
+        long getAccessEnvelopeOverlapCount() { return accessEnvelopeOverlapCount; }
+        long getInterDomainBarrierCount() { return interDomainBarrierCount; }
+        long getGlobalCorridorCount() { return globalCorridorCount; }
+        long getAcceptedCount() { return acceptedCount; }
+        CorridorWitnessSnapshot getFirstGlobalCorridorWitness() {
+            return firstGlobalCorridorWitness;
+        }
+        CorridorWitnessSnapshot getFirstRequiredOrientationPruneWitness() {
+            return firstRequiredOrientationPruneWitness;
+        }
+    }
+    /** Immutable primitive bounds and component provenance for one domain union. */
+    static final class DomainBoundsSnapshot {
+        private final String domainId;
+        private final boolean present;
+        private final int x,y,width,height;
+        private final String minXComponentId,maxXComponentId,minYComponentId,maxYComponentId;
+        private DomainBoundsSnapshot(String domainId,boolean present,int x,int y,int width,
+                int height,String minXComponentId,String maxXComponentId,
+                String minYComponentId,String maxYComponentId) {
+            this.domainId=domainId; this.present=present;
+            this.x=x; this.y=y; this.width=width; this.height=height;
+            this.minXComponentId=minXComponentId; this.maxXComponentId=maxXComponentId;
+            this.minYComponentId=minYComponentId; this.maxYComponentId=maxYComponentId;
+        }
+        String getDomainId() { return domainId; }
+        boolean isPresent() { return present; }
+        int getX() { return x; }
+        int getY() { return y; }
+        int getWidth() { return width; }
+        int getHeight() { return height; }
+        String getMinXComponentId() { return minXComponentId; }
+        String getMaxXComponentId() { return maxXComponentId; }
+        String getMinYComponentId() { return minYComponentId; }
+        String getMaxYComponentId() { return maxYComponentId; }
+    }
+    /** First unsatisfied global-corridor witness from one failed medium placement. */
+    static final class CorridorWitnessSnapshot {
+        private final String barrierFirstDomain,barrierSecondDomain;
+        private final int barrierClearance;
+        private final String trialComponentId,trialGeometryId,trialGeometryVariantKey;
+        private final String trialGeometryTransformKey,trialRotation,trialSide;
+        private final int trialX,trialY;
+        private final DomainBoundsSnapshot trialFirstCourtyard,trialSecondCourtyard;
+        private final DomainBoundsSnapshot preTrialFirstDomainBounds,preTrialSecondDomainBounds;
+        private final DomainBoundsSnapshot postUnionFirstDomainBounds,postUnionSecondDomainBounds;
+        private final int appliedAllowedOrientationMask,unconstrainedSeparatingOrientationMask;
+        private final long firstToSecondXMargin,secondToFirstXMargin;
+        private final long firstToSecondYMargin,secondToFirstYMargin;
+        private CorridorWitnessSnapshot(String barrierFirstDomain,String barrierSecondDomain,
+                int barrierClearance,String trialComponentId,String trialGeometryId,
+                String trialGeometryVariantKey,String trialGeometryTransformKey,int trialX,
+                int trialY,String trialRotation,String trialSide,
+                DomainBoundsSnapshot trialFirstCourtyard,DomainBoundsSnapshot trialSecondCourtyard,
+                DomainBoundsSnapshot preTrialFirstDomainBounds,
+                DomainBoundsSnapshot preTrialSecondDomainBounds,
+                DomainBoundsSnapshot postUnionFirstDomainBounds,
+                DomainBoundsSnapshot postUnionSecondDomainBounds,
+                int appliedAllowedOrientationMask,int unconstrainedSeparatingOrientationMask,
+                long firstToSecondXMargin,
+                long secondToFirstXMargin,long firstToSecondYMargin,long secondToFirstYMargin) {
+            this.barrierFirstDomain=barrierFirstDomain;
+            this.barrierSecondDomain=barrierSecondDomain;
+            this.barrierClearance=barrierClearance;
+            this.trialComponentId=trialComponentId;
+            this.trialGeometryId=trialGeometryId;
+            this.trialGeometryVariantKey=trialGeometryVariantKey;
+            this.trialGeometryTransformKey=trialGeometryTransformKey;
+            this.trialX=trialX; this.trialY=trialY;
+            this.trialRotation=trialRotation; this.trialSide=trialSide;
+            this.trialFirstCourtyard=trialFirstCourtyard;
+            this.trialSecondCourtyard=trialSecondCourtyard;
+            this.preTrialFirstDomainBounds=preTrialFirstDomainBounds;
+            this.preTrialSecondDomainBounds=preTrialSecondDomainBounds;
+            this.postUnionFirstDomainBounds=postUnionFirstDomainBounds;
+            this.postUnionSecondDomainBounds=postUnionSecondDomainBounds;
+            this.appliedAllowedOrientationMask=appliedAllowedOrientationMask;
+            this.unconstrainedSeparatingOrientationMask=unconstrainedSeparatingOrientationMask;
+            this.firstToSecondXMargin=firstToSecondXMargin;
+            this.secondToFirstXMargin=secondToFirstXMargin;
+            this.firstToSecondYMargin=firstToSecondYMargin;
+            this.secondToFirstYMargin=secondToFirstYMargin;
+        }
+        String getBarrierFirstDomain() { return barrierFirstDomain; }
+        String getBarrierSecondDomain() { return barrierSecondDomain; }
+        int getBarrierClearance() { return barrierClearance; }
+        String getTrialComponentId() { return trialComponentId; }
+        String getTrialGeometryId() { return trialGeometryId; }
+        String getTrialGeometryVariantKey() { return trialGeometryVariantKey; }
+        String getTrialGeometryTransformKey() { return trialGeometryTransformKey; }
+        int getTrialX() { return trialX; }
+        int getTrialY() { return trialY; }
+        String getTrialRotation() { return trialRotation; }
+        String getTrialSide() { return trialSide; }
+        DomainBoundsSnapshot getTrialFirstCourtyard() { return trialFirstCourtyard; }
+        DomainBoundsSnapshot getTrialSecondCourtyard() { return trialSecondCourtyard; }
+        DomainBoundsSnapshot getPreTrialFirstDomainBounds() {
+            return preTrialFirstDomainBounds;
+        }
+        DomainBoundsSnapshot getPreTrialSecondDomainBounds() {
+            return preTrialSecondDomainBounds;
+        }
+        DomainBoundsSnapshot getPostUnionFirstDomainBounds() {
+            return postUnionFirstDomainBounds;
+        }
+        DomainBoundsSnapshot getPostUnionSecondDomainBounds() {
+            return postUnionSecondDomainBounds;
+        }
+        int getAppliedAllowedOrientationMask() { return appliedAllowedOrientationMask; }
+        int getUnconstrainedSeparatingOrientationMask() {
+            return unconstrainedSeparatingOrientationMask;
+        }
+        /** Positive is a clearance shortfall; zero or less satisfies this orientation. */
+        long getFirstToSecondXMargin() { return firstToSecondXMargin; }
+        /** Positive is a clearance shortfall; zero or less satisfies this orientation. */
+        long getSecondToFirstXMargin() { return secondToFirstXMargin; }
+        /** Positive is a clearance shortfall; zero or less satisfies this orientation. */
+        long getFirstToSecondYMargin() { return firstToSecondYMargin; }
+        /** Positive is a clearance shortfall; zero or less satisfies this orientation. */
+        long getSecondToFirstYMargin() { return secondToFirstYMargin; }
+    }
+    private static final class DomainExtrema {
+        boolean present;
+        int minX,maxX,minY,maxY;
+        String minXComponentId,maxXComponentId,minYComponentId,maxYComponentId;
+        void include(Rectangle bounds,String componentId) {
+            int right=bounds.x+bounds.width,bottom=bounds.y+bounds.height;
+            if(!present) {
+                present=true; minX=bounds.x; maxX=right; minY=bounds.y; maxY=bottom;
+                minXComponentId=componentId; maxXComponentId=componentId;
+                minYComponentId=componentId; maxYComponentId=componentId;
+                return;
+            }
+            if(bounds.x<minX) { minX=bounds.x; minXComponentId=componentId; }
+            if(right>maxX) { maxX=right; maxXComponentId=componentId; }
+            if(bounds.y<minY) { minY=bounds.y; minYComponentId=componentId; }
+            if(bottom>maxY) { maxY=bottom; maxYComponentId=componentId; }
+        }
+    }
+    private static final class CorridorWitnessCapture {
+        private CorridorWitnessSnapshot firstGlobalWitness;
+        private CorridorWitnessSnapshot firstRequiredOrientationPruneWitness;
+        boolean needsWitnessData() {
+            return firstGlobalWitness==null || firstRequiredOrientationPruneWitness==null;
+        }
+        CorridorWitnessSnapshot snapshot() { return firstGlobalWitness; }
+        CorridorWitnessSnapshot orientationPruneSnapshot() {
+            return firstRequiredOrientationPruneWitness;
+        }
+        void capture(PcbPlacementConstraints constraints,PcbFootprint trial,
+                Vector<PcbFootprint> placed,int self,
+                TreeMap<String,Rectangle> trialCourtyards,
+                TreeMap<String,Rectangle> postUnionCourtyards,
+                PcbPlacementConstraints.Barrier barrier,Rectangle first,Rectangle second,
+                int appliedAllowedOrientationMask,int unconstrainedSeparatingOrientationMask,
+                boolean captureGlobalWitness,boolean captureRequiredOrientationPruneWitness) {
+            if((!captureGlobalWitness || firstGlobalWitness!=null) &&
+                    (!captureRequiredOrientationPruneWitness ||
+                    firstRequiredOrientationPruneWitness!=null))return;
+            String trialId=trial.getPlacement().getComponentId();
+            TreeMap<String,DomainExtrema> preExtrema=new TreeMap<String,DomainExtrema>();
+            TreeMap<String,DomainExtrema> postExtrema=new TreeMap<String,DomainExtrema>();
+            includeDomainExtrema(postExtrema,trialCourtyards,trialId);
+            for(int index=0;index<placed.size();index++) if(index!=self) {
+                PcbFootprint peer=placed.get(index);
+                TreeMap<String,Rectangle> peerCourtyards=
+                    constraints.domainCourtyards(peer.getPlacement());
+                String peerId=peer.getPlacement().getComponentId();
+                includeDomainExtrema(preExtrema,peerCourtyards,peerId);
+                includeDomainExtrema(postExtrema,peerCourtyards,peerId);
+            }
+            DomainBoundsSnapshot trialFirst=trialDomainSnapshot(barrier.firstDomain,
+                trialCourtyards,trialId);
+            DomainBoundsSnapshot trialSecond=trialDomainSnapshot(barrier.secondDomain,
+                trialCourtyards,trialId);
+            DomainBoundsSnapshot preFirst=aggregateDomainSnapshot(barrier.firstDomain,
+                preExtrema.get(barrier.firstDomain),null);
+            DomainBoundsSnapshot preSecond=aggregateDomainSnapshot(barrier.secondDomain,
+                preExtrema.get(barrier.secondDomain),null);
+            DomainBoundsSnapshot postFirst=aggregateDomainSnapshot(barrier.firstDomain,
+                postExtrema.get(barrier.firstDomain),postUnionCourtyards.get(barrier.firstDomain));
+            DomainBoundsSnapshot postSecond=aggregateDomainSnapshot(barrier.secondDomain,
+                postExtrema.get(barrier.secondDomain),postUnionCourtyards.get(barrier.secondDomain));
+            PcbComponentPlacement placement=trial.getPlacement();
+            CorridorWitnessSnapshot captured=new CorridorWitnessSnapshot(
+                barrier.firstDomain,barrier.secondDomain,
+                barrier.clearance,trialId,placement.getPhysicalPackage().getId(),
+                placement.getGeometryVariantKey(),placement.getGeometryTransformKey(),
+                placement.getX(),placement.getY(),placement.getRotation().name(),
+                placement.getMountingSide().name(),trialFirst,trialSecond,preFirst,preSecond,
+                postFirst,postSecond,appliedAllowedOrientationMask,
+                unconstrainedSeparatingOrientationMask,
+                (long)first.x+first.width+barrier.clearance-second.x,
+                (long)second.x+second.width+barrier.clearance-first.x,
+                (long)first.y+first.height+barrier.clearance-second.y,
+                (long)second.y+second.height+barrier.clearance-first.y);
+            if(captureGlobalWitness && firstGlobalWitness==null)
+                firstGlobalWitness=captured;
+            if(captureRequiredOrientationPruneWitness &&
+                    firstRequiredOrientationPruneWitness==null)
+                firstRequiredOrientationPruneWitness=captured;
+        }
+        private static void includeDomainExtrema(TreeMap<String,DomainExtrema> aggregates,
+                TreeMap<String,Rectangle> courtyards,String componentId) {
+            for(java.util.Map.Entry<String,Rectangle> entry:courtyards.entrySet()) {
+                DomainExtrema aggregate=aggregates.get(entry.getKey());
+                if(aggregate==null) { aggregate=new DomainExtrema(); aggregates.put(entry.getKey(),aggregate); }
+                aggregate.include(entry.getValue(),componentId);
+            }
+        }
+        private static DomainBoundsSnapshot trialDomainSnapshot(String domainId,
+                TreeMap<String,Rectangle> courtyards,String componentId) {
+            Rectangle bounds=courtyards.get(domainId);
+            if(bounds==null)return emptyDomainSnapshot(domainId);
+            return new DomainBoundsSnapshot(domainId,true,bounds.x,bounds.y,bounds.width,
+                bounds.height,componentId,componentId,componentId,componentId);
+        }
+        private static DomainBoundsSnapshot aggregateDomainSnapshot(String domainId,
+                DomainExtrema extrema,Rectangle actualBounds) {
+            if(extrema==null || !extrema.present)
+                return emptyDomainSnapshot(domainId);
+            int x=actualBounds==null?extrema.minX:actualBounds.x;
+            int y=actualBounds==null?extrema.minY:actualBounds.y;
+            int width=actualBounds==null?extrema.maxX-extrema.minX:actualBounds.width;
+            int height=actualBounds==null?extrema.maxY-extrema.minY:actualBounds.height;
+            return new DomainBoundsSnapshot(domainId,true,x,y,width,height,extrema.minXComponentId,
+                extrema.maxXComponentId,extrema.minYComponentId,extrema.maxYComponentId);
+        }
+        private static DomainBoundsSnapshot emptyDomainSnapshot(String domainId) {
+            return new DomainBoundsSnapshot(domainId,false,0,0,0,0,null,null,null,null);
+        }
+    }
     static final class Plan {
         final Rectangle outline;
         final Vector<PcbFootprint> footprints;
@@ -72,6 +365,10 @@ final class PcbPlacementPlanner {
         if (registry==null) throw new IllegalArgumentException("Missing footprint registry"); this.registry=registry;
     }
     Plan plan(TroubleshootBoard board,PcbPlacementConstraints constraints,long seed,int candidate) {
+        return plan(board,constraints,seed,candidate,null);
+    }
+    Plan plan(TroubleshootBoard board,PcbPlacementConstraints constraints,long seed,int candidate,
+            DiagnosticSink diagnosticSink) {
         if (board==null || constraints==null) throw new IllegalArgumentException("Missing placement inputs");
         constraints.validate(board);
         if (board.getComponentIds().isEmpty() || board.getComponentIds().size()>MAX_PARTS) throw new Rejected("PART_LIMIT");
@@ -133,7 +430,7 @@ final class PcbPlacementPlanner {
         anchorWidth=align(anchorWidth); maxWidth=align(maxWidth);
         if (board.getComponentIds().size()>=MEDIUM_MIN_PARTS)
             return planMedium(board,constraints,seed,candidate,algorithmCandidate,useCompact,groups,anchors,
-                demandArea,courtyardArea,maxWidth,anchorWidth);
+                demandArea,courtyardArea,maxWidth,anchorWidth,diagnosticSink);
         boolean leftAnchored=false,rightAnchored=false;
         for(Item item:anchors) {
             PcbPlacementConstraints.Anchor side=resolvedAnchor(item.demand,seed,candidate);
@@ -255,7 +552,7 @@ final class PcbPlacementPlanner {
             PcbPlacementConstraints constraints,long seed,int candidate,int algorithmCandidate,
             boolean useCompact,
             TreeMap<String,Region> groups,Vector<Item> anchors,long demandArea,
-            long courtyardArea,int maxWidth,int anchorWidth) {
+            long courtyardArea,int maxWidth,int anchorWidth,DiagnosticSink diagnosticSink) {
         int placementVersion = constraints.placementDensityVersion;
         boolean pinLocal=placementVersion>=10 && candidate==1 &&
             SeededPcbLayoutGenerator.hasRepeatedControlRegions(constraints);
@@ -277,6 +574,14 @@ final class PcbPlacementPlanner {
         for (Item item:anchors) {
             all.add(item); byId.put(item.demand.componentId,item);
             maxHeight=Math.max(maxHeight,item.envelope.height+CHANNEL);
+        }
+        Vector<PcbFootprint> selectedFootprints=new Vector<PcbFootprint>();
+        for(Item item:all)selectedFootprints.add(item.footprint);
+        TreeMap<String,Integer> corridorRequirements=new TreeMap<String,Integer>();
+        for(PcbPlacementConstraints.Barrier barrier:constraints.getBarriers()) {
+            int allowed=requireNonEmptyIsolationOrientationMask(
+                supportedIsolationOrientationMask(constraints,barrier,selectedFootprints));
+            corridorRequirements.put(corridorBarrierKey(barrier),allowed);
         }
         final TreeMap<String,RegionHint> hints=mediumRegionHints(board,groups,anchors,
             byId,topology,seed,algorithmCandidate,useGrouped);
@@ -373,7 +678,7 @@ final class PcbPlacementPlanner {
         for (Item item:orderedAnchors) {
             PcbFootprint selected=mediumPlace(item,placed,topology,hints,board,
                 constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,tight,
-                pinLocal,true,boundaryX,evaluations);
+                pinLocal,true,boundaryX,evaluations,corridorRequirements,diagnosticSink);
             if(selected==null) throw new Rejected("MEDIUM_CONNECTOR_PACKING");
             item.footprint=selected; placed.add(selected);
         }
@@ -387,7 +692,7 @@ final class PcbPlacementPlanner {
             if(next==null) throw new Rejected("MEDIUM_COMPONENT_ORDER");
             PcbFootprint selected=mediumPlace(next,placed,topology,hints,board,
                 constraints,outline,seed,algorithmCandidate,useCompact,useGrouped,scoreGrouped,scoreWholeContent,tight,
-                pinLocal,false,boundaryX,evaluations);
+                pinLocal,false,boundaryX,evaluations,corridorRequirements,diagnosticSink);
             if(selected==null) throw new Rejected("MEDIUM_COMPONENT_PACKING");
             next.footprint=selected; placed.add(selected);
             remaining.remove(next.demand.componentId);
@@ -929,7 +1234,12 @@ final class PcbPlacementPlanner {
             TopologyPlacementGraph topology,TreeMap<String,RegionHint> hints,
             TroubleshootBoard board,PcbPlacementConstraints constraints,Rectangle outline,
             long seed,int algorithmCandidate,boolean useCompact,boolean useGrouped,
-            boolean scoreGrouped,boolean scoreWholeContent,boolean tight,boolean pinLocal,boolean anchor,int boundaryX,int[] evaluations) {
+            boolean scoreGrouped,boolean scoreWholeContent,boolean tight,boolean pinLocal,
+            boolean anchor,int boundaryX,int[] evaluations,
+            TreeMap<String,Integer> corridorRequirements,DiagnosticSink diagnosticSink) {
+        int itemEvaluationStart=evaluations[0];
+        long[] outcomeCounts=diagnosticSink==null?null:new long[FitOutcome.values().length];
+        CorridorWitnessCapture corridorWitness=diagnosticSink==null?null:new CorridorWitnessCapture();
         RegionHint hint=hints.get(regionKey(item.demand));
         int preferredX=outline.x+MEDIUM_BORDER+(int)Math.round(
             (outline.width-2.0*MEDIUM_BORDER)*(hint==null ? .5 : hint.xFraction))-
@@ -1021,7 +1331,8 @@ final class PcbPlacementPlanner {
                 evaluations[0]++;
                 if(evaluations[0]>MEDIUM_MAX_EVALUATIONS)
                     throw new Rejected("MEDIUM_PLACEMENT_BUDGET");
-                if(!fits(trial,outline,placed,-1,constraints))continue;
+                if(!fits(trial,outline,placed,-1,constraints,diagnosticSink,outcomeCounts,
+                        corridorWitness,corridorRequirements))continue;
                 double score=mediumPlacementScore(trial,item,placed,topology,board,hint,outline,useCompact,scoreWholeContent,group);
                 if(support!=null)score+=support.endpointSpan(trial)*3.0;
                 if(vacancyPreference!=null)score+=(Math.abs((long)x-vacancyPreference.x)+
@@ -1060,7 +1371,8 @@ final class PcbPlacementPlanner {
                     mediumGridOrigin(item.footprint,x,outline,margin,false),
                     mediumGridOrigin(item.footprint,y,outline,margin,true));
                 evaluations[0]++;
-                if(!fits(trial,outline,placed,-1,constraints))continue;
+                if(!fits(trial,outline,placed,-1,constraints,diagnosticSink,outcomeCounts,
+                        corridorWitness,corridorRequirements))continue;
                 double score=mediumPlacementScore(trial,item,placed,topology,board,hint,outline,useCompact,scoreWholeContent,group);
                 if(support!=null)score+=support.endpointSpan(trial)*3.0;
                 if(vacancyPreference!=null)score+=(Math.abs((long)trial.getPlacement().getX()-vacancyPreference.x)+
@@ -1073,6 +1385,16 @@ final class PcbPlacementPlanner {
                  * work for larger inventories and preserves candidate variety. */
                 break;
             }
+        }
+        if(best==null && diagnosticSink!=null) {
+            int margin=itemsMargin(item,constraints);
+            diagnosticSink.onPlacementFailure(new PlacementFailureSnapshot(item,outline,
+                mediumGridBound(item.footprint,outline,margin,false,false),
+                mediumGridBound(item.footprint,outline,margin,false,true),
+                mediumGridBound(item.footprint,outline,margin,true,false),
+                mediumGridBound(item.footprint,outline,margin,true,true),
+                placed.size(),evaluations[0]-itemEvaluationStart,evaluations[0],outcomeCounts,
+                corridorWitness.snapshot(),corridorWitness.orientationPruneSnapshot()));
         }
         return best;
     }
@@ -1303,43 +1625,165 @@ final class PcbPlacementPlanner {
             }
         return score;
     }
+    /** Returns the four clearance-qualified relative orientations supported by a pair. */
+    static int separatingOrientationMask(Rectangle first,Rectangle second,int clearance) {
+        if(first==null || second==null || clearance<0)
+            throw new IllegalArgumentException("Invalid corridor orientation inputs");
+        int result=0;
+        if((long)first.x+first.width+clearance<=second.x)
+            result|=CORRIDOR_FIRST_LEFT_SECOND;
+        if((long)second.x+second.width+clearance<=first.x)
+            result|=CORRIDOR_SECOND_LEFT_FIRST;
+        if((long)first.y+first.height+clearance<=second.y)
+            result|=CORRIDOR_FIRST_ABOVE_SECOND;
+        if((long)second.y+second.height+clearance<=first.y)
+            result|=CORRIDOR_SECOND_ABOVE_FIRST;
+        return result;
+    }
+    /**
+     * Intersects orientations supported by every selected mixed package that
+     * carries both domains of this barrier. Translation cannot change these
+     * relative courtyard relations; ordinary packages impose no restriction.
+     */
+    static int supportedIsolationOrientationMask(PcbPlacementConstraints constraints,
+            PcbPlacementConstraints.Barrier barrier,Vector<PcbFootprint> selectedFootprints) {
+        if(constraints==null || barrier==null || selectedFootprints==null)
+            throw new IllegalArgumentException("Missing selected isolation orientation inputs");
+        int result=CORRIDOR_ALL_ORIENTATIONS;
+        boolean found=false;
+        for(PcbFootprint footprint:selectedFootprints) {
+            if(footprint==null)throw new IllegalArgumentException("Missing selected footprint");
+            PhysicalPackageGeometry geometry=
+                footprint.getPlacement().getPhysicalGeometry();
+            if(geometry==null || geometry.getIsolationBody()==null)continue;
+            TreeMap<String,Rectangle> courtyards=
+                constraints.domainCourtyards(footprint.getPlacement());
+            Rectangle first=courtyards.get(barrier.firstDomain);
+            Rectangle second=courtyards.get(barrier.secondDomain);
+            if(first==null || second==null)continue;
+            result&=separatingOrientationMask(first,second,barrier.clearance);
+            found=true;
+        }
+        return found?result:CORRIDOR_ALL_ORIENTATIONS;
+    }
+    /** Empty selected-body orientation intersections are an explicit placement rejection. */
+    static int requireNonEmptyIsolationOrientationMask(int mask) {
+        if((mask&~CORRIDOR_ALL_ORIENTATIONS)!=0)
+            throw new IllegalArgumentException("Unknown corridor orientation bit");
+        if(mask==0)throw new Rejected("MIXED_CORRIDOR_ORIENTATION");
+        return mask;
+    }
+    /** Current aggregate orientations; incomplete views remain admissible until both domains exist. */
+    static int currentSeparatingOrientations(PcbPlacementConstraints constraints,
+            PcbPlacementConstraints.Barrier barrier,PcbFootprint trial,
+            Vector<PcbFootprint> placed,int self,boolean complete) {
+        if(constraints==null || barrier==null || placed==null)
+            throw new IllegalArgumentException("Missing current corridor inputs");
+        TreeMap<String,Rectangle> domains=aggregateDomainCourtyards(
+            constraints,trial,placed,self);
+        return currentSeparatingOrientations(barrier,domains,complete);
+    }
+    private static int currentSeparatingOrientations(
+            PcbPlacementConstraints.Barrier barrier,TreeMap<String,Rectangle> domains,
+            boolean complete) {
+        Rectangle first=domains.get(barrier.firstDomain),second=domains.get(barrier.secondDomain);
+        if(first==null || second==null)
+            return complete?0:CORRIDOR_ALL_ORIENTATIONS;
+        return separatingOrientationMask(first,second,barrier.clearance);
+    }
+    private static TreeMap<String,Rectangle> aggregateDomainCourtyards(
+            PcbPlacementConstraints constraints,PcbFootprint trial,
+            Vector<PcbFootprint> placed,int self) {
+        TreeMap<String,Rectangle> domains=new TreeMap<String,Rectangle>();
+        if(trial!=null)
+            addDomainCourtyards(constraints.domainCourtyards(trial.getPlacement()),domains);
+        for(int index=0;index<placed.size();index++) if(index!=self)
+            addDomainCourtyards(constraints,placed.get(index),domains);
+        return domains;
+    }
+    private static String corridorBarrierKey(PcbPlacementConstraints.Barrier barrier) {
+        return barrier.firstDomain.length()+":"+barrier.firstDomain+barrier.secondDomain;
+    }
+    private static int requiredCorridorOrientations(
+            PcbPlacementConstraints.Barrier barrier,TreeMap<String,Integer> requirements) {
+        if(requirements==null)return CORRIDOR_ALL_ORIENTATIONS;
+        Integer required=requirements.get(corridorBarrierKey(barrier));
+        return required==null?CORRIDOR_ALL_ORIENTATIONS:required.intValue();
+    }
     private static boolean fits(PcbFootprint f,Rectangle outline,Vector<PcbFootprint> placed,int self,PcbPlacementConstraints constraints) {
+        return fits(f,outline,placed,self,constraints,null,null,null,null);
+    }
+    private static boolean fits(PcbFootprint f,Rectangle outline,Vector<PcbFootprint> placed,
+            int self,PcbPlacementConstraints constraints,DiagnosticSink diagnosticSink,
+            long[] outcomeCounts,CorridorWitnessCapture corridorWitness,
+            TreeMap<String,Integer> corridorRequirements) {
         PcbPlacementConstraints.Part demand=constraints.get(f.getPlacement().getComponentId()); Rectangle r=envelope(f,demand.accessMargin);
-        if(r.x<outline.x+10 || r.y<outline.y+10 || r.x+r.width>outline.x+outline.width-10 || r.y+r.height>outline.y+outline.height-10) return false;
+        if(r.x<outline.x+10 || r.y<outline.y+10 || r.x+r.width>outline.x+outline.width-10 || r.y+r.height>outline.y+outline.height-10)
+            return reportFitOutcome(diagnosticSink,outcomeCounts,FitOutcome.OUTLINE);
         for(int i=0;i<placed.size();i++) if(i!=self) {
             PcbFootprint other=placed.get(i); PcbPlacementConstraints.Part od=constraints.get(other.getPlacement().getComponentId());
-            Rectangle b=envelope(other,od.accessMargin); if(r.intersects(b)) return false;
+            Rectangle b=envelope(other,od.accessMargin); if(r.intersects(b))
+                return reportFitOutcome(diagnosticSink,outcomeCounts,FitOutcome.ACCESS_ENVELOPE_OVERLAP);
             for(PcbPlacementConstraints.Barrier barrier:constraints.getBarriers())
                 for(java.util.Map.Entry<String,Rectangle> a:constraints.domainCourtyards(f.getPlacement()).entrySet())
                     for(java.util.Map.Entry<String,Rectangle> c:constraints.domainCourtyards(other.getPlacement()).entrySet())
                         if(barrier.separates(a.getKey(),c.getKey())) {
                             Rectangle ac=a.getValue(),bc=c.getValue();
                             int dx=Math.max(ac.x-bc.x-bc.width,bc.x-ac.x-ac.width),dy=Math.max(ac.y-bc.y-bc.height,bc.y-ac.y-ac.height);
-                            if(Math.max(dx,dy)<barrier.clearance) return false;
+                            if(Math.max(dx,dy)<barrier.clearance)
+                                return reportFitOutcome(diagnosticSink,outcomeCounts,FitOutcome.INTER_DOMAIN_BARRIER);
                         }
         }
-        return hasGlobalCorridors(constraints,f,placed,self,false);
+        if(!hasGlobalCorridors(constraints,f,placed,self,false,corridorWitness,
+                corridorRequirements))
+            return reportFitOutcome(diagnosticSink,outcomeCounts,FitOutcome.GLOBAL_CORRIDOR);
+        return reportFitOutcome(diagnosticSink,outcomeCounts,FitOutcome.ACCEPTED);
+    }
+    private static boolean reportFitOutcome(DiagnosticSink diagnosticSink,long[] outcomeCounts,
+            FitOutcome outcome) {
+        if(outcomeCounts!=null)outcomeCounts[outcome.ordinal()]++;
+        if(diagnosticSink!=null)diagnosticSink.onFitOutcome(outcome);
+        return outcome==FitOutcome.ACCEPTED;
     }
     /** A barrier needs one common corridor, not a different axis for each pair. */
     private static boolean hasGlobalCorridors(PcbPlacementConstraints constraints,
             PcbFootprint trial,Vector<PcbFootprint> placed,int self,boolean complete) {
+        return hasGlobalCorridors(constraints,trial,placed,self,complete,null,null);
+    }
+    private static boolean hasGlobalCorridors(PcbPlacementConstraints constraints,
+            PcbFootprint trial,Vector<PcbFootprint> placed,int self,boolean complete,
+            CorridorWitnessCapture witnessCapture) {
+        return hasGlobalCorridors(constraints,trial,placed,self,complete,witnessCapture,null);
+    }
+    private static boolean hasGlobalCorridors(PcbPlacementConstraints constraints,
+            PcbFootprint trial,Vector<PcbFootprint> placed,int self,boolean complete,
+            CorridorWitnessCapture witnessCapture,
+            TreeMap<String,Integer> corridorRequirements) {
         Vector<PcbPlacementConstraints.Barrier> barriers=constraints.getBarriers();
         if(barriers.isEmpty())return true;
+        boolean captureWitnessData=witnessCapture!=null && witnessCapture.needsWitnessData();
+        TreeMap<String,Rectangle> trialCourtyards=trial==null?null:
+            constraints.domainCourtyards(trial.getPlacement());
         TreeMap<String,Rectangle> domains=new TreeMap<String,Rectangle>();
-        if(trial!=null)addDomainCourtyards(constraints,trial,domains);
-        for(int index=0;index<placed.size();index++)
-            if(index!=self)addDomainCourtyards(constraints,placed.get(index),domains);
+        if(trialCourtyards!=null)addDomainCourtyards(trialCourtyards,domains);
+        for(int index=0;index<placed.size();index++) if(index!=self)
+            addDomainCourtyards(constraints,placed.get(index),domains);
         for(PcbPlacementConstraints.Barrier barrier:barriers) {
             Rectangle first=domains.get(barrier.firstDomain),second=domains.get(barrier.secondDomain);
-            if(first==null || second==null) {
-                if(complete)return false;
-                continue;
-            }
-            int gap=barrier.clearance;
-            if((long)first.x+first.width+gap<=second.x ||
-                    (long)second.x+second.width+gap<=first.x ||
-                    (long)first.y+first.height+gap<=second.y ||
-                    (long)second.y+second.height+gap<=first.y)continue;
+            int unconstrainedMask=currentSeparatingOrientations(barrier,domains,complete);
+            int allowedMask=requiredCorridorOrientations(barrier,corridorRequirements);
+            if((unconstrainedMask&allowedMask)!=0)continue;
+            boolean captureGlobal=witnessCapture!=null && first!=null && second!=null &&
+                unconstrainedMask==0 && witnessCapture.snapshot()==null;
+            boolean captureOrientationPrune=witnessCapture!=null && first!=null &&
+                second!=null && unconstrainedMask!=0 &&
+                (unconstrainedMask&allowedMask)==0 &&
+                witnessCapture.orientationPruneSnapshot()==null;
+            if(captureWitnessData && trial!=null &&
+                    (captureGlobal || captureOrientationPrune))
+                witnessCapture.capture(constraints,trial,placed,self,trialCourtyards,
+                    domains,barrier,first,second,allowedMask,unconstrainedMask,
+                    captureGlobal,captureOrientationPrune);
             return false;
         }
         return true;
@@ -1348,8 +1792,11 @@ final class PcbPlacementPlanner {
             PcbFootprint footprint,TreeMap<String,Rectangle> domains) {
         // Mixed packages contribute their declared conductive courtyards;
         // their inert insulating body may span the corridor.
-        for(java.util.Map.Entry<String,Rectangle> entry:
-                constraints.domainCourtyards(footprint.getPlacement()).entrySet()) {
+        addDomainCourtyards(constraints.domainCourtyards(footprint.getPlacement()),domains);
+    }
+    private static void addDomainCourtyards(TreeMap<String,Rectangle> courtyards,
+            TreeMap<String,Rectangle> domains) {
+        for(java.util.Map.Entry<String,Rectangle> entry:courtyards.entrySet()) {
             Rectangle old=domains.get(entry.getKey());
             domains.put(entry.getKey(),old==null?new Rectangle(entry.getValue()):union(old,entry.getValue()));
         }

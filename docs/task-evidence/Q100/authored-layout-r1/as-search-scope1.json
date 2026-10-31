@@ -1,0 +1,68 @@
+{
+  "schema": "troubleshootjs-q100-search-scope-disclosure-v1",
+  "status": "SCOPE_DISCLOSED_PROTECTED_CONTENT_STATUS_UNKNOWN",
+  "supplements": "as-current-focused1.json",
+  "originalSearch": {
+    "sourceOnlyCommands": [
+      "rg -n \"task48|Task48|receive|Receive|TimeoutSeconds|operationBudget|transport\" scripts/verify-a03-browser.ps1 scripts/VerifierIsolation.psm1 scripts/verify-q100-evidence.ps1",
+      "rg -n \"function Navigate-Cdp|Get-Route-Reports|Invoke-Cdp|Evaluate-Cdp|Get-Route-Reports|Get-DiagnosticText|Throw-VerifierInfrastructure|Invoke-Route\" scripts/verify-a03-browser.ps1"
+    ],
+    "broadScratchCommand": "rg -n \"route-task48|task48|elapsedMs|remainingDeadlineMs|CDP receive\" <OLD-SCRATCH>/ao-compiled-current-1* <OLD-SCRATCH> 2>$null",
+    "oldScratchBasename": "tsj-q100-pilot-18c2561bd2f043c7ba51ef907665466f",
+    "searchRootWasExplicit": true,
+    "prefixArgumentDidNotConstrainWholeRootArgument": true,
+    "explicitGlobExclusions": [],
+    "ripgrepDefaults": {
+      "hiddenFilesSkipped": true,
+      "ignoreFilesRespected": true,
+      "binaryFilesSkipped": true,
+      "symlinksFollowed": false
+    }
+  },
+  "returnedOutput": {
+    "toolOutputTruncated": true,
+    "approximateOriginalTokens": 1370000,
+    "completeOutputRetained": false,
+    "rawOutputCopiedOrSaved": false,
+    "visibleExcerptCategories": [
+      "source matches",
+      "P04 console and receipt matches"
+    ],
+    "omittedMatchesCanBeReconstructed": false
+  },
+  "rootPathNameOnlyAudit": {
+    "artifact": "as-overbroad-search-scope1/result.json",
+    "sha256": "0fa4b7b87d6cf4e22b81e2fe97bd5ccf5b27155afa5dc971631b7519e38d0f48",
+    "bytes": 491,
+    "filenameCount": 3411,
+    "namedProtectedPatternMatches": {
+      "HARD": 0,
+      "PSYCHOTIC": 0,
+      "Protected": 0,
+      "Blind": 0,
+      "Holdout": 0
+    },
+    "symlinksFollowed": false,
+    "fileContentsReadByInventory": false,
+    "fullPathInventoryCopied": false
+  },
+  "protectedDataBoundary": {
+    "protectedContentReadStatus": "UNKNOWN_CANNOT_CERTIFY",
+    "protectedHardOrPsychoticExecutionKnown": false,
+    "hardAndPsychoticRemainUnavailableAndUnrun": true,
+    "reason": "The original content search had no protected-name exclusion. The later filename-only audit found no matching names, but filenames cannot rule out protected content under a different name."
+  },
+  "disclosure": {
+    "originalSearchScopeErrorDisclosedByRoot": true,
+    "thisPacketPreservesRatherThanRewritesPriorDisclosure": true,
+    "noProtectedContentsWereOpenedForThisSupplement": true,
+    "onlyRootMetadataResultWasRead": true,
+    "relativePathsFileContentsWereNotRead": true
+  },
+  "limitations": [
+    "The second ripgrep argument searched the entire named scratch root; every nonhidden, nonignored text file there matching the query could be read.",
+    "The explicit ao-compiled-current-1* path argument did not narrow the additional whole-directory argument.",
+    "The visible tool output was truncated, so omitted matching lines and any protected-content exposure cannot be determined from retained output.",
+    "The filename-only audit is evidence about names only; it is not proof that protected content was absent or unread."
+  ]
+}

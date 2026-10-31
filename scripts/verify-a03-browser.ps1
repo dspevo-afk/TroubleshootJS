@@ -11,7 +11,8 @@ param(
     [string]$WorktreeRoot = '',
     [AllowEmptyString()]
     [string]$OutputPath = '',
-    [int]$TimeoutSeconds = 90
+    [int]$TimeoutSeconds = 90,
+    [switch]$TraceRouteTiming
 )
 
 # This is a small developer-report reader. It deliberately uses the same
@@ -36,6 +37,15 @@ $script:FailureDiagnostic = $null
 $script:CleanupDiagnostic = $null
 $script:NextCdpId = 1
 $script:CdpEvents = New-Object Collections.Generic.List[string]
+$script:RouteTimingEnabled = [bool]$TraceRouteTiming
+$script:RouteTimingRecordLimit = 64
+$script:RouteTimingRecords = New-Object Collections.Generic.List[object]
+$script:RouteTimingRecordCount = 0
+$script:RouteTimingTruncatedCount = 0
+$script:RouteTimingOrdinal = 0
+$script:CurrentRouteTiming = $null
+$script:CurrentRouteTimingClock = $null
+$script:RouteTimingRecorderFailureCount = 0
 $script:IsQ100Gate = ($Gate -ieq 'Q100' -or $Gate -ieq 'Q100Faults' -or $Gate -ieq 'Q100Player' -or $Gate -ieq 'E06State') -and -not $Smoke
 $script:Q100MatrixStartedUtc = if ($script:IsQ100Gate) { [DateTime]::UtcNow } else { [DateTime]::MinValue }
 $script:Q100MatrixDeadlineUtc = if ($script:IsQ100Gate) { $script:Q100MatrixStartedUtc.AddSeconds(6000) } else { [DateTime]::MinValue }
@@ -275,16 +285,361 @@ function Receive-Cdp($Socket, [int]$WantedId, [DateTime]$Deadline) {
     }
 }
 
+function Get-RouteTimingElapsedMilliseconds([long]$StartTicks) {
+    $elapsedTicks = [Diagnostics.Stopwatch]::GetTimestamp() - $StartTicks
+    return [long][Math]::Max(0, [Math]::Floor(
+        ($elapsedTicks * 1000.0) / [Diagnostics.Stopwatch]::Frequency))
+}
+
+function Add-RouteTimingEntry($Route, [string]$ListName, $Entry,
+        [string]$CountName, [string]$TruncatedName) {
+    $list = $Route[$ListName]
+    $Route[$CountName] = [int]$Route[$CountName] + 1
+    if ($list.Count -ge $script:RouteTimingRecordLimit) {
+        $list.RemoveAt(0)
+        $Route[$TruncatedName] = [int]$Route[$TruncatedName] + 1
+    }
+    [void]$list.Add($Entry)
+}
+
+function Set-RouteTimingPhase([string]$Phase) {
+    if (-not $script:RouteTimingEnabled -or $null -eq $script:CurrentRouteTiming -or
+            -not (Test-VerifierStrictStringValue $Phase) -or
+            [String]::IsNullOrWhiteSpace($Phase)) { return }
+    $route = $script:CurrentRouteTiming
+    $now = [Diagnostics.Stopwatch]::GetTimestamp()
+    if ([string]$route['phase'] -ceq $Phase) { return }
+    if (-not [String]::IsNullOrWhiteSpace([string]$route['phase'])) {
+        $phaseElapsed = Get-RouteTimingElapsedMilliseconds ([long]$route['phaseStartTicks'])
+        Add-RouteTimingEntry $route 'phases' ([ordered]@{
+            phase = [string]$route['phase']
+            elapsedMs = $phaseElapsed
+            routeElapsedMs = [long]$script:CurrentRouteTimingClock.ElapsedMilliseconds
+        }) 'phaseCount' 'phaseTruncatedCount'
+    }
+    $route['phase'] = $Phase
+    $route['phaseStartTicks'] = $now
+}
+
+function Start-RouteTiming($Definition, [int]$Ordinal, [DateTime]$Deadline) {
+    if (-not $script:RouteTimingEnabled) { return }
+    $clock = [Diagnostics.Stopwatch]::StartNew()
+    $script:CurrentRouteTimingClock = $clock
+    $remainingDeadlineMs = if ($Deadline -eq [DateTime]::MinValue) { $null } else {
+        [long][Math]::Max(0, [Math]::Floor(($Deadline - [DateTime]::UtcNow).TotalMilliseconds))
+    }
+    $route = [ordered]@{
+        ordinal = $Ordinal
+        name = [string]$Definition.name
+        kind = [string]$Definition.kind
+        deadlineRemainingAtStartMs = $remainingDeadlineMs
+        phase = 'before-navigation-boundary-sample'
+        phaseStartTicks = [Diagnostics.Stopwatch]::GetTimestamp()
+        phases = New-Object Collections.Generic.List[object]
+        phaseCount = 0
+        phaseTruncatedCount = 0
+        cdpCalls = New-Object Collections.Generic.List[object]
+        cdpCallCount = 0
+        cdpCallTruncatedCount = 0
+        pendingCdpRequest = $null
+        lastCdpRequest = $null
+        requestAtFailure = $null
+        samples = New-Object Collections.Generic.List[object]
+        sampleCount = 0
+        sampleTruncatedCount = 0
+        sampleFailureCount = 0
+        sampleSkippedCount = 0
+        beforeNavigationSampleRecorded = $false
+        afterRouteSampleRecorded = $false
+        finalized = $false
+    }
+    $script:CurrentRouteTiming = $route
+}
+
+function Test-RouteTimingFiniteNonnegativeNumber($Value) {
+    if ($null -eq $Value) { return $false }
+    if ($Value -isnot [byte] -and $Value -isnot [sbyte] -and
+            $Value -isnot [int16] -and $Value -isnot [uint16] -and
+            $Value -isnot [int32] -and $Value -isnot [uint32] -and
+            $Value -isnot [int64] -and $Value -isnot [uint64] -and
+            $Value -isnot [single] -and $Value -isnot [double] -and
+            $Value -isnot [decimal]) { return $false }
+    try {
+        $number = [double]$Value
+        return (-not [double]::IsNaN($number) -and
+            -not [double]::IsInfinity($number) -and $number -ge 0)
+    } catch { return $false }
+}
+
+function Get-RouteTimingRequestSnapshot($Request) {
+    if ($null -eq $Request) { return $null }
+    $requestId = 0
+    $method = ''
+    $state = ''
+    $phase = ''
+    $ageMs = 0L
+    $sendElapsedMs = 0L
+    $waitElapsedMs = 0L
+    $failureKind = ''
+    if ($Request -is [System.Collections.IDictionary]) {
+        $requestId = [int]$Request['requestId']
+        $method = [string]$Request['method']
+        $state = [string]$Request['state']
+        $phase = [string]$Request['phase']
+        $ageMs = if ($Request.Contains('startedTicks')) {
+            Get-RouteTimingElapsedMilliseconds ([long]$Request['startedTicks'])
+        } else { [long]$Request['ageMs'] }
+        if ($Request.Contains('sendElapsedMs')) { $sendElapsedMs = [long]$Request['sendElapsedMs'] }
+        if ($Request.Contains('waitElapsedMs')) { $waitElapsedMs = [long]$Request['waitElapsedMs'] }
+        if ($Request.Contains('failureKind')) { $failureKind = [string]$Request['failureKind'] }
+    } else {
+        $requestId = [int]$Request.requestId
+        $method = [string]$Request.method
+        $state = [string]$Request.state
+        $phase = [string]$Request.phase
+        $ageMs = [long]$Request.ageMs
+        if ($Request.PSObject.Properties['sendElapsedMs']) { $sendElapsedMs = [long]$Request.sendElapsedMs }
+        if ($Request.PSObject.Properties['waitElapsedMs']) { $waitElapsedMs = [long]$Request.waitElapsedMs }
+        if ($Request.PSObject.Properties['failureKind']) { $failureKind = [string]$Request.failureKind }
+    }
+    return [ordered]@{
+        requestId = $requestId
+        method = $method
+        state = $state
+        ageMs = $ageMs
+        phase = $phase
+        sendElapsedMs = $sendElapsedMs
+        waitElapsedMs = $waitElapsedMs
+        failureKind = $failureKind
+    }
+}
+
+function Add-RouteHeapSample([string]$Boundary, $Socket, [DateTime]$Deadline) {
+    if (-not $script:RouteTimingEnabled -or $null -eq $script:CurrentRouteTiming) { return }
+    $route = $script:CurrentRouteTiming
+    $sampleClock = [Diagnostics.Stopwatch]::StartNew()
+    $sample = [ordered]@{
+        boundary = $Boundary
+        method = 'Runtime.getHeapUsage'
+        status = 'failed'
+        elapsedMs = 0L
+        failureKind = ''
+        metrics = [ordered]@{}
+    }
+    if ($Boundary -ceq 'before-navigation') { $route['beforeNavigationSampleRecorded'] = $true }
+    if ($Boundary -ceq 'after-route') { $route['afterRouteSampleRecorded'] = $true }
+    try {
+        if ($Deadline -ne [DateTime]::MinValue -and [DateTime]::UtcNow -ge $Deadline) {
+            $sample.status = 'skipped'
+            $sample.failureKind = 'route-deadline-expired'
+            $route['sampleSkippedCount'] = [int]$route['sampleSkippedCount'] + 1
+        } else {
+            $response = Invoke-Cdp $Socket 'Runtime.getHeapUsage' @{} $Deadline
+            if ($null -eq $response -or -not $response.PSObject.Properties['result'] -or
+                    $null -eq $response.result) {
+                throw 'Runtime heap response omitted its result object.'
+            }
+            $metrics = [ordered]@{}
+            foreach ($metricName in @('usedSize', 'totalSize',
+                    'embedderHeapUsedSize', 'backingStorageSize')) {
+                $property = $response.result.PSObject.Properties[$metricName]
+                if ($null -eq $property) {
+                    if ($metricName -in @('usedSize', 'totalSize')) {
+                        throw 'Runtime heap response omitted a required size metric.'
+                    }
+                    continue
+                }
+                if (-not (Test-RouteTimingFiniteNonnegativeNumber $property.Value)) {
+                    throw 'Runtime heap response contained a malformed size metric.'
+                }
+                $metrics[$metricName] = [double]$property.Value
+            }
+            $sample.status = 'collected'
+            $sample.metrics = $metrics
+        }
+    } catch {
+        $sample.status = 'failed'
+        $sample.failureKind = 'runtime-heap-query-or-response-failure'
+        $route['sampleFailureCount'] = [int]$route['sampleFailureCount'] + 1
+    } finally {
+        $sample.elapsedMs = [long]$sampleClock.ElapsedMilliseconds
+        Add-RouteTimingEntry $route 'samples' $sample 'sampleCount' 'sampleTruncatedCount'
+        $sampleClock.Stop()
+    }
+}
+
+function Complete-RouteTiming([string]$Outcome, [string]$FailureKind = '') {
+    if (-not $script:RouteTimingEnabled -or $null -eq $script:CurrentRouteTiming) { return }
+    $route = $script:CurrentRouteTiming
+    if ([bool]$route['finalized']) { return }
+    if ($Outcome -ceq 'FAILED' -and -not [bool]$route['afterRouteSampleRecorded']) {
+        $skippedSample = [ordered]@{
+            boundary = 'after-route'
+            method = 'Runtime.getHeapUsage'
+            status = 'skipped'
+            elapsedMs = 0L
+            failureKind = 'route-failed-before-boundary'
+            metrics = [ordered]@{}
+        }
+        $route['afterRouteSampleRecorded'] = $true
+        $route['sampleSkippedCount'] = [int]$route['sampleSkippedCount'] + 1
+        Add-RouteTimingEntry $route 'samples' $skippedSample 'sampleCount' 'sampleTruncatedCount'
+    }
+    $activePhase = [string]$route['phase']
+    if (-not [String]::IsNullOrWhiteSpace($activePhase)) {
+        $phaseElapsed = Get-RouteTimingElapsedMilliseconds ([long]$route['phaseStartTicks'])
+        Add-RouteTimingEntry $route 'phases' ([ordered]@{
+            phase = $activePhase
+            elapsedMs = $phaseElapsed
+            routeElapsedMs = [long]$script:CurrentRouteTimingClock.ElapsedMilliseconds
+        }) 'phaseCount' 'phaseTruncatedCount'
+    }
+    $pending = $route['pendingCdpRequest']
+    if ($Outcome -ceq 'FAILED') {
+        $failureRequest = $pending
+        if ($null -eq $failureRequest -and $null -ne $route['lastCdpRequest'] -and
+                [string]$route['lastCdpRequest']['state'] -ceq 'failed') {
+            $failureRequest = $route['lastCdpRequest']
+        }
+        if ($null -ne $failureRequest) { $route['requestAtFailure'] = Get-RouteTimingRequestSnapshot $failureRequest }
+    }
+    $traceStatus = if ([int]$route['sampleFailureCount'] -gt 0 -or
+            [int]$route['sampleSkippedCount'] -gt 0 -or
+            [int]$route['phaseTruncatedCount'] -gt 0 -or
+            [int]$route['cdpCallTruncatedCount'] -gt 0 -or
+            [int]$route['sampleTruncatedCount'] -gt 0) { 'PARTIAL' } else { 'COMPLETE' }
+    $record = [ordered]@{
+        ordinal = [int]$route['ordinal']
+        name = [string]$route['name']
+        kind = [string]$route['kind']
+        outcome = $Outcome
+        elapsedMs = [long]$script:CurrentRouteTimingClock.ElapsedMilliseconds
+        failureKind = $FailureKind
+        activePhaseAtEnd = if ($Outcome -ceq 'FAILED') { $activePhase } else { '' }
+        collectionStatus = $traceStatus
+        phases = $route['phases'].ToArray()
+        phaseCount = [int]$route['phaseCount']
+        phaseTruncatedCount = [int]$route['phaseTruncatedCount']
+        cdpCalls = $route['cdpCalls'].ToArray()
+        cdpCallCount = [int]$route['cdpCallCount']
+        cdpCallTruncatedCount = [int]$route['cdpCallTruncatedCount']
+        lastCdpRequest = $route['lastCdpRequest']
+        requestAtFailure = $route['requestAtFailure']
+        deadlineRemainingAtStartMs = $route['deadlineRemainingAtStartMs']
+        samples = $route['samples'].ToArray()
+        sampleCount = [int]$route['sampleCount']
+        sampleTruncatedCount = [int]$route['sampleTruncatedCount']
+        sampleFailureCount = [int]$route['sampleFailureCount']
+        sampleSkippedCount = [int]$route['sampleSkippedCount']
+    }
+    $script:RouteTimingRecordCount++
+    if ($script:RouteTimingRecords.Count -ge $script:RouteTimingRecordLimit) {
+        $script:RouteTimingRecords.RemoveAt(0)
+        $script:RouteTimingTruncatedCount++
+    }
+    [void]$script:RouteTimingRecords.Add($record)
+    $route['finalized'] = $true
+    $script:CurrentRouteTimingClock.Stop()
+    $script:CurrentRouteTimingClock = $null
+    $script:CurrentRouteTiming = $null
+}
+
 function Invoke-Cdp($Socket, [string]$Method, $Parameters, [DateTime]$Deadline) {
     $id = $script:NextCdpId
     $script:NextCdpId++
-    [void](Send-Cdp $Socket $id $Method $Parameters)
-    $response = Receive-Cdp $Socket $id $Deadline
-    if ($response.PSObject.Properties['error']) {
-        Throw-VerifierInfrastructure ("CDP protocol error for $Method`: " +
-            ($response.error | ConvertTo-Json -Compress -Depth 8))
+    if (-not $script:RouteTimingEnabled -or $null -eq $script:CurrentRouteTiming) {
+        [void](Send-Cdp $Socket $id $Method $Parameters)
+        $response = Receive-Cdp $Socket $id $Deadline
+        if ($response.PSObject.Properties['error']) {
+            Throw-VerifierInfrastructure ("CDP protocol error for $Method`: " +
+                ($response.error | ConvertTo-Json -Compress -Depth 8))
+        }
+        return $response
     }
-    return $response
+    $route = $script:CurrentRouteTiming
+    $isNavigation = $Method -ceq 'Page.navigate'
+    if ($isNavigation) { Set-RouteTimingPhase 'navigation-send' }
+    $request = [ordered]@{
+        requestId = [int]$id
+        method = $Method
+        phase = if ($isNavigation) { 'navigation' } else { [string]$route['phase'] }
+        sendPhase = if ($isNavigation) { 'navigation-send' } else { [string]$route['phase'] }
+        waitPhase = if ($isNavigation) { 'navigation-readiness' } else { [string]$route['phase'] }
+        state = 'pending'
+        startedTicks = [Diagnostics.Stopwatch]::GetTimestamp()
+        routeStartedMs = [long]$script:CurrentRouteTimingClock.ElapsedMilliseconds
+        sendElapsedMs = 0L
+        waitElapsedMs = 0L
+        ageMs = 0L
+        failureKind = ''
+    }
+    $route['pendingCdpRequest'] = $request
+    $response = $null
+    try {
+        $sendClock = [Diagnostics.Stopwatch]::StartNew()
+        try {
+            [void](Send-Cdp $Socket $id $Method $Parameters)
+        } finally {
+            try {
+                $request.sendElapsedMs = [long]$sendClock.ElapsedMilliseconds
+            } catch {
+                try { $script:RouteTimingRecorderFailureCount++ } catch { }
+            } finally {
+                try { $sendClock.Stop() } catch { }
+            }
+        }
+        if ($isNavigation) { Set-RouteTimingPhase 'navigation-readiness' }
+        $waitClock = [Diagnostics.Stopwatch]::StartNew()
+        try {
+            $response = Receive-Cdp $Socket $id $Deadline
+        } finally {
+            try {
+                $request.waitElapsedMs = [long]$waitClock.ElapsedMilliseconds
+            } catch {
+                try { $script:RouteTimingRecorderFailureCount++ } catch { }
+            } finally {
+                try { $waitClock.Stop() } catch { }
+            }
+        }
+        if ($response.PSObject.Properties['error']) {
+            $request.state = 'failed'
+            $request.failureKind = 'cdp-response-error'
+            Throw-VerifierInfrastructure ("CDP protocol error for $Method`: " +
+                ($response.error | ConvertTo-Json -Compress -Depth 8))
+        }
+        $request.state = 'completed'
+        return $response
+    } catch {
+        if ($request.state -ceq 'pending') {
+            $request.state = 'failed'
+            $request.failureKind = 'cdp-send-or-wait-failed'
+        }
+        throw
+    } finally {
+        try {
+            $request.ageMs = Get-RouteTimingElapsedMilliseconds ([long]$request.startedTicks)
+            $safeRequest = [ordered]@{
+                requestId = [int]$request.requestId
+                method = [string]$request.method
+                phase = [string]$request.phase
+                sendPhase = [string]$request.sendPhase
+                waitPhase = [string]$request.waitPhase
+                state = [string]$request.state
+                routeStartedMs = [long]$request.routeStartedMs
+                ageMs = [long]$request.ageMs
+                sendElapsedMs = [long]$request.sendElapsedMs
+                waitElapsedMs = [long]$request.waitElapsedMs
+                failureKind = [string]$request.failureKind
+            }
+            $route['lastCdpRequest'] = $safeRequest
+            $route['pendingCdpRequest'] = $null
+            Add-RouteTimingEntry $route 'cdpCalls' $safeRequest 'cdpCallCount' 'cdpCallTruncatedCount'
+        } catch {
+            try { $script:RouteTimingRecorderFailureCount++ } catch { }
+            try { $route['lastCdpRequest'] = Get-RouteTimingRequestSnapshot $request } catch { }
+            try { $route['pendingCdpRequest'] = $null } catch { }
+        }
+    }
 }
 
 function Evaluate-Cdp($Socket, [string]$Expression, [DateTime]$Deadline) {
@@ -1732,7 +2087,7 @@ function Test-E06AcceptanceCanaryReport([object]$Text, [string]$Canary) {
         if ($null -eq $report -or $report -is [array] -or
                 $report.protocol -cne 'tsj-e06-acceptance-boundary-canary-v1' -or
                 $report.status -cne 'PASS_E06_ACCEPTANCE_BOUNDARY_CANARY' -or
-                $report.epoch -cne 'tsj-generation-dependencies-v21' -or
+                $report.epoch -cne 'tsj-generation-dependencies-v26' -or
                 $report.canary -cne $Canary -or $report.family -cne 'RB56_CONTROL' -or
                 $report.seed -isnot [string] -or $report.seed -cne '-8360266000248569150' -or
                 $report.cleanup -cne 'PASS' -or $null -ne $report.cleanupError -or
@@ -2093,10 +2448,17 @@ try {
             $routeDeadline = $script:Q100MatrixDeadlineUtc
         }
         Set-Operation 'browser' ('route-' + [string]$definition.name) $routeDeadline
+        if ($script:RouteTimingEnabled) {
+            $script:RouteTimingOrdinal++
+            Start-RouteTiming $definition $script:RouteTimingOrdinal $routeDeadline
+            Add-RouteHeapSample 'before-navigation' $session.Socket $routeDeadline
+            Set-RouteTimingPhase 'navigation-send'
+        }
         $routeUrl = $baseUrl + '/circuitjs.html?' + [string]$definition.query
         $navigationUrl = Navigate-Cdp $session.Socket $routeUrl $context.RunId `
             $session.RouteId $routeDeadline
         if ($definition.kind -eq 'smoke') {
+            if ($script:RouteTimingEnabled) { Set-RouteTimingPhase 'smoke-validation' }
             $transportSmoke = Evaluate-Cdp $session.Socket `
                 '({ready:document.readyState,url:location.href})' $routeDeadline
             if ($null -eq $transportSmoke -or $transportSmoke.ready -cne 'complete' -or
@@ -2107,15 +2469,22 @@ try {
                 status = 'PASS'; navigationUrl = (Get-SafeText $navigationUrl 2000);
                 observed = [ordered]@{ ready = [string]$transportSmoke.ready;
                     url = (Get-SafeText $transportSmoke.url 2000) }; events = $script:CdpEvents.ToArray() }
+            if ($script:RouteTimingEnabled) {
+                Set-RouteTimingPhase 'after-route-boundary-sample'
+                Add-RouteHeapSample 'after-route' $session.Socket $routeDeadline
+            }
             [void]$routeResults.Add($result)
+            if ($script:RouteTimingEnabled) { Complete-RouteTiming 'COMPLETE' }
             continue
         }
         $ticketEntryAudit = $null
         if (Test-RouteRequiresTicketEntry ([string]$definition.kind)) {
+            if ($script:RouteTimingEnabled) { Set-RouteTimingPhase 'ticket-entry' }
             $ticketEntryAudit = Invoke-OrdinaryTicketEntry $session.Socket $routeDeadline
         }
         $reports = $null
         do {
+            if ($script:RouteTimingEnabled) { Set-RouteTimingPhase 'report-poll' }
             $reports = Get-RouteReports $session.Socket $routeDeadline
             if (Test-RouteReady $definition.kind $reports $definition) { break }
             if ($definition.kind -ceq 'q100-player' -and (Test-Q100PlayerDeveloperLeak $reports)) {
@@ -2154,6 +2523,7 @@ try {
         }
         $privacyNegativeCanaryEvidence = $null
         if ($definition.kind -in @('q100-player','q100-debugfalse')) {
+            if ($script:RouteTimingEnabled) { Set-RouteTimingPhase 'privacy-negative-canary' }
             $privacyNegativeCanaryEvidence = Invoke-Q100PlayerPrivacyNegativeCanary `
                 $session.Socket $routeDeadline
             $reports = $privacyNegativeCanaryEvidence.finalReports
@@ -2194,10 +2564,16 @@ try {
             }
             $record.reports[$reportName] = Get-ExactReportText $property.Value
         }
+        if ($script:RouteTimingEnabled) { Set-RouteTimingPhase 'route-artifact-write' }
         $artifactName = 'route-' + ($definition.name -replace '[^A-Za-z0-9._-]', '-') + '.json'
         $artifact = Write-RunArtifact $context $artifactName $record
         $record.artifactSha256 = $artifact.sha256
         [void]$routeResults.Add($record)
+        if ($script:RouteTimingEnabled) {
+            Set-RouteTimingPhase 'after-route-boundary-sample'
+            Add-RouteHeapSample 'after-route' $session.Socket $routeDeadline
+            Complete-RouteTiming 'COMPLETE'
+        }
     }
     if ($Gate -ieq 'Q100' -and -not $Smoke -and
             -not (Test-Q100HealthyMatrix $routeResults.ToArray())) {
@@ -2216,12 +2592,71 @@ try {
     }
     $requestedExitCode = 0
 } catch {
-    $exception = if ($_.PSObject.Properties['Exception']) { $_.Exception } else { $_ }
+    $failureErrorRecord = $_
+    $exception = if ($failureErrorRecord.PSObject.Properties['Exception']) {
+        $failureErrorRecord.Exception
+    } else { $failureErrorRecord }
     $requestedExitCode = if ($exception.Data -and $exception.Data.Contains('VerifierExitCode')) {
         [int]$exception.Data['VerifierExitCode']
     } else { 2 }
     $failureKind = if ($requestedExitCode -eq 1) { 'application' } else { 'infrastructure' }
-    $script:FailureDiagnostic = New-FailureDiagnostic (Get-EarlyErrorText $_) $failureKind
+    if ($script:RouteTimingEnabled -and $null -ne $script:CurrentRouteTiming) {
+        try {
+            Complete-RouteTiming 'FAILED' $failureKind
+        } catch {
+            $script:RouteTimingRecorderFailureCount++
+            $clock = $script:CurrentRouteTimingClock
+            $active = $script:CurrentRouteTiming
+            if ($null -ne $clock -and $null -ne $active) {
+                try {
+                    $failureRequest = $active['pendingCdpRequest']
+                    if ($null -eq $failureRequest -and $null -ne $active['lastCdpRequest'] -and
+                            [string]$active['lastCdpRequest']['state'] -ceq 'failed') {
+                        $failureRequest = $active['lastCdpRequest']
+                    }
+                    $requestSnapshot = Get-RouteTimingRequestSnapshot $failureRequest
+                    $fallbackRecord = [ordered]@{
+                        ordinal = [int]$active['ordinal']
+                        name = [string]$active['name']
+                        kind = [string]$active['kind']
+                        outcome = 'INCOMPLETE'
+                        elapsedMs = [long]$clock.ElapsedMilliseconds
+                        failureKind = 'route-timing-finalization-failed'
+                        activePhaseAtEnd = [string]$active['phase']
+                        collectionStatus = 'INCOMPLETE'
+                        phases = $active['phases'].ToArray()
+                        phaseCount = [int]$active['phaseCount']
+                        phaseTruncatedCount = [int]$active['phaseTruncatedCount']
+                        cdpCalls = $active['cdpCalls'].ToArray()
+                        cdpCallCount = [int]$active['cdpCallCount']
+                        cdpCallTruncatedCount = [int]$active['cdpCallTruncatedCount']
+                        lastCdpRequest = $active['lastCdpRequest']
+                        requestAtFailure = $requestSnapshot
+                        deadlineRemainingAtStartMs = $active['deadlineRemainingAtStartMs']
+                        samples = $active['samples'].ToArray()
+                        sampleCount = [int]$active['sampleCount']
+                        sampleTruncatedCount = [int]$active['sampleTruncatedCount']
+                        sampleFailureCount = [int]$active['sampleFailureCount']
+                        sampleSkippedCount = [int]$active['sampleSkippedCount']
+                    }
+                    $script:RouteTimingRecordCount++
+                    if ($script:RouteTimingRecords.Count -ge $script:RouteTimingRecordLimit) {
+                        $script:RouteTimingRecords.RemoveAt(0)
+                        $script:RouteTimingTruncatedCount++
+                    }
+                    [void]$script:RouteTimingRecords.Add($fallbackRecord)
+                } catch {
+                    $script:RouteTimingRecorderFailureCount++
+                } finally {
+                    $clock.Stop()
+                    $script:CurrentRouteTimingClock = $null
+                    $script:CurrentRouteTiming = $null
+                }
+            }
+        }
+    }
+    $script:FailureDiagnostic = New-FailureDiagnostic `
+        (Get-EarlyErrorText $failureErrorRecord) $failureKind
     Write-Host ('FAIL verify-a03-browser: ' + [string]$script:FailureDiagnostic.error +
         ' phase=' + [string]$script:FailureDiagnostic.phase +
         ' operation=' + [string]$script:FailureDiagnostic.operation +
@@ -2319,6 +2754,30 @@ try {
             routes = $routeResults.ToArray()
             failure = if ($script:FailureDiagnostic) { $script:FailureDiagnostic } else { [ordered]@{} }
             cleanup = $cleanupReport
+        }
+        if ($script:RouteTimingEnabled) {
+            $routeTimingStatus = if ($script:RouteTimingRecordCount -eq 0) {
+                'NO_ROUTE_STARTED'
+            } elseif ($script:RouteTimingRecorderFailureCount -gt 0 -or
+                    $script:RouteTimingTruncatedCount -gt 0 -or
+                    @($script:RouteTimingRecords | Where-Object outcome -CEQ 'INCOMPLETE').Count -gt 0) {
+                'INCOMPLETE'
+            } elseif (@($script:RouteTimingRecords | Where-Object outcome -CEQ 'FAILED').Count -gt 0) {
+                'INCOMPLETE'
+            } elseif (@($script:RouteTimingRecords | Where-Object collectionStatus -CEQ 'PARTIAL').Count -gt 0) {
+                'PARTIAL'
+            } else { 'COMPLETE' }
+            $report['routeTiming'] = [ordered]@{
+                protocol = 'a03-route-timing-v1'
+                status = $routeTimingStatus
+                timebase = 'monotonic-stopwatch'
+                sampleKind = 'Runtime.getHeapUsage'
+                perRouteRecordLimit = [int]$script:RouteTimingRecordLimit
+                routeCount = [int]$script:RouteTimingRecordCount
+                routeTruncatedCount = [int]$script:RouteTimingTruncatedCount
+                recorderFailureCount = [int]$script:RouteTimingRecorderFailureCount
+                routes = $script:RouteTimingRecords.ToArray()
+            }
         }
         if ($script:IsQ100Gate) {
             $report.q100Matrix = [ordered]@{

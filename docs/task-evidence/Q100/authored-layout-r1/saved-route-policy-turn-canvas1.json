@@ -1,0 +1,763 @@
+{
+  "schema": "troubleshootjs-saved-route-policy-turn-canvas-observation-v1",
+  "status": "PASS_12_CASE_RETAINED_BOUNDS_ONLY",
+  "scope": "Scratch-only TURN_CANVAS follow-up to the retained TURN_UNIFORM failure; observational bound review only, not S acceptance or production interpretation.",
+  "run": {
+    "variant": "TURN_CANVAS",
+    "selector": "SAVED_7_8_REP",
+    "suite": "P07GeometryEpochDiagnosticContractTest",
+    "helperExitCode": 0,
+    "helperElapsedSeconds": 59.5986203,
+    "nativeCaseCount": 12,
+    "nativeAssertionCount": 185142,
+    "nativeDiagnosticElapsedMs": 26157,
+    "caseOrder": "PLACEMENT_VERSION_MAJOR_THEN_EXPLICIT_SEED_ORDER",
+    "placementVersions": [
+      7,
+      8
+    ],
+    "rootSeeds": [
+      "-1017",
+      "-1004",
+      "-1022",
+      "0",
+      "17",
+      "42"
+    ],
+    "layoutVersion": 23,
+    "dependencyEpoch": "tsj-generation-dependencies-v24",
+    "nativeChildLimitMs": 180000,
+    "outerWatchdogMs": 600000,
+    "terminationProven": true,
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "inputCount": 1059,
+    "inputPinsSha256": "ecbb6837bf35d086347da4c042e143ef91bc1aceddd8356398620d20cc5e36c0",
+    "sealSha256": "4379f63726aca04d14ddb0711150122c9372c656c2a7e25534b3eb14d57a898c",
+    "cleanup": {
+      "status": "PASS",
+      "terminationProven": true,
+      "elapsedSeconds": null,
+      "timing": "Cleanup duration is not separately reported; helper elapsed is the full wrapper interval, not a cleanup-only measurement."
+    }
+  },
+  "boundReview": {
+    "status": "PASS_12_CASE_RETAINED_BOUNDS_ONLY",
+    "scope": "SCRATCH_TURN_CANVAS_ABLATION_ONLY; NOT_S_ACCEPTANCE_OR_PRODUCTION_INTERPRETATION",
+    "adoption": false,
+    "layoutQualification": false,
+    "automaticGoldenSeal": false,
+    "baseEpochLabelsNotAdopted": true,
+    "caseCount": 12,
+    "areaComparisons": 17,
+    "sourceControlComparisons": 36,
+    "catalogSha256": "57b20a02b9f1f17671dd89a5a032cafbb792b76384cedbc85b5d69dc748d62a9",
+    "readerSourceSha256": "cb712b8f3fcf94513891c2dea4cf8459fb7fb7c40dd320b2af67caaa83920581",
+    "receiptSha256": "1ebda510cda06e78b050a6b1c51118500af276150d259d30daca568fe00e3417",
+    "receiptBytes": 6793002,
+    "cases": [
+      {
+        "profile": 7,
+        "seed": "-1017",
+        "area": 5122184,
+        "selectedAttempt": 1,
+        "vias": 31,
+        "bounds": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<=",
+            "literal": "SAVED6_AREA[0]",
+            "expected": 5122184,
+            "actual": 5122184,
+            "status": "PASS"
+          }
+        ],
+        "otherControls": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "placementCandidates",
+            "operator": "==",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "oneFaceAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "twoLayerAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "profile": 7,
+        "seed": "-1004",
+        "area": 4622400,
+        "selectedAttempt": 0,
+        "vias": 42,
+        "bounds": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<=",
+            "literal": "SAVED6_AREA[1]",
+            "expected": 4622400,
+            "actual": 4622400,
+            "status": "PASS"
+          }
+        ],
+        "otherControls": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "placementCandidates",
+            "operator": "==",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "oneFaceAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "twoLayerAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "profile": 7,
+        "seed": "-1022",
+        "area": 7232134,
+        "selectedAttempt": 1,
+        "vias": 48,
+        "bounds": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<=",
+            "literal": "SAVED6_AREA[2]",
+            "expected": 8443994,
+            "actual": 7232134,
+            "status": "PASS"
+          }
+        ],
+        "otherControls": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "placementCandidates",
+            "operator": "==",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "oneFaceAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "twoLayerAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "profile": 7,
+        "seed": "0",
+        "area": 4679776,
+        "selectedAttempt": 1,
+        "vias": 34,
+        "bounds": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<=",
+            "literal": "SAVED6_AREA[3]",
+            "expected": 4679776,
+            "actual": 4679776,
+            "status": "PASS"
+          }
+        ],
+        "otherControls": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "placementCandidates",
+            "operator": "==",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "oneFaceAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "twoLayerAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "profile": 7,
+        "seed": "17",
+        "area": 6962949,
+        "selectedAttempt": 0,
+        "vias": 48,
+        "bounds": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<=",
+            "literal": "SAVED6_AREA[4]",
+            "expected": 7708262,
+            "actual": 6962949,
+            "status": "PASS"
+          }
+        ],
+        "otherControls": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "placementCandidates",
+            "operator": "==",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "oneFaceAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "twoLayerAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "profile": 7,
+        "seed": "42",
+        "area": 6371585,
+        "selectedAttempt": 4,
+        "vias": 48,
+        "bounds": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<=",
+            "literal": "SAVED6_AREA[5]",
+            "expected": 6371585,
+            "actual": 6371585,
+            "status": "PASS"
+          }
+        ],
+        "otherControls": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "placementCandidates",
+            "operator": "==",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "oneFaceAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "twoLayerAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "profile": 8,
+        "seed": "-1017",
+        "area": 4529785,
+        "selectedAttempt": 3,
+        "vias": 28,
+        "bounds": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<=",
+            "literal": "SAVED7_AREA[0]",
+            "expected": 5122184,
+            "actual": 4529785,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<",
+            "literal": "SAVED7_AREA[0]",
+            "expected": 5122184,
+            "actual": 4529785,
+            "status": "PASS"
+          }
+        ],
+        "otherControls": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "placementCandidates",
+            "operator": "==",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "oneFaceAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "twoLayerAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "profile": 8,
+        "seed": "-1004",
+        "area": 4466664,
+        "selectedAttempt": 3,
+        "vias": 21,
+        "bounds": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<=",
+            "literal": "SAVED7_AREA[1]",
+            "expected": 4622400,
+            "actual": 4466664,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<",
+            "literal": "SAVED7_AREA[1]",
+            "expected": 4622400,
+            "actual": 4466664,
+            "status": "PASS"
+          }
+        ],
+        "otherControls": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "placementCandidates",
+            "operator": "==",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "oneFaceAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "twoLayerAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "profile": 8,
+        "seed": "-1022",
+        "area": 6553200,
+        "selectedAttempt": 3,
+        "vias": 48,
+        "bounds": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<=",
+            "literal": "SAVED7_AREA[2]",
+            "expected": 7395541,
+            "actual": 6553200,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<",
+            "literal": "SAVED7_AREA[2]",
+            "expected": 7395541,
+            "actual": 6553200,
+            "status": "PASS"
+          }
+        ],
+        "otherControls": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "placementCandidates",
+            "operator": "==",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "oneFaceAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "twoLayerAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "profile": 8,
+        "seed": "0",
+        "area": 4679776,
+        "selectedAttempt": 1,
+        "vias": 34,
+        "bounds": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<=",
+            "literal": "SAVED7_AREA[3]",
+            "expected": 4679776,
+            "actual": 4679776,
+            "status": "PASS"
+          }
+        ],
+        "otherControls": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "placementCandidates",
+            "operator": "==",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "oneFaceAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "twoLayerAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "profile": 8,
+        "seed": "17",
+        "area": 5814368,
+        "selectedAttempt": 3,
+        "vias": 48,
+        "bounds": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<=",
+            "literal": "SAVED7_AREA[4]",
+            "expected": 7708262,
+            "actual": 5814368,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<",
+            "literal": "SAVED7_AREA[4]",
+            "expected": 7708262,
+            "actual": 5814368,
+            "status": "PASS"
+          }
+        ],
+        "otherControls": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "placementCandidates",
+            "operator": "==",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "oneFaceAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "twoLayerAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "profile": 8,
+        "seed": "42",
+        "area": 6078240,
+        "selectedAttempt": 3,
+        "vias": 48,
+        "bounds": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<=",
+            "literal": "SAVED7_AREA[5]",
+            "expected": 6371585,
+            "actual": 6078240,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "boardOutlineArea",
+            "operator": "<",
+            "literal": "SAVED7_AREA[5]",
+            "expected": 6371585,
+            "actual": 6078240,
+            "status": "PASS"
+          }
+        ],
+        "otherControls": [
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "placementCandidates",
+            "operator": "==",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "oneFaceAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "sourceId": "PcbFunctionalGroupingContractTest",
+            "metric": "twoLayerAttempts",
+            "operator": "<=",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          }
+        ]
+      }
+    ]
+  },
+  "selectedExamples": [
+    {
+      "profile": 7,
+      "rootSeed": "42",
+      "boardOutlineArea": 6371585,
+      "selectedAttempt": 4,
+      "source": "Native retained-bounds record; attempt value preserved as emitted."
+    },
+    {
+      "profile": 8,
+      "rootSeed": "-1022",
+      "boardOutlineArea": 6553200,
+      "selectedAttempt": 3,
+      "source": "Native retained-bounds record; area is below the recorded SAVED7_AREA[2] ceiling."
+    }
+  ],
+  "sealBinding": {
+    "sealedConfigFile": "saved-route-policy-turn-canvas-sealed-v1.json",
+    "sealedConfigSha256": "4379f63726aca04d14ddb0711150122c9372c656c2a7e25534b3eb14d57a898c",
+    "inputPinsFile": "saved-route-probe-turn-canvas-sealed-v1-pins.json",
+    "inputPinsSha256": "ecbb6837bf35d086347da4c042e143ef91bc1aceddd8356398620d20cc5e36c0",
+    "inputCount": 1059,
+    "preparedManifestSha256": "b888a0a266a5f9a4d8269a8942524e42383d2ffebfd2e678998545b44020ca9f",
+    "sourceSealSha256": "8746267237258786353079d0c709c9469ff91afd473b5434822cd4904213d598",
+    "sourceVariant": "TURN_UNIFORM",
+    "variant": "TURN_CANVAS",
+    "inheritedTurnUniformPlanner": {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "variantSha256": "312710146c69ec01b38dd3a5ffe4a42fafdd00716cf9fa7d8b735edfd331f996",
+      "change": "Scratch-only TURN_UNIFORM variant; see bound review preserved controls."
+    },
+    "additionalCanvasVariant": {
+      "path": "src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java",
+      "baselineSha256": "7bf84a2d6c4c5077638d44d1239530a694d7015106010a72840df69c8dc7d4b0",
+      "variantSha256": "8bd1d779be620727556d65f3b0d2ad0891cc44e2d3484c049e8d6cf6806ec8ed",
+      "declaredChange": "Call existing ensureCanvasContainsBoard for every selected Medium policy; no physical board/tray mutation or numeric bound change."
+    },
+    "testSource": {
+      "path": "tests/contracts/P07GeometryEpochDiagnosticContractTest.java",
+      "sha256": "3c36b320364c39a162349cf814d9f1e0860586829b98f5956d19d7905e0caa46",
+      "note": "Pinned diagnostic test input; unchanged in this scratch ablation."
+    }
+  },
+  "epochInterpretation": {
+    "layoutVersion": 23,
+    "dependencyEpoch": "tsj-generation-dependencies-v24",
+    "status": "BASE_ONLY_NOT_ADOPTED",
+    "strictSReaderRerun": false,
+    "currentSAcceptance": false
+  },
+  "preservedPriorRuns": [
+    {
+      "file": "saved-route-policy-turn1-fail.json",
+      "sha256": "37b8ced4274afa395f3aeba26296cc00a4a471a9dc2e0c225dd41d4266183c4c",
+      "status": "FAIL",
+      "observationsCompleted": 11,
+      "observationsExpected": 12
+    },
+    {
+      "file": "saved-profile-census1.json",
+      "sha256": "1519943e950b0edfd4f5c37f7f8174495a9fd8da4964e8252d6f538f0d244e24",
+      "status": "FAIL_RETAINED_BOUNDS",
+      "exitCode": 2
+    }
+  ],
+  "limitations": [
+    "This scratch PASS preserves the selected 12-case native diagnostics and 17 area inequalities plus 36 control comparisons; it does not qualify all physical layouts.",
+    "No production source fix, source adoption, S acceptance, automatic golden seal, or 100-route/playable qualification is claimed.",
+    "The prior TURN_UNIFORM 11-of-12 failure and saved-profile comparative failure remain preserved and are not replaced by this ablation.",
+    "A full strict S reader rerun was not performed; layout 23 and dependency v24 remain base-only labels.",
+    "Future source-core U changes invalidate A–R evidence reuse boundaries."
+  ],
+  "rawArtifacts": [
+    {
+      "file": "fixed-route-policy-turn-canvas-7-8-1-result.json",
+      "bytes": 1004,
+      "sha256": "e76ca4553d706a59e99307deef3b970929c1e872d903eadb136ddb43c3e7bc08"
+    },
+    {
+      "file": "fixed-route-policy-turn-canvas-7-8-1-receipt.txt",
+      "bytes": 6793002,
+      "sha256": "1ebda510cda06e78b050a6b1c51118500af276150d259d30daca568fe00e3417"
+    },
+    {
+      "file": "fixed-route-policy-turn-canvas-7-8-1-console.txt",
+      "bytes": 6794142,
+      "sha256": "a69d3317417e676a48a29f0768416030998bba37cebaa2ef58c426688d1b3e5b"
+    },
+    {
+      "file": "fixed-route-policy-turn-canvas-7-8-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "fixed-route-policy-turn-canvas-7-8-1-launcher.json",
+      "bytes": 281,
+      "sha256": "97310404a9b7b06edfc4688e215d891c43689307cfae55c91e4705c8da87149f"
+    },
+    {
+      "file": "fixed-route-policy-turn-canvas-7-8-1-bound-review.json",
+      "bytes": 15538,
+      "sha256": "ce4d74f3d0bf0f1eaea75fe369636d59772af683c1a8f2a0b8cd1e8a9f3b38d2"
+    },
+    {
+      "file": "saved-route-policy-turn-canvas-sealed-v1.json",
+      "bytes": 1374,
+      "sha256": "4379f63726aca04d14ddb0711150122c9372c656c2a7e25534b3eb14d57a898c"
+    },
+    {
+      "file": "saved-route-probe-turn-canvas-sealed-v1-pins.json",
+      "bytes": 199139,
+      "sha256": "ecbb6837bf35d086347da4c042e143ef91bc1aceddd8356398620d20cc5e36c0"
+    },
+    {
+      "file": "run-saved-route-policy-turn-canvas.ps1",
+      "bytes": 4673,
+      "sha256": "8e853dc8958106f0f7a93f6a73ffdd857601c3a3ec25cc675dbb2e17a0770573"
+    },
+    {
+      "file": "prepare-saved-route-turn-canvas.py",
+      "bytes": 3922,
+      "sha256": "ea2337bce73f4690b89eef673192deba7d3bfa6c8f6c919d5427da30ed6e609a"
+    }
+  ],
+  "sanitization": {
+    "consoleAndReceiptContentsEmbedded": false,
+    "absoluteMachinePathsIncluded": false,
+    "processIdentifiersIncluded": false,
+    "rawArtifacts": "Basenames, byte counts, and SHA-256 only; full 12-case bounded review is embedded."
+  }
+}

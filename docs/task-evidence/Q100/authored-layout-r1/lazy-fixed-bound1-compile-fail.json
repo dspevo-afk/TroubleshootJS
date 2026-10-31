@@ -1,0 +1,163 @@
+{
+  "packetVersion": 1,
+  "evidence": "Q100_P07_LAZY_FIXED_BOUND_COMPILE_FAILURE",
+  "attempt": "lazy-fixed-bound-1",
+  "status": "FAIL_COMPILE",
+  "execution": {
+    "helperExitCode": 2,
+    "outerInvocationExitCode": 1,
+    "phase": "COMPILE",
+    "elapsedSeconds": 28.1416872,
+    "operationElapsedSeconds": 28.1416872,
+    "cleanupElapsedSeconds": "NOT_REPORTED_SEPARATELY",
+    "processTerminationProven": true,
+    "cleanupStatus": "PASS",
+    "cleanupMarker": "CLEANUP: current JVM contract classes and task-owned scratch removed.",
+    "nativeChildLimitMs": 60000,
+    "outerWatchdogMs": 600000,
+    "configuredSuite": "P07BranchDiagnosticsContractTest",
+    "suiteExecutionStatus": "NOT RUN",
+    "executedSuiteCount": 0,
+    "executedSuites": [],
+    "semanticCanaries": "NOT RUN",
+    "runnerPassDetectionAssertions": 16,
+    "runnerPassDetectionIsSuiteExecution": false
+  },
+  "compilation": {
+    "status": "FAIL",
+    "compiler": "javac 1.8.0_502",
+    "sourceLevel": "1.7",
+    "compilerExitCode": 1,
+    "diagnosticCount": 1,
+    "diagnostics": [
+      {
+        "source": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+        "line": 734,
+        "message": "local variable pairBoundMetrics is accessed from within inner class; needs to be declared final",
+        "capturedVariable": "pairBoundMetrics"
+      }
+    ],
+    "warningCount": 1,
+    "failureSummary": "The Java 7 source-level compile failed because the anonymous inner class captures pairBoundMetrics without a final declaration.",
+    "compilerMarkers": [
+      "JDK: javac 1.8.0_502",
+      "PASS: current-contract runner pass detection assertions=16",
+      "1 error",
+      "1 warning"
+    ]
+  },
+  "sourceSnapshot": {
+    "scope": "SCRATCH_PROTOTYPE_NOT_ADOPTED",
+    "sourceSnapshotRevision": 1,
+    "inputRevision": 1,
+    "baseEpochLabelsNotAdopted": true,
+    "worktreeProductionAdopted": false,
+    "inputCount": 1059,
+    "inputBytes": 85389122,
+    "changedInputCount": 3,
+    "unchangedInputCount": 1056,
+    "parentPinsSha256": "f8187ae204daa48aaa41aa49627a936d7b825665ffe343783632538d747ecbcc",
+    "overlays": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "beforeSha256": "6eb32ebea70a37084700d89451b0d3eb3c5da2dc2320e9d90014a369fcbb8a31",
+        "afterSha256": "3bc90241eea99c3982e6a1200b45ec8102ba47242f53784694ee23eb74e36402",
+        "bytes": 71354,
+        "overlayRevision": 2
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "beforeSha256": "564adf46dc3b2d7951edb19cc2e661ca5a8c2e62cd7a19a9ecb54b94e3e9f102",
+        "afterSha256": "67f9658971d7964e46d4b1fa89ca83ccf38a6e6cc1a79c11ccb080cb34a9d59a",
+        "bytes": 86193,
+        "overlayRevision": 1
+      },
+      {
+        "path": "tests/contracts/P07BranchDiagnosticsContractTest.java",
+        "beforeSha256": "d1b2572682c1a1751a266643dd1bbc33cdc84e4e4ecbeb3a1a01663a60be563e",
+        "afterSha256": "99bcc0278d58c4f142c5104e1e64430401a2cad1a6ab1b34918ab71c19ef1b59",
+        "bytes": 84097,
+        "overlayRevision": 2
+      }
+    ]
+  },
+  "inputSeal": {
+    "file": "lazy-fixed-bound-inputs-sealed1.json",
+    "sha256": "cff4c0f57bb65fcd1c1e3d7c7c0bc7080a7aaea3130fe7f1dcb9ed35ab7c7089",
+    "bytes": 2169,
+    "protocol": "p07-lazy-fixed-bound-input-seal-v1",
+    "changedInputCount": 3,
+    "unchangedInputCount": 1056,
+    "sourceSnapshotRevision": 1,
+    "routerOverlayRevision": 2,
+    "queryOverlayRevision": 1,
+    "testOverlayRevision": 2,
+    "copyAuditSha256": "018874a5e026fa999329ab8a6210ead4ab0ac3398aecfad25eda898bf557ccd5"
+  },
+  "sourcePins": {
+    "file": "lazy-fixed-bound-sealed-pins.json",
+    "sha256": "c131c6bb9b499a820bd44fd2f474cda79f30e1d30bb2d4cc27b3fe5ceb56ce96",
+    "bytes": 199140,
+    "count": 1059,
+    "pathsRelative": true
+  },
+  "rawArtifacts": [
+    {
+      "name": "lazy-fixed-bound-1-result.json",
+      "bytes": 868,
+      "sha256": "056ab19c8d5974aa1da4e63fce4273ef6236b82daa3571791e15a36528d1e792",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-fixed-bound-1-console.txt",
+      "bytes": 1483,
+      "sha256": "fc4e4f0318ccd18b8894996568d66570842eeb77c4d007b981cdf9b80544d47d",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-fixed-bound-1-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-fixed-bound-1-launcher.json",
+      "bytes": 223,
+      "sha256": "cbf570f7f920e671983260482d0769d8faf27c7832e92d8a085ace9757678d98",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-fixed-bound-inputs-sealed1.json",
+      "bytes": 2169,
+      "sha256": "cff4c0f57bb65fcd1c1e3d7c7c0bc7080a7aaea3130fe7f1dcb9ed35ab7c7089",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-fixed-bound-sealed-pins.json",
+      "bytes": 199140,
+      "sha256": "c131c6bb9b499a820bd44fd2f474cda79f30e1d30bb2d4cc27b3fe5ceb56ce96",
+      "rawContentsIncluded": false
+    },
+    {
+      "name": "lazy-fixed-bound-copy1.json",
+      "bytes": 121855,
+      "sha256": "018874a5e026fa999329ab8a6210ead4ab0ac3398aecfad25eda898bf557ccd5",
+      "rawContentsIncluded": false
+    }
+  ],
+  "limitations": [
+    "The compiler failure prevented AJ semantic canaries and route observations from running.",
+    "The runner pass-detection assertions are setup checks, not AJ contract-test results.",
+    "No layout qualification, successful suite receipt, or production adoption is claimed.",
+    "The cleanup marker and termination proof are preserved; a separate cleanup duration was not reported.",
+    "Raw result, launcher, console, and pin contents are not embedded; process identifiers, personal absolute paths, and uncontrolled logs are omitted."
+  ],
+  "interpretation": {
+    "compileFailedBeforeTestExecution": true,
+    "actualSemanticsMeasured": false,
+    "layoutQualified": false,
+    "adopted": false,
+    "scope": "COMPILE_PRECONDITION_ONLY",
+    "cleanup": "PASS_EXPLICIT_CONSOLE_MARKER"
+  }
+}

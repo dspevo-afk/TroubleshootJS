@@ -1,0 +1,196 @@
+{
+  "schema": "troubleshootjs-q100-route-return-queue-review",
+  "reviewId": "route-return-queue-review1",
+  "status": "SOURCE_ONLY_CONDITIONAL_PROOF_NOT_IMPLEMENTED",
+  "reviewScope": "AF bounded source review of a queue-only two-step-return suppression in PcbLayerRoutingPrototype.Search.offer; no implementation, test, or gate was run.",
+  "sourceBinding": {
+    "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+    "sha256": "6eb32ebea70a37084700d89451b0d3eb3c5da2dc2320e9d90014a369fcbb8a31",
+    "basis": "The reviewed source bytes are the specified pre-implementation baseline."
+  },
+  "candidateGuard": {
+    "placement": "After the existing best-cost check and best.put(node.key,node), immediately before queue.add(node).",
+    "suppressQueueAddWhen": "node.previous != null; gp=node.previous.previous != null; gp.direction != 4; node.layer == node.previous.layer == gp.layer; node.cell == gp.cell.",
+    "constructionAndCache": "Keep Node construction, serial increment, prior-cost rejection, and best.put unchanged. Suppress only queue.add for labels matching the guard. Equal transitions follow from the same-layer two-edge path because only a via changes layer and increments transitions; checking equal transitions explicitly is a redundant defensive predicate.",
+    "direction4Boundary": "Do not suppress when the grandparent direction is 4. A direction-4 state can be an initial seed or follow a via. Its expansion does not offer a via, while the returned cardinal-direction node can. viaFits also returns for an existing same-net hole before pad-clearance checks, so start-pad geometry alone cannot prove the omitted via successor illegal."
+  },
+  "localSuccessorProof": {
+    "stateAndCostReferences": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 283,
+        "symbol": "Node fields and predecessor"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 290,
+        "symbol": "exact state key"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 785,
+        "symbol": "ordinary-step cost"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 822,
+        "symbol": "via successor guard and cost"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 940,
+        "symbol": "offer cache update and enqueue"
+      }
+    ],
+    "ordinarySuccessors": "Let G=node.previous.previous, P=node.previous, and N=node. The guard makes G,P,N one layer and N return to G's cell; both edges are ordinary moves and transitions are unchanged. For each in-bounds cardinal direction d, G and N name the same target cell. offerStep's face/layer/endpoint geometry predicate has the same inputs at those two coordinates, and the branch face state is not published or mutated until a goal has been found. Therefore any ordinary successor legal from N is also considered from G with the same key (cell, layer, direction, transitions).",
+    "ordinaryCostBound": "GRID=10; TURN_COST=35; secondary step surcharge is nonnegative and is 0, 2, or 8 in the policies. The G-to-P-to-G return contributes two extra same-layer steps and an immediate reversal. For cardinal G.direction, its turn count plus the final turn into d is never less than the direct G-to-d turn count: direct incurs at most one turn, while the return sequence includes the reversal. Thus each loop-derived ordinary successor has g at least 20 plus two secondary surcharges above the corresponding direct successor. Node construction still occurs before the queue filter, so insertion serials for all later labels remain unchanged.",
+    "viaSuccessor": "With G.direction != 4, both G and N pass the direction part of the via guard. They have the same cell, layer, and transition count. pathViaFits checks the same existing via locations relative to that cell: the two added edges contain no vias and return to the same coordinate. viaFits sees the same branch-frozen holes, bounds, net, and coordinates, including its existing-same-net-hole early return. If via is legal from N, it is legal from G and produces the same key (same cell, opposite layer, direction 4, transitions+1); the loop prefix adds only positive step/turn cost. If the via predicates reject it from G, they also reject it from N.",
+    "goalAndExpansion": "A goal state returns before neighbor enumeration. A G object that generated P and can therefore anchor this two-edge chain was already expanded as a non-goal. The returned label cannot be the first state to terminate at that same G coordinate/face.",
+    "references": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 778,
+        "symbol": "offerStep face predicate and cost"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 790,
+        "symbol": "BranchSearch.advanceOne"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 813,
+        "symbol": "goal check before neighbors"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 817,
+        "symbol": "four fixed-order ordinary directions"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 945,
+        "symbol": "viaFits"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 963,
+        "symbol": "pathViaFits history scan"
+      }
+    ]
+  },
+  "cacheAndHistoryLimits": {
+    "preservedBehavior": "Node.key contains transitions, layer, direction, and cell; NodeIndex stores one current Node per key and stale queue entries are rejected by object identity. Keeping the existing best.put before the queue-only filter preserves the current exact-key cost comparison and replacement behavior. Moving the filter before best.put would change which same-key path label wins.",
+    "knownLimitation": "The key omits prior via coordinates, while pathViaFits scans ancestry for prior via locations near a candidate. Equal-key labels with different via histories can therefore have different future via legality; existing exact-key replacement can alias those histories. This candidate does not add count-only Pareto dominance, does not repair that limitation, and does not establish that history aliasing caused any reported capped route failure.",
+    "references": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 290,
+        "symbol": "key omits via coordinates"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 338,
+        "symbol": "NodeIndex"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 345,
+        "symbol": "NodeIndex.get"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 349,
+        "symbol": "NodeIndex.put replaces exact-key value"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 796,
+        "symbol": "stale-node identity check"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 963,
+        "symbol": "pathViaFits"
+      }
+    ]
+  },
+  "boundedSearchAndObserverEffects": {
+    "branchWork": "BranchSearch.advanceOne polls and expands one node atomically; the four neighbor offers and optional via offer are not separate resumable microstages. Search.advanceOne delegates to the branch, while advanceSlice charges one work unit for that call. A suppressed label therefore removes a later pop/branch expansion and can move slice boundaries.",
+    "countsAndLimits": "Because best.put is retained, best-state count still includes the suppressed label; frontier count is lower. Branch and total expanded counts decrease if the label otherwise expanded. The existing branch/total expansion limits, retry/order outcomes, and diagnostic counters may consequently differ; this is not outcome-equivalent under current finite budgets and requires fresh affected gates before any implementation/adoption.",
+    "observer": "The existing observer check cadence is expansion-based (every 128 branch expansions), and pathViaFits can check it during ancestry scans every 256 nodes. Removing an expansion and its via scan can change checkpoint timing/call count and cancellation timing, even when all successor states are redundant. No claim of callback-trace equivalence is made.",
+    "references": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 179,
+        "symbol": "advanceSlice work-unit contract"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 208,
+        "symbol": "one Search.advanceOne per work unit"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 592,
+        "symbol": "Search.advanceOne dispatch"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 797,
+        "symbol": "128-expansion observer and budget checks"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 806,
+        "symbol": "branch and total expansion increments"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 763,
+        "symbol": "terminal diagnostic counts"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+        "line": 967,
+        "symbol": "256-node via-history observer checks"
+      }
+    ],
+    "diagnosticCounters": "Beyond branch/global expansion and frontier counts, repeated blocked permitsLayerStep calls may update per-face congestion/conflict counters. Omitting loop expansions can lower these diagnostics even though no new physical occupancy is published."
+  },
+  "boundedValidationRecommendation": "If the owner later implements this optimization, extend the existing private/package-owned P07 diagnostic contract path with a compact hand-authored fixture: cover a cardinal-direction grandparent, each in-bounds ordinary successor, a legal via successor with matching path history, and a direction-4 two-step return that remains queued. Keep the exact-key cache update and serial allocation observable through expected state/cost behavior; compare route and independent geometry outcomes without freezing changed expansion/frontier totals as physical goldens. Use sparse fixture state, no exported API and no grid-sized visited arrays. This is a recommendation only; no test or gate was run.",
+  "actions": {
+    "implementation": "NONE",
+    "testsOrGatesRun": "NONE",
+    "sourceChanges": "NONE",
+    "evidenceFilesChanged": [
+      "docs/task-evidence/Q100/authored-layout-r1/route-return-queue-review1.json"
+    ],
+    "adoptionOrPerformanceClaim": "NONE"
+  },
+  "predicateSideEffects": {
+    "sourceReferences": [
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "line": 1064,
+        "symbol": "P07 per-face predicate entry"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "line": 1086,
+        "symbol": "predicate delegates to occupancy/traversal checks"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "line": 807,
+        "symbol": "canOccupy"
+      },
+      {
+        "path": "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+        "line": 812,
+        "symbol": "rejection counters and conflict recording"
+      }
+    ],
+    "detail": "The repeated ordinary edge predicate is decision-equivalent for identical endpoints and the same branch face state, but it is not wholly side-effect-free: PcbNetRouter.Router.canOccupy increments congestion-rejection counters and records conflicts on blocked cells. Suppressing the loop expansion therefore also suppresses those repeated diagnostic side effects. This is another reason not to claim byte-for-byte diagnostics or callback/work trace equivalence."
+  }
+}

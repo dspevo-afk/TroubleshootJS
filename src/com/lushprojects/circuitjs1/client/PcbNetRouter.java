@@ -1064,10 +1064,27 @@ final class PcbNetRouter {
         /** Shared exact per-face predicates for the developer-only layered search. */
         boolean permitsLayerStep(int ax,int ay,int bx,int by,String net,
                 PcbPadPlacement start,PcbPadPlacement end) {
+            return permitsLayerStep(ax,ay,bx,by,net,start,end,null);
+        }
+        /** P07 may terminate only at these already-published plated pads, never net peers. */
+        boolean permitsLayerStep(int ax,int ay,int bx,int by,String net,
+                PcbPadPlacement start,PcbPadPlacement end,PcbPadPlacement[] reachedTerminals) {
             int x=gridX(ax),y=gridY(ay),nx=gridX(bx),ny=gridY(by);
             if(x<0 || y<0 || nx<0 || ny<0 || x>=gridWidth || nx>=gridWidth ||
                     y>=gridHeight || ny>=gridHeight) return false;
             int direction=nx>x?1:nx<x?3:ny>y?2:0;
+            if(permitsLayerStepToEndpoint(x,y,nx,ny,direction,net,start,end)) return true;
+            if(reachedTerminals==null) return false;
+            for(PcbPadPlacement reached:reachedTerminals) {
+                if(reached==null) throw new IllegalArgumentException("Missing reached P07 terminal");
+                if(reached.getPadId().equals(start.getPadId()) ||
+                        end!=null && reached.getPadId().equals(end.getPadId())) continue;
+                if(permitsLayerStepToEndpoint(x,y,nx,ny,direction,net,start,reached)) return true;
+            }
+            return false;
+        }
+        private boolean permitsLayerStepToEndpoint(int x,int y,int nx,int ny,int direction,
+                String net,PcbPadPlacement start,PcbPadPlacement end) {
             return isLegalMove(x,y,nx,ny,direction,gridX(start.getX()),gridY(start.getY()),
                 end==null?-1:gridX(end.getX()),end==null?-1:gridY(end.getY()),start,end) &&
                 canTraverse(x,y,nx,ny,start,end,net) && canOccupy(nx,ny,net,start,end);
@@ -1085,6 +1102,262 @@ final class PcbNetRouter {
                 (clearanceNet[x][y]==null || net.equals(clearanceNet[x][y]));
         }
         void occupyLayerPath(Vector<Point> path,String net) { markCopper(path,net); }
+        /** Native fixed-graph observation copy; mutable counters/conflicts/work are deliberately fresh. */
+        Router copyForFixedGraphObservation() {
+            observationCheckpoint(observer,attempt);
+            Router copy=new Router(layout,board,new Rectangle(outline),attempt,observer,layer,0);
+            observationCheckpoint(observer,attempt);
+            PcbRoutingWork sourceWork=work;
+            if(sourceWork==null) copy.work=null;
+            else {
+                int requestCount=sourceWork.netAttemptLimit-sourceWork.limits.reroutedNets;
+                if(requestCount<0 || requestCount%sourceWork.limits.orderings!=0)
+                    throw new IllegalStateException("P07 fixed observation work limits are inconsistent");
+                copy.work=new PcbRoutingWork(sourceWork.limits,
+                    requestCount/sourceWork.limits.orderings);
+            }
+            copy.factoryUnderpasses=factoryUnderpasses;
+            copy.emptyComponentFace=emptyComponentFace;
+            copy.activeTraceWidth=activeTraceWidth;
+            copy.activeNetId=activeNetId;
+            copyStringGridInto(occupiedNet,copy.occupiedNet,observer,attempt);
+            copyStringGridInto(clearanceNet,copy.clearanceNet,observer,attempt);
+            copy.horizontalReservation=copyStringGrid(horizontalReservation,observer,attempt);
+            copy.verticalReservation=copyStringGrid(verticalReservation,observer,attempt);
+            copy.padAt=copyStringGrid(padAt,observer,attempt);
+            copyStringArrayInto(padNets,copy.padNets,observer,attempt);
+            copyIntArrayInto(padWidths,copy.padWidths,observer,attempt);
+            copyRectanglesInto(padBounds,copy.padBounds,observer,attempt);
+            copyRectanglesInto(escapeCorridors,copy.escapeCorridors,observer,attempt);
+            copyRectanglesInto(escapeReservations,copy.escapeReservations,observer,attempt);
+            copyRectanglesInto(courtyards,copy.courtyards,observer,attempt);
+            copy.collisionCourtyards=copyRectangles(collisionCourtyards,observer,attempt);
+            copyIntArrayInto(allComponentIndexes,copy.allComponentIndexes,observer,attempt);
+            copyIntGridInto(componentCandidatesByColumn,copy.componentCandidatesByColumn,observer,attempt);
+            copyReferences(pads,copy.pads,observer,attempt);
+            copyReferences(components,copy.components,observer,attempt);
+            observationCheckpoint(observer,attempt);
+            return copy;
+        }
+
+        /** Exact elementwise equality for fixed route-predicate state; query effects are excluded. */
+        boolean sameFixedGraphObservation(Router other) {
+            if(other==null || board!=other.board || layout!=other.layout || attempt!=other.attempt ||
+                    layer!=other.layer || checkProfiledPadTouches!=other.checkProfiledPadTouches ||
+                    !sameRectangle(outline,other.outline) || minX!=other.minX || minY!=other.minY ||
+                    gridWidth!=other.gridWidth || gridHeight!=other.gridHeight ||
+                    emptyComponentFace!=other.emptyComponentFace ||
+                    factoryUnderpasses!=other.factoryUnderpasses || activeTraceWidth!=other.activeTraceWidth ||
+                    !sameString(activeNetId,other.activeNetId) || (domainRules==null)!=(other.domainRules==null) ||
+                    !sameWorkConfiguration(work,other.work))
+                return false;
+            return sameStringGrid(occupiedNet,other.occupiedNet) &&
+                sameStringGrid(clearanceNet,other.clearanceNet) &&
+                sameStringGrid(horizontalReservation,other.horizontalReservation) &&
+                sameStringGrid(verticalReservation,other.verticalReservation) &&
+                sameStringGrid(padAt,other.padAt) &&
+                sameStrings(padNets,other.padNets) && sameInts(padWidths,other.padWidths) &&
+                sameRectangles(padBounds,other.padBounds) &&
+                sameRectangles(escapeCorridors,other.escapeCorridors) &&
+                sameRectangles(escapeReservations,other.escapeReservations) &&
+                sameReferences(pads,other.pads) && sameReferences(components,other.components) &&
+                sameRectangles(courtyards,other.courtyards) &&
+                sameRectangles(collisionCourtyards,other.collisionCourtyards) &&
+                sameInts(allComponentIndexes,other.allComponentIndexes) &&
+                sameIntGrid(componentCandidatesByColumn,other.componentCandidatesByColumn);
+        }
+
+        /** Pure, deterministic side-effect stamp for before/after live-state checks. */
+        String fixedGraphObservationEffects() {
+            StringBuilder stamp=new StringBuilder("fixed-graph-router-effects@1");
+            stamp.append(";expansions=").append(expansions);
+            stamp.append(";rawSegments=").append(rawSegments);
+            stamp.append(";congestionRejections=").append(congestionRejections);
+            stamp.append(";conflictCount=").append(conflicts.size());
+            for(java.util.Map.Entry<String,Integer> entry:conflicts.entrySet())
+                stamp.append(";conflict=").append(entry.getKey().length()).append(':')
+                    .append(entry.getKey()).append('=').append(entry.getValue());
+            String workStamp=work==null?null:work.snapshot().toCanonical();
+            stamp.append(";workLength=").append(workStamp==null?-1:workStamp.length());
+            stamp.append(";work=");
+            if(workStamp==null) stamp.append("null");
+            else stamp.append(workStamp);
+            return stamp.toString();
+        }
+
+        private static final int OBSERVATION_COPY_CHUNK=4096;
+        private static void observationCheckpoint(SeededPcbLayoutGenerator.AttemptObserver observer,
+                int attempt) {
+            if(observer!=null) observer.check(attempt);
+        }
+        private static void copyStringChunk(String[] source,int sourceStart,String[] target,int targetStart,
+                int length,SeededPcbLayoutGenerator.AttemptObserver observer,int attempt) {
+            int offset=0;
+            observationCheckpoint(observer,attempt);
+            while(offset<length) {
+                int count=Math.min(OBSERVATION_COPY_CHUNK,length-offset);
+                System.arraycopy(source,sourceStart+offset,target,targetStart+offset,count);
+                offset+=count;
+                observationCheckpoint(observer,attempt);
+            }
+        }
+        private static String[][] copyStringGrid(String[][] source,
+                SeededPcbLayoutGenerator.AttemptObserver observer,int attempt) {
+            observationCheckpoint(observer,attempt);
+            if(source==null) return null;
+            String[][] result=new String[source.length][];
+            for(int x=0;x<source.length;x++) {
+                observationCheckpoint(observer,attempt);
+                if(source[x]==null) result[x]=null;
+                else {
+                    result[x]=new String[source[x].length];
+                    copyStringChunk(source[x],0,result[x],0,source[x].length,observer,attempt);
+                }
+            }
+            observationCheckpoint(observer,attempt);
+            return result;
+        }
+        private static void copyStringGridInto(String[][] source,String[][] target,
+                SeededPcbLayoutGenerator.AttemptObserver observer,int attempt) {
+            observationCheckpoint(observer,attempt);
+            if(source==null || target==null || source.length!=target.length)
+                throw new IllegalStateException("P07 fixed observation grid dimensions differ");
+            for(int x=0;x<source.length;x++) {
+                observationCheckpoint(observer,attempt);
+                if(source[x]==null) { target[x]=null; continue; }
+                if(target[x]==null || source[x].length!=target[x].length)
+                    target[x]=new String[source[x].length];
+                copyStringChunk(source[x],0,target[x],0,source[x].length,observer,attempt);
+            }
+            observationCheckpoint(observer,attempt);
+        }
+        private static void copyStringArrayInto(String[] source,String[] target,
+                SeededPcbLayoutGenerator.AttemptObserver observer,int attempt) {
+            observationCheckpoint(observer,attempt);
+            if(source==null || target==null || source.length!=target.length)
+                throw new IllegalStateException("P07 fixed observation string arrays differ");
+            copyStringChunk(source,0,target,0,source.length,observer,attempt);
+        }
+        private static void copyIntArrayInto(int[] source,int[] target,
+                SeededPcbLayoutGenerator.AttemptObserver observer,int attempt) {
+            observationCheckpoint(observer,attempt);
+            if(source==null || target==null || source.length!=target.length)
+                throw new IllegalStateException("P07 fixed observation integer arrays differ");
+            copyIntChunk(source,0,target,0,source.length,observer,attempt);
+        }
+        private static void copyIntChunk(int[] source,int sourceStart,int[] target,int targetStart,
+                int length,SeededPcbLayoutGenerator.AttemptObserver observer,int attempt) {
+            int offset=0;
+            observationCheckpoint(observer,attempt);
+            while(offset<length) {
+                int count=Math.min(OBSERVATION_COPY_CHUNK,length-offset);
+                System.arraycopy(source,sourceStart+offset,target,targetStart+offset,count);
+                offset+=count;
+                observationCheckpoint(observer,attempt);
+            }
+        }
+        private static void copyIntGridInto(int[][] source,int[][] target,
+                SeededPcbLayoutGenerator.AttemptObserver observer,int attempt) {
+            observationCheckpoint(observer,attempt);
+            if(source==null || target==null || source.length!=target.length)
+                throw new IllegalStateException("P07 fixed observation index grids differ");
+            for(int x=0;x<source.length;x++) {
+                observationCheckpoint(observer,attempt);
+                if(source[x]==null) { target[x]=null; continue; }
+                if(target[x]==null || source[x].length!=target[x].length)
+                    target[x]=new int[source[x].length];
+                copyIntChunk(source[x],0,target[x],0,source[x].length,observer,attempt);
+            }
+            observationCheckpoint(observer,attempt);
+        }
+        private static void copyRectanglesInto(Rectangle[] source,Rectangle[] target,
+                SeededPcbLayoutGenerator.AttemptObserver observer,int attempt) {
+            observationCheckpoint(observer,attempt);
+            if(source==null || target==null || source.length!=target.length)
+                throw new IllegalStateException("P07 fixed observation rectangle arrays differ");
+            for(int i=0;i<source.length;i++) {
+                if((i%OBSERVATION_COPY_CHUNK)==0) observationCheckpoint(observer,attempt);
+                target[i]=copyRectangle(source[i]);
+            }
+            observationCheckpoint(observer,attempt);
+        }
+        private static Rectangle[] copyRectangles(Rectangle[] source,
+                SeededPcbLayoutGenerator.AttemptObserver observer,int attempt) {
+            observationCheckpoint(observer,attempt);
+            if(source==null) return null;
+            Rectangle[] result=new Rectangle[source.length];
+            for(int i=0;i<source.length;i++) {
+                if((i%OBSERVATION_COPY_CHUNK)==0) observationCheckpoint(observer,attempt);
+                result[i]=copyRectangle(source[i]);
+            }
+            observationCheckpoint(observer,attempt);
+            return result;
+        }
+        private static void copyReferences(Object[] source,Object[] target,
+                SeededPcbLayoutGenerator.AttemptObserver observer,int attempt) {
+            observationCheckpoint(observer,attempt);
+            if(source==null || target==null || source.length!=target.length)
+                throw new IllegalStateException("P07 fixed observation reference arrays differ");
+            for(int start=0;start<source.length;start+=OBSERVATION_COPY_CHUNK) {
+                observationCheckpoint(observer,attempt);
+                int count=Math.min(OBSERVATION_COPY_CHUNK,source.length-start);
+                System.arraycopy(source,start,target,start,count);
+            }
+            observationCheckpoint(observer,attempt);
+        }
+        private static Rectangle copyRectangle(Rectangle value) {
+            return value==null?null:new Rectangle(value);
+        }
+        private static boolean sameString(String a,String b) {
+            return a==null?b==null:a.equals(b);
+        }
+        private static boolean sameWorkConfiguration(PcbRoutingWork a,PcbRoutingWork b) {
+            if(a==null || b==null) return a==b;
+            PcbRoutingWork.Limits x=a.limits,y=b.limits;
+            return x.orderings==y.orderings && x.ripUpPasses==y.ripUpPasses &&
+                x.victimsPerPass==y.victimsPerPass && x.reroutedNets==y.reroutedNets &&
+                x.expansions==y.expansions && a.netAttemptLimit==b.netAttemptLimit;
+        }
+        private static boolean sameStrings(String[] a,String[] b) {
+            if(a==null || b==null) return a==b;
+            if(a.length!=b.length) return false;
+            for(int i=0;i<a.length;i++) if(!sameString(a[i],b[i])) return false;
+            return true;
+        }
+        private static boolean sameInts(int[] a,int[] b) {
+            if(a==null || b==null) return a==b;
+            if(a.length!=b.length) return false;
+            for(int i=0;i<a.length;i++) if(a[i]!=b[i]) return false;
+            return true;
+        }
+        private static boolean sameIntGrid(int[][] a,int[][] b) {
+            if(a==null || b==null) return a==b;
+            if(a.length!=b.length) return false;
+            for(int i=0;i<a.length;i++) if(!sameInts(a[i],b[i])) return false;
+            return true;
+        }
+        private static boolean sameStringGrid(String[][] a,String[][] b) {
+            if(a==null || b==null) return a==b;
+            if(a.length!=b.length) return false;
+            for(int i=0;i<a.length;i++) if(!sameStrings(a[i],b[i])) return false;
+            return true;
+        }
+        private static boolean sameRectangle(Rectangle a,Rectangle b) {
+            return a==null || b==null?a==b:
+                a.x==b.x && a.y==b.y && a.width==b.width && a.height==b.height;
+        }
+        private static boolean sameRectangles(Rectangle[] a,Rectangle[] b) {
+            if(a==null || b==null) return a==b;
+            if(a.length!=b.length) return false;
+            for(int i=0;i<a.length;i++) if(!sameRectangle(a[i],b[i])) return false;
+            return true;
+        }
+        private static boolean sameReferences(Object[] a,Object[] b) {
+            if(a==null || b==null) return a==b;
+            if(a.length!=b.length) return false;
+            for(int i=0;i<a.length;i++) if(a[i]!=b[i]) return false;
+            return true;
+        }
 
         private int gridX(int x) {
             return (x - minX) % GRID == 0 ? (x - minX) / GRID : -1;

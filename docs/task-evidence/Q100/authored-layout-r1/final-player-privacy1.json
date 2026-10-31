@@ -1,0 +1,672 @@
+{
+  "schema": "q100-compiled-player-privacy-evidence-v1",
+  "status": "PASS",
+  "scope": "COMPILED_PLAYER_PRIVACY_ONLY",
+  "privacyGate": {
+    "gate": "Q100Player",
+    "exitCode": 0,
+    "helperElapsedSeconds": 74.7849068,
+    "reportBasename": "final-compiled-q100player-1.json",
+    "reportSha256": "ad2b5a52d0832d62d6a1f858e7e83c382f5891fc73d0290eaa634cca6eb89e79",
+    "reportBytes": 16502,
+    "cleanupStatus": "PASS",
+    "cleanupResourceSuccess": true,
+    "cleanupElapsedMs": 47490,
+    "cleanupLimitMs": 120000,
+    "cleanupPhaseTimings": {
+      "PreflightMs": 61,
+      "PhysicalNamespaceMs": 267,
+      "BrowserSessionMs": 38746,
+      "PreviewMs": 6810,
+      "LeaseReleaseMs": 26,
+      "FinalProofMs": 1568,
+      "BrowserShutdown": [
+        {
+          "RouteId": "009117db7f0d4dbd9d493df27a7bdd02",
+          "Lane": "boundReceipt",
+          "TotalMs": 11614,
+          "FailurePhase": "",
+          "PhasesMs": {
+            "rootContainmentProof": 423,
+            "endpointAndSocketConnect": 14,
+            "postConnectRootAndListenerProof": 386,
+            "protectedHelperCensus": 3113,
+            "precloseJournalAndAuthorization": 1740,
+            "closeSendAndAcknowledgement": 19,
+            "retainedProcessNaturalExitProof": 4176,
+            "lateDescendantAbsenceProof": 771,
+            "containmentJobEmptyProof": 2,
+            "profileQuiescence": 874,
+            "finalListenerAbsenceProof": 76,
+            "resourceDisposal": 7
+          },
+          "Counts": {
+            "protectedDescendantCount": 16,
+            "rootAndDescendantRecordCount": 17,
+            "waitLoopPassCount": 2,
+            "naturalExitProofCallCount": 34,
+            "currentAbsenceProofCount": 32,
+            "currentAbsenceObservationCount": 64,
+            "lateDescendantParentQueryCount": 17,
+            "containmentJobPollCount": 1
+          }
+        }
+      ]
+    }
+  },
+  "build": {
+    "variant": "Player",
+    "style": "OBF",
+    "buildElapsedSeconds": 93.9583418,
+    "buildIdentityProtocol": "troubleshootjs-production-build-identity-v1",
+    "buildIdentity": {
+      "Protocol": "troubleshootjs-production-build-identity-v1",
+      "Variant": "Player",
+      "Style": "OBF",
+      "InputDigest": "ec046715efbdc5fde13e5f0a86e89b1bedf2641eb45f72061e00847caf764bca",
+      "InputFileCount": 1199,
+      "OutputDigest": "1619931b4085bb98881de35639e843dbc4d17e7786e32067f2a2d63f3c2b7914",
+      "OutputFileCount": 357
+    },
+    "outputInventoryCount": 357,
+    "outputInventoryTotalBytes": 10200856.0,
+    "outputDigest": "1619931b4085bb98881de35639e843dbc4d17e7786e32067f2a2d63f3c2b7914",
+    "outputFileCount": 357,
+    "compiledJavaScriptFileCount": 7,
+    "captures": [
+      {
+        "name": "player-final1-identity.json",
+        "bytes": 361,
+        "sha256": "519c8ad1bd13f381d500a81dda4f593e2576f0b59e8c603896646f500724d2e6",
+        "byteIdenticalToRawCapture": true
+      },
+      {
+        "name": "player-final1-size.json",
+        "bytes": 1471,
+        "sha256": "0d6ded71d622e2190498b2bf90fed52ff7be485c3ef8352232d8f754b9d463ee",
+        "byteIdenticalToRawCapture": true
+      },
+      {
+        "name": "player-final1-inventory.json",
+        "bytes": 60778,
+        "sha256": "aec2f838478359af61c12dbccb11e897be5af8ff6797f3ae9d19f03c277b61ac",
+        "byteIdenticalToRawCapture": true
+      }
+    ]
+  },
+  "buildSourcePins": {
+    "manifestBasename": "pins.json",
+    "manifestBytes": 643,
+    "manifestSha256": "d1fac3c9d152ca422759888de694b97216684031e25e9bfbf07b80a5e665983f",
+    "entryCount": 4,
+    "frozenAndCurrentFilesMatched": 4,
+    "entries": [
+      {
+        "path": "scripts/verify-a03-browser.ps1",
+        "sha256": "235b73c338de139b498f4011bc707bed5b9f5dc8ffbee177c89c518ad49a7b7d",
+        "frozenBytes": 140029,
+        "frozenMatches": true,
+        "currentBytes": 140029,
+        "currentMatches": true
+      },
+      {
+        "path": "scripts/verify-q100-evidence.ps1",
+        "sha256": "ba725f9dcd9dad4fef8b538de38ed902ba55cd88a86c46b9eed109df93b48d2e",
+        "frozenBytes": 58276,
+        "frozenMatches": true,
+        "currentBytes": 58276,
+        "currentMatches": true
+      },
+      {
+        "path": "scripts/VerifierIsolation.psm1",
+        "sha256": "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+        "frozenBytes": 886656,
+        "frozenMatches": true,
+        "currentBytes": 886656,
+        "currentMatches": true
+      },
+      {
+        "path": ".tools/gwt-2.7.0/production-build-identity.json",
+        "sha256": "519c8ad1bd13f381d500a81dda4f593e2576f0b59e8c603896646f500724d2e6",
+        "frozenBytes": 361,
+        "frozenMatches": true,
+        "currentBytes": 361,
+        "currentMatches": true
+      }
+    ],
+    "buildIdentityMatchesPlayerArtifact": true
+  },
+  "routes": [
+    {
+      "name": "q100-player-debug-query",
+      "kind": "q100-player",
+      "status": "PASS",
+      "navigationUrl": "http://127.0.0.1:59842/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ100=true&tsjQ100Variant=SHARED_HYSTERETIC_LINEAR&tsjQ100Fault=RSA_RESISTANCE&tsjQ100Dt=0.0001&tsjQ100Canary=after-step&running=true&tsjVerifierNavigation=61c97b1b195f4434aecf8402ea3a611f&tsjVerifierRun=48e35dc0768f4ee19f151995e6ae43ae&tsjVerifierRoute=009117db7f0d4dbd9d493df27a7bdd02",
+      "verification": "",
+      "readiness": {
+        "workbenchNavigationReady": true,
+        "programReady": true,
+        "retestCustomerReady": true,
+        "boardPowerReady": true,
+        "boardPowerLabel": "Board Power: ON"
+      },
+      "reports": {},
+      "events": [
+        "console: converged after 7 iterations, timeStep = 0.000005",
+        "console: converged after 7 iterations, timeStep = 0.000005",
+        "console: converged after 7 iterations, timeStep = 0.000005",
+        "console: converged after 21 iterations, timeStep = 0.000005",
+        "console: node 4 unconnected",
+        "console: node 4 unconnected",
+        "console: node 4 unconnected",
+        "console: node 4 unconnected",
+        "console: node 6 unconnected",
+        "console: node 11 unconnected",
+        "console: node 6 unconnected",
+        "console: node 11 unconnected",
+        "console: node 6 unconnected",
+        "console: node 11 unconnected",
+        "console: converged after 7 iterations, timeStep = 0.000005",
+        "console: converged after 7 iterations, timeStep = 0.000005",
+        "console: converged after 7 iterations, timeStep = 0.000005",
+        "console: converged after 16 iterations, timeStep = 0.000005",
+        "console: node 4 unconnected",
+        "console: node 6 unconnected",
+        "console: node 6 unconnected",
+        "console: node 6 unconnected",
+        "console: converged after 7 iterations, timeStep = 0.000005",
+        "console: converged after 7 iterations, timeStep = 0.000005",
+        "console: converged after 21 iterations, timeStep = 0.000005",
+        "console: node 4 unconnected",
+        "console: node 4 unconnected",
+        "console: node 4 unconnected",
+        "console: node 4 unconnected",
+        "console: node 8 unconnected",
+        "console: node 9 unconnected",
+        "console: node 8 unconnected",
+        "console: node 9 unconnected",
+        "console: node 8 unconnected",
+        "console: node 9 unconnected",
+        "console: converged after 7 iterations, timeStep = 0.000005"
+      ],
+      "ordinaryTicketEntry": {
+        "protocol": "tsj-ordinary-ticket-entry-v1",
+        "status": "PASS",
+        "buttonLabel": "Accept ticket and start",
+        "labelledCount": 1,
+        "visibleEnabledCount": 1,
+        "expectedComplaintVisible": true,
+        "clickPoint": {
+          "x": 408.7109375,
+          "y": 618.15625
+        },
+        "inputEvents": [
+          "mouseMoved",
+          "mousePressed:left",
+          "mouseReleased:left"
+        ]
+      },
+      "privacyNegativeCanary": {
+        "protocol": "tsj-q100-player-dom-privacy-canary-v1",
+        "status": "PASS",
+        "sentinels": [
+          "data-tsj-q100-fault",
+          "data-tsj-future-answer"
+        ],
+        "cases": [
+          {
+            "attribute": "data-tsj-q100-fault",
+            "sentinelValue": "CANARY_ONLY",
+            "reportContainsAttribute": true,
+            "developerLeakDetected": true,
+            "playerPrivacyRejected": true
+          },
+          {
+            "attribute": "data-tsj-future-answer",
+            "sentinelValue": "CANARY_ONLY",
+            "reportContainsAttribute": true,
+            "developerLeakDetected": true,
+            "playerPrivacyRejected": true
+          }
+        ],
+        "finalPlayerPrivacy": "PASS"
+      },
+      "sentinelsCleanup": {
+        "status": "PASS",
+        "removed": [
+          "data-tsj-q100-fault",
+          "data-tsj-future-answer"
+        ],
+        "cases": [
+          {
+            "attribute": "data-tsj-q100-fault",
+            "removed": true
+          },
+          {
+            "attribute": "data-tsj-future-answer",
+            "removed": true
+          }
+        ]
+      },
+      "q100ReportAttributePresent": false,
+      "developerAttributes": {},
+      "artifactSha256": "a92ddc741861b27352785ccf21ad9c45dfcf3f4c66a793daf76bb44f6d2c0caf"
+    }
+  ],
+  "privacyCanaries": [
+    {
+      "protocol": "tsj-q100-player-dom-privacy-canary-v1",
+      "status": "PASS",
+      "sentinels": [
+        "data-tsj-q100-fault",
+        "data-tsj-future-answer"
+      ],
+      "cases": [
+        {
+          "attribute": "data-tsj-q100-fault",
+          "sentinelValue": "CANARY_ONLY",
+          "reportContainsAttribute": true,
+          "developerLeakDetected": true,
+          "playerPrivacyRejected": true
+        },
+        {
+          "attribute": "data-tsj-future-answer",
+          "sentinelValue": "CANARY_ONLY",
+          "reportContainsAttribute": true,
+          "developerLeakDetected": true,
+          "playerPrivacyRejected": true
+        }
+      ],
+      "finalPlayerPrivacy": "PASS"
+    }
+  ],
+  "artifactProof": {
+    "playerArtifact": {
+      "protocol": "troubleshootjs-q100-player-artifact-proof-v1",
+      "buildIdentityProtocol": "troubleshootjs-production-build-identity-v1",
+      "variant": "Player",
+      "style": "OBF",
+      "inputDigest": "ec046715efbdc5fde13e5f0a86e89b1bedf2641eb45f72061e00847caf764bca",
+      "inputFileCount": 1199,
+      "outputDigest": "1619931b4085bb98881de35639e843dbc4d17e7786e32067f2a2d63f3c2b7914",
+      "outputFileCount": 357,
+      "compiledJavaScriptFileCount": 7,
+      "developerMarkerScan": "PASS"
+    },
+    "routeArtifacts": [
+      {
+        "routeName": "q100-player-debug-query",
+        "routeStatus": "PASS",
+        "artifactSha256": "a92ddc741861b27352785ccf21ad9c45dfcf3f4c66a793daf76bb44f6d2c0caf",
+        "q100ReportAttributePresent": false
+      }
+    ]
+  },
+  "limits": {
+    "q100Matrix": {
+      "operationElapsedMs": 26994,
+      "operationLimitMs": 6000000
+    },
+    "cleanup": {
+      "success": true,
+      "errors": {},
+      "diagnostic": {},
+      "phaseTimings": {
+        "PreflightMs": 61,
+        "PhysicalNamespaceMs": 267,
+        "BrowserSessionMs": 38746,
+        "PreviewMs": 6810,
+        "LeaseReleaseMs": 26,
+        "FinalProofMs": 1568,
+        "BrowserShutdown": [
+          {
+            "RouteId": "009117db7f0d4dbd9d493df27a7bdd02",
+            "Lane": "boundReceipt",
+            "TotalMs": 11614,
+            "FailurePhase": "",
+            "PhasesMs": {
+              "rootContainmentProof": 423,
+              "endpointAndSocketConnect": 14,
+              "postConnectRootAndListenerProof": 386,
+              "protectedHelperCensus": 3113,
+              "precloseJournalAndAuthorization": 1740,
+              "closeSendAndAcknowledgement": 19,
+              "retainedProcessNaturalExitProof": 4176,
+              "lateDescendantAbsenceProof": 771,
+              "containmentJobEmptyProof": 2,
+              "profileQuiescence": 874,
+              "finalListenerAbsenceProof": 76,
+              "resourceDisposal": 7
+            },
+            "Counts": {
+              "protectedDescendantCount": 16,
+              "rootAndDescendantRecordCount": 17,
+              "waitLoopPassCount": 2,
+              "naturalExitProofCallCount": 34,
+              "currentAbsenceProofCount": 32,
+              "currentAbsenceObservationCount": 64,
+              "lateDescendantParentQueryCount": 17,
+              "containmentJobPollCount": 1
+            }
+          }
+        ]
+      },
+      "resourceSuccess": true,
+      "elapsedMs": 47490,
+      "limitMs": 120000,
+      "status": "PASS"
+    },
+    "browserShutdownProof": [
+      {
+        "RouteId": "009117db7f0d4dbd9d493df27a7bdd02",
+        "Lane": "boundReceipt",
+        "TotalMs": 11614,
+        "FailurePhase": "",
+        "PhasesMs": {
+          "rootContainmentProof": 423,
+          "endpointAndSocketConnect": 14,
+          "postConnectRootAndListenerProof": 386,
+          "protectedHelperCensus": 3113,
+          "precloseJournalAndAuthorization": 1740,
+          "closeSendAndAcknowledgement": 19,
+          "retainedProcessNaturalExitProof": 4176,
+          "lateDescendantAbsenceProof": 771,
+          "containmentJobEmptyProof": 2,
+          "profileQuiescence": 874,
+          "finalListenerAbsenceProof": 76,
+          "resourceDisposal": 7
+        },
+        "Counts": {
+          "protectedDescendantCount": 16,
+          "rootAndDescendantRecordCount": 17,
+          "waitLoopPassCount": 2,
+          "naturalExitProofCallCount": 34,
+          "currentAbsenceProofCount": 32,
+          "currentAbsenceObservationCount": 64,
+          "lateDescendantParentQueryCount": 17,
+          "containmentJobPollCount": 1
+        }
+      }
+    ]
+  },
+  "sourceDigests": {
+    "verifierIsolation": "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+    "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+    "sourceDigest": "c753fa3c521c748b7e8ba1c71273199ae33a1c064bb0d2f701a761fc841d388e",
+    "scriptDigest": "27c8f614c00b5a0cedceb71e799e5d12a4e4d8b4f45ab5e2dfdc9d5a403250b7",
+    "webDigest": "5a8823ed52e402d0fe40411733d1639ac97444503bcb2eb8178cc31307eacb2e",
+    "executionDigest": "7afd5f8537ba15d808ff23263fd2ee435ad924d5cabb13892b25e4d4799d9dd3",
+    "executionFileCount": 1597
+  },
+  "sanitizedReport": {
+    "protocol": "troubleshootjs-a03-browser-report-v1",
+    "gate": "Q100Player",
+    "smoke": false,
+    "headed": false,
+    "runId": "48e35dc0768f4ee19f151995e6ae43ae",
+    "repositoryIdentity": "[SANITIZED_REPOSITORY_IDENTITY]",
+    "sourceDigests": {
+      "verifierIsolation": "bbca483ef2dee5dd29eef3857126591e3c0556cf3ba76f6f6d62124e910ae7e5",
+      "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+      "sourceDigest": "c753fa3c521c748b7e8ba1c71273199ae33a1c064bb0d2f701a761fc841d388e",
+      "scriptDigest": "27c8f614c00b5a0cedceb71e799e5d12a4e4d8b4f45ab5e2dfdc9d5a403250b7",
+      "webDigest": "5a8823ed52e402d0fe40411733d1639ac97444503bcb2eb8178cc31307eacb2e",
+      "executionDigest": "7afd5f8537ba15d808ff23263fd2ee435ad924d5cabb13892b25e4d4799d9dd3",
+      "executionFileCount": 1597
+    },
+    "previewIdentity": {
+      "protocol": "troubleshootjs-preview-identity-v2",
+      "verifierRunId": "48e35dc0768f4ee19f151995e6ae43ae",
+      "previewPort": 59842,
+      "processId": 13752,
+      "processStartTicks": 639289980382595680,
+      "sourceDigest": "c753fa3c521c748b7e8ba1c71273199ae33a1c064bb0d2f701a761fc841d388e",
+      "scriptDigest": "27c8f614c00b5a0cedceb71e799e5d12a4e4d8b4f45ab5e2dfdc9d5a403250b7",
+      "webDigest": "5a8823ed52e402d0fe40411733d1639ac97444503bcb2eb8178cc31307eacb2e",
+      "executionDigest": "7afd5f8537ba15d808ff23263fd2ee435ad924d5cabb13892b25e4d4799d9dd3",
+      "executionFileCount": 1597
+    },
+    "status": "PASS",
+    "routes": [
+      {
+        "name": "q100-player-debug-query",
+        "kind": "q100-player",
+        "status": "PASS",
+        "navigationUrl": "http://127.0.0.1:59842/circuitjs.html?tsjChallenge=led&seed=3&tsjDebug=true&tsjVerifyQ100=true&tsjQ100Variant=SHARED_HYSTERETIC_LINEAR&tsjQ100Fault=RSA_RESISTANCE&tsjQ100Dt=0.0001&tsjQ100Canary=after-step&running=true&tsjVerifierNavigation=61c97b1b195f4434aecf8402ea3a611f&tsjVerifierRun=48e35dc0768f4ee19f151995e6ae43ae&tsjVerifierRoute=009117db7f0d4dbd9d493df27a7bdd02",
+        "verification": "",
+        "readiness": {
+          "workbenchNavigationReady": true,
+          "programReady": true,
+          "retestCustomerReady": true,
+          "boardPowerReady": true,
+          "boardPowerLabel": "Board Power: ON"
+        },
+        "reports": {},
+        "events": [
+          "console: converged after 7 iterations, timeStep = 0.000005",
+          "console: converged after 7 iterations, timeStep = 0.000005",
+          "console: converged after 7 iterations, timeStep = 0.000005",
+          "console: converged after 21 iterations, timeStep = 0.000005",
+          "console: node 4 unconnected",
+          "console: node 4 unconnected",
+          "console: node 4 unconnected",
+          "console: node 4 unconnected",
+          "console: node 6 unconnected",
+          "console: node 11 unconnected",
+          "console: node 6 unconnected",
+          "console: node 11 unconnected",
+          "console: node 6 unconnected",
+          "console: node 11 unconnected",
+          "console: converged after 7 iterations, timeStep = 0.000005",
+          "console: converged after 7 iterations, timeStep = 0.000005",
+          "console: converged after 7 iterations, timeStep = 0.000005",
+          "console: converged after 16 iterations, timeStep = 0.000005",
+          "console: node 4 unconnected",
+          "console: node 6 unconnected",
+          "console: node 6 unconnected",
+          "console: node 6 unconnected",
+          "console: converged after 7 iterations, timeStep = 0.000005",
+          "console: converged after 7 iterations, timeStep = 0.000005",
+          "console: converged after 21 iterations, timeStep = 0.000005",
+          "console: node 4 unconnected",
+          "console: node 4 unconnected",
+          "console: node 4 unconnected",
+          "console: node 4 unconnected",
+          "console: node 8 unconnected",
+          "console: node 9 unconnected",
+          "console: node 8 unconnected",
+          "console: node 9 unconnected",
+          "console: node 8 unconnected",
+          "console: node 9 unconnected",
+          "console: converged after 7 iterations, timeStep = 0.000005"
+        ],
+        "ordinaryTicketEntry": {
+          "protocol": "tsj-ordinary-ticket-entry-v1",
+          "status": "PASS",
+          "buttonLabel": "Accept ticket and start",
+          "labelledCount": 1,
+          "visibleEnabledCount": 1,
+          "expectedComplaintVisible": true,
+          "clickPoint": {
+            "x": 408.7109375,
+            "y": 618.15625
+          },
+          "inputEvents": [
+            "mouseMoved",
+            "mousePressed:left",
+            "mouseReleased:left"
+          ]
+        },
+        "privacyNegativeCanary": {
+          "protocol": "tsj-q100-player-dom-privacy-canary-v1",
+          "status": "PASS",
+          "sentinels": [
+            "data-tsj-q100-fault",
+            "data-tsj-future-answer"
+          ],
+          "cases": [
+            {
+              "attribute": "data-tsj-q100-fault",
+              "sentinelValue": "CANARY_ONLY",
+              "reportContainsAttribute": true,
+              "developerLeakDetected": true,
+              "playerPrivacyRejected": true
+            },
+            {
+              "attribute": "data-tsj-future-answer",
+              "sentinelValue": "CANARY_ONLY",
+              "reportContainsAttribute": true,
+              "developerLeakDetected": true,
+              "playerPrivacyRejected": true
+            }
+          ],
+          "finalPlayerPrivacy": "PASS"
+        },
+        "sentinelsCleanup": {
+          "status": "PASS",
+          "removed": [
+            "data-tsj-q100-fault",
+            "data-tsj-future-answer"
+          ],
+          "cases": [
+            {
+              "attribute": "data-tsj-q100-fault",
+              "removed": true
+            },
+            {
+              "attribute": "data-tsj-future-answer",
+              "removed": true
+            }
+          ]
+        },
+        "q100ReportAttributePresent": false,
+        "developerAttributes": {},
+        "artifactSha256": "a92ddc741861b27352785ccf21ad9c45dfcf3f4c66a793daf76bb44f6d2c0caf"
+      }
+    ],
+    "failure": {},
+    "cleanup": {
+      "success": true,
+      "errors": {},
+      "diagnostic": {},
+      "phaseTimings": {
+        "PreflightMs": 61,
+        "PhysicalNamespaceMs": 267,
+        "BrowserSessionMs": 38746,
+        "PreviewMs": 6810,
+        "LeaseReleaseMs": 26,
+        "FinalProofMs": 1568,
+        "BrowserShutdown": [
+          {
+            "RouteId": "009117db7f0d4dbd9d493df27a7bdd02",
+            "Lane": "boundReceipt",
+            "TotalMs": 11614,
+            "FailurePhase": "",
+            "PhasesMs": {
+              "rootContainmentProof": 423,
+              "endpointAndSocketConnect": 14,
+              "postConnectRootAndListenerProof": 386,
+              "protectedHelperCensus": 3113,
+              "precloseJournalAndAuthorization": 1740,
+              "closeSendAndAcknowledgement": 19,
+              "retainedProcessNaturalExitProof": 4176,
+              "lateDescendantAbsenceProof": 771,
+              "containmentJobEmptyProof": 2,
+              "profileQuiescence": 874,
+              "finalListenerAbsenceProof": 76,
+              "resourceDisposal": 7
+            },
+            "Counts": {
+              "protectedDescendantCount": 16,
+              "rootAndDescendantRecordCount": 17,
+              "waitLoopPassCount": 2,
+              "naturalExitProofCallCount": 34,
+              "currentAbsenceProofCount": 32,
+              "currentAbsenceObservationCount": 64,
+              "lateDescendantParentQueryCount": 17,
+              "containmentJobPollCount": 1
+            }
+          }
+        ]
+      },
+      "resourceSuccess": true,
+      "elapsedMs": 47490,
+      "limitMs": 120000,
+      "status": "PASS"
+    },
+    "q100Matrix": {
+      "operationElapsedMs": 26994,
+      "operationLimitMs": 6000000
+    },
+    "q100PlayerArtifact": {
+      "protocol": "troubleshootjs-q100-player-artifact-proof-v1",
+      "buildIdentityProtocol": "troubleshootjs-production-build-identity-v1",
+      "variant": "Player",
+      "style": "OBF",
+      "inputDigest": "ec046715efbdc5fde13e5f0a86e89b1bedf2641eb45f72061e00847caf764bca",
+      "inputFileCount": 1199,
+      "outputDigest": "1619931b4085bb98881de35639e843dbc4d17e7786e32067f2a2d63f3c2b7914",
+      "outputFileCount": 357,
+      "compiledJavaScriptFileCount": 7,
+      "developerMarkerScan": "PASS"
+    }
+  },
+  "inputArtifacts": [
+    {
+      "name": "final-compiled-q100player-1.json",
+      "bytes": 16502,
+      "sha256": "ad2b5a52d0832d62d6a1f858e7e83c382f5891fc73d0290eaa634cca6eb89e79"
+    },
+    {
+      "name": "final-compiled-q100player-1-result.json",
+      "bytes": 234,
+      "sha256": "31a4320531da0c027f32908909b4d5f05b785a518c6d1d65d94314918bab0e94"
+    },
+    {
+      "name": "final-compiled-q100player-1-launcher.json",
+      "bytes": 205,
+      "sha256": "dac524fdc4ba7c4d5aabab8c34ebe93cbf26256c367f05874be02e50390bb68c"
+    },
+    {
+      "name": "final-compiled-q100player-1.log",
+      "bytes": 1327,
+      "sha256": "92766470657a37872bde45a539cd5c5783cb444e67eff6673f377ddbed0415a3"
+    },
+    {
+      "name": "player-final1-identity.json",
+      "bytes": 361,
+      "sha256": "519c8ad1bd13f381d500a81dda4f593e2576f0b59e8c603896646f500724d2e6"
+    },
+    {
+      "name": "player-final1-size.json",
+      "bytes": 1471,
+      "sha256": "0d6ded71d622e2190498b2bf90fed52ff7be485c3ef8352232d8f754b9d463ee"
+    },
+    {
+      "name": "player-final1-inventory.json",
+      "bytes": 60778,
+      "sha256": "aec2f838478359af61c12dbccb11e897be5af8ff6797f3ae9d19f03c277b61ac"
+    },
+    {
+      "name": "freeze-final-compiled-q100player-1/pins.json",
+      "bytes": 643,
+      "sha256": "d1fac3c9d152ca422759888de694b97216684031e25e9bfbf07b80a5e665983f"
+    }
+  ],
+  "sanitization": {
+    "repositoryIdentity": "REDACTED",
+    "resultReportPath": "Omitted; sanitized basename retained",
+    "rawReportHadDriveAbsolutePath": false,
+    "rawReportContainedRepositoryPath": false,
+    "rawConsoleOrLogContentsEmbedded": false,
+    "machineAbsolutePathsEmbedded": false
+  },
+  "qualificationLimits": {
+    "compiledPrivacyOnly": true,
+    "q100RouteQualification": false,
+    "normalPopulationQualification": false,
+    "all100PartLayoutQualification": false,
+    "productSourceAfterBuildFreeze": "UNCHANGED_PER_COORDINATOR",
+    "testOnlyCleanupR": "IN_PROGRESS"
+  }
+}

@@ -1,0 +1,312 @@
+{
+  "schema": "troubleshootjs-q100-saved-profile-7-8-comparative-failure",
+  "schemaVersion": 1,
+  "scope": "BASELINE_CURRENT_COMPARISON_FAILURE_PRESERVATION_ONLY; NO_ADOPTION_OR_GOLDEN_SEALING",
+  "candidateBase": {
+    "branch": "codex/q100-physical-feasibility",
+    "commit": "8a2c12446b2c46bde32b32537dec58a15a65d3b9"
+  },
+  "catalogBinding": {
+    "path": "docs/task-evidence/Q100/authored-layout-r1/saved-profile-baseline-catalog.json",
+    "sha256": "57b20a02b9f1f17671dd89a5a032cafbb792b76384cedbc85b5d69dc748d62a9",
+    "bytes": 269099,
+    "caseId": "representative-v7-seed-42",
+    "sourceMetric": {
+      "constant": "SAVED6_AREA[5]",
+      "value": 6371585,
+      "literalSource": "PcbFunctionalGroupingContractTest.java"
+    }
+  },
+  "nativeRuns": {
+    "cohortId": "SAVED_7_8_REP",
+    "baseline": {
+      "source": "baseline",
+      "runId": "ffce8d30-1d1f-4731-be65-3cfa7e644ae0",
+      "suite": "P07GeometryEpochDiagnosticContractTest",
+      "cohortId": "SAVED_7_8_REP",
+      "placementVersions": [
+        7,
+        8
+      ],
+      "rootSeeds": [
+        "-1017",
+        "-1004",
+        "-1022",
+        "0",
+        "17",
+        "42"
+      ],
+      "cases": 12,
+      "assertions": 185118,
+      "nativeDiagnosticElapsedMs": 28435,
+      "wrapperElapsedSeconds": 60.7252953,
+      "nativeChildLimitMs": 180000,
+      "outerWatchdogMs": 600000,
+      "layoutVersion": 22,
+      "dependencyEpoch": "tsj-generation-dependencies-v23",
+      "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+      "layoutQualification": false,
+      "adopted": false,
+      "adoption": false,
+      "inputRevision": 2,
+      "inputCount": 1059,
+      "inputPinsSha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+      "inputAudit": "PASS_BEFORE_AND_AFTER",
+      "process": {
+        "pid": 29168,
+        "startTicks": "639290037728987850",
+        "terminationProven": true,
+        "launcherPid": 36004,
+        "launcherCreatedUtc": "2026-10-31T00:36:11.4244870Z",
+        "launcherExecutable": "powershell.exe"
+      },
+      "nativeFooter": {
+        "status": "PASS",
+        "line": "PASS: P07 geometry epoch diagnostic contracts savedProfileEpoch=true cohortId=SAVED_7_8_REP assertions=185118 cases=12 layout=22 dependency=tsj-generation-dependencies-v23 layoutQualification=false adoption=false scope=OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION"
+      },
+      "cleanup": {
+        "status": "PASS",
+        "line": "CLEANUP: current JVM contract classes and task-owned scratch removed."
+      },
+      "seed42Version7Observation": {
+        "caseOrdinal": 6,
+        "rootSeed": "42",
+        "placementInterpretationVersion": 7,
+        "expectedPackages": 54,
+        "expectedPads": 131,
+        "boardArea": 6371585,
+        "selectedPlacementAttempt": 4,
+        "viaCount": 47,
+        "normalizedPhysicalSha256": "4215c18b10349ff0049c19c43f40b78a710ea17de52d00a1a973bb0c7160eff7",
+        "layoutVersion": 22,
+        "dependencyEpoch": "tsj-generation-dependencies-v23",
+        "status": "PASS_OBSERVATION_ONLY",
+        "layoutQualification": false,
+        "adopted": false,
+        "adoption": false
+      }
+    },
+    "current": {
+      "source": "current",
+      "runId": "e9a29d29-bc16-4a94-b1eb-66d47b66fcd2",
+      "suite": "P07GeometryEpochDiagnosticContractTest",
+      "cohortId": "SAVED_7_8_REP",
+      "placementVersions": [
+        7,
+        8
+      ],
+      "rootSeeds": [
+        "-1017",
+        "-1004",
+        "-1022",
+        "0",
+        "17",
+        "42"
+      ],
+      "cases": 12,
+      "assertions": 185085,
+      "nativeDiagnosticElapsedMs": 27559,
+      "wrapperElapsedSeconds": 59.885540899999995,
+      "nativeChildLimitMs": 180000,
+      "outerWatchdogMs": 600000,
+      "layoutVersion": 23,
+      "dependencyEpoch": "tsj-generation-dependencies-v24",
+      "scope": "OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION",
+      "layoutQualification": false,
+      "adopted": false,
+      "adoption": false,
+      "inputRevision": 2,
+      "inputCount": 1059,
+      "inputPinsSha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e",
+      "inputAudit": "PASS_BEFORE_AND_AFTER",
+      "process": {
+        "pid": 26972,
+        "startTicks": "639290038731068816",
+        "terminationProven": true,
+        "launcherPid": 33440,
+        "launcherCreatedUtc": "2026-10-31T00:37:51.6615110Z",
+        "launcherExecutable": "powershell.exe"
+      },
+      "nativeFooter": {
+        "status": "PASS",
+        "line": "PASS: P07 geometry epoch diagnostic contracts savedProfileEpoch=true cohortId=SAVED_7_8_REP assertions=185085 cases=12 layout=23 dependency=tsj-generation-dependencies-v24 layoutQualification=false adoption=false scope=OBSERVATIONAL_SAVED_PROFILE_EPOCH_TRANSITION"
+      },
+      "cleanup": {
+        "status": "PASS",
+        "line": "CLEANUP: current JVM contract classes and task-owned scratch removed."
+      },
+      "seed42Version7Observation": {
+        "caseOrdinal": 6,
+        "rootSeed": "42",
+        "placementInterpretationVersion": 7,
+        "expectedPackages": 54,
+        "expectedPads": 131,
+        "boardArea": 6524231,
+        "selectedPlacementAttempt": 4,
+        "viaCount": 42,
+        "normalizedPhysicalSha256": "fd0b45af69d16fd3eb51cc11cd69b9f2e338d6a99b68e9768bb30fab4a67cad8",
+        "layoutVersion": 23,
+        "dependencyEpoch": "tsj-generation-dependencies-v24",
+        "status": "PASS_OBSERVATION_ONLY",
+        "layoutQualification": false,
+        "adopted": false,
+        "adoption": false
+      }
+    },
+    "comparisonReader": {
+      "status": "FAIL",
+      "exitCode": 2,
+      "source": "current",
+      "cohortId": "SAVED_7_8_REP",
+      "readerSource": {
+        "path": "tests/qualification/rb100-layout/read_saved_profile_transition.py",
+        "sha256": "b2b2c8721e5f852fb9e4cdd74b313dddc28d12792c8ead9e115710b21b8ac613",
+        "bytes": 109386
+      },
+      "error": "FAIL: current violates retained source metric SAVED6_AREA[5]",
+      "failingCase": {
+        "placementVersion": 7,
+        "rootSeed": "42",
+        "sourceMetric": "SAVED6_AREA[5]",
+        "expectedArea": 6371585,
+        "observedArea": 6524231,
+        "comparison": "observed area must satisfy the retained source bound",
+        "selectedPlacementAttempt": 4,
+        "baselineArea": 6371585,
+        "baselineSelectedAttempt": 4,
+        "baselineViaCount": 47,
+        "currentViaCount": 42,
+        "currentReaderReachedHashComparison": false,
+        "reason": "reader stopped at the first retained source metric failure"
+      },
+      "outputJson": "NOT_EMITTED",
+      "elapsedSeconds": "NOT_SEPARATELY_MEASURED",
+      "unifiedToolReportedSeconds": {
+        "value": 0.42,
+        "scope": "TOTAL_HOST_TOOL TIME; NOT ATTRIBUTED TO READER"
+      }
+    },
+    "areaRegression": {
+      "caseId": "representative-v7-seed-42",
+      "expectedSourceArea": 6371585,
+      "baselineObservedArea": 6371585,
+      "currentObservedArea": 6524231,
+      "currentExceedsSourceBound": true,
+      "deltaArea": 152646,
+      "selectedPlacementAttemptUnchanged": true,
+      "baselineVias": 47,
+      "currentVias": 42,
+      "adoption": "NONE",
+      "goldenSealing": "NONE"
+    }
+  },
+  "inputRevision2": {
+    "seal": {
+      "artifact": "saved-profile-inputs-sealed2.json",
+      "sha256": "d49c8054e1358e9ccf408727f039cc4c20336bab542c306d5d7dcd759a9864ba",
+      "bytes": 1036,
+      "catalogSha256": "57b20a02b9f1f17671dd89a5a032cafbb792b76384cedbc85b5d69dc748d62a9",
+      "inputRevision": 2
+    },
+    "baselinePins": {
+      "file": "saved-profile-baseline-v2-sealed-pins.json",
+      "inputCount": 1059,
+      "sha256": "09ac49088fef03a2a0aee0929647f0e16b14bae15573faa89e71e19ad7d525da",
+      "bytes": 224612
+    },
+    "currentPins": {
+      "file": "saved-profile-current-v2-sealed-pins.json",
+      "inputCount": 1059,
+      "sha256": "696aa78fa0ebbacebf7eb1d2401c88caff30ce76f27e0161196ecb66bb0eaa5e",
+      "bytes": 224560
+    },
+    "inputCountEach": 1059,
+    "beforeAfterAudit": "PASS for both native runs"
+  },
+  "rawArtifacts": [
+    {
+      "source": "baseline",
+      "artifact": "saved-profile-baseline-7-8-rep-1-result.json",
+      "sha256": "ed8730a0fa712c31ceabec5d0fd7851641bc13ccc8a4ab370eece283377f4593",
+      "bytes": 784,
+      "contentsEmbedded": false
+    },
+    {
+      "source": "baseline",
+      "artifact": "saved-profile-baseline-7-8-rep-1-receipt.txt",
+      "sha256": "fdeef2b21f120f44f3469062c1168f3d6c3a1f59972151391e6d128a32b2d2bc",
+      "bytes": 6869528,
+      "contentsEmbedded": false
+    },
+    {
+      "source": "baseline",
+      "artifact": "saved-profile-baseline-7-8-rep-1-console.txt",
+      "sha256": "5518eb3173195a3bc2a64b50793e1207bacfebaa678d639e363e87db53b4b5ce",
+      "bytes": 6870668,
+      "contentsEmbedded": false
+    },
+    {
+      "source": "baseline",
+      "artifact": "saved-profile-baseline-7-8-rep-1-launcher.json",
+      "sha256": "6327b23d9a6778e0e9b8a8c456bd6e7d1a1e1c5bf64080112fce5343612762d7",
+      "bytes": 273,
+      "contentsEmbedded": false
+    },
+    {
+      "source": "baseline",
+      "artifact": "saved-profile-baseline-7-8-rep-1-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "contentsEmbedded": false
+    },
+    {
+      "source": "current",
+      "artifact": "saved-profile-current-7-8-rep-1-result.json",
+      "sha256": "b20267febd02845abf7bd3f4f05ca268bac474be531cadd3b95cf5df8ddf6b14",
+      "bytes": 791,
+      "contentsEmbedded": false
+    },
+    {
+      "source": "current",
+      "artifact": "saved-profile-current-7-8-rep-1-receipt.txt",
+      "sha256": "c6dedc6c4350dd8dd8a2ed50c5d38c8a90285e8e29ee1919494157baf141a5e8",
+      "bytes": 6775331,
+      "contentsEmbedded": false
+    },
+    {
+      "source": "current",
+      "artifact": "saved-profile-current-7-8-rep-1-console.txt",
+      "sha256": "0108979cfb8d39b5df6b350bd21e778ba64e860f32b540f15837911fb07367c0",
+      "bytes": 6776471,
+      "contentsEmbedded": false
+    },
+    {
+      "source": "current",
+      "artifact": "saved-profile-current-7-8-rep-1-launcher.json",
+      "sha256": "ce9f4bd2e52efb3cacfb069392bb47ba8f1865f320fe50caac89e79f780b9cd8",
+      "bytes": 271,
+      "contentsEmbedded": false
+    },
+    {
+      "source": "current",
+      "artifact": "saved-profile-current-7-8-rep-1-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "contentsEmbedded": false
+    }
+  ],
+  "readerRunTiming": {
+    "readerElapsedSeconds": "NOT_SEPARATELY_MEASURED",
+    "unifiedToolReportedSeconds": 0.42,
+    "unifiedToolTimingScope": "TOTAL_HOST_TOOL; DO NOT ATTRIBUTE TO READER"
+  },
+  "resultJsonEmittedByReader": false,
+  "rawConsoleOrReceiptContentsEmbedded": false,
+  "personalAbsolutePathsEmbedded": false,
+  "limitations": [
+    "Both native diagnostics passed their 12-case observation contracts and cleanup; this does not constitute qualification.",
+    "The strict current comparison failed at SAVED6_AREA[5] for placement7 seed42.",
+    "No current hash replacement or adoption is claimed.",
+    "The reader emitted no output JSON; its own elapsed time was not separately measured."
+  ]
+}
