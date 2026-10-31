@@ -1,4 +1,61 @@
-# Current checkpoint: shared PCB groundwork published; next graph scope frozen
+# Current checkpoint: independent fixed-prefix graph oracle prerequisite accepted
+
+**Locally accepted; publication preparation. Updated:** 2026-10-31. Audit repo
+`tsj-audit-20261027`, branch `codex/q100-physical-feasibility`, starting HEAD
+`4e2ec4a017eaff2a86b6156662e29a57eca360e7`; clean before this substep. Accepted
+production `34ff05d08d3a985c9c59f202d789fe653b558100` remains unchanged/pushed and
+its Gmail `1a192ec829f2b69d` was already sent once. Separate Desktop work, prior
+failures and scratch evidence remain preserved.
+
+Delivered only [fixed-prefix PLAN Amendment A](task-evidence/Q100/fixed-prefix-r1/PLAN.md):
+a strict immutable generic graph codec and independent directed two-face minimum
+relaxed-cost oracle. The [new packet](task-evidence/Q100/fixed-prefix-r1/README.md)
+binds exact code, tests, process evidence and limits. Reader SHA C146CEF4...9D8B2A00;
+tests B02F094E...BE7AABD5. No client Java/native runner/module changes; layout25,
+dependency26 and CircuitJS behavior remain unchanged. The generic graph cannot
+attest real nets/pads or a captured board and every acceptance flag remains false.
+
+Final-source PASS12 synthetic contracts/1024 independent tiny-graph Floyd-Warshall
+comparisons. Unit runner0.032s; maintained bounded helper0.5504682s total, exit0,
+PID15416/start639290641967790397, termination proven. Literal tests include real
+equal-cost choices, exact canonical digest and70-state witness capped at64 output
+states with a full-path digest. PASS10 real Python3.13.14 CLI canaries, each bounded
+at15s with exact exit/PID/start/termination and stream hashes: reachable cost70,
+unreachable, duplicate/type errors, missing/directory input,8MiB+1 rejection,
+exact8MiB acceptance, deep JSON and row wrapping. Exit1/2 negatives are expected
+rejections, never accepted graphs. Reachable counters explicitly stop at the first
+settled goal; no full reachability census is inferred.
+
+Root integrated review and independent read-only source/test review found no
+material blocker. Reviewer ran no gates; root's real CLI proof closes the review's
+in-process-test limitation. Initial development nesting-fixture failure remains
+reported with an explicit missing raw/pre-fix scratch-copy limit; source/pass1
+snapshots before root's tie/witness coverage additions are retained. No production
+or parser assertion was weakened.
+
+Read-only input audit PASS1597 source/scripts/web execution files and both1199-file
+GWT input identities match accepted production; Developer compiled357-file output
+also matches. Native, GWT and visible Player gates are NOT APPLICABLE to this
+Python-only prerequisite and were not rerun. It renews no full population or board
+qualification. CI retains the accepted self-hosted Windows runner prerequisite.
+No protected data or old scratch contents accessed in this substep. HARD/PSYCHOTIC
+remain unavailable/unrun; prior protected-read scope uncertainty remains disclosed.
+Actual100 accepted layouts remain ZERO; full capture and playable100 unproven.
+
+Resources: owned OS-temp leaf tsj-q100-fixed-prefix-32a838c2de984f739276c39f229953dc
+retains controlled synthetic inputs/raw streams/source snapshots. All bounded
+children and the audit launcher are closed; no browser, preview or electrical
+graph allocated. Maintained helper return proves process/output/log cleanup;
+cleanup duration is not separately measured and is not claimed as zero.
+Final scoped QA PASS5 files/1 strict JSON/3 local links, no privacy/reparse findings;
+manifest4D2D8FE6...7EABEC1A and bounded process proof remain in owned scratch.
+Next: finish staged diff checks, commit/push normally, verify remote SHA and
+send one completion Gmail for this prerequisite. Then implement the actual
+staged generator/router capture seam, prove prefix/owner parity and independent
+producer fidelity, and observe both exact authored100 variants under frozen
+budgets. Four fresh qualified layouts/runtime/solvability remain later work.
+
+# Historical checkpoint: shared PCB groundwork publication and next scope
 
 **PUBLISHED. Updated:** 2026-10-31. Audit repo `tsj-audit-20261027`, branch
 `codex/q100-physical-feasibility`, accepted implementation commit `34ff05d08d3a985c9c59f202d789fe653b558100`.

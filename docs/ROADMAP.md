@@ -74,7 +74,10 @@ exact proof and limits.
 Existing90s/640/5s and120s cleanup limits, routing caps and independent oracles
 remain. The full30-root and2x31 matrices are not renewed by these scoped gates.
 No new admission, all-seed or playable100 claim follows. The next [capped fixed-prefix graph scope](task-evidence/Q100/fixed-prefix-r1/PLAN.md)
-is frozen; implementation and measurement have not started. Four
+is frozen. Its first independent generic graph-oracle prerequisite now passes
+synthetic contracts and real CLI canaries; publication is being finalized. It
+does not attest a real captured board. The production observation seam and actual
+authored100 measurements have not started. Four
 fresh layered layouts and physical runtime/solvability proof remain required.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical

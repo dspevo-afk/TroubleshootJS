@@ -70,3 +70,57 @@ real generator finalizer, independent finite-width P08 graph/clearance checks,
 layered connectivity and access, then fresh electrical/runtime/diagnostic proof.
 Structural100 fixtures and a single-face access helper cannot substitute for that.
 Four fresh qualified layouts and physical runtime/solvability remain later work.
+
+## Amendment A: independent graph oracle before the production capture seam
+
+First complete a small test-only prerequisite: an independent Python graph codec,
+reachability/cost oracle and synthetic contracts. This substep changes no client
+Java, native runner, electrical behavior or generation identity. The real generator
+capture seam, actual authored100 observations and full diagnostic milestone remain
+unstarted. Synthetic fixtures must never be presented as captured boards.
+
+Freeze generic protocol `p07-fixed-prefix-graph-v1`, model
+`DIRECTED_TWO_FACE_HISTORY_RELAXED`. Its exact keys are protocol, model, caseId,
+width, height, primary, steps, vias, goals and starts. caseId is a bounded ASCII
+fixture/graph label, not an authored-candidate identity. Width/height are positive
+integers with at most250000 cells. A state is face*cells+y*width+x. `steps` has
+2*cells integral masks0..15: NORTH1, EAST2, SOUTH4, WEST8. Reject off-grid bits,
+including row wrapping. `vias` has cells booleans and enables a bidirectional
+same-cell face transition; `goals` has2*cells booleans. `starts` has one or two
+distinct valid state indices. Allow zero goals as an explicit unreachable graph.
+Require exact types, lengths and keys; bool is not an integer field.
+
+The independent oracle uses literal costs: ordinary step10 on primary face,
+12 on the other face, via60; starting on the secondary face costs2. Turn history,
+transition count and global via limits are relaxed, never claimed satisfied.
+The graph alone grants no authority to real pads, nets or physical connectivity;
+later producer parity and lineage proofs remain necessary. A reachable relaxed
+path is not a routed layout. Results explicitly carry no layout/electrical/Q100
+acceptance, including for malformed or synthetic inputs.
+
+Use an immutable validated snapshot; changes to caller-owned arrays cannot change
+it. Define the graph digest as SHA-256 of UTF-8 canonical JSON of those exact keys,
+sorted keys, compact separators, ASCII escaping and no final newline. Equal-cost
+choices must be deterministic; no lexicographically minimal-path claim is needed.
+Retain a bounded deterministic witness and counts/digest so the tests can verify
+each edge, goal face and exact cost independently. Cap input at8388608 bytes before
+JSON decoding, reject duplicate keys/nonfinite constants, and support one leading
+UTF-8 BOM consistently with maintained readers. Fail without disclosing file paths
+or raw input. The codec cannot attest an actual authored100 capture.
+
+Require literal asymmetric-step, wrong-goal-face, via present/absent, blocked-cell,
+disconnected and zero-cost start-goal cases; strict malformed-input negatives,
+immutability and deterministic digest/witness checks. Independently enumerate all
+64 directed1x2 two-face graphs (four possible ordinary edges and two via cells)
+against Floyd-Warshall costs for every start/goal pair. Do not call production
+router predicates/search in these tests or derive expectations from its outputs.
+Check the actual selected Python CLI with positive and negative files, including
+missing input, and record PID/start/executable/exit/termination and separate elapsed
+time. No tests read HARD/protected data, old scratch or real board exports.
+
+Final gates for this prerequisite are the focused Python contracts, real CLI
+canaries, read-only integrated review and diff/packet checks. GWT/native/visible
+Player gates are NOT APPLICABLE while all their consumed inputs stay unchanged;
+audit that boundary explicitly. Publish only the accepted oracle prerequisite,
+with the real capture seam and authored observations still pending. This is no
+closure of the full fixed-prefix diagnostic or Q100 qualification.

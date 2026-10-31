@@ -1,0 +1,533 @@
+{
+  "schema": "troubleshootjs-fixed-prefix-oracle-prerequisite-v1",
+  "status": "ACCEPTED_TEST_ORACLE_PREREQUISITE_ONLY",
+  "recordedAtUtc": "2026-10-31T17:27:36.156728+00:00",
+  "repository": {
+    "branch": "codex/q100-physical-feasibility",
+    "startingHead": "4e2ec4a017eaff2a86b6156662e29a57eca360e7",
+    "acceptedProduction": "34ff05d08d3a985c9c59f202d789fe653b558100"
+  },
+  "scope": "Independent generic graph codec and synthetic oracle only; no actual captured graph, generator observation seam, layout, electrical or Q100 qualification.",
+  "source": [
+    {
+      "file": "tests/qualification/rb100-layout/read_fixed_prefix_graph.py",
+      "bytes": 15570,
+      "sha256": "c146cef4336d96eb6b6597569115d746d6a1fffe3b0c2ee2759d0e259d8b2a00"
+    },
+    {
+      "file": "tests/qualification/rb100-layout/test_read_fixed_prefix_graph.py",
+      "bytes": 22630,
+      "sha256": "b02f094ee35429a75f94c1566a83b5d7f357d7e93c483545baee25e5be7aabd5"
+    }
+  ],
+  "protocol": {
+    "name": "p07-fixed-prefix-graph-v1",
+    "model": "DIRECTED_TWO_FACE_HISTORY_RELAXED",
+    "maximumCells": 250000,
+    "maximumInputBytes": 8388608,
+    "maximumWitnessPrefixStates": 64,
+    "stateOrder": "face*cells+y*width+x",
+    "directionMasks": {
+      "north": 1,
+      "east": 2,
+      "south": 4,
+      "west": 8
+    },
+    "ordinaryPrimaryCost": 10,
+    "ordinarySecondaryCost": 12,
+    "secondaryStartCost": 2,
+    "viaCost": 60,
+    "relaxed": "Turn history, transition count and global via limits; graph authority/actual physical mapping is not attested."
+  },
+  "runtime": {
+    "status": "PASS_RUNTIME_PREFLIGHT_ONLY",
+    "version": "3.13.14",
+    "pid": 33284,
+    "processStartTicks": "639290638163725180",
+    "exitCode": 0,
+    "terminationProven": true,
+    "elapsedSeconds": 0.4138343,
+    "requestedExecutable": "PythonSoftwareFoundation.Python.3.13 WindowsApps alias; full executable and process capture retained in owned scratch"
+  },
+  "unit": {
+    "name": "unit",
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "terminationProven": true,
+    "elapsedSeconds": 0.5504682,
+    "timeoutMs": 60000,
+    "processId": 15416,
+    "processStartTicks": "639290641967790397",
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "9c31972cda629a9d36d517ddcab2c4e5d81ff5e7c27965c4489028ca83d33262",
+    "status": "PASS_12_SYNTHETIC_CONTRACTS_1024_ENUMERATION_COMPARISONS",
+    "testCount": 12,
+    "unittestElapsedSeconds": 0.032,
+    "tinyDirectedGraphs": 64,
+    "singletonStartGoalPairsPerGraph": 16,
+    "independentFloydWarshallComparisons": 1024,
+    "comparisonScope": "All step/via masks on a two-cell/two-face graph and every singleton start/goal pair; not all graph sizes or all goal subsets.",
+    "literalCases": [
+      "directed asymmetric/reverse-only",
+      "goal-face and via present/absent",
+      "blocked encoded-cell/disconnected/zero-goal",
+      "primary zero-cost start-goal and secondary initial/step costs",
+      "multiple starts/goals and real equal-cost diamond",
+      "literal canonical graph digest",
+      "70-state witness with64-state/63-edge output prefix and pinned full-path digest",
+      "exact types/keys/boundaries/resource cap/UTF8/BOM/duplicate/nonfinite/deep JSON rejection",
+      "immutable arrays and sanitized in-process CLI behavior"
+    ]
+  },
+  "realSelectedCli": {
+    "status": "PASS_TEN_CONTROLLED_CANARIES",
+    "invocation": "python.exe -B tests/qualification/rb100-layout/read_fixed_prefix_graph.py <owned synthetic graph file>",
+    "cases": [
+      {
+        "name": "positive",
+        "exitCode": 0,
+        "expectedExitCode": 0,
+        "terminationProven": true,
+        "elapsedSeconds": 0.1438216,
+        "timeoutMs": 15000,
+        "processId": 30956,
+        "processStartTicks": "639290641972120721",
+        "stdoutSha256": "733d5b6518af47ee798c4963f5da9770016429e4ab2ad290de591dcf76a240e0",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "PASS_SYNTHETIC_GRAPH_CANARY",
+        "record": {
+          "acceptance": {
+            "actualCaptureAttested": false,
+            "electrical": false,
+            "layout": false,
+            "q100": false
+          },
+          "caseId": "ROOT_VIA_POSITIVE",
+          "counters": {
+            "heapPopsBeforeTermination": 3,
+            "ordinaryEdgesExaminedBeforeTermination": 1,
+            "settledStatesBeforeTermination": 3,
+            "strictRelaxationsBeforeTermination": 2,
+            "viaChecksBeforeTermination": 2
+          },
+          "graphSha256": "8f493095883f031cbb4f228344bc9a6150a9927b6be82d05918a4fe442e824b2",
+          "minimumRelaxedCost": 70,
+          "model": "DIRECTED_TWO_FACE_HISTORY_RELAXED",
+          "protocol": "p07-fixed-prefix-graph-v1",
+          "reachable": true,
+          "schema": "p07-fixed-prefix-graph-oracle-result-v1",
+          "search": {
+            "fullReachabilityCensus": false,
+            "termination": "FIRST_GOAL_SETTLED"
+          },
+          "status": "REACHABLE",
+          "witness": {
+            "edgeCount": 2,
+            "edgeKindPrefix": [
+              "STEP_EAST",
+              "VIA"
+            ],
+            "goalState": 3,
+            "prefixTruncated": false,
+            "sha256": "6c5c402c61fb78be43446b86e9881062553df068ca1529811b6efc6fc5c98f3c",
+            "startState": 0,
+            "stateCount": 3,
+            "statePrefix": [
+              0,
+              1,
+              3
+            ]
+          }
+        }
+      },
+      {
+        "name": "unreachable",
+        "exitCode": 0,
+        "expectedExitCode": 0,
+        "terminationProven": true,
+        "elapsedSeconds": 0.137145,
+        "timeoutMs": 15000,
+        "processId": 20896,
+        "processStartTicks": "639290641973978005",
+        "stdoutSha256": "849384a742fbe223f21d661c6cea31efaf4262bda0183e81f9f425e822d0fedb",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "PASS_SYNTHETIC_GRAPH_CANARY",
+        "record": {
+          "acceptance": {
+            "actualCaptureAttested": false,
+            "electrical": false,
+            "layout": false,
+            "q100": false
+          },
+          "caseId": "ROOT_VIA_POSITIVE",
+          "counters": {
+            "heapPopsBeforeTermination": 2,
+            "ordinaryEdgesExaminedBeforeTermination": 1,
+            "settledStatesBeforeTermination": 2,
+            "strictRelaxationsBeforeTermination": 1,
+            "viaChecksBeforeTermination": 2
+          },
+          "graphSha256": "cd00c2e3aa738910b74d8af84cbc26a1c8bfd85ca821c2a1debad7bde7c774ea",
+          "minimumRelaxedCost": null,
+          "model": "DIRECTED_TWO_FACE_HISTORY_RELAXED",
+          "protocol": "p07-fixed-prefix-graph-v1",
+          "reachable": false,
+          "schema": "p07-fixed-prefix-graph-oracle-result-v1",
+          "search": {
+            "fullReachabilityCensus": true,
+            "termination": "QUEUE_EXHAUSTED"
+          },
+          "status": "UNREACHABLE",
+          "witness": null
+        }
+      },
+      {
+        "name": "duplicate",
+        "exitCode": 1,
+        "expectedExitCode": 1,
+        "terminationProven": true,
+        "elapsedSeconds": 0.1452465,
+        "timeoutMs": 15000,
+        "processId": 24872,
+        "processStartTicks": "639290641975399283",
+        "stdoutSha256": "6802da68d62cf72dc958245ea39648ff0e4d40dd89dd522f92538ef7742f1fed",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "PASS_EXPECTED_REJECTION",
+        "record": {
+          "acceptance": {
+            "actualCaptureAttested": false,
+            "electrical": false,
+            "layout": false,
+            "q100": false
+          },
+          "error": "DUPLICATE_JSON_KEY",
+          "schema": "p07-fixed-prefix-graph-oracle-result-v1",
+          "status": "REJECTED"
+        }
+      },
+      {
+        "name": "wrong-type",
+        "exitCode": 1,
+        "expectedExitCode": 1,
+        "terminationProven": true,
+        "elapsedSeconds": 0.13320959999999998,
+        "timeoutMs": 15000,
+        "processId": 36764,
+        "processStartTicks": "639290641976873354",
+        "stdoutSha256": "a62eac9b19f2e0922e284acaab37cf0053d113df10a1bc079c050c0543792e77",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "PASS_EXPECTED_REJECTION",
+        "record": {
+          "acceptance": {
+            "actualCaptureAttested": false,
+            "electrical": false,
+            "layout": false,
+            "q100": false
+          },
+          "error": "DIMENSIONS_INVALID",
+          "schema": "p07-fixed-prefix-graph-oracle-result-v1",
+          "status": "REJECTED"
+        }
+      },
+      {
+        "name": "missing",
+        "exitCode": 2,
+        "expectedExitCode": 2,
+        "terminationProven": true,
+        "elapsedSeconds": 0.16647389999999998,
+        "timeoutMs": 15000,
+        "processId": 14368,
+        "processStartTicks": "639290641978222765",
+        "stdoutSha256": "0641782fd7d49bafcc001ded2740fcc4990682fe5aa1e935b24c9883c4c54dcb",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "PASS_EXPECTED_REJECTION",
+        "record": {
+          "acceptance": {
+            "actualCaptureAttested": false,
+            "electrical": false,
+            "layout": false,
+            "q100": false
+          },
+          "error": "INPUT_UNAVAILABLE",
+          "schema": "p07-fixed-prefix-graph-oracle-result-v1",
+          "status": "ERROR"
+        }
+      },
+      {
+        "name": "directory",
+        "exitCode": 2,
+        "expectedExitCode": 2,
+        "terminationProven": true,
+        "elapsedSeconds": 0.1319725,
+        "timeoutMs": 15000,
+        "processId": 38824,
+        "processStartTicks": "639290641979918215",
+        "stdoutSha256": "0641782fd7d49bafcc001ded2740fcc4990682fe5aa1e935b24c9883c4c54dcb",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "PASS_EXPECTED_REJECTION",
+        "record": {
+          "acceptance": {
+            "actualCaptureAttested": false,
+            "electrical": false,
+            "layout": false,
+            "q100": false
+          },
+          "error": "INPUT_UNAVAILABLE",
+          "schema": "p07-fixed-prefix-graph-oracle-result-v1",
+          "status": "ERROR"
+        }
+      },
+      {
+        "name": "oversize",
+        "exitCode": 1,
+        "expectedExitCode": 1,
+        "terminationProven": true,
+        "elapsedSeconds": 0.1313113,
+        "timeoutMs": 15000,
+        "processId": 20864,
+        "processStartTicks": "639290641981312761",
+        "stdoutSha256": "e0ff57180972aa8070f6a41aaddcff645ac94ac07f25426e221f8ecf894c8a4a",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "PASS_EXPECTED_REJECTION",
+        "record": {
+          "acceptance": {
+            "actualCaptureAttested": false,
+            "electrical": false,
+            "layout": false,
+            "q100": false
+          },
+          "error": "INPUT_TOO_LARGE",
+          "schema": "p07-fixed-prefix-graph-oracle-result-v1",
+          "status": "REJECTED"
+        }
+      },
+      {
+        "name": "exact-cap",
+        "exitCode": 0,
+        "expectedExitCode": 0,
+        "terminationProven": true,
+        "elapsedSeconds": 0.1583413,
+        "timeoutMs": 15000,
+        "processId": 10836,
+        "processStartTicks": "639290641982874593",
+        "stdoutSha256": "733d5b6518af47ee798c4963f5da9770016429e4ab2ad290de591dcf76a240e0",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "PASS_SYNTHETIC_GRAPH_CANARY",
+        "record": {
+          "acceptance": {
+            "actualCaptureAttested": false,
+            "electrical": false,
+            "layout": false,
+            "q100": false
+          },
+          "caseId": "ROOT_VIA_POSITIVE",
+          "counters": {
+            "heapPopsBeforeTermination": 3,
+            "ordinaryEdgesExaminedBeforeTermination": 1,
+            "settledStatesBeforeTermination": 3,
+            "strictRelaxationsBeforeTermination": 2,
+            "viaChecksBeforeTermination": 2
+          },
+          "graphSha256": "8f493095883f031cbb4f228344bc9a6150a9927b6be82d05918a4fe442e824b2",
+          "minimumRelaxedCost": 70,
+          "model": "DIRECTED_TWO_FACE_HISTORY_RELAXED",
+          "protocol": "p07-fixed-prefix-graph-v1",
+          "reachable": true,
+          "schema": "p07-fixed-prefix-graph-oracle-result-v1",
+          "search": {
+            "fullReachabilityCensus": false,
+            "termination": "FIRST_GOAL_SETTLED"
+          },
+          "status": "REACHABLE",
+          "witness": {
+            "edgeCount": 2,
+            "edgeKindPrefix": [
+              "STEP_EAST",
+              "VIA"
+            ],
+            "goalState": 3,
+            "prefixTruncated": false,
+            "sha256": "6c5c402c61fb78be43446b86e9881062553df068ca1529811b6efc6fc5c98f3c",
+            "startState": 0,
+            "stateCount": 3,
+            "statePrefix": [
+              0,
+              1,
+              3
+            ]
+          }
+        }
+      },
+      {
+        "name": "deep-json",
+        "exitCode": 1,
+        "expectedExitCode": 1,
+        "terminationProven": true,
+        "elapsedSeconds": 0.1309854,
+        "timeoutMs": 15000,
+        "processId": 37984,
+        "processStartTicks": "639290641984487703",
+        "stdoutSha256": "32d2151e7dcc3ee2f88203462566a161924552a5b304b229ea5f62482c0dfcc3",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "PASS_EXPECTED_REJECTION",
+        "record": {
+          "acceptance": {
+            "actualCaptureAttested": false,
+            "electrical": false,
+            "layout": false,
+            "q100": false
+          },
+          "error": "JSON_INVALID",
+          "schema": "p07-fixed-prefix-graph-oracle-result-v1",
+          "status": "REJECTED"
+        }
+      },
+      {
+        "name": "row-wrap",
+        "exitCode": 1,
+        "expectedExitCode": 1,
+        "terminationProven": true,
+        "elapsedSeconds": 0.132181,
+        "timeoutMs": 15000,
+        "processId": 27624,
+        "processStartTicks": "639290641985821293",
+        "stdoutSha256": "7433a54ea9304b3717dbdeeb7263f9e32138d00d2226ef666284a427484aa14e",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "PASS_EXPECTED_REJECTION",
+        "record": {
+          "acceptance": {
+            "actualCaptureAttested": false,
+            "electrical": false,
+            "layout": false,
+            "q100": false
+          },
+          "error": "STEP_LEAVES_GRID",
+          "schema": "p07-fixed-prefix-graph-oracle-result-v1",
+          "status": "REJECTED"
+        }
+      }
+    ],
+    "negativeExitInterpretation": "Exit1 data rejection and exit2 unavailable/nonregular input are expected negative canaries only, never accepted graphs or application qualification.",
+    "literalPositive": {
+      "minimumRelaxedCost": 70,
+      "witnessStates": [
+        0,
+        1,
+        3
+      ],
+      "canonicalGraphSha256": "8f493095883f031cbb4f228344bc9a6150a9927b6be82d05918a4fe442e824b2"
+    },
+    "censusLimit": "Reachable results stop at first settled goal. Counters explicitly describe work before termination; they are not a complete reachable-state census."
+  },
+  "inputBoundaryAudit": {
+    "status": "PASS_UNCHANGED_PRODUCTION_INPUT_BOUNDARY_AUDIT_ONLY",
+    "execution": {
+      "Protocol": "troubleshootjs-execution-provenance-v1",
+      "SourceDigest": "0cbe64a449e761ce25194c017fa0bc32f0539d598d4cc4e76a71062ede15e059",
+      "ScriptDigest": "e9799a7f641bff597eabd8b70da11f8026ad6c3a764d5d06d44c0f36b1a0593c",
+      "WebDigest": "cdf4eeb48553ed65fd76b1d423b8efee2eac1f9968750eeb4c22c7c767d1d61c",
+      "Digest": "c9d9120f51804ef4e36e97f095a45679cfc5e4fdf82cbec01e8ccb7530e0e46c",
+      "FileCount": 1597
+    },
+    "developerInput": {
+      "Protocol": "troubleshootjs-production-build-identity-v1",
+      "Variant": "Developer",
+      "Style": "OBF",
+      "InputDigest": "5c9e0f811d28a51e13d5e3c603d7e8b855e62c8d098fa64761776cbc3d1199b0",
+      "InputFileCount": 1199
+    },
+    "playerInput": {
+      "Protocol": "troubleshootjs-production-build-identity-v1",
+      "Variant": "Player",
+      "Style": "OBF",
+      "InputDigest": "45654010ddaf068b1cb30a193d43084b80eed0dbfb84f3dcf5f50b6f21df0d1f",
+      "InputFileCount": 1199
+    },
+    "currentSharedOutput": {
+      "OutputDigest": "38a2cba1decd94769ec36f56fd023216d1fd8e6b96546285849e18ba5b579f2e",
+      "OutputFileCount": 357
+    },
+    "sharedOutputVariant": "Developer; not inferred to be the Player output",
+    "nativeScope": "No client/test-contract Java, native runner or module changes; generic Python oracle is outside native consumed roots.",
+    "checksRun": "Read-only hashes and identity recomputation; no build/native/browser gate."
+  },
+  "review": {
+    "root": "Integrated source/test review complete; no actionable blocker after genuine tie and witness-bound coverage added.",
+    "independentReviewer": "q100_cleanup_profile",
+    "mode": "READ_ONLY_SOURCE_AND_TEST_REVIEW",
+    "reviewedReaderSha256": "c146cef4336d96eb6b6597569115d746d6a1fffe3b0c2ee2759d0e259d8b2a00",
+    "reviewedTestsSha256": "b02f094ee35429a75f94c1566a83b5d7f357d7e93c483545baee25e5be7aabd5",
+    "result": "NO_MATERIAL_CODE_BLOCKER_FOUND",
+    "reviewerRanGates": false,
+    "gapAndClosure": "Reviewer correctly identified in-process CLI tests alone insufficient. Root separately completed ten real selected-host process canaries with ownership/exit/termination records."
+  },
+  "developmentHistory": {
+    "initialDeepJsonFixture": "Implementer reported initial2048-depth fixture did not trigger selected parser recursion limit. Test fixture increased to4096; parser behavior was not weakened.",
+    "initialFailureEvidenceLimit": "Original failing tool output remains in the conversation; raw failure/pre-fix test bytes were not copied to this scratch. Do not claim a retained complete pre-fix artifact.",
+    "retainedPass1": "oracle-dev holds source/test snapshots and passing11-test output before root coverage additions.",
+    "rootCoverageCorrections": "The original tie fixture had only one path. A real equal-cost diamond, bounded70-state output and literal canonical-hash expectations were added in tests only.",
+    "readerAlgorithmChangedAfterFirstPassingDevelopmentRun": false
+  },
+  "gatesNotRun": {
+    "jdk8Gwt": "NOT_APPLICABLE: no production Java/build inputs changed;1199-input identities per variant recomputed unchanged.",
+    "native": "NOT_APPLICABLE: client and contract Java/native runner/module unchanged; this Python oracle is outside native inputs.",
+    "browserAndVisiblePlayer": "NOT_APPLICABLE: no visible/player flow changed;1597 execution files and Developer compiled output unchanged.",
+    "actualAuthored100Capture": "NOT_STARTED",
+    "ci": "NOT_RUN: existing self-hosted Windows runner registration prerequisite."
+  },
+  "resources": {
+    "status": "All bounded children terminal; no browser/preview or live electrical graph allocated.",
+    "cleanup": "Maintained bounded helper returned after process/output/owned log cleanup; no browser/preview allocated.",
+    "cleanupMilliseconds": null,
+    "cleanupTimeSeparatelyMeasured": false,
+    "elapsedInterpretation": "Per-child elapsedSeconds include maintained process/output/log cleanup; unittest0.032s is separate test-runner time.",
+    "scratchLeaf": "tsj-q100-fixed-prefix-32a838c2de984f739276c39f229953dc",
+    "rawStreamsAndSyntheticInputs": "Retained only in task-owned OS-temp scratch."
+  },
+  "limits": {
+    "actualCaptureAttested": false,
+    "actual100AcceptedLayouts": 0,
+    "playableQ100": false,
+    "electricalProofGranted": false,
+    "hardOrPsychoticAvailableOrRun": false,
+    "protectedAccessThisSubstep": "No protected data or old scratch contents accessed.",
+    "priorProtectedReadScope": "UNCERTAIN as previously disclosed; this substep does not certify the prior boundary.",
+    "generationAndRoutingCaps": "Unchanged; this generic oracle does not execute generation/routing."
+  },
+  "evidence": {
+    "preflight": {
+      "file": "preflight-result.json",
+      "bytes": 236,
+      "sha256": "baf4304ab7f6287eff5ef1a196d557e55a3cdde105e826020b0e2feff34e4d7c"
+    },
+    "finalHostChecks": {
+      "file": "result.json",
+      "bytes": 22096,
+      "sha256": "9da851055253a2383a1ce029f2c1e5433f4c952b0fff6e6ca309a112cd13f736"
+    },
+    "inputBoundaryAudit": {
+      "file": "audit-inputs1-result.json",
+      "bytes": 2000,
+      "sha256": "95700f182efc372dc5e33305b06a813e65f005d64c993376d47dcbbd1fa5265a"
+    },
+    "launchers": [
+      {
+        "file": "preflight.ps1",
+        "bytes": 1918,
+        "sha256": "71a7619c0e1d57f8f0947bf36cdc4098b1b69eaf71394eca98db4f3eaa4f5390"
+      },
+      {
+        "file": "run-final1.ps1",
+        "bytes": 8571,
+        "sha256": "aa49a8f14e9845c4aec078c8a52ec1d25a6b49838f0f3413e738bc1179d15e34"
+      },
+      {
+        "file": "audit-inputs1.ps1",
+        "bytes": 2682,
+        "sha256": "7cfc34d82529c26dba7c60dfdebc170a5a890b9a1c2d2ebdb52937a6ba22f4d7"
+      }
+    ]
+  },
+  "publication": "NOT_YET_COMMITTED_OR_PUSHED_AT_CAPTURE; publish only accepted prerequisite; one Gmail after exact remote SHA verification.",
+  "nextUnstarted": "Production generator/router observation seam, then both exact authored100 captures and applicable final-source gates."
+}

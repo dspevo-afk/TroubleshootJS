@@ -142,6 +142,14 @@ physical qualification. Obsolete single-face experiment entrypoints are retired;
 explicit callers. Retaining those routines is not evidence that an authored100
 layout passed them. A separate layered raster and finite-width P08 reference
 check connectivity/geometry without replacing CircuitJS electrical behavior.
+The test-only Python fixed-prefix graph codec/oracle accepts a separate generic
+directed two-face bitmap protocol. It validates and freezes supplied arrays, then
+uses independent Dijkstra with literal primary/secondary/via costs. It knows no
+PCB predicates and cannot attest a capture or qualify a layout. A reachable result
+stops at the first settled goal; counters explicitly describe work before that
+termination, while its witness output has a64-state prefix and full-path digest.
+Literal fixtures and independent tiny-graph Floyd-Warshall comparisons qualify
+this test tool only. The staged real-generator capture seam remains separate.
 The published E06 candidate used v21 for its
 accepted-memory boundary change. The published Q100-1 candidate used v20 for
 the earlier E02/E04/E06 solver-policy corrections. The context binds declared
