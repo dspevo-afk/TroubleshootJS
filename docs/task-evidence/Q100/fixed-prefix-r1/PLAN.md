@@ -124,3 +124,43 @@ Player gates are NOT APPLICABLE while all their consumed inputs stay unchanged;
 audit that boundary explicitly. Publish only the accepted oracle prerequisite,
 with the real capture seam and authored observations still pending. This is no
 closure of the full fixed-prefix diagnostic or Q100 qualification.
+
+## Amendment B: next production observation seam, before implementation
+
+Amendment A is published as75ba4d3a9a2e13f4d6d9fe364418816889dc6a83.
+Read-only owner analysis identifies the next necessary implementation; no producer
+code or actual authored100 measurements have started at this checkpoint.
+
+The safe failed-branch interception is `Search.BranchSearch.emitTerminal`, before
+the `Session.advanceWork` Exhausted handler clears candidate/search. Retain a
+pending terminal failure while a selected capture task advances; publish only a
+complete immutable observation, then resume the original failure transition.
+No ordinary search work may advance while that prefix is suspended. The null-sink
+path keeps its existing transition sequence. Sink failure/cancellation/staleness
+must discard partial output, latch the first fatal observation error and prevent
+later revival; never convert that error into ordinary routing exhaustion.
+
+Pass one opt-in, per-session observer through the actual generator's
+`advanceMediumRouting` and `beginOrderingCandidates` ownership. Bind the complete
+ordered eligible placement list, actual selected attempt/request index and raw
+placement fingerprint. Independently bind internal router pass0..2, branch
+ordinal, net/start/root IDs, reached-terminal set, prefix vias and terminal reason.
+Keep the existing direct legacy helper separate; it cannot supply this lineage.
+
+The current router copy routine is synchronous despite loop checkpoints. Make
+the capture's copies and edge/goal/via scan resumable in bounded chunks, returning
+to the existing caller between slices. Charge observation work under the same
+90s/640/5s limits and report it separately from route-search expansions. Compare
+live predicate state/effect stamps/layout before and after against untouched
+copies; use query copies for all preparation and permission calls. A branch may
+have no relaxed-bound field, so capture must not depend on guidance having run.
+
+The frozen generic graph payload is not the capture's authority envelope. Supply
+separate strict lineage/source/prefix metadata bound to its canonical graph digest;
+preserve exact signed-long seed strings. Never add unchecked authority fields to
+the generic oracle's exact-key protocol. Producer fidelity needs literal physical
+step, goal-face, foreign-net and via fixtures against captured bits, plus actual
+null/capture parity. Python synthetic tests alone do not establish that boundary.
+After those contracts, observe both authored variants and run the applicable
+final-source native/JDK8/GWT/compiled regression gates. The existing full plan's
+caps, evidence requirements and nonqualification limits remain unchanged.

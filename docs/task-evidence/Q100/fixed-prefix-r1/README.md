@@ -1,6 +1,9 @@
 # Independent fixed-prefix graph oracle prerequisite
 
-Status: **locally accepted prerequisite; publication preparation.** Starting HEAD
+Status: **PUBLISHED oracle prerequisite.** Commit
+`75ba4d3a9a2e13f4d6d9fe364418816889dc6a83`, normal origin push/exact SHA verified,
+completion Gmail `1a19306e19fc861e` sent once; [publication receipt](publication1.json).
+Starting HEAD
 `4e2ec4a017eaff2a86b6156662e29a57eca360e7`. This implements only
 [PLAN Amendment A](PLAN.md), before the actual generator observation seam.
 The [controlled evidence](oracle-prerequisite1.json) records source hashes,

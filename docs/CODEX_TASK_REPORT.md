@@ -1,8 +1,12 @@
 # Current checkpoint: independent fixed-prefix graph oracle prerequisite accepted
 
-**Locally accepted; publication preparation. Updated:** 2026-10-31. Audit repo
+**PUBLISHED. Updated:** 2026-10-31. Audit repo
 `tsj-audit-20261027`, branch `codex/q100-physical-feasibility`, starting HEAD
-`4e2ec4a017eaff2a86b6156662e29a57eca360e7`; clean before this substep. Accepted
+`4e2ec4a017eaff2a86b6156662e29a57eca360e7`; accepted oracle commit
+`75ba4d3a9a2e13f4d6d9fe364418816889dc6a83` normally pushed, exact origin branch SHA verified.
+Completion Gmail `1a19306e19fc861e` sent once after empty exact-SHA Sent search.
+Publication receipt/checkpoint documentation follows that implementation commit.
+The worktree was clean after implementation publication. Accepted
 production `34ff05d08d3a985c9c59f202d789fe653b558100` remains unchanged/pushed and
 its Gmail `1a192ec829f2b69d` was already sent once. Separate Desktop work, prior
 failures and scratch evidence remain preserved.
@@ -49,11 +53,16 @@ graph allocated. Maintained helper return proves process/output/log cleanup;
 cleanup duration is not separately measured and is not claimed as zero.
 Final scoped QA PASS5 files/1 strict JSON/3 local links, no privacy/reparse findings;
 manifest4D2D8FE6...7EABEC1A and bounded process proof remain in owned scratch.
-Next: finish staged diff checks, commit/push normally, verify remote SHA and
-send one completion Gmail for this prerequisite. Then implement the actual
-staged generator/router capture seam, prove prefix/owner parity and independent
-producer fidelity, and observe both exact authored100 variants under frozen
-budgets. Four fresh qualified layouts/runtime/solvability remain later work.
+Eight explicit intended paths committed; staged/unstaged diff checks PASS.
+Only publication/next-scope documents change afterward; no code/gate renewal.
+Documentation-only QA2 PASS6 files/2 JSON/4 local links, no privacy/reparse findings;
+manifestDE92C5FE...BAC6A22C is retained with its bounded process proof.
+Next action is the [PLAN Amendment B producer seam](task-evidence/Q100/fixed-prefix-r1/PLAN.md):
+suspend a selected real failed branch before owner cleanup, export bounded copies
+in resumable slices, prove actual generator lineage and null-sink parity, then
+capture both exact authored variants. Implementation NOT STARTED. Preserve all
+90s/640/5s, routing and host limits. Four fresh qualified layouts/runtime/solvability
+remain later work; playable100 is unproven. Continue the standing roadmap request.
 
 # Historical checkpoint: shared PCB groundwork publication and next scope
 

@@ -1,0 +1,18 @@
+{
+  "schema": "troubleshootjs-fixed-prefix-oracle-publication-v1",
+  "status": "PUBLISHED_AND_NOTIFIED",
+  "recordedAtUtc": "2026-10-31T17:36:57.183110+00:00",
+  "commit": "75ba4d3a9a2e13f4d6d9fe364418816889dc6a83",
+  "message": "Add independent fixed-prefix graph oracle",
+  "branch": "codex/q100-physical-feasibility",
+  "remote": "origin",
+  "remoteBranchShaVerified": "75ba4d3a9a2e13f4d6d9fe364418816889dc6a83",
+  "normalPush": true,
+  "completionGmail": {
+    "messageId": "1a19306e19fc861e",
+    "successfulSendsForThisPrerequisite": 1,
+    "exactShaSentSearchBeforeSend": "NO_MATCH"
+  },
+  "scope": "Only independent generic graph oracle prerequisite; no actual authored100 graph capture or layout acceptance.",
+  "nextUnstarted": "Staged real-generator/router observation seam and producer-fidelity contracts."
+}

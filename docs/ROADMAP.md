@@ -75,7 +75,9 @@ Existing90s/640/5s and120s cleanup limits, routing caps and independent oracles
 remain. The full30-root and2x31 matrices are not renewed by these scoped gates.
 No new admission, all-seed or playable100 claim follows. The next [capped fixed-prefix graph scope](task-evidence/Q100/fixed-prefix-r1/PLAN.md)
 is frozen. Its first independent generic graph-oracle prerequisite now passes
-synthetic contracts and real CLI canaries; publication is being finalized. It
+synthetic contracts and real CLI canaries and is published as
+`75ba4d3a9a2e13f4d6d9fe364418816889dc6a83` on the same origin branch, exact SHA verified;
+completion Gmail `1a19306e19fc861e` sent once. It
 does not attest a real captured board. The production observation seam and actual
 authored100 measurements have not started. Four
 fresh layered layouts and physical runtime/solvability proof remain required.
