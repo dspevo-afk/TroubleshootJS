@@ -1,8 +1,14 @@
-# Current checkpoint: shared PCB groundwork validated; publication preparation
+# Current checkpoint: shared PCB groundwork published; next graph scope frozen
 
-**Locally accepted; publication PENDING. Updated:** 2026-10-31. Audit repo
-`tsj-audit-20261027`, branch `codex/q100-physical-feasibility`, base/HEAD
-`8a2c12446b2c46bde32b32537dec58a15a65d3b9`. No new commit/push/email yet.
+**PUBLISHED. Updated:** 2026-10-31. Audit repo `tsj-audit-20261027`, branch
+`codex/q100-physical-feasibility`, accepted implementation commit `34ff05d08d3a985c9c59f202d789fe653b558100`.
+Normal push to `origin/codex/q100-physical-feasibility` and exact remote SHA verified.
+Completion Gmail `1a192ec829f2b69d` sent once after an empty exact-SHA Sent search.
+An initial connector schema error occurred before any send; the corrected request
+returned SENT. Publication receipt/next-scope documentation follows this commit.
+Documentation-only publication QA3 PASS208 files/192 JSON/69 links, zero scoped
+privacy/reparse findings; exact tree5630D2E4...BAB90C6 is in av-root-final-qa3.
+No production inputs changed and no production gates were rerun for bookkeeping.
 Separate Desktop checkout, unrelated changes, prior failures and scratch evidence
 remain preserved. Continue until stopped under the [frozen A-AV scope](task-evidence/Q100/authored-layout-r1/PLAN.md).
 
@@ -90,10 +96,17 @@ remain unchanged. Final scoped packet QA2 PASS207 files/191 strict JSON,67 links
 pattern findings, UTF-8 failures or reparse points. Raw/decoded positive and negative
 path canaries pass; bounded helper exit0/termination proven. Exact tree manifest
 D32B7774...FA9782 and process proof remain in task scratch av-root-final-qa2.
-Root must finish staged/unstaged diff checks, stage explicit intended paths,
-commit/push normally, verify remote SHA and send
-one completion Gmail. Then begin the next bounded actual100 fixed-prefix graph
-diagnosis; four fresh qualified layered layouts and runtime/solvability are pending.
+Staged/unstaged diff checks passed and261 explicit intended paths were committed.
+The accepted source has no unresolved implementation blocker in its frozen scope.
+The next [fixed-prefix graph scope](task-evidence/Q100/fixed-prefix-r1/PLAN.md) is
+now frozen from read-only owner analysis; implementation/measurement NOT STARTED.
+It distinguishes eligible placement order from the router's three internal
+orderings and the legacy direct helper from the actual generator stream.
+Next action: implement the bounded opt-in graph observation through existing owners,
+prove null-sink parity/independent graph canaries, then run the exact two-variant
+observations and applicable final-source gates. Four fresh qualified layered
+layouts and physical runtime/solvability remain pending. No active owned gate,
+preview or browser remains. Preserve all scratch/failure evidence and Desktop work.
 
 # Historical checkpoint: AU E06 diagnostic work before the final maintained pass
 
@@ -2081,7 +2094,7 @@ before any Q100 physical/admission claim. Historical checkpoints follow.
 
 # Historical checkpoint: Q100 cleanup acceptance before dependency v20
 
-**Status:** IN PROGRESS — all 62 compiled electrical cases PASS; aggregate FAIL on cleanup duration.
+**Status:** IN PROGRESS â€” all 62 compiled electrical cases PASS; aggregate FAIL on cleanup duration.
 **Date:** 2026-10-30
 **Base:** a1352b5caeb78e069606f84a569e14670f28d807
 **Branch:** codex/q100-constrained-pilot; Q100 work remains uncommitted/unpublished.
@@ -2139,7 +2152,7 @@ namespace/manifest and frozen failed source remain in task-owned OS temp.
 The revised about:blank canary passed on actual PS5: HTTP.sys/512 files cleanup
 41.084 s, TCP/2048 files 61.673 s, natural close 9.977 s under 15 s. Both real
 helper-quiescence and junction-deletion negatives PASS. Maintained live TCP
-listener identity PASS 63 checks, three 219–231 ms proofs under 500 ms, cleanup
+listener identity PASS 63 checks, three 219â€“231 ms proofs under 500 ms, cleanup
 PASS. Inner timings show remaining browser profile cleanup cost; full matrix
 acceptance still requires a fresh run. Existing ownership, containment, reparse,
 process and listener checks and budgets remain required. Player 3/Developer 5
@@ -2181,7 +2194,7 @@ remains active. Historical checkpoints below describe their earlier candidates.
 
 # Historical checkpoint: Q100 before complete browser cleanup result
 
-**Status:** IN PROGRESS — native healthy/62 faults and compiled 11-route lifecycle/Player privacy PASS; compiled 62 faults running.
+**Status:** IN PROGRESS â€” native healthy/62 faults and compiled 11-route lifecycle/Player privacy PASS; compiled 62 faults running.
 **Date:** 2026-10-30
 **Base:** a1352b5caeb78e069606f84a569e14670f28d807
 **Branch:** codex/q100-constrained-pilot; all intended Q100 work remains uncommitted.
@@ -2296,7 +2309,7 @@ continuation remains active. Historical checkpoints below describe earlier state
 
 # Historical checkpoint: Q100 model-4 recovery before temporal batches
 
-**Status:** IN PROGRESS — model 4 healthy/domain gates PASS; full fault reference 61/62 PASS, one FAIL.
+**Status:** IN PROGRESS â€” model 4 healthy/domain gates PASS; full fault reference 61/62 PASS, one FAIL.
 **Date:** 2026-10-30
 **Base:** a1352b5caeb78e069606f84a569e14670f28d807
 **Branch:** codex/q100-constrained-pilot; intended Q100 edits remain uncommitted.
@@ -2408,7 +2421,7 @@ the owner stops it. This checkpoint supersedes historical pending-gate statement
 
 # Historical checkpoint: Q100 startup investigation before healthy acceptance
 
-**Status:** IN PROGRESS — private graph implemented; electrical startup/recovery investigation, not accepted.
+**Status:** IN PROGRESS â€” private graph implemented; electrical startup/recovery investigation, not accepted.
 **Date:** 2026-10-29
 **Base:** `a1352b5caeb78e069606f84a569e14670f28d807`
 **Branch:** `codex/q100-constrained-pilot`; clean before this planning checkpoint.
@@ -2447,7 +2460,7 @@ before later source changes, so final-source Player/Developer builds remain NOT 
 
 The existing E02 owner now has a bounded enable-knee Newton secant and strict
 domain validation after global convergence, before time/callbacks/receipts. The
-I–V equations, accepted-state limits and model-3 board remain unchanged. A bounded
+Iâ€“V equations, accepted-state limits and model-3 board remain unchanged. A bounded
 read-only math/boundary review found no blocker; this is not runtime evidence.
 The [plan](task-evidence/Q100/constrained-pilot-r1/PLAN.md) records the correction
 before validation, with the exact pre-correction plan preserved separately.

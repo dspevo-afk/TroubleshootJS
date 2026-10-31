@@ -1,6 +1,6 @@
 # TroubleshootJS: Current Roadmap
 
-**Updated:** 2026-10-31 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
+**Updated:** 2026-10-31 · **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
 
 ## Current product checkpoint
 
@@ -66,13 +66,15 @@ Three exact source-bound normal MEDIUM roots also pass from the Current9
 predecessor under unchanged90s/640/5s limits. Prep5's CRLF validator and omitted
 companion wrapper failures remain failures; a separate bounded strict postprocess
 accepts the retained browser captures with actual pre/post source/build checks.
-The shared groundwork is locally accepted, pending final evidence review and
-normal publication. The current checkpoint and packet bind exact proof and limits.
+The shared groundwork is published as `34ff05d08d3a985c9c59f202d789fe653b558100`
+on `origin/codex/q100-physical-feasibility`, exact remote SHA verified. Completion
+Gmail `1a192ec829f2b69d` was sent once. The current checkpoint and packet bind
+exact proof and limits.
 
 Existing90s/640/5s and120s cleanup limits, routing caps and independent oracles
 remain. The full30-root and2x31 matrices are not renewed by these scoped gates.
-No new admission, all-seed or playable100 claim follows. After publication of this
-shared groundwork, capped actual100 fixed-prefix graph diagnosis resumes; four
+No new admission, all-seed or playable100 claim follows. The next [capped fixed-prefix graph scope](task-evidence/Q100/fixed-prefix-r1/PLAN.md)
+is frozen; implementation and measurement have not started. Four
 fresh layered layouts and physical runtime/solvability proof remain required.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical

@@ -1,7 +1,8 @@
 # Shared PCB corrections and authored RB100 layout observations
 
-Current checkpoint (2026-10-31): **shared groundwork locally accepted; final
-review/publication preparation.** Layout25/dependency26 final-source native33,
+Current checkpoint (2026-10-31): **shared groundwork PUBLISHED.**
+Commit `34ff05d08d3a985c9c59f202d789fe653b558100`, normal origin push and exact
+remote SHA verified; completion Gmail `1a192ec829f2b69d` sent once. Layout25/dependency26 final-source native33,
 six-board independent physical comparison, saved72/all20 paired comparisons,
 actual Player/Developer builds, Current9, Player privacy, visible repair/restore,
 normal3 and maintained E06State10 pass. No100-package layout or playable100 is
@@ -48,6 +49,10 @@ Latest final-source evidence:
 - [Final consumed-source binding audit](av-final-source-bind1.json); all named Native5, GWT and browser execution inputs still match their passing snapshots.
 - [Root acceptance and explicit remaining limits](av-acceptance1.json), accepting shared groundwork without granting playable100.
 - [Preserved WinPS5 test-bootstrap failure](av-reparse-eof1.json) and [final SHA-bootstrap/reparse57 refresh](av-reparse-bootstrap1.json), with missing-file and wrong-file negatives before context creation.
+
+[Publication receipt](av-publication1.json). The next
+[fixed-prefix graph scope](../fixed-prefix-r1/PLAN.md) is frozen; implementation
+and measurement are not started. This bookkeeping does not renew production gates.
 
 ## Retained development observations
 
