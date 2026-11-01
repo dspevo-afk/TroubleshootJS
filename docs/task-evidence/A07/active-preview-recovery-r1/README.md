@@ -1,7 +1,10 @@
 # Active preview recovery
 
-Locally validated; publication receipt pending. The controlled [validation.json](validation.json)
-records source and evidence hashes. Raw authority, manifests, claims, profiles,
+Published as `a1573fc6147af2998966f4a0e3b11f2c14599d9a` on
+`origin/codex/q100-physical-feasibility`; exact remote SHA verified. Completion
+Gmail `1a19748ce8416866` sent once. The controlled [validation.json](validation.json)
+records source and evidence hashes as a prepublication qualification snapshot;
+its pending-publication field describes that creation time. Raw authority, manifests, claims, profiles,
 command lines and logs remain in the task-owned OS-temp evidence directory.
 
 The separate `Invoke-VerifierRetainedActivePreviewRecovery` entrypoint recovers one

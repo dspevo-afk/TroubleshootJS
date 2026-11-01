@@ -42,7 +42,9 @@ not supplied. Earlier failures stay recorded, including one500ms startup miss;
 these finite passes establish no general host-stability cure or electrical claim.
 
 The [active-preview recovery prerequisite](task-evidence/A07/active-preview-recovery-r1/README.md)
-is locally validated, publication pending. A separate entrypoint recovers one
+is accepted and published as `a1573fc6147af2998966f4a0e3b11f2c14599d9a` on
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
+Gmail `1a19748ce8416866` sent once. A separate entrypoint recovers one
 live verified preview and bound, close-unattempted browser after their common
 parent exits. Normal preview cleanup precedes the existing parent-exit browser
 lane, with both claims and original identities preserved. Final synthetic131/

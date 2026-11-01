@@ -1,11 +1,16 @@
-# Current checkpoint: active-preview recovery locally validated
+# Current checkpoint: active-preview recovery published
 
-**LOCALLY VALIDATED; PUBLICATION PENDING. Updated:** 2026-11-01 UTC.
-P branch codex/a07-retained-preview-recovery-20261101 is based on
-585eb915d9d7516b8ee86f19855e7b583cdd2e34. No new push or completion email yet;
-prior3b75c8b3/receipt585eb915 and Gmail1a19661abd842e78 remain complete once.
+**PUBLISHED. Updated:** 2026-11-01 UTC.
+Implementation `a1573fc6147af2998966f4a0e3b11f2c14599d9a`
+(`Recover retained active previews through owned cleanup`) was pushed normally
+from codex/a07-retained-preview-recovery-20261101 to
+origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
+Gmail `1a19748ce8416866` sent once. No duplicate for this receipt.
+Prior3b75c8b3/receipt585eb915 and Gmail1a19661abd842e78 remain complete once.
 The [active recovery packet](task-evidence/A07/active-preview-recovery-r1/README.md)
-records scope, sources, commands, failures and limits. Root owns final review.
+records scope, sources, commands, failures and limits. Root reviewed the integrated
+and staged diff and privacy projection; the scoped independent static review found
+no blocking false-PASS issue. Both diff checks passed.
 
 Final module8b68e983c6c35b05ce10bd8a30378293701d02f72fee14d1c66cbc214729f896;
 parent91bfafc156efd3185d98bc3f69e6eb712dcd38d1fd00967636b9adc0837925db;
@@ -37,8 +42,10 @@ all failure evidence/backups/stashes and earlier quarantines remain preserved.
 No Java/solver/model/epoch/seed/Player-flow change. Full Java/electrical/Player
 matrix and CI NOT RUN; self-hosted runner setup remains required. Protected data
 unmaterialized, historical unread boundary UNCERTIFIED; HARD/PSYCHOTIC unrun.
-Q100 physical100 remains unqualified, private40/48 not adopted. Next: final diff,
-normal commit/push/one Gmail, then source-bound observer controls and CPU profile.
+Q100 physical100 remains unqualified, private40/48 not adopted. Next: preserve and
+integrate Main/W, then source-bound observer controls and CPU profile. Private v3
+changes only the v2 module pin to8B; selected WinPS5 pure24 PASS806ms, source
+502395c1...bd2247 stable. Both actual observer controls remain NOT RUN.
 
 # Historical checkpoint: retained terminal-preview recovery published
 
