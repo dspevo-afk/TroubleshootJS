@@ -63,6 +63,19 @@ canary before the long diagnostic CPU observation. No numerical treatment or
 playable100 admission follows. Pending B6, Desktop work and prior evidence remain
 preserved; protected qualification data stays unmaterialized, HARD/PSYCHOTIC unrun.
 
+The [native Windows listener prerequisite](task-evidence/A07/native-listener-r1/README.md)
+is locally accepted for its recorded host candidate; publication is pending.
+The strict lease proof now uses fresh bounded IPv4/IPv6 IP Helper snapshots,
+with metadata compilation outside the unchanged 500 ms clock. The ordinary
+Get-NetTCPConnection path and single bounded netstat fallback remain; the latter
+now covers both TCP families, validates connected UDP rows and canonicalizes
+IPv6 endpoints. Final native100/parser39/maintained54, real socket/connected-UDP,
+forced-TCP67 and HTTP.sys controls pass. Current passes 9/9 with exit 0 and proven
+termination, all seven stability fields and unchanged 1199/357 compiler inventories. Earlier ABI,
+IPv6/UDP and private receipt-writer failures remain preserved. This changes no
+electrical model or admission boundary. Next remains two fresh 80 s observer controls
+before the exact long CIN33 CPU diagnostic; no timing or playable100 closure.
+
 The authored100 physical experiment remains unqualified: exact candidates still
 exhaust routing caps, with zero accepted100 layouts. Shared physical groundwork
 corrects mixed-footprint corridor constraints, required-P07 grid admission,

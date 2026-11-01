@@ -61,6 +61,26 @@ mutation. Existing root, process, listener, job, natural-exit, claim and profile
 proofs and cleanup ordering remain in force; the 15-second shutdown and 120-second
 aggregate cleanup limits and legacy ownerless recovery are unchanged.
 
+VerifierIsolation also owns the Windows IP Helper TCP-table adapter used by the
+500 ms lease proof. It compiles interop metadata during run-context setup without
+querying the network tables. Each proof reads fresh IPv4 and IPv6 owner-PID
+listener tables, with bounded allocations, row counts and retries, and frees
+native buffers and the trusted System32 library handle on every path. Both
+families must complete before an empty result can establish absence. Native
+rows still cross the existing process-start, CIM, owner and opaque HTTP.sys
+authorization boundaries; PID 4 remains a transport owner with no invented
+process-start identity. Only explicit unsupported API cases use the retained
+fallback under the same monotonic deadline.
+
+The ordinary listener route remains Get-NetTCPConnection first. Its netstat
+fallback uses one bounded `-ano` query covering both TCP families. The parser
+validates and ignores unconnected or connected UDP rows, keeps UDP out of TCP
+records and completeness evidence, and canonicalizes bracketed IPv6 TCP
+addresses before identity comparison. Unknown, malformed or incomplete output
+still fails closed. The maintained native-listener contracts exercise literal
+Windows ABI/decoder expectations and parser/provider boundaries; real socket and
+preview qualification is recorded separately in the task report.
+
 A separate active-preview recovery entrypoint admits one still-active, verified
 run-owned preview and one bound, close-unattempted browser session from the same
 positively absent launch parent. It validates the complete manifest and both

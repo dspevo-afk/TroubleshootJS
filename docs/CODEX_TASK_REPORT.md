@@ -1,4 +1,66 @@
-# Current checkpoint: active-preview recovery published
+# Current checkpoint: native listener host prerequisite accepted locally
+
+**LOCALLY ACCEPTED; PUBLICATION PENDING. Updated:** 2026-11-01 UTC.
+No resource gate remains active. P branch `codex/native-listener-host-20261101`
+is based on HEAD `d5a2f736d60f6833207774b1aaaca058dd34c00d`. The intended change
+adds native Windows TCP ownership inspection, complete IPv6 netstat fallback and
+two maintained pure contracts. The [evidence packet](task-evidence/A07/native-listener-r1/README.md)
+records the finite host scope, failures and limits. Architecture/roadmap updated
+in P; final staged review, normal commit/push verification and one Gmail remain.
+
+Final module SHA-256:
+`fb07ad540e22a225a11b8a12e9dc8e5a20d88f58f89cf32a5fd347613530954c`.
+Runner `da71f1ee...cf947`, ABI contract `cddb3dbc...29695`, netstat contract
+`8eb3e6c6...b5d4d`; embedded C# helper `7589ef86...785b` unchanged after ABI fix.
+No Java/GWT production change. Compilation metadata precedes the 500 ms proof
+clock without table-query warmup. Default Get-NetTCPConnection-first behavior,
+process/CIM/opaque HTTP.sys authority and all original budgets remain.
+
+Final source/pure checks PASS: 100 native, 39 parser/provider, 586 source-audit
+assertions; maintained contracts 54 (51 literal ABI/decoder +3 provenance/compiler)
+and39. Selected CLI exclusions pass four expected-exit2/termination controls.
+Real process/netstat identity and synthetic kernel/consumer boundaries pass;
+active131/retained192 synthetic recovery fixtures pass. Independent R4 source
+review found no blocker in its bounded parser scope; it is not live evidence.
+
+Real final socket cases pass three IPv6/wildcard address cases and all absence checks,
+cleanup1218ms. HTTP.sys passes explicit native PID4/null-start proofs157/144ms
+and four carried-proof mutation negatives (first three also direct issuer),
+cleanup6274ms. Integrated P forced-TCP Live67 passes, cleanup6167ms. Owned UDP4/
+UDP6 self-connect canary passes numeric-remote CLI witnesses with no sends and
+all TCP/UDP closure proofs, cleanup474ms. All selected child exits/termination pass.
+
+Final Current2 PASS9/9, exit0/termination proved, child235952ms, all seven source
+stability fields and compiler inventories unchanged. Report `ee0bf5f6...5d95b2`,
+receipt `a8f75fe2...ca953`; raw exit proof is saved before optional report parsing.
+Browser shutdown7854ms; exact aggregate cleanup duration NOT SUPPLIED by Current.
+Accepted Developer output reused after fresh before/after audit of1199 inputs/
+357 outputs, exact `5dd76a5a...1e83` / `611f4f10...b064`. No new Java build needed.
+Current1 child reported9/9/cleanup success but its outer writer failed; numeric
+exit was not durable and was not inferred. The corrected full repeat supplies it.
+
+Earlier bad IPv6 ABI, 504/523ms startup misses, HTTP.sys fixture mistakes,
+IPv4-only netstat false absence, UDP completeness/canonicalization and connected-
+UDP grammar failures remain preserved. Later read-only759/556ms closure audits
+do not rewrite original cleanup-UNPROVEN results. Extra canary and Current outer
+receipt failures also remain failures. No budget/oracle was weakened.
+
+Main/W remain atd5a2f736 with preserved B6/private40 work and original module
+8b68e983...f896; only root checkpoints changed there. P holds intended code/docs.
+Desktop task43p/e0c36885,7tracked/89untracked files, stashes/backups/quarantines,
+ambient8928 and older unregistered-claim failure evidence remain preserved.
+S=OS-temp tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
+private runs and sources are under S/cin33-cpu-r1. No new commit/push/email yet;
+prior A07a1573fc6/receiptd5a2f736/Gmail1a19748ce8416866 remain complete once.
+
+Next after publication/integration: two fresh80s independent observer controls,
+normal and injected failure, then exact separate/CIN33_SHUNT50us CPU observation
+at route75s. No actual CIN33 profile; zero accepted100 physical layouts;
+reference40/48 NOT ADOPTED. Original90s/500ms/5s/15s/120s/640 work steps/6000s/
+600s limits stay. HARD/PSYCHOTIC unavailable/unrun; protected data unmaterialized
+here, historical unread boundary UNCERTIFIED. CI NOT RUN/self-hosted prerequisite.
+
+# Historical checkpoint: active-preview recovery published
 
 **PUBLISHED. Updated:** 2026-11-01 UTC.
 Implementation `a1573fc6147af2998966f4a0e3b11f2c14599d9a`

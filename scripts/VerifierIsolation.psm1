@@ -5283,7 +5283,7 @@ function Test-VerifierListenerInspectionSchema($Inspection,
     if (-not (Test-VerifierStrictBooleanValue $Inspection.HasListeners)) { return $false }
     if ($null -eq $Inspection.Listeners -or -not ($Inspection.Listeners -is [array]) -or
             -not (Test-VerifierStrictStringValue $Inspection.Source) -or
-            $Inspection.Source -cnotin @('netstat', 'Get-NetTCPConnection') -or
+            $Inspection.Source -cnotin @('netstat', 'Get-NetTCPConnection', 'GetExtendedTcpTable') -or
             -not (Test-VerifierStrictStringValue $Inspection.Error) -or
             $Inspection.Error -cne '' -or
             -not (Test-VerifierStrictStringValue $Inspection.ListenerOwnerKind) -or
@@ -5767,7 +5767,7 @@ function Test-VerifierListenerRecordSchema($Listener, $PreviewContext = $null,
             -not (Test-VerifierStrictIntegralValue $Listener.Port 1 65535) -or
             -not (Test-VerifierStrictIntegralValue $Listener.ProcessId 1 ([int]::MaxValue)) -or
             -not (Test-VerifierLoopbackAddress $Listener.LocalAddress) -or
-            $Listener.Source -cnotin @('netstat', 'Get-NetTCPConnection')) {
+            $Listener.Source -cnotin @('netstat', 'Get-NetTCPConnection', 'GetExtendedTcpTable')) {
         return $false
     }
     if (-not (Test-VerifierListenerOwnerTuple $Listener.ListenerOwnerKind `
@@ -5825,7 +5825,7 @@ function New-VerifierKernelTransportListenerRecord($LocalAddress, $Port, $Source
     if (-not (Test-VerifierStrictStringValue $LocalAddress) -or
             -not (Test-VerifierStrictIntegralValue $Port 1 65535) -or
             -not (Test-VerifierStrictStringValue $Source) -or
-            $Source -cnotin @('netstat', 'Get-NetTCPConnection') -or
+            $Source -cnotin @('netstat', 'Get-NetTCPConnection', 'GetExtendedTcpTable') -or
             -not (Test-VerifierLoopbackAddress $LocalAddress)) {
         Throw-VerifierInfrastructure 'The kernel transport listener record did not come from a validated loopback listener query.'
     }
@@ -5876,7 +5876,7 @@ function Get-VerifierListenerProcessRecord($ProcessId, $LocalAddress, $Port, $So
             -not (Test-VerifierStrictStringValue $LocalAddress) -or
             -not (Test-VerifierStrictIntegralValue $Port 1 65535) -or
             -not (Test-VerifierStrictStringValue $Source) -or
-            $Source -cnotin @('netstat', 'Get-NetTCPConnection') -or
+            $Source -cnotin @('netstat', 'Get-NetTCPConnection', 'GetExtendedTcpTable') -or
             -not (Test-VerifierLoopbackAddress $LocalAddress)) {
         Throw-VerifierInfrastructure "Loopback listener query returned an invalid PID for port $Port."
     }
@@ -5998,6 +5998,101 @@ function Parse-VerifierNetstatListenerOutput($Port, [object[]]$Output,
         if ($line -match '(?i)error|access denied|not recognized|invalid|failed|cannot') {
             Throw-VerifierInfrastructure "netstat.exe returned error text while inspecting loopback port ${Port}: $line"
         }
+        if ($line -match '^(?i:UDP)\s+') {
+            $udpMatch = [regex]::Match($line,
+                '^\s*UDP\s+(?<local>\S+):(?<localPort>\d+)\s+(?<foreign>\S+)\s+(?<pid>\d+)\s*$')
+            if (-not $udpMatch.Success) {
+                Throw-VerifierInfrastructure "netstat.exe returned a malformed UDP record while inspecting loopback port $($Port): $line"
+            }
+            $udpLocalPortText = $udpMatch.Groups['localPort'].Value
+            $udpPidText = $udpMatch.Groups['pid'].Value
+            $udpLocalPort = 0
+            $udpPid = 0
+            if (-not [int]::TryParse($udpLocalPortText,
+                    [Globalization.NumberStyles]::Integer,
+                    [Globalization.CultureInfo]::InvariantCulture, [ref]$udpLocalPort) -or
+                -not [int]::TryParse($udpPidText,
+                    [Globalization.NumberStyles]::Integer,
+                    [Globalization.CultureInfo]::InvariantCulture, [ref]$udpPid) -or
+                $udpLocalPort -lt 0 -or $udpLocalPort -gt 65535 -or
+                $udpPid -lt 0 -or $udpPid -gt [int]::MaxValue) {
+                Throw-VerifierInfrastructure "netstat.exe returned an out-of-range integral UDP field while inspecting loopback port $($Port): $line"
+            }
+            $udpForeignEndpoint = $udpMatch.Groups['foreign'].Value
+            if ($udpForeignEndpoint -cne '*:*') {
+                $udpForeignIsBracketed = $udpForeignEndpoint.StartsWith('[')
+                if ($udpForeignIsBracketed) {
+                    $udpForeignMatch = [regex]::Match($udpForeignEndpoint,
+                        '^\[(?<address>[^\[\]]+)\]:(?<port>\d+)$')
+                } else {
+                    $udpForeignMatch = [regex]::Match($udpForeignEndpoint,
+                        '^(?<address>[^:\[\]]+):(?<port>\d+)$')
+                }
+                if (-not $udpForeignMatch.Success) {
+                    Throw-VerifierInfrastructure "netstat.exe returned a malformed UDP foreign endpoint while inspecting loopback port $($Port): $line"
+                }
+                $udpForeignAddress = $udpForeignMatch.Groups['address'].Value
+                $udpForeignPortText = $udpForeignMatch.Groups['port'].Value
+                $udpForeignPort = 0
+                if (-not [int]::TryParse($udpForeignPortText,
+                        [Globalization.NumberStyles]::Integer,
+                        [Globalization.CultureInfo]::InvariantCulture, [ref]$udpForeignPort) -or
+                    $udpForeignPort -lt 1 -or $udpForeignPort -gt 65535 -or
+                    $udpForeignPortText -cne $udpForeignPort.ToString([Globalization.CultureInfo]::InvariantCulture)) {
+                    Throw-VerifierInfrastructure "netstat.exe returned an out-of-range or noncanonical UDP foreign port while inspecting loopback port $($Port): $line"
+                }
+                $udpForeignParsedAddress = $null
+                if (-not [Net.IPAddress]::TryParse($udpForeignAddress, [ref]$udpForeignParsedAddress) -or
+                    ($udpForeignIsBracketed -and
+                        $udpForeignParsedAddress.AddressFamily -ne [Net.Sockets.AddressFamily]::InterNetworkV6) -or
+                    (-not $udpForeignIsBracketed -and
+                        $udpForeignParsedAddress.AddressFamily -ne [Net.Sockets.AddressFamily]::InterNetwork)) {
+                    Throw-VerifierInfrastructure "netstat.exe returned a malformed numeric UDP foreign address or wrong address family while inspecting loopback port $($Port): $line"
+                }
+                $canonicalUdpForeignAddress = $udpForeignParsedAddress.ToString()
+                $udpForeignAddressComparison = if ($udpForeignParsedAddress.AddressFamily -eq
+                        [Net.Sockets.AddressFamily]::InterNetwork) {
+                    [StringComparison]::Ordinal
+                } else {
+                    [StringComparison]::OrdinalIgnoreCase
+                }
+                if (-not [string]::Equals($udpForeignAddress, $canonicalUdpForeignAddress, $udpForeignAddressComparison)) {
+                    Throw-VerifierInfrastructure "netstat.exe returned a noncanonical numeric UDP foreign address while inspecting loopback port $($Port): $line"
+                }
+            }
+            $udpAddress = $udpMatch.Groups['local'].Value
+            if ($udpAddress.StartsWith('[') -or $udpAddress.EndsWith(']')) {
+                if (-not $udpAddress.StartsWith('[') -or -not $udpAddress.EndsWith(']')) {
+                    Throw-VerifierInfrastructure "netstat.exe returned a malformed bracketed UDP address while inspecting loopback port $($Port): $line"
+                }
+                $udpAddress = $udpAddress.Substring(1, $udpAddress.Length - 2)
+            }
+            $udpParsedAddress = $null
+            if (-not [Net.IPAddress]::TryParse($udpAddress, [ref]$udpParsedAddress) -or
+                    $udpParsedAddress.AddressFamily -notin @(
+                        [Net.Sockets.AddressFamily]::InterNetwork,
+                        [Net.Sockets.AddressFamily]::InterNetworkV6)) {
+                Throw-VerifierInfrastructure "netstat.exe returned a malformed numeric UDP address while inspecting loopback port $($Port): $line"
+            }
+            $udpEndpointIsBracketed = $udpMatch.Groups['local'].Value.StartsWith('[')
+            if (($udpEndpointIsBracketed -and
+                    $udpParsedAddress.AddressFamily -ne [Net.Sockets.AddressFamily]::InterNetworkV6) -or
+                (-not $udpEndpointIsBracketed -and
+                    $udpParsedAddress.AddressFamily -eq [Net.Sockets.AddressFamily]::InterNetworkV6)) {
+                Throw-VerifierInfrastructure "netstat.exe returned a bracketed/nonbracketed UDP address with the wrong IP family while inspecting loopback port $($Port): $line"
+            }
+            $canonicalUdpAddress = $udpParsedAddress.ToString()
+            $udpAddressComparison = if ($udpParsedAddress.AddressFamily -eq
+                    [Net.Sockets.AddressFamily]::InterNetwork) {
+                [StringComparison]::Ordinal
+            } else {
+                [StringComparison]::OrdinalIgnoreCase
+            }
+            if (-not [string]::Equals($udpAddress, $canonicalUdpAddress, $udpAddressComparison)) {
+                Throw-VerifierInfrastructure "netstat.exe returned a noncanonical numeric UDP address while inspecting loopback port $($Port): $line"
+            }
+            continue
+        }
         if ($line -notmatch '^(?i:TCP)\s+') {
             Throw-VerifierInfrastructure "netstat.exe returned an unrecognized line while inspecting loopback port ${Port}: $line"
         }
@@ -6030,6 +6125,18 @@ function Parse-VerifierNetstatListenerOutput($Port, [object[]]$Output,
         if ($localPort -ne $Port -or
                 $match.Groups['state'].Value -notmatch '^(?i:LISTENING)$') { continue }
         $address = $match.Groups['local'].Value
+        if ($address.StartsWith('[') -or $address.EndsWith(']')) {
+            if (-not $address.StartsWith('[') -or -not $address.EndsWith(']')) {
+                Throw-VerifierInfrastructure "netstat.exe returned a malformed bracketed TCP address while inspecting loopback port $($Port): $line"
+            }
+            $bracketedAddress = $address.Substring(1, $address.Length - 2)
+            $parsedBracketedAddress = $null
+            if (-not [Net.IPAddress]::TryParse($bracketedAddress, [ref]$parsedBracketedAddress) -or
+                    $parsedBracketedAddress.AddressFamily -ne [Net.Sockets.AddressFamily]::InterNetworkV6) {
+                Throw-VerifierInfrastructure "netstat.exe returned a malformed bracketed IPv6 TCP address while inspecting loopback port $($Port): $line"
+            }
+            $address = $parsedBracketedAddress.ToString()
+        }
         if (-not (Test-VerifierLoopbackAddress $address)) { continue }
         if ($listenerPid -le 0) {
             Throw-VerifierInfrastructure "netstat.exe returned a listening TCP record without a positive owning PID while inspecting loopback port ${Port}: $line"
@@ -6045,14 +6152,132 @@ function Parse-VerifierNetstatListenerOutput($Port, [object[]]$Output,
         $PreviewContext $PreviewOwner $null -StructuralOnly)
 }
 
+function Initialize-VerifierNativeTcpTableInterop {
+    $providerTypeName = 'TroubleshootJS.Verifier.NativeListenerR1.TcpTableProvider'
+    if ($null -ne ($providerTypeName -as [type])) { return }
+    try {
+        $encodedSource = 'dXNpbmcgU3lzdGVtOwp1c2luZyBTeXN0ZW0uQ29sbGVjdGlvbnMuR2VuZXJpYzsKdXNpbmcgU3lzdGVtLkNvbXBvbmVudE1vZGVsOwp1c2luZyBTeXN0ZW0uSU87CnVzaW5nIFN5c3RlbS5OZXQ7CnVzaW5nIFN5c3RlbS5SdW50aW1lLkludGVyb3BTZXJ2aWNlczsKCm5hbWVzcGFjZSBUcm91Ymxlc2hvb3RKUy5WZXJpZmllci5OYXRpdmVMaXN0ZW5lclIxCnsKICAgIFtTZXJpYWxpemFibGVdCiAgICBwdWJsaWMgc2VhbGVkIGNsYXNzIFVuc3VwcG9ydGVkRXhjZXB0aW9uIDogRXhjZXB0aW9uCiAgICB7CiAgICAgICAgcHVibGljIFVuc3VwcG9ydGVkRXhjZXB0aW9uKHN0cmluZyBtZXNzYWdlKSA6IGJhc2UobWVzc2FnZSkgeyB9CiAgICB9CgogICAgcHVibGljIHNlYWxlZCBjbGFzcyBMaXN0ZW5lclJvdwogICAgewogICAgICAgIHB1YmxpYyBzdHJpbmcgQWRkcmVzcyB7IGdldDsgcHJpdmF0ZSBzZXQ7IH0KICAgICAgICBwdWJsaWMgaW50IFBvcnQgeyBnZXQ7IHByaXZhdGUgc2V0OyB9CiAgICAgICAgcHVibGljIGludCBQcm9jZXNzSWQgeyBnZXQ7IHByaXZhdGUgc2V0OyB9CiAgICAgICAgcHVibGljIGludCBTdGF0ZSB7IGdldDsgcHJpdmF0ZSBzZXQ7IH0KICAgICAgICBwdWJsaWMgaW50IEZhbWlseSB7IGdldDsgcHJpdmF0ZSBzZXQ7IH0KCiAgICAgICAgaW50ZXJuYWwgTGlzdGVuZXJSb3coc3RyaW5nIGFkZHJlc3MsIGludCBwb3J0LCBpbnQgcHJvY2Vzc0lkLCBpbnQgc3RhdGUsIGludCBmYW1pbHkpCiAgICAgICAgewogICAgICAgICAgICBBZGRyZXNzID0gYWRkcmVzczsKICAgICAgICAgICAgUG9ydCA9IHBvcnQ7CiAgICAgICAgICAgIFByb2Nlc3NJZCA9IHByb2Nlc3NJZDsKICAgICAgICAgICAgU3RhdGUgPSBzdGF0ZTsKICAgICAgICAgICAgRmFtaWx5ID0gZmFtaWx5OwogICAgICAgIH0KICAgIH0KCiAgICBwdWJsaWMgc2VhbGVkIGNsYXNzIExheW91dEluZm8KICAgIHsKICAgICAgICBwdWJsaWMgaW50IEhlYWRlclNpemUgeyBnZXQ7IGludGVybmFsIHNldDsgfQogICAgICAgIHB1YmxpYyBpbnQgUm93U2l6ZSB7IGdldDsgaW50ZXJuYWwgc2V0OyB9CiAgICAgICAgcHVibGljIGludCBDb3VudE9mZnNldCB7IGdldDsgaW50ZXJuYWwgc2V0OyB9CiAgICAgICAgcHVibGljIGludCBTdGF0ZU9mZnNldCB7IGdldDsgaW50ZXJuYWwgc2V0OyB9CiAgICAgICAgcHVibGljIGludCBMb2NhbEFkZHJlc3NPZmZzZXQgeyBnZXQ7IGludGVybmFsIHNldDsgfQogICAgICAgIHB1YmxpYyBpbnQgTG9jYWxTY29wZU9mZnNldCB7IGdldDsgaW50ZXJuYWwgc2V0OyB9CiAgICAgICAgcHVibGljIGludCBMb2NhbFBvcnRPZmZzZXQgeyBnZXQ7IGludGVybmFsIHNldDsgfQogICAgICAgIHB1YmxpYyBpbnQgUHJvY2Vzc0lkT2Zmc2V0IHsgZ2V0OyBpbnRlcm5hbCBzZXQ7IH0KICAgICAgICBwdWJsaWMgaW50IFJlbW90ZUFkZHJlc3NPZmZzZXQgeyBnZXQ7IGludGVybmFsIHNldDsgfQogICAgICAgIHB1YmxpYyBpbnQgUmVtb3RlU2NvcGVPZmZzZXQgeyBnZXQ7IGludGVybmFsIHNldDsgfQogICAgICAgIHB1YmxpYyBpbnQgUmVtb3RlUG9ydE9mZnNldCB7IGdldDsgaW50ZXJuYWwgc2V0OyB9CiAgICB9CgogICAgW1N0cnVjdExheW91dChMYXlvdXRLaW5kLlNlcXVlbnRpYWwpXQogICAgaW50ZXJuYWwgc3RydWN0IE1pYlRjcFJvd093bmVyUGlkCiAgICB7CiAgICAgICAgcHVibGljIHVpbnQgU3RhdGU7CiAgICAgICAgcHVibGljIHVpbnQgTG9jYWxBZGRyZXNzOwogICAgICAgIHB1YmxpYyB1aW50IExvY2FsUG9ydDsKICAgICAgICBwdWJsaWMgdWludCBSZW1vdGVBZGRyZXNzOwogICAgICAgIHB1YmxpYyB1aW50IFJlbW90ZVBvcnQ7CiAgICAgICAgcHVibGljIHVpbnQgT3duaW5nUGlkOwogICAgfQoKICAgIFtTdHJ1Y3RMYXlvdXQoTGF5b3V0S2luZC5TZXF1ZW50aWFsKV0KICAgIGludGVybmFsIHN0cnVjdCBNaWJUY3BUYWJsZU93bmVyUGlkCiAgICB7CiAgICAgICAgcHVibGljIHVpbnQgTnVtYmVyT2ZFbnRyaWVzOwogICAgICAgIHB1YmxpYyBNaWJUY3BSb3dPd25lclBpZCBGaXJzdFJvdzsKICAgIH0KCiAgICBbU3RydWN0TGF5b3V0KExheW91dEtpbmQuU2VxdWVudGlhbCldCiAgICBpbnRlcm5hbCBzdHJ1Y3QgTWliVGNwNlJvd093bmVyUGlkCiAgICB7CiAgICAgICAgW01hcnNoYWxBcyhVbm1hbmFnZWRUeXBlLkJ5VmFsQXJyYXksIFNpemVDb25zdCA9IDE2KV0KICAgICAgICBwdWJsaWMgYnl0ZVtdIExvY2FsQWRkcmVzczsKICAgICAgICBwdWJsaWMgdWludCBMb2NhbFNjb3BlSWQ7CiAgICAgICAgcHVibGljIHVpbnQgTG9jYWxQb3J0OwogICAgICAgIFtNYXJzaGFsQXMoVW5tYW5hZ2VkVHlwZS5CeVZhbEFycmF5LCBTaXplQ29uc3QgPSAxNildCiAgICAgICAgcHVibGljIGJ5dGVbXSBSZW1vdGVBZGRyZXNzOwogICAgICAgIHB1YmxpYyB1aW50IFJlbW90ZVNjb3BlSWQ7CiAgICAgICAgcHVibGljIHVpbnQgUmVtb3RlUG9ydDsKICAgICAgICBwdWJsaWMgdWludCBTdGF0ZTsKICAgICAgICBwdWJsaWMgdWludCBPd25pbmdQaWQ7CiAgICB9CgogICAgW1N0cnVjdExheW91dChMYXlvdXRLaW5kLlNlcXVlbnRpYWwpXQogICAgaW50ZXJuYWwgc3RydWN0IE1pYlRjcDZUYWJsZU93bmVyUGlkCiAgICB7CiAgICAgICAgcHVibGljIHVpbnQgTnVtYmVyT2ZFbnRyaWVzOwogICAgICAgIHB1YmxpYyBNaWJUY3A2Um93T3duZXJQaWQgRmlyc3RSb3c7CiAgICB9CgogICAgcHVibGljIHNlYWxlZCBjbGFzcyBOYXRpdmVUYWJsZUJ1ZmZlciA6IElEaXNwb3NhYmxlCiAgICB7CiAgICAgICAgcHJpdmF0ZSBJbnRQdHIgX3BvaW50ZXI7CiAgICAgICAgcHJpdmF0ZSBib29sIF9kaXNwb3NlZDsKCiAgICAgICAgcHVibGljIGJvb2wgSXNEaXNwb3NlZCB7IGdldCB7IHJldHVybiBfZGlzcG9zZWQ7IH0gfQoKICAgICAgICBpbnRlcm5hbCBJbnRQdHIgUG9pbnRlcgogICAgICAgIHsKICAgICAgICAgICAgZ2V0CiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgIGlmIChfZGlzcG9zZWQgfHwgX3BvaW50ZXIgPT0gSW50UHRyLlplcm8pCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgdGhyb3cgbmV3IE9iamVjdERpc3Bvc2VkRXhjZXB0aW9uKCJOYXRpdmVUYWJsZUJ1ZmZlciIpOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgcmV0dXJuIF9wb2ludGVyOwogICAgICAgICAgICB9CiAgICAgICAgfQoKICAgICAgICBwdWJsaWMgTmF0aXZlVGFibGVCdWZmZXIoaW50IGJ5dGVMZW5ndGgpCiAgICAgICAgewogICAgICAgICAgICBpZiAoYnl0ZUxlbmd0aCA8IDEgfHwgYnl0ZUxlbmd0aCA+IFRjcFRhYmxlUHJvdmlkZXIuTWF4aW11bUJ1ZmZlckJ5dGVzKQogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICB0aHJvdyBuZXcgSW52YWxpZERhdGFFeGNlcHRpb24oIlRoZSBuYXRpdmUgVENQIHRhYmxlIGJ1ZmZlciBzaXplIHdhcyBvdXRzaWRlIGl0cyBib3VuZC4iKTsKICAgICAgICAgICAgfQogICAgICAgICAgICBfcG9pbnRlciA9IE1hcnNoYWwuQWxsb2NIR2xvYmFsKGJ5dGVMZW5ndGgpOwogICAgICAgICAgICBpZiAoX3BvaW50ZXIgPT0gSW50UHRyLlplcm8pCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgIHRocm93IG5ldyBPdXRPZk1lbW9yeUV4Y2VwdGlvbigiQ291bGQgbm90IGFsbG9jYXRlIGEgYm91bmRlZCBuYXRpdmUgVENQIHRhYmxlIGJ1ZmZlci4iKTsKICAgICAgICAgICAgfQogICAgICAgIH0KCiAgICAgICAgcHVibGljIHN0YXRpYyBOYXRpdmVUYWJsZUJ1ZmZlciBGcm9tQnl0ZXNGb3JQdXJlVGVzdChieXRlW10gYnl0ZXMpCiAgICAgICAgewogICAgICAgICAgICBpZiAoYnl0ZXMgPT0gbnVsbCB8fCBieXRlcy5MZW5ndGggPCAxIHx8CiAgICAgICAgICAgICAgICBieXRlcy5MZW5ndGggPiBUY3BUYWJsZVByb3ZpZGVyLk1heGltdW1CdWZmZXJCeXRlcykKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgdGhyb3cgbmV3IEludmFsaWREYXRhRXhjZXB0aW9uKCJUaGUgcHVyZSBUQ1AgdGFibGUgZml4dHVyZSBoYWQgYW4gaW52YWxpZCBidWZmZXIgbGVuZ3RoLiIpOwogICAgICAgICAgICB9CiAgICAgICAgICAgIE5hdGl2ZVRhYmxlQnVmZmVyIGJ1ZmZlciA9IG5ldyBOYXRpdmVUYWJsZUJ1ZmZlcihieXRlcy5MZW5ndGgpOwogICAgICAgICAgICB0cnkKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgTWFyc2hhbC5Db3B5KGJ5dGVzLCAwLCBidWZmZXIuUG9pbnRlciwgYnl0ZXMuTGVuZ3RoKTsKICAgICAgICAgICAgICAgIHJldHVybiBidWZmZXI7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgY2F0Y2gKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgYnVmZmVyLkRpc3Bvc2UoKTsKICAgICAgICAgICAgICAgIHRocm93OwogICAgICAgICAgICB9CiAgICAgICAgfQoKICAgICAgICBwdWJsaWMgdm9pZCBEaXNwb3NlKCkKICAgICAgICB7CiAgICAgICAgICAgIGlmICghX2Rpc3Bvc2VkKQogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICBJbnRQdHIgcG9pbnRlciA9IF9wb2ludGVyOwogICAgICAgICAgICAgICAgX3BvaW50ZXIgPSBJbnRQdHIuWmVybzsKICAgICAgICAgICAgICAgIF9kaXNwb3NlZCA9IHRydWU7CiAgICAgICAgICAgICAgICBpZiAocG9pbnRlciAhPSBJbnRQdHIuWmVybykKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICBNYXJzaGFsLkZyZWVIR2xvYmFsKHBvaW50ZXIpOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgfQogICAgfQoKICAgIHB1YmxpYyBzdGF0aWMgY2xhc3MgVGNwVGFibGVQcm92aWRlcgogICAgewogICAgICAgIHB1YmxpYyBjb25zdCBpbnQgTWF4aW11bUJ1ZmZlckJ5dGVzID0gMTYgKiAxMDI0ICogMTAyNDsKICAgICAgICBwdWJsaWMgY29uc3QgdWludCBNYXhpbXVtUm93c1BlckZhbWlseSA9IDEwMDAwMDsKICAgICAgICBwdWJsaWMgY29uc3QgaW50IE1heGltdW1GaWxsQXR0ZW1wdHNQZXJGYW1pbHkgPSAzOwoKICAgICAgICBwcml2YXRlIGNvbnN0IHVpbnQgRXJyb3JTdWNjZXNzID0gMDsKICAgICAgICBwcml2YXRlIGNvbnN0IHVpbnQgRXJyb3JJbnN1ZmZpY2llbnRCdWZmZXIgPSAxMjI7CiAgICAgICAgcHJpdmF0ZSBjb25zdCB1aW50IEVycm9yTm90U3VwcG9ydGVkID0gNTA7CiAgICAgICAgcHJpdmF0ZSBjb25zdCB1aW50IEFmSW5ldCA9IDI7CiAgICAgICAgcHJpdmF0ZSBjb25zdCB1aW50IEFmSW5ldDYgPSAyMzsKICAgICAgICBwcml2YXRlIGNvbnN0IGludCBUY3BUYWJsZU93bmVyUGlkTGlzdGVuZXIgPSAzOwogICAgICAgIHByaXZhdGUgY29uc3QgdWludCBMb2FkTGlicmFyeVNlYXJjaERsbExvYWREaXIgPSAweDAwMDAwMTAwOwogICAgICAgIHByaXZhdGUgY29uc3QgdWludCBMb2FkTGlicmFyeVNlYXJjaFN5c3RlbTMyID0gMHgwMDAwMDgwMDsKCiAgICAgICAgW1VubWFuYWdlZEZ1bmN0aW9uUG9pbnRlcihDYWxsaW5nQ29udmVudGlvbi5XaW5hcGkpXQogICAgICAgIHByaXZhdGUgZGVsZWdhdGUgdWludCBHZXRFeHRlbmRlZFRjcFRhYmxlRGVsZWdhdGUoCiAgICAgICAgICAgIEludFB0ciB0Y3BUYWJsZSwKICAgICAgICAgICAgcmVmIHVpbnQgc2l6ZSwKICAgICAgICAgICAgW01hcnNoYWxBcyhVbm1hbmFnZWRUeXBlLkJvb2wpXSBib29sIG9yZGVyLAogICAgICAgICAgICB1aW50IGFkZHJlc3NGYW1pbHksCiAgICAgICAgICAgIGludCB0YWJsZUNsYXNzLAogICAgICAgICAgICB1aW50IHJlc2VydmVkKTsKCiAgICAgICAgW0RsbEltcG9ydCgia2VybmVsMzIuZGxsIiwgQ2hhclNldCA9IENoYXJTZXQuVW5pY29kZSwgRXhhY3RTcGVsbGluZyA9IHRydWUsCiAgICAgICAgICAgIFNldExhc3RFcnJvciA9IHRydWUpXQogICAgICAgIHByaXZhdGUgc3RhdGljIGV4dGVybiBJbnRQdHIgTG9hZExpYnJhcnlFeFcoCiAgICAgICAgICAgIHN0cmluZyBmaWxlTmFtZSwgSW50UHRyIGZpbGVIYW5kbGUsIHVpbnQgZmxhZ3MpOwoKICAgICAgICBbRGxsSW1wb3J0KCJrZXJuZWwzMi5kbGwiLCBDaGFyU2V0ID0gQ2hhclNldC5BbnNpLCBFeGFjdFNwZWxsaW5nID0gdHJ1ZSwKICAgICAgICAgICAgU2V0TGFzdEVycm9yID0gdHJ1ZSldCiAgICAgICAgcHJpdmF0ZSBzdGF0aWMgZXh0ZXJuIEludFB0ciBHZXRQcm9jQWRkcmVzcyhJbnRQdHIgbW9kdWxlLCBzdHJpbmcgcHJvY2VkdXJlTmFtZSk7CgogICAgICAgIFtEbGxJbXBvcnQoImtlcm5lbDMyLmRsbCIsIEV4YWN0U3BlbGxpbmcgPSB0cnVlLCBTZXRMYXN0RXJyb3IgPSB0cnVlKV0KICAgICAgICBbcmV0dXJuOiBNYXJzaGFsQXMoVW5tYW5hZ2VkVHlwZS5Cb29sKV0KICAgICAgICBwcml2YXRlIHN0YXRpYyBleHRlcm4gYm9vbCBGcmVlTGlicmFyeShJbnRQdHIgbW9kdWxlKTsKCiAgICAgICAgcHVibGljIHN0YXRpYyBMYXlvdXRJbmZvIEdldExheW91dEluZm9Gb3JQdXJlVGVzdChpbnQgYWRkcmVzc0ZhbWlseSkKICAgICAgICB7CiAgICAgICAgICAgIHJldHVybiBHZXRMYXlvdXQoYWRkcmVzc0ZhbWlseSk7CiAgICAgICAgfQoKICAgICAgICBwdWJsaWMgc3RhdGljIGludCBDb21wdXRlUmVxdWlyZWRMZW5ndGhGb3JQdXJlVGVzdCh1aW50IHJvd0NvdW50LCBpbnQgYWRkcmVzc0ZhbWlseSkKICAgICAgICB7CiAgICAgICAgICAgIHJldHVybiBDb21wdXRlUmVxdWlyZWRMZW5ndGgocm93Q291bnQsIEdldExheW91dChhZGRyZXNzRmFtaWx5KSk7CiAgICAgICAgfQoKICAgICAgICBwdWJsaWMgc3RhdGljIGJvb2wgSXNVbnN1cHBvcnRlZEFwaVN0YXR1c0ZvclB1cmVUZXN0KHVpbnQgc3RhdHVzKQogICAgICAgIHsKICAgICAgICAgICAgcmV0dXJuIElzVW5zdXBwb3J0ZWRBcGlTdGF0dXMoc3RhdHVzKTsKICAgICAgICB9CgogICAgICAgIHB1YmxpYyBzdGF0aWMgYm9vbCBJc1Vuc3VwcG9ydGVkTG9hZEVycm9yRm9yUHVyZVRlc3QoaW50IGVycm9yKQogICAgICAgIHsKICAgICAgICAgICAgcmV0dXJuIElzVW5zdXBwb3J0ZWRMb2FkRXJyb3IoZXJyb3IpOwogICAgICAgIH0KCiAgICAgICAgcHVibGljIHN0YXRpYyBMaXN0ZW5lclJvd1tdIERlY29kZUlwdjRGb3JQdXJlVGVzdChieXRlW10gYnVmZmVyLCBpbnQgcmV0dXJuZWRMZW5ndGgpCiAgICAgICAgewogICAgICAgICAgICByZXR1cm4gRGVjb2RlQnl0ZXMoYnVmZmVyLCByZXR1cm5lZExlbmd0aCwgKGludClBZkluZXQpOwogICAgICAgIH0KCiAgICAgICAgcHVibGljIHN0YXRpYyBMaXN0ZW5lclJvd1tdIERlY29kZUlwdjZGb3JQdXJlVGVzdChieXRlW10gYnVmZmVyLCBpbnQgcmV0dXJuZWRMZW5ndGgpCiAgICAgICAgewogICAgICAgICAgICByZXR1cm4gRGVjb2RlQnl0ZXMoYnVmZmVyLCByZXR1cm5lZExlbmd0aCwgKGludClBZkluZXQ2KTsKICAgICAgICB9CgogICAgICAgIHB1YmxpYyBzdGF0aWMgTGlzdGVuZXJSb3dbXSBEZWNvZGVBbmREaXNwb3NlRm9yUHVyZVRlc3QoCiAgICAgICAgICAgIE5hdGl2ZVRhYmxlQnVmZmVyIGJ1ZmZlciwgaW50IGFkZHJlc3NGYW1pbHksIGludCByZXR1cm5lZExlbmd0aCkKICAgICAgICB7CiAgICAgICAgICAgIHJldHVybiBEZWNvZGVBbmREaXNwb3NlKGJ1ZmZlciwgYWRkcmVzc0ZhbWlseSwgcmV0dXJuZWRMZW5ndGgpOwogICAgICAgIH0KCiAgICAgICAgcHVibGljIHN0YXRpYyBMaXN0ZW5lclJvd1tdIEdldExpc3RlbmVyUm93cyhpbnQgcmVxdWVzdGVkUG9ydCkKICAgICAgICB7CiAgICAgICAgICAgIGlmIChyZXF1ZXN0ZWRQb3J0IDwgMSB8fCByZXF1ZXN0ZWRQb3J0ID4gNjU1MzUpCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgIHRocm93IG5ldyBJbnZhbGlkRGF0YUV4Y2VwdGlvbigiVGhlIHJlcXVlc3RlZCBUQ1AgbGlzdGVuZXIgcG9ydCB3YXMgaW52YWxpZC4iKTsKICAgICAgICAgICAgfQogICAgICAgICAgICBpZiAoRW52aXJvbm1lbnQuT1NWZXJzaW9uLlBsYXRmb3JtICE9IFBsYXRmb3JtSUQuV2luMzJOVCkKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgdGhyb3cgbmV3IFVuc3VwcG9ydGVkRXhjZXB0aW9uKCJUaGUgV2luZG93cyBJUCBIZWxwZXIgbGlzdGVuZXIgQVBJIGlzIHVuYXZhaWxhYmxlIG9uIHRoaXMgcGxhdGZvcm0uIik7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgaWYgKEVudmlyb25tZW50LklzNjRCaXRPcGVyYXRpbmdTeXN0ZW0gJiYgIUVudmlyb25tZW50LklzNjRCaXRQcm9jZXNzKQogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICB0aHJvdyBuZXcgVW5zdXBwb3J0ZWRFeGNlcHRpb24oIlRoZSBzZWxlY3RlZCBwcm9jZXNzIGFyY2hpdGVjdHVyZSBjYW5ub3QgbG9hZCB0aGUgU3lzdGVtMzIgSVAgSGVscGVyIEFQSS4iKTsKICAgICAgICAgICAgfQoKICAgICAgICAgICAgc3RyaW5nIHN5c3RlbURpcmVjdG9yeSA9IEVudmlyb25tZW50LlN5c3RlbURpcmVjdG9yeTsKICAgICAgICAgICAgaWYgKCFQYXRoLklzUGF0aFJvb3RlZChzeXN0ZW1EaXJlY3RvcnkpIHx8CiAgICAgICAgICAgICAgICAhU3RyaW5nLkVxdWFscygKICAgICAgICAgICAgICAgICAgICBQYXRoLkdldEZpbGVOYW1lKHN5c3RlbURpcmVjdG9yeS5UcmltRW5kKFBhdGguRGlyZWN0b3J5U2VwYXJhdG9yQ2hhciwgUGF0aC5BbHREaXJlY3RvcnlTZXBhcmF0b3JDaGFyKSksCiAgICAgICAgICAgICAgICAgICAgIlN5c3RlbTMyIiwKICAgICAgICAgICAgICAgICAgICBTdHJpbmdDb21wYXJpc29uLk9yZGluYWxJZ25vcmVDYXNlKSkKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgdGhyb3cgbmV3IFVuc3VwcG9ydGVkRXhjZXB0aW9uKCJUaGUgb3BlcmF0aW5nLXN5c3RlbSBTeXN0ZW0zMiBkaXJlY3RvcnkgY291bGQgbm90IGJlIHJlc29sdmVkIHNhZmVseS4iKTsKICAgICAgICAgICAgfQoKICAgICAgICAgICAgc3RyaW5nIGxpYnJhcnlQYXRoID0gUGF0aC5HZXRGdWxsUGF0aChQYXRoLkNvbWJpbmUoc3lzdGVtRGlyZWN0b3J5LCAiaXBobHBhcGkuZGxsIikpOwogICAgICAgICAgICBJbnRQdHIgbW9kdWxlID0gTG9hZExpYnJhcnlFeFcoCiAgICAgICAgICAgICAgICBsaWJyYXJ5UGF0aCwKICAgICAgICAgICAgICAgIEludFB0ci5aZXJvLAogICAgICAgICAgICAgICAgTG9hZExpYnJhcnlTZWFyY2hEbGxMb2FkRGlyIHwgTG9hZExpYnJhcnlTZWFyY2hTeXN0ZW0zMik7CiAgICAgICAgICAgIGlmIChtb2R1bGUgPT0gSW50UHRyLlplcm8pCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgIGludCBsb2FkRXJyb3IgPSBNYXJzaGFsLkdldExhc3RXaW4zMkVycm9yKCk7CiAgICAgICAgICAgICAgICBpZiAoSXNVbnN1cHBvcnRlZExvYWRFcnJvcihsb2FkRXJyb3IpKQogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgIHRocm93IG5ldyBVbnN1cHBvcnRlZEV4Y2VwdGlvbigiVGhlIFN5c3RlbTMyIElQIEhlbHBlciBsaXN0ZW5lciBBUEkgaXMgdW5hdmFpbGFibGUgb24gdGhpcyBwbGF0Zm9ybS4iKTsKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIHRocm93IG5ldyBXaW4zMkV4Y2VwdGlvbihsb2FkRXJyb3IsICJUaGUgU3lzdGVtMzIgSVAgSGVscGVyIGxpYnJhcnkgY291bGQgbm90IGJlIGxvYWRlZC4iKTsKICAgICAgICAgICAgfQoKICAgICAgICAgICAgdHJ5CiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgIEludFB0ciBhZGRyZXNzID0gR2V0UHJvY0FkZHJlc3MobW9kdWxlLCAiR2V0RXh0ZW5kZWRUY3BUYWJsZSIpOwogICAgICAgICAgICAgICAgaWYgKGFkZHJlc3MgPT0gSW50UHRyLlplcm8pCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgdGhyb3cgbmV3IFVuc3VwcG9ydGVkRXhjZXB0aW9uKCJUaGUgU3lzdGVtMzIgSVAgSGVscGVyIGxpc3RlbmVyIGVudHJ5IHBvaW50IGlzIHVuYXZhaWxhYmxlLiIpOwogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgIEdldEV4dGVuZGVkVGNwVGFibGVEZWxlZ2F0ZSBxdWVyeSA9CiAgICAgICAgICAgICAgICAgICAgKEdldEV4dGVuZGVkVGNwVGFibGVEZWxlZ2F0ZSlNYXJzaGFsLkdldERlbGVnYXRlRm9yRnVuY3Rpb25Qb2ludGVyKAogICAgICAgICAgICAgICAgICAgICAgICBhZGRyZXNzLCB0eXBlb2YoR2V0RXh0ZW5kZWRUY3BUYWJsZURlbGVnYXRlKSk7CgogICAgICAgICAgICAgICAgTGlzdGVuZXJSb3dbXSBpcHY0ID0gUmVhZEZhbWlseShxdWVyeSwgQWZJbmV0KTsKICAgICAgICAgICAgICAgIExpc3RlbmVyUm93W10gaXB2NiA9IFJlYWRGYW1pbHkocXVlcnksIEFmSW5ldDYpOwogICAgICAgICAgICAgICAgTGlzdDxMaXN0ZW5lclJvdz4gc2VsZWN0ZWQgPSBuZXcgTGlzdDxMaXN0ZW5lclJvdz4oKTsKICAgICAgICAgICAgICAgIEFkZFJlcXVlc3RlZFBvcnQoc2VsZWN0ZWQsIGlwdjQsIHJlcXVlc3RlZFBvcnQpOwogICAgICAgICAgICAgICAgQWRkUmVxdWVzdGVkUG9ydChzZWxlY3RlZCwgaXB2NiwgcmVxdWVzdGVkUG9ydCk7CiAgICAgICAgICAgICAgICByZXR1cm4gc2VsZWN0ZWQuVG9BcnJheSgpOwogICAgICAgICAgICB9CiAgICAgICAgICAgIGZpbmFsbHkKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgaWYgKCFGcmVlTGlicmFyeShtb2R1bGUpKQogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgIGludCBmcmVlRXJyb3IgPSBNYXJzaGFsLkdldExhc3RXaW4zMkVycm9yKCk7CiAgICAgICAgICAgICAgICAgICAgdGhyb3cgbmV3IFdpbjMyRXhjZXB0aW9uKGZyZWVFcnJvciwgIlRoZSBTeXN0ZW0zMiBJUCBIZWxwZXIgbW9kdWxlIGNvdWxkIG5vdCBiZSByZWxlYXNlZC4iKTsKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgfQogICAgICAgIH0KCiAgICAgICAgcHJpdmF0ZSBzdGF0aWMgdm9pZCBBZGRSZXF1ZXN0ZWRQb3J0KAogICAgICAgICAgICBMaXN0PExpc3RlbmVyUm93PiBkZXN0aW5hdGlvbiwgTGlzdGVuZXJSb3dbXSByb3dzLCBpbnQgcmVxdWVzdGVkUG9ydCkKICAgICAgICB7CiAgICAgICAgICAgIGZvciAoaW50IGkgPSAwOyBpIDwgcm93cy5MZW5ndGg7IGkrKykKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgaWYgKHJvd3NbaV0uUG9ydCA9PSByZXF1ZXN0ZWRQb3J0KQogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgIGRlc3RpbmF0aW9uLkFkZChyb3dzW2ldKTsKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgfQogICAgICAgIH0KCiAgICAgICAgcHJpdmF0ZSBzdGF0aWMgTGlzdGVuZXJSb3dbXSBSZWFkRmFtaWx5KAogICAgICAgICAgICBHZXRFeHRlbmRlZFRjcFRhYmxlRGVsZWdhdGUgcXVlcnksIHVpbnQgYWRkcmVzc0ZhbWlseSkKICAgICAgICB7CiAgICAgICAgICAgIExheW91dEluZm8gbGF5b3V0ID0gR2V0TGF5b3V0KChpbnQpYWRkcmVzc0ZhbWlseSk7CiAgICAgICAgICAgIHVpbnQgcmVxdWlyZWRCeXRlcyA9IDA7CiAgICAgICAgICAgIHVpbnQgaW5pdGlhbFN0YXR1cyA9IHF1ZXJ5KAogICAgICAgICAgICAgICAgSW50UHRyLlplcm8sCiAgICAgICAgICAgICAgICByZWYgcmVxdWlyZWRCeXRlcywKICAgICAgICAgICAgICAgIGZhbHNlLAogICAgICAgICAgICAgICAgYWRkcmVzc0ZhbWlseSwKICAgICAgICAgICAgICAgIFRjcFRhYmxlT3duZXJQaWRMaXN0ZW5lciwKICAgICAgICAgICAgICAgIDApOwoKICAgICAgICAgICAgaWYgKElzVW5zdXBwb3J0ZWRBcGlTdGF0dXMoaW5pdGlhbFN0YXR1cykpCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgIHRocm93IG5ldyBVbnN1cHBvcnRlZEV4Y2VwdGlvbigiVGhlIFdpbmRvd3MgSVAgSGVscGVyIGxpc3RlbmVyIHRhYmxlIGlzIHVuc3VwcG9ydGVkLiIpOwogICAgICAgICAgICB9CiAgICAgICAgICAgIGlmIChpbml0aWFsU3RhdHVzICE9IEVycm9ySW5zdWZmaWNpZW50QnVmZmVyKQogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICBpZiAoaW5pdGlhbFN0YXR1cyA9PSBFcnJvclN1Y2Nlc3MpCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgdGhyb3cgbmV3IEludmFsaWREYXRhRXhjZXB0aW9uKCJUaGUgSVAgSGVscGVyIHNpemUgcHJvYmUgcmV0dXJuZWQgbm8gdGFibGUgYnVmZmVyLiIpOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgdGhyb3cgbmV3IFdpbjMyRXhjZXB0aW9uKChpbnQpaW5pdGlhbFN0YXR1cywgIlRoZSBJUCBIZWxwZXIgbGlzdGVuZXIgdGFibGUgc2l6ZSBwcm9iZSBmYWlsZWQuIik7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgVmFsaWRhdGVDYXBhY2l0eShyZXF1aXJlZEJ5dGVzLCBsYXlvdXQpOwoKICAgICAgICAgICAgZm9yIChpbnQgYXR0ZW1wdCA9IDA7IGF0dGVtcHQgPCBNYXhpbXVtRmlsbEF0dGVtcHRzUGVyRmFtaWx5OyBhdHRlbXB0KyspCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgIE5hdGl2ZVRhYmxlQnVmZmVyIGJ1ZmZlciA9IG5ldyBOYXRpdmVUYWJsZUJ1ZmZlcigoaW50KXJlcXVpcmVkQnl0ZXMpOwogICAgICAgICAgICAgICAgdHJ5CiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgdWludCByZXR1cm5lZEJ5dGVzID0gcmVxdWlyZWRCeXRlczsKICAgICAgICAgICAgICAgICAgICB1aW50IHN0YXR1cyA9IHF1ZXJ5KAogICAgICAgICAgICAgICAgICAgICAgICBidWZmZXIuUG9pbnRlciwKICAgICAgICAgICAgICAgICAgICAgICAgcmVmIHJldHVybmVkQnl0ZXMsCiAgICAgICAgICAgICAgICAgICAgICAgIGZhbHNlLAogICAgICAgICAgICAgICAgICAgICAgICBhZGRyZXNzRmFtaWx5LAogICAgICAgICAgICAgICAgICAgICAgICBUY3BUYWJsZU93bmVyUGlkTGlzdGVuZXIsCiAgICAgICAgICAgICAgICAgICAgICAgIDApOwoKICAgICAgICAgICAgICAgICAgICBpZiAoSXNVbnN1cHBvcnRlZEFwaVN0YXR1cyhzdGF0dXMpKQogICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgdGhyb3cgbmV3IFVuc3VwcG9ydGVkRXhjZXB0aW9uKCJUaGUgV2luZG93cyBJUCBIZWxwZXIgbGlzdGVuZXIgdGFibGUgaXMgdW5zdXBwb3J0ZWQuIik7CiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIGlmIChzdGF0dXMgPT0gRXJyb3JJbnN1ZmZpY2llbnRCdWZmZXIpCiAgICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICAgICBpZiAoYXR0ZW1wdCArIDEgPj0gTWF4aW11bUZpbGxBdHRlbXB0c1BlckZhbWlseSB8fAogICAgICAgICAgICAgICAgICAgICAgICAgICAgcmV0dXJuZWRCeXRlcyA8PSByZXF1aXJlZEJ5dGVzKQogICAgICAgICAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICB0aHJvdyBuZXcgSW52YWxpZERhdGFFeGNlcHRpb24oIlRoZSBJUCBIZWxwZXIgbGlzdGVuZXIgdGFibGUgZGlkIG5vdCBzdGFiaWxpemUgd2l0aGluIGl0cyBib3VuZGVkIGZpbGwgYXR0ZW1wdHMuIik7CiAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICAgICAgVmFsaWRhdGVDYXBhY2l0eShyZXR1cm5lZEJ5dGVzLCBsYXlvdXQpOwogICAgICAgICAgICAgICAgICAgICAgICByZXF1aXJlZEJ5dGVzID0gcmV0dXJuZWRCeXRlczsKICAgICAgICAgICAgICAgICAgICAgICAgY29udGludWU7CiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIGlmIChzdGF0dXMgIT0gRXJyb3JTdWNjZXNzKQogICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgdGhyb3cgbmV3IFdpbjMyRXhjZXB0aW9uKChpbnQpc3RhdHVzLCAiVGhlIElQIEhlbHBlciBsaXN0ZW5lciB0YWJsZSBxdWVyeSBmYWlsZWQuIik7CiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIGlmIChyZXR1cm5lZEJ5dGVzID4gcmVxdWlyZWRCeXRlcyB8fAogICAgICAgICAgICAgICAgICAgICAgICByZXR1cm5lZEJ5dGVzID4gTWF4aW11bUJ1ZmZlckJ5dGVzKQogICAgICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICAgICAgdGhyb3cgbmV3IEludmFsaWREYXRhRXhjZXB0aW9uKCJUaGUgSVAgSGVscGVyIGxpc3RlbmVyIHRhYmxlIHJldHVybmVkIGFuIGludmFsaWQgZGF0YSBsZW5ndGguIik7CiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIHJldHVybiBEZWNvZGVBbmREaXNwb3NlKGJ1ZmZlciwgKGludClhZGRyZXNzRmFtaWx5LCAoaW50KXJldHVybmVkQnl0ZXMpOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgZmluYWxseQogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgIGJ1ZmZlci5EaXNwb3NlKCk7CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIHRocm93IG5ldyBJbnZhbGlkRGF0YUV4Y2VwdGlvbigiVGhlIElQIEhlbHBlciBsaXN0ZW5lciB0YWJsZSBleGNlZWRlZCBpdHMgYm91bmRlZCBmaWxsIGF0dGVtcHRzLiIpOwogICAgICAgIH0KCiAgICAgICAgcHJpdmF0ZSBzdGF0aWMgdm9pZCBWYWxpZGF0ZUNhcGFjaXR5KHVpbnQgY2FwYWNpdHksIExheW91dEluZm8gbGF5b3V0KQogICAgICAgIHsKICAgICAgICAgICAgaW50IG1pbmltdW0gPSBNYXRoLk1heChsYXlvdXQuSGVhZGVyU2l6ZSwgY2hlY2tlZChsYXlvdXQuQ291bnRPZmZzZXQgKyBzaXplb2YodWludCkpKTsKICAgICAgICAgICAgaWYgKGNhcGFjaXR5IDwgbWluaW11bSB8fCBjYXBhY2l0eSA+IE1heGltdW1CdWZmZXJCeXRlcykKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgdGhyb3cgbmV3IEludmFsaWREYXRhRXhjZXB0aW9uKCJUaGUgSVAgSGVscGVyIGxpc3RlbmVyIHRhYmxlIHJlcXVlc3RlZCBhIG1hbGZvcm1lZCBvciBleGNlc3NpdmUgYnVmZmVyLiIpOwogICAgICAgICAgICB9CiAgICAgICAgfQoKICAgICAgICBwcml2YXRlIHN0YXRpYyBMaXN0ZW5lclJvd1tdIERlY29kZUJ5dGVzKAogICAgICAgICAgICBieXRlW10gYnl0ZXMsIGludCByZXR1cm5lZExlbmd0aCwgaW50IGFkZHJlc3NGYW1pbHkpCiAgICAgICAgewogICAgICAgICAgICBpZiAoYnl0ZXMgPT0gbnVsbCB8fCBieXRlcy5MZW5ndGggPCAxIHx8CiAgICAgICAgICAgICAgICBieXRlcy5MZW5ndGggPiBNYXhpbXVtQnVmZmVyQnl0ZXMgfHwKICAgICAgICAgICAgICAgIHJldHVybmVkTGVuZ3RoIDwgMCB8fCByZXR1cm5lZExlbmd0aCA+IGJ5dGVzLkxlbmd0aCkKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgdGhyb3cgbmV3IEludmFsaWREYXRhRXhjZXB0aW9uKCJUaGUgVENQIHRhYmxlIGZpeHR1cmUgbGVuZ3RoIHdhcyBpbnZhbGlkLiIpOwogICAgICAgICAgICB9CgogICAgICAgICAgICBOYXRpdmVUYWJsZUJ1ZmZlciBidWZmZXIgPSBOYXRpdmVUYWJsZUJ1ZmZlci5Gcm9tQnl0ZXNGb3JQdXJlVGVzdChieXRlcyk7CiAgICAgICAgICAgIHJldHVybiBEZWNvZGVBbmREaXNwb3NlKGJ1ZmZlciwgYWRkcmVzc0ZhbWlseSwgcmV0dXJuZWRMZW5ndGgpOwogICAgICAgIH0KCiAgICAgICAgcHJpdmF0ZSBzdGF0aWMgTGlzdGVuZXJSb3dbXSBEZWNvZGVBbmREaXNwb3NlKAogICAgICAgICAgICBOYXRpdmVUYWJsZUJ1ZmZlciBidWZmZXIsIGludCBhZGRyZXNzRmFtaWx5LCBpbnQgcmV0dXJuZWRMZW5ndGgpCiAgICAgICAgewogICAgICAgICAgICBpZiAoYnVmZmVyID09IG51bGwpCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgIHRocm93IG5ldyBBcmd1bWVudE51bGxFeGNlcHRpb24oImJ1ZmZlciIpOwogICAgICAgICAgICB9CiAgICAgICAgICAgIHRyeQogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICByZXR1cm4gRGVjb2RlKGJ1ZmZlci5Qb2ludGVyLCBhZGRyZXNzRmFtaWx5LCByZXR1cm5lZExlbmd0aCk7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgZmluYWxseQogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICBidWZmZXIuRGlzcG9zZSgpOwogICAgICAgICAgICB9CiAgICAgICAgfQoKICAgICAgICBwcml2YXRlIHN0YXRpYyBMaXN0ZW5lclJvd1tdIERlY29kZSgKICAgICAgICAgICAgSW50UHRyIGJ1ZmZlciwgaW50IGFkZHJlc3NGYW1pbHksIGludCByZXR1cm5lZExlbmd0aCkKICAgICAgICB7CiAgICAgICAgICAgIExheW91dEluZm8gbGF5b3V0ID0gR2V0TGF5b3V0KGFkZHJlc3NGYW1pbHkpOwogICAgICAgICAgICBpbnQgbWluaW11bSA9IE1hdGguTWF4KGxheW91dC5IZWFkZXJTaXplLCBjaGVja2VkKGxheW91dC5Db3VudE9mZnNldCArIHNpemVvZih1aW50KSkpOwogICAgICAgICAgICBpZiAocmV0dXJuZWRMZW5ndGggPCBtaW5pbXVtIHx8CiAgICAgICAgICAgICAgICByZXR1cm5lZExlbmd0aCA+IE1heGltdW1CdWZmZXJCeXRlcykKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgdGhyb3cgbmV3IEludmFsaWREYXRhRXhjZXB0aW9uKCJUaGUgSVAgSGVscGVyIGxpc3RlbmVyIHRhYmxlIHdhcyB0cnVuY2F0ZWQgb3IgZXhjZXNzaXZlLiIpOwogICAgICAgICAgICB9CgogICAgICAgICAgICB1aW50IGNvdW50ID0gUmVhZFVJbnQzMihidWZmZXIsIGxheW91dC5Db3VudE9mZnNldCwgcmV0dXJuZWRMZW5ndGgpOwogICAgICAgICAgICBpbnQgcmVxdWlyZWRMZW5ndGggPSBDb21wdXRlUmVxdWlyZWRMZW5ndGgoY291bnQsIGxheW91dCk7CiAgICAgICAgICAgIGlmIChyZXF1aXJlZExlbmd0aCA+IHJldHVybmVkTGVuZ3RoKQogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICB0aHJvdyBuZXcgSW52YWxpZERhdGFFeGNlcHRpb24oIlRoZSBJUCBIZWxwZXIgbGlzdGVuZXIgdGFibGUgcm93IGRhdGEgZXhjZWVkZWQgaXRzIHJldHVybmVkIGxlbmd0aC4iKTsKICAgICAgICAgICAgfQoKICAgICAgICAgICAgTGlzdGVuZXJSb3dbXSByb3dzID0gbmV3IExpc3RlbmVyUm93WyhpbnQpY291bnRdOwogICAgICAgICAgICBmb3IgKGludCBpbmRleCA9IDA7IGluZGV4IDwgcm93cy5MZW5ndGg7IGluZGV4KyspCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgIGludCByb3dPZmZzZXQgPSBjaGVja2VkKGxheW91dC5IZWFkZXJTaXplICsgY2hlY2tlZChpbmRleCAqIGxheW91dC5Sb3dTaXplKSk7CiAgICAgICAgICAgICAgICB1aW50IHN0YXRlID0gUmVhZFVJbnQzMihidWZmZXIsIGNoZWNrZWQocm93T2Zmc2V0ICsgbGF5b3V0LlN0YXRlT2Zmc2V0KSwgcmV0dXJuZWRMZW5ndGgpOwogICAgICAgICAgICAgICAgaWYgKHN0YXRlICE9IDIpCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgdGhyb3cgbmV3IEludmFsaWREYXRhRXhjZXB0aW9uKCJUaGUgb3duZXItUElEIGxpc3RlbmVyIHRhYmxlIGNvbnRhaW5lZCBhIG5vbi1saXN0ZW5pbmcgc3RhdGUuIik7CiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgdWludCByYXdQb3J0ID0gUmVhZFVJbnQzMihidWZmZXIsIGNoZWNrZWQocm93T2Zmc2V0ICsgbGF5b3V0LkxvY2FsUG9ydE9mZnNldCksIHJldHVybmVkTGVuZ3RoKTsKICAgICAgICAgICAgICAgIGludCBwb3J0ID0gRGVjb2RlTmV0d29ya1BvcnQocmF3UG9ydCk7CiAgICAgICAgICAgICAgICB1aW50IHJhd1BpZCA9IFJlYWRVSW50MzIoYnVmZmVyLCBjaGVja2VkKHJvd09mZnNldCArIGxheW91dC5Qcm9jZXNzSWRPZmZzZXQpLCByZXR1cm5lZExlbmd0aCk7CiAgICAgICAgICAgICAgICBpZiAocmF3UGlkIDwgMSB8fCByYXdQaWQgPiBJbnQzMi5NYXhWYWx1ZSkKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgICB0aHJvdyBuZXcgSW52YWxpZERhdGFFeGNlcHRpb24oIlRoZSBvd25lci1QSUQgbGlzdGVuZXIgdGFibGUgY29udGFpbmVkIGFuIGludmFsaWQgcHJvY2VzcyBpZGVudGlmaWVyLiIpOwogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgIHN0cmluZyBhZGRyZXNzOwogICAgICAgICAgICAgICAgaWYgKGFkZHJlc3NGYW1pbHkgPT0gKGludClBZkluZXQpCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgYnl0ZVtdIGFkZHJlc3NCeXRlcyA9IFJlYWRCeXRlcygKICAgICAgICAgICAgICAgICAgICAgICAgYnVmZmVyLAogICAgICAgICAgICAgICAgICAgICAgICBjaGVja2VkKHJvd09mZnNldCArIGxheW91dC5Mb2NhbEFkZHJlc3NPZmZzZXQpLAogICAgICAgICAgICAgICAgICAgICAgICA0LAogICAgICAgICAgICAgICAgICAgICAgICByZXR1cm5lZExlbmd0aCk7CiAgICAgICAgICAgICAgICAgICAgYWRkcmVzcyA9IG5ldyBJUEFkZHJlc3MoYWRkcmVzc0J5dGVzKS5Ub1N0cmluZygpOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgZWxzZQogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgIGJ5dGVbXSBhZGRyZXNzQnl0ZXMgPSBSZWFkQnl0ZXMoCiAgICAgICAgICAgICAgICAgICAgICAgIGJ1ZmZlciwKICAgICAgICAgICAgICAgICAgICAgICAgY2hlY2tlZChyb3dPZmZzZXQgKyBsYXlvdXQuTG9jYWxBZGRyZXNzT2Zmc2V0KSwKICAgICAgICAgICAgICAgICAgICAgICAgMTYsCiAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybmVkTGVuZ3RoKTsKICAgICAgICAgICAgICAgICAgICB1aW50IHJhd1Njb3BlID0gUmVhZFVJbnQzMigKICAgICAgICAgICAgICAgICAgICAgICAgYnVmZmVyLAogICAgICAgICAgICAgICAgICAgICAgICBjaGVja2VkKHJvd09mZnNldCArIGxheW91dC5Mb2NhbFNjb3BlT2Zmc2V0KSwKICAgICAgICAgICAgICAgICAgICAgICAgcmV0dXJuZWRMZW5ndGgpOwogICAgICAgICAgICAgICAgICAgIHVpbnQgc2NvcGUgPSB1bmNoZWNrZWQoKHVpbnQpSVBBZGRyZXNzLk5ldHdvcmtUb0hvc3RPcmRlcih1bmNoZWNrZWQoKGludClyYXdTY29wZSkpKTsKICAgICAgICAgICAgICAgICAgICBhZGRyZXNzID0gbmV3IElQQWRkcmVzcyhhZGRyZXNzQnl0ZXMsIChsb25nKXNjb3BlKS5Ub1N0cmluZygpOwogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgIHJvd3NbaW5kZXhdID0gbmV3IExpc3RlbmVyUm93KGFkZHJlc3MsIHBvcnQsIChpbnQpcmF3UGlkLCAoaW50KXN0YXRlLCBhZGRyZXNzRmFtaWx5KTsKICAgICAgICAgICAgfQogICAgICAgICAgICByZXR1cm4gcm93czsKICAgICAgICB9CgogICAgICAgIHByaXZhdGUgc3RhdGljIHVpbnQgUmVhZFVJbnQzMihJbnRQdHIgYnVmZmVyLCBpbnQgb2Zmc2V0LCBpbnQgcmV0dXJuZWRMZW5ndGgpCiAgICAgICAgewogICAgICAgICAgICBpZiAob2Zmc2V0IDwgMCB8fCBvZmZzZXQgPiByZXR1cm5lZExlbmd0aCAtIHNpemVvZih1aW50KSkKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgdGhyb3cgbmV3IEludmFsaWREYXRhRXhjZXB0aW9uKCJBIFRDUCB0YWJsZSBzY2FsYXIgZXhjZWVkZWQgdGhlIHJldHVybmVkIGJ1ZmZlci4iKTsKICAgICAgICAgICAgfQogICAgICAgICAgICByZXR1cm4gdW5jaGVja2VkKCh1aW50KU1hcnNoYWwuUmVhZEludDMyKGJ1ZmZlciwgb2Zmc2V0KSk7CiAgICAgICAgfQoKICAgICAgICBwcml2YXRlIHN0YXRpYyBieXRlW10gUmVhZEJ5dGVzKAogICAgICAgICAgICBJbnRQdHIgYnVmZmVyLCBpbnQgb2Zmc2V0LCBpbnQgbGVuZ3RoLCBpbnQgcmV0dXJuZWRMZW5ndGgpCiAgICAgICAgewogICAgICAgICAgICBpZiAob2Zmc2V0IDwgMCB8fCBsZW5ndGggPCAxIHx8IG9mZnNldCA+IHJldHVybmVkTGVuZ3RoIC0gbGVuZ3RoKQogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICB0aHJvdyBuZXcgSW52YWxpZERhdGFFeGNlcHRpb24oIkEgVENQIHRhYmxlIGFkZHJlc3MgZXhjZWVkZWQgdGhlIHJldHVybmVkIGJ1ZmZlci4iKTsKICAgICAgICAgICAgfQogICAgICAgICAgICBieXRlW10gcmVzdWx0ID0gbmV3IGJ5dGVbbGVuZ3RoXTsKICAgICAgICAgICAgTWFyc2hhbC5Db3B5KEludFB0ci5BZGQoYnVmZmVyLCBvZmZzZXQpLCByZXN1bHQsIDAsIGxlbmd0aCk7CiAgICAgICAgICAgIHJldHVybiByZXN1bHQ7CiAgICAgICAgfQoKICAgICAgICBwcml2YXRlIHN0YXRpYyBpbnQgRGVjb2RlTmV0d29ya1BvcnQodWludCByYXdQb3J0KQogICAgICAgIHsKICAgICAgICAgICAgaWYgKChyYXdQb3J0ICYgMHhmZmZmMDAwMFUpICE9IDApCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgIHRocm93IG5ldyBJbnZhbGlkRGF0YUV4Y2VwdGlvbigiVGhlIG93bmVyLVBJRCBsaXN0ZW5lciB0YWJsZSBjb250YWluZWQgYSBtYWxmb3JtZWQgbmV0d29yay1vcmRlciBwb3J0LiIpOwogICAgICAgICAgICB9CiAgICAgICAgICAgIHVzaG9ydCBuZXR3b3JrUG9ydCA9IHVuY2hlY2tlZCgodXNob3J0KXJhd1BvcnQpOwogICAgICAgICAgICB1c2hvcnQgcG9ydCA9IHVuY2hlY2tlZCgodXNob3J0KUlQQWRkcmVzcy5OZXR3b3JrVG9Ib3N0T3JkZXIodW5jaGVja2VkKChzaG9ydCluZXR3b3JrUG9ydCkpKTsKICAgICAgICAgICAgaWYgKHBvcnQgPCAxKQogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICB0aHJvdyBuZXcgSW52YWxpZERhdGFFeGNlcHRpb24oIlRoZSBvd25lci1QSUQgbGlzdGVuZXIgdGFibGUgY29udGFpbmVkIGFuIGludmFsaWQgbG9jYWwgcG9ydC4iKTsKICAgICAgICAgICAgfQogICAgICAgICAgICByZXR1cm4gKGludClwb3J0OwogICAgICAgIH0KCiAgICAgICAgcHJpdmF0ZSBzdGF0aWMgaW50IENvbXB1dGVSZXF1aXJlZExlbmd0aCh1aW50IHJvd0NvdW50LCBMYXlvdXRJbmZvIGxheW91dCkKICAgICAgICB7CiAgICAgICAgICAgIGlmIChyb3dDb3VudCA+IE1heGltdW1Sb3dzUGVyRmFtaWx5IHx8CiAgICAgICAgICAgICAgICBsYXlvdXQuSGVhZGVyU2l6ZSA8IDEgfHwgbGF5b3V0LlJvd1NpemUgPCAxKQogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICB0aHJvdyBuZXcgSW52YWxpZERhdGFFeGNlcHRpb24oIlRoZSBvd25lci1QSUQgbGlzdGVuZXIgdGFibGUgcm93IGNvdW50IG9yIGxheW91dCB3YXMgaW52YWxpZC4iKTsKICAgICAgICAgICAgfQoKICAgICAgICAgICAgbG9uZyByZXF1aXJlZCA9IChsb25nKWxheW91dC5IZWFkZXJTaXplICsgKChsb25nKXJvd0NvdW50ICogKGxvbmcpbGF5b3V0LlJvd1NpemUpOwogICAgICAgICAgICBpZiAocmVxdWlyZWQgPiBJbnQzMi5NYXhWYWx1ZSB8fCByZXF1aXJlZCA+IE1heGltdW1CdWZmZXJCeXRlcykKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgdGhyb3cgbmV3IEludmFsaWREYXRhRXhjZXB0aW9uKCJUaGUgb3duZXItUElEIGxpc3RlbmVyIHRhYmxlIGxlbmd0aCBleGNlZWRlZCBpdHMgYm91bmQuIik7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgcmV0dXJuIChpbnQpcmVxdWlyZWQ7CiAgICAgICAgfQoKICAgICAgICBwcml2YXRlIHN0YXRpYyBMYXlvdXRJbmZvIEdldExheW91dChpbnQgYWRkcmVzc0ZhbWlseSkKICAgICAgICB7CiAgICAgICAgICAgIExheW91dEluZm8gcmVzdWx0ID0gbmV3IExheW91dEluZm8oKTsKICAgICAgICAgICAgaWYgKGFkZHJlc3NGYW1pbHkgPT0gKGludClBZkluZXQpCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgIFR5cGUgcm93ID0gdHlwZW9mKE1pYlRjcFJvd093bmVyUGlkKTsKICAgICAgICAgICAgICAgIFR5cGUgdGFibGUgPSB0eXBlb2YoTWliVGNwVGFibGVPd25lclBpZCk7CiAgICAgICAgICAgICAgICByZXN1bHQuSGVhZGVyU2l6ZSA9IE1hcnNoYWwuT2Zmc2V0T2YodGFibGUsICJGaXJzdFJvdyIpLlRvSW50MzIoKTsKICAgICAgICAgICAgICAgIHJlc3VsdC5Sb3dTaXplID0gTWFyc2hhbC5TaXplT2Yocm93KTsKICAgICAgICAgICAgICAgIHJlc3VsdC5Db3VudE9mZnNldCA9IE1hcnNoYWwuT2Zmc2V0T2YodGFibGUsICJOdW1iZXJPZkVudHJpZXMiKS5Ub0ludDMyKCk7CiAgICAgICAgICAgICAgICByZXN1bHQuU3RhdGVPZmZzZXQgPSBNYXJzaGFsLk9mZnNldE9mKHJvdywgIlN0YXRlIikuVG9JbnQzMigpOwogICAgICAgICAgICAgICAgcmVzdWx0LkxvY2FsQWRkcmVzc09mZnNldCA9IE1hcnNoYWwuT2Zmc2V0T2Yocm93LCAiTG9jYWxBZGRyZXNzIikuVG9JbnQzMigpOwogICAgICAgICAgICAgICAgcmVzdWx0LkxvY2FsU2NvcGVPZmZzZXQgPSAtMTsKICAgICAgICAgICAgICAgIHJlc3VsdC5Mb2NhbFBvcnRPZmZzZXQgPSBNYXJzaGFsLk9mZnNldE9mKHJvdywgIkxvY2FsUG9ydCIpLlRvSW50MzIoKTsKICAgICAgICAgICAgICAgIHJlc3VsdC5Qcm9jZXNzSWRPZmZzZXQgPSBNYXJzaGFsLk9mZnNldE9mKHJvdywgIk93bmluZ1BpZCIpLlRvSW50MzIoKTsKICAgICAgICAgICAgICAgIHJlc3VsdC5SZW1vdGVBZGRyZXNzT2Zmc2V0ID0gTWFyc2hhbC5PZmZzZXRPZihyb3csICJSZW1vdGVBZGRyZXNzIikuVG9JbnQzMigpOwogICAgICAgICAgICAgICAgcmVzdWx0LlJlbW90ZVNjb3BlT2Zmc2V0ID0gLTE7CiAgICAgICAgICAgICAgICByZXN1bHQuUmVtb3RlUG9ydE9mZnNldCA9IE1hcnNoYWwuT2Zmc2V0T2Yocm93LCAiUmVtb3RlUG9ydCIpLlRvSW50MzIoKTsKICAgICAgICAgICAgICAgIHJldHVybiByZXN1bHQ7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgaWYgKGFkZHJlc3NGYW1pbHkgPT0gKGludClBZkluZXQ2KQogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICBUeXBlIHJvdyA9IHR5cGVvZihNaWJUY3A2Um93T3duZXJQaWQpOwogICAgICAgICAgICAgICAgVHlwZSB0YWJsZSA9IHR5cGVvZihNaWJUY3A2VGFibGVPd25lclBpZCk7CiAgICAgICAgICAgICAgICByZXN1bHQuSGVhZGVyU2l6ZSA9IE1hcnNoYWwuT2Zmc2V0T2YodGFibGUsICJGaXJzdFJvdyIpLlRvSW50MzIoKTsKICAgICAgICAgICAgICAgIHJlc3VsdC5Sb3dTaXplID0gTWFyc2hhbC5TaXplT2Yocm93KTsKICAgICAgICAgICAgICAgIHJlc3VsdC5Db3VudE9mZnNldCA9IE1hcnNoYWwuT2Zmc2V0T2YodGFibGUsICJOdW1iZXJPZkVudHJpZXMiKS5Ub0ludDMyKCk7CiAgICAgICAgICAgICAgICByZXN1bHQuU3RhdGVPZmZzZXQgPSBNYXJzaGFsLk9mZnNldE9mKHJvdywgIlN0YXRlIikuVG9JbnQzMigpOwogICAgICAgICAgICAgICAgcmVzdWx0LkxvY2FsQWRkcmVzc09mZnNldCA9IE1hcnNoYWwuT2Zmc2V0T2Yocm93LCAiTG9jYWxBZGRyZXNzIikuVG9JbnQzMigpOwogICAgICAgICAgICAgICAgcmVzdWx0LkxvY2FsU2NvcGVPZmZzZXQgPSBNYXJzaGFsLk9mZnNldE9mKHJvdywgIkxvY2FsU2NvcGVJZCIpLlRvSW50MzIoKTsKICAgICAgICAgICAgICAgIHJlc3VsdC5Mb2NhbFBvcnRPZmZzZXQgPSBNYXJzaGFsLk9mZnNldE9mKHJvdywgIkxvY2FsUG9ydCIpLlRvSW50MzIoKTsKICAgICAgICAgICAgICAgIHJlc3VsdC5Qcm9jZXNzSWRPZmZzZXQgPSBNYXJzaGFsLk9mZnNldE9mKHJvdywgIk93bmluZ1BpZCIpLlRvSW50MzIoKTsKICAgICAgICAgICAgICAgIHJlc3VsdC5SZW1vdGVBZGRyZXNzT2Zmc2V0ID0gTWFyc2hhbC5PZmZzZXRPZihyb3csICJSZW1vdGVBZGRyZXNzIikuVG9JbnQzMigpOwogICAgICAgICAgICAgICAgcmVzdWx0LlJlbW90ZVNjb3BlT2Zmc2V0ID0gTWFyc2hhbC5PZmZzZXRPZihyb3csICJSZW1vdGVTY29wZUlkIikuVG9JbnQzMigpOwogICAgICAgICAgICAgICAgcmVzdWx0LlJlbW90ZVBvcnRPZmZzZXQgPSBNYXJzaGFsLk9mZnNldE9mKHJvdywgIlJlbW90ZVBvcnQiKS5Ub0ludDMyKCk7CiAgICAgICAgICAgICAgICByZXR1cm4gcmVzdWx0OwogICAgICAgICAgICB9CiAgICAgICAgICAgIHRocm93IG5ldyBJbnZhbGlkRGF0YUV4Y2VwdGlvbigiVGhlIG93bmVyLVBJRCBsaXN0ZW5lciB0YWJsZSB1c2VkIGFuIHVua25vd24gYWRkcmVzcyBmYW1pbHkuIik7CiAgICAgICAgfQoKICAgICAgICBwcml2YXRlIHN0YXRpYyBib29sIElzVW5zdXBwb3J0ZWRBcGlTdGF0dXModWludCBzdGF0dXMpCiAgICAgICAgewogICAgICAgICAgICByZXR1cm4gc3RhdHVzID09IEVycm9yTm90U3VwcG9ydGVkOwogICAgICAgIH0KCiAgICAgICAgcHJpdmF0ZSBzdGF0aWMgYm9vbCBJc1Vuc3VwcG9ydGVkTG9hZEVycm9yKGludCBlcnJvcikKICAgICAgICB7CiAgICAgICAgICAgIHJldHVybiBlcnJvciA9PSAyIHx8IGVycm9yID09IDMgfHwgZXJyb3IgPT0gODcgfHwKICAgICAgICAgICAgICAgIGVycm9yID09IDEyNiB8fCBlcnJvciA9PSAxMjcgfHwgZXJyb3IgPT0gMTkzOwogICAgICAgIH0KICAgIH0KfQo='
+        $sourceBytes = [Convert]::FromBase64String($encodedSource)
+        $sourceText = [Text.Encoding]::UTF8.GetString($sourceBytes)
+        Add-Type -TypeDefinition $sourceText -Language CSharp -ErrorAction Stop | Out-Null
+        if ($null -eq ($providerTypeName -as [type])) {
+            Throw-VerifierInfrastructure 'The native listener interop type did not load after compilation.'
+        }
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ('Could not compile the private native listener interop type: ' +
+            (Get-VerifierErrorMessage $_))
+    }
+}
+
+function Test-VerifierNativeListenerUnsupported($ErrorValue) {
+    if ($null -eq $ErrorValue) { return $false }
+    $exception = if ($ErrorValue -is [System.Management.Automation.ErrorRecord]) {
+        $ErrorValue.Exception
+    } else { $ErrorValue }
+    for ($depth = 0; $depth -lt 8 -and $null -ne $exception; $depth++) {
+        $typeName = $exception.GetType().FullName
+        if ($typeName -ceq 'TroubleshootJS.Verifier.NativeListenerR1.UnsupportedException') {
+            return $true
+        }
+        if ($typeName -cnotin @('System.Management.Automation.MethodInvocationException',
+                'System.Reflection.TargetInvocationException')) {
+            return $false
+        }
+        $exception = $exception.InnerException
+    }
+    return $false
+}
+
+function Convert-VerifierNativeTcpListenerRows([object[]]$Rows, $Port) {
+    if (-not (Test-VerifierStrictIntegralValue $Port 1 65535) -or
+            $null -eq $Rows -or -not ($Rows -is [array])) {
+        Throw-VerifierInfrastructure 'The native listener snapshot was not a complete row array for a valid port.'
+    }
+    $normalized = New-Object Collections.ArrayList
+    $endpoints = @{}
+    foreach ($row in $Rows) {
+        if ($null -eq $row -or
+                $row.GetType().FullName -cne 'TroubleshootJS.Verifier.NativeListenerR1.ListenerRow') {
+            Throw-VerifierInfrastructure 'The native listener snapshot contained a malformed row type.'
+        }
+        $address = $row.Address
+        $rowPort = $row.Port
+        $processId = $row.ProcessId
+        $state = $row.State
+        $family = $row.Family
+        if (-not (Test-VerifierStrictStringValue $address) -or
+                -not (Test-VerifierStrictIntegralValue $rowPort 1 65535) -or
+                -not (Test-VerifierStrictIntegralValue $processId 1 ([int]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $state 2 2) -or
+                -not (Test-VerifierStrictIntegralValue $family 2 23) -or
+                $family -notin @(2, 23)) {
+            Throw-VerifierInfrastructure 'The native listener snapshot contained malformed local fields.'
+        }
+        $parsedAddress = $null
+        if (-not [Net.IPAddress]::TryParse($address, [ref]$parsedAddress) -or
+                $parsedAddress.ToString() -cne $address) {
+            Throw-VerifierInfrastructure 'The native listener snapshot contained a malformed or noncanonical local address.'
+        }
+        if ([long]$rowPort -ne [long]$Port -or
+                -not (Test-VerifierLoopbackAddress $address)) {
+            continue
+        }
+        $endpoint = $address.ToLowerInvariant() + '|' + [string]$rowPort
+        if ($endpoints.ContainsKey($endpoint)) {
+            Throw-VerifierInfrastructure 'The native listener snapshot contained an ambiguous duplicate endpoint.'
+        }
+        $endpoints[$endpoint] = $true
+        [void]$normalized.Add([pscustomobject]@{
+            LocalAddress = $address
+            Port = [int]$rowPort
+            ProcessId = [int]$processId
+            Source = 'GetExtendedTcpTable'
+        })
+    }
+    return ,$normalized.ToArray()
+}
 function Get-VerifierLoopbackListenerRecords($Port,
         $PreviewContext = $null, $PreviewOwner = $null,
-        [switch]$PreferNetstat) {
+        [switch]$PreferNetstat, [switch]$PreferNative) {
     if ($null -ne $PreviewContext) {
         [void](Assert-VerifierContextPreflight $PreviewContext 'loopback listener context')
     }
     if (-not (Test-VerifierStrictIntegralValue $Port 1 65535)) {
         Throw-VerifierInfrastructure "Cannot inspect invalid loopback port $Port."
+    }
+    if ($PreferNetstat -and $PreferNative) {
+        Throw-VerifierInfrastructure 'Listener inspection cannot prefer both native IP Helper and netstat providers.'
+    }
+    if ($PreferNative) {
+        $providerTypeName = 'TroubleshootJS.Verifier.NativeListenerR1.TcpTableProvider'
+        if ($null -eq ($providerTypeName -as [type])) {
+            Initialize-VerifierNativeTcpTableInterop
+        }
+        $providerType = $providerTypeName -as [type]
+        $getRowsMethod = $providerType.GetMethod('GetListenerRows',
+            [Reflection.BindingFlags]::Public -bor [Reflection.BindingFlags]::Static)
+        if ($null -eq $getRowsMethod) {
+            Throw-VerifierInfrastructure 'The native IP Helper listener provider omitted its snapshot method.'
+        }
+        $nativeRows = $null
+        try {
+            $nativeArguments = New-Object object[] 1
+            $nativeArguments[0] = [int]$Port
+            $nativeRows = $getRowsMethod.Invoke($null, $nativeArguments)
+            if ($null -eq $nativeRows) { $nativeRows = New-Object object[] 0 }
+        } catch {
+            if (Test-VerifierNativeListenerUnsupported $_) {
+                return (Get-VerifierLoopbackListenerRecords $Port $PreviewContext $PreviewOwner -PreferNetstat)
+            }
+            throw
+        }
+        $nativeCandidates = Convert-VerifierNativeTcpListenerRows ([object[]]$nativeRows) $Port
+        $nativeRecords = New-Object Collections.ArrayList
+        foreach ($candidate in $nativeCandidates) {
+            [void]$nativeRecords.Add((Get-VerifierListenerProcessRecord $candidate.ProcessId $candidate.LocalAddress $candidate.Port 'GetExtendedTcpTable' $PreviewContext $PreviewOwner))
+        }
+        return (New-VerifierListenerInspection $true $true @($nativeRecords) 'GetExtendedTcpTable' '' $PreviewContext $PreviewOwner $null -StructuralOnly)
     }
     $netConnectionError = $null
     $netConnectionSucceeded = $false
@@ -6135,7 +6360,7 @@ function Get-VerifierLoopbackListenerRecords($Port,
     }
     try {
         $netstatResult = Invoke-VerifierBoundedProcess $netstatCommand.Source `
-            @('-ano', '-p', 'tcp') 5000
+            @('-ano') 5000
     } catch {
         Throw-VerifierInfrastructure "Could not inspect loopback listeners for port ${Port}: $(Get-VerifierErrorMessage $_)"
     }
@@ -6643,6 +6868,7 @@ function New-VerifierRunContext($WorktreeRoot, $EvidenceParent = '',
     $runRoot = $null
     $manifestPath = $null
     try {
+        Initialize-VerifierNativeTcpTableInterop
         $root = Get-VerifierFullPath $WorktreeRoot
         if (-not (Test-Path -LiteralPath $root -PathType Container)) {
             Throw-VerifierInfrastructure "Worktree root does not exist: $root"
@@ -7981,9 +8207,9 @@ function Get-VerifierPortLeaseBoundOwnershipProof($Context, $Lease,
         $inspection = try {
             if ($null -ne $PreviewListenerOwner) {
                 Get-VerifierLoopbackListenerRecords ([int]$Lease.Port) $Context $PreviewListenerOwner `
-                    -PreferNetstat
+                    -PreferNative
             } else {
-                Get-VerifierLoopbackListenerRecords ([int]$Lease.Port) -PreferNetstat
+                Get-VerifierLoopbackListenerRecords ([int]$Lease.Port) -PreferNative
             }
         } catch {
             if (Test-VerifierInfrastructureError $_) { throw }

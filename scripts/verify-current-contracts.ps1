@@ -5,6 +5,7 @@ param(
     [string]$ReceiptOutputPath = '',
     [switch]$RetainedPreviewRecoveryContractOnly,
     [switch]$ActivePreviewRecoveryContractOnly,
+    [switch]$NativeListenerContractOnly,
     [string[]]$Suite = @(),
     [long[]]$Q30ServiceSeeds = @(7,13,4,14,43,3,10,64),
     [long[]]$Q30SensitivitySeeds = @(7,13,4,14,43,3,10,64),
@@ -294,6 +295,35 @@ function Invoke-CurrentActivePreviewRecoveryContract {
     return [string]$tested.Stdout
 }
 
+function Invoke-CurrentNativeListenerContract {
+    param([string]$RepositoryRoot, [string]$PowerShellExe)
+    $nativeTestPath = Join-Path $RepositoryRoot 'tests/contracts/native-listener.ps1'
+    $nativeTested = Invoke-VerifierBoundedProcess $PowerShellExe @('-NoProfile',
+        '-ExecutionPolicy', 'Bypass', '-File', $nativeTestPath) 60000
+    Write-Host $nativeTested.Stdout
+    if ($nativeTested.Stderr) { Write-Host $nativeTested.Stderr }
+    if (-not (Test-CurrentContractPassMarker -Stdout $nativeTested.Stdout `
+                -Marker 'native listener contracts assertions=' `
+                -TerminationProven $nativeTested.TerminationProven `
+                -ExitCode $nativeTested.ExitCode)) {
+        throw ('Native listener pure contract failed, exit ' + $nativeTested.ExitCode)
+    }
+
+    $netstatTestPath = Join-Path $RepositoryRoot 'tests/contracts/native-listener-netstat.ps1'
+    $netstatTested = Invoke-VerifierBoundedProcess $PowerShellExe @('-NoProfile',
+        '-ExecutionPolicy', 'Bypass', '-File', $netstatTestPath) 60000
+    Write-Host $netstatTested.Stdout
+    if ($netstatTested.Stderr) { Write-Host $netstatTested.Stderr }
+    if (-not (Test-CurrentContractPassMarker -Stdout $netstatTested.Stdout `
+                -Marker 'native listener netstat contracts assertions=' `
+                -TerminationProven $netstatTested.TerminationProven `
+                -ExitCode $netstatTested.ExitCode)) {
+        throw ('Native listener netstat contract failed, exit ' + $netstatTested.ExitCode)
+    }
+    return [String]::Join([Environment]::NewLine,
+        @([string]$nativeTested.Stdout, [string]$netstatTested.Stdout))
+}
+
 function Get-DensePcbPackingCohortReceipt {
     param(
         [Parameter(Mandatory = $true)][string]$Stdout,
@@ -387,6 +417,27 @@ try {
                 $focusedReceipt, (New-Object Text.UTF8Encoding($false)))
         }
         Write-Host 'PASS: focused active preview recovery synthetic fixtures. Java matrix and real host recovery NOT RUN.'
+        exit 0
+    }
+    if ($NativeListenerContractOnly) {
+        $otherSelections = @($PSBoundParameters.Keys | Where-Object {
+            $_ -notin @('NativeListenerContractOnly', 'ReceiptOutputPath',
+                'Verbose', 'Debug', 'ErrorAction', 'WarningAction', 'InformationAction',
+                'ErrorVariable', 'WarningVariable', 'InformationVariable',
+                'OutVariable', 'OutBuffer', 'PipelineVariable')
+        })
+        if ($otherSelections.Count -ne 0) {
+            throw '-NativeListenerContractOnly excludes other contract selections and toolchains.'
+        }
+        Import-Module (Join-Path $PSScriptRoot 'VerifierIsolation.psm1') -Force
+        $repositoryRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+        $powershell = Join-Path $env:SystemRoot 'System32/WindowsPowerShell/v1.0/powershell.exe'
+        $focusedReceipt = Invoke-CurrentNativeListenerContract $repositoryRoot $powershell
+        if ($ReceiptOutputPath) {
+            [IO.File]::WriteAllText([IO.Path]::GetFullPath($ReceiptOutputPath),
+                $focusedReceipt, (New-Object Text.UTF8Encoding($false)))
+        }
+        Write-Host 'PASS: focused native listener pure contracts. Java matrix and native OS queries NOT RUN.'
         exit 0
     }
     $distinctSuites = @($Suite | Select-Object -Unique)
@@ -1696,6 +1747,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         throw ('Preview listener identity contract failed, exit ' + $listenerContract.ExitCode)
     }
     $receipts.Add($listenerContract.Stdout)
+    $receipts.Add((Invoke-CurrentNativeListenerContract $repositoryRoot $powershell))
     $promotionContract = Invoke-VerifierBoundedProcess $powershell @('-NoProfile', '-ExecutionPolicy',
         'Bypass', '-File', (Join-Path $repositoryRoot 'tests/contracts/build-module-promotion-contract.ps1')) 60000
     Write-Host $promotionContract.Stdout
