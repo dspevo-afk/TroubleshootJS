@@ -1,8 +1,11 @@
-# Current checkpoint: A07 host prerequisite accepted locally
+# Current checkpoint: A07 host prerequisite published
 
-**ACCEPTED LOCALLY; publication pending. Updated:** 2026-11-01 UTC /2026-10-31 local.
+**PUBLISHED. Updated:** 2026-11-01 UTC /2026-10-31 local.
 Leaf branch `codex/a07-report-contract-v2-20261031`, base
-`b48a140bfb90317ad44870ad25220933aa755963`. No new commit/push/Gmail yet.
+`b48a140bfb90317ad44870ad25220933aa755963`. Accepted implementation `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317`
+(`Fix A07 report and owned browser verification`) was pushed normally to
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified. Completion
+Gmail `1a1953880a20986e` was sent once; no duplicate notification for this receipt.
 Main audit's pending B6 changes and separate Desktop checkout remain preserved.
 
 Scope: strict A07 V2/exact26, owned navigation, composite parent observations,
@@ -57,10 +60,12 @@ Strict controlled exportV6 PASS/exit0/1476ms, evidenceb615f899...3d433.
 ExportV5 stays REFUSED/exit2 for its incorrect build-target expectation;
 one-literal correction requires the actual maintained Compile target.
 
-Next: final staging review, isolated commit,
-preserve main docs/B6 before integration, normal origin push and one Gmail after
-remote SHA verification. Then resume the separate Q100 electrical timing scope;
-its proposed private48-step experiment is not implemented or qualified.
+Controlled export and root diff/staged review passed before publication. Main
+B6 files have exact backups and its three pending docs are retained in an exact
+pathspec stash during integration. Next restore those pending docs, preserve
+both histories and resume the separate Q100 electrical timing scope. Proposed
+private48-step experiment is not implemented or qualified. Earlier failed
+resources remain preserved; this receipt launches no new process.
 
 # Historical checkpoint: superseded host-investigation handoff
 

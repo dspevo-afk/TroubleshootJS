@@ -17,7 +17,9 @@ The Q100-1 pilot was published as `9c74c46bdcf99dc62d3b7f7d35b71eb5ba9b3acf` on 
 ## Current direction
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
-locally accepted; publication is pending. Coordinated V2 requires all26 exact
+accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion
+Gmail `1a1953880a20986e` sent once. Coordinated V2 requires all26 exact
 cases and rejects V1. Owned beforeunload handling, complete fresh native/CIM
 parent observations and the inherited stored-energy debug query now pass focused
 contracts, real host canaries, final-source JDK8/GWT Player/Developer builds,

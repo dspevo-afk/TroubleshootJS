@@ -1,6 +1,6 @@
 # A07 report contract V2 — integration checkpoint
 
-**Status: ACCEPTED LOCALLY; publication pending.** Final A07, Current9, Player
+**Status: PUBLISHED.** Final A07, Current9, Player
 privacy and both production builds pass. Root reviewed the integrated source and
 owns publication. This packet records a bounded verifier prerequisite; it grants
 no product-release or expanded electrical qualification.
@@ -8,6 +8,12 @@ no product-release or expanded electrical qualification.
 Candidate branch: `codex/a07-report-contract-v2-20261031`
 
 Base: `b48a140bfb90317ad44870ad25220933aa755963`
+
+Implementation `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` (`Fix A07 report and owned browser verification`) was
+pushed normally to `origin/codex/q100-physical-feasibility`; the exact remote SHA
+was verified. Completion Gmail `1a1953880a20986e` was sent once. The controlled validation
+JSON was frozen before publication; its pending-publication field records that
+capture time. This documentation receipt does not change validated sources.
 
 ## Scope
 
