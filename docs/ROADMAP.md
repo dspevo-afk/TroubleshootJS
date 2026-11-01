@@ -28,7 +28,9 @@ compiled A07/Current9 and Player privacy. Identity/absence oracles and maintaine
 separate Q100 electrical timing failures and zero accepted100 layouts remain.
 
 The [retained terminal-preview recovery prerequisite](task-evidence/A07/retained-preview-recovery-r1/README.md)
-is locally accepted for its bounded host scope; publication is pending. One
+is accepted and published as `3b75c8b3e5317b75c4ab7d1d8801a07d502b1f6c` on
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
+Gmail `1a19661abd842e78` sent once. One
 bound, close-unattempted browser can be recovered beside its already-terminal
 run-owned preview while preserving all identity, lease, listener and cleanup
 proofs. Original ownerless recovery remains supported. Final actual ownerless

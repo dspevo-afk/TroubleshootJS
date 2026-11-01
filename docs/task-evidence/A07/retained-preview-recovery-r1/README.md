@@ -1,8 +1,15 @@
 # Retained terminal-preview recovery
 
-**Status: VALIDATED LOCAL; publication pending.** This is a host-resource
+**Status: PUBLISHED.** This is a host-resource
 prerequisite only. It does not qualify Q100 layout timing, a playable RB100, or any
 electrical/model behavior.
+
+Implementation `3b75c8b3e5317b75c4ab7d1d8801a07d502b1f6c`
+(`Support retained browser recovery after preview cleanup`) was pushed normally
+to `origin/codex/q100-physical-feasibility`; exact SHA verified. Completion Gmail
+`1a19661abd842e78` was sent once. The [controlled validation JSON](validation.json)
+was frozen before publication; its pending-publication field describes that
+capture time. This receipt changes no validated source or gate.
 
 ## Scope and invariants
 
@@ -121,7 +128,7 @@ that cleanup does not change the case result.
 
 ## Limits
 
-Publication is still pending. The injected canary remains
+The injected canary remains
 FAIL despite the later successful recovery observation. HARD/PSYCHOTIC remain
 unavailable and unrun; protected qualification data remains unmaterialized and
 the historical unread boundary remains uncertified. Q100 timing is not closed,

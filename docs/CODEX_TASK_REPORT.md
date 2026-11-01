@@ -1,7 +1,11 @@
-# Current checkpoint: retained terminal-preview recovery validated locally
+# Current checkpoint: retained terminal-preview recovery published
 
-**VALIDATED LOCAL; PUBLICATION PENDING. Updated:** 2026-11-01 UTC.
-Branch codex/a07-retained-preview-recovery-20261101, base/HEAD883d7ba94aa13447210e4c72390e93a9467f976f.
+**PUBLISHED. Updated:** 2026-11-01 UTC.
+Implementation3b75c8b3e5317b75c4ab7d1d8801a07d502b1f6c
+(`Support retained browser recovery after preview cleanup`), based on883d7ba9,
+was pushed normally from codex/a07-retained-preview-recovery-20261101 to
+origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
+Gmail1a19661abd842e78 sent once. No duplicate notification for this receipt.
 Root owns acceptance/publication. The frozen scope, controlled evidence and
 commands are in docs/task-evidence/A07/retained-preview-recovery-r1/.
 
@@ -48,10 +52,12 @@ leaf, Desktop and prior backup/stash remain preserved. HARD/PSYCHOTIC unavailabl
 unrun, protected data unmaterialized; historical unread boundary UNCERTIFIED.
 CI NOT RUN; self-hosted runner setup is the approved prerequisite.
 
-Next: final sanitized evidence/diff and explicit staging, normal commit/push to
-origin/codex/q100-physical-feasibility, verify SHA, one completion Gmail; integrate
-while preserving pending work, then independent observer canary/long CIN33 CPU
-observation. Reference40/48 remain NOT ADOPTED; zero accepted100 layouts. No new
+The controlled validation JSON was frozen before publication; its PENDING field
+records that capture time. Root reviewed the actual staged11-file diff and
+whitespace checks. Initial collector schema failures and formatting-only plan
+EOF correction are preserved privately; no gate/oracle/source was changed.
+Next: integrate while preserving pending work, then independent observer canary/
+long CIN33 CPU observation. Reference40/48 remain NOT ADOPTED; zero accepted100 layouts. No new
 electrical,30-root,full62,playable100 or broad qualification.
 
 # Historical checkpoint: A07 host prerequisite published
