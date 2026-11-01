@@ -4,6 +4,7 @@ param(
     [string]$PythonExe = 'python',
     [string]$ReceiptOutputPath = '',
     [switch]$RetainedPreviewRecoveryContractOnly,
+    [switch]$ActivePreviewRecoveryContractOnly,
     [string[]]$Suite = @(),
     [long[]]$Q30ServiceSeeds = @(7,13,4,14,43,3,10,64),
     [long[]]$Q30SensitivitySeeds = @(7,13,4,14,43,3,10,64),
@@ -275,6 +276,24 @@ function Invoke-CurrentRetainedPreviewRecoveryContract {
     return [string]$tested.Stdout
 }
 
+function Invoke-CurrentActivePreviewRecoveryContract {
+    param([string]$RepositoryRoot, [string]$PowerShellExe)
+    $modulePath = Join-Path $RepositoryRoot 'scripts/VerifierIsolation.psm1'
+    $expectedModuleSha256 = Get-VerifierFileSha256 $modulePath
+    $tested = Invoke-VerifierBoundedProcess $PowerShellExe @('-NoProfile',
+        '-ExecutionPolicy', 'Bypass', '-File', (Join-Path $RepositoryRoot 'tests/contracts/active-preview-recovery-contract.ps1'),
+        '-ModulePath', $modulePath, '-ExpectedModuleSha256', $expectedModuleSha256) 60000
+    Write-Host $tested.Stdout
+    if ($tested.Stderr) { Write-Host $tested.Stderr }
+    if (-not (Test-CurrentContractPassMarker -Stdout $tested.Stdout `
+                -Marker 'active preview recovery synthetic admission/source-order fixtures; assertions=131; scope=synthetic-source-contract-only; host-recovery=NOT_RUN' `
+                -TerminationProven $tested.TerminationProven `
+                -ExitCode $tested.ExitCode)) {
+        throw ('Active preview recovery synthetic fixture contract failed, exit ' + $tested.ExitCode)
+    }
+    return [string]$tested.Stdout
+}
+
 function Get-DensePcbPackingCohortReceipt {
     param(
         [Parameter(Mandatory = $true)][string]$Stdout,
@@ -347,6 +366,27 @@ try {
                 $focusedReceipt, (New-Object Text.UTF8Encoding($false)))
         }
         Write-Host 'PASS: focused retained preview recovery fixtures. Java matrix and real host recovery NOT RUN.'
+        exit 0
+    }
+    if ($ActivePreviewRecoveryContractOnly) {
+        $otherSelections = @($PSBoundParameters.Keys | Where-Object {
+            $_ -notin @('ActivePreviewRecoveryContractOnly', 'ReceiptOutputPath',
+                'Verbose', 'Debug', 'ErrorAction', 'WarningAction', 'InformationAction',
+                'ErrorVariable', 'WarningVariable', 'InformationVariable',
+                'OutVariable', 'OutBuffer', 'PipelineVariable')
+        })
+        if ($otherSelections.Count -ne 0) {
+            throw '-ActivePreviewRecoveryContractOnly excludes other contract selections and toolchains.'
+        }
+        Import-Module (Join-Path $PSScriptRoot 'VerifierIsolation.psm1') -Force
+        $repositoryRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+        $powershell = Join-Path $env:SystemRoot 'System32/WindowsPowerShell/v1.0/powershell.exe'
+        $focusedReceipt = Invoke-CurrentActivePreviewRecoveryContract $repositoryRoot $powershell
+        if ($ReceiptOutputPath) {
+            [IO.File]::WriteAllText([IO.Path]::GetFullPath($ReceiptOutputPath),
+                $focusedReceipt, (New-Object Text.UTF8Encoding($false)))
+        }
+        Write-Host 'PASS: focused active preview recovery synthetic fixtures. Java matrix and real host recovery NOT RUN.'
         exit 0
     }
     $distinctSuites = @($Suite | Select-Object -Unique)
@@ -1668,6 +1708,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
     }
     $receipts.Add($promotionContract.Stdout)
     $receipts.Add((Invoke-CurrentRetainedPreviewRecoveryContract $repositoryRoot $powershell))
+    $receipts.Add((Invoke-CurrentActivePreviewRecoveryContract $repositoryRoot $powershell))
     if ($ReceiptOutputPath) {
         foreach ($parityName in @('vectors', 'manifest-resistive', 'manifest-controlled', 'manifest-controlled-alt')) {
             $paritySource = Join-Path $taskRoot ('parity.' + $parityName + '.txt')

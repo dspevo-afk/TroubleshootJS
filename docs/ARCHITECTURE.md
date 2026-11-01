@@ -61,6 +61,25 @@ mutation. Existing root, process, listener, job, natural-exit, claim and profile
 proofs and cleanup ordering remain in force; the 15-second shutdown and 120-second
 aggregate cleanup limits and legacy ownerless recovery are unchanged.
 
+A separate active-preview recovery entrypoint admits one still-active, verified
+run-owned preview and one bound, close-unattempted browser session from the same
+positively absent launch parent. It validates the complete manifest and both
+canonical claim records, acquires their exact named mutexes in deterministic
+order, and binds distinct in-memory preview authority to the exact context,
+leases, current recovery process and locks. The original parent start tuple is
+preserved issuer lineage; absence is freshly proved without claiming to reread
+an exited parent's start time. Before stopping the preview, its real process
+handle, native/CIM identity, executable, parent and command markers are freshly
+checked. The bound lease and fresh HTTP.sys proof own live listener evidence;
+the server's listener-inspection cleanup flag remains false until cleanup.
+Normal preview cleanup must establish terminal process, listener and claim
+proofs before the existing bound-receipt parent-exit Browser.close lane can run.
+Normal final run cleanup and lock disposal complete the same single 120-second
+acceptance clock. The existing 500 ms ownership proof and 15-second browser
+shutdown limits remain. Preflight failures release only this attempt's locks;
+later failures preserve the actual partial journal. The default retained browser
+entrypoint still rejects active previews.
+
 RB56's registered staged capability supplies normal MEDIUM requests as well as
 private exact qualification requests. The two authorities are independent of the
 catalog enablement flag. Private session adoption checks the exact private

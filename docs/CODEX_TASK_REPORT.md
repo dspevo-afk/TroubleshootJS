@@ -1,4 +1,46 @@
-# Current checkpoint: retained terminal-preview recovery published
+# Current checkpoint: active-preview recovery locally validated
+
+**LOCALLY VALIDATED; PUBLICATION PENDING. Updated:** 2026-11-01 UTC.
+P branch codex/a07-retained-preview-recovery-20261101 is based on
+585eb915d9d7516b8ee86f19855e7b583cdd2e34. No new push or completion email yet;
+prior3b75c8b3/receipt585eb915 and Gmail1a19661abd842e78 remain complete once.
+The [active recovery packet](task-evidence/A07/active-preview-recovery-r1/README.md)
+records scope, sources, commands, failures and limits. Root owns final review.
+
+Final module8b68e983c6c35b05ce10bd8a30378293701d02f72fee14d1c66cbc214729f896;
+parent91bfafc156efd3185d98bc3f69e6eb712dcd38d1fd00967636b9adc0837925db;
+child9b5a36760f490e76094660a2a6bc06c96d58dd8887bd6d9e0bc3c7ca1c5524ba.
+New131 and retained192 synthetic selectors pass on actual WinPS5.1, exit0/
+termination proved; exclusive controls reject and marker8 passes. Fresh host3
+passes with setup31298ms, API71742ms/reported71738ms, capture171ms,
+independent OS proof1083ms, aggregate106395ms/outer107007ms, exit0/termtrue.
+All17 proof predicates pass, actual EOF/handle disposal and original child/
+preview/browser absence, ports/claims/profile cleanup are proved. Report9cd56a33...cdd12b,
+outer7628fdfa...f0f42 under task-owned OS-temp active-preview-recovery-r1/fresh-host3/.
+
+Final Current4 passes9/9,362.8384207s, exit0/termination proved/all7 stability
+fields true; cleanup succeeds and shutdown9804ms. Exact aggregate cleanup time
+is NOT SUPPLIED. Receipt5d857db3...12f0b/report1649e3c7...6d71f. Final consumed
+input audit66eb3013...19544 PASS11 comparisons/25128ms. Compiler1199inputs/
+357outputs remain exact input5dd76a5a.../output611f4f10...; prior actual JDK8/GWT
+Developer output is reused with this measured boundary. No production Java change.
+
+Ordered transport2 passes exact early5s rejection, natural15s exit, same-handle
+late capture/exact markers/disposal, outer18848ms. First transport/ordered controls
+remain FAIL with independent actor-closure evidence. Current3 startup549ms and
+fresh-host2 startup526ms exceeded the unchanged500ms limit; no universal cure is
+claimed. Parent parameter/timing and child persistence error-path fixes precede
+the final host. No raw authorities or logs are included in the public packet.
+
+Resources from this milestone are closed. Main B6, W private40, Desktop changes,
+all failure evidence/backups/stashes and earlier quarantines remain preserved.
+No Java/solver/model/epoch/seed/Player-flow change. Full Java/electrical/Player
+matrix and CI NOT RUN; self-hosted runner setup remains required. Protected data
+unmaterialized, historical unread boundary UNCERTIFIED; HARD/PSYCHOTIC unrun.
+Q100 physical100 remains unqualified, private40/48 not adopted. Next: final diff,
+normal commit/push/one Gmail, then source-bound observer controls and CPU profile.
+
+# Historical checkpoint: retained terminal-preview recovery published
 
 **PUBLISHED. Updated:** 2026-11-01 UTC.
 Implementation3b75c8b3e5317b75c4ab7d1d8801a07d502b1f6c

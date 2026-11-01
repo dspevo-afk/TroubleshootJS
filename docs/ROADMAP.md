@@ -41,6 +41,19 @@ input audit confirms the build and Current inputs remain unchanged. The original
 not supplied. Earlier failures stay recorded, including one500ms startup miss;
 these finite passes establish no general host-stability cure or electrical claim.
 
+The [active-preview recovery prerequisite](task-evidence/A07/active-preview-recovery-r1/README.md)
+is locally validated, publication pending. A separate entrypoint recovers one
+live verified preview and bound, close-unattempted browser after their common
+parent exits. Normal preview cleanup precedes the existing parent-exit browser
+lane, with both claims and original identities preserved. Final synthetic131/
+retained192, registered selector controls, actual ordered-output control, fresh
+active host and Current9 pass. An11-comparison final input audit preserves the
+qualified compiler and execution inventories. The test caller now proves child
+exit before recovery and requires actual EOF afterwards. Earlier pipe, harness
+and500ms startup failures remain failures; no limit, electrical behavior or
+playable100 admission changes. Next remains the independent observer control
+before the long CIN33 CPU observation.
+
 The private reference48 and reference40 timing experiments remain NOT ADOPTED:
 native4/62 and Developer builds pass, but compiled separate/CIN33_SHUNT50us still
 fails its documented temporal/route boundary. Next is a real independent observer
