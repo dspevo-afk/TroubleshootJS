@@ -1,6 +1,6 @@
 # TroubleshootJS: Current Roadmap
 
-**Updated:** 2026-10-31 · **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
+**Updated:** 2026-11-01 · **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
 
 ## Current product checkpoint
 
@@ -26,6 +26,25 @@ contracts, real host canaries, final-source JDK8/GWT Player/Developer builds,
 compiled A07/Current9 and Player privacy. Identity/absence oracles and maintained
 15s/120s/90s/5s/640 budgets remain. This closes a verifier prerequisite; the
 separate Q100 electrical timing failures and zero accepted100 layouts remain.
+
+The [retained terminal-preview recovery prerequisite](task-evidence/A07/retained-preview-recovery-r1/README.md)
+is locally accepted for its bounded host scope; publication is pending. One
+bound, close-unattempted browser can be recovered beside its already-terminal
+run-owned preview while preserving all identity, lease, listener and cleanup
+proofs. Original ownerless recovery remains supported. Final actual ownerless
+and terminal-preview cases, strict synthetic fixtures, real HTTP.sys positive/
+wrong-identity controls, Developer build and Current9 pass. The final consumed-
+input audit confirms the build and Current inputs remain unchanged. The original
+15s/120s/500ms limits remain; exact nested recovery cleanup/shutdown times are
+not supplied. Earlier failures stay recorded, including one500ms startup miss;
+these finite passes establish no general host-stability cure or electrical claim.
+
+The private reference48 and reference40 timing experiments remain NOT ADOPTED:
+native4/62 and Developer builds pass, but compiled separate/CIN33_SHUNT50us still
+fails its documented temporal/route boundary. Next is a real independent observer
+canary before the long diagnostic CPU observation. No numerical treatment or
+playable100 admission follows. Pending B6, Desktop work and prior evidence remain
+preserved; protected qualification data stays unmaterialized, HARD/PSYCHOTIC unrun.
 
 The authored100 physical experiment remains unqualified: exact candidates still
 exhaust routing caps, with zero accepted100 layouts. Shared physical groundwork

@@ -1,4 +1,60 @@
-# Current checkpoint: A07 host prerequisite published
+# Current checkpoint: retained terminal-preview recovery validated locally
+
+**VALIDATED LOCAL; PUBLICATION PENDING. Updated:** 2026-11-01 UTC.
+Branch codex/a07-retained-preview-recovery-20261101, base/HEAD883d7ba94aa13447210e4c72390e93a9467f976f.
+Root owns acceptance/publication. The frozen scope, controlled evidence and
+commands are in docs/task-evidence/A07/retained-preview-recovery-r1/.
+
+Modulefc160736e0de967cbea5090a9546e771e64207181db51978f1350bc1b77f64e6
+adds one bound, close-unattempted CDP browser beside one fully terminal owned
+preview; original ownerless modes remain. Canonical GUID/path, full preserved
+history and fresh process/listener proofs precede mutation and close-attempt
+journaling. All existing identity, resource and15s/120s/500ms limits remain.
+No client, solver/model, epoch, seed, Player flow or admission change.
+
+Final gates PASS: synthetic192/14681ms; original5e ownerless bound+issued14/
+1607ms; registered focused192/16645ms; runner marker/exclusive-selector controls.
+Actual JDK8/GWT Developer174.3973063s,1199inputs/357outputs; input5dd76a5a...1e83,
+output611f4f10...b064. Final Current9/351.1663231s, exit0/termination proven,
+shutdown9968ms; cleanup succeeded, exact aggregate cleanup elapsed NOT SUPPLIED.
+Final consumed-input audit PASS11 comparisons/22801ms confirms all compiler
+inputs/outputs and source/script/web/full execution digests unchanged.
+Audit7d1a2b99212cb6faa85e1b2419d6972eb10f2148bdc97ef221338e76690ce8a1.
+
+Final live Ownerless4 PASS: child6904ms, API52737ms, case60772ms, outer61331ms.
+TerminalPreview4 PASS: child38488ms, preview terminalization8511ms, API55777ms,
+case95453ms, outer96097ms. Both exit0/termination proven, all immutable identity,
+witness, source, receipt, process/listener/profile/claim/final proofs pass.
+API intervals bound cleanup from above (<120s); exact nested cleanup/shutdown
+subphase durations NOT SUPPLIED;15s natural shutdown stays enforced. Sum64288ms
+of terminal-preview cleanup and API intervals is not continuous wall time.
+Actual default HTTP.sys/PID4 positive297ms, exact wrong-identity rejection139ms,
+restored positive302ms all<500; no durable/handle change, cleanup8562ms PASS.
+
+Final parent620f8467545634f68ee9ee007c6560644e203ef98c3ed3f40da66e0014b4bf9c,
+child274a358238a8d165904fb2d7f6940149562a08cac923bbdeef6a2bedae9b5471.
+Final synthetic full pre/post helper proof uses independent child identity and
+an explicitly synthetic claim-presence lookup; fresh live cases validate the
+new witness. Source-only reviews are scoped in the packet; Root reviews final diff.
+All earlier harness, source and host failures remain FAIL, including the500ms
+startup miss; no universal cause/cure claimed. Both failed-run retained browsers
+were recovered through maintained APIs (62853ms and53430ms operation upper
+bounds). Recovery does not reclassify their failed cases. Raw authority, tokens,
+command lines, old failures and quarantines remain private and preserved.
+
+Resources: no new live browser/preview/claim/profile blocker; final test launchers
+and bounded children exited. Main B6's9 tracked/6 untracked changes, private40
+leaf, Desktop and prior backup/stash remain preserved. HARD/PSYCHOTIC unavailable/
+unrun, protected data unmaterialized; historical unread boundary UNCERTIFIED.
+CI NOT RUN; self-hosted runner setup is the approved prerequisite.
+
+Next: final sanitized evidence/diff and explicit staging, normal commit/push to
+origin/codex/q100-physical-feasibility, verify SHA, one completion Gmail; integrate
+while preserving pending work, then independent observer canary/long CIN33 CPU
+observation. Reference40/48 remain NOT ADOPTED; zero accepted100 layouts. No new
+electrical,30-root,full62,playable100 or broad qualification.
+
+# Historical checkpoint: A07 host prerequisite published
 
 **PUBLISHED. Updated:** 2026-11-01 UTC /2026-10-31 local.
 Leaf branch `codex/a07-report-contract-v2-20261031`, base

@@ -3065,11 +3065,97 @@ function Assert-VerifierSerializedServerRecord($Server,
     }
 }
 
+function Assert-VerifierFreshTerminalPreviewProcessAndListenerAbsence($Context,
+        [string]$Label = 'retained terminal preview') {
+    [void](Assert-VerifierContextPreflight $Context ($Label + ' context') `
+        -RequiredProperties @('RunId', 'RepositoryIdentity', 'PreviewNonce'))
+    [void](Assert-VerifierDurableServerLease $Context ($Label + ' server'))
+    $server = $Context.Server
+    if ($server.Owner -cne 'run' -or $server.State -cne 'cleaned' -or
+            $server.CleanupResult -cne 'complete' -or
+            -not $server.IdentityVerified -or $server.CallerOwned -or
+            -not $server.ProcessIdentityKnown -or $server.OwnershipUncertain -or
+            -not $server.ProcessTerminationProven -or -not $server.ProcessAbsent -or
+            -not $server.ListenerInspectionProven -or $server.ListenerAbsent -ne $true) {
+        Throw-VerifierInfrastructure "$Label was not the exact completed run-owned preview record."
+    }
+    [void](Assert-VerifierDurableLeaseTerminal $server.Lease $Context `
+        ($Label + ' terminal lease'))
+    $recordedProcess = [pscustomobject]@{
+        ProcessId = [int]$server.ProcessId
+        ProcessStartTicks = [long]$server.ProcessStartTicks
+        ParentProcessId = [int]$server.ProcessParentProcessId
+        ParentProcessStartTicks = [long]$server.ProcessParentProcessStartTicks
+        CommandLine = [string]$server.ProcessCommandLine
+    }
+    $processAbsence = Confirm-VerifierRecordedProcessAbsent $recordedProcess `
+        ($Label + ' original process') ([string]$server.ProcessCommandLine) `
+        ([int]$server.Port) ([string]$server.Script) ([string]$server.RunId) `
+        ([string]$server.Nonce) ''
+    if (-not $processAbsence.QueryProven -or -not $processAbsence.Absent -or
+            $processAbsence.Replaced) {
+        Throw-VerifierInfrastructure "$Label original process absence was not freshly proven without PID reuse."
+    }
+    $listenerInspection = Get-VerifierLoopbackListenerRecords ([int]$server.Port)
+    if (-not (Test-VerifierListenerInspectionSchema $listenerInspection) -or
+            -not $listenerInspection.Success -or -not $listenerInspection.Known) {
+        Throw-VerifierInfrastructure "$Label listener inspection was not positively proven."
+    }
+    $listenerCount = @($listenerInspection.Listeners).Count
+    if ($listenerInspection.HasListeners -or $listenerCount -ne 0) {
+        Throw-VerifierInfrastructure "$Label original listener absence was not freshly proven."
+    }
+}
+
+function Test-VerifierRetainedTerminalPreviewRecoveryScope($Context, $SessionRecord) {
+    if ($null -eq $Context -or $null -eq $Context.PSObject.Properties['Server'] -or
+            $null -eq $Context.Server) {
+        return $false
+    }
+    if ($null -eq (Get-VerifierRetainedBrowserRecoveryLeaseAuthority `
+            $Context $SessionRecord.Lease 'terminal-preview recovery scope')) {
+        return $false
+    }
+    $leases = @($Context.LeaseRecords)
+    $sessions = @($Context.BrowserSessions)
+    if ($Context.Server.Owner -ceq 'none' -and $leases.Count -eq 1) {
+        return $false
+    }
+    if ($Context.Server.Owner -cne 'run') {
+        Throw-VerifierInfrastructure 'Retained browser recovery authority was paired with a noncanonical preview owner.'
+    }
+    if ($leases.Count -ne 2 -or $sessions.Count -ne 1 -or
+            -not [object]::ReferenceEquals($sessions[0], $SessionRecord) -or
+            $null -eq $SessionRecord.PSObject.Properties['Lease'] -or
+            $null -eq $SessionRecord.Lease -or
+            $SessionRecord.Lease.Kind -cne 'cdp' -or
+            $null -eq $Context.Server.PSObject.Properties['Lease'] -or
+            $null -eq $Context.Server.Lease -or
+            $Context.Server.Lease.Kind -cne 'preview' -or
+            $Context.Server.State -cne 'cleaned' -or
+            $Context.Server.CleanupResult -cne 'complete' -or
+            $Context.BaseUrl -cne $Context.Server.BaseUrl) {
+        Throw-VerifierInfrastructure 'Retained terminal preview recovery context did not keep its exact terminal server and one-CDP association.'
+    }
+    $cdpLeases = @($leases | Where-Object { $_.Kind -ceq 'cdp' })
+    $previewLeases = @($leases | Where-Object { $_.Kind -ceq 'preview' })
+    if ($cdpLeases.Count -ne 1 -or $previewLeases.Count -ne 1 -or
+            -not [object]::ReferenceEquals($cdpLeases[0], $SessionRecord.Lease) -or
+            -not [object]::ReferenceEquals($previewLeases[0], $Context.Server.Lease)) {
+        Throw-VerifierInfrastructure 'Retained terminal preview recovery context lost or duplicated one of its exact leases.'
+    }
+    Assert-VerifierDurableManifestContext $Context
+    [void](Get-VerifierRetainedBrowserRecoveryLeaseAuthority `
+        $Context $SessionRecord.Lease 'terminal-preview recovery scope')
+    return $true
+}
+
 function New-VerifierRetainedBrowserRecoveryContext([string]$ManifestPath) {
     # This is intentionally a narrow deserializer, not a general retained-run
-    # importer. It accepts exactly one failed/bound CDP browser session with
-    # no preview owner, then reconstructs only the live objects required to
-    # send Browser.close and finish the exact existing lease transaction.
+    # importer. It accepts either the existing ownerless one-CDP shape or one
+    # failed/bound CDP browser session beside one already-terminal run-owned
+    # preview lease. It reconstructs only the live objects required to send
+    # Browser.close and finish the exact existing lease transaction.
     if (-not (Test-VerifierStrictStringValue $ManifestPath) -or
             [String]::IsNullOrWhiteSpace($ManifestPath)) {
         Throw-VerifierInfrastructure 'Retained browser recovery requires one exact non-empty manifest path.'
@@ -3098,9 +3184,8 @@ function New-VerifierRetainedBrowserRecoveryContext([string]$ManifestPath) {
     }
     [void](ConvertTo-VerifierStrictTimestampText $manifest.createdUtc $false `
         'retained browser recovery manifest createdUtc' -AllowJsonDateTime)
-    if ($manifest.protocol -cne 'troubleshootjs-verifier-run-v1' -or
-            $manifest.baseUrl -cne '') {
-        Throw-VerifierInfrastructure 'Retained browser recovery manifest carried an unsupported protocol or active preview URL.'
+    if ($manifest.protocol -cne 'troubleshootjs-verifier-run-v1') {
+        Throw-VerifierInfrastructure 'Retained browser recovery manifest carried an unsupported protocol.'
     }
     foreach ($collectionName in @('leases', 'browserSessions', 'artifacts')) {
         $property = $manifest.PSObject.Properties[$collectionName]
@@ -3142,22 +3227,53 @@ function New-VerifierRetainedBrowserRecoveryContext([string]$ManifestPath) {
     }
     $leases = @($manifest.leases)
     $sessions = @($manifest.browserSessions)
-    if ($leases.Count -ne 1 -or $sessions.Count -ne 1) {
-        Throw-VerifierInfrastructure 'Retained browser recovery requires exactly one retained CDP lease and browser session.'
+    if ($sessions.Count -ne 1) {
+        Throw-VerifierInfrastructure 'Retained browser recovery requires exactly one retained CDP browser session.'
     }
-    $serializedLease = $leases[0]
     $serializedSession = $sessions[0]
-    Assert-VerifierSerializedLeaseRecord $serializedLease 'retained browser recovery lease'
     Assert-VerifierSerializedBrowserSessionRecord $serializedSession `
         'retained browser recovery session'
     $serverProperty = $manifest.PSObject.Properties['server']
     if ($null -eq $serverProperty -or $null -eq $serverProperty.Value) {
-        Throw-VerifierInfrastructure 'Retained browser recovery manifest omitted its ownerless server record.'
+        Throw-VerifierInfrastructure 'Retained browser recovery manifest omitted its server record.'
     }
     Assert-VerifierSerializedServerRecord $serverProperty.Value `
         'retained browser recovery server'
-    if ($serverProperty.Value.owner -cne 'none') {
-        Throw-VerifierInfrastructure 'Retained browser recovery refuses a manifest that owns a preview/server resource.'
+    $serializedServer = $serverProperty.Value
+    $terminalPreviewRecovery = ($serializedServer.owner -ceq 'run')
+    if ($serializedServer.owner -cnotin @('none', 'run')) {
+        Throw-VerifierInfrastructure 'Retained browser recovery refuses caller-owned or unknown preview/server resources.'
+    }
+    if (-not $terminalPreviewRecovery) {
+        if ($leases.Count -ne 1 -or $manifest.baseUrl -cne '') {
+            Throw-VerifierInfrastructure 'Retained browser recovery requires exactly one retained CDP lease and an ownerless server with an empty preview URL.'
+        }
+        $serializedLease = $leases[0]
+        $serializedPreviewLease = $null
+        Assert-VerifierSerializedLeaseRecord $serializedLease 'retained browser recovery lease'
+    } else {
+        if ($leases.Count -ne 2 -or
+                [String]::IsNullOrWhiteSpace([string]$manifest.baseUrl) -or
+                $manifest.baseUrl -cne $serializedServer.baseUrl) {
+            Throw-VerifierInfrastructure 'Retained browser recovery requires one exact terminal preview plus one CDP lease and its historical base URL.'
+        }
+        foreach ($leaseRecord in $leases) {
+            Assert-VerifierSerializedLeaseRecord $leaseRecord `
+                'retained browser recovery lease collection entry'
+        }
+        $cdpLeaseRecords = @($leases | Where-Object { $_.kind -ceq 'cdp' })
+        $previewLeaseRecords = @($leases | Where-Object { $_.kind -ceq 'preview' })
+        if ($cdpLeaseRecords.Count -ne 1 -or $previewLeaseRecords.Count -ne 1) {
+            Throw-VerifierInfrastructure 'Retained browser recovery requires exactly one CDP lease and one preview lease.'
+        }
+        $serializedLease = $cdpLeaseRecords[0]
+        $serializedPreviewLease = $previewLeaseRecords[0]
+        if ($serializedLease.leaseId -ceq $serializedPreviewLease.leaseId -or
+                [int]$serializedLease.port -eq [int]$serializedPreviewLease.port -or
+                $serializedLease.claimName -ceq $serializedPreviewLease.claimName -or
+                (Test-VerifierCanonicalWindowsPathValue $serializedLease.path $serializedPreviewLease.path)) {
+            Throw-VerifierInfrastructure 'Retained browser recovery CDP and preview leases did not identify distinct claims.'
+        }
     }
     $lease = ConvertFrom-VerifierSerializedLeaseRecord $serializedLease `
         'retained browser recovery lease'
@@ -3212,8 +3328,13 @@ function New-VerifierRetainedBrowserRecoveryContext([string]$ManifestPath) {
         $serializedSession.cleanupResult -cin @('pending', 'infrastructure-failure') -and
         $issuedContainedLaunch)
     if ($boundRecovery) {
-        $recoveryMode = 'bound'
+        $recoveryMode = if ($terminalPreviewRecovery) {
+            'bound-terminal-preview'
+        } else { 'bound' }
     } elseif ($issuedContainedRecovery) {
+        if ($terminalPreviewRecovery) {
+            Throw-VerifierInfrastructure 'Terminal preview recovery requires exactly one already-bound, close-unattempted CDP session.'
+        }
         $recoveryMode = 'issued-contained'
     } else {
         Throw-VerifierInfrastructure 'Retained browser recovery lease/session association was neither one exact bound tuple nor one issued contained-launch tuple.'
@@ -3247,6 +3368,39 @@ function New-VerifierRetainedBrowserRecoveryContext([string]$ManifestPath) {
     [void](Assert-VerifierPhysicalOwnedPath $evidenceNamespaceRoot $evidenceDirectory)
     if (-not (Test-VerifierCanonicalWindowsPathValue $serializedSession.profile $lease.ProfilePath)) {
         Throw-VerifierInfrastructure 'Retained browser recovery session and lease disagreed on the owned profile path.'
+    }
+    $previewLease = $null
+    if ($terminalPreviewRecovery) {
+        $previewLease = ConvertFrom-VerifierSerializedLeaseRecord $serializedPreviewLease `
+            'retained terminal preview lease'
+        if ($previewLease.Kind -cne 'preview' -or
+                $previewLease.RunId -cne [string]$manifest.runId -or
+                $previewLease.RepositoryIdentity -cne [string]$manifest.repositoryIdentity -or
+                -not (Test-VerifierCanonicalWindowsPathValue $previewLease.WorktreeRoot $worktreeRoot) -or
+                [int]$previewLease.Port -ne [int]$serializedServer.port -or
+                [int]$previewLease.Port -eq [int]$lease.Port -or
+                $serializedServer.baseUrl -cne ('http://127.0.0.1:' + [string]$previewLease.Port)) {
+            Throw-VerifierInfrastructure 'Retained terminal preview lease did not match its exact run, server, and distinct CDP association.'
+        }
+        $canonicalPreviewLeaseId = [Guid]::Empty
+        if (-not [Guid]::TryParseExact([string]$previewLease.LeaseId, 'N', `
+                [ref]$canonicalPreviewLeaseId) -or
+                $canonicalPreviewLeaseId -eq [Guid]::Empty -or
+                [string]$previewLease.LeaseId -cne $canonicalPreviewLeaseId.ToString('N')) {
+            Throw-VerifierInfrastructure 'Retained terminal preview lease ID was not one exact lowercase canonical GUID-N value.'
+        }
+        $expectedPreviewClaimPath = Get-VerifierFullPath (Join-Path $expectedPortLeaseRoot `
+            ($previewLease.Port.ToString() + '-' + $previewLease.LeaseId + '.lease'))
+        if (-not (Test-VerifierCanonicalWindowsPathValue $previewLease.Path `
+                $expectedPreviewClaimPath)) {
+            Throw-VerifierInfrastructure 'Retained terminal preview lease path was not its exact canonical port-and-lease claim path.'
+        }
+        [void](Assert-VerifierPhysicalOwnedPath $expectedPortLeaseRoot $previewLease.Path)
+        if (-not (Test-VerifierSerializedLeaseTerminal $serializedPreviewLease `
+                $previewLease.Path $serializedServer ([string]$manifest.runId) `
+                ([string]$manifest.repositoryIdentity) $worktreeRoot)) {
+            Throw-VerifierInfrastructure 'Retained preview lease/server did not pass the complete serialized terminal proof.'
+        }
     }
 
     $receipt = $receiptProperty.Value
@@ -3316,6 +3470,47 @@ function New-VerifierRetainedBrowserRecoveryContext([string]$ManifestPath) {
         ProcessAbsent = [bool]$lease.ProcessAbsent
         RetainedRecoveryAuthority = $null
     }
+    $livePreviewLease = $null
+    if ($terminalPreviewRecovery) {
+        $livePreviewLease = [pscustomobject]@{
+            LeaseId = [string]$previewLease.LeaseId; Kind = [string]$previewLease.Kind
+            Port = [int]$previewLease.Port; Path = [string]$previewLease.Path
+            RunId = [string]$previewLease.RunId
+            RepositoryIdentity = [string]$previewLease.RepositoryIdentity
+            WorktreeRoot = [string]$previewLease.WorktreeRoot
+            Status = [string]$previewLease.Status
+            Registered = [bool]$previewLease.Registered; ClaimName = [string]$previewLease.ClaimName
+            ClaimState = [string]$previewLease.ClaimState
+            ClaimOwnerPid = [int]$previewLease.ClaimOwnerPid
+            ClaimOwnerStartTicks = [long]$previewLease.ClaimOwnerStartTicks
+            BoundProcessId = [int]$previewLease.BoundProcessId
+            BoundProcessStartTicks = [long]$previewLease.BoundProcessStartTicks
+            ListenerProcessId = [int]$previewLease.ListenerProcessId
+            ListenerProcessStartTicks = $previewLease.ListenerProcessStartTicks
+            ListenerOwnerKind = [string]$previewLease.ListenerOwnerKind
+            ListenerOwnerProof = [string]$previewLease.ListenerOwnerProof
+            ListenerOwnerEvidence = [string]$previewLease.ListenerOwnerEvidence
+            BindValidatedUtc = [string]$previewLease.BindValidatedUtc
+            ReleasedUtc = [string]$previewLease.ReleasedUtc
+            ClaimMutex = $null; AuthorizationProof = $null
+            ProfilePath = [string]$previewLease.ProfilePath; OwnerType = 'none'
+            ProfileInspectionFailed = $false; BrowserPath = [string]$previewLease.BrowserPath
+            ReleaseState = [string]$previewLease.ReleaseState
+            ReleaseJournalState = [string]$previewLease.ReleaseJournalState
+            ReleaseBlocked = [bool]$previewLease.ReleaseBlocked
+            ReleaseBlockReason = [string]$previewLease.ReleaseBlockReason
+            MutexReleased = [bool]$previewLease.MutexReleased
+            ListenerInspectionSuccess = [bool]$previewLease.ListenerInspectionSuccess
+            ListenerInspectionKnown = [bool]$previewLease.ListenerInspectionKnown
+            ListenerHasListeners = $previewLease.ListenerHasListeners
+            ListenerAbsent = $previewLease.ListenerAbsent
+            ListenerInspectionUtc = [string]$previewLease.ListenerInspectionUtc
+            ProcessProofRequired = [bool]$previewLease.ProcessProofRequired
+            ProcessTerminationProven = [bool]$previewLease.ProcessTerminationProven
+            ProcessAbsent = [bool]$previewLease.ProcessAbsent
+            RetainedRecoveryAuthority = $null
+        }
+    }
     $liveContainmentLaunch = if ($null -eq $serializedSession.PSObject.Properties['containmentLaunch'] -or
             $null -eq $serializedSession.containmentLaunch) {
         $null
@@ -3379,8 +3574,23 @@ function New-VerifierRetainedBrowserRecoveryContext([string]$ManifestPath) {
         ListenerInspectionProven = [bool]$server.listenerInspectionProven
         ListenerAbsent = $server.listenerAbsent
     }
+    if ($terminalPreviewRecovery) {
+        $liveServer.Lease = $livePreviewLease
+    }
     $liveLeases = New-Object Collections.ArrayList
-    [void]$liveLeases.Add($liveLease)
+    if ($terminalPreviewRecovery) {
+        foreach ($leaseRecord in $leases) {
+            if ($leaseRecord.leaseId -ceq $serializedLease.leaseId) {
+                [void]$liveLeases.Add($liveLease)
+            } elseif ($leaseRecord.leaseId -ceq $serializedPreviewLease.leaseId) {
+                [void]$liveLeases.Add($livePreviewLease)
+            } else {
+                Throw-VerifierInfrastructure 'Retained browser recovery lease collection changed during context reconstruction.'
+            }
+        }
+    } else {
+        [void]$liveLeases.Add($liveLease)
+    }
     $liveSessions = New-Object Collections.ArrayList
     [void]$liveSessions.Add($liveSession)
     $liveArtifacts = New-Object Collections.ArrayList
@@ -3397,7 +3607,8 @@ function New-VerifierRetainedBrowserRecoveryContext([string]$ManifestPath) {
         PortLeaseRoot = $expectedPortLeaseRoot
         CreatedUtc = ConvertTo-VerifierStrictTimestampText $manifest.createdUtc $false `
             'retained browser recovery manifest createdUtc' -AllowJsonDateTime
-        BaseUrl = ''; Server = $liveServer; LeaseRecords = $liveLeases
+        BaseUrl = $(if ($terminalPreviewRecovery) { [string]$manifest.baseUrl } else { '' })
+        Server = $liveServer; LeaseRecords = $liveLeases
         BrowserSessions = $liveSessions; Artifacts = $liveArtifacts
         CleanupState = [string]$cleanup.state
         CleanupCompletedUtc = ConvertTo-VerifierStrictTimestampText `
@@ -3419,6 +3630,12 @@ function New-VerifierRetainedBrowserRecoveryContext([string]$ManifestPath) {
             BrowserDrainAfterInitialGraphSignalWritten = $false
         }
         ManifestWritePhase = ''
+    }
+    if ($terminalPreviewRecovery) {
+        # Recheck the rehydrated terminal server/lease and its live OS absence
+        # proofs before the caller can acquire the retained CDP claim.
+        Assert-VerifierFreshTerminalPreviewProcessAndListenerAbsence $context `
+            'retained terminal preview recovery factory'
     }
     return [pscustomobject]@{
         Context = $context; Lease = $liveLease; Session = $liveSession; Mode = $recoveryMode
@@ -3593,12 +3810,20 @@ function Invoke-VerifierRetainedBrowserRecovery([string]$ManifestPath,
     $cleanupResult = $null
     try {
         Enter-VerifierRetainedBrowserRecoveryLease $context $lease
+        if ($recoveryMode -eq 'bound-terminal-preview') {
+            if (-not (Test-VerifierRetainedTerminalPreviewRecoveryScope `
+                    $context $session)) {
+                Throw-VerifierInfrastructure 'Retained terminal preview recovery scope was not freshly bound to the acquired CDP claim.'
+            }
+            Assert-VerifierFreshTerminalPreviewProcessAndListenerAbsence $context `
+                'retained terminal preview post-claim proof'
+        }
         # Persist the recovery intent before Browser.close. An interruption
         # here remains an eligible bound/unattempted receipt; an interruption
         # after the close-attempt journal remains safely non-retriable.
         $context.CleanupState = 'pending'
         $context.CleanupCompletedUtc = ''
-        if ($recoveryMode -eq 'bound') {
+        if ($recoveryMode -in @('bound', 'bound-terminal-preview')) {
             $session.Status = 'attached'
         } elseif ($recoveryMode -eq 'issued-contained') {
             # The durable PID/job record is intentionally not a close
@@ -14554,6 +14779,17 @@ function Close-VerifierBrowserSessionWithBoundRecoveryReceipt($Context, $Session
             Throw-VerifierInfrastructure 'Browser parent-exit recovery root changed during protected-helper census.'
         }
         [void](Assert-VerifierBrowserParentExitRecoveryListener $Context $SessionRecord $rootBeforeJournal)
+        # Recheck the terminal preview before the irreversible close-attempt
+        # journal. A failed proof leaves this exact CDP receipt unattempted.
+        Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
+        $terminalPreviewRecoveryScope = Test-VerifierRetainedTerminalPreviewRecoveryScope `
+            $Context $SessionRecord
+        Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
+        if ($terminalPreviewRecoveryScope) {
+            Assert-VerifierFreshTerminalPreviewProcessAndListenerAbsence $Context `
+                'retained terminal preview pre-journal proof'
+            Assert-VerifierBrowserShutdownDeadline $budget $budgetTicks
+        }
         Record-VerifierBrowserRecoveryCloseAttempt $Context $SessionRecord
         $rootAtSend = Get-VerifierBrowserReceiptNaturalShutdownRoot $Context `
             $SessionRecord $OwnerRoot -RequireLaunchParentAbsent:$RequireLaunchParentAbsent `

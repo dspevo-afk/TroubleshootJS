@@ -3,6 +3,7 @@ param(
     [string]$JavaHome = $env:JAVA_HOME,
     [string]$PythonExe = 'python',
     [string]$ReceiptOutputPath = '',
+    [switch]$RetainedPreviewRecoveryContractOnly,
     [string[]]$Suite = @(),
     [long[]]$Q30ServiceSeeds = @(7,13,4,14,43,3,10,64),
     [long[]]$Q30SensitivitySeeds = @(7,13,4,14,43,3,10,64),
@@ -259,6 +260,21 @@ function Test-CurrentContractPassMarker {
     return $true
 }
 
+function Invoke-CurrentRetainedPreviewRecoveryContract {
+    param([string]$RepositoryRoot, [string]$PowerShellExe)
+    $tested = Invoke-VerifierBoundedProcess $PowerShellExe @('-NoProfile',
+        '-ExecutionPolicy', 'Bypass', '-File', (Join-Path $RepositoryRoot 'tests/contracts/retained-preview-recovery-contract.ps1')) 60000
+    Write-Host $tested.Stdout
+    if ($tested.Stderr) { Write-Host $tested.Stderr }
+    if (-not (Test-CurrentContractPassMarker -Stdout $tested.Stdout `
+                -Marker 'retained preview recovery fixture contract; assertions=' `
+                -TerminationProven $tested.TerminationProven `
+                -ExitCode $tested.ExitCode)) {
+        throw ('Retained preview recovery fixture contract failed, exit ' + $tested.ExitCode)
+    }
+    return [string]$tested.Stdout
+}
+
 function Get-DensePcbPackingCohortReceipt {
     param(
         [Parameter(Mandatory = $true)][string]$Stdout,
@@ -312,6 +328,27 @@ function Get-DensePcbPackingCohortReceipt {
 $taskRoot = ''
 $resultCode = 2
 try {
+    if ($RetainedPreviewRecoveryContractOnly) {
+        $otherSelections = @($PSBoundParameters.Keys | Where-Object {
+            $_ -notin @('RetainedPreviewRecoveryContractOnly', 'ReceiptOutputPath',
+                'Verbose', 'Debug', 'ErrorAction', 'WarningAction', 'InformationAction',
+                'ErrorVariable', 'WarningVariable', 'InformationVariable',
+                'OutVariable', 'OutBuffer', 'PipelineVariable')
+        })
+        if ($otherSelections.Count -ne 0) {
+            throw '-RetainedPreviewRecoveryContractOnly excludes other contract selections and toolchains.'
+        }
+        Import-Module (Join-Path $PSScriptRoot 'VerifierIsolation.psm1') -Force
+        $repositoryRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+        $powershell = Join-Path $env:SystemRoot 'System32/WindowsPowerShell/v1.0/powershell.exe'
+        $focusedReceipt = Invoke-CurrentRetainedPreviewRecoveryContract $repositoryRoot $powershell
+        if ($ReceiptOutputPath) {
+            [IO.File]::WriteAllText([IO.Path]::GetFullPath($ReceiptOutputPath),
+                $focusedReceipt, (New-Object Text.UTF8Encoding($false)))
+        }
+        Write-Host 'PASS: focused retained preview recovery fixtures. Java matrix and real host recovery NOT RUN.'
+        exit 0
+    }
     $distinctSuites = @($Suite | Select-Object -Unique)
     if ($distinctSuites.Count -ne $Suite.Count) {
         throw 'Select each current contract suite at most once.'
@@ -1630,6 +1667,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         throw ('Production build promotion contract failed, exit ' + $promotionContract.ExitCode)
     }
     $receipts.Add($promotionContract.Stdout)
+    $receipts.Add((Invoke-CurrentRetainedPreviewRecoveryContract $repositoryRoot $powershell))
     if ($ReceiptOutputPath) {
         foreach ($parityName in @('vectors', 'manifest-resistive', 'manifest-controlled', 'manifest-controlled-alt')) {
             $paritySource = Join-Path $taskRoot ('parity.' + $parityName + '.txt')

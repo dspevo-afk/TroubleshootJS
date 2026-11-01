@@ -48,6 +48,19 @@ retain their existing owner. Interop warms
 during session setup; observations, natural-exit, containment, journal, listener
 and profile proofs remain inside the unchanged shutdown and cleanup budgets.
 
+VerifierIsolation's retained browser recovery accepts either the original
+ownerless one-CDP form or one bound, close-unattempted CDP session beside one
+fully terminal run-owned preview. The preview form preserves and validates the
+complete preview lease/server history, including a canonical lowercase GUID-N
+preview lease ID and claim path, the terminal lease/server proof, and fresh
+original-process and listener absence at admission, after claim, before close
+intent, and immediately before journaling a close attempt. Recovery authority is
+scoped to that exact run, preview and CDP session; active or caller-owned previews,
+extra leases/sessions and malformed preview records fail before resource
+mutation. Existing root, process, listener, job, natural-exit, claim and profile
+proofs and cleanup ordering remain in force; the 15-second shutdown and 120-second
+aggregate cleanup limits and legacy ownerless recovery are unchanged.
+
 RB56's registered staged capability supplies normal MEDIUM requests as well as
 private exact qualification requests. The two authorities are independent of the
 catalog enablement flag. Private session adoption checks the exact private
