@@ -1,8 +1,8 @@
 {
   "schema": "troubleshootjs-native-listener-evidence-v1",
   "asOf": "2026-11-01",
-  "status": "LOCALLY_ACCEPTED_PENDING_PUBLICATION",
-  "publication": "NOT_PUBLISHED",
+  "status": "ACCEPTED_AND_PUBLISHED",
+  "publication": "PUBLISHED",
   "rootAcceptance": "ACCEPTED_FOR_RECORDED_HOST_SCOPE",
   "candidate": {
     "branch": "codex/native-listener-host-20261101",
@@ -362,5 +362,10 @@
     "run-native-live-2/result.json": "fae3b40d642b2f482eb9b37464cb412bcc11e26ceea424d48503f3b128e82a32",
     "run-native-p-connected-udp-3/result.json": "fafa1c10de46103b4d05f38a5ed02dccee771c626bc65e6ba2779039a61d1fb4",
     "native-connected-udp-canary-r1/run-native-connected-udp-canary-r1-2/result.json": "eee05e2c3ac3630ff3d0ecd6ee41acd2d4e94a9ca70b33107a7deac37f488d61"
-  }
+  },
+  "implementationCommit": "be15bf7f03f8ca5f504ec164a807a344e2a7de33",
+  "implementationMessage": "Use native TCP ownership snapshots and fix IPv6 fallback",
+  "verifiedRemote": "origin/codex/q100-physical-feasibility",
+  "completionGmailId": "1a198e4cd3f5d367",
+  "completionEmailSentOnce": true
 }

@@ -64,7 +64,9 @@ playable100 admission follows. Pending B6, Desktop work and prior evidence remai
 preserved; protected qualification data stays unmaterialized, HARD/PSYCHOTIC unrun.
 
 The [native Windows listener prerequisite](task-evidence/A07/native-listener-r1/README.md)
-is locally accepted for its recorded host candidate; publication is pending.
+is accepted and published as `be15bf7f03f8ca5f504ec164a807a344e2a7de33` on
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
+Gmail `1a198e4cd3f5d367` sent once.
 The strict lease proof now uses fresh bounded IPv4/IPv6 IP Helper snapshots,
 with metadata compilation outside the unchanged 500 ms clock. The ordinary
 Get-NetTCPConnection path and single bounded netstat fallback remain; the latter

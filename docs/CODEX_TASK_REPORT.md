@@ -1,12 +1,17 @@
-# Current checkpoint: native listener host prerequisite accepted locally
+# Current checkpoint: native listener prerequisite published; integration next
 
-**LOCALLY ACCEPTED; PUBLICATION PENDING. Updated:** 2026-11-01 UTC.
+**PUBLISHED. Updated:** 2026-11-01 UTC.
+Implementation `be15bf7f03f8ca5f504ec164a807a344e2a7de33` (`Use native TCP ownership snapshots and fix IPv6 fallback`)
+was pushed normally from `codex/native-listener-host-20261101` to
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified. Completion
+Gmail `1a198e4cd3f5d367` sent once. No duplicate for the publication receipt.
 No resource gate remains active. P branch `codex/native-listener-host-20261101`
 is based on HEAD `d5a2f736d60f6833207774b1aaaca058dd34c00d`. The intended change
 adds native Windows TCP ownership inspection, complete IPv6 netstat fallback and
 two maintained pure contracts. The [evidence packet](task-evidence/A07/native-listener-r1/README.md)
 records the finite host scope, failures and limits. Architecture/roadmap updated
-in P; final staged review, normal commit/push verification and one Gmail remain.
+in P. Integrated and staged reviews/whitespace checks passed. Documentation-only
+publication receipt remains; no additional completion email.
 
 Final module SHA-256:
 `fb07ad540e22a225a11b8a12e9dc8e5a20d88f58f89cf32a5fd347613530954c`.
@@ -50,10 +55,10 @@ Main/W remain atd5a2f736 with preserved B6/private40 work and original module
 Desktop task43p/e0c36885,7tracked/89untracked files, stashes/backups/quarantines,
 ambient8928 and older unregistered-claim failure evidence remain preserved.
 S=OS-temp tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
-private runs and sources are under S/cin33-cpu-r1. No new commit/push/email yet;
+private runs and sources are under S/cin33-cpu-r1. The native implementation is now published as recorded above;
 prior A07a1573fc6/receiptd5a2f736/Gmail1a19748ce8416866 remain complete once.
 
-Next after publication/integration: two fresh80s independent observer controls,
+Next after preserving and integrating Main/W pending work: two fresh80s independent observer controls,
 normal and injected failure, then exact separate/CIN33_SHUNT50us CPU observation
 at route75s. No actual CIN33 profile; zero accepted100 physical layouts;
 reference40/48 NOT ADOPTED. Original90s/500ms/5s/15s/120s/640 work steps/6000s/

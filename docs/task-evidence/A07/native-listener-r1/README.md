@@ -1,6 +1,6 @@
 # Native Windows listener ownership
 
-**LOCALLY ACCEPTED; PUBLICATION PENDING.** This packet closes the recorded Windows host prerequisite. It grants no Q100 or electrical admission.
+**ACCEPTED AND PUBLISHED.** This packet closes the recorded Windows host prerequisite. It grants no Q100 or electrical admission.
 
 The strict lease proof now reads fresh IPv4 and IPv6 owner-PID TCP tables through Windows IP Helper. Interop metadata compiles during context setup before the existing proof clock; no table-query warmup occurs. Allocation, row and retry bounds and all buffer/library disposal paths fail closed. Retained process, CIM, parent, nonce and opaque HTTP.sys ownership checks remain in their existing owners. Only explicit unsupported native API cases use the retained fallback under the same deadline.
 
@@ -8,7 +8,7 @@ The ordinary route remains Get-NetTCPConnection first. Its fallback uses one bou
 
 ## Candidate and validation
 
-The working candidate is on `codex/native-listener-host-20261101`, based on `d5a2f736d60f6833207774b1aaaca058dd34c00d`. Exact source pins and sanitized evidence records are in [validation.json](validation.json). Raw process, authority, endpoint and failure records remain private.
+Implementation `be15bf7f03f8ca5f504ec164a807a344e2a7de33` was pushed normally from `codex/native-listener-host-20261101` to `origin/codex/q100-physical-feasibility` and verified remotely. Completion Gmail `1a198e4cd3f5d367` was sent once. The source candidate was based on `d5a2f736d60f6833207774b1aaaca058dd34c00d`. Exact source pins and sanitized evidence records are in [validation.json](validation.json). Raw process, authority, endpoint and failure records remain private.
 
 | Gate | Result and limit |
 | --- | --- |
