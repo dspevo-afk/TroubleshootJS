@@ -14,6 +14,40 @@ older evidence packets describe their own historical candidates.
 
 ## Audit corrections and current execution boundaries
 
+A07SolverDeveloperVerifier owns the exact TSJ-A07-SOLVER-2 developer report.
+Its26 runtime cases include the three existing settlement contracts for repeated
+idle work, pending analysis and an active queued DC measurement. The browser
+consumer requires every named case once with PASS and preserves the existing
+physics, type, timing and cleanup predicates. The independent report fixture
+rejects V1 and missing, failed, duplicate or unexpected cases. The host retains
+failed A07 reports/events and measures its120s cleanup through the same resource
+owner. This protocol boundary changes no CircuitJS numerical behavior or Player
+capability; qualification remains scoped by the roadmap.
+
+The A03 host owns successor navigation on its verified loopback preview. It binds
+one expected beforeunload response to the pending request, socket, previous
+completed URL, run, route and deadline. A bounded two-response state retains the
+navigation result and dialog acknowledgement in either order; readiness requires
+the exact destination URL. Authorization clears in finally, and failure reports
+retain fresh reports or null alongside bounded route/event diagnostics. Browser,
+preview and lease teardown remain with VerifierIsolation; this host behavior
+does not change application unsaved state or electrical behavior.
+
+VerifierIsolation owns fresh parent-process observations for bound-receipt
+shutdown. Its protected-helper census and post-close late-child proof use a
+fresh complete native Toolhelp child set with one retained handle binding each
+child's native identity. Empty sets need no per-parent CIM query. Nonempty sets
+require a direct fresh CIM parent observation with equal PID sets and exact
+PID/parent/name/command-line/creation correlation. CIM supplies its original path
+spelling and other authority fields; the independent initial-snapshot and later
+current-ID CIM comparisons stay exact. Separate native100ns ticks must exactly
+match the retained process start, with the original9-tick CIM precision check.
+Every retained parent is freshly queried after close; any child, set/field/query
+disagreement or native disposal error fails closed. Other parent-query callers
+retain their existing owner. Interop warms
+during session setup; observations, natural-exit, containment, journal, listener
+and profile proofs remain inside the unchanged shutdown and cleanup budgets.
+
 RB56's registered staged capability supplies normal MEDIUM requests as well as
 private exact qualification requests. The two authorities are independent of the
 catalog enablement flag. Private session adoption checks the exact private

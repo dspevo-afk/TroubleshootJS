@@ -8479,6 +8479,7 @@ function Invoke-GateBBoundReceiptRecoveryBoundaryCanary() {
             'Get-VerifierProcessById',
             'Get-VerifierProcessRecordsByIdWithFallback',
             'Get-VerifierProcessRecordsByParentWithFallback',
+            'Get-VerifierBoundReceiptNativeProcessRecordsByParent',
             'Get-VerifierProcessStartTicks',
             'Stop-VerifierVerifiedProcessExactly')
         $saved = @{}
@@ -8513,9 +8514,22 @@ function Invoke-GateBBoundReceiptRecoveryBoundaryCanary() {
             if ($rootWmi.Count -ne 1 -or $null -eq $rootWmi[0]) {
                 Throw-VerifierInfrastructure 'bound-receipt protected-helper fixture could not retain its current root record.'
             }
+            $childStartTicks = [long](& $saved['Get-VerifierProcessStartTicks'] $child)
+            if ($childStartTicks -le 0) {
+                Throw-VerifierInfrastructure 'bound-receipt protected-helper fixture had no exact retained start identity.'
+            }
+            $nativeCreationRemainderTicks = [long]($childStartTicks % 10L)
+            $projectedCreationTicks = [long]($childStartTicks - $nativeCreationRemainderTicks)
+            $wmiCreationTicks = [long]$childWmi[0].CreationDate.ToUniversalTime().Ticks
+            if ($projectedCreationTicks -le 0 -or
+                    [Math]::Abs($wmiCreationTicks - $childStartTicks) -gt 9L) {
+                Throw-VerifierInfrastructure 'bound-receipt protected-helper fixture WMI creation time did not match its retained handle at CIM precision.'
+            }
+            $projectedCreationDate = [DateTime]::new(
+                $projectedCreationTicks, [DateTimeKind]::Utc)
             $rawChild = [pscustomobject]@{
-                ProcessId = [int]$childWmi[0].ProcessId
-                ParentProcessId = [int]$childWmi[0].ParentProcessId
+                ProcessId = [uint32]$childWmi[0].ProcessId
+                ParentProcessId = [uint32]$childWmi[0].ParentProcessId
                 Name = if ($childWmi[0].PSObject.Properties['Name']) {
                     [string]$childWmi[0].Name
                 } else { 'powershell.exe' }
@@ -8524,7 +8538,7 @@ function Invoke-GateBBoundReceiptRecoveryBoundaryCanary() {
                 # receipt path must retain it for natural shutdown rather than
                 # ignore it or authorize a stop by PID/PPID.
                 CommandLine = $null
-                CreationDate = $childWmi[0].CreationDate
+                CreationDate = $projectedCreationDate
             }
             if ([int]$rawChild.ParentProcessId -ne [int]$PID) {
                 Throw-VerifierInfrastructure 'bound-receipt protected-helper fixture was not a direct child of the canary root.'
@@ -8549,20 +8563,24 @@ function Invoke-GateBBoundReceiptRecoveryBoundaryCanary() {
                 ChildProcess = $child; RawChild = $rawChild; ChildPresent = $true
                 IdentityMode = 'current'; HideDirectChild = $false
                 ReusedRawChild = $null; EscapedGrandchild = $null
+                NativeCreationTicks = [long]$childStartTicks
+                NativeCreationRemainderTicks = [long]$nativeCreationRemainderTicks
+                NativeMetadataMode = 'current'
+                NativeParentQueryLog = (New-Object Collections.ArrayList)
                 FailStartCapture = $false
                 StopCalls = 0
             }
             $state.ReusedRawChild = [pscustomobject]@{
-                ProcessId = [int]$rawChild.ProcessId
-                ParentProcessId = [int]$rawChild.ParentProcessId
+                ProcessId = [uint32]$rawChild.ProcessId
+                ParentProcessId = [uint32]$rawChild.ParentProcessId
                 Name = [string]$rawChild.Name
                 ExecutablePath = [string]$rawChild.ExecutablePath
                 CommandLine = $null
                 CreationDate = $rawChild.CreationDate.AddSeconds(1)
             }
             $state.EscapedGrandchild = [pscustomobject]@{
-                ProcessId = 2147482999
-                ParentProcessId = [int]$rawChild.ProcessId
+                ProcessId = [uint32]2147482999
+                ParentProcessId = [uint32]$rawChild.ProcessId
                 Name = 'markerless-grandchild.exe'
                 ExecutablePath = $shell
                 CommandLine = $null
@@ -8587,6 +8605,71 @@ function Invoke-GateBBoundReceiptRecoveryBoundaryCanary() {
                     return @()
                 }
                 return & $saved['Get-VerifierProcessRecordsByIdWithFallback'] $ProcessId $Purpose
+            }
+            Set-Item Function:\Get-VerifierBoundReceiptNativeProcessRecordsByParent -Force -Value {
+                param($ParentProcessId, $Purpose)
+                $s = $script:GateBBoundReceiptState
+                $records = @()
+                if ([int]$ParentProcessId -eq [int]$s.RootPid) {
+                    if ($s.ChildPresent) {
+                        $recordProperties = [ordered]@{
+                            ProcessId = [uint32]$s.RawChild.ProcessId
+                            ParentProcessId = [uint32]$s.RawChild.ParentProcessId
+                            Name = [string]$s.RawChild.Name
+                            ExecutablePath = [string]$s.RawChild.ExecutablePath
+                            CommandLine = $null
+                            CreationDate = $s.RawChild.CreationDate
+                        }
+                        if ($s.NativeMetadataMode -ne 'missingTicks') {
+                            $nativeTicks = [long]$s.NativeCreationTicks
+                            if ($s.NativeMetadataMode -eq 'badTicks') { $nativeTicks++ }
+                            $recordProperties['NativeCreationTicks'] = [long]$nativeTicks
+                        }
+                        $nativeRemainder = [long]$s.NativeCreationRemainderTicks
+                        if ($s.NativeMetadataMode -eq 'badRemainder') {
+                            $nativeRemainder = if ($nativeRemainder -eq 0L) { 1L } else { 0L }
+                        }
+                        $recordProperties['NativeCreationRemainderTicks'] = [long]$nativeRemainder
+                        $records = @([pscustomobject]$recordProperties)
+                    }
+                } elseif ([int]$ParentProcessId -eq [int]$s.ChildPid) {
+                    if ($s.HideDirectChild) { $records = @($s.EscapedGrandchild) }
+                } else {
+                    return & $saved['Get-VerifierBoundReceiptNativeProcessRecordsByParent'] `
+                        $ParentProcessId $Purpose
+                }
+                $loggedNativeTicks = $null
+                $loggedNativeTicksType = ''
+                $loggedNativeRemainder = $null
+                $loggedNativeRemainderType = ''
+                $loggedProjectionTicks = 0L
+                if ($records.Count -eq 1) {
+                    $nativeTicksProperty = $records[0].PSObject.Properties['NativeCreationTicks']
+                    if ($null -ne $nativeTicksProperty) {
+                        $loggedNativeTicks = $nativeTicksProperty.Value
+                        $loggedNativeTicksType = $nativeTicksProperty.Value.GetType().FullName
+                    }
+                    $nativeRemainderProperty = $records[0].PSObject.Properties['NativeCreationRemainderTicks']
+                    if ($null -ne $nativeRemainderProperty) {
+                        $loggedNativeRemainder = $nativeRemainderProperty.Value
+                        $loggedNativeRemainderType = $nativeRemainderProperty.Value.GetType().FullName
+                    }
+                    if ($records[0].PSObject.Properties['CreationDate'] -and
+                            $records[0].CreationDate -is [DateTime]) {
+                        $loggedProjectionTicks = [long]$records[0].CreationDate.ToUniversalTime().Ticks
+                    }
+                }
+                [void]$s.NativeParentQueryLog.Add([pscustomobject]@{
+                    ParentProcessId = [int]$ParentProcessId
+                    ResultCount = [int]$records.Count
+                    MetadataMode = [string]$s.NativeMetadataMode
+                    NativeCreationTicks = $loggedNativeTicks
+                    NativeCreationTicksType = [string]$loggedNativeTicksType
+                    NativeCreationRemainderTicks = $loggedNativeRemainder
+                    NativeCreationRemainderTicksType = [string]$loggedNativeRemainderType
+                    ProjectedCreationTicks = [long]$loggedProjectionTicks
+                })
+                return @($records)
             }
             Set-Item Function:\Get-VerifierProcessRecordsByParentWithFallback -Force -Value {
                 param($ParentProcessId, $Purpose)
@@ -8636,6 +8719,64 @@ function Invoke-GateBBoundReceiptRecoveryBoundaryCanary() {
                     $descendants[0].CommandLine -cne '' -or
                     $descendants[0].Process.GetType() -ne [Diagnostics.Process]) {
                 Throw-VerifierInfrastructure 'bound-receipt protected-helper was not retained as one observation-only natural-shutdown record.'
+            }
+            $initialNativeQueries = @($state.NativeParentQueryLog)
+            if ($initialNativeQueries.Count -ne 2 -or
+                    [int]$initialNativeQueries[0].ParentProcessId -ne [int]$state.RootPid -or
+                    [int]$initialNativeQueries[0].ResultCount -ne 1 -or
+                    [int]$initialNativeQueries[1].ParentProcessId -ne [int]$state.ChildPid -or
+                    [int]$initialNativeQueries[1].ResultCount -ne 0 -or
+                    $initialNativeQueries[0].MetadataMode -cne 'current' -or
+                    $initialNativeQueries[1].MetadataMode -cne 'current' -or
+                    $initialNativeQueries[0].NativeCreationTicksType -cne 'System.Int64' -or
+                    [long]$initialNativeQueries[0].NativeCreationTicks -ne [long]$state.NativeCreationTicks -or
+                    $initialNativeQueries[0].NativeCreationRemainderTicksType -cne 'System.Int64' -or
+                    [long]$initialNativeQueries[0].NativeCreationRemainderTicks -ne [long]$state.NativeCreationRemainderTicks -or
+                    [long]$initialNativeQueries[0].ProjectedCreationTicks -ne
+                        ([long]$state.NativeCreationTicks - [long]$state.NativeCreationRemainderTicks)) {
+                Throw-VerifierInfrastructure 'bound-receipt protected-helper fixture did not make exactly one native root-child observation followed by one empty leaf observation.'
+            }
+            $nativeMetadataNegative = {
+                param([string]$Mode)
+                # Keep this in the canary's active scope so the injected
+                # provider functions remain the commands resolved by the call.
+                $s = $state
+                $s.NativeMetadataMode = $Mode
+                $beforeQueries = [int]$s.NativeParentQueryLog.Count
+                $trialScope = $null
+                $rejected = $false
+                try {
+                    $trialScope = New-VerifierBrowserDrainScope
+                    try {
+                        [void]@(Get-VerifierBoundReceiptNaturalShutdownDescendants `
+                            $rootRecord $snapshot $trialScope)
+                    } catch {
+                        $rejected = Test-VerifierInfrastructureError $_
+                    }
+                } catch {
+                    $rejected = Test-VerifierInfrastructureError $_
+                } finally {
+                    $s.NativeMetadataMode = 'current'
+                    if ($null -ne $trialScope) {
+                        try {
+                            foreach ($failure in @(Dispose-VerifierBrowserDrainScope $trialScope)) {
+                                [void]$cleanupErrors.Add([string]$failure)
+                            }
+                        } catch { [void]$cleanupErrors.Add((Get-VerifierErrorMessage $_)) }
+                    }
+                }
+                return [pscustomobject]@{
+                    Rejected = [bool]$rejected
+                    QueryCount = [int]$s.NativeParentQueryLog.Count - $beforeQueries
+                }
+            }
+            $missingNativeTicks = & $nativeMetadataNegative 'missingTicks'
+            $badNativeTicks = & $nativeMetadataNegative 'badTicks'
+            $badNativeRemainder = & $nativeMetadataNegative 'badRemainder'
+            if (-not $missingNativeTicks.Rejected -or $missingNativeTicks.QueryCount -ne 1 -or
+                    -not $badNativeTicks.Rejected -or $badNativeTicks.QueryCount -ne 1 -or
+                    -not $badNativeRemainder.Rejected -or $badNativeRemainder.QueryCount -ne 1) {
+                Throw-VerifierInfrastructure 'bound-receipt protected-helper accepted missing or inconsistent exact native creation metadata.'
             }
             # The visible tuple is intentionally unchanged while CreationDate
             # differs. A PID reuse cannot be adopted just because name/path/
@@ -8726,6 +8867,9 @@ function Invoke-GateBBoundReceiptRecoveryBoundaryCanary() {
             return [pscustomobject]@{
                 Retained = $true; Natural = $true; ReuseRejected = $reusedRejected
                 EscapedGrandchildRejected = $escapedGrandchildRejected
+                MissingNativeTicksRejected = [bool]$missingNativeTicks.Rejected
+                BadNativeTicksRejected = [bool]$badNativeTicks.Rejected
+                BadNativeRemainderRejected = [bool]$badNativeRemainder.Rejected
                 StartCaptureExitAccepted = [bool]$startCaptureExitAccepted
                 LeafNatural = [bool]$leafNatural
                 LeafSnapshotRejected = [bool]$leafSnapshotRejected
@@ -8778,11 +8922,13 @@ function Invoke-GateBBoundReceiptRecoveryBoundaryCanary() {
         'browser cleanup accepted a missing receipt or reached a legacy cleanup/write path'
     Assert-GateB ($protectedHelper.Retained -and $protectedHelper.Natural -and
         $protectedHelper.ReuseRejected -and $protectedHelper.EscapedGrandchildRejected -and
+        $protectedHelper.MissingNativeTicksRejected -and $protectedHelper.BadNativeTicksRejected -and
+        $protectedHelper.BadNativeRemainderRejected -and
         $protectedHelper.StartCaptureExitAccepted -and
         $protectedHelper.LeafNatural -and $protectedHelper.LeafSnapshotRejected -and
         $protectedHelper.Stops -eq 0) `
         'bound receipt did not retain an uninspectable helper, prove an exited leaf, reject PID/start reuse and unretained child branches, and avoid stops'
-    Write-Host 'PASS:bound receipt rejects missing authority, PID/start reuse, and unretained child branches while naturally proving null-command helpers and exited leaves'
+    Write-Host 'PASS:bound receipt rejects missing authority, PID/start reuse, invalid native creation metadata, and unretained child branches while naturally proving null-command helpers and exited leaves'
 }
 
 function Invoke-GateBBrowserNaturalShutdownCanary() {

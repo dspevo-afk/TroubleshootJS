@@ -1,4 +1,216 @@
-# Current checkpoint: independent fixed-prefix graph oracle prerequisite accepted
+# Current checkpoint: A07 host prerequisite accepted locally
+
+**ACCEPTED LOCALLY; publication pending. Updated:** 2026-11-01 UTC /2026-10-31 local.
+Leaf branch `codex/a07-report-contract-v2-20261031`, base
+`b48a140bfb90317ad44870ad25220933aa755963`. No new commit/push/Gmail yet.
+Main audit's pending B6 changes and separate Desktop checkout remain preserved.
+
+Scope: strict A07 V2/exact26, owned navigation, composite parent observations,
+Gate B fixture and stored-energy caller debug flag. Six frozen plans and the
+acceptance packet are in `docs/task-evidence/A07/report-contract-v2/`.
+Final hostc790b2a9...719f6/module5e0ae0c8...3a1fa/GateBc686d7f7...e51d0;
+legacy verify-browser restored exactly4729d122...a2bfe with no final diff.
+No solver math/model/epoch, Player flow, admission, shutdown authority or
+maintained15s/120s/90s/5s/640 limit changed. Nonempty native sets require fresh
+CIM correlation and original raw six-field authority; complete native empty
+sets omit only that per-parent CIM query. Exact native100ns/start/9-tick proofs remain.
+
+Final-source validation PASS:
+
+- Native A07-3:306531 assertions/36.259557s,1061 exact inputs/85552900B.
+- Report5:521; pure navigation7:61; native synthetic errors:12; natural exit:19;
+  cleanup-budget:68/512files,shutdown11067ms/cleanup68334ms. Synthetic failures
+  do not claim real OS access-denial or PID reuse.
+- Parent V2 direct and bounded lanes:42 each, full baseline/owned-child sets,
+  explicit module pin, ten synthetic CIM failures and wrong-pin prechild rejection.
+- RealNavigation5:four named cases/332.617s, all shutdown/cleanup/fixture proofs;
+  generic assertion counter0. Reuse auditf016303e...fea512 proves18 imported
+  function bodies/test/module/preview unchanged; its original8f raw pin is retained.
+- Selected Gate B native-process2 and natural-shutdown3 pass. Natural group
+  operation201360.470ms,wrapper203353.784ms/all9markers. Frozen TASK-only600s
+  aggregate envelope replaces the arbitrary180s wrapper; maintained limits unchanged.
+- Actual JDK8/GWT Developer2:183.5626377s and Player3:134.0980922s;
+  each1199 inputs/357 outputs with complete inventories, source stable.
+- Full A07-4:9/310.5729046s,cleanup79380ms/shutdown9455ms, two owned dialog/ack pairs.
+- Current2:9/347.073364s,cleanup PASS/shutdown9415ms; aggregate cleanup time not supplied.
+- PlayerPrivacy4:1/106.4216911s,seven JS probes/two DOM negatives,
+  cleanup62845ms/shutdown12779ms. Player3 installed. All exit/termination/source/
+  artifact proofs pass. No full matrix/30-root/2x31 renewal or playable100 claim.
+
+Failures remain failures: original23/26 mismatch, stored-energy missing flag,
+earlier shutdown overruns, fixture/pin/report errors, native-path rejected
+alternative and180s natural-group timeout. The timeout's missing receipt and
+unknown descendants remain UNPROVEN; exact-root census0 is not cleanup proof.
+Failed profiles/claims/old logs remain preserved; no blanket termination or
+authority edits. Real canary source-only reviews found no material blocker;
+they did not independently rerun gates. No visible product-flow change requires
+new repair screenshots. HARD/PSYCHOTIC unavailable/unrun, protected-unread history
+UNCERTIFIED; CI NOT RUN (approved zero-runner prerequisite).
+
+Source-review follow-up: the preexisting Gate B exceptional fallback ignores its
+final wait result/removes the release signal. Its accepted PASS already requires
+earlier natural exit/absence; the review retracted a false-PASS concern after
+tracing that path. Early failing canaries still need explicit cleanup-failure
+reporting/preserved signal. This is not proof for any failed cleanup.
+
+Strict controlled exportV6 PASS/exit0/1476ms, evidenceb615f899...3d433.
+ExportV5 stays REFUSED/exit2 for its incorrect build-target expectation;
+one-literal correction requires the actual maintained Compile target.
+
+Next: final staging review, isolated commit,
+preserve main docs/B6 before integration, normal origin push and one Gmail after
+remote SHA verification. Then resume the separate Q100 electrical timing scope;
+its proposed private48-step experiment is not implemented or qualified.
+
+# Historical checkpoint: superseded host-investigation handoff
+
+**IN PROGRESS; NOT PUBLISHED. Updated:** 2026-11-01 UTC /2026-10-31 local.
+Sparse branch `codex/a07-report-contract-v2-20261031`, base/HEAD
+`b48a140bfb90317ad44870ad25220933aa755963`. No new commit/push/Gmail. Main audit
+branch remains b48 with its pending observer changes preserved; Desktop work and
+all historical failures remain untouched. Root owns acceptance/publication.
+
+Scope: frozen [report plan](task-evidence/A07/report-contract-v2/PLAN.md),
+[owned navigation plan](task-evidence/A07/report-contract-v2/NAVIGATION-PLAN.md)
+the [native parent plan](task-evidence/A07/report-contract-v2/NATIVE-PARENT-PLAN.md)
+and [composite amendment](task-evidence/A07/report-contract-v2/COMPOSITE-PARENT-PLAN.md).
+Strict V2 requires the exact26 producer cases (old host expected23); all original
+physics/type/latency checks remain. The host now scopes one beforeunload response
+to its exact pending owned request/socket/prior URL/run/route/deadline, retains
+both navigation and acknowledgement replies, and requires exact destination URL.
+It clears authorization in finally and retains truthful null/fresh failure reports.
+No application solver/math/model/epoch/Player UI, route or budget change.
+
+Frozen maintained source pins: host8f5b631a...e2b28; navigation testb4c559a7...84bc7;
+producer e351be3b...02a65; report fixture326b4ffc...516b; owner module5e0ae0c8...3a1fa
+integrates the reviewed composite provider. Root reviewed changes;
+independent source-only review
+covered hostA589, followed by root's stricter pending-response guard. No reviewer
+claimed runtime proof. Hardcoded protected data stays excluded/unmaterialized.
+
+Passing evidence and exact reuse boundary:
+- Native A07 PASS306531/34.8337203s,1061 inputs/85525573 bytes, manifest8c576912...
+  283c3f, input/exit/termination/cleanup proof. Root raw-path/length/hash reuse audit
+  confirms all1061 native and1199 GWT inputs unchanged. Host/test PS changes are
+  outside those sets and require fresh own gates.
+- Root WinPS5 report contracts2 PASS521/7.2689855s; navigation pure4 PASS61/
+  1.0776499s, exit/termination/source stability proven.
+- Actual JDK8/GWT Player2 PASS120.4023328s, same1199 input580f98c4...c4622 and357
+  outpute3cef763...3c0e5 as Player1; five caches9513277 bytes. Player is installed.
+  Developer1 PASS167.0780636s,1199 input5dd76a5a...1e83 /357 output611f4f10...
+  2b064, five caches17964162 bytes. Full inventories retained.
+- PRE-NAV host only: Player privacy1 PASS100.914174s/cleanup60415/shutdown14639ms;
+  Current9 PASS313.4413579s/source/output/cleanup. Current supplies no aggregate
+  cleanup interval; none is inferred. These are not final changed-host acceptance.
+
+Host cause and retained failures:
+- Old A07 command's first three routes pass V2 (768ms,306530 pure/103 runtime
+  assertions,26 cases/21 model/16 scale rows), but inherited A06 navigation fails
+  at90019ms. Private passive Page trace confirms beforeunload after real ticket
+  input, with Page.navigate id39 waiting90006ms; A06 document did not load.
+  Both hosts remain FAIL; no A06 solver/schema cause is inferred.
+- Real1 FAIL83.4084518s: root launched before test handoff settled (c643/55603
+  bytes changed to50b/56601), then Generic.List array coercion lost the report.
+  Exactc643 source is unavailable, not reconstructed. Its original timing/report
+  remains unavailable. A later exact retained manifest matches parent10224 and
+  records cleanup complete/profile absent; this does not recover timing or gate
+  acceptance. An earlier UTC/local directory-filter zero count was wrong and is
+  explicitly withdrawn in postfailure-census-correction.json.
+- Real2 stable776 FAIL83.1775504s: navigation observed trusted input/exact target/
+  handled1/ack1, but scalar shutdown-record Count parsing failed. Original cleanup
+  acceptance is NOT PROVEN. Later exact PID/port absence is separate evidence.
+  Real1/2 four HTML fixtures were individually hash-checked and archived outside
+  war with ancestor/reparse/containment proofs, no recursive moves/deletes.
+- Real3 stable46b FAIL331.8025841s: positive, alert and changed-source canaries
+  pass, all four cleanups/shutdowns pass (13049/12907/13405/12476ms). The async
+  wrong-destination fixture could finish its requested URL before later navigation;
+  it did not capture a wrong URL being accepted. Fix4b4 changes the URL synchronously
+  before completion and verifies a literal flag/wrong path/preserved lineage.
+- Real4 stableb4 FAIL50.8920207s: positive navigation PASS25312ms/handled1/ack1,
+  but shutdown15024>15000ms; cleanup24588ms fails with seven errors. Remaining
+  three lanes NOT RUN. Its fixtures and original failed manifest/profile/lease
+  remain retained; recorded PIDs22200/11004/26984 and ports61171/61984 are now absent.
+- Final Player privacy2 route PASS, but full gate FAIL67.9854551s: shutdown16292>
+  15000ms (protected-helper census6223ms), cleanup26855ms<120000 yet resource proof
+  FAIL. Exact original run1f237f3e...b22/profile/claim60003 retained. Recorded
+  PIDs24600/21724/15800, profile-matched Edge processes and ports60003/49704 are
+  now absent. No process was killed; no authority/manifest was changed. The
+  maintained recovery API rejects this combined, already-close-attempted run.
+
+Two same-boundary shutdown overruns stopped unchanged full reruns. Private fresh
+Toolhelp provider now passes30 actual WinPS5 alternating
+pairs over1-to2-to1 owned children, unchanged raw equivalence, native100ns identity,
+four synthetic negatives and graceful cleanup. Native medians12.3-14.0ms versus
+CIM92.6-96.1ms. UInt32/CIM precision projection retains exact native ticks
+separately; old exact comparisons/9-tick predicate and independent current CIM stay.
+
+Private integrated candidate6bf43110...d6c6 passes source review/actual one-child4,
+but actual Player diagnostic1 FAILS: route PASS/source+build stable, shutdown16335>
+15000ms, cleanup28341ms FAIL; protected census5007ms/late-absence1768ms with17fresh
+queries. Result eaa578b6...83920/original authority/profile/lease retained. Recorded
+launcher/runner/server PIDs and both listeners absent. A separate exact owned
+manifest census confirms browser25248 absent/profile present, bound receipt and
+closeAttemptedtrue. It added one forensic census leaf, copied to task evidence;
+no authority/manifest/profile/lease edit. No recovery/termination; original
+cleanup remains FAIL.
+
+New frozen BEFORE-edit plan a21f1471...b33d1 extends native use to just the fresh
+post-close parent-query callsite, retaining every parent observation/counter and
+late-child rejection. Private candidatef5eaf655...ebd4b differs by exactly one line.
+Actual focused WinPS5 PASS6/911.2173ms: live late child rejected; after exit0 and
+independent CIM absence, same-parent empty proof passes; old raw/exact identity
+checks pass. No actual PID reuse/access denial induced. Independent source review
+finds no material blocker. Private Player diagnostic2 PASS108.0379757s, source+
+compiled identity stable, shutdown13403ms/cleanup63968ms. Root integrates exactf5
+with only three temporary namespace renames; maintained module9e0f5e53...99aa7.
+Final report3 PASS521/8.4446177s, pure5 PASS61/1.4263012s and maintained actual
+natural-exit/reuse1 PASS19/16.3478105s, stable inputs/exit/termination. Source-derived native
+error tests, real host contracts and final browser gates remain pending. Root
+owns integration/acceptance; no deduplication/limit change. Old failures stay FAIL.
+
+Final module9e native A07 renewal PASS37.5622898s,1061inputs/85549368B,
+manifestd5791d35...46d05. Maintained cleanup-budget1 PASS68/107.2575301s,
+shutdown12490ms/cleanup69631ms. Exact all1199 GWT input rows still match, zero
+differences. Source-derived native error contract PASS10 synthetic, not actual
+OS failures. Gate B fixture now targets native metadata/callsite while retaining
+old cases and adding missing/bad ticks/remainder negatives; not yet run.
+
+Broader actual PowerShell child contract FAILS exact raw parity: only ExecutablePath
+differs by six letter cases. All other fields/native-start/CIM precision checks,
+live late-child rejection, graceful exit0/absence/empty proof pass; overall FAIL
+and cleanup PASS stay preserved. No case folding or comparator relaxation. An
+exact WINDIR path probe reproduces it with K32 as well; K32 is NOT adopted.
+New frozen private plan319bc9f2...d3a28 uses direct fresh CIM authority when a
+native child set is nonempty, corroborated by exact sets/five identity fields and
+native ticks. Complete empty native sets alone skip CIM. Private module5e0ae0c8...
+3a1fa passes independent source review and strict actual parent23/exit0/cleanup;
+unchanged C# passes synthetic12/source round-trip/stable hashes. Two prior marker
+preflight failures/no child and missing-output invocation/no compilation remain
+recorded. Injected CIM-boundary negatives and private Player timing are pending.
+No case folding/comparator/budget change. W module9e stays unchanged until those
+private diagnostics pass. Those diagnostics now PASS: combined actual/CIM35,
+all10 synthetic failures reject with zero output/restored helpers, independent
+review no material false-pass issue; private Player3 PASS93.8708687s/source+build
+stable, shutdown13674ms/cleanup49721ms. W adopts exact5e and the combined parent
+contract. Native C# and six named raw-oracle/caller functions audit exactly equal.
+
+Final5e gates: native A07-3 PASS36.259557s,1061inputs/85552900B, manifestd61de93b...
+1c526; report4 PASS521/8.1120331s; pure6 PASS61/1.1458324s; native errors1 PASS12/
+1.3457503s. Parent1 FAIL2 before owned child launch because its baseline was
+nonempty under the bounded runner; source and no-child cleanup proven. A separate
+test CLI-hash/internal-variable case collision is being fixed. No raw expectation
+is weakened; focused host diagnosis precedes renewal. Other final gates pending.
+
+Final four canaries, Player privacy, A07 nine routes and Current9 are NOT accepted.
+Developer build2 is NOT RUN. All15s shutdown/120s cleanup/90s route/5s solver/640
+work limits remain. No publication/email until required gates close. This work
+closes neither separate E06 five-second nor normal MEDIUM ninety-second failures.
+No100 routing/playable/public/full30-root/2x31/release renewal. Next after host
+acceptance: preserve/integrate pending audit work, then resume electrical timing.
+HARD/PSYCHOTIC unavailable/unrun; historical protected-unread status UNCERTIFIED.
+CI NOT RUN: zero self-hosted runners remains the user-approved prerequisite.
+
+# Historical checkpoint: independent fixed-prefix graph oracle prerequisite accepted
 
 **PUBLISHED. Updated:** 2026-10-31. Audit repo
 `tsj-audit-20261027`, branch `codex/q100-physical-feasibility`, starting HEAD

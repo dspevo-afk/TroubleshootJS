@@ -37,6 +37,11 @@ $script:FailureDiagnostic = $null
 $script:CleanupDiagnostic = $null
 $script:NextCdpId = 1
 $script:CdpEvents = New-Object Collections.Generic.List[string]
+$script:OwnedPreviewOrigin = $null
+$script:LastCompletedOwnedNavigation = $null
+$script:ActiveOwnedNavigation = $null
+$script:LastNavigationEvidence = $null
+$script:LastNavigationDialogRejection = $null
 $script:RouteTimingEnabled = [bool]$TraceRouteTiming
 $script:RouteTimingRecordLimit = 64
 $script:RouteTimingRecords = New-Object Collections.Generic.List[object]
@@ -47,6 +52,7 @@ $script:CurrentRouteTiming = $null
 $script:CurrentRouteTimingClock = $null
 $script:RouteTimingRecorderFailureCount = 0
 $script:IsQ100Gate = ($Gate -ieq 'Q100' -or $Gate -ieq 'Q100Faults' -or $Gate -ieq 'Q100Player' -or $Gate -ieq 'E06State') -and -not $Smoke
+$script:HasBoundedCleanup = $script:IsQ100Gate -or ($Gate -ieq 'A07' -and -not $Smoke)
 $script:Q100MatrixStartedUtc = if ($script:IsQ100Gate) { [DateTime]::UtcNow } else { [DateTime]::MinValue }
 $script:Q100MatrixDeadlineUtc = if ($script:IsQ100Gate) { $script:Q100MatrixStartedUtc.AddSeconds(6000) } else { [DateTime]::MinValue }
 $script:Q100MatrixOperationElapsedMs = $null
@@ -202,11 +208,163 @@ function New-FailureDiagnostic([string]$Message, [string]$Kind) {
     }
 }
 
-function Send-Cdp($Socket, [int]$Id, [string]$Method, $Parameters) {
+function Get-OwnedNavigationValue($Value, [string]$Name) {
+    if ($null -eq $Value) { return $null }
+    if ($Value -is [System.Collections.IDictionary]) { return $Value[$Name] }
+    $property = $Value.PSObject.Properties[$Name]
+    if ($null -eq $property) { return $null }
+    return $property.Value
+}
+
+function Test-OwnedNavigationInteger($Value) {
+    return ($Value -is [int] -or $Value -is [long]) -and
+        [long]$Value -gt 0 -and [long]$Value -le [int]::MaxValue
+}
+
+function Get-OwnedLoopbackOrigin([string]$Url) {
+    try { $uri = [Uri]$Url } catch { return $null }
+    if (-not $uri.IsAbsoluteUri -or -not $uri.IsLoopback -or
+            $uri.Scheme -cnotin @('http','https') -or
+            -not [String]::IsNullOrEmpty($uri.UserInfo)) { return $null }
+    return $uri.GetLeftPart([UriPartial]::Authority)
+}
+
+function Test-OwnedBeforeUnloadAuthorization($Event, $Socket, $ActiveNavigation,
+        [int]$WantedRequestId, [DateTime]$Now) {
+    if ($null -eq $Event -or $null -eq $ActiveNavigation -or $null -eq $Socket -or
+            $Event.PSObject.Properties['method'] -eq $null -or
+            [string]$Event.method -cne 'Page.javascriptDialogOpening' -or
+            -not [Object]::ReferenceEquals($Socket, $ActiveNavigation['socket']) -or
+            -not (Test-OwnedNavigationInteger $WantedRequestId) -or
+            [long]$ActiveNavigation.navigationRequestId -ne [long]$WantedRequestId -or
+            $null -eq $ActiveNavigation.responseState -or
+            [long]$ActiveNavigation.responseState.navigationRequestId -ne [long]$WantedRequestId -or
+            $null -ne $ActiveNavigation.responseState.navigationResponse -or
+            $ActiveNavigation.dialogHandledCount -ne 0 -or
+            $null -ne $ActiveNavigation.dialogAckRequestId -or
+            $ActiveNavigation.deadline -isnot [DateTime] -or
+            $Now -ge [DateTime]$ActiveNavigation.deadline) { return $false }
+
+    $parameters = Get-OwnedNavigationValue $Event 'params'
+    $dialogType = Get-OwnedNavigationValue $parameters 'type'
+    $sourceUrl = Get-OwnedNavigationValue $parameters 'url'
+    if ($null -eq $parameters -or
+            ($parameters -isnot [System.Collections.IDictionary] -and
+             $parameters -isnot [System.Management.Automation.PSCustomObject]) -or
+            [string]$dialogType -cne 'beforeunload' -or
+            $sourceUrl -isnot [string]) { return $false }
+
+    $previous = $ActiveNavigation.previousCompletion
+    if ($null -eq $previous -or $previous -isnot [System.Collections.IDictionary] -or
+            -not [Object]::ReferenceEquals($previous, $script:LastCompletedOwnedNavigation) -or
+            -not $previous.completed -or
+            -not [Object]::ReferenceEquals($Socket, $previous.socket) -or
+            [string]$previous.runId -cne [string]$ActiveNavigation.runId -or
+            [string]$previous.routeId -cne [string]$ActiveNavigation.routeId -or
+            [string]$previous.url -cne [string]$ActiveNavigation.priorUrl -or
+            [string]$sourceUrl -cne [string]$previous.url) { return $false }
+
+    $ownedOrigin = [string]$ActiveNavigation.ownedOrigin
+    $sourceOrigin = Get-OwnedLoopbackOrigin ([string]$sourceUrl)
+    $priorOrigin = [string]$previous.origin
+    $targetOrigin = Get-OwnedLoopbackOrigin ([string]$ActiveNavigation.targetUrl)
+    return -not [String]::IsNullOrWhiteSpace($ownedOrigin) -and
+        $ownedOrigin -ieq [string]$script:OwnedPreviewOrigin -and
+        $sourceOrigin -ieq $ownedOrigin -and $priorOrigin -ieq $ownedOrigin -and
+        $targetOrigin -ieq $ownedOrigin
+}
+
+function New-OwnedNavigationResponseState([int]$NavigationRequestId) {
+    if (-not (Test-OwnedNavigationInteger $NavigationRequestId)) {
+        throw [InvalidOperationException]::new('Owned navigation request ID is invalid.')
+    }
+    return [ordered]@{
+        navigationRequestId = $NavigationRequestId
+        dialogAckRequestId = $null
+        navigationResponse = $null
+        dialogAckResponse = $null
+        acknowledgementSuccessCount = 0
+    }
+}
+
+function Set-OwnedNavigationAckRequestId($State, [int]$RequestId) {
+    if ($null -eq $State -or -not (Test-OwnedNavigationInteger $RequestId) -or
+            [int]$RequestId -le [int]$State.navigationRequestId -or
+            $null -ne $State.dialogAckRequestId) {
+        throw [InvalidOperationException]::new('Owned navigation dialog acknowledgement ID is invalid or duplicated.')
+    }
+    $State.dialogAckRequestId = $RequestId
+}
+
+function Add-OwnedNavigationResponse($State, $Message) {
+    if ($null -eq $State -or $null -eq $Message -or
+            $Message.PSObject.Properties['id'] -eq $null -or
+            -not (Test-OwnedNavigationInteger $Message.id)) {
+        throw [InvalidOperationException]::new('Owned navigation received a malformed response ID.')
+    }
+    if ($Message.PSObject.Properties['error']) {
+        $protocolError = $Message.error | ConvertTo-Json -Compress -Depth 8
+        throw [InvalidOperationException]::new(
+            'Owned navigation received a CDP error response: ' + [string]$protocolError)
+    }
+    if ($Message.PSObject.Properties['result'] -eq $null -or
+            ($Message.result -isnot [System.Collections.IDictionary] -and
+             $Message.result -isnot [System.Management.Automation.PSCustomObject])) {
+        throw [InvalidOperationException]::new('Owned navigation received a malformed CDP result.')
+    }
+    $responseId = [int]$Message.id
+    if ($responseId -eq [int]$State.navigationRequestId) {
+        if ($null -ne $State.navigationResponse) {
+            throw [InvalidOperationException]::new('Owned navigation response was duplicated.')
+        }
+        $State.navigationResponse = $Message
+        return
+    }
+    if ($null -ne $State.dialogAckRequestId -and
+            $responseId -eq [int]$State.dialogAckRequestId) {
+        if ($null -ne $State.dialogAckResponse) {
+            throw [InvalidOperationException]::new('Owned dialog acknowledgement response was duplicated.')
+        }
+        $State.dialogAckResponse = $Message
+        $State.acknowledgementSuccessCount = 1
+        return
+    }
+    throw [InvalidOperationException]::new('Owned navigation received an unknown CDP response ID.')
+}
+
+function Test-OwnedNavigationResponsesComplete($State) {
+    return $null -ne $State -and $null -ne $State.navigationResponse -and
+        ($null -eq $State.dialogAckRequestId -or $null -ne $State.dialogAckResponse)
+}
+
+function Test-OwnedNavigationReadiness($Observation, [string]$ExpectedUrl) {
+    $ready = Get-OwnedNavigationValue $Observation 'ready'
+    $url = Get-OwnedNavigationValue $Observation 'url'
+    return $ready -is [string] -and $ready -ceq 'complete' -and
+        $url -is [string] -and $url -ceq $ExpectedUrl
+}
+
+function Wait-OwnedNavigationReady($Socket, [string]$ExpectedUrl, [DateTime]$Deadline) {
+    do {
+        $observation = Evaluate-Cdp $Socket '({ready:document.readyState,url:location.href})' $Deadline
+        if (Test-OwnedNavigationReadiness $observation $ExpectedUrl) { return }
+        Start-Sleep -Milliseconds 200
+    } while ([DateTime]::UtcNow -lt $Deadline)
+    Throw-VerifierInfrastructure 'Timed out waiting for the exact owned navigation URL to complete.'
+}
+
+function Send-Cdp($Socket, [int]$Id, [string]$Method, $Parameters,
+        [DateTime]$Deadline = [DateTime]::MinValue) {
     $message = @{ id = $Id; method = $Method; params = $Parameters } |
         ConvertTo-Json -Compress -Depth 12
     $bytes = [Text.Encoding]::UTF8.GetBytes($message)
-    $timeout = [Threading.CancellationTokenSource]::new(5000)
+    $timeoutMilliseconds = 5000
+    if ($Deadline -ne [DateTime]::MinValue) {
+        $remaining = [long][Math]::Floor(($Deadline - [DateTime]::UtcNow).TotalMilliseconds)
+        if ($remaining -le 0) { Throw-VerifierInfrastructure 'CDP send deadline expired.' }
+        $timeoutMilliseconds = [int][Math]::Min(5000L, $remaining)
+    }
+    $timeout = [Threading.CancellationTokenSource]::new($timeoutMilliseconds)
     try {
         $Socket.SendAsync(
             (New-Object ArraySegment[byte] -ArgumentList (,$bytes)),
@@ -220,7 +378,33 @@ function Send-Cdp($Socket, [int]$Id, [string]$Method, $Parameters) {
     }
 }
 
-function Receive-Cdp($Socket, [int]$WantedId, [DateTime]$Deadline) {
+function Set-OwnedNavigationDialogRejection($Event, [string]$Reason) {
+    $parameters = Get-OwnedNavigationValue $Event 'params'
+    $reportedType = Get-OwnedNavigationValue $parameters 'type'
+    if ($reportedType -isnot [string] -or
+            $reportedType -cnotin @('alert','beforeunload','confirm','prompt')) {
+        $reportedType = 'other'
+    }
+    $hasBrowserHandler = Get-OwnedNavigationValue $parameters 'hasBrowserHandler'
+    if ($hasBrowserHandler -isnot [bool]) { $hasBrowserHandler = $null }
+    $script:LastNavigationDialogRejection = [ordered]@{
+        type = [string]$reportedType
+        hasBrowserHandler = $hasBrowserHandler
+        reason = $Reason
+    }
+    return [string]$reportedType
+}
+
+function Receive-Cdp($Socket, [int]$WantedId, [DateTime]$Deadline, $NavigationState = $null) {
+    if ($null -ne $NavigationState) {
+        $active = $script:ActiveOwnedNavigation
+        if ($null -eq $active -or [int]$NavigationState.navigationRequestId -ne $WantedId -or
+                -not [Object]::ReferenceEquals($Socket, $active.socket) -or
+                -not [Object]::ReferenceEquals($NavigationState, $active.responseState) -or
+                [DateTime]$Deadline -ne [DateTime]$active.deadline) {
+            Throw-VerifierInfrastructure 'Owned navigation response scope did not match its socket, request ID, or original deadline.'
+        }
+    }
     while ($true) {
         $stream = [IO.MemoryStream]::new()
         try {
@@ -262,6 +446,31 @@ function Receive-Cdp($Socket, [int]$WantedId, [DateTime]$Deadline) {
             }
             if ($message.PSObject.Properties['method']) {
                 $method = [string]$message.method
+                if ($method -eq 'Page.javascriptDialogOpening') {
+                    if ($null -eq $NavigationState -or
+                            -not (Test-OwnedBeforeUnloadAuthorization $message $Socket `
+                                $script:ActiveOwnedNavigation $WantedId ([DateTime]::UtcNow))) {
+                        $rejectedType = Set-OwnedNavigationDialogRejection $message 'outside-owned-beforeunload-scope'
+                        Throw-VerifierInfrastructure ("A03_NAVIGATION_DIALOG_REJECTED:type=$rejectedType; dialog is outside the exact owned navigation scope.")
+                    }
+                    if ($script:ActiveOwnedNavigation.dialogHandledCount -ne 0) {
+                        $rejectedType = Set-OwnedNavigationDialogRejection $message 'duplicate-dialog'
+                        Throw-VerifierInfrastructure ("A03_NAVIGATION_DIALOG_REJECTED:type=$rejectedType; more than one dialog was raised for this navigation.")
+                    }
+                    $acknowledgementId = $script:NextCdpId
+                    $script:NextCdpId++
+                    try {
+                        Set-OwnedNavigationAckRequestId $NavigationState $acknowledgementId
+                    } catch {
+                        Throw-VerifierInfrastructure ('A03_NAVIGATION_DIALOG_REJECTED: ' +
+                            (Get-VerifierErrorMessage $_))
+                    }
+                    $script:ActiveOwnedNavigation.dialogAckRequestId = $acknowledgementId
+                    [void](Send-Cdp $Socket $acknowledgementId 'Page.handleJavaScriptDialog' `
+                        @{ accept = $true } $Deadline)
+                    $script:ActiveOwnedNavigation.dialogHandledCount = 1
+                    continue
+                }
                 if ($method -eq 'Runtime.exceptionThrown') {
                     [void]$script:CdpEvents.Add((Get-DiagnosticText ('exception: ' +
                         [string]$message.params.exceptionDetails.text) 4000))
@@ -274,6 +483,19 @@ function Receive-Cdp($Socket, [int]$WantedId, [DateTime]$Deadline) {
                     [void]$script:CdpEvents.Add((Get-DiagnosticText ('console: ' +
                         ($parts -join ' ')) 4000))
                 }
+                continue
+            }
+            if ($null -ne $NavigationState) {
+                try {
+                    Add-OwnedNavigationResponse $NavigationState $message
+                } catch {
+                    Throw-VerifierInfrastructure ('Owned navigation response rejected: ' +
+                        (Get-VerifierErrorMessage $_))
+                }
+                if (Test-OwnedNavigationResponsesComplete $NavigationState) {
+                    return $NavigationState.navigationResponse
+                }
+                continue
             }
             if ($message.PSObject.Properties['id'] -and
                     [int]$message.id -eq $WantedId) {
@@ -547,9 +769,23 @@ function Complete-RouteTiming([string]$Outcome, [string]$FailureKind = '') {
 function Invoke-Cdp($Socket, [string]$Method, $Parameters, [DateTime]$Deadline) {
     $id = $script:NextCdpId
     $script:NextCdpId++
+    $isNavigation = $Method -ceq 'Page.navigate'
+    $navigationState = $null
+    if ($isNavigation) {
+        $active = $script:ActiveOwnedNavigation
+        $requestedUrl = Get-OwnedNavigationValue $Parameters 'url'
+        if ($null -eq $active -or -not [Object]::ReferenceEquals($Socket, $active.socket) -or
+                $active.navigationRequestId -ne 0 -or [DateTime]$active.deadline -ne $Deadline -or
+                $requestedUrl -isnot [string] -or $requestedUrl -cne [string]$active.targetUrl) {
+            Throw-VerifierInfrastructure 'Page.navigate was issued outside its exact owned navigation scope.'
+        }
+        $active.navigationRequestId = $id
+        $navigationState = New-OwnedNavigationResponseState $id
+        $active.responseState = $navigationState
+    }
     if (-not $script:RouteTimingEnabled -or $null -eq $script:CurrentRouteTiming) {
-        [void](Send-Cdp $Socket $id $Method $Parameters)
-        $response = Receive-Cdp $Socket $id $Deadline
+        [void](Send-Cdp $Socket $id $Method $Parameters $Deadline)
+        $response = Receive-Cdp $Socket $id $Deadline $navigationState
         if ($response.PSObject.Properties['error']) {
             Throw-VerifierInfrastructure ("CDP protocol error for $Method`: " +
                 ($response.error | ConvertTo-Json -Compress -Depth 8))
@@ -557,7 +793,6 @@ function Invoke-Cdp($Socket, [string]$Method, $Parameters, [DateTime]$Deadline) 
         return $response
     }
     $route = $script:CurrentRouteTiming
-    $isNavigation = $Method -ceq 'Page.navigate'
     if ($isNavigation) { Set-RouteTimingPhase 'navigation-send' }
     $request = [ordered]@{
         requestId = [int]$id
@@ -578,7 +813,7 @@ function Invoke-Cdp($Socket, [string]$Method, $Parameters, [DateTime]$Deadline) 
     try {
         $sendClock = [Diagnostics.Stopwatch]::StartNew()
         try {
-            [void](Send-Cdp $Socket $id $Method $Parameters)
+            [void](Send-Cdp $Socket $id $Method $Parameters $Deadline)
         } finally {
             try {
                 $request.sendElapsedMs = [long]$sendClock.ElapsedMilliseconds
@@ -591,7 +826,7 @@ function Invoke-Cdp($Socket, [string]$Method, $Parameters, [DateTime]$Deadline) 
         if ($isNavigation) { Set-RouteTimingPhase 'navigation-readiness' }
         $waitClock = [Diagnostics.Stopwatch]::StartNew()
         try {
-            $response = Receive-Cdp $Socket $id $Deadline
+            $response = Receive-Cdp $Socket $id $Deadline $navigationState
         } finally {
             try {
                 $request.waitElapsedMs = [long]$waitClock.ElapsedMilliseconds
@@ -773,16 +1008,64 @@ function Invoke-OrdinaryTicketEntry($Socket, [DateTime]$Deadline) {
 
 function Navigate-Cdp($Socket, [string]$Url, [string]$RunId,
         [string]$RouteId, [DateTime]$Deadline) {
+    if ($null -ne $script:ActiveOwnedNavigation) {
+        Throw-VerifierInfrastructure 'An owned navigation is already active.'
+    }
+    $targetOrigin = Get-OwnedLoopbackOrigin $Url
+    if ([String]::IsNullOrWhiteSpace($targetOrigin) -or
+            $targetOrigin -ine [string]$script:OwnedPreviewOrigin) {
+        Throw-VerifierInfrastructure 'A03 navigation target is outside the owned loopback preview origin.'
+    }
     $marker = [Guid]::NewGuid().ToString('N')
     $separator = if ($Url.IndexOf('?') -ge 0) { '&' } else { '?' }
     $navigationUrl = $Url + $separator +
         'tsjVerifierNavigation=' + $marker +
         '&tsjVerifierRun=' + $RunId + '&tsjVerifierRoute=' + $RouteId
-    [void](Invoke-Cdp $Socket 'Page.navigate' @{ url = $navigationUrl } $Deadline)
-    $escapedMarker = $marker.Replace("'", "\\'")
-    Wait-Cdp $Socket ("document.readyState==='complete'&&location.href.includes('$escapedMarker')") `
-        $Deadline 'compiled page navigation'
-    return $navigationUrl
+    $active = [ordered]@{
+        socket = $Socket
+        previousCompletion = $script:LastCompletedOwnedNavigation
+        priorUrl = if ($null -ne $script:LastCompletedOwnedNavigation) {
+            [string]$script:LastCompletedOwnedNavigation.url
+        } else { '' }
+        targetUrl = $navigationUrl
+        ownedOrigin = [string]$script:OwnedPreviewOrigin
+        runId = $RunId
+        routeId = $RouteId
+        deadline = $Deadline
+        navigationRequestId = 0
+        dialogAckRequestId = $null
+        dialogHandledCount = 0
+        responseState = $null
+    }
+    $script:ActiveOwnedNavigation = $active
+    $script:LastNavigationDialogRejection = $null
+    $completed = $false
+    try {
+        [void](Invoke-Cdp $Socket 'Page.navigate' @{ url = $navigationUrl } $Deadline)
+        Wait-OwnedNavigationReady $Socket $navigationUrl $Deadline
+        $script:LastCompletedOwnedNavigation = [ordered]@{
+            socket = $Socket
+            url = $navigationUrl
+            origin = $targetOrigin
+            runId = $RunId
+            routeId = $RouteId
+            completed = $true
+        }
+        $script:LastNavigationEvidence = [ordered]@{
+            handledCount = [int]$active.dialogHandledCount
+            acknowledgementSuccessCount = if ($null -ne $active.responseState) {
+                [int]$active.responseState.acknowledgementSuccessCount
+            } else { 0 }
+        }
+        $completed = $true
+        return $navigationUrl
+    } finally {
+        $script:ActiveOwnedNavigation = $null
+        if (-not $completed) {
+            $script:LastCompletedOwnedNavigation = $null
+            $script:LastNavigationEvidence = $null
+        }
+    }
 }
 
 function Test-JsonReport([object]$Value, [string]$Protocol) {
@@ -872,7 +1155,7 @@ function Test-A08Report([object]$Value) {
 function Test-A07Report([object]$Value) {
     try {
         $p = (Get-ExactReportText $Value) | ConvertFrom-Json -ErrorAction Stop
-        if ($p.version -cne 'TSJ-A07-SOLVER-1' -or $p.status -cne 'PASS' -or $p.cleanup -cne 'PASS' -or
+        if ($p.version -cne 'TSJ-A07-SOLVER-2' -or $p.status -cne 'PASS' -or $p.cleanup -cne 'PASS' -or
                 -not (Test-VerifierStrictIntegralValue $p.pureAssertions 38L ([long]::MaxValue)) -or
                 -not (Test-VerifierStrictIntegralValue $p.runtimeAssertions 73L ([long]::MaxValue)) -or
                 -not (Test-A07FiniteNumber $p.wallMs 0 ([double]::MaxValue))) { return $false }
@@ -903,7 +1186,10 @@ function Test-A07Report([object]$Value) {
             'schematic-reanalysis-preserves-events',
             'schematic-retaining-import-preserves-events',
             'schematic-undo-retires-event-clock',
-            'schematic-redo-retires-event-clock')
+            'schematic-redo-retires-event-clock',
+            'real-settlement-idle-repeat-no-work',
+            'real-settlement-pending-analysis-fallback',
+            'real-settlement-active-queued-dc-fallback')
         if ($p.runtimeCases -isnot [array] -or $p.runtimeCases.Count -ne $cases.Count) { return $false }
         foreach ($name in $cases) {
             $found = @($p.runtimeCases | Where-Object { $_.case -ceq $name -and $_.status -ceq 'PASS' })
@@ -2341,7 +2627,7 @@ function Get-RouteDefinitions([string]$SelectedGate, [bool]$SmokeOnly) {
             @($all | Where-Object name -CEQ 'a03')[0],
             @($all | Where-Object name -CEQ 'task49')[0],
             [pscustomobject]@{ name='stored-energy'; kind='stored-energy';
-                query='tsjChallenge=rc&seed=3&tsjVerifyStoredEnergy=true&running=true'; reportNames=@() }
+                query='tsjChallenge=rc&seed=3&tsjDebug=true&tsjVerifyStoredEnergy=true&running=true'; reportNames=@() }
         )
     }
     if ($SelectedGate -ceq 'A03') { return $all[0..2] }
@@ -2406,6 +2692,10 @@ try {
     $resolvedBrowser = Resolve-VerifierBrowserPath $BrowserPath
     Set-Operation 'preview' 'Start-VerifierOwnedPreview'
     $baseUrl = [string](Start-VerifierOwnedPreview $context $previewPath $effectiveTimeoutSeconds ([bool]$ForceTcpListener))
+    $script:OwnedPreviewOrigin = Get-OwnedLoopbackOrigin $baseUrl
+    if ([String]::IsNullOrWhiteSpace([string]$script:OwnedPreviewOrigin)) {
+        Throw-VerifierInfrastructure 'Owned preview did not expose a loopback HTTP origin.'
+    }
     Set-Operation 'preview' 'read-preview-identity'
     $previewIdentity = Get-PreviewIdentity $baseUrl $context $root $previewPath
     Set-Operation 'setup' 'define-routes'
@@ -2454,6 +2744,7 @@ try {
             Add-RouteHeapSample 'before-navigation' $session.Socket $routeDeadline
             Set-RouteTimingPhase 'navigation-send'
         }
+        $reports = $null
         $routeUrl = $baseUrl + '/circuitjs.html?' + [string]$definition.query
         $navigationUrl = Navigate-Cdp $session.Socket $routeUrl $context.RunId `
             $session.RouteId $routeDeadline
@@ -2467,6 +2758,8 @@ try {
             }
             $result = [ordered]@{ name = $definition.name; kind = 'transport';
                 status = 'PASS'; navigationUrl = (Get-SafeText $navigationUrl 2000);
+                navigationDialogs = [ordered]@{ handledCount = [int]$script:LastNavigationEvidence.handledCount;
+                    acknowledgementSuccessCount = [int]$script:LastNavigationEvidence.acknowledgementSuccessCount };
                 observed = [ordered]@{ ready = [string]$transportSmoke.ready;
                     url = (Get-SafeText $transportSmoke.url 2000) }; events = $script:CdpEvents.ToArray() }
             if ($script:RouteTimingEnabled) {
@@ -2482,7 +2775,6 @@ try {
             if ($script:RouteTimingEnabled) { Set-RouteTimingPhase 'ticket-entry' }
             $ticketEntryAudit = Invoke-OrdinaryTicketEntry $session.Socket $routeDeadline
         }
-        $reports = $null
         do {
             if ($script:RouteTimingEnabled) { Set-RouteTimingPhase 'report-poll' }
             $reports = Get-RouteReports $session.Socket $routeDeadline
@@ -2536,6 +2828,8 @@ try {
         }
         $record = [ordered]@{ name = $definition.name; kind = $definition.kind;
             status = 'PASS'; navigationUrl = (Get-SafeText $navigationUrl 2000);
+            navigationDialogs = [ordered]@{ handledCount = [int]$script:LastNavigationEvidence.handledCount;
+                acknowledgementSuccessCount = [int]$script:LastNavigationEvidence.acknowledgementSuccessCount };
             verification = (Get-ExactReportText $reports.verification);
             readiness = [ordered]@{ workbenchNavigationReady = [bool]$reports.normalReady.workbenchNavigationReady;
                 programReady = [bool]$reports.normalReady.programReady;
@@ -2677,9 +2971,10 @@ try {
             }
         }
         $cleanupStartedUtc = [DateTime]::UtcNow
-        $cleanupDeadline = if ($script:IsQ100Gate) { $cleanupStartedUtc.AddSeconds(120) } else { [DateTime]::MinValue }
+        $cleanupBudgetName = if ($Gate -ieq 'A07') { 'A07' } else { 'Q100' }
+        $cleanupDeadline = if ($script:HasBoundedCleanup) { $cleanupStartedUtc.AddSeconds(120) } else { [DateTime]::MinValue }
         # Complete-VerifierRun owns teardown and has no safe cancellation API.
-        # Finish its ownership proof, then fail closed if Q100 cleanup exceeded
+        # Finish its ownership proof, then fail closed if A07/Q100 cleanup exceeds
         # its separately measured acceptance bound.
         Set-Operation 'cleanup' 'Complete-VerifierRun' $cleanupDeadline
         try { $cleanupResult = Complete-VerifierRun $context }
@@ -2688,14 +2983,14 @@ try {
             $requestedExitCode = 2
             $script:CleanupDiagnostic = New-FailureDiagnostic (Get-EarlyErrorText $_) 'infrastructure'
         }
-        if ($script:IsQ100Gate) {
+        if ($script:HasBoundedCleanup) {
             $script:Q100CleanupElapsedMs = [long][Math]::Max(0,
                 [Math]::Floor(([DateTime]::UtcNow - $cleanupStartedUtc).TotalMilliseconds))
             if ($script:Q100CleanupElapsedMs -gt 120000L) {
                 $requestedExitCode = 2
                 if ($null -eq $script:CleanupDiagnostic) {
                     $script:CleanupDiagnostic = New-FailureDiagnostic `
-                        'Q100 verifier cleanup exceeded its 120-second acceptance budget.' 'infrastructure'
+                        ($cleanupBudgetName + ' verifier cleanup exceeded its 120-second acceptance budget.') 'infrastructure'
                 }
             }
         }
@@ -2712,8 +3007,8 @@ try {
         $cleanupErrors = if ($cleanupResult -and $cleanupResult.Errors) {
             @($cleanupResult.Errors | ForEach-Object { Get-DiagnosticText $_ 4000 })
         } else { @() }
-        if ($script:IsQ100Gate -and $script:Q100CleanupElapsedMs -gt 120000L) {
-            $cleanupErrors += 'Q100 verifier cleanup exceeded its 120-second acceptance budget.'
+        if ($script:HasBoundedCleanup -and $script:Q100CleanupElapsedMs -gt 120000L) {
+            $cleanupErrors += ($cleanupBudgetName + ' verifier cleanup exceeded its 120-second acceptance budget.')
         }
         $reportPath = if ([String]::IsNullOrWhiteSpace($OutputPath)) {
             Join-Path $context.EvidenceDirectory 'verify-a03-browser.json'
@@ -2729,7 +3024,7 @@ try {
         }
         $cleanupSuccess = if ($cleanupResult) {
             [bool]$cleanupResult.Success -and
-                (-not $script:IsQ100Gate -or $script:Q100CleanupElapsedMs -le 120000L)
+                (-not $script:HasBoundedCleanup -or $script:Q100CleanupElapsedMs -le 120000L)
         } else { $false }
         $cleanupReport = [ordered]@{
             success = $cleanupSuccess; errors = $cleanupErrors
@@ -2738,7 +3033,7 @@ try {
         if ($null -ne $cleanupResult -and $cleanupResult.PSObject.Properties['ExtraPhaseTimings']) {
             $cleanupReport.phaseTimings = $cleanupResult.ExtraPhaseTimings
         }
-        if ($script:IsQ100Gate) {
+        if ($script:HasBoundedCleanup) {
             $cleanupReport.resourceSuccess = if ($cleanupResult) { [bool]$cleanupResult.Success } else { $false }
             $cleanupReport.elapsedMs = $script:Q100CleanupElapsedMs
             $cleanupReport.limitMs = 120000L
@@ -2785,12 +3080,13 @@ try {
                 operationLimitMs = 6000000L
             }
         }
-        if ($Gate -ieq 'E06State' -and $requestedExitCode -ne 0 -and
-                $null -ne $reports -and $null -ne $definition) {
+        if (($Gate -ieq 'E06State' -or $Gate -ieq 'A07') -and $requestedExitCode -ne 0 -and
+                $null -ne $definition) {
             $report.failedRoute = [ordered]@{
                 name = [string]$definition.name; kind = [string]$definition.kind
                 lastReports = $reports; eventCount = $script:CdpEvents.Count
                 events = @($script:CdpEvents | Select-Object -Last 20)
+                navigationDialogRejection = $script:LastNavigationDialogRejection
             }
         }
         if ($Gate -ieq 'Q100Player' -and $script:Q100PlayerArtifactProof) {

@@ -587,7 +587,7 @@ final class A07SolverDeveloperVerifier {
         require(!sim.solverExecutor.isUnavailable() && sim.isGeneratedRuntimeSettled(), "all proof leases were released");
         schematicLifecycles();
         cases.append("]"); latencies.append("]");
-        String report = "{\"version\":\"TSJ-A07-SOLVER-1\",\"status\":\"PASS\"," +
+        String report = "{\"version\":\"TSJ-A07-SOLVER-2\",\"status\":\"PASS\"," +
             "\"pureAssertions\":" + pureAssertions + ",\"runtimeAssertions\":" + assertions +
             ",\"runtimeCases\":" + cases + ",\"latencies\":" + latencies +
             ",\"models\":" + models + ",\"scale\":" + scale +

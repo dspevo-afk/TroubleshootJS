@@ -1,0 +1,844 @@
+{
+  "schema": "troubleshootjs-a07-v2-navigation-prerequisite-evidence-v5",
+  "status": "PASS_BOUNDED_EVIDENCE",
+  "publication": "PENDING_ROOT_FINAL_REVIEW_AND_NORMAL_PUBLICATION",
+  "scope": "Finite A07 V2 report-contract, audited navigation source slice, native parent/error, natural-exit and cleanup proofs, compiled A07, Current9 and Player privacy evidence.",
+  "sourceSnapshot": {
+    "branch": "codex/a07-report-contract-v2-20261031",
+    "head": "b48a140bfb90317ad44870ad25220933aa755963",
+    "sourcePins": {
+      "src/com/lushprojects/circuitjs1/client/A07SolverDeveloperVerifier.java": "e351be3b09d3ce76d42b5614f5d0112f3133a25d17e85aa3a90e455f17002a65",
+      "scripts/verify-a03-browser.ps1": "c790b2a95fab462fd275ee6ede981ad9997c1d046646eabacfdb31b9e76719f6",
+      "tests/contracts/a04-report-contract.ps1": "326b4ffce60bbaed99c22c2cc43f5c7e5af116ca1ca74197cda27ded445c516b",
+      "tests/contracts/a03-navigation-contract.ps1": "b4c559a79cf1e75083c4588254d443f8b1cfee4104e56c56b1a6e6436a284bc7",
+      "scripts/verify-gate-b.ps1": "c686d7f7846a1b195ab812173f8a24b6dd0c1ba64fbadc56aebcad60a2be51d0",
+      "tests/contracts/browser-bound-receipt-native-errors.ps1": "8b946a078077d7184a6343ca80733bcd59a9487b779d74ceab7638068722694b",
+      "tests/contracts/browser-bound-receipt-parent.ps1": "0b4350f04a3846cf0bfbaf0a42560af7410359f41cd51ac39135340db24fa504",
+      "tests/contracts/browser-natural-exit-reuse.ps1": "ebb8457d47a584a60e82a84c1cd2a3d844e3d615f553b71a9944fbade3474ae6",
+      "scripts/VerifierIsolation.psm1": "5e0ae0c8fb6beb20c2d9fff3f652074136032197eab61f450c5fdceaa4e3a1fa",
+      "tests/contracts/browser-cleanup-budget.ps1": "fe0e177dcb074ddda55cd21dfe6ad56492b83a7fd7b11787a85387612212e44c",
+      "scripts/preview.ps1": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34"
+    },
+    "navigationPlanSha256": "e4e0fe37276a2290469459246da5b9d5cc5aeee8fd1969803fd975e5abdc13b0",
+    "compositeParentPlanSha256": "b67bd6c43216ed4a6f4593f53aacd04af26646290ed7de62a6ea4096815a6217",
+    "aggregateEnvelopePlanSha256": "ec1c8d312ee4d6be927382d046a9ad93d7083f49502fe3193a38c0a5b52a402c",
+    "storedEnergyRoutePlanSha256": "93f39794bc59af24589da54711558fc6b1cbb41804ec8b1ef389116ab68420a2"
+  },
+  "nativeA07": {
+    "status": "PASS",
+    "freshHostRun": true,
+    "elapsedSeconds": 36.259557,
+    "inputCount": 1061,
+    "inputBytes": 85552900,
+    "inputInventorySha256": "d61de93b59c179e667e7be6275c97200545e57642610e31d373f8e72a211c526",
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "terminationProven": true,
+    "cleanupStatus": "PASS",
+    "outerLimitMs": 1800000
+  },
+  "gwtInputReuse": {
+    "status": "PASS_REUSED_INPUT_AUDIT",
+    "freshBuildRun": false,
+    "manifestSha256": "3a50231e274549dea4fc537b9c67e19628f2c5d67e818f28a3d9fbab03310452",
+    "inputFileCount": 1199,
+    "mismatchCount": 0,
+    "scopeCounts": {
+      "src": 1189,
+      "build": 1,
+      "classpath": 9
+    },
+    "sourceBytes": 10669616,
+    "buildBytes": 38284,
+    "classpathBytes": 70601241,
+    "playerInputDigest": "580f98c40f08d3a7caa642ab11257bfc97ae43874f15f0ff520ab80652ec4622",
+    "developerInputDigest": "5dd76a5abe9ebe2e9c90aff2489189e361c79c8824ccd1e0de1ceed19f6a1e83",
+    "buildConsumerSha256": "746e3327ae4599dbaab1ea6c6eabf697fd6e9396ebacf9094f6075cf31e38f7e",
+    "auditResultSha256": "4cbd856f236194ff3790f2832e55dc2e29aed4ccb7e7e5c2004e59ffaf0f181b",
+    "auditScriptSha256": "cee93bf5890f9e7679adf7955971293a5eb8d5778d3a707325bb8d75a7b34ee3"
+  },
+  "syntheticNativeErrorsContract": {
+    "status": "PASS_SYNTHETIC_FAIL_CLOSED",
+    "caseCount": 12,
+    "passed": 12,
+    "failed": 0,
+    "sourceRoundTripExact": true,
+    "capturedModuleUnchanged": true,
+    "moduleSha256": "5e0ae0c8fb6beb20c2d9fff3f652074136032197eab61f450c5fdceaa4e3a1fa",
+    "addTypeCompiled": true,
+    "processQueriesPerformed": false,
+    "caseSetSha256": "241e3f0bf969ae4ad5a8acbd04d6024a23a2b912e3559a3f763a4e4a041b8b04",
+    "scope": "AST-extracted maintained C# body with deterministic synthetic native-call wrappers; no OS process query.",
+    "gateElapsedSeconds": 1.3457503,
+    "inputManifestSha256": "fa7cc1902e4a75f05cf35139b83ad6c50a3ff84b1342b9efa6d665a057003f96",
+    "resultArtifact": "host-v2-native-errors1/native-errors/result.json",
+    "gateResultArtifact": "host-v2-native-errors1/result.json",
+    "inputsArtifact": "host-v2-native-errors1/inputs.json"
+  },
+  "actualParentProviderContract": {
+    "status": "PASS",
+    "actualLaneCount": 2,
+    "negativeLaneCount": 1,
+    "directCli": {
+      "status": "PASS",
+      "assertions": 42,
+      "baselineCount": 0,
+      "liveRejectedRole": "OWNED_CHILD",
+      "proofCount": 24,
+      "resultSha256": "e25991e715e581256ae1736bf18a301f7db99a6f6f0d0d5c9926b03eebae00db",
+      "cleanupStatus": "PASS",
+      "syntheticCimNegativeCount": 10
+    },
+    "boundedConsole": {
+      "status": "PASS",
+      "assertions": 42,
+      "baselineCount": 1,
+      "ambientBaselineImage": "conhost.exe",
+      "liveRejectedRole": "AMBIENT_CONSOLE_HOST",
+      "ownedChildClaimedAsAmbient": false,
+      "syntheticCimNegativeCount": 10,
+      "cleanupStatus": "PASS",
+      "resultSha256": "8836a54a41dc8f54112dfa221154aa819b43e5bcfec2016db8d7246f812c17bd"
+    },
+    "wrongPin": {
+      "status": "PASS_EXPECTED_PRECHILD_REJECTION",
+      "exitCode": 2,
+      "expectedRejectionMarkerObserved": true,
+      "ownerMarkerPresent": false,
+      "attemptDirectoryCount": 0,
+      "evidenceRootEntryCount": 0,
+      "wrongPinDistinctFromExpectedModule": true
+    },
+    "moduleSha256": "5e0ae0c8fb6beb20c2d9fff3f652074136032197eab61f450c5fdceaa4e3a1fa",
+    "testSha256": "0b4350f04a3846cf0bfbaf0a42560af7410359f41cd51ac39135340db24fa504",
+    "directLauncherArtifact": "maintained-parent-canary-debug2/direct-cli-lane3/launcher.json",
+    "directChildResultArtifact": "maintained-parent-canary-debug2/direct-cli-lane3/maintained-parent-canary2/attempt-8283c57d5b8e45c5a1f981de5d4ce0ae/result.json",
+    "directLiveRejectionArtifact": "maintained-parent-canary-debug2/direct-cli-lane3/maintained-parent-canary2/attempt-8283c57d5b8e45c5a1f981de5d4ce0ae/live-rejection.json",
+    "boundedLauncherArtifact": "maintained-parent-canary-debug2/bounded-module-lane4/bounded-result.json",
+    "boundedChildResultArtifact": "maintained-parent-canary-debug2/bounded-module-lane4/maintained-parent-canary2/attempt-774b16f9d5934318bb7b77e92e840be2/result.json",
+    "boundedLiveRejectionArtifact": "maintained-parent-canary-debug2/bounded-module-lane4/maintained-parent-canary2/attempt-774b16f9d5934318bb7b77e92e840be2/live-rejection.json",
+    "wrongPinResultArtifact": "maintained-parent-canary-debug2/wrong-module-pin-v4/result.json",
+    "rawProcessIdentityCopied": false
+  },
+  "naturalExit": {
+    "status": "PASS",
+    "checks": 19,
+    "elapsedSeconds": 16.1196456,
+    "limitMs": 120000,
+    "sourceStable": true,
+    "inputManifestVerified": true,
+    "moduleSha256": "5e0ae0c8fb6beb20c2d9fff3f652074136032197eab61f450c5fdceaa4e3a1fa",
+    "contractScriptSha256": "ebb8457d47a584a60e82a84c1cd2a3d844e3d615f553b71a9944fbade3474ae6",
+    "resultArtifact": "host-v2-natural-exit2/result.json",
+    "inputsArtifact": "host-v2-natural-exit2/inputs.json"
+  },
+  "browserCleanupBudget": {
+    "status": "PASS",
+    "scope": "about-blank-browser-resource-cleanup",
+    "profileFilesExercised": 512,
+    "evidenceArtifactCount": 0,
+    "cleanupElapsedMs": 68334,
+    "cleanupBudgetMs": 120000,
+    "browserShutdownMs": 11067,
+    "browserShutdownLimitMs": 15000,
+    "helperTerminationAndAbsenceProven": true,
+    "reparseContainmentNegativePassed": true,
+    "junctionDeletionNegativePassed": true,
+    "ownedResourceAbsenceProven": true,
+    "contractScriptSha256": "fe0e177dcb074ddda55cd21dfe6ad56492b83a7fd7b11787a85387612212e44c",
+    "inputManifestSha256": "65fcba256f57e8b44f64adcd5588e0994ddbf5c2d2c119be3e7c42cb1f6834aa",
+    "inputManifestBeforeAfterEqual": true,
+    "inputManifestAfterSha256": "65fcba256f57e8b44f64adcd5588e0994ddbf5c2d2c119be3e7c42cb1f6834aa",
+    "previewScriptSha256": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+    "reportArtifact": "host-v2-cleanup-budget2/contract-report.json",
+    "inputsBeforeArtifact": "host-v2-cleanup-budget2/inputs.json",
+    "inputsAfterArtifact": "host-v2-cleanup-budget2/inputs-after.json"
+  },
+  "selectedGateBNativeProcessProbe": {
+    "status": "PASS_SELECTED_GATE_B_PROBE",
+    "mode": "NativeProcess",
+    "operationElapsedMs": 5736.806,
+    "wrapperElapsedMs": 6699.706,
+    "outerLimitMs": 180000,
+    "moduleSha256": "5e0ae0c8fb6beb20c2d9fff3f652074136032197eab61f450c5fdceaa4e3a1fa",
+    "gateBScriptSha256": "c686d7f7846a1b195ab812173f8a24b6dd0c1ba64fbadc56aebcad60a2be51d0",
+    "inputsStable": true,
+    "helperTerminationProven": true,
+    "markerCount": 3,
+    "doesNotQualifyFullGateB": true,
+    "resultArtifact": "host-gateb-probe-gate1/host-v2-native-process2-nativeprocess/result.json"
+  },
+  "naturalShutdown": {
+    "status": "PASS_SELECTED_GATE_B_PROBE",
+    "mode": "NaturalShutdown",
+    "markerCount": 9,
+    "allNineMarkersExactlyOnce": true,
+    "operationElapsedMs": 201360.47,
+    "wrapperElapsedMs": 203353.784,
+    "taskAggregateLimitMs": 600000,
+    "innerNativeProcessLimitMs": 180000,
+    "innerMaintainedDeadlinesUnchanged": true,
+    "sourceInputsStable": true,
+    "helperTerminationProven": true,
+    "moduleSha256": "5e0ae0c8fb6beb20c2d9fff3f652074136032197eab61f450c5fdceaa4e3a1fa",
+    "gateBScriptSha256": "c686d7f7846a1b195ab812173f8a24b6dd0c1ba64fbadc56aebcad60a2be51d0",
+    "wrapperScriptSha256": "11193d91dc52eb9c97900efb0b18135e7d6170d710fc8eba14d7453a808c6334",
+    "planSha256": "ec1c8d312ee4d6be927382d046a9ad93d7083f49502fe3193a38c0a5b52a402c",
+    "resultSha256": "193b527d1869be3fb767c5dd4e01b5c9d929bfbecd4aed818890a7ea073f2681",
+    "resultArtifact": "host-gateb-probe-gate2/host-v2-natural-shutdown3-naturalshutdown/result.json",
+    "wrapperArtifact": "host-gateb-probe-gate2.ps1",
+    "planArtifact": "gateb-aggregate-envelope2/PLAN.md",
+    "prior180SecondAggregateAttempt": {
+      "status": "FAIL_UNPROVEN",
+      "outerLimitMs": 180000,
+      "elapsedMs": 180424.585,
+      "passMarkers": 8,
+      "helperExitCodeReturned": false,
+      "terminationProven": false,
+      "laterCensusIsNotCleanupProof": true
+    },
+    "priorFixtureClosureAttemptStatus": "FAIL",
+    "orchestrationOnlyDiagnosticNotAcceptance": {
+      "modeCount": 12,
+      "elapsedSeconds": 31.244,
+      "launcherSha256": "c01f46bbf546504c6c81883d2325aebb5a16310e3f3e397664600ecbd8ab6a24",
+      "traceSha256": "25ecb02d7ef614ec56a7e12a376ed9d8766a5ea323582b8d33e4a99a4c16243a"
+    }
+  },
+  "reportContract": {
+    "status": "PASS",
+    "schema": "a07-v2-report-contract-gate-v1",
+    "mode": null,
+    "assertions": 521,
+    "elapsedSeconds": 8.3935541,
+    "limitMs": 60000,
+    "terminationProven": true,
+    "sourceInputsStable": true,
+    "resultArtifact": "host-v2-report-contract5/result.json"
+  },
+  "navigationPure": {
+    "status": "PASS",
+    "schema": "a07-v2-navigation-gate-v1",
+    "mode": "Pure",
+    "assertions": 61,
+    "elapsedSeconds": 1.4476027,
+    "limitMs": 60000,
+    "terminationProven": true,
+    "sourceInputsStable": true,
+    "resultArtifact": "host-v2-navigation-pure7/result.json"
+  },
+  "navigationReal": {
+    "status": "PASS",
+    "attempt": "host-v2-navigation-real5",
+    "elapsedSeconds": 332.6172482,
+    "assertions": 0,
+    "sourceInputsUnchanged": true,
+    "sourceReuse": {
+      "status": "PASS_REUSED_FUNCTION_SLICE",
+      "auditArtifact": "stored-energy-route-fix1/reuse-audit2.json",
+      "auditSha256": "f016303e9a8417ec3f8b71f3888a88965b8d7b77916d3c0261c29398d7fea512",
+      "storedEnergyRoutePlanSha256": "93f39794bc59af24589da54711558fc6b1cbb41804ec8b1ef389116ab68420a2",
+      "rawConsumedBrowserScriptSha256": "8f5b631a9552e12254969efbbd4e3e1ff2f55f7411345d5a49311be4d9be2b28",
+      "currentBrowserScriptSha256": "c790b2a95fab462fd275ee6ede981ad9997c1d046646eabacfdb31b9e76719f6",
+      "rawConsumedBrowserScriptBytes": 174576,
+      "currentBrowserScriptBytes": 174590,
+      "rawWholeFilePinsEqual": false,
+      "reusedFunctionCount": 18,
+      "reusedFunctionHashesSha256": "8bd5dc6b77c19c6fa87210554738826441fc5f013d8ff9b91dfa41c45b1c75ec",
+      "current9ProjectionUnchanged": true,
+      "q100PlayerProjectionEqual": true,
+      "a07StoredEnergyRouteOnlyDifference": true,
+      "auditArtifactInputsStable": true,
+      "realRunSourceStable": true,
+      "scope": "The real navigation canary reused only the audited 18-function source slice; its raw browser script was the prior version."
+    },
+    "fixtureCleanupStatus": "PASS",
+    "fixtureCleanupMs": 45,
+    "fixtureCount": 4,
+    "fixtureBytes": 1853,
+    "fixtureManifestSha256": "c63cae64c8314c04df5e4701b7840128ecfcca26ad385be45bedc88f9a6bd8df",
+    "laneCount": 4,
+    "lanes": [
+      {
+        "lane": "positive",
+        "status": "PASS",
+        "operationStatus": "PASS",
+        "operationMs": 27818,
+        "cleanupState": null,
+        "cleanupStateEvidencePresent": false,
+        "cleanupDiagnostic": "",
+        "cleanupMs": 45149,
+        "shutdownMs": 11058,
+        "ownershipProven": true
+      },
+      {
+        "lane": "alert",
+        "status": "PASS_EXPECTED_REJECTION",
+        "operationStatus": "PASS_EXPECTED_REJECTION",
+        "operationMs": 26939,
+        "cleanupState": null,
+        "cleanupStateEvidencePresent": false,
+        "cleanupDiagnostic": "",
+        "cleanupMs": 58920,
+        "shutdownMs": 10685,
+        "ownershipProven": true
+      },
+      {
+        "lane": "source-mismatch",
+        "status": "PASS_EXPECTED_REJECTION",
+        "operationStatus": "PASS_EXPECTED_REJECTION",
+        "operationMs": 27057,
+        "cleanupState": null,
+        "cleanupStateEvidencePresent": false,
+        "cleanupDiagnostic": "",
+        "cleanupMs": 58825,
+        "shutdownMs": 11040,
+        "ownershipProven": true
+      },
+      {
+        "lane": "wrong-destination",
+        "status": "PASS_EXPECTED_REJECTION",
+        "operationStatus": "PASS_EXPECTED_REJECTION",
+        "operationMs": 32160,
+        "cleanupState": null,
+        "cleanupStateEvidencePresent": false,
+        "cleanupDiagnostic": "",
+        "cleanupMs": 54661,
+        "shutdownMs": 10031,
+        "ownershipProven": true
+      }
+    ],
+    "genericAssertionCounter": 0,
+    "reportSha256": "90399af756e027ebc6bcd77a7770265b90c8618ab50156c98b987822f2c7a6da",
+    "layoutQualification": false,
+    "electricalQualification": false,
+    "resultArtifact": "host-v2-navigation-real5/result.json",
+    "reportArtifact": "host-v2-navigation-real5/report.json"
+  },
+  "builds": {
+    "Developer": {
+      "status": "PASS",
+      "elapsedSeconds": 183.56263769999998,
+      "variant": "Developer",
+      "style": "OBF",
+      "sourceInputStable": true,
+      "runnerOutputStableFlag": false,
+      "outputInventoryMatchedIdentity": true,
+      "inputDigest": "5dd76a5abe9ebe2e9c90aff2489189e361c79c8824ccd1e0de1ceed19f6a1e83",
+      "inputFileCount": 1199,
+      "outputDigest": "611f4f10e55796a05d4e0769b3d66d3265b3f6fc25c987d6102ed8a6c162b064",
+      "outputFileCount": 357,
+      "outputInventoryDigest": "611f4f10e55796a05d4e0769b3d66d3265b3f6fc25c987d6102ed8a6c162b064",
+      "outputInventoryBytes": 18704589,
+      "physicalOutputTreeRehashed": false,
+      "cacheFileCount": 5,
+      "cacheBytes": 17964162,
+      "outputInventoryArtifact": "host-v2-developer-build2/output-inventory.json",
+      "outputSizeArtifact": "host-v2-developer-build2/output-size.json"
+    },
+    "Player": {
+      "status": "PASS",
+      "elapsedSeconds": 134.0980922,
+      "variant": "Player",
+      "style": "OBF",
+      "sourceInputStable": true,
+      "runnerOutputStableFlag": false,
+      "outputInventoryMatchedIdentity": true,
+      "inputDigest": "580f98c40f08d3a7caa642ab11257bfc97ae43874f15f0ff520ab80652ec4622",
+      "inputFileCount": 1199,
+      "outputDigest": "e3cef7636468142ce9a8a6ea1707622343cc876407cb3bc1312c158da4b3c0e5",
+      "outputFileCount": 357,
+      "outputInventoryDigest": "e3cef7636468142ce9a8a6ea1707622343cc876407cb3bc1312c158da4b3c0e5",
+      "outputInventoryBytes": 10253704,
+      "physicalOutputTreeRehashed": true,
+      "cacheFileCount": 5,
+      "cacheBytes": 9513277,
+      "outputInventoryArtifact": "host-v2-player-build3/output-inventory.json",
+      "outputSizeArtifact": "host-v2-player-build3/output-size.json"
+    }
+  },
+  "playerPrivacy": {
+    "status": "PASS",
+    "elapsedSeconds": 106.42169109999999,
+    "gateVariant": {
+      "variant": "Player",
+      "style": "OBF",
+      "inputDigest": "580f98c40f08d3a7caa642ab11257bfc97ae43874f15f0ff520ab80652ec4622",
+      "inputFileCount": 1199,
+      "outputDigest": "e3cef7636468142ce9a8a6ea1707622343cc876407cb3bc1312c158da4b3c0e5",
+      "outputFileCount": 357
+    },
+    "routeCount": 1,
+    "compiledJavaScriptFileCount": 7,
+    "terminationProven": true,
+    "sourceInputStable": true,
+    "outputStable": true,
+    "sourceDigests": {
+      "verifierIsolation": "5e0ae0c8fb6beb20c2d9fff3f652074136032197eab61f450c5fdceaa4e3a1fa",
+      "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+      "sourceDigest": "aa152591883c5941a9096d8adc60c271f28566fd6a90488cf925813013ed7ca8",
+      "scriptDigest": "23ca3c99fa2d65aa88fa4f4348d710c8ab78505fdb7e1ba98bd1656b71479c9b",
+      "webDigest": "bb2378dfb24eaf27cfab3f8d8182b7e1e24b0fb20ab40f6af1d5d21f838f5899",
+      "executionDigest": "7b35254889b183e7bb9c2a53260dceb1e2fa1cc8031994738105564d88cab843"
+    },
+    "executionFileCount": 1596,
+    "reportSha256": "e2d5c02b606d5e88ec7b5a45531611bf6d1358c030613529dd43ecc8b7cea6b4",
+    "cleanup": {
+      "success": true,
+      "resourceSuccess": true,
+      "status": "PASS",
+      "elapsedMs": 62845,
+      "limitMs": 120000,
+      "aggregateTimingAvailable": true,
+      "browserShutdownRecordCount": 1,
+      "browserShutdownMaxTotalMs": 12779,
+      "browserShutdownLimitMs": 15000,
+      "serializedErrorsShape": "dict",
+      "emptySerializedObjectNotUsedAsIndependentProof": true
+    },
+    "resultArtifact": "host-v2-player-privacy4/result.json",
+    "reportArtifact": "host-v2-player-privacy4/report.json"
+  },
+  "compiledA07": {
+    "status": "PASS",
+    "attempt": "host-v2-compiled-a07-4",
+    "elapsedSeconds": 310.57290459999996,
+    "sourceInputStable": true,
+    "outputStable": true,
+    "terminationProven": true,
+    "gateVariant": {
+      "variant": "Developer",
+      "style": "OBF",
+      "inputDigest": "5dd76a5abe9ebe2e9c90aff2489189e361c79c8824ccd1e0de1ceed19f6a1e83",
+      "inputFileCount": 1199,
+      "outputDigest": "611f4f10e55796a05d4e0769b3d66d3265b3f6fc25c987d6102ed8a6c162b064",
+      "outputFileCount": 357
+    },
+    "routeCount": 9,
+    "routes": [
+      {
+        "name": "a07",
+        "status": "PASS"
+      },
+      {
+        "name": "a07-forcedfailure",
+        "status": "PASS"
+      },
+      {
+        "name": "a07-debugoff",
+        "status": "PASS"
+      },
+      {
+        "name": "a06",
+        "status": "PASS"
+      },
+      {
+        "name": "a06-forcedfailure",
+        "status": "PASS"
+      },
+      {
+        "name": "a06-debugoff",
+        "status": "PASS"
+      },
+      {
+        "name": "a03",
+        "status": "PASS"
+      },
+      {
+        "name": "task49",
+        "status": "PASS"
+      },
+      {
+        "name": "stored-energy",
+        "status": "PASS"
+      }
+    ],
+    "cleanup": {
+      "success": true,
+      "resourceSuccess": true,
+      "status": "PASS",
+      "elapsedMs": 79380,
+      "limitMs": 120000,
+      "aggregateTimingAvailable": true,
+      "browserShutdownRecordCount": 1,
+      "browserShutdownMaxTotalMs": 9455,
+      "browserShutdownLimitMs": 15000,
+      "serializedErrorsShape": "dict",
+      "emptySerializedObjectNotUsedAsIndependentProof": true
+    },
+    "sourceDigests": {
+      "verifierIsolation": "5e0ae0c8fb6beb20c2d9fff3f652074136032197eab61f450c5fdceaa4e3a1fa",
+      "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+      "sourceDigest": "aa152591883c5941a9096d8adc60c271f28566fd6a90488cf925813013ed7ca8",
+      "scriptDigest": "23ca3c99fa2d65aa88fa4f4348d710c8ab78505fdb7e1ba98bd1656b71479c9b",
+      "webDigest": "bb76e72e7ac2e2d386326b4feb8989f2a97befea9440ddf18c509f85e9246284",
+      "executionDigest": "04add4d28f81d5940cab7bba802e2baeb14dfd4432377a188c14cde26e55d195"
+    },
+    "executionFileCount": 1596,
+    "reportSha256": "8b9b43d7e8c0313b6284bee8e83416a9f3a551616989dbf29c2b97990f838f34",
+    "resultArtifact": "host-v2-compiled-a07-4/result.json",
+    "reportArtifact": "host-v2-compiled-a07-4/report.json",
+    "a07Contract": {
+      "version": "TSJ-A07-SOLVER-2",
+      "status": "PASS",
+      "runtimeCaseCount": 26,
+      "runtimeAssertions": 103,
+      "pureAssertions": 306530,
+      "wallMs": 880,
+      "positivePayloadCount": 1,
+      "forcedFailureCanaryMarkerPresent": true,
+      "debugOffEmptyVerificationAndPrivateReport": true,
+      "routeNavigationDialogCount": 9,
+      "ownedBeforeunloadCount": 2,
+      "acknowledgementSuccessCount": 2
+    }
+  },
+  "compiledCurrent9": {
+    "status": "PASS",
+    "attempt": "host-v2-compiled-current2",
+    "elapsedSeconds": 347.07336399999997,
+    "sourceInputStable": true,
+    "outputStable": true,
+    "terminationProven": true,
+    "gateVariant": {
+      "variant": "Developer",
+      "style": "OBF",
+      "inputDigest": "5dd76a5abe9ebe2e9c90aff2489189e361c79c8824ccd1e0de1ceed19f6a1e83",
+      "inputFileCount": 1199,
+      "outputDigest": "611f4f10e55796a05d4e0769b3d66d3265b3f6fc25c987d6102ed8a6c162b064",
+      "outputFileCount": 357
+    },
+    "routeCount": 9,
+    "routes": [
+      {
+        "name": "a03",
+        "status": "PASS"
+      },
+      {
+        "name": "task46",
+        "status": "PASS"
+      },
+      {
+        "name": "task47",
+        "status": "PASS"
+      },
+      {
+        "name": "task48",
+        "status": "PASS"
+      },
+      {
+        "name": "task49",
+        "status": "PASS"
+      },
+      {
+        "name": "a02",
+        "status": "PASS"
+      },
+      {
+        "name": "a04",
+        "status": "PASS"
+      },
+      {
+        "name": "a04-forcedfailure",
+        "status": "PASS"
+      },
+      {
+        "name": "a04-debugoff",
+        "status": "PASS"
+      }
+    ],
+    "cleanup": {
+      "success": true,
+      "resourceSuccess": null,
+      "status": null,
+      "elapsedMs": null,
+      "limitMs": null,
+      "aggregateTimingAvailable": false,
+      "browserShutdownRecordCount": 1,
+      "browserShutdownMaxTotalMs": 9415,
+      "browserShutdownLimitMs": 15000,
+      "serializedErrorsShape": "dict",
+      "emptySerializedObjectNotUsedAsIndependentProof": true
+    },
+    "sourceDigests": {
+      "verifierIsolation": "5e0ae0c8fb6beb20c2d9fff3f652074136032197eab61f450c5fdceaa4e3a1fa",
+      "previewScript": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34",
+      "sourceDigest": "aa152591883c5941a9096d8adc60c271f28566fd6a90488cf925813013ed7ca8",
+      "scriptDigest": "23ca3c99fa2d65aa88fa4f4348d710c8ab78505fdb7e1ba98bd1656b71479c9b",
+      "webDigest": "bb76e72e7ac2e2d386326b4feb8989f2a97befea9440ddf18c509f85e9246284",
+      "executionDigest": "04add4d28f81d5940cab7bba802e2baeb14dfd4432377a188c14cde26e55d195"
+    },
+    "executionFileCount": 1596,
+    "reportSha256": "d395b99c43e7cca01baddb0dd792ecfcf060c2e466548ce6ae5a97f5df5726fb",
+    "resultArtifact": "host-v2-compiled-current2/result.json",
+    "reportArtifact": "host-v2-compiled-current2/report.json",
+    "current9": true
+  },
+  "limits": {
+    "q100RoutingAcceptance": false,
+    "publicAdmission": false,
+    "e06Qualification": false,
+    "normalQualification": false,
+    "full30OrTwoBy31Renewal": false,
+    "navigationLayoutQualification": false,
+    "navigationElectricalQualification": false,
+    "selectedGateBProbeQualifiesFullGateB": false,
+    "nativeErrorContractQualifiesOSProcessBehavior": false,
+    "naturalShutdownProbeQualifiesFullGateB": false,
+    "hardOrPsychoticGate": "UNAVAILABLE_OR_NOT_RUN",
+    "currentCleanupAggregateElapsedMs": null,
+    "currentCleanupAggregateElapsedMsNote": "No single maintained aggregate field was present; not inferred by summing phases.",
+    "playerInventoryPhysicalTreeRehashedAfterDeveloperBuild": true,
+    "playerInventoryPhysicalTreeNote": "The final installed tree is Player3 and its complete 357-file inventory is physically rehashed. Developer2 is represented by its captured build identity and output inventory; its tree is not rechecked after Player3 replaces it.",
+    "navigationReuseBoundary": "RealNav5 consumed the prior browser-script whole-file pin; reuse is restricted to the audited 18 identical navigation-function bodies plus unchanged module, preview, and contract sources.",
+    "currentCleanupAggregateElapsedMsNotInferred": true,
+    "serializedCleanupErrorsNote": "The serialized empty-object shape is not used as independent cleanup proof."
+  },
+  "preservedFailures": [
+    "The original A07 browser attempt failed on inherited A06 Page.navigate after three A07 routes; its cleanup result remains unchanged.",
+    "Native1 and native2 inventories are not reused after module changes; native3 is a fresh host run with its own input manifest.",
+    "The pre-navigation Current9 pass is not reused as final-source evidence.",
+    "Navigation real2 remains a failed cleanup proof; expected rejections are not promoted from that attempt.",
+    "Navigation real3 failed the wrong-destination negative because it did not prove rejection before the expected URL completed; not reused.",
+    "Earlier synthetic native-error runs are preserved; the final twelve-case byte-capture proof is separately required.",
+    "Earlier parent-provider executable-path case mismatch remains preserved; final direct, ambient-console and wrong-pin lanes are separately checked.",
+    "Navigation real1 failed after startup source inputs changed and its report was lost; it is not reused or cleanup-reclassified.",
+    "Earlier report-contract V1 mismatch remains historical failure.",
+    "NaturalShutdown2 remains FAIL/UNPROVEN after the task aggregate reached 180000ms without a returned child exit or termination receipt; later absence census is not cleanup proof.",
+    "The earlier NaturalShutdown fixture-closure attempt remains failed; the isolated 12-mode orchestration check is diagnostic only.",
+    "E06 and normal qualification outcomes are outside this packet and are not upgraded by it."
+  ],
+  "copiedInventories": {
+    "native-inputs.json": {
+      "relativeName": "native-inputs.json",
+      "bytes": 224968,
+      "sha256": "d61de93b59c179e667e7be6275c97200545e57642610e31d373f8e72a211c526"
+    },
+    "build-inputs.json": {
+      "relativeName": "build-inputs.json",
+      "bytes": 260578,
+      "sha256": "3a50231e274549dea4fc537b9c67e19628f2c5d67e818f28a3d9fbab03310452"
+    },
+    "player-output-inventory.json": {
+      "relativeName": "player-output-inventory.json",
+      "bytes": 52205,
+      "sha256": "1ad2caf8f0ec64cb59b61da18565ad5e14d0160a022cf8dfdbb733024b09f404"
+    },
+    "developer-output-inventory.json": {
+      "relativeName": "developer-output-inventory.json",
+      "bytes": 52206,
+      "sha256": "e4dae12c4fec0fef445b2b1fadea5c629cd598fb32cb8d444124682e5f8c3a12"
+    }
+  },
+  "artifacts": {
+    "a07-report-contract-v2/final-build-inputs.json": {
+      "relativeName": "a07-report-contract-v2/final-build-inputs.json",
+      "bytes": 260578,
+      "sha256": "3a50231e274549dea4fc537b9c67e19628f2c5d67e818f28a3d9fbab03310452"
+    },
+    "a07-report-contract-v2/gwt-only-reuse-audit2-result.json": {
+      "relativeName": "a07-report-contract-v2/gwt-only-reuse-audit2-result.json",
+      "bytes": 1618,
+      "sha256": "4cbd856f236194ff3790f2832e55dc2e29aed4ccb7e7e5c2004e59ffaf0f181b"
+    },
+    "a07-report-contract-v2/gwt-only-reuse-audit2.py": {
+      "relativeName": "a07-report-contract-v2/gwt-only-reuse-audit2.py",
+      "bytes": 7109,
+      "sha256": "cee93bf5890f9e7679adf7955971293a5eb8d5778d3a707325bb8d75a7b34ee3"
+    },
+    "gateb-aggregate-envelope2/PLAN.md": {
+      "relativeName": "gateb-aggregate-envelope2/PLAN.md",
+      "bytes": 2175,
+      "sha256": "ec1c8d312ee4d6be927382d046a9ad93d7083f49502fe3193a38c0a5b52a402c"
+    },
+    "host-gateb-probe-gate1/host-v2-native-process2-nativeprocess/result.json": {
+      "relativeName": "host-gateb-probe-gate1/host-v2-native-process2-nativeprocess/result.json",
+      "bytes": 3721,
+      "sha256": "ae3ed49fe85efc7798e90cb761ff131d6e436006e292ca16f1e1b7c5dc40487c"
+    },
+    "host-gateb-probe-gate2.ps1": {
+      "relativeName": "host-gateb-probe-gate2.ps1",
+      "bytes": 20561,
+      "sha256": "11193d91dc52eb9c97900efb0b18135e7d6170d710fc8eba14d7453a808c6334"
+    },
+    "host-gateb-probe-gate2/host-v2-natural-shutdown3-naturalshutdown/result.json": {
+      "relativeName": "host-gateb-probe-gate2/host-v2-natural-shutdown3-naturalshutdown/result.json",
+      "bytes": 6632,
+      "sha256": "193b527d1869be3fb767c5dd4e01b5c9d929bfbecd4aed818890a7ea073f2681"
+    },
+    "host-v2-cleanup-budget2/contract-report.json": {
+      "relativeName": "host-v2-cleanup-budget2/contract-report.json",
+      "bytes": 10121,
+      "sha256": "a2ec99f0e82b99c94ef850eb9922efaed43f695b16ab4548471393468e8a7e88"
+    },
+    "host-v2-cleanup-budget2/inputs-after.json": {
+      "relativeName": "host-v2-cleanup-budget2/inputs-after.json",
+      "bytes": 545,
+      "sha256": "65fcba256f57e8b44f64adcd5588e0994ddbf5c2d2c119be3e7c42cb1f6834aa"
+    },
+    "host-v2-cleanup-budget2/inputs.json": {
+      "relativeName": "host-v2-cleanup-budget2/inputs.json",
+      "bytes": 545,
+      "sha256": "65fcba256f57e8b44f64adcd5588e0994ddbf5c2d2c119be3e7c42cb1f6834aa"
+    },
+    "host-v2-compiled-a07-4/report.json": {
+      "relativeName": "host-v2-compiled-a07-4/report.json",
+      "bytes": 774326,
+      "sha256": "8b9b43d7e8c0313b6284bee8e83416a9f3a551616989dbf29c2b97990f838f34"
+    },
+    "host-v2-compiled-a07-4/result.json": {
+      "relativeName": "host-v2-compiled-a07-4/result.json",
+      "bytes": 2321,
+      "sha256": "431a2c9f31bf9c05adec8e805faa392b0fdf793cee2dac3d0db9c54b6626a87b"
+    },
+    "host-v2-compiled-current2/report.json": {
+      "relativeName": "host-v2-compiled-current2/report.json",
+      "bytes": 940480,
+      "sha256": "d395b99c43e7cca01baddb0dd792ecfcf060c2e466548ce6ae5a97f5df5726fb"
+    },
+    "host-v2-compiled-current2/result.json": {
+      "relativeName": "host-v2-compiled-current2/result.json",
+      "bytes": 2325,
+      "sha256": "b92be1fce2399f18a4255e7b0bb73c20cf35d8bbaa17d623e935add56ca0fb63"
+    },
+    "host-v2-developer-build2/output-inventory.json": {
+      "relativeName": "host-v2-developer-build2/output-inventory.json",
+      "bytes": 52206,
+      "sha256": "e4dae12c4fec0fef445b2b1fadea5c629cd598fb32cb8d444124682e5f8c3a12"
+    },
+    "host-v2-developer-build2/output-size.json": {
+      "relativeName": "host-v2-developer-build2/output-size.json",
+      "bytes": 1026,
+      "sha256": "f369e165d59aba55902e42418d18eb2d16fd15eaef9acdb03aeca8d4b2a749c7"
+    },
+    "host-v2-developer-build2/result.json": {
+      "relativeName": "host-v2-developer-build2/result.json",
+      "bytes": 2088,
+      "sha256": "db7aae7243ff453f485008030efce372133d496cde46fe47303932e11761c75c"
+    },
+    "host-v2-native-a07-3/result.json": {
+      "relativeName": "host-v2-native-a07-3/result.json",
+      "bytes": 1495,
+      "sha256": "ec22ef3e417953b332ce1083b81ec5d776656b9f727f03fa9dabc36e3a552c5f"
+    },
+    "host-v2-native-errors1/inputs.json": {
+      "relativeName": "host-v2-native-errors1/inputs.json",
+      "bytes": 389,
+      "sha256": "fa7cc1902e4a75f05cf35139b83ad6c50a3ff84b1342b9efa6d665a057003f96"
+    },
+    "host-v2-native-errors1/native-errors/result.json": {
+      "relativeName": "host-v2-native-errors1/native-errors/result.json",
+      "bytes": 14022,
+      "sha256": "d5dc0aaf42530c6f53679a92b6b20234b0c391df7de674edfa3979e6d623f71b"
+    },
+    "host-v2-native-errors1/result.json": {
+      "relativeName": "host-v2-native-errors1/result.json",
+      "bytes": 745,
+      "sha256": "6f700f22511f2b15af736f8d2db2e0ff68799f60f36e0d86b83a32ce9322e189"
+    },
+    "host-v2-native3-inputs.json": {
+      "relativeName": "host-v2-native3-inputs.json",
+      "bytes": 224968,
+      "sha256": "d61de93b59c179e667e7be6275c97200545e57642610e31d373f8e72a211c526"
+    },
+    "host-v2-natural-exit2/inputs.json": {
+      "relativeName": "host-v2-natural-exit2/inputs.json",
+      "bytes": 380,
+      "sha256": "2a157f5341bf9362908581653602fbc3ec7aadb5c93f2e6d2353a94f24aa782e"
+    },
+    "host-v2-natural-exit2/result.json": {
+      "relativeName": "host-v2-natural-exit2/result.json",
+      "bytes": 683,
+      "sha256": "7a40cba386dc8f39dccf99751229f877917b14e30e53a6beea51bbcde87eb54f"
+    },
+    "host-v2-navigation-pure7/result.json": {
+      "relativeName": "host-v2-navigation-pure7/result.json",
+      "bytes": 708,
+      "sha256": "af214b89d07628a544a8893a84983396e90a65161b90d50c6e0a15abcfc317a5"
+    },
+    "host-v2-navigation-real5/report.json": {
+      "relativeName": "host-v2-navigation-real5/report.json",
+      "bytes": 13227,
+      "sha256": "90399af756e027ebc6bcd77a7770265b90c8618ab50156c98b987822f2c7a6da"
+    },
+    "host-v2-navigation-real5/result.json": {
+      "relativeName": "host-v2-navigation-real5/result.json",
+      "bytes": 1923,
+      "sha256": "6fd79fe2c24abb1a408f5d174acdb2be06d10da19d87ebf1cb7616ba3409ea9f"
+    },
+    "host-v2-player-build3/output-inventory.json": {
+      "relativeName": "host-v2-player-build3/output-inventory.json",
+      "bytes": 52205,
+      "sha256": "1ad2caf8f0ec64cb59b61da18565ad5e14d0160a022cf8dfdbb733024b09f404"
+    },
+    "host-v2-player-build3/output-size.json": {
+      "relativeName": "host-v2-player-build3/output-size.json",
+      "bytes": 1014,
+      "sha256": "8489a66cd1fb4bbc2a7d04c22b6e5ebcb8a66bf0d8195b865a2d445e41eeecf2"
+    },
+    "host-v2-player-build3/result.json": {
+      "relativeName": "host-v2-player-build3/result.json",
+      "bytes": 2072,
+      "sha256": "bdd71084a55d87d25b644a3dc7bf093f657b589c5bde201354f80b7564edc448"
+    },
+    "host-v2-player-privacy4/report.json": {
+      "relativeName": "host-v2-player-privacy4/report.json",
+      "bytes": 16875,
+      "sha256": "e2d5c02b606d5e88ec7b5a45531611bf6d1358c030613529dd43ecc8b7cea6b4"
+    },
+    "host-v2-player-privacy4/result.json": {
+      "relativeName": "host-v2-player-privacy4/result.json",
+      "bytes": 2322,
+      "sha256": "08bc447c65ad246ab12bff8fd420075972d3e310d68ffadb72f53ca33953f69b"
+    },
+    "host-v2-report-contract5/result.json": {
+      "relativeName": "host-v2-report-contract5/result.json",
+      "bytes": 504,
+      "sha256": "3d757693ef5e043e967517489476850719eadb042b3e16d52f7831ec97ee4857"
+    },
+    "maintained-parent-canary-debug2/bounded-module-lane4/bounded-result.json": {
+      "relativeName": "maintained-parent-canary-debug2/bounded-module-lane4/bounded-result.json",
+      "bytes": 2314,
+      "sha256": "b9d74b9cc144bd64dac7b8058e58361efc603d5a7e1967837c0a966fd2872a3f"
+    },
+    "maintained-parent-canary-debug2/bounded-module-lane4/maintained-parent-canary2/attempt-774b16f9d5934318bb7b77e92e840be2/live-rejection.json": {
+      "relativeName": "maintained-parent-canary-debug2/bounded-module-lane4/maintained-parent-canary2/attempt-774b16f9d5934318bb7b77e92e840be2/live-rejection.json",
+      "bytes": 589,
+      "sha256": "96c29999262e589dec2039d023dd038b9f590ec3a6c253bfcd2aa5b6431145e5"
+    },
+    "maintained-parent-canary-debug2/bounded-module-lane4/maintained-parent-canary2/attempt-774b16f9d5934318bb7b77e92e840be2/result.json": {
+      "relativeName": "maintained-parent-canary-debug2/bounded-module-lane4/maintained-parent-canary2/attempt-774b16f9d5934318bb7b77e92e840be2/result.json",
+      "bytes": 19543,
+      "sha256": "8836a54a41dc8f54112dfa221154aa819b43e5bcfec2016db8d7246f812c17bd"
+    },
+    "maintained-parent-canary-debug2/direct-cli-lane3/launcher.json": {
+      "relativeName": "maintained-parent-canary-debug2/direct-cli-lane3/launcher.json",
+      "bytes": 2147,
+      "sha256": "2b5763b9ca35fb916bcbff1c33bc6e1123d87c7776b37060614a97748603c3a0"
+    },
+    "maintained-parent-canary-debug2/direct-cli-lane3/maintained-parent-canary2/attempt-8283c57d5b8e45c5a1f981de5d4ce0ae/live-rejection.json": {
+      "relativeName": "maintained-parent-canary-debug2/direct-cli-lane3/maintained-parent-canary2/attempt-8283c57d5b8e45c5a1f981de5d4ce0ae/live-rejection.json",
+      "bytes": 544,
+      "sha256": "cf6107b6c830c904dfd3700f0e8901aa009dc3c1af42539e16945d00034b7a63"
+    },
+    "maintained-parent-canary-debug2/direct-cli-lane3/maintained-parent-canary2/attempt-8283c57d5b8e45c5a1f981de5d4ce0ae/result.json": {
+      "relativeName": "maintained-parent-canary-debug2/direct-cli-lane3/maintained-parent-canary2/attempt-8283c57d5b8e45c5a1f981de5d4ce0ae/result.json",
+      "bytes": 18713,
+      "sha256": "e25991e715e581256ae1736bf18a301f7db99a6f6f0d0d5c9926b03eebae00db"
+    },
+    "maintained-parent-canary-debug2/wrong-module-pin-v4/result.json": {
+      "relativeName": "maintained-parent-canary-debug2/wrong-module-pin-v4/result.json",
+      "bytes": 668,
+      "sha256": "f71719288986134f720c8cf07289c1a6731034155657660329b72b8d999f9abc"
+    },
+    "stored-energy-route-fix1/reuse-audit2.json": {
+      "relativeName": "stored-energy-route-fix1/reuse-audit2.json",
+      "bytes": 19412,
+      "sha256": "f016303e9a8417ec3f8b71f3888a88965b8d7b77916d3c0261c29398d7fea512"
+    },
+    "stored-energy-route-fix1/source-pins/verify-a03-browser-8f.ps1": {
+      "relativeName": "stored-energy-route-fix1/source-pins/verify-a03-browser-8f.ps1",
+      "bytes": 174576,
+      "sha256": "8f5b631a9552e12254969efbbd4e3e1ff2f55f7411345d5a49311be4d9be2b28"
+    }
+  }
+}

@@ -16,6 +16,15 @@ The Q100-1 pilot was published as `9c74c46bdcf99dc62d3b7f7d35b71eb5ba9b3acf` on 
 
 ## Current direction
 
+The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
+locally accepted; publication is pending. Coordinated V2 requires all26 exact
+cases and rejects V1. Owned beforeunload handling, complete fresh native/CIM
+parent observations and the inherited stored-energy debug query now pass focused
+contracts, real host canaries, final-source JDK8/GWT Player/Developer builds,
+compiled A07/Current9 and Player privacy. Identity/absence oracles and maintained
+15s/120s/90s/5s/640 budgets remain. This closes a verifier prerequisite; the
+separate Q100 electrical timing failures and zero accepted100 layouts remain.
+
 The authored100 physical experiment remains unqualified: exact candidates still
 exhaust routing caps, with zero accepted100 layouts. Shared physical groundwork
 corrects mixed-footprint corridor constraints, required-P07 grid admission,

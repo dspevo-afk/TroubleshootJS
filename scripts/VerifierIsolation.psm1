@@ -12652,6 +12652,468 @@ function Confirm-VerifierBoundReceiptObservedLeafNaturalExit($DrainScope,
     }
 }
 
+function Initialize-VerifierBoundReceiptNativeParentCensus() {
+    if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT) {
+        Throw-VerifierInfrastructure 'Native bound-receipt parent census is unavailable on this platform.'
+    }
+    $typeName = 'TroubleshootJsVerifierBoundReceiptParent1.ParentCensus'
+    $loadedType = $typeName -as [type]
+    if ($null -ne $loadedType) { return $loadedType }
+    $source = @'
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Text;
+
+namespace TroubleshootJsVerifierBoundReceiptParent1 {
+    public sealed class ProcessRecord {
+        public int ProcessId { get; set; }
+        public int ParentProcessId { get; set; }
+        public string Name { get; set; }
+        public string ExecutablePath { get; set; }
+        public string CommandLine { get; set; }
+        public DateTime CreationDate { get; set; }
+    }
+
+    public static class ParentCensus {
+        private const uint TH32CS_SNAPPROCESS = 0x00000002;
+        private const uint PROCESS_QUERY_INFORMATION = 0x00000400;
+        private const uint PROCESS_QUERY_LIMITED_INFORMATION = 0x00001000;
+        private const int ProcessBasicInformation = 0;
+        private const int ProcessCommandLineInformation = 60;
+        private const int STATUS_INFO_LENGTH_MISMATCH = unchecked((int)0xC0000004);
+        private const int STATUS_BUFFER_TOO_SMALL = unchecked((int)0xC0000023);
+        private const int ERROR_NO_MORE_FILES = 18;
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        private struct PROCESSENTRY32 {
+            public uint dwSize;
+            public uint cntUsage;
+            public uint th32ProcessID;
+            public IntPtr th32DefaultHeapID;
+            public uint th32ModuleID;
+            public uint cntThreads;
+            public uint th32ParentProcessID;
+            public int pcPriClassBase;
+            public uint dwFlags;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+            public string szExeFile;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct PROCESS_BASIC_INFORMATION {
+            public IntPtr Reserved1;
+            public IntPtr PebBaseAddress;
+            public IntPtr Reserved2_0;
+            public IntPtr Reserved2_1;
+            public IntPtr UniqueProcessId;
+            public IntPtr InheritedFromUniqueProcessId;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct FILETIME {
+            public uint Low;
+            public uint High;
+            public long ToInt64() { return ((long)High << 32) | Low; }
+        }
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern IntPtr CreateToolhelp32Snapshot(uint flags, uint processId);
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        private static extern bool Process32FirstW(IntPtr snapshot, ref PROCESSENTRY32 entry);
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        private static extern bool Process32NextW(IntPtr snapshot, ref PROCESSENTRY32 entry);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool CloseHandle(IntPtr handle);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern IntPtr OpenProcess(uint access, bool inheritHandle, uint processId);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern uint GetProcessId(IntPtr processHandle);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool GetProcessTimes(IntPtr processHandle, out FILETIME creationTime,
+            out FILETIME exitTime, out FILETIME kernelTime, out FILETIME userTime);
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        private static extern bool QueryFullProcessImageNameW(IntPtr processHandle,
+            uint flags, StringBuilder imagePath, ref uint size);
+        [DllImport("ntdll.dll")]
+        private static extern int NtQueryInformationProcess(IntPtr processHandle,
+            int informationClass, IntPtr information, int informationLength,
+            out int returnLength);
+
+        private static bool InvalidHandle(IntPtr handle) {
+            return handle == IntPtr.Zero || handle == new IntPtr(-1);
+        }
+
+        private static IntPtr OpenOneRetainedQueryHandle(int processId) {
+            uint combined = PROCESS_QUERY_INFORMATION | PROCESS_QUERY_LIMITED_INFORMATION;
+            IntPtr handle = OpenProcess(combined, false, unchecked((uint)processId));
+            if (!InvalidHandle(handle)) { return handle; }
+            handle = OpenProcess(PROCESS_QUERY_INFORMATION, false, unchecked((uint)processId));
+            if (!InvalidHandle(handle)) { return handle; }
+            handle = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, unchecked((uint)processId));
+            if (!InvalidHandle(handle)) { return handle; }
+            throw new Win32Exception(Marshal.GetLastWin32Error(),
+                "OpenProcess failed for a filtered parent child.");
+        }
+
+        private static int QueryParentProcessId(IntPtr handle) {
+            int length = Marshal.SizeOf(typeof(PROCESS_BASIC_INFORMATION));
+            IntPtr buffer = Marshal.AllocHGlobal(length);
+            try {
+                int returnLength;
+                int status = NtQueryInformationProcess(handle, ProcessBasicInformation,
+                    buffer, length, out returnLength);
+                if (status != 0) {
+                    throw new InvalidOperationException("NtQueryInformationProcess(parent) failed: 0x" +
+                        status.ToString("X8"));
+                }
+                PROCESS_BASIC_INFORMATION information =
+                    (PROCESS_BASIC_INFORMATION)Marshal.PtrToStructure(buffer,
+                        typeof(PROCESS_BASIC_INFORMATION));
+                long parent = information.InheritedFromUniqueProcessId.ToInt64();
+                if (parent <= 0 || parent > Int32.MaxValue) {
+                    throw new InvalidOperationException("Native parent PID was not a positive Int32.");
+                }
+                return (int)parent;
+            } finally {
+                Marshal.FreeHGlobal(buffer);
+            }
+        }
+
+        private static string QueryImagePath(IntPtr handle) {
+            StringBuilder path = new StringBuilder(32768);
+            uint length = (uint)path.Capacity;
+            if (!QueryFullProcessImageNameW(handle, 0, path, ref length) ||
+                    length == 0 || length > path.Capacity) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "QueryFullProcessImageNameW failed for a filtered child.");
+            }
+            string result = path.ToString(0, checked((int)length));
+            if (String.IsNullOrWhiteSpace(result)) {
+                throw new InvalidOperationException("Filtered child image path was empty.");
+            }
+            return result;
+        }
+
+        private static string QueryCommandLine(IntPtr handle) {
+            int returnLength;
+            int status = NtQueryInformationProcess(handle, ProcessCommandLineInformation,
+                IntPtr.Zero, 0, out returnLength);
+            if (status != 0 && status != STATUS_INFO_LENGTH_MISMATCH &&
+                    status != STATUS_BUFFER_TOO_SMALL) {
+                throw new InvalidOperationException("NtQueryInformationProcess(command line size) failed: 0x" +
+                    status.ToString("X8"));
+            }
+            int bufferSize = returnLength > 0 ? returnLength + 2 : 4096;
+            for (int attempt = 0; attempt < 5; attempt++) {
+                if (bufferSize < 64) { bufferSize = 64; }
+                if (bufferSize > 1048576) {
+                    throw new InvalidOperationException("Command-line query exceeded its bounded buffer.");
+                }
+                IntPtr buffer = Marshal.AllocHGlobal(bufferSize);
+                try {
+                    status = NtQueryInformationProcess(handle, ProcessCommandLineInformation,
+                        buffer, bufferSize, out returnLength);
+                    if (status == STATUS_INFO_LENGTH_MISMATCH || status == STATUS_BUFFER_TOO_SMALL) {
+                        int requested = returnLength > bufferSize ? returnLength + 2 : bufferSize * 2;
+                        bufferSize = requested > bufferSize ? requested : bufferSize + 1024;
+                        continue;
+                    }
+                    if (status != 0) {
+                        throw new InvalidOperationException("NtQueryInformationProcess(command line) failed: 0x" +
+                            status.ToString("X8"));
+                    }
+                    ushort length = unchecked((ushort)Marshal.ReadInt16(buffer, 0));
+                    ushort maximumLength = unchecked((ushort)Marshal.ReadInt16(buffer, 2));
+                    int pointerOffset = IntPtr.Size == 8 ? 8 : 4;
+                    IntPtr text = Marshal.ReadIntPtr(buffer, pointerOffset);
+                    if (length == 0) { return String.Empty; }
+                    if (text == IntPtr.Zero || (length % 2) != 0 ||
+                            length > maximumLength || length > 65534) {
+                        throw new InvalidOperationException("Native command-line UNICODE_STRING was malformed.");
+                    }
+                    long bufferStart = buffer.ToInt64();
+                    long bufferEnd = bufferStart + bufferSize;
+                    long textStart = text.ToInt64();
+                    long textEnd = textStart + length;
+                    if (textStart < bufferStart || textEnd < textStart || textEnd > bufferEnd) {
+                        throw new InvalidOperationException("Native command-line pointer escaped its returned buffer.");
+                    }
+                    string result = Marshal.PtrToStringUni(text, length / 2);
+                    if (result == null) {
+                        throw new InvalidOperationException("Native command line was null.");
+                    }
+                    return result;
+                } finally {
+                    Marshal.FreeHGlobal(buffer);
+                }
+            }
+            throw new InvalidOperationException("Native command-line query did not stabilize within five bounded attempts.");
+        }
+
+        private static Exception CaptureCloseFailure(IntPtr handle, string label) {
+            if (CloseHandle(handle)) { return null; }
+            int error = Marshal.GetLastWin32Error();
+            return new Win32Exception(error, "CloseHandle failed for the " + label + ".");
+        }
+
+        private static ProcessRecord ReadMatchingEntry(PROCESSENTRY32 entry, int expectedParent) {
+            if (entry.th32ProcessID == 0 || entry.th32ProcessID > Int32.MaxValue ||
+                    entry.th32ParentProcessID == 0 || entry.th32ParentProcessID > Int32.MaxValue) {
+                throw new InvalidOperationException("Filtered Toolhelp entry had a malformed PID or PPID.");
+            }
+            int processId = (int)entry.th32ProcessID;
+            int snapshotParent = (int)entry.th32ParentProcessID;
+            if (snapshotParent != expectedParent) {
+                throw new InvalidOperationException("Filtered Toolhelp entry changed parent before identity query.");
+            }
+            IntPtr handle = OpenOneRetainedQueryHandle(processId);
+            Exception primary = null;
+            ProcessRecord record = null;
+            try {
+                uint handlePid = GetProcessId(handle);
+                if (handlePid == 0 || handlePid != (uint)processId) {
+                    throw new InvalidOperationException("Retained process handle PID did not match its Toolhelp entry.");
+                }
+                FILETIME created, exited, kernel, user;
+                if (!GetProcessTimes(handle, out created, out exited, out kernel, out user)) {
+                    throw new Win32Exception(Marshal.GetLastWin32Error(),
+                        "GetProcessTimes failed for a filtered child.");
+                }
+                long creationTicks = created.ToInt64();
+                if (creationTicks <= 0 || exited.ToInt64() != 0) {
+                    throw new InvalidOperationException("Filtered child exited or had malformed creation time during census.");
+                }
+                int nativeParent = QueryParentProcessId(handle);
+                if (nativeParent != snapshotParent || nativeParent != expectedParent) {
+                    throw new InvalidOperationException("Same-handle parent identity disagreed with the Toolhelp parent field.");
+                }
+                string imagePath = QueryImagePath(handle);
+                string commandLine = QueryCommandLine(handle);
+                string snapshotName = entry.szExeFile;
+                string imageName = Path.GetFileName(imagePath);
+                if (String.IsNullOrWhiteSpace(snapshotName) || String.IsNullOrWhiteSpace(imageName) ||
+                        !String.Equals(snapshotName, imageName, StringComparison.OrdinalIgnoreCase)) {
+                    throw new InvalidOperationException("Filtered child image name disagreed with its Toolhelp entry.");
+                }
+                FILETIME createdAgain, exitedAgain, kernelAgain, userAgain;
+                if (!GetProcessTimes(handle, out createdAgain, out exitedAgain, out kernelAgain, out userAgain) ||
+                        createdAgain.ToInt64() != creationTicks || exitedAgain.ToInt64() != 0) {
+                    throw new InvalidOperationException("Filtered child creation identity changed or exited during census.");
+                }
+                DateTime creationDate = DateTime.FromFileTimeUtc(creationTicks);
+                if (creationDate.Ticks <= 0 || creationDate.Kind != DateTimeKind.Utc) {
+                    throw new InvalidOperationException("Filtered child creation time was invalid.");
+                }
+                record = new ProcessRecord {
+                    ProcessId = processId,
+                    ParentProcessId = nativeParent,
+                    Name = snapshotName,
+                    ExecutablePath = imagePath,
+                    CommandLine = commandLine,
+                    CreationDate = creationDate
+                };
+            } catch (Exception error) {
+                primary = error;
+            }
+            Exception closeError = CaptureCloseFailure(handle, "filtered process handle");
+            if (primary != null) {
+                if (closeError != null) { primary.Data["CloseHandleFailure"] = closeError.ToString(); }
+                throw new InvalidOperationException("Filtered child identity query failed.", primary);
+            }
+            if (closeError != null) { throw closeError; }
+            return record;
+        }
+        public static ProcessRecord[] GetByParent(int parentProcessId) {
+            if (parentProcessId <= 0) {
+                throw new ArgumentOutOfRangeException("parentProcessId",
+                    "A filtered process census requires an exact positive parent PID.");
+            }
+            IntPtr snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+            if (InvalidHandle(snapshot)) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "CreateToolhelp32Snapshot failed.");
+            }
+            Exception primary = null;
+            List<ProcessRecord> records = new List<ProcessRecord>();
+            try {
+                HashSet<int> seen = new HashSet<int>();
+                PROCESSENTRY32 entry = new PROCESSENTRY32();
+                entry.dwSize = (uint)Marshal.SizeOf(typeof(PROCESSENTRY32));
+                if (!Process32FirstW(snapshot, ref entry)) {
+                    int error = Marshal.GetLastWin32Error();
+                    throw new Win32Exception(error, "Process32FirstW failed; an empty or incomplete process snapshot is not accepted.");
+                }
+                do {
+                    if (entry.th32ParentProcessID == (uint)parentProcessId) {
+                        ProcessRecord record = ReadMatchingEntry(entry, parentProcessId);
+                        if (!seen.Add(record.ProcessId)) {
+                            throw new InvalidOperationException("Filtered process snapshot contained a duplicate PID.");
+                        }
+                        records.Add(record);
+                    }
+                    entry = new PROCESSENTRY32();
+                    entry.dwSize = (uint)Marshal.SizeOf(typeof(PROCESSENTRY32));
+                } while (Process32NextW(snapshot, ref entry));
+                int nextError = Marshal.GetLastWin32Error();
+                if (nextError != ERROR_NO_MORE_FILES) {
+                    throw new Win32Exception(nextError, "Process32NextW did not terminate with no-more-files.");
+                }
+            } catch (Exception error) {
+                primary = error;
+            }
+            Exception closeError = CaptureCloseFailure(snapshot, "Toolhelp process snapshot");
+            if (primary != null) {
+                if (closeError != null) { primary.Data["CloseHandleFailure"] = closeError.ToString(); }
+                throw new InvalidOperationException("Filtered parent process census failed.", primary);
+            }
+            if (closeError != null) { throw closeError; }
+            return records.ToArray();
+        }    }
+}
+'@
+    try {
+        Add-Type -TypeDefinition $source -Language CSharp -ErrorAction Stop | Out-Null
+    } catch {
+        Throw-VerifierInfrastructure ('Could not load the native bound-receipt parent census helper: ' + (Get-VerifierErrorMessage $_))
+    }
+    $loadedType = $typeName -as [type]
+    if ($null -eq $loadedType) { Throw-VerifierInfrastructure 'The native bound-receipt parent census helper did not load a usable type.' }
+    return $loadedType
+}
+
+function ConvertTo-VerifierBoundReceiptCimObservation($NativeRecord, [int]$ExpectedParentProcessId,
+        [string]$Label = 'bound-receipt native parent observation') {
+    $nativeType = 'TroubleshootJsVerifierBoundReceiptParent1.ProcessRecord' -as [type]
+    if ($null -eq $nativeType -or $null -eq $NativeRecord -or $NativeRecord -is [array] -or
+            $NativeRecord.GetType() -ne $nativeType) {
+        Throw-VerifierInfrastructure "$Label was null, array-shaped, or not the exact native record type."
+    }
+    if (-not (Test-VerifierStrictIntegralValue $NativeRecord.ProcessId 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $NativeRecord.ParentProcessId 1 ([int]::MaxValue)) -or
+            [int]$NativeRecord.ParentProcessId -ne $ExpectedParentProcessId) {
+        Throw-VerifierInfrastructure "$Label carried an invalid PID or parent identity."
+    }
+    $date = $NativeRecord.CreationDate
+    if ($null -eq $date -or $date.GetType() -ne [DateTime] -or $date.Kind -ne [DateTimeKind]::Utc) {
+        Throw-VerifierInfrastructure "$Label carried a missing or non-UTC exact native creation time."
+    }
+    $nativeTicks = [long]$date.Ticks
+    if ($nativeTicks -le 0) { Throw-VerifierInfrastructure "$Label carried a non-positive exact native creation time." }
+    $remainder = [long]($nativeTicks % 10L)
+    $cimTicks = [long]($nativeTicks - $remainder)
+    if ($cimTicks -le 0) { Throw-VerifierInfrastructure "$Label could not be represented at CIM timestamp precision." }
+    $record = [pscustomobject][ordered]@{
+        ProcessId = [uint32]$NativeRecord.ProcessId
+        ParentProcessId = [uint32]$NativeRecord.ParentProcessId
+        Name = [string]$NativeRecord.Name
+        ExecutablePath = [string]$NativeRecord.ExecutablePath
+        CommandLine = [string]$NativeRecord.CommandLine
+        CreationDate = [DateTime]::new($cimTicks, [DateTimeKind]::Utc)
+        NativeCreationTicks = $nativeTicks
+        NativeCreationRemainderTicks = $remainder
+    }
+    [void](Assert-VerifierBoundReceiptObservationRawRecord $record $Label)
+    if ([long]$record.CreationDate.ToUniversalTime().Ticks -ne $cimTicks) {
+        Throw-VerifierInfrastructure "$Label lost the exact CIM-precision creation timestamp projection."
+    }
+    return $record
+}
+
+function Get-VerifierBoundReceiptCimProcessRecordsByParent($ParentProcessId) {
+    if (-not (Test-VerifierStrictIntegralValue $ParentProcessId 1 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure 'A bound-receipt CIM parent query requires an exact positive PID.'
+    }
+    try {
+        $records = @(Get-CimInstance -ClassName Win32_Process -Filter (
+            'ParentProcessId = {0}' -f [int]$ParentProcessId) -ErrorAction Stop)
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ('Could not obtain the direct bound-receipt CIM child observation for PID ' +
+            [string]$ParentProcessId + ': ' + (Get-VerifierErrorMessage $_))
+    }
+    return @($records)
+}
+
+function Get-VerifierBoundReceiptNativeProcessRecordsByParent($ParentProcessId,
+        [string]$Purpose = 'bound-receipt exact browser descendant') {
+    if (-not (Test-VerifierStrictIntegralValue $ParentProcessId 1 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure 'A native bound-receipt parent query requires an exact positive PID.'
+    }
+    $ParentProcessId = [int]$ParentProcessId
+    $inspectionType = Initialize-VerifierBoundReceiptNativeParentCensus
+    try {
+        $rawRecords = @($inspectionType::GetByParent($ParentProcessId))
+    } catch {
+        if (Test-VerifierInfrastructureError $_) { throw }
+        Throw-VerifierInfrastructure ("Could not query " + $Purpose + " children of PID " +
+            [string]$ParentProcessId + " through the native parent census: " + (Get-VerifierErrorMessage $_))
+    }
+    $result = New-Object Collections.ArrayList
+    $seen = @{}
+    foreach ($raw in $rawRecords) {
+        try {
+            $record = ConvertTo-VerifierBoundReceiptCimObservation $raw $ParentProcessId 'native bound-receipt parent child record'
+        } catch {
+            if (Test-VerifierInfrastructureError $_) { throw }
+            Throw-VerifierInfrastructure ("Could not validate " + $Purpose + " child of PID " +
+                [string]$ParentProcessId + ": " + (Get-VerifierErrorMessage $_))
+        }
+        $childProcessId = [int]$record.ProcessId
+        if ($seen.ContainsKey($childProcessId)) { Throw-VerifierInfrastructure "Native bound-receipt parent census returned duplicate PID $childProcessId." }
+        $seen[$childProcessId] = $true
+        [void]$result.Add($record)
+    }
+    # A complete fresh empty native walk needs no path spelling representation.
+    # A nonempty walk uses the original CIM authority fields: kernel image-path
+    # spelling can differ from CIM even for the same retained process. No string
+    # normalization replaces the caller's independent exact CIM comparisons.
+    if ($result.Count -eq 0) { return @() }
+    $cimRecords = @(Get-VerifierBoundReceiptCimProcessRecordsByParent $ParentProcessId)
+    if ($cimRecords.Count -ne $result.Count) {
+        Throw-VerifierInfrastructure 'Bound-receipt native and direct CIM child sets disagreed.'
+    }
+    $cimByPid = @{}
+    foreach ($cimRecord in $cimRecords) {
+        [void](Assert-VerifierBoundReceiptObservationRawRecord $cimRecord 'direct bound-receipt CIM child')
+        $childProcessId = [int]$cimRecord.ProcessId
+        if ([int]$cimRecord.ParentProcessId -ne $ParentProcessId -or
+                -not $seen.ContainsKey($childProcessId) -or $cimByPid.ContainsKey($childProcessId)) {
+            Throw-VerifierInfrastructure 'Bound-receipt direct CIM child set carried a duplicate or mismatched identity.'
+        }
+        $cimByPid[$childProcessId] = $cimRecord
+    }
+    $composite = New-Object Collections.ArrayList
+    foreach ($nativeRecord in $result) {
+        $cimRecord = $cimByPid[[int]$nativeRecord.ProcessId]
+        foreach ($field in @('ProcessId', 'ParentProcessId', 'Name', 'CommandLine')) {
+            if (-not [object]::Equals($nativeRecord.$field, $cimRecord.$field)) {
+                Throw-VerifierInfrastructure ("Bound-receipt native and direct CIM child identity disagreed at " + $field + '.')
+            }
+        }
+        $cimTicks = Get-VerifierBoundReceiptObservationCreationTicks $cimRecord 'direct bound-receipt CIM child'
+        if ([long]$cimTicks -ne [long]$nativeRecord.CreationDate.ToUniversalTime().Ticks) {
+            Throw-VerifierInfrastructure 'Bound-receipt native and direct CIM child creation times disagreed.'
+        }
+        $record = [pscustomobject][ordered]@{
+            ProcessId = $cimRecord.ProcessId
+            ParentProcessId = $cimRecord.ParentProcessId
+            Name = $cimRecord.Name
+            ExecutablePath = $cimRecord.ExecutablePath
+            CommandLine = $cimRecord.CommandLine
+            CreationDate = $cimRecord.CreationDate.ToUniversalTime()
+            NativeCreationTicks = [long]$nativeRecord.NativeCreationTicks
+            NativeCreationRemainderTicks = [long]$nativeRecord.NativeCreationRemainderTicks
+        }
+        [void](Assert-VerifierBoundReceiptObservationRawRecord $record 'composite bound-receipt child')
+        [void]$composite.Add($record)
+    }
+    # Emit only after every child and both complete sets have validated.
+    return @($composite.ToArray())
+}
+
 function Get-VerifierBoundReceiptNaturalShutdownDescendants($RootRecord,
         $Snapshot, $DrainScope) {
     # The bound receipt authorizes Browser.close for its exact root only. It
@@ -12762,8 +13224,7 @@ function Get-VerifierBoundReceiptNaturalShutdownDescendants($RootRecord,
         }
         $queriedChildren = @()
         try {
-            $queriedChildren = @(Get-VerifierProcessRecordsByParentWithFallback $parentPid `
-                'bound-receipt exact browser descendant')
+            $queriedChildren = @(Get-VerifierBoundReceiptNativeProcessRecordsByParent $parentPid 'bound-receipt exact browser descendant')
         } catch {
             if (Test-VerifierInfrastructureError $_) { throw }
             Throw-VerifierInfrastructure ("Could not query bound-receipt children of PID ${parentPid}: " +
@@ -12781,6 +13242,8 @@ function Get-VerifierBoundReceiptNaturalShutdownDescendants($RootRecord,
                         $candidatesByPid[$childPid] $queriedChild)) {
                     Throw-VerifierInfrastructure "Bound-receipt snapshot and exact child query disagreed for PID $childPid."
                 }
+                # Keep exact native 100 ns ticks beside the unchanged CIM projection.
+                $candidatesByPid[$childPid] = $queriedChild
             } else {
                 $candidatesByPid[$childPid] = $queriedChild
             }
@@ -12853,6 +13316,18 @@ function Get-VerifierBoundReceiptNaturalShutdownDescendants($RootRecord,
             }
             if ($childStart -le 0) {
                 Throw-VerifierInfrastructure "Bound-receipt protected-helper PID $childPid had no positive start identity."
+            }
+            $nativeTicks = $candidate.PSObject.Properties['NativeCreationTicks']
+            $nativeRemainder = $candidate.PSObject.Properties['NativeCreationRemainderTicks']
+            if ($null -eq $nativeTicks -or $null -eq $nativeRemainder -or
+                    -not (Test-VerifierStrictIntegralValue $nativeTicks.Value 1 ([long]::MaxValue)) -or
+                    -not (Test-VerifierStrictIntegralValue $nativeRemainder.Value 0 9) -or
+                    [long]$nativeTicks.Value -ne $childStart) {
+                Throw-VerifierInfrastructure "Bound-receipt protected-helper PID $childPid did not retain exact native creation identity."
+            }
+            $projectedTicks = Get-VerifierBoundReceiptObservationCreationTicks $candidate "bound-receipt protected-helper PID $childPid native projection"
+            if ([long]$projectedTicks -ne ([long]$nativeTicks.Value - [long]$nativeRemainder.Value)) {
+                Throw-VerifierInfrastructure "Bound-receipt protected-helper PID $childPid had an inconsistent CIM precision remainder."
             }
             Assert-VerifierBoundReceiptObservationMatchesRetainedProcess $candidate `
                 $childStart "bound-receipt protected-helper PID $childPid"
@@ -13034,7 +13509,7 @@ function Assert-VerifierBoundReceiptNaturalShutdownNoLateDescendants($RootRecord
         try {
             Add-VerifierBrowserShutdownTimingCount $TimingRecord `
                 'lateDescendantParentQueryCount'
-            $lateChildren = @(Get-VerifierProcessRecordsByParentWithFallback ([int]$parentPid `
+            $lateChildren = @(Get-VerifierBoundReceiptNativeProcessRecordsByParent ([int]$parentPid `
                 ) 'bound-receipt post-close browser descendant')
         } catch {
             if (Test-VerifierInfrastructureError $_) { throw }
@@ -14917,6 +15392,8 @@ function New-VerifierBrowserSession($Context, $RouteName, $Url,
     }
     $TimeoutSeconds = Assert-VerifierTimeoutSeconds $TimeoutSeconds 'browser session timeout'
     [void](Assert-VerifierContextPreflight $Context 'browser session context' -RequireDurable)
+    # Compile native parent-query interop before browser launch; type warmup only.
+    [void](Initialize-VerifierBoundReceiptNativeParentCensus)
     if ([String]::IsNullOrWhiteSpace($BrowserPath)) {
         $BrowserPath = Resolve-VerifierBrowserPath ''
     } else {

@@ -313,7 +313,10 @@ $runtimeNames=@('accepted-state-source-and-time-identity','exclusive-private-gra
             'schematic-reanalysis-preserves-events',
             'schematic-retaining-import-preserves-events',
             'schematic-undo-retires-event-clock',
-            'schematic-redo-retires-event-clock')
+            'schematic-redo-retires-event-clock',
+            'real-settlement-idle-repeat-no-work',
+            'real-settlement-pending-analysis-fallback',
+            'real-settlement-active-queued-dc-fallback')
 $modelValues=[ordered]@{'relay-energize'=0.04966;'relay-release'=0.00002;
     'transformer-loaded'=.499;'transformer-load-step'=.493;'diode-forward'=.62;
     'diode-reverse-current'=-1e-10;'converter-20ohm-mean'=5.6;'converter-20ohm-ripple'=.03;
@@ -339,7 +342,7 @@ $scaleRows=@(foreach ($n in @(20,40,60,100)) { foreach ($seed in @(0,1)) { forea
         analysisCount=1;stampCount=1;factorizationCount=1;solveCount=2;iterationCount=2;subIterationCount=2;
         sourceVoltage=10;totalResistance=$total;observedCurrent=$amps;nodeVoltages=$nodes}
 } } })
-$execution=[ordered]@{version='TSJ-A07-SOLVER-1';status='PASS';cleanup='PASS';pureAssertions=38;
+$execution=[ordered]@{version='TSJ-A07-SOLVER-2';status='PASS';cleanup='PASS';pureAssertions=38;
     runtimeAssertions=73;wallMs=100;runtimeCases=@($runtimeNames | ForEach-Object { @{case=$_;status='PASS'} });
     models=@{assertions=59;physicalPackages=$null;playableQualification=$false;
         limits=@('synthetic fixtures only','current-based relay','linear transformer','open-loop converter');rows=$modelRows};
@@ -356,6 +359,8 @@ foreach ($field in @('version','cleanup','status')) {
     $bad=Copy-Report $execution; $bad.$field='FAIL'
     Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) "Invalid A07 $field accepted."
 }
+$bad=Copy-Report $execution;$bad.version='TSJ-A07-SOLVER-1'
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'V1 A07 report accepted by V2 contract.'
 foreach ($field in @('pureAssertions','runtimeAssertions','wallMs')) {
     foreach ($value in @($null,'9999',-1,$true)) {
         $bad=Copy-Report $execution; $bad.$field=$value
@@ -374,7 +379,10 @@ foreach ($name in @(
     'schematic-reanalysis-preserves-events',
     'schematic-retaining-import-preserves-events',
     'schematic-undo-retires-event-clock',
-    'schematic-redo-retires-event-clock')) {
+    'schematic-redo-retires-event-clock',
+    'real-settlement-idle-repeat-no-work',
+    'real-settlement-pending-analysis-fallback',
+    'real-settlement-active-queued-dc-fallback')) {
     $bad=Copy-Report $execution
     $bad.runtimeCases=@($bad.runtimeCases | Where-Object case -cne $name)
     Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) "Missing required runtime case accepted: $name"
@@ -382,6 +390,18 @@ foreach ($name in @(
     ($bad.runtimeCases | Where-Object case -ceq $name).status='FAIL'
     Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) "Failed required runtime case accepted: $name"
 }
+foreach ($name in @(
+    'real-settlement-idle-repeat-no-work',
+    'real-settlement-pending-analysis-fallback',
+    'real-settlement-active-queued-dc-fallback')) {
+    $bad=Copy-Report $execution
+    $sourceRow=@($bad.runtimeCases | Where-Object case -ceq $name)[0]
+    $bad.runtimeCases+=@{case=$sourceRow.case;status=$sourceRow.status}
+    Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) "Duplicate new A07 runtime case accepted: $name"
+}
+$bad=Copy-Report $execution
+$bad.runtimeCases+=@{case='unexpected-a07-runtime-case';status='PASS'}
+Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Arbitrary extra A07 runtime case accepted.'
 $bad=Copy-Report $execution;$bad.models.rows[0].value=0
 Assert-ReportContract (-not (Test-A07Report (Encode-Report $bad))) 'Broken relay physics accepted behind PASS.'
 $bad=Copy-Report $execution;$bad.models.rows[0]=$bad.models.rows[1]
