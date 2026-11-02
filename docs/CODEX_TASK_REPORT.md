@@ -1,4 +1,199 @@
-# Current checkpoint: minimum-via diagnostic published; routing treatment audit active
+# Current checkpoint: capacity-aware prune accepted locally, publication pending
+
+**LOCALLY ACCEPTED FINITE SCOPE; NOT YET PUBLISHED. Updated2026-11-02.**
+Q=OS-temp/tsj-q100-capacity-bound-20261102-r1, branchcodex/q100-capacity-bound-20261102,
+HEADd4b084db58a7b5b618146eddfceeebd19b45480c plus intended15code/3docs/evidence paths.
+Z=S/capacity-bound-r1 retains exact source, raw/process proofs and failures.
+13 semantic Java changes plus one raw-only LF/CRLF file audited; source-ff61 has14.
+Final core090c48b9/test38346dc7/relaxedf583b2ad; currentlayout26/dependency28.
+
+Focused native3 PASS13091/2105/849; native33 PASS including original22 and actual
+E06/electrical/identity/physical contracts. Shared authored expands2970804 versus
+baseline3000000 (29196 saved); separate2918222 unchanged. Both EXHAUSTED/no layout.
+Normal-path postchecks precede negative pruning; original late trigger/caps stay.
+Native manifest1067/ff61d4ce654b633f9bf3774b0986c541bb8e8c6d892b67854702f6bb6df6a216.
+Structural72 cases per snapshot/20paired bounds/six physical hashes PASS through
+independent readerR3, plus1positive/16negative controls and real junction rejection/
+owned-link cleanup. Raw identity exclusion is geometrySha256 only; counts604/605
+justified by exact source proof and one added stale25 canary. Original goldens stay.
+
+Actual Player/Developer JDK8/GWT builds PASS1202/357; exact Developer reproduction:
+Dev438cc4c0fdf7205479c60d1d30540dc964b9da8312c42850790cd1f209a8c2ed/
+17ae3c055ca10c44b54ee110e6313181455f89679f89d51b1ee36f61350586f7.
+Player53125e37f12449bd50dabd9cff43368eed0e4bea3bccfc1cd19d60becee7c6a5/
+602e5b4b2255ea02badf6e8bc1954246f6ebe28dae462cfd17ead81d3cc8ccfe;357 actual
+output files archived before restoring Developer. E06StateR2 PASS10 (197.170s op,
+68.725s cleanup); Current9 PASS (cleanup.success, aggregateelapsed not exported,
+8.291s browser); Player privacy PASS (51.906s cleanup/11.035s browser).
+
+Normal3 native export/actual compiled host/independent preparation and postprocessR2
+PASS. Exact approved roots -2230691771308388107,6702341860553104274,
+-8360266000248569150; four planned candidate hashes each, actual1 attempt/root.
+Generation56.688/47.777/28.452s/work506/502/392; maxUnitMillis0 not measured peak.
+Host exit0/termination, cleanup3.910653s/server stopped/no owned survivors. Immutable
+checker/oracle retained; only two layout literals adapted with reverse byte/AST
+proof. Version regex now distinguishes named layout seeds; all native canonical
+manifest hashes match. Full current selfcheckR2 and source-only review clear.
+
+Final input auditR2 PASS: all1067 native rows,22 selected pins, current build inputs/
+output and actual Player archive/helper sources unchanged. No active owned gate,
+browser, preview or JVM. All earlier failures/source records retained, including
+reader wiring, rawidentity/count overconstraint, host stale27, normal3 seed/version
+regex and audit counter-export correction. No failed result was reclassified.
+
+NEXT: finish integrated/staged diff review, normal commit and explicit origin push
+to codex/q100-physical-feasibility, verify remote SHA, send one completion Gmail,
+then publication receipt. Latest remote isd4b084db; origin URL verified; neverpush
+upstream. After publication, start fresh current26/v28 NO_PATH-prefix capture and
+per-net VIA tally for the two authored variants; oldv27 graphs do not establish
+current prefixes. See capacity-bound-r1 README/qualification for controlled evidence.
+
+Full30 EXCLUDED by owner; HARD/PSYCHOTIC unavailable/unrun; protected unread
+UNCERTIFIED; playable100=0/betaheld. No full2-by-31, all-seed, modest-host, long-session,
+FPS or human repair renewal. Fresh API self-hosted runnercount0; CI prerequisite.
+I stays clean; Main/Desktop/W/P/N, stashes/failures/branches/ambient8928 preserved.
+Preserve16 newline-only Python status entries and local duplicate old host-source
+files under capacity-bound-r1/e06state-r1 untracked; stage intended paths only.
+No push or mail yet for this candidate. Prior min-via48b3f4d2/receiptd4b084db/
+Gmail1a19d1d72d433b85 remains the latest published milestone.
+
+Historical checkpoints below retain their recorded source/time and superseded
+claims; the current checkpoint and limits above control.
+
+# Historical checkpoint: late-only capacity-bound FocusR3 before collection
+
+**IN PROGRESS, PRIVATE/NOT ADOPTED/NOT PUBLISHED. Updated2026-11-02.** Work in
+Q=OS-temp/tsj-q100-capacity-bound-20261102-r1, branch
+codex/q100-capacity-bound-20261102, HEADd4b084db58a7b5b618146eddfceeebd19b45480c.
+I=OS-temp/tsj-b6-v27-20261102-r2 stays clean accepted baseline; rejected N remains
+unchanged. Frozen scope/amendment: docs/task-evidence/Q100/capacity-bound-r1/PLAN.md.
+Z=S/capacity-bound-r1 keeps all exact source, controls, raw runs and failure records.
+Focused native process active/awaiting collection: unifiedexec4835, Z/focused-r3/positive-r3. Staged0; late-only source remains unqualified until result collection.
+
+Early-build revision source99d97eba passed fresh FocusR2: TwoLayer13091,
+Relaxed2105/two structural seed5 clones/exact projected24 hashes, Observation828
+with lifecycle/first-success coverage; exit0/termination/cleanup/input audit PASS,
+parent34.1247459s including cleanup. Earlier FocusR1 failed first-success policy
+coupling; exact8 sources/failure retained at Z/focused-r1. Assertion preserved.
+
+Actual authored R1 on SAME source99d97eba then FAILED. Shared hit WORK_LIMIT640
+in p07-session-advance-632: operation19.462s/cleanup1ms/max unit1.229s. Terminal/
+layout facts NOT EXPORTED after failure; identity comes from frozen variant order,
+not missing reportFacts. Separate diagnostic PASS but EXHAUSTED,14.558s/0ms,
+476units/max.757s/2910211 expansions/no returned layout. Parent exit2, termination/
+cleanup PASS and1067 before/after input audit PASS,67.2151558s including cleanup.
+Session64711 complete. No actual layout accepted; no missing proof reclassified.
+
+Exact8 executed sources shared by FocusR2/authored R1 archived at Z/source-99d97;
+authored raw/results and controlled failure-summary.json are in Z/authored-r1.
+Per-field work breakdown NOT EXPORTED. Extra early initialization is source-level
+inference, not measured subphase. Do not increase90s/640/5s or other quotas.
+
+PLAN amended BEFORE next edits: remove early-build/direct-goal/pressure-policy
+scaffolding and restore EXACT original late-pressure trigger and ordering-guidance
+activation. Keep only zero-capacity VIA mask in the existing bound callback and
+fully checked unreachable pruning after cap checks, with observer cancellation.
+No objective, threshold, cost, actual route predicate, array or attempt changes.
+Geometry-permissive captured VIA masks remain independent. Candidate26/28;
+plan1/model4/intent9/dumpv7 and all original caps unchanged.
+
+Leaf capacity_bound owns only PcbLayerRoutingPrototype plus P07RelaxedDistanceBound
+and P07FixedPrefixObservation tests. It is adapting only NEW literal zero-capacity/
+lifecycle fixtures to a larger board below250000 cells that naturally reaches the
+original67232 pressure threshold. Original small geometry/first-success oracles
+remain; lifecycle snapshots become pre-build queue/expansion/cache state after
+real search, not a two-node cold-start assumption. No worker actors/tests.
+
+Root owns version/strict current26-prefix adapters and authored independent-oracle
+wrapper. Historical20/24 projection targets and literal SHA oracles remain exact;
+four-file multiset audit PASS. Additional conditional metadata guards remain in
+Z/metadata-followups.json; not completed. Nine SDK jars/22 raw-pinned Python files
+verified from I;16 newline-only statusM entries have empty canonical diff. Eight
+intended Java paths/report/untracked plan. Do not carry rejected N queue objective.
+
+Late-only source finalized/reviewed: core8555a3c3, relaxedf583b2ad, observation
+4617b53b. Exact original build trigger/guidance restored; production diff only
+zero-capacity callback VIA mask and completed negative pruning after caps.
+New33221-cell literal fixture naturally reaches original pressure threshold.
+Pre-build queue/best/expansion/serial/geometry/router snapshots and partial/full
+abort/cap precedence canaries; proof latches and one-work completion slices fixed
+before actors. Unexecuted pre-fix sources in review-before-late-canary-fix.
+Final source-only review CLEAR; no independent numeric or small-fixture oracle
+weakened. No late-only native PASS inferred yet.
+
+Fresh FocusR3 input1067 manifest
+2740eb2e88ab6c206a92a3a052da5c3d9432c28c727af9a3b93d797f9f1922d4.
+Negative expectedexit2 before child requested. Positive pending. AuthoredR2
+wrappers prepared but no manifest/actor yet. Conditional metadata followups and
+all final-source adoption gates remain pending; no Q publication or completion mail.
+NEXT: finish late-only source/tests, review, fresh focused3 THEN authored2 in new
+namespaces/1067-input manifests, with real wrapper negative/exit proof. No prior
+source PASS qualifies the new revision. If useful checked-pruning benefit is
+proved, freeze/run all conditional final native/actual GWT/compiled/privacy/
+electrical/approved3-root gates before adoption/publication; otherwise preserve
+NOT_ADOPTED. No GWT/Current/E06/normal3 on Q yet. Playable100 remains0/betaheld.
+Full30 manifest excluded, HARD/PSYCHOTIC unavailable/unrun, no new protected data
+access, prior unread UNCERTIFIED. Main/Desktop/W/P/I/N, failures/stashes/branches/
+ambient8928 preserved. Latest published min-via48b3f4d2/receiptd4b084db/
+Gmail1a19d1d72d433b85 sent once; no mail/push for failed or pending candidates.
+
+
+# Historical checkpoint: rejected via-objective experiment
+
+**NOT ADOPTED/NOT PUBLISHED. Updated2026-11-02.** Accepted baseline remains
+I=OS-temp/tsj-b6-v27-20261102-r2, branch codex/q100-minimum-vias-20261102,
+HEADd4b084db58a7b5b618146eddfceeebd19b45480c, clean; source layout25/dependency27.
+Minimum-via48b3f4d2/receiptd4b084db pushed/verified and Gmail1a19d1d72d433b85
+sent once. The private failed candidate below was not committed, pushed or emailed.
+
+N=OS-temp/tsj-q100-branch-order-20261102-r1, branch
+codex/q100-via-objective-20261102, HEADd4b084db plus seven Java source/test changes,
+report and untracked frozen plan docs/task-evidence/Q100/via-objective-r1/PLAN.md.
+Only pass2/FULLER/ROLE uses fewer-transition priority then existing weighted order.
+Versions26/28 identify this private candidate. All costs/predicates/caps retained.
+No actual layout from either authored case, so the treatment is NOT ADOPTED.
+
+R4 actual native command had1067 bound inputs, manifest
+a212bd9d0c1247d02528f231f4344486a0e9142548caa07eb48feae76f39d0c7.
+Shared diagnostic PASS but EXHAUSTED,16.466s operation/1ms cleanup,250 work,
+max unit1.317s,3 route attempts/2977206 expansions/no layout. Separate diagnostic
+PASS but EXHAUSTED,13.226s/0ms cleanup,273 work,max.830s,3 attempts/2653202
+expansions/no layout. Independent physical checks NOT RUN_NO_LAYOUT. Zero-output
+viaCount0 does not describe failed-prefix via usage; prefix counts not exported.
+
+P07TwoLayer PASS13104 assertions. Group FAIL exit2: P07RelaxedDistanceBound hit
+PcbCompactnessContractTest.layout24PrefixReferenceSha256's current-layout25 guard.
+That historical projection helper was not fully migrated; no numeric oracle was
+changed or test failure suppressed. P07FixedPrefixObservation NOT RUN after that
+failure. Before/after1067 input audit PASS; child36888/start639292359213694242
+terminated, cleanup PASS; parent operation+cleanup67.9189518s, split not exported.
+Unifiedexec session9301 complete exit2; outer launcher9180/start639292359195698894
+also exited. No run-owned browser/preview/JVM/launcher remains active.
+
+V=S/via-objective-r1 keeps decision-r4.json, positive-r4 raw streams/result,
+native-r4-inputs/definition and exact seven executed sources+patch in
+candidate-r4-source. Keep N unchanged as rejected source. R1 preparation error,
+R2 caller-exit error/corrected canary and R2/R3 preflight manifests remain; final
+R4 wrong-binding control exit2 before child launch requested. No GWT/Player/
+Current/E06/normal3 gates run for the rejected treatment. No production fix claim.
+
+E=S/branch-order-r1 retains no-checkout sparse setup,9 verified SDK jars and22
+Python raw-byte synchronization rows.16 newline-only Python statusM entries in N
+have empty canonical diff; preserve their pinned bytes. Staged0. Main/Desktop/W/
+I/P, older failures/stashes/branches/ambient8928 preserved. Full30 manifest export
+excluded; HARD/PSYCHOTIC unavailable/unrun; prior unread UNCERTIFIED. No new
+protected dataset access. Original budgets unchanged; playable100 layouts0/betaheld.
+
+NEXT: source-only audit in accepted I of a smaller necessary-constraint treatment:
+when no request-hole capacity remains, mask VIA edges in the existing relaxed
+distance field and prune only fully proven unreachable states/branches. Keep the
+original weighted objective and quotas. No next treatment selected/implemented
+yet. Separate audit identifies the precise current26/28 historical-projection
+metadata migration while preserving independent layout24-prefix geometry hashes.
+Create/freeze a fresh candidate from I before edits; do not overwrite rejected N.
+
+
+# Historical checkpoint: minimum-via diagnostic publication
 
 **PUBLISHED. Updated2026-11-02.** Implementation
 48b3f4d237cc00732bdee197c5b3bb0c4425bd40 (`Bound Q100 fixed-prefix minimum via counts`)
@@ -101,13 +296,9 @@ proofs remain required for later playable100 qualification.
 
 # Historical checkpoint: B6 observation publication and acceptance
 
-**PUBLISHED. Updated2026-11-02.** Implementation
-`ffcd2983b3b730e08fb7d7a57db16c3b6fd32d33` (`Observe actual Q100 failed routing prefixes`)
-was normally pushed to origin/codex/q100-physical-feasibility and its exact remote
-SHA verified. Completion Gmail `1a19cdf5978f9027` sent once; no duplicate for this
-documentation-only receipt. Integration worktree I=OS-temp/tsj-b6-v27-20261102-r2,
-branch codex/q100-fixed-prefix-v27-r2-20261102, source parent
-9a6736e12487d8f6e7ea15ccfecb8ecaa0c1c295. No active run-owned process.
+**VALIDATED, pending normal commit/push. Updated2026-11-02.** Integration worktree
+I=OS-temp/tsj-b6-v27-20261102-r2, branch codex/q100-fixed-prefix-v27-r2-20261102,
+source parent9a6736e12487d8f6e7ea15ccfecb8ecaa0c1c295. No active run-owned process.
 The [qualification packet](task-evidence/Q100/fixed-prefix-r1/README.md) records
 controlled independent outputs, exact source/build hashes, commands and limits.
 
@@ -157,83 +348,1405 @@ Unrelated Main B6 at5f05b005(9tracked/6new), Wprivate40(7/8), Desktop e0c36885(7
 stashes/branches/prior evidence and ambient8928 preserved. Public beta held;
 HARD/PSYCHOTIC unavailable/unrun; no full30/2x31/all-seed/long-session/modest-host/
 FPS/human-repair renewal. Manual player input NOT APPLICABLE for unchanged flow.
-CI requires the approved self-hosted runner registered. Integrated/staged diff,
-whitespace, source-pin/staged-byte and controlled privacy checks passed. NEXT:
-freeze the next routing diagnosis scope using the accepted fixed graphs before
-selecting any treatment. No actual100 layout is accepted.
+CI requires the approved self-hosted runner registered. NEXT: final staged review,
+normal commit/push/remote verification and one completion Gmail, then freeze the
+next routing diagnosis/treatment scope. No actual100 layout is accepted.
 
 
-# Historical checkpoint: reduced matrix ordering published; routing integration next
+# Historical checkpoint: all solver gates pass; corrected normal3 capture active
 
-**PUBLISHED. Updated2026-11-02.** Implementation
-`cad0799a59131464ceaea19d425e9c9efe1f329f` (`Order reduced nonlinear CircuitJS matrices`)
-was pushed normally from codex/q100-reduced-matrix-ordering-20261102 to
-origin/codex/q100-physical-feasibility and its exact remote SHA verified.
-Completion Gmail `1a19c6d6151fe3ca` sent once. This documentation-only receipt
-requires no repeated production gate or completion email. Source parent is
-5f05b005c80e312c60fc7db24745f2d8afe4d04b. No active run-owned process remains.
-The [qualification packet](task-evidence/A07/reduced-matrix-ordering-r1/README.md)
-records exact source/build/artifact hashes, commands, finite gates and limits.
-Local raw evidence is retained under OS-temp/
-tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/cin33-cpu-r1,
-principally reduced-matrix-ordering-r1, normal3-native-r1/epoch27-export-r3
-and normal3-host-launch-r1/attempt-20261102T123748Z-0696711555f34f7294fb81e8d701f6a6.
-Final consumed-input audit PASS: all25 source pins, Developer1202/357 and Player
-input1202 unchanged. Current war is the qualified Developer build; Player output
-was recorded before that rebuild and is not inferred from current war.
+**IN PROGRESS, normal3 raw capture PASS; final metadata review pending, no active P actor.** Updated 2026-11-02.
+S = OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
+T = S/cin33-cpu-r1; P = S/a07-retained-preview-publication.
+P branch codex/q100-reduced-matrix-ordering-20261102, HEAD
+5f05b005c80e312c60fc7db24745f2d8afe4d04b,14 tracked/3 new intended files, staged0.
+Source25 pins in T/reduced-matrix-ordering-r1/candidate-inputs-r3.json. No P source
+changed during tooling repairs. Main B6(9/6), Wprivate40(7/8), Desktop e0c36885(7/89),
+all branches/stashes/failures and ambient8928 preserved. No new commit/push/mail;
+be15/receipt5f05/Gmail1a198e4cd3f5d367 already published once.
 
-ReducedMatrixOrdering applies a generic bounded symmetric minimum-degree
-permutation during CircuitJS simplification, before original backups; inverse
-RowInfo maps preserve physical nodes and solver state. No models, LU algorithm,
-finite/convergence/ownership guards or independent physics oracle changed.
-Dependency interpretation v27 rejects stale v26 proof/save identities; model
-inputs remain v7. Native/GWT fixtures check mappings, literal independent solves,
-KCL/KVL, events, reset, and actual private-parent restoration.
+Scope: generic minimum-degree symmetric ordering of eligible nonlinear reduced
+CircuitJS matrices16..128 before original backups; inverse-remap fresh RowInfo.
+Models/LU/physical identities/guards/oracles unchanged. No cache, replacement
+solver or seed/fault-specific policy. Explicit dependency v27, model dump v7.
+Stale v26 proof/save rejection tested. Plan: reduced-matrix-ordering-r1/PLAN.md.
 
-PASS: focused native10; native62/62; compiled62/62; E06State10/10 including both
-CIN33_SHUNT50us fault/repair references; final A07 and Current9; actual final-source
-JDK8/GWT Player/Developer builds; Player privacy with two negative sentinels;
-source-bound finite3 native manifests, live source/compiled-script binding and
-original independent payload postprocessing. Developer rebuild exactly reproduces
-qualified input3415963/outputdb929514,1202/357; Player67c4fbb9/36920c11,1202/357.
-Compiled full62 operation1175.905s/6000s, cleanup112.913s/120s, browser11.444s/15s.
-Normal3 generations56.716/48.491/28.157s and work506/503/392 respect original90s/640.
-No manual interaction/repair evidence is claimed for this numerical-only change.
+All current production gates PASS (details/full hashes in historical checkpoint):
+- Native10 exec40057, native full62 exec70745 (254091 assertions,62/62,131634ms).
+- Developer r2 and fresh r3 reproduce EXACT input3415963aac69c3e5cc21292ec8f3c239671f54e253ec4d9a4c534f49b35bc06e,
+  outputdb929514ea26d2e50a8d9530d757abd7a683a05ef642b1a15c6dc142738e62e8,1202/357.
+- E06State10 exec46867, both CIN33_SHUNT50us fault+repair24000steps/1.2s/work393/
+  max64/fixedTRUE. Separate27154ms/maxUnit1288, shared19480/maxUnit393; maxUnit is
+  batch time, not500ms attempt guard. Cleanup69896/browser9256ms; report8c2894ca.
+- Compiled full62 exec42834:62/62, operation1175905ms, cleanup112913ms/120000,
+  browser11444ms/15000, source25pins stable; reportd966ee0e.
+- Final A07r4 exec99283:9/9, cleanup68813/browser8836ms, report233390c1.
+- Current9 exec31817:9/9, cleanup.success=true/browser8317ms; aggregate elapsed
+  NOT EXPORTED, reportbfd36eda. E06 reader121 fixtures and actual v27/v26 controls pass.
+- Player build exec33402 compile67.649s/link1.400s; input67c4fbb91a4df6494252d726cb9361e26ccdbcef59c8c559e45ae860810560bb,
+  output36920c116085091bffd5cb0488c8681d21471e3040f5f9e43aa4823db1c4960f,1202/357.
+  Privacy exec69636 PASS1route+2sentinel negatives/cleanup; cleanup54019/browser10960ms,
+  report19d63505. Actual Player input snapshot saved before Developer rebuild.
+  No visible UI/physical flow changed: manual Player interaction NOT APPLICABLE.
 
-All earlier failed treatments and compile/fixture/receipt/route failures remain
-preserved. Native3's exact one-source Task35 GWT-only verifier adapter throws if
-called; it grants no electrical proof. The raw first capture remains FAIL after
-missing-bootstrap diagnosis; the successful fresh capture was independently
-postprocessed. Original oracle function bytes and budgets were preserved. Scoped
-independent adapter/reader/schema and reduced-ordering source reviews found no
-remaining blocker; reviewers ran no actors. Root completed integrated and staged
-diff, whitespace, source-pin, staged-byte and controlled-packet privacy checks.
-No broad performance guarantee is inferred.
+Finite3 native producer v2 PASS epoch27-export-r3, root exec52856; javac/java exits0
+and terminationTRUE, source/build/jars stable. Wrapper1dcad805 uses canonical
+OrdinalIgnoreCase jar order and EXACT one Task35 GWT-only verifier fail-closed
+stub (throws if called). Independent adapter review clear, fresh pure PASS0.419s.
+Root actual native source/classpath/receipt validator PASS0.442s; manifest37f5e3f1
+is1208bytes/three ordered roots/four candidates each. Current maintained stub literal
+matches P native runner d36a3cd8. Classes intentionally retained; helper private
+logs removed before return, separate cleanup duration NOT SUPPLIED. No native
+physics claim from this export. Player/developer post snapshots saved with -r2 suffix.
 
-Limits: no full30 renewal or all-seed/long-session/modest-host/FPS/human-repair
-claim. Public beta held, accepted playable100 layouts0, HARD/PSYCHOTIC unavailable
-and unrun; protected data stayed unmaterialized here, historical unread boundary
-remains uncertified. CI requires the approved self-hosted runner registered.
-Unrelated Main B6, private40 and Desktop work, old branches/stashes/evidence and
-ambient preview are preserved. NEXT: resume the preserved Q100 physical feasibility
-work in a fresh worktree from the published source. Audit old capture/parity
-receipts before reuse, merge overlapping registrations/diagnostics deliberately,
-and run required final-source gates. No physical milestone is accepted yet.
+Capture launcher7620e523, host_specce594297, finite_plan4ae43b17, selfcheckf31f510e.
+Actual selected WinPS/Python process canaryr3 PASS exits0/2, literal CLI exact;
+reader fixture10 PASS including actual old TIMEOUTs remaining false; bad expected
+build digest rejected before browser. Source review bootstrap/parser clear.
+Corrected capture CLOSED CAPTURE_PROCESS_SUCCESS_ONLY/exit0 in normal3-host-launch-r1/
+attempt-20261102T123748Z-0696711555f34f7294fb81e8d701f6a6, serves P with pinned Main
+runnerf0d46920. Exact existing A07 LED3 predecessor bootstrap is now explicit;
+three RB56 target roots/order and115s unchanged. Capture alone is NOT qualification.
+Original payload checker61fb30a1/currentchecker9328b52c/postprocess222763ce unchanged;
+preparef46e795e owns strict manifest/current-file/native-adapter validation.
 
-# Historical checkpoint: native listener prerequisite published; integration next
+Raw corrected capture exec11278/exit0:3/3PASS in58.175/50.059/29.485s, child0 and
+terminationTRUE, cleanup PASS3.985s/serverstopped/no owned survivors/inputAuditPASS.
+This is not yet accepted normal3. prepare attempt1 failed an invented SHA-in-script-
+attachment requirement (maintained runner emits no SHA). postprocess now1aaacb7d
+matches six actual attachment fields, exact loopback origin/cache path and validated
+manifest row; selfcheckd9c5faf4 PASS0.456s. Originaloracle61fb30a1/currentchecker9328
+unchanged. Independent review active; root flagged missing backend-ID link to
+terminal scopeIdentity witness, still being assessed. Actual observations have
+attachment doc/html3/5 and terminal backendBefore/After3/5; attachment generation1
+versus terminal generation2 is legitimate, do not equate those generations.
+No production source, raw capture or physical oracle changed. Publication HELD.
 
-**PUBLISHED. Updated:** 2026-11-01 UTC.
+NEXT: finish actual script-attachment/document witness binding review and any
+necessary scoped fix, fresh pure checks, then use native output normal3-native-r1/epoch27-export-r3,
+player-before-developer.json, player-after-developer-r2.json, developer-before-host-r2.json
+and actual after-host identity for prepare.py then unchanged postprocess.py. All are
+under T/reduced-matrix-ordering-r1 except named capture/native folders. Never promote
+raw capture to qualification without both validators. One expensive P actor at a time.
+Then final input audit/docs/diff, normal commit/push/remote verification and one Gmail.
+
+Failures preserved: native export r1 javac incompatibility, r2 strict classpath-order
+mismatch; first browser3 allTIMEOUT because missing predecessor, then caller nested
+name error. Old actual capture remains FAIL; no electrical failure inferred before
+verifier start. All earlier unroll/ref40/cache and observer failures stay recorded.
+No full30 work; protected HARD stays unmaterialized here, HARD/PSYCHOTIC unavailable/
+unrun, historical unread UNCERTIFIED. Original90s/640/5s/500ms/15s/120s unchanged.
+Playable100 layouts=0, public beta held; self-hosted CI runner registration required.
+
+# Historical checkpoint: ordered solver passes62; finite3 tooling repairs
+
+**IN PROGRESS. Finite3 native v2 ACTIVE exec87998; capture tools in repair.** Updated 2026-11-02T12:16Z.
+P = S/a07-retained-preview-publication; branch
+`codex/q100-reduced-matrix-ordering-20261102`, HEAD
+`5f05b005c80e312c60fc7db24745f2d8afe4d04b`;14 intended tracked/3 new files, staged0.
+T = S/cin33-cpu-r1. Candidate source: reduced-matrix-ordering-r1/candidate-inputs-r3.json,
+25 pins. Scope plan and every launch/return/report are in that same T folder.
+Main B6(9tracked/6untracked), W private40(7/8), Desktop e0c36885(7/89), all old
+branches/stashes/failure evidence and ambient8928 remain preserved. No new commit,
+push or mail. Native be15/receipt5f05/Gmail1a198e4cd3f5d367 already published once.
+
+Scope: generic minimum-degree symmetric permutation of eligible nonlinear
+CircuitJS reduced matrices16..128, before original backups; inverse-remap fresh
+RowInfo coordinates, physical node identities unchanged. No replacement solver,
+cache or seed/fault-specific policy. Existing models/LU/finite/convergence/events/
+cleanup guards and independent voltage/fault oracles stay. Explicit dependency
+interpretation v27; model dump epoch stays v7. Stale v26 proofs/saves rejected.
+
+Current production build is Developer r2, actual selected WinPS/JDK8 through
+scripts/build.ps1: compile114.853s/link1.656s, input
+3415963aac69c3e5cc21292ec8f3c239671f54e253ec4d9a4c534f49b35bc06e (1202 files), output
+db929514ea26d2e50a8d9530d757abd7a683a05ef642b1a15c6dc142738e62e8 (357 files).
+Full live identity recheck after the PS-only epoch reader migration matched all
+four fields. Build has no explicit success exit; nested exit NOT EXPORTED, outer
+exit0 and maintained compiler/promotion/identity checks completed. No source drift.
+
+Passing current gates:
+- Native10 exec40057/exit0: A07372629, zero292/pivot388, healthy RB10024294/4cases,
+  RelB249/RB56model123/D01198/A1015/ordering445935/relaxed2026. Total62443ms incl
+  compile/cleanup; native scratch removal reported, separate duration not supplied.
+- E06State10 exec46867/exit0,25 pins stable: operation204523ms, cleanup69896ms,
+  browser9256ms. Report8c2894ca. Both CIN33_SHUNT50us complete fault+repair24000
+  steps/1.2s/work393/380batches/max64/fixedTRUE, protocolv3/model4/exactseedSTRING
+  9007199254740993. Shared19480ms/maxUnit393; Separate27154ms/maxUnit1288.
+  MaxUnit is batch time, not500ms accepted-step guard. Private cleanup3/4ms.
+- Native full62 exec70745/exit0:254091 assertions,62/62/failures0,131634ms under
+  1200000ms; total161585ms incl compile/cleanup. NATIVE_GRAPH_ONLY; general native
+  matrix not run. Compiled full62 exec42834/exit0:62/62, operation1175905ms,
+  cleanup112913ms under120000, browser11444ms under15000, resourceSuccess true.
+  Reportd966ee0ed1afac9ff9bb90cf810317c689ed020c1a30b9f4ed90b0bc37a8ba87.
+- Final A07 r4 exec99283/exit0:9/9, cleanup68813ms/browser8836ms/resourceSuccess,
+  25 pins stable; report233390c15bcdb4590db0881ab9de06b3600ee3cf4c17ccde149232feb1ab0196.
+  Earlier r3 passed too, but predates PS-only E06 reader change. Final r4 is fresh.
+- Maintained E06/Q100/A04 reader fixtures PASS121/strict-base; actual captured v27
+  reader-positive/in-memory v26-negative PASS. Original failed gate stays failed.
+
+- Current9 PASS exec31817/exit0:9/9, cleanup.success=true, browser8317ms; aggregate
+  cleanup elapsed/resourceSuccess are NOT EXPORTED by this gate. Total285933ms,
+  25 pins stable. Reportbfd36eda5a31ea26054a55abec159deeefc5b90c80ee46f5249e37d0ee8c3a83.
+- Qualified Developer module archived byte-for-byte (357 files), all copied SHA
+  values checked, live production input/output recheck matched3415963/db929514.
+- Player JDK8/GWT build PASS exec33402/exit0, compile67.649s/link1.400s, input
+  67c4fbb91a4df6494252d726cb9361e26ccdbcef59c8c559e45ae860810560bb,
+  output36920c116085091bffd5cb0488c8681d21471e3040f5f9e43aa4823db1c4960f.
+  Player privacy PASS exec69636/exit0:1route, two leakage-sentinel negatives and
+  sentinel cleanup PASS; cleanup54019ms/browser10960ms/resourceSuccess true,
+  25 pins stable. Report19d63505e2769fac7df24a7b89d1b03a5fab49821a7bf1e3137de53792cb0c0f.
+  Fresh Player identity snapshot confirms1202/357 and those exact digests.
+  Visible Player input flows are NOT APPLICABLE to this numerical-only change;
+  actual compiled Player privacy is qualified, no manual repair interaction claimed.
+
+- Developer r3 rebuild PASS exec28630/exit0, compile112.316s/link1.733s. Exact
+  input3415963/outputdb929514 reproduced: prior qualified Developer gates reusable
+  after actual full identity match, not merely semantic source similarity.
+- Finite3 fresh pure selfcheck PASS0.415s/exit0; current owner v27 and original
+  independent checker function/request v5/budgets intact. No full30 preparation.
+- Real selected WinPS/Python boundary canary r2 PASS/exit0: quoted/spaced/trailing
+  slash/long-decimal CLI bytes exact, real child exits0 and2, both termination
+  proofs true; exit2 rejected. Actual task ancestors have no reparse points;
+  both helper temp roots verified absent. Initial root canary r1 failed because
+  PS5 JSON-array result was double-wrapped in the test; raw CLI was exact. Source
+  and failure preserved; r1 receipt elapsed0 was unmeasured, not timing proof.
+- Actual wrong-build-digest and wrong-count launcher negatives both NOT_PASS/
+  selected exit1 before spec/browser; neither output created. Source binding is P,
+  Main supplies runner code only. Capture-only launcher454b5943 unchanged.
+- Finite3 native export r1 FAIL exec55630/outer1: javac actualexit1 with termination
+  TRUE. Exact known Task35 UI verifier generic comparison is accepted by GWT but
+  rejected by javac8. Source/error/receipt/partial classes remain in
+  normal3-native-r1/epoch27-export-r1; Java export NOT RUN. No P source changed.
+- cpu_hot_js_source now owns a bounded external adapter: use the existing
+  maintained native runner's fail-closed Task35 verifier stub (throws if invoked),
+  replace EXACTLY one unrelated UI developer source, declare provenance, and keep
+  strict all-other-production-source census. Wrapper/prepare/selfcheck/newstub
+  changes only in T; freeze old files first. No changes to P, payload checker,
+  request/physics/budget or protected data. Root integration and actual gates
+  pending. No active P/native/browser/GWT actor; only source-only worker.
+
+Failures preserved below/in T: invalid600s wrapper preview timeout (fixed to90),
+new test's incorrect scopeColCount identity expectation (existing Task41 copies
+values; corrected fixture preserves graph/map identity checks), E06 r1 timed out
+on a real PASS v27 canary because host required v26 (fixed exact literal+negative).
+Old row-unroll/ref40/exact-cache treatments remain NOT ADOPTED. No failures erased.
+
+NEXT: native export v2 ACTIVE exec87998 (epoch27-export-r2); wrapper26da3f46,
+preparef46e795e/selfcheck29d1bd5e/stub1e1c4e05. Independent adapter source review
+CLEAR; root fresh pure selfcheck PASS0.479s. Exact one unrelated Task35 source is
+replaced by the maintained fail-closed stub; no P source or physics/oracle change.
+After native export, validate actual receipts and fresh pure capture-tool checks,
+then rerun the exactly-three approved root browser capture and prepare/postprocess.
+One expensive P actor only. No commit/push/mail until this blocker is resolved.
+
+First actual capture exec36296 CLOSED selected exit1/NOT_PASS. Actual runner child
+exit1/terminationTRUE,355.625s. All3 cases TIMEOUT115s with no verification/report
+attributes; actual cleanup PASS4.317s/server stopped/no owned survivors/inputAudit
+PASS (1577 files, before/after6912b638). No electrical failure inferred because
+Rb56 never started. Caller then masked those timeouts with wrong `case.name` field
+(actual case records use `case.case.name`). Raw output and caller454b preserved in
+normal3-host-launch-r1/attempt-20261102T120433Z-bb93575fb94542f19589c2a3b29b3e25.
+Root diagnosed actual missing predecessor bootstrap: CirSim5294 requires a ready
+generatedChallengeController before Rb56 start. Existing passing A07 uses exact
+`tsjChallenge=led&seed=3&running=true`. cpu_hot_js_source now owns T-only host_spec,
+finite_plan,selfcheck, READMEs and capture launcher to add this existing LED3
+predecessor, preserve all3 RB56 target roots/order/115s and original budgets, fix
+the actual nested case schema and add source-only real-timeout/synthetic reader
+fixtures. No actors by worker. prepare/oracle/checker/manifest entry4a54e7f0 stay
+unchanged. Actual normal3 electrical qualification/export still pending; no full30.
+Original90s/640/5s/500ms/browser15s/cleanup120s limits remain. Protected HARD data
+stays unmaterialized here; HARD/PSYCHOTIC unavailable/unrun. Historical unread
+boundary UNCERTIFIED after recorded incidents. Public beta held; playable100
+layouts=0. CI still needs the approved self-hosted runner registered. Publish only
+after remaining required gates pass; normal push, verified SHA, one completion Gmail.
+
+# Historical checkpoint: reduced matrix ordering through full62
+
+**IN PROGRESS.** Final A07 ACTIVE: root exec99283. Updated 2026-11-02T11:22Z.
+P is `codex/q100-reduced-matrix-ordering-20261102`, HEAD
+`5f05b005c80e312c60fc7db24745f2d8afe4d04b`; 14 tracked/3 untracked intended changes,
+staged0. Candidate r3: T/reduced-matrix-ordering-r1/candidate-inputs-r3.json (25 pins).
+Main B6 (9 tracked/6 untracked), W private40 (7/8), Desktop e0c36885 (7/89), old
+branches/stashes/evidence and ambient8928 remain preserved. No new commit/push/mail.
+Native be15/receipt5f05/Gmail1a198e4cd3f5d367 were already published once.
+
+Scope: generic symmetric minimum-degree ordering of eligible nonlinear reduced
+CircuitJS matrices16..128 during existing analysis, before original backups.
+A/RHS are permuted together; fresh RowInfo maps use the inverse. Physical node
+identities, models, stamping, LU, convergence and all finite/budget/ownership
+guards remain. No cache or seed/fault-specific policy. Explicit dependency v27
+acknowledges changed floating point order; model dump epoch remains v7. Plan:
+T/reduced-matrix-ordering-r1/PLAN.md. Playable100 layouts remain zero.
+
+Gates and preserved failures:
+- Native r1 PASS exec95398/exit0: A07 reported372629, zero-row292, pivot388,
+  healthy RB10024294/cases4/fail0/4754ms; total35455ms includes compile/cleanup.
+- Developer r1 PASS exec82827/exit0, compile116.341s/link1.679s, 1202/357 files,
+  input696f64db09917badf8af86e028dd9b09e44d4f8e664529b3ca5a5fe3ad899119,
+  output459be4d4e9d55f446b10658b6bc593a5726448cc9e35a95cd17939e9aa68d4dc.
+  This output is STALE for r2's test change; new build is required.
+- Compiled A07 r1 INFRASTRUCTURE_FAILURE before browser launch: root wrapper
+  supplied600s to preview (admitted10..300); selected exit2. Wrapper corrected
+  to maintained90s. Original wrapper/report remain preserved.
+- Compiled A07 r2 FAIL exec29506 at1985ms in new parent-restore test. Existing
+  Task41 intentionally copies scopeColCount, but the new fixture incorrectly
+  required array identity. No production restore defect established. Failure
+  cleanup PASS46026ms/browser12408ms/resourceSuccess=true. Frozen24sources,
+  7JS/full357inventory and r1-root-observation.json preserve exact evidence.
+- Candidate r2 changes ONLY that fixture: independently copied scope column
+  values are compared; every solver/RowInfo/graph identity check remains strict.
+  Runtime source2bfe4d01485fe16d95717ae4183054473cd41f3cea8706ed459ff8865cbc9507.
+- Fresh native r2 PASS exec40057/exit0, ten suites/total62443ms including cleanup:
+  A07372629, zero292, pivot388, healthy RB10024294/4cases/4018ms, RelB249,
+  RB56model123, D01198, A1015, ordering445935, relaxed2026. Direct stale-v26 and
+  v25 parser/cache rejection pass. Geometry/numeric assertions unchanged.
+  Native scratch cleanup reported removed; separate duration NOT SUPPLIED.
+- Developer r2 PASS exec67858/tool exit0; compile114.853s/link1.656s, total167025ms.
+  Build script has no explicit success exit statement; wrapper nested exit was null,
+  not an exported child-exit receipt. Maintained compiler/link/source-promotion
+  checks completed and emitted qualified identity input3415963aac69c3e5cc21292ec8f3c239671f54e253ec4d9a4c534f49b35bc06e,
+  outputdb929514ea26d2e50a8d9530d757abd7a683a05ef642b1a15c6dc142738e62e8.
+- Compiled A07 r3 PASS exec98244/exit0, nine routes, including actual ordered
+  parent restore; aggregate cleanup58380ms/browser9209ms/resourceSuccess=true.
+  Report100c95b7faa99ffd2f21c0cd52a23ceb4aeb24a2ec8b7a12e3a33fe77a5fc04f.
+- E06State r1 INFRASTRUCTURE_FAILURE exec72128/selected exit2 at first canary:
+  report deadline90156ms, matrix113560ms; cleanup PASS57864ms/browser7750ms.
+  Report0981d941c5939a8393c3b9ef0b245a90b164395cd7177f8eb024ab7f2c34944e.
+  Raw report was PASS v27 (operation193ms/cleanup17ms/work22/1216 steps), but host
+  reader still required v26. CIN33 was NOT REACHED; no solver timing failure inferred.
+- Root migrated ONLY current E06 host epoch literal to v27; fixture expects v27
+  and now explicitly rejects v26. Maintained selected-WinPS reader fixtures PASS121
+  plus Q100/A04 base fixtures. Actual captured v27 reader-positive/v26-in-memory
+  negative PASS; original report bytes and original failed gate remain unchanged.
+  Driver5c47bde6d64e64034f1631214fcefaef981d7f1d91c3a51e3f23b41d91614fd1;
+  evidence scriptb1eadda2dfd92776da12aa34a5d4fe44f9364253ab0f54fdc9b97d858a9c15ea.
+  Independent current-consumer search found only deliberate stale-v26 negative.
+- Full live build identity recheck after PS-only changes PASS: unchanged input3415963/
+  outputdb929514,1202/357. Reuse Developer r2; no Java/build/jar/output changed.
+  Native10 inputs likewise unchanged. Fresh A07 host gate will follow E06 closure.
+- E06State r2 PASS exec46867 / selected and wrapper exits0,25 pins unchanged:
+  all10 routes, operation204523ms, cleanup PASS69896ms/browser9256ms/resourceSuccess.
+  Report8c2894cacfce73ff64bb8b6012d3cedf07815de144bbfa24487b95b4261cbbb8.
+  Both CIN33_SHUNT50us variants complete fault+repair 24000 accepted steps/1.2s,
+  work393/380 batches/max64/fixedTRUE, protocolv3/model4/seedSTRING9007199254740993.
+  Shared19480ms/maxUnit393ms/privateCleanup3ms; Separate27154ms/maxUnit1288ms/
+  privateCleanup4ms. MaxUnit is a batch metric, not the500ms accepted-step guard.
+  Original90s/640/5s/500ms limits and independent electrical oracles unchanged.
+  This closes the critical finite timing gate, not full62 or playable100 admission.
+- Native full62 PASS exec70745/selected exit0:254091 reported assertions,62/62,
+  failures0,131634ms matrix under1200000ms. Wrapper161585ms includes compile/
+  test/cleanup; scratch removal reported, separate cleanup duration NOT SUPPLIED.
+  Scope NATIVE_GRAPH_ONLY; entire general native contract matrix NOT RUN.
+- Compiled full62 PASS exec42834/selected and wrapper exit0,25 pins unchanged:
+  all62 routes PASS, operation1175905ms under6000000ms; cleanup PASS112913ms
+  under120000ms, browser11444ms under15000ms, resourceSuccess=true. Total1288950ms
+  includes cleanup. Reportd966ee0ed1afac9ff9bb90cf810317c689ed020c1a30b9f4ed90b0bc37a8ba87.
+  This is finite authored electrical/fault/repair evidence, not playable100 layouts.
+- Final-source host A07 r4 ACTIVE exec99283 after PS-only epoch migration; no
+  parallel expensive P gate. Current, Player privacy/build and normal3 NOT RUN.
+  Playable100 layouts remain zero.
+
+Earlier row-unroll/ref40/exact-cache candidates all failed critical browser
+CIN33 timing and are NOT ADOPTED. Their exact failures/sources stay preserved.
+Offline Node work reduction is exploratory, with no product speed or physics
+claim. Source-only review also fixed atomic Result allocation, star tie literals,
+ParentSnapshot typo and GWT clone/final compatibility before native gates.
+
+Finite3 external tools preserve byte-exact historical v26 reader provenance and
+bind current v27 dynamically. Root pure selfcheck PASS (0.610s); explicit transition
+and eleven invalid controls, other seven epochs unchanged. Historical selfcheck+
+audit frozen; current selfcheck3b02aca8, audit863b3e43. Original checker function,
+request serialization, physics and90s/640/5s budgets unchanged. Actual native
+export/browser normal3 NOT RUN; only three approved development roots are allowed.
+
+NEXT: finish final A07 then Current, Player build/privacy and relevant
+visible flow, approved source-bound normal3. Normal commit/push/Gmail only after
+all required gates pass, never an unresolved blocker as success. Selected WinPS5.1,
+Temurin8 and original90s/640/5s/500ms/browser15s/cleanup120s bounds remain. Protected
+HARD data stays unmaterialized here; HARD/PSYCHOTIC unavailable/unrun. Historical
+unread boundary remains UNCERTIFIED after recorded scope incidents. Public beta
+held; self-hosted CI runner registration remains a prerequisite.
+
+# Historical checkpoint: actual workload captured; numeric ordering feasibility
+
+**IN PROGRESS; NO ACTIVE P RESOURCE GATE.** Updated: 2026-11-02T08:46:25.855252+00:00.
+P is CLEAN, codex/q100-kernel-workload-diagnostic-20261102 at
+5f05b005c80e312c60fc7db24745f2d8afe4d04b, staged0. Exactlyfive failedcache-owned
+tracked paths restored toHEAD andoneownednewhelper removed afterallbytehashes
+matched frozen11sources/7JS/357inventory+binarypatch. All failedbranches/evidence
+remain. Existingwar/cachee945 build is STALE for currentbaseline; do notserveit.
+MainB6(9tracked/6untracked), Wprivate40(7tracked/8untracked), Desktop e0c36885
+(7tracked/89untracked), allstashes/quarantines/ambient8928 preserved.
+
+Rejected exactcache: native4/finalDeveloper/compiledA079 passed for frozen
+source, but E06separateCIN33_50us FAIL59483ms, temporal5s accepted51/trials7498;
+refrecorded12512/work207/fixedFALSE. CleanupPASS59322/browser8464. Reporta8af9eaf.
+Combinedrowunroll/ref40 alsofailed90s, standaloneunroll/ref64failed5s; allrawfailures
+andexactcandidates preserved. Noneadopted. No newPlayer/Current/normal3orfull62/30
+qualification. No newcommit/push/mail. Nativebe15/receipt5f05/Gmail1a198e4cd3f5d367
+already publishedonce. Playable100=0; HARD/PSYCHOTIC unavailable/unrun.
+
+TypedstorageNodeprobe8.87s showedno consistentbenefit; no typedbridgeimplementation.
+OrdinaryloopNodeprobe6.97s/336fixtures/1008exactcomparisons/1344identitychecks/
+882signedzero-negatives PASS, but reversed-order timings identify no reliablewinner.
+Source-onlymicrobench limitations retained (Array.fromkind, NodevsGWT); bothclosed.
+
+NEXT: T/lu-kernel-shape-native-r1 source-onlyprepare_patch.py beingprepared by
+cpu_hot_js_source. Itmayemit ONLYtwo acceptedHEAD-derived patchedsourcecopiesinT:
+CirSim Javafallbackshape counters/timeplumbing andonebounded rawA+RHS copy per
+nativecase at .625<=t<.65; Rb100ElectricalPilotContractTest diagnosticloop report.
+Rootreviewed/appliedtemporarytwofiles fromprepared-source-r4 (sourcepatch848e35c2).
+IndependentreviewotherwiseCLEAR; rootaddedfinite-timeguardbeforeactor (preventsNaN
+snapshotJSON). ActualCirSimB3E7C64A/test4FDCF876, nativeverifierDA71F1EE/moduleFB07.
+Maintainednative CIN33_50us diagnosticCLOSEDexec30389/toolouterexit1, selected
+maintainedscriptactualexit2/NOT_QUALIFIED; rawmessagereportsJavaexit0, independent
+Java terminationreceiptNOTEXPORTED. Casefooter2/2failures0/assertions16156/19047ms;
+Sharedreference6243ms/maxUnit149; Separate10439ms/maxUnit641; both24000steps/work393/
+fixedTRUE, privatecleanup0/1ms. Driver54755msincludescompile/test/cleanup; scratch
+cleanupreportedremoved/durationNOTSUPPLIED. Twofilesfullbytesfrozenruntime-source-r1
+thenrestorediffinalB3E7/4FDCF pinsmatched; Pclean/baseline431AC04B/FB5ED54E.
+Rawconsole296186bytes/SHAa9ed92fb321e7fce97638935994b0c7985ebf207a2d1f48d5fa0f28997e72858.
+Strictrootformat/caps/counterconsistency+IEEE-bit-preservedexportPASS_DIAGNOSTIC_ONLY;
+closed-capture-r1/inputs.json b1a7531adc74d02f6a57c08c36a253482434af366c452d40b1fdbbd1ba190ba1.
+ActualrawA at.62505:102x102/399nonzerosShared,103x103/400Separate(~3.8%).
+Focused.60-.65 Javafallbackupdates638232324Shared/4464437207Separate; contiguous8
+weightedfraction9.25%/10.71%. No electrical/performance acceptancefromobserver.
+FirstofflineMD exploratory result: countedupdates55668->2463(shared)59317->2104(separate),
+Croutpivot/solvechecks finite, butdifferentorderingsolutionsmaxabsdelta1.81e-5/4.84e-5,
+productacceptabilityUNRESOLVED; no runtimegainproof. InputstillNewtontrialnotphysicalreading.
+Safeanalysispoint needsstaticbaselinepattern, soSECONDnativeobserverextensioncaptured
+origMatrix+nonlinearRowmask(max32896doubles+128bools). Longlinepositive+truncatednegative
+max32896canaryPASS. Independentsource-onlyextensionreviewCLEAR. SecondcaptureCLOSED
+exec55802/toolouter1/maintainedscript2/NOT_QUALIFIED,Javaexit0reported/terminationreceipt
+NOTEXPORTED; native2/2failures0/assert16156/18454ms, driver48047msinclcompile+cleanup,
+scratchremovalreported/durationNOTSUPPLIED. ConsoleD5ECA325...RawCurrentA/RHSbitmatchand
+ALL/focusedcountersEXACTmatchfirstcapture. StaticorigA279/280nonzeros; nonlinearRows71/72.
+Closed-analysis-capture-r1/inputs.json85cf40644036b509938704a3b18311043397817c81d46d8d5c9686ab5175fdf7.
+Runtimeanalysis2sourcesfrozenbeforeguardedrestore; Pcleanat5f05/noJava/browser/GWTactor.
+NEXTboundedofflineNodefeasibilitybybrowser_lu_row_blocking: genericdeterministic
+minimum-degree orders derivedONLYfromstaticorigA+mask, thenappliedtoexactNewtonA/RHS,
+notphysicalreadings; no Pimplementationyet. Source-reviewcpu_hot_js_source located
+analysisownerinsimplifyMatrix afterreducedA/RHS assignment,beforeorigbackup: symmetric
+permutation+inversemapRow/mapCol, preserve-1/type/value/flags. stampCircuit creates
+freshRowInfoobjects eachanalysis; snapshotshallowrefs meanneverremapsavedparentrows.
+Pivot/FPorderchangesrequireexplicitcontract/epoch andfreshoracles ifeveradopted.
+Nativeentrywas
+entrylu-kernel-shape-native-r1/run-native-r1.ps1/launchmetadata. Compiler60s/child240s,
+original90s/640/5s/500ms unchanged. OutputtransportR1actualcanaryFAILED: default
+WinPSOutFilewrappedlongJSONat119chars. Failurepreserved; explicitUTF8/width1048576
+R2PASS16512values/signedzero/singleline +truncatedJSONnegative. No wrappedJSONrepair.
+RawdataremainDIAGNOSTIC_ONLY_NOT_QUALIFIED; normalpassmarkerunchangedrejectedbanner.
+No native/browser/Java/GWT Pactor remains; boundedofflineNode mayrunonlytask-ownedT.
+No newkernelimplementation/performanceclaim/publication.
+
+Finite3tools remainfrozenexternal, originalpayloadcheckerbyteexact/currentstagedv5,
+rootfreshpurePASS andindependentfullmanifestfixreviewCLEAR; actualnativeexport/
+browser/normal3NOTRUN. Wrapper2d824d93, prepare01cdc0e7/postprocess222763ce/
+selfcheckd9db6db4. No full30manifestorprotectedpartitionpreparation.
+Newsource-scopeincident: leafverifierheader1-70 displayedunrelateddefaultseedconstants;
+valuesnotused/reproduced, no dataset/HARDopened/run; further scriptreads stopped.
+Recordscope-incident-verifier-header-cpu1.json. HistoricalunreadUNCERTIFIED remains.
+Original90s/640/5s/500ms/15s/120s limits preserved; CIself-hostedprerequisiteremains.
+
+# Historical checkpoint: cache timing failure preserved; typed workspace feasibility
+
+**IN PROGRESS; NO ACTIVE P RESOURCE GATE.** Updated: 2026-11-02T07:42:50.642043+00:00.
+P now codex/q100-exact-nonlinear-lu-reuse-20261102, HEAD5f05b005c80e312c60fc7db24745f2d8afe4d04b.
+Combined row-unroll/ref40 E06 CLOSED FAILexec4879/toolouterexit1 (selectedchildexit
+NOTSUPPLIED). Nine routes PASS; separate CIN33_50us failed terminaldeadline90141ms,
+lastRUNNING:q100/noq100report. Matrixoperation430131ms; cleanupPASS60402ms,
+browserShutdown8956ms/resourceSuccessTRUE. Report127d9d1f4fbb5cf9daf50f144a0d09ddf4a11795ee46ac2c7fba4fc973dbfaf2.
+No trial/factor progress serialized at host cutoff; no inferred acceptedstepcount.
+NOTADOPTED. Frozen9sources/7actualcompiledJS/full357inventory0bec649b preserved at
+browser-lu40-source-freeze-r1 (recordfe12cbffca6db04f69d118b005b94e314ee5bde86344d5adcc9e982f694de491)
+plus five-file binarypatch/root-observation. Exactlyfive rootowned candidate paths
+restored toHEAD after checking all five bytehashes; no unrelatedchangesdiscarded.
+CombinedDevelopercompile108.242s/link1.638s,1199/357 input05267fb2/output0bec649b.
+Native4/pureReader/reviewPASS belong only to rejected combined candidate, not nextsource.
+No combinedPlayer/A07/Current/normal3 attempted aftercriticalFAIL.
+
+NEXT experiment exact-lu-reuse-r1/PLAN.md: invocation-local exact bounded nonlinear
+LU factors/pivots reuse, signedzero key/currentRHS/pivot rowidentity replay; all
+original guards/oracles/budgets. Worker owns CirSim+LuFactorizationChecks; root owns
+new LuReuseNonlinearChecks+nativeA07/compiledscheduledState integration+nativebridge
+selectors. Fresh-refactor comparison seam is packageprivate verification-onlyflag.
+Native earlyA07 CLOSED PASSexec73839/exit0 onfinalhelperFFEB334B,312352assertions;
+actual400step realDiode+changingAC/RC fresh/cache samples bitexact, factorcallslower,
+nextinvoke cold; independentKCL/KVL/envelopes retained. Initialswitchfixture r1/r2
+failedwithreuseDISABLED atfirstacceptedstep: gateIcorrespondsoldr_off whilefinal
+R=r_on. Rawfails/sources/diagnosis preserved. Fixture replaced withactualforward
+Diode+RC, no modelchange orwaivedKVLclaim; control-transitionissuefollowupoutside
+cachequalification. R3fixtureedit compilefailurepreserved; newline/replacement
+handling correctedbeforeR4PASS. RemainingNative3 CLOSED PASSexec53517/exit0:
+RB10024294assertions/4healthy/8870ms/faultmatrixNOTRUN, ownedLU292,pivot388.
+Cleanupclasses/scratchreportedremoved, durationNOTSUPPLIED. Final-sourceDeveloper
+JDK8/GWT firstbuildFAILEDexec48277/exit1: three newtesthelper arrayclone() calls
+unsupportedbyGWT2.7. Failedsource/lock/logroot preserved. Workerreplacedonlythose
+copies withshallowrowreference loop+primitiveSystem.arraycopy, assertionsunchanged;
+finalLuChecks6385b1d48e55f9b19c4854a4065adda8eb8689c768ded12ff42de02bb2dd6b9a.
+Rootreviewedtinycopydiff. FreshNative4 CLOSED PASSexec61214/exit0 afterfix:
+A07312352, RB10024294/4actualhealthy/8832ms (faultmatrixNOTRUN), zero292,pivot388.
+Final-source Developer buildCLOSED PASSexec42426/exit0, compile111.689s/link1.635s,
+totalwall/cleanupNOTSUPPLIED. Snapshotexact-lu-reuse-developer-build-r1:1200/357,
+input049ee55438c25f3baefd4dd99605bbc1b630dfc298702a46cd81b16b4c1aa004,
+outpute9456c838ba35fdd6179e42771d59e6ecc97854c9d88895c3525a71d3d43499e.
+CompiledA07 CLOSED PASSexec79950/exit0,9routes/corepure306741+runtime5713,
+26exactcasesallPASS, corewall910ms. Actualcompilednonlinear fresh/cachecomparison
+passed; cleanupPASS59628/browser9291/resourceSuccessTRUE. Report036a1f3adf724973454374dd040cc4be5711d4e2d3b806ee2e0f3e10115afe3a.
+Currentcandidate11sources+7actualJS/full357inventory frozenexact-lu-reuse-source-freeze-r1,
+preservation25f66e0d12bb061f0c648313825310c8cf283800461dabb4319814d9099099ae.
+CriticalE06State10 CLOSED FAILexec66395/toolouterexit1 (selectedchildexitNOTSUPPLIED).
+Nine routesPASS; separateCIN33_50us applicationFAIL59483ms/remaining30516ms.
+Error temporal5000ms deadlineorclockregression accepted51/trials7498. Privateoperation
+57984ms/privatecleanup3ms; refv3/64/model4/STRINGseed9007199254740993, recorded12512steps/
+198batches/work207/wall57983/maxUnit3379/live.62815/fixedStepVerifiedFALSE. Do not
+promote partialdiagnostics tofixed-stepacceptance. Matrixoperation431436ms;
+aggregatecleanupPASS59322/browser8464/resourceSuccessTRUE. Reporta8af9eaf952a788d21a040fd163fbd319aacc8563bbcfcab1aaf9676353ca594.
+Exactcache NOTADOPTED/no usefulCINperformanceclosure. Frozen11sources/7JS/inventory
+plusfivefilebinarypatch preservecandidate; no finalPlayer/privacy/Current/normal3
+runforrejectedcandidate. No broad62/30renewal. No newpublication.
+NEXT: source-onlytyped Float64Array workspacefeasibility usingSAMEexistingbounded
+factorizer, exactorder/pivots/live-rowidentity/partialfailurecopyback/cleanup; no
+replacementsolver ornewtypedimplementationyet. cpu_hot_js_source read-onlydesign;
+browser_lu_row_blocking ownsNEWtyped-lu-probe-r1 forboundedNodeV8synthetic kernel
+comparison only (EXPLORATORY, no GWT/electricalspeedproof). Psourceunchangedwhile
+source-reviewpending; cachebranchretained. No browser/Java/buildgateactive. No
+compiledcachequalification orperformanceclaimyet; oldGWT artifacts stale. Rootnative-manifest
+wrapper SOURCEONLY/notrun, now2d824d93e5c556735c0bb510665c7103d8464fc8711187c9fa4fcbf907fb4858:
+explicitkernel/ref/countparams andpre/postGWTjarinventorydigest/count, originalmodule/JDKpins
+retained; earlierwrapperfrozenSHA394913a7. prepare91f01ee9/selfchecke459c3ec,
+RootfreshpureafterwrapperfreezePASS. Independenttoolreviewfoundfullmanifest
+postprocess recheckgap; pre-fixfrozen190d74b6, fix222763ce/prepare01cdc0e7/
+selfcheckd9db6db4 nowrecomputeaggregate+completebefore/after/live src+warrows with
+sharedvalidators. Meaningfulstale/extra/missing/changednonDevrow andboolschema
+negativesPASS; rootfreshpureafterfixPASS. Independentfix-onlyreviewCLEAR, rootfreshpurePASS; no actualnativeexport/host/runtimeproof.
+Willrebindactualcurrentcandidate beforecanaries.
+Normal3worker frozeexternalnormal3-finite-r1 plusnormal3-native-r1 wrapper/purefixtures; sourceproof now
+traces actual staged RB56serializer v5 (genericv6branchnotselected), original
+check_capture retained byteexact, eight epochowners andexactqueryliterals proven.
+Preparation CLI binds realnativeexport/logs/buildidentities/currenthost src+war,
+notfictionalreceipt orfull30manifest. Actualnormal3runtimeNOTRUN. Historical
+source-scope incidents remain disclosed below; no newprotected-data readclaim.
+
+MainB6(9tracked/6untracked), Wprivate40(7tracked/8untracked), Desktop e0c36885
+(7tracked/89untracked) all preserved/staged0; ambient8928 untouched. Main/W HEAD5f05.
+No new commit/push/Gmail; nativebe15/receipt5f05/Gmail1a198e4cd3f5d367 alreadyonce.
+HARD/PSYCHOTIC unavailable/unrun; protecteddataunmaterialized, unreadUNCERTIFIED;
+playable100=0. Requiredcurrentcandidate gates remain; do notpublish blockerassuccess.
+
+# Historical checkpoint: combined kernel/ref40 compiled E06 active
+
+**IN PROGRESS; ONE RESOURCE GATE ACTIVE. Updated:** 2026-11-02T03:50:27.470701+00:00.
+P branch codex/q100-cin33-bounded-reference-20261102, HEAD5f05b005c80e312c60fc7db24745f2d8afe4d04b,
+staged0/fiveintendedfilesmodified (CirSim+fourreference40/reader/testfiles). Player JDK8/GWT build CLOSED PASS (actualexec80021
+exit0); compile71.394s/link1.389s, totalwall/cleanup durations NOTSUPPLIED. Snapshot
+browser-lu-player-build-r1 binds1199/357: input9760B4C8/outputCE4EFD07, full digests
+in unchanged production-build-identity.json. Actual Q100Player privacy CLOSED PASSexec90301/exit0,
+ONE route (not seven routes), two sentinel negativecases/cleanupPASS41680ms,
+browserShutdown11265ms. Report71d7dc16...5c3ce4c8. Original task browser/preview
+closed; ambient8928 untouched. Final Developer JDK8/GWT build CLOSED PASSexec89670/exit0;
+compile111.163s/link1.662s (totalwall/cleanupNOTSUPPLIED), snapshotbrowser-lu-developer-build-r1,
+1199/357 input0ECE0367/output174DBCAA. Compiled A07 CLOSED PASSexec86011/exit0:
+9routes, core306530pureassertions+26runtimecasesallPASS, cleanup71126ms/browser9406ms;
+reportFBD3B48F. STANDALONE E06State CLOSED FAILexec94860 (toolouterexit1;
+actualselectedchildexitNOTSUPPLIED),9routesPASS then separateCIN33_50us FAIL at56432ms,
+remaining33567ms. Error: temporal5000ms deadline orclockregression, accepted51/trials7590
+inside64stepbatch; referencev3/work207/recordedaccepted12512/batches198/maxUnit3263,
+refwall54943ms. No debugger/profiler inthisrun. CleanupPASS71006ms/browser8939ms,
+alltaskactorsclosed. Report08e22e2f...e425d96. StandaloneNOTACCEPTED. Failure snapshot
+browser-lu-standalone-failure-r1 preserves9sourcefiles,7actualcompiledJS andcomplete
+357rowinventory matching174DBCAA; preservation64c59b9d...e0d56d. No failuresdiscarded.
+
+NEW COMBINED EXPERIMENT ONLY: samekernel0A8E +Rb100PilotReference6B063E28 batch40/
+protocolv5 (copiedfourintendedfiles fromWprivate40; allotherWchangesleftalone).
+PureQ100readerfixtures PASS inclA04currentv6/14, source strictv5/typedcounts/current
+canaries/independentfaultoracle/2x31SYNTHETIC matrix; noactual62matrix claim.
+FreshNative FOURsuitegate CLOSED PASSexec21811/exit0: RB10024414assertions/
+4healthyactualreferences/8228ms (faultmatrixNOTRUN), A07 306531, zero-row292,pivot388;
+classes/scratchcleanupreportedremoved, exactdurationNOTSUPPLIED. PureQ100reader
+actualcommandexit0 (A04fixture14+Q100strictsuite; syntheticmatrixonly). COMBINED
+Developer JDK8/GWT build ACTIVEexec18360,900sinnercap. Do notstartanotherexpensive
+Pgate untilitcloses. ExistingstandaloneGWT snapshotsaboveare STALE forcombined
+source. CriticalE06 matrix followsfreshDeveloper; ifpasses, freshPlayer/privacy
+andDeveloperactivation plusA07/Current/finite3 arestillrequired. No newsource
+adoption/publication. Rootnative-manifest wrapper atnormal3-native-r1/export-manifests.ps1
+SOURCEONLY/WinPSparsePASS; notexecuted, rootownsseparatefolder. Workerownsseed-free
+normal3-finite-r1; canonical3-root Javaentryready, no30rowtestclass/compilerdata.
+ Workmax640,
+operation5000/trial500/case90000 unchanged,fullfault24000steps andexpectedwork613.
+No reference40adoption/publication until allcombinedgatespass. No currentbrowser.
+Main/W HEAD5f05, MainB6(9tracked/6untracked), Wprivate40(7tracked/8untracked),
+Desktope0c36885(7tracked/89untracked), ambient8928/all failures/stashes/quarantines
+preserved. Prior native-listener P branch retained. Nativebe15/receipt5f05/Gmail
+1a198e4cd3f5d367 published once; no newcommit/push/mail.
+
+Diagnostic prerequisite now CLOSED, accepted ONLY for post-run profile consistency.
+V8 run2 originalINFRA/routeFAIL/launcherFAIL/child2/FAIL_REFERENCE and incomplete
+referencev5/model4/seedSTRING9007199254740993/CIN33_SHUNT50us remain. Worker/profile/
+transport/join PASS; cleanupPASS53488ms/browser8380ms/all original actors closed.
+500ms guard failed near1695.237ms debuggerpause; causeUNPROVEN/no compensation or
+unprofiled-performance conclusion. Final80s controls success7/inject2 PASSclosed;
+closureFA963850/manifest3a820. Bytearchive287819/SHA18814902...91892/CreateNewsidecar
+1ef3d702...39d9e2; helperF498/actualFS5of5+23assertionsPASS227ms/cleanup11ms,
+normalnegative+positive/CIN33positive PASS. All rawsource/report bytes preserved.
+
+FINAL V4 adapterf0a966941cece9d33cbbd92b1d2828f8c6c50d8382b5eb6e33f8870fa621ab4a,
+tests7C60697A/contractAEF8F2F0. Rootfresh132pure PASS31157.064ms/inputstable;
+actualNTFS7 PASS5.168ms/cleanup.510ms/linkremoved/targetpreserved. Directcurrent
+ledger typedIDs100..110/pairs107,109/real3scommandcutoffs and nextsend>=max(priorresponse,
+priorrequiredEvent). Exact5key/rawmanifest3a and worker-beforeStart7CB validate
+current producer; no ledger/deadline projection or raw report mutation. All prior
+127testbodies preserved plus5serial-chronology cases; oldcore/route/physics/profile/
+path/cleanup predicates retained. Independent fix-onlyreview CLEAR. Earlier829
+candidate's missingserialcheck and rawPASS56ca retained under qualification-withheld1;
+no stalePASS reused. Fresh ACTUAL root-actual-run2 on finalF0 source PASSchild0/
+117.897ms/inputsStable. Analysis bytes remain56ca5019315f7deed8b4afc168f664e60073a6d97d6a07c022370c16af08162e,
+originalrawFAIL/child2 retained; electrical/route/admission NOT_QUALIFIED.
+
+Qualified profile1275nodes/7502samples/75059663us. Approx sampledself IKb64.1805%,
+KKb9.5799%,MKb5.2769%; exactcoordinates+weights match prior exploration. Literal
+matrix-update/factor/solve code matches preserved baselineW AE70cacheJS/8EF2D13F.
+JavaUNMAPPED/inferredowner, no exactCPUclaim. W1199/357 CFEB/538/moduleFB/driverDD/
+preview75 unchanged. No newobserver/capture/controls needed for post-run readerfix.
+
+Current kernel candidate CirSim0a8ef5afec4257efc9680b20ec97a6a2c1a094a2236bb1ccde730f0b29668ce2:
+only JSNI full8column groups block4lower rows, scalar/partial tails and every
+cell's arithmetic/order unchanged; no allocations/cache/newstate/budget changes.
+LuFactorizationChecks7F7524D6 unchanged. Independent source review CLEAR; existing
+width8/9 and dense fixture0 at24/33 prove rowtails0/1/2/3 against Crout oracle.
+Rootnative THREE focused suites PASS: A07 306531, ownedzero-row292, pivotcollection388;
+selectedJDK/javac8u502, actualexec93712 exited0, task scratch cleanupreportedremoved
+(exactduration NOTSUPPLIED). Native receipt.json is TEXT markers, not JSON.
+Changed JSNI runtime/performance UNQUALIFIED until GWT/actualbrowser gates.
+
+NEXT: finish critical compiled E06State, then freshPlayer/privacy+Developeractivation and A07/Current/scoped normalMEDIUM
+regressions. Source builds/tests must use this finalP candidate and maintained
+scripts. Never adopt an unresolved/slow treatment. Browser-kernel plan is
+BROWSER-LU-ROW-BLOCKING-r1-PLAN.md; exactmatrixcache remains UNSTARTED/hitrateunknown.
+Normal3 discovery recorded a leaf Get-Content source slice1-30 of
+rb56-medium/read_qualification.py displayed adjacent protected non-development
+seed constants14-22. Values not propagated/used; further helper reads stopped,
+no partition/runtime test started. Incident scope-incident-normal-helper1.json;
+exactreadtime NOTRECORDED. No new clean protected-read claim. Known approved
+three development roots are available from accepted finite3 aggregate; replay
+must avoid full30manifest/exposedconstants. Separate controlled software-only
+function-node extraction excludes global seedtables, redacts longliterals and
+never imports/executes originalnormalreader. check_capture's readset permits a
+finite3plan; arithmetic candidate helper isnot aseedlookup. FEATURE/WAIT helper
+import safety and explicit3-root native manifest producer remain under source-only
+inspection. No normal3 runtime/acceptance/publication yet. No Harddata/partition run.
+CurrentHost9 remains required afterE06; no broad30root qualification renewed.
+Private40/48 NOTADOPTED; playable100=0. Original90s/640/5s/3s/500ms/15s/120s/600s/
+6000s preserved. HARD/PSYCHOTIC unavailable/unrun; protecteddata unmaterializedhere,
+historicalunread UNCERTIFIED. CI NOTRUN/self-hosted prerequisite. Next product
+milestone remains Q100 physical/runtime/routing qualification after necessaryfix.
+
+# Historical checkpoint: V8 CIN33 profile captured; reference FAIL, resources closed
+
+**IN PROGRESS; NO ACTIVE RESOURCE GATE. Updated:** 2026-11-02T03:03:43.275892+00:00.
+Main/W/P HEAD5f05b005c80e312c60fc7db24745f2d8afe4d04b, staged0/Pclean. MainB6
+(9tracked/6untracked), Wprivate40(7tracked/8untracked), Desktop e0c36885(7tracked/
+89untracked), ambient8928/all failures/stashes/quarantines preserved. Nativebe15/
+receipt5f05 published; Gmail1a198e4cd3f5d367 once. No newcommit/push/mail.
+
+ExactCIN33 run-long-cin33-success-2 CLOSED OVERALLFAIL/INFRA/actualexit2/termination/
+sourceStable/child153853ms. WorkerPASS/profileVALIDATED/pause-stop-resume-disable/
+peerclose/physicaltaskproofPASS/secondary0; parentworkerResult+joinPASS, parent
+statusFAIL/errors[] solelybecauseprimaryapplicationFAIL. CleanupPASS53488ms/
+browser8380ms/Completecalledsuccess/allresourceproofs. Outer67770674...4a3eea;
+report2d7d380a...215541; root-capture-observation1.json bindsrawstatuses/metrics.
+Primaryapplicationfailureat77044ms (<original90s), operation
+q100-fault-SEPARATE_DIRECT_SWITCHING-CIN33_SHUNT. q100FAIL_REFERENCE/error
+'One CircuitJS accepted-step attempt exceeded its wall budget'; referencev5
+INCOMPLETE_ELECTRICAL_REFERENCE/modelVersion4/seedSTRING9007199254740993/dt0.00005/
+maxBatch40/accepted12880/batches322/work331/simSeconds0.64465/matrix105->103/
+wall75063/maxUnit3139/fixedStepVerifiedFALSE. PRIVATE40 STILLNOTADOPTED.
+CDPpauseevent75178.598ms->resumed76873.835ms =1695.237ms; primary174.843msafter
+resume. Debuggerpause mayperturbwall budgets; trialstart tickNOTserialized,
+causalcontribution NOTPROVEN. DoNOTtreatasnormalunprofiledreferencefailure or
+subtractpausedtime/waivebudgets. Profilecontainsprepausesamplesfordiagnosticuse.
+
+NEXT: finishSOURCEONLY profile-archive-v1 utility/actualFSfixtures. Reader69B
+requirescase/long-observer but679persistsprofileinexactOSTempContext/evidence;
+launcher8archivesonlysources. Confirmedclosednormal7source125485B/SHA9032B7CA...
+E61CBDE, casetargetabsent. Rootwillactualnormal7wrongExpectedHashnegative+positive,
+thenexacteligibleCIN33archive+CreateNewsidecar. Deriveonlycanonicalrepo20hex/GUID
+Contextsource; rawtermination/source/report/manifest/cleanup+worker/parent/artifact
+SHA/sizebinding, no-reparseancestors,8MiB,freshdir/CreateNew,byteexact/reportunchanged.
+No producer/launcher/control/report/readerrewrite, nofilediscovery/rejectedfallback.
+Utilityleafmayreadclosednormal7metadata/size/hashONLY, noCIN33/rawprofile/protected.
+Reader69B supportsroutePASSorEXACT90timeoutonly, so77sapplicationFAILunsupported.
+AuthorizedNEWreceipt-analysis-v3 only (workerobserver_v4_worker): exactV2baseline
+copied, V2unchanged; preserveall63oldcases/PASS+90validators/commonproofs, addseparate
+strictobservedapplication-failure identity+diagnostic-onlybranch andnegativecases.
+AllrawFAIL/exit2 retained; capturequalifiedmodelseedNOTAVAILABLE, factualfailed
+reference seedSTRING storedseparately; no budgetcompensation/electricalacceptance.
+Source/profileshape/path/cleanup oracles notweakened. Puretestsallowed, NO actual
+profileanalysisbyV3leaf. Actualreport+relevantproducer/source allowed,norawprofile/
+protecteddata. Finalsource/runtimequalification NOTRUN pendingimplementation.
+Separateprofile-exploration-v1 read-only exploration authorized (core_close): ONE
+actualCIN2profile, exactreportSHA/worker-parent-artifacthash+size/no-reparse verified;
+reuse69Bvalidate_profile+analysis_view onactualContextroot, NOTfullroutevalidator.
+Approxhotfunctions only, everyresult EXPLORATORY_NOT_FULL_RECEIPT_QUALIFIED/rawFAIL;
+no Javaattribution or exactCPU/electricalclaims. ResultsNOTYETSUPPLIED. No other
+profiles/HARDreads. CurrentDeveloperOBF538/357 hasNOsymbol/source maps; JavaUNMAPPED.
+NarrowWbuildconfig/artifactinventory confirmsno map; no otherscratch/protectedread.
+Exactbudgetowner: CircuitSolverExecutor.beginTrial WALL_LIMIT_MS500 detects
+sameacceptedstepattempt acrossnonlineartrials; temporaloperation5000 usesadifferent
+error. Duration.currentTimeMillis(script)/System.currentTimeMillis(native) hasno
+pauseexclusion. Measuredpause1695.237ms wouldbesufficient IFoverlappingattempt,
+butattemptstart/acceptedidentityatpause omitted; maxUnit3139 isouterwrappermetric,
+notfailingattempt. CauseUNPROVEN/no budgetsubtraction. Source-onlyclockinspection.
+ExplorationONLY completed atprofile-exploration-v1: strict69Bprofilegraph/byteson
+exactContextrootverified287819B/SHA18814902c95021727e9475359b093ebcc8067f8d1398dd553dae0b3a87991892,
+1275nodes/7502samples/sum75059663us; report/routeFAIL. Approxsampledself IKb64.1805%,
+KKb9.5799%,MKb5.2769% atcircuitjs1-0.js zero-basedlines9761/10230/9253:12. JavaUNMAPPED,
+noexactCPUclaim. SummaryDA937BFC...20328/script00D5EE01...71344, source/reportunchanged.
+Read-onlyexplorer(cpu_hot_js_source) identifiesliteralJSbodies/uniquecurrentinstalled
+permutation fromgivenname+line tuples only; nootherbuild/rawdata/protectedread,
+JavacandidatesmustremainINFERENCE. No receipt-qualifiedactualCPUanalysisyet.
+
+Finalobserver6790661f(controller)/F3DA(core)/7cb0b57bf2df14dcfe45a59e83dbb93cd9b7d3544fe9632059c594e3612e049d(worker),
+launcher8E5B3FA28...; RootPlanV8R2. Final18roleCIN33manifestpins12
+3a820b3948a1816f3f67be13818ff894677229856578435313c5fdb7d2a3f05b.
+Normal80success7 PASSexit0/term/stable/child161658/cleanup61692/browser8646;
+profileVALIDATED/controlTRUE/Q100FALSE/receive138balanced/secondary0. Inject80run2
+PASSexit0/term/stable/child158795/cleanup58995/browser8893; expectedinjectionTRUE/
+profileNOT_CAPTURED_INJECTED/stopNA/allresume-disable-peer-taskproofPASS. Both
+physicalclosuresPASS. ClosureFA963850...DC1485 bindsbothactualfinalcontrols+18
+unchangedsources. No V5/planned/electrical-primary-only evidence substituted.
+
+Finitebrowserprereqs: preNavV8PASS1055 andpost-bootstrapV8PASS1336 (actualexit2/
+term/source+buildstable/child82383/cleanup55048/browser11473). MaintainedactualCDP
+mouseentry+publicsemanticworkbenchreadybeforearming insideoriginal90/planned75;
+notvisiblePlayer/human/solver-timeproof. Timeronce/propertydeleted/noclear,
+callbackcausalityUNPROVEN/actualframeNOTSUPPLIED/causeINCONCLUSIVE. Oldidle/startup/
+native-CIMfailures remainFAIL; no hostcure/empty-nativeoracle/retrychange. LastDtimer
+separaterecoveryPASSchild52260/API50812/final407, alloriginalPIDs/claims/profile/
+ports56773+51762closed146/1ms. Priorfailuresandrecovery receiptsfullypreserved.
+
+Postbootstrap finalFAF422FE(controller)/5A73AE4C(runner)/3E836698(pins33): proofwrite
+catchpreservesoriginalerror+boundedexistingdiagnostic, consumerrejectsmarker even
+preexistingproof.195oldassertskept/new196,2inverse679/helpers4equalDD335. Finalsource
+reviewnoblocker/noactorstestsbyreviewer. Rootsummary951348d3: selectedWinPS5static33/
+parse4/inverse2/helper4, actualarray8/8child918/op75, pureboot13/69/238child1895/
+op1048/cleanup38, actualFS5/38child1479/op155/cleanup9PASS. IOexisting-fileguard
+refusalbeforestream only. V8summary2d3b4a09 binds12core/controller/worker/transport/
+retention/launcher gates; sixexact-inputreuse andsixfresh distinguished. Rejected
+profile8MiB/CreateNew retentionafterresume/disable/socketcleanup keepsstrict
+validatorunchanged. SynchronousWrite/Flushnotinterruptible; parentfinishrejects.
+ReaderV2V8only69B09695/BCB393BE/8F42F471:63purePASS+actualNTFS7PASS; actual77sbranch
+pending. V7snapshots/rootbadexternalhashfailure/pre-fixproof-write/PS5arrayfailures
+preserved. No Java/production/build/solver/model/admission/playercodechange.
+W1199/357CFEB/538, moduleFB/driverDD/preview75 unchanged. Original90s/640/5s/3s/
+500ms/15s/120s/600s/6000s retained. Private40/48 NOTADOPTED; playable100accepted=0.
+HARD/PSYCHOTIC unavailable/unrun; protecteddata unmaterializedhere/historicalunread
+UNCERTIFIED. CI NOTRUN/self-hostedprerequisite. Nextproductmilestone remainsQ100
+physical/runtime/routing qualification afterthediagnostic/necessarycausefix.
+
+# Historical checkpoint: V7 profile rejected; original resources closed
+
+**IN PROGRESS; NO ACTIVE RESOURCE GATE. Updated:** 2026-11-02T01:27:16.100987+00:00.
+Main/W/P HEAD5f05b005c80e312c60fc7db24745f2d8afe4d04b; staged0/Pclean.
+Main B6(9tracked/6untracked), W private40(7tracked/8untracked), Desktop
+(7tracked/89untracked), ambient8928 and all failures/stashes/quarantines preserved.
+Published nativebe15/receipt5f05, Gmail1a198e4cd3f5d367 once. No new commit/push/email.
+
+V7 controller6790661f/coreF3DA/worker1F3D/launcher8701 frozen. Final focused
+summary5f078907 binds11 PASS gates, including core51/1403, corrected worker50/137,
+preNav7/41, parent60, sharedpause33, component/CLI/launcher guards. Actual trigger
+transport9/147 and fresh close7/255 PASS with all per-case cleanup proven. These
+finite tests grant no profile, electrical or playable100 acceptance.
+V7 preNavrun1 PASS_EXPECTED_FAILURE_CLEANUP_ONLY1049; postNavrun1 FAIL834:
+pause ACK/no paused event and recovery-resume timeout. Original cleanupFAIL21143ms
+(helper identity ambiguity); separate published terminal-preview recovery PASS,
+original actors/claims/profile/ports closed. Original failure remains unchanged.
+
+Fresh unchanged-source postNavrun2 CLOSED FAIL852, actual childexit2/termination/
+source+buildStable; child80822ms. Pause/stop/resume/Profiler.disable/peerclose and
+physical task cleanup PASS, but strict profile validation FAIL: timeDelta non-finite
+or negative. No rejected payload was retained, so actual index/value/type/cause
+are NOT SUPPLIED. Normal profile metadata remains unvalidated. Original cleanup
+PASS54518ms/browser12240ms. Report6c614aaa950ed6b315f7f8693375294b4974fac736b3855b63fb888e0497737f;
+outer82860ef1f9e69e4110fcc8846a12692ac2b40b658f918a07c6cfc2e85f252ff5.
+Later read-only closure audit1 FAIL because original parentPID35360 was reused
+by unrelated Notepad; no process was terminated. Separate audit2 PASS_ORIGINAL_
+RESOURCE_CLOSURE: launched-handle proves original parent exit; reused PID/start
+recorded and current Notepad left untouched. Original preview16360/Edge37356
+absent, claims/profile gone, fresh both-family ports62151/64430 empty115/2ms;
+manifest/report unchanged. Actual audit childexit0/termination/sourceStable,
+child1315ms/operation388ms; receipt59c8ee2affdff328b6bf5c3ec2756fe58c2690bddcfca046bf6c7a3bb3846043.
+Audit scope is original identities, not every current PID; original run remains FAIL.
+Evidence root: task-owned cin33-cpu-r1/post-navigation-canary-v7/run-2/.
+
+Next necessary substep: new private V8 worker retains bounded distinct rejected
+profile evidence on strict validation failure, preserving the original exception,
+normal accepted artifact path and all timing/cleanup/oracle limits. V7 remains
+immutable; no third blind unchanged capture. Leaf owns only new worker/focused
+fixtures; root owns integration/actual gates. No V8 gate has run yet. V7 normal+
+injected80s controls and exact CIN33 retry remain NOT RUN; no actual CPU analysis.
+ReaderV2 explicitV7 candidate3425e194/63purePASS and actualNTFSguard7PASS remain
+finite source-bound evidence, incompatible with future changed worker until pinned.
+
+No Java/production/solver/model/admission/player change. W1199/357 CFEB/538,
+moduleFB/driverDD/preview75 unchanged; original90s/640/5s/3s/500ms/15s/120s/600s/
+6000s limits retained. Private40/48 NOT ADOPTED; accepted playable100 layouts=0.
+HARD/PSYCHOTIC unavailable/unrun; protected data unmaterialized here, historical
+unread boundary UNCERTIFIED. CI NOT RUN/self-hosted runner prerequisite. Next
+unstarted product milestone remains Q100 physical runtime/routing qualification.
+
+# Historical checkpoint: V7 postNav retry active after separate recovery
+
+**IN PROGRESS; ONE RESOURCE GATE ACTIVE. Updated:** 2026-11-02 00:50 UTC.
+Main/W/P HEAD5f05b005/Pclean/staged0; MainB6(9tracked/6untracked), Wprivate40
+(7tracked/8untracked), Desktop(7tracked/89untracked), ambient8928 and all earlier
+failures/stashes/quarantines preserved. Publishednativebe15/receipt5f05,
+Gmail1a198e4cd3f5d367 once. No new commit/push/email.
+
+V7 finalcontroller6790661f...670ca/coreF3DA/worker1f3d968e...92b35 frozen;
+launcher7 87012374...68901/planFC201. Summaryv7-final-preflight-summary1.json
+5f078907...926b4 binds11actualselectedWinPS5 gates, allPASS/exit0/termination/
+sourceStable: core51/1403 child8353ms; worker50/137 child4189; preNav7/41 child7531;
+parent60 child1231; pausewindow33 child1138; component13params/sixoriginalbodies/
+3positive8negative child1966; noWorker4 child840; CLI5 child3587; launcher39 child1389.
+NewACTUAL.NETtrigger9/147 PASSchild10699/operation6768/cleanup2931/all9cleanupPASS:
+3genuinepending/completedread/fragmentpositives and6strictnegative failures. Continuous
+ready3020ms/cleanup2701 remainsfailedoperation; one3s arming+pausecutoff preserved.
+Freshclose7/255 againstV7worker PASSchild5251/op4264/cleanup20/all7cleanupPASS.
+Sourceclosefixtureprotocolv6 is unchanged and pointsat actualnew1F3worker; noFF84reuse.
+
+OldE5DBownershiprun39/113FAIL was fixture $mode collision with imported Script:Mode:
+faultneverinjected, normalpendingread correctlywitnessed. Oldfile+failedrawreceipt
+preserved; NEWfixturev6 SHA6593317e...65650 renames3selectors, all106oldassertsites+
+42caseheaders retained plusrealSyncAPIthrow/noReturnedTaskoracle. Actual50/137 now
+passes; historicalV6sync-label is NOT actualsync-branchproof. Production1F3 unchanged.
+Independentparentwindow review and boundedworkerreview found no residual blocker.
+Reviewer withdrew cutoff-counter concern: completedunobservedtask remains explicit
+Receiver.PendingReceiveTask, Started=Completed+1/Completed=Disposed untilnormal
+sharedcleanupconsumesit. No extraexpiredcapturework/productionchange justified;
+exactmicrointerleavingnotclaimedcovered. Reviewsran no tests/actors.
+
+V7preNavrun-1 CLOSED PASS_EXPECTED_FAILURE_CLEANUP_ONLY1049checks,
+actualexit2/termination/source+buildStable/child73711ms; operationnegativebefore
+navigation/profile, cleanup48546ms/browser9752ms, allresourceproofsPASS. Underlying
+INFRA/route/parentFAIL preserved. Reportacc894ba...262e1/outer8b0621fc...745ca.
+V7postNavrun-1 CLOSED FAIL834/actualexit2term/source+buildStable/child46619ms.
+Sentinel1046ms, task379 genuinelypending36/35, butDebugger.pauseACK30.31ms with
+NOpaused event ->3sTIMEOUT; recoveryresume noACK/event ->3sTIMEOUT, no profile.
+ProtocolErrorsempty; later39/39/39 physicalquiescence true, abortedcloseFAIL.
+OriginalcleanupFAIL21143ms: protected-helperPID33012 identityambiguous during
+census; previewterminal butCdpclaim/profile retained/closeAttemptedFALSE.
+Report06e21f88...49437/outer2c2ba777...31811 remainunchanged.
+SeparatepublishedFB terminal-preview RetainedBrowserRecovery CLOSED
+PASS_RECOVERY_ONLYchild54238ms/actualexit0term/sourceStable/API52830ms plus
+externalfinalproof359ms. Originalparent34256/preview22136/Edge35712 absent,
+claims/profilegone, bothfamilyports57102/51478 empty144/1ms, manifestterminal
+196903aa...c89f. Receipt09bd47ee...d0e9/outer41d565fb...b29d. Exact recovery
+browser-shutdown subphase notsupplied byAPI. OriginalpostFAIL unchanged.
+Read-onlydiagnosis rulesoutPrimaryDone commandpumpstarvation (corecommandwait
+passesfalse/false); no crash/detach/error events. pause-next-JS-statement contract
+isverifiedofficialsource; idle/beforeengineplausible but notproven cause, and
+missingresumeACKunexplained. No producerchange justified. No universalhostcure.
+Onlyactivegate: ONEfreshunchangedsourcepostNavrun-2, exec29838, supervisorPID
+20816/startTicks639291786194650304/selectedWinPS5.1.26100.9711;
+launchUTC2026-11-02T01:10:30.5545028Z. Runner96aa54a9...65096/manifestab0aae50...a1c4e;
+cloneac1ec9e7...ae1fe exactly3sourcecopies/onesentinel insertion restores679.
+Actualretryresult/cleanup NOTYETSUPPLIED. No otherresourcegate untilclosure.
+Ifsamepause/environmentfailure repeats, NOthirdunchangedrun: separatebounded
+actualbrowserprotocol diagnostic idle/onebenignnextstatement withunchanged3s/
+resume/cleanup caps beforeanother treatment. Do not relaxanypause/cleanuporacle.
+V7full80scontrols/CIN33 NOTRUN. Plannedunstartedcontrolsuccess-7/inject-2,
+thenCIN33success-2 verifiedcase/launchdirsabsent; no acceptancefromplannednames.
+
+ReceiptadapterV1 unaccepted; V2updatedexplicitV7pins candidate3425e194...54831,
+suite8738c4b8...cb75b/contractFA9A...f0f1f. Rootpure63PASS7386.349ms/sourceStable;
+62previouspurePASS7025.243ms andfrozenV6candidate59+62 preserved. ActualWindows
+PythonNTFSpathguard7 PASSonfinal3425: op8.971ms/cleanup0.546ms, junctionrejected
+beforeartifactopen, exactownedlinkremoved/targetpreserved/sourceStable. EarlierECC
+path7 pass remainsseparate. Noactualprofileanalysis/actualV7rolemanifest yet;
+source/runtime timeoutbranch remainsPURE_ONLY/NOTRUN untilobserved, neverroutePASS.
+
+V6postNavFAIL369/no profile/pending-readrace andV5CIN33eventoverflow/cleanupFAIL/
+EOFmiss remain unchanged. Their laterresourceclosureproofs are separate, not PASS
+promotion; earlierV5lateprimaryelectricalPASS80053ms is finiteobservedonly.
+No Java/production/build/solver/model/admission/player change. W1199/357CFEB/538,
+moduleFB/driverDD/preview75 andoriginal90s/640/5s/3s/500ms/15s/120s/600s/6000s
+limits remain. Private40/48 NOTADOPTED/accepted100=0. HARD/PSYCHOTIC unavailable/
+unrun; protecteddata unmaterializedhere/historicalunreadUNCERTIFIED. CI NOTRUN/
+self-hostedprerequisite. Next closepreNav, postNavfailurecleanup, freshnormal+
+injected80s controls beforeexactCIN33retry and receipt-aware diagnosticanalysis.
+
+# Historical checkpoint: V7 source/focused work before browser gates
+
+**IN PROGRESS. Updated:** 2026-11-02 00:02 UTC.
+Main/W/P HEAD5f05b005; Mainbranchcodex/q100-physical-feasibility, Wprivate40,
+Pclean/staged0. Main9tracked/6untracked, W7tracked/8untracked and Desktop
+7tracked/89untracked preserved; all historical failures/stashes/quarantines/
+ambient8928 untouched. Publishednativebe15/receipt5f05/Gmail1a198e4cd3f5d367 once.
+No new commit/push/email. No active resource gate or running exec session.
+
+V6 coreF3DA/workerFF84/controller3DD frozen. FocusedfinalselectedWinPS5 PASS:
+core51/1403, worker35/102, preNav7/41, parent60, components13params/sixoriginal
+bodies/3positive8negative, noWorker4/CLI5/launcher39. Real.NET transport7/255
+PASSchild5182ms/operation4145ms/cleanup18ms, allresourcesclosed. Required128
+history/overflow oracle retained; optionalcensus fixed4buckets. Aborted yet
+provedphysicalcleanup staysseparatefromgracefulPASS; secondaryerrorsretained.
+ActualbrowserpreNavnegativePASS566/exit2term/source+buildStable/child59975ms,
+operation39ms/cleanup36207ms/browser9691ms, underlyingroute/parentFAIL preserved.
+
+V6 postNavrun-1 remains FAIL369, child73197ms/actualexit2/termination/source+
+buildStable. Exactnavigation/sentinel1027ms; triggerPRIMARY_TERMINAL at1042.9606ms.
+SoleownedTask388 hadalreadycompleted at snapshot (started41/completed40), so
+strictpending/retentionwitness false. GenericTIMER75message was not a timer75
+capture. No profile/pause/stop/resume/disable. Parent6errors preservefailure.
+UnderlyingcleanupPASS49294ms/browser11828/Completecalledsuccess/physicalIo+
+peerclosePASS. Outerfailedbeforeexternalproof. Reportad21fba2...6a70b/outerc023caf1...91281.
+LaterREADONLYclosurePASS473ms/child1416ms/exit0term/stable: originalparent20888,
+preview23764/Edge30532 absent, claims/profileabsent, bothfamilyports64953/49673
+empty112/2ms, manifestunchanged/no mutations. Receipt0c5507a7...1c6790. Original
+postNavFAIL unchanged; no V6full80scontrols/CIN33. V6controlmanifestgenerator
+prepare-v6-control-manifest1.py UNRUN and mustreject this failedprerequisite.
+EarlierV5CIN33 eventoverflow/no profile/overallINFRA+cleanupFAIL+wrapperEOFmiss,
+separateexactretainedrecoveryPASS61866 and postfailureunchanged1199/357audit stay
+recorded. Its lateprimaryelectricalPASS80053ms did not accept overallrun.
+
+Root-approved V7 plan LONG-OBSERVER-v7-ROOT-PLAN.md: inside SAME snapshotfunction,
+drain completed exactownedread through strictsinglepump/account/dispose, starta
+successor onlyaftercompletion, then witness genuinepending and retain exactref
+throughpause send. ONE checkedactualTrigger.actualTicks+3*Frequency cutoff,
+clipped originalroute/sharedcleanup, coversboth preparation and Debugger.pause;
+no reset/grace/sleep/secondreader/fakepending. CorecopyF3DA/fixture9EFC byteexact.
+Root V7controller6790661f...670ca independentlychecksallpause send/response/event
+proofs/correlation inside samewindow; pure33PASSchild1138ms/exit0term/stable,
+fixture30e5814a...a05fa. Existing3DD census/physicalpredicates unchanged. V7window
+independent source review found no blocker in boundedhelper/caller scope; review
+ran no tests/actors. FreshselectedWinPS5 core51/1403 PASSchild8353ms, existing
+parentpredicates60 PASSchild1231ms, launcher7 components39 PASSchild1389ms,
+allactualexit0/termination/sourceStable; launcher87012374...68901. V7worker1f3d968e...92b35 and triggerhostrunner38538ed3...7582b/peer2a2f6f8a...e8f84
+frozensource/ASTonly. Rootownershiprun1 FAIL39/113/actualexit2/termination/stable,
+child4152ms. Failednewfaultcase didnotinjectfault: foreach $mode collides with
+worker $script:Mode reset by fixtureinitializer (PowerShellcase-insensitive).
+Normalpendingread was correctlywitnessed, so expectedfaultassert failed. CoreF3
+faultaccount/dispose code is sound; no productionignored-faultclaim. Sameconcrete
+fixturecollision affects3selectorloops including historicalsyncAPIcase; earlier
+PASS is not actualsync-branchproof. E5DBfixture/failure preserved; rootauthorized
+NEWfixturev6 construction-only unique3selectors +extraactualsync/noTaskassert,
+alloldassertions retained. Worker1F3/coreF3 unchanged. RootremainingpreNav/real
+trigger9/realclose7 configs PREPAREDUNRUN untilfreshfixturepasses. NoV7realactors.
+NewV7pre/postadapters preparedsource-only/22finite roles, nocopies/materialization
+untilfinalsource/actualqualification. Root owns all actualactors.
+ReceiptadapterV1 pure28 remains NOTACCEPTED after source-reviewblockers.
+ReceiptV2frozen59candidate archivedbyteexact; correctedcandidateecc4ac6f...ddd7e
+requiresactual34parentTaskProoffields, rejectsunknownextras, oneexplicitartifact
+only. Leaf62purePASS, root'searlier59purePASS6761.271ms/sourceStable; current62
+rootrerunpending. ActualWindowsPython NTFSjunction pathcanary7PASS onECCsource:
+operation11.348ms/cleanup0.626ms, ordinaryfilepositive and4negativepathguards,
+no read-throughjunction; exactownedjunctionremoved, targetpreserved/sourceStable.
+This proves staticfilesystemboundary only, no actualreceipt/profilequalification.
+V7candidatepinupdate awaitsfinalsourcecoordination; no actualCIN33profileexists.
+Preserve all old sources.
+
+No production/Java/build/solver/model/admission/player change; W1199/357CFEB/538,
+moduleFB/driverDD/preview75 and90s/640/5s/3s/500ms/15s/120s/600s/6000s limits
+remain. Private40/48 NOTADOPTED/accepted100=0. HARD/PSYCHOTIC unavailable/unrun;
+protecteddata unmaterializedhere/historicalunreadUNCERTIFIED. CI NOTRUN/self-hosted
+prerequisite. Next integrate/reviewV7, finalfocused+actualtriggertransport proof,
+pre/postnegativebrowsergates, freshnormal+injected80s beforeexactCIN33retry.
+
+# Historical checkpoint: V6 postNav failed and resources closed
+
+**IN PROGRESS; NO RESOURCE GATE ACTIVE. Updated:** 2026-11-01 23:54 UTC.
+Main/W/P HEAD5f05b005, P clean/staged0. Main B6/W private40/Desktop pending
+changes and all old evidence/stashes/quarantines/ambient8928 preserved. Native
+be15/receipt5f05 published, Gmail1a198e4cd3f5d367 once. No new commit/push/email.
+
+First V5 CIN33 success-1 remains INFRASTRUCTURE_FAILURE/cleanupFAIL81154ms/
+wrapperEOF+failurecleanup unproven, exactactualchildexit/termination NOTSUPPLIED.
+Worker129th event overflowed128 before capture; no profile or pause/stop/resume/
+disable. LaterprimaryelectricalreferencePASS80053ms/613work/24000steps/maxUnit2784
+is observed finite evidence only, not overallacceptance. Report715b967b...f1f1a.
+Separate exactretainedrecovery1 CLOSED PASS_RECOVERY_ONLY/child61866ms/exit0/term/
+stable, API60627ms(finalAPI60623), externalproof232ms: parent/preview/Edge absent,
+claims/profile absent, ports57805/65293 empty2/1ms, terminalmanifest. OriginalFAIL
+unchanged. Postfailure18roles+W1199/357CFEB/538 unchangedaudit PASS; no new build.
+
+V6 newprivate sources FROZEN: controller3dd9dde4...26e8f/coref3daf3b4...8e688/
+workerff84b52d...8e4b1; launcher6 b2c6cea8...0cd4e; plan646acc (exactmetadata
+in v6-final-preflight-summary1.json d0a62a68...018f6). Original128requiredhistory
+kept, fixed4optional scriptParsed/log/debug/info counters with stricttypedcensus;
+required/unknown/error events and originaloverfloworacles retained. Worker/parent/
+longreportv4. Accurateactualtaskinvocation and physicalquiescence permit outer
+cleanup after provedabort/disposal whileclose/worker stayFAIL. Secondaryerrors
+are bounded payload-free records, never silently suppressed. Root review found
+fixedrow/physicalpredicate gaps; fixed3DD nowindependentlyreviewed with no residual
+blocker in fix-onlyscope. Reviewran no tests/actors; earlierhelper124BF PASS not reused.
+
+ActualselectedWinPS5 final gates CLOSED PASS/exit0/term/sourceStable:
+core51/1403 child7579ms, worker35/102 child3988ms, preNav7/41 child7629ms,
+parent60 child1288ms, component13params/sixoriginalbodies/3positive8negative
+child2032ms, noWorker4 child870ms, CLI5 child3444ms, launcher39 child1395ms.
+Actual.NET4 transport7/255 child5182ms, operation4145ms/cleanup18ms, all7cleanupPASS.
+Optional290 flood aggregates exactly290/retained0 and gracefulclosePASS; required129
+beforeclose/trailing retaincloseFAIL/drop1 yet physicaldisposalproof true; withheld
+peer failsclose at3055ms. Resources/tasks/listeners allclosed/proved. Reportda5d49cc...1d833.
+Earlier callerwronghash/outputpath/scopedstatus failures preserved; noassertion/source
+was changed to pass them. Final core F3DA/fixture9EFC identical through freshpass.
+
+V6 real preNavnegative run-1 CLOSED PASS_EXPECTED_FAILURE_CLEANUP_ONLY,
+566checks; underlyingINFRA/routeFAIL/parentFAIL/actualexit2/termination preserved,
+child59975ms/source+buildStable. Noactualnavigation/profile/pause/stop/resume;
+Profiler.disable and actual output+peerclose/physical/task/resourceproofs PASS.
+Operation39ms, aggregatecleanup36207ms/browser9691ms. Report6d41457d...c22b7/
+outerec39d5f8...95646. This is failurecleanup proof, not normal80s/electricalproof.
+V6 postNavnegative run-1 CLOSED FAIL369checks, child73197ms/actualexit2/
+termination/source+buildStable. Actualnavigation+exactsentinel1027ms proved;
+workerfailed1431ms because trigger selectedPRIMARY_TERMINAL while its sole owned
+receiveTask388 had completed asynchronously (started41/completed40), so strict
+triggerPending/retainedproof false. Generic errorlabelTIMER75 doesnot mean timer
+actuallyfired. No profile/pause/stop/resume/disable; do not loosenorwhitelistrunner.
+Parent6errors preserve capturefailure. UnderlyingaggregatecleanupPASS49294ms/
+browser11828/Completecalledsuccess/physicalIoquiescenttrue/peerclosePASS. Runner
+stopped beforeits externalresourceproof. Reportad21fba2...6a70b/outerc023caf1...91281.
+Separate laterread-onlyclosureaudit CLOSED PASS, child1416ms/exit0/term/stable;
+actualproof473ms: originalparent20888/preview23764/Edge30532 absent, claims/profile
+absent, ports64953/49673 bothfamilyempty112/2ms, manifestunchanged. No resource
+mutation, no originalPASSpromotion. Receipt0c5507a7...1c6790/outer71d385f8...28644.
+NO RESOURCE GATE ACTIVE. V6 frozen; rootrequested boundedread-only pending-receive
+race diagnosis from workerowner. No V7sourceornew fullcontrols/CIN33 yet. New
+prepare-v6-control-manifest1.py is UNRUN and willreject failedpostcanary; do not
+rununchanged V6long controls. Next approve minimalownerfix underexistingdeadlines,
+preserve genuinependingTask/reference/onepump proof and repeat relevantfinalgates.
+Both80sV6 controls and V6 CIN33 NOTRUN. V5controls don't qualifychangedV6.
+Receipt-analysis V1 pure28 passed but source review foundprovenance/timing/schema
+blockers: NOT ACCEPTED, noactualprofile. V2 separatecontract/fixes in progress.
+
+Original90s/640/5s/3s/500ms/15s/120s/600s/6000s limits remain; no production/Java/
+model/admission/player change. Private40/48 NOTADOPTED, accepted100=0. HARD/
+PSYCHOTIC unavailable/unrun; protecteddata unmaterialized here/historicalunread
+UNCERTIFIED. CI NOTRUN/self-hosted prerequisite. Next closecurrentgate, then
+postNavexpectedfailure, freshnormal+injected80s controls before exactCIN33retry.
+
+# Historical checkpoint: V5 recovery closed and V6 source planning
+
+**IN PROGRESS; NO RESOURCE GATE ACTIVE. Updated:** 2026-11-01 23:30 UTC.
+Main/W/P HEAD5f05b005, P clean/staged0. Main B6/W private40/Desktop pending
+changes, ambient8928 and historical evidence/stashes/quarantines preserved.
+Nativebe15/receipt5f05 published, completionGmail1a198e4cd3f5d367 once.
+No new commit/push/email. Private plan LONG-OBSERVER-v6-ROOT-PLAN.md records
+scope/ownership/validation. V5 sources/evidence immutable; newV6 under development.
+
+V5 full80s normal success-6/injected inject-1 CLOSED PASS, actual exit0/term/
+source+buildStable, cleanup56054/55200ms/browser7844/7855ms. Focused and real
+negative/transport gates passed in their V5 scopes; they do not qualify V6.
+FirstCIN33 success-1 FAIL: overallINFRASTRUCTURE_FAILURE, cleanupFAIL81154ms/
+resourcesunproven, worker EventHistoryOverflow129>128 after1869ms, no profile.
+Pause/stop/resume/disable NOTATTEMPTED; closeprecondition failed before API
+invocation (oldworker inaccurately labeledattempted/SYNCFAIL), abort/disposePASS,
+parentasyncquiescenttrue/Ioquiescentfalse/Complete skipped. Report715b967b...f1f1a.
+Underlying primaryelectricalreferencev5 didvalidatePASS80053ms/613work/24000steps/
+600batches/maxUnit2784ms/modelseedstring9007199254740993; overallFAIL preserved.
+Wrapper threw outputEOF+failurecleanup unproven, exactchildexit/termination
+NOTSUPPLIED. A later pass cannot repair those missing original proofs.
+
+Exact retainedrecovery1 CLOSED PASS_RECOVERY_ONLY using publishedmoduleFB/API;
+child61866ms/actualexit0/term/sourceStable. API60627ms (reported60623), separate
+finalproof232ms; originalparent29756/preview14800/Edge2552 absent, bothclaims/
+profileabsent, nativebothfamilyports57805/65293 empty2/1ms, manifestterminal.
+Receiptc3acdbee...9f770/outeref13d3db78aa; original failure unchanged.
+Postfailure18role+Developer1199/357 CFEB/538 audit PASS_UNCHANGED_INPUTS_ONLY,
+shaea5729962af4; no new Java/GWT build needed.
+Recovery script parseerror beforeexecution preserved; parentheses-onlyfix09288926.
+
+Root/leaf V6 change only optional event representation and failed-I/O cleanup:
+keep128requiredhistory; aggregate explicit scriptParsed/log/debug/info in fixed
+counters, preserve required/unknown/errors and original overflow oracle; independently
+validate census in parent. Accurate taskinvocation/quiescence allows outercleanup
+after provedabort/disposal while worker/close remainFAIL; preserve secondaryerrors.
+Worker/parent/reportv4 rejects oldreceipts. Rootcontroller initial22dabec6 is
+unqualified; core/worker/fixtures under development, no tests/actors on V6 yet.
+Receipt-analysis adapter separately uses synthetic fixtures; no real CIN33profile.
+
+All original90s/640/5s/3s/500ms/15s/120s/600s/6000s limits remain. No solver,
+physics/model/admission/player changes; private40/48 NOTADOPTED, accepted100=0.
+HARD/PSYCHOTIC unavailable/unrun; protecteddata unmaterialized here, historical
+unreadUNCERTIFIED. CI NOTRUN/self-hosted prerequisite. Next: integrate/reviewV6,
+run final focused+realtransport/negative gates, then fresh80s controls before
+one exactCIN33 retry. Do not treat V5controls as V6 acceptance.
+
+# Historical checkpoint: CIN33 failed; retained recovery launched
+
+**IN PROGRESS; ONE RECOVERY GATE ACTIVE. Updated:** 2026-11-01 23:26 UTC.
+Main/W/P HEAD5f05b005/P clean/staged0; all B6/private40/Desktop pending work,
+historical failures/stashes/quarantines/ambient8928 preserved. Nativebe15+
+receipt5f05 published, Gmail1a198e4cd3f5d367 once. No new commit/push/email.
+
+Final V5 normal80s success-6 and injected80s inject-1 CLOSED PASS on same18pins;
+child154164/153376ms, cleanup56054/55200ms, browser7844/7855ms. Normalprofile
+VALIDATED; injected NOT_CAPTURED_INJECTED/sentinelobserved. Focused core41/568,
+worker26/64/preNav7/41/parentIo12/launcher39/realtransport4/65 and real browser
+negative preNav290/postNav315 pass in their scoped final-source evidence.
+
+First exactCIN33 run-long-cin33-success-1 returned overall INFRASTRUCTURE_FAILURE,
+cleanupFAIL81154ms/resourceSuccessfalse; report715b967b...f1f1a preserved.
+Actual worker failed1869ms at EventHistoryOverflow129>128: retained scriptParsed69,
+consoleAPICalled37 plus22other, dropped1; 129thmethod not retained. No profile,
+pause/stop/resume/disable NOT_ATTEMPTED. Worker socketabort/disposePASS, close
+quiescentfalse; parentasyncquiescenttrue/Ioquiescentfalse/CompleteVerifierRun
+SKIPPED. No gracefulclose or cleanupPASS is inferred. Primary electricalroute
+did later validatePASS/referencev5/modelseedstring9007199254740993, operation
+80053ms/613work/24000steps/600batches/maxUnit2784ms; this does NOT accept overall
+run or renew any qualification. Raw requestedexit2 is not actualchildreturn.
+Outer launcher47d7 threw bounded outputEOF+failurecleanup unproven before raw
+childreturn/result could be saved. Exactchildexit/termination NOTSUPPLIED.
+Manifest original8cccfa3b...ed82c, parent29756/start639291720639082648,
+preview14800/start639291720668508408/port57805, Edge2552/start639291720836927493/
+CDP65293 retained; no manual/unowned process termination.
+
+Only active resource gate: exact retained active-preview recovery1, exec14349.
+SupervisorPID20280/startTicks639291723710072758/selectedWinPS5.1.26100.9711,
+launchUTC2026-11-01T23:26:11.4755100Z. Source recover-cin33-failure1.ps1 uses published moduleFB
+API Invoke-VerifierRetainedActivePreviewRecovery, own120s cap/external600s. It
+must reattest parentabsence/process/claims and stop exactpreview before bound
+parent-exit Browser.close. Actual recovery/result/finalabsence NOTYETSUPPLIED.
+Initial recovery script parseerror beforeexecution is backed up; only missing
+expression parentheses fixed. No resource mutation occurred on parsefailure.
+Original CIN33 failure will remain FAIL after any later recovery success.
+
+V5 sources39E9/9F80/A171 and original128history bound remain frozen. Read-only
+source diagnosis and separate receipt-analysis pureadapter work in progress.
+No new launch until exact recovery proves terminal resources. W before-build
+1199/357 CFEB/538 exact; postfailurebuildaudit NOTRUN yet. No Java/model/admission
+change, private40/48 NOTADOPTED, zero accepted100. Original90s/640/5s/3s/500ms/
+15s/120s/600s/6000s limits remain. HARD/PSYCHOTIC unavailable/unrun; protecteddata
+unmaterialized here/historicalunreadUNCERTIFIED. CI NOTRUN/self-hostedprerequisite.
+Next: close/prove exact recovery, diagnose bounded event telemetry/cleanup owner
+without raising128 or suppressing correlation/errors; preserve all failure evidence.
+
+# Historical checkpoint: observer controls passed; CIN33 first launch
+
+**IN PROGRESS; ONE RESOURCE GATE ACTIVE. Updated:** 2026-11-01 23:21 UTC.
+Main/W/P HEAD5f05b005; P clean. Main B6 (9tracked/6untracked), W private40
+(7tracked/8untracked), Desktop (7tracked/89untracked) and all old evidence,
+stashes/quarantines/ambient8928 preserved; staged0. Native be15+receipt5f05
+published, Gmail1a198e4cd3f5d367 once. No new commit/push/email.
+
+Private V5 final controller39e90f67...36aea/core9f80bc6a...51b69/worker
+a171951f...303e frozen. Focused core41/568, worker26/64, preNav7/41,
+parentIo12, launcher39 and real transport4/65 pass; final actual browser
+preNav290/postNav315 negative cleanup canaries pass while underlying FAIL/exit2
+remain. Independent bounded source/fix-only review found no residual blocker;
+it ran no runtime gates. Prior failed fixtures/attempts remain preserved.
+
+Two final-source80s controls CLOSED PASS, exit0/termination/source+buildStable:
+normal run-long-control-success-6 child154164ms, validated profile and actual
+pause/stop/resume/disable/output+peerclose; receive130/130/130/send11/11/11;
+cleanup56054ms/browser7844ms. Report8e8b837d...09d14/outer7a697de0...05864.
+injected run-long-control-inject-1 child153376ms, sentinel observed; profile
+NOT_CAPTURED_INJECTED, no fabricatedcapture; pause/resume/disable/peerclose and
+alltaskquiescencePASS; receive47/47/47/send10/10/10; cleanup55200ms/browser7855ms.
+Report52a3d848...ed11d/outera1a6288d...f36ce. Root fresh closure audit passes.
+
+Only active gate: run-long-cin33-success-1, exec98543; supervisorPID9324/
+startTicks639291720540064682/selectedWinPS5.1.26100.9711;
+launchUTC2026-11-01T23:21:03.8446526Z. Launcher47d7d61b...2dadc and manifest
+b1fee8c9...e416f preserve18 role pins; bothcontrol prerequisites verified before
+actors. W actual Developer1199/357 CFEB/538 exact before; after NOTYETSUPPLIED.
+Exact private40 SEPARATE_DIRECT_SWITCHING/CIN33_SHUNT50us, URLseed3; modelseed
+9007199254740993 only a source-bound expectation until terminalreport observed.
+Capture target75s; originalroute90s unchanged. Result/profile/cleanup NOTYETSUPPLIED.
+Do not start another resource gate until closure. A useful profile cannot promote
+routeFAIL/exit2. Receipt-aware analysis adapter is separate pure work in progress.
+
+Limits remain90s/640/5s temporal+send/3s CDP+close/500ms ownership/15s shutdown/
+120s aggregatecleanup/600s outer/6000s matrix. No production/Java/build/model/
+admission change; private40/48 NOT ADOPTED, zero accepted100. Structural100 is
+not playable100. HARD/PSYCHOTIC unavailable/unrun; protected data unmaterialized
+here, historical unread boundary UNCERTIFIED. CI NOTRUN/self-hosted prerequisite.
+Next: close current gate, inspect actualreport/rawreturn/provenance and profile;
+diagnose timing using separately validated adapter without relaxing any oracle.
+
+# Historical checkpoint: normal80s passed and injected80s launched
+
+**IN PROGRESS; ONE RESOURCE GATE ACTIVE. Updated:** 2026-11-01 23:16 UTC.
+Main/W/P HEAD5f05b005, P clean; Main B6/W private40/Desktop preserved. Native
+be15/receipt published, Gmail1a198e4cd3f5d367 once. No new commit/push/email.
+Normal5 remains FAIL/exit2/term71944ms, resourcecleanupPASS47324ms/browser10543;
+no80s loop or injection/CIN33. Tiny benign startup profile is not CIN33 evidence.
+
+Current private V5 plan4364fa18...f833e. Core9f80bc6a...51b69 and corrected
+V8fixture35f27d9c...010fd PASS41/568, all prior30 names/oracles retained+11,
+fixturecleanupPASS, selectedWinPS5 child7031ms/exit0/term/sourceStable. Initial
+V8 source9022/run1 FAIL40/1 was an empty-array fixture construction bug before
+its oracle; pre-fix bytes/result preserved. Runtime result e9fbda7e...0803e.
+
+Worker a171951f...303e/ownershipfixture1b74fccd...db87c PASS26/64, original11/36
+retained; child3091ms/exit0/term/stable, result e9e695a5...20e63. Initial78f0
+fixture prematurely set CloseSent before actual API invocation; preserved with
+FAIL12/37. Only helper construction fixed, no assertion/core/worker change.
+PreNavfixture0695c29d...723e1 PASS7/41 child7426ms, result12033ed2...ad14b.
+
+Actual selected .NET4 ClientWebSocket transport canary PASS4/65, child4327ms/
+exit0/term/stable. Quiet/text/fragment operations277/47/16ms; withheld-peer
+negative3032ms correctly retains worker closeFAIL after output completion.
+All four cleanupPASS, aggregate25ms; actual client/server tasks/socket/listener
+closures and original3s window prove. Result6fe1fa71...664c7/outerb075f75a...dc6b8.
+Root did not promote output-send completion, timeout or abort into graceful PASS.
+
+Navigation-return selected-host contract R2 PASS3cases/child1043ms: extra value
+is actual handoff PSCustomObject+URL, fixedclone yields exactoneURL; wrongorigin
+still rejects beforepublication. No network in this function fixture. Result
+6715a9f8...749cd. Root's firstR1 boolean expectation was wrong and remainsFAIL.
+Controller39e90f67...36aea voids that internalreturn and validates new peer-close
+timestamps/reportprotocol3. Review found returned-task disposal missing from
+full parentIoquiescence despite normal acceptancealreadyFAIL. Root extracted
+its predicate and requires typedreturned/disposed close+connecttask ownership;
+BE8backup preserved. Fresh components/noWorker4/CLI5 PASS on39E9, children
+1941/818/3367ms; new parentIo12cases PASSchild926ms includes disposalfailures.
+Six original route/report bodies unchanged.
+
+Independent V5 review and fix-only review now find no residual source blocker
+in their bounded scopes; neither ran runtimegates. Savedworkerreport omits
+literalpeerCloseStatus (corecapturesactualnullablecode) and literalinterval;
+these are scoped/source-bound limits, no statuswhitelist fabricated. Root
+Launcher5 47d7d61b...2dadc source/path39PASSchild1376ms.
+V5 real pre-navigation canary run-1 CLOSED PASS_EXPECTED_FAILURE_CLEANUP_ONLY,
+290checks; underlyingINFRA/routeFAIL/parentFAIL/exit2 retained, child58292ms/
+termination/sourceBuildStable. Actualrejection35ms, cleanupPASS35321ms/browser
+9607ms, output-close+peer-close/task and freshterminalresourceproofs pass.
+Receipte7135010...8f28c/reportfff8f316...1f0b5. This renews expected-failure
+cleanup only, not normal80s or electrical/profile qualification.
+V5 post-navigation canary run-1 CLOSED PASS_EXPECTED_FAILURE_CLEANUP_ONLY,
+315checks/underlyingINFRA-route-parentFAIL/exit2/termination, child72040ms,
+source/buildStable. Actual one-string URL/target proof saved before exactsentinel
+at1066ms, then actual benign profile/pause/stop/resume/disable and output+peer
+close/task/terminalresource proofs pass. Cleanup48264ms/browser10732ms. This
+is not normal80s or CIN33 evidence. Receiptd8df3e37...c616a/reporta2d57cd1...e62ca/
+actualpostproof1d4d4e00...b547f. Both real failure canaries now pass final source.
+All18 actualsource/proof roles audited in manifest8974f95e...8ad95; launcher5
+47d7d61b...2dadc. Fresh missing-controls guard PASSchild1625ms before actors.
+Normal80s run-long-control-success-6 CLOSED PASS, exit0/termination/source/
+buildStable, child154164ms. ActualroutePASS/controlValidatedtrue/q100false,
+worker/parentPASS; validatedprofile, pause/stop/resume/disable and output/peer
+close PASS. Receive130/130/130, send11/11/11 balanced/disposed. Aggregatecleanup
+PASS56054ms/browser7844ms. Report8e8b837d...09d14/outer7a697de0...05864.
+Only active resource gate: run-long-control-inject-1, exec7082.
+SupervisorPID26428/startTicks639291717723628555/selectedWinPS5.1.26100.9711;
+launchUTC2026-11-01T23:16:22.2534878Z. Same18rolemanifest8974f95e...8ad95 /
+launcher47d7d61b...2dadc. Injected80s actualresult/cleanupNOTYETSUPPLIED.
+No othergate untilclosure. Core9F80/workerA171/controller39E9 remainfrozen;
+root ownsallactualactors/acceptance. Only bothclosedPASS permit exactCIN33
+diagnostic; do not count the ongoing inject gate as passed.
+
+Next: source review + real final-source preNav and short postNav expected-failure
+browser canaries, then normal80s and InjectAfterPause80s closedPASS before exact
+separate/CIN33_SHUNT50us route75s CPU observation. No actual CIN33 profile; zero
+accepted100; reference40/48 NOT ADOPTED. Preserve90s/640worksteps/5s/3s/500ms/
+15s/120s/600s/6000s, original oracles and CircuitJS truth. ModuleFB/driverDD/
+preview75 and W1199/357 CFEB/538 unchanged; no Java build needed. HARD/PSYCHOTIC
+unavailable/unrun; protected data unmaterialized here, historical unread boundary
+UNCERTIFIED. CI NOT RUN/self-hosted prerequisite. S=OS-temp
+tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591. All old failures,
+stashes/quarantines and ambient8928 stay untouched. One resource gate active as recorded above.
+
+# Historical checkpoint: navigation return and socket-close failures; V5 planning
+
+**IN PROGRESS; NO RESOURCE GATE ACTIVE. Updated:** 2026-11-01 UTC.
+Main/W/P HEAD5f05b005; P clean, Main B6/W private40/Desktop preserved. Native
+be15 and receipt published; Gmail1a198e4cd3f5d367 once. No new commit/push/email.
+Original V3 run4 remains FAIL/exit2/termination, cleanupFAIL135996ms. Later
+read-only280ms closure audit is PASS for exact original resources only; no
+original result or manifest was rewritten. No injection/CIN33 has run.
+
+Root plan LONG-OBSERVER-v4-ROOT-PLAN.md46085a14...721bb is authoritative.
+Private V4 core88090822...3236e now binds immutable target/CDP/preview origin,
+rejects legacy/mismatched handoffs, owns one nonresetting shared120s clock and
+a strict no-pause profiler-disable lane. Workerdf34ece2...c370e observes early
+PrimaryFAIL, retains it and provides separate preNavigationCleanup proof while
+overall worker/route remain FAIL. Controller draftb7447455...43522 migrates
+bindings/protocol2/sharedclock and preserves six original report/route bodies;
+target helper still matches tested e92c4d72...cf1b. No production/Java/model or
+admission change. ModuleFB/driverDD/preview75 and W1199/357 compiler identity stay.
+
+Fresh actual explicit selected WinPS5 gates PASS/exit0/term/sourceStable:
+core30/429, all26 original runtime case names preserved+4new, fixturecleanupPASS,
+receives2155/2155/2155 and sends89/89/89, no pending. Core result1d19cc6d...666b2,
+child7386ms. Worker11/36 resultb879f494...a110f child2608ms; new focused7/41
+result30ac7e2e...724a2b child4909ms. These are in-memory function/task evidence,
+not actual CDP/browser. First root core invocation rejected wrong output path
+before tests (exit1/term639ms); corrected output/config only, failure preserved.
+Controller components/no-worker4/CLI5 pass on draftB744, children1971/861/3491ms.
+
+All work is private under S/cin33-cpu-r1/long-route-diagnostic-v4 and new sibling
+source/config folders. Root owns controller/launchers/acceptance. Leaves
+observer_v4_core/observer_v4_worker supplied frozen sources; worker now owns
+ONLY native-pre-navigation-canary-v4/ source-only preparation of the real
+expected-failure adapter. Independent observer_v4_review found no source-level blocker in the bounded
+core8809/workerDF34/controllerB744 lifecycle/wire/deadline/positive-parent scope;
+no runtime gate was run by that reviewer. Root launcher4BD88 source/path39 gate
+passes child1331ms. No actor permission to leaves. Normal PASS stays strict.
+
+Real negative adapter run-1 CLOSED PASS_EXPECTED_FAILURE_CLEANUP_ONLY236checks,
+child57922ms/underlyingexit2/termination, source/buildStable. Underlying route,
+worker and parent remain FAIL. Actual owned-target rejection38ms; profiling was
+disabled without pause/stop/resume/capture, first shared120s clock retained.
+Worker finished126.1929ms after sharedcleanup start; no extra runtime threshold.
+Cleanup PASS34867ms/browser9156ms. Eight actual setup/disable commands and task/
+socket proofs pass. Both terminal claims, fresh native absence/original PIDs and
+profile absence pass. Receiptbaf126d1...bd150/report50c46062...d8af2/raw3e0b0825...06ec7.
+Literal sampling interval is source-bound authorization evidence, not separately
+serialized in its live ledger. Original V3 cleanupFAIL remains unchanged.
+
+Normal run-long-control-success-5 CLOSED FAIL, child71944ms/exit2/termination,
+source/buildStable. Navigation itself and worker navigation proof PASS, but the
+post-navigation controller target check fails984ms into route setup. Suspected
+cause is an unvoided PublishNavigationHandoff return: Navigate-Cdp emits both
+boolean and URL, so its assigned navigationUrl is not one exact URL string.
+The80s loop did not run. Worker captured a tiny benign PRIMARY_TERMINAL startup
+profile, paused/stopped/resumed/disabled PASS; it is not CIN33 evidence.
+Worker socket closure fails on actual .NET CloseAsync receiving Text; API calls
+for output-only close with the existing single receive pump. Socket task/receive
+disposal eventually quiesces; overall worker/parent remain FAIL. Actual resource
+cleanup PASS47324ms/browser10543ms. Report0a8252e9...fb207/raw99194b60...d7721/
+outerf20b5292...97cee preserved. No active resource gate, injection or CIN33.
+
+Next private V5: prove/fix Navigate-Cdp scalar return at selected host, replace
+CloseAsync with output-close plus bounded existing-pump peer-close proof under
+one original3s close window/shared120s clock. Preserve original identity/profile/
+task oracles; require focused real transport canary before another full control.
+Changed worker cannot reuse V4 runtime PASS. Two fresh80s controls still required.
+After both PASS: fresh
+InjectAfterPause80s closed PASS, then exact separate/CIN33_SHUNT50us route75s
+CPU diagnostic. No actual CIN33 profile; reference40/48 NOT ADOPTED; zero
+accepted100 layouts. Keep90s/640worksteps/5s/3sCDP/500ms/15s/120s/600s/6000s
+limits. HARD/PSYCHOTIC unavailable/unrun; protected data unmaterialized here,
+historical unread boundary UNCERTIFIED. CI NOT RUN/self-hosted prerequisite.
+S=OS-temp tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
+old evidence/stashes/quarantines and ambient8928 stay untouched.
+
+# Historical checkpoint: observer navigation and cleanup failures; V4 planning
+
+**IN PROGRESS; NO RESOURCE GATE ACTIVE. Updated:** 2026-11-01 UTC.
+Main/W/P HEAD5f05b005; P clean, B6/private40/Desktop work preserved. No new
+production/Java/model/admission change or publication/email. Native be15bf7f
+and receipt remain published with Gmail1a198e4cd3f5d367 once.
+
+V2 success3 remains CLOSED FAIL before worker start; cleanup PASS34894ms.
+Root actual selected WinPS5 loopback canary proves the current JSONarray wrapper
+rejects a valid target; explicit enumeration accepts it and rejects wrongURL,
+duplicateID, missingWebSocket and malformedURI fixtures. All13 clients closed,
+listener stopped, task completed/disposed. Operation1014ms/cleanup11ms, child
+1537ms/exit0/termination/sourceStable. Result9892412e...cf5ac; outer78106db1...7300d.
+The unrun original leaf draft is preserved; root corrected its canonical JSON
+array fixtures, normalized negative cases, output and cleanup evidence first.
+
+Frozen V3 controller3103087a...1d362 changes ONLY that query enumeration from
+V2. Its helper matches the tested clone e92c4d72...cf1b after function rename.
+All exact target/type/URL/URI predicates and six route/report bodies remain.
+ModuleFB/core7DB/workerDCA unchanged. Fresh selected-host component/no-worker/
+CLI/launcher/dependency checks PASS/exit0/term/sourceStable, child1909/802/3387/
+1328/1579ms. Launcher39/actual junction cleanup and five actual CLI rejection
+cases pass. Core355/26 and fresh V2 worker11/36 reused only across exact-input
+audit. All18 roles and metadata hashes bind actual files. No live PASS reused.
+
+run-long-control-success-4 is CLOSED FAIL, child158795ms/exit2/termination;
+source/build stable. Target normalization works: worker setup and Profiler.start
+acknowledgement PASS. Before Page.navigate or80s loop, handoff publication fails
+26ms into route setup: core conflates CDP62083 with preview HTTP64568. Its fixture
+uses one port for both and state lacks an explicit immutable owner binding.
+Primary FAIL is published, but worker waits only NavigationPublished/FatalStop,
+not PrimaryDone; it waits90258ms and never copies the FAIL outcome. Shared
+cleanup ticks stay0; no profiler disable, pause/resume or stop. Socket aborted
+on expired route deadline. Cleanup FAIL135996ms>120000 despite resourceSuccess
+true; browser shutdown6504ms. Do not reclassify missing lifecycle proof.
+Report60f8f905...f2873; rawreturnedf1a9e3...28429; outerd0743cc3...47db8c.
+
+Exact original manifest61591890...3219 is terminal: cleanup complete/errors[],
+two released claims/leases and process/listener proofs, browser/profile cleanup.
+Later actual selected-host read-only audit PASS280ms/child989ms/exit0/term/stable:
+fresh native TCP absence for both ports, original PIDs640/35156 absent, original
+profile absent, manifest5724fc8c...66374 unchanged. Audit ef7443ed...e5d03,
+outer185c01a4...7dc99. No recovery/cleanup/mutation or failure rewrite. Actual
+owned browser was Microsoft Edge. No resource gate remains active.
+Receipts under S/cin33-cpu-r1/run-long-control-success-4[-launch]; S=OS-temp
+tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591.
+
+Next: plan private V4 with explicit target/CDP/preview-origin state binding and
+early shared cleanup/primary-failure wakeup. Preserve positive parent assertions;
+add a strict no-pause pre-navigation failure cleanup oracle/canary. Refresh all
+changed core/worker/controller focused gates and actual negative lifecycle gate
+before two fresh80s normal/injected controls. Only both closed PASS permit the
+exact separate/CIN33_SHUNT50us route75s CPU diagnostic. No V4 source yet.
+No actual CIN33 profile; reference40/48 NOT ADOPTED; zero accepted100 layouts.
+Original90s/500ms/5s/15s/120s/640worksteps/600s/6000s limits and independent
+oracles stay. HARD/PSYCHOTIC unavailable/unrun, protected data unmaterialized
+here with historical unread boundary UNCERTIFIED. CI NOT RUN/self-hosted
+prerequisite. Ambient8928, stashes/quarantines and old failures stay untouched.
+
+# Historical checkpoint: observer V2 target lookup failure; diagnostic next
+
+**IN PROGRESS; NO RESOURCE GATE ACTIVE. Updated:** 2026-11-01 UTC.
+Main/W/P HEAD is `5f05b005c80e312c60fc7db24745f2d8afe4d04b`.
+Native implementation be15bf7f and receipt are published; Gmail1a198e4cd3f5d367
+was sent once. P stays clean. Main B6/W private40 pending work and Desktop stay
+preserved. No new production code, Java build, model, epoch or admission change.
+
+Private observer V2 is source-frozen: controller bc0a7fee...b528 differs only
+in accepted module pin fb07ad54...0954c. Core7db9db49...714b5 and worker
+dca5d02d...34580 remain byte-exact. Launcher8b372608...94ecf additionally saves
+the actual bounded child return durably before optional parsing/audits.
+All18 manifest roles and five fresh receipt hashes pass root byte audit;
+manifest7a20c448...7046. Historical navigation controls are context only.
+
+Fresh explicit selected WinPS5 bounded checks PASS/exit0/termination/sourceStable:
+controller components (13 parameters, six original function bodies,3+/8-),
+no-worker4, worker11/36, CLI5 negative guards, launcher39 (original36+3 receipt
+source checks), and missing-controls dependency. Component/CLI/worker/launcher/
+dependency child times1949/3411/2578/1363/1561ms; no-worker859ms. Launcher actual
+junction cleanup passes; inner missing-controls guard exits1 with termination
+and no actor destinations. Core355/26 evidence reused only after exact source/
+fixture/result input audit. The older worker attribution caveat prompted the
+fresh worker check. A requested-shell host mismatch was rejected by the wrapper
+before import/output/actors; final gates use explicit powershell.exe and record
+actual version5.1.26100.9711. Earlier source/metadata mistakes stay preserved.
+
+The gate `run-long-control-success-3` is CLOSED FAIL. Child exit2/termination
+proved,58165ms; operation browser/start-independent-profiler-observer failed21ms
+into lookup before worker invocation: exactly-owned about:blank target check.
+No route,80s loop, observer or profile ran. Cleanup PASS34894ms; actual browser
+shutdown9352ms. Source/build stable;1199/357 compiler digests unchanged. Report
+1f8d0641...d93b, raw child-return91f89233...767c7, outer50e12489...c173f.
+No injection or CIN33 started. S=OS-temp
+tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591; all receipts
+remain under S/cin33-cpu-r1/run-long-control-success-3[-launch]. No active gate.
+
+Next: diagnose the fresh target-query failure before any retry. Module read-only
+trace proves Chrome starts about:blank and does not navigate before return;
+actual target-list response was not retained, so wrong-page selection is not
+established. Root suspects selected-host Invoke-RestMethod JSON-array wrapping
+at controller's independent target lookup; leaf prepares a real owned loopback
+HTTP shape canary only, with no actor permission. Keep exact target/URL/WebSocket
+oracles. Require both closed80s controls before exact CIN33 route75 diagnostic.
+No actual CIN33 profile; reference40/48 NOT ADOPTED; zero accepted100 layouts.
+Keep90s/500ms/5s/15s/120s/640 work steps/600s/6000s limits. HARD/PSYCHOTIC stay
+unavailable/unrun; protected data unmaterialized here, historical unread boundary
+UNCERTIFIED. CI NOT RUN/self-hosted runner prerequisite. Old failures, stashes,
+quarantines, unregistered claim evidence and ambient8928 remain untouched.
+
+# Historical checkpoint: native listener integrated; observer V2 preparation
+
+**IN PROGRESS. Updated:** 2026-11-01 UTC. Native prerequisite published and integrated.
 Implementation `be15bf7f03f8ca5f504ec164a807a344e2a7de33` (`Use native TCP ownership snapshots and fix IPv6 fallback`)
 was pushed normally from `codex/native-listener-host-20261101` to
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified. Completion
 Gmail `1a198e4cd3f5d367` sent once. No duplicate for the publication receipt.
-No resource gate remains active. P branch `codex/native-listener-host-20261101`
-is based on HEAD `d5a2f736d60f6833207774b1aaaca058dd34c00d`. The intended change
+No resource gate remains active. Main, W and P are at publication receipt
+`5f05b005c80e312c60fc7db24745f2d8afe4d04b`. P is clean. The accepted change
 adds native Windows TCP ownership inspection, complete IPv6 netstat fallback and
 two maintained pure contracts. The [evidence packet](task-evidence/A07/native-listener-r1/README.md)
 records the finite host scope, failures and limits. Architecture/roadmap updated
-in P. Integrated and staged reviews/whitespace checks passed. Documentation-only
-publication receipt remains; no additional completion email.
+in P. Integrated and staged reviews/whitespace checks passed. The publication
+receipt is also pushed and verified; no additional completion email.
 
 Final module SHA-256:
 `fb07ad540e22a225a11b8a12e9dc8e5a20d88f58f89cf32a5fd347613530954c`.
@@ -272,20 +1785,597 @@ UDP grammar failures remain preserved. Later read-only759/556ms closure audits
 do not rewrite original cleanup-UNPROVEN results. Extra canary and Current outer
 receipt failures also remain failures. No budget/oracle was weakened.
 
-Main/W remain atd5a2f736 with preserved B6/private40 work and original module
-8b68e983...f896; only root checkpoints changed there. P holds intended code/docs.
+Main/W now contain the accepted native module fb07ad54...0954c. Integration
+receipt d522ac18...fea4b preserves all30 pending paths: 25 byte-exact and five
+identical after subtracting only published additions. Main15/W15 explicit-path
+backups and retained stashes4e32dd72/801d531f remain. All pending work is unstaged.
+Main selected-host maintained54+39 smoke passes. W compiler1199/357 digests
+cfebece2...b877 /538ecc98...3a6f remain exact (filesystem audit under PS7).
 Desktop task43p/e0c36885,7tracked/89untracked files, stashes/backups/quarantines,
 ambient8928 and older unregistered-claim failure evidence remain preserved.
 S=OS-temp tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
 private runs and sources are under S/cin33-cpu-r1. The native implementation is now published as recorded above;
 prior A07a1573fc6/receiptd5a2f736/Gmail1a19748ce8416866 remain complete once.
 
-Next after preserving and integrating Main/W pending work: two fresh80s independent observer controls,
+Next: prepare source-only observer V2 with the accepted native-module pin;
+core7db9db49/worker dca5d02d stay byte-exact. Refresh selected-host controller,
+CLI, launcher and dependency gates, then two fresh80s independent observer controls,
 normal and injected failure, then exact separate/CIN33_SHUNT50us CPU observation
 at route75s. No actual CIN33 profile; zero accepted100 physical layouts;
 reference40/48 NOT ADOPTED. Original90s/500ms/5s/15s/120s/640 work steps/6000s/
 600s limits stay. HARD/PSYCHOTIC unavailable/unrun; protected data unmaterialized
 here, historical unread boundary UNCERTIFIED. CI NOT RUN/self-hosted prerequisite.
+
+# Historical checkpoint: port proof measured; host treatment planning
+
+**IN PROGRESS; NO RESOURCE GATE ACTIVE. Updated:** 2026-11-01 UTC.
+Root exec94539 finished. Private preview-only timing4 PASS, exit0/termination/
+source/buildstable; cleanupPASS8530ms, all maintained resources closed.
+S/cin33-cpu-r1/run-port-proof-timing-4 (+ -launch sibling) keeps raw receipts.
+Case2927b3bd...aa721a, outerdb6d2a5b...6a3c8; bounded child57660ms, operation
+22632ms/context950ms/preview21670.7737ms. No observer/browser/route was run.
+Valid19 records,0 errors/overflow/incomplete: target477.9788ms,22.0212ms below500.
+Direct contained spans: listener224.4035/structure7.7161/initial semantic77.765/
+final semantic143.2323ms; sum453.1169, residual24.8619. Get-Process6.9312 and
+CIM92.947ms are nested in final semantic; do not sum them again. Whole-trace
+recorder19.3798ms covers19records and cannot all be assigned/subtracted from
+the target. This finite instrumented pass establishes no general startup cure.
+Code map confirms strict500 path ALREADY uses PreferNetstat (bounded netstat
+process/parser); there is no existing native TCP table helper. Timing summary
+df219519b4294fa1b70a0c0330352bef91f7aaa1c40850e2f56d65537a7b4fe7 (4253B)
+preserves containment/overhead limits and no-cure scope; rootFS/readback pending.
+Root authorized a PRIVATE native-listener adapter experiment, NOT adoption:
+S/cin33-cpu-r1/NATIVE-LISTENER-r1-PLAN.md
+4b034058ecb5559f90eee34f025a3dec2cff1135bbc7900d35cc61d7f43cfa91.
+Fresh leaf native_listener_impl owns ONLY NEW native-listener-r1/ module,
+transform/diff/spec/pure fixtures from baseline4C66. No actor permission to leaves.
+Distinct PreferNative for strict proof, retain defaultGetNet+forcedNetstat oracles,
+fresh owner-PID snapshots for IPv4/6 through existing process/schema/HTTP.sys
+authority, no500clock movement/query warmup. Compile/load metadata before proof
+in NewContext; malformed/capacity/unknown fails, only explicit unsupported API
+may fall back under the same budget. Root checked Microsoft primary API/row/
+table padding/byte-order contracts. All real canaries and adoption await review.
+Private candidate is now materialized/frozen at native-listener-r1/
+VerifierIsolation.NativeListener.psm1 cb4b04d45cf7658218ee8903d0406dd1e5f943942bec0273952de9aa95c079eb
+(1045256B), helperNativeTcpTableR1.cs3c2fd2d2...a4add(24017B), diff74a8ed4e...12449.
+Owner self95 pure assertions passed but do NOT qualify its ABI. PS integration
+review found no blocker in its stated scope; C# review found a MATERIAL IPv6
+layout bug: State declared first/offset0 instead ofWindowsState48. Native rows
+would be misread. NO native API/live actor has run. PreserveCB4/helper/diff/tests;
+owner prepared ONLY fix draft6c95022a...3c68e and is HOLDING active files.
+Fresh independent leaf native_layout_tests owns ONLY native-listener-layout-tests/:
+literalWindowsABI/byte-buffer oracle, first gate againstbadCB4 must finish before
+root authorizes runtime fix. ExpectedIPv6 localAddr0/scope16/port20/remoteAddr24/
+remoteScope40/remotePort44/State48/PID52/stride56, header row4. Fixtures may NOT
+derive those offsets from runtimeGetLayout. After first bad gate, owner fixes
+struct/own literal fixtures, newpin+freshpure/independentgates before anyactor.
+No W/P/Main production module change and no native-provider adoption yet.
+
+W's missing normal Current contract was tracked but skip-worktree omitted:
+tests/contracts/preview-listener-identity.ps1, HEAD blob8641a4f2d60cbc5aec24d665397fcc94bfdbe14d.
+Root materialized ONLY that exact file from cleanP/sameHEAD, rawSHA
+5cd48ddee08053654c6a9c16f06a47c17160b708ce2cf6f3ad9901a4593a66c5,
+retaining theS flag/sparse settings. Receipt normal-listener-contract-materialization1.json.
+Root ran the unchanged restored contract in selectedWinPS5 withLive=false:
+baseline-preview-listener-identity-pure1.json PASS30 checks, budget500, cleanupnull.
+This is pure baseline evidence only. No protected qualification data materialized.
+Native fullCurrent remains NOT RUN, distinct from earlier P browserCurrent9.
+S=OS-temp tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591.
+
+P=S/a07-retained-preview-publication clean atd5a2f736d60f6833207774b1aaaca058dd34c00d;
+Main/W sameHEAD, Main9tracked/6untracked B6, W7tracked/3evidence dirs/private40.
+Desktop, old quarantines/stashes/backups/failures and ambient8928 preserved.
+A07a1573fc6147af2998966f4a0e3b11f2c14599d9a/receiptd5a2f736 pushed/remote
+verified, Gmail1a19748ce8416866 sent once. No newer commit/push/email.
+
+The frozen long observer is not yet host-qualified. Core7db9db49...714b5
+49477B passed355/26 with balanced2092receives/26sends; workerdca5d02d...34580
+78279B passed36/11 and source review; controller4e52a00d...b51d267213B has
+final pure/components/CLIguard5 PASS and narrow source review. Runtime/private
+files live in S/cin33-cpu-r1/long-route-diagnostic-v1/. No Java/model/epoch change.
+Supervisor cin33-long-launch1.ps1e00ddc61...6f7f8 and18-input manifest
+d2da5d5e...aab9f remain frozen. W module8B/driverdd3354...7964 unchanged.
+
+Actual long CONTROL Success1 and2 both FAIL before browser/observer at the SAME
+cumulative500ms lease proof:504/523ms at kernel-semantic-authorization,
+preview phase19682/19607ms, cleanupPASS9091/8622ms. Outer30484/29974ms,exit2/
+termination/source/buildstable. No third unchanged full command; no cap raised.
+Corrected summary2be11d79a...d66a8 binds both receipts/inventories and distinguishes
+failed StartPreview from unknown partial-preview process status. Summary1
+4db9a3d1...9efcf incorrectly said no preview ever started; retained/not reused.
+One stopwatch covers listener/structure/initial semantic/final semantic stages;
+the last call includes retained-process/current-PID CIM or native-fallback
+inspection. Exact subphase costs were missing, hence this separate probe.
+
+REAL instrumented private module:
+S/cin33-cpu-r1/port-proof-timing-r1/VerifierIsolation.PortProofTiming.psm1
+4c66a1bf5d3b15fed4d78fcfb17b2a792f86d2e38a3dc4f01dec361ccfbc2e75 (1007117B).
+Base8b68e983c6c35b05ce10bd8a30378293701d02f72fee14d1c66cbc214729f896994606B
+is unchanged in W/P/Main. Reproducer324c04f2...f8d5, diff17057473...75507,
+spec843d9620...131f4; actualWinPS5 pure51PASS846ms(root receipt566f3e4b...7c5a).
+Source-delta review found no added query/warmup/predicate/provider/cap change.
+Trace is enabled only around StartPreview, bounded64 with error/overflow/
+incomplete counters, static labels and measured recorder overhead.
+Earlier cleanup_profile FCBE/hash/parse claim had NO materialized file and is
+INVALID. Fresh port_proof_trace created the verified candidate; all leaves frozen.
+
+A failed first preflight mistakenly used an inside path as its outside fixture,
+then was killed at15s while NewPortLease had reserved an UNREGISTERED lease.
+Rootread-onlyaudit273a7d7c...4dcac (1714ms) observed TWO fresh empty parent/
+direct-child/listener views and absent named mutex, manifest unchanged2ddd7e63...
+710bd. Run da0a662808ec4c33b0895cb442bb11a5 and lease633b254676464ae7b076fdaf098e177d
+remain pending/unregistered failure evidence. Source journal order supports no
+preview process launch at that checkpoint. No terminal/cleanup PASS was forged,
+no claim/manifest deleted/edited, no live resource observed. Old preflight1's
+hardcoded no-context footer is invalid; failed evidence is preserved.
+
+Root fixed probe requires exactly one ValidateOnly|RunOwnedPreview; preflight
+returns before import/context; actor mode journals context.json before preview.
+Final probe F546B85E245B312042E78AD2B69F44C712F223A8C11A4ECA0B0A8DDE93F8D3E5,
+supervisor4fc0db41fba18a73feb8787b3c552577a6429bdfaf05e5e96e8126c0b2147d38,
+rootplan72dd318f...9b055. Final selected WinPS5 preflight4 PASS6/2317ms;
+trace-report3 PASS17/81ms requires exactly one complete port-proof-total record,
+coherent ticks/ms and actual success|throw outcome. Old acceptederror-token
+fixture and one string-interpolation fixture error are preserved, not reused.
+The module/observer/probe get no production/electrical grant from these checks.
+
+Probe4 root-only command uses original600s outer,90s preview,500ms proof and120s
+total cleanup, ordinary CompleteVerifierRun, exact source copies and before/after
+Developer build1199/357 (cfebece2...cb877/538ecc98...b3a6f). No Chrome/observer/
+route. A preview failure remains overallFAIL/exit2 even if trace useful and
+cleanup passes. Next inspect/freeze the native experiment, pure checks and actual
+selected-implementation canaries before any adoption or long-control rerun.
+No500ms cap or identity oracle change is authorized. No actual75s/CIN33 CPU profile yet.
+
+Private40/48 NOT ADOPTED; zero accepted100 physical layouts. Original90s/640/5s/
+500ms/15s/120s/6000s limits and independent oracles remain. HARD/PSYCHOTIC
+unavailable/unrun; protected qualification unmaterialized, historical unread
+boundary UNCERTIFIED. CI NOT RUN/self-hosted prerequisite.
+
+# Historical checkpoint: long controls held by port-proof timing
+
+**IN PROGRESS; NO RESOURCE GATE ACTIVE. Updated:** 2026-11-01 UTC.
+Both selected WinPS5 controls ended before browser/observer launch; all their
+resources are closed. Exec sessions17549/83522 are finished.
+S=OS-temp tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591.
+Success1 remains FAIL before browser/observer: preview lease ownership proof
+cumulative504ms exceeded500ms at kernel-semantic-authorization; phase19682ms,
+cleanupPASS9091ms.
+Outer30484ms/exit2/termination/source/buildstable; caseace7ad8f...ec0d39,
+outer2af55523...54824. All resources closed; no route/profile started.
+Success2 is also FAIL at that same cumulative500ms proof:523ms, phase19607ms,
+cleanupPASS8622ms; outer29974ms/exit2/termination/source/buildstable.
+Case73a783ef...95eb46; outer354a885e...bd737. No route/profile in either case.
+NO THIRD UNCHANGED FULL RUN. No cap raised. The stage label is not an exclusive
+timer: one stopwatch covers initial listener inspection, structure, opaque proof
+creation and final per-kernel listener semantic revalidation. The crossing is
+observed after Test-VerifierRunOwnedPreviewHttpSysListener returns, but nested
+timings are absent. Old browser parent-census warmup covers a different path.
+Next necessary scope: bounded PRIVATE preview-only per-call timing diagnostic.
+Fresh leaf port_proof_trace owns ONLY NEW S/cin33-cpu-r1/port-proof-timing-r1/;
+oracle_map provided read-only dependency/clock advice. No W/P/Main/module8B or
+frozen observer edits. Cleanup_profile was interrupted after its claimedFCBE
+module/hash/parse had NO materialized file at the stated path; that claim is
+UNVERIFIED/INVALID and cannot be reused. Root verified destination absent.
+Root owns the separate minimal probe outside the new module leaf.
+Root reviews plan/exact instrumented delta and pure checks BEFORE any actor;
+root alone may launch one preview-only probe with actual source declared,
+unchanged500ms proof/120s teardown and no electrical or browser-route claim.
+
+P=S/a07-retained-preview-publication clean atd5a2f736d60f6833207774b1aaaca058dd34c00d;
+Main/W sameHEAD, Main9tracked/6untracked B6 and W7tracked/3evidence dirs/private40 preserved.
+Desktop, stashes/backups, old failures/quarantines and ambient8928 remain untouched.
+A07a1573fc6147af2998966f4a0e3b11f2c14599d9a/receiptd5a2f736 pushed and remote
+verified; Gmail1a19748ce8416866 sent once. No newer commit/push/email.
+
+Current runtime is PRIVATE diagnostic tooling only, no Java/model/solver/epoch
+or W/P/Main runtime changes. L=S/cin33-cpu-r1/long-route-diagnostic-v1/.
+Frozen core7db9db4930cb2aa353b332a34f71a4e46d9fab475fd75e737d40c509bec714b5
+49477B; worker dca5d02d1fe63333bcc9c471d9e5ea4585bdebb4cd01e5f1b81f6565ef834580
+78279B; controller4e52a00dbaa23ae1544008257b065fda292976a3cacf886ce5648dfe5479b51d
+267213B. Root supervisor cin33-long-launch1.ps1
+e00ddc610289ab74e732f27bbf4bfdf1db2c26fd3dc5368ab2cf64ecdaa6f7f8.
+18-input manifest long-observer-control-pins2.json
+d2da5d5e3864ccb43310010a01d36b096fa3b14a959582bebb5d57aaa2caab9f.
+All component writers now frozen; leaves run no actors or publication.
+
+Final selected WinPS5 gates: core V6 PASS355assertions/26cases
+(resultdbf917db...382fe), receive2092/2092/2092, send26/26/26, no pending;
+worker component PASS36/11,1864ms (fa914843...15641);
+controller component3 PASS AST0/13params/3positive/8negative/6original-oracle
+function bodies exact; no-worker cleanup4cases PASS (BE6187CE...CF1D6).
+Root actual CLIguard3 PASS5/5,2789ms, each exit2/termination/exactguard/no context;
+root launcher component2 PASS36,719ms incl actual junction and selected bad-hash
+child; dependency2 PASS rejects missing two long controls before actor dirs.
+Full current worker/core and controller integration source reviews found no
+remaining material blocker in their stated scope. These are not live-CDP proof.
+
+Earlier core/fixture/CLI/dependency failures stay FAIL and unchanged.
+Notable fixes: completed receive/send/connect/close task ownership/disposal,
+pre-send deadline/timestamp checks, detached navigation handoff, all cleanup waits
+clipped to one120s deadline, actual75s pending-task identity/reference retention,
+PS5 property-count/typed payload handling, local pre-import typed guards,
+and narrowly proven no-worker cleanup while keeping operation FAIL.
+Exact old993worker bytes NOT PRESERVED; its stable written review hash remains,
+A063/0FD sources and incorrectly reconstructed non-evidence file retained.
+Root A243 supervisor actual manifest failure exposed automatic Matches clobber;
+exact A243 preserved, E00 renames local selection variable. No actor started there.
+
+W module8b68...29f896/driverdd3354...7964 remain pinned. Developer build
+cfebece2...cb877/538ecc98...b3a6f,1199/357, is checked fresh before/after each run.
+Existing P generic v5 and W navigation v3 normal/injected passes and exact v2
+retained recovery remain valid only for their own sources; all their actors closed.
+
+After the measured host prerequisite is resolved, resume the frozen normal
+control (fresh manifest if consumed inputs change). Only after PASS run the SAME
+frozen80s CONTROL InjectAfterPause. Each must prove TIMER_75 while one existing
+receive stays owned, actual primary80s token/duration, pause/resume and teardown.
+Then one exact separate/CIN33_SHUNT50us diagnostic with original Q100 readers.
+Route FAIL/timeout remains overallFAIL/exit2 even if profile VALIDATED.
+No actual long CIN33 profile or75s host proof yet; private40/48 NOT ADOPTED,
+zero accepted100 physical layouts. All90s/640/5s/500ms/15s/120s/6000s/600s caps
+and independent oracles unchanged. New CIN33-only analyzer72bb0a52...1a8ed
+has11 synthetic passes, actual data NOT RUN; old control analyzer unchanged.
+HARD/PSYCHOTIC unavailable/unrun; protected qualification unmaterialized,
+historical unread boundary UNCERTIFIED; CI NOT RUN/self-hosted prerequisite.
+
+# Historical checkpoint: long observer final ownership fixes
+
+**IN PROGRESS; NO RESOURCE GATE ACTIVE. Updated:** 2026-11-01 UTC.
+Resume in the task-owned temp root S=tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591.
+P=S/a07-retained-preview-publication; W=S/a07-report-v2-worktree.
+P/Main/W HEAD d5a2f736d60f6833207774b1aaaca058dd34c00d.
+P clean; Main9 tracked/6 untracked B6; W7 tracked/3 evidence dirs/private40.
+Desktop, stashes, backups, quarantines, old failures and ambient8928 preserved.
+A07 a1573fc6147af2998966f4a0e3b11f2c14599d9a and receipt d5a2f736 pushed;
+Gmail1a19748ce8416866 sent once. No newer commit/push/email.
+
+P generic v5 and W navigation v3 normal/injected controls PASS, all actors closed.
+Navigation summary b1024bfaf3ba991f7f62d21d640ac77f7c6da3b917f6a46b69ea897acbfc6c51.
+W v2 FAIL remains unchanged; exact retained recovery PASS proved eventual cleanup.
+These passes certify their own old transport, not the new persistent receive pump.
+
+Current scope is PRIVATE diagnostic tooling in S/cin33-cpu-r1/long-route-diagnostic-v1/.
+No W/P/Main runtime, Java, model, solver, source/build or epoch changes.
+W driver dd33542439f1625a8002011220b672c6c5cf29bdbcf1cd10485d543fa7a27964;
+module8b68e983c6c35b05ce10bd8a30378293701d02f72fee14d1c66cbc214729f896.
+W Developer build cfebece2...cb877/538ecc98...b3a6f,1199/357 files, requires fresh input audit.
+CPU plan19b92972...ddf26, implementation69102b79...f87f,
+interface-v2b670c430...08657 and root-decisions42fb321b...13feec1 remain binding.
+
+One writer/file: cleanup_profile owns observer-core.psm1 + observer-worker.ps1;
+cleanup_owner owns verify-cin33-diagnostic.ps1; cleanup_code owns pure fixtures.
+Leaves run no browser/port/profile/build actors and do not stage/push/notify.
+Root owns integration, final source review, launch, acceptance/publication.
+Root private supervisor cin33-long-launch1.ps1 is preparatory, not yet frozen/run;
+launch plan C015AEC7178EC69CAD571AD42C2CAA74F93383FF55309781F87C6CDB521321F2.
+
+Core2996/C15 failed pure gates remain FAIL. Core873de256...3f482 passed V2
+260 assertions/21 cases and V3 send-disposal supplement283/21 in selected WinPS5;
+24 sends started/completed/disposed, no pending sends. V2 result279ef8f6...43268.
+Read-only review then found send timestamp sampled before preparation and recovery
+could issue after combined drain/send deadline. FB209d3284350d9d148b03e8d6ec2b5a7455b4613e090c0402bdad2f9e76267b
+(48968B) fixes both; narrow review found no new blocker, owner self16 passed.
+Independent V4 is pending/running. No PASS transfers to successor source.
+
+Root direct read additionally found completed ReceiveTasks lacked disposal and
+ConnectAsync success/timeout task ownership was incomplete. Authorized final batch:
+actual receive disposal counter/finally, retained connect task/CTS bounded drain,
+and parent workerIoQuiescent gate based on all IO tasks/counters/socket proof,
+separate from overall operation success. Preserve frozen results before changes.
+
+Worker993 read-only review found mutable handoff, fresh waits beyond shared120s,
+and untracked CloseAsync timeout task. Required fixes underway, with actual
+connect/read/send/close task quiescence, immutable handoff snapshot, deadline
+finish proof and actual pending Task.Id/reference retention at75 before pause.
+Exact993 bytes were NOT preserved; only stable written review hash exists.
+Current0FD worker (50871B), exact A063 predecessor and incorrectly reconstructed
+49312B non-evidence file are retained. Final full current worker review required.
+Controller now has explicit CONTROL|CIN33 guard, BCL hashes, pinned W module,
+unchanged original Q100/readiness/E06 definitions/oracles, and strict worker fields;
+final integration/component checks/host negative guards remain pending.
+
+Next: finish narrow batch; freeze core/worker/controller; fresh selected WinPS5
+pure/component gates and root integrated review; then TWO actual80s CONTROL
+normal/injected runs (same source), each proving pending receive at75 and cleanup.
+Only after both pass run one exact separate/CIN33_SHUNT50us route. Original90s
+route,640 work,5s temporal/send,500ms ownership,15s browser,120s total cleanup,
+6000s matrix and600s diagnostic outer limits remain. Capture/route results stay
+separate; route timeout is overall FAIL/exit2 even if profile is valid.
+No actual long CIN33 profile or75s host proof yet. Private40/48 NOT ADOPTED;
+zero accepted100 physical layouts. Analyzer4ac5732f...65c894 remains old4s
+synthetic CONTROL-only; adapt provenance before any actual CIN33 analysis.
+HARD/PSYCHOTIC unavailable/unrun; protected qualification unmaterialized and
+historical unread boundary UNCERTIFIED. CI NOT RUN/self-hosted prerequisite.
+
+# Historical checkpoint: W navigation controls passed; long observation design
+
+**IN PROGRESS; TRANSPORT CONTROLS PASS; NO RESOURCE GATE ACTIVE. Updated:** 2026-11-01 UTC.
+A07 implementationa1573fc6147af2998966f4a0e3b11f2c14599d9a/receipt
+d5a2f736d60f6833207774b1aaaca058dd34c00d pushed/remote verified; Gmail
+1a19748ce8416866 sent once. P clean atd5a2f736; Main/W sameHEAD. Main9tracked/
+6untracked B6, W7tracked/3evidence dirs/private40, Desktop and all stashes/
+backups/evidence remain preserved. No additional commit/push/email since A07.
+
+S=OS-temp tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591.
+P=S/a07-retained-preview-publication; W=S/a07-report-v2-worktree.
+Both P-v5 generic controls PASS (summary2a97e641...5480b), no W proof transfer.
+Actual W NAVv2 Success1 remains FAIL (casedc0784b0...57bcca/outer03e68498...d81109e):
+primary/nav/profile/pause/resume passed, but parent prematurely stopped worker
+during final Profiler.disable. Cleanup separately failed protectedHelperCensus:
+disappearing PID12884 lacked two complete helper/child absence views; shutdown
+3665ms/census2132ms, cleanup33083ms, closeAttempted=false. Source unchanged.
+Read-only audits1/2 failed summary schema assumptions, without manifest mutation;
+audit3captured terminal preview + bound close-unattempted CDP/absent parent.
+
+Root recovered that exact retained browser with unchanged8B terminal-preview
+API: API70483ms, independent external proof851ms, outer72223ms exit0/termination/
+source true. Four external process/listener proofs plus claims/profile absence;
+result31ad2a23...d062a, outer659c047c...fa8b, finalmanifest43c27300...83759f.
+Original failed case untouched. All its resources closed; ambient8928/quarantines
+untouched. No universal cause/cure for census failure inferred; source map shows
+two complete absence views sought in a500ms loop-entry window with synchronous
+CIM calls; exact missing per-view timing/outcomes are not supplied.
+
+Frozen NAVv3 sourcecdfd2fb968a1f2a8c6260a324025d29e179c5355c53afef77ed5b266b4b0a8ab;
+plan3f80132f...bd9766; pure26 PASS469ms (actual runspaces/source stable), result
+30b1eb42...596b47. V2 signature/wait/event helpers unchanged; final source delta
+lets a valid completed primary's worker finish naturally, preserving failure
+cancellation and the original120s/BeginStop fallback. Root + independent scoped
+review found no blocker. V2 remains frozen; no old PASS reused for changed behavior.
+
+Actual W NAVv3 Success1 PASS_PAUSE_STOP_RESUME: outer128759ms, exit0/termination/
+source true; casebce8e956...1dab13/outera5627d81...fa19c5. Same target/full owned
+URL, one main frame/3contexts, profile11622B/5nodes/140samples (cd37b18b...dc7c4ba),
+primary/worker/disable/order/output0/error0/join/EndInvoke/disposals proved.
+Cleanup82647ms/shutdown13117ms pass unchanged limits; positive actors closed.
+
+Actual W NAVv3 Inject1 PASS_INJECTED_FAILURE_RECOVERY: outer130300ms/exit0/
+termination/source true, exact sentinel/resume/primary/navigation/order/disable/
+output0/error0/join/EndInvoke/disposals proved. Caseb26845c0...7f08180,
+outer1136e8b3...caa9f45, cleanup83696ms/shutdown13607ms. Expected no-profile
+outcome preserved. Both W controls and all their resources are closed.
+Private navigation-v3-controls-summary1.json (3435B,b1024bfaf3ba991f7f62d21d640ac77f7c6da3b917f6a46b69ea897acbfc6c51)
+validates raw receipts, exact before/after source/build/file counts, closure,
+control/profile data and the preserved v2 FAIL/recovery. No electrical grant.
+Supervisor cin33-navigation-launch2.ps1168db51b...b19ce92 froze14inputs and600s
+outer. W driverdd3354...7964/module8b68...29f896/buildcfebe...b877/538ecc...a6f1199/357.
+
+Next phase IMPLEMENTATION APPROVED, no actor authorization to leaves:
+LONG-IMPLEMENTATION-v1-PLAN.md69102b79...626f87f, interface-v2b670c430...08657,
+root final interface decisions42fb321b...13feec1. Only NEW private leaf
+S/cin33-cpu-r1/long-route-diagnostic-v1/ may receive runtime changes.
+Cleanup_profile owns observer-core.psm1 + observer-worker.ps1 (core first),
+cleanup_owner owns verify-cin33-diagnostic.ps1, cleanup_code owns the independent
+test-cin33-observer-v1.ps1 +testartifacts. Initial driver/worker subdirectories
+are immutable scaffolds. No W/P/Main/module/Java/model edits; otheragentreview
+mustnotwrite thosefiles. No current resource gate.
+
+Core16helpers use a synchronized CONTROL/CIN33 state, exact one-time clocks/
+URL handoff/outcome, atomic75s or early-terminal trigger, persistentsoleReceiveAsync
+task+assembler that survives timer wake, strict bounded IDs/events, and failure-only
+mandatory resume. Rootdecisions addmode/controlValidated (neverfakeQ100), trigger
+wake-once/suppression duringcommandpairing, explicitLedger inCanDisable witha sole
+pending read allowed atclean boundary (prevents deadlock), and separate actual
+worker facts from later parent join/EndInvoke/disposal/teardown receipt.
+Concrete controls will be TWO full80sbenignLED runs (normal/injection), each
+covering navigation+75s pending-receive before any exact CIN33 run. Existing
+queryLEDseed3/noextraDebug, originaldeadlinepoint and90/120 bounds remain.
+CIN33 keeps originalQ100reader and6000smatrixclock; routeFAIL triggerscapture
+ratherthanfatalstop, andoverallexit2/FAIL evenifprofilevalid. Plans/actualtimes
+must stay distinct. Worker/core need fresh selectedpuretests +rootreview/freeze
+before root actualcontrols; oldv3passes do not certify newpump.
+Core first pin2996f435213bf5d9c32871314741ae1fa9971446a133e778799108927d077c9c
+(36697B) imports/parses but final independent first-pin run4 is FAIL:
+15cases/84assertions,9pass6fail, source stable; resultb70e10bb...96ca38,
+fixture1db09421...802a2a (all earlier fixture attempts retained). Stale clocks
+and binaryCDPframes accepted; invalid[long]::Int32.MaxValue blocks commandtests.
+Read-only review additionally found late response/events canresolveSUCCESS,
+pendingSendAsync canoutliveuntrackedowner, and late primaryPASS needs bound.
+Owner identified fatal-ledgercleanboundarymandatory-resume gap.
+Root nowauthorized only required batch AFTER frozenfirstgate finished:
+freshclock/TEXT-only/intcast; strictobservedcommanddeadlines; retainedpending
+sendtask+quiescence/nooverlap; mandatoryownedresume withoutclearingFatal; late
+PASSreject/lateFAILstillcapturetrigger. Preserve2996bytes; newpin+freeze and
+fresh independentgate required. Tester adds targetednegativeswithoutweakening
+oldcases. Newcorec15d52e401c2bb178c59e764349dd264098d5dd274ee6ba29d7a6fb0e73c66cc
+(40922B) is now frozen for fresh independenttests +read-only fix review; old2996
+snapshot preserved. Owner reports parser/import16exports+selfcanaries only.
+PendingSendTask/SendStarted/SendCompleted are now explicit; no new core PASS is
+accepted until independent cases and unresolved-send/late-event boundaries pass.
+CurrentworkerA06353c2...4c9481 (49292B) parses and wires send/receive quiescence
+but is unaccepted; controller stillbeingintegrated. No actual
+browser/port/profile/build/Java actor runs in this phase.
+Generic and navigation prerequisites passed; noCIN33route/profiletimingproofyet.
+Control-only analyzer4ac5732f...65c894 passed14pure and final report290f9304...
+cc3c4; adapt scope/provenance before CIN33 use. No Java/model/physics treatment.
+
+Long CIN33 profile/75s capture NOT RUN/unproved. Private40/48 NOT ADOPTED,
+zero accepted100 physical layouts. All500ms/3s/5s/15s/90s/120s/640 budgets/oracles
+remain. HARD/PSYCHOTIC unavailable/unrun, protected data unmaterialized,
+historical unread boundary UNCERTIFIED. CI NOT RUN/self-hosted prerequisite.
+
+# Historical checkpoint: W-bound navigation control running
+
+**IN PROGRESS; NAVIGATION SUCCESS IS THE SOLE RESOURCE GATE. Updated:** 2026-11-01 UTC.
+Published A07 implementationa1573fc6147af2998966f4a0e3b11f2c14599d9a/receipt
+d5a2f736d60f6833207774b1aaaca058dd34c00d remain verified remotely on
+origin/codex/q100-physical-feasibility. Gmail1a19748ce8416866 sent once, no duplicate.
+P clean atd5a2f736; Main/W also that HEAD. Main9tracked/6untracked B6 and W7tracked/
+3evidence dirs/private40, Desktop, all stashes/backups/failure evidence preserved.
+
+S is OS-temp tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591.
+P=S/a07-retained-preview-publication; W=S/a07-report-v2-worktree.
+Both P-bound generic v5 controls PASS, source776d74bf...8e271; summary2a97e641...5480b.
+Success128596ms/cleanup83422/shutdown13172; injection126687/82183/13481;
+exit0/termination/closure/source proof true, exact sentinel recovered. No W proof
+transfer. V3 real FAIL and v4 source-review rejection remain preserved.
+
+Frozen NEW navigation v2 SHA1e29e4d1a7b9e0c64201389027ae625756f3c9bb7d8236c27e6dcc0460271879;
+pre-edit plan7f9ca81f...5e24f; finalbinding7ac01326...629f7; amendment441513b5...f3f2cd1.
+Final pure28 PASS on selected WinPS5.1.26100.9711, result54f909e6...14c30d.
+It actually invokes pinned W helper signatures, loopback/value/text/integer
+functions, controlled raw receive/console/exception path and a real runspace
+publish/wait/read helper. These are local helper tests, not CDP host proof.
+Root and independent final delta reviews find no source blocker. V1a2d2/static72
+remains rejected: dropped inline bindings, early shared-clock read, missing event/
+SafeText dependencies. V2 preserves signatures, exact W helpers and CdpEvents,
+waits before reading the published clock inside existing15s setup bound, and
+checks the parent's exact single90s deadline. Earlier fixture failures preserved.
+
+Actual navigation v2 Success1 RUNNING via S/cin33-navigation-launch1.ps1,
+SHA69861af404bb62c9948139c368331c96700829b1fc1fb6eac3a06b350e3700f5;
+10 frozen source/plan/prerequisite inputs before/after,600s outer unchanged.
+RunIDrun-navigation-v2-success-1 under S/cin33-cpu-r1; execsession25925,
+launcher28824/start639291408136511141 at14:40:14UTC selected WinPS5.
+Do not mutate frozen inputs or launch another resource gate through cleanup.
+W driverdd335424...7964/module8b68e983...29f896; exact Developer input
+cfebece2...b877/output538ecc98...a6f,1199/357 fixed and checked before/after.
+Target begins about:blank, profiler ack precedes owned Navigate-Cdp under single
+90s clock; same target/port/full token URL and observer frame/default context
+events must precede four-second busy/pause/stop/resume/primary/disable controls.
+
+Next: collect result and exact resource disposition. No success without actual
+route/profile/worker/source/cleanup proofs. If pass, run supported navigation
+injection control before adapting the separately scoped long CIN33 driver under
+CPU plan19b92972...ddf26. URLseed3 and modelseed9007199254740993 stay distinct.
+Private control-only analyzer4ac5732f...65c894 has14/14 pure and valid final
+report290f9304...cc3c4; initial invalid-JSON output staysFAIL. Adapt its explicit
+scope/provenance before any CIN33 input. No Java/solver/model/epoch treatment.
+
+Long CIN33 CPU profile/75s capture NOT RUN/unproved; private40/48 NOT ADOPTED,
+zero accepted100 physical layouts. All500ms/3s/5s/15s/90s/120s/640 budgets and
+oracles remain. HARD/PSYCHOTIC unavailable/unrun; protected data unmaterialized,
+historical unread boundary UNCERTIFIED. CI NOT RUN/self-hosted prerequisite.
+Ambient8928 and older quarantines untouched.
+
+# Historical checkpoint: independent observer recovery controls
+
+**IN PROGRESS; GENERIC CONTROLS PASS; NO RESOURCE GATE ACTIVE. Updated:** 2026-11-01 UTC.
+A07 active-preview implementation a1573fc6147af2998966f4a0e3b11f2c14599d9a and
+receipt d5a2f736d60f6833207774b1aaaca058dd34c00d are pushed with exact remote proof;
+completion Gmail1a19748ce8416866 sent once. P clean, Main/W HEADd5a2f736.
+Main9 tracked/6 untracked B6 and W7 tracked/3 untracked evidence dirs/private40
+remain preserved; Desktop status byte-exact. Explicit overlap stashes b4153fa1.../
+7d709bce... and integration2 backup remain, as do all earlier stashes/evidence.
+
+S is OS-temp tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
+P=S/a07-retained-preview-publication, W=S/a07-report-v2-worktree.
+Final private observer v5 SHA776d74bffb7ab93de455498bf1eb24e9bbbd517733fab716c289d704b4a8e271;
+planb51144ba776353c263aba3dc3cc85a6955c7592896a28330581e7563700d03d2;
+launcher cin33-independent-launch5.ps1 SHA69bd1d4ab4cddd8c52d484b61d8fcb363eb09a4347ca35db5b686fd44a68c61e.
+Selected WinPS5.1.26100.9711 pure41 PASS758.7583ms/exit0/source stable;
+receipt819b214f...b880b8. Root and independent rawtick-delta review no blocker.
+It preserves v4 ordering fix, uses precise same-clock ticks and retains display ms.
+Module8b68...29f896/driver281217...4debd4/P Developer5dd...1e83/611...b064,
+1199/357 unchanged. No product/physics/epoch/seed change.
+
+Actual v5 Success1 PASS_PAUSE_STOP_RESUME: outer128596ms/exit0/termination
+proven/source stable. Caseaffa8f5708e18ffb258e3735ad5b46d32901d99784743c623c9a8e73d8576a9c;
+outer75b94b7bdc6a0ff644b1fc25c9372aa0db79a08d8ce0e8d13f387cebbb954c0a.
+Worker output0/error0/joined/EndInvoke returned/socket/runspace/PowerShell disposal/
+receive boundary proved; pause/stop/resume/primary/end/disable exact order true.
+ProfileVALIDATED24500B/32nodes/58samples (fb2e2c76...3ffcdb), cleanup83422ms<120s,
+shutdown13172ms<15s. All positive-control actors closed; no CIN33 claim.
+
+Actual v5 InjectAfterPause1 PASS_INJECTED_FAILURE_RECOVERY: outer126687ms,
+exit0/termination proven/source stable. Casea5f58e3a74afc57916177215d0164165c2ddfb6e3080855aa17a936bb2302785;
+outerec366a75910d6cde60c0f2bb00a2b8fe839ceef103c1c5f11c271f99f58f356c.
+Exact after-proven-pause sentinel, valid primary, resume ack/event, rawtick order,
+disable, output0/error0/join/EndInvoke/disposal/boundary/cleanup all proved.
+Expected no-profile outcome preserved. Cleanup82183ms<120s/shutdown13481ms<15s.
+Both P controls and all their actors are closed. No resource gate active.
+Controlled private observer-v5-controls-summary1.json (2a97e641...55480b,3980B)
+validates both raw receipts/source/build pins/closures and independent profile
+census/hash; it grants no electrical or W-bound navigation qualification.
+
+V3 original real Success FAIL remains frozen (27828aad...77794), cleanup83800/
+shutdown13742 proved; immediate disable3s preceded end/primary pump. V4 pure32
+PASS but no live run; root review rejected a same-ms false-negative. No old pass
+is reused for changed behavior. Both earlier-source snapshots remain intact.
+
+Navigation v1 a2d282973514c2e14a5739a59eb90432a250333b6a89949fb2dce2d6562d167a
+was rejected before any host run despite static72 PASS1624ms/exit0. Root and
+independent review found worker Ready-before-deadline-publication race and a
+function loader that drops inline signatures/returns a nested ScriptBlock.
+Actual selected WinPS5 pure navigation-function-load-probe1.ps1 reproduced that
+wrong return type with zero parse errors. No navigation host/solver proof exists.
+Cleanup_owner now owns NEW v2 files only: complete allowlisted declarations and
+a bounded publish/wait/read helper using existing15s setup deadline; actual
+WinPS function-invocation/runspace fixtures must precede root live acceptance.
+Old v1, static results, plans and authoring failures remain preserved; not all
+transient fixture source bytes were snapshotted, as disclosed by the owner.
+Browser_adapter_map checks retained primary-vs-adapter return contracts read-only.
+
+Current CPU plan19b9297227b55f6be3f9b32e053d607c857b5b60c2cf78982cff132d205ddf26
+records actual P-v5 passes; priorBA14 is preserved. W driverdd3354...7964 and
+buildcfebe...b877/538ecc...a6f differ from P; no transfer of P controls as W
+qualification. Module starts about:blank; profiler ack precedes unchanged route
+clock/navigation; verify same target/full token URL and observer main-frame/
+default context events. URLseed3 and modelseed9007199254740993 remain distinct.
+
+Private control-profile analyzer4ac5732f...65c894 has final14/14 pure PASS and
+valid control-only output290f9304...cc3c4 (9996B). Weighted sample sum617665us,
+32nodes/58samples, Java UNMAPPED; emptyURL frames stay unattributed, never inferred
+native. Initial writer exit0 produced invalid JSON (FAIL output contract); its
+receipt/output and valid pre-classification output stay preserved. The analyzer
+currently labels SYNTHETIC_4S_LED_CONTROL_ONLY; adapt explicit scope/provenance
+before any future CIN33 input. No useful CIN33 profile has been captured.
+
+Long CIN33 CPU profile/75s capture NOT RUN/unproved. Private40/48 NOT ADOPTED;
+zero accepted100 physical layouts. All500ms/3s/5s/15s/90s/120s/640 budgets and
+independent oracles remain. Accepted R12 Phase2a1352b5c is an ancestor. HARD/
+PSYCHOTIC unavailable/unrun, protected data unmaterialized, historical unread
+boundary UNCERTIFIED. CI NOT RUN/self-hosted prerequisite. Ambient8928 untouched.
+
+# Historical checkpoint: observer control ordering diagnosis
+
+**IN PROGRESS; NO RESOURCE GATE ACTIVE. Updated:** 2026-11-01 UTC.
+A07 active-preview implementation a1573fc6147af2998966f4a0e3b11f2c14599d9a and
+documentation receipt d5a2f736d60f6833207774b1aaaca058dd34c00d are normally pushed
+to origin/codex/q100-physical-feasibility with exact remote proof. Completion
+Gmail1a19748ce8416866 sent once; do not duplicate. P is clean at receipt d5a2f736.
+Main/W also HEADd5a2f736; explicit path stashes b4153fa1.../7d709bce... preserve
+pending overlaps. Integration2 proves15 other files byte-exact and12 production
+source checks across three trees; Desktop status byte-exact. Main9 tracked/6
+untracked, W7 tracked/3 evidence dirs, prior stashes/backups/quarantines preserved.
+
+S is OS-temp tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591.
+Observer v3 in S/cin33-cpu-r1 is pin-only successor502395c120c298ad170e58b261a801ff944e9cec2ae769d1f3fb665255bd2247;
+pure24 PASS806ms on selected WinPS5.1.26100.9711. Final module8b68...29f896,
+driver281217...4debd4, Developer input5dd76a5a...1e83/output611f4f10...b064,
+1199/357 unchanged. This source is now frozen with its failed real canary.
+
+Actual v3 Success1 FAIL, selected child exit2/termination proven/source stable,
+outer128719ms. Case27828aade3ab18a9aa7ed3b3be3fe3e5159630d226913eafa339a2b823d77794;
+launch resultb1c953cf03fe0088d9604bda9c7b28f688cdb4c2dcbbfd4a4c5e9842c9bfe9f5.
+Primary busy evaluation PASS. Worker pause/Profiler.stop/profile-shape/resume
+proved; then Profiler.disable id109 timed out on its3s cap before the four-second
+busy control's end marker. Source orders disable before later end/primary pump;
+this ordering is the next bounded fix. Worker output0/error0/EndInvoke returned,
+joined, receive-boundary/socket/runspace/PowerShell disposal all proven.
+Cleanup PASS83800ms under120000; browser shutdown13742ms under15000. Resources
+owned by this canary are closed. Its raw profile23212B/30nodes/56samples is not
+a CIN33 profile; top profileStatus NOT_CAPTURED conflicts with nested VALIDATED,
+and root failure object is empty while worker typed failure remains retained.
+Do not relabel this canary PASS or run the long profile yet.
+
+V4 e8a6da0fd8667f7a43b9e8438486f835084b88af936eac2aa38fb2b854458b6d
+and pure32 PASS744.592ms are preserved; no v4 live run. Static integrated review
+found no false-PASS/budget change, but new floored-ms ordering comparisons could
+reject true order within one millisecond. Root holds live execution for a precise
+raw-Stopwatch-tick successor. Cleanup_code leaf owns NEW v5 source/plan/fixture
+only; never alter v3/v4 proof sources. Root reviews/freeze then runs Success and
+InjectAfterPause serially on qualified P5dd/611 artifact, each600s externally bound.
+CPU plan ba14bdc9...a48f84 requires a separately W-bound real navigation/cleanup
+control (dd3354 driver, cfebe/538ecc build) before the long diagnostic route. The
+module launches about:blank and does not pre-navigate; worker profiler ack must
+precede the unchanged route-clock/navigation point. URLseed3 and model seed
+9007199254740993 remain distinct. Accepted R12 Phase2 a1352b5c is an ancestor.
+No active resource gate. All500ms/3s/5s/15s/90s/120s/640 budgets/oracles remain.
+Private40/48 NOT ADOPTED; zero accepted100 physical layouts. HARD/PSYCHOTIC
+unavailable/unrun; protected data unmaterialized, historical unread boundary
+UNCERTIFIED. CI NOT RUN/self-hosted runner prerequisite. Ambient8928 untouched.
 
 # Historical checkpoint: active-preview recovery published
 
@@ -331,10 +2421,348 @@ all failure evidence/backups/stashes and earlier quarantines remain preserved.
 No Java/solver/model/epoch/seed/Player-flow change. Full Java/electrical/Player
 matrix and CI NOT RUN; self-hosted runner setup remains required. Protected data
 unmaterialized, historical unread boundary UNCERTIFIED; HARD/PSYCHOTIC unrun.
-Q100 physical100 remains unqualified, private40/48 not adopted. Next: preserve and
-integrate Main/W, then source-bound observer controls and CPU profile. Private v3
+Q100 physical100 remains unqualified, private40/48 not adopted. Main/W now
+include receipt d5a2f736 with pending B6/private40 work preserved through explicit
+path stashes and three-way integration. Next: source-bound observer controls and
+CPU profile. Private v3
 changes only the v2 module pin to8B; selected WinPS5 pure24 PASS806ms, source
-502395c1...bd2247 stable. Both actual observer controls remain NOT RUN.
+502395c1...bd2247 stable. Observer Success is now RUNNING as the sole resource
+gate via private cin33-independent-launch4.ps1 (2eb05ddd...d0c8abc), run ID
+run-independent-v3-success-1; launch2396/start639291364941131828, selected WinPS5.
+Its600s outer bound and all original cleanup/control limits remain. InjectAfterPause
+and long CIN33 profile remain NOT RUN. Do not start another actor through cleanup.
+
+# Historical checkpoint: final active-recovery host qualification
+
+**LOCALLY VALIDATED; PUBLICATION REVIEW IN PROGRESS. Updated:** 2026-11-01 UTC.
+Main/W HEAD585eb915d9d7516b8ee86f19855e7b583cdd2e34. P branch
+codex/a07-retained-preview-recovery-20261101 remains at that HEAD with local
+module/runner/architecture and three test files pending. No new commit/push/email.
+Old3b75c8b3/receipt585eb915 and Gmail1a19661abd842e78 remain complete; no duplicate.
+S is OS-temp tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
+P=S/a07-retained-preview-publication, W=S/a07-report-v2-worktree. Main B6 9 tracked/
+6 untracked, W private40 7 tracked/3 evidence dirs, Desktop, stashes/backups intact.
+
+**Final production source:** P module
+8b68e983c6c35b05ce10bd8a30378293701d02f72fee14d1c66cbc214729f896 (994606B),
+private BDE predecessor preserved. Only23 LF-to-CRLF normalizations distinguish
+them; p-canonical-eol1/ proves normalized text equality for module/fixture.
+P active fixturebe81fa2c...52cd8e, runnerb3b20e1d...e11056. Final WinPS5 focused
+new131 PASS6412ms / retained192 PASS16133ms, both exit0/termination true;
+two exact selector exclusions exit2 (361/328ms), marker8 PASS. Receipt4a7fb8a...4b0967
+at S/active-preview-recovery-r1/registered-focused2/. No production Java changes.
+
+**Final Current4 PASS:** S/retained-preview-Current-4/result.json,
+SHA5d857db3c4f9edf67fd8ccef4a503118f8364a2a8368ce8771d5a5530f812f0b.
+9/9 routes,362.8384207s, exit0/termination proven/all7 stability fields true;
+cleanup owner succeeds, shutdown9804ms<15000, aggregate cleanup elapsed NOT SUPPLIED.
+Report1649e3c7...6d71f. Developer compiler inputs1199/outputs357 remain exact
+input5dd76a5a.../output611f4f10...; reuse audit6 comparisons PASS11980ms and Current
+before/after confirm. Do not repeat Current unless consumed src/scripts/war change;
+new tests/docs are outside that consumed execution tree (audit before publication).
+Current3 remains FAIL: startup kernel proof549ms>500,0 routes; preview-only owner
+cleanup and current3-absence-audit2 freshly prove process/listener/claim absent.
+Current3 audit1 failed its overly strict repo-identity preflight (20 hex, not GUID).
+
+**Old retained blocker cleared:** b58...da4 actual recovery4 passed with private
+BDE source, API81786ms (reported81780), external proof940ms/276 assertions,
+outer83587ms/exit0/termination true. Parent37640/preview7956/Edge2160 absent;
+ports50020/50236, both claims/profile absent. It remains earlier-source evidence,
+not a replacement for final-source fresh-host proof. Source/claim freezes persist.
+
+**Transport controls:** diagnostic run1 remains FAIL (redirected managed helper
+held outer EOF,12220ms; expected inherited-output rejection12112ms). Both natural
+15s helpers/runner absence pass; outer35670ms/exit2/termtrue. Ordered-run1 remains
+FAIL: wrong no-redirect helper selected shell path, early capture returned17ms,
+marker oracle failed. Actor absence, late capture and handle disposition separately
+passed; ordered1-resource-audit1 proves3 exact actors absent. Ordered-run2 PASS
+on corrected helper stdout-inherited/stderr-redirected path: body18283/outer18848ms,
+early exact typed EOF5025ms, helper live before/after, natural15009ms, same-handle
+late capture + exact stdout368/stderr183 + disposal/source stable. No claim that
+helper stderr was drained. Ordered2 case78a72b38...0ae526, outer98802f7d...2a9096.
+All under S/active-preview-recovery-r1/transport-canary/. Original failures unchanged.
+
+**Fresh host caller:** maintained P tests/contracts/browser-active-preview-recovery.ps1
+now parent91bfafc156efd3185d98bc3f69e6eb712dcd38d1fd00967636b9adc0837925db;
+child9b5a36760f490e76094660a2a6bc06c96d58dd8887bd6d9e0bc3c7ca1c5524ba.
+Both pin canonical P module. Real retained child handle/native+CIM launch identity
+and actual exit/absence + durable envelope precede API; actual5s EOF/capture,
+envelope match, disposal, fresh exact child/preview/browser/listener absence follow
+API. No fabricated Invoke receipt. Child finalization failure stays exit2 and
+attempts normal owner cleanup once. Report readback/persistence guards exit0.
+Pre-API source/import rejection intentionally remains fail-closed without unsafe
+cleanup/capture. Parent/child reviewed; original80382/DFCB and9D77/C99 versions
+preserved. Root owns final parent edits after interrupting canaries leaf.
+
+Fresh-host1 FAIL676ms before actors: script initializer overwrote RepositoryRoot.
+Root removed reset; WinPS5 parameter-init static contracts pass both scripts.
+Fresh-host2 FAIL40163ms: startup kernel proof526ms>500, no browser allocated,
+child normal cleanup9533ms; obsolete parent terminal-timing read then crashed
+its failure report (outer exit1/termtrue). Removed that obsolete read. Separate
+fresh2-resource-audit1 proves3 exact actors/preview listener/claim absent.
+Fresh-host3 PASS: outer107007ms, exit0/termination true/sourceStable; case106395ms,
+setup31298ms, API71742ms/reported71738, actual output capture171ms and final exact
+OS absence1083ms. All17 proof predicates, EOF/envelope equality/handle disposal,
+child/preview/browser absence, ports/claims/profile cleanup proved. Final source
+91BF/9B/module8B unchanged. Case9cd56a33...cdd12b/outer7628fdfa...f0f42.
+Final consumed-input audit11 PASS25128ms (66eb3013...19544), matching Current4.
+
+**Next:** finish controlled public A07 summary and diff review, then explicit
+normal commit/push to origin/codex/q100-physical-feasibility and one completion
+Gmail. No new commit/push/email yet. Private collector output is not an authority;
+root checks it against original receipts and privacy boundaries before export.
+Main/W backup active-recovery-integration2 preserves15/7 exact files plus status,
+patches and Desktop metadata before integration. Then continue observer controls
+and CPU profile. V2 source982eb2a7...181803 has pure21 and scoped review only;
+its old FC pin needs a preserved successor for canonical8B. No resource gate active.
+
+Private40/48 NOT ADOPTED; zero accepted100 physical layouts. Actual long CIN33 CPU
+profile and75s capture target NOT RUN/unproved. HARD/PSYCHOTIC unavailable/unrun,
+protected data unmaterialized, historical unread boundary UNCERTIFIED. CI NOT RUN/
+self-hosted runner prerequisite. Ambient8928 and old quarantines untouched.
+
+# Historical checkpoint: active-preview recovery proved; fresh canary next
+
+**IN PROGRESS; RETAINED RESOURCE BLOCKER CLEARED. Updated:** 2026-11-01 UTC.
+Main and W remain HEAD585eb915d9d7516b8ee86f19855e7b583cdd2e34. Publication P now
+locally integrates module8b68e983...29f896, fixturebe81fa2c...52cd8e, runnerb3b20e1d...e11056,
+and architecture text; these are uncommitted and not yet published.
+Published3b75c8b3/receipt585eb915 and Gmail1a19661abd842e78 remain complete;
+no new commit/push/email for the private active-preview extension yet.
+S denotes task-owned OS-temp tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591.
+Main B6 (9 tracked/6 untracked), W private40 (7 tracked/3 evidence directories),
+Desktop, backups and stashes remain preserved. No Java/solver/model/epoch change.
+
+**Frozen private owner:** BDE457F49B42061E40DB2A37809042E74952ED86A2BFD34BF8C0CA0968480F1C,
+994583 bytes, S/active-preview-recovery-r1/candidate/VerifierIsolation.psm1.
+Selected WinPS5 parser PASS67ms; maintained ownerless/terminal synthetic192
+PASS15850ms/exit0/termination proven; new synthetic/source-order131 PASS5279ms,
+exit0, actual WinPS5.1.26100.9711, fixture07e2e182...6b00d9. Scoped independent
+full state-machine review plus exact successor-delta reviews found no remaining
+source blocker. These source/pure checks are not host cleanup proof.
+
+**Actual read-only admission3 PASS2019ms:** exact active factory/process identity,
+precise default-terminal and wrong-nonce rejection; manifest/both claims/source
+unchanged. Earlier admission1 FAIL656ms exposed the incorrect server startup flag;
+lease/binder prove the listener, while server.listenerInspectionProven is false
+until cleanup. Earlier admission2 FAIL1231ms was the root harness's incorrect
+PSCustomObject accelerator type equality. Actual WinPS5 pure probe confirmed the
+concrete type and corrected harness3; original failures remain intact. CDP
+intermediate-state and terminal assertion-output source fixes/snapshots are also
+preserved; source-change-during-fixture FAIL16757ms is not reused as a pass.
+
+**Exact old-run recovery4 PASS:** b58d756da64d45088cf4b454bdb11da4,
+namespace54c9e3765d7da1b0e7fa. API-reported81780ms/root-call81786ms; independent
+external final proof940ms/276 assertions; API+external body82743ms; outer83587ms,
+exit0/termination proven. One normal preview cleanup preceded the existing
+boundReceiptParentExit Browser.close lane and final normal run proof. Original
+parent37640, preview7956 and Edge2160 are freshly absent without PID reuse;
+ports50020/50236 have no listener, both claims and exact browser profile are absent.
+Identity/artifact/binding timestamps and receipt association were preserved;
+source stayed exact. Final manifest04bf59dc6da329e7053db4a0c87c8ca480aec3ecdb686796dc69a69d290871c6.
+Case receipt5b4c8443...ffe8f9; outer0c70b4a1...95d680 under
+S/active-preview-recovery-r1/actual-recovery4{,-launch}/. Existing500ms ownership,
+15s browser and120s recovery limits retained; exact nested shutdown elapsed was
+not supplied by this API. No new preview/browser was launched for this recovery.
+The failed original independent-observer Success2 remains FAIL, not reclassified.
+
+**Final-source registered validation PASS:** P's Git checkout uses CRLF. The
+canonical-EOL pass changes only23 LF newlines in BDE and normalizes the new
+fixture, with normalized source equality proved and originals preserved at
+S/active-preview-recovery-r1/p-canonical-eol1/. Final P module is
+8b68e983c6c35b05ce10bd8a30378293701d02f72fee14d1c66cbc214729f896;
+fixturebe81fa2c03bf22b36f12cbba9bade3c4eae4ab595fb41819f3a445e6e252cd8e.
+Fresh new131 selector6412ms/existing192 selector16133ms, exit0/termination proven;
+two exact exclusive-selection rejections361/328ms have exit2, and marker helper8
+passes. Actual WinPS5, inputs stable. Receipt4a7fb8a69c09a64098fe3ee4f9c8f39e5e0cc9292ef8d71b05fe178b804b0967
+under registered-focused2/. Earlier BDE focused1 remains preserved for its source.
+Build reuse audit6 comparisons PASS11980ms:1199 inputs/357 outputs unchanged;
+new host Current and full matrix remain NOT RUN.
+
+**Transport diagnostic run1 FAIL, resources closed:** actual selected WinPS5
+redirected-helper lane hit the exact typed output-stream EOF failure,12220ms
+invocation/10205ms after runner receipt, with helper still live. Explicit
+inherited-stdout control has the expected rejection,12112ms/10136ms. Both helpers
+ran their15s natural lifetime and fresh helper/runner absence passed; no kills,
+browser or port. Body35105ms, outer35670ms/exit2/termination proven. Original
+failure remains FAIL. Resultf73aa4c4...6bba5/outer75a0f0b3...fd0caa under
+S/active-preview-recovery-r1/transport-canary/run1{,-launch}/. Source is
+dcb6160c41148018fcea547eb61711000aefcf04f7ac19d81c8ce3150cd9d989
+(an earlier63-character supplied hash was rejected before any allocation;
+the corrected pin changed no code). This proves the selected nested launch can
+retain the outer pipe; it is consistent with, not exclusive proof of, the old
+observer failure. Existing bounded-process EOF requirements remain unchanged.
+
+**Next:** ordered-helper control and fresh active-host caller correction using
+existing Start-VerifierProcess/Complete-VerifierProcessOutputCapture owners.
+Hold the real child handle, prove actual exit/absence and a durable source-bound
+setup envelope before recovery, then require actual output EOF/capture and
+matching stdout AFTER recovery. Never invent a bounded-process receipt before
+EOF or promote the failed diagnostic. Owner prepares the private ordered helper;
+canaries leaf owns the private parent/child EOF-order change and final fresh OS
+absence checks. No resource gate is active. The private host uses the canonical
+repository module path, exact API object shape and bounded private failure logs.
+Then
+then integrate/validate the maintained host extension and publish normally with
+one completion Gmail. P's qualified Developer artifact remains input5dd76a5a.../
+output611f4f10...; no client/build input changed. Only one resource/expensive gate
+at a time through cleanup. After this prerequisite, resume frozen observer v2
+controls (982eb2a7...181803), then actual long CIN33 CPU observation before any
+new timing treatment. Private40/48 not adopted; zero accepted100 physical layouts;
+long CIN33 profile NOT RUN. HARD/PSYCHOTIC unavailable/unrun, protected data
+unmaterialized, historical unread boundary UNCERTIFIED. CI NOT RUN/self-hosted
+runner prerequisite. Ambient8928 and earlier quarantines stay untouched.
+
+# Historical checkpoint: active-preview recovery prerequisite
+
+**IN PROGRESS; LIVE OWNED RESOURCE BLOCKER. Updated:** 2026-11-01 UTC.
+Do not start another browser/preview/profile gate until this exact run is cleaned
+through a reviewed maintained owner. Main and W remain HEAD585eb915d9d7516b8ee86f19855e7b583cdd2e34.
+Host prerequisite3b75c8b3 is published/remote-verified; Gmail1a19661abd842e78 sent
+ONCE. No duplicate. Its terminal-preview scope remains accepted; no new milestone
+has been published. Main B6/private40/Desktop changes, backups and stashes remain.
+
+**Exact retained run:** b58d756da64d45088cf4b454bdb11da4, namespace54c9e3765d7da1b0e7fa.
+Manifest under OS-temp/TroubleshootJS/verify/<namespace>/<run>/manifest.json.
+Root freeze SHA7c47e9323fa29afb086e0d4c5af1fd1529fcdbbd2ae3d194ba3f387ea3f4e50c.
+Original parent37640/start639291245338823514 positively absent.
+Preview7956/start639291245494638106/port50020 and Edge2160/
+start639291245722837027/CDP50236 positively alive/exact at freeze.
+One active verified run-owned preview lease plus one bound, close-unattempted CDP
+session. Full originals/claims/source/report/process observations frozen at
+S/cin33-cpu-r1/independent-success2-recovery1/. S is the task-owned OS-temp
+tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591.
+
+**Actual independent observer Success2 FAIL.** Report confirms worker ready,
+joined, socket/runspace/PowerShell disposed, pause/resume and framing proven.
+Worker FAIL setting property proven: unqualified pause result overwrote script:
+Pause under case-insensitive scope. Profile/commands local collisions also found.
+EndInvoke returned unexpected pipeline output; the old caller withheld completion
+proof and skipped Complete-VerifierRun. Child report cleanup FAIL16911ms; this
+does not certify cleanup. Outer bounded helper then failed output-stream closure,
+so no authoritative returned child receipt. Parent later proven absent. Root
+supervisor failure/raw result/source are preserved; no timeout/error is PASS.
+
+Bare postfix increments do NOT emit output (verified WinPS5); that proposed cause
+was retracted. A pure async Task probe emits VoidTaskResult unless explicitly
+voided; unvoided worker ConnectAsync is a concrete possible leak, but the actual
+EndInvoke payload/count was not preserved and remains unknown. Do not invent it.
+Canonical failed canaryCF0E1DE10E6E0F2255CDC769BB7C1E09D45205EADC7F3EEA3FD09476228198EB
+and plan93B94314...38411 remain unchanged. Separate v2 candidate is authorized
+for collisions, intended-void await, output metadata and separation of completed
+EndInvoke from output-contract validity; a failed operation must still clean up
+when worker ownership closure is actually proven. Unjoined/unresumed work stays
+fail-closed. No v2 host gate before the resource blocker closes.
+
+Private v2 is now frozen at982eb2a7f682735b02f633dafe7ee585303e17b109057194b1248e136e181803.
+Selected WinPS5 pure AST/helper21 PASS685ms; root diff review and independent
+a03 source review found no material blocker in the stated completion/contract,
+closure, cleanup-adapter and clock scope. Root source-review artifact25e7b908...86107
+is under S/cin33-cpu-r1/root-v2-source-review1.json. This is source/pure evidence
+only: live concurrency, profiler and cleanup NOT RUN for v2.
+
+Active owner candidate62528802e41c17445d19f5639affc65f39749e76d0aef28e41432a93170a9d54
+is frozen privately. Selected WinPS5 parser PASS68ms; maintained synthetic192
+PASS15941ms/exit0/termination proven against this source. Earlier391f gate FAIL
+16757ms because the source changed during the fixture; preserved, not reused.
+Source review caught CDP lock/handle intermediate-state contradictions before
+cleanup. DEC4 actual read-only admission then FAIL656ms: its synthetic issuer
+incorrectly treated server.listenerInspectionProven as a startup proof. The
+existing preview initializer sets that cleanup-only field false; the bound lease
+and fresh binder own live listener proof. Candidate6252 now requires strict false
+while retaining the positive lease/binder predicates. Manifest, both claims and
+DEC4 source remained unchanged in that failed admission. Original snapshots and
+failed gate artifacts remain in S/active-preview-recovery-r1/. Fresh active pure
+fixture, source delta review and admission2 precede any exact recovery. No new
+preview/browser was launched, and actual recovery remains NOT RUN.
+
+**Recovery work:** published fc160736...f64e6 API admits only ownerless or already-
+terminal-preview state, so it correctly refuses this active preview. No forged
+state/authority, manual journal edit, ad-hoc PID kill or broad cleanup is allowed.
+Leaf q100_cleanup_owner owns ONLY S/active-preview-recovery-r1/PLAN.md and
+candidate/VerifierIsolation.psm1 (private copy ofFC); planaba446a4452abf0df94a9adc2f6aadc6cd1dcc519f22c859ef17380d52cdd1b0 accepted.
+Implement a strict full-graph active mode, both exact claim locks/rollback,
+preview-only paired authority plus existing CDP authority, original parent
+absence/no-PID-reuse bound across both claims/preview/browser receipt, exact fresh
+preview child/native/CIM/HTTP identity. Normal preview cleanup first, prove its
+terminal journal/absence, existing parent-exit browser path, then normal final
+run cleanup. Keep one120s entry clock,500ms HTTP proof,15s browser shutdown.
+Existing ordinary/ownerless/terminal admission remains strict. No Java/client/
+model/epoch changes. Candidate implementation/pure review precede root actual
+read-only admission and any one maintained recovery; no resource mutation yet.
+
+Published/integrated source and all prior failures remain intact. P publication
+tree is clean; Main9 tracked/6 untracked, W7 tracked/3 evidence directories.
+Private40/48 not adopted; exact CIN33 profile NOT RUN, zero accepted100 layouts.
+HARD/PSYCHOTIC unavailable/unrun, protected data unmaterialized; historical unread
+boundary UNCERTIFIED. CI NOT RUN/self-hosted runner prerequisite. Ambient8928 and
+old quarantines stay untouched. Next: finish/review private active recovery owner
+and fixtures, resolve this exact resource, then resume v2 observer controls.
+
+# Historical checkpoint: independent observer canary preparation
+
+**IN PROGRESS; DIAGNOSTIC PREPARATION ONLY. Updated:** 2026-11-01 UTC.
+Main codex/q100-physical-feasibility and private W/codex/q100-reference40-20261101
+now HEAD585eb915d9d7516b8ee86f19855e7b583cdd2e34. S denotes the task-owned
+OS-temp directory tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
+W=S/a07-report-v2-worktree. Publication leaf S/a07-retained-preview-publication
+is clean at the same HEAD.
+
+Retained-preview host prerequisite implementation3b75c8b3e5317b75c4ab7d1d8801a07d502b1f6c
+and receipt585eb915 are pushed/remote-verified. Gmail1a19661abd842e78 was sent
+ONCE; never duplicate it. Packet docs/task-evidence/A07/retained-preview-recovery-r1/
+records final Developer/Current9, synthetic192+legacy14, both real host cases,
+strict actual kernel positive/negative proofs, and final11-input-comparisons.
+Limits/failures remain recorded; no electrical/Q100 timing closure.
+
+Integration PASS: Main11 unaffected files byte-exact; its runner and architecture
+equal independent three-way merges. W's four private source files byte-exact,
+architecture exact three-way merge. Desktop branch/HEAD/status metadata unchanged;
+no Desktop file contents read/modified. Main remains9 tracked/6 untracked pending;
+W remains7 tracked plus3 private evidence directories. Stashes261ad290561367a65e07479cf8ed648b59d77dcf,
+407572da7cca73921d9f6e0c76cda4f4a8bb12b0 and earlier e9c54ab8 retained.
+Backup/evidence S/retained-recovery-integration1/; resultc03adfb194f4633853e2de52e34953c94b14d39ce3119ee355ee3e6fd61a3566.
+Old W private recovery PLAN preserved byte-exact at
+S/retained-recovery-integration1/private40/old-private-recovery-PLAN.md before
+the incoming tracked plan. Report/roadmap conflicts were resolved with both
+private histories preserved; the first W resolver expected a missing historical
+marker and failed, saved, then the common-suffix resolution passed. No conflicts
+or staged changes remain. Fresh integrated Main focused192 PASS15900ms, exit0/
+termination proven; merged runner2d39754fe7a2f05d67905da178a17844627021869cad8535e40b6d509518887c.
+B6/Java/electrical matrices were NOT RUN by that integration check.
+
+Current accepted host modulefc160736e0de967cbea5090a9546e771e64207181db51978f1350bc1b77f64e6.
+Private40/v5 and48/v4 remain NOT ADOPTED. W's40 Developer artifact/inputcfebece2.../
+output538ecc98... remains installed; no solver, LU, model, epoch or reference
+treatment adopted. Zero accepted100 layouts. Exact long CIN33 profile NOT RUN.
+
+Leaf q100_cleanup_code owns ONLY the new private
+S/cin33-cpu-r1/canary-independent-observer-v1.ps1 and WORKER-CANARY-PLAN.md.
+It prepares a real WinPS5 dedicated runspace as sole observer-socket owner while
+Main blocks in synchronous ordinary-page busy evaluation; Main retains primary/
+session/cleanup ownership. First frozen3c9857b4...143291/plan361cf70c...16844c
+passes WinPS5 parser/pure10 clock-verdict checks and CloseAsync smoke, but is
+NOT RUN against CDP. Source review requires a successor before any browser:
+adapt actual three-field Complete-VerifierRun return; safely record Exception
+and ErrorRecord failures; do not reset the cleanup join budget if a pause origin
+is missing; precheck8MiB and bounded-discard the remaining oversized message
+before attempting resume. Existing draft ACK-tick, shared-clock, join/disposal
+and verdict-order bugs were corrected; successor delta review is still required.
+The reviewer's timestamp-seconds finding was retracted: official Runtime.Timestamp
+uses milliseconds. No unit change is authorized by that mistaken finding.
+Use the qualified P Developer artifact for transport controls, not solver proof.
+Require real success and injected-after-pause resume/cleanup controls before the
+long case. A short trigger proves concurrency only; production75s capture timing
+needs its own same-host proof. Preserve90s route,5s send,3s controls,120s cleanup
+from first pause,15s shutdown,10ms sampling and profile bounds.
+
+Resources: no new live browser/preview/claim/profile blocker and no expensive
+gate active. Prior quarantines/unknown historical timeout descendants and ambient
+localhost8928 remain untouched. HARD/PSYCHOTIC unavailable/unrun; protected data
+not materialized, historical unread boundary UNCERTIFIED. CI NOT RUN/self-hosted
+runner prerequisite. Next: worker handoff, source/pure review, one externally
+bounded actual observer success control, then its failure/deadline controls;
+only after those, freeze and run the diagnostic CIN33 profile. No new publication.
 
 # Historical checkpoint: retained terminal-preview recovery published
 
@@ -397,6 +2825,507 @@ EOF correction are preserved privately; no gate/oracle/source was changed.
 Next: integrate while preserving pending work, then independent observer canary/
 long CIN33 CPU observation. Reference40/48 remain NOT ADOPTED; zero accepted100 layouts. No new
 electrical,30-root,full62,playable100 or broad qualification.
+
+# Historical checkpoint: private timing work before host publication
+
+**IN PROGRESS; NO NEW PUBLICATION. Updated:** 2026-11-01 UTC.
+Main codex/q100-physical-feasibility HEAD/remote883d7ba94aa13447210e4c72390e93a9467f976f.
+Leaf W=a07-report-v2-worktree/codex/q100-reference40-20261101, same base.
+Root owns acceptance/publication. A07 implementation7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317
+and receipt883 remain published; Gmail1a1953880a20986e sent once. No duplicate.
+Main B6/leaf40/Desktop changes stay preserved; no new commit/push/email.
+
+**OWNED RESOURCE RECOVERED. PUBLICATION VALIDATION IN PROGRESS.** One maintained recovery against
+run54f574bc5df84b469c7f85a8e7364ddf PASSES, exit0/termination proven.
+Bounded child64074ms; native interop setup381ms; recovery API operation62853ms.
+API exposes no separate cleanup time:62853ms is a measured upper bound including
+factory, claim, full cleanup and release, within120s. Natural shutdown15s stays
+enforced; exact shutdown elapsed is NOT SUPPLIED. No budget was extended.
+Full terminal receipt/cleanup proof, profile and claim absence, empty errors,
+closed receipt and source stability pass. Result8454e17726c50b7247bc4de67faeea6ee97024b309ed7bcc46fee49fa851e0f5;
+parent receipt82d4024dccea9054b1be5c2540a5875807b2b32b937441681f252383e459d245.
+Final manifest0875b400a48a78b82029c1e5ce9807824c47cd76f8045d656780f6ecb0ef7852.
+Task wrapper38060/child11316 exited, exec68951 closed. Old failed resources and
+unknown historical timeout descendants remain preserved; no broad cleanup.
+
+Private candidate S/retained-preview-recovery-r1/candidate/VerifierIsolation.psm1
+fc160736e0de967cbea5090a9546e771e64207181db51978f1350bc1b77f64e6,
+931864B. W/Main module remains original5e0ae0c8fb6beb20c2d9fff3f652074136032197eab61f450c5fdceaa4e3a1fa.
+Candidate adds ONLY bound, close-unattempted CDP recovery beside one fully terminal
+run-owned preview. It preserves complete associations/history and all old oracles;
+fresh process/listener checks run at admission, post-claim/pre-intent and BEFORE
+the close-attempt journal within15s. Preview ID must be nonempty lowercase
+GUID-N and its claim independently matches the issuer's canonical port/ID path.
+Root+independent final-source review pass. Earlier6f/00b/4289/39db versions and
+source/harness failures remain preserved. Never edit old manifests to bypass guards.
+
+Final selectedWinPS5 synthetic/source-order suite PASS180/15.691s, source stable,
+test3eab9264f9eac1dce66a37bfbe52834f06394bccfc1748de382f554011a13e6a;
+attempt tests/attempt-fc160-01. Original5e legacy-only PASS6/1.176s/zero census.
+Actual read-only admission PASS1949ms. Actual owned TCP listener on the terminal
+preview port forces refusal PASS1101ms; listener disposed/absence proven. Both
+preserve manifest11afb295.../claimf03c214b... bytes. Original5e factory refusal
+PASS101ms is separate. Complete private inputs/wrappers/tests are frozen:
+S/retained-preview-recovery-r1/recovery-freeze1 manifest
+b634929adbb619e7067e9f08d89b83eb9735ce6ba3b20783dd12f6d335e64b16.
+Frozen plan in leaf docs/task-evidence/A07/retained-preview-recovery-r1/PLAN.md
+aa4e47f50040153bb4567db4877e78b27c4d675872a9fd25e3ccd5c558a7cb10.
+Raw authority/command lines/private manifests stay out of publication.
+
+Publication tree S/a07-retained-preview-publication is on
+codex/a07-retained-preview-recovery-20261101 at883; modulefc160 integrated,
+1465 declared source/contract/static paths materialized,19300 other paths skipped.
+Initial CRLF native Git-stdin setup failed before materialization; exact NUL-byte
+resume passed. No protected content was checked out by the failed command.
+Actual JDK8/GWT Developer PASS174.3973063s/1199inputs/357outputs, input5dd76a5a...,
+output611f4f10...; complete inventory26baece0...fa5. Maintained fixturee49d54a8
+PASS192/14681ms; original5e LegacyOnly bound+issued-contained PASS14/1607ms.
+Current1 PASS9 before runner registration. Registered fixture PASS192/16645ms;
+marker self-test and exclusive-selector refusal pass. Final Current2 PASS9/
+351.1663231s, exit0/termination proven, all consumed source/build/execution stable,
+shutdown9968ms; exact aggregate cleanup elapsed NOT SUPPLIED. Wrapper PS7.6.5,
+selected child WinPS5. Report1fa7db58...ed0a6; runnercaec410f...f1cd8.
+Actual TerminalPreview1 FAIL child-process JSON decoding/ArgumentException,
+child exit2/termination proven803ms, outer1824ms; no recovery attempted or bound
+witness. Inner streams were lost by the harness; source/failure preserved.
+Worker adds private raw child evidence before parsing and separates module-name
+warnings from machine JSON. Inner failure cause not yet proven; Ownerless NOT RUN.
+Publication tree report owns the detailed current checkpoint. Later Terminal3
+fails existing500ms preview kernel authorization; childcleanup8644ms and root
+fresh unboundpreview process/listener/claim absence prove no resource blocker.
+Ownerless3 reaches READY but parent strict-property error leaves exact browser
+38484/start639291193561025082/CDP58300/run6f165d7d4cba43d9b1e07ab1321967cc.
+Root exactmaintained recovery PASS, exec25251/launcher37700 closed: API53430ms
+upperboundscleanup<120s, setup407ms separate; boundedchild54630ms exit0/termtrue.
+Full terminalreceiptclosed/profile+claimabsent, noerrors, modulefc unchanged;
+finalmanifestbe4a8578...c0d9. OriginalcaseFAIL; no new live resource blocker.
+Frozen diagnosis proves missingclaimOwnerPid/StartTicks in child lease witness;
+worker adds requiredfields and checks fullpre/post helpers with independent child
+identity. Focused actualkernel positive/negative canary is being prepared, unrun.
+No commit/push/email or electrical timing closure.
+
+Original InjectAfterPause1 remains FAIL/exit2 despite proven inner resume/drain:
+cleanup failed at protectedHelperCensus when child38016 exited before handle
+acquisition. Later successful resource recovery does not reclassify it. Success1
+passed on original5e: cleanup66139ms/shutdown13092ms, real busy profile32nodes/
+57samples/24141B. Offline analyzerc554299f and34 purePython controls pass; actual
+busy analysis e298c30e gives601889us weighted/span602148us/tail259us. These are
+transport controls, not CircuitJS hotspots. Fresh final-source recovery control
+and a real independent observer-worker canary precede the long CIN33 profile.
+
+40/v5 and48/v4 remain NOT ADOPTED: native4/62 and Developer build pass, but compiled
+separate/CIN33_SHUNT50us fails (48 temporal deadline;40 reaches90s without terminal
+report). Existing40 artifact cfeb.../538ecc... stays installed in W. No long
+private CPU profile, numerical/LU/epoch treatment, full62 compiled, new40 Player/
+Current/privacy, playable100 or timing qualification. ZERO accepted100 layouts.
+Main B6 remains9 tracked/6 untracked;12 non-doc paths and docs stashe9c54ab8/
+15-file backup preserved. Desktop untouched. HARD/PSYCHOTIC unavailable/unrun;
+protected-unread history UNCERTIFIED. CI NOT RUN/self-hosted runner prerequisite.
+
+# Historical checkpoint: retained-preview recovery preparation; Q100 timing unresolved
+
+**IN PROGRESS; NO NEW PUBLICATION. Updated:** 2026-11-01 UTC.
+Main codex/q100-physical-feasibility HEAD/remote883d7ba94aa13447210e4c72390e93a9467f976f.
+Leaf a07-report-v2-worktree/codex/q100-reference40-20261101, same base.
+W/Main maintained host remains5e0ae0c8fb6beb20c2d9fff3f652074136032197eab61f450c5fdceaa4e3a1fa.
+Root owns acceptance/publication. A07 implementation7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317
+and receipt883 remain published; Gmail1a1953880a20986e sent once. No duplicate.
+
+**LIVE OWNED RESOURCE BLOCKER.** No new expensive gate or long CIN33 case until
+the retained browser is resolved. Exact run54f574bc5df84b469c7f85a8e7364ddf,
+browser18544/start639291121751039844, Edge, CDP53543; profile/claim retained.
+Original failed manifest lives under the verifier namespace36dcb187e769afd031b5.
+Read-only census2026-11-01T06:51:32Z confirms exact root still alive; preview3708,
+launch parent38772 and observed transient child38016 currently absent. This
+does not prove historical descendant cleanup. No ad hoc close/kill/delete.
+Durable bound receipt is close-unattempted. Preview cleanup is complete and its
+lease terminal/released; the run still records its historical URL/preview owner.
+
+Actual InjectAfterPause1 remains **FAIL/exit2** (INCONCLUSIVE_CLEANUP_OR_SOURCE),
+termination proven, bounded child76354ms. Expected exception, resume, exact
+primary drain, disable and534.7501ms pause/3465.2499ms margin prove the inner
+recovery control, but cleanup fails at protectedHelperCensus because child38016
+exited before retained handle acquisition. Cleanup20833ms/resourceSuccess=false;
+browser shutdown5433ms/failurePhase protectedHelperCensus. Report
+6cbcd5013ad1b0d807de6a02a398906b8da609050f99bc4581ef777a36ef9588.
+Later resource recovery cannot reclassify this original failed canary.
+
+Current strict recovery API refuses this joined manifest: historical baseUrl,
+two leases and completed run-owned preview do not match its ownerless1-CDP scope.
+Actual selectedWinPS5 read-only factory refusal PASS101ms; manifest/claim byte
+stable. Before-manifest11afb295f1d1c0b65ffe932e7a5163d81ee4c6280c6d42b3614533c381130724,
+claimf03c214b367d6216a2606ead7c346b5ca71d814f3e024d6812e5fa16358edbf0.
+Private copies in S/retained-preview-recovery-r1/evidence1; never publish tokens.
+
+Frozen leaf plan docs/task-evidence/A07/retained-preview-recovery-r1/PLAN.md
+aa4e47f50040153bb4567db4877e78b27c4d675872a9fd25e3ccd5c558a7cb10.
+Worker q100_cleanup_owner owns ONLY new private candidate/VerifierIsolation.psm1
+under S/retained-preview-recovery-r1; W/Main source stays unchanged.
+Worker q100_cleanup_profile owns tests/ there.
+First private candidate6f273a4e10207784bc01cb7e42ab7251d7c1662426cad09f956475a16af43095
+passes AST/diff checks but is NOT ACCEPTED: source review requires the same fresh
+terminal-preview absence proof again after claim acquisition/before intent write
+and at final close, rather than retaining an admission-only census. Worker owns
+that narrow revision;6f and its00b successor are preserved. The final candidate is
+4289cb471dd1832390dd71ebf1cd3ef4986f4b2fc46b953ffa75033f4dcdbde6,
+930930B: one shared fresh absence helper runs at admission, post-claim/pre-intent,
+and before the close-attempt journal inside15s. The intermediate00b placement
+after that journal was rejected before runtime, to retain retry authority when
+the new preview guard fails. Original post-journal root/listener/job checks remain.
+Root and independent source review closed those ordering gaps, but actual pure
+fixtures found another blocker:4289 accepts a self-consistent noncanonical preview
+claim filename, unlike its independently pinned CDP claim. Preserve4289/attempt05;
+worker must pin the preview claim to the issuer's canonical port/leaseId path
+before terminal claim-absence proof. Keep both self-consistent alternate-path
+and mismatched-path negatives. Source4289 is NOT ACCEPTED; no actual candidate
+preflight/recovery has run. OriginalW5e legacy-only selectedWinPS fixture PASS6/
+1.176s, zero census callbacks; initial test hash/callback-expectation failures
+remain preserved under tests/attempt-* with source pins. Do not bypass guards
+or promote mocks/source order into host proof.
+Reuse complete terminal lease/
+server validators and fresh process/listener absence; preserve all original
+receipt/identity/claim/path/reparse/containment oracles. Exactly one eligible
+unattempted CDP plus one completely terminal preview; reject active, caller,
+extra, uncertain or mismatched resources before mutation. Rehydrate all valid
+history; do not strip or edit the original manifest. Root reviews pure contracts,
+does actual read-only preflight, then one normal maintained recovery attempt.
+Keep15s shutdown/120s cleanup; outer600s changes no inner allowance. No recovery
+call/new module integration/build/full gate has run yet.
+
+Earlier pause Success1 PASS/exit0, termination proven, bounded child122545ms;
+cleanup66139ms/shutdown13092ms, source/build stable. Reportc168a6da4fb625384754945720dc2175da8070ecb9113ea2fc6592b52d607660.
+C075 child/BAA4 launcher and freezebe340df1 bind source; pureWinPS33 checks pass.
+Its ordinary-page busy profile97e2bb2b70181f1b203ea5ce16a73bd7dde428c59821a1778391e551d105d967
+has32nodes/57samples/24141B. Offline analyzerc554299f and34 purePython tests pass;
+first actual analysis e298c30e reports601889us weighted/span602148us/tail259us.
+This is transport evidence, never a CircuitJS hotspot or electrical PASS.
+Unpaused1 singleton-array failure and unpaused2 stop cancellation remain
+INCONCLUSIVE with cleanup proven; both failures/source freezes are preserved.
+
+40/v5 and48/v4 remain NOT ADOPTED. Each native4/62 and Developer build passes
+for its exact source, but compiled separate/CIN33_SHUNT50us fails:48 at temporal
+deadline,40 at90s without terminal report. Preserved40 artifact cfeb.../538ecc...
+is still installed in W. No numerical/LU/epoch treatment, private long CPU
+profile, playable100, full62 compiled or fresh40 Player/Current/privacy claim.
+
+Main B6 remains9 tracked/6 untracked;12 non-doc files preserved, exact docs
+stashe9c54ab8 and15-file backup retained. Desktop untouched; old failures,
+quarantined claims/profiles and unknown old timeout descendants remain preserved.
+ZERO accepted100 layouts. HARD/PSYCHOTIC unavailable/unrun, protected-unread
+history UNCERTIFIED. CI NOT RUN/self-hosted runner prerequisite retained.
+
+# Historical checkpoint: CIN33 CPU observation;40 and48 not adopted
+
+**IN PROGRESS; NO NEW PUBLICATION. Updated:** 2026-11-01 UTC/local.
+Main codex/q100-physical-feasibility HEAD/remote883d7ba94aa13447210e4c72390e93a9467f976f.
+Leaf a07-report-v2-worktree/codex/q100-reference40-20261101, same base,
+four uncommitted40/v5 source changes. Root owns acceptance/publication.
+A07 implementation7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317 and receipt883d7ba9
+remain published/remote verified; Gmail1a1953880a20986e sent once. No duplicate.
+
+40 is NOT ADOPTED. NativeHealthy1 PASS24414/four andFaults1 PASS254211/62;
+actual Developer1 PASS181.0050622s/1199inputs/357outputs with full inventory,
+inputcfebece2a7e2047e58f1b4b5e39487cd079fc2a3deb4e236d1eb25d1c44cb877,
+output538ecc981cf4d59735d89fc83e5b22a06faec79e875b3c08d0561e4fcf5b3a6f.
+E06State1 fails after9PASS: separate/CIN33_SHUNT50us reaches90s route deadline
+at90023ms, CDP receive canceled. Last verification RUNNING:q100/no terminal
+reference. This does NOT prove5s unit resolved. CleanupPASS79878ms/shutdown9490ms,
+exit2/termination proven; wrapper552.8280613s. No40 commit/push/mail.
+
+48 likewise NOT ADOPTED: native4/62 and Developer pass but compiled separate
+CIN33 reports temporal deadline or clock regression,47accepted/6980trials of48;
+work273/wall67721ms/sim.63115. Failed-unit exact duration unavailable;4868ms is
+only prior completed maximum. Cleanup80.170s/shutdown9.761s PASS. No48 publication.
+Both failures and all source/artifact captures remain preserved, not promoted.
+
+40 preservation attempt2 PASS in reference40-preservation1/attempt2: nine exact
+source/docs,1199input rows/81309141B,1189/1/9 exact set, one compiler-source delta.
+Input manifest82914f2e5d848f064a7d7f72cc733b0a1298d59732d467bb965af65d79d0572d,
+snapshot5c9e022f8da0473b21bccbd573eada945e0f8e7d60e6fb3d6aa34870814064b1,
+resulte89b5ae42380628684d5bf6837b0f2bd35ea0026589ca14e6d38005c0f7f383f.
+Player identity was computed only, never built/qualified. Attempt1's erroneous
+before/after-build output equality remains failed; corrected sibling compares
+stable inputs and installed/accepted after identity. Source4 seal remains
+a895fec09f0e3edc3b11b66ae6212e6ea384bce68b63801833beda0a30c1bc0e.
+
+Next is CPU observation, not another cap or math treatment. Frozen leaf plan
+docs/task-evidence/Q100/cin33-cpu-r1/PLAN.md SHA
+140995d705c87261d0a56f11ede3385e8ae0db2c3e1b611a4b831e67ef471025.
+Use existing unchanged OBF Developer40 artifact and actual CircuitJS graph.
+Source chain: Q100Runner -> Rb100Reference -> CircuitSolverExecutor -> CirSim.
+Iterations/matrix restore/stamp/LU/solve/accepted commits are candidates only,
+not measured hotspots. Existing OBF has no complete Java symbol map; raw JS
+attribution/inference limits must be explicit. No LU row4 treatment adopted.
+
+Leaf worker prepares ONLY S/cin33-cpu-r1/ scratch code, no client/solver edits.
+The narrower NO-PAUSE-CANARY.md amendment15cc8e6dc8c9548e98717ca580a222b1ac2123c50e448cbc1d26c677f73b0927
+first tests whether an observer socket can stop profiling during synchronous
+busy JavaScript on its exact owned target. Wrong target/port must reject before
+connection; protocol-error, profile-shape, primary-reply and120s disposal proofs
+are required. Root reviews/runs that canary before implementing the long case.
+Debugger-domain controls are NOT APPLICABLE if unpaused stop is proven; a
+pause/resume fallback needs a separate amendment and actual host canaries.
+The later single CIN33 observation requires an independent observer to stop near
+75s, because the primary Runtime.evaluate can block until90s. True route errors
+remain failures; every observation is DIAGNOSTIC_ONLY. Keep90/640/5/500/
+6000matrix/120 limits and observer disposal inside cleanup. No ambient access.
+
+Canary1 is INCONCLUSIVE/exit2, termination proven, bounded child120058ms.
+CleanupPASS64010ms/shutdown12973ms; source/build unchanged. Report6fdf1e16d69a6473d48e4934d3e52f89b01516bec734089d6fe969eed688a498
+preserves unknown-methodPASS/startPASS but stopNOTRUN: generic Prop unwrapped
+one console argument, so start marker was missed. No conclusion about stop
+interruption follows. Failed source22316ed6 and freezea7f53302 remain unchanged.
+V2 preserves array properties without changing scalar/object/null types. Actual
+AST-extracted WinPS5 shape controls PASS17/337ms. Actual canary-unpaused-2 is
+INCONCLUSIVE/exit2, termination proven, bounded child119626ms. Start marker now
+observed; profiler.startPASS but combined3s stop cancels, no profile. Exact failed
+send/receive phase was not recorded, so unpaused-stop impossibility is not proven.
+CleanupPASS64838ms/shutdown12347ms; source/build stable. Report2553857ce0953f5c0c43eb27d351c46ef12122c67adba8b6f4fcc1ef5cede09c,
+child7fe03345e6b5f523cf41bf0dc20e5774b4cd246f2e090876032bebdb4e3befc1,
+launcher3b8e75c72ec0b832eaa5f600446f20705d56e823a9a4d35eff05d7f0011ea20f,
+freezefdfb36b1fa65666ff725ba227a2acda32e1e49548c29eecb4372274afcf9fa31.
+Do not rerun that unchanged command. No long CIN33 profile or electrical gate
+has run. Both unpaused canary owners exited with proven resource cleanup.
+The new leaf PAUSE-CANARY.md869df51c3e9556755a9833a53c96a5985723075acf6187208f1649aa6e8a2f75
+freezes success and injected-failure/resume transport controls before the long
+case. Worker owns only a new scratch script; root reviews/runs.120s cleanup starts
+before first pause, includes stop/resume/capture/primary drain/socket disposal
+and CompleteRun; combined3s controls stay stricter than5s send. Exact failed
+operation/stack and partial statuses must persist. No product/solver edit, budget
+extension or qualification. Raw endpoints/profiles remain private.
+
+The actual pause Success control PASSES: canary-pause-success-1, exit0,
+termination proven, bounded child122545ms. Pause completes537.2164ms after
+profiler-start ACK,3462.7836ms before the conservative busy-end bound. Stop,
+resume, exact primary drain and profiler disable pass. Cleanup66139ms and
+shutdown13092ms PASS; source/build stable. Reportc168a6da4fb625384754945720dc2175da8070ecb9113ea2fc6592b52d607660.
+Actual profile97e2bb2b70181f1b203ea5ce16a73bd7dde428c59821a1778391e551d105d967,
+24141B/32nodes/57samples; this is only the ordinary-page busy canary.
+Childc075c73c0d06475d41c124994dfc78935374b0473876475f642892d9073dc326,
+launcherbaa4cf04ebf8ea99a1c824270ad1cb7d48bd7f95e82c86255a3eadeab1b39d22,
+freezebe340df1a9af8d43232fe8c618cc8bf0bea55d82c99d64ac42a092e49fa752ac.
+Root and independent final-source review pass. New selectedWinPS5 pure
+dispatcher/timing controls PASS33/718ms. Offline analyzerc554299fed742e91aaaf21cc51e2c1360265d18d84aea69ac428ebdc0b8b964b
+has purePython34 PASS/source review. Its first real canary-profile analysis
+e298c30e97a454f084c41d5586ab56a98d542f0fab268be4d1a7a86fe2019f57
+reports601889us weighted samples/span602148us/tail259us. No CircuitJS hotspot
+or electrical qualification follows from that synthetic busy loop.
+InjectAfterPause is ACTIVE: canary-pause-injected-1, exec42906;
+launch2026-11-01T06:42:18.3723273Z, WinPS5 wrapper31260/start639291121379034808,
+child38772/start639291121384642363, bothWindowsPowerShell/v1.0/powershell.exe.
+Same C075 child/BAA4 launcher/freeze3. One expensive gate globally through
+cleanup. Long CIN33 observation remains NOT RUN and must wait for this result.
+
+Main B6 remains9 tracked/6 untracked,12 non-doc files verified preserved through
+host integration; exact docs stashe9c54ab8686ea104ce7af0b8a5a176c4833a4842 and
+15-file backup retained. Desktop source untouched. B6 normal MEDIUM first root
+-2230691771308388107 still hits90s/HYPOTHESES; normal3/30 not renewed. ZERO
+accepted100 layouts; structural/relaxed graphs not playable100. Failed profiles/
+claims/old timeout's unknown descendants remain preserved. HARD/PSYCHOTIC
+unavailable/unrun, protected-unread history UNCERTIFIED; CI NOT RUN/runner prerequisite.
+
+# Historical checkpoint: reference40 failed timing handoff; Q100 capture pending; private reference40 experiment
+
+**IN PROGRESS;40 NOT PUBLISHED. Updated:** 2026-11-01 UTC/local.
+Audit codex/q100-physical-feasibility HEAD/remote883d7ba94aa13447210e4c72390e93a9467f976f.
+Active leaf a07-report-v2-worktree, branchcodex/q100-reference40-20261101,
+same base. Root owns acceptance/publication; no40 commit/push/Gmail.
+
+A07 implementation7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317 and receipt883d7ba9
+are normally published/remote verified; Gmail1a1953880a20986e sent once. No
+duplicate for receipt. Its exact native/build/A07/Current/privacy proof and
+limits remain attached to its packet, not relabeled for current source.
+
+Reference48 is NOT ADOPTED. Native4/62 and final actual Developer2 pass for48,
+but E06State1 passes9 and fails separate/CIN33_SHUNT50us. Exact error reports
+solver deadline reached or clock regression;47 accepted steps/6980 trials of48,
+work273,referencewall67721ms,sim.63115. Prior completed maxUnit4868ms excludes
+the failed unit; its exact duration is unavailable. Graph cleanupPASS4ms;
+browser aggregate80170ms/shutdown9761ms, exit1/termination proven. No48 push/mail.
+Nine source/doc files remain byte-exact in reference48-preservation1, manifest
+d1038137d230c2922d8486f0afb397487d16b9d02c73b33d62ec35ca7d61364b.
+Complete1199 compiler manifest53a468e90e6dcb80b735516133b4e52bae258d0a0cc12aa9571b8dc11e844171
+rehashes81309141B,1189/1/9 exact set, sole changed input Rb100PilotReference.
+Capture1 failure/incomplete-manifest attempts remain preserved; corrected sibling
+validation891d8cf880435695cf8dfc52efc0331cbfed2657aad765e6f6b865bdcc60c22a passes.
+
+Uniform40/v5 frozen planed2367aee7e9ad453425d27b1f19dad3f6d562704a5821ddc1aa2393585fc64c
+is docs/task-evidence/Q100/reference40-r1/PLAN.md in the leaf. Source4 seal
+a895fec09f0e3edc3b11b66ae6212e6ea384bce68b63801833beda0a30c1bc0e.
+Strict synthetic reader PASS5.210935s/exit0/source stable, four healthy/62 fault
+fixtures and retained negatives; aggregate Q100 assertion counter unavailable.
+Independent source review found no material blocker; it reran no gates.
+
+Only private cap/protocol/strict expected metadata change. Preserve CircuitJS
+math/model4/plan1/population1, seed9007199254740993, accepted steps/endpoints,
+all31 fault oracles/two variants; separate E06 canary64/executor128 and normal
+MEDIUM unchanged. Batches/work: healthy100us150/157,50us300/307;
+fault100us300/313,50us600/613; canary40/.004s/work3. Forty leaves27 work units;
+39 leaves5,38 exceeds640. All90s/640/5s/500ms/15s/120s limits stay.
+Reference40 native4/full62, both actual builds, E06State10/Q10011/full62,
+Current9/privacy must pass fresh before adoption; no full100us fault matrix claim.
+
+Task-only native wrapper811dca4e...c6c9a and productionca8dfcfa...39de7 clone
+validated48 helpers with declarative identity/protocol changes only. Old wrapper
+and capture failures remain failures. Native40 namespace negative passes exact
+prework rejection/no mutation; no40 browser/build gate has run unless listed below.
+
+Audit B6 remains9 tracked/6 untracked with12 non-doc files verified byte-exact
+through host integration; exact docs stashe9c54ab8686ea104ce7af0b8a5a176c4833a4842
+and explicit15-file backup retained. Desktop source untouched. B6's old proofs
+belong to recorded inputs; normal MEDIUM root-2230691771308388107 still hits90s/
+HYPOTHESES, two other passes do not renew normal3. Rejected LU row4 not adopted.
+ZERO accepted100 layouts; structural/relaxed graphs are not playable100. Failed
+profiles/claims/old unproven timeout descendants remain preserved. HARD/PSYCHOTIC
+unavailable/unrun, protected-unread history UNCERTIFIED; CI NOT RUN/runner prerequisite.
+One expensive gate globally through cleanup. Advance only after the active gate
+returns with actual termination and cleanup proof; do not publish a blocker as success.
+
+## Current validation
+
+| Kind/mode | Run | Status | Session |
+| --- | --- | --- | --- |
+| native/Healthy | `ref40-healthy1` | PASS | -1 |
+| native/FaultMatrix | `ref40-faults1` | PASS | -1 |
+| production/BuildDeveloper | `reference40-BuildDeveloper-1` | PASS | -1 |
+| production/E06State | `reference40-E06State-1` | FAIL | -1 |
+
+Latest `reference40-E06State-1`: **FAIL**, unified exec session`-1`. Launcher/result
+are task-owned reference40-E06State-1/ in the fresh scratch.
+
+`ref40-healthy1`: `{"nativeExitCode":0,"exitCode":null,"terminationProven":true,"boundedProcessElapsedSeconds":43.8917891,"elapsedSeconds":null,"inputCount":1061,"inputBytes":85552898,"inputManifestSha256Before":"2f045aada035d8e995bf060c3df8c2508f6ac3841be53e95b52f1e5b06cbd799","inputAudit":"PASS_BEFORE_AND_AFTER","nativeSummary":{"assertions":24414,"cases":4,"expectedCases":4,"elapsedMs":8728,"faultMatrixHostBoundMs":0,"line":"PASS: RB100 electrical pilot contracts assertions=24414 cases=4 expectedCases=4 failures=0 elapsedMs=8728 faultMatrixHostBoundMs=0 scope=NATIVE_GRAPH_ONLY"},"failureMessage":null}`
+
+`ref40-faults1`: `{"nativeExitCode":0,"exitCode":null,"terminationProven":true,"boundedProcessElapsedSeconds":314.8899621,"elapsedSeconds":null,"inputCount":1061,"inputBytes":85552898,"inputManifestSha256Before":"2f045aada035d8e995bf060c3df8c2508f6ac3841be53e95b52f1e5b06cbd799","inputAudit":"PASS_BEFORE_AND_AFTER","nativeSummary":{"assertions":254211,"cases":62,"expectedCases":62,"elapsedMs":280145,"faultMatrixHostBoundMs":1200000,"line":"PASS: RB100 electrical pilot contracts assertions=254211 cases=62 expectedCases=62 failures=0 elapsedMs=280145 faultMatrixHostBoundMs=1200000 scope=NATIVE_GRAPH_ONLY"},"failureMessage":null}`
+
+`reference40-BuildDeveloper-1`: `{"nativeExitCode":null,"exitCode":0,"terminationProven":true,"boundedProcessElapsedSeconds":null,"elapsedSeconds":181.0050622,"inputCount":null,"inputBytes":null,"inputManifestSha256Before":null,"inputAudit":null,"nativeSummary":null,"failureMessage":null}`
+
+`reference40-E06State-1`: `{"nativeExitCode":null,"exitCode":2,"terminationProven":true,"boundedProcessElapsedSeconds":null,"elapsedSeconds":552.8280613,"inputCount":null,"inputBytes":null,"inputManifestSha256Before":null,"inputAudit":null,"nativeSummary":null,"failureMessage":"Browser report was not a successful non-smoke requested gate."}`
+
+# Historical checkpoint: failed reference48 handoff; Q100 capture pending; private reference48 experiment
+
+**IN PROGRESS. Updated:** 2026-11-01 UTC /2026-11-01 local.
+Audit codex/q100-physical-feasibility HEAD/remote883d7ba94aa13447210e4c72390e93a9467f976f.
+The active isolated experiment leaf is a07-report-v2-worktree, branch
+codex/q100-reference48-20261031, same base. Its own top report is detailed authority.
+
+A07 implementation7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317 and receipt
+883d7ba94aa13447210e4c72390e93a9467f976f are published normally on
+origin/codex/q100-physical-feasibility; both remote SHAs verified. Gmail
+1a1953880a20986e sent once, no duplicate for receipt. A07/Current9/Player privacy,
+both actual JDK8/GWT builds and selected native/real-host proofs pass only for
+the packet's recorded source. Prior failures, limits and source-only review
+scope remain in docs/task-evidence/A07/report-contract-v2/README.md.
+
+Next necessary scope is isolated private Q100 reference48, not yet qualified.
+Its frozen plan is docs/task-evidence/Q100/reference48-r1/PLAN.md, SHA
+a6c0b73bc861fff3998c641411ef52185429d7d306ea41ae60efa46ca9e2b567.
+Hypothesis: smaller temporal requests may avoid the measured separate/CIN33_SHUNT
+50us5s failure. A prior accepted-source control failed without B6. No universal
+cause/performance claim and no resolution of normal MEDIUM90s are inferred.
+Change private64->48 and strict referencev3->v4 only; preserve CircuitJS math,
+seed9007199254740993, model4/plan1/population1, all accepted steps/context endpoints,
+all62 fault/repair oracles, separate E06 canary64 and executor128. Normal MEDIUM
+is outside this reference's callers. All90s/640/5s/500ms/15s/120s caps stay.
+Independent48 expectations: healthy100us129batches/136work,50us252/259;
+fault100us258/271,50us504/517. More operation/deferred boundaries require actual
+runtime proof. Adoption requires healthy4/full62 native, compiledQ100/full62/
+E06State, final-source builds/Current/privacy. SelectedCIN33 native proof is
+included in full62; the separate diagnostic banner is not a qualified gate.
+
+Implementation is handed off; root owns integrated acceptance and publication.
+One expensive gate globally through cleanup. No48-stage/push/mail until all
+required proofs pass; do not publish a timing failure as success.
+
+B6 remains sealed/pending on the audit branch:9 tracked/6 untracked,12
+non-doc files verified byte-exact through host integration. Its3 task docs merge
+both histories with one identical common suffix; exact stash
+e9c54ab8686ea104ce7af0b8a5a176c4833a4842 and explicit15-file backup remain.
+Separate Desktop e0c36885/codex/task43p-final-recovery remains7 tracked/89 untracked,
+untouched. Earlier B6 evidence stays attached to recorded inputs, not renewed by
+host integration or48. First normal MEDIUM root-2230691771308388107 still reaches
+90s/HYPOTHESES; two other passes do not renew normal3. Rejected LU row4 NOT adopted.
+ZERO accepted100 layouts. No playable100/public admission, full30 or matrix renewal.
+Earlier failed profiles/claims/unknown timeout descendants remain preserved;
+exact-root absence is not cleanup proof. HARD/PSYCHOTIC unavailable/unrun;
+protected-unread history UNCERTIFIED; CI NOT RUN pending approved runner setup.
+
+## Current validation
+
+Source4 is frozen in reference48-source-freeze2.json, SHA
+fc0143d545880c49a84506b31eea66a011e5876c9ff82f38f285b4cbfe9abd6d.
+Reference0866ad82...bd6a1/native84d1416f...72e08/hostdf917f45...3635b/
+syntheticf5bab024...32e2e. Root restored only the unrelated join spelling to
+baseline before this final seal; no electrical expectation changed.
+Source-only independent review found no material blocker, without rerunning gates.
+Final synthetic3 PASS5.0390503s/exit0/termination/source stable,4 healthy/62 fault
+fixtures; aggregate assertion count is unavailable. Synthetic1 refused a mistyped
+source hash BEFORE child allocation; source was not changed to satisfy it.
+Synthetic2 retains its preceding host pin;3 is the final renewal.
+Real native-wrapper duplicate-namespace negative passes expected exit2, preserving
+the sole marker and writing no new run artifact. Wrappers use the unchanged
+maintained native/process owners, JDK8 and selected WinPS5.1, with no transcript.
+Healthy1 remains wrapperFAIL/exit2: actual native4/24363 assertions/exit0,
+termination/input/cleanup proofs pass, but wrapper1 expected the full-run banner.
+Wrapper2 corrects only that expectation to the exact maintained focused-suite
+banner. Its duplicate-namespace negative also passes with no artifact mutation.
+The runner's full-matrix/independent-oracles NOT RUN banner stays explicit;
+selected RB100 internal expectations do not qualify the full native platform.
+Final Healthy2 PASS:24363 assertions/four variant-timestep cases, suite8192ms,
+bounded child42.3844641s, exit0/termination, exact1061 inputs/85552898B before/after,
+manifest196cf9dc0d44876ceeb5d279f6403cb16a0506aad53f3fbbeec56d4159370813.
+All four case cleanup proofs and maintained scratch cleanup pass; individual
+operation/cleanup times are in the result, not combined into an invented aggregate.
+
+Latest native run `ref48-faults1`: **PASS**, unified exec session `-1`.
+Evidence/launcher: task-owned reference48-native-runs/ref48-faults1/. Launcher records
+exact PID/start/executable before invocation. Native gates are serial; keep the
+single active session through completion/cleanup before another expensive gate.
+Healthy expects4 and retains60s inner limit; FaultMatrix expects62 and retains
+1200s. Both keep1800s outer task envelope and every90s/640/5s operation limit.
+No matrix or runtime PASS is inferred while the result is pending.
+
+Recorded result: `{"status":"PASS","mode":"FaultMatrix","nativeExitCode":0,"terminationProven":true,"inputCount":1061,"inputBytes":85552898,"inputManifestSha256Before":"196cf9dc0d44876ceeb5d279f6403cb16a0506aad53f3fbbeec56d4159370813","inputManifestSha256After":"196cf9dc0d44876ceeb5d279f6403cb16a0506aad53f3fbbeec56d4159370813","inputAudit":"PASS_BEFORE_AND_AFTER","boundedProcessElapsedSeconds":315.02385269999996,"nativeSummary":{"assertions":254160,"cases":62,"expectedCases":62,"elapsedMs":280709,"faultMatrixHostBoundMs":1200000,"line":"PASS: RB100 electrical pilot contracts assertions=254160 cases=62 expectedCases=62 failures=0 elapsedMs=280709 faultMatrixHostBoundMs=1200000 scope=NATIVE_GRAPH_ONLY"},"cleanupMarkerCount":1}`
+
+## Production validation
+
+Native Healthy2 and Faults1 both PASS on final source:24363/four and254160/62
+assertions/cases respectively. Fault suite280709ms/bounded315.0238527s,
+all62 case cleanup proofs and maintained scratch cleanup pass; same exact1061
+input manifest196cf9dc...70813 before/after. This is selected native-graph
+qualification, not compiled or physical/playable100 proof.
+
+Production task wrapper4 SHA82961290af51e04d1dd47f3283901f9160696fc87aa02077cb0f487f1a43fb50
+uses the maintained build/browser/process owners with7200000ms outer envelope.
+V1's source-only pre-import issue was corrected before any gate. V2's namespace
+negative preserves its marker but lacks an observed reason; its separate
+disposition remains LIMITED, not specific contract proof. V3 adds only sanitized
+prework diagnostics; actual namespace negative3 PASS/exit2 with exact refusal
+reason and no new artifact/build. Snapshot-only selected-host preflight passed;
+it is not a production build. Full actual gates below remain serial.
+
+Developer1 remains wrapperFAIL: actual compiler child exit0/termination in
+181.3914682s, followed by an unparenthesized Test-Path/-or capture guard error.
+Raw streams were not saved and post-snapshot was NOT RUN. Its installed receipt/
+357-file output inventory are preserved as UNQUALIFIED_POST_FAILURE, not PASS.
+V4 corrects only guard parentheses and labels capture phase. Actual WinPS5 guard
+and copied receipt/Current/Player parser controls PASS (data-only; six input files
+unchanged), result60faa89b...d80c. Fresh Developer2 is required and is not inferred
+from the earlier compiler exit or those helper checks.
+
+| Mode | Status | Run | Session | Result SHA-256 |
+| --- | --- | --- | --- | --- |
+| BuildDeveloper | PASS | `reference48-BuildDeveloper-2` | -1 | cb86b6383832e9f96f6c27a509bce9e326df91d12f6677646f144058f19d059b |
+| E06State | FAIL | `reference48-E06State-1` | -1 | 799338b8f508c0a295b8859f9765e49aa78a16e28207cdd9f2c38c8ed86f864f |
+| Q100 | NOT RUN | — | — | — |
+| Q100Faults | NOT RUN | — | — | — |
+| BuildPlayer | NOT RUN | — | — | — |
+| Current | NOT RUN | — | — | — |
+| Q100Player | NOT RUN | — | — | — |
+
+Latest production `reference48-E06State-1`: **FAIL**, session`-1`. Resources are
+recorded at task-owned reference48-E06State-1/launcher.json before launch. Keep the
+single active gate through termination/cleanup before another expensive gate.
+No adoption/publication until all required final-source gates close.
 
 # Historical checkpoint: A07 host prerequisite published
 

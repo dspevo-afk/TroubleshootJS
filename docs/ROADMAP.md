@@ -74,6 +74,20 @@ layouts remain zero.
 Implementation `48b3f4d237cc00732bdee197c5b3bb0c4425bd40` is verified on
 origin/codex/q100-physical-feasibility; completion Gmail `1a19d1d72d433b85` sent once.
 
+The [capacity-aware P07 prune](task-evidence/Q100/capacity-bound-r1/README.md) is
+locally accepted under layout26/dependency28; publication is pending. A completed,
+postchecked zero-capacity bound excludes unreachable states while preserving the
+original late trigger and all caps. The exact shared authored case expands29196
+fewer states; both authored variants still exhaust with no layout. Native33,
+72-case/20-bound structural comparison, six unchanged physical hashes, actual
+Player/Developer builds, E06State10, Current9, Player privacy and exact3 normal
+development roots pass. Developer output reproduces exactly after restoration.
+The four-candidate envelope is preserved; each actual normal run accepts its first
+candidate. Earlier failures remain, including fixture, host-metadata and private
+reader corrections. No full30/2-by-31, HARD, human-repair or playable100 renewal.
+Next is fresh current26/v28 NO_PATH-prefix evidence and per-net VIA accounting
+before another deterministic routing treatment. Playable100 remains0; beta held.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

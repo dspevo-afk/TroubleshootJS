@@ -1435,6 +1435,12 @@ final class PcbLayerRoutingPrototype {
                 }
                 return value;
             }
+            private boolean zeroViaCapacity() {
+                return policy==Policy.FULLER_TWO_LAYER && holes.length>=maximumVias;
+            }
+            private boolean relaxedBoundObservationRequired() {
+                return owner.diagnostics!=null || zeroViaCapacity();
+            }
             private boolean shouldStartRelaxedBound() {
                 return policy==Policy.FULLER_TWO_LAYER && !relaxedBoundStarted &&
                     expanded>=MAX_BRANCH_EXPANSIONS-WORK_QUANTUM && queue.size()>0 &&
@@ -1442,7 +1448,7 @@ final class PcbLayerRoutingPrototype {
             }
             private void beginRelaxedBound() {
                 if(owner.orderingStream) owner.guidanceStarted=true;
-                if(owner.diagnostics!=null) {
+                if(relaxedBoundObservationRequired()) {
                     observer.check(pass);
                     relaxedLayoutGeometryBefore=layout.geometryFingerprint();
                     observer.check(pass);
@@ -1450,7 +1456,8 @@ final class PcbLayerRoutingPrototype {
                 }
                 relaxedBoundStarted=true;
                 relaxedQueryFaces=new PcbNetRouter.Router[2];
-                if(owner.diagnostics!=null) relaxedPristineFaces=new PcbNetRouter.Router[2];
+                if(relaxedBoundObservationRequired())
+                    relaxedPristineFaces=new PcbNetRouter.Router[2];
                 relaxedCloneFace=0; relaxedPostVerifyFace=0;
             }
             private void advanceRelaxedBoundBuild() {
@@ -1460,9 +1467,9 @@ final class PcbLayerRoutingPrototype {
                     PcbNetRouter.Router live=faces[layer];
                     if(live==null)
                         throw new IllegalStateException("P07 relaxed bound is missing a live router face");
-                    if(owner.diagnostics!=null) {
+                    if(relaxedBoundObservationRequired()) {
                         if(relaxedPristineFaces[layer]==null) {
-                            // Keep an untouched diagnostic reference; the later
+                            // Keep an untouched comparison reference; the later
                             // query copy may prepare this face for the routed net.
                             relaxedLiveEffectsBefore[layer]=live.fixedGraphObservationEffects();
                             observer.check(pass);
@@ -1480,7 +1487,7 @@ final class PcbLayerRoutingPrototype {
                     }
                     PcbNetRouter.Router query=live.copyForFixedGraphObservation();
                     observer.check(pass);
-                    if(owner.diagnostics!=null) {
+                    if(relaxedBoundObservationRequired()) {
                         if(!relaxedPristineFaces[layer].sameFixedGraphObservation(query))
                             throw new IllegalStateException("P07 relaxed bound query clone differs from pristine before scanning");
                         if(!relaxedLiveEffectsBefore[layer].equals(live.fixedGraphObservationEffects()))
@@ -1510,7 +1517,7 @@ final class PcbLayerRoutingPrototype {
                 if(relaxedPostVerifyFace<2) {
                     int layer=relaxedPostVerifyFace;
                     PcbNetRouter.Router live=faces[layer];
-                    if(owner.diagnostics!=null) {
+                    if(relaxedBoundObservationRequired()) {
                         // The scan query may have warmed its local net preparation;
                         // compare live state only to the untouched pre-scan copy.
                         String effectsAfter=live.fixedGraphObservationEffects();
@@ -1523,7 +1530,7 @@ final class PcbLayerRoutingPrototype {
                     relaxedBoundWorkUnits++;
                     observer.check(pass);
                     if(relaxedPostVerifyFace==2) {
-                        if(owner.diagnostics!=null) {
+                        if(relaxedBoundObservationRequired()) {
                             observer.check(pass);
                             relaxedBoundLiveLayoutStable=relaxedLayoutGeometryBefore.equals(
                                 layout.geometryFingerprint());
@@ -1557,8 +1564,9 @@ final class PcbLayerRoutingPrototype {
                     public boolean permitsVia(int cell) {
                         if(cell<0 || cell>=cells)
                             throw new IllegalArgumentException("Invalid P07 relaxed via cell");
-                        return Search.this.relaxedViaFits(net,x(cell),y(cell),holes,holeBounds,
-                            relaxedQueryFaces);
+                        return holes.length<maximumVias &&
+                            Search.this.relaxedViaFits(net,x(cell),y(cell),holes,holeBounds,
+                                relaxedQueryFaces);
                     }
                 };
             }
@@ -1602,6 +1610,14 @@ final class PcbLayerRoutingPrototype {
                 }
                 if(relaxedBoundComplete) {
                     int stronger=relaxedDistanceBound.value(current.cell,current.layer);
+                    if(zeroViaCapacity() && stronger<0) {
+                        if(!relaxedBoundObservationChecked || !relaxedBoundLiveLayoutStable ||
+                                !relaxedBoundRouterStateStable || !relaxedBoundRouterEffectsStable)
+                            throw new IllegalStateException(
+                                "P07 zero-capacity unreachable prune lacks completed fixed-graph comparisons");
+                        observer.check(pass);
+                        return;
+                    }
                     if(stronger>=0 && stronger>current.heuristic &&
                             refreshNodeForBound(current,stronger,best,queue,cells)) {
                         relaxedBoundRefreshes++; relaxedBoundWorkUnits++;

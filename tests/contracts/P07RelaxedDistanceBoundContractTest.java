@@ -34,7 +34,7 @@ public final class P07RelaxedDistanceBoundContractTest {
     public static void main(String[] args) {
         if(args!=null && args.length!=0) throw new IllegalArgumentException("The focused P07 relaxed-bound contract takes no arguments");
         String runId=UUID.randomUUID().toString();int before=checks;
-        runRelaxedDistanceBoundContracts();runRefreshNodeContracts();
+        runRelaxedDistanceBoundContracts();runCapacityMaskedDistanceContracts();runRefreshNodeContracts();
         for(CloneFixture fixture:CLONE_FIXTURES)runCloneFixture(runId,fixture);
         int assertions=checks-before;
         System.out.println("P07_RELAXED_DISTANCE_BOUND_SUITE {\"protocol\":"+quote(PROTOCOL)+
@@ -49,9 +49,9 @@ public final class P07RelaxedDistanceBoundContractTest {
     }
     private static void runCloneFixture(final String runId,final CloneFixture selected) {
         Rb56Plan plan=Rb56Plan.resolve(selected.rootSeed,selected.placementVersion);
-        require(SeededPcbLayoutGenerator.CURRENT_VERSION==25 &&
-            "tsj-generation-dependencies-v27".equals(GenerationDependencyContext.INTERPRETATION_EPOCH),
-            "clone canary input is pinned to the current layout-25/dependency-27 epoch");
+        require(SeededPcbLayoutGenerator.CURRENT_VERSION==26 &&
+            "tsj-generation-dependencies-v28".equals(GenerationDependencyContext.INTERPRETATION_EPOCH),
+            "clone canary input is pinned to the current layout-26/dependency-28 epoch");
         require(plan.seed==selected.rootSeed && plan.placementInterpretationVersion==selected.placementVersion &&
             plan.layoutSeed==selected.placementSeed && plan.routingSeed==selected.routingSeed,
             "clone fixture preserves the exact signed root and named generation seeds");
@@ -87,6 +87,7 @@ public final class P07RelaxedDistanceBoundContractTest {
         final int width, height, cells;
         final boolean[][][] steps;
         final boolean[] vias;
+        boolean maskVias;
         int ordinaryCalls, viaCalls;
         int malformedStepCalls;
         RuntimeException runtimeFailure;
@@ -119,8 +120,9 @@ public final class P07RelaxedDistanceBoundContractTest {
             if (errorFailure != null && failOnVia) throw errorFailure;
             if (cell < 0 || cell >= cells)
                 throw new IllegalStateException("Relaxed field queried an out-of-grid via cell");
-            return vias[cell];
+            return referencePermitsVia(cell);
         }
+        boolean referencePermitsVia(int cell) { return vias[cell] && !maskVias; }
     }
 
     private interface CheckAction { void run(); }
@@ -299,6 +301,61 @@ public final class P07RelaxedDistanceBoundContractTest {
             "retry after Error does not resume the interrupted settled-state scan");
     }
 
+    private static void runCapacityMaskedDistanceContracts() {
+        SyntheticGraph planar=new SyntheticGraph(3,2);
+        planar.step(0,0,1); planar.step(0,1,2); planar.step(0,2,5);
+        boolean[] planarGoals=new boolean[planar.cells*2]; planarGoals[5]=true;
+        PcbLayerRoutingPrototype.RelaxedDistanceBound planarBound=
+            verifyBoundAgainstReference(planar,planarGoals,0);
+        require(planarBound.value(0,0)==30 && planarBound.value(1,0)==20 &&
+            planarBound.value(0,1)==-1 && planarBound.value(4,0)==-1,
+            "literal same-face planar path costs three GRID steps and cannot change faces");
+
+        SyntheticGraph viaOnly=new SyntheticGraph(1,1);
+        viaOnly.vias[0]=true;
+        boolean[] bottomGoal=new boolean[] {false,true};
+        PcbLayerRoutingPrototype.RelaxedDistanceBound viaAllowedBound=
+            verifyBoundAgainstReference(viaOnly,bottomGoal,0);
+        require(viaAllowedBound.value(0,0)==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.viaCost &&
+            viaAllowedBound.value(0,1)==0,
+            "the single VIA is the only literal connection to the opposite-face goal");
+        SyntheticGraph viaMasked=new SyntheticGraph(1,1);
+        viaMasked.vias[0]=true; viaMasked.maskVias=true;
+        PcbLayerRoutingPrototype.RelaxedDistanceBound viaMaskedBound=
+            verifyBoundAgainstReference(viaMasked,bottomGoal,0);
+        require(viaMaskedBound.value(0,0)==-1 && viaMaskedBound.value(0,1)==0,
+            "masking only the VIA edge makes an otherwise VIA-only start unreachable");
+
+        SyntheticGraph oneFaceOnly=new SyntheticGraph(2,1);
+        oneFaceOnly.step(0,0,1);
+        boolean[] topGoal=new boolean[oneFaceOnly.cells*2]; topGoal[1]=true;
+        PcbLayerRoutingPrototype.RelaxedDistanceBound oneFaceBound=
+            verifyBoundAgainstReference(oneFaceOnly,topGoal,0);
+        require(oneFaceBound.value(0,0)==PcbLayerRoutingPrototype.GRID &&
+            oneFaceBound.value(0,1)==-1,
+            "of the two start faces exactly the top face has a finite completion");
+
+        SyntheticGraph noGoalGraph=new SyntheticGraph(2,1);
+        noGoalGraph.step(0,0,1);
+        boolean[] noGoals=new boolean[noGoalGraph.cells*2];
+        PcbLayerRoutingPrototype.RelaxedDistanceBound noGoalBound=
+            verifyBoundAgainstReference(noGoalGraph,noGoals,0);
+        require(noGoalBound.isComplete() && noGoalBound.value(0,0)==-1 &&
+            noGoalBound.value(1,1)==-1,
+            "a fully scanned field with no goals proves every face unreachable");
+
+        final PcbLayerRoutingPrototype.RelaxedDistanceBound incomplete=
+            new PcbLayerRoutingPrototype.RelaxedDistanceBound(1,1,bottomGoal,0,
+                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,viaMasked);
+        incomplete.advanceOne();
+        require(!incomplete.isComplete(),"a capacity-masked field remains incomplete during goal initialization");
+        expectIllegalState(new CheckAction() { public void run() { incomplete.value(0,0); } },
+            "an incomplete capacity-masked field cannot prove unreachable states");
+        while(!incomplete.isComplete()) incomplete.advanceOne();
+        require(incomplete.value(0,0)==-1,
+            "unreachable is exposed only after the capacity-masked field fully completes");
+    }
+
     private static PcbLayerRoutingPrototype.RelaxedDistanceBound verifyBoundAgainstReference(
             SyntheticGraph graph, boolean[] goals, int primary) {
         final PcbLayerRoutingPrototype.RelaxedDistanceBound bound =
@@ -339,7 +396,7 @@ public final class P07RelaxedDistanceBoundContractTest {
                 distance[layer * graph.cells + from][layer * graph.cells + to] =
                     PcbLayerRoutingPrototype.GRID + (layer == primary ? 0 :
                         PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.secondaryCost);
-        for (int cell = 0; cell < graph.cells; cell++) if (graph.vias[cell]) {
+        for (int cell = 0; cell < graph.cells; cell++) if (graph.referencePermitsVia(cell)) {
             distance[cell][graph.cells + cell] = PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.viaCost;
             distance[graph.cells + cell][cell] = PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.viaCost;
         }

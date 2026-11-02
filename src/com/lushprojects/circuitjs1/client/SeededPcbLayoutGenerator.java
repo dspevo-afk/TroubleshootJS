@@ -8,8 +8,8 @@ import java.util.Vector;
  * nets are supplied by the logical board and are never invented here.
  */
 class SeededPcbLayoutGenerator {
-    /** Layout v25 binds guided P07 route-order finalization; package geometry remains contract v3. */
-    static final int CURRENT_VERSION = 25;
+    /** Layout v26 identifies capacity-aware P07 bounds; package geometry remains contract v3. */
+    static final int CURRENT_VERSION = 26;
     private static final int GRID = 10;
     private static final int MAX_ATTEMPTS = 80;
     private static final int TARGET_VIABLE_CANDIDATES = 5;

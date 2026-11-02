@@ -166,7 +166,7 @@ do not qualify the current protocol.
 These owners grant no normal catalog, physical admission, production D01 proof,
 session capacity or playable-family authority. The roadmap records their evidence.
 
-Dependency interpretation v26 binds layout algorithm25, including shared
+Dependency interpretation v28 binds layout algorithm26, including shared
 medium-placement corridor pruning and required-P07 grid admission before the
 bounded route subset. Each medium plan
 intersects the separating orientations supported by all selected mixed isolation
@@ -192,10 +192,19 @@ requests; uniform RESTRICTED keeps its original bound, and the role-width flag
 still owns failed-net promotion. Difficult FULLER branches may construct a
 directed fixed-obstacle distance bound once only one existing branch-work quantum
 remains. Per-face Router query copies preserve the live layout, reservations and
-prepared-net state. The field relaxes path history and global via restrictions;
-it supplies search guidance, not electrical behavior or a completeness promise.
-Staged field construction and immutable pop-time priority refresh consume Session
-work; unreachable relaxed states retain the existing bound rather than pruning.
+prepared-net state. The field relaxes path history and ordinarily global via
+restrictions; it supplies search guidance, not electrical behavior or a
+completeness promise. Layout26 masks VIA edges when the fixed prefix has already
+consumed the FULLER request's hole allowance, because production cannot take any
+further transition. Only this zero-capacity case can discard states with a
+completed negative distance. The existing clone/live-state/effect/layout
+comparisons run for this case with or without a diagnostic listener; all four
+completed stability flags are mandatory before pruning. Both start faces and
+all represented goals remain in the field. Incomplete fields never prune, and
+request/branch caps and observer checks retain precedence. Captured relaxed
+fixed-prefix graphs keep their geometry-permissive VIA mask independently.
+Staged comparison/field work and immutable pop-time priority refresh consume the
+existing Session budget. Original late activation and ordering choices remain.
 
 The Medium owner opts into a one-slot ordering stream. An unguided request keeps
 its ordinary first success; once stronger guidance has intervened, the same

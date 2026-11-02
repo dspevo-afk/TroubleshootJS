@@ -52,8 +52,8 @@ public final class PcbCompactnessContractTest {
     /** Accepted-source physical oracle: only reference x/y and the epoch are masked. */
     static String physicalGeometrySha256(PcbBoardLayout layout) {
         if (layout == null) throw new IllegalArgumentException("Missing PCB layout");
-        if (SeededPcbLayoutGenerator.CURRENT_VERSION != 25)
-            throw new AssertionError("Physical geometry oracle requires layout version 25");
+        if (SeededPcbLayoutGenerator.CURRENT_VERSION != 26)
+            throw new AssertionError("Physical geometry oracle requires layout version 26");
         String before = layout.geometryFingerprint();
         Vector<PcbSilkscreenLabel> labels = layout.getSilkscreenLabels();
         TreeSet<String> expectedReferences = new TreeSet<String>();
@@ -79,12 +79,12 @@ public final class PcbCompactnessContractTest {
     /** Historical full-layout comparison projection; only the current layout prefix is changed. */
     static String layout24PrefixReferenceSha256(PcbBoardLayout layout) {
         if (layout == null) throw new IllegalArgumentException("Missing PCB layout");
-        if (SeededPcbLayoutGenerator.CURRENT_VERSION != 25)
-            throw new AssertionError("Historical geometry projection requires current layout version 25");
+        if (SeededPcbLayoutGenerator.CURRENT_VERSION != 26)
+            throw new AssertionError("Historical geometry projection requires current layout version 26");
         String before = layout.geometryFingerprint();
-        String currentPrefix = "layout=25|";
+        String currentPrefix = "layout=26|";
         if (before == null || !before.startsWith(currentPrefix))
-            throw new AssertionError("Expected actual current layout=25 geometry fingerprint");
+            throw new AssertionError("Expected actual current layout=26 geometry fingerprint");
         String projected = "layout=24|" + before.substring(currentPrefix.length());
         if (!before.equals(layout.geometryFingerprint()))
             throw new AssertionError("Historical geometry projection changed bytes beyond the layout prefix");
@@ -92,9 +92,9 @@ public final class PcbCompactnessContractTest {
     }
 
     static String normalizeReferencePositions(String fingerprint, Vector<PcbSilkscreenLabel> labels) {
-        String prefix = "layout=25|";
+        String prefix = "layout=26|";
         if (fingerprint == null || !fingerprint.startsWith(prefix))
-            throw new AssertionError("Expected actual layout=25 geometry fingerprint");
+            throw new AssertionError("Expected actual layout=26 geometry fingerprint");
         String normalized = "layout=<LAYOUT_EPOCH>|" + fingerprint.substring(prefix.length());
         TreeSet<String> ids = new TreeSet<String>();
         for (PcbSilkscreenLabel label : labels) {
@@ -154,12 +154,13 @@ public final class PcbCompactnessContractTest {
                 fixtureLabels(changed,reference))), "nonreference positions and text remain exact");
         expectNormalizationFailure(raw.replace(labelRecord(reference),""), labels);
         expectNormalizationFailure(raw + labelRecord(reference), labels);
-        expectNormalizationFailure(raw.replace("layout=25|","layout=24|"), labels);
-        expectNormalizationFailure(raw.replace("layout=25|","layout=23|"), labels);
-        expectNormalizationFailure(raw.replace("layout=25|","layout=22|"), labels);
-        expectNormalizationFailure(raw.replace("layout=25|","layout=21|"), labels);
-        expectNormalizationFailure(raw.replace("layout=25|","layout=20|"), labels);
-        expectNormalizationFailure(raw.replace("layout=25|","layout=19|"), labels);
+        expectNormalizationFailure(raw.replace("layout=26|","layout=25|"), labels);
+        expectNormalizationFailure(raw.replace("layout=26|","layout=24|"), labels);
+        expectNormalizationFailure(raw.replace("layout=26|","layout=23|"), labels);
+        expectNormalizationFailure(raw.replace("layout=26|","layout=22|"), labels);
+        expectNormalizationFailure(raw.replace("layout=26|","layout=21|"), labels);
+        expectNormalizationFailure(raw.replace("layout=26|","layout=20|"), labels);
+        expectNormalizationFailure(raw.replace("layout=26|","layout=19|"), labels);
         Vector<PcbSilkscreenLabel> duplicate = fixtureLabels(title,reference); duplicate.add(reference);
         expectNormalizationFailure(raw, duplicate);
     }
@@ -171,7 +172,7 @@ public final class PcbCompactnessContractTest {
     }
 
     private static String normalizationFixture(PcbSilkscreenLabel title, PcbSilkscreenLabel reference) {
-        return "layout=25|body=20,30,40,50;P:R1.1@100,200;" + labelRecord(title) +
+        return "layout=26|body=20,30,40,50;P:R1.1@100,200;" + labelRecord(title) +
             labelRecord(reference) + "T:net-a@1,2,3,4;";
     }
 

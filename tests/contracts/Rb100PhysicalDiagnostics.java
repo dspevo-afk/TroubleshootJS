@@ -34,12 +34,12 @@ public final class Rb100PhysicalDiagnostics {
     static void runPlacementDiagnosticContracts() {
         long suiteStarted = System.nanoTime();
         int beforeAssertions = assertions;
-        require(SeededPcbLayoutGenerator.CURRENT_VERSION == 25 &&
-                "tsj-generation-dependencies-v27".equals(
+        require(SeededPcbLayoutGenerator.CURRENT_VERSION == 26 &&
+                "tsj-generation-dependencies-v28".equals(
                     GenerationDependencyContext.INTERPRETATION_EPOCH) &&
                 Rb100Plan.PLAN_VERSION == 1 && Rb100Plan.MODEL_VERSION == 4 &&
                 Rb100Placement.INTENT_VERSION == 9,
-            "placement diagnostics identify current layout25/dependency-v27/plan1/model4/intent9 inputs");
+            "placement diagnostics identify current layout26/dependency-v28/plan1/model4/intent9 inputs");
         PlacementDiagnosticCase[] cases = new PlacementDiagnosticCase[] {
             runStructuralPlacementDiagnostic(), runCorridorWitnessPlacementDiagnostic()
         };
@@ -280,12 +280,12 @@ public final class Rb100PhysicalDiagnostics {
             result.phase = "CURRENT_SOURCE_IDENTITY";
             unit(budget, "p07-source-identity", new UnitAction() {
                 public void run() {
-                    require(SeededPcbLayoutGenerator.CURRENT_VERSION == 25 &&
-                        "tsj-generation-dependencies-v27".equals(
+                    require(SeededPcbLayoutGenerator.CURRENT_VERSION == 26 &&
+                        "tsj-generation-dependencies-v28".equals(
                             GenerationDependencyContext.INTERPRETATION_EPOCH) &&
                         Rb100Plan.PLAN_VERSION == 1 && Rb100Plan.MODEL_VERSION == 4 &&
                         Rb100Placement.INTENT_VERSION == 9,
-                        "P07 observation identifies layout25/dependency-v27/plan1/model4/intent9");
+                        "P07 observation identifies layout26/dependency-v28/plan1/model4/intent9");
                     require(MediumBoardPhysicalPolicy.PLACEMENT_CANDIDATES == 6 &&
                         MediumBoardPhysicalPolicy.ROUTING_CANDIDATES == 3 &&
                         PcbLayerRoutingPrototype.MAX_EXPANSIONS == 1000000 &&
@@ -452,6 +452,22 @@ public final class Rb100PhysicalDiagnostics {
                     return null;
                 }
             });
+            if(policyResult[0].accepted()) {
+                result.phase="AUTHORED_INDEPENDENT_PHYSICAL_SUBSETS";
+                unit(budget,"p07-authored-independent-physical-subsets",new UnitAction() {
+                    public void run() {
+                        P07OrderingCandidatesContractTest.verifyAuthored100PhysicalSubsets(
+                            candidate[0].board(),policyResult[0].getLayout());
+                        identity[0].requireUnchanged(candidate[0]);
+                    }
+                });
+            }
+            System.out.println("RB100_CAPACITY_BOUND_PHYSICAL_SUBSETS {\"protocol\":"+
+                "\"rb100-physical-subsets-v1\",\"runId\":\""+jsonFull(runId)+
+                "\",\"variant\":\""+variant.name()+"\",\"status\":\""+
+                (policyResult[0].accepted()?"PASS_GEOMETRY_CLEARANCE_GRAPH_RASTER_ONLY":
+                    "NOT_RUN_NO_LAYOUT")+"\",\"independentTwoLayerAccess\":false,"+
+                "\"layoutQualification\":false}");
             if(captureCollector!=null) {
                 result.phase="FIXED_PREFIX_GRAPH_SERIALIZATION";
                 valueUnit(budget,"p07-fixed-prefix-graph-serialization-and-emission",
@@ -955,12 +971,12 @@ public final class Rb100PhysicalDiagnostics {
             result.phase = "CURRENT_SOURCE_IDENTITY";
             unit(budget, "p07-branch-source-identity", new UnitAction() {
                 public void run() {
-                    require(SeededPcbLayoutGenerator.CURRENT_VERSION == 25 &&
-                        "tsj-generation-dependencies-v27".equals(
+                    require(SeededPcbLayoutGenerator.CURRENT_VERSION == 26 &&
+                        "tsj-generation-dependencies-v28".equals(
                             GenerationDependencyContext.INTERPRETATION_EPOCH) &&
                         Rb100Plan.PLAN_VERSION == 1 && Rb100Plan.MODEL_VERSION == 4 &&
                         Rb100Placement.INTENT_VERSION == 9,
-                        "fixed branch observation identifies layout25/dependency-v27/plan1/model4/intent9");
+                        "fixed branch observation identifies layout26/dependency-v28/plan1/model4/intent9");
                     require(PcbLayerRoutingPrototype.MAX_EXPANSIONS == 1000000 &&
                         PcbLayerRoutingPrototype.MAX_BRANCH_EXPANSIONS == 100000 &&
                         PcbLayerRoutingPrototype.MAX_CELLS == 250000 &&
@@ -1296,10 +1312,10 @@ public final class Rb100PhysicalDiagnostics {
     static void runCorridorOrientationContracts() {
         long started = System.nanoTime();
         int beforeAssertions = assertions;
-        require(SeededPcbLayoutGenerator.CURRENT_VERSION == 25 &&
-                "tsj-generation-dependencies-v27".equals(
+        require(SeededPcbLayoutGenerator.CURRENT_VERSION == 26 &&
+                "tsj-generation-dependencies-v28".equals(
                     GenerationDependencyContext.INTERPRETATION_EPOCH),
-            "orientation contract identifies layout25/dependency-v27 interpretation");
+            "orientation contract identifies layout26/dependency-v28 interpretation");
         require(Rb100Plan.PLAN_VERSION == 1 && Rb100Plan.MODEL_VERSION == 4 &&
                 Rb100Placement.INTENT_VERSION == 9,
             "orientation contract identifies current plan1/model4/physical-intent9");
@@ -1631,10 +1647,10 @@ public final class Rb100PhysicalDiagnostics {
                     require(result.nullGeometry.equals(result.observedGeometry) &&
                         result.nullGeometry.equals(result.retryGeometry),
                         "null/observed and post-abort null placements have exact canonical pose parity");
-                    require(result.nullGeometry.startsWith("layout=25|"),
+                    require(result.nullGeometry.startsWith("layout=26|"),
                         "generic20 control has the current layout epoch prefix");
                     require("d0ca6b24/41787".equals(key("layout=20|" +
-                            result.nullGeometry.substring("layout=25|".length()))),
+                            result.nullGeometry.substring("layout=26|".length()))),
                         "generic20 geometry retains its recorded key with only the epoch masked");
                     require(counts[0].snapshotCalls == 0 && counts[0].totalOutcomes() > 0,
                         "accepted positive control reports fit outcomes without a failure snapshot");

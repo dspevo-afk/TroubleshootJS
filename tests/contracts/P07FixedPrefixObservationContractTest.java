@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Vector;
 
 /** Literal geometry, ownership and fatal-lifecycle contracts for fixed-prefix capture. */
@@ -18,6 +20,10 @@ public final class P07FixedPrefixObservationContractTest {
     public static void main(String[] args) {
         CaptureCutoff cutoff=limitAfterFirstTreeBranch();
         selectedFailureCopiesLiteralDirectedGraph(cutoff);
+        zeroCapacityNoPathRetainsGeometryPermissiveCaptureVias();
+        zeroCapacityNormalOwnerPerformsComparisonsWithoutDiagnostics();
+        pressureRelaxedBoundAbortContracts();
+        pressureBoundCapacityGuardsPrecedeUnreachablePruning();
         unselectedFailureAndFoundBranchesDoNotCapture(cutoff);
         resumableCopyIsIsolatedAndStalenessIsDetectable();
         sinkFailureAndCallbackCancellationStayLatched(cutoff);
@@ -187,9 +193,264 @@ public final class P07FixedPrefixObservationContractTest {
         Fixture open=new Fixture();
         Capture accept=new Capture(true);
         Run found=run(open,accept,NOOP,PcbLayerRoutingPrototype.MAX_EXPANSIONS);
-        check(found.summary!=null && found.summary.yieldedOrderings>0 &&
+        check(found.summary!=null && found.summary.yieldedOrderings==1 &&
+            !found.summary.guidanceStarted &&
+            "FIRST_SUCCESS_UNGUIDED".equals(found.summary.termination) &&
             accept.selectCalls==0 && accept.graphCalls==0 && accept.events.isEmpty(),
-            "successful FOUND branches never invoke the failure selector or capture sink");
+            "the small literal fixture preserves first-success ordering below the original pressure threshold");
+    }
+
+    private static void zeroCapacityNoPathRetainsGeometryPermissiveCaptureVias() {
+        final ZeroCapacityNoPathFixture fixture=new ZeroCapacityNoPathFixture();
+        final String before=fixture.layout.geometryFingerprint();
+        final Capture capture=new Capture(true);
+        final Vector<PcbLayerRoutingPrototype.BranchSnapshot> terminalSnapshots=
+            new Vector<PcbLayerRoutingPrototype.BranchSnapshot>();
+        PcbLayerRoutingPrototype.Diagnostics diagnostics=
+            new PcbLayerRoutingPrototype.Diagnostics() {
+                public void onTerminalBranch(PcbLayerRoutingPrototype.BranchSnapshot snapshot) {
+                    terminalSnapshots.add(snapshot);
+                }
+            };
+        PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
+            new PcbLayerRoutingPrototype.FixedPrefixCaptureContext(91L,93L,
+                new int[]{4,2,0},4,0,before);
+        PcbLayerRoutingPrototype.Session session=
+            PcbLayerRoutingPrototype.beginOrderingCandidatesWithFixedPrefixObservation(
+                fixture.board,fixture.layout,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
+                NOOP,PcbLayerRoutingPrototype.MAX_EXPANSIONS,0,diagnostics,context,capture);
+        int calls=0,yields=0;
+        while(true) {
+            PcbLayerRoutingPrototype.OrderingProgress progress=session.advanceOrderingSlice(256);
+            if(progress==PcbLayerRoutingPrototype.OrderingProgress.ROUTE_READY) {
+                PcbLayerRoutingPrototype.Result result=session.takeReadyOrdering();
+                check(result!=null && result.accepted() && result.layout!=null,
+                    "capacity-bound observation streams only complete accepted route results");
+                yields++;
+            } else if(progress==PcbLayerRoutingPrototype.OrderingProgress.COMPLETE) break;
+            if(++calls>100000) throw new AssertionError("zero-capacity fixture exceeded its bounded slice guard");
+        }
+        PcbLayerRoutingPrototype.OrderingSummary summary=session.orderingSummary();
+        check(summary!=null && capture.selectCalls==1 && capture.graphCalls==1 &&
+            capture.lineage!=null && capture.graph!=null,
+            "a zero-capacity terminal failure publishes one selected fixed-prefix graph");
+        check("NO_PATH".equals(capture.lineage.terminalReason()) &&
+            capture.lineage.prefixHoleCount()==0 && yields==0,
+            "a fully proved zero-via branch drains through the existing NO_PATH terminal");
+        PcbLayerRoutingPrototype.BranchSnapshot required=null;
+        for(PcbLayerRoutingPrototype.BranchSnapshot snapshot:terminalSnapshots)
+            if(snapshot.pass==0 && "00_REQUIRED".equals(snapshot.netId)) {
+                required=snapshot;
+                break;
+            }
+        int pressureThreshold=PcbLayerRoutingPrototype.MAX_BRANCH_EXPANSIONS-
+            PcbLayerRoutingPrototype.WORK_QUANTUM;
+        check(required!=null && "NO_PATH".equals(required.terminalReason) &&
+            required.prefixViaCount==0 && required.relaxedBoundStarted &&
+            required.relaxedBoundComplete && required.relaxedBoundObservationChecked &&
+            required.relaxedBoundLiveLayoutStable && required.relaxedBoundRouterStateStable &&
+            required.relaxedBoundRouterEffectsStable && required.branchExpanded==pressureThreshold &&
+            required.branchExpanded<fixture.directionalStateLowerBound,
+            "original late pressure trigger completes all comparisons and prunes the drained zero-via branch");
+        check(summary.guidanceStarted,
+            "the original pressure-triggered bound retains its ordering-guidance activation");
+        int open=cell(capture.graph,230,220);
+        check(capture.graph.gridWidth()==239 && capture.graph.gridHeight()==139 &&
+            capture.graph.cellCount()==33221 && capture.graph.viaAllowedAt(open),
+            "captured geometry retains its bounded literal grid and permits an open VIA despite zero request capacity");
+        check(fixture.layout.geometryFingerprint().equals(before),
+            "zero-capacity bound and graph capture leave the caller-owned layout unchanged");
+    }
+
+    private static void zeroCapacityNormalOwnerPerformsComparisonsWithoutDiagnostics() {
+        final ZeroCapacityNoPathFixture fixture=new ZeroCapacityNoPathFixture();
+        final String geometryBefore=fixture.layout.geometryFingerprint();
+        final int pressureThreshold=PcbLayerRoutingPrototype.MAX_BRANCH_EXPANSIONS-
+            PcbLayerRoutingPrototype.WORK_QUANTUM;
+        PressureBoundObserver observer=new PressureBoundObserver(
+            PressureBoundObserver.NORMAL_UNDIAGNOSED_COMPLETION,null);
+        PcbLayerRoutingPrototype.Session session=PcbLayerRoutingPrototype.begin(
+            fixture.board,fixture.layout,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
+            observer,pressureThreshold+1,0);
+        observer.attach(session);
+
+        int slices=0;
+        while(!session.advanceSlice(observer.distanceInitializationComplete()?1:256))
+            if(++slices>100000)
+                throw new AssertionError("normal no-diagnostic pressure canary exceeded its slice guard");
+        PcbLayerRoutingPrototype.Result result=session.result();
+        check(fieldValue(session,"diagnostics")==null &&
+            fieldValue(session,"fixedPrefixGraphObserver")==null &&
+            fieldValue(session,"fixedPrefixContext")==null,
+            "comparison canary uses the ordinary owner without a diagnostics or capture listener");
+        check(result!=null && !result.accepted() &&
+            result.outcome.endsWith(":TOTAL_SEARCH_LIMIT"),
+            "ordinary no-diagnostics routing retains the existing terminal request-cap result");
+        check(observer.sawOriginalPressurePredicate && observer.sawNoDiagnosticChecks &&
+            observer.sawCompleteField && observer.sawDistanceFieldComplete &&
+            observer.sawCompleteComparisons && observer.sawQueueBeforeFirstPop,
+            "ordinary zero-capacity routing records all postchecks before its first post-build pop");
+        check(observer.branch!=null && booleanField(observer.branch,"terminalEmitted") &&
+            queueSize(fieldValue(observer.branch,"queue"))==0 &&
+            intField(observer.branch,"expanded")==observer.preBuildExpanded &&
+            observer.workingLayoutUnchanged() && observer.liveFacesUnchanged(),
+            "the uninstrumented pass drains only proved-unreachable states without changing route or live graph state");
+        check(fixture.layout.geometryFingerprint().equals(geometryBefore),
+            "ordinary no-diagnostics comparison leaves the caller-owned layout unchanged");
+    }
+
+    private static void pressureRelaxedBoundAbortContracts() {
+        final RuntimeException buildCancellation=
+            new IllegalStateException("zero-capacity relaxed pressure-build cancellation sentinel");
+        PressureBoundObserver incomplete=new PressureBoundObserver(
+            PressureBoundObserver.DURING_INCOMPLETE_DISTANCE,buildCancellation);
+        assertPressureBoundAbort(new ZeroCapacityNoPathFixture(),incomplete,buildCancellation,
+            "cancellation during pressure-triggered incremental distance initialization keeps the field incomplete");
+        check(incomplete.sawStartedIncomplete && incomplete.sawPartialDistanceField &&
+            !incomplete.sawCompleteField,
+            "incomplete-field cancellation is injected only after real pressure and field work begin");
+
+        final Error completedCancellation=
+            new AssertionError("zero-capacity completed-field cancellation sentinel");
+        PressureBoundObserver completed=new PressureBoundObserver(
+            PressureBoundObserver.COMPLETE_BEFORE_FIRST_POP,completedCancellation);
+        assertPressureBoundAbort(new ZeroCapacityNoPathFixture(),completed,completedCancellation,
+            "observer cancellation at the pressure-built completed-field boundary prevents unreachable pruning");
+        check(completed.sawStartedIncomplete && completed.sawCompleteField &&
+            completed.sawDistanceFieldComplete &&
+            completed.sawCompleteComparisons &&
+            completed.sawQueueBeforeFirstPop,
+            "completed-field cancellation follows all clone/live comparisons and precedes the first post-build pop");
+    }
+
+    private static void pressureBoundCapacityGuardsPrecedeUnreachablePruning() {
+        int maximum=PcbLayerRoutingPrototype.MAX_BRANCH_EXPANSIONS-
+            PcbLayerRoutingPrototype.WORK_QUANTUM+1;
+        assertPressureBoundCapacityGuard(new ZeroCapacityNoPathFixture(),
+            PressureBoundObserver.TOTAL_CAP_BEFORE_PRUNE,"TOTAL_SEARCH_LIMIT",maximum);
+        assertPressureBoundCapacityGuard(new ZeroCapacityNoPathFixture(),
+            PressureBoundObserver.BRANCH_CAP_BEFORE_PRUNE,"BRANCH_SEARCH_LIMIT",maximum);
+    }
+
+    private static void assertPressureBoundCapacityGuard(ZeroCapacityNoPathFixture fixture,
+            int target,String expectedTerminal,int maximum) {
+        final String geometryBefore=fixture.layout.geometryFingerprint();
+        final Capture capture=new Capture(true);
+        final Vector<PcbLayerRoutingPrototype.BranchSnapshot> terminalSnapshots=
+            new Vector<PcbLayerRoutingPrototype.BranchSnapshot>();
+        PcbLayerRoutingPrototype.Diagnostics diagnostics=
+            new PcbLayerRoutingPrototype.Diagnostics() {
+                public void onTerminalBranch(PcbLayerRoutingPrototype.BranchSnapshot snapshot) {
+                    terminalSnapshots.add(snapshot);
+                }
+            };
+        PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
+            new PcbLayerRoutingPrototype.FixedPrefixCaptureContext(91L,93L,
+                new int[]{4,2,0},4,0,geometryBefore);
+        PressureBoundObserver observer=new PressureBoundObserver(target,null);
+        PcbLayerRoutingPrototype.Session session=
+            PcbLayerRoutingPrototype.beginOrderingCandidatesWithFixedPrefixObservation(
+                fixture.board,fixture.layout,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
+                observer,maximum,0,diagnostics,context,capture);
+        observer.attach(session);
+
+        int slices=0;
+        while(true) {
+            int work=observer.distanceInitializationComplete()?1:256;
+            PcbLayerRoutingPrototype.OrderingProgress progress=session.advanceOrderingSlice(work);
+            if(progress==PcbLayerRoutingPrototype.OrderingProgress.ROUTE_READY)
+                session.takeReadyOrdering();
+            else if(progress==PcbLayerRoutingPrototype.OrderingProgress.COMPLETE) break;
+            if(++slices>100000)
+                throw new AssertionError("pressure cap-precedence canary exceeded its bounded slice guard");
+        }
+        PcbLayerRoutingPrototype.OrderingSummary summary=session.orderingSummary();
+        PcbLayerRoutingPrototype.BranchSnapshot required=null;
+        for(PcbLayerRoutingPrototype.BranchSnapshot snapshot:terminalSnapshots)
+            if(snapshot.pass==0 && "00_REQUIRED".equals(snapshot.netId)) {
+                required=snapshot;
+                break;
+            }
+        check(summary!=null && observer.capInjected && observer.sawOriginalPressurePredicate &&
+            observer.sawCompleteComparisons && observer.sawQueueBeforeFirstPop,
+            "cap canary exhausts the selected budget only after the pressure field and comparisons complete");
+        check(required!=null && expectedTerminal.equals(required.terminalReason) &&
+            required.relaxedBoundComplete && required.relaxedBoundObservationChecked &&
+            required.relaxedBoundLiveLayoutStable && required.relaxedBoundRouterStateStable &&
+            required.relaxedBoundRouterEffectsStable && required.frontierCount>0,
+            "the exhausted request or branch cap wins before proved-unreachable states can be drained as NO_PATH");
+        check(capture.lineage!=null && expectedTerminal.equals(capture.lineage.terminalReason()) &&
+            capture.graph!=null && fixture.layout.geometryFingerprint().equals(geometryBefore),
+            "cap terminal capture preserves its true failure reason and caller geometry");
+    }
+
+    private static void assertPressureBoundAbort(ZeroCapacityNoPathFixture fixture,
+            PressureBoundObserver observer,Throwable expected,String message) {
+        final String geometryBefore=fixture.layout.geometryFingerprint();
+        final Capture capture=new Capture(true);
+        final Vector<PcbLayerRoutingPrototype.BranchSnapshot> terminalSnapshots=
+            new Vector<PcbLayerRoutingPrototype.BranchSnapshot>();
+        PcbLayerRoutingPrototype.Diagnostics diagnostics=
+            new PcbLayerRoutingPrototype.Diagnostics() {
+                public void onTerminalBranch(PcbLayerRoutingPrototype.BranchSnapshot snapshot) {
+                    terminalSnapshots.add(snapshot);
+                }
+            };
+        PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
+            new PcbLayerRoutingPrototype.FixedPrefixCaptureContext(91L,93L,
+                new int[]{4,2,0},4,0,geometryBefore);
+        PcbLayerRoutingPrototype.Session session=
+            PcbLayerRoutingPrototype.beginOrderingCandidatesWithFixedPrefixObservation(
+                fixture.board,fixture.layout,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
+                observer,PcbLayerRoutingPrototype.MAX_EXPANSIONS,0,diagnostics,context,capture);
+        observer.attach(session);
+
+        Throwable caught=null;
+        int slices=0;
+        try {
+            while(true) {
+                int work=observer.distanceInitializationComplete()?1:256;
+                PcbLayerRoutingPrototype.OrderingProgress progress=session.advanceOrderingSlice(work);
+                if(progress==PcbLayerRoutingPrototype.OrderingProgress.ROUTE_READY)
+                    session.takeReadyOrdering();
+                else if(progress==PcbLayerRoutingPrototype.OrderingProgress.COMPLETE) break;
+                if(++slices>100000)
+                    throw new AssertionError("pressure relaxed-bound cancellation exceeded its bounded slice guard");
+            }
+        } catch(RuntimeException failure) { caught=failure; }
+        catch(Error failure) { caught=failure; }
+        check(caught==expected,message+" original observer throwable identity; "+
+            throwableDetails(caught));
+        check(observer.triggered && observer.sawOriginalPressurePredicate &&
+            observer.baselineCaptured && observer.preBuildSnapshotUnchanged(),
+            "pressure-field canary records its actual pre-build frontier, cache and layout state");
+        check(terminalSnapshots.isEmpty() && capture.selectCalls==0 && capture.graphCalls==0 &&
+            capture.graph==null && capture.lineage==null,
+            "a pressure-field abort emits no terminal NO_PATH receipt or fixed-prefix capture");
+        check(fixture.layout.geometryFingerprint().equals(geometryBefore),
+            "a pressure-field abort leaves caller-owned layout geometry unchanged");
+        check(observer.workingLayoutUnchanged(),
+            "a pressure-field abort leaves the active routing-copy geometry unchanged");
+        check(observer.liveFacesUnchanged(),
+            "query-field cancellation preserves live fixed-graph state and effects on both faces");
+        check(fieldValue(session,"diagnosticFailure")==expected &&
+            fieldValue(session,"search")==null && fieldValue(session,"candidate")==null &&
+            fieldValue(session,"pendingFixedPrefixCapture")==null &&
+            fieldValue(session,"pendingFixedPrefixFailure")==null &&
+            fieldValue(session,"readyOrdering")==null && fieldValue(session,"orderingTermination")==null &&
+            !booleanField(session,"fixedPrefixCaptureReserved") && !booleanField(session,"complete"),
+            "session latches the failure and releases active candidate/search/capture ownership");
+
+        Throwable laterAdvance=null;
+        try { session.advanceOrderingSlice(1); }
+        catch(RuntimeException failure) { laterAdvance=failure; }
+        catch(Error failure) { laterAdvance=failure; }
+        Throwable laterSummary=null;
+        try { session.orderingSummary(); }
+        catch(RuntimeException failure) { laterSummary=failure; }
+        catch(Error failure) { laterSummary=failure; }
+        check(laterAdvance==expected && laterSummary==expected,
+            "pressure-field failures remain latched and cannot revive routing or publish a summary");
     }
 
     private static void resumableCopyIsIsolatedAndStalenessIsDetectable() {
@@ -376,6 +637,269 @@ public final class P07FixedPrefixObservationContractTest {
         if(!condition) throw new AssertionError("P07 fixed-prefix observation: "+message);
     }
 
+    private static String throwableDetails(Throwable failure) {
+        if(failure==null) return "caught=null";
+        Throwable cause=failure.getCause();
+        return "caught="+failure.getClass().getName()+" message="+failure.getMessage()+
+            " cause="+(cause==null?"null":cause.getClass().getName()+" message="+cause.getMessage());
+    }
+
+    private static Object fieldValue(Object owner,String name) {
+        try {
+            Field field=owner.getClass().getDeclaredField(name);
+            field.setAccessible(true);
+            return field.get(owner);
+        } catch(Exception failure) {
+            throw new AssertionError("P07 early-bound fixture could not inspect "+name,failure);
+        }
+    }
+
+    private static boolean booleanField(Object owner,String name) {
+        try {
+            Field field=owner.getClass().getDeclaredField(name);
+            field.setAccessible(true);
+            return field.getBoolean(owner);
+        } catch(Exception failure) {
+            throw new AssertionError("P07 early-bound fixture could not inspect "+name,failure);
+        }
+    }
+
+    private static int intField(Object owner,String name) {
+        try {
+            Field field=owner.getClass().getDeclaredField(name);
+            field.setAccessible(true);
+            return field.getInt(owner);
+        } catch(Exception failure) {
+            throw new AssertionError("P07 early-bound fixture could not inspect "+name,failure);
+        }
+    }
+
+    private static void setIntField(Object owner,String name,int value) {
+        try {
+            Field field=owner.getClass().getDeclaredField(name);
+            field.setAccessible(true);
+            field.setInt(owner,value);
+        } catch(Exception failure) {
+            throw new AssertionError("P07 pressure-bound fixture could not set "+name,failure);
+        }
+    }
+
+    private static int queueSize(Object queue) {
+        try {
+            Method method=queue.getClass().getDeclaredMethod("size");
+            method.setAccessible(true);
+            return ((Integer)method.invoke(queue)).intValue();
+        } catch(Exception failure) {
+            throw new AssertionError("P07 early-bound fixture could not inspect the live frontier",failure);
+        }
+    }
+
+    private static boolean booleanMethod(Object owner,String name) {
+        try {
+            Method method=owner.getClass().getDeclaredMethod(name);
+            method.setAccessible(true);
+            return ((Boolean)method.invoke(owner)).booleanValue();
+        } catch(Exception failure) {
+            throw new AssertionError("P07 early-bound fixture could not inspect "+name,failure);
+        }
+    }
+
+    private static int intMethod(Object owner,String name) {
+        try {
+            Method method=owner.getClass().getDeclaredMethod(name);
+            method.setAccessible(true);
+            return ((Integer)method.invoke(owner)).intValue();
+        } catch(Exception failure) {
+            throw new AssertionError("P07 early-bound fixture could not inspect "+name,failure);
+        }
+    }
+
+    private static final class PressureBoundObserver implements SeededPcbLayoutGenerator.AttemptObserver {
+        static final int DURING_INCOMPLETE_DISTANCE=1,COMPLETE_BEFORE_FIRST_POP=2,
+            TOTAL_CAP_BEFORE_PRUNE=3,BRANCH_CAP_BEFORE_PRUNE=4,
+            NORMAL_UNDIAGNOSED_COMPLETION=5;
+        final int target;
+        final Throwable sentinel;
+        PcbLayerRoutingPrototype.Session session;
+        Object branch;
+        Object searchOwner;
+        Object preBuildBest;
+        Object[] preBuildQueueNodes,preBuildBestNodes;
+        int[] preBuildBestKeys;
+        PcbBoardLayout workingLayout;
+        int preBuildQueueSize,preBuildBestSize,preBuildExpanded,preBuildSerial;
+        String preBuildGeometry;
+        PcbNetRouter.Router[] liveFaces,pristineFaces;
+        String[] liveEffectsBefore;
+        boolean capturing,baselineCaptured,triggered;
+        boolean sawOriginalPressurePredicate;
+        boolean capInjected;
+        boolean sawNoDiagnosticChecks;
+        boolean sawStartedIncomplete,sawPartialDistanceField,sawCompleteField,
+            sawDistanceFieldComplete,sawCompleteComparisons,sawQueueBeforeFirstPop;
+
+        PressureBoundObserver(int target,Throwable sentinel) {
+            boolean cancellationTarget=target==DURING_INCOMPLETE_DISTANCE ||
+                target==COMPLETE_BEFORE_FIRST_POP;
+            boolean capacityTarget=target==TOTAL_CAP_BEFORE_PRUNE || target==BRANCH_CAP_BEFORE_PRUNE;
+            boolean normalTarget=target==NORMAL_UNDIAGNOSED_COMPLETION;
+            if((!cancellationTarget && !capacityTarget && !normalTarget) ||
+                    cancellationTarget && !(sentinel instanceof RuntimeException) &&
+                        !(sentinel instanceof Error) || capacityTarget && sentinel!=null)
+                throw new IllegalArgumentException("Invalid pressure-bound lifecycle canary");
+            this.target=target; this.sentinel=sentinel;
+        }
+        void attach(PcbLayerRoutingPrototype.Session session) { this.session=session; }
+        public void check(int attempt) {
+            if(capturing || triggered || session==null) return;
+            Object search=fieldValue(session,"search");
+            if(search==null) return;
+            Object currentBranch=fieldValue(search,"branch");
+            if(currentBranch==null) return;
+            if(target==NORMAL_UNDIAGNOSED_COMPLETION && sawCompleteField &&
+                    branch!=currentBranch) return;
+            if(!booleanField(currentBranch,"relaxedBoundStarted")) {
+                if(booleanMethod(currentBranch,"shouldStartRelaxedBound")) {
+                    sawOriginalPressurePredicate=true;
+                    branch=currentBranch;
+                    if(!baselineCaptured) capturePreBuild(search);
+                }
+                return;
+            }
+            if(branch!=currentBranch)
+                throw new AssertionError("Pressure relaxed-bound branch changed before its abort canary");
+            boolean complete=booleanField(branch,"relaxedBoundComplete");
+            if(!complete) sawStartedIncomplete=true;
+            if(!baselineCaptured)
+                throw new AssertionError("Pressure relaxed-bound field started without its pre-build snapshot");
+            if(target==DURING_INCOMPLETE_DISTANCE && !complete) {
+                Object distanceBound=fieldValue(branch,"relaxedDistanceBound");
+                if(distanceBound!=null && !booleanMethod(distanceBound,"isComplete") &&
+                        intMethod(distanceBound,"getWorkUnits")>=1) {
+                    sawPartialDistanceField=true;
+                    abort();
+                }
+            }
+            if(complete) {
+                sawCompleteField=true;
+                Object distanceBound=fieldValue(branch,"relaxedDistanceBound");
+                sawDistanceFieldComplete=distanceBound!=null && booleanMethod(distanceBound,"isComplete");
+                sawCompleteComparisons=booleanField(branch,"relaxedBoundObservationChecked") &&
+                    booleanField(branch,"relaxedBoundLiveLayoutStable") &&
+                    booleanField(branch,"relaxedBoundRouterStateStable") &&
+                    booleanField(branch,"relaxedBoundRouterEffectsStable");
+                if(preBuildSnapshotUnchanged()) sawQueueBeforeFirstPop=true;
+                if(target==NORMAL_UNDIAGNOSED_COMPLETION && sawDistanceFieldComplete &&
+                        sawCompleteComparisons && sawQueueBeforeFirstPop)
+                    sawNoDiagnosticChecks=true;
+                if(target==COMPLETE_BEFORE_FIRST_POP && sawQueueBeforeFirstPop) abort();
+                if((target==TOTAL_CAP_BEFORE_PRUNE || target==BRANCH_CAP_BEFORE_PRUNE) &&
+                        !capInjected && sawDistanceFieldComplete && sawCompleteComparisons &&
+                        sawQueueBeforeFirstPop) {
+                    if(target==TOTAL_CAP_BEFORE_PRUNE) {
+                        Object budget=fieldValue(session,"budget");
+                        setIntField(budget,"expanded",intField(budget,"maximum"));
+                    } else setIntField(branch,"expanded",
+                        PcbLayerRoutingPrototype.MAX_BRANCH_EXPANSIONS);
+                    capInjected=true;
+                }
+            }
+        }
+        private void capturePreBuild(Object search) {
+            Object queue=fieldValue(branch,"queue");
+            preBuildBest=fieldValue(branch,"best");
+            preBuildQueueSize=queueSize(queue);
+            preBuildBestSize=intMethod(preBuildBest,"size");
+            preBuildQueueNodes=copyObjects((Object[])fieldValue(queue,"values"));
+            preBuildBestNodes=copyObjects((Object[])fieldValue(preBuildBest,"values"));
+            preBuildBestKeys=copyInts((int[])fieldValue(preBuildBest,"keys"));
+            preBuildExpanded=intField(branch,"expanded");
+            searchOwner=search;
+            preBuildSerial=intField(searchOwner,"serial");
+            workingLayout=(PcbBoardLayout)fieldValue(search,"layout");
+            preBuildGeometry=workingLayout.geometryFingerprint();
+            captureLiveFaces(search);
+        }
+        private void captureLiveFaces(Object search) {
+            capturing=true;
+            try {
+                liveFaces=(PcbNetRouter.Router[])fieldValue(search,"faces");
+                pristineFaces=new PcbNetRouter.Router[2];
+                liveEffectsBefore=new String[2];
+                for(int layer=0;layer<2;layer++) {
+                    liveEffectsBefore[layer]=liveFaces[layer].fixedGraphObservationEffects();
+                    pristineFaces[layer]=liveFaces[layer].copyForFixedGraphObservation();
+                    if(!liveFaces[layer].sameFixedGraphObservation(pristineFaces[layer]) ||
+                            !liveEffectsBefore[layer].equals(liveFaces[layer].fixedGraphObservationEffects()))
+                        throw new AssertionError("Early bound baseline copy changed a live router face");
+                }
+                baselineCaptured=true;
+            } finally { capturing=false; }
+        }
+        boolean preBuildSnapshotUnchanged() {
+            if(!baselineCaptured || branch==null || searchOwner==null || preBuildBest==null ||
+                    workingLayout==null)
+                return false;
+            Object queue=fieldValue(branch,"queue"),best=fieldValue(branch,"best");
+            return queueSize(queue)==preBuildQueueSize && intMethod(best,"size")==preBuildBestSize &&
+                sameObjects(fieldValue(queue,"values"),preBuildQueueNodes) &&
+                sameObjects(fieldValue(best,"values"),preBuildBestNodes) &&
+                sameInts(fieldValue(best,"keys"),preBuildBestKeys) &&
+                intField(branch,"expanded")==preBuildExpanded &&
+                intField(searchOwner,"serial")==preBuildSerial && workingLayoutUnchanged();
+        }
+        private static Object[] copyObjects(Object[] values) {
+            Object[] copy=new Object[values.length];
+            System.arraycopy(values,0,copy,0,values.length);
+            return copy;
+        }
+        private static int[] copyInts(int[] values) {
+            int[] copy=new int[values.length];
+            System.arraycopy(values,0,copy,0,values.length);
+            return copy;
+        }
+        private static boolean sameObjects(Object current,Object[] snapshot) {
+            if(!(current instanceof Object[]) || snapshot==null) return false;
+            Object[] values=(Object[])current;
+            if(values.length!=snapshot.length) return false;
+            for(int index=0;index<values.length;index++)
+                if(values[index]!=snapshot[index]) return false;
+            return true;
+        }
+        private static boolean sameInts(Object current,int[] snapshot) {
+            if(!(current instanceof int[]) || snapshot==null) return false;
+            int[] values=(int[])current;
+            if(values.length!=snapshot.length) return false;
+            for(int index=0;index<values.length;index++)
+                if(values[index]!=snapshot[index]) return false;
+            return true;
+        }
+        boolean workingLayoutUnchanged() {
+            return preBuildGeometry!=null && workingLayout!=null &&
+                preBuildGeometry.equals(workingLayout.geometryFingerprint());
+        }
+        boolean distanceInitializationComplete() {
+            if(branch==null) return false;
+            Object distanceBound=fieldValue(branch,"relaxedDistanceBound");
+            return distanceBound!=null && intMethod(distanceBound,"getWorkUnits")>=
+                intField(distanceBound,"stateCount");
+        }
+        boolean liveFacesUnchanged() {
+            if(!baselineCaptured || liveFaces==null || pristineFaces==null || liveEffectsBefore==null)
+                return false;
+            for(int layer=0;layer<2;layer++)
+                if(!liveFaces[layer].sameFixedGraphObservation(pristineFaces[layer]) ||
+                        !liveEffectsBefore[layer].equals(liveFaces[layer].fixedGraphObservationEffects()))
+                    return false;
+            return true;
+        }
+        private void abort() {
+            triggered=true;
+            if(sentinel instanceof RuntimeException) throw (RuntimeException)sentinel;
+            throw (Error)sentinel;
+        }
+    }
+
     private static class Capture implements PcbLayerRoutingPrototype.FixedPrefixGraphObserver {
         final boolean accept;
         int selectCalls,graphCalls;
@@ -413,6 +937,68 @@ public final class P07FixedPrefixObservationContractTest {
             this.expansionLimit=expansionLimit;
             this.bottomTreeGoalX=bottomTreeGoalX;
             this.bottomTreeGoalY=bottomTreeGoalY;
+        }
+    }
+
+    private static final class ZeroCapacityNoPathFixture {
+        private static final Rectangle OUTLINE=new Rectangle(100,100,2400,1400);
+        private static final int TOP_WALL_X=900,BOTTOM_WALL_X=920;
+        private static final int TARGET_A_X=400,TARGET_B_X=1800;
+        final TroubleshootBoard board=new TroubleshootBoard("P07_ZERO_CAPACITY_NO_PATH");
+        final PcbBoardLayout layout=new PcbBoardLayout(2600,1600,OUTLINE,
+            new Rectangle(2520,120,60,1400));
+        final int directionalStateLowerBound;
+        ZeroCapacityNoPathFixture() {
+            PcbLayerRoutingPrototype.GridAdmission grid=
+                PcbLayerRoutingPrototype.gridAdmission(OUTLINE);
+            int rightWallCell=(BOTTOM_WALL_X+40+PcbLayerRoutingPrototype.GRID-
+                (OUTLINE.x+PcbLayerRoutingPrototype.GRID))/PcbLayerRoutingPrototype.GRID;
+            directionalStateLowerBound=(grid.width-2-rightWallCell+1)*(grid.height-2)*4-256;
+            int pressureThreshold=PcbLayerRoutingPrototype.MAX_BRANCH_EXPANSIONS-
+                PcbLayerRoutingPrototype.WORK_QUANTUM;
+            check(grid.eligible && grid.width==239 && grid.height==139 &&
+                grid.cells==33221 && grid.cells<PcbLayerRoutingPrototype.MAX_CELLS &&
+                directionalStateLowerBound>pressureThreshold,
+                "literal pressure fixture has a bounded grid and sufficient open-side directional states");
+            board.addNet(new BoardNet("00_REQUIRED",BoardNet.RoutingRole.HIGH_CURRENT));
+            addPoint("TARGET_A","00_REQUIRED",TARGET_A_X,800,PcbBoardSide.TOP);
+            addPoint("TARGET_B","00_REQUIRED",TARGET_B_X,800,PcbBoardSide.TOP);
+            int ordinal=0;
+            for(PcbBoardSide side:new PcbBoardSide[]{PcbBoardSide.TOP,PcbBoardSide.BOTTOM})
+                for(int y=120;y<=1480;y+=20) {
+                    String component="BARRIER_"+side+"_"+ordinal;
+                    String net="99_"+component;
+                    board.addNet(new BoardNet(net));
+                    addPoint(component,net,
+                        side==PcbBoardSide.TOP?TOP_WALL_X:BOTTOM_WALL_X,y,side);
+                    ordinal++;
+                }
+            Vector<PcbPlacementConstraints.Part> demands=
+                new Vector<PcbPlacementConstraints.Part>();
+            for(String id:board.getComponentIds())
+                demands.add(new PcbPlacementConstraints.Part(id,"p07",
+                    "zero-capacity observation", "p07",PcbPlacementConstraints.Anchor.NONE,16));
+            board.setPlacementConstraints(new PcbPlacementConstraints(demands,
+                new Vector<PcbPlacementConstraints.Barrier>(),PcbCopperLayer.BOTTOM,
+                PcbPlacementConstraints.DEFAULT_PHYSICAL_POLICY_ID,
+                PcbPlacementConstraints.DEFAULT_PHYSICAL_POLICY_VERSION,1,false,
+                PcbTraceWidthProfile.UNIFORM));
+            board.validate();
+            layout.validateAgainst(board);
+        }
+        private void addPoint(String id,String net,int x,int y,PcbBoardSide side) {
+            PhysicalPackage physical=P06FactoryLinkFixtures.TEST_POINT;
+            BoardComponent component=new BoardComponent(id,"STRUCTURAL",physical);
+            board.addComponent(component);
+            board.addPad(new BoardPad(id+".1",id,"1",net));
+            PcbPackagePose reference=new PcbPackagePose(100,100,PcbRotation.DEG_0,side);
+            Point local=physical.getGeometry().placedAt(reference).getPadPoint(0);
+            PcbPackagePose pose=new PcbPackagePose(100+x-local.x,100+y-local.y,
+                PcbRotation.DEG_0,side);
+            PcbFootprint footprint=PcbFootprint.fromPhysicalPackage(component,pose,
+                physical.getGeometry());
+            layout.addComponent(footprint.getPlacement());
+            for(PcbPadPlacement pad:footprint.getPads()) layout.addPad(pad);
         }
     }
 

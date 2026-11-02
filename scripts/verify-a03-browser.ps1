@@ -2373,7 +2373,7 @@ function Test-E06AcceptanceCanaryReport([object]$Text, [string]$Canary) {
         if ($null -eq $report -or $report -is [array] -or
                 $report.protocol -cne 'tsj-e06-acceptance-boundary-canary-v1' -or
                 $report.status -cne 'PASS_E06_ACCEPTANCE_BOUNDARY_CANARY' -or
-                $report.epoch -cne 'tsj-generation-dependencies-v27' -or
+                $report.epoch -cne 'tsj-generation-dependencies-v28' -or
                 $report.canary -cne $Canary -or $report.family -cne 'RB56_CONTROL' -or
                 $report.seed -isnot [string] -or $report.seed -cne '-8360266000248569150' -or
                 $report.cleanup -cne 'PASS' -or $null -ne $report.cleanupError -or
