@@ -1,4 +1,53 @@
-# Current checkpoint: native listener prerequisite published; integration next
+# Current checkpoint: reduced matrix ordering validated; publication pending
+
+**VALIDATED, pending normal commit/push. Updated2026-11-02.** Branch
+codex/q100-reduced-matrix-ordering-20261102; source parent
+5f05b005c80e312c60fc7db24745f2d8afe4d04b. No active run-owned process remains.
+The [qualification packet](task-evidence/A07/reduced-matrix-ordering-r1/README.md)
+records exact source/build/artifact hashes, commands, finite gates and limits.
+Local raw evidence is retained under OS-temp/
+tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/cin33-cpu-r1,
+principally reduced-matrix-ordering-r1, normal3-native-r1/epoch27-export-r3
+and normal3-host-launch-r1/attempt-20261102T123748Z-0696711555f34f7294fb81e8d701f6a6.
+Final consumed-input audit PASS: all25 source pins, Developer1202/357 and Player
+input1202 unchanged. Current war is the qualified Developer build; Player output
+was recorded before that rebuild and is not inferred from current war.
+
+ReducedMatrixOrdering applies a generic bounded symmetric minimum-degree
+permutation during CircuitJS simplification, before original backups; inverse
+RowInfo maps preserve physical nodes and solver state. No models, LU algorithm,
+finite/convergence/ownership guards or independent physics oracle changed.
+Dependency interpretation v27 rejects stale v26 proof/save identities; model
+inputs remain v7. Native/GWT fixtures check mappings, literal independent solves,
+KCL/KVL, events, reset, and actual private-parent restoration.
+
+PASS: focused native10; native62/62; compiled62/62; E06State10/10 including both
+CIN33_SHUNT50us fault/repair references; final A07 and Current9; actual final-source
+JDK8/GWT Player/Developer builds; Player privacy with two negative sentinels;
+source-bound finite3 native manifests, live source/compiled-script binding and
+original independent payload postprocessing. Developer rebuild exactly reproduces
+qualified input3415963/outputdb929514,1202/357; Player67c4fbb9/36920c11,1202/357.
+Compiled full62 operation1175.905s/6000s, cleanup112.913s/120s, browser11.444s/15s.
+Normal3 generations56.716/48.491/28.157s and work506/503/392 respect original90s/640.
+No manual interaction/repair evidence is claimed for this numerical-only change.
+
+All earlier failed treatments and compile/fixture/receipt/route failures remain
+preserved. Native3's exact one-source Task35 GWT-only verifier adapter throws if
+called; it grants no electrical proof. The raw first capture remains FAIL after
+missing-bootstrap diagnosis; the successful fresh capture was independently
+postprocessed. Original oracle function bytes and budgets were preserved. Scoped
+independent adapter/reader/schema reviews found no remaining blocker; root owns
+integrated diff and final acceptance. No broad performance guarantee is inferred.
+
+Limits: no full30 renewal or all-seed/long-session/modest-host/FPS/human-repair
+claim. Public beta held, accepted playable100 layouts0, HARD/PSYCHOTIC unavailable
+and unrun; protected data stayed unmaterialized here, historical unread boundary
+remains uncertified. CI requires the approved self-hosted runner registered.
+Unrelated Main B6, private40 and Desktop work, old branches/stashes/evidence and
+ambient preview are preserved. NEXT: normal commit/push/remote SHA verification,
+one completion Gmail, then resume the preserved Q100 physical feasibility work.
+
+# Historical checkpoint: native listener prerequisite published; integration next
 
 **PUBLISHED. Updated:** 2026-11-01 UTC.
 Implementation `be15bf7f03f8ca5f504ec164a807a344e2a7de33` (`Use native TCP ownership snapshots and fix IPv6 fallback`)

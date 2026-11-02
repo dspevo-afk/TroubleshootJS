@@ -35,11 +35,11 @@ public final class Rb100PhysicalDiagnostics {
         long suiteStarted = System.nanoTime();
         int beforeAssertions = assertions;
         require(SeededPcbLayoutGenerator.CURRENT_VERSION == 25 &&
-                "tsj-generation-dependencies-v26".equals(
+                "tsj-generation-dependencies-v27".equals(
                     GenerationDependencyContext.INTERPRETATION_EPOCH) &&
                 Rb100Plan.PLAN_VERSION == 1 && Rb100Plan.MODEL_VERSION == 4 &&
                 Rb100Placement.INTENT_VERSION == 9,
-            "placement diagnostics identify current layout25/dependency-v26/plan1/model4/intent9 inputs");
+            "placement diagnostics identify current layout25/dependency-v27/plan1/model4/intent9 inputs");
         PlacementDiagnosticCase[] cases = new PlacementDiagnosticCase[] {
             runStructuralPlacementDiagnostic(), runCorridorWitnessPlacementDiagnostic()
         };
@@ -216,11 +216,11 @@ public final class Rb100PhysicalDiagnostics {
             unit(budget, "p07-source-identity", new UnitAction() {
                 public void run() {
                     require(SeededPcbLayoutGenerator.CURRENT_VERSION == 25 &&
-                        "tsj-generation-dependencies-v26".equals(
+                        "tsj-generation-dependencies-v27".equals(
                             GenerationDependencyContext.INTERPRETATION_EPOCH) &&
                         Rb100Plan.PLAN_VERSION == 1 && Rb100Plan.MODEL_VERSION == 4 &&
                         Rb100Placement.INTENT_VERSION == 9,
-                        "P07 observation identifies layout25/dependency-v26/plan1/model4/intent9");
+                        "P07 observation identifies layout25/dependency-v27/plan1/model4/intent9");
                     require(MediumBoardPhysicalPolicy.PLACEMENT_CANDIDATES == 6 &&
                         MediumBoardPhysicalPolicy.ROUTING_CANDIDATES == 3 &&
                         PcbLayerRoutingPrototype.MAX_EXPANSIONS == 1000000 &&
@@ -541,11 +541,11 @@ public final class Rb100PhysicalDiagnostics {
             unit(budget, "p07-branch-source-identity", new UnitAction() {
                 public void run() {
                     require(SeededPcbLayoutGenerator.CURRENT_VERSION == 25 &&
-                        "tsj-generation-dependencies-v26".equals(
+                        "tsj-generation-dependencies-v27".equals(
                             GenerationDependencyContext.INTERPRETATION_EPOCH) &&
                         Rb100Plan.PLAN_VERSION == 1 && Rb100Plan.MODEL_VERSION == 4 &&
                         Rb100Placement.INTENT_VERSION == 9,
-                        "fixed branch observation identifies layout25/dependency-v26/plan1/model4/intent9");
+                        "fixed branch observation identifies layout25/dependency-v27/plan1/model4/intent9");
                     require(PcbLayerRoutingPrototype.MAX_EXPANSIONS == 1000000 &&
                         PcbLayerRoutingPrototype.MAX_BRANCH_EXPANSIONS == 100000 &&
                         PcbLayerRoutingPrototype.MAX_CELLS == 250000 &&
@@ -882,9 +882,9 @@ public final class Rb100PhysicalDiagnostics {
         long started = System.nanoTime();
         int beforeAssertions = assertions;
         require(SeededPcbLayoutGenerator.CURRENT_VERSION == 25 &&
-                "tsj-generation-dependencies-v26".equals(
+                "tsj-generation-dependencies-v27".equals(
                     GenerationDependencyContext.INTERPRETATION_EPOCH),
-            "orientation contract identifies layout25/dependency-v26 interpretation");
+            "orientation contract identifies layout25/dependency-v27 interpretation");
         require(Rb100Plan.PLAN_VERSION == 1 && Rb100Plan.MODEL_VERSION == 4 &&
                 Rb100Placement.INTENT_VERSION == 9,
             "orientation contract identifies current plan1/model4/physical-intent9");

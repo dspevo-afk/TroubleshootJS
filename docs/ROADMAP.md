@@ -1,6 +1,6 @@
 # TroubleshootJS: Current Roadmap
 
-**Updated:** 2026-11-01 · **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
+**Updated:** 2026-11-02 · **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
 
 ## Current product checkpoint
 
@@ -15,6 +15,20 @@ Q100 remains IN PROGRESS. Its first [private functional/electrical pilot](task-e
 The Q100-1 pilot was published as `9c74c46bdcf99dc62d3b7f7d35b71eb5ba9b3acf` on `origin/codex/q100-constrained-pilot`, verified remotely and its completion email sent. It grants no playable RB100 or public admission. The separate [E06 accepted-state boundary](task-evidence/E06/accepted-state-r1/README.md) is now accepted for staged receipt/controller/predictor memory, failed-step preservation and exact compiled predecessor restoration. Final native/build/Player privacy/Current gates, two compiled failure canaries, eight authored electrical regressions and three source-bound normal MEDIUM roots pass under v21; this renews neither the full2-by-31 nor30-root qualification. Initial fixture, timeout and typed-report failures remain preserved. Broad E06 nominal fidelity remains unqualified. E06 was published as `8a2c12446b2c46bde32b32537dec58a15a65d3b9` on `origin/codex/e06-accepted-state`, exact remote SHA verified and completion email sent. The first [authored RB100 layout feasibility experiment](task-evidence/Q100/authored-layout-r1/PLAN.md) has completed its bounded shared-correction and diagnostic substep; actual routing remains unqualified. It exercises the existing private layout path; generic THT_SINGLE_FACE@1 admission, full physical runtime and rendered service interaction remain separate boundaries. Routing/access for100 packages, procedural qualification, save capacity and long-session evidence remain pending. The owner authorized continued roadmap execution until told to stop.
 
 ## Current direction
+
+The [reduced nonlinear matrix ordering prerequisite](task-evidence/A07/reduced-matrix-ordering-r1/README.md)
+is accepted for its recorded v27 source. Generic static minimum-degree ordering
+keeps CircuitJS models, LU, physical identities and all original bounds/oracles.
+Both CIN33_SHUNT50us references now complete fault and repair under the unchanged
+limits. Focused native10, native and compiled2-by-31 references, final compiled
+A07/Current9, actual JDK8/GWT Player/Developer builds, Player privacy and three
+source-bound normal MEDIUM development roots pass. Full-matrix cleanup112.913s
+is below120s; browser shutdown11.444s is below15s. Old failure evidence remains.
+This renews only the recorded finite electrical and three-root scope, with no
+full30 renewal, public-beta release, HARD/PSYCHOTIC access or playable100 layouts.
+Publication is tracked in the task report. Next is the preserved Q100 physical
+routing/fixed-prefix work on this qualified numerical source; accepted100 layouts
+remain zero and fresh physical/runtime/solvability evidence is still required.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

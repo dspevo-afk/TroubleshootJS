@@ -14,6 +14,24 @@ older evidence packets describe their own historical candidates.
 
 ## Audit corrections and current execution boundaries
 
+CirSim owns reduced nonlinear matrix ordering at the end of simplification,
+before its original matrix/right-side backups. ReducedMatrixOrdering derives a
+deterministic greedy minimum-degree permutation from the undirected union of the
+static off-diagonal pattern. It permutes rows, columns and the right side together
+and inverse-remaps fresh RowInfo coordinates. Physical node/terminal identities,
+constants, flags, CircuitJS models, stamping, LU and convergence remain unchanged.
+The production path admits only matrices of size16..128 with finite entries/right
+side bounded by1e100 and complete valid maps; unsupported inputs retain the old
+path. Replacement arrays and result allocation precede the map commit. There is
+no retained ordering cache or seed/fault-specific policy. Original backups use
+the ordered coordinates for subsequent iterations. Fresh analysis RowInfo objects
+preserve private-snapshot parent restoration. The internal comparison flag is
+used only by native/Developer fixtures, with no Player query or UI control.
+Dependency interpretation v27 identifies the changed floating-point solve order;
+model dump input epoch v7 remains. The [finite qualification packet](task-evidence/A07/reduced-matrix-ordering-r1/README.md)
+records electrical, mapping, reset, parent restoration, privacy and regression
+evidence without granting playable100 or renewed30-root admission.
+
 A07SolverDeveloperVerifier owns the exact TSJ-A07-SOLVER-2 developer report.
 Its26 runtime cases include the three existing settlement contracts for repeated
 idle work, pending analysis and an active queued DC measurement. The browser

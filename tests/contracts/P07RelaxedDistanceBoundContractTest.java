@@ -50,8 +50,8 @@ public final class P07RelaxedDistanceBoundContractTest {
     private static void runCloneFixture(final String runId,final CloneFixture selected) {
         Rb56Plan plan=Rb56Plan.resolve(selected.rootSeed,selected.placementVersion);
         require(SeededPcbLayoutGenerator.CURRENT_VERSION==25 &&
-            "tsj-generation-dependencies-v26".equals(GenerationDependencyContext.INTERPRETATION_EPOCH),
-            "clone canary input is pinned to the current layout-25/dependency-26 epoch");
+            "tsj-generation-dependencies-v27".equals(GenerationDependencyContext.INTERPRETATION_EPOCH),
+            "clone canary input is pinned to the current layout-25/dependency-27 epoch");
         require(plan.seed==selected.rootSeed && plan.placementInterpretationVersion==selected.placementVersion &&
             plan.layoutSeed==selected.placementSeed && plan.routingSeed==selected.routingSeed,
             "clone fixture preserves the exact signed root and named generation seeds");

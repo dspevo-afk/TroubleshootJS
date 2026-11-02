@@ -432,8 +432,8 @@ public final class P07OrderingCandidatesContractTest {
     private static PreparedStreamCase prepareStreamCase(StreamFixture selected) {
         Rb56Plan plan=Rb56Plan.resolve(selected.rootSeed,selected.placementVersion);
         require(SeededPcbLayoutGenerator.CURRENT_VERSION==25 &&
-            "tsj-generation-dependencies-v26".equals(GenerationDependencyContext.INTERPRETATION_EPOCH),
-            "AO saved fixture is explicitly pinned to the current layout-25/dependency-26 interpretation");
+            "tsj-generation-dependencies-v27".equals(GenerationDependencyContext.INTERPRETATION_EPOCH),
+            "AO saved fixture is explicitly pinned to the current layout-25/dependency-27 interpretation");
         require(plan.seed==selected.rootSeed &&
             plan.placementInterpretationVersion==selected.placementVersion &&
             plan.layoutSeed==selected.placementSeed && plan.routingSeed==selected.routingSeed,

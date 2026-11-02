@@ -21,9 +21,9 @@ import java.util.Vector;
  */
 final class GenerationDependencyContext {
     /** Current interpretation epoch.  Caches are valid only in this runtime. */
-    // Guided route-order continuation and strict receipt validation change the
-    // shared-budget proof; invalidate v25 identities, not electrical model inputs.
-    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v26";
+    // Reduced-coordinate ordering changes floating-point solve order and the
+    // bounded generation/evaluation proof; reject prior v26 dependency identities.
+    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v27";
     static final String CIRCUIT_DUMP_EPOCH =
         "circuitjs-source-load-model-inputs-no-transient-dump-v7";
     static final String POWER_REFERENCE_STORAGE_SEAM = "power-domain-contract-v1";

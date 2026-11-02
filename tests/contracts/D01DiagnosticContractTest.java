@@ -85,7 +85,7 @@ public final class D01DiagnosticContractTest {
             require(baselineKey.equals(baseline.diagnosticKey()),
                 "real dependency capture and diagnostic key share the complete canonical value");
             String canonical = baseline.canonical();
-            String expectedEpoch = "tsj-generation-dependencies-v26";
+            String expectedEpoch = "tsj-generation-dependencies-v27";
             require(canonical.startsWith("V" + expectedEpoch.length() + ":" +
                     expectedEpoch + ";") &&
                     canonical.indexOf("circuitjs-source-load-model-inputs-no-transient-dump-v7") >= 0,
@@ -612,6 +612,7 @@ public final class D01DiagnosticContractTest {
                 controller, new Object(), provider.getObservationProgram(), evidence, 4,
                 null, key, false);
             for (final String priorEpoch : new String[] {
+                    "tsj-generation-dependencies-v26",
                     "tsj-generation-dependencies-v25",
                     "tsj-generation-dependencies-v24",
                     "tsj-generation-dependencies-v23",
@@ -622,7 +623,7 @@ public final class D01DiagnosticContractTest {
                 final GeneratedDiagnosticContextKey priorKey = new GeneratedDiagnosticContextKey(
                     priorFrame + capturedContext.canonical().substring(currentFrame.length()));
                 require(!priorKey.equals(key),
-                    priorEpoch + " proof identity differs from the actual captured v26 key");
+                    priorEpoch + " proof identity differs from the actual captured v27 key");
                 final GeneratedDiagnosticProofReceipt priorSource = new GeneratedDiagnosticProofReceipt(board,
                     controller, new Object(), provider.getObservationProgram(), evidence, 4,
                     null, priorKey, false);
@@ -633,7 +634,7 @@ public final class D01DiagnosticContractTest {
                 require(priorCache.lookup(priorKey) == priorEntry,
                     "prior proof fixture is keyed by " + priorEpoch + " and captured current canonical fields");
                 require(priorCache.lookup(key) == null,
-                    "captured v26 context misses a cache entry keyed by " + priorEpoch);
+                    "captured v27 context misses a cache entry keyed by " + priorEpoch);
                 reject(priorEpoch + " proof evidence cannot be reused under the current context",
                     new Case() { public void run() {
                         priorEntry.validateForReuse(key, board);

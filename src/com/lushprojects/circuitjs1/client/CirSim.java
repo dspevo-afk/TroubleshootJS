@@ -243,6 +243,7 @@ MouseOutHandler, MouseWheelHandler {
     private static final int LU_BOUNDED_MAX_SIZE = 128;
     private static final double LU_BOUNDED_ENTRY_LIMIT = 1e100;
     boolean luBaselineBounded, luCurrentBounded;
+    boolean reducedOrderingDisabledForChecks;
     RowInfo circuitRowInfo[];
     int circuitPermute[];
     boolean simRunning;
@@ -3032,6 +3033,14 @@ MouseOutHandler, MouseWheelHandler {
 	circuitMatrix = newmatx;
 	circuitRightSide = newrs;
 	matrixSize = circuitMatrixSize = newsize;
+        if (circuitNonLinear && !reducedOrderingDisabledForChecks) {
+            ReducedMatrixOrdering.Result ordering = ReducedMatrixOrdering.reorder(
+                    circuitMatrix, circuitRightSide, circuitRowInfo);
+            if (ordering.changed) {
+                circuitMatrix = ordering.matrix;
+                circuitRightSide = ordering.rightSide;
+            }
+        }
 	for (i = 0; i != matrixSize; i++)
 	    origRightSide[i] = circuitRightSide[i];
 	for (i = 0; i != matrixSize; i++)

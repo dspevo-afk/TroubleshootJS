@@ -78,9 +78,9 @@ public final class P07GeometryEpochDiagnosticContractTest {
         if (!((layoutVersion == 22 &&
                     "tsj-generation-dependencies-v23".equals(dependencyEpoch)) ||
                 (layoutVersion == 25 &&
-                    "tsj-generation-dependencies-v26".equals(dependencyEpoch))))
+                    "tsj-generation-dependencies-v27".equals(dependencyEpoch))))
             throw new IllegalStateException("Expected the frozen layout22/dependency23 or current " +
-                "layout25/dependency26 source pair; found layout=" + layoutVersion +
+                "layout25/dependency27 source pair; found layout=" + layoutVersion +
                 " dependency=" + dependencyEpoch);
         String runId = UUID.randomUUID().toString();
         long started = System.nanoTime();
@@ -121,9 +121,9 @@ public final class P07GeometryEpochDiagnosticContractTest {
         if (!((layoutVersion == 22 &&
                     "tsj-generation-dependencies-v23".equals(dependencyEpoch)) ||
                 (layoutVersion == 25 &&
-                    "tsj-generation-dependencies-v26".equals(dependencyEpoch))))
+                    "tsj-generation-dependencies-v27".equals(dependencyEpoch))))
             throw new IllegalStateException("Expected the frozen layout22/dependency23 or current " +
-                "layout25/dependency26 source pair; found layout=" + layoutVersion +
+                "layout25/dependency27 source pair; found layout=" + layoutVersion +
                 " dependency=" + dependencyEpoch);
         String runId = UUID.randomUUID().toString();
         long started = System.nanoTime();

@@ -130,6 +130,7 @@ public final class RelBSessionIdentityContractTest {
                 PlayerSessionReplay.parse(parsed.replay).matches(request),
                 "placement-15 private identity survives the unchanged bounded session codec: " + seed);
             for (final String priorEpoch : new String[] {
+                    "tsj-generation-dependencies-v26",
                     "tsj-generation-dependencies-v25",
                     "tsj-generation-dependencies-v24",
                     "tsj-generation-dependencies-v23",
@@ -138,7 +139,7 @@ public final class RelBSessionIdentityContractTest {
                     GenerationDependencyContext.INTERPRETATION_EPOCH, priorEpoch);
                 reject(new Attempt() { public void run() {
                     PlayerSessionReplay.parse(priorDependencyIdentity);
-                } }, priorEpoch + " replay derived from the captured current v26 identity is rejected: " + seed);
+                } }, priorEpoch + " replay derived from the captured current v27 identity is rejected: " + seed);
             }
             GenerationRequest canvasRequest = request.withRb56PlacementInterpretationVersion(
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CANVAS);
@@ -448,9 +449,9 @@ public final class RelBSessionIdentityContractTest {
      */
     private static void verifyPriorEpochIntakeBeforeCoordinatorStart(CirSim sim,
             GenerationCoordinator coordinator, long seed) {
-        check("tsj-generation-dependencies-v26".equals(
+        check("tsj-generation-dependencies-v27".equals(
                 GenerationDependencyContext.INTERPRETATION_EPOCH),
-            "prior-v25 intake cases are derived from the current v26 identity");
+            "prior-epoch intake cases are derived from the current v27 identity");
         for (final int placementVersion : new int[] {
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_LEGACY,
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_COMPACT }) {
@@ -461,56 +462,59 @@ public final class RelBSessionIdentityContractTest {
             final String currentWire = currentSave.encode();
             check(currentReplay.equals(PlayerSessionReplay.parse(currentReplay).canonical()) &&
                     currentWire.equals(PlayerSessionSave.parse(currentWire).encode()),
-                "current-v26 private placement " + placementVersion +
+                "current-v27 private placement " + placementVersion +
                     " remains accepted by the actual replay and save parsers");
 
-            final String priorReplay = currentReplay.replace(
-                GenerationDependencyContext.INTERPRETATION_EPOCH,
-                "tsj-generation-dependencies-v25");
-            final String priorWire = currentWire.replace(currentReplay, priorReplay);
-            check(!priorReplay.equals(currentReplay) &&
-                    priorWire.replace(priorReplay, currentReplay).equals(currentWire),
-                "prior-v25 placement " + placementVersion +
-                    " changes only the epoch in a valid current replay and save");
+            for (final String priorEpoch : new String[] {
+                    "tsj-generation-dependencies-v26",
+                    "tsj-generation-dependencies-v25" }) {
+                final String priorReplay = currentReplay.replace(
+                    GenerationDependencyContext.INTERPRETATION_EPOCH, priorEpoch);
+                final String priorWire = currentWire.replace(currentReplay, priorReplay);
+                check(!priorReplay.equals(currentReplay) &&
+                        priorWire.replace(priorReplay, currentReplay).equals(currentWire),
+                    priorEpoch + " placement " + placementVersion +
+                        " changes only the epoch in a valid current replay and save");
 
-            final GenerationJob beforeJob = coordinator.getJob();
-            final GeneratedBoardInstance beforeOwner = sim.getGeneratedBoardInstance();
-            final Object beforeElements = sim.elmList;
-            final PlayerSessionHistory beforeHistory = beforeOwner == null ||
-                beforeOwner.getPhysicalBoardRuntime() == null ? null :
-                beforeOwner.getPhysicalBoardRuntime().getSessionHistory();
-            final Vector<PlayerSessionSave.Operation> beforeHistoryOperations =
-                beforeHistory == null ? null : beforeHistory.operations();
-            RuntimeException replayFailure = null;
-            try { PlayerSessionReplay.parse(priorReplay); }
-            catch (RuntimeException expected) { replayFailure = expected; }
-            check(replayFailure instanceof IllegalArgumentException &&
-                    replayFailure.getMessage() != null && replayFailure.getMessage().contains("epoch"),
-                "actual replay parser rejects prior-v25 private placement " + placementVersion);
+                final GenerationJob beforeJob = coordinator.getJob();
+                final GeneratedBoardInstance beforeOwner = sim.getGeneratedBoardInstance();
+                final Object beforeElements = sim.elmList;
+                final PlayerSessionHistory beforeHistory = beforeOwner == null ||
+                    beforeOwner.getPhysicalBoardRuntime() == null ? null :
+                    beforeOwner.getPhysicalBoardRuntime().getSessionHistory();
+                final Vector<PlayerSessionSave.Operation> beforeHistoryOperations =
+                    beforeHistory == null ? null : beforeHistory.operations();
+                RuntimeException replayFailure = null;
+                try { PlayerSessionReplay.parse(priorReplay); }
+                catch (RuntimeException expected) { replayFailure = expected; }
+                check(replayFailure instanceof IllegalArgumentException &&
+                        replayFailure.getMessage() != null && replayFailure.getMessage().contains("epoch"),
+                    "actual replay parser rejects " + priorEpoch + " private placement " + placementVersion);
 
-            RuntimeException saveFailure = null;
-            boolean coordinatorEntered = false;
-            try {
-                PlayerSessionSave parsed = PlayerSessionSave.parse(priorWire);
-                coordinatorEntered = true;
-                coordinator.startSessionRestoreForQualification(request, parsed);
-            } catch (RuntimeException expected) { saveFailure = expected; }
-            check(saveFailure instanceof IllegalArgumentException &&
-                    saveFailure.getMessage() != null && saveFailure.getMessage().contains("epoch") &&
-                    !coordinatorEntered,
-                "actual save parser rejects prior-v25 placement " + placementVersion +
-                    " before coordinator restore entry");
-            check(sim.generationCoordinator == coordinator && coordinator.getJob() == beforeJob &&
-                    sim.getGeneratedBoardInstance() == beforeOwner && sim.elmList == beforeElements,
-                "prior-v25 placement " + placementVersion +
-                    " intake preserves the existing coordinator, job and graph owner");
-            final PlayerSessionHistory afterHistory = beforeOwner == null ||
-                beforeOwner.getPhysicalBoardRuntime() == null ? null :
-                beforeOwner.getPhysicalBoardRuntime().getSessionHistory();
-            check(beforeHistory == afterHistory && (beforeHistory == null ||
-                    sameOperations(beforeHistoryOperations, afterHistory.operations())),
-                "prior-v25 placement " + placementVersion +
-                    " intake preserves any existing owner's session history");
+                RuntimeException saveFailure = null;
+                boolean coordinatorEntered = false;
+                try {
+                    PlayerSessionSave parsed = PlayerSessionSave.parse(priorWire);
+                    coordinatorEntered = true;
+                    coordinator.startSessionRestoreForQualification(request, parsed);
+                } catch (RuntimeException expected) { saveFailure = expected; }
+                check(saveFailure instanceof IllegalArgumentException &&
+                        saveFailure.getMessage() != null && saveFailure.getMessage().contains("epoch") &&
+                        !coordinatorEntered,
+                    "actual save parser rejects " + priorEpoch + " placement " + placementVersion +
+                        " before coordinator restore entry");
+                check(sim.generationCoordinator == coordinator && coordinator.getJob() == beforeJob &&
+                        sim.getGeneratedBoardInstance() == beforeOwner && sim.elmList == beforeElements,
+                    priorEpoch + " placement " + placementVersion +
+                        " intake preserves the existing coordinator, job and graph owner");
+                final PlayerSessionHistory afterHistory = beforeOwner == null ||
+                    beforeOwner.getPhysicalBoardRuntime() == null ? null :
+                    beforeOwner.getPhysicalBoardRuntime().getSessionHistory();
+                check(beforeHistory == afterHistory && (beforeHistory == null ||
+                        sameOperations(beforeHistoryOperations, afterHistory.operations())),
+                    priorEpoch + " placement " + placementVersion +
+                        " intake preserves any existing owner's session history");
+            }
         }
     }
 

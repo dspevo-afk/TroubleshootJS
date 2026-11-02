@@ -29,6 +29,7 @@ final class A07SolverDeveloperVerifier {
         started = System.currentTimeMillis();
         pureAssertions = A07ExecutionContractVectors.run();
         pureAssertions += LuFactorizationChecks.run();
+        pureAssertions += ReducedMatrixOrderingChecks.run();
         observations();
         settlementBoundaries();
         reentryAndIsolation();
@@ -321,6 +322,8 @@ final class A07SolverDeveloperVerifier {
         if (recordCase) record("real-" + mode);
     }
     private void scheduledState() {
+        assertions += ReducedMatrixOrderingRuntimeChecks.run();
+        assertions += ReducedMatrixOrderingRuntimeChecks.verifyParentIsolation(sim);
         String small = scheduledTrace(1), large = scheduledTrace(5);
         require(small.equals("123") && large.equals(small), "actual accepted-step events are independent of work batching");
         record("real-accepted-step-scheduling");

@@ -532,6 +532,7 @@ final class PhysicalSpecificationDeveloperVerifier {
 '@, (New-Object Text.UTF8Encoding($false)))
     $needsQ30NativeLoggerBridge = $Suite.Count -eq 0 -or $Suite -contains 'U05DifficultyContractTest' -or $Suite -contains 'ControlledSourceDerivativeContractTest' -or
         $Suite -contains 'Rb100ElectricalPilotContractTest' -or
+        $Suite -contains 'A07ExecutionContractTest' -or
         $Suite -contains 'PcbPlacementDiagnosticsContractTest' -or
         $Suite -contains 'Rb100P07PolicyDiagnosticContractTest' -or
         $Suite -contains 'Rb100P07BranchDiagnosticContractTest' -or
@@ -578,6 +579,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'SensorControlFamilyContractTest'
     $needsE06NativeBridge = $Suite.Count -eq 0 -or $Suite -contains 'U05DifficultyContractTest' -or $Suite -contains 'ControlledSourceDerivativeContractTest' -or $Suite -contains 'E06ConverterPilotContractTest' -or $Suite -contains 'E06AcceptedStateContractTest' -or
         $Suite -contains 'Rb100ElectricalPilotContractTest' -or
+        $Suite -contains 'A07ExecutionContractTest' -or
         $Suite -contains 'PcbPlacementDiagnosticsContractTest' -or
         $Suite -contains 'Rb100P07PolicyDiagnosticContractTest' -or
         $Suite -contains 'Rb100P07BranchDiagnosticContractTest' -or

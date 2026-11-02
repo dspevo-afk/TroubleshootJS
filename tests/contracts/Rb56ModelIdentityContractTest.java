@@ -186,7 +186,7 @@ public final class Rb56ModelIdentityContractTest {
     }
 
     private static void existingCanonicalBytes() throws Exception {
-        require("tsj-generation-dependencies-v26".equals(GenerationDependencyContext.INTERPRETATION_EPOCH) &&
+        require("tsj-generation-dependencies-v27".equals(GenerationDependencyContext.INTERPRETATION_EPOCH) &&
             "circuitjs-source-load-model-inputs-no-transient-dump-v7".equals(GenerationDependencyContext.CIRCUIT_DUMP_EPOCH),
             "E06, layout, and required-grid interpretation invalidate prior proof identities while model dump inputs remain exact");
         ResistorElm resistor = own(new ResistorElm(16, 32)); resistor.x2 = 80; resistor.resistance = 100;
