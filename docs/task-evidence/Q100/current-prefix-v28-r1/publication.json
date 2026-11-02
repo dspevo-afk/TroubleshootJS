@@ -1,0 +1,17 @@
+{
+  "schema": "current-prefix-publication-v1",
+  "implementationSha": "0f90adbfbecfd47f55f3647b211112fbc7c01d36",
+  "message": "Capture current NO_PATH prefixes and VIA ownership",
+  "localBranch": "codex/q100-v28-prefix-20261102",
+  "remote": "origin",
+  "remoteUrl": "https://github.com/dspevo-afk/TroubleshootJS.git",
+  "targetBranch": "codex/q100-physical-feasibility",
+  "push": "NORMAL_FAST_FORWARD",
+  "exactRemoteShaVerified": true,
+  "completionEmailId": "1a19e3cd68aac2ca",
+  "completionEmailSubject": "TroubleshootJS: current NO_PATH prefixes and VIA ownership pushed",
+  "completionEmailCount": 1,
+  "scope": "FINITE_PRIVATE_DIAGNOSTIC_ONLY",
+  "documentationReceipt": "FOLLOWS_IMPLEMENTATION_NO_SECOND_EMAIL",
+  "nextUnstarted": "Source-audit and freeze one generic bounded VIA-conservation/routing trial"
+}

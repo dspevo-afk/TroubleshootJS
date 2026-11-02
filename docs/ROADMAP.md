@@ -91,7 +91,7 @@ Next is fresh current26/v28 NO_PATH-prefix evidence and per-net VIA accounting
 before another deterministic routing treatment. Playable100 remains0; beta held.
 
 The [current26/v28 NO_PATH-prefix diagnostic](task-evidence/Q100/current-prefix-v28-r1/README.md)
-is locally accepted for its exact two authored branches. Both prefixes contain48
+is accepted and published for its exact two authored branches. Both prefixes contain48
 VIA holes. Shared requires at least1 more transition with allowance0; separate is
 unreachable even in the geometry-permissive fixed graph. Independent weighted
 reachability agrees. The conserved per-net ledger identifies actual prefix VIA
@@ -103,7 +103,7 @@ failures remain preserved. Production inputs1202 per variant are byte-identical;
 no fresh GWT/Player/electrical/normal3/full30 qualification is claimed. Next is one
 frozen generic VIA-conservation/routing experiment with actual physical/access/
 runtime proofs before adoption. Playable100 remains0; beta held; HARD unavailable.
-Publication receipt records the accepted SHA and one completion notification.
+Implementation 0f90adbfbecfd47f55f3647b211112fbc7c01d36 is verified on origin/codex/q100-physical-feasibility; completion Gmail 1a19e3cd68aac2ca was sent once.
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

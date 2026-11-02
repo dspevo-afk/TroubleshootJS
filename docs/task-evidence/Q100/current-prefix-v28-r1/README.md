@@ -80,3 +80,5 @@ experiment against these distinct findings, avoiding the rejected queue-objectiv
 source. Any adoption needs final-source physical/finalizer/clearance/connectivity/
 access and runtime/electrical/regression evidence; current graphs alone cannot
 supply it. No source edit for that treatment belongs to this milestone.
+
+Publication: implementation 0f90adbfbecfd47f55f3647b211112fbc7c01d36 verified on origin/codex/q100-physical-feasibility; Gmail 1a19e3cd68aac2ca sent once. The documentation receipt adds no new implementation or gate claim.
