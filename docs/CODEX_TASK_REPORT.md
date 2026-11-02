@@ -1,55 +1,51 @@
-# Current checkpoint: captured-witness diagnostic validated; publication pending
+# Current checkpoint: captured-witness diagnostic published; lower-bound scope next
 
-**VALIDATED, not yet published. Updated2026-11-02.** Work in
-I=OS-temp/tsj-b6-v27-20261102-r2, branch codex/q100-route-diagnosis-20261102,
-HEAD9df5dd450fd3023cab241a5de6c2233aa87c22a9. New Python-only diagnostic and
-controlled packet docs/task-evidence/Q100/fixed-prefix-route-diagnosis-r1 are
-complete. No production Java/native/build input, epoch or budget changed.
+**PUBLISHED. Updated2026-11-02.** Implementation
+25170c65c0b2d4030ebbf6c5472bc8a45b541dc2 (`Describe captured routing witness constraints`)
+was normally pushed to origin/codex/q100-physical-feasibility, exact SHA verified.
+Completion Gmail1a19d068838fd57d sent once; no duplicate for a doc-only receipt.
+Work in I=OS-temp/tsj-b6-v27-20261102-r2, branch
+codex/q100-route-diagnosis-20261102. Source parent9df5dd45. Current receipt HEAD
+is obtained from git; production/native/build inputs stay at accepted B6 source.
 
-PASS27 integrated literal/synthetic tests; actual selected CLI two positives and
-three rejection controls with correct exits and proved termination; real NTFS
-junction negative; final independent source/report review clear. A pre-run
-unpinned metrics-helper blocker was fixed and rejected source copy preserved.
-Production boundary audit PASS34 prior execution pins/1067 native inputs/
-Developer1202 inputs357 outputs/Player1202 inputs. Fresh native/GWT/Player/Current
-gates and manual Player input NOT APPLICABLE to this unchanged production scope.
-Current war is the accepted Developer188fc389/71d5d5b8 build, not Player output.
+Packet: docs/task-evidence/Q100/fixed-prefix-route-diagnosis-r1. PASS27 integrated
+synthetic tests, real selected CLI two positives/three negatives with expected
+exits/proved termination, real NTFS junction rejection and final independent
+source/report review. Pre-run metrics-pin blocker fixed, rejected sources kept.
+Audit PASS34 execution pins/1067 native inputs/Developer1202inputs357outputs/
+Player1202inputs unchanged. Fresh native/GWT/Player/Current/manual input gates
+NOT APPLICABLE to this Python-only scope. Current war Developer188fc389/71d5d5b8.
 
-On the exact accepted B6 graphs, the shared relaxed shortest witness adds hole49
-beyond48; the separate witness uses8 transitions beyond4. Each rejects only that
-particular path. All-path infeasibility and production search exhaustion cause
-remain unestablished. Production feasibility UNKNOWN, all acceptance flags false,
-accepted playable100 layouts0, public beta held. No full30/2x31 renewal.
+Shared relaxed shortest witness adds hole49 beyond48; separate uses8 transitions
+beyond4. These reject only those particular paths. Alternative-path infeasibility
+and production exhaustion cause unestablished. Production feasibility UNKNOWN,
+all acceptance flags false, accepted playable100 layouts0 and public beta held.
 
 S=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
-B=S/fixed-prefix-v27-r1 retains accepted raw B6 source/receipts/builds;
-D=S/fixed-prefix-route-diagnosis-r1 retains current exact CLI process identities,
-bounded timing/results, rejected control copies and unchanged-input audit.
-All five children terminated. No run-owned browser, preview or CLI remains live.
-Prior failure evidence/failed full checkout remain preserved; no broad cleanup.
+B=S/fixed-prefix-v27-r1 keeps accepted raw B6 inputs/receipts/builds;
+D=S/fixed-prefix-route-diagnosis-r1 keeps the exact current process/timing/result
+receipts, rejected control copies and unchanged-input audit. All five children
+terminated; no run-owned browser, preview or CLI remains active. Prior failures
+and failed full checkout remain preserved; no broad cleanup.
 
-B6ffcd2983/receipt9df5dd45 already published to origin/codex/q100-physical-feasibility,
-remote verified, Gmail1a19cdf5978f9027 sent once. Solvercad0799a/receipt9a6736e1/
-Gmail1a19c6d6151fe3ca remain published once. Do not duplicate those emails.
-Current diagnostic still needs explicit staging/diff review, commit, normal push
-to the established origin branch, exact remote verification and one new Gmail.
+Earlier B6ffcd2983/receipt9df5dd45/Gmail1a19cdf5978f9027 and solvercad0799a/
+receipt9a6736e1/Gmail1a19c6d6151fe3ca are published once. Preserve all raw evidence.
+Only three approved normal development roots/order with four candidates each
+are authorized. Rb56ManifestContractTest full30 export EXCLUDED/unrun by owner.
+HARD/PSYCHOTIC unavailable/unrun; protected data not opened/run by this scope.
+Prior unread certification UNCERTIFIED and materialization incident disclosed;
+no unmaterialized-data claim. Original90s/640/5s/500ms/P07caps/15s/120s unchanged.
+CI still needs the approved self-hosted runner registered.
 
-Only the three approved normal development roots/order with four candidates each
-are authorized. Rb56ManifestContractTest full30 export explicitly EXCLUDED/unrun.
-HARD/PSYCHOTIC unavailable/unrun; protected data not opened/run by this diagnostic.
-Historical unread certification UNCERTIFIED, prior materialization incident
-disclosed; no unmaterialized-data claim. All original90s/640/5s/500ms/P07caps/
-15s/120s limits remain. CI needs the approved self-hosted runner registered.
+Main at5f05b005(9tracked/6new), Wprivate40 at5f05b005(7/8), Desktop e0c36885(7/89),
+P at9a6736e1 clean; all-untracked counts. Main11 implementation inputs preserved;
+stashes/branches/ambient8928 untouched. Main checkpoint is the resume pointer;
+do not pull/reset the dirty checkouts. Continue in I.
 
-Main at5f05b005 with9tracked/6new preserved B6 changes; Wprivate40 at5f05b005(7/8),
-Desktop e0c36885(7/89), P at9a6736e1 clean. Counts include all untracked files.
-Main's11 implementation inputs remain preserved; stashes/branches/ambient8928
-untouched. Main checkpoint is resume pointer; do not pull/reset dirty checkouts.
-
-NEXT after publication: freeze and independently test a minimum-via lower-bound
-diagnostic on only the same two graphs before choosing any routing treatment.
-Production replay/finalizer/clearance/connectivity/access and electrical runtime/
-solvability proofs remain required for later playable100 qualification.
+NEXT: freeze and independently test a minimum-via lower-bound diagnostic on only
+the same two captured graphs before choosing any routing treatment. Real route
+replay/finalizer/clearance/connectivity/access and electrical runtime/solvability
+proofs remain required for later playable100 qualification.
 
 
 # Historical checkpoint: B6 observation publication and acceptance
