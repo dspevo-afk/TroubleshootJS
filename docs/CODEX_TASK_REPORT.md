@@ -1,4 +1,58 @@
-# Current checkpoint: B6 observation published; routing diagnosis next
+# Current checkpoint: captured-witness diagnostic validated; publication pending
+
+**VALIDATED, not yet published. Updated2026-11-02.** Work in
+I=OS-temp/tsj-b6-v27-20261102-r2, branch codex/q100-route-diagnosis-20261102,
+HEAD9df5dd450fd3023cab241a5de6c2233aa87c22a9. New Python-only diagnostic and
+controlled packet docs/task-evidence/Q100/fixed-prefix-route-diagnosis-r1 are
+complete. No production Java/native/build input, epoch or budget changed.
+
+PASS27 integrated literal/synthetic tests; actual selected CLI two positives and
+three rejection controls with correct exits and proved termination; real NTFS
+junction negative; final independent source/report review clear. A pre-run
+unpinned metrics-helper blocker was fixed and rejected source copy preserved.
+Production boundary audit PASS34 prior execution pins/1067 native inputs/
+Developer1202 inputs357 outputs/Player1202 inputs. Fresh native/GWT/Player/Current
+gates and manual Player input NOT APPLICABLE to this unchanged production scope.
+Current war is the accepted Developer188fc389/71d5d5b8 build, not Player output.
+
+On the exact accepted B6 graphs, the shared relaxed shortest witness adds hole49
+beyond48; the separate witness uses8 transitions beyond4. Each rejects only that
+particular path. All-path infeasibility and production search exhaustion cause
+remain unestablished. Production feasibility UNKNOWN, all acceptance flags false,
+accepted playable100 layouts0, public beta held. No full30/2x31 renewal.
+
+S=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
+B=S/fixed-prefix-v27-r1 retains accepted raw B6 source/receipts/builds;
+D=S/fixed-prefix-route-diagnosis-r1 retains current exact CLI process identities,
+bounded timing/results, rejected control copies and unchanged-input audit.
+All five children terminated. No run-owned browser, preview or CLI remains live.
+Prior failure evidence/failed full checkout remain preserved; no broad cleanup.
+
+B6ffcd2983/receipt9df5dd45 already published to origin/codex/q100-physical-feasibility,
+remote verified, Gmail1a19cdf5978f9027 sent once. Solvercad0799a/receipt9a6736e1/
+Gmail1a19c6d6151fe3ca remain published once. Do not duplicate those emails.
+Current diagnostic still needs explicit staging/diff review, commit, normal push
+to the established origin branch, exact remote verification and one new Gmail.
+
+Only the three approved normal development roots/order with four candidates each
+are authorized. Rb56ManifestContractTest full30 export explicitly EXCLUDED/unrun.
+HARD/PSYCHOTIC unavailable/unrun; protected data not opened/run by this diagnostic.
+Historical unread certification UNCERTIFIED, prior materialization incident
+disclosed; no unmaterialized-data claim. All original90s/640/5s/500ms/P07caps/
+15s/120s limits remain. CI needs the approved self-hosted runner registered.
+
+Main at5f05b005 with9tracked/6new preserved B6 changes; Wprivate40 at5f05b005(7/8),
+Desktop e0c36885(7/89), P at9a6736e1 clean. Counts include all untracked files.
+Main's11 implementation inputs remain preserved; stashes/branches/ambient8928
+untouched. Main checkpoint is resume pointer; do not pull/reset dirty checkouts.
+
+NEXT after publication: freeze and independently test a minimum-via lower-bound
+diagnostic on only the same two graphs before choosing any routing treatment.
+Production replay/finalizer/clearance/connectivity/access and electrical runtime/
+solvability proofs remain required for later playable100 qualification.
+
+
+# Historical checkpoint: B6 observation publication and acceptance
 
 **PUBLISHED. Updated2026-11-02.** Implementation
 `ffcd2983b3b730e08fb7d7a57db16c3b6fd32d33` (`Observe actual Q100 failed routing prefixes`)

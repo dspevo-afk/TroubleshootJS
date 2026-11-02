@@ -256,6 +256,19 @@ termination, while its witness output has a64-state prefix and full-path digest.
 Literal fixtures and independent tiny-graph Floyd-Warshall comparisons qualify
 this test tool only.
 
+The separate test-only witness metrics module consumes that oracle's complete
+in-memory witness and validates its edges, cost and digest. It describes turns
+with direction reset after a VIA, transition count, the all-hole budget and the
+strict open-square via-spacing predicate. Spacing work is bounded and incomplete
+checks stay explicit. Its strict CLI pins both helper sources and the complete
+previously accepted B6 summary/receipt before graph interpretation, accepts only
+the two recorded authored cases and emits bounded metrics without full paths.
+These checks do not run another search or replay the production router. Every
+result retains UNKNOWN production feasibility and false route/layout/electrical/
+Q100 acceptance, including a result whose reported subset checks all conform.
+The [diagnostic packet](task-evidence/Q100/fixed-prefix-route-diagnosis-r1/README.md)
+records the two particular witnesses and does not exclude alternative paths.
+
 The private `beginWithFixedPrefixObservation` generator entry point binds exact
 layout/routing seeds, the complete priority-ordered eligible placement list,
 actual selected attempt/request and raw placement fingerprint. Its P07 observer

@@ -47,6 +47,17 @@ Accepted playable100 layouts remain
 zero; next is a frozen routing diagnosis/treatment scope using these graphs,
 followed by real finalizer/clearance/connectivity/access and functional proofs.
 
+The [captured-witness history diagnostic](task-evidence/Q100/fixed-prefix-route-diagnosis-r1/README.md)
+is accepted for the exact two B6 graphs. The shared relaxed shortest witness
+would add hole49 beyond the48-hole limit; the separate witness uses8 transitions
+against FULLER's4. These findings reject those particular paths and establish
+neither all-path infeasibility nor the cause of production search exhaustion.
+The Python-only tool passes27 synthetic tests and five real selected CLI
+controls. An audit confirms all consumed production/native/build inputs remain
+unchanged; no production gate or population qualification is renewed. Next is
+minimum-via or constraint-aware alternative-path analysis under the existing
+limits before choosing a routing treatment. Playable100 layouts remain zero.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion
