@@ -542,6 +542,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'P07GeometryEpochDiagnosticContractTest' -or
         $Suite -contains 'PcbCorridorOrientationContractTest' -or
         $Suite -contains 'P07GridEligibilityContractTest' -or
+        $Suite -contains 'P07FixedPrefixObservationContractTest' -or
+        $Suite -contains 'Rb100FixedPrefixCaptureContractTest' -or
         $Suite -contains 'PhysicalServiceabilityContractTest' -or
         $Suite -contains 'PcbRoleWidthOwnerIdentityContractTest' -or
         $Suite -contains 'InductorAcceptedStateContractTest' -or
@@ -589,6 +591,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'P07GeometryEpochDiagnosticContractTest' -or
         $Suite -contains 'PcbCorridorOrientationContractTest' -or
         $Suite -contains 'P07GridEligibilityContractTest' -or
+        $Suite -contains 'P07FixedPrefixObservationContractTest' -or
+        $Suite -contains 'Rb100FixedPrefixCaptureContractTest' -or
         $Suite -contains 'PhysicalServiceabilityContractTest' -or
         $Suite -contains 'PcbRoleWidthOwnerIdentityContractTest' -or
         $Suite -contains 'Rb56PowerStageContractTest' -or $Suite -contains 'Rb56ModelIdentityContractTest' -or
@@ -1006,6 +1010,8 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         @{ Name = 'P07GeometryEpochDiagnosticContractTest'; Marker = 'P07 geometry epoch diagnostic contracts ' },
         @{ Name = 'P07ReachedPthContractTest'; Marker = 'P07 reached PTH contracts ' },
         @{ Name = 'P07LayeredRasterOracleContractTest'; Marker = 'P07 layered raster oracle contracts ' },
+        @{ Name = 'P07FixedPrefixObservationContractTest'; Marker = 'P07 fixed-prefix observation contracts ' },
+        @{ Name = 'Rb100FixedPrefixCaptureContractTest'; Marker = 'RB100 fixed-prefix capture contracts ' },
         @{ Name = 'PcbLayerRoutingResumptionContractTest'; Marker = 'Pcb layer routing resumption contracts ' },
         @{ Name = 'P08ScalabilityContractTest'; Marker = 'P08 scalable physical contracts ' },
         @{ Name = 'P08ReferenceWidthContractTest'; Marker = 'P08 reference width contracts ' },
@@ -1608,9 +1614,10 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         # The NEW P07 54-row structural comparison has its own explicit ten-minute budget.
         # Dense packing deliberately keeps two separate 60s children (maximum 120s logical census).
         # Existing suites retain their original one-minute bounds.
-        # Each current private P07 observation has two independently bounded
-        # 90s operations and 120s cleanups; the aggregate allowance changes no case limit.
-        $testBudget = if ($testClass -eq 'P07GeometryEpochDiagnosticContractTest') { 180000 } elseif ($testClass -in @('Rb100P07PolicyDiagnosticContractTest','Rb100P07BranchDiagnosticContractTest')) { 480000 } elseif ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100FaultMatrix) { 1200000 } elseif ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100DiagnosticFault) { 240000 } elseif ($testClass -eq 'P07LayerCorpus') { 600000 } elseif ($testClass -in @('P09EnvelopeCorpus','QuickPlayPhysicalMatrixContractTest')) { 180000 } elseif ($testClass -in @('QuickPlayGateCorpus','QuickPlayGateHoldoutCorpus')) { 600000 } else { 60000 }
+        # Existing private P07 observations have two independently bounded
+        # 90s operations and 120s cleanups. The new fixed-prefix pair has four operations
+        # and a 900s aggregate (4*(90+120)+60); no per-case or existing suite limit changes.
+        $testBudget = if ($testClass -eq 'Rb100FixedPrefixCaptureContractTest') { 900000 } elseif ($testClass -eq 'P07GeometryEpochDiagnosticContractTest') { 180000 } elseif ($testClass -in @('Rb100P07PolicyDiagnosticContractTest','Rb100P07BranchDiagnosticContractTest')) { 480000 } elseif ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100FaultMatrix) { 1200000 } elseif ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100DiagnosticFault) { 240000 } elseif ($testClass -eq 'P07LayerCorpus') { 600000 } elseif ($testClass -in @('P09EnvelopeCorpus','QuickPlayPhysicalMatrixContractTest')) { 180000 } elseif ($testClass -in @('QuickPlayGateCorpus','QuickPlayGateHoldoutCorpus')) { 600000 } else { 60000 }
         $tested = Invoke-VerifierBoundedProcess $java $testArguments $testBudget
         Write-Host $tested.Stdout
         if ($tested.Stderr) { Write-Host $tested.Stderr }

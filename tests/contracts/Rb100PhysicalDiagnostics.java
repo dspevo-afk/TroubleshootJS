@@ -129,6 +129,61 @@ public final class Rb100PhysicalDiagnostics {
             "\"layoutQualification\":false}");
     }
 
+    /** Actual-generator null/capture pairs for the opt-in fixed-prefix graph seam. */
+    static void runFixedPrefixCaptureContracts() {
+        long suiteStarted=System.nanoTime();
+        int beforeAssertions=assertions;
+        final String runId=UUID.randomUUID().toString();
+        Rb100Plan.Variant[] authored=variants();
+        P07PolicyDiagnosticCase[][] results=new P07PolicyDiagnosticCase[2][2];
+        int failures=0;
+        String[] operationIds={"SHARED_NULL","SHARED_CAPTURE","SEPARATE_NULL","SEPARATE_CAPTURE"};
+        for(int variantIndex=0;variantIndex<authored.length;variantIndex++) {
+            Rb100Plan.Variant variant=authored[variantIndex];
+            P07PolicyDiagnosticCase baseline=runP07PolicyDiagnosticCase(
+                variant,runId,null,null,"NULL",operationIds[variantIndex*2]);
+            results[variantIndex][0]=baseline;
+            System.out.println("RB100_FIXED_PREFIX_CAPTURE_OPERATION "+
+                fixedPrefixOperationJson(baseline,"NULL",operationIds[variantIndex*2]));
+            if(!"PASS".equals(baseline.status)) failures++;
+
+            FixedPrefixCaptureCollector capture=new FixedPrefixCaptureCollector(
+                variant,runId,operationIds[variantIndex*2+1]);
+            P07PolicyDiagnosticCase observed=runP07PolicyDiagnosticCase(
+                variant,runId,capture,baseline,"CAPTURE",operationIds[variantIndex*2+1]);
+            results[variantIndex][1]=observed;
+            System.out.println("RB100_FIXED_PREFIX_CAPTURE_OPERATION "+
+                fixedPrefixOperationJson(observed,"CAPTURE",operationIds[variantIndex*2+1]));
+            if(!"PASS".equals(observed.status)) failures++;
+            String pair=fixedPrefixPairJson(baseline,observed,variant,runId,
+                operationIds[variantIndex*2],operationIds[variantIndex*2+1]);
+            System.out.println("RB100_FIXED_PREFIX_CAPTURE_PAIR "+pair);
+            if(!fixedPrefixPairPassed(baseline,observed,variant)) failures++;
+        }
+        long suiteMillis=nanosToMillis(System.nanoTime()-suiteStarted);
+        if(suiteMillis>900000L) failures++;
+        if(failures!=0 || authored.length!=2) {
+            System.out.println("RB100_FIXED_PREFIX_CAPTURE_SUMMARY {\"status\":\"FAIL\",\"operations\":4,"+
+                "\"expectedOperations\":4,\"failures\":"+failures+",\"runId\":\""+
+                jsonFull(runId)+"\",\"suiteMs\":"+suiteMillis+
+                ",\"layoutQualification\":false}");
+            throw new AssertionError("RB100 fixed-prefix capture failures="+failures);
+        }
+        System.out.println("PASS: RB100 fixed-prefix capture contracts {\"status\":\"PASS\",\"operations\":4,"+
+            "\"nullOperations\":2,\"captureOperations\":2,\"pairs\":2,\"graphs\":2,"+
+            "\"authoredVariants\":2,\"variants\":[\"SHARED_HYSTERETIC_LINEAR\",\"SEPARATE_DIRECT_SWITCHING\"],"+
+            "\"runId\":\""+jsonFull(runId)+"\",\"rootSeed\":\""+SEED+
+            "\",\"placementSeed\":\""+PLACEMENT_DIAGNOSTIC_SEED+"\",\"routingSeed\":\""+
+            ROUTING_DIAGNOSTIC_ROUTING_SEED+"\",\"layoutVersion\":"+
+            SeededPcbLayoutGenerator.CURRENT_VERSION+",\"dependencyEpoch\":\""+
+            jsonFull(GenerationDependencyContext.INTERPRETATION_EPOCH)+"\",\"planVersion\":"+
+            Rb100Plan.PLAN_VERSION+",\"modelVersion\":"+Rb100Plan.MODEL_VERSION+
+            ",\"physicalIntentVersion\":"+Rb100Placement.INTENT_VERSION+",\"assertions\":"+
+            (assertions-beforeAssertions)+",\"suiteMs\":"+suiteMillis+
+            ",\"suiteLimitMs\":900000"+
+            ",\"scope\":\"OBSERVATIONAL_ACTUAL_GENERATOR_FIXED_PREFIX_CAPTURE_ONLY\",\"layoutQualification\":false}");
+    }
+
     static void runP07BranchDiagnosticContracts() {
         long suiteStarted = System.nanoTime();
         int beforeAssertions = assertions;
@@ -194,10 +249,20 @@ public final class Rb100PhysicalDiagnostics {
 
     private static P07PolicyDiagnosticCase runP07PolicyDiagnosticCase(
             final Rb100Plan.Variant variant, String runId) {
+        return runP07PolicyDiagnosticCase(variant,runId,null,null,"LEGACY",null);
+    }
+
+    private static P07PolicyDiagnosticCase runP07PolicyDiagnosticCase(
+            final Rb100Plan.Variant variant,String runId,
+            final FixedPrefixCaptureCollector captureCollector,
+            final P07PolicyDiagnosticCase expectedNull,final String mode,final String operationId) {
         final long operationStarted = System.nanoTime();
         final Budget budget = new Budget(operationStarted);
         final P07PolicyDiagnosticCase result = new P07PolicyDiagnosticCase(
             variant.name(), SEED, runId);
+        result.fixedPrefixMode=mode;
+        result.fixedPrefixOperationId=operationId;
+        result.fixedPrefixCollector=captureCollector;
         final NativeContext[] context = new NativeContext[1];
         final Rb100Plan[] plan = new Rb100Plan[1];
         final Rb100ElectricalPilot.Candidate[] candidate =
@@ -311,8 +376,10 @@ public final class Rb100PhysicalDiagnostics {
                 public void run() {
                     generator[0] = new SeededPcbLayoutGenerator(
                         StandardPcbFootprintProviders.createRegistry(), observer);
-                    session[0] = generator[0].begin(candidate[0].board(),
-                        result.placementSeed, result.routingSeed);
+                    session[0] = captureCollector == null ?
+                        generator[0].begin(candidate[0].board(),result.placementSeed,result.routingSeed) :
+                        generator[0].beginWithFixedPrefixObservation(candidate[0].board(),
+                            result.placementSeed,result.routingSeed,captureCollector);
                 }
             });
 
@@ -371,9 +438,42 @@ public final class Rb100PhysicalDiagnostics {
                     result.solverGraphIdentityStatus = "PASS";
                     result.boardIdentityStatus = "PASS";
                     result.captureLayoutOutput();
+                    if(captureCollector==null) {
+                        if("NULL".equals(mode))
+                            requireExpectedFixedPrefixPlacement(variant,policyResult[0].getStatistics());
+                    } else {
+                        require(expectedNull!=null && "PASS".equals(expectedNull.status) &&
+                            expectedNull.policyResult!=null && expectedNull.policyResult.getStatistics()!=null,
+                            "capture run has its terminal null-observer actual-generator baseline");
+                        requireExpectedFixedPrefixPlacement(variant,policyResult[0].getStatistics());
+                        requireFixedPrefixPairParity(expectedNull,result);
+                        captureCollector.requireComplete(result);
+                    }
                     return null;
                 }
             });
+            if(captureCollector!=null) {
+                result.phase="FIXED_PREFIX_GRAPH_SERIALIZATION";
+                valueUnit(budget,"p07-fixed-prefix-graph-serialization-and-emission",
+                    new UnitValue<Object>() {
+                        public Object run() {
+                            long serializationStarted=System.nanoTime();
+                            FixedPrefixGraphEmission emission=serializeFixedPrefixGraph(
+                                captureCollector,variant);
+                            result.fixedPrefixGraphCaseId=emission.caseId;
+                            result.fixedPrefixGraphSha256=emission.sha256;
+                            result.fixedPrefixGraphBytes=emission.bytes;
+                            result.fixedPrefixSerializationMillis=nanosToMillis(
+                                System.nanoTime()-serializationStarted);
+                            System.out.println("P07_FIXED_PREFIX_GRAPH_DATA "+emission.payload);
+                            System.out.println("P07_FIXED_PREFIX_CAPTURE_FACT "+
+                                fixedPrefixCaptureFactJson(result,captureCollector,
+                                    emission,result.fixedPrefixSerializationMillis,
+                                    operationId,mode));
+                            return null;
+                        }
+                    });
+            }
         } catch (RuntimeException failure) {
             result.failurePhase = result.phase;
             result.failure = failure;
@@ -408,6 +508,321 @@ public final class Rb100PhysicalDiagnostics {
             result.workUnits <= WORK_LIMIT && result.maxUnitMillis <=
                 nanosToMillis(UNIT_LIMIT_NANOS) ? "PASS" : "FAIL";
         return result;
+    }
+
+    private static void requireExpectedFixedPrefixPlacement(Rb100Plan.Variant variant,
+            MediumBoardPhysicalPolicy.Statistics statistics) {
+        int[] expected=expectedFixedPrefixEligibleAttempts(variant);
+        require(statistics!=null && statistics.routeEligiblePlacementAttempts.size()==expected.length,
+            "actual generator request retains the frozen post-priority eligible placement census");
+        for(int i=0;i<expected.length;i++)
+            require(statistics.routeEligiblePlacementAttempts.get(i).intValue()==expected[i],
+                "actual generator keeps the exact post-priority eligible placement order");
+        require(firstP07RequestAttempt(statistics)==4,
+            "actual first required-P07 request selects eligible placement attempt4 without a forced selector");
+    }
+
+    private static int[] expectedFixedPrefixEligibleAttempts(Rb100Plan.Variant variant) {
+        if(variant==Rb100Plan.Variant.SHARED_HYSTERETIC_LINEAR)
+            return new int[]{4,2,0,1,3};
+        if(variant==Rb100Plan.Variant.SEPARATE_DIRECT_SWITCHING)
+            return new int[]{4,2,3,0,1};
+        throw new IllegalArgumentException("Unknown authored fixed-prefix variant");
+    }
+
+    private static int firstP07RequestAttempt(MediumBoardPhysicalPolicy.Statistics statistics) {
+        if(statistics==null) return -1;
+        String prefix=MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER+"@";
+        for(String outcome:statistics.routeOutcomes) if(outcome.startsWith(prefix)) {
+            int end=outcome.indexOf('=',prefix.length());
+            if(end<=prefix.length()) return -1;
+            try { return Integer.parseInt(outcome.substring(prefix.length(),end)); }
+            catch(NumberFormatException malformed) { return -1; }
+        }
+        return -1;
+    }
+
+    private static void requireFixedPrefixPairParity(P07PolicyDiagnosticCase baseline,
+            P07PolicyDiagnosticCase observed) {
+        require(baseline!=null && observed!=null && baseline.policyResult!=null &&
+            observed.policyResult!=null && baseline.policyResult.getStatistics()!=null &&
+            observed.policyResult.getStatistics()!=null,
+            "null/capture pair has complete actual generator results");
+        MediumBoardPhysicalPolicy.Statistics first=baseline.policyResult.getStatistics();
+        MediumBoardPhysicalPolicy.Statistics second=observed.policyResult.getStatistics();
+        require(first.toCanonical().equals(second.toCanonical()),
+            "fixed-prefix observation preserves the full deterministic medium policy receipt");
+        require(baseline.inputMetadata!=null &&
+            baseline.inputMetadata.sameAs(observed.inputMetadata),
+            "null/capture pair preserves the actual medium placement and routing inputs");
+        require(baseline.sessionTerminalStatus.equals(observed.sessionTerminalStatus) &&
+            baseline.layoutOutputJson.equals(observed.layoutOutputJson),
+            "fixed-prefix observation preserves terminal session status and exact layout output");
+    }
+
+    private static boolean fixedPrefixPairPassed(P07PolicyDiagnosticCase baseline,
+            P07PolicyDiagnosticCase observed,Rb100Plan.Variant variant) {
+        if(baseline==null || observed==null || baseline.policyResult==null ||
+                observed.policyResult==null || baseline.policyResult.getStatistics()==null ||
+                observed.policyResult.getStatistics()==null) return false;
+        MediumBoardPhysicalPolicy.Statistics first=baseline.policyResult.getStatistics();
+        MediumBoardPhysicalPolicy.Statistics second=observed.policyResult.getStatistics();
+        return "PASS".equals(baseline.status) && "PASS".equals(observed.status) &&
+            baseline.inputMetadata!=null && baseline.inputMetadata.sameAs(observed.inputMetadata) &&
+            sameIntVector(first.routeEligiblePlacementAttempts,second.routeEligiblePlacementAttempts) &&
+            firstP07RequestAttempt(first)==firstP07RequestAttempt(second) &&
+            first.routeOutcomes.equals(second.routeOutcomes) &&
+            primaryRoutingOrders(first)==primaryRoutingOrders(second) &&
+            primaryRoutingExpansions(first)==primaryRoutingExpansions(second) &&
+            first.toCanonical().equals(second.toCanonical()) &&
+            baseline.sessionTerminalStatus.equals(observed.sessionTerminalStatus) &&
+            baseline.layoutOutputJson.equals(observed.layoutOutputJson) &&
+            sameExpectedEligible(first.routeEligiblePlacementAttempts,variant);
+    }
+
+    private static String fixedPrefixPairJson(P07PolicyDiagnosticCase baseline,
+            P07PolicyDiagnosticCase observed,Rb100Plan.Variant variant,String runId,
+            String nullOperationId,String captureOperationId) {
+        MediumBoardPhysicalPolicy.Statistics first=statistics(baseline);
+        MediumBoardPhysicalPolicy.Statistics second=statistics(observed);
+        boolean eligible=first!=null && second!=null && sameIntVector(
+            first.routeEligiblePlacementAttempts,second.routeEligiblePlacementAttempts);
+        boolean firstRequest=first!=null && second!=null &&
+            firstP07RequestAttempt(first)==firstP07RequestAttempt(second);
+        boolean outcomes=first!=null && second!=null && first.routeOutcomes.equals(second.routeOutcomes);
+        boolean orders=first!=null && second!=null && primaryRoutingOrders(first)==primaryRoutingOrders(second);
+        boolean expansions=first!=null && second!=null &&
+            primaryRoutingExpansions(first)==primaryRoutingExpansions(second);
+        boolean canonicalAndTerminal=first!=null && second!=null &&
+            first.toCanonical().equals(second.toCanonical()) &&
+            baseline!=null && observed!=null && baseline.inputMetadata!=null &&
+            baseline.inputMetadata.sameAs(observed.inputMetadata) &&
+            baseline.sessionTerminalStatus.equals(observed.sessionTerminalStatus);
+        boolean layout=baseline!=null && observed!=null &&
+            baseline.layoutOutputJson.equals(observed.layoutOutputJson);
+        boolean pass=fixedPrefixPairPassed(baseline,observed,variant);
+        return "{\"protocolVersion\":1,\"runId\":\""+jsonFull(runId)+
+            "\",\"variant\":\""+variant.name()+"\",\"nullOperationId\":\""+
+            nullOperationId+"\",\"captureOperationId\":\""+captureOperationId+
+            "\",\"eligiblePlacementAttemptsEqual\":"+eligible+
+            ",\"firstP07RequestAttemptEqual\":"+firstRequest+
+            ",\"routeOutcomesEqual\":"+outcomes+
+            ",\"primaryRoutingOrdersEqual\":"+orders+
+            ",\"primaryRoutingExpansionsEqual\":"+expansions+
+            ",\"policyCanonicalAndTerminalEqual\":"+canonicalAndTerminal+
+            ",\"layoutOutputEqual\":"+layout+
+            ",\"status\":\""+(pass?"PASS":"FAIL")+"\",\"parityStatus\":\""+
+            (pass?"PASS":"FAIL")+"\",\"scope\":\"OBSERVATIONAL_NULL_CAPTURE_PARITY_ONLY\","+
+            "\"layoutQualification\":false}";
+    }
+
+    private static MediumBoardPhysicalPolicy.Statistics statistics(P07PolicyDiagnosticCase result) {
+        return result==null || result.policyResult==null?null:result.policyResult.getStatistics();
+    }
+
+    private static int primaryRoutingOrders(MediumBoardPhysicalPolicy.Statistics statistics) {
+        return statistics.routingOrders-(statistics.packingProbe==null?0:statistics.packingProbe.orderings);
+    }
+
+    private static int primaryRoutingExpansions(MediumBoardPhysicalPolicy.Statistics statistics) {
+        return statistics.routingExpansions-(statistics.packingProbe==null?0:statistics.packingProbe.expansions);
+    }
+
+    private static boolean sameExpectedEligible(Vector<Integer> attempts,Rb100Plan.Variant variant) {
+        int[] expected=expectedFixedPrefixEligibleAttempts(variant);
+        if(attempts==null || attempts.size()!=expected.length) return false;
+        for(int i=0;i<expected.length;i++) if(attempts.get(i).intValue()!=expected[i]) return false;
+        return true;
+    }
+
+    private static boolean sameIntVector(Vector<Integer> first,Vector<Integer> second) {
+        return first!=null && first.equals(second);
+    }
+
+    private static String fixedPrefixOperationJson(P07PolicyDiagnosticCase result,
+            String mode,String operationId) {
+        MediumBoardPhysicalPolicy.Statistics statistics=result.policyResult==null?
+            null:result.policyResult.getStatistics();
+        String canonical=statistics==null?"":statistics.toCanonical();
+        return "{\"protocolVersion\":1,\"runId\":\""+jsonFull(result.runId)+
+            "\",\"operationId\":\""+jsonFull(operationId)+"\",\"variant\":\""+
+            jsonFull(result.subject)+"\",\"mode\":\""+mode+"\",\"status\":\""+
+            result.status+"\",\"terminalStatus\":\""+jsonFull(result.sessionTerminalStatus)+
+            "\",\"policyOutcome\":"+(statistics==null?"null":"\""+jsonFull(statistics.outcome)+"\"")+
+            ",\"selectedRoutePolicy\":"+(statistics==null?"null":nullableString(statistics.selectedRoutePolicy))+
+            ",\"policySelectedPlacementAttempt\":"+(statistics==null?-1:statistics.selectedPlacementAttempt)+
+            ",\"firstP07RequestAttempt\":"+firstP07RequestAttempt(statistics)+
+            ",\"routeEligiblePlacementAttempts\":"+integerVectorJson(statistics==null?
+                new Vector<Integer>():statistics.routeEligiblePlacementAttempts)+
+            ",\"routeEligibilitySkips\":"+stringVectorJson(statistics==null?
+                new Vector<String>():statistics.routeEligibilitySkips)+
+            ",\"routeOutcomes\":"+stringVectorJson(statistics==null?
+                new Vector<String>():statistics.routeOutcomes)+
+            ",\"primaryRoutingOrders\":"+(statistics==null?0:primaryRoutingOrders(statistics))+
+            ",\"primaryRoutingExpansions\":"+(statistics==null?0:primaryRoutingExpansions(statistics))+
+            ",\"policyCanonicalLength\":"+canonical.length()+
+            ",\"policyCanonicalSha256\":\""+sha256Hex(canonical)+"\",\"policyCanonical\":\""+
+            jsonFull(canonical)+"\",\"layoutOutput\":"+result.layoutOutputJson+
+            ",\"components\":"+result.components+",\"pads\":"+result.pads+
+            ",\"nets\":"+result.nets+",\"rootSeed\":\""+result.seed+
+            "\",\"placementSeed\":\""+result.placementSeed+"\",\"routingSeed\":\""+
+            result.routingSeed+"\",\"layoutVersion\":"+SeededPcbLayoutGenerator.CURRENT_VERSION+
+            ",\"dependencyEpoch\":\""+jsonFull(GenerationDependencyContext.INTERPRETATION_EPOCH)+
+            "\",\"planVersion\":"+Rb100Plan.PLAN_VERSION+",\"modelVersion\":"+
+            Rb100Plan.MODEL_VERSION+",\"physicalIntentVersion\":"+Rb100Placement.INTENT_VERSION+
+            ",\"operationMs\":"+result.operationMillis+",\"cleanupMs\":"+result.cleanupMillis+
+            ",\"cleanupStatus\":\""+(result.cleanupPassed?"PASS":"FAIL")+
+            "\",\"workUnits\":"+result.workUnits+",\"maxUnitMs\":"+result.maxUnitMillis+
+            ",\"failurePhase\":\""+jsonFull(result.failurePhase)+"\",\"failureType\":\""+
+            jsonFull(typedFailure(result.failure))+"\",\"cleanupFailureType\":\""+
+            jsonFull(typedFailure(result.cleanupFailure))+"\",\"scope\":\"OBSERVATIONAL_ACTUAL_GENERATOR_FIXED_PREFIX_CAPTURE_ONLY\","+
+            "\"layoutQualification\":false}";
+    }
+
+    private static String fixedPrefixCaptureFactJson(P07PolicyDiagnosticCase result,
+            FixedPrefixCaptureCollector collector,FixedPrefixGraphEmission emission,
+            long serializationElapsedMillis,String operationId,String mode) {
+        PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot graph=collector.snapshot;
+        PcbLayerRoutingPrototype.FixedPrefixBranchLineage lineage=collector.selected;
+        PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=lineage.context();
+        int[] eligible=context.eligiblePlacementAttempts();
+        int[] holeCounts=lineage.prefixHoleCountsByKind();
+        StringBuilder holes=new StringBuilder("[");
+        for(int i=0;i<lineage.prefixHoleCount();i++) {
+            if(i>0) holes.append(',');
+            PcbLayerRoutingPrototype.FixedPrefixHole hole=lineage.prefixHole(i);
+            holes.append("{\"id\":\"").append(jsonFull(hole.id())).append("\",\"netId\":")
+                .append(hole.netId()==null?"null":"\""+jsonFull(hole.netId())+"\"")
+                .append(",\"kind\":\"").append(hole.kind().name())
+                .append("\",\"x\":").append(hole.x()).append(",\"y\":").append(hole.y())
+                .append(",\"drillRadius\":").append(hole.drillRadius())
+                .append(",\"landRadius\":").append(hole.landRadius()).append(",\"exposure\":")
+                .append(hole.exposure()==null?"null":"\""+hole.exposure().name()+"\"").append('}');
+        }
+        holes.append(']');
+        int goalsTop=0,goalsBottom=0;
+        for(int cell=0;cell<graph.cellCount();cell++) {
+            if(graph.goalAt(PcbCopperLayer.TOP.ordinal(),cell)) goalsTop++;
+            if(graph.goalAt(PcbCopperLayer.BOTTOM.ordinal(),cell)) goalsBottom++;
+        }
+        String raw=context.rawPlacementFingerprint();
+        String prefix=lineage.prefixGeometryFingerprint();
+        return "{\"protocolVersion\":1,\"runId\":\""+jsonFull(result.runId)+
+            "\",\"operationId\":\""+jsonFull(operationId)+"\",\"mode\":\""+mode+
+            "\",\"variant\":\""+jsonFull(result.subject)+"\",\"rootSeed\":\""+result.seed+
+            "\",\"placementSeed\":\""+context.layoutSeed()+"\",\"routingSeed\":\""+
+            context.routingSeed()+"\",\"layoutVersion\":"+SeededPcbLayoutGenerator.CURRENT_VERSION+
+            ",\"dependencyEpoch\":\""+jsonFull(GenerationDependencyContext.INTERPRETATION_EPOCH)+
+            "\",\"planVersion\":"+Rb100Plan.PLAN_VERSION+",\"modelVersion\":"+
+            Rb100Plan.MODEL_VERSION+",\"physicalIntentVersion\":"+Rb100Placement.INTENT_VERSION+
+            ",\"components\":"+result.components+",\"pads\":"+result.pads+
+            ",\"nets\":"+result.nets+",\"routeEligiblePlacementAttempts\":"+
+            integerArrayJson(eligible)+",\"selectedPlacementIndex\":"+context.selectedPlacementIndex()+
+            ",\"selectedPlacementAttempt\":"+context.selectedPlacementAttempt()+
+            ",\"routeRequestIndex\":"+context.routeRequestIndex()+
+            ",\"rawPlacementFingerprint\":\""+jsonFull(raw)+"\",\"rawPlacementFingerprintLength\":"+
+            raw.length()+",\"rawPlacementFingerprintSha256\":\""+sha256Hex(raw)+
+            "\",\"graphCaseId\":\""+jsonFull(emission.caseId)+"\",\"graphSha256\":\""+
+            emission.sha256+"\",\"graphBytes\":"+emission.bytes+
+            ",\"gridWidth\":"+graph.gridWidth()+",\"gridHeight\":"+graph.gridHeight()+
+            ",\"gridOriginX\":"+graph.originX()+",\"gridOriginY\":"+graph.originY()+
+            ",\"gridPitch\":"+graph.gridPitch()+",\"cellCount\":"+graph.cellCount()+
+            ",\"primaryLayer\":"+graph.primaryLayer()+",\"startCell\":"+graph.startCell()+
+            ",\"initialFacesMask\":"+graph.initialFacesMask()+",\"pass\":"+lineage.pass()+
+            ",\"branchOrdinal\":"+lineage.branchOrdinal()+",\"netId\":\""+
+            jsonFull(lineage.netId())+"\",\"startPadId\":\""+jsonFull(lineage.startPadId())+
+            "\",\"rootPadId\":\""+jsonFull(lineage.rootPadId())+"\",\"startX\":"+
+            lineage.startX()+",\"startY\":"+lineage.startY()+",\"rootX\":"+
+            lineage.rootX()+",\"rootY\":"+lineage.rootY()+",\"reachedPadIds\":"+
+            stringArrayJson(lineage.reachedPadIds())+",\"reachedPthPadIds\":"+
+            stringArrayJson(lineage.reachedPthPadIds())+",\"terminalReason\":\""+
+            jsonFull(lineage.terminalReason())+"\",\"prefixGeometryFingerprint\":\""+
+            jsonFull(prefix)+"\",\"prefixGeometryFingerprintLength\":"+prefix.length()+
+            ",\"prefixGeometryFingerprintSha256\":\""+sha256Hex(prefix)+
+            "\",\"prefixHoleCount\":"+lineage.prefixHoleCount()+",\"prefixViaCount\":"+
+            lineage.prefixViaCount()+",\"prefixHoleCountsByKind\":{\"VIA\":"+
+            holeCounts[PcbBoardHole.Kind.VIA.ordinal()]+",\"PLATED\":"+
+            holeCounts[PcbBoardHole.Kind.PLATED.ordinal()]+",\"NON_PLATED\":"+
+            holeCounts[PcbBoardHole.Kind.NON_PLATED.ordinal()]+"},\"prefixHoles\":"+holes+
+            ",\"branchExpanded\":"+lineage.branchExpanded()+",\"totalRouteExpansions\":"+
+            lineage.totalRouteExpansions()+",\"goalsTop\":"+goalsTop+",\"goalsBottom\":"+
+            goalsBottom+",\"captureWorkUnits\":"+graph.captureWorkUnits()+",\"copyEntries\":"+
+            graph.copyEntries()+",\"goalProbes\":"+graph.goalProbes()+",\"ordinaryEdgeProbes\":"+
+            graph.ordinaryEdgeProbes()+",\"viaProbes\":"+graph.viaProbes()+
+            ",\"comparisonEntries\":"+graph.comparisonEntries()+
+            ",\"captureActiveElapsedMillis\":"+graph.captureActiveElapsedMillis()+
+            ",\"serializationElapsedMillis\":"+serializationElapsedMillis+
+            ",\"scope\":\"ACTUAL_GENERATOR_FIXED_PREFIX_OBSERVATION_ONLY\",\"reachabilityClaim\":false,"+
+            "\"layoutQualification\":false}";
+    }
+
+    private static FixedPrefixGraphEmission serializeFixedPrefixGraph(
+            FixedPrefixCaptureCollector collector,Rb100Plan.Variant variant) {
+        PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot graph=collector.snapshot;
+        int cells=graph.cellCount();
+        String caseId=variant==Rb100Plan.Variant.SHARED_HYSTERETIC_LINEAR?
+            "RB100_SHARED_HYSTERETIC_LINEAR_REQ0":"RB100_SEPARATE_DIRECT_SWITCHING_REQ0";
+        StringBuilder payload=new StringBuilder(Math.min(8388608,64+cells*12));
+        payload.append("{\"caseId\":\"").append(caseId)
+            .append("\",\"goals\":[");
+        for(int layer=0;layer<2;layer++) for(int cell=0;cell<cells;cell++) {
+            if(layer!=0 || cell!=0) payload.append(',');
+            payload.append(graph.goalAt(layer,cell));
+        }
+        payload.append("],\"height\":").append(graph.gridHeight())
+            .append(",\"model\":\"DIRECTED_TWO_FACE_HISTORY_RELAXED\",\"primary\":")
+            .append(graph.primaryLayer()).append(",\"protocol\":\"p07-fixed-prefix-graph-v1\",\"starts\":[");
+        boolean first=true;
+        for(int layer=0;layer<2;layer++) if((graph.initialFacesMask()&(1<<layer))!=0) {
+            if(!first) payload.append(',');
+            payload.append(layer*cells+graph.startCell()); first=false;
+        }
+        payload.append("],\"steps\":[");
+        for(int layer=0;layer<2;layer++) for(int cell=0;cell<cells;cell++) {
+            if(layer!=0 || cell!=0) payload.append(',');
+            payload.append(layer==PcbCopperLayer.TOP.ordinal()?graph.topStepMaskAt(cell):
+                graph.bottomStepMaskAt(cell));
+        }
+        payload.append("],\"vias\":[");
+        for(int cell=0;cell<cells;cell++) {
+            if(cell>0) payload.append(',');
+            payload.append(graph.viaAllowedAt(cell));
+        }
+        payload.append("],\"width\":").append(graph.gridWidth()).append('}');
+        String canonical=payload.toString();
+        int bytes=canonical.getBytes(StandardCharsets.UTF_8).length;
+        require(bytes>0 && bytes<=8*1024*1024,
+            "each canonical fixed-prefix graph is independently bounded to8MiB");
+        return new FixedPrefixGraphEmission(caseId,canonical,sha256Hex(canonical),bytes);
+    }
+
+    private static String integerArrayJson(int[] values) {
+        StringBuilder json=new StringBuilder("[");
+        for(int i=0;i<values.length;i++) { if(i>0) json.append(','); json.append(values[i]); }
+        return json.append(']').toString();
+    }
+
+    private static String stringArrayJson(String[] values) {
+        StringBuilder json=new StringBuilder("[");
+        for(int i=0;i<values.length;i++) {
+            if(i>0) json.append(',');
+            json.append(values[i]==null?"null":"\""+jsonFull(values[i])+"\"");
+        }
+        return json.append(']').toString();
+    }
+
+    private static String integerVectorJson(Vector<Integer> values) {
+        StringBuilder json=new StringBuilder("[");
+        for(int i=0;i<values.size();i++) { if(i>0) json.append(','); json.append(values.get(i)); }
+        return json.append(']').toString();
+    }
+
+    private static String stringVectorJson(Vector<String> values) {
+        StringBuilder json=new StringBuilder("[");
+        for(int i=0;i<values.size();i++) {
+            if(i>0) json.append(','); json.append('"').append(jsonFull(values.get(i))).append('"');
+        }
+        return json.append(']').toString();
     }
 
     private static void verifyP07PolicyStatistics(MediumBoardPhysicalPolicy.Result result) {
@@ -1985,6 +2400,10 @@ public final class Rb100PhysicalDiagnostics {
         return out.toString();
     }
 
+    private static String nullableString(String value) {
+        return value==null?"null":"\""+jsonFull(value)+"\"";
+    }
+
     private static Throwable append(Throwable prior, Throwable next) {
         if (prior == null) return next;
         prior.addSuppressed(next);
@@ -2075,6 +2494,138 @@ public final class Rb100PhysicalDiagnostics {
             super(reason + (unit == null ? "" : " in " + unit));
             this.reason = reason;
         }
+    }
+
+    private static final class FixedPrefixGraphEmission {
+        final String caseId,payload,sha256;
+        final int bytes;
+        FixedPrefixGraphEmission(String caseId,String payload,String sha256,int bytes) {
+            this.caseId=caseId; this.payload=payload; this.sha256=sha256; this.bytes=bytes;
+        }
+    }
+
+    private static final class FixedPrefixCaptureCollector
+            implements PcbLayerRoutingPrototype.FixedPrefixGraphObserver {
+        final Rb100Plan.Variant variant;
+        final String runId,operationId;
+        int requestZeroSelectionCalls,graphCallbacks;
+        PcbLayerRoutingPrototype.FixedPrefixBranchLineage selected;
+        PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot snapshot;
+        FixedPrefixCaptureCollector(Rb100Plan.Variant variant,String runId,String operationId) {
+            this.variant=variant; this.runId=runId; this.operationId=operationId;
+        }
+        public boolean select(PcbLayerRoutingPrototype.FixedPrefixBranchLineage lineage) {
+            require(lineage!=null && lineage.context()!=null,
+                "generator capture selector receives complete actual failed-branch lineage");
+            PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=lineage.context();
+            if(context.routeRequestIndex()!=0) return false;
+            requestZeroSelectionCalls++;
+            require(context.layoutSeed()==PLACEMENT_DIAGNOSTIC_SEED &&
+                context.routingSeed()==ROUTING_DIAGNOSTIC_ROUTING_SEED &&
+                context.selectedPlacementAttempt()==4 &&
+                context.selectedPlacementIndex()==0 &&
+                sameExpectedEligible(toIntegerVector(context.eligiblePlacementAttempts()),variant),
+                "capture source lineage binds exact authored signed seeds, post-priority candidates and actual request0 attempt4");
+            require(!"FOUND".equals(lineage.terminalReason()),
+                "fixed-prefix capture selects only a failed terminal branch");
+            if(selected!=null) return false;
+            selected=lineage;
+            return true;
+        }
+        public void onGraph(PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot graph) {
+            graphCallbacks++;
+            require(graph!=null && selected!=null && graph.lineage()==selected &&
+                graph.context()==selected.context(),
+                "completed graph retains the exact selected immutable request lineage");
+            snapshot=graph;
+        }
+        void requireComplete(P07PolicyDiagnosticCase result) {
+            require(requestZeroSelectionCalls==1 && graphCallbacks==1 && selected!=null && snapshot!=null,
+                "one actual request0 failed branch is selected once and emits one complete graph");
+            require(snapshot.lineage()==selected && snapshot.context()==selected.context() &&
+                snapshot.captureWorkUnits()>0 && snapshot.copyEntries()>0 &&
+                snapshot.goalProbes()>0 && snapshot.ordinaryEdgeProbes()>0 &&
+                snapshot.viaProbes()==snapshot.cellCount() &&
+                snapshot.comparisonEntries()>0 && snapshot.captureActiveElapsedMillis()>=0,
+                "captured graph reports separately bounded copy, predicate-scan and comparison work");
+            int cells=snapshot.cellCount();
+            require(snapshot.gridWidth()>0 && snapshot.gridHeight()>0 && cells>0 &&
+                cells<=PcbLayerRoutingPrototype.MAX_CELLS &&
+                (long)snapshot.gridWidth()*snapshot.gridHeight()==cells &&
+                snapshot.gridPitch()==PcbLayerRoutingPrototype.GRID &&
+                snapshot.primaryLayer()==PcbCopperLayer.BOTTOM.ordinal() &&
+                snapshot.initialFacesMask()==3 && snapshot.startCell()>=0 &&
+                snapshot.startCell()<cells,
+                "captured graph preserves the admitted bounded FULLER two-face routing grid");
+            int startCell=fixedPrefixCell(snapshot,selected.startX(),selected.startY());
+            int rootCell=fixedPrefixCell(snapshot,selected.rootX(),selected.rootY());
+            boolean rootReached=false;
+            for(String reached:selected.reachedPadIds())
+                if(selected.rootPadId().equals(reached)) rootReached=true;
+            for(String additional:selected.reachedPthPadIds()) {
+                boolean inReached=false;
+                for(String reached:selected.reachedPadIds())
+                    if(additional.equals(reached)) inReached=true;
+                require(inReached && !selected.rootPadId().equals(additional),
+                    "additional PTH endpoints are reached terminals distinct from the separately bound root");
+            }
+            require(snapshot.startCell()==startCell &&
+                startCell!=rootCell && rootReached &&
+                snapshot.goalAt(PcbCopperLayer.TOP.ordinal(),rootCell) &&
+                snapshot.goalAt(PcbCopperLayer.BOTTOM.ordinal(),rootCell),
+                "graph start and both root-face goals are bound to the copied lineage coordinates");
+            long expectedEdges=4L*((long)(snapshot.gridWidth()-1)*snapshot.gridHeight()+
+                (long)snapshot.gridWidth()*(snapshot.gridHeight()-1));
+            require(snapshot.goalProbes()==2*cells &&
+                snapshot.ordinaryEdgeProbes()==expectedEdges,
+                "graph predicate census covers every in-bounds directed edge and both goal faces");
+            require(selected.branchExpanded()>=0 &&
+                selected.branchExpanded()<=PcbLayerRoutingPrototype.MAX_BRANCH_EXPANSIONS &&
+                selected.totalRouteExpansions()>=selected.branchExpanded() &&
+                selected.totalRouteExpansions()<=PcbLayerRoutingPrototype.MAX_EXPANSIONS,
+                "captured terminal counters remain within the unchanged production P07 request limits");
+            int[] counts=selected.prefixHoleCountsByKind();
+            int countTotal=0;
+            for(int count:counts) {
+                require(count>=0,"typed fixed-prefix hole count is nonnegative");
+                countTotal+=count;
+            }
+            require(counts.length==PcbBoardHole.Kind.values().length &&
+                countTotal==selected.prefixHoleCount() &&
+                counts[PcbBoardHole.Kind.VIA.ordinal()]==selected.prefixViaCount() &&
+                selected.prefixViaCount()<=PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.vias,
+                "typed prefix inventory covers every hole and counts only actual VIA holes toward the via cap");
+            HashSet<String> holeIds=new HashSet<String>();
+            int[] copiedCounts=new int[PcbBoardHole.Kind.values().length];
+            for(int index=0;index<selected.prefixHoleCount();index++) {
+                PcbLayerRoutingPrototype.FixedPrefixHole hole=selected.prefixHole(index);
+                require(hole!=null && hole.id()!=null && !hole.id().isEmpty() &&
+                    hole.kind()!=null && holeIds.add(hole.id()),
+                    "typed prefix hole rows retain unique immutable identities and valid kinds");
+                copiedCounts[hole.kind().ordinal()]++;
+            }
+            for(int index=0;index<counts.length;index++)
+                require(copiedCounts[index]==counts[index],
+                    "typed prefix row inventory matches its independent per-kind counts");
+            require(selected.pass()>=0 && selected.pass()<PcbLayerRoutingPrototype.ORDERINGS &&
+                selected.branchOrdinal()>=1 && !"FOUND".equals(selected.terminalReason()) &&
+                selected.context().routeRequestIndex()==0 && result.policyResult!=null,
+                "captured lineage identifies a failed real first-request branch and never a found route");
+        }
+        private static Vector<Integer> toIntegerVector(int[] values) {
+            Vector<Integer> result=new Vector<Integer>();
+            for(int value:values) result.add(Integer.valueOf(value));
+            return result;
+        }
+    }
+
+    private static int fixedPrefixCell(PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot graph,
+            int x,int y) {
+        int gx=(x-graph.originX())/graph.gridPitch();
+        int gy=(y-graph.originY())/graph.gridPitch();
+        require(gx>=0 && gx<graph.gridWidth() && gy>=0 && gy<graph.gridHeight(),
+            "captured lineage coordinates map into the copied graph rectangle");
+        return gy*graph.gridWidth()+gx;
     }
 
     private static class PlacementDiagnosticCase {
@@ -2296,6 +2847,10 @@ public final class Rb100PhysicalDiagnostics {
         PcbRoutingRejectedException sessionRejection;
         MediumBoardPhysicalPolicy.Result policyResult;
         String layoutOutputJson = "null";
+        String fixedPrefixMode,fixedPrefixOperationId,fixedPrefixGraphCaseId,fixedPrefixGraphSha256;
+        int fixedPrefixGraphBytes;
+        long fixedPrefixSerializationMillis;
+        FixedPrefixCaptureCollector fixedPrefixCollector;
 
         P07PolicyDiagnosticCase(String variant, long seed, String runId) {
             super("AUTHORED_RB100", variant, seed, -1);

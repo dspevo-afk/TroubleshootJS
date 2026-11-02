@@ -1,4 +1,63 @@
-# Current checkpoint: reduced matrix ordering published; routing integration next
+# Current checkpoint: B6 fixed-prefix observation validated; publication pending
+
+**VALIDATED, pending normal commit/push. Updated2026-11-02.** Integration worktree
+I=OS-temp/tsj-b6-v27-20261102-r2, branch codex/q100-fixed-prefix-v27-r2-20261102,
+source parent9a6736e12487d8f6e7ea15ccfecb8ecaa0c1c295. No active run-owned process.
+The [qualification packet](task-evidence/Q100/fixed-prefix-r1/README.md) records
+controlled independent outputs, exact source/build hashes, commands and limits.
+
+Private authored100 observation uses the actual bare generator with envelope=null
+on both paired sides. Immutable failed-branch graphs preserve predicate permissions,
+goal faces, prefix state, PTH authority and lineage without live mutation. Errors/
+cancellation/staleness fail closed. Null/capture routing/search output parity holds.
+Both operations exhaust routing; relaxed REACHABLE does not grant a valid route.
+ConstructionSession/Player envelope admission is separate; playable100 layouts0.
+
+PASS:806 native seam assertions; four actual paired operations/two graphs with
+complete1066-input binding; real independent graph reader/junction negative and
+link cleanup; full72-case/20-bound default parity and six literal geometries;
+native22 regression with consumed structural TSV included in1067 before/after
+inputs; final synthetic35; actual final-source JDK8/GWT Player/Developer builds;
+E06State10/10, Current9, Player privacy/two sentinels; exact three-root normal
+MEDIUM native manifests/live source-script binding/original independent payloads.
+Owner explicitly excluded Rb56ManifestContractTest's full30 identity export.
+
+Developer input188fc389bcab05bf51054e9485a418d52573a69d79f136099ff9da971c6aa6b1/
+output71d5d5b8d1d1209e5d9f1fcb8f62972e24a686328bb90ff9d70cba2beb3aa8f8,
+1202/357 reproduced after Player; compiled evidence reused only after that audit.
+Player a553dcbd/a81ff0e8,1202/357; actual357 files archived before Developer rebuild.
+Final audit:30 Java/host pins,1066 native inputs, structural TSV and both variant
+inputs unchanged. E06 operation206.876s/cleanup69.014s/browser8.929s. Current cleanup
+success/browser8.466s, aggregate elapsed NOT EXPORTED. Player privacy cleanup61.201s/
+browser14.518s under unchanged120s/15s. Normal3 generation75.570/62.967/35.916s,
+work506/503/392, host cleanup4.523s/no survivors; parent+child exits0/termination
+proved. Plan241617f9/postprocessd94482e8, release/admissionfalse. maxUnit summary0
+is not a measured peak. Original90s/640/5s/500ms limits and physics oracles stay.
+
+Historical helper390acf30 and all geometry/area oracles remain byte-exact. The
+current reader isolates two metadata validators, AST-proving only their epoch
+expressions change tolayout25/v27. Final source review clear; reviewers ran no
+actors. All earlier observation-budget/setup/fixture/metadata/caller failures and
+exact sources remain preserved. No failed raw capture is reclassified.
+
+Raw evidence: S=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
+B=S/fixed-prefix-v27-r1. Final normal3 attempt is B/normal3-adapter-r1/
+normal3-host-launch-r1/attempt-20261102T151348Z-3a0b011971e548a9af3aac63781541e9.
+Native classes, qualified Player archive and normal build outputs remain owned
+evidence. Failed full checkout S/b6-v27-integration remains unused after excessive
+materialization/path failure; no unmaterialized-data claim. No protected dataset
+opened or run; historical unread boundary remains UNCERTIFIED.
+
+Unrelated Main B6 at5f05b005(9tracked/6new), Wprivate40(7/8), Desktop e0c36885(7/89),
+stashes/branches/prior evidence and ambient8928 preserved. Public beta held;
+HARD/PSYCHOTIC unavailable/unrun; no full30/2x31/all-seed/long-session/modest-host/
+FPS/human-repair renewal. Manual player input NOT APPLICABLE for unchanged flow.
+CI requires the approved self-hosted runner registered. NEXT: final staged review,
+normal commit/push/remote verification and one completion Gmail, then freeze the
+next routing diagnosis/treatment scope. No actual100 layout is accepted.
+
+
+# Historical checkpoint: reduced matrix ordering published; routing integration next
 
 **PUBLISHED. Updated2026-11-02.** Implementation
 `cad0799a59131464ceaea19d425e9c9efe1f329f` (`Order reduced nonlinear CircuitJS matrices`)

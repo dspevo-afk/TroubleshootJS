@@ -1140,17 +1140,201 @@ final class PcbNetRouter {
             return copy;
         }
 
+        /** Starts a resumable exact observation copy without running the routing-grid constructor. */
+        FixedGraphCopyTask beginFixedGraphObservationCopy() {
+            return new FixedGraphCopyTask(this);
+        }
+        FixedGraphComparisonTask beginFixedGraphComparison(Router other) {
+            return new FixedGraphComparisonTask(this,other);
+        }
+
+        /** Bounded copy of the mutable router state used by fixed-prefix permission queries. */
+        static final class FixedGraphCopyTask {
+            private final Router source;
+            private final Router target;
+            private int stage,outer,inner,copiedEntries;
+            private boolean complete;
+            private FixedGraphCopyTask(Router source) {
+                if(source==null) throw new IllegalArgumentException("Missing fixed observation router");
+                this.source=source;
+                target=new Router(source,true);
+            }
+            boolean advanceOne(int maximumEntries) {
+                if(maximumEntries<1) throw new IllegalArgumentException("Observation copy chunk must be positive");
+                if(complete) return true;
+                int remaining=maximumEntries;
+                int entriesThisCall=0;
+                while(remaining>0 && !complete) {
+                    switch(stage) {
+                        case 0: copyStringGridStep(source.occupiedNet,target.occupiedNet,remaining); break;
+                        case 1: copyStringGridStep(source.clearanceNet,target.clearanceNet,remaining); break;
+                        case 2: copyStringGridStep(source.horizontalReservation,target.horizontalReservation,remaining); break;
+                        case 3: copyStringGridStep(source.verticalReservation,target.verticalReservation,remaining); break;
+                        case 4: copyStringGridStep(source.padAt,target.padAt,remaining); break;
+                        case 5: copyStringArrayStep(source.padNets,target.padNets,remaining); break;
+                        case 6: copyIntArrayStep(source.padWidths,target.padWidths,remaining); break;
+                        case 7: copyRectangleArrayStep(source.padBounds,target.padBounds,remaining); break;
+                        case 8: copyRectangleArrayStep(source.escapeCorridors,target.escapeCorridors,remaining); break;
+                        case 9: copyRectangleArrayStep(source.escapeReservations,target.escapeReservations,remaining); break;
+                        case 10: copyReferenceArrayStep(source.pads,target.pads,remaining); break;
+                        case 11: copyReferenceArrayStep(source.components,target.components,remaining); break;
+                        case 12: copyRectangleArrayStep(source.courtyards,target.courtyards,remaining); break;
+                        case 13: copyIntArrayStep(source.allComponentIndexes,target.allComponentIndexes,remaining); break;
+                        case 14: copyIntGridStep(source.componentCandidatesByColumn,target.componentCandidatesByColumn,remaining); break;
+                        case 15:
+                            if(source.collisionCourtyards!=null && target.collisionCourtyards==null)
+                                throw new IllegalStateException("Fixed observation collision-courtyard shape differs");
+                            copyRectangleArrayStep(source.collisionCourtyards,target.collisionCourtyards,remaining); break;
+                        default:
+                            complete=true;
+                            copiedEntries+=entriesThisCall;
+                            return true;
+                    }
+                    int consumed=lastCopiedWork;
+                    if(consumed<1 && !complete)
+                        throw new IllegalStateException("Fixed observation copy made no progress");
+                    remaining-=consumed;
+                    entriesThisCall+=lastCopiedEntries;
+                    if(complete) return true;
+                }
+                copiedEntries+=entriesThisCall;
+                return complete;
+            }
+            private int lastCopiedWork,lastCopiedEntries;
+            private void copyStringGridStep(String[][] from,String[][] to,int maximum) {
+                if(from==null || to==null) {
+                    if(from!=to) throw new IllegalStateException("Fixed observation string-grid shape differs");
+                    lastCopiedWork=1; lastCopiedEntries=0; nextStage(); return;
+                }
+                if(from.length!=to.length)
+                    throw new IllegalStateException("Fixed observation string-grid shape differs");
+                lastCopiedWork=0; lastCopiedEntries=0;
+                if(from.length==0) { lastCopiedWork=1; nextStage(); return; }
+                while(outer<from.length && lastCopiedWork<maximum) {
+                    String[] row=from[outer];
+                    if(row==null) {
+                        to[outer]=null; outer++; inner=0; lastCopiedWork++; continue;
+                    }
+                    if(to[outer]==null) to[outer]=new String[row.length];
+                    if(to[outer].length!=row.length)
+                        throw new IllegalStateException("Fixed observation string-grid row differs");
+                    if(row.length==0) { outer++; inner=0; lastCopiedWork++; continue; }
+                    int count=Math.min(row.length-inner,maximum-lastCopiedWork);
+                    if(count>0) {
+                        System.arraycopy(row,inner,to[outer],inner,count);
+                        inner+=count; lastCopiedWork+=count; lastCopiedEntries+=count;
+                    }
+                    if(inner==row.length) { outer++; inner=0; }
+                }
+                if(outer==from.length) nextStage();
+            }
+            private void copyStringArrayStep(String[] from,String[] to,int maximum) {
+                if(from==null || to==null || from.length!=to.length)
+                    throw new IllegalStateException("Fixed observation string-array shape differs");
+                lastCopiedWork=copyReferencesRange(from,to,outer,maximum);
+                lastCopiedEntries=lastCopiedWork;
+                outer+=lastCopiedWork;
+                if(from.length==0 && outer==0) { lastCopiedWork=1; lastCopiedEntries=0; outer=1; }
+                if(outer>=from.length) nextStage();
+            }
+            private void copyIntArrayStep(int[] from,int[] to,int maximum) {
+                if(from==null || to==null || from.length!=to.length)
+                    throw new IllegalStateException("Fixed observation integer-array shape differs");
+                int count=Math.min(maximum,from.length-outer);
+                if(count>0) System.arraycopy(from,outer,to,outer,count);
+                lastCopiedWork=count; lastCopiedEntries=count; outer+=count;
+                if(from.length==0 && outer==0) { lastCopiedWork=1; lastCopiedEntries=0; outer=1; }
+                if(outer>=from.length) nextStage();
+            }
+            private void copyRectangleArrayStep(Rectangle[] from,Rectangle[] to,int maximum) {
+                if(from==null || to==null) {
+                    if(from!=to) throw new IllegalStateException("Fixed observation rectangle-array shape differs");
+                    lastCopiedWork=1; lastCopiedEntries=0; nextStage(); return;
+                }
+                if(from.length!=to.length)
+                    throw new IllegalStateException("Fixed observation rectangle-array shape differs");
+                int count=Math.min(maximum,from.length-outer);
+                for(int i=0;i<count;i++) to[outer+i]=copyRectangle(from[outer+i]);
+                lastCopiedWork=count; lastCopiedEntries=count; outer+=count;
+                if(from.length==0 && outer==0) { lastCopiedWork=1; lastCopiedEntries=0; outer=1; }
+                if(outer>=from.length) nextStage();
+            }
+            private void copyReferenceArrayStep(Object[] from,Object[] to,int maximum) {
+                if(from==null || to==null || from.length!=to.length)
+                    throw new IllegalStateException("Fixed observation reference-array shape differs");
+                lastCopiedWork=copyReferencesRange(from,to,outer,maximum);
+                lastCopiedEntries=lastCopiedWork;
+                outer+=lastCopiedWork;
+                if(from.length==0 && outer==0) { lastCopiedWork=1; lastCopiedEntries=0; outer=1; }
+                if(outer>=from.length) nextStage();
+            }
+            private int copyReferencesRange(Object[] from,Object[] to,int start,int maximum) {
+                int count=Math.min(maximum,from.length-start);
+                if(count>0) System.arraycopy(from,start,to,start,count);
+                return count;
+            }
+            private void copyIntGridStep(int[][] from,int[][] to,int maximum) {
+                if(from==null || to==null || from.length!=to.length)
+                    throw new IllegalStateException("Fixed observation integer-grid shape differs");
+                lastCopiedWork=0; lastCopiedEntries=0;
+                if(from.length==0) { lastCopiedWork=1; nextStage(); return; }
+                while(outer<from.length && lastCopiedWork<maximum) {
+                    int[] row=from[outer];
+                    if(row==null) { to[outer]=null; outer++; inner=0; lastCopiedWork++; continue; }
+                    if(to[outer]==null) to[outer]=new int[row.length];
+                    if(to[outer].length!=row.length)
+                        throw new IllegalStateException("Fixed observation integer-grid row differs");
+                    if(row.length==0) { outer++; inner=0; lastCopiedWork++; continue; }
+                    int count=Math.min(row.length-inner,maximum-lastCopiedWork);
+                    if(count>0) { System.arraycopy(row,inner,to[outer],inner,count); inner+=count; lastCopiedWork+=count; lastCopiedEntries+=count; }
+                    if(inner==row.length) { outer++; inner=0; }
+                }
+                if(outer==from.length) nextStage();
+            }
+            private void nextStage() { stage++; outer=0; inner=0; }
+            Router result() {
+                if(!complete) throw new IllegalStateException("Fixed observation copy is incomplete");
+                return target;
+            }
+            int copiedEntries() { return copiedEntries; }
+        }
+
+        private Router(Router source,boolean observationShell) {
+            if(source==null || !observationShell)
+                throw new IllegalArgumentException("Invalid fixed observation shell");
+            work=copyObservationWork(source.work);
+            board=source.board; layout=source.layout; checkProfiledPadTouches=source.checkProfiledPadTouches;
+            outline=new Rectangle(source.outline); minX=source.minX; minY=source.minY;
+            gridWidth=source.gridWidth; gridHeight=source.gridHeight;
+            occupiedNet=new String[gridWidth][]; clearanceNet=new String[gridWidth][];
+            pads=new PcbPadPlacement[source.pads.length]; padNets=new String[source.padNets.length];
+            padWidths=new int[source.padWidths.length]; padBounds=new Rectangle[source.padBounds.length];
+            escapeCorridors=new Rectangle[source.escapeCorridors.length];
+            escapeReservations=new Rectangle[source.escapeReservations.length];
+            components=new PcbComponentPlacement[source.components.length];
+            courtyards=new Rectangle[source.courtyards.length];
+            allComponentIndexes=new int[source.allComponentIndexes.length];
+            componentCandidatesByColumn=new int[source.componentCandidatesByColumn.length][];
+            collisionCourtyards=source.collisionCourtyards==null?null:
+                new Rectangle[source.collisionCourtyards.length];
+            horizontalReservation=new String[gridWidth][]; verticalReservation=new String[gridWidth][];
+            padAt=source.padAt==null?null:new String[gridWidth][];
+            expansions=rawSegments=congestionRejections=0;
+            factoryUnderpasses=source.factoryUnderpasses; activeTraceWidth=source.activeTraceWidth;
+            activeNetId=source.activeNetId; attempt=source.attempt; observer=source.observer;
+            layer=source.layer; domainRules=source.domainRules; emptyComponentFace=source.emptyComponentFace;
+        }
+        private static PcbRoutingWork copyObservationWork(PcbRoutingWork source) {
+            if(source==null) return null;
+            int requestCount=source.netAttemptLimit-source.limits.reroutedNets;
+            if(requestCount<0 || requestCount%source.limits.orderings!=0)
+                throw new IllegalStateException("P07 fixed observation work limits are inconsistent");
+            return new PcbRoutingWork(source.limits,requestCount/source.limits.orderings);
+        }
+
         /** Exact elementwise equality for fixed route-predicate state; query effects are excluded. */
         boolean sameFixedGraphObservation(Router other) {
-            if(other==null || board!=other.board || layout!=other.layout || attempt!=other.attempt ||
-                    layer!=other.layer || checkProfiledPadTouches!=other.checkProfiledPadTouches ||
-                    !sameRectangle(outline,other.outline) || minX!=other.minX || minY!=other.minY ||
-                    gridWidth!=other.gridWidth || gridHeight!=other.gridHeight ||
-                    emptyComponentFace!=other.emptyComponentFace ||
-                    factoryUnderpasses!=other.factoryUnderpasses || activeTraceWidth!=other.activeTraceWidth ||
-                    !sameString(activeNetId,other.activeNetId) || (domainRules==null)!=(other.domainRules==null) ||
-                    !sameWorkConfiguration(work,other.work))
-                return false;
+            if(!sameFixedGraphScalars(this,other)) return false;
             return sameStringGrid(occupiedNet,other.occupiedNet) &&
                 sameStringGrid(clearanceNet,other.clearanceNet) &&
                 sameStringGrid(horizontalReservation,other.horizontalReservation) &&
@@ -1165,6 +1349,162 @@ final class PcbNetRouter {
                 sameRectangles(collisionCourtyards,other.collisionCourtyards) &&
                 sameInts(allComponentIndexes,other.allComponentIndexes) &&
                 sameIntGrid(componentCandidatesByColumn,other.componentCandidatesByColumn);
+        }
+        private static boolean sameFixedGraphScalars(Router first,Router other) {
+            return other!=null && first.board==other.board && first.layout==other.layout &&
+                first.attempt==other.attempt && first.layer==other.layer &&
+                first.checkProfiledPadTouches==other.checkProfiledPadTouches &&
+                sameRectangle(first.outline,other.outline) && first.minX==other.minX &&
+                first.minY==other.minY && first.gridWidth==other.gridWidth &&
+                first.gridHeight==other.gridHeight && first.emptyComponentFace==other.emptyComponentFace &&
+                first.factoryUnderpasses==other.factoryUnderpasses &&
+                first.activeTraceWidth==other.activeTraceWidth &&
+                sameString(first.activeNetId,other.activeNetId) &&
+                (first.domainRules==null)==(other.domainRules==null) &&
+                sameWorkConfiguration(first.work,other.work);
+        }
+
+        /** Elementwise bounded comparison for capture parity, including every predicate array. */
+        static final class FixedGraphComparisonTask {
+            private final Router first,second;
+            private int stage,outer,inner,comparedEntries;
+            private boolean complete,equal;
+            private FixedGraphComparisonTask(Router first,Router second) {
+                this.first=first; this.second=second;
+                equal=sameFixedGraphScalars(first,second);
+                if(!equal) complete=true;
+            }
+            boolean advanceOne(int maximumEntries) {
+                if(maximumEntries<1) throw new IllegalArgumentException("Observation comparison chunk must be positive");
+                if(complete) return true;
+                int remaining=maximumEntries;
+                while(remaining>0 && !complete) {
+                    switch(stage) {
+                        case 0: compareStringGrid(first.occupiedNet,second.occupiedNet,remaining); break;
+                        case 1: compareStringGrid(first.clearanceNet,second.clearanceNet,remaining); break;
+                        case 2: compareStringGrid(first.horizontalReservation,second.horizontalReservation,remaining); break;
+                        case 3: compareStringGrid(first.verticalReservation,second.verticalReservation,remaining); break;
+                        case 4: compareStringGrid(first.padAt,second.padAt,remaining); break;
+                        case 5: compareStringArray(first.padNets,second.padNets,remaining); break;
+                        case 6: compareIntArray(first.padWidths,second.padWidths,remaining); break;
+                        case 7: compareRectangleArray(first.padBounds,second.padBounds,remaining); break;
+                        case 8: compareRectangleArray(first.escapeCorridors,second.escapeCorridors,remaining); break;
+                        case 9: compareRectangleArray(first.escapeReservations,second.escapeReservations,remaining); break;
+                        case 10: compareReferenceArray(first.pads,second.pads,remaining); break;
+                        case 11: compareReferenceArray(first.components,second.components,remaining); break;
+                        case 12: compareRectangleArray(first.courtyards,second.courtyards,remaining); break;
+                        case 13: compareRectangleArray(first.collisionCourtyards,second.collisionCourtyards,remaining); break;
+                        case 14: compareIntArray(first.allComponentIndexes,second.allComponentIndexes,remaining); break;
+                        case 15: compareIntGrid(first.componentCandidatesByColumn,second.componentCandidatesByColumn,remaining); break;
+                        default: complete=true; equal=true; return true;
+                    }
+                    if(!equal) { complete=true; return true; }
+                    int consumed=lastComparedWork;
+                    if(consumed<1 && !complete)
+                        throw new IllegalStateException("Fixed observation comparison made no progress");
+                    remaining-=consumed;
+                    comparedEntries+=lastComparedWork;
+                }
+                return complete;
+            }
+            private int lastComparedWork;
+            private void compareStringGrid(String[][] a,String[][] b,int maximum) {
+                lastComparedWork=0;
+                if(a==null || b==null) {
+                    equal=a==b; lastComparedWork=1; nextStage(); return;
+                }
+                if(a.length!=b.length) { equal=false; return; }
+                if(a.length==0) { lastComparedWork=1; nextStage(); return; }
+                while(outer<a.length && lastComparedWork<maximum) {
+                    String[] ar=a[outer],br=b[outer];
+                    if(ar==null || br==null) {
+                        if(ar!=br) { equal=false; return; }
+                        outer++; inner=0; lastComparedWork++; continue;
+                    }
+                    if(ar.length!=br.length) { equal=false; return; }
+                    if(ar.length==0) { outer++; inner=0; lastComparedWork++; continue; }
+                    int count=Math.min(ar.length-inner,maximum-lastComparedWork);
+                    for(int i=0;i<count;i++) if(!sameString(ar[inner+i],br[inner+i])) {
+                        equal=false; lastComparedWork+=i+1; return;
+                    }
+                    inner+=count; lastComparedWork+=count;
+                    if(inner==ar.length) { outer++; inner=0; }
+                }
+                if(outer==a.length) nextStage();
+            }
+            private void compareStringArray(String[] a,String[] b,int maximum) {
+                lastComparedWork=0;
+                if(a==null || b==null) { equal=a==b; lastComparedWork=1; nextStage(); return; }
+                if(a.length!=b.length) { equal=false; return; }
+                int count=Math.min(maximum,a.length-outer);
+                for(int i=0;i<count;i++) if(!sameString(a[outer+i],b[outer+i])) {
+                    equal=false; lastComparedWork=i+1; outer+=i+1; return;
+                }
+                lastComparedWork=count; outer+=count;
+                if(a.length==0 && outer==0) { lastComparedWork=1; outer=1; }
+                if(outer>=a.length) nextStage();
+            }
+            private void compareIntArray(int[] a,int[] b,int maximum) {
+                lastComparedWork=0;
+                if(a==null || b==null) { equal=a==b; lastComparedWork=1; nextStage(); return; }
+                if(a.length!=b.length) { equal=false; return; }
+                int count=Math.min(maximum,a.length-outer);
+                for(int i=0;i<count;i++) if(a[outer+i]!=b[outer+i]) {
+                    equal=false; lastComparedWork=i+1; outer+=i+1; return;
+                }
+                lastComparedWork=count; outer+=count;
+                if(a.length==0 && outer==0) { lastComparedWork=1; outer=1; }
+                if(outer>=a.length) nextStage();
+            }
+            private void compareRectangleArray(Rectangle[] a,Rectangle[] b,int maximum) {
+                lastComparedWork=0;
+                if(a==null || b==null) { equal=a==b; lastComparedWork=1; nextStage(); return; }
+                if(a.length!=b.length) { equal=false; return; }
+                int count=Math.min(maximum,a.length-outer);
+                for(int i=0;i<count;i++) if(!sameRectangle(a[outer+i],b[outer+i])) {
+                    equal=false; lastComparedWork=i+1; outer+=i+1; return;
+                }
+                lastComparedWork=count; outer+=count;
+                if(a.length==0 && outer==0) { lastComparedWork=1; outer=1; }
+                if(outer>=a.length) nextStage();
+            }
+            private void compareReferenceArray(Object[] a,Object[] b,int maximum) {
+                lastComparedWork=0;
+                if(a==null || b==null) { equal=a==b; lastComparedWork=1; nextStage(); return; }
+                if(a.length!=b.length) { equal=false; return; }
+                int count=Math.min(maximum,a.length-outer);
+                for(int i=0;i<count;i++) if(a[outer+i]!=b[outer+i]) {
+                    equal=false; lastComparedWork=i+1; outer+=i+1; return;
+                }
+                lastComparedWork=count; outer+=count;
+                if(a.length==0 && outer==0) { lastComparedWork=1; outer=1; }
+                if(outer>=a.length) nextStage();
+            }
+            private void compareIntGrid(int[][] a,int[][] b,int maximum) {
+                lastComparedWork=0;
+                if(a==null || b==null) { equal=a==b; lastComparedWork=1; nextStage(); return; }
+                if(a.length!=b.length) { equal=false; return; }
+                if(a.length==0) { lastComparedWork=1; nextStage(); return; }
+                while(outer<a.length && lastComparedWork<maximum) {
+                    int[] ar=a[outer],br=b[outer];
+                    if(ar==null || br==null) {
+                        if(ar!=br) { equal=false; return; }
+                        outer++; inner=0; lastComparedWork++; continue;
+                    }
+                    if(ar.length!=br.length) { equal=false; return; }
+                    if(ar.length==0) { outer++; inner=0; lastComparedWork++; continue; }
+                    int count=Math.min(ar.length-inner,maximum-lastComparedWork);
+                    for(int i=0;i<count;i++) if(ar[inner+i]!=br[inner+i]) {
+                        equal=false; lastComparedWork+=i+1; return;
+                    }
+                    inner+=count; lastComparedWork+=count;
+                    if(inner==ar.length) { outer++; inner=0; }
+                }
+                if(outer==a.length) nextStage();
+            }
+            private void nextStage() { stage++; outer=0; inner=0; }
+            boolean equal() { return complete && equal; }
+            int comparedEntries() { return comparedEntries; }
         }
 
         /** Pure, deterministic side-effect stamp for before/after live-state checks. */

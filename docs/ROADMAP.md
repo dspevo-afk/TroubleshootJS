@@ -32,6 +32,19 @@ Next is the preserved Q100 physical
 routing/fixed-prefix work on this qualified numerical source; accepted100 layouts
 remain zero and fresh physical/runtime/solvability evidence is still required.
 
+The private [actual-generator fixed-prefix diagnostic](task-evidence/Q100/fixed-prefix-r1/README.md)
+is accepted for its recorded v27 source against clean baseline9a6736e1. Both exact
+authored variants preserve null/capture route/search parity and emit immutable
+failed-prefix graphs; independent relaxed reachability finds paths without
+granting actual route acceptance. Fresh72-case/20-bound default parity, six literal
+geometries, native22 regression, actual Player/Developer builds, Current9,
+E06State10, Player privacy and three source-bound development roots pass. The
+owner excluded the full30 manifest-export test; HARD/PSYCHOTIC remain unavailable
+and unrun. The capture uses the bare private generator with no supported envelope.
+Publication is tracked in the task report. Accepted playable100 layouts remain
+zero; next is a frozen routing diagnosis/treatment scope using these graphs,
+followed by real finalizer/clearance/connectivity/access and functional proofs.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

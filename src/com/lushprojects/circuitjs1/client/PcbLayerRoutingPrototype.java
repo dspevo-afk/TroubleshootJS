@@ -67,6 +67,212 @@ final class PcbLayerRoutingPrototype {
     interface Diagnostics {
         void onTerminalBranch(BranchSnapshot snapshot);
     }
+    /** One opt-in, per-request hook for a complete failed-prefix graph only. */
+    interface FixedPrefixGraphObserver {
+        boolean select(FixedPrefixBranchLineage lineage);
+        void onGraph(FixedPrefixGraphSnapshot snapshot);
+    }
+    /** Immutable source identity supplied by the actual medium generator owner. */
+    static final class FixedPrefixCaptureContext {
+        private final long layoutSeed,routingSeed;
+        private final int[] eligiblePlacementAttempts;
+        private final int selectedPlacementIndex,routeRequestIndex;
+        private final String rawPlacementFingerprint;
+        FixedPrefixCaptureContext(long layoutSeed,long routingSeed,int[] eligiblePlacementAttempts,
+                int selectedPlacementAttempt,int routeRequestIndex,String rawPlacementFingerprint) {
+            if(eligiblePlacementAttempts==null || eligiblePlacementAttempts.length<1 ||
+                    eligiblePlacementAttempts.length>6 || selectedPlacementAttempt<0 ||
+                    routeRequestIndex<0 || routeRequestIndex>=MediumBoardPhysicalPolicy.ROUTING_CANDIDATES || rawPlacementFingerprint==null ||
+                    rawPlacementFingerprint.length()==0 || rawPlacementFingerprint.length()>1048576)
+                throw new IllegalArgumentException("Invalid actual fixed-prefix capture context");
+            int selectedIndex=-1;
+            for(int i=0;i<eligiblePlacementAttempts.length;i++) {
+                int attempt=eligiblePlacementAttempts[i];
+                if(attempt<0 || attempt>=PcbPlacementPlanner.OUTLINE_CANDIDATES)
+                    throw new IllegalArgumentException("Invalid fixed-prefix eligible placement attempt");
+                if(attempt==selectedPlacementAttempt) selectedIndex=i;
+                for(int j=0;j<i;j++) if(eligiblePlacementAttempts[j]==attempt)
+                    throw new IllegalArgumentException("Duplicate fixed-prefix eligible placement attempt");
+            }
+            if(selectedIndex<0) throw new IllegalArgumentException("Selected fixed-prefix placement is not eligible");
+            this.layoutSeed=layoutSeed; this.routingSeed=routingSeed;
+            this.eligiblePlacementAttempts=copyFixedPrefixInts(eligiblePlacementAttempts);
+            this.selectedPlacementIndex=selectedIndex;
+            this.routeRequestIndex=routeRequestIndex;
+            this.rawPlacementFingerprint=rawPlacementFingerprint;
+        }
+        long layoutSeed() { return layoutSeed; }
+        long routingSeed() { return routingSeed; }
+        int[] eligiblePlacementAttempts() { return copyFixedPrefixInts(eligiblePlacementAttempts); }
+        int selectedPlacementIndex() { return selectedPlacementIndex; }
+        int selectedPlacementAttempt() { return eligiblePlacementAttempts[selectedPlacementIndex]; }
+        int routeRequestIndex() { return routeRequestIndex; }
+        String rawPlacementFingerprint() { return rawPlacementFingerprint; }
+    }
+    private static int[] copyFixedPrefixInts(int[] source) {
+        int[] copy=new int[source.length];
+        System.arraycopy(source,0,copy,0,source.length);
+        return copy;
+    }
+    private static String[] copyFixedPrefixStrings(String[] source) {
+        String[] copy=new String[source.length];
+        System.arraycopy(source,0,copy,0,source.length);
+        return copy;
+    }
+    /** Typed, immutable copy of a hole in the already-published routing prefix. */
+    static final class FixedPrefixHole {
+        private final String id,netId;
+        private final PcbBoardHole.Kind kind;
+        private final int x,y,drillRadius,landRadius;
+        private final PcbCopperAccess.Exposure exposure;
+        private FixedPrefixHole(PcbBoardHole hole) {
+            if(hole==null) throw new IllegalArgumentException("Missing fixed-prefix hole");
+            id=hole.id; netId=hole.netId; kind=hole.kind; x=hole.x; y=hole.y;
+            drillRadius=hole.drillRadius; landRadius=hole.landRadius; exposure=hole.exposure;
+        }
+        String id() { return id; }
+        String netId() { return netId; }
+        PcbBoardHole.Kind kind() { return kind; }
+        int x() { return x; }
+        int y() { return y; }
+        int drillRadius() { return drillRadius; }
+        int landRadius() { return landRadius; }
+        PcbCopperAccess.Exposure exposure() { return exposure; }
+    }
+    /** Immutable physical identity of the branch prefix at one terminal failure. */
+    static final class FixedPrefixBranchLineage {
+        private final FixedPrefixCaptureContext context;
+        private final int pass,branchOrdinal,startX,startY,rootX,rootY,branchExpanded,totalRouteExpansions;
+        private final String netId,startPadId,rootPadId,terminalReason,prefixGeometryFingerprint;
+        private final String[] reachedPadIds,reachedPthPadIds;
+        private final FixedPrefixHole[] prefixHoles;
+        private final int[] prefixHoleCountsByKind;
+        private final int prefixViaCount;
+        private FixedPrefixBranchLineage(FixedPrefixCaptureContext context,int pass,int branchOrdinal,String netId,
+                PcbPadPlacement start,PcbPadPlacement root,String[] reachedPadIds,String[] reachedPthPadIds,
+                int branchExpanded,int totalRouteExpansions,
+                PcbBoardHole[] holes,String terminalReason,String prefixGeometryFingerprint) {
+            if(context==null || pass<0 || pass>=ORDERINGS || branchOrdinal<1 || netId==null || start==null ||
+                    root==null || reachedPadIds==null || reachedPthPadIds==null || holes==null || terminalReason==null ||
+                    prefixGeometryFingerprint==null || branchExpanded<0 || totalRouteExpansions<0)
+                throw new IllegalArgumentException("Invalid fixed-prefix branch lineage");
+            this.context=context;
+            this.pass=pass; this.branchOrdinal=branchOrdinal; this.netId=netId;
+            startPadId=start.getPadId(); rootPadId=root.getPadId();
+            startX=start.getX(); startY=start.getY(); rootX=root.getX(); rootY=root.getY();
+            this.branchExpanded=branchExpanded; this.totalRouteExpansions=totalRouteExpansions;
+            this.reachedPadIds=copyFixedPrefixStrings(reachedPadIds);
+            this.reachedPthPadIds=copyFixedPrefixStrings(reachedPthPadIds);
+            this.prefixHoles=new FixedPrefixHole[holes.length];
+            this.prefixHoleCountsByKind=new int[PcbBoardHole.Kind.values().length];
+            int vias=0;
+            for(int i=0;i<holes.length;i++) {
+                this.prefixHoles[i]=new FixedPrefixHole(holes[i]);
+                prefixHoleCountsByKind[holes[i].kind.ordinal()]++;
+                if(holes[i].kind==PcbBoardHole.Kind.VIA) vias++;
+            }
+            prefixViaCount=vias; this.terminalReason=terminalReason;
+            this.prefixGeometryFingerprint=prefixGeometryFingerprint;
+        }
+        FixedPrefixCaptureContext context() { return context; }
+        int pass() { return pass; }
+        int branchOrdinal() { return branchOrdinal; }
+        String netId() { return netId; }
+        String startPadId() { return startPadId; }
+        String rootPadId() { return rootPadId; }
+        int startX() { return startX; }
+        int startY() { return startY; }
+        int rootX() { return rootX; }
+        int rootY() { return rootY; }
+        int branchExpanded() { return branchExpanded; }
+        int totalRouteExpansions() { return totalRouteExpansions; }
+        String[] reachedPadIds() { return copyFixedPrefixStrings(reachedPadIds); }
+        String[] reachedPthPadIds() { return copyFixedPrefixStrings(reachedPthPadIds); }
+        int prefixHoleCount() { return prefixHoles.length; }
+        FixedPrefixHole prefixHole(int index) {
+            if(index<0 || index>=prefixHoles.length)
+                throw new IllegalArgumentException("Invalid fixed-prefix hole index");
+            return prefixHoles[index];
+        }
+        int[] prefixHoleCountsByKind() { return copyFixedPrefixInts(prefixHoleCountsByKind); }
+        int prefixViaCount() { return prefixViaCount; }
+        String terminalReason() { return terminalReason; }
+        String prefixGeometryFingerprint() { return prefixGeometryFingerprint; }
+    }
+    /** Completed immutable mask data; no live router or mutable arrays escape. */
+    static final class FixedPrefixGraphSnapshot {
+        private final FixedPrefixCaptureContext context;
+        private final FixedPrefixBranchLineage lineage;
+        private final int gridWidth,gridHeight,originX,originY,primaryLayer,startCell,initialFacesMask;
+        private final byte[] topStepMasks,bottomStepMasks;
+        private final boolean[] goalFaces,viaAllowed;
+        private final int captureWorkUnits,copyEntries,goalProbes,ordinaryEdgeProbes,viaProbes,
+            comparisonEntries;
+        private final long captureActiveElapsedMillis;
+        private FixedPrefixGraphSnapshot(FixedPrefixCaptureContext context,
+                FixedPrefixBranchLineage lineage,int gridWidth,int gridHeight,int originX,int originY,
+                int primaryLayer,int startCell,int initialFacesMask,byte[] topStepMasks,
+                byte[] bottomStepMasks,boolean[] goalFaces,boolean[] viaAllowed,int captureWorkUnits,
+                int copyEntries,int goalProbes,int ordinaryEdgeProbes,int viaProbes,
+                int comparisonEntries,long captureActiveElapsedMillis) {
+            if(context==null || lineage==null || gridWidth<1 || gridHeight<1 || primaryLayer<0 ||
+                    primaryLayer>1 || (long)gridWidth*gridHeight>MAX_CELLS || topStepMasks==null ||
+                    bottomStepMasks==null || goalFaces==null || viaAllowed==null || captureWorkUnits<1 ||
+                    copyEntries<0 || goalProbes<0 || ordinaryEdgeProbes<0 || viaProbes<0 ||
+                    comparisonEntries<0 || captureActiveElapsedMillis<0)
+                throw new IllegalArgumentException("Invalid completed fixed-prefix graph");
+            int cells=gridWidth*gridHeight;
+            if(lineage.context()!=context || startCell<0 || startCell>=cells || initialFacesMask!=3 ||
+                    topStepMasks.length!=cells || bottomStepMasks.length!=cells ||
+                    goalFaces.length!=cells*2 || viaAllowed.length!=cells)
+                throw new IllegalArgumentException("Fixed-prefix graph mask dimensions differ");
+            this.context=context; this.lineage=lineage;
+            this.gridWidth=gridWidth; this.gridHeight=gridHeight; this.originX=originX; this.originY=originY;
+            this.primaryLayer=primaryLayer; this.startCell=startCell; this.initialFacesMask=initialFacesMask;
+            // Ownership transfers from the retired capture task; only scalar accessors are public.
+            this.topStepMasks=topStepMasks; this.bottomStepMasks=bottomStepMasks;
+            this.goalFaces=goalFaces; this.viaAllowed=viaAllowed;
+            this.captureWorkUnits=captureWorkUnits; this.copyEntries=copyEntries;
+            this.goalProbes=goalProbes; this.ordinaryEdgeProbes=ordinaryEdgeProbes; this.viaProbes=viaProbes;
+            this.comparisonEntries=comparisonEntries;
+            this.captureActiveElapsedMillis=captureActiveElapsedMillis;
+        }
+        FixedPrefixCaptureContext context() { return context; }
+        FixedPrefixBranchLineage lineage() { return lineage; }
+        int gridWidth() { return gridWidth; }
+        int gridHeight() { return gridHeight; }
+        int gridPitch() { return GRID; }
+        int originX() { return originX; }
+        int originY() { return originY; }
+        int primaryLayer() { return primaryLayer; }
+        int startCell() { return startCell; }
+        int initialFacesMask() { return initialFacesMask; }
+        int cellCount() { return viaAllowed.length; }
+        int topStepMaskAt(int cell) {
+            if(cell<0 || cell>=cellCount()) throw new IllegalArgumentException("Invalid fixed-prefix cell");
+            return topStepMasks[cell]&15;
+        }
+        int bottomStepMaskAt(int cell) {
+            if(cell<0 || cell>=cellCount()) throw new IllegalArgumentException("Invalid fixed-prefix cell");
+            return bottomStepMasks[cell]&15;
+        }
+        boolean goalAt(int layer,int cell) {
+            if(layer<0 || layer>1 || cell<0 || cell>=cellCount())
+                throw new IllegalArgumentException("Invalid fixed-prefix goal state");
+            return goalFaces[layer*cellCount()+cell];
+        }
+        boolean viaAllowedAt(int cell) {
+            if(cell<0 || cell>=cellCount()) throw new IllegalArgumentException("Invalid fixed-prefix cell");
+            return viaAllowed[cell];
+        }
+        int captureWorkUnits() { return captureWorkUnits; }
+        int copyEntries() { return copyEntries; }
+        int goalProbes() { return goalProbes; }
+        int ordinaryEdgeProbes() { return ordinaryEdgeProbes; }
+        int viaProbes() { return viaProbes; }
+        int comparisonEntries() { return comparisonEntries; }
+        long captureActiveElapsedMillis() { return captureActiveElapsedMillis; }
+    }
     /** Immutable scalars captured once when one real branch terminates. */
     static final class BranchSnapshot {
         final int pass;
@@ -158,6 +364,16 @@ final class PcbLayerRoutingPrototype {
             throw new IllegalArgumentException("P07 ordering stream requires FULLER_TWO_LAYER");
         return new Session(board,placement,policy,observer,maximum,maximumVias,diagnostics,true);
     }
+    /** Generator-owned, opt-in capture; its terminal hook is separate from ordinary diagnostics. */
+    static Session beginOrderingCandidatesWithFixedPrefixObservation(TroubleshootBoard board,
+            PcbBoardLayout placement,Policy policy,SeededPcbLayoutGenerator.AttemptObserver observer,
+            int maximum,int maximumVias,Diagnostics diagnostics,FixedPrefixCaptureContext context,
+            FixedPrefixGraphObserver captureObserver) {
+        if(policy!=Policy.FULLER_TWO_LAYER || context==null || captureObserver==null)
+            throw new IllegalArgumentException("Invalid actual P07 fixed-prefix observation request");
+        return new Session(board,placement,policy,observer,maximum,maximumVias,diagnostics,true,
+            context,captureObserver);
+    }
     static Result route(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
             SeededPcbLayoutGenerator.AttemptObserver observer) {
         return route(board,placement,policy,observer,MAX_EXPANSIONS);
@@ -184,6 +400,11 @@ final class PcbLayerRoutingPrototype {
         private final Diagnostics diagnostics;
         private final boolean roleWidths;
         private final boolean orderingStream;
+        private final FixedPrefixCaptureContext fixedPrefixContext;
+        private final FixedPrefixGraphObserver fixedPrefixGraphObserver;
+        private Search.BranchSearch.FixedPrefixCaptureTask pendingFixedPrefixCapture;
+        private Exhausted pendingFixedPrefixFailure;
+        private boolean fixedPrefixCaptureReserved;
         private int pass,passes;
         private int completedOrderings,yieldedOrderings;
         private String reason="NO_PATH";
@@ -200,25 +421,35 @@ final class PcbLayerRoutingPrototype {
 
         Session(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
                 SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias) {
-            this(board,placement,policy,observer,maximum,maximumVias,null,false);
+            this(board,placement,policy,observer,maximum,maximumVias,null,false,null,null);
         }
         Session(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
                 SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias,
                 Diagnostics diagnostics) {
-            this(board,placement,policy,observer,maximum,maximumVias,diagnostics,false);
+            this(board,placement,policy,observer,maximum,maximumVias,diagnostics,false,null,null);
         }
         private Session(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
                 SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias,
                 Diagnostics diagnostics,boolean orderingStream) {
+            this(board,placement,policy,observer,maximum,maximumVias,diagnostics,orderingStream,null,null);
+        }
+        private Session(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
+                SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias,
+                Diagnostics diagnostics,boolean orderingStream,FixedPrefixCaptureContext context,
+                FixedPrefixGraphObserver captureObserver) {
             if(board==null || placement==null || policy==null || observer==null ||
                     maximum<1 || maximum>MAX_EXPANSIONS || maximumVias<0 || maximumVias>policy.vias)
                 throw new IllegalArgumentException("Invalid P07 request");
             if(orderingStream && policy!=Policy.FULLER_TWO_LAYER)
                 throw new IllegalArgumentException("P07 ordering stream requires FULLER_TWO_LAYER");
+            if((context==null)!=(captureObserver==null) || context!=null && !orderingStream)
+                throw new IllegalArgumentException("Invalid fixed-prefix observation session");
             this.board=board; this.policy=policy; this.observer=observer;
             this.maximumVias=maximumVias;
             this.diagnostics=diagnostics;
             this.orderingStream=orderingStream;
+            this.fixedPrefixContext=context;
+            this.fixedPrefixGraphObserver=captureObserver;
             roleWidths=board.getPlacementConstraints().getTraceWidthProfile()==PcbTraceWidthProfile.ROLE_WIDTHS;
             observer.check(0);
             if(!placement.getHoles().isEmpty()) throw new IllegalArgumentException("P07 requires an undrilled candidate");
@@ -253,6 +484,35 @@ final class PcbLayerRoutingPrototype {
             if(orderingStream && (readyOrdering!=null || complete)) return complete;
             int remaining=maximumWork;
             while(remaining>0 && !complete && (!orderingStream || readyOrdering==null)) {
+                if(pendingFixedPrefixCapture!=null) {
+                    // A selected failure owns this turn. Copying and scans return
+                    // to the generator after a small bounded batch, never after
+                    // consuming the complete graph in one call.
+                    int chunks=Math.min(4,remaining);
+                    for(int chunk=0;chunk<chunks;chunk++) {
+                        observer.check(pass);
+                        boolean captured=pendingFixedPrefixCapture.advanceObservationUnit();
+                        remaining--;
+                        if(!captured) continue;
+                        FixedPrefixGraphSnapshot snapshot=pendingFixedPrefixCapture.finish();
+                        observer.check(pass);
+                        fixedPrefixGraphObserver.onGraph(snapshot);
+                        observer.check(pass);
+                        Exhausted terminal=pendingFixedPrefixFailure;
+                        pendingFixedPrefixCapture=null;
+                        pendingFixedPrefixFailure=null;
+                        if(terminal==null)
+                            throw new IllegalStateException("Fixed-prefix capture lost its deferred failure");
+                        if(handleExhausted(terminal)) {
+                            finishOrderingTerminal("TOTAL_SEARCH_LIMIT",false);
+                            observer.check(orderingObserverPass());
+                            return true;
+                        }
+                        return false;
+                    }
+                    observer.check(pass);
+                    return false;
+                }
                 if(search==null) {
                     if(pass>=ORDERINGS || budget.expanded>=budget.maximum) {
                         if(orderingStream) {
@@ -315,15 +575,7 @@ final class PcbLayerRoutingPrototype {
                         }
                     }
                 } catch(Exhausted failure) {
-                    reason=failure.getMessage();
-                    boolean totalSearchLimit=orderingStream && reason!=null &&
-                        reason.endsWith(":TOTAL_SEARCH_LIMIT");
-                    previousFailedNet=roleWidths && search!=null?search.currentNet:null;
-                    candidate=null; search=null; pass++;
-                    if(orderingStream) {
-                        turnBoundWorkspace=null;
-                        completedOrderings++;
-                    }
+                    boolean totalSearchLimit=handleExhausted(failure);
                     remaining--;
                     if(totalSearchLimit) finishOrderingTerminal("TOTAL_SEARCH_LIMIT",false);
                 } catch(PcbBoardLayout.RouteQualityRejectedException quality) {
@@ -347,6 +599,29 @@ final class PcbLayerRoutingPrototype {
                 if(!complete && readyOrdering==null) observer.check(orderingObserverPass());
             } else if(!complete) observer.check(pass<ORDERINGS?pass:ORDERINGS-1);
             return complete;
+        }
+        private boolean handleExhausted(Exhausted failure) {
+            reason=failure.getMessage();
+            boolean totalSearchLimit=orderingStream && reason!=null &&
+                reason.endsWith(":TOTAL_SEARCH_LIMIT");
+            previousFailedNet=roleWidths && search!=null?search.currentNet:null;
+            candidate=null; search=null; pass++;
+            if(orderingStream) {
+                turnBoundWorkspace=null;
+                completedOrderings++;
+            }
+            return totalSearchLimit;
+        }
+        private boolean deferFixedPrefixCapture(Search.BranchSearch branch,
+                FixedPrefixBranchLineage lineage) {
+            if(fixedPrefixGraphObserver==null || fixedPrefixCaptureReserved) return false;
+            if(pendingFixedPrefixCapture!=null || pendingFixedPrefixFailure!=null)
+                throw new IllegalStateException("A fixed-prefix failure is already suspended");
+            if(!fixedPrefixGraphObserver.select(lineage)) return false;
+            fixedPrefixCaptureReserved=true;
+            pendingFixedPrefixCapture=branch.new FixedPrefixCaptureTask(lineage);
+            pendingFixedPrefixFailure=new Exhausted(lineage.netId()+":"+lineage.terminalReason());
+            return true;
         }
         OrderingProgress advanceOrderingSlice() { return advanceOrderingSlice(WORK_QUANTUM); }
         /** Advances only the current pass; a ready route must be taken before successor work. */
@@ -445,6 +720,8 @@ final class PcbLayerRoutingPrototype {
             result=null;
             readyOrdering=null;
             orderingTermination=null;
+            pendingFixedPrefixCapture=null;
+            pendingFixedPrefixFailure=null;
             comparisonComplete=false;
             if(orderingStream) {
                 complete=false;
@@ -1061,6 +1338,7 @@ final class PcbLayerRoutingPrototype {
         private final class BranchSearch {
             final String net;
             final PcbPadPlacement start,root;
+            final int branchOrdinal;
             final PcbPadPlacement[] reachedTerminals;
             final boolean[] goal;
             final int[] distance;
@@ -1087,6 +1365,7 @@ final class PcbLayerRoutingPrototype {
             PcbPadPlacement foundTerminal;
             BranchSearch(String net,PcbPadPlacement start,PcbPadPlacement root) {
                 this.net=net; this.start=start; this.root=root;
+                branchOrdinal=branches;
                 observer.check(pass);
                 // Publisher finishes before the next branch is constructed.
                 // Its holes are immutable throughout this branch, including
@@ -1109,24 +1388,35 @@ final class PcbLayerRoutingPrototype {
                         heuristic(cell(start),4,layer),serial++,cells,null));
                 observer.check(pass);
             }
-            private void emitTerminal(String terminalReason) {
-                if(owner.diagnostics==null) return;
+            private boolean emitTerminal(String terminalReason) {
                 if(terminalEmitted)
                     throw new IllegalStateException("P07 branch terminal was already observed");
                 terminalEmitted=true;
-                owner.emitBranchSnapshot(new BranchSnapshot(pass,net,
-                    start.getPadId(),root.getPadId(),start.getX(),start.getY(),
-                    root.getX(),root.getY(),width,height,goalsTop,goalsBottom,
-                    holes.length,reachedPadIds.size(),
-                    distance[cell(start)],minimumExploredManhattanDistance==Integer.MAX_VALUE?
-                        -1:minimumExploredManhattanDistance,expanded,budget.expanded,
-                    expandedTop,expandedBottom,queue.size(),best.size(),terminalReason,
-                    relaxedBoundStarted,relaxedBoundComplete,relaxedBoundObservationChecked,
-                    relaxedBoundLiveLayoutStable,relaxedBoundRouterStateStable,
-                    relaxedBoundRouterEffectsStable,relaxedBoundWorkUnits,
-                    relaxedDistanceBound==null?0:relaxedDistanceBound.getOrdinaryProbes(),
-                    relaxedDistanceBound==null?0:relaxedDistanceBound.getViaProbes(),
-                    relaxedBoundRefreshes));
+                if(owner.diagnostics!=null)
+                    owner.emitBranchSnapshot(new BranchSnapshot(pass,net,
+                        start.getPadId(),root.getPadId(),start.getX(),start.getY(),
+                        root.getX(),root.getY(),width,height,goalsTop,goalsBottom,
+                        holes.length,reachedPadIds.size(),
+                        distance[cell(start)],minimumExploredManhattanDistance==Integer.MAX_VALUE?
+                            -1:minimumExploredManhattanDistance,expanded,budget.expanded,
+                        expandedTop,expandedBottom,queue.size(),best.size(),terminalReason,
+                        relaxedBoundStarted,relaxedBoundComplete,relaxedBoundObservationChecked,
+                        relaxedBoundLiveLayoutStable,relaxedBoundRouterStateStable,
+                        relaxedBoundRouterEffectsStable,relaxedBoundWorkUnits,
+                        relaxedDistanceBound==null?0:relaxedDistanceBound.getOrdinaryProbes(),
+                        relaxedDistanceBound==null?0:relaxedDistanceBound.getViaProbes(),
+                        relaxedBoundRefreshes));
+                if(owner.fixedPrefixGraphObserver==null || owner.fixedPrefixCaptureReserved ||
+                        "FOUND".equals(terminalReason)) return false;
+                String[] reachedIds=Search.this.reachedPadIds.toArray(new String[0]);
+                Vector<String> reachedPthIds=new Vector<String>();
+                for(PcbPadPlacement reached:reachedTerminals) reachedPthIds.add(reached.getPadId());
+                FixedPrefixBranchLineage lineage=new FixedPrefixBranchLineage(owner.fixedPrefixContext,
+                    pass,branchOrdinal,net,
+                    start,root,reachedIds,reachedPthIds.toArray(new String[0]),expanded,budget.expanded,
+                    holes,terminalReason,
+                    layout.geometryFingerprint());
+                return owner.deferFixedPrefixCapture(this,lineage);
             }
             private PcbPadPlacement terminalAt(int layer,int cell) {
                 if(cell==cell(root) && PcbCopperAccess.hasCopper(root,PcbCopperLayer.values()[layer]))
@@ -1297,17 +1587,17 @@ final class PcbLayerRoutingPrototype {
                 }
                 Node current=queue.poll();
                 if(current==null) {
-                    emitTerminal("NO_PATH");
+                    if(emitTerminal("NO_PATH")) return;
                     throw new Exhausted(net+":NO_PATH");
                 }
                 if(best.get(current.key)!=current) return;
                 if((expanded%128)==0) observer.check(pass);
                 if(budget.expanded>=budget.maximum) {
-                    emitTerminal("TOTAL_SEARCH_LIMIT");
+                    if(emitTerminal("TOTAL_SEARCH_LIMIT")) return;
                     throw new Exhausted(net+":TOTAL_SEARCH_LIMIT");
                 }
                 if(expanded>=MAX_BRANCH_EXPANSIONS) {
-                    emitTerminal("BRANCH_SEARCH_LIMIT");
+                    if(emitTerminal("BRANCH_SEARCH_LIMIT")) return;
                     throw new Exhausted(net+":BRANCH_SEARCH_LIMIT");
                 }
                 if(relaxedBoundComplete) {
@@ -1338,6 +1628,211 @@ final class PcbLayerRoutingPrototype {
                         pathViaFits(current) && viaFits(net,x(current.cell),y(current.cell),holes,holeBounds))
                     offer(queue,best,new Node(current.cell,1-current.layer,4,current.transitions+1,
                         current.cost+policy.viaCost,heuristic(current.cell,4,1-current.layer),serial++,cells,current));
+            }
+            /** Resumable source-checked copy and physical-mask scan for one selected failure. */
+            private final class FixedPrefixCaptureTask {
+                private static final int CAPTURE_CHUNK=4096;
+                private static final int COPY_CHUNK=WORK_QUANTUM;
+                private final FixedPrefixBranchLineage lineage;
+                private final PcbNetRouter.Router[] liveFaces=faces;
+                private final PcbNetRouter.Router[] pristineFaces=new PcbNetRouter.Router[2];
+                private final PcbNetRouter.Router[] queryFaces=new PcbNetRouter.Router[2];
+                private final String[] liveEffectsBefore=new String[2];
+                private final String prefixGeometryBefore;
+                private final int startCell;
+                private final int initialFacesMask;
+                private final byte[] topStepMasks=new byte[cells];
+                private final byte[] bottomStepMasks=new byte[cells];
+                private final boolean[] goalFaces=new boolean[cells*2];
+                private final boolean[] viaAllowed=new boolean[cells];
+                private PcbNetRouter.Router.FixedGraphCopyTask copyTask;
+                private PcbNetRouter.Router.FixedGraphComparisonTask comparisonTask;
+                private int copyTaskEntryWatermark;
+                private int comparisonMode,verificationFace,comparisonEntries;
+                private int stage,copyIndex,goalLayer,goalCell,scanCell,scanLayer,scanDirection,viaCell;
+                private int captureWorkUnits,copyEntries,goalProbes,ordinaryEdgeProbes,viaProbes;
+                private long captureActiveElapsedMillis,currentUnitStartMillis;
+                private boolean complete;
+                private FixedPrefixGraphSnapshot snapshot;
+                FixedPrefixCaptureTask(FixedPrefixBranchLineage lineage) {
+                    if(lineage==null || owner.fixedPrefixContext==null || liveFaces[0]==null || liveFaces[1]==null)
+                        throw new IllegalArgumentException("Invalid selected fixed-prefix capture");
+                    this.lineage=lineage;
+                    observer.check(pass);
+                    startCell=cell(start);
+                    initialFacesMask=(1<<primary)|(1<<(1-primary));
+                    prefixGeometryBefore=layout.geometryFingerprint();
+                    if(!lineage.prefixGeometryFingerprint().equals(prefixGeometryBefore))
+                        throw new IllegalStateException("Fixed-prefix lineage changed before capture began");
+                    for(int layer=0;layer<2;layer++)
+                        liveEffectsBefore[layer]=liveFaces[layer].fixedGraphObservationEffects();
+                    observer.check(pass);
+                }
+                boolean advanceObservationUnit() {
+                    if(complete) return true;
+                    currentUnitStartMillis=System.currentTimeMillis();
+                    observer.check(pass);
+                    captureWorkUnits++;
+                    if(stage==0) advanceCopies();
+                    else if(stage==1) advanceGoals();
+                    else if(stage==2) advanceOrdinaryEdges();
+                    else if(stage==3) advanceVias();
+                    else if(stage==4) advanceFinalVerification();
+                    else if(stage==5) finishCapture();
+                    else throw new IllegalStateException("Unknown fixed-prefix capture stage");
+                    observer.check(pass);
+                    captureActiveElapsedMillis+=Math.max(0L,System.currentTimeMillis()-currentUnitStartMillis);
+                    return complete;
+                }
+                private void advanceCopies() {
+                    if(copyIndex>=4) { stage=1; return; }
+                    if(comparisonTask!=null) {
+                        advanceFixedGraphComparison();
+                        if(comparisonTask.equal()) {
+                            if(comparisonMode==1 &&
+                                    !liveEffectsBefore[copyIndex/2].equals(
+                                        liveFaces[copyIndex/2].fixedGraphObservationEffects()))
+                                throw new IllegalStateException("Fixed-prefix router clone changed live router effects");
+                            comparisonTask=null; comparisonMode=0;
+                            copyTask=null; copyTaskEntryWatermark=0; copyIndex++;
+                            if(copyIndex>=4) stage=1;
+                        }
+                        return;
+                    }
+                    int layer=copyIndex/2;
+                    if(copyTask==null) {
+                        copyTask=liveFaces[layer].beginFixedGraphObservationCopy();
+                        copyTaskEntryWatermark=0;
+                    }
+                    boolean copied=copyTask.advanceOne(COPY_CHUNK);
+                    int copiedTotal=copyTask.copiedEntries();
+                    copyEntries+=copiedTotal-copyTaskEntryWatermark;
+                    copyTaskEntryWatermark=copiedTotal;
+                    if(copied) {
+                        PcbNetRouter.Router clone=copyTask.result();
+                        if((copyIndex&1)==0) {
+                            pristineFaces[layer]=clone;
+                            comparisonTask=clone.beginFixedGraphComparison(liveFaces[layer]);
+                            comparisonMode=1;
+                        } else {
+                            if(pristineFaces[layer]==null)
+                                throw new IllegalStateException("Fixed-prefix pristine router copy is missing");
+                            queryFaces[layer]=clone;
+                            comparisonTask=clone.beginFixedGraphComparison(pristineFaces[layer]);
+                            comparisonMode=2;
+                        }
+                    }
+                }
+                private void advanceFixedGraphComparison() {
+                    int compared=comparisonTask.comparedEntries();
+                    boolean comparedComplete=comparisonTask.advanceOne(COPY_CHUNK);
+                    int comparedTotal=comparisonTask.comparedEntries();
+                    comparisonEntries+=comparedTotal-compared;
+                    if(comparedComplete && !comparisonTask.equal()) {
+                        String message=comparisonMode==2?
+                            "Fixed-prefix query clone differs from pristine state":
+                            comparisonMode==3?"Fixed-prefix capture changed live router fixed state":
+                                "Fixed-prefix router clone differs from live source";
+                        throw new IllegalStateException(message);
+                    }
+                }
+                private void advanceGoals() {
+                    int operations=0;
+                    while(goalLayer<2 && operations<CAPTURE_CHUNK) {
+                        if(goalLayer!=primary && policy.transitions==0) { goalLayer++; goalCell=0; continue; }
+                        if(goalCell==0) goalFaces[goalLayer*cells+cell(root)]=true;
+                        if(goalCell<cells) {
+                            if(queryFaces[goalLayer].ownsLayerGridCell(goalCell%width,
+                                    goalCell/width,net))
+                                goalFaces[goalLayer*cells+goalCell]=true;
+                            goalProbes++; goalCell++; operations++; continue;
+                        }
+                        for(PcbPadPlacement reached:reachedTerminals)
+                            if(PcbCopperAccess.hasCopper(reached,PcbCopperLayer.values()[goalLayer]))
+                                goalFaces[goalLayer*cells+cell(reached)]=true;
+                        goalLayer++; goalCell=0;
+                    }
+                    if(goalLayer>=2) stage=2;
+                }
+                private void advanceOrdinaryEdges() {
+                    int operations=0;
+                    while(scanLayer<2 && operations<CAPTURE_CHUNK) {
+                        int cx=scanCell%width,cy=scanCell/width;
+                        int next=-1,bit=0;
+                        if(scanDirection==0) { if(cy>0) { next=scanCell-width; bit=1; } }
+                        else if(scanDirection==1) { if(cx+1<width) { next=scanCell+1; bit=2; } }
+                        else if(scanDirection==2) { if(cy+1<height) { next=scanCell+width; bit=4; } }
+                        else if(scanDirection==3) { if(cx>0) { next=scanCell-1; bit=8; } }
+                        else throw new IllegalStateException("Invalid fixed-prefix direction");
+                        if(next>=0) {
+                            PcbPadPlacement[] faceTargets=scanLayer==primary ||
+                                policy==Policy.FULLER_TWO_LAYER?reachedTerminals:null;
+                            if(queryFaces[scanLayer].permitsLayerStep(x(scanCell),y(scanCell),
+                                    x(next),y(next),net,start,root,faceTargets)) {
+                                if(scanLayer==PcbCopperLayer.TOP.ordinal())
+                                    topStepMasks[scanCell]=(byte)(topStepMasks[scanCell]|bit);
+                                else bottomStepMasks[scanCell]=(byte)(bottomStepMasks[scanCell]|bit);
+                            }
+                            ordinaryEdgeProbes++;
+                        }
+                        operations++; scanDirection++;
+                        if(scanDirection>=4) {
+                            scanDirection=0; scanCell++;
+                            if(scanCell>=cells) { scanCell=0; scanLayer++; }
+                        }
+                    }
+                    if(scanLayer>=2) stage=3;
+                }
+                private void advanceVias() {
+                    int operations=0;
+                    while(viaCell<cells && operations<CAPTURE_CHUNK) {
+                        viaAllowed[viaCell]=Search.this.relaxedViaFits(net,x(viaCell),
+                            y(viaCell),holes,holeBounds,queryFaces);
+                        viaCell++; viaProbes++; operations++;
+                    }
+                    if(viaCell>=cells) stage=4;
+                }
+                private void advanceFinalVerification() {
+                    if(verificationFace>=2) { stage=5; return; }
+                    if(comparisonTask==null) {
+                        if(pristineFaces[verificationFace]==null)
+                            throw new IllegalStateException("Fixed-prefix pristine router copy is missing at final verification");
+                        comparisonTask=liveFaces[verificationFace].beginFixedGraphComparison(
+                            pristineFaces[verificationFace]);
+                        comparisonMode=3;
+                    }
+                    advanceFixedGraphComparison();
+                    if(comparisonTask.equal()) {
+                        int layer=verificationFace;
+                        if(!liveEffectsBefore[layer].equals(liveFaces[layer].fixedGraphObservationEffects()))
+                            throw new IllegalStateException("Fixed-prefix capture changed live router effects");
+                        comparisonTask=null; comparisonMode=0;
+                        verificationFace++;
+                    }
+                }
+                private void finishCapture() {
+                    if(!prefixGeometryBefore.equals(layout.geometryFingerprint()))
+                        throw new IllegalStateException("Fixed-prefix capture changed layout geometry");
+                    for(int layer=0;layer<2;layer++)
+                        if(pristineFaces[layer]==null || queryFaces[layer]==null)
+                            throw new IllegalStateException("Fixed-prefix capture lost a verified router copy");
+                    snapshot=new FixedPrefixGraphSnapshot(owner.fixedPrefixContext,lineage,width,height,
+                        minX,minY,primary,startCell,initialFacesMask,topStepMasks,bottomStepMasks,
+                        goalFaces,viaAllowed,captureWorkUnits,copyEntries,goalProbes,
+                        ordinaryEdgeProbes,viaProbes,comparisonEntries,captureActiveElapsedMillis+
+                            Math.max(0L,System.currentTimeMillis()-currentUnitStartMillis));
+                    // The immutable snapshot is the only retained owner of graph arrays.
+                    complete=true;
+                    comparisonTask=null; copyTask=null;
+                    for(int layer=0;layer<2;layer++) {
+                        pristineFaces[layer]=null; queryFaces[layer]=null;
+                    }
+                }
+                FixedPrefixGraphSnapshot finish() {
+                    if(!complete || snapshot==null)
+                        throw new IllegalStateException("Fixed-prefix graph capture is incomplete");
+                    return snapshot;
+                }
             }
         }
         private final class Publisher {

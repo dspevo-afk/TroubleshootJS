@@ -239,8 +239,9 @@ After compacting a Medium route and positioning
 its parts tray, the canvas owner completes board containment for every selected
 Medium policy. It extends workbench dimensions without changing the board, tray
 or conductive geometry. The roadmap records qualification of these changes.
-The native `Rb100PhysicalDiagnostics` helper owns only the current policy/branch
-observations and focused placement controls. Its thin entrypoints do not grant
+The native `Rb100PhysicalDiagnostics` helper owns current policy/branch
+observations, focused placement controls and the private paired actual-generator
+capture runner. Its thin entrypoints do not grant
 physical qualification. Obsolete single-face experiment entrypoints are retired;
 `Rb100PhysicalReference` retains strict test-only physical oracles for future
 explicit callers. Retaining those routines is not evidence that an authored100
@@ -253,7 +254,43 @@ PCB predicates and cannot attest a capture or qualify a layout. A reachable resu
 stops at the first settled goal; counters explicitly describe work before that
 termination, while its witness output has a64-state prefix and full-path digest.
 Literal fixtures and independent tiny-graph Floyd-Warshall comparisons qualify
-this test tool only. The staged real-generator capture seam remains separate.
+this test tool only.
+
+The private `beginWithFixedPrefixObservation` generator entry point binds exact
+layout/routing seeds, the complete priority-ordered eligible placement list,
+actual selected attempt/request and raw placement fingerprint. Its P07 observer
+selects a terminal failed branch before ordinary exhaustion. The router suspends
+that transition while bounded copy, permission scan and comparison tasks run,
+then publishes one immutable graph and resumes the same failure. Ordinary callers
+retain the null observer. Isolated predicate copies and before/after comparisons
+protect live fixed state, effects and layout; cancellation, stale ownership or
+observer failure latches a fatal error. Full reached pads and additional reached
+PTH endpoints are separate sets. Typed holes distinguish vias, plated holes and
+nonplated holes.
+
+Capture chunks return through the existing generator scheduler and consume its
+unchanged case/unit budgets. Cheap copies/comparisons use the existing32768-entry
+work quantum; permission scans use4096 probes, at most four internal chunks per
+generator advance. Case units and internal observation chunks have distinct
+counters. The strict capture reader binds graph bytes, lineage, a closed native
+source inventory and process/cleanup receipts before invoking the independent
+graph oracle. The relaxed history/global-via model grants diagnostic reachability,
+with no route, layout, electrical or playable100 acceptance. This observation
+seam retains layout25 and the published numerical dependency interpretation v27.
+The authored100 paired runner uses the bare generator with envelope=null on both
+sides. Its lineage is not a ConstructionSession/Player supported-envelope proof;
+THT_SINGLE_FACE@1 retains its existing16-part admission limit. No envelope or
+public100 admission is expanded by this diagnostic.
+The [current checkpoint](CODEX_TASK_REPORT.md) records its qualification status.
+
+The current default-parity reader owns v27 metadata validation separately from
+the frozen layout-transition reader. It verifies the historical helper's exact
+source hash, extracts only its frame and case validators into isolated globals,
+and AST-checks that only their dependency expressions change to an explicit
+layout25/v27 guard. Original helper functions, catalog, geometry calculations and
+retained numeric bounds remain unchanged. Raw native outputs stay byte-exact.
+The capture reader independently closes its1066-file native inventory; the
+selected regression additionally binds its consumed structural TSV fixture.
 The published E06 candidate used v21 for its
 accepted-memory boundary change. The published Q100-1 candidate used v20 for
 the earlier E02/E04/E06 solver-policy corrections. The context binds declared
