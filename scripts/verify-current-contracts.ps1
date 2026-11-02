@@ -17,6 +17,7 @@ param(
     [long[]]$QuickPlayGateSeeds = @(),
     [long[]]$Q30PlanSeeds = @(),
     [switch]$Rb100FaultMatrix,
+    [switch]$Rb100NoPathPrefixCapture,
     [switch]$Rb100ConvergenceTrace,
     [switch]$Rb100AdaptiveStudy,
     [string]$Rb100DiagnosticFault = '',
@@ -49,6 +50,18 @@ if ($Rb100DiagnosticFault -and $Rb100FaultMatrix) {
 }
 if ($Rb100DiagnosticDt -ne '0.0001' -and -not $Rb100DiagnosticFault) {
     throw 'An alternate RB100 diagnostic timestep requires an explicit selected diagnostic fault.'
+}
+if ($Rb100NoPathPrefixCapture) {
+    if ($Suite.Count -ne 1) {
+        throw '-Rb100NoPathPrefixCapture requires exactly -Suite Rb100FixedPrefixCaptureContractTest.'
+    }
+    if ($Suite[0] -cne 'Rb100FixedPrefixCaptureContractTest') {
+        throw '-Rb100NoPathPrefixCapture requires exactly -Suite Rb100FixedPrefixCaptureContractTest.'
+    }
+    if ($Rb100FaultMatrix -or $Rb100ConvergenceTrace -or $Rb100AdaptiveStudy -or
+            $Rb100DiagnosticFault -or $Rb100DiagnosticDt -ne '0.0001') {
+        throw '-Rb100NoPathPrefixCapture excludes other RB100 diagnostic modes.'
+    }
 }
 
 function Write-Q30CasePlanMetadataFailure {
@@ -1324,6 +1337,10 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         }
         $testArguments = @('-ea', '-cp', $classPath,
             ('com.lushprojects.circuitjs1.client.' + $testClass))
+        if ($testClass -eq 'Rb100FixedPrefixCaptureContractTest' -and
+                $Rb100NoPathPrefixCapture) {
+            $testArguments += '--completed-no-path'
+        }
         if ($testClass -eq 'Q30PlanContractTest' -and
                 $PSBoundParameters.ContainsKey('Q30PlanSeeds')) {
             $planSeedTexts = @($Q30PlanSeeds | ForEach-Object {

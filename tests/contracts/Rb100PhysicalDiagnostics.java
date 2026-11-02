@@ -131,26 +131,39 @@ public final class Rb100PhysicalDiagnostics {
 
     /** Actual-generator null/capture pairs for the opt-in fixed-prefix graph seam. */
     static void runFixedPrefixCaptureContracts() {
+        runFixedPrefixCaptureContracts(false);
+    }
+
+    /** Actual-generator completed NO_PATH null/capture pairs for the two frozen targets. */
+    static void runFixedPrefixCaptureContracts(boolean completedNoPath) {
         long suiteStarted=System.nanoTime();
         int beforeAssertions=assertions;
         final String runId=UUID.randomUUID().toString();
         Rb100Plan.Variant[] authored=variants();
         P07PolicyDiagnosticCase[][] results=new P07PolicyDiagnosticCase[2][2];
         int failures=0;
+        if(completedNoPath) runCompletedNoPathSelectorControls(authored);
         String[] operationIds={"SHARED_NULL","SHARED_CAPTURE","SEPARATE_NULL","SEPARATE_CAPTURE"};
         for(int variantIndex=0;variantIndex<authored.length;variantIndex++) {
             Rb100Plan.Variant variant=authored[variantIndex];
+            FixedPrefixNoPathTarget target=completedNoPath?
+                fixedPrefixNoPathTarget(variant):null;
             P07PolicyDiagnosticCase baseline=runP07PolicyDiagnosticCase(
-                variant,runId,null,null,"NULL",operationIds[variantIndex*2]);
+                variant,runId,null,null,"NULL",operationIds[variantIndex*2],target);
             results[variantIndex][0]=baseline;
             System.out.println("RB100_FIXED_PREFIX_CAPTURE_OPERATION "+
                 fixedPrefixOperationJson(baseline,"NULL",operationIds[variantIndex*2]));
             if(!"PASS".equals(baseline.status)) failures++;
+            if(target!=null) {
+                require("PASS".equals(baseline.status),
+                    "completed NO_PATH capture stops before selection when its null operation is incomplete");
+                requireCompletedNoPathOrderingReceipt(baseline,target);
+            }
 
             FixedPrefixCaptureCollector capture=new FixedPrefixCaptureCollector(
-                variant,runId,operationIds[variantIndex*2+1]);
+                variant,runId,operationIds[variantIndex*2+1],target);
             P07PolicyDiagnosticCase observed=runP07PolicyDiagnosticCase(
-                variant,runId,capture,baseline,"CAPTURE",operationIds[variantIndex*2+1]);
+                variant,runId,capture,baseline,"CAPTURE",operationIds[variantIndex*2+1],target);
             results[variantIndex][1]=observed;
             System.out.println("RB100_FIXED_PREFIX_CAPTURE_OPERATION "+
                 fixedPrefixOperationJson(observed,"CAPTURE",operationIds[variantIndex*2+1]));
@@ -172,6 +185,7 @@ public final class Rb100PhysicalDiagnostics {
         System.out.println("PASS: RB100 fixed-prefix capture contracts {\"status\":\"PASS\",\"operations\":4,"+
             "\"nullOperations\":2,\"captureOperations\":2,\"pairs\":2,\"graphs\":2,"+
             "\"authoredVariants\":2,\"variants\":[\"SHARED_HYSTERETIC_LINEAR\",\"SEPARATE_DIRECT_SWITCHING\"],"+
+            (completedNoPath?"\"captureSelection\":\"COMPLETED_NO_PATH\",":"")+
             "\"runId\":\""+jsonFull(runId)+"\",\"rootSeed\":\""+SEED+
             "\",\"placementSeed\":\""+PLACEMENT_DIAGNOSTIC_SEED+"\",\"routingSeed\":\""+
             ROUTING_DIAGNOSTIC_ROUTING_SEED+"\",\"layoutVersion\":"+
@@ -249,13 +263,14 @@ public final class Rb100PhysicalDiagnostics {
 
     private static P07PolicyDiagnosticCase runP07PolicyDiagnosticCase(
             final Rb100Plan.Variant variant, String runId) {
-        return runP07PolicyDiagnosticCase(variant,runId,null,null,"LEGACY",null);
+        return runP07PolicyDiagnosticCase(variant,runId,null,null,"LEGACY",null,null);
     }
 
     private static P07PolicyDiagnosticCase runP07PolicyDiagnosticCase(
             final Rb100Plan.Variant variant,String runId,
             final FixedPrefixCaptureCollector captureCollector,
-            final P07PolicyDiagnosticCase expectedNull,final String mode,final String operationId) {
+            final P07PolicyDiagnosticCase expectedNull,final String mode,final String operationId,
+            final FixedPrefixNoPathTarget noPathTarget) {
         final long operationStarted = System.nanoTime();
         final Budget budget = new Budget(operationStarted);
         final P07PolicyDiagnosticCase result = new P07PolicyDiagnosticCase(
@@ -324,7 +339,14 @@ public final class Rb100PhysicalDiagnostics {
                         require(result.components == EXPECTED_COMPONENTS && result.pads == 246 &&
                             (result.nets == 59 || result.nets == 60),
                             "P07 observation uses the actual authored 100-component, 246-pad, 59-or-60-net board");
-                        return BoardIdentity.capture(candidate[0]);
+                        BoardIdentity captured=BoardIdentity.capture(candidate[0]);
+                        if(noPathTarget!=null) {
+                            result.boardNetIds=new TreeSet<String>(candidate[0].board().getNetIds());
+                            require(result.boardNetIds.size()==result.nets &&
+                                result.boardNetIds.equals(captured.nets),
+                                "fixed-prefix net census starts from the unique authoritative authored board net IDs");
+                        }
+                        return captured;
                     }
                 });
 
@@ -431,6 +453,14 @@ public final class Rb100PhysicalDiagnostics {
                     }
                     verifyP07PolicyStatistics(policyResult[0]);
                     identity[0].requireUnchanged(candidate[0]);
+                    if(captureCollector!=null &&
+                            captureCollector.completedNoPathTarget!=null) {
+                        require(result.boardNetIds!=null &&
+                            result.boardNetIds.equals(new TreeSet<String>(
+                                candidate[0].board().getNetIds())) &&
+                            result.boardNetIds.size()==result.nets,
+                            "completed NO_PATH census verifies the pre-generation net IDs remain unchanged after generation");
+                    }
                     require(CircuitElm.sim == context[0].sim &&
                         CirSim.theSim == context[0].sim && context[0].sim.elmList == context[0].rawGraph &&
                         context[0].rawGraph.isEmpty(),
@@ -439,13 +469,20 @@ public final class Rb100PhysicalDiagnostics {
                     result.boardIdentityStatus = "PASS";
                     result.captureLayoutOutput();
                     if(captureCollector==null) {
-                        if("NULL".equals(mode))
+                        if(noPathTarget==null && "NULL".equals(mode))
                             requireExpectedFixedPrefixPlacement(variant,policyResult[0].getStatistics());
+                        else if(noPathTarget!=null)
+                            requireCompletedNoPathOrderingReceipt(result,noPathTarget);
                     } else {
                         require(expectedNull!=null && "PASS".equals(expectedNull.status) &&
                             expectedNull.policyResult!=null && expectedNull.policyResult.getStatistics()!=null,
                             "capture run has its terminal null-observer actual-generator baseline");
-                        requireExpectedFixedPrefixPlacement(variant,policyResult[0].getStatistics());
+                        if(noPathTarget==null)
+                            requireExpectedFixedPrefixPlacement(variant,policyResult[0].getStatistics());
+                        else {
+                            requireCompletedNoPathOrderingReceipt(expectedNull,noPathTarget);
+                            requireCompletedNoPathOrderingReceipt(result,noPathTarget);
+                        }
                         requireFixedPrefixPairParity(expectedNull,result);
                         captureCollector.requireComplete(result);
                     }
@@ -486,6 +523,13 @@ public final class Rb100PhysicalDiagnostics {
                                 fixedPrefixCaptureFactJson(result,captureCollector,
                                     emission,result.fixedPrefixSerializationMillis,
                                     operationId,mode));
+                            if(captureCollector.completedNoPathTarget!=null) {
+                                require(result.boardNetIds!=null &&
+                                    result.boardNetIds.size()==result.nets,
+                                    "completed NO_PATH census has the pre-generation authoritative net-ID set");
+                                System.out.println("RB100_FIXED_PREFIX_NET_CENSUS "+
+                                    fixedPrefixNetCensusJson(result,emission,operationId));
+                            }
                             return null;
                         }
                     });
@@ -536,6 +580,95 @@ public final class Rb100PhysicalDiagnostics {
                 "actual generator keeps the exact post-priority eligible placement order");
         require(firstP07RequestAttempt(statistics)==4,
             "actual first required-P07 request selects eligible placement attempt4 without a forced selector");
+    }
+
+    private static FixedPrefixNoPathTarget fixedPrefixNoPathTarget(Rb100Plan.Variant variant) {
+        if(variant==Rb100Plan.Variant.SHARED_HYSTERETIC_LINEAR)
+            return new FixedPrefixNoPathTarget(2,2,0,"F_DRAIN");
+        if(variant==Rb100Plan.Variant.SEPARATE_DIRECT_SWITCHING)
+            return new FixedPrefixNoPathTarget(0,0,4,"A_COIL_LOW");
+        throw new IllegalArgumentException("Unknown authored fixed-prefix NO_PATH variant");
+    }
+
+    /** Cheap primitive controls exercise the exact selector predicate before either capture. */
+    private static void runCompletedNoPathSelectorControls(Rb100Plan.Variant[] authored) {
+        require(authored!=null && authored.length==2,
+            "completed NO_PATH selector controls cover the two authored variants");
+        for(Rb100Plan.Variant variant:authored) {
+            FixedPrefixNoPathTarget target=fixedPrefixNoPathTarget(variant);
+            require(matchesCompletedNoPathTarget(target,target.requestIndex,target.eligibleIndex,
+                target.placementAttempt,target.netId,"NO_PATH"),
+                "completed NO_PATH selector accepts the exact frozen request, placement and net");
+            require(!matchesCompletedNoPathTarget(target,target.requestIndex+1,target.eligibleIndex,
+                target.placementAttempt,target.netId,"NO_PATH"),
+                "completed NO_PATH selector ignores another request");
+            require(!matchesCompletedNoPathTarget(target,target.requestIndex,target.eligibleIndex,
+                target.placementAttempt,"OTHER_NET","NO_PATH"),
+                "completed NO_PATH selector ignores a different branch net");
+            require(!matchesCompletedNoPathTarget(target,target.requestIndex,target.eligibleIndex,
+                target.placementAttempt,target.netId,"TOTAL_SEARCH_LIMIT"),
+                "completed NO_PATH selector rejects non-NO_PATH terminal branches");
+            require(!matchesCompletedNoPathTarget(target,target.requestIndex,target.eligibleIndex,
+                target.placementAttempt,target.netId,"FOUND"),
+                "completed NO_PATH selector rejects found branches");
+            require(shouldSelectFirstCompletedNoPathTarget(target,target.requestIndex,
+                target.eligibleIndex,target.placementAttempt,target.netId,"NO_PATH",false) &&
+                !shouldSelectFirstCompletedNoPathTarget(target,target.requestIndex,
+                    target.eligibleIndex,target.placementAttempt,target.netId,"NO_PATH",true),
+                "completed NO_PATH selector selects only the first matching lineage");
+            boolean wrongPlacementRejected=false;
+            try {
+                matchesCompletedNoPathTarget(target,target.requestIndex,target.eligibleIndex+1,
+                    target.placementAttempt+1,target.netId,"NO_PATH");
+            } catch(IllegalArgumentException expected) {
+                wrongPlacementRejected=true;
+            }
+            require(wrongPlacementRejected,
+                "completed NO_PATH selector fails closed on target-request placement mismatch");
+        }
+    }
+
+    private static boolean matchesCompletedNoPathTarget(FixedPrefixNoPathTarget target,
+            int requestIndex,int eligibleIndex,int placementAttempt,String netId,
+            String terminalReason) {
+        if(requestIndex!=target.requestIndex) return false;
+        if(eligibleIndex!=target.eligibleIndex || placementAttempt!=target.placementAttempt)
+            throw new IllegalArgumentException(
+                "Completed NO_PATH target request selected a different placement");
+        return target.netId.equals(netId) && "NO_PATH".equals(terminalReason);
+    }
+
+    private static boolean shouldSelectFirstCompletedNoPathTarget(
+            FixedPrefixNoPathTarget target,int requestIndex,int eligibleIndex,
+            int placementAttempt,String netId,String terminalReason,boolean alreadySelected) {
+        return !alreadySelected && matchesCompletedNoPathTarget(target,requestIndex,
+            eligibleIndex,placementAttempt,netId,terminalReason);
+    }
+
+    /** Bind capture selection to the exact completed request receipt from its null run. */
+    private static void requireCompletedNoPathOrderingReceipt(P07PolicyDiagnosticCase result,
+            FixedPrefixNoPathTarget target) {
+        MediumBoardPhysicalPolicy.Statistics statistics=statistics(result);
+        require(result!=null && result.policyResult!=null && statistics!=null &&
+            result.boardNetIds!=null && result.boardNetIds.contains(target.netId) &&
+            statistics.orderingSearchReceipts!=null && statistics.routeOutcomes!=null &&
+            target.requestIndex<statistics.orderingSearchReceipts.size() &&
+            target.requestIndex<statistics.routeOutcomes.size(),
+            "completed NO_PATH target has an exact request-indexed null/capture receipt");
+        MediumBoardPhysicalPolicy.OrderingSearchReceipt receipt=
+            statistics.orderingSearchReceipts.get(target.requestIndex);
+        String expectedOutcome=MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER+"@"+
+            target.placementAttempt+"=REJECTED:"+
+            MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER+":"+target.netId+":NO_PATH";
+        require(receipt!=null && receipt.attempt==target.placementAttempt &&
+            receipt.comparisonComplete &&
+            receipt.completedOrderings==PcbLayerRoutingPrototype.ORDERINGS &&
+            (target.netId+":NO_PATH").equals(receipt.termination) &&
+            expectedOutcome.equals(statistics.routeOutcomes.get(target.requestIndex)) &&
+            statistics.routeEligiblePlacementAttempts.size()>target.eligibleIndex &&
+            statistics.routeEligiblePlacementAttempts.get(target.eligibleIndex).intValue()==
+                target.placementAttempt && target.requestIndex==target.eligibleIndex,
+            "completed NO_PATH target binds its exact eligible placement and completed null ordering receipt, never a total-search-limit receipt");
     }
 
     private static int[] expectedFixedPrefixEligibleAttempts(Rb100Plan.Variant variant) {
@@ -701,6 +834,10 @@ public final class Rb100PhysicalDiagnostics {
         PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot graph=collector.snapshot;
         PcbLayerRoutingPrototype.FixedPrefixBranchLineage lineage=collector.selected;
         PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=lineage.context();
+        if(collector.completedNoPathTarget!=null) {
+            require(result.boardNetIds!=null && result.boardNetIds.size()==result.nets,
+                "completed NO_PATH census uses the sorted unique board-net snapshot");
+        }
         int[] eligible=context.eligiblePlacementAttempts();
         int[] holeCounts=lineage.prefixHoleCountsByKind();
         StringBuilder holes=new StringBuilder("[");
@@ -772,12 +909,35 @@ public final class Rb100PhysicalDiagnostics {
             "\"layoutQualification\":false}";
     }
 
+    private static String fixedPrefixNetCensusJson(P07PolicyDiagnosticCase result,
+            FixedPrefixGraphEmission emission,String operationId) {
+        require(result!=null && emission!=null && result.boardNetIds!=null &&
+            result.boardNetIds.size()==result.nets,
+            "fixed-prefix net census binds the actual pre-generation board identity");
+        return "{\"protocolVersion\":1,\"runId\":\""+jsonFull(result.runId)+
+            "\",\"operationId\":\""+jsonFull(operationId)+
+            "\",\"variant\":\""+jsonFull(result.subject)+
+            "\",\"graphCaseId\":\""+jsonFull(emission.caseId)+
+            "\",\"graphSha256\":\""+emission.sha256+
+            "\",\"netIds\":"+stringArrayJson(result.boardNetIds.toArray(new String[0]))+"}";
+    }
+
     private static FixedPrefixGraphEmission serializeFixedPrefixGraph(
             FixedPrefixCaptureCollector collector,Rb100Plan.Variant variant) {
         PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot graph=collector.snapshot;
         int cells=graph.cellCount();
-        String caseId=variant==Rb100Plan.Variant.SHARED_HYSTERETIC_LINEAR?
-            "RB100_SHARED_HYSTERETIC_LINEAR_REQ0":"RB100_SEPARATE_DIRECT_SWITCHING_REQ0";
+        String caseId;
+        if(collector.completedNoPathTarget!=null) {
+            require(collector.completedNoPathTarget.requestIndex==
+                graph.context().routeRequestIndex(),
+                "completed NO_PATH graph case ID binds its selected request");
+            caseId=variant==Rb100Plan.Variant.SHARED_HYSTERETIC_LINEAR?
+                "RB100_SHARED_HYSTERETIC_LINEAR_NO_PATH_REQ2":
+                "RB100_SEPARATE_DIRECT_SWITCHING_NO_PATH_REQ0";
+        } else {
+            caseId=variant==Rb100Plan.Variant.SHARED_HYSTERETIC_LINEAR?
+                "RB100_SHARED_HYSTERETIC_LINEAR_REQ0":"RB100_SEPARATE_DIRECT_SWITCHING_REQ0";
+        }
         StringBuilder payload=new StringBuilder(Math.min(8388608,64+cells*12));
         payload.append("{\"caseId\":\"").append(caseId)
             .append("\",\"goals\":[");
@@ -2520,44 +2680,91 @@ public final class Rb100PhysicalDiagnostics {
         }
     }
 
+    private static final class FixedPrefixNoPathTarget {
+        final int requestIndex,eligibleIndex,placementAttempt;
+        final String netId;
+        FixedPrefixNoPathTarget(int requestIndex,int eligibleIndex,int placementAttempt,
+                String netId) {
+            if(requestIndex<0 || eligibleIndex<0 || placementAttempt<0 || netId==null ||
+                    netId.length()==0 || requestIndex!=eligibleIndex)
+                throw new IllegalArgumentException("Invalid fixed-prefix completed NO_PATH target");
+            this.requestIndex=requestIndex; this.eligibleIndex=eligibleIndex;
+            this.placementAttempt=placementAttempt; this.netId=netId;
+        }
+    }
+
     private static final class FixedPrefixCaptureCollector
             implements PcbLayerRoutingPrototype.FixedPrefixGraphObserver {
         final Rb100Plan.Variant variant;
         final String runId,operationId;
-        int requestZeroSelectionCalls,graphCallbacks;
+        final FixedPrefixNoPathTarget completedNoPathTarget;
+        int requestZeroSelectionCalls,targetRequestSelectionCalls,
+            targetNoPathLineageCalls,graphCallbacks;
         PcbLayerRoutingPrototype.FixedPrefixBranchLineage selected;
         PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot snapshot;
-        FixedPrefixCaptureCollector(Rb100Plan.Variant variant,String runId,String operationId) {
+        FixedPrefixCaptureCollector(Rb100Plan.Variant variant,String runId,String operationId,
+                FixedPrefixNoPathTarget completedNoPathTarget) {
             this.variant=variant; this.runId=runId; this.operationId=operationId;
+            this.completedNoPathTarget=completedNoPathTarget;
         }
         public boolean select(PcbLayerRoutingPrototype.FixedPrefixBranchLineage lineage) {
             require(lineage!=null && lineage.context()!=null,
                 "generator capture selector receives complete actual failed-branch lineage");
             PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=lineage.context();
-            if(context.routeRequestIndex()!=0) return false;
-            requestZeroSelectionCalls++;
-            require(context.layoutSeed()==PLACEMENT_DIAGNOSTIC_SEED &&
-                context.routingSeed()==ROUTING_DIAGNOSTIC_ROUTING_SEED &&
-                context.selectedPlacementAttempt()==4 &&
-                context.selectedPlacementIndex()==0 &&
-                sameExpectedEligible(toIntegerVector(context.eligiblePlacementAttempts()),variant),
-                "capture source lineage binds exact authored signed seeds, post-priority candidates and actual request0 attempt4");
-            require(!"FOUND".equals(lineage.terminalReason()),
-                "fixed-prefix capture selects only a failed terminal branch");
-            if(selected!=null) return false;
+            if(completedNoPathTarget==null) {
+                if(context.routeRequestIndex()!=0) return false;
+                requestZeroSelectionCalls++;
+                require(context.layoutSeed()==PLACEMENT_DIAGNOSTIC_SEED &&
+                    context.routingSeed()==ROUTING_DIAGNOSTIC_ROUTING_SEED &&
+                    context.selectedPlacementAttempt()==4 &&
+                    context.selectedPlacementIndex()==0 &&
+                    sameExpectedEligible(toIntegerVector(context.eligiblePlacementAttempts()),variant),
+                    "capture source lineage binds exact authored signed seeds, post-priority candidates and actual request0 attempt4");
+                require(!"FOUND".equals(lineage.terminalReason()),
+                    "fixed-prefix capture selects only a failed terminal branch");
+            } else {
+                if(context.routeRequestIndex()!=completedNoPathTarget.requestIndex) return false;
+                targetRequestSelectionCalls++;
+                require(context.layoutSeed()==PLACEMENT_DIAGNOSTIC_SEED &&
+                    context.routingSeed()==ROUTING_DIAGNOSTIC_ROUTING_SEED &&
+                    context.selectedPlacementAttempt()==completedNoPathTarget.placementAttempt &&
+                    context.selectedPlacementIndex()==completedNoPathTarget.eligibleIndex &&
+                    sameExpectedEligible(toIntegerVector(context.eligiblePlacementAttempts()),variant),
+                    "completed NO_PATH lineage binds exact request, authored seeds, eligible order and target placement");
+                boolean matches=matchesCompletedNoPathTarget(completedNoPathTarget,
+                    context.routeRequestIndex(),context.selectedPlacementIndex(),
+                    context.selectedPlacementAttempt(),lineage.netId(),lineage.terminalReason());
+                if(matches) targetNoPathLineageCalls++;
+                if(!shouldSelectFirstCompletedNoPathTarget(completedNoPathTarget,
+                        context.routeRequestIndex(),context.selectedPlacementIndex(),
+                        context.selectedPlacementAttempt(),lineage.netId(),lineage.terminalReason(),
+                        selected!=null)) return false;
+            }
+            if(completedNoPathTarget==null && selected!=null) return false;
             selected=lineage;
             return true;
         }
         public void onGraph(PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot graph) {
             graphCallbacks++;
-            require(graph!=null && selected!=null && graph.lineage()==selected &&
+            require(graphCallbacks==1 && graph!=null && selected!=null && graph.lineage()==selected &&
                 graph.context()==selected.context(),
                 "completed graph retains the exact selected immutable request lineage");
             snapshot=graph;
         }
         void requireComplete(P07PolicyDiagnosticCase result) {
-            require(requestZeroSelectionCalls==1 && graphCallbacks==1 && selected!=null && snapshot!=null,
-                "one actual request0 failed branch is selected once and emits one complete graph");
+            if(completedNoPathTarget==null) {
+                require(requestZeroSelectionCalls==1 && graphCallbacks==1 && selected!=null && snapshot!=null,
+                    "one actual request0 failed branch is selected once and emits one complete graph");
+            } else {
+                require(targetRequestSelectionCalls>0 && targetNoPathLineageCalls>0 &&
+                    graphCallbacks==1 && selected!=null && snapshot!=null &&
+                    selected.context().routeRequestIndex()==completedNoPathTarget.requestIndex &&
+                    selected.context().selectedPlacementIndex()==completedNoPathTarget.eligibleIndex &&
+                    selected.context().selectedPlacementAttempt()==completedNoPathTarget.placementAttempt &&
+                    completedNoPathTarget.netId.equals(selected.netId()) &&
+                    "NO_PATH".equals(selected.terminalReason()),
+                    "first matching completed NO_PATH lineage for the exact request, placement and net emits one graph callback");
+            }
             require(snapshot.lineage()==selected && snapshot.context()==selected.context() &&
                 snapshot.captureWorkUnits()>0 && snapshot.copyEntries()>0 &&
                 snapshot.goalProbes()>0 && snapshot.ordinaryEdgeProbes()>0 &&
@@ -2625,8 +2832,10 @@ public final class Rb100PhysicalDiagnostics {
                     "typed prefix row inventory matches its independent per-kind counts");
             require(selected.pass()>=0 && selected.pass()<PcbLayerRoutingPrototype.ORDERINGS &&
                 selected.branchOrdinal()>=1 && !"FOUND".equals(selected.terminalReason()) &&
-                selected.context().routeRequestIndex()==0 && result.policyResult!=null,
-                "captured lineage identifies a failed real first-request branch and never a found route");
+                (completedNoPathTarget==null ? selected.context().routeRequestIndex()==0 :
+                    selected.context().routeRequestIndex()==completedNoPathTarget.requestIndex) &&
+                result.policyResult!=null,
+                "captured lineage identifies the actual selected request's failed branch and never a found route");
         }
         private static Vector<Integer> toIntegerVector(int[] values) {
             Vector<Integer> result=new Vector<Integer>();
@@ -2860,6 +3069,7 @@ public final class Rb100PhysicalDiagnostics {
         String boardIdentityStatus = "NOT_REACHED";
         String solverGraphIdentityStatus = "NOT_REACHED";
         RoutingInputMetadata inputMetadata;
+        TreeSet<String> boardNetIds;
         PcbRoutingRejectedException sessionRejection;
         MediumBoardPhysicalPolicy.Result policyResult;
         String layoutOutputJson = "null";

@@ -1,0 +1,154 @@
+[
+  {
+    "name": "completed-r3",
+    "exitCode": 0,
+    "terminationProven": true,
+    "cleanupStatus": "PASS",
+    "elapsedIncludingCleanupSeconds": 89.607669,
+    "nativeManifestSha256": "94690f1c4c75dc8d6a0483f93ae84bbc9819f8b68bc06181c493846c1a330c1d",
+    "operations": [
+      {
+        "operationId": "SHARED_NULL",
+        "status": "PASS",
+        "operationMs": 16118,
+        "cleanupMs": 1,
+        "cleanupStatus": "PASS",
+        "workUnits": 275,
+        "maxUnitMs": 1255,
+        "primaryRoutingExpansions": 2970804
+      },
+      {
+        "operationId": "SHARED_CAPTURE",
+        "status": "PASS",
+        "operationMs": 13604,
+        "cleanupMs": 0,
+        "cleanupStatus": "PASS",
+        "workUnits": 383,
+        "maxUnitMs": 746,
+        "primaryRoutingExpansions": 2970804
+      },
+      {
+        "operationId": "SEPARATE_NULL",
+        "status": "PASS",
+        "operationMs": 12795,
+        "cleanupMs": 0,
+        "cleanupStatus": "PASS",
+        "workUnits": 300,
+        "maxUnitMs": 783,
+        "primaryRoutingExpansions": 2918222
+      },
+      {
+        "operationId": "SEPARATE_CAPTURE",
+        "status": "PASS",
+        "operationMs": 13488,
+        "cleanupMs": 0,
+        "cleanupStatus": "PASS",
+        "workUnits": 454,
+        "maxUnitMs": 851,
+        "primaryRoutingExpansions": 2918222
+      }
+    ],
+    "facts": [
+      {
+        "variant": "SHARED_HYSTERETIC_LINEAR",
+        "graphCaseId": "RB100_SHARED_HYSTERETIC_LINEAR_NO_PATH_REQ2",
+        "graphSha256": "96dd616cb419d80dfa7624cfd0b4573e03ce5bf144973b68e1830db94872cafb",
+        "graphBytes": 2327756,
+        "terminalReason": "NO_PATH",
+        "pass": 2,
+        "branchOrdinal": 72,
+        "prefixHoleCount": 48,
+        "prefixViaCount": 48,
+        "captureWorkUnits": 427
+      },
+      {
+        "variant": "SEPARATE_DIRECT_SWITCHING",
+        "graphCaseId": "RB100_SEPARATE_DIRECT_SWITCHING_NO_PATH_REQ0",
+        "graphSha256": "b5e3cbb7534c6be2d22d721322257dd978be4a8f9c9ecca71ba3d281275f72e7",
+        "graphBytes": 3324986,
+        "terminalReason": "NO_PATH",
+        "pass": 2,
+        "branchOrdinal": 77,
+        "prefixHoleCount": 48,
+        "prefixViaCount": 48,
+        "captureWorkUnits": 611
+      }
+    ]
+  },
+  {
+    "name": "default-r1",
+    "exitCode": 0,
+    "terminationProven": true,
+    "cleanupStatus": "PASS",
+    "elapsedIncludingCleanupSeconds": 89.2943877,
+    "nativeManifestSha256": "94690f1c4c75dc8d6a0483f93ae84bbc9819f8b68bc06181c493846c1a330c1d",
+    "operations": [
+      {
+        "operationId": "SHARED_NULL",
+        "status": "PASS",
+        "operationMs": 15880,
+        "cleanupMs": 1,
+        "cleanupStatus": "PASS",
+        "workUnits": 275,
+        "maxUnitMs": 1203,
+        "primaryRoutingExpansions": 2970804
+      },
+      {
+        "operationId": "SHARED_CAPTURE",
+        "status": "PASS",
+        "operationMs": 13707,
+        "cleanupMs": 0,
+        "cleanupStatus": "PASS",
+        "workUnits": 428,
+        "maxUnitMs": 854,
+        "primaryRoutingExpansions": 2970804
+      },
+      {
+        "operationId": "SEPARATE_NULL",
+        "status": "PASS",
+        "operationMs": 13278,
+        "cleanupMs": 0,
+        "cleanupStatus": "PASS",
+        "workUnits": 300,
+        "maxUnitMs": 844,
+        "primaryRoutingExpansions": 2918222
+      },
+      {
+        "operationId": "SEPARATE_CAPTURE",
+        "status": "PASS",
+        "operationMs": 12759,
+        "cleanupMs": 0,
+        "cleanupStatus": "PASS",
+        "workUnits": 454,
+        "maxUnitMs": 780,
+        "primaryRoutingExpansions": 2918222
+      }
+    ],
+    "facts": [
+      {
+        "variant": "SHARED_HYSTERETIC_LINEAR",
+        "graphCaseId": "RB100_SHARED_HYSTERETIC_LINEAR_REQ0",
+        "graphSha256": "e1937e17dd01b00c49021ade1931e0a510694eb76626b1a0146ff38bc6d06248",
+        "graphBytes": 3370428,
+        "terminalReason": "NO_PATH",
+        "pass": 0,
+        "branchOrdinal": 114,
+        "prefixHoleCount": 48,
+        "prefixViaCount": 48,
+        "captureWorkUnits": 611
+      },
+      {
+        "variant": "SEPARATE_DIRECT_SWITCHING",
+        "graphCaseId": "RB100_SEPARATE_DIRECT_SWITCHING_REQ0",
+        "graphSha256": "5b1c80b2c97dbfd4cd65ccd45ff7dbc056e78fa53f23c794ee02cd2bba67e9a5",
+        "graphBytes": 3325808,
+        "terminalReason": "BRANCH_SEARCH_LIMIT",
+        "pass": 0,
+        "branchOrdinal": 114,
+        "prefixHoleCount": 39,
+        "prefixViaCount": 39,
+        "captureWorkUnits": 611
+      }
+    ]
+  }
+]

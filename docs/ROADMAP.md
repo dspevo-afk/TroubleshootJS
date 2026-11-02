@@ -90,6 +90,20 @@ completion Gmail 1a19e02b11d6f55d was sent once.
 Next is fresh current26/v28 NO_PATH-prefix evidence and per-net VIA accounting
 before another deterministic routing treatment. Playable100 remains0; beta held.
 
+The [current26/v28 NO_PATH-prefix diagnostic](task-evidence/Q100/current-prefix-v28-r1/README.md)
+is locally accepted for its exact two authored branches. Both prefixes contain48
+VIA holes. Shared requires at least1 more transition with allowance0; separate is
+unreachable even in the geometry-permissive fixed graph. Independent weighted
+reachability agrees. The conserved per-net ledger identifies actual prefix VIA
+consumers without proving a routing treatment or board infeasibility. Fresh native
+null/capture modes (four operations each), original B6 graph reproduction, Python23,
+actual reader positive/five negatives including a real junction, dispatch/host
+controls and final source audit pass. Source-only review CLEAR is scoped; earlier
+failures remain preserved. Production inputs1202 per variant are byte-identical;
+no fresh GWT/Player/electrical/normal3/full30 qualification is claimed. Next is one
+frozen generic VIA-conservation/routing experiment with actual physical/access/
+runtime proofs before adoption. Playable100 remains0; beta held; HARD unavailable.
+Publication receipt records the accepted SHA and one completion notification.
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion
@@ -135,7 +149,7 @@ native4/62 and Developer builds pass, but compiled separate/CIN33_SHUNT50us stil
 fails its documented temporal/route boundary. Next is a real independent observer
 canary before the long diagnostic CPU observation. No numerical treatment or
 playable100 admission follows. Pending B6, Desktop work and prior evidence remain
-preserved; protected qualification data stays unmaterialized, HARD/PSYCHOTIC unrun.
+preserved; HARD/PSYCHOTIC remain unrun; the current protected unread boundary is UNCERTIFIED.
 
 The [native Windows listener prerequisite](task-evidence/A07/native-listener-r1/README.md)
 is accepted and published as `be15bf7f03f8ca5f504ec164a807a344e2a7de33` on

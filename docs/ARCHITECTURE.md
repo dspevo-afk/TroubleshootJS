@@ -309,14 +309,29 @@ generator advance. Case units and internal observation chunks have distinct
 counters. The strict capture reader binds graph bytes, lineage, a closed native
 source inventory and process/cleanup receipts before invoking the independent
 graph oracle. The relaxed history/global-via model grants diagnostic reachability,
-with no route, layout, electrical or playable100 acceptance. This observation
-seam retains layout25 and the published numerical dependency interpretation v27.
+with no route, layout, electrical or playable100 acceptance. The original B6 qualification records layout25/dependencyv27; newer captures
+bind their enclosing current epochs explicitly.
 The authored100 paired runner uses the bare generator with envelope=null on both
 sides. Its lineage is not a ConstructionSession/Player supported-envelope proof;
 THT_SINGLE_FACE@1 retains its existing16-part admission limit. No envelope or
 public100 admission is expanded by this diagnostic.
 The [current checkpoint](CODEX_TASK_REPORT.md) records its qualification status.
 
+The native capture runner also has a private completed-NO_PATH selection mode
+for current layout26/dependency28. It binds the selected request, placement and
+net to the completed null-run policy receipt, then preserves the ordinary
+null/capture canonical result and expansion parity. Its separate net-census event
+uses the actual candidate board IDs and the same run, operation and graph digest;
+it does not infer ownership from a boolean VIA mask. The current-prefix ledger
+reader validates this census against every copied hole owner, joins VIA centers
+to the immutable relaxed graph, and computes the unchanged independent minimum
+VIA bound. Budget comparisons charge all prefix holes plus transitions and also
+retain the four-transition branch bound. A permitted existing same-net VIA and a
+blocked foreign-net VIA describe that fixed relaxed predicate only. Within-budget
+bounds remain inconclusive, with UNKNOWN production feasibility and false
+route/layout/electrical/Q100 acceptance. Default request0 capture and historical
+v27 reader/oracle artifacts retain their separate contracts. This test-only mode
+adds no Player capability, production policy, epoch or playable100 admission.
 The current default-parity reader owns v27 metadata validation separately from
 the frozen layout-transition reader. It verifies the historical helper's exact
 source hash, extracts only its frame and case validators into isolated globals,
