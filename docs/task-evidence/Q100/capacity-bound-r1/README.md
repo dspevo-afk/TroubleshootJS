@@ -1,6 +1,8 @@
 # Capacity-aware P07 unreachable-state pruning
 
-Status: **Locally accepted finite implementation; publication pending.** Parent
+Status: **PUBLISHED finite routing prune.** Implementation 73ee3c3788429ed02a40c2647c761a609d01eadf was pushed and
+verified on origin/codex/q100-physical-feasibility; completion Gmail 1a19e02b11d6f55d
+was sent once. Parent
 `d4b084db58a7b5b618146eddfceeebd19b45480c`. The [frozen plan](PLAN.md)
 records the refinements and comparison boundaries before their source edits.
 The [qualification record](qualification.json) binds the final sources and gates.

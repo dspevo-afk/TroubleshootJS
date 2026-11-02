@@ -1,61 +1,46 @@
-# Current checkpoint: capacity-aware prune accepted locally, publication pending
+# Current checkpoint: capacity-aware P07 prune published
 
-**LOCALLY ACCEPTED FINITE SCOPE; NOT YET PUBLISHED. Updated2026-11-02.**
-Q=OS-temp/tsj-q100-capacity-bound-20261102-r1, branchcodex/q100-capacity-bound-20261102,
-HEADd4b084db58a7b5b618146eddfceeebd19b45480c plus intended15code/3docs/evidence paths.
-Z=S/capacity-bound-r1 retains exact source, raw/process proofs and failures.
-13 semantic Java changes plus one raw-only LF/CRLF file audited; source-ff61 has14.
-Final core090c48b9/test38346dc7/relaxedf583b2ad; currentlayout26/dependency28.
+**PUBLISHED FINITE MILESTONE. Updated2026-11-02.** Accepted implementation
+73ee3c3788429ed02a40c2647c761a609d01eadf, Prune zero-capacity P07 routing states,
+normal origin/codex/q100-physical-feasibility push and exact remote SHA verified.
+Completion Gmail1a19e02b11d6f55d sent once. Documentation receipt follows this
+implementation; do not duplicate the email. Q=OS-temp/tsj-q100-capacity-bound-20261102-r1,
+branchcodex/q100-capacity-bound-20261102. Source layout26/dependency28.
 
-Focused native3 PASS13091/2105/849; native33 PASS including original22 and actual
-E06/electrical/identity/physical contracts. Shared authored expands2970804 versus
-baseline3000000 (29196 saved); separate2918222 unchanged. Both EXHAUSTED/no layout.
-Normal-path postchecks precede negative pruning; original late trigger/caps stay.
-Native manifest1067/ff61d4ce654b633f9bf3774b0986c541bb8e8c6d892b67854702f6bb6df6a216.
-Structural72 cases per snapshot/20paired bounds/six physical hashes PASS through
-independent readerR3, plus1positive/16negative controls and real junction rejection/
-owned-link cleanup. Raw identity exclusion is geometrySha256 only; counts604/605
-justified by exact source proof and one added stale25 canary. Original goldens stay.
+All scoped gates PASS: focused3/native33; structural72 cases per snapshot/all20
+paired bounds/six unchanged physical hashes; independent readerR3 plus16negative
+and real junction controls; actual JDK8/GWT Player/Developer and exact Developer
+reproduction; E06State10/Current9/Player privacy; exact approved3 normal roots,
+four-candidate envelope, actual first-candidate acceptance each. Generation
+56.688/47.777/28.452s and work506/502/392; maxUnitMillis0 is not a measured peak.
+Native manifests/actual host/independent prepare/postprocessR2 source-bound; host
+exit0/termination/cleanup3.910653s/server stopped/no survivors. Final auditR2
+closes native1067/selected22/build1202/output357/archive/helper boundaries.
 
-Actual Player/Developer JDK8/GWT builds PASS1202/357; exact Developer reproduction:
-Dev438cc4c0fdf7205479c60d1d30540dc964b9da8312c42850790cd1f209a8c2ed/
-17ae3c055ca10c44b54ee110e6313181455f89679f89d51b1ee36f61350586f7.
-Player53125e37f12449bd50dabd9cff43368eed0e4bea3bccfc1cd19d60becee7c6a5/
-602e5b4b2255ea02badf6e8bc1954246f6ebe28dae462cfd17ead81d3cc8ccfe;357 actual
-output files archived before restoring Developer. E06StateR2 PASS10 (197.170s op,
-68.725s cleanup); Current9 PASS (cleanup.success, aggregateelapsed not exported,
-8.291s browser); Player privacy PASS (51.906s cleanup/11.035s browser).
+Shared exact authored case expands2970804 versus3000000,29196 fewer states;
+separate2918222 unchanged. Both EXHAUSTED/no layout. Normal-path postchecks and
+fully completed field precede pruning; original late trigger and all caps remain.
+All earlier failures/source/control records retained under Z=S/capacity-bound-r1.
+Controlled evidence: docs/task-evidence/Q100/capacity-bound-r1/README.md and
+qualification.json/publication.json. No public admission or playable100 follows.
 
-Normal3 native export/actual compiled host/independent preparation and postprocessR2
-PASS. Exact approved roots -2230691771308388107,6702341860553104274,
--8360266000248569150; four planned candidate hashes each, actual1 attempt/root.
-Generation56.688/47.777/28.452s/work506/502/392; maxUnitMillis0 not measured peak.
-Host exit0/termination, cleanup3.910653s/server stopped/no owned survivors. Immutable
-checker/oracle retained; only two layout literals adapted with reverse byte/AST
-proof. Version regex now distinguishes named layout seeds; all native canonical
-manifest hashes match. Full current selfcheckR2 and source-only review clear.
+NEXT: start fresh current26/v28 NO_PATH-prefix capture for BOTH exact authored
+variants and per-net VIA tally from existing full lineage; oldv27 graphs cannot
+establish current state. Root9007199254740993, placement-6587958367974952701,
+routing8445301674744508279. Freeze scope first; preserve null/capture parity,
+canonical order, budgets and independent oracles. Do not infer whole-board
+impossibility or alter routing policy before evidence selects one bounded trial.
+No implementation for this next scope has started.
 
-Final input auditR2 PASS: all1067 native rows,22 selected pins, current build inputs/
-output and actual Player archive/helper sources unchanged. No active owned gate,
-browser, preview or JVM. All earlier failures/source records retained, including
-reader wiring, rawidentity/count overconstraint, host stale27, normal3 seed/version
-regex and audit counter-export correction. No failed result was reclassified.
-
-NEXT: finish integrated/staged diff review, normal commit and explicit origin push
-to codex/q100-physical-feasibility, verify remote SHA, send one completion Gmail,
-then publication receipt. Latest remote isd4b084db; origin URL verified; neverpush
-upstream. After publication, start fresh current26/v28 NO_PATH-prefix capture and
-per-net VIA tally for the two authored variants; oldv27 graphs do not establish
-current prefixes. See capacity-bound-r1 README/qualification for controlled evidence.
-
-Full30 EXCLUDED by owner; HARD/PSYCHOTIC unavailable/unrun; protected unread
-UNCERTIFIED; playable100=0/betaheld. No full2-by-31, all-seed, modest-host, long-session,
-FPS or human repair renewal. Fresh API self-hosted runnercount0; CI prerequisite.
-I stays clean; Main/Desktop/W/P/N, stashes/failures/branches/ambient8928 preserved.
-Preserve16 newline-only Python status entries and local duplicate old host-source
-files under capacity-bound-r1/e06state-r1 untracked; stage intended paths only.
-No push or mail yet for this candidate. Prior min-via48b3f4d2/receiptd4b084db/
-Gmail1a19d1d72d433b85 remains the latest published milestone.
+No active owned browser/preview/JVM or gate remains; current Q output Developer
+438cc4c0.../17ae3c05..., actual Player53125e37.../602e5b4b... archived357 files.
+I clean; Main/Desktop/W/P/N and stashes/failures/branches/ambient8928 preserved.
+Remaining Q status entries are newline-only Python files with empty canonical
+diff and untracked duplicate old host-source evidence; preserve them. Stage only
+intended paths. Full30 EXCLUDED, HARD/PSYCHOTIC unavailable/unrun, protected unread
+UNCERTIFIED; playable100=0/betaheld. No full2-by-31, all-seed, modest-host,
+long-session/FPS or human-repair renewal. CI registration prerequisite; fresh
+repository API runnercount0. Continue eligible roadmap work until owner says stop.
 
 Historical checkpoints below retain their recorded source/time and superseded
 claims; the current checkpoint and limits above control.
