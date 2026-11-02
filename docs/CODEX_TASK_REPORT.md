@@ -1,7 +1,11 @@
-# Current checkpoint: reduced matrix ordering validated; publication pending
+# Current checkpoint: reduced matrix ordering published; routing integration next
 
-**VALIDATED, pending normal commit/push. Updated2026-11-02.** Branch
-codex/q100-reduced-matrix-ordering-20261102; source parent
+**PUBLISHED. Updated2026-11-02.** Implementation
+`cad0799a59131464ceaea19d425e9c9efe1f329f` (`Order reduced nonlinear CircuitJS matrices`)
+was pushed normally from codex/q100-reduced-matrix-ordering-20261102 to
+origin/codex/q100-physical-feasibility and its exact remote SHA verified.
+Completion Gmail `1a19c6d6151fe3ca` sent once. This documentation-only receipt
+requires no repeated production gate or completion email. Source parent is
 5f05b005c80e312c60fc7db24745f2d8afe4d04b. No active run-owned process remains.
 The [qualification packet](task-evidence/A07/reduced-matrix-ordering-r1/README.md)
 records exact source/build/artifact hashes, commands, finite gates and limits.
@@ -36,16 +40,20 @@ preserved. Native3's exact one-source Task35 GWT-only verifier adapter throws if
 called; it grants no electrical proof. The raw first capture remains FAIL after
 missing-bootstrap diagnosis; the successful fresh capture was independently
 postprocessed. Original oracle function bytes and budgets were preserved. Scoped
-independent adapter/reader/schema reviews found no remaining blocker; root owns
-integrated diff and final acceptance. No broad performance guarantee is inferred.
+independent adapter/reader/schema and reduced-ordering source reviews found no
+remaining blocker; reviewers ran no actors. Root completed integrated and staged
+diff, whitespace, source-pin, staged-byte and controlled-packet privacy checks.
+No broad performance guarantee is inferred.
 
 Limits: no full30 renewal or all-seed/long-session/modest-host/FPS/human-repair
 claim. Public beta held, accepted playable100 layouts0, HARD/PSYCHOTIC unavailable
 and unrun; protected data stayed unmaterialized here, historical unread boundary
 remains uncertified. CI requires the approved self-hosted runner registered.
 Unrelated Main B6, private40 and Desktop work, old branches/stashes/evidence and
-ambient preview are preserved. NEXT: normal commit/push/remote SHA verification,
-one completion Gmail, then resume the preserved Q100 physical feasibility work.
+ambient preview are preserved. NEXT: resume the preserved Q100 physical feasibility
+work in a fresh worktree from the published source. Audit old capture/parity
+receipts before reuse, merge overlapping registrations/diagnostics deliberately,
+and run required final-source gates. No physical milestone is accepted yet.
 
 # Historical checkpoint: native listener prerequisite published; integration next
 

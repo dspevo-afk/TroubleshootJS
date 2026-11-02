@@ -26,7 +26,9 @@ source-bound normal MEDIUM development roots pass. Full-matrix cleanup112.913s
 is below120s; browser shutdown11.444s is below15s. Old failure evidence remains.
 This renews only the recorded finite electrical and three-root scope, with no
 full30 renewal, public-beta release, HARD/PSYCHOTIC access or playable100 layouts.
-Publication is tracked in the task report. Next is the preserved Q100 physical
+Published implementation `cad0799a59131464ceaea19d425e9c9efe1f329f` is verified on
+origin/codex/q100-physical-feasibility; completion Gmail `1a19c6d6151fe3ca` sent once.
+Next is the preserved Q100 physical
 routing/fixed-prefix work on this qualified numerical source; accepted100 layouts
 remain zero and fresh physical/runtime/solvability evidence is still required.
 
