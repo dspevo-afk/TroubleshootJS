@@ -1,8 +1,12 @@
-# Current checkpoint: B6 fixed-prefix observation validated; publication pending
+# Current checkpoint: B6 observation published; routing diagnosis next
 
-**VALIDATED, pending normal commit/push. Updated2026-11-02.** Integration worktree
-I=OS-temp/tsj-b6-v27-20261102-r2, branch codex/q100-fixed-prefix-v27-r2-20261102,
-source parent9a6736e12487d8f6e7ea15ccfecb8ecaa0c1c295. No active run-owned process.
+**PUBLISHED. Updated2026-11-02.** Implementation
+`ffcd2983b3b730e08fb7d7a57db16c3b6fd32d33` (`Observe actual Q100 failed routing prefixes`)
+was normally pushed to origin/codex/q100-physical-feasibility and its exact remote
+SHA verified. Completion Gmail `1a19cdf5978f9027` sent once; no duplicate for this
+documentation-only receipt. Integration worktree I=OS-temp/tsj-b6-v27-20261102-r2,
+branch codex/q100-fixed-prefix-v27-r2-20261102, source parent
+9a6736e12487d8f6e7ea15ccfecb8ecaa0c1c295. No active run-owned process.
 The [qualification packet](task-evidence/Q100/fixed-prefix-r1/README.md) records
 controlled independent outputs, exact source/build hashes, commands and limits.
 
@@ -52,9 +56,10 @@ Unrelated Main B6 at5f05b005(9tracked/6new), Wprivate40(7/8), Desktop e0c36885(7
 stashes/branches/prior evidence and ambient8928 preserved. Public beta held;
 HARD/PSYCHOTIC unavailable/unrun; no full30/2x31/all-seed/long-session/modest-host/
 FPS/human-repair renewal. Manual player input NOT APPLICABLE for unchanged flow.
-CI requires the approved self-hosted runner registered. NEXT: final staged review,
-normal commit/push/remote verification and one completion Gmail, then freeze the
-next routing diagnosis/treatment scope. No actual100 layout is accepted.
+CI requires the approved self-hosted runner registered. Integrated/staged diff,
+whitespace, source-pin/staged-byte and controlled privacy checks passed. NEXT:
+freeze the next routing diagnosis scope using the accepted fixed graphs before
+selecting any treatment. No actual100 layout is accepted.
 
 
 # Historical checkpoint: reduced matrix ordering published; routing integration next

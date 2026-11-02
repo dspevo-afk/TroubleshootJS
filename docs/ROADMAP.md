@@ -41,7 +41,9 @@ geometries, native22 regression, actual Player/Developer builds, Current9,
 E06State10, Player privacy and three source-bound development roots pass. The
 owner excluded the full30 manifest-export test; HARD/PSYCHOTIC remain unavailable
 and unrun. The capture uses the bare private generator with no supported envelope.
-Publication is tracked in the task report. Accepted playable100 layouts remain
+Implementation `ffcd2983b3b730e08fb7d7a57db16c3b6fd32d33` is verified on
+origin/codex/q100-physical-feasibility; completion Gmail `1a19cdf5978f9027` sent once.
+Accepted playable100 layouts remain
 zero; next is a frozen routing diagnosis/treatment scope using these graphs,
 followed by real finalizer/clearance/connectivity/access and functional proofs.
 
