@@ -1,4 +1,58 @@
-# Current checkpoint: captured-witness diagnostic published; lower-bound scope next
+# Current checkpoint: minimum-via diagnostic validated; publication pending
+
+**VALIDATED, not yet published. Updated2026-11-02.** Work in
+I=OS-temp/tsj-b6-v27-20261102-r2, branch codex/q100-minimum-vias-20261102,
+HEAD0572b959b27a1950980276b316ef4f387ed9e359. Scope/packet:
+docs/task-evidence/Q100/fixed-prefix-minimum-vias-r1. New test-only core/CLI and
+tests are final; no production behavior, epoch, budget or Player flow changed.
+
+PASS17 final integrated tests,1024 independent tiny exhaustive comparisons,
+literal0/1/2-VIA/promotion cases, real NTFS junction and stale graph-hash controls.
+Actual selected CLI two positives/three negatives have expected exits and proved
+termination; all six children including unit tests terminated. Core/CLI final
+independent source reviews clear. A graph/hash binding review blocker was fixed
+before data runs; actual four pre-fix sources retained. Intermediate fixture
+return-edge counter error preserved separately; final expected3 is justified.
+
+Exact accepted B6 shared graph minimum1 exceeds capacity0(prefix48/request48),
+excluding every budget-conforming path in that fixed graph. Separate minimum0
+is within capacity4(prefix39); this gives a relaxed alternative, not an accepted
+route. The gate charges prefix holes+transitions even for reused physical holes.
+Production feasibility UNKNOWN; all acceptance flags false; playable100 layouts0.
+No other prefix/order/placement/seed or whole-board infeasibility claim.
+
+Unchanged-input audit PASS34 prior execution pins/1067 native inputs/Developer
+1202inputs357outputs/Player1202inputs. Fresh native/GWT/Player/Current/manual-input
+gates NOT APPLICABLE to Python-only scope. Current war Developer188fc389/71d5d5b8.
+S=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
+M=S/fixed-prefix-minimum-vias-r1 retains raw process identities/times/results,
+source/rejection copies and audit. D=S/fixed-prefix-route-diagnosis-r1 and
+B=S/fixed-prefix-v27-r1 remain accepted prior evidence. No run-owned actor live.
+
+Prior witness25170c65/receipt0572b959 is pushed/verified, Gmail1a19d068838fd57d
+sent once. B6ffcd2983/receipt9df5dd45/Gmail1a19cdf5978f9027 and solvercad0799a/
+receipt9a6736e1/Gmail1a19c6d6151fe3ca remain published once; no duplicate mail.
+Current min-via scope needs explicit diff/staging review, commit, normal push to
+origin/codex/q100-physical-feasibility, exact remote verification and one Gmail.
+
+Only three approved normal development roots/order/four candidates each remain
+authorized; full30 manifest export EXCLUDED/unrun by owner. HARD/PSYCHOTIC stay
+unavailable/unrun; protected data not opened/run here. Prior unread certification
+UNCERTIFIED/materialization incident preserved, no unmaterialized-data claim.
+Original90s/640/5s/500ms/P07caps/15s/120s unchanged; public beta held. CI needs the
+approved self-hosted runner registered. Main11 preserved implementation hashes
+freshly rechecked PASS; Main5f05b005(9tracked/6new), W5f05b005(7/8), Desktop
+e0c36885(7/89), P9a6736e1 clean, stashes/branches/ambient8928 untouched. Do not
+pull/reset dirty checkouts. Main report is resume pointer; continue in I.
+
+NEXT after publication: freeze the smallest routing treatment/necessary experiment
+addressing shared prefix via consumption and the separate relaxed alternative.
+Source audit says the current reverse bound ignores remaining transition budget;
+that alone cannot rescue the excluded shared prefix. No treatment selected yet.
+Real finalizer/clearance/connectivity/access and runtime/solvability remain later.
+
+
+# Historical checkpoint: captured-witness diagnostic publication
 
 **PUBLISHED. Updated2026-11-02.** Implementation
 25170c65c0b2d4030ebbf6c5472bc8a45b541dc2 (`Describe captured routing witness constraints`)

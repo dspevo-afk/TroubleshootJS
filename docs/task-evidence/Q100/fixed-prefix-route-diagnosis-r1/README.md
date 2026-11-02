@@ -7,7 +7,7 @@ acceptance.
 
 | Captured case | Relaxed witness | Descriptive turns/cost | History subset result |
 | --- | --- | --- | --- |
-| SHARED_HYSTERETIC_LINEAR |73states,71steps,1via; relaxed cost860 |5turns,175penalty,cost1035 |Adds hole49 after prefix48; request limit48 |
+| SHARED_HYSTERETIC_LINEAR |73states,71steps,1via; relaxed cost860 |5turns,175penalty,cost1035 |Prefix48+1 transition charges49 against request limit48 |
 | SEPARATE_DIRECT_SWITCHING |269states,260steps,8vias; relaxed cost3116 |9turns,315penalty,cost3431 |Needs8 transitions; FULLER limit4 |
 
 These reject the particular relaxed witnesses. They do not show that every
@@ -25,6 +25,9 @@ cost is descriptive for that witness, not a production optimum or accepted cost.
 
 The selected history checks report the four-transition limit, first/consecutive
 VIA restrictions, all-hole budget when adding a via, and pairwise via spacing.
+The historical output field holeCountAfterAddition is the production gate's
+prefix-hole-plus-transition charge, not a measured physical hole count.
+Production checks that charge even if publication could reuse an existing hole.
 The production spacing test rejects only when both absolute coordinate deltas
 are less than20; exactly20 on either axis is permitted. Reported coordinates are
 GRID_ORIGIN_RELATIVE_UNITS. Their deltas are translation-invariant. Spacing work

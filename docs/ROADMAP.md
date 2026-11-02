@@ -49,7 +49,7 @@ followed by real finalizer/clearance/connectivity/access and functional proofs.
 
 The [captured-witness history diagnostic](task-evidence/Q100/fixed-prefix-route-diagnosis-r1/README.md)
 is accepted for the exact two B6 graphs. The shared relaxed shortest witness
-would add hole49 beyond the48-hole limit; the separate witness uses8 transitions
+charges prefix48+1 transition against the48-hole gate; the separate uses8 transitions
 against FULLER's4. These findings reject those particular paths and establish
 neither all-path infeasibility nor the cause of production search exhaustion.
 The Python-only tool passes27 synthetic tests and five real selected CLI
@@ -59,6 +59,18 @@ minimum-via or constraint-aware alternative-path analysis under the existing
 limits before choosing a routing treatment. Playable100 layouts remain zero.
 Implementation `25170c65c0b2d4030ebbf6c5472bc8a45b541dc2` is verified on
 origin/codex/q100-physical-feasibility; completion Gmail `1a19d068838fd57d` sent once.
+
+The [minimum-via lower-bound diagnostic](task-evidence/Q100/fixed-prefix-minimum-vias-r1/README.md)
+is accepted for the same two B6 graphs. Shared needs at least1 transition but its
+captured prefix permits0; every path in that fixed graph fails the budget gate.
+Separate has a zero-transition relaxed alternative and is not excluded by its
+capacity4. Neither result accepts a production route or proves the board
+impossible. Final17 synthetic tests including1024 independent tiny comparisons,
+five actual CLI controls and unchanged production-input audit pass. No production
+behavior, budget, epoch or population qualification changed. Next is a frozen
+routing treatment or necessary diagnostic for these distinct findings, followed
+by real route/finalizer/clearance/connectivity/access/runtime proofs. Playable100
+layouts remain zero.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

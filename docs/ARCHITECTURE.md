@@ -269,6 +269,18 @@ Q100 acceptance, including a result whose reported subset checks all conform.
 The [diagnostic packet](task-evidence/Q100/fixed-prefix-route-diagnosis-r1/README.md)
 records the two particular witnesses and does not exclude alternative paths.
 
+A separate test-only minimum-via module uses layered0/1 reachability over the
+same immutable codec value. Planar edges cost0 and face toggles1; starts all
+begin at0. Each planar closure finishes before deferred VIA targets promote.
+It retains bounded counters without predecessors or paths, and validates graph
+content/digest through the existing codec before searching. Its CLI reuses the
+pinned strict capture reader's provenance/path/graph checks and pins the new
+helper before execution. Source-bound qualification separately compares the
+count with the prefix-hole-plus-transition gate. A lower bound can exclude that
+frozen branch under its budget; it cannot accept a route or establish that an
+entire board is impossible. The [minimum-via packet](task-evidence/Q100/fixed-prefix-minimum-vias-r1/README.md)
+records exact results and independent tiny-graph expectations.
+
 The private `beginWithFixedPrefixObservation` generator entry point binds exact
 layout/routing seeds, the complete priority-ordered eligible placement list,
 actual selected attempt/request and raw placement fingerprint. Its P07 observer
