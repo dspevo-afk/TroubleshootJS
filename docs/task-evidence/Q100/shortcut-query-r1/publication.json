@@ -1,0 +1,19 @@
+{
+  "schema": "quality-shortcut-publication-v1",
+  "status": "PUBLISHED",
+  "implementationSha": "0448edab2c830d0e9c141ff3c6fbbdfc58cc0ae4",
+  "message": "Verify actual routing shortcut permissions",
+  "workingBranch": "codex/q100-shortcut-query-20261103",
+  "remote": "origin",
+  "remoteRef": "refs/heads/codex/q100-physical-feasibility",
+  "normalPush": true,
+  "exactRemoteShaVerified": true,
+  "completionGmailMessageId": "1a1a015732234a6b",
+  "completionEmailCount": 1,
+  "duplicateSearchCount": 0,
+  "remainingCanonicalWorktreeChanges": 0,
+  "remainingUnrelatedNewlineStatusEntries": 17,
+  "activeOwnedOsResources": 0,
+  "nextUnstarted": "Actual fixed-prefix zero-VIA length-bound scope and independent graph oracle",
+  "playable100": 0
+}
