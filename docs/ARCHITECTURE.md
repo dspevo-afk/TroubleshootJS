@@ -365,7 +365,7 @@ The [path packet](task-evidence/Q100/quality-path-r1/README.md) proves no legal
 shortcut, alternate reachable route, layout or electrical qualification. No
 Router query clone or new production seam is introduced.
 
-The current Rb100QualityShortcutContractTest replaces that Path entry/API under
+At revision15, Rb100QualityShortcutContractTest replaced that Path entry/API under
 diagnostic revision15. Its test-only adapter retains the actual BranchSearch
 before Publisher handoff, verifies its endpoint/goal/face identities and holds
 P07 quiescent while P07ShortcutQueryDiagnostics advances once per charged unit.
@@ -382,6 +382,22 @@ closed12-record source-bound wire. Historical readers remain byte-frozen.
 The [checked shortcut packet](task-evidence/Q100/shortcut-query-r1/README.md)
 records0 qualified candidates in that finite family and proves no all-path
 infeasibility, route/finalizer/access/electrical/layout or playable qualification.
+
+The current Rb100QualityZeroViaGraphContractTest replaces the Shortcut entry/API
+under diagnostic revision16. P07ZeroViaGraphDiagnostics owns test-only resumable
+two-face Router observation, exact goal-union capture and compact directed mask
+encoding. The actual BranchSearch binding includes policy, primary, eligible
+initial faces, via cap and prefix holes; original endpoint authorities remain.
+Every original found-path step must occur in the captured face mask. Native
+capture installs no route and performs no shortest analysis. The new strict
+read_quality_zero_via.py reader privately reuses byte-pinned pure validators,
+checks the closed12-record wire/source census, and computes directed forward
+BFS independently on each eligible face. It applies each goal's own positive
+Manhattan3:1 length gate; it never applies the original630 limit to other goals.
+Turn/bend/search/finalizer/access/electrical/layout proof remains separate.
+The [zero-via packet](task-evidence/Q100/zero-via-graph-r1/README.md) records the
+finite saturated-prefix diagnosis and independent Dijkstra agreement. Previous
+shortcut helper/fixture and all28 previous Python files remain byte-frozen.
 The current default-parity reader owns v27 metadata validation separately from
 the frozen layout-transition reader. It verifies the historical helper's exact
 source hash, extracts only its frame and case validators into isolated globals,

@@ -154,6 +154,21 @@ limit, epoch or admission change; playable100=0/beta held, full30 EXCLUDED.
 Next is a frozen actual fixed-prefix zero-VIA length-bound investigation with
 an independent graph oracle before choosing another routing treatment.
 Implementation0448edab2c830d0e9c141ff3c6fbbdfc58cc0ae4 is normally pushed and exact remote verified on origin/codex/q100-physical-feasibility; completion Gmail1a1a015732234a6b sent ONCE.
+
+The [two-face zero-via length diagnosis](task-evidence/Q100/zero-via-graph-r1/README.md)
+is locally accepted for the exact captured D_SENSE prefix. Both seeded faces are
+fully queried with the actual goal union; independent BFS and heap Dijkstra
+agree shortest650/8010 against630, with48 of48 holes already occupied. No
+length-valid zero-new-via route exists in that prefix. Earlier routing choices
+must change for this branch; no routing treatment or whole-board infeasibility
+is accepted. Focused24+20, actual NULL/PROBE parity,21 Python methods, current
+reader positive/21 negatives/actual-junction cleanup,16384 tiny comparisons and
+final unchanged-input audit pass. One optional file-symlink is NOT RUN. Earlier
+fixture/reader/host failures remain preserved and uncredited. Production850/
+compiler1202 inputs unchanged, no fresh GWT/Player/Current/electrical/normal3/
+full2-by-31 qualification. Playable100=0/beta held; all limits/data boundaries
+remain. Next is prefix hole-allocation/earlier-routing ownership audit before
+a generic capacity treatment. Publication awaits normal push verification/mail.
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

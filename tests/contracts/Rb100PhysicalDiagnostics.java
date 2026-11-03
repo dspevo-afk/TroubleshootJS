@@ -135,8 +135,8 @@ public final class Rb100PhysicalDiagnostics {
             "\"layoutQualification\":false}");
     }
 
-    /** Actual-generator NULL/PROBE pair plus the bounded actual-branch shortcut query. */
-    static void runQualityShortcutContracts() {
+    /** Actual-generator NULL/PROBE pair plus the bounded actual-branch zero-via graph scan. */
+    static void runQualityZeroViaGraphContracts() {
         long suiteStarted=System.nanoTime();
         int beforeAssertions=assertions;
         final String runId=UUID.randomUUID().toString();
@@ -158,7 +158,7 @@ public final class Rb100PhysicalDiagnostics {
             "NULL",nullOperationId,null,null,true);
         if(!"PASS".equals(baseline.status) || baseline.policyResult==null ||
                 baseline.policyResult.getLayout()!=null || baseline.qualitySubsetMarkerJson==null) {
-            System.out.println("RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":15,\"runId\":\""+
+            System.out.println("RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":16,\"runId\":\""+
                 jsonFull(runId)+"\",\"operationId\":\""+nullOperationId+
                 "\",\"variant\":\""+variant.name()+"\",\"mode\":\"NULL\",\"result\":"+
                 baseline.toJson()+"}");
@@ -201,7 +201,7 @@ public final class Rb100PhysicalDiagnostics {
         long suiteMillis=nanosToMillis(System.nanoTime()-suiteStarted);
         require(suiteMillis<=480000L,
             "quality scalar two-operation suite remains within its frozen480s ceiling");
-        System.out.println("PASS: RB100 quality scalar contracts {\"protocolVersion\":1,\"sourceRevision\":15,"+
+        System.out.println("PASS: RB100 quality scalar contracts {\"protocolVersion\":1,\"sourceRevision\":16,"+
             "\"status\":\"PASS\",\"operations\":2,\"nullOperations\":1,\"probeOperations\":1,"+
             "\"pairs\":1,\"confirmedScalarEvents\":1,\"variant\":\""+variant.name()+
             "\",\"runId\":\""+jsonFull(runId)+"\",\"rootSeed\":\""+SEED+
@@ -218,12 +218,12 @@ public final class Rb100PhysicalDiagnostics {
             ",\"routeMillisStatus\":\"INCOMPLETE_MANUAL_SINGLE_STEP_CADENCE_NOT_REPRESENTATIVE\","+
             "\"feasibility\":\"UNKNOWN\",\"layoutQualification\":false,"+
             "\"scope\":\"OBSERVATIONAL_ACTUAL_GENERATOR_QUALITY_SCALAR_ONLY\"}");
-        String shortcutEvent=probe.shortcutQueryEventJson(observed);
-        String shortcutSummary=probe.shortcutQuerySummaryJson(observed);
+        String graphEvent=probe.zeroViaGraphEventJson(observed,pairPassed);
+        String graphSummary=probe.zeroViaGraphSummaryJson(observed,pairPassed);
         System.out.println(pathEvent);
         System.out.println(pathSummary);
-        System.out.println(shortcutEvent);
-        System.out.println(shortcutSummary);
+        System.out.println(graphEvent);
+        System.out.println(graphSummary);
     }
 
     /** Actual-generator null/capture pairs for the opt-in fixed-prefix graph seam. */
@@ -863,7 +863,7 @@ public final class Rb100PhysicalDiagnostics {
 
     private static String qualityScalarOperationJson(P07PolicyDiagnosticCase result,
             String operationId,String mode) {
-        return "RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":15,"+
+        return "RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":16,"+
             "\"runId\":\""+jsonFull(result.runId)+"\",\"operationId\":\""+
             jsonFull(operationId)+"\",\"variant\":\""+jsonFull(result.subject)+
             "\",\"mode\":\""+jsonFull(mode)+"\",\"result\":"+result.toJson()+"}";
@@ -923,7 +923,7 @@ public final class Rb100PhysicalDiagnostics {
             observed.policyResult!=null && baseline.policyResult.getLayout()==null &&
             observed.policyResult.getLayout()==null && baseline.layoutOutputJson.contains("\"layoutReturned\":false") &&
             observed.layoutOutputJson.contains("\"layoutReturned\":false");
-        return "RB100_QUALITY_SCALAR_PAIR {\"protocolVersion\":1,\"sourceRevision\":15,"+
+        return "RB100_QUALITY_SCALAR_PAIR {\"protocolVersion\":1,\"sourceRevision\":16,"+
             "\"runId\":\""+jsonFull(runId)+"\",\"variant\":\""+variant.name()+
             "\",\"nullOperationId\":\""+nullOperationId+"\",\"probeOperationId\":\""+
             probeOperationId+"\",\"rootSeed\":\""+SEED+"\",\"placementSeed\":\""+
@@ -3064,7 +3064,7 @@ public final class Rb100PhysicalDiagnostics {
         final String runId,operationId;
         final Rb100Plan.Variant variant;
         int selectCalls,graphCallbacks,manualSliceSteps,manualGroups;
-        int shortcutAdvanceCalls;
+        int graphAdvanceCalls;
         long manualDriverNanos;
         String controlsJson,qualityRejectionMessage,generatorLastFailureType,
             generatorLastFailureMessage;
@@ -3073,11 +3073,11 @@ public final class Rb100PhysicalDiagnostics {
         Object targetStartPad,targetRootPad,targetEndNode;
         QualityScalarSnapshot snapshot;
         QualityPathSnapshot pathSnapshot;
-        ShortcutQueryBinding shortcutBinding;
-        P07ShortcutQueryDiagnostics.Cursor shortcutCursor;
-        String shortcutDiagnosticJson;
-        int shortcutQueryQualifiedCount=-1,shortcutCompletedLastWork=-1;
-        int lastShortcutBudgetUnit;
+        ZeroViaGraphBinding graphBinding;
+        P07ZeroViaGraphDiagnostics.Cursor graphCursor;
+        String graphDiagnosticJson;
+        int graphOrdinaryQueries=-1,graphCompletedLastWork=-1;
+        int lastGraphBudgetUnit;
         int targetAccountingBefore=-1,targetAccountingAfter=-1;
         boolean targetCaptured,qualityRejected,targetRequestAccounted,
             terminalConfirmed,readyGuardRequested,armedReadyGuard,targetBranchHandoffVerified;
@@ -3104,8 +3104,8 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         String nextManualUnitName() {
-            return shortcutCursor!=null && !shortcutCursor.isComplete() ?
-                "p07-quality-shortcut-query-advance-"+(shortcutAdvanceCalls+1) :
+            return graphCursor!=null && !graphCursor.isComplete() ?
+                "p07-quality-zero-via-graph-advance-"+(graphAdvanceCalls+1) :
                 "p07-quality-scalar-single-step-group-"+(manualGroups+1);
         }
 
@@ -3127,15 +3127,15 @@ public final class Rb100PhysicalDiagnostics {
                 "manual single-step driver owns the live generator session before the target rejection");
             Object active=P07ScalarReflection.read(generatorSession,"mediumTwoLayerRoute");
             require(active!=null,"manual single-step driver observes the actual retained P07 owner");
-            if(shortcutCursor!=null && !shortcutCursor.isComplete()) {
+            if(graphCursor!=null && !graphCursor.isComplete()) {
                 require(active==routeSession &&
                     P07ScalarReflection.read(routeSession,"fixedPrefixContext")==fixedPrefixContext,
-                    "pending shortcut work retains the same generator owner and fixed-prefix context");
-                long queryGroupStarted=System.nanoTime();
+                    "pending zero-via graph work retains the same generator owner and fixed-prefix context");
+                long graphGroupStarted=System.nanoTime();
                 try {
-                    advanceShortcutQuery(budget);
+                    advanceZeroViaGraph(budget);
                 } finally {
-                    manualDriverNanos+=Math.max(0L,System.nanoTime()-queryGroupStarted);
+                    manualDriverNanos+=Math.max(0L,System.nanoTime()-graphGroupStarted);
                 }
                 manualGroups++;
                 return;
@@ -3193,7 +3193,7 @@ public final class Rb100PhysicalDiagnostics {
                     require(progress!=PcbLayerRoutingPrototype.OrderingProgress.ROUTE_READY,
                         "manual P07 stepping must stop before any retained route can be integrated");
                     inspectActualTargetAfterSlice(progress);
-                    if(shortcutCursor!=null && !shortcutCursor.isComplete()) break;
+                    if(graphCursor!=null && !graphCursor.isComplete()) break;
                     if(progress==PcbLayerRoutingPrototype.OrderingProgress.COMPLETE && !qualityRejected)
                         throw new AssertionError("target quality rejection was not observed before P07 completion");
                 }
@@ -3222,7 +3222,7 @@ public final class Rb100PhysicalDiagnostics {
             return null;
         }
 
-        private void beginShortcutQuery(Object search,Object publisher) {
+        private void beginZeroViaGraph(Object search,Object publisher) {
             require(targetBranchSearch==search && targetBranch!=null && targetBranchHandoffVerified &&
                 P07ScalarReflection.read(search,"branch")==null &&
                 P07ScalarReflection.read(search,"publisher")==publisher,
@@ -3239,6 +3239,12 @@ public final class Rb100PhysicalDiagnostics {
             PcbBoardLayout layout=(PcbBoardLayout)P07ScalarReflection.read(search,"layout");
             PcbNetRouter.Router[] faces=(PcbNetRouter.Router[])
                 P07ScalarReflection.read(search,"faces");
+            PcbLayerRoutingPrototype.Policy policy=(PcbLayerRoutingPrototype.Policy)
+                P07ScalarReflection.read(search,"policy");
+            int primaryLayer=P07ScalarReflection.intField(search,"primary");
+            int maximumVias=P07ScalarReflection.intField(search,"maximumVias");
+            PcbBoardHole[] prefixHoles=(PcbBoardHole[])
+                P07ScalarReflection.read(targetBranch,"holes");
             int width=P07ScalarReflection.intField(search,"width");
             int height=P07ScalarReflection.intField(search,"height");
             int cells=P07ScalarReflection.intField(search,"cells");
@@ -3247,6 +3253,10 @@ public final class Rb100PhysicalDiagnostics {
             int pitch=PcbLayerRoutingPrototype.GRID;
             int endCell=P07ScalarReflection.intField(found,"cell");
             int endLayer=P07ScalarReflection.intField(found,"layer");
+            int initialLayerMask=0;
+            for(int layer=0;layer<2;layer++)
+                if(layer==primaryLayer || policy==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER)
+                    initialLayerMask|=1<<layer;
             require(pathSnapshot!=null && pathSnapshot.nodes.length==66,
                 "approved actual Publisher path retains its exact66 captured nodes before query setup");
             QualityPathNodeSnapshot firstPathNode=pathSnapshot.nodes[0];
@@ -3254,10 +3264,12 @@ public final class Rb100PhysicalDiagnostics {
             PcbPadPlacement publisherTerminal=(PcbPadPlacement)
                 P07ScalarReflection.read(publisher,"endTerminal");
             require(snapshot.pass==1 && "D_SENSE".equals(snapshot.netId) &&
+                start!=null && root!=null && "U2D.SENSOR".equals(start.getPadId()) &&
+                "CFLT_D.1".equals(root.getPadId()) &&
                 snapshot.pathNodeCount==66 && snapshot.planarLength==650 &&
                 snapshot.directDistance==210 && snapshot.bends==6 && snapshot.transitionCount==0 &&
-                firstPathNode.cost==2 && lastPathNode.cost==992,
-                "shortcut family binds only the approved separate D_SENSE 66/650/210/6/0 path with actual endpoint costs2/992");
+                endCell==93086 && firstPathNode.cost==2 && lastPathNode.cost==992,
+                "zero-via graph binds the approved separate U2D.SENSOR-to-CFLT_D.1 D_SENSE path 66/650/210/6/0 ending at cell93086 with costs2/992");
             require(targetPublisher==publisher && targetEndNode==found &&
                 P07ScalarReflection.read(publisher,"end")==found && publisherTerminal==foundTerminal &&
                 start==targetStartPad && root==targetRootPad && start!=null && root!=null &&
@@ -3272,12 +3284,25 @@ public final class Rb100PhysicalDiagnostics {
                 width==snapshot.gridWidth && height==snapshot.gridHeight &&
                 originX==snapshot.gridOriginX && originY==snapshot.gridOriginY &&
                 pitch==snapshot.gridPitch && faces!=null && faces.length==2 &&
-                faces[PcbCopperLayer.TOP.ordinal()]!=null && reached!=null && goals!=null &&
+                faces[PcbCopperLayer.TOP.ordinal()]!=null &&
+                faces[PcbCopperLayer.BOTTOM.ordinal()]!=null &&
+                policy==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER &&
+                primaryLayer==PcbCopperLayer.BOTTOM.ordinal() && initialLayerMask==3 &&
+                maximumVias>=0 && maximumVias<=policy.vias && prefixHoles!=null &&
+                layout.getHoleCount()==prefixHoles.length && reached!=null && goals!=null &&
                 goals.length==2*cells && endCell==pathSnapshot.nodes[pathSnapshot.nodes.length-1].cell &&
                 endLayer==snapshot.endLayer && endLayer==PcbCopperLayer.TOP.ordinal() &&
                 P07ScalarReflection.intField(publisher,"stage")==1 &&
                 P07ScalarReflection.intField(publisher,"qualityIndex")==66,
-                "actual BranchSearch endpoints, goal mask, TOP Router, grid and quiescent Publisher match the captured path");
+                "actual BranchSearch endpoints, complete two-face graph authorities, policy, grid and quiescent Publisher match the captured path");
+            PcbBoardHole[] layoutHoles=layout.getHoles().toArray(new PcbBoardHole[0]);
+            require(layoutHoles.length==prefixHoles.length,
+                "actual BranchSearch retains the complete original fixed-prefix hole count");
+            for(int index=0;index<prefixHoles.length;index++)
+                require(prefixHoles[index]!=null && prefixHoles[index]==layoutHoles[index],
+                    "actual BranchSearch fixed-prefix hole identity remains bound at index "+index);
+            require(initialLayerMask==3,
+                "FULLER actual policy seeds both primary and secondary faces without copper filtering");
             require(goals[endLayer*cells+endCell],
                 "actual Publisher end cell and face are true in the retained BranchSearch goal mask");
             String[] reachedIds=new String[reached.length];
@@ -3305,21 +3330,22 @@ public final class Rb100PhysicalDiagnostics {
                 path[index][1]=row.y;
                 path[index][2]=row.layer;
             }
-            shortcutBinding=new ShortcutQueryBinding(search,targetBranch,publisher,found,foundTerminal,
-                goals,reached,faces,faces[PcbCopperLayer.TOP.ordinal()],layout,start,root,netId,
-                P07ScalarReflection.intField(search,"pass"),width,height,cells,originX,originY,pitch,
-                endLayer,endCell,reachedIds);
-            P07ShortcutQueryDiagnostics.Context context=new P07ShortcutQueryDiagnostics.Context(
-                layout,faces[PcbCopperLayer.TOP.ordinal()],netId,start,root,reached,goals,
-                width,height,originX,originY,pitch,endLayer,path);
-            shortcutCursor=P07ShortcutQueryDiagnostics.begin(context);
-            require(shortcutCursor!=null && !shortcutCursor.isComplete(),
-                "actual finite shortcut-family cursor begins pending and resumable");
-            verifyShortcutBindingUnchanged(false);
+            graphBinding=new ZeroViaGraphBinding(search,targetBranch,publisher,found,foundTerminal,
+                goals,reached,faces,layout,start,root,netId,
+                P07ScalarReflection.intField(search,"pass"),width,height,cells,originX,originY,
+                pitch,endLayer,endCell,policy,primaryLayer,initialLayerMask,maximumVias,
+                prefixHoles,reachedIds);
+            P07ZeroViaGraphDiagnostics.Context context=new P07ZeroViaGraphDiagnostics.Context(
+                layout,faces,netId,start,root,reached,goals,width,height,originX,originY,pitch,
+                initialLayerMask,path);
+            graphCursor=P07ZeroViaGraphDiagnostics.begin(context);
+            require(graphCursor!=null && !graphCursor.isComplete(),
+                "actual finite two-face zero-via graph cursor begins pending and resumable");
+            verifyGraphBindingUnchanged(false);
         }
 
-        private void verifyShortcutBindingUnchanged(boolean ownerAdvanced) {
-            ShortcutQueryBinding binding=shortcutBinding;
+        private void verifyGraphBindingUnchanged(boolean ownerAdvanced) {
+            ZeroViaGraphBinding binding=graphBinding;
             require(binding!=null && targetBranch==binding.branch &&
                 targetBranchSearch==binding.search && targetSearch==binding.search &&
                 targetPublisher==binding.publisher && targetEndNode==binding.endNode,
@@ -3332,20 +3358,35 @@ public final class Rb100PhysicalDiagnostics {
             PcbPadPlacement[] reached=(PcbPadPlacement[])
                 P07ScalarReflection.read(binding.branch,"reachedTerminals");
             boolean[] goals=(boolean[])P07ScalarReflection.read(binding.branch,"goal");
+            int derivedInitialLayerMask=0;
+            for(int layer=0;layer<2;layer++)
+                if(layer==binding.primaryLayer ||
+                        binding.policy==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER)
+                    derivedInitialLayerMask|=1<<layer;
             require(P07ScalarReflection.read(binding.search,"owner")==routeSession &&
                 P07ScalarReflection.read(binding.search,"branch")==null &&
                 P07ScalarReflection.read(binding.search,"publisher")==binding.publisher &&
                 P07ScalarReflection.read(binding.search,"layout")==binding.layout &&
                 P07ScalarReflection.intField(binding.search,"pass")==binding.pass &&
+                P07ScalarReflection.read(binding.search,"policy")==binding.policy &&
+                P07ScalarReflection.intField(binding.search,"primary")==binding.primaryLayer &&
+                P07ScalarReflection.intField(binding.search,"maximumVias")==binding.maximumVias &&
                 binding.netId.equals(P07ScalarReflection.stringField(binding.search,"currentNet")) &&
                 P07ScalarReflection.read(binding.search,"currentRoot")==binding.root &&
-                faces==binding.facesIdentity && faces[binding.layer]==binding.liveFace &&
+                faces==binding.facesIdentity && faces.length==2 &&
+                faces[0]==binding.faceValues[0] && faces[1]==binding.faceValues[1] &&
+                binding.policy==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER &&
+                binding.primaryLayer==PcbCopperLayer.BOTTOM.ordinal() &&
+                binding.initialLayerMask==derivedInitialLayerMask && derivedInitialLayerMask==3 &&
                 P07ScalarReflection.read(binding.branch,"found")==binding.endNode &&
                 P07ScalarReflection.read(binding.branch,"foundTerminal")==binding.foundTerminal &&
                 P07ScalarReflection.read(binding.branch,"goal")==binding.goalIdentity &&
                 Arrays.equals(binding.goalValues,goals) &&
                 P07ScalarReflection.read(binding.branch,"reachedTerminals")==binding.reachedIdentity &&
                 reached.length==binding.reachedValues.length &&
+                P07ScalarReflection.read(binding.branch,"holes")==binding.holesIdentity &&
+                ((PcbBoardHole[])P07ScalarReflection.read(binding.branch,"holes")).length==
+                    binding.prefixHoles.length &&
                 P07ScalarReflection.read(binding.branch,"start")==binding.start &&
                 P07ScalarReflection.read(binding.branch,"root")==binding.root &&
                 P07ScalarReflection.read(binding.publisher,"end")==binding.endNode &&
@@ -3355,11 +3396,21 @@ public final class Rb100PhysicalDiagnostics {
                 binding.netId.equals(P07ScalarReflection.stringField(binding.publisher,"net")) &&
                 P07ScalarReflection.intField(binding.publisher,"stage")==1 &&
                 P07ScalarReflection.intField(binding.publisher,"qualityIndex")==66,
-                "original branch goal and endpoint authorities and actual Publisher stay unchanged and quiescent");
+                "original branch goal, two-face router, policy, hole cap and endpoint authorities stay unchanged and quiescent");
             for(int index=0;index<reached.length;index++)
                 require(reached[index]==binding.reachedValues[index] &&
                     binding.reachedPadIds[index].equals(reached[index].getPadId()),
                     "actual reached PTH identity and canonical pad ID remain unchanged at index "+index);
+            PcbBoardHole[] branchHoles=(PcbBoardHole[])
+                P07ScalarReflection.read(binding.branch,"holes");
+            PcbBoardHole[] layoutHoles=binding.layout.getHoles().toArray(new PcbBoardHole[0]);
+            require(branchHoles.length==binding.prefixHoleCount &&
+                layoutHoles.length==binding.prefixHoleCount,
+                "actual prefix hole count stays bound to both BranchSearch and layout");
+            for(int index=0;index<branchHoles.length;index++)
+                require(branchHoles[index]==binding.prefixHoles[index] &&
+                    branchHoles[index]==layoutHoles[index],
+                    "actual prefix hole identity remains unchanged at index "+index);
             int endCell=P07ScalarReflection.intField(binding.endNode,"cell");
             int endLayer=P07ScalarReflection.intField(binding.endNode,"layer");
             require(endCell==binding.endCell && endLayer==binding.endLayer &&
@@ -3367,60 +3418,60 @@ public final class Rb100PhysicalDiagnostics {
                 "actual found end cell and layer remain a true original goal");
         }
 
-        private void advanceShortcutQuery(Budget budget) {
-            require(shortcutCursor!=null && !shortcutCursor.isComplete() &&
-                shortcutBinding!=null && !qualityRejected,
-                "pending shortcut query owns the actual quiescent Publisher before P07 resumes");
+        private void advanceZeroViaGraph(Budget budget) {
+            require(graphCursor!=null && !graphCursor.isComplete() &&
+                graphBinding!=null && !qualityRejected,
+                "pending zero-via graph owns the actual quiescent Publisher before P07 resumes");
             require(budget!=null && budget.unitName!=null &&
-                budget.unitName.startsWith("p07-quality-shortcut-query-advance-") &&
-                budget.workUnits>lastShortcutBudgetUnit,
+                budget.unitName.startsWith("p07-quality-zero-via-graph-advance-") &&
+                budget.workUnits>lastGraphBudgetUnit,
                 "each pending cursor advance receives one newly charged existing outer work unit");
             int workUnit=budget.workUnits;
-            int callsBefore=shortcutAdvanceCalls;
+            int callsBefore=graphAdvanceCalls;
             budget.checkpoint();
             verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
                 fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
-            verifyShortcutBindingUnchanged(false);
-            boolean advanceComplete=shortcutCursor.advance(MAX_MANUAL_STEPS_PER_UNIT);
-            shortcutAdvanceCalls++;
-            int lastWork=shortcutCursor.lastWork();
-            require(advanceComplete==shortcutCursor.isComplete() &&
-                shortcutAdvanceCalls==callsBefore+1 && budget.workUnits==workUnit &&
+            verifyGraphBindingUnchanged(false);
+            boolean advanceComplete=graphCursor.advance(MAX_MANUAL_STEPS_PER_UNIT);
+            graphAdvanceCalls++;
+            int lastWork=graphCursor.lastWork();
+            require(advanceComplete==graphCursor.isComplete() &&
+                graphAdvanceCalls==callsBefore+1 && budget.workUnits==workUnit &&
                 lastWork>0 && lastWork<=MAX_MANUAL_STEPS_PER_UNIT,
                 "one resumable cursor advance completes within its single existing bounded work unit");
             budget.checkpoint();
             verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
                 fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
-            verifyShortcutBindingUnchanged(false);
-            if(shortcutCursor.isComplete()) captureCompletedShortcutCursor(lastWork);
+            verifyGraphBindingUnchanged(false);
+            if(graphCursor.isComplete()) captureCompletedGraphCursor(lastWork);
             budget.checkpoint();
-            lastShortcutBudgetUnit=workUnit;
+            lastGraphBudgetUnit=workUnit;
         }
 
-        private void captureCompletedShortcutCursor(int lastWork) {
-            require(shortcutCursor!=null && shortcutCursor.isComplete() &&
-                shortcutDiagnosticJson==null && lastWork>0 &&
+        private void captureCompletedGraphCursor(int lastWork) {
+            require(graphCursor!=null && graphCursor.isComplete() &&
+                graphDiagnosticJson==null && lastWork>0 &&
                 lastWork<=MAX_MANUAL_STEPS_PER_UNIT,
-                "completed shortcut cursor has a single bounded final work result");
-            String diagnostic=shortcutCursor.bodyJson();
-            int queryQualifiedCount=shortcutCursor.result().queryQualifiedCount;
-            String repeatedDiagnostic=shortcutCursor.bodyJson();
-            int repeatedCount=shortcutCursor.result().queryQualifiedCount;
+                "completed zero-via graph cursor has a single bounded final work result");
+            String diagnostic=graphCursor.bodyJson();
+            int ordinaryQueries=graphCursor.result().ordinaryQueries;
+            String repeatedDiagnostic=graphCursor.bodyJson();
+            int repeatedCount=graphCursor.result().ordinaryQueries;
             require(diagnostic!=null && diagnostic.equals(repeatedDiagnostic) &&
-                queryQualifiedCount>=0 && repeatedCount==queryQualifiedCount &&
-                shortcutCursor.isComplete() && shortcutCursor.lastWork()==lastWork,
+                ordinaryQueries>=0 && repeatedCount==ordinaryQueries &&
+                graphCursor.isComplete() && graphCursor.lastWork()==lastWork,
                 "completed cursor body and immutable structured result remain stable across reads");
-            shortcutDiagnosticJson=diagnostic;
-            shortcutQueryQualifiedCount=queryQualifiedCount;
-            shortcutCompletedLastWork=lastWork;
+            graphDiagnosticJson=diagnostic;
+            graphOrdinaryQueries=ordinaryQueries;
+            graphCompletedLastWork=lastWork;
         }
 
-        private void verifyCompletedShortcutCursor() {
-            require(shortcutCursor!=null && shortcutCursor.isComplete() &&
-                shortcutDiagnosticJson!=null && shortcutQueryQualifiedCount>=0 &&
-                shortcutCursor.result().queryQualifiedCount==shortcutQueryQualifiedCount &&
-                shortcutCursor.lastWork()==shortcutCompletedLastWork,
-                "completed shortcut cursor retains its terminal body, count and last-work state");
+        private void verifyCompletedGraphCursor() {
+            require(graphCursor!=null && graphCursor.isComplete() &&
+                graphDiagnosticJson!=null && graphOrdinaryQueries>=0 &&
+                graphCursor.result().ordinaryQueries==graphOrdinaryQueries &&
+                graphCursor.lastWork()==graphCompletedLastWork,
+                "completed zero-via graph cursor retains its terminal body, query count and last-work state");
         }
 
         private void verifyTargetContext(
@@ -3465,7 +3516,7 @@ public final class Rb100PhysicalDiagnostics {
                             (PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext,
                             snapshot);
                         targetCaptured=true;
-                        beginShortcutQuery(search,publisher);
+                        beginZeroViaGraph(search,publisher);
                     }
                 }
             }
@@ -3490,12 +3541,12 @@ public final class Rb100PhysicalDiagnostics {
                         snapshot.startPadId.equals(((PcbPadPlacement)targetStartPad).getPadId()) &&
                         snapshot.rootPadId.equals(((PcbPadPlacement)targetRootPad).getPadId()),
                         "actual rejection retains the same request/pass/net/start/root and Publisher object identity");
-                    require(shortcutCursor!=null && shortcutCursor.isComplete() &&
-                        shortcutAdvanceCalls>0,
+                    require(graphCursor!=null && graphCursor.isComplete() &&
+                        graphAdvanceCalls>0,
                         "actual branch-quality rejection resumes only after the bounded query cursor completes");
                     verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
                         fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
-                    verifyShortcutBindingUnchanged(true);
+                    verifyGraphBindingUnchanged(true);
                     qualityRejectionMessage=reason;
                     qualityRejected=true;
                 } else {
@@ -3528,9 +3579,9 @@ public final class Rb100PhysicalDiagnostics {
             require(targetCaptured && qualityRejected && snapshot!=null &&
                 routeSession!=null && fixedPrefixContext!=null && armedReadyGuard,
                 "terminal scalar record has its exact actual target context and rejection");
-            require(shortcutCursor!=null && shortcutCursor.isComplete() &&
-                shortcutAdvanceCalls>0 && shortcutBinding!=null,
-                "terminal shortcut diagnostic has completed all resumable query work under the existing driver");
+            require(graphCursor!=null && graphCursor.isComplete() &&
+                graphAdvanceCalls>0 && graphBinding!=null,
+                "terminal zero-via graph diagnostic has completed all resumable work under the existing driver");
             require(targetRequestAccounted && targetAccountingAfter==targetAccountingBefore+1,
                 "ordinary generator advancement accounts the target P07 request exactly once");
             require(result!=null && "EXHAUSTED".equals(result.sessionTerminalStatus) &&
@@ -3569,8 +3620,8 @@ public final class Rb100PhysicalDiagnostics {
                 "actual Publisher path snapshot retains its same-operation source identities");
             verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
                 fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
-            verifyShortcutBindingUnchanged(qualityRejected);
-            verifyCompletedShortcutCursor();
+            verifyGraphBindingUnchanged(qualityRejected);
+            verifyCompletedGraphCursor();
         }
 
         long manualDriverMillis() { return nanosToMillis(manualDriverNanos); }
@@ -3579,7 +3630,7 @@ public final class Rb100PhysicalDiagnostics {
             requireTerminalOperation(result);
             PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
                 (PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext;
-            return "RB100_QUALITY_SCALAR_EVENT {\"protocolVersion\":1,\"sourceRevision\":15,"+
+            return "RB100_QUALITY_SCALAR_EVENT {\"protocolVersion\":1,\"sourceRevision\":16,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\""+jsonFull(operationId)+
                 "\",\"variant\":\""+variant.name()+"\",\"mode\":\"PROBE\",\"rootSeed\":\""+
                 SEED+"\",\"placementSeed\":\""+PLACEMENT_DIAGNOSTIC_SEED+
@@ -3633,7 +3684,7 @@ public final class Rb100PhysicalDiagnostics {
                 nodes.append(pathSnapshot.nodes[index].toJson());
             }
             nodes.append(']');
-            return "RB100_QUALITY_PATH_EVENT {\"protocolVersion\":1,\"sourceRevision\":15,"+
+            return "RB100_QUALITY_PATH_EVENT {\"protocolVersion\":1,\"sourceRevision\":16,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\""+
                 jsonFull(operationId)+"\",\"order\":\"START_TO_END\",\"captureStage\":"+
                 pathSnapshot.captureStage+",\"captureQualityIndex\":"+
@@ -3643,14 +3694,16 @@ public final class Rb100PhysicalDiagnostics {
                 "\"legalShortcutProof\":false,\"layoutQualification\":false}";
         }
 
-        String shortcutQueryEventJson(P07PolicyDiagnosticCase result) {
+        String zeroViaGraphEventJson(P07PolicyDiagnosticCase result,boolean pairPassed) {
             requireTerminalOperation(result);
-            require(shortcutBinding!=null && shortcutCursor!=null &&
-                shortcutCursor.isComplete() && shortcutAdvanceCalls>0 &&
-                shortcutDiagnosticJson!=null,
-                "shortcut query event is emitted only after the actual terminal operation and every cursor unit complete");
-            verifyShortcutBindingUnchanged(true);
-            ShortcutQueryBinding binding=shortcutBinding;
+            require(pairPassed && "QUALITY_PROBE".equals(operationId) && graphBinding!=null &&
+                graphCursor!=null && graphCursor.isComplete() && graphAdvanceCalls>0 &&
+                graphDiagnosticJson!=null,
+                "zero-via graph event follows same-run scalar parity, terminal rejection and every cursor unit");
+            require(qualityRejected && targetRequestAccounted && terminalConfirmed,
+                "zero-via graph event follows the same actual quality rejection and terminal cleanup");
+            verifyGraphBindingUnchanged(true);
+            ZeroViaGraphBinding binding=graphBinding;
             String foundTerminal=binding.foundTerminal==null ? "null" :
                 "\""+jsonFull(((PcbPadPlacement)binding.foundTerminal).getPadId())+"\"";
             StringBuilder reached=new StringBuilder("[");
@@ -3659,34 +3712,39 @@ public final class Rb100PhysicalDiagnostics {
                 reached.append('"').append(jsonFull(binding.reachedPadIds[index])).append('"');
             }
             reached.append(']');
-            return "RB100_SHORTCUT_QUERY_EVENT {\"protocolVersion\":1,\"sourceRevision\":15,"+
+            return "RB100_ZERO_VIA_GRAPH_EVENT {\"protocolVersion\":1,\"sourceRevision\":16,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\","+
-                "\"scope\":\"ACTUAL_QUERY_CLONE_SHORTCUT_FAMILY_ONLY\",\"binding\":{"+
+                "\"scope\":\"ACTUAL_FIXED_PREFIX_ZERO_NEW_VIA_GRAPH_ONLY\",\"binding\":{"+
                 "\"branchIdentityVerified\":true,\"sourcePublisherUnchanged\":true,"+
                 "\"pass\":"+binding.pass+",\"netId\":\""+jsonFull(binding.netId)+"\","+
                 "\"startPadId\":\""+jsonFull(binding.start.getPadId())+"\","+
                 "\"rootPadId\":\""+jsonFull(binding.root.getPadId())+"\","+
                 "\"reachedPthPadIds\":"+reached+",\"foundTerminalPadId\":"+foundTerminal+","+
                 "\"endCell\":"+binding.endCell+",\"endLayer\":"+binding.endLayer+","+
-                "\"goalMaskLength\":"+binding.goalValues.length+"},\"diagnostic\":"+
-                shortcutDiagnosticJson+",\"feasibility\":\"UNKNOWN\",\"legalShortcutProof\":false,"+
+                "\"goalMaskLength\":"+binding.goalValues.length+",\"policy\":\""+
+                binding.policy.name()+"\",\"primaryLayer\":"+binding.primaryLayer+
+                ",\"initialLayerMask\":"+binding.initialLayerMask+",\"maximumVias\":"+
+                binding.maximumVias+",\"prefixHoleCount\":"+binding.prefixHoleCount+
+                "},\"diagnostic\":"+graphDiagnosticJson+
+                ",\"feasibility\":\"UNKNOWN\",\"legalRouteProof\":false,"+
                 "\"layoutQualification\":false,\"routeAdoption\":false}";
         }
 
-        String shortcutQuerySummaryJson(P07PolicyDiagnosticCase result) {
+        String zeroViaGraphSummaryJson(P07PolicyDiagnosticCase result,boolean pairPassed) {
             requireTerminalOperation(result);
-            require(shortcutBinding!=null && shortcutCursor!=null && shortcutCursor.isComplete(),
-                "shortcut query summary follows the fully completed actual branch diagnostic");
-            verifyShortcutBindingUnchanged(true);
-            int queryQualifiedCount=shortcutQueryQualifiedCount;
-            require(queryQualifiedCount>=0,
-                "helper structured result exposes the natural finite query-qualified candidate count");
-            return "PASS: RB100 quality shortcut contracts {\"protocolVersion\":1,\"sourceRevision\":15,"+
+            require(pairPassed && "QUALITY_PROBE".equals(operationId) && graphBinding!=null &&
+                graphCursor!=null && graphCursor.isComplete(),
+                "zero-via graph summary follows the parity-checked completed actual branch diagnostic");
+            verifyGraphBindingUnchanged(true);
+            int ordinaryQueries=graphOrdinaryQueries;
+            require(ordinaryQueries>=0 && ordinaryQueries==graphCursor.result().ordinaryQueries,
+                "helper structured result exposes its final ordinary edge query count");
+            return "PASS: RB100 quality zero-via graph contracts {\"protocolVersion\":1,\"sourceRevision\":16,"+
                 "\"status\":\"PASS\",\"runId\":\""+jsonFull(runId)+
                 "\",\"operationId\":\"QUALITY_PROBE\",\"events\":1,"+
-                "\"queryQualifiedCount\":"+queryQualifiedCount+","+
-                "\"scope\":\"ACTUAL_QUERY_CLONE_SHORTCUT_FAMILY_ONLY\",\"feasibility\":\"UNKNOWN\","+
-                "\"legalShortcutProof\":false,\"layoutQualification\":false,\"routeAdoption\":false}";
+                "\"scope\":\"ACTUAL_FIXED_PREFIX_ZERO_NEW_VIA_GRAPH_ONLY\",\"ordinaryQueries\":"+
+                ordinaryQueries+",\"feasibility\":\"UNKNOWN\",\"legalRouteProof\":false,"+
+                "\"layoutQualification\":false,\"routeAdoption\":false}";
         }
     }
 
@@ -3746,32 +3804,43 @@ public final class Rb100PhysicalDiagnostics {
         }
     }
 
-    private static final class ShortcutQueryBinding {
+    private static final class ZeroViaGraphBinding {
         final Object search,branch,publisher,endNode,foundTerminal,goalIdentity,
-            reachedIdentity,facesIdentity;
-        final PcbNetRouter.Router liveFace;
+            reachedIdentity,facesIdentity,holesIdentity;
+        final PcbNetRouter.Router[] faceValues;
         final PcbBoardLayout layout;
         final PcbPadPlacement start,root;
         final PcbPadPlacement[] reachedValues;
+        final PcbBoardHole[] prefixHoles;
         final boolean[] goalValues;
         final String netId;
         final String[] reachedPadIds;
-        final int pass,width,height,cells,originX,originY,pitch,layer,endCell,endLayer;
-        ShortcutQueryBinding(Object search,Object branch,Object publisher,Object endNode,
+        final PcbLayerRoutingPrototype.Policy policy;
+        final int pass,width,height,cells,originX,originY,pitch,endCell,endLayer,
+            primaryLayer,initialLayerMask,maximumVias,prefixHoleCount;
+        ZeroViaGraphBinding(Object search,Object branch,Object publisher,Object endNode,
                 PcbPadPlacement foundTerminal,boolean[] goalIdentity,
                 PcbPadPlacement[] reachedIdentity,Object facesIdentity,
-                PcbNetRouter.Router liveFace,PcbBoardLayout layout,PcbPadPlacement start,
+                PcbBoardLayout layout,PcbPadPlacement start,
                 PcbPadPlacement root,String netId,int pass,int width,int height,int cells,
-                int originX,int originY,int pitch,int layer,int endCell,String[] reachedPadIds) {
+                int originX,int originY,int pitch,int endLayer,int endCell,
+                PcbLayerRoutingPrototype.Policy policy,int primaryLayer,int initialLayerMask,
+                int maximumVias,PcbBoardHole[] prefixHoles,String[] reachedPadIds) {
             this.search=search; this.branch=branch; this.publisher=publisher; this.endNode=endNode;
             this.foundTerminal=foundTerminal; this.goalIdentity=goalIdentity;
             this.reachedIdentity=reachedIdentity; this.facesIdentity=facesIdentity;
-            this.liveFace=liveFace; this.layout=layout; this.start=start; this.root=root;
+            this.faceValues=((PcbNetRouter.Router[])facesIdentity).clone();
+            this.holesIdentity=P07ScalarReflection.read(branch,"holes");
+            this.layout=layout; this.start=start; this.root=root;
             this.reachedValues=reachedIdentity.clone(); this.goalValues=goalIdentity.clone();
+            this.prefixHoles=prefixHoles.clone();
             this.netId=netId; this.reachedPadIds=reachedPadIds.clone();
             this.pass=pass; this.width=width; this.height=height; this.cells=cells;
-            this.originX=originX; this.originY=originY; this.pitch=pitch; this.layer=layer;
-            this.endCell=endCell; this.endLayer=layer;
+            this.originX=originX; this.originY=originY; this.pitch=pitch;
+            this.endCell=endCell; this.endLayer=endLayer;
+            this.policy=policy; this.primaryLayer=primaryLayer;
+            this.initialLayerMask=initialLayerMask; this.maximumVias=maximumVias;
+            this.prefixHoleCount=prefixHoles.length;
         }
     }
 
@@ -4086,7 +4155,7 @@ public final class Rb100PhysicalDiagnostics {
         require(runId!=null && snapshot!=null && snapshot.nodes.length==66 &&
             snapshot.captureStage==1 && snapshot.captureQualityIndex==66,
             "quality path summary binds the single frozen stage1 66-node capture");
-        return "PASS: RB100 quality path contracts {\"protocolVersion\":1,\"sourceRevision\":15,"+
+        return "PASS: RB100 quality path contracts {\"protocolVersion\":1,\"sourceRevision\":16,"+
             "\"status\":\"PASS\",\"runId\":\""+jsonFull(runId)+
             "\",\"operationId\":\"QUALITY_PROBE\",\"events\":1,\"nodes\":66,"+
             "\"scope\":\"ACTUAL_PUBLISHER_PATH_ONLY\",\"feasibility\":\"UNKNOWN\","+
@@ -4135,7 +4204,7 @@ public final class Rb100PhysicalDiagnostics {
                 .append(",\"publisherStage\":").append(row.publisherStage).append('}');
         }
         checks.append(']');
-        return "RB100_QUALITY_SCALAR_CONTROLS {\"protocolVersion\":1,\"sourceRevision\":15,"+
+        return "RB100_QUALITY_SCALAR_CONTROLS {\"protocolVersion\":1,\"sourceRevision\":16,"+
             "\"runId\":\""+jsonFull(runId)+"\",\"status\":\"PASS\","+
             "\"fixture\":\"SYNTHETIC_PUBLISHER_METRICS_ONLY\",\"checks\":"+checks+
             ",\"assertions\":"+(assertions-beforeAssertions)+",\"layoutQualification\":false}";

@@ -1,0 +1,124 @@
+{
+  "schema": "zero-via-finite-qualification-v1",
+  "status": "PASS_DIAGNOSTIC_ONLY",
+  "sourceParent": "0102783930cd63a6b4e7c0adb5ff240ee3c5d271",
+  "sourceRevision": 16,
+  "nativeInputCount": 1072,
+  "nativeInputBytes": 86186689,
+  "nativeManifestSha256": "76d525847af2d39b178520dce34c120a9ef10e085f2ffe9d485d8733d004850d",
+  "productionLayoutVersion": 26,
+  "dependencyEpoch": "tsj-generation-dependencies-v28",
+  "nativeElapsedIncludingCompileCleanupSeconds": 73.0866562,
+  "operations": [
+    {
+      "operationId": "QUALITY_NULL",
+      "status": "PASS",
+      "operationMs": 16726,
+      "cleanupMs": 1,
+      "workUnits": 300,
+      "maxUnitMs": 1311,
+      "cleanupStatus": "PASS",
+      "routingOrders": 9,
+      "routingExpansions": 2918222,
+      "layoutReturned": false
+    },
+    {
+      "operationId": "QUALITY_PROBE",
+      "status": "PASS",
+      "operationMs": 22418,
+      "cleanupMs": 0,
+      "workUnits": 569,
+      "maxUnitMs": 775,
+      "cleanupStatus": "PASS",
+      "routingOrders": 9,
+      "routingExpansions": 2918222,
+      "layoutReturned": false
+    }
+  ],
+  "binding": {
+    "branchIdentityVerified": true,
+    "endCell": 93086,
+    "endLayer": 0,
+    "foundTerminalPadId": "CFLT_D.1",
+    "goalMaskLength": 295404,
+    "initialLayerMask": 3,
+    "maximumVias": 48,
+    "netId": "D_SENSE",
+    "pass": 1,
+    "policy": "FULLER_TWO_LAYER",
+    "prefixHoleCount": 48,
+    "primaryLayer": 1,
+    "reachedPthPadIds": [],
+    "rootPadId": "CFLT_D.1",
+    "sourcePublisherUnchanged": true,
+    "startPadId": "U2D.SENSOR"
+  },
+  "grid": {
+    "cells": 147702,
+    "endCell": 93086,
+    "endLayer": 0,
+    "height": 309,
+    "initialLayerMask": 3,
+    "originX": 30,
+    "originY": 30,
+    "pitch": 10,
+    "startCell": 84479,
+    "width": 478
+  },
+  "graphWork": {
+    "activeMillis": 950,
+    "advanceCalls": 268,
+    "comparisonEntries": 4007598,
+    "copyEntries": 2670740,
+    "encodedCells": 443106,
+    "goalCells": 147702,
+    "ordinaryQueries": 1178468,
+    "workSteps": 8781824
+  },
+  "lengthAnalysis": {
+    "faces": [
+      {
+        "distanceCapturedEnd": 650,
+        "layer": 0,
+        "lengthEligibleGoals": 0,
+        "minimumEligibleLength": null,
+        "reachableGoals": 1,
+        "shortestAnyGoal": 650
+      },
+      {
+        "distanceCapturedEnd": null,
+        "layer": 1,
+        "lengthEligibleGoals": 0,
+        "minimumEligibleLength": null,
+        "reachableGoals": 1,
+        "shortestAnyGoal": 8010
+      }
+    ],
+    "geometricRelaxation": "NO_ZERO_VIA_LENGTH_ELIGIBLE_GOAL_IN_FIXED_PREFIX",
+    "lengthEligibleGoals": 0,
+    "minimumEligibleLength": null,
+    "scope": "FIXED_PREFIX_ZERO_NEW_VIA_LENGTH_ONLY",
+    "seedLayerMask": 3
+  },
+  "focusedAssertions": {
+    "preservedShortcut": 24,
+    "newGraph": 20
+  },
+  "focusedElapsedIncludingCompileCleanupSeconds": 42.598457599999996,
+  "pythonPassed": 21,
+  "pythonOptionalFileLinkSkipped": 1,
+  "pythonElapsedSeconds": 0.8047594,
+  "realSelectedReaderNegatives": 21,
+  "actualJunctionRemoved": true,
+  "independentTinyComparisons": 16384,
+  "independentActualDijkstraAgreement": true,
+  "productionJavaUnchanged": 850,
+  "compilerInputsUnchangedPerVariant": 1202,
+  "frozenPythonFilesUnchanged": 28,
+  "sourceStabilityPrecondition": "EXCLUSIVE_SYNCHRONOUS_OWNER_FROM_BEGIN_TO_COMPLETION",
+  "wholeBoardFeasibility": "UNKNOWN",
+  "layoutQualification": false,
+  "routeAdoption": false,
+  "playable100": 0,
+  "buildDisposition": "NOT_RUN_IDENTICAL_850_PRODUCTION_AND_1202_COMPILER_INPUTS_PRIOR_QUALIFIED_EVIDENCE_ONLY"
+}

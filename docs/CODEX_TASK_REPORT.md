@@ -1,4 +1,68 @@
-# Current checkpoint: checked shortcut diagnostic accepted locally
+# Current checkpoint: fixed-prefix capacity and length diagnosis
+
+LOCAL FINITE ACCEPTANCE / PUBLICATION PENDING. G=OS-temp/tsj-q100-zero-via-graph-20261103-r1,
+branchcodex/q100-zero-via-graph-20261103, sourceParentHEAD0102783930cd63a6b4e7c0adb5ff240ee3c5d271.
+Packet docs/task-evidence/Q100/zero-via-graph-r1; rawQG=S/zero-via-graph-r1.
+Production26/dependency28/VIA60 unchanged.
+
+Exactapprovedseparate9007199254740993 placement-6587958367974952701/
+routing8445301674744508279 req0/index0/attempt4/pass1/D_SENSE capturedprefix:
+147702cells/478x309, bothinitialfacesmask3, rootCFLT_D.1/startU2D.SENSOR,
+onegoal93086bothfaces/direct210/limit630. Independently shortestTOP650,
+BOTTOM8010; zero length-eligible goals. Prefix48/max48 holes prevents new
+pathViaFits transitions. This diagnoses THISprefix; earlier routing choices
+must change for this branch. No treatment/wholeboard infeasibility/admission.
+Originalpath66/650/6bends/0transTOP andprefixSHA98d38955 exactlymatchparentR.
+All65source stepsallowed. Playable100=0/betaheld.
+
+Finalnative1072/rev16/86186689bytes manifest
+76d525847af2d39b178520dce34c120a9ef10e085f2ffe9d485d8733d004850d;
+5changedcurrentnativepaths/launchers QG/source-76d52584. Helper3d5bd84b,
+fixturec749078b, adapter372ab4bc; source-onlyfinalreviewsCLEAR withactualarchive
+diff. FocusR2 oldShortcut24+newGraph20 PASS42.5984576s; actualR1 PASS73.0866562s,
+bothinclcompilecleanup/child0/native0/term/cleanup/sourcebeforeafter. NULL16726ms/
+cleanup1/work300/maxunit1311; PROBE22418/0/569/775; canonicalidentity9orders/
+2918222exp/nolayout parity+5Publishercontrols. Capture1178468queries/147702goal
+positions/443106chars,268advances/8781824conservativedebit/950msactive. All
+90s/640/5s/120scleanup/32768quantum/routingcaps unchanged. Activeclockexcludes
+constantResultwrapper/laterJSON; outerclockincludesall. Aggregatecleanupnot
+separately supplied. Exclusive synchronoussourceownership required; noarbitrary
+mutationdetection duringinitialincrementalcopy.
+
+PythonR2 PASS21methods+1optionalfilelinkSKIP/22total/0.8047594s/child0/term/source8stable.
+Currentreaderad19a362/teste44cf780; eightinputs/hosts QG/python-source-ad19a362.
+ActualpositiveR2 and21selectedcurrent-readernegativesPASS:20casesR3 plus
+modified-helpercurrentcaseR4. Actualdirectoryjunctionremovednonrecursively/
+targetsourceunchanged. Independenttinysource884e6c77 PASS16384comparisons,
+0.3886861s; actualheapDijkstrasource42739681 PASS650/8010 agreement0.6229877s,
+no readerimports/exit0/term. Reuseallconsumedgraph/oracle/preservedR1reportbytes
+unchanged, freshR2analysisagrees. FinalauditR2 PASS native1072/850production/
+1202compilerinputspervariant/28frozenPython/source/path/prefix/all21controls.
+No freshGWT/Player/Current/electrical/normal3/full2-by-31 claim.
+
+Failurespreserved: nativeR1/fc0df70f old24PASS/newfixtureBOTTOMpathFAIL41.9650749s
+child2/term/cleanupmarker/no qualifyingreceipt; old09988wireN/3Ncountswrong.
+FixedvalidTOPpath+directpreflight/char-by-charN/3Nwithoutweakenedoracles.
+Reader30814scalarforeignwrappererror yieldedINPUT_INVALID inactualnegative;
+fixedcorrecttypedboundary+realpinned-validatorfixture, priorreviewsuperseded.
+HostnegativeR2wrongcheckoutsuffixFAILafter18cases; R3older-readerhelpercase
+invalidcurrentevidencecaughtfinalauditR1; correctedcurrentR4PASS andfinalauditR2.
+Sources/observationspreserved, notcredited. Nativeinputsunchangedthroughreader-
+onlyfixes, so passedfinalsourceNativeevidence reusedafterexactaudit. Onecosmetic
+fixtureindentationfollow-updeferred; no behavioralblocker.
+
+NEXT: rootexplicitdiff/stage review, commit/normalpush toorigin/codex/q100-physical-feasibility,
+exactSHAverify andONEnewcompletionGmail. Nextunstarted: sourceauditthisprefix's
+48holeallocations/earlierroutingownership beforeonegenericcapacitytreatment.
+LatestpublishedR0448edab/receipt01027839 mail1a1a015732234a6b ONCE NEVERduplicate.
+No activeownedOSactor/JVM/browser/preview/listener/junction. PreserveG21initial
+newline-onlyentriesafterthinretirement, all28oldPython andoldShortcuthelper/
+fixture; MainHEAD5f05b0059tracked6untracked; DesktopHEADe0c368857tracked89untrackedAll;
+allotherworktrees/stashes/branches/rejectedM/Z/U/V/N/failures/ambient8928 unchanged.
+Full30EXCLUDED/unrun; only3approvednormalroots/four-candidateenvelope, no new
+population/holdout/blind/HARDdata. HARD/PSYCHOTIC unavailable/unrun, protectedunread
+UNCERTIFIED. Self-hostedCIrunnerregistration prerequisite. Continueuntilownersaysstop.
+# Historical checkpoint: checked shortcut diagnostic published
 
 PUBLISHED FINITE DIAGNOSTIC. Implementation0448edab2c830d0e9c141ff3c6fbbdfc58cc0ae4 normally pushed/exact remote verified; completion Gmail1a1a015732234a6b sent ONCE, NEVER duplicate. Documentation receipt follows. R=OS-temp/tsj-q100-shortcut-query-20261103-r1,
 branch codex/q100-shortcut-query-20261103, acceptedCandidate0448edab2c830d0e9c141ff3c6fbbdfc58cc0ae4 / sourceParent4c4a882ea65e252c50a3f094e73f41c61b02c420.

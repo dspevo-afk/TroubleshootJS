@@ -1,0 +1,246 @@
+{
+  "schema": "zero-via-selected-controls-v1",
+  "status": "PASS_FINAL_SELECTED_READER_ONLY",
+  "cases": [
+    {
+      "name": "wrong-spec",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "INPUT_SPEC_SHA256_MISMATCH",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 0.48095289999999996
+    },
+    {
+      "name": "wrong-source",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "SOURCE_PIN_CONTENT_MISMATCH",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 1.1968629
+    },
+    {
+      "name": "corrupt-receipt",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "NATIVE_RUN_ARTIFACT_BINDING_INVALID",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 2.6801567
+    },
+    {
+      "name": "metric-conservation",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "EVENT_SCALAR_CONSERVATION_INVALID",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 2.7093765
+    },
+    {
+      "name": "false-playable",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "EVENT_QUALIFICATION_INVALID",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 2.8640352
+    },
+    {
+      "name": "path-state-key",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "PATH_STATE_KEY_INVALID",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 2.6590738
+    },
+    {
+      "name": "path-parent",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "PATH_PARENT_ORDER_INVALID",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 2.7325087999999997
+    },
+    {
+      "name": "false-legal-shortcut",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "PATH_EVENT_IDENTITY_OR_SCOPE_INVALID",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 2.7359432
+    },
+    {
+      "name": "current-context",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "QUALITY_PATH_CONTEXT_INVALID",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 2.6640607
+    },
+    {
+      "name": "graph-uppercase",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "GRAPH_MASK_ENCODING_INVALID",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 2.6714501999999998
+    },
+    {
+      "name": "graph-boundary",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "GRAPH_MASK_NORTH_BOUNDARY_INVALID",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 2.9610461999999997
+    },
+    {
+      "name": "graph-original-edge",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "GRAPH_ORIGINAL_PATH_EDGE_MISSING",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 3.1509057
+    },
+    {
+      "name": "graph-end-goal",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "GRAPH_CAPTURED_END_NOT_A_GOAL",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 2.9579154
+    },
+    {
+      "name": "graph-query-count",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "GRAPH_WORK_CONSERVATION_INVALID",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 2.7610316
+    },
+    {
+      "name": "graph-seed-mask",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "GRAPH_GRID_DOMAIN_OR_SCALAR_BINDING_INVALID",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 2.6527344999999998
+    },
+    {
+      "name": "graph-adoption",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "GRAPH_EVENT_IDENTITY_OR_SCOPE_INVALID",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 2.6651802
+    },
+    {
+      "name": "graph-hole-cap",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "GRAPH_BINDING_GRAPH_DOMAIN_INVALID",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 2.6806216999999997
+    },
+    {
+      "name": "graph-encoded-count",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "GRAPH_WORK_CONSERVATION_INVALID",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 2.7234124
+    },
+    {
+      "name": "modified-helper",
+      "run": "r4",
+      "status": "PASS",
+      "expectedCode": "PREFIX_LEDGER_HELPER_HASH_MISMATCH",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 0.47110219999999997
+    },
+    {
+      "name": "modified-frozen-path",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "FROZEN_QUALITY_PATH_READER_HASH_MISMATCH",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 0.43125939999999996
+    },
+    {
+      "name": "actual-junction",
+      "run": "r3",
+      "status": "PASS",
+      "expectedCode": "SOURCE_ROOT_REPARSE_PATH",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "readerSourceSha256": "ad19a362574c9fd5d54abac0b0710e93c33fbd35db33926f7006e34be4aaeb36",
+      "elapsedSeconds": 0.4237049
+    }
+  ],
+  "junctionCleanup": {
+    "status": "PASS",
+    "actualJunctionRemoved": true,
+    "nonrecursive": true,
+    "targetSourceUnchanged": true
+  },
+  "optionalFileSymlink": "NOT_RUN_HOST_PRIVILEGE",
+  "wrongNativeDigest": "PASS_EXPECTED_2_BEFORE_CHILD",
+  "priorWrongSelectedModifiedHelper": "R3_OLDER_CONSUMER_NOT_CREDITED_CORRECTED_CURRENT_R4"
+}
