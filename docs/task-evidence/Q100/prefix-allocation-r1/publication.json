@@ -1,0 +1,20 @@
+{
+  "schema": "prefix-allocation-publication-v1",
+  "status": "PUBLISHED",
+  "implementationSha": "d513b931fbcde5a6f98ca5bc62fb2f8fdc38685b",
+  "message": "Diagnose fixed-prefix via allocations",
+  "workingBranch": "codex/q100-prefix-allocation-20261103",
+  "configuredUpstream": null,
+  "remote": "origin",
+  "remoteRef": "refs/heads/codex/q100-physical-feasibility",
+  "normalPush": true,
+  "exactRemoteShaVerified": true,
+  "completionGmailMessageId": "1a1a086ab36d5eb3",
+  "completionEmailCount": 1,
+  "duplicateSearchCount": 0,
+  "remainingCanonicalChanges": 0,
+  "preservedNewlineStatusEntries": 24,
+  "activeOwnedOsResources": 0,
+  "nextUnstarted": "Source-audit earlier same-net layer reuse and branch rooting before a bounded generic treatment",
+  "playable100": 0
+}

@@ -1,8 +1,8 @@
 # Current checkpoint: fixed-prefix allocation diagnosis
 
-LOCALLY ACCEPTED FINITE DIAGNOSTIC, publication pending. H=OS-temp/
+PUBLISHED FINITE DIAGNOSTIC. Implementationd513b931fbcde5a6f98ca5bc62fb2f8fdc38685b normally pushed/exact remote verified; completion Gmail1a1a086ab36d5eb3 sent ONCE, NEVER duplicate. Documentation receipt follows. H=OS-temp/
 tsj-q100-prefix-allocation-20261103-r1, branchcodex/q100-prefix-allocation-20261103,
-actualHEAD/sourceParent10c177fda604c14a941932e52a7e7b72a53b5899. Packet
+acceptedImplementationd513b931fbcde5a6f98ca5bc62fb2f8fdc38685b/sourceParent10c177fda604c14a941932e52a7e7b72a53b5899. Packet
  docs/task-evidence/Q100/prefix-allocation-r1, rawQA=S/prefix-allocation-r1.
 Native1074/rev17/86266543bytes manifest
 c541311a61f2f0cd8fc934d7d9619c90fb709db454b5b03905102af7d0b33775.
@@ -42,12 +42,13 @@ ownedOSresource; unowned8928untouched. Main5f05b005 has9tracked/6untracked;
 Desktop e0c36885 has7tracked/89untracked preserved, H24newline-only statuses
 willremain. Allstashes/olderworktrees/failures preserved.
 
-NEXT: inspectdiff/stageexact/normalcommitpush to established origin ref
-codex/q100-physical-feasibility, exactverify thenONEcompletionGmail; dedup0.
-Hhasnoupstreamconfigured, originURLverified, remote10c177fd matchesparent.
-PriorGmail1a1a04ef0cdf2e9e sentONCE, NEVERduplicate. Afterpublication, source-audit
-earlier same-net layer reuse/branchrooting before freezing a boundedgeneric
-capacity treatment. Continue standingroadmap; no routinepermissionneeded.
+NEXT: read-only source audit of earlier same-net layer reuse/branch rooting is
+assigned to copy_stability_owner, no code/experiment/epoch frozen. After its
+source evidence, freeze at most one bounded generic capacity proof/treatment.
+Continue standing roadmap; no routine permission needed. H has no configured
+upstream, established origin ref remains codex/q100-physical-feasibility. Prior
+Gmail1a1a04ef0cdf2e9e and H Gmail1a1a086ab36d5eb3 sent ONCE; NEVER duplicate.
+
 # Historical checkpoint: checked shortcut diagnostic published
 
 PUBLISHED FINITE DIAGNOSTIC. Implementation0448edab2c830d0e9c141ff3c6fbbdfc58cc0ae4 normally pushed/exact remote verified; completion Gmail1a1a015732234a6b sent ONCE, NEVER duplicate. Documentation receipt follows. R=OS-temp/tsj-q100-shortcut-query-20261103-r1,

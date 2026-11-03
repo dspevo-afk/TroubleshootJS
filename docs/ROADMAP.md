@@ -181,7 +181,7 @@ wire migrates to revision17/v2/14records; production26/dependency28 and all caps
 remain. Graph/path/prefix exactly match accepted G; no new GWT/Player/electrical
 or population qualification. Playable100=0/beta held. Next unstarted is source
 audit of earlier same-net layer reuse/branch rooting before freezing a bounded
-generic treatment. Publication pending; this is a diagnostic, not a route fix.
+generic treatment. Implementationd513b931fbcde5a6f98ca5bc62fb2f8fdc38685b is normally pushed and exact remote verified on origin/codex/q100-physical-feasibility; completion Gmail1a1a086ab36d5eb3 sent ONCE. This is a diagnostic, not a route fix.
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion
