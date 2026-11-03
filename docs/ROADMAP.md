@@ -168,7 +168,7 @@ fixture/reader/host failures remain preserved and uncredited. Production850/
 compiler1202 inputs unchanged, no fresh GWT/Player/Current/electrical/normal3/
 full2-by-31 qualification. Playable100=0/beta held; all limits/data boundaries
 remain. Next is prefix hole-allocation/earlier-routing ownership audit before
-a generic capacity treatment. Publication awaits normal push verification/mail.
+a generic capacity treatment. Implementationd196ad249325dced709aec11e47dd059e53f2554 normally pushed and exact remote verified on origin/codex/q100-physical-feasibility; completion Gmail1a1a04ef0cdf2e9e sent ONCE.
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

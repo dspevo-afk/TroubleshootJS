@@ -56,4 +56,4 @@ and are not credited. See validation.md.
 Next unstarted: audit this prefix's48 hole allocations and earlier routing
 choices through existing ownership before freezing a generic capacity treatment.
 No extra hole allowance, ordering, seed sweep or rejected treatment is adopted.
-Publication awaits normal commit/push verification and one completion Gmail.
+Implementationd196ad249325dced709aec11e47dd059e53f2554, Diagnose fixed-prefix zero-via length limits, normally pushed to origin/codex/q100-physical-feasibility and exact remote SHA verified. Completion Gmail1a1a04ef0cdf2e9e sent once. Documentation receipt follows without a second email.

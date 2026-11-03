@@ -1,7 +1,7 @@
 # Current checkpoint: fixed-prefix capacity and length diagnosis
 
-LOCAL FINITE ACCEPTANCE / PUBLICATION PENDING. G=OS-temp/tsj-q100-zero-via-graph-20261103-r1,
-branchcodex/q100-zero-via-graph-20261103, sourceParentHEAD0102783930cd63a6b4e7c0adb5ff240ee3c5d271.
+PUBLISHED FINITE DIAGNOSTIC. Implementationd196ad249325dced709aec11e47dd059e53f2554 normally pushed/exact remote verified; completion Gmail1a1a04ef0cdf2e9e sent ONCE, NEVER duplicate. Documentation receipt follows. G=OS-temp/tsj-q100-zero-via-graph-20261103-r1,
+branchcodex/q100-zero-via-graph-20261103, acceptedCandidated196ad249325dced709aec11e47dd059e53f2554 / sourceParent0102783930cd63a6b4e7c0adb5ff240ee3c5d271.
 Packet docs/task-evidence/Q100/zero-via-graph-r1; rawQG=S/zero-via-graph-r1.
 Production26/dependency28/VIA60 unchanged.
 
@@ -51,10 +51,9 @@ Sources/observationspreserved, notcredited. Nativeinputsunchangedthroughreader-
 onlyfixes, so passedfinalsourceNativeevidence reusedafterexactaudit. Onecosmetic
 fixtureindentationfollow-updeferred; no behavioralblocker.
 
-NEXT: rootexplicitdiff/stage review, commit/normalpush toorigin/codex/q100-physical-feasibility,
-exactSHAverify andONEnewcompletionGmail. Nextunstarted: sourceauditthisprefix's
+PUBLICATION: rootintegrateddiff/cachedchecks/explicit21paths passed; normalcodecommitd196ad24 andexactremotepushverified. Sparseaddonlyexactnewtaskpaths, no pattern/globalchanges. Gmail1a1a04ef0cdf2e9e sentONCE afterdedup0. Nextunstarted: sourceauditthisprefix's
 48holeallocations/earlierroutingownership beforeonegenericcapacitytreatment.
-LatestpublishedR0448edab/receipt01027839 mail1a1a015732234a6b ONCE NEVERduplicate.
+PriorpublishedR0448edab/receipt01027839 mail1a1a015732234a6b ONCE NEVERduplicate.
 No activeownedOSactor/JVM/browser/preview/listener/junction. PreserveG21initial
 newline-onlyentriesafterthinretirement, all28oldPython andoldShortcuthelper/
 fixture; MainHEAD5f05b0059tracked6untracked; DesktopHEADe0c368857tracked89untrackedAll;

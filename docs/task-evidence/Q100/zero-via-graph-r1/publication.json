@@ -1,0 +1,19 @@
+{
+  "schema": "zero-via-diagnosis-publication-v1",
+  "status": "PUBLISHED",
+  "implementationSha": "d196ad249325dced709aec11e47dd059e53f2554",
+  "message": "Diagnose fixed-prefix zero-via length limits",
+  "workingBranch": "codex/q100-zero-via-graph-20261103",
+  "remote": "origin",
+  "remoteRef": "refs/heads/codex/q100-physical-feasibility",
+  "normalPush": true,
+  "exactRemoteShaVerified": true,
+  "completionGmailMessageId": "1a1a04ef0cdf2e9e",
+  "completionEmailCount": 1,
+  "duplicateSearchCount": 0,
+  "remainingCanonicalChanges": 0,
+  "preservedNewlineStatusEntries": 21,
+  "activeOwnedOsResources": 0,
+  "nextUnstarted": "Audit exact-prefix hole allocations and earlier routing ownership before a generic capacity treatment",
+  "playable100": 0
+}
