@@ -195,7 +195,7 @@ limit or routing treatment changes. This is not saturation-at48, all-face
 runtime, actualD_SENSE improvement, or playable100 qualification. No fresh GWT/
 Player/electrical/population or H-source renewal. Next is a source audit of one
 costly earlier-net branch before a justified generic via-reduction treatment.
-Publication pending; all previous data/budget limits remain.
+Implementation0972259abb4c45f2e48b2a6011f578cb59ef5eb8 normally pushed and exact remote verified on origin/codex/q100-physical-feasibility; completion Gmail1a1a0bfa2630c25a sent ONCE. All previous data/budget limits remain.
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

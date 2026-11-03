@@ -46,4 +46,4 @@ boundary UNCERTIFIED. No persistent owned process/profile/port remains.
 
 Next unstarted: source-audit one costly earlier-net branch for a justified way
 to reduce new vias within the original limits. No candidate treatment is accepted
-from this contract alone. Publication pending.
+from this contract alone. Implementation0972259abb4c45f2e48b2a6011f578cb59ef5eb8, Verify same-session via tree joining, normally pushed to origin/codex/q100-physical-feasibility and exact remote SHA verified. Completion Gmail1a1a0bfa2630c25a sent ONCE. Documentation receipt follows without another email.

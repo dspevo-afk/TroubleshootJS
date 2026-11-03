@@ -1,0 +1,20 @@
+{
+  "schema": "via-tree-join-publication-v1",
+  "status": "PUBLISHED",
+  "implementationSha": "0972259abb4c45f2e48b2a6011f578cb59ef5eb8",
+  "message": "Verify same-session via tree joining",
+  "workingBranch": "codex/q100-via-tree-join-20261103",
+  "configuredUpstream": null,
+  "remote": "origin",
+  "remoteRef": "refs/heads/codex/q100-physical-feasibility",
+  "normalPush": true,
+  "exactRemoteShaVerified": true,
+  "completionGmailMessageId": "1a1a0bfa2630c25a",
+  "completionEmailCount": 1,
+  "duplicateSearchCount": 0,
+  "remainingCanonicalChanges": 0,
+  "preservedNewlineStatusEntries": 28,
+  "activeOwnedOsResources": 0,
+  "nextUnstarted": "Source-audit one costly earlier-net branch for avoidable new vias within original limits",
+  "playable100": 0
+}

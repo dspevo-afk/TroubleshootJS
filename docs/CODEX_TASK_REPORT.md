@@ -1,8 +1,8 @@
 # Current checkpoint: same-session prior-via tree join proof
 
-LOCALLY ACCEPTED FINITE NATIVE CONTRACT, publication pending. J=OS-temp/
+PUBLISHED FINITE NATIVE CONTRACT. Implementation0972259abb4c45f2e48b2a6011f578cb59ef5eb8 normally pushed/exact remote verified; Gmail1a1a0bfa2630c25a sent ONCE, NEVER duplicate. Documentation receipt follows. J=OS-temp/
 tsj-q100-via-tree-join-20261103-r1 branchcodex/q100-via-tree-join-20261103,
-actualHEAD/sourceParentf96906b04f7a2e395c9ece5b9476069a3bd1e9e6. Packet
+acceptedImplementation0972259abb4c45f2e48b2a6011f578cb59ef5eb8/sourceParentf96906b04f7a2e395c9ece5b9476069a3bd1e9e6. Packet
  docs/task-evidence/Q100/via-tree-join-r1, rawQJ=S/via-tree-join-r1.
 Finalnative1074/86289907bytes manifest4e7860328f2567b4e2a9eb369dc9c6aec67fec9d3cc36e031108ea3284f8e7e7.
 Only existing P07TwoLayerContractTest.java changed, SHA
@@ -46,10 +46,13 @@ shortest650/8010vs630, exactprefix98d38955; noavoidability/treatmentadopted.
 No persistentownedOSresource; Main5f05b005 9tracked/6untracked, Desktop e0c36885
 7tracked/89untracked, H andallolderworktrees/stashes/failures preserved; unowned
 8928untouched. J28initialnewline-only entries willremain afterintendedcommit.
-NEXT: inspect/stageexact/normalcommitpush establishedorigin/codex/q100-physical-feasibility,
-verifyexactremote thenONEcompletionGmail. Nextunstarted: source-auditonecostly
-earlier-netbranch forjustifiedviareduction withinoriginalbudgets; no newtreatment
-frozen. Continue standingroadmap untilownerstop.
+NEXT: source-audit one costly earlier-net branch for avoidable new vias within
+original limits. No new treatment/epoch/capture frozen yet. Later D_SENSE prefix
+cannot be back-projected into an earlier branch. Continue standing roadmap.
+Jhasno configured upstream; established origin ref remains
+codex/q100-physical-feasibility. H Gmail1a1a086ab36d5eb3 and J Gmail
+1a1a0bfa2630c25a sent ONCE each; NEVER duplicate.
+
 # Historical checkpoint: checked shortcut diagnostic published
 
 PUBLISHED FINITE DIAGNOSTIC. Implementation0448edab2c830d0e9c141ff3c6fbbdfc58cc0ae4 normally pushed/exact remote verified; completion Gmail1a1a015732234a6b sent ONCE, NEVER duplicate. Documentation receipt follows. R=OS-temp/tsj-q100-shortcut-query-20261103-r1,
