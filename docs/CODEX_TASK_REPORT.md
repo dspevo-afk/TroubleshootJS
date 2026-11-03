@@ -1,66 +1,53 @@
-# Current checkpoint: fixed-prefix capacity and length diagnosis
+# Current checkpoint: fixed-prefix allocation diagnosis
 
-PUBLISHED FINITE DIAGNOSTIC. Implementationd196ad249325dced709aec11e47dd059e53f2554 normally pushed/exact remote verified; completion Gmail1a1a04ef0cdf2e9e sent ONCE, NEVER duplicate. Documentation receipt follows. G=OS-temp/tsj-q100-zero-via-graph-20261103-r1,
-branchcodex/q100-zero-via-graph-20261103, acceptedCandidated196ad249325dced709aec11e47dd059e53f2554 / sourceParent0102783930cd63a6b4e7c0adb5ff240ee3c5d271.
-Packet docs/task-evidence/Q100/zero-via-graph-r1; rawQG=S/zero-via-graph-r1.
-Production26/dependency28/VIA60 unchanged.
+LOCALLY ACCEPTED FINITE DIAGNOSTIC, publication pending. H=OS-temp/
+tsj-q100-prefix-allocation-20261103-r1, branchcodex/q100-prefix-allocation-20261103,
+actualHEAD/sourceParent10c177fda604c14a941932e52a7e7b72a53b5899. Packet
+ docs/task-evidence/Q100/prefix-allocation-r1, rawQA=S/prefix-allocation-r1.
+Native1074/rev17/86266543bytes manifest
+c541311a61f2f0cd8fc934d7d9619c90fb709db454b5b03905102af7d0b33775.
+Helper0CA03165/fixture4540322F/adapterA4EDF4C7; readerCCB2F0AE/testE50D2D4E.
+Production26/dependency28/VIA60 and all original caps unchanged.
 
-Exactapprovedseparate9007199254740993 placement-6587958367974952701/
-routing8445301674744508279 req0/index0/attempt4/pass1/D_SENSE capturedprefix:
-147702cells/478x309, bothinitialfacesmask3, rootCFLT_D.1/startU2D.SENSOR,
-onegoal93086bothfaces/direct210/limit630. Independently shortestTOP650,
-BOTTOM8010; zero length-eligible goals. Prefix48/max48 holes prevents new
-pathViaFits transitions. This diagnoses THISprefix; earlier routing choices
-must change for this branch. No treatment/wholeboard infeasibility/admission.
-Originalpath66/650/6bends/0transTOP andprefixSHA98d38955 exactlymatchparentR.
-All65source stepsallowed. Playable100=0/betaheld.
+Actual approved separate root9007199254740993 placement-6587958367974952701/
+routing8445301674744508279 req0/index0/attempt4/pass1/D_SENSE:
+48factoryvias from32priorbranches on12nets, currentposition14/nextindex15/
+branch117, templateempty, D_SENSEprefixcreation0. RAIL5=10/LOAD12=8; full
+counts/rows in packet. Creation inventory is not chronology/later reuse or
+proof a via avoidable. Same prefixSHA98d389553de34bc53732beece39f5c178248da5c291e39fc55e5e422b7fe4851,
+path66/TOP650/direct210/6bends/0trans, graphmask/BFS identical acceptedG:
+shortest650/8010 vs630, goal93086. No treatment/whole-board infeasibility/
+playable100admission; playable100=0/beta held.
 
-Finalnative1072/rev16/86186689bytes manifest
-76d525847af2d39b178520dce34c120a9ef10e085f2ffe9d485d8733d004850d;
-5changedcurrentnativepaths/launchers QG/source-76d52584. Helper3d5bd84b,
-fixturec749078b, adapter372ab4bc; source-onlyfinalreviewsCLEAR withactualarchive
-diff. FocusR2 oldShortcut24+newGraph20 PASS42.5984576s; actualR1 PASS73.0866562s,
-bothinclcompilecleanup/child0/native0/term/cleanup/sourcebeforeafter. NULL16726ms/
-cleanup1/work300/maxunit1311; PROBE22418/0/569/775; canonicalidentity9orders/
-2918222exp/nolayout parity+5Publishercontrols. Capture1178468queries/147702goal
-positions/443106chars,268advances/8781824conservativedebit/950msactive. All
-90s/640/5s/120scleanup/32768quantum/routingcaps unchanged. Activeclockexcludes
-constantResultwrapper/laterJSON; outerclockincludesall. Aggregatecleanupnot
-separately supplied. Exclusive synchronoussourceownership required; noarbitrary
-mutationdetection duringinitialincrementalcopy.
+FinalfocusR2 PASS24+20+48/45.202228s inclcompilecleanup. ActualR1 PASS
+73.6486582s inclcompilecleanup/child0/termination/cleanup/sourcebeforeafter.
+NULL17091ms/cleanup1/300work/max1352; PROBE23417/0/570/836. Canonicalidentity/
+9orders/2918222exp/no-layout parity+5Publishercontrols. Allocation48rows/60nets/
+2880matches/4217work/1advance/32msactive, minimum4116. Complete placeholder
+payload measured; elapsed-digit/finalwrapper/laterJSON excluded, outerall.
+PythonR2 PASS34+1optionalfilelinkSKIP/35methods/0.6535232s/exit0/term/source8stable.
+Actualpositive+40CURRENTreadernegatives PASS incl19allocationcontrols andreal
+junction removednonrecursively/targetunchanged. Rootindependentliteraloracle
+PASS0.4212906s andactualallocationoracle PASS0.4682741s/no readerimports.
+FinalinputauditPASS1074/850production/1202compilerpervariant/28frozenPython;
+actualpath/prefix/graph/BFS exactG; priorDijkstrasourceandboundreceipt verified
+forreuse. No freshGWT/Player/Current/electrical/normal3/full2-by-31 claim.
+Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historicalprotectedunread
+boundaryUNCERTIFIED. All90s/640/5s/120scleanup/32768quantum/routecaps unchanged.
 
-PythonR2 PASS21methods+1optionalfilelinkSKIP/22total/0.8047594s/child0/term/source8stable.
-Currentreaderad19a362/teste44cf780; eightinputs/hosts QG/python-source-ad19a362.
-ActualpositiveR2 and21selectedcurrent-readernegativesPASS:20casesR3 plus
-modified-helpercurrentcaseR4. Actualdirectoryjunctionremovednonrecursively/
-targetsourceunchanged. Independenttinysource884e6c77 PASS16384comparisons,
-0.3886861s; actualheapDijkstrasource42739681 PASS650/8010 agreement0.6229877s,
-no readerimports/exit0/term. Reuseallconsumedgraph/oracle/preservedR1reportbytes
-unchanged, freshR2analysisagrees. FinalauditR2 PASS native1072/850production/
-1202compilerinputspervariant/28frozenPython/source/path/prefix/all21controls.
-No freshGWT/Player/Current/electrical/normal3/full2-by-31 claim.
+Earlier readerfingerprint/timing, no-opPythonR1 andJava7focusR1 failures preserved
+with exactsnapshots/logs, uncredited. Source-only adapter/consumer CLEAR;
+helperfinalarchiveddiff verified, rootintegratedreviewandgates. No persistent
+ownedOSresource; unowned8928untouched. Main5f05b005 has9tracked/6untracked;
+Desktop e0c36885 has7tracked/89untracked preserved, H24newline-only statuses
+willremain. Allstashes/olderworktrees/failures preserved.
 
-Failurespreserved: nativeR1/fc0df70f old24PASS/newfixtureBOTTOMpathFAIL41.9650749s
-child2/term/cleanupmarker/no qualifyingreceipt; old09988wireN/3Ncountswrong.
-FixedvalidTOPpath+directpreflight/char-by-charN/3Nwithoutweakenedoracles.
-Reader30814scalarforeignwrappererror yieldedINPUT_INVALID inactualnegative;
-fixedcorrecttypedboundary+realpinned-validatorfixture, priorreviewsuperseded.
-HostnegativeR2wrongcheckoutsuffixFAILafter18cases; R3older-readerhelpercase
-invalidcurrentevidencecaughtfinalauditR1; correctedcurrentR4PASS andfinalauditR2.
-Sources/observationspreserved, notcredited. Nativeinputsunchangedthroughreader-
-onlyfixes, so passedfinalsourceNativeevidence reusedafterexactaudit. Onecosmetic
-fixtureindentationfollow-updeferred; no behavioralblocker.
-
-PUBLICATION: rootintegrateddiff/cachedchecks/explicit21paths passed; normalcodecommitd196ad24 andexactremotepushverified. Sparseaddonlyexactnewtaskpaths, no pattern/globalchanges. Gmail1a1a04ef0cdf2e9e sentONCE afterdedup0. Nextunstarted: sourceauditthisprefix's
-48holeallocations/earlierroutingownership beforeonegenericcapacitytreatment.
-PriorpublishedR0448edab/receipt01027839 mail1a1a015732234a6b ONCE NEVERduplicate.
-No activeownedOSactor/JVM/browser/preview/listener/junction. PreserveG21initial
-newline-onlyentriesafterthinretirement, all28oldPython andoldShortcuthelper/
-fixture; MainHEAD5f05b0059tracked6untracked; DesktopHEADe0c368857tracked89untrackedAll;
-allotherworktrees/stashes/branches/rejectedM/Z/U/V/N/failures/ambient8928 unchanged.
-Full30EXCLUDED/unrun; only3approvednormalroots/four-candidateenvelope, no new
-population/holdout/blind/HARDdata. HARD/PSYCHOTIC unavailable/unrun, protectedunread
-UNCERTIFIED. Self-hostedCIrunnerregistration prerequisite. Continueuntilownersaysstop.
+NEXT: inspectdiff/stageexact/normalcommitpush to established origin ref
+codex/q100-physical-feasibility, exactverify thenONEcompletionGmail; dedup0.
+Hhasnoupstreamconfigured, originURLverified, remote10c177fd matchesparent.
+PriorGmail1a1a04ef0cdf2e9e sentONCE, NEVERduplicate. Afterpublication, source-audit
+earlier same-net layer reuse/branchrooting before freezing a boundedgeneric
+capacity treatment. Continue standingroadmap; no routinepermissionneeded.
 # Historical checkpoint: checked shortcut diagnostic published
 
 PUBLISHED FINITE DIAGNOSTIC. Implementation0448edab2c830d0e9c141ff3c6fbbdfc58cc0ae4 normally pushed/exact remote verified; completion Gmail1a1a015732234a6b sent ONCE, NEVER duplicate. Documentation receipt follows. R=OS-temp/tsj-q100-shortcut-query-20261103-r1,

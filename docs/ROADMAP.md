@@ -169,6 +169,19 @@ compiler1202 inputs unchanged, no fresh GWT/Player/Current/electrical/normal3/
 full2-by-31 qualification. Playable100=0/beta held; all limits/data boundaries
 remain. Next is prefix hole-allocation/earlier-routing ownership audit before
 a generic capacity treatment. Implementationd196ad249325dced709aec11e47dd059e53f2554 normally pushed and exact remote verified on origin/codex/q100-physical-feasibility; completion Gmail1a1a04ef0cdf2e9e sent ONCE.
+The [fixed-prefix allocation diagnosis](task-evidence/Q100/prefix-allocation-r1/README.md)
+is locally accepted: all48 factory vias were created on12 earlier nets across32
+branches before current D_SENSE at source position14/branch117. RAIL5/LOAD12
+account for18; no individual via is proven avoidable. Focused24+20+48, actual
+NULL/PROBE,34 Python methods plus1 declared filelink skip, actual positive/40
+rejection controls/junction cleanup, independent literal/actual row oracles and
+final1074/850production/1202compiler/28frozenPython audit pass. Earlier no-op
+negative, timing omission and Java7 compile failures stay preserved. Current
+wire migrates to revision17/v2/14records; production26/dependency28 and all caps
+remain. Graph/path/prefix exactly match accepted G; no new GWT/Player/electrical
+or population qualification. Playable100=0/beta held. Next unstarted is source
+audit of earlier same-net layer reuse/branch rooting before freezing a bounded
+generic treatment. Publication pending; this is a diagnostic, not a route fix.
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

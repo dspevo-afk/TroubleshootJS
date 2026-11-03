@@ -384,20 +384,37 @@ records0 qualified candidates in that finite family and proves no all-path
 infeasibility, route/finalizer/access/electrical/layout or playable qualification.
 
 The current Rb100QualityZeroViaGraphContractTest replaces the Shortcut entry/API
-under diagnostic revision16. P07ZeroViaGraphDiagnostics owns test-only resumable
+under diagnostic revision17. P07ZeroViaGraphDiagnostics owns test-only resumable
 two-face Router observation, exact goal-union capture and compact directed mask
 encoding. The actual BranchSearch binding includes policy, primary, eligible
 initial faces, via cap and prefix holes; original endpoint authorities remain.
 Every original found-path step must occur in the captured face mask. Native
 capture installs no route and performs no shortest analysis. The new strict
 read_quality_zero_via.py reader privately reuses byte-pinned pure validators,
-checks the closed12-record wire/source census, and computes directed forward
+checks the closed14-record v2 wire/1074-source census, and computes directed forward
 BFS independently on each eligible face. It applies each goal's own positive
 Manhattan3:1 length gate; it never applies the original630 limit to other goals.
 Turn/bend/search/finalizer/access/electrical/layout proof remains separate.
 The [zero-via packet](task-evidence/Q100/zero-via-graph-r1/README.md) records the
 finite saturated-prefix diagnosis and independent Dijkstra agreement. Previous
 shortcut helper/fixture and all28 previous Python files remain byte-frozen.
+P07PrefixAllocationDiagnostics owns the test-only resumable creation inventory
+on that same quiescent Publisher boundary. Rb100PhysicalDiagnostics binds the
+actual source net-vector identity/order, next-fetch index, current net/global
+branch ordinal, empty template and prefix hole objects/IDs/fingerprints. It
+advances allocation before graph capture in a distinct charged value unit and
+rechecks both source bindings through rejection/cleanup. Full known-net prefix
+parsing supports slash-containing IDs; canonical Java UTF16 order and raw hole
+fingerprints retain their existing meanings. Pairwise prior-creator/net-order
+consistency and kind/net conservation establish creation ownership only, not
+insertion chronology or all later uses of a reused hole. The current reader
+migrates to v2/revision17, independently checks factory fields/fingerprints and
+counts, and adds prefixAllocationObservation with false chronology/adoption/
+qualification flags. The older28 Python files remain byte-frozen. Its measured
+active time includes a complete placeholder JSON payload; only elapsed-digit
+correction/final wrapper and later outer JSON are excluded, while case/unit
+clocks include all work. The [allocation packet](task-evidence/Q100/prefix-allocation-r1/README.md)
+records48 vias across32 prior branches/12 nets, without a production change.
 The current default-parity reader owns v27 metadata validation separately from
 the frozen layout-transition reader. It verifies the historical helper's exact
 source hash, extracts only its frame and case validators into isolated globals,

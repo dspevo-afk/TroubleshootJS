@@ -158,7 +158,7 @@ public final class Rb100PhysicalDiagnostics {
             "NULL",nullOperationId,null,null,true);
         if(!"PASS".equals(baseline.status) || baseline.policyResult==null ||
                 baseline.policyResult.getLayout()!=null || baseline.qualitySubsetMarkerJson==null) {
-            System.out.println("RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":16,\"runId\":\""+
+            System.out.println("RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":17,\"runId\":\""+
                 jsonFull(runId)+"\",\"operationId\":\""+nullOperationId+
                 "\",\"variant\":\""+variant.name()+"\",\"mode\":\"NULL\",\"result\":"+
                 baseline.toJson()+"}");
@@ -201,7 +201,7 @@ public final class Rb100PhysicalDiagnostics {
         long suiteMillis=nanosToMillis(System.nanoTime()-suiteStarted);
         require(suiteMillis<=480000L,
             "quality scalar two-operation suite remains within its frozen480s ceiling");
-        System.out.println("PASS: RB100 quality scalar contracts {\"protocolVersion\":1,\"sourceRevision\":16,"+
+        System.out.println("PASS: RB100 quality scalar contracts {\"protocolVersion\":1,\"sourceRevision\":17,"+
             "\"status\":\"PASS\",\"operations\":2,\"nullOperations\":1,\"probeOperations\":1,"+
             "\"pairs\":1,\"confirmedScalarEvents\":1,\"variant\":\""+variant.name()+
             "\",\"runId\":\""+jsonFull(runId)+"\",\"rootSeed\":\""+SEED+
@@ -224,6 +224,10 @@ public final class Rb100PhysicalDiagnostics {
         System.out.println(pathSummary);
         System.out.println(graphEvent);
         System.out.println(graphSummary);
+        String allocationEvent=probe.prefixAllocationEventJson(observed,pairPassed);
+        String allocationSummary=probe.prefixAllocationSummaryJson(observed,pairPassed);
+        System.out.println(allocationEvent);
+        System.out.println(allocationSummary);
     }
 
     /** Actual-generator null/capture pairs for the opt-in fixed-prefix graph seam. */
@@ -863,7 +867,7 @@ public final class Rb100PhysicalDiagnostics {
 
     private static String qualityScalarOperationJson(P07PolicyDiagnosticCase result,
             String operationId,String mode) {
-        return "RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":16,"+
+        return "RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":17,"+
             "\"runId\":\""+jsonFull(result.runId)+"\",\"operationId\":\""+
             jsonFull(operationId)+"\",\"variant\":\""+jsonFull(result.subject)+
             "\",\"mode\":\""+jsonFull(mode)+"\",\"result\":"+result.toJson()+"}";
@@ -923,7 +927,7 @@ public final class Rb100PhysicalDiagnostics {
             observed.policyResult!=null && baseline.policyResult.getLayout()==null &&
             observed.policyResult.getLayout()==null && baseline.layoutOutputJson.contains("\"layoutReturned\":false") &&
             observed.layoutOutputJson.contains("\"layoutReturned\":false");
-        return "RB100_QUALITY_SCALAR_PAIR {\"protocolVersion\":1,\"sourceRevision\":16,"+
+        return "RB100_QUALITY_SCALAR_PAIR {\"protocolVersion\":1,\"sourceRevision\":17,"+
             "\"runId\":\""+jsonFull(runId)+"\",\"variant\":\""+variant.name()+
             "\",\"nullOperationId\":\""+nullOperationId+"\",\"probeOperationId\":\""+
             probeOperationId+"\",\"rootSeed\":\""+SEED+"\",\"placementSeed\":\""+
@@ -3078,6 +3082,11 @@ public final class Rb100PhysicalDiagnostics {
         String graphDiagnosticJson;
         int graphOrdinaryQueries=-1,graphCompletedLastWork=-1;
         int lastGraphBudgetUnit;
+        P07PrefixAllocationDiagnostics.Cursor prefixAllocationCursor;
+        PrefixAllocationBinding prefixAllocationBinding;
+        String prefixAllocationDiagnosticJson;
+        int prefixAllocationAdvanceCalls,prefixAllocationCompletedLastWork;
+        int prefixAllocationTotalHoles=-1,lastPrefixAllocationBudgetUnit;
         int targetAccountingBefore=-1,targetAccountingAfter=-1;
         boolean targetCaptured,qualityRejected,targetRequestAccounted,
             terminalConfirmed,readyGuardRequested,armedReadyGuard,targetBranchHandoffVerified;
@@ -3104,6 +3113,9 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         String nextManualUnitName() {
+            if(prefixAllocationCursor!=null && !prefixAllocationCursor.isComplete())
+                return "p07-quality-prefix-allocation-advance-"+
+                    (prefixAllocationAdvanceCalls+1);
             return graphCursor!=null && !graphCursor.isComplete() ?
                 "p07-quality-zero-via-graph-advance-"+(graphAdvanceCalls+1) :
                 "p07-quality-scalar-single-step-group-"+(manualGroups+1);
@@ -3127,6 +3139,19 @@ public final class Rb100PhysicalDiagnostics {
                 "manual single-step driver owns the live generator session before the target rejection");
             Object active=P07ScalarReflection.read(generatorSession,"mediumTwoLayerRoute");
             require(active!=null,"manual single-step driver observes the actual retained P07 owner");
+            if(prefixAllocationCursor!=null && !prefixAllocationCursor.isComplete()) {
+                require(active==routeSession &&
+                    P07ScalarReflection.read(routeSession,"fixedPrefixContext")==fixedPrefixContext,
+                    "pending prefix allocation work retains the same generator owner and fixed-prefix context");
+                long allocationGroupStarted=System.nanoTime();
+                try {
+                    advancePrefixAllocation(budget);
+                } finally {
+                    manualDriverNanos+=Math.max(0L,System.nanoTime()-allocationGroupStarted);
+                }
+                manualGroups++;
+                return;
+            }
             if(graphCursor!=null && !graphCursor.isComplete()) {
                 require(active==routeSession &&
                     P07ScalarReflection.read(routeSession,"fixedPrefixContext")==fixedPrefixContext,
@@ -3341,7 +3366,175 @@ public final class Rb100PhysicalDiagnostics {
             graphCursor=P07ZeroViaGraphDiagnostics.begin(context);
             require(graphCursor!=null && !graphCursor.isComplete(),
                 "actual finite two-face zero-via graph cursor begins pending and resumable");
+            beginPrefixAllocation(search,prefixHoles,layout);
             verifyGraphBindingUnchanged(false);
+            verifyPrefixAllocationBindingUnchanged(false);
+        }
+
+        private void beginPrefixAllocation(Object search,PcbBoardHole[] prefixHoles,
+                PcbBoardLayout layout) {
+            require(prefixAllocationCursor==null && prefixAllocationBinding==null &&
+                search==targetSearch && targetBranchSearch==search && targetBranch!=null &&
+                prefixHoles!=null && layout!=null,
+                "actual allocation cursor begins once on the retained same-owner D_SENSE branch");
+            Object netsObject=P07ScalarReflection.read(search,"nets");
+            require(netsObject instanceof Vector,
+                "actual Search retains its source-ordered routing-net vector");
+            Vector<?> nets=(Vector<?>)netsObject;
+            require(nets.size()>0 && nets.size()<=256,
+                "actual routing-net vector stays within the frozen allocation identity bound");
+            String[] netOrder=new String[nets.size()];
+            HashSet<String> uniqueNets=new HashSet<String>();
+            for(int index=0;index<nets.size();index++) {
+                Object value=nets.get(index);
+                require(value instanceof String,
+                    "actual Search net vector contains only source String values");
+                String net=(String)value;
+                require(net.length()>0 && net.length()<=4096 &&
+                    uniqueNets.add(net) && net.equals(PcbConductorGraph.requireId(net)),
+                    "actual source-order routing nets are unique, bounded, and valid identities");
+                netOrder[index]=net;
+            }
+            int searchNetIndex=P07ScalarReflection.intField(search,"netIndex");
+            int currentNetPosition=searchNetIndex-1;
+            String currentNet=P07ScalarReflection.stringField(search,"currentNet");
+            int currentBranchOrdinal=P07ScalarReflection.intField(targetBranch,"branchOrdinal");
+            int searchBranchCount=P07ScalarReflection.intField(search,"branches");
+            int pass=P07ScalarReflection.intField(search,"pass");
+            int maximumVias=P07ScalarReflection.intField(search,"maximumVias");
+            Object templateObject=P07ScalarReflection.read(routeSession,"template");
+            require(currentNetPosition>=0 && currentNetPosition<netOrder.length &&
+                currentNet!=null && currentNet.equals(netOrder[currentNetPosition]) &&
+                currentNet.equals(snapshot.netId) && currentBranchOrdinal>0 &&
+                searchBranchCount==currentBranchOrdinal && pass==1 && maximumVias==48 &&
+                prefixHoles.length==48 && layout.getHoleCount()==48 &&
+                templateObject instanceof PcbBoardLayout &&
+                ((PcbBoardLayout)templateObject).getHoleCount()==0 &&
+                ((PcbBoardLayout)templateObject).getHoles().isEmpty(),
+                "allocation binds current actual net position/branch and empty Session template to its 48-hole prefix");
+            prefixAllocationBinding=new PrefixAllocationBinding(search,nets,netOrder,
+                searchNetIndex,currentNet,currentBranchOrdinal,pass,maximumVias,
+                targetBranch,prefixHoles,layout,(PcbBoardLayout)templateObject);
+            P07PrefixAllocationDiagnostics.Context context=
+                new P07PrefixAllocationDiagnostics.Context(layout,prefixHoles,netOrder,
+                    searchNetIndex,currentNet,currentBranchOrdinal,pass,maximumVias);
+            prefixAllocationCursor=P07PrefixAllocationDiagnostics.begin(context);
+            require(prefixAllocationCursor!=null && !prefixAllocationCursor.isComplete(),
+                "actual prefix allocation diagnostic begins pending before the ordinary graph cursor resumes");
+            verifyPrefixAllocationBindingUnchanged(false);
+        }
+
+        private void verifyPrefixAllocationBindingUnchanged(boolean ownerAdvanced) {
+            PrefixAllocationBinding binding=prefixAllocationBinding;
+            require(binding!=null && prefixAllocationCursor!=null &&
+                targetSearch==binding.search && targetBranch==binding.branch &&
+                targetBranchSearch==binding.search,
+                "actual Search and retained BranchSearch identities remain bound to prefix allocation");
+            Object activeSearch=P07ScalarReflection.read(routeSession,"search");
+            require(ownerAdvanced ? activeSearch==null : activeSearch==binding.search,
+                "same P07 owner remains quiescent until the captured branch is rejected");
+            Object sourceNets=P07ScalarReflection.read(binding.search,"nets");
+            require(sourceNets==binding.netVectorIdentity && sourceNets instanceof Vector &&
+                P07ScalarReflection.intField(binding.search,"netIndex")==binding.searchNetIndex &&
+                binding.currentNet.equals(
+                    P07ScalarReflection.stringField(binding.search,"currentNet")) &&
+                P07ScalarReflection.intField(binding.search,"branches")==
+                    binding.currentBranchOrdinal &&
+                P07ScalarReflection.intField(binding.branch,"branchOrdinal")==
+                    binding.currentBranchOrdinal &&
+                binding.currentNet.equals(
+                    P07ScalarReflection.stringField(binding.branch,"net")) &&
+                P07ScalarReflection.intField(binding.search,"pass")==binding.pass &&
+                P07ScalarReflection.intField(binding.search,"maximumVias")==
+                    binding.maximumVias &&
+                P07ScalarReflection.read(binding.search,"layout")==binding.layout &&
+                P07ScalarReflection.read(binding.search,"publisher")==targetPublisher &&
+                P07ScalarReflection.read(binding.branch,"holes")==binding.prefixHoles &&
+                P07ScalarReflection.read(routeSession,"template")==binding.template &&
+                binding.templateHoleCount==0 && binding.template.getHoleCount()==0 &&
+                binding.template.getHoles().isEmpty() &&
+                binding.layout.getHoleCount()==binding.prefixHoles.length &&
+                binding.prefixHoles.length==48 &&
+                P07ScalarReflection.intField(binding.search,"maximumVias")==48,
+                "source net vector/cursor, branch ordinal, actual layout, Publisher, and empty template stay unchanged");
+            Vector<?> nets=(Vector<?>)sourceNets;
+            require(nets.size()==binding.netValues.length &&
+                binding.currentNetPosition==binding.searchNetIndex-1 &&
+                binding.currentNetPosition>=0 &&
+                binding.currentNetPosition<binding.netValues.length &&
+                binding.netValues[binding.currentNetPosition].equals(binding.currentNet),
+                "actual net-vector length and next-fetch current position remain exact");
+            for(int index=0;index<binding.netValues.length;index++)
+                require(binding.netValues[index].equals(nets.get(index)),
+                    "actual Search net-order value remains unchanged at index "+index);
+            Vector<PcbBoardHole> layoutHoles=binding.layout.getHoles();
+            require(layoutHoles.size()==binding.prefixHoles.length &&
+                binding.prefixGeometryFingerprint.equals(
+                    binding.layout.geometryFingerprint()),
+                "actual layout prefix count/order geometry fingerprint remain unchanged");
+            for(int index=0;index<binding.prefixHoles.length;index++) {
+                PcbBoardHole hole=binding.prefixHoles[index];
+                require(hole!=null && hole==layoutHoles.get(index) &&
+                    hole.id.equals(binding.holeIds[index]) &&
+                    hole.fingerprint().equals(binding.holeFingerprints[index]),
+                    "original prefix hole identity, ID and fingerprint remain unchanged at index "+index);
+            }
+            if(graphCursor!=null && graphCursor.isComplete()) {
+                require(sha256Hex(binding.prefixGeometryFingerprint).equals(
+                    graphCursor.result().prefixGeometrySha256),
+                    "allocation layout fingerprint remains the completed graph's exact geometry authority");
+            }
+        }
+
+        private void advancePrefixAllocation(Budget budget) {
+            require(prefixAllocationCursor!=null && !prefixAllocationCursor.isComplete() &&
+                prefixAllocationBinding!=null && !qualityRejected,
+                "pending allocation cursor owns the actual quiescent Publisher before P07 resumes");
+            require(budget!=null && budget.unitName!=null &&
+                budget.unitName.startsWith("p07-quality-prefix-allocation-advance-") &&
+                budget.workUnits>lastPrefixAllocationBudgetUnit,
+                "each allocation cursor advance receives a newly charged existing outer work unit");
+            int workUnit=budget.workUnits;
+            int callsBefore=prefixAllocationAdvanceCalls;
+            budget.checkpoint();
+            verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
+                fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
+            verifyGraphBindingUnchanged(false);
+            verifyPrefixAllocationBindingUnchanged(false);
+            boolean advanceComplete=prefixAllocationCursor.advance(MAX_MANUAL_STEPS_PER_UNIT);
+            prefixAllocationAdvanceCalls++;
+            int lastWork=prefixAllocationCursor.lastWork();
+            require(advanceComplete==prefixAllocationCursor.isComplete() &&
+                prefixAllocationAdvanceCalls==callsBefore+1 && budget.workUnits==workUnit &&
+                lastWork>0 && lastWork<=MAX_MANUAL_STEPS_PER_UNIT,
+                "one resumable allocation cursor advance completes within its single bounded work unit");
+            budget.checkpoint();
+            verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
+                fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
+            verifyGraphBindingUnchanged(false);
+            verifyPrefixAllocationBindingUnchanged(false);
+            if(prefixAllocationCursor.isComplete())
+                captureCompletedPrefixAllocationCursor(lastWork);
+            budget.checkpoint();
+            lastPrefixAllocationBudgetUnit=workUnit;
+        }
+
+        private void captureCompletedPrefixAllocationCursor(int lastWork) {
+            require(prefixAllocationCursor!=null && prefixAllocationCursor.isComplete() &&
+                prefixAllocationDiagnosticJson==null && lastWork>0 &&
+                lastWork<=MAX_MANUAL_STEPS_PER_UNIT,
+                "completed prefix allocation cursor has one bounded final work result");
+            String diagnostic=prefixAllocationCursor.bodyJson();
+            String repeatedDiagnostic=prefixAllocationCursor.bodyJson();
+            int totalHoles=prefixAllocationCursor.result().totalHoles;
+            require(diagnostic!=null && diagnostic.equals(repeatedDiagnostic) &&
+                totalHoles==prefixAllocationBinding.prefixHoles.length &&
+                prefixAllocationCursor.isComplete() &&
+                prefixAllocationCursor.lastWork()==lastWork,
+                "completed allocation body and immutable total-hole result remain stable across reads");
+            prefixAllocationDiagnosticJson=diagnostic;
+            prefixAllocationTotalHoles=totalHoles;
+            prefixAllocationCompletedLastWork=lastWork;
         }
 
         private void verifyGraphBindingUnchanged(boolean ownerAdvanced) {
@@ -3432,6 +3625,7 @@ public final class Rb100PhysicalDiagnostics {
             verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
                 fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
             verifyGraphBindingUnchanged(false);
+            verifyPrefixAllocationBindingUnchanged(false);
             boolean advanceComplete=graphCursor.advance(MAX_MANUAL_STEPS_PER_UNIT);
             graphAdvanceCalls++;
             int lastWork=graphCursor.lastWork();
@@ -3443,6 +3637,7 @@ public final class Rb100PhysicalDiagnostics {
             verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
                 fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
             verifyGraphBindingUnchanged(false);
+            verifyPrefixAllocationBindingUnchanged(false);
             if(graphCursor.isComplete()) captureCompletedGraphCursor(lastWork);
             budget.checkpoint();
             lastGraphBudgetUnit=workUnit;
@@ -3547,6 +3742,7 @@ public final class Rb100PhysicalDiagnostics {
                     verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
                         fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
                     verifyGraphBindingUnchanged(true);
+                    verifyPrefixAllocationBindingUnchanged(true);
                     qualityRejectionMessage=reason;
                     qualityRejected=true;
                 } else {
@@ -3568,6 +3764,7 @@ public final class Rb100PhysicalDiagnostics {
             if(accounted==targetAccountingBefore+1) {
                 targetAccountingAfter=accounted;
                 targetRequestAccounted=true;
+                verifyPrefixAllocationBindingUnchanged(true);
             } else if(accounted>targetAccountingBefore+1) {
                 throw new AssertionError("target P07 request accounting advanced more than once before receipt");
             }
@@ -3582,6 +3779,10 @@ public final class Rb100PhysicalDiagnostics {
             require(graphCursor!=null && graphCursor.isComplete() &&
                 graphAdvanceCalls>0 && graphBinding!=null,
                 "terminal zero-via graph diagnostic has completed all resumable work under the existing driver");
+            require(prefixAllocationCursor!=null && prefixAllocationCursor.isComplete() &&
+                prefixAllocationAdvanceCalls>0 && prefixAllocationDiagnosticJson!=null &&
+                prefixAllocationTotalHoles==48,
+                "terminal allocation diagnostic completes before the actual branch rejection resumes");
             require(targetRequestAccounted && targetAccountingAfter==targetAccountingBefore+1,
                 "ordinary generator advancement accounts the target P07 request exactly once");
             require(result!=null && "EXHAUSTED".equals(result.sessionTerminalStatus) &&
@@ -3606,7 +3807,8 @@ public final class Rb100PhysicalDiagnostics {
 
         void requireTerminalOperation(P07PolicyDiagnosticCase result) {
             require(terminalConfirmed && targetCaptured && qualityRejected &&
-                targetRequestAccounted && "PASS".equals(result.status) &&
+                targetRequestAccounted && result!=null && result.cleanupPassed &&
+                "PASS".equals(result.status) &&
                 "EXHAUSTED".equals(result.sessionTerminalStatus) &&
                 result.policyResult!=null && result.policyResult.getLayout()==null &&
                 graphCallbacks==0,
@@ -3621,7 +3823,9 @@ public final class Rb100PhysicalDiagnostics {
             verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
                 fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
             verifyGraphBindingUnchanged(qualityRejected);
+            verifyPrefixAllocationBindingUnchanged(qualityRejected);
             verifyCompletedGraphCursor();
+            verifyCompletedPrefixAllocationCursor();
         }
 
         long manualDriverMillis() { return nanosToMillis(manualDriverNanos); }
@@ -3630,7 +3834,7 @@ public final class Rb100PhysicalDiagnostics {
             requireTerminalOperation(result);
             PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
                 (PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext;
-            return "RB100_QUALITY_SCALAR_EVENT {\"protocolVersion\":1,\"sourceRevision\":16,"+
+            return "RB100_QUALITY_SCALAR_EVENT {\"protocolVersion\":1,\"sourceRevision\":17,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\""+jsonFull(operationId)+
                 "\",\"variant\":\""+variant.name()+"\",\"mode\":\"PROBE\",\"rootSeed\":\""+
                 SEED+"\",\"placementSeed\":\""+PLACEMENT_DIAGNOSTIC_SEED+
@@ -3684,7 +3888,7 @@ public final class Rb100PhysicalDiagnostics {
                 nodes.append(pathSnapshot.nodes[index].toJson());
             }
             nodes.append(']');
-            return "RB100_QUALITY_PATH_EVENT {\"protocolVersion\":1,\"sourceRevision\":16,"+
+            return "RB100_QUALITY_PATH_EVENT {\"protocolVersion\":1,\"sourceRevision\":17,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\""+
                 jsonFull(operationId)+"\",\"order\":\"START_TO_END\",\"captureStage\":"+
                 pathSnapshot.captureStage+",\"captureQualityIndex\":"+
@@ -3712,7 +3916,7 @@ public final class Rb100PhysicalDiagnostics {
                 reached.append('"').append(jsonFull(binding.reachedPadIds[index])).append('"');
             }
             reached.append(']');
-            return "RB100_ZERO_VIA_GRAPH_EVENT {\"protocolVersion\":1,\"sourceRevision\":16,"+
+            return "RB100_ZERO_VIA_GRAPH_EVENT {\"protocolVersion\":1,\"sourceRevision\":17,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\","+
                 "\"scope\":\"ACTUAL_FIXED_PREFIX_ZERO_NEW_VIA_GRAPH_ONLY\",\"binding\":{"+
                 "\"branchIdentityVerified\":true,\"sourcePublisherUnchanged\":true,"+
@@ -3739,12 +3943,77 @@ public final class Rb100PhysicalDiagnostics {
             int ordinaryQueries=graphOrdinaryQueries;
             require(ordinaryQueries>=0 && ordinaryQueries==graphCursor.result().ordinaryQueries,
                 "helper structured result exposes its final ordinary edge query count");
-            return "PASS: RB100 quality zero-via graph contracts {\"protocolVersion\":1,\"sourceRevision\":16,"+
+            return "PASS: RB100 quality zero-via graph contracts {\"protocolVersion\":1,\"sourceRevision\":17,"+
                 "\"status\":\"PASS\",\"runId\":\""+jsonFull(runId)+
                 "\",\"operationId\":\"QUALITY_PROBE\",\"events\":1,"+
                 "\"scope\":\"ACTUAL_FIXED_PREFIX_ZERO_NEW_VIA_GRAPH_ONLY\",\"ordinaryQueries\":"+
                 ordinaryQueries+",\"feasibility\":\"UNKNOWN\",\"legalRouteProof\":false,"+
                 "\"layoutQualification\":false,\"routeAdoption\":false}";
+        }
+
+        private void verifyCompletedPrefixAllocationCursor() {
+            require(prefixAllocationCursor!=null && prefixAllocationCursor.isComplete() &&
+                prefixAllocationBinding!=null && prefixAllocationDiagnosticJson!=null &&
+                prefixAllocationAdvanceCalls>0 && prefixAllocationCompletedLastWork>0 &&
+                prefixAllocationCursor.result().totalHoles==prefixAllocationTotalHoles &&
+                prefixAllocationTotalHoles==prefixAllocationBinding.prefixHoles.length &&
+                prefixAllocationCursor.lastWork()==prefixAllocationCompletedLastWork &&
+                prefixAllocationDiagnosticJson.equals(prefixAllocationCursor.bodyJson()),
+                "completed allocation cursor retains its immutable body, hole total and terminal work state");
+            require(graphCursor!=null && graphCursor.isComplete() &&
+                sha256Hex(prefixAllocationBinding.prefixGeometryFingerprint).equals(
+                    graphCursor.result().prefixGeometrySha256),
+                "allocation prefix fingerprint equals the same actual graph geometry fingerprint");
+        }
+
+        String prefixAllocationEventJson(P07PolicyDiagnosticCase result,boolean pairPassed) {
+            requireTerminalOperation(result);
+            require(pairPassed && "QUALITY_PROBE".equals(operationId) &&
+                qualityRejected && targetRequestAccounted && terminalConfirmed &&
+                result.cleanupPassed && prefixAllocationBinding!=null,
+                "prefix allocation event follows scalar parity, same-owner rejection/accounting and cleanup");
+            verifyGraphBindingUnchanged(true);
+            verifyPrefixAllocationBindingUnchanged(true);
+            verifyCompletedPrefixAllocationCursor();
+            PrefixAllocationBinding binding=prefixAllocationBinding;
+            require(binding.pass==1 && binding.maximumVias==48 &&
+                binding.prefixHoles.length==48 && binding.templateHoleCount==0 &&
+                binding.template.getHoleCount()==0 &&
+                binding.searchNetIndex==binding.currentNetPosition+1 &&
+                binding.netValues[binding.currentNetPosition].equals(binding.currentNet) &&
+                binding.currentNet.equals(graphBinding.netId) &&
+                binding.currentBranchOrdinal>0,
+                "allocation event binds the exact current source net, branch, empty template and 48-hole prefix");
+            return "RB100_PREFIX_ALLOCATION_EVENT {\"protocolVersion\":1,\"sourceRevision\":17,"+
+                "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\","+
+                "\"scope\":\"ACTUAL_FIXED_PREFIX_CREATION_ALLOCATION_ONLY\",\"binding\":{"+
+                "\"branchIdentityVerified\":true,\"sourcePublisherUnchanged\":true,"+
+                "\"pass\":"+binding.pass+",\"netId\":\""+jsonFull(binding.currentNet)+"\","+
+                "\"startPadId\":\""+jsonFull(graphBinding.start.getPadId())+"\","+
+                "\"rootPadId\":\""+jsonFull(graphBinding.root.getPadId())+"\","+
+                "\"prefixHoleCount\":"+binding.prefixHoles.length+
+                ",\"maximumVias\":"+binding.maximumVias+
+                ",\"templateHoleCount\":0,\"searchNetIndex\":"+binding.searchNetIndex+
+                ",\"currentNetPosition\":"+binding.currentNetPosition+
+                ",\"currentBranchOrdinal\":"+binding.currentBranchOrdinal+
+                ",\"netOrder\":"+stringArrayJson(binding.netValues)+"},\"diagnostic\":"+
+                prefixAllocationDiagnosticJson+",\"chronologyProof\":false,"+
+                "\"routeAdoption\":false,\"layoutQualification\":false}";
+        }
+
+        String prefixAllocationSummaryJson(P07PolicyDiagnosticCase result,boolean pairPassed) {
+            requireTerminalOperation(result);
+            require(pairPassed && "QUALITY_PROBE".equals(operationId) &&
+                qualityRejected && targetRequestAccounted && terminalConfirmed &&
+                result.cleanupPassed,
+                "prefix allocation summary follows the actual rejected and cleaned-up scalar operation");
+            verifyCompletedPrefixAllocationCursor();
+            return "PASS: RB100 prefix allocation contracts {\"protocolVersion\":1,"+
+                "\"sourceRevision\":17,\"status\":\"PASS\",\"runId\":\""+
+                jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\",\"events\":1,"+
+                "\"scope\":\"ACTUAL_FIXED_PREFIX_CREATION_ALLOCATION_ONLY\",\"totalHoles\":"+
+                prefixAllocationTotalHoles+",\"chronologyProof\":false,\"routeAdoption\":false,"+
+                "\"layoutQualification\":false}";
         }
     }
 
@@ -3841,6 +4110,45 @@ public final class Rb100PhysicalDiagnostics {
             this.policy=policy; this.primaryLayer=primaryLayer;
             this.initialLayerMask=initialLayerMask; this.maximumVias=maximumVias;
             this.prefixHoleCount=prefixHoles.length;
+        }
+    }
+
+    private static final class PrefixAllocationBinding {
+        final Object search,netVectorIdentity,branch;
+        final String[] netValues;
+        final int searchNetIndex,currentNetPosition,currentBranchOrdinal,pass,
+            maximumVias,templateHoleCount;
+        final String currentNet;
+        final PcbBoardHole[] prefixHoles;
+        final String[] holeIds,holeFingerprints;
+        final PcbBoardLayout layout,template;
+        final String prefixGeometryFingerprint;
+        PrefixAllocationBinding(Object search,Vector<?> netVector,String[] netValues,
+                int searchNetIndex,String currentNet,int currentBranchOrdinal,int pass,
+                int maximumVias,Object branch,PcbBoardHole[] prefixHoles,
+                PcbBoardLayout layout,PcbBoardLayout template) {
+            this.search=search;
+            this.netVectorIdentity=netVector;
+            this.netValues=netValues.clone();
+            this.searchNetIndex=searchNetIndex;
+            this.currentNetPosition=searchNetIndex-1;
+            this.currentNet=currentNet;
+            this.currentBranchOrdinal=currentBranchOrdinal;
+            this.pass=pass;
+            this.maximumVias=maximumVias;
+            this.branch=branch;
+            this.prefixHoles=prefixHoles;
+            this.layout=layout;
+            this.template=template;
+            this.templateHoleCount=template.getHoleCount();
+            this.prefixGeometryFingerprint=layout.geometryFingerprint();
+            this.holeIds=new String[prefixHoles.length];
+            this.holeFingerprints=new String[prefixHoles.length];
+            for(int index=0;index<prefixHoles.length;index++) {
+                PcbBoardHole hole=prefixHoles[index];
+                this.holeIds[index]=hole.id;
+                this.holeFingerprints[index]=hole.fingerprint();
+            }
         }
     }
 
@@ -4155,7 +4463,7 @@ public final class Rb100PhysicalDiagnostics {
         require(runId!=null && snapshot!=null && snapshot.nodes.length==66 &&
             snapshot.captureStage==1 && snapshot.captureQualityIndex==66,
             "quality path summary binds the single frozen stage1 66-node capture");
-        return "PASS: RB100 quality path contracts {\"protocolVersion\":1,\"sourceRevision\":16,"+
+        return "PASS: RB100 quality path contracts {\"protocolVersion\":1,\"sourceRevision\":17,"+
             "\"status\":\"PASS\",\"runId\":\""+jsonFull(runId)+
             "\",\"operationId\":\"QUALITY_PROBE\",\"events\":1,\"nodes\":66,"+
             "\"scope\":\"ACTUAL_PUBLISHER_PATH_ONLY\",\"feasibility\":\"UNKNOWN\","+
@@ -4204,7 +4512,7 @@ public final class Rb100PhysicalDiagnostics {
                 .append(",\"publisherStage\":").append(row.publisherStage).append('}');
         }
         checks.append(']');
-        return "RB100_QUALITY_SCALAR_CONTROLS {\"protocolVersion\":1,\"sourceRevision\":16,"+
+        return "RB100_QUALITY_SCALAR_CONTROLS {\"protocolVersion\":1,\"sourceRevision\":17,"+
             "\"runId\":\""+jsonFull(runId)+"\",\"status\":\"PASS\","+
             "\"fixture\":\"SYNTHETIC_PUBLISHER_METRICS_ONLY\",\"checks\":"+checks+
             ",\"assertions\":"+(assertions-beforeAssertions)+",\"layoutQualification\":false}";

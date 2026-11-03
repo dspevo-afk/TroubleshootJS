@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Source-bound reader for the bounded RB100 fixed-prefix zero-via graph.
+"""Source-bound reader for the bounded RB100 prefix allocation and graph.
 
 The graph is a directed, two-face relaxation of one captured failed branch.
-It reports length-only possibilities and exclusions for that fixed prefix; it
-does not prove a legal route, a finalized PCB layout, or playable qualification.
+The allocation report records creation ownership for the captured prefix; it
+does not infer later use, chronological history, route acceptance, or playable
+qualification.
 """
 from __future__ import annotations
 
@@ -19,14 +20,14 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
 
-INPUT_SCHEMA = "p07-quality-zero-via-input-v1"
-RUN_SCHEMA = "q100-quality-zero-via-native-run-v1"
-RESULT_SCHEMA = "q100-quality-zero-via-reader-result-v1"
+INPUT_SCHEMA = "p07-quality-zero-via-input-v2"
+RUN_SCHEMA = "q100-quality-zero-via-native-run-v2"
+RESULT_SCHEMA = "q100-quality-zero-via-reader-result-v2"
 SUITE = "Rb100QualityZeroViaGraphContractTest"
 ENTRY_SCRIPT = "scripts/verify-current-contracts.ps1"
-SOURCE_REVISION = 16
-SOURCE_INPUT_COUNT = 1072
-CONTRACT_JAVA_COUNT = 216
+SOURCE_REVISION = 17
+SOURCE_INPUT_COUNT = 1074
+CONTRACT_JAVA_COUNT = 218
 LAYOUT_VERSION = 26
 DEPENDENCY_EPOCH = "tsj-generation-dependencies-v28"
 PLAN_VERSION = 1
@@ -40,6 +41,9 @@ MAX_WORK_QUANTUM = 32_768
 MAX_TOTAL_WORK = MAX_WORK_UNITS * MAX_WORK_QUANTUM
 MAX_ACTIVE_MS = 90_000
 MAX_VIAS = 48
+MAX_ABS_BOARD_COORDINATE = 100_000_000
+MAX_VIA_LAND_RADIUS = 6
+MAX_VIA_CENTER_COORDINATE = MAX_ABS_BOARD_COORDINATE - MAX_VIA_LAND_RADIUS
 ROOT_SEED = "9007199254740993"
 PLACEMENT_SEED = "-6587958367974952701"
 ROUTING_SEED = "8445301674744508279"
@@ -61,12 +65,16 @@ QUALITY_REQUIRED_INPUTS = frozenset({
     "tests/contracts/P07ZeroViaGraphContractTest.java",
     "tests/contracts/P07ShortcutQueryDiagnostics.java",
     "tests/contracts/P07ShortcutQueryContractTest.java",
+    "tests/contracts/P07PrefixAllocationDiagnostics.java",
+    "tests/contracts/P07PrefixAllocationContractTest.java",
     "scripts/verify-current-contracts.ps1",
     "tests/contracts/current-contract-runner-contract.ps1",
 })
 
 GRAPH_EVENT_MARKER = "RB100_ZERO_VIA_GRAPH_EVENT"
 GRAPH_SUMMARY_MARKER = "PASS: RB100 quality zero-via graph contracts"
+ALLOCATION_EVENT_MARKER = "RB100_PREFIX_ALLOCATION_EVENT"
+ALLOCATION_SUMMARY_MARKER = "PASS: RB100 prefix allocation contracts"
 RECEIPT_MARKERS = (
     "RB100_QUALITY_SCALAR_CONTROLS",
     "RB100_CAPACITY_BOUND_PHYSICAL_SUBSETS",
@@ -80,6 +88,8 @@ RECEIPT_MARKERS = (
     "PASS: RB100 quality path contracts",
     GRAPH_EVENT_MARKER,
     GRAPH_SUMMARY_MARKER,
+    ALLOCATION_EVENT_MARKER,
+    ALLOCATION_SUMMARY_MARKER,
 )
 EVENT_PREFIXES = ("RB100_", "P07_", "PASS: RB100")
 
@@ -110,6 +120,35 @@ GRAPH_SUMMARY_KEYS = frozenset((
     "feasibility legalRouteProof layoutQualification routeAdoption"
 ).split())
 
+ALLOCATION_EVENT_KEYS = frozenset((
+    "protocolVersion sourceRevision runId operationId scope binding diagnostic "
+    "chronologyProof routeAdoption layoutQualification"
+).split())
+ALLOCATION_BINDING_KEYS = frozenset((
+    "branchIdentityVerified sourcePublisherUnchanged pass netId startPadId rootPadId "
+    "prefixHoleCount maximumVias templateHoleCount searchNetIndex currentNetPosition "
+    "currentBranchOrdinal netOrder"
+).split())
+ALLOCATION_DIAGNOSTIC_KEYS = frozenset("stability work totals rows".split())
+ALLOCATION_STABILITY_KEYS = frozenset((
+    "prefixGeometrySha256 liveBeforeVerified liveAfterVerified "
+    "holeIdentitiesVerified lineageVerified"
+).split())
+ALLOCATION_WORK_KEYS = frozenset((
+    "advanceCalls workSteps rowsScanned netComparisons netTotalsWritten activeMillis"
+).split())
+ALLOCATION_TOTALS_KEYS = frozenset("totalHoles byKind byNet".split())
+ALLOCATION_KIND_TOTAL_KEYS = frozenset("VIA PLATED NON_PLATED".split())
+ALLOCATION_NET_TOTAL_KEYS = frozenset("netPosition netId holeCount".split())
+ALLOCATION_ROW_KEYS = frozenset((
+    "index id netId kind x y drillRadius landRadius exposure fingerprint "
+    "creatorNetPosition creatorBranchOrdinal piece"
+).split())
+ALLOCATION_SUMMARY_KEYS = frozenset((
+    "protocolVersion sourceRevision status runId operationId events scope totalHoles "
+    "chronologyProof routeAdoption layoutQualification"
+).split())
+
 SHA256_RE = re.compile(r"[0-9a-f]{64}\Z", re.ASCII)
 UUID_RE = re.compile(
     r"[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\Z",
@@ -117,6 +156,9 @@ UUID_RE = re.compile(
 )
 ERROR_CODE_RE = re.compile(r"[A-Z0-9_]{1,96}\Z", re.ASCII)
 HEX_MASK_RE = re.compile(r"[0-9a-f]+\Z", re.ASCII)
+ALLOCATION_OWNER_RE = re.compile(r"([1-9][0-9]*)/(0|[1-9][0-9]*)\Z", re.ASCII)
+ALLOCATION_NET_COUNT = 256
+ALLOCATION_ID_UTF16_LIMIT = 4096
 MAX_SPEC_BYTES = 1024 * 1024
 MAX_RESULT_BYTES = 2 * 1024 * 1024
 MAX_CAPTURE_BYTES = 32 * 1024 * 1024
@@ -591,6 +633,260 @@ def _validate_graph_summary(value: Any, event: Mapping[str, Any],
     return dict(value)
 
 
+def _java_string_length(value: str) -> int:
+    return len(value.encode("utf-16-le", errors="strict")) // 2
+
+
+def _java_string_sort_key(value: str) -> bytes:
+    return value.encode("utf-16-be", errors="strict")
+
+
+def _valid_allocation_text(value: Any) -> bool:
+    if type(value) is not str or not value:
+        return False
+    if any(ord(char) <= 0x1F or ord(char) == 0x7F for char in value):
+        return False
+    try:
+        return 0 < _java_string_length(value) <= ALLOCATION_ID_UTF16_LIMIT
+    except UnicodeEncodeError:
+        return False
+
+
+def _allocation_hole_fingerprint(hole_id: str, net_id: str,
+                                 x: int, y: int) -> str:
+    identity = (f"{_java_string_length(hole_id)}:{hole_id}VIA"
+                f"{_java_string_length(net_id)}:{net_id}"
+                f"{x},{y},2,6,EXPOSED")
+    return identity
+
+
+def _allocation_owner(hole_id: str, net_order: Sequence[str]
+                      ) -> Tuple[int, int, int]:
+    matches: List[Tuple[int, int, int]] = []
+    for net_position, net_id in enumerate(net_order):
+        prefix = "p07-via/" + net_id + "/"
+        if not hole_id.startswith(prefix):
+            continue
+        suffix = hole_id[len(prefix):]
+        parsed = ALLOCATION_OWNER_RE.fullmatch(suffix)
+        if parsed is None:
+            continue
+        ordinal_text, piece_text = parsed.groups()
+        if len(ordinal_text) > 10 or len(piece_text) > 10:
+            continue
+        ordinal, piece = int(ordinal_text), int(piece_text)
+        if ordinal <= MAX_SCALAR and piece <= MAX_SCALAR:
+            matches.append((net_position, ordinal, piece))
+    _need(len(matches) == 1, "ALLOCATION_ROW_ID_INVALID")
+    return matches[0]
+
+
+def _validate_prefix_allocation_event(value: Any,
+                                      scalar_event: Mapping[str, Any],
+                                      graph: Mapping[str, Any]) -> Dict[str, Any]:
+    _exact_keys(value, ALLOCATION_EVENT_KEYS, "ALLOCATION_EVENT_KEYS_INVALID")
+    _need(_integer(value["protocolVersion"], 1, 1) and
+          _integer(value["sourceRevision"], SOURCE_REVISION, SOURCE_REVISION) and
+          type(value["runId"]) is str and UUID_RE.fullmatch(value["runId"]) is not None and
+          value["runId"] == scalar_event["runId"] and
+          value["operationId"] == PROBE_OPERATION_ID and
+          value["scope"] == "ACTUAL_FIXED_PREFIX_CREATION_ALLOCATION_ONLY" and
+          value["chronologyProof"] is False and
+          value["routeAdoption"] is False and
+          value["layoutQualification"] is False,
+          "ALLOCATION_EVENT_IDENTITY_OR_SCOPE_INVALID")
+
+    binding = value["binding"]
+    _exact_keys(binding, ALLOCATION_BINDING_KEYS, "ALLOCATION_BINDING_KEYS_INVALID")
+    graph_binding = graph["binding"]
+    _need(binding["branchIdentityVerified"] is True and
+          binding["sourcePublisherUnchanged"] is True and
+          _integer(binding["pass"], 0, MAX_SCALAR) and
+          binding["pass"] == scalar_event["pass"] == graph_binding["pass"] and
+          binding["netId"] == scalar_event["netId"] == graph_binding["netId"] and
+          binding["startPadId"] == scalar_event["startPadId"] ==
+          graph_binding["startPadId"] and
+          binding["rootPadId"] == scalar_event["rootPadId"] ==
+          graph_binding["rootPadId"] and
+          _integer(binding["prefixHoleCount"], 0, MAX_VIAS) and
+          binding["prefixHoleCount"] == graph_binding["prefixHoleCount"] and
+          _integer(binding["maximumVias"], 0, MAX_VIAS) and
+          binding["maximumVias"] == graph_binding["maximumVias"] and
+          binding["prefixHoleCount"] <= binding["maximumVias"] and
+          _integer(binding["templateHoleCount"], 0, 0) and
+          _integer(binding["currentBranchOrdinal"], 1, MAX_SCALAR),
+          "ALLOCATION_BINDING_IDENTITY_INVALID")
+
+    net_order = binding["netOrder"]
+    _need(type(net_order) is list and 1 <= len(net_order) <= ALLOCATION_NET_COUNT and
+          all(_valid_allocation_text(net_id) for net_id in net_order) and
+          len(set(net_order)) == len(net_order),
+          "ALLOCATION_NET_ORDER_INVALID")
+    _need(_integer(binding["searchNetIndex"], 1, len(net_order)) and
+          _integer(binding["currentNetPosition"], 0, len(net_order) - 1) and
+          binding["currentNetPosition"] == binding["searchNetIndex"] - 1 and
+          net_order[binding["currentNetPosition"]] == binding["netId"],
+          "ALLOCATION_CURRENT_NET_POSITION_INVALID")
+
+    diagnostic = value["diagnostic"]
+    _exact_keys(diagnostic, ALLOCATION_DIAGNOSTIC_KEYS,
+                "ALLOCATION_DIAGNOSTIC_KEYS_INVALID")
+    stability = diagnostic["stability"]
+    _exact_keys(stability, ALLOCATION_STABILITY_KEYS,
+                "ALLOCATION_STABILITY_KEYS_INVALID")
+    graph_prefix_sha = graph["diagnostic"]["stability"]["prefixGeometrySha256"]
+    _need(type(stability["prefixGeometrySha256"]) is str and
+          SHA256_RE.fullmatch(stability["prefixGeometrySha256"]) is not None and
+          stability["prefixGeometrySha256"] == graph_prefix_sha and
+          stability["liveBeforeVerified"] is True and
+          stability["liveAfterVerified"] is True and
+          stability["holeIdentitiesVerified"] is True and
+          stability["lineageVerified"] is True,
+          "ALLOCATION_STABILITY_INVALID")
+
+    totals = diagnostic["totals"]
+    _exact_keys(totals, ALLOCATION_TOTALS_KEYS, "ALLOCATION_TOTALS_KEYS_INVALID")
+    total_holes = binding["prefixHoleCount"]
+    _need(_integer(totals["totalHoles"], 0, MAX_VIAS) and
+          totals["totalHoles"] == total_holes,
+          "ALLOCATION_TOTAL_HOLES_INVALID")
+
+    rows = diagnostic["rows"]
+    _need(type(rows) is list and len(rows) == total_holes,
+          "ALLOCATION_ROWS_INVALID")
+    net_positions = {net_id: position for position, net_id in enumerate(net_order)}
+    net_counts = [0] * len(net_order)
+    row_ids: List[str] = []
+    branch_owners: Dict[int, Tuple[int, str]] = {}
+    for index, row in enumerate(rows):
+        _exact_keys(row, ALLOCATION_ROW_KEYS, "ALLOCATION_ROW_KEYS_INVALID")
+        hole_id, net_id = row["id"], row["netId"]
+        _need(_integer(row["index"], 0, max(0, total_holes - 1)) and
+              row["index"] == index and
+              _valid_allocation_text(hole_id) and
+              _valid_allocation_text(net_id) and net_id in net_positions,
+              "ALLOCATION_ROW_ID_INVALID")
+        owner_position, branch_ordinal, piece = _allocation_owner(hole_id, net_order)
+        _need(owner_position == net_positions[net_id] and
+              owner_position <= binding["currentNetPosition"] and
+              0 < branch_ordinal < binding["currentBranchOrdinal"] and
+              piece >= 0 and
+              row["creatorNetPosition"] == owner_position and
+              _integer(row["creatorNetPosition"], 0, len(net_order) - 1) and
+              row["creatorBranchOrdinal"] == branch_ordinal and
+              _integer(row["creatorBranchOrdinal"], 1, MAX_SCALAR) and
+              row["piece"] == piece and _integer(row["piece"], 0, MAX_SCALAR),
+              "ALLOCATION_ROW_OWNER_INVALID")
+        prior_owner = branch_owners.get(branch_ordinal)
+        _need(prior_owner is None or prior_owner == (owner_position, net_id),
+              "ALLOCATION_BRANCH_OWNER_INCONSISTENT")
+        branch_owners[branch_ordinal] = (owner_position, net_id)
+        _need(row["kind"] == "VIA" and
+              _integer(row["x"], -MAX_VIA_CENTER_COORDINATE,
+                       MAX_VIA_CENTER_COORDINATE) and
+              _integer(row["y"], -MAX_VIA_CENTER_COORDINATE,
+                       MAX_VIA_CENTER_COORDINATE) and
+              _integer(row["drillRadius"], 2, 2) and
+              _integer(row["landRadius"], 6, 6) and
+              row["exposure"] == "EXPOSED",
+              "ALLOCATION_ROW_GEOMETRY_INVALID")
+        _need(type(row["fingerprint"]) is str and
+              row["fingerprint"] == _allocation_hole_fingerprint(
+                  hole_id, net_id, row["x"], row["y"]),
+              "ALLOCATION_ROW_FINGERPRINT_INVALID")
+        row_ids.append(hole_id)
+        net_counts[owner_position] += 1
+
+    prior_position = -1
+    for branch_ordinal in sorted(branch_owners):
+        owner_position, _net_id = branch_owners[branch_ordinal]
+        _need(owner_position >= prior_position,
+              "ALLOCATION_BRANCH_ORDER_INCONSISTENT")
+        prior_position = owner_position
+
+    try:
+        _need(len(set(row_ids)) == len(row_ids) and
+              row_ids == sorted(row_ids, key=_java_string_sort_key),
+              "ALLOCATION_ROW_ORDER_INVALID")
+    except UnicodeEncodeError:
+        _fail("ALLOCATION_ROW_ID_INVALID")
+
+    by_kind = totals["byKind"]
+    _exact_keys(by_kind, ALLOCATION_KIND_TOTAL_KEYS,
+                "ALLOCATION_KIND_TOTALS_INVALID")
+    _need(all(_integer(by_kind[kind], 0, total_holes)
+              for kind in ("VIA", "PLATED", "NON_PLATED")) and
+          by_kind["VIA"] == total_holes and
+          by_kind["PLATED"] == 0 and by_kind["NON_PLATED"] == 0,
+          "ALLOCATION_KIND_TOTALS_INVALID")
+
+    by_net = totals["byNet"]
+    _need(type(by_net) is list and len(by_net) == len(net_order),
+          "ALLOCATION_NET_TOTALS_INVALID")
+    for position, net_total in enumerate(by_net):
+        _exact_keys(net_total, ALLOCATION_NET_TOTAL_KEYS,
+                    "ALLOCATION_NET_TOTALS_INVALID")
+        _need(_integer(net_total["netPosition"], 0, len(net_order) - 1) and
+              net_total["netPosition"] == position and
+              net_total["netId"] == net_order[position] and
+              _integer(net_total["holeCount"], 0, total_holes) and
+              net_total["holeCount"] == net_counts[position],
+              "ALLOCATION_NET_TOTALS_INVALID")
+    _need(sum(net_counts) == total_holes and
+          sum(net_total["holeCount"] for net_total in by_net) == total_holes,
+          "ALLOCATION_TOTALS_CONSERVATION_INVALID")
+
+    work = diagnostic["work"]
+    _exact_keys(work, ALLOCATION_WORK_KEYS, "ALLOCATION_WORK_KEYS_INVALID")
+    for field, minimum, maximum in (
+            ("advanceCalls", 1, MAX_WORK_UNITS),
+            ("workSteps", 1, MAX_TOTAL_WORK),
+            ("rowsScanned", 0, MAX_VIAS),
+            ("netComparisons", 0, MAX_VIAS * ALLOCATION_NET_COUNT),
+            ("netTotalsWritten", 1, ALLOCATION_NET_COUNT),
+            ("activeMillis", 0, MAX_ACTIVE_MS)):
+        _need(_integer(work[field], minimum, maximum), "ALLOCATION_WORK_INVALID")
+    expected_comparisons = total_holes * len(net_order)
+    lineage_pair_checks = total_holes * (total_holes - 1) // 2
+    expected_work = (total_holes + expected_comparisons + len(net_order) +
+                     lineage_pair_checks)
+    _need(work["rowsScanned"] == total_holes and
+          work["netComparisons"] == expected_comparisons and
+          work["netTotalsWritten"] == len(net_order) and
+          work["workSteps"] >= expected_work and
+          work["workSteps"] <= work["advanceCalls"] * MAX_WORK_QUANTUM and
+          work["workSteps"] <= MAX_TOTAL_WORK,
+          "ALLOCATION_WORK_CONSERVATION_INVALID")
+
+    return {
+        "event": dict(value), "binding": dict(binding),
+        "diagnostic": dict(diagnostic), "scope": value["scope"],
+        "chronologyProof": False, "routeAdoption": False,
+        "layoutQualification": False,
+    }
+
+
+def _validate_prefix_allocation_summary(value: Any, event: Mapping[str, Any],
+                                        allocation: Mapping[str, Any]
+                                        ) -> Dict[str, Any]:
+    _exact_keys(value, ALLOCATION_SUMMARY_KEYS,
+                "ALLOCATION_SUMMARY_KEYS_INVALID")
+    _need(_integer(value["protocolVersion"], 1, 1) and
+          _integer(value["sourceRevision"], SOURCE_REVISION, SOURCE_REVISION) and
+          value["status"] == "PASS" and
+          value["runId"] == event["runId"] and
+          value["operationId"] == PROBE_OPERATION_ID and
+          _integer(value["events"], 1, 1) and
+          value["scope"] == event["scope"] and
+          _integer(value["totalHoles"], 0, MAX_VIAS) and
+          value["totalHoles"] == allocation["binding"]["prefixHoleCount"] and
+          value["chronologyProof"] is False and
+          value["routeAdoption"] is False and
+          value["layoutQualification"] is False,
+          "ALLOCATION_SUMMARY_IDENTITY_OR_SCOPE_INVALID")
+    return dict(value)
+
+
 def _validate_receipt_lines(lines: Sequence[str], ledger: types.ModuleType,
                             frozen: types.ModuleType, scalar: types.ModuleType
                             ) -> Dict[str, Any]:
@@ -610,9 +906,15 @@ def _validate_receipt_lines(lines: Sequence[str], ledger: types.ModuleType,
                                "QUALITY_PATH_SUMMARY_INVALID", records[9], records[8], scalar)
     graph = _validate_graph_event(records[10], old["event"], path)
     graph_summary = _validate_graph_summary(records[11], records[10], graph)
+    allocation = _validate_prefix_allocation_event(
+        records[12], old["event"], graph)
+    allocation_summary = _validate_prefix_allocation_summary(
+        records[13], records[12], allocation)
     return {"scalar": old, "currentContext": current_context,
             "path": path, "pathSummary": path_summary,
-            "graph": graph, "graphSummary": graph_summary}
+            "graph": graph, "graphSummary": graph_summary,
+            "allocation": allocation,
+            "allocationSummary": allocation_summary}
 
 
 def _validate_console_and_receipt(stdout_raw: bytes, receipt_raw: bytes,
@@ -721,6 +1023,8 @@ def _run_validation(spec_argument: str, spec_sha256: str) -> Dict[str, Any]:
     path = parsed["path"]
     graph = parsed["graph"]
     work = graph["diagnostic"]["work"]
+    allocation = parsed["allocation"]
+    allocation_diagnostic = allocation["diagnostic"]
     return {
         "schema": RESULT_SCHEMA,
         "status": "PASS",
@@ -790,6 +1094,16 @@ def _run_validation(spec_argument: str, spec_sha256: str) -> Dict[str, Any]:
             "analysis": graph["analysis"],
             "feasibility": "UNKNOWN", "legalRouteProof": False,
             "layoutQualification": False, "routeAdoption": False,
+        },
+        "prefixAllocationObservation": {
+            "scope": allocation["scope"],
+            "binding": allocation["binding"],
+            "stability": allocation_diagnostic["stability"],
+            "work": allocation_diagnostic["work"],
+            "totals": allocation_diagnostic["totals"],
+            "rows": allocation_diagnostic["rows"],
+            "chronologyProof": False, "routeAdoption": False,
+            "layoutQualification": False,
         },
     }
 
