@@ -1,10 +1,16 @@
 package com.lushprojects.circuitjs1.client;
 
 import java.nio.charset.StandardCharsets;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -127,6 +133,88 @@ public final class Rb100PhysicalDiagnostics {
             ",\"suiteMs\":" + suiteMillis +
             ",\"scope\":\"OBSERVATIONAL_PRIVATE_P07_POLICY_ONLY\"," +
             "\"layoutQualification\":false}");
+    }
+
+    /** Exact actual-generator NULL/PROBE pair for the private quality-scalar diagnostic. */
+    static void runQualityScalarContracts() {
+        long suiteStarted=System.nanoTime();
+        int beforeAssertions=assertions;
+        final String runId=UUID.randomUUID().toString();
+        final String nullOperationId="QUALITY_NULL";
+        final String probeOperationId="QUALITY_PROBE";
+        Rb100Plan.Variant variant=Rb100Plan.Variant.SEPARATE_DIRECT_SWITCHING;
+        require(SeededPcbLayoutGenerator.CURRENT_VERSION==26 &&
+            "tsj-generation-dependencies-v28".equals(
+                GenerationDependencyContext.INTERPRETATION_EPOCH) &&
+            Rb100Plan.PLAN_VERSION==1 && Rb100Plan.MODEL_VERSION==4 &&
+            Rb100Placement.INTENT_VERSION==9,
+            "quality scalar diagnostic identifies current layout26/dependency-v28/plan1/model4/intent9 inputs");
+        require(CASE_LIMIT_NANOS==90000000000L && WORK_LIMIT==640 &&
+            UNIT_LIMIT_NANOS==5000000000L && CLEANUP_LIMIT_MILLIS==120000L,
+            "quality scalar diagnostic retains the existing case/work/unit/cleanup budgets");
+
+        P07PolicyDiagnosticCase baseline=runP07PolicyDiagnosticCase(variant,runId,null,null,
+            "NULL",nullOperationId,null,null,true);
+        if(!"PASS".equals(baseline.status) || baseline.policyResult==null ||
+                baseline.policyResult.getLayout()!=null || baseline.qualitySubsetMarkerJson==null) {
+            System.out.println("RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":8,\"runId\":\""+
+                jsonFull(runId)+"\",\"operationId\":\""+nullOperationId+
+                "\",\"variant\":\""+variant.name()+"\",\"mode\":\"NULL\",\"result\":"+
+                baseline.toJson()+"}");
+            throw new AssertionError("RB100 quality scalar null baseline did not complete without a layout");
+        }
+
+        QualityScalarProbe probe=new QualityScalarProbe(runId,probeOperationId,variant);
+        P07PolicyDiagnosticCase observed=runP07PolicyDiagnosticCase(variant,runId,null,baseline,
+            "PROBE",probeOperationId,null,probe,true);
+        if(probe.controlsJson==null) {
+            if(baseline.qualitySubsetMarkerJson!=null)
+                System.out.println(baseline.qualitySubsetMarkerJson);
+            System.out.println(qualityScalarOperationJson(baseline,nullOperationId,"NULL"));
+            if(observed.qualitySubsetMarkerJson!=null)
+                System.out.println(observed.qualitySubsetMarkerJson);
+            System.out.println(qualityScalarOperationJson(observed,probeOperationId,"PROBE"));
+            throw new AssertionError("RB100 quality scalar actual Publisher controls were not completed");
+        }
+        System.out.println(probe.controlsJson);
+        System.out.println(baseline.qualitySubsetMarkerJson);
+        System.out.println(qualityScalarOperationJson(baseline,nullOperationId,"NULL"));
+        System.out.println(observed.qualitySubsetMarkerJson==null ?
+            "RB100_CAPACITY_BOUND_PHYSICAL_SUBSETS {\"protocol\":\"rb100-physical-subsets-v1\",\"runId\":\""+
+                jsonFull(runId)+"\",\"variant\":\""+variant.name()+
+                "\",\"status\":\"MISSING\",\"independentTwoLayerAccess\":false,\"layoutQualification\":false}" :
+            observed.qualitySubsetMarkerJson);
+        System.out.println(qualityScalarOperationJson(observed,probeOperationId,"PROBE"));
+
+        probe.requireTerminalOperation(observed);
+        boolean pairPassed=qualityScalarPairPassed(baseline,observed,variant);
+        String event=probe.eventJson(observed);
+        System.out.println(event);
+        System.out.println(qualityScalarPairJson(baseline,observed,variant,runId,
+            nullOperationId,probeOperationId,pairPassed,probe));
+        require(pairPassed && "PASS".equals(baseline.status) && "PASS".equals(observed.status),
+            "quality scalar pair preserves the canonical null/probe generator result");
+
+        long suiteMillis=nanosToMillis(System.nanoTime()-suiteStarted);
+        require(suiteMillis<=480000L,
+            "quality scalar two-operation suite remains within its frozen480s ceiling");
+        System.out.println("PASS: RB100 quality scalar contracts {\"protocolVersion\":1,\"sourceRevision\":8,"+
+            "\"status\":\"PASS\",\"operations\":2,\"nullOperations\":1,\"probeOperations\":1,"+
+            "\"pairs\":1,\"confirmedScalarEvents\":1,\"variant\":\""+variant.name()+
+            "\",\"runId\":\""+jsonFull(runId)+"\",\"rootSeed\":\""+SEED+
+            "\",\"placementSeed\":\""+PLACEMENT_DIAGNOSTIC_SEED+
+            "\",\"routingSeed\":\""+ROUTING_DIAGNOSTIC_ROUTING_SEED+
+            "\",\"layoutVersion\":"+SeededPcbLayoutGenerator.CURRENT_VERSION+
+            ",\"dependencyEpoch\":\""+jsonFull(GenerationDependencyContext.INTERPRETATION_EPOCH)+
+            "\",\"planVersion\":"+Rb100Plan.PLAN_VERSION+
+            ",\"modelVersion\":"+Rb100Plan.MODEL_VERSION+
+            ",\"physicalIntentVersion\":"+Rb100Placement.INTENT_VERSION+
+            ",\"assertions\":"+(assertions-beforeAssertions)+",\"suiteMs\":"+suiteMillis+
+            ",\"suiteLimitMs\":480000,\"manualDriverMillis\":"+probe.manualDriverMillis()+
+            ",\"manualSliceSteps\":"+probe.manualSliceSteps+
+            ",\"routeMillisStatus\":\"INCOMPLETE_MANUAL_SINGLE_STEP_CADENCE_NOT_REPRESENTATIVE\","+
+            "\"feasibility\":\"UNKNOWN\",\"layoutQualification\":false,"+
+            "\"scope\":\"OBSERVATIONAL_ACTUAL_GENERATOR_QUALITY_SCALAR_ONLY\"}");
     }
 
     /** Actual-generator null/capture pairs for the opt-in fixed-prefix graph seam. */
@@ -271,6 +359,16 @@ public final class Rb100PhysicalDiagnostics {
             final FixedPrefixCaptureCollector captureCollector,
             final P07PolicyDiagnosticCase expectedNull,final String mode,final String operationId,
             final FixedPrefixNoPathTarget noPathTarget) {
+        return runP07PolicyDiagnosticCase(variant,runId,captureCollector,expectedNull,mode,
+            operationId,noPathTarget,null,false);
+    }
+
+    private static P07PolicyDiagnosticCase runP07PolicyDiagnosticCase(
+            final Rb100Plan.Variant variant,String runId,
+            final FixedPrefixCaptureCollector captureCollector,
+            final P07PolicyDiagnosticCase expectedNull,final String mode,final String operationId,
+            final FixedPrefixNoPathTarget noPathTarget,
+            final QualityScalarProbe qualityProbe,final boolean qualityScalarOperation) {
         final long operationStarted = System.nanoTime();
         final Budget budget = new Budget(operationStarted);
         final P07PolicyDiagnosticCase result = new P07PolicyDiagnosticCase(
@@ -278,6 +376,8 @@ public final class Rb100PhysicalDiagnostics {
         result.fixedPrefixMode=mode;
         result.fixedPrefixOperationId=operationId;
         result.fixedPrefixCollector=captureCollector;
+        result.qualityScalarProbe=qualityProbe;
+        result.qualityScalarOperation=qualityScalarOperation;
         final NativeContext[] context = new NativeContext[1];
         final Rb100Plan[] plan = new Rb100Plan[1];
         final Rb100ElectricalPilot.Candidate[] candidate =
@@ -391,6 +491,8 @@ public final class Rb100PhysicalDiagnostics {
                     public void check(int attempt) {
                         result.observerChecks++;
                         budget.checkpoint();
+                        if(qualityProbe!=null)
+                            qualityProbe.guardNoUnexpectedReady(session[0]);
                     }
                 };
             result.phase = "MEDIUM_SESSION_BEGIN";
@@ -398,15 +500,29 @@ public final class Rb100PhysicalDiagnostics {
                 public void run() {
                     generator[0] = new SeededPcbLayoutGenerator(
                         StandardPcbFootprintProviders.createRegistry(), observer);
-                    session[0] = captureCollector == null ?
+                    PcbLayerRoutingPrototype.FixedPrefixGraphObserver graphObserver=
+                        captureCollector!=null?captureCollector:qualityProbe;
+                    session[0] = graphObserver == null ?
                         generator[0].begin(candidate[0].board(),result.placementSeed,result.routingSeed) :
                         generator[0].beginWithFixedPrefixObservation(candidate[0].board(),
-                            result.placementSeed,result.routingSeed,captureCollector);
+                            result.placementSeed,result.routingSeed,graphObserver);
+                    if(qualityProbe!=null) qualityProbe.armReadyGuard();
                 }
             });
 
             result.phase = "MEDIUM_SESSION_ADVANCE";
             while (!terminal[0]) {
+                if(qualityProbe!=null && qualityProbe.shouldManuallyAdvance(session[0])) {
+                    final int groupIndex=qualityProbe.manualGroups+1;
+                    valueUnit(budget,"p07-quality-scalar-single-step-group-"+groupIndex,
+                        new UnitValue<Object>() {
+                            public Object run() {
+                                qualityProbe.advanceManualGroup(session[0],budget);
+                                return null;
+                            }
+                        });
+                    continue;
+                }
                 result.advanceCalls++;
                 try {
                     terminal[0] = valueUnit(budget,
@@ -416,11 +532,15 @@ public final class Rb100PhysicalDiagnostics {
                                 return Boolean.valueOf(session[0].advance());
                             }
                         }).booleanValue();
+                    if(qualityProbe!=null)
+                        qualityProbe.observeGeneratorAdvance(session[0]);
                     if (terminal[0]) result.sessionTerminalStatus = "ROUTED";
                 } catch (PcbRoutingRejectedException expectedExhaustion) {
                     terminalRejection[0] = expectedExhaustion;
                     terminal[0] = true;
                     result.sessionTerminalStatus = "EXHAUSTED";
+                    if(qualityProbe!=null)
+                        qualityProbe.observeGeneratorAdvance(session[0]);
                 }
             }
             result.phase = "TERMINAL_POLICY_RESULT_CAPTURE";
@@ -468,6 +588,9 @@ public final class Rb100PhysicalDiagnostics {
                     result.solverGraphIdentityStatus = "PASS";
                     result.boardIdentityStatus = "PASS";
                     result.captureLayoutOutput();
+                    if(qualityProbe!=null)
+                        qualityProbe.confirmTerminalOperation(result,session[0],generator[0],
+                            policyResult[0]);
                     if(captureCollector==null) {
                         if(noPathTarget==null && "NULL".equals(mode))
                             requireExpectedFixedPrefixPlacement(variant,policyResult[0].getStatistics());
@@ -499,12 +622,12 @@ public final class Rb100PhysicalDiagnostics {
                     }
                 });
             }
-            System.out.println("RB100_CAPACITY_BOUND_PHYSICAL_SUBSETS {\"protocol\":"+
-                "\"rb100-physical-subsets-v1\",\"runId\":\""+jsonFull(runId)+
+            result.qualitySubsetMarkerJson="RB100_CAPACITY_BOUND_PHYSICAL_SUBSETS {\"protocol\":\"rb100-physical-subsets-v1\",\"runId\":\""+jsonFull(runId)+
                 "\",\"variant\":\""+variant.name()+"\",\"status\":\""+
                 (policyResult[0].accepted()?"PASS_GEOMETRY_CLEARANCE_GRAPH_RASTER_ONLY":
                     "NOT_RUN_NO_LAYOUT")+"\",\"independentTwoLayerAccess\":false,"+
-                "\"layoutQualification\":false}");
+                "\"layoutQualification\":false}";
+            if(!qualityScalarOperation) System.out.println(result.qualitySubsetMarkerJson);
             if(captureCollector!=null) {
                 result.phase="FIXED_PREFIX_GRAPH_SERIALIZATION";
                 valueUnit(budget,"p07-fixed-prefix-graph-serialization-and-emission",
@@ -727,6 +850,88 @@ public final class Rb100PhysicalDiagnostics {
             baseline.sessionTerminalStatus.equals(observed.sessionTerminalStatus) &&
             baseline.layoutOutputJson.equals(observed.layoutOutputJson) &&
             sameExpectedEligible(first.routeEligiblePlacementAttempts,variant);
+    }
+
+    private static String qualityScalarOperationJson(P07PolicyDiagnosticCase result,
+            String operationId,String mode) {
+        return "RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":8,"+
+            "\"runId\":\""+jsonFull(result.runId)+"\",\"operationId\":\""+
+            jsonFull(operationId)+"\",\"variant\":\""+jsonFull(result.subject)+
+            "\",\"mode\":\""+jsonFull(mode)+"\",\"result\":"+result.toJson()+"}";
+    }
+
+    private static boolean qualityScalarPairPassed(P07PolicyDiagnosticCase baseline,
+            P07PolicyDiagnosticCase observed,Rb100Plan.Variant variant) {
+        if(!fixedPrefixPairPassed(baseline,observed,variant) ||
+                baseline.policyResult.getLayout()!=null || observed.policyResult.getLayout()!=null)
+            return false;
+        MediumBoardPhysicalPolicy.Statistics first=baseline.policyResult.getStatistics();
+        MediumBoardPhysicalPolicy.Statistics second=observed.policyResult.getStatistics();
+        return first!=null && second!=null &&
+            first.routeEligiblePlacementAttempts.equals(second.routeEligiblePlacementAttempts) &&
+            firstP07RequestAttempt(first)==4 && firstP07RequestAttempt(first)==firstP07RequestAttempt(second) &&
+            first.routeOutcomes.equals(second.routeOutcomes) &&
+            primaryRoutingOrders(first)==primaryRoutingOrders(second) &&
+            primaryRoutingExpansions(first)==primaryRoutingExpansions(second) &&
+            first.toCanonical().equals(second.toCanonical()) &&
+            baseline.components==observed.components && baseline.pads==observed.pads &&
+            baseline.nets==observed.nets && "PASS".equals(baseline.boardIdentityStatus) &&
+            "PASS".equals(observed.boardIdentityStatus) &&
+            "PASS".equals(baseline.solverGraphIdentityStatus) &&
+            "PASS".equals(observed.solverGraphIdentityStatus) &&
+            baseline.sessionTerminalStatus.equals(observed.sessionTerminalStatus) &&
+            baseline.layoutOutputJson.equals(observed.layoutOutputJson);
+    }
+
+    private static String qualityScalarPairJson(P07PolicyDiagnosticCase baseline,
+            P07PolicyDiagnosticCase observed,Rb100Plan.Variant variant,String runId,
+            String nullOperationId,String probeOperationId,boolean passed,
+            QualityScalarProbe probe) {
+        MediumBoardPhysicalPolicy.Statistics first=statistics(baseline);
+        MediumBoardPhysicalPolicy.Statistics second=statistics(observed);
+        boolean eligible=first!=null && second!=null &&
+            first.routeEligiblePlacementAttempts.equals(second.routeEligiblePlacementAttempts);
+        boolean firstRequest=first!=null && second!=null && firstP07RequestAttempt(first)==4 &&
+            firstP07RequestAttempt(first)==firstP07RequestAttempt(second);
+        boolean outcomes=first!=null && second!=null && first.routeOutcomes.equals(second.routeOutcomes);
+        boolean orders=first!=null && second!=null &&
+            primaryRoutingOrders(first)==primaryRoutingOrders(second);
+        boolean expansions=first!=null && second!=null &&
+            primaryRoutingExpansions(first)==primaryRoutingExpansions(second);
+        boolean canonical=first!=null && second!=null && first.toCanonical().equals(second.toCanonical());
+        boolean board=baseline!=null && observed!=null && baseline.components==observed.components &&
+            baseline.pads==observed.pads && baseline.nets==observed.nets &&
+            "PASS".equals(baseline.boardIdentityStatus) && "PASS".equals(observed.boardIdentityStatus) &&
+            baseline.inputMetadata!=null && baseline.inputMetadata.sameAs(observed.inputMetadata);
+        boolean solver=baseline!=null && observed!=null &&
+            "PASS".equals(baseline.solverGraphIdentityStatus) &&
+            "PASS".equals(observed.solverGraphIdentityStatus);
+        boolean terminal=baseline!=null && observed!=null &&
+            baseline.sessionTerminalStatus.equals(observed.sessionTerminalStatus);
+        boolean layout=baseline!=null && observed!=null &&
+            baseline.layoutOutputJson.equals(observed.layoutOutputJson);
+        boolean absent=baseline!=null && observed!=null && baseline.policyResult!=null &&
+            observed.policyResult!=null && baseline.policyResult.getLayout()==null &&
+            observed.policyResult.getLayout()==null && baseline.layoutOutputJson.contains("\"layoutReturned\":false") &&
+            observed.layoutOutputJson.contains("\"layoutReturned\":false");
+        return "RB100_QUALITY_SCALAR_PAIR {\"protocolVersion\":1,\"sourceRevision\":8,"+
+            "\"runId\":\""+jsonFull(runId)+"\",\"variant\":\""+variant.name()+
+            "\",\"nullOperationId\":\""+nullOperationId+"\",\"probeOperationId\":\""+
+            probeOperationId+"\",\"rootSeed\":\""+SEED+"\",\"placementSeed\":\""+
+            PLACEMENT_DIAGNOSTIC_SEED+"\",\"routingSeed\":\""+ROUTING_DIAGNOSTIC_ROUTING_SEED+
+            "\",\"layoutVersion\":"+SeededPcbLayoutGenerator.CURRENT_VERSION+
+            ",\"dependencyEpoch\":\""+jsonFull(GenerationDependencyContext.INTERPRETATION_EPOCH)+
+            "\",\"planVersion\":"+Rb100Plan.PLAN_VERSION+",\"modelVersion\":"+
+            Rb100Plan.MODEL_VERSION+",\"physicalIntentVersion\":"+Rb100Placement.INTENT_VERSION+
+            ",\"status\":\""+(passed?"PASS":"FAIL")+"\",\"routeEligiblePlacementAttemptsEqual\":"+
+            eligible+",\"firstP07RequestAttemptEqual\":"+firstRequest+
+            ",\"routeOutcomesEqual\":"+outcomes+",\"primaryRoutingOrdersEqual\":"+orders+
+            ",\"primaryRoutingExpansionsEqual\":"+expansions+",\"policyCanonicalEqual\":"+canonical+
+            ",\"boardIdentityEqual\":"+board+",\"solverIdentityEqual\":"+solver+
+            ",\"terminalStatusEqual\":"+terminal+",\"layoutOutputEqual\":"+layout+
+            ",\"layoutAbsent\":"+absent+
+",\"routeMillisStatus\":\"INCOMPLETE_MANUAL_SINGLE_STEP_CADENCE_NOT_REPRESENTATIVE\","+
+            "\"layoutQualification\":false}";
     }
 
     private static String fixedPrefixPairJson(P07PolicyDiagnosticCase baseline,
@@ -2844,6 +3049,635 @@ public final class Rb100PhysicalDiagnostics {
         }
     }
 
+    private static final class QualityScalarProbe
+            implements PcbLayerRoutingPrototype.FixedPrefixGraphObserver {
+        private static final int MAX_MANUAL_STEPS_PER_UNIT=32768;
+        final String runId,operationId;
+        final Rb100Plan.Variant variant;
+        int selectCalls,graphCallbacks,manualSliceSteps,manualGroups;
+        long manualDriverNanos;
+        String controlsJson,qualityRejectionMessage,generatorLastFailureType,
+            generatorLastFailureMessage;
+        Object routeSession,fixedPrefixContext,targetSearch,targetPublisher;
+        Object targetStartPad,targetRootPad,targetEndNode;
+        QualityScalarSnapshot snapshot;
+        int targetAccountingBefore=-1,targetAccountingAfter=-1;
+        boolean targetCaptured,qualityRejected,targetRequestAccounted,
+            terminalConfirmed,readyGuardRequested,armedReadyGuard;
+
+        QualityScalarProbe(String runId,String operationId,Rb100Plan.Variant variant) {
+            this.runId=runId; this.operationId=operationId; this.variant=variant;
+        }
+
+        public boolean select(PcbLayerRoutingPrototype.FixedPrefixBranchLineage lineage) {
+            selectCalls++;
+            if(lineage==null || lineage.context()==null)
+                throw new AssertionError("quality scalar observer received incomplete actual failed-branch lineage");
+            return false;
+        }
+
+        public void onGraph(PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot graph) {
+            graphCallbacks++;
+            throw new AssertionError("quality scalar observer must never materialize a graph");
+        }
+
+        boolean shouldManuallyAdvance(SeededPcbLayoutGenerator.Session generatorSession) {
+            return !qualityRejected && generatorSession!=null &&
+                P07ScalarReflection.read(generatorSession,"mediumTwoLayerRoute")!=null;
+        }
+
+        void armReadyGuard() { readyGuardRequested=true; }
+
+        void guardNoUnexpectedReady(SeededPcbLayoutGenerator.Session generatorSession) {
+            if(!readyGuardRequested || generatorSession==null) return;
+            Object active=P07ScalarReflection.read(generatorSession,"mediumTwoLayerRoute");
+            if(active==null) return;
+            armedReadyGuard=true;
+            Object ready=P07ScalarReflection.read(active,"readyOrdering");
+            if(ready!=null)
+                throw new AssertionError(
+                    "armed actual-generator observer rejects unexpected ROUTE_READY before parent integration");
+        }
+
+        void advanceManualGroup(SeededPcbLayoutGenerator.Session generatorSession,Budget budget) {
+            require(generatorSession!=null && !qualityRejected,
+                "manual single-step driver owns the live generator session before the target rejection");
+            Object active=P07ScalarReflection.read(generatorSession,"mediumTwoLayerRoute");
+            require(active!=null,"manual single-step driver observes the actual retained P07 owner");
+            if(routeSession==null) {
+                routeSession=active;
+                fixedPrefixContext=P07ScalarReflection.read(routeSession,"fixedPrefixContext");
+                require(fixedPrefixContext instanceof PcbLayerRoutingPrototype.FixedPrefixCaptureContext,
+                    "probe observer installs the actual generator-owned fixed-prefix context");
+                verifyTargetContext((PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext);
+                targetAccountingBefore=P07ScalarReflection.intField(generatorSession,
+                    "mediumTwoLayerAttempts");
+                require(targetAccountingBefore==0,
+                    "target request starts before the generator accounts its retained P07 stream");
+                require(P07ScalarReflection.intField(routeSession,"pass")==0,
+                    "first ordinary generator quantum has not crossed the target ordering before manual stepping begins");
+                Object initialSearch=P07ScalarReflection.read(routeSession,"search");
+                require(initialSearch==null || P07ScalarReflection.intField(initialSearch,"pass")==0,
+                    "first ordinary generator quantum has not skipped the pass1 scalar observation point");
+            } else {
+                require(active==routeSession,
+                    "manual single-step driver cannot switch to a successor P07 owner");
+            }
+            require(P07ScalarReflection.read(routeSession,"fixedPrefixContext")==fixedPrefixContext,
+                "manual P07 work group retains its actual fixed-prefix request owner");
+            long manualGroupStarted=System.nanoTime();
+            int steps=0;
+            try {
+                while(steps<MAX_MANUAL_STEPS_PER_UNIT && !qualityRejected) {
+                    budget.checkpoint();
+                    Object search=P07ScalarReflection.read(routeSession,"search");
+                    if(search!=null && controlsJson==null)
+                        controlsJson=runQualityScalarPublisherControls(search,runId);
+                    PcbLayerRoutingPrototype.OrderingProgress progress=
+                        ((PcbLayerRoutingPrototype.Session)routeSession).advanceOrderingSlice(1);
+                    manualSliceSteps++;
+                    steps++;
+                    require(progress!=PcbLayerRoutingPrototype.OrderingProgress.ROUTE_READY,
+                        "manual P07 stepping must stop before any retained route can be integrated");
+                    inspectActualTargetAfterSlice(progress);
+                    if(progress==PcbLayerRoutingPrototype.OrderingProgress.COMPLETE && !qualityRejected)
+                        throw new AssertionError("target quality rejection was not observed before P07 completion");
+                }
+            } finally {
+                manualDriverNanos+=Math.max(0L,System.nanoTime()-manualGroupStarted);
+            }
+            manualGroups++;
+        }
+
+        private void verifyTargetContext(
+                PcbLayerRoutingPrototype.FixedPrefixCaptureContext context) {
+            require(variant==Rb100Plan.Variant.SEPARATE_DIRECT_SWITCHING &&
+                context.layoutSeed()==PLACEMENT_DIAGNOSTIC_SEED &&
+                context.routingSeed()==ROUTING_DIAGNOSTIC_ROUTING_SEED &&
+                context.routeRequestIndex()==0 && context.selectedPlacementIndex()==0 &&
+                context.selectedPlacementAttempt()==4 &&
+                Arrays.equals(context.eligiblePlacementAttempts(),new int[]{4,2,3,0,1}) &&
+                context.rawPlacementFingerprint()!=null &&
+                context.rawPlacementFingerprint().length()>0 &&
+                context.rawPlacementFingerprint().length()<=1024*1024,
+                "actual quality probe context binds exact seeds, request0, eligible index0, attempt4 and canonical placement order");
+        }
+
+        private void inspectActualTargetAfterSlice(
+                PcbLayerRoutingPrototype.OrderingProgress progress) {
+            Object search=P07ScalarReflection.read(routeSession,"search");
+            if(!targetCaptured && search!=null) {
+                int pass=P07ScalarReflection.intField(search,"pass");
+                Object publisher=P07ScalarReflection.read(search,"publisher");
+                if(pass==1 && publisher!=null && "D_SENSE".equals(
+                        P07ScalarReflection.stringField(publisher,"net"))) {
+                    int stage=P07ScalarReflection.intField(publisher,"stage");
+                    Vector<?> reversed=(Vector<?>)P07ScalarReflection.read(publisher,"reversed");
+                    int qualityIndex=P07ScalarReflection.intField(publisher,"qualityIndex");
+                    if(stage==1 && reversed!=null && qualityIndex==reversed.size()) {
+                        snapshot=captureActualQualityScalars(search,publisher,
+                            (PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext);
+                        require(snapshot.pathNodeCount>1 && snapshot.planarLength>0,
+                            "actual D_SENSE target is a nonempty found path, not a zero-length route");
+                        require(snapshot.rejectDirectZero || snapshot.rejectLengthOverThreeDirect ||
+                            snapshot.rejectBendsOver16,
+                            "actual D_SENSE Publisher state must explain the existing branch-quality rejection");
+                        targetSearch=search;
+                        targetPublisher=publisher;
+                        targetStartPad=P07ScalarReflection.read(publisher,"start");
+                        targetRootPad=P07ScalarReflection.read(publisher,"root");
+                        targetEndNode=P07ScalarReflection.read(publisher,"end");
+                        targetCaptured=true;
+                    }
+                }
+            }
+            if(targetCaptured && !qualityRejected) {
+                int ownerPass=P07ScalarReflection.intField(routeSession,"pass");
+                Object currentSearch=P07ScalarReflection.read(routeSession,"search");
+                if(ownerPass==2 && currentSearch==null) {
+                    String reason=P07ScalarReflection.stringField(routeSession,"reason");
+                    require("D_SENSE:BRANCH_QUALITY_LIMIT".equals(reason),
+                        "same P07 owner records the subsequent actual D_SENSE branch-quality rejection");
+                    PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
+                        (PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext;
+                    require(P07ScalarReflection.read(targetSearch,"publisher")==targetPublisher &&
+                        P07ScalarReflection.read(targetSearch,"owner")==routeSession &&
+                        P07ScalarReflection.read(routeSession,"fixedPrefixContext")==context &&
+                        P07ScalarReflection.intField(targetSearch,"pass")==snapshot.pass &&
+                        snapshot.pass==1 && snapshot.netId.equals(
+                            P07ScalarReflection.stringField(targetSearch,"currentNet")) &&
+                        P07ScalarReflection.read(targetPublisher,"start")==targetStartPad &&
+                        P07ScalarReflection.read(targetPublisher,"root")==targetRootPad &&
+                        P07ScalarReflection.read(targetPublisher,"end")==targetEndNode &&
+                        snapshot.startPadId.equals(((PcbPadPlacement)targetStartPad).getPadId()) &&
+                        snapshot.rootPadId.equals(((PcbPadPlacement)targetRootPad).getPadId()),
+                        "actual rejection retains the same request/pass/net/start/root and Publisher object identity");
+                    qualityRejectionMessage=reason;
+                    qualityRejected=true;
+                } else {
+                    Object currentPublisher=currentSearch==null?null:
+                        P07ScalarReflection.read(currentSearch,"publisher");
+                    require(currentPublisher==targetPublisher,
+                        "captured Publisher must be rejected by its actual guard before any successor branch or owner");
+                    require(progress==PcbLayerRoutingPrototype.OrderingProgress.WORKING,
+                        "actual quality rejection stays an internally consumed P07 failure, not a retained route");
+                }
+            }
+        }
+
+        void observeGeneratorAdvance(SeededPcbLayoutGenerator.Session generatorSession) {
+            if(!qualityRejected || targetRequestAccounted) return;
+            Object active=P07ScalarReflection.read(generatorSession,"mediumTwoLayerRoute");
+            int accounted=P07ScalarReflection.intField(generatorSession,"mediumTwoLayerAttempts");
+            if(active==routeSession) return;
+            if(accounted==targetAccountingBefore+1) {
+                targetAccountingAfter=accounted;
+                targetRequestAccounted=true;
+            } else if(accounted>targetAccountingBefore+1) {
+                throw new AssertionError("target P07 request accounting advanced more than once before receipt");
+            }
+        }
+
+        void confirmTerminalOperation(P07PolicyDiagnosticCase result,
+                SeededPcbLayoutGenerator.Session generatorSession,
+                SeededPcbLayoutGenerator generator,MediumBoardPhysicalPolicy.Result policyResult) {
+            require(targetCaptured && qualityRejected && snapshot!=null &&
+                routeSession!=null && fixedPrefixContext!=null && armedReadyGuard,
+                "terminal scalar record has its exact actual target context and rejection");
+            require(targetRequestAccounted && targetAccountingAfter==targetAccountingBefore+1,
+                "ordinary generator advancement accounts the target P07 request exactly once");
+            require(result!=null && "EXHAUSTED".equals(result.sessionTerminalStatus) &&
+                policyResult!=null && !policyResult.accepted() && policyResult.getLayout()==null &&
+                result.layoutOutputJson.contains("\"layoutReturned\":false") &&
+                result.sessionRejection!=null && result.sessionRejection.isExhausted(),
+                "actual generator operation ends exhausted with no selected or returned layout");
+            require(generatorSession!=null && generator!=null,
+                "final rejection record remains owned by the actual generator session");
+            Object lastFailure=P07ScalarReflection.read(generatorSession,"lastFailure");
+            require(lastFailure instanceof PcbRoutingRejectedException,
+                "actual generator lastFailure retains its typed PcbRoutingRejectedException owner");
+            generatorLastFailureType=lastFailure.getClass().getName();
+            generatorLastFailureMessage=((Throwable)lastFailure).getMessage();
+            require(generatorLastFailureMessage!=null && generatorLastFailureMessage.length()>0,
+                "actual generator lastFailure retains its source rejection message");
+            require(graphCallbacks==0,
+                "nonselecting quality observer never invokes graph materialization callback");
+            terminalConfirmed=true;
+        }
+
+        void requireTerminalOperation(P07PolicyDiagnosticCase result) {
+            require(terminalConfirmed && targetCaptured && qualityRejected &&
+                targetRequestAccounted && "PASS".equals(result.status) &&
+                "EXHAUSTED".equals(result.sessionTerminalStatus) &&
+                result.policyResult!=null && result.policyResult.getLayout()==null &&
+                graphCallbacks==0,
+                "quality scalar event is eligible only after successful cleanup and confirmed no-layout rejection");
+        }
+
+        long manualDriverMillis() { return nanosToMillis(manualDriverNanos); }
+
+        String eventJson(P07PolicyDiagnosticCase result) {
+            requireTerminalOperation(result);
+            PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
+                (PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext;
+            return "RB100_QUALITY_SCALAR_EVENT {\"protocolVersion\":1,\"sourceRevision\":8,"+
+                "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\""+jsonFull(operationId)+
+                "\",\"variant\":\""+variant.name()+"\",\"mode\":\"PROBE\",\"rootSeed\":\""+
+                SEED+"\",\"placementSeed\":\""+PLACEMENT_DIAGNOSTIC_SEED+
+                "\",\"routingSeed\":\""+ROUTING_DIAGNOSTIC_ROUTING_SEED+
+                "\",\"layoutVersion\":"+SeededPcbLayoutGenerator.CURRENT_VERSION+
+                ",\"dependencyEpoch\":\""+jsonFull(GenerationDependencyContext.INTERPRETATION_EPOCH)+
+                "\",\"planVersion\":"+Rb100Plan.PLAN_VERSION+
+                ",\"modelVersion\":"+Rb100Plan.MODEL_VERSION+
+                ",\"physicalIntentVersion\":"+Rb100Placement.INTENT_VERSION+
+                ",\"routeRequestIndex\":"+context.routeRequestIndex()
+                +",\"selectedPlacementIndex\":"+context.selectedPlacementIndex()
+                +",\"selectedPlacementAttempt\":"+context.selectedPlacementAttempt()
+                +",\"eligiblePlacementAttempts\":"+integerArrayJson(context.eligiblePlacementAttempts())
+                +",\"placementFingerprintLength\":"+context.rawPlacementFingerprint().length()
+                +",\"placementFingerprintSha256\":\""+sha256Hex(context.rawPlacementFingerprint())+"\""
+                +",\"pass\":"+snapshot.pass+",\"netId\":\""+jsonFull(snapshot.netId)+"\""
+                +",\"startPadId\":\""+jsonFull(snapshot.startPadId)+"\",\"rootPadId\":\""+
+                jsonFull(snapshot.rootPadId)+"\",\"endPadId\":null"
+                +",\"startX\":"+snapshot.startX+",\"startY\":"+snapshot.startY
+                +",\"endX\":"+snapshot.endX+",\"endY\":"+snapshot.endY
+                +",\"endLayer\":"+snapshot.endLayer+",\"primaryLayer\":"+snapshot.primaryLayer
+                +",\"firstLayer\":"+snapshot.firstLayer+",\"gridWidth\":"+snapshot.gridWidth
+                +",\"gridHeight\":"+snapshot.gridHeight+",\"gridOriginX\":"+snapshot.gridOriginX
+                +",\"gridOriginY\":"+snapshot.gridOriginY+",\"gridPitch\":"+snapshot.gridPitch
+                +",\"pathNodeCount\":"+snapshot.pathNodeCount+",\"transitionCount\":"+
+                snapshot.transitionCount+",\"planarLength\":"+snapshot.planarLength
+                +",\"directDistance\":"+snapshot.directDistance+",\"bends\":"+snapshot.bends
+                +",\"rejectDirectZero\":"+snapshot.rejectDirectZero
+                +",\"rejectLengthOverThreeDirect\":"+snapshot.rejectLengthOverThreeDirect
+                +",\"rejectBendsOver16\":"+snapshot.rejectBendsOver16
+                +",\"qualityRejected\":true,\"qualityRejectionOwner\":\"PcbLayerRoutingPrototype.Session#reason\""
+                +",\"qualityRejectionMessage\":\""+jsonFull(qualityRejectionMessage)+"\""
+                +",\"generatorLastFailureSource\":\"SeededPcbLayoutGenerator.Session#lastFailure\""
+                +",\"generatorLastFailureType\":\""+jsonFull(generatorLastFailureType)+"\""
+                +",\"generatorLastFailureMessage\":\""+jsonFull(generatorLastFailureMessage)+"\""
+                +",\"routeMillisStatus\":\"INCOMPLETE_MANUAL_SINGLE_STEP_CADENCE_NOT_REPRESENTATIVE\""
+                +",\"manualDriverMillis\":"+manualDriverMillis()+",\"manualSliceSteps\":"+
+                manualSliceSteps+",\"acceptanceFlags\":{\"accepted\":false,\"routed\":false,\"playable\":false}"
+                +",\"feasibility\":\"UNKNOWN\",\"layoutQualification\":false,\"graphCallbacks\":"+
+                graphCallbacks+"}";
+        }
+    }
+
+    private static final class QualityScalarSnapshot {
+        final int pass,startX,startY,endX,endY,endLayer,primaryLayer,firstLayer,
+            gridWidth,gridHeight,gridOriginX,gridOriginY,gridPitch,pathNodeCount,
+            transitionCount,planarLength,directDistance,bends;
+        final String netId,startPadId,rootPadId;
+        final boolean rejectDirectZero,rejectLengthOverThreeDirect,rejectBendsOver16;
+        QualityScalarSnapshot(int pass,String netId,String startPadId,String rootPadId,
+                int startX,int startY,int endX,int endY,int endLayer,int primaryLayer,
+                int firstLayer,int gridWidth,int gridHeight,int gridOriginX,int gridOriginY,
+                int gridPitch,int pathNodeCount,int transitionCount,int planarLength,
+                int directDistance,int bends) {
+            this.pass=pass; this.netId=netId; this.startPadId=startPadId; this.rootPadId=rootPadId;
+            this.startX=startX; this.startY=startY; this.endX=endX; this.endY=endY;
+            this.endLayer=endLayer; this.primaryLayer=primaryLayer; this.firstLayer=firstLayer;
+            this.gridWidth=gridWidth; this.gridHeight=gridHeight; this.gridOriginX=gridOriginX;
+            this.gridOriginY=gridOriginY; this.gridPitch=gridPitch; this.pathNodeCount=pathNodeCount;
+            this.transitionCount=transitionCount; this.planarLength=planarLength;
+            this.directDistance=directDistance; this.bends=bends;
+            rejectDirectZero=directDistance==0;
+            rejectLengthOverThreeDirect=(long)planarLength>3L*directDistance;
+            rejectBendsOver16=bends>16;
+        }
+    }
+
+    private static final class P07ScalarReflection {
+        private static final Map<String,Field> FIELDS=new HashMap<String,Field>();
+        private static final Map<String,Method> METHODS=new HashMap<String,Method>();
+        private static Constructor<?> nodeConstructor,publisherConstructor;
+        private static Class<?> nodeClass,publisherClass;
+
+        static Object read(Object target,String name) {
+            if(target==null) throw new AssertionError("Cannot read "+name+" from a null actual owner");
+            String key=target.getClass().getName()+"#"+name;
+            Field field=FIELDS.get(key);
+            if(field==null) {
+                Class<?> current=target.getClass();
+                while(current!=null && field==null) {
+                    try { field=current.getDeclaredField(name); }
+                    catch(NoSuchFieldException absent) { current=current.getSuperclass(); }
+                }
+                if(field==null) throw new AssertionError("Missing reflected actual field "+key);
+                field.setAccessible(true);
+                FIELDS.put(key,field);
+            }
+            try { return field.get(target); }
+            catch(IllegalAccessException failure) {
+                throw new AssertionError("Cannot read actual field "+key,failure);
+            }
+        }
+
+        static int intField(Object target,String name) {
+            Object value=read(target,name);
+            if(!(value instanceof Integer)) throw new AssertionError("Actual field is not int: "+name);
+            return ((Integer)value).intValue();
+        }
+
+        static String stringField(Object target,String name) {
+            Object value=read(target,name);
+            if(value!=null && !(value instanceof String))
+                throw new AssertionError("Actual field is not String: "+name);
+            return (String)value;
+        }
+
+        static Object invoke(Object target,String name,Class<?>[] parameterTypes,Object... args) {
+            if(target==null) throw new AssertionError("Cannot invoke "+name+" on a null actual owner");
+            StringBuilder signature=new StringBuilder(target.getClass().getName()).append('#').append(name);
+            for(Class<?> parameter:parameterTypes) signature.append(':').append(parameter.getName());
+            String key=signature.toString();
+            Method method=METHODS.get(key);
+            if(method==null) {
+                try { method=target.getClass().getDeclaredMethod(name,parameterTypes); }
+                catch(NoSuchMethodException failure) {
+                    throw new AssertionError("Missing reflected actual method "+key,failure);
+                }
+                method.setAccessible(true);
+                METHODS.put(key,method);
+            }
+            try { return method.invoke(target,args); }
+            catch(InvocationTargetException failure) { throw propagate(failure.getCause()); }
+            catch(ReflectiveOperationException failure) {
+                throw new AssertionError("Cannot invoke actual method "+key,failure);
+            }
+        }
+
+        static int searchCoordinate(Object search,String method,int cell) {
+            return ((Integer)invoke(search,method,new Class<?>[]{Integer.TYPE},Integer.valueOf(cell))).intValue();
+        }
+
+        static int searchCell(Object search,PcbPadPlacement pad) {
+            return ((Integer)invoke(search,"cell",new Class<?>[]{PcbPadPlacement.class},pad)).intValue();
+        }
+
+        static Object newNode(Object search,int cell,int layer,int direction,int transitions,
+                int serial,Object previous) {
+            ensureConstructors(search);
+            try {
+                int cells=intField(search,"cells");
+                return nodeConstructor.newInstance(Integer.valueOf(cell),Integer.valueOf(layer),
+                    Integer.valueOf(direction),Integer.valueOf(transitions),Integer.valueOf(serial*10),
+                    Integer.valueOf(0),Integer.valueOf(serial),Integer.valueOf(cells),previous);
+            } catch(InvocationTargetException failure) { throw propagate(failure.getCause()); }
+            catch(ReflectiveOperationException failure) {
+                throw new AssertionError("Cannot create isolated synthetic P07 node",failure);
+            }
+        }
+
+        static Object newPublisher(Object search,String net,PcbPadPlacement start,
+                PcbPadPlacement root,Object end,PcbPadPlacement endTerminal) {
+            ensureConstructors(search);
+            try { return publisherConstructor.newInstance(search,net,start,root,end,endTerminal); }
+            catch(InvocationTargetException failure) { throw propagate(failure.getCause()); }
+            catch(ReflectiveOperationException failure) {
+                throw new AssertionError("Cannot create isolated synthetic P07 Publisher",failure);
+            }
+        }
+
+        static void advancePublisher(Object publisher) {
+            invoke(publisher,"advanceOne",new Class<?>[0]);
+        }
+
+        private static void ensureConstructors(Object search) {
+            if(nodeConstructor!=null && publisherConstructor!=null) return;
+            try {
+                for(Class<?> nested:PcbLayerRoutingPrototype.class.getDeclaredClasses())
+                    if("Node".equals(nested.getSimpleName())) nodeClass=nested;
+                for(Class<?> nested:search.getClass().getDeclaredClasses())
+                    if("Publisher".equals(nested.getSimpleName())) publisherClass=nested;
+                if(nodeClass==null || publisherClass==null)
+                    throw new AssertionError("Actual private P07 Node/Publisher classes are missing");
+                nodeConstructor=nodeClass.getDeclaredConstructor(Integer.TYPE,Integer.TYPE,
+                    Integer.TYPE,Integer.TYPE,Integer.TYPE,Integer.TYPE,Integer.TYPE,Integer.TYPE,nodeClass);
+                publisherConstructor=publisherClass.getDeclaredConstructor(search.getClass(),
+                    String.class,PcbPadPlacement.class,PcbPadPlacement.class,nodeClass,
+                    PcbPadPlacement.class);
+                nodeConstructor.setAccessible(true);
+                publisherConstructor.setAccessible(true);
+            } catch(ReflectiveOperationException failure) {
+                throw new AssertionError("Actual P07 scalar constructor contract changed",failure);
+            }
+        }
+
+        private static RuntimeException propagate(Throwable failure) {
+            if(failure instanceof RuntimeException) return (RuntimeException)failure;
+            if(failure instanceof Error) throw (Error)failure;
+            return new IllegalStateException("Reflected P07 operation failed",failure);
+        }
+    }
+
+    private static QualityScalarSnapshot captureActualQualityScalars(Object search,Object publisher,
+            PcbLayerRoutingPrototype.FixedPrefixCaptureContext context) {
+        Vector<?> reversed=(Vector<?>)P07ScalarReflection.read(publisher,"reversed");
+        require(reversed!=null && !reversed.isEmpty(),
+            "actual quiescent Publisher retains its complete ordered path nodes");
+        Object firstNode=reversed.get(reversed.size()-1);
+        Object endNode=P07ScalarReflection.read(publisher,"end");
+        PcbPadPlacement start=(PcbPadPlacement)P07ScalarReflection.read(publisher,"start");
+        PcbPadPlacement root=(PcbPadPlacement)P07ScalarReflection.read(publisher,"root");
+        require(start!=null && root!=null && endNode!=null,
+            "actual Publisher binds the starting pad, original tree root and found goal node");
+        int startCell=P07ScalarReflection.searchCell(search,start);
+        int startX=start.getX(),startY=start.getY();
+        require(P07ScalarReflection.searchCoordinate(search,"x",startCell)==startX &&
+            P07ScalarReflection.searchCoordinate(search,"y",startCell)==startY,
+            "actual Publisher start pad maps to the exact Search grid cell without rounding");
+        int endCell=P07ScalarReflection.intField(endNode,"cell");
+        int endX=P07ScalarReflection.searchCoordinate(search,"x",endCell);
+        int endY=P07ScalarReflection.searchCoordinate(search,"y",endCell);
+        int direct=Math.abs(startX-endX)+Math.abs(startY-endY);
+        int length=P07ScalarReflection.intField(publisher,"length");
+        int bends=P07ScalarReflection.intField(publisher,"bends");
+        int transitions=P07ScalarReflection.intField(endNode,"transitions");
+        int layerChanges=0;
+        for(int index=reversed.size()-1;index>0;index--) {
+            int before=P07ScalarReflection.intField(reversed.get(index),"layer");
+            int after=P07ScalarReflection.intField(reversed.get(index-1),"layer");
+            if(before!=after) layerChanges++;
+        }
+        int gridWidth=P07ScalarReflection.intField(search,"width");
+        int gridHeight=P07ScalarReflection.intField(search,"height");
+        int gridOriginX=P07ScalarReflection.intField(search,"minX");
+        int gridOriginY=P07ScalarReflection.intField(search,"minY");
+        int gridPitch=PcbLayerRoutingPrototype.GRID;
+        int firstLayer=P07ScalarReflection.intField(firstNode,"layer");
+        int endLayer=P07ScalarReflection.intField(endNode,"layer");
+        int primaryLayer=P07ScalarReflection.intField(search,"primary");
+        require(transitions==layerChanges && transitions>=0 && transitions<reversed.size(),
+            "actual end-node transition count conserves every actual path layer change");
+        require(length==(reversed.size()-1-transitions)*gridPitch,
+            "actual Publisher planar length conserves same-layer path edges at GRID10");
+        require(firstLayer>=0 && firstLayer<2 &&
+            PcbCopperAccess.hasCopper(start,PcbCopperLayer.values()[firstLayer]) &&
+            direct>=0 && gridWidth>0 && gridHeight>0,
+            "actual reversed path starts on a copper face available at the actual start pad and remains grid bounded");
+        require(context.rawPlacementFingerprint()!=null &&
+            context.rawPlacementFingerprint().length()>0,
+            "actual metric observation remains bound to the actual request placement fingerprint");
+        return new QualityScalarSnapshot(P07ScalarReflection.intField(search,"pass"),
+            P07ScalarReflection.stringField(publisher,"net"),start.getPadId(),root.getPadId(),
+            startX,startY,endX,endY,endLayer,primaryLayer,firstLayer,gridWidth,gridHeight,
+            gridOriginX,gridOriginY,gridPitch,reversed.size(),transitions,length,direct,bends);
+    }
+
+    private static String runQualityScalarPublisherControls(Object search,String runId) {
+        int beforeAssertions=assertions;
+        int width=P07ScalarReflection.intField(search,"width");
+        int height=P07ScalarReflection.intField(search,"height");
+        PcbBoardLayout layout=(PcbBoardLayout)P07ScalarReflection.read(search,"layout");
+        require(width>20 && height>20 && layout!=null,
+            "literal Publisher controls use the actual admitted P07 Search grid and private layout");
+        PcbPadPlacement anchor=null;
+        int anchorCell=-1;
+        for(PcbPadPlacement pad:layout.getPads()) {
+            int cell=P07ScalarReflection.searchCell(search,pad);
+            int gx=cell%width,gy=cell/width;
+            if(gx>=10 && gx+10<width && gy>=10 && gy+10<height) {
+                anchor=pad; anchorCell=cell; break;
+            }
+        }
+        require(anchor!=null,"literal scalar controls find an actual placed pad with ten-cell grid clearance");
+        ArrayList<QualityControlResult> rows=new ArrayList<QualityControlResult>();
+        rows.add(runQualityControl(search,anchor,anchorCell,"direct_zero_rejected","",
+            0,0,0,1,0,1,true));
+        rows.add(runQualityControl(search,anchor,anchorCell,"length_over_3x_rejected","N3,E2,S3",
+            80,20,2,9,0,1,true));
+        rows.add(runQualityControl(search,anchor,anchorCell,"bends_over_16_rejected",
+            "(E1,N1)x9",180,180,17,19,0,1,true));
+        rows.add(runQualityControl(search,anchor,anchorCell,"exact_3x_16_accepted",
+            "E6,N1,W6,N1,E1,N1,W1,N1,E1,N1,W1,N1,E1,N1,W1,N1,E1",
+            270,90,16,28,0,2,false));
+        rows.add(runQualityControl(search,anchor,anchorCell,"via_direction_reset","E1,V1,N1,E1",
+            30,30,1,5,1,2,false));
+        StringBuilder checks=new StringBuilder("[");
+        for(int index=0;index<rows.size();index++) {
+            if(index>0) checks.append(',');
+            QualityControlResult row=rows.get(index);
+            checks.append("{\"name\":\"").append(row.name).append("\",\"status\":\"PASS\"")
+                .append(",\"planarLength\":").append(row.planarLength)
+                .append(",\"directDistance\":").append(row.directDistance)
+                .append(",\"bends\":").append(row.bends)
+                .append(",\"pathNodeCount\":").append(row.pathNodeCount)
+                .append(",\"transitionCount\":").append(row.transitionCount)
+                .append(",\"publisherStage\":").append(row.publisherStage).append('}');
+        }
+        checks.append(']');
+        return "RB100_QUALITY_SCALAR_CONTROLS {\"protocolVersion\":1,\"sourceRevision\":8,"+
+            "\"runId\":\""+jsonFull(runId)+"\",\"status\":\"PASS\","+
+            "\"fixture\":\"SYNTHETIC_PUBLISHER_METRICS_ONLY\",\"checks\":"+checks+
+            ",\"assertions\":"+(assertions-beforeAssertions)+",\"layoutQualification\":false}";
+    }
+
+    private static QualityControlResult runQualityControl(Object search,PcbPadPlacement anchor,
+            int anchorCell,String name,String specification,int expectedLength,int expectedDirect,
+            int expectedBends,int expectedNodes,int expectedTransitions,int expectedStage,
+            boolean expectRejected) {
+        char[] steps=expandQualityControl(specification);
+        int width=P07ScalarReflection.intField(search,"width");
+        int height=P07ScalarReflection.intField(search,"height");
+        int gx=anchorCell%width,gy=anchorCell/width;
+        ArrayList<Integer> cells=new ArrayList<Integer>();
+        ArrayList<Integer> layers=new ArrayList<Integer>();
+        ArrayList<Integer> directions=new ArrayList<Integer>();
+        ArrayList<Integer> transitions=new ArrayList<Integer>();
+        int layer=P07ScalarReflection.intField(search,"primary"),transitionCount=0;
+        cells.add(Integer.valueOf(anchorCell)); layers.add(Integer.valueOf(layer));
+        directions.add(Integer.valueOf(4)); transitions.add(Integer.valueOf(0));
+        for(char step:steps) {
+            if(step=='V') { layer=1-layer; transitionCount++; }
+            else if(step=='E') gx++;
+            else if(step=='W') gx--;
+            else if(step=='N') gy--;
+            else if(step=='S') gy++;
+            else throw new AssertionError("Unknown literal scalar-control direction");
+            require(gx>=0 && gx<width && gy>=0 && gy<height,
+                "literal synthetic Publisher chain remains inside its actual Search grid");
+            cells.add(Integer.valueOf(gy*width+gx));
+            layers.add(Integer.valueOf(layer));
+            directions.add(Integer.valueOf(step=='E'?0:step=='N'?1:step=='W'?2:step=='S'?3:4));
+            transitions.add(Integer.valueOf(transitionCount));
+        }
+        Object previous=null;
+        for(int index=0;index<cells.size();index++)
+            previous=P07ScalarReflection.newNode(search,cells.get(index).intValue(),
+                layers.get(index).intValue(),directions.get(index).intValue(),
+                transitions.get(index).intValue(),index,previous);
+        PcbPadPlacement root=anchor;
+        Object publisher=P07ScalarReflection.newPublisher(search,"CONTROL_"+name,
+            anchor,root,previous,null);
+        boolean rejected=false;
+        String rejection=null;
+        for(int work=0;work<steps.length+cells.size()+8;work++) {
+            int stage=P07ScalarReflection.intField(publisher,"stage");
+            if(stage==2) break;
+            try { P07ScalarReflection.advancePublisher(publisher); }
+            catch(RuntimeException failure) {
+                if("Exhausted".equals(failure.getClass().getSimpleName()) &&
+                        failure.getMessage()!=null && failure.getMessage().endsWith(":BRANCH_QUALITY_LIMIT")) {
+                    rejected=true; rejection=failure.getMessage(); break;
+                }
+                throw failure;
+            }
+        }
+        Vector<?> reversed=(Vector<?>)P07ScalarReflection.read(publisher,"reversed");
+        Object end=P07ScalarReflection.read(publisher,"end");
+        int length=P07ScalarReflection.intField(publisher,"length");
+        int bends=P07ScalarReflection.intField(publisher,"bends");
+        int direct=Math.abs(anchor.getX()-P07ScalarReflection.searchCoordinate(search,"x",
+            P07ScalarReflection.intField(end,"cell")))+
+            Math.abs(anchor.getY()-P07ScalarReflection.searchCoordinate(search,"y",
+                P07ScalarReflection.intField(end,"cell")));
+        int endTransitions=P07ScalarReflection.intField(end,"transitions");
+        int stage=P07ScalarReflection.intField(publisher,"stage");
+        require(rejected==expectRejected && length==expectedLength && direct==expectedDirect &&
+            bends==expectedBends && reversed.size()==expectedNodes &&
+            endTransitions==expectedTransitions && stage==expectedStage,
+            "actual Publisher control matches its frozen literal scalar/readiness row: "+name+
+            (rejection==null?"":" "+rejection));
+        if(expectRejected) require(stage==1 && rejected,
+            "literal rejected Publisher control stops at its pre-publication quality guard");
+        else require(!rejected && stage==2,
+            "literal accepted Publisher control proves readiness only and never publishes geometry");
+        return new QualityControlResult(name,length,direct,bends,reversed.size(),
+            endTransitions,stage);
+    }
+
+    private static char[] expandQualityControl(String specification) {
+        if(specification==null || specification.length()==0) return new char[0];
+        ArrayList<Character> result=new ArrayList<Character>();
+        if("(E1,N1)x9".equals(specification)) {
+            for(int repeat=0;repeat<9;repeat++) { result.add(Character.valueOf('E')); result.add(Character.valueOf('N')); }
+        } else {
+            String[] tokens=specification.split(",");
+            for(String token:tokens) {
+                if(token.length()<2) throw new AssertionError("Malformed literal scalar-control segment");
+                char direction=token.charAt(0);
+                int count=Integer.parseInt(token.substring(1));
+                for(int index=0;index<count;index++) result.add(Character.valueOf(direction));
+            }
+        }
+        char[] values=new char[result.size()];
+        for(int index=0;index<values.length;index++) values[index]=result.get(index).charValue();
+        return values;
+    }
+
+    private static final class QualityControlResult {
+        final String name;
+        final int planarLength,directDistance,bends,pathNodeCount,transitionCount,publisherStage;
+        QualityControlResult(String name,int planarLength,int directDistance,int bends,
+                int pathNodeCount,int transitionCount,int publisherStage) {
+            this.name=name; this.planarLength=planarLength; this.directDistance=directDistance;
+            this.bends=bends; this.pathNodeCount=pathNodeCount;
+            this.transitionCount=transitionCount; this.publisherStage=publisherStage;
+        }
+    }
+
     private static int fixedPrefixCell(PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot graph,
             int x,int y) {
         int gx=(x-graph.originX())/graph.gridPitch();
@@ -3074,9 +3908,12 @@ public final class Rb100PhysicalDiagnostics {
         MediumBoardPhysicalPolicy.Result policyResult;
         String layoutOutputJson = "null";
         String fixedPrefixMode,fixedPrefixOperationId,fixedPrefixGraphCaseId,fixedPrefixGraphSha256;
+        String qualitySubsetMarkerJson;
         int fixedPrefixGraphBytes;
         long fixedPrefixSerializationMillis;
         FixedPrefixCaptureCollector fixedPrefixCollector;
+        QualityScalarProbe qualityScalarProbe;
+        boolean qualityScalarOperation;
 
         P07PolicyDiagnosticCase(String variant, long seed, String runId) {
             super("AUTHORED_RB100", variant, seed, -1);

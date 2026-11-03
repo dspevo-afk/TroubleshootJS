@@ -1,0 +1,39 @@
+{
+  "schema": "quality-scalar-native-summary-v1",
+  "status": "PASS_DIAGNOSTIC_ONLY",
+  "sourceManifestSha256": "653a4e64a5308eaddd0a6eba45081b3577c92503c833c1683acd44c5be5266dd",
+  "sourceInputCount": 1068,
+  "sourceInputBytes": 86013188,
+  "sourceRevision": 8,
+  "parentElapsedSecondsIncludingCleanup": 69.7411078,
+  "parentExitCode": 0,
+  "nativeExitCode": 0,
+  "terminationProven": true,
+  "cleanupStatus": "PASS",
+  "cleanupElapsedMs": null,
+  "operations": [
+    {
+      "mode": "NULL",
+      "status": "PASS",
+      "operationMs": 16622,
+      "cleanupMs": 1,
+      "workUnits": 300,
+      "maxUnitMs": 1380,
+      "primaryRoutingExpansions": 2918222,
+      "primaryRoutingOrders": 9
+    },
+    {
+      "mode": "PROBE",
+      "status": "PASS",
+      "operationMs": 20414,
+      "cleanupMs": 0,
+      "workUnits": 300,
+      "maxUnitMs": 765,
+      "primaryRoutingExpansions": 2918222,
+      "primaryRoutingOrders": 9
+    }
+  ],
+  "productionFeasibility": "UNKNOWN",
+  "layoutQualification": false,
+  "playable100": 0
+}

@@ -1,0 +1,35 @@
+{
+    "schema":  "quality-scalar-final-input-audit-v1",
+    "status":  "PASS",
+    "nativeInputCount":  1068,
+    "nativeManifestSha256":  "653a4e64a5308eaddd0a6eba45081b3577c92503c833c1683acd44c5be5266dd",
+    "nativeInputBytes":  86013188,
+    "modifiedFromAcceptedT":  [
+                                  "scripts/verify-current-contracts.ps1",
+                                  "tests/contracts/Rb100PhysicalDiagnostics.java"
+                              ],
+    "addedFromAcceptedT":  [
+                               "tests/contracts/Rb100QualityScalarContractTest.java"
+                           ],
+    "productionJavaUnchanged":  850,
+    "productionBuildInputsPerVariant":  1202,
+    "developerInputDigest":  "438cc4c0fdf7205479c60d1d30540dc964b9da8312c42850790cd1f209a8c2ed",
+    "playerInputDigest":  "53125e37f12449bd50dabd9cff43368eed0e4bea3bccfc1cd19d60becee7c6a5",
+    "priorPythonFilesUnchanged":  24,
+    "pythonInputHashes":  {
+                              "read_quality_scalars.py":  "0396ae2566454063c6c744fbeb49e68859edb9ef092a23b027e01a3977f52802",
+                              "test_read_quality_scalars.py":  "c51749f5f8af2e1026d87958686e13ea20603ef3ca6c2c94021538a5dbe79281",
+                              "read_current_prefix_ledger.py":  "339230dd7019fb509cc98011baa7c880462a448bbf16cd25da8203423eff34b5",
+                              "read_fixed_prefix_graph.py":  "c146cef4336d96eb6b6597569115d746d6a1fffe3b0c2ee2759d0e259d8b2a00",
+                              "read_fixed_prefix_capture.py":  "26cbdc32361f07f759cc32dd3fe432fd640e329ce7e51dd583094dc10d0af962",
+                              "fixed_prefix_minimum_vias.py":  "924edc27078935e18da981117a09011989233afafff2345402c7bd5c1105d9b1"
+                          },
+    "positiveReaderOutputSha256":  "df9cae97f2e9ee3e2e19cede34d88f89032ea5e37a68f27d36f3f24c62f8fcf2",
+    "positiveReader":  "PASS",
+    "negativeControls":  7,
+    "actualJunctionRemoved":  true,
+    "elapsedSeconds":  18.4858093,
+    "buildDisposition":  "NOT_RUN_IDENTICAL_PRODUCTION_INPUTS_PRIOR_QUALIFIED_EVIDENCE_ONLY",
+    "productionOutputDisposition":  "NO_Y_PLAYER_OR_DEVELOPER_COMPILED_OUTPUT",
+    "cleanupSplit":  "NO_BROWSER_PREVIEW_OR_PERSISTENT_RESOURCE_STARTED"
+}

@@ -332,6 +332,25 @@ bounds remain inconclusive, with UNKNOWN production feasibility and false
 route/layout/electrical/Q100 acceptance. Default request0 capture and historical
 v27 reader/oracle artifacts retain their separate contracts. This test-only mode
 adds no Player capability, production policy, epoch or playable100 admission.
+
+The native quality-scalar runner is also test-only. It follows the actual
+generator-owned P07 Session/Search/Publisher through cached reflection, uses the
+existing nonselecting observer only for request context, and single-steps the
+existing work method inside the original native budgets. It reads complete
+pre-guard metrics, confirms the next rejection on the same owner and resumes
+ordinary parent accounting. Synthetic Publisher controls stop before geometry
+publication. No reflected field write, graph callback or production seam is
+added; unexpected retained yields fail before integration. NULL/PROBE logical
+canonical, expansion, identity and no-layout parity are required. Manual cadence
+and incomplete routeMillis are explicitly not default-performance evidence.
+The separate strict Python reader binds the closed source census and native
+outputs, recomputes scalar conservation/predicates and compares actual operation
+statistics. Frozen helper modules are hash-checked, privately executed with
+temporary module slots restored in finally, and get only four diagnostic
+schema/count/revision overrides. Natural int/long counters and full placement
+ranking remain distinct from routing budgets and P07 eligibility. The
+[quality-scalar packet](task-evidence/Q100/quality-scalars-r1/README.md) records
+the finite result and unqualified boundaries; this adds no Player capability.
 The current default-parity reader owns v27 metadata validation separately from
 the frozen layout-transition reader. It verifies the historical helper's exact
 source hash, extracts only its frame and case validators into isolated globals,

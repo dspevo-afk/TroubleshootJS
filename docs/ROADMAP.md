@@ -104,6 +104,23 @@ no fresh GWT/Player/electrical/normal3/full30 qualification is claimed. Next is 
 frozen generic VIA-conservation/routing experiment with actual physical/access/
 runtime proofs before adoption. Playable100 remains0; beta held; HARD unavailable.
 Implementation 0f90adbfbecfd47f55f3647b211112fbc7c01d36 is verified on origin/codex/q100-physical-feasibility; completion Gmail 1a19e3cd68aac2ca was sent once.
+
+The [actual-generator quality-scalar diagnostic](task-evidence/Q100/quality-scalars-r1/README.md)
+is locally accepted for its exact separate authored request0/placement4/pass1.
+D_SENSE length650 exceeds3*210=630 by20; its6 bends pass16. Same-owner rejection,
+NULL/PROBE logical parity, five real Publisher controls, final Python28,
+source-bound actual reader/seven negatives and final unchanged-input audit pass.
+Two earlier private routing treatments (VIA120 and width-first pass2) returned
+no layouts and remain NOT ADOPTED; their sources/failures stay preserved.
+This new test-only milestone changes no production routing, quality, epoch or
+limit and proves no alternate path. Manual cadence is not default-performance
+evidence. Source reviews are scoped CLEAR; all failed compile/reader/fixture
+runs remain failures. Production850/build1202 inputs per variant are identical;
+no fresh GWT/Player/electrical/normal3/full30 gate is claimed. Next is one frozen
+bounded quality-aware search treatment with independent resource/counterexample
+fixtures and actual physical/access/runtime proofs before adoption. Playable100=0,
+beta held, full30 EXCLUDED/unrun, HARD/PSYCHOTIC unavailable/unrun; protected
+unread remains UNCERTIFIED. Normal publication follows these validated gates.
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion
