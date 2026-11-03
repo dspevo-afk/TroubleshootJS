@@ -20,14 +20,14 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
 
-INPUT_SCHEMA = "p07-quality-zero-via-input-v2"
-RUN_SCHEMA = "q100-quality-zero-via-native-run-v2"
-RESULT_SCHEMA = "q100-quality-zero-via-reader-result-v2"
+INPUT_SCHEMA = "p07-quality-zero-via-input-v3"
+RUN_SCHEMA = "q100-quality-zero-via-native-run-v3"
+RESULT_SCHEMA = "q100-quality-zero-via-reader-result-v3"
 SUITE = "Rb100QualityZeroViaGraphContractTest"
 ENTRY_SCRIPT = "scripts/verify-current-contracts.ps1"
-SOURCE_REVISION = 17
-SOURCE_INPUT_COUNT = 1074
-CONTRACT_JAVA_COUNT = 218
+SOURCE_REVISION = 18
+SOURCE_INPUT_COUNT = 1076
+CONTRACT_JAVA_COUNT = 220
 LAYOUT_VERSION = 26
 DEPENDENCY_EPOCH = "tsj-generation-dependencies-v28"
 PLAN_VERSION = 1
@@ -67,6 +67,8 @@ QUALITY_REQUIRED_INPUTS = frozenset({
     "tests/contracts/P07ShortcutQueryContractTest.java",
     "tests/contracts/P07PrefixAllocationDiagnostics.java",
     "tests/contracts/P07PrefixAllocationContractTest.java",
+    "tests/contracts/P07AcceptedBranchCaptureDiagnostics.java",
+    "tests/contracts/P07AcceptedBranchCaptureContractTest.java",
     "scripts/verify-current-contracts.ps1",
     "tests/contracts/current-contract-runner-contract.ps1",
 })
@@ -75,6 +77,8 @@ GRAPH_EVENT_MARKER = "RB100_ZERO_VIA_GRAPH_EVENT"
 GRAPH_SUMMARY_MARKER = "PASS: RB100 quality zero-via graph contracts"
 ALLOCATION_EVENT_MARKER = "RB100_PREFIX_ALLOCATION_EVENT"
 ALLOCATION_SUMMARY_MARKER = "PASS: RB100 prefix allocation contracts"
+LOAD12_BRANCH_EVENT_MARKER = "RB100_LOAD12_BRANCH_EVENT"
+LOAD12_BRANCH_SUMMARY_MARKER = "PASS: RB100 LOAD12 branch contracts"
 RECEIPT_MARKERS = (
     "RB100_QUALITY_SCALAR_CONTROLS",
     "RB100_CAPACITY_BOUND_PHYSICAL_SUBSETS",
@@ -90,6 +94,8 @@ RECEIPT_MARKERS = (
     GRAPH_SUMMARY_MARKER,
     ALLOCATION_EVENT_MARKER,
     ALLOCATION_SUMMARY_MARKER,
+    LOAD12_BRANCH_EVENT_MARKER,
+    LOAD12_BRANCH_SUMMARY_MARKER,
 )
 EVENT_PREFIXES = ("RB100_", "P07_", "PASS: RB100")
 
@@ -148,6 +154,104 @@ ALLOCATION_SUMMARY_KEYS = frozenset((
     "protocolVersion sourceRevision status runId operationId events scope totalHoles "
     "chronologyProof routeAdoption layoutQualification"
 ).split())
+
+LOAD12_EVENT_KEYS = frozenset((
+    "protocolVersion sourceRevision runId operationId scope rootSeed placementSeed "
+    "routingSeed routeRequestIndex selectedPlacementIndex selectedPlacementAttempt "
+    "status claims pre post"
+).split())
+LOAD12_CLAIMS_KEYS = frozenset((
+    "avoidability chronologyProof routeAdoption layoutQualification playable100"
+).split())
+LOAD12_PRE_KEYS = frozenset((
+    "schema source seeds prefixInventory prefixTraces path goal nativePublisher work stability"
+).split())
+LOAD12_SOURCE_KEYS = frozenset((
+    "pass netId netIndexNextFetch netPosition netOrder branchOrdinal policy "
+    "templateHoleCount startPadAttachment startCopperFaceMask rootCopperFaceMask "
+    "startPadId rootPadId startX startY rootX rootY reachedPadIds "
+    "reachedPthPadIds grid"
+).split())
+LOAD12_GRID_KEYS = frozenset((
+    "minX minY width height cells primaryLayer maximumVias maximumTransitions"
+).split())
+LOAD12_SEEDS_KEYS = frozenset("schema queueSize faceMask nodes".split())
+LOAD12_SEED_NODE_KEYS = frozenset((
+    "heapIndex cell x y layer direction transitions cost heuristic serial key"
+).split())
+LOAD12_PREFIX_TRACE_KEYS = frozenset(("count rows".split()))
+LOAD12_TRACE_ROW_KEYS = frozenset((
+    "index sourceId netId startPadId endPadId layer exposure width xPoints yPoints "
+    "traceFingerprint"
+).split())
+LOAD12_PATH_KEYS = frozenset((
+    "nodeCount gridSteps length bends transitionCount directDistance tupleSha256 "
+    "nodes planarRuns"
+).split())
+LOAD12_PATH_NODE_KEYS = frozenset((
+    "index parentIndex cell x y layer direction transitions cost heuristic serial key"
+).split())
+LOAD12_PLANAR_RUN_KEYS = frozenset(
+    "layer firstNodeIndex lastNodeIndex xPoints yPoints".split())
+LOAD12_GOAL_KEYS = frozenset((
+    "cellCount topCount bottomCount bothCount faceBits faceBitsSha256 foundGoal"
+).split())
+LOAD12_PUBLISHER_KEYS = frozenset((
+    "stage qualityIndex nodeCount length bends directDistance endCell endX endY "
+    "endLayer endTransitions endTerminalPadId"
+).split())
+LOAD12_PRE_WORK_KEYS = frozenset((
+    "advanceCalls workSteps prefixWorkSteps seedEntries pathNodes goalCells "
+    "traceRows serializedUtf16Units activeMillis"
+).split())
+LOAD12_PRE_STABILITY_KEYS = frozenset((
+    "liveBeforeVerified liveAfterVerified seedIdentityVerified pathChainVerified "
+    "prefixLineageVerified goalMaskVerified traceIdentityVerified"
+).split())
+LOAD12_POST_KEYS = frozenset(
+    "schema source post work stability claims".split())
+LOAD12_POST_SOURCE_KEYS = frozenset((
+    "pass netId branchOrdinal searchBranches currentNet searchBranchIsNull "
+    "searchPublisherIsNull publisherStage startPadId reachedStartCount "
+    "preHoleCount preTraceCount"
+).split())
+LOAD12_POST_INVENTORY_KEYS = frozenset((
+    "holeCount createdHoleCount createdTraceCount holeRows createdHoleIds "
+    "retainedHoleBindings createdTraceRows retainedTraceBindings transitionBindings"
+).split())
+LOAD12_RETAINED_HOLE_KEYS = frozenset((
+    "id preFingerprint postFingerprint preIndex postIndex sameObject"
+).split())
+LOAD12_RETAINED_TRACE_KEYS = frozenset((
+    "sourceId preFingerprint postFingerprint preIndex postIndex sameObject"
+).split())
+LOAD12_TRANSITION_BINDING_KEYS = frozenset((
+    "pathNodeIndex fromLayer toLayer cell x y netId viaId viaFingerprint "
+    "creatorNetPosition creatorBranchOrdinal piece createdInBranch"
+).split())
+LOAD12_POST_WORK_KEYS = frozenset((
+    "advanceCalls workSteps aggregateWorkSteps holeRows traceRows transitionMatches "
+    "serializedUtf16Units activeMillis"
+).split())
+LOAD12_POST_STABILITY_KEYS = frozenset((
+    "liveBeforeVerified liveAfterVerified searchIdentityVerified publisherCompleted "
+    "reachedStartVerified holeIdentityVerified traceIdentityVerified "
+    "transitionBindingsVerified traceRunsVerified"
+).split())
+LOAD12_SUMMARY_KEYS = frozenset((
+    "protocolVersion sourceRevision status runId operationId events scope rootSeed "
+    "placementSeed routingSeed routeRequestIndex selectedPlacementIndex "
+    "selectedPlacementAttempt pathNodes transitions createdHoles claims"
+).split())
+LOAD12_PRE_FIXED_JSON_COUNTERS = frozenset((
+    ("work", "advanceCalls"), ("work", "workSteps"),
+    ("work", "serializedUtf16Units"), ("work", "activeMillis"),
+))
+LOAD12_POST_FIXED_JSON_COUNTERS = frozenset((
+    ("work", "advanceCalls"), ("work", "workSteps"),
+    ("work", "aggregateWorkSteps"), ("work", "serializedUtf16Units"),
+    ("work", "activeMillis"),
+))
 
 SHA256_RE = re.compile(r"[0-9a-f]{64}\Z", re.ASCII)
 UUID_RE = re.compile(
@@ -681,6 +785,118 @@ def _allocation_owner(hole_id: str, net_order: Sequence[str]
     return matches[0]
 
 
+def _validate_allocation_inventory(totals: Any, rows: Any,
+                                   net_order: Sequence[str],
+                                   current_net_position: int,
+                                   current_branch_ordinal: int,
+                                   expected_total: Optional[int] = None,
+                                   allow_current_owner: bool = False
+                                   ) -> Dict[str, Any]:
+    """Validate the shared prefix-hole census used at both capture boundaries."""
+    if totals is None:
+        total_holes = expected_total
+        _need(_integer(total_holes, 0, MAX_VIAS),
+              "ALLOCATION_TOTAL_HOLES_INVALID")
+    else:
+        _exact_keys(totals, ALLOCATION_TOTALS_KEYS, "ALLOCATION_TOTALS_KEYS_INVALID")
+        total_holes = totals["totalHoles"]
+        _need(_integer(total_holes, 0, MAX_VIAS) and
+              (expected_total is None or total_holes == expected_total),
+              "ALLOCATION_TOTAL_HOLES_INVALID")
+    _need(type(rows) is list and len(rows) == total_holes,
+          "ALLOCATION_ROWS_INVALID")
+
+    net_positions = {net_id: position for position, net_id in enumerate(net_order)}
+    net_counts = [0] * len(net_order)
+    row_ids: List[str] = []
+    branch_owners: Dict[int, Tuple[int, str]] = {}
+    for index, row in enumerate(rows):
+        _exact_keys(row, ALLOCATION_ROW_KEYS, "ALLOCATION_ROW_KEYS_INVALID")
+        hole_id, net_id = row["id"], row["netId"]
+        _need(_integer(row["index"], 0, max(0, total_holes - 1)) and
+              row["index"] == index and
+              _valid_allocation_text(hole_id) and
+              _valid_allocation_text(net_id) and net_id in net_positions,
+              "ALLOCATION_ROW_ID_INVALID")
+        owner_position, branch_ordinal, piece = _allocation_owner(hole_id, net_order)
+        before_current = branch_ordinal < current_branch_ordinal
+        current_owner = (allow_current_owner and
+                         branch_ordinal == current_branch_ordinal and
+                         owner_position == current_net_position)
+        _need(owner_position == net_positions[net_id] and
+              owner_position <= current_net_position and
+              0 < branch_ordinal and (before_current or current_owner) and
+              piece >= 0 and
+              row["creatorNetPosition"] == owner_position and
+              _integer(row["creatorNetPosition"], 0, len(net_order) - 1) and
+              row["creatorBranchOrdinal"] == branch_ordinal and
+              _integer(row["creatorBranchOrdinal"], 1, MAX_SCALAR) and
+              row["piece"] == piece and _integer(row["piece"], 0, MAX_SCALAR),
+              "ALLOCATION_ROW_OWNER_INVALID")
+        prior_owner = branch_owners.get(branch_ordinal)
+        _need(prior_owner is None or prior_owner == (owner_position, net_id),
+              "ALLOCATION_BRANCH_OWNER_INCONSISTENT")
+        branch_owners[branch_ordinal] = (owner_position, net_id)
+        _need(row["kind"] == "VIA" and
+              _integer(row["x"], -MAX_VIA_CENTER_COORDINATE,
+                       MAX_VIA_CENTER_COORDINATE) and
+              _integer(row["y"], -MAX_VIA_CENTER_COORDINATE,
+                       MAX_VIA_CENTER_COORDINATE) and
+              _integer(row["drillRadius"], 2, 2) and
+              _integer(row["landRadius"], 6, 6) and
+              row["exposure"] == "EXPOSED",
+              "ALLOCATION_ROW_GEOMETRY_INVALID")
+        _need(type(row["fingerprint"]) is str and
+              row["fingerprint"] == _allocation_hole_fingerprint(
+                  hole_id, net_id, row["x"], row["y"]),
+              "ALLOCATION_ROW_FINGERPRINT_INVALID")
+        row_ids.append(hole_id)
+        net_counts[owner_position] += 1
+
+    prior_position = -1
+    for branch_ordinal in sorted(branch_owners):
+        owner_position, _net_id = branch_owners[branch_ordinal]
+        _need(owner_position >= prior_position,
+              "ALLOCATION_BRANCH_ORDER_INCONSISTENT")
+        prior_position = owner_position
+
+    try:
+        _need(len(set(row_ids)) == len(row_ids) and
+              row_ids == sorted(row_ids, key=_java_string_sort_key),
+              "ALLOCATION_ROW_ORDER_INVALID")
+    except UnicodeEncodeError:
+        _fail("ALLOCATION_ROW_ID_INVALID")
+
+    by_net = None
+    if totals is not None:
+        by_kind = totals["byKind"]
+        _exact_keys(by_kind, ALLOCATION_KIND_TOTAL_KEYS,
+                    "ALLOCATION_KIND_TOTALS_INVALID")
+        _need(all(_integer(by_kind[kind], 0, total_holes)
+                  for kind in ("VIA", "PLATED", "NON_PLATED")) and
+              by_kind["VIA"] == total_holes and
+              by_kind["PLATED"] == 0 and by_kind["NON_PLATED"] == 0,
+              "ALLOCATION_KIND_TOTALS_INVALID")
+
+        by_net = totals["byNet"]
+        _need(type(by_net) is list and len(by_net) == len(net_order),
+              "ALLOCATION_NET_TOTALS_INVALID")
+        for position, net_total in enumerate(by_net):
+            _exact_keys(net_total, ALLOCATION_NET_TOTAL_KEYS,
+                        "ALLOCATION_NET_TOTALS_INVALID")
+            _need(_integer(net_total["netPosition"], 0, len(net_order) - 1) and
+                  net_total["netPosition"] == position and
+                  net_total["netId"] == net_order[position] and
+                  _integer(net_total["holeCount"], 0, total_holes) and
+                  net_total["holeCount"] == net_counts[position],
+                  "ALLOCATION_NET_TOTALS_INVALID")
+        _need(sum(net_counts) == total_holes and
+              sum(net_total["holeCount"] for net_total in by_net) == total_holes,
+              "ALLOCATION_TOTALS_CONSERVATION_INVALID")
+    return {"totalHoles": total_holes, "netCounts": net_counts,
+            "byNet": by_net, "rows": rows}
+
+
 def _validate_prefix_allocation_event(value: Any,
                                       scalar_event: Mapping[str, Any],
                                       graph: Mapping[str, Any]) -> Dict[str, Any]:
@@ -744,97 +960,11 @@ def _validate_prefix_allocation_event(value: Any,
           stability["lineageVerified"] is True,
           "ALLOCATION_STABILITY_INVALID")
 
-    totals = diagnostic["totals"]
-    _exact_keys(totals, ALLOCATION_TOTALS_KEYS, "ALLOCATION_TOTALS_KEYS_INVALID")
-    total_holes = binding["prefixHoleCount"]
-    _need(_integer(totals["totalHoles"], 0, MAX_VIAS) and
-          totals["totalHoles"] == total_holes,
-          "ALLOCATION_TOTAL_HOLES_INVALID")
-
-    rows = diagnostic["rows"]
-    _need(type(rows) is list and len(rows) == total_holes,
-          "ALLOCATION_ROWS_INVALID")
-    net_positions = {net_id: position for position, net_id in enumerate(net_order)}
-    net_counts = [0] * len(net_order)
-    row_ids: List[str] = []
-    branch_owners: Dict[int, Tuple[int, str]] = {}
-    for index, row in enumerate(rows):
-        _exact_keys(row, ALLOCATION_ROW_KEYS, "ALLOCATION_ROW_KEYS_INVALID")
-        hole_id, net_id = row["id"], row["netId"]
-        _need(_integer(row["index"], 0, max(0, total_holes - 1)) and
-              row["index"] == index and
-              _valid_allocation_text(hole_id) and
-              _valid_allocation_text(net_id) and net_id in net_positions,
-              "ALLOCATION_ROW_ID_INVALID")
-        owner_position, branch_ordinal, piece = _allocation_owner(hole_id, net_order)
-        _need(owner_position == net_positions[net_id] and
-              owner_position <= binding["currentNetPosition"] and
-              0 < branch_ordinal < binding["currentBranchOrdinal"] and
-              piece >= 0 and
-              row["creatorNetPosition"] == owner_position and
-              _integer(row["creatorNetPosition"], 0, len(net_order) - 1) and
-              row["creatorBranchOrdinal"] == branch_ordinal and
-              _integer(row["creatorBranchOrdinal"], 1, MAX_SCALAR) and
-              row["piece"] == piece and _integer(row["piece"], 0, MAX_SCALAR),
-              "ALLOCATION_ROW_OWNER_INVALID")
-        prior_owner = branch_owners.get(branch_ordinal)
-        _need(prior_owner is None or prior_owner == (owner_position, net_id),
-              "ALLOCATION_BRANCH_OWNER_INCONSISTENT")
-        branch_owners[branch_ordinal] = (owner_position, net_id)
-        _need(row["kind"] == "VIA" and
-              _integer(row["x"], -MAX_VIA_CENTER_COORDINATE,
-                       MAX_VIA_CENTER_COORDINATE) and
-              _integer(row["y"], -MAX_VIA_CENTER_COORDINATE,
-                       MAX_VIA_CENTER_COORDINATE) and
-              _integer(row["drillRadius"], 2, 2) and
-              _integer(row["landRadius"], 6, 6) and
-              row["exposure"] == "EXPOSED",
-              "ALLOCATION_ROW_GEOMETRY_INVALID")
-        _need(type(row["fingerprint"]) is str and
-              row["fingerprint"] == _allocation_hole_fingerprint(
-                  hole_id, net_id, row["x"], row["y"]),
-              "ALLOCATION_ROW_FINGERPRINT_INVALID")
-        row_ids.append(hole_id)
-        net_counts[owner_position] += 1
-
-    prior_position = -1
-    for branch_ordinal in sorted(branch_owners):
-        owner_position, _net_id = branch_owners[branch_ordinal]
-        _need(owner_position >= prior_position,
-              "ALLOCATION_BRANCH_ORDER_INCONSISTENT")
-        prior_position = owner_position
-
-    try:
-        _need(len(set(row_ids)) == len(row_ids) and
-              row_ids == sorted(row_ids, key=_java_string_sort_key),
-              "ALLOCATION_ROW_ORDER_INVALID")
-    except UnicodeEncodeError:
-        _fail("ALLOCATION_ROW_ID_INVALID")
-
-    by_kind = totals["byKind"]
-    _exact_keys(by_kind, ALLOCATION_KIND_TOTAL_KEYS,
-                "ALLOCATION_KIND_TOTALS_INVALID")
-    _need(all(_integer(by_kind[kind], 0, total_holes)
-              for kind in ("VIA", "PLATED", "NON_PLATED")) and
-          by_kind["VIA"] == total_holes and
-          by_kind["PLATED"] == 0 and by_kind["NON_PLATED"] == 0,
-          "ALLOCATION_KIND_TOTALS_INVALID")
-
-    by_net = totals["byNet"]
-    _need(type(by_net) is list and len(by_net) == len(net_order),
-          "ALLOCATION_NET_TOTALS_INVALID")
-    for position, net_total in enumerate(by_net):
-        _exact_keys(net_total, ALLOCATION_NET_TOTAL_KEYS,
-                    "ALLOCATION_NET_TOTALS_INVALID")
-        _need(_integer(net_total["netPosition"], 0, len(net_order) - 1) and
-              net_total["netPosition"] == position and
-              net_total["netId"] == net_order[position] and
-              _integer(net_total["holeCount"], 0, total_holes) and
-              net_total["holeCount"] == net_counts[position],
-              "ALLOCATION_NET_TOTALS_INVALID")
-    _need(sum(net_counts) == total_holes and
-          sum(net_total["holeCount"] for net_total in by_net) == total_holes,
-          "ALLOCATION_TOTALS_CONSERVATION_INVALID")
+    inventory = _validate_allocation_inventory(
+        diagnostic["totals"], diagnostic["rows"], net_order,
+        binding["currentNetPosition"], binding["currentBranchOrdinal"],
+        expected_total=binding["prefixHoleCount"])
+    total_holes = inventory["totalHoles"]
 
     work = diagnostic["work"]
     _exact_keys(work, ALLOCATION_WORK_KEYS, "ALLOCATION_WORK_KEYS_INVALID")
@@ -887,6 +1017,1013 @@ def _validate_prefix_allocation_summary(value: Any, event: Mapping[str, Any],
     return dict(value)
 
 
+def _validate_load12_claims(value: Any, code: str) -> Dict[str, Any]:
+    _exact_keys(value, LOAD12_CLAIMS_KEYS, code + "_KEYS_INVALID")
+    _need(value["avoidability"] == "UNKNOWN" and
+          value["chronologyProof"] is False and
+          value["routeAdoption"] is False and
+          value["layoutQualification"] is False and
+          _integer(value["playable100"], 0, 0), code + "_INVALID")
+    return dict(value)
+
+
+def _load12_grid_cell_for_position(grid: Mapping[str, Any], cells: int,
+                                  x: int, y: int, code: str) -> int:
+    dx, dy = x - grid["minX"], y - grid["minY"]
+    _need(dx >= 0 and dy >= 0 and dx % 10 == 0 and dy % 10 == 0 and
+          dx // 10 < grid["width"] and dy // 10 < grid["height"], code)
+    cell = (dy // 10) * grid["width"] + dx // 10
+    _need(_integer(cell, 0, cells - 1), code)
+    return cell
+
+
+def _trace_field(value: Optional[str]) -> str:
+    if value is None:
+        return "-1:"
+    return str(_java_string_length(value)) + ":" + value
+
+
+def _allocation_net_totals_digest(net_order: Sequence[str],
+                                 counts: Sequence[int]) -> str:
+    canonical = "\n".join(
+        str(position) + "," + str(_java_string_length(net_id)) + ":" + net_id +
+        "," + str(counts[position])
+        for position, net_id in enumerate(net_order))
+    return _sha256(canonical.encode("utf-8", errors="strict"))
+
+
+def _java_string_list_digest(values: Sequence[str]) -> str:
+    return _sha256("\n".join(values).encode("utf-8", errors="strict"))
+
+
+def _trace_fingerprint(row: Mapping[str, Any]) -> str:
+    x_csv = ",".join(str(value) for value in row["xPoints"])
+    y_csv = ",".join(str(value) for value in row["yPoints"])
+    canonical = (_trace_field(row["sourceId"]) + _trace_field(row["netId"]) +
+                 _trace_field(row["startPadId"]) + _trace_field(row["endPadId"]) +
+                 row["layer"] + "\n" + row["exposure"] + "\n" +
+                 str(row["width"]) + "\n" + x_csv + "\n" + y_csv)
+    return _sha256(canonical.encode("utf-8", errors="strict"))
+
+
+def _load12_json_string_utf16_units(value: str, legacy_prefix: bool) -> int:
+    units = 2
+    for character in value:
+        codepoint = ord(character)
+        if character in ('"', "\\", "\b", "\f", "\n", "\r", "\t"):
+            units += 2
+        elif codepoint < 0x20 or codepoint == 0x7F:
+            units += 6
+        elif legacy_prefix:
+            units += 2 if codepoint > 0xFFFF else 1
+        elif 0xD800 <= codepoint <= 0xDFFF:
+            units += 6
+        elif codepoint > 0xFFFF:
+            units += 12
+        else:
+            units += 1
+    return units
+
+
+def _load12_serialized_json_utf16_units(
+        value: Any, fixed_counter_paths: frozenset,
+        legacy_raw_paths: frozenset = frozenset()) -> int:
+    def measure(item: Any, path: Tuple[str, ...] = (),
+                legacy_prefix: bool = False) -> int:
+        if path in fixed_counter_paths:
+            _need(type(item) is int and item >= 0,
+                  "LOAD12_SERIALIZED_LENGTH_COUNTER_INVALID")
+            return 19
+        if path in legacy_raw_paths:
+            legacy_prefix = True
+        if item is None:
+            return 4
+        if type(item) is bool:
+            return 4 if item else 5
+        if type(item) is int:
+            return len(str(item))
+        if type(item) is str:
+            return _load12_json_string_utf16_units(item, legacy_prefix)
+        if type(item) is list:
+            return (2 + max(0, len(item) - 1) +
+                    sum(measure(child, path, legacy_prefix) for child in item))
+        if type(item) is dict:
+            total = 2 + max(0, len(item) - 1)
+            for key, child in item.items():
+                _need(type(key) is str,
+                      "LOAD12_SERIALIZED_LENGTH_KEY_INVALID")
+                total += (_load12_json_string_utf16_units(key, legacy_prefix) + 1 +
+                          measure(child, path + (key,), legacy_prefix))
+            return total
+        _fail("LOAD12_SERIALIZED_LENGTH_VALUE_INVALID")
+
+    return measure(value)
+
+
+def _validate_load12_trace_rows(rows: Any, code: str) -> List[Dict[str, Any]]:
+    _need(type(rows) is list and len(rows) <= 100_000, code + "_ROWS_INVALID")
+    checked: List[Dict[str, Any]] = []
+    for index, row in enumerate(rows):
+        _exact_keys(row, LOAD12_TRACE_ROW_KEYS, code + "_ROW_KEYS_INVALID")
+        source_id = row["sourceId"]
+        start_pad = row["startPadId"]
+        end_pad = row["endPadId"]
+        _need(_integer(row["index"], 0, 99_999) and
+              (source_id is None or _valid_allocation_text(source_id)) and
+              _valid_allocation_text(row["netId"]) and
+              (start_pad is None or _valid_allocation_text(start_pad)) and
+              (end_pad is None or _valid_allocation_text(end_pad)) and
+              row["layer"] in ("TOP", "BOTTOM") and
+              row["exposure"] in ("EXPOSED", "COVERED") and
+              _integer(row["width"], 1, MAX_SCALAR),
+              code + "_ROW_DOMAIN_INVALID")
+        x_points, y_points = row["xPoints"], row["yPoints"]
+        _need(type(x_points) is list and type(y_points) is list and
+              2 <= len(x_points) == len(y_points) <= 4096 and
+              all(_integer(point, -MAX_ABS_BOARD_COORDINATE,
+                           MAX_ABS_BOARD_COORDINATE)
+                  for point in x_points + y_points),
+              code + "_ROW_GEOMETRY_INVALID")
+        fingerprint = row["traceFingerprint"]
+        _need(type(fingerprint) is str and SHA256_RE.fullmatch(fingerprint) is not None and
+              fingerprint == _trace_fingerprint(row),
+              code + "_ROW_FINGERPRINT_INVALID")
+        checked.append(row)
+    return checked
+
+
+def _validate_load12_source(value: Any) -> Dict[str, Any]:
+    _exact_keys(value, LOAD12_SOURCE_KEYS, "LOAD12_SOURCE_KEYS_INVALID")
+    _need(_integer(value["pass"], 1, 1) and value["netId"] == "LOAD12" and
+          _integer(value["branchOrdinal"], 73, 73) and
+          value["policy"] == "FULLER_TWO_LAYER" and
+          _integer(value["templateHoleCount"], 0, 0) and
+          value["startPadAttachment"] in ("PLATED_THROUGH_HOLE", "SURFACE_PAD") and
+          _integer(value["startCopperFaceMask"], 1, 3) and
+          _integer(value["rootCopperFaceMask"], 1, 3) and
+          all(_valid_allocation_text(value[field])
+              for field in ("netId", "startPadId", "rootPadId")) and
+          value["startPadId"] != value["rootPadId"] and
+          all(_integer(value[field], -MAX_ABS_BOARD_COORDINATE,
+                       MAX_ABS_BOARD_COORDINATE)
+              for field in ("startX", "startY", "rootX", "rootY")),
+          "LOAD12_SOURCE_IDENTITY_INVALID")
+
+    net_order = value["netOrder"]
+    _need(type(net_order) is list and 1 <= len(net_order) <= ALLOCATION_NET_COUNT and
+          all(_valid_allocation_text(net_id) for net_id in net_order) and
+          len(set(net_order)) == len(net_order),
+          "LOAD12_SOURCE_NET_ORDER_INVALID")
+    _need(_integer(value["netIndexNextFetch"], 1, len(net_order)) and
+          _integer(value["netPosition"], 0, len(net_order) - 1) and
+          value["netPosition"] == value["netIndexNextFetch"] - 1 and
+          net_order[value["netPosition"]] == value["netId"],
+          "LOAD12_SOURCE_NET_POSITION_INVALID")
+
+    reached = value["reachedPadIds"]
+    reached_pth = value["reachedPthPadIds"]
+    _need(type(reached) is list and len(reached) <= 246 and
+          all(_valid_allocation_text(pad_id) for pad_id in reached) and
+          len(set(reached)) == len(reached) and
+          type(reached_pth) is list and len(reached_pth) <= len(reached) and
+          all(_valid_allocation_text(pad_id) for pad_id in reached_pth) and
+          len(set(reached_pth)) == len(reached_pth) and
+          set(reached_pth) <= set(reached) and
+          value["rootPadId"] in reached and
+          value["rootPadId"] not in reached_pth and
+          value["startPadId"] not in reached,
+          "LOAD12_SOURCE_REACHED_PADS_INVALID")
+
+    grid = value["grid"]
+    _exact_keys(grid, LOAD12_GRID_KEYS, "LOAD12_GRID_KEYS_INVALID")
+    width, height = grid["width"], grid["height"]
+    cells = (width * height if _integer(width, 1, MAX_GRID_CELLS) and
+             _integer(height, 1, MAX_GRID_CELLS) else 0)
+    _need(0 < cells <= MAX_GRID_CELLS and
+          _integer(grid["cells"], cells, cells) and
+          _integer(grid["minX"], -MAX_ABS_BOARD_COORDINATE,
+                   MAX_ABS_BOARD_COORDINATE) and
+          _integer(grid["minY"], -MAX_ABS_BOARD_COORDINATE,
+                   MAX_ABS_BOARD_COORDINATE) and
+          grid["primaryLayer"] in ("TOP", "BOTTOM") and
+          _integer(grid["maximumVias"], 48, 48) and
+          _integer(grid["maximumTransitions"], 4, 4) and
+          grid["minX"] + (width - 1) * 10 <= MAX_ABS_BOARD_COORDINATE and
+          grid["minY"] + (height - 1) * 10 <= MAX_ABS_BOARD_COORDINATE and
+          grid["minX"] + (width - 1) * 10 >= -MAX_ABS_BOARD_COORDINATE and
+          grid["minY"] + (height - 1) * 10 >= -MAX_ABS_BOARD_COORDINATE,
+          "LOAD12_GRID_DOMAIN_INVALID")
+    start_cell = _load12_grid_cell_for_position(
+        grid, cells, value["startX"], value["startY"],
+        "LOAD12_SOURCE_START_PAD_OFF_GRID")
+    root_cell = _load12_grid_cell_for_position(
+        grid, cells, value["rootX"], value["rootY"],
+        "LOAD12_SOURCE_ROOT_PAD_OFF_GRID")
+    return {"source": dict(value), "grid": dict(grid), "cells": cells,
+            "netOrder": list(net_order), "startCell": start_cell,
+            "rootCell": root_cell}
+
+
+def _validate_load12_seed_snapshot(value: Any,
+                                   source: Mapping[str, Any]
+                                   ) -> Dict[str, Any]:
+    _exact_keys(value, LOAD12_SEEDS_KEYS, "LOAD12_SEEDS_KEYS_INVALID")
+    _need(value["schema"] == "p07-accepted-branch-seeds-r1" and
+          _integer(value["queueSize"], 2, 2) and
+          _integer(value["faceMask"], 3, 3) and
+          type(value["nodes"]) is list and len(value["nodes"]) == 2,
+          "LOAD12_SEED_SNAPSHOT_INVALID")
+    grid = source["grid"]
+    nodes: List[Dict[str, Any]] = []
+    layers = set()
+    serials = set()
+    start_cell = None
+    for index, node in enumerate(value["nodes"]):
+        _exact_keys(node, LOAD12_SEED_NODE_KEYS, "LOAD12_SEED_NODE_KEYS_INVALID")
+        _need(_integer(node["heapIndex"], 0, 1) and node["heapIndex"] == index and
+              _integer(node["cell"], 0, source["cells"] - 1) and
+              _integer(node["x"], -MAX_ABS_BOARD_COORDINATE,
+                       MAX_ABS_BOARD_COORDINATE) and
+              _integer(node["y"], -MAX_ABS_BOARD_COORDINATE,
+                       MAX_ABS_BOARD_COORDINATE) and
+              _integer(node["layer"], 0, 1) and node["layer"] not in layers and
+              _integer(node["direction"], 4, 4) and
+              _integer(node["transitions"], 0, 0) and
+              _integer(node["cost"], 0, MAX_SCALAR) and
+              _integer(node["heuristic"], 0, MAX_SCALAR) and
+              _integer(node["serial"], 0, MAX_SCALAR) and
+              node["serial"] not in serials and
+              _integer(node["key"], 0, MAX_SCALAR) and
+              node["key"] == (((node["transitions"] * 2 + node["layer"]) * 5 +
+                               node["direction"]) * source["cells"] + node["cell"]),
+              "LOAD12_SEED_NODE_INVALID")
+        expected_x = grid["minX"] + (node["cell"] % grid["width"]) * 10
+        expected_y = grid["minY"] + (node["cell"] // grid["width"]) * 10
+        _need((node["x"], node["y"]) == (expected_x, expected_y),
+              "LOAD12_SEED_NODE_GRID_MAPPING_INVALID")
+        if start_cell is None:
+            start_cell = node["cell"]
+        _need(node["cell"] == start_cell and
+              node["cell"] == source["startCell"],
+              "LOAD12_SEED_START_CELL_INCONSISTENT")
+        layers.add(node["layer"])
+        serials.add(node["serial"])
+        nodes.append(node)
+    _need(layers == {0, 1}, "LOAD12_SEED_LAYERS_INVALID")
+    return {"snapshot": dict(value), "nodes": nodes,
+            "startCell": start_cell}
+
+
+def _validate_load12_start_face(source: Mapping[str, Any],
+                                start_node: Mapping[str, Any],
+                                prefix_rows: Sequence[Mapping[str, Any]]) -> None:
+    source_fields = source["source"]
+    required_face = 1 << start_node["layer"]
+    if source_fields["startCopperFaceMask"] & required_face:
+        return
+    start_vias = [row for row in prefix_rows
+                  if row["kind"] == "VIA" and
+                  row["netId"] == source_fields["netId"] and
+                  row["x"] == source_fields["startX"] and
+                  row["y"] == source_fields["startY"]]
+    _need(len(start_vias) == 1, "LOAD12_START_FACE_UNSUPPORTED")
+
+
+def _validate_load12_prefix_inventory(value: Any,
+                                      source: Mapping[str, Any]
+                                      ) -> Dict[str, Any]:
+    _exact_keys(value, ALLOCATION_DIAGNOSTIC_KEYS,
+                "LOAD12_PREFIX_INVENTORY_KEYS_INVALID")
+    stability = value["stability"]
+    _exact_keys(stability, ALLOCATION_STABILITY_KEYS,
+                "LOAD12_PREFIX_STABILITY_KEYS_INVALID")
+    _need(type(stability["prefixGeometrySha256"]) is str and
+          SHA256_RE.fullmatch(stability["prefixGeometrySha256"]) is not None and
+          stability["liveBeforeVerified"] is True and
+          stability["liveAfterVerified"] is True and
+          stability["holeIdentitiesVerified"] is True and
+          stability["lineageVerified"] is True,
+          "LOAD12_PREFIX_STABILITY_INVALID")
+    inventory = _validate_allocation_inventory(
+        value["totals"], value["rows"], source["netOrder"],
+        source["source"]["netPosition"], source["source"]["branchOrdinal"])
+    _need(inventory["totalHoles"] <= source["grid"]["maximumVias"],
+          "LOAD12_PREFIX_HOLE_CAP_INVALID")
+
+    work = value["work"]
+    _exact_keys(work, ALLOCATION_WORK_KEYS, "LOAD12_PREFIX_WORK_KEYS_INVALID")
+    for field, minimum, maximum in (
+            ("advanceCalls", 1, MAX_WORK_UNITS),
+            ("workSteps", 1, MAX_TOTAL_WORK),
+            ("rowsScanned", 0, MAX_VIAS),
+            ("netComparisons", 0, MAX_VIAS * ALLOCATION_NET_COUNT),
+            ("netTotalsWritten", 1, ALLOCATION_NET_COUNT),
+            ("activeMillis", 0, MAX_ACTIVE_MS)):
+        _need(_integer(work[field], minimum, maximum),
+              "LOAD12_PREFIX_WORK_DOMAIN_INVALID")
+    total_holes = inventory["totalHoles"]
+    net_count = len(source["netOrder"])
+    expected_comparisons = total_holes * net_count
+    pair_checks = total_holes * (total_holes - 1) // 2
+    minimum_work = total_holes + expected_comparisons + net_count + pair_checks
+    _need(work["rowsScanned"] == total_holes and
+          work["netComparisons"] == expected_comparisons and
+          work["netTotalsWritten"] == net_count and
+          work["workSteps"] >= minimum_work and
+          work["workSteps"] <= work["advanceCalls"] * MAX_WORK_QUANTUM and
+          work["workSteps"] <= MAX_TOTAL_WORK,
+          "LOAD12_PREFIX_WORK_CONSERVATION_INVALID")
+    return {"inventory": inventory, "work": dict(work),
+            "stability": dict(stability)}
+
+
+def _load12_expected_planar_runs(
+        nodes: Sequence[Mapping[str, Any]]) -> List[Dict[str, Any]]:
+    groups: List[Tuple[int, int]] = []
+    first = 0
+    for index in range(1, len(nodes)):
+        if nodes[index]["layer"] != nodes[index - 1]["layer"]:
+            groups.append((first, index - 1))
+            first = index
+    groups.append((first, len(nodes) - 1))
+
+    runs: List[Dict[str, Any]] = []
+    for first_index, last_index in groups:
+        _need(last_index > first_index, "LOAD12_PATH_SINGLE_NODE_PLANAR_RUN")
+        compact: List[Tuple[int, int]] = []
+        for index in range(first_index, last_index + 1):
+            node = nodes[index]
+            compact.append((node["x"], node["y"]))
+            while len(compact) >= 3:
+                a, b, c = compact[-3:]
+                same_direction = (
+                    a[0] == b[0] == c[0] and
+                    (b[1] - a[1]) * (c[1] - b[1]) > 0
+                ) or (
+                    a[1] == b[1] == c[1] and
+                    (b[0] - a[0]) * (c[0] - b[0]) > 0
+                )
+                if not same_direction:
+                    break
+                compact.pop(-2)
+        runs.append({
+            "layer": nodes[first_index]["layer"],
+            "firstNodeIndex": first_index,
+            "lastNodeIndex": last_index,
+            "xPoints": [point[0] for point in compact],
+            "yPoints": [point[1] for point in compact],
+        })
+    return runs
+
+
+def _load12_compact_trace_points(trace: Mapping[str, Any]
+                                ) -> List[Tuple[int, int]]:
+    points: List[Tuple[int, int]] = []
+    for x, y in zip(trace["xPoints"], trace["yPoints"]):
+        point = (x, y)
+        if len(points) >= 2:
+            before, middle = points[-2:]
+            same_direction_collinear = (
+                (before[0] == middle[0] == point[0] and
+                 (middle[1] - before[1]) * (point[1] - middle[1]) > 0)
+                or
+                (before[1] == middle[1] == point[1] and
+                 (middle[0] - before[0]) * (point[0] - middle[0]) > 0)
+            )
+            if same_direction_collinear:
+                points[-1] = point
+                continue
+        points.append(point)
+    return points
+
+
+def _validate_load12_path_and_goal(path_value: Any, goal_value: Any,
+                                   publisher_value: Any,
+                                   source: Mapping[str, Any],
+                                   seeds: Mapping[str, Any],
+                                   prefix_rows: Sequence[Mapping[str, Any]]
+                                   ) -> Dict[str, Any]:
+    _exact_keys(path_value, LOAD12_PATH_KEYS, "LOAD12_PATH_KEYS_INVALID")
+    path_nodes = path_value["nodes"]
+    _need(type(path_nodes) is list and 2 <= len(path_nodes) <= 4096 and
+          _integer(path_value["nodeCount"], len(path_nodes), len(path_nodes)),
+          "LOAD12_PATH_NODE_COUNT_INVALID")
+    grid = source["grid"]
+    source_fields = source["source"]
+    cells = source["cells"]
+    seen_serials = set()
+    normalized: List[Dict[str, Any]] = []
+    for index, node in enumerate(path_nodes):
+        _exact_keys(node, LOAD12_PATH_NODE_KEYS, "LOAD12_PATH_NODE_KEYS_INVALID")
+        _need(_integer(node["index"], 0, len(path_nodes) - 1) and
+              node["index"] == index and
+              _integer(node["parentIndex"], -1, len(path_nodes) - 1) and
+              node["parentIndex"] == (-1 if index == 0 else index - 1) and
+              _integer(node["cell"], 0, cells - 1) and
+              _integer(node["x"], -MAX_ABS_BOARD_COORDINATE,
+                       MAX_ABS_BOARD_COORDINATE) and
+              _integer(node["y"], -MAX_ABS_BOARD_COORDINATE,
+                       MAX_ABS_BOARD_COORDINATE) and
+              _integer(node["layer"], 0, 1) and
+              _integer(node["direction"], 0, 4) and
+              _integer(node["transitions"], 0, 4) and
+              _integer(node["cost"], 0, MAX_SCALAR) and
+              _integer(node["heuristic"], 0, MAX_SCALAR) and
+              _integer(node["serial"], 0, MAX_SCALAR) and
+              node["serial"] not in seen_serials and
+              _integer(node["key"], 0, MAX_SCALAR),
+              "LOAD12_PATH_NODE_DOMAIN_INVALID")
+        dx, dy = node["x"] - grid["minX"], node["y"] - grid["minY"]
+        _need(dx >= 0 and dy >= 0 and dx % 10 == 0 and dy % 10 == 0 and
+              dx // 10 < grid["width"] and dy // 10 < grid["height"] and
+              node["cell"] == (dy // 10) * grid["width"] + dx // 10,
+              "LOAD12_PATH_NODE_CELL_INVALID")
+        expected_key = (((node["transitions"] * 2 + node["layer"]) * 5 +
+                         node["direction"]) * cells + node["cell"])
+        _need(node["key"] == expected_key,
+              "LOAD12_PATH_NODE_KEY_INVALID")
+        seen_serials.add(node["serial"])
+        normalized.append(node)
+
+    first_node = normalized[0]
+    last_node = normalized[-1]
+    _need(first_node["direction"] == 4 and first_node["transitions"] == 0 and
+          first_node["cell"] == seeds["startCell"] == source["startCell"] and
+          (first_node["x"], first_node["y"]) ==
+          (source_fields["startX"], source_fields["startY"]),
+          "LOAD12_PATH_START_INVALID")
+    seed_match = any(all(first_node[field] == seed[field] for field in (
+        "cell", "x", "y", "layer", "direction", "transitions", "cost",
+        "heuristic", "serial", "key")) for seed in seeds["nodes"])
+    _need(seed_match, "LOAD12_PATH_START_NOT_CAPTURED_SEED")
+    _validate_load12_start_face(source, first_node, prefix_rows)
+
+    grid_steps = 0
+    transitions = 0
+    length = 0
+    bends = 0
+    last_direction = 4
+    for before, after in zip(normalized, normalized[1:]):
+        if before["layer"] == after["layer"]:
+            dx = after["x"] - before["x"]
+            dy = after["y"] - before["y"]
+            direction = {(0, -10): 0, (10, 0): 1,
+                         (0, 10): 2, (-10, 0): 3}.get((dx, dy))
+            _need(direction is not None and
+                  after["cell"] - before["cell"] in
+                  (-grid["width"], -1, 1, grid["width"]) and
+                  after["direction"] == direction and
+                  after["transitions"] == before["transitions"],
+                  "LOAD12_PATH_PLANAR_EDGE_INVALID")
+            if last_direction != 4 and last_direction != direction:
+                bends += 1
+            last_direction = direction
+            grid_steps += 1
+            length += 10
+        else:
+            _need(after["cell"] == before["cell"] and
+                  (after["x"], after["y"]) == (before["x"], before["y"]) and
+                  after["layer"] == 1 - before["layer"] and
+                  before["direction"] != 4 and after["direction"] == 4 and
+                  after["transitions"] == before["transitions"] + 1 and
+                  after["transitions"] <= grid["maximumTransitions"],
+                  "LOAD12_PATH_FACE_FLIP_INVALID")
+            transitions += 1
+            last_direction = 4
+
+    tuple_text = "\n".join(",".join(str(node[field]) for field in (
+        "index", "parentIndex", "cell", "x", "y", "layer", "direction",
+        "transitions", "cost", "heuristic", "serial", "key"))
+                          for node in normalized)
+    tuple_sha = _sha256(tuple_text.encode("utf-8", errors="strict"))
+    direct_distance = (abs(source_fields["startX"] - last_node["x"]) +
+                       abs(source_fields["startY"] - last_node["y"]))
+    _need(_integer(path_value["gridSteps"], grid_steps, grid_steps) and
+          _integer(path_value["length"], length, length) and
+          _integer(path_value["bends"], bends, bends) and
+          _integer(path_value["transitionCount"], transitions, transitions) and
+          _integer(path_value["directDistance"], direct_distance, direct_distance) and
+          direct_distance > 0 and
+          type(path_value["tupleSha256"]) is str and
+          path_value["tupleSha256"] == tuple_sha,
+          "LOAD12_PATH_METRICS_OR_HASH_INVALID")
+
+    expected_runs = _load12_expected_planar_runs(normalized)
+    supplied_runs = path_value["planarRuns"]
+    _need(type(supplied_runs) is list and len(supplied_runs) == len(expected_runs),
+          "LOAD12_PLANAR_RUNS_INVALID")
+    for expected, supplied in zip(expected_runs, supplied_runs):
+        _exact_keys(supplied, LOAD12_PLANAR_RUN_KEYS,
+                    "LOAD12_PLANAR_RUN_KEYS_INVALID")
+        _need(_integer(supplied["layer"], 0, 1) and
+              _integer(supplied["firstNodeIndex"], 0, len(normalized) - 1) and
+              _integer(supplied["lastNodeIndex"], 0, len(normalized) - 1) and
+              type(supplied["xPoints"]) is list and
+              type(supplied["yPoints"]) is list and
+              all(_integer(point, -MAX_ABS_BOARD_COORDINATE,
+                           MAX_ABS_BOARD_COORDINATE)
+                  for point in supplied["xPoints"] + supplied["yPoints"]) and
+              supplied == expected,
+              "LOAD12_PLANAR_RUN_MISMATCH")
+
+    _exact_keys(goal_value, LOAD12_GOAL_KEYS, "LOAD12_GOAL_KEYS_INVALID")
+    face_bits = goal_value["faceBits"]
+    _need(type(face_bits) is str and len(face_bits) == cells and
+          all(char in "0123" for char in face_bits),
+          "LOAD12_GOAL_FACE_BITS_INVALID")
+    top_count = sum(1 for char in face_bits if int(char) & 1)
+    bottom_count = sum(1 for char in face_bits if int(char) & 2)
+    both_count = face_bits.count("3")
+    cell_count = sum(1 for char in face_bits if char != "0")
+    _need(_integer(goal_value["cellCount"], cell_count, cell_count) and
+          _integer(goal_value["topCount"], top_count, top_count) and
+          _integer(goal_value["bottomCount"], bottom_count, bottom_count) and
+          _integer(goal_value["bothCount"], both_count, both_count) and
+          type(goal_value["faceBitsSha256"]) is str and
+          goal_value["faceBitsSha256"] == _sha256(face_bits.encode("ascii")) and
+          goal_value["foundGoal"] is True and
+          int(face_bits[last_node["cell"]]) & (1 << last_node["layer"]),
+          "LOAD12_GOAL_MASK_INVALID")
+
+    _exact_keys(publisher_value, LOAD12_PUBLISHER_KEYS,
+                "LOAD12_PUBLISHER_KEYS_INVALID")
+    end_terminal = publisher_value["endTerminalPadId"]
+    valid_end_terminal = (end_terminal is None or
+                          end_terminal == source_fields["rootPadId"] or
+                          end_terminal in source_fields["reachedPthPadIds"])
+    root_terminal_matches_grid = (
+        end_terminal != source_fields["rootPadId"] or
+        (last_node["cell"] == source["rootCell"] and
+         (last_node["x"], last_node["y"]) ==
+         (source_fields["rootX"], source_fields["rootY"]))
+    )
+    _need(_integer(publisher_value["stage"], 1, 1) and
+          _integer(publisher_value["qualityIndex"], len(normalized), len(normalized)) and
+          _integer(publisher_value["nodeCount"], len(normalized), len(normalized)) and
+          _integer(publisher_value["length"], length, length) and
+          _integer(publisher_value["bends"], bends, bends) and
+          _integer(publisher_value["directDistance"], direct_distance, direct_distance) and
+          _integer(publisher_value["endCell"], last_node["cell"], last_node["cell"]) and
+          _integer(publisher_value["endX"], last_node["x"], last_node["x"]) and
+          _integer(publisher_value["endY"], last_node["y"], last_node["y"]) and
+          _integer(publisher_value["endLayer"], last_node["layer"], last_node["layer"]) and
+          _integer(publisher_value["endTransitions"], transitions, transitions) and
+          root_terminal_matches_grid and
+          valid_end_terminal,
+          "LOAD12_NATIVE_PUBLISHER_BINDING_INVALID")
+    _need(end_terminal is None or _valid_allocation_text(end_terminal),
+          "LOAD12_NATIVE_PUBLISHER_TERMINAL_INVALID")
+
+    return {"path": dict(path_value), "nodes": normalized,
+            "goal": dict(goal_value), "publisher": dict(publisher_value),
+            "gridSteps": grid_steps, "length": length, "bends": bends,
+            "transitions": transitions, "directDistance": direct_distance,
+            "tupleSha256": tuple_sha, "planarRuns": expected_runs,
+            "endCell": last_node["cell"], "endLayer": last_node["layer"],
+            "endTerminalPadId": end_terminal}
+
+
+def _validate_load12_pre(value: Any) -> Dict[str, Any]:
+    _exact_keys(value, LOAD12_PRE_KEYS, "LOAD12_PRE_KEYS_INVALID")
+    _need(value["schema"] == "p07-accepted-branch-pre-r1",
+          "LOAD12_PRE_SCHEMA_INVALID")
+    source = _validate_load12_source(value["source"])
+    seeds = _validate_load12_seed_snapshot(value["seeds"], source)
+    prefix = _validate_load12_prefix_inventory(value["prefixInventory"], source)
+    traces_value = value["prefixTraces"]
+    _exact_keys(traces_value, LOAD12_PREFIX_TRACE_KEYS,
+                "LOAD12_PREFIX_TRACES_KEYS_INVALID")
+    traces = _validate_load12_trace_rows(
+        traces_value["rows"], "LOAD12_PREFIX_TRACES")
+    _need(_integer(traces_value["count"], len(traces), len(traces)),
+          "LOAD12_PREFIX_TRACES_COUNT_INVALID")
+    _need(all(trace["index"] == index for index, trace in enumerate(traces)),
+          "LOAD12_PREFIX_TRACE_INDEX_INVALID")
+    path = _validate_load12_path_and_goal(
+        value["path"], value["goal"], value["nativePublisher"], source,
+        seeds, prefix["inventory"]["rows"])
+
+    work = value["work"]
+    _exact_keys(work, LOAD12_PRE_WORK_KEYS, "LOAD12_PRE_WORK_KEYS_INVALID")
+    for field, minimum, maximum in (
+            ("advanceCalls", 1, MAX_WORK_UNITS),
+            ("workSteps", 1, MAX_TOTAL_WORK),
+            ("prefixWorkSteps", 0, MAX_TOTAL_WORK),
+            ("seedEntries", 2, 2),
+            ("pathNodes", 2, 4096),
+            ("goalCells", 1, MAX_GRID_CELLS),
+            ("traceRows", 0, 100_000),
+            ("serializedUtf16Units", 0, MAX_TOTAL_WORK),
+            ("activeMillis", 0, MAX_ACTIVE_MS)):
+        _need(_integer(work[field], minimum, maximum),
+              "LOAD12_PRE_WORK_DOMAIN_INVALID")
+    serialized_units = _load12_serialized_json_utf16_units(
+        value, LOAD12_PRE_FIXED_JSON_COUNTERS,
+        frozenset((("prefixInventory",),)))
+    _need(serialized_units <= MAX_TOTAL_WORK and
+          work["serializedUtf16Units"] == serialized_units,
+          "LOAD12_PRE_SERIALIZED_UTF16_UNITS_INVALID")
+    minimum_work = (work["prefixWorkSteps"] + work["seedEntries"] +
+                    work["pathNodes"] + work["goalCells"] + work["traceRows"] +
+                    work["serializedUtf16Units"])
+    _need(work["prefixWorkSteps"] == prefix["work"]["workSteps"] and
+          work["pathNodes"] == path["path"]["nodeCount"] and
+          work["goalCells"] == source["cells"] and
+          work["traceRows"] == len(traces) and
+          work["workSteps"] >= minimum_work and
+          work["workSteps"] <= work["advanceCalls"] * MAX_WORK_QUANTUM and
+          work["workSteps"] <= MAX_TOTAL_WORK,
+          "LOAD12_PRE_WORK_CONSERVATION_INVALID")
+
+    stability = value["stability"]
+    _exact_keys(stability, LOAD12_PRE_STABILITY_KEYS,
+                "LOAD12_PRE_STABILITY_KEYS_INVALID")
+    _need(all(stability[field] is True for field in LOAD12_PRE_STABILITY_KEYS),
+          "LOAD12_PRE_STABILITY_INVALID")
+    return {"pre": dict(value), "source": source, "seeds": seeds,
+            "prefix": prefix, "prefixTraces": traces,
+            "path": path, "work": dict(work), "stability": dict(stability)}
+
+
+def _validate_load12_post(value: Any, pre: Mapping[str, Any]
+                          ) -> Dict[str, Any]:
+    _exact_keys(value, LOAD12_POST_KEYS, "LOAD12_POST_KEYS_INVALID")
+    _need(value["schema"] == "p07-accepted-branch-post-r1",
+          "LOAD12_POST_SCHEMA_INVALID")
+    source_value = value["source"]
+    _exact_keys(source_value, LOAD12_POST_SOURCE_KEYS,
+                "LOAD12_POST_SOURCE_KEYS_INVALID")
+    pre_source = pre["source"]["source"]
+    prefix_rows = pre["prefix"]["inventory"]["rows"]
+    prefix_traces = pre["prefixTraces"]
+    _need(_integer(source_value["pass"], 1, 1) and
+          source_value["netId"] == pre_source["netId"] == "LOAD12" and
+          _integer(source_value["branchOrdinal"], 73, 73) and
+          _integer(source_value["searchBranches"], 73, 73) and
+          source_value["currentNet"] == pre_source["netId"] and
+          source_value["searchBranchIsNull"] is True and
+          source_value["searchPublisherIsNull"] is True and
+          _integer(source_value["publisherStage"], 6, 6) and
+          source_value["startPadId"] == pre_source["startPadId"] and
+          _integer(source_value["reachedStartCount"], 1, 1) and
+          _integer(source_value["preHoleCount"], len(prefix_rows), len(prefix_rows)) and
+          _integer(source_value["preTraceCount"], len(prefix_traces), len(prefix_traces)),
+          "LOAD12_POST_SOURCE_BINDING_INVALID")
+
+    post_inventory_value = value["post"]
+    _exact_keys(post_inventory_value, LOAD12_POST_INVENTORY_KEYS,
+                "LOAD12_POST_INVENTORY_KEYS_INVALID")
+    hole_count = post_inventory_value["holeCount"]
+    _need(_integer(hole_count, 0, pre_source["grid"]["maximumVias"]),
+          "LOAD12_POST_HOLE_COUNT_INVALID")
+    inventory = _validate_allocation_inventory(
+        None,
+        post_inventory_value["holeRows"], pre["source"]["netOrder"],
+        pre_source["netPosition"], pre_source["branchOrdinal"],
+        expected_total=hole_count, allow_current_owner=True)
+    # The helper validates the row identities and lineage above. Build and
+    # validate totals against those rows without accepting a producer summary.
+    post_rows = inventory["rows"]
+    post_ids = [row["id"] for row in post_rows]
+    try:
+        _need(post_ids == sorted(post_ids, key=_java_string_sort_key),
+              "LOAD12_POST_HOLE_ORDER_INVALID")
+    except UnicodeEncodeError:
+        _fail("LOAD12_POST_HOLE_ORDER_INVALID")
+
+    pre_by_id = {row["id"]: row for row in prefix_rows}
+    post_by_id = {row["id"]: row for row in post_rows}
+    _need(set(pre_by_id) <= set(post_by_id), "LOAD12_RETAINED_HOLE_MISSING")
+    created_ids = [hole_id for hole_id in post_ids if hole_id not in pre_by_id]
+    supplied_created_ids = post_inventory_value["createdHoleIds"]
+    _need(type(supplied_created_ids) is list and
+          all(_valid_allocation_text(hole_id) for hole_id in supplied_created_ids) and
+          len(set(supplied_created_ids)) == len(supplied_created_ids),
+          "LOAD12_CREATED_HOLE_IDS_INVALID")
+    try:
+        _need(supplied_created_ids == created_ids and
+              supplied_created_ids == sorted(supplied_created_ids,
+                                             key=_java_string_sort_key),
+              "LOAD12_CREATED_HOLE_DELTA_INVALID")
+    except UnicodeEncodeError:
+        _fail("LOAD12_CREATED_HOLE_IDS_INVALID")
+    created_set = set(created_ids)
+    _need(_integer(post_inventory_value["createdHoleCount"], len(created_ids),
+                   len(created_ids)) and
+          all(post_by_id[hole_id]["creatorBranchOrdinal"] == 73 and
+              post_by_id[hole_id]["creatorNetPosition"] == pre_source["netPosition"] and
+              post_by_id[hole_id]["netId"] == pre_source["netId"]
+              for hole_id in created_ids),
+          "LOAD12_CREATED_HOLE_OWNER_INVALID")
+
+    retained_holes = post_inventory_value["retainedHoleBindings"]
+    _need(type(retained_holes) is list and len(retained_holes) == len(prefix_rows),
+          "LOAD12_RETAINED_HOLE_BINDINGS_INVALID")
+    retained_ids: List[str] = []
+    for binding in retained_holes:
+        _exact_keys(binding, LOAD12_RETAINED_HOLE_KEYS,
+                    "LOAD12_RETAINED_HOLE_BINDING_KEYS_INVALID")
+        hole_id = binding["id"]
+        valid_id = _valid_allocation_text(hole_id)
+        before = pre_by_id.get(hole_id) if valid_id else None
+        after = post_by_id.get(hole_id) if valid_id else None
+        _need(valid_id and before is not None and after is not None and
+              type(binding["preFingerprint"]) is str and
+              binding["preFingerprint"] == before["fingerprint"] and
+              binding["postFingerprint"] == after["fingerprint"] and
+              _integer(binding["preIndex"], 0, max(0, len(prefix_rows) - 1)) and
+              binding["preIndex"] == before["index"] and
+              _integer(binding["postIndex"], 0, max(0, len(post_rows) - 1)) and
+              binding["postIndex"] == after["index"] and
+              binding["sameObject"] is True,
+              "LOAD12_RETAINED_HOLE_BINDING_INVALID")
+        retained_ids.append(hole_id)
+    try:
+        _need(retained_ids == sorted(pre_by_id, key=_java_string_sort_key) and
+              len(set(retained_ids)) == len(retained_ids),
+              "LOAD12_RETAINED_HOLE_BINDINGS_INVALID")
+    except UnicodeEncodeError:
+        _fail("LOAD12_RETAINED_HOLE_BINDINGS_INVALID")
+
+    created_trace_rows = _validate_load12_trace_rows(
+        post_inventory_value["createdTraceRows"], "LOAD12_CREATED_TRACES")
+    _need(_integer(post_inventory_value["createdTraceCount"],
+                   len(created_trace_rows), len(created_trace_rows)) and
+          len(created_trace_rows) == len(pre["path"]["planarRuns"]),
+          "LOAD12_CREATED_TRACE_COUNT_INVALID")
+    post_trace_count = len(prefix_traces) + len(created_trace_rows)
+    _need(post_trace_count <= 100_000,
+          "LOAD12_POST_TRACE_COUNT_INVALID")
+
+    retained_traces = post_inventory_value["retainedTraceBindings"]
+    _need(type(retained_traces) is list and len(retained_traces) == len(prefix_traces),
+          "LOAD12_RETAINED_TRACE_BINDINGS_INVALID")
+    retained_pre_indexes = []
+    retained_post_indexes = []
+    prior_retained_post_index = -1
+    for binding in retained_traces:
+        _exact_keys(binding, LOAD12_RETAINED_TRACE_KEYS,
+                    "LOAD12_RETAINED_TRACE_BINDING_KEYS_INVALID")
+        pre_index = binding["preIndex"]
+        before = (prefix_traces[pre_index]
+                  if _integer(pre_index, 0, len(prefix_traces) - 1) else None)
+        post_index = binding["postIndex"]
+        _need(before is not None and
+              binding["sourceId"] == before["sourceId"] and
+              binding["preFingerprint"] == before["traceFingerprint"] and
+              binding["postFingerprint"] == before["traceFingerprint"] and
+              _integer(post_index, 0, max(0, post_trace_count - 1)) and
+              post_index > prior_retained_post_index and
+              binding["sameObject"] is True,
+              "LOAD12_RETAINED_TRACE_BINDING_INVALID")
+        retained_pre_indexes.append(pre_index)
+        retained_post_indexes.append(post_index)
+        prior_retained_post_index = post_index
+    _need(sorted(retained_pre_indexes) == list(range(len(prefix_traces))),
+          "LOAD12_RETAINED_TRACE_BINDINGS_INVALID")
+
+    created_post_indexes = [trace["index"] for trace in created_trace_rows]
+    _need(all(index < post_trace_count for index in created_post_indexes) and
+          all(before < after for before, after in zip(
+              created_post_indexes, created_post_indexes[1:])),
+          "LOAD12_CREATED_TRACE_INDEX_ORDER_INVALID")
+    all_post_indexes = sorted(retained_post_indexes + created_post_indexes)
+    _need(all_post_indexes == list(range(post_trace_count)),
+          "LOAD12_POST_TRACE_INDEX_PARTITION_INVALID")
+
+    same_net_prefix_traces = [trace for trace in prefix_traces
+                              if trace["netId"] == pre_source["netId"]]
+    same_net_widths = {trace["width"] for trace in same_net_prefix_traces}
+    _need(same_net_prefix_traces and len(same_net_widths) == 1 and
+          all(trace["width"] in same_net_widths for trace in created_trace_rows),
+          "LOAD12_CREATED_TRACE_WIDTH_NOT_BOUND_TO_PREFIX")
+    runs = pre["path"]["planarRuns"]
+    path_nodes = pre["path"]["nodes"]
+    effective_end_pad = pre["path"]["endTerminalPadId"]
+    if effective_end_pad is None and \
+            (path_nodes[-1]["x"], path_nodes[-1]["y"]) == \
+            (pre_source["rootX"], pre_source["rootY"]):
+        effective_end_pad = pre_source["rootPadId"]
+    expected_runs = {}
+    for index, run in enumerate(runs):
+        source_id = "p07/" + pre_source["netId"] + "/" + \
+            str(pre_source["branchOrdinal"]) + "/" + str(index)
+        expected_runs[source_id] = (index, run)
+    matched_runs = set()
+    for trace in created_trace_rows:
+        matched = expected_runs.get(trace["sourceId"])
+        _need(matched is not None,
+              "LOAD12_CREATED_TRACE_PATH_BINDING_INVALID")
+        run_index, run = matched
+        run_is_last = run_index == len(runs) - 1
+        expected_start_pad = pre_source["startPadId"] if run_index == 0 else None
+        expected_end_pad = effective_end_pad if run_is_last else None
+        expected_layer = "TOP" if run["layer"] == 0 else "BOTTOM"
+        compacted_points = _load12_compact_trace_points(trace)
+        expected_points = list(zip(run["xPoints"], run["yPoints"]))
+        _need(run_index not in matched_runs and
+              trace["netId"] == pre_source["netId"] and
+              trace["startPadId"] == expected_start_pad and
+              trace["endPadId"] == expected_end_pad and
+              trace["layer"] == expected_layer and
+              trace["exposure"] == "EXPOSED" and
+              compacted_points == expected_points,
+              "LOAD12_CREATED_TRACE_PATH_BINDING_INVALID")
+        matched_runs.add(run_index)
+    _need(matched_runs == set(range(len(runs))),
+          "LOAD12_CREATED_TRACE_PATH_BINDING_INVALID")
+
+    transition_nodes = []
+    for index, (before, after) in enumerate(zip(path_nodes, path_nodes[1:]), 1):
+        if before["layer"] != after["layer"]:
+            transition_nodes.append((index, before, after))
+    transition_bindings = post_inventory_value["transitionBindings"]
+    _need(type(transition_bindings) is list and
+          len(transition_bindings) == len(transition_nodes),
+          "LOAD12_TRANSITION_BINDINGS_INVALID")
+    for binding, (path_index, before, after) in zip(transition_bindings,
+                                                    transition_nodes):
+        _exact_keys(binding, LOAD12_TRANSITION_BINDING_KEYS,
+                    "LOAD12_TRANSITION_BINDING_KEYS_INVALID")
+        candidates = [row for row in post_rows
+                      if row["kind"] == "VIA" and
+                      row["netId"] == pre_source["netId"] and
+                      row["x"] == after["x"] and row["y"] == after["y"]]
+        via_id = binding["viaId"]
+        valid_via_id = _valid_allocation_text(via_id)
+        via = post_by_id.get(via_id) if valid_via_id else None
+        _need(len(candidates) == 1 and via is candidates[0] and
+              _integer(binding["pathNodeIndex"], path_index, path_index) and
+              _integer(binding["fromLayer"], before["layer"], before["layer"]) and
+              _integer(binding["toLayer"], after["layer"], after["layer"]) and
+              _integer(binding["cell"], after["cell"], after["cell"]) and
+              _integer(binding["x"], after["x"], after["x"]) and
+              _integer(binding["y"], after["y"], after["y"]) and
+              binding["netId"] == pre_source["netId"] and
+              valid_via_id and
+              binding["viaFingerprint"] == via["fingerprint"] and
+              binding["creatorNetPosition"] == via["creatorNetPosition"] and
+              binding["creatorBranchOrdinal"] == via["creatorBranchOrdinal"] and
+              binding["piece"] == via["piece"] and
+              _integer(binding["creatorNetPosition"], 0,
+                       len(pre["source"]["netOrder"]) - 1) and
+              _integer(binding["creatorBranchOrdinal"], 1, 73) and
+              _integer(binding["piece"], 0, MAX_SCALAR) and
+              type(binding["createdInBranch"]) is bool and
+              binding["createdInBranch"] is (via_id in created_set) and
+              ((via_id in created_set and via["creatorBranchOrdinal"] == 73) or
+               (via_id not in created_set and via_id in pre_by_id)),
+              "LOAD12_TRANSITION_BINDING_INVALID")
+
+    claims = _validate_load12_claims(value["claims"], "LOAD12_POST_CLAIMS")
+    stability = value["stability"]
+    _exact_keys(stability, LOAD12_POST_STABILITY_KEYS,
+                "LOAD12_POST_STABILITY_KEYS_INVALID")
+    _need(all(stability[field] is True for field in LOAD12_POST_STABILITY_KEYS),
+          "LOAD12_POST_STABILITY_INVALID")
+    work = value["work"]
+    _exact_keys(work, LOAD12_POST_WORK_KEYS, "LOAD12_POST_WORK_KEYS_INVALID")
+    for field, minimum, maximum in (
+            ("advanceCalls", 1, MAX_WORK_UNITS),
+            ("workSteps", 1, MAX_TOTAL_WORK),
+            ("aggregateWorkSteps", 1, MAX_TOTAL_WORK),
+            ("holeRows", 0, MAX_VIAS),
+            ("traceRows", 0, 100_000),
+            ("transitionMatches", 0, 4096),
+            ("serializedUtf16Units", 0, MAX_TOTAL_WORK),
+            ("activeMillis", 0, MAX_ACTIVE_MS)):
+        _need(_integer(work[field], minimum, maximum),
+              "LOAD12_POST_WORK_DOMAIN_INVALID")
+    serialized_units = _load12_serialized_json_utf16_units(
+        value, LOAD12_POST_FIXED_JSON_COUNTERS)
+    _need(serialized_units <= MAX_TOTAL_WORK and
+          work["serializedUtf16Units"] == serialized_units,
+          "LOAD12_POST_SERIALIZED_UTF16_UNITS_INVALID")
+    aggregate_steps = pre["work"]["workSteps"] + work["workSteps"]
+    aggregate_calls = pre["work"]["advanceCalls"] + work["advanceCalls"]
+    aggregate_active = pre["work"]["activeMillis"] + work["activeMillis"]
+    minimum_post_work = (work["holeRows"] + work["traceRows"] +
+                         work["transitionMatches"] + work["serializedUtf16Units"])
+    _need(work["holeRows"] == len(post_rows) and
+          work["traceRows"] == len(prefix_traces) + len(created_trace_rows) and
+          work["transitionMatches"] == len(transition_nodes) and
+          work["workSteps"] >= minimum_post_work and
+          work["workSteps"] <= work["advanceCalls"] * MAX_WORK_QUANTUM and
+          work["aggregateWorkSteps"] == aggregate_steps and
+          aggregate_steps <= MAX_TOTAL_WORK and aggregate_calls <= MAX_WORK_UNITS and
+          aggregate_active <= MAX_ACTIVE_MS,
+          "LOAD12_POST_WORK_CONSERVATION_INVALID")
+    return {"post": dict(value), "inventoryObject": dict(post_inventory_value),
+            "source": dict(source_value),
+            "inventory": inventory, "rows": post_rows,
+            "createdHoleIds": created_ids,
+            "createdTraceRows": created_trace_rows,
+            "transitionNodes": transition_nodes,
+            "work": dict(work), "stability": dict(stability),
+            "claims": claims}
+
+
+def _validate_load12_branch_event(value: Any,
+                                  scalar_event: Mapping[str, Any],
+                                  allocation: Mapping[str, Any]
+                                  ) -> Dict[str, Any]:
+    _exact_keys(value, LOAD12_EVENT_KEYS, "LOAD12_EVENT_KEYS_INVALID")
+    _need(_integer(value["protocolVersion"], 1, 1) and
+          _integer(value["sourceRevision"], SOURCE_REVISION, SOURCE_REVISION) and
+          type(value["runId"]) is str and UUID_RE.fullmatch(value["runId"]) is not None and
+          value["runId"] == scalar_event["runId"] and
+          value["operationId"] == PROBE_OPERATION_ID and
+          value["scope"] == "ACTUAL_LOAD12_BRANCH_ENTRY_PATH_AND_PUBLICATION_ONLY" and
+          value["rootSeed"] == ROOT_SEED and
+          value["placementSeed"] == PLACEMENT_SEED and
+          value["routingSeed"] == ROUTING_SEED and
+          _integer(value["routeRequestIndex"], 0, 0) and
+          _integer(value["selectedPlacementIndex"], 0, 0) and
+          _integer(value["selectedPlacementAttempt"], 4, 4) and
+          value["rootSeed"] == scalar_event["rootSeed"] and
+          value["placementSeed"] == scalar_event["placementSeed"] and
+          value["routingSeed"] == scalar_event["routingSeed"] and
+          value["routeRequestIndex"] == scalar_event["routeRequestIndex"] and
+          value["selectedPlacementIndex"] == scalar_event["selectedPlacementIndex"] and
+          value["selectedPlacementAttempt"] ==
+          scalar_event["selectedPlacementAttempt"] and
+          value["status"] == "PASS",
+          "LOAD12_EVENT_IDENTITY_OR_SCOPE_INVALID")
+    claims = _validate_load12_claims(value["claims"], "LOAD12_EVENT_CLAIMS")
+    pre = _validate_load12_pre(value["pre"])
+    post = _validate_load12_post(value["post"], pre)
+    _need(post["claims"] == claims,
+          "LOAD12_EVENT_POST_CLAIMS_MISMATCH")
+
+    # Later D_SENSE inventory is corroboration of stable source IDs and raw
+    # fingerprints only. Its later row indexes and graph are not backprojected.
+    later_binding = allocation["binding"]
+    later_rows = allocation["diagnostic"]["rows"]
+    later_by_id = {row["id"]: row for row in later_rows}
+    all_load12_rows = (pre["prefix"]["inventory"]["rows"] + post["rows"])
+    for row in all_load12_rows:
+        later = later_by_id.get(row["id"])
+        _need(later is not None and later["fingerprint"] == row["fingerprint"],
+              "LOAD12_LATER_ALLOCATION_CORROBORATION_INVALID")
+    _need(later_binding["netOrder"] == pre["source"]["netOrder"],
+          "LOAD12_LATER_ALLOCATION_NET_ORDER_MISMATCH")
+    later_branch_rows = [row for row in later_rows
+                         if row["creatorBranchOrdinal"] == 73 and
+                         row["netId"] == "LOAD12"]
+    later_branch_ids = {row["id"] for row in later_branch_rows}
+    created_transition_ids = {
+        binding["viaId"]
+        for binding in post["inventoryObject"]["transitionBindings"]
+        if binding["createdInBranch"] is True
+    }
+    _need(later_branch_ids == set(post["createdHoleIds"]) and
+          created_transition_ids == set(post["createdHoleIds"]),
+          "LOAD12_LATER_BRANCH_DELTA_MISMATCH")
+
+    return {"event": dict(value), "claims": claims,
+            "pre": pre, "post": post,
+            "scope": value["scope"], "runId": value["runId"]}
+
+
+def _validate_load12_branch_summary(value: Any, event: Mapping[str, Any],
+                                    load12: Mapping[str, Any]
+                                    ) -> Dict[str, Any]:
+    _exact_keys(value, LOAD12_SUMMARY_KEYS,
+                "LOAD12_SUMMARY_KEYS_INVALID")
+    source_event = load12["event"]
+    pre = load12["pre"]
+    post = load12["post"]
+    _need(_integer(value["protocolVersion"], 1, 1) and
+          _integer(value["sourceRevision"], SOURCE_REVISION, SOURCE_REVISION) and
+          value["status"] == "PASS" and
+          value["runId"] == source_event["runId"] == event["runId"] and
+          value["operationId"] == PROBE_OPERATION_ID and
+          _integer(value["events"], 1, 1) and
+          value["scope"] == source_event["scope"] and
+          value["rootSeed"] == source_event["rootSeed"] and
+          value["placementSeed"] == source_event["placementSeed"] and
+          value["routingSeed"] == source_event["routingSeed"] and
+          _integer(value["routeRequestIndex"],
+                   source_event["routeRequestIndex"],
+                   source_event["routeRequestIndex"]) and
+          _integer(value["selectedPlacementIndex"],
+                   source_event["selectedPlacementIndex"],
+                   source_event["selectedPlacementIndex"]) and
+          _integer(value["selectedPlacementAttempt"],
+                   source_event["selectedPlacementAttempt"],
+                   source_event["selectedPlacementAttempt"]) and
+          _integer(value["pathNodes"], pre["path"]["path"]["nodeCount"],
+                   pre["path"]["path"]["nodeCount"]) and
+          _integer(value["transitions"], pre["path"]["transitions"],
+                   pre["path"]["transitions"]) and
+          _integer(value["createdHoles"], len(post["createdHoleIds"]),
+                   len(post["createdHoleIds"])),
+          "LOAD12_SUMMARY_IDENTITY_OR_SCOPE_INVALID")
+    claims = _validate_load12_claims(value["claims"], "LOAD12_SUMMARY_CLAIMS")
+    _need(claims == load12["claims"], "LOAD12_SUMMARY_CLAIMS_MISMATCH")
+    return dict(value)
+
+
 def _validate_receipt_lines(lines: Sequence[str], ledger: types.ModuleType,
                             frozen: types.ModuleType, scalar: types.ModuleType
                             ) -> Dict[str, Any]:
@@ -910,11 +2047,16 @@ def _validate_receipt_lines(lines: Sequence[str], ledger: types.ModuleType,
         records[12], old["event"], graph)
     allocation_summary = _validate_prefix_allocation_summary(
         records[13], records[12], allocation)
+    load12 = _validate_load12_branch_event(records[14], old["event"], allocation)
+    load12_summary = _validate_load12_branch_summary(
+        records[15], records[14], load12)
     return {"scalar": old, "currentContext": current_context,
             "path": path, "pathSummary": path_summary,
             "graph": graph, "graphSummary": graph_summary,
             "allocation": allocation,
-            "allocationSummary": allocation_summary}
+            "allocationSummary": allocation_summary,
+            "load12Branch": load12,
+            "load12BranchSummary": load12_summary}
 
 
 def _validate_console_and_receipt(stdout_raw: bytes, receipt_raw: bytes,
@@ -1025,6 +2167,21 @@ def _run_validation(spec_argument: str, spec_sha256: str) -> Dict[str, Any]:
     work = graph["diagnostic"]["work"]
     allocation = parsed["allocation"]
     allocation_diagnostic = allocation["diagnostic"]
+    load12 = parsed["load12Branch"]
+    load12_pre = load12["pre"]
+    load12_post = load12["post"]
+    load12_source = load12_pre["source"]["source"]
+    load12_path = load12_pre["path"]
+    load12_prefix = load12_pre["prefix"]
+    load12_post_object = load12_post["inventoryObject"]
+    load12_post_rows = load12_post["rows"]
+    load12_net_order = load12_pre["source"]["netOrder"]
+    load12_prefix_net_counts = load12_prefix["inventory"]["netCounts"]
+    load12_post_net_counts = load12_post["inventory"]["netCounts"]
+    load12_transition_created_ids = sorted(
+        {binding["viaId"]
+         for binding in load12_post_object["transitionBindings"]
+         if binding["createdInBranch"] is True}, key=_java_string_sort_key)
     return {
         "schema": RESULT_SCHEMA,
         "status": "PASS",
@@ -1104,6 +2261,110 @@ def _run_validation(spec_argument: str, spec_sha256: str) -> Dict[str, Any]:
             "rows": allocation_diagnostic["rows"],
             "chronologyProof": False, "routeAdoption": False,
             "layoutQualification": False,
+        },
+        "load12BranchObservation": {
+            "scope": load12["scope"],
+            "runId": load12["runId"],
+            "operationId": PROBE_OPERATION_ID,
+            "approvedRequest": {
+                "rootSeed": load12["event"]["rootSeed"],
+                "placementSeed": load12["event"]["placementSeed"],
+                "routingSeed": load12["event"]["routingSeed"],
+                "routeRequestIndex": load12["event"]["routeRequestIndex"],
+                "selectedPlacementIndex":
+                    load12["event"]["selectedPlacementIndex"],
+                "selectedPlacementAttempt":
+                    load12["event"]["selectedPlacementAttempt"],
+            },
+            "source": {
+                "pass": load12_source["pass"],
+                "netId": load12_source["netId"],
+                "netPosition": load12_source["netPosition"],
+                "netOrderCount": len(load12_source["netOrder"]),
+                "branchOrdinal": load12_source["branchOrdinal"],
+                "policy": load12_source["policy"],
+                "templateHoleCount": load12_source["templateHoleCount"],
+                "startPadAttachment": load12_source["startPadAttachment"],
+                "startCopperFaceMask": load12_source["startCopperFaceMask"],
+                "rootCopperFaceMask": load12_source["rootCopperFaceMask"],
+                "startPadId": load12_source["startPadId"],
+                "rootPadId": load12_source["rootPadId"],
+                "startX": load12_source["startX"],
+                "startY": load12_source["startY"],
+                "rootX": load12_source["rootX"],
+                "rootY": load12_source["rootY"],
+                "grid": load12_source["grid"],
+            },
+            "seeds": {
+                "queueSize": load12_pre["seeds"]["snapshot"]["queueSize"],
+                "faceMask": load12_pre["seeds"]["snapshot"]["faceMask"],
+                "serials": [node["serial"]
+                            for node in load12_pre["seeds"]["nodes"]],
+            },
+            "prefixInventory": {
+                "holeCount": load12_prefix["inventory"]["totalHoles"],
+                "byKind": load12_pre["pre"]["prefixInventory"]["totals"]["byKind"],
+                "netTotalCount": len(load12_net_order),
+                "netTotalsSha256": _allocation_net_totals_digest(
+                    load12_net_order, load12_prefix_net_counts),
+                "stability": load12_prefix["stability"],
+                "work": load12_prefix["work"],
+            },
+            "prefixTraceCount": len(load12_pre["prefixTraces"]),
+            "path": {
+                "nodeCount": load12_path["path"]["nodeCount"],
+                "gridSteps": load12_path["gridSteps"],
+                "length": load12_path["length"],
+                "bends": load12_path["bends"],
+                "transitionCount": load12_path["transitions"],
+                "directDistance": load12_path["directDistance"],
+                "tupleSha256": load12_path["tupleSha256"],
+                "planarRunCount": len(load12_path["planarRuns"]),
+            },
+            "goal": {
+                "cellCount": load12_path["goal"]["cellCount"],
+                "topCount": load12_path["goal"]["topCount"],
+                "bottomCount": load12_path["goal"]["bottomCount"],
+                "bothCount": load12_path["goal"]["bothCount"],
+                "faceBitsSha256": load12_path["goal"]["faceBitsSha256"],
+                "foundGoal": True,
+            },
+            "publisher": {
+                "stage": load12_path["publisher"]["stage"],
+                "qualityIndex": load12_path["publisher"]["qualityIndex"],
+                "nodeCount": load12_path["publisher"]["nodeCount"],
+                "endCell": load12_path["publisher"]["endCell"],
+                "endLayer": load12_path["publisher"]["endLayer"],
+                "endTransitions": load12_path["publisher"]["endTransitions"],
+                "endTerminalPadId":
+                    load12_path["publisher"]["endTerminalPadId"],
+            },
+            "post": {
+                "holeCount": len(load12_post_rows),
+                "createdHoleCount": len(load12_post["createdHoleIds"]),
+                "createdHoleIdsSha256": _java_string_list_digest(
+                    load12_post["createdHoleIds"]),
+                "retainedHoleCount":
+                    len(load12_post_object["retainedHoleBindings"]),
+                "netTotalCount": len(load12_net_order),
+                "netTotalsSha256": _allocation_net_totals_digest(
+                    load12_net_order, load12_post_net_counts),
+                "createdTraceCount": len(load12_post["createdTraceRows"]),
+                "createdTraceFingerprintsSha256": _java_string_list_digest(
+                    [trace["traceFingerprint"]
+                     for trace in load12_post["createdTraceRows"]]),
+                "retainedTraceCount":
+                    len(load12_post_object["retainedTraceBindings"]),
+                "transitionCount": len(load12_post["transitionNodes"]),
+                "createdTransitionCount": len(load12_transition_created_ids),
+                "createdTransitionViaIdsSha256": _java_string_list_digest(
+                    load12_transition_created_ids),
+            },
+            "work": {"pre": load12_pre["work"],
+                     "post": load12_post["work"]},
+            "stability": {"pre": load12_pre["stability"],
+                          "post": load12_post["stability"]},
+            "claims": load12["claims"],
         },
     }
 

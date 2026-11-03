@@ -54,7 +54,7 @@ def _event_fixture():
         "maximumVias": 4, "prefixHoleCount": 0,
     }
     event = {
-        "protocolVersion": 1, "sourceRevision": 17, "runId": RUN_ID,
+        "protocolVersion": 1, "sourceRevision": 18, "runId": RUN_ID,
         "operationId": "QUALITY_PROBE",
         "scope": "ACTUAL_FIXED_PREFIX_ZERO_NEW_VIA_GRAPH_ONLY",
         "binding": binding,
@@ -131,7 +131,7 @@ def _allocation_fixture(net_order=None, hole_specs=None):
         for position, net_id in enumerate(net_order)
     ]
     event = {
-        "protocolVersion": 1, "sourceRevision": 17, "runId": RUN_ID,
+        "protocolVersion": 1, "sourceRevision": 18, "runId": RUN_ID,
         "operationId": "QUALITY_PROBE",
         "scope": "ACTUAL_FIXED_PREFIX_CREATION_ALLOCATION_ONLY",
         "binding": {
@@ -168,7 +168,7 @@ def _allocation_fixture(net_order=None, hole_specs=None):
         "layoutQualification": False,
     }
     summary = {
-        "protocolVersion": 1, "sourceRevision": 17, "status": "PASS",
+        "protocolVersion": 1, "sourceRevision": 18, "status": "PASS",
         "runId": RUN_ID, "operationId": "QUALITY_PROBE", "events": 1,
         "scope": event["scope"], "totalHoles": len(rows),
         "chronologyProof": False, "routeAdoption": False,
@@ -184,6 +184,367 @@ def _refresh_literal_fingerprint(row):
     net_length = len(net_id.encode("utf-16-le", errors="strict")) // 2
     row["fingerprint"] = (f"{id_length}:{identity}VIA{net_length}:{net_id}"
                            f"{row['x']},{row['y']},2,6,EXPOSED")
+
+
+def _literal_trace(index, source_id, net_id, start_pad_id, end_pad_id,
+                   layer, width, x_points, y_points):
+    def field(value):
+        if value is None:
+            return "-1:"
+        length = len(value.encode("utf-16-le", errors="strict")) // 2
+        return f"{length}:{value}"
+
+    exposure = "EXPOSED"
+    raw = (field(source_id) + field(net_id) + field(start_pad_id) +
+           field(end_pad_id) + layer + "\n" + exposure + "\n" + str(width) + "\n" +
+           ",".join(str(point) for point in x_points) + "\n" +
+           ",".join(str(point) for point in y_points))
+    return {
+        "index": index, "sourceId": source_id, "netId": net_id,
+        "startPadId": start_pad_id, "endPadId": end_pad_id,
+        "layer": layer, "exposure": exposure, "width": width,
+        "xPoints": list(x_points), "yPoints": list(y_points),
+        "traceFingerprint": hashlib.sha256(raw.encode("utf-8")).hexdigest(),
+    }
+
+
+def _fixture_json_string_units(value, legacy_prefix):
+    units = 2
+    for character in value:
+        codepoint = ord(character)
+        if character in ('"', "\\", "\b", "\f", "\n", "\r", "\t"):
+            units += 2
+        elif codepoint < 0x20 or codepoint == 0x7F:
+            units += 6
+        elif legacy_prefix:
+            units += 2 if codepoint > 0xFFFF else 1
+        elif 0xD800 <= codepoint <= 0xDFFF:
+            units += 6
+        elif codepoint > 0xFFFF:
+            units += 12
+        else:
+            units += 1
+    return units
+
+
+def _fixture_serialized_json_units(value, fixed_counter_paths,
+                                   legacy_raw_paths=()):
+    def measure(item, path=(), legacy_prefix=False):
+        if path in fixed_counter_paths:
+            if type(item) is not int or item < 0:
+                raise AssertionError("counter fixture must be a nonnegative integer")
+            return 19
+        if path in legacy_raw_paths:
+            legacy_prefix = True
+        if item is None:
+            return 4
+        if type(item) is bool:
+            return 4 if item else 5
+        if type(item) is int:
+            return len(str(item))
+        if type(item) is str:
+            return _fixture_json_string_units(item, legacy_prefix)
+        if type(item) is list:
+            return (2 + max(0, len(item) - 1) +
+                    sum(measure(child, path, legacy_prefix) for child in item))
+        if type(item) is dict:
+            total = 2 + max(0, len(item) - 1)
+            for key, child in item.items():
+                total += (_fixture_json_string_units(key, legacy_prefix) + 1 +
+                          measure(child, path + (key,), legacy_prefix))
+            return total
+        raise AssertionError("fixture contains a non-JSON value")
+
+    return measure(value)
+
+
+def _load12_branch_fixture():
+    net_order = ["NET_😀", "LOAD12", "D_SENSE"]
+    old_hole = _literal_hole(
+        0, "p07-via/LOAD12/10/0", "LOAD12", 1, 10, 0, 10, 0)
+    prefix_inventory = {
+        "stability": {
+            "prefixGeometrySha256": "a" * 64,
+            "liveBeforeVerified": True, "liveAfterVerified": True,
+            "holeIdentitiesVerified": True, "lineageVerified": True,
+        },
+        "work": {
+            "advanceCalls": 1, "workSteps": 7, "rowsScanned": 1,
+            "netComparisons": 3, "netTotalsWritten": 3, "activeMillis": 1,
+        },
+        "totals": {
+            "totalHoles": 1,
+            "byKind": {"VIA": 1, "PLATED": 0, "NON_PLATED": 0},
+            "byNet": [
+                {"netPosition": 0, "netId": "NET_😀", "holeCount": 0},
+                {"netPosition": 1, "netId": "LOAD12", "holeCount": 1},
+                {"netPosition": 2, "netId": "D_SENSE", "holeCount": 0},
+            ],
+        },
+        "rows": [old_hole],
+    }
+    prefix_trace = _literal_trace(
+        0, "p07/LOAD12/68/0", "LOAD12", "ROOT.PAD", "PREV.PTH",
+        "TOP", 10, [0, 10], [0, 0])
+
+    # Literal source Nodes: four face flips, six planar steps, exact key and
+    # parent identities. The seed serials are deliberately not 0 and 1.
+    node_values = [
+        (0, 0, 0, 0, 4, 0, 0, 60, 41, 64),
+        (1, 10, 0, 0, 1, 0, 10, 50, 43, 17),
+        (1, 10, 0, 1, 4, 1, 70, 50, 44, 305),
+        (2, 20, 0, 1, 1, 1, 82, 40, 45, 258),
+        (2, 20, 0, 0, 4, 2, 142, 40, 46, 386),
+        (6, 20, 10, 0, 2, 2, 152, 30, 47, 358),
+        (6, 20, 10, 1, 4, 3, 212, 30, 48, 630),
+        (7, 30, 10, 1, 1, 3, 224, 20, 49, 583),
+        (7, 30, 10, 0, 4, 4, 284, 20, 50, 711),
+        (11, 30, 20, 0, 2, 4, 294, 10, 51, 683),
+        (15, 30, 30, 0, 2, 4, 304, 0, 52, 687),
+    ]
+    path_nodes = []
+    for index, fields in enumerate(node_values):
+        cell, x, y, layer, direction, transitions, cost, heuristic, serial, key = fields
+        path_nodes.append({
+            "index": index, "parentIndex": -1 if index == 0 else index - 1,
+            "cell": cell, "x": x, "y": y, "layer": layer,
+            "direction": direction, "transitions": transitions,
+            "cost": cost, "heuristic": heuristic, "serial": serial, "key": key,
+        })
+    tuple_fields = ("index", "parentIndex", "cell", "x", "y", "layer",
+                    "direction", "transitions", "cost", "heuristic", "serial", "key")
+    tuple_sha = hashlib.sha256("\n".join(
+        ",".join(str(node[field]) for field in tuple_fields)
+        for node in path_nodes).encode("utf-8")).hexdigest()
+    planar_runs = [
+        {"layer": 0, "firstNodeIndex": 0, "lastNodeIndex": 1,
+         "xPoints": [0, 10], "yPoints": [0, 0]},
+        {"layer": 1, "firstNodeIndex": 2, "lastNodeIndex": 3,
+         "xPoints": [10, 20], "yPoints": [0, 0]},
+        {"layer": 0, "firstNodeIndex": 4, "lastNodeIndex": 5,
+         "xPoints": [20, 20], "yPoints": [0, 10]},
+        {"layer": 1, "firstNodeIndex": 6, "lastNodeIndex": 7,
+         "xPoints": [20, 30], "yPoints": [10, 10]},
+        {"layer": 0, "firstNodeIndex": 8, "lastNodeIndex": 10,
+         "xPoints": [30, 30], "yPoints": [10, 30]},
+    ]
+    face_bits = "0" * 15 + "3"
+    source = {
+        "pass": 1, "netId": "LOAD12", "netIndexNextFetch": 2,
+        "netPosition": 1, "netOrder": list(net_order), "branchOrdinal": 73,
+        "policy": "FULLER_TWO_LAYER", "templateHoleCount": 0,
+        "startPadAttachment": "SURFACE_PAD", "startCopperFaceMask": 1,
+        "rootCopperFaceMask": 3,
+        "startPadId": "START.PAD", "rootPadId": "ROOT.PAD",
+        "startX": 0, "startY": 0, "rootX": 30, "rootY": 30,
+        "reachedPadIds": ["ROOT.PAD", "PREV.PTH"],
+        "reachedPthPadIds": ["PREV.PTH"],
+        "grid": {
+            "minX": 0, "minY": 0, "width": 4, "height": 4,
+            "cells": 16, "primaryLayer": "TOP", "maximumVias": 48,
+            "maximumTransitions": 4,
+        },
+    }
+    seed_nodes = [
+        {"heapIndex": 0, "cell": 0, "x": 0, "y": 0, "layer": 0,
+         "direction": 4, "transitions": 0, "cost": 0, "heuristic": 60,
+         "serial": 41, "key": 64},
+        {"heapIndex": 1, "cell": 0, "x": 0, "y": 0, "layer": 1,
+         "direction": 4, "transitions": 0, "cost": 2, "heuristic": 60,
+         "serial": 42, "key": 144},
+    ]
+    pre = {
+        "schema": "p07-accepted-branch-pre-r1", "source": source,
+        "seeds": {"schema": "p07-accepted-branch-seeds-r1", "queueSize": 2,
+                  "faceMask": 3, "nodes": seed_nodes},
+        "prefixInventory": prefix_inventory,
+        "prefixTraces": {"count": 1, "rows": [prefix_trace]},
+        "path": {
+            "nodeCount": 11, "gridSteps": 6, "length": 60, "bends": 0,
+            "transitionCount": 4, "directDistance": 60,
+            "tupleSha256": tuple_sha, "nodes": path_nodes,
+            "planarRuns": planar_runs,
+        },
+        "goal": {
+            "cellCount": 1, "topCount": 1, "bottomCount": 1,
+            "bothCount": 1, "faceBits": face_bits,
+            "faceBitsSha256": hashlib.sha256(face_bits.encode("ascii")).hexdigest(),
+            "foundGoal": True,
+        },
+        "nativePublisher": {
+            "stage": 1, "qualityIndex": 11, "nodeCount": 11,
+            "length": 60, "bends": 0, "directDistance": 60,
+            "endCell": 15, "endX": 30, "endY": 30, "endLayer": 0,
+            "endTransitions": 4, "endTerminalPadId": "ROOT.PAD",
+        },
+        "work": {
+            "advanceCalls": 1, "workSteps": 137, "prefixWorkSteps": 7,
+            "seedEntries": 2, "pathNodes": 11, "goalCells": 16,
+            "traceRows": 1, "serializedUtf16Units": 100,
+            "activeMillis": 1,
+        },
+        "stability": {
+            "liveBeforeVerified": True, "liveAfterVerified": True,
+            "seedIdentityVerified": True, "pathChainVerified": True,
+            "prefixLineageVerified": True, "goalMaskVerified": True,
+            "traceIdentityVerified": True,
+        },
+    }
+    pre["work"]["serializedUtf16Units"] = _fixture_serialized_json_units(
+        pre,
+        {("work", "advanceCalls"), ("work", "workSteps"),
+         ("work", "serializedUtf16Units"), ("work", "activeMillis")},
+        {("prefixInventory",)})
+    pre_work_floor = (pre["work"]["prefixWorkSteps"] +
+                      pre["work"]["seedEntries"] + pre["work"]["pathNodes"] +
+                      pre["work"]["goalCells"] + pre["work"]["traceRows"] +
+                      pre["work"]["serializedUtf16Units"])
+    pre["work"]["workSteps"] = pre_work_floor
+    pre["work"]["advanceCalls"] = max(1, (pre_work_floor + 32767) // 32768)
+    created_specs = [
+        ("p07-via/LOAD12/73/2", "LOAD12", 73, 2, 20, 0),
+        ("p07-via/LOAD12/73/3", "LOAD12", 73, 3, 20, 10),
+        ("p07-via/LOAD12/73/4", "LOAD12", 73, 4, 30, 10),
+    ]
+    post_rows = sorted(
+        [old_hole] + [
+            _literal_hole(index, spec[0], spec[1], 1,
+                          spec[2], spec[3], spec[4], spec[5])
+            for index, spec in enumerate(created_specs, 1)
+        ], key=lambda row: row["id"].encode("utf-16-be"))
+    for index, row in enumerate(post_rows):
+        row["index"] = index
+    created_ids = sorted((spec[0] for spec in created_specs),
+                         key=lambda item: item.encode("utf-16-be"))
+    created_traces = [
+        _literal_trace(0 if index == 0 else index + 1,
+                       "p07/LOAD12/73/" + str(index), "LOAD12",
+                       "START.PAD" if index == 0 else None,
+                       "ROOT.PAD" if index == 4 else None,
+                       ("TOP", "BOTTOM")[run["layer"]], 10,
+                       run["xPoints"], run["yPoints"])
+        for index, run in enumerate(planar_runs)
+    ]
+    post = {
+        "schema": "p07-accepted-branch-post-r1",
+        "source": {
+            "pass": 1, "netId": "LOAD12", "branchOrdinal": 73,
+            "searchBranches": 73, "currentNet": "LOAD12",
+            "searchBranchIsNull": True, "searchPublisherIsNull": True,
+            "publisherStage": 6, "startPadId": "START.PAD",
+            "reachedStartCount": 1, "preHoleCount": 1, "preTraceCount": 1,
+        },
+        "post": {
+            "holeCount": 4, "createdHoleCount": 3,
+            "createdTraceCount": 5, "holeRows": post_rows,
+            "createdHoleIds": created_ids,
+            "retainedHoleBindings": [{
+                "id": old_hole["id"], "preFingerprint": old_hole["fingerprint"],
+                "postFingerprint": old_hole["fingerprint"],
+                "preIndex": 0, "postIndex": 0, "sameObject": True,
+            }],
+            "createdTraceRows": created_traces,
+            "retainedTraceBindings": [{
+                "sourceId": prefix_trace["sourceId"],
+                "preFingerprint": prefix_trace["traceFingerprint"],
+                "postFingerprint": prefix_trace["traceFingerprint"],
+                "preIndex": 0, "postIndex": 1, "sameObject": True,
+            }],
+            "transitionBindings": [
+                {"pathNodeIndex": 2, "fromLayer": 0, "toLayer": 1,
+                 "cell": 1, "x": 10, "y": 0, "netId": "LOAD12",
+                 "viaId": old_hole["id"],
+                 "viaFingerprint": old_hole["fingerprint"],
+                 "creatorNetPosition": 1, "creatorBranchOrdinal": 10,
+                 "piece": 0, "createdInBranch": False},
+                {"pathNodeIndex": 4, "fromLayer": 1, "toLayer": 0,
+                 "cell": 2, "x": 20, "y": 0, "netId": "LOAD12",
+                 "viaId": post_rows[1]["id"],
+                 "viaFingerprint": post_rows[1]["fingerprint"],
+                 "creatorNetPosition": 1, "creatorBranchOrdinal": 73,
+                 "piece": 2, "createdInBranch": True},
+                {"pathNodeIndex": 6, "fromLayer": 0, "toLayer": 1,
+                 "cell": 6, "x": 20, "y": 10, "netId": "LOAD12",
+                 "viaId": post_rows[2]["id"],
+                 "viaFingerprint": post_rows[2]["fingerprint"],
+                 "creatorNetPosition": 1, "creatorBranchOrdinal": 73,
+                 "piece": 3, "createdInBranch": True},
+                {"pathNodeIndex": 8, "fromLayer": 1, "toLayer": 0,
+                 "cell": 7, "x": 30, "y": 10, "netId": "LOAD12",
+                 "viaId": post_rows[3]["id"],
+                 "viaFingerprint": post_rows[3]["fingerprint"],
+                 "creatorNetPosition": 1, "creatorBranchOrdinal": 73,
+                 "piece": 4, "createdInBranch": True},
+            ],
+        },
+        "work": {
+            "advanceCalls": 1, "workSteps": 120,
+            "aggregateWorkSteps": 257, "holeRows": 4,
+            "traceRows": 6, "transitionMatches": 4,
+            "serializedUtf16Units": 100, "activeMillis": 1,
+        },
+        "stability": {
+            "liveBeforeVerified": True, "liveAfterVerified": True,
+            "searchIdentityVerified": True, "publisherCompleted": True,
+            "reachedStartVerified": True, "holeIdentityVerified": True,
+            "traceIdentityVerified": True, "transitionBindingsVerified": True,
+            "traceRunsVerified": True,
+        },
+        "claims": {"avoidability": "UNKNOWN", "chronologyProof": False,
+                   "routeAdoption": False, "layoutQualification": False,
+                   "playable100": 0},
+    }
+    post["work"]["serializedUtf16Units"] = _fixture_serialized_json_units(
+        post,
+        {("work", "advanceCalls"), ("work", "workSteps"),
+         ("work", "aggregateWorkSteps"),
+         ("work", "serializedUtf16Units"), ("work", "activeMillis")})
+    post_work_floor = (post["work"]["holeRows"] + post["work"]["traceRows"] +
+                       post["work"]["transitionMatches"] +
+                       post["work"]["serializedUtf16Units"])
+    post["work"]["workSteps"] = post_work_floor
+    post["work"]["advanceCalls"] = max(1, (post_work_floor + 32767) // 32768)
+    post["work"]["aggregateWorkSteps"] = (
+        pre["work"]["workSteps"] + post["work"]["workSteps"])
+    claims = dict(post["claims"])
+    event = {
+        "protocolVersion": 1, "sourceRevision": 18, "runId": RUN_ID,
+        "operationId": "QUALITY_PROBE",
+        "scope": "ACTUAL_LOAD12_BRANCH_ENTRY_PATH_AND_PUBLICATION_ONLY",
+        "rootSeed": "9007199254740993",
+        "placementSeed": "-6587958367974952701",
+        "routingSeed": "8445301674744508279",
+        "routeRequestIndex": 0, "selectedPlacementIndex": 0,
+        "selectedPlacementAttempt": 4, "status": "PASS",
+        "claims": claims, "pre": pre, "post": post,
+    }
+    summary = {
+        "protocolVersion": 1, "sourceRevision": 18, "status": "PASS",
+        "runId": RUN_ID, "operationId": "QUALITY_PROBE", "events": 1,
+        "scope": event["scope"], "rootSeed": event["rootSeed"],
+        "placementSeed": event["placementSeed"],
+        "routingSeed": event["routingSeed"], "routeRequestIndex": 0,
+        "selectedPlacementIndex": 0, "selectedPlacementAttempt": 4,
+        "pathNodes": 11, "transitions": 4, "createdHoles": 3,
+        "claims": claims,
+    }
+    d_hole_specs = [
+        ("p07-via/LOAD12/10/0", "LOAD12", 10, 0, 10, 0),
+        *created_specs,
+    ]
+    scalar, _old_path, graph, allocation_event, _allocation_summary = \
+        _allocation_fixture(net_order, d_hole_specs)
+    scalar.update({
+        "rootSeed": "9007199254740993",
+        "placementSeed": "-6587958367974952701",
+        "routingSeed": "8445301674744508279",
+        "routeRequestIndex": 0, "selectedPlacementIndex": 0,
+        "selectedPlacementAttempt": 4,
+    })
+    allocation_event["binding"]["currentBranchOrdinal"] = 74
+    allocation = reader._validate_prefix_allocation_event(
+        allocation_event, scalar, graph)
+    return scalar, event, summary, allocation
 
 
 def _floyd_warshall(width, height, masks):
@@ -413,7 +774,7 @@ class GraphWireTests(unittest.TestCase):
         scalar, path, event = _event_fixture()
         graph = reader._validate_graph_event(event, scalar, path)
         summary = {
-            "protocolVersion": 1, "sourceRevision": 17, "status": "PASS",
+            "protocolVersion": 1, "sourceRevision": 18, "status": "PASS",
             "runId": RUN_ID, "operationId": "QUALITY_PROBE", "events": 1,
             "scope": event["scope"],
             "ordinaryQueries": event["diagnostic"]["work"]["ordinaryQueries"],
@@ -721,6 +1082,309 @@ class PrefixAllocationWireTests(unittest.TestCase):
         self.assertEqual(caught.exception.code, "ALLOCATION_SUMMARY_KEYS_INVALID")
 
 
+class Load12BranchWireTests(unittest.TestCase):
+    def _validate(self):
+        scalar, event, summary, allocation = _load12_branch_fixture()
+        checked = reader._validate_load12_branch_event(event, scalar, allocation)
+        return event, summary, allocation, checked
+
+    def _assert_event_code(self, event, scalar, allocation, expected):
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_load12_branch_event(event, scalar, allocation)
+        self.assertEqual(caught.exception.code, expected)
+
+    def test_trace_compaction_matches_unequal_same_direction_segments(self):
+        trace = {
+            "xPoints": [0, 10, 30, 45, 40, 40, 40, 50],
+            "yPoints": [0, 0, 0, 0, 0, 5, 20, 20],
+        }
+        self.assertEqual(
+            reader._load12_compact_trace_points(trace),
+            [(0, 0), (45, 0), (40, 0), (40, 20), (50, 20)],
+        )
+
+    def test_post_result_schema_is_required_and_versioned(self):
+        scalar, event, _summary, allocation = _load12_branch_fixture()
+        event["post"].pop("schema")
+        self._assert_event_code(
+            event, scalar, allocation, "LOAD12_POST_KEYS_INVALID")
+
+        scalar, event, _summary, allocation = _load12_branch_fixture()
+        event["post"]["schema"] = "p07-accepted-branch-post-r0"
+        self._assert_event_code(
+            event, scalar, allocation, "LOAD12_POST_SCHEMA_INVALID")
+    def test_literal_four_flip_path_metrics_seed_and_created_delta(self):
+        event, summary, _allocation, checked = self._validate()
+        pre = event["pre"]
+        path = pre["path"]
+        post = event["post"]["post"]
+        self.assertEqual(
+            [node["key"] for node in path["nodes"]],
+            [64, 17, 305, 258, 386, 358, 630, 583, 711, 683, 687])
+        self.assertEqual(
+            [node["parentIndex"] for node in path["nodes"]],
+            [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+        self.assertEqual((path["nodeCount"], path["gridSteps"], path["length"],
+                          path["bends"], path["transitionCount"],
+                          path["directDistance"]), (11, 6, 60, 0, 4, 60))
+        self.assertEqual(pre["seeds"]["faceMask"], 3)
+        self.assertEqual(pre["source"]["startCopperFaceMask"], 1)
+        self.assertEqual([node["serial"] for node in pre["seeds"]["nodes"]],
+                         [41, 42])
+        self.assertEqual(pre["goal"]["faceBits"], "0" * 15 + "3")
+        self.assertEqual(pre["goal"]["cellCount"], 1)
+        self.assertEqual(pre["goal"]["topCount"], 1)
+        self.assertEqual(pre["goal"]["bottomCount"], 1)
+        self.assertEqual(pre["goal"]["bothCount"], 1)
+        self.assertEqual(len(post["transitionBindings"]), 4)
+        self.assertEqual([row["index"] for row in post["createdTraceRows"]],
+                         [0, 2, 3, 4, 5])
+        self.assertEqual(post["retainedTraceBindings"][0]["postIndex"], 1)
+        self.assertEqual(post["createdHoleCount"], 3)
+        self.assertEqual(post["createdHoleIds"], [
+            "p07-via/LOAD12/73/2", "p07-via/LOAD12/73/3",
+            "p07-via/LOAD12/73/4",
+        ])
+        self.assertEqual(
+            [row["fingerprint"] for row in post["holeRows"]], [
+                "19:p07-via/LOAD12/10/0VIA6:LOAD1210,0,2,6,EXPOSED",
+                "19:p07-via/LOAD12/73/2VIA6:LOAD1220,0,2,6,EXPOSED",
+                "19:p07-via/LOAD12/73/3VIA6:LOAD1220,10,2,6,EXPOSED",
+                "19:p07-via/LOAD12/73/4VIA6:LOAD1230,10,2,6,EXPOSED",
+            ])
+        self.assertEqual(checked["pre"]["path"]["tupleSha256"],
+                         path["tupleSha256"])
+        self.assertEqual(
+            path["tupleSha256"],
+            "073217a0eb6d91135fd69a6bc2a13eaf41847908d45e39a9c7991f48a631391e")
+        self.assertEqual(
+            reader._validate_load12_branch_summary(summary, event, checked), summary)
+
+    def test_closed_header_claims_and_typed_summary_fail_closed(self):
+        scalar, event, _summary, allocation = _load12_branch_fixture()
+        event["extra"] = True
+        self._assert_event_code(event, scalar, allocation, "LOAD12_EVENT_KEYS_INVALID")
+
+        scalar, event, _summary, allocation = _load12_branch_fixture()
+        event["routingSeed"] = "8445301674744508278"
+        self._assert_event_code(
+            event, scalar, allocation, "LOAD12_EVENT_IDENTITY_OR_SCOPE_INVALID")
+
+        scalar, event, _summary, allocation = _load12_branch_fixture()
+        event["claims"]["chronologyProof"] = True
+        self._assert_event_code(event, scalar, allocation, "LOAD12_EVENT_CLAIMS_INVALID")
+
+        event, summary, _allocation, checked = self._validate()
+        summary["transitions"] = 3
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_load12_branch_summary(summary, event, checked)
+        self.assertEqual(caught.exception.code,
+                         "LOAD12_SUMMARY_IDENTITY_OR_SCOPE_INVALID")
+
+        event, summary, _allocation, checked = self._validate()
+        summary["claims"]["playable100"] = 1
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_load12_branch_summary(summary, event, checked)
+        self.assertEqual(caught.exception.code, "LOAD12_SUMMARY_CLAIMS_INVALID")
+
+    def test_path_parent_key_hash_goal_and_publisher_bindings_are_checked(self):
+        scalar, event, _summary, allocation = _load12_branch_fixture()
+        source = reader._validate_load12_source(event["pre"]["source"])
+        unsupported_start_node = dict(event["pre"]["path"]["nodes"][0], layer=1)
+        prefix_start_via = _literal_hole(
+            0, "p07-via/LOAD12/68/9", "LOAD12", 1, 68, 9, 0, 0)
+        reader._validate_load12_start_face(
+            source, unsupported_start_node, [prefix_start_via])
+
+        cases = (
+            (lambda event: event["pre"]["source"].update(startX=1),
+             "LOAD12_SOURCE_START_PAD_OFF_GRID"),
+            (lambda event: event["pre"]["source"].update(rootY=31),
+             "LOAD12_SOURCE_ROOT_PAD_OFF_GRID"),
+            (lambda event: event["pre"]["source"].update(startX=10),
+             "LOAD12_SEED_START_CELL_INCONSISTENT"),
+            (lambda event: event["pre"]["path"]["nodes"][0].update(
+                layer=1, cost=2, serial=42, key=144),
+             "LOAD12_START_FACE_UNSUPPORTED"),
+            (lambda event: event["pre"]["path"]["nodes"][3].update(parentIndex=3),
+             "LOAD12_PATH_NODE_DOMAIN_INVALID"),
+            (lambda event: event["pre"]["path"]["nodes"][2].update(key=306),
+             "LOAD12_PATH_NODE_KEY_INVALID"),
+            (lambda event: event["pre"]["path"]["nodes"][5].update(cell=5),
+             "LOAD12_PATH_NODE_CELL_INVALID"),
+            (lambda event: event["pre"]["path"].update(tupleSha256="0" * 64),
+             "LOAD12_PATH_METRICS_OR_HASH_INVALID"),
+            (lambda event: event["pre"]["path"].update(directDistance=30),
+             "LOAD12_PATH_METRICS_OR_HASH_INVALID"),
+            (lambda event: event["pre"]["goal"].update(faceBitsSha256="0" * 64),
+             "LOAD12_GOAL_MASK_INVALID"),
+            (lambda event: event["pre"]["nativePublisher"].update(endTransitions=3),
+             "LOAD12_NATIVE_PUBLISHER_BINDING_INVALID"),
+            (lambda event: event["pre"]["path"]["planarRuns"][0]["xPoints"].__setitem__(1, 11),
+             "LOAD12_PLANAR_RUN_MISMATCH"),
+        )
+        for mutate, expected in cases:
+            scalar, event, _summary, allocation = _load12_branch_fixture()
+            mutate(event)
+            with self.subTest(expected=expected):
+                self._assert_event_code(event, scalar, allocation, expected)
+
+    def test_source_order_prefix_owner_and_raw_fingerprint_fail_closed(self):
+        cases = (
+            (lambda event: event["pre"]["source"].update(netIndexNextFetch=1),
+             "LOAD12_SOURCE_NET_POSITION_INVALID"),
+            (lambda event: event["pre"]["source"].update(branchOrdinal=74),
+             "LOAD12_SOURCE_IDENTITY_INVALID"),
+            (lambda event: event["pre"]["prefixInventory"]["rows"][0].update(
+                fingerprint="wrong"),
+             "ALLOCATION_ROW_FINGERPRINT_INVALID"),
+            (lambda event: event["pre"]["prefixInventory"]["totals"]["byNet"][1].update(
+                holeCount=0),
+             "ALLOCATION_NET_TOTALS_INVALID"),
+            (lambda event: event["pre"]["prefixInventory"]["work"].update(
+                workSteps=6),
+             "LOAD12_PREFIX_WORK_CONSERVATION_INVALID"),
+        )
+        for mutate, expected in cases:
+            scalar, event, _summary, allocation = _load12_branch_fixture()
+            mutate(event)
+            with self.subTest(expected=expected):
+                self._assert_event_code(event, scalar, allocation, expected)
+
+        for hole_id, creator_ordinal, expected in (
+                ("p07-via/LOAD12/73/0", 73, "ALLOCATION_ROW_OWNER_INVALID"),
+                ("p07-via/LOAD12/10/0/1", 10, "ALLOCATION_ROW_ID_INVALID")):
+            scalar, event, _summary, allocation = _load12_branch_fixture()
+            row = event["pre"]["prefixInventory"]["rows"][0]
+            row["id"] = hole_id
+            row["creatorBranchOrdinal"] = creator_ordinal
+            _refresh_literal_fingerprint(row)
+            with self.subTest(hole_id=hole_id):
+                self._assert_event_code(event, scalar, allocation, expected)
+
+    def test_post_delta_retention_current_owner_and_transition_bindings_fail(self):
+        cases = (
+            (lambda event: event["post"]["post"]["createdHoleIds"].pop(),
+             "LOAD12_CREATED_HOLE_DELTA_INVALID"),
+            (lambda event: event["post"]["post"]["retainedHoleBindings"][0].update(
+                postIndex=1),
+             "LOAD12_RETAINED_HOLE_BINDING_INVALID"),
+            (lambda event: event["post"]["post"]["transitionBindings"][0].update(
+                createdInBranch=True),
+             "LOAD12_TRANSITION_BINDING_INVALID"),
+            (lambda event: event["post"]["post"]["transitionBindings"][1].update(
+                x=21),
+             "LOAD12_TRANSITION_BINDING_INVALID"),
+            (lambda event: event["post"]["post"]["transitionBindings"][2].update(
+                viaFingerprint="wrong"),
+             "LOAD12_TRANSITION_BINDING_INVALID"),
+        )
+        for mutate, expected in cases:
+            scalar, event, _summary, allocation = _load12_branch_fixture()
+            mutate(event)
+            with self.subTest(expected=expected):
+                self._assert_event_code(event, scalar, allocation, expected)
+
+        scalar, event, _summary, allocation = _load12_branch_fixture()
+        row = event["post"]["post"]["holeRows"][1]
+        row["id"] = "p07-via/LOAD12/74/2"
+        row["creatorBranchOrdinal"] = 74
+        _refresh_literal_fingerprint(row)
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_load12_branch_event(event, scalar, allocation)
+        self.assertEqual(caught.exception.code, "ALLOCATION_ROW_OWNER_INVALID")
+
+    def test_created_trace_runs_fingerprints_and_width_bind_to_prior_same_net(self):
+        scalar, event, _summary, allocation = _load12_branch_fixture()
+        event["post"]["post"]["createdTraceRows"][0]["index"] = 1
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_load12_branch_event(event, scalar, allocation)
+        self.assertEqual(caught.exception.code,
+                         "LOAD12_POST_TRACE_INDEX_PARTITION_INVALID")
+
+        scalar, event, _summary, allocation = _load12_branch_fixture()
+        trace = event["post"]["post"]["createdTraceRows"][0]
+        trace.update(_literal_trace(
+            trace["index"], trace["sourceId"], trace["netId"],
+            trace["startPadId"], trace["endPadId"], trace["layer"], 11,
+            trace["xPoints"], trace["yPoints"]))
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_load12_branch_event(event, scalar, allocation)
+        self.assertEqual(caught.exception.code,
+                         "LOAD12_CREATED_TRACE_WIDTH_NOT_BOUND_TO_PREFIX")
+
+        scalar, event, _summary, allocation = _load12_branch_fixture()
+        trace = event["post"]["post"]["createdTraceRows"][0]
+        trace.update(_literal_trace(
+            trace["index"], trace["sourceId"], trace["netId"],
+            trace["startPadId"], trace["endPadId"], trace["layer"],
+            trace["width"], [0, 20], trace["yPoints"]))
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_load12_branch_event(event, scalar, allocation)
+        self.assertEqual(caught.exception.code,
+                         "LOAD12_CREATED_TRACE_PATH_BINDING_INVALID")
+
+        scalar, event, _summary, allocation = _load12_branch_fixture()
+        event["post"]["claims"]["routeAdoption"] = True
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_load12_branch_event(event, scalar, allocation)
+        self.assertEqual(caught.exception.code, "LOAD12_POST_CLAIMS_INVALID")
+
+    def test_serialized_utf16_units_bind_to_native_and_legacy_json_encodings(self):
+        event, _summary, _allocation, checked = self._validate()
+        self.assertIn("😀", event["pre"]["source"]["netOrder"][0])
+        self.assertIn(
+            "😀", event["pre"]["prefixInventory"]["totals"]["byNet"][0]["netId"])
+        self.assertEqual(
+            checked["pre"]["pre"]["work"]["serializedUtf16Units"],
+            _fixture_serialized_json_units(
+                event["pre"],
+                {("work", "advanceCalls"), ("work", "workSteps"),
+                 ("work", "serializedUtf16Units"), ("work", "activeMillis")},
+                {("prefixInventory",)}))
+        self.assertEqual(
+            checked["post"]["post"]["work"]["serializedUtf16Units"],
+            _fixture_serialized_json_units(
+                event["post"],
+                {("work", "advanceCalls"), ("work", "workSteps"),
+                 ("work", "aggregateWorkSteps"),
+                 ("work", "serializedUtf16Units"), ("work", "activeMillis")}))
+
+        for section, expected_code in (
+                ("pre", "LOAD12_PRE_SERIALIZED_UTF16_UNITS_INVALID"),
+                ("post", "LOAD12_POST_SERIALIZED_UTF16_UNITS_INVALID")):
+            for undercount in (False, True):
+                scalar, mutated, _summary, allocation = _load12_branch_fixture()
+                count = mutated[section]["work"]["serializedUtf16Units"]
+                mutated[section]["work"]["serializedUtf16Units"] = (
+                    count - 1 if undercount else 0)
+                with self.subTest(section=section, undercount=undercount):
+                    self._assert_event_code(
+                        mutated, scalar, allocation, expected_code)
+
+    def test_nested_work_and_later_D_sense_rows_only_corroborate_ids_and_fp(self):
+        scalar, event, _summary, allocation = _load12_branch_fixture()
+        event["post"]["work"]["aggregateWorkSteps"] += 1
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_load12_branch_event(event, scalar, allocation)
+        self.assertEqual(caught.exception.code,
+                         "LOAD12_POST_WORK_CONSERVATION_INVALID")
+
+        scalar, event, _summary, allocation = _load12_branch_fixture()
+        allocation["diagnostic"]["rows"][0]["fingerprint"] = "changed"
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_load12_branch_event(event, scalar, allocation)
+        self.assertEqual(caught.exception.code,
+                         "LOAD12_LATER_ALLOCATION_CORROBORATION_INVALID")
+
+        scalar, event, _summary, allocation = _load12_branch_fixture()
+        allocation["binding"]["netOrder"] = ["OTHER", "LOAD12", "D_SENSE"]
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_load12_branch_event(event, scalar, allocation)
+        self.assertEqual(caught.exception.code,
+                         "LOAD12_LATER_ALLOCATION_NET_ORDER_MISMATCH")
+
+
 class _LineLedger:
     class LedgerInputError(ValueError):
         pass
@@ -740,15 +1404,31 @@ class ReceiptTests(unittest.TestCase):
     def _receipt(self):
         return [marker + " {}" for marker in reader.RECEIPT_MARKERS]
 
-    def test_receipt_is_the_closed_fourteen_record_v2_sequence(self):
-        self.assertEqual(len(reader.RECEIPT_MARKERS), 14)
-        self.assertEqual(reader.RECEIPT_MARKERS[-2:], (
-            reader.ALLOCATION_EVENT_MARKER, reader.ALLOCATION_SUMMARY_MARKER))
+    def test_receipt_is_the_closed_sixteen_record_v3_sequence(self):
+        expected = (
+            "RB100_QUALITY_SCALAR_CONTROLS",
+            "RB100_CAPACITY_BOUND_PHYSICAL_SUBSETS",
+            "RB100_QUALITY_SCALAR_OPERATION",
+            "RB100_CAPACITY_BOUND_PHYSICAL_SUBSETS",
+            "RB100_QUALITY_SCALAR_OPERATION",
+            "RB100_QUALITY_SCALAR_EVENT",
+            "RB100_QUALITY_SCALAR_PAIR",
+            "PASS: RB100 quality scalar contracts",
+            "RB100_QUALITY_PATH_EVENT",
+            "PASS: RB100 quality path contracts",
+            "RB100_ZERO_VIA_GRAPH_EVENT",
+            "PASS: RB100 quality zero-via graph contracts",
+            "RB100_PREFIX_ALLOCATION_EVENT",
+            "PASS: RB100 prefix allocation contracts",
+            "RB100_LOAD12_BRANCH_EVENT",
+            "PASS: RB100 LOAD12 branch contracts",
+        )
+        self.assertEqual(reader.RECEIPT_MARKERS, expected)
         receipt = self._receipt()
-        self.assertEqual(len(receipt), 14)
-        self.assertTrue(receipt[-2].startswith("RB100_PREFIX_ALLOCATION_EVENT "))
+        self.assertEqual(len(receipt), 16)
+        self.assertTrue(receipt[-2].startswith("RB100_LOAD12_BRANCH_EVENT "))
         self.assertTrue(receipt[-1].startswith(
-            "PASS: RB100 prefix allocation contracts "))
+            "PASS: RB100 LOAD12 branch contracts "))
 
     def test_console_receipt_must_have_exact_marker_order_and_no_stderr_events(self):
         ledger = _LineLedger()
@@ -786,15 +1466,19 @@ class ReceiptTests(unittest.TestCase):
 
 
 class SourceBoundRunTests(unittest.TestCase):
-    def test_coordinated_v2_schema_and_native_census_are_pinned(self):
-        self.assertEqual(reader.INPUT_SCHEMA, "p07-quality-zero-via-input-v2")
-        self.assertEqual(reader.RUN_SCHEMA, "q100-quality-zero-via-native-run-v2")
+    def test_coordinated_v3_schema_and_native_census_are_pinned(self):
+        self.assertEqual(reader.INPUT_SCHEMA, "p07-quality-zero-via-input-v3")
+        self.assertEqual(reader.RUN_SCHEMA, "q100-quality-zero-via-native-run-v3")
         self.assertEqual(reader.RESULT_SCHEMA,
-                         "q100-quality-zero-via-reader-result-v2")
-        self.assertEqual(reader.SOURCE_REVISION, 17)
-        self.assertEqual(reader.SOURCE_INPUT_COUNT, 1074)
-        self.assertEqual(reader.CONTRACT_JAVA_COUNT, 218)
-        self.assertEqual(len(reader.QUALITY_REQUIRED_INPUTS), 10)
+                         "q100-quality-zero-via-reader-result-v3")
+        self.assertEqual(reader.SOURCE_REVISION, 18)
+        self.assertEqual(reader.SOURCE_INPUT_COUNT, 1076)
+        self.assertEqual(reader.CONTRACT_JAVA_COUNT, 220)
+        self.assertEqual(len(reader.QUALITY_REQUIRED_INPUTS), 12)
+        self.assertIn("tests/contracts/P07AcceptedBranchCaptureDiagnostics.java",
+                      reader.QUALITY_REQUIRED_INPUTS)
+        self.assertIn("tests/contracts/P07AcceptedBranchCaptureContractTest.java",
+                      reader.QUALITY_REQUIRED_INPUTS)
 
     def test_source_schema_and_revision_are_rejected_before_source_reads(self):
         with tempfile.TemporaryDirectory(prefix="q100-zero-via-source-") as temporary:
@@ -802,13 +1486,14 @@ class SourceBoundRunTests(unittest.TestCase):
             spec_path = base / "input-spec.json"
             for schema, revision in (
                     ("p07-quality-zero-via-input-v1", 16),
-                    (reader.INPUT_SCHEMA, 16)):
+                    ("p07-quality-zero-via-input-v2", 17),
+                    (reader.INPUT_SCHEMA, 17)):
                 spec = {
                     "schema": schema,
                     "sourceRoot": str(base / "missing-source"),
                     "pinsPath": str(base / "missing-pins.json"),
                     "pinsSha256": "a" * 64,
-                    "inputCount": 1072, "inputBytes": 100,
+                    "inputCount": 1076, "inputBytes": 100,
                     "sourceSnapshotRevision": revision,
                     "resultPath": str(base / "missing-result.json"),
                     "stdoutPath": str(base / "missing-stdout.txt"),

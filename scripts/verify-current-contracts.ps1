@@ -939,7 +939,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         @{ Name = 'Rb100ElectricalPilotContractTest'; Marker = 'RB100 electrical pilot contracts ' },
         @{ Name = 'PcbPlacementDiagnosticsContractTest'; Marker = 'PCB placement diagnostics contracts ' },
         @{ Name = 'Rb100P07PolicyDiagnosticContractTest'; Marker = 'RB100 P07 policy diagnostic contracts ' },
-        @{ Name = 'Rb100QualityZeroViaGraphContractTest'; Marker = 'RB100 prefix allocation contracts ' },
+        @{ Name = 'Rb100QualityZeroViaGraphContractTest'; Marker = 'RB100 LOAD12 branch contracts ' },
         @{ Name = 'Rb100P07BranchDiagnosticContractTest'; Marker = 'RB100 P07 branch diagnostic contracts ' },
         @{ Name = 'PcbCorridorOrientationContractTest'; Marker = 'PCB corridor orientation contracts ' },
         @{ Name = 'Rb56ModelIdentityContractTest'; Marker = 'RB56 model-identity contracts ' },
@@ -1021,6 +1021,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         @{ Name = 'P07ShortcutQueryContractTest'; Marker = 'P07 shortcut query contracts ' },
         @{ Name = 'P07ZeroViaGraphContractTest'; Marker = 'P07 zero-via graph contracts ' },
         @{ Name = 'P07PrefixAllocationContractTest'; Marker = 'P07 prefix-allocation contracts ' },
+        @{ Name = 'P07AcceptedBranchCaptureContractTest'; Marker = 'P07 accepted branch capture contracts ' },
         @{ Name = 'P07TwoLayerContractTest'; Marker = 'P07 two-layer contracts ' },
         @{ Name = 'P07GridEligibilityContractTest'; Marker = 'P07 grid eligibility contracts ' },
         @{ Name = 'P07BranchDiagnosticsContractTest'; Marker = 'P07 branch diagnostics contracts ' },
@@ -1066,6 +1067,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
     $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/P07ShortcutQueryDiagnostics.java')
     $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/P07ZeroViaGraphDiagnostics.java')
     $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/P07PrefixAllocationDiagnostics.java')
+    $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/P07AcceptedBranchCaptureDiagnostics.java')
     $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/Rb100PhysicalReference.java')
     $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/P08StructuralFixtures.java')
     $sourcePaths += (Join-Path $repositoryRoot 'tests/contracts/HeldFamilyCatalogFixture.java')

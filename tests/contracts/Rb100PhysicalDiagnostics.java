@@ -135,7 +135,7 @@ public final class Rb100PhysicalDiagnostics {
             "\"layoutQualification\":false}");
     }
 
-    /** Actual-generator NULL/PROBE pair plus the bounded actual-branch zero-via graph scan. */
+    /** Actual-generator NULL/PROBE pair plus bounded actual-branch graph, allocation and LOAD12 capture. */
     static void runQualityZeroViaGraphContracts() {
         long suiteStarted=System.nanoTime();
         int beforeAssertions=assertions;
@@ -158,7 +158,7 @@ public final class Rb100PhysicalDiagnostics {
             "NULL",nullOperationId,null,null,true);
         if(!"PASS".equals(baseline.status) || baseline.policyResult==null ||
                 baseline.policyResult.getLayout()!=null || baseline.qualitySubsetMarkerJson==null) {
-            System.out.println("RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":17,\"runId\":\""+
+            System.out.println("RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":18,\"runId\":\""+
                 jsonFull(runId)+"\",\"operationId\":\""+nullOperationId+
                 "\",\"variant\":\""+variant.name()+"\",\"mode\":\"NULL\",\"result\":"+
                 baseline.toJson()+"}");
@@ -201,7 +201,7 @@ public final class Rb100PhysicalDiagnostics {
         long suiteMillis=nanosToMillis(System.nanoTime()-suiteStarted);
         require(suiteMillis<=480000L,
             "quality scalar two-operation suite remains within its frozen480s ceiling");
-        System.out.println("PASS: RB100 quality scalar contracts {\"protocolVersion\":1,\"sourceRevision\":17,"+
+        System.out.println("PASS: RB100 quality scalar contracts {\"protocolVersion\":1,\"sourceRevision\":18,"+
             "\"status\":\"PASS\",\"operations\":2,\"nullOperations\":1,\"probeOperations\":1,"+
             "\"pairs\":1,\"confirmedScalarEvents\":1,\"variant\":\""+variant.name()+
             "\",\"runId\":\""+jsonFull(runId)+"\",\"rootSeed\":\""+SEED+
@@ -228,6 +228,10 @@ public final class Rb100PhysicalDiagnostics {
         String allocationSummary=probe.prefixAllocationSummaryJson(observed,pairPassed);
         System.out.println(allocationEvent);
         System.out.println(allocationSummary);
+        String load12Event=probe.load12EventJson(observed,pairPassed);
+        String load12Summary=probe.load12SummaryJson(observed,pairPassed);
+        System.out.println(load12Event);
+        System.out.println(load12Summary);
     }
 
     /** Actual-generator null/capture pairs for the opt-in fixed-prefix graph seam. */
@@ -867,7 +871,7 @@ public final class Rb100PhysicalDiagnostics {
 
     private static String qualityScalarOperationJson(P07PolicyDiagnosticCase result,
             String operationId,String mode) {
-        return "RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":17,"+
+        return "RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":18,"+
             "\"runId\":\""+jsonFull(result.runId)+"\",\"operationId\":\""+
             jsonFull(operationId)+"\",\"variant\":\""+jsonFull(result.subject)+
             "\",\"mode\":\""+jsonFull(mode)+"\",\"result\":"+result.toJson()+"}";
@@ -927,7 +931,7 @@ public final class Rb100PhysicalDiagnostics {
             observed.policyResult!=null && baseline.policyResult.getLayout()==null &&
             observed.policyResult.getLayout()==null && baseline.layoutOutputJson.contains("\"layoutReturned\":false") &&
             observed.layoutOutputJson.contains("\"layoutReturned\":false");
-        return "RB100_QUALITY_SCALAR_PAIR {\"protocolVersion\":1,\"sourceRevision\":17,"+
+        return "RB100_QUALITY_SCALAR_PAIR {\"protocolVersion\":1,\"sourceRevision\":18,"+
             "\"runId\":\""+jsonFull(runId)+"\",\"variant\":\""+variant.name()+
             "\",\"nullOperationId\":\""+nullOperationId+"\",\"probeOperationId\":\""+
             probeOperationId+"\",\"rootSeed\":\""+SEED+"\",\"placementSeed\":\""+
@@ -3072,6 +3076,7 @@ public final class Rb100PhysicalDiagnostics {
         long manualDriverNanos;
         String controlsJson,qualityRejectionMessage,generatorLastFailureType,
             generatorLastFailureMessage;
+        SeededPcbLayoutGenerator.Session targetGeneratorSession;
         Object routeSession,fixedPrefixContext,targetSearch,targetPublisher,
             targetBranchSearch,targetBranch;
         Object targetStartPad,targetRootPad,targetEndNode;
@@ -3087,9 +3092,27 @@ public final class Rb100PhysicalDiagnostics {
         String prefixAllocationDiagnosticJson;
         int prefixAllocationAdvanceCalls,prefixAllocationCompletedLastWork;
         int prefixAllocationTotalHoles=-1,lastPrefixAllocationBudgetUnit;
+        P07AcceptedBranchCaptureDiagnostics.SeedSnapshot load12Seeds;
+        P07AcceptedBranchCaptureDiagnostics.Context load12Context;
+        P07AcceptedBranchCaptureDiagnostics.PreCursor load12PreCursor;
+        P07AcceptedBranchCaptureDiagnostics.PreResult load12PreResult;
+        P07AcceptedBranchCaptureDiagnostics.PostCursor load12PostCursor;
+        P07AcceptedBranchCaptureDiagnostics.PostResult load12PostResult;
+        Load12BranchBinding load12Binding;
+        Object load12Search,load12Branch,load12Publisher,load12ReversedIdentity;
+        String load12PreJson,load12PostJson;
+        String[] load12PreHoleIds,load12PreHoleFingerprints,
+            load12PostHoleIds,load12PostHoleFingerprints,load12CreatedHoleIds;
+        int load12PathNodeCount=-1,load12TransitionCount=-1,load12PrefixHoleCount=-1,
+            load12PostHoleCount=-1,load12CreatedHoleCount=-1,load12CreatedTraceCount=-1;
+        int load12PreAdvanceCalls,load12PostAdvanceCalls;
+        int lastLoad12PreBudgetUnit,lastLoad12PostBudgetUnit;
         int targetAccountingBefore=-1,targetAccountingAfter=-1;
         boolean targetCaptured,qualityRejected,targetRequestAccounted,
             terminalConfirmed,readyGuardRequested,armedReadyGuard,targetBranchHandoffVerified;
+        boolean load12BranchCaptured,load12BranchHandoffVerified,
+            load12PreStarted,load12PreComplete,load12PostStarted,load12PostComplete,
+            load12CaptureReleased;
 
         QualityScalarProbe(String runId,String operationId,Rb100Plan.Variant variant) {
             this.runId=runId; this.operationId=operationId; this.variant=variant;
@@ -3113,6 +3136,10 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         String nextManualUnitName() {
+            if(load12PreStarted && !load12PreComplete)
+                return "p07-quality-load12-pre-advance-"+(load12PreAdvanceCalls+1);
+            if(load12PostStarted && !load12PostComplete)
+                return "p07-quality-load12-post-advance-"+(load12PostAdvanceCalls+1);
             if(prefixAllocationCursor!=null && !prefixAllocationCursor.isComplete())
                 return "p07-quality-prefix-allocation-advance-"+
                     (prefixAllocationAdvanceCalls+1);
@@ -3139,6 +3166,30 @@ public final class Rb100PhysicalDiagnostics {
                 "manual single-step driver owns the live generator session before the target rejection");
             Object active=P07ScalarReflection.read(generatorSession,"mediumTwoLayerRoute");
             require(active!=null,"manual single-step driver observes the actual retained P07 owner");
+            if(load12PreStarted && !load12PreComplete) {
+                require(active==routeSession && generatorSession==targetGeneratorSession,
+                    "pending LOAD12 pre-capture retains the same generator and P07 owner");
+                long preGroupStarted=System.nanoTime();
+                try {
+                    advanceLoad12PreCapture(budget);
+                } finally {
+                    manualDriverNanos+=Math.max(0L,System.nanoTime()-preGroupStarted);
+                }
+                manualGroups++;
+                return;
+            }
+            if(load12PostStarted && !load12PostComplete) {
+                require(active==routeSession && generatorSession==targetGeneratorSession,
+                    "pending LOAD12 post-capture retains the same generator and P07 owner");
+                long postGroupStarted=System.nanoTime();
+                try {
+                    advanceLoad12PostCapture(budget);
+                } finally {
+                    manualDriverNanos+=Math.max(0L,System.nanoTime()-postGroupStarted);
+                }
+                manualGroups++;
+                return;
+            }
             if(prefixAllocationCursor!=null && !prefixAllocationCursor.isComplete()) {
                 require(active==routeSession &&
                     P07ScalarReflection.read(routeSession,"fixedPrefixContext")==fixedPrefixContext,
@@ -3167,6 +3218,7 @@ public final class Rb100PhysicalDiagnostics {
             }
             if(routeSession==null) {
                 routeSession=active;
+                targetGeneratorSession=generatorSession;
                 fixedPrefixContext=P07ScalarReflection.read(routeSession,"fixedPrefixContext");
                 require(fixedPrefixContext instanceof PcbLayerRoutingPrototype.FixedPrefixCaptureContext,
                     "probe observer installs the actual generator-owned fixed-prefix context");
@@ -3181,7 +3233,7 @@ public final class Rb100PhysicalDiagnostics {
                 require(initialSearch==null || P07ScalarReflection.intField(initialSearch,"pass")==0,
                     "first ordinary generator quantum has not skipped the pass1 scalar observation point");
             } else {
-                require(active==routeSession,
+                require(active==routeSession && generatorSession==targetGeneratorSession,
                     "manual single-step driver cannot switch to a successor P07 owner");
             }
             require(P07ScalarReflection.read(routeSession,"fixedPrefixContext")==fixedPrefixContext,
@@ -3194,6 +3246,8 @@ public final class Rb100PhysicalDiagnostics {
                     Object search=P07ScalarReflection.read(routeSession,"search");
                     if(search!=null && controlsJson==null)
                         controlsJson=runQualityScalarPublisherControls(search,runId);
+                    Object load12BranchBeforeSlice=retainLoad12BranchBeforeSlice(search);
+                    verifyLoad12ProgressBeforeSlice(search);
                     Object branchBeforeSlice=retainTargetBranchBeforeSlice(search);
                     Object publisherBeforeSlice=search==null?null:
                         P07ScalarReflection.read(search,"publisher");
@@ -3215,9 +3269,27 @@ public final class Rb100PhysicalDiagnostics {
                             targetBranchHandoffVerified=true;
                         }
                     }
+                    if(search!=null && load12BranchCaptured &&
+                            load12BranchBeforeSlice==load12Branch &&
+                            publisherBeforeSlice==null && search==load12Search) {
+                        Object branchAfterSlice=P07ScalarReflection.read(search,"branch");
+                        Object publisherAfterSlice=P07ScalarReflection.read(search,"publisher");
+                        if(branchAfterSlice==null && publisherAfterSlice!=null) {
+                            require(P07ScalarReflection.read(publisherAfterSlice,"end")==
+                                    P07ScalarReflection.read(load12Branch,"found") &&
+                                P07ScalarReflection.read(publisherAfterSlice,"endTerminal")==
+                                    P07ScalarReflection.read(load12Branch,"foundTerminal"),
+                                "LOAD12 Publisher receives the exact actual found Node and end terminal");
+                            load12Publisher=publisherAfterSlice;
+                            load12BranchHandoffVerified=true;
+                        }
+                    }
                     require(progress!=PcbLayerRoutingPrototype.OrderingProgress.ROUTE_READY,
                         "manual P07 stepping must stop before any retained route can be integrated");
                     inspectActualTargetAfterSlice(progress);
+                    verifyLoad12ProgressAfterSlice();
+                    if(load12PreStarted && !load12PreComplete) break;
+                    if(load12PostStarted && !load12PostComplete) break;
                     if(graphCursor!=null && !graphCursor.isComplete()) break;
                     if(progress==PcbLayerRoutingPrototype.OrderingProgress.COMPLETE && !qualityRejected)
                         throw new AssertionError("target quality rejection was not observed before P07 completion");
@@ -3226,6 +3298,559 @@ public final class Rb100PhysicalDiagnostics {
                 manualDriverNanos+=Math.max(0L,System.nanoTime()-manualGroupStarted);
             }
             manualGroups++;
+        }
+
+        private Object retainLoad12BranchBeforeSlice(Object search) {
+            if(search==null || load12CaptureReleased) return null;
+            if(load12BranchCaptured) {
+                require(search==load12Search,
+                    "LOAD12 capture cannot follow a successor Search");
+                Object branch=P07ScalarReflection.read(search,"branch");
+                return branch==load12Branch ? branch : null;
+            }
+            if(P07ScalarReflection.intField(search,"pass")!=1) return null;
+            Object branch=P07ScalarReflection.read(search,"branch");
+            if(branch==null) return null;
+            int ordinal=P07ScalarReflection.intField(branch,"branchOrdinal");
+            if(ordinal<73) return null;
+            require(ordinal==73 &&
+                "LOAD12".equals(P07ScalarReflection.stringField(branch,"net")),
+                "the first pass1 branch at ordinal73 is the approved LOAD12 target");
+            captureLoad12BranchBeforeFirstWork(search,branch);
+            return branch;
+        }
+
+        private void captureLoad12BranchBeforeFirstWork(Object search,Object branch) {
+            require(!load12BranchCaptured && routeSession!=null &&
+                targetGeneratorSession!=null &&
+                P07ScalarReflection.read(targetGeneratorSession,"mediumTwoLayerRoute")==routeSession &&
+                P07ScalarReflection.read(routeSession,"search")==search &&
+                P07ScalarReflection.read(search,"branch")==branch &&
+                P07ScalarReflection.read(search,"publisher")==null,
+                "LOAD12/73 source is captured before its first BranchSearch work");
+            Object netsObject=P07ScalarReflection.read(search,"nets");
+            require(netsObject instanceof Vector,
+                "LOAD12 Search retains its actual source-order net vector");
+            Vector<?> nets=(Vector<?>)netsObject;
+            require(nets.size()>0 && nets.size()<=256,
+                "LOAD12 Search net vector stays inside its frozen metadata bound");
+            String[] netOrder=new String[nets.size()];
+            HashSet<String> uniqueNets=new HashSet<String>();
+            for(int index=0;index<nets.size();index++) {
+                Object value=nets.get(index);
+                require(value instanceof String,
+                    "LOAD12 Search net order contains only source String values");
+                String net=(String)value;
+                require(net.length()>0 && net.length()<=4096 &&
+                    uniqueNets.add(net) && net.equals(PcbConductorGraph.requireId(net)),
+                    "LOAD12 Search net order is unique and contains bounded valid identities");
+                netOrder[index]=net;
+            }
+            int searchNetIndex=P07ScalarReflection.intField(search,"netIndex");
+            int currentNetPosition=searchNetIndex-1;
+            String currentNet=P07ScalarReflection.stringField(search,"currentNet");
+            int branchOrdinal=P07ScalarReflection.intField(branch,"branchOrdinal");
+            int searchBranches=P07ScalarReflection.intField(search,"branches");
+            int pass=P07ScalarReflection.intField(search,"pass");
+            PcbLayerRoutingPrototype.Policy policy=(PcbLayerRoutingPrototype.Policy)
+                P07ScalarReflection.read(search,"policy");
+            int primaryLayer=P07ScalarReflection.intField(search,"primary");
+            int maximumVias=P07ScalarReflection.intField(search,"maximumVias");
+            PcbBoardLayout layout=(PcbBoardLayout)P07ScalarReflection.read(search,"layout");
+            PcbBoardLayout template=(PcbBoardLayout)P07ScalarReflection.read(routeSession,"template");
+            PcbBoardHole[] prefixHoles=(PcbBoardHole[])
+                P07ScalarReflection.read(branch,"holes");
+            PcbPadPlacement start=(PcbPadPlacement)P07ScalarReflection.read(branch,"start");
+            PcbPadPlacement root=(PcbPadPlacement)P07ScalarReflection.read(branch,"root");
+            Object queue=P07ScalarReflection.read(branch,"queue");
+            require(currentNetPosition>=0 && currentNetPosition<netOrder.length &&
+                currentNet!=null && "LOAD12".equals(currentNet) &&
+                currentNet.equals(netOrder[currentNetPosition]) &&
+                branchOrdinal==73 && searchBranches==branchOrdinal && pass==1 &&
+                policy==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER &&
+                primaryLayer==PcbCopperLayer.BOTTOM.ordinal() &&
+                maximumVias==48 && policy.transitions==4 && layout!=null &&
+                template!=null && template.getHoleCount()==0 &&
+                template.getHoles().isEmpty() && start!=null && root!=null &&
+                P07ScalarReflection.read(search,"currentRoot")==root &&
+                prefixHoles!=null && prefixHoles.length<=maximumVias &&
+                layout.getHoleCount()==prefixHoles.length &&
+                P07ScalarReflection.intField(branch,"expanded")==0 &&
+                P07ScalarReflection.intField(queue,"size")==2 &&
+                P07ScalarReflection.read(branch,"found")==null,
+                "actual LOAD12/73 captures ordered net, FULLER policy, empty template, and two unconsumed source seeds");
+            Vector<PcbBoardHole> layoutHoles=layout.getHoles();
+            require(layoutHoles.size()==prefixHoles.length,
+                "LOAD12 branch prefix array and live layout have the same initial hole count");
+            for(int index=0;index<prefixHoles.length;index++)
+                require(prefixHoles[index]!=null && prefixHoles[index]==layoutHoles.get(index),
+                    "LOAD12 source prefix retains its original hole identity at index "+index);
+            P07AcceptedBranchCaptureDiagnostics.SeedSnapshot seeds=
+                P07AcceptedBranchCaptureDiagnostics.captureInitialSeeds(search,branch);
+            require(seeds!=null && seeds.nodeCount()==2,
+                "actual LOAD12 branch retains both initial seed Node identities before queue advancement");
+            load12Search=search;
+            load12Branch=branch;
+            load12Seeds=seeds;
+            load12Binding=new Load12BranchBinding(search,branch,nets,netOrder,
+                searchNetIndex,currentNet,branchOrdinal,searchBranches,pass,policy,
+                primaryLayer,maximumVias,layout,template,prefixHoles,start,root);
+            load12BranchCaptured=true;
+            verifyLoad12BranchSourceBeforePublication();
+        }
+
+        private void verifyLoad12SearchMetadata() {
+            Load12BranchBinding binding=load12Binding;
+            require(binding!=null && load12Search==binding.search &&
+                load12Branch==binding.branch &&
+                P07ScalarReflection.read(binding.search,"nets")==binding.netVectorIdentity &&
+                P07ScalarReflection.intField(binding.search,"netIndex")==binding.searchNetIndex &&
+                P07ScalarReflection.stringField(binding.search,"currentNet")
+                    .equals(binding.currentNet) &&
+                P07ScalarReflection.intField(binding.search,"branches")==binding.searchBranches &&
+                binding.searchBranches==binding.branchOrdinal &&
+                P07ScalarReflection.intField(binding.branch,"branchOrdinal")==binding.branchOrdinal &&
+                binding.currentNet.equals(P07ScalarReflection.stringField(binding.branch,"net")) &&
+                P07ScalarReflection.intField(binding.search,"pass")==binding.pass &&
+                P07ScalarReflection.read(binding.search,"policy")==binding.policy &&
+                P07ScalarReflection.intField(binding.search,"primary")==binding.primaryLayer &&
+                P07ScalarReflection.intField(binding.search,"maximumVias")==binding.maximumVias &&
+                P07ScalarReflection.read(binding.search,"layout")==binding.layout &&
+                P07ScalarReflection.read(routeSession,"template")==binding.template &&
+                binding.template.getHoleCount()==0 && binding.template.getHoles().isEmpty(),
+                "LOAD12 source Search, net position, branch ordinal, policy, layout and template remain exact");
+            Vector<?> nets=(Vector<?>)binding.netVectorIdentity;
+            require(nets.size()==binding.netOrder.length &&
+                binding.currentNetPosition==binding.searchNetIndex-1 &&
+                binding.netOrder[binding.currentNetPosition].equals(binding.currentNet),
+                "LOAD12 source net vector retains its actual next-fetch/current-net relationship");
+            for(int index=0;index<binding.netOrder.length;index++)
+                require(binding.netOrder[index].equals(nets.get(index)),
+                    "LOAD12 actual net order remains unchanged at index "+index);
+        }
+
+        private void verifyLoad12BranchSourceBeforePublication() {
+            Load12BranchBinding binding=load12Binding;
+            verifyLoad12SearchMetadata();
+            require(P07ScalarReflection.read(routeSession,"search")==binding.search &&
+                P07ScalarReflection.read(binding.search,"branch")==binding.branch &&
+                P07ScalarReflection.read(binding.search,"publisher")==null &&
+                P07ScalarReflection.read(binding.branch,"start")==binding.start &&
+                P07ScalarReflection.read(binding.branch,"root")==binding.root &&
+                binding.prefixHoles.length==binding.layout.getHoleCount() &&
+                binding.prefixGeometryFingerprint.equals(
+                    binding.layout.geometryFingerprint()),
+                "LOAD12 prefix geometry and retained unworked branch remain unchanged before publication");
+            verifyLoad12BranchHoleArray();
+            Vector<PcbBoardHole> layoutHoles=binding.layout.getHoles();
+            require(layoutHoles.size()==binding.prefixHoles.length,
+                "LOAD12 pre-publication layout preserves every original prefix hole");
+            for(int index=0;index<binding.prefixHoles.length;index++) {
+                PcbBoardHole hole=binding.prefixHoles[index];
+                require(hole==layoutHoles.get(index) &&
+                    hole.id.equals(binding.prefixHoleIds[index]) &&
+                    hole.fingerprint().equals(binding.prefixHoleFingerprints[index]),
+                    "LOAD12 pre-publication prefix hole identity and fingerprint remain unchanged at index "+index);
+            }
+        }
+
+        private void verifyLoad12ProgressBeforeSlice(Object search) {
+            if(!load12BranchCaptured || load12CaptureReleased) return;
+            require(search==load12Search &&
+                P07ScalarReflection.read(routeSession,"search")==load12Search,
+                "manual P07 stepping remains on the retained LOAD12 Search");
+            require(P07ScalarReflection.intField(load12Search,"pass")==1 &&
+                "LOAD12".equals(P07ScalarReflection.stringField(load12Search,"currentNet")) &&
+                P07ScalarReflection.intField(load12Search,"branches")==73 &&
+                P07ScalarReflection.intField(load12Branch,"branchOrdinal")==73,
+                "manual P07 stepping retains LOAD12 net and branch73 until the post capture");
+            Object branch=P07ScalarReflection.read(load12Search,"branch");
+            Object publisher=P07ScalarReflection.read(load12Search,"publisher");
+            if(!load12PreComplete) {
+                require((branch==load12Branch && publisher==null) ||
+                    (load12BranchHandoffVerified && branch==null &&
+                        publisher==load12Publisher),
+                    "LOAD12 branch either remains in its search or its found Publisher is retained");
+            } else if(!load12PostStarted) {
+                require(load12BranchHandoffVerified && branch==null &&
+                    publisher==load12Publisher && load12PreResult!=null &&
+                    P07ScalarReflection.read(publisher,"reversed")==load12ReversedIdentity,
+                    "normal LOAD12 Publisher resumes only from its completed pre capture");
+                Vector<?> reversed=(Vector<?>)P07ScalarReflection.read(publisher,"reversed");
+                require(reversed.size()==load12PreResult.pathNodeCount() &&
+                    P07ScalarReflection.intField(publisher,"qualityIndex")==reversed.size(),
+                    "LOAD12 Publisher retains the measured actual Node path before publication steps");
+            } else {
+                throw new AssertionError("LOAD12 post cursor must own the branch before another P07 slice");
+            }
+        }
+
+        private void inspectLoad12AfterSlice(Object search) {
+            if(!load12BranchCaptured || load12CaptureReleased || search!=load12Search)
+                return;
+            Object branch=P07ScalarReflection.read(search,"branch");
+            Object publisher=P07ScalarReflection.read(search,"publisher");
+            if(!load12PreStarted && branch==null && publisher==load12Publisher &&
+                    load12BranchHandoffVerified &&
+                    P07ScalarReflection.intField(publisher,"stage")==1) {
+                Vector<?> reversed=(Vector<?>)P07ScalarReflection.read(publisher,"reversed");
+                if(reversed==null ||
+                        P07ScalarReflection.intField(publisher,"qualityIndex")!=reversed.size())
+                    return;
+                verifyLoad12SearchMetadata();
+                require(reversed.size()>1 &&
+                    P07ScalarReflection.intField(publisher,"qualityIndex")==reversed.size() &&
+                    P07ScalarReflection.read(publisher,"end")==
+                        P07ScalarReflection.read(load12Branch,"found") &&
+                    P07ScalarReflection.read(publisher,"endTerminal")==
+                        P07ScalarReflection.read(load12Branch,"foundTerminal"),
+                    "LOAD12 pre-capture starts at its actual found Publisher stage1 quality boundary");
+                load12ReversedIdentity=reversed;
+                load12Context=new P07AcceptedBranchCaptureDiagnostics.Context(
+                    routeSession,load12Search,load12Branch,load12Publisher,load12Seeds);
+                load12PreStarted=true;
+                verifyLoad12PreBoundary();
+                return;
+            }
+            if(load12PreComplete && !load12PostStarted && branch==null &&
+                    publisher==null && load12Publisher!=null &&
+                    P07ScalarReflection.intField(load12Publisher,"stage")==6) {
+                verifyLoad12SearchMetadata();
+                require(load12BranchHandoffVerified && load12Publisher!=null &&
+                    P07ScalarReflection.intField(load12Publisher,"stage")==6,
+                    "LOAD12 post-capture starts only after the retained Publisher reaches stage6");
+                verifyLoad12PostBoundary();
+                load12PostStarted=true;
+                return;
+            }
+        }
+
+        private void verifyLoad12TemplateAndSearchOwner() {
+            Load12BranchBinding binding=load12Binding;
+            require(binding!=null && routeSession!=null && targetGeneratorSession!=null &&
+                P07ScalarReflection.read(targetGeneratorSession,"mediumTwoLayerRoute")==routeSession &&
+                P07ScalarReflection.read(routeSession,"search")==load12Search &&
+                P07ScalarReflection.read(load12Search,"owner")==routeSession,
+                "LOAD12 cursor remains attached to the original generator, route and Search owners");
+            require(fixedPrefixContext instanceof
+                    PcbLayerRoutingPrototype.FixedPrefixCaptureContext &&
+                P07ScalarReflection.read(routeSession,"fixedPrefixContext")==fixedPrefixContext,
+                "LOAD12 capture retains the actual macro fixed-prefix request context");
+            verifyTargetContext((PcbLayerRoutingPrototype.FixedPrefixCaptureContext)
+                fixedPrefixContext);
+            verifyLoad12SearchMetadata();
+            require(P07ScalarReflection.read(routeSession,"template")==binding.template &&
+                binding.template.getHoleCount()==0 && binding.template.getHoles().isEmpty() &&
+                P07ScalarReflection.read(load12Search,"layout")==binding.layout,
+                "LOAD12 cursor preserves the actual empty incoming template and source layout identities");
+        }
+
+        private void verifyLoad12PrefixHoleBindings(boolean allowLayoutReorder) {
+            Load12BranchBinding binding=load12Binding;
+            require(binding!=null && binding.prefixHoles.length==binding.prefixHoleIds.length &&
+                binding.prefixHoles.length==binding.prefixHoleFingerprints.length,
+                "LOAD12 source prefix retains its captured hole identity and fingerprint inventory");
+            Vector<PcbBoardHole> layoutHoles=binding.layout.getHoles();
+            require(layoutHoles.size()>=binding.prefixHoles.length,
+                "LOAD12 layout retains every source prefix hole after actual publication");
+            HashMap<String,PcbBoardHole> byId=new HashMap<String,PcbBoardHole>();
+            for(PcbBoardHole hole:layoutHoles)
+                require(hole!=null && byId.put(hole.id,hole)==null,
+                    "LOAD12 live layout retains unique canonical hole IDs");
+            for(int index=0;index<binding.prefixHoles.length;index++) {
+                PcbBoardHole original=binding.prefixHoles[index];
+                PcbBoardHole live=allowLayoutReorder?byId.get(binding.prefixHoleIds[index]):
+                    layoutHoles.get(index);
+                require(original!=null && live==original &&
+                    original.id.equals(binding.prefixHoleIds[index]) &&
+                    original.fingerprint().equals(binding.prefixHoleFingerprints[index]),
+                    "LOAD12 prefix hole object, ID and raw fingerprint remain unchanged for "+
+                        binding.prefixHoleIds[index]);
+            }
+        }
+
+        private void verifyLoad12PreBoundary() {
+            verifyLoad12TemplateAndSearchOwner();
+            require(load12PreStarted && load12BranchHandoffVerified &&
+                P07ScalarReflection.read(load12Search,"branch")==null &&
+                P07ScalarReflection.read(load12Search,"publisher")==load12Publisher &&
+                P07ScalarReflection.intField(load12Publisher,"stage")==1 &&
+                P07ScalarReflection.read(load12Publisher,"reversed")==load12ReversedIdentity,
+                "LOAD12 pre cursor retains the same found Publisher at stage1");
+            Vector<?> reversed=(Vector<?>)P07ScalarReflection.read(load12Publisher,"reversed");
+            require(reversed!=null && reversed.size()>1 &&
+                P07ScalarReflection.intField(load12Publisher,"qualityIndex")==reversed.size() &&
+                P07ScalarReflection.read(load12Publisher,"end")==
+                    P07ScalarReflection.read(load12Branch,"found") &&
+                P07ScalarReflection.read(load12Publisher,"endTerminal")==
+                    P07ScalarReflection.read(load12Branch,"foundTerminal") &&
+                P07ScalarReflection.read(load12Branch,"start")==load12Binding.start &&
+                P07ScalarReflection.read(load12Branch,"root")==load12Binding.root &&
+                load12Binding.prefixGeometryFingerprint.equals(
+                    load12Binding.layout.geometryFingerprint()),
+                "LOAD12 pre boundary retains actual path, endpoints, and unchanged prefix geometry");
+            verifyLoad12BranchHoleArray();
+            verifyLoad12PrefixHoleBindings(false);
+        }
+
+        private int reachedStartCount() {
+            Object reachedObject=P07ScalarReflection.read(load12Search,"reachedPadIds");
+            require(reachedObject instanceof Vector,
+                "LOAD12 source retains the actual reached-pad vector at publication handoff");
+            Vector<?> reached=(Vector<?>)reachedObject;
+            int count=0;
+            for(Object value:reached) {
+                require(value instanceof String,
+                    "LOAD12 reached-pad entries retain actual String identities");
+                if(load12Binding.start.getPadId().equals(value)) count++;
+            }
+            return count;
+        }
+
+        private void verifyLoad12PostBoundary() {
+            verifyLoad12TemplateAndSearchOwner();
+            require(load12PreComplete && load12PreResult!=null &&
+                P07ScalarReflection.read(load12Search,"branch")==null &&
+                P07ScalarReflection.read(load12Search,"publisher")==null &&
+                P07ScalarReflection.intField(load12Publisher,"stage")==6 &&
+                reachedStartCount()==1,
+                "LOAD12 post boundary follows completed publication and one reached-start handoff");
+            verifyLoad12BranchHoleArray();
+            verifyLoad12PrefixHoleBindings(true);
+        }
+
+        private void verifyLoad12BranchHoleArray() {
+            Load12BranchBinding binding=load12Binding;
+            Object branchHolesObject=P07ScalarReflection.read(binding.branch,"holes");
+            require(branchHolesObject==binding.prefixHoleArrayIdentity &&
+                branchHolesObject instanceof PcbBoardHole[],
+                "LOAD12 BranchSearch retains the exact captured source hole-array object");
+            PcbBoardHole[] branchHoles=(PcbBoardHole[])branchHolesObject;
+            require(branchHoles.length==binding.prefixHoles.length &&
+                binding.prefixHoleArrayIdentity.length==binding.prefixHoles.length,
+                "LOAD12 BranchSearch source hole array retains the captured prefix length");
+            for(int index=0;index<branchHoles.length;index++) {
+                PcbBoardHole sourceHole=branchHoles[index];
+                PcbBoardHole snapshotHole=binding.prefixHoles[index];
+                require(sourceHole==snapshotHole && sourceHole!=null &&
+                    sourceHole.id.equals(binding.prefixHoleIds[index]) &&
+                    sourceHole.fingerprint().equals(binding.prefixHoleFingerprints[index]),
+                    "LOAD12 BranchSearch source hole array retains each snapshotted object, ID and fingerprint at index "+index);
+            }
+        }
+
+        private void verifyLoad12ProgressAfterSlice() {
+            if(!load12BranchCaptured || load12CaptureReleased) return;
+            if(load12PostStarted) {
+                verifyLoad12PostBoundary();
+            } else if(load12PreStarted && !load12PreComplete) {
+                verifyLoad12PreBoundary();
+            }
+        }
+
+        private void advanceLoad12PreCapture(Budget budget) {
+            require(load12PreStarted && !load12PreComplete &&
+                load12Context!=null && load12PreAdvanceCalls<640 &&
+                load12PreAdvanceCalls+load12PostAdvanceCalls<640,
+                "pending LOAD12 pre cursor has its one retained actual source boundary");
+            require(budget!=null && budget.unitName!=null &&
+                budget.unitName.startsWith("p07-quality-load12-pre-advance-") &&
+                budget.workUnits>lastLoad12PreBudgetUnit,
+                "each LOAD12 pre-cursor advance owns a fresh charged outer value unit");
+            int workUnit=budget.workUnits,callsBefore=load12PreAdvanceCalls;
+            budget.checkpoint();
+            verifyLoad12PreBoundary();
+            if(load12PreCursor==null)
+                load12PreCursor=P07AcceptedBranchCaptureDiagnostics.beginPre(load12Context);
+            require(load12PreCursor!=null && !load12PreCursor.isComplete(),
+                "LOAD12 pre cursor begins pending in its separately charged value unit");
+            boolean complete=load12PreCursor.advance(MAX_MANUAL_STEPS_PER_UNIT);
+            load12PreAdvanceCalls++;
+            int lastWork=load12PreCursor.lastWork();
+            require(complete==load12PreCursor.isComplete() &&
+                load12PreAdvanceCalls==callsBefore+1 && budget.workUnits==workUnit &&
+                lastWork>0 &&
+                lastWork<=MAX_MANUAL_STEPS_PER_UNIT,
+                "one LOAD12 pre-cursor advance remains within its bounded source quantum");
+            budget.checkpoint();
+            verifyLoad12PreBoundary();
+            if(load12PreCursor.isComplete()) captureCompletedLoad12Pre();
+            if(load12PreCursor.isComplete()) verifyLoad12PreBoundary();
+            budget.checkpoint();
+            lastLoad12PreBudgetUnit=workUnit;
+        }
+
+        private void captureCompletedLoad12Pre() {
+            require(load12PreCursor!=null && load12PreCursor.isComplete() &&
+                load12PreResult==null && load12PreJson==null,
+                "LOAD12 pre result is materialized once after its bounded cursor completes");
+            P07AcceptedBranchCaptureDiagnostics.PreResult result=load12PreCursor.result();
+            String body=result.toJson();
+            require(result.pathNodeCount()>=2 && result.pathNodeCount()<=4096 &&
+                result.transitionCount()>=0 && result.transitionCount()<=4 &&
+                result.prefixHoleCount()==load12Binding.prefixHoles.length &&
+                result.branchOrdinal()==73 && "LOAD12".equals(result.netId()) &&
+                body!=null && body.equals(result.toJson()),
+                "LOAD12 pre result exposes the actual bounded path and captured prefix inventory");
+            String seedJson=load12Seeds.toJson();
+            require(seedJson!=null && seedJson.contains("\"faceMask\":3") &&
+                body.contains("\"seeds\":"+seedJson),
+                "LOAD12 pre result embeds the exact two-face seed snapshot captured before branch work");
+            String[] ids=new String[result.prefixHoleCount()];
+            String[] fingerprints=new String[result.prefixHoleCount()];
+            HashMap<String,String> expected=new HashMap<String,String>();
+            for(int index=0;index<load12Binding.prefixHoleIds.length;index++)
+                require(expected.put(load12Binding.prefixHoleIds[index],
+                    load12Binding.prefixHoleFingerprints[index])==null,
+                    "LOAD12 retained source prefix IDs are unique");
+            HashSet<String> observedIds=new HashSet<String>();
+            for(int index=0;index<ids.length;index++) {
+                ids[index]=result.prefixHoleIdAt(index);
+                fingerprints[index]=result.prefixHoleFingerprintAt(index);
+                require(ids[index]!=null && fingerprints[index]!=null &&
+                    observedIds.add(ids[index]) && fingerprints[index].equals(expected.get(ids[index])),
+                    "LOAD12 helper prefix rows preserve source hole ID and raw fingerprint");
+            }
+            require(observedIds.size()==expected.size(),
+                "LOAD12 helper prefix inventory accounts for every captured source hole");
+            load12PathNodeCount=result.pathNodeCount();
+            load12TransitionCount=result.transitionCount();
+            load12PrefixHoleCount=result.prefixHoleCount();
+            load12PreHoleIds=ids;
+            load12PreHoleFingerprints=fingerprints;
+            load12PreJson=body;
+            load12PreResult=result;
+            load12PreComplete=true;
+        }
+
+        private void advanceLoad12PostCapture(Budget budget) {
+            require(load12PostStarted && !load12PostComplete &&
+                load12Context!=null && load12PreResult!=null &&
+                load12PreAdvanceCalls+load12PostAdvanceCalls<640,
+                "pending LOAD12 post cursor follows the same completed pre result and source context");
+            require(budget!=null && budget.unitName!=null &&
+                budget.unitName.startsWith("p07-quality-load12-post-advance-") &&
+                budget.workUnits>lastLoad12PostBudgetUnit,
+                "each LOAD12 post-cursor advance owns a fresh charged outer value unit");
+            int workUnit=budget.workUnits,callsBefore=load12PostAdvanceCalls;
+            budget.checkpoint();
+            verifyLoad12PostBoundary();
+            if(load12PostCursor==null)
+                load12PostCursor=P07AcceptedBranchCaptureDiagnostics.beginPost(
+                    load12Context,load12PreResult);
+            require(load12PostCursor!=null && !load12PostCursor.isComplete(),
+                "LOAD12 post cursor begins pending in its separately charged value unit");
+            boolean complete=load12PostCursor.advance(MAX_MANUAL_STEPS_PER_UNIT);
+            load12PostAdvanceCalls++;
+            int lastWork=load12PostCursor.lastWork();
+            require(complete==load12PostCursor.isComplete() &&
+                load12PostAdvanceCalls==callsBefore+1 && budget.workUnits==workUnit &&
+                lastWork>0 &&
+                lastWork<=MAX_MANUAL_STEPS_PER_UNIT,
+                "one LOAD12 post-cursor advance remains within its bounded source quantum");
+            budget.checkpoint();
+            verifyLoad12PostBoundary();
+            if(load12PostCursor.isComplete()) captureCompletedLoad12Post();
+            budget.checkpoint();
+            lastLoad12PostBudgetUnit=workUnit;
+        }
+
+        private void captureCompletedLoad12Post() {
+            require(load12PostCursor!=null && load12PostCursor.isComplete() &&
+                load12PostResult==null && load12PostJson==null,
+                "LOAD12 post result is materialized once after its bounded cursor completes");
+            P07AcceptedBranchCaptureDiagnostics.PostResult result=load12PostCursor.result();
+            String body=result.toJson();
+            require(load12PreResult!=null &&
+                result.postHoleCount()>=load12PreResult.prefixHoleCount() &&
+                result.postHoleCount()<=48 && result.createdHoleCount()>=0 &&
+                result.createdHoleCount()<=result.postHoleCount() &&
+                result.createdTraceCount()>=0 && result.createdTraceCount()<=100000 &&
+                body!=null && body.equals(result.toJson()),
+                "LOAD12 post result exposes actual bounded publication counts and immutable JSON");
+            String[] ids=new String[result.postHoleCount()];
+            String[] fingerprints=new String[result.postHoleCount()];
+            HashMap<String,String> preById=new HashMap<String,String>();
+            for(int index=0;index<load12PreHoleIds.length;index++)
+                require(preById.put(load12PreHoleIds[index],
+                    load12PreHoleFingerprints[index])==null,
+                    "LOAD12 pre inventory retains unique IDs during post correlation");
+            HashMap<String,String> postById=new HashMap<String,String>();
+            for(int index=0;index<ids.length;index++) {
+                ids[index]=result.postHoleIdAt(index);
+                fingerprints[index]=result.postHoleFingerprintAt(index);
+                require(ids[index]!=null && fingerprints[index]!=null &&
+                    postById.put(ids[index],fingerprints[index])==null,
+                    "LOAD12 post inventory retains unique actual hole IDs and fingerprints");
+                String preFingerprint=preById.get(ids[index]);
+                if(preFingerprint!=null)
+                    require(preFingerprint.equals(fingerprints[index]),
+                        "LOAD12 publication preserves raw fingerprints for all earlier same-net hole owners");
+            }
+            for(String id:load12PreHoleIds)
+                require(postById.containsKey(id) &&
+                    preById.get(id).equals(postById.get(id)),
+                    "LOAD12 post inventory retains every original prefix hole by ID and fingerprint");
+            String[] created=new String[result.createdHoleCount()];
+            HashSet<String> createdSet=new HashSet<String>();
+            for(int index=0;index<created.length;index++) {
+                created[index]=result.createdHoleIdAt(index);
+                require(created[index]!=null && !preById.containsKey(created[index]) &&
+                    postById.containsKey(created[index]) && createdSet.add(created[index]),
+                    "LOAD12 created-hole IDs are the actual post-minus-pre identity set");
+            }
+            require(createdSet.size()==result.postHoleCount()-preById.size(),
+                "LOAD12 created-hole accounting equals the actual post-minus-pre hole set");
+            load12PostHoleIds=ids;
+            load12PostHoleFingerprints=fingerprints;
+            load12CreatedHoleIds=created;
+            load12PostHoleCount=result.postHoleCount();
+            load12CreatedHoleCount=result.createdHoleCount();
+            load12CreatedTraceCount=result.createdTraceCount();
+            load12PostJson=body;
+            load12PostResult=result;
+            load12PostComplete=true;
+            verifyLoad12PostBoundary();
+            releaseLoad12CaptureSources();
+        }
+
+        private void releaseLoad12CaptureSources() {
+            require(load12PostComplete && load12PreComplete && load12PostJson!=null &&
+                load12PreJson!=null && load12PostHoleIds!=null &&
+                load12PostHoleFingerprints!=null,
+                "LOAD12 source release occurs only after both complete immutable result bodies are saved");
+            load12PreCursor=null;
+            load12PostCursor=null;
+            load12Context=null;
+            load12Seeds=null;
+            load12PreResult=null;
+            load12PostResult=null;
+            load12Search=null;
+            load12Branch=null;
+            load12Publisher=null;
+            load12ReversedIdentity=null;
+            load12Binding=null;
+            load12CaptureReleased=true;
+        }
+
+        private void verifyLoad12CorroboratesFinalDPrefix() {
+            require(load12CaptureReleased && load12PreHoleIds!=null &&
+                load12PostHoleIds!=null && prefixAllocationBinding!=null &&
+                prefixAllocationBinding.prefixHoles.length==48,
+                "D_SENSE final prefix capture cross-checks the completed earlier LOAD12 inventory");
+            PrefixAllocationBinding d=prefixAllocationBinding;
+            HashMap<String,String> dById=new HashMap<String,String>();
+            for(int index=0;index<d.holeIds.length;index++)
+                require(dById.put(d.holeIds[index],d.holeFingerprints[index])==null,
+                    "D_SENSE final prefix rows retain unique hole identities");
+            for(int index=0;index<load12PreHoleIds.length;index++)
+                require(load12PreHoleFingerprints[index].equals(
+                    dById.get(load12PreHoleIds[index])),
+                    "LOAD12 pre-hole ID and raw fingerprint are retained in the later D_SENSE prefix");
+            for(int index=0;index<load12PostHoleIds.length;index++)
+                require(load12PostHoleFingerprints[index].equals(
+                    dById.get(load12PostHoleIds[index])),
+                    "LOAD12 post-hole ID and raw fingerprint are retained in the later D_SENSE prefix");
         }
 
         private Object retainTargetBranchBeforeSlice(Object search) {
@@ -3422,6 +4047,7 @@ public final class Rb100PhysicalDiagnostics {
             require(prefixAllocationCursor!=null && !prefixAllocationCursor.isComplete(),
                 "actual prefix allocation diagnostic begins pending before the ordinary graph cursor resumes");
             verifyPrefixAllocationBindingUnchanged(false);
+            verifyLoad12CorroboratesFinalDPrefix();
         }
 
         private void verifyPrefixAllocationBindingUnchanged(boolean ownerAdvanced) {
@@ -3686,6 +4312,7 @@ public final class Rb100PhysicalDiagnostics {
         private void inspectActualTargetAfterSlice(
                 PcbLayerRoutingPrototype.OrderingProgress progress) {
             Object search=P07ScalarReflection.read(routeSession,"search");
+            inspectLoad12AfterSlice(search);
             if(!targetCaptured && search!=null) {
                 int pass=P07ScalarReflection.intField(search,"pass");
                 Object publisher=P07ScalarReflection.read(search,"publisher");
@@ -3834,7 +4461,7 @@ public final class Rb100PhysicalDiagnostics {
             requireTerminalOperation(result);
             PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
                 (PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext;
-            return "RB100_QUALITY_SCALAR_EVENT {\"protocolVersion\":1,\"sourceRevision\":17,"+
+            return "RB100_QUALITY_SCALAR_EVENT {\"protocolVersion\":1,\"sourceRevision\":18,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\""+jsonFull(operationId)+
                 "\",\"variant\":\""+variant.name()+"\",\"mode\":\"PROBE\",\"rootSeed\":\""+
                 SEED+"\",\"placementSeed\":\""+PLACEMENT_DIAGNOSTIC_SEED+
@@ -3888,7 +4515,7 @@ public final class Rb100PhysicalDiagnostics {
                 nodes.append(pathSnapshot.nodes[index].toJson());
             }
             nodes.append(']');
-            return "RB100_QUALITY_PATH_EVENT {\"protocolVersion\":1,\"sourceRevision\":17,"+
+            return "RB100_QUALITY_PATH_EVENT {\"protocolVersion\":1,\"sourceRevision\":18,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\""+
                 jsonFull(operationId)+"\",\"order\":\"START_TO_END\",\"captureStage\":"+
                 pathSnapshot.captureStage+",\"captureQualityIndex\":"+
@@ -3916,7 +4543,7 @@ public final class Rb100PhysicalDiagnostics {
                 reached.append('"').append(jsonFull(binding.reachedPadIds[index])).append('"');
             }
             reached.append(']');
-            return "RB100_ZERO_VIA_GRAPH_EVENT {\"protocolVersion\":1,\"sourceRevision\":17,"+
+            return "RB100_ZERO_VIA_GRAPH_EVENT {\"protocolVersion\":1,\"sourceRevision\":18,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\","+
                 "\"scope\":\"ACTUAL_FIXED_PREFIX_ZERO_NEW_VIA_GRAPH_ONLY\",\"binding\":{"+
                 "\"branchIdentityVerified\":true,\"sourcePublisherUnchanged\":true,"+
@@ -3943,7 +4570,7 @@ public final class Rb100PhysicalDiagnostics {
             int ordinaryQueries=graphOrdinaryQueries;
             require(ordinaryQueries>=0 && ordinaryQueries==graphCursor.result().ordinaryQueries,
                 "helper structured result exposes its final ordinary edge query count");
-            return "PASS: RB100 quality zero-via graph contracts {\"protocolVersion\":1,\"sourceRevision\":17,"+
+            return "PASS: RB100 quality zero-via graph contracts {\"protocolVersion\":1,\"sourceRevision\":18,"+
                 "\"status\":\"PASS\",\"runId\":\""+jsonFull(runId)+
                 "\",\"operationId\":\"QUALITY_PROBE\",\"events\":1,"+
                 "\"scope\":\"ACTUAL_FIXED_PREFIX_ZERO_NEW_VIA_GRAPH_ONLY\",\"ordinaryQueries\":"+
@@ -3984,7 +4611,7 @@ public final class Rb100PhysicalDiagnostics {
                 binding.currentNet.equals(graphBinding.netId) &&
                 binding.currentBranchOrdinal>0,
                 "allocation event binds the exact current source net, branch, empty template and 48-hole prefix");
-            return "RB100_PREFIX_ALLOCATION_EVENT {\"protocolVersion\":1,\"sourceRevision\":17,"+
+            return "RB100_PREFIX_ALLOCATION_EVENT {\"protocolVersion\":1,\"sourceRevision\":18,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\","+
                 "\"scope\":\"ACTUAL_FIXED_PREFIX_CREATION_ALLOCATION_ONLY\",\"binding\":{"+
                 "\"branchIdentityVerified\":true,\"sourcePublisherUnchanged\":true,"+
@@ -4009,11 +4636,111 @@ public final class Rb100PhysicalDiagnostics {
                 "prefix allocation summary follows the actual rejected and cleaned-up scalar operation");
             verifyCompletedPrefixAllocationCursor();
             return "PASS: RB100 prefix allocation contracts {\"protocolVersion\":1,"+
-                "\"sourceRevision\":17,\"status\":\"PASS\",\"runId\":\""+
+                "\"sourceRevision\":18,\"status\":\"PASS\",\"runId\":\""+
                 jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\",\"events\":1,"+
                 "\"scope\":\"ACTUAL_FIXED_PREFIX_CREATION_ALLOCATION_ONLY\",\"totalHoles\":"+
                 prefixAllocationTotalHoles+",\"chronologyProof\":false,\"routeAdoption\":false,"+
                 "\"layoutQualification\":false}";
+        }
+
+        private void requireLoad12CaptureComplete(P07PolicyDiagnosticCase result,
+                boolean pairPassed) {
+            requireTerminalOperation(result);
+            require(pairPassed && "QUALITY_PROBE".equals(operationId) &&
+                qualityRejected && targetRequestAccounted && terminalConfirmed &&
+                result.cleanupPassed && "PASS".equals(result.status) &&
+                runId.equals(result.runId) && result.qualityScalarProbe==this &&
+                result.qualityScalarOperation &&
+                "QUALITY_PROBE".equals(result.fixedPrefixOperationId) &&
+                controlsJson!=null && graphCallbacks==0 &&
+                load12BranchCaptured && load12BranchHandoffVerified &&
+                load12PreStarted && load12PreComplete && load12PostStarted &&
+                load12PostComplete && load12CaptureReleased && load12PreJson!=null &&
+                load12PostJson!=null && load12PreAdvanceCalls>0 &&
+                load12PostAdvanceCalls>0 &&
+                load12PreAdvanceCalls+load12PostAdvanceCalls<=640 &&
+                load12PreHoleIds!=null && load12PreHoleFingerprints!=null &&
+                load12PostHoleIds!=null && load12PostHoleFingerprints!=null &&
+                load12CreatedHoleIds!=null && prefixAllocationBinding!=null,
+                "LOAD12 event follows the complete same-run accepted branch capture and clean terminal rejection");
+            require(load12Search==null && load12Branch==null && load12Publisher==null &&
+                load12ReversedIdentity==null && load12Seeds==null && load12Context==null &&
+                load12Binding==null && load12PreCursor==null && load12PostCursor==null &&
+                load12PreResult==null && load12PostResult==null,
+                "completed LOAD12 capture releases all live source and cursor references before successor routing");
+            require(load12PathNodeCount>=2 && load12PathNodeCount<=4096 &&
+                load12TransitionCount>=0 && load12TransitionCount<=4 &&
+                load12PrefixHoleCount==load12PreHoleIds.length &&
+                load12PostHoleCount==load12PostHoleIds.length &&
+                load12PostHoleCount<=48 &&
+                load12CreatedHoleCount==load12CreatedHoleIds.length &&
+                load12CreatedTraceCount>=0 && load12CreatedTraceCount<=100000,
+                "LOAD12 retained result metrics match actual copied identity inventories and frozen caps");
+            require(load12PreJson.contains("\"faceMask\":3") &&
+                load12PreJson.contains("\"startCopperFaceMask\":3") &&
+                load12PreJson.contains("\"rootCopperFaceMask\":3") &&
+                load12PreJson.contains("\"policy\":\"FULLER_TWO_LAYER\"") &&
+                load12PreJson.contains("\"maximumVias\":48") &&
+                load12PreJson.contains("\"maximumTransitions\":4"),
+                "LOAD12 result retains actual dual-face seeds, copper, FULLER policy and unchanged limits");
+            require(prefixAllocationBinding.prefixHoles.length==48 &&
+                prefixAllocationBinding.pass==1 &&
+                "D_SENSE".equals(prefixAllocationBinding.currentNet) &&
+                prefixAllocationBinding.currentBranchOrdinal>0,
+                "LOAD12 event follows the later actual immutable D_SENSE prefix controls");
+            verifyLoad12CorroboratesFinalDPrefix();
+            verifyGraphBindingUnchanged(true);
+            verifyPrefixAllocationBindingUnchanged(true);
+            verifyCompletedGraphCursor();
+            verifyCompletedPrefixAllocationCursor();
+        }
+
+        private void verifyLoad12EventHeader() {
+            PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
+                (PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext;
+            require(context!=null && runId!=null && !runId.isEmpty() &&
+                "QUALITY_PROBE".equals(operationId) &&
+                variant==Rb100Plan.Variant.SEPARATE_DIRECT_SWITCHING &&
+                SEED==9007199254740993L &&
+                PLACEMENT_DIAGNOSTIC_SEED==-6587958367974952701L &&
+                ROUTING_DIAGNOSTIC_ROUTING_SEED==8445301674744508279L &&
+                context.layoutSeed()==PLACEMENT_DIAGNOSTIC_SEED &&
+                context.routingSeed()==ROUTING_DIAGNOSTIC_ROUTING_SEED &&
+                context.routeRequestIndex()==0 && context.selectedPlacementIndex()==0 &&
+                context.selectedPlacementAttempt()==4,
+                "LOAD12 event header is bound to the exact approved macro run, operation, seeds and placement");
+            verifyTargetContext(context);
+        }
+
+        String load12EventJson(P07PolicyDiagnosticCase result,boolean pairPassed) {
+            requireLoad12CaptureComplete(result,pairPassed);
+            verifyLoad12EventHeader();
+            return "RB100_LOAD12_BRANCH_EVENT {\"protocolVersion\":1,\"sourceRevision\":18,"+
+                "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\","+
+                "\"scope\":\"ACTUAL_LOAD12_BRANCH_ENTRY_PATH_AND_PUBLICATION_ONLY\","+
+                "\"rootSeed\":\"9007199254740993\",\"placementSeed\":\"-6587958367974952701\","+
+                "\"routingSeed\":\"8445301674744508279\",\"routeRequestIndex\":0,"+
+                "\"selectedPlacementIndex\":0,\"selectedPlacementAttempt\":4,"+
+                "\"status\":\"PASS\",\"claims\":{\"avoidability\":\"UNKNOWN\","+
+                "\"chronologyProof\":false,\"routeAdoption\":false,"+
+                "\"layoutQualification\":false,\"playable100\":0},\"pre\":"+
+                load12PreJson+",\"post\":"+load12PostJson+"}";
+        }
+
+        String load12SummaryJson(P07PolicyDiagnosticCase result,boolean pairPassed) {
+            requireLoad12CaptureComplete(result,pairPassed);
+            verifyLoad12EventHeader();
+            return "PASS: RB100 LOAD12 branch contracts {\"protocolVersion\":1,"+
+                "\"sourceRevision\":18,\"status\":\"PASS\",\"runId\":\""+
+                jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\",\"events\":1,"+
+                "\"scope\":\"ACTUAL_LOAD12_BRANCH_ENTRY_PATH_AND_PUBLICATION_ONLY\","+
+                "\"rootSeed\":\"9007199254740993\",\"placementSeed\":\"-6587958367974952701\","+
+                "\"routingSeed\":\"8445301674744508279\",\"routeRequestIndex\":0,"+
+                "\"selectedPlacementIndex\":0,\"selectedPlacementAttempt\":4,"+
+                "\"pathNodes\":"+load12PathNodeCount+",\"transitions\":"+
+                load12TransitionCount+",\"createdHoles\":"+load12CreatedHoleCount+","+
+                "\"claims\":{\"avoidability\":\"UNKNOWN\",\"chronologyProof\":false,"+
+                "\"routeAdoption\":false,\"layoutQualification\":false,\"playable100\":0}}";
         }
     }
 
@@ -4148,6 +4875,52 @@ public final class Rb100PhysicalDiagnostics {
                 PcbBoardHole hole=prefixHoles[index];
                 this.holeIds[index]=hole.id;
                 this.holeFingerprints[index]=hole.fingerprint();
+            }
+        }
+    }
+
+    private static final class Load12BranchBinding {
+        final Object search,netVectorIdentity,branch;
+        final String[] netOrder,prefixHoleIds,prefixHoleFingerprints;
+        final int searchNetIndex,currentNetPosition,branchOrdinal,searchBranches,
+            pass,primaryLayer,maximumVias;
+        final String currentNet,prefixGeometryFingerprint;
+        final PcbLayerRoutingPrototype.Policy policy;
+        final PcbBoardLayout layout,template;
+        final PcbBoardHole[] prefixHoleArrayIdentity;
+        final PcbBoardHole[] prefixHoles;
+        final PcbPadPlacement start,root;
+        Load12BranchBinding(Object search,Object branch,Vector<?> netVector,
+                String[] netOrder,int searchNetIndex,String currentNet,int branchOrdinal,
+                int searchBranches,int pass,PcbLayerRoutingPrototype.Policy policy,
+                int primaryLayer,int maximumVias,PcbBoardLayout layout,
+                PcbBoardLayout template,PcbBoardHole[] prefixHoles,
+                PcbPadPlacement start,PcbPadPlacement root) {
+            this.search=search;
+            this.branch=branch;
+            this.netVectorIdentity=netVector;
+            this.netOrder=netOrder.clone();
+            this.searchNetIndex=searchNetIndex;
+            this.currentNetPosition=searchNetIndex-1;
+            this.currentNet=currentNet;
+            this.branchOrdinal=branchOrdinal;
+            this.searchBranches=searchBranches;
+            this.pass=pass;
+            this.policy=policy;
+            this.primaryLayer=primaryLayer;
+            this.maximumVias=maximumVias;
+            this.layout=layout;
+            this.template=template;
+            this.prefixHoleArrayIdentity=prefixHoles;
+            this.prefixHoles=prefixHoles.clone();
+            this.start=start;
+            this.root=root;
+            this.prefixGeometryFingerprint=layout.geometryFingerprint();
+            this.prefixHoleIds=new String[prefixHoles.length];
+            this.prefixHoleFingerprints=new String[prefixHoles.length];
+            for(int index=0;index<prefixHoles.length;index++) {
+                this.prefixHoleIds[index]=prefixHoles[index].id;
+                this.prefixHoleFingerprints[index]=prefixHoles[index].fingerprint();
             }
         }
     }
@@ -4463,7 +5236,7 @@ public final class Rb100PhysicalDiagnostics {
         require(runId!=null && snapshot!=null && snapshot.nodes.length==66 &&
             snapshot.captureStage==1 && snapshot.captureQualityIndex==66,
             "quality path summary binds the single frozen stage1 66-node capture");
-        return "PASS: RB100 quality path contracts {\"protocolVersion\":1,\"sourceRevision\":17,"+
+        return "PASS: RB100 quality path contracts {\"protocolVersion\":1,\"sourceRevision\":18,"+
             "\"status\":\"PASS\",\"runId\":\""+jsonFull(runId)+
             "\",\"operationId\":\"QUALITY_PROBE\",\"events\":1,\"nodes\":66,"+
             "\"scope\":\"ACTUAL_PUBLISHER_PATH_ONLY\",\"feasibility\":\"UNKNOWN\","+
@@ -4512,7 +5285,7 @@ public final class Rb100PhysicalDiagnostics {
                 .append(",\"publisherStage\":").append(row.publisherStage).append('}');
         }
         checks.append(']');
-        return "RB100_QUALITY_SCALAR_CONTROLS {\"protocolVersion\":1,\"sourceRevision\":17,"+
+        return "RB100_QUALITY_SCALAR_CONTROLS {\"protocolVersion\":1,\"sourceRevision\":18,"+
             "\"runId\":\""+jsonFull(runId)+"\",\"status\":\"PASS\","+
             "\"fixture\":\"SYNTHETIC_PUBLISHER_METRICS_ONLY\",\"checks\":"+checks+
             ",\"assertions\":"+(assertions-beforeAssertions)+",\"layoutQualification\":false}";

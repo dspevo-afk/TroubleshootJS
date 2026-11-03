@@ -196,6 +196,20 @@ runtime, actualD_SENSE improvement, or playable100 qualification. No fresh GWT/
 Player/electrical/population or H-source renewal. Next is a source audit of one
 costly earlier-net branch before a justified generic via-reduction treatment.
 Implementation0972259abb4c45f2e48b2a6011f578cb59ef5eb8 normally pushed and exact remote verified on origin/codex/q100-physical-feasibility; completion Gmail1a1a0bfa2630c25a sent ONCE. All previous data/budget limits remain.
+The [actual LOAD12 branch capture](task-evidence/Q100/load12-branch-r1/README.md)
+is accepted as a finite test-only prerequisite. At the exact separate request0/
+attempt4/pass1/branch73 boundary, the actual path has222 nodes/2170 length/2 bends/
+4 transitions. Normal publication adds4 VIAs and5 traces to its17-VIA/88-trace
+prefix, preserving identities and binding every flip/run to actual copper.
+Fresh native focus5 and NULL/PROBE, current Python44+1 declared skip/45, actual
+reader,56 selected negatives, real junction cleanup, independent raw-receipt
+oracle and final1076/850-production/1202-compiler/28-frozen-Python audit pass.
+Earlier source, consumer and fixture failures remain preserved without credit.
+Production behavior, epochs and all budgets remain unchanged; no new GWT/Player/
+electrical/normal3/full30 qualification is claimed. Four new VIAs do not prove
+avoidability. Next is analysis of the actual earlier LOAD12 zero-new-via graph,
+under the original640-unit cap, before any routing treatment. Playable100 remains0.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

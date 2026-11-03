@@ -384,14 +384,14 @@ records0 qualified candidates in that finite family and proves no all-path
 infeasibility, route/finalizer/access/electrical/layout or playable qualification.
 
 The current Rb100QualityZeroViaGraphContractTest replaces the Shortcut entry/API
-under diagnostic revision17. P07ZeroViaGraphDiagnostics owns test-only resumable
+under diagnostic revision18. P07ZeroViaGraphDiagnostics owns test-only resumable
 two-face Router observation, exact goal-union capture and compact directed mask
 encoding. The actual BranchSearch binding includes policy, primary, eligible
 initial faces, via cap and prefix holes; original endpoint authorities remain.
 Every original found-path step must occur in the captured face mask. Native
 capture installs no route and performs no shortest analysis. The new strict
 read_quality_zero_via.py reader privately reuses byte-pinned pure validators,
-checks the closed14-record v2 wire/1074-source census, and computes directed forward
+checks the closed16-record v3 wire/1076-source census, and computes directed forward
 BFS independently on each eligible face. It applies each goal's own positive
 Manhattan3:1 length gate; it never applies the original630 limit to other goals.
 Turn/bend/search/finalizer/access/electrical/layout proof remains separate.
@@ -408,13 +408,29 @@ parsing supports slash-containing IDs; canonical Java UTF16 order and raw hole
 fingerprints retain their existing meanings. Pairwise prior-creator/net-order
 consistency and kind/net conservation establish creation ownership only, not
 insertion chronology or all later uses of a reused hole. The current reader
-migrates to v2/revision17, independently checks factory fields/fingerprints and
+migrates to v3/revision18, independently checks factory fields/fingerprints and
 counts, and adds prefixAllocationObservation with false chronology/adoption/
 qualification flags. The older28 Python files remain byte-frozen. Its measured
 active time includes a complete placeholder JSON payload; only elapsed-digit
 correction/final wrapper and later outer JSON are excluded, while case/unit
 clocks include all work. The [allocation packet](task-evidence/Q100/prefix-allocation-r1/README.md)
 records48 vias across32 prior branches/12 nets, without a production change.
+P07AcceptedBranchCaptureDiagnostics owns test-only resumable observation before
+and after a successful branch's normal Publisher. It retains actual initial
+Node identities, validates the found chain and goal-face union, and binds each
+post-publication transition to its VIA and each planar run to its trace. The
+adapter pauses the same Search at both boundaries, checks original object/ID/
+fingerprint retention, then releases the live capture before routing continues.
+An internal inclusive creator-validation horizon permits the just-published
+branch in the post inventory; source branch ownership remains unchanged.
+The current reader independently checks the appended LOAD12 event and summary,
+including exact native UTF16 body counts and global post-trace indices. Goal
+cellCount means unique goal-bearing cells; work.goalCells counts every mask cell
+scanned. Payload copies are debited; outer unit/case clocks include the final
+self-referential time patch and immutable copy omitted from reported activeMillis.
+The [LOAD12 packet](task-evidence/Q100/load12-branch-r1/README.md) separates normal
+branch publication from route adoption, layout qualification and VIA avoidability.
+
 P07TwoLayerContractTest also owns the matched seven-point prior-via tree-join
 contract. A fresh FULLER Session with explicit requestcap2 creates a via and
 later reaches that exact existing barrel by a TOP planar branch. Read-only
