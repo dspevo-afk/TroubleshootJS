@@ -410,6 +410,8 @@ final class PcbNetRouter {
         private Rectangle[] collisionCourtyards;
         private int activeTraceWidth=-1;
         private String activeNetId;
+        /** Changes only when fixed route-predicate state is mutated after construction. */
+        private long fixedGraphMutationRevision;
         private final int attempt;
         private final SeededPcbLayoutGenerator.AttemptObserver observer;
         private final PcbCopperLayer layer;
@@ -544,6 +546,7 @@ final class PcbNetRouter {
         /** Prepare exact role-width geometry once per routed net, outside its bounded search loop. */
         private void prepareNet(String netId) {
             if(netId!=null && netId.equals(activeNetId)) return;
+            noteFixedGraphMutation();
             int width=traceWidth(netId);
             activeNetId=netId;
             if(activeTraceWidth==width) return;
@@ -962,6 +965,7 @@ final class PcbNetRouter {
                 else survivors.add(trace);
             }
             if(!changed) return;
+            noteFixedGraphMutation();
             layout.replaceTraces(survivors);
             for(int x=0;x<gridWidth;x++) {
                 java.util.Arrays.fill(occupiedNet[x],null);
@@ -1020,6 +1024,7 @@ final class PcbNetRouter {
         private boolean equal(String a,String b) { return a==null?b==null:a.equals(b); }
 
         private void markCopper(Vector<Point> points, String netId) {
+            if(points!=null && !points.isEmpty()) noteFixedGraphMutation();
             for (Point point : points) {
                 int centerX = gridX(point.x);
                 int centerY = gridY(point.y);
@@ -1102,6 +1107,12 @@ final class PcbNetRouter {
                 (clearanceNet[x][y]==null || net.equals(clearanceNet[x][y]));
         }
         void occupyLayerPath(Vector<Point> path,String net) { markCopper(path,net); }
+        long observationRevision() { return fixedGraphMutationRevision; }
+        private void noteFixedGraphMutation() {
+            if(fixedGraphMutationRevision==Long.MAX_VALUE)
+                throw new IllegalStateException("Fixed graph mutation revision exhausted");
+            fixedGraphMutationRevision++;
+        }
         /** Native fixed-graph observation copy; mutable counters/conflicts/work are deliberately fresh. */
         Router copyForFixedGraphObservation() {
             observationCheckpoint(observer,attempt);
@@ -1120,6 +1131,7 @@ final class PcbNetRouter {
             copy.emptyComponentFace=emptyComponentFace;
             copy.activeTraceWidth=activeTraceWidth;
             copy.activeNetId=activeNetId;
+            copy.fixedGraphMutationRevision=fixedGraphMutationRevision;
             copyStringGridInto(occupiedNet,copy.occupiedNet,observer,attempt);
             copyStringGridInto(clearanceNet,copy.clearanceNet,observer,attempt);
             copy.horizontalReservation=copyStringGrid(horizontalReservation,observer,attempt);
@@ -1144,6 +1156,19 @@ final class PcbNetRouter {
         FixedGraphCopyTask beginFixedGraphObservationCopy() {
             return new FixedGraphCopyTask(this);
         }
+        /** Starts a charged Router-only copy that retains the source context. */
+        ChargedFixedGraphCopyTask beginChargedFixedGraphObservationCopy() {
+            return new ChargedFixedGraphCopyTask(this,layout,observer,false);
+        }
+        /**
+         * Starts a charged Router-only copy rebound to a detached layout and an
+         * independent cancellation/deadline observer. The caller owns both inputs
+         * for the full cursor lifetime.
+         */
+        ChargedFixedGraphCopyTask beginChargedFixedGraphObservationCopy(
+                PcbBoardLayout targetLayout,SeededPcbLayoutGenerator.AttemptObserver targetObserver) {
+            return new ChargedFixedGraphCopyTask(this,targetLayout,targetObserver,true);
+        }
         FixedGraphComparisonTask beginFixedGraphComparison(Router other) {
             return new FixedGraphComparisonTask(this,other);
         }
@@ -1155,9 +1180,46 @@ final class PcbNetRouter {
             private int stage,outer,inner,copiedEntries;
             private boolean complete;
             private FixedGraphCopyTask(Router source) {
+                this(source,source==null?null:new Router(source,true));
+            }
+            private FixedGraphCopyTask(Router source,Router target) {
                 if(source==null) throw new IllegalArgumentException("Missing fixed observation router");
+                if(target==null) throw new IllegalArgumentException("Missing fixed observation target");
                 this.source=source;
-                target=new Router(source,true);
+                this.target=target;
+            }
+            /** Allocation credit needed before the next inner step creates a grid row. */
+            private long nextRowAllocationUnits() {
+                if(stage==0) return rowAllocationUnits(source.occupiedNet,target.occupiedNet,outer);
+                if(stage==1) return rowAllocationUnits(source.clearanceNet,target.clearanceNet,outer);
+                if(stage==2) return rowAllocationUnits(source.horizontalReservation,target.horizontalReservation,outer);
+                if(stage==3) return rowAllocationUnits(source.verticalReservation,target.verticalReservation,outer);
+                if(stage==4) return rowAllocationUnits(source.padAt,target.padAt,outer);
+                if(stage==14) return rowAllocationUnits(source.componentCandidatesByColumn,
+                    target.componentCandidatesByColumn,outer);
+                return 0;
+            }
+            private static long rowAllocationUnits(String[][] from,String[][] to,int outer) {
+                if(from==null || to==null) {
+                    if(from!=to) throw new IllegalStateException("Fixed observation grid nullness differs");
+                    return 0;
+                }
+                if(from.length!=to.length) throw new IllegalStateException("Fixed observation grid shape differs");
+                if(outer>=from.length) return 0;
+                String[] row=from[outer];
+                if(row==null || to[outer]!=null) return 0;
+                return (long)row.length+1L;
+            }
+            private static long rowAllocationUnits(int[][] from,int[][] to,int outer) {
+                if(from==null || to==null) {
+                    if(from!=to) throw new IllegalStateException("Fixed observation grid nullness differs");
+                    return 0;
+                }
+                if(from.length!=to.length) throw new IllegalStateException("Fixed observation grid shape differs");
+                if(outer>=from.length) return 0;
+                int[] row=from[outer];
+                if(row==null || to[outer]!=null) return 0;
+                return (long)row.length+1L;
             }
             boolean advanceOne(int maximumEntries) {
                 if(maximumEntries<1) throw new IllegalArgumentException("Observation copy chunk must be positive");
@@ -1299,11 +1361,274 @@ final class PcbNetRouter {
             int copiedEntries() { return copiedEntries; }
         }
 
+        /**
+         * Charged owner wrapper around the existing fixed-copy cursor. Each
+         * shell/row allocation is credited before the inner copy step can make it.
+         */
+        static final class ChargedFixedGraphCopyTask {
+            private static final int MAX_WORK=32768;
+            private Router source,target,result;
+            private PcbBoardLayout sourceLayoutForCheck;
+            private PcbBoardLayout targetLayout;
+            private SeededPcbLayoutGenerator.AttemptObserver targetObserver;
+            private FixedGraphCopyTask copyTask;
+            private FixedGraphComparisonTask comparisonTask;
+            private final long sourceRevision;
+            private final long sourceLayoutRevision,targetLayoutRevision;
+            private final int sourceAttempt,sourceGridWidth,sourceGridHeight,sourceMinX,sourceMinY;
+            private final int sourceOutlineX,sourceOutlineY,sourceOutlineWidth,sourceOutlineHeight;
+            private final int sourceActiveTraceWidth;
+            private final String sourceActiveNetId;
+            private final boolean sourceFactoryUnderpasses;
+            private long shellUnits,shellCredits,rowUnits,rowCredits,workSteps;
+            private int lastWork,copiedEntries,bindingIndex,phase;
+            private boolean complete,cancelled,failed;
+
+            private ChargedFixedGraphCopyTask(Router source,PcbBoardLayout targetLayout,
+                    SeededPcbLayoutGenerator.AttemptObserver targetObserver,
+                    boolean explicitDetachedObserver) {
+                if(source==null || targetLayout==null || explicitDetachedObserver && targetObserver==null)
+                    throw new IllegalArgumentException("Invalid charged fixed graph copy context");
+                if(explicitDetachedObserver && (targetLayout==source.layout || targetObserver==source.observer))
+                    throw new IllegalArgumentException("Detached fixed graph copy requires detached context and observer");
+                Rectangle detachedOutline=targetLayout.getBoardOutline();
+                if(!sameRectangle(source.outline,detachedOutline))
+                    throw new IllegalArgumentException("Detached fixed graph copy layout outline differs");
+                this.source=source;
+                sourceLayoutForCheck=source.layout;
+                this.targetLayout=targetLayout;
+                this.targetObserver=targetObserver;
+                sourceRevision=source.fixedGraphMutationRevision;
+                sourceLayoutRevision=sourceLayoutForCheck.observationRevision();
+                targetLayoutRevision=targetLayout.observationRevision();
+                sourceAttempt=source.attempt;
+                sourceGridWidth=source.gridWidth; sourceGridHeight=source.gridHeight;
+                sourceMinX=source.minX; sourceMinY=source.minY;
+                sourceOutlineX=source.outline.x; sourceOutlineY=source.outline.y;
+                sourceOutlineWidth=source.outline.width; sourceOutlineHeight=source.outline.height;
+                sourceActiveTraceWidth=source.activeTraceWidth;
+                sourceActiveNetId=source.activeNetId;
+                sourceFactoryUnderpasses=source.factoryUnderpasses;
+                shellUnits=routerShellAllocationUnits(source);
+                requireSourceStable();
+            }
+
+            boolean advance(int maximumWork) {
+                lastWork=0;
+                if(maximumWork<1 || maximumWork>MAX_WORK)
+                    throw new IllegalArgumentException("Charged fixed graph copy work must be in 1..32768");
+                if(cancelled || failed)
+                    throw new IllegalStateException("Charged fixed graph copy is no longer usable");
+                if(complete) return true;
+                try {
+                    int remaining=maximumWork;
+                    while(remaining>0 && !complete) {
+                        requireSourceStable();
+                        if(targetObserver!=null && (workSteps&1023L)==0) targetObserver.check(sourceAttempt);
+                        if(phase==0) {
+                            if(shellCredits<shellUnits) {
+                                shellCredits++; debit(); remaining--; continue;
+                            }
+                            target=new Router(source,true,targetLayout,targetObserver);
+                            copyTask=new FixedGraphCopyTask(source,target);
+                            phase=1;
+                            continue;
+                        }
+                        if(phase==1) {
+                            long needed=copyTask.nextRowAllocationUnits();
+                            if(needed>0 && rowUnits!=needed) { rowUnits=needed; rowCredits=0; }
+                            if(needed==0) { rowUnits=0; rowCredits=0; }
+                            if(needed>0 && rowCredits<rowUnits) {
+                                rowCredits++; debit(); remaining--; continue;
+                            }
+                            int before=copyTask.copiedEntries();
+                            boolean copied=copyTask.advanceOne(1);
+                            int after=copyTask.copiedEntries();
+                            if(after<before) throw new IllegalStateException("Charged fixed copy counter regressed");
+                            copiedEntries+=after-before;
+                            rowUnits=0; rowCredits=0;
+                            debit(); remaining--;
+                            requireSourceStable();
+                            if(copied) {
+                                result=copyTask.result();
+                                copyTask=null;
+                                comparisonTask=new FixedGraphComparisonTask(source,result,targetLayout);
+                                phase=2;
+                            }
+                            continue;
+                        }
+                        if(phase==2) {
+                            boolean compared=comparisonTask.advanceOne(1);
+                            debit(); remaining--;
+                            requireSourceStable();
+                            if(compared) {
+                                if(!comparisonTask.equal())
+                                    throw new IllegalStateException("Source Router changed during charged fixed graph copy");
+                                comparisonTask=null;
+                                phase=3;
+                                bindingIndex=0;
+                            }
+                            continue;
+                        }
+                        if(phase==3) {
+                            int padCount=result.pads.length;
+                            int componentCount=result.components.length;
+                            int total=padCount+componentCount;
+                            if(bindingIndex<total) {
+                                if(bindingIndex<padCount) {
+                                    PcbPadPlacement pad=result.pads[bindingIndex];
+                                    if(pad==null || source.layout.getPad(pad.getPadId())!=pad ||
+                                            targetLayout.getPad(pad.getPadId())!=pad)
+                                        throw new IllegalStateException("Detached Router pad identity differs from target layout");
+                                } else {
+                                    PcbComponentPlacement component=result.components[bindingIndex-padCount];
+                                    if(component==null || source.layout.getComponent(component.getComponentId())!=component ||
+                                            targetLayout.getComponent(component.getComponentId())!=component)
+                                        throw new IllegalStateException("Detached Router component identity differs from target layout");
+                                }
+                                bindingIndex++;
+                                debit(); remaining--;
+                                requireSourceStable();
+                                continue;
+                            }
+                            if(!sameRectangle(result.outline,targetLayout.getBoardOutline()))
+                                throw new IllegalStateException("Detached Router outline no longer matches target layout");
+                            requireSourceStable();
+                            complete=true;
+                            source=null; sourceLayoutForCheck=null; targetLayout=null; targetObserver=null;
+                            debit(); remaining--;
+                            continue;
+                        }
+                        throw new IllegalStateException("Unknown charged fixed graph copy phase");
+                    }
+                    return complete;
+                } catch(RuntimeException failure) {
+                    failClosed();
+                    throw failure;
+                } catch(Error failure) {
+                    failClosed();
+                    throw failure;
+                }
+            }
+
+            private void debit() {
+                lastWork++;
+                workSteps++;
+            }
+
+            private static long routerShellAllocationUnits(Router router) {
+                long units=8;
+                units=addArrayAllocationUnits(units,router.occupiedNet);
+                units=addArrayAllocationUnits(units,router.clearanceNet);
+                units=addArrayAllocationUnits(units,router.pads);
+                units=addArrayAllocationUnits(units,router.padNets);
+                units=addArrayAllocationUnits(units,router.padWidths);
+                units=addArrayAllocationUnits(units,router.padBounds);
+                units=addArrayAllocationUnits(units,router.escapeCorridors);
+                units=addArrayAllocationUnits(units,router.escapeReservations);
+                units=addArrayAllocationUnits(units,router.components);
+                units=addArrayAllocationUnits(units,router.courtyards);
+                units=addArrayAllocationUnits(units,router.allComponentIndexes);
+                units=addArrayAllocationUnits(units,router.componentCandidatesByColumn);
+                units=addArrayAllocationUnits(units,router.collisionCourtyards);
+                units=addArrayAllocationUnits(units,router.horizontalReservation);
+                units=addArrayAllocationUnits(units,router.verticalReservation);
+                units=addArrayAllocationUnits(units,router.padAt);
+                return units;
+            }
+            private static long addArrayAllocationUnits(long units,Object[] values) {
+                return values==null?units:addArrayAllocationUnits(units,values.length);
+            }
+            private static long addArrayAllocationUnits(long units,int[] values) {
+                return values==null?units:addArrayAllocationUnits(units,values.length);
+            }
+            private static long addArrayAllocationUnits(long units,Rectangle[] values) {
+                return values==null?units:addArrayAllocationUnits(units,values.length);
+            }
+            private static long addArrayAllocationUnits(long units,String[] values) {
+                return values==null?units:addArrayAllocationUnits(units,values.length);
+            }
+            private static long addArrayAllocationUnits(long units,PcbPadPlacement[] values) {
+                return values==null?units:addArrayAllocationUnits(units,values.length);
+            }
+            private static long addArrayAllocationUnits(long units,PcbComponentPlacement[] values) {
+                return values==null?units:addArrayAllocationUnits(units,values.length);
+            }
+            private static long addArrayAllocationUnits(long units,String[][] values) {
+                return values==null?units:addArrayAllocationUnits(units,values.length);
+            }
+            private static long addArrayAllocationUnits(long units,int[][] values) {
+                return values==null?units:addArrayAllocationUnits(units,values.length);
+            }
+            private static long addArrayAllocationUnits(long units,int length) {
+                if(units>Long.MAX_VALUE-(long)length-1L)
+                    throw new IllegalStateException("Charged fixed graph shell allocation overflow");
+                return units+(long)length+1L;
+            }
+
+            private void requireSourceStable() {
+                Router current=source;
+                PcbBoardLayout originalLayout=sourceLayoutForCheck;
+                PcbBoardLayout detachedLayout=targetLayout;
+                if(current==null || originalLayout==null || detachedLayout==null ||
+                        current.layout!=originalLayout ||
+                        originalLayout.observationRevision()!=sourceLayoutRevision ||
+                        detachedLayout.observationRevision()!=targetLayoutRevision ||
+                        current.fixedGraphMutationRevision!=sourceRevision ||
+                        current.attempt!=sourceAttempt || current.gridWidth!=sourceGridWidth ||
+                        current.gridHeight!=sourceGridHeight || current.minX!=sourceMinX ||
+                        current.minY!=sourceMinY || current.outline.x!=sourceOutlineX ||
+                        current.outline.y!=sourceOutlineY || current.outline.width!=sourceOutlineWidth ||
+                        current.outline.height!=sourceOutlineHeight ||
+                        current.activeTraceWidth!=sourceActiveTraceWidth ||
+                        !sameString(current.activeNetId,sourceActiveNetId) ||
+                        current.factoryUnderpasses!=sourceFactoryUnderpasses)
+                    throw new IllegalStateException("Source Router changed during charged fixed graph copy");
+            }
+
+            private void failClosed() {
+                failed=true; complete=false; result=null; target=null; source=null; sourceLayoutForCheck=null;
+                targetLayout=null; targetObserver=null; copyTask=null; comparisonTask=null;
+            }
+
+            void cancel() {
+                if(complete) {
+                    target=null;
+                    source=null;
+                    sourceLayoutForCheck=null;
+                    targetLayout=null;
+                    targetObserver=null;
+                    copyTask=null;
+                    comparisonTask=null;
+                    return;
+                }
+                cancelled=true; complete=false; result=null; target=null; source=null; sourceLayoutForCheck=null;
+                targetLayout=null; targetObserver=null; copyTask=null; comparisonTask=null;
+            }
+            int lastWork() { return lastWork; }
+            long workSteps() { return workSteps; }
+            boolean isComplete() { return complete && !cancelled && !failed; }
+            Router result() {
+                if(!isComplete() || result==null)
+                    throw new IllegalStateException("Charged fixed graph copy is incomplete");
+                return result;
+            }
+            int copiedEntries() { return copiedEntries; }
+        }
+
         private Router(Router source,boolean observationShell) {
+            this(source,observationShell,source==null?null:source.layout,
+                source==null?null:source.observer);
+        }
+        private Router(Router source,boolean observationShell,PcbBoardLayout targetLayout,
+                SeededPcbLayoutGenerator.AttemptObserver targetObserver) {
             if(source==null || !observationShell)
                 throw new IllegalArgumentException("Invalid fixed observation shell");
+            if(targetLayout==null || targetLayout!=source.layout &&
+                    !sameRectangle(source.outline,targetLayout.getBoardOutline()))
+                throw new IllegalArgumentException("Invalid fixed observation target context");
             work=copyObservationWork(source.work);
-            board=source.board; layout=source.layout; checkProfiledPadTouches=source.checkProfiledPadTouches;
+            board=source.board; layout=targetLayout; checkProfiledPadTouches=source.checkProfiledPadTouches;
             outline=new Rectangle(source.outline); minX=source.minX; minY=source.minY;
             gridWidth=source.gridWidth; gridHeight=source.gridHeight;
             occupiedNet=new String[gridWidth][]; clearanceNet=new String[gridWidth][];
@@ -1321,8 +1646,11 @@ final class PcbNetRouter {
             padAt=source.padAt==null?null:new String[gridWidth][];
             expansions=rawSegments=congestionRejections=0;
             factoryUnderpasses=source.factoryUnderpasses; activeTraceWidth=source.activeTraceWidth;
-            activeNetId=source.activeNetId; attempt=source.attempt; observer=source.observer;
-            layer=source.layer; domainRules=source.domainRules; emptyComponentFace=source.emptyComponentFace;
+            activeNetId=source.activeNetId; fixedGraphMutationRevision=source.fixedGraphMutationRevision;
+            attempt=source.attempt; observer=targetObserver;
+            layer=source.layer;
+            // PcbTwoLayerRules holds no layout reference and is immutable after construction.
+            domainRules=source.domainRules; emptyComponentFace=source.emptyComponentFace;
         }
         private static PcbRoutingWork copyObservationWork(PcbRoutingWork source) {
             if(source==null) return null;
@@ -1351,7 +1679,14 @@ final class PcbNetRouter {
                 sameIntGrid(componentCandidatesByColumn,other.componentCandidatesByColumn);
         }
         private static boolean sameFixedGraphScalars(Router first,Router other) {
-            return other!=null && first.board==other.board && first.layout==other.layout &&
+            return other!=null && first.layout==other.layout && sameFixedGraphScalarValues(first,other);
+        }
+        private static boolean sameFixedGraphScalars(Router first,Router other,
+                PcbBoardLayout expectedLayout) {
+            return other!=null && other.layout==expectedLayout && sameFixedGraphScalarValues(first,other);
+        }
+        private static boolean sameFixedGraphScalarValues(Router first,Router other) {
+            return first!=null && other!=null && first.board==other.board &&
                 first.attempt==other.attempt && first.layer==other.layer &&
                 first.checkProfiledPadTouches==other.checkProfiledPadTouches &&
                 sameRectangle(first.outline,other.outline) && first.minX==other.minX &&
@@ -1370,8 +1705,13 @@ final class PcbNetRouter {
             private int stage,outer,inner,comparedEntries;
             private boolean complete,equal;
             private FixedGraphComparisonTask(Router first,Router second) {
+                this(first,second,null);
+            }
+            private FixedGraphComparisonTask(Router first,Router second,
+                    PcbBoardLayout expectedLayout) {
                 this.first=first; this.second=second;
-                equal=sameFixedGraphScalars(first,second);
+                equal=expectedLayout==null?sameFixedGraphScalars(first,second):
+                    sameFixedGraphScalars(first,second,expectedLayout);
                 if(!equal) complete=true;
             }
             boolean advanceOne(int maximumEntries) {

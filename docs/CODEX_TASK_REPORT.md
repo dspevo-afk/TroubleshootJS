@@ -1,59 +1,77 @@
-# Current checkpoint: detached native replay prerequisite published
+# Current checkpoint: charged detached owner accepted locally; publication pending
 
-2026-11-03. Active P=OS-temp/tsj-q100-load12-replay-20261103-r1,
-branch `codex/q100-load12-replay-20261103`, source parent
-`ebd9e2a247992e7faa56cf91473a9ea88ee1b056`. QP=preserved fixed-prefix capture
-bundle/load12-replay-r1. Finite literal prerequisite published. Impl `6ec16e8f3abb7fd202c01c1e35149112f42e7354`
-normally pushed and exact remote verified on origin/codex/q100-physical-feasibility.
-Completion Gmail `1a1a2f85b660134d` sent ONCE; never duplicate. Receipt metadata
-commit follows without another email. Final stage/diff/privacy/source-index checks pass.
+2026-11-03. Q=OS-temp/tsj-q100-load12-replay-actual-20261103-r1, branch
+`codex/q100-load12-replay-actual-20261103`, HEAD/source parent
+`924d5e7f81340e2ce5d28a0336b76ff7baa87a36`. QQ=preserved fixed-prefix
+bundle/load12-replay-actual-r1. Packet:docs/task-evidence/Q100/load12-replay-actual-r1.
+All required gates PASS for the independently complete literal charged-owner
+prerequisite. Root final diff/stage/normal commit+push+one Gmail remain. No Q
+publication or completion email yet. No current task runtime actors.
 
-Final native1078/86683322/
-`052cd6ec7884bfeb9b74131609eb86265ea0d6f15ab6c09c8b32dc9716006806`.
-New contract sourceSHA7f71478804e70f7ab7ffbb84269aba594898e2c1956a97edd88c071e25637fca.
-PASS prereq-r6:268 assertions, case468ms, wholewrapper35.1236888s. Final focus6
-PASS38.5249257s:24/57/48/3736/268/13112 assertions, repeatedcase113ms.
-Fresh D_SENSE NULL/PROBE PASS79.192689s: operation18081/25474ms, work300/634,
-maxunit1436/811ms, cleanup1/0ms. Child termination/source-before-after/script
-cleanup proven; separate wrapper cleanup duration null, no invented timing.
+Scope: opt-in resumable Layout/Router/initial FULLER branch copies; actual initial
+Nodes, consumed budget, goals/workspace/order/prefix state, separate mutable
+owners and observer, stale-source/row/array guards and Error/cancel cleanup.
+Real Search/Publisher reproduce the literal cap2 prior-VIA landing with one planar
+trace/no new hole. Callers release in finally. Normal route callers, caps, costs,
+ordering and layout26/dependency28 remain. Actual LOAD12/73 baseline48, large-grid
+cost and cap17 are NOT RUN/unqualified; playable100=0/beta held.
 
-Python-r1 PASS51 +one declared file-symlink privilege skip/52,1.0254703s;
-consumed8 archived, frozen28 byte-identical after canonical-index equality.
-Actual current1078 reader PASS6.1779244s; stale1077 exact identity rejection
-PASS expectedexit2/.4684743s; both terminated/source stable. Reader changes
-ONLY census1077/221->1078/222; private20/r5/v5 wire/algorithms remain unchanged.
-Final-source-audit-r1 PASS20.476224s; sourceb2a48e11ba89c25c142c41dc0db8bb2177870f1dacbef7e147fea153143da755.
-Binds final native/CLI/Python artifacts, original literal proof and fixture blob,
-850 byte-unchanged production,1202 compiler inputs per variant and28 Python.
-No actual GWT build inferred. Evidence docs/task-evidence/Q100/load12-replay-r1/.
+Final1078 inputs/86762693bytes/850productionJava/222contractJava; manifest
+1055a2c12763ecfdc28dd5f261a9160c2194f5a6fe922aab4bd08627b312b35a.
+LayoutBA2B00DA/Router3CC350D7/LayerF79F4461/nativeDA9CE59E. Source-only review
+CLEAR covers frozen production copy/lifetime owners; root reviewed native
+canaries. No source edits after final qualification.19 intentional raw newline-
+only frozen Python statuses must remain unstaged; canonical diff is unchanged.
 
-Literal pass0 UNDER/C.1 branch4/rootA.1 uses prefix2/cap2; both detached runs
-use the SAME original allowance. Actual Search/Publisher reproduce the original
-path/trace/graph, preserve live source, prove independent mutable owners, and
-reject wrong entry/root/seed/goal/prefix and exact exhausted-budget cases.
-Target is creatorVIA p07-via/UNDER/3/1 TOP310,320, zero transitions/null pad
-terminal, one addedtrace/no newhole. Exact coordinates reuse accepted J proof;
-fixture Gitblob6680673cdfb926af3686f6cbe8b9b5589358581c unchanged since0972259.
-Root integration and separate source-only runner/census, prefix-copy/root/
-geometry delta and final tree-goal reviews complete; no leaf runtime gates.
-R1-R5 failures/source/output archived; compile/fixture/prefix/goal assumptions
-resolved, no failed receipt credited. Root owns final integration; leaves idle.
+Gates: focused6 PASS38.9489621s(detached89591/case348ms; old5 counts24/57/48/
+3736/13112). Native33 r2 PASS154.9670527s; P08 launch canary36.6984341s.
+Fresh D NULL/PROBE PASS78.9953206s:17486/26052ms op,1/0ms cleanup,work300/634,
+maxunit1407/826ms. Actual current1078 reader/stale1077 rejection PASS. Python51+
+one declared file-symlink skip/52 REUSED only after8consumed+28imports+toolpins.
 
-No actual LOAD12 or reduced-cap contrast,147702-cell setup, route adoption or
-playable100 proof. Source contains only native fixture/registry/census changes;
-production850/layout26/dependency28/VIA60/all original caps untouched. No fresh
-LOAD12 capture/GWT/Player/electrical/normal3/2-by-31/full30 renewal; full30 owner
-EXCLUDED. Protected HARD unread/unrun in this scope; historical unreadUNCERTIFIED;
-HARD/PSYCHOTIC unavailable. Playable100=0/beta held.
+Actual final-source JDK8/GWT Developer160.4380209s and Player120.5605791s PASS,
+1202inputs/357outputs each. Dev input55dbc1a64495b40155346343ee9e0cf886a4ea41a26c48f67e0ab39e9e0a6a9f,
+outputeeed83142fd9f815f7e37e3cd38504f297612b7cc0b44998e3abc21078192e6a;
+actual357 Devoutputs archived/verified. Player input72edcd8359348c6789f9fdc60a782c89e71f25bd08947b77991d1dc687dffe66,
+outputca8592a524730a19512e636b41762d9aa5ca6e8266e38653ba0411dae4dd57c0.
+Player is active. E06State10 PASS206111ms operation/63501ms cleanup(parent
+270.1163033s). Current9 PASS314.0097408s,cleanupsuccess/browser10243ms; aggregate
+cleanup elapsed not exported. Player privacy1+7JS PASS37635ms operation/44237ms
+cleanup(parent82.3110458s),browser13299ms; negative sentinels rejected/removed.
 
-Last N published impl1ac4d845/receiptebd9e2a2, exact remote verified;
-Gmail1a1a2bd2ae69511a sent ONCE, never duplicate. Preserve Main original9tracked/
-6untracked, N25 inherited newline statuses, Desktop e0c36885 branchcodex/
-task43p-final-recovery (firstobserved7tracked/73untracked), all other worktrees
-and failures. P frozen helper raw EOL statuses are intentional for byte pins.
-No runtime actor or owned persistent preview/profile/port; localhost8928 untouched.
-Next: finish the documentation receipt commit/push, then bounded actual LOAD12/73
-baseline48/cap17 replay under original limits before generic treatment/adoption.
+Normal3 native+realcapture+independent prepare/post PASS; exactdevelopmentroots
+-2230691771308388107/6702341860553104274/-8360266000248569150. Generation
+61744/51341/30492ms/work506/502/392,one actualattempt/root; maxUnitMillis0 is not
+a measured peak. Host183.6900875s/cleanup1.0500259s/serverStopped/survivors0;
+admission/releasefalse. Helper consumed Player input-only while Dev active; later
+actual Player build matched input. Short output OS-temp/tsj-n3h-1dd36944217a
+(profile74chars) is task-owned; no live actor. Native manifest class output and
+compiled archives remain documented build artifacts. Final-source/evidence audit
+PASS21.8790321s,1078native/1202compiler each/9SDK/28frozenPython/20normal3statics.
+
+Failures preserved: prereq-r1 compile15.2169677s fixed copy.offer; R2contract
+35.8688601s corrected premature immediate-rejection expectation to bounded
+rejection before Ready, retaining oracle. R3pass predates hardening, historical.
+Native33 r1 FAIL156.2343555s from QA OS cwd relative TSV; realpositive/negative
+shell+P08 controls established source-root launch; no production fix. Firstnormal3
+host FAIL beforecases(3requested/0actual),38.3074882s outer/6.5368356s inner,
+Edge Error3/deep profile;cleanupPASS0.8525631s/survivors0. Shortpathretrypassed.
+Oldfiles/rawprofiles preserved; no failed run relabelled PASS.
+
+Lastaccepted P impl6ec16e8f/receipt924d5e7f; Gmail1a1a2f85b660134d sent ONCE.
+Never duplicate P or earlier N mail. Main5f05b005 original9tracked/6untracked,
+Desktop e0c36885 and all unrelated work/evidence remain preserved. Unowned8928
+untouched. Protected HARD unread/unrun thisscope/historyUNCERTIFIED;
+HARD/PSYCHOTIC unavailable. Full30 ownerEXCLUDED; CI NOTRUN/runnerprerequisite
+recorded. No manual Player input/newhumanrepair, full30 or2-by-31 renewal.
+
+Next: publish accepted owner prerequisite through explicit-path commit/normal
+push to origin/codex/q100-physical-feasibility, verifyexactSHA, dedup/sendoneGmail,
+record docs receipt. Then bounded actual LOAD12/73 baseline48, exact root
+9007199254740993/place-6587958367974952701/route8445301674744508279/request0/
+index0/attempt4/pass1,pre17VIA88traces,expected222nodes/2170length/2bends/4flips
+->4VIA5traces; cap17 follows baseline. All90s/640/5s/120s/32768 and routing caps
+remain. Never infer actual replay success from this literal prerequisite.
 
 # Historical checkpoint: actual LOAD12 branch capture published
 

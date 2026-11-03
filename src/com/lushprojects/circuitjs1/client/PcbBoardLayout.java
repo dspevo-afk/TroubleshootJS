@@ -8,7 +8,11 @@ import java.util.Vector;
 
 class PcbBoardLayout {
     private boolean sealed;
-    void seal() { sealed = true; }
+    private long revision;
+    void seal() {
+        if(!sealed) { sealed=true; revision++; }
+    }
+    long observationRevision() { return revision; }
     boolean isSealed() { return sealed; }
     private void requireMutable() {
         if (sealed) throw new IllegalStateException("Pristine PCB realization is sealed");
@@ -18,16 +22,14 @@ class PcbBoardLayout {
     private Rectangle boardOutline;
     private final Rectangle partsTray;
     private final int layoutAlgorithmVersion;
-    private final HashMap<String, PcbPadPlacement> pads =
-        new HashMap<String, PcbPadPlacement>();
-    private final HashMap<String, PcbComponentPlacement> components =
-        new HashMap<String, PcbComponentPlacement>();
-    private final HashMap<String, PcbSilkscreenLabel> silkscreenLabels =
-        new HashMap<String, PcbSilkscreenLabel>();
+    private final HashMap<String, PcbPadPlacement> pads;
+    private final HashMap<String, PcbComponentPlacement> components;
+    private final HashMap<String, PcbSilkscreenLabel> silkscreenLabels;
     private final Vector<PcbTraceGeometry> traces = new Vector<PcbTraceGeometry>();
     private PcbRoutingWork.Statistics routingRecoveryStatistics;
     void setRoutingRecoveryStatistics(PcbRoutingWork.Statistics statistics) {
-        requireMutable(); routingRecoveryStatistics=statistics;
+        requireMutable();
+        if(routingRecoveryStatistics!=statistics) { routingRecoveryStatistics=statistics; revision++; }
     }
     PcbRoutingWork.Statistics getRoutingRecoveryStatistics() { return routingRecoveryStatistics; }
     /** Private routing candidate: immutable placements are shared, mutable copper is not. */
@@ -42,8 +44,12 @@ class PcbBoardLayout {
     }
     private int routingExpansions,rawRoutingSegments,routingCongestionRejections;
     void setRoutingStatistics(int expansions,int rawSegments,int congestionRejections) {
-        requireMutable(); routingExpansions=expansions; rawRoutingSegments=rawSegments;
+        requireMutable();
+        boolean changed=routingExpansions!=expansions || rawRoutingSegments!=rawSegments ||
+            routingCongestionRejections!=congestionRejections;
+        routingExpansions=expansions; rawRoutingSegments=rawSegments;
         routingCongestionRejections=congestionRejections;
+        if(changed) revision++;
     }
     int getRoutingExpansions() { return routingExpansions; }
     int getRawRoutingSegments() { return rawRoutingSegments; }
@@ -59,13 +65,20 @@ class PcbBoardLayout {
             throw new IllegalStateException("Packing generation receipt is set once");
         receipt.requireGeometry(this);
         packingProbeReceipt = receipt;
+        revision++;
     }
     /** Original generation provenance; later physical edits retain that history. */
     PcbPackingProbeReceipt getPackingProbeReceipt() { return packingProbeReceipt; }
     void setGenerationStatistics(int placements,int routes,int expansions,long millis,long placementSeed,long routingSeed) {
-        requireMutable();generationPlacementAttempts=placements;generationRoutingAttempts=routes;
+        requireMutable();
+        boolean changed=!procedural || generationPlacementAttempts!=placements ||
+            generationRoutingAttempts!=routes || generationRoutingExpansions!=expansions ||
+            generationRoutingMillis!=millis || generationPlacementSeed!=placementSeed ||
+            generationRoutingSeed!=routingSeed;
+        generationPlacementAttempts=placements;generationRoutingAttempts=routes;
         generationRoutingExpansions=expansions;generationRoutingMillis=millis;
         generationPlacementSeed=placementSeed;generationRoutingSeed=routingSeed;procedural=true;
+        if(changed) revision++;
     }
     boolean matchesGenerationSeeds(long placement,long routing) {
         return procedural && generationPlacementSeed==placement && generationRoutingSeed==routing;
@@ -78,6 +91,10 @@ class PcbBoardLayout {
     PcbBoardLayout copyForCompaction() {
         requireMutable();
         return copyWithCopper();
+    }
+    CompactionCopyTask beginCompactionCopy() {
+        requireMutable();
+        return new CompactionCopyTask(this);
     }
     /** Fresh layout owner from frozen coordinate values; never repeats routing. */
     PcbBoardLayout copySealed() {
@@ -97,17 +114,419 @@ class PcbBoardLayout {
             generationRoutingExpansions,generationRoutingMillis,generationPlacementSeed,generationRoutingSeed);
         return copy;
     }
+
+    /** Bounded copy retains source guards until cancel; cancelling a complete task keeps its result. */
+    static final class CompactionCopyTask {
+        private static final int MAX_WORK=32768;
+        private PcbBoardLayout source;
+        private PcbBoardLayout target;
+        private PcbBoardLayout completedResult;
+        private CopyCursor[] cursors;
+        private int phase;
+        private int lastWork;
+        private long workSteps;
+        private long copiedEntries;
+        private boolean complete;
+        private boolean cancelled;
+        private boolean sourceReleased;
+
+        private final boolean sourceSealed;
+        private final long sourceRevision;
+        private final int sourceWidth,sourceHeight,sourceLayoutVersion;
+        private Rectangle sourceOutlineRef,sourcePartsTrayRef;
+        private final int outlineX,outlineY,outlineWidth,outlineHeight;
+        private final int trayX,trayY,trayWidth,trayHeight;
+        private HashMap<String,PcbPadPlacement> sourcePads;
+        private HashMap<String,PcbComponentPlacement> sourceComponents;
+        private HashMap<String,PcbSilkscreenLabel> sourceLabels;
+        private Vector<PcbTraceGeometry> sourceTraces;
+        private java.util.TreeMap<String,PcbLayoutRegion> sourceRegions;
+        private java.util.TreeMap<String,PcbBoardHole> sourceHoles;
+        private final int padCount,componentCount,labelCount,traceCount,regionCount,holeCount;
+        private PcbRoutingWork.Statistics recoveryStatistics;
+        private final int routingExpansionCount,routingSegmentCount,routingCongestionCount;
+        private final int placementAttempts,routingAttempts,generationExpansionCount;
+        private final long generationMillis,placementSeed,routingSeed;
+        private final boolean procedural;
+        private PcbPackingProbeReceipt packingReceipt;
+
+        private CompactionCopyTask(PcbBoardLayout source) {
+            if(source==null) throw new IllegalArgumentException("Missing PCB layout source");
+            source.requireMutable();
+            this.source=source;
+            this.sourceSealed=source.sealed;
+            this.sourceRevision=source.observationRevision();
+            this.sourceWidth=source.width; this.sourceHeight=source.height;
+            this.sourceLayoutVersion=source.layoutAlgorithmVersion;
+            this.sourceOutlineRef=source.boardOutline; this.sourcePartsTrayRef=source.partsTray;
+            this.outlineX=source.boardOutline.x; this.outlineY=source.boardOutline.y;
+            this.outlineWidth=source.boardOutline.width; this.outlineHeight=source.boardOutline.height;
+            this.trayX=source.partsTray.x; this.trayY=source.partsTray.y;
+            this.trayWidth=source.partsTray.width; this.trayHeight=source.partsTray.height;
+            this.sourcePads=source.pads; this.sourceComponents=source.components;
+            this.sourceLabels=source.silkscreenLabels; this.sourceTraces=source.traces;
+            this.sourceRegions=source.regions; this.sourceHoles=source.holes;
+            this.padCount=source.pads.size(); this.componentCount=source.components.size();
+            this.labelCount=source.silkscreenLabels.size(); this.traceCount=source.traces.size();
+            this.regionCount=source.regions.size(); this.holeCount=source.holes.size();
+            this.recoveryStatistics=source.routingRecoveryStatistics;
+            this.routingExpansionCount=source.routingExpansions;
+            this.routingSegmentCount=source.rawRoutingSegments;
+            this.routingCongestionCount=source.routingCongestionRejections;
+            this.placementAttempts=source.generationPlacementAttempts;
+            this.routingAttempts=source.generationRoutingAttempts;
+            this.generationExpansionCount=source.generationRoutingExpansions;
+            this.generationMillis=source.generationRoutingMillis;
+            this.placementSeed=source.generationPlacementSeed;
+            this.routingSeed=source.generationRoutingSeed;
+            this.procedural=source.procedural;
+            this.packingReceipt=source.packingProbeReceipt;
+
+            this.target=new PcbBoardLayout(sourceWidth,sourceHeight,sourceOutlineRef,
+                sourcePartsTrayRef,sourceLayoutVersion,mapInitialCapacity(padCount),
+                mapInitialCapacity(componentCount),mapInitialCapacity(labelCount));
+            target.routingRecoveryStatistics=recoveryStatistics;
+            target.routingExpansions=routingExpansionCount;
+            target.rawRoutingSegments=routingSegmentCount;
+            target.routingCongestionRejections=routingCongestionCount;
+            if(procedural) {
+                target.generationPlacementAttempts=placementAttempts;
+                target.generationRoutingAttempts=routingAttempts;
+                target.generationRoutingExpansions=generationExpansionCount;
+                target.generationRoutingMillis=generationMillis;
+                target.generationPlacementSeed=placementSeed;
+                target.generationRoutingSeed=routingSeed;
+                target.procedural=true;
+            }
+            target.packingProbeReceipt=packingReceipt;
+
+            this.cursors=new CopyCursor[] {
+                new MapCopyCursor<String,PcbPadPlacement>(sourcePads,target.pads,padCount,true),
+                new MapCopyCursor<String,PcbComponentPlacement>(sourceComponents,target.components,
+                    componentCount,true),
+                new MapCopyCursor<String,PcbSilkscreenLabel>(sourceLabels,target.silkscreenLabels,
+                    labelCount,true),
+                new VectorCopyCursor<PcbTraceGeometry>(sourceTraces,target.traces,traceCount),
+                new MapCopyCursor<String,PcbLayoutRegion>(sourceRegions,target.regions,regionCount,false),
+                new MapCopyCursor<String,PcbBoardHole>(sourceHoles,target.holes,holeCount,false)
+            };
+            verifySourceGuards();
+        }
+
+        boolean advance(int maxWork) {
+            if(maxWork<1 || maxWork>MAX_WORK)
+                throw new IllegalArgumentException("Compaction copy work quantum is outside [1,32768]");
+            if(cancelled) throw new IllegalStateException("Compaction copy task was cancelled");
+            if(complete) { lastWork=0; return true; }
+            lastWork=0;
+            try {
+                verifySourceGuards();
+                while(lastWork<maxWork && phase<cursors.length*2) {
+                    CopyCursor cursor=cursors[phase%cursors.length];
+                    int rowsBefore=cursor.copiedEntries();
+                    boolean consumed;
+                    try {
+                        consumed=phase<cursors.length?cursor.copyOne():cursor.verifyOne();
+                    } finally {
+                        int rowsAfter=cursor.copiedEntries();
+                        if(rowsAfter>rowsBefore) copiedEntries+=(long)(rowsAfter-rowsBefore);
+                    }
+                    if(consumed) {
+                        lastWork++;
+                        workSteps++;
+                    } else {
+                        phase++;
+                    }
+                }
+                verifySourceGuards();
+                if(phase==cursors.length*2) {
+                    completedResult=target;
+                    target=null;
+                    cursors=null;
+                    complete=true;
+                }
+                return complete;
+            } catch(java.util.ConcurrentModificationException changed) {
+                discard();
+                throw new IllegalStateException("PCB layout changed during compaction copy",changed);
+            } catch(RuntimeException failure) {
+                discard();
+                throw failure;
+            } catch(Error failure) {
+                discard();
+                throw failure;
+            }
+        }
+
+        int lastWork() { return lastWork; }
+        long workSteps() { return workSteps; }
+        long copiedEntries() { return copiedEntries; }
+        boolean isComplete() { return complete; }
+        /** O(1) source revision, scalar and collection identity/count check. */
+        boolean sourceUnchanged() { return !sourceReleased && sourceGuardsMatch(); }
+
+        PcbBoardLayout result() {
+            if(cancelled) throw new IllegalStateException("Compaction copy task was cancelled");
+            if(!complete || completedResult==null)
+                throw new IllegalStateException("Compaction copy result is not complete");
+            return completedResult;
+        }
+
+        void cancel() {
+            if(cancelled || sourceReleased) return;
+            if(complete) { releaseSourceReferences(); return; }
+            discard();
+        }
+
+        private void verifySourceGuards() {
+            if(!sourceGuardsMatch())
+                throw new IllegalStateException("PCB layout source changed during compaction copy");
+        }
+
+        private boolean sourceGuardsMatch() {
+            PcbBoardLayout value=source;
+            return value!=null && value.observationRevision()==sourceRevision &&
+                    value.sealed==sourceSealed && !value.sealed &&
+                    value.width==sourceWidth && value.height==sourceHeight &&
+                    value.layoutAlgorithmVersion==sourceLayoutVersion &&
+                    value.boardOutline==sourceOutlineRef && value.partsTray==sourcePartsTrayRef &&
+                    value.boardOutline.x==outlineX && value.boardOutline.y==outlineY &&
+                    value.boardOutline.width==outlineWidth && value.boardOutline.height==outlineHeight &&
+                    value.partsTray.x==trayX && value.partsTray.y==trayY &&
+                    value.partsTray.width==trayWidth && value.partsTray.height==trayHeight &&
+                    value.pads==sourcePads && value.components==sourceComponents &&
+                    value.silkscreenLabels==sourceLabels && value.traces==sourceTraces &&
+                    value.regions==sourceRegions && value.holes==sourceHoles &&
+                    value.pads.size()==padCount && value.components.size()==componentCount &&
+                    value.silkscreenLabels.size()==labelCount && value.traces.size()==traceCount &&
+                    value.regions.size()==regionCount && value.holes.size()==holeCount &&
+                    value.routingRecoveryStatistics==recoveryStatistics &&
+                    value.routingExpansions==routingExpansionCount &&
+                    value.rawRoutingSegments==routingSegmentCount &&
+                    value.routingCongestionRejections==routingCongestionCount &&
+                    value.generationPlacementAttempts==placementAttempts &&
+                    value.generationRoutingAttempts==routingAttempts &&
+                    value.generationRoutingExpansions==generationExpansionCount &&
+                    value.generationRoutingMillis==generationMillis &&
+                    value.generationPlacementSeed==placementSeed &&
+                    value.generationRoutingSeed==routingSeed && value.procedural==procedural &&
+                    value.packingProbeReceipt==packingReceipt;
+        }
+
+        private void discard() {
+            cancelled=true;
+            complete=false;
+            completedResult=null;
+            target=null;
+            source=null;
+            cursors=null;
+            releaseSourceReferences();
+            lastWork=0;
+        }
+
+        private void releaseSourceReferences() {
+            source=null;
+            sourceOutlineRef=null; sourcePartsTrayRef=null;
+            sourcePads=null; sourceComponents=null; sourceLabels=null;
+            sourceTraces=null; sourceRegions=null; sourceHoles=null;
+            recoveryStatistics=null; packingReceipt=null;
+            sourceReleased=true;
+        }
+
+        private static int mapInitialCapacity(int count) {
+            if(count<0) throw new IllegalArgumentException("Negative PCB map size");
+            if(count==0) return 0;
+            float requested=(float)count/0.75f+1.0f;
+            if(requested>1073741824.0f)
+                throw new IllegalArgumentException("PCB map exceeds bounded copy capacity");
+            int initial=(int)requested;
+            return hashTableCapacity(initial);
+        }
+
+        private static int hashTableCapacity(int initialCapacity) {
+            if(initialCapacity<=0) return 0;
+            int capacity=1;
+            while(capacity<initialCapacity) {
+                if(capacity>=1073741824)
+                    throw new IllegalArgumentException("PCB map exceeds bounded table capacity");
+                capacity<<=1;
+            }
+            return capacity;
+        }
+
+        private static int ceilLog2(int value) {
+            int result=0,capacity=1;
+            while(capacity<value && result<31) { capacity<<=1; result++; }
+            return result;
+        }
+
+        private interface CopyCursor {
+            boolean copyOne();
+            boolean verifyOne();
+            int copiedEntries();
+        }
+
+        private static final class MapCopyCursor<K,V> implements CopyCursor {
+            private final java.util.Map<K,V> source;
+            private final java.util.Map<K,V> target;
+            private final int expectedSize;
+            private final boolean hashed;
+            private final long tableCapacity;
+            private java.util.Iterator<java.util.Map.Entry<K,V>> copyIterator;
+            private java.util.Iterator<java.util.Map.Entry<K,V>> verifyIterator;
+            private MapRow<K,V> firstRow,lastRow,verifyRow;
+            private java.util.Map.Entry<K,V> pendingEntry;
+            private K pendingKey;
+            private V pendingValue;
+            private long pendingInsertWork,tableWorkLeft;
+            private int copied,verified;
+            private boolean copyComplete,verifyStarted,verifyComplete;
+
+            MapCopyCursor(java.util.Map<K,V> source,java.util.Map<K,V> target,
+                    int expectedSize,boolean hashed) {
+                this.source=source; this.target=target; this.expectedSize=expectedSize;
+                this.hashed=hashed;
+                this.tableCapacity=hashed && expectedSize>0?
+                    hashTableCapacity(mapInitialCapacity(expectedSize)):0L;
+                this.tableWorkLeft=tableCapacity;
+                this.copyIterator=source.entrySet().iterator();
+                this.copyComplete=expectedSize==0;
+            }
+
+            public boolean copyOne() {
+                if(copyComplete) return false;
+                if(tableWorkLeft>0) { tableWorkLeft--; return true; }
+                if(pendingEntry==null) {
+                    if(copied>=expectedSize || !copyIterator.hasNext())
+                        throw new IllegalStateException("PCB layout map changed during compaction copy");
+                    pendingEntry=copyIterator.next();
+                    pendingKey=pendingEntry.getKey();
+                    pendingValue=pendingEntry.getValue();
+                    pendingInsertWork=insertWork(pendingKey,target.size(),hashed);
+                }
+                if(pendingInsertWork>1) { pendingInsertWork--; return true; }
+                target.put(pendingKey,pendingValue);
+                copied++;
+                MapRow<K,V> row=new MapRow<K,V>(pendingKey,pendingValue);
+                if(firstRow==null) firstRow=row; else lastRow.next=row;
+                lastRow=row;
+                pendingEntry=null; pendingKey=null; pendingValue=null; pendingInsertWork=0;
+                if(copied==expectedSize) {
+                    if(copyIterator.hasNext())
+                        throw new IllegalStateException("PCB layout map size changed during compaction copy");
+                    copyComplete=true;
+                }
+                return true;
+            }
+
+            public boolean verifyOne() {
+                if(!copyComplete)
+                    throw new IllegalStateException("PCB layout map verification preceded its copy");
+                if(verifyComplete) return false;
+                if(!verifyStarted) {
+                    verifyIterator=source.entrySet().iterator();
+                    verifyRow=firstRow;
+                    verifyStarted=true;
+                }
+                if(verified<expectedSize) {
+                    if(verifyRow==null || !verifyIterator.hasNext())
+                        throw new IllegalStateException("PCB layout map changed after a row was copied");
+                    java.util.Map.Entry<K,V> entry=verifyIterator.next();
+                    if(entry.getKey()!=verifyRow.key || entry.getValue()!=verifyRow.value)
+                        throw new IllegalStateException("PCB layout map row changed after it was copied");
+                    verifyRow=verifyRow.next;
+                    verified++;
+                    return true;
+                }
+                if(verifyRow!=null || verifyIterator.hasNext())
+                    throw new IllegalStateException("PCB layout map contents changed during verification");
+                verifyComplete=true;
+                return false;
+            }
+
+            public int copiedEntries() { return copied; }
+
+            private static long insertWork(Object key,int existing,boolean hashed) {
+                int keyLength=key instanceof String?((String)key).length():1;
+                if(hashed) return 1L+keyLength+existing;
+                int heightBound=2*ceilLog2(existing+2);
+                return 1L+(long)heightBound*(keyLength+1L);
+            }
+        }
+
+        private static final class VectorCopyCursor<V> implements CopyCursor {
+            private final Vector<V> source;
+            private final Vector<V> target;
+            private final int expectedSize;
+            private final int targetCapacity;
+            private int copied,verified,capacity=10;
+            private long allocationWorkLeft;
+            private boolean copyComplete,verifyComplete;
+
+            VectorCopyCursor(Vector<V> source,Vector<V> target,int expectedSize) {
+                this.source=source; this.target=target; this.expectedSize=expectedSize;
+                this.targetCapacity=expectedSize>10?Math.max(20,expectedSize):10;
+                this.allocationWorkLeft=targetCapacity>10?targetCapacity:0L;
+                this.copyComplete=expectedSize==0;
+            }
+
+            public boolean copyOne() {
+                if(copyComplete) return false;
+                if(allocationWorkLeft>0) {
+                    allocationWorkLeft--;
+                    if(allocationWorkLeft==0) {
+                        target.ensureCapacity(targetCapacity);
+                        capacity=targetCapacity;
+                    }
+                    return true;
+                }
+                if(copied>=expectedSize)
+                    throw new IllegalStateException("PCB trace vector changed during compaction copy");
+                if(copied>=capacity || copied>=targetCapacity)
+                    throw new IllegalStateException("PCB trace vector capacity changed during compaction copy");
+                target.add(source.elementAt(copied));
+                copied++;
+                if(copied==expectedSize) copyComplete=true;
+                return true;
+            }
+
+            public boolean verifyOne() {
+                if(!copyComplete)
+                    throw new IllegalStateException("PCB trace verification preceded its copy");
+                if(verifyComplete) return false;
+                if(verified<expectedSize) {
+                    if(source.elementAt(verified)!=target.elementAt(verified))
+                        throw new IllegalStateException("PCB trace row changed after it was copied");
+                    verified++;
+                    return true;
+                }
+                verifyComplete=true;
+                return false;
+            }
+
+            public int copiedEntries() { return copied; }
+        }
+
+        private static final class MapRow<K,V> {
+            final K key;
+            final V value;
+            MapRow<K,V> next;
+            MapRow(K key,V value) { this.key=key; this.value=value; }
+        }
+    }
     void replaceTraces(Vector<PcbTraceGeometry> candidates) {
         requireMutable();
         if(candidates==null) throw new IllegalArgumentException("Missing routes");
         for(PcbTraceGeometry trace:candidates) if(trace==null) throw new IllegalArgumentException("Missing route");
         traces.clear();traces.addAll(candidates);
+        revision++;
     }
     private final java.util.TreeMap<String,PcbLayoutRegion> regions = new java.util.TreeMap<String,PcbLayoutRegion>();
     void addRegion(PcbLayoutRegion region) {
         requireMutable();
         if (region == null || regions.containsKey(region.id)) throw new IllegalArgumentException("Duplicate physical region");
         region.bounds(this); regions.put(region.id, region);
+        revision++;
     }
     Vector<PcbLayoutRegion> getRegions() { return new Vector<PcbLayoutRegion>(regions.values()); }
     private final java.util.TreeMap<String,PcbBoardHole> holes = new java.util.TreeMap<String,PcbBoardHole>();
@@ -117,6 +536,7 @@ class PcbBoardLayout {
         if (hole == null || holes.containsKey(hole.id))
             throw new IllegalArgumentException("Duplicate or missing board hole");
         holes.put(hole.id,hole);
+        revision++;
     }
     Vector<PcbBoardHole> getHoles() { return new Vector<PcbBoardHole>(holes.values()); }
     int getHoleCount() { return holes.size(); }
@@ -131,6 +551,12 @@ class PcbBoardLayout {
 
     PcbBoardLayout(int width, int height, Rectangle boardOutline, Rectangle partsTray,
             int layoutAlgorithmVersion) {
+        this(width,height,boardOutline,partsTray,layoutAlgorithmVersion,16,16,16);
+    }
+
+    private PcbBoardLayout(int width, int height, Rectangle boardOutline, Rectangle partsTray,
+            int layoutAlgorithmVersion,int padMapCapacity,int componentMapCapacity,
+            int labelMapCapacity) {
         if (layoutAlgorithmVersion != SeededPcbLayoutGenerator.CURRENT_VERSION)
             throw new IllegalArgumentException("Unsupported retired PCB layout algorithm version: " +
                 layoutAlgorithmVersion);
@@ -146,6 +572,9 @@ class PcbBoardLayout {
         this.boardOutline = new Rectangle(boardOutline);
         this.partsTray = new Rectangle(partsTray);
         this.layoutAlgorithmVersion = layoutAlgorithmVersion;
+        this.pads = new HashMap<String, PcbPadPlacement>(padMapCapacity);
+        this.components = new HashMap<String, PcbComponentPlacement>(componentMapCapacity);
+        this.silkscreenLabels = new HashMap<String, PcbSilkscreenLabel>(labelMapCapacity);
     }
 
     int getLayoutAlgorithmVersion() { return layoutAlgorithmVersion; }
@@ -155,6 +584,7 @@ class PcbBoardLayout {
         if (pad == null || pads.containsKey(pad.getPadId()))
             throw new IllegalArgumentException("Duplicate or missing PCB pad placement");
         pads.put(pad.getPadId(),pad);
+        revision++;
     }
 
     void addComponent(PcbComponentPlacement component) {
@@ -162,6 +592,7 @@ class PcbBoardLayout {
         if (component == null || components.containsKey(component.getComponentId()))
             throw new IllegalArgumentException("Duplicate or missing PCB component placement");
         components.put(component.getComponentId(),component);
+        revision++;
     }
 
     void addSilkscreenLabel(PcbSilkscreenLabel label) {
@@ -169,12 +600,14 @@ class PcbBoardLayout {
         if (label == null || silkscreenLabels.containsKey(label.getId()))
             throw new IllegalArgumentException("Duplicate or missing PCB silkscreen label");
         silkscreenLabels.put(label.getId(),label);
+        revision++;
     }
 
     void addTrace(PcbTraceGeometry trace) {
         requireMutable();
         if (trace == null) throw new IllegalArgumentException("Missing PCB trace");
         traces.add(trace);
+        revision++;
     }
 
     void validateAgainst(TroubleshootBoard board) {
@@ -340,6 +773,7 @@ class PcbBoardLayout {
                         checkedAdd(candidate.y, candidate.height)) &&
                     !candidate.intersects(boardOutline)) {
                 partsTray.setBounds(candidate.x, candidate.y, candidate.width, candidate.height);
+                revision++;
                 return;
             }
         }
@@ -350,6 +784,7 @@ class PcbBoardLayout {
         height=Math.max(height,checkedAdd(Math.max(checkedAdd(right.y,right.height),
             checkedAdd(boardOutline.y,boardOutline.height)),gap));
         partsTray.setBounds(right.x,right.y,right.width,right.height);
+        revision++;
     }
 
     /** Complete workbench containment without moving any physical board or tray geometry. */
@@ -359,8 +794,11 @@ class PcbBoardLayout {
         int boardBottom = checkedAdd(boardOutline.y, boardOutline.height);
         int nextWidth = Math.max(width, boardRight);
         int nextHeight = Math.max(height, boardBottom);
-        width = nextWidth;
-        height = nextHeight;
+        if(width!=nextWidth || height!=nextHeight) {
+            width = nextWidth;
+            height = nextHeight;
+            revision++;
+        }
     }
 
     private void validateTraceCourtyards(TroubleshootBoard board, PcbTraceGeometry trace,
@@ -913,6 +1351,7 @@ class PcbBoardLayout {
         holes.clear(); holes.putAll(translatedHoles);
         silkscreenLabels.clear(); silkscreenLabels.putAll(translatedLabels);
         boardOutline = translatedOutline;
+        revision++;
     }
 
     Rectangle getOccupiedContentBounds() {

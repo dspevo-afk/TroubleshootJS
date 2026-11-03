@@ -388,6 +388,313 @@ final class PcbLayerRoutingPrototype {
         while(!session.advanceSlice()) { }
         return session.result();
     }
+    private static final Diagnostics DETACHED_DIAGNOSTICS=new Diagnostics() {
+        public void onTerminalBranch(BranchSnapshot snapshot) { }
+    };
+    private static final FixedPrefixGraphObserver DETACHED_PREFIX_OBSERVER=new FixedPrefixGraphObserver() {
+        public boolean select(FixedPrefixBranchLineage lineage) { return false; }
+        public void onGraph(FixedPrefixGraphSnapshot snapshot) { }
+    };
+
+    /** Opt-in diagnostic state copy. No normal route overload calls this method. */
+    static DetachedBranchCopyTask beginDetachedBranchCopy(Session source,
+            SeededPcbLayoutGenerator.AttemptObserver observer) {
+        return new DetachedBranchCopyTask(source,observer);
+    }
+
+    /** Copies an actual initial branch; never computes or injects a found path. */
+    static final class DetachedBranchCopyTask {
+        private Session source;
+        private Search original;
+        private Search.BranchSearch branch;
+        private TurnBoundWorkspace workspace;
+        private Budget sourceBudget;
+        private PcbBoardLayout sourceLayout,sourceTemplate;
+        private SeededPcbLayoutGenerator.AttemptObserver observer;
+        private PcbBoardLayout.CompactionCopyTask layoutTask,templateTask;
+        private PcbNetRouter.Router.ChargedFixedGraphCopyTask routerTask;
+        private PcbNetRouter.Router[] sourceFaces;
+        private final long[] faceRevisions=new long[2];
+        private long layoutRevision,templateRevision;
+        private boolean[] sourceGoal,goal;
+        private int[][] sourceInts,copiedInts;
+        private Node firstSeed,secondSeed;
+        private Vector<String> nets,pending,reached;
+        private PcbPadPlacement[] pads,terminals;
+        private PcbComponentPlacement[] parts;
+        private PcbBoardHole[] holes;
+        private Rectangle[] bounds;
+        private Session owner;
+        private Search copy;
+        private Search.BranchSearch copiedBranch;
+        private DetachedBranchReplay result;
+        private int stage,array=-1,index,metaIndex,face,lastWork;
+        private int serial,expanded,maximum,branches,segments,netIndex,pass;
+        private int netCount,pendingCount,reachedCount;
+        private long credits,work,copied;
+        private boolean cancelled,complete;
+
+        private DetachedBranchCopyTask(Session source,SeededPcbLayoutGenerator.AttemptObserver observer) {
+            if(source==null || observer==null || observer==source.observer || source.complete ||
+                    source.policy!=Policy.FULLER_TWO_LAYER || source.search==null ||
+                    source.pendingFixedPrefixCapture!=null || source.pendingFixedPrefixFailure!=null)
+                throw new IllegalArgumentException("Detached copy requires an independent initial FULLER owner");
+            this.source=source; this.observer=observer; original=source.search; branch=original.branch;
+            if(branch==null || original.publisher!=null || original.complete ||
+                    source.candidate!=original.layout || original.owner!=source ||
+                    original.budget!=source.budget || branch.expanded!=0 || branch.found!=null ||
+                    branch.foundTerminal!=null || branch.terminalEmitted || branch.relaxedBoundStarted ||
+                    branch.relaxedQueryFaces!=null || branch.relaxedPristineFaces!=null ||
+                    branch.relaxedDistanceBound!=null || branch.queue.size()!=2 || branch.best.size()!=2 ||
+                    branch.queue.values.length!=128 || branch.best.values.length!=128 ||
+                    original.cells<1 || original.cells>MAX_CELLS || original.nets==null ||
+                    original.currentPadIds==null || original.reachedPadIds==null ||
+                    original.currentRoot==null || source.turnBoundWorkspace==null)
+                throw new IllegalArgumentException("Detached copy requires the pre-first-work branch frontier");
+            firstSeed=branch.queue.values[0]; secondSeed=branch.queue.values[1];
+            requireSeed(firstSeed); requireSeed(secondSeed);
+            if(firstSeed.layer==secondSeed.layer || branch.best.get(firstSeed.key)!=firstSeed ||
+                    branch.best.get(secondSeed.key)!=secondSeed)
+                throw new IllegalArgumentException("Detached copy requires both original root seed states");
+            workspace=source.turnBoundWorkspace;
+            workspace.requireGrid(original.width,original.height,original.cells);
+            sourceGoal=branch.goal;
+            sourceInts=new int[][]{branch.distance,workspace.north,workspace.east,workspace.south,
+                workspace.west,workspace.axisMin,workspace.rowMin};
+            copiedInts=new int[7][];
+            if(sourceGoal.length!=2L*original.cells || branch.turnLowerBound==null ||
+                    branch.turnLowerBound.manhattan!=branch.distance ||
+                    branch.turnLowerBound.north!=workspace.north || branch.turnLowerBound.east!=workspace.east ||
+                    branch.turnLowerBound.south!=workspace.south || branch.turnLowerBound.west!=workspace.west ||
+                    branch.turnLowerBound.axisMin!=workspace.axisMin || original.faces[0]==null || original.faces[1]==null)
+                throw new IllegalArgumentException("Detached copy has incompatible initial arrays");
+            for(int i=0;i<sourceInts.length;i++) if(sourceInts[i]==null || sourceInts[i].length!=original.cells)
+                throw new IllegalArgumentException("Detached copy has incompatible turn workspace");
+            if((long)original.pads.length+original.parts.length+branch.reachedTerminals.length+
+                    branch.holes.length*5L+original.nets.size()+original.currentPadIds.size()+
+                    original.reachedPadIds.size()>32768 || branch.holes.length>48)
+                throw new IllegalArgumentException("Detached copy metadata exceeds its bounded envelope");
+            sourceBudget=source.budget;
+            serial=original.serial; expanded=sourceBudget.expanded; maximum=sourceBudget.maximum;
+            branches=original.branches; segments=original.segments; netIndex=original.netIndex; pass=original.pass;
+            if(maximum<1 || maximum>MAX_EXPANSIONS || expanded<0 || expanded>maximum)
+                throw new IllegalArgumentException("Detached copy has an invalid consumed global budget");
+            nets=original.nets; pending=original.currentPadIds; reached=original.reachedPadIds;
+            netCount=nets.size(); pendingCount=pending.size(); reachedCount=reached.size();
+            sourceLayout=original.layout; sourceTemplate=source.template;
+            layoutRevision=sourceLayout.observationRevision(); templateRevision=sourceTemplate.observationRevision();
+            sourceFaces=new PcbNetRouter.Router[]{original.faces[0],original.faces[1]};
+            for(int i=0;i<2;i++) faceRevisions[i]=sourceFaces[i].observationRevision();
+            layoutTask=sourceLayout.beginCompactionCopy();
+            templateTask=sourceTemplate.beginCompactionCopy();
+        }
+
+        private void requireSeed(Node node) {
+            if(node==null || node.previous!=null || node.direction!=4 || node.transitions!=0 ||
+                    node.cell!=original.cell(branch.start) || node.layer<0 || node.layer>1 ||
+                    node.cost!=(node.layer==original.primary?0:original.policy.secondaryCost))
+                throw new IllegalArgumentException("Detached copy has a noninitial seed");
+        }
+        boolean advance(int maximumWork) {
+            lastWork=0;
+            if(maximumWork<1 || maximumWork>32768) throw new IllegalArgumentException("Detached copy quantum must be in 1..32768");
+            if(complete) return true;
+            if(cancelled) throw new IllegalStateException("Detached copy was cancelled");
+            try {
+                requireSource(); observer.check(pass); requireSource();
+                while(lastWork<maximumWork && !complete) {
+                    step(); lastWork++; work++;
+                }
+                if(!complete) requireSource();
+                return complete;
+            } catch(RuntimeException failure) { cancel(); throw failure;
+            } catch(Error failure) { cancel(); throw failure; }
+        }
+        private void step() {
+            if(stage==0) {
+                long before=layoutTask.copiedEntries();
+                boolean done=layoutTask.advance(1); copied+=layoutTask.copiedEntries()-before;
+                if(done) stage=1;
+            } else if(stage==1) {
+                long before=templateTask.copiedEntries();
+                boolean done=templateTask.advance(1); copied+=templateTask.copiedEntries()-before;
+                if(done) {stage=2; array=-1; credits=0;}
+            } else if(stage==2) {
+                int length=array<0?sourceGoal.length:sourceInts[array].length;
+                if(credits<length) {credits++; return;}
+                if(array<0) goal=new boolean[length]; else copiedInts[array]=new int[length];
+                credits=0;
+                if(++array==7) {stage=3; array=-1; index=0;}
+            } else if(stage==3) {
+                int length=array<0?sourceGoal.length:sourceInts[array].length;
+                if(index<length) {
+                    if(array<0) goal[index]=sourceGoal[index]; else copiedInts[array][index]=sourceInts[array][index];
+                    index++; copied++; return;
+                }
+                index=0;
+                if(++array==7) {stage=4; credits=0;}
+            } else if(stage==4) {
+                long units=512L+original.pads.length+original.parts.length+branch.reachedTerminals.length+
+                    branch.holes.length*5L+netCount+pendingCount+reachedCount;
+                if(credits<units) {credits++; return;}
+                createShells(); stage=5; metaIndex=0;
+            } else if(stage==5) {
+                if(copyMetadata(metaIndex++)) {stage=6; face=0;}
+            } else if(stage==6) {
+                if(routerTask==null) routerTask=sourceFaces[face].beginChargedFixedGraphObservationCopy(copy.layout,observer);
+                int before=routerTask.copiedEntries(); boolean done=routerTask.advance(1);
+                copied+=routerTask.copiedEntries()-before;
+                if(done) {
+                    copy.faces[face]=routerTask.result(); routerTask.cancel(); routerTask=null;
+                    if(++face==2) {stage=7; array=-1; index=0;}
+                }
+            } else if(stage==7) {
+                int length=array<0?sourceGoal.length:sourceInts[array].length;
+                if(index<length) {
+                    if(array<0?goal[index]!=sourceGoal[index]:copiedInts[array][index]!=sourceInts[array][index])
+                        throw changed();
+                    index++; return;
+                }
+                index=0;
+                if(++array==7) {stage=8; metaIndex=0;}
+            } else if(stage==8) {
+                if(verifyMetadata(metaIndex++)) stage=9;
+            } else if(stage==9) {
+                requireSource();
+                if(!layoutTask.sourceUnchanged() || !templateTask.sourceUnchanged()) throw changed();
+                result=new DetachedBranchReplay(owner,copy,copiedBranch);
+                complete=true; stage=10; dropBorrowed();
+            } else throw new IllegalStateException("Unknown detached copy phase");
+        }
+        private void createShells() {
+            PcbBoardLayout layout=layoutTask.result();
+            owner=new Session(source,observer,templateTask.result(),layout);
+            owner.turnBoundWorkspace=new TurnBoundWorkspace(workspace,copiedInts);
+            pads=new PcbPadPlacement[original.pads.length]; parts=new PcbComponentPlacement[original.parts.length];
+            terminals=new PcbPadPlacement[branch.reachedTerminals.length];
+            holes=new PcbBoardHole[branch.holes.length]; bounds=new Rectangle[holes.length];
+            copy=new Search(original,owner,layout,pads,parts);
+            copy.nets=new Vector<String>(netCount); copy.currentPadIds=new Vector<String>(pendingCount);
+            copy.reachedPadIds=new Vector<String>(reachedCount);
+            copiedBranch=copy.new BranchSearch(branch,goal,copiedInts[0],terminals,holes,bounds);
+            // Nodes are immutable. Copy only their initial heap/index containers, never a found chain.
+            copy.offer(copiedBranch.queue,copiedBranch.best,firstSeed);
+            copy.offer(copiedBranch.queue,copiedBranch.best,secondSeed);
+            copy.branch=copiedBranch; owner.search=copy;
+        }
+        private boolean copyMetadata(int at) {
+            if(at<pads.length) {pads[at]=original.pads[at]; return false;} at-=pads.length;
+            if(at<parts.length) {parts[at]=original.parts[at]; return false;} at-=parts.length;
+            if(at<terminals.length) {terminals[at]=branch.reachedTerminals[at]; return false;} at-=terminals.length;
+            if(at<holes.length) {
+                holes[at]=branch.holes[at]; Rectangle r=branch.holeBounds[at];
+                bounds[at]=new Rectangle(r.x,r.y,r.width,r.height); return false;
+            } at-=holes.length;
+            if(at<netCount) {copy.nets.add(nets.get(at)); return false;} at-=netCount;
+            if(at<pendingCount) {copy.currentPadIds.add(pending.get(at)); return false;} at-=pendingCount;
+            if(at<reachedCount) {copy.reachedPadIds.add(reached.get(at)); return false;}
+            return true;
+        }
+        private boolean verifyMetadata(int at) {
+            if(at<pads.length) {if(pads[at]!=original.pads[at] || copy.layout.getPad(pads[at].getPadId())!=pads[at]) throw changed(); return false;} at-=pads.length;
+            if(at<parts.length) {if(parts[at]!=original.parts[at]) throw changed(); return false;} at-=parts.length;
+            if(at<terminals.length) {if(terminals[at]!=branch.reachedTerminals[at]) throw changed(); return false;} at-=terminals.length;
+            if(at<holes.length) {
+                Rectangle a=bounds[at],b=branch.holeBounds[at];
+                if(holes[at]!=branch.holes[at] || a.x!=b.x || a.y!=b.y || a.width!=b.width || a.height!=b.height) throw changed();
+                return false;
+            } at-=holes.length;
+            if(at<netCount) {if(!copy.nets.get(at).equals(nets.get(at))) throw changed(); return false;} at-=netCount;
+            if(at<pendingCount) {if(!copy.currentPadIds.get(at).equals(pending.get(at))) throw changed(); return false;} at-=pendingCount;
+            if(at<reachedCount) {if(!copy.reachedPadIds.get(at).equals(reached.get(at))) throw changed(); return false;}
+            return true;
+        }
+        private void requireSource() {
+            if(source==null || source.complete || source.search!=original || original.branch!=branch ||
+                    original.publisher!=null || source.candidate!=sourceLayout || original.layout!=sourceLayout ||
+                    source.template!=sourceTemplate || source.budget!=sourceBudget || original.budget!=sourceBudget ||
+                    sourceBudget.maximum!=maximum || sourceBudget.expanded!=expanded ||
+                    original.serial!=serial || original.branches!=branches || original.segments!=segments ||
+                    original.netIndex!=netIndex || original.pass!=pass || original.nets!=nets || nets.size()!=netCount ||
+                    original.currentPadIds!=pending || pending.size()!=pendingCount ||
+                    original.reachedPadIds!=reached || reached.size()!=reachedCount ||
+                    branch.expanded!=0 || branch.found!=null || branch.foundTerminal!=null || branch.terminalEmitted ||
+                    branch.relaxedBoundStarted || branch.queue.size()!=2 || branch.best.size()!=2 ||
+                    branch.queue.values[0]!=firstSeed || branch.queue.values[1]!=secondSeed ||
+                    branch.best.get(firstSeed.key)!=firstSeed || branch.best.get(secondSeed.key)!=secondSeed ||
+                    original.currentRoot!=branch.root || !branch.net.equals(original.currentNet) ||
+                    branch.goal!=sourceGoal || branch.distance!=sourceInts[0] || source.turnBoundWorkspace!=workspace ||
+                    original.faces[0]!=sourceFaces[0] || original.faces[1]!=sourceFaces[1] ||
+                    sourceLayout.observationRevision()!=layoutRevision ||
+                    sourceTemplate.observationRevision()!=templateRevision ||
+                    sourceFaces[0].observationRevision()!=faceRevisions[0] || sourceFaces[1].observationRevision()!=faceRevisions[1])
+                throw changed();
+        }
+        private static IllegalStateException changed() {return new IllegalStateException("Detached branch source changed");}
+        private void dropBorrowed() {
+            if(layoutTask!=null) layoutTask.cancel(); if(templateTask!=null) templateTask.cancel();
+            if(routerTask!=null) routerTask.cancel();
+            source=null; original=null; branch=null; workspace=null; sourceBudget=null; sourceLayout=null; sourceTemplate=null;
+            observer=null; layoutTask=null; templateTask=null; routerTask=null; sourceFaces=null;
+            sourceGoal=null; sourceInts=null; copiedInts=null; nets=null; pending=null; reached=null;
+            owner=null; copy=null; copiedBranch=null; pads=null; parts=null; terminals=null; holes=null; bounds=null; goal=null;
+        }
+        void cancel() {
+            lastWork=0;
+            if(complete) {dropBorrowed(); return;}
+            cancelled=true; result=null; dropBorrowed();
+        }
+        int lastWork() {return lastWork;}
+        long workSteps() {return work;}
+        long copiedEntries() {return copied;}
+        boolean isComplete() {return complete;}
+        String phase() {
+            if(cancelled) return "CANCELLED";
+            if(complete) return "COMPLETE";
+            if(stage<2) return "COPY_LAYOUT";
+            if(stage<6) return "COPY_ARRAYS";
+            if(stage==6) return "COPY_ROUTERS";
+            return "VERIFY_SOURCE";
+        }
+        DetachedBranchReplay result() {
+            if(!complete || result==null) throw new IllegalStateException("Detached copy is incomplete");
+            return result;
+        }
+    }
+
+    /** Owns exactly one copied branch and its normal Publisher, never a subsequent route. */
+    static final class DetachedBranchReplay {
+        private Session owner;
+        private Search search;
+        private Search.BranchSearch branch;
+        private Search.Publisher publisher;
+        private PcbBoardLayout layout;
+        private int lastWork;
+        private boolean complete,released;
+        private DetachedBranchReplay(Session owner,Search search,Search.BranchSearch branch) {
+            this.owner=owner; this.search=search; this.branch=branch; layout=search.layout;
+        }
+        boolean advance(int maximumWork) {
+            if(maximumWork<1 || maximumWork>32768) throw new IllegalArgumentException("Detached replay quantum must be in 1..32768");
+            lastWork=0; requireLive(); if(complete) return true;
+            owner.observer.check(search.pass);
+            while(lastWork<maximumWork && !complete) {
+                lastWork++; search.advanceOne();
+                if(search.publisher!=null) publisher=search.publisher;
+                if(publisher!=null && search.publisher==null && search.branch==null) complete=true;
+            }
+            return complete;
+        }
+        private void requireLive() {if(released) throw new IllegalStateException("Detached replay was released");}
+        int lastWork() {return lastWork;}
+        boolean isComplete() {return complete;}
+        PcbBoardLayout getLayout() {requireLive(); return layout;}
+        Object getSearchForDiagnostics() {requireLive(); return search;}
+        Object getBranchForDiagnostics() {requireLive(); return branch;}
+        Object getPublisherForDiagnostics() {requireLive(); return publisher;}
+        void release() {released=true; owner=null; search=null; branch=null; publisher=null; layout=null; lastWork=0;}
+    }
+
     /** Retains one route candidate and its search state across counted generation turns. */
     static final class Session {
         private final TroubleshootBoard board;
@@ -418,6 +725,25 @@ final class PcbLayerRoutingPrototype {
         private boolean complete;
         private boolean guidanceStarted,comparisonComplete;
         private Throwable diagnosticFailure;
+
+        /** Detached single-branch owner; large state is supplied by the charged copy cursor. */
+        private Session(Session source,SeededPcbLayoutGenerator.AttemptObserver observer,
+                PcbBoardLayout template,PcbBoardLayout candidate) {
+            board=source.board; policy=source.policy; this.observer=observer;
+            this.template=template; this.candidate=candidate; links=source.links;
+            maximumVias=source.maximumVias; budget=new Budget(source.budget.maximum);
+            budget.expanded=source.budget.expanded;
+            diagnostics=source.diagnostics==null?null:DETACHED_DIAGNOSTICS;
+            roleWidths=source.roleWidths; orderingStream=source.orderingStream;
+            fixedPrefixContext=source.fixedPrefixContext;
+            fixedPrefixGraphObserver=source.fixedPrefixGraphObserver==null?null:DETACHED_PREFIX_OBSERVER;
+            pass=source.pass; passes=source.passes;
+            completedOrderings=source.completedOrderings; yieldedOrderings=source.yieldedOrderings;
+            reason=source.reason; orderingTermination=source.orderingTermination;
+            previousFailedNet=source.previousFailedNet;
+            fixedPrefixCaptureReserved=source.fixedPrefixCaptureReserved;
+            guidanceStarted=source.guidanceStarted; comparisonComplete=source.comparisonComplete;
+        }
 
         Session(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
                 SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias) {
@@ -881,6 +1207,11 @@ final class PcbLayerRoutingPrototype {
             north=new int[cells]; east=new int[cells]; south=new int[cells];
             west=new int[cells]; axisMin=new int[cells]; rowMin=new int[cells];
         }
+        private TurnBoundWorkspace(TurnBoundWorkspace source,int[][] copied) {
+            width=source.width; height=source.height; cells=source.cells;
+            north=copied[1]; east=copied[2]; south=copied[3]; west=copied[4];
+            axisMin=copied[5]; rowMin=copied[6];
+        }
         private void requireGrid(int requestedWidth,int requestedHeight,int requestedCells) {
             if(width!=requestedWidth || height!=requestedHeight || cells!=requestedCells)
                 throw new IllegalArgumentException("Mismatched turn lower-bound workspace grid");
@@ -894,6 +1225,11 @@ final class PcbLayerRoutingPrototype {
         private static final int INFINITY=Integer.MAX_VALUE/4;
         private final int cells;
         private final int[] manhattan,north,east,south,west,axisMin;
+        private TurnLowerBound(TurnLowerBound source,int[] distance,TurnBoundWorkspace workspace) {
+            cells=source.cells; manhattan=distance;
+            north=workspace.north; east=workspace.east; south=workspace.south;
+            west=workspace.west; axisMin=workspace.axisMin;
+        }
         TurnLowerBound(int width,int height,boolean[] goals,int[] distance,
                 SeededPcbLayoutGenerator.AttemptObserver observer,int pass) {
             this(width,height,goals,distance,observer,pass,null);
@@ -1186,6 +1522,18 @@ final class PcbLayerRoutingPrototype {
         private BranchSearch branch;
         private Publisher publisher;
         private boolean complete;
+        private Search(Search source,Session owner,PcbBoardLayout layout,
+                PcbPadPlacement[] pads,PcbComponentPlacement[] parts) {
+            this.owner=owner; board=source.board; this.layout=layout; policy=source.policy;
+            observer=owner.observer; budget=owner.budget; pass=source.pass;
+            minX=source.minX; minY=source.minY; width=source.width; height=source.height;
+            cells=source.cells; primary=source.primary; maximumVias=source.maximumVias;
+            // Rules retain only immutable board/domain constraints, never a mutable layout.
+            rules=source.rules; this.pads=pads; this.parts=parts;
+            serial=source.serial; branches=source.branches; segments=source.segments;
+            promotedNet=source.promotedNet; netIndex=source.netIndex; currentNet=source.currentNet;
+            currentRoot=layout.getPad(source.currentRoot.getPadId());
+        }
         Search(Session owner,TroubleshootBoard board,PcbBoardLayout layout,Policy policy,
                 SeededPcbLayoutGenerator.AttemptObserver observer,Budget budget,int pass,String promotedNet,
                 int maximumVias) {
@@ -1363,6 +1711,15 @@ final class PcbLayerRoutingPrototype {
             RelaxedDistanceBound relaxedDistanceBound;
             Node found;
             PcbPadPlacement foundTerminal;
+            private BranchSearch(BranchSearch source,boolean[] goal,int[] distance,
+                    PcbPadPlacement[] reached,PcbBoardHole[] holes,Rectangle[] bounds) {
+                net=source.net; start=layout.getPad(source.start.getPadId());
+                root=layout.getPad(source.root.getPadId()); branchOrdinal=source.branchOrdinal;
+                reachedTerminals=reached; this.goal=goal; this.distance=distance;
+                this.holes=holes; holeBounds=bounds;
+                turnLowerBound=new TurnLowerBound(source.turnLowerBound,distance,owner.turnBoundWorkspace);
+                goalsTop=source.goalsTop; goalsBottom=source.goalsBottom;
+            }
             BranchSearch(String net,PcbPadPlacement start,PcbPadPlacement root) {
                 this.net=net; this.start=start; this.root=root;
                 branchOrdinal=branches;

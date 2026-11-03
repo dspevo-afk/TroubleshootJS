@@ -1,0 +1,236 @@
+{
+    "schema":  "q100-charged-detached-owner-qualification-v1",
+    "status":  "PASS_FINITE_SCOPE_PENDING_PUBLICATION",
+    "sourceParent":  "924d5e7f81340e2ce5d28a0336b76ff7baa87a36",
+    "layoutVersion":  26,
+    "dependencyEpoch":  "tsj-generation-dependencies-v28",
+    "nativeInputCount":  1078,
+    "nativeInputBytes":  86762693,
+    "nativeManifestSha256":  "1055a2c12763ecfdc28dd5f261a9160c2194f5a6fe922aab4bd08627b312b35a",
+    "sourcePins":  [
+                       {
+                           "path":  "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java",
+                           "sha256":  "ba2b00da838846f61e07388a1f97806146a7891e6628b08b38e6db20d0178eee"
+                       },
+                       {
+                           "path":  "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+                           "sha256":  "f79f4461450d0ff868692aaa8fc27f9c46365a7314f243e38d9ebb0784359366"
+                       },
+                       {
+                           "path":  "src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+                           "sha256":  "3cc350d74d92eca0d94fd0b1b245519636150869cf38542c9a5fa50af6a3ba32"
+                       }
+                   ],
+    "native":  {
+                   "focused-r1":  {
+                                      "status":  "PASS",
+                                      "elapsedIncludingCleanupSeconds":  38.948962099999996,
+                                      "suites":  [
+                                                     "P07DetachedBranchReplayContractTest",
+                                                     "P07ShortcutQueryContractTest",
+                                                     "P07ZeroViaGraphContractTest",
+                                                     "P07PrefixAllocationContractTest",
+                                                     "P07TwoLayerContractTest",
+                                                     "P07AcceptedBranchCaptureContractTest"
+                                                 ],
+                                      "receiptSha256":  "8c8a0bd15fa1382e725cae0769edc2ca2d641bff776a25a100168d1a58531a4c",
+                                      "cleanupElapsedMs":  null
+                                  },
+                   "query-d-r1":  {
+                                      "status":  "PASS",
+                                      "elapsedIncludingCleanupSeconds":  78.9953206,
+                                      "suites":  [
+                                                     "Rb100QualityZeroViaGraphContractTest"
+                                                 ],
+                                      "receiptSha256":  "80b9f41a3b7802bee72b1c7e0b6f113759ba7535b1eeb2a4c10f2b7f75396618",
+                                      "cleanupElapsedMs":  null
+                                  },
+                   "cwd-canary-r1":  {
+                                         "status":  "PASS",
+                                         "elapsedIncludingCleanupSeconds":  36.6984341,
+                                         "suites":  [
+                                                        "P08ScalabilityContractTest"
+                                                    ],
+                                         "receiptSha256":  "ad3f2f9822aea493245f200be2fb71ae1b80e3f488ae8941b66588fb1fa78af3",
+                                         "cleanupElapsedMs":  null
+                                     },
+                   "regression-r2":  {
+                                         "status":  "PASS",
+                                         "elapsedIncludingCleanupSeconds":  154.96705269999998,
+                                         "suites":  [
+                                                        "RouterQueueContractTest",
+                                                        "P04RoutingContractTest",
+                                                        "P05RoutingContractTest",
+                                                        "P06FactoryLinkContractTest",
+                                                        "P07TwoLayerContractTest",
+                                                        "P07GridEligibilityContractTest",
+                                                        "P07BranchDiagnosticsContractTest",
+                                                        "P07OrderingCandidatesContractTest",
+                                                        "P07RelaxedDistanceBoundContractTest",
+                                                        "P07ReachedPthContractTest",
+                                                        "P07LayeredRasterOracleContractTest",
+                                                        "PcbLayerRoutingResumptionContractTest",
+                                                        "P08ScalabilityContractTest",
+                                                        "P08ReferenceWidthContractTest",
+                                                        "PcbRoutingCourtyardIndexContractTest",
+                                                        "PcbRoleWidthTurnBoundContractTest",
+                                                        "PcbRoleWidthRoutingContractTest",
+                                                        "PcbRoleWidthOwnerIdentityContractTest",
+                                                        "PcbCompactionContractTest",
+                                                        "PcbCanvasBoundaryContractTest",
+                                                        "PhysicalServiceabilityContractTest",
+                                                        "Rb100PlanContractTest",
+                                                        "P07FixedPrefixObservationContractTest",
+                                                        "PcbCompactnessContractTest",
+                                                        "P07GeometryEpochDiagnosticContractTest",
+                                                        "D01DiagnosticContractTest",
+                                                        "Rb56ModelIdentityContractTest",
+                                                        "RelBSessionIdentityContractTest",
+                                                        "PcbNormalPackingIdentityContractTest",
+                                                        "PcbPlacementDiagnosticsContractTest",
+                                                        "E06AcceptedStateContractTest",
+                                                        "A07ExecutionContractTest",
+                                                        "Rb100ElectricalPilotContractTest"
+                                                    ],
+                                         "receiptSha256":  "61b67111d74eebec8b9879d61c93a24f08435f44d4df9f3b0c311e2d94be5c4b",
+                                         "cleanupElapsedMs":  null
+                                     }
+               },
+    "builds":  {
+                   "Developer":  {
+                                     "status":  "PASS_ACTUAL_FINAL_SOURCE_BUILD",
+                                     "inputDigest":  "55dbc1a64495b40155346343ee9e0cf886a4ea41a26c48f67e0ab39e9e0a6a9f",
+                                     "inputFileCount":  1202,
+                                     "outputDigest":  "eeed83142fd9f815f7e37e3cd38504f297612b7cc0b44998e3abc21078192e6a",
+                                     "outputFileCount":  357,
+                                     "elapsedIncludingCleanupSeconds":  160.4380209
+                                 },
+                   "Player":  {
+                                  "status":  "PASS_ACTUAL_FINAL_SOURCE_BUILD",
+                                  "inputDigest":  "72edcd8359348c6789f9fdc60a782c89e71f25bd08947b77991d1dc687dffe66",
+                                  "inputFileCount":  1202,
+                                  "outputDigest":  "ca8592a524730a19512e636b41762d9aa5ca6e8266e38653ba0411dae4dd57c0",
+                                  "outputFileCount":  357,
+                                  "elapsedIncludingCleanupSeconds":  120.5605791
+                              }
+               },
+    "compiled":  {
+                     "E06State":  {
+                                      "status":  "PASS",
+                                      "routes":  10,
+                                      "elapsedIncludingCleanupSeconds":  270.11630329999997,
+                                      "cleanupSuccess":  true,
+                                      "cleanupElapsedMs":  63501,
+                                      "operationElapsedMs":  206111,
+                                      "browserShutdownMs":  9993
+                                  },
+                     "Current":  {
+                                     "status":  "PASS",
+                                     "routes":  9,
+                                     "elapsedIncludingCleanupSeconds":  314.0097408,
+                                     "cleanupSuccess":  true,
+                                     "cleanupElapsedMs":  null,
+                                     "operationElapsedMs":  null,
+                                     "browserShutdownMs":  10243
+                                 },
+                     "Q100Player":  {
+                                        "status":  "PASS",
+                                        "routes":  1,
+                                        "elapsedIncludingCleanupSeconds":  82.3110458,
+                                        "cleanupSuccess":  true,
+                                        "cleanupElapsedMs":  44237,
+                                        "operationElapsedMs":  37635,
+                                        "browserShutdownMs":  13299
+                                    }
+                 },
+    "playerJavaScriptArtifactCount":  7,
+    "normal3":  {
+                    "status":  "PASS_FINITE3_DEVELOPMENT_PAYLOADS",
+                    "roots":  [
+                                  "-2230691771308388107",
+                                  "6702341860553104274",
+                                  "-8360266000248569150"
+                              ],
+                    "checks":  [
+                                   {
+                                       "root":  "-2230691771308388107",
+                                       "seed":  "-2230691771308388107",
+                                       "attempts":  1,
+                                       "generationMillis":  61744,
+                                       "generationWork":  506,
+                                       "maxUnitMillis":  0,
+                                       "operationMillis":  62361,
+                                       "cleanupMillis":  6
+                                   },
+                                   {
+                                       "root":  "6702341860553104274",
+                                       "seed":  "6702341860553104274",
+                                       "attempts":  1,
+                                       "generationMillis":  51341,
+                                       "generationWork":  502,
+                                       "maxUnitMillis":  0,
+                                       "operationMillis":  51943,
+                                       "cleanupMillis":  5
+                                   },
+                                   {
+                                       "root":  "-8360266000248569150",
+                                       "seed":  "-8360266000248569150",
+                                       "attempts":  1,
+                                       "generationMillis":  30492,
+                                       "generationWork":  392,
+                                       "maxUnitMillis":  0,
+                                       "operationMillis":  30886,
+                                       "cleanupMillis":  5
+                                   }
+                               ],
+                    "captureElapsedIncludingCleanupSeconds":  183.6900875,
+                    "cleanupSeconds":  1.0500258998945355,
+                    "serverStopped":  true,
+                    "ownedSurvivors":  0,
+                    "releaseEligible":  false,
+                    "admissionEligible":  false,
+                    "peakUnitMeasurement":  "maxUnitMillis0_IS_NOT_A_MEASURED_PEAK",
+                    "playerBinding":  "INPUT_ONLY_DURING_DEVELOPER_GATE_THEN_MATCHED_BY_ACTUAL_PLAYER_BUILD"
+                },
+    "audit":  {
+                  "status":  "PASS",
+                  "elapsedSeconds":  21.8790321,
+                  "compilerInputsPerVariant":  1202,
+                  "nativeInputs":  1078,
+                  "sdkPins":  9,
+                  "frozenPythonPins":  28,
+                  "normal3StaticPins":  20,
+                  "developerArchivedOutputs":  357,
+                  "activeVariant":  "Player",
+                  "sourceOnlyReview":  "CLEAR_ON_FROZEN_PRODUCTION_COPY_OWNERS;ROOT_REVIEWED_NATIVE_CANARIES",
+                  "currentAggregateCleanupElapsed":  "NOT_EXPORTED"
+              },
+    "python":  {
+                   "status":  "REUSED_AFTER_CONSUMED_INPUT_AUDIT",
+                   "passed":  51,
+                   "declaredFileSymlinkPrivilegeSkip":  1,
+                   "total":  52
+               },
+    "scope":  {
+                  "qualification":  "LITERAL_CAP2_CHARGED_OWNER_PREREQUISITE",
+                  "actualLoad12Baseline":  "NOT_RUN_NOT_QUALIFIED",
+                  "cap17":  "NOT_RUN",
+                  "largeGridCopyCost":  "NOT_MEASURED",
+                  "routeAdoption":  false,
+                  "playable100":  0,
+                  "beta":  "HELD",
+                  "full30":  "EXCLUDED_OWNER_DECISION",
+                  "protectedHard":  "UNREAD_UNRUN_THIS_SCOPE",
+                  "historicalUnread":  "UNCERTIFIED",
+                  "HARD":  "UNAVAILABLE_UNRUN",
+                  "PSYCHOTIC":  "UNAVAILABLE_UNRUN",
+                  "manualVisiblePlayerInput":  "NOT_APPLICABLE_NO_PLAYER_FLOW_CHANGE",
+                  "CI":  "NOT_RUN_SELF_HOSTED_RUNNER_PREREQUISITE_RECORDED"
+              },
+    "resources":  {
+                      "ownedPersistentActors":  0,
+                      "ownedBrowserPreviewCleanup":  "PASS",
+                      "preserved":  "Earlier failures/profiles, native build outputs, Developer archive and unrelated checkouts",
+                      "unowned8928":  "UNTOUCHED"
+                  }
+}

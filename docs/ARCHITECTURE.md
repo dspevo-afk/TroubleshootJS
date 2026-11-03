@@ -456,20 +456,40 @@ The paired audit binds both operations' D_SENSE inventory rows and geometry to
 the separate D graph. Standalone LOAD12 checks that later hash's format; its
 earlier graph cannot independently supply the later D geometry authority.
 
-P07DetachedBranchReplayContractTest owns a small literal native prerequisite,
-using the existing private seven-point fixture through reflection. Its detached
-Session keeps a virgin template while the compaction copy owner retains copper.
-Independent fixed-graph Router copies preserve incremental prefix occupancy and
-reservations before the actual BranchSearch reconstructs goals, distance bounds
-and seeds. Budget usage, serial, order and endpoints remain bound to the captured
-entry; mutable layout containers, faces and turn-bound workspace are separate.
-The real Publisher must reproduce source path/copper/graph without altering the
-paused source. Tree-goal validation binds the actual Node to the retained creator
-VIA and nullable pad terminal. This adapter is private to the small fixture; its
-synchronous setup and same-cap2 replay do not qualify large-prefix accounting,
-actual LOAD12 routing, a reduced-cap treatment or adoption. The
-[finite prerequisite packet](task-evidence/Q100/load12-replay-r1/README.md)
-records validation and protected-data limits.
+PcbBoardLayout owns an opt-in CompactionCopyTask that copies and verifies pads,
+components, labels, regions, holes, traces and provenance in charged steps.
+PcbNetRouter.Router owns ChargedFixedGraphCopyTask, retaining the existing fixed
+copy/comparison implementation while charging shell and row allocations and
+rebinding to a detached layout and independent observer. Source and target
+layout revisions, Router revisions, physical bindings and final comparisons
+must remain stable before a result becomes available. The older synchronous
+and observation APIs retain their existing callers and scheduling.
+
+PcbLayerRoutingPrototype owns DetachedBranchCopyTask and DetachedBranchReplay.
+The copy supports the actual pre-first-work FULLER frontier: two original seed
+Nodes, consumed global budget, goals, distances, turn workspace, order, serial,
+endpoints, prefix copper and fixed Router state. Large mutable arrays and
+containers are allocated, copied and verified through bounded cursors; private
+shell constructors do not recompute a branch or inject a found path. Immutable
+physical values, initial Nodes and immutable PcbTwoLayerRules may be shared.
+The rules contain no mutable layout reference. A distinct observer retains
+cancellation/deadline semantics without sharing writable callback state.
+Cancellation or stale-source failure discards partial results; a completed
+copier releases source context while preserving its returned owner handle.
+The replay runs the real Search and Publisher and stops after that branch's
+publication, before another branch starts. Callers release the detached owner in a
+finally path, including observer or routing failures.
+Normal route overloads do not invoke these opt-in APIs.
+
+P07DetachedBranchReplayContractTest uses the existing private seven-point
+fixture and independent path, geometry, graph and creator-VIA expectations to
+check the owner API. The original saturated cap2 is preserved, including the
+nullable tree-goal terminal and TOP(310,320) landing on its prior VIA. Its old
+synchronous adapter is retired. The accepted historical
+[prerequisite packet](task-evidence/Q100/load12-replay-r1/README.md) and current
+[charged-owner packet](task-evidence/Q100/load12-replay-actual-r1/README.md)
+record separate validation boundaries. The small fixture does not qualify
+actual LOAD12 routing, large-grid cost, a reduced-cap treatment or adoption.
 
 P07TwoLayerContractTest also owns the matched seven-point prior-via tree-join
 contract. A fresh FULLER Session with explicit requestcap2 creates a via and

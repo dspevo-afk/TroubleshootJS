@@ -1,6 +1,5 @@
 package com.lushprojects.circuitjs1.client;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -13,6 +12,8 @@ public final class P07DetachedBranchReplayContractTest {
     private static final int SOURCE_VIA_CAP=2;
     private static final int MAX_SOURCE_UNITS=2000000;
     private static final int MAX_REPLAY_UNITS=50000;
+    private static final int MAX_COPY_WORK_STEPS=2000000;
+    private static final int MAX_COPY_QUANTUM=PcbLayerRoutingPrototype.WORK_QUANTUM;
     private static final int MAX_LITERAL_GRID_CELLS=10000;
     private static final int MAX_ROUTER_OBSERVATION_CALLS=100;
     private static int assertions;
@@ -47,16 +48,19 @@ public final class P07DetachedBranchReplayContractTest {
         require(source.prefixIds.length==SOURCE_VIA_CAP && source.maximumVias==SOURCE_VIA_CAP,
             "literal consumer begins with its two-VIA prefix at the original saturated cap");
 
-        Replay baseline=runDetached(source,source.maximumVias,source.budgetMaximum);
+        verifyCopyLifecycle(source);
+        verifyStaleCopyCanaries();
+        verifyChargedRouterCopyFailureCanaries();
+
+        Replay baseline=runDetached(source,1);
         verifySourceUnchanged(source,"baseline replay");
-        // This P06 source already runs at its two-hole cap; the second owner is an
-        // independent saturated-cap reproduction, not a lower-cap comparison.
-        Replay saturated=runDetached(source,source.prefixIds.length,source.budgetMaximum);
-        verifySourceUnchanged(source,"saturated-cap replay");
-        require(saturated.maximumVias==source.prefixIds.length,
-            "independent saturated replay uses the actual prefix-hole count as its cap");
-        verifyDetachedResults(baseline,saturated);
-        Replay entryControl=buildDetached(source,source.maximumVias,source.budgetMaximum);
+        Replay batched=runDetached(source,MAX_COPY_QUANTUM);
+        verifySourceUnchanged(source,"batched replay");
+        require(baseline.maximumVias==source.maximumVias &&
+                batched.maximumVias==source.maximumVias,
+            "both copy quanta preserve the original Session VIA cap");
+        verifyDetachedResults(baseline,batched);
+        Replay entryControl=buildDetached(source,MAX_COPY_QUANTUM);
         verifyNegativeControls(source,entryControl);
         verifySourceUnchanged(source,"negative controls");
         verifyExhaustedBudget(source);
@@ -66,10 +70,13 @@ public final class P07DetachedBranchReplayContractTest {
         verifySourcePublishedDelta(source,original);
         verifyDetachedResults(baseline,original);
         verifyBranchPhysicalAndConnectivity(baseline);
-        verifyBranchPhysicalAndConnectivity(saturated);
+        verifyBranchPhysicalAndConnectivity(batched);
         verifyBranchPhysicalAndConnectivity(original);
         require(fixture.layout.getHoles().isEmpty() && fixture.layout.getTraces().isEmpty(),
             "all routing remained inside the source Session candidate");
+        baseline.handle.release();
+        batched.handle.release();
+        entryControl.handle.release();
         assertions++;
     }
 
@@ -103,209 +110,342 @@ public final class P07DetachedBranchReplayContractTest {
         throw new AssertionError("literal source exceeded its one-unit capture guard");
     }
 
-    private static Replay runDetached(Source source,int maximumVias,int budgetMaximum)
-            throws Exception {
-        Replay replay=buildDetached(source,maximumVias,budgetMaximum);
-        completeReplay(replay);
+    private static Replay runDetached(Source source,int quantum) throws Exception {
+        Replay replay=buildDetached(source,quantum);
+        completeReplay(replay,quantum);
         verifySourceUnchanged(source,"detached replay work");
         return replay;
     }
 
-    private static Replay buildDetached(Source source,int maximumVias,int budgetMaximum)
-            throws Exception {
-        if(source==null || maximumVias<source.prefixIds.length ||
-                maximumVias>PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.vias ||
-                budgetMaximum<source.budgetExpanded || budgetMaximum<1)
-            throw new IllegalArgumentException("Invalid bounded literal replay request");
-        PcbBoardLayout detachedLayout=source.layout.copyForCompaction();
-        PcbLayerRoutingPrototype.Session detachedOwner=PcbLayerRoutingPrototype.begin(
-            source.fixture.board,source.fixture.layout,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
-            P06FactoryLinkFixtures.OBSERVER,budgetMaximum,maximumVias);
-        Object detachedBudget=field(detachedOwner,"budget");
-        setField(detachedBudget,"expanded",Integer.valueOf(source.budgetExpanded));
-        Object detachedSearch=newSearch(source,detachedOwner,detachedLayout,maximumVias);
-        setField(detachedOwner,"candidate",detachedLayout);
-        setField(detachedOwner,"search",detachedSearch);
-        setField(detachedOwner,"pass",Integer.valueOf(source.pass));
-        int freshFacesDifferent=restorePrefixRouterFaces(source,detachedSearch,detachedLayout);
-        require(freshFacesDifferent>0,
-            "source prefix carries Router state absent from a Search rebuilt only from layout geometry");
-        verifyDetachedSearchEnvelope(source,detachedSearch,detachedLayout);
-        verifyDetachedGoalInputs(source,detachedSearch,detachedLayout);
-        Object detachedBranch=newBranch(source,detachedSearch,detachedLayout);
-        setField(detachedSearch,"branch",detachedBranch);
-        Replay replay=new Replay(source,detachedOwner,detachedSearch,detachedBranch,
-            detachedLayout,maximumVias);
+    private static Replay buildDetached(Source source,int quantum) throws Exception {
+        if(source==null || quantum<1 || quantum>MAX_COPY_QUANTUM)
+            throw new IllegalArgumentException("Invalid bounded literal replay quantum");
+        final int[] detachedChecks={0};
+        final SeededPcbLayoutGenerator.AttemptObserver detachedObserver=
+            new SeededPcbLayoutGenerator.AttemptObserver() {
+                public void check(int attempt) { detachedChecks[0]++; }
+            };
+        final PcbLayerRoutingPrototype.DetachedBranchCopyTask copy=
+            PcbLayerRoutingPrototype.beginDetachedBranchCopy(source.session,detachedObserver);
+        expectLifecycleRejected(new Checked(){public void run() { copy.result(); }},
+            "copy result is unavailable before completion");
+        long previousSteps=0;
+        int calls=0;
+        while(!copy.isComplete()) {
+            copy.advance(quantum);
+            int used=copy.lastWork();
+            long steps=copy.workSteps();
+            require(used>0 && used<=quantum && steps>previousSteps,
+                "detached owner copy charges positive work within its caller quantum");
+            previousSteps=steps;
+            if(++calls>MAX_COPY_WORK_STEPS)
+                throw new AssertionError("detached owner copy exceeded its bounded progress guard");
+        }
+        final PcbLayerRoutingPrototype.DetachedBranchReplay handle=copy.result();
+        long completeSteps=copy.workSteps();
+        copy.advance(quantum);
+        require(copy.isComplete() && copy.lastWork()==0 && copy.workSteps()==completeSteps &&
+                copy.result()==handle,
+            "repeated complete-copy calls are idempotent and retain one owner handle");
+        Object detachedSearch=handle.getSearchForDiagnostics();
+        Object detachedBranch=handle.getBranchForDiagnostics();
+        PcbBoardLayout detachedLayout=handle.getLayout();
+        expectIllegalArgument(new Checked(){public void run() { handle.advance(0); }},
+            "zero replay quantum is rejected");
+        expectIllegalArgument(new Checked(){public void run() {
+            handle.advance(MAX_COPY_QUANTUM+1);
+        }},"over-maximum replay quantum is rejected");
+        require(!handle.isComplete() && handle.lastWork()==0,
+            "invalid replay quanta leave the copied entry ready but unadvanced");
+        PcbLayerRoutingPrototype.Session detachedOwner=
+            (PcbLayerRoutingPrototype.Session)field(detachedSearch,"owner");
+        copy.cancel();
+        require(copy.isComplete() && handle.getLayout()==detachedLayout &&
+                handle.getSearchForDiagnostics()==detachedSearch &&
+                handle.getBranchForDiagnostics()==detachedBranch,
+            "canceling a completed copier releases only task references, not its returned replay");
+        Replay replay=new Replay(source,copy,handle,detachedOwner,detachedSearch,detachedBranch,
+            detachedLayout,source.maximumVias,detachedObserver,detachedChecks);
+        require(field(source.owner,"observer")==source.observerRef &&
+                field(detachedOwner,"observer")==detachedObserver &&
+                detachedObserver!=source.observerRef && detachedChecks[0]>0,
+            "detached copy uses its own checked observer without forwarding to the source");
         verifyDetachedEntry(source,replay,detachedOwner,replay.branch,replay.start,
             detachedLayout.getPad(source.root.getPadId()),source.branchOrdinal,
             source.seedValues,source.goalValues,source.prefixIds,source.prefixFingerprints);
-        if(maximumVias==source.prefixIds.length) {
+        if(source.maximumVias==source.prefixIds.length) {
             Object seed=Array.get(field(field(detachedBranch,"queue"),"values"),0);
             Method pathViaFits=detachedSearch.getClass().getDeclaredMethod(
                 "pathViaFits",seed.getClass());
             pathViaFits.setAccessible(true);
             require(!((Boolean)invoke(pathViaFits,detachedSearch,seed)).booleanValue(),
-                "actual saturated prefix cap disables another transition, including at an existing VIA");
+                "original literal VIA cap rejects another transition at the existing VIA");
         }
+        require(intField(field(replay.search,"budget"),"maximum")==source.budgetMaximum,
+            "detached copy preserves the source expansion ceiling");
         return replay;
     }
 
-    private static int restorePrefixRouterFaces(Source source,Object search,
-            PcbBoardLayout detachedLayout) throws Exception {
-        PcbNetRouter.Router[] faces=(PcbNetRouter.Router[])field(search,"faces");
-        if(faces.length!=source.faceSnapshots.length || faces.length!=2)
-            throw new IllegalArgumentException("Detached Search has incomplete Router faces");
-        int freshDifferences=0;
-        for(int layer=0;layer<faces.length;layer++) {
-            PcbNetRouter.Router expected=source.faceSnapshots[layer].copyForFixedGraphObservation();
-            setField(expected,"layout",detachedLayout);
-            if(!sameRouterSnapshot(faces[layer],expected)) freshDifferences++;
-            PcbNetRouter.Router restored=source.faceSnapshots[layer].copyForFixedGraphObservation();
-            if(!sameRouterSnapshot(restored,source.faceSnapshots[layer]))
-                throw new IllegalStateException("Detached prefix Router copy differs from retained source face "+layer);
-            setField(restored,"layout",detachedLayout);
-            requireRouterPadsBound(restored,detachedLayout);
-            requireRouterArraysDetached(restored,source.faceSnapshots[layer],source.faceRefs[layer]);
-            if(!sameRouterSnapshot(restored,expected))
-                throw new IllegalStateException("Detached Router face did not restore exact prefix state "+layer);
-            faces[layer]=restored;
-            require(restored!=source.faceRefs[layer] && restored!=source.faceSnapshots[layer] &&
-                    field(restored,"layout")==detachedLayout,
-                "detached Router face owns copied source prefix state and the cloned layout");
-        }
-        return freshDifferences;
+    private static void verifyCopyLifecycle(Source source) throws Exception {
+        final PcbLayerRoutingPrototype.DetachedBranchCopyTask task=
+            PcbLayerRoutingPrototype.beginDetachedBranchCopy(source.session,
+                detachedNoopObserver());
+        expectIllegalArgument(new Checked(){public void run() { task.advance(0); }},
+            "zero copy quantum is rejected");
+        expectIllegalArgument(new Checked(){public void run() { task.advance(MAX_COPY_QUANTUM+1); }},
+            "over-maximum copy quantum is rejected");
+        require(task.workSteps()==0 && !task.isComplete(),
+            "invalid quantum requests leave the fresh copy task unchanged");
+        task.advance(1);
+        require(task.lastWork()==1 && task.workSteps()>0 && !task.isComplete(),
+            "one-unit owner-copy advancement makes bounded partial progress");
+        task.cancel();
+        require(!task.isComplete() && task.lastWork()==0,
+            "canceled partial owner copy drops work without reporting completion");
+        expectLifecycleRejected(new Checked(){public void run() { task.result(); }},
+            "canceled owner copy exposes no partial result");
+        expectLifecycleRejected(new Checked(){public void run() { task.advance(1); }},
+            "canceled owner copy cannot resume");
+        require(task.lastWork()==0,
+            "rejected advance after cancellation reports no new work");
+        task.cancel();
+        verifySourceUnchanged(source,"canceled partial owner copy");
+        assertions++;
     }
 
-    private static void requireRouterPadsBound(PcbNetRouter.Router router,PcbBoardLayout layout)
+    private static void verifyStaleCopyCanaries() throws Exception {
+        Source changedLayout=freshSource();
+        final PcbLayerRoutingPrototype.DetachedBranchCopyTask changedLayoutTask=beginCopy(changedLayout);
+        changedLayoutTask.advance(1);
+        require(!changedLayoutTask.isComplete(),
+            "layout-mutation canary starts from a partial copy");
+        Rectangle outline=(Rectangle)field(changedLayout.layout,"boardOutline");
+        outline.x++;
+        expectStaleAdvance(changedLayoutTask,"mutated source layout is rejected during owner copy");
+        expectLifecycleRejected(new Checked(){public void run() { changedLayoutTask.result(); }},
+            "mutated source layout exposes no replay result");
+        changedLayoutTask.cancel();
+
+        Source switched=freshSource();
+        final PcbLayerRoutingPrototype.DetachedBranchCopyTask switchedTask=beginCopy(switched);
+        switchedTask.advance(1);
+        require(!switchedTask.isComplete(),
+            "source-switch canary starts from a partial copy");
+        Source successor=freshSource();
+        setField(switched.session,"search",successor.search);
+        setField(switched.session,"candidate",successor.layout);
+        setField(switched.session,"pass",Integer.valueOf(successor.pass));
+        expectStaleAdvance(switchedTask,"switched source Search is rejected during owner copy");
+        expectLifecycleRejected(new Checked(){public void run() { switchedTask.result(); }},
+            "switched source exposes no replay result");
+        switchedTask.cancel();
+
+        Source changedCopiedRow=freshSource();
+        final PcbLayerRoutingPrototype.DetachedBranchCopyTask rowTask=beginCopy(changedCopiedRow);
+        int copySteps=0;
+        while(!rowTask.isComplete() &&
+                !("COPY_LAYOUT".equals(String.valueOf(rowTask.phase())) &&
+                  rowTask.copiedEntries()>0) && copySteps<MAX_COPY_WORK_STEPS) {
+            rowTask.advance(1);
+            copySteps++;
+        }
+        require(!rowTask.isComplete() &&
+                "COPY_LAYOUT".equals(String.valueOf(rowTask.phase())) &&
+                rowTask.copiedEntries()>0,
+            "row-mutation canary waits until layout data has been copied");
+        @SuppressWarnings("unchecked")
+        java.util.HashMap<Object,Object> pads=(java.util.HashMap<Object,Object>)
+            field(changedCopiedRow.layout,"pads");
+        require(!pads.isEmpty(),"row-mutation canary has a retained source pad row");
+        Object firstKey=pads.keySet().iterator().next();
+        pads.put(firstKey,null);
+        expectStaleBeforeReady(rowTask,
+            "changed source map row is rejected after its corresponding row was copied");
+        expectLifecycleRejected(new Checked(){public void run() { rowTask.result(); }},
+            "changed copied row exposes no replay result");
+        rowTask.cancel();
+
+        Source changedGoal=freshSource();
+        final PcbLayerRoutingPrototype.DetachedBranchCopyTask goalTask=beginCopy(changedGoal);
+        int verifySteps=0;
+        while(!goalTask.isComplete() &&
+                !"VERIFY_SOURCE".equals(goalTask.phase()) && verifySteps<MAX_COPY_WORK_STEPS) {
+            goalTask.advance(1);
+            verifySteps++;
+        }
+        require(!goalTask.isComplete() && "VERIFY_SOURCE".equals(goalTask.phase()),
+            "primitive-mask canary reaches source verification after all copied state is complete");
+        boolean[] sourceGoal=(boolean[])field(changedGoal.branch,"goal");
+        require(sourceGoal.length>0,"primitive-mask canary has a source goal entry");
+        sourceGoal[0]=!sourceGoal[0];
+        expectStaleAdvance(goalTask,
+            "changed source primitive goal entry is rejected after its copy completed");
+        expectLifecycleRejected(new Checked(){public void run() { goalTask.result(); }},
+            "changed primitive goal entry exposes no replay result");
+        goalTask.cancel();
+    }
+
+    private static void verifyChargedRouterCopyFailureCanaries() throws Exception {
+        RouterCopyFixture changedSource=routerCopyFixture();
+        PcbBoardLayout sourceTarget=changedSource.layout.copyForCompaction();
+        PcbNetRouter.Router.ChargedFixedGraphCopyTask sourceTask=
+            changedSource.router.beginChargedFixedGraphObservationCopy(sourceTarget,
+                detachedNoopObserver());
+        advanceRouterUntilCopied(sourceTask,"source-layout revision canary");
+        changedSource.layout.setRoutingStatistics(changedSource.layout.getRoutingExpansions()+1,
+            changedSource.layout.getRawRoutingSegments(),
+            changedSource.layout.getRoutingCongestionRejections());
+        expectRouterStale(sourceTask,"source-layout revision change is rejected before completion");
+        expectRouterResultUnavailable(sourceTask,"source-layout revision change");
+
+        RouterCopyFixture changedTarget=routerCopyFixture();
+        PcbBoardLayout target=changedTarget.layout.copyForCompaction();
+        PcbNetRouter.Router.ChargedFixedGraphCopyTask targetTask=
+            changedTarget.router.beginChargedFixedGraphObservationCopy(target,
+                detachedNoopObserver());
+        advanceRouterUntilCopied(targetTask,"target-layout revision canary");
+        target.setRoutingStatistics(target.getRoutingExpansions()+1,
+            target.getRawRoutingSegments(),target.getRoutingCongestionRejections());
+        expectRouterStale(targetTask,"target-layout revision change is rejected before completion");
+        expectRouterResultUnavailable(targetTask,"target-layout revision change");
+
+        RouterCopyFixture observerFixture=routerCopyFixture();
+        PcbBoardLayout observerTarget=observerFixture.layout.copyForCompaction();
+        final ThrowingAttemptObserver observer=new ThrowingAttemptObserver();
+        final PcbNetRouter.Router.ChargedFixedGraphCopyTask observerTask=
+            observerFixture.router.beginChargedFixedGraphObservationCopy(observerTarget,observer);
+        advanceRouterUntilCopied(observerTask,"observer Error cleanup canary");
+        require(field(observerTask,"target")!=null && field(observerTask,"copyTask")!=null &&
+                intField(observerTask,"copiedEntries")>0 && intField(observerTask,"phase")==1 &&
+                !observerTask.isComplete() &&
+                observer.checks>0 && field(observerFixture.router,"observer")!=observer,
+            "observer Error is armed after detached Router rows and partial arrays exist");
+        observer.fail=true;
+        boolean observerError=false;
+        try { observerTask.advance(1024); }
+        catch(AssertionError expected) {
+            if(!"charged Router observer failure canary".equals(expected.getMessage()))
+                throw new AssertionError("Unexpected charged Router observer Error",expected);
+            observerError=true;
+            assertions++;
+        }
+        require(observerError && booleanField(observerTask,"failed") && !observerTask.isComplete(),
+            "observer Error fails the charged copy closed before a complete result");
+        String[] borrowedFields={"source","target","result","sourceLayoutForCheck",
+            "targetLayout","targetObserver","copyTask","comparisonTask"};
+        for(String name:borrowedFields)
+            require(field(observerTask,name)==null,
+                "observer Error releases charged Router task reference "+name);
+        expectRouterResultUnavailable(observerTask,"observer Error");
+    }
+
+    private static RouterCopyFixture routerCopyFixture() {
+        P06FactoryLinkFixtures.Fixture fixture=new P06FactoryLinkFixtures.Fixture(true,0,0);
+        PcbNetRouter.Router router=new PcbNetRouter.Router(fixture.layout,fixture.board,
+            fixture.layout.getBoardOutline(),0,P06FactoryLinkFixtures.OBSERVER,PcbCopperLayer.TOP);
+        return new RouterCopyFixture(fixture.layout,router);
+    }
+
+    private static void advanceRouterUntilCopied(
+            PcbNetRouter.Router.ChargedFixedGraphCopyTask task,String label) {
+        int steps=0;
+        while(!task.isComplete() && task.copiedEntries()==0 &&
+                steps<MAX_COPY_WORK_STEPS) {
+            task.advance(1);
+            steps++;
+        }
+        require(!task.isComplete() && task.copiedEntries()>0 && task.workSteps()>0,
+            label+" advances through the real charged copy cursor until a source row is copied");
+    }
+
+    private static void expectRouterStale(
+            PcbNetRouter.Router.ChargedFixedGraphCopyTask task,String label) {
+        try { task.advance(1); }
+        catch(IllegalStateException expected) { assertions++; return; }
+        throw new AssertionError("Expected charged Router stale-source rejection: "+label);
+    }
+
+    private static void expectRouterResultUnavailable(
+            final PcbNetRouter.Router.ChargedFixedGraphCopyTask task,final String label)
             throws Exception {
-        PcbPadPlacement[] pads=(PcbPadPlacement[])field(router,"pads");
-        PcbComponentPlacement[] components=(PcbComponentPlacement[])field(router,"components");
-        for(PcbPadPlacement pad:pads) if(layout.getPad(pad.getPadId())!=pad)
-            throw new IllegalStateException("Detached Router pad reference is outside its layout");
-        for(PcbComponentPlacement component:components)
-            if(layout.getComponent(component.getComponentId())!=component)
-                throw new IllegalStateException("Detached Router component reference is outside its layout");
-        assertions++;
+        require(!task.isComplete(),label+" remains incomplete");
+        expectLifecycleRejected(new Checked(){public void run() { task.result(); }},
+            label+" exposes no partial result");
     }
 
-    private static void requireRouterArraysDetached(PcbNetRouter.Router actual,
-            PcbNetRouter.Router snapshot,PcbNetRouter.Router live) throws Exception {
-        String[] names={"occupiedNet","clearanceNet","pads","padNets","padWidths","padBounds",
-            "escapeCorridors","escapeReservations","components","courtyards",
-            "allComponentIndexes","componentCandidatesByColumn","collisionCourtyards",
-            "horizontalReservation","verticalReservation","padAt"};
-        for(String name:names) {
-            Object value=field(actual,name);
-            if(value!=null && (value==field(snapshot,name) || value==field(live,name)))
-                throw new IllegalStateException("Detached Router reused mutable source array: "+name);
+    private static final class RouterCopyFixture {
+        final PcbBoardLayout layout;
+        final PcbNetRouter.Router router;
+        RouterCopyFixture(PcbBoardLayout layout,PcbNetRouter.Router router) {
+            this.layout=layout; this.router=router;
         }
-        assertions++;
     }
 
-    private static void verifyDetachedSearchEnvelope(Source source,Object search,
-            PcbBoardLayout layout) throws Exception {
-        String[] fields={"primary","minX","minY","width","height","cells","pass","maximumVias"};
-        for(String name:fields)
-            if(intField(search,name)!=intField(source.search,name))
-                throw new IllegalArgumentException("Detached Search grid or primary field changed: "+name);
-        require(field(search,"board")==source.fixture.board && field(search,"layout")==layout &&
-                stringField(search,"currentNet").equals(source.currentNet) &&
-                layout.geometryFingerprint().equals(source.layoutFingerprint),
-            "detached Search retains the source board, net, grid and prefix geometry");
-    }
-
-    private static void verifyDetachedGoalInputs(Source source,Object search,
-            PcbBoardLayout layout) throws Exception {
-        Class<?> searchClass=search.getClass();
-        PcbPadPlacement root=layout.getPad(source.root.getPadId());
-        Method reachedMethod=searchClass.getDeclaredMethod("reachedPthTerminals",
-            String.class,PcbPadPlacement.class);
-        reachedMethod.setAccessible(true);
-        PcbPadPlacement[] reached=(PcbPadPlacement[])invoke(reachedMethod,search,source.currentNet,root);
-        PcbPadPlacement[] sourceReached=(PcbPadPlacement[])field(source.branch,"reachedTerminals");
-        requirePadIds(sourceReached,reached);
-        Method goalsMethod=searchClass.getDeclaredMethod("goals",String.class,
-            PcbPadPlacement.class,PcbPadPlacement[].class);
-        goalsMethod.setAccessible(true);
-        boolean[] goals=(boolean[])invoke(goalsMethod,search,source.currentNet,root,reached);
-        requireGoalValues(source.goalValues,goals);
-        Method distanceMethod=searchClass.getDeclaredMethod("lowerBound",boolean[].class);
-        distanceMethod.setAccessible(true);
-        int[] distance=(int[])invoke(distanceMethod,search,goals);
-        int[] sourceDistance=(int[])field(source.branch,"distance");
-        if(!Arrays.equals(sourceDistance,distance))
-            throw new IllegalArgumentException("Detached lower-bound distance differs from source goals");
-        assertions++;
-    }
-
-    private static void requirePadIds(PcbPadPlacement[] expected,PcbPadPlacement[] actual) {
-        if(expected==null || actual==null || expected.length!=actual.length)
-            throw new IllegalArgumentException("Detached reached-terminal set differs from source");
-        for(int i=0;i<expected.length;i++)
-            if(!expected[i].getPadId().equals(actual[i].getPadId()))
-                throw new IllegalArgumentException("Detached reached-terminal order differs from source");
-        assertions++;
-    }
-
-    private static Object newSearch(Source source,PcbLayerRoutingPrototype.Session owner,
-            PcbBoardLayout layout,int maximumVias) throws Exception {
-        Object budget=field(owner,"budget");
-        Class<?> budgetClass=Class.forName(PcbLayerRoutingPrototype.class.getName()+"$Budget");
-        Constructor<?> constructor=source.search.getClass().getDeclaredConstructor(
-            PcbLayerRoutingPrototype.Session.class,TroubleshootBoard.class,PcbBoardLayout.class,
-            PcbLayerRoutingPrototype.Policy.class,SeededPcbLayoutGenerator.AttemptObserver.class,
-            budgetClass,Integer.TYPE,String.class,Integer.TYPE);
-        constructor.setAccessible(true);
-        Object search=constructor.newInstance(owner,source.fixture.board,layout,
-            PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,P06FactoryLinkFixtures.OBSERVER,
-            budget,Integer.valueOf(source.pass),field(source.search,"promotedNet"),
-            Integer.valueOf(maximumVias));
-        if(source.serial<source.seedValues.length)
-            throw new IllegalArgumentException("Source serial precedes branch seed allocation");
-        setField(search,"serial",Integer.valueOf(source.serial-source.seedValues.length));
-        setField(search,"branches",Integer.valueOf(source.branches));
-        setField(search,"segments",Integer.valueOf(source.segments));
-        setField(search,"nets",new Vector<String>(source.netOrder));
-        setField(search,"netIndex",Integer.valueOf(source.netIndex));
-        setField(search,"currentNet",source.currentNet);
-        setField(search,"currentPadIds",copyStrings(source.currentPadIds));
-        setField(search,"reachedPadIds",copyStrings(source.reachedPadIds));
-        setField(search,"currentRoot",layout.getPad(source.root.getPadId()));
-        require(layout.getPad(source.start.getPadId())!=null &&
-                layout.getPad(source.root.getPadId())!=null,
-            "detached layout retains source branch endpoints");
-        require(field(owner,"template") instanceof PcbBoardLayout &&
-                ((PcbBoardLayout)field(owner,"template")).getHoleCount()==0,
-            "detached Session keeps a virgin, empty-hole template");
-        return search;
-    }
-
-    private static Object newBranch(Source source,Object search,PcbBoardLayout layout)
-            throws Exception {
-        Class<?> branchClass=source.branch.getClass();
-        Constructor<?> constructor=branchClass.getDeclaredConstructor(search.getClass(),
-            String.class,PcbPadPlacement.class,PcbPadPlacement.class);
-        constructor.setAccessible(true);
-        return constructor.newInstance(search,source.currentNet,
-            layout.getPad(source.start.getPadId()),layout.getPad(source.root.getPadId()));
-    }
-
-    private static void completeReplay(Replay replay) throws Exception {
-        Method advance=replay.search.getClass().getDeclaredMethod("advanceOne");
-        advance.setAccessible(true);
-        int units=0;
-        while(field(replay.search,"branch")!=null || field(replay.search,"publisher")!=null) {
-            Object publisher=field(replay.search,"publisher");
-            if(publisher!=null && replay.publisher==null) replay.publisher=publisher;
-            invoke(advance,replay.search);
-            publisher=field(replay.search,"publisher");
-            if(publisher!=null && replay.publisher==null) replay.publisher=publisher;
-            if(++units>MAX_REPLAY_UNITS)
-                throw new AssertionError("detached literal replay exceeded its one-step guard");
+    private static final class ThrowingAttemptObserver
+            implements SeededPcbLayoutGenerator.AttemptObserver {
+        int checks;
+        boolean fail;
+        public void check(int attempt) {
+            checks++;
+            if(fail) throw new AssertionError("charged Router observer failure canary");
         }
+    }
+
+    private static Source freshSource() throws Exception {
+        LiteralFixture fixture=literalSourceFixture();
+        PcbLayerRoutingPrototype.Session session=PcbLayerRoutingPrototype.begin(
+            fixture.board,fixture.layout,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
+            P06FactoryLinkFixtures.OBSERVER,PcbLayerRoutingPrototype.MAX_EXPANSIONS,SOURCE_VIA_CAP);
+        return captureConsumerEntry(fixture,session);
+    }
+
+    private static PcbLayerRoutingPrototype.DetachedBranchCopyTask beginCopy(Source source) {
+        return PcbLayerRoutingPrototype.beginDetachedBranchCopy(source.session,
+            detachedNoopObserver());
+    }
+
+    private static SeededPcbLayoutGenerator.AttemptObserver detachedNoopObserver() {
+        return new SeededPcbLayoutGenerator.AttemptObserver() {
+            public void check(int attempt) { }
+        };
+    }
+
+    private static void expectStaleAdvance(final PcbLayerRoutingPrototype.DetachedBranchCopyTask task,
+            String label) throws Exception {
+        try { task.advance(1); }
+        catch(IllegalStateException expected) { assertions++; return; }
+        throw new AssertionError("Expected stale-copy rejection: "+label);
+    }
+
+    private static void expectStaleBeforeReady(
+            final PcbLayerRoutingPrototype.DetachedBranchCopyTask task,String label) {
+        for(int steps=0;steps<MAX_COPY_WORK_STEPS;steps++) {
+            try { task.advance(1); }
+            catch(IllegalStateException expected) { assertions++; return; }
+            if(task.isComplete())
+                throw new AssertionError("Stale copy became ready before rejection: "+label);
+        }
+        throw new AssertionError("Stale-copy verification exceeded its bounded guard: "+label);
+    }
+
+    private static void completeReplay(Replay replay,int quantum) throws Exception {
+        int calls=0;
+        while(!replay.handle.isComplete()) {
+            replay.handle.advance(quantum);
+            int used=replay.handle.lastWork();
+            require(used>0 && used<=quantum,
+                "detached route replay charges bounded work within its caller quantum");
+            if(++calls>MAX_REPLAY_UNITS)
+                throw new AssertionError("detached literal replay exceeded its bounded progress guard");
+        }
+        replay.publisher=replay.handle.getPublisherForDiagnostics();
         require(replay.publisher!=null && field(replay.search,"branch")==null &&
                 field(replay.search,"publisher")==null,
             "normal Search completed the detached branch Publisher");
+        replay.handle.advance(quantum);
+        require(replay.handle.isComplete() && replay.handle.lastWork()==0 &&
+                replay.handle.getPublisherForDiagnostics()==replay.publisher,
+            "repeated complete-replay calls are idempotent");
         require(field(replay.branch,"found")!=null,
             "detached branch found an actual Search goal node before publication");
         replay.pathRows=pathRows(field(replay.publisher,"end"));
@@ -330,8 +470,8 @@ public final class P07DetachedBranchReplayContractTest {
     }
 
     private static Replay finishOriginalConsumer(Source source) throws Exception {
-        Replay replay=new Replay(source,source.session,source.search,source.branch,
-            source.layout,source.maximumVias);
+        Replay replay=new Replay(source,null,null,source.owner,source.search,source.branch,
+            source.layout,source.maximumVias,null,null);
         int units=0;
         while(units<MAX_REPLAY_UNITS) {
             Object publisher=field(source.search,"publisher");
@@ -482,13 +622,16 @@ public final class P07DetachedBranchReplayContractTest {
     private static void verifyExhaustedBudget(Source source) throws Exception {
         require(source.budgetExpanded>0,
             "literal consumer has prior global expansion work for exhausted-budget control");
-        Replay replay=buildDetached(source,source.maximumVias,source.budgetExpanded);
+        Replay replay=buildDetached(source,MAX_COPY_QUANTUM);
+        Object detachedBudget=field(replay.search,"budget");
+        setField(detachedBudget,"maximum",Integer.valueOf(source.budgetExpanded));
+        require(intField(detachedBudget,"maximum")==source.budgetExpanded &&
+                intField(field(source.search,"budget"),"maximum")==source.budgetMaximum,
+            "exhausted-budget control limits only the detached copy after owner cloning");
         int before=intField(field(replay.search,"budget"),"expanded");
-        Method advance=replay.search.getClass().getDeclaredMethod("advanceOne");
-        advance.setAccessible(true);
         boolean rejected=false;
-        for(int units=0;units<MAX_REPLAY_UNITS && !rejected;units++) {
-            try { invoke(advance,replay.search); }
+        for(int calls=0;calls<MAX_REPLAY_UNITS && !rejected;calls++) {
+            try { replay.handle.advance(1); }
             catch(RuntimeException expected) {
                 String exhaustedName=PcbLayerRoutingPrototype.class.getName()+"$Exhausted";
                 if(!exhaustedName.equals(expected.getClass().getName()) ||
@@ -498,11 +641,12 @@ public final class P07DetachedBranchReplayContractTest {
                 rejected=true;
             }
         }
-        require(rejected && field(replay.branch,"found")==null &&
+        require(rejected && !replay.handle.isComplete() && field(replay.branch,"found")==null &&
                 field(replay.search,"publisher")==null &&
                 intField(field(replay.search,"budget"),"expanded")==before &&
                 replay.layout.geometryFingerprint().equals(source.layoutFingerprint),
             "exhausted replay exposes no success and leaves detached geometry unchanged");
+        replay.handle.release();
     }
 
     private static void verifyDetachedResults(Replay first,Replay second) throws Exception {
@@ -586,7 +730,8 @@ public final class P07DetachedBranchReplayContractTest {
                 field(source.search,"owner")==source.owner &&
                 field(source.search,"branch")==source.branch &&
                 field(source.search,"publisher")==null &&
-                field(source.session,"candidate")==source.layout,
+                field(source.session,"candidate")==source.layout &&
+                field(source.owner,"observer")==source.observerRef,
             phase+" leaves the retained source owner and branch binding untouched");
         require(source.fixture.layout.getHoles().isEmpty() && source.fixture.layout.getTraces().isEmpty() &&
                 ((PcbBoardLayout)field(source.session,"template")).getHoleCount()==0,
@@ -639,6 +784,24 @@ public final class P07DetachedBranchReplayContractTest {
         if(sourceBudget==replayBudget || sourceFaces==replayFaces || sourceWorkspace==null ||
                 replayWorkspace==null || sourceWorkspace==replayWorkspace)
             throw new IllegalArgumentException("Detached replay shares mutable routing resources");
+        String[] layoutContainers={"pads","components","silkscreenLabels","traces","regions","holes"};
+        for(String name:layoutContainers)
+            if(field(source.layout,name)==field(replay.layout,name))
+                throw new IllegalArgumentException("Detached replay shares mutable layout container: "+name);
+        if(field(source.search,"nets")==field(replay.search,"nets") ||
+                field(source.search,"currentPadIds")==field(replay.search,"currentPadIds") ||
+                field(source.search,"reachedPadIds")==field(replay.search,"reachedPadIds") ||
+                field(source.branch,"goal")==field(replay.branch,"goal") ||
+                field(source.branch,"distance")==field(replay.branch,"distance") ||
+                field(source.branch,"reachedTerminals")==field(replay.branch,"reachedTerminals") ||
+                field(source.branch,"holes")==field(replay.branch,"holes") ||
+                field(source.branch,"queue")==field(replay.branch,"queue") ||
+                field(source.search,"faces")==field(replay.search,"faces"))
+            throw new IllegalArgumentException("Detached replay shares a mutable branch or Search array");
+        Object sourceQueueValues=field(source.queueRef,"values");
+        Object replayQueueValues=field(field(replay.branch,"queue"),"values");
+        if(sourceQueueValues==replayQueueValues)
+            throw new IllegalArgumentException("Detached replay shares its mutable frontier array");
         PcbNetRouter.Router[] sourceFaceArray=(PcbNetRouter.Router[])sourceFaces;
         PcbNetRouter.Router[] replayFaceArray=(PcbNetRouter.Router[])replayFaces;
         if(sourceFaceArray.length!=2 || replayFaceArray.length!=2)
@@ -647,7 +810,46 @@ public final class P07DetachedBranchReplayContractTest {
             throw new IllegalArgumentException("Detached replay shares a Router face");
         for(int i=0;i<2;i++) if(field(replayFaceArray[i],"layout")!=replay.layout)
             throw new IllegalArgumentException("Detached Router face is not bound to its cloned layout");
+        String[] routerArrays={"occupiedNet","clearanceNet","pads","padNets","padWidths","padBounds",
+            "escapeCorridors","escapeReservations","components","courtyards",
+            "allComponentIndexes","componentCandidatesByColumn","collisionCourtyards",
+            "horizontalReservation","verticalReservation","padAt"};
+        for(int i=0;i<2;i++) for(String name:routerArrays) {
+            Object array=field(replayFaceArray[i],name);
+            requireArrayIsolation(array,field(sourceFaceArray[i],name),
+                field(source.faceSnapshots[i],name),"Router."+name);
+        }
+        require(field(replay.owner,"observer")==replay.observer &&
+                replay.observer!=source.observerRef && replay.observerChecks!=null,
+            "detached replay retains its private attempt observer");
         assertions++;
+    }
+
+    private static void requireArrayIsolation(Object actual,Object live,Object snapshot,
+            String name) throws Exception {
+        if(actual==null || live==null || snapshot==null) {
+            if(actual!=live || actual!=snapshot)
+                throw new IllegalArgumentException("Detached array nullness changed: "+name);
+            return;
+        }
+        if(actual==live || actual==snapshot)
+            throw new IllegalArgumentException("Detached replay reused mutable array: "+name);
+        if(!actual.getClass().isArray() || !live.getClass().isArray() ||
+                !snapshot.getClass().isArray()) return;
+        int length=Array.getLength(actual);
+        if(Array.getLength(live)!=length || Array.getLength(snapshot)!=length)
+            throw new IllegalArgumentException("Detached array shape changed: "+name);
+        Class<?> component=actual.getClass().getComponentType();
+        if(component.isArray()) {
+            for(int i=0;i<length;i++)
+                requireArrayIsolation(Array.get(actual,i),Array.get(live,i),
+                    Array.get(snapshot,i),name+"["+i+"]");
+        } else if(component==Rectangle.class) {
+            for(int i=0;i<length;i++)
+                if(Array.get(actual,i)==Array.get(live,i) ||
+                        Array.get(actual,i)==Array.get(snapshot,i))
+                    throw new IllegalArgumentException("Detached replay reused mutable rectangle: "+name);
+        }
     }
 
     private static void verifySourceRouters(Source source,String phase) throws Exception {
@@ -897,6 +1099,18 @@ public final class P07DetachedBranchReplayContractTest {
         throw new AssertionError("Expected rejection: "+label);
     }
 
+    private static void expectIllegalArgument(Checked check,String label) throws Exception {
+        try { check.run(); }
+        catch(IllegalArgumentException expected) { assertions++; return; }
+        throw new AssertionError("Expected invalid-quantum rejection: "+label);
+    }
+
+    private static void expectLifecycleRejected(Checked check,String label) throws Exception {
+        try { check.run(); }
+        catch(IllegalStateException expected) { assertions++; return; }
+        throw new AssertionError("Expected lifecycle rejection: "+label);
+    }
+
     private static Object field(Object target,String name) throws Exception {
         if(target==null) throw new IllegalArgumentException("Missing reflection target: "+name);
         Field field=target.getClass().getDeclaredField(name);
@@ -953,6 +1167,7 @@ public final class P07DetachedBranchReplayContractTest {
         final Vector<String> netOrder,currentPadIds,reachedPadIds;
         final Object netOrderRef,currentPadIdsRef,reachedPadIdsRef;
         final Object queueRef,goalRef;
+        final Object observerRef;
         final Object faceArrayRef,workspaceRef;
         final PcbNetRouter.Router[] faceRefs,faceSnapshots;
         final String[] faceEffects;
@@ -968,6 +1183,7 @@ public final class P07DetachedBranchReplayContractTest {
             require(sourceUnits>0 && sourceUnits<MAX_SOURCE_UNITS,
                 "actual source branch appears within the bounded literal handoff window");
             this.owner=(PcbLayerRoutingPrototype.Session)field(search,"owner");
+            this.observerRef=field(owner,"observer");
             this.layout=(PcbBoardLayout)field(search,"layout");
             this.prefixLayout=layout.copyForCompaction();
             this.start=(PcbPadPlacement)field(branch,"start");
@@ -1038,8 +1254,12 @@ public final class P07DetachedBranchReplayContractTest {
 
     private static final class Replay {
         final Source source;
+        final PcbLayerRoutingPrototype.DetachedBranchCopyTask copyTask;
+        final PcbLayerRoutingPrototype.DetachedBranchReplay handle;
         final PcbLayerRoutingPrototype.Session owner;
         final Object search,branch;
+        final SeededPcbLayoutGenerator.AttemptObserver observer;
+        final int[] observerChecks;
         final PcbBoardLayout layout;
         final PcbPadPlacement start,root;
         final int maximumVias,budgetMaximum;
@@ -1051,11 +1271,18 @@ public final class P07DetachedBranchReplayContractTest {
         String foundViaId,foundViaFingerprint;
         int foundX,foundY,foundLayer,foundTransitions;
 
-        Replay(Source source,PcbLayerRoutingPrototype.Session owner,Object search,Object branch,
-                PcbBoardLayout layout,int maximumVias) throws Exception {
-            this.source=source; this.owner=owner; this.search=search; this.branch=branch;
+        Replay(Source source,PcbLayerRoutingPrototype.DetachedBranchCopyTask copyTask,
+                PcbLayerRoutingPrototype.DetachedBranchReplay handle,
+                PcbLayerRoutingPrototype.Session owner,Object search,Object branch,
+                PcbBoardLayout layout,int maximumVias,
+                SeededPcbLayoutGenerator.AttemptObserver observer,int[] observerChecks)
+                throws Exception {
+            this.source=source; this.copyTask=copyTask; this.handle=handle;
+            this.owner=owner; this.search=search; this.branch=branch;
+            this.observer=observer; this.observerChecks=observerChecks;
             this.layout=layout; this.maximumVias=maximumVias;
-            this.budgetMaximum=intField(field(search,"budget"),"maximum");
+            this.budgetMaximum=search==null?source.budgetMaximum:
+                intField(field(search,"budget"),"maximum");
             this.start=(PcbPadPlacement)field(branch,"start");
             this.root=(PcbPadPlacement)field(branch,"root");
         }

@@ -252,6 +252,18 @@ exact remote verified on origin/codex/q100-physical-feasibility; completion Gmai
 `1a1a2f85b660134d` sent once. Next is bounded actual LOAD12/73 baseline48 and separate
 cap17 replay under the existing limits before any generic treatment/adoption.
 
+The [charged detached-owner prerequisite](task-evidence/Q100/load12-replay-actual-r1/README.md)
+is locally accepted for its literal saturated cap2 fixture. Layout, Router and
+initial FULLER branch copies allocate/copy/verify through charged owners, retain
+the actual frontier and consumed budget, and run the real Search/Publisher in
+separate mutable state. Stale-source, cancellation and Error cleanup controls
+pass. Final focused6/native33, fresh D NULL/PROBE+reader, actual Player/Developer
+builds, E06State10/Current9/privacy, exact3 normal development roots and final
+source audit pass. Earlier compile/contract/cwd/profile failures are preserved.
+All original budgets, costs, epochs and route choices remain. Actual LOAD12/73
+baseline48, large-grid cost and cap17 are next and unqualified. No routing/layout
+adoption or playable100 proof is granted; playable100=0/beta held. Full30/data
+boundaries remain. Normal publication and completion notification are pending.
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion
