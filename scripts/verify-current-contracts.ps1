@@ -1025,6 +1025,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         @{ Name = 'P07ZeroViaGraphContractTest'; Marker = 'P07 zero-via graph contracts ' },
         @{ Name = 'P07PrefixAllocationContractTest'; Marker = 'P07 prefix-allocation contracts ' },
         @{ Name = 'P07AcceptedBranchCaptureContractTest'; Marker = 'P07 accepted branch capture contracts ' },
+        @{ Name = 'P07DetachedBranchReplayContractTest'; Marker = 'P07 detached branch replay contracts ' },
         @{ Name = 'P07TwoLayerContractTest'; Marker = 'P07 two-layer contracts ' },
         @{ Name = 'P07GridEligibilityContractTest'; Marker = 'P07 grid eligibility contracts ' },
         @{ Name = 'P07BranchDiagnosticsContractTest'; Marker = 'P07 branch diagnostics contracts ' },

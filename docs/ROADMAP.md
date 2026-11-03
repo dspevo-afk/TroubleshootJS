@@ -233,6 +233,23 @@ completion Gmail `1a1a2bd2ae69511a` was sent once. Next is a finite actual Branc
 replay of a relaxed LOAD12 candidate before any generic VIA-reduction treatment
 or adoption.
 
+The [detached native replay prerequisite](task-evidence/Q100/load12-replay-r1/PLAN.md)
+is locally accepted for its small literal fixture. Separate actual Search,
+BranchSearch, Publisher, Router and budget owners reproduce the source branch
+and creator-VIA join with source-preservation and exact rejection controls.
+Post-search PreResult is not an initial frontier; fresh layout-only Router state
+also omits the published prefix. Final native268, six focused suites, fresh
+D_SENSE NULL/PROBE, Python51+one declared skip/52, actual current-count acceptance
+and stale-count rejection, and final1078/850-production/1202-compiler/28-frozen-
+Python audit pass. The independent prior-VIA proof supplies TOP(310,320), with
+its fixture blob unchanged. R1-R5 failures remain preserved. Both detached
+replays use the original saturated cap2; there is no lower-cap contrast.
+Production26/dependency28 and all budgets stay unchanged. No actual LOAD12,
+large-prefix setup, route adoption, fresh GWT/Player/electrical/population or
+playable100 proof is granted. Full30/data boundaries remain; beta held.
+Publication pending. Next is bounded actual LOAD12/73 baseline48 and separate
+cap17 replay under the existing limits before any generic treatment/adoption.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

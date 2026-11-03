@@ -1,50 +1,58 @@
-# Current checkpoint: LOAD12 graph diagnostic published
+# Current checkpoint: detached native replay prerequisite validated
 
-2026-11-03. Active N=OS-temp/tsj-q100-load12-graph-20261103-r1,
-branch `codex/q100-load12-graph-20261103`. Implementation
-`1ac4d845ce15739afcc0011d237de77fc6064162` (Capture bounded pre-LOAD12 routing
-graph) is normally pushed to origin/codex/q100-physical-feasibility and exact
-remote verified. Completion Gmail `1a1a2bd2ae69511a` sent ONCE; never duplicate.
-Documentation publication receipt is ready for its own commit/push; no second mail.
+2026-11-03. Active P=OS-temp/tsj-q100-load12-replay-20261103-r1,
+branch `codex/q100-load12-replay-20261103`, HEAD/source parent
+`ebd9e2a247992e7faa56cf91473a9ea88ee1b056`. QP=preserved fixed-prefix capture
+bundle/load12-replay-r1. Finite literal prerequisite validated; final explicit
+staging/root review and publication pending. No P commit/push/email yet.
 
-Finite scope: actual pre-LOAD12/73 two-face graph, captured separately from later
-D_SENSE. Private20/graph-r5/v5; source parent b033826e. Native1077/86611889/
-`408473f0d144250f0d901821486674ad8d01ad2af43dfd2633a228ec2f9e137c`.
-PASS: focus-r13 39.0378681s (24/57/48/3736/13112 assertions); query-d-r8
-78.2774239s, query-load-r2 79.0452749s. NULL/PROBE work D300/634 and
-LOAD300/628, original640 cap. Inputs before/after, termination and cleanup pass.
-Python-r5 PASS51 +one declared file-symlink privilege skip/52. Both v5 readers,
-r6 negatives D65+3 scoped N/A and LOAD68, real junction cleanup, both independent
-actual graph oracles and positive pair pass. Paired synthetic content mismatch
-is expected standaloneLOAD exit0 then pair exit2/PAIR_D_ALLOCATION_stability;
-source/LOAD branch unchanged, full1077 rehash passes; no native qualification.
+Final native1078/86683322/
+`052cd6ec7884bfeb9b74131609eb86265ea0d6f15ab6c09c8b32dc9716006806`.
+New contract sourceSHA7f71478804e70f7ab7ffbb84269aba594898e2c1956a97edd88c071e25637fca.
+PASS prereq-r6:268 assertions, case468ms, wholewrapper35.1236888s. Final focus6
+PASS38.5249257s:24/57/48/3736/268/13112 assertions, repeatedcase113ms.
+Fresh D_SENSE NULL/PROBE PASS79.192689s: operation18081/25474ms, work300/634,
+maxunit1436/811ms, cleanup1/0ms. Child termination/source-before-after/script
+cleanup proven; separate wrapper cleanup duration null, no invented timing.
 
-Combined final-input-audit-v5-r10 PASS57.0072596s, sourceSHA
-23a56e178b06083bef12d80139e7d17f97cf0c7bcfc08cf4b71c5aabacb71b35;
-exact Require canary11 PASS .2228138s. Final audit binds all selected gates,
-original H path/masks/allocation/all analysis metrics, 850 unchanged production,
-1202 compiler inputs per variant and28 frozen Python files. Root integrated diff,
-index/source hashes, JSON/privacy and whitespace checks pass; separate helper,
-reader, runner and final-audit source-only reviews CLEAR, no leaf runtime gates.
-R1-R9 and every earlier failed source/result remain preserved, no false PASS.
-Controlled evidence: `docs/task-evidence/Q100/load12-graph-r1/`; raw QA remains
-in preserved fixed-prefix bundle/load12-graph-r1.
+Python-r1 PASS51 +one declared file-symlink privilege skip/52,1.0254703s;
+consumed8 archived, frozen28 byte-identical after canonical-index equality.
+Actual current1078 reader PASS6.1779244s; stale1077 exact identity rejection
+PASS expectedexit2/.4684743s; both terminated/source stable. Reader changes
+ONLY census1077/221->1078/222; private20/r5/v5 wire/algorithms remain unchanged.
+Final-source-audit-r1 PASS20.476224s; sourceb2a48e11ba89c25c142c41dc0db8bb2177870f1dacbef7e147fea153143da755.
+Binds final native/CLI/Python artifacts, original literal proof and fixture blob,
+850 byte-unchanged production,1202 compiler inputs per variant and28 Python.
+No actual GWT build inferred. Evidence docs/task-evidence/Q100/load12-replay-r1/.
 
-LOAD prefix17VIAs/88traces, actual path222nodes/2170/4flips. Relaxed graph finds
-per-goal length-eligible TOP46/BOTTOM415, minima2510/3250. No legal actual
-search/finalizer route, VIA avoidability, route adoption or layout qualification.
-Production850 Java, layout26/dependency28/VIA60 and all original budgets unchanged.
-No fresh GWT/Player/electrical/normal3/2-by-31 renewal; full30 owner EXCLUDED.
-Protected HARD unread/unrun in current scope; historical unread UNCERTIFIED.
+Literal pass0 UNDER/C.1 branch4/rootA.1 uses prefix2/cap2; both detached runs
+use the SAME original allowance. Actual Search/Publisher reproduce the original
+path/trace/graph, preserve live source, prove independent mutable owners, and
+reject wrong entry/root/seed/goal/prefix and exact exhausted-budget cases.
+Target is creatorVIA p07-via/UNDER/3/1 TOP310,320, zero transitions/null pad
+terminal, one addedtrace/no newhole. Exact coordinates reuse accepted J proof;
+fixture Gitblob6680673cdfb926af3686f6cbe8b9b5589358581c unchanged since0972259.
+Root integration and separate source-only runner/census, prefix-copy/root/
+geometry delta and final tree-goal reviews complete; no leaf runtime gates.
+R1-R5 failures/source/output archived; compile/fixture/prefix/goal assumptions
+resolved, no failed receipt credited. Root owns final integration; leaves idle.
+
+No actual LOAD12 or reduced-cap contrast,147702-cell setup, route adoption or
+playable100 proof. Source contains only native fixture/registry/census changes;
+production850/layout26/dependency28/VIA60/all original caps untouched. No fresh
+LOAD12 capture/GWT/Player/electrical/normal3/2-by-31/full30 renewal; full30 owner
+EXCLUDED. Protected HARD unread/unrun in this scope; historical unreadUNCERTIFIED;
 HARD/PSYCHOTIC unavailable. Playable100=0/beta held.
 
-Preserve25 inherited raw newline-only N statuses, unrelated Desktop/Main/K
-changes and all failure evidence. No owned persistent preview/profile/port;
-unowned localhost8928/browser untouched. No runtime actor remains. LastK mail
-1a1a1704c5a30202 also complete, never duplicate.
-Next unstarted milestone: finite actual BranchSearch/finalizer replay of a
-relaxed LOAD12 candidate before generic VIA-reduction treatment or adoption.
-Two leaf read-only source questions are active; root owns integration and actors.
+Last N published impl1ac4d845/receiptebd9e2a2, exact remote verified;
+Gmail1a1a2bd2ae69511a sent ONCE, never duplicate. Preserve Main original9tracked/
+6untracked, N25 inherited newline statuses, Desktop e0c36885 branchcodex/
+task43p-final-recovery (firstobserved7tracked/73untracked), all other worktrees
+and failures. P frozen helper raw EOL statuses are intentional for byte pins.
+No runtime actor or owned persistent preview/profile/port; localhost8928 untouched.
+Next: final stage/diff checks, normal commit/push to origin/codex/q100-physical-
+feasibility, exact remote verify and ONE new completion Gmail; receipt follows
+without another mail. Then bounded actual LOAD12/73 baseline48/cap17 replay.
 
 # Historical checkpoint: actual LOAD12 branch capture published
 

@@ -1759,8 +1759,8 @@ class SourceBoundRunTests(unittest.TestCase):
         self.assertEqual(reader.RESULT_SCHEMA,
                          "q100-quality-zero-via-reader-result-v5")
         self.assertEqual(reader.SOURCE_REVISION, 20)
-        self.assertEqual(reader.SOURCE_INPUT_COUNT, 1077)
-        self.assertEqual(reader.CONTRACT_JAVA_COUNT, 221)
+        self.assertEqual(reader.SOURCE_INPUT_COUNT, 1078)
+        self.assertEqual(reader.CONTRACT_JAVA_COUNT, 222)
         self.assertEqual(len(reader.QUALITY_REQUIRED_INPUTS), 13)
         self.assertEqual(reader.SUITES, {
             "D_SENSE": "Rb100QualityZeroViaGraphContractTest",
@@ -1789,7 +1789,7 @@ class SourceBoundRunTests(unittest.TestCase):
                     "sourceRoot": str(base / "missing-source"),
                     "pinsPath": str(base / "missing-pins.json"),
                     "pinsSha256": "a" * 64,
-                    "inputCount": 1077, "inputBytes": 100,
+                    "inputCount": reader.SOURCE_INPUT_COUNT, "inputBytes": 100,
                     "sourceSnapshotRevision": revision,
                     "resultPath": str(base / "missing-result.json"),
                     "stdoutPath": str(base / "missing-stdout.txt"),
@@ -1822,6 +1822,14 @@ class SourceBoundRunTests(unittest.TestCase):
                          ("D_SENSE", "Rb100QualityZeroViaGraphContractTest"))
         self.assertNotIn("target", legacy)
         self.assertNotIn("suite", legacy)
+
+        for count in (1077, 1079, True, 1078.0):
+            spec = dict(base, inputCount=count)
+            with self.subTest(input_count=count):
+                with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+                    reader._validate_target_spec(spec)
+                self.assertEqual(caught.exception.code,
+                                 "INPUT_SPEC_IDENTITY_INVALID")
 
         for target, suite in (
                 ("LOAD12", reader.SUITES["D_SENSE"]),

@@ -1,0 +1,91 @@
+{
+    "schema":  "q100-detached-replay-final-source-audit-v1",
+    "status":  "PASS",
+    "sourceParent":  "ebd9e2a247992e7faa56cf91473a9ea88ee1b056",
+    "auditSourceSha256":  "b2a48e11ba89c25c142c41dc0db8bb2177870f1dacbef7e147fea153143da755",
+    "guardCanaries":  {
+                          "positive":  1,
+                          "negative":  5,
+                          "scope":  "EXACT_REQUIRE_IMPLEMENTATION"
+                      },
+    "nativeInputs":  1078,
+    "nativeInputBytes":  86683322,
+    "nativeManifestSha256":  "052cd6ec7884bfeb9b74131609eb86265ea0d6f15ab6c09c8b32dc9716006806",
+    "productionJavaUnchanged":  850,
+    "contractJava":  222,
+    "staticInputs":  6,
+    "nativeGates":  {
+                        "prereq-r6":  {
+                                          "exitCode":  0,
+                                          "terminationProven":  true,
+                                          "cleanupStatus":  "PASS",
+                                          "cleanupElapsedMs":  null,
+                                          "wholeWrapperElapsedSeconds":  35.1236888,
+                                          "receiptSha256":  "8c15550f75425aae07b2b8c380900df81299d311debe909074e4cfa3a61ddc3b"
+                                      },
+                        "focused-r1":  {
+                                           "exitCode":  0,
+                                           "terminationProven":  true,
+                                           "cleanupStatus":  "PASS",
+                                           "cleanupElapsedMs":  null,
+                                           "wholeWrapperElapsedSeconds":  38.5249257,
+                                           "receiptSha256":  "a95810d291546313bdc5826ab396bbd6999afbfa0829e653994e6789983a1a1c"
+                                       },
+                        "query-d-r1":  {
+                                           "exitCode":  0,
+                                           "terminationProven":  true,
+                                           "cleanupStatus":  "PASS",
+                                           "cleanupElapsedMs":  null,
+                                           "wholeWrapperElapsedSeconds":  79.192689,
+                                           "receiptSha256":  "4b47e78b596956ef7fb8913afaa73bb9b14765621be30035794c78fed0418181"
+                                       }
+                    },
+    "detachedCase":  {
+                         "assertions":  268,
+                         "caseElapsedMs":  468,
+                         "sourceSha256":  "7f71478804e70f7ab7ffbb84269aba594898e2c1956a97edd88c071e25637fca",
+                         "scope":  "LITERAL_SATURATED_PREFIX_SAME_ALLOWANCE_ONLY",
+                         "actualLoad12Replay":  false,
+                         "lowerCapContrast":  false
+                     },
+    "python":  {
+                   "passed":  51,
+                   "declaredSkip":  1,
+                   "total":  52,
+                   "elapsedSeconds":  1.0254703,
+                   "readerSha256":  "04350cd76e9cf5e22b9b726624b4dce8c4c170b16921efcef3fce4383af2c278",
+                   "frozenInputs":  28
+               },
+    "readerCli":  {
+                      "currentCount1078":  "PASS",
+                      "oldCount1077":  "REJECTED_EXPECTED_EXIT2",
+                      "positiveElapsedSeconds":  6.1779243999999993,
+                      "negativeElapsedSeconds":  0.46847429999999995
+                  },
+    "historicalLiteralOracle":  {
+                                    "acceptedCommit":  "0972259abb4c45f2e48b2a6011f578cb59ef5eb8",
+                                    "fixtureGitBlob":  "6680673cdfb926af3686f6cbe8b9b5589358581c",
+                                    "proofGitBlob":  "4165826d5b36868c6517412e5b2fee9e4263e085",
+                                    "creatorViaID":  "p07-via/UNDER/3/1",
+                                    "coords":  [
+                                                   310,
+                                                   320
+                                               ],
+                                    "joinedFace":  "TOP",
+                                    "transitions":  0,
+                                    "qualificationRenewal":  false
+                                },
+    "compiler":  {
+                     "developerInputs":  1202,
+                     "developerDigest":  "438cc4c0fdf7205479c60d1d30540dc964b9da8312c42850790cd1f209a8c2ed",
+                     "playerInputs":  1202,
+                     "playerDigest":  "53125e37f12449bd50dabd9cff43368eed0e4bea3bccfc1cd19d60becee7c6a5",
+                     "freshBuild":  "NOT_RUN_UNCHANGED_INPUTS"
+                 },
+    "full30":  "OWNER_EXCLUDED",
+    "hardPsychotic":  "UNAVAILABLE_UNREAD_UNRUN_IN_CURRENT_SCOPE",
+    "historicalUnreadBoundary":  "UNCERTIFIED",
+    "playable100":  0,
+    "beta":  "HELD",
+    "elapsedSeconds":  20.476224
+}

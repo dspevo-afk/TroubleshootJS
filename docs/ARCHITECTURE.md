@@ -392,7 +392,7 @@ initial faces, via cap and prefix holes; original endpoint authorities remain.
 Every original found-path step must occur in the captured face mask. Native
 capture installs no route and performs no shortest analysis. The new strict
 read_quality_zero_via.py reader privately reuses byte-pinned pure validators,
-checks the closed16-record v5 wire/1077-source census, and computes directed forward
+checks the closed16-record v5 wire/1078-source census, and computes directed forward
 BFS independently on each eligible face. It applies each goal's own positive
 Manhattan3:1 length gate; it never applies the original630 limit to other goals.
 Turn/bend/search/finalizer/access/electrical/layout proof remains separate.
@@ -455,6 +455,21 @@ VIA-avoidability, layout or playable100 proof.
 The paired audit binds both operations' D_SENSE inventory rows and geometry to
 the separate D graph. Standalone LOAD12 checks that later hash's format; its
 earlier graph cannot independently supply the later D geometry authority.
+
+P07DetachedBranchReplayContractTest owns a small literal native prerequisite,
+using the existing private seven-point fixture through reflection. Its detached
+Session keeps a virgin template while the compaction copy owner retains copper.
+Independent fixed-graph Router copies preserve incremental prefix occupancy and
+reservations before the actual BranchSearch reconstructs goals, distance bounds
+and seeds. Budget usage, serial, order and endpoints remain bound to the captured
+entry; mutable layout containers, faces and turn-bound workspace are separate.
+The real Publisher must reproduce source path/copper/graph without altering the
+paused source. Tree-goal validation binds the actual Node to the retained creator
+VIA and nullable pad terminal. This adapter is private to the small fixture; its
+synchronous setup and same-cap2 replay do not qualify large-prefix accounting,
+actual LOAD12 routing, a reduced-cap treatment or adoption. The
+[finite prerequisite packet](task-evidence/Q100/load12-replay-r1/README.md)
+records validation and protected-data limits.
 
 P07TwoLayerContractTest also owns the matched seven-point prior-via tree-join
 contract. A fresh FULLER Session with explicit requestcap2 creates a via and

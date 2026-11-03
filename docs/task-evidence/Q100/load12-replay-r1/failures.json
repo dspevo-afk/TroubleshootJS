@@ -1,0 +1,79 @@
+{
+  "schema": "q100-detached-replay-failures-v1",
+  "qualificationCredit": "NONE",
+  "attempts": [
+    {
+      "run": "prereq-r1",
+      "status": "FAIL",
+      "phase": "COMPILE_MISSING_IMPORT",
+      "wholeWrapperElapsedSeconds": 32.9149702,
+      "nativeOperationElapsedMs": null,
+      "cleanupElapsedMs": null,
+      "childExitCode": 2,
+      "terminationProven": true,
+      "scriptCleanup": "REPORTED_SCRATCH_REMOVAL",
+      "qualifiedReceipt": false,
+      "sourceSha256": "d01f6a6f74e2e8918bab19fe51d36bb3501efff03e2959cf23f9df8150ca53b2",
+      "stdoutSha256": "2504dd0cf21147b9af5c2ec55379eb500eec8bb6d78f807a74c00e7f81944da0"
+    },
+    {
+      "run": "prereq-r2",
+      "status": "FAIL",
+      "phase": "NATIVE_WRONG_FIXTURE",
+      "wholeWrapperElapsedSeconds": 35.006585,
+      "nativeOperationElapsedMs": null,
+      "cleanupElapsedMs": null,
+      "childExitCode": 2,
+      "terminationProven": true,
+      "scriptCleanup": "REPORTED_SCRATCH_REMOVAL",
+      "qualifiedReceipt": false,
+      "sourceSha256": "09cd1938d05ec1d76cd0d295906538221116b6500989670542a12d3444386d6a",
+      "stdoutSha256": "82b7d4f6d85c258813c1b70267ad2d279bb49ed8af8c63564cea7a63bed3fd2a"
+    },
+    {
+      "run": "prereq-r3",
+      "status": "FAIL",
+      "phase": "PREFIX_STATE_SEED_EQUIVALENCE",
+      "wholeWrapperElapsedSeconds": 35.0572994,
+      "nativeOperationElapsedMs": null,
+      "cleanupElapsedMs": null,
+      "childExitCode": 2,
+      "terminationProven": true,
+      "scriptCleanup": "REPORTED_SCRATCH_REMOVAL",
+      "qualifiedReceipt": false,
+      "sourceSha256": "aae547dbe538accf2c8bcdcf39325aa802e476caf2a33d17f8f21d5ccf1dbc1c",
+      "stdoutSha256": "7e101a5cd1f9dc795a6e787d52fb4f5e15d030288c6f35c8b78f59336aebf1d9"
+    },
+    {
+      "run": "prereq-r4",
+      "status": "FAIL",
+      "phase": "WRONG_PAD_ONLY_GOAL_ORACLE",
+      "wholeWrapperElapsedSeconds": 35.7844531,
+      "nativeOperationElapsedMs": null,
+      "cleanupElapsedMs": null,
+      "childExitCode": 2,
+      "terminationProven": true,
+      "scriptCleanup": "REPORTED_SCRATCH_REMOVAL",
+      "qualifiedReceipt": false,
+      "sourceSha256": "97c207d51ac7c91ee9c1d219073b009d2191b46ddacd4cd95727dc4a0d2ead53",
+      "stdoutSha256": "9e42e369d86aaa3af50519b94334bde6e8505bec2882da3a612aa971a8b37e57"
+    },
+    {
+      "run": "prereq-r5",
+      "status": "FAIL",
+      "phase": "COMPILE_TRUNCATED_IDENTIFIERS",
+      "wholeWrapperElapsedSeconds": 32.6954449,
+      "nativeOperationElapsedMs": null,
+      "cleanupElapsedMs": null,
+      "childExitCode": 2,
+      "terminationProven": true,
+      "scriptCleanup": "REPORTED_SCRATCH_REMOVAL",
+      "qualifiedReceipt": false,
+      "sourceSha256": "c8a31636a88f0bef0759a1e0ad1bc81c7cfc8e5da4102f14bba560d0c3f20134",
+      "stdoutSha256": "2ec1ea615f44a6b121b7bd83f78138a539fe22370507d538ec2db23e242dafba"
+    }
+  ],
+  "earlierSourceFindings": "Fresh-entry negatives, exact exceptions, source7 final captures, root binding and Router ownership strengthened before final pass.",
+  "resolvedBy": "prereq-r6_on_final_source",
+  "rawSourcesAndOutputs": "PRESERVED_EXTERNAL_QP"
+}
