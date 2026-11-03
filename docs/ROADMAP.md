@@ -282,6 +282,9 @@ consumed-input audits pass; unchanged production evidence is reused, not rerun.
 The two actual lifecycle failures and unit-fixture failure remain preserved.
 Cap17 is next and unqualified; no VIA-avoidability, routing adoption, accepted
 layout or playable100 claim. Full30/data boundaries remain; playable100=0/beta held.
+Implementation `ce49abbb8b0c4a1d671b56003ae1ec6829152768` was normally pushed to
+origin/codex/q100-physical-feasibility and its exact remote SHA verified;
+completion Gmail `1a1a3c4e8ffb2d87` was sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

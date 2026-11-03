@@ -1,12 +1,12 @@
 # Actual LOAD12/73 detached baseline48 — evidence receipt
 
-**Evidence status:** the final native and reader gates and root final-source audit pass for the recorded candidate. Publication remains pending. This receipt is not a routing or playable-board qualification.
+**Evidence status:** the final native and reader gates and root final-source audit pass for the recorded candidate. Implementation `ce49abbb8b0c4a1d671b56003ae1ec6829152768` was normally pushed to `origin/codex/q100-physical-feasibility` and its exact remote SHA verified. Completion Gmail `1a1a3c4e8ffb2d87` was sent once. This receipt is not a routing or playable-board qualification.
 
-See [PLAN.md](PLAN.md) for the bounded implementation contract and retained limits. The machine receipts and raw logs remain in the task-owned external bundle `load12-baseline-r1`; they were not copied into this repository.
+See [PLAN.md](PLAN.md) for the bounded implementation contract and retained limits. The raw machine receipts and logs remain in the task-owned external bundle `load12-baseline-r1`; the sanitized qualification summary is committed beside this receipt.
 
 ## Candidate and request identity
 
-- Parent/HEAD: `8093e2a989e690344c9913ce65ee326735f60348`; branch: `codex/q100-load12-baseline-20261103`.
+- Validated source parent: `8093e2a989e690344c9913ce65ee326735f60348`; branch: `codex/q100-load12-baseline-20261103`.
 - Native source snapshot revision 20: 1,079 pinned inputs, 86,838,457 bytes, manifest SHA-256 `02bb0b1512fc67a371fa24b249cc0dcfd451666592882d20e8c0378025a47975`. The r3 native receipt audited inputs before and after; process exit was 0, termination was proven, and cleanup status was PASS.
 - Layout/model interpretation stayed at layout 26 and dependency epoch `tsj-generation-dependencies-v28`. The exact seed tuple is root `9007199254740993`, placement `-6587958367974952701`, routing `8445301674744508279`.
 - The comparison is request 0, selected placement index 0 / attempt 4, pass 1, LOAD12 net position 3 / next fetch 4, branch 73 of 73, BOTTOM layer, from `JLOAD.1` to `CSTORE_E.1`. The grid is 478 × 309 (147,702 cells), origin (30,30), pitch 10. The initial prefix contains 17 vias and 88 traces. The replay retains the existing VIA cap of 48.
@@ -66,10 +66,10 @@ The recorded run stayed under the existing 90 s operation, 640-unit, 5 s per-uni
 
 The r3 adapter follows Publisher stage 0 collection and stops at the unchanged quiescent stage 1 metric-walk boundary. It also follows the real stage 5-to-2 cycle between publication pieces and completes at stage 6. The correction changes no routing behavior, oracle, work quantum, or budget. Earlier failure bundles remain preserved and receive no pass credit.
 
-## Limits and pending acceptance
+## Limits and publication
 
 This evidence covers one authored request/placement and actual LOAD12/73 branch under the recorded candidate. It does not establish cap17, VIA avoidability, route adoption, an accepted layout, electrical solvability, or playable100 qualification. No production or visible Player flow changed. No production schema/model epoch or budget was changed.
 
 Fresh GWT/Player, full33, electrical62, human Player, CI, and full30 gates were **NOT RUN** for this native diagnostic scope; reused build and regression evidence is identified above and is not presented as fresh. Visible Player/browser evidence is **NOT APPLICABLE** because no visible Player flow changed. Protected HARD was unread/unrun in this scope; the historical unread boundary remains **UNCERTIFIED**. HARD and PSYCHOTIC remain unavailable; full30 remains owner-excluded. Playable100 remains 0 and beta remains held.
 
-Root's final-source audit r1 passed in 14.8851226 s and the sanitized qualification receipt was recorded. Root updated the roadmap, architecture, and task report; no implementation or test blocker remains. Publication and remote verification remain pending. No commit, push, or milestone completion email is claimed here. The previous charged-owner email was already sent once and must not be duplicated.
+Root's final-source audit r1 passed in 14.8851226 s and the sanitized qualification receipt was recorded. Root updated the roadmap, architecture, and task report; no implementation or test blocker remains. The accepted implementation was committed and normally pushed as `ce49abbb8b0c4a1d671b56003ae1ec6829152768`, with exact remote verification. Completion Gmail `1a1a3c4e8ffb2d87` was sent once. This documentation-only receipt gets no second email. Cap17 is the next unstarted implementation milestone.

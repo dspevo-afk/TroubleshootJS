@@ -1,526 +1,536 @@
 {
-    "schema":  "q100-load12-detached-baseline-qualification-v1",
-    "status":  "PASS_FINITE_BASELINE48_PENDING_PUBLICATION",
-    "sourceParent":  "8093e2a989e690344c9913ce65ee326735f60348",
-    "layoutVersion":  26,
-    "dependencyEpoch":  "tsj-generation-dependencies-v28",
-    "nativeInputCount":  1079,
-    "nativeInputBytes":  86838457,
-    "nativeManifestSha256":  "02bb0b1512fc67a371fa24b249cc0dcfd451666592882d20e8c0378025a47975",
-    "sourcePins":  [
-                       {
-                           "path":  "tests/contracts/Rb100PhysicalDiagnostics.java",
-                           "sha256":  "27ad555dcc32667c57264595967bdd52c15c28c059cdca76721e04bc63b45a91"
-                       },
-                       {
-                           "path":  "tests/contracts/P07PrefixAllocationDiagnostics.java",
-                           "sha256":  "516f2de104a0efc5fbe50eb834e5b23a091bdb3ac2920d1b2f1248cc6b2d3725"
-                       },
-                       {
-                           "path":  "tests/contracts/P07AcceptedBranchCaptureDiagnostics.java",
-                           "sha256":  "425a2bc1fbaf28aab9e29ec71c323d4ed4b03b0db44a86ab5a9ab8d26ecc5a64"
-                       },
-                       {
-                           "path":  "tests/contracts/P07AcceptedBranchCaptureContractTest.java",
-                           "sha256":  "689028625cbfe780a62cae2dfe3002878d87f6d0615873f1874c7c7beae0e5af"
-                       },
-                       {
-                           "path":  "tests/contracts/Rb100Load12DetachedBaselineContractTest.java",
-                           "sha256":  "e4e5eceeddac28742db46ee473c740a32d40be3365f47260a17dd6facdf52b9a"
-                       },
-                       {
-                           "path":  "scripts/verify-current-contracts.ps1",
-                           "sha256":  "336c91c814308c72bc2f811bbd874a4c8902b3d0c794cb03b5a2b1114af30349"
-                       },
-                       {
-                           "path":  "tests/qualification/rb100-layout/read_load12_baseline.py",
-                           "sha256":  "08722e97c4f97b6650200fb86953a30569030d48ed0872ffa077d641015b58d3"
-                       },
-                       {
-                           "path":  "tests/qualification/rb100-layout/test_read_load12_baseline.py",
-                           "sha256":  "6bf0a06eca4fe42f5785dc82342007a5cd8cb03568687c53a028e5ea67163105"
-                       },
-                       {
-                           "path":  "tests/qualification/rb100-layout/read_quality_zero_via.py",
-                           "sha256":  "937ba44dc45d68aa69e88c94bbd1c1c2badba415c7340dfd24adfefef3c40ac7"
-                       },
-                       {
-                           "path":  "tests/qualification/rb100-layout/test_read_quality_zero_via.py",
-                           "sha256":  "2f068d1df62e02bf888f2e3f0e4582d6adc39b600bda386df02742c676cd585e"
-                       }
-                   ],
-    "baseline":  {
-                     "assertions":  6923853,
-                     "avoidability":  "UNKNOWN",
-                     "clone":  {
-                                   "bends":  2,
-                                   "flips":  4,
-                                   "goalSha256":  "cc48299ed82e39f1bac10269e7c41afc6468f1e53fc96baa36a95d5c60d548d2",
-                                   "netOrderSha256":  "aa83747fea4e180bab8cd163255a7c5b1593928c4b97e9993483eca474e12e06",
-                                   "nodeCount":  222,
-                                   "pathTupleSha256":  "1410a3abd90478627a638109cc31971802e53b3590015f83ebe4d8a57923a13d",
-                                   "planarLength":  2170,
-                                   "post":  {
-                                                "createdTraceCount":  5,
-                                                "createdViaCount":  4,
-                                                "holeCount":  21,
-                                                "traceCount":  93,
-                                                "viaCount":  21
-                                            },
-                                   "postGeometrySha256":  "9ea3f27c084608f5dd1ed14a5720229fb3a4a6697d632fb8a84212835bf1b297",
-                                   "pre":  {
-                                               "holeCount":  17,
-                                               "traceCount":  88,
-                                               "viaCount":  17
-                                           },
-                                   "preGeometrySha256":  "7c963bb9ba10f7419d2e6abaecff4cfc1504ba2744914d6874ffd02ca475c447",
-                                   "prefixRowsSha256":  "a64a51023fc1495576fd7d2e38683df362425871c96191610194cce9ede13eee",
-                                   "publicationSha256":  "20c2e5579af0b95ac0f29422ef071ee1c8b8f85820bbe7af78f55d13b783300a",
-                                   "seedSha256":  "4f109e366394d828fb2a40e5551f2b3014c945d97d2865f2e2d6b86d4f68ef55"
-                               },
-                     "comparison":  {
-                                        "goalEqual":  true,
-                                        "graphReceiptCreated":  false,
-                                        "layoutQualification":  false,
-                                        "metricsEqual":  true,
-                                        "netOrderEqual":  true,
-                                        "pathEqual":  true,
-                                        "playable100":  false,
-                                        "postGeometryEqual":  true,
-                                        "postRowsEqual":  true,
-                                        "preGeometryEqual":  true,
-                                        "prefixRowsEqual":  true,
-                                        "publicationEqual":  true,
-                                        "routeAdoption":  false,
-                                        "seedEqual":  true,
-                                        "sourcePreserved":  true,
-                                        "sourceResumed":  true
-                                    },
-                     "layoutAdoption":  false,
-                     "original":  {
-                                      "bends":  2,
-                                      "flips":  4,
-                                      "goalSha256":  "cc48299ed82e39f1bac10269e7c41afc6468f1e53fc96baa36a95d5c60d548d2",
-                                      "netOrderSha256":  "aa83747fea4e180bab8cd163255a7c5b1593928c4b97e9993483eca474e12e06",
-                                      "nodeCount":  222,
-                                      "pathTupleSha256":  "1410a3abd90478627a638109cc31971802e53b3590015f83ebe4d8a57923a13d",
-                                      "planarLength":  2170,
-                                      "post":  {
-                                                   "createdTraceCount":  5,
-                                                   "createdViaCount":  4,
-                                                   "holeCount":  21,
-                                                   "traceCount":  93,
-                                                   "viaCount":  21
-                                               },
-                                      "postGeometrySha256":  "9ea3f27c084608f5dd1ed14a5720229fb3a4a6697d632fb8a84212835bf1b297",
-                                      "pre":  {
-                                                  "holeCount":  17,
-                                                  "traceCount":  88,
-                                                  "viaCount":  17
-                                              },
-                                      "preGeometrySha256":  "7c963bb9ba10f7419d2e6abaecff4cfc1504ba2744914d6874ffd02ca475c447",
-                                      "prefixRowsSha256":  "a64a51023fc1495576fd7d2e38683df362425871c96191610194cce9ede13eee",
-                                      "publicationSha256":  "20c2e5579af0b95ac0f29422ef071ee1c8b8f85820bbe7af78f55d13b783300a",
-                                      "seedSha256":  "4f109e366394d828fb2a40e5551f2b3014c945d97d2865f2e2d6b86d4f68ef55"
-                                  },
-                     "playableBoards":  0,
-                     "purpose":  "DETACHED_LOAD12_REPLAY",
-                     "routeAdoption":  false,
-                     "runId":  "bf2f56aa-c1cb-4021-8118-5d28ff58737b",
-                     "scope":  "BASELINE48_ONLY",
-                     "selector":  {
-                                      "branchOrdinal":  73,
-                                      "grid":  {
-                                                   "cells":  147702,
-                                                   "height":  309,
-                                                   "minX":  30,
-                                                   "minY":  30,
-                                                   "pitch":  10,
-                                                   "width":  478
-                                               },
-                                      "netId":  "LOAD12",
-                                      "netPosition":  3,
-                                      "nextFetch":  4,
-                                      "pass":  1,
-                                      "placementSeed":  "-6587958367974952701",
-                                      "prefix":  {
-                                                     "traces":  88,
-                                                     "vias":  17
-                                                 },
-                                      "primaryLayer":  "BOTTOM",
-                                      "rootPadId":  "CSTORE_E.1",
-                                      "rootSeed":  "9007199254740993",
-                                      "routeRequestIndex":  0,
-                                      "routingSeed":  "8445301674744508279",
-                                      "searchBranches":  73,
-                                      "selectedPlacementAttempt":  4,
-                                      "selectedPlacementIndex":  0,
-                                      "startPadId":  "JLOAD.1"
-                                  },
-                     "work":  {
-                                  "cloneCursor":  {
-                                                      "postAdvanceCalls":  4,
-                                                      "postWork":  117262,
-                                                      "preAdvanceCalls":  26,
-                                                      "preWork":  829511
-                                                  },
-                                  "copy":  {
-                                               "advanceCalls":  247,
-                                               "copiedEntries":  2665509,
-                                               "lastWork":  28727,
-                                               "observerChecks":  1994978,
-                                               "workSteps":  8089655
-                                           },
-                                  "limits":  {
-                                                 "cleanupMs":  120000,
-                                                 "maximumTransitions":  4,
-                                                 "maximumVias":  48,
-                                                 "operationMs":  90000,
-                                                 "quantum":  32768,
-                                                 "unitMs":  5000,
-                                                 "workUnits":  640
-                                             },
-                                  "replay":  {
-                                                 "toPostCalls":  1,
-                                                 "toPostWork":  472,
-                                                 "toPreCalls":  571334,
-                                                 "toPreWork":  571334
-                                             },
-                                  "sourceCursor":  {
-                                                       "postAdvanceCalls":  4,
-                                                       "postWork":  117262,
-                                                       "preAdvanceCalls":  26,
-                                                       "preWork":  829508
-                                                   },
-                                  "sourceOperation":  {
-                                                          "cleanupMs":  0,
-                                                          "manualGroups":  376,
-                                                          "manualSliceSteps":  1472673,
-                                                          "maxUnitMs":  672,
-                                                          "operationMs":  20855,
-                                                          "postAdvanceCalls":  4,
-                                                          "preAdvanceCalls":  26,
-                                                          "workUnits":  631
-                                                      }
-                              }
-                 },
-    "native":  {
-                   "query-baseline-r3":  {
-                                             "status":  "PASS",
-                                             "suites":  [
-                                                            "Rb100Load12DetachedBaselineContractTest"
-                                                        ],
-                                             "elapsedIncludingCompileAndCleanupSeconds":  66.6657706,
-                                             "aggregateCleanupElapsedMs":  null,
-                                             "receiptSha256":  "f2c54d056771b415b0f5b341b7af488af1d5ada1d5685bdb6543c2cb6546c5b0",
-                                             "operations":  [
-                                                                {
-                                                                    "mode":  "NULL",
-                                                                    "operationMs":  15464,
-                                                                    "workUnits":  300,
-                                                                    "maxUnitMs":  1317,
-                                                                    "cleanupMs":  1
-                                                                },
-                                                                {
-                                                                    "mode":  "PROBE",
-                                                                    "operationMs":  20855,
-                                                                    "workUnits":  631,
-                                                                    "maxUnitMs":  672,
-                                                                    "cleanupMs":  0
-                                                                }
-                                                            ]
-                                         },
-                   "focused-r1":  {
-                                      "status":  "PASS",
-                                      "suites":  [
-                                                     "P07DetachedBranchReplayContractTest",
-                                                     "P07ShortcutQueryContractTest",
-                                                     "P07ZeroViaGraphContractTest",
-                                                     "P07PrefixAllocationContractTest",
-                                                     "P07TwoLayerContractTest",
-                                                     "P07AcceptedBranchCaptureContractTest"
-                                                 ],
-                                      "elapsedIncludingCompileAndCleanupSeconds":  33.4961802,
-                                      "aggregateCleanupElapsedMs":  null,
-                                      "receiptSha256":  "208e9b639d198f54439cc5afd71319ea8d62942be98ccdb152151089686f9759",
-                                      "operations":  [
-
-                                                     ]
-                                  },
-                   "query-d-r1":  {
-                                      "status":  "PASS",
-                                      "suites":  [
-                                                     "Rb100QualityZeroViaGraphContractTest"
-                                                 ],
-                                      "elapsedIncludingCompileAndCleanupSeconds":  67.9075259,
-                                      "aggregateCleanupElapsedMs":  null,
-                                      "receiptSha256":  "6164a906a15408d5e892ba0d34c12b9884c9ff5351ef3f897cf466dc964eda5b",
-                                      "operations":  [
-                                                         {
-                                                             "mode":  "NULL",
-                                                             "operationMs":  15697,
-                                                             "workUnits":  300,
-                                                             "maxUnitMs":  1429,
-                                                             "cleanupMs":  1
-                                                         },
-                                                         {
-                                                             "mode":  "PROBE",
-                                                             "operationMs":  22087,
-                                                             "workUnits":  634,
-                                                             "maxUnitMs":  715,
-                                                             "cleanupMs":  0
-                                                         }
-                                                     ]
-                                  },
-                   "query-load-r1":  {
-                                         "status":  "PASS",
-                                         "suites":  [
-                                                        "Rb100Load12ZeroViaGraphContractTest"
-                                                    ],
-                                         "elapsedIncludingCompileAndCleanupSeconds":  67.8524283,
-                                         "aggregateCleanupElapsedMs":  null,
-                                         "receiptSha256":  "5880d05f34a7a085b0d778fed430c4c57d705cce791604e4fa27696e73a648c4",
-                                         "operations":  [
-                                                            {
-                                                                "mode":  "NULL",
-                                                                "operationMs":  15722,
-                                                                "workUnits":  300,
-                                                                "maxUnitMs":  1294,
-                                                                "cleanupMs":  1
-                                                            },
-                                                            {
-                                                                "mode":  "PROBE",
-                                                                "operationMs":  22497,
-                                                                "workUnits":  628,
-                                                                "maxUnitMs":  647,
-                                                                "cleanupMs":  0
-                                                            }
-                                                        ]
-                                     }
-               },
-    "python":  {
-                   "python-tests-r2":  {
-                                           "status":  "PASS_WITH_DECLARED_FILE_SYMLINK_PRIVILEGE_SKIP",
-                                           "passed":  51,
-                                           "skipped":  1,
-                                           "total":  52,
-                                           "elapsedSeconds":  1.0154026,
-                                           "consumedInputsAuditedUnchanged":  true
-                                       },
-                   "baseline-python-tests-r2":  {
-                                                    "status":  "PASS_WITH_DECLARED_FILE_SYMLINK_PRIVILEGE_SKIP",
-                                                    "passed":  19,
-                                                    "skipped":  1,
-                                                    "total":  20,
-                                                    "elapsedSeconds":  0.86888349999999992,
-                                                    "consumedInputsAuditedUnchanged":  true
-                                                }
-               },
-    "readers":  {
-                    "baseline-reader-r1":  {
-                                               "status":  "PASS",
-                                               "expectedExitCode":  0,
-                                               "actualExitCode":  0,
-                                               "expectedErrorCode":  "",
-                                               "elapsedSeconds":  5.5490651
-                                           },
-                    "baseline-reader-stale1078-r1":  {
-                                                         "status":  "PASS",
-                                                         "expectedExitCode":  2,
-                                                         "actualExitCode":  2,
-                                                         "expectedErrorCode":  "INPUT_SPEC_IDENTITY_INVALID",
-                                                         "elapsedSeconds":  0.42561129999999997
-                                                     },
-                    "baseline-reader-rounded-seed-r1":  {
-                                                            "status":  "PASS",
-                                                            "expectedExitCode":  2,
-                                                            "actualExitCode":  2,
-                                                            "expectedErrorCode":  "BASELINE_SELECTOR_LINEAGE_INVALID",
-                                                            "elapsedSeconds":  2.5988824999999998
-                                                        },
-                    "baseline-reader-clone-post-hash-r1":  {
-                                                               "status":  "PASS",
-                                                               "expectedExitCode":  2,
-                                                               "actualExitCode":  2,
-                                                               "expectedErrorCode":  "BASELINE_CAPTURE_COMPARISON_INVALID",
-                                                               "elapsedSeconds":  2.5831440999999997
-                                                           },
-                    "baseline-reader-duplicate-event-r1":  {
-                                                               "status":  "PASS",
-                                                               "expectedExitCode":  2,
-                                                               "actualExitCode":  2,
-                                                               "expectedErrorCode":  "RUN_RECEIPT_MARKER_ORDER_INVALID",
-                                                               "elapsedSeconds":  2.5927352
-                                                           },
-                    "baseline-reader-over640-r1":  {
-                                                       "status":  "PASS",
-                                                       "expectedExitCode":  2,
-                                                       "actualExitCode":  2,
-                                                       "expectedErrorCode":  "BASELINE_SOURCE_WORK_LIMIT_INVALID",
-                                                       "elapsedSeconds":  2.4294409
-                                                   },
-                    "baseline-reader-impossible-entry-work-r1":  {
-                                                                     "status":  "PASS",
-                                                                     "expectedExitCode":  2,
-                                                                     "actualExitCode":  2,
-                                                                     "expectedErrorCode":  "BASELINE_REPLAY_WORK_INVALID",
-                                                                     "elapsedSeconds":  2.4216580999999997
-                                                                 },
-                    "baseline-reader-junction-r1":  {
-                                                        "status":  "PASS",
-                                                        "expectedExitCode":  2,
-                                                        "actualExitCode":  2,
-                                                        "expectedErrorCode":  "READER_SOURCE_REPARSE_PATH",
-                                                        "elapsedSeconds":  0.3643364
-                                                    },
-                    "reader-d-r1":  {
-                                        "status":  "PASS",
-                                        "expectedExitCode":  0,
-                                        "actualExitCode":  0,
-                                        "expectedErrorCode":  "",
-                                        "elapsedSeconds":  6.1132966999999994
-                                    },
-                    "reader-load-r1":  {
-                                           "status":  "PASS",
-                                           "expectedExitCode":  0,
-                                           "actualExitCode":  0,
-                                           "expectedErrorCode":  "",
-                                           "elapsedSeconds":  5.4712976
-                                       },
-                    "reader-d-stale1078-r1":  {
-                                                  "status":  "PASS",
-                                                  "expectedExitCode":  2,
-                                                  "actualExitCode":  2,
-                                                  "expectedErrorCode":  "INPUT_SPEC_IDENTITY_INVALID",
-                                                  "elapsedSeconds":  0.45061239999999997
-                                              }
-                },
-    "productionReuse":  {
-                            "status":  "PASS_REUSE_BOUNDARY_AUDITED_NOT_FRESH_GATES",
-                            "sourceParent":  "8093e2a989e690344c9913ce65ee326735f60348",
-                            "elapsedSeconds":  29.9876062,
-                            "builds":  {
-                                           "Developer":  {
-                                                             "status":  "REUSED_AFTER_INPUT_AUDIT_NOT_FRESH_BUILD",
-                                                             "inputDigest":  "55dbc1a64495b40155346343ee9e0cf886a4ea41a26c48f67e0ab39e9e0a6a9f",
-                                                             "inputFileCount":  1202,
-                                                             "acceptedOutputDigest":  "eeed83142fd9f815f7e37e3cd38504f297612b7cc0b44998e3abc21078192e6a",
-                                                             "acceptedOutputFileCount":  357
-                                                         },
-                                           "Player":  {
-                                                          "status":  "REUSED_AFTER_INPUT_AUDIT_NOT_FRESH_BUILD",
-                                                          "inputDigest":  "72edcd8359348c6789f9fdc60a782c89e71f25bd08947b77991d1dc687dffe66",
-                                                          "inputFileCount":  1202,
-                                                          "acceptedOutputDigest":  "ca8592a524730a19512e636b41762d9aa5ca6e8266e38653ba0411dae4dd57c0",
-                                                          "acceptedOutputFileCount":  357
-                                                      }
-                                       },
-                            "compiled":  {
-                                             "e06-state-r1":  {
-                                                                  "status":  "REUSED_AFTER_CONSUMED_INPUT_AUDIT",
-                                                                  "routes":  10,
-                                                                  "cleanupSuccess":  true,
-                                                                  "aggregateCleanupElapsedMs":  63501
-                                                              },
-                                             "current-r1":  {
-                                                                "status":  "REUSED_AFTER_CONSUMED_INPUT_AUDIT",
-                                                                "routes":  9,
-                                                                "cleanupSuccess":  true,
-                                                                "aggregateCleanupElapsedMs":  null
-                                                            },
-                                             "player-privacy-r1":  {
-                                                                       "status":  "REUSED_AFTER_CONSUMED_INPUT_AUDIT",
-                                                                       "routes":  1,
-                                                                       "cleanupSuccess":  true,
-                                                                       "aggregateCleanupElapsedMs":  44237
-                                                                   }
-                                         },
-                            "hostPins":  [
-                                             {
-                                                 "path":  "scripts/VerifierIsolation.psm1",
-                                                 "sha256":  "fb07ad540e22a225a11b8a12e9dc8e5a20d88f58f89cf32a5fd347613530954c"
-                                             },
-                                             {
-                                                 "path":  "scripts/verify-a03-browser.ps1",
-                                                 "sha256":  "5865e77913aac8b0462ab6fb392081430d5df5a0ddd943f49f699a19db016886"
-                                             },
-                                             {
-                                                 "path":  "scripts/preview.ps1",
-                                                 "sha256":  "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34"
-                                             },
-                                             {
-                                                 "path":  "scripts/build.ps1",
-                                                 "sha256":  "746e3327ae4599dbaab1ea6c6eabf697fd6e9396ebacf9094f6075cf31e38f7e"
-                                             }
-                                         ],
-                            "developerArchivedOutputs":  357,
-                            "playerPreservedOutputs":  357,
-                            "normal3":  {
-                                            "status":  "REUSED_AFTER_CONSUMED_INPUT_AUDIT",
-                                            "roots":  [
-                                                          "-2230691771308388107",
-                                                          "6702341860553104274",
-                                                          "-8360266000248569150"
-                                                      ],
-                                            "staticPins":  20,
-                                            "releaseEligible":  false,
-                                            "admissionEligible":  false,
-                                            "maxUnitMillis0":  "NOT_MEASURED_PEAK"
-                                        },
-                            "sdkPins":  9,
-                            "frozenPythonPins":  28,
-                            "productionOrPlayerFlowChanged":  false,
-                            "freshNativeBaseline":  "SEPARATELY_REQUIRED",
-                            "full30":  "OWNER_EXCLUDED",
-                            "protectedHard":  "UNREAD_UNRUN_THIS_SCOPE"
-                        },
-    "review":  {
-                   "rootIntegratedDiff":  "REVIEWED",
-                   "independent":  "SOURCE_ONLY_NATIVE_GETTERS_LITERAL_ORACLES_REGISTRY_CENSUS_CLEAR",
-                   "adapterPostFix":  "ROOT_REVIEW_AND_FRESH_ACTUAL_GATES",
-                   "consumer":  "ROOT_REVIEW_AND_FRESH20_UNIT_AND_ACTUAL_CONTROLS"
-               },
-    "audit":  {
-                  "status":  "PASS",
-                  "elapsedSeconds":  14.885122599999999,
-                  "nativeInputs":  1079,
-                  "compilerInputsPerVariant":  1202,
-                  "sdkPins":  9,
-                  "frozenPythonPins":  28,
-                  "ownedPersistentActors":  0,
-                  "directoryJunctionRemoved":  true
-              },
-    "scope":  {
-                  "qualification":  "ACTUAL_LOAD12_73_SAME_CAP48_DETACHED_BASELINE_ONLY",
-                  "cap17":  "NOT_RUN_NOT_QUALIFIED",
-                  "viaAvoidability":  "UNKNOWN",
-                  "routingAdoption":  false,
-                  "acceptedLayout":  false,
-                  "playable100":  0,
-                  "beta":  "HELD",
-                  "freshGwt":  "NOT_RUN_PRODUCTION_INPUTS_UNCHANGED_AUDITED_REUSE",
-                  "freshCompiledPlayer":  "NOT_RUN_AUDITED_REUSE",
-                  "freshNormal3":  "NOT_RUN_AUDITED_REUSE_OF_THREE_APPROVED_DEVELOPMENT_ROOTS",
-                  "freshNative33":  "NOT_RUN_UNAFFECTED_CONTRACTS",
-                  "electrical62":  "NOT_RUN",
-                  "full30":  "OWNER_EXCLUDED",
-                  "protectedHard":  "UNREAD_UNRUN_THIS_SCOPE",
-                  "historicalUnread":  "UNCERTIFIED",
-                  "HARD":  "UNAVAILABLE_UNRUN",
-                  "PSYCHOTIC":  "UNAVAILABLE_UNRUN",
-                  "manualVisiblePlayer":  "NOT_APPLICABLE_NO_PLAYER_FLOW_CHANGE",
-                  "CI":  "NOT_RUN_SELF_HOSTED_RUNNER_PREREQUISITE_RECORDED"
-              },
-    "failuresPreserved":  [
-                              "query-baseline-r1",
-                              "query-baseline-r2",
-                              "baseline-python-tests-r1",
-                              "python-tests-r1"
-                          ],
-    "resources":  {
-                      "taskPreviewBrowserProfilePort":  "NONE",
-                      "unowned8928":  "UNTOUCHED",
-                      "unrelatedCheckouts":  "PRESERVED",
-                      "rawNewlineOnlyHelpers":  19
-                  }
+  "schema": "q100-load12-detached-baseline-qualification-v1",
+  "status": "PASS_FINITE_BASELINE48_PUBLISHED",
+  "sourceParent": "8093e2a989e690344c9913ce65ee326735f60348",
+  "layoutVersion": 26,
+  "dependencyEpoch": "tsj-generation-dependencies-v28",
+  "nativeInputCount": 1079,
+  "nativeInputBytes": 86838457,
+  "nativeManifestSha256": "02bb0b1512fc67a371fa24b249cc0dcfd451666592882d20e8c0378025a47975",
+  "sourcePins": [
+    {
+      "path": "tests/contracts/Rb100PhysicalDiagnostics.java",
+      "sha256": "27ad555dcc32667c57264595967bdd52c15c28c059cdca76721e04bc63b45a91"
+    },
+    {
+      "path": "tests/contracts/P07PrefixAllocationDiagnostics.java",
+      "sha256": "516f2de104a0efc5fbe50eb834e5b23a091bdb3ac2920d1b2f1248cc6b2d3725"
+    },
+    {
+      "path": "tests/contracts/P07AcceptedBranchCaptureDiagnostics.java",
+      "sha256": "425a2bc1fbaf28aab9e29ec71c323d4ed4b03b0db44a86ab5a9ab8d26ecc5a64"
+    },
+    {
+      "path": "tests/contracts/P07AcceptedBranchCaptureContractTest.java",
+      "sha256": "689028625cbfe780a62cae2dfe3002878d87f6d0615873f1874c7c7beae0e5af"
+    },
+    {
+      "path": "tests/contracts/Rb100Load12DetachedBaselineContractTest.java",
+      "sha256": "e4e5eceeddac28742db46ee473c740a32d40be3365f47260a17dd6facdf52b9a"
+    },
+    {
+      "path": "scripts/verify-current-contracts.ps1",
+      "sha256": "336c91c814308c72bc2f811bbd874a4c8902b3d0c794cb03b5a2b1114af30349"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/read_load12_baseline.py",
+      "sha256": "08722e97c4f97b6650200fb86953a30569030d48ed0872ffa077d641015b58d3"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/test_read_load12_baseline.py",
+      "sha256": "6bf0a06eca4fe42f5785dc82342007a5cd8cb03568687c53a028e5ea67163105"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/read_quality_zero_via.py",
+      "sha256": "937ba44dc45d68aa69e88c94bbd1c1c2badba415c7340dfd24adfefef3c40ac7"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/test_read_quality_zero_via.py",
+      "sha256": "2f068d1df62e02bf888f2e3f0e4582d6adc39b600bda386df02742c676cd585e"
+    }
+  ],
+  "baseline": {
+    "assertions": 6923853,
+    "avoidability": "UNKNOWN",
+    "clone": {
+      "bends": 2,
+      "flips": 4,
+      "goalSha256": "cc48299ed82e39f1bac10269e7c41afc6468f1e53fc96baa36a95d5c60d548d2",
+      "netOrderSha256": "aa83747fea4e180bab8cd163255a7c5b1593928c4b97e9993483eca474e12e06",
+      "nodeCount": 222,
+      "pathTupleSha256": "1410a3abd90478627a638109cc31971802e53b3590015f83ebe4d8a57923a13d",
+      "planarLength": 2170,
+      "post": {
+        "createdTraceCount": 5,
+        "createdViaCount": 4,
+        "holeCount": 21,
+        "traceCount": 93,
+        "viaCount": 21
+      },
+      "postGeometrySha256": "9ea3f27c084608f5dd1ed14a5720229fb3a4a6697d632fb8a84212835bf1b297",
+      "pre": {
+        "holeCount": 17,
+        "traceCount": 88,
+        "viaCount": 17
+      },
+      "preGeometrySha256": "7c963bb9ba10f7419d2e6abaecff4cfc1504ba2744914d6874ffd02ca475c447",
+      "prefixRowsSha256": "a64a51023fc1495576fd7d2e38683df362425871c96191610194cce9ede13eee",
+      "publicationSha256": "20c2e5579af0b95ac0f29422ef071ee1c8b8f85820bbe7af78f55d13b783300a",
+      "seedSha256": "4f109e366394d828fb2a40e5551f2b3014c945d97d2865f2e2d6b86d4f68ef55"
+    },
+    "comparison": {
+      "goalEqual": true,
+      "graphReceiptCreated": false,
+      "layoutQualification": false,
+      "metricsEqual": true,
+      "netOrderEqual": true,
+      "pathEqual": true,
+      "playable100": false,
+      "postGeometryEqual": true,
+      "postRowsEqual": true,
+      "preGeometryEqual": true,
+      "prefixRowsEqual": true,
+      "publicationEqual": true,
+      "routeAdoption": false,
+      "seedEqual": true,
+      "sourcePreserved": true,
+      "sourceResumed": true
+    },
+    "layoutAdoption": false,
+    "original": {
+      "bends": 2,
+      "flips": 4,
+      "goalSha256": "cc48299ed82e39f1bac10269e7c41afc6468f1e53fc96baa36a95d5c60d548d2",
+      "netOrderSha256": "aa83747fea4e180bab8cd163255a7c5b1593928c4b97e9993483eca474e12e06",
+      "nodeCount": 222,
+      "pathTupleSha256": "1410a3abd90478627a638109cc31971802e53b3590015f83ebe4d8a57923a13d",
+      "planarLength": 2170,
+      "post": {
+        "createdTraceCount": 5,
+        "createdViaCount": 4,
+        "holeCount": 21,
+        "traceCount": 93,
+        "viaCount": 21
+      },
+      "postGeometrySha256": "9ea3f27c084608f5dd1ed14a5720229fb3a4a6697d632fb8a84212835bf1b297",
+      "pre": {
+        "holeCount": 17,
+        "traceCount": 88,
+        "viaCount": 17
+      },
+      "preGeometrySha256": "7c963bb9ba10f7419d2e6abaecff4cfc1504ba2744914d6874ffd02ca475c447",
+      "prefixRowsSha256": "a64a51023fc1495576fd7d2e38683df362425871c96191610194cce9ede13eee",
+      "publicationSha256": "20c2e5579af0b95ac0f29422ef071ee1c8b8f85820bbe7af78f55d13b783300a",
+      "seedSha256": "4f109e366394d828fb2a40e5551f2b3014c945d97d2865f2e2d6b86d4f68ef55"
+    },
+    "playableBoards": 0,
+    "purpose": "DETACHED_LOAD12_REPLAY",
+    "routeAdoption": false,
+    "runId": "bf2f56aa-c1cb-4021-8118-5d28ff58737b",
+    "scope": "BASELINE48_ONLY",
+    "selector": {
+      "branchOrdinal": 73,
+      "grid": {
+        "cells": 147702,
+        "height": 309,
+        "minX": 30,
+        "minY": 30,
+        "pitch": 10,
+        "width": 478
+      },
+      "netId": "LOAD12",
+      "netPosition": 3,
+      "nextFetch": 4,
+      "pass": 1,
+      "placementSeed": "-6587958367974952701",
+      "prefix": {
+        "traces": 88,
+        "vias": 17
+      },
+      "primaryLayer": "BOTTOM",
+      "rootPadId": "CSTORE_E.1",
+      "rootSeed": "9007199254740993",
+      "routeRequestIndex": 0,
+      "routingSeed": "8445301674744508279",
+      "searchBranches": 73,
+      "selectedPlacementAttempt": 4,
+      "selectedPlacementIndex": 0,
+      "startPadId": "JLOAD.1"
+    },
+    "work": {
+      "cloneCursor": {
+        "postAdvanceCalls": 4,
+        "postWork": 117262,
+        "preAdvanceCalls": 26,
+        "preWork": 829511
+      },
+      "copy": {
+        "advanceCalls": 247,
+        "copiedEntries": 2665509,
+        "lastWork": 28727,
+        "observerChecks": 1994978,
+        "workSteps": 8089655
+      },
+      "limits": {
+        "cleanupMs": 120000,
+        "maximumTransitions": 4,
+        "maximumVias": 48,
+        "operationMs": 90000,
+        "quantum": 32768,
+        "unitMs": 5000,
+        "workUnits": 640
+      },
+      "replay": {
+        "toPostCalls": 1,
+        "toPostWork": 472,
+        "toPreCalls": 571334,
+        "toPreWork": 571334
+      },
+      "sourceCursor": {
+        "postAdvanceCalls": 4,
+        "postWork": 117262,
+        "preAdvanceCalls": 26,
+        "preWork": 829508
+      },
+      "sourceOperation": {
+        "cleanupMs": 0,
+        "manualGroups": 376,
+        "manualSliceSteps": 1472673,
+        "maxUnitMs": 672,
+        "operationMs": 20855,
+        "postAdvanceCalls": 4,
+        "preAdvanceCalls": 26,
+        "workUnits": 631
+      }
+    }
+  },
+  "native": {
+    "query-baseline-r3": {
+      "status": "PASS",
+      "suites": [
+        "Rb100Load12DetachedBaselineContractTest"
+      ],
+      "elapsedIncludingCompileAndCleanupSeconds": 66.6657706,
+      "aggregateCleanupElapsedMs": null,
+      "receiptSha256": "f2c54d056771b415b0f5b341b7af488af1d5ada1d5685bdb6543c2cb6546c5b0",
+      "operations": [
+        {
+          "mode": "NULL",
+          "operationMs": 15464,
+          "workUnits": 300,
+          "maxUnitMs": 1317,
+          "cleanupMs": 1
+        },
+        {
+          "mode": "PROBE",
+          "operationMs": 20855,
+          "workUnits": 631,
+          "maxUnitMs": 672,
+          "cleanupMs": 0
+        }
+      ]
+    },
+    "focused-r1": {
+      "status": "PASS",
+      "suites": [
+        "P07DetachedBranchReplayContractTest",
+        "P07ShortcutQueryContractTest",
+        "P07ZeroViaGraphContractTest",
+        "P07PrefixAllocationContractTest",
+        "P07TwoLayerContractTest",
+        "P07AcceptedBranchCaptureContractTest"
+      ],
+      "elapsedIncludingCompileAndCleanupSeconds": 33.4961802,
+      "aggregateCleanupElapsedMs": null,
+      "receiptSha256": "208e9b639d198f54439cc5afd71319ea8d62942be98ccdb152151089686f9759",
+      "operations": []
+    },
+    "query-d-r1": {
+      "status": "PASS",
+      "suites": [
+        "Rb100QualityZeroViaGraphContractTest"
+      ],
+      "elapsedIncludingCompileAndCleanupSeconds": 67.9075259,
+      "aggregateCleanupElapsedMs": null,
+      "receiptSha256": "6164a906a15408d5e892ba0d34c12b9884c9ff5351ef3f897cf466dc964eda5b",
+      "operations": [
+        {
+          "mode": "NULL",
+          "operationMs": 15697,
+          "workUnits": 300,
+          "maxUnitMs": 1429,
+          "cleanupMs": 1
+        },
+        {
+          "mode": "PROBE",
+          "operationMs": 22087,
+          "workUnits": 634,
+          "maxUnitMs": 715,
+          "cleanupMs": 0
+        }
+      ]
+    },
+    "query-load-r1": {
+      "status": "PASS",
+      "suites": [
+        "Rb100Load12ZeroViaGraphContractTest"
+      ],
+      "elapsedIncludingCompileAndCleanupSeconds": 67.8524283,
+      "aggregateCleanupElapsedMs": null,
+      "receiptSha256": "5880d05f34a7a085b0d778fed430c4c57d705cce791604e4fa27696e73a648c4",
+      "operations": [
+        {
+          "mode": "NULL",
+          "operationMs": 15722,
+          "workUnits": 300,
+          "maxUnitMs": 1294,
+          "cleanupMs": 1
+        },
+        {
+          "mode": "PROBE",
+          "operationMs": 22497,
+          "workUnits": 628,
+          "maxUnitMs": 647,
+          "cleanupMs": 0
+        }
+      ]
+    }
+  },
+  "python": {
+    "python-tests-r2": {
+      "status": "PASS_WITH_DECLARED_FILE_SYMLINK_PRIVILEGE_SKIP",
+      "passed": 51,
+      "skipped": 1,
+      "total": 52,
+      "elapsedSeconds": 1.0154026,
+      "consumedInputsAuditedUnchanged": true
+    },
+    "baseline-python-tests-r2": {
+      "status": "PASS_WITH_DECLARED_FILE_SYMLINK_PRIVILEGE_SKIP",
+      "passed": 19,
+      "skipped": 1,
+      "total": 20,
+      "elapsedSeconds": 0.8688834999999999,
+      "consumedInputsAuditedUnchanged": true
+    }
+  },
+  "readers": {
+    "baseline-reader-r1": {
+      "status": "PASS",
+      "expectedExitCode": 0,
+      "actualExitCode": 0,
+      "expectedErrorCode": "",
+      "elapsedSeconds": 5.5490651
+    },
+    "baseline-reader-stale1078-r1": {
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "actualExitCode": 2,
+      "expectedErrorCode": "INPUT_SPEC_IDENTITY_INVALID",
+      "elapsedSeconds": 0.42561129999999997
+    },
+    "baseline-reader-rounded-seed-r1": {
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "actualExitCode": 2,
+      "expectedErrorCode": "BASELINE_SELECTOR_LINEAGE_INVALID",
+      "elapsedSeconds": 2.5988824999999998
+    },
+    "baseline-reader-clone-post-hash-r1": {
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "actualExitCode": 2,
+      "expectedErrorCode": "BASELINE_CAPTURE_COMPARISON_INVALID",
+      "elapsedSeconds": 2.5831440999999997
+    },
+    "baseline-reader-duplicate-event-r1": {
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "actualExitCode": 2,
+      "expectedErrorCode": "RUN_RECEIPT_MARKER_ORDER_INVALID",
+      "elapsedSeconds": 2.5927352
+    },
+    "baseline-reader-over640-r1": {
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "actualExitCode": 2,
+      "expectedErrorCode": "BASELINE_SOURCE_WORK_LIMIT_INVALID",
+      "elapsedSeconds": 2.4294409
+    },
+    "baseline-reader-impossible-entry-work-r1": {
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "actualExitCode": 2,
+      "expectedErrorCode": "BASELINE_REPLAY_WORK_INVALID",
+      "elapsedSeconds": 2.4216580999999997
+    },
+    "baseline-reader-junction-r1": {
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "actualExitCode": 2,
+      "expectedErrorCode": "READER_SOURCE_REPARSE_PATH",
+      "elapsedSeconds": 0.3643364
+    },
+    "reader-d-r1": {
+      "status": "PASS",
+      "expectedExitCode": 0,
+      "actualExitCode": 0,
+      "expectedErrorCode": "",
+      "elapsedSeconds": 6.113296699999999
+    },
+    "reader-load-r1": {
+      "status": "PASS",
+      "expectedExitCode": 0,
+      "actualExitCode": 0,
+      "expectedErrorCode": "",
+      "elapsedSeconds": 5.4712976
+    },
+    "reader-d-stale1078-r1": {
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "actualExitCode": 2,
+      "expectedErrorCode": "INPUT_SPEC_IDENTITY_INVALID",
+      "elapsedSeconds": 0.45061239999999997
+    }
+  },
+  "productionReuse": {
+    "status": "PASS_REUSE_BOUNDARY_AUDITED_NOT_FRESH_GATES",
+    "sourceParent": "8093e2a989e690344c9913ce65ee326735f60348",
+    "elapsedSeconds": 29.9876062,
+    "builds": {
+      "Developer": {
+        "status": "REUSED_AFTER_INPUT_AUDIT_NOT_FRESH_BUILD",
+        "inputDigest": "55dbc1a64495b40155346343ee9e0cf886a4ea41a26c48f67e0ab39e9e0a6a9f",
+        "inputFileCount": 1202,
+        "acceptedOutputDigest": "eeed83142fd9f815f7e37e3cd38504f297612b7cc0b44998e3abc21078192e6a",
+        "acceptedOutputFileCount": 357
+      },
+      "Player": {
+        "status": "REUSED_AFTER_INPUT_AUDIT_NOT_FRESH_BUILD",
+        "inputDigest": "72edcd8359348c6789f9fdc60a782c89e71f25bd08947b77991d1dc687dffe66",
+        "inputFileCount": 1202,
+        "acceptedOutputDigest": "ca8592a524730a19512e636b41762d9aa5ca6e8266e38653ba0411dae4dd57c0",
+        "acceptedOutputFileCount": 357
+      }
+    },
+    "compiled": {
+      "e06-state-r1": {
+        "status": "REUSED_AFTER_CONSUMED_INPUT_AUDIT",
+        "routes": 10,
+        "cleanupSuccess": true,
+        "aggregateCleanupElapsedMs": 63501
+      },
+      "current-r1": {
+        "status": "REUSED_AFTER_CONSUMED_INPUT_AUDIT",
+        "routes": 9,
+        "cleanupSuccess": true,
+        "aggregateCleanupElapsedMs": null
+      },
+      "player-privacy-r1": {
+        "status": "REUSED_AFTER_CONSUMED_INPUT_AUDIT",
+        "routes": 1,
+        "cleanupSuccess": true,
+        "aggregateCleanupElapsedMs": 44237
+      }
+    },
+    "hostPins": [
+      {
+        "path": "scripts/VerifierIsolation.psm1",
+        "sha256": "fb07ad540e22a225a11b8a12e9dc8e5a20d88f58f89cf32a5fd347613530954c"
+      },
+      {
+        "path": "scripts/verify-a03-browser.ps1",
+        "sha256": "5865e77913aac8b0462ab6fb392081430d5df5a0ddd943f49f699a19db016886"
+      },
+      {
+        "path": "scripts/preview.ps1",
+        "sha256": "75a183be31359470bd1802c6d8f8890b7a894f1c8b2c0833747cfe2aa8895a34"
+      },
+      {
+        "path": "scripts/build.ps1",
+        "sha256": "746e3327ae4599dbaab1ea6c6eabf697fd6e9396ebacf9094f6075cf31e38f7e"
+      }
+    ],
+    "developerArchivedOutputs": 357,
+    "playerPreservedOutputs": 357,
+    "normal3": {
+      "status": "REUSED_AFTER_CONSUMED_INPUT_AUDIT",
+      "roots": [
+        "-2230691771308388107",
+        "6702341860553104274",
+        "-8360266000248569150"
+      ],
+      "staticPins": 20,
+      "releaseEligible": false,
+      "admissionEligible": false,
+      "maxUnitMillis0": "NOT_MEASURED_PEAK"
+    },
+    "sdkPins": 9,
+    "frozenPythonPins": 28,
+    "productionOrPlayerFlowChanged": false,
+    "freshNativeBaseline": "SEPARATELY_REQUIRED",
+    "full30": "OWNER_EXCLUDED",
+    "protectedHard": "UNREAD_UNRUN_THIS_SCOPE"
+  },
+  "review": {
+    "rootIntegratedDiff": "REVIEWED",
+    "independent": "SOURCE_ONLY_NATIVE_GETTERS_LITERAL_ORACLES_REGISTRY_CENSUS_CLEAR",
+    "adapterPostFix": "ROOT_REVIEW_AND_FRESH_ACTUAL_GATES",
+    "consumer": "ROOT_REVIEW_AND_FRESH20_UNIT_AND_ACTUAL_CONTROLS"
+  },
+  "audit": {
+    "status": "PASS",
+    "elapsedSeconds": 14.885122599999999,
+    "nativeInputs": 1079,
+    "compilerInputsPerVariant": 1202,
+    "sdkPins": 9,
+    "frozenPythonPins": 28,
+    "ownedPersistentActors": 0,
+    "directoryJunctionRemoved": true
+  },
+  "scope": {
+    "qualification": "ACTUAL_LOAD12_73_SAME_CAP48_DETACHED_BASELINE_ONLY",
+    "cap17": "NOT_RUN_NOT_QUALIFIED",
+    "viaAvoidability": "UNKNOWN",
+    "routingAdoption": false,
+    "acceptedLayout": false,
+    "playable100": 0,
+    "beta": "HELD",
+    "freshGwt": "NOT_RUN_PRODUCTION_INPUTS_UNCHANGED_AUDITED_REUSE",
+    "freshCompiledPlayer": "NOT_RUN_AUDITED_REUSE",
+    "freshNormal3": "NOT_RUN_AUDITED_REUSE_OF_THREE_APPROVED_DEVELOPMENT_ROOTS",
+    "freshNative33": "NOT_RUN_UNAFFECTED_CONTRACTS",
+    "electrical62": "NOT_RUN",
+    "full30": "OWNER_EXCLUDED",
+    "protectedHard": "UNREAD_UNRUN_THIS_SCOPE",
+    "historicalUnread": "UNCERTIFIED",
+    "HARD": "UNAVAILABLE_UNRUN",
+    "PSYCHOTIC": "UNAVAILABLE_UNRUN",
+    "manualVisiblePlayer": "NOT_APPLICABLE_NO_PLAYER_FLOW_CHANGE",
+    "CI": "NOT_RUN_SELF_HOSTED_RUNNER_PREREQUISITE_RECORDED"
+  },
+  "failuresPreserved": [
+    "query-baseline-r1",
+    "query-baseline-r2",
+    "baseline-python-tests-r1",
+    "python-tests-r1"
+  ],
+  "resources": {
+    "taskPreviewBrowserProfilePort": "NONE",
+    "unowned8928": "UNTOUCHED",
+    "unrelatedCheckouts": "PRESERVED",
+    "rawNewlineOnlyHelpers": 19
+  },
+  "publication": {
+    "implementationCommit": "ce49abbb8b0c4a1d671b56003ae1ec6829152768",
+    "message": "Qualify actual LOAD12 detached baseline replay",
+    "sourceBranch": "codex/q100-load12-baseline-20261103",
+    "publishedRef": "origin/codex/q100-physical-feasibility",
+    "normalPush": true,
+    "exactRemoteVerified": true,
+    "completionGmailId": "1a1a3c4e8ffb2d87",
+    "completionEmails": 1,
+    "nextUnstartedImplementation": "Explicit cap17 detached replay",
+    "receipt": "Documentation only; no duplicate completion email"
+  }
 }
