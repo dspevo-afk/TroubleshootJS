@@ -135,8 +135,8 @@ public final class Rb100PhysicalDiagnostics {
             "\"layoutQualification\":false}");
     }
 
-    /** Exact actual-generator NULL/PROBE pair and Publisher path for the private quality-path diagnostic. */
-    static void runQualityPathContracts() {
+    /** Actual-generator NULL/PROBE pair plus the bounded actual-branch shortcut query. */
+    static void runQualityShortcutContracts() {
         long suiteStarted=System.nanoTime();
         int beforeAssertions=assertions;
         final String runId=UUID.randomUUID().toString();
@@ -150,14 +150,15 @@ public final class Rb100PhysicalDiagnostics {
             Rb100Placement.INTENT_VERSION==9,
             "quality scalar diagnostic identifies current layout26/dependency-v28/plan1/model4/intent9 inputs");
         require(CASE_LIMIT_NANOS==90000000000L && WORK_LIMIT==640 &&
-            UNIT_LIMIT_NANOS==5000000000L && CLEANUP_LIMIT_MILLIS==120000L,
+            UNIT_LIMIT_NANOS==5000000000L && CLEANUP_LIMIT_MILLIS==120000L &&
+            QualityScalarProbe.MAX_MANUAL_STEPS_PER_UNIT==32768,
             "quality scalar diagnostic retains the existing case/work/unit/cleanup budgets");
 
         P07PolicyDiagnosticCase baseline=runP07PolicyDiagnosticCase(variant,runId,null,null,
             "NULL",nullOperationId,null,null,true);
         if(!"PASS".equals(baseline.status) || baseline.policyResult==null ||
                 baseline.policyResult.getLayout()!=null || baseline.qualitySubsetMarkerJson==null) {
-            System.out.println("RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":14,\"runId\":\""+
+            System.out.println("RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":15,\"runId\":\""+
                 jsonFull(runId)+"\",\"operationId\":\""+nullOperationId+
                 "\",\"variant\":\""+variant.name()+"\",\"mode\":\"NULL\",\"result\":"+
                 baseline.toJson()+"}");
@@ -200,7 +201,7 @@ public final class Rb100PhysicalDiagnostics {
         long suiteMillis=nanosToMillis(System.nanoTime()-suiteStarted);
         require(suiteMillis<=480000L,
             "quality scalar two-operation suite remains within its frozen480s ceiling");
-        System.out.println("PASS: RB100 quality scalar contracts {\"protocolVersion\":1,\"sourceRevision\":14,"+
+        System.out.println("PASS: RB100 quality scalar contracts {\"protocolVersion\":1,\"sourceRevision\":15,"+
             "\"status\":\"PASS\",\"operations\":2,\"nullOperations\":1,\"probeOperations\":1,"+
             "\"pairs\":1,\"confirmedScalarEvents\":1,\"variant\":\""+variant.name()+
             "\",\"runId\":\""+jsonFull(runId)+"\",\"rootSeed\":\""+SEED+
@@ -217,8 +218,12 @@ public final class Rb100PhysicalDiagnostics {
             ",\"routeMillisStatus\":\"INCOMPLETE_MANUAL_SINGLE_STEP_CADENCE_NOT_REPRESENTATIVE\","+
             "\"feasibility\":\"UNKNOWN\",\"layoutQualification\":false,"+
             "\"scope\":\"OBSERVATIONAL_ACTUAL_GENERATOR_QUALITY_SCALAR_ONLY\"}");
+        String shortcutEvent=probe.shortcutQueryEventJson(observed);
+        String shortcutSummary=probe.shortcutQuerySummaryJson(observed);
         System.out.println(pathEvent);
         System.out.println(pathSummary);
+        System.out.println(shortcutEvent);
+        System.out.println(shortcutSummary);
     }
 
     /** Actual-generator null/capture pairs for the opt-in fixed-prefix graph seam. */
@@ -517,8 +522,8 @@ public final class Rb100PhysicalDiagnostics {
             result.phase = "MEDIUM_SESSION_ADVANCE";
             while (!terminal[0]) {
                 if(qualityProbe!=null && qualityProbe.shouldManuallyAdvance(session[0])) {
-                    final int groupIndex=qualityProbe.manualGroups+1;
-                    valueUnit(budget,"p07-quality-scalar-single-step-group-"+groupIndex,
+                    final String unitName=qualityProbe.nextManualUnitName();
+                    valueUnit(budget,unitName,
                         new UnitValue<Object>() {
                             public Object run() {
                                 qualityProbe.advanceManualGroup(session[0],budget);
@@ -858,7 +863,7 @@ public final class Rb100PhysicalDiagnostics {
 
     private static String qualityScalarOperationJson(P07PolicyDiagnosticCase result,
             String operationId,String mode) {
-        return "RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":14,"+
+        return "RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":15,"+
             "\"runId\":\""+jsonFull(result.runId)+"\",\"operationId\":\""+
             jsonFull(operationId)+"\",\"variant\":\""+jsonFull(result.subject)+
             "\",\"mode\":\""+jsonFull(mode)+"\",\"result\":"+result.toJson()+"}";
@@ -918,7 +923,7 @@ public final class Rb100PhysicalDiagnostics {
             observed.policyResult!=null && baseline.policyResult.getLayout()==null &&
             observed.policyResult.getLayout()==null && baseline.layoutOutputJson.contains("\"layoutReturned\":false") &&
             observed.layoutOutputJson.contains("\"layoutReturned\":false");
-        return "RB100_QUALITY_SCALAR_PAIR {\"protocolVersion\":1,\"sourceRevision\":14,"+
+        return "RB100_QUALITY_SCALAR_PAIR {\"protocolVersion\":1,\"sourceRevision\":15,"+
             "\"runId\":\""+jsonFull(runId)+"\",\"variant\":\""+variant.name()+
             "\",\"nullOperationId\":\""+nullOperationId+"\",\"probeOperationId\":\""+
             probeOperationId+"\",\"rootSeed\":\""+SEED+"\",\"placementSeed\":\""+
@@ -3059,16 +3064,23 @@ public final class Rb100PhysicalDiagnostics {
         final String runId,operationId;
         final Rb100Plan.Variant variant;
         int selectCalls,graphCallbacks,manualSliceSteps,manualGroups;
+        int shortcutAdvanceCalls;
         long manualDriverNanos;
         String controlsJson,qualityRejectionMessage,generatorLastFailureType,
             generatorLastFailureMessage;
-        Object routeSession,fixedPrefixContext,targetSearch,targetPublisher;
+        Object routeSession,fixedPrefixContext,targetSearch,targetPublisher,
+            targetBranchSearch,targetBranch;
         Object targetStartPad,targetRootPad,targetEndNode;
         QualityScalarSnapshot snapshot;
         QualityPathSnapshot pathSnapshot;
+        ShortcutQueryBinding shortcutBinding;
+        P07ShortcutQueryDiagnostics.Cursor shortcutCursor;
+        String shortcutDiagnosticJson;
+        int shortcutQueryQualifiedCount=-1,shortcutCompletedLastWork=-1;
+        int lastShortcutBudgetUnit;
         int targetAccountingBefore=-1,targetAccountingAfter=-1;
         boolean targetCaptured,qualityRejected,targetRequestAccounted,
-            terminalConfirmed,readyGuardRequested,armedReadyGuard;
+            terminalConfirmed,readyGuardRequested,armedReadyGuard,targetBranchHandoffVerified;
 
         QualityScalarProbe(String runId,String operationId,Rb100Plan.Variant variant) {
             this.runId=runId; this.operationId=operationId; this.variant=variant;
@@ -3091,6 +3103,12 @@ public final class Rb100PhysicalDiagnostics {
                 P07ScalarReflection.read(generatorSession,"mediumTwoLayerRoute")!=null;
         }
 
+        String nextManualUnitName() {
+            return shortcutCursor!=null && !shortcutCursor.isComplete() ?
+                "p07-quality-shortcut-query-advance-"+(shortcutAdvanceCalls+1) :
+                "p07-quality-scalar-single-step-group-"+(manualGroups+1);
+        }
+
         void armReadyGuard() { readyGuardRequested=true; }
 
         void guardNoUnexpectedReady(SeededPcbLayoutGenerator.Session generatorSession) {
@@ -3109,6 +3127,19 @@ public final class Rb100PhysicalDiagnostics {
                 "manual single-step driver owns the live generator session before the target rejection");
             Object active=P07ScalarReflection.read(generatorSession,"mediumTwoLayerRoute");
             require(active!=null,"manual single-step driver observes the actual retained P07 owner");
+            if(shortcutCursor!=null && !shortcutCursor.isComplete()) {
+                require(active==routeSession &&
+                    P07ScalarReflection.read(routeSession,"fixedPrefixContext")==fixedPrefixContext,
+                    "pending shortcut work retains the same generator owner and fixed-prefix context");
+                long queryGroupStarted=System.nanoTime();
+                try {
+                    advanceShortcutQuery(budget);
+                } finally {
+                    manualDriverNanos+=Math.max(0L,System.nanoTime()-queryGroupStarted);
+                }
+                manualGroups++;
+                return;
+            }
             if(routeSession==null) {
                 routeSession=active;
                 fixedPrefixContext=P07ScalarReflection.read(routeSession,"fixedPrefixContext");
@@ -3138,13 +3169,31 @@ public final class Rb100PhysicalDiagnostics {
                     Object search=P07ScalarReflection.read(routeSession,"search");
                     if(search!=null && controlsJson==null)
                         controlsJson=runQualityScalarPublisherControls(search,runId);
+                    Object branchBeforeSlice=retainTargetBranchBeforeSlice(search);
+                    Object publisherBeforeSlice=search==null?null:
+                        P07ScalarReflection.read(search,"publisher");
                     PcbLayerRoutingPrototype.OrderingProgress progress=
                         ((PcbLayerRoutingPrototype.Session)routeSession).advanceOrderingSlice(1);
                     manualSliceSteps++;
                     steps++;
+                    if(search!=null && targetBranch!=null &&
+                            branchBeforeSlice==targetBranch && publisherBeforeSlice==null &&
+                            search==targetBranchSearch) {
+                        Object branchAfterSlice=P07ScalarReflection.read(search,"branch");
+                        Object publisherAfterSlice=P07ScalarReflection.read(search,"publisher");
+                        if(branchAfterSlice==null && publisherAfterSlice!=null) {
+                            require(P07ScalarReflection.read(publisherAfterSlice,"end") ==
+                                    P07ScalarReflection.read(targetBranch,"found") &&
+                                P07ScalarReflection.read(publisherAfterSlice,"endTerminal") ==
+                                    P07ScalarReflection.read(targetBranch,"foundTerminal"),
+                                "installed Publisher endpoints are the found Node and terminal from the retained actual BranchSearch");
+                            targetBranchHandoffVerified=true;
+                        }
+                    }
                     require(progress!=PcbLayerRoutingPrototype.OrderingProgress.ROUTE_READY,
                         "manual P07 stepping must stop before any retained route can be integrated");
                     inspectActualTargetAfterSlice(progress);
+                    if(shortcutCursor!=null && !shortcutCursor.isComplete()) break;
                     if(progress==PcbLayerRoutingPrototype.OrderingProgress.COMPLETE && !qualityRejected)
                         throw new AssertionError("target quality rejection was not observed before P07 completion");
                 }
@@ -3152,6 +3201,226 @@ public final class Rb100PhysicalDiagnostics {
                 manualDriverNanos+=Math.max(0L,System.nanoTime()-manualGroupStarted);
             }
             manualGroups++;
+        }
+
+        private Object retainTargetBranchBeforeSlice(Object search) {
+            if(search==null || P07ScalarReflection.intField(search,"pass")!=1) return null;
+            Object branch=P07ScalarReflection.read(search,"branch");
+            if(targetBranch==null) {
+                if(branch==null || !"D_SENSE".equals(P07ScalarReflection.stringField(branch,"net")))
+                    return null;
+                require(P07ScalarReflection.read(search,"publisher")==null,
+                    "retained actual D_SENSE BranchSearch precedes its Publisher installation");
+                targetBranchSearch=search;
+                targetBranch=branch;
+            }
+            if(search==targetBranchSearch && branch!=null) {
+                require(branch==targetBranch,
+                    "actual D_SENSE branch identity remains the same through its pre-Publisher search slices");
+                return branch;
+            }
+            return null;
+        }
+
+        private void beginShortcutQuery(Object search,Object publisher) {
+            require(targetBranchSearch==search && targetBranch!=null && targetBranchHandoffVerified &&
+                P07ScalarReflection.read(search,"branch")==null &&
+                P07ScalarReflection.read(search,"publisher")==publisher,
+                "stage1 Publisher follows the exact BranchSearch retained before its installing P07 slice");
+            Object found=P07ScalarReflection.read(targetBranch,"found");
+            PcbPadPlacement foundTerminal=(PcbPadPlacement)
+                P07ScalarReflection.read(targetBranch,"foundTerminal");
+            PcbPadPlacement start=(PcbPadPlacement)P07ScalarReflection.read(targetBranch,"start");
+            PcbPadPlacement root=(PcbPadPlacement)P07ScalarReflection.read(targetBranch,"root");
+            PcbPadPlacement[] reached=(PcbPadPlacement[])
+                P07ScalarReflection.read(targetBranch,"reachedTerminals");
+            boolean[] goals=(boolean[])P07ScalarReflection.read(targetBranch,"goal");
+            String netId=P07ScalarReflection.stringField(targetBranch,"net");
+            PcbBoardLayout layout=(PcbBoardLayout)P07ScalarReflection.read(search,"layout");
+            PcbNetRouter.Router[] faces=(PcbNetRouter.Router[])
+                P07ScalarReflection.read(search,"faces");
+            int width=P07ScalarReflection.intField(search,"width");
+            int height=P07ScalarReflection.intField(search,"height");
+            int cells=P07ScalarReflection.intField(search,"cells");
+            int originX=P07ScalarReflection.intField(search,"minX");
+            int originY=P07ScalarReflection.intField(search,"minY");
+            int pitch=PcbLayerRoutingPrototype.GRID;
+            int endCell=P07ScalarReflection.intField(found,"cell");
+            int endLayer=P07ScalarReflection.intField(found,"layer");
+            require(pathSnapshot!=null && pathSnapshot.nodes.length==66,
+                "approved actual Publisher path retains its exact66 captured nodes before query setup");
+            QualityPathNodeSnapshot firstPathNode=pathSnapshot.nodes[0];
+            QualityPathNodeSnapshot lastPathNode=pathSnapshot.nodes[pathSnapshot.nodes.length-1];
+            PcbPadPlacement publisherTerminal=(PcbPadPlacement)
+                P07ScalarReflection.read(publisher,"endTerminal");
+            require(snapshot.pass==1 && "D_SENSE".equals(snapshot.netId) &&
+                snapshot.pathNodeCount==66 && snapshot.planarLength==650 &&
+                snapshot.directDistance==210 && snapshot.bends==6 && snapshot.transitionCount==0 &&
+                firstPathNode.cost==2 && lastPathNode.cost==992,
+                "shortcut family binds only the approved separate D_SENSE 66/650/210/6/0 path with actual endpoint costs2/992");
+            require(targetPublisher==publisher && targetEndNode==found &&
+                P07ScalarReflection.read(publisher,"end")==found && publisherTerminal==foundTerminal &&
+                start==targetStartPad && root==targetRootPad && start!=null && root!=null &&
+                netId!=null && netId.equals(snapshot.netId) &&
+                netId.equals(P07ScalarReflection.stringField(search,"currentNet")) &&
+                P07ScalarReflection.read(search,"currentRoot")==root &&
+                netId.equals(P07ScalarReflection.stringField(publisher,"net")) &&
+                P07ScalarReflection.read(publisher,"start")==start &&
+                P07ScalarReflection.read(publisher,"root")==root &&
+                width>0 && height>0 && (long)width*height==cells &&
+                cells==snapshot.gridWidth*snapshot.gridHeight &&
+                width==snapshot.gridWidth && height==snapshot.gridHeight &&
+                originX==snapshot.gridOriginX && originY==snapshot.gridOriginY &&
+                pitch==snapshot.gridPitch && faces!=null && faces.length==2 &&
+                faces[PcbCopperLayer.TOP.ordinal()]!=null && reached!=null && goals!=null &&
+                goals.length==2*cells && endCell==pathSnapshot.nodes[pathSnapshot.nodes.length-1].cell &&
+                endLayer==snapshot.endLayer && endLayer==PcbCopperLayer.TOP.ordinal() &&
+                P07ScalarReflection.intField(publisher,"stage")==1 &&
+                P07ScalarReflection.intField(publisher,"qualityIndex")==66,
+                "actual BranchSearch endpoints, goal mask, TOP Router, grid and quiescent Publisher match the captured path");
+            require(goals[endLayer*cells+endCell],
+                "actual Publisher end cell and face are true in the retained BranchSearch goal mask");
+            String[] reachedIds=new String[reached.length];
+            String previousId=null;
+            for(int index=0;index<reached.length;index++) {
+                PcbPadPlacement pad=reached[index];
+                require(pad!=null && !root.getPadId().equals(pad.getPadId()) &&
+                    (previousId==null || previousId.compareTo(pad.getPadId())<0),
+                    "actual reached PTH terminals retain unique canonical source order outside the root");
+                reachedIds[index]=pad.getPadId();
+                previousId=pad.getPadId();
+            }
+            if(foundTerminal!=null) {
+                boolean terminalAuthority=foundTerminal==root;
+                for(PcbPadPlacement pad:reached) if(pad==foundTerminal) terminalAuthority=true;
+                require(terminalAuthority,
+                    "actual found terminal is the Publisher endpoint and an original root or reached PTH identity");
+            }
+            int[][] path=new int[pathSnapshot.nodes.length][3];
+            for(int index=0;index<pathSnapshot.nodes.length;index++) {
+                QualityPathNodeSnapshot row=pathSnapshot.nodes[index];
+                require(row.layer==endLayer,
+                    "the captured actual path stays on its checked TOP Router face without adding transitions");
+                path[index][0]=row.x;
+                path[index][1]=row.y;
+                path[index][2]=row.layer;
+            }
+            shortcutBinding=new ShortcutQueryBinding(search,targetBranch,publisher,found,foundTerminal,
+                goals,reached,faces,faces[PcbCopperLayer.TOP.ordinal()],layout,start,root,netId,
+                P07ScalarReflection.intField(search,"pass"),width,height,cells,originX,originY,pitch,
+                endLayer,endCell,reachedIds);
+            P07ShortcutQueryDiagnostics.Context context=new P07ShortcutQueryDiagnostics.Context(
+                layout,faces[PcbCopperLayer.TOP.ordinal()],netId,start,root,reached,goals,
+                width,height,originX,originY,pitch,endLayer,path);
+            shortcutCursor=P07ShortcutQueryDiagnostics.begin(context);
+            require(shortcutCursor!=null && !shortcutCursor.isComplete(),
+                "actual finite shortcut-family cursor begins pending and resumable");
+            verifyShortcutBindingUnchanged(false);
+        }
+
+        private void verifyShortcutBindingUnchanged(boolean ownerAdvanced) {
+            ShortcutQueryBinding binding=shortcutBinding;
+            require(binding!=null && targetBranch==binding.branch &&
+                targetBranchSearch==binding.search && targetSearch==binding.search &&
+                targetPublisher==binding.publisher && targetEndNode==binding.endNode,
+                "retained actual BranchSearch, Search, Publisher and end Node object identities remain bound");
+            Object activeSearch=P07ScalarReflection.read(routeSession,"search");
+            require(ownerAdvanced ? activeSearch==null : activeSearch==binding.search,
+                "P07 owner remains stopped at the captured Search until cursor completion, then advances only to its actual rejection");
+            PcbNetRouter.Router[] faces=(PcbNetRouter.Router[])
+                P07ScalarReflection.read(binding.search,"faces");
+            PcbPadPlacement[] reached=(PcbPadPlacement[])
+                P07ScalarReflection.read(binding.branch,"reachedTerminals");
+            boolean[] goals=(boolean[])P07ScalarReflection.read(binding.branch,"goal");
+            require(P07ScalarReflection.read(binding.search,"owner")==routeSession &&
+                P07ScalarReflection.read(binding.search,"branch")==null &&
+                P07ScalarReflection.read(binding.search,"publisher")==binding.publisher &&
+                P07ScalarReflection.read(binding.search,"layout")==binding.layout &&
+                P07ScalarReflection.intField(binding.search,"pass")==binding.pass &&
+                binding.netId.equals(P07ScalarReflection.stringField(binding.search,"currentNet")) &&
+                P07ScalarReflection.read(binding.search,"currentRoot")==binding.root &&
+                faces==binding.facesIdentity && faces[binding.layer]==binding.liveFace &&
+                P07ScalarReflection.read(binding.branch,"found")==binding.endNode &&
+                P07ScalarReflection.read(binding.branch,"foundTerminal")==binding.foundTerminal &&
+                P07ScalarReflection.read(binding.branch,"goal")==binding.goalIdentity &&
+                Arrays.equals(binding.goalValues,goals) &&
+                P07ScalarReflection.read(binding.branch,"reachedTerminals")==binding.reachedIdentity &&
+                reached.length==binding.reachedValues.length &&
+                P07ScalarReflection.read(binding.branch,"start")==binding.start &&
+                P07ScalarReflection.read(binding.branch,"root")==binding.root &&
+                P07ScalarReflection.read(binding.publisher,"end")==binding.endNode &&
+                P07ScalarReflection.read(binding.publisher,"endTerminal")==binding.foundTerminal &&
+                P07ScalarReflection.read(binding.publisher,"start")==binding.start &&
+                P07ScalarReflection.read(binding.publisher,"root")==binding.root &&
+                binding.netId.equals(P07ScalarReflection.stringField(binding.publisher,"net")) &&
+                P07ScalarReflection.intField(binding.publisher,"stage")==1 &&
+                P07ScalarReflection.intField(binding.publisher,"qualityIndex")==66,
+                "original branch goal and endpoint authorities and actual Publisher stay unchanged and quiescent");
+            for(int index=0;index<reached.length;index++)
+                require(reached[index]==binding.reachedValues[index] &&
+                    binding.reachedPadIds[index].equals(reached[index].getPadId()),
+                    "actual reached PTH identity and canonical pad ID remain unchanged at index "+index);
+            int endCell=P07ScalarReflection.intField(binding.endNode,"cell");
+            int endLayer=P07ScalarReflection.intField(binding.endNode,"layer");
+            require(endCell==binding.endCell && endLayer==binding.endLayer &&
+                binding.goalValues[endLayer*binding.cells+endCell],
+                "actual found end cell and layer remain a true original goal");
+        }
+
+        private void advanceShortcutQuery(Budget budget) {
+            require(shortcutCursor!=null && !shortcutCursor.isComplete() &&
+                shortcutBinding!=null && !qualityRejected,
+                "pending shortcut query owns the actual quiescent Publisher before P07 resumes");
+            require(budget!=null && budget.unitName!=null &&
+                budget.unitName.startsWith("p07-quality-shortcut-query-advance-") &&
+                budget.workUnits>lastShortcutBudgetUnit,
+                "each pending cursor advance receives one newly charged existing outer work unit");
+            int workUnit=budget.workUnits;
+            int callsBefore=shortcutAdvanceCalls;
+            budget.checkpoint();
+            verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
+                fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
+            verifyShortcutBindingUnchanged(false);
+            boolean advanceComplete=shortcutCursor.advance(MAX_MANUAL_STEPS_PER_UNIT);
+            shortcutAdvanceCalls++;
+            int lastWork=shortcutCursor.lastWork();
+            require(advanceComplete==shortcutCursor.isComplete() &&
+                shortcutAdvanceCalls==callsBefore+1 && budget.workUnits==workUnit &&
+                lastWork>0 && lastWork<=MAX_MANUAL_STEPS_PER_UNIT,
+                "one resumable cursor advance completes within its single existing bounded work unit");
+            budget.checkpoint();
+            verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
+                fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
+            verifyShortcutBindingUnchanged(false);
+            if(shortcutCursor.isComplete()) captureCompletedShortcutCursor(lastWork);
+            budget.checkpoint();
+            lastShortcutBudgetUnit=workUnit;
+        }
+
+        private void captureCompletedShortcutCursor(int lastWork) {
+            require(shortcutCursor!=null && shortcutCursor.isComplete() &&
+                shortcutDiagnosticJson==null && lastWork>0 &&
+                lastWork<=MAX_MANUAL_STEPS_PER_UNIT,
+                "completed shortcut cursor has a single bounded final work result");
+            String diagnostic=shortcutCursor.bodyJson();
+            int queryQualifiedCount=shortcutCursor.result().queryQualifiedCount;
+            String repeatedDiagnostic=shortcutCursor.bodyJson();
+            int repeatedCount=shortcutCursor.result().queryQualifiedCount;
+            require(diagnostic!=null && diagnostic.equals(repeatedDiagnostic) &&
+                queryQualifiedCount>=0 && repeatedCount==queryQualifiedCount &&
+                shortcutCursor.isComplete() && shortcutCursor.lastWork()==lastWork,
+                "completed cursor body and immutable structured result remain stable across reads");
+            shortcutDiagnosticJson=diagnostic;
+            shortcutQueryQualifiedCount=queryQualifiedCount;
+            shortcutCompletedLastWork=lastWork;
+        }
+
+        private void verifyCompletedShortcutCursor() {
+            require(shortcutCursor!=null && shortcutCursor.isComplete() &&
+                shortcutDiagnosticJson!=null && shortcutQueryQualifiedCount>=0 &&
+                shortcutCursor.result().queryQualifiedCount==shortcutQueryQualifiedCount &&
+                shortcutCursor.lastWork()==shortcutCompletedLastWork,
+                "completed shortcut cursor retains its terminal body, count and last-work state");
         }
 
         private void verifyTargetContext(
@@ -3196,6 +3465,7 @@ public final class Rb100PhysicalDiagnostics {
                             (PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext,
                             snapshot);
                         targetCaptured=true;
+                        beginShortcutQuery(search,publisher);
                     }
                 }
             }
@@ -3220,6 +3490,12 @@ public final class Rb100PhysicalDiagnostics {
                         snapshot.startPadId.equals(((PcbPadPlacement)targetStartPad).getPadId()) &&
                         snapshot.rootPadId.equals(((PcbPadPlacement)targetRootPad).getPadId()),
                         "actual rejection retains the same request/pass/net/start/root and Publisher object identity");
+                    require(shortcutCursor!=null && shortcutCursor.isComplete() &&
+                        shortcutAdvanceCalls>0,
+                        "actual branch-quality rejection resumes only after the bounded query cursor completes");
+                    verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
+                        fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
+                    verifyShortcutBindingUnchanged(true);
                     qualityRejectionMessage=reason;
                     qualityRejected=true;
                 } else {
@@ -3252,6 +3528,9 @@ public final class Rb100PhysicalDiagnostics {
             require(targetCaptured && qualityRejected && snapshot!=null &&
                 routeSession!=null && fixedPrefixContext!=null && armedReadyGuard,
                 "terminal scalar record has its exact actual target context and rejection");
+            require(shortcutCursor!=null && shortcutCursor.isComplete() &&
+                shortcutAdvanceCalls>0 && shortcutBinding!=null,
+                "terminal shortcut diagnostic has completed all resumable query work under the existing driver");
             require(targetRequestAccounted && targetAccountingAfter==targetAccountingBefore+1,
                 "ordinary generator advancement accounts the target P07 request exactly once");
             require(result!=null && "EXHAUSTED".equals(result.sessionTerminalStatus) &&
@@ -3290,6 +3569,8 @@ public final class Rb100PhysicalDiagnostics {
                 "actual Publisher path snapshot retains its same-operation source identities");
             verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
                 fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
+            verifyShortcutBindingUnchanged(qualityRejected);
+            verifyCompletedShortcutCursor();
         }
 
         long manualDriverMillis() { return nanosToMillis(manualDriverNanos); }
@@ -3298,7 +3579,7 @@ public final class Rb100PhysicalDiagnostics {
             requireTerminalOperation(result);
             PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
                 (PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext;
-            return "RB100_QUALITY_SCALAR_EVENT {\"protocolVersion\":1,\"sourceRevision\":14,"+
+            return "RB100_QUALITY_SCALAR_EVENT {\"protocolVersion\":1,\"sourceRevision\":15,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\""+jsonFull(operationId)+
                 "\",\"variant\":\""+variant.name()+"\",\"mode\":\"PROBE\",\"rootSeed\":\""+
                 SEED+"\",\"placementSeed\":\""+PLACEMENT_DIAGNOSTIC_SEED+
@@ -3352,7 +3633,7 @@ public final class Rb100PhysicalDiagnostics {
                 nodes.append(pathSnapshot.nodes[index].toJson());
             }
             nodes.append(']');
-            return "RB100_QUALITY_PATH_EVENT {\"protocolVersion\":1,\"sourceRevision\":14,"+
+            return "RB100_QUALITY_PATH_EVENT {\"protocolVersion\":1,\"sourceRevision\":15,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\""+
                 jsonFull(operationId)+"\",\"order\":\"START_TO_END\",\"captureStage\":"+
                 pathSnapshot.captureStage+",\"captureQualityIndex\":"+
@@ -3360,6 +3641,52 @@ public final class Rb100PhysicalDiagnostics {
                 "\"nodeIdentityUnique\":true,\"nodes\":"+nodes+
                 ",\"scope\":\"ACTUAL_PUBLISHER_PATH_ONLY\",\"feasibility\":\"UNKNOWN\","+
                 "\"legalShortcutProof\":false,\"layoutQualification\":false}";
+        }
+
+        String shortcutQueryEventJson(P07PolicyDiagnosticCase result) {
+            requireTerminalOperation(result);
+            require(shortcutBinding!=null && shortcutCursor!=null &&
+                shortcutCursor.isComplete() && shortcutAdvanceCalls>0 &&
+                shortcutDiagnosticJson!=null,
+                "shortcut query event is emitted only after the actual terminal operation and every cursor unit complete");
+            verifyShortcutBindingUnchanged(true);
+            ShortcutQueryBinding binding=shortcutBinding;
+            String foundTerminal=binding.foundTerminal==null ? "null" :
+                "\""+jsonFull(((PcbPadPlacement)binding.foundTerminal).getPadId())+"\"";
+            StringBuilder reached=new StringBuilder("[");
+            for(int index=0;index<binding.reachedPadIds.length;index++) {
+                if(index>0) reached.append(',');
+                reached.append('"').append(jsonFull(binding.reachedPadIds[index])).append('"');
+            }
+            reached.append(']');
+            return "RB100_SHORTCUT_QUERY_EVENT {\"protocolVersion\":1,\"sourceRevision\":15,"+
+                "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\","+
+                "\"scope\":\"ACTUAL_QUERY_CLONE_SHORTCUT_FAMILY_ONLY\",\"binding\":{"+
+                "\"branchIdentityVerified\":true,\"sourcePublisherUnchanged\":true,"+
+                "\"pass\":"+binding.pass+",\"netId\":\""+jsonFull(binding.netId)+"\","+
+                "\"startPadId\":\""+jsonFull(binding.start.getPadId())+"\","+
+                "\"rootPadId\":\""+jsonFull(binding.root.getPadId())+"\","+
+                "\"reachedPthPadIds\":"+reached+",\"foundTerminalPadId\":"+foundTerminal+","+
+                "\"endCell\":"+binding.endCell+",\"endLayer\":"+binding.endLayer+","+
+                "\"goalMaskLength\":"+binding.goalValues.length+"},\"diagnostic\":"+
+                shortcutDiagnosticJson+",\"feasibility\":\"UNKNOWN\",\"legalShortcutProof\":false,"+
+                "\"layoutQualification\":false,\"routeAdoption\":false}";
+        }
+
+        String shortcutQuerySummaryJson(P07PolicyDiagnosticCase result) {
+            requireTerminalOperation(result);
+            require(shortcutBinding!=null && shortcutCursor!=null && shortcutCursor.isComplete(),
+                "shortcut query summary follows the fully completed actual branch diagnostic");
+            verifyShortcutBindingUnchanged(true);
+            int queryQualifiedCount=shortcutQueryQualifiedCount;
+            require(queryQualifiedCount>=0,
+                "helper structured result exposes the natural finite query-qualified candidate count");
+            return "PASS: RB100 quality shortcut contracts {\"protocolVersion\":1,\"sourceRevision\":15,"+
+                "\"status\":\"PASS\",\"runId\":\""+jsonFull(runId)+
+                "\",\"operationId\":\"QUALITY_PROBE\",\"events\":1,"+
+                "\"queryQualifiedCount\":"+queryQualifiedCount+","+
+                "\"scope\":\"ACTUAL_QUERY_CLONE_SHORTCUT_FAMILY_ONLY\",\"feasibility\":\"UNKNOWN\","+
+                "\"legalShortcutProof\":false,\"layoutQualification\":false,\"routeAdoption\":false}";
         }
     }
 
@@ -3416,6 +3743,35 @@ public final class Rb100PhysicalDiagnostics {
             this.captureStage=captureStage; this.captureQualityIndex=captureQualityIndex;
             this.sourceReversedIdentity=sourceReversedIdentity;
             this.sourceNodeIdentities=sourceNodeIdentities; this.nodes=nodes;
+        }
+    }
+
+    private static final class ShortcutQueryBinding {
+        final Object search,branch,publisher,endNode,foundTerminal,goalIdentity,
+            reachedIdentity,facesIdentity;
+        final PcbNetRouter.Router liveFace;
+        final PcbBoardLayout layout;
+        final PcbPadPlacement start,root;
+        final PcbPadPlacement[] reachedValues;
+        final boolean[] goalValues;
+        final String netId;
+        final String[] reachedPadIds;
+        final int pass,width,height,cells,originX,originY,pitch,layer,endCell,endLayer;
+        ShortcutQueryBinding(Object search,Object branch,Object publisher,Object endNode,
+                PcbPadPlacement foundTerminal,boolean[] goalIdentity,
+                PcbPadPlacement[] reachedIdentity,Object facesIdentity,
+                PcbNetRouter.Router liveFace,PcbBoardLayout layout,PcbPadPlacement start,
+                PcbPadPlacement root,String netId,int pass,int width,int height,int cells,
+                int originX,int originY,int pitch,int layer,int endCell,String[] reachedPadIds) {
+            this.search=search; this.branch=branch; this.publisher=publisher; this.endNode=endNode;
+            this.foundTerminal=foundTerminal; this.goalIdentity=goalIdentity;
+            this.reachedIdentity=reachedIdentity; this.facesIdentity=facesIdentity;
+            this.liveFace=liveFace; this.layout=layout; this.start=start; this.root=root;
+            this.reachedValues=reachedIdentity.clone(); this.goalValues=goalIdentity.clone();
+            this.netId=netId; this.reachedPadIds=reachedPadIds.clone();
+            this.pass=pass; this.width=width; this.height=height; this.cells=cells;
+            this.originX=originX; this.originY=originY; this.pitch=pitch; this.layer=layer;
+            this.endCell=endCell; this.endLayer=layer;
         }
     }
 
@@ -3730,7 +4086,7 @@ public final class Rb100PhysicalDiagnostics {
         require(runId!=null && snapshot!=null && snapshot.nodes.length==66 &&
             snapshot.captureStage==1 && snapshot.captureQualityIndex==66,
             "quality path summary binds the single frozen stage1 66-node capture");
-        return "PASS: RB100 quality path contracts {\"protocolVersion\":1,\"sourceRevision\":14,"+
+        return "PASS: RB100 quality path contracts {\"protocolVersion\":1,\"sourceRevision\":15,"+
             "\"status\":\"PASS\",\"runId\":\""+jsonFull(runId)+
             "\",\"operationId\":\"QUALITY_PROBE\",\"events\":1,\"nodes\":66,"+
             "\"scope\":\"ACTUAL_PUBLISHER_PATH_ONLY\",\"feasibility\":\"UNKNOWN\","+
@@ -3779,7 +4135,7 @@ public final class Rb100PhysicalDiagnostics {
                 .append(",\"publisherStage\":").append(row.publisherStage).append('}');
         }
         checks.append(']');
-        return "RB100_QUALITY_SCALAR_CONTROLS {\"protocolVersion\":1,\"sourceRevision\":14,"+
+        return "RB100_QUALITY_SCALAR_CONTROLS {\"protocolVersion\":1,\"sourceRevision\":15,"+
             "\"runId\":\""+jsonFull(runId)+"\",\"status\":\"PASS\","+
             "\"fixture\":\"SYNTHETIC_PUBLISHER_METRICS_ONLY\",\"checks\":"+checks+
             ",\"assertions\":"+(assertions-beforeAssertions)+",\"layoutQualification\":false}";

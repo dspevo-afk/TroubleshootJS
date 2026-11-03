@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Strict source-bound reader for the RB100 Publisher quality-path receipt.
+"""Strict source-bound reader for the RB100 query-clone shortcut receipt.
 
-The reader validates one captured actual path and its source-bound rejection
-context. Repeated geometry is reported as a candidate for inspection; this
-module does not prove a legal shortcut, another reachable route, physical
-layout, electrical behavior, or playable qualification.
+The reader independently derives a bounded geometric replacement family and
+validates the actual Router query results. Query qualification does not prove
+route adoption, finalization, physical layout, electrical behavior, or playable
+qualification.
 """
 from __future__ import annotations
 
@@ -19,14 +19,14 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
 
-INPUT_SCHEMA = "p07-quality-path-input-v1"
-RUN_SCHEMA = "q100-quality-path-native-run-v1"
-RESULT_SCHEMA = "q100-quality-path-reader-result-v1"
-SUITE = "Rb100QualityPathContractTest"
+INPUT_SCHEMA = "p07-quality-shortcut-input-v1"
+RUN_SCHEMA = "q100-quality-shortcut-native-run-v1"
+RESULT_SCHEMA = "q100-quality-shortcut-reader-result-v1"
+SUITE = "Rb100QualityShortcutContractTest"
 ENTRY_SCRIPT = "scripts/verify-current-contracts.ps1"
-SOURCE_REVISION = 14
-SOURCE_INPUT_COUNT = 1068
-CONTRACT_JAVA_COUNT = 212
+SOURCE_REVISION = 15
+SOURCE_INPUT_COUNT = 1070
+CONTRACT_JAVA_COUNT = 214
 LAYOUT_VERSION = 26
 DEPENDENCY_EPOCH = "tsj-generation-dependencies-v28"
 PLAN_VERSION = 1
@@ -49,14 +49,18 @@ CLEANUP_LINE = "CLEANUP: current JVM contract classes and task-owned scratch rem
 
 PINNED_SCALAR_READER_SHA256 = "0396ae2566454063c6c744fbeb49e68859edb9ef092a23b027e01a3977f52802"
 QUALITY_REQUIRED_INPUTS = frozenset({
-    "tests/contracts/Rb100QualityPathContractTest.java",
+    "tests/contracts/Rb100QualityShortcutContractTest.java",
     "tests/contracts/Rb100PhysicalDiagnostics.java",
+    "tests/contracts/P07ShortcutQueryDiagnostics.java",
+    "tests/contracts/P07ShortcutQueryContractTest.java",
     "scripts/verify-current-contracts.ps1",
     "tests/contracts/current-contract-runner-contract.ps1",
 })
 
 PATH_EVENT_MARKER = "RB100_QUALITY_PATH_EVENT"
 PATH_SUMMARY_MARKER = "PASS: RB100 quality path contracts"
+SHORTCUT_EVENT_MARKER = "RB100_SHORTCUT_QUERY_EVENT"
+SHORTCUT_SUMMARY_MARKER = "PASS: RB100 quality shortcut contracts"
 PATH_EVENT_KEYS = frozenset((
     "protocolVersion sourceRevision runId operationId order captureStage "
     "captureQualityIndex parentIdentityVerified nodeIdentityUnique nodes scope "
@@ -69,6 +73,38 @@ PATH_SUMMARY_KEYS = frozenset((
     "protocolVersion sourceRevision status runId operationId events nodes scope "
     "feasibility legalShortcutProof layoutQualification"
 ).split())
+SHORTCUT_EVENT_KEYS = frozenset((
+    "protocolVersion sourceRevision runId operationId scope binding diagnostic "
+    "feasibility legalShortcutProof layoutQualification routeAdoption"
+).split())
+SHORTCUT_BINDING_KEYS = frozenset((
+    "branchIdentityVerified sourcePublisherUnchanged pass netId startPadId rootPadId "
+    "reachedPthPadIds foundTerminalPadId endCell endLayer goalMaskLength"
+).split())
+SHORTCUT_DIAGNOSTIC_KEYS = frozenset("stability family work edges candidates result".split())
+SHORTCUT_STABILITY_KEYS = frozenset((
+    "prefixGeometrySha256 liveBeforeVerified liveAfterVerified liveEffectsUnchanged "
+    "goalVerified originalPathVerified"
+).split())
+SHORTCUT_FAMILY_KEYS = frozenset((
+    "order minimumSaving maximumLength maximumBends candidateCount candidateTupleSha256 "
+    "replacementEdgeVisits distinctDirectedEdges"
+).split())
+SHORTCUT_WORK_KEYS = frozenset((
+    "advanceCalls workSteps copyEntries comparisonEntries queryCalls reusedEdgeVisits "
+    "activeMillis originalPathQueries"
+).split())
+SHORTCUT_EDGE_KEYS = frozenset(("fromCell toCell allowed").split())
+SHORTCUT_CANDIDATE_KEYS = frozenset(("i j orientation length bends allowed").split())
+SHORTCUT_RESULT_KEYS = frozenset((
+    "queryQualifiedCount minimumQualifiedLength firstQualified"
+).split())
+SHORTCUT_FIRST_KEYS = frozenset(("i j orientation length bends").split())
+SHORTCUT_SUMMARY_KEYS = frozenset((
+    "protocolVersion sourceRevision status runId operationId events "
+    "queryQualifiedCount scope feasibility legalShortcutProof layoutQualification "
+    "routeAdoption"
+).split())
 RECEIPT_MARKERS = (
     "RB100_QUALITY_SCALAR_CONTROLS",
     "RB100_CAPACITY_BOUND_PHYSICAL_SUBSETS",
@@ -80,6 +116,8 @@ RECEIPT_MARKERS = (
     "PASS: RB100 quality scalar contracts",
     PATH_EVENT_MARKER,
     PATH_SUMMARY_MARKER,
+    SHORTCUT_EVENT_MARKER,
+    SHORTCUT_SUMMARY_MARKER,
 )
 EVENT_PREFIXES = ("RB100_", "P07_", "PASS: RB100")
 SHA256_RE = re.compile(r"[0-9a-f]{64}\Z", re.ASCII)
@@ -88,6 +126,14 @@ ERROR_CODE_RE = re.compile(r"[A-Z0-9_]{1,96}\Z", re.ASCII)
 MAX_SPEC_BYTES = 1024 * 1024
 MAX_RESULT_BYTES = 2 * 1024 * 1024
 MAX_CAPTURE_BYTES = 32 * 1024 * 1024
+MAX_QUALIFIED_CANDIDATES = 4290
+MAX_REPLACEMENT_EDGE_VISITS = 95810
+MAX_DISTINCT_DIRECTED_EDGES = 4354
+MAX_ORIGINAL_PATH_EDGES = 65
+MAX_ADVANCE_CALLS = 640
+MAX_MANUAL_WORK_QUANTUM = 32768
+MAX_DIAGNOSTIC_WORK_STEPS = MAX_ADVANCE_CALLS * MAX_MANUAL_WORK_QUANTUM
+MAX_DIAGNOSTIC_ACTIVE_MS = 90_000
 class QualityPathInputError(ValueError):
     """A static sanitized failure; input text and paths are never interpolated."""
 
@@ -219,8 +265,11 @@ def _load_frozen_scalar() -> Tuple[types.ModuleType, types.ModuleType,
         # remain unchanged, and this module is never left in sys.modules.
         scalar.INPUT_SCHEMA = INPUT_SCHEMA
         scalar.RUN_SCHEMA = RUN_SCHEMA
+        scalar.RESULT_SCHEMA = RESULT_SCHEMA
         scalar.SUITE = SUITE
         scalar.SOURCE_REVISION = SOURCE_REVISION
+        scalar.SOURCE_INPUT_COUNT = SOURCE_INPUT_COUNT
+        scalar.CONTRACT_JAVA_COUNT = CONTRACT_JAVA_COUNT
         scalar.QUALITY_REQUIRED_INPUTS = QUALITY_REQUIRED_INPUTS
         _need(scalar.SOURCE_INPUT_COUNT == SOURCE_INPUT_COUNT and
               scalar.CONTRACT_JAVA_COUNT == CONTRACT_JAVA_COUNT,
@@ -409,6 +458,357 @@ def _validate_path_summary(value: Any, event: Mapping[str, Any],
     return dict(value)
 
 
+def _path_direction(before: Mapping[str, int], after: Mapping[str, int]) -> int:
+    dx, dy = after["x"] - before["x"], after["y"] - before["y"]
+    return (1 if dx > 0 else 3 if dx < 0 else
+            2 if dy > 0 else 0)
+
+
+def _monotone_replacement(start: Mapping[str, int], end: Mapping[str, int],
+                          orientation: int, pitch: int) -> List[Tuple[int, int]]:
+    x, y = start["x"], start["y"]
+    end_x, end_y = end["x"], end["y"]
+    points = [(x, y)]
+    axes = ("x", "y") if orientation == 0 else ("y", "x")
+    for axis in axes:
+        target = end_x if axis == "x" else end_y
+        coordinate = x if axis == "x" else y
+        delta = target - coordinate
+        step = pitch if delta > 0 else -pitch
+        for _ in range(abs(delta) // pitch):
+            if axis == "x":
+                x += step
+            else:
+                y += step
+            points.append((x, y))
+    return points
+
+
+def _derive_shortcut_family(path: Mapping[str, Any],
+                            scalar_event: Mapping[str, Any]) -> Dict[str, Any]:
+    """Derive the complete bounded geometric family from the captured path."""
+    nodes = path["nodes"]
+    _need(type(nodes) is list and 1 <= len(nodes) <= 66,
+          "SHORTCUT_PATH_BOUND_INVALID")
+    width, height = scalar_event["gridWidth"], scalar_event["gridHeight"]
+    origin_x, origin_y = scalar_event["gridOriginX"], scalar_event["gridOriginY"]
+    pitch = scalar_event["gridPitch"]
+    cells = width * height
+    path_length = path["planarLength"]
+    direct_distance = path["directDistance"]
+    minimum_saving = max(1, path_length - 3 * direct_distance)
+    maximum_length = 3 * direct_distance
+    maximum_bends = 16
+    family: List[Dict[str, Any]] = []
+    edge_visits = 0
+    edge_set = set()
+
+    def cell_for(x: int, y: int) -> int:
+        grid_x, grid_y = x - origin_x, y - origin_y
+        _need(grid_x >= 0 and grid_y >= 0 and grid_x % pitch == 0 and
+              grid_y % pitch == 0, "SHORTCUT_REPLACEMENT_GRID_INVALID")
+        column, row = grid_x // pitch, grid_y // pitch
+        _need(column < width and row < height,
+              "SHORTCUT_REPLACEMENT_GRID_INVALID")
+        return row * width + column
+
+    for i in range(len(nodes) - 1):
+        for j in range(i + 1, len(nodes)):
+            start, end = nodes[i], nodes[j]
+            dx, dy = end["x"] - start["x"], end["y"] - start["y"]
+            _need(dx % pitch == 0 and dy % pitch == 0,
+                  "SHORTCUT_ANCHOR_GRID_INVALID")
+            manhattan_steps = (abs(dx) + abs(dy)) // pitch
+            original_steps = j - i
+            saving = (original_steps - manhattan_steps) * pitch
+            length = path_length - saving
+            if saving < minimum_saving or length > maximum_length:
+                continue
+
+            orientations = (0,) if dx == 0 or dy == 0 else (0, 1)
+            for orientation in orientations:
+                replacement = _monotone_replacement(start, end, orientation, pitch)
+                replacement_directions = [
+                    _path_direction({"x": before[0], "y": before[1]},
+                                    {"x": after[0], "y": after[1]})
+                    for before, after in zip(replacement, replacement[1:])
+                ]
+                prefix_directions = [node["direction"] for node in nodes[1:i + 1]]
+                suffix_directions = [node["direction"] for node in nodes[j + 1:]]
+                directions = prefix_directions + replacement_directions + suffix_directions
+                bends = sum(before != after for before, after in
+                            zip(directions, directions[1:]))
+                if bends > maximum_bends:
+                    continue
+
+                replacement_cells = [cell_for(x, y) for x, y in replacement]
+                replacement_edges = list(zip(replacement_cells, replacement_cells[1:]))
+                edge_visits += len(replacement_edges)
+                _need(edge_visits <= MAX_REPLACEMENT_EDGE_VISITS,
+                      "SHORTCUT_EDGE_VISIT_LIMIT_INVALID")
+                for edge in replacement_edges:
+                    edge_set.add(edge)
+                family.append({
+                    "i": i, "j": j, "orientation": orientation,
+                    "saving": saving, "length": length, "bends": bends,
+                    "replacementEdges": replacement_edges,
+                })
+                _need(len(family) <= MAX_QUALIFIED_CANDIDATES,
+                      "SHORTCUT_CANDIDATE_LIMIT_INVALID")
+
+    ordered_edges = sorted(edge_set)
+    _need(len(ordered_edges) <= MAX_DISTINCT_DIRECTED_EDGES,
+          "SHORTCUT_DIRECTED_EDGE_LIMIT_INVALID")
+    tuples = [[item["i"], item["j"], item["orientation"],
+               item["saving"], item["bends"]] for item in family]
+    tuple_bytes = json.dumps(tuples, separators=(",", ":"),
+                             ensure_ascii=True).encode("ascii")
+    return {
+        "minimumSaving": minimum_saving,
+        "maximumLength": maximum_length,
+        "maximumBends": maximum_bends,
+        "candidates": family,
+        "candidateCount": len(family),
+        "candidateTupleSha256": _sha256(tuple_bytes),
+        "replacementEdgeVisits": edge_visits,
+        "edges": ordered_edges,
+    }
+
+
+def _validate_shortcut_binding(binding: Any, scalar_event: Mapping[str, Any],
+                                path: Mapping[str, Any]) -> Dict[str, Any]:
+    _exact_keys(binding, SHORTCUT_BINDING_KEYS, "SHORTCUT_BINDING_KEYS_INVALID")
+    _need(binding["branchIdentityVerified"] is True and
+          binding["sourcePublisherUnchanged"] is True and
+          _integer(binding["pass"], 0, MAX_SCALAR) and
+          binding["pass"] == scalar_event["pass"] and
+          binding["netId"] == scalar_event["netId"] and
+          binding["startPadId"] == scalar_event["startPadId"] and
+          binding["rootPadId"] == scalar_event["rootPadId"],
+          "SHORTCUT_BINDING_IDENTITY_INVALID")
+    _need(type(binding["netId"]) is str and binding["netId"] and
+          type(binding["startPadId"]) is str and binding["startPadId"] and
+          type(binding["rootPadId"]) is str and binding["rootPadId"],
+          "SHORTCUT_BINDING_IDENTITY_INVALID")
+    reached = binding["reachedPthPadIds"]
+    _need(type(reached) is list and len(reached) <= 246 and
+          all(type(value) is str and 0 < len(value) <= 256 for value in reached) and
+          len(set(reached)) == len(reached) and reached == sorted(reached) and
+          binding["rootPadId"] not in reached,
+          "SHORTCUT_REACHED_PTH_IDS_INVALID")
+    found_terminal = binding["foundTerminalPadId"]
+    _need(found_terminal is None or
+          (type(found_terminal) is str and 0 < len(found_terminal) <= 256),
+          "SHORTCUT_FOUND_TERMINAL_ID_INVALID")
+    _need(found_terminal is None or
+          found_terminal == binding["rootPadId"] or found_terminal in reached,
+          "SHORTCUT_FOUND_TERMINAL_ID_INVALID")
+
+    end = path["nodes"][-1]
+    cells = scalar_event["gridWidth"] * scalar_event["gridHeight"]
+    _need(_integer(binding["endCell"], 0, cells - 1) and
+          binding["endCell"] == end["cell"] and
+          _integer(binding["endLayer"], 0, 1) and
+          binding["endLayer"] == end["layer"] and
+          _integer(binding["goalMaskLength"], 1, MAX_GRID_CELLS * 2) and
+          binding["goalMaskLength"] == 2 * cells,
+          "SHORTCUT_END_GOAL_IDENTITY_INVALID")
+    return dict(binding)
+
+
+def _original_path_edges(path: Mapping[str, Any]) -> set:
+    nodes = path["nodes"]
+    return {(before["cell"], after["cell"])
+            for before, after in zip(nodes, nodes[1:])}
+
+
+def _validate_shortcut_event(value: Any, scalar_event: Mapping[str, Any],
+                             path: Mapping[str, Any]) -> Dict[str, Any]:
+    _exact_keys(value, SHORTCUT_EVENT_KEYS, "SHORTCUT_EVENT_KEYS_INVALID")
+    scalar = path["event"]
+    _need(_integer(value["protocolVersion"], 1, 1) and
+          _integer(value["sourceRevision"], SOURCE_REVISION, SOURCE_REVISION) and
+          value["runId"] == scalar["runId"] and
+          value["operationId"] == PROBE_OPERATION_ID and
+          value["scope"] == "ACTUAL_QUERY_CLONE_SHORTCUT_FAMILY_ONLY" and
+          value["feasibility"] == "UNKNOWN" and
+          value["legalShortcutProof"] is False and
+          value["layoutQualification"] is False and
+          value["routeAdoption"] is False,
+          "SHORTCUT_EVENT_IDENTITY_OR_SCOPE_INVALID")
+    binding = _validate_shortcut_binding(value["binding"], scalar_event, path)
+    derived = _derive_shortcut_family(path, scalar_event)
+    diagnostic = value["diagnostic"]
+    _exact_keys(diagnostic, SHORTCUT_DIAGNOSTIC_KEYS,
+                "SHORTCUT_DIAGNOSTIC_KEYS_INVALID")
+
+    stability = diagnostic["stability"]
+    _exact_keys(stability, SHORTCUT_STABILITY_KEYS,
+                "SHORTCUT_STABILITY_KEYS_INVALID")
+    _need(type(stability["prefixGeometrySha256"]) is str and
+          SHA256_RE.fullmatch(stability["prefixGeometrySha256"]) is not None and
+          stability["liveBeforeVerified"] is True and
+          stability["liveAfterVerified"] is True and
+          stability["liveEffectsUnchanged"] is True and
+          stability["goalVerified"] is True and
+          stability["originalPathVerified"] is True,
+          "SHORTCUT_STABILITY_INVALID")
+
+    family = diagnostic["family"]
+    _exact_keys(family, SHORTCUT_FAMILY_KEYS, "SHORTCUT_FAMILY_KEYS_INVALID")
+    _need(family["order"] == "I_J_ORIENTATION_X_FIRST_0_Y_FIRST_1" and
+          _integer(family["minimumSaving"], 1, MAX_SCALAR) and
+          family["minimumSaving"] == derived["minimumSaving"] and
+          _integer(family["maximumLength"], 0, MAX_SCALAR) and
+          family["maximumLength"] == derived["maximumLength"] and
+          _integer(family["maximumBends"], 16, 16) and
+          _integer(family["candidateCount"], 0, MAX_QUALIFIED_CANDIDATES) and
+          family["candidateCount"] == derived["candidateCount"] and
+          type(family["candidateTupleSha256"]) is str and
+          SHA256_RE.fullmatch(family["candidateTupleSha256"]) is not None and
+          family["candidateTupleSha256"] == derived["candidateTupleSha256"] and
+          _integer(family["replacementEdgeVisits"], 0, MAX_REPLACEMENT_EDGE_VISITS) and
+          family["replacementEdgeVisits"] == derived["replacementEdgeVisits"] and
+          _integer(family["distinctDirectedEdges"], 0, MAX_DISTINCT_DIRECTED_EDGES),
+          "SHORTCUT_FAMILY_DERIVATION_INVALID")
+
+    edges = diagnostic["edges"]
+    _need(type(edges) is list and len(edges) == family["distinctDirectedEdges"] and
+          len(edges) == len(derived["edges"]), "SHORTCUT_EDGE_SET_INVALID")
+    edge_allowed: Dict[Tuple[int, int], bool] = {}
+    cells = scalar_event["gridWidth"] * scalar_event["gridHeight"]
+    for item, expected in zip(edges, derived["edges"]):
+        _exact_keys(item, SHORTCUT_EDGE_KEYS, "SHORTCUT_EDGE_KEYS_INVALID")
+        _need(_integer(item["fromCell"], 0, cells - 1) and
+              _integer(item["toCell"], 0, cells - 1) and
+              type(item["allowed"]) is bool and
+              (item["fromCell"], item["toCell"]) == expected,
+              "SHORTCUT_EDGE_SET_INVALID")
+        edge_allowed[expected] = item["allowed"]
+
+    original_path_edges = _original_path_edges(path)
+    family_edges = set(derived["edges"])
+    overlapping_original_edges = original_path_edges & family_edges
+    missing_original_edges = original_path_edges - family_edges
+    _need(all(edge_allowed[edge] is True for edge in overlapping_original_edges),
+          "SHORTCUT_ORIGINAL_PATH_EDGE_INVALID")
+
+    work = diagnostic["work"]
+    _exact_keys(work, SHORTCUT_WORK_KEYS, "SHORTCUT_WORK_KEYS_INVALID")
+    # Copy/comparison task counters can cover several full grid arrays; keep
+    # them bounded by the charged work budget and the aggregate conservation
+    # check below instead of a one-grid geometry bound.
+    work_ranges = {
+        "advanceCalls": (1, MAX_ADVANCE_CALLS),
+        "workSteps": (0, MAX_DIAGNOSTIC_WORK_STEPS),
+        "copyEntries": (0, MAX_DIAGNOSTIC_WORK_STEPS),
+        "comparisonEntries": (0, MAX_DIAGNOSTIC_WORK_STEPS),
+        "queryCalls": (0, MAX_DISTINCT_DIRECTED_EDGES + MAX_ORIGINAL_PATH_EDGES),
+        "reusedEdgeVisits": (0, MAX_REPLACEMENT_EDGE_VISITS),
+        "activeMillis": (0, MAX_DIAGNOSTIC_ACTIVE_MS),
+        "originalPathQueries": (0, MAX_ORIGINAL_PATH_EDGES),
+    }
+    for name, bounds in work_ranges.items():
+        _need(_integer(work[name], bounds[0], bounds[1]),
+              "SHORTCUT_WORK_DOMAIN_INVALID")
+    _need(work["originalPathQueries"] == len(missing_original_edges) and
+          work["queryCalls"] == len(edges) + work["originalPathQueries"] and
+          work["reusedEdgeVisits"] ==
+          derived["replacementEdgeVisits"] - len(edges) and
+          work["workSteps"] <= work["advanceCalls"] * MAX_MANUAL_WORK_QUANTUM and
+          work["workSteps"] >= (family["candidateCount"] +
+                                derived["replacementEdgeVisits"] +
+                                work["originalPathQueries"] +
+                                work["copyEntries"] + work["comparisonEntries"]),
+          "SHORTCUT_WORK_CONSERVATION_INVALID")
+
+    candidates = diagnostic["candidates"]
+    _need(type(candidates) is list and
+          len(candidates) == derived["candidateCount"],
+          "SHORTCUT_CANDIDATE_SET_INVALID")
+    qualified = []
+    for item, expected in zip(candidates, derived["candidates"]):
+        _exact_keys(item, SHORTCUT_CANDIDATE_KEYS,
+                    "SHORTCUT_CANDIDATE_KEYS_INVALID")
+        _need(_integer(item["i"], 0, len(path["nodes"]) - 2) and
+              _integer(item["j"], item["i"] + 1, len(path["nodes"]) - 1) and
+              _integer(item["orientation"], 0, 1) and
+              item["i"] == expected["i"] and
+              item["j"] == expected["j"] and
+              item["orientation"] == expected["orientation"] and
+              _integer(item["length"], 0, MAX_SCALAR) and
+              item["length"] == expected["length"] and
+              _integer(item["bends"], 0, MAX_SCALAR) and
+              item["bends"] == expected["bends"] and
+              type(item["allowed"]) is bool,
+              "SHORTCUT_CANDIDATE_GEOMETRY_INVALID")
+        edge_flags = [edge_allowed[edge] for edge in expected["replacementEdges"]]
+        _need(item["allowed"] is all(edge_flags),
+              "SHORTCUT_CANDIDATE_EDGE_CONJUNCTION_INVALID")
+        if item["allowed"]:
+            qualified.append({
+                "i": expected["i"], "j": expected["j"],
+                "orientation": expected["orientation"],
+                "length": expected["length"], "bends": expected["bends"],
+            })
+
+    result = diagnostic["result"]
+    _exact_keys(result, SHORTCUT_RESULT_KEYS, "SHORTCUT_RESULT_KEYS_INVALID")
+    minimum_length = min((item["length"] for item in qualified), default=None)
+    first_qualified = qualified[0] if qualified else None
+    _need(_integer(result["queryQualifiedCount"], 0, MAX_QUALIFIED_CANDIDATES) and
+          result["queryQualifiedCount"] == len(qualified) and
+          (result["minimumQualifiedLength"] is None or
+           _integer(result["minimumQualifiedLength"], 0, MAX_SCALAR)) and
+          result["minimumQualifiedLength"] == minimum_length,
+          "SHORTCUT_RESULT_COUNT_INVALID")
+    if first_qualified is None:
+        _need(result["firstQualified"] is None,
+              "SHORTCUT_FIRST_QUALIFIED_INVALID")
+    else:
+        first_record = result["firstQualified"]
+        _exact_keys(first_record, SHORTCUT_FIRST_KEYS,
+                    "SHORTCUT_FIRST_QUALIFIED_KEYS_INVALID")
+        _need(_integer(first_record["i"], 0, len(path["nodes"]) - 2) and
+              _integer(first_record["j"], first_record["i"] + 1,
+                       len(path["nodes"]) - 1) and
+              _integer(first_record["orientation"], 0, 1) and
+              _integer(first_record["length"], 0, MAX_SCALAR) and
+              _integer(first_record["bends"], 0, 16) and
+              first_record == first_qualified,
+              "SHORTCUT_FIRST_QUALIFIED_INVALID")
+    return {
+        "event": dict(value), "binding": binding,
+        "diagnostic": dict(diagnostic), "family": derived,
+        "queryQualifiedCount": len(qualified),
+        "minimumQualifiedLength": minimum_length,
+        "firstQualified": first_qualified,
+        "scope": "ACTUAL_QUERY_CLONE_SHORTCUT_FAMILY_ONLY",
+        "feasibility": "UNKNOWN", "legalShortcutProof": False,
+        "layoutQualification": False, "routeAdoption": False,
+    }
+
+
+def _validate_shortcut_summary(value: Any, event: Mapping[str, Any],
+                               shortcut: Mapping[str, Any]) -> Dict[str, Any]:
+    _exact_keys(value, SHORTCUT_SUMMARY_KEYS,
+                "SHORTCUT_SUMMARY_KEYS_INVALID")
+    _need(_integer(value["protocolVersion"], 1, 1) and
+          _integer(value["sourceRevision"], SOURCE_REVISION, SOURCE_REVISION) and
+          value["status"] == "PASS" and value["runId"] == event["runId"] and
+          value["operationId"] == PROBE_OPERATION_ID and
+          _integer(value["events"], 1, 1) and
+          _integer(value["queryQualifiedCount"], 0, MAX_QUALIFIED_CANDIDATES) and
+          value["queryQualifiedCount"] == shortcut["queryQualifiedCount"] and
+          value["scope"] == "ACTUAL_QUERY_CLONE_SHORTCUT_FAMILY_ONLY" and
+          value["feasibility"] == "UNKNOWN" and
+          value["legalShortcutProof"] is False and
+          value["layoutQualification"] is False and
+          value["routeAdoption"] is False,
+          "SHORTCUT_SUMMARY_IDENTITY_OR_SCOPE_INVALID")
+    return dict(value)
+
+
 def _validate_current_authored_context(scalar_receipt: Mapping[str, Any]) -> Dict[str, Any]:
     expected = {
         "physicalPolicyId": "MEDIUM_BOARD",
@@ -445,7 +845,11 @@ def _validate_receipt_lines(lines: Sequence[str], ledger: types.ModuleType,
     current_context = _validate_current_authored_context(old)
     path = _validate_path_event(records[8], old["event"], scalar)
     summary = _validate_path_summary(records[9], records[8], scalar)
+    shortcut = _validate_shortcut_event(records[10], old["event"], path)
+    shortcut_summary = _validate_shortcut_summary(
+        records[11], records[10], shortcut)
     return {"scalar": old, "path": path, "pathSummary": summary,
+            "shortcut": shortcut, "shortcutSummary": shortcut_summary,
             "currentContext": current_context}
 
 
@@ -471,7 +875,8 @@ def _validate_console_and_receipt(stdout_raw: bytes, receipt_raw: bytes,
     _need(console.count(FOCUSED_PASS) == 1 and console.count(CLEANUP_LINE) == 1 and
           console.index(FOCUSED_PASS) < console.index(CLEANUP_LINE),
           "RUN_CONSOLE_PASS_OR_CLEANUP_INVALID")
-    _need(sum(line.startswith(PATH_SUMMARY_MARKER + " ") for line in receipt) == 1,
+    _need(sum(line.startswith(PATH_SUMMARY_MARKER + " ") for line in receipt) == 1 and
+          sum(line.startswith(SHORTCUT_SUMMARY_MARKER + " ") for line in receipt) == 1,
           "RUN_PATH_SUMMARY_MARKER_INVALID")
     return console, receipt
 
@@ -542,6 +947,12 @@ def run_validation(spec_argument: str, spec_sha256: str) -> Dict[str, Any]:
     }
     scalar_event = parsed["scalar"]["event"]
     path = parsed["path"]
+    shortcut = parsed["shortcut"]
+    shortcut_binding = shortcut["binding"]
+    shortcut_diagnostic = shortcut["diagnostic"]
+    shortcut_family = shortcut_diagnostic["family"]
+    shortcut_work = shortcut_diagnostic["work"]
+    shortcut_stability = shortcut_diagnostic["stability"]
     return {
         "schema": RESULT_SCHEMA,
         "status": "PASS",
@@ -601,6 +1012,28 @@ def run_validation(spec_argument: str, spec_sha256: str) -> Dict[str, Any]:
             "feasibility": "UNKNOWN",
             "legalShortcutProof": False,
             "layoutQualification": False,
+        },
+        "qualityShortcutObservation": {
+            "scope": "ACTUAL_QUERY_CLONE_SHORTCUT_FAMILY_ONLY",
+            "binding": shortcut_binding,
+            "stability": shortcut_stability,
+            "family": {
+                "minimumSaving": shortcut_family["minimumSaving"],
+                "maximumLength": shortcut_family["maximumLength"],
+                "maximumBends": shortcut_family["maximumBends"],
+                "candidateCount": shortcut_family["candidateCount"],
+                "candidateTupleSha256": shortcut_family["candidateTupleSha256"],
+                "replacementEdgeVisits": shortcut_family["replacementEdgeVisits"],
+                "distinctDirectedEdges": shortcut_family["distinctDirectedEdges"],
+            },
+            "work": shortcut_work,
+            "queryQualifiedCount": shortcut["queryQualifiedCount"],
+            "minimumQualifiedLength": shortcut["minimumQualifiedLength"],
+            "firstQualified": shortcut["firstQualified"],
+            "feasibility": "UNKNOWN",
+            "legalShortcutProof": False,
+            "layoutQualification": False,
+            "routeAdoption": False,
         },
     }
 

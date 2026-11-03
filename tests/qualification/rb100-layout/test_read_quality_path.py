@@ -1,4 +1,4 @@
-"""Synthetic contract, isolation, and source-binding tests for the path reader."""
+"""Independent geometry, wire, isolation, and source-binding reader tests."""
 from __future__ import annotations
 
 import hashlib
@@ -354,6 +354,183 @@ def _path_summary():
     }
 
 
+def _independent_shortcut_family(nodes, scalar_event):
+    width = scalar_event["gridWidth"]
+    pitch = scalar_event["gridPitch"]
+    origin_x, origin_y = scalar_event["gridOriginX"], scalar_event["gridOriginY"]
+    path_length = scalar_event["planarLength"]
+    direct = scalar_event["directDistance"]
+    minimum_saving = max(1, path_length - 3 * direct)
+    maximum_length = 3 * direct
+    candidates = []
+    all_edges = set()
+    visits = 0
+
+    def cell(point):
+        x, y = point
+        return ((y - origin_y) // pitch) * width + (x - origin_x) // pitch
+
+    def directions(points):
+        result = []
+        for (x0, y0), (x1, y1) in zip(points, points[1:]):
+            result.append(1 if x1 > x0 else 3 if x1 < x0 else
+                          2 if y1 > y0 else 0)
+        return result
+
+    for i in range(len(nodes) - 1):
+        for j in range(i + 1, len(nodes)):
+            start = (nodes[i]["x"], nodes[i]["y"])
+            end = (nodes[j]["x"], nodes[j]["y"])
+            dx, dy = end[0] - start[0], end[1] - start[1]
+            saving = ((j - i) - (abs(dx) + abs(dy)) // pitch) * pitch
+            length = path_length - saving
+            if saving < minimum_saving or length > maximum_length:
+                continue
+            for orientation in ((0,) if dx == 0 or dy == 0 else (0, 1)):
+                replacement = [start]
+                x, y = start
+                for axis in ((0, 1) if orientation == 0 else (1, 0)):
+                    target = end[axis]
+                    value = x if axis == 0 else y
+                    delta = target - value
+                    step = pitch if delta > 0 else -pitch
+                    for _ in range(abs(delta) // pitch):
+                        if axis == 0:
+                            x += step
+                        else:
+                            y += step
+                        replacement.append((x, y))
+                before = [node["direction"] for node in nodes[1:i + 1]]
+                middle = directions(replacement)
+                after = [node["direction"] for node in nodes[j + 1:]]
+                whole = before + middle + after
+                bends = sum(a != b for a, b in zip(whole, whole[1:]))
+                if bends > 16:
+                    continue
+                route_cells = [cell(point) for point in replacement]
+                replacement_edges = list(zip(route_cells, route_cells[1:]))
+                visits += len(replacement_edges)
+                all_edges.update(replacement_edges)
+                candidates.append({
+                    "i": i, "j": j, "orientation": orientation,
+                    "saving": saving, "length": length, "bends": bends,
+                    "edges": replacement_edges,
+                })
+    ordered_edges = sorted(all_edges)
+    tuples = [[row["i"], row["j"], row["orientation"],
+               row["saving"], row["bends"]] for row in candidates]
+    tuple_hash = hashlib.sha256(
+        json.dumps(tuples, separators=(",", ":"), ensure_ascii=True).encode("ascii")
+    ).hexdigest()
+    return {
+        "minimumSaving": minimum_saving, "maximumLength": maximum_length,
+        "candidates": candidates, "edges": ordered_edges, "visits": visits,
+        "tupleHash": tuple_hash,
+    }
+
+
+def _shortcut_fixture():
+    nodes = _path_nodes()
+    scalar_event = _scalar_event()
+    family = _independent_shortcut_family(nodes, scalar_event)
+    original_edges = {(before["cell"], after["cell"])
+                      for before, after in zip(nodes, nodes[1:])}
+    family_edge_set = set(family["edges"])
+    original_path_queries = len(original_edges - family_edge_set)
+    edge_allowed = {edge: False for edge in family["edges"]}
+    for edge in original_edges & family_edge_set:
+        edge_allowed[edge] = True
+    if family["candidates"]:
+        for edge in family["candidates"][0]["edges"]:
+            edge_allowed[edge] = True
+    edges = [
+        {"fromCell": from_cell, "toCell": to_cell,
+         "allowed": edge_allowed[(from_cell, to_cell)]}
+        for from_cell, to_cell in family["edges"]
+    ]
+    candidates = []
+    qualified = []
+    for row in family["candidates"]:
+        allowed = all(edge_allowed[edge] for edge in row["edges"])
+        candidate = {key: row[key] for key in ("i", "j", "orientation", "length", "bends")}
+        candidate["allowed"] = allowed
+        candidates.append(candidate)
+        if allowed:
+            qualified.append({key: candidate[key]
+                              for key in ("i", "j", "orientation", "length", "bends")})
+    query_count = len(edges)
+    query_count += original_path_queries
+    result = {
+        "queryQualifiedCount": len(qualified),
+        "minimumQualifiedLength": min((item["length"] for item in qualified), default=None),
+        "firstQualified": qualified[0] if qualified else None,
+    }
+    copy_entries = 1
+    comparison_entries = 1
+    work_steps = (len(candidates) + family["visits"] + query_count +
+                  copy_entries + comparison_entries)
+    advance_calls = max(
+        1, (work_steps + reader.MAX_MANUAL_WORK_QUANTUM - 1) //
+        reader.MAX_MANUAL_WORK_QUANTUM)
+    query_event = {
+        "protocolVersion": 1, "sourceRevision": reader.SOURCE_REVISION,
+        "runId": RUN_ID, "operationId": reader.PROBE_OPERATION_ID,
+        "scope": "ACTUAL_QUERY_CLONE_SHORTCUT_FAMILY_ONLY",
+        "binding": {
+            "branchIdentityVerified": True, "sourcePublisherUnchanged": True,
+            "pass": 1, "netId": scalar_event["netId"],
+            "startPadId": scalar_event["startPadId"],
+            "rootPadId": scalar_event["rootPadId"],
+            "reachedPthPadIds": ["PAD_PTH_1", "PAD_PTH_2"],
+            "foundTerminalPadId": "PAD_PTH_1",
+            "endCell": nodes[-1]["cell"], "endLayer": nodes[-1]["layer"],
+            "goalMaskLength": 2 * scalar_event["gridWidth"] * scalar_event["gridHeight"],
+        },
+        "diagnostic": {
+            "stability": {
+                "prefixGeometrySha256": "a" * 64,
+                "liveBeforeVerified": True, "liveAfterVerified": True,
+                "liveEffectsUnchanged": True, "goalVerified": True,
+                "originalPathVerified": True,
+            },
+            "family": {
+                "order": "I_J_ORIENTATION_X_FIRST_0_Y_FIRST_1",
+                "minimumSaving": family["minimumSaving"],
+                "maximumLength": family["maximumLength"],
+                "maximumBends": 16,
+                "candidateCount": len(candidates),
+                "candidateTupleSha256": family["tupleHash"],
+                "replacementEdgeVisits": family["visits"],
+                "distinctDirectedEdges": len(edges),
+            },
+            "work": {
+                "advanceCalls": advance_calls,
+                "workSteps": work_steps,
+                "copyEntries": copy_entries, "comparisonEntries": comparison_entries,
+                "queryCalls": query_count,
+                "reusedEdgeVisits": family["visits"] - len(edges),
+                "activeMillis": 5,
+                "originalPathQueries": original_path_queries,
+            },
+            "edges": edges,
+            "candidates": candidates,
+            "result": result,
+        },
+        "feasibility": "UNKNOWN", "legalShortcutProof": False,
+        "layoutQualification": False, "routeAdoption": False,
+    }
+    query_summary = {
+        "protocolVersion": 1, "sourceRevision": reader.SOURCE_REVISION,
+        "status": "PASS", "runId": RUN_ID,
+        "operationId": reader.PROBE_OPERATION_ID, "events": 1,
+        "queryQualifiedCount": result["queryQualifiedCount"],
+        "scope": "ACTUAL_QUERY_CLONE_SHORTCUT_FAMILY_ONLY",
+        "feasibility": "UNKNOWN", "legalShortcutProof": False,
+        "layoutQualification": False, "routeAdoption": False,
+    }
+    return query_event, query_summary, family
+
+
 def _tag(marker, value):
     return marker + " " + json.dumps(value, separators=(",", ":"))
 
@@ -363,6 +540,7 @@ def _decode(line):
 
 
 def _receipt_lines():
+    shortcut, shortcut_summary, _family = _shortcut_fixture()
     records = (
         ("RB100_QUALITY_SCALAR_CONTROLS", _controls()),
         ("RB100_CAPACITY_BOUND_PHYSICAL_SUBSETS", _subset()),
@@ -376,6 +554,8 @@ def _receipt_lines():
         ("PASS: RB100 quality scalar contracts", _scalar_summary()),
         (reader.PATH_EVENT_MARKER, _path_event()),
         (reader.PATH_SUMMARY_MARKER, _path_summary()),
+        (reader.SHORTCUT_EVENT_MARKER, shortcut),
+        (reader.SHORTCUT_SUMMARY_MARKER, shortcut_summary),
     )
     return [_tag(marker, value) for marker, value in records]
 
@@ -401,16 +581,25 @@ class QualityPathReceiptTests(unittest.TestCase):
         after = {name for name in sys.modules
                  if name.startswith("_q100_quality_path_scalar_")}
         self.assertEqual(before, after)
-        self.assertEqual(scalar.SOURCE_REVISION, 14)
-        self.assertEqual(scalar.INPUT_SCHEMA, "p07-quality-path-input-v1")
-        self.assertEqual(scalar.RUN_SCHEMA, "q100-quality-path-native-run-v1")
-        self.assertEqual(scalar.SUITE, "Rb100QualityPathContractTest")
-        self.assertEqual(scalar.SOURCE_INPUT_COUNT, 1068)
-        self.assertEqual(scalar.CONTRACT_JAVA_COUNT, 212)
+        self.assertEqual(scalar.SOURCE_REVISION, 15)
+        self.assertEqual(scalar.INPUT_SCHEMA, "p07-quality-shortcut-input-v1")
+        self.assertEqual(scalar.RUN_SCHEMA, "q100-quality-shortcut-native-run-v1")
+        self.assertEqual(scalar.RESULT_SCHEMA, "q100-quality-shortcut-reader-result-v1")
+        self.assertEqual(scalar.SUITE, "Rb100QualityShortcutContractTest")
+        self.assertEqual(scalar.SOURCE_INPUT_COUNT, 1070)
+        self.assertEqual(scalar.CONTRACT_JAVA_COUNT, 214)
         self.assertEqual(ledger.SOURCE_JAVA_COUNT, 850)
-        self.assertIn("tests/contracts/Rb100QualityPathContractTest.java",
+        self.assertEqual(ledger.SOURCE_INPUT_COUNT, 1070)
+        self.assertEqual(ledger.CONTRACT_JAVA_COUNT, 214)
+        self.assertIn("tests/contracts/Rb100QualityShortcutContractTest.java",
+                      scalar.QUALITY_REQUIRED_INPUTS)
+        self.assertIn("tests/contracts/P07ShortcutQueryDiagnostics.java",
+                      scalar.QUALITY_REQUIRED_INPUTS)
+        self.assertIn("tests/contracts/P07ShortcutQueryContractTest.java",
                       scalar.QUALITY_REQUIRED_INPUTS)
         self.assertNotIn("tests/contracts/Rb100QualityScalarContractTest.java",
+                         scalar.QUALITY_REQUIRED_INPUTS)
+        self.assertNotIn("tests/contracts/Rb100QualityPathContractTest.java",
                          scalar.QUALITY_REQUIRED_INPUTS)
         self.assertEqual(hashes["frozenScalarReaderSha256"],
                          reader.PINNED_SCALAR_READER_SHA256)
@@ -505,16 +694,204 @@ class QualityPathReceiptTests(unittest.TestCase):
         event["sourceRevision"] = 8
         self._assert_path_code("RECORD_PROTOCOL_INVALID", event)
 
-    def test_all_ten_markers_are_closed_ordered_and_unique(self):
+    def test_all_twelve_markers_are_closed_ordered_and_unique(self):
         lines = _receipt_lines()
         parsed = reader._validate_receipt_lines(lines, self.ledger, self.scalar)
+        revisioned = [_decode(line)["sourceRevision"] for line in lines
+                      if "sourceRevision" in _decode(line)]
+        self.assertTrue(revisioned)
+        self.assertEqual(set(revisioned), {15})
         self.assertEqual(parsed["pathSummary"]["nodes"], 66)
+        self.assertEqual(parsed["shortcut"]["family"]["candidateCount"],
+                         len(_independent_shortcut_family(
+                             _path_nodes(), _scalar_event())["candidates"]))
+        self.assertGreater(parsed["shortcut"]["queryQualifiedCount"], 0)
         for damaged in (
-                lines[:8] + [lines[8], lines[8]],
-                lines[:8] + [lines[9], lines[8]],
-                lines[:9] + ["RB100_UNEXPECTED {}"]):
+                lines[:8] + [lines[8], lines[8]] + lines[10:],
+                lines[:9] + [lines[10], lines[9]] + lines[11:],
+                lines[:-1] + ["RB100_UNEXPECTED {}"]):
             with self.assertRaises(reader.QualityPathInputError):
                 reader._validate_receipt_lines(damaged, self.ledger, self.scalar)
+
+    def test_literal_family_covers_both_orientations_aligned_dedup_and_exact_threshold(self):
+        _event, _summary, family = _shortcut_fixture()
+        tuples = {(row["i"], row["j"], row["orientation"]): row
+                  for row in family["candidates"]}
+        self.assertEqual(family["minimumSaving"], 20)
+        self.assertIn((4, 14, 0), tuples)
+        self.assertNotIn((4, 14, 1), tuples)
+        self.assertEqual(tuples[(4, 14, 0)]["saving"], 20)
+        self.assertEqual(tuples[(4, 14, 0)]["length"], 630)
+        self.assertIn((4, 15, 0), tuples)
+        self.assertIn((4, 15, 1), tuples)
+        self.assertEqual(tuples[(4, 15, 0)]["saving"], 20)
+        self.assertEqual(tuples[(4, 15, 1)]["saving"], 20)
+
+    def test_shortcut_edges_are_closed_and_candidates_use_every_edge_flag(self):
+        event, summary, _family = _shortcut_fixture()
+        diagnostic = event["diagnostic"]
+        edges = {(row["fromCell"], row["toCell"]): row["allowed"]
+                 for row in diagnostic["edges"]}
+        self.assertIn(True, edges.values())
+        self.assertIn(False, edges.values())
+        self.assertEqual(summary["queryQualifiedCount"],
+                         diagnostic["result"]["queryQualifiedCount"])
+        original_edges = {(before["cell"], after["cell"])
+                          for before, after in zip(_path_nodes(), _path_nodes()[1:])}
+        self.assertEqual(diagnostic["work"]["originalPathQueries"],
+                         len(original_edges - set(edges)))
+        self.assertIs(diagnostic["stability"]["originalPathVerified"], True)
+
+        damaged = json.loads(json.dumps(event))
+        damaged["diagnostic"]["edges"].pop()
+        self._assert_shortcut_code("SHORTCUT_EDGE_SET_INVALID", damaged)
+
+        damaged = json.loads(json.dumps(event))
+        damaged["diagnostic"]["edges"][0]["allowed"] = "false"
+        self._assert_shortcut_code("SHORTCUT_EDGE_SET_INVALID", damaged)
+
+        damaged = json.loads(json.dumps(event))
+        family = _shortcut_fixture()[2]
+        first_edge = next(edge for edge in family["candidates"][0]["edges"]
+                          if edge not in original_edges)
+        changed = next(row for row in damaged["diagnostic"]["edges"]
+                       if (row["fromCell"], row["toCell"]) == first_edge)
+        changed["allowed"] = not changed["allowed"]
+        self._assert_shortcut_code("SHORTCUT_CANDIDATE_EDGE_CONJUNCTION_INVALID", damaged)
+
+        damaged = json.loads(json.dumps(event))
+        original_edge = next(edge for edge in sorted(original_edges)
+                             if edge in edges)
+        original_row = next(row for row in damaged["diagnostic"]["edges"]
+                            if (row["fromCell"], row["toCell"]) == original_edge)
+        original_row["allowed"] = False
+        self._assert_shortcut_code("SHORTCUT_ORIGINAL_PATH_EDGE_INVALID", damaged)
+
+        damaged = json.loads(json.dumps(event))
+        damaged["diagnostic"]["candidates"][0]["allowed"] = not \
+            damaged["diagnostic"]["candidates"][0]["allowed"]
+        self._assert_shortcut_code("SHORTCUT_CANDIDATE_EDGE_CONJUNCTION_INVALID", damaged)
+
+        damaged = json.loads(json.dumps(event))
+        damaged["diagnostic"]["candidates"][0], damaged["diagnostic"]["candidates"][1] = \
+            damaged["diagnostic"]["candidates"][1], damaged["diagnostic"]["candidates"][0]
+        self._assert_shortcut_code("SHORTCUT_CANDIDATE_GEOMETRY_INVALID", damaged)
+
+    def test_shortcut_family_hash_count_identity_and_claims_fail_closed(self):
+        event, _summary, _family = _shortcut_fixture()
+        for field, value, code in (
+                ("candidateCount", event["diagnostic"]["family"]["candidateCount"] + 1,
+                 "SHORTCUT_FAMILY_DERIVATION_INVALID"),
+                ("candidateTupleSha256", "0" * 64,
+                 "SHORTCUT_FAMILY_DERIVATION_INVALID"),
+                ("replacementEdgeVisits",
+                 event["diagnostic"]["family"]["replacementEdgeVisits"] - 1,
+                 "SHORTCUT_FAMILY_DERIVATION_INVALID")):
+            damaged = json.loads(json.dumps(event))
+            damaged["diagnostic"]["family"][field] = value
+            self._assert_shortcut_code(code, damaged)
+
+        for field, value in (
+                ("netId", "OTHER_NET"), ("startPadId", "OTHER_START"),
+                ("rootPadId", "OTHER_ROOT"), ("endCell", 0),
+                ("goalMaskLength", 1),
+                ("reachedPthPadIds", ["PAD_PTH_2", "PAD_PTH_1"])):
+            damaged = json.loads(json.dumps(event))
+            damaged["binding"][field] = value
+            self._assert_shortcut_code(
+                "SHORTCUT_BINDING_IDENTITY_INVALID" if field in
+                ("netId", "startPadId", "rootPadId") else
+                "SHORTCUT_REACHED_PTH_IDS_INVALID" if field == "reachedPthPadIds" else
+                "SHORTCUT_END_GOAL_IDENTITY_INVALID", damaged)
+
+        damaged = json.loads(json.dumps(event))
+        damaged["legalShortcutProof"] = True
+        self._assert_shortcut_code("SHORTCUT_EVENT_IDENTITY_OR_SCOPE_INVALID", damaged)
+
+        for field, value in (("layoutQualification", True), ("routeAdoption", True),
+                             ("feasibility", "POSSIBLE")):
+            damaged = json.loads(json.dumps(event))
+            damaged[field] = value
+            self._assert_shortcut_code("SHORTCUT_EVENT_IDENTITY_OR_SCOPE_INVALID", damaged)
+
+        damaged = json.loads(json.dumps(event))
+        damaged["sourceRevision"] = 14
+        self._assert_shortcut_code("SHORTCUT_EVENT_IDENTITY_OR_SCOPE_INVALID", damaged)
+
+        damaged = json.loads(json.dumps(event))
+        damaged["diagnostic"]["result"]["minimumQualifiedLength"] = 0
+        self._assert_shortcut_code("SHORTCUT_RESULT_COUNT_INVALID", damaged)
+
+        damaged = json.loads(json.dumps(event))
+        damaged["diagnostic"]["result"]["firstQualified"]["i"] += 1
+        self._assert_shortcut_code("SHORTCUT_FIRST_QUALIFIED_INVALID", damaged)
+
+        damaged = json.loads(json.dumps(event))
+        damaged["diagnostic"]["stability"]["prefixGeometrySha256"] = "not-a-hash"
+        self._assert_shortcut_code("SHORTCUT_STABILITY_INVALID", damaged)
+
+        damaged = json.loads(json.dumps(event))
+        damaged["diagnostic"]["work"]["advanceCalls"] = 641
+        self._assert_shortcut_code("SHORTCUT_WORK_DOMAIN_INVALID", damaged)
+
+        damaged = json.loads(json.dumps(event))
+        damaged["diagnostic"]["work"]["copyEntries"] = \
+            reader.MAX_DIAGNOSTIC_WORK_STEPS + 1
+        self._assert_shortcut_code("SHORTCUT_WORK_DOMAIN_INVALID", damaged)
+
+        damaged = json.loads(json.dumps(event))
+        work = damaged["diagnostic"]["work"]
+        work["advanceCalls"] = reader.MAX_ADVANCE_CALLS
+        work["workSteps"] = reader.MAX_DIAGNOSTIC_WORK_STEPS
+        work["copyEntries"] = reader.MAX_DIAGNOSTIC_WORK_STEPS // 2
+        work["comparisonEntries"] = reader.MAX_DIAGNOSTIC_WORK_STEPS // 2
+        self._assert_shortcut_code("SHORTCUT_WORK_CONSERVATION_INVALID", damaged)
+
+        damaged = json.loads(json.dumps(event))
+        damaged["diagnostic"]["work"]["queryCalls"] += 1
+        self._assert_shortcut_code("SHORTCUT_WORK_CONSERVATION_INVALID", damaged)
+
+        _event, summary, _family = _shortcut_fixture()
+        summary["routeAdoption"] = True
+        self._assert_shortcut_code(
+            "SHORTCUT_SUMMARY_IDENTITY_OR_SCOPE_INVALID", summary=summary)
+
+        _event, summary, _family = _shortcut_fixture()
+        summary["queryQualifiedCount"] += 1
+        self._assert_shortcut_code(
+            "SHORTCUT_SUMMARY_IDENTITY_OR_SCOPE_INVALID", summary=summary)
+
+    def test_copy_and_comparison_counters_can_span_multiple_full_grid_arrays(self):
+        event, _summary, family = _shortcut_fixture()
+        path = reader._validate_path_event(_path_event(), _scalar_event(), self.scalar)
+        work = event["diagnostic"]["work"]
+        cells = _scalar_event()["gridWidth"] * _scalar_event()["gridHeight"]
+        work["copyEntries"] = 2 * 5 * cells + 500
+        work["comparisonEntries"] = 3 * 5 * cells + 700
+        minimum_work = (
+            len(family["candidates"]) + family["visits"] +
+            work["originalPathQueries"] + work["copyEntries"] +
+            work["comparisonEntries"]
+        )
+        work["workSteps"] = max(work["workSteps"], minimum_work)
+        work["advanceCalls"] = max(
+            1, (work["workSteps"] + reader.MAX_MANUAL_WORK_QUANTUM - 1) //
+            reader.MAX_MANUAL_WORK_QUANTUM)
+        parsed = reader._validate_shortcut_event(event, _scalar_event(), path)
+        self.assertEqual(parsed["queryQualifiedCount"],
+                         event["diagnostic"]["result"]["queryQualifiedCount"])
+
+    def _assert_shortcut_code(self, code, event=None, summary=None):
+        shortcut, generated_summary, _family = _shortcut_fixture()
+        with self.assertRaises(reader.QualityPathInputError) as caught:
+            parsed = reader._validate_shortcut_event(
+                shortcut if event is None else event,
+                _scalar_event(), reader._validate_path_event(
+                    _path_event(), _scalar_event(), self.scalar))
+            reader._validate_shortcut_summary(
+                generated_summary if summary is None else summary,
+                shortcut if event is None else event, parsed)
+        self.assertEqual(caught.exception.code, code)
 
     def test_current_authored_context_is_not_inherited_from_the_generic_scalar_reader(self):
         for field, wrong in (
@@ -584,13 +961,13 @@ class SourceBoundRunTests(unittest.TestCase):
                                if path.startswith("tests/contracts/") and
                                path.endswith(".java"))
         self.assertLessEqual(len(source_java), 850)
-        self.assertLessEqual(len(contract_java), 212)
+        self.assertLessEqual(len(contract_java), 214)
         source_java.extend("src/qualityPathFixture/Source{:04d}.java".format(index)
                            for index in range(850 - len(source_java)))
-        contract_java.extend("tests/contracts/QualityPathFixture{:04d}.java".format(index)
-                             for index in range(212 - len(contract_java)))
+        contract_java.extend("tests/contracts/QualityShortcutFixture{:04d}.java".format(index)
+                             for index in range(214 - len(contract_java)))
         all_paths = sorted(set(source_java + contract_java + list(self.ledger.STATIC_NATIVE_INPUTS)))
-        self.assertEqual(len(all_paths), 1068)
+        self.assertEqual(len(all_paths), 1070)
         rows = []
         for relative in all_paths:
             path = root.joinpath(*relative.split("/"))
@@ -623,8 +1000,8 @@ class SourceBoundRunTests(unittest.TestCase):
             "command": {"entry": reader.ENTRY_SCRIPT, "suite": reader.SUITE,
                         "suites": [reader.SUITE], "args": [], "environment": {}},
             "layoutVersion": 26, "dependencyEpoch": reader.DEPENDENCY_EPOCH,
-            "sourceSnapshotRevision": 14, "inputCount": 1068,
-            "inputBytes": 1068, "inputPinsSha256": hashlib.sha256(pins_raw).hexdigest(),
+            "sourceSnapshotRevision": 15, "inputCount": 1070,
+            "inputBytes": 1070, "inputPinsSha256": hashlib.sha256(pins_raw).hexdigest(),
             "inputAudit": "PASS_BEFORE_AND_AFTER", "exitCode": 0, "nativeExitCode": 0,
             "terminationProven": True, "cleanupStatus": "PASS", "cleanupElapsedMs": None,
             "viaCost": 60, "nativeLimitMs": 480_000, "outerLimitMs": 1_800_000,
@@ -639,7 +1016,7 @@ class SourceBoundRunTests(unittest.TestCase):
         spec = {
             "schema": reader.INPUT_SCHEMA, "sourceRoot": str(root),
             "pinsPath": str(pins_path), "pinsSha256": hashlib.sha256(pins_raw).hexdigest(),
-            "inputCount": 1068, "inputBytes": 1068, "sourceSnapshotRevision": 14,
+            "inputCount": 1070, "inputBytes": 1070, "sourceSnapshotRevision": 15,
             **{name: str(path) for name, path in artifacts.items()},
         }
         spec_path = base / "input-spec.json"
@@ -679,10 +1056,12 @@ class SourceBoundRunTests(unittest.TestCase):
                 str(bundle["specPath"]),
                 hashlib.sha256(bundle["specPath"].read_bytes()).hexdigest(),
             )
-            self.assertEqual(result["schema"], "q100-quality-path-reader-result-v1")
-            self.assertEqual(result["sourceSnapshotRevision"], 14)
-            self.assertEqual(result["source"]["inputCount"], 1068)
-            self.assertIn("tests/contracts/Rb100QualityPathContractTest.java",
+            self.assertEqual(result["schema"], "q100-quality-shortcut-reader-result-v1")
+            self.assertEqual(result["sourceSnapshotRevision"], 15)
+            self.assertEqual(result["source"]["inputCount"], 1070)
+            self.assertIn("tests/contracts/Rb100QualityShortcutContractTest.java",
+                          result["source"]["requiredNativeInputSha256"])
+            self.assertIn("tests/contracts/P07ShortcutQueryDiagnostics.java",
                           result["source"]["requiredNativeInputSha256"])
             self.assertEqual(result["qualityPathObservation"]["pathNodeCount"], 66)
             self.assertEqual(result["qualityPathObservation"]["planarLength"], 650)
@@ -693,6 +1072,14 @@ class SourceBoundRunTests(unittest.TestCase):
             self.assertEqual(result["qualityPathObservation"]["feasibility"], "UNKNOWN")
             self.assertIs(result["qualityPathObservation"]["legalShortcutProof"], False)
             self.assertIs(result["qualityPathObservation"]["layoutQualification"], False)
+            shortcut = result["qualityShortcutObservation"]
+            self.assertEqual(shortcut["scope"],
+                             "ACTUAL_QUERY_CLONE_SHORTCUT_FAMILY_ONLY")
+            self.assertGreater(shortcut["family"]["candidateCount"], 0)
+            self.assertGreater(shortcut["family"]["replacementEdgeVisits"], 0)
+            self.assertGreater(shortcut["queryQualifiedCount"], 0)
+            self.assertIs(shortcut["legalShortcutProof"], False)
+            self.assertIs(shortcut["routeAdoption"], False)
 
     def test_spec_schema_revision_and_sha_are_bound_before_run_artifacts(self):
         with tempfile.TemporaryDirectory(prefix="q100-quality-spec-") as temporary:
@@ -709,6 +1096,32 @@ class SourceBoundRunTests(unittest.TestCase):
             with self.assertRaises(reader.QualityPathInputError) as caught:
                 reader.run_validation(str(bundle["specPath"]), "0" * 64)
             self.assertEqual(caught.exception.code, "INPUT_SPEC_SHA256_MISMATCH")
+
+        with tempfile.TemporaryDirectory(prefix="q100-quality-revision14-") as temporary:
+            bundle = self._make_bundle(Path(temporary))
+            spec = dict(bundle["spec"])
+            spec["sourceSnapshotRevision"] = 14
+            raw = json.dumps(spec, separators=(",", ":"), sort_keys=True).encode("utf-8")
+            bundle["specPath"].write_bytes(raw)
+            with self.assertRaises(reader.QualityPathInputError) as caught:
+                reader.run_validation(str(bundle["specPath"]), hashlib.sha256(raw).hexdigest())
+            self.assertEqual(caught.exception.code, "INPUT_SPEC_IDENTITY_INVALID")
+
+        with tempfile.TemporaryDirectory(prefix="q100-quality-run-revision14-") as temporary:
+            bundle = self._make_bundle(Path(temporary))
+            run = dict(bundle["run"])
+            run.update({
+                "schema": "q100-quality-path-native-run-v1",
+                "sourceSnapshotRevision": 14,
+                "inputCount": 1068, "inputBytes": 1068,
+            })
+            bundle["artifacts"]["resultPath"].write_text(
+                json.dumps(run, separators=(",", ":"), sort_keys=True), encoding="utf-8")
+            with self.assertRaises(reader.QualityPathInputError) as caught:
+                reader.run_validation(
+                    str(bundle["specPath"]),
+                    hashlib.sha256(bundle["specPath"].read_bytes()).hexdigest())
+            self.assertEqual(caught.exception.code, "NATIVE_RUN_IDENTITY_INVALID")
 
     def test_source_pin_content_and_complete_receipt_markers_are_bound(self):
         with tempfile.TemporaryDirectory(prefix="q100-quality-source-") as temporary:

@@ -1,4 +1,69 @@
-# Current checkpoint: rejected Publisher path diagnostic published
+# Current checkpoint: checked shortcut diagnostic accepted locally
+
+LOCAL FINITE ACCEPTANCE / PUBLICATION PENDING. R=OS-temp/tsj-q100-shortcut-query-20261103-r1,
+branch codex/q100-shortcut-query-20261103, sourceParentHEAD4c4a882ea65e252c50a3f094e73f41c61b02c420.
+Packet docs/task-evidence/Q100/shortcut-query-r1; QS=S/shortcut-query-r1.
+Production remains layout26/dependency28/VIA60,850 Java inputs unchanged.
+
+Actual same-owner request0/index0/attempt4/pass1/D_SENSE path66/650/direct210/
+6bends/0trans, approved separate authored9007199254740993, placement-6587958367974952701/
+routing8445301674744508279. NONE of2,011 geometric single-splice Manhattan
+candidates qualifies under actual Router queries:892 directed family edges plus
+3 absent original edges=895 queries. All65 actual original edges pass. Family
+33771 visits/tuplee1ba80b4 matches independent preimplementation geometry; primitive
+path exactly equals prior frozen source14 receipt. This proves only that finite
+family result. Shorter-route feasibility UNKNOWN; playable100=0/beta held.
+
+Final native1070/rev15/86128496bytes manifest
+5c1d4c3699378cbe445f1106ca774274db03226f82ba8a8eaae3c87ce5e0de0b.
+Source5changedfiles+launchers QS/source-5c1d4c36; helpere4983bb7, wrapper60c5cbf2,
+adapter38dd1a08, runnerbc87bc22. FocusR7 PASS24/32.4774309s; actualqueryR1
+PASS72.1283627s including compile/cleanup,exit0/native0/termination/cleanup/source.
+NULL16933ms/cleanup1/work300/maxunit1352; PROBE21159/0/401/808. Logicalcanonical/
+identity/9orders/2918222exp/nolayout parity and5 Publisher controls pass.
+Query100advances/3276800conservative debit,1189968copy/1785006compare entries,
+41ms active time. Excludes final constant-time wrapper and later serialization;
+outer90s/640/5s/120s and32768 quantum include all work and remain unchanged.
+
+PythonR1 PASS_WITH_DECLARED_SKIP:18 passed/1 optionalFILE_SYMLINK NOTRUN host
+privilege,19methods/23.9179985s/child0/term/source7stable. Reader66d482a7 /
+tests017bcba7; seven sources+hosts QS/python-source-66d482a7. Actual readerpositive
+and16 expectedexit2 negatives PASS/termination; actual directoryjunction removed
+nonrecursively/targetsource unchanged. Final audit PASS native1070/production850/
+compiler1202pervariant/26oldPython unchanged and actualpath/offlineoracle match.
+Developer438cc4c0.../Player53125e37... inputs unchanged; no freshGWT/Player/
+Current/electrical/normal3/full2-by-31 claim. Full30 EXCLUDED/unrun.
+
+Final source-only adapter/helper/consumer reviews CLEAR. Exclusive synchronous
+live-source ownership from begin through completion is a precondition; comparisons
+cannot detect arbitrary mutations absorbed during initial incremental copying.
+Actual adapter holds P07 quiescent with owner/stage/path/goal guards. Alreadycopied
+cell mutation canary retained; no atomic/concurrent snapshot claim. Conservative
+full nested allowances fix under-debit; reader bounds now use original totalwork
+rather than invalid2-grid assumption, preserving conservation and all limits.
+
+All earlier R1prepared/R2audit/R3compile/R4pose/R5courtyard/R6handoracle failures
+and exact sources remain preserved, never PASS. Literal independent5S4E5N oracle
+checks all36 edges, absent601->660/660->601, unchanged45/260/shortest40 assertions.
+See QS/pre-gate-review-decision.md and packetvalidation.md. Root accidental
+reserved-variable preparation file was verified, archived and removed exactly.
+No active owned OSactor/JVM/browser/preview/listener/junction.
+
+NEXT: root diff/stage review, commit, normalpush to origin/codex/q100-physical-feasibility,
+exactremote verify and ONE new completion Gmail; no unresolved blocker. Next
+unstarted: frozen actual fixed-prefix zero-VIA length-bound feasibility scope with
+independent graph oracle before another routing treatment. Latest publishedL
+6e0e6afa/receipt4c4a882e mail1a19fc0ced52a86d ONCE, NEVER duplicate.
+
+Main originalbranchHEAD5f05b005 preserves9tracked/6untracked/staged0; Desktop
+originalbranchHEADe0c36885 preserves7tracked/89untrackedAll/staged0. R preserves
+17 unrelated newline-only Python entries; no unrelated stage. All other worktrees,
+rejectedM/Z/U/V/N, stashes/branches/failureevidence/ambient8928 preserved.
+Only three approved normal roots/four-candidate envelope; no new population/
+holdout/blind/HARD data. HARD/PSYCHOTIC unavailable/unrun; protected unread
+UNCERTIFIED. CIself-hosted runner registration remains prerequisite. Continue
+eligible roadmap work until owner says stop.
+# Historical checkpoint: rejected Publisher path diagnostic published
 
 PUBLISHED FINITE DIAGNOSTIC. Implementation6e0e6afa947ce92f842817e081f4e9f979d2814b / Capture actual quality-rejected routing paths normally pushed and exactremoteverified onorigin/codex/q100-physical-feasibility; completionGmail1a19fc0ced52a86d sentONCE NEVERduplicate. Documentationreceipt follows. L=OS-temp/tsj-q100-quality-path-20261103-r1, branchcodex/q100-quality-path-20261103, acceptedCandidate6e0e6afa947ce92f842817e081f4e9f979d2814b/sourceParentda74e2865b34933dfd1222e7149e5e91d66741f1. Packet docs/task-evidence/Q100/quality-path-r1/README.md; raw QP=S/quality-path-r1. Production stayslayout26/dependency28/FULLERVIA60, no rejectedM/Z/U/V/Ncode. CurrententryRb100QualityPathContractTest replaces scalarcurrententry/API; historical26Python files/readers/artifacts unchanged. Diagnostic source14/native1068=850+212+6/86027277bytes; manifest25347d305d6e73d0862fe85f727aabee587df9706a87d415df77932934b7d9be. Exact3changednativeinputs/launchers QP/source-25347d30, oldthinmainarchived. Initial17unrelatedPythonnewlineentries preserved.
 

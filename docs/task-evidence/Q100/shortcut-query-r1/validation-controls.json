@@ -1,0 +1,174 @@
+{
+  "schema": "quality-shortcut-controls-v1",
+  "status": "PASS",
+  "cases": [
+    {
+      "name": "wrong-spec",
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "expectedCode": "INPUT_SPEC_SHA256_MISMATCH",
+      "readerSourceSha256": "66d482a7e00fb5be95606091ff5870c369b132065951cf08cf59e3ac26bdeec6",
+      "elapsedSeconds": 0.4273344
+    },
+    {
+      "name": "wrong-source",
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "expectedCode": "SOURCE_PIN_CONTENT_MISMATCH",
+      "readerSourceSha256": "66d482a7e00fb5be95606091ff5870c369b132065951cf08cf59e3ac26bdeec6",
+      "elapsedSeconds": 1.2268056
+    },
+    {
+      "name": "corrupt-receipt",
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "expectedCode": "NATIVE_RUN_ARTIFACT_BINDING_INVALID",
+      "readerSourceSha256": "66d482a7e00fb5be95606091ff5870c369b132065951cf08cf59e3ac26bdeec6",
+      "elapsedSeconds": 2.7173358999999997
+    },
+    {
+      "name": "metric-conservation",
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "expectedCode": "EVENT_SCALAR_CONSERVATION_INVALID",
+      "readerSourceSha256": "66d482a7e00fb5be95606091ff5870c369b132065951cf08cf59e3ac26bdeec6",
+      "elapsedSeconds": 2.7110713
+    },
+    {
+      "name": "false-playable",
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "expectedCode": "EVENT_QUALIFICATION_INVALID",
+      "readerSourceSha256": "66d482a7e00fb5be95606091ff5870c369b132065951cf08cf59e3ac26bdeec6",
+      "elapsedSeconds": 2.6823918
+    },
+    {
+      "name": "path-state-key",
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "expectedCode": "PATH_STATE_KEY_INVALID",
+      "readerSourceSha256": "66d482a7e00fb5be95606091ff5870c369b132065951cf08cf59e3ac26bdeec6",
+      "elapsedSeconds": 2.7633774
+    },
+    {
+      "name": "path-parent",
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "expectedCode": "PATH_PARENT_ORDER_INVALID",
+      "readerSourceSha256": "66d482a7e00fb5be95606091ff5870c369b132065951cf08cf59e3ac26bdeec6",
+      "elapsedSeconds": 2.6949809
+    },
+    {
+      "name": "false-legal-shortcut",
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "expectedCode": "PATH_EVENT_IDENTITY_OR_SCOPE_INVALID",
+      "readerSourceSha256": "66d482a7e00fb5be95606091ff5870c369b132065951cf08cf59e3ac26bdeec6",
+      "elapsedSeconds": 2.7049122
+    },
+    {
+      "name": "current-context",
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "expectedCode": "QUALITY_PATH_CONTEXT_INVALID",
+      "readerSourceSha256": "66d482a7e00fb5be95606091ff5870c369b132065951cf08cf59e3ac26bdeec6",
+      "elapsedSeconds": 2.6696961
+    },
+    {
+      "name": "shortcut-tuple",
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "expectedCode": "SHORTCUT_FAMILY_DERIVATION_INVALID",
+      "readerSourceSha256": "66d482a7e00fb5be95606091ff5870c369b132065951cf08cf59e3ac26bdeec6",
+      "elapsedSeconds": 2.7850337
+    },
+    {
+      "name": "shortcut-conjunction",
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "expectedCode": "SHORTCUT_CANDIDATE_EDGE_CONJUNCTION_INVALID",
+      "readerSourceSha256": "66d482a7e00fb5be95606091ff5870c369b132065951cf08cf59e3ac26bdeec6",
+      "elapsedSeconds": 2.7135218
+    },
+    {
+      "name": "shortcut-query-count",
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "expectedCode": "SHORTCUT_WORK_CONSERVATION_INVALID",
+      "readerSourceSha256": "66d482a7e00fb5be95606091ff5870c369b132065951cf08cf59e3ac26bdeec6",
+      "elapsedSeconds": 2.7213021
+    },
+    {
+      "name": "shortcut-end-goal",
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "expectedCode": "SHORTCUT_END_GOAL_IDENTITY_INVALID",
+      "readerSourceSha256": "66d482a7e00fb5be95606091ff5870c369b132065951cf08cf59e3ac26bdeec6",
+      "elapsedSeconds": 2.7592562
+    },
+    {
+      "name": "shortcut-adoption",
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "expectedCode": "SHORTCUT_EVENT_IDENTITY_OR_SCOPE_INVALID",
+      "readerSourceSha256": "66d482a7e00fb5be95606091ff5870c369b132065951cf08cf59e3ac26bdeec6",
+      "elapsedSeconds": 2.6686351
+    },
+    {
+      "name": "modified-helper",
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "expectedCode": "PREFIX_LEDGER_HELPER_HASH_MISMATCH",
+      "readerSourceSha256": "66d482a7e00fb5be95606091ff5870c369b132065951cf08cf59e3ac26bdeec6",
+      "elapsedSeconds": 0.4817087
+    },
+    {
+      "name": "actual-junction",
+      "status": "PASS",
+      "expectedExitCode": 2,
+      "exitCode": 2,
+      "terminationProven": true,
+      "expectedCode": "SOURCE_ROOT_REPARSE_PATH",
+      "readerSourceSha256": "66d482a7e00fb5be95606091ff5870c369b132065951cf08cf59e3ac26bdeec6",
+      "elapsedSeconds": 0.4720719
+    }
+  ],
+  "junctionCleanup": {
+    "status": "PASS",
+    "actualJunctionRemoved": true,
+    "nonrecursive": true,
+    "targetSourceUnchanged": true
+  },
+  "optionalFileSymlink": "NOT_RUN_HOST_PRIVILEGE",
+  "wrongNativeManifest": "PASS_EXPECTED_2_BEFORE_CHILD"
+}

@@ -137,6 +137,23 @@ legal-step investigation of geometric shortening candidates through the unchange
 actual Router predicates; a legal shorter route is still UNKNOWN. Playable100=0,
 beta held; all existing budgets and protected-data restrictions remain. Implementation6e0e6afa947ce92f842817e081f4e9f979d2814b is normally pushed and exact remote verified on origin/codex/q100-physical-feasibility; completion Gmail1a19fc0ced52a86d sent once.
 
+
+The [checked shortcut diagnostic](task-evidence/Q100/shortcut-query-r1/README.md)
+is locally accepted for the exact separate authored target. None of2,011
+geometrically eligible single-splice Manhattan candidates passes the unchanged
+actual Router predicates; all65 original path steps pass the positive control.
+This excludes that family only, with shorter-route feasibility still UNKNOWN.
+Focused24, actual source-bound NULL/PROBE parity/cleanup,18 Python methods,
+reader positive/16 real negatives/junction cleanup and final input audit pass.
+One optional file-symlink test is NOT RUN for host privilege. Source stability
+requires exclusive synchronous ownership; no arbitrary initial-copy mutation
+detection is claimed. Earlier host/compile/fixture failures stay preserved.
+Production850/compiler1202-per-variant inputs are unchanged; no fresh GWT/
+Player/Current/electrical/normal3/full2-by-31 qualification is inferred. No route,
+limit, epoch or admission change; playable100=0/beta held, full30 EXCLUDED.
+Next is a frozen actual fixed-prefix zero-VIA length-bound investigation with
+an independent graph oracle before choosing another routing treatment.
+Publication is pending normal commit/push verification and one completion Gmail.
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

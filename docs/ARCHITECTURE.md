@@ -351,7 +351,7 @@ metadata overrides. Natural int/long counters and full placement
 ranking remain distinct from routing budgets and P07 eligibility. The
 [quality-scalar packet](task-evidence/Q100/quality-scalars-r1/README.md) records
 the finite result and unqualified boundaries; this adds no Player capability.
-The current Rb100QualityPathContractTest replaces the scalar entry and retains
+At revision14, Rb100QualityPathContractTest replaced the scalar entry and retained
 its scalar/parity/Publisher controls under diagnostic source revision14. At the
 same quiescent pre-guard Publisher checkpoint it copies primitive start-to-end
 Node states, checks predecessor object identity and immutable source state, and
@@ -364,6 +364,24 @@ overrides and narrow error adapters; historical readers remain unchanged.
 The [path packet](task-evidence/Q100/quality-path-r1/README.md) proves no legal
 shortcut, alternate reachable route, layout or electrical qualification. No
 Router query clone or new production seam is introduced.
+
+The current Rb100QualityShortcutContractTest replaces that Path entry/API under
+diagnostic revision15. Its test-only adapter retains the actual BranchSearch
+before Publisher handoff, verifies its endpoint/goal/face identities and holds
+P07 quiescent while P07ShortcutQueryDiagnostics advances once per charged unit.
+The helper copies actual Router predicate state, compares it before and after
+queries, derives canonical single-splice Manhattan candidates, and memoizes
+directed permitsLayerStep results with original start/root/reached authorities.
+Anchors receive no endpoint authority. Every original found-path edge is also
+required to pass. No route is installed. Exclusive synchronous caller ownership
+from begin through completion is a precondition; incremental equality checks do
+not certify arbitrary concurrent initial-copy mutation. Task allowances are
+conservative budget debits; entry counters remain separate. The strict current
+reader independently derives the family and candidate conjunctions from the
+closed12-record source-bound wire. Historical readers remain byte-frozen.
+The [checked shortcut packet](task-evidence/Q100/shortcut-query-r1/README.md)
+records0 qualified candidates in that finite family and proves no all-path
+infeasibility, route/finalizer/access/electrical/layout or playable qualification.
 The current default-parity reader owns v27 metadata validation separately from
 the frozen layout-transition reader. It verifies the historical helper's exact
 source hash, extracts only its frame and case validators into isolated globals,
