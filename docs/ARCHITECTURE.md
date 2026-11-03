@@ -415,6 +415,13 @@ active time includes a complete placeholder JSON payload; only elapsed-digit
 correction/final wrapper and later outer JSON are excluded, while case/unit
 clocks include all work. The [allocation packet](task-evidence/Q100/prefix-allocation-r1/README.md)
 records48 vias across32 prior branches/12 nets, without a production change.
+P07TwoLayerContractTest also owns the matched seven-point prior-via tree-join
+contract. A fresh FULLER Session with explicit requestcap2 creates a via and
+later reaches that exact existing barrel by a TOP planar branch. Read-only
+source observation binds both face-goal bits, creator ID/object, endpoint and
+unchanged hole count; production graph/P08/layered-raster and negative controls
+check physical meaning. This adds no production seam or behavior. Default48
+and all-face runtime remain separate from this [finite proof](task-evidence/Q100/via-tree-join-r1/README.md).
 The current default-parity reader owns v27 metadata validation separately from
 the frozen layout-transition reader. It verifies the historical helper's exact
 source hash, extracts only its frame and case validators into isolated globals,

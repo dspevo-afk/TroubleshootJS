@@ -1,54 +1,55 @@
-# Current checkpoint: fixed-prefix allocation diagnosis
+# Current checkpoint: same-session prior-via tree join proof
 
-PUBLISHED FINITE DIAGNOSTIC. Implementationd513b931fbcde5a6f98ca5bc62fb2f8fdc38685b normally pushed/exact remote verified; completion Gmail1a1a086ab36d5eb3 sent ONCE, NEVER duplicate. Documentation receipt follows. H=OS-temp/
-tsj-q100-prefix-allocation-20261103-r1, branchcodex/q100-prefix-allocation-20261103,
-acceptedImplementationd513b931fbcde5a6f98ca5bc62fb2f8fdc38685b/sourceParent10c177fda604c14a941932e52a7e7b72a53b5899. Packet
- docs/task-evidence/Q100/prefix-allocation-r1, rawQA=S/prefix-allocation-r1.
-Native1074/rev17/86266543bytes manifest
-c541311a61f2f0cd8fc934d7d9619c90fb709db454b5b03905102af7d0b33775.
-Helper0CA03165/fixture4540322F/adapterA4EDF4C7; readerCCB2F0AE/testE50D2D4E.
-Production26/dependency28/VIA60 and all original caps unchanged.
+LOCALLY ACCEPTED FINITE NATIVE CONTRACT, publication pending. J=OS-temp/
+tsj-q100-via-tree-join-20261103-r1 branchcodex/q100-via-tree-join-20261103,
+actualHEAD/sourceParentf96906b04f7a2e395c9ece5b9476069a3bd1e9e6. Packet
+ docs/task-evidence/Q100/via-tree-join-r1, rawQJ=S/via-tree-join-r1.
+Finalnative1074/86289907bytes manifest4e7860328f2567b4e2a9eb369dc9c6aec67fec9d3cc36e031108ea3284f8e7e7.
+Only existing P07TwoLayerContractTest.java changed, SHA
+ba2b1e2c38b9e786e926bc8e5706445c1ffaf08f73f9e9f136f9494fdd92bddd.
+Production26/dependency28/VIA60/default48/allcaps unchanged.
 
-Actual approved separate root9007199254740993 placement-6587958367974952701/
-routing8445301674744508279 req0/index0/attempt4/pass1/D_SENSE:
-48factoryvias from32priorbranches on12nets, currentposition14/nextindex15/
-branch117, templateempty, D_SENSEprefixcreation0. RAIL5=10/LOAD12=8; full
-counts/rows in packet. Creation inventory is not chronology/later reuse or
-proof a via avoidable. Same prefixSHA98d389553de34bc53732beece39f5c178248da5c291e39fc55e5e422b7fe4851,
-path66/TOP650/direct210/6bends/0trans, graphmask/BFS identical acceptedG:
-shortest650/8010 vs630, goal93086. No treatment/whole-board infeasibility/
-playable100admission; playable100=0/beta held.
+Actualfresh7pointP06matched FULLERrequestcap2: OVER M210300/UNDER C450320
+preserve3padnets, GNDfetchthenOVER/UNDER. Creatorbranch3, later4/rawnetIndex3/
+currentposition2/pass0/A.1root/C.1start. EarlierUNDER creates2vias; laterC joins
+p07-via/UNDER/3/1 at310,320 onTOP, both actualgoalbits true, transition0, original
+holeobject/ID retained/finalholes2. Geometry/rules/productionGraph/P08/raster,
+missing/wrongnetvia/foreignisolation/inputpreservation PASS. This is one actual
+TOPjoin/bothfaceavailability atrequest2, NOTallfacesruntime/policy48 saturation,
+actualD_SENSE treatment or viaavoidability. Playable100=0/betaheld.
 
-FinalfocusR2 PASS24+20+48/45.202228s inclcompilecleanup. ActualR1 PASS
-73.6486582s inclcompilecleanup/child0/termination/cleanup/sourcebeforeafter.
-NULL17091ms/cleanup1/300work/max1352; PROBE23417/0/570/836. Canonicalidentity/
-9orders/2918222exp/no-layout parity+5Publishercontrols. Allocation48rows/60nets/
-2880matches/4217work/1advance/32msactive, minimum4116. Complete placeholder
-payload measured; elapsed-digit/finalwrapper/laterJSON excluded, outerall.
-PythonR2 PASS34+1optionalfilelinkSKIP/35methods/0.6535232s/exit0/term/source8stable.
-Actualpositive+40CURRENTreadernegatives PASS incl19allocationcontrols andreal
-junction removednonrecursively/targetunchanged. Rootindependentliteraloracle
-PASS0.4212906s andactualallocationoracle PASS0.4682741s/no readerimports.
-FinalinputauditPASS1074/850production/1202compilerpervariant/28frozenPython;
-actualpath/prefix/graph/BFS exactG; priorDijkstrasourceandboundreceipt verified
-forreuse. No freshGWT/Player/Current/electrical/normal3/full2-by-31 claim.
-Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historicalprotectedunread
-boundaryUNCERTIFIED. All90s/640/5s/120scleanup/32768quantum/routecaps unchanged.
+R4finalselectedWinPS5.1/JDK8 nativePASS P07TwoLayer13112/P07ReachedPth39/
+P07LayeredRaster15,33.7518072s inclcompilecleanup, child0/native0/termination/
+cleanup/sourcebeforeafter. Exactsource/hosts QJ/source-4e786032. FinalauditPASS
+19.3251317s:1074currentinputs/onlyonetestdelta/850production/1202compilerpervariant/
+30Python unchanged. Auditlauncherexitconfirmed. No freshactualQ100 NULL/PROBE,
+Python/GWT/Player/Current/electrical/normal3/full2-by-31 renewal; Hsourceclosure
+records stay attachedtoH. Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun,
+historicalprotectedunreadboundaryUNCERTIFIED. All90s/640/5s/120scleanup/32768
+quantum/routingcaps unchanged andunrenewedwhereNOTRUN.
 
-Earlier readerfingerprint/timing, no-opPythonR1 andJava7focusR1 failures preserved
-with exactsnapshots/logs, uncredited. Source-only adapter/consumer CLEAR;
-helperfinalarchiveddiff verified, rootintegratedreviewandgates. No persistent
-ownedOSresource; unowned8928untouched. Main5f05b005 has9tracked/6untracked;
-Desktop e0c36885 has7tracked/89untracked preserved, H24newline-only statuses
-willremain. Allstashes/olderworktrees/failures preserved.
+R1five-net C_RIGHT:NO_PATH failed34.629625s/sourceD089/843cec8a; R2duplicate
+physicaldemandsetup failed33.7052571s/sourceF3DD/f09f01fe; R3wronginitialreached-set
+distanceoracle failed34.1638948s/source34F1/42db1e71. Allcompiled/child2/term/
+maintainedcleanup/no receipt; later2suitesNOTRUN. Exactarchives/logs preserved,
+no failurescredited. Rootcorrectedmisstated B-C comparison: initiallyonlyA
+reached, so A-B300<A-C310; actual4callbackorder/barrel/cap/oracles retained.
+FinalBA2B source-onlyreviewCLEAR withactualarchiveddiff/callercontract; root
+integratedsource+gatesreview. Abstractfive-cutoracle is ONLYrejectedpreparation.
 
-NEXT: read-only source audit of earlier same-net layer reuse/branch rooting is
-assigned to copy_stability_owner, no code/experiment/epoch frozen. After its
-source evidence, freeze at most one bounded generic capacity proof/treatment.
-Continue standing roadmap; no routine permission needed. H has no configured
-upstream, established origin ref remains codex/q100-physical-feasibility. Prior
-Gmail1a1a04ef0cdf2e9e and H Gmail1a1a086ab36d5eb3 sent ONCE; NEVER duplicate.
+PriorH implementationd513b931fbcde5a6f98ca5bc62fb2f8fdc38685b andreceiptf96906b0
+normallypushed/exactremoteverified; Gmail1a1a086ab36d5eb3 sentONCE, NEVERduplicate.
+H24newlineonly/canonicalindexempty/untracked0. Itdiagnosedactualapprovedseparate
+9007199254740993 D_SENSEprefix48vias/12earliernets/32branches, noownvia/reachedPTH,
+shortest650/8010vs630, exactprefix98d38955; noavoidability/treatmentadopted.
 
+No persistentownedOSresource; Main5f05b005 9tracked/6untracked, Desktop e0c36885
+7tracked/89untracked, H andallolderworktrees/stashes/failures preserved; unowned
+8928untouched. J28initialnewline-only entries willremain afterintendedcommit.
+NEXT: inspect/stageexact/normalcommitpush establishedorigin/codex/q100-physical-feasibility,
+verifyexactremote thenONEcompletionGmail. Nextunstarted: source-auditonecostly
+earlier-netbranch forjustifiedviareduction withinoriginalbudgets; no newtreatment
+frozen. Continue standingroadmap untilownerstop.
 # Historical checkpoint: checked shortcut diagnostic published
 
 PUBLISHED FINITE DIAGNOSTIC. Implementation0448edab2c830d0e9c141ff3c6fbbdfc58cc0ae4 normally pushed/exact remote verified; completion Gmail1a1a015732234a6b sent ONCE, NEVER duplicate. Documentation receipt follows. R=OS-temp/tsj-q100-shortcut-query-20261103-r1,

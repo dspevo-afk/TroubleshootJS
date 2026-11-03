@@ -1,6 +1,6 @@
 # TroubleshootJS: Current Roadmap
 
-**Updated:** 2026-11-02 · **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
+**Updated:** 2026-11-03 · **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
 
 ## Current product checkpoint
 
@@ -182,6 +182,20 @@ remain. Graph/path/prefix exactly match accepted G; no new GWT/Player/electrical
 or population qualification. Playable100=0/beta held. Next unstarted is source
 audit of earlier same-net layer reuse/branch rooting before freezing a bounded
 generic treatment. Implementationd513b931fbcde5a6f98ca5bc62fb2f8fdc38685b is normally pushed and exact remote verified on origin/codex/q100-physical-feasibility; completion Gmail1a1a086ab36d5eb3 sent ONCE. This is a diagnostic, not a route fix.
+The [same-session prior-via join proof](task-evidence/Q100/via-tree-join-r1/README.md)
+is locally accepted for a seven-pad FULLER fixture with maintained requestcap2.
+An earlier branch creates the two vias; later C.1 joins retained creator
+p07-via/UNDER/3/1 at(310,320) onTOP, zero transitions/no addedhole, with both actual
+face-goal bits present. Geometry/rules/production graph/P08/raster and missing/
+wrong-net/foreign/input controls pass. Final JDK8 native suites13112/39/15,
+termination/cleanup/source audit and1074/850production/1202compiler/30Python
+input audit pass. Earlier geometry/setup/fixture-oracle failures remain preserved.
+Only an existing test changes native behavior; no production/epoch/cost/order/
+limit or routing treatment changes. This is not saturation-at48, all-face
+runtime, actualD_SENSE improvement, or playable100 qualification. No fresh GWT/
+Player/electrical/population or H-source renewal. Next is a source audit of one
+costly earlier-net branch before a justified generic via-reduction treatment.
+Publication pending; all previous data/budget limits remain.
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

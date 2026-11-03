@@ -1,0 +1,23 @@
+{
+  "schema": "via-tree-join-final-input-audit-v1",
+  "status": "PASS",
+  "nativeInputCount": 1074,
+  "nativeInputBytes": 86289907,
+  "nativeManifestSha256": "4e7860328f2567b4e2a9eb369dc9c6aec67fec9d3cc36e031108ea3284f8e7e7",
+  "modifiedFromAcceptedH": [
+    "tests/contracts/P07TwoLayerContractTest.java"
+  ],
+  "productionJavaUnchanged": 850,
+  "compilerInputsPerVariant": 1202,
+  "developerInputDigest": "438cc4c0fdf7205479c60d1d30540dc964b9da8312c42850790cd1f209a8c2ed",
+  "playerInputDigest": "53125e37f12449bd50dabd9cff43368eed0e4bea3bccfc1cd19d60becee7c6a5",
+  "pythonFilesUnchanged": 30,
+  "elapsedSeconds": 19.3251317,
+  "hActualNativeDisposition": "NOT_RENEWED_H_RECORD_REMAINS_ATTACHED_TO_H_CHANGED_TEST_INPUT_NOT_REUSED",
+  "freshGwt": "NOT_RUN_PRODUCTION_AND_COMPILER_INPUTS_UNCHANGED",
+  "full30": "EXCLUDED",
+  "hardPsychotic": "UNAVAILABLE_UNRUN",
+  "protectedUnreadBoundary": "UNCERTIFIED_HISTORICAL",
+  "playable100": 0,
+  "activeOwnedOsResources": 0
+}

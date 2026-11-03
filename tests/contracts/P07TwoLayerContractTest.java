@@ -31,6 +31,7 @@ public final class P07TwoLayerContractTest {
             }
         }
         viaCapBounds();
+        sameSessionPriorViaTreeJoin();
         negatives(); barriers(); surfacePadEnvelope();
         System.out.println("PASS: P07 two-layer contracts assertions="+checks);
     }
@@ -670,6 +671,356 @@ public final class P07TwoLayerContractTest {
         require(original.equals(f.layout.geometryFingerprint()) &&
             originalGraph.equals(f.layout.captureConductorGraph(f.board).toCanonical()),
             "invalid via caps leave the input placement and graph unchanged");
+    }
+
+    /** Recreates the known FULLER P06 crossing with balanced three-pad OVER and UNDER nets. */
+    private static void sameSessionPriorViaTreeJoin() {
+        final PriorViaJoinFixture f=sameSessionViaTreeJoinFixture();
+        final String original=f.layout.geometryFingerprint();
+        final String originalGraph=f.layout.captureConductorGraph(f.board).toCanonical();
+        require(f.layout.getHoles().isEmpty() && f.layout.getTraces().isEmpty(),
+            "same-session VIA join starts from an empty P06 placement");
+        final java.util.List<PcbLayerRoutingPrototype.BranchSnapshot> events=
+            new java.util.ArrayList<PcbLayerRoutingPrototype.BranchSnapshot>();
+        PcbLayerRoutingPrototype.Session session=PcbLayerRoutingPrototype.begin(f.board,f.layout,
+            PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,P06FactoryLinkFixtures.OBSERVER,
+            PcbLayerRoutingPrototype.MAX_EXPANSIONS,2,
+            new PcbLayerRoutingPrototype.Diagnostics() {
+                public void onTerminalBranch(PcbLayerRoutingPrototype.BranchSnapshot snapshot) {
+                    events.add(snapshot);
+                }
+            });
+
+        PcbBoardHole creatorVia=null;
+        boolean bothFaceGoal=false;
+        int joinedX=Integer.MIN_VALUE,joinedY=Integer.MIN_VALUE,joinedLayer=-1,transitions=-1;
+        int creatorPrefixCoordinateMatches=0;
+        int laterBranchOrdinal=-1,laterNetIndex=-1,laterPass=-1;
+        String laterRootId=null,laterStartId=null,laterCurrentNet=null,prefixGeometry="none";
+        String observedConsumerBranch="none";
+        PcbBoardHole[] creatorPrefix=null;
+        boolean[] prefixTopGoals=null,prefixBottomGoals=null;
+        PcbLayerRoutingPrototype.BranchSnapshot laterSnapshot=null;
+        int slices=0;
+        boolean complete=false;
+        while(!complete) {
+            complete=session.advanceSlice(1);
+            if(++slices>2000000)
+                throw new AssertionError("same-session VIA join exceeded its one-unit slice guard");
+            Object search=privateField(session,"search");
+            if(search==null) continue;
+
+            Object branch=privateField(search,"branch");
+            if(branch!=null) {
+                PcbPadPlacement start=(PcbPadPlacement)privateField(branch,"start");
+                if("C.1".equals(start.getPadId())) {
+                    PcbPadPlacement root=(PcbPadPlacement)privateField(branch,"root");
+                    int pass=privateInt(search,"pass");
+                    int netIndex=privateInt(search,"netIndex");
+                    int branchOrdinal=privateInt(branch,"branchOrdinal");
+                    PcbBoardLayout privateLayout=(PcbBoardLayout)privateField(search,"layout");
+                    PcbBoardHole[] prefix=(PcbBoardHole[])privateField(branch,"holes");
+                    boolean[] goals=(boolean[])privateField(branch,"goal");
+                    int cells=privateInt(search,"cells"),width=privateInt(search,"width");
+                    int minX=privateInt(search,"minX"),minY=privateInt(search,"minY");
+                    String currentNet=(String)privateField(search,"currentNet");
+                    if("none".equals(observedConsumerBranch)) {
+                        StringBuilder observed=new StringBuilder();
+                        observed.append("pass=").append(pass).append(";net=").append(currentNet)
+                            .append(";netIndex=").append(netIndex).append(";branch=").append(branchOrdinal)
+                            .append(";root=").append(root.getPadId()).append(";start=").append(start.getPadId())
+                            .append(";prefix=").append(prefix.length).append(';');
+                        for(int i=0;i<prefix.length;i++) {
+                            PcbBoardHole hole=prefix[i];
+                            int cell=((hole.y-minY)/PcbLayerRoutingPrototype.GRID)*width+
+                                (hole.x-minX)/PcbLayerRoutingPrototype.GRID;
+                            if(i>0) observed.append(',');
+                            observed.append(hole.id).append('@').append(hole.x).append(',').append(hole.y)
+                                .append(':').append(goals[cell]?'T':'-').append(goals[cells+cell]?'B':'-');
+                        }
+                        observedConsumerBranch=observed.toString();
+                    }
+                    // Bind proof state only to the planned pass-0 UNDER/C branch.
+                    if(creatorPrefix==null && pass==0 && "UNDER".equals(currentNet) &&
+                            branchOrdinal==4 && netIndex==3) {
+                        laterRootId=root.getPadId(); laterStartId=start.getPadId();
+                        laterCurrentNet=currentNet;
+                        laterBranchOrdinal=branchOrdinal; laterNetIndex=netIndex; laterPass=pass;
+                        creatorPrefix=prefix;
+                        prefixTopGoals=new boolean[prefix.length];
+                        prefixBottomGoals=new boolean[prefix.length];
+                        StringBuilder coordinates=new StringBuilder();
+                        for(int i=0;i<prefix.length;i++) {
+                            PcbBoardHole hole=prefix[i];
+                            int cell=((hole.y-minY)/PcbLayerRoutingPrototype.GRID)*width+
+                                (hole.x-minX)/PcbLayerRoutingPrototype.GRID;
+                            prefixTopGoals[i]=goals[cell];
+                            prefixBottomGoals[i]=goals[cells+cell];
+                            if(coordinates.length()>0) coordinates.append(';');
+                            coordinates.append(hole.id).append('@').append(hole.x).append(',').append(hole.y)
+                                .append(':').append(goals[cell]?'T':'-').append(goals[cells+cell]?'B':'-');
+                        }
+                        prefixGeometry=coordinates.toString();
+                    }
+                }
+            }
+
+            Object publisher=privateField(search,"publisher");
+            if(publisher!=null && creatorPrefix!=null && transitions<0) {
+                PcbPadPlacement start=(PcbPadPlacement)privateField(publisher,"start");
+                if("C.1".equals(start.getPadId())) {
+                    Object end=privateField(publisher,"end");
+                    int cell=privateInt(end,"cell");
+                    int layer=privateInt(end,"layer");
+                    int width=privateInt(search,"width");
+                    int minX=privateInt(search,"minX"),minY=privateInt(search,"minY");
+                    joinedX=minX+(cell%width)*PcbLayerRoutingPrototype.GRID;
+                    joinedY=minY+(cell/width)*PcbLayerRoutingPrototype.GRID;
+                    joinedLayer=layer;
+                    transitions=privateInt(end,"transitions");
+                    for(int i=0;i<creatorPrefix.length;i++)
+                        if(creatorPrefix[i].x==joinedX && creatorPrefix[i].y==joinedY) {
+                            creatorPrefixCoordinateMatches++;
+                            creatorVia=creatorPrefix[i];
+                            bothFaceGoal=prefixTopGoals[i] && prefixBottomGoals[i];
+                        }
+                }
+            }
+        }
+
+        PcbLayerRoutingPrototype.Result result=session.result();
+        for(PcbLayerRoutingPrototype.BranchSnapshot snapshot:events)
+            if(snapshot.pass==0 && "UNDER".equals(snapshot.netId) &&
+                    "C.1".equals(snapshot.startPadId)) laterSnapshot=snapshot;
+        String[] expectedNets={"OVER","OVER","UNDER","UNDER"};
+        String[] expectedStarts={"M.1","R.1","B.1","C.1"};
+        String[] expectedRoots={"L.1","L.1","A.1","A.1"};
+        boolean orderedBranches=events.size()==expectedNets.length;
+        if(orderedBranches) for(int i=0;i<expectedNets.length;i++) {
+            PcbLayerRoutingPrototype.BranchSnapshot snapshot=events.get(i);
+            if(snapshot.pass!=0 || !expectedNets[i].equals(snapshot.netId) ||
+                    !expectedStarts[i].equals(snapshot.startPadId) ||
+                    !expectedRoots[i].equals(snapshot.rootPadId) ||
+                    !"FOUND".equals(snapshot.terminalReason)) orderedBranches=false;
+        }
+        if(!result.accepted() || creatorVia==null || creatorPrefix.length!=2 ||
+                creatorPrefixCoordinateMatches!=1 || !bothFaceGoal || transitions!=0 ||
+                joinedX!=310 || joinedY<300 || joinedY>340 ||
+                joinedLayer!=PcbCopperLayer.TOP.ordinal() ||
+                laterBranchOrdinal!=4 || laterNetIndex!=3 || laterPass!=0 ||
+                !"UNDER".equals(laterCurrentNet) || laterSnapshot==null ||
+                laterSnapshot.prefixViaCount!=2 ||
+                !creatorVia.id.startsWith("p07-via/UNDER/3/") || !orderedBranches ||
+                events.get(0).prefixViaCount!=0 || events.get(0).reachedPadCount!=1 ||
+                events.get(1).prefixViaCount!=0 || events.get(1).reachedPadCount!=2 ||
+                events.get(2).prefixViaCount!=0 || events.get(2).reachedPadCount!=1 ||
+                events.get(3).prefixViaCount!=2 || events.get(3).reachedPadCount!=2) {
+            String joinedFace=joinedLayer==PcbCopperLayer.TOP.ordinal()?"TOP":
+                joinedLayer==PcbCopperLayer.BOTTOM.ordinal()?"BOTTOM":"NONE";
+            System.out.println("P07_PRIOR_VIA_JOIN_CANDIDATE {\"outcome\":\""+result.outcome+
+                "\",\"root\":\""+laterRootId+"\",\"start\":\""+laterStartId+
+                "\",\"creatorBranch\":\"UNDER/3\",\"laterBranch\":"+laterBranchOrdinal+
+                ",\"net\":\""+laterCurrentNet+"\",\"netIndexNextFetch\":"+laterNetIndex+
+                ",\"currentNetPosition\":"+(laterNetIndex<0?-1:laterNetIndex-1)+",\"pass\":"+laterPass+
+                ",\"observedConsumerBranch\":\""+observedConsumerBranch+"\""+
+                ",\"prefixCount\":"+(creatorPrefix==null?-1:creatorPrefix.length)+
+                ",\"prefixCoordinateMatches\":"+creatorPrefixCoordinateMatches+
+                ",\"prefix\":\""+prefixGeometry+"\",\"creatorViaID\":\""+
+                (creatorVia==null?"NONE":creatorVia.id)+"\",\"endpoint\":["+joinedX+","+joinedY+
+                "],\"joinedFace\":\""+joinedFace+"\",\"transitions\":"+transitions+
+                ",\"bothGoalBits\":"+bothFaceGoal+",\"orderedBranches\":"+orderedBranches+
+                ",\"eventCount\":"+events.size()+",\"accepted\":"+result.accepted()+"}");
+            throw new AssertionError("CANDIDATE: same-session P06 consumer branch missed its existing creator barrel");
+        }
+        require(result.vias==2 && result.layout.getHoleCount()==2,
+            "FULLER cap-two P06 route retains exactly its two naturally published vias");
+        require(joinedX==creatorVia.x && joinedY==creatorVia.y && bothFaceGoal &&
+            creatorVia.id.startsWith("p07-via/UNDER/3/"),
+            "the later branch ends on the original dual-face UNDER via without a transition");
+        require("A.1".equals(laterRootId) && "C.1".equals(laterStartId) &&
+            laterSnapshot!=null && "FOUND".equals(laterSnapshot.terminalReason) &&
+            laterSnapshot.prefixViaCount==2 && laterSnapshot.reachedPadCount==2 &&
+            "A.1".equals(laterSnapshot.rootPadId) && "C.1".equals(laterSnapshot.startPadId),
+            "the later diagnostic records the actual A-to-C tree branch and two-via prefix");
+        require(orderedBranches && events.get(0).prefixViaCount==0 && events.get(0).reachedPadCount==1 &&
+            events.get(1).prefixViaCount==0 && events.get(1).reachedPadCount==2 &&
+            events.get(2).prefixViaCount==0 && events.get(2).reachedPadCount==1 &&
+            events.get(3).prefixViaCount==2 && events.get(3).reachedPadCount==2,
+            "actual callbacks show both OVER branches, the empty UNDER creator prefix, then its VIA consumer");
+
+        int creatorIdentityMatches=0;
+        for(PcbBoardHole hole:result.layout.getHoles()) {
+            require(hole.kind==PcbBoardHole.Kind.VIA && "UNDER".equals(hole.netId),
+                "accepted output retains only UNDER VIA holes from the crossing branch");
+            if(hole==creatorVia) creatorIdentityMatches++;
+        }
+        require(creatorPrefixCoordinateMatches==1 && creatorIdentityMatches==1 &&
+            containsHoleIdentity(result.layout,creatorVia),
+            "Publisher preserves the actual creator hole object and ID through the later join");
+        java.util.Vector<PcbTraceGeometry> laterTraces=new java.util.Vector<PcbTraceGeometry>();
+        for(PcbTraceGeometry trace:result.layout.getTraces())
+            if("UNDER".equals(trace.getNetId()) && "C.1".equals(trace.getStartPadId()))
+                laterTraces.add(trace);
+        require(laterTraces.size()==1 && laterTraces.firstElement().getLayer()==PcbCopperLayer.TOP &&
+            "C.1".equals(laterTraces.firstElement().getStartPadId()) &&
+            laterTraces.firstElement().getEndPadId()==null,
+            "the actual later branch publishes one top-face trace to a nonterminal tree VIA");
+        PcbTraceGeometry laterTrace=laterTraces.firstElement();
+        int[] traceX=laterTrace.getXPoints(),traceY=laterTrace.getYPoints();
+        require(traceX[0]==f.layout.getPad("C.1").getX() &&
+            traceY[0]==f.layout.getPad("C.1").getY() &&
+            traceX[traceX.length-1]==creatorVia.x && traceY[traceY.length-1]==creatorVia.y &&
+            joinedX==traceX[traceX.length-1] && joinedY==traceY[traceY.length-1],
+            "published C1 centerline terminates at the original creator VIA barrel");
+
+        result.layout.validateRoutingGeometry(f.board);
+        new PcbTwoLayerRules(f.board,result.layout).validate(result.layout);
+        PcbConductorGraph.Snapshot production=result.layout.captureConductorGraph(f.board).pristine();
+        production.requirePristineNetConnectivity(f.board);
+        require(production.padsConnected("A.1","B.1") &&
+            production.padsConnected("A.1","C.1") &&
+            production.padsConnected("L.1","R.1") &&
+            !production.padsConnected("A.1","L.1") &&
+            !production.padsConnected("A.1","G.1"),
+            "production conductor graph joins UNDER while isolating OVER and GND");
+        PcbConductorGraph.Snapshot reference=
+            P08ReferenceConductorBuilder.capture(f.board,result.layout).pristine();
+        reference.requirePristineNetConnectivity(f.board);
+        require(reference.padsConnected("A.1","C.1") &&
+            !reference.padsConnected("A.1","L.1") &&
+            !reference.padsConnected("A.1","G.1"),
+            "independent P08 graph confirms target connectivity and foreign-net isolation");
+        P07LayeredRasterOracle.Metrics raster=P07LayeredRasterOracle.verify(result.layout,f.board);
+        require(raster.getViaBarrels()==2 && raster.getPlatedPadBarrels()==f.board.getPadIds().size() &&
+            raster.getTraceUnitSteps()>0,
+            "independent layered raster verifies both via barrels and every face-qualified pad pair");
+
+        final PcbBoardLayout missing=copyRoutingLayout(f.layout,result.layout,creatorVia,null);
+        reject(new Runnable(){public void run(){missing.validateRoutingGeometry(f.board);}},
+            "removing the reused creator via breaks the intended two-face connectivity");
+        final PcbBoardHole wrongVia=PcbTwoLayerRules.via(creatorVia.id,"OVER",creatorVia.x,creatorVia.y);
+        final PcbBoardLayout wrong=copyRoutingLayout(f.layout,result.layout,creatorVia,wrongVia);
+        reject(new Runnable(){public void run(){wrong.validateRoutingGeometry(f.board);}},
+            "a wrong-net via at the reused creator coordinate breaks intended connectivity");
+        reject(new Runnable(){public void run(){new PcbTwoLayerRules(f.board,wrong).validate(wrong);}},
+            "two-layer rules reject the foreign owner at the same via coordinate");
+        require(original.equals(f.layout.geometryFingerprint()) &&
+            originalGraph.equals(f.layout.captureConductorGraph(f.board).toCanonical()) &&
+            f.layout.getTraces().isEmpty() && f.layout.getHoles().isEmpty(),
+            "the Session and negative controls preserve the exact empty input");
+        System.out.println("P07_PRIOR_VIA_JOIN {\"case\":\"p06-fuller-crossing-with-balanced-three-pad-nets\",\"root\":\"A.1\",\"start\":\"C.1\",\"creatorBranch\":3,\"laterBranch\":4,\"netIndexNextFetch\":"+laterNetIndex+",\"currentNetPosition\":"+(laterNetIndex-1)+",\"pass\":"+laterPass+",\"creatorViaID\":\""+
+            creatorVia.id+"\",\"coords\":["+creatorVia.x+","+creatorVia.y+"],\"prefixCount\":"+
+            laterSnapshot.prefixViaCount+",\"joinedFace\":\"TOP\",\"endpoint\":["+joinedX+","+
+            joinedY+"],\"transitions\":"+transitions+",\"finalHoleCount\":"+
+            result.layout.getHoleCount()+",\"bothGoalBits\":"+bothFaceGoal+
+            ",\"controls\":{\"missingVia\":\"REJECTED\",\"wrongNetVia\":\"REJECTED\",\"foreignNets\":\"ISOLATED\",\"input\":\"UNCHANGED\"}}");
+    }
+
+    private static PriorViaJoinFixture sameSessionViaTreeJoinFixture() {
+        return new PriorViaJoinFixture();
+    }
+    private static final class PriorViaJoinFixture {
+        final TroubleshootBoard board=new TroubleshootBoard("P06_RAISED_CROSSOVER");
+        final PcbBoardLayout layout=new PcbBoardLayout(900,650,
+            new Rectangle(100,100,420,400),new Rectangle(650,120,200,400));
+        PriorViaJoinFixture() {
+            board.addNet(new BoardNet("OVER"));
+            board.addNet(new BoardNet("UNDER"));
+            board.addNet(new BoardNet("GND"));
+            addPoint("L","OVER",110,300,PcbRotation.DEG_180);
+            addPoint("R","OVER",510,300,PcbRotation.DEG_0);
+            addPoint("A","UNDER",310,150,PcbRotation.DEG_0);
+            addPoint("B","UNDER",310,450,PcbRotation.DEG_0);
+            addPoint("G","GND",180,450,PcbRotation.DEG_0);
+            addPoint("M","OVER",210,300,PcbRotation.DEG_0);
+            addPoint("C","UNDER",450,320,PcbRotation.DEG_0);
+
+            java.util.Vector<PcbPlacementConstraints.Part> parts=
+                new java.util.Vector<PcbPlacementConstraints.Part>();
+            for(String id:board.getComponentIds()) parts.add(new PcbPlacementConstraints.Part(
+                id,"prototype","Factory-link fixture","low-voltage",
+                PcbPlacementConstraints.Anchor.NONE,16));
+            board.setPlacementConstraints(new PcbPlacementConstraints(parts,
+                new java.util.Vector<PcbPlacementConstraints.Barrier>(),PcbCopperLayer.TOP));
+            board.addPowerInput(new ExternalBoardPowerInput("LINK_SUPPLY","L.1","G.1","OVER","GND"));
+            board.addPowerInput(new ExternalBoardPowerInput("UNDER_SUPPLY","A.1","G.1","UNDER","GND"));
+            board.validate();
+            addLabel("L",120,235); addLabel("R",475,235); addLabel("A",333,145);
+            addLabel("B",333,440); addLabel("G",200,440);
+            layout.validateAgainst(board);
+
+            require(layout.getPad("L.1").getX()==110 && layout.getPad("L.1").getY()==300 &&
+                layout.getPad("M.1").getX()==210 && layout.getPad("M.1").getY()==300 &&
+                layout.getPad("R.1").getX()==510 && layout.getPad("R.1").getY()==300 &&
+                layout.getPad("A.1").getX()==310 && layout.getPad("A.1").getY()==150 &&
+                layout.getPad("B.1").getX()==310 && layout.getPad("B.1").getY()==450 &&
+                layout.getPad("C.1").getX()==450 && layout.getPad("C.1").getY()==320 &&
+                layout.getPad("G.1").getX()==180 && layout.getPad("G.1").getY()==450,
+                "literal P06 crossing, return, midpoint, and consumer pad coordinates");
+            require(board.getNet("OVER").getPadIds().size()==3 &&
+                board.getNet("UNDER").getPadIds().size()==3 && board.getNet("GND").getPadIds().size()==1,
+                "the candidate balances OVER and UNDER pad counts while retaining P06 return supply");
+            require(manhattan(110,300,210,300)<manhattan(110,300,510,300) &&
+                manhattan(210,300,510,300)<manhattan(110,300,510,300),
+                "OVER source nearest-tree order is L root, M first, then R");
+            require(manhattan(310,150,310,450)<manhattan(310,150,450,320),
+                "with only root A reached, B distance 300 precedes C distance 310");
+        }
+        private void addPoint(String id,String net,int x,int y,PcbRotation rotation) {
+            PhysicalPackage physical=P06FactoryLinkFixtures.TEST_POINT;
+            BoardComponent component=new BoardComponent(id,physical.getId(),physical,id);
+            board.addComponent(component);
+            board.addPad(new BoardPad(id+".1",id,"1",net));
+            PcbPackagePose reference=new PcbPackagePose(100,100,rotation,PcbBoardSide.BOTTOM);
+            Point local=physical.getGeometry().placedAt(reference).getPadPoint(0);
+            PcbPackagePose pose=new PcbPackagePose(100+x-local.x,100+y-local.y,
+                rotation,PcbBoardSide.BOTTOM);
+            PcbFootprint footprint=PcbFootprint.fromPhysicalPackage(component,pose,physical.getGeometry());
+            layout.addComponent(footprint.getPlacement());
+            for(PcbPadPlacement pad:footprint.getPads()) layout.addPad(pad);
+        }
+        private void addLabel(String id,int x,int y) {
+            layout.addSilkscreenLabel(new PcbSilkscreenLabel("component:"+id,id,
+                new Rectangle(x,y,28,18),12,true,null));
+        }
+    }
+    private static int manhattan(int x1,int y1,int x2,int y2) {
+        return Math.abs(x1-x2)+Math.abs(y1-y2);
+    }
+    private static Object privateField(Object target,String name) {
+        if(target==null) throw new AssertionError("cannot read private field from null: "+name);
+        try {
+            java.lang.reflect.Field field=target.getClass().getDeclaredField(name);
+            field.setAccessible(true);
+            return field.get(target);
+        } catch(Exception failure) {
+            throw new AssertionError("cannot read P07 source field "+name,failure);
+        }
+    }
+    private static int privateInt(Object target,String name) {
+        if(target==null) throw new AssertionError("cannot read P07 integer field from null: "+name);
+        try {
+            java.lang.reflect.Field field=target.getClass().getDeclaredField(name);
+            field.setAccessible(true);
+            return field.getInt(target);
+        } catch(Exception failure) {
+            throw new AssertionError("cannot read P07 source integer field "+name,failure);
+        }
+    }
+    private static boolean containsHoleIdentity(PcbBoardLayout layout,PcbBoardHole expected) {
+        for(PcbBoardHole hole:layout.getHoles()) if(hole==expected) return true;
+        return false;
+    }
+    private static PcbBoardLayout copyRoutingLayout(PcbBoardLayout input,PcbBoardLayout routed,
+            PcbBoardHole replaced,PcbBoardHole replacement) {
+        PcbBoardLayout copy=input.copyForRouting();
+        for(PcbTraceGeometry trace:routed.getTraces()) copy.addTrace(trace);
+        for(PcbBoardHole hole:routed.getHoles()) {
+            if(hole==replaced) {
+                if(replacement!=null) copy.addHole(replacement);
+            } else copy.addHole(hole);
+        }
+        return copy;
     }
     /** Alternating endpoint pairs occupy opposite routing-grid boundaries, leaving no planar detour. */
     private static final class BoundaryCrossingFixture {

@@ -1,0 +1,30 @@
+{
+  "case": "p06-fuller-crossing-with-balanced-three-pad-nets",
+  "root": "A.1",
+  "start": "C.1",
+  "creatorBranch": 3,
+  "laterBranch": 4,
+  "netIndexNextFetch": 3,
+  "currentNetPosition": 2,
+  "pass": 0,
+  "creatorViaID": "p07-via/UNDER/3/1",
+  "coords": [
+    310,
+    320
+  ],
+  "prefixCount": 2,
+  "joinedFace": "TOP",
+  "endpoint": [
+    310,
+    320
+  ],
+  "transitions": 0,
+  "finalHoleCount": 2,
+  "bothGoalBits": true,
+  "controls": {
+    "missingVia": "REJECTED",
+    "wrongNetVia": "REJECTED",
+    "foreignNets": "ISOLATED",
+    "input": "UNCHANGED"
+  }
+}

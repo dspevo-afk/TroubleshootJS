@@ -1,0 +1,93 @@
+{
+  "schema": "via-tree-join-qualification-v1",
+  "status": "PASS_FINITE_NATIVE_CONTRACT_ONLY",
+  "sourceParent": "f96906b04f7a2e395c9ece5b9476069a3bd1e9e6",
+  "sourceFile": "tests/contracts/P07TwoLayerContractTest.java",
+  "sourceSha256": "ba2b1e2c38b9e786e926bc8e5706445c1ffaf08f73f9e9f136f9494fdd92bddd",
+  "nativeSourceArchive": "S/via-tree-join-r1/source-4e786032",
+  "native": {
+    "schema": "q100-via-tree-join-native-run-v1",
+    "source": "candidate",
+    "suite": "P07TwoLayerContractTest",
+    "cohortId": null,
+    "command": {
+      "entry": "scripts/verify-current-contracts.ps1",
+      "suite": "P07TwoLayerContractTest",
+      "suites": [
+        "P07TwoLayerContractTest",
+        "P07ReachedPthContractTest",
+        "P07LayeredRasterOracleContractTest"
+      ],
+      "args": [],
+      "environment": {}
+    },
+    "layoutVersion": 26,
+    "dependencyEpoch": "tsj-generation-dependencies-v28",
+    "sourceSnapshotRevision": 17,
+    "inputCount": 1074,
+    "inputBytes": 86289907,
+    "inputPinsSha256": "4e7860328f2567b4e2a9eb369dc9c6aec67fec9d3cc36e031108ea3284f8e7e7",
+    "inputAudit": "PASS_BEFORE_AND_AFTER",
+    "exitCode": 0,
+    "nativeExitCode": 0,
+    "terminationProven": true,
+    "cleanupStatus": "PASS",
+    "cleanupElapsedMs": null,
+    "viaCost": 60,
+    "nativeLimitMs": 60000,
+    "outerLimitMs": 1800000,
+    "processId": 6328,
+    "processStartTicks": "639292945173455807",
+    "elapsedSeconds": 33.7518072,
+    "requestedExecutable": "powershell.exe",
+    "stdoutBytes": 2315,
+    "stdoutSha256": "c3151e4cdf05884a4c3a89f1de65967f80ed50b45515d63e8d2b87cb3a7e8d45",
+    "stderrBytes": 0,
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "receiptBytes": 1562,
+    "receiptSha256": "0535a899bde02350f8667ec0c29c650e7ec17cda5561f2100aa2aac70918be33"
+  },
+  "suiteAssertions": {
+    "P07TwoLayerContractTest": 13112,
+    "P07ReachedPthContractTest": 39,
+    "P07LayeredRasterOracleContractTest": 15
+  },
+  "fixture": {
+    "parts": 7,
+    "pads": 7,
+    "nets": 3,
+    "policy": "FULLER_TWO_LAYER",
+    "requestViaCap": 2,
+    "defaultViaCap": 48,
+    "defaultPolicyChanged": false,
+    "inputCopper": "EMPTY",
+    "actualJoinFace": "TOP",
+    "bothFaceGoalAvailability": true,
+    "allFacesRuntimeProof": false,
+    "full48SaturationProof": false
+  },
+  "review": {
+    "root": "INTEGRATED_SOURCE_AND_ACTUAL_GATES_REVIEWED",
+    "independent": "SOURCE_ONLY_FINAL_BA2B1E2C_CLEAR_INITIAL_REACHED_SET_ORACLE_CORRECTION_CONFIRMED",
+    "priorReviews": "STATIC_ONLY_SUPERSEDED_NOT_RUNTIME_PASS"
+  },
+  "notRun": [
+    "actual Q100 NULL/PROBE renewal",
+    "fresh Python",
+    "GWT",
+    "Player",
+    "Current",
+    "electrical",
+    "normal3",
+    "full2-by-31",
+    "full48 saturation",
+    "every-face branch runtime"
+  ],
+  "full30": "EXCLUDED_BY_OWNER",
+  "hardPsychotic": "UNAVAILABLE_UNRUN",
+  "protectedUnreadBoundary": "UNCERTIFIED_HISTORICAL",
+  "playable100": 0,
+  "layoutQualification": false,
+  "routeAdoption": false,
+  "nextUnstarted": "Source-audit one costly earlier-net branch for a justified reduction of new vias under original limits"
+}
