@@ -1,5 +1,7 @@
 package com.lushprojects.circuitjs1.client;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -36,6 +38,81 @@ public final class Rb100PhysicalDiagnostics {
     private static int assertions;
 
     private Rb100PhysicalDiagnostics() { }
+
+    static void runGraphRecordTransportContracts() {
+        String prefix="RB100_ZERO_VIA_GRAPH_EVENT {\"diagnostic\":";
+        String diagnostic="{\"schema\":\"p07-zero-via-graph-r5\",\"work\":{\"encodedCells\":3}}";
+        final char[] diagnosticChars=diagnostic.toCharArray();
+        RecordBody diagnosticBody=new RecordBody() {
+            public void writeTo(PrintStream output) { output.print(diagnosticChars); }
+        };
+        String suffix=",\"feasibility\":\"UNKNOWN\"}";
+        ByteArrayOutputStream positiveBytes=new ByteArrayOutputStream();
+        PrintStream positive=new PrintStream(positiveBytes,true);
+        try {
+            emitGraphRecord(positive,prefix,diagnosticBody,suffix);
+        } finally {
+            positive.close();
+        }
+        byte[] actual=positiveBytes.toByteArray();
+        String lineSeparator=System.lineSeparator();
+        int expectedLength=prefix.length()+diagnostic.length()+suffix.length()+
+            lineSeparator.length();
+        int suffixOffset=prefix.length()+diagnostic.length();
+        int lineEndingOffset=suffixOffset+suffix.length();
+        int lineBreaks=0;
+        for(byte value:actual) if(value=='\n') lineBreaks++;
+        if(actual.length!=expectedLength ||
+                !asciiBytesEqual(actual,0,prefix) ||
+                !asciiBytesEqual(actual,prefix.length(),diagnostic) ||
+                !asciiBytesEqual(actual,suffixOffset,suffix) ||
+                !asciiBytesEqual(actual,lineEndingOffset,lineSeparator) || lineBreaks!=1)
+            throw new AssertionError("Graph record transport changed bytes or emitted more than one line");
+
+        ByteArrayOutputStream negativeBytes=new ByteArrayOutputStream();
+        PrintStream closed=new PrintStream(negativeBytes,true);
+        closed.close();
+        boolean rejected=false;
+        try {
+            emitGraphRecord(closed,prefix,diagnosticBody,suffix);
+        } catch(AssertionError expectedWriteFailure) {
+            rejected=true;
+        }
+        if(!rejected)
+            throw new AssertionError("Graph record transport accepted a closed PrintStream");
+        ByteArrayOutputStream subclassBytes=new ByteArrayOutputStream();
+        PrintStream subclass=new PrintStream(subclassBytes) {
+            public void print(char[] value) { throw new AssertionError("Graph body reached an overridable sink"); }
+        };
+        boolean subclassRejected=false;
+        try {
+            emitGraphRecord(subclass,prefix,diagnosticBody,suffix);
+        } catch(IllegalArgumentException expectedSubclassRejection) {
+            subclassRejected=true;
+        } finally {subclass.close();}
+        if(!subclassRejected || subclassBytes.size()!=0)
+            throw new AssertionError("Graph record transport exposed a partial record to an unsupported subclass");
+    }
+
+    private static boolean asciiBytesEqual(byte[] actual,int offset,String expected) {
+        if(actual==null || expected==null || offset<0 ||
+                offset+expected.length()>actual.length) return false;
+        for(int index=0;index<expected.length();index++)
+            if((actual[offset+index]&255)!=expected.charAt(index)) return false;
+        return true;
+    }
+
+    interface RecordBody { void writeTo(PrintStream output); }
+
+    static void emitGraphRecord(PrintStream output,String prefix,RecordBody body,String suffix) {
+        if(output==null || output.getClass()!=PrintStream.class || prefix==null || body==null || suffix==null)
+            throw new IllegalArgumentException("Graph record transport requires complete inputs");
+        output.print(prefix);
+        body.writeTo(output);
+        output.println(suffix);
+        if(output.checkError())
+            throw new AssertionError("RB100 graph event stdout write failed");
+    }
 
     static void runPlacementDiagnosticContracts() {
         long suiteStarted = System.nanoTime();
@@ -137,13 +214,24 @@ public final class Rb100PhysicalDiagnostics {
 
     /** Actual-generator NULL/PROBE pair plus bounded actual-branch graph, allocation and LOAD12 capture. */
     static void runQualityZeroViaGraphContracts() {
+        runQualityZeroViaGraphContracts(P07ZeroViaGraphDiagnostics.Target.D_SENSE);
+    }
+
+    /** Actual-generator NULL/PROBE pair plus LOAD12 pre-publication graph, allocation and capture. */
+    static void runLoad12ZeroViaGraphContracts() {
+        runQualityZeroViaGraphContracts(P07ZeroViaGraphDiagnostics.Target.LOAD12);
+    }
+
+    private static void runQualityZeroViaGraphContracts(
+            P07ZeroViaGraphDiagnostics.Target graphTarget) {
         long suiteStarted=System.nanoTime();
         int beforeAssertions=assertions;
         final String runId=UUID.randomUUID().toString();
         final String nullOperationId="QUALITY_NULL";
         final String probeOperationId="QUALITY_PROBE";
         Rb100Plan.Variant variant=Rb100Plan.Variant.SEPARATE_DIRECT_SWITCHING;
-        require(SeededPcbLayoutGenerator.CURRENT_VERSION==26 &&
+        require(graphTarget!=null &&
+            SeededPcbLayoutGenerator.CURRENT_VERSION==26 &&
             "tsj-generation-dependencies-v28".equals(
                 GenerationDependencyContext.INTERPRETATION_EPOCH) &&
             Rb100Plan.PLAN_VERSION==1 && Rb100Plan.MODEL_VERSION==4 &&
@@ -158,14 +246,14 @@ public final class Rb100PhysicalDiagnostics {
             "NULL",nullOperationId,null,null,true);
         if(!"PASS".equals(baseline.status) || baseline.policyResult==null ||
                 baseline.policyResult.getLayout()!=null || baseline.qualitySubsetMarkerJson==null) {
-            System.out.println("RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":18,\"runId\":\""+
+            System.out.println("RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":20,\"runId\":\""+
                 jsonFull(runId)+"\",\"operationId\":\""+nullOperationId+
                 "\",\"variant\":\""+variant.name()+"\",\"mode\":\"NULL\",\"result\":"+
                 baseline.toJson()+"}");
             throw new AssertionError("RB100 quality scalar null baseline did not complete without a layout");
         }
 
-        QualityScalarProbe probe=new QualityScalarProbe(runId,probeOperationId,variant);
+        QualityScalarProbe probe=new QualityScalarProbe(runId,probeOperationId,variant,graphTarget);
         P07PolicyDiagnosticCase observed=runP07PolicyDiagnosticCase(variant,runId,null,baseline,
             "PROBE",probeOperationId,null,probe,true);
         if(probe.controlsJson==null) {
@@ -187,6 +275,8 @@ public final class Rb100PhysicalDiagnostics {
             observed.qualitySubsetMarkerJson);
         System.out.println(qualityScalarOperationJson(observed,probeOperationId,"PROBE"));
 
+        if(!"PASS".equals(observed.status))
+            System.out.println(probe.failureProgressJson());
         probe.requireTerminalOperation(observed);
         boolean pairPassed=qualityScalarPairPassed(baseline,observed,variant);
         String event=probe.eventJson(observed);
@@ -201,7 +291,7 @@ public final class Rb100PhysicalDiagnostics {
         long suiteMillis=nanosToMillis(System.nanoTime()-suiteStarted);
         require(suiteMillis<=480000L,
             "quality scalar two-operation suite remains within its frozen480s ceiling");
-        System.out.println("PASS: RB100 quality scalar contracts {\"protocolVersion\":1,\"sourceRevision\":18,"+
+        System.out.println("PASS: RB100 quality scalar contracts {\"protocolVersion\":1,\"sourceRevision\":20,"+
             "\"status\":\"PASS\",\"operations\":2,\"nullOperations\":1,\"probeOperations\":1,"+
             "\"pairs\":1,\"confirmedScalarEvents\":1,\"variant\":\""+variant.name()+
             "\",\"runId\":\""+jsonFull(runId)+"\",\"rootSeed\":\""+SEED+
@@ -218,11 +308,10 @@ public final class Rb100PhysicalDiagnostics {
             ",\"routeMillisStatus\":\"INCOMPLETE_MANUAL_SINGLE_STEP_CADENCE_NOT_REPRESENTATIVE\","+
             "\"feasibility\":\"UNKNOWN\",\"layoutQualification\":false,"+
             "\"scope\":\"OBSERVATIONAL_ACTUAL_GENERATOR_QUALITY_SCALAR_ONLY\"}");
-        String graphEvent=probe.zeroViaGraphEventJson(observed,pairPassed);
         String graphSummary=probe.zeroViaGraphSummaryJson(observed,pairPassed);
         System.out.println(pathEvent);
         System.out.println(pathSummary);
-        System.out.println(graphEvent);
+        probe.emitZeroViaGraphEvent(observed,pairPassed);
         System.out.println(graphSummary);
         String allocationEvent=probe.prefixAllocationEventJson(observed,pairPassed);
         String allocationSummary=probe.prefixAllocationSummaryJson(observed,pairPassed);
@@ -871,7 +960,7 @@ public final class Rb100PhysicalDiagnostics {
 
     private static String qualityScalarOperationJson(P07PolicyDiagnosticCase result,
             String operationId,String mode) {
-        return "RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":18,"+
+        return "RB100_QUALITY_SCALAR_OPERATION {\"protocolVersion\":1,\"sourceRevision\":20,"+
             "\"runId\":\""+jsonFull(result.runId)+"\",\"operationId\":\""+
             jsonFull(operationId)+"\",\"variant\":\""+jsonFull(result.subject)+
             "\",\"mode\":\""+jsonFull(mode)+"\",\"result\":"+result.toJson()+"}";
@@ -931,7 +1020,7 @@ public final class Rb100PhysicalDiagnostics {
             observed.policyResult!=null && baseline.policyResult.getLayout()==null &&
             observed.policyResult.getLayout()==null && baseline.layoutOutputJson.contains("\"layoutReturned\":false") &&
             observed.layoutOutputJson.contains("\"layoutReturned\":false");
-        return "RB100_QUALITY_SCALAR_PAIR {\"protocolVersion\":1,\"sourceRevision\":18,"+
+        return "RB100_QUALITY_SCALAR_PAIR {\"protocolVersion\":1,\"sourceRevision\":20,"+
             "\"runId\":\""+jsonFull(runId)+"\",\"variant\":\""+variant.name()+
             "\",\"nullOperationId\":\""+nullOperationId+"\",\"probeOperationId\":\""+
             probeOperationId+"\",\"rootSeed\":\""+SEED+"\",\"placementSeed\":\""+
@@ -3071,6 +3160,7 @@ public final class Rb100PhysicalDiagnostics {
         private static final int MAX_MANUAL_STEPS_PER_UNIT=32768;
         final String runId,operationId;
         final Rb100Plan.Variant variant;
+        final P07ZeroViaGraphDiagnostics.Target graphTarget;
         int selectCalls,graphCallbacks,manualSliceSteps,manualGroups;
         int graphAdvanceCalls;
         long manualDriverNanos;
@@ -3079,12 +3169,16 @@ public final class Rb100PhysicalDiagnostics {
         SeededPcbLayoutGenerator.Session targetGeneratorSession;
         Object routeSession,fixedPrefixContext,targetSearch,targetPublisher,
             targetBranchSearch,targetBranch;
+        P07AcceptedBranchCaptureDiagnostics.SeedSnapshot targetSeeds;
         Object targetStartPad,targetRootPad,targetEndNode;
         QualityScalarSnapshot snapshot;
         QualityPathSnapshot pathSnapshot;
         ZeroViaGraphBinding graphBinding;
+        Load12GraphBinding load12GraphBinding;
         P07ZeroViaGraphDiagnostics.Cursor graphCursor;
-        String graphDiagnosticJson;
+        P07ZeroViaGraphDiagnostics.Context graphContext;
+        P07ZeroViaGraphDiagnostics.GraphInput graphInput;
+        GraphReceipt graphReceipt;
         int graphOrdinaryQueries=-1,graphCompletedLastWork=-1;
         int lastGraphBudgetUnit;
         P07PrefixAllocationDiagnostics.Cursor prefixAllocationCursor;
@@ -3114,8 +3208,10 @@ public final class Rb100PhysicalDiagnostics {
             load12PreStarted,load12PreComplete,load12PostStarted,load12PostComplete,
             load12CaptureReleased;
 
-        QualityScalarProbe(String runId,String operationId,Rb100Plan.Variant variant) {
+        QualityScalarProbe(String runId,String operationId,Rb100Plan.Variant variant,
+                P07ZeroViaGraphDiagnostics.Target graphTarget) {
             this.runId=runId; this.operationId=operationId; this.variant=variant;
+            this.graphTarget=graphTarget;
         }
 
         public boolean select(PcbLayerRoutingPrototype.FixedPrefixBranchLineage lineage) {
@@ -3130,6 +3226,23 @@ public final class Rb100PhysicalDiagnostics {
             throw new AssertionError("quality scalar observer must never materialize a graph");
         }
 
+        String failureProgressJson() {
+            String graph=graphCursor==null?"null":graphCursor.failureProgressJson();
+            if(graphReceipt!=null && graphCursor==null) {
+                P07ZeroViaGraphDiagnostics.Result value=graphReceipt.result;
+                graph=value.failureProgressJson();
+            }
+            return "RB100_QUALITY_GRAPH_FAILURE_PROGRESS {\"schema\":\"q100-quality-capture-failure-progress-r1\","+
+                "\"status\":\"OBSERVATION_ONLY_NOT_QUALIFICATION\",\"target\":\""+graphTarget.name()+
+                "\",\"manualGroups\":"+manualGroups+",\"manualSliceSteps\":"+manualSliceSteps+
+                ",\"load12PreAdvanceCalls\":"+load12PreAdvanceCalls+
+                ",\"load12PostAdvanceCalls\":"+load12PostAdvanceCalls+
+                ",\"prefixAllocationAdvanceCalls\":"+prefixAllocationAdvanceCalls+
+                ",\"graphAdvanceCalls\":"+graphAdvanceCalls+",\"qualityRejected\":"+qualityRejected+
+                ",\"load12PreComplete\":"+load12PreComplete+",\"load12PostComplete\":"+load12PostComplete+
+                ",\"graph\":"+graph+"}";
+        }
+
         boolean shouldManuallyAdvance(SeededPcbLayoutGenerator.Session generatorSession) {
             return !qualityRejected && generatorSession!=null &&
                 P07ScalarReflection.read(generatorSession,"mediumTwoLayerRoute")!=null;
@@ -3138,6 +3251,9 @@ public final class Rb100PhysicalDiagnostics {
         String nextManualUnitName() {
             if(load12PreStarted && !load12PreComplete)
                 return "p07-quality-load12-pre-advance-"+(load12PreAdvanceCalls+1);
+            if(graphTarget==P07ZeroViaGraphDiagnostics.Target.LOAD12 &&
+                    graphCursor!=null && !graphCursor.isComplete())
+                return "p07-quality-zero-via-graph-advance-"+(graphAdvanceCalls+1);
             if(load12PostStarted && !load12PostComplete)
                 return "p07-quality-load12-post-advance-"+(load12PostAdvanceCalls+1);
             if(prefixAllocationCursor!=null && !prefixAllocationCursor.isComplete())
@@ -3174,6 +3290,20 @@ public final class Rb100PhysicalDiagnostics {
                     advanceLoad12PreCapture(budget);
                 } finally {
                     manualDriverNanos+=Math.max(0L,System.nanoTime()-preGroupStarted);
+                }
+                manualGroups++;
+                return;
+            }
+            if(graphTarget==P07ZeroViaGraphDiagnostics.Target.LOAD12 &&
+                    graphCursor!=null && !graphCursor.isComplete()) {
+                require(active==routeSession && generatorSession==targetGeneratorSession &&
+                    load12GraphBinding!=null && !load12PostStarted,
+                    "pending LOAD12 graph retains the same quiescent pre-Publisher owner");
+                long graphGroupStarted=System.nanoTime();
+                try {
+                    advanceZeroViaGraph(budget);
+                } finally {
+                    manualDriverNanos+=Math.max(0L,System.nanoTime()-graphGroupStarted);
                 }
                 manualGroups++;
                 return;
@@ -3291,6 +3421,7 @@ public final class Rb100PhysicalDiagnostics {
                     if(load12PreStarted && !load12PreComplete) break;
                     if(load12PostStarted && !load12PostComplete) break;
                     if(graphCursor!=null && !graphCursor.isComplete()) break;
+                    if(prefixAllocationCursor!=null && !prefixAllocationCursor.isComplete()) break;
                     if(progress==PcbLayerRoutingPrototype.OrderingProgress.COMPLETE && !qualityRejected)
                         throw new AssertionError("target quality rejection was not observed before P07 completion");
                 }
@@ -3674,8 +3805,11 @@ public final class Rb100PhysicalDiagnostics {
                 "one LOAD12 pre-cursor advance remains within its bounded source quantum");
             budget.checkpoint();
             verifyLoad12PreBoundary();
-            if(load12PreCursor.isComplete()) captureCompletedLoad12Pre();
-            if(load12PreCursor.isComplete()) verifyLoad12PreBoundary();
+            if(complete) captureCompletedLoad12Pre();
+            if(complete) {
+                verifyLoad12PreBoundary();
+                load12PreCursor=null;
+            }
             budget.checkpoint();
             lastLoad12PreBudgetUnit=workUnit;
         }
@@ -3721,6 +3855,8 @@ public final class Rb100PhysicalDiagnostics {
             load12PreJson=body;
             load12PreResult=result;
             load12PreComplete=true;
+            if(graphTarget==P07ZeroViaGraphDiagnostics.Target.LOAD12)
+                beginLoad12ZeroViaGraph();
         }
 
         private void advanceLoad12PostCapture(Budget budget) {
@@ -3815,9 +3951,21 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         private void releaseLoad12CaptureSources() {
+            boolean selectedGraphReady;
+            if(graphTarget==P07ZeroViaGraphDiagnostics.Target.LOAD12) {
+                selectedGraphReady=graphReceipt!=null &&
+                    graphReceipt.header.target==P07ZeroViaGraphDiagnostics.Target.LOAD12 &&
+                    graphReceipt.sourceReleasedBeforeSuccessorWork;
+            } else {
+                selectedGraphReady=graphReceipt==null ||
+                    (graphReceipt.header.target==P07ZeroViaGraphDiagnostics.Target.D_SENSE &&
+                        graphReceipt.sourceReleasedBeforeSuccessorWork);
+            }
             require(load12PostComplete && load12PreComplete && load12PostJson!=null &&
                 load12PreJson!=null && load12PostHoleIds!=null &&
-                load12PostHoleFingerprints!=null,
+                load12PostHoleFingerprints!=null && load12GraphBinding==null &&
+                graphCursor==null && graphContext==null && graphInput==null &&
+                selectedGraphReady,
                 "LOAD12 source release occurs only after both complete immutable result bodies are saved");
             load12PreCursor=null;
             load12PostCursor=null;
@@ -3861,6 +4009,13 @@ public final class Rb100PhysicalDiagnostics {
                     return null;
                 require(P07ScalarReflection.read(search,"publisher")==null,
                     "retained actual D_SENSE BranchSearch precedes its Publisher installation");
+                if(graphTarget==P07ZeroViaGraphDiagnostics.Target.D_SENSE) {
+                    targetSeeds=P07AcceptedBranchCaptureDiagnostics.captureInitialSeeds(search,branch);
+                    require(targetSeeds!=null && targetSeeds.searchRef==search &&
+                        targetSeeds.branchRef==branch && targetSeeds.nodeCount()==2 &&
+                        retainedSeedLayerMask(targetSeeds)==3,
+                        "D_SENSE seed faces come from the exact retained branch-entry queue objects");
+                }
                 targetBranchSearch=search;
                 targetBranch=branch;
             }
@@ -3873,7 +4028,8 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         private void beginZeroViaGraph(Object search,Object publisher) {
-            require(targetBranchSearch==search && targetBranch!=null && targetBranchHandoffVerified &&
+            require(graphTarget==P07ZeroViaGraphDiagnostics.Target.D_SENSE &&
+                targetBranchSearch==search && targetBranch!=null && targetBranchHandoffVerified &&
                 P07ScalarReflection.read(search,"branch")==null &&
                 P07ScalarReflection.read(search,"publisher")==publisher,
                 "stage1 Publisher follows the exact BranchSearch retained before its installing P07 slice");
@@ -3903,10 +4059,7 @@ public final class Rb100PhysicalDiagnostics {
             int pitch=PcbLayerRoutingPrototype.GRID;
             int endCell=P07ScalarReflection.intField(found,"cell");
             int endLayer=P07ScalarReflection.intField(found,"layer");
-            int initialLayerMask=0;
-            for(int layer=0;layer<2;layer++)
-                if(layer==primaryLayer || policy==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER)
-                    initialLayerMask|=1<<layer;
+            int initialLayerMask=retainedSeedLayerMask(targetSeeds);
             require(pathSnapshot!=null && pathSnapshot.nodes.length==66,
                 "approved actual Publisher path retains its exact66 captured nodes before query setup");
             QualityPathNodeSnapshot firstPathNode=pathSnapshot.nodes[0];
@@ -3971,29 +4124,152 @@ public final class Rb100PhysicalDiagnostics {
                 require(terminalAuthority,
                     "actual found terminal is the Publisher endpoint and an original root or reached PTH identity");
             }
-            int[][] path=new int[pathSnapshot.nodes.length][3];
-            for(int index=0;index<pathSnapshot.nodes.length;index++) {
-                QualityPathNodeSnapshot row=pathSnapshot.nodes[index];
+            for(QualityPathNodeSnapshot row:pathSnapshot.nodes)
                 require(row.layer==endLayer,
-                    "the captured actual path stays on its checked TOP Router face without adding transitions");
-                path[index][0]=row.x;
-                path[index][1]=row.y;
-                path[index][2]=row.layer;
-            }
+                    "the captured actual D_SENSE path stays on its checked TOP Router face without adding transitions");
             graphBinding=new ZeroViaGraphBinding(search,targetBranch,publisher,found,foundTerminal,
                 goals,reached,faces,layout,start,root,netId,
                 P07ScalarReflection.intField(search,"pass"),width,height,cells,originX,originY,
                 pitch,endLayer,endCell,policy,primaryLayer,initialLayerMask,maximumVias,
                 prefixHoles,reachedIds);
-            P07ZeroViaGraphDiagnostics.Context context=new P07ZeroViaGraphDiagnostics.Context(
+            graphInput=new DQualityPathGraphInput(pathSnapshot,targetSeeds);
+            graphContext=new P07ZeroViaGraphDiagnostics.Context(
+                P07ZeroViaGraphDiagnostics.Target.D_SENSE,
                 layout,faces,netId,start,root,reached,goals,width,height,originX,originY,pitch,
-                initialLayerMask,path);
-            graphCursor=P07ZeroViaGraphDiagnostics.begin(context);
+                initialLayerMask,graphInput);
+            graphCursor=P07ZeroViaGraphDiagnostics.begin(graphContext);
             require(graphCursor!=null && !graphCursor.isComplete(),
                 "actual finite two-face zero-via graph cursor begins pending and resumable");
             beginPrefixAllocation(search,prefixHoles,layout);
             verifyGraphBindingUnchanged(false);
             verifyPrefixAllocationBindingUnchanged(false);
+        }
+
+        private void beginLoad12ZeroViaGraph() {
+            require(graphTarget==P07ZeroViaGraphDiagnostics.Target.LOAD12 &&
+                load12PreComplete && load12PreResult!=null && load12PreCursor!=null &&
+                load12PreCursor.isComplete() && graphCursor==null && graphReceipt==null &&
+                !load12PostStarted && load12GraphBinding==null,
+                "LOAD12 graph starts once from its completed immutable pre-publication result");
+            Object found=P07ScalarReflection.read(load12Publisher,"end");
+            Object foundTerminal=P07ScalarReflection.read(load12Publisher,"endTerminal");
+            Object goalObject=P07ScalarReflection.read(load12Branch,"goal");
+            Object facesObject=P07ScalarReflection.read(load12Search,"faces");
+            require(found!=null && goalObject instanceof boolean[] &&
+                facesObject instanceof PcbNetRouter.Router[] &&
+                ((PcbNetRouter.Router[])facesObject).length==2,
+                "LOAD12 graph binds its actual found Node, goal array and two face Routers");
+            boolean[] goals=(boolean[])goalObject;
+            PcbNetRouter.Router[] faces=(PcbNetRouter.Router[])facesObject;
+            PcbPadPlacement[] reached=(PcbPadPlacement[])
+                P07ScalarReflection.read(load12Branch,"reachedTerminals");
+            int width=P07ScalarReflection.intField(load12Search,"width");
+            int height=P07ScalarReflection.intField(load12Search,"height");
+            int cells=P07ScalarReflection.intField(load12Search,"cells");
+            int originX=P07ScalarReflection.intField(load12Search,"minX");
+            int originY=P07ScalarReflection.intField(load12Search,"minY");
+            int pitch=PcbLayerRoutingPrototype.GRID;
+            int endCell=P07ScalarReflection.intField(found,"cell");
+            int endLayer=P07ScalarReflection.intField(found,"layer");
+            int initialLayerMask=retainedSeedLayerMask(load12Seeds);
+            int reportedSeedMask=load12PreResult.seedLayerMask();
+            require(reportedSeedMask==initialLayerMask &&
+                load12PreResult.sourceKind().equals("LOAD12_ACCEPTED_PRE_RESULT") &&
+                load12PreResult.goalCellCount()>0 && load12PreResult.goalCellCount()<=cells &&
+                load12PreResult.pathNodeCount()<=4096 &&
+                load12PreResult.transitionCount()<=4 &&
+                load12PreResult.netId().equals("LOAD12") &&
+                load12PreResult.branchOrdinal()==73 && initialLayerMask==3,
+                "LOAD12 immutable PreResult and retained initial seed objects agree on the approved branch source");
+            require(load12Binding.pass==1 && load12Binding.currentNetPosition==3 &&
+                load12Binding.searchNetIndex==4 && load12Binding.branchOrdinal==73 &&
+                load12Binding.searchBranches==73 && load12Binding.currentNet.equals("LOAD12") &&
+                load12Binding.maximumVias==48 &&
+                load12Binding.policy==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER &&
+                load12Binding.primaryLayer==PcbCopperLayer.BOTTOM.ordinal() &&
+                width>0 && height>0 && (long)width*height==cells &&
+                goals.length==2*cells && reached!=null &&
+                endCell==load12PreResult.pathCellAt(load12PreResult.pathNodeCount()-1) &&
+                endLayer==load12PreResult.pathLayerAt(load12PreResult.pathNodeCount()-1) &&
+                load12PreResult.pathXAt(0)==load12Binding.start.getX() &&
+                load12PreResult.pathYAt(0)==load12Binding.start.getY() &&
+                load12PreResult.pathCellAt(0)==P07ScalarReflection.searchCell(
+                    load12Search,load12Binding.start),
+                "LOAD12 graph source binds actual pass1 net-position3/branch73 path, endpoints, grid and unchanged caps");
+            require(foundTerminal==P07ScalarReflection.read(load12Branch,"foundTerminal") &&
+                (foundTerminal==null || foundTerminal==load12Binding.root ||
+                    containsPadIdentity(reached,foundTerminal)),
+                "LOAD12 Publisher terminal is its actual root or reached PTH authority");
+            String[] reachedIds=new String[reached.length];
+            String previousId=null;
+            for(int index=0;index<reached.length;index++) {
+                PcbPadPlacement pad=reached[index];
+                require(pad!=null && pad!=load12Binding.root &&
+                    (previousId==null || previousId.compareTo(pad.getPadId())<0),
+                    "LOAD12 reached PTH identities retain unique canonical source order outside the root");
+                reachedIds[index]=pad.getPadId();
+                previousId=pad.getPadId();
+            }
+            load12GraphBinding=new Load12GraphBinding(load12Search,load12Branch,
+                load12Publisher,found,foundTerminal,goals,facesObject,faces,
+                load12Binding.layout,load12Binding.start,load12Binding.root,reached,
+                load12Binding.prefixHoleArrayIdentity,
+                reachedIds,load12Binding.currentNet,load12Binding.pass,
+                load12Binding.branchOrdinal,load12Binding.currentNetPosition,
+                load12Binding.searchNetIndex,endCell,endLayer,load12Binding.policy,
+                load12Binding.primaryLayer,
+                initialLayerMask,load12Binding.maximumVias,load12Binding.prefixHoles.length,
+                goals.length);
+            graphInput=load12PreResult;
+            graphContext=new P07ZeroViaGraphDiagnostics.Context(
+                P07ZeroViaGraphDiagnostics.Target.LOAD12,load12Binding.layout,faces,
+                load12Binding.currentNet,load12Binding.start,load12Binding.root,reached,
+                goals,width,height,originX,originY,pitch,initialLayerMask,graphInput);
+            graphCursor=P07ZeroViaGraphDiagnostics.begin(graphContext);
+            require(graphCursor!=null && !graphCursor.isComplete(),
+                "actual LOAD12 fixed-prefix graph cursor begins pending before Publisher resumes");
+            verifyLoad12GraphBoundary();
+        }
+
+        private void verifyLoad12GraphBoundary() {
+            Load12GraphBinding binding=load12GraphBinding;
+            require(graphTarget==P07ZeroViaGraphDiagnostics.Target.LOAD12 &&
+                binding!=null && !load12PostStarted && !load12CaptureReleased &&
+                load12PreComplete && load12PreResult!=null && graphInput==load12PreResult &&
+                load12Search==binding.search && load12Branch==binding.branch &&
+                load12Publisher==binding.publisher,
+                "pending LOAD12 graph retains the exact immutable pre result and live pre-Publisher sources");
+            verifyLoad12TemplateAndSearchOwner();
+            require(P07ScalarReflection.read(binding.search,"branch")==null &&
+                P07ScalarReflection.read(binding.search,"publisher")==binding.publisher &&
+                P07ScalarReflection.intField(binding.publisher,"stage")==1 &&
+                P07ScalarReflection.read(binding.publisher,"reversed")==load12ReversedIdentity &&
+                P07ScalarReflection.intField(binding.publisher,"qualityIndex")==
+                    load12PreResult.pathNodeCount() &&
+                P07ScalarReflection.read(binding.publisher,"end")==binding.endNode &&
+                P07ScalarReflection.read(binding.publisher,"endTerminal")==binding.foundTerminal &&
+                P07ScalarReflection.read(binding.publisher,"start")==binding.start &&
+                P07ScalarReflection.read(binding.publisher,"root")==binding.root &&
+                P07ScalarReflection.read(binding.search,"faces")==binding.facesIdentity &&
+                P07ScalarReflection.read(binding.branch,"goal")==binding.goalIdentity &&
+                P07ScalarReflection.read(binding.branch,"reachedTerminals")==binding.reachedIdentity &&
+                P07ScalarReflection.read(binding.branch,"holes")==binding.holesIdentity &&
+                P07ScalarReflection.read(binding.search,"layout")==binding.layout &&
+                binding.holesIdentity==load12Binding.prefixHoleArrayIdentity &&
+                binding.layout.getHoleCount()==load12Binding.prefixHoles.length &&
+                P07ScalarReflection.stringField(binding.search,"currentNet").equals(binding.header.netId) &&
+                P07ScalarReflection.intField(binding.search,"netIndex")==binding.header.netIndexNextFetch &&
+                P07ScalarReflection.intField(binding.search,"branches")==binding.header.branchOrdinal &&
+                P07ScalarReflection.intField(binding.branch,"branchOrdinal")==binding.header.branchOrdinal &&
+                P07ScalarReflection.intField(binding.search,"pass")==binding.header.pass &&
+                P07ScalarReflection.intField(binding.search,"maximumVias")==binding.header.maximumVias,
+                "LOAD12 Search, BranchSearch, Publisher stage1, layout, goal and face-router identities remain fixed");
+            PcbNetRouter.Router[] faces=(PcbNetRouter.Router[])binding.facesIdentity;
+            require(faces.length==binding.faceValues.length &&
+                faces[0]==binding.faceValues[0] && faces[1]==binding.faceValues[1],
+                "LOAD12 actual face Routers remain the same ordered objects");
+            verifyLoad12BranchHoleArray();
+            verifyLoad12PrefixHoleBindings(false);
         }
 
         private void beginPrefixAllocation(Object search,PcbBoardHole[] prefixHoles,
@@ -4051,6 +4327,11 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         private void verifyPrefixAllocationBindingUnchanged(boolean ownerAdvanced) {
+            verifyPrefixAllocationBindingUnchanged(ownerAdvanced,true);
+        }
+
+        private void verifyPrefixAllocationBindingUnchanged(boolean ownerAdvanced,
+                boolean checkFullGeometry) {
             PrefixAllocationBinding binding=prefixAllocationBinding;
             require(binding!=null && prefixAllocationCursor!=null &&
                 targetSearch==binding.search && targetBranch==binding.branch &&
@@ -4095,9 +4376,11 @@ public final class Rb100PhysicalDiagnostics {
                     "actual Search net-order value remains unchanged at index "+index);
             Vector<PcbBoardHole> layoutHoles=binding.layout.getHoles();
             require(layoutHoles.size()==binding.prefixHoles.length &&
-                binding.prefixGeometryFingerprint.equals(
-                    binding.layout.geometryFingerprint()),
-                "actual layout prefix count/order geometry fingerprint remain unchanged");
+                (!checkFullGeometry || binding.prefixGeometryFingerprint.equals(
+                    binding.layout.geometryFingerprint())),
+                checkFullGeometry ?
+                    "actual layout prefix count/order geometry fingerprint remain unchanged" :
+                    "actual prefix count remains stable while the graph cursor performs its charged full-geometry check");
             for(int index=0;index<binding.prefixHoles.length;index++) {
                 PcbBoardHole hole=binding.prefixHoles[index];
                 require(hole!=null && hole==layoutHoles.get(index) &&
@@ -4105,10 +4388,11 @@ public final class Rb100PhysicalDiagnostics {
                     hole.fingerprint().equals(binding.holeFingerprints[index]),
                     "original prefix hole identity, ID and fingerprint remain unchanged at index "+index);
             }
-            if(graphCursor!=null && graphCursor.isComplete()) {
+            if(graphTarget==P07ZeroViaGraphDiagnostics.Target.D_SENSE &&
+                    graphReceipt!=null) {
                 require(sha256Hex(binding.prefixGeometryFingerprint).equals(
-                    graphCursor.result().prefixGeometrySha256),
-                    "allocation layout fingerprint remains the completed graph's exact geometry authority");
+                    graphReceipt.result.prefixGeometrySha256),
+                    "D allocation layout fingerprint remains the completed D graph geometry authority");
             }
         }
 
@@ -4125,7 +4409,10 @@ public final class Rb100PhysicalDiagnostics {
             budget.checkpoint();
             verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
                 fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
-            verifyGraphBindingUnchanged(false);
+            if(graphTarget==P07ZeroViaGraphDiagnostics.Target.D_SENSE)
+                verifyGraphBindingUnchanged(false);
+            else
+                verifyCompletedGraphCursor();
             verifyPrefixAllocationBindingUnchanged(false);
             boolean advanceComplete=prefixAllocationCursor.advance(MAX_MANUAL_STEPS_PER_UNIT);
             prefixAllocationAdvanceCalls++;
@@ -4137,7 +4424,10 @@ public final class Rb100PhysicalDiagnostics {
             budget.checkpoint();
             verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
                 fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
-            verifyGraphBindingUnchanged(false);
+            if(graphTarget==P07ZeroViaGraphDiagnostics.Target.D_SENSE)
+                verifyGraphBindingUnchanged(false);
+            else
+                verifyCompletedGraphCursor();
             verifyPrefixAllocationBindingUnchanged(false);
             if(prefixAllocationCursor.isComplete())
                 captureCompletedPrefixAllocationCursor(lastWork);
@@ -4177,11 +4467,7 @@ public final class Rb100PhysicalDiagnostics {
             PcbPadPlacement[] reached=(PcbPadPlacement[])
                 P07ScalarReflection.read(binding.branch,"reachedTerminals");
             boolean[] goals=(boolean[])P07ScalarReflection.read(binding.branch,"goal");
-            int derivedInitialLayerMask=0;
-            for(int layer=0;layer<2;layer++)
-                if(layer==binding.primaryLayer ||
-                        binding.policy==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER)
-                    derivedInitialLayerMask|=1<<layer;
+            int derivedInitialLayerMask=retainedSeedLayerMask(targetSeeds);
             require(P07ScalarReflection.read(binding.search,"owner")==routeSession &&
                 P07ScalarReflection.read(binding.search,"branch")==null &&
                 P07ScalarReflection.read(binding.search,"publisher")==binding.publisher &&
@@ -4197,10 +4483,12 @@ public final class Rb100PhysicalDiagnostics {
                 binding.policy==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER &&
                 binding.primaryLayer==PcbCopperLayer.BOTTOM.ordinal() &&
                 binding.initialLayerMask==derivedInitialLayerMask && derivedInitialLayerMask==3 &&
+                targetSeeds!=null && targetSeeds.searchRef==binding.search &&
+                targetSeeds.branchRef==binding.branch &&
                 P07ScalarReflection.read(binding.branch,"found")==binding.endNode &&
                 P07ScalarReflection.read(binding.branch,"foundTerminal")==binding.foundTerminal &&
                 P07ScalarReflection.read(binding.branch,"goal")==binding.goalIdentity &&
-                Arrays.equals(binding.goalValues,goals) &&
+                goals==binding.goalIdentity &&
                 P07ScalarReflection.read(binding.branch,"reachedTerminals")==binding.reachedIdentity &&
                 reached.length==binding.reachedValues.length &&
                 P07ScalarReflection.read(binding.branch,"holes")==binding.holesIdentity &&
@@ -4233,13 +4521,42 @@ public final class Rb100PhysicalDiagnostics {
             int endCell=P07ScalarReflection.intField(binding.endNode,"cell");
             int endLayer=P07ScalarReflection.intField(binding.endNode,"layer");
             require(endCell==binding.endCell && endLayer==binding.endLayer &&
-                binding.goalValues[endLayer*binding.cells+endCell],
-                "actual found end cell and layer remain a true original goal");
+                (graphReceipt==null || graphReceipt.result.goalVerified),
+                "actual found end cell and layer remain bound to the cursor-verified original goal");
+        }
+
+        private GraphHeader graphHeaderForD(ZeroViaGraphBinding binding) {
+            require(binding!=null && targetSeeds!=null &&
+                targetSeeds.searchRef==binding.search && targetSeeds.branchRef==binding.branch,
+                "D graph header binds the retained branch-entry seed snapshot");
+            int nextFetch=P07ScalarReflection.intField(binding.search,"netIndex");
+            int branchOrdinal=P07ScalarReflection.intField(binding.branch,"branchOrdinal");
+            require(nextFetch>=1 && branchOrdinal>0 &&
+                P07ScalarReflection.intField(binding.search,"branches")==branchOrdinal,
+                "D graph header uses actual next-fetch net position and retained branch ordinal");
+            String terminalId=binding.foundTerminal==null?null:
+                ((PcbPadPlacement)binding.foundTerminal).getPadId();
+            return new GraphHeader(P07ZeroViaGraphDiagnostics.Target.D_SENSE,
+                "D_SENSE_PUBLISHER_PATH",binding.pass,branchOrdinal,nextFetch-1,nextFetch,
+                binding.netId,binding.start.getPadId(),binding.root.getPadId(),
+                binding.reachedPadIds,terminalId,binding.endCell,binding.endLayer,
+                2*binding.cells,binding.policy.name(),binding.primaryLayer,
+                binding.initialLayerMask,binding.maximumVias,binding.policy.transitions,
+                binding.prefixHoleCount);
+        }
+
+        private void verifyGraphSourceAfterOwnerRejection() {
+            if(graphTarget==P07ZeroViaGraphDiagnostics.Target.D_SENSE)
+                verifyGraphBindingUnchanged(true);
+            else
+                verifyCompletedGraphCursor();
         }
 
         private void advanceZeroViaGraph(Budget budget) {
             require(graphCursor!=null && !graphCursor.isComplete() &&
-                graphBinding!=null && !qualityRejected,
+                !qualityRejected && (graphTarget==P07ZeroViaGraphDiagnostics.Target.D_SENSE?
+                    graphBinding!=null && load12GraphBinding==null:
+                    graphBinding==null && load12GraphBinding!=null),
                 "pending zero-via graph owns the actual quiescent Publisher before P07 resumes");
             require(budget!=null && budget.unitName!=null &&
                 budget.unitName.startsWith("p07-quality-zero-via-graph-advance-") &&
@@ -4248,10 +4565,7 @@ public final class Rb100PhysicalDiagnostics {
             int workUnit=budget.workUnits;
             int callsBefore=graphAdvanceCalls;
             budget.checkpoint();
-            verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
-                fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
-            verifyGraphBindingUnchanged(false);
-            verifyPrefixAllocationBindingUnchanged(false);
+            verifyGraphSourceBeforeOrAfterAdvance(false);
             boolean advanceComplete=graphCursor.advance(MAX_MANUAL_STEPS_PER_UNIT);
             graphAdvanceCalls++;
             int lastWork=graphCursor.lastWork();
@@ -4260,39 +4574,114 @@ public final class Rb100PhysicalDiagnostics {
                 lastWork>0 && lastWork<=MAX_MANUAL_STEPS_PER_UNIT,
                 "one resumable cursor advance completes within its single existing bounded work unit");
             budget.checkpoint();
-            verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
-                fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
-            verifyGraphBindingUnchanged(false);
-            verifyPrefixAllocationBindingUnchanged(false);
+            verifyGraphSourceBeforeOrAfterAdvance(false);
             if(graphCursor.isComplete()) captureCompletedGraphCursor(lastWork);
             budget.checkpoint();
             lastGraphBudgetUnit=workUnit;
         }
 
+        private void verifyGraphSourceBeforeOrAfterAdvance(boolean ownerAdvanced) {
+            if(graphTarget==P07ZeroViaGraphDiagnostics.Target.LOAD12) {
+                require(!ownerAdvanced,"LOAD12 graph source is never checked after successor work");
+                verifyLoad12GraphBoundary();
+            } else {
+                verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
+                    fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
+                verifyGraphBindingUnchanged(ownerAdvanced);
+                verifyPrefixAllocationBindingUnchanged(ownerAdvanced,false);
+            }
+        }
+
         private void captureCompletedGraphCursor(int lastWork) {
             require(graphCursor!=null && graphCursor.isComplete() &&
-                graphDiagnosticJson==null && lastWork>0 &&
+                graphReceipt==null && lastWork>0 &&
                 lastWork<=MAX_MANUAL_STEPS_PER_UNIT,
                 "completed zero-via graph cursor has a single bounded final work result");
-            String diagnostic=graphCursor.bodyJson();
-            int ordinaryQueries=graphCursor.result().ordinaryQueries;
-            String repeatedDiagnostic=graphCursor.bodyJson();
-            int repeatedCount=graphCursor.result().ordinaryQueries;
-            require(diagnostic!=null && diagnostic.equals(repeatedDiagnostic) &&
+            P07ZeroViaGraphDiagnostics.Result result=graphCursor.result();
+            require(result!=null,
+                "completed zero-via graph cursor returns its immutable result receipt");
+            P07ZeroViaGraphDiagnostics.Result repeatedResult=graphCursor.result();
+            int bodyLength=result.bodyLength();
+            int ordinaryQueries=result.ordinaryQueries;
+            int repeatedCount=repeatedResult.ordinaryQueries;
+            long consumedInputWork=result.copyEntries+result.comparisonEntries+
+                result.geometryBytes+result.effectUnits+result.ordinaryQueries+
+                result.goalCells+result.reachedPadChecks+result.pathNodes+
+                result.pathEdgesVerified+result.tupleBytes+
+                result.serializedUtf16Units;
+            require(result==repeatedResult && bodyLength>=0 &&
+                result.bodyLength()==bodyLength &&
                 ordinaryQueries>=0 && repeatedCount==ordinaryQueries &&
-                graphCursor.isComplete() && graphCursor.lastWork()==lastWork,
-                "completed cursor body and immutable structured result remain stable across reads");
-            graphDiagnosticJson=diagnostic;
+                graphCursor.isComplete() && graphCursor.lastWork()==lastWork &&
+                result.advanceCalls==graphAdvanceCalls && result.workSteps>=consumedInputWork &&
+                result.goalCells==result.cells && result.encodedCells==3*result.cells &&
+                result.serializedUtf16Units==bodyLength &&
+                result.pathNodes==result.pathNodeCount &&
+                result.pathEdgesVerified==result.pathNodeCount-1 &&
+                result.pathPlanarEdgeCount+result.pathTransitionCount==result.pathNodeCount-1 &&
+                result.activeMillis<=90000L,
+                "completed graph counters cover consumed work with encodedCells counted only inside serialization");
+            GraphHeader header;
+            boolean prefixGeometryVerified;
+            if(graphTarget==P07ZeroViaGraphDiagnostics.Target.D_SENSE) {
+                verifyGraphBindingUnchanged(false);
+                PrefixAllocationBinding allocation=prefixAllocationBinding;
+                require(allocation!=null &&
+                    sha256Hex(allocation.prefixGeometryFingerprint).equals(
+                        result.prefixGeometrySha256),
+                    "D_SENSE graph geometry hash matches its independently captured D allocation prefix");
+                header=graphHeaderForD(graphBinding);
+                prefixGeometryVerified=true;
+            } else {
+                verifyLoad12GraphBoundary();
+                require(load12Binding!=null &&
+                    sha256Hex(load12Binding.prefixGeometryFingerprint).equals(
+                        result.prefixGeometrySha256),
+                    "LOAD12 graph geometry hash matches its actual pre-publication prefix snapshot");
+                header=load12GraphBinding.header;
+                prefixGeometryVerified=true;
+            }
+            require(graphInput!=null && result.target==graphTarget &&
+                result.sourceKind.equals(header.sourceKind) &&
+                result.initialLayerMask==header.initialLayerMask &&
+                result.pathNodeCount==graphInput.pathNodeCount() &&
+                result.pathTransitionCount==graphInput.pathTransitionsAt(
+                    graphInput.pathNodeCount()-1),
+                "immutable result retains the selected actual target, seed faces and complete source witness");
+            if(graphTarget==P07ZeroViaGraphDiagnostics.Target.LOAD12)
+                require(result.pathTupleSha256.equals(load12PreResult.pathTupleSha256()) &&
+                    result.goalFaceBitsSha256.equals(load12PreResult.goalFaceBitsSha256()) &&
+                    result.goalUnionCellCount==load12PreResult.goalCellCount(),
+                    "LOAD12 graph recomputation matches the same immutable PreResult tuple and goal values");
+            require(result.liveBeforeVerified && result.liveAfterVerified &&
+                result.liveEffectsUnchanged && result.goalVerified &&
+                result.originalPathVerified,
+                "completed graph result retains source, goal and actual witness stability proofs");
             graphOrdinaryQueries=ordinaryQueries;
             graphCompletedLastWork=lastWork;
+            graphCursor=null;
+            graphContext=null;
+            graphInput=null;
+            if(graphTarget==P07ZeroViaGraphDiagnostics.Target.LOAD12) {
+                load12GraphBinding=null;
+            }
+            graphReceipt=new GraphReceipt(header,result,lastWork,
+                graphCursor==null && graphContext==null && graphInput==null &&
+                    (graphTarget!=P07ZeroViaGraphDiagnostics.Target.LOAD12 ||
+                        load12GraphBinding==null),prefixGeometryVerified);
+            verifyCompletedGraphCursor();
         }
 
         private void verifyCompletedGraphCursor() {
-            require(graphCursor!=null && graphCursor.isComplete() &&
-                graphDiagnosticJson!=null && graphOrdinaryQueries>=0 &&
-                graphCursor.result().ordinaryQueries==graphOrdinaryQueries &&
-                graphCursor.lastWork()==graphCompletedLastWork,
-                "completed zero-via graph cursor retains its terminal body, query count and last-work state");
+            require(graphCursor==null && graphContext==null && graphInput==null &&
+                graphReceipt!=null && graphReceipt.header.target==graphTarget &&
+                graphReceipt.result!=null &&
+                graphReceipt.result.bodyLength()==graphReceipt.result.serializedUtf16Units &&
+                graphOrdinaryQueries>=0 && graphReceipt.ordinaryQueries==graphOrdinaryQueries &&
+                graphReceipt.result.ordinaryQueries==graphOrdinaryQueries &&
+                graphReceipt.completedLastWork==graphCompletedLastWork &&
+                graphReceipt.sourceReleasedBeforeSuccessorWork,
+                "completed graph receipt retains its immutable result after releasing live graph job references");
         }
 
         private void verifyTargetContext(
@@ -4338,7 +4727,15 @@ public final class Rb100PhysicalDiagnostics {
                             (PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext,
                             snapshot);
                         targetCaptured=true;
-                        beginZeroViaGraph(search,publisher);
+                        if(graphTarget==P07ZeroViaGraphDiagnostics.Target.D_SENSE) {
+                            beginZeroViaGraph(search,publisher);
+                        } else {
+                            PcbBoardHole[] prefixHoles=(PcbBoardHole[])
+                                P07ScalarReflection.read(targetBranch,"holes");
+                            PcbBoardLayout layout=(PcbBoardLayout)
+                                P07ScalarReflection.read(search,"layout");
+                            beginPrefixAllocation(search,prefixHoles,layout);
+                        }
                     }
                 }
             }
@@ -4363,12 +4760,12 @@ public final class Rb100PhysicalDiagnostics {
                         snapshot.startPadId.equals(((PcbPadPlacement)targetStartPad).getPadId()) &&
                         snapshot.rootPadId.equals(((PcbPadPlacement)targetRootPad).getPadId()),
                         "actual rejection retains the same request/pass/net/start/root and Publisher object identity");
-                    require(graphCursor!=null && graphCursor.isComplete() &&
+                    require(graphReceipt!=null && graphReceipt.header.target==graphTarget &&
                         graphAdvanceCalls>0,
                         "actual branch-quality rejection resumes only after the bounded query cursor completes");
                     verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
                         fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
-                    verifyGraphBindingUnchanged(true);
+                    verifyGraphSourceAfterOwnerRejection();
                     verifyPrefixAllocationBindingUnchanged(true);
                     qualityRejectionMessage=reason;
                     qualityRejected=true;
@@ -4403,8 +4800,11 @@ public final class Rb100PhysicalDiagnostics {
             require(targetCaptured && qualityRejected && snapshot!=null &&
                 routeSession!=null && fixedPrefixContext!=null && armedReadyGuard,
                 "terminal scalar record has its exact actual target context and rejection");
-            require(graphCursor!=null && graphCursor.isComplete() &&
-                graphAdvanceCalls>0 && graphBinding!=null,
+            require(graphReceipt!=null && graphAdvanceCalls>0 &&
+                graphReceipt.header.target==graphTarget &&
+                (graphTarget==P07ZeroViaGraphDiagnostics.Target.D_SENSE?
+                    graphBinding!=null && load12GraphBinding==null:
+                    graphBinding==null && load12GraphBinding==null),
                 "terminal zero-via graph diagnostic has completed all resumable work under the existing driver");
             require(prefixAllocationCursor!=null && prefixAllocationCursor.isComplete() &&
                 prefixAllocationAdvanceCalls>0 && prefixAllocationDiagnosticJson!=null &&
@@ -4449,7 +4849,12 @@ public final class Rb100PhysicalDiagnostics {
                 "actual Publisher path snapshot retains its same-operation source identities");
             verifyQualityPathSourceUnchanged(routeSession,targetSearch,targetPublisher,
                 fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
-            verifyGraphBindingUnchanged(qualityRejected);
+            if(graphTarget==P07ZeroViaGraphDiagnostics.Target.D_SENSE)
+                verifyGraphBindingUnchanged(qualityRejected);
+            else
+                require(load12GraphBinding==null && graphReceipt!=null &&
+                    graphReceipt.sourceReleasedBeforeSuccessorWork,
+                    "LOAD12 graph source bindings were released before later Publisher work");
             verifyPrefixAllocationBindingUnchanged(qualityRejected);
             verifyCompletedGraphCursor();
             verifyCompletedPrefixAllocationCursor();
@@ -4461,7 +4866,7 @@ public final class Rb100PhysicalDiagnostics {
             requireTerminalOperation(result);
             PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
                 (PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext;
-            return "RB100_QUALITY_SCALAR_EVENT {\"protocolVersion\":1,\"sourceRevision\":18,"+
+            return "RB100_QUALITY_SCALAR_EVENT {\"protocolVersion\":1,\"sourceRevision\":20,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\""+jsonFull(operationId)+
                 "\",\"variant\":\""+variant.name()+"\",\"mode\":\"PROBE\",\"rootSeed\":\""+
                 SEED+"\",\"placementSeed\":\""+PLACEMENT_DIAGNOSTIC_SEED+
@@ -4515,7 +4920,7 @@ public final class Rb100PhysicalDiagnostics {
                 nodes.append(pathSnapshot.nodes[index].toJson());
             }
             nodes.append(']');
-            return "RB100_QUALITY_PATH_EVENT {\"protocolVersion\":1,\"sourceRevision\":18,"+
+            return "RB100_QUALITY_PATH_EVENT {\"protocolVersion\":1,\"sourceRevision\":20,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\""+
                 jsonFull(operationId)+"\",\"order\":\"START_TO_END\",\"captureStage\":"+
                 pathSnapshot.captureStage+",\"captureQualityIndex\":"+
@@ -4525,56 +4930,77 @@ public final class Rb100PhysicalDiagnostics {
                 "\"legalShortcutProof\":false,\"layoutQualification\":false}";
         }
 
-        String zeroViaGraphEventJson(P07PolicyDiagnosticCase result,boolean pairPassed) {
+        void emitZeroViaGraphEvent(P07PolicyDiagnosticCase result,boolean pairPassed) {
             requireTerminalOperation(result);
-            require(pairPassed && "QUALITY_PROBE".equals(operationId) && graphBinding!=null &&
-                graphCursor!=null && graphCursor.isComplete() && graphAdvanceCalls>0 &&
-                graphDiagnosticJson!=null,
-                "zero-via graph event follows same-run scalar parity, terminal rejection and every cursor unit");
+            require(pairPassed && "QUALITY_PROBE".equals(operationId) &&
+                graphReceipt!=null && graphReceipt.header.target==graphTarget &&
+                graphReceipt.result!=null && graphAdvanceCalls>0,
+                "zero-via graph event follows same-run parity, source capture, rejection and all cursor units");
             require(qualityRejected && targetRequestAccounted && terminalConfirmed,
-                "zero-via graph event follows the same actual quality rejection and terminal cleanup");
-            verifyGraphBindingUnchanged(true);
-            ZeroViaGraphBinding binding=graphBinding;
-            String foundTerminal=binding.foundTerminal==null ? "null" :
-                "\""+jsonFull(((PcbPadPlacement)binding.foundTerminal).getPadId())+"\"";
-            StringBuilder reached=new StringBuilder("[");
-            for(int index=0;index<binding.reachedPadIds.length;index++) {
-                if(index>0) reached.append(',');
-                reached.append('"').append(jsonFull(binding.reachedPadIds[index])).append('"');
-            }
-            reached.append(']');
-            return "RB100_ZERO_VIA_GRAPH_EVENT {\"protocolVersion\":1,\"sourceRevision\":18,"+
+                "zero-via graph event follows the actual quality rejection and terminal cleanup");
+            verifyGraphSourceAfterOwnerRejection();
+            GraphHeader binding=graphReceipt.header;
+            P07ZeroViaGraphDiagnostics.Result graph=graphReceipt.result;
+            String foundTerminal=binding.foundTerminalPadId==null ? "null" :
+                "\""+jsonFull(binding.foundTerminalPadId)+"\"";
+            String prefix="RB100_ZERO_VIA_GRAPH_EVENT {\"protocolVersion\":1,\"sourceRevision\":20,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\","+
-                "\"scope\":\"ACTUAL_FIXED_PREFIX_ZERO_NEW_VIA_GRAPH_ONLY\",\"binding\":{"+
+                "\"target\":\""+binding.target.name()+"\",\"scope\":\""+
+                binding.scope+"\",\"binding\":{"+
                 "\"branchIdentityVerified\":true,\"sourcePublisherUnchanged\":true,"+
-                "\"pass\":"+binding.pass+",\"netId\":\""+jsonFull(binding.netId)+"\","+
-                "\"startPadId\":\""+jsonFull(binding.start.getPadId())+"\","+
-                "\"rootPadId\":\""+jsonFull(binding.root.getPadId())+"\","+
-                "\"reachedPthPadIds\":"+reached+",\"foundTerminalPadId\":"+foundTerminal+","+
-                "\"endCell\":"+binding.endCell+",\"endLayer\":"+binding.endLayer+","+
-                "\"goalMaskLength\":"+binding.goalValues.length+",\"policy\":\""+
-                binding.policy.name()+"\",\"primaryLayer\":"+binding.primaryLayer+
-                ",\"initialLayerMask\":"+binding.initialLayerMask+",\"maximumVias\":"+
-                binding.maximumVias+",\"prefixHoleCount\":"+binding.prefixHoleCount+
-                "},\"diagnostic\":"+graphDiagnosticJson+
-                ",\"feasibility\":\"UNKNOWN\",\"legalRouteProof\":false,"+
+                "\"sourceKind\":\""+binding.sourceKind+"\",\"pass\":"+binding.pass+
+                ",\"branchOrdinal\":"+binding.branchOrdinal+
+                ",\"netPosition\":"+binding.netPosition+
+                ",\"netIndexNextFetch\":"+binding.netIndexNextFetch+
+                ",\"netId\":\""+jsonFull(binding.netId)+"\",\"startPadId\":\""+
+                jsonFull(binding.startPadId)+"\",\"rootPadId\":\""+
+                jsonFull(binding.rootPadId)+"\",\"sourceReleasedBeforeSuccessorWork\":"+
+                graphReceipt.sourceReleasedBeforeSuccessorWork+
+                ",\"reachedPthPadIds\":"+stringArrayJson(binding.reachedPthPadIds)
+                +",\"foundTerminalPadId\":"+foundTerminal
+                +",\"endCell\":"+binding.endCell+",\"endLayer\":"+binding.endLayer
+                +",\"goalMaskLength\":"+binding.goalMaskLength
+                +",\"goalUnionCellCount\":"+graph.goalUnionCellCount
+                +",\"policy\":\""+binding.policy+"\",\"primaryLayer\":"+
+                binding.primaryLayer+",\"initialLayerMask\":"+binding.initialLayerMask
+                +",\"maximumVias\":"+binding.maximumVias
+                +",\"maximumTransitions\":"+binding.maximumTransitions
+                +",\"prefixHoleCount\":"+binding.prefixHoleCount
+                +",\"pathNodeCount\":"+graph.pathNodeCount
+                +",\"pathTransitionCount\":"+graph.pathTransitionCount
+                +",\"pathTupleSha256\":\""+graph.pathTupleSha256
+                +"\",\"goalFaceBitsSha256\":\""+graph.goalFaceBitsSha256+"\"}"
+                +",\"diagnostic\":";
+            String suffix=",\"feasibility\":\"UNKNOWN\",\"legalRouteProof\":false,"+
                 "\"layoutQualification\":false,\"routeAdoption\":false}";
+            require(graph.bodyLength()>=0 &&
+                graph.bodyLength()==graph.serializedUtf16Units &&
+                prefix.length()<=1000000 &&
+                suffix.length()<=1000000,
+                "streamed graph event wrapper remains bounded outside the immutable diagnostic body");
+            final P07ZeroViaGraphDiagnostics.Result immutableGraph=graph;
+            emitGraphRecord(System.out,prefix,new RecordBody() {
+                public void writeTo(PrintStream output) { immutableGraph.writeBody(output); }
+            },suffix);
         }
 
         String zeroViaGraphSummaryJson(P07PolicyDiagnosticCase result,boolean pairPassed) {
             requireTerminalOperation(result);
-            require(pairPassed && "QUALITY_PROBE".equals(operationId) && graphBinding!=null &&
-                graphCursor!=null && graphCursor.isComplete(),
-                "zero-via graph summary follows the parity-checked completed actual branch diagnostic");
-            verifyGraphBindingUnchanged(true);
+            require(pairPassed && "QUALITY_PROBE".equals(operationId) &&
+                graphReceipt!=null && graphReceipt.header.target==graphTarget,
+                "zero-via graph summary follows the parity-checked immutable source result");
+            verifyGraphSourceAfterOwnerRejection();
             int ordinaryQueries=graphOrdinaryQueries;
-            require(ordinaryQueries>=0 && ordinaryQueries==graphCursor.result().ordinaryQueries,
+            require(ordinaryQueries>=0 && ordinaryQueries==graphReceipt.result.ordinaryQueries,
                 "helper structured result exposes its final ordinary edge query count");
-            return "PASS: RB100 quality zero-via graph contracts {\"protocolVersion\":1,\"sourceRevision\":18,"+
+            return "PASS: RB100 quality zero-via graph contracts {\"protocolVersion\":1,\"sourceRevision\":20,"+
                 "\"status\":\"PASS\",\"runId\":\""+jsonFull(runId)+
                 "\",\"operationId\":\"QUALITY_PROBE\",\"events\":1,"+
-                "\"scope\":\"ACTUAL_FIXED_PREFIX_ZERO_NEW_VIA_GRAPH_ONLY\",\"ordinaryQueries\":"+
-                ordinaryQueries+",\"feasibility\":\"UNKNOWN\",\"legalRouteProof\":false,"+
+                "\"target\":\""+graphReceipt.header.target.name()+"\",\"scope\":\""+
+                graphReceipt.header.scope+"\",\"ordinaryQueries\":"+ordinaryQueries+
+                ",\"sourceReleasedBeforeSuccessorWork\":"+
+                graphReceipt.sourceReleasedBeforeSuccessorWork+
+                ",\"feasibility\":\"UNKNOWN\",\"legalRouteProof\":false,"+
                 "\"layoutQualification\":false,\"routeAdoption\":false}";
         }
 
@@ -4587,10 +5013,15 @@ public final class Rb100PhysicalDiagnostics {
                 prefixAllocationCursor.lastWork()==prefixAllocationCompletedLastWork &&
                 prefixAllocationDiagnosticJson.equals(prefixAllocationCursor.bodyJson()),
                 "completed allocation cursor retains its immutable body, hole total and terminal work state");
-            require(graphCursor!=null && graphCursor.isComplete() &&
-                sha256Hex(prefixAllocationBinding.prefixGeometryFingerprint).equals(
-                    graphCursor.result().prefixGeometrySha256),
-                "allocation prefix fingerprint equals the same actual graph geometry fingerprint");
+            if(graphTarget==P07ZeroViaGraphDiagnostics.Target.D_SENSE)
+                require(graphReceipt!=null && graphReceipt.prefixGeometryVerified &&
+                    sha256Hex(prefixAllocationBinding.prefixGeometryFingerprint).equals(
+                        graphReceipt.result.prefixGeometrySha256),
+                    "D allocation prefix fingerprint equals the same actual D graph geometry fingerprint");
+            else
+                require(graphReceipt!=null && graphReceipt.prefixGeometryVerified &&
+                    graphReceipt.header.target==P07ZeroViaGraphDiagnostics.Target.LOAD12,
+                    "LOAD graph geometry matches its pre-publication prefix independently of later D allocation geometry");
         }
 
         String prefixAllocationEventJson(P07PolicyDiagnosticCase result,boolean pairPassed) {
@@ -4599,7 +5030,7 @@ public final class Rb100PhysicalDiagnostics {
                 qualityRejected && targetRequestAccounted && terminalConfirmed &&
                 result.cleanupPassed && prefixAllocationBinding!=null,
                 "prefix allocation event follows scalar parity, same-owner rejection/accounting and cleanup");
-            verifyGraphBindingUnchanged(true);
+            verifyGraphSourceAfterOwnerRejection();
             verifyPrefixAllocationBindingUnchanged(true);
             verifyCompletedPrefixAllocationCursor();
             PrefixAllocationBinding binding=prefixAllocationBinding;
@@ -4608,16 +5039,16 @@ public final class Rb100PhysicalDiagnostics {
                 binding.template.getHoleCount()==0 &&
                 binding.searchNetIndex==binding.currentNetPosition+1 &&
                 binding.netValues[binding.currentNetPosition].equals(binding.currentNet) &&
-                binding.currentNet.equals(graphBinding.netId) &&
+                binding.currentNet.equals(snapshot.netId) &&
                 binding.currentBranchOrdinal>0,
                 "allocation event binds the exact current source net, branch, empty template and 48-hole prefix");
-            return "RB100_PREFIX_ALLOCATION_EVENT {\"protocolVersion\":1,\"sourceRevision\":18,"+
+            return "RB100_PREFIX_ALLOCATION_EVENT {\"protocolVersion\":1,\"sourceRevision\":20,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\","+
                 "\"scope\":\"ACTUAL_FIXED_PREFIX_CREATION_ALLOCATION_ONLY\",\"binding\":{"+
                 "\"branchIdentityVerified\":true,\"sourcePublisherUnchanged\":true,"+
                 "\"pass\":"+binding.pass+",\"netId\":\""+jsonFull(binding.currentNet)+"\","+
-                "\"startPadId\":\""+jsonFull(graphBinding.start.getPadId())+"\","+
-                "\"rootPadId\":\""+jsonFull(graphBinding.root.getPadId())+"\","+
+                "\"startPadId\":\""+jsonFull(snapshot.startPadId)+"\","+
+                "\"rootPadId\":\""+jsonFull(snapshot.rootPadId)+"\","+
                 "\"prefixHoleCount\":"+binding.prefixHoles.length+
                 ",\"maximumVias\":"+binding.maximumVias+
                 ",\"templateHoleCount\":0,\"searchNetIndex\":"+binding.searchNetIndex+
@@ -4636,7 +5067,7 @@ public final class Rb100PhysicalDiagnostics {
                 "prefix allocation summary follows the actual rejected and cleaned-up scalar operation");
             verifyCompletedPrefixAllocationCursor();
             return "PASS: RB100 prefix allocation contracts {\"protocolVersion\":1,"+
-                "\"sourceRevision\":18,\"status\":\"PASS\",\"runId\":\""+
+                "\"sourceRevision\":20,\"status\":\"PASS\",\"runId\":\""+
                 jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\",\"events\":1,"+
                 "\"scope\":\"ACTUAL_FIXED_PREFIX_CREATION_ALLOCATION_ONLY\",\"totalHoles\":"+
                 prefixAllocationTotalHoles+",\"chronologyProof\":false,\"routeAdoption\":false,"+
@@ -4661,7 +5092,10 @@ public final class Rb100PhysicalDiagnostics {
                 load12PreAdvanceCalls+load12PostAdvanceCalls<=640 &&
                 load12PreHoleIds!=null && load12PreHoleFingerprints!=null &&
                 load12PostHoleIds!=null && load12PostHoleFingerprints!=null &&
-                load12CreatedHoleIds!=null && prefixAllocationBinding!=null,
+                load12CreatedHoleIds!=null && prefixAllocationBinding!=null &&
+                graphReceipt!=null && graphReceipt.header.target==graphTarget &&
+                graphCursor==null && graphContext==null && graphInput==null &&
+                load12GraphBinding==null,
                 "LOAD12 event follows the complete same-run accepted branch capture and clean terminal rejection");
             require(load12Search==null && load12Branch==null && load12Publisher==null &&
                 load12ReversedIdentity==null && load12Seeds==null && load12Context==null &&
@@ -4689,7 +5123,7 @@ public final class Rb100PhysicalDiagnostics {
                 prefixAllocationBinding.currentBranchOrdinal>0,
                 "LOAD12 event follows the later actual immutable D_SENSE prefix controls");
             verifyLoad12CorroboratesFinalDPrefix();
-            verifyGraphBindingUnchanged(true);
+            verifyGraphSourceAfterOwnerRejection();
             verifyPrefixAllocationBindingUnchanged(true);
             verifyCompletedGraphCursor();
             verifyCompletedPrefixAllocationCursor();
@@ -4715,7 +5149,7 @@ public final class Rb100PhysicalDiagnostics {
         String load12EventJson(P07PolicyDiagnosticCase result,boolean pairPassed) {
             requireLoad12CaptureComplete(result,pairPassed);
             verifyLoad12EventHeader();
-            return "RB100_LOAD12_BRANCH_EVENT {\"protocolVersion\":1,\"sourceRevision\":18,"+
+            return "RB100_LOAD12_BRANCH_EVENT {\"protocolVersion\":1,\"sourceRevision\":20,"+
                 "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\","+
                 "\"scope\":\"ACTUAL_LOAD12_BRANCH_ENTRY_PATH_AND_PUBLICATION_ONLY\","+
                 "\"rootSeed\":\"9007199254740993\",\"placementSeed\":\"-6587958367974952701\","+
@@ -4731,7 +5165,7 @@ public final class Rb100PhysicalDiagnostics {
             requireLoad12CaptureComplete(result,pairPassed);
             verifyLoad12EventHeader();
             return "PASS: RB100 LOAD12 branch contracts {\"protocolVersion\":1,"+
-                "\"sourceRevision\":18,\"status\":\"PASS\",\"runId\":\""+
+                "\"sourceRevision\":20,\"status\":\"PASS\",\"runId\":\""+
                 jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\",\"events\":1,"+
                 "\"scope\":\"ACTUAL_LOAD12_BRANCH_ENTRY_PATH_AND_PUBLICATION_ONLY\","+
                 "\"rootSeed\":\"9007199254740993\",\"placementSeed\":\"-6587958367974952701\","+
@@ -4800,6 +5234,155 @@ public final class Rb100PhysicalDiagnostics {
         }
     }
 
+    private static boolean containsPadIdentity(PcbPadPlacement[] pads,Object target) {
+        if(pads==null || target==null) return false;
+        for(PcbPadPlacement pad:pads) if(pad==target) return true;
+        return false;
+    }
+
+    private static int retainedSeedLayerMask(
+            P07AcceptedBranchCaptureDiagnostics.SeedSnapshot seeds) {
+        require(seeds!=null && seeds.nodeRefs!=null && seeds.nodeValues!=null &&
+            seeds.nodeRefs.length==seeds.nodeValues.length &&
+            seeds.nodeRefs.length>0 && seeds.nodeRefs.length<=2,
+            "graph source retains the actual bounded branch-entry seed Node objects");
+        int mask=0;
+        for(int index=0;index<seeds.nodeRefs.length;index++) {
+            Object node=seeds.nodeRefs[index];
+            int[] values=seeds.nodeValues[index];
+            require(node!=null && values!=null && values.length==8 &&
+                P07ScalarReflection.intField(node,"cell")==values[0] &&
+                P07ScalarReflection.intField(node,"layer")==values[1] &&
+                P07ScalarReflection.intField(node,"direction")==values[2] &&
+                P07ScalarReflection.intField(node,"transitions")==values[3],
+                "retained branch-entry seed identity preserves its captured source Node fields");
+            int layer=values[1];
+            require(layer>=PcbCopperLayer.TOP.ordinal() &&
+                layer<=PcbCopperLayer.BOTTOM.ordinal() && (mask&(1<<layer))==0,
+                "actual branch-entry seed layers are unique valid copper faces");
+            mask|=1<<layer;
+        }
+        require(mask!=0,"actual branch-entry seed queue selects at least one copper face");
+        return mask;
+    }
+
+    /** Read-only D_SENSE witness view over the already captured immutable path rows. */
+    private static final class DQualityPathGraphInput
+            implements P07ZeroViaGraphDiagnostics.GraphInput {
+        final QualityPathSnapshot path;
+        final int seedLayerMask;
+        DQualityPathGraphInput(QualityPathSnapshot path,
+                P07AcceptedBranchCaptureDiagnostics.SeedSnapshot seeds) {
+            require(path!=null && path.nodes!=null && path.nodes.length>=2 &&
+                seeds!=null && seeds.nodeRefs!=null && seeds.nodeRefs.length>0 &&
+                path.sourceNodeIdentities!=null && path.sourceNodeIdentities.length==path.nodes.length &&
+                seeds.containsNodeIdentity(path.sourceNodeIdentities[0]),
+                "D_SENSE graph path begins at one of the exact retained branch-entry seed Nodes");
+            this.path=path;
+            this.seedLayerMask=retainedSeedLayerMask(seeds);
+            require((seedLayerMask&(1<<path.nodes[0].layer))!=0,
+                "D_SENSE witness first face is selected by its retained actual seed objects");
+        }
+        public String sourceKind() { return "D_SENSE_PUBLISHER_PATH"; }
+        public int seedLayerMask() { return seedLayerMask; }
+        public int pathNodeCount() { return path.nodes.length; }
+        public int pathCellAt(int index) { return path.nodes[index].cell; }
+        public int pathXAt(int index) { return path.nodes[index].x; }
+        public int pathYAt(int index) { return path.nodes[index].y; }
+        public int pathLayerAt(int index) { return path.nodes[index].layer; }
+        public int pathDirectionAt(int index) { return path.nodes[index].direction; }
+        public int pathTransitionsAt(int index) { return path.nodes[index].transitions; }
+        public int pathCostAt(int index) { return path.nodes[index].cost; }
+        public int pathHeuristicAt(int index) { return path.nodes[index].heuristic; }
+        public int pathSerialAt(int index) { return path.nodes[index].serial; }
+        public int pathKeyAt(int index) { return path.nodes[index].key; }
+        public String pathTupleSha256() { return null; }
+        public String goalFaceBitsSha256() { return null; }
+        public int goalCellCount() { return -1; }
+        public int expectedGoalFaceMaskAt(int cell) { return -1; }
+    }
+
+    private static final class GraphHeader {
+        final P07ZeroViaGraphDiagnostics.Target target;
+        final String scope,sourceKind,netId,startPadId,rootPadId,foundTerminalPadId,policy;
+        final String[] reachedPthPadIds;
+        final int pass,branchOrdinal,netPosition,netIndexNextFetch,endCell,endLayer,
+            goalMaskLength,primaryLayer,initialLayerMask,maximumVias,maximumTransitions,
+            prefixHoleCount;
+        GraphHeader(P07ZeroViaGraphDiagnostics.Target target,String sourceKind,int pass,
+                int branchOrdinal,int netPosition,int netIndexNextFetch,String netId,
+                String startPadId,String rootPadId,String[] reachedPthPadIds,
+                String foundTerminalPadId,int endCell,int endLayer,int goalMaskLength,
+                String policy,int primaryLayer,int initialLayerMask,int maximumVias,
+                int maximumTransitions,int prefixHoleCount) {
+            this.target=target;
+            this.scope=target==P07ZeroViaGraphDiagnostics.Target.D_SENSE?
+                "ACTUAL_FIXED_PREFIX_ZERO_NEW_VIA_GRAPH_ONLY":
+                "ACTUAL_LOAD12_FIXED_PREFIX_ZERO_NEW_VIA_GRAPH_ONLY";
+            this.sourceKind=sourceKind;
+            this.pass=pass; this.branchOrdinal=branchOrdinal;
+            this.netPosition=netPosition; this.netIndexNextFetch=netIndexNextFetch;
+            this.netId=netId; this.startPadId=startPadId; this.rootPadId=rootPadId;
+            this.reachedPthPadIds=reachedPthPadIds.clone();
+            this.foundTerminalPadId=foundTerminalPadId;
+            this.endCell=endCell; this.endLayer=endLayer; this.goalMaskLength=goalMaskLength;
+            this.policy=policy; this.primaryLayer=primaryLayer;
+            this.initialLayerMask=initialLayerMask; this.maximumVias=maximumVias;
+            this.maximumTransitions=maximumTransitions; this.prefixHoleCount=prefixHoleCount;
+        }
+    }
+
+    /** Immutable result receipt; contains no live P07 graph source objects. */
+    private static final class GraphReceipt {
+        final GraphHeader header;
+        final P07ZeroViaGraphDiagnostics.Result result;
+        final int ordinaryQueries,completedLastWork;
+        final boolean sourceReleasedBeforeSuccessorWork,prefixGeometryVerified;
+        GraphReceipt(GraphHeader header,P07ZeroViaGraphDiagnostics.Result result,
+                int completedLastWork,
+                boolean sourceReleasedBeforeSuccessorWork,
+                boolean prefixGeometryVerified) {
+            this.header=header; this.result=result;
+            this.ordinaryQueries=result.ordinaryQueries;
+            this.completedLastWork=completedLastWork;
+            this.sourceReleasedBeforeSuccessorWork=sourceReleasedBeforeSuccessorWork;
+            this.prefixGeometryVerified=prefixGeometryVerified;
+        }
+    }
+
+    /** Live identity guards held only until the LOAD12 graph cursor finishes. */
+    private static final class Load12GraphBinding {
+        final Object search,branch,publisher,endNode,foundTerminal,goalIdentity,
+            facesIdentity,holesIdentity,reachedIdentity;
+        final PcbNetRouter.Router[] faceValues;
+        final PcbBoardLayout layout;
+        final PcbPadPlacement start,root;
+        final String netId;
+        final GraphHeader header;
+        Load12GraphBinding(Object search,Object branch,Object publisher,Object endNode,
+                Object foundTerminal,Object goalIdentity,Object facesIdentity,
+                PcbNetRouter.Router[] faces,PcbBoardLayout layout,PcbPadPlacement start,
+                PcbPadPlacement root,PcbPadPlacement[] reached,Object holesIdentity,
+                String[] reachedPadIds,String netId,int pass,int branchOrdinal,
+                int netPosition,int netIndexNextFetch,int endCell,int endLayer,
+                PcbLayerRoutingPrototype.Policy policy,int primaryLayer,
+                int initialLayerMask,int maximumVias,int prefixHoleCount,int goalMaskLength) {
+            this.search=search; this.branch=branch; this.publisher=publisher;
+            this.endNode=endNode; this.foundTerminal=foundTerminal;
+            this.goalIdentity=goalIdentity; this.facesIdentity=facesIdentity;
+            this.faceValues=faces.clone(); this.layout=layout; this.start=start; this.root=root;
+            this.reachedIdentity=reached;
+            this.holesIdentity=holesIdentity; this.netId=netId;
+            String terminalId=foundTerminal==null?null:
+                ((PcbPadPlacement)foundTerminal).getPadId();
+            this.header=new GraphHeader(P07ZeroViaGraphDiagnostics.Target.LOAD12,
+                "LOAD12_ACCEPTED_PRE_RESULT",pass,branchOrdinal,netPosition,
+                netIndexNextFetch,netId,start.getPadId(),root.getPadId(),reachedPadIds,
+                terminalId,endCell,endLayer,goalMaskLength,policy.name(),primaryLayer,
+                initialLayerMask,maximumVias,policy.transitions,prefixHoleCount);
+        }
+    }
+
     private static final class ZeroViaGraphBinding {
         final Object search,branch,publisher,endNode,foundTerminal,goalIdentity,
             reachedIdentity,facesIdentity,holesIdentity;
@@ -4808,7 +5391,6 @@ public final class Rb100PhysicalDiagnostics {
         final PcbPadPlacement start,root;
         final PcbPadPlacement[] reachedValues;
         final PcbBoardHole[] prefixHoles;
-        final boolean[] goalValues;
         final String netId;
         final String[] reachedPadIds;
         final PcbLayerRoutingPrototype.Policy policy;
@@ -4828,7 +5410,7 @@ public final class Rb100PhysicalDiagnostics {
             this.faceValues=((PcbNetRouter.Router[])facesIdentity).clone();
             this.holesIdentity=P07ScalarReflection.read(branch,"holes");
             this.layout=layout; this.start=start; this.root=root;
-            this.reachedValues=reachedIdentity.clone(); this.goalValues=goalIdentity.clone();
+            this.reachedValues=reachedIdentity.clone();
             this.prefixHoles=prefixHoles.clone();
             this.netId=netId; this.reachedPadIds=reachedPadIds.clone();
             this.pass=pass; this.width=width; this.height=height; this.cells=cells;
@@ -5236,7 +5818,7 @@ public final class Rb100PhysicalDiagnostics {
         require(runId!=null && snapshot!=null && snapshot.nodes.length==66 &&
             snapshot.captureStage==1 && snapshot.captureQualityIndex==66,
             "quality path summary binds the single frozen stage1 66-node capture");
-        return "PASS: RB100 quality path contracts {\"protocolVersion\":1,\"sourceRevision\":18,"+
+        return "PASS: RB100 quality path contracts {\"protocolVersion\":1,\"sourceRevision\":20,"+
             "\"status\":\"PASS\",\"runId\":\""+jsonFull(runId)+
             "\",\"operationId\":\"QUALITY_PROBE\",\"events\":1,\"nodes\":66,"+
             "\"scope\":\"ACTUAL_PUBLISHER_PATH_ONLY\",\"feasibility\":\"UNKNOWN\","+
@@ -5285,7 +5867,7 @@ public final class Rb100PhysicalDiagnostics {
                 .append(",\"publisherStage\":").append(row.publisherStage).append('}');
         }
         checks.append(']');
-        return "RB100_QUALITY_SCALAR_CONTROLS {\"protocolVersion\":1,\"sourceRevision\":18,"+
+        return "RB100_QUALITY_SCALAR_CONTROLS {\"protocolVersion\":1,\"sourceRevision\":20,"+
             "\"runId\":\""+jsonFull(runId)+"\",\"status\":\"PASS\","+
             "\"fixture\":\"SYNTHETIC_PUBLISHER_METRICS_ONLY\",\"checks\":"+checks+
             ",\"assertions\":"+(assertions-beforeAssertions)+",\"layoutQualification\":false}";

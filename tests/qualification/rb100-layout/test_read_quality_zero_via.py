@@ -32,33 +32,51 @@ def _event_fixture():
     }
     path = {
         "nodes": [
-            {"cell": 0, "x": 0, "y": 0, "layer": 1, "transitions": 0},
-            {"cell": 1, "x": 10, "y": 0, "layer": 1, "transitions": 0},
+            {"index": 0, "parentIndex": -1, "cell": 0, "x": 0, "y": 0,
+             "layer": 1, "direction": 4, "transitions": 0, "cost": 0,
+             "heuristic": 10, "serial": 0, "key": 54},
+            {"index": 1, "parentIndex": 0, "cell": 1, "x": 10, "y": 0,
+             "layer": 1, "direction": 1, "transitions": 0, "cost": 10,
+             "heuristic": 0, "serial": 1, "key": 37},
         ],
         "transitionCount": 0,
+        "pathNodeCount": 2,
     }
     query_count = reader._ordinary_query_count(width, height)
     work = {
-        "advanceCalls": 1, "workSteps": query_count + 3 * cells + cells + 12,
+        "advanceCalls": 1, "workSteps": 0,
         "copyEntries": 6, "comparisonEntries": 6,
+        "geometryBytes": 1, "effectUnits": 1,
         "ordinaryQueries": query_count, "goalCells": cells,
-        "encodedCells": 3 * cells, "activeMillis": 1,
+        "reachedPadChecks": 0, "encodedCells": 3 * cells,
+        "pathNodes": 2, "pathEdgesVerified": 1,
+        "tupleBytes": len(reader._graph_tuple_bytes(path["nodes"])),
+        "serializedUtf16Units": 0, "activeMillis": 1,
     }
+    goal_bits = "020000"
     binding = {
         "branchIdentityVerified": True, "sourcePublisherUnchanged": True,
-        "pass": 1, "netId": "D_SENSE", "startPadId": "U2D.SENSOR",
-        "rootPadId": "CFLT_D.1", "reachedPthPadIds": [],
+        "sourceKind": "D_SENSE_PUBLISHER_PATH", "pass": 1,
+        "branchOrdinal": 9, "netPosition": 2, "netIndexNextFetch": 3,
+        "netId": "D_SENSE", "startPadId": "U2D.SENSOR",
+        "rootPadId": "CFLT_D.1", "sourceReleasedBeforeSuccessorWork": True,
+        "reachedPthPadIds": [],
         "foundTerminalPadId": "CFLT_D.1", "endCell": 1, "endLayer": 1,
-        "goalMaskLength": 2 * cells, "policy": "FULLER_TWO_LAYER",
+        "goalMaskLength": 2 * cells, "goalUnionCellCount": 1,
+        "policy": "FULLER_TWO_LAYER",
         "primaryLayer": 1, "initialLayerMask": 3,
-        "maximumVias": 4, "prefixHoleCount": 0,
+        "maximumVias": 48, "maximumTransitions": 4, "prefixHoleCount": 0,
+        "pathNodeCount": 2, "pathTransitionCount": 0,
+        "pathTupleSha256": reader._graph_tuple_sha256(path["nodes"]),
+        "goalFaceBitsSha256": hashlib.sha256(goal_bits.encode("ascii")).hexdigest(),
     }
     event = {
-        "protocolVersion": 1, "sourceRevision": 18, "runId": RUN_ID,
-        "operationId": "QUALITY_PROBE",
+        "protocolVersion": 1, "sourceRevision": 20, "runId": RUN_ID,
+        "operationId": "QUALITY_PROBE", "target": "D_SENSE",
         "scope": "ACTUAL_FIXED_PREFIX_ZERO_NEW_VIA_GRAPH_ONLY",
         "binding": binding,
         "diagnostic": {
+            "schema": "p07-zero-via-graph-r5",
             "stability": {
                 "prefixGeometrySha256": "a" * 64,
                 "liveBeforeVerified": True, "liveAfterVerified": True,
@@ -69,7 +87,12 @@ def _event_fixture():
                 "width": width, "height": height, "cells": cells,
                 "originX": 0, "originY": 0, "pitch": 10,
                 "startCell": 0, "initialLayerMask": 3,
-                "endCell": 1, "endLayer": 1,
+                "endCell": 1, "endLayer": 1, "goalUnionCellCount": 1,
+            },
+            "path": {
+                "nodeCount": 2, "planarEdgeCount": 1,
+                "transitionCount": 0,
+                "tupleSha256": binding["pathTupleSha256"],
             },
             "work": work,
             # The original path's only edge is on BOTTOM/layer1.
@@ -81,7 +104,147 @@ def _event_fixture():
         "feasibility": "UNKNOWN", "legalRouteProof": False,
         "layoutQualification": False, "routeAdoption": False,
     }
+    work["serializedUtf16Units"] = reader._graph_serialized_json_utf16_units(
+        event["diagnostic"])
+    work["workSteps"] = (
+        work["copyEntries"] + work["comparisonEntries"] +
+        work["geometryBytes"] + work["effectUnits"] +
+        work["ordinaryQueries"] + work["goalCells"] +
+        work["reachedPadChecks"] + work["pathNodes"] +
+        work["pathEdgesVerified"] + work["tupleBytes"] +
+        work["serializedUtf16Units"])
     return scalar, path, event
+
+
+def _fixture_allocation_binding(event):
+    binding = event["binding"]
+    return {
+        "currentBranchOrdinal": binding["branchOrdinal"],
+        "currentNetPosition": binding["netPosition"],
+        "searchNetIndex": binding["netIndexNextFetch"],
+        "prefixHoleCount": binding["prefixHoleCount"],
+        "maximumVias": binding["maximumVias"],
+    }
+
+
+def _validate_graph_fixture(event, scalar, path):
+    return reader._validate_graph_event(
+        event, scalar, path,
+        allocation_binding=_fixture_allocation_binding(event))
+
+
+def _load12_graph_fixture():
+    scalar, _d_path, event = _event_fixture()
+    cells = 4
+    nodes = [
+        {"index": 0, "parentIndex": -1, "cell": 0, "x": 0, "y": 0,
+         "layer": 0, "direction": 4, "transitions": 0, "cost": 0,
+         "heuristic": 20, "serial": 0, "key": 16},
+        {"index": 1, "parentIndex": 0, "cell": 1, "x": 10, "y": 0,
+         "layer": 0, "direction": 1, "transitions": 0, "cost": 10,
+         "heuristic": 10, "serial": 1, "key": 5},
+        {"index": 2, "parentIndex": 1, "cell": 1, "x": 10, "y": 0,
+         "layer": 1, "direction": 4, "transitions": 1, "cost": 12,
+         "heuristic": 10, "serial": 2, "key": 77},
+        {"index": 3, "parentIndex": 2, "cell": 3, "x": 10, "y": 10,
+         "layer": 1, "direction": 2, "transitions": 1, "cost": 22,
+         "heuristic": 0, "serial": 3, "key": 71},
+    ]
+    tuple_sha = reader._graph_tuple_sha256(nodes)
+    goal_bits = "0002"
+    goal_sha = hashlib.sha256(goal_bits.encode("ascii")).hexdigest()
+    source_grid = {
+        "minX": 0, "minY": 0, "width": 2, "height": 2, "cells": cells,
+        "primaryLayer": "BOTTOM", "maximumVias": 48,
+        "maximumTransitions": 4,
+    }
+    source_fields = {
+        "pass": 1, "netId": "LOAD12", "branchOrdinal": 73,
+        "netPosition": 3, "netIndexNextFetch": 4,
+        "policy": "FULLER_TWO_LAYER", "templateHoleCount": 0,
+        "startPadId": "JLOAD.1", "rootPadId": "CSTORE_E.1",
+        "reachedPthPadIds": [], "startX": 0, "startY": 0,
+        "rootX": 10, "rootY": 10,
+    }
+    path_source = {
+        "path": {"nodeCount": len(nodes)}, "transitions": 1,
+        "tupleSha256": tuple_sha, "endCell": 3, "endLayer": 1,
+        "nodes": nodes,
+        "goal": {"faceBitsSha256": goal_sha, "cellCount": 1},
+    }
+    pre = {
+        "source": {"source": source_fields, "grid": source_grid,
+                   "startCell": 0},
+        "path": path_source,
+        "prefix": {
+            "inventory": {"totalHoles": 1},
+            "stability": {"prefixGeometrySha256": "c" * 64},
+        },
+        "seeds": {"snapshot": {"faceMask": 3}},
+    }
+    path_source["endTerminalPadId"] = "CSTORE_E.1"
+    work = {
+        "advanceCalls": 1, "workSteps": 0,
+        "copyEntries": 4, "comparisonEntries": 4,
+        "geometryBytes": 1, "effectUnits": 1,
+        "ordinaryQueries": reader._ordinary_query_count(2, 2),
+        "goalCells": cells, "reachedPadChecks": 0,
+        "encodedCells": 3 * cells, "pathNodes": len(nodes),
+        "pathEdgesVerified": len(nodes) - 1,
+        "tupleBytes": len(reader._graph_tuple_bytes(nodes)),
+        "serializedUtf16Units": 0, "activeMillis": 1,
+    }
+    binding = {
+        "branchIdentityVerified": True, "sourcePublisherUnchanged": True,
+        "sourceKind": "LOAD12_ACCEPTED_PRE_RESULT", "pass": 1,
+        "branchOrdinal": 73, "netPosition": 3, "netIndexNextFetch": 4,
+        "netId": "LOAD12", "startPadId": "JLOAD.1",
+        "rootPadId": "CSTORE_E.1", "sourceReleasedBeforeSuccessorWork": True,
+        "reachedPthPadIds": [], "foundTerminalPadId": "CSTORE_E.1",
+        "endCell": 3, "endLayer": 1, "goalMaskLength": 2 * cells,
+        "goalUnionCellCount": 1, "policy": "FULLER_TWO_LAYER",
+        "primaryLayer": 1, "initialLayerMask": 3, "maximumVias": 48,
+        "maximumTransitions": 4, "prefixHoleCount": 1,
+        "pathNodeCount": len(nodes), "pathTransitionCount": 1,
+        "pathTupleSha256": tuple_sha, "goalFaceBitsSha256": goal_sha,
+    }
+    event["target"] = "LOAD12"
+    event["scope"] = "ACTUAL_LOAD12_FIXED_PREFIX_ZERO_NEW_VIA_GRAPH_ONLY"
+    event["binding"] = binding
+    event["diagnostic"] = {
+        "schema": "p07-zero-via-graph-r5",
+        "stability": {
+            "prefixGeometrySha256": "c" * 64,
+            "liveBeforeVerified": True, "liveAfterVerified": True,
+            "liveEffectsUnchanged": True, "goalVerified": True,
+            "originalPathVerified": True,
+        },
+        "grid": {
+            "width": 2, "height": 2, "cells": cells, "originX": 0,
+            "originY": 0, "pitch": 10, "startCell": 0,
+            "initialLayerMask": 3, "endCell": 3, "endLayer": 1,
+            "goalUnionCellCount": 1,
+        },
+        "path": {
+            "nodeCount": len(nodes), "planarEdgeCount": 2,
+            "transitionCount": 1, "tupleSha256": tuple_sha,
+        },
+        "work": work,
+        "masks": {
+            "topStepsHex": "2000", "bottomStepsHex": "2400",
+            "goalFacesHex": goal_bits,
+        },
+    }
+    work["serializedUtf16Units"] = reader._graph_serialized_json_utf16_units(
+        event["diagnostic"])
+    work["workSteps"] = (
+        work["copyEntries"] + work["comparisonEntries"] +
+        work["geometryBytes"] + work["effectUnits"] +
+        work["ordinaryQueries"] + work["goalCells"] +
+        work["reachedPadChecks"] + work["pathNodes"] +
+        work["pathEdgesVerified"] + work["tupleBytes"] +
+        work["serializedUtf16Units"])
+    return scalar, event, pre
 
 
 def _literal_hole(index, hole_id, net_id, net_position, ordinal, piece, x, y):
@@ -120,18 +283,27 @@ def _allocation_fixture(net_order=None, hole_specs=None):
     ]
 
     scalar, path, graph_event = _event_fixture()
+    current_position = net_order.index("D_SENSE")
+    graph_event["binding"]["branchOrdinal"] = 9
+    graph_event["binding"]["netPosition"] = current_position
+    graph_event["binding"]["netIndexNextFetch"] = current_position + 1
     graph_event["binding"]["maximumVias"] = 48
     graph_event["binding"]["prefixHoleCount"] = len(rows)
     graph_event["diagnostic"]["stability"]["prefixGeometrySha256"] = "b" * 64
-    graph = reader._validate_graph_event(graph_event, scalar, path)
-    current_position = net_order.index("D_SENSE")
+    graph = reader._validate_graph_event(
+        graph_event, scalar, path,
+        allocation_binding={
+            "currentBranchOrdinal": 9, "currentNetPosition": current_position,
+            "searchNetIndex": current_position + 1,
+            "prefixHoleCount": len(rows), "maximumVias": 48,
+        })
     by_net = [
         {"netPosition": position, "netId": net_id,
          "holeCount": sum(1 for row in rows if row["netId"] == net_id)}
         for position, net_id in enumerate(net_order)
     ]
     event = {
-        "protocolVersion": 1, "sourceRevision": 18, "runId": RUN_ID,
+        "protocolVersion": 1, "sourceRevision": 20, "runId": RUN_ID,
         "operationId": "QUALITY_PROBE",
         "scope": "ACTUAL_FIXED_PREFIX_CREATION_ALLOCATION_ONLY",
         "binding": {
@@ -168,7 +340,7 @@ def _allocation_fixture(net_order=None, hole_specs=None):
         "layoutQualification": False,
     }
     summary = {
-        "protocolVersion": 1, "sourceRevision": 18, "status": "PASS",
+        "protocolVersion": 1, "sourceRevision": 20, "status": "PASS",
         "runId": RUN_ID, "operationId": "QUALITY_PROBE", "events": 1,
         "scope": event["scope"], "totalHoles": len(rows),
         "chronologyProof": False, "routeAdoption": False,
@@ -508,7 +680,7 @@ def _load12_branch_fixture():
         pre["work"]["workSteps"] + post["work"]["workSteps"])
     claims = dict(post["claims"])
     event = {
-        "protocolVersion": 1, "sourceRevision": 18, "runId": RUN_ID,
+        "protocolVersion": 1, "sourceRevision": 20, "runId": RUN_ID,
         "operationId": "QUALITY_PROBE",
         "scope": "ACTUAL_LOAD12_BRANCH_ENTRY_PATH_AND_PUBLICATION_ONLY",
         "rootSeed": "9007199254740993",
@@ -519,7 +691,7 @@ def _load12_branch_fixture():
         "claims": claims, "pre": pre, "post": post,
     }
     summary = {
-        "protocolVersion": 1, "sourceRevision": 18, "status": "PASS",
+        "protocolVersion": 1, "sourceRevision": 20, "status": "PASS",
         "runId": RUN_ID, "operationId": "QUALITY_PROBE", "events": 1,
         "scope": event["scope"], "rootSeed": event["rootSeed"],
         "placementSeed": event["placementSeed"],
@@ -543,7 +715,7 @@ def _load12_branch_fixture():
     })
     allocation_event["binding"]["currentBranchOrdinal"] = 74
     allocation = reader._validate_prefix_allocation_event(
-        allocation_event, scalar, graph)
+        allocation_event, scalar, graph, "LOAD12")
     return scalar, event, summary, allocation
 
 
@@ -607,11 +779,18 @@ def _oracle_face(width, height, pitch, start, end, end_layer,
 class GraphOracleTests(unittest.TestCase):
     def _compare_oracle(self, width, height, pitch, start, end, end_layer,
                         seeds, top, bottom, goals):
-        actual = reader._analyze_graph(width, height, pitch, start, end,
-                                       end_layer, seeds, top, bottom, goals)
+        analysis = reader._analyze_graph(width, height, pitch, start, end,
+                                         end_layer, seeds, top, bottom, goals)
         expected_faces, expected_eligible = _oracle_face(
             width, height, pitch, start, end, end_layer,
             top, bottom, goals, seeds)
+        self.assertEqual(analysis["target"], "D_SENSE")
+        self.assertEqual(analysis["scope"], "FIXED_PREFIX_ZERO_VIA_LENGTH_ONLY")
+        self.assertEqual(
+            analysis["crossCheck"],
+            "IDENTICAL_PER_FACE_DISTANCES_AND_GOAL_COUNTS")
+        self.assertEqual(analysis["queueBfs"], analysis["heapDijkstra"])
+        actual = analysis["queueBfs"]
         self.assertEqual(actual["faces"], expected_faces)
         self.assertEqual(actual["lengthEligibleGoals"], len(expected_eligible))
         self.assertEqual(actual["minimumEligibleLength"],
@@ -690,22 +869,121 @@ class GraphOracleTests(unittest.TestCase):
 class GraphWireTests(unittest.TestCase):
     def test_closed_event_validates_full_grid_identity_both_seeds_and_original_edge(self):
         scalar, path, event = _event_fixture()
-        parsed = reader._validate_graph_event(event, scalar, path)
-        self.assertEqual(parsed["analysis"]["seedLayerMask"], 3)
-        self.assertEqual(parsed["analysis"]["faces"][1]["distanceCapturedEnd"], 10)
+        parsed = _validate_graph_fixture(event, scalar, path)
+        self.assertEqual(parsed["analysis"]["queueBfs"]["seedLayerMask"], 3)
+        self.assertEqual(
+            parsed["analysis"]["queueBfs"]["faces"][1]["distanceCapturedEnd"], 10)
         self.assertIs(parsed["legalRouteProof"], False)
         self.assertIs(parsed["routeAdoption"], False)
+
+    def test_load12_graph_binds_multiface_path_and_independent_face_algorithms(self):
+        scalar, event, pre = _load12_graph_fixture()
+        parsed = reader._validate_graph_event(
+            event, scalar, {}, "LOAD12", load12_pre=pre)
+        self.assertEqual(parsed["target"], "LOAD12")
+        self.assertEqual(parsed["binding"]["branchOrdinal"], 73)
+        self.assertEqual(parsed["binding"]["netPosition"], 3)
+        self.assertEqual(parsed["binding"]["netIndexNextFetch"], 4)
+        self.assertEqual(parsed["diagnostic"]["path"]["planarEdgeCount"], 2)
+        self.assertEqual(parsed["diagnostic"]["path"]["transitionCount"], 1)
+        self.assertEqual(parsed["analysis"]["queueBfs"],
+                         parsed["analysis"]["heapDijkstra"])
+        self.assertEqual(parsed["analysis"]["queueBfs"]["faces"], [
+            {"layer": 0, "reachableGoals": 0, "shortestAnyGoal": None,
+             "distanceCapturedEnd": None, "lengthEligibleGoals": 0,
+             "minimumEligibleLength": None},
+            {"layer": 1, "reachableGoals": 1, "shortestAnyGoal": 20,
+             "distanceCapturedEnd": 20, "lengthEligibleGoals": 1,
+             "minimumEligibleLength": 20},
+        ])
+        self.assertIs(parsed["legalRouteProof"], False)
+        self.assertIs(parsed["routeAdoption"], False)
+
+    def test_load12_source_binding_rejects_wrong_target_source_and_late_release(self):
+        scalar, event, pre = _load12_graph_fixture()
+        event["target"] = "D_SENSE"
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_graph_event(event, scalar, {}, "LOAD12", pre)
+        self.assertEqual(caught.exception.code, "GRAPH_TARGET_SPEC_MISMATCH")
+
+        scalar, event, pre = _load12_graph_fixture()
+        event["binding"]["sourceKind"] = "D_SENSE_PUBLISHER_PATH"
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_graph_event(event, scalar, {}, "LOAD12", pre)
+        self.assertEqual(caught.exception.code, "GRAPH_BINDING_IDENTITY_INVALID")
+
+        scalar, event, pre = _load12_graph_fixture()
+        event["binding"]["sourceReleasedBeforeSuccessorWork"] = False
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_graph_event(event, scalar, {}, "LOAD12", pre)
+        self.assertEqual(caught.exception.code, "GRAPH_BINDING_IDENTITY_INVALID")
+
+        scalar, event, pre = _load12_graph_fixture()
+        pre["source"]["grid"]["width"] = 3
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_graph_event(event, scalar, {}, "LOAD12", pre)
+        self.assertEqual(caught.exception.code,
+                         "GRAPH_GRID_DOMAIN_OR_SCALAR_BINDING_INVALID")
+
+    def test_load12_planar_edges_use_each_face_and_flips_are_not_graph_edges(self):
+        scalar, event, pre = _load12_graph_fixture()
+        event["diagnostic"]["masks"]["topStepsHex"] = "0000"
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_graph_event(event, scalar, {}, "LOAD12", pre)
+        self.assertEqual(caught.exception.code, "GRAPH_ORIGINAL_PATH_EDGE_MISSING")
+
+        scalar, event, pre = _load12_graph_fixture()
+        event["diagnostic"]["masks"]["bottomStepsHex"] = "0000"
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_graph_event(event, scalar, {}, "LOAD12", pre)
+        self.assertEqual(caught.exception.code, "GRAPH_ORIGINAL_PATH_EDGE_MISSING")
+
+        scalar, event, pre = _load12_graph_fixture()
+        pre["path"]["nodes"][2]["cell"] = 2
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_graph_event(event, scalar, {}, "LOAD12", pre)
+        self.assertEqual(caught.exception.code,
+                         "GRAPH_ORIGINAL_PATH_FACE_FLIP_INVALID")
+
+    def test_graph_serialized_length_counts_fixed_counters_and_java_escapes(self):
+        self.assertEqual(reader._graph_json_string_utf16_units("A\U0001F527\x7f"),
+                         2 + 1 + 12 + 6)
+        scalar, path, event = _event_fixture()
+        event["diagnostic"]["work"]["serializedUtf16Units"] -= 1
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            _validate_graph_fixture(event, scalar, path)
+        self.assertEqual(caught.exception.code, "GRAPH_WORK_CONSERVATION_INVALID")
+
+    def test_load12_summary_repeats_target_scope_and_release_claim_exactly(self):
+        scalar, event, pre = _load12_graph_fixture()
+        graph = reader._validate_graph_event(
+            event, scalar, {}, "LOAD12", load12_pre=pre)
+        summary = {
+            "protocolVersion": 1, "sourceRevision": 20, "status": "PASS",
+            "runId": RUN_ID, "operationId": "QUALITY_PROBE", "events": 1,
+            "target": "LOAD12", "scope": event["scope"],
+            "ordinaryQueries": event["diagnostic"]["work"]["ordinaryQueries"],
+            "sourceReleasedBeforeSuccessorWork": True,
+            "feasibility": "UNKNOWN", "legalRouteProof": False,
+            "layoutQualification": False, "routeAdoption": False,
+        }
+        self.assertEqual(reader._validate_graph_summary(summary, event, graph), summary)
+        summary["target"] = "D_SENSE"
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_graph_summary(summary, event, graph)
+        self.assertEqual(caught.exception.code,
+                         "GRAPH_SUMMARY_IDENTITY_OR_SCOPE_INVALID")
 
     def test_closed_keys_and_revision_are_required(self):
         scalar, path, event = _event_fixture()
         event["unrecognized"] = True
         with self.assertRaises(reader.QualityZeroViaInputError) as caught:
-            reader._validate_graph_event(event, scalar, path)
+            _validate_graph_fixture(event, scalar, path)
         self.assertEqual(caught.exception.code, "GRAPH_EVENT_KEYS_INVALID")
         scalar, path, event = _event_fixture()
         event["sourceRevision"] = 15
         with self.assertRaises(reader.QualityZeroViaInputError) as caught:
-            reader._validate_graph_event(event, scalar, path)
+            _validate_graph_fixture(event, scalar, path)
         self.assertEqual(caught.exception.code, "GRAPH_EVENT_IDENTITY_OR_SCOPE_INVALID")
 
     def test_claim_flags_and_live_stability_are_false_or_verified_exactly(self):
@@ -714,69 +992,78 @@ class GraphWireTests(unittest.TestCase):
             event[field] = True
             with self.subTest(field=field):
                 with self.assertRaises(reader.QualityZeroViaInputError) as caught:
-                    reader._validate_graph_event(event, scalar, path)
+                    _validate_graph_fixture(event, scalar, path)
                 self.assertEqual(caught.exception.code,
                                  "GRAPH_EVENT_IDENTITY_OR_SCOPE_INVALID")
         scalar, path, event = _event_fixture()
         event["diagnostic"]["stability"]["liveAfterVerified"] = False
         with self.assertRaises(reader.QualityZeroViaInputError) as caught:
-            reader._validate_graph_event(event, scalar, path)
+            _validate_graph_fixture(event, scalar, path)
         self.assertEqual(caught.exception.code, "GRAPH_STABILITY_INVALID")
 
     def test_original_path_edges_must_be_present_in_the_correct_face(self):
         scalar, path, event = _event_fixture()
         event["diagnostic"]["masks"]["bottomStepsHex"] = "000000"
         with self.assertRaises(reader.QualityZeroViaInputError) as caught:
-            reader._validate_graph_event(event, scalar, path)
+            _validate_graph_fixture(event, scalar, path)
         self.assertEqual(caught.exception.code, "GRAPH_ORIGINAL_PATH_EDGE_MISSING")
 
     def test_query_work_and_goal_mask_conservation_are_bound(self):
         scalar, path, event = _event_fixture()
         event["diagnostic"]["work"]["ordinaryQueries"] -= 1
         with self.assertRaises(reader.QualityZeroViaInputError) as caught:
-            reader._validate_graph_event(event, scalar, path)
+            _validate_graph_fixture(event, scalar, path)
         self.assertEqual(caught.exception.code, "GRAPH_WORK_CONSERVATION_INVALID")
         scalar, path, event = _event_fixture()
         event["binding"]["goalMaskLength"] -= 1
         with self.assertRaises(reader.QualityZeroViaInputError) as caught:
-            reader._validate_graph_event(event, scalar, path)
+            _validate_graph_fixture(event, scalar, path)
         self.assertEqual(caught.exception.code, "GRAPH_BINDING_GRAPH_DOMAIN_INVALID")
         scalar, path, event = _event_fixture()
-        event["binding"]["prefixHoleCount"] = 5
+        event["binding"]["initialLayerMask"] = 1
+        event["diagnostic"]["grid"]["initialLayerMask"] = 1
         with self.assertRaises(reader.QualityZeroViaInputError) as caught:
-            reader._validate_graph_event(event, scalar, path)
+            _validate_graph_fixture(event, scalar, path)
+        self.assertEqual(caught.exception.code,
+                         "GRAPH_GRID_DOMAIN_OR_SCALAR_BINDING_INVALID")
+        scalar, path, event = _event_fixture()
+        event["binding"]["prefixHoleCount"] = 49
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            _validate_graph_fixture(event, scalar, path)
         self.assertEqual(caught.exception.code, "GRAPH_BINDING_GRAPH_DOMAIN_INVALID")
 
         scalar, path, event = _event_fixture()
         event["diagnostic"]["work"]["workSteps"] = reader.MAX_TOTAL_WORK + 1
         with self.assertRaises(reader.QualityZeroViaInputError) as caught:
-            reader._validate_graph_event(event, scalar, path)
+            _validate_graph_fixture(event, scalar, path)
         self.assertEqual(caught.exception.code, "GRAPH_WORK_DOMAIN_INVALID")
         scalar, path, event = _event_fixture()
         event["diagnostic"]["work"]["copyEntries"] = reader.MAX_TOTAL_WORK
         with self.assertRaises(reader.QualityZeroViaInputError) as caught:
-            reader._validate_graph_event(event, scalar, path)
+            _validate_graph_fixture(event, scalar, path)
         self.assertEqual(caught.exception.code, "GRAPH_WORK_CONSERVATION_INVALID")
 
     def test_mask_hex_is_canonical_lowercase_and_goal_faces_are_two_bits(self):
         scalar, path, event = _event_fixture()
         event["diagnostic"]["masks"]["topStepsHex"] = "A00000"
         with self.assertRaises(reader.QualityZeroViaInputError) as caught:
-            reader._validate_graph_event(event, scalar, path)
+            _validate_graph_fixture(event, scalar, path)
         self.assertEqual(caught.exception.code, "GRAPH_MASK_ENCODING_INVALID")
         scalar, path, event = _event_fixture()
         event["diagnostic"]["masks"]["goalFacesHex"] = "040000"
         with self.assertRaises(reader.QualityZeroViaInputError) as caught:
-            reader._validate_graph_event(event, scalar, path)
+            _validate_graph_fixture(event, scalar, path)
         self.assertEqual(caught.exception.code, "GRAPH_GOAL_FACE_MASK_INVALID")
 
     def test_summary_must_match_event_and_actual_query_count(self):
         scalar, path, event = _event_fixture()
-        graph = reader._validate_graph_event(event, scalar, path)
+        graph = _validate_graph_fixture(event, scalar, path)
         summary = {
-            "protocolVersion": 1, "sourceRevision": 18, "status": "PASS",
+            "protocolVersion": 1, "sourceRevision": 20, "status": "PASS",
             "runId": RUN_ID, "operationId": "QUALITY_PROBE", "events": 1,
+            "target": event["target"],
             "scope": event["scope"],
+            "sourceReleasedBeforeSuccessorWork": True,
             "ordinaryQueries": event["diagnostic"]["work"]["ordinaryQueries"],
             "feasibility": "UNKNOWN", "legalRouteProof": False,
             "layoutQualification": False, "routeAdoption": False,
@@ -1404,7 +1691,7 @@ class ReceiptTests(unittest.TestCase):
     def _receipt(self):
         return [marker + " {}" for marker in reader.RECEIPT_MARKERS]
 
-    def test_receipt_is_the_closed_sixteen_record_v3_sequence(self):
+    def test_receipt_is_the_closed_sixteen_record_v5_sequence(self):
         expected = (
             "RB100_QUALITY_SCALAR_CONTROLS",
             "RB100_CAPACITY_BOUND_PHYSICAL_SUBSETS",
@@ -1466,15 +1753,21 @@ class ReceiptTests(unittest.TestCase):
 
 
 class SourceBoundRunTests(unittest.TestCase):
-    def test_coordinated_v3_schema_and_native_census_are_pinned(self):
-        self.assertEqual(reader.INPUT_SCHEMA, "p07-quality-zero-via-input-v3")
-        self.assertEqual(reader.RUN_SCHEMA, "q100-quality-zero-via-native-run-v3")
+    def test_coordinated_v5_schema_and_native_census_are_pinned(self):
+        self.assertEqual(reader.INPUT_SCHEMA, "p07-quality-zero-via-input-v5")
+        self.assertEqual(reader.RUN_SCHEMA, "q100-quality-zero-via-native-run-v5")
         self.assertEqual(reader.RESULT_SCHEMA,
-                         "q100-quality-zero-via-reader-result-v3")
-        self.assertEqual(reader.SOURCE_REVISION, 18)
-        self.assertEqual(reader.SOURCE_INPUT_COUNT, 1076)
-        self.assertEqual(reader.CONTRACT_JAVA_COUNT, 220)
-        self.assertEqual(len(reader.QUALITY_REQUIRED_INPUTS), 12)
+                         "q100-quality-zero-via-reader-result-v5")
+        self.assertEqual(reader.SOURCE_REVISION, 20)
+        self.assertEqual(reader.SOURCE_INPUT_COUNT, 1077)
+        self.assertEqual(reader.CONTRACT_JAVA_COUNT, 221)
+        self.assertEqual(len(reader.QUALITY_REQUIRED_INPUTS), 13)
+        self.assertEqual(reader.SUITES, {
+            "D_SENSE": "Rb100QualityZeroViaGraphContractTest",
+            "LOAD12": "Rb100Load12ZeroViaGraphContractTest",
+        })
+        self.assertIn("tests/contracts/Rb100Load12ZeroViaGraphContractTest.java",
+                      reader.QUALITY_REQUIRED_INPUTS)
         self.assertIn("tests/contracts/P07AcceptedBranchCaptureDiagnostics.java",
                       reader.QUALITY_REQUIRED_INPUTS)
         self.assertIn("tests/contracts/P07AcceptedBranchCaptureContractTest.java",
@@ -1487,18 +1780,23 @@ class SourceBoundRunTests(unittest.TestCase):
             for schema, revision in (
                     ("p07-quality-zero-via-input-v1", 16),
                     ("p07-quality-zero-via-input-v2", 17),
+                    ("p07-quality-zero-via-input-v3", 18),
+                    ("p07-quality-zero-via-input-v4", 19),
+                    (reader.INPUT_SCHEMA, 19),
                     (reader.INPUT_SCHEMA, 17)):
                 spec = {
                     "schema": schema,
                     "sourceRoot": str(base / "missing-source"),
                     "pinsPath": str(base / "missing-pins.json"),
                     "pinsSha256": "a" * 64,
-                    "inputCount": 1076, "inputBytes": 100,
+                    "inputCount": 1077, "inputBytes": 100,
                     "sourceSnapshotRevision": revision,
                     "resultPath": str(base / "missing-result.json"),
                     "stdoutPath": str(base / "missing-stdout.txt"),
                     "receiptPath": str(base / "missing-receipt.txt"),
                     "stderrPath": str(base / "missing-stderr.txt"),
+                    "target": "D_SENSE",
+                    "suite": reader.SUITES["D_SENSE"],
                 }
                 raw = json.dumps(spec, separators=(",", ":"), sort_keys=True).encode()
                 spec_path.write_bytes(raw)
@@ -1508,6 +1806,47 @@ class SourceBoundRunTests(unittest.TestCase):
                             str(spec_path), hashlib.sha256(raw).hexdigest())
                     self.assertEqual(caught.exception.code,
                                      "INPUT_SPEC_IDENTITY_INVALID")
+
+    def test_input_spec_target_and_suite_are_a_closed_pair(self):
+        base = {
+            "schema": reader.INPUT_SCHEMA,
+            "sourceRoot": "unused", "pinsPath": "unused",
+            "pinsSha256": "a" * 64, "inputCount": reader.SOURCE_INPUT_COUNT,
+            "inputBytes": 100, "sourceSnapshotRevision": reader.SOURCE_REVISION,
+            "resultPath": "unused", "stdoutPath": "unused",
+            "receiptPath": "unused", "stderrPath": "unused",
+            "target": "D_SENSE", "suite": reader.SUITES["D_SENSE"],
+        }
+        target, suite, legacy = reader._validate_target_spec(base)
+        self.assertEqual((target, suite),
+                         ("D_SENSE", "Rb100QualityZeroViaGraphContractTest"))
+        self.assertNotIn("target", legacy)
+        self.assertNotIn("suite", legacy)
+
+        for target, suite in (
+                ("LOAD12", reader.SUITES["D_SENSE"]),
+                ("UNKNOWN", reader.SUITES["D_SENSE"]),
+                ("D_SENSE", reader.SUITES["LOAD12"])):
+            spec = dict(base, target=target, suite=suite)
+            with self.subTest(target=target, suite=suite):
+                with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+                    reader._validate_target_spec(spec)
+                self.assertEqual(caught.exception.code,
+                                 "INPUT_SPEC_IDENTITY_INVALID")
+
+    def test_native_run_target_is_required_and_matches_input_spec(self):
+        legacy = {key: None for key in ("schema", "suite", "command")}
+        run = dict(legacy, target="LOAD12")
+        self.assertEqual(reader._validate_native_run_target(
+            run, "LOAD12", legacy.keys()), legacy)
+        run["target"] = "D_SENSE"
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_native_run_target(run, "LOAD12", legacy.keys())
+        self.assertEqual(caught.exception.code, "NATIVE_RUN_TARGET_INVALID")
+        del run["target"]
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_native_run_target(run, "LOAD12", legacy.keys())
+        self.assertEqual(caught.exception.code, "NATIVE_RUN_KEYS_INVALID")
 
     def test_input_spec_hash_is_checked_before_source_or_artifact_reads(self):
         with tempfile.TemporaryDirectory(prefix="q100-zero-via-spec-hash-") as temporary:

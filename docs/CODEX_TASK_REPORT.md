@@ -1,12 +1,57 @@
-# Current checkpoint: LOAD12 capture published
+# Current checkpoint: LOAD12 graph diagnostic locally accepted
+
+2026-11-03. Active N=OS-temp/tsj-q100-load12-graph-20261103-r1,
+branch `codex/q100-load12-graph-20261103`; HEAD/source parent
+`b033826e108773ef1c0fc723efd9efc120d539cd`. QN is the preserved fixed-prefix
+capture bundle's `load12-graph-r1`. Implementation is locally accepted for the
+finite diagnostic; publication and one new Gmail are pending root staged review.
+
+Final native1077/86611889/
+`408473f0d144250f0d901821486674ad8d01ad2af43dfd2633a228ec2f9e137c`,
+private20/graph-r5/v5. PASS: focused-r13 39.0378681s (24/57/48/3736/13112
+assertions); query-d-r8 78.2774239s and query-load-r2 79.0452749s. NULL/PROBE
+work D300/634, LOAD300/628, all within640; selected actors terminated, cleanup
+and input before/after passed. Python-r5 PASS51 +one declared symlink-privilege
+skip/52. Both v5 readers, r6 negatives D65+3 scoped N/A and LOAD68, real junction
+cleanup, final independent target oracles and paired audit PASS. Paired synthetic
+negative: standalone LOAD exit0, paired exit2/PAIR_D_ALLOCATION_stability;
+source/branch unchanged and full1077 post-rehash PASS, no native qualification.
+
+Combined final-input-audit-v5-r10 PASS57.0072596s, sourceSHA
+23a56e178b06083bef12d80139e7d17f97cf0c7bcfc08cf4b71c5aabacb71b35.
+Exact Require canary11 PASS .2228138s. Audit binds all selected gates, both
+actual captures, original H comparison metrics, all133 fresh controls and
+850 unchanged production /1202 compiler inputs per variant/28 frozen Python.
+R1-R9 aggregate-audit failures remain preserved; no failed record gains credit.
+Root integration and separate helper/reader/runner/audit source-only reviews
+complete, no leaf runtime gates. Controlled evidence is in
+`docs/task-evidence/Q100/load12-graph-r1/`; raw QA remains external.
+
+LOAD12 prefix17VIAs/88traces, branch73 path222nodes/2170/4flips. Relaxed graph
+finds per-goal length-eligible TOP46/BOTTOM415, minima2510/3250. No legal actual
+search/finalizer route, VIA avoidability, adoption or layout qualification.
+Production850 Java, layout26/dependency28/VIA60, all original budgets unchanged.
+No fresh GWT/Player/electrical/normal3/2-by-31 renewal; full30 owner EXCLUDED.
+Protected HARD unread/unrun in current scope; historical unread UNCERTIFIED.
+HARD/PSYCHOTIC unavailable. Playable100=0/beta held.
+
+N nine intended source paths staged; final docs/controlled JSON ready for root
+staging and review. Preserve inherited newline-only statuses and unrelated
+Desktop/Main/K changes and every failed source/result. No owned persistent
+preview/profile/port; unowned localhost8928/browser untouched. Last K publication
+b033826e/Gmail1a1a1704c5a30202 complete, never duplicate. N has no commit/push/email.
+Next: explicit-path stage/diff review, normal commit/push to
+origin/codex/q100-physical-feasibility, verify exact SHA and send one completion
+Gmail. Then finite actual BranchSearch/finalizer replay before generic adoption.
+
+# Historical checkpoint: actual LOAD12 branch capture published
 
 2026-11-03. Implementation2b321bb3d1cc3f9342d0cc9c602bf02854728b4a,
 Capture actual LOAD12 branch publication, normally pushed and exact remote SHA
 verified on origin/codex/q100-physical-feasibility. Working K=OS-temp/
 tsj-q100-load12-branch-20261103-r1, branchcodex/q100-load12-branch-20261103;
 sourceParentfad252a4e8a14f4b3d1645a32e1a9d68111feebe.
-Completion Gmail1a1a1704c5a30202 sent ONCE; NEVER duplicate. Documentation receipt
-follows without another email. Packet docs/task-evidence/Q100/load12-branch-r1;
+Completion Gmail1a1a1704c5a30202 sent ONCE; NEVER duplicate. Documentation receiptb033826e108773ef1c0fc723efd9efc120d539cd is normally pushed and exact remote verified; no second email. Packet docs/task-evidence/Q100/load12-branch-r1;
 raw S/load12-branch-r1. No owned process/profile/port remains.
 
 Accepted finite test-only capture: separate9007199254740993, placement

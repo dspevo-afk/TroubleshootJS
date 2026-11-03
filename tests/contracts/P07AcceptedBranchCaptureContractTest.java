@@ -282,8 +282,18 @@ public final class P07AcceptedBranchCaptureContractTest {
         require(actualGoalMask.length==goalGridCells*2,
             "independent goal count reads the exact two-face BranchSearch mask");
         int actualGoalCellCount=0;
-        for(int goalCell=0;goalCell<goalGridCells;goalCell++)
-            if(actualGoalMask[goalCell] || actualGoalMask[goalGridCells+goalCell]) actualGoalCellCount++;
+        MessageDigest liveGoalDigest=MessageDigest.getInstance("SHA-256");
+        for(int goalCell=0;goalCell<goalGridCells;goalCell++) {
+            int mask=(actualGoalMask[goalCell]?1:0)|(actualGoalMask[goalGridCells+goalCell]?2:0);
+            if(mask!=0) actualGoalCellCount++;
+            liveGoalDigest.update((byte)('0'+mask));
+            require(pre.expectedGoalFaceMaskAt(goalCell)==mask,
+                "immutable PreResult face-bit view matches the live actual goal mask at cell "+goalCell);
+        }
+        String goalBitsSha=hex(liveGoalDigest.digest());
+        require("LOAD12_ACCEPTED_PRE_RESULT".equals(pre.sourceKind()) && pre.seedLayerMask()==3 &&
+                pre.goalCellCount()==actualGoalCellCount && pre.goalFaceBitsSha256().equals(goalBitsSha),
+            "typed graph input reuses actual seed-face, goal-union count and captured goal hash values");
         String goalJson=section(preJson,"goal");
         require(goalJson.contains("\"cellCount\":"+actualGoalCellCount+","),
             "goal.cellCount equals unique nonzero cells in the actual BranchSearch goal mask");
@@ -469,6 +479,12 @@ public final class P07AcceptedBranchCaptureContractTest {
             else require(field(current,"previous")==reverse.get(i-1),"actual previous-Node identity is contiguous");
             int x=minX+(cell%width)*PcbLayerRoutingPrototype.GRID;
             int y=minY+(cell/width)*PcbLayerRoutingPrototype.GRID;
+            require(pre.pathCellAt(i)==cell && pre.pathXAt(i)==x && pre.pathYAt(i)==y &&
+                    pre.pathLayerAt(i)==layer && pre.pathDirectionAt(i)==direction &&
+                    pre.pathTransitionsAt(i)==trans && pre.pathCostAt(i)==cost &&
+                    pre.pathHeuristicAt(i)==heuristic && pre.pathSerialAt(i)==serial &&
+                    pre.pathKeyAt(i)==key,
+                "GraphInput scalar accessors match the same actual immutable Node tuple at index "+i);
             if(i==0) require(x==startPad.getX() && y==startPad.getY(),
                 "actual start seed occupies the exact Search.cell mapping of its physical pad");
             String tuple=i+","+parent+","+cell+","+x+","+y+","+layer+","+direction+","+

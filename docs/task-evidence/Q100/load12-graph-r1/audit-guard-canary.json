@@ -1,0 +1,17 @@
+{
+    "schema":  "q100-real-audit-guard-canary-r1",
+    "status":  "PASS",
+    "sourceSha256":  "23a56e178b06083bef12d80139e7d17f97cf0c7bcfc08cf4b71c5aabacb71b35",
+    "sourceStable":  true,
+    "positive":  1,
+    "negativeNames":  [
+                          "false",
+                          "truthyArray",
+                          "truthyInteger",
+                          "emptyMessage",
+                          "missingCondition"
+                      ],
+    "elapsedSeconds":  0.22281379999999998,
+    "scope":  "EXACT_AST_EXTRACTED_REQUIRE_ONLY_NOT_FULL_AUDIT",
+    "noPersistentResource":  true
+}

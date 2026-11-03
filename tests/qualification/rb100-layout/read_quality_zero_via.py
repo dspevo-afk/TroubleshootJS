@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Source-bound reader for the bounded RB100 prefix allocation and graph.
 
-The graph is a directed, two-face relaxation of one captured failed branch.
+Each graph is a directed, two-face relaxation of one captured source branch:
+D_SENSE's publisher path or LOAD12's accepted pre-publication state.
 The allocation report records creation ownership for the captured prefix; it
 does not infer later use, chronological history, route acceptance, or playable
 qualification.
@@ -9,6 +10,7 @@ qualification.
 from __future__ import annotations
 
 import hashlib
+import heapq
 import json
 import os
 import re
@@ -20,14 +22,18 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
 
-INPUT_SCHEMA = "p07-quality-zero-via-input-v3"
-RUN_SCHEMA = "q100-quality-zero-via-native-run-v3"
-RESULT_SCHEMA = "q100-quality-zero-via-reader-result-v3"
-SUITE = "Rb100QualityZeroViaGraphContractTest"
+INPUT_SCHEMA = "p07-quality-zero-via-input-v5"
+RUN_SCHEMA = "q100-quality-zero-via-native-run-v5"
+RESULT_SCHEMA = "q100-quality-zero-via-reader-result-v5"
+SUITES = {
+    "D_SENSE": "Rb100QualityZeroViaGraphContractTest",
+    "LOAD12": "Rb100Load12ZeroViaGraphContractTest",
+}
+SUITE = SUITES["D_SENSE"]
 ENTRY_SCRIPT = "scripts/verify-current-contracts.ps1"
-SOURCE_REVISION = 18
-SOURCE_INPUT_COUNT = 1076
-CONTRACT_JAVA_COUNT = 220
+SOURCE_REVISION = 20
+SOURCE_INPUT_COUNT = 1077
+CONTRACT_JAVA_COUNT = 221
 LAYOUT_VERSION = 26
 DEPENDENCY_EPOCH = "tsj-generation-dependencies-v28"
 PLAN_VERSION = 1
@@ -60,6 +66,7 @@ PINNED_QUALITY_PATH_READER_SHA256 = (
 )
 QUALITY_REQUIRED_INPUTS = frozenset({
     "tests/contracts/Rb100QualityZeroViaGraphContractTest.java",
+    "tests/contracts/Rb100Load12ZeroViaGraphContractTest.java",
     "tests/contracts/Rb100PhysicalDiagnostics.java",
     "tests/contracts/P07ZeroViaGraphDiagnostics.java",
     "tests/contracts/P07ZeroViaGraphContractTest.java",
@@ -100,29 +107,36 @@ RECEIPT_MARKERS = (
 EVENT_PREFIXES = ("RB100_", "P07_", "PASS: RB100")
 
 GRAPH_EVENT_KEYS = frozenset((
-    "protocolVersion sourceRevision runId operationId scope binding diagnostic "
+    "protocolVersion sourceRevision runId operationId target scope binding diagnostic "
     "feasibility legalRouteProof layoutQualification routeAdoption"
 ).split())
 GRAPH_BINDING_KEYS = frozenset((
-    "branchIdentityVerified sourcePublisherUnchanged pass netId startPadId rootPadId "
-    "reachedPthPadIds foundTerminalPadId endCell endLayer goalMaskLength policy "
-    "primaryLayer initialLayerMask maximumVias prefixHoleCount"
+    "branchIdentityVerified sourcePublisherUnchanged sourceKind pass branchOrdinal "
+    "netPosition netIndexNextFetch netId startPadId rootPadId sourceReleasedBeforeSuccessorWork "
+    "reachedPthPadIds foundTerminalPadId endCell endLayer goalMaskLength goalUnionCellCount "
+    "policy primaryLayer initialLayerMask maximumVias maximumTransitions prefixHoleCount "
+    "pathNodeCount pathTransitionCount pathTupleSha256 goalFaceBitsSha256"
 ).split())
-GRAPH_DIAGNOSTIC_KEYS = frozenset("stability grid work masks".split())
+GRAPH_DIAGNOSTIC_KEYS = frozenset("schema stability grid path work masks".split())
 GRAPH_STABILITY_KEYS = frozenset((
     "prefixGeometrySha256 liveBeforeVerified liveAfterVerified liveEffectsUnchanged "
     "goalVerified originalPathVerified"
 ).split())
 GRAPH_GRID_KEYS = frozenset((
-    "width height cells originX originY pitch startCell initialLayerMask endCell endLayer"
+    "width height cells originX originY pitch startCell initialLayerMask endCell endLayer "
+    "goalUnionCellCount"
 ).split())
+GRAPH_PATH_KEYS = frozenset(
+    "nodeCount planarEdgeCount transitionCount tupleSha256".split())
 GRAPH_WORK_KEYS = frozenset((
-    "advanceCalls workSteps copyEntries comparisonEntries ordinaryQueries goalCells "
-    "encodedCells activeMillis"
+    "advanceCalls workSteps copyEntries comparisonEntries geometryBytes effectUnits "
+    "ordinaryQueries goalCells reachedPadChecks encodedCells pathNodes pathEdgesVerified "
+    "tupleBytes serializedUtf16Units activeMillis"
 ).split())
 GRAPH_MASK_KEYS = frozenset("topStepsHex bottomStepsHex goalFacesHex".split())
 GRAPH_SUMMARY_KEYS = frozenset((
-    "protocolVersion sourceRevision status runId operationId events scope ordinaryQueries "
+    "protocolVersion sourceRevision status runId operationId events target scope ordinaryQueries "
+    "sourceReleasedBeforeSuccessorWork "
     "feasibility legalRouteProof layoutQualification routeAdoption"
 ).split())
 
@@ -253,6 +267,12 @@ LOAD12_POST_FIXED_JSON_COUNTERS = frozenset((
     ("work", "activeMillis"),
 ))
 
+INPUT_SPEC_KEYS = frozenset((
+    "schema sourceRoot pinsPath pinsSha256 inputCount inputBytes "
+    "sourceSnapshotRevision resultPath stdoutPath receiptPath stderrPath target suite"
+).split())
+LEGACY_INPUT_SPEC_KEYS = INPUT_SPEC_KEYS - frozenset(("target", "suite"))
+
 SHA256_RE = re.compile(r"[0-9a-f]{64}\Z", re.ASCII)
 UUID_RE = re.compile(
     r"[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\Z",
@@ -371,7 +391,7 @@ def _exec_private(raw: bytes, path: Path, name: str) -> types.ModuleType:
 def _load_pinned_helpers() -> Tuple[types.ModuleType, types.ModuleType,
                                     types.ModuleType, types.ModuleType,
                                     Dict[str, str]]:
-    """Load frozen validators privately; only the documented epoch metadata varies."""
+    """Load frozen validators privately; only pinned schema metadata varies."""
     own_path = Path(os.path.abspath(__file__))
     _need(not _has_reparse_component(own_path), "READER_SOURCE_REPARSE_PATH")
     own_path = own_path.resolve(strict=True)
@@ -383,8 +403,9 @@ def _load_pinned_helpers() -> Tuple[types.ModuleType, types.ModuleType,
           "FROZEN_QUALITY_PATH_READER_HASH_MISMATCH")
     frozen = _exec_private(
         frozen_raw, frozen_path, "_q100_quality_zero_via_path_" + uuid.uuid4().hex)
-    # These are the only compatibility overrides on the frozen reader. No
-    # validator function or shared module state is changed.
+    # These are the compatibility metadata overrides on the private frozen
+    # reader. The requested target suite is applied after its spec is validated;
+    # no validator function or shared module state is changed.
     frozen.INPUT_SCHEMA = INPUT_SCHEMA
     frozen.RUN_SCHEMA = RUN_SCHEMA
     frozen.RESULT_SCHEMA = RESULT_SCHEMA
@@ -451,6 +472,31 @@ def _parse_tagged(line: str, marker: str, ledger: types.ModuleType) -> Any:
                         "GRAPH_RECEIPT_RECORD")
 
 
+def _validate_target_spec(spec: Any) -> Tuple[str, str, Dict[str, Any]]:
+    _exact_keys(spec, INPUT_SPEC_KEYS, "INPUT_SPEC_KEYS_INVALID")
+    target = spec["target"]
+    _need(type(target) is str and target in SUITES and
+          type(spec["suite"]) is str and spec["suite"] == SUITES[target] and
+          spec["schema"] == INPUT_SCHEMA and
+          type(spec["sourceSnapshotRevision"]) is int and
+          spec["sourceSnapshotRevision"] == SOURCE_REVISION and
+          type(spec["inputCount"]) is int and
+          spec["inputCount"] == SOURCE_INPUT_COUNT,
+          "INPUT_SPEC_IDENTITY_INVALID")
+    return target, spec["suite"], {
+        key: spec[key] for key in LEGACY_INPUT_SPEC_KEYS
+    }
+
+
+def _validate_native_run_target(value: Any, target: str,
+                                legacy_keys: Iterable[str]) -> Dict[str, Any]:
+    _exact_keys(value, set(legacy_keys) | {"target"}, "NATIVE_RUN_KEYS_INVALID")
+    _need(type(target) is str and target in SUITES and
+          type(value["target"]) is str and value["target"] == target,
+          "NATIVE_RUN_TARGET_INVALID")
+    return {key: item for key, item in value.items() if key != "target"}
+
+
 def _decode_masks(masks: Mapping[str, Any], cells: int) -> Tuple[List[int], List[int], List[int]]:
     top: List[int] = []
     bottom: List[int] = []
@@ -485,11 +531,13 @@ def _validate_boundaries(width: int, height: int,
 def _analyze_graph(width: int, height: int, pitch: int, start_cell: int,
                    end_cell: int, end_layer: int, initial_layer_mask: int,
                    top_steps: Sequence[int], bottom_steps: Sequence[int],
-                   goal_faces: Sequence[int]) -> Dict[str, Any]:
-    """Forward BFS on each seeded face, using only captured directed permissions."""
+                   goal_faces: Sequence[int], target: str = "D_SENSE"
+                   ) -> Dict[str, Any]:
+    """Compare independent BFS and heap/Dijkstra relaxations per seeded face."""
     cells = width * height if _integer(width, 1, MAX_GRID_CELLS) and \
         _integer(height, 1, MAX_GRID_CELLS) else 0
     _need(0 < cells <= MAX_GRID_CELLS and
+          target in SUITES and
           _integer(pitch, 1, MAX_SCALAR) and
           _integer(start_cell, 0, cells - 1) and
           _integer(end_cell, 0, cells - 1) and
@@ -504,78 +552,252 @@ def _analyze_graph(width: int, height: int, pitch: int, start_cell: int,
           "GRAPH_ANALYSIS_MASK_VALUE_INVALID")
     _validate_boundaries(width, height, top_steps, bottom_steps)
     directions = ((0, -1, 0x1), (1, 0, 0x2), (0, 1, 0x4), (-1, 0, 0x8))
-    faces: List[Dict[str, Any]] = []
-    all_eligible: List[int] = []
-    for layer, mask in enumerate((top_steps, bottom_steps)):
-        bit = 1 << layer
-        if not (initial_layer_mask & bit):
-            continue
-        distances: List[Optional[int]] = [None] * cells
-        distances[start_cell] = 0
-        queue = deque([start_cell])
-        while queue:
-            source = queue.popleft()
-            distance = distances[source]
-            assert distance is not None
-            x, y = source % width, source // width
-            for dx, dy, direction_bit in directions:
-                if not (mask[source] & direction_bit):
-                    continue
-                target_x, target_y = x + dx, y + dy
-                # Boundary validation above makes every permission an in-grid
-                # directed edge. Keep the guard so malformed direct fixtures fail closed.
-                _need(0 <= target_x < width and 0 <= target_y < height,
-                      "GRAPH_EDGE_OUT_OF_BOUNDS")
-                target = target_y * width + target_x
-                if distances[target] is None:
-                    distances[target] = distance + 1
-                    queue.append(target)
-
-        reachable_lengths: List[int] = []
-        eligible_lengths: List[int] = []
-        for cell, face_mask in enumerate(goal_faces):
-            distance_steps = distances[cell]
-            if not (face_mask & bit) or distance_steps is None:
+    def summarize(algorithm: str) -> Dict[str, Any]:
+        faces: List[Dict[str, Any]] = []
+        all_eligible: List[int] = []
+        for layer, mask in enumerate((top_steps, bottom_steps)):
+            bit = 1 << layer
+            if not (initial_layer_mask & bit):
                 continue
-            length = distance_steps * pitch
-            goal_x, goal_y = cell % width, cell // width
-            direct = (abs(goal_x - start_cell % width) +
-                      abs(goal_y - start_cell // width)) * pitch
-            reachable_lengths.append(length)
-            if direct > 0 and length <= 3 * direct:
-                eligible_lengths.append(length)
-        end_steps = distances[end_cell] if layer == end_layer else None
-        faces.append({
-            "layer": layer,
-            "reachableGoals": len(reachable_lengths),
-            "shortestAnyGoal": min(reachable_lengths, default=None),
-            "distanceCapturedEnd": (None if end_steps is None else end_steps * pitch),
-            "lengthEligibleGoals": len(eligible_lengths),
-            "minimumEligibleLength": min(eligible_lengths, default=None),
-        })
-        all_eligible.extend(eligible_lengths)
+            distances: List[Optional[int]] = [None] * cells
+            distances[start_cell] = 0
+            if algorithm == "queueBfs":
+                queue = deque([start_cell])
+                while queue:
+                    source = queue.popleft()
+                    distance = distances[source]
+                    assert distance is not None
+                    x, y = source % width, source // width
+                    for dx, dy, direction_bit in directions:
+                        if not (mask[source] & direction_bit):
+                            continue
+                        target_x, target_y = x + dx, y + dy
+                        _need(0 <= target_x < width and 0 <= target_y < height,
+                              "GRAPH_EDGE_OUT_OF_BOUNDS")
+                        target_cell = target_y * width + target_x
+                        if distances[target_cell] is None:
+                            distances[target_cell] = distance + 1
+                            queue.append(target_cell)
+            else:
+                frontier = [(0, start_cell)]
+                while frontier:
+                    distance, source = heapq.heappop(frontier)
+                    if distances[source] != distance:
+                        continue
+                    x, y = source % width, source // width
+                    for dx, dy, direction_bit in directions:
+                        if not (mask[source] & direction_bit):
+                            continue
+                        target_x, target_y = x + dx, y + dy
+                        _need(0 <= target_x < width and 0 <= target_y < height,
+                              "GRAPH_EDGE_OUT_OF_BOUNDS")
+                        target_cell = target_y * width + target_x
+                        candidate = distance + 1
+                        known = distances[target_cell]
+                        if known is None or candidate < known:
+                            distances[target_cell] = candidate
+                            heapq.heappush(frontier, (candidate, target_cell))
+
+            reachable_lengths: List[int] = []
+            eligible_lengths: List[int] = []
+            for cell, face_mask in enumerate(goal_faces):
+                distance_steps = distances[cell]
+                if not (face_mask & bit) or distance_steps is None:
+                    continue
+                length = distance_steps * pitch
+                goal_x, goal_y = cell % width, cell // width
+                direct = (abs(goal_x - start_cell % width) +
+                          abs(goal_y - start_cell // width)) * pitch
+                reachable_lengths.append(length)
+                if direct > 0 and length <= 3 * direct:
+                    eligible_lengths.append(length)
+            end_steps = distances[end_cell] if layer == end_layer else None
+            faces.append({
+                "layer": layer,
+                "reachableGoals": len(reachable_lengths),
+                "shortestAnyGoal": min(reachable_lengths, default=None),
+                "distanceCapturedEnd": (
+                    None if end_steps is None else end_steps * pitch),
+                "lengthEligibleGoals": len(eligible_lengths),
+                "minimumEligibleLength": min(eligible_lengths, default=None),
+            })
+            all_eligible.extend(eligible_lengths)
+        return {
+            "seedLayerMask": initial_layer_mask,
+            "faces": faces,
+            "lengthEligibleGoals": len(all_eligible),
+            "minimumEligibleLength": min(all_eligible, default=None),
+            "geometricRelaxation": (
+                "LENGTH_ELIGIBLE_GOAL_EXISTS_AS_RELAXATION_ONLY"
+                if all_eligible else "NO_ZERO_VIA_LENGTH_ELIGIBLE_GOAL_IN_FIXED_PREFIX"
+            ),
+        }
+
+    queue_summary = summarize("queueBfs")
+    heap_summary = summarize("heapDijkstra")
+    _need(queue_summary == heap_summary, "GRAPH_ORACLE_DISAGREEMENT")
     return {
-        "seedLayerMask": initial_layer_mask,
-        "faces": faces,
-        "lengthEligibleGoals": len(all_eligible),
-        "minimumEligibleLength": min(all_eligible, default=None),
-        "geometricRelaxation": (
-            "LENGTH_ELIGIBLE_GOAL_EXISTS_AS_RELAXATION_ONLY"
-            if all_eligible else "NO_ZERO_VIA_LENGTH_ELIGIBLE_GOAL_IN_FIXED_PREFIX"
-        ),
-        "scope": "FIXED_PREFIX_ZERO_NEW_VIA_LENGTH_ONLY",
+        "target": target,
+        "scope": "FIXED_PREFIX_ZERO_VIA_LENGTH_ONLY",
+        "queueBfs": queue_summary,
+        "heapDijkstra": heap_summary,
+        "crossCheck": "IDENTICAL_PER_FACE_DISTANCES_AND_GOAL_COUNTS",
     }
 
 
+def _graph_tuple_sha256(nodes: Sequence[Mapping[str, Any]]) -> str:
+    return _sha256(_graph_tuple_bytes(nodes))
+
+
+def _graph_tuple_bytes(nodes: Sequence[Mapping[str, Any]]) -> bytes:
+    tuple_text = "\n".join(
+        ",".join(str(node[field]) for field in (
+            "index", "parentIndex", "cell", "x", "y", "layer", "direction",
+            "transitions", "cost", "heuristic", "serial", "key"))
+        for node in nodes)
+    return tuple_text.encode("utf-8", errors="strict")
+
+
+def _graph_json_string_utf16_units(value: str) -> int:
+    units = 2
+    for character in value:
+        codepoint = ord(character)
+        if character in ('"', "\\", "\b", "\f", "\n", "\r", "\t"):
+            units += 2
+        elif codepoint < 0x20 or codepoint == 0x7F:
+            units += 6
+        elif 0xD800 <= codepoint <= 0xDFFF:
+            units += 6
+        elif codepoint > 0xFFFF:
+            units += 12
+        else:
+            units += 1
+    return units
+
+
+def _graph_serialized_json_utf16_units(value: Any) -> int:
+    fixed_counter_names = frozenset(GRAPH_WORK_KEYS - {"advanceCalls", "workSteps"}) | {
+        "advanceCalls", "workSteps"
+    }
+
+    def measure(item: Any, path: Tuple[str, ...] = ()) -> int:
+        if path[:1] == ("work",) and len(path) == 2 and path[1] in fixed_counter_names:
+            _need(type(item) is int and item >= 0,
+                  "GRAPH_SERIALIZED_LENGTH_COUNTER_INVALID")
+            return 19
+        if item is None:
+            return 4
+        if type(item) is bool:
+            return 4 if item else 5
+        if type(item) is int:
+            return len(str(item))
+        if type(item) is str:
+            return _graph_json_string_utf16_units(item)
+        if type(item) is list:
+            return 2 + max(0, len(item) - 1) + sum(
+                measure(child, path) for child in item)
+        if type(item) is dict:
+            total = 2 + max(0, len(item) - 1)
+            for key, child in item.items():
+                _need(type(key) is str,
+                      "GRAPH_SERIALIZED_LENGTH_KEY_INVALID")
+                total += (_graph_json_string_utf16_units(key) + 1 +
+                          measure(child, path + (key,)))
+            return total
+        _fail("GRAPH_SERIALIZED_LENGTH_VALUE_INVALID")
+
+    return measure(value)
+
+
 def _validate_graph_event(value: Any, scalar_event: Mapping[str, Any],
-                          path: Mapping[str, Any]) -> Dict[str, Any]:
+                          path: Mapping[str, Any], target: str = "D_SENSE",
+                          load12_pre: Optional[Mapping[str, Any]] = None,
+                          allocation_binding: Optional[Mapping[str, Any]] = None
+                          ) -> Dict[str, Any]:
     _exact_keys(value, GRAPH_EVENT_KEYS, "GRAPH_EVENT_KEYS_INVALID")
+    _need(target in SUITES and value["target"] == target,
+          "GRAPH_TARGET_SPEC_MISMATCH")
+    scope = ("ACTUAL_FIXED_PREFIX_ZERO_NEW_VIA_GRAPH_ONLY" if target == "D_SENSE"
+             else "ACTUAL_LOAD12_FIXED_PREFIX_ZERO_NEW_VIA_GRAPH_ONLY")
+    source_kind = ("D_SENSE_PUBLISHER_PATH" if target == "D_SENSE"
+                   else "LOAD12_ACCEPTED_PRE_RESULT")
+    if target == "LOAD12":
+        _need(load12_pre is not None, "GRAPH_LOAD12_SOURCE_MISSING")
+        source = load12_pre["source"]["source"]
+        path_source = load12_pre["path"]
+        source_grid = load12_pre["source"]["grid"]
+        expected_source = {
+            "pass": source["pass"], "branchOrdinal": source["branchOrdinal"],
+            "netPosition": source["netPosition"],
+            "netIndexNextFetch": source["netIndexNextFetch"],
+            "netId": source["netId"], "startPadId": source["startPadId"],
+            "rootPadId": source["rootPadId"],
+            "reachedPthPadIds": source["reachedPthPadIds"],
+            "foundTerminalPadId": path_source["endTerminalPadId"],
+            "prefixHoleCount": load12_pre["prefix"]["inventory"]["totalHoles"],
+            "maximumVias": source_grid["maximumVias"],
+            "maximumTransitions": source_grid["maximumTransitions"],
+            "primaryLayer": (0 if source_grid["primaryLayer"] == "TOP" else 1),
+            "initialLayerMask": load12_pre["seeds"]["snapshot"]["faceMask"],
+            "pathNodeCount": path_source["path"]["nodeCount"],
+            "pathTransitionCount": path_source["transitions"],
+            "pathTupleSha256": path_source["tupleSha256"],
+            "goalFaceBitsSha256": load12_pre["path"]["goal"]["faceBitsSha256"],
+            "goalUnionCellCount": load12_pre["path"]["goal"]["cellCount"],
+            "startX": source["startX"], "startY": source["startY"],
+            "rootX": source["rootX"], "rootY": source["rootY"],
+            "width": source_grid["width"], "height": source_grid["height"],
+            "originX": source_grid["minX"], "originY": source_grid["minY"],
+            "pitch": 10, "startCell": load12_pre["source"]["startCell"],
+            "endCell": path_source["endCell"],
+            "endLayer": path_source["endLayer"],
+            "endX": path_source["nodes"][-1]["x"],
+            "endY": path_source["nodes"][-1]["y"],
+        }
+        source_nodes = path_source["nodes"]
+        expected_policy = source["policy"]
+    else:
+        source = scalar_event
+        path_source = path
+        source_grid = None
+        expected_source = {
+            "pass": scalar_event["pass"], "netId": scalar_event["netId"],
+            "startPadId": scalar_event["startPadId"],
+            "rootPadId": scalar_event["rootPadId"],
+            "primaryLayer": scalar_event["primaryLayer"],
+            "startX": scalar_event["startX"], "startY": scalar_event["startY"],
+            "endX": scalar_event["endX"], "endY": scalar_event["endY"],
+            "endLayer": scalar_event["endLayer"],
+            "width": scalar_event["gridWidth"],
+            "height": scalar_event["gridHeight"],
+            "originX": scalar_event["gridOriginX"],
+            "originY": scalar_event["gridOriginY"],
+            "pitch": scalar_event["gridPitch"],
+            "pathNodeCount": path["pathNodeCount"],
+            "pathTransitionCount": path["transitionCount"],
+            "pathTupleSha256": _graph_tuple_sha256(path["nodes"]),
+            "startCell": path["nodes"][0]["cell"],
+            "endCell": path["nodes"][-1]["cell"],
+        }
+        _need(isinstance(allocation_binding, Mapping),
+              "GRAPH_D_SENSE_ALLOCATION_BINDING_MISSING")
+        expected_source.update({
+            "branchOrdinal": allocation_binding.get("currentBranchOrdinal"),
+            "netPosition": allocation_binding.get("currentNetPosition"),
+            "netIndexNextFetch": allocation_binding.get("searchNetIndex"),
+            "prefixHoleCount": allocation_binding.get("prefixHoleCount"),
+            "maximumVias": allocation_binding.get("maximumVias"),
+            "maximumTransitions": 4,
+        })
+        source_nodes = path["nodes"]
+        expected_policy = "FULLER_TWO_LAYER"
+
     _need(_integer(value["protocolVersion"], 1, 1) and
           _integer(value["sourceRevision"], SOURCE_REVISION, SOURCE_REVISION) and
           type(value["runId"]) is str and UUID_RE.fullmatch(value["runId"]) is not None and
           value["runId"] == scalar_event["runId"] and
           value["operationId"] == PROBE_OPERATION_ID and
-          value["scope"] == "ACTUAL_FIXED_PREFIX_ZERO_NEW_VIA_GRAPH_ONLY" and
+          value["scope"] == scope and
           value["feasibility"] == "UNKNOWN" and
           value["legalRouteProof"] is False and
           value["layoutQualification"] is False and
@@ -586,13 +808,26 @@ def _validate_graph_event(value: Any, scalar_event: Mapping[str, Any],
     _exact_keys(binding, GRAPH_BINDING_KEYS, "GRAPH_BINDING_KEYS_INVALID")
     _need(binding["branchIdentityVerified"] is True and
           binding["sourcePublisherUnchanged"] is True and
-          _integer(binding["pass"], 0, MAX_SCALAR) and
-          binding["pass"] == scalar_event["pass"] and
-          binding["netId"] == scalar_event["netId"] and
-          binding["startPadId"] == scalar_event["startPadId"] and
-          binding["rootPadId"] == scalar_event["rootPadId"] and
+          binding["sourceReleasedBeforeSuccessorWork"] is True and
+          binding["sourceKind"] == source_kind and
+          _integer(binding["pass"], 1, 1) and
+          _integer(binding["branchOrdinal"], 1, MAX_SCALAR) and
+          _integer(binding["netPosition"], 0, ALLOCATION_NET_COUNT - 1) and
+          _integer(binding["netIndexNextFetch"], 1, ALLOCATION_NET_COUNT) and
+          binding["netIndexNextFetch"] == binding["netPosition"] + 1 and
           all(type(binding[field]) is str and 0 < len(binding[field]) <= 512
-              for field in ("netId", "startPadId", "rootPadId")),
+              for field in ("netId", "startPadId", "rootPadId")) and
+          all(binding[field] == expected_source[field] for field in (
+              "pass", "branchOrdinal", "netPosition", "netIndexNextFetch",
+              "netId", "startPadId", "rootPadId", "maximumVias",
+              "prefixHoleCount", "maximumTransitions", "pathNodeCount",
+              "pathTransitionCount", "pathTupleSha256")) and
+          (target != "LOAD12" or
+           (binding["initialLayerMask"] == expected_source["initialLayerMask"] and
+            binding["reachedPthPadIds"] == expected_source["reachedPthPadIds"] and
+            binding["foundTerminalPadId"] ==
+            expected_source["foundTerminalPadId"])) and
+          binding["policy"] == expected_policy,
           "GRAPH_BINDING_IDENTITY_INVALID")
     reached = binding["reachedPthPadIds"]
     _need(type(reached) is list and len(reached) <= 246 and
@@ -618,6 +853,10 @@ def _validate_graph_event(value: Any, scalar_event: Mapping[str, Any],
           stability["goalVerified"] is True and
           stability["originalPathVerified"] is True,
           "GRAPH_STABILITY_INVALID")
+    _need(target != "LOAD12" or
+          stability["prefixGeometrySha256"] ==
+          load12_pre["prefix"]["stability"]["prefixGeometrySha256"],
+          "GRAPH_LOAD12_PREFIX_GEOMETRY_MISMATCH")
 
     grid = diagnostic["grid"]
     _exact_keys(grid, GRAPH_GRID_KEYS, "GRAPH_GRID_KEYS_INVALID")
@@ -632,19 +871,22 @@ def _validate_graph_event(value: Any, scalar_event: Mapping[str, Any],
           _integer(grid["endCell"], 0, cells - 1) and
           _integer(grid["endLayer"], 0, 1) and
           _integer(grid["initialLayerMask"], 1, 3) and
-          grid["initialLayerMask"] == 3 and
+          grid["initialLayerMask"] == binding["initialLayerMask"] and
+          (target != "D_SENSE" or grid["initialLayerMask"] == 3) and
           (width, height, grid["originX"], grid["originY"], grid["pitch"]) ==
-          (scalar_event["gridWidth"], scalar_event["gridHeight"],
-           scalar_event["gridOriginX"], scalar_event["gridOriginY"],
-           scalar_event["gridPitch"]),
+          (expected_source["width"], expected_source["height"],
+           expected_source["originX"], expected_source["originY"],
+           expected_source["pitch"]) and
+          _integer(grid["goalUnionCellCount"], 0, cells),
           "GRAPH_GRID_DOMAIN_OR_SCALAR_BINDING_INVALID")
-    first, last = path["nodes"][0], path["nodes"][-1]
-    _need(grid["startCell"] == first["cell"] and
-          grid["endCell"] == last["cell"] and grid["endLayer"] == last["layer"] and
+    first, last = source_nodes[0], source_nodes[-1]
+    _need(grid["startCell"] == first["cell"] == expected_source["startCell"] and
+          grid["endCell"] == last["cell"] == expected_source["endCell"] and
+          grid["endLayer"] == last["layer"] == expected_source["endLayer"] and
           (first["x"], first["y"]) ==
-          (scalar_event["startX"], scalar_event["startY"]) and
-          (last["x"], last["y"], last["layer"]) ==
-          (scalar_event["endX"], scalar_event["endY"], scalar_event["endLayer"]),
+          (expected_source["startX"], expected_source["startY"]) and
+          (last["x"], last["y"]) ==
+          (expected_source["endX"], expected_source["endY"]),
           "GRAPH_PATH_ENDPOINT_BINDING_INVALID")
     _need(_integer(binding["endCell"], 0, cells - 1) and
           binding["endCell"] == grid["endCell"] and
@@ -652,66 +894,139 @@ def _validate_graph_event(value: Any, scalar_event: Mapping[str, Any],
           binding["endLayer"] == grid["endLayer"] and
           _integer(binding["goalMaskLength"], 1, 2 * MAX_GRID_CELLS) and
           binding["goalMaskLength"] == 2 * cells and
-          binding["policy"] == "FULLER_TWO_LAYER" and
+          _integer(binding["goalUnionCellCount"], 0, cells) and
+          binding["goalUnionCellCount"] == grid["goalUnionCellCount"] and
+          binding["policy"] == expected_policy and
           _integer(binding["primaryLayer"], 0, 1) and
-          binding["primaryLayer"] == 1 and
-          binding["primaryLayer"] == scalar_event["primaryLayer"] and
+          binding["primaryLayer"] == expected_source["primaryLayer"] and
           binding["initialLayerMask"] == grid["initialLayerMask"] and
-          _integer(binding["maximumVias"], 0, MAX_VIAS) and
+          _integer(binding["maximumVias"], MAX_VIAS, MAX_VIAS) and
+          _integer(binding["maximumTransitions"], 4, 4) and
           _integer(binding["prefixHoleCount"], 0, MAX_VIAS) and
-          binding["prefixHoleCount"] <= binding["maximumVias"],
+          binding["prefixHoleCount"] <= binding["maximumVias"] and
+          _integer(binding["pathNodeCount"], 2, 4096) and
+          _integer(binding["pathTransitionCount"], 0, 4) and
+          type(binding["pathTupleSha256"]) is str and
+          SHA256_RE.fullmatch(binding["pathTupleSha256"]) is not None and
+          type(binding["goalFaceBitsSha256"]) is str and
+          SHA256_RE.fullmatch(binding["goalFaceBitsSha256"]) is not None,
           "GRAPH_BINDING_GRAPH_DOMAIN_INVALID")
+
+    _need(diagnostic["schema"] == "p07-zero-via-graph-r5",
+          "GRAPH_DIAGNOSTIC_SCHEMA_INVALID")
+    path_diagnostic = diagnostic["path"]
+    _exact_keys(path_diagnostic, GRAPH_PATH_KEYS, "GRAPH_PATH_KEYS_INVALID")
+    transitions = sum(
+        1 for before, after in zip(source_nodes, source_nodes[1:])
+        if before["layer"] != after["layer"])
+    planar_count = len(source_nodes) - 1 - transitions
+    source_tuple_sha = expected_source["pathTupleSha256"]
+    _need(_integer(path_diagnostic["nodeCount"], len(source_nodes), len(source_nodes)) and
+          _integer(path_diagnostic["planarEdgeCount"], planar_count, planar_count) and
+          _integer(path_diagnostic["transitionCount"], transitions, transitions) and
+          type(path_diagnostic["tupleSha256"]) is str and
+          path_diagnostic["tupleSha256"] == source_tuple_sha and
+          binding["pathNodeCount"] == len(source_nodes) and
+          binding["pathTransitionCount"] == transitions and
+          binding["pathTupleSha256"] == source_tuple_sha,
+          "GRAPH_PATH_SOURCE_BINDING_INVALID")
 
     masks = diagnostic["masks"]
     _exact_keys(masks, GRAPH_MASK_KEYS, "GRAPH_MASK_KEYS_INVALID")
     top, bottom, goals = _decode_masks(masks, cells)
     _need(all(0 <= nibble <= 3 for nibble in goals),
           "GRAPH_GOAL_FACE_MASK_INVALID")
-    _need(goals[grid["endCell"]] & (1 << grid["endLayer"]),
+    goal_text = masks["goalFacesHex"]
+    union_count = sum(1 for nibble in goals if nibble)
+    goal_sha = _sha256(goal_text.encode("ascii"))
+    _need(goals[grid["endCell"]] & (1 << grid["endLayer"]) and
+          union_count == grid["goalUnionCellCount"] == binding["goalUnionCellCount"] and
+          goal_sha == binding["goalFaceBitsSha256"] and
+          (target != "LOAD12" or
+           (goal_sha == load12_pre["path"]["goal"]["faceBitsSha256"] and
+            union_count == load12_pre["path"]["goal"]["cellCount"])),
           "GRAPH_CAPTURED_END_NOT_A_GOAL")
-    _need(path["transitionCount"] == 0 and scalar_event["transitionCount"] == 0 and
-          all(node["layer"] == first["layer"] for node in path["nodes"]),
-          "GRAPH_ORIGINAL_PATH_NOT_ZERO_VIA")
-    for before, after in zip(path["nodes"], path["nodes"][1:]):
+    _need(transitions <= 4 and
+          (target != "D_SENSE" or
+           (transitions == 0 and scalar_event["transitionCount"] == 0)),
+          "GRAPH_ORIGINAL_PATH_TRANSITIONS_INVALID")
+    observed_transitions = 0
+    observed_planar = 0
+    for before, after in zip(source_nodes, source_nodes[1:]):
         dx, dy = after["x"] - before["x"], after["y"] - before["y"]
+        if before["layer"] != after["layer"]:
+            _need(before["cell"] == after["cell"] and dx == dy == 0 and
+                  after["layer"] == 1 - before["layer"] and
+                  after["transitions"] == before["transitions"] + 1 and
+                  after["transitions"] <= binding["maximumTransitions"],
+                  "GRAPH_ORIGINAL_PATH_FACE_FLIP_INVALID")
+            observed_transitions += 1
+            continue
         direction_bit = (0x2 if dx == grid["pitch"] else
                          0x8 if dx == -grid["pitch"] else
                          0x4 if dy == grid["pitch"] else
                          0x1 if dy == -grid["pitch"] else 0)
-        _need(direction_bit != 0 and
+        _need(direction_bit != 0 and abs(dx) + abs(dy) == grid["pitch"] and
+              after["transitions"] == before["transitions"] and
               (top if before["layer"] == 0 else bottom)[before["cell"]] & direction_bit,
               "GRAPH_ORIGINAL_PATH_EDGE_MISSING")
+        observed_planar += 1
+    _need(observed_transitions == transitions and observed_planar == planar_count and
+          first["layer"] in (0, 1) and
+          grid["initialLayerMask"] & (1 << first["layer"]) and
+          (target != "LOAD12" or
+           grid["initialLayerMask"] == load12_pre["seeds"]["snapshot"]["faceMask"]),
+          "GRAPH_ORIGINAL_PATH_SOURCE_INCONSISTENT")
 
     work = diagnostic["work"]
     _exact_keys(work, GRAPH_WORK_KEYS, "GRAPH_WORK_KEYS_INVALID")
     ranges = {
         "advanceCalls": (1, MAX_WORK_UNITS),
         "workSteps": (1, MAX_TOTAL_WORK),
-        "copyEntries": (0, MAX_TOTAL_WORK),
-        "comparisonEntries": (0, MAX_TOTAL_WORK),
+        "copyEntries": (1, MAX_TOTAL_WORK),
+        "comparisonEntries": (1, MAX_TOTAL_WORK),
+        "geometryBytes": (1, MAX_TOTAL_WORK),
+        "effectUnits": (1, MAX_TOTAL_WORK),
         "ordinaryQueries": (0, MAX_TOTAL_WORK),
         "goalCells": (0, MAX_TOTAL_WORK),
+        "reachedPadChecks": (0, MAX_TOTAL_WORK),
         "encodedCells": (0, MAX_TOTAL_WORK),
+        "pathNodes": (0, MAX_TOTAL_WORK),
+        "pathEdgesVerified": (0, MAX_TOTAL_WORK),
+        "tupleBytes": (0, MAX_TOTAL_WORK),
+        "serializedUtf16Units": (0, MAX_TOTAL_WORK),
         "activeMillis": (0, MAX_ACTIVE_MS),
     }
     for name, (minimum, maximum) in ranges.items():
         _need(_integer(work[name], minimum, maximum), "GRAPH_WORK_DOMAIN_INVALID")
     expected_queries = _ordinary_query_count(width, height)
+    serialized_units = _graph_serialized_json_utf16_units(diagnostic)
+    work_lower_bound = (
+        work["copyEntries"] + work["comparisonEntries"] +
+        work["geometryBytes"] + work["effectUnits"] +
+        work["ordinaryQueries"] + work["goalCells"] +
+        work["reachedPadChecks"] + work["pathNodes"] +
+        work["pathEdgesVerified"] + work["tupleBytes"] +
+        work["serializedUtf16Units"])
     _need(work["ordinaryQueries"] == expected_queries and
           work["goalCells"] == cells and work["encodedCells"] == 3 * cells and
+          work["pathNodes"] == len(source_nodes) and
+          work["pathEdgesVerified"] == len(source_nodes) - 1 and
+          work["tupleBytes"] == len(_graph_tuple_bytes(source_nodes)) and
+          work["reachedPadChecks"] >=
+          len(reached) + len(reached) * (len(reached) - 1) // 2 and
+          work["serializedUtf16Units"] == serialized_units and
           work["workSteps"] <= work["advanceCalls"] * MAX_WORK_QUANTUM and
-          work["workSteps"] >= (work["copyEntries"] + work["comparisonEntries"] +
-                                work["ordinaryQueries"] + work["goalCells"] +
-                                work["encodedCells"]),
+          work["workSteps"] >= work_lower_bound,
           "GRAPH_WORK_CONSERVATION_INVALID")
 
     analysis = _analyze_graph(width, height, grid["pitch"], grid["startCell"],
                               grid["endCell"], grid["endLayer"],
-                              grid["initialLayerMask"], top, bottom, goals)
+                              grid["initialLayerMask"], top, bottom, goals, target)
     return {
         "event": dict(value), "binding": dict(binding),
         "diagnostic": dict(diagnostic), "analysis": analysis,
-        "scope": value["scope"], "feasibility": "UNKNOWN",
+        "target": target, "scope": value["scope"], "feasibility": "UNKNOWN",
         "legalRouteProof": False, "layoutQualification": False,
         "routeAdoption": False,
     }
@@ -726,7 +1041,11 @@ def _validate_graph_summary(value: Any, event: Mapping[str, Any],
           value["status"] == "PASS" and value["runId"] == event["runId"] and
           value["operationId"] == PROBE_OPERATION_ID and
           _integer(value["events"], 1, 1) and
+          value["target"] == event["target"] == graph["target"] and
           value["scope"] == event["scope"] and
+          value["sourceReleasedBeforeSuccessorWork"] is True and
+          value["sourceReleasedBeforeSuccessorWork"] ==
+          event["binding"]["sourceReleasedBeforeSuccessorWork"] and
           _integer(value["ordinaryQueries"], 0, MAX_TOTAL_WORK) and
           value["ordinaryQueries"] == work["ordinaryQueries"] and
           value["feasibility"] == "UNKNOWN" and
@@ -899,7 +1218,8 @@ def _validate_allocation_inventory(totals: Any, rows: Any,
 
 def _validate_prefix_allocation_event(value: Any,
                                       scalar_event: Mapping[str, Any],
-                                      graph: Mapping[str, Any]) -> Dict[str, Any]:
+                                      graph: Mapping[str, Any],
+                                      target: str = "D_SENSE") -> Dict[str, Any]:
     _exact_keys(value, ALLOCATION_EVENT_KEYS, "ALLOCATION_EVENT_KEYS_INVALID")
     _need(_integer(value["protocolVersion"], 1, 1) and
           _integer(value["sourceRevision"], SOURCE_REVISION, SOURCE_REVISION) and
@@ -914,23 +1234,30 @@ def _validate_prefix_allocation_event(value: Any,
 
     binding = value["binding"]
     _exact_keys(binding, ALLOCATION_BINDING_KEYS, "ALLOCATION_BINDING_KEYS_INVALID")
+    _need(target in SUITES and
+          (target != "D_SENSE" or graph["target"] == "D_SENSE"),
+          "ALLOCATION_GRAPH_TARGET_MISMATCH")
     graph_binding = graph["binding"]
     _need(binding["branchIdentityVerified"] is True and
           binding["sourcePublisherUnchanged"] is True and
           _integer(binding["pass"], 0, MAX_SCALAR) and
-          binding["pass"] == scalar_event["pass"] == graph_binding["pass"] and
-          binding["netId"] == scalar_event["netId"] == graph_binding["netId"] and
-          binding["startPadId"] == scalar_event["startPadId"] ==
-          graph_binding["startPadId"] and
-          binding["rootPadId"] == scalar_event["rootPadId"] ==
-          graph_binding["rootPadId"] and
+          binding["pass"] == scalar_event["pass"] and
+          binding["netId"] == scalar_event["netId"] and
+          binding["startPadId"] == scalar_event["startPadId"] and
+          binding["rootPadId"] == scalar_event["rootPadId"] and
           _integer(binding["prefixHoleCount"], 0, MAX_VIAS) and
-          binding["prefixHoleCount"] == graph_binding["prefixHoleCount"] and
-          _integer(binding["maximumVias"], 0, MAX_VIAS) and
-          binding["maximumVias"] == graph_binding["maximumVias"] and
+          _integer(binding["maximumVias"], MAX_VIAS, MAX_VIAS) and
           binding["prefixHoleCount"] <= binding["maximumVias"] and
           _integer(binding["templateHoleCount"], 0, 0) and
-          _integer(binding["currentBranchOrdinal"], 1, MAX_SCALAR),
+          _integer(binding["currentBranchOrdinal"], 1, MAX_SCALAR) and
+          (target != "D_SENSE" or
+           (binding["pass"] == graph_binding["pass"] and
+            binding["netId"] == graph_binding["netId"] and
+            binding["startPadId"] == graph_binding["startPadId"] and
+            binding["rootPadId"] == graph_binding["rootPadId"] and
+            binding["prefixHoleCount"] == graph_binding["prefixHoleCount"] and
+            binding["maximumVias"] == graph_binding["maximumVias"] and
+            binding["currentBranchOrdinal"] == graph_binding["branchOrdinal"])),
           "ALLOCATION_BINDING_IDENTITY_INVALID")
 
     net_order = binding["netOrder"]
@@ -953,7 +1280,8 @@ def _validate_prefix_allocation_event(value: Any,
     graph_prefix_sha = graph["diagnostic"]["stability"]["prefixGeometrySha256"]
     _need(type(stability["prefixGeometrySha256"]) is str and
           SHA256_RE.fullmatch(stability["prefixGeometrySha256"]) is not None and
-          stability["prefixGeometrySha256"] == graph_prefix_sha and
+          (target != "D_SENSE" or
+           stability["prefixGeometrySha256"] == graph_prefix_sha) and
           stability["liveBeforeVerified"] is True and
           stability["liveAfterVerified"] is True and
           stability["holeIdentitiesVerified"] is True and
@@ -965,6 +1293,10 @@ def _validate_prefix_allocation_event(value: Any,
         binding["currentNetPosition"], binding["currentBranchOrdinal"],
         expected_total=binding["prefixHoleCount"])
     total_holes = inventory["totalHoles"]
+    _need(target != "D_SENSE" or
+          (binding["currentNetPosition"] == graph_binding["netPosition"] and
+           binding["searchNetIndex"] == graph_binding["netIndexNextFetch"]),
+          "ALLOCATION_BINDING_IDENTITY_INVALID")
 
     work = diagnostic["work"]
     _exact_keys(work, ALLOCATION_WORK_KEYS, "ALLOCATION_WORK_KEYS_INVALID")
@@ -1625,7 +1957,7 @@ def _validate_load12_pre(value: Any) -> Dict[str, Any]:
           "LOAD12_PRE_SERIALIZED_UTF16_UNITS_INVALID")
     minimum_work = (work["prefixWorkSteps"] + work["seedEntries"] +
                     work["pathNodes"] + work["goalCells"] + work["traceRows"] +
-                    work["serializedUtf16Units"])
+        work["serializedUtf16Units"])
     _need(work["prefixWorkSteps"] == prefix["work"]["workSteps"] and
           work["pathNodes"] == path["path"]["nodeCount"] and
           work["goalCells"] == source["cells"] and
@@ -1923,10 +2255,9 @@ def _validate_load12_post(value: Any, pre: Mapping[str, Any]
             "claims": claims}
 
 
-def _validate_load12_branch_event(value: Any,
-                                  scalar_event: Mapping[str, Any],
-                                  allocation: Mapping[str, Any]
-                                  ) -> Dict[str, Any]:
+def _validate_load12_header_and_pre(value: Any,
+                                   scalar_event: Mapping[str, Any]
+                                   ) -> Dict[str, Any]:
     _exact_keys(value, LOAD12_EVENT_KEYS, "LOAD12_EVENT_KEYS_INVALID")
     _need(_integer(value["protocolVersion"], 1, 1) and
           _integer(value["sourceRevision"], SOURCE_REVISION, SOURCE_REVISION) and
@@ -1951,6 +2282,19 @@ def _validate_load12_branch_event(value: Any,
           "LOAD12_EVENT_IDENTITY_OR_SCOPE_INVALID")
     claims = _validate_load12_claims(value["claims"], "LOAD12_EVENT_CLAIMS")
     pre = _validate_load12_pre(value["pre"])
+    _need(pre["pre"]["source"]["pass"] == scalar_event["pass"] and
+          pre["pre"]["source"]["netId"] == "LOAD12",
+          "LOAD12_PRE_SCALAR_SOURCE_MISMATCH")
+    return {"event": dict(value), "claims": claims, "pre": pre}
+
+
+def _validate_load12_branch_event(value: Any,
+                                  scalar_event: Mapping[str, Any],
+                                  allocation: Mapping[str, Any]
+                                  ) -> Dict[str, Any]:
+    header = _validate_load12_header_and_pre(value, scalar_event)
+    claims = header["claims"]
+    pre = header["pre"]
     post = _validate_load12_post(value["post"], pre)
     _need(post["claims"] == claims,
           "LOAD12_EVENT_POST_CLAIMS_MISMATCH")
@@ -2025,7 +2369,8 @@ def _validate_load12_branch_summary(value: Any, event: Mapping[str, Any],
 
 
 def _validate_receipt_lines(lines: Sequence[str], ledger: types.ModuleType,
-                            frozen: types.ModuleType, scalar: types.ModuleType
+                            frozen: types.ModuleType, scalar: types.ModuleType,
+                            target: str = "D_SENSE"
                             ) -> Dict[str, Any]:
     _need(type(lines) in (list, tuple) and len(lines) == len(RECEIPT_MARKERS) and
           all(type(line) is str and line for line in lines),
@@ -2041,10 +2386,18 @@ def _validate_receipt_lines(lines: Sequence[str], ledger: types.ModuleType,
                       "QUALITY_PATH_EVENT_INVALID", records[8], old["event"], scalar)
     path_summary = _path_call(frozen, frozen._validate_path_summary,
                                "QUALITY_PATH_SUMMARY_INVALID", records[9], records[8], scalar)
-    graph = _validate_graph_event(records[10], old["event"], path)
+    _need(target in SUITES, "GRAPH_TARGET_SPEC_INVALID")
+    # Validate the immutable accepted LOAD12 pre-boundary before selecting it as
+    # a graph source. The complete branch validator later binds post and the
+    # shared D_SENSE inventory without backprojecting either into this prefix.
+    load12_header = _validate_load12_header_and_pre(records[14], old["event"])
+    load12_pre = load12_header["pre"]
+    graph = _validate_graph_event(
+        records[10], old["event"], path, target, load12_pre,
+        records[12].get("binding"))
     graph_summary = _validate_graph_summary(records[11], records[10], graph)
     allocation = _validate_prefix_allocation_event(
-        records[12], old["event"], graph)
+        records[12], old["event"], graph, target)
     allocation_summary = _validate_prefix_allocation_summary(
         records[13], records[12], allocation)
     load12 = _validate_load12_branch_event(records[14], old["event"], allocation)
@@ -2056,7 +2409,8 @@ def _validate_receipt_lines(lines: Sequence[str], ledger: types.ModuleType,
             "allocation": allocation,
             "allocationSummary": allocation_summary,
             "load12Branch": load12,
-            "load12BranchSummary": load12_summary}
+            "load12BranchSummary": load12_summary,
+            "target": target, "suite": SUITES[target]}
 
 
 def _validate_console_and_receipt(stdout_raw: bytes, receipt_raw: bytes,
@@ -2115,8 +2469,15 @@ def _run_validation(spec_argument: str, spec_sha256: str) -> Dict[str, Any]:
     _need(_sha256(spec_raw) == spec_sha256, "INPUT_SPEC_SHA256_MISMATCH")
     spec = _ledger_call(ledger, ledger._strict_json,
                         "INPUT_SPEC_INVALID", spec_raw, "INPUT_SPEC")
+    target, suite, legacy_spec = _validate_target_spec(spec)
+    # The byte-frozen prefix ledger has a closed legacy key set. Target/suite
+    # are validated above and remain bound to the raw spec hash; pass its exact
+    # legacy projection to the pinned source-census validator.
+    frozen.SUITE = suite
+    scalar.SUITE = suite
     context = _ledger_call(ledger, ledger._validate_input_spec,
-                           "INPUT_SPEC_INVALID", spec, spec_path.parent, capture)
+                           "INPUT_SPEC_INVALID", legacy_spec,
+                           spec_path.parent, capture)
     _need(QUALITY_REQUIRED_INPUTS <= set(context["pinMap"]),
           "QUALITY_SOURCE_PINS_OMIT_REQUIRED_INPUT")
 
@@ -2135,13 +2496,16 @@ def _run_validation(spec_argument: str, spec_sha256: str) -> Dict[str, Any]:
                               MAX_CAPTURE_BYTES, "RUN_STDERR", allow_empty=True)
     run_result = _ledger_call(ledger, ledger._strict_json,
                               "NATIVE_RUN_JSON_INVALID", result_raw, "NATIVE_RUN")
+    legacy_run_result = _validate_native_run_target(
+        run_result, target, scalar.NATIVE_RUN_KEYS)
     _path_call(frozen, frozen._validate_native_run, "NATIVE_RUN_INVALID",
-               run_result, context, stdout_raw, receipt_raw, stderr_raw, scalar)
+               legacy_run_result, context,
+               stdout_raw, receipt_raw, stderr_raw, scalar)
     _console, receipt_lines = _validate_console_and_receipt(
         stdout_raw, receipt_raw, stderr_raw, ledger)
-    parsed = _validate_receipt_lines(receipt_lines, ledger, frozen, scalar)
+    parsed = _validate_receipt_lines(receipt_lines, ledger, frozen, scalar, target)
     _scalar_call(scalar, scalar._stable_source_check, "SOURCE_REVALIDATION_FAILED",
-                 spec_raw, spec_path, spec_sha256, spec, context, ledger, capture)
+                 spec_raw, spec_path, spec_sha256, legacy_spec, context, ledger, capture)
     _stable_helpers(own_sha, frozen_sha, helper_hashes, frozen, scalar)
 
     # Re-read all native captures after validation so the report is tied to the
@@ -2185,6 +2549,8 @@ def _run_validation(spec_argument: str, spec_sha256: str) -> Dict[str, Any]:
     return {
         "schema": RESULT_SCHEMA,
         "status": "PASS",
+        "target": target,
+        "suite": suite,
         "sourceSnapshotRevision": SOURCE_REVISION,
         "source": {
             "inputCount": context["inputCount"],
@@ -2207,6 +2573,8 @@ def _run_validation(spec_argument: str, spec_sha256: str) -> Dict[str, Any]:
             "stderrBytes": len(stderr_raw), "stderrSha256": _sha256(stderr_raw),
         },
         "nativeRun": {
+            "target": run_result["target"],
+            "suite": run_result["suite"],
             "processId": run_result["processId"],
             "processStartTicks": run_result["processStartTicks"],
             "elapsedSeconds": run_result["elapsedSeconds"],
@@ -2243,6 +2611,7 @@ def _run_validation(spec_argument: str, spec_sha256: str) -> Dict[str, Any]:
             "layoutQualification": False,
         },
         "qualityZeroViaGraphObservation": {
+            "target": graph["target"],
             "scope": graph["scope"],
             "binding": graph["binding"],
             "stability": graph["diagnostic"]["stability"],

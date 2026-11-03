@@ -40,7 +40,7 @@ final class P07AcceptedBranchCaptureDiagnostics {
         final Object searchRef,branchRef,routeSessionRef,layoutRef,queueRef;
         final Object[] nodeRefs;
         final int[][] nodeValues;
-        final int pass,netIndexNextFetch,branchOrdinal,branches,traceCount,traceModCount;
+        final int pass,netIndexNextFetch,branchOrdinal,branches,traceCount,traceModCount,faceMask;
         final String currentNet;
         final String[] netOrder;
         final PcbBoardHole[] prefixHoleRefs;
@@ -112,6 +112,7 @@ final class P07AcceptedBranchCaptureDiagnostics {
                 seedMask|=bit; nodeRefs[i]=node; nodeValues[i]=values; captureWork++;
             }
             if(seedMask!=3) throw new IllegalArgumentException("P07 seed queue does not cover both copper faces");
+            faceMask=seedMask;
 
             int gridWidth=intField(search,"width"),gridHeight=intField(search,"height");
             long gridCells=(long)gridWidth*gridHeight;
@@ -342,7 +343,7 @@ final class P07AcceptedBranchCaptureDiagnostics {
         return new PostCursor(context,preResult);
     }
 
-    static final class PreResult {
+    static final class PreResult implements P07ZeroViaGraphDiagnostics.GraphInput {
         private final String bodyJson;
         private final PathNode[] nodes;
         private final Vector<RunData> runs;
@@ -352,24 +353,61 @@ final class P07AcceptedBranchCaptureDiagnostics {
         private final String netId,pathTupleSha256;
         private final String[] netOrder;
         private final int branchOrdinal,transitionCount,workSteps,advanceCalls;
+        private final int faceBitsOffset,faceBitCells,goalCellCount,seedLayerMask;
+        private final String goalFaceBitsSha256;
         private PreResult(String bodyJson,PathNode[] nodes,Vector<RunData> runs,Vector<TraceData> prefixTraces,
                 PcbBoardHole[] prefixHoleRefs,String[] netOrder,
                 P07PrefixAllocationDiagnostics.Row[] prefixRows,String netId,int branchOrdinal,
-                int transitionCount,String pathTupleSha256,int workSteps,int advanceCalls) {
+                int transitionCount,String pathTupleSha256,int workSteps,int advanceCalls,
+                int faceBitsOffset,int faceBitCells,String goalFaceBitsSha256,int goalCellCount,
+                int seedLayerMask) {
             this.bodyJson=bodyJson; this.nodes=nodes; this.runs=runs; this.prefixTraces=prefixTraces;
             this.prefixHoleRefs=prefixHoleRefs; this.netOrder=netOrder; this.prefixRows=prefixRows;
             this.netId=netId; this.branchOrdinal=branchOrdinal;
             this.transitionCount=transitionCount; this.pathTupleSha256=pathTupleSha256;
             this.workSteps=workSteps; this.advanceCalls=advanceCalls;
+            if(bodyJson==null || faceBitsOffset<0 || faceBitCells<1 ||
+                    faceBitsOffset+faceBitCells>bodyJson.length() || goalFaceBitsSha256==null ||
+                    goalCellCount<1 || seedLayerMask<1 || seedLayerMask>3)
+                throw new IllegalArgumentException("Incomplete immutable P07 graph input snapshot");
+            this.faceBitsOffset=faceBitsOffset; this.faceBitCells=faceBitCells;
+            this.goalFaceBitsSha256=goalFaceBitsSha256; this.goalCellCount=goalCellCount;
+            this.seedLayerMask=seedLayerMask;
         }
-        int pathNodeCount() { return nodes.length; }
+        public int pathNodeCount() { return nodes.length; }
         int transitionCount() { return transitionCount; }
         int prefixHoleCount() { return prefixRows.length; }
         String netId() { return netId; }
         int branchOrdinal() { return branchOrdinal; }
         String prefixHoleIdAt(int index) { return prefixRows[index].id; }
         String prefixHoleFingerprintAt(int index) { return prefixRows[index].fingerprint; }
-        String pathTupleSha256() { return pathTupleSha256; }
+        public String pathTupleSha256() { return pathTupleSha256; }
+        public String sourceKind() { return "LOAD12_ACCEPTED_PRE_RESULT"; }
+        public int seedLayerMask() { return seedLayerMask; }
+        public int pathCellAt(int index) { return pathAt(index).cell; }
+        public int pathXAt(int index) { return pathAt(index).x; }
+        public int pathYAt(int index) { return pathAt(index).y; }
+        public int pathLayerAt(int index) { return pathAt(index).layer; }
+        public int pathDirectionAt(int index) { return pathAt(index).direction; }
+        public int pathTransitionsAt(int index) { return pathAt(index).transitions; }
+        public int pathCostAt(int index) { return pathAt(index).cost; }
+        public int pathHeuristicAt(int index) { return pathAt(index).heuristic; }
+        public int pathSerialAt(int index) { return pathAt(index).serial; }
+        public int pathKeyAt(int index) { return pathAt(index).key; }
+        public String goalFaceBitsSha256() { return goalFaceBitsSha256; }
+        public int goalCellCount() { return goalCellCount; }
+        public int expectedGoalFaceMaskAt(int cell) {
+            if(bodyJson==null || cell<0 || cell>=faceBitCells)
+                throw new IndexOutOfBoundsException("P07 expected goal-face cell");
+            char value=bodyJson.charAt(faceBitsOffset+cell);
+            if(value<'0' || value>'3') throw new IllegalStateException("Malformed immutable P07 goal-face nibble");
+            return value-'0';
+        }
+        private PathNode pathAt(int index) {
+            if(nodes==null || index<0 || index>=nodes.length)
+                throw new IndexOutOfBoundsException("P07 graph path Node");
+            return nodes[index];
+        }
         String toJson() { if(bodyJson==null) throw new IllegalStateException("Incomplete P07 pre result"); return bodyJson; }
     }
 
@@ -601,6 +639,7 @@ final class P07AcceptedBranchCaptureDiagnostics {
         private MessageDigest tupleDigest,goalDigest;
         private long activeNanos;
         private JsonStream stream;
+        private JsonString faceBitsJson;
         private JsonCounter activeMillisCounter,serializedUnitsCounter,workStepsCounter,advanceCallsCounter;
         private String goalFaceBitsSha256;
         private PreResult result;
@@ -801,6 +840,7 @@ final class P07AcceptedBranchCaptureDiagnostics {
                     break;
                 }
                 case 6: {
+                    faceBitsJson=new JsonString(faceBits,true);
                     stream=new JsonStream(buildPreModel(this));
                     stage=7; debit(1,maximumWork); break;
                 }
@@ -845,7 +885,8 @@ final class P07AcceptedBranchCaptureDiagnostics {
                         result=new PreResult(body,pathNodes,planarRuns,
                             prefixTraces,context.prefixHoles,context.netOrder,
                             prefixRows,context.netId,context.branchOrdinal,transitionCount,pathTupleSha256,
-                            workSteps,advanceCalls);
+                            workSteps,advanceCalls,faceBitsJson.contentOffset,goals.length/2,
+                            goalFaceBitsSha256,goalCellCount,context.seeds.faceMask);
                         if(context.preResult!=null) throw new IllegalStateException("P07 Context already has a pre result");
                         context.preResult=result; complete=true;
                     }
@@ -1349,7 +1390,7 @@ final class P07AcceptedBranchCaptureDiagnostics {
                 })),
             "goal",object("cellCount",p.goalCellCount,"topCount",p.goalsTop,
                 "bottomCount",p.goalsBottom,"bothCount",p.goalsBoth,
-                "faceBits",new JsonString(p.faceBits),"faceBitsSha256",p.goalFaceBitsSha256,
+                "faceBits",p.faceBitsJson,"faceBitsSha256",p.goalFaceBitsSha256,
                 "foundGoal",Boolean.TRUE),
             "nativePublisher",object("stage",intField(c.publisher,"stage"),
                 "qualityIndex",p.qualityIndex,"nodeCount",nodes.length,
@@ -1450,7 +1491,13 @@ final class P07AcceptedBranchCaptureDiagnostics {
     }
     private static final class JsonString {
         final CharSequence value;
-        JsonString(CharSequence value) { if(value==null) throw new IllegalArgumentException("Missing P07 JSON string"); this.value=value; }
+        final boolean captureOffset;
+        int contentOffset=-1;
+        JsonString(CharSequence value) { this(value,false); }
+        JsonString(CharSequence value,boolean captureOffset) {
+            if(value==null) throw new IllegalArgumentException("Missing P07 JSON string");
+            this.value=value; this.captureOffset=captureOffset;
+        }
     }
     private static final class JsonCounter {
         final int width;
@@ -1582,7 +1629,14 @@ final class P07AcceptedBranchCaptureDiagnostics {
                 String text=value==null?"null":String.valueOf(value);
                 frames.add(new JsonRawFrame(text));
             } else if(value instanceof String) frames.add(new JsonStringFrame((String)value));
-            else if(value instanceof JsonString) frames.add(new JsonStringFrame(((JsonString)value).value));
+            else if(value instanceof JsonString) {
+                JsonString string=(JsonString)value;
+                if(string.captureOffset) {
+                    if(string.contentOffset>=0) throw new IllegalStateException("P07 JSON string offset captured twice");
+                    string.contentOffset=builder.length()+1;
+                }
+                frames.add(new JsonStringFrame(string.value));
+            }
             else if(value instanceof JsonRaw) frames.add(new JsonRawFrame(((JsonRaw)value).value));
             else if(value instanceof JsonCounter) {
                 JsonCounter counter=(JsonCounter)value;

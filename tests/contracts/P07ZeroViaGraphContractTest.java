@@ -7,6 +7,7 @@ public final class P07ZeroViaGraphContractTest {
     public static void main(String[] args) {
         if (args != null && args.length != 0)
             throw new IllegalArgumentException("Expected no arguments");
+        Rb100PhysicalDiagnostics.runGraphRecordTransportContracts();
         P07ZeroViaGraphDiagnostics.runContracts();
     }
 }

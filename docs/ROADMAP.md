@@ -211,6 +211,26 @@ avoidability. Next is analysis of the actual earlier LOAD12 zero-new-via graph,
 under the original640-unit cap, before any routing treatment. Playable100 remains0.
 Implementation2b321bb3d1cc3f9342d0cc9c602bf02854728b4a normally pushed and exact remote SHA verified on origin/codex/q100-physical-feasibility; completion Gmail1a1a1704c5a30202 sent ONCE.
 
+The [actual pre-LOAD12 graph diagnostic](task-evidence/Q100/load12-graph-r1/README.md)
+is locally accepted for the exact same authored branch73. Its earlier17-VIA/
+88-trace prefix is captured separately from the later D_SENSE48-VIA prefix.
+Independent queue BFS and heap Dijkstra find46 TOP and415 BOTTOM length-eligible
+goals, using each goal's own positive-Manhattan gate; shortest lengths are2510
+and3250. This relaxed result proves neither a legal BranchSearch/finalizer
+route nor that any of the actual branch's4 new VIAs is avoidable. Final native
+focus5, separate actual NULL/PROBE pairs within640 units, Python51+1 declared
+filelink skip, both current readers,133 fresh negative controls, real junction
+cleanup, independent actual-target oracles, paired consistency/content-mismatch
+checks and the final1077/850-production/1202-compiler/28-frozen-Python audit pass.
+Earlier failures remain preserved and uncredited. Private revision20/r5/v5
+migrates the owned diagnostics only; production26/dependency28 and all budgets
+remain unchanged. No fresh GWT/Player/electrical/normal3/2-by-31/full30 renewal.
+Full30 stays owner-EXCLUDED; current protected HARD data remains unread/unrun,
+historical unread boundary UNCERTIFIED, HARD/PSYCHOTIC unavailable. Playable100=0,
+beta held. Publication pending. Next is a finite actual BranchSearch/finalizer
+replay of a relaxed LOAD12 candidate before any generic VIA-reduction treatment
+or adoption.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

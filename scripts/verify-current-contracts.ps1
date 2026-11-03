@@ -549,6 +549,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'PcbPlacementDiagnosticsContractTest' -or
         $Suite -contains 'Rb100P07PolicyDiagnosticContractTest' -or
         $Suite -contains 'Rb100QualityZeroViaGraphContractTest' -or
+        $Suite -contains 'Rb100Load12ZeroViaGraphContractTest' -or
         $Suite -contains 'Rb100P07BranchDiagnosticContractTest' -or
         $Suite -contains 'P07BranchDiagnosticsContractTest' -or
         $Suite -contains 'P07OrderingCandidatesContractTest' -or
@@ -599,6 +600,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'PcbPlacementDiagnosticsContractTest' -or
         $Suite -contains 'Rb100P07PolicyDiagnosticContractTest' -or
         $Suite -contains 'Rb100QualityZeroViaGraphContractTest' -or
+        $Suite -contains 'Rb100Load12ZeroViaGraphContractTest' -or
         $Suite -contains 'Rb100P07BranchDiagnosticContractTest' -or
         $Suite -contains 'P07BranchDiagnosticsContractTest' -or
         $Suite -contains 'P07OrderingCandidatesContractTest' -or
@@ -940,6 +942,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         @{ Name = 'PcbPlacementDiagnosticsContractTest'; Marker = 'PCB placement diagnostics contracts ' },
         @{ Name = 'Rb100P07PolicyDiagnosticContractTest'; Marker = 'RB100 P07 policy diagnostic contracts ' },
         @{ Name = 'Rb100QualityZeroViaGraphContractTest'; Marker = 'RB100 LOAD12 branch contracts ' },
+        @{ Name = 'Rb100Load12ZeroViaGraphContractTest'; Marker = 'RB100 LOAD12 branch contracts ' },
         @{ Name = 'Rb100P07BranchDiagnosticContractTest'; Marker = 'RB100 P07 branch diagnostic contracts ' },
         @{ Name = 'PcbCorridorOrientationContractTest'; Marker = 'PCB corridor orientation contracts ' },
         @{ Name = 'Rb56ModelIdentityContractTest'; Marker = 'RB56 model-identity contracts ' },
@@ -1645,7 +1648,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         # Existing private P07 observations have two independently bounded
         # 90s operations and 120s cleanups. The new fixed-prefix pair has four operations
         # and a 900s aggregate (4*(90+120)+60); no per-case or existing suite limit changes.
-        $testBudget = if ($testClass -eq 'Rb100FixedPrefixCaptureContractTest') { 900000 } elseif ($testClass -eq 'P07GeometryEpochDiagnosticContractTest') { 180000 } elseif ($testClass -in @('Rb100P07PolicyDiagnosticContractTest','Rb100P07BranchDiagnosticContractTest','Rb100QualityZeroViaGraphContractTest')) { 480000 } elseif ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100FaultMatrix) { 1200000 } elseif ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100DiagnosticFault) { 240000 } elseif ($testClass -eq 'P07LayerCorpus') { 600000 } elseif ($testClass -in @('P09EnvelopeCorpus','QuickPlayPhysicalMatrixContractTest')) { 180000 } elseif ($testClass -in @('QuickPlayGateCorpus','QuickPlayGateHoldoutCorpus')) { 600000 } else { 60000 }
+        $testBudget = if ($testClass -eq 'Rb100FixedPrefixCaptureContractTest') { 900000 } elseif ($testClass -eq 'P07GeometryEpochDiagnosticContractTest') { 180000 } elseif ($testClass -in @('Rb100P07PolicyDiagnosticContractTest','Rb100P07BranchDiagnosticContractTest','Rb100QualityZeroViaGraphContractTest','Rb100Load12ZeroViaGraphContractTest')) { 480000 } elseif ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100FaultMatrix) { 1200000 } elseif ($testClass -eq 'Rb100ElectricalPilotContractTest' -and $Rb100DiagnosticFault) { 240000 } elseif ($testClass -eq 'P07LayerCorpus') { 600000 } elseif ($testClass -in @('P09EnvelopeCorpus','QuickPlayPhysicalMatrixContractTest')) { 180000 } elseif ($testClass -in @('QuickPlayGateCorpus','QuickPlayGateHoldoutCorpus')) { 600000 } else { 60000 }
         $tested = Invoke-VerifierBoundedProcess $java $testArguments $testBudget
         Write-Host $tested.Stdout
         if ($tested.Stderr) { Write-Host $tested.Stderr }

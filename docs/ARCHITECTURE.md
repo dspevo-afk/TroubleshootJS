@@ -383,15 +383,16 @@ The [checked shortcut packet](task-evidence/Q100/shortcut-query-r1/README.md)
 records0 qualified candidates in that finite family and proves no all-path
 infeasibility, route/finalizer/access/electrical/layout or playable qualification.
 
-The current Rb100QualityZeroViaGraphContractTest replaces the Shortcut entry/API
-under diagnostic revision18. P07ZeroViaGraphDiagnostics owns test-only resumable
+The current Rb100QualityZeroViaGraphContractTest and
+Rb100Load12ZeroViaGraphContractTest share the typed diagnostic revision20 driver.
+P07ZeroViaGraphDiagnostics owns test-only resumable
 two-face Router observation, exact goal-union capture and compact directed mask
 encoding. The actual BranchSearch binding includes policy, primary, eligible
 initial faces, via cap and prefix holes; original endpoint authorities remain.
 Every original found-path step must occur in the captured face mask. Native
 capture installs no route and performs no shortest analysis. The new strict
 read_quality_zero_via.py reader privately reuses byte-pinned pure validators,
-checks the closed16-record v3 wire/1076-source census, and computes directed forward
+checks the closed16-record v5 wire/1077-source census, and computes directed forward
 BFS independently on each eligible face. It applies each goal's own positive
 Manhattan3:1 length gate; it never applies the original630 limit to other goals.
 Turn/bend/search/finalizer/access/electrical/layout proof remains separate.
@@ -408,7 +409,7 @@ parsing supports slash-containing IDs; canonical Java UTF16 order and raw hole
 fingerprints retain their existing meanings. Pairwise prior-creator/net-order
 consistency and kind/net conservation establish creation ownership only, not
 insertion chronology or all later uses of a reused hole. The current reader
-migrates to v3/revision18, independently checks factory fields/fingerprints and
+migrates to v5/revision20, independently checks factory fields/fingerprints and
 counts, and adds prefixAllocationObservation with false chronology/adoption/
 qualification flags. The older28 Python files remain byte-frozen. Its measured
 active time includes a complete placeholder JSON payload; only elapsed-digit
@@ -430,6 +431,30 @@ scanned. Payload copies are debited; outer unit/case clocks include the final
 self-referential time patch and immutable copy omitted from reported activeMillis.
 The [LOAD12 packet](task-evidence/Q100/load12-branch-r1/README.md) separates normal
 branch publication from route adoption, layout qualification and VIA avoidability.
+
+The typed LOAD12 target captures its ordinary two-face graph after the immutable
+PreResult and before normal Publisher work. Its GraphInput reads that same
+captured Node chain, seed faces and goal bits; the later D_SENSE inventory supplies
+no earlier geometry or goal authority. One target graph is captured per operation.
+The LOAD12 operation still completes normal publication/post capture and later
+D_SENSE rejection, and both targets retain NULL/PROBE accounting and cleanup.
+P07ZeroViaGraphDiagnostics compares complete live geometry/effect streams by
+SHA-256 and exact lengths plus container/key/object identity, with full fixed
+Router comparisons before and after predicate queries. Prepared same-net/width
+guards allow one fixed snapshot per face to serve as the query copy. Read-only
+source fragments and incremental decimal/tuple encoding retain bounded work.
+The r5 Result owns three private encoded mask arrays and a small immutable header;
+it streams them through an exact base PrintStream without whole-body String
+copies. The completed cursor clears all live/source references before returning,
+and the adapter releases its jobs before successor work. Subclass sinks fail
+before any prefix or array exposure. These are private native diagnostics; no
+production routing or electrical behavior changes. The
+[LOAD12 graph packet](task-evidence/Q100/load12-graph-r1/README.md) records current
+validation and its limits; graph length relaxation supplies no legal-route,
+VIA-avoidability, layout or playable100 proof.
+The paired audit binds both operations' D_SENSE inventory rows and geometry to
+the separate D graph. Standalone LOAD12 checks that later hash's format; its
+earlier graph cannot independently supply the later D geometry authority.
 
 P07TwoLayerContractTest also owns the matched seven-point prior-via tree-join
 contract. A fresh FULLER Session with explicit requestcap2 creates a via and

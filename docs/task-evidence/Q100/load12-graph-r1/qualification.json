@@ -1,0 +1,191 @@
+{
+  "schema": "q100-load12-graph-qualification-v1",
+  "status": "ACCEPTED_FINITE_DIAGNOSTIC",
+  "publication": "PENDING",
+  "sourceParent": "b033826e108773ef1c0fc723efd9efc120d539cd",
+  "sourceBranch": "codex/q100-load12-graph-20261103",
+  "sourceRevision": 20,
+  "graphSchema": "p07-zero-via-graph-r5",
+  "nativeInputCount": 1077,
+  "nativeInputBytes": 86611889,
+  "nativeInputManifestSha256": "408473f0d144250f0d901821486674ad8d01ad2af43dfd2633a228ec2f9e137c",
+  "sourcePins": {
+    "tests/contracts/P07ZeroViaGraphDiagnostics.java": "67d47f21babfc22f5b43e2ff005a7df54776ff8ee2c97fcffd5eb5830aa5d834",
+    "tests/contracts/Rb100PhysicalDiagnostics.java": "1302b635bf759fa877ee052750bf1f9f9b40eb822b3646f17d1d245a12e67102",
+    "scripts/verify-current-contracts.ps1": "c3a6ca881a9805782d5f11b03c0ea96693450338af77194d8b33e18c2c2bd817",
+    "tests/contracts/P07AcceptedBranchCaptureDiagnostics.java": "945f0c928b7e86741d130120d527758fcf95e72ad831c59d9ee0ffa6d2caeff5",
+    "tests/contracts/P07AcceptedBranchCaptureContractTest.java": "83204b5a37b121cacda50e4893054bb17ac289716cfba3472b7bcd5d7a974f38",
+    "tests/contracts/P07ZeroViaGraphContractTest.java": "476706a9ad65489622d4f55be9763bf433b25c6f757f16c600733e1033c7ea85",
+    "tests/contracts/Rb100Load12ZeroViaGraphContractTest.java": "8e39ec6cea0bf29bef8214031363b79224addb4750e4c52f241965667e46966d",
+    "tests/qualification/rb100-layout/read_quality_zero_via.py": "1933b4fec3f983c7eb846b02ad61339d6ffce961091cfa90c67d56b231f6caff",
+    "tests/qualification/rb100-layout/test_read_quality_zero_via.py": "d0c5afa6b105032881c54545ff00622bc9f843daa3973843c73df9f160eb276e"
+  },
+  "externalHostPins": {
+    "independent-target-graph-oracle.py": "b7475a16bedfd1d0509fce917bd926e06be7ed69aa0deb5c4f9a5857fac7c7cd",
+    "paired-target-audit.py": "cc6b45de2d6441fb511bbe6001aaa049a065f8beee5ee3c53446f7bb7f7d585a",
+    "run-paired-prefix-negative-v1.ps1": "f547df934b1da25607d84a7a2893ae66a6ced88b5e7ff996b2e5d9c24565a8ff",
+    "run-reader-negatives-v5-r6.ps1": "380328ab74b9a79db94080e5fb524e02f5903c8aea2e5c00a60567022585c33d",
+    "final-input-audit-v5-r10.ps1": "23a56e178b06083bef12d80139e7d17f97cf0c7bcfc08cf4b71c5aabacb71b35",
+    "audit-guard-canary-r11.ps1": "b12596b5bbacffb2e1f88b926f5c65c272572bd719b5c9ad95a59fcbe3808ec7",
+    "native-gate.ps1": "0291446258b935f80ad63aee5a12216caef5d291d840c44924fe3f9177eeed88",
+    "native-child.ps1": "91aef49eb5dec1677f672775dba7ca96d9d05dc85c52ff44f00004943a384e73",
+    "run-python-tests-r5.ps1": "c62c7ed93d27e8c87eab35400eecb593d227907152bbc3d1a15650c40aa16374",
+    "run-reader.ps1": "f01e31c546323b1d4696796331689dd964d056ef699daf171a3947d170025b2c",
+    "run-target-oracle.ps1": "dbdc293922ee22c4a36d8b3b6d92d6bde267c451370e3fcaa3cd2dd570d1f923"
+  },
+  "selectedGates": {
+    "focused-r13": {
+      "status": "PASS",
+      "exitCode": 0,
+      "terminationProven": true,
+      "elapsedSeconds": 39.0378681,
+      "rawResultSha256": "ac39c926ed5dc10c0bdc4a62e7b114b065ddae7df655deba672ba256f839f57e",
+      "statusBasis": "VERIFIED_EXIT_NATIVE_EXIT_TERMINATION_CLEANUP_INPUT_AUDIT"
+    },
+    "query-d-r8": {
+      "status": "PASS",
+      "exitCode": 0,
+      "terminationProven": true,
+      "elapsedSeconds": 78.2774239,
+      "rawResultSha256": "4b604ca01751d8529e835dbd5a0093a5ad252f86bd4f15c93f8b39f93a356496",
+      "statusBasis": "VERIFIED_EXIT_NATIVE_EXIT_TERMINATION_CLEANUP_INPUT_AUDIT"
+    },
+    "query-load-r2": {
+      "status": "PASS",
+      "exitCode": 0,
+      "terminationProven": true,
+      "elapsedSeconds": 79.0452749,
+      "rawResultSha256": "21c827fadf50dfd5bf8498202a0a11206ce77c4d12bccd4b22499ce3fa3ea9bf",
+      "statusBasis": "VERIFIED_EXIT_NATIVE_EXIT_TERMINATION_CLEANUP_INPUT_AUDIT"
+    },
+    "python-tests-r5": {
+      "status": "PASS_WITH_DECLARED_SKIP",
+      "exitCode": 0,
+      "terminationProven": true,
+      "elapsedSeconds": 1.0733248,
+      "rawResultSha256": "f75429ca2757cfbe92426635eacd0320915ac7a964dc159540adfaa74c9a51a5"
+    },
+    "reader-d-v5-r1": {
+      "status": "PASS",
+      "exitCode": 0,
+      "terminationProven": true,
+      "elapsedSeconds": 7.1535337,
+      "rawResultSha256": "1a3a3617fd7e930f46f9bab460758cb8ddead83de5cad181242c05c9a22c629b"
+    },
+    "reader-load-v5-r1": {
+      "status": "PASS",
+      "exitCode": 0,
+      "terminationProven": true,
+      "elapsedSeconds": 6.2167452999999995,
+      "rawResultSha256": "062844da6daa6ef66f80f2c5e93cc8727537b0343f1ec941666cdcce34bb872d"
+    }
+  },
+  "finalInputAudit": {
+    "status": "PASS",
+    "sourceSha256": "23a56e178b06083bef12d80139e7d17f97cf0c7bcfc08cf4b71c5aabacb71b35",
+    "rawResultSha256": "8a430804a29c492fc75b1b1ff502fe07cc4efa16daca3a8703f7736344ad878f",
+    "elapsedSeconds": 57.0072596
+  },
+  "negativeControls": {
+    "dSense": 65,
+    "load12": 68,
+    "dTargetScopedNotApplicable": 3,
+    "load12TargetScopedNotApplicable": 0,
+    "historyRowsImported": 0,
+    "qualificationCredit": "NONE"
+  },
+  "pairedPrefixNegative": {
+    "run": "paired-prefix-negative-v1",
+    "sourceSha256": "f547df934b1da25607d84a7a2893ae66a6ced88b5e7ff996b2e5d9c24565a8ff",
+    "status": "PASS",
+    "classification": "SYNTHETIC_REBOUND_NEGATIVE_NOT_NATIVE_QUALIFICATION",
+    "syntheticAllocationGeometrySha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "dSenseGraphGeometrySha256": "98d389553de34bc53732beece39f5c178248da5c291e39fc55e5e422b7fe4851",
+    "load12GraphGeometrySha256": "7c963bb9ba10f7419d2e6abaecff4cfc1504ba2744914d6874ffd02ca475c447",
+    "unchangedLoad12Branch": true,
+    "pairedAuditStatus": "FAIL",
+    "pairAuditCode": "PAIR_D_ALLOCATION_stability",
+    "pairedAuditExitCode": 2,
+    "sourceStable": true,
+    "nativeQualification": false,
+    "fullMatrixQualification": false
+  },
+  "independentAnalysis": {
+    "queueBfsHeapDijkstra": "IDENTICAL_PER_FACE_DISTANCES_AND_GOAL_COUNTS",
+    "dSense": {
+      "topMinimum": 650,
+      "bottomMinimum": 8010,
+      "lengthEligibleGoals": 0
+    },
+    "load12": {
+      "topMinimum": 2510,
+      "bottomMinimum": 3250,
+      "topLengthEligibleGoals": 46,
+      "bottomLengthEligibleGoals": 415
+    },
+    "scope": "FIXED_PREFIX_ZERO_VIA_LENGTH_ONLY",
+    "usesPerGoalPositiveManhattanGate": true
+  },
+  "limits": {
+    "compileMs": 60000,
+    "focusedSuiteMs": 60000,
+    "actualSuiteMs": 480000,
+    "operationMs": 90000,
+    "workUnits": 640,
+    "unitMs": 5000,
+    "cleanupMs": 120000,
+    "quantum": 32768,
+    "requestExpansions": 1000000,
+    "branchExpansions": 100000,
+    "gridCells": 250000,
+    "orders": 3,
+    "factoryViaHoles": 48,
+    "branchTransitions": 4
+  },
+  "review": {
+    "rootIntegratedDiff": "PASS",
+    "helperSourceOnly": "CLEAR",
+    "readerSourceOnly": "CLEAR",
+    "runnerSourceOnly": "CLEAR",
+    "aggregateAuditSourceOnly": "CLEAR",
+    "leafRuntimeGates": "NONE"
+  },
+  "reuse": {
+    "productionJavaUnchanged": 850,
+    "developerCompilerInputCount": 1202,
+    "developerCompilerDigest": "438cc4c0fdf7205479c60d1d30540dc964b9da8312c42850790cd1f209a8c2ed",
+    "playerCompilerInputCount": 1202,
+    "playerCompilerDigest": "53125e37f12449bd50dabd9cff43368eed0e4bea3bccfc1cd19d60becee7c6a5",
+    "pythonFrozenFromK": 28,
+    "actualGwtBuild": "NOT_RUN_UNCHANGED_INPUTS",
+    "playerFlow": "NOT_APPLICABLE_TEST_ONLY_NO_UI_CHANGE",
+    "electricalRenewal": "NOT_RUN",
+    "normalThreeRootRenewal": "NOT_RUN",
+    "full2By31Renewal": "NOT_RUN",
+    "full30": "OWNER_EXCLUDED",
+    "hardPsychotic": "UNAVAILABLE_UNREAD_UNRUN_IN_CURRENT_SCOPE",
+    "historicalUnreadBoundary": "UNCERTIFIED"
+  },
+  "resources": {
+    "selectedChildrenTerminated": true,
+    "junctionCleanup": "PASS",
+    "persistentTaskResources": "NONE",
+    "unrelatedMainDesktopAndFailures": "PRESERVED",
+    "nativeWrapperCleanupElapsedMs": null,
+    "nativeWrapperCleanupLimit": "SCRIPT_CLEANUP_STATUS_PASS_NO_SEPARATE_ELAPSED_FIELD"
+  },
+  "claims": {
+    "feasibility": "UNKNOWN",
+    "legalRouteProven": false,
+    "viaAvoidabilityProven": false,
+    "routeAdopted": false,
+    "layoutQualification": false,
+    "playable100": 0,
+    "beta": "HELD"
+  },
+  "nextUnstarted": "Finite actual BranchSearch/finalizer replay of a relaxed LOAD12 candidate before generic via-reduction treatment or adoption.",
+  "frozenContractPins": {
+    "WIRE_SPEC.md": "bd74bbb426e606c5d5d646082928b4f28b207c6c44dd7d0d39a98dc24b705b58",
+    "PLAN.md": "34f95bef3df62bda26b49771f81eecb3e1689082b54ad91bc0a692fd0f10dd66"
+  }
+}
