@@ -1,12 +1,16 @@
-# Current checkpoint: charged detached owner accepted locally; publication pending
+# Current checkpoint: charged detached owner published; actual baseline next
 
 2026-11-03. Q=OS-temp/tsj-q100-load12-replay-actual-20261103-r1, branch
-`codex/q100-load12-replay-actual-20261103`, HEAD/source parent
-`924d5e7f81340e2ce5d28a0336b76ff7baa87a36`. QQ=preserved fixed-prefix
+`codex/q100-load12-replay-actual-20261103`, HEAD before this documentation receipt `62587951c5e843288923204ebee6f5ff0cfebdd8`,
+validated source parent `924d5e7f81340e2ce5d28a0336b76ff7baa87a36`. QQ=preserved fixed-prefix
 bundle/load12-replay-actual-r1. Packet:docs/task-evidence/Q100/load12-replay-actual-r1.
 All required gates PASS for the independently complete literal charged-owner
-prerequisite. Root final diff/stage/normal commit+push+one Gmail remain. No Q
-publication or completion email yet. No current task runtime actors.
+prerequisite. Implementation62587951c5e843288923204ebee6f5ff0cfebdd8, Add charged
+detached routing copy owners, normally pushed and exact remote verified on
+origin/codex/q100-physical-feasibility. Completion Gmail1a1a37ea07ea1c26 sent ONCE;
+NEVER duplicate. This documentation receipt needs no second milestone email.
+No current task runtime actors. Unstaged19 frozen-helper raw newline statuses
+remain canonical-diff-empty, staged0 at implementation commit.
 
 Scope: opt-in resumable Layout/Router/initial FULLER branch copies; actual initial
 Nodes, consumed budget, goals/workspace/order/prefix state, separate mutable
@@ -65,13 +69,13 @@ untouched. Protected HARD unread/unrun thisscope/historyUNCERTIFIED;
 HARD/PSYCHOTIC unavailable. Full30 ownerEXCLUDED; CI NOTRUN/runnerprerequisite
 recorded. No manual Player input/newhumanrepair, full30 or2-by-31 renewal.
 
-Next: publish accepted owner prerequisite through explicit-path commit/normal
-push to origin/codex/q100-physical-feasibility, verifyexactSHA, dedup/sendoneGmail,
-record docs receipt. Then bounded actual LOAD12/73 baseline48, exact root
-9007199254740993/place-6587958367974952701/route8445301674744508279/request0/
+Next: start bounded actual LOAD12/73 baseline48 from this accepted source after
+the documentation receipt publication is verified. Exact
+root9007199254740993/place-6587958367974952701/route8445301674744508279/request0/
 index0/attempt4/pass1,pre17VIA88traces,expected222nodes/2170length/2bends/4flips
 ->4VIA5traces; cap17 follows baseline. All90s/640/5s/120s/32768 and routing caps
-remain. Never infer actual replay success from this literal prerequisite.
+remain. No actual integration/runtime yet. Never infer actual replay success
+from this literal prerequisite. No new notification for the documentation receipt.
 
 # Historical checkpoint: actual LOAD12 branch capture published
 

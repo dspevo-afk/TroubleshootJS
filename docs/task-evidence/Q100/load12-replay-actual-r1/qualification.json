@@ -1,6 +1,6 @@
 {
     "schema":  "q100-charged-detached-owner-qualification-v1",
-    "status":  "PASS_FINITE_SCOPE_PENDING_PUBLICATION",
+    "status":  "PASS_FINITE_SCOPE_PUBLISHED",
     "sourceParent":  "924d5e7f81340e2ce5d28a0336b76ff7baa87a36",
     "layoutVersion":  26,
     "dependencyEpoch":  "tsj-generation-dependencies-v28",
@@ -232,5 +232,15 @@
                       "ownedBrowserPreviewCleanup":  "PASS",
                       "preserved":  "Earlier failures/profiles, native build outputs, Developer archive and unrelated checkouts",
                       "unowned8928":  "UNTOUCHED"
-                  }
+                  },
+    "publication": {
+        "implementation": "62587951c5e843288923204ebee6f5ff0cfebdd8",
+        "message": "Add charged detached routing copy owners",
+        "workingBranch": "codex/q100-load12-replay-actual-20261103",
+        "remoteBranch": "origin/codex/q100-physical-feasibility",
+        "exactRemoteVerified": true,
+        "completionGmail": "1a1a37ea07ea1c26",
+        "completionNotifications": 1,
+        "documentationReceipt": "NO_SECOND_MILESTONE_EMAIL"
+    }
 }

@@ -1,8 +1,10 @@
 # Charged detached routing owners
 
-Status: **LOCALLY ACCEPTED; publication pending.** This qualifies the small
+Status: **PUBLISHED finite prerequisite.** This qualifies the small
 literal cap2 owner prerequisite. Actual LOAD12/73 baseline48, large-grid copy cost
 and cap17 replay remain unqualified. Playable100 remains0; beta is held.
+
+Implementation `62587951c5e843288923204ebee6f5ff0cfebdd8`, Add charged detached routing copy owners, was normally pushed and verified on `origin/codex/q100-physical-feasibility`. Completion Gmail `1a1a37ea07ea1c26` was sent once; no second email for this documentation receipt.
 
 Source parent: `924d5e7f81340e2ce5d28a0336b76ff7baa87a36`.
 The [frozen plan](PLAN.md) defines the scope; [qualification.json](qualification.json)

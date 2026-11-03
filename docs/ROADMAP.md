@@ -263,7 +263,10 @@ source audit pass. Earlier compile/contract/cwd/profile failures are preserved.
 All original budgets, costs, epochs and route choices remain. Actual LOAD12/73
 baseline48, large-grid cost and cap17 are next and unqualified. No routing/layout
 adoption or playable100 proof is granted; playable100=0/beta held. Full30/data
-boundaries remain. Normal publication and completion notification are pending.
+boundaries remain. Implementation `62587951c5e843288923204ebee6f5ff0cfebdd8`
+was normally pushed and exact remote verified on origin/codex/q100-physical-feasibility;
+completion Gmail `1a1a37ea07ea1c26` was sent once.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion
