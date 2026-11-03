@@ -355,12 +355,13 @@ final class P07AcceptedBranchCaptureDiagnostics {
         private final int branchOrdinal,transitionCount,workSteps,advanceCalls;
         private final int faceBitsOffset,faceBitCells,goalCellCount,seedLayerMask;
         private final String goalFaceBitsSha256;
+        private final String prefixGeometrySha256;
         private PreResult(String bodyJson,PathNode[] nodes,Vector<RunData> runs,Vector<TraceData> prefixTraces,
                 PcbBoardHole[] prefixHoleRefs,String[] netOrder,
                 P07PrefixAllocationDiagnostics.Row[] prefixRows,String netId,int branchOrdinal,
                 int transitionCount,String pathTupleSha256,int workSteps,int advanceCalls,
                 int faceBitsOffset,int faceBitCells,String goalFaceBitsSha256,int goalCellCount,
-                int seedLayerMask) {
+                int seedLayerMask,String prefixGeometrySha256) {
             this.bodyJson=bodyJson; this.nodes=nodes; this.runs=runs; this.prefixTraces=prefixTraces;
             this.prefixHoleRefs=prefixHoleRefs; this.netOrder=netOrder; this.prefixRows=prefixRows;
             this.netId=netId; this.branchOrdinal=branchOrdinal;
@@ -373,6 +374,9 @@ final class P07AcceptedBranchCaptureDiagnostics {
             this.faceBitsOffset=faceBitsOffset; this.faceBitCells=faceBitCells;
             this.goalFaceBitsSha256=goalFaceBitsSha256; this.goalCellCount=goalCellCount;
             this.seedLayerMask=seedLayerMask;
+            if(prefixGeometrySha256==null || prefixGeometrySha256.length()!=64)
+                throw new IllegalArgumentException("Missing immutable P07 prefix geometry digest");
+            this.prefixGeometrySha256=prefixGeometrySha256;
         }
         public int pathNodeCount() { return nodes.length; }
         int transitionCount() { return transitionCount; }
@@ -395,6 +399,7 @@ final class P07AcceptedBranchCaptureDiagnostics {
         public int pathSerialAt(int index) { return pathAt(index).serial; }
         public int pathKeyAt(int index) { return pathAt(index).key; }
         public String goalFaceBitsSha256() { return goalFaceBitsSha256; }
+        String prefixGeometrySha256() { return prefixGeometrySha256; }
         public int goalCellCount() { return goalCellCount; }
         public int expectedGoalFaceMaskAt(int cell) {
             if(bodyJson==null || cell<0 || cell>=faceBitCells)
@@ -416,11 +421,16 @@ final class P07AcceptedBranchCaptureDiagnostics {
         private final Vector<P07PrefixAllocationDiagnostics.Row> postRows;
         private final Vector<String> createdHoleIds;
         private final int createdTraceCount;
+        private final String postGeometrySha256;
         private PostResult(String bodyJson,Vector<P07PrefixAllocationDiagnostics.Row> postRows,
-                Vector<String> createdHoleIds,int createdTraceCount) {
+                Vector<String> createdHoleIds,int createdTraceCount,String postGeometrySha256) {
             this.bodyJson=bodyJson; this.postRows=postRows;
             this.createdHoleIds=createdHoleIds; this.createdTraceCount=createdTraceCount;
+            if(postGeometrySha256==null || postGeometrySha256.length()!=64)
+                throw new IllegalArgumentException("Missing immutable P07 post geometry digest");
+            this.postGeometrySha256=postGeometrySha256;
         }
+        String postGeometrySha256() { return postGeometrySha256; }
         int postHoleCount() { return postRows.size(); }
         int createdHoleCount() { return createdHoleIds.size(); }
         int createdTraceCount() { return createdTraceCount; }
@@ -886,7 +896,7 @@ final class P07AcceptedBranchCaptureDiagnostics {
                             prefixTraces,context.prefixHoles,context.netOrder,
                             prefixRows,context.netId,context.branchOrdinal,transitionCount,pathTupleSha256,
                             workSteps,advanceCalls,faceBitsJson.contentOffset,goals.length/2,
-                            goalFaceBitsSha256,goalCellCount,context.seeds.faceMask);
+                            goalFaceBitsSha256,goalCellCount,context.seeds.faceMask,prefixCursor.prefixGeometrySha256());
                         if(context.preResult!=null) throw new IllegalStateException("P07 Context already has a pre result");
                         context.preResult=result; complete=true;
                     }
@@ -1287,7 +1297,8 @@ final class P07AcceptedBranchCaptureDiagnostics {
                         if(body.length()!=serializedUtf16Units)
                             throw new IllegalStateException("P07 final post payload changed its UTF-16 length");
                         activeNanos+=Math.max(0L,System.nanoTime()-finalCopyStarted);
-                        result=new PostResult(body,postRows,createdHoleIds,createdTraceCount);
+                        result=new PostResult(body,postRows,createdHoleIds,createdTraceCount,
+                            postInventoryCursor.prefixGeometrySha256());
                         complete=true;
                     }
                     break;

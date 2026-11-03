@@ -491,6 +491,31 @@ synchronous adapter is retired. The accepted historical
 record separate validation boundaries. The small fixture does not qualify
 actual LOAD12 routing, large-grid cost, a reduced-cap treatment or adoption.
 
+Rb100PhysicalDiagnostics has a separate detached-baseline purpose, dispatched by
+Rb100Load12DetachedBaselineContractTest, alongside its existing graph target.
+It pauses the original LOAD12/73 initial frontier, drains the charged owner copy,
+captures the copied seeds, and runs the real detached Search/Publisher. Single
+steps are grouped within the existing32768 quantum and stop at stage1 with the
+metric walk complete, immediately before the quality decision. Existing Pre/Post
+cursors retain their strict quiescent/stage6 boundaries. Normal Publisher piece
+publication can cycle stage5 to stage2; identity and terminal guards preserve
+the same branch. Cleanup releases detached owners even on failure.
+Fresh original captures then supply the comparison oracle while the original
+operation continues to its unchanged later D_SENSE rejection. This purpose emits
+one compact baseline event and honestly performs no full graph capture.
+
+The native inventory/capture result owners expose their already computed immutable
+geometry digests without extra scans, serialization or cursor work. Literal tests
+compare these accessors against independent hashes of the live layouts.
+read_load12_baseline owns its closed baseline spec, event and native-v5 wrapper;
+private pinned scalar/ledger helpers retain their algorithms and independent
+NULL/PROBE oracles. It compares source/clone values, lineage, hashes, publication
+deltas and observed work, then rereads sources/helpers/artifacts. Current native
+census is1079 inputs/223 contract Java files. The
+[baseline packet](task-evidence/Q100/load12-baseline-r1/README.md) qualifies only
+this actual same-cap48 branch replay within the original limits; it does not
+qualify cap17, route adoption, an accepted layout or a playable100 board.
+
 P07TwoLayerContractTest also owns the matched seven-point prior-via tree-join
 contract. A fresh FULLER Session with explicit requestcap2 creates a via and
 later reaches that exact existing barrel by a TOP planar branch. Read-only

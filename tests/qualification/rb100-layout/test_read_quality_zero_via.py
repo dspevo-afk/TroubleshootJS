@@ -1759,14 +1759,16 @@ class SourceBoundRunTests(unittest.TestCase):
         self.assertEqual(reader.RESULT_SCHEMA,
                          "q100-quality-zero-via-reader-result-v5")
         self.assertEqual(reader.SOURCE_REVISION, 20)
-        self.assertEqual(reader.SOURCE_INPUT_COUNT, 1078)
-        self.assertEqual(reader.CONTRACT_JAVA_COUNT, 222)
-        self.assertEqual(len(reader.QUALITY_REQUIRED_INPUTS), 13)
+        self.assertEqual(reader.SOURCE_INPUT_COUNT, 1079)
+        self.assertEqual(reader.CONTRACT_JAVA_COUNT, 223)
+        self.assertEqual(len(reader.QUALITY_REQUIRED_INPUTS), 14)
         self.assertEqual(reader.SUITES, {
             "D_SENSE": "Rb100QualityZeroViaGraphContractTest",
             "LOAD12": "Rb100Load12ZeroViaGraphContractTest",
         })
         self.assertIn("tests/contracts/Rb100Load12ZeroViaGraphContractTest.java",
+                      reader.QUALITY_REQUIRED_INPUTS)
+        self.assertIn("tests/contracts/Rb100Load12DetachedBaselineContractTest.java",
                       reader.QUALITY_REQUIRED_INPUTS)
         self.assertIn("tests/contracts/P07AcceptedBranchCaptureDiagnostics.java",
                       reader.QUALITY_REQUIRED_INPUTS)
@@ -1823,7 +1825,7 @@ class SourceBoundRunTests(unittest.TestCase):
         self.assertNotIn("target", legacy)
         self.assertNotIn("suite", legacy)
 
-        for count in (1077, 1079, True, 1078.0):
+        for count in (1077, 1078, 1080, True, 1079.0):
             spec = dict(base, inputCount=count)
             with self.subTest(input_count=count):
                 with self.assertRaises(reader.QualityZeroViaInputError) as caught:

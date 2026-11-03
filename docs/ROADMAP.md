@@ -260,12 +260,28 @@ separate mutable state. Stale-source, cancellation and Error cleanup controls
 pass. Final focused6/native33, fresh D NULL/PROBE+reader, actual Player/Developer
 builds, E06State10/Current9/privacy, exact3 normal development roots and final
 source audit pass. Earlier compile/contract/cwd/profile failures are preserved.
-All original budgets, costs, epochs and route choices remain. Actual LOAD12/73
-baseline48, large-grid cost and cap17 are next and unqualified. No routing/layout
+All original budgets, costs, epochs and route choices remain. That prerequisite
+did not qualify actual LOAD12/73 baseline48, large-grid cost or cap17. No routing/layout
 adoption or playable100 proof is granted; playable100=0/beta held. Full30/data
 boundaries remain. Implementation `62587951c5e843288923204ebee6f5ff0cfebdd8`
 was normally pushed and exact remote verified on origin/codex/q100-physical-feasibility;
 completion Gmail `1a1a37ea07ea1c26` was sent once.
+
+The [actual LOAD12 detached baseline48](task-evidence/Q100/load12-baseline-r1/README.md)
+is locally accepted. The exact147702-cell branch73 initial frontier is copied
+through charged owners, replayed through the ordinary Search/Publisher, then
+compared with fresh original Pre/Post captures. Both retain222nodes/2170length/
+2bends/4flips and identical path, goal, geometry and publication hashes; each
+normal publication adds4VIAs/5traces. The PROBE operation uses631/640units,
+20855/90000ms and max672/5000ms; its247 copy calls charge8089655work. This is one
+measured same-cap48 case, with only9 work units remaining. Focused6, fresh original
+D/LOAD12 graph modes, current1079/223 consumers,20 new reader tests with one
+declared file-symlink skip, actual corruption controls and a Windows junction
+rejection/cleanup pass. Final-source and prior production/build/compiled/normal3
+consumed-input audits pass; unchanged production evidence is reused, not rerun.
+The two actual lifecycle failures and unit-fixture failure remain preserved.
+Cap17 is next and unqualified; no VIA-avoidability, routing adoption, accepted
+layout or playable100 claim. Full30/data boundaries remain; playable100=0/beta held.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

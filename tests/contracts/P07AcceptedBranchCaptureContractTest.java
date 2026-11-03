@@ -274,7 +274,10 @@ public final class P07AcceptedBranchCaptureContractTest {
             "already-complete pre cursor reports zero work on a later call");
         final P07AcceptedBranchCaptureDiagnostics.PreResult pre=preCursor.result();
         require(pre.netId().equals(stringField(search,"currentNet")) &&
-            pre.branchOrdinal()==intField(branch,"branchOrdinal"),"pre result preserves live branch metadata");
+            pre.branchOrdinal()==intField(branch,"branchOrdinal") &&
+            pre.prefixGeometrySha256().equals(hex(MessageDigest.getInstance("SHA-256").digest(
+                ((PcbBoardLayout)field(search,"layout")).geometryFingerprint().getBytes("UTF-8")))),
+            "pre result preserves live branch metadata and independently hashed geometry");
         require(pre.prefixHoleCount()==expectedPrefix,"pre result uses expected actual prefix inventory");
         String preJson=pre.toJson();
         int goalGridCells=intField(search,"cells");
@@ -344,7 +347,10 @@ public final class P07AcceptedBranchCaptureContractTest {
         require(postCursor.advance(1) && postCursor.lastWork()==0,
             "already-complete post cursor reports zero work on a later call");
         P07AcceptedBranchCaptureDiagnostics.PostResult post=postCursor.result();
-        require(post.postHoleCount()>=post.createdHoleCount(),"post inventory contains every created hole");
+        require(post.postHoleCount()>=post.createdHoleCount() &&
+            post.postGeometrySha256().equals(hex(MessageDigest.getInstance("SHA-256").digest(
+                ((PcbBoardLayout)field(search,"layout")).geometryFingerprint().getBytes("UTF-8")))),
+            "post inventory contains every created hole and independently hashed published geometry");
         require(section(pre.toJson(),"path").contains("\"tupleSha256\":\""+pre.pathTupleSha256()+"\""),
             "pre JSON serializes the source-bound path tuple digest");
         require(section(post.toJson(),"claims").contains("\"avoidability\":\"UNKNOWN\""),

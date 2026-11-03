@@ -470,6 +470,11 @@ final class P07PrefixAllocationDiagnostics {
 
         int lastWork() { return lastWork; }
         boolean isComplete() { return complete; }
+        /** Cached by the existing inventory capture; no additional geometry scan. */
+        String prefixGeometrySha256() {
+            if (!complete) throw new IllegalStateException("P07 prefix geometry is incomplete");
+            return prefixGeometrySha256;
+        }
 
         String bodyJson() {
             if (!complete || bodyJson == null)

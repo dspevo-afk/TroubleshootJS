@@ -1,81 +1,64 @@
-# Current checkpoint: charged detached owner published; actual baseline next
+# Current checkpoint: actual LOAD12 baseline accepted, publication pending
 
-2026-11-03. Q=OS-temp/tsj-q100-load12-replay-actual-20261103-r1, branch
-`codex/q100-load12-replay-actual-20261103`, HEAD before this documentation receipt `62587951c5e843288923204ebee6f5ff0cfebdd8`,
-validated source parent `924d5e7f81340e2ce5d28a0336b76ff7baa87a36`. QQ=preserved fixed-prefix
-bundle/load12-replay-actual-r1. Packet:docs/task-evidence/Q100/load12-replay-actual-r1.
-All required gates PASS for the independently complete literal charged-owner
-prerequisite. Implementation62587951c5e843288923204ebee6f5ff0cfebdd8, Add charged
-detached routing copy owners, normally pushed and exact remote verified on
-origin/codex/q100-physical-feasibility. Completion Gmail1a1a37ea07ea1c26 sent ONCE;
-NEVER duplicate. This documentation receipt needs no second milestone email.
-No current task runtime actors. Unstaged19 frozen-helper raw newline statuses
-remain canonical-diff-empty, staged0 at implementation commit.
+2026-11-03. Active R=OS-temp/tsj-q100-load12-baseline-20261103-r1,
+branch codex/q100-load12-baseline-20261103, HEAD/source parent
+8093e2a989e690344c9913ce65ee326735f60348. Packet:
+docs/task-evidence/Q100/load12-baseline-r1/{PLAN,README,qualification.json}.
+QR=preserved fixed-prefix bundle/load12-baseline-r1. Actual same-cap48 LOAD12/73
+is locally accepted; cap17 remains next/unqualified. Root9007199254740993/
+place-6587958367974952701/route8445301674744508279/request0/index0/attempt4/pass1/
+netpos3/next4/primaryBOTTOM/grid478x309=147702/origin30,30/pitch10;
+prefix17VIA88traces/startJLOAD.1/rootCSTORE_E.1.
 
-Scope: opt-in resumable Layout/Router/initial FULLER branch copies; actual initial
-Nodes, consumed budget, goals/workspace/order/prefix state, separate mutable
-owners and observer, stale-source/row/array guards and Error/cancel cleanup.
-Real Search/Publisher reproduce the literal cap2 prior-VIA landing with one planar
-trace/no new hole. Callers release in finally. Normal route callers, caps, costs,
-ordering and layout26/dependency28 remain. Actual LOAD12/73 baseline48, large-grid
-cost and cap17 are NOT RUN/unqualified; playable100=0/beta held.
+Final native1079/850productionJava/223contractJava/86838457bytes, manifest
+02bb0b1512fc67a371fa24b249cc0dcfd451666592882d20e8c0378025a47975.
+RBD27ad555dcc32667c57264595967bdd52c15c28c059cdca76721e04bc63b45a91.
+Native query-baseline-r3 PASS66.6657706s includingcompile/cleanup. NULL15464ms/
+300units/max1317ms/cleanup1ms; PROBE20855ms/631units/max672ms/cleanup0ms.
+Both actualPre/Post results agree:222nodes/2170length/2bends/4flips, pathtuple
+1410a3ab...3d, goalcc48299e...8d2, pregeom7c963bb9...447,
+postgeom9ea3f27c...297, publication20c2e557...00a; normal+4VIA/+5trace to21/93.
+Copy247calls/8089655work/2665509copiedentries; toPre571334singlecalls/work,
+toPost1call472work. ClonePre26/829511, sourcePre26/829508, eachPost4/117262.
+No phase work inferred from crossing batches; only9 outerwork units remain.
 
-Final1078 inputs/86762693bytes/850productionJava/222contractJava; manifest
-1055a2c12763ecfdc28dd5f261a9160c2194f5a6fe922aab4bd08627b312b35a.
-LayoutBA2B00DA/Router3CC350D7/LayerF79F4461/nativeDA9CE59E. Source-only review
-CLEAR covers frozen production copy/lifetime owners; root reviewed native
-canaries. No source edits after final qualification.19 intentional raw newline-
-only frozen Python statuses must remain unstaged; canonical diff is unchanged.
+Focused6 PASS33.4961802s:89591/24/57/48/13112/3736 assertions. Original Dgraph
+PASS67.9075259s(NULL300/PROBE634units), LOAD12graphPASS67.8524283s(300/628).
+Currentcomposite D+LOAD12positive andstale1078negative PASS. Newbaseline reader
+positive+6artifact-bound negatives PASS; actualWindowsjunctionnegative+exact
+nonrecursive linkcleanup/targetstable PASS. CurrentPython r2 PASS51+1declared
+file-symlinkprivilege skip/52; newbaselinePython r2 PASS19+1sameboundaryskip/20.
+Consumed Python inputs auditedunchanged. Finalsourceaudit r1 PASS14.8851226s.
+Root reviewed integrateddiff; optionalsupport-only independentreview clear,
+adapter/consumer pre-runtime reviews not reused as post-fix acceptance.
 
-Gates: focused6 PASS38.9489621s(detached89591/case348ms; old5 counts24/57/48/
-3736/13112). Native33 r2 PASS154.9670527s; P08 launch canary36.6984341s.
-Fresh D NULL/PROBE PASS78.9953206s:17486/26052ms op,1/0ms cleanup,work300/634,
-maxunit1407/826ms. Actual current1078 reader/stale1077 rejection PASS. Python51+
-one declared file-symlink skip/52 REUSED only after8consumed+28imports+toolpins.
+Native r1/r2 FAILat309units:installedstage0, then stage1metricwalk incomplete.
+Existing Context demandsstage1 qualityIndex==reversed.size(), before quality
+decision. Root corrected retainedPublisher collection/walk andlegal5->2piece
+cycle. Pythonunitr1 FAIL3fixtureerrors+1skip andcurrentcensusPythonr1 failure
+remain preserved. No failedrun, missingreceipt or exit2 countedPASS. Native
+aggregate cleanupelapsed notexported; individualcasecleanup isreportedabove.
 
-Actual final-source JDK8/GWT Developer160.4380209s and Player120.5605791s PASS,
-1202inputs/357outputs each. Dev input55dbc1a64495b40155346343ee9e0cf886a4ea41a26c48f67e0ab39e9e0a6a9f,
-outputeeed83142fd9f815f7e37e3cd38504f297612b7cc0b44998e3abc21078192e6a;
-actual357 Devoutputs archived/verified. Player input72edcd8359348c6789f9fdc60a782c89e71f25bd08947b77991d1dc687dffe66,
-outputca8592a524730a19512e636b41762d9aa5ca6e8266e38653ba0411dae4dd57c0.
-Player is active. E06State10 PASS206111ms operation/63501ms cleanup(parent
-270.1163033s). Current9 PASS314.0097408s,cleanupsuccess/browser10243ms; aggregate
-cleanup elapsed not exported. Player privacy1+7JS PASS37635ms operation/44237ms
-cleanup(parent82.3110458s),browser13299ms; negative sentinels rejected/removed.
+No production/Playerflow source change. Productionreuseaudit PASS29.9876062s:
+all1202compilerinputspervariant,357Player/357Devarchivedoutputs, compiled
+E06State10/Current9/privacy andnormal3 consumedinputs exact; REUSED notfresh
+build/browser/normal3 gates. Finalcompiler/native/9SDK/28frozenPython pins match.
+Limits90s/640units/5sunit/120scleanup/32768quantum/request1M/branch100K/grid250K/
+order3/VIA48/trans4/cost60, compile60s/suite480s/outer1800s unchanged.
 
-Normal3 native+realcapture+independent prepare/post PASS; exactdevelopmentroots
--2230691771308388107/6702341860553104274/-8360266000248569150. Generation
-61744/51341/30492ms/work506/502/392,one actualattempt/root; maxUnitMillis0 is not
-a measured peak. Host183.6900875s/cleanup1.0500259s/serverStopped/survivors0;
-admission/releasefalse. Helper consumed Player input-only while Dev active; later
-actual Player build matched input. Short output OS-temp/tsj-n3h-1dd36944217a
-(profile74chars) is task-owned; no live actor. Native manifest class output and
-compiled archives remain documented build artifacts. Final-source/evidence audit
-PASS21.8790321s,1078native/1202compiler each/9SDK/28frozenPython/20normal3statics.
+No task persistentactors/browser/preview/profile/port. Unowned8928untouched.
+19rawnewline-onlyhelperstatuses preserved/unstaged. Main5f05b005 with9tracked/
+6untracked, Desktop e0c368855a3891acd4673e94ce9afa732390e2bf andotherwork preserved.
+Protected HARD unread/unrun thisscope; historicalunread UNCERTIFIED;
+HARD/PSYCHOTIC unavailable. Full30 owner-excluded; approvednormal3only.
+Playable100=0/betaheld; no VIAavoidability/adoption/acceptedlayout/electrical/
+humanPlayer/full33/CI renewal. Self-hostedrunner prerequisite remains.
 
-Failures preserved: prereq-r1 compile15.2169677s fixed copy.offer; R2contract
-35.8688601s corrected premature immediate-rejection expectation to bounded
-rejection before Ready, retaining oracle. R3pass predates hardening, historical.
-Native33 r1 FAIL156.2343555s from QA OS cwd relative TSV; realpositive/negative
-shell+P08 controls established source-root launch; no production fix. Firstnormal3
-host FAIL beforecases(3requested/0actual),38.3074882s outer/6.5368356s inner,
-Edge Error3/deep profile;cleanupPASS0.8525631s/survivors0. Shortpathretrypassed.
-Oldfiles/rawprofiles preserved; no failed run relabelled PASS.
-
-Lastaccepted P impl6ec16e8f/receipt924d5e7f; Gmail1a1a2f85b660134d sent ONCE.
-Never duplicate P or earlier N mail. Main5f05b005 original9tracked/6untracked,
-Desktop e0c36885 and all unrelated work/evidence remain preserved. Unowned8928
-untouched. Protected HARD unread/unrun thisscope/historyUNCERTIFIED;
-HARD/PSYCHOTIC unavailable. Full30 ownerEXCLUDED; CI NOTRUN/runnerprerequisite
-recorded. No manual Player input/newhumanrepair, full30 or2-by-31 renewal.
-
-Next: start bounded actual LOAD12/73 baseline48 from this accepted source after
-the documentation receipt publication is verified. Exact
-root9007199254740993/place-6587958367974952701/route8445301674744508279/request0/
-index0/attempt4/pass1,pre17VIA88traces,expected222nodes/2170length/2bends/4flips
-->4VIA5traces; cap17 follows baseline. All90s/640/5s/120s/32768 and routing caps
-remain. No actual integration/runtime yet. Never infer actual replay success
-from this literal prerequisite. No new notification for the documentation receipt.
+No baselinepublication/mail yet. PriorQ62587951+receipt8093e2a9 waspushed and
+Gmail1a1a37ea07ea1c26 sentONCE; neverduplicate. Next: finish README, inspect/stage
+explicit intendedpaths/diffchecks, normalcommit/push originHEAD:codex/q100-physical-feasibility,
+verifyremote exactSHA andsendonecompletionGmail, thenrecordreceipt. Cap17 source-
+only API audit underway independently, no cap17implementation or runtime yet.
 
 # Historical checkpoint: actual LOAD12 branch capture published
 

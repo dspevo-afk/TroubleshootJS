@@ -32,8 +32,8 @@ SUITES = {
 SUITE = SUITES["D_SENSE"]
 ENTRY_SCRIPT = "scripts/verify-current-contracts.ps1"
 SOURCE_REVISION = 20
-SOURCE_INPUT_COUNT = 1078
-CONTRACT_JAVA_COUNT = 222
+SOURCE_INPUT_COUNT = 1079
+CONTRACT_JAVA_COUNT = 223
 LAYOUT_VERSION = 26
 DEPENDENCY_EPOCH = "tsj-generation-dependencies-v28"
 PLAN_VERSION = 1
@@ -67,6 +67,7 @@ PINNED_QUALITY_PATH_READER_SHA256 = (
 QUALITY_REQUIRED_INPUTS = frozenset({
     "tests/contracts/Rb100QualityZeroViaGraphContractTest.java",
     "tests/contracts/Rb100Load12ZeroViaGraphContractTest.java",
+    "tests/contracts/Rb100Load12DetachedBaselineContractTest.java",
     "tests/contracts/Rb100PhysicalDiagnostics.java",
     "tests/contracts/P07ZeroViaGraphDiagnostics.java",
     "tests/contracts/P07ZeroViaGraphContractTest.java",
