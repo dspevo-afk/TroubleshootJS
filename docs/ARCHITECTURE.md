@@ -333,7 +333,7 @@ route/layout/electrical/Q100 acceptance. Default request0 capture and historical
 v27 reader/oracle artifacts retain their separate contracts. This test-only mode
 adds no Player capability, production policy, epoch or playable100 admission.
 
-The native quality-scalar runner is also test-only. It follows the actual
+The native quality-path runner is also test-only. It follows the actual
 generator-owned P07 Session/Search/Publisher through cached reflection, uses the
 existing nonselecting observer only for request context, and single-steps the
 existing work method inside the original native budgets. It reads complete
@@ -346,11 +346,24 @@ and incomplete routeMillis are explicitly not default-performance evidence.
 The separate strict Python reader binds the closed source census and native
 outputs, recomputes scalar conservation/predicates and compares actual operation
 statistics. Frozen helper modules are hash-checked, privately executed with
-temporary module slots restored in finally, and get only four diagnostic
-schema/count/revision overrides. Natural int/long counters and full placement
+temporary module slots restored in finally, and get only explicit diagnostic
+metadata overrides. Natural int/long counters and full placement
 ranking remain distinct from routing budgets and P07 eligibility. The
 [quality-scalar packet](task-evidence/Q100/quality-scalars-r1/README.md) records
 the finite result and unqualified boundaries; this adds no Player capability.
+The current Rb100QualityPathContractTest replaces the scalar entry and retains
+its scalar/parity/Publisher controls under diagnostic source revision14. At the
+same quiescent pre-guard Publisher checkpoint it copies primitive start-to-end
+Node states, checks predecessor object identity and immutable source state, and
+emits the path only after confirmed same-owner rejection and terminal cleanup.
+The independent path reader binds all ten records, the closed native census,
+current authored identity and complete captured artifacts. It recomputes physical
+grid coordinates, parent/state keys, headings, initial/step costs, metrics and
+repeated cells/edges. Its pinned scalar validator runs privately with metadata
+overrides and narrow error adapters; historical readers remain unchanged.
+The [path packet](task-evidence/Q100/quality-path-r1/README.md) proves no legal
+shortcut, alternate reachable route, layout or electrical qualification. No
+Router query clone or new production seam is introduced.
 The current default-parity reader owns v27 metadata validation separately from
 the frozen layout-transition reader. It verifies the historical helper's exact
 source hash, extracts only its frame and case validators into isolated globals,

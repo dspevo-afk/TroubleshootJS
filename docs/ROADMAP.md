@@ -121,6 +121,22 @@ bounded quality-aware search treatment with independent resource/counterexample
 fixtures and actual physical/access/runtime proofs before adoption. Playable100=0,
 beta held, full30 EXCLUDED/unrun, HARD/PSYCHOTIC unavailable/unrun; protected
 unread remains UNCERTIFIED. Implementation17cea659508b10f09160f32b2dbf912a90801db5 is normally pushed and exact remote verified on origin/codex/q100-physical-feasibility; completion Gmail1a19eca1e3ceaeb2 sent once.
+The [actual rejected-path diagnostic](task-evidence/Q100/quality-path-r1/README.md)
+is locally accepted for the same exact separate authored target. It captures66
+actual Publisher nodes and independently confirms length650/direct210/6bends,
+zero transitions and no repeated same-face cells or edges. Native execution,
+same-owner rejection/parity/cleanup,14 Python methods, the source-bound reader,
+eleven real negatives and final unchanged-input audits pass. One optional
+file-symlink test is NOT RUN for host privilege; the actual directory-junction
+negative passes with verified cleanup. Earlier Python and wrapper failures remain
+preserved. Production850/build1202 inputs per variant are identical; no new
+GWT/Player/electrical/normal3/full30 qualification is claimed. Separate private
+quality-frontier and medoid-root trials returned no layouts and remain unadopted.
+This diagnostic changes no production routing or admission. Next is bounded
+legal-step investigation of geometric shortening candidates through the unchanged
+actual Router predicates; a legal shorter route is still UNKNOWN. Playable100=0,
+beta held; all existing budgets and protected-data restrictions remain.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion
