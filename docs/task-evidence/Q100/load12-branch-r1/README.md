@@ -1,6 +1,6 @@
 # Actual LOAD12 branch publication capture
 
-Accepted finite test-only diagnostic. All required gates pass; publication follows the normal commit/push workflow.
+Accepted finite test-only diagnostic. All required gates pass and publication is verified.
 
 This test-only diagnostic observes the approved separate authored root
 `9007199254740993`, placement `-6587958367974952701`, routing
@@ -44,3 +44,4 @@ HARD/PSYCHOTIC unavailable/unrun, historical protected unread boundary UNCERTIFI
 The diagnostic is private and grants no route/layout adoption or VIA avoidance
 proof. Playable100 remains0; beta remains held. Next is analysis of the actual
 pre-LOAD12 zero-new-via graph before choosing any routing treatment.
+Implementation2b321bb3d1cc3f9342d0cc9c602bf02854728b4a, Capture actual LOAD12 branch publication, normally pushed to origin/codex/q100-physical-feasibility with exact remote SHA verified. Completion Gmail1a1a1704c5a30202 sent ONCE. The documentation receipt adds no second email.

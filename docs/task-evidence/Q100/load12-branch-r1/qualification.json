@@ -207,7 +207,22 @@
   "hardPsychotic": "UNAVAILABLE_UNRUN",
   "protectedUnreadHistory": "UNCERTIFIED",
   "activeOwnedOsResources": 0,
-  "publication": "PENDING_NORMAL_COMMIT_PUSH_AND_ONE_GMAIL",
+  "publication": {
+    "schema": "q100-load12-publication-r1",
+    "status": "PUBLISHED_EXACT_REMOTE_VERIFIED",
+    "implementationSha": "2b321bb3d1cc3f9342d0cc9c602bf02854728b4a",
+    "message": "Capture actual LOAD12 branch publication",
+    "workingBranch": "codex/q100-load12-branch-20261103",
+    "remote": "origin",
+    "publishedRef": "refs/heads/codex/q100-physical-feasibility",
+    "remoteImplementationShaVerified": "2b321bb3d1cc3f9342d0cc9c602bf02854728b4a",
+    "nativeManifestSha256": "a98fa666a4bede2c8a625b44f9682e8ec4bffad8c3314c73740bca5d4cdcd4df",
+    "completionGmailMessageId": "1a1a1704c5a30202",
+    "completionGmailSentOnce": true,
+    "duplicateCheck": "NO_MATCH_BEFORE_SEND",
+    "nextUnstartedImplementation": "Actual pre-LOAD12 zero-new-via graph capture and analysis under unchanged budgets",
+    "documentationReceipt": "FOLLOWING_WITHOUT_ANOTHER_EMAIL"
+  },
   "pythonEvidenceReuse": "Python R5 reused only after all8 consumed file hashes audited unchanged. Java EOF cleanup is outside those inputs.",
   "finalSourceHygiene": "Removed only trailing blank whitespace from helper6F82DA87 to4010FAD0; fresh R9/queryR3/readerR4/oracleR3/all56R2 negatives/final audit pass on the exact new source. Staged diff check passed before these gates."
 }
