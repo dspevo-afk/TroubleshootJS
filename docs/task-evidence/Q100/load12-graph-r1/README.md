@@ -1,6 +1,6 @@
 # LOAD12 fixed-prefix zero-new-via graph
 
-**Status: locally accepted for this finite diagnostic; publication pending.**
+**Status: accepted and published for this finite diagnostic.**
 Focused native contracts, same-source D_SENSE and LOAD12 captures, current
 readers, 133 fresh adversarial controls, independent actual-graph oracles,
 paired consistency and semantic mismatch checks, and the final combined input
@@ -85,8 +85,10 @@ attempts and process receipts remain in the preserved external QA bundle.
 No full-30 owner-excluded suite, HARD/PSYCHOTIC data, GWT/player/electrical
 renewal, or normal three-by-two-by-31 matrix was run for this diagnostic. HARD
 and PSYCHOTIC remain unavailable/unrun; protected current data was not read;
-historical data boundaries remain uncertified. Publication and completion email
-are pending; this acceptance covers the diagnostic contracts only.
+historical data boundaries remain uncertified. See [publication receipt](publication.json).
+Implementation `1ac4d845ce15739afcc0011d237de77fc6064162` is verified on
+origin/codex/q100-physical-feasibility; completion Gmail `1a1a2bd2ae69511a`
+was sent once. Acceptance covers the diagnostic contracts only.
 
 The next unstarted milestone is a finite actual BranchSearch/finalizer replay
 of any relaxed candidate before considering generic via-reduction adoption.

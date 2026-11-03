@@ -227,7 +227,9 @@ migrates the owned diagnostics only; production26/dependency28 and all budgets
 remain unchanged. No fresh GWT/Player/electrical/normal3/2-by-31/full30 renewal.
 Full30 stays owner-EXCLUDED; current protected HARD data remains unread/unrun,
 historical unread boundary UNCERTIFIED, HARD/PSYCHOTIC unavailable. Playable100=0,
-beta held. Publication pending. Next is a finite actual BranchSearch/finalizer
+beta held. Implementation `1ac4d845ce15739afcc0011d237de77fc6064162` is normally
+pushed and exact remote verified on origin/codex/q100-physical-feasibility;
+completion Gmail `1a1a2bd2ae69511a` was sent once. Next is a finite actual BranchSearch/finalizer
 replay of a relaxed LOAD12 candidate before any generic VIA-reduction treatment
 or adoption.
 

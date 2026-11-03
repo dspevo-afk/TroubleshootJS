@@ -1,7 +1,7 @@
 {
   "schema": "q100-load12-graph-qualification-v1",
   "status": "ACCEPTED_FINITE_DIAGNOSTIC",
-  "publication": "PENDING",
+  "publication": "PUBLISHED_EXACT_REMOTE_VERIFIED",
   "sourceParent": "b033826e108773ef1c0fc723efd9efc120d539cd",
   "sourceBranch": "codex/q100-load12-graph-20261103",
   "sourceRevision": 20,
@@ -187,5 +187,7 @@
   "frozenContractPins": {
     "WIRE_SPEC.md": "bd74bbb426e606c5d5d646082928b4f28b207c6c44dd7d0d39a98dc24b705b58",
     "PLAN.md": "34f95bef3df62bda26b49771f81eecb3e1689082b54ad91bc0a692fd0f10dd66"
-  }
+  },
+  "implementationCommit": "1ac4d845ce15739afcc0011d237de77fc6064162",
+  "completionEmailId": "1a1a2bd2ae69511a"
 }

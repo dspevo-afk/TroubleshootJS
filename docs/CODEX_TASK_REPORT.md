@@ -1,48 +1,50 @@
-# Current checkpoint: LOAD12 graph diagnostic locally accepted
+# Current checkpoint: LOAD12 graph diagnostic published
 
 2026-11-03. Active N=OS-temp/tsj-q100-load12-graph-20261103-r1,
-branch `codex/q100-load12-graph-20261103`; HEAD/source parent
-`b033826e108773ef1c0fc723efd9efc120d539cd`. QN is the preserved fixed-prefix
-capture bundle's `load12-graph-r1`. Implementation is locally accepted for the
-finite diagnostic; publication and one new Gmail are pending root staged review.
+branch `codex/q100-load12-graph-20261103`. Implementation
+`1ac4d845ce15739afcc0011d237de77fc6064162` (Capture bounded pre-LOAD12 routing
+graph) is normally pushed to origin/codex/q100-physical-feasibility and exact
+remote verified. Completion Gmail `1a1a2bd2ae69511a` sent ONCE; never duplicate.
+Documentation publication receipt is ready for its own commit/push; no second mail.
 
-Final native1077/86611889/
-`408473f0d144250f0d901821486674ad8d01ad2af43dfd2633a228ec2f9e137c`,
-private20/graph-r5/v5. PASS: focused-r13 39.0378681s (24/57/48/3736/13112
-assertions); query-d-r8 78.2774239s and query-load-r2 79.0452749s. NULL/PROBE
-work D300/634, LOAD300/628, all within640; selected actors terminated, cleanup
-and input before/after passed. Python-r5 PASS51 +one declared symlink-privilege
-skip/52. Both v5 readers, r6 negatives D65+3 scoped N/A and LOAD68, real junction
-cleanup, final independent target oracles and paired audit PASS. Paired synthetic
-negative: standalone LOAD exit0, paired exit2/PAIR_D_ALLOCATION_stability;
-source/branch unchanged and full1077 post-rehash PASS, no native qualification.
+Finite scope: actual pre-LOAD12/73 two-face graph, captured separately from later
+D_SENSE. Private20/graph-r5/v5; source parent b033826e. Native1077/86611889/
+`408473f0d144250f0d901821486674ad8d01ad2af43dfd2633a228ec2f9e137c`.
+PASS: focus-r13 39.0378681s (24/57/48/3736/13112 assertions); query-d-r8
+78.2774239s, query-load-r2 79.0452749s. NULL/PROBE work D300/634 and
+LOAD300/628, original640 cap. Inputs before/after, termination and cleanup pass.
+Python-r5 PASS51 +one declared file-symlink privilege skip/52. Both v5 readers,
+r6 negatives D65+3 scoped N/A and LOAD68, real junction cleanup, both independent
+actual graph oracles and positive pair pass. Paired synthetic content mismatch
+is expected standaloneLOAD exit0 then pair exit2/PAIR_D_ALLOCATION_stability;
+source/LOAD branch unchanged, full1077 rehash passes; no native qualification.
 
 Combined final-input-audit-v5-r10 PASS57.0072596s, sourceSHA
-23a56e178b06083bef12d80139e7d17f97cf0c7bcfc08cf4b71c5aabacb71b35.
-Exact Require canary11 PASS .2228138s. Audit binds all selected gates, both
-actual captures, original H comparison metrics, all133 fresh controls and
-850 unchanged production /1202 compiler inputs per variant/28 frozen Python.
-R1-R9 aggregate-audit failures remain preserved; no failed record gains credit.
-Root integration and separate helper/reader/runner/audit source-only reviews
-complete, no leaf runtime gates. Controlled evidence is in
-`docs/task-evidence/Q100/load12-graph-r1/`; raw QA remains external.
+23a56e178b06083bef12d80139e7d17f97cf0c7bcfc08cf4b71c5aabacb71b35;
+exact Require canary11 PASS .2228138s. Final audit binds all selected gates,
+original H path/masks/allocation/all analysis metrics, 850 unchanged production,
+1202 compiler inputs per variant and28 frozen Python files. Root integrated diff,
+index/source hashes, JSON/privacy and whitespace checks pass; separate helper,
+reader, runner and final-audit source-only reviews CLEAR, no leaf runtime gates.
+R1-R9 and every earlier failed source/result remain preserved, no false PASS.
+Controlled evidence: `docs/task-evidence/Q100/load12-graph-r1/`; raw QA remains
+in preserved fixed-prefix bundle/load12-graph-r1.
 
-LOAD12 prefix17VIAs/88traces, branch73 path222nodes/2170/4flips. Relaxed graph
-finds per-goal length-eligible TOP46/BOTTOM415, minima2510/3250. No legal actual
-search/finalizer route, VIA avoidability, adoption or layout qualification.
-Production850 Java, layout26/dependency28/VIA60, all original budgets unchanged.
+LOAD prefix17VIAs/88traces, actual path222nodes/2170/4flips. Relaxed graph finds
+per-goal length-eligible TOP46/BOTTOM415, minima2510/3250. No legal actual
+search/finalizer route, VIA avoidability, route adoption or layout qualification.
+Production850 Java, layout26/dependency28/VIA60 and all original budgets unchanged.
 No fresh GWT/Player/electrical/normal3/2-by-31 renewal; full30 owner EXCLUDED.
 Protected HARD unread/unrun in current scope; historical unread UNCERTIFIED.
 HARD/PSYCHOTIC unavailable. Playable100=0/beta held.
 
-N nine intended source paths staged; final docs/controlled JSON ready for root
-staging and review. Preserve inherited newline-only statuses and unrelated
-Desktop/Main/K changes and every failed source/result. No owned persistent
-preview/profile/port; unowned localhost8928/browser untouched. Last K publication
-b033826e/Gmail1a1a1704c5a30202 complete, never duplicate. N has no commit/push/email.
-Next: explicit-path stage/diff review, normal commit/push to
-origin/codex/q100-physical-feasibility, verify exact SHA and send one completion
-Gmail. Then finite actual BranchSearch/finalizer replay before generic adoption.
+Preserve25 inherited raw newline-only N statuses, unrelated Desktop/Main/K
+changes and all failure evidence. No owned persistent preview/profile/port;
+unowned localhost8928/browser untouched. No runtime actor remains. LastK mail
+1a1a1704c5a30202 also complete, never duplicate.
+Next unstarted milestone: finite actual BranchSearch/finalizer replay of a
+relaxed LOAD12 candidate before generic VIA-reduction treatment or adoption.
+Two leaf read-only source questions are active; root owns integration and actors.
 
 # Historical checkpoint: actual LOAD12 branch capture published
 

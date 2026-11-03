@@ -1,6 +1,6 @@
 # LOAD12 graph validation evidence
 
-**Checkpoint status: locally accepted for the finite diagnostic; publication pending.**
+**Checkpoint status: accepted and published for the finite diagnostic.**
 This page summarizes the final positive evidence and fresh negative controls.
 All evidence aliases are task-owned: `N` is the current source worktree and
 `QN` is the external QA bundle. No personal absolute paths or raw receipt bodies
@@ -187,7 +187,8 @@ protected current data was not read and historical data boundaries remain
 uncertified. No GWT/Player/electrical, normal-three-root, 2-by-31 or full30
 renewal was performed.
 Playable100 remains 0 and beta is held. Only this finite diagnostic is locally
-accepted; publication and one completion email are pending.
+accepted; implementation `1ac4d845ce15739afcc0011d237de77fc6064162` is pushed
+and exact remote verified. Completion Gmail `1a1a2bd2ae69511a` was sent once.
 
 The next unstarted milestone is a finite actual BranchSearch/finalizer replay
 of any relaxed candidate before considering generic via-reduction adoption. It
