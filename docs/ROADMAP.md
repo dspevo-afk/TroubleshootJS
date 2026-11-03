@@ -247,7 +247,9 @@ replays use the original saturated cap2; there is no lower-cap contrast.
 Production26/dependency28 and all budgets stay unchanged. No actual LOAD12,
 large-prefix setup, route adoption, fresh GWT/Player/electrical/population or
 playable100 proof is granted. Full30/data boundaries remain; beta held.
-Publication pending. Next is bounded actual LOAD12/73 baseline48 and separate
+Implementation `6ec16e8f3abb7fd202c01c1e35149112f42e7354` is normally pushed and
+exact remote verified on origin/codex/q100-physical-feasibility; completion Gmail
+`1a1a2f85b660134d` sent once. Next is bounded actual LOAD12/73 baseline48 and separate
 cap17 replay under the existing limits before any generic treatment/adoption.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is

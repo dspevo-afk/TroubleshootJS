@@ -1,6 +1,6 @@
 # Detached native branch replay prerequisite
 
-**Status: validated for the small literal fixture; publication pending.**
+**Status: accepted and published for the small literal fixture.**
 The new native contract invokes the real private Search, BranchSearch and
 Publisher on independently owned routing state. It reproduces the original
 branch path, copper publication and conductor graph while preserving the live
@@ -62,3 +62,7 @@ or reject. Large-prefix copy/setup work needs its own charged bound under the
 existing640/32768/90s/5s/120s limits. Saturation disables every transition,
 including existing-VIA traversal. No generic treatment or adoption follows from
 this literal prerequisite.
+
+Implementation `6ec16e8f3abb7fd202c01c1e35149112f42e7354` is normally pushed
+and exact remote verified on origin/codex/q100-physical-feasibility. Completion
+Gmail `1a1a2f85b660134d` was sent once; see [receipt](publication.json).

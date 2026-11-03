@@ -1,7 +1,7 @@
 {
   "schema": "q100-detached-replay-qualification-v1",
   "status": "ACCEPTED_FINITE_LITERAL_PREREQUISITE",
-  "publication": "PENDING",
+  "publication": "PUBLISHED_EXACT_REMOTE_VERIFIED",
   "sourceParent": "ebd9e2a247992e7faa56cf91473a9ea88ee1b056",
   "sourceBranch": "codex/q100-load12-replay-20261103",
   "sourcePins": {
@@ -153,5 +153,7 @@
     "separateWrapperCleanupElapsed": "NOT_REPORTED",
     "unrelatedWorkAndFailures": "PRESERVED"
   },
-  "nextUnstarted": "Bounded actual LOAD12/73 baseline48 and separate cap17 replay before generic routing treatment/adoption."
+  "nextUnstarted": "Bounded actual LOAD12/73 baseline48 and separate cap17 replay before generic routing treatment/adoption.",
+  "implementationCommit": "6ec16e8f3abb7fd202c01c1e35149112f42e7354",
+  "completionEmailId": "1a1a2f85b660134d"
 }

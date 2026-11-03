@@ -1,0 +1,23 @@
+{
+  "schema": "q100-detached-replay-publication-v1",
+  "status": "PUBLISHED_EXACT_REMOTE_VERIFIED",
+  "implementationCommit": "6ec16e8f3abb7fd202c01c1e35149112f42e7354",
+  "message": "Verify detached native branch replay isolation",
+  "sourceBranch": "codex/q100-load12-replay-20261103",
+  "remote": "origin",
+  "repository": "https://github.com/dspevo-afk/TroubleshootJS.git",
+  "publishedRef": "refs/heads/codex/q100-physical-feasibility",
+  "verifiedRemoteSha": "6ec16e8f3abb7fd202c01c1e35149112f42e7354",
+  "push": "NORMAL",
+  "completionEmail": {
+    "status": "SENT_ONCE",
+    "id": "1a1a2f85b660134d",
+    "to": "dspevock@stateofthearcelectric.com",
+    "subject": "TroubleshootJS: detached native replay prerequisite pushed"
+  },
+  "scope": "FINITE_LITERAL_SATURATED_CAP2_REPLAY_PREREQUISITE",
+  "actualLoad12Replay": false,
+  "lowerCapContrast": false,
+  "playable100": 0,
+  "nextUnstarted": "Bounded actual LOAD12/73 baseline48 and separate cap17 replay under original limits before generic treatment/adoption."
+}

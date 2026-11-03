@@ -98,6 +98,9 @@ Final native wrapper cleanup duration is null; the script cleanup status and
 child termination are proven. Raw sources/receipts and all unrelated work are
 preserved; no persistent task process/preview/profile/port remains.
 
-Publication is pending final staging/review. Next is the bounded actual LOAD12
+Implementation `6ec16e8f3abb7fd202c01c1e35149112f42e7354` is normally pushed and
+exact remote verified. Completion Gmail `1a1a2f85b660134d` was sent once.
+Final explicit staging, source/index hashes, JSON/privacy and whitespace checks
+pass. Next is the bounded actual LOAD12
 baseline/reduced-cap replay described in PLAN, followed by the actual route,
 clearance/connectivity/access/runtime proofs before any adoption.
