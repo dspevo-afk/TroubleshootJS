@@ -120,7 +120,7 @@ no fresh GWT/Player/electrical/normal3/full30 gate is claimed. Next is one froze
 bounded quality-aware search treatment with independent resource/counterexample
 fixtures and actual physical/access/runtime proofs before adoption. Playable100=0,
 beta held, full30 EXCLUDED/unrun, HARD/PSYCHOTIC unavailable/unrun; protected
-unread remains UNCERTIFIED. Normal publication follows these validated gates.
+unread remains UNCERTIFIED. Implementation17cea659508b10f09160f32b2dbf912a90801db5 is normally pushed and exact remote verified on origin/codex/q100-physical-feasibility; completion Gmail1a19eca1e3ceaeb2 sent once.
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion
