@@ -12,7 +12,7 @@ dependency28 / FULLER VIA60. Only the test-owned diagnostic, entry/runner and
 offline reader changed. The old current scalar entry/API is replaced; historical
 scalar readers and artifacts remain byte-frozen. See the [plan](PLAN.md),
 [wire](WIRE.md), [reader result](reader-result.json) and
-[qualification](qualification.json). Publication is pending verified push.
+[qualification](qualification.json). Implementation6e0e6afa is published and remotely verified; the completion email was sent once. See the [publication receipt](publication.md).
 
 Exact root9007199254740993, placement-6587958367974952701,
 routing8445301674744508279; SEPARATE_DIRECT_SWITCHING, plan1/model4/intent9,

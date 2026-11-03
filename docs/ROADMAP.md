@@ -135,7 +135,7 @@ quality-frontier and medoid-root trials returned no layouts and remain unadopted
 This diagnostic changes no production routing or admission. Next is bounded
 legal-step investigation of geometric shortening candidates through the unchanged
 actual Router predicates; a legal shorter route is still UNKNOWN. Playable100=0,
-beta held; all existing budgets and protected-data restrictions remain.
+beta held; all existing budgets and protected-data restrictions remain. Implementation6e0e6afa947ce92f842817e081f4e9f979d2814b is normally pushed and exact remote verified on origin/codex/q100-physical-feasibility; completion Gmail1a19fc0ced52a86d sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

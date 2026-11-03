@@ -42,7 +42,16 @@
   "nextUnstarted": "BOUNDED_LEGAL_STEP_INVESTIGATION_OF_GEOMETRIC_SHORTCUT_CANDIDATES_NO_ROUTING_TREATMENT_YET",
   "protectedUnread": "UNCERTIFIED",
   "readerSha256": "6d92011b8d3ef407b349adc36f6ccce0dcc34280741f0e369eed5cbeb88bd133",
-  "publication": "PENDING",
+  "publication": {
+    "status": "IMPLEMENTATION_PUBLISHED_EXACT_REMOTE_SHA_VERIFIED_ONE_EMAIL_SENT",
+    "implementation": "6e0e6afa947ce92f842817e081f4e9f979d2814b",
+    "message": "Capture actual quality-rejected routing paths",
+    "localBranch": "codex/q100-quality-path-20261103",
+    "remote": "origin",
+    "remoteBranch": "codex/q100-physical-feasibility",
+    "completionEmailId": "1a19fc0ced52a86d",
+    "completionEmailCount": 1
+  },
   "beta": "HELD",
   "productionChanged": false,
   "nativeManifestSha256": "25347d305d6e73d0862fe85f727aabee587df9706a87d415df77932934b7d9be",
