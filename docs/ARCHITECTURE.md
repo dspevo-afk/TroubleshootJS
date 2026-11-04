@@ -481,6 +481,16 @@ publication, before another branch starts. Callers release the detached owner in
 finally path, including observer or routing failures.
 Normal route overloads do not invoke these opt-in APIs.
 
+The explicit-cap detached-copy overload bounds the requested VIA allowance by
+the initial prefix-hole count and the source Session, Search and policy caps
+before starting copy work. It installs that allowance on both copied owners;
+the original owners and the two-argument API retain their source cap. It copies
+the existing frontier and work state without rebuilding goals or injecting a
+path. The reduced-cap literal runs a cap2 copy of a source48 owner through the
+ordinary Search/Publisher to the prior VIA; its cap17 check covers entry scalars
+only. The [reduced-cap packet](task-evidence/Q100/load12-cap17-r1/README.md)
+records this prerequisite separately from actual LOAD12 cap17 routing.
+
 P07DetachedBranchReplayContractTest uses the existing private seven-point
 fixture and independent path, geometry, graph and creator-VIA expectations to
 check the owner API. The original saturated cap2 is preserved, including the

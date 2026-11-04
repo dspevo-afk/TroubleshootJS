@@ -399,7 +399,13 @@ final class PcbLayerRoutingPrototype {
     /** Opt-in diagnostic state copy. No normal route overload calls this method. */
     static DetachedBranchCopyTask beginDetachedBranchCopy(Session source,
             SeededPcbLayoutGenerator.AttemptObserver observer) {
-        return new DetachedBranchCopyTask(source,observer);
+        return beginDetachedBranchCopy(source,observer,source==null?0:source.maximumVias);
+    }
+
+    /** Opt-in copy with a bounded VIA allowance for the detached owner only. */
+    static DetachedBranchCopyTask beginDetachedBranchCopy(Session source,
+            SeededPcbLayoutGenerator.AttemptObserver observer,int maximumVias) {
+        return new DetachedBranchCopyTask(source,observer,maximumVias);
     }
 
     /** Copies an actual initial branch; never computes or injects a found path. */
@@ -430,11 +436,13 @@ final class PcbLayerRoutingPrototype {
         private DetachedBranchReplay result;
         private int stage,array=-1,index,metaIndex,face,lastWork;
         private int serial,expanded,maximum,branches,segments,netIndex,pass;
+        private final int maximumVias;
         private int netCount,pendingCount,reachedCount;
         private long credits,work,copied;
         private boolean cancelled,complete;
 
-        private DetachedBranchCopyTask(Session source,SeededPcbLayoutGenerator.AttemptObserver observer) {
+        private DetachedBranchCopyTask(Session source,SeededPcbLayoutGenerator.AttemptObserver observer,
+                int maximumVias) {
             if(source==null || observer==null || observer==source.observer || source.complete ||
                     source.policy!=Policy.FULLER_TWO_LAYER || source.search==null ||
                     source.pendingFixedPrefixCapture!=null || source.pendingFixedPrefixFailure!=null)
@@ -451,6 +459,13 @@ final class PcbLayerRoutingPrototype {
                     original.currentPadIds==null || original.reachedPadIds==null ||
                     original.currentRoot==null || source.turnBoundWorkspace==null)
                 throw new IllegalArgumentException("Detached copy requires the pre-first-work branch frontier");
+            int prefixHoleCount=branch.holes.length;
+            if(prefixHoleCount!=original.layout.getHoleCount() ||
+                    maximumVias<prefixHoleCount || maximumVias>source.maximumVias ||
+                    maximumVias>original.maximumVias || maximumVias>source.policy.vias)
+                throw new IllegalArgumentException(
+                    "Detached copy VIA cap must fit the source policy and initial prefix");
+            this.maximumVias=maximumVias;
             firstSeed=branch.queue.values[0]; secondSeed=branch.queue.values[1];
             requireSeed(firstSeed); requireSeed(secondSeed);
             if(firstSeed.layer==secondSeed.layer || branch.best.get(firstSeed.key)!=firstSeed ||
@@ -568,12 +583,12 @@ final class PcbLayerRoutingPrototype {
         }
         private void createShells() {
             PcbBoardLayout layout=layoutTask.result();
-            owner=new Session(source,observer,templateTask.result(),layout);
+            owner=new Session(source,observer,templateTask.result(),layout,maximumVias);
             owner.turnBoundWorkspace=new TurnBoundWorkspace(workspace,copiedInts);
             pads=new PcbPadPlacement[original.pads.length]; parts=new PcbComponentPlacement[original.parts.length];
             terminals=new PcbPadPlacement[branch.reachedTerminals.length];
             holes=new PcbBoardHole[branch.holes.length]; bounds=new Rectangle[holes.length];
-            copy=new Search(original,owner,layout,pads,parts);
+            copy=new Search(original,owner,layout,pads,parts,maximumVias);
             copy.nets=new Vector<String>(netCount); copy.currentPadIds=new Vector<String>(pendingCount);
             copy.reachedPadIds=new Vector<String>(reachedCount);
             copiedBranch=copy.new BranchSearch(branch,goal,copiedInts[0],terminals,holes,bounds);
@@ -728,10 +743,10 @@ final class PcbLayerRoutingPrototype {
 
         /** Detached single-branch owner; large state is supplied by the charged copy cursor. */
         private Session(Session source,SeededPcbLayoutGenerator.AttemptObserver observer,
-                PcbBoardLayout template,PcbBoardLayout candidate) {
+                PcbBoardLayout template,PcbBoardLayout candidate,int maximumVias) {
             board=source.board; policy=source.policy; this.observer=observer;
             this.template=template; this.candidate=candidate; links=source.links;
-            maximumVias=source.maximumVias; budget=new Budget(source.budget.maximum);
+            this.maximumVias=maximumVias; budget=new Budget(source.budget.maximum);
             budget.expanded=source.budget.expanded;
             diagnostics=source.diagnostics==null?null:DETACHED_DIAGNOSTICS;
             roleWidths=source.roleWidths; orderingStream=source.orderingStream;
@@ -1523,11 +1538,11 @@ final class PcbLayerRoutingPrototype {
         private Publisher publisher;
         private boolean complete;
         private Search(Search source,Session owner,PcbBoardLayout layout,
-                PcbPadPlacement[] pads,PcbComponentPlacement[] parts) {
+                PcbPadPlacement[] pads,PcbComponentPlacement[] parts,int maximumVias) {
             this.owner=owner; board=source.board; this.layout=layout; policy=source.policy;
             observer=owner.observer; budget=owner.budget; pass=source.pass;
             minX=source.minX; minY=source.minY; width=source.width; height=source.height;
-            cells=source.cells; primary=source.primary; maximumVias=source.maximumVias;
+            cells=source.cells; primary=source.primary; this.maximumVias=maximumVias;
             // Rules retain only immutable board/domain constraints, never a mutable layout.
             rules=source.rules; this.pads=pads; this.parts=parts;
             serial=source.serial; branches=source.branches; segments=source.segments;

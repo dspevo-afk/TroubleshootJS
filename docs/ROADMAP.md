@@ -286,6 +286,23 @@ Implementation `ce49abbb8b0c4a1d671b56003ae1ec6829152768` was normally pushed to
 origin/codex/q100-physical-feasibility and its exact remote SHA verified;
 completion Gmail `1a1a3c4e8ffb2d87` was sent once.
 
+The [reduced-cap detached-owner prerequisite](task-evidence/Q100/load12-cap17-r1/README.md)
+is locally accepted after fresh runtime gates and an18.3350241s final-source audit;
+publication is pending.
+An explicit allowance configures both copied Session/Search caps without changing
+the original owners or default routing. The literal source48/prefix2 -> cap2 copy
+joins the prior UNDER VIA on TOP through normal Search/Publisher; cap17 entry
+scalars pass separately. Native33/focused6, original actual cap48 baseline and
+D/LOAD12 graph modes, independent consumers/Python checks, actual JDK8/GWT
+Player/Developer builds, Player privacy, E06State10, Current9 and exactly three
+normal MEDIUM development roots pass. The normal four-candidate envelope remains;
+each actual case accepts its first candidate. Earlier pin-race, overlapping-run,
+PS5 loader and browser-cleanup failures remain preserved, never credited. No
+budgets, oracles, normal routing or layout26/dependency28 interpretation changed.
+Actual LOAD12/73 cap17 is next and NOT RUN; VIA avoidability, route adoption,
+accepted layout and playable100 remain unqualified. Playable100=0/beta held;
+full30/data boundaries and the self-hosted runner prerequisite remain.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

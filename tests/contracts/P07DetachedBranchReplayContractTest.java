@@ -10,6 +10,8 @@ import java.util.Vector;
 /** Literal prerequisite proving a detached owner can replay one real P07 branch. */
 public final class P07DetachedBranchReplayContractTest {
     private static final int SOURCE_VIA_CAP=2;
+    private static final int POLICY_VIA_CAP=48;
+    private static final int REDUCED_VIA_CAP=17;
     private static final int MAX_SOURCE_UNITS=2000000;
     private static final int MAX_REPLAY_UNITS=50000;
     private static final int MAX_COPY_WORK_STEPS=2000000;
@@ -48,35 +50,47 @@ public final class P07DetachedBranchReplayContractTest {
         require(source.prefixIds.length==SOURCE_VIA_CAP && source.maximumVias==SOURCE_VIA_CAP,
             "literal consumer begins with its two-VIA prefix at the original saturated cap");
 
+        verifyInvalidRequestedCaps(source);
+        Source higherCapSource=freshSource(POLICY_VIA_CAP);
+        require(higherCapSource.maximumVias==POLICY_VIA_CAP && higherCapSource.prefixIds.length==2,
+            "higher-cap literal source retains its two-hole initial consumer prefix");
+        verifyInvalidRequestedCaps(higherCapSource);
+        verifyReducedCapLifecycle(higherCapSource);
+        verifyReducedCapCopies(higherCapSource);
+
         verifyCopyLifecycle(source);
         verifyStaleCopyCanaries();
         verifyChargedRouterCopyFailureCanaries();
 
-        Replay baseline=runDetached(source,1);
-        verifySourceUnchanged(source,"baseline replay");
-        Replay batched=runDetached(source,MAX_COPY_QUANTUM);
-        verifySourceUnchanged(source,"batched replay");
-        require(baseline.maximumVias==source.maximumVias &&
-                batched.maximumVias==source.maximumVias,
-            "both copy quanta preserve the original Session VIA cap");
-        verifyDetachedResults(baseline,batched);
-        Replay entryControl=buildDetached(source,MAX_COPY_QUANTUM);
-        verifyNegativeControls(source,entryControl);
-        verifySourceUnchanged(source,"negative controls");
-        verifyExhaustedBudget(source);
-        verifySourceUnchanged(source,"exhausted-budget control");
+        Replay baseline=null,batched=null,entryControl=null;
+        try {
+            baseline=runDetached(source,1);
+            verifySourceUnchanged(source,"baseline replay");
+            batched=runDetached(source,MAX_COPY_QUANTUM);
+            verifySourceUnchanged(source,"batched replay");
+            require(baseline.maximumVias==source.maximumVias &&
+                    batched.maximumVias==source.maximumVias,
+                "both copy quanta preserve the original Session VIA cap");
+            verifyDetachedResults(baseline,batched);
+            entryControl=buildDetached(source,MAX_COPY_QUANTUM);
+            verifyNegativeControls(source,entryControl);
+            verifySourceUnchanged(source,"negative controls");
+            verifyExhaustedBudget(source);
+            verifySourceUnchanged(source,"exhausted-budget control");
 
-        Replay original=finishOriginalConsumer(source);
-        verifySourcePublishedDelta(source,original);
-        verifyDetachedResults(baseline,original);
-        verifyBranchPhysicalAndConnectivity(baseline);
-        verifyBranchPhysicalAndConnectivity(batched);
-        verifyBranchPhysicalAndConnectivity(original);
-        require(fixture.layout.getHoles().isEmpty() && fixture.layout.getTraces().isEmpty(),
-            "all routing remained inside the source Session candidate");
-        baseline.handle.release();
-        batched.handle.release();
-        entryControl.handle.release();
+            Replay original=finishOriginalConsumer(source);
+            verifySourcePublishedDelta(source,original);
+            verifyDetachedResults(baseline,original);
+            verifyBranchPhysicalAndConnectivity(baseline);
+            verifyBranchPhysicalAndConnectivity(batched);
+            verifyBranchPhysicalAndConnectivity(original);
+            require(fixture.layout.getHoles().isEmpty() && fixture.layout.getTraces().isEmpty(),
+                "all routing remained inside the source Session candidate");
+        } finally {
+            if(baseline!=null) baseline.handle.release();
+            if(batched!=null) batched.handle.release();
+            if(entryControl!=null) entryControl.handle.release();
+        }
         assertions++;
     }
 
@@ -112,12 +126,131 @@ public final class P07DetachedBranchReplayContractTest {
 
     private static Replay runDetached(Source source,int quantum) throws Exception {
         Replay replay=buildDetached(source,quantum);
-        completeReplay(replay,quantum);
-        verifySourceUnchanged(source,"detached replay work");
-        return replay;
+        boolean retained=false;
+        try {
+            completeReplay(replay,quantum);
+            verifySourceUnchanged(source,"detached replay work");
+            retained=true;
+            return replay;
+        } finally {
+            if(!retained) replay.handle.release();
+        }
+    }
+
+    private static Replay runDetachedAtCap(Source source,int quantum,int maximumVias)
+            throws Exception {
+        Replay replay=buildDetachedAtCap(source,quantum,maximumVias);
+        boolean retained=false;
+        try {
+            completeReplay(replay,quantum);
+            verifySourceUnchanged(source,"explicit-cap detached replay work");
+            retained=true;
+            return replay;
+        } finally {
+            if(!retained) replay.handle.release();
+        }
+    }
+
+    private static void verifyInvalidRequestedCaps(final Source source) throws Exception {
+        require(source!=null,"invalid-cap control has a retained source owner");
+        expectDetachedCapRejected(source,1,"target VIA cap below the initial prefix");
+        expectDetachedCapRejected(source,0,"zero target VIA cap");
+        expectDetachedCapRejected(source,-1,"negative target VIA cap");
+        int overSourceOrPolicy=source.maximumVias==SOURCE_VIA_CAP?
+            SOURCE_VIA_CAP+1:POLICY_VIA_CAP+1;
+        expectDetachedCapRejected(source,overSourceOrPolicy,
+            source.maximumVias==SOURCE_VIA_CAP?"target VIA cap above the source cap":
+                "target VIA cap above the policy cap");
+        verifySourceUnchanged(source,"invalid explicit VIA cap requests");
+    }
+
+    private static void expectDetachedCapRejected(final Source source,final int maximumVias,
+            String label) throws Exception {
+        final int[] checks={0};
+        final SeededPcbLayoutGenerator.AttemptObserver observer=
+            new SeededPcbLayoutGenerator.AttemptObserver() {
+                public void check(int attempt) { checks[0]++; }
+            };
+        PcbLayerRoutingPrototype.DetachedBranchCopyTask task=null;
+        boolean rejected=false;
+        try {
+            task=PcbLayerRoutingPrototype.beginDetachedBranchCopy(
+                source.session,observer,maximumVias);
+        } catch(IllegalArgumentException expected) { rejected=true; }
+        finally { if(task!=null) task.cancel(); }
+        require(rejected && task==null && checks[0]==0,
+            label+" is rejected before starting an observer or copy task");
+    }
+
+    private static void verifyReducedCapLifecycle(final Source source) throws Exception {
+        final PcbLayerRoutingPrototype.DetachedBranchCopyTask task=
+            PcbLayerRoutingPrototype.beginDetachedBranchCopy(source.session,
+                detachedNoopObserver(),REDUCED_VIA_CAP);
+        try {
+            expectLifecycleRejected(new Checked(){public void run() { task.result(); }},
+                "reduced-cap copy exposes no replay before completion");
+            task.advance(1);
+            require(task.lastWork()==1 && !task.isComplete(),
+                "reduced-cap copy begins bounded work before cancellation");
+            task.cancel();
+            require(!task.isComplete() && task.lastWork()==0,
+                "canceled reduced-cap copy reports no partial completion");
+            expectLifecycleRejected(new Checked(){public void run() { task.result(); }},
+                "canceled reduced-cap copy exposes no replay result");
+            expectLifecycleRejected(new Checked(){public void run() { task.advance(1); }},
+                "canceled reduced-cap copy cannot resume");
+        } finally { task.cancel(); }
+        verifySourceUnchanged(source,"canceled reduced-cap copy lifecycle");
+    }
+
+    private static void verifyReducedCapCopies(Source source) throws Exception {
+        Replay saturated=null;
+        try {
+            saturated=runDetachedAtCap(source,MAX_COPY_QUANTUM,SOURCE_VIA_CAP);
+            require(saturated.maximumVias==SOURCE_VIA_CAP &&
+                    intField(saturated.owner,"maximumVias")==SOURCE_VIA_CAP &&
+                    intField(saturated.search,"maximumVias")==SOURCE_VIA_CAP,
+                "explicit cap two configures both detached owner scalars");
+            require(source.maximumVias==POLICY_VIA_CAP &&
+                    intField(source.owner,"maximumVias")==POLICY_VIA_CAP &&
+                    intField(source.search,"maximumVias")==POLICY_VIA_CAP,
+                "explicit cap two leaves the retained source owner at policy capacity");
+            require("p07-via/UNDER/3/1".equals(saturated.foundViaId) &&
+                    saturated.foundX==310 && saturated.foundY==320 &&
+                    saturated.foundLayer==PcbCopperLayer.TOP.ordinal() &&
+                    saturated.foundTransitions==0,
+                "saturated replay joins the literal prior UNDER creator VIA on TOP with no new transition");
+            verifyBranchPhysicalAndConnectivity(saturated);
+        } finally {
+            if(saturated!=null) saturated.handle.release();
+        }
+
+        Replay cap17=null;
+        try {
+            cap17=buildDetachedAtCap(source,MAX_COPY_QUANTUM,REDUCED_VIA_CAP);
+            require(cap17.maximumVias==REDUCED_VIA_CAP &&
+                    intField(cap17.owner,"maximumVias")==REDUCED_VIA_CAP &&
+                    intField(cap17.search,"maximumVias")==REDUCED_VIA_CAP,
+                "explicit cap seventeen configures both detached owner scalars");
+            require(!cap17.handle.isComplete() && cap17.handle.lastWork()==0,
+                "cap seventeen copy is an untouched normal Search entry before replay");
+            verifySourceUnchanged(source,"explicit cap seventeen owner copy");
+        } finally {
+            if(cap17!=null) cap17.handle.release();
+        }
     }
 
     private static Replay buildDetached(Source source,int quantum) throws Exception {
+        return buildDetached(source,quantum,source==null?0:source.maximumVias,false);
+    }
+
+    private static Replay buildDetachedAtCap(Source source,int quantum,int maximumVias)
+            throws Exception {
+        return buildDetached(source,quantum,maximumVias,true);
+    }
+
+    private static Replay buildDetached(Source source,int quantum,final int maximumVias,
+            boolean explicitCap) throws Exception {
         if(source==null || quantum<1 || quantum>MAX_COPY_QUANTUM)
             throw new IllegalArgumentException("Invalid bounded literal replay quantum");
         final int[] detachedChecks={0};
@@ -126,7 +259,12 @@ public final class P07DetachedBranchReplayContractTest {
                 public void check(int attempt) { detachedChecks[0]++; }
             };
         final PcbLayerRoutingPrototype.DetachedBranchCopyTask copy=
-            PcbLayerRoutingPrototype.beginDetachedBranchCopy(source.session,detachedObserver);
+            explicitCap?PcbLayerRoutingPrototype.beginDetachedBranchCopy(
+                source.session,detachedObserver,maximumVias):
+                PcbLayerRoutingPrototype.beginDetachedBranchCopy(source.session,detachedObserver);
+        PcbLayerRoutingPrototype.DetachedBranchReplay copiedReplay=null;
+        boolean transferred=false;
+        try {
         expectLifecycleRejected(new Checked(){public void run() { copy.result(); }},
             "copy result is unavailable before completion");
         long previousSteps=0;
@@ -142,6 +280,7 @@ public final class P07DetachedBranchReplayContractTest {
                 throw new AssertionError("detached owner copy exceeded its bounded progress guard");
         }
         final PcbLayerRoutingPrototype.DetachedBranchReplay handle=copy.result();
+        copiedReplay=handle;
         long completeSteps=copy.workSteps();
         copy.advance(quantum);
         require(copy.isComplete() && copy.lastWork()==0 && copy.workSteps()==completeSteps &&
@@ -159,13 +298,12 @@ public final class P07DetachedBranchReplayContractTest {
             "invalid replay quanta leave the copied entry ready but unadvanced");
         PcbLayerRoutingPrototype.Session detachedOwner=
             (PcbLayerRoutingPrototype.Session)field(detachedSearch,"owner");
-        copy.cancel();
         require(copy.isComplete() && handle.getLayout()==detachedLayout &&
                 handle.getSearchForDiagnostics()==detachedSearch &&
                 handle.getBranchForDiagnostics()==detachedBranch,
             "canceling a completed copier releases only task references, not its returned replay");
         Replay replay=new Replay(source,copy,handle,detachedOwner,detachedSearch,detachedBranch,
-            detachedLayout,source.maximumVias,detachedObserver,detachedChecks);
+            detachedLayout,maximumVias,detachedObserver,detachedChecks);
         require(field(source.owner,"observer")==source.observerRef &&
                 field(detachedOwner,"observer")==detachedObserver &&
                 detachedObserver!=source.observerRef && detachedChecks[0]>0,
@@ -173,7 +311,7 @@ public final class P07DetachedBranchReplayContractTest {
         verifyDetachedEntry(source,replay,detachedOwner,replay.branch,replay.start,
             detachedLayout.getPad(source.root.getPadId()),source.branchOrdinal,
             source.seedValues,source.goalValues,source.prefixIds,source.prefixFingerprints);
-        if(source.maximumVias==source.prefixIds.length) {
+        if(replay.maximumVias==source.prefixIds.length) {
             Object seed=Array.get(field(field(detachedBranch,"queue"),"values"),0);
             Method pathViaFits=detachedSearch.getClass().getDeclaredMethod(
                 "pathViaFits",seed.getClass());
@@ -183,13 +321,19 @@ public final class P07DetachedBranchReplayContractTest {
         }
         require(intField(field(replay.search,"budget"),"maximum")==source.budgetMaximum,
             "detached copy preserves the source expansion ceiling");
+        transferred=true;
         return replay;
+        } finally {
+            copy.cancel();
+            if(!transferred && copiedReplay!=null) copiedReplay.release();
+        }
     }
 
     private static void verifyCopyLifecycle(Source source) throws Exception {
         final PcbLayerRoutingPrototype.DetachedBranchCopyTask task=
             PcbLayerRoutingPrototype.beginDetachedBranchCopy(source.session,
                 detachedNoopObserver());
+        try {
         expectIllegalArgument(new Checked(){public void run() { task.advance(0); }},
             "zero copy quantum is rejected");
         expectIllegalArgument(new Checked(){public void run() { task.advance(MAX_COPY_QUANTUM+1); }},
@@ -208,7 +352,7 @@ public final class P07DetachedBranchReplayContractTest {
             "canceled owner copy cannot resume");
         require(task.lastWork()==0,
             "rejected advance after cancellation reports no new work");
-        task.cancel();
+        } finally { task.cancel(); }
         verifySourceUnchanged(source,"canceled partial owner copy");
         assertions++;
     }
@@ -216,6 +360,7 @@ public final class P07DetachedBranchReplayContractTest {
     private static void verifyStaleCopyCanaries() throws Exception {
         Source changedLayout=freshSource();
         final PcbLayerRoutingPrototype.DetachedBranchCopyTask changedLayoutTask=beginCopy(changedLayout);
+        try {
         changedLayoutTask.advance(1);
         require(!changedLayoutTask.isComplete(),
             "layout-mutation canary starts from a partial copy");
@@ -224,10 +369,11 @@ public final class P07DetachedBranchReplayContractTest {
         expectStaleAdvance(changedLayoutTask,"mutated source layout is rejected during owner copy");
         expectLifecycleRejected(new Checked(){public void run() { changedLayoutTask.result(); }},
             "mutated source layout exposes no replay result");
-        changedLayoutTask.cancel();
+        } finally { changedLayoutTask.cancel(); }
 
         Source switched=freshSource();
         final PcbLayerRoutingPrototype.DetachedBranchCopyTask switchedTask=beginCopy(switched);
+        try {
         switchedTask.advance(1);
         require(!switchedTask.isComplete(),
             "source-switch canary starts from a partial copy");
@@ -238,10 +384,11 @@ public final class P07DetachedBranchReplayContractTest {
         expectStaleAdvance(switchedTask,"switched source Search is rejected during owner copy");
         expectLifecycleRejected(new Checked(){public void run() { switchedTask.result(); }},
             "switched source exposes no replay result");
-        switchedTask.cancel();
+        } finally { switchedTask.cancel(); }
 
         Source changedCopiedRow=freshSource();
         final PcbLayerRoutingPrototype.DetachedBranchCopyTask rowTask=beginCopy(changedCopiedRow);
+        try {
         int copySteps=0;
         while(!rowTask.isComplete() &&
                 !("COPY_LAYOUT".equals(String.valueOf(rowTask.phase())) &&
@@ -263,10 +410,11 @@ public final class P07DetachedBranchReplayContractTest {
             "changed source map row is rejected after its corresponding row was copied");
         expectLifecycleRejected(new Checked(){public void run() { rowTask.result(); }},
             "changed copied row exposes no replay result");
-        rowTask.cancel();
+        } finally { rowTask.cancel(); }
 
         Source changedGoal=freshSource();
         final PcbLayerRoutingPrototype.DetachedBranchCopyTask goalTask=beginCopy(changedGoal);
+        try {
         int verifySteps=0;
         while(!goalTask.isComplete() &&
                 !"VERIFY_SOURCE".equals(goalTask.phase()) && verifySteps<MAX_COPY_WORK_STEPS) {
@@ -282,7 +430,7 @@ public final class P07DetachedBranchReplayContractTest {
             "changed source primitive goal entry is rejected after its copy completed");
         expectLifecycleRejected(new Checked(){public void run() { goalTask.result(); }},
             "changed primitive goal entry exposes no replay result");
-        goalTask.cancel();
+        } finally { goalTask.cancel(); }
     }
 
     private static void verifyChargedRouterCopyFailureCanaries() throws Exception {
@@ -392,10 +540,14 @@ public final class P07DetachedBranchReplayContractTest {
     }
 
     private static Source freshSource() throws Exception {
+        return freshSource(SOURCE_VIA_CAP);
+    }
+
+    private static Source freshSource(int maximumVias) throws Exception {
         LiteralFixture fixture=literalSourceFixture();
         PcbLayerRoutingPrototype.Session session=PcbLayerRoutingPrototype.begin(
             fixture.board,fixture.layout,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
-            P06FactoryLinkFixtures.OBSERVER,PcbLayerRoutingPrototype.MAX_EXPANSIONS,SOURCE_VIA_CAP);
+            P06FactoryLinkFixtures.OBSERVER,PcbLayerRoutingPrototype.MAX_EXPANSIONS,maximumVias);
         return captureConsumerEntry(fixture,session);
     }
 
@@ -508,6 +660,12 @@ public final class P07DetachedBranchReplayContractTest {
             int expectedOrdinal,int[][] expectedSeeds,
             boolean[] expectedGoals,String[] expectedHoleIds,String[] expectedFingerprints)
             throws Exception {
+        if(intField(replay.owner,"maximumVias")!=replay.maximumVias ||
+                intField(replay.search,"maximumVias")!=replay.maximumVias)
+            throw new IllegalArgumentException("Detached Session/Search VIA caps differ from the requested cap");
+        if(intField(source.owner,"maximumVias")!=source.maximumVias ||
+                intField(source.search,"maximumVias")!=source.maximumVias)
+            throw new IllegalArgumentException("Detached copy changed the source Session/Search VIA cap");
         if(expectedOwner!=replay.owner || field(replay.search,"owner")!=expectedOwner ||
                 field(expectedOwner,"search")!=replay.search)
             throw new IllegalArgumentException("Detached route Session owner changed");
@@ -623,6 +781,7 @@ public final class P07DetachedBranchReplayContractTest {
         require(source.budgetExpanded>0,
             "literal consumer has prior global expansion work for exhausted-budget control");
         Replay replay=buildDetached(source,MAX_COPY_QUANTUM);
+        try {
         Object detachedBudget=field(replay.search,"budget");
         setField(detachedBudget,"maximum",Integer.valueOf(source.budgetExpanded));
         require(intField(detachedBudget,"maximum")==source.budgetExpanded &&
@@ -646,7 +805,7 @@ public final class P07DetachedBranchReplayContractTest {
                 intField(field(replay.search,"budget"),"expanded")==before &&
                 replay.layout.geometryFingerprint().equals(source.layoutFingerprint),
             "exhausted replay exposes no success and leaves detached geometry unchanged");
-        replay.handle.release();
+        } finally { replay.handle.release(); }
     }
 
     private static void verifyDetachedResults(Replay first,Replay second) throws Exception {
@@ -728,6 +887,8 @@ public final class P07DetachedBranchReplayContractTest {
     private static void verifySourceUnchanged(Source source,String phase) throws Exception {
         require(field(source.session,"search")==source.search &&
                 field(source.search,"owner")==source.owner &&
+                intField(source.session,"maximumVias")==source.maximumVias &&
+                intField(source.search,"maximumVias")==source.maximumVias &&
                 field(source.search,"branch")==source.branch &&
                 field(source.search,"publisher")==null &&
                 field(source.session,"candidate")==source.layout &&
