@@ -50,3 +50,8 @@ Use the current passing guard mode and frozen independent consumer as parity
 oracles. A new graph mode needs its own exact transport and source binding;
 preserve old receipts and reject incomplete or unsupported graph capture. Do
 not project a synthetic old receipt or adopt a different route in this scope.
+
+Predecessor publication is now verified: implementation `9dc822d4c15df3ee21c0f06c12339fb145b735f9`,
+normal push to `origin/codex/q100-physical-feasibility`, completion Gmail `1a1a7ed052322950`
+sent once; see [publication.md](publication.md). This next scope remains unstarted
+at that receipt and is eligible under the standing roadmap authorization.

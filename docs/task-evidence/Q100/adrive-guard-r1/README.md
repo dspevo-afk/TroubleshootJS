@@ -1,6 +1,6 @@
 # Actual A_DRIVE pre-guard witness
 
-**Accepted finite diagnostic; publication pending.** The copied cost240/cap48
+**Accepted and published finite diagnostic.** The copied cost240/cap48
 ordering reaches actual A_DRIVE branch142 and the unchanged quality predicate
 rejects its path because length770 exceeds three times direct190 (570).
 The 82-node path has5 bends and4 layer transitions. The independent reader
@@ -64,3 +64,7 @@ under the standing roadmap authorization after this milestone is published.
 Root reviewed the integrated source and evidence. Optional final consumer source
 review found no material blocker in counter bounds, grid/cursor closure, strict
 transport and pinned-helper reuse; it ran no independent runtime.
+
+Implementation `9dc822d4c15df3ee21c0f06c12339fb145b735f9` is verified on
+`origin/codex/q100-physical-feasibility`. Completion Gmail `1a1a7ed052322950`
+was sent once. See [publication.md](publication.md).

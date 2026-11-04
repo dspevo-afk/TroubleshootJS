@@ -4,7 +4,8 @@
   "candidate": {
     "branch": "codex/q100-adrive-guard-20261104",
     "sourceParent": "44f1fa699fd64a67f6da7528c66d57750ac89236",
-    "publication": "PENDING"
+    "publication": "PUSH_VERIFIED_EXACT_REMOTE_SHA",
+    "commit": "9dc822d4c15df3ee21c0f06c12339fb145b735f9"
   },
   "artifactAliases": {
     "QZ": "external task-owned OS-temp evidence root; retained locally",
@@ -1889,6 +1890,18 @@
   "review": {
     "root": "Integrated source/transport/packet review; final native and independent consumer receipts reviewed against audited inputs",
     "consumerSourceReview": "No material blocker at final e43e4676/6581adc0; ownerwork/group bounds, grid/base, cursor/branch closure, exact v5/raw-payload/f11 binding. Source-only; no independent runtime.",
-    "nativeSourceReview": "No material blocker at final00cb2c4e: all reflected lease booleans checked by strict type/value, retained receiver Search survives sender release, charged source geometry before/after/rawbase binding, cleanup clears retained references. Source-only; no independent runtime."
+    "nativeSourceReview": "No material blocker at final00cb2c4e: all reflected lease booleans checked by strict type/value, retained receiver Search survives sender release, charged source geometry before/after/rawbase binding, cleanup clears retained references. Source-only; no independent runtime.",
+    "packetReview": "No material mismatch in five packet documents against named final receipts; source-only, no runtime or edits."
+  },
+  "publication": {
+    "implementationCommit": "9dc822d4c15df3ee21c0f06c12339fb145b735f9",
+    "message": "Capture actual A_DRIVE quality rejection witness",
+    "localBranch": "codex/q100-adrive-guard-20261104",
+    "remote": "origin",
+    "remoteBranch": "codex/q100-physical-feasibility",
+    "normalPush": true,
+    "exactRemoteShaVerified": true,
+    "completionGmailId": "1a1a7ed052322950",
+    "completionEmailCount": 1
   }
 }

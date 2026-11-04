@@ -25,7 +25,8 @@
   "candidate": {
     "branch": "codex/q100-adrive-guard-20261104",
     "sourceParent": "44f1fa699fd64a67f6da7528c66d57750ac89236",
-    "commit": "PENDING_PUBLICATION"
+    "commit": "9dc822d4c15df3ee21c0f06c12339fb145b735f9",
+    "publication": "PUSH_VERIFIED_EXACT_REMOTE_SHA"
   },
   "code": [
     {
