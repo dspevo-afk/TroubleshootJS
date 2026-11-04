@@ -574,6 +574,21 @@ The [cost240 packet](task-evidence/Q100/load12-cost240-r1/README.md) records the
 accepted finite experiment and its validation limits. It grants no routing
 adoption or whole-board qualification.
 
+DetachedBranchReplay transfers its completed Publisher through the single-use
+takeOrderingContinuation seam. DetachedOrderingContinuation exclusively owns
+the same copied Session, Search, layout, effective cost/cap and inherited request
+budget. The sender loses access; the Session's ordinary advance/result APIs
+cannot bypass the lease. The receiver advances only the retained ordering and
+stops at ROUTE_READY or ORDERING_BOUNDARY before a template rebuild or another
+pass. Consuming a ready result ends the lease; it does not certify completion
+of the ordinary three-ordering comparison stream. Cancellation, stale identity
+and observer failures close only the current lease. Actual owner work remains
+separate from caller-charged handoff and finalization transitions. The
+[ownership prerequisite plan](task-evidence/Q100/cost240-remainder-owner-r1/PLAN.md)
+keeps source preparation, copy, branch, transfer, remainder and finalization in
+one bounded operation. Small physical fixtures and the genuine saved7 owner
+adapter are separate from the later actual LOAD12 remainder experiment.
+
 P07TwoLayerContractTest also owns the matched seven-point prior-via tree-join
 contract. A fresh FULLER Session with explicit requestcap2 creates a via and
 later reaches that exact existing barrel by a TOP planar branch. Read-only

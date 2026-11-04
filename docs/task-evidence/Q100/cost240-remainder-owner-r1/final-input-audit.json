@@ -1,0 +1,28 @@
+{
+    "schema":  "copied-ordering-final-input-resource-audit-v1",
+    "status":  "PASS",
+    "elapsedSeconds":  18.759166099999998,
+    "source9":  "UNCHANGED",
+    "native1079":  "UNCHANGED",
+    "nativeBytes":  87081192,
+    "nativeManifestSha256":  "d9c3da3c85859622cd75915dbde9fa14b322691d763106ba39584eb493e21190",
+    "python38":  "UNCHANGED_RAW",
+    "toolsAndModule":  "UNCHANGED",
+    "developer":  {
+                      "Protocol":  "troubleshootjs-production-build-identity-v1",
+                      "Variant":  "Developer",
+                      "Style":  "OBF",
+                      "InputDigest":  "08b617227b1b61a7671e8f921856e1e3053961c90e85c06970f9e8c678c940b7",
+                      "InputFileCount":  1202,
+                      "OutputDigest":  "3e04234746715be5331d84fb6b721ae11b2485506592226272fc353cd9fbb456",
+                      "OutputFileCount":  357
+                  },
+    "playerInputs":  "UNCHANGED_1202_OUTPUT_FIELDS_IGNORED_UNDER_DEVELOPER",
+    "playerArchiveCount":  357,
+    "playerArchiveDigest":  "ad675dd2457f12681a2601a92ffd067c0c90f4326817c7e040e5a088369eb41c",
+    "qualificationSha256":  "d940b1a82f95c7c02a66b877a1bedffa10070844ae2cc32b7446ce0ea6711b09",
+    "normal3Profile":  "REMOVED_WITH_PASS_RECEIPT",
+    "freshNormal3ProcessCount":  0,
+    "priorFailureEvidence":  "PRESERVED",
+    "activeMatrix":  "NONE_ROOT_CONFIRMED"
+}

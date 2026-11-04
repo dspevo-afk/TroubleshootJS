@@ -240,6 +240,8 @@ public final class P07OrderingCandidatesContractTest {
         verifyReducedTotalCaps(runId);
         verifyPostYieldObserverFailure(runId);
         verifyPostYieldDiagnosticFailure(runId);
+        verifyDetachedOrderingFinalizer(runId);
+        verifyDetachedOrderingBoundary(runId);
         MediumBoardPhysicalPolicy.Result generated=runActualGeneratorReceiptCase(runId);
         int assertions=checks-before;
         System.out.println("P07_ORDERING_STREAM_SUITE {\"protocol\":"+quote(STREAM_PROTOCOL)+
@@ -248,6 +250,8 @@ public final class P07OrderingCandidatesContractTest {
             ",\"seed5Cases\":2,\"unguidedFirstSuccessFixture\":true"+
             ",\"totalCapCases\":2,\"postYieldObserverLatch\":true"+
             ",\"postYieldDiagnosticsLatch\":true,\"generatorStatisticsVerified\":true"+
+            ",\"detachedCurrentOrderingFinalizer\":true"+
+            ",\"detachedCurrentOrderingBoundary\":true"+
             ",\"generatorAccepted\":"+generated.accepted()+
             ",\"generatedLayoutSha256\":"+(generated.getLayout()==null?"null":
                 quote(PlayerSessionFingerprint.of(generated.getLayout().geometryFingerprint())))+
@@ -427,6 +431,50 @@ public final class P07OrderingCandidatesContractTest {
             calls++;
             if(failure!=null && calls>=throwAtCall) throw failure;
         }
+    }
+
+    private static final class RemainderOperationBudget {
+        private static final int MAX_UNITS=640;
+        private static final int MAX_WORK_PER_UNIT=32768;
+        private static final long MAX_TOTAL_NANOS=90000000000L;
+        private static final long MAX_UNIT_NANOS=5000000000L;
+        final long started=System.nanoTime();
+        int units,stateTransitions,zeroSearchWorkUnits;
+        long realOwnerWork,maxUnitNanos;
+        private long unitStarted;
+        private String active;
+
+        void begin(String operation) {
+            if(active!=null) throw new IllegalStateException("Nested remainder operation unit");
+            require(units<MAX_UNITS,"copied-ordering operation stays within its shared 640-unit budget");
+            active=operation;
+            unitStarted=System.nanoTime();
+            units++;
+            checkTotal(operation);
+        }
+        void end(int work,int quantum) {
+            end(work,quantum,false);
+        }
+        void end(int work,int quantum,boolean stateTransition) {
+            if(active==null) throw new IllegalStateException("Missing remainder operation unit");
+            String operation=active;
+            long elapsed=System.nanoTime()-unitStarted;
+            require(quantum>=0 && quantum<=MAX_WORK_PER_UNIT && work>=0 && work<=quantum,
+                operation+" reports only real bounded owner work");
+            require(elapsed<=MAX_UNIT_NANOS,
+                operation+" finishes within the shared five-second unit allowance");
+            realOwnerWork+=work;
+            if(work==0) zeroSearchWorkUnits++;
+            if(stateTransition) stateTransitions++;
+            if(elapsed>maxUnitNanos) maxUnitNanos=elapsed;
+            active=null;
+            checkTotal(operation);
+        }
+        void checkTotal(String operation) {
+            require(System.nanoTime()-started<=MAX_TOTAL_NANOS,
+                operation+" remains inside the shared 90-second operation allowance");
+        }
+        long elapsedNanos() { return System.nanoTime()-started; }
     }
 
     private static PreparedStreamCase prepareStreamCase(StreamFixture selected) {
@@ -998,6 +1046,704 @@ public final class P07OrderingCandidatesContractTest {
             ",\"expansionsAtFailure\":"+expansionAtFailure+",\"inputsStable\":true}");
     }
 
+    private static void verifyDetachedOrderingFinalizer(String runId) {
+        final RemainderOperationBudget budget=new RemainderOperationBudget();
+        PcbLayerRoutingPrototype.DetachedBranchCopyTask copy=null;
+        PcbLayerRoutingPrototype.DetachedBranchReplay replay=null;
+        PcbLayerRoutingPrototype.DetachedOrderingContinuation continuation=null;
+        PreparedStreamCase prepared=null;
+        PcbLayerRoutingPrototype.Session source=null;
+        PcbLayerRoutingPrototype.Session copiedOwner=null;
+        Object sourceSearch=null,sourceBranch=null,copiedSearch=null,copiedBranch=null;
+        PcbBoardLayout copiedLayout=null;
+        try {
+            budget.begin("saved7 source preparation");
+            prepared=prepareStreamCase(AM_STREAM_FIXTURE);
+            budget.end(0,0);
+            require(prepared.fixture.rootSeed==42L && prepared.fixture.placementVersion==7 &&
+                prepared.fixture.candidateAttempt==4 && prepared.board.getComponentIds().size()==54 &&
+                prepared.board.getPadIds().size()==131,
+                "detached finalizer fixture is the real saved7/root42/candidate4 RB56 board");
+
+            budget.begin("existing Medium owner and comparator setup");
+            final OwnerAdapter owner=new OwnerAdapter(prepared.board,prepared.plan,
+                prepared.placementPlan,prepared.fixture.candidateAttempt);
+            budget.end(0,0,true);
+
+            final CountingObserver sourceObserver=new CountingObserver();
+            final CountingObserver detachedObserver=new CountingObserver();
+            budget.begin("FULLER ordering source setup");
+            source=PcbLayerRoutingPrototype.beginOrderingCandidates(prepared.board,prepared.placement,
+                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,sourceObserver,
+                PcbLayerRoutingPrototype.MAX_EXPANSIONS,48,null);
+            budget.end(0,0,true);
+
+            int sourceWork=0,sourceCalls=0;
+            budget.begin("capture the real initial pass-zero branch frontier");
+            while(sourceCalls<STREAM_MAX_ADVANCES) {
+                Object search=observedField(source,"search");
+                Object branch=search==null?null:observedField(search,"branch");
+                if(branch!=null) {
+                    sourceSearch=search;
+                    sourceBranch=branch;
+                    break;
+                }
+                if(sourceWork>=RemainderOperationBudget.MAX_WORK_PER_UNIT)
+                    throw new AssertionError("initial source capture exhausted its 32768-step controller unit");
+                PcbLayerRoutingPrototype.OrderingProgress sourceProgress=source.advanceOrderingSlice(1);
+                int used=source.lastWork();
+                if(used<0 || used>1 || sourceWork>RemainderOperationBudget.MAX_WORK_PER_UNIT-used)
+                    throw new AssertionError("initial source capture exceeded its 32768-step controller unit");
+                sourceWork+=used;
+                sourceCalls++;
+                require(sourceProgress==PcbLayerRoutingPrototype.OrderingProgress.WORKING && used<=1,
+                    "source frontier capture advances only one real owner step at a time");
+            }
+            require(sourceBranch!=null && sourceWork<=RemainderOperationBudget.MAX_WORK_PER_UNIT,
+                "saved7 first branch frontier is captured inside one bounded controller unit");
+            require(observedInt(sourceSearch,"pass")==0 && observedInt(source,"pass")==0 &&
+                observedInt(sourceBranch,"expanded")==0 &&
+                observedInt(observedField(sourceBranch,"queue"),"size")==2 &&
+                observedInt(observedField(sourceBranch,"best"),"size")==2 &&
+                observedField(sourceBranch,"found")==null &&
+                observedField(sourceBranch,"foundTerminal")==null &&
+                !observedBoolean(sourceBranch,"relaxedBoundStarted") &&
+                observedField(sourceSearch,"publisher")==null && source.expansions()==0 &&
+                observedInt(source,"maximumVias")==48 && observedInt(source,"viaCost")==60,
+                "captured source is the genuine pristine two-seed branch under source cost60/cap48");
+            budget.end(sourceWork,RemainderOperationBudget.MAX_WORK_PER_UNIT,true);
+
+            final int inheritedExpansions=source.expansions();
+            final int sourceViaCost=observedInt(source,"viaCost");
+            final String inheritedNet=(String)observedField(sourceBranch,"net");
+            final String inheritedStart=((PcbPadPlacement)observedField(sourceBranch,"start")).getPadId();
+            final String inheritedRoot=((PcbPadPlacement)observedField(sourceBranch,"root")).getPadId();
+            final int inheritedBranchOrdinal=observedInt(sourceBranch,"branchOrdinal");
+            require(sourceObserver!=detachedObserver && sourceObserver.calls>0,
+                "detached copy uses an independent observer after real source preparation");
+
+            budget.begin("charged cost240/cap48 owner copy setup");
+            copy=PcbLayerRoutingPrototype.beginDetachedBranchCopy(source,detachedObserver,48,240);
+            budget.end(0,0,true);
+            int copyCalls=0;
+            long copyWork=0L;
+            while(!copy.isComplete()) {
+                if(++copyCalls>RemainderOperationBudget.MAX_UNITS)
+                    throw new AssertionError("charged P07 copy exceeded the operation's shared 640-unit guard");
+                budget.begin("charged detached owner copy");
+                boolean done=copy.advance(RemainderOperationBudget.MAX_WORK_PER_UNIT);
+                int used=copy.lastWork();
+                budget.end(used,RemainderOperationBudget.MAX_WORK_PER_UNIT,done);
+                copyWork+=used;
+                require(done==copy.isComplete() && (used>0 || done),
+                    "charged detached copy reports bounded progress or its actual completion transition");
+            }
+            budget.begin("consume the completed charged copy");
+            replay=copy.result();
+            budget.end(0,0,true);
+            require(replay!=null && !replay.isComplete(),
+                "charged copy yields the live initial branch replay cursor before its branch work");
+
+            budget.begin("audit copied owner identity and inherited cost state");
+            copiedOwner=(PcbLayerRoutingPrototype.Session)observedField(replay,"owner");
+            copiedSearch=replay.getSearchForDiagnostics();
+            copiedBranch=replay.getBranchForDiagnostics();
+            copiedLayout=replay.getLayout();
+            Object copiedBudget=observedField(copiedOwner,"budget");
+            Object sourceQueue=observedField(sourceBranch,"queue");
+            Object copiedQueue=observedField(copiedBranch,"queue");
+            require(copiedOwner!=source && copiedSearch!=sourceSearch && copiedBranch!=sourceBranch &&
+                copiedLayout==observedField(copiedSearch,"layout") &&
+                copiedLayout==observedField(copiedOwner,"candidate") &&
+                observedField(copiedSearch,"owner")==copiedOwner &&
+                observedField(copiedSearch,"branch")==copiedBranch &&
+                observedField(copiedSearch,"budget")==copiedBudget &&
+                observedInt(copiedSearch,"pass")==0 && observedInt(copiedOwner,"pass")==0 &&
+                observedInt(copiedBudget,"maximum")==PcbLayerRoutingPrototype.MAX_EXPANSIONS &&
+                observedInt(copiedBudget,"expanded")==inheritedExpansions &&
+                observedInt(copiedOwner,"maximumVias")==48 &&
+                observedInt(copiedSearch,"maximumVias")==48 &&
+                observedInt(copiedOwner,"viaCost")==240 && observedInt(copiedSearch,"viaCost")==240,
+                "copy retains the same ordering Search/layout/pass and inherited request budget with cost240/cap48");
+            require(observedInt(copiedBranch,"expanded")==0 &&
+                observedInt(copiedQueue,"size")==2 && observedInt(sourceQueue,"size")==2 &&
+                inheritedNet.equals(observedField(copiedBranch,"net")) &&
+                inheritedStart.equals(((PcbPadPlacement)observedField(copiedBranch,"start")).getPadId()) &&
+                inheritedRoot.equals(((PcbPadPlacement)observedField(copiedBranch,"root")).getPadId()) &&
+                inheritedBranchOrdinal==observedInt(copiedBranch,"branchOrdinal"),
+                "copied branch retains the source's exact pass-zero net, terminals and branch lineage");
+            require(source.expansions()==inheritedExpansions && observedField(source,"search")==sourceSearch &&
+                observedField(sourceSearch,"branch")==sourceBranch &&
+                observedInt(sourceBranch,"expanded")==0 &&
+                prepared.inputGeometry.equals(prepared.placement.geometryFingerprint()) &&
+                prepared.planCanonical.equals(prepared.plan.canonical()) &&
+                prepared.boardCanonical.equals(logicalBoardFingerprint(prepared.board)),
+                "copy completion leaves the original search frontier and saved7 source inputs unchanged");
+            budget.end(0,0);
+
+            int branchCalls=0;
+            long branchWork=0L;
+            while(!replay.isComplete()) {
+                if(++branchCalls>RemainderOperationBudget.MAX_UNITS)
+                    throw new AssertionError("P07 detached branch replay exceeded its shared 640-unit guard");
+                budget.begin("copied current-branch replay and Publisher");
+                boolean done=replay.advance(RemainderOperationBudget.MAX_WORK_PER_UNIT);
+                int used=replay.lastWork();
+                budget.end(used,RemainderOperationBudget.MAX_WORK_PER_UNIT,done);
+                branchWork+=used;
+                require(done==replay.isComplete() && (used>0 || done),
+                    "copied branch replay reports bounded real work or its terminal Publisher transition");
+            }
+
+            budget.begin("audit completed copied Publisher before handoff");
+            Object publisher=replay.getPublisherForDiagnostics();
+            require(replay.isComplete() && publisher!=null && observedInt(publisher,"stage")==6 &&
+                observedField(copiedSearch,"branch")==null && observedField(copiedSearch,"publisher")==null &&
+                observedField(copiedBranch,"found")!=null &&
+                observedField(copiedBranch,"foundTerminal")!=null &&
+                observedBoolean(copiedBranch,"terminalEmitted") &&
+                observedInt(copiedOwner,"viaCost")==240 && observedInt(copiedOwner,"maximumVias")==48 &&
+                observedInt(copiedBudget,"expanded")>inheritedExpansions &&
+                copiedLayout.getTraces().size()>0 && copiedLayout.getHoleCount()<=48,
+                "cost240 replay completes the real copied branch Publisher under inherited search ownership");
+            require(source.expansions()==inheritedExpansions && observedField(source,"search")==sourceSearch &&
+                observedInt(sourceBranch,"expanded")==0 &&
+                prepared.inputGeometry.equals(prepared.placement.geometryFingerprint()),
+                "branch replay preserves the source's independent live frontier and raw placement");
+            budget.end(0,0);
+
+            budget.begin("single-use copied ordering handoff");
+            continuation=replay.takeOrderingContinuation();
+            budget.end(0,0,true);
+            final PcbLayerRoutingPrototype.DetachedBranchReplay transferredReplay=replay;
+            expectIllegalState(new Runnable(){public void run(){transferredReplay.getSearchForDiagnostics();}},
+                "successful ordering handoff invalidates the branch sender's Search access");
+            expectIllegalState(new Runnable(){public void run(){transferredReplay.getLayout();}},
+                "successful ordering handoff invalidates the branch sender's layout access");
+            require(continuation!=null && observedField(continuation,"owner")==copiedOwner &&
+                observedField(continuation,"search")==copiedSearch &&
+                observedField(copiedOwner,"detachedOrderingContinuation")==continuation &&
+                observedField(copiedOwner,"search")==copiedSearch &&
+                observedField(copiedOwner,"candidate")==copiedLayout &&
+                observedBoolean(copiedOwner,"orderingStream") &&
+                observedInt(copiedOwner,"viaCost")==240 && observedInt(copiedOwner,"maximumVias")==48,
+                "exclusive receiver owns the exact completed copy Search and its cost/cap");
+
+            int remainderCalls=0;
+            long remainderWork=0L;
+            PcbLayerRoutingPrototype.DetachedOrderingProgress progress;
+            while(true) {
+                if(++remainderCalls>RemainderOperationBudget.MAX_UNITS)
+                    throw new AssertionError("current-order continuation exceeded its shared 640-unit guard");
+                budget.begin("copied current-order remainder");
+                progress=continuation.advance(RemainderOperationBudget.MAX_WORK_PER_UNIT);
+                int used=continuation.lastWork();
+                budget.end(used,RemainderOperationBudget.MAX_WORK_PER_UNIT,
+                    progress!=PcbLayerRoutingPrototype.DetachedOrderingProgress.WORKING);
+                remainderWork+=used;
+                if(progress==PcbLayerRoutingPrototype.DetachedOrderingProgress.WORKING) continue;
+                if(progress==PcbLayerRoutingPrototype.DetachedOrderingProgress.ORDERING_BOUNDARY)
+                    throw new AssertionError("copied current ordering ended before an owner-finalizable route: "+
+                        continuation.boundaryReason());
+                if(progress!=PcbLayerRoutingPrototype.DetachedOrderingProgress.ROUTE_READY)
+                    throw new AssertionError("copied current ordering returned unknown progress");
+                break;
+            }
+            require(remainderWork>0,
+                "continuation advances real same-order Search work after the branch handoff");
+
+            budget.begin("audit continuation-owned current-order Result before take");
+            final PcbLayerRoutingPrototype.Result ready=
+                (PcbLayerRoutingPrototype.Result)observedField(copiedOwner,"readyOrdering");
+            Object continuationSearch=observedField(continuation,"search");
+            Object continuationBudget=observedField(copiedOwner,"budget");
+            require(ready!=null && continuationSearch==copiedSearch &&
+                observedField(copiedOwner,"search")==null && observedField(copiedOwner,"candidate")==null &&
+                observedBoolean(copiedSearch,"complete") && observedField(copiedSearch,"branch")==null &&
+                observedField(copiedSearch,"publisher")==null && observedField(copiedSearch,"budget")==continuationBudget &&
+                observedInt(copiedSearch,"viaCost")==240 && observedInt(copiedSearch,"maximumVias")==48,
+                "continuation has finished only its current copied Search and retains its own ready Result");
+            require(ready.accepted() && ready.orderings==1 && ready.expansions==
+                observedInt(continuationBudget,"expanded") && ready.expansions>inheritedExpansions &&
+                ready.layout==copiedLayout && ready.vias==ready.layout.getHoleCount() && ready.vias<=48 &&
+                !prepared.inputGeometry.equals(ready.layout.geometryFingerprint()),
+                "ready Result preserves first-order lineage, cumulative inherited work, cap and copied layout identity");
+            require(observedInt(copiedOwner,"pass")==1 && observedInt(copiedOwner,"passes")==1 &&
+                observedInt(copiedOwner,"completedOrderings")==1 &&
+                observedInt(copiedOwner,"yieldedOrderings")==1 &&
+                !observedBoolean(copiedOwner,"comparisonComplete"),
+                "continuation stops after exactly one current ordering without claiming comparison completion");
+            budget.end(0,0);
+
+            final PcbLayerRoutingPrototype.Result continuationResult;
+            budget.begin("consume the continuation's current-order Result");
+            continuationResult=continuation.takeReadyOrdering();
+            budget.end(0,0,true);
+            require(continuationResult==ready && continuation.isComplete() &&
+                continuation.boundaryReason()==null &&
+                observedBoolean(copiedOwner,"orderingLeaseClosed") &&
+                observedField(copiedOwner,"detachedOrderingContinuation")==null &&
+                observedField(copiedOwner,"readyOrdering")==null &&
+                observedInt(copiedOwner,"viaCost")==240 && observedInt(copiedOwner,"maximumVias")==48,
+                "one-time take returns the exact continuation Result and closes this copied lease");
+            final PcbLayerRoutingPrototype.Session transferredOwner=copiedOwner;
+            expectIllegalState(new Runnable(){public void run(){transferredOwner.orderingSummary();}},
+                "single-order handoff cannot publish an ordinary comparison summary");
+            expectIllegalState(new Runnable(){public void run(){transferredOwner.advanceOrderingSlice(1);}},
+                "single-order handoff cannot advance into a new template or pass");
+
+            budget.begin("existing RB56 finalizer, independent physical checks and comparator");
+            FinalizedVariant finalized=owner.finalizeAndConsider(prepared.board,
+                prepared.plan.layoutSeed,continuationResult);
+            budget.end(0,0,true);
+            require(finalized.invoked && finalized.accepted && finalized.ownerWinner &&
+                "FINALIZED_AND_CONSIDERED_BY_EXISTING_OWNER".equals(finalized.status) &&
+                finalized.geometrySha256!=null && finalized.qualityMilli>=0 &&
+                finalized.evidence!=null && finalized.evidence.graph!=null &&
+                finalized.evidence.raster!=null && finalized.evidence.orderedPadPairs==17161L &&
+                finalized.evidence.referenceClearancePairs>=0,
+                "the continuation-owned Result passes production finalization, independent whole-board oracles and the real comparator");
+            try {
+                PcbBoardLayout winner=(PcbBoardLayout)owner.winnerLayout.get(owner.session);
+                require(winner!=null,"existing saved7 owner stores the finalized candidate winner");
+                Rectangle winnerBounds=winner.getBoardOutline();
+                require(owner.winnerAttempt.getInt(owner.session)==owner.candidate.attempt &&
+                    owner.winnerPlacementScore.getLong(owner.session)==owner.candidate.cheapScore &&
+                    owner.winnerArea.getLong(owner.session)==(long)winnerBounds.width*winnerBounds.height &&
+                    owner.winnerArea.getLong(owner.session)==finalized.area &&
+                    Double.compare(owner.winnerQuality.getDouble(owner.session),finalized.quality)==0 &&
+                    finalized.geometrySha256.equals(PlayerSessionFingerprint.of(winner.geometryFingerprint())) &&
+                    finalized.evidence.orderedPadPairs==
+                        ((long)prepared.board.getPadIds().size()*prepared.board.getPadIds().size()),
+                    "actual saved7 placement attempt wins with its production score and independently validated finalized geometry");
+            } catch(IllegalAccessException failure) {
+                throw new IllegalStateException("Could not inspect the actual saved7 owner winner",failure);
+            }
+
+            require(source.expansions()==inheritedExpansions && observedField(source,"search")==sourceSearch &&
+                observedField(sourceSearch,"branch")==sourceBranch &&
+                observedInt(sourceBranch,"expanded")==0 &&
+                prepared.planCanonical.equals(prepared.plan.canonical()) &&
+                prepared.boardCanonical.equals(logicalBoardFingerprint(prepared.board)) &&
+                prepared.inputGeometry.equals(prepared.placement.geometryFingerprint()),
+                "branch replay, remainder, finalization and scoring preserve the original source owners and inputs");
+            budget.checkTotal("completed copied-order finalizer contract");
+            require(budget.units<=RemainderOperationBudget.MAX_UNITS &&
+                budget.realOwnerWork>0 && budget.stateTransitions>=6,
+                "one shared operation accounts actual work and explicit state transitions without resetting phase counters");
+            require(budget.realOwnerWork==(long)sourceWork+copyWork+branchWork+remainderWork,
+                "one operation-wide owner-work total reconciles preparation frontier, copy, replay and remainder phases");
+            System.out.println("P07_DETACHED_ORDERING_FINALIZER {\"protocol\":\"p07-detached-ordering-finalizer-v1\""+
+                ",\"runId\":"+quote(runId)+",\"caseId\":\"SAVED7_ROOT42_DENSITY7_CANDIDATE4\""+
+                ",\"sourceViaCost\":"+sourceViaCost+",\"copiedViaCost\":240,\"viaCap\":48"+
+                ",\"sourceExpansionsAtFrontier\":"+inheritedExpansions+
+                ",\"resultOrderings\":"+continuationResult.orderings+
+                ",\"resultExpansions\":"+continuationResult.expansions+
+                ",\"resultVias\":"+continuationResult.vias+
+                ",\"branchNet\":"+quote(inheritedNet)+",\"branchStart\":"+quote(inheritedStart)+
+                ",\"branchRoot\":"+quote(inheritedRoot)+",\"branchOrdinal\":"+inheritedBranchOrdinal+
+                ",\"sourceCaptureCalls\":"+sourceCalls+",\"sourceCaptureWork\":"+sourceWork+
+                ",\"copyCalls\":"+copyCalls+",\"copyWork\":"+copyWork+
+                ",\"branchReplayCalls\":"+branchCalls+",\"branchReplayWork\":"+branchWork+
+                ",\"remainderCalls\":"+remainderCalls+
+                ",\"remainderWork\":"+remainderWork+
+                ",\"finalization\":\"FINALIZED_AND_CONSIDERED_BY_EXISTING_OWNER\""+
+                ",\"ownerWinner\":true,\"finalGeometrySha256\":"+quote(finalized.geometrySha256)+
+                ",\"units\":"+budget.units+",\"realOwnerWork\":"+budget.realOwnerWork+
+                ",\"stateTransitions\":"+budget.stateTransitions+
+                ",\"zeroSearchWorkUnits\":"+budget.zeroSearchWorkUnits+
+                ",\"maximumUnitElapsedNanos\":"+budget.maxUnitNanos+
+                ",\"elapsedNanos\":"+budget.elapsedNanos()+
+                ",\"ordinaryComparisonComplete\":false,\"layoutQualification\":false,\"adoption\":false}");
+        } finally {
+            if(continuation!=null) continuation.release();
+            if(replay!=null) replay.release();
+            if(copy!=null) copy.cancel();
+        }
+    }
+
+    private static void verifyDetachedOrderingBoundary(String runId) {
+        final RemainderOperationBudget budget=new RemainderOperationBudget();
+        PcbLayerRoutingPrototype.DetachedBranchCopyTask copy=null;
+        PcbLayerRoutingPrototype.DetachedBranchReplay replay=null;
+        PcbLayerRoutingPrototype.DetachedOrderingContinuation continuation=null;
+        PreparedStreamCase prepared=null;
+        PcbLayerRoutingPrototype.Session source=null,copiedOwner=null;
+        Object sourceSearch=null,sourceBranch=null,copiedSearch=null,copiedBranch=null,copiedTemplate=null;
+        PcbBoardLayout sourceSearchLayout=null;
+        String sourceGeometry=null;
+        boolean cleanupComplete=false;
+        try {
+            budget.begin("select maintained saved5 boundary fixture");
+            final StreamFixture fixture=findSaved5Version10Fixture();
+            budget.end(0,0);
+            budget.begin("prepare saved5 plan and real candidate placement");
+            prepared=prepareStreamCase(fixture);
+            budget.end(0,0);
+            require(fixture.rootSeed==5L && fixture.placementVersion==10 &&
+                fixture.candidateAttempt==1 && fixture.placementSeed==-7630701392004902526L &&
+                fixture.routingSeed==-9106650364266936003L &&
+                prepared.board.getComponentIds().size()==54 && prepared.board.getPadIds().size()==131,
+                "boundary fixture is the existing saved5/version10/candidate1 real RB56 placement");
+
+            final CountingObserver sourceObserver=new CountingObserver();
+            final CountingObserver detachedObserver=new CountingObserver();
+            budget.begin("saved5 FULLER ordering source setup");
+            source=PcbLayerRoutingPrototype.beginOrderingCandidates(prepared.board,prepared.placement,
+                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,sourceObserver,
+                PcbLayerRoutingPrototype.MAX_EXPANSIONS,48,null);
+            budget.end(0,0,true);
+
+            int sourceWork=0,sourceCalls=0;
+            budget.begin("capture saved5 pass-zero AC_RETURN branch before expansion");
+            try {
+                while(sourceCalls<STREAM_MAX_ADVANCES) {
+                    Object search=observedField(source,"search");
+                    Object branch=search==null?null:observedField(search,"branch");
+                    if(branch!=null) {
+                        sourceSearch=search;
+                        sourceBranch=branch;
+                        break;
+                    }
+                    if(sourceWork>=RemainderOperationBudget.MAX_WORK_PER_UNIT)
+                        throw new AssertionError("saved5 initial branch capture exhausted its 32768-step controller unit");
+                    PcbLayerRoutingPrototype.OrderingProgress sourceProgress=null;
+                    try { sourceProgress=source.advanceOrderingSlice(1); }
+                    finally {
+                        int used=source.lastWork();
+                        if(used<0 || used>1 || sourceWork>RemainderOperationBudget.MAX_WORK_PER_UNIT-used)
+                            throw new AssertionError("saved5 initial branch capture exceeded its 32768-step controller unit");
+                        sourceWork+=used;
+                        sourceCalls++;
+                    }
+                    require(sourceProgress==PcbLayerRoutingPrototype.OrderingProgress.WORKING,
+                        "saved5 source capture stops before the first ordering emits or terminates");
+                }
+                require(sourceBranch!=null && sourceWork<=RemainderOperationBudget.MAX_WORK_PER_UNIT,
+                    "saved5 pass-zero branch frontier is captured inside one shared controller unit");
+                sourceSearchLayout=(PcbBoardLayout)observedField(sourceSearch,"layout");
+                sourceGeometry=sourceSearchLayout.geometryFingerprint();
+                require(observedInt(sourceSearch,"pass")==0 && observedInt(source,"pass")==0 &&
+                    "AC_RETURN".equals(observedField(sourceSearch,"currentNet")) &&
+                    "AC_RETURN".equals(observedField(sourceBranch,"net")) &&
+                    "D4.K".equals(((PcbPadPlacement)observedField(sourceBranch,"start")).getPadId()) &&
+                    "D2.A".equals(((PcbPadPlacement)observedField(sourceBranch,"root")).getPadId()) &&
+                    observedInt(sourceBranch,"branchOrdinal")==1 &&
+                    observedInt(sourceBranch,"expanded")==0 &&
+                    observedInt(observedField(sourceBranch,"queue"),"size")==2 &&
+                    observedInt(observedField(sourceBranch,"best"),"size")==2 &&
+                    ((PcbBoardHole[])observedField(sourceBranch,"holes")).length==0 &&
+                    sourceSearchLayout.getHoleCount()==0 && sourceSearchLayout.getTraces().isEmpty() &&
+                    observedField(sourceSearch,"publisher")==null && source.expansions()==0 &&
+                    observedInt(source,"maximumVias")==48 && observedInt(source,"viaCost")==60,
+                    "saved5 source is the exact pristine AC_RETURN D4.K-to-D2.A branch1 with no VIA prefix");
+            } finally {
+                budget.end(sourceWork,RemainderOperationBudget.MAX_WORK_PER_UNIT,sourceBranch!=null);
+            }
+
+            final int inheritedExpansions=source.expansions();
+            final String boardCanonical=prepared.boardCanonical;
+            final String planCanonical=prepared.planCanonical;
+            final String placementGeometry=prepared.inputGeometry;
+            final int sourceObserverCalls=sourceObserver.calls;
+            budget.begin("charged cost60/cap48 saved5 copy setup");
+            copy=PcbLayerRoutingPrototype.beginDetachedBranchCopy(source,detachedObserver,48,60);
+            budget.end(0,0,true);
+            int copyCalls=0;
+            long copyWork=0L;
+            while(!copy.isComplete()) {
+                if(++copyCalls>RemainderOperationBudget.MAX_UNITS)
+                    throw new AssertionError("saved5 detached copy exceeded its shared 640-unit guard");
+                budget.begin("charged saved5 owner copy");
+                boolean done=false;
+                long workBefore=copy.workSteps(),workDelta;
+                try { done=copy.advance(RemainderOperationBudget.MAX_WORK_PER_UNIT); }
+                finally {
+                    workDelta=copy.workSteps()-workBefore;
+                    if(workDelta<0 || workDelta>RemainderOperationBudget.MAX_WORK_PER_UNIT)
+                        throw new AssertionError("saved5 copy reported work outside its controller quantum");
+                    copyWork+=workDelta;
+                    budget.end((int)workDelta,RemainderOperationBudget.MAX_WORK_PER_UNIT,done);
+                }
+                require(copy.lastWork()==workDelta,
+                    "saved5 copy cursor's per-call work matches its cumulative charged work");
+                require(done==copy.isComplete() && (workDelta>0L || done),
+                    "saved5 charged copy reports real bounded progress or completion");
+            }
+            budget.begin("consume saved5 charged copy result");
+            replay=copy.result();
+            budget.end(0,0,true);
+            require(replay!=null && !replay.isComplete(),
+                "saved5 copy result is a live initial branch cursor awaiting its actual replay");
+
+            budget.begin("audit saved5 copied frontier and inherited request state");
+            copiedOwner=(PcbLayerRoutingPrototype.Session)observedField(replay,"owner");
+            copiedSearch=replay.getSearchForDiagnostics();
+            copiedBranch=replay.getBranchForDiagnostics();
+            PcbBoardLayout copiedLayout=replay.getLayout();
+            copiedTemplate=observedField(copiedOwner,"template");
+            Object sourceBudget=observedField(source,"budget");
+            Object copiedBudget=observedField(copiedOwner,"budget");
+            require(copiedOwner!=source && copiedSearch!=sourceSearch && copiedBranch!=sourceBranch &&
+                observedField(copiedSearch,"owner")==copiedOwner &&
+                observedField(copiedOwner,"search")==copiedSearch &&
+                observedField(copiedSearch,"branch")==copiedBranch &&
+                observedField(copiedOwner,"candidate")==copiedLayout &&
+                observedField(copiedSearch,"layout")==copiedLayout &&
+                observedField(copiedSearch,"budget")==copiedBudget &&
+                observedInt(copiedSearch,"pass")==0 && observedInt(copiedOwner,"pass")==0 &&
+                observedInt(copiedBudget,"maximum")==PcbLayerRoutingPrototype.MAX_EXPANSIONS &&
+                observedInt(copiedBudget,"expanded")==inheritedExpansions &&
+                observedInt(sourceBudget,"expanded")==inheritedExpansions &&
+                observedInt(copiedOwner,"viaCost")==60 && observedInt(copiedSearch,"viaCost")==60 &&
+                observedInt(copiedOwner,"maximumVias")==48 && observedInt(copiedSearch,"maximumVias")==48,
+                "saved5 copy retains the same pass-zero Search, layout, source budget, cost60 and cap48");
+            require("AC_RETURN".equals(observedField(copiedBranch,"net")) &&
+                "D4.K".equals(((PcbPadPlacement)observedField(copiedBranch,"start")).getPadId()) &&
+                "D2.A".equals(((PcbPadPlacement)observedField(copiedBranch,"root")).getPadId()) &&
+                observedInt(copiedBranch,"branchOrdinal")==1 &&
+                observedInt(copiedBranch,"expanded")==0 &&
+                ((PcbBoardHole[])observedField(copiedBranch,"holes")).length==0 &&
+                source.expansions()==inheritedExpansions && observedField(source,"search")==sourceSearch &&
+                observedField(sourceSearch,"branch")==sourceBranch &&
+                sourceSearchLayout.geometryFingerprint().equals(sourceGeometry) &&
+                prepared.planCanonical.equals(prepared.plan.canonical()) &&
+                prepared.boardCanonical.equals(logicalBoardFingerprint(prepared.board)) &&
+                placementGeometry.equals(prepared.placement.geometryFingerprint()),
+                "saved5 copy preserves the exact initial branch lineage and source graph/layout state");
+            budget.end(0,0);
+
+            int branchCalls=0;
+            long branchWork=0L;
+            while(!replay.isComplete()) {
+                if(++branchCalls>RemainderOperationBudget.MAX_UNITS)
+                    throw new AssertionError("saved5 detached branch replay exceeded its shared 640-unit guard");
+                budget.begin("replay saved5 AC_RETURN branch and actual Publisher");
+                boolean done=false;
+                int used=0;
+                try { done=replay.advance(RemainderOperationBudget.MAX_WORK_PER_UNIT); }
+                finally {
+                    used=replay.lastWork();
+                    branchWork+=used;
+                    budget.end(used,RemainderOperationBudget.MAX_WORK_PER_UNIT,done);
+                }
+                require(done==replay.isComplete() && (used>0 || done),
+                    "saved5 branch replay reports bounded real work or its terminal Publisher transition");
+            }
+            budget.begin("audit completed saved5 AC_RETURN Publisher");
+            Object publisher=replay.getPublisherForDiagnostics();
+            require(publisher!=null && observedInt(publisher,"stage")==6 &&
+                observedField(copiedSearch,"branch")==null && observedField(copiedSearch,"publisher")==null &&
+                observedField(copiedBranch,"found")!=null &&
+                observedField(copiedBranch,"foundTerminal")!=null &&
+                observedBoolean(copiedBranch,"terminalEmitted") &&
+                observedInt(copiedBranch,"expanded")==45 &&
+                observedInt(copiedBudget,"expanded")==45 &&
+                observedInt(copiedOwner,"pass")==0 && observedInt(copiedOwner,"viaCost")==60 &&
+                copiedOwner!=source && source.expansions()==inheritedExpansions &&
+                observedInt(sourceBranch,"expanded")==0 &&
+                sourceSearchLayout.geometryFingerprint().equals(sourceGeometry),
+                "saved5 clone replays the recorded 45-expansion first AC_RETURN branch without touching its source");
+            budget.end(0,0);
+
+            budget.begin("single-use saved5 current-order handoff");
+            continuation=replay.takeOrderingContinuation();
+            budget.end(0,0,true);
+            require(observedField(continuation,"owner")==copiedOwner &&
+                observedField(continuation,"search")==copiedSearch &&
+                observedField(copiedOwner,"detachedOrderingContinuation")==continuation &&
+                observedField(copiedOwner,"search")==copiedSearch &&
+                observedField(continuation,"template")==copiedTemplate &&
+                observedBoolean(copiedOwner,"orderingStream") &&
+                observedInt(copiedOwner,"viaCost")==60 && observedInt(copiedOwner,"maximumVias")==48,
+                "saved5 receiver owns only the exact copied current-order Search");
+
+            budget.begin("release transferred branch sender without affecting receiver");
+            replay.release();
+            budget.end(0,0,true);
+            require(observedField(continuation,"owner")==copiedOwner &&
+                observedField(continuation,"search")==copiedSearch &&
+                observedField(continuation,"layout")==copiedLayout &&
+                observedField(continuation,"template")==copiedTemplate &&
+                observedField(copiedOwner,"detachedOrderingContinuation")==continuation,
+                "releasing the transferred sender leaves the copied current-order receiver live");
+
+            int remainderCalls=0;
+            long remainderWork=0L;
+            PcbLayerRoutingPrototype.DetachedOrderingProgress progress;
+            while(true) {
+                if(++remainderCalls>RemainderOperationBudget.MAX_UNITS)
+                    throw new AssertionError("saved5 current-order remainder exceeded its shared 640-unit guard");
+                budget.begin("advance saved5 copied pass-zero ordering remainder");
+                progress=null;
+                try { progress=continuation.advance(RemainderOperationBudget.MAX_WORK_PER_UNIT); }
+                finally {
+                    int used=continuation.lastWork();
+                    remainderWork+=used;
+                    budget.end(used,RemainderOperationBudget.MAX_WORK_PER_UNIT,
+                        progress!=null && progress!=PcbLayerRoutingPrototype.DetachedOrderingProgress.WORKING);
+                }
+                if(progress==PcbLayerRoutingPrototype.DetachedOrderingProgress.WORKING) continue;
+                if(progress==PcbLayerRoutingPrototype.DetachedOrderingProgress.ROUTE_READY)
+                    throw new AssertionError("saved5 detached pass zero unexpectedly produced a route");
+                if(progress!=PcbLayerRoutingPrototype.DetachedOrderingProgress.ORDERING_BOUNDARY)
+                    throw new AssertionError("saved5 continuation returned an unknown terminal state");
+                break;
+            }
+
+            budget.begin("audit saved5 typed current-order rejection");
+            final String actualReason=continuation.boundaryReason();
+            final String boundaryClass=detachedBoundaryClass(actualReason);
+            final int boundaryExpansions=observedInt(copiedBudget,"expanded");
+            final int remainingBudget=observedInt(copiedBudget,"maximum")-boundaryExpansions;
+            require(continuation.isComplete() && boundaryClass!=null &&
+                !actualReason.contains("TOTAL_SEARCH_LIMIT") && boundaryExpansions>0 && remainingBudget>0 &&
+                boundaryExpansions<PcbLayerRoutingPrototype.MAX_EXPANSIONS,
+                "saved5 receiver stops on an actual NO_PATH or QUALITY_LIMIT with request budget remaining");
+            require(observedInt(continuation,"pass")==0 &&
+                observedBoolean(copiedOwner,"orderingLeaseClosed") &&
+                observedField(copiedOwner,"detachedOrderingContinuation")==null &&
+                observedField(copiedOwner,"search")==null && observedField(copiedOwner,"candidate")==null &&
+                observedField(copiedOwner,"readyOrdering")==null &&
+                observedField(copiedOwner,"turnBoundWorkspace")==null &&
+                observedField(copiedOwner,"template")==copiedTemplate &&
+                observedField(continuation,"owner")==null &&
+                observedField(continuation,"search")==null &&
+                observedField(continuation,"layout")==null &&
+                observedField(continuation,"template")==null &&
+                observedField(continuation,"budget")==null &&
+                observedInt(copiedOwner,"passes")==1 && observedInt(copiedOwner,"pass")==1 &&
+                observedInt(copiedOwner,"completedOrderings")==1 &&
+                observedInt(copiedOwner,"yieldedOrderings")==0 &&
+                observedField(copiedOwner,"orderingTermination")==null &&
+                !observedBoolean(copiedOwner,"comparisonComplete") &&
+                !observedBoolean(copiedOwner,"complete"),
+                "boundary retires its current pass without rebuilding a next Search or claiming stream completion");
+            require(remainderWork>0 && branchWork>0 &&
+                source.expansions()==inheritedExpansions && observedField(source,"search")==sourceSearch &&
+                observedField(sourceSearch,"branch")==sourceBranch && observedInt(sourceBranch,"expanded")==0 &&
+                sourceSearchLayout.geometryFingerprint().equals(sourceGeometry) &&
+                placementGeometry.equals(prepared.placement.geometryFingerprint()) &&
+                planCanonical.equals(prepared.plan.canonical()) &&
+                boardCanonical.equals(logicalBoardFingerprint(prepared.board)),
+                "saved5 copy and failed remainder preserve original plan, board, placement and branch source");
+            budget.end(0,0);
+
+            final int observerCallsAtBoundary=detachedObserver.calls;
+            final int ownerLastWorkAtBoundary=copiedOwner.lastWork();
+            budget.begin("poll saved5 terminal boundary without further work");
+            PcbLayerRoutingPrototype.DetachedOrderingProgress repeated=continuation.advance(
+                RemainderOperationBudget.MAX_WORK_PER_UNIT);
+            int repeatedWork=continuation.lastWork();
+            budget.end(repeatedWork,RemainderOperationBudget.MAX_WORK_PER_UNIT,false);
+            require(repeated==PcbLayerRoutingPrototype.DetachedOrderingProgress.ORDERING_BOUNDARY &&
+                repeatedWork==0 && actualReason.equals(continuation.boundaryReason()) &&
+                detachedObserver.calls==observerCallsAtBoundary &&
+                observedInt(copiedBudget,"expanded")==boundaryExpansions &&
+                copiedOwner.lastWork()==ownerLastWorkAtBoundary,
+                "repeated saved5 boundary polling returns the same reason with zero work and no observer calls");
+
+            budget.begin("reject result take and raw Session bypasses after boundary");
+            final PcbLayerRoutingPrototype.DetachedOrderingContinuation terminalReceiver=continuation;
+            final PcbLayerRoutingPrototype.Session terminalOwner=copiedOwner;
+            expectIllegalState(new Runnable(){public void run(){terminalReceiver.takeReadyOrdering();}},
+                "a no-route ordering boundary exposes no takeable Result");
+            expectIllegalState(new Runnable(){public void run(){terminalOwner.advanceOrderingSlice(1);}},
+                "raw ordering advancement cannot bypass a transferred terminal boundary");
+            expectIllegalState(new Runnable(){public void run(){terminalOwner.advanceSlice(1);}},
+                "raw legacy advancement cannot bypass a transferred terminal boundary");
+            expectIllegalState(new Runnable(){public void run(){terminalOwner.orderingSummary();}},
+                "one failed current ordering cannot publish an ordinary whole-stream summary");
+            require(detachedObserver.calls==observerCallsAtBoundary &&
+                observedInt(copiedBudget,"expanded")==boundaryExpansions &&
+                copiedOwner.lastWork()==ownerLastWorkAtBoundary &&
+                observedField(copiedOwner,"search")==null && observedField(copiedOwner,"candidate")==null &&
+                observedField(copiedOwner,"readyOrdering")==null,
+                "rejected receiver and raw Session APIs leave all boundary counters and ownership unchanged");
+            budget.end(0,0);
+
+            budget.begin("release terminal saved5 copied owners");
+            continuation.release();
+            replay.release();
+            copy.cancel();
+            budget.end(0,0,true);
+            cleanupComplete=true;
+            budget.begin("verify source preservation after copied-owner release");
+            require(source.expansions()==inheritedExpansions && observedField(source,"search")==sourceSearch &&
+                observedField(sourceSearch,"branch")==sourceBranch && observedInt(sourceBranch,"expanded")==0 &&
+                sourceSearchLayout.geometryFingerprint().equals(sourceGeometry) &&
+                placementGeometry.equals(prepared.placement.geometryFingerprint()) &&
+                planCanonical.equals(prepared.plan.canonical()) &&
+                boardCanonical.equals(logicalBoardFingerprint(prepared.board)) &&
+                sourceObserver.calls==sourceObserverCalls,
+                "releasing the copied boundary cannot mutate or observe the original saved5 source");
+            require(observedField(continuation,"owner")==null && observedField(continuation,"search")==null &&
+                observedField(continuation,"layout")==null && observedField(continuation,"budget")==null &&
+                continuation.isComplete() && actualReason.equals(continuation.boundaryReason()),
+                "terminal saved5 receiver releases copied references while preserving its scalar boundary receipt");
+            budget.end(0,0);
+
+            budget.checkTotal("completed saved5 current-order boundary contract");
+            require(budget.units<=RemainderOperationBudget.MAX_UNITS &&
+                budget.realOwnerWork==(long)sourceWork+copyWork+branchWork+remainderWork &&
+                budget.realOwnerWork>0 && budget.stateTransitions>=6,
+                "single uninterrupted saved5 operation reconciles work and explicit state transitions within its limits");
+            System.out.println("P07_DETACHED_ORDERING_BOUNDARY {\"protocol\":\"p07-detached-ordering-boundary-v1\""+
+                ",\"runId\":"+quote(runId)+",\"caseId\":"+quote(fixture.caseId)+
+                ",\"rootSeed\":\"5\",\"placementVersion\":10,\"candidateAttempt\":1"+
+                ",\"placementSeed\":\"-7630701392004902526\",\"routingSeed\":\"-9106650364266936003\""+
+                ",\"sourceViaCost\":60,\"copiedViaCost\":60,\"viaCap\":48"+
+                ",\"branchNet\":\"AC_RETURN\",\"branchStart\":\"D4.K\",\"branchRoot\":\"D2.A\""+
+                ",\"branchOrdinal\":1,\"prefixVias\":0,\"branchExpansions\":45"+
+                ",\"sourceCaptureCalls\":"+sourceCalls+",\"sourceCaptureWork\":"+sourceWork+
+                ",\"copyCalls\":"+copyCalls+",\"copyWork\":"+copyWork+
+                ",\"branchReplayCalls\":"+branchCalls+",\"branchReplayWork\":"+branchWork+
+                ",\"remainderCalls\":"+remainderCalls+",\"remainderWork\":"+remainderWork+
+                ",\"progress\":\"ORDERING_BOUNDARY\",\"boundaryClass\":"+quote(boundaryClass)+
+                ",\"actualBoundaryReason\":"+quote(actualReason)+
+                ",\"cumulativeExpansions\":"+boundaryExpansions+
+                ",\"remainingRequestBudget\":"+remainingBudget+
+                ",\"passesStarted\":1,\"completedOrderings\":1,\"yieldedOrderings\":0"+
+                ",\"ordinaryComparisonComplete\":false,\"units\":"+budget.units+
+                ",\"realOwnerWork\":"+budget.realOwnerWork+
+                ",\"stateTransitions\":"+budget.stateTransitions+
+                ",\"zeroSearchWorkUnits\":"+budget.zeroSearchWorkUnits+
+                ",\"maximumUnitElapsedNanos\":"+budget.maxUnitNanos+
+                ",\"elapsedNanos\":"+budget.elapsedNanos()+
+                ",\"sourceGeometrySha256\":"+quote(PlayerSessionFingerprint.of(sourceGeometry))+
+                ",\"sourceUnchanged\":true,\"layoutQualification\":false,\"adoption\":false}");
+        } finally {
+            if(!cleanupComplete) {
+                if(continuation!=null) continuation.release();
+                if(replay!=null) replay.release();
+                if(copy!=null) copy.cancel();
+            }
+        }
+    }
+
+    private static StreamFixture findSaved5Version10Fixture() {
+        StreamFixture found=null;
+        for(StreamFixture candidate:SEED5_STREAM_FIXTURES) {
+            if(candidate.rootSeed==5L && candidate.placementVersion==10 &&
+                    candidate.candidateAttempt==1 &&
+                    candidate.placementSeed==-7630701392004902526L &&
+                    candidate.routingSeed==-9106650364266936003L) {
+                require(found==null,"saved5/version10 boundary fixture identity is unique");
+                found=candidate;
+            }
+        }
+        require(found!=null,"maintained saved5/version10 boundary fixture is present by its signed identity");
+        return found;
+    }
+
+    private static String detachedBoundaryClass(String actualReason) {
+        if(actualReason==null) return null;
+        if("NO_PATH".equals(actualReason) || actualReason.endsWith(":NO_PATH")) return "NO_PATH";
+        if("QUALITY_LIMIT".equals(actualReason) || actualReason.endsWith(":QUALITY_LIMIT") ||
+                actualReason.endsWith(":BRANCH_QUALITY_LIMIT")) return "QUALITY_LIMIT";
+        return null;
+    }
+
     private static PcbLayerRoutingPrototype.Result advanceUntilFirstYield(
             PcbLayerRoutingPrototype.Session session,SeededPcbLayoutGenerator.AttemptObserver observer) {
         int advances=0;
@@ -1407,6 +2153,37 @@ public final class P07OrderingCandidatesContractTest {
         try { action.run(); }
         catch(IllegalArgumentException expected) { checks++; return; }
         throw new AssertionError(message);
+    }
+
+    private static Object observedField(Object target,String name) {
+        if(target==null) throw new IllegalStateException("Missing P07 observation target: "+name);
+        try {
+            Field field=target.getClass().getDeclaredField(name);
+            field.setAccessible(true);
+            return field.get(target);
+        } catch(ReflectiveOperationException failure) {
+            throw new IllegalStateException("Could not read P07 observation field: "+name,failure);
+        }
+    }
+    private static int observedInt(Object target,String name) {
+        if(target==null) throw new IllegalStateException("Missing P07 observation target: "+name);
+        try {
+            Field field=target.getClass().getDeclaredField(name);
+            field.setAccessible(true);
+            return field.getInt(target);
+        } catch(ReflectiveOperationException failure) {
+            throw new IllegalStateException("Could not read P07 integer field: "+name,failure);
+        }
+    }
+    private static boolean observedBoolean(Object target,String name) {
+        if(target==null) throw new IllegalStateException("Missing P07 observation target: "+name);
+        try {
+            Field field=target.getClass().getDeclaredField(name);
+            field.setAccessible(true);
+            return field.getBoolean(target);
+        } catch(ReflectiveOperationException failure) {
+            throw new IllegalStateException("Could not read P07 boolean field: "+name,failure);
+        }
     }
 
     private static void emitStreamCanary(String runId,String caseId,boolean pass,String detail) {

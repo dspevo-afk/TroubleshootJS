@@ -20,6 +20,7 @@ final class PcbLayerRoutingPrototype {
     static final int MAX_DIAGNOSTIC_VIA_COST=240;
     static final int MAX_BRANCH_EXPANSIONS=100000, ORDERINGS=3;
     enum OrderingProgress { WORKING, ROUTE_READY, COMPLETE }
+    enum DetachedOrderingProgress { WORKING, ROUTE_READY, ORDERING_BOUNDARY }
     /** The single production arithmetic used both by Search and pre-route admission. */
     static final class GridAdmission {
         final int width,height;
@@ -714,29 +715,255 @@ final class PcbLayerRoutingPrototype {
         private Search.Publisher publisher;
         private PcbBoardLayout layout;
         private int lastWork;
-        private boolean complete,released;
+        private boolean complete,released,transferred,failed,inFlight,cancelRequested;
         private DetachedBranchReplay(Session owner,Search search,Search.BranchSearch branch) {
             this.owner=owner; this.search=search; this.branch=branch; layout=search.layout;
         }
         boolean advance(int maximumWork) {
             if(maximumWork<1 || maximumWork>32768) throw new IllegalArgumentException("Detached replay quantum must be in 1..32768");
+            if(failed) throw new IllegalStateException("Detached replay failed");
+            if(inFlight) throw new IllegalStateException("Detached replay is already advancing");
             lastWork=0; requireLive(); if(complete) return true;
-            owner.observer.check(search.pass);
-            while(lastWork<maximumWork && !complete) {
-                lastWork++; search.advanceOne();
-                if(search.publisher!=null) publisher=search.publisher;
-                if(publisher!=null && search.publisher==null && search.branch==null) complete=true;
+            inFlight=true;
+            try {
+                requireReplayOwner();
+                owner.observer.check(search.pass);
+                requireReplayOwner();
+                while(lastWork<maximumWork && !complete) {
+                    requireReplayOwner();
+                    lastWork++; search.advanceOne();
+                    if(search.publisher!=null) publisher=search.publisher;
+                    if(publisher!=null && search.publisher==null && search.branch==null) complete=true;
+                    requireReplayOwner();
+                }
+                return complete;
+            } catch(RuntimeException failure) {
+                fail(failure); throw failure;
+            } catch(Error failure) {
+                fail(failure); throw failure;
+            } finally {
+                inFlight=false;
             }
-            return complete;
         }
-        private void requireLive() {if(released) throw new IllegalStateException("Detached replay was released");}
+        private void requireLive() {
+            if(transferred) throw new IllegalStateException("Detached replay ordering owner was transferred");
+            if(released) throw new IllegalStateException("Detached replay was released");
+            if(failed) throw new IllegalStateException("Detached replay failed");
+        }
+        private void requireReplayOwner() {
+            if(cancelRequested || owner==null || search==null || layout==null ||
+                    owner.search!=search || owner.candidate!=layout || search.owner!=owner ||
+                    search.layout!=layout || owner.orderingLeaseClosed ||
+                    owner.detachedOrderingContinuation!=null || owner.complete ||
+                    owner.readyOrdering!=null || owner.diagnosticFailure!=null || search.complete)
+                throw new IllegalStateException("Detached replay owner changed");
+        }
+        private void fail(Throwable failure) {
+            failed=true;
+            complete=false;
+            Session current=owner;
+            if(current!=null && current.detachedOrderingContinuation==null &&
+                    current.search==search && current.candidate==layout && search!=null &&
+                    search.owner==current && search.layout==layout) {
+                current.search=null; current.candidate=null; current.turnBoundWorkspace=null;
+                current.readyOrdering=null; current.orderingLeaseClosed=true;
+            }
+            owner=null; search=null; branch=null; publisher=null; layout=null;
+        }
+        DetachedOrderingContinuation takeOrderingContinuation() {
+            requireLive();
+            if(inFlight || !complete || owner==null || search==null || branch==null || publisher==null || layout==null ||
+                    !branch.terminalEmitted || branch.found==null ||
+                    publisher.stage!=6 || publisher.net==null || !publisher.net.equals(branch.net) ||
+                    publisher.start!=branch.start || publisher.root!=branch.root ||
+                    publisher.end!=branch.found || publisher.endTerminal!=branch.foundTerminal ||
+                    owner.detachedOrderingContinuation!=null || owner.orderingLeaseClosed ||
+                    !owner.orderingStream || owner.complete || owner.readyOrdering!=null ||
+                    owner.diagnosticFailure!=null ||
+                    owner.search!=search || owner.candidate!=layout || search.owner!=owner ||
+                    search.layout!=layout || search.publisher!=null || search.branch!=null || search.complete ||
+                    search.pass!=owner.pass || search.budget!=owner.budget || owner.policy!=Policy.FULLER_TWO_LAYER ||
+                    search.maximumVias!=owner.maximumVias || search.viaCost!=owner.viaCost)
+                throw new IllegalStateException("Detached ordering handoff requires its completed live Publisher");
+            DetachedOrderingContinuation continuation=new DetachedOrderingContinuation(
+                owner,search,layout,owner.pass,owner.board,owner.policy,owner.template,owner.budget,
+                owner.observer,owner.maximumVias,owner.viaCost);
+            owner.detachedOrderingContinuation=continuation;
+            transferred=true;
+            lastWork=0;
+            owner=null; search=null; branch=null; publisher=null; layout=null;
+            return continuation;
+        }
         int lastWork() {return lastWork;}
         boolean isComplete() {return complete;}
         PcbBoardLayout getLayout() {requireLive(); return layout;}
         Object getSearchForDiagnostics() {requireLive(); return search;}
         Object getBranchForDiagnostics() {requireLive(); return branch;}
         Object getPublisherForDiagnostics() {requireLive(); return publisher;}
-        void release() {released=true; owner=null; search=null; branch=null; publisher=null; layout=null; lastWork=0;}
+        void cancel() { release(); }
+        void release() {
+            if(inFlight) {cancelRequested=true; return;}
+            released=true; owner=null; search=null; branch=null; publisher=null; layout=null;
+            if(!failed) lastWork=0;
+        }
+    }
+
+    /** Exclusive continuation of the same copied ordering Search after one branch publishes. */
+    static final class DetachedOrderingContinuation {
+        private Session owner;
+        private Search search;
+        private PcbBoardLayout layout;
+        private final int pass,maximumVias,viaCost;
+        private TroubleshootBoard board;
+        private Policy policy;
+        private PcbBoardLayout template;
+        private Budget budget;
+        private SeededPcbLayoutGenerator.AttemptObserver observer;
+        private DetachedOrderingProgress progress=DetachedOrderingProgress.WORKING;
+        private String boundaryReason;
+        private int lastWork;
+        private boolean released,failed,resultTaken,inFlight,cancelRequested;
+
+        private DetachedOrderingContinuation(Session owner,Search search,PcbBoardLayout layout,int pass,
+                TroubleshootBoard board,Policy policy,PcbBoardLayout template,Budget budget,
+                SeededPcbLayoutGenerator.AttemptObserver observer,int maximumVias,int viaCost) {
+            this.owner=owner; this.search=search; this.layout=layout; this.pass=pass;
+            this.board=board; this.policy=policy; this.template=template; this.budget=budget;
+            this.observer=observer; this.maximumVias=maximumVias; this.viaCost=viaCost;
+        }
+
+        DetachedOrderingProgress advance(int maximumWork) {
+            if(maximumWork<1 || maximumWork>32768)
+                throw new IllegalArgumentException("Detached ordering quantum must be in 1..32768");
+            if(inFlight) throw new IllegalStateException("Detached ordering continuation is already advancing");
+            lastWork=0;
+            if(released && progress==DetachedOrderingProgress.ORDERING_BOUNDARY) return progress;
+            requireLive();
+            if(progress!=DetachedOrderingProgress.WORKING) return progress;
+            inFlight=true;
+            boolean entered=false;
+            try {
+                requireCurrent();
+                entered=true;
+                progress=owner.advanceCurrentOrdering(maximumWork,this);
+                lastWork=owner.lastWork;
+                if(progress==DetachedOrderingProgress.ORDERING_BOUNDARY) {
+                    boundaryReason=owner.orderingTermination!=null?
+                        owner.orderingTermination:owner.reason;
+                    closeLease(false,null);
+                }
+                return progress;
+            } catch(RuntimeException failure) {
+                if(entered && owner!=null && owner.detachedOrderingContinuation==this)
+                    lastWork=owner.lastWork;
+                fail(failure); throw failure;
+            } catch(Error failure) {
+                if(entered && owner!=null && owner.detachedOrderingContinuation==this)
+                    lastWork=owner.lastWork;
+                fail(failure); throw failure;
+            } finally {
+                inFlight=false;
+            }
+        }
+
+        Result takeReadyOrdering() {
+            if(inFlight) throw new IllegalStateException("Detached ordering continuation is already advancing");
+            requireLive();
+            if(progress!=DetachedOrderingProgress.ROUTE_READY)
+                throw new IllegalStateException("Detached current ordering route is not ready");
+            lastWork=0;
+            inFlight=true;
+            try {
+                Result ready=owner.takeReadyOrdering(this);
+                resultTaken=true;
+                closeLease(false,null);
+                return ready;
+            } catch(RuntimeException failure) {
+                fail(failure); throw failure;
+            } catch(Error failure) {
+                fail(failure); throw failure;
+            } finally {
+                inFlight=false;
+            }
+        }
+
+        private void requireLive() {
+            if(released) throw new IllegalStateException("Detached ordering continuation was released");
+            if(failed) throw new IllegalStateException("Detached ordering continuation failed");
+            if(owner==null) throw new IllegalStateException("Detached ordering continuation is terminal");
+        }
+        private void requireCurrent() {
+            if(cancelRequested || owner==null || owner.detachedOrderingContinuation!=this || owner.orderingLeaseClosed ||
+                    owner.search!=search || owner.candidate!=layout || owner.board!=board ||
+                    owner.policy!=policy || owner.template!=template || owner.budget!=budget ||
+                    owner.observer!=observer || owner.maximumVias!=maximumVias || owner.viaCost!=viaCost ||
+                    owner.pass!=pass || !owner.orderingStream || owner.complete ||
+                    owner.diagnosticFailure!=null ||
+                    owner.readyOrdering!=null || search.owner!=owner || search.layout!=layout ||
+                    search.pass!=pass || search.budget!=budget || search.maximumVias!=maximumVias ||
+                    search.viaCost!=viaCost)
+                throw new IllegalStateException("Detached ordering owner changed");
+        }
+        private void requireReady() {
+            if(cancelRequested || owner==null || owner.detachedOrderingContinuation!=this || owner.orderingLeaseClosed ||
+                    !owner.orderingStream || owner.board!=board || owner.policy!=policy ||
+                    owner.template!=template || owner.budget!=budget || owner.observer!=observer ||
+                    owner.maximumVias!=maximumVias || owner.viaCost!=viaCost ||
+                    owner.readyOrdering==null || owner.readyOrdering.layout!=layout ||
+                    owner.search!=null || owner.candidate!=null || owner.complete &&
+                        owner.orderingTermination==null)
+                throw new IllegalStateException("Detached ready ordering owner changed");
+        }
+        private void markBoundary() {
+            progress=DetachedOrderingProgress.ORDERING_BOUNDARY;
+            boundaryReason=owner==null?"ORDERING_BOUNDARY":
+                owner.orderingTermination!=null?owner.orderingTermination:owner.reason;
+        }
+        private boolean ownsCurrentSearch(Session session) {
+            return owner==session && session.detachedOrderingContinuation==this &&
+                session.search==search && session.candidate==layout && session.pass==pass &&
+                session.readyOrdering==null && !session.complete;
+        }
+        private void fail(Throwable failure) {
+            failed=true;
+            closeLease(true,failure);
+        }
+        private void closeLease(boolean discard,Throwable failure) {
+            Session current=owner;
+            if(current!=null && current.detachedOrderingContinuation==this) {
+                boolean stillOwns=ownsCurrentSearch(current) ||
+                    progress==DetachedOrderingProgress.ROUTE_READY && current.readyOrdering!=null &&
+                        current.readyOrdering.layout==layout ||
+                    progress==DetachedOrderingProgress.ORDERING_BOUNDARY && current.search==null &&
+                        current.candidate==null && current.readyOrdering==null ||
+                    resultTaken && current.search==null && current.candidate==null &&
+                        current.readyOrdering==null;
+                if(stillOwns) {
+                    if(discard && failure!=null) current.abortAfterDiagnosticFailure(failure);
+                    if(discard && failure==null) {
+                        current.search=null; current.candidate=null; current.turnBoundWorkspace=null;
+                        current.readyOrdering=null; current.pendingFixedPrefixCapture=null;
+                        current.pendingFixedPrefixFailure=null;
+                    }
+                    current.orderingLeaseClosed=true;
+                }
+                // Drop only this lease token even when its pinned Search has gone stale.
+                current.detachedOrderingContinuation=null;
+            }
+            owner=null; search=null; layout=null; board=null; policy=null; template=null;
+            budget=null; observer=null; released=true;
+        }
+        int lastWork() {return lastWork;}
+        boolean isComplete() {
+            return progress==DetachedOrderingProgress.ORDERING_BOUNDARY || resultTaken;
+        }
+        String boundaryReason() {return boundaryReason;}
+        void cancel() { release(); }
+        void release() {
+            if(released) return;
+            if(inFlight) {cancelRequested=true; return;}
+            closeLease(true,null);
+        }
     }
 
     /** Retains one route candidate and its search state across counted generation turns. */
@@ -770,6 +997,9 @@ final class PcbLayerRoutingPrototype {
         private boolean complete;
         private boolean guidanceStarted,comparisonComplete;
         private Throwable diagnosticFailure;
+        private DetachedOrderingContinuation detachedOrderingContinuation;
+        private boolean orderingLeaseClosed;
+        private int lastWork;
 
         /** Detached single-branch owner; large state is supplied by the charged copy cursor. */
         private Session(Session source,SeededPcbLayoutGenerator.AttemptObserver observer,
@@ -842,6 +1072,7 @@ final class PcbLayerRoutingPrototype {
         boolean advanceSlice() { return advanceSlice(WORK_QUANTUM); }
         /** Each queue pop or bounded route-state operation consumes one slice unit. */
         boolean advanceSlice(int maximumWork) {
+            requireOrderingLeaseOpen();
             rethrowDiagnosticFailureIfAny();
             if(orderingStream)
                 throw new IllegalStateException("P07 ordering session requires advanceOrderingSlice");
@@ -851,25 +1082,33 @@ final class PcbLayerRoutingPrototype {
         }
         /** Shared bounded search loop; only result/terminal transitions vary by session mode. */
         private boolean advanceWork(int maximumWork) {
+            return advanceWork(maximumWork,null);
+        }
+        private boolean advanceWork(int maximumWork,DetachedOrderingContinuation continuation) {
+            lastWork=0;
             if(!orderingStream && complete) return true;
-            observer.check(orderingStream?orderingObserverPass():pass);
+            checkObserver(orderingStream?orderingObserverPass():pass,continuation);
             if(orderingStream && (readyOrdering!=null || complete)) return complete;
             int remaining=maximumWork;
             while(remaining>0 && !complete && (!orderingStream || readyOrdering==null)) {
+                if(continuation!=null && continuation.progress==DetachedOrderingProgress.ORDERING_BOUNDARY)
+                    break;
+                if(continuation!=null) continuation.requireCurrent();
                 if(pendingFixedPrefixCapture!=null) {
                     // A selected failure owns this turn. Copying and scans return
                     // to the generator after a small bounded batch, never after
                     // consuming the complete graph in one call.
                     int chunks=Math.min(4,remaining);
                     for(int chunk=0;chunk<chunks;chunk++) {
-                        observer.check(pass);
-                        boolean captured=pendingFixedPrefixCapture.advanceObservationUnit();
-                        remaining--;
+                        checkObserver(pass,continuation);
+                        boolean captured;
+                        try { captured=pendingFixedPrefixCapture.advanceObservationUnit(); }
+                        finally { remaining=consumeWork(remaining); }
                         if(!captured) continue;
                         FixedPrefixGraphSnapshot snapshot=pendingFixedPrefixCapture.finish();
-                        observer.check(pass);
+                        checkObserver(pass,continuation);
                         fixedPrefixGraphObserver.onGraph(snapshot);
-                        observer.check(pass);
+                        checkObserver(pass,continuation);
                         Exhausted terminal=pendingFixedPrefixFailure;
                         pendingFixedPrefixCapture=null;
                         pendingFixedPrefixFailure=null;
@@ -877,12 +1116,14 @@ final class PcbLayerRoutingPrototype {
                             throw new IllegalStateException("Fixed-prefix capture lost its deferred failure");
                         if(handleExhausted(terminal)) {
                             finishOrderingTerminal("TOTAL_SEARCH_LIMIT",false);
-                            observer.check(orderingObserverPass());
+                            if(continuation!=null) continuation.markBoundary();
+                            else checkObserver(orderingObserverPass(),null);
                             return true;
                         }
+                        if(continuation!=null) continuation.markBoundary();
                         return false;
                     }
-                    observer.check(pass);
+                    checkObserver(pass,continuation);
                     return false;
                 }
                 if(search==null) {
@@ -894,7 +1135,7 @@ final class PcbLayerRoutingPrototype {
                         } else finishRejected();
                         break;
                     }
-                    observer.check(pass);
+                    checkObserver(pass,continuation);
                     passes++;
                     String promotedNet=roleWidths?previousFailedNet:null;
                     previousFailedNet=null;
@@ -910,21 +1151,25 @@ final class PcbLayerRoutingPrototype {
                             completedOrderings++;
                         } else pass++;
                     }
-                    observer.check(pass<ORDERINGS?pass:ORDERINGS-1);
-                    remaining--;
+                    checkObserver(pass<ORDERINGS?pass:ORDERINGS-1,continuation);
+                    remaining=consumeWork(remaining);
                     continue;
                 }
+                if(continuation!=null) continuation.requireCurrent();
+                boolean searchCallReturned=false,searchOperationCharged=false;
                 try {
                     search.advanceOne();
-                    remaining--;
+                    searchCallReturned=true;
+                    remaining=consumeWork(remaining);
+                    searchOperationCharged=true;
                     if(search.complete) {
-                        observer.check(pass);
+                        checkObserver(pass,continuation);
                         candidate.validateRoutingGeometry(board);
                         search.rules.validate(candidate);
                         candidate.validateRouteQuality();
                         if(candidate.getHoleCount()>maximumVias)
                             throw new IllegalStateException("P07 route exceeded its request via allowance");
-                        observer.check(pass); // No partial routes or holes can escape a failed/cancelled attempt.
+                        checkObserver(pass,continuation); // No partial routes or holes can escape a failed/cancelled attempt.
                         candidate.setRoutingStatistics(budget.expanded,search.segments,0);
                         if(orderingStream) {
                             readyOrdering=new Result(candidate,"SUCCESS",budget.expanded,passes,links);
@@ -947,9 +1192,16 @@ final class PcbLayerRoutingPrototype {
                         }
                     }
                 } catch(Exhausted failure) {
+                    if(!searchCallReturned || continuation==null || remaining>0) {
+                        remaining=consumeWork(remaining);
+                        searchOperationCharged=true;
+                    }
                     boolean totalSearchLimit=handleExhausted(failure);
-                    remaining--;
                     if(totalSearchLimit) finishOrderingTerminal("TOTAL_SEARCH_LIMIT",false);
+                    if(continuation!=null) {
+                        continuation.markBoundary();
+                        break;
+                    }
                 } catch(PcbBoardLayout.RouteQualityRejectedException quality) {
                     reason="QUALITY_LIMIT";
                     previousFailedNet=null;
@@ -958,9 +1210,22 @@ final class PcbLayerRoutingPrototype {
                         turnBoundWorkspace=null;
                         completedOrderings++;
                     }
-                    remaining--;
+                    if(!searchCallReturned || continuation==null || remaining>0) {
+                        remaining=consumeWork(remaining);
+                        searchOperationCharged=true;
+                    }
+                    if(continuation!=null) {
+                        continuation.markBoundary();
+                        break;
+                    }
+                } finally {
+                    // A detached operation that fails inside Search.advanceOne still reports
+                    // the entered owner work; normal sessions keep their historical accounting.
+                    if(continuation!=null && !searchOperationCharged) lastWork++;
                 }
             }
+            if(continuation!=null && continuation.progress==DetachedOrderingProgress.ORDERING_BOUNDARY)
+                return complete;
             if(orderingStream && !complete && readyOrdering==null && search==null) {
                 if(pass>=ORDERINGS)
                     finishOrderingTerminal(yieldedOrderings>0?"ORDERINGS_COMPLETE":reason,true);
@@ -968,8 +1233,8 @@ final class PcbLayerRoutingPrototype {
                     finishOrderingTerminal("TOTAL_SEARCH_LIMIT",false);
             }
             if(orderingStream) {
-                if(!complete && readyOrdering==null) observer.check(orderingObserverPass());
-            } else if(!complete) observer.check(pass<ORDERINGS?pass:ORDERINGS-1);
+                if(!complete && readyOrdering==null) checkObserver(orderingObserverPass(),continuation);
+            } else if(!complete) checkObserver(pass<ORDERINGS?pass:ORDERINGS-1,continuation);
             return complete;
         }
         private boolean handleExhausted(Exhausted failure) {
@@ -998,6 +1263,7 @@ final class PcbLayerRoutingPrototype {
         OrderingProgress advanceOrderingSlice() { return advanceOrderingSlice(WORK_QUANTUM); }
         /** Advances only the current pass; a ready route must be taken before successor work. */
         OrderingProgress advanceOrderingSlice(int maximumWork) {
+            requireOrderingLeaseOpen();
             if(!orderingStream)
                 throw new IllegalStateException("P07 legacy session does not expose ordering progress");
             rethrowDiagnosticFailureIfAny();
@@ -1016,11 +1282,55 @@ final class PcbLayerRoutingPrototype {
                 throw failure;
             }
         }
+        private DetachedOrderingProgress advanceCurrentOrdering(int maximumWork,
+                DetachedOrderingContinuation continuation) {
+            if(maximumWork<1 || maximumWork>32768)
+                throw new IllegalArgumentException("Detached ordering quantum must be in 1..32768");
+            if(!orderingStream || continuation==null || detachedOrderingContinuation!=continuation ||
+                    orderingLeaseClosed)
+                throw new IllegalStateException("Detached ordering lease is not current");
+            continuation.requireCurrent();
+            boolean terminal=advanceWork(maximumWork,continuation);
+            if(readyOrdering!=null) return DetachedOrderingProgress.ROUTE_READY;
+            if(continuation.progress==DetachedOrderingProgress.ORDERING_BOUNDARY || terminal) {
+                if(continuation.progress!=DetachedOrderingProgress.ORDERING_BOUNDARY)
+                    continuation.markBoundary();
+                return DetachedOrderingProgress.ORDERING_BOUNDARY;
+            }
+            return DetachedOrderingProgress.WORKING;
+        }
+        private Result takeReadyOrdering(DetachedOrderingContinuation continuation) {
+            if(!orderingStream || continuation==null || detachedOrderingContinuation!=continuation ||
+                    orderingLeaseClosed)
+                throw new IllegalStateException("Detached ordering lease is not current");
+            continuation.requireReady();
+            Result ready=readyOrdering;
+            observer.check(orderingObserverPass());
+            continuation.requireReady();
+            if(readyOrdering!=ready)
+                throw new IllegalStateException("Detached ready ordering changed during observation");
+            readyOrdering=null;
+            return ready;
+        }
         private int orderingObserverPass() {
             return pass<0?0:pass>=ORDERINGS?ORDERINGS-1:pass;
         }
+        private void checkObserver(int attempt,DetachedOrderingContinuation continuation) {
+            if(continuation!=null) continuation.requireCurrent();
+            observer.check(attempt);
+            if(continuation!=null) continuation.requireCurrent();
+        }
+        private int consumeWork(int remaining) {
+            lastWork++;
+            return remaining-1;
+        }
+        private void requireOrderingLeaseOpen() {
+            if(detachedOrderingContinuation!=null || orderingLeaseClosed)
+                throw new IllegalStateException("P07 ordering owner was transferred or closed");
+        }
         /** Consumes exactly one yielded route; no search work is performed here. */
         Result takeReadyOrdering() {
+            requireOrderingLeaseOpen();
             if(!orderingStream)
                 throw new IllegalStateException("P07 legacy session does not expose ordering candidates");
             rethrowDiagnosticFailureIfAny();
@@ -1041,6 +1351,7 @@ final class PcbLayerRoutingPrototype {
         }
         /** Available only after terminal search and after the caller takes any final yield. */
         OrderingSummary orderingSummary() {
+            requireOrderingLeaseOpen();
             if(!orderingStream)
                 throw new IllegalStateException("P07 legacy session does not expose ordering summary");
             rethrowDiagnosticFailureIfAny();
@@ -1059,6 +1370,7 @@ final class PcbLayerRoutingPrototype {
             }
         }
         Result result() {
+            requireOrderingLeaseOpen();
             rethrowDiagnosticFailureIfAny();
             if(orderingStream)
                 throw new IllegalStateException("P07 ordering session does not expose legacy result");
@@ -1066,6 +1378,7 @@ final class PcbLayerRoutingPrototype {
             return result;
         }
         int expansions() { return budget.expanded; }
+        int lastWork() { return lastWork; }
         private void rethrowDiagnosticFailureIfAny() {
             if(diagnosticFailure instanceof RuntimeException)
                 throw (RuntimeException)diagnosticFailure;

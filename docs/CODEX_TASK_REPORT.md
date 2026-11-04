@@ -1,3 +1,84 @@
+# Current checkpoint: copied-order ownership validated; publication pending
+
+UTC 2026-11-04. Worktree X=OS-temp/tsj-q100-cost240-remainder-20261104-r1;
+branch codex/q100-cost240-remainder-20261104; HEAD/source parent
+35f732237fe2be863816a49e715599655c6fa18e. QX=fixed-prefix bundle/
+cost240-remainder-owner-r1. No new commit, push or completion email yet.
+Prior cost240 implementation 1b25be0d1ddf406ef1c2722c864eabd92f0262e1 and
+receipt35f73223 remain published on origin/codex/q100-physical-feasibility;
+Gmail1a1a55391cbe9b24 was sent once.
+
+Scope: single-use ownership transfer from a completed detached Publisher to
+the same copied current-order Session/Search/layout/pass/cost/cap/budget.
+Typed ready or rejection boundaries prevent accidental successor ordering.
+Source preservation, cancellation, observer errors, reentry and stale cleanup
+are covered. Normal defaults, old APIs, layout26/dependency28 and all bounds
+remain unchanged. Actual LOAD12/73 copied remainder is NOT RUN; playable100=0,
+beta held. The [finite packet](task-evidence/Q100/cost240-remainder-owner-r1/README.md)
+and [qualification](task-evidence/Q100/cost240-remainder-owner-r1/qualification.json)
+record commands, identities, results and limits.
+
+Frozen production SHA256 1acc6acf9a172952fabdd316ca732d4e86905f449b65dc51e7a17bf7c8e5848e;
+literal9c3bb41a4a318b56efc4e3d937f97de249fab8d29ad79ba1b0cbbdabc8aa8d9a;
+OrderingCandidates6a6c51eacf1743d4e1abf94dfaab1240316ba6b5fbae9701000176ff4973b68c.
+Native manifest d9c3da3c85859622cd75915dbde9fa14b322691d763106ba39584eb493e21190
+has1079 inputs/87081192 bytes (850 production,223 contracts,6 static).
+Source9/R6 archive and earlier failed source snapshots remain in QX.
+
+PASS final-source prerequisite2 (48.7235142s), focused8 (51.4797401s),
+native33 including original22 (131.3581685s), five native diagnostics and
+five independent readers. All native child exits0/terminationTRUE/input audits/
+managed-scratch cleanupPASS. Separate native/build cleanup duration NOT EXPORTED.
+Saved7/root42/candidate4 own-result finalizer/comparator plus independent P08
+clearance/connectivity/net isolation/all-pair/raster checks PASS:345235 expansions,
+16 VIAs, geometry753627b05999ad1b3f60aecd54130af2a1b957daa68cbe2752dfcaaac47d5c87.
+Seed5/v10 default60 control stops at actual REF_SHARED:BRANCH_QUALITY_LIMIT,
+222262 expansions/777738 remaining, no successor/search/result/comparison claim.
+One90s/640-unit/5s-unit operation, <=32768 actual steps/unit, includes all phases.
+
+Actual final-source JDK8/GWT OBF Player and Developer builds PASS, each1202/357.
+Player inpute74f62c0c6b0d8e87186a328905cb60cc8c90b084bdb6a0a1f3cc80018e2d727,
+outputad675dd2457f12681a2601a92ffd067c0c90f4326817c7e040e5a088369eb41c.
+Developer input08b617227b1b61a7671e8f921856e1e3053961c90e85c06970f9e8c678c940b7,
+output3e04234746715be5331d84fb6b721ae11b2485506592226272fc353cd9fbb456.
+Compiled Player privacy1/marker scan7, E06State10 and Current9 PASS.
+Current cleanup.successTRUE/noerrors/shutdown6568ms; resourceSuccess and separate
+operation/cleanup durations NOT EXPORTED; total elapsed230.2990643s is reported. Other gate phase metrics are in packet.
+Automated privacy is not visible manual Player input or human-repair proof.
+
+Normal3 all six phases PASS, including real wrong-SDK rejection before export
+and independent exact three-root validation. Four-candidate envelope/one attempt
+per root; roots -2230691771308388107,6702341860553104274,-8360266000248569150.
+Normal3 reported maxUnitMillis0 is not a new independent unit-time measurement.
+Python135 methods:133PASS/two exact host file-symlink privilege skips; reuse
+audited against unchanged raw38 inputs/tools/module/hosts. Final audit PASS:
+source9/native1079/Python38/tools/module/Developer identity/Player inputs and
+357-file Player archive unchanged; qualification SHA256
+d940b1a82f95c7c02a66b877a1bedffa10070844ae2cc32b7446ce0ea6711b09.
+
+Task-owned normal3 profile removed with PASS; fresh process count0. Capture/
+owner marker/result retained. No active current matrix or owned browser actor.
+X active output Developer; Player357 archive QX/player-output-r1 retained.
+Prior W/T failed privacy profiles/claims, old failure evidence and unowned8928
+remain untouched. Independent read-only production review found no supported-API
+blocker; reviewer ran no tests. Root owns integrated diff and runtime acceptance.
+
+Preserved: Main5f05b005 has9tracked+6untracked, Desktop e0c36885 has7tracked+
+73untracked, U f0c2004f has19raw-only helpers, W35f73223 has23raw-only helpers/
+canonical0/staged0. X raw-only helpers remain unrelated. Main top checkpoint
+mirrors X; accepted W immutable. All prior checkpoint bodies remain in QX.
+Full30 owner-excluded/full2-by-31 not renewed. Existing focused42/5 are separate.
+HARD/PSYCHOTIC unavailable/unrun; protected HARD unread in this scope, historical
+unread UNCERTIFIED. Self-hosted CI runner registration remains a prerequisite.
+
+Next: inspect/stage intended paths, normal commit/push to the established
+origin/codex/q100-physical-feasibility ref, verify exact SHA, then one completion
+Gmail. Record publication separately. Continue the [frozen actual remainder
+scope](task-evidence/Q100/cost240-remainder-owner-r1/NEXT_ACTUAL_REMAINDER_PLAN.md)
+after publication; its design is not routing or independent-access proof.
+
+# Historical checkpoint: cost240 published
+
 # Current checkpoint: cost240 published; next owner design underway
 
 UTC2026-11-04. W=OS-temp/tsj-q100-load12-cost240-20261104-r1, branch

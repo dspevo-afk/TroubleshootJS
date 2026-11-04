@@ -17,6 +17,7 @@ public final class P07DetachedBranchReplayContractTest {
     private static final int MAX_REPLAY_UNITS=50000;
     private static final int MAX_COPY_WORK_STEPS=2000000;
     private static final int MAX_COPY_QUANTUM=PcbLayerRoutingPrototype.WORK_QUANTUM;
+    private static final int SOURCE_PREP_WORK_PER_UNIT=8192;
     private static final int MAX_LITERAL_GRID_CELLS=10000;
     private static final int MAX_ROUTER_OBSERVATION_CALLS=100;
     private static int assertions;
@@ -122,6 +123,7 @@ public final class P07DetachedBranchReplayContractTest {
             if(explicitDefault!=null) explicitDefault.handle.release();
             if(costOverride!=null) costOverride.handle.release();
         }
+        verifyOrderingContinuationHandoff();
         assertions++;
     }
 
@@ -153,6 +155,716 @@ public final class P07DetachedBranchReplayContractTest {
             units++;
         }
         throw new AssertionError("literal source exceeded its one-unit capture guard");
+    }
+
+    private static Source freshOrderingSource(final ContinuationBudget budget) throws Exception {
+        final LiteralFixture fixture=budget.run("source-setup",new Operation<LiteralFixture>() {
+            public LiteralFixture run() throws Exception { return literalSourceFixture(); }
+        });
+        final PcbLayerRoutingPrototype.Session session=budget.run("source-setup",
+            new Operation<PcbLayerRoutingPrototype.Session>() {
+                public PcbLayerRoutingPrototype.Session run() {
+                    return PcbLayerRoutingPrototype.beginOrderingCandidates(
+                        fixture.board,fixture.layout,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
+                        P06FactoryLinkFixtures.OBSERVER,PcbLayerRoutingPrototype.MAX_EXPANSIONS,
+                        POLICY_VIA_CAP,null);
+                }
+            });
+        final int[] steps={0};
+        final Object[] capturedSearch={null},capturedBranch={null};
+        while(steps[0]<MAX_SOURCE_UNITS && capturedSearch[0]==null) {
+            budget.runMeasured("source-prep",new Operation<Void>() {
+                public Void run() throws Exception {
+                    while(budget.currentUnitWork()<SOURCE_PREP_WORK_PER_UNIT &&
+                            steps[0]<MAX_SOURCE_UNITS) {
+                        Object search=field(session,"search");
+                        if(search!=null) {
+                            Object branch=field(search,"branch");
+                            if(branch!=null && intField(search,"pass")==0 &&
+                                    intField(branch,"branchOrdinal")==4 &&
+                                    "UNDER".equals(stringField(search,"currentNet")) &&
+                                    "C.1".equals(((PcbPadPlacement)field(branch,"start")).getPadId())) {
+                                capturedSearch[0]=search; capturedBranch[0]=branch;
+                                return null;
+                            }
+                        }
+                        PcbLayerRoutingPrototype.OrderingProgress progress;
+                        try { progress=session.advanceOrderingSlice(1); }
+                        finally { budget.recordWork(session.lastWork()); }
+                        int used=session.lastWork();
+                        require(used>=0 && used<=1,
+                            "real ordering source preparation charges at most its one-step request");
+                        steps[0]++;
+                        if(progress!=PcbLayerRoutingPrototype.OrderingProgress.WORKING)
+                            throw new AssertionError("real ordering source ended before its consumer branch");
+                        if(used==0) break;
+                    }
+                    return null;
+                }
+            });
+        }
+        if(capturedSearch[0]!=null) {
+            final Object search=capturedSearch[0],branch=capturedBranch[0];
+            final int sourceUnits=steps[0];
+            return budget.run("source-setup",new Operation<Source>() {public Source run()
+                    throws Exception {
+                return new Source(fixture,session,search,branch,sourceUnits);
+            }});
+        }
+        throw new AssertionError("ordering source exceeded its bounded work-unit capture guard");
+    }
+
+    private static void verifyOrderingContinuationHandoff() throws Exception {
+        final ContinuationBudget budget=new ContinuationBudget();
+        final Source source=freshOrderingSource(budget);
+        final Source control=freshOrderingSource(budget);
+        require(source.maximumVias==POLICY_VIA_CAP && source.viaCost==
+                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.viaCost && source.viaCost==60 &&
+                source.prefixIds.length==SOURCE_VIA_CAP,
+            "real ordering source retains policy cost sixty, cap forty-eight and its two-VIA prefix");
+
+        final Replay early=buildDetached(source,MAX_COPY_QUANTUM,POLICY_VIA_CAP,true,
+            source.viaCost,true,null,budget);
+        try {
+            final Object earlySearch=early.search;
+            final PcbBoardLayout earlyLayout=early.layout;
+            expectLifecycleRejected(budget,"handoff",new Checked(){public void run() {
+                early.handle.takeOrderingContinuation();
+            }},"early continuation handoff is rejected before Publisher completion");
+            require(early.handle.getSearchForDiagnostics()==earlySearch &&
+                    early.handle.getLayout()==earlyLayout && !early.handle.isComplete(),
+                "rejected early handoff preserves the live detached branch owner");
+        } finally { early.handle.release(); }
+
+        final PcbLayerRoutingPrototype.Result ordinary=finishCurrentOrdering(control,budget);
+        budget.run("oracle",new Operation<Void>() {public Void run() {
+            verifyFullOrderingLayout(control.fixture.board,ordinary.layout,"ordinary cost-sixty route");
+            return null;
+        }});
+        final GateObserver defaultGate=new GateObserver();
+        final Replay defaultCost=buildDetached(source,MAX_COPY_QUANTUM,POLICY_VIA_CAP,true,
+            source.viaCost,true,defaultGate,budget);
+        final Source raisedSource=freshOrderingSource(budget);
+        final Replay raisedCost=buildDetached(raisedSource,MAX_COPY_QUANTUM,POLICY_VIA_CAP,true,
+            DIAGNOSTIC_VIA_COST,true,null,budget);
+        PcbLayerRoutingPrototype.Result continuedDefault=null,continuedRaised=null;
+        try {
+            completeReplay(defaultCost,MAX_COPY_QUANTUM,budget);
+            completeReplay(raisedCost,MAX_COPY_QUANTUM,budget);
+            require(field(defaultCost.publisher,"endTerminal")==null &&
+                    field(defaultCost.branch,"foundTerminal")==null &&
+                    field(raisedCost.publisher,"endTerminal")==null &&
+                    field(raisedCost.branch,"foundTerminal")==null,
+                "tree-join goal retains a legitimate null terminal through both Publishers");
+            require(defaultCost.maximumVias==POLICY_VIA_CAP &&
+                    defaultCost.viaCost==source.viaCost &&
+                    raisedCost.maximumVias==POLICY_VIA_CAP &&
+                    raisedCost.viaCost==DIAGNOSTIC_VIA_COST &&
+                    intField(defaultCost.owner,"maximumVias")==POLICY_VIA_CAP &&
+                    intField(defaultCost.owner,"viaCost")==60 &&
+                    intField(raisedCost.owner,"maximumVias")==POLICY_VIA_CAP &&
+                    intField(raisedCost.owner,"viaCost")==DIAGNOSTIC_VIA_COST &&
+                    intField(source.owner,"maximumVias")==POLICY_VIA_CAP &&
+                    intField(source.owner,"viaCost")==60,
+                "copied ordering remainder preserves cap forty-eight and isolates effective cost");
+
+            PcbLayerRoutingPrototype.Session defaultOwner=defaultCost.owner;
+            Object defaultSearch=defaultCost.search;
+            PcbBoardLayout defaultLayout=defaultCost.layout;
+            int sourcePasses=intField(source.owner,"passes");
+            int sourceCompleted=intField(source.owner,"completedOrderings");
+            int sourceYielded=intField(source.owner,"yieldedOrderings");
+            Object sourceBudget=field(source.owner,"budget");
+            Object copiedBudget=field(defaultOwner,"budget");
+            final PcbLayerRoutingPrototype.DetachedOrderingContinuation defaultContinuation=
+                budget.run("handoff",new Operation<PcbLayerRoutingPrototype.DetachedOrderingContinuation>() {
+                    public PcbLayerRoutingPrototype.DetachedOrderingContinuation run() {
+                        return defaultCost.handle.takeOrderingContinuation();
+                    }
+                });
+            require(field(defaultCost.handle,"owner")==null && field(defaultCost.handle,"search")==null &&
+                    field(defaultCost.handle,"layout")==null &&
+                    field(defaultContinuation,"owner")==defaultOwner &&
+                    field(defaultContinuation,"search")==defaultSearch &&
+                    field(defaultContinuation,"layout")==defaultLayout &&
+                    field(defaultOwner,"search")==defaultSearch &&
+                    field(defaultOwner,"candidate")==defaultLayout &&
+                    field(defaultOwner,"board")==field(source.owner,"board") &&
+                    field(defaultOwner,"policy")==field(source.owner,"policy") &&
+                    field(defaultOwner,"fixedPrefixContext")==field(source.owner,"fixedPrefixContext") &&
+                    field(defaultSearch,"rules")==field(source.search,"rules") &&
+                    field(defaultSearch,"board")==field(source.search,"board") &&
+                    field(defaultSearch,"policy")==field(source.search,"policy") &&
+                    field(defaultSearch,"budget")==copiedBudget && copiedBudget!=sourceBudget &&
+                    intField(copiedBudget,"maximum")==intField(sourceBudget,"maximum") &&
+                    intField(copiedBudget,"expanded")>=intField(sourceBudget,"expanded") &&
+                    intField(copiedBudget,"expanded")<=intField(copiedBudget,"maximum") &&
+                    booleanField(defaultOwner,"orderingStream") &&
+                    intField(defaultOwner,"passes")==sourcePasses &&
+                    intField(defaultOwner,"completedOrderings")==sourceCompleted &&
+                    intField(defaultOwner,"yieldedOrderings")==sourceYielded,
+                "single-use transfer retains the exact copied Session, Search, layout and inherited counters");
+            final PcbLayerRoutingPrototype.DetachedOrderingContinuation finalDefault=defaultContinuation;
+            final PcbLayerRoutingPrototype.Session finalDefaultOwner=defaultOwner;
+            final int[] checksBeforeInvalid={defaultCost.observerChecks[0]};
+            expectIllegalArgument(budget,"lifecycle",new Checked(){public void run() {
+                finalDefault.advance(0);
+            }},
+                "detached ordering rejects zero work before observer callbacks");
+            expectIllegalArgument(budget,"lifecycle",new Checked(){public void run() {
+                finalDefault.advance(32769);
+            }},
+                "detached ordering rejects work above thirty-two thousand seven hundred sixty-eight");
+            require(defaultCost.observerChecks[0]==checksBeforeInvalid[0] &&
+                    finalDefault.lastWork()==0 && field(finalDefaultOwner,"search")==defaultSearch,
+                "invalid continuation quanta leave owner, Search and observer untouched");
+            expectLifecycleRejected(budget,"lifecycle",new Checked(){public void run() {
+                finalDefaultOwner.advanceOrderingSlice(1);
+            }},"raw Session cannot advance while the continuation owns its ordering");
+            expectLifecycleRejected(budget,"lifecycle",new Checked(){public void run() {
+                finalDefaultOwner.takeReadyOrdering();
+            }},"raw Session cannot steal a continuation route");
+            expectLifecycleRejected(budget,"lifecycle",new Checked(){public void run() {
+                finalDefaultOwner.orderingSummary();
+            }},"raw Session cannot expose an ordinary summary during continuation ownership");
+            expectLifecycleRejected(budget,"lifecycle",new Checked(){public void run() {
+                defaultCost.handle.takeOrderingContinuation();
+            }},"a transferred replay cannot issue a duplicate continuation");
+            expectLifecycleRejected(budget,"lifecycle",new Checked(){public void run() {
+                defaultCost.handle.advance(1);
+            }},"a transferred replay cannot resume branch work");
+            budget.run("lifecycle",new Operation<Void>() {public Void run() {
+                defaultCost.handle.release(); defaultCost.handle.cancel(); return null;
+            }});
+            defaultGate.runOnNextCheck(new Runnable(){public void run() {
+                try { defaultContinuation.advance(1); }
+                catch(IllegalStateException expected) {
+                    defaultGate.rejectedAdvanceReentries++;
+                    budget.recordNestedControlUnit();
+                }
+            }});
+            ContinuationRun defaultRun=finishContinuation(defaultContinuation,defaultCost,32768,
+                defaultGate,budget);
+            continuedDefault=defaultRun.result;
+            final PcbLayerRoutingPrototype.Result route60=continuedDefault;
+            require(defaultGate.rejectedAdvanceReentries==1 && defaultGate.rejectedTakeReentries==1,
+                "reentrant continuation advance and take are rejected without consuming nested work");
+            require(continuedDefault.layout==defaultLayout && continuedDefault.accepted() &&
+                    continuedDefault.orderings==ordinary.orderings &&
+                    continuedDefault.expansions==ordinary.expansions &&
+                    continuedDefault.vias==ordinary.vias &&
+                    PlayerSessionFingerprint.of(continuedDefault.layout.geometryFingerprint()).equals(
+                        PlayerSessionFingerprint.of(ordinary.layout.geometryFingerprint())) &&
+                    PlayerSessionFingerprint.of(continuedDefault.layout.traceGeometryFingerprint()).equals(
+                        PlayerSessionFingerprint.of(ordinary.layout.traceGeometryFingerprint())) &&
+                    continuedDefault.layout.captureConductorGraph(source.fixture.board).toCanonical().equals(
+                        ordinary.layout.captureConductorGraph(control.fixture.board).toCanonical()),
+                "cost-sixty copied remainder matches the real ordinary current-ordering route exactly");
+            budget.run("oracle",new Operation<Void>() {public Void run() {
+                verifyFullOrderingLayout(source.fixture.board,route60.layout,
+                    "continued cost-sixty route");
+                return null;
+            }});
+            expectLifecycleRejected(budget,"lifecycle",new Checked(){public void run() {
+                finalDefault.advance(1);
+            }},"consuming the current route ends the continuation lease");
+            expectLifecycleRejected(budget,"lifecycle",new Checked(){public void run() {
+                finalDefault.takeReadyOrdering();
+            }},"a current-ordering result can be taken only once");
+            expectLifecycleRejected(budget,"lifecycle",new Checked(){public void run() {
+                finalDefaultOwner.orderingSummary();
+            }},"consumed current-ordering result does not claim ordinary comparison completion");
+
+            final PcbLayerRoutingPrototype.DetachedOrderingContinuation raisedContinuation=
+                budget.run("handoff",new Operation<PcbLayerRoutingPrototype.DetachedOrderingContinuation>() {
+                    public PcbLayerRoutingPrototype.DetachedOrderingContinuation run() {
+                        return raisedCost.handle.takeOrderingContinuation();
+                    }
+                });
+            PcbLayerRoutingPrototype.Session raisedOwner=raisedCost.owner;
+            Object raisedSearch=raisedCost.search;
+            PcbBoardLayout raisedLayout=raisedCost.layout;
+            require(field(raisedContinuation,"owner")==raisedOwner &&
+                    field(raisedContinuation,"search")==raisedSearch &&
+                    field(raisedContinuation,"layout")==raisedLayout,
+                "cost-two-forty transfer does not rebuild or replace the copied Search");
+            ContinuationRun raisedRun=finishContinuation(raisedContinuation,raisedCost,32768,null,budget);
+            continuedRaised=raisedRun.result;
+            final PcbLayerRoutingPrototype.Result route240=continuedRaised;
+            require(continuedRaised.accepted() && continuedRaised.layout==raisedLayout &&
+                    continuedRaised.expansions==raisedOwner.expansions() &&
+                    intField(raisedOwner,"viaCost")==DIAGNOSTIC_VIA_COST &&
+                    intField(raisedOwner,"maximumVias")==POLICY_VIA_CAP,
+                "cost-two-forty continuation completes the same ordering under its inherited expansion budget");
+            budget.run("oracle",new Operation<Void>() {public Void run() {
+                verifyFullOrderingLayout(raisedSource.fixture.board,route240.layout,
+                    "continued cost-two-forty route");
+                return null;
+            }});
+            budget.run("lifecycle",new Operation<Void>() {public Void run() throws Exception {
+                verifySourceUnchanged(source,"cost-sixty and cost-two-forty ordering continuations");
+                verifySourceUnchanged(raisedSource,"cost-two-forty ordering continuation");
+                return null;
+            }});
+        } finally {
+            defaultCost.handle.release();
+            raisedCost.handle.release();
+        }
+
+        verifyContinuationCancellation(source,budget);
+        verifyStaleContinuation(source,budget);
+        verifyContinuationObserverFailure(source,budget);
+        verifyReplayReentrancy(source,budget);
+        verifyReplayFailureLifecycle(source,budget);
+        budget.run("lifecycle",new Operation<Void>() {public Void run() throws Exception {
+            verifySourceUnchanged(source,"ordering continuation lifecycle canaries");
+            return null;
+        }});
+        budget.reportAndCheck();
+        assertions++;
+    }
+
+    private static PcbLayerRoutingPrototype.Result finishCurrentOrdering(final Source source,
+            final ContinuationBudget budget) throws Exception {
+        for(int calls=0;calls<MAX_COPY_WORK_STEPS;calls++) {
+            final int beforeExpanded=source.session.expansions();
+            PcbLayerRoutingPrototype.OrderingProgress progress=budget.runMeasured("control",
+                new Operation<PcbLayerRoutingPrototype.OrderingProgress>() {
+                    public PcbLayerRoutingPrototype.OrderingProgress run() {
+                        try { return source.session.advanceOrderingSlice(
+                            budget.remainingBatchWork()); }
+                        finally { budget.recordWork(source.session.lastWork()); }
+                    }
+                });
+            int used=source.session.lastWork();
+            require(used>=0 && used<=ContinuationBudget.MAX_BATCH_WORK &&
+                    source.session.expansions()-beforeExpanded<=used,
+                "ordinary control owner reports bounded charged work without invented expansions");
+            if(progress==PcbLayerRoutingPrototype.OrderingProgress.ROUTE_READY)
+                return budget.run("handoff",new Operation<PcbLayerRoutingPrototype.Result>() {
+                    public PcbLayerRoutingPrototype.Result run() {
+                        return source.session.takeReadyOrdering();
+                    }
+                });
+            if(progress==PcbLayerRoutingPrototype.OrderingProgress.COMPLETE)
+                throw new AssertionError("ordinary literal ordering ended without a route");
+        }
+        throw new AssertionError("ordinary literal ordering exceeded its bounded completion guard");
+    }
+
+    private static ContinuationRun finishContinuation(
+            PcbLayerRoutingPrototype.DetachedOrderingContinuation continuation,Replay replay,int quantum)
+            throws Exception {
+        return finishContinuation(continuation,replay,quantum,null,null);
+    }
+
+    private static ContinuationRun finishContinuation(
+            final PcbLayerRoutingPrototype.DetachedOrderingContinuation continuation,Replay replay,int quantum,
+            final GateObserver reentrancyGate) throws Exception {
+        return finishContinuation(continuation,replay,quantum,reentrancyGate,null);
+    }
+
+    private static ContinuationRun finishContinuation(
+            final PcbLayerRoutingPrototype.DetachedOrderingContinuation continuation,final Replay replay,
+            final int quantum,final GateObserver reentrancyGate,final ContinuationBudget budget) throws Exception {
+        final long[] totalWork={0};
+        final int[] calls={0};
+        while(true) {
+            final PcbLayerRoutingPrototype.DetachedOrderingProgress[] progressHolder={null};
+            if(budget==null) {
+                int beforeExpanded=replay.owner.expansions();
+                progressHolder[0]=continuation.advance(quantum);
+                int used=continuation.lastWork();
+                require(used>=0 && used<=quantum && used==replay.owner.lastWork() &&
+                        replay.owner.expansions()-beforeExpanded<=used,
+                    "continuation reports the exact bounded owner work without inventing expansions");
+                if(progressHolder[0]==PcbLayerRoutingPrototype.DetachedOrderingProgress.WORKING)
+                    require(used>0,"working continuation makes charged owner progress");
+                totalWork[0]+=used;
+                if(++calls[0]>MAX_COPY_WORK_STEPS)
+                    throw new AssertionError("detached current ordering exceeded its bounded progress guard");
+            } else budget.runMeasured("remainder",new Operation<Void>() {
+                public Void run() {
+                    while(budget.remainingBatchWork()>0) {
+                        final int callQuantum=Math.min(quantum,budget.remainingBatchWork());
+                        int beforeExpanded=replay.owner.expansions();
+                        try { progressHolder[0]=continuation.advance(callQuantum); }
+                        finally { budget.recordWork(continuation.lastWork()); }
+                        int used=continuation.lastWork();
+                        require(used>=0 && used<=callQuantum && used==replay.owner.lastWork() &&
+                                replay.owner.expansions()-beforeExpanded<=used,
+                            "continuation reports the exact bounded owner work without inventing expansions");
+                        totalWork[0]+=used;
+                        if(++calls[0]>MAX_COPY_WORK_STEPS)
+                            throw new AssertionError("detached current ordering exceeded its bounded progress guard");
+                        if(progressHolder[0]!=PcbLayerRoutingPrototype.DetachedOrderingProgress.WORKING ||
+                                used==0) break;
+                    }
+                    return null;
+                }
+            });
+            PcbLayerRoutingPrototype.DetachedOrderingProgress progress=progressHolder[0];
+            int used=continuation.lastWork();
+            if(progress==PcbLayerRoutingPrototype.DetachedOrderingProgress.ROUTE_READY) {
+                if(reentrancyGate!=null) reentrancyGate.runOnNextCheck(new Runnable(){public void run() {
+                    try { continuation.takeReadyOrdering(); }
+                    catch(IllegalStateException expected) {
+                        reentrancyGate.rejectedTakeReentries++;
+                        if(budget!=null) budget.recordNestedControlUnit();
+                    }
+                }});
+                PcbLayerRoutingPrototype.Result result=budget==null?
+                    continuation.takeReadyOrdering():budget.run("handoff",
+                        new Operation<PcbLayerRoutingPrototype.Result>() {
+                            public PcbLayerRoutingPrototype.Result run() {
+                                return continuation.takeReadyOrdering();
+                            }
+                        });
+                require(continuation.lastWork()==0 && result!=null && result.accepted() &&
+                        result.layout!=null && result.expansions==replay.owner.expansions() &&
+                        totalWork[0]>0 && calls[0]>0,
+                    "continuation exposes one real current-ordering route after zero-work result transfer");
+                return new ContinuationRun(result,totalWork[0],calls[0]);
+            }
+            if(progress==PcbLayerRoutingPrototype.DetachedOrderingProgress.ORDERING_BOUNDARY)
+                throw new AssertionError("literal current ordering stopped at a rejection boundary: "+
+                    continuation.boundaryReason());
+        }
+    }
+
+    private static void verifyContinuationCancellation(final Source source,
+            final ContinuationBudget budget) throws Exception {
+        verifyContinuationActiveCancellation(source,budget);
+        final Replay replay=buildDetached(source,MAX_COPY_QUANTUM,POLICY_VIA_CAP,true,
+            source.viaCost,true,null,budget);
+        try {
+            completeReplay(replay,MAX_COPY_QUANTUM,budget);
+            final PcbLayerRoutingPrototype.DetachedOrderingContinuation continuation=budget.run("handoff",
+                new Operation<PcbLayerRoutingPrototype.DetachedOrderingContinuation>() {
+                    public PcbLayerRoutingPrototype.DetachedOrderingContinuation run() {
+                        return replay.handle.takeOrderingContinuation();
+                    }
+                });
+            final PcbLayerRoutingPrototype.Session owner=replay.owner;
+            final Object search=replay.search;
+            final PcbBoardLayout layout=replay.layout;
+            final int passBefore=intField(owner,"pass");
+            final int passesBefore=intField(owner,"passes");
+            final int completedBefore=intField(owner,"completedOrderings");
+            final int yieldedBefore=intField(owner,"yieldedOrderings");
+            final int expandedBefore=owner.expansions();
+            final int ownerWorkBefore=owner.lastWork();
+            PcbLayerRoutingPrototype.DetachedOrderingProgress progress=budget.runMeasured("remainder",
+                new Operation<PcbLayerRoutingPrototype.DetachedOrderingProgress>() {
+                    public PcbLayerRoutingPrototype.DetachedOrderingProgress run() {
+                        try { return continuation.advance(1); }
+                        finally { budget.recordWork(continuation.lastWork()); }
+                    }
+                });
+            Object ready=field(owner,"readyOrdering");
+            boolean readyMatches=ready!=null && field(ready,"layout")==layout;
+            String evidence="progress="+progress+" continuationLastWork="+continuation.lastWork()+
+                " ownerLastWorkBefore="+ownerWorkBefore+" ownerLastWork="+owner.lastWork()+
+                " searchStillOwned="+(field(owner,"search")==search)+
+                " candidateStillOwned="+(field(owner,"candidate")==layout)+" ready="+(ready!=null)+
+                " readyLayoutMatches="+readyMatches+" searchComplete="+booleanField(search,"complete")+
+                " continuationOwnerPinned="+(field(continuation,"owner")==owner)+
+                " ownerLeasePinned="+(field(owner,"detachedOrderingContinuation")==continuation)+
+                " ownerPass="+intField(owner,"pass")+" searchPass="+intField(search,"pass")+
+                " passes="+intField(owner,"passes")+" completed="+
+                intField(owner,"completedOrderings")+" yielded="+intField(owner,"yieldedOrderings")+
+                " expansionsDelta="+(owner.expansions()-expandedBefore)+
+                " ownerComplete="+booleanField(owner,"complete")+" termination="+
+                field(owner,"orderingTermination");
+            System.out.println("P07_ORDERING_CANCEL_CANARY "+evidence);
+            require(progress==PcbLayerRoutingPrototype.DetachedOrderingProgress.ROUTE_READY &&
+                    continuation.lastWork()==1 && owner.lastWork()==1 &&
+                    field(owner,"search")==null && field(owner,"candidate")==null &&
+                    readyMatches && booleanField(search,"complete") &&
+                    field(continuation,"owner")==owner &&
+                    field(owner,"detachedOrderingContinuation")==continuation &&
+                    owner.expansions()-expandedBefore>=0 &&
+                    owner.expansions()-expandedBefore<=continuation.lastWork() &&
+                    intField(owner,"pass")==passBefore+1 && intField(owner,"passes")==passesBefore &&
+                    intField(owner,"completedOrderings")==completedBefore+1 &&
+                    intField(owner,"yieldedOrderings")==yieldedBefore+1,
+                "one-unit Search completion publishes the expected ready route before cancellation; "+
+                    evidence);
+            budget.run("lifecycle",new Operation<Void>() {public Void run() {
+                continuation.cancel(); return null;
+            }});
+            require(continuation.lastWork()==1 && owner.lastWork()==1,
+                "cancel retains the completed call's one measured owner operation before any retry");
+            final int expansionsBeforeRejectedCalls=owner.expansions();
+            expectLifecycleRejected(budget,"lifecycle",new Checked(){public void run() {
+                continuation.advance(1);
+            }},"canceled continuation cannot resume");
+            expectLifecycleRejected(budget,"lifecycle",new Checked(){public void run() {
+                continuation.takeReadyOrdering();
+            }},"canceled ready result cannot be taken");
+            String canceledState="continuationLastWork="+continuation.lastWork()+
+                " ownerSearch="+(field(owner,"search")!=null)+" ownerCandidate="+
+                (field(owner,"candidate")!=null)+" ready="+(field(owner,"readyOrdering")!=null)+
+                " lease="+(field(owner,"detachedOrderingContinuation")!=null)+
+                " receiverOwner="+(field(continuation,"owner")!=null)+
+                " receiverSearch="+(field(continuation,"search")!=null)+
+                " receiverLayout="+(field(continuation,"layout")!=null)+
+                " leaseClosed="+booleanField(owner,"orderingLeaseClosed")+
+                " pass="+intField(owner,"pass");
+            System.out.println("P07_ORDERING_CANCEL_DISCARD "+canceledState);
+            require(!continuation.isComplete() && continuation.lastWork()==0 && owner.lastWork()==1 &&
+                    owner.expansions()==expansionsBeforeRejectedCalls &&
+                    field(owner,"search")==null && field(owner,"candidate")==null &&
+                    field(owner,"readyOrdering")==null &&
+                    field(owner,"detachedOrderingContinuation")==null &&
+                    field(continuation,"owner")==null && field(continuation,"search")==null &&
+                    field(continuation,"layout")==null &&
+                    booleanField(owner,"orderingLeaseClosed"),
+                "canceling the receiver releases its ready result and lease; "+canceledState);
+            budget.run("lifecycle",new Operation<Void>() {public Void run() {
+                replay.handle.release(); replay.handle.cancel(); return null;
+            }});
+            budget.run("oracle",new Operation<Void>() {public Void run() throws Exception {
+                verifySourceUnchanged(source,"canceled current-ordering continuation"); return null;
+            }});
+        } finally { replay.handle.release(); }
+    }
+
+    private static void verifyContinuationActiveCancellation(final Source source,
+            final ContinuationBudget budget) throws Exception {
+        final Replay replay=buildDetached(source,MAX_COPY_QUANTUM,POLICY_VIA_CAP,true,
+            source.viaCost,true,null,budget);
+        try {
+            completeReplay(replay,MAX_COPY_QUANTUM,budget);
+            final PcbLayerRoutingPrototype.DetachedOrderingContinuation continuation=budget.run("handoff",
+                new Operation<PcbLayerRoutingPrototype.DetachedOrderingContinuation>() {
+                    public PcbLayerRoutingPrototype.DetachedOrderingContinuation run() {
+                        return replay.handle.takeOrderingContinuation();
+                    }
+                });
+            final PcbLayerRoutingPrototype.Session owner=replay.owner;
+            final Object search=replay.search;
+            final PcbBoardLayout layout=replay.layout;
+            final int passBefore=intField(owner,"pass");
+            final int ownerWorkBefore=owner.lastWork();
+            String evidence="progress="+field(continuation,"progress")+" continuationLastWork="+
+                continuation.lastWork()+" ownerLastWorkBefore="+ownerWorkBefore+
+                " ownerLastWork="+owner.lastWork()+
+                " ownerSearchLive="+(field(owner,"search")==search)+
+                " ownerCandidateLive="+(field(owner,"candidate")==layout)+
+                " continuationOwnerPinned="+(field(continuation,"owner")==owner)+
+                " ownerLeasePinned="+(field(owner,"detachedOrderingContinuation")==continuation)+
+                " ready="+(field(owner,"readyOrdering")!=null)+" pass="+intField(owner,"pass")+
+                " searchPass="+intField(search,"pass");
+            System.out.println("P07_ORDERING_ACTIVE_CANCEL_CANARY "+evidence);
+            require(field(continuation,"progress")==
+                    PcbLayerRoutingPrototype.DetachedOrderingProgress.WORKING &&
+                    continuation.lastWork()==0 && field(owner,"search")==search &&
+                    field(owner,"candidate")==layout && field(owner,"readyOrdering")==null &&
+                    field(continuation,"owner")==owner &&
+                    field(owner,"detachedOrderingContinuation")==continuation &&
+                    intField(owner,"pass")==passBefore,
+                "post-handoff cancellation starts from a live WORKING Search before any owner step; "+
+                    evidence);
+            budget.run("lifecycle",new Operation<Void>() {public Void run() {
+                continuation.cancel(); return null;
+            }});
+            expectLifecycleRejected(budget,"lifecycle",new Checked(){public void run() {
+                continuation.advance(1);
+            }},"canceled active continuation cannot resume");
+            expectLifecycleRejected(budget,"lifecycle",new Checked(){public void run() {
+                continuation.takeReadyOrdering();
+            }},"canceled active continuation cannot take a route");
+            String canceledState="continuationLastWork="+continuation.lastWork()+
+                " ownerLastWorkBefore="+ownerWorkBefore+" ownerLastWork="+owner.lastWork()+
+                " ownerSearch="+(field(owner,"search")!=null)+" ownerCandidate="+
+                (field(owner,"candidate")!=null)+" ready="+(field(owner,"readyOrdering")!=null)+
+                " lease="+(field(owner,"detachedOrderingContinuation")!=null)+
+                " receiverOwner="+(field(continuation,"owner")!=null)+
+                " receiverSearch="+(field(continuation,"search")!=null)+
+                " receiverLayout="+(field(continuation,"layout")!=null)+
+                " leaseClosed="+booleanField(owner,"orderingLeaseClosed")+
+                " pass="+intField(owner,"pass");
+            System.out.println("P07_ORDERING_ACTIVE_CANCEL_DISCARD "+canceledState);
+            require(!continuation.isComplete() && continuation.lastWork()==0 &&
+                    field(owner,"search")==null && field(owner,"candidate")==null &&
+                    field(owner,"readyOrdering")==null &&
+                    field(owner,"detachedOrderingContinuation")==null &&
+                    field(continuation,"owner")==null && field(continuation,"search")==null &&
+                    field(continuation,"layout")==null &&
+                    booleanField(owner,"orderingLeaseClosed") &&
+                    intField(owner,"pass")==passBefore && owner.lastWork()==ownerWorkBefore,
+                "canceling active ownership releases its copied Search without advancing the pass; "+
+                    canceledState);
+            budget.run("lifecycle",new Operation<Void>() {public Void run() {
+                replay.handle.release(); replay.handle.cancel(); return null;
+            }});
+            budget.run("oracle",new Operation<Void>() {public Void run() throws Exception {
+                verifySourceUnchanged(source,"pre-advance active continuation cancellation");
+                return null;
+            }});
+        } finally { replay.handle.release(); }
+    }
+
+    private static void verifyStaleContinuation(final Source source,
+            final ContinuationBudget budget) throws Exception {
+        final Replay replay=buildDetached(source,MAX_COPY_QUANTUM,POLICY_VIA_CAP,true,
+            source.viaCost,true,null,budget);
+        try {
+            completeReplay(replay,MAX_COPY_QUANTUM,budget);
+            final PcbLayerRoutingPrototype.DetachedOrderingContinuation continuation=budget.run("handoff",
+                new Operation<PcbLayerRoutingPrototype.DetachedOrderingContinuation>() {
+                    public PcbLayerRoutingPrototype.DetachedOrderingContinuation run() {
+                        return replay.handle.takeOrderingContinuation();
+                    }
+                });
+            final PcbLayerRoutingPrototype.Session owner=replay.owner;
+            final PcbBoardLayout candidate=replay.layout;
+            budget.run("lifecycle",new Operation<Void>() {public Void run() throws Exception {
+                setField(owner,"search",null); return null;
+            }});
+            final int checksBefore=replay.observerChecks[0];
+            budget.run("lifecycle",new Operation<Void>() {public Void run() throws Exception {
+                expectLifecycleRejected(new Checked(){public void run() { continuation.advance(1); }},
+                    "stale continuation is rejected before observer or successor work");
+                return null;
+            }});
+            require(replay.observerChecks[0]==checksBefore && field(owner,"candidate")==candidate &&
+                    field(owner,"detachedOrderingContinuation")==null &&
+                    !booleanField(owner,"orderingLeaseClosed"),
+                "stale receiver unlinks only its own lease and leaves the changed owner candidate open");
+            budget.run("lifecycle",new Operation<Void>() {public Void run() {
+                replay.handle.release(); replay.handle.cancel(); return null;
+            }});
+            budget.run("oracle",new Operation<Void>() {public Void run() throws Exception {
+                verifySourceUnchanged(source,"stale current-ordering continuation"); return null;
+            }});
+        } finally { replay.handle.release(); }
+    }
+
+    private static void verifyContinuationObserverFailure(final Source source,
+            final ContinuationBudget budget) throws Exception {
+        final GateObserver gate=new GateObserver();
+        final Replay replay=buildDetached(source,MAX_COPY_QUANTUM,POLICY_VIA_CAP,true,
+            source.viaCost,true,gate,budget);
+        try {
+            completeReplay(replay,MAX_COPY_QUANTUM,budget);
+            final PcbLayerRoutingPrototype.DetachedOrderingContinuation continuation=budget.run("handoff",
+                new Operation<PcbLayerRoutingPrototype.DetachedOrderingContinuation>() {
+                    public PcbLayerRoutingPrototype.DetachedOrderingContinuation run() {
+                        return replay.handle.takeOrderingContinuation();
+                    }
+                });
+            gate.failAfter(1);
+            final boolean[] rejected={false};
+            budget.runMeasured("remainder",new Operation<Void>() {public Void run() {
+                try { continuation.advance(1); }
+                catch(IllegalStateException expected) { rejected[0]=true; }
+                finally { budget.recordWork(continuation.lastWork()); }
+                require(rejected[0],"observer failure inside the copied Search aborts the receiver");
+                return null;
+            }});
+            require(continuation.lastWork()==1 && replay.owner.lastWork()==1 &&
+                    !continuation.isComplete() &&
+                    booleanField(replay.owner,"orderingLeaseClosed") &&
+                    field(replay.owner,"detachedOrderingContinuation")==null,
+                "observer failure preserves the one already-entered owner operation and cannot summarize");
+            expectLifecycleRejected(budget,"lifecycle",new Checked(){public void run() {
+                continuation.advance(1);
+            }},"observer-failed continuation cannot resume");
+            budget.run("oracle",new Operation<Void>() {public Void run() throws Exception {
+                verifySourceUnchanged(source,"observer-failed current-ordering continuation");
+                return null;
+            }});
+        } finally { replay.handle.release(); }
+    }
+
+    private static void verifyReplayReentrancy(final Source source,final ContinuationBudget budget)
+            throws Exception {
+        final GateObserver gate=new GateObserver();
+        final Replay replay=buildDetached(source,MAX_COPY_QUANTUM,POLICY_VIA_CAP,true,
+            source.viaCost,true,gate,budget);
+        try {
+            gate.runOnNextCheck(new Runnable(){public void run() {
+                try { replay.handle.advance(1); }
+                catch(IllegalStateException expected) {
+                    gate.rejectedAdvanceReentries++;
+                    budget.recordNestedControlUnit();
+                }
+            }});
+            budget.runMeasured("branch-replay",new Operation<Void>() {public Void run() {
+                try { replay.handle.advance(1); }
+                finally { budget.recordWork(replay.handle.lastWork()); }
+                return null;
+            }});
+            require(gate.rejectedAdvanceReentries==1 && replay.handle.lastWork()==1 &&
+                    !replay.handle.isComplete(),
+                "reentrant detached branch advance is rejected before a nested work unit");
+            completeReplay(replay,MAX_COPY_QUANTUM,budget);
+            replay.handle.release(); replay.handle.cancel();
+            budget.run("oracle",new Operation<Void>() {public Void run() throws Exception {
+                verifySourceUnchanged(source,"reentrant detached branch replay"); return null;
+            }});
+        } finally { replay.handle.release(); }
+    }
+
+    private static void verifyReplayFailureLifecycle(final Source source,
+            final ContinuationBudget budget) throws Exception {
+        final GateObserver gate=new GateObserver();
+        final Replay replay=buildDetached(source,MAX_COPY_QUANTUM,POLICY_VIA_CAP,true,
+            source.viaCost,true,gate,budget);
+        try {
+            gate.failAfter(1);
+            final boolean[] rejected={false};
+            budget.runMeasured("branch-replay",new Operation<Void>() {public Void run() {
+                try { replay.handle.advance(1); }
+                catch(IllegalStateException expected) { rejected[0]=true; }
+                finally { budget.recordWork(replay.handle.lastWork()); }
+                require(rejected[0],"observer failure during branch replay is terminal");
+                return null;
+            }});
+            require(replay.handle.lastWork()==1 && !replay.handle.isComplete() &&
+                    booleanField(replay.handle,"failed") && field(replay.handle,"owner")==null,
+                "failed branch replay retains its one entered unit and clears copied-owner references");
+            expectLifecycleRejected(budget,"lifecycle",new Checked(){public void run() {
+                replay.handle.advance(1);
+            }},"failed branch replay cannot be retried");
+            expectLifecycleRejected(budget,"lifecycle",new Checked(){public void run() {
+                replay.handle.takeOrderingContinuation();
+            }},"failed branch replay cannot transfer a continuation");
+            require(replay.handle.lastWork()==1,
+                "rejected retry preserves the original failed-operation work count");
+            budget.run("lifecycle",new Operation<Void>() {public Void run() {
+                replay.handle.release(); replay.handle.cancel(); return null;
+            }});
+            budget.run("oracle",new Operation<Void>() {public Void run() throws Exception {
+                verifySourceUnchanged(source,"failed detached branch replay"); return null;
+            }});
+        } finally { replay.handle.release(); }
+    }
+
+    private static void verifyFullOrderingLayout(TroubleshootBoard board,PcbBoardLayout layout,String label) {
+        layout.validateRoutingGeometry(board);
+        new PcbTwoLayerRules(board,layout).validate(layout);
+        layout.validateTraceClearance();
+        P08ScalabilityContractTest.referenceClearance(layout.getTraces());
+        PcbConductorGraph productionGraph=layout.captureConductorGraph(board);
+        PcbConductorGraph referenceGraph=P08ReferenceConductorBuilder.capture(board,layout);
+        require(productionGraph.toCanonical().equals(referenceGraph.toCanonical()),
+            label+" matches the independent P08 conductor graph");
+        PcbConductorGraph.Snapshot production=productionGraph.pristine();
+        production.requirePristineNetConnectivity(board);
+        PcbConductorGraph.Snapshot reference=referenceGraph.pristine();
+        reference.requirePristineNetConnectivity(board);
+        Vector<String> pads=board.getPadIds();
+        for(String first:pads) for(String second:pads) {
+            boolean sameNet=board.getPad(first).getNetId().equals(board.getPad(second).getNetId());
+            require(reference.padsConnected(first,second)==sameNet,
+                label+" preserves full connectivity and foreign-net isolation for "+first+"/"+second);
+        }
+        P07LayeredRasterOracle.Metrics raster=P07LayeredRasterOracle.verify(layout,board);
+        require(raster.getOrderedPadPairs()==(long)pads.size()*pads.size(),
+            label+" passes independent layered-raster connectivity for every ordered pad pair");
     }
 
     private static Source captureTransitionEntry() throws Exception {
@@ -639,68 +1351,133 @@ public final class P07DetachedBranchReplayContractTest {
 
     private static Replay buildDetached(Source source,int quantum,final int maximumVias,
             boolean explicitCap,final int viaCost,boolean explicitCost) throws Exception {
+        return buildDetached(source,quantum,maximumVias,explicitCap,viaCost,explicitCost,null);
+    }
+
+    private static Replay buildDetached(final Source source,final int quantum,final int maximumVias,
+            final boolean explicitCap,final int viaCost,final boolean explicitCost,
+            final SeededPcbLayoutGenerator.AttemptObserver suppliedObserver) throws Exception {
+        return buildDetached(source,quantum,maximumVias,explicitCap,viaCost,explicitCost,
+            suppliedObserver,null);
+    }
+
+    private static Replay buildDetached(final Source source,final int quantum,final int maximumVias,
+            final boolean explicitCap,final int viaCost,final boolean explicitCost,
+            final SeededPcbLayoutGenerator.AttemptObserver suppliedObserver,
+            final ContinuationBudget budget) throws Exception {
         if(source==null || quantum<1 || quantum>MAX_COPY_QUANTUM)
             throw new IllegalArgumentException("Invalid bounded literal replay quantum");
         final int[] detachedChecks={0};
         final SeededPcbLayoutGenerator.AttemptObserver detachedObserver=
             new SeededPcbLayoutGenerator.AttemptObserver() {
-                public void check(int attempt) { detachedChecks[0]++; }
+                public void check(int attempt) {
+                    detachedChecks[0]++;
+                    if(suppliedObserver!=null) suppliedObserver.check(attempt);
+                }
             };
-        final PcbLayerRoutingPrototype.DetachedBranchCopyTask copy=explicitCost?
-            PcbLayerRoutingPrototype.beginDetachedBranchCopy(
-                source.session,detachedObserver,maximumVias,viaCost):
-            explicitCap?PcbLayerRoutingPrototype.beginDetachedBranchCopy(
-                source.session,detachedObserver,maximumVias):
-            PcbLayerRoutingPrototype.beginDetachedBranchCopy(source.session,detachedObserver);
+        final Operation<PcbLayerRoutingPrototype.DetachedBranchCopyTask> createCopy=
+            new Operation<PcbLayerRoutingPrototype.DetachedBranchCopyTask>() {
+                public PcbLayerRoutingPrototype.DetachedBranchCopyTask run() {
+                    return explicitCost?PcbLayerRoutingPrototype.beginDetachedBranchCopy(
+                        source.session,detachedObserver,maximumVias,viaCost):
+                        explicitCap?PcbLayerRoutingPrototype.beginDetachedBranchCopy(
+                            source.session,detachedObserver,maximumVias):
+                        PcbLayerRoutingPrototype.beginDetachedBranchCopy(source.session,detachedObserver);
+                }
+            };
+        final PcbLayerRoutingPrototype.DetachedBranchCopyTask copy=budget==null?
+            createCopy.run():budget.run("copy",createCopy);
         PcbLayerRoutingPrototype.DetachedBranchReplay copiedReplay=null;
         boolean transferred=false;
         try {
-        expectLifecycleRejected(new Checked(){public void run() { copy.result(); }},
+        if(budget==null) expectLifecycleRejected(new Checked(){public void run() { copy.result(); }},
             "copy result is unavailable before completion");
-        long previousSteps=0;
-        int calls=0;
+        else budget.run("copy",new Operation<Void>() {public Void run() throws Exception {
+            expectLifecycleRejected(new Checked(){public void run() { copy.result(); }},
+                "copy result is unavailable before completion");
+            return null;
+        }});
+        final long[] previousSteps={0};
+        final int[] calls={0};
         while(!copy.isComplete()) {
-            copy.advance(quantum);
-            int used=copy.lastWork();
-            long steps=copy.workSteps();
-            require(used>0 && used<=quantum && steps>previousSteps,
-                "detached owner copy charges positive work within its caller quantum");
-            previousSteps=steps;
-            if(++calls>MAX_COPY_WORK_STEPS)
-                throw new AssertionError("detached owner copy exceeded its bounded progress guard");
+            if(budget==null) {
+                copy.advance(quantum);
+                int used=copy.lastWork(); long steps=copy.workSteps();
+                require(used>0 && used<=quantum && steps>previousSteps[0],
+                    "detached owner copy charges positive work within its caller quantum");
+                previousSteps[0]=steps;
+                if(++calls[0]>MAX_COPY_WORK_STEPS)
+                    throw new AssertionError("detached owner copy exceeded its bounded progress guard");
+            } else budget.runMeasured("copy",new Operation<Void>() {public Void run() {
+                while(!copy.isComplete() && budget.remainingBatchWork()>0) {
+                    final int callQuantum=Math.min(quantum,budget.remainingBatchWork());
+                    try { copy.advance(callQuantum); }
+                    finally { budget.recordWork(copy.lastWork()); }
+                    int used=copy.lastWork(); long steps=copy.workSteps();
+                    require(used>=0 && used<=callQuantum &&
+                            (used==0?steps==previousSteps[0]:steps>previousSteps[0]),
+                        "detached owner copy reports bounded work without inventing steps");
+                    previousSteps[0]=steps;
+                    if(++calls[0]>MAX_COPY_WORK_STEPS)
+                        throw new AssertionError("detached owner copy exceeded its bounded progress guard");
+                    if(used==0) break;
+                }
+                return null;
+            }});
         }
-        final PcbLayerRoutingPrototype.DetachedBranchReplay handle=copy.result();
+        final PcbLayerRoutingPrototype.DetachedBranchReplay handle=budget==null?copy.result():
+            budget.run("copy",new Operation<PcbLayerRoutingPrototype.DetachedBranchReplay>() {
+                public PcbLayerRoutingPrototype.DetachedBranchReplay run() { return copy.result(); }
+            });
         copiedReplay=handle;
         long completeSteps=copy.workSteps();
-        copy.advance(quantum);
+        if(budget==null) copy.advance(quantum);
+        else budget.run("copy",new Operation<Void>() {public Void run() {
+            copy.advance(quantum); return null;
+        }});
         require(copy.isComplete() && copy.lastWork()==0 && copy.workSteps()==completeSteps &&
                 copy.result()==handle,
             "repeated complete-copy calls are idempotent and retain one owner handle");
-        Object detachedSearch=handle.getSearchForDiagnostics();
+        final Object detachedSearch=handle.getSearchForDiagnostics();
         Object detachedBranch=handle.getBranchForDiagnostics();
-        PcbBoardLayout detachedLayout=handle.getLayout();
-        expectIllegalArgument(new Checked(){public void run() { handle.advance(0); }},
-            "zero replay quantum is rejected");
-        expectIllegalArgument(new Checked(){public void run() {
-            handle.advance(MAX_COPY_QUANTUM+1);
-        }},"over-maximum replay quantum is rejected");
+        final PcbBoardLayout detachedLayout=handle.getLayout();
+        if(budget==null) {
+            expectIllegalArgument(new Checked(){public void run() { handle.advance(0); }},
+                "zero replay quantum is rejected");
+            expectIllegalArgument(new Checked(){public void run() {
+                handle.advance(MAX_COPY_QUANTUM+1);
+            }},"over-maximum replay quantum is rejected");
+        } else {
+            expectIllegalArgument(budget,"lifecycle",new Checked(){public void run() {
+                handle.advance(0);
+            }},"zero replay quantum is rejected");
+            expectIllegalArgument(budget,"lifecycle",new Checked(){public void run() {
+                handle.advance(MAX_COPY_QUANTUM+1);
+            }},"over-maximum replay quantum is rejected");
+        }
         require(!handle.isComplete() && handle.lastWork()==0,
             "invalid replay quanta leave the copied entry ready but unadvanced");
-        PcbLayerRoutingPrototype.Session detachedOwner=
+        final PcbLayerRoutingPrototype.Session detachedOwner=
             (PcbLayerRoutingPrototype.Session)field(detachedSearch,"owner");
         require(copy.isComplete() && handle.getLayout()==detachedLayout &&
                 handle.getSearchForDiagnostics()==detachedSearch &&
                 handle.getBranchForDiagnostics()==detachedBranch,
             "canceling a completed copier releases only task references, not its returned replay");
-        Replay replay=new Replay(source,copy,handle,detachedOwner,detachedSearch,detachedBranch,
+        final Replay replay=new Replay(source,copy,handle,detachedOwner,detachedSearch,detachedBranch,
             detachedLayout,maximumVias,viaCost,detachedObserver,detachedChecks);
         require(field(source.owner,"observer")==source.observerRef &&
                 field(detachedOwner,"observer")==detachedObserver &&
                 detachedObserver!=source.observerRef && detachedChecks[0]>0,
             "detached copy uses its own checked observer without forwarding to the source");
-        verifyDetachedEntry(source,replay,detachedOwner,replay.branch,replay.start,
+        if(budget==null) verifyDetachedEntry(source,replay,detachedOwner,replay.branch,replay.start,
             detachedLayout.getPad(source.root.getPadId()),source.branchOrdinal,
             source.seedValues,source.goalValues,source.prefixIds,source.prefixFingerprints);
+        else budget.run("copy",new Operation<Void>() {public Void run() throws Exception {
+            verifyDetachedEntry(source,replay,detachedOwner,replay.branch,replay.start,
+                detachedLayout.getPad(source.root.getPadId()),source.branchOrdinal,
+                source.seedValues,source.goalValues,source.prefixIds,source.prefixFingerprints);
+            return null;
+        }});
         if(replay.maximumVias==source.prefixIds.length) {
             Object seed=Array.get(field(field(detachedBranch,"queue"),"values"),0);
             Method pathViaFits=detachedSearch.getClass().getDeclaredMethod(
@@ -971,20 +1748,56 @@ public final class P07DetachedBranchReplayContractTest {
     }
 
     private static void completeReplay(Replay replay,int quantum) throws Exception {
-        int calls=0;
+        completeReplay(replay,quantum,null);
+    }
+
+    private static void completeReplay(final Replay replay,final int quantum,
+            final ContinuationBudget budget) throws Exception {
+        final int[] calls={0};
         while(!replay.handle.isComplete()) {
-            replay.handle.advance(quantum);
-            int used=replay.handle.lastWork();
-            require(used>0 && used<=quantum,
-                "detached route replay charges bounded work within its caller quantum");
-            if(++calls>MAX_REPLAY_UNITS)
-                throw new AssertionError("detached literal replay exceeded its bounded progress guard");
+            if(budget==null) {
+                int beforeExpanded=replay.owner.expansions();
+                replay.handle.advance(quantum);
+                int used=replay.handle.lastWork();
+                require(used>0 && used<=quantum &&
+                        replay.owner.expansions()-beforeExpanded<=used,
+                    "detached route replay charges bounded actual work without invented expansions");
+                if(++calls[0]>MAX_REPLAY_UNITS)
+                    throw new AssertionError("detached literal replay exceeded its bounded progress guard");
+            } else budget.runMeasured("branch-replay",new Operation<Void>() {public Void run() {
+                while(!replay.handle.isComplete() && budget.remainingBatchWork()>0) {
+                    final int callQuantum=Math.min(quantum,budget.remainingBatchWork());
+                    int beforeExpanded=replay.owner.expansions();
+                    try { replay.handle.advance(callQuantum); }
+                    finally { budget.recordWork(replay.handle.lastWork()); }
+                    int used=replay.handle.lastWork();
+                    require(used>=0 && used<=callQuantum &&
+                            replay.owner.expansions()-beforeExpanded<=used,
+                        "detached route replay charges bounded actual work without invented expansions");
+                    if(++calls[0]>MAX_REPLAY_UNITS)
+                        throw new AssertionError("detached literal replay exceeded its bounded progress guard");
+                    if(used==0) break;
+                }
+                return null;
+            }});
         }
+        if(budget==null) replay.handle.advance(quantum);
+        else budget.run("branch-replay",new Operation<Void>() {public Void run() {
+            replay.handle.advance(quantum); return null;
+        }});
+        require(replay.handle.isComplete() && replay.handle.lastWork()==0,
+            "repeated complete-replay calls are idempotent");
+        if(budget==null) completeReplayEvidence(replay);
+        else budget.run("branch-replay",new Operation<Void>() {public Void run() throws Exception {
+            completeReplayEvidence(replay); return null;
+        }});
+    }
+
+    private static void completeReplayEvidence(Replay replay) throws Exception {
         replay.publisher=replay.handle.getPublisherForDiagnostics();
         require(replay.publisher!=null && field(replay.search,"branch")==null &&
                 field(replay.search,"publisher")==null,
             "normal Search completed the detached branch Publisher");
-        replay.handle.advance(quantum);
         require(replay.handle.isComplete() && replay.handle.lastWork()==0 &&
                 replay.handle.getPublisherForDiagnostics()==replay.publisher,
             "repeated complete-replay calls are idempotent");
@@ -1669,6 +2482,20 @@ public final class P07DetachedBranchReplayContractTest {
         throw new AssertionError("Expected lifecycle rejection: "+label);
     }
 
+    private static void expectLifecycleRejected(final ContinuationBudget budget,
+            final String phase,final Checked check,final String label) throws Exception {
+        budget.run(phase,new Operation<Void>() {public Void run() throws Exception {
+            expectLifecycleRejected(check,label); return null;
+        }});
+    }
+
+    private static void expectIllegalArgument(final ContinuationBudget budget,
+            final String phase,final Checked check,final String label) throws Exception {
+        budget.run(phase,new Operation<Void>() {public Void run() throws Exception {
+            expectIllegalArgument(check,label); return null;
+        }});
+    }
+
     private static Object field(Object target,String name) throws Exception {
         if(target==null) throw new IllegalArgumentException("Missing reflection target: "+name);
         Field field=target.getClass().getDeclaredField(name);
@@ -1845,6 +2672,164 @@ public final class P07DetachedBranchReplayContractTest {
                 intField(field(search,"budget"),"maximum");
             this.start=(PcbPadPlacement)field(branch,"start");
             this.root=(PcbPadPlacement)field(branch,"root");
+        }
+    }
+
+    private static final class ContinuationRun {
+        final PcbLayerRoutingPrototype.Result result;
+        final long totalWork;
+        final int calls;
+        ContinuationRun(PcbLayerRoutingPrototype.Result result,long totalWork,int calls) {
+            this.result=result; this.totalWork=totalWork; this.calls=calls;
+        }
+    }
+
+    private static final class GateObserver implements SeededPcbLayoutGenerator.AttemptObserver {
+        int calls,successfulCallsBeforeFailure=-1;
+        int rejectedAdvanceReentries,rejectedTakeReentries;
+        Runnable nextAction;
+        void failAfter(int successfulCalls) {
+            if(successfulCalls<0) throw new IllegalArgumentException("Negative observer failure delay");
+            successfulCallsBeforeFailure=successfulCalls;
+        }
+        void runOnNextCheck(Runnable action) {
+            if(action==null) throw new IllegalArgumentException("Missing observer canary action");
+            nextAction=action;
+        }
+        public void check(int attempt) {
+            calls++;
+            Runnable action=nextAction; nextAction=null;
+            if(action!=null) action.run();
+            if(successfulCallsBeforeFailure==0) {
+                successfulCallsBeforeFailure=-1;
+                throw new IllegalStateException("detached continuation observer canary");
+            }
+            if(successfulCallsBeforeFailure>0) successfulCallsBeforeFailure--;
+        }
+    }
+
+    private interface Operation<T> { T run() throws Exception; }
+
+    /** One uninterrupted ledger for the new source/copy/replay/handoff/remainder fixture. */
+    private static final class ContinuationBudget {
+        private static final long MAX_ELAPSED_NANOS=90000000000L;
+        private static final long MAX_UNIT_NANOS=5000000000L;
+        private static final int MAX_UNITS=640;
+        private static final int MAX_WORK_PER_UNIT=32768;
+        static final int MAX_BATCH_WORK=8192;
+        private static final String[] PHASES={"source-setup","source-prep","copy","branch-replay",
+            "handoff","remainder","oracle","lifecycle","control"};
+        private final long started=System.nanoTime();
+        private final int[] phaseUnits=new int[PHASES.length];
+        private final long[] phaseWork=new long[PHASES.length];
+        private int units;
+        private int unitWork,maxUnitWork;
+        private long totalWork;
+        private String unitPhase;
+        private boolean inUnit;
+        <T> T run(Operation<T> operation) throws Exception {
+            return run("control",operation);
+        }
+        <T> T run(String phase,Operation<T> operation) throws Exception {
+            return execute(phase,operation);
+        }
+        <T> T runMeasured(String phase,Operation<T> operation) throws Exception {
+            return execute(phase,operation);
+        }
+        private <T> T execute(String phase,Operation<T> operation) throws Exception {
+            if(operation==null) throw new IllegalArgumentException("Missing bounded owner operation");
+            int index=phaseIndex(phase);
+            if(inUnit) throw new IllegalStateException("Q100 controller units cannot nest");
+            checkElapsed();
+            if(++units>MAX_UNITS)
+                throw new AssertionError(summary("exceeded 640 caller units"));
+            phaseUnits[index]++;
+            unitPhase=phase; unitWork=0; inUnit=true;
+            long unitStarted=System.nanoTime();
+            T result;
+            try {
+                result=operation.run();
+            } catch(Exception failure) {
+                finishUnitWithCheck(unitStarted);
+                throw failure;
+            } catch(Error failure) {
+                finishUnitWithCheck(unitStarted);
+                throw failure;
+            }
+            try { checkUnit(unitStarted); }
+            finally { finishUnit(); }
+            return result;
+        }
+        void recordWork(int actualWork) {
+            if(!inUnit) throw new IllegalStateException("Owner work reported outside a controller unit");
+            if(actualWork<0 || unitWork>MAX_WORK_PER_UNIT-actualWork)
+                throw new AssertionError(summary("controller unit exceeded 32768 actual owner steps"));
+            if(actualWork==0) {
+                if(unitWork>0) recordNestedControlUnit();
+                return;
+            }
+            unitWork+=actualWork; totalWork+=actualWork;
+            phaseWork[phaseIndex(unitPhase)]+=actualWork;
+            if(unitWork>maxUnitWork) maxUnitWork=unitWork;
+        }
+        int currentUnitWork() {
+            if(!inUnit) throw new IllegalStateException("No active Q100 controller unit");
+            return unitWork;
+        }
+        int remainingUnitWork() { return MAX_WORK_PER_UNIT-currentUnitWork(); }
+        int remainingBatchWork() {
+            return Math.min(MAX_BATCH_WORK-unitWork,remainingUnitWork());
+        }
+        void recordNestedControlUnit() {
+            if(!inUnit) throw new IllegalStateException("Control work reported outside a controller unit");
+            checkElapsed();
+            if(++units>MAX_UNITS) throw new AssertionError(summary("exceeded 640 caller units"));
+            phaseUnits[phaseIndex(unitPhase)]++;
+        }
+        void checkElapsed() {
+            long elapsed=System.nanoTime()-started;
+            if(elapsed>MAX_ELAPSED_NANOS)
+                throw new AssertionError(summary("exceeded 90 seconds"));
+        }
+        private void checkUnit(long unitStarted) {
+            long duration=System.nanoTime()-unitStarted;
+            checkElapsed();
+            if(duration>MAX_UNIT_NANOS)
+                throw new AssertionError(summary("controller unit exceeded five seconds; phase="+
+                    unitPhase+" unitWork="+unitWork+" durationMillis="+(duration/1000000L)));
+            if(unitWork>maxUnitWork) maxUnitWork=unitWork;
+        }
+        private void finishUnit() { inUnit=false; unitPhase=null; unitWork=0; }
+        private void finishUnitWithCheck(long unitStarted) {
+            try { checkUnit(unitStarted); }
+            finally { finishUnit(); }
+        }
+        private int phaseIndex(String phase) {
+            if(phase==null) throw new IllegalArgumentException("Missing Q100 phase name");
+            for(int i=0;i<PHASES.length;i++) if(PHASES[i].equals(phase)) return i;
+            throw new IllegalArgumentException("Unknown Q100 phase: "+phase);
+        }
+        void reportAndCheck() {
+            checkElapsed();
+            long phaseWorkTotal=0; int phaseUnitTotal=0;
+            for(int i=0;i<PHASES.length;i++) {
+                phaseWorkTotal+=phaseWork[i]; phaseUnitTotal+=phaseUnits[i];
+            }
+            if(units>MAX_UNITS || maxUnitWork>MAX_WORK_PER_UNIT ||
+                    maxUnitWork>MAX_BATCH_WORK || totalWork!=phaseWorkTotal || units!=phaseUnitTotal)
+                throw new AssertionError(summary("Q100 budget accounting is inconsistent"));
+            System.out.println(summary("complete"));
+        }
+        private String summary(String state) {
+            StringBuilder phases=new StringBuilder();
+            for(int i=0;i<PHASES.length;i++) {
+                if(i>0) phases.append(',');
+                phases.append(PHASES[i]).append('=')
+                    .append(phaseUnits[i]).append('/').append(phaseWork[i]);
+            }
+            return "Q100_CONTINUATION_BUDGET state="+state+" units="+units+
+                " ownerWork="+totalWork+" maxUnitWork="+maxUnitWork+" elapsedMillis="+
+                ((System.nanoTime()-started)/1000000L)+" phaseUnits/Work="+phases;
         }
     }
 
