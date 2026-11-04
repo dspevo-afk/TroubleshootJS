@@ -383,8 +383,24 @@ Current9, exactly3 approved MEDIUM roots and owned-profile cleanup pass. Final
 consumed-input and production identity audits pass; failed harnesses remain FAIL.
 Implementation `9dc822d4c15df3ee21c0f06c12339fb145b735f9` is normally pushed and exact remote verified; completion Gmail `1a1a7ed052322950` sent once. Publication is recorded in the packet/current checkpoint. No routing treatment,
 full physical proof or playable100 qualification follows; playable100=0/beta held.
-Next is the [actual copied A_DRIVE graph/constraint diagnostic](task-evidence/Q100/adrive-guard-r1/NEXT_GRAPH_PLAN.md),
-including the complete legal goal set before any further treatment.
+The subsequent [actual copied A_DRIVE graph capture](task-evidence/Q100/adrive-graph-r1/README.md)
+is now locally accepted as a finite diagnostic; normal publication is pending.
+It captures the real BranchSearch's complete directed two-face/history-relaxed
+masks and goal provenance before the unchanged rejection. The exact authored
+case has147702cells/two measured root-face goals; source17holes/88traces and
+copied37/177prefix remain unchanged. Independent decoding, path/mask and ledger
+checks pass:621groups/640, operation26.7291289s/90s, maximum1.2535871s/5s.
+R11 explicitly changes provisional observer grouping/encoding while retaining
+actual P07 work and domain/oracle limits; rejected R10 and earlier failures stay
+preserved. Fresh native2/8/33(original22), seven predecessor query/reader pairs,
+Python227PASS/4declared privilege skips, actual Player/Developer builds, privacy,
+E06State10/Current9, exactly3 normal development roots, owned-profile cleanup and
+final consumed-input/variant audits pass. The first privacy cleanup and Normal3
+preflight failures remain FAIL; exact recovery and fresh strict gates pass.
+No search, route treatment, physical admission or playable100 claim follows.
+Playable100=0/beta held; full30 excluded and HARD/PSYCHOTIC unavailable/unrun.
+Next is separately frozen bounded constraint-aware feasibility/lower-bound
+analysis of this retained frozen graph before a routing treatment.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

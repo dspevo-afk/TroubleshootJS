@@ -96,6 +96,48 @@ public final class Rb100PhysicalDiagnostics {
         } finally {subclass.close();}
         if(!subclassRejected || subclassBytes.size()!=0)
             throw new AssertionError("Graph record transport exposed a partial record to an unsupported subclass");
+        verifyPackedGraphCursorContracts();
+    }
+
+    private static void verifyPackedGraphCursorContracts() {
+        TreeMap<String,Object> values=new TreeMap<String,Object>();
+        values.put("bits",new PackedGraphValue(new boolean[]{true,false,true}));
+        values.put("steps",new PackedGraphValue(new int[]{0,1,2,10,15}));
+        String expected="{\"bits\":\"101\",\"steps\":\"012af\"}";
+        for(int maximum:new int[]{1,7,32768}) {
+            GraphJsonCursor cursor=new GraphJsonCursor(values);
+            StringBuilder actual=new StringBuilder();
+            int groups=0;
+            while(!cursor.complete) {
+                StringBuilder chunk=new StringBuilder(maximum);
+                int written=cursor.appendChars(chunk,maximum);
+                cursor.completeIfExhausted();
+                if(written!=chunk.length() || written>maximum ||
+                        written==0 && !cursor.complete || ++groups>expected.length())
+                    throw new AssertionError("Packed graph cursor exceeded a bounded advance");
+                actual.append(chunk);
+            }
+            if(!expected.equals(actual.toString()) ||
+                    groups!=(expected.length()+maximum-1)/maximum)
+                throw new AssertionError("Packed graph cursor changed literal bytes or added an empty completion group");
+        }
+        TreeMap<String,Object> exact=new TreeMap<String,Object>();
+        exact.put("b",new PackedGraphValue(new boolean[32760]));
+        GraphJsonCursor cursor=new GraphJsonCursor(exact);
+        StringBuilder chunk=new StringBuilder(32768);
+        int written=cursor.appendChars(chunk,32768);
+        cursor.completeIfExhausted();
+        if(written!=32768 || chunk.length()!=32768 || !cursor.complete ||
+                !"{\"b\":\"".equals(chunk.substring(0,6)) ||
+                !"\"}".equals(chunk.substring(32766)))
+            throw new AssertionError("Packed graph cursor did not complete exactly at the32KiB boundary");
+        for(int index=6;index<32766;index++)
+            if(chunk.charAt(index)!='0')
+                throw new AssertionError("Packed graph cursor changed a literal zero bit");
+        boolean rejected=false;
+        try {new PackedGraphValue(new int[]{16}).append(new StringBuilder(),0,1);}
+        catch(IllegalStateException expectedInvalidMask) {rejected=true;}
+        if(!rejected) throw new AssertionError("Packed graph cursor truncated an invalid mask");
     }
 
     private static boolean asciiBytesEqual(byte[] actual,int offset,String expected) {
@@ -256,6 +298,12 @@ public final class Rb100PhysicalDiagnostics {
             QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD);
     }
 
+    /** Actual copied A_DRIVE guard boundary plus its pre-guard fixed-prefix graph. */
+    static void runLoad12DetachedCost240GuardGraphContracts() {
+        runQualityZeroViaGraphContracts(P07ZeroViaGraphDiagnostics.Target.LOAD12,
+            QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD_GRAPH);
+    }
+
     private static void runQualityZeroViaGraphContracts(
             P07ZeroViaGraphDiagnostics.Target graphTarget) {
         runQualityZeroViaGraphContracts(graphTarget,QualityScalarPurpose.ZERO_VIA_GRAPH);
@@ -305,10 +353,34 @@ public final class Rb100PhysicalDiagnostics {
                     remainderProbe.captureOperationFailure(failure);
                 }
             }
-            String remainderEvent=remainderProbe.detachedLoad12Cost240RemainderEventJson(
-                remainder,suiteMillis);
+            String remainderEvent=remainderProbe.isGuardGraphExperiment()?null:
+                remainderProbe.detachedLoad12Cost240RemainderEventJson(
+                    remainder,suiteMillis);
             boolean guardWireReady=false;
-            if(remainderProbe.isGuardExperiment() && "PASS".equals(remainder.status)) {
+            if(remainderProbe.isGuardGraphExperiment() &&
+                    "PASS".equals(remainder.status)) {
+                try {
+                    remainderProbe.prepareDetachedLoad12Cost240GuardGraphReport(
+                        remainder,suiteMillis,assertions-beforeAssertions);
+                    suiteMillis=nanosToMillis(System.nanoTime()-suiteStarted);
+                    require(suiteMillis<=480000L,
+                        "actual LOAD12 copied-order graph report remains within its frozen480s suite ceiling");
+                    guardWireReady=true;
+                } catch(RuntimeException failure) {
+                    remainder.failurePhase="GRAPH_REPORT_PREPARATION";
+                    remainder.failure=append(remainder.failure,failure);
+                    remainder.status="FAIL";
+                    remainderProbe.captureOperationFailure(failure);
+                    remainderProbe.emitGraphCaptureFailureProgress(failure);
+                } catch(Error failure) {
+                    remainder.failurePhase="GRAPH_REPORT_PREPARATION";
+                    remainder.failure=append(remainder.failure,failure);
+                    remainder.status="FAIL";
+                    remainderProbe.captureOperationFailure(failure);
+                    remainderProbe.emitGraphCaptureFailureProgress(failure);
+                }
+                if(guardWireReady) remainderProbe.emitDetachedLoad12Cost240GuardGraphReport();
+            } else if(remainderProbe.isGuardExperiment() && "PASS".equals(remainder.status)) {
                 try {
                     remainderProbe.prepareDetachedLoad12Cost240GuardEvent(
                         remainder,suiteMillis,remainderEvent);
@@ -328,9 +400,18 @@ public final class Rb100PhysicalDiagnostics {
                     remainderProbe.detachedLoad12Cost240RemainderEventJson(
                         remainder,suiteMillis);
             }
-            if(remainderProbe.isGuardExperiment()) writeUtf8Record(remainderEvent);
+            if(remainderProbe.isGuardGraphExperiment()) {
+                if(!guardWireReady) {
+                    if(!"PASS".equals(remainder.status))
+                        remainderProbe.emitGraphCaptureFailureProgress(remainder.failure);
+                    remainderEvent=remainderProbe.detachedLoad12Cost240RemainderEventJson(
+                        remainder,suiteMillis);
+                    writeUtf8Record(remainderEvent);
+                }
+            } else if(remainderProbe.isGuardExperiment()) writeUtf8Record(remainderEvent);
             else System.out.println(remainderEvent);
-            if(guardWireReady) remainderProbe.emitDetachedLoad12Cost240GuardEvent();
+            if(guardWireReady && !remainderProbe.isGuardGraphExperiment())
+                remainderProbe.emitDetachedLoad12Cost240GuardEvent();
             if(!"PASS".equals(remainder.status) ||
                     !remainderProbe.remainderExperimentComplete) {
                 remainderProbe.captureOperationFailure(remainder.failure);
@@ -339,7 +420,10 @@ public final class Rb100PhysicalDiagnostics {
             }
             require(suiteMillis<=480000L,
                 "actual LOAD12 copied-order remainder suite remains within its frozen480s ceiling");
-            String passMarker=remainderProbe.isGuardExperiment()?
+            String passMarker=remainderProbe.isGuardGraphExperiment()?
+                "PASS: RB100 LOAD12 detached cost240 guard graph contracts assertions="+
+                    (assertions-beforeAssertions):
+                remainderProbe.isGuardExperiment()?
                 "PASS: RB100 LOAD12 detached cost240 guard contracts assertions="+
                     (assertions-beforeAssertions):
                 "PASS: RB100 LOAD12 detached cost240 remainder contracts assertions="+
@@ -3171,7 +3255,7 @@ public final class Rb100PhysicalDiagnostics {
             "rawPhysicalOracles","finalizationAndReporting","finalPhysicalOracles"};
         final long started;
         int workUnits;
-        long maxUnitNanos;
+        long maxUnitNanos,lastUnitElapsedNanos;
         long unitStarted;
         String unitName;
         boolean remainderMetricsEnabled,guardWitnessMetrics;
@@ -3275,6 +3359,7 @@ public final class Rb100PhysicalDiagnostics {
         }
         void endUnit(Throwable primary) {
             long elapsed = System.nanoTime() - unitStarted;
+            lastUnitElapsedNanos=elapsed;
             if (elapsed > maxUnitNanos) maxUnitNanos = elapsed;
             String ended = unitName;
             if(remainderMetricsEnabled && unitRemainderPhase>=0) {
@@ -3486,7 +3571,7 @@ public final class Rb100PhysicalDiagnostics {
     private enum QualityScalarPurpose {
         ZERO_VIA_GRAPH, DETACHED_LOAD12_BASELINE, DETACHED_LOAD12_CAP17,
         DETACHED_LOAD12_COST240, DETACHED_LOAD12_COST240_REMAINDER,
-        DETACHED_LOAD12_COST240_GUARD
+        DETACHED_LOAD12_COST240_GUARD, DETACHED_LOAD12_COST240_GUARD_GRAPH
     }
 
     private static boolean isDetachedLoad12Purpose(QualityScalarPurpose purpose) {
@@ -3494,7 +3579,8 @@ public final class Rb100PhysicalDiagnostics {
             purpose==QualityScalarPurpose.DETACHED_LOAD12_CAP17 ||
             purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240 ||
             purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_REMAINDER ||
-            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD;
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD ||
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD_GRAPH;
     }
 
     private static boolean isDetachedLoad12Cap17(QualityScalarPurpose purpose) {
@@ -3504,18 +3590,26 @@ public final class Rb100PhysicalDiagnostics {
     private static boolean isDetachedLoad12Cost240(QualityScalarPurpose purpose) {
         return purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240 ||
             purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_REMAINDER ||
-            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD;
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD ||
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD_GRAPH;
     }
 
     private static boolean isDetachedLoad12Cost240Remainder(
             QualityScalarPurpose purpose) {
         return purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_REMAINDER ||
-            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD;
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD ||
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD_GRAPH;
     }
 
     private static boolean isDetachedLoad12Cost240Guard(
             QualityScalarPurpose purpose) {
-        return purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD;
+        return purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD ||
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD_GRAPH;
+    }
+
+    private static boolean isDetachedLoad12Cost240GuardGraph(
+            QualityScalarPurpose purpose) {
+        return purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD_GRAPH;
     }
 
     private static boolean capturesDetachedLoad12CostResults(
@@ -3553,6 +3647,1636 @@ public final class Rb100PhysicalDiagnostics {
                 holeCount+",\"holeRowsSha256\":\""+holeRowsSha256+"\"}";
         }
     }
+
+    private static final class ADriveGraphLimits {
+        static final int SOURCE_ROWS=16384,PADS=246,HOLES=390;
+        private ADriveGraphLimits() { }
+    }
+    private static final class ADriveGraphMax {
+        static final int VALUE=8*1024*1024;
+        private ADriveGraphMax() { }
+    }
+
+    /** Immutable, pre-encoded ASCII chunks retained for the graph-only receipt. */
+    private static final class GraphByteSequence {
+        final byte[][] chunks;
+        final int length;
+        GraphByteSequence(byte[][] chunks,int length) {
+            this.chunks=chunks; this.length=length;
+        }
+        void writeTo(PrintStream output) {
+            for(byte[] chunk:chunks) output.write(chunk,0,chunk.length);
+        }
+        void update(MessageDigest digest) {
+            for(byte[] chunk:chunks) digest.update(chunk,0,chunk.length);
+        }
+    }
+
+    private static final class GraphByteSequenceBuilder {
+        final Vector<byte[]> chunks=new Vector<byte[]>();
+        int length;
+        void add(byte[] chunk) {
+            if(chunk==null || chunk.length<1 || chunk.length>ADriveChunkLimit.VALUE)
+                throw new IllegalArgumentException("Invalid graph byte chunk");
+            chunks.add(chunk); length+=chunk.length;
+        }
+        GraphByteSequence finish() {
+            return new GraphByteSequence(chunks.toArray(new byte[chunks.size()][]),length);
+        }
+    }
+
+    private static final class ADriveChunkLimit {
+        static final int VALUE=32768;
+        private ADriveChunkLimit() { }
+    }
+
+    private static String graphAsciiQuote(String value) {
+        if(value==null) throw new IllegalArgumentException("Graph JSON string is null");
+        StringBuilder out=new StringBuilder(value.length()+2);
+        out.append('"');
+        final char[] hex="0123456789abcdef".toCharArray();
+        for(int index=0;index<value.length();index++) {
+            char ch=value.charAt(index);
+            if(Character.isHighSurrogate(ch)) {
+                if(index+1>=value.length() || !Character.isLowSurrogate(value.charAt(index+1)))
+                    throw new IllegalArgumentException("Graph JSON contains an unpaired UTF-16 surrogate");
+                out.append("\\u").append(hex[(ch>>>12)&15]).append(hex[(ch>>>8)&15])
+                    .append(hex[(ch>>>4)&15]).append(hex[ch&15]);
+                char low=value.charAt(++index);
+                out.append("\\u").append(hex[(low>>>12)&15]).append(hex[(low>>>8)&15])
+                    .append(hex[(low>>>4)&15]).append(hex[low&15]);
+            } else if(Character.isLowSurrogate(ch)) {
+                throw new IllegalArgumentException("Graph JSON contains an unpaired UTF-16 surrogate");
+            } else if(ch=='"' || ch=='\\') out.append('\\').append(ch);
+            else if(ch=='\b') out.append("\\b");
+            else if(ch=='\f') out.append("\\f");
+            else if(ch=='\n') out.append("\\n");
+            else if(ch=='\r') out.append("\\r");
+            else if(ch=='\t') out.append("\\t");
+            else if(ch<32 || ch>126) {
+                out.append("\\u").append(hex[(ch>>>12)&15]).append(hex[(ch>>>8)&15])
+                    .append(hex[(ch>>>4)&15]).append(hex[ch&15]);
+            } else out.append(ch);
+        }
+        return out.append('"').toString();
+    }
+
+    private static void requireGraphId(String value,String label) {
+        if(value==null || value.length()==0 || value.length()>4096)
+            throw new IllegalStateException("INCOMPLETE_CAPTURE: "+label+
+                " is missing or exceeds4096 UTF-16 units");
+        for(int index=0;index<value.length();index++) {
+            char ch=value.charAt(index);
+            if(Character.isHighSurrogate(ch)) {
+                if(index+1>=value.length() ||
+                        !Character.isLowSurrogate(value.charAt(index+1)))
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: "+label+
+                        " contains an unpaired UTF-16 surrogate");
+                index++;
+            } else if(Character.isLowSurrogate(ch)) {
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: "+label+
+                    " contains an unpaired UTF-16 surrogate");
+            }
+        }
+    }
+
+    private static boolean coordinateInDomain(int value) {
+        return value>=-100000000 && value<=100000000;
+    }
+
+    private static boolean coordinateInDomain(long value) {
+        return value>=-100000000L && value<=100000000L;
+    }
+
+    private static boolean rectangleInDomain(Rectangle value) {
+        if(value==null || value.width<=0 || value.height<=0) return false;
+        long right=(long)value.x+value.width,bottom=(long)value.y+value.height;
+        return coordinateInDomain(value.x) && coordinateInDomain(value.y) &&
+            right>=-100000000L && right<=100000000L &&
+            bottom>=-100000000L && bottom<=100000000L;
+    }
+
+    private static int asciiLength(String value) {
+        for(int index=0;index<value.length();index++)
+            if(value.charAt(index)>127)
+                throw new IllegalArgumentException("Expected bounded canonical ASCII literal");
+        return value.length();
+    }
+
+    private static GraphByteSequence asciiSequence(String value) {
+        int length=asciiLength(value);
+        if(length==0) return new GraphByteSequence(new byte[0][],0);
+        byte[] bytes=new byte[length];
+        for(int index=0;index<length;index++) bytes[index]=(byte)value.charAt(index);
+        return new GraphByteSequence(new byte[][]{bytes},length);
+    }
+
+    private static String digestHex(MessageDigest digest) {
+        if(digest==null) throw new IllegalArgumentException("Missing SHA-256 digest state");
+        return lowerHex(digest.digest());
+    }
+
+    private static String lowerHex(byte[] bytes) {
+        StringBuilder output=new StringBuilder(bytes.length*2);
+        for(byte value:bytes) {
+            int unsigned=value&0xff;
+            if(unsigned<16) output.append('0');
+            output.append(Integer.toHexString(unsigned));
+        }
+        return output.toString();
+    }
+
+    /** Lossless packed graph mask streamed directly from the immutable capture arrays. */
+    private static final class PackedGraphValue {
+        private static final String HEX="0123456789abcdef";
+        final int[] masks;
+        final boolean[] bits;
+        final int length;
+        PackedGraphValue(int[] values) {
+            if(values==null) throw new IllegalArgumentException("Missing packed graph step masks");
+            masks=values; bits=null; length=values.length;
+        }
+        PackedGraphValue(boolean[] values) {
+            if(values==null) throw new IllegalArgumentException("Missing packed graph bit masks");
+            masks=null; bits=values; length=values.length;
+        }
+        void append(StringBuilder output,int offset,int count) {
+            int end=offset+count;
+            if(offset<0 || count<0 || end>length)
+                throw new IllegalArgumentException("Invalid packed graph cursor range");
+            if(masks!=null) {
+                for(int index=offset;index<end;index++) {
+                    int mask=masks[index];
+                    if(mask<0 || mask>15)
+                        throw new IllegalStateException("INCOMPLETE_CAPTURE: packed graph step mask is outside0..15");
+                    output.append(HEX.charAt(mask));
+                }
+            } else {
+                for(int index=offset;index<end;index++)
+                    output.append(bits[index]?'1':'0');
+            }
+        }
+    }
+
+    private static final class GraphJsonFrame {
+        final Object value;
+        boolean started;
+        int index;
+        java.util.Iterator<?> iterator;
+        GraphJsonFrame(Object value) { this.value=value; }
+    }
+
+    /** Resumable compact JSON encoder over bounded primitive/list/map values. */
+    private static final class GraphJsonCursor {
+        final Vector<GraphJsonFrame> stack=new Vector<GraphJsonFrame>();
+        String pending;
+        int pendingOffset;
+        boolean complete;
+        GraphJsonCursor(Object value) { stack.add(new GraphJsonFrame(value)); }
+        int appendChars(StringBuilder output,int maximum) {
+            int appended=0;
+            while(appended<maximum && !complete) {
+                GraphJsonFrame frame=stack.isEmpty()?null:stack.lastElement();
+                if(pending==null && frame!=null && frame.value instanceof PackedGraphValue) {
+                    PackedGraphValue packed=(PackedGraphValue)frame.value;
+                    if(!frame.started) {
+                        frame.started=true; output.append('"'); appended++;
+                    } else if(frame.index<packed.length) {
+                        int count=Math.min(maximum-appended,packed.length-frame.index);
+                        packed.append(output,frame.index,count);
+                        frame.index+=count; appended+=count;
+                    } else {
+                        stack.remove(stack.size()-1); output.append('"'); appended++;
+                    }
+                    continue;
+                }
+                if(pending==null) pending=nextFragment();
+                if(pending==null) { complete=true; break; }
+                int count=Math.min(maximum-appended,pending.length()-pendingOffset);
+                output.append(pending,pendingOffset,pendingOffset+count);
+                pendingOffset+=count; appended+=count;
+                if(pendingOffset==pending.length()) { pending=null; pendingOffset=0; }
+            }
+            return appended;
+        }
+        void completeIfExhausted() {
+            if(pending==null && stack.isEmpty()) complete=true;
+        }
+        private String nextFragment() {
+            while(!stack.isEmpty()) {
+                GraphJsonFrame frame=stack.lastElement();
+                Object value=frame.value;
+                if(value==null || value instanceof String || value instanceof Number ||
+                        value instanceof Boolean) {
+                    stack.remove(stack.size()-1);
+                    if(value==null) return "null";
+                    if(value instanceof String) return graphAsciiQuote((String)value);
+                    return value.toString();
+                }
+                if(value instanceof Map<?,?>) {
+                    Map<?,?> map=(Map<?,?>)value;
+                    if(!frame.started) {
+                        frame.started=true; frame.iterator=map.entrySet().iterator();
+                        return "{";
+                    }
+                    if(frame.iterator.hasNext()) {
+                        Map.Entry<?,?> entry=(Map.Entry<?,?>)frame.iterator.next();
+                        if(!(entry.getKey() instanceof String))
+                            throw new IllegalArgumentException("Graph JSON object key is not a string");
+                        frame.index++;
+                        stack.add(new GraphJsonFrame(entry.getValue()));
+                        return (frame.index>1?",":"")+graphAsciiQuote((String)entry.getKey())+":";
+                    }
+                    stack.remove(stack.size()-1);
+                    return "}";
+                }
+                if(value instanceof Iterable<?>) {
+                    if(!frame.started) {
+                        frame.started=true; frame.iterator=((Iterable<?>)value).iterator();
+                        return "[";
+                    }
+                    if(frame.iterator.hasNext()) {
+                        Object next=frame.iterator.next(); frame.index++;
+                        stack.add(new GraphJsonFrame(next));
+                        return frame.index>1?",":"";
+                    }
+                    stack.remove(stack.size()-1);
+                    return "]";
+                }
+                if(value.getClass().isArray()) {
+                    int length=java.lang.reflect.Array.getLength(value);
+                    if(!frame.started) { frame.started=true; return "["; }
+                    if(frame.index<length) {
+                        Object next=java.lang.reflect.Array.get(value,frame.index++);
+                        stack.add(new GraphJsonFrame(next));
+                        return frame.index>1?",":"";
+                    }
+                    stack.remove(stack.size()-1);
+                    return "]";
+                }
+                throw new IllegalArgumentException("Unsupported graph JSON value: "+
+                    value.getClass().getName());
+            }
+            return null;
+        }
+    }
+
+    private static final class GraphCaptureReport {
+        final GraphByteSequence graph,goalRows,holeRows,padRows,traceRows,
+            reachedPthPadIds,groupLedger;
+        final String goalBitsSha256,graphSha256,sourceRowsSha256,netId;
+        final int graphCanonicalBytes,sourceRowsCanonicalBytes,sourceRows,
+            padCount,traceCount,holeCount,holeViaCount,holePlatedCount,
+            holeNonPlatedCount,viaKindCount,goalStates,
+            captureTaskIdentity,snapshotIdentity,contextIdentity,ownerIdentity,
+            searchIdentity,branchIdentity,layoutIdentity,topRouterIdentity,
+            bottomRouterIdentity,branchOrdinal,pass,copyEntries,comparisonEntries,
+            goalProbes,ordinaryEdgeProbes,viaProbes,captureInternalUnits,
+            graphTaskGroups,graphMetadataGroups,graphCaptureGroups;
+        final long captureActiveElapsedMillis,captureContinuationOwnerSteps,
+            maxTaskLedgerElapsedNanos;
+        GraphCaptureReport(GraphByteSequence graph,GraphByteSequence goalRows,
+                GraphByteSequence holeRows,GraphByteSequence padRows,
+                GraphByteSequence traceRows,GraphByteSequence reachedPthPadIds,
+                GraphByteSequence groupLedger,String goalBitsSha256,String graphSha256,
+                String sourceRowsSha256,String netId,int graphCanonicalBytes,
+                int sourceRowsCanonicalBytes,int sourceRows,int padCount,int traceCount,
+                int holeCount,int holeViaCount,int holePlatedCount,int holeNonPlatedCount,
+                int viaKindCount,int goalStates,int captureTaskIdentity,
+                int snapshotIdentity,int contextIdentity,int ownerIdentity,int searchIdentity,
+                int branchIdentity,int layoutIdentity,int topRouterIdentity,
+                int bottomRouterIdentity,int branchOrdinal,int pass,int copyEntries,
+                int comparisonEntries,int goalProbes,int ordinaryEdgeProbes,int viaProbes,
+                int captureInternalUnits,int graphTaskGroups,int graphMetadataGroups,
+                int graphCaptureGroups,long captureActiveElapsedMillis,
+                long continuationOwnerSteps,long maxTaskLedgerElapsedNanos) {
+            this.graph=graph; this.goalRows=goalRows; this.holeRows=holeRows;
+            this.padRows=padRows; this.traceRows=traceRows;
+            this.reachedPthPadIds=reachedPthPadIds; this.groupLedger=groupLedger;
+            this.goalBitsSha256=goalBitsSha256; this.graphSha256=graphSha256;
+            this.sourceRowsSha256=sourceRowsSha256; this.netId=netId;
+            this.graphCanonicalBytes=graphCanonicalBytes;
+            this.sourceRowsCanonicalBytes=sourceRowsCanonicalBytes;
+            this.sourceRows=sourceRows; this.padCount=padCount; this.traceCount=traceCount;
+            this.holeCount=holeCount; this.holeViaCount=holeViaCount;
+            this.holePlatedCount=holePlatedCount;
+            this.holeNonPlatedCount=holeNonPlatedCount;
+            this.viaKindCount=viaKindCount;
+            this.goalStates=goalStates; this.captureTaskIdentity=captureTaskIdentity;
+            this.snapshotIdentity=snapshotIdentity; this.contextIdentity=contextIdentity;
+            this.ownerIdentity=ownerIdentity; this.searchIdentity=searchIdentity;
+            this.branchIdentity=branchIdentity; this.layoutIdentity=layoutIdentity;
+            this.topRouterIdentity=topRouterIdentity;
+            this.bottomRouterIdentity=bottomRouterIdentity;
+            this.branchOrdinal=branchOrdinal; this.pass=pass;
+            this.copyEntries=copyEntries; this.comparisonEntries=comparisonEntries;
+            this.goalProbes=goalProbes; this.ordinaryEdgeProbes=ordinaryEdgeProbes;
+            this.viaProbes=viaProbes; this.captureInternalUnits=captureInternalUnits;
+            this.graphTaskGroups=graphTaskGroups;
+            this.graphMetadataGroups=graphMetadataGroups;
+            this.graphCaptureGroups=graphCaptureGroups;
+            this.captureActiveElapsedMillis=captureActiveElapsedMillis;
+            this.captureContinuationOwnerSteps=continuationOwnerSteps;
+            this.maxTaskLedgerElapsedNanos=maxTaskLedgerElapsedNanos;
+        }
+    }
+
+    private static final class GraphTraceData {
+        PcbTraceGeometry source;
+        final String sourceId,netId,startPadId,endPadId,layer,exposure;
+        final int width;
+        int[] xPoints,yPoints;
+        int[] routerGridCells;
+        boolean needed;
+        GraphTraceData(PcbTraceGeometry source) {
+            this.source=source;
+            sourceId=source.getSourceId(); netId=source.getNetId();
+            startPadId=source.getStartPadId(); endPadId=source.getEndPadId();
+            layer=source.getLayer()==null?null:source.getLayer().name();
+            exposure=source.getExposure()==null?null:source.getExposure().name();
+            width=source.getWidth();
+            Object rawX=P07ScalarReflection.read(source,"xPoints");
+            Object rawY=P07ScalarReflection.read(source,"yPoints");
+            if(!(rawX instanceof int[]) || !(rawY instanceof int[]))
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: immutable trace coordinate arrays changed type");
+            // PcbTraceGeometry owns private final copies and never exposes them. Retaining
+            // those exact immutable arrays avoids an uncharged whole-polyline getter copy.
+            xPoints=(int[])rawX; yPoints=(int[])rawY;
+        }
+        TreeMap<String,Object> json() {
+            TreeMap<String,Object> row=new TreeMap<String,Object>();
+            row.put("sourceId",sourceId); row.put("netId",netId);
+            row.put("startPadId",startPadId); row.put("endPadId",endPadId);
+            row.put("layer",layer); row.put("exposure",exposure);
+            row.put("width",Integer.valueOf(width)); row.put("xPoints",xPoints);
+            row.put("yPoints",yPoints); row.put("routerGridCells",routerGridCells);
+            return row;
+        }
+    }
+
+    private static final class GraphHoleData {
+        final String id,kind,netId,exposure;
+        final int x,y,drillRadius,landRadius,conductiveLayerMask;
+        final Integer gridCell;
+        GraphHoleData(PcbBoardHole hole,Integer gridCell) {
+            id=hole.id; kind=hole.kind.name(); netId=hole.netId;
+            exposure=hole.exposure.name(); x=hole.x; y=hole.y;
+            drillRadius=hole.drillRadius; landRadius=hole.landRadius;
+            conductiveLayerMask=hole.kind==PcbBoardHole.Kind.NON_PLATED?0:3;
+            this.gridCell=gridCell;
+        }
+        TreeMap<String,Object> json() {
+            TreeMap<String,Object> row=new TreeMap<String,Object>();
+            row.put("id",id); row.put("kind",kind); row.put("netId",netId);
+            row.put("x",Integer.valueOf(x)); row.put("y",Integer.valueOf(y));
+            row.put("drillRadius",Integer.valueOf(drillRadius));
+            row.put("landRadius",Integer.valueOf(landRadius));
+            row.put("exposure",exposure);
+            row.put("conductiveLayerMask",Integer.valueOf(conductiveLayerMask));
+            row.put("gridCell",gridCell);
+            return row;
+        }
+    }
+
+    private static final class GraphSourceRef implements Comparable<GraphSourceRef> {
+        final String sourceType,sourceId,role;
+        GraphSourceRef(String sourceType,String sourceId,String role) {
+            this.sourceType=sourceType; this.sourceId=sourceId; this.role=role;
+        }
+        public int compareTo(GraphSourceRef other) {
+            int result=sourceType.compareTo(other.sourceType);
+            if(result==0) result=sourceId.compareTo(other.sourceId);
+            if(result==0) result=role.compareTo(other.role);
+            return result;
+        }
+        TreeMap<String,Object> json() {
+            TreeMap<String,Object> row=new TreeMap<String,Object>();
+            row.put("sourceType",sourceType); row.put("sourceId",sourceId);
+            row.put("role",role); return row;
+        }
+    }
+
+    private static final class GraphTaskLedgerRow {
+        final String kind;
+        final int internalCalls,copyEntries,comparisonEntries,goalProbes,
+            ordinaryEdgeProbes,viaProbes,conservativeWorkUpperBound;
+        final long elapsedNanos;
+        GraphTaskLedgerRow(String kind,int internalCalls,int copyEntries,
+                int comparisonEntries,int goalProbes,int ordinaryEdgeProbes,
+                int viaProbes,int conservativeWorkUpperBound,long elapsedNanos) {
+            this.kind=kind; this.internalCalls=internalCalls;
+            this.copyEntries=copyEntries; this.comparisonEntries=comparisonEntries;
+            this.goalProbes=goalProbes; this.ordinaryEdgeProbes=ordinaryEdgeProbes;
+            this.viaProbes=viaProbes;
+            this.conservativeWorkUpperBound=conservativeWorkUpperBound;
+            this.elapsedNanos=elapsedNanos;
+        }
+        TreeMap<String,Object> json() {
+            TreeMap<String,Object> row=new TreeMap<String,Object>();
+            row.put("kind",kind); row.put("internalCalls",Integer.valueOf(internalCalls));
+            row.put("copyEntries",Integer.valueOf(copyEntries));
+            row.put("comparisonEntries",Integer.valueOf(comparisonEntries));
+            row.put("goalProbes",Integer.valueOf(goalProbes));
+            row.put("ordinaryEdgeProbes",Integer.valueOf(ordinaryEdgeProbes));
+            row.put("viaProbes",Integer.valueOf(viaProbes));
+            row.put("conservativeWorkUpperBound",Integer.valueOf(conservativeWorkUpperBound));
+            row.put("elapsedNanos",Long.valueOf(elapsedNanos));
+            return row;
+        }
+    }
+
+    /** One already-sized event part; large immutable captures are never joined or recopied. */
+    private static final class GraphRecordPart {
+        final byte[] bytes;
+        final GraphByteSequence sequence;
+        GraphRecordPart(byte[] bytes,GraphByteSequence sequence) {
+            if((bytes==null)==(sequence==null))
+                throw new IllegalArgumentException("Graph record part must have exactly one backing value");
+            this.bytes=bytes; this.sequence=sequence;
+        }
+        int length() { return bytes==null?sequence.length:bytes.length; }
+        void writeTo(PrintStream output) {
+            if(bytes!=null) output.write(bytes,0,bytes.length);
+            else sequence.writeTo(output);
+        }
+    }
+
+    private static final class GraphCaptureBuilder {
+        QualityScalarProbe probe;
+        Object owner,search,branch,publisher,context,task;
+        PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot snapshot;
+        PcbBoardLayout layout;
+        TroubleshootBoard board;
+        PcbNetRouter.Router[] routers;
+        PcbPadPlacement start,root;
+        PcbPadPlacement[] reached;
+        PcbBoardHole[] branchHoles;
+        PcbLayerRoutingPrototype.FixedPrefixBranchLineage lineage;
+        Constructor<?> taskConstructor;
+        Method taskAdvanceMethod,taskFinishMethod;
+        boolean ownerCaptureReserved;
+        Object ownerPendingCapture,ownerPendingFailure;
+        long[] routerRevisions;
+        String[] routerEffects;
+        int width,height,cells,originX,originY,primary,startCell,branchOrdinal,pass;
+        String netId;
+        boolean[] branchGoals,goalFaces,viaAllowed;
+        int[] stepMasks;
+        MessageDigest goalBitsDigest;
+        int goalStateIndex,goalCount;
+        byte[] goalDigestScratch=new byte[ADriveChunkLimit.VALUE];
+        final Vector<GraphTaskLedgerRow> ledgerRows=new Vector<GraphTaskLedgerRow>();
+        final Vector<GraphTraceData> traceTodo=new Vector<GraphTraceData>();
+        final TreeMap<String,GraphTraceData> traceRows=
+            new TreeMap<String,GraphTraceData>();
+        final HashSet<String> traceSourceIds=new HashSet<String>();
+        final TreeMap<String,PcbPadPlacement> padPlacements=
+            new TreeMap<String,PcbPadPlacement>();
+        final TreeMap<String,GraphHoleData> holeRows=
+            new TreeMap<String,GraphHoleData>();
+        final HashMap<Integer,ArrayList<GraphTraceData>> traceByState=
+            new HashMap<Integer,ArrayList<GraphTraceData>>();
+        final HashMap<Integer,ArrayList<GraphHoleData>> holeByState=
+            new HashMap<Integer,ArrayList<GraphHoleData>>();
+        final Vector<Object> goalProvenance=new Vector<Object>();
+        Vector<?> copiedTraces;
+        Vector<Point> currentTraceGridPoints;
+        GraphTraceData currentTrace;
+        TreeSet<Integer> currentTraceCells;
+        java.util.Iterator<Integer> currentTraceCellIterator;
+        int[] currentTraceCellArray;
+        int currentTraceCellIndex;
+        int traceCursor,tracePointCursor,goalCursor,traceNeededCount;
+        int[] holeKindCounts=new int[PcbBoardHole.Kind.values().length];
+        int viaKindCount;
+        ArrayList<String> reachedPthPadIds=new ArrayList<String>();
+        ArrayList<Object> padRowValues,traceRowValues,holeRowValues;
+        ArrayList<Object> goalRowValues;
+        Map<String,Object> graphObject,sourceRowsObject;
+        GraphJsonCursor graphCursor,goalRowsCursor,holeRowsCursor,padRowsCursor,
+            traceRowsCursor,reachedCursor,ledgerCursor;
+        StringBuilder goalRowsChars=new StringBuilder(),
+            holeRowsChars=new StringBuilder(),padRowsChars=new StringBuilder(),
+            traceRowsChars=new StringBuilder(),reachedChars=new StringBuilder(),
+            ledgerChars=new StringBuilder();
+        int graphSerializedChars,graphEncodeOffset,goalRowsEncodeOffset,holeRowsEncodeOffset,
+            padRowsEncodeOffset,traceRowsEncodeOffset,reachedEncodeOffset,
+            ledgerEncodeOffset,sourceHashSequenceIndex,sourceHashChunkIndex,
+            sourceHashChunkOffset,sourceRowsCanonicalBytes,graphCanonicalBytes;
+        GraphByteSequenceBuilder graphBytesBuilder=new GraphByteSequenceBuilder(),
+            goalRowsBytesBuilder=new GraphByteSequenceBuilder(),
+            holeRowsBytesBuilder=new GraphByteSequenceBuilder(),
+            padRowsBytesBuilder=new GraphByteSequenceBuilder(),
+            traceRowsBytesBuilder=new GraphByteSequenceBuilder(),
+            reachedBytesBuilder=new GraphByteSequenceBuilder(),
+            ledgerBytesBuilder=new GraphByteSequenceBuilder();
+        GraphByteSequence graphBytes,goalRowsBytes,holeRowsBytes,padRowsBytes,
+            traceRowsBytes,reachedBytes,ledgerBytes;
+        MessageDigest graphDigest,sourceRowsDigest;
+        final Vector<GraphByteSequence> sourceHashSequences=
+            new Vector<GraphByteSequence>();
+        String graphSha256,sourceRowsSha256,goalBitsSha256;
+        int sourceRows,padCount,traceCount,holeCount;
+        int captureTaskIdentity,snapshotIdentity,contextIdentity,ownerIdentity,
+            searchIdentity,branchIdentity,layoutIdentity,topRouterIdentity,
+            bottomRouterIdentity;
+        int copyEntries,comparisonEntries,goalProbes,ordinaryEdgeProbes,viaProbes,
+            captureInternalUnits;
+        long captureActiveElapsedMillis;
+        long maxTaskLedgerElapsedNanos;
+        GraphCaptureReport report;
+
+        GraphCaptureBuilder(QualityScalarProbe probe) { this.probe=probe; }
+
+        private static MessageDigest newSha256() {
+            try { return MessageDigest.getInstance("SHA-256"); }
+            catch(NoSuchAlgorithmException impossible) {
+                throw new IllegalStateException("SHA-256 is unavailable",impossible);
+            }
+        }
+
+        private static RuntimeException graphInvocationFailure(Throwable failure) {
+            if(failure instanceof Error) throw (Error)failure;
+            if(failure instanceof RuntimeException) return (RuntimeException)failure;
+            return new IllegalStateException("Actual fixed-prefix task invocation failed",failure);
+        }
+
+        void initializeTask() {
+            try { initializeTaskReflective(); }
+            catch(InvocationTargetException wrapped) {
+                throw graphInvocationFailure(wrapped.getCause());
+            } catch(ReflectiveOperationException failure) {
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: actual fixed-prefix constructor or method signature is unavailable",failure);
+            }
+        }
+
+        private void initializeTaskReflective() throws ReflectiveOperationException {
+            if(probe==null || !probe.isGuardGraphExperiment() ||
+                    probe.guardStage!=QualityScalarProbe.GUARD_BOUNDARY ||
+                    probe.remainderStage!=QualityScalarProbe.REMAINDER_ADVANCE ||
+                    probe.guardWitnessComplete)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: graph initialization is outside the paused pre-guard checkpoint");
+            owner=probe.remainderOwner; search=probe.guardSearch;
+            branch=probe.guardBranchSearch; publisher=probe.guardPublisher;
+            layout=probe.remainderCopiedLayout;
+            if(owner==null || search==null || branch==null || publisher==null || layout==null)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: actual copied graph owners are missing");
+            probe.verifyCost240GuardGraphOwner(this);
+            board=(TroubleshootBoard)P07ScalarReflection.read(search,"board");
+            context=P07ScalarReflection.read(owner,"fixedPrefixContext");
+            if(!(context instanceof PcbLayerRoutingPrototype.FixedPrefixCaptureContext) ||
+                    context!=probe.fixedPrefixContext ||
+                    P07ScalarReflection.read(search,"owner")!=owner ||
+                    P07ScalarReflection.read(search,"layout")!=layout || board==null)
+                throw new IllegalStateException("STALE_OWNER: copied Search lost its retained fixed-prefix context or board");
+            routers=(PcbNetRouter.Router[])P07ScalarReflection.read(search,"faces");
+            if(routers==null || routers.length!=2 || routers[0]==null || routers[1]==null)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: actual copied face Routers are missing");
+            if(P07ScalarReflection.read(routers[0],"layer")!=PcbCopperLayer.TOP ||
+                    P07ScalarReflection.read(routers[1],"layer")!=PcbCopperLayer.BOTTOM)
+                throw new IllegalStateException("STALE_OWNER: copied face Router order is not TOP then BOTTOM");
+            start=(PcbPadPlacement)P07ScalarReflection.read(branch,"start");
+            root=(PcbPadPlacement)P07ScalarReflection.read(branch,"root");
+            reached=(PcbPadPlacement[])P07ScalarReflection.read(branch,"reachedTerminals");
+            branchHoles=(PcbBoardHole[])P07ScalarReflection.read(branch,"holes");
+            branchGoals=(boolean[])P07ScalarReflection.read(branch,"goal");
+            netId=P07ScalarReflection.stringField(branch,"net");
+            branchOrdinal=P07ScalarReflection.intField(branch,"branchOrdinal");
+            pass=P07ScalarReflection.intField(search,"pass");
+            width=P07ScalarReflection.intField(search,"width");
+            height=P07ScalarReflection.intField(search,"height");
+            cells=P07ScalarReflection.intField(search,"cells");
+            originX=P07ScalarReflection.intField(search,"minX");
+            originY=P07ScalarReflection.intField(search,"minY");
+            primary=P07ScalarReflection.intField(search,"primary");
+            if(start==null || root==null || reached==null || branchHoles==null ||
+                    branchGoals==null || !"A_DRIVE".equals(netId) || pass!=1 ||
+                    branchOrdinal!=142 || primary<0 || primary>1 || width!=478 ||
+                    height!=309 || cells!=width*height || originX!=30 || originY!=30 ||
+                    (long)cells*2L>Integer.MAX_VALUE || branchGoals.length!=2*cells ||
+                    branchHoles.length>ADriveGraphLimits.HOLES ||
+                    !"FULLER_TWO_LAYER".equals(String.valueOf(P07ScalarReflection.read(search,"policy"))))
+                throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: selected copied graph differs from the frozen A_DRIVE checkpoint");
+            startCell=P07ScalarReflection.searchCell(search,start);
+            Object found=P07ScalarReflection.read(branch,"found");
+            if(found!=probe.guardEndNode || found==null ||
+                    P07ScalarReflection.read(publisher,"end")!=found ||
+                    start!=probe.guardStartPad || root!=probe.guardRootPad)
+                throw new IllegalStateException("STALE_OWNER: actual found BranchSearch does not match the retained Publisher");
+            Object reachedSequence=P07ScalarReflection.read(search,"reachedPadIds");
+            if(!(reachedSequence instanceof Vector<?>))
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: copied Search reached-pad sequence is missing");
+            Vector<?> reachedPadVector=(Vector<?>)reachedSequence;
+            String[] reachedPadIds=new String[reachedPadVector.size()];
+            for(int index=0;index<reachedPadVector.size();index++) {
+                Object value=reachedPadVector.get(index);
+                if(!(value instanceof String))
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: copied reached-pad identity is not a String");
+                reachedPadIds[index]=(String)value;
+                requireGraphId(reachedPadIds[index],"reachedPadId");
+            }
+            String[] reachedPthIds=new String[reached.length];
+            String previous=null;
+            for(int index=0;index<reached.length;index++) {
+                PcbPadPlacement pad=reached[index];
+                if(pad==null || pad==root || pad==start ||
+                        pad.getAttachment()!=PcbTerminalAttachment.PLATED_THROUGH_HOLE ||
+                        previous!=null && previous.compareTo(pad.getPadId())>=0)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: copied reached PTH terminals are not canonical actual pads");
+                reachedPthIds[index]=pad.getPadId(); previous=pad.getPadId();
+            }
+            Object ownerBudget=P07ScalarReflection.read(owner,"budget");
+            int totalExpansions=P07ScalarReflection.intField(ownerBudget,"expanded");
+            String prefixGeometry=layout.geometryFingerprint();
+            if(probe.guardPrefixBefore==null ||
+                    !sha256Hex(prefixGeometry).equals(
+                        probe.guardPrefixBefore.geometrySha256))
+                throw new IllegalStateException("STALE_OWNER: copied graph geometry differs from the captured pre-guard prefix");
+            Class<?> lineageClass=PcbLayerRoutingPrototype.FixedPrefixBranchLineage.class;
+            Constructor<?> lineageConstructor=lineageClass.getDeclaredConstructor(
+                PcbLayerRoutingPrototype.FixedPrefixCaptureContext.class,Integer.TYPE,
+                Integer.TYPE,String.class,PcbPadPlacement.class,PcbPadPlacement.class,
+                String[].class,String[].class,Integer.TYPE,Integer.TYPE,
+                PcbBoardHole[].class,String.class,String.class);
+            if(lineageConstructor.getDeclaringClass()!=lineageClass ||
+                    !java.lang.reflect.Modifier.isPrivate(lineageConstructor.getModifiers()))
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: actual private lineage constructor signature changed");
+            lineageConstructor.setAccessible(true);
+            lineage=(PcbLayerRoutingPrototype.FixedPrefixBranchLineage)
+                lineageConstructor.newInstance(context,Integer.valueOf(pass),
+                    Integer.valueOf(branchOrdinal),netId,start,root,reachedPadIds,
+                    reachedPthIds,Integer.valueOf(P07ScalarReflection.intField(branch,"expanded")),
+                    Integer.valueOf(totalExpansions),branchHoles,"FOUND",prefixGeometry);
+            Class<?> taskClass=Class.forName(
+                "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search$BranchSearch$FixedPrefixCaptureTask");
+            if(taskClass.getEnclosingClass()!=branch.getClass() ||
+                    !java.lang.reflect.Modifier.isPrivate(taskClass.getModifiers()) ||
+                    !taskClass.getName().equals(
+                        "com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search$BranchSearch$FixedPrefixCaptureTask"))
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: actual fixed-prefix task declaring class changed");
+            taskConstructor=taskClass.getDeclaredConstructor(branch.getClass(),lineageClass);
+            if(taskConstructor.getDeclaringClass()!=taskClass ||
+                    taskConstructor.getModifiers()!=0 ||
+                    taskConstructor.getParameterTypes().length!=2 ||
+                    taskConstructor.getParameterTypes()[0]!=branch.getClass() ||
+                    taskConstructor.getParameterTypes()[1]!=lineageClass)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: actual fixed-prefix task constructor signature changed");
+            taskConstructor.setAccessible(true);
+            taskAdvanceMethod=taskClass.getDeclaredMethod("advanceObservationUnit");
+            taskFinishMethod=taskClass.getDeclaredMethod("finish");
+            if(taskAdvanceMethod.getDeclaringClass()!=taskClass ||
+                    taskAdvanceMethod.getReturnType()!=Boolean.TYPE ||
+                    taskFinishMethod.getDeclaringClass()!=taskClass ||
+                    taskFinishMethod.getReturnType()!=
+                        PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot.class)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: actual fixed-prefix task method signatures changed");
+            taskAdvanceMethod.setAccessible(true); taskFinishMethod.setAccessible(true);
+            ownerCaptureReserved=P07ScalarReflection.booleanField(owner,
+                "fixedPrefixCaptureReserved");
+            ownerPendingCapture=P07ScalarReflection.read(owner,"pendingFixedPrefixCapture");
+            ownerPendingFailure=P07ScalarReflection.read(owner,"pendingFixedPrefixFailure");
+            task=taskConstructor.newInstance(branch,lineage);
+            captureTaskIdentity=System.identityHashCode(task);
+            contextIdentity=System.identityHashCode(context);
+            ownerIdentity=System.identityHashCode(owner);
+            searchIdentity=System.identityHashCode(search);
+            branchIdentity=System.identityHashCode(branch);
+            layoutIdentity=System.identityHashCode(layout);
+            topRouterIdentity=System.identityHashCode(routers[0]);
+            bottomRouterIdentity=System.identityHashCode(routers[1]);
+            routerRevisions=new long[2]; routerEffects=new String[2];
+            for(int layer=0;layer<2;layer++) {
+                routerRevisions[layer]=((Long)P07ScalarReflection.invoke(routers[layer],
+                    "observationRevision",new Class<?>[0])).longValue();
+                routerEffects[layer]=(String)P07ScalarReflection.invoke(routers[layer],
+                    "fixedGraphObservationEffects",new Class<?>[0]);
+            }
+            goalBitsDigest=newSha256();
+        }
+
+        GraphTaskLedgerRow advanceTaskGroup(Budget budget) {
+            verifyLiveOwners();
+            int stage=P07ScalarReflection.intField(task,"stage");
+            String kind=taskCategory(stage);
+            int beforeCopy=P07ScalarReflection.intField(task,"copyEntries");
+            int beforeComparison=P07ScalarReflection.intField(task,"comparisonEntries");
+            int beforeGoals=P07ScalarReflection.intField(task,"goalProbes");
+            int beforeEdges=P07ScalarReflection.intField(task,"ordinaryEdgeProbes");
+            int beforeVias=P07ScalarReflection.intField(task,"viaProbes");
+            int calls=0; boolean done=false; int scanProbes=0;
+            do {
+                budget.checkpoint();
+                verifyLiveOwners();
+                int callBeforeCopy=P07ScalarReflection.intField(task,"copyEntries");
+                int callBeforeComparison=P07ScalarReflection.intField(task,"comparisonEntries");
+                int callBeforeGoals=P07ScalarReflection.intField(task,"goalProbes");
+                int callBeforeEdges=P07ScalarReflection.intField(task,"ordinaryEdgeProbes");
+                int callBeforeVias=P07ScalarReflection.intField(task,"viaProbes");
+                Object returned;
+                try { returned=taskAdvanceMethod.invoke(task); }
+                catch(InvocationTargetException wrapped) {
+                    calls++; captureInternalUnits++;
+                    throw graphInvocationFailure(wrapped.getCause());
+                }
+                catch(ReflectiveOperationException failure) {
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: cannot advance actual fixed-prefix capture task",failure);
+                }
+                calls++; captureInternalUnits++;
+                if(returned==null || returned.getClass()!=Boolean.class)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: fixed-prefix task did not return a Boolean");
+                done=((Boolean)returned).booleanValue();
+                if(kind.equals("TASK_FINALIZE") && !done)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: stage5 fixed-prefix task did not finalize in its single required call");
+                int goalDelta=P07ScalarReflection.intField(task,"goalProbes")-callBeforeGoals;
+                int edgeDelta=P07ScalarReflection.intField(task,"ordinaryEdgeProbes")-callBeforeEdges;
+                int viaDelta=P07ScalarReflection.intField(task,"viaProbes")-callBeforeVias;
+                int copyDelta=P07ScalarReflection.intField(task,"copyEntries")-callBeforeCopy;
+                int compareDelta=P07ScalarReflection.intField(task,"comparisonEntries")-callBeforeComparison;
+                if(goalDelta<0 || edgeDelta<0 || viaDelta<0 || copyDelta<0 || compareDelta<0)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: fixed-prefix task counters regressed");
+                scanProbes+=goalDelta+edgeDelta+viaDelta;
+                if(kind.equals("SCAN") &&
+                        (goalDelta+edgeDelta+viaDelta>4096 || copyDelta!=0 || compareDelta!=0))
+                    throw new IllegalStateException("BUDGET_EXPIRED: fixed-prefix scan quantum exceeded its 4096-probe category");
+                if(!kind.equals("SCAN") &&
+                        (goalDelta!=0 || edgeDelta!=0 || viaDelta!=0))
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: fixed-prefix non-scan stage performed a scan");
+                if(kind.equals("COPY_OR_COMPARE") && copyDelta+compareDelta>32768)
+                    throw new IllegalStateException("BUDGET_EXPIRED: fixed-prefix copy/compare call exceeded its 32768-entry quantum");
+                if(kind.equals("TASK_FINALIZE") &&
+                        (copyDelta!=0 || compareDelta!=0 || goalDelta!=0 ||
+                            edgeDelta!=0 || viaDelta!=0))
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: task finalizer exposed observer deltas");
+                verifyLiveOwners();
+                int nextStage=P07ScalarReflection.intField(task,"stage");
+                if(!kind.equals(taskCategory(nextStage))) break;
+            } while(!kind.equals("TASK_FINALIZE") && calls<4 && !done);
+            int copy=P07ScalarReflection.intField(task,"copyEntries")-beforeCopy;
+            int compared=P07ScalarReflection.intField(task,"comparisonEntries")-beforeComparison;
+            int goals=P07ScalarReflection.intField(task,"goalProbes")-beforeGoals;
+            int edges=P07ScalarReflection.intField(task,"ordinaryEdgeProbes")-beforeEdges;
+            int vias=P07ScalarReflection.intField(task,"viaProbes")-beforeVias;
+            int bound=kind.equals("SCAN")?4096*calls:
+                kind.equals("TASK_FINALIZE")?32768:32768*calls;
+            if(calls<1 || calls>4 || kind.equals("SCAN") && scanProbes>bound ||
+                    kind.equals("TASK_FINALIZE") && calls!=1 ||
+                    copy+compared+goals+edges+vias>bound || bound>131072)
+                throw new IllegalStateException("BUDGET_EXPIRED: fixed-prefix task group exceeds its conservative work bound");
+            if(done) {
+                try {
+                    Object value=taskFinishMethod.invoke(task);
+                    if(!(value instanceof PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot))
+                        throw new IllegalStateException("INCOMPLETE_CAPTURE: fixed-prefix finish did not return its immutable snapshot");
+                    snapshot=(PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot)value;
+                } catch(InvocationTargetException wrapped) { throw graphInvocationFailure(wrapped.getCause()); }
+                catch(ReflectiveOperationException failure) {
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: cannot finish actual fixed-prefix task",failure);
+                }
+                verifyLiveOwners();
+            }
+            budget.checkpoint();
+            long elapsed=Math.max(0L,System.nanoTime()-budget.unitStarted);
+            if(elapsed>UNIT_LIMIT_NANOS)
+                throw new IllegalStateException("BUDGET_EXPIRED: fixed-prefix task group exceeded its five-second unit deadline");
+            ledgerRows.add(new GraphTaskLedgerRow(kind,calls,copy,compared,goals,
+                edges,vias,bound,elapsed));
+            return ledgerRows.lastElement();
+        }
+
+        private static String taskCategory(int stage) {
+            if(stage>=1 && stage<=3) return "SCAN";
+            if(stage==5) return "TASK_FINALIZE";
+            if(stage==0 || stage==4) return "COPY_OR_COMPARE";
+            throw new IllegalStateException("INCOMPLETE_CAPTURE: unknown fixed-prefix task stage "+stage);
+        }
+
+        private void verifyLiveOwners() {
+            if(probe==null || task==null || search==null || branch==null || publisher==null ||
+                    owner==null || layout==null || routers==null || context==null ||
+                    P07ScalarReflection.read(probe.remainderOwner,"search")!=search ||
+                    P07ScalarReflection.read(probe.remainderOwner,"candidate")!=layout ||
+                    P07ScalarReflection.read(probe.remainderOwner,
+                        "detachedOrderingContinuation")!=probe.remainderContinuation ||
+                    P07ScalarReflection.read(search,"owner")!=owner ||
+                    P07ScalarReflection.read(search,"layout")!=layout ||
+                    P07ScalarReflection.read(search,"publisher")!=publisher ||
+                    P07ScalarReflection.read(owner,"fixedPrefixContext")!=context ||
+                    P07ScalarReflection.read(search,"faces")!=routers ||
+                    P07ScalarReflection.read(branch,"found")!=probe.guardEndNode ||
+                    P07ScalarReflection.intField(publisher,"stage")!=1 ||
+                    P07ScalarReflection.intField(publisher,"qualityIndex")!=probe.guardReversedSize ||
+                    P07ScalarReflection.read(owner,"pendingFixedPrefixCapture")!=ownerPendingCapture ||
+                    P07ScalarReflection.read(owner,"pendingFixedPrefixFailure")!=ownerPendingFailure ||
+                    P07ScalarReflection.booleanField(owner,"fixedPrefixCaptureReserved")!=ownerCaptureReserved ||
+                    System.identityHashCode(task)!=captureTaskIdentity ||
+                    System.identityHashCode(branch)!=branchIdentity ||
+                    System.identityHashCode(search)!=searchIdentity ||
+                    System.identityHashCode(layout)!=layoutIdentity ||
+                    System.identityHashCode(owner)!=ownerIdentity ||
+                    System.identityHashCode(routers[0])!=topRouterIdentity ||
+                    System.identityHashCode(routers[1])!=bottomRouterIdentity)
+                throw new IllegalStateException("STALE_OWNER: copied pre-guard graph owners or callback state changed");
+            probe.requireLoad12Cost240GuardOwner(search);
+            probe.verifyLoad12Cost240GuardBranchPublisher(branch,publisher);
+            probe.verifyPausedLoad12Source();
+            GuardPrefixSnapshot current=probe.captureLoad12GuardPrefix(layout);
+            if(probe.guardPrefixBefore==null || !probe.guardPrefixBefore.same(current))
+                throw new IllegalStateException("STALE_OWNER: copied prefix geometry changed during fixed-prefix capture");
+            for(int layer=0;layer<2;layer++) {
+                long revision=((Long)P07ScalarReflection.invoke(routers[layer],
+                    "observationRevision",new Class<?>[0])).longValue();
+                String effects=(String)P07ScalarReflection.invoke(routers[layer],
+                    "fixedGraphObservationEffects",new Class<?>[0]);
+                if(revision!=routerRevisions[layer] || !routerEffects[layer].equals(effects))
+                    throw new IllegalStateException("STALE_OWNER: live Router state or effects changed during capture");
+            }
+        }
+
+        void verifyObserverState() { verifyLiveOwners(); }
+
+        void verifySnapshot() {
+            if(snapshot==null || snapshot.context()!=context || snapshot.lineage()!=lineage ||
+                    snapshot.gridWidth()!=width || snapshot.gridHeight()!=height ||
+                    snapshot.cellCount()!=cells || snapshot.originX()!=originX ||
+                    snapshot.originY()!=originY || snapshot.primaryLayer()!=primary ||
+                    snapshot.startCell()!=P07ScalarReflection.searchCell(search,start) ||
+                    snapshot.initialFacesMask()!=3 || snapshot.captureWorkUnits()!=captureInternalUnits ||
+                    snapshot.lineage().branchOrdinal()!=branchOrdinal ||
+                    snapshot.lineage().pass()!=pass || !netId.equals(snapshot.lineage().netId()))
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: immutable graph snapshot identity or dimensions differ from its live branch");
+            int maskLength=cells*2;
+            goalFaces=new boolean[maskLength]; viaAllowed=new boolean[cells];
+            stepMasks=new int[maskLength];
+            copyEntries=snapshot.copyEntries(); comparisonEntries=snapshot.comparisonEntries();
+            goalProbes=snapshot.goalProbes(); ordinaryEdgeProbes=snapshot.ordinaryEdgeProbes();
+            viaProbes=snapshot.viaProbes(); captureActiveElapsedMillis=
+                snapshot.captureActiveElapsedMillis();
+            int expectedEdges=4*((width-1)*height+width*(height-1));
+            if(snapshot.goalProbes()!=2*cells ||
+                    snapshot.ordinaryEdgeProbes()!=expectedEdges ||
+                    snapshot.viaProbes()!=cells || snapshot.captureWorkUnits()!=captureInternalUnits ||
+                    captureInternalUnits<1 || captureInternalUnits>2560 ||
+                    snapshot.gridPitch()!=PcbLayerRoutingPrototype.GRID)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: fixed-prefix task counters or grid pitch do not cover the actual bounded graph");
+            int ledgerCalls=0,ledgerCopy=0,ledgerComparison=0,ledgerGoals=0,
+                ledgerEdges=0,ledgerVias=0;
+            maxTaskLedgerElapsedNanos=0L;
+            for(int index=0;index<ledgerRows.size();index++) {
+                GraphTaskLedgerRow row=ledgerRows.get(index);
+                int categoryWork=row.copyEntries+row.comparisonEntries+
+                    row.goalProbes+row.ordinaryEdgeProbes+row.viaProbes;
+                boolean badScan=row.kind.equals("SCAN") &&
+                        (row.internalCalls<1 || row.internalCalls>4 ||
+                            row.conservativeWorkUpperBound!=4096*row.internalCalls ||
+                            row.copyEntries!=0 || row.comparisonEntries!=0 ||
+                            row.internalCalls>4);
+                boolean badCopy=row.kind.equals("COPY_OR_COMPARE") &&
+                            (row.internalCalls<1 || row.internalCalls>4 || row.goalProbes!=0 ||
+                                row.ordinaryEdgeProbes!=0 || row.viaProbes!=0 ||
+                                row.conservativeWorkUpperBound!=32768*row.internalCalls);
+                boolean badFinalize=row.kind.equals("TASK_FINALIZE") &&
+                            (row.internalCalls!=1 || index!=ledgerRows.size()-1 ||
+                                row.copyEntries!=0 || row.comparisonEntries!=0 ||
+                                row.goalProbes!=0 || row.ordinaryEdgeProbes!=0 ||
+                                row.viaProbes!=0 || row.conservativeWorkUpperBound!=32768);
+                boolean unknown=!(row.kind.equals("SCAN") ||
+                    row.kind.equals("COPY_OR_COMPARE") ||
+                    row.kind.equals("TASK_FINALIZE"));
+                if(unknown || badScan || badCopy || badFinalize ||
+                        row.elapsedNanos<0L || row.elapsedNanos>UNIT_LIMIT_NANOS ||
+                        row.conservativeWorkUpperBound>131072 || categoryWork<0 ||
+                        categoryWork>row.conservativeWorkUpperBound)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: task ledger category or finalizer is invalid");
+                ledgerCalls+=row.internalCalls; ledgerCopy+=row.copyEntries;
+                ledgerComparison+=row.comparisonEntries; ledgerGoals+=row.goalProbes;
+                ledgerEdges+=row.ordinaryEdgeProbes; ledgerVias+=row.viaProbes;
+                maxTaskLedgerElapsedNanos=Math.max(maxTaskLedgerElapsedNanos,
+                    row.elapsedNanos);
+            }
+            if(ledgerRows.isEmpty() || ledgerCalls!=captureInternalUnits ||
+                    ledgerCopy!=copyEntries || ledgerComparison!=comparisonEntries ||
+                    ledgerGoals!=goalProbes || ledgerEdges!=ordinaryEdgeProbes ||
+                    ledgerVias!=viaProbes)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: task ledger deltas do not sum to the immutable capture snapshot");
+        }
+
+        void copyMaskChunk(int maximumStates) {
+            int end=Math.min(2*cells,goalStateIndex+maximumStates);
+            int write=0;
+            for(int state=goalStateIndex;state<end;state++) {
+                int layer=state/cells,cell=state%cells;
+                boolean copied=snapshot.goalAt(layer,cell);
+                if(branchGoals[state]!=copied)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: fixed-prefix goal bit differs from retained BranchSearch.goal at state "+state);
+                goalFaces[state]=copied;
+                if(copied) goalCount++;
+                goalDigestScratch[write++]=(byte)(copied?'1':'0');
+                stepMasks[state]=layer==0?snapshot.topStepMaskAt(cell):
+                    snapshot.bottomStepMaskAt(cell);
+                if(state<cells) viaAllowed[cell]=snapshot.viaAllowedAt(cell);
+            }
+            if(write>0) goalBitsDigest.update(goalDigestScratch,0,write);
+            goalStateIndex=end;
+            if(goalStateIndex==2*cells) goalBitsSha256=lowerHex(goalBitsDigest.digest());
+        }
+
+        void setupSources() {
+            if(snapshot==null || board==null || layout==null || branchHoles==null ||
+                    reached==null || goalFaces==null || goalStateIndex!=2*cells)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: graph source census started before mask parity");
+            if(branchHoles.length>ADriveGraphLimits.HOLES ||
+                    branchHoles.length!=layout.getHoleCount())
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: actual copied hole source census exceeds390 or differs from the retained prefix");
+            Object rawTraces=P07ScalarReflection.read(layout,"traces");
+            if(!(rawTraces instanceof Vector<?>) || ((Vector<?>)rawTraces).size()>100000)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: copied trace source collection exceeds its existing bound");
+            copiedTraces=(Vector<?>)rawTraces;
+            TreeMap<String,PcbBoardHole> copiedHoleIdentity=new TreeMap<String,PcbBoardHole>();
+            for(PcbBoardHole hole:branchHoles) {
+                if(hole==null || copiedHoleIdentity.put(hole.id,hole)!=null)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: branch hole identities are missing or duplicated");
+            }
+            if(copiedHoleIdentity.size()!=branchHoles.length)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: branch hole census changed");
+            for(PcbBoardHole hole:layout.getHoles()) {
+                PcbBoardHole branchHole=copiedHoleIdentity.get(hole.id);
+                if(branchHole!=hole || !branchHole.fingerprint().equals(hole.fingerprint()))
+                    throw new IllegalStateException("STALE_OWNER: live copied hole differs from the retained branch hole snapshot");
+                if(hole.kind==null || hole.exposure==null || !coordinateInDomain(hole.x) ||
+                        !coordinateInDomain(hole.y) || hole.drillRadius<=0 ||
+                        hole.landRadius<=0 ||
+                        (hole.kind==PcbBoardHole.Kind.NON_PLATED?
+                            hole.netId!=null || hole.landRadius!=hole.drillRadius:
+                            hole.netId==null || hole.landRadius<=hole.drillRadius) ||
+                        !rectangleInDomain(hole.getBounds()))
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: actual hole source violates its constructor geometry contract");
+                if(hole.netId!=null) requireGraphId(hole.netId,"holeNetId");
+                Integer gridCell=holeGridCell(hole);
+                GraphHoleData data=new GraphHoleData(hole,gridCell);
+                requireGraphId(data.id,"holeId");
+                if(holeRows.put(data.id,data)!=null)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: copied hole IDs are duplicated");
+                holeKindCounts[hole.kind.ordinal()]++;
+                if(hole.kind==PcbBoardHole.Kind.VIA) viaKindCount++;
+                if(gridCell!=null && hole.kind!=PcbBoardHole.Kind.NON_PLATED &&
+                        netId.equals(hole.netId)) {
+                    for(int layer=0;layer<2;layer++) {
+                        int state=layer*cells+gridCell.intValue();
+                        ArrayList<GraphHoleData> values=holeByState.get(Integer.valueOf(state));
+                        if(values==null) { values=new ArrayList<GraphHoleData>(); holeByState.put(Integer.valueOf(state),values); }
+                        values.add(data);
+                    }
+                }
+            }
+            if(holeRows.size()!=branchHoles.length || holeRows.size()>ADriveGraphLimits.HOLES)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: complete actual hole rows exceed390");
+            if(probe.guardPrefixBefore==null ||
+                    holeRows.size()!=probe.guardPrefixBefore.holeCount ||
+                    copiedTraces.size()!=probe.guardPrefixBefore.traceCount)
+                throw new IllegalStateException("STALE_OWNER: copied graph source rows differ from the measured pre-guard prefix");
+            for(PcbPadPlacement pad:reached) {
+                if(pad==null || pad==root || pad==start ||
+                        pad.getAttachment()!=PcbTerminalAttachment.PLATED_THROUGH_HOLE)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: reached PTH list contains an unsupported actual pad");
+                requireGraphId(pad.getPadId(),"reachedPthPadId");
+                reachedPthPadIds.add(pad.getPadId()); addPad(pad);
+            }
+            addPad(start); addPad(root);
+            requireBothFacePadGoal(root,"root");
+            for(PcbPadPlacement pad:reached) requireBothFacePadGoal(pad,"reached PTH");
+            for(Object rawTrace:copiedTraces) {
+                if(!(rawTrace instanceof PcbTraceGeometry))
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: copied layout trace row has an unsupported runtime type");
+                PcbTraceGeometry trace=(PcbTraceGeometry)rawTrace;
+                if(trace==null || !netId.equals(trace.getNetId())) continue;
+                if(traceTodo.size()>=ADriveGraphLimits.SOURCE_ROWS)
+                    throw new IllegalStateException("WITNESS_BYTES_LIMIT: needed same-net trace rows exceed16384");
+                GraphTraceData data=new GraphTraceData(trace);
+                requireGraphId(data.sourceId,"traceSourceId");
+                if(!netId.equals(data.netId) || data.layer==null ||
+                        !("TOP".equals(data.layer) || "BOTTOM".equals(data.layer)) ||
+                        data.exposure==null || data.xPoints==null || data.yPoints==null ||
+                        data.xPoints.length<2 ||
+                        data.xPoints.length>16384 || data.xPoints.length!=data.yPoints.length ||
+                        data.width<9 || data.width>63 || (data.width&1)==0 ||
+                        ("TOP".equals(data.layer)?0:1)!=trace.getLayer().ordinal())
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: copied trace row violates its actual immutable geometry contract");
+                if(data.startPadId!=null) requireGraphId(data.startPadId,"traceStartPadId");
+                if(data.endPadId!=null) requireGraphId(data.endPadId,"traceEndPadId");
+                for(int point=0;point<data.xPoints.length;point++)
+                    if(!coordinateInDomain(data.xPoints[point]) ||
+                            !coordinateInDomain(data.yPoints[point]))
+                        throw new IllegalStateException("INCOMPLETE_CAPTURE: copied trace coordinate exceeds the production geometry domain");
+                for(int point=1;point<data.xPoints.length;point++) {
+                    boolean horizontal=data.yPoints[point]==data.yPoints[point-1];
+                    boolean vertical=data.xPoints[point]==data.xPoints[point-1];
+                    if(horizontal==vertical)
+                        throw new IllegalStateException("INCOMPLETE_CAPTURE: copied same-net trace has a zero or diagonal segment");
+                }
+                if(!traceSourceIds.add(data.sourceId))
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: copied same-net trace source IDs are duplicated");
+                traceTodo.add(data);
+            }
+            if(reachedPthPadIds.size()>ADriveGraphLimits.PADS ||
+                    traceTodo.size()+holeRows.size()>ADriveGraphLimits.SOURCE_ROWS)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: graph source row counts exceed their closed census caps");
+            Collections.sort(reachedPthPadIds);
+            for(int index=1;index<reachedPthPadIds.size();index++)
+                if(reachedPthPadIds.get(index-1).equals(reachedPthPadIds.get(index)))
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: reached PTH pad IDs are duplicated");
+            traceCursor=0; tracePointCursor=0;
+        }
+
+        private void addPad(PcbPadPlacement pad) {
+            if(pad==null) throw new IllegalStateException("INCOMPLETE_CAPTURE: required source pad is missing");
+            if(pad.getAttachment()!=PcbTerminalAttachment.PLATED_THROUGH_HOLE)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: routing owner source pad is not plated through-hole");
+            String id=pad.getPadId(); requireGraphId(id,"padId");
+            if(layout.getPad(id)!=pad)
+                throw new IllegalStateException("STALE_OWNER: actual pad source is not the copied layout pad identity");
+            BoardPad logical=board.getPad(id);
+            if(logical==null || !netId.equals(logical.getNetId()))
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: required pad source is not on the actual A_DRIVE board net");
+            PcbPadPlacement previous=padPlacements.get(id);
+            if(previous!=null && previous!=pad)
+                throw new IllegalStateException("STALE_OWNER: duplicate stable pad ID resolves to another placement");
+            padPlacements.put(id,pad);
+        }
+
+        private void requireBothFacePadGoal(PcbPadPlacement pad,String label) {
+            int cell=P07ScalarReflection.searchCell(search,pad);
+            if(cell<0 || cell>=cells ||
+                    pad.getAttachment()!=PcbTerminalAttachment.PLATED_THROUGH_HOLE ||
+                    !PcbCopperAccess.hasCopper(pad,PcbCopperLayer.TOP) ||
+                    !PcbCopperAccess.hasCopper(pad,PcbCopperLayer.BOTTOM) ||
+                    !goalFaces[cell] || !goalFaces[cells+cell])
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: actual "+label+
+                    " PTH does not supply both mandatory face goals");
+        }
+
+        private void addTraceEndpoint(String padId) {
+            requireGraphId(padId,"traceEndpointPadId");
+            PcbPadPlacement pad=layout.getPad(padId);
+            if(pad==null) throw new IllegalStateException("INCOMPLETE_CAPTURE: nonnull trace endpoint does not resolve in copied layout");
+            addPad(pad);
+        }
+
+        private Integer holeGridCell(PcbBoardHole hole) {
+            long dx=(long)hole.x-originX,dy=(long)hole.y-originY;
+            if(dx<0 || dy<0 || dx%PcbLayerRoutingPrototype.GRID!=0 ||
+                    dy%PcbLayerRoutingPrototype.GRID!=0 ||
+                    dx/PcbLayerRoutingPrototype.GRID>=width ||
+                    dy/PcbLayerRoutingPrototype.GRID>=height) return null;
+            return Integer.valueOf((int)(dy/PcbLayerRoutingPrototype.GRID)*width+
+                (int)(dx/PcbLayerRoutingPrototype.GRID));
+        }
+
+        void advanceTraceMappingChunk(int maximumPoints) {
+            if(traceCursor>=traceTodo.size()) return;
+            if(currentTrace==null) {
+                currentTrace=traceTodo.get(traceCursor);
+                if(currentTrace==null)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: trace mapper encountered an already released source row");
+                int layer="TOP".equals(currentTrace.layer)?0:1;
+                PcbNetRouter.Router router=routers[layer];
+                Object points=P07ScalarReflection.invoke(router,"gridPoints",
+                    new Class<?>[]{PcbTraceGeometry.class},currentTrace.source);
+                if(!(points instanceof Vector<?>))
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: actual Router.gridPoints did not return its trace occupancy");
+                currentTraceGridPoints=(Vector<Point>)points;
+                currentTraceCells=new TreeSet<Integer>(); tracePointCursor=0;
+            }
+            int pointStart=tracePointCursor;
+            int end=Math.min(currentTraceGridPoints.size(),tracePointCursor+maximumPoints);
+            int layer="TOP".equals(currentTrace.layer)?0:1;
+            PcbNetRouter.Router router=routers[layer];
+            for(;tracePointCursor<end;tracePointCursor++) {
+                Point point=currentTraceGridPoints.get(tracePointCursor);
+                if(point==null) throw new IllegalStateException("INCOMPLETE_CAPTURE: actual Router.gridPoints includes a null point");
+                int gx=((Integer)P07ScalarReflection.invoke(router,"gridX",
+                    new Class<?>[]{Integer.TYPE},Integer.valueOf(point.x))).intValue();
+                int gy=((Integer)P07ScalarReflection.invoke(router,"gridY",
+                    new Class<?>[]{Integer.TYPE},Integer.valueOf(point.y))).intValue();
+                long expectedX=(long)originX+(long)gx*PcbLayerRoutingPrototype.GRID;
+                long expectedY=(long)originY+(long)gy*PcbLayerRoutingPrototype.GRID;
+                if(gx<0 || gy<0 || gx>=width || gy>=height ||
+                        expectedX!=point.x || expectedY!=point.y)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: actual Router.gridPoints entry does not map exactly to the Search grid");
+                int cell=gy*width+gx;
+                if(currentTraceCells.add(Integer.valueOf(cell)) &&
+                        goalFaces[layer*cells+cell]) {
+                    currentTrace.needed=true;
+                    Integer state=Integer.valueOf(layer*cells+cell);
+                    ArrayList<GraphTraceData> values=traceByState.get(state);
+                    if(values==null) {
+                        values=new ArrayList<GraphTraceData>();
+                        traceByState.put(state,values);
+                    }
+                    values.add(currentTrace);
+                }
+            }
+            if(tracePointCursor>=currentTraceGridPoints.size()) {
+                if(!currentTrace.needed) {
+                    currentTrace.source=null; currentTrace.xPoints=null;
+                    currentTrace.yPoints=null; traceTodo.set(traceCursor,null);
+                    currentTrace=null; currentTraceGridPoints=null;
+                    currentTraceCells=null; traceCursor++;
+                    return;
+                }
+                if(currentTraceCellArray==null) {
+                    currentTraceCellArray=new int[currentTraceCells.size()];
+                    currentTraceCellIterator=currentTraceCells.iterator();
+                    currentTraceCellIndex=0;
+                }
+                int remainingWork=maximumPoints-(end-pointStart);
+                if(remainingWork<=0) return;
+                int limit=Math.min(currentTraceCellArray.length,
+                    currentTraceCellIndex+remainingWork);
+                while(currentTraceCellIndex<limit && currentTraceCellIterator.hasNext())
+                    currentTraceCellArray[currentTraceCellIndex++]=
+                        currentTraceCellIterator.next().intValue();
+                if(currentTraceCellIndex==currentTraceCellArray.length) {
+                    if(currentTraceCellIterator.hasNext())
+                        throw new IllegalStateException("INCOMPLETE_CAPTURE: trace grid-cell cursor exceeds its exact allocation");
+                    currentTrace.routerGridCells=currentTraceCellArray;
+                    currentTrace.source=null;
+                    if(traceRows.put(currentTrace.sourceId,currentTrace)!=null)
+                        throw new IllegalStateException("INCOMPLETE_CAPTURE: actual trace source identity is duplicated");
+                    traceNeededCount++;
+                    traceTodo.set(traceCursor,null);
+                    currentTrace=null; currentTraceGridPoints=null;
+                    currentTraceCells=null; currentTraceCellIterator=null;
+                    currentTraceCellArray=null; currentTraceCellIndex=0;
+                    traceCursor++;
+                }
+            }
+        }
+
+        void advanceGoalProvenanceChunk(int maximumStates) {
+            int end=Math.min(2*cells,goalCursor+maximumStates);
+            for(;goalCursor<end;goalCursor++) {
+                if(!goalFaces[goalCursor]) continue;
+                int layer=goalCursor/cells,cell=goalCursor%cells;
+                TreeSet<GraphSourceRef> refs=new TreeSet<GraphSourceRef>();
+                boolean eligible=false;
+                boolean rootFace=layer==primary ||
+                    ((PcbLayerRoutingPrototype.Policy)P07ScalarReflection.read(search,"policy")).transitions>0;
+                if(rootFace && PcbCopperAccess.hasCopper(root,
+                        PcbCopperLayer.values()[layer]) &&
+                        cell==P07ScalarReflection.searchCell(search,root)) {
+                    refs.add(new GraphSourceRef("PAD",root.getPadId(),"ROOT_PAD"));
+                    eligible=true;
+                }
+                for(PcbPadPlacement pad:reached) {
+                    if(PcbCopperAccess.hasCopper(pad,PcbCopperLayer.values()[layer]) &&
+                            P07ScalarReflection.searchCell(search,pad)==cell) {
+                        refs.add(new GraphSourceRef("PAD",pad.getPadId(),"REACHED_PTH_PAD"));
+                        eligible=true;
+                    }
+                }
+                ArrayList<GraphTraceData> trees=traceByState.get(Integer.valueOf(goalCursor));
+                boolean tree=trees!=null && !trees.isEmpty();
+                if(tree) {
+                    if(trees==null || trees.isEmpty())
+                        throw new IllegalStateException("INCOMPLETE_CAPTURE: Router-owned same-net tree goal has no exact trace source attribution");
+                    for(GraphTraceData trace:trees) {
+                        if(trace==null || !netId.equals(trace.netId) ||
+                                !trace.layer.equals(PcbCopperLayer.values()[layer].name()))
+                            throw new IllegalStateException("INCOMPLETE_CAPTURE: tree goal attribution resolved to a foreign trace");
+                        trace.needed=true;
+                        refs.add(new GraphSourceRef("TRACE",trace.sourceId,
+                            "SAME_NET_TREE_TRACE"));
+                    }
+                    eligible=true;
+                }
+                ArrayList<GraphHoleData> barrels=holeByState.get(Integer.valueOf(goalCursor));
+                if(barrels!=null) for(GraphHoleData hole:barrels) {
+                    if(!netId.equals(hole.netId) || hole.gridCell==null ||
+                            hole.gridCell.intValue()!=cell || hole.conductiveLayerMask==0)
+                        throw new IllegalStateException("INCOMPLETE_CAPTURE: supplemental barrel attribution is not exact same-net copper");
+                    String role="VIA".equals(hole.kind)?"SAME_NET_VIA_BARREL":
+                        "SAME_NET_PTH_BARREL";
+                    refs.add(new GraphSourceRef("HOLE",hole.id,role));
+                }
+                if(!eligible || refs.isEmpty())
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: actual goal bit has no production eligibility source");
+                TreeMap<String,Object> row=new TreeMap<String,Object>();
+                row.put("state",Integer.valueOf(goalCursor)); row.put("cell",Integer.valueOf(cell));
+                row.put("layer",Integer.valueOf(layer));
+                ArrayList<Object> refRows=new ArrayList<Object>();
+                for(GraphSourceRef ref:refs) refRows.add(ref.json());
+                row.put("sourceRefs",refRows); goalProvenance.add(row);
+            }
+        }
+
+        void finalizeSourceRowsAndGraph() {
+            if(goalProvenance.size()!=goalCount || goalCount<1 ||
+                    goalCount>2*cells || traceCursor!=traceTodo.size() ||
+                    currentTrace!=null || traceRows.size()!=traceNeededCount)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: goal or trace source census is incomplete");
+            for(GraphTraceData trace:traceRows.values()) if(trace.needed) {
+                if(trace.startPadId!=null) addTraceEndpoint(trace.startPadId);
+                if(trace.endPadId!=null) addTraceEndpoint(trace.endPadId);
+            }
+            padCount=padPlacements.size(); traceCount=0; holeCount=holeRows.size();
+            if(padCount>ADriveGraphLimits.PADS || holeCount>ADriveGraphLimits.HOLES ||
+                    holeCount!=probe.guardPrefixBefore.holeCount)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: actual graph pad/hole rows exceed their caps or differ from the captured prefix");
+            padRowValues=new ArrayList<Object>(padCount);
+            for(PcbPadPlacement pad:padPlacements.values())
+                padRowValues.add(padJson(pad));
+            holeRowValues=new ArrayList<Object>(holeCount);
+            for(GraphHoleData hole:holeRows.values()) holeRowValues.add(hole.json());
+            traceRowValues=new ArrayList<Object>();
+            for(GraphTraceData trace:traceRows.values()) if(trace.needed) {
+                if(trace.routerGridCells==null || trace.routerGridCells.length<1)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: needed trace has no actual Router.gridPoints census");
+                traceRowValues.add(trace.json()); traceCount++;
+            }
+            goalRowValues=new ArrayList<Object>(goalProvenance);
+            sourceRows=padCount+traceCount+holeCount;
+            if(sourceRows>ADriveGraphLimits.SOURCE_ROWS || traceCount>ADriveGraphLimits.SOURCE_ROWS ||
+                    reachedPthPadIds.size()>ADriveGraphLimits.PADS || goalRowValues.size()!=goalCount)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: closed source row census exceeds16384 rows or246 pads");
+            if(holeKindCounts.length!=3 ||
+                    holeKindCounts[PcbBoardHole.Kind.VIA.ordinal()]!=viaKindCount ||
+                    holeKindCounts[0]+holeKindCounts[1]+holeKindCounts[2]!=holeCount)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: hole kind counts do not cover every actual hole");
+            int endCell=P07ScalarReflection.intField(probe.guardEndNode,"cell");
+            int endLayer=P07ScalarReflection.intField(probe.guardEndNode,"layer");
+            if(endCell<0 || endCell>=cells || endLayer<0 || endLayer>1 ||
+                    !goalFaces[endLayer*cells+endCell])
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: observed FOUND endpoint is not an actual captured goal");
+            for(int state=0;state<stepMasks.length;state++) {
+                int cell=state%cells,mask=stepMasks[state];
+                int x=cell%width,y=cell/width;
+                if(mask<0 || mask>15 || x==0 && (mask&8)!=0 ||
+                        x==width-1 && (mask&2)!=0 || y==0 && (mask&1)!=0 ||
+                        y==height-1 && (mask&4)!=0)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: captured directed step mask contains an invalid boundary bit");
+            }
+            PcbLayerRoutingPrototype.Policy policy=(PcbLayerRoutingPrototype.Policy)
+                P07ScalarReflection.read(search,"policy");
+            if(policy!=PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER ||
+                    P07ScalarReflection.intField(search,"maximumVias")!=48 ||
+                    P07ScalarReflection.intField(search,"viaCost")!=240 ||
+                    policy.transitions!=4 || PcbLayerRoutingPrototype.GRID!=10 ||
+                    PcbLayerRoutingPrototype.TURN_COST!=35)
+                throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: copied graph policy or cost inputs differ from the actual cost240 owner");
+            ArrayList<Object> holeCounts=new ArrayList<Object>(3);
+            String[] kinds={"VIA","PLATED","NON_PLATED"};
+            for(int index=0;index<kinds.length;index++) {
+                TreeMap<String,Object> row=new TreeMap<String,Object>();
+                row.put("kind",kinds[index]); row.put("count",Integer.valueOf(holeKindCounts[index]));
+                holeCounts.add(row);
+            }
+            TreeMap<String,Object> rowCounts=new TreeMap<String,Object>();
+            rowCounts.put("padRows",Integer.valueOf(padCount));
+            rowCounts.put("traceRows",Integer.valueOf(traceCount));
+            rowCounts.put("holeRows",Integer.valueOf(holeCount));
+            rowCounts.put("sourceRows",Integer.valueOf(sourceRows));
+            rowCounts.put("goalStates",Integer.valueOf(goalCount));
+            rowCounts.put("allHoleCount",Integer.valueOf(holeCount));
+            rowCounts.put("viaKindCount",Integer.valueOf(viaKindCount));
+            sourceRowsObject=new TreeMap<String,Object>();
+            sourceRowsObject.put("goalProvenance",goalRowValues);
+            sourceRowsObject.put("holeRows",holeRowValues);
+            sourceRowsObject.put("padRows",padRowValues);
+            sourceRowsObject.put("traceRows",traceRowValues);
+            TreeMap<String,Object> graph=new TreeMap<String,Object>();
+            graph.put("caseId","Q100_LOAD12_COST240_ADRIVE_PRE_GUARD");
+            graph.put("goals",new PackedGraphValue(goalFaces));
+            graph.put("height",Integer.valueOf(height));
+            graph.put("model","DIRECTED_TWO_FACE_HISTORY_RELAXED");
+            graph.put("primary",Integer.valueOf(primary));
+            graph.put("protocol","p07-fixed-prefix-packed-graph-v1");
+            graph.put("starts",new int[]{startCell,cells+startCell});
+            graph.put("steps",new PackedGraphValue(stepMasks));
+            graph.put("vias",new PackedGraphValue(viaAllowed));
+            graph.put("width",Integer.valueOf(width));
+            graphObject=graph;
+            ArrayList<Object> ledgerValues=new ArrayList<Object>(ledgerRows.size());
+            for(GraphTaskLedgerRow row:ledgerRows) ledgerValues.add(row.json());
+            graphCursor=new GraphJsonCursor(graphObject);
+            goalRowsCursor=new GraphJsonCursor(goalRowValues);
+            holeRowsCursor=new GraphJsonCursor(holeRowValues);
+            padRowsCursor=new GraphJsonCursor(padRowValues);
+            traceRowsCursor=new GraphJsonCursor(traceRowValues);
+            reachedCursor=new GraphJsonCursor(reachedPthPadIds);
+            ledgerCursor=new GraphJsonCursor(ledgerValues);
+            sourceRowsCanonicalBytes=0;
+            graphDigest=newSha256();
+            graphBytesBuilder=new GraphByteSequenceBuilder();
+            sourceRowsDigest=newSha256();
+        }
+
+        private TreeMap<String,Object> padJson(PcbPadPlacement pad) {
+            String id=pad.getPadId();
+            requireGraphId(id,"padId");
+            BoardPad logical=board.getPad(id);
+            if(logical==null || !netId.equals(logical.getNetId()) ||
+                    layout.getPad(id)!=pad)
+                throw new IllegalStateException("STALE_OWNER: pad row does not resolve to the copied layout and actual board net");
+            PcbTerminalAttachment attachment=pad.getAttachment();
+            PcbBoardSide side=pad.getMountingSide();
+            PcbCopperAccess.Exposure exposure=pad.getExposure();
+            if(attachment!=PcbTerminalAttachment.PLATED_THROUGH_HOLE ||
+                    side==null || exposure==null ||
+                    pad.getEscapeDx()<-1 || pad.getEscapeDx()>1 ||
+                    pad.getEscapeDy()<-1 || pad.getEscapeDy()>1 ||
+                    Math.abs(pad.getEscapeDx())+Math.abs(pad.getEscapeDy())>1 ||
+                    pad.getEscapeLength()<0 || pad.getEscapeLength()>0 &&
+                        pad.getEscapeDx()==0 && pad.getEscapeDy()==0)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: actual pad escape fields violate their constructor contract");
+            Rectangle bounds=pad.getPadBounds(),probeBounds=pad.getProbeBounds();
+            long padRight=bounds==null?Long.MIN_VALUE:(long)bounds.x+bounds.width;
+            long padBottom=bounds==null?Long.MIN_VALUE:(long)bounds.y+bounds.height;
+            long probeRight=probeBounds==null?Long.MIN_VALUE:(long)probeBounds.x+probeBounds.width;
+            long probeBottom=probeBounds==null?Long.MIN_VALUE:(long)probeBounds.y+probeBounds.height;
+            long escapeX=(long)pad.getX()+(long)pad.getEscapeDx()*pad.getEscapeLength();
+            long escapeY=(long)pad.getY()+(long)pad.getEscapeDy()*pad.getEscapeLength();
+            if(!rectangleInDomain(bounds) || !rectangleInDomain(probeBounds) ||
+                    !coordinateInDomain(pad.getX()) || !coordinateInDomain(pad.getY()) ||
+                    !coordinateInDomain(escapeX) || !coordinateInDomain(escapeY) ||
+                    bounds.x>pad.getX() || bounds.y>pad.getY() ||
+                    padRight<pad.getX() || padBottom<pad.getY() ||
+                    probeBounds.x>bounds.x || probeBounds.y>bounds.y ||
+                    probeRight<padRight || probeBottom<padBottom)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: actual pad rectangles are missing or empty");
+            long dx=(long)pad.getX()-originX,dy=(long)pad.getY()-originY;
+            if(dx<0 || dy<0 || dx%PcbLayerRoutingPrototype.GRID!=0 ||
+                    dy%PcbLayerRoutingPrototype.GRID!=0 ||
+                    dx/PcbLayerRoutingPrototype.GRID>=width ||
+                    dy/PcbLayerRoutingPrototype.GRID>=height)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: actual pad is off-grid or outside Search bounds");
+            int exactCell=((int)(dy/PcbLayerRoutingPrototype.GRID))*width+
+                (int)(dx/PcbLayerRoutingPrototype.GRID);
+            int ownerCell=P07ScalarReflection.searchCell(search,pad);
+            if(ownerCell!=exactCell)
+                throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: actual Search.cell differs from strict pad grid mapping");
+            int copperMask=attachment==PcbTerminalAttachment.PLATED_THROUGH_HOLE?3:
+                1<<side.ordinal();
+            for(int layer=0;layer<2;layer++)
+                if(PcbCopperAccess.hasCopper(pad,PcbCopperLayer.values()[layer])!=
+                        ((copperMask&(1<<layer))!=0))
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: pad copper-layer mask differs from actual copper access");
+            TreeMap<String,Object> row=new TreeMap<String,Object>();
+            row.put("padId",id); row.put("netId",logical.getNetId());
+            row.put("x",Integer.valueOf(pad.getX())); row.put("y",Integer.valueOf(pad.getY()));
+            row.put("escapeDx",Integer.valueOf(pad.getEscapeDx()));
+            row.put("escapeDy",Integer.valueOf(pad.getEscapeDy()));
+            row.put("escapeLength",Integer.valueOf(pad.getEscapeLength()));
+            row.put("attachment",attachment.name()); row.put("mountingSide",side.name());
+            row.put("exposure",exposure.name()); row.put("padBounds",rectangleJson(bounds));
+            row.put("probeBounds",rectangleJson(probeBounds));
+            row.put("copperLayerMask",Integer.valueOf(copperMask));
+            row.put("gridCell",Integer.valueOf(exactCell));
+            return row;
+        }
+
+        private TreeMap<String,Object> rectangleJson(Rectangle value) {
+            TreeMap<String,Object> row=new TreeMap<String,Object>();
+            row.put("x",Integer.valueOf(value.x)); row.put("y",Integer.valueOf(value.y));
+            row.put("width",Integer.valueOf(value.width)); row.put("height",Integer.valueOf(value.height));
+            return row;
+        }
+
+        boolean serializeGraphChunk() {
+            if(graphCursor==null || graphBytesBuilder==null || graphDigest==null ||
+                    graphSerializedChars!=graphEncodeOffset ||
+                    graphEncodeOffset!=graphBytesBuilder.length)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: packed graph serialize/encode cursors diverged");
+            int remaining=ADriveGraphMax.VALUE-graphSerializedChars;
+            if(remaining<=0 && !graphCursor.complete)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: packed graph exceeds8MiB before serialization completed");
+            int maximum=Math.min(ADriveChunkLimit.VALUE,Math.max(0,remaining));
+            StringBuilder chunk=new StringBuilder(maximum);
+            int written=graphCursor.appendChars(chunk,maximum);
+            graphCursor.completeIfExhausted();
+            if(written<0 || written!=chunk.length() || written>ADriveChunkLimit.VALUE ||
+                    graphSerializedChars>(long)ADriveGraphMax.VALUE-written)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: packed graph cursor exceeded its bounded ASCII advance");
+            if(written==0 && !graphCursor.complete)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: packed graph cursor made no bounded serialization progress");
+            graphSerializedChars+=written;
+            enforceAggregateArtifactLimit();
+            if(written>0) {
+                encodeChunk(chunk,0,graphBytesBuilder,graphDigest);
+                graphEncodeOffset=graphBytesBuilder.length;
+            }
+            if(graphSerializedChars!=graphEncodeOffset ||
+                    graphEncodeOffset!=graphBytesBuilder.length)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: packed graph bytes do not cover serialized ASCII");
+            if(graphCursor.complete) {
+                graphBytes=graphBytesBuilder.finish();
+                graphSha256=digestHex(graphDigest);
+                graphCanonicalBytes=graphBytes.length;
+            }
+            enforceAggregateArtifactLimit();
+            return graphCursor.complete;
+        }
+        boolean serializeGoalRowsChunk() { return serializeChunk(goalRowsCursor,goalRowsChars); }
+        boolean serializeHoleRowsChunk() { return serializeChunk(holeRowsCursor,holeRowsChars); }
+        boolean serializePadRowsChunk() { return serializeChunk(padRowsCursor,padRowsChars); }
+        boolean serializeTraceRowsChunk() { return serializeChunk(traceRowsCursor,traceRowsChars); }
+        boolean serializeReachedChunk() { return serializeChunk(reachedCursor,reachedChars); }
+        boolean serializeLedgerChunk() { return serializeChunk(ledgerCursor,ledgerChars); }
+
+        private boolean serializeChunk(GraphJsonCursor cursor,StringBuilder output) {
+            if(cursor==null) throw new IllegalStateException("INCOMPLETE_CAPTURE: graph serializer cursor is missing");
+            int remaining=ADriveGraphMax.VALUE-output.length();
+            if(remaining<=0 && !cursor.complete)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: graph JSON exceeds8MiB before encoding");
+            int limit=Math.min(ADriveChunkLimit.VALUE,remaining);
+            int written=cursor.appendChars(output,limit);
+            if(written<0 || written>ADriveChunkLimit.VALUE ||
+                    output.length()>ADriveGraphMax.VALUE)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: graph metadata cursor exceeded its charged32KiB advance");
+            enforceAggregateArtifactLimit();
+            return cursor.complete;
+        }
+
+        boolean encodeGoalRowsChunk() {
+            boolean done=encodeChunk(goalRowsChars,goalRowsEncodeOffset,goalRowsBytesBuilder,null);
+            goalRowsEncodeOffset=Math.min(goalRowsChars.length(),
+                goalRowsEncodeOffset+ADriveChunkLimit.VALUE);
+            goalRowsBytes=done?goalRowsBytesBuilder.finish():null;
+            enforceAggregateArtifactLimit(); return done;
+        }
+        boolean encodeHoleRowsChunk() {
+            boolean done=encodeChunk(holeRowsChars,holeRowsEncodeOffset,holeRowsBytesBuilder,null);
+            holeRowsEncodeOffset=Math.min(holeRowsChars.length(),
+                holeRowsEncodeOffset+ADriveChunkLimit.VALUE);
+            holeRowsBytes=done?holeRowsBytesBuilder.finish():null;
+            enforceAggregateArtifactLimit(); return done;
+        }
+        boolean encodePadRowsChunk() {
+            boolean done=encodeChunk(padRowsChars,padRowsEncodeOffset,padRowsBytesBuilder,null);
+            padRowsEncodeOffset=Math.min(padRowsChars.length(),
+                padRowsEncodeOffset+ADriveChunkLimit.VALUE);
+            padRowsBytes=done?padRowsBytesBuilder.finish():null;
+            enforceAggregateArtifactLimit(); return done;
+        }
+        boolean encodeTraceRowsChunk() {
+            boolean done=encodeChunk(traceRowsChars,traceRowsEncodeOffset,traceRowsBytesBuilder,null);
+            traceRowsEncodeOffset=Math.min(traceRowsChars.length(),
+                traceRowsEncodeOffset+ADriveChunkLimit.VALUE);
+            traceRowsBytes=done?traceRowsBytesBuilder.finish():null;
+            enforceAggregateArtifactLimit(); return done;
+        }
+        boolean encodeReachedChunk() {
+            boolean done=encodeChunk(reachedChars,reachedEncodeOffset,reachedBytesBuilder,null);
+            reachedEncodeOffset=Math.min(reachedChars.length(),
+                reachedEncodeOffset+ADriveChunkLimit.VALUE);
+            reachedBytes=done?reachedBytesBuilder.finish():null;
+            enforceAggregateArtifactLimit(); return done;
+        }
+        boolean encodeLedgerChunk() {
+            boolean done=encodeChunk(ledgerChars,ledgerEncodeOffset,ledgerBytesBuilder,null);
+            ledgerEncodeOffset=Math.min(ledgerChars.length(),
+                ledgerEncodeOffset+ADriveChunkLimit.VALUE);
+            ledgerBytes=done?ledgerBytesBuilder.finish():null;
+            enforceAggregateArtifactLimit(); return done;
+        }
+
+        private boolean encodeChunk(StringBuilder input,int offset,
+                GraphByteSequenceBuilder output,MessageDigest digest) {
+            if(input==null || output==null || offset<0 || offset>input.length())
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: graph ASCII encoder cursor is invalid");
+            int end=Math.min(input.length(),offset+ADriveChunkLimit.VALUE);
+            if(end==offset) return true;
+            byte[] bytes=new byte[end-offset];
+            for(int index=offset;index<end;index++) {
+                char ch=input.charAt(index);
+                if(ch>127)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: canonical graph serializer emitted non-ASCII text");
+                bytes[index-offset]=(byte)ch;
+            }
+            output.add(bytes);
+            if(digest!=null) digest.update(bytes,0,bytes.length);
+            return end==input.length();
+        }
+
+        private void enforceAggregateArtifactLimit() {
+            long total=Math.max(graphBytesBuilder.length,graphSerializedChars)+
+                (long)Math.max(goalRowsBytesBuilder.length,goalRowsChars.length())+
+                Math.max(holeRowsBytesBuilder.length,holeRowsChars.length())+
+                Math.max(padRowsBytesBuilder.length,padRowsChars.length())+
+                Math.max(traceRowsBytesBuilder.length,traceRowsChars.length())+
+                Math.max(reachedBytesBuilder.length,reachedChars.length())+
+                Math.max(ledgerBytesBuilder.length,ledgerChars.length())+64L;
+            if(total>ADriveGraphMax.VALUE)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: precomputed graph/source/ledger buffers exceed8MiB");
+        }
+
+        boolean hashSourceRowsChunk() {
+            if(sourceHashSequences.isEmpty()) initializeSourceHashSequences();
+            int remaining=ADriveChunkLimit.VALUE;
+            while(remaining>0 && sourceHashSequenceIndex<sourceHashSequences.size()) {
+                GraphByteSequence sequence=sourceHashSequences.get(sourceHashSequenceIndex);
+                if(sourceHashChunkIndex>=sequence.chunks.length) {
+                    sourceHashSequenceIndex++; sourceHashChunkIndex=0; sourceHashChunkOffset=0;
+                    continue;
+                }
+                byte[] chunk=sequence.chunks[sourceHashChunkIndex];
+                int length=Math.min(remaining,chunk.length-sourceHashChunkOffset);
+                if(length<=0) throw new IllegalStateException("INCOMPLETE_CAPTURE: source hash cursor made no progress");
+                sourceRowsDigest.update(chunk,sourceHashChunkOffset,length);
+                sourceHashChunkOffset+=length; remaining-=length;
+                if(sourceHashChunkOffset==chunk.length) {
+                    sourceHashChunkIndex++; sourceHashChunkOffset=0;
+                }
+            }
+            if(sourceHashSequenceIndex>=sourceHashSequences.size()) {
+                sourceRowsSha256=digestHex(sourceRowsDigest);
+                return true;
+            }
+            return false;
+        }
+
+        private void initializeSourceHashSequences() {
+            GraphByteSequence prefix=asciiSequence("{\"goalProvenance\":");
+            GraphByteSequence holePrefix=asciiSequence(",\"holeRows\":");
+            GraphByteSequence padPrefix=asciiSequence(",\"padRows\":");
+            GraphByteSequence tracePrefix=asciiSequence(",\"traceRows\":");
+            GraphByteSequence suffix=asciiSequence("}");
+            sourceHashSequences.add(prefix); sourceHashSequences.add(goalRowsBytes);
+            sourceHashSequences.add(holePrefix); sourceHashSequences.add(holeRowsBytes);
+            sourceHashSequences.add(padPrefix); sourceHashSequences.add(padRowsBytes);
+            sourceHashSequences.add(tracePrefix); sourceHashSequences.add(traceRowsBytes);
+            sourceHashSequences.add(suffix);
+            sourceRowsCanonicalBytes=prefix.length+goalRowsBytes.length+holePrefix.length+
+                holeRowsBytes.length+padPrefix.length+padRowsBytes.length+
+                tracePrefix.length+traceRowsBytes.length+suffix.length;
+            if(sourceRowsCanonicalBytes<1 || sourceRowsCanonicalBytes>ADriveGraphMax.VALUE)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: canonical sourceRows object exceeds8MiB");
+        }
+
+        GraphCaptureReport createReport(int graphTaskGroups,int graphMetadataGroups,
+                int graphCaptureGroups,long continuationOwnerSteps) {
+            if(graphBytes==null || goalRowsBytes==null || holeRowsBytes==null ||
+                    padRowsBytes==null || traceRowsBytes==null || reachedBytes==null ||
+                    ledgerBytes==null || graphSha256==null || sourceRowsSha256==null ||
+                    goalBitsSha256==null || snapshot==null ||
+                    graphCaptureGroups!=graphTaskGroups+graphMetadataGroups ||
+                    sourceRowsCanonicalBytes<=0 || graphCanonicalBytes!=graphBytes.length)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: immutable graph report is missing a completed buffer or digest");
+            report=new GraphCaptureReport(graphBytes,goalRowsBytes,holeRowsBytes,
+                padRowsBytes,traceRowsBytes,reachedBytes,ledgerBytes,goalBitsSha256,
+                graphSha256,sourceRowsSha256,netId,graphCanonicalBytes,
+            sourceRowsCanonicalBytes,sourceRows,padCount,traceCount,holeCount,
+                holeKindCounts[PcbBoardHole.Kind.VIA.ordinal()],
+                holeKindCounts[PcbBoardHole.Kind.PLATED.ordinal()],
+                holeKindCounts[PcbBoardHole.Kind.NON_PLATED.ordinal()],
+                viaKindCount,goalCount,
+                captureTaskIdentity,System.identityHashCode(snapshot),
+                contextIdentity,ownerIdentity,searchIdentity,branchIdentity,layoutIdentity,
+                topRouterIdentity,bottomRouterIdentity,branchOrdinal,pass,copyEntries,
+                comparisonEntries,goalProbes,ordinaryEdgeProbes,viaProbes,
+                captureInternalUnits,graphTaskGroups,graphMetadataGroups,
+                graphCaptureGroups,captureActiveElapsedMillis,continuationOwnerSteps,
+                maxTaskLedgerElapsedNanos);
+            return report;
+        }
+
+        void releaseLiveReferences() {
+            probe=null; owner=null; search=null; branch=null; publisher=null;
+            context=null; task=null; snapshot=null; layout=null; board=null;
+            routers=null; start=null; root=null; reached=null; branchHoles=null;
+            branchGoals=null; lineage=null; taskConstructor=null;
+            taskAdvanceMethod=null; taskFinishMethod=null; copiedTraces=null;
+            ownerPendingCapture=null; ownerPendingFailure=null;
+            currentTraceGridPoints=null; currentTrace=null; currentTraceCells=null;
+            currentTraceCellIterator=null; currentTraceCellArray=null;
+            currentTraceCellIndex=0;
+            padPlacements.clear(); traceTodo.clear(); traceRows.clear();
+            traceSourceIds.clear(); traceByState.clear(); holeByState.clear();
+            holeRows.clear(); goalProvenance.clear(); ledgerRows.clear();
+            reachedPthPadIds.clear();
+            graphObject=null; sourceRowsObject=null; graphCursor=null;
+            goalRowsCursor=null; holeRowsCursor=null; padRowsCursor=null;
+            traceRowsCursor=null; reachedCursor=null; ledgerCursor=null;
+            padRowValues=null; traceRowValues=null; holeRowValues=null;
+            goalRowValues=null; copiedTraces=null; graphBytesBuilder=null;
+            goalRowsBytesBuilder=null; holeRowsBytesBuilder=null;
+            padRowsBytesBuilder=null; traceRowsBytesBuilder=null;
+            reachedBytesBuilder=null; ledgerBytesBuilder=null;
+            goalRowsChars=null; holeRowsChars=null;
+            padRowsChars=null; traceRowsChars=null; reachedChars=null;
+            ledgerChars=null; graphDigest=null; sourceRowsDigest=null;
+            goalBitsDigest=null; goalFaces=null; viaAllowed=null;
+            stepMasks=null; sourceHashSequences.clear();
+            graphBytes=null; goalRowsBytes=null; holeRowsBytes=null;
+            padRowsBytes=null; traceRowsBytes=null; reachedBytes=null;
+            ledgerBytes=null; report=null;
+            traceRevisionsClear();
+        }
+
+        private void traceRevisionsClear() {
+            routerRevisions=null; routerEffects=null;
+        }
+    }
+
     private static final class Load12RemainderPhysicalProof {
         final String geometrySha256,graphSha256;
         final int traceCount,holeCount,viaCount,accessGridCells,accessReachableCells;
@@ -3941,6 +5665,16 @@ public final class Rb100PhysicalDiagnostics {
         private static final int GUARD_ADVANCE=0,GUARD_CAPTURE_BEFORE=1,
             GUARD_RECOMPUTE=2,GUARD_SERIALIZE=3,GUARD_BOUNDARY=4,
             GUARD_CAPTURE_AFTER=5,GUARD_COMPLETE=6;
+        private static final int GRAPH_IDLE=0,GRAPH_INITIALIZE=1,GRAPH_TASK=2,
+            GRAPH_VERIFY=3,GRAPH_COPY_MASKS=4,GRAPH_SOURCE_SETUP=5,
+            GRAPH_TRACE_MAP=6,GRAPH_GOAL_MAP=7,GRAPH_SOURCE_FINALIZE=8,
+            GRAPH_SERIALIZE_GRAPH=9,GRAPH_SERIALIZE_GOAL_ROWS=10,
+            GRAPH_ENCODE_GOAL_ROWS=11,GRAPH_SERIALIZE_HOLE_ROWS=12,
+            GRAPH_ENCODE_HOLE_ROWS=13,GRAPH_SERIALIZE_PAD_ROWS=14,
+            GRAPH_ENCODE_PAD_ROWS=15,GRAPH_SERIALIZE_TRACE_ROWS=16,
+            GRAPH_ENCODE_TRACE_ROWS=17,GRAPH_SERIALIZE_REACHED=18,
+            GRAPH_ENCODE_REACHED=19,GRAPH_SERIALIZE_LEDGER=20,
+            GRAPH_ENCODE_LEDGER=21,GRAPH_HASH_SOURCE_ROWS=22,GRAPH_COMPLETE=23;
         int guardStage=GUARD_ADVANCE,guardPass=-1,guardOrdering=-1,
             guardNetVectorPosition=-1,guardSearchNetIndex=-1,guardBranchOrdinal=-1,
             guardSearchBranches=-1,guardGridWidth=-1,guardGridHeight=-1,
@@ -3971,6 +5705,37 @@ public final class Rb100PhysicalDiagnostics {
         boolean guardDirectZero,guardLengthOverThreeDirect,guardBendsOver16,
             guardRejected,guardRejectedBranchPublished,guardSameTypedBoundary,
             guardWitnessComplete;
+        int graphStage=GRAPH_IDLE,graphTaskGroups,graphMetadataGroups,
+            graphInternalUnits,graphGoalStateIndex,graphMaskIndex,
+            graphTraceIndex,graphTracePointIndex,graphSourceStateIndex,
+            graphSerializeCursor,graphEncodeOffset,graphHashSegment,graphHashOffset,
+            graphRowCount,graphHoleCount,graphViaKindCount,graphGoalCount,
+            graphTotalSourceRows,graphGraphBytes,graphSourceRowsBytes,
+            graphCopyEntries,graphComparisonEntries,graphGoalProbes,
+            graphOrdinaryEdgeProbes,graphViaProbes,
+            graphTaskStageAtStart=-1,graphTaskTraceCursor,graphCaptureGroupsAtStart;
+        long graphTaskActiveNanos,graphContinuationOwnerStepsAtStart;
+        Object graphCaptureTask;
+        PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot graphSnapshot;
+        GraphCaptureBuilder graphBuilder;
+        GraphCaptureReport graphCaptureReport;
+        String graphGoalBitsSha256,graphGraphSha256,graphSourceRowsSha256,
+            graphBaseEventSha256,graphGuardEventSha256;
+        byte[] graphReportBasePayloadBytes;
+        Vector<GraphRecordPart> graphReportParts;
+        int graphEnvelopeSmallBytes;
+        boolean graphReportPrepared,graphReportEmitted,graphCaptureReleased;
+        boolean graphFailureProgressEmitted,graphFailureProgressSnapshotCaptured,
+            graphLiveReferencesCleared;
+        int graphFailureUnitsAtCleanup=-1,graphFailureStageAtCleanup=-1,
+            graphFailureTaskStageAtCleanup=-1,graphFailureInternalUnitsAtCleanup,
+            graphFailureCopyEntriesAtCleanup,graphFailureComparisonEntriesAtCleanup,
+            graphFailureGoalProbesAtCleanup,graphFailureEdgeProbesAtCleanup,
+            graphFailureViaProbesAtCleanup,graphFailureGraphCharsAtCleanup,
+            graphFailureGraphBytesAtCleanup,graphFailureSerializeCursorAtCleanup,
+            graphFailureEncodeOffsetAtCleanup;
+        long graphFailureElapsedNanosAtCleanup=-1L;
+        long graphReportElapsedNanos,graphFinalOperationElapsedNanos;
         private static final int REMAINDER_IDLE=0,REMAINDER_HANDOFF=1,
             REMAINDER_ADVANCE=2,REMAINDER_TAKE_RESULT=3,REMAINDER_RAW_ORACLES=4,
             REMAINDER_FINALIZE=5,REMAINDER_FINAL_ORACLES=6,REMAINDER_COMPLETE=7;
@@ -4040,6 +5805,10 @@ public final class Rb100PhysicalDiagnostics {
 
         boolean isGuardExperiment() {
             return isDetachedLoad12Cost240Guard(purpose);
+        }
+
+        boolean isGuardGraphExperiment() {
+            return isDetachedLoad12Cost240GuardGraph(purpose);
         }
 
         void beginRemainderOuterAdvance() {
@@ -4194,6 +5963,11 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         String nextManualUnitName() {
+            if(isGuardGraphExperiment() && guardStage==GUARD_BOUNDARY &&
+                    graphStage!=GRAPH_COMPLETE) {
+                return "p07-quality-load12-remainder-ordering-remainder-adrive-guard-capture-graph-"+
+                    graphStage+"-"+(graphTaskGroups+graphMetadataGroups+1);
+            }
             if(isGuardExperiment() && remainderStage==REMAINDER_HANDOFF)
                 return "p07-quality-load12-remainder-ordering-remainder-adrive-guard-handoff";
             if(isGuardExperiment() && remainderStage==REMAINDER_ADVANCE) {
@@ -5022,6 +6796,10 @@ public final class Rb100PhysicalDiagnostics {
                 return;
             }
             if(guardStage==GUARD_BOUNDARY) {
+                if(isGuardGraphExperiment() && graphStage!=GRAPH_COMPLETE) {
+                    advanceLoad12Cost240GuardGraphUnit(budget);
+                    return;
+                }
                 advanceLoad12Cost240GuardMicrocall(budget,true);
                 return;
             }
@@ -5030,6 +6808,223 @@ public final class Rb100PhysicalDiagnostics {
                 return;
             }
             throw new IllegalStateException("OPERATION_EXCEPTION: unexpected A_DRIVE guard stage "+guardStage);
+        }
+
+        private void advanceLoad12Cost240GuardGraphUnit(Budget budget) {
+            if(!isGuardGraphExperiment() || budget==null ||
+                    budget.unitName==null || guardStage!=GUARD_BOUNDARY ||
+                    guardWitnessComplete || graphStage==GRAPH_COMPLETE)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: graph observer is outside the paused pre-guard stage");
+            if(graphBuilder==null) {
+                graphCaptureGroupsAtStart=budget.workUnits-1;
+                graphContinuationOwnerStepsAtStart=guardContinuationOwnerSteps;
+                graphBuilder=new GraphCaptureBuilder(this);
+            }
+            graphBuilder.probe=this;
+            if(graphStage!=GRAPH_COMPLETE) {
+                verifyCost240GuardGraphOwner(graphBuilder);
+                if(graphBuilder.task!=null) graphBuilder.verifyObserverState();
+            }
+            if(graphStage==GRAPH_IDLE) {
+                graphBuilder.initializeTask();
+                graphCaptureTask=graphBuilder.task;
+                graphMetadataGroups++;
+                graphStage=GRAPH_TASK;
+            } else if(graphStage==GRAPH_TASK) {
+                graphTaskStageAtStart=P07ScalarReflection.intField(
+                    graphBuilder.task,"stage");
+                GraphTaskLedgerRow row=graphBuilder.advanceTaskGroup(budget);
+                graphTaskGroups++;
+                graphInternalUnits=graphBuilder.captureInternalUnits;
+                graphCopyEntries=P07ScalarReflection.intField(graphBuilder.task,"copyEntries");
+                graphComparisonEntries=P07ScalarReflection.intField(graphBuilder.task,"comparisonEntries");
+                graphGoalProbes=P07ScalarReflection.intField(graphBuilder.task,"goalProbes");
+                graphOrdinaryEdgeProbes=P07ScalarReflection.intField(graphBuilder.task,"ordinaryEdgeProbes");
+                graphViaProbes=P07ScalarReflection.intField(graphBuilder.task,"viaProbes");
+                graphTaskActiveNanos=row.elapsedNanos;
+                if(graphBuilder.snapshot!=null) {
+                    graphSnapshot=graphBuilder.snapshot;
+                    graphStage=GRAPH_VERIFY;
+                }
+            } else if(graphStage==GRAPH_VERIFY) {
+                graphBuilder.verifySnapshot();
+                graphStage=GRAPH_COPY_MASKS;
+                graphMetadataGroups++;
+            } else if(graphStage==GRAPH_COPY_MASKS) {
+                graphBuilder.copyMaskChunk(ADriveChunkLimit.VALUE);
+                graphGoalStateIndex=graphBuilder.goalStateIndex;
+                graphGoalCount=graphBuilder.goalCount;
+                graphGoalBitsSha256=graphBuilder.goalBitsSha256;
+                graphMetadataGroups++;
+                if(graphBuilder.goalStateIndex==2*graphBuilder.cells)
+                    graphStage=GRAPH_SOURCE_SETUP;
+            } else if(graphStage==GRAPH_SOURCE_SETUP) {
+                graphBuilder.setupSources();
+                graphHoleCount=graphBuilder.holeRows.size();
+                graphViaKindCount=graphBuilder.viaKindCount;
+                graphTraceIndex=0;
+                graphStage=GRAPH_TRACE_MAP;
+                graphMetadataGroups++;
+            } else if(graphStage==GRAPH_TRACE_MAP) {
+                graphBuilder.advanceTraceMappingChunk(ADriveChunkLimit.VALUE);
+                graphTraceIndex=graphBuilder.traceCursor;
+                graphMetadataGroups++;
+                if(graphBuilder.traceCursor>=graphBuilder.traceTodo.size() &&
+                        graphBuilder.currentTrace==null)
+                    graphStage=GRAPH_GOAL_MAP;
+            } else if(graphStage==GRAPH_GOAL_MAP) {
+                graphBuilder.advanceGoalProvenanceChunk(ADriveChunkLimit.VALUE);
+                graphSourceStateIndex=graphBuilder.goalCursor;
+                graphGoalCount=graphBuilder.goalCount;
+                graphMetadataGroups++;
+                if(graphBuilder.goalCursor==2*graphBuilder.cells)
+                    graphStage=GRAPH_SOURCE_FINALIZE;
+            } else if(graphStage==GRAPH_SOURCE_FINALIZE) {
+                graphBuilder.finalizeSourceRowsAndGraph();
+                graphStage=GRAPH_SERIALIZE_GRAPH;
+                graphMetadataGroups++;
+            } else if(graphStage==GRAPH_SERIALIZE_GRAPH) {
+                if(graphBuilder.serializeGraphChunk())
+                    graphStage=GRAPH_SERIALIZE_GOAL_ROWS;
+                graphSerializeCursor=graphBuilder.graphSerializedChars;
+                graphEncodeOffset=graphBuilder.graphEncodeOffset;
+                graphMetadataGroups++;
+            } else if(graphStage==GRAPH_SERIALIZE_GOAL_ROWS) {
+                if(graphBuilder.serializeGoalRowsChunk()) graphStage=GRAPH_ENCODE_GOAL_ROWS;
+                graphSerializeCursor=graphBuilder.goalRowsChars.length();
+                graphMetadataGroups++;
+            } else if(graphStage==GRAPH_ENCODE_GOAL_ROWS) {
+                if(graphBuilder.encodeGoalRowsChunk()) graphStage=GRAPH_SERIALIZE_HOLE_ROWS;
+                graphEncodeOffset=graphBuilder.goalRowsEncodeOffset;
+                graphMetadataGroups++;
+            } else if(graphStage==GRAPH_SERIALIZE_HOLE_ROWS) {
+                if(graphBuilder.serializeHoleRowsChunk()) graphStage=GRAPH_ENCODE_HOLE_ROWS;
+                graphSerializeCursor=graphBuilder.holeRowsChars.length();
+                graphMetadataGroups++;
+            } else if(graphStage==GRAPH_ENCODE_HOLE_ROWS) {
+                if(graphBuilder.encodeHoleRowsChunk()) graphStage=GRAPH_SERIALIZE_PAD_ROWS;
+                graphEncodeOffset=graphBuilder.holeRowsEncodeOffset;
+                graphMetadataGroups++;
+            } else if(graphStage==GRAPH_SERIALIZE_PAD_ROWS) {
+                if(graphBuilder.serializePadRowsChunk()) graphStage=GRAPH_ENCODE_PAD_ROWS;
+                graphSerializeCursor=graphBuilder.padRowsChars.length();
+                graphMetadataGroups++;
+            } else if(graphStage==GRAPH_ENCODE_PAD_ROWS) {
+                if(graphBuilder.encodePadRowsChunk()) graphStage=GRAPH_SERIALIZE_TRACE_ROWS;
+                graphEncodeOffset=graphBuilder.padRowsEncodeOffset;
+                graphMetadataGroups++;
+            } else if(graphStage==GRAPH_SERIALIZE_TRACE_ROWS) {
+                if(graphBuilder.serializeTraceRowsChunk()) graphStage=GRAPH_ENCODE_TRACE_ROWS;
+                graphSerializeCursor=graphBuilder.traceRowsChars.length();
+                graphMetadataGroups++;
+            } else if(graphStage==GRAPH_ENCODE_TRACE_ROWS) {
+                if(graphBuilder.encodeTraceRowsChunk()) graphStage=GRAPH_SERIALIZE_REACHED;
+                graphEncodeOffset=graphBuilder.traceRowsEncodeOffset;
+                graphMetadataGroups++;
+            } else if(graphStage==GRAPH_SERIALIZE_REACHED) {
+                if(graphBuilder.serializeReachedChunk()) graphStage=GRAPH_ENCODE_REACHED;
+                graphSerializeCursor=graphBuilder.reachedChars.length();
+                graphMetadataGroups++;
+            } else if(graphStage==GRAPH_ENCODE_REACHED) {
+                if(graphBuilder.encodeReachedChunk()) graphStage=GRAPH_SERIALIZE_LEDGER;
+                graphEncodeOffset=graphBuilder.reachedEncodeOffset;
+                graphMetadataGroups++;
+            } else if(graphStage==GRAPH_SERIALIZE_LEDGER) {
+                if(graphBuilder.serializeLedgerChunk()) graphStage=GRAPH_ENCODE_LEDGER;
+                graphSerializeCursor=graphBuilder.ledgerChars.length();
+                graphMetadataGroups++;
+            } else if(graphStage==GRAPH_ENCODE_LEDGER) {
+                if(graphBuilder.encodeLedgerChunk()) graphStage=GRAPH_HASH_SOURCE_ROWS;
+                graphEncodeOffset=graphBuilder.ledgerEncodeOffset;
+                graphMetadataGroups++;
+            } else if(graphStage==GRAPH_HASH_SOURCE_ROWS) {
+                if(graphBuilder.hashSourceRowsChunk()) graphStage=GRAPH_COMPLETE;
+                graphMetadataGroups++;
+                if(graphStage==GRAPH_COMPLETE) finishGraphCaptureReport();
+            } else {
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: unknown graph capture stage "+graphStage);
+            }
+            if(graphStage!=GRAPH_COMPLETE) {
+                verifyCost240GuardGraphOwner(graphBuilder);
+                if(graphBuilder.task!=null) graphBuilder.verifyObserverState();
+            }
+            if(graphStage==GRAPH_COMPLETE &&
+                    (graphCaptureReport==null || !graphCaptureReleased ||
+                        graphCaptureTask!=null || graphSnapshot!=null || graphBuilder!=null))
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: graph capture did not release all adapter live references");
+        }
+
+        private void verifyCost240GuardGraphOwner(GraphCaptureBuilder builder) {
+            if(!isGuardGraphExperiment() || builder==null || remainderBudget==null ||
+                    guardStage!=GUARD_BOUNDARY || guardSearch==null ||
+                    guardReceiverSearch!=guardSearch || guardBranchSearch==null ||
+                    guardPublisher==null || remainderOwner==null ||
+                    remainderCopiedLayout==null || remainderContinuation==null ||
+                    P07ScalarReflection.read(guardSearch,"owner")!=remainderOwner ||
+                    P07ScalarReflection.read(guardSearch,"layout")!=remainderCopiedLayout ||
+                    P07ScalarReflection.read(guardSearch,"publisher")!=guardPublisher ||
+                    P07ScalarReflection.read(remainderOwner,"fixedPrefixContext")!=fixedPrefixContext ||
+                    P07ScalarReflection.intField(guardPublisher,"stage")!=1 ||
+                    P07ScalarReflection.intField(guardPublisher,"qualityIndex")!=guardReversedSize ||
+                    P07ScalarReflection.read(guardBranchSearch,"found")!=guardEndNode ||
+                    !"A_DRIVE".equals(P07ScalarReflection.stringField(guardBranchSearch,"net")) ||
+                    P07ScalarReflection.intField(guardBranchSearch,"branchOrdinal")!=142 ||
+                    remainderContinuation.isComplete() ||
+                    P07ScalarReflection.read(remainderOwner,"search")!=guardSearch ||
+                    P07ScalarReflection.read(remainderOwner,"candidate")!=remainderCopiedLayout ||
+                    P07ScalarReflection.read(remainderOwner,"detachedOrderingContinuation")!=remainderContinuation)
+                throw new IllegalStateException("STALE_OWNER: graph capture is not bound to the live paused A_DRIVE pre-guard owner");
+            requireLoad12Cost240GuardOwner(guardSearch);
+            verifyLoad12Cost240GuardBranchPublisher(guardBranchSearch,guardPublisher);
+            verifyPausedLoad12Source();
+            GuardPrefixSnapshot prefix=captureLoad12GuardPrefix(remainderCopiedLayout);
+            if(guardPrefixBefore==null || !guardPrefixBefore.same(prefix))
+                throw new IllegalStateException("STALE_OWNER: copied prefix changed before fixed-prefix graph observation");
+            if(builder.owner!=null && (builder.owner!=remainderOwner ||
+                    builder.search!=guardSearch || builder.branch!=guardBranchSearch ||
+                    builder.publisher!=guardPublisher || builder.layout!=remainderCopiedLayout))
+                throw new IllegalStateException("STALE_OWNER: graph task binding differs from the retained guard owner");
+        }
+
+        private void finishGraphCaptureReport() {
+            GraphCaptureBuilder builder=graphBuilder;
+            if(builder==null || builder.snapshot==null ||
+                    builder.goalBitsSha256==null || builder.graphBytes==null ||
+                    builder.goalRowsBytes==null || builder.holeRowsBytes==null ||
+                    builder.padRowsBytes==null || builder.traceRowsBytes==null ||
+                    builder.reachedBytes==null || builder.ledgerBytes==null ||
+                    builder.sourceRowsSha256==null)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: graph buffers or digests are incomplete");
+            builder.verifyObserverState();
+            int groups=budgetlessGraphGroupCount();
+            if(graphTaskGroups<1 || graphMetadataGroups<1 || groups!=
+                    graphTaskGroups+graphMetadataGroups || graphInternalUnits!=builder.captureInternalUnits ||
+                    graphInternalUnits>4*graphTaskGroups || graphInternalUnits>2560 ||
+                    builder.snapshot.captureWorkUnits()!=graphInternalUnits ||
+                    graphContinuationOwnerStepsAtStart!=guardContinuationOwnerSteps ||
+                    guardContinuationOwnerSteps!=remainderBudget.remainderPhaseOwnerSteps[6])
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: graph controller/task counters do not reconcile");
+            graphCaptureReport=builder.createReport(graphTaskGroups,graphMetadataGroups,
+                groups,guardContinuationOwnerSteps);
+            graphGoalBitsSha256=graphCaptureReport.goalBitsSha256;
+            graphGraphSha256=graphCaptureReport.graphSha256;
+            graphSourceRowsSha256=graphCaptureReport.sourceRowsSha256;
+            graphGraphBytes=graphCaptureReport.graphCanonicalBytes;
+            graphSourceRowsBytes=graphCaptureReport.sourceRowsCanonicalBytes;
+            graphRowCount=graphCaptureReport.sourceRows;
+            graphTotalSourceRows=graphCaptureReport.sourceRows;
+            graphGoalCount=graphCaptureReport.goalStates;
+            graphBuilder.releaseLiveReferences();
+            graphBuilder=null; graphCaptureTask=null; graphSnapshot=null;
+            graphCaptureReleased=true;
+            graphStage=GRAPH_COMPLETE;
+        }
+
+        private int budgetlessGraphGroupCount() {
+            if(remainderBudget==null) return -1;
+            int count=remainderBudget.workUnits-graphCaptureGroupsAtStart;
+            if(count<0) throw new IllegalStateException("INCOMPLETE_CAPTURE: graph group counter regressed");
+            return count;
         }
 
         private void requireLoad12Cost240GuardOwner(Object search) {
@@ -5619,6 +7614,11 @@ public final class Rb100PhysicalDiagnostics {
                 "preGuardPublisher.qualityIndexEqualsReversedSize");
             verifyLoad12Cost240GuardBranchPublisher(guardBranchSearch,guardPublisher);
             verifyPausedLoad12Source();
+            if(isGuardGraphExperiment() &&
+                    (graphStage!=GRAPH_COMPLETE || graphCaptureReport==null ||
+                        !graphCaptureReleased || graphCaptureTask!=null ||
+                        graphSnapshot!=null || graphBuilder!=null))
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: copied pre-guard graph was not completed and released before the unchanged boundary call");
             guardSourceGeometrySha256After=pausedSourceGeometrySha256(
                 remainderSourceAfterJson);
             if(!guardSourceGeometrySha256.equals(guardSourceGeometrySha256After))
@@ -6334,6 +8334,10 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         private void clearLoad12GuardOwnerReferences() {
+            captureGraphFailureProgress();
+            if(graphBuilder!=null) graphBuilder.releaseLiveReferences();
+            graphBuilder=null; graphCaptureTask=null; graphSnapshot=null;
+            graphLiveReferencesCleared=true;
             guardReceiverSearch=null;
             guardSearch=null;
             guardBranchSearch=null;
@@ -6344,6 +8348,133 @@ public final class Rb100PhysicalDiagnostics {
             guardFoundTerminal=null;
             guardNetVector=null;
             guardNodeRows=null;
+        }
+
+        private void captureGraphFailureProgress() {
+            if(!isGuardGraphExperiment() || graphFailureProgressSnapshotCaptured) return;
+            graphFailureStageAtCleanup=graphStage;
+            graphFailureTaskStageAtCleanup=graphTaskStageAtStart;
+            graphFailureInternalUnitsAtCleanup=graphInternalUnits;
+            graphFailureCopyEntriesAtCleanup=graphCopyEntries;
+            graphFailureComparisonEntriesAtCleanup=graphComparisonEntries;
+            graphFailureGoalProbesAtCleanup=graphGoalProbes;
+            graphFailureEdgeProbesAtCleanup=graphOrdinaryEdgeProbes;
+            graphFailureViaProbesAtCleanup=graphViaProbes;
+            graphFailureGraphCharsAtCleanup=graphSerializeCursor;
+            graphFailureGraphBytesAtCleanup=graphGraphBytes;
+            graphFailureSerializeCursorAtCleanup=graphSerializeCursor;
+            graphFailureEncodeOffsetAtCleanup=graphEncodeOffset;
+            if(graphBuilder!=null) {
+                graphFailureInternalUnitsAtCleanup=graphBuilder.captureInternalUnits;
+                if(graphBuilder.task!=null) {
+                    graphFailureTaskStageAtCleanup=
+                        P07ScalarReflection.intField(graphBuilder.task,"stage");
+                    graphFailureCopyEntriesAtCleanup=
+                        P07ScalarReflection.intField(graphBuilder.task,"copyEntries");
+                    graphFailureComparisonEntriesAtCleanup=
+                        P07ScalarReflection.intField(graphBuilder.task,"comparisonEntries");
+                    graphFailureGoalProbesAtCleanup=
+                        P07ScalarReflection.intField(graphBuilder.task,"goalProbes");
+                    graphFailureEdgeProbesAtCleanup=
+                        P07ScalarReflection.intField(graphBuilder.task,"ordinaryEdgeProbes");
+                    graphFailureViaProbesAtCleanup=
+                        P07ScalarReflection.intField(graphBuilder.task,"viaProbes");
+                }
+                graphFailureGraphCharsAtCleanup=graphBuilder.graphSerializedChars;
+                if(graphStage==GRAPH_SERIALIZE_GRAPH) {
+                    graphFailureSerializeCursorAtCleanup=graphBuilder.graphSerializedChars;
+                    graphFailureEncodeOffsetAtCleanup=graphBuilder.graphEncodeOffset;
+                }
+                if(graphBuilder.graphBytesBuilder!=null)
+                    graphFailureGraphBytesAtCleanup=graphBuilder.graphBytesBuilder.length;
+            } else if(graphCaptureReport!=null) {
+                graphFailureInternalUnitsAtCleanup=graphCaptureReport.captureInternalUnits;
+                graphFailureCopyEntriesAtCleanup=graphCaptureReport.copyEntries;
+                graphFailureComparisonEntriesAtCleanup=graphCaptureReport.comparisonEntries;
+                graphFailureGoalProbesAtCleanup=graphCaptureReport.goalProbes;
+                graphFailureEdgeProbesAtCleanup=graphCaptureReport.ordinaryEdgeProbes;
+                graphFailureViaProbesAtCleanup=graphCaptureReport.viaProbes;
+                graphFailureGraphBytesAtCleanup=graphCaptureReport.graphCanonicalBytes;
+            }
+            if(remainderBudget!=null) {
+                graphFailureUnitsAtCleanup=remainderBudget.workUnits;
+                graphFailureElapsedNanosAtCleanup=Math.max(0L,
+                    System.nanoTime()-remainderBudget.started);
+            }
+            graphFailureProgressSnapshotCaptured=true;
+        }
+
+        void emitGraphCaptureFailureProgress(Throwable failure) {
+            if(!isGuardGraphExperiment() || graphFailureProgressEmitted) return;
+            captureGraphFailureProgress();
+            graphFailureProgressEmitted=true;
+            String message=failure==null?"capture did not complete":failure.toString();
+            if(message.length()>512) message=message.substring(0,512);
+            long actualElapsed=remainderBudget==null?graphFailureElapsedNanosAtCleanup:
+                Math.max(0L,System.nanoTime()-remainderBudget.started);
+            int actualUnits=remainderBudget==null?graphFailureUnitsAtCleanup:
+                remainderBudget.workUnits;
+            System.err.println("RB100_LOAD12_ADRIVE_GRAPH_FAILURE_PROGRESS {\"phase\":\""+
+                jsonFull(failure==null?"GRAPH_CAPTURE":typedFailure(failure))+"\",\"stage\":"+
+                graphFailureStageAtCleanup+",\"graphPhase\":\""+
+                graphStageName(graphFailureStageAtCleanup)+"\",\"taskStage\":"+
+                graphFailureTaskStageAtCleanup+",\"taskPhase\":\""+
+                graphTaskStageName(graphFailureTaskStageAtCleanup)+
+                "\",\"controllerUnits\":"+actualUnits+
+                ",\"operationElapsedNanos\":"+actualElapsed+
+                ",\"progressAtCleanup\":{\"controllerUnits\":"+
+                graphFailureUnitsAtCleanup+",\"operationElapsedNanos\":"+
+                graphFailureElapsedNanosAtCleanup+",\"internalCalls\":"+
+                graphFailureInternalUnitsAtCleanup+",\"copyEntries\":"+
+                graphFailureCopyEntriesAtCleanup+",\"comparisonEntries\":"+
+                graphFailureComparisonEntriesAtCleanup+",\"goalProbes\":"+
+                graphFailureGoalProbesAtCleanup+",\"ordinaryEdgeProbes\":"+
+                graphFailureEdgeProbesAtCleanup+",\"viaProbes\":"+
+                graphFailureViaProbesAtCleanup+",\"serializedChars\":"+
+                graphFailureGraphCharsAtCleanup+",\"encodedGraphBytes\":"+
+                graphFailureGraphBytesAtCleanup+",\"serializeCursor\":"+
+                graphFailureSerializeCursorAtCleanup+",\"encodeOffset\":"+
+                graphFailureEncodeOffsetAtCleanup+"},\"liveReferencesCleared\":"+
+                graphLiveReferencesCleared+",\"message\":\""+jsonFull(message)+"\"}");
+        }
+
+        private String graphStageName(int stage) {
+            switch(stage) {
+                case GRAPH_IDLE:return "IDLE";
+                case GRAPH_INITIALIZE:return "INITIALIZE";
+                case GRAPH_TASK:return "TASK";
+                case GRAPH_VERIFY:return "VERIFY";
+                case GRAPH_COPY_MASKS:return "COPY_MASKS";
+                case GRAPH_SOURCE_SETUP:return "SOURCE_SETUP";
+                case GRAPH_TRACE_MAP:return "TRACE_MAP";
+                case GRAPH_GOAL_MAP:return "GOAL_MAP";
+                case GRAPH_SOURCE_FINALIZE:return "SOURCE_FINALIZE";
+                case GRAPH_SERIALIZE_GRAPH:return "SERIALIZE_GRAPH";
+                case GRAPH_SERIALIZE_GOAL_ROWS:return "SERIALIZE_GOAL_ROWS";
+                case GRAPH_ENCODE_GOAL_ROWS:return "ENCODE_GOAL_ROWS";
+                case GRAPH_SERIALIZE_HOLE_ROWS:return "SERIALIZE_HOLE_ROWS";
+                case GRAPH_ENCODE_HOLE_ROWS:return "ENCODE_HOLE_ROWS";
+                case GRAPH_SERIALIZE_PAD_ROWS:return "SERIALIZE_PAD_ROWS";
+                case GRAPH_ENCODE_PAD_ROWS:return "ENCODE_PAD_ROWS";
+                case GRAPH_SERIALIZE_TRACE_ROWS:return "SERIALIZE_TRACE_ROWS";
+                case GRAPH_ENCODE_TRACE_ROWS:return "ENCODE_TRACE_ROWS";
+                case GRAPH_SERIALIZE_REACHED:return "SERIALIZE_REACHED";
+                case GRAPH_ENCODE_REACHED:return "ENCODE_REACHED";
+                case GRAPH_SERIALIZE_LEDGER:return "SERIALIZE_LEDGER";
+                case GRAPH_ENCODE_LEDGER:return "ENCODE_LEDGER";
+                case GRAPH_HASH_SOURCE_ROWS:return "HASH_SOURCE_ROWS";
+                case GRAPH_COMPLETE:return "COMPLETE";
+                default:return "UNKNOWN";
+            }
+        }
+
+        private String graphTaskStageName(int stage) {
+            if(stage==0 || stage==4) return "COPY_OR_COMPARE";
+            if(stage==1) return "GOAL_SCAN";
+            if(stage==2) return "ORDINARY_EDGE_SCAN";
+            if(stage==3) return "VIA_SCAN";
+            if(stage==5) return "TASK_FINALIZE";
+            return stage<0?"NOT_STARTED":"UNKNOWN";
         }
 
         void cleanupDetachedLoad12Owners() {
@@ -8229,19 +10360,302 @@ public final class Rb100PhysicalDiagnostics {
                 ",\"suiteLimitMs\":480000,\"failure\":"+failureJson+"}";
         }
 
+        private byte[] graphAsciiBytes(String value) {
+            int length=asciiLength(value);
+            byte[] bytes=new byte[length];
+            for(int index=0;index<length;index++) bytes[index]=(byte)value.charAt(index);
+            return bytes;
+        }
+
+        private void addGraphReportText(String value) {
+            if(graphReportParts==null) graphReportParts=new Vector<GraphRecordPart>();
+            byte[] bytes=graphAsciiBytes(value);
+            graphEnvelopeSmallBytes+=bytes.length;
+            if(graphEnvelopeSmallBytes>16*1024)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: small graph envelope exceeds16KiB");
+            graphReportParts.add(new GraphRecordPart(bytes,null));
+        }
+
+        private void addGraphReportSequence(GraphByteSequence sequence) {
+            if(sequence==null) throw new IllegalStateException(
+                "INCOMPLETE_CAPTURE: immutable graph report sequence is missing");
+            if(graphReportParts==null) graphReportParts=new Vector<GraphRecordPart>();
+            graphReportParts.add(new GraphRecordPart(null,sequence));
+        }
+
+        private void requireGraphReportPayloadLimit() {
+            long total=0L;
+            for(GraphRecordPart part:graphReportParts) {
+                total+=part.length();
+                if(total>ADriveGraphMax.VALUE)
+                    throw new IllegalStateException("WITNESS_BYTES_LIMIT: complete graph event exceeds8MiB");
+            }
+            if(graphEnvelopeSmallBytes>16*1024)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: small graph envelope exceeds16KiB");
+        }
+
+        private String graphCaptureJson(GraphCaptureReport report) {
+            String taskClass="com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Search$BranchSearch$FixedPrefixCaptureTask";
+            return "{\"status\":\"COMPLETE\",\"taskClass\":"+
+                graphAsciiQuote(taskClass)+",\"captureTaskIdentity\":"+
+                report.captureTaskIdentity+",\"snapshotIdentity\":"+
+                report.snapshotIdentity+",\"contextIdentity\":"+
+                report.contextIdentity+",\"ownerIdentity\":"+report.ownerIdentity+
+                ",\"searchIdentity\":"+report.searchIdentity+
+                ",\"branchIdentity\":"+report.branchIdentity+
+                ",\"layoutIdentity\":"+report.layoutIdentity+
+                ",\"routerIdentities\":["+report.topRouterIdentity+","+
+                report.bottomRouterIdentity+"],\"branchOrdinal\":"+
+                report.branchOrdinal+",\"pass\":"+report.pass+",\"netId\":"+
+                graphAsciiQuote(report.netId)+",\"sourceGoalFaceCount\":"+
+                report.goalStates+",\"sourceGoalBitsSha256\":"+
+                graphAsciiQuote(report.goalBitsSha256)+
+                ",\"branchAtPublisherStage\":true,\"sourcePaused\":true,"+
+                "\"routerStateUnchanged\":true,\"routerEffectsUnchanged\":true,"+
+                "\"prefixGeometryUnchanged\":true,\"goalArrayParity\":true,"+
+                "\"sourceAttributionComplete\":true,\"liveReferencesReleased\":true}";
+        }
+
+        private String graphPolicyJson(GraphCaptureReport report) {
+            return "{\"layerMap\":[\"TOP\",\"BOTTOM\"],\"directionBits\":\"NORTH=1,EAST=2,SOUTH=4,WEST=8\","+
+                "\"viaMaskSemantics\":\"HISTORY_RELAXED\",\"viaMaskPredicate\":\"relaxedViaFits\","+
+                "\"primaryStepCost\":10,\"secondaryStepCost\":12,\"secondaryStartCost\":2,"+
+                "\"turnCost\":35,\"copiedViaCost\":240,\"maximumHoleCount\":48,"+
+                "\"actualAllHoleCount\":"+report.holeCount+
+                ",\"actualViaKindCount\":"+report.viaKindCount+
+                ",\"maximumTransitions\":4,\"pathTransitionPredicate\":\"pathViaFits\","+
+                "\"viaMaskExcludesRemainingHoleCapacity\":true,"+
+                "\"viaMaskExcludesEarlierPathViaSpacing\":true,\"searchPerformed\":false,"+
+                "\"routeFeasibilityClaim\":false,\"viaSpacing\":{\"axisThreshold\":20,"+
+                "\"comparison\":\"STRICT_LT\",\"combineAxes\":\"AND\","+
+                "\"compareAgainst\":\"EVERY_EARLIER_PATH_VIA\","+
+                "\"equalityAt20Permitted\":true}}";
+        }
+
+        private String graphHoleKindCountsJson(GraphCaptureReport report) {
+            return "[{\"kind\":\"VIA\",\"count\":"+report.holeViaCount+
+                "},{\"kind\":\"PLATED\",\"count\":"+report.holePlatedCount+
+                "},{\"kind\":\"NON_PLATED\",\"count\":"+
+                report.holeNonPlatedCount+"}]";
+        }
+
+        void prepareDetachedLoad12Cost240GuardGraphReport(
+                P07PolicyDiagnosticCase result,long suiteMillis,int assertionCount) {
+            if(!isGuardGraphExperiment() || result==null ||
+                    !"PASS".equals(result.status) || !result.cleanupPassed ||
+                    result.cleanupMillis>CLEANUP_LIMIT_MILLIS ||
+                    result.workUnits<1 || result.workUnits>=WORK_LIMIT ||
+                    result.operationMillis>90000L || suiteMillis>480000L ||
+                    !remainderExperimentComplete || !remainderSourceVerified ||
+                    !remainderHandoffComplete || !guardWitnessComplete ||
+                    guardStage!=GUARD_COMPLETE || graphStage!=GRAPH_COMPLETE ||
+                    graphCaptureReport==null || !graphCaptureReleased ||
+                    graphBuilder!=null || graphCaptureTask!=null || graphSnapshot!=null ||
+                    !graphLiveReferencesCleared || graphReportPrepared || assertionCount<1 ||
+                    remainderBudget==null || remainderBudget.unitName!=null ||
+                    remainderBudget.remainderOperationElapsedNanos<0L ||
+                    guardPrefixBefore==null || guardPrefixAfter==null ||
+                    !guardPrefixBefore.same(guardPrefixAfter))
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: graph report preparation is not after cleanup and the unchanged typed boundary");
+            if(System.nanoTime()-createdAtNanos>480000000000L)
+                throw new IllegalStateException("BUDGET_EXPIRED: native suite exceeded its frozen480-second limit before graph report preparation");
+            final String unitName="p07-final-report-preparation-adrive-graph-envelope";
+            Budget budget=remainderBudget;
+            final long finalContinuationOwnerSteps=guardContinuationOwnerSteps;
+            if(graphCaptureReport.captureContinuationOwnerSteps!=
+                        graphContinuationOwnerStepsAtStart ||
+                    finalContinuationOwnerSteps!=
+                        graphCaptureReport.captureContinuationOwnerSteps+1L ||
+                    finalContinuationOwnerSteps!=budget.remainderPhaseOwnerSteps[6])
+                throw new IllegalStateException("STALE_OWNER: graph observation or the single subsequent guard step changed continuation accounting");
+            budget.beginUnit(unitName);
+            Throwable primary=null;
+            try {
+                String baseEvent=detachedLoad12Cost240RemainderEventJson(result,suiteMillis);
+                String baseMarker="RB100_LOAD12_COST240_REMAINDER_EVENT ";
+                if(baseEvent==null || !baseEvent.startsWith(baseMarker) ||
+                        baseEvent.indexOf('\n')>=0 || baseEvent.indexOf('\r')>=0)
+                    throw new IllegalStateException("OPERATION_EXCEPTION: raw base event is unavailable for graph binding");
+                String basePayload=baseEvent.substring(baseMarker.length());
+                graphReportBasePayloadBytes=basePayload.getBytes(StandardCharsets.UTF_8);
+                if(graphReportBasePayloadBytes.length+
+                        baseMarker.length()+1L>16L*1024L*1024L)
+                    throw new IllegalStateException("WITNESS_BYTES_LIMIT: raw base payload exceeds the16MiB event-line limit");
+                graphBaseEventSha256=sha256Hex(graphReportBasePayloadBytes);
+                prepareDetachedLoad12Cost240GuardEventWithBaseSha(result,suiteMillis,
+                    baseEvent,graphBaseEventSha256);
+                MessageDigest guardDigest;
+                try { guardDigest=MessageDigest.getInstance("SHA-256"); }
+                catch(NoSuchAlgorithmException impossible) {
+                    throw new IllegalStateException("SHA-256 is unavailable",impossible);
+                }
+                guardDigest.update(guardWirePrefixBytes);
+                guardDigest.update(guardNodeArrayBytes);
+                guardDigest.update(guardWireSuffixBytes);
+                graphGuardEventSha256=lowerHex(guardDigest.digest());
+
+                GraphCaptureReport report=graphCaptureReport;
+                graphReportParts=new Vector<GraphRecordPart>();
+                graphEnvelopeSmallBytes=0;
+                String quoteRun=graphAsciiQuote(runId);
+                String prefix="{\"protocolVersion\":1,\"schema\":\"rb100-load12-adrive-guard-graph-r2\",\"status\":\"PASS\",\"runId\":"+
+                    quoteRun+",\"operationId\":\"QUALITY_PROBE\",\"scope\":\"ACTUAL_LOAD12_COST240_COPIED_ORDER_ADRIVE_PRE_GUARD_GRAPH_CAPTURE\","+
+                    "\"bindings\":{\"base\":{\"runId\":"+quoteRun+
+                    ",\"eventSha256\":"+graphAsciiQuote(graphBaseEventSha256)+
+                    "},\"guard\":{\"runId\":"+quoteRun+",\"eventSha256\":"+
+                    graphAsciiQuote(graphGuardEventSha256)+"}},\"inputs\":"+
+                    guardInputsJson+",\"lineage\":"+guardLineageJson+
+                    ",\"target\":"+guardTargetJson+",\"grid\":"+guardGridJson+
+                    ",\"endpoints\":"+guardEndpointsJson+",\"capture\":"+
+                    graphCaptureJson(report)+",\"prefix\":{\"before\":"+
+                    guardPrefixBefore.json()+",\"after\":"+guardPrefixAfter.json()+
+                    ",\"unchanged\":true},\"graph\":";
+                addGraphReportText(prefix);
+                addGraphReportSequence(report.graph);
+                String graphTail=",\"graphIntegrity\":{\"encoding\":\"CANONICAL_COMPACT_ASCII_SORTED_KEYS_PACKED_MASKS\",\"canonicalBytes\":"+
+                    report.graphCanonicalBytes+",\"sha256\":"+
+                    graphAsciiQuote(report.graphSha256)+"},\"policy\":"+
+                    graphPolicyJson(report)+",\"sourceCensus\":{\"padRows\":";
+                addGraphReportText(graphTail);
+                addGraphReportSequence(report.padRows);
+                addGraphReportText(",\"traceRows\":");
+                addGraphReportSequence(report.traceRows);
+                addGraphReportText(",\"holeRows\":");
+                addGraphReportSequence(report.holeRows);
+                addGraphReportText(",\"reachedPthPadIds\":");
+                addGraphReportSequence(report.reachedPthPadIds);
+                addGraphReportText(",\"holeKindCounts\":"+
+                    graphHoleKindCountsJson(report)+",\"goalProvenance\":");
+                addGraphReportSequence(report.goalRows);
+                addGraphReportText(",\"rowCounts\":{\"padRows\":"+
+                    report.padCount+",\"traceRows\":"+report.traceCount+
+                    ",\"holeRows\":"+report.holeCount+",\"sourceRows\":"+
+                    report.sourceRows+",\"goalStates\":"+report.goalStates+
+                    ",\"allHoleCount\":"+report.holeCount+
+                    ",\"viaKindCount\":"+report.viaKindCount+
+                    "},\"sourceRowsCanonicalBytes\":"+
+                    report.sourceRowsCanonicalBytes+",\"sourceRowsSha256\":"+
+                    graphAsciiQuote(report.sourceRowsSha256)+"},\"work\":{\"budgetPhase\":\"orderingRemainder\",\"graphCaptureGroups\":"+
+                    report.graphCaptureGroups+",\"graphTaskGroups\":"+
+                    report.graphTaskGroups+",\"graphMetadataGroups\":"+
+                    report.graphMetadataGroups+",\"captureInternalUnits\":"+
+                    report.captureInternalUnits+",\"copyEntries\":"+
+                    report.copyEntries+",\"comparisonEntries\":"+
+                    report.comparisonEntries+",\"goalProbes\":"+
+                    report.goalProbes+",\"ordinaryEdgeProbes\":"+
+                    report.ordinaryEdgeProbes+",\"viaProbes\":"+
+                    report.viaProbes+",\"captureActiveElapsedMillis\":"+
+                    report.captureActiveElapsedMillis+",\"continuationOwnerSteps\":"+
+                    finalContinuationOwnerSteps+",\"graphCanonicalBytes\":"+
+                    report.graphCanonicalBytes+",\"sourceRowsCanonicalBytes\":"+
+                    report.sourceRowsCanonicalBytes+",\"groupLedger\":");
+                addGraphReportSequence(report.groupLedger);
+                addGraphReportText(",\"preReport\":{\"controllerUnits\":"+
+                    result.workUnits+",\"maximumUnitElapsedMs\":"+
+                    result.maxUnitMillis+",\"operationElapsedMs\":"+
+                    result.operationMillis+"},\"reportPreparation\":");
+                if(budget.unitOwnerSteps!=0)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: final graph report unit unexpectedly performed continuation owner steps");
+                budget.checkpoint();
+            } catch(RuntimeException failure) {
+                primary=failure; throw failure;
+            } catch(Error failure) {
+                primary=failure; throw failure;
+            } finally {
+                budget.endUnit(primary);
+            }
+            graphReportElapsedNanos=budget.lastUnitElapsedNanos;
+            graphFinalOperationElapsedNanos=Math.max(0L,System.nanoTime()-budget.started);
+            GraphCaptureReport report=graphCaptureReport;
+            if(budget.lastUnitElapsedNanos<0L || budget.lastUnitElapsedNanos>UNIT_LIMIT_NANOS ||
+                    budget.workUnits!=result.workUnits+1 || budget.workUnits>WORK_LIMIT ||
+                    budget.maxUnitNanos>UNIT_LIMIT_NANOS ||
+                    budget.maxUnitNanos<(long)result.maxUnitMillis*1000000L ||
+                    budget.maxUnitNanos<report.maxTaskLedgerElapsedNanos ||
+                    budget.maxUnitNanos<graphReportElapsedNanos ||
+                    graphFinalOperationElapsedNanos<remainderBudget.remainderOperationElapsedNanos ||
+                    graphFinalOperationElapsedNanos>CASE_LIMIT_NANOS ||
+                    finalContinuationOwnerSteps!=guardContinuationOwnerSteps ||
+                    finalContinuationOwnerSteps!=budget.remainderPhaseOwnerSteps[6] ||
+                    report.captureInternalUnits>4*report.graphTaskGroups ||
+                    report.captureInternalUnits>2560 ||
+                    report.graphCaptureGroups!=report.graphTaskGroups+report.graphMetadataGroups)
+                throw new IllegalStateException("BUDGET_EXPIRED: final graph report counters or operation envelope do not reconcile");
+            if(graphReportParts==null || graphReportParts.size()<1)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: graph event envelope was not prepared");
+            graphReportParts.add(new GraphRecordPart(graphAsciiBytes(
+                "{\"unitName\":\"p07-final-report-preparation-adrive-graph-envelope\",\"controllerUnits\":1,\"elapsedNanos\":"+
+                graphReportElapsedNanos+",\"ownerSteps\":0},\"final\":{\"controllerUnits\":"+
+                budget.workUnits+",\"maximumUnitElapsedNanos\":"+budget.maxUnitNanos+
+                ",\"operationElapsedNanos\":"+graphFinalOperationElapsedNanos+
+                ",\"continuationOwnerSteps\":"+finalContinuationOwnerSteps+
+                "}},\"cleanup\":{\"status\":\"PASS\",\"elapsedMs\":"+
+                result.cleanupMillis+",\"limitMs\":"+CLEANUP_LIMIT_MILLIS+
+                "},\"claims\":{\"routeAccepted\":false,\"geometryPublished\":false,"+
+                "\"layoutQualification\":false,\"routeAdoption\":false,\"playable100\":false}}"),null));
+            graphEnvelopeSmallBytes+=graphReportParts.lastElement().bytes.length;
+            if(graphEnvelopeSmallBytes>16*1024)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: completed graph envelope exceeds16KiB of small fragments");
+            requireGraphReportPayloadLimit();
+            if(graphReportBasePayloadBytes.length+
+                    "RB100_LOAD12_COST240_REMAINDER_EVENT ".length()+1L>
+                    16L*1024L*1024L)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: graph report outer line or assertion snapshot is invalid");
+            graphReportPrepared=true;
+        }
+
+        void emitDetachedLoad12Cost240GuardGraphReport() {
+            if(!graphReportPrepared || graphReportEmitted || graphReportParts==null ||
+                    graphReportBasePayloadBytes==null || !guardWirePrepared ||
+                    graphCaptureReport==null || !graphCaptureReleased)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: graph records were not fully prevalidated");
+            writeGraphPayloadRecord("RB100_LOAD12_COST240_REMAINDER_EVENT ",
+                graphReportBasePayloadBytes);
+            writeGraphPayloadRecord("RB100_LOAD12_ADRIVE_GUARD_EVENT ",
+                guardWirePrefixBytes,guardNodeArrayBytes,guardWireSuffixBytes);
+            byte[] marker=graphAsciiBytes("RB100_LOAD12_ADRIVE_GRAPH_EVENT ");
+            System.out.write(marker,0,marker.length);
+            for(GraphRecordPart part:graphReportParts) part.writeTo(System.out);
+            System.out.write('\n'); System.out.flush();
+            if(System.out.checkError())
+                throw new IllegalStateException("CLEANUP_FAILED: native graph event write failed");
+            graphReportEmitted=true;
+        }
+
+        private void writeGraphPayloadRecord(String marker,byte[]... payloadParts) {
+            byte[] markerBytes=graphAsciiBytes(marker);
+            System.out.write(markerBytes,0,markerBytes.length);
+            for(byte[] part:payloadParts) {
+                if(part==null) throw new IllegalStateException(
+                    "INCOMPLETE_CAPTURE: prevalidated record payload part is missing");
+                System.out.write(part,0,part.length);
+            }
+            System.out.write('\n'); System.out.flush();
+            if(System.out.checkError())
+                throw new IllegalStateException("CLEANUP_FAILED: native graph-bound record write failed");
+        }
+
         void prepareDetachedLoad12Cost240GuardEvent(P07PolicyDiagnosticCase result,
                 long suiteMillis,String baseEvent) {
-            guardWirePrepared=false;
-            guardWirePrefixBytes=null;
-            guardWireSuffixBytes=null;
-            requireGuardWitnessOperation(result,suiteMillis,baseEvent);
             String baseMarker="RB100_LOAD12_COST240_REMAINDER_EVENT ";
             if(baseEvent==null || !baseEvent.startsWith(baseMarker) ||
                     baseEvent.indexOf('\n')>=0 || baseEvent.indexOf('\r')>=0)
                 throw new IllegalStateException("OPERATION_EXCEPTION: raw base event payload is unavailable for binding");
-            String basePayload=baseEvent.substring(baseMarker.length());
-            byte[] basePayloadBytes=basePayload.getBytes(StandardCharsets.UTF_8);
-            String baseSha256=sha256Hex(basePayloadBytes);
+            byte[] basePayloadBytes=baseEvent.substring(baseMarker.length())
+                .getBytes(StandardCharsets.UTF_8);
+            prepareDetachedLoad12Cost240GuardEventWithBaseSha(result,suiteMillis,
+                baseEvent,sha256Hex(basePayloadBytes));
+        }
+
+        private void prepareDetachedLoad12Cost240GuardEventWithBaseSha(
+                P07PolicyDiagnosticCase result,long suiteMillis,String baseEvent,
+                String baseSha256) {
+            guardWirePrepared=false;
+            guardWirePrefixBytes=null;
+            guardWireSuffixBytes=null;
+            requireGuardWitnessOperation(result,suiteMillis,baseEvent);
+            if(baseSha256==null || baseSha256.length()!=64)
+                throw new IllegalStateException("OPERATION_EXCEPTION: raw base payload digest is unavailable");
             String jsonPrefix="{\"protocolVersion\":1,\"schema\":\"rb100-load12-adrive-guard-witness-r1\",\"status\":\"PASS\",\"runId\":\""+
                 jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\",\"scope\":\"ACTUAL_LOAD12_COST240_COPIED_ORDER_ADRIVE_PRE_GUARD\",\"base\":{\"runId\":\""+
                 jsonFull(runId)+"\",\"eventSha256\":\""+baseSha256+"\"},\"inputs\":"+
@@ -10099,6 +12513,13 @@ public final class Rb100PhysicalDiagnostics {
             Object value=read(target,name);
             if(!(value instanceof Integer)) throw new AssertionError("Actual field is not int: "+name);
             return ((Integer)value).intValue();
+        }
+
+        static boolean booleanField(Object target,String name) {
+            Object value=read(target,name);
+            if(value==null || value.getClass()!=Boolean.class)
+                throw new AssertionError("Actual field is not primitive boolean: "+name);
+            return ((Boolean)value).booleanValue();
         }
 
         static String stringField(Object target,String name) {

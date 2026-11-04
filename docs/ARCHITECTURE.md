@@ -634,6 +634,27 @@ or whole-layout qualification. The [guard plan](task-evidence/Q100/adrive-guard-
 keeps route adoption, finalizer, physical oracles and playable100 acceptance
 outside this finite diagnostic. No Player control or model epoch is added.
 
+The private --cost240-guard-graph mode captures the actual same BranchSearch
+with its existing FixedPrefixCaptureTask before that guard call. It copies the
+complete directed two-face/history-relaxed edge, goal and static VIA masks,
+binds root/reached/tree goal provenance and source conductor identities, and
+checks source/effects/prefix parity throughout. R11 groups bounded observer calls
+separately from actual continuation-owner steps and serializes, encodes and
+hashes the same short-lived32KiB chunk; only encoded chunks are retained. One
+charged report unit emits the immutable raw base/guard/graph records after
+cleanup. The active graph and routing predicates remain the production owners.
+
+read_load12_adrive_graph.py owns the separate four-record transport and strict
+packed-mask decoding. Its private hash-bound pure guard validator remains
+unchanged. The reader validates the closed source inventory, raw payload hashes,
+all goal provenance, exact path/mask relations and observer/operation accounting.
+Static VIA masks omit path-history spacing and remaining capacity; captured
+connectivity therefore supplies neither path feasibility nor production route
+acceptance. The [graph packet](task-evidence/Q100/adrive-graph-r1/README.md)
+records hashes for exact controlled native artifacts retained in task-owned
+scratch for a separately scoped later analysis. No alternative search or routing
+treatment runs in this capture mode.
+
 P07TwoLayerContractTest also owns the matched seven-point prior-via tree-join
 contract. A fresh FULLER Session with explicit requestcap2 creates a via and
 later reaches that exact existing barrel by a TOP planar branch. Read-only

@@ -25,7 +25,11 @@ public final class Rb100Load12DetachedBaselineContractTest {
             Rb100PhysicalDiagnostics.runLoad12DetachedCost240GuardContracts();
             return;
         }
+        if(args.length==1 && "--cost240-guard-graph".equals(args[0])) {
+            Rb100PhysicalDiagnostics.runLoad12DetachedCost240GuardGraphContracts();
+            return;
+        }
         throw new IllegalArgumentException(
-            "Expected no arguments, exactly --cap17, --cost240, --cost240-remainder, or --cost240-guard");
+            "Expected no arguments, exactly --cap17, --cost240, --cost240-remainder, --cost240-guard, or --cost240-guard-graph");
     }
 }

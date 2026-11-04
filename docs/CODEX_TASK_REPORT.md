@@ -1,4 +1,78 @@
-# Current checkpoint: A_DRIVE guard published; next actual graph/constraint diagnostic
+# Current checkpoint: A_DRIVE graph locally accepted; publication pending
+
+UTC2026-11-04. W=OS-temp/tsj-q100-adrive-graph-20261104-r1,
+branch codex/q100-adrive-graph-20261104, HEAD/sourceparent
+96589b8dfaf17cdd7bc74deec4518ab36891c66a. QW=OS-temp/
+tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/adrive-graph-r1.
+No W commit/push/email yet. Established normal target origin/codex/q100-physical-
+feasibility was verified at96589b8d; local upstream unset. Predecessor guard
+9dc822d4+receipt96589b8d/Gmail1a1a7ed052322950 already published; do not resend.
+
+CAPTURE ONLY locally accepted. Source/command/gates/timing/limits/artifact hashes:
+docs/task-evidence/Q100/adrive-graph-r1/{README.md,qualification.json,
+final-input-audit.json,FAILURES.md,publication.md}. Exact controlled4-record
+capture/raw wrapper+source census/stdout.gz retained in QW/query-graph-r8 and
+QW/controlled-capture-archive-r1. Repository .gitignore keeps raw captures outside
+the repo; published packet contains controlled summaries/hashes. Wire is -text. Canonical R11 wire e5653755...,
+historical R9 heading/pre-run status clarified in README. R10 failed640 and
+lowerbound673, NOT_ADOPTED; explicit observer-group/encoding revisionR11 retains
+original90s/640groups/5s/32768actualP07steps and all domain/oracle bounds.
+
+Final native source-freeze-r8/inputs.json SHA
+f27c588a5690e666a934c53d120c52a6911b46f5ba0db72ce8585decbbdb428c,
+228661rawB/87400672sumB/1079=850production+223contractJava+6static.
+All850production unchanged. Fresh query-graph-r8/graph-reader-r4/rootreview-r2
+PASS; graph738743B SHA0c73ce21580a9c4e2508a251425907da01d11c200483409870181a5d8d30ef11,
+147702cells, complete measured2root-facegoals,37VIAhole/2pad/0tracegoalrows.
+621finalgroups/215graphgroups/611calls, operation26.7291289s/max1.2535871s,
+cleanup1ms. Original17/88source unresumed, copied37/177prefix and82-node guard
+path/rejection unchanged. No routing search/treatment/adoption/epoch change.
+
+ALL required final gates PASS: native2/8/33(original22),7predecessor pairs,
+Python231=227pass4declared file-symlinkprivilege skips, actual Player/Developer
+JDK8/GWT builds,357-file Player archive/privacy-r2/E06State10/Current9 and strict
+root-final-compiled-review-r1 (reviewerR2 DB6d22fb...). Eachvariant ownbuild and
+PlayerInput!=DeveloperInput discriminator preserved. Python reuse only after
+complete unchanged consumed-source/host/runtime audit; old changed-Java PASSes
+not reused. Realjunction/wrongSHA/nativehost/CLI negatives pass. Streaming
+source-only re-review resolved duplicate-buffer blocker; no reviewer execution.
+
+Exactly3 approved MEDIUMroots/fourcandidate envelope: corrected normal3-final-
+sequence-r2 all6phases PASS369.4309782s, eachroot firstattempt; independent3-case
+reports/seed/error/terminal checks PASS. Actual hostcleanup1.4597139s, zero owned
+survivors/errors. Wrongreceipt rejection +exact profile cleanupPASS1.744s; no
+process terminated, freshCIM before/after0profile refs, owner marker/raw retained.
+OS-temp/tsj-n3h-2ee44a8b523d/host-output/profile is removed; no active task actors/matrix.
+Rootfinal sourceaudit PASS1079native/44Python/9SDK/24Normal3/28supplementalhosts
+and selectedexecutables. Normal3pinsR2 SHA60417ea8...; host28pinsR2 SHA0023b6ac...
+and all selectedruntime helpers unchanged. All workers idle.
+
+Preserved failures: original privacy-r1 FAILexit2 (native/CIM childcounts differed,
+actual sets notsaved =>causeUNPROVEN). Maintained exact recoveryPASS47.228326s
+and freshprivacy-r2 PASS75.981056s/cleanup44.492s/shutdown8.720s; originalFAIL
+unchanged. InitialNormal3preflight FAILbefore runtime/export/actors due fourstale
+after.json literals; fourliteral fixes +freshnamespaceR2, no identity/oracle
+weakening. Old sources/failedsequence/raw receipts retained inQW. ArchiveR1
+slowregex failedbeforecopy; verifiedownPID cleanup; correctedR2PASS. All prior
+design/harness failures remain; no unresolved current gate or resource blocker.
+
+NEXT: inspect final actualdiff and git diff--check; stage intended paths ONLY,
+inspect cached diff/check and rawartifact blob hashes; normalcommit/push and
+exactremoteSHAverify, searchSent then ONEnew Gmail; record publication receipt
+without a second email. No further build/tests required for docs-only edits;
+all consumed inputs remain final. Next unstarted is separately frozen bounded
+constraint-aware feasibility/lowerbound using this capturedgraph; no search yet.
+
+Preserve W42bootstrap raw-EOL-only statuses/exclude unintended staging. Main
+5f05b0059tracked6untracked0staged; Desktop e0c368857tracked73collapseduntracked
+(89files)0staged, readonlyJDK8provider; uncertain8928 untouched. R12a1352b5 ancestor
+verified. Protected HARD unread/unrun CURRENT; historicalunread UNCERTIFIED.
+HARD/PSYCHOTIC unavailable/unrun, full30owner-excluded, no independent two-face
+access/humanrepair/visual/FPS/allseed/capacity renewal; playable100=0/betaheld.
+Self-hostedWindows CI runnerregistration prerequisite; no remotegreen claim.
+Continue standing roadmap until user says stop.
+
+# Historical checkpoint: A_DRIVE guard published
 
 UTC2026-11-04. Active Z=OS-temp/tsj-q100-adrive-guard-20261104-r1,
 branch codex/q100-adrive-guard-20261104; implementation

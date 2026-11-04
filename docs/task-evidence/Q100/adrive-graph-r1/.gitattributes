@@ -1,0 +1,2 @@
+# The independent input spec binds the exact frozen wire bytes.
+WIRE_SPEC.md -text
