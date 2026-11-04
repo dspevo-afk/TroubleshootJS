@@ -1485,7 +1485,11 @@ def _validate_load12_trace_rows(rows: Any, code: str) -> List[Dict[str, Any]]:
     return checked
 
 
-def _validate_load12_source(value: Any) -> Dict[str, Any]:
+def _validate_load12_source(value: Any,
+                            expected_maximum_vias: int = MAX_VIAS
+                            ) -> Dict[str, Any]:
+    _need(_integer(expected_maximum_vias, 1, MAX_VIAS),
+          "LOAD12_EXPECTED_VIA_CAP_INVALID")
     _exact_keys(value, LOAD12_SOURCE_KEYS, "LOAD12_SOURCE_KEYS_INVALID")
     _need(_integer(value["pass"], 1, 1) and value["netId"] == "LOAD12" and
           _integer(value["branchOrdinal"], 73, 73) and
@@ -1539,7 +1543,8 @@ def _validate_load12_source(value: Any) -> Dict[str, Any]:
           _integer(grid["minY"], -MAX_ABS_BOARD_COORDINATE,
                    MAX_ABS_BOARD_COORDINATE) and
           grid["primaryLayer"] in ("TOP", "BOTTOM") and
-          _integer(grid["maximumVias"], 48, 48) and
+          _integer(grid["maximumVias"], expected_maximum_vias,
+                   expected_maximum_vias) and
           _integer(grid["maximumTransitions"], 4, 4) and
           grid["minX"] + (width - 1) * 10 <= MAX_ABS_BOARD_COORDINATE and
           grid["minY"] + (height - 1) * 10 <= MAX_ABS_BOARD_COORDINATE and
@@ -1916,11 +1921,16 @@ def _validate_load12_path_and_goal(path_value: Any, goal_value: Any,
             "endTerminalPadId": end_terminal}
 
 
-def _validate_load12_pre(value: Any) -> Dict[str, Any]:
+def _validate_load12_pre(value: Any,
+                         expected_maximum_vias: int = MAX_VIAS
+                         ) -> Dict[str, Any]:
+    _need(_integer(expected_maximum_vias, 1, MAX_VIAS),
+          "LOAD12_EXPECTED_VIA_CAP_INVALID")
     _exact_keys(value, LOAD12_PRE_KEYS, "LOAD12_PRE_KEYS_INVALID")
     _need(value["schema"] == "p07-accepted-branch-pre-r1",
           "LOAD12_PRE_SCHEMA_INVALID")
-    source = _validate_load12_source(value["source"])
+    source = _validate_load12_source(
+        value["source"], expected_maximum_vias=expected_maximum_vias)
     seeds = _validate_load12_seed_snapshot(value["seeds"], source)
     prefix = _validate_load12_prefix_inventory(value["prefixInventory"], source)
     traces_value = value["prefixTraces"]

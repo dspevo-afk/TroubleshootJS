@@ -18,6 +18,7 @@ param(
     [long[]]$Q30PlanSeeds = @(),
     [switch]$Rb100FaultMatrix,
     [switch]$Rb100NoPathPrefixCapture,
+    [switch]$Rb100Load12Cap17Replay,
     [switch]$Rb100ConvergenceTrace,
     [switch]$Rb100AdaptiveStudy,
     [string]$Rb100DiagnosticFault = '',
@@ -61,6 +62,19 @@ if ($Rb100NoPathPrefixCapture) {
     if ($Rb100FaultMatrix -or $Rb100ConvergenceTrace -or $Rb100AdaptiveStudy -or
             $Rb100DiagnosticFault -or $Rb100DiagnosticDt -ne '0.0001') {
         throw '-Rb100NoPathPrefixCapture excludes other RB100 diagnostic modes.'
+    }
+}
+if ($Rb100Load12Cap17Replay) {
+    if ($Suite.Count -ne 1) {
+        throw '-Rb100Load12Cap17Replay requires exactly -Suite Rb100Load12DetachedBaselineContractTest.'
+    }
+    if ($Suite[0] -cne 'Rb100Load12DetachedBaselineContractTest') {
+        throw '-Rb100Load12Cap17Replay requires exactly -Suite Rb100Load12DetachedBaselineContractTest.'
+    }
+    if ($Rb100NoPathPrefixCapture -or $Rb100FaultMatrix -or
+            $Rb100ConvergenceTrace -or $Rb100AdaptiveStudy -or
+            $Rb100DiagnosticFault -or $Rb100DiagnosticDt -ne '0.0001') {
+        throw '-Rb100Load12Cap17Replay excludes other RB100 diagnostic modes.'
     }
 }
 
@@ -1359,6 +1373,10 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
                 $Rb100NoPathPrefixCapture) {
             $testArguments += '--completed-no-path'
         }
+        if ($testClass -eq 'Rb100Load12DetachedBaselineContractTest' -and
+                $Rb100Load12Cap17Replay) {
+            $testArguments += '--cap17'
+        }
         if ($testClass -eq 'Q30PlanContractTest' -and
                 $PSBoundParameters.ContainsKey('Q30PlanSeeds')) {
             $planSeedTexts = @($Q30PlanSeeds | ForEach-Object {
@@ -1658,8 +1676,13 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         if ($tested.Stderr) { Write-Host $tested.Stderr }
         $receipts.Add($tested.Stdout)
         $outputs[$testClass] = $tested.Stdout
+        $expectedMarker = $definition.Marker
+        if ($testClass -eq 'Rb100Load12DetachedBaselineContractTest' -and
+                $Rb100Load12Cap17Replay) {
+            $expectedMarker = 'RB100 LOAD12 detached cap17 contracts '
+        }
         if (-not (Test-CurrentContractPassMarker -Stdout $tested.Stdout `
-                    -Marker $definition.Marker `
+                    -Marker $expectedMarker `
                     -TerminationProven $tested.TerminationProven `
                     -ExitCode $tested.ExitCode)) {
             throw ('Current contract did not provide a qualified result: ' + $testClass +

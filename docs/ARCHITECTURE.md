@@ -526,6 +526,29 @@ census is1079 inputs/223 contract Java files. The
 this actual same-cap48 branch replay within the original limits; it does not
 qualify cap17, route adoption, an accepted layout or a playable100 board.
 
+The same native entry has an explicit cap17 mode, admitted only by the maintained
+single-suite dispatcher option. It copies the actual paused LOAD12/73 frontier
+through the charged owner and uses normal Search/Publisher at detached cap17;
+ordinary no-argument baseline behavior remains separate. Its r2 event retains
+the existing cached clone and original Pre/Post bodies, plus a measured source
+caps/frontier/counts/seeds sample after clone publication and before resumption.
+No extra full graph walk is added to the charged operation. Full original
+geometry identity is checked at its subsequent pre boundary, not claimed as part
+of that immediate scalar sample. Failure progress preserves phase/exception and
+does not translate arbitrary exceptions into NO_PATH or success.
+
+The private export_load12_graphspec adapter retains full validated cap48 masks
+and raw pre-state with source/artifact/helper pins. Its read-only builder lets
+read_load12_cap17 recompute canonical graphspec bytes before independently
+checking actual clone edges, goal-face membership, normal publication lineage,
+source preservation/resumption and bounded work. The shared LOAD12 pre/source
+validator accepts an explicit expected VIA allowance; omitted allowance remains
+strict48 and cap17 is supplied only for the clone. Export output publication
+fails on descriptor-close or temporary-unlink errors. These diagnostic owners
+change no production routing policy, model epoch, Player surface or admission.
+The [actual cap17 packet](task-evidence/Q100/load12-cap17-actual-r1/README.md)
+records its finite qualification boundary.
+
 P07TwoLayerContractTest also owns the matched seven-point prior-via tree-join
 contract. A fresh FULLER Session with explicit requestcap2 creates a via and
 later reaches that exact existing barrel by a TOP planar branch. Read-only

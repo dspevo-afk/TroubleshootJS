@@ -228,6 +228,12 @@ public final class Rb100PhysicalDiagnostics {
             QualityScalarPurpose.DETACHED_LOAD12_BASELINE);
     }
 
+    /** Actual LOAD12 source at48 with one explicitly copied and replayed branch at17 VIAs. */
+    static void runLoad12DetachedCap17Contracts() {
+        runQualityZeroViaGraphContracts(P07ZeroViaGraphDiagnostics.Target.LOAD12,
+            QualityScalarPurpose.DETACHED_LOAD12_CAP17);
+    }
+
     private static void runQualityZeroViaGraphContracts(
             P07ZeroViaGraphDiagnostics.Target graphTarget) {
         runQualityZeroViaGraphContracts(graphTarget,QualityScalarPurpose.ZERO_VIA_GRAPH);
@@ -304,6 +310,16 @@ public final class Rb100PhysicalDiagnostics {
                 "quality scalar detached-baseline suite remains within its frozen480s ceiling");
             System.out.println(probe.detachedLoad12BaselineEventJson(observed,pairPassed));
             System.out.println("PASS: RB100 LOAD12 detached baseline contracts assertions="+
+                (assertions-beforeAssertions));
+            return;
+        }
+        if(purpose==QualityScalarPurpose.DETACHED_LOAD12_CAP17) {
+            probe.requirePathSnapshotUnchanged();
+            long suiteMillis=nanosToMillis(System.nanoTime()-suiteStarted);
+            require(suiteMillis<=480000L,
+                "quality scalar cap17 suite remains within its frozen480s ceiling");
+            System.out.println(probe.detachedLoad12Cap17EventJson(observed,pairPassed));
+            System.out.println("PASS: RB100 LOAD12 detached cap17 contracts assertions="+
                 (assertions-beforeAssertions));
             return;
         }
@@ -3194,7 +3210,18 @@ public final class Rb100PhysicalDiagnostics {
         }
     }
 
-    private enum QualityScalarPurpose { ZERO_VIA_GRAPH, DETACHED_LOAD12_BASELINE }
+    private enum QualityScalarPurpose {
+        ZERO_VIA_GRAPH, DETACHED_LOAD12_BASELINE, DETACHED_LOAD12_CAP17
+    }
+
+    private static boolean isDetachedLoad12Purpose(QualityScalarPurpose purpose) {
+        return purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE ||
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_CAP17;
+    }
+
+    private static boolean isDetachedLoad12Cap17(QualityScalarPurpose purpose) {
+        return purpose==QualityScalarPurpose.DETACHED_LOAD12_CAP17;
+    }
 
     private static final class QualityScalarProbe
             implements PcbLayerRoutingPrototype.FixedPrefixGraphObserver {
@@ -3242,13 +3269,21 @@ public final class Rb100PhysicalDiagnostics {
         Object load12Search,load12Branch,load12Publisher,load12ReversedIdentity;
         String load12PreJson,load12PostJson;
         String[] load12PreHoleIds,load12PreHoleFingerprints,
-            load12PostHoleIds,load12PostHoleFingerprints,load12CreatedHoleIds;
+            load12PostHoleIds,load12PostHoleFingerprints,load12CreatedHoleIds,
+            load12InitialPrefixHoleIds,load12InitialPrefixHoleFingerprints,
+            load12NetOrder;
         int load12PathNodeCount=-1,load12TransitionCount=-1,load12PrefixHoleCount=-1,
             load12PostHoleCount=-1,load12CreatedHoleCount=-1,load12CreatedTraceCount=-1;
         int load12PreViaCount=-1,load12PreTraceCount=-1,
             load12PostViaCount=-1,load12PostTraceCount=-1,load12CreatedViaCount=-1;
         int load12Pass=-1,load12NetPosition=-1,load12NextFetch=-1,
             load12BranchOrdinal=-1,load12SearchBranches=-1,load12PrimaryLayer=-1,
+            load12MaximumVias=-1,load12SessionMaximumVias=-1,
+            cap17SourceAfterReplaySessionMaximumVias=-1,
+            cap17SourceAfterReplaySearchMaximumVias=-1,
+            cap17SourceAfterReplayBranchExpanded=-1,
+            cap17SourceAfterReplayHoleCount=-1,
+            cap17SourceAfterReplayTraceCount=-1,
             load12GridWidth=-1,load12GridHeight=-1,load12GridCells=-1,
             load12GridOriginX=-1,load12GridOriginY=-1;
         int load12PreAdvanceCalls,load12PostAdvanceCalls;
@@ -3266,7 +3301,8 @@ public final class Rb100PhysicalDiagnostics {
         Object detachedSearch,detachedBranch,detachedPublisher;
         Load12DetachedMetrics detachedMetrics;
         String[] detachedPrefixHoleIds,detachedPrefixHoleFingerprints,
-            detachedPostHoleIds,detachedPostHoleFingerprints,detachedCreatedHoleIds;
+            detachedPostHoleIds,detachedPostHoleFingerprints,detachedCreatedHoleIds,
+            detachedNetOrder;
         int detachedPhase,detachedCopyAdvanceCalls,detachedCopyLastWork,
             detachedReplayEntryCalls,detachedReplayEntryWork,
             detachedReplayPublicationCalls,detachedReplayPublicationWork,
@@ -3276,7 +3312,9 @@ public final class Rb100PhysicalDiagnostics {
             detachedPostHoleCount=-1,detachedPostViaCount=-1,detachedPostTraceCount=-1,
             detachedCreatedViaCount=-1,detachedCreatedTraceCount=-1,
             detachedLastBudgetUnit,detachedObserverChecks,
-            detachedPublisherLastStage=-1;
+            detachedPublisherLastStage=-1,detachedSessionMaximumVias=-1,
+            detachedSearchMaximumVias=-1,detachedFailureQueueSize=-1,
+            detachedFailureExpanded=-1,detachedFailureLastWork=-1;
         long detachedCopyLastReportedWork,detachedCopyEntries,
             detachedReplayEntryTotalWork,detachedReplayPublicationTotalWork,
             detachedPreTotalWork,detachedPostTotalWork;
@@ -3285,7 +3323,9 @@ public final class Rb100PhysicalDiagnostics {
             detachedPostGeometrySha256,detachedPublicationSha256,
             load12PreGeometrySha256,load12PostGeometrySha256,
             load12SeedSha256,load12NetOrderSha256,load12PrefixRowsSha256,
-            load12PublicationSha256;
+            load12PublicationSha256,load12SeedJson,detachedPreJson,detachedPostJson,
+            detachedFailurePhase,detachedFailureType,detachedFailureMessage,
+            cap17SourceAfterReplaySeedsJson;
         String load12NetId,load12StartPadId,load12RootPadId;
         int targetAccountingBefore=-1,targetAccountingAfter=-1;
         boolean targetCaptured,qualityRejected,targetRequestAccounted,
@@ -3295,7 +3335,7 @@ public final class Rb100PhysicalDiagnostics {
             load12CaptureReleased,detachedPreStarted,detachedPreComplete,
             detachedReplayPublicationComplete,detachedPostComplete,
             detachedOwnersReleased,detachedComparisonComplete,
-            detachedSourcePreserved;
+            detachedSourcePreserved,cap17SourceAfterReplayCaptured;
 
         QualityScalarProbe(String runId,String operationId,Rb100Plan.Variant variant,
                 P07ZeroViaGraphDiagnostics.Target graphTarget,
@@ -3322,6 +3362,34 @@ public final class Rb100PhysicalDiagnostics {
                 P07ZeroViaGraphDiagnostics.Result value=graphReceipt.result;
                 graph=value.failureProgressJson();
             }
+            String detachedCap17=isDetachedLoad12Cap17(purpose)?
+                ",\"detachedCap17\":{\"status\":\"FAILURE_UNCLASSIFIED\",\"phase\":\""+
+                    (detachedFailurePhase==null?detachedPhaseName(detachedPhase):
+                        detachedFailurePhase)+"\",\"sourceMaximumVias\":"+
+                    load12MaximumVias+",\"copyRequestedMaximumVias\":17,"+
+                    "\"copiedSessionMaximumVias\":"+detachedSessionMaximumVias+","+
+                    "\"copiedSearchMaximumVias\":"+detachedSearchMaximumVias+","+
+                    "\"copyAdvanceCalls\":"+detachedCopyAdvanceCalls+","+
+                    "\"copyWorkSteps\":"+detachedCopyLastReportedWork+","+
+                    "\"replayToPreCalls\":"+detachedReplayEntryCalls+","+
+                    "\"replayToPreWork\":"+detachedReplayEntryTotalWork+","+
+                    "\"replayToPostCalls\":"+detachedReplayPublicationCalls+","+
+                    "\"replayToPostWork\":"+detachedReplayPublicationTotalWork+","+
+                    "\"clonePreAdvanceCalls\":"+detachedPreAdvanceCalls+","+
+                    "\"clonePreWork\":"+detachedPreTotalWork+","+
+                    "\"clonePostAdvanceCalls\":"+detachedPostAdvanceCalls+","+
+                    "\"clonePostWork\":"+detachedPostTotalWork+","+
+                    "\"sourcePreAdvanceCalls\":"+load12PreAdvanceCalls+","+
+                    "\"sourcePreWork\":"+load12PreTotalWork+","+
+                    "\"sourcePostAdvanceCalls\":"+load12PostAdvanceCalls+","+
+                    "\"sourcePostWork\":"+load12PostTotalWork+","+
+                    "\"failureType\":"+(detachedFailureType==null?"null":
+                        "\""+jsonFull(detachedFailureType)+"\"")+","+
+                    "\"failureMessage\":"+(detachedFailureMessage==null?"null":
+                        "\""+jsonFull(detachedFailureMessage)+"\"")+","+
+                    "\"failureQueueSize\":"+detachedFailureQueueSize+","+
+                    "\"failureExpanded\":"+detachedFailureExpanded+","+
+                    "\"failureLastWork\":"+detachedFailureLastWork+"}" : "";
             return "RB100_QUALITY_GRAPH_FAILURE_PROGRESS {\"schema\":\"q100-quality-capture-failure-progress-r1\","+
                 "\"status\":\"OBSERVATION_ONLY_NOT_QUALIFICATION\",\"target\":\""+graphTarget.name()+
                 "\",\"manualGroups\":"+manualGroups+",\"manualSliceSteps\":"+manualSliceSteps+
@@ -3330,7 +3398,19 @@ public final class Rb100PhysicalDiagnostics {
                 ",\"prefixAllocationAdvanceCalls\":"+prefixAllocationAdvanceCalls+
                 ",\"graphAdvanceCalls\":"+graphAdvanceCalls+",\"qualityRejected\":"+qualityRejected+
                 ",\"load12PreComplete\":"+load12PreComplete+",\"load12PostComplete\":"+load12PostComplete+
-                ",\"graph\":"+graph+"}";
+                ",\"graph\":"+graph+detachedCap17+"}";
+        }
+
+        private static String detachedPhaseName(int phase) {
+            if(phase==DETACHED_IDLE) return "IDLE";
+            if(phase==DETACHED_COPY) return "COPY_LAYOUT";
+            if(phase==DETACHED_PREPARE) return "PREPARE";
+            if(phase==DETACHED_FIND_PRE) return "FIND_PRE";
+            if(phase==DETACHED_CAPTURE_PRE) return "CAPTURE_PRE";
+            if(phase==DETACHED_REPLAY_POST) return "REPLAY_POST";
+            if(phase==DETACHED_CAPTURE_POST) return "CAPTURE_POST";
+            if(phase==DETACHED_COMPLETE) return "COMPLETE";
+            return "UNKNOWN";
         }
 
         boolean shouldManuallyAdvance(SeededPcbLayoutGenerator.Session generatorSession) {
@@ -3339,7 +3419,7 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         String nextManualUnitName() {
-            if(purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE &&
+            if(isDetachedLoad12Purpose(purpose) &&
                     detachedPhase>=DETACHED_COPY && detachedPhase<DETACHED_COMPLETE) {
                 if(detachedPhase==DETACHED_COPY)
                     return "p07-quality-load12-detached-copy-advance-"+
@@ -3491,7 +3571,7 @@ public final class Rb100PhysicalDiagnostics {
                         controlsJson=runQualityScalarPublisherControls(search,runId);
                     Object load12BranchBeforeSlice=retainLoad12BranchBeforeSlice(search,budget);
                     verifyLoad12ProgressBeforeSlice(search);
-                    if(purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE &&
+                    if(isDetachedLoad12Purpose(purpose) &&
                             detachedPhase==DETACHED_COPY)
                         break;
                     Object branchBeforeSlice=retainTargetBranchBeforeSlice(search);
@@ -3618,6 +3698,7 @@ public final class Rb100PhysicalDiagnostics {
                 policy==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER &&
                 primaryLayer==PcbCopperLayer.BOTTOM.ordinal() &&
                 maximumVias==48 && policy.transitions==4 && layout!=null &&
+                P07ScalarReflection.intField(routeSession,"maximumVias")==48 &&
                 template!=null && template.getHoleCount()==0 &&
                 template.getHoles().isEmpty() && start!=null && root!=null &&
                 P07ScalarReflection.read(search,"currentRoot")==root &&
@@ -3643,7 +3724,7 @@ public final class Rb100PhysicalDiagnostics {
             load12Binding=new Load12BranchBinding(search,branch,nets,netOrder,
                 searchNetIndex,currentNet,branchOrdinal,searchBranches,pass,policy,
                 primaryLayer,maximumVias,layout,template,prefixHoles,start,root);
-            if(purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE) {
+            if(isDetachedLoad12Purpose(purpose)) {
                 require(budget!=null && "QUALITY_PROBE".equals(operationId) &&
                     graphTarget==P07ZeroViaGraphDiagnostics.Target.LOAD12,
                     "detached baseline owner starts only inside the selected LOAD12 probe operation");
@@ -3653,6 +3734,10 @@ public final class Rb100PhysicalDiagnostics {
                 load12BranchOrdinal=branchOrdinal;
                 load12SearchBranches=searchBranches;
                 load12PrimaryLayer=primaryLayer;
+                load12MaximumVias=maximumVias;
+                load12SessionMaximumVias=P07ScalarReflection.intField(
+                    routeSession,"maximumVias");
+                load12NetOrder=netOrder.clone();
                 load12GridWidth=P07ScalarReflection.intField(search,"width");
                 load12GridHeight=P07ScalarReflection.intField(search,"height");
                 load12GridCells=P07ScalarReflection.intField(search,"cells");
@@ -3661,10 +3746,14 @@ public final class Rb100PhysicalDiagnostics {
                 load12NetId=currentNet;
                 load12StartPadId=start.getPadId();
                 load12RootPadId=root.getPadId();
+                load12SeedJson=seeds.toJson();
                 load12SeedSha256=sha256Hex(seeds.toJson());
                 load12NetOrderSha256=netOrderSha256(netOrder);
                 load12PrefixRowsSha256=prefixRowsSha256(load12Binding.prefixHoleIds,
                     load12Binding.prefixHoleFingerprints);
+                load12InitialPrefixHoleIds=load12Binding.prefixHoleIds.clone();
+                load12InitialPrefixHoleFingerprints=
+                    load12Binding.prefixHoleFingerprints.clone();
                 Load12LayoutCounts initialCounts=load12LayoutCounts(layout);
                 require(initialCounts.holes==17 && initialCounts.vias==17 &&
                     initialCounts.traces==88,
@@ -3678,7 +3767,7 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         private void beginDetachedLoad12Copy(final Budget operationBudget) {
-            require(purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE &&
+            require(isDetachedLoad12Purpose(purpose) &&
                 load12BranchCaptured==false && load12Binding!=null && load12Seeds!=null &&
                 routeSession instanceof PcbLayerRoutingPrototype.Session &&
                 detachedCopyTask==null && detachedPhase==DETACHED_IDLE,
@@ -3697,17 +3786,35 @@ public final class Rb100PhysicalDiagnostics {
                             "detached copy observer remains bound to the active source operation");
                     }
                 };
-            detachedCopyTask=PcbLayerRoutingPrototype.beginDetachedBranchCopy(
-                (PcbLayerRoutingPrototype.Session)routeSession,detachedObserver);
-            require(detachedCopyTask!=null && !detachedCopyTask.isComplete() &&
-                "COPY_LAYOUT".equals(detachedCopyTask.phase()),
-                "typed detached owner starts at its charged initial layout-copy phase");
+            try {
+                if(isDetachedLoad12Cap17(purpose))
+                    detachedCopyTask=PcbLayerRoutingPrototype.beginDetachedBranchCopy(
+                        (PcbLayerRoutingPrototype.Session)routeSession,detachedObserver,17);
+                else
+                    detachedCopyTask=PcbLayerRoutingPrototype.beginDetachedBranchCopy(
+                        (PcbLayerRoutingPrototype.Session)routeSession,detachedObserver);
+                require(detachedCopyTask!=null && !detachedCopyTask.isComplete() &&
+                    "COPY_LAYOUT".equals(detachedCopyTask.phase()) &&
+                    (!isDetachedLoad12Cap17(purpose) ||
+                        P07ScalarReflection.intField(detachedCopyTask,"maximumVias")==17),
+                    "typed detached owner starts at its charged initial layout-copy phase");
+            } catch(RuntimeException failure) {
+                recordDetachedFailure(failure);
+                if(isDetachedLoad12Cap17(purpose))
+                    detachedFailurePhase="COPY_LAYOUT_INIT";
+                throw failure;
+            } catch(Error failure) {
+                recordDetachedFailure(failure);
+                if(isDetachedLoad12Cap17(purpose))
+                    detachedFailurePhase="COPY_LAYOUT_INIT";
+                throw failure;
+            }
             detachedPhase=DETACHED_COPY;
         }
 
         private boolean advanceDetachedLoad12Phase(Object active,
                 SeededPcbLayoutGenerator.Session generatorSession,Budget budget) {
-            if(purpose!=QualityScalarPurpose.DETACHED_LOAD12_BASELINE ||
+            if(!isDetachedLoad12Purpose(purpose) ||
                     detachedPhase<DETACHED_COPY || detachedPhase>=DETACHED_COMPLETE)
                 return false;
             require(active==routeSession && generatorSession==targetGeneratorSession &&
@@ -3814,13 +3921,18 @@ public final class Rb100PhysicalDiagnostics {
                     verifyDetachedPreBoundary();
                     if(complete) {
                         detachedPreResult=detachedPreCursor.result();
+                        if(isDetachedLoad12Cap17(purpose))
+                            detachedPreJson=detachedPreResult.toJson();
                         detachedMetrics=load12DetachedMetrics(detachedPreResult);
                         detachedPreGeometrySha256=detachedPreResult.prefixGeometrySha256();
                         require(detachedPreGeometrySha256!=null &&
                             detachedPreGeometrySha256.length()==64 &&
                             detachedPreResult.prefixHoleCount()==detachedPreHoleCount &&
                             detachedPreResult.pathTupleSha256()!=null &&
-                            detachedPreResult.goalFaceBitsSha256()!=null,
+                            detachedPreResult.goalFaceBitsSha256()!=null &&
+                            (!isDetachedLoad12Cap17(purpose) ||
+                                detachedPreJson!=null &&
+                                detachedPreJson.equals(detachedPreResult.toJson())),
                             "detached pre result retains its cursor-derived geometry, path and goal hashes");
                         detachedPreComplete=true;
                         detachedPreCursor=null;
@@ -3870,6 +3982,8 @@ public final class Rb100PhysicalDiagnostics {
                     verifyDetachedPostBoundary();
                     if(complete) {
                         detachedPostResult=detachedPostCursor.result();
+                        if(isDetachedLoad12Cap17(purpose))
+                            detachedPostJson=detachedPostResult.toJson();
                         detachedPostGeometrySha256=detachedPostResult.postGeometrySha256();
                         Load12LayoutCounts post=load12LayoutCounts(
                             detachedReplay.getLayout());
@@ -3899,24 +4013,96 @@ public final class Rb100PhysicalDiagnostics {
                         require(detachedPostGeometrySha256!=null &&
                             detachedPostGeometrySha256.length()==64 &&
                             detachedPostResult.postHoleCount()==detachedPostHoleCount &&
-                            detachedPostResult.createdHoleCount()==detachedCreatedViaCount &&
+                            (isDetachedLoad12Cap17(purpose)?
+                                detachedCreatedViaCount<=detachedPostResult.createdHoleCount():
+                                detachedPostResult.createdHoleCount()==detachedCreatedViaCount) &&
                             detachedPostResult.createdTraceCount()==
-                                detachedPostTraceCount-detachedPreTraceCount,
+                                detachedPostTraceCount-detachedPreTraceCount &&
+                            (!isDetachedLoad12Cap17(purpose) ||
+                                detachedPostJson!=null &&
+                                detachedPostJson.equals(detachedPostResult.toJson())),
                             "detached post result retains actual cursor-derived geometry and publication rows");
                         detachedPostComplete=true;
                         detachedPostCursor=null;
                         detachedPhase=DETACHED_COMPLETE;
                         verifyLoad12BranchSourceBeforePublication();
                         detachedSourcePreserved=true;
+                        if(isDetachedLoad12Cap17(purpose))
+                            captureCap17SourceStateAfterReplayBeforeResume();
                         releaseDetachedLoad12Owners();
                     }
                 }
                 budget.checkpoint();
                 detachedLastBudgetUnit=workUnit;
                 return true;
+            } catch(RuntimeException failure) {
+                recordDetachedFailure(failure);
+                throw failure;
+            } catch(Error failure) {
+                recordDetachedFailure(failure);
+                throw failure;
             } finally {
                 manualDriverNanos+=Math.max(0L,System.nanoTime()-started);
             }
+        }
+
+        private void recordDetachedFailure(Throwable failure) {
+            if(!isDetachedLoad12Cap17(purpose)) return;
+            detachedFailurePhase=detachedPhaseName(detachedPhase);
+            detachedFailureType=failure==null?null:failure.getClass().getName();
+            detachedFailureMessage=failure==null?null:failure.getMessage();
+            try {
+                if(detachedBranch!=null) {
+                    detachedFailureExpanded=P07ScalarReflection.intField(
+                        detachedBranch,"expanded");
+                    Object queue=P07ScalarReflection.read(detachedBranch,"queue");
+                    if(queue!=null)
+                        detachedFailureQueueSize=P07ScalarReflection.intField(queue,"size");
+                }
+                if(detachedReplay!=null)
+                    detachedFailureLastWork=detachedReplay.lastWork();
+            } catch(Throwable captureFailure) {
+                if(failure!=null && captureFailure!=failure)
+                    failure.addSuppressed(captureFailure);
+            }
+        }
+
+        private void captureCap17SourceStateAfterReplayBeforeResume() {
+            require(isDetachedLoad12Cap17(purpose) && detachedSourcePreserved &&
+                detachedReplayPublicationComplete && detachedPostComplete &&
+                detachedPhase==DETACHED_COMPLETE && routeSession!=null &&
+                load12Binding!=null && load12Search==load12Binding.search &&
+                load12Branch==load12Binding.branch && !cap17SourceAfterReplayCaptured &&
+                P07ScalarReflection.read(routeSession,"search")==load12Search &&
+                P07ScalarReflection.read(load12Search,"branch")==load12Branch &&
+                P07ScalarReflection.read(load12Search,"publisher")==null &&
+                P07ScalarReflection.read(load12Search,"layout")==load12Binding.layout,
+                "cap17 original source snapshot occurs after clone publication and before source resumption");
+            PcbBoardLayout sourceLayout=load12Binding.layout;
+            P07AcceptedBranchCaptureDiagnostics.SeedSnapshot freshSeeds=
+                P07AcceptedBranchCaptureDiagnostics.captureInitialSeeds(
+                    load12Search,load12Branch);
+            require(freshSeeds!=null && freshSeeds.nodeCount()==2 &&
+                freshSeeds.searchRef==load12Search && freshSeeds.branchRef==load12Branch,
+                "cap17 after-replay source snapshot uses the actual original two-node seeds");
+            String freshSeedJson=freshSeeds.toJson();
+            cap17SourceAfterReplaySessionMaximumVias=
+                P07ScalarReflection.intField(routeSession,"maximumVias");
+            cap17SourceAfterReplaySearchMaximumVias=
+                P07ScalarReflection.intField(load12Search,"maximumVias");
+            cap17SourceAfterReplayBranchExpanded=
+                P07ScalarReflection.intField(load12Branch,"expanded");
+            cap17SourceAfterReplayHoleCount=sourceLayout.getHoleCount();
+            cap17SourceAfterReplayTraceCount=sourceLayout.getTraces().size();
+            cap17SourceAfterReplaySeedsJson=freshSeedJson;
+            require(cap17SourceAfterReplaySessionMaximumVias==48 &&
+                cap17SourceAfterReplaySearchMaximumVias==48 &&
+                cap17SourceAfterReplayBranchExpanded==0 &&
+                cap17SourceAfterReplayHoleCount==17 &&
+                cap17SourceAfterReplayTraceCount==88 &&
+                freshSeedJson!=null && freshSeedJson.equals(load12SeedJson),
+                "cap17 after-replay source values match its measured unchanged48-cap, zero-work, 17-hole/88-trace frontier");
+            cap17SourceAfterReplayCaptured=true;
         }
 
         private String detachedUnitPrefix(int phase) {
@@ -3938,6 +4124,10 @@ public final class Rb100PhysicalDiagnostics {
             detachedSearch=detachedReplay.getSearchForDiagnostics();
             detachedBranch=detachedReplay.getBranchForDiagnostics();
             Object owner=P07ScalarReflection.read(detachedSearch,"owner");
+            detachedSessionMaximumVias=owner==null?-1:
+                P07ScalarReflection.intField(owner,"maximumVias");
+            detachedSearchMaximumVias=P07ScalarReflection.intField(
+                detachedSearch,"maximumVias");
             require(owner!=null && owner!=routeSession && detachedSearch!=load12Search &&
                 detachedBranch!=load12Branch &&
                 P07ScalarReflection.read(detachedSearch,"branch")==detachedBranch &&
@@ -3969,8 +4159,19 @@ public final class Rb100PhysicalDiagnostics {
                 P07ScalarReflection.intField(detachedSearch,"pass")==load12Binding.pass &&
                 P07ScalarReflection.intField(detachedSearch,"primary")==
                     load12Binding.primaryLayer &&
-                P07ScalarReflection.intField(detachedSearch,"maximumVias")==
-                    load12Binding.maximumVias &&
+                detachedSessionMaximumVias==(isDetachedLoad12Cap17(purpose)?17:
+                    load12Binding.maximumVias) &&
+                detachedSearchMaximumVias==detachedSessionMaximumVias &&
+                P07ScalarReflection.intField(detachedSearch,"width")==
+                    P07ScalarReflection.intField(load12Binding.search,"width") &&
+                P07ScalarReflection.intField(detachedSearch,"height")==
+                    P07ScalarReflection.intField(load12Binding.search,"height") &&
+                P07ScalarReflection.intField(detachedSearch,"cells")==
+                    P07ScalarReflection.intField(load12Binding.search,"cells") &&
+                P07ScalarReflection.intField(detachedSearch,"minX")==
+                    P07ScalarReflection.intField(load12Binding.search,"minX") &&
+                P07ScalarReflection.intField(detachedSearch,"minY")==
+                    P07ScalarReflection.intField(load12Binding.search,"minY") &&
                 P07ScalarReflection.read(detachedSearch,"policy")==load12Binding.policy &&
                 sameStringArray(netOrder,load12Binding.netOrder) &&
                 start.getPadId().equals(load12Binding.start.getPadId()) &&
@@ -4003,8 +4204,13 @@ public final class Rb100PhysicalDiagnostics {
                 P07ScalarReflection.intField(detachedSearch,"primary"),
                 P07ScalarReflection.intField(detachedSearch,"maximumVias"),
                 layout,template,holes,start,root,holeIds,holeFingerprints);
+            require(detachedBinding.maximumVias==detachedSearchMaximumVias &&
+                detachedBinding.maximumVias==(isDetachedLoad12Cap17(purpose)?17:
+                    load12Binding.maximumVias),
+                "detached branch binding retains the explicitly selected copied VIA allowance");
             detachedPrefixHoleIds=holeIds.clone();
             detachedPrefixHoleFingerprints=holeFingerprints.clone();
+            detachedNetOrder=netOrder.clone();
             detachedSeedJson=detachedSeeds.toJson();
             detachedSeedSha256=sha256Hex(detachedSeedJson);
             detachedNetOrderSha256=netOrderSha256(netOrder);
@@ -4080,6 +4286,8 @@ public final class Rb100PhysicalDiagnostics {
                 P07ScalarReflection.intField(detachedSearch,"netIndex")==4 &&
                 P07ScalarReflection.intField(detachedSearch,"branches")==73 &&
                 "LOAD12".equals(P07ScalarReflection.stringField(detachedSearch,"currentNet")) &&
+                P07ScalarReflection.intField(detachedSearch,"maximumVias")==
+                    detachedSearchMaximumVias &&
                 P07ScalarReflection.read(detachedSearch,"layout")==detachedContext.layout &&
                 P07ScalarReflection.read(detachedPublisher,"end")==
                     P07ScalarReflection.read(detachedBranch,"found") &&
@@ -4141,12 +4349,12 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         void cleanupDetachedLoad12Owners() {
-            if(purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE)
+            if(isDetachedLoad12Purpose(purpose))
                 releaseDetachedLoad12Owners();
         }
 
         private void compareLoad12SourceToDetached() {
-            require(purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE &&
+            require(isDetachedLoad12Purpose(purpose) &&
                 load12PostComplete && load12PreResult!=null && load12PostResult!=null &&
                 load12Metrics!=null && detachedPhase==DETACHED_COMPLETE &&
                 detachedPreComplete && detachedPostComplete &&
@@ -4173,51 +4381,69 @@ public final class Rb100PhysicalDiagnostics {
                 load12PreHoleIds.length==17 && load12PreViaCount==17 &&
                 load12PreTraceCount==88,
                 "actual detached baseline selector is the exact approved LOAD12/73 478x309 prefix source");
-            require(load12Metrics.sameAs(detachedMetrics) &&
-                load12Metrics.pathTupleSha256.equals(detachedMetrics.pathTupleSha256) &&
-                load12Metrics.goalSha256.equals(detachedMetrics.goalSha256) &&
-                load12Metrics.nodeCount==detachedMetrics.nodeCount &&
-                load12Metrics.planarLength==detachedMetrics.planarLength &&
-                load12Metrics.bends==detachedMetrics.bends &&
-                load12Metrics.flips==detachedMetrics.flips,
-                "fresh original and detached PreResults have the same actual path, goal and geometric metrics");
             require(load12SeedSha256.equals(detachedSeedSha256) &&
                 load12NetOrderSha256.equals(detachedNetOrderSha256) &&
                 load12PrefixRowsSha256.equals(detachedPrefixRowsSha256) &&
                 sameStringArray(load12PreHoleIds,detachedPrefixHoleIds) &&
                 sameStringArray(load12PreHoleFingerprints,detachedPrefixHoleFingerprints),
                 "fresh original and copied branch retain matching seed, ordered-net and prefix identities");
-            require(load12PreGeometrySha256.equals(detachedPreGeometrySha256) &&
-                load12PostGeometrySha256.equals(detachedPostGeometrySha256) &&
-                load12PublicationSha256.equals(detachedPublicationSha256),
-                "fresh original and detached replay have equal cursor-derived pre/post geometry and publication hashes");
-            require(load12PostHoleCount==21 && load12PostViaCount==21 &&
-                load12PostTraceCount==93 && load12CreatedViaCount==4 &&
-                load12CreatedTraceCount==5 && detachedPostHoleCount==21 &&
-                detachedPostViaCount==21 && detachedPostTraceCount==93 &&
-                detachedCreatedViaCount==4 && detachedCreatedTraceCount==5 &&
-                load12PostHoleCount-load12PrefixHoleCount==4 &&
-                load12PostTraceCount-load12PreTraceCount==5,
-                "normal original and detached publication each add the observed4 VIA/5 trace rows");
-            require(sameStringArray(load12PostHoleIds,detachedPostHoleIds) &&
-                sameStringArray(load12PostHoleFingerprints,detachedPostHoleFingerprints) &&
-                sameStringArray(load12CreatedHoleIds,detachedCreatedHoleIds) &&
-                load12PostResult.postHoleCount()==detachedPostResult.postHoleCount() &&
-                load12PostResult.createdHoleCount()==
-                    detachedPostResult.createdHoleCount() &&
-                load12PostResult.createdTraceCount()==
-                    detachedPostResult.createdTraceCount(),
-                "fresh original and detached PostResults preserve every publication hole row and delta");
-            for(int index=0;index<load12PostResult.postHoleCount();index++)
-                require(load12PostResult.postHoleIdAt(index).equals(
-                        detachedPostResult.postHoleIdAt(index)) &&
-                    load12PostResult.postHoleFingerprintAt(index).equals(
-                        detachedPostResult.postHoleFingerprintAt(index)),
-                    "detached PostResult row matches the original by ID and raw fingerprint at "+index);
-            for(int index=0;index<load12PostResult.createdHoleCount();index++)
-                require(load12PostResult.createdHoleIdAt(index).equals(
-                        detachedPostResult.createdHoleIdAt(index)),
-                    "detached created-hole row matches the original at "+index);
+            require(load12PreGeometrySha256.equals(detachedPreGeometrySha256),
+                "fresh original and copied branch retain the same cursor-derived initial prefix geometry");
+            if(purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE) {
+                require(load12Metrics.sameAs(detachedMetrics) &&
+                    load12Metrics.pathTupleSha256.equals(detachedMetrics.pathTupleSha256) &&
+                    load12Metrics.goalSha256.equals(detachedMetrics.goalSha256) &&
+                    load12Metrics.nodeCount==detachedMetrics.nodeCount &&
+                    load12Metrics.planarLength==detachedMetrics.planarLength &&
+                    load12Metrics.bends==detachedMetrics.bends &&
+                    load12Metrics.flips==detachedMetrics.flips,
+                    "fresh original and same-cap detached PreResults have the same actual path, goal and geometric metrics");
+                require(load12PostGeometrySha256.equals(detachedPostGeometrySha256) &&
+                    load12PublicationSha256.equals(detachedPublicationSha256),
+                    "same-cap original and detached replay have equal post geometry and publication hashes");
+                require(load12PostHoleCount==21 && load12PostViaCount==21 &&
+                    load12PostTraceCount==93 && load12CreatedViaCount==4 &&
+                    load12CreatedTraceCount==5 && detachedPostHoleCount==21 &&
+                    detachedPostViaCount==21 && detachedPostTraceCount==93 &&
+                    detachedCreatedViaCount==4 && detachedCreatedTraceCount==5 &&
+                    load12PostHoleCount-load12PrefixHoleCount==4 &&
+                    load12PostTraceCount-load12PreTraceCount==5,
+                    "same-cap normal publication each adds the established4 VIA/5 trace rows");
+                require(sameStringArray(load12PostHoleIds,detachedPostHoleIds) &&
+                    sameStringArray(load12PostHoleFingerprints,detachedPostHoleFingerprints) &&
+                    sameStringArray(load12CreatedHoleIds,detachedCreatedHoleIds) &&
+                    load12PostResult.postHoleCount()==detachedPostResult.postHoleCount() &&
+                    load12PostResult.createdHoleCount()==
+                        detachedPostResult.createdHoleCount() &&
+                    load12PostResult.createdTraceCount()==
+                        detachedPostResult.createdTraceCount(),
+                    "same-cap PostResults preserve every publication hole row and delta");
+                for(int index=0;index<load12PostResult.postHoleCount();index++)
+                    require(load12PostResult.postHoleIdAt(index).equals(
+                            detachedPostResult.postHoleIdAt(index)) &&
+                        load12PostResult.postHoleFingerprintAt(index).equals(
+                            detachedPostResult.postHoleFingerprintAt(index)),
+                        "same-cap PostResult row matches original ID and raw fingerprint at "+index);
+                for(int index=0;index<load12PostResult.createdHoleCount();index++)
+                    require(load12PostResult.createdHoleIdAt(index).equals(
+                            detachedPostResult.createdHoleIdAt(index)),
+                        "same-cap created-hole row matches original at "+index);
+            } else {
+                require(isDetachedLoad12Cap17(purpose) &&
+                    load12Metrics.goalSha256.equals(detachedMetrics.goalSha256),
+                    "cap17 clone retains the complete unchanged source goal-face mask");
+                require(detachedSessionMaximumVias==17 &&
+                    detachedSearchMaximumVias==17 && detachedPreViaCount==17 &&
+                    detachedPreHoleCount==17 && detachedPreTraceCount==88 &&
+                    detachedPostViaCount==17 &&
+                    detachedCreatedViaCount==0 &&
+                    detachedPostResult.postHoleCount()==detachedPostHoleCount &&
+                    detachedPostResult.createdHoleCount()==detachedCreatedHoleIds.length &&
+                    prefixRowsRetained(detachedPrefixHoleIds,
+                        detachedPrefixHoleFingerprints,detachedPostHoleIds,
+                        detachedPostHoleFingerprints),
+                    "cap17 normal publication preserves all17 prefix holes and creates no VIA");
+            }
             require(load12BranchHandoffVerified && load12CaptureReleased==false &&
                 graphReceipt==null && graphCursor==null && graphContext==null &&
                 graphInput==null && graphAdvanceCalls==0,
@@ -4515,18 +4741,19 @@ public final class Rb100PhysicalDiagnostics {
                 load12PreResult==null && load12PreJson==null,
                 "LOAD12 pre result is materialized once after its bounded cursor completes");
             P07AcceptedBranchCaptureDiagnostics.PreResult result=load12PreCursor.result();
-            String body=purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE?
-                null:result.toJson();
+            String body=isDetachedLoad12Cap17(purpose)?result.toJson():
+                isDetachedLoad12Purpose(purpose)?null:result.toJson();
             require(result.pathNodeCount()>=2 && result.pathNodeCount()<=4096 &&
                 result.transitionCount()>=0 && result.transitionCount()<=4 &&
                 result.prefixHoleCount()==load12Binding.prefixHoles.length &&
                 result.branchOrdinal()==73 && "LOAD12".equals(result.netId()) &&
-                (purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE ||
+                (isDetachedLoad12Cap17(purpose)?body!=null:
+                    isDetachedLoad12Purpose(purpose) ||
                     body!=null && body.equals(result.toJson())),
                 "LOAD12 pre result exposes the actual bounded path and captured prefix inventory");
             String seedJson=load12Seeds.toJson();
             require(seedJson!=null && seedJson.contains("\"faceMask\":3") &&
-                (purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE ||
+                (isDetachedLoad12Purpose(purpose) ||
                     body.contains("\"seeds\":"+seedJson)),
                 "LOAD12 pre result embeds the exact two-face seed snapshot captured before branch work");
             String[] ids=new String[result.prefixHoleCount()];
@@ -4549,7 +4776,7 @@ public final class Rb100PhysicalDiagnostics {
             load12PathNodeCount=result.pathNodeCount();
             load12TransitionCount=result.transitionCount();
             load12PrefixHoleCount=result.prefixHoleCount();
-            if(purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE) {
+            if(isDetachedLoad12Purpose(purpose)) {
                 load12Metrics=load12DetachedMetrics(result);
                 load12PreGeometrySha256=result.prefixGeometrySha256();
                 require(load12Metrics.pathTupleSha256.equals(
@@ -4564,6 +4791,7 @@ public final class Rb100PhysicalDiagnostics {
             }
             load12PreHoleIds=ids;
             load12PreHoleFingerprints=fingerprints;
+            load12SeedJson=seedJson;
             load12PreJson=body;
             load12PreResult=result;
             load12PreComplete=true;
@@ -4610,14 +4838,15 @@ public final class Rb100PhysicalDiagnostics {
                 load12PostResult==null && load12PostJson==null,
                 "LOAD12 post result is materialized once after its bounded cursor completes");
             P07AcceptedBranchCaptureDiagnostics.PostResult result=load12PostCursor.result();
-            String body=purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE?
-                null:result.toJson();
+            String body=isDetachedLoad12Cap17(purpose)?result.toJson():
+                isDetachedLoad12Purpose(purpose)?null:result.toJson();
             require(load12PreResult!=null &&
                 result.postHoleCount()>=load12PreResult.prefixHoleCount() &&
                 result.postHoleCount()<=48 && result.createdHoleCount()>=0 &&
                 result.createdHoleCount()<=result.postHoleCount() &&
                 result.createdTraceCount()>=0 && result.createdTraceCount()<=100000 &&
-                (purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE ||
+                (isDetachedLoad12Cap17(purpose)?body!=null:
+                    isDetachedLoad12Purpose(purpose) ||
                     body!=null && body.equals(result.toJson())),
                 "LOAD12 post result exposes actual bounded publication counts and immutable JSON");
             String[] ids=new String[result.postHoleCount()];
@@ -4663,7 +4892,7 @@ public final class Rb100PhysicalDiagnostics {
             load12PostResult=result;
             load12PostComplete=true;
             verifyLoad12PostBoundary();
-            if(purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE) {
+            if(isDetachedLoad12Purpose(purpose)) {
                 load12PostGeometrySha256=result.postGeometrySha256();
                 Load12LayoutCounts post=load12LayoutCounts(load12Binding.layout);
                 load12PostViaCount=post.vias;
@@ -4678,7 +4907,7 @@ public final class Rb100PhysicalDiagnostics {
 
         private void releaseLoad12CaptureSources() {
             boolean selectedGraphReady;
-            if(purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE) {
+            if(isDetachedLoad12Purpose(purpose)) {
                 selectedGraphReady=detachedComparisonComplete && graphReceipt==null &&
                     graphCursor==null && graphContext==null && graphInput==null;
             } else if(graphTarget==P07ZeroViaGraphDiagnostics.Target.LOAD12) {
@@ -4691,7 +4920,7 @@ public final class Rb100PhysicalDiagnostics {
                         graphReceipt.sourceReleasedBeforeSuccessorWork);
             }
             require(load12PostComplete && load12PreComplete &&
-                (purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE?
+                (isDetachedLoad12Purpose(purpose)?
                     load12PreResult!=null && load12PostResult!=null:
                     load12PreJson!=null && load12PostJson!=null) &&
                 load12PostHoleIds!=null &&
@@ -5405,7 +5634,7 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         private void verifyCompletedGraphCursor() {
-            if(purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE) {
+            if(isDetachedLoad12Purpose(purpose)) {
                 require(graphCursor==null && graphContext==null && graphInput==null &&
                     graphReceipt==null && graphAdvanceCalls==0 &&
                     detachedComparisonComplete,
@@ -5499,7 +5728,7 @@ public final class Rb100PhysicalDiagnostics {
                         snapshot.startPadId.equals(((PcbPadPlacement)targetStartPad).getPadId()) &&
                         snapshot.rootPadId.equals(((PcbPadPlacement)targetRootPad).getPadId()),
                         "actual rejection retains the same request/pass/net/start/root and Publisher object identity");
-                    if(purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE) {
+                    if(isDetachedLoad12Purpose(purpose)) {
                         require(detachedComparisonComplete && graphReceipt==null &&
                             graphCursor==null && graphContext==null && graphInput==null &&
                             graphAdvanceCalls==0,
@@ -5546,7 +5775,7 @@ public final class Rb100PhysicalDiagnostics {
             require(targetCaptured && qualityRejected && snapshot!=null &&
                 routeSession!=null && fixedPrefixContext!=null && armedReadyGuard,
                 "terminal scalar record has its exact actual target context and rejection");
-            if(purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE) {
+            if(isDetachedLoad12Purpose(purpose)) {
                 require(detachedComparisonComplete && graphReceipt==null && graphCursor==null &&
                     graphBinding==null && load12GraphBinding==null && graphAdvanceCalls==0,
                     "terminal detached purpose completed replay comparison without a graph receipt");
@@ -5603,7 +5832,7 @@ public final class Rb100PhysicalDiagnostics {
                 fixedPrefixContext,targetStartPad,targetRootPad,targetEndNode,pathSnapshot);
             if(graphTarget==P07ZeroViaGraphDiagnostics.Target.D_SENSE)
                 verifyGraphBindingUnchanged(qualityRejected);
-            else if(purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE)
+            else if(isDetachedLoad12Purpose(purpose))
                 require(detachedComparisonComplete && graphReceipt==null &&
                     load12GraphBinding==null,
                     "detached LOAD12 comparison is complete and no LOAD12 graph was started");
@@ -5849,6 +6078,256 @@ public final class Rb100PhysicalDiagnostics {
                 ",\"createdTraceCount\":"+createdTraces+"}}";
         }
 
+        String detachedLoad12Cap17EventJson(P07PolicyDiagnosticCase result,
+                boolean pairPassed) {
+            requireTerminalOperation(result);
+            PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
+                (PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext;
+            require(pairPassed && isDetachedLoad12Cap17(purpose) &&
+                graphTarget==P07ZeroViaGraphDiagnostics.Target.LOAD12 &&
+                result!=null && result.qualityScalarProbe==this &&
+                "PASS".equals(result.status) && result.cleanupPassed &&
+                result.operationMillis<=90000L && result.workUnits<=WORK_LIMIT &&
+                result.maxUnitMillis<=nanosToMillis(UNIT_LIMIT_NANOS) &&
+                result.cleanupMillis<=CLEANUP_LIMIT_MILLIS && context!=null &&
+                detachedComparisonComplete && detachedSourcePreserved &&
+                cap17SourceAfterReplayCaptured &&
+                cap17SourceAfterReplaySessionMaximumVias==48 &&
+                cap17SourceAfterReplaySearchMaximumVias==48 &&
+                cap17SourceAfterReplayBranchExpanded==0 &&
+                cap17SourceAfterReplayHoleCount==17 &&
+                cap17SourceAfterReplayTraceCount==88 &&
+                cap17SourceAfterReplaySeedsJson!=null &&
+                cap17SourceAfterReplaySeedsJson.equals(load12SeedJson) &&
+                detachedOwnersReleased && detachedReplayPublicationComplete &&
+                detachedPublisherLastStage==6 && detachedPreComplete &&
+                detachedPostComplete && detachedCopyTask==null && detachedReplay==null &&
+                detachedSessionMaximumVias==17 && detachedSearchMaximumVias==17 &&
+                load12SessionMaximumVias==48 && load12MaximumVias==48 &&
+                load12CaptureReleased && qualityRejected && targetRequestAccounted &&
+                terminalConfirmed && detachedPreJson!=null &&
+                detachedPostJson!=null && detachedPreJson.startsWith("{") &&
+                detachedPostJson.startsWith("{") &&
+                detachedPreResult!=null && detachedPostResult!=null &&
+                load12PreJson!=null && load12PostJson!=null &&
+                load12PreJson.startsWith("{") && load12PostJson.startsWith("{") &&
+                load12Metrics!=null && detachedMetrics!=null &&
+                load12SeedJson!=null && detachedSeedJson!=null &&
+                load12NetOrder!=null && detachedNetOrder!=null &&
+                load12InitialPrefixHoleIds!=null &&
+                load12InitialPrefixHoleFingerprints!=null &&
+                detachedPrefixHoleIds!=null && detachedPrefixHoleFingerprints!=null &&
+                load12PreGeometrySha256!=null && detachedPreGeometrySha256!=null &&
+                load12PostGeometrySha256!=null && detachedPostGeometrySha256!=null &&
+                load12PublicationSha256!=null && detachedPublicationSha256!=null &&
+                load12Pass==1 && load12NetPosition==3 && load12NextFetch==4 &&
+                load12BranchOrdinal==73 && load12SearchBranches==73 &&
+                "LOAD12".equals(load12NetId) && "JLOAD.1".equals(load12StartPadId) &&
+                "CSTORE_E.1".equals(load12RootPadId) &&
+                load12PrimaryLayer==PcbCopperLayer.BOTTOM.ordinal() &&
+                load12GridWidth==478 && load12GridHeight==309 &&
+                load12GridCells==147702 && load12GridOriginX==30 &&
+                load12GridOriginY==30 && PcbLayerRoutingPrototype.GRID==10 &&
+                load12PreViaCount==17 && load12PreTraceCount==88 &&
+                detachedPreHoleCount==17 && detachedPreViaCount==17 &&
+                detachedPreTraceCount==88 &&
+                detachedPostViaCount==17 && detachedCreatedViaCount==0 &&
+                detachedPostResult.postHoleCount()==detachedPostHoleCount &&
+                detachedPostResult.createdHoleCount()==detachedCreatedHoleIds.length &&
+                prefixRowsRetained(detachedPrefixHoleIds,
+                    detachedPrefixHoleFingerprints,detachedPostHoleIds,
+                    detachedPostHoleFingerprints) &&
+                detachedCopyAdvanceCalls>0 && detachedCopyLastReportedWork>0 &&
+                detachedCopyEntries>0 && detachedObserverChecks>0 &&
+                detachedReplayEntryCalls>0 && detachedReplayEntryTotalWork>0 &&
+                detachedReplayPublicationCalls>0 &&
+                detachedReplayPublicationTotalWork>0 &&
+                detachedPreAdvanceCalls>0 && detachedPreTotalWork>0 &&
+                detachedPostAdvanceCalls>0 && detachedPostTotalWork>0 &&
+                load12PreAdvanceCalls>0 && load12PreTotalWork>0 &&
+                load12PostAdvanceCalls>0 && load12PostTotalWork>0 &&
+                load12PreAdvanceCalls+load12PostAdvanceCalls<=WORK_LIMIT &&
+                detachedSourcePreserved && load12CaptureReleased &&
+                graphReceipt==null && graphCursor==null && graphAdvanceCalls==0 &&
+                load12PreResult==null && load12PostResult==null,
+                "cap17 event requires a complete, normally published, cleaned and source-resumed actual replay");
+            verifyLoad12EventHeader();
+            boolean seedEqual=load12SeedJson.equals(detachedSeedJson) &&
+                load12SeedSha256.equals(detachedSeedSha256);
+            boolean netOrderEqual=Arrays.equals(load12NetOrder,detachedNetOrder) &&
+                load12NetOrderSha256.equals(detachedNetOrderSha256);
+            boolean prefixRowsEqual=load12PrefixRowsSha256.equals(
+                detachedPrefixRowsSha256) &&
+                sameStringArray(load12InitialPrefixHoleIds,detachedPrefixHoleIds) &&
+                sameStringArray(load12InitialPrefixHoleFingerprints,
+                    detachedPrefixHoleFingerprints);
+            boolean preGeometryEqual=load12PreGeometrySha256.equals(
+                detachedPreGeometrySha256);
+            boolean fullGoalEqual=load12Metrics.goalSha256.equals(
+                detachedMetrics.goalSha256);
+            require(seedEqual && netOrderEqual && prefixRowsEqual &&
+                preGeometryEqual && fullGoalEqual && detachedSourcePreserved &&
+                qualityRejected && targetRequestAccounted && load12CaptureReleased,
+                "cap17 replay preserves source seeds/order/prefix/initial geometry/full-goal and resumes the original source");
+            boolean pathEqualObserved=load12Metrics.pathTupleSha256.equals(
+                detachedMetrics.pathTupleSha256);
+            boolean postGeometryEqualObserved=load12PostGeometrySha256.equals(
+                detachedPostGeometrySha256);
+            boolean publicationEqualObserved=load12PublicationSha256.equals(
+                detachedPublicationSha256);
+            boolean sourceResumed=qualityRejected && targetRequestAccounted &&
+                load12CaptureReleased;
+            String initialSource=detachedLoad12InitialIdentityJson(load12SeedJson,
+                load12NetOrder,load12NetOrderSha256,load12InitialPrefixHoleIds,
+                load12InitialPrefixHoleFingerprints,load12PrefixRowsSha256,
+                load12PreGeometrySha256,load12PreHoleIds.length,
+                load12PreViaCount,load12PreTraceCount);
+            String initialClone=detachedLoad12InitialIdentityJson(detachedSeedJson,
+                detachedNetOrder,detachedNetOrderSha256,detachedPrefixHoleIds,
+                detachedPrefixHoleFingerprints,detachedPrefixRowsSha256,
+                detachedPreGeometrySha256,detachedPreHoleCount,
+                detachedPreViaCount,detachedPreTraceCount);
+            return "RB100_LOAD12_DETACHED_CAP17_EVENT {\"protocolVersion\":1,"+
+                "\"schema\":\"rb100-load12-detached-cap17-r2\",\"status\":\"PASS\","+
+                "\"runId\":\""+jsonFull(runId)+"\",\"operationId\":\""+
+                jsonFull(operationId)+"\",\"scope\":\"ONE_ACTUAL_LOAD12_BRANCH_DETACHED_CAP17_REPLAY\","+
+                "\"selector\":{\"rootSeed\":\""+SEED+"\",\"placementSeed\":\""+
+                PLACEMENT_DIAGNOSTIC_SEED+"\",\"routingSeed\":\""+
+                ROUTING_DIAGNOSTIC_ROUTING_SEED+"\",\"routeRequestIndex\":"+
+                context.routeRequestIndex()+",\"selectedPlacementIndex\":"+
+                context.selectedPlacementIndex()+",\"selectedPlacementAttempt\":"+
+                context.selectedPlacementAttempt()+",\"eligiblePlacementAttempts\":"+
+                integerArrayJson(context.eligiblePlacementAttempts())+
+                ",\"placementFingerprintSha256\":\""+
+                sha256Hex(context.rawPlacementFingerprint())+"\",\"pass\":"+
+                load12Pass+",\"netPosition\":"+load12NetPosition+",\"nextFetch\":"+
+                load12NextFetch+",\"branchOrdinal\":"+load12BranchOrdinal+
+                ",\"searchBranches\":"+load12SearchBranches+",\"netId\":\""+
+                jsonFull(load12NetId)+"\",\"primaryLayer\":\"BOTTOM\",\"startPadId\":\""+
+                jsonFull(load12StartPadId)+"\",\"rootPadId\":\""+
+                jsonFull(load12RootPadId)+"\",\"grid\":{\"width\":"+load12GridWidth+
+                ",\"height\":"+load12GridHeight+",\"cells\":"+load12GridCells+
+                ",\"minX\":"+load12GridOriginX+",\"minY\":"+load12GridOriginY+
+                ",\"pitch\":"+PcbLayerRoutingPrototype.GRID+"},\"prefix\":{\"vias\":"+
+                load12PreViaCount+",\"traces\":"+load12PreTraceCount+"}},"+
+                "\"source\":{\"sessionMaximumVias\":"+load12SessionMaximumVias+
+                ",\"searchMaximumVias\":"+load12MaximumVias+",\"initial\":"+
+                initialSource+",\"afterReplayBeforeResume\":{\"sessionMaximumVias\":"+
+                cap17SourceAfterReplaySessionMaximumVias+
+                ",\"searchMaximumVias\":"+
+                cap17SourceAfterReplaySearchMaximumVias+
+                ",\"branchExpanded\":"+cap17SourceAfterReplayBranchExpanded+
+                ",\"holeCount\":"+cap17SourceAfterReplayHoleCount+
+                ",\"traceCount\":"+cap17SourceAfterReplayTraceCount+
+                ",\"seeds\":"+cap17SourceAfterReplaySeedsJson+"}},"+
+                "\"clone\":{\"requestedMaximumVias\":17,"+
+                "\"sessionMaximumVias\":"+detachedSessionMaximumVias+
+                ",\"searchMaximumVias\":"+detachedSearchMaximumVias+
+                ",\"initial\":"+initialClone+",\"path\":"+
+                detachedLoad12Cap17PathJson(detachedMetrics)+",\"preResult\":"+
+                detachedPreJson+",\"postResult\":"+detachedPostJson+
+                ",\"normalPublisher\":{\"completed\":true,\"stage\":"+
+                detachedPublisherLastStage+",\"replayComplete\":true,\"preHoleCount\":"+
+                detachedPreHoleCount+",\"preViaCount\":"+detachedPreViaCount+
+                ",\"preTraceCount\":"+detachedPreTraceCount+",\"postHoleCount\":"+
+                detachedPostHoleCount+",\"postViaCount\":"+detachedPostViaCount+
+                ",\"postTraceCount\":"+detachedPostTraceCount+
+                ",\"createdHoleCount\":"+detachedPostResult.createdHoleCount()
+                +",\"createdViaCount\":"+detachedCreatedViaCount+
+                ",\"createdTraceCount\":"+detachedCreatedTraceCount+"}},"+
+                "\"original\":{\"path\":"+detachedLoad12Cap17PathJson(load12Metrics)+
+                ",\"preGeometrySha256\":\""+load12PreGeometrySha256+
+                "\",\"postGeometrySha256\":\""+load12PostGeometrySha256+
+                "\",\"publicationSha256\":\""+load12PublicationSha256+
+                "\",\"preResult\":"+load12PreJson+",\"postResult\":"+
+                load12PostJson+",\"pre\":{\"holeCount\":"+load12PreHoleIds.length+
+                ",\"viaCount\":"+load12PreViaCount+",\"traceCount\":"+
+                load12PreTraceCount+"},\"post\":{\"holeCount\":"+load12PostHoleCount+
+                ",\"viaCount\":"+load12PostViaCount+",\"traceCount\":"+
+                load12PostTraceCount+",\"createdViaCount\":"+load12CreatedViaCount+
+                ",\"createdTraceCount\":"+load12CreatedTraceCount+"}},"+
+                "\"work\":{\"sourceOperation\":{\"operationMs\":"+
+                result.operationMillis+",\"workUnits\":"+result.workUnits+
+                ",\"maxUnitMs\":"+result.maxUnitMillis+",\"cleanupMs\":"+
+                result.cleanupMillis+",\"manualGroups\":"+manualGroups+
+                ",\"manualSliceSteps\":"+manualSliceSteps+"},\"copy\":{\"advanceCalls\":"+
+                detachedCopyAdvanceCalls+",\"workSteps\":"+detachedCopyLastReportedWork+
+                ",\"copiedEntries\":"+detachedCopyEntries+",\"lastWork\":"+
+                detachedCopyLastWork+",\"observerChecks\":"+detachedObserverChecks+"},"+
+                "\"replay\":{\"toPreCalls\":"+detachedReplayEntryCalls+
+                ",\"toPreWork\":"+detachedReplayEntryTotalWork+
+                ",\"toPostCalls\":"+detachedReplayPublicationCalls+
+                ",\"toPostWork\":"+detachedReplayPublicationTotalWork+"},"+
+                "\"cloneCursor\":{\"preAdvanceCalls\":"+detachedPreAdvanceCalls+
+                ",\"preWork\":"+detachedPreTotalWork+
+                ",\"postAdvanceCalls\":"+detachedPostAdvanceCalls+
+                ",\"postWork\":"+detachedPostTotalWork+"},\"sourceCursor\":{\"preAdvanceCalls\":"+
+                load12PreAdvanceCalls+",\"preWork\":"+load12PreTotalWork+
+                ",\"postAdvanceCalls\":"+load12PostAdvanceCalls+
+                ",\"postWork\":"+load12PostTotalWork+"},\"sourceOutcome\":{\"phase\":\""+
+                detachedPhaseName(detachedPhase)+"\",\"qualityRejected\":"+qualityRejected+
+                ",\"targetRequestAccounted\":"+targetRequestAccounted+
+                ",\"sourceResumed\":"+sourceResumed+"}},"+
+                "\"comparison\":{\"initialSeedsEqual\":"+seedEqual+
+                ",\"initialNetOrderEqual\":"+netOrderEqual+
+                ",\"initialPrefixRowsEqual\":"+prefixRowsEqual+
+                ",\"initialPrefixGeometryEqual\":"+preGeometryEqual+
+                ",\"fullGoalFaceBitsEqual\":"+fullGoalEqual+
+                ",\"pathTupleEqualObserved\":"+pathEqualObserved+
+                ",\"postGeometryEqualObserved\":"+postGeometryEqualObserved+
+                ",\"publicationEqualObserved\":"+publicationEqualObserved+
+                ",\"prefixRetained\":true,\"zeroNewVias\":true,\"sourcePreserved\":"+
+                detachedSourcePreserved+",\"sourceResumed\":"+sourceResumed+"},"+
+                "\"limits\":{\"operationMs\":90000,\"workUnits\":"+WORK_LIMIT+
+                ",\"unitMs\":"+nanosToMillis(UNIT_LIMIT_NANOS)+
+                ",\"cleanupMs\":"+CLEANUP_LIMIT_MILLIS+
+                ",\"quantum\":"+MAX_MANUAL_STEPS_PER_UNIT+
+                ",\"maximumSourceVias\":48,\"maximumDetachedVias\":17,"+
+                "\"maximumTransitions\":4},\"branchRouteFound\":true,"+
+                "\"fullBoardFeasibility\":\"UNKNOWN\",\"routeAdoption\":false,"+
+                "\"layoutQualification\":false,\"playable100\":false}";
+        }
+
+        private String detachedLoad12InitialIdentityJson(String seedsJson,
+                String[] netOrder,String netOrderSha256,String[] holeIds,
+                String[] holeFingerprints,String prefixRowsSha256,
+                String preGeometrySha256,int holeCount,int viaCount,int traceCount) {
+            require(seedsJson!=null && seedsJson.startsWith("{") &&
+                netOrder!=null && netOrder.length>0 && netOrderSha256!=null &&
+                holeIds!=null && holeFingerprints!=null &&
+                holeIds.length==holeFingerprints.length && holeIds.length==holeCount &&
+                holeCount==17 && viaCount==17 && traceCount==88 &&
+                prefixRowsSha256!=null && preGeometrySha256!=null,
+                "cap17 initial identity object retains complete bounded source identities");
+            StringBuilder rows=new StringBuilder("[");
+            for(int index=0;index<holeIds.length;index++) {
+                if(index>0) rows.append(',');
+                rows.append("{\"id\":\"").append(jsonFull(holeIds[index]))
+                    .append("\",\"fingerprint\":\"")
+                    .append(jsonFull(holeFingerprints[index])).append("\"}");
+            }
+            rows.append(']');
+            return "{\"seeds\":"+seedsJson+",\"netOrder\":"+
+                stringArrayJson(netOrder)+",\"netOrderSha256\":\""+
+                netOrderSha256+"\",\"prefixRows\":"+rows+
+                ",\"prefixRowsSha256\":\""+prefixRowsSha256+
+                "\",\"preGeometrySha256\":\""+preGeometrySha256+
+                "\",\"prefix\":{\"holeCount\":"+holeCount+
+                ",\"viaCount\":"+viaCount+",\"traceCount\":"+traceCount+"}}";
+        }
+
+        private String detachedLoad12Cap17PathJson(Load12DetachedMetrics metrics) {
+            require(metrics!=null && metrics.pathTupleSha256!=null &&
+                metrics.goalSha256!=null && metrics.nodeCount>=2 &&
+                metrics.planarLength>=0 && metrics.bends>=0 && metrics.flips>=0,
+                "cap17 path values come only from the actual cursor-captured PreResult");
+            return "{\"pathTupleSha256\":\""+metrics.pathTupleSha256+
+                "\",\"goalFaceBitsSha256\":\""+metrics.goalSha256+
+                "\",\"nodeCount\":"+metrics.nodeCount+
+                ",\"planarLength\":"+metrics.planarLength+
+                ",\"bends\":"+metrics.bends+",\"flips\":"+metrics.flips+"}";
+        }
+
         String pathEventJson(P07PolicyDiagnosticCase result,boolean pairPassed) {
             requireTerminalOperation(result);
             require(pairPassed && "QUALITY_PROBE".equals(operationId),
@@ -5958,7 +6437,7 @@ public final class Rb100PhysicalDiagnostics {
                     sha256Hex(prefixAllocationBinding.prefixGeometryFingerprint).equals(
                         graphReceipt.result.prefixGeometrySha256),
                     "D allocation prefix fingerprint equals the same actual D graph geometry fingerprint");
-            else if(purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE)
+            else if(isDetachedLoad12Purpose(purpose))
                 require(detachedComparisonComplete && graphReceipt==null &&
                     load12GraphBinding==null,
                     "completed D allocation remains source-bound after the graph-free LOAD12 replay comparison");
@@ -6641,6 +7120,23 @@ public final class Rb100PhysicalDiagnostics {
         if(left==null || right==null || left.length!=right.length) return false;
         for(int index=0;index<left.length;index++)
             if(left[index]==null || !left[index].equals(right[index])) return false;
+        return true;
+    }
+
+    private static boolean prefixRowsRetained(String[] prefixIds,
+            String[] prefixFingerprints,String[] postIds,String[] postFingerprints) {
+        if(prefixIds==null || prefixFingerprints==null || postIds==null ||
+                postFingerprints==null || prefixIds.length!=prefixFingerprints.length ||
+                postIds.length!=postFingerprints.length || prefixIds.length>48 ||
+                postIds.length>48) return false;
+        HashMap<String,String> postRows=new HashMap<String,String>();
+        for(int index=0;index<postIds.length;index++)
+            if(postIds[index]==null || postFingerprints[index]==null ||
+                    postRows.put(postIds[index],postFingerprints[index])!=null) return false;
+        for(int index=0;index<prefixIds.length;index++)
+            if(prefixIds[index]==null || prefixFingerprints[index]==null ||
+                    !prefixFingerprints[index].equals(postRows.get(prefixIds[index])))
+                return false;
         return true;
     }
 

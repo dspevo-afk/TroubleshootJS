@@ -5,8 +5,14 @@ public final class Rb100Load12DetachedBaselineContractTest {
     private Rb100Load12DetachedBaselineContractTest() { }
 
     public static void main(String[] args) {
-        if(args!=null && args.length!=0)
-            throw new IllegalArgumentException("Expected no arguments");
-        Rb100PhysicalDiagnostics.runLoad12DetachedBaselineContracts();
+        if(args==null || args.length==0) {
+            Rb100PhysicalDiagnostics.runLoad12DetachedBaselineContracts();
+            return;
+        }
+        if(args.length==1 && "--cap17".equals(args[0])) {
+            Rb100PhysicalDiagnostics.runLoad12DetachedCap17Contracts();
+            return;
+        }
+        throw new IllegalArgumentException("Expected no arguments or exactly --cap17");
     }
 }

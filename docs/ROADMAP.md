@@ -298,12 +298,32 @@ normal MEDIUM development roots pass. The normal four-candidate envelope remains
 each actual case accepts its first candidate. Earlier pin-race, overlapping-run,
 PS5 loader and browser-cleanup failures remain preserved, never credited. No
 budgets, oracles, normal routing or layout26/dependency28 interpretation changed.
-Actual LOAD12/73 cap17 is next and NOT RUN; VIA avoidability, route adoption,
+At that prerequisite, actual LOAD12/73 cap17 was NOT RUN; VIA avoidability, route adoption,
 accepted layout and playable100 remain unqualified. Playable100=0/beta held;
 full30/data boundaries and the self-hosted runner prerequisite remain.
 Implementation`b8473f7ecfb160784ffd2cd07ce045ef9f955098` was normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion
 Gmail`1a1a42b61de83015` was sent once.
+
+The [actual LOAD12 cap17 diagnostic](task-evidence/Q100/load12-cap17-actual-r1/README.md)
+is accepted for the exact paused branch73, with no production Java/default/epoch
+change. The detached cap17 Search/Publisher publishes252nodes/2510length/5bends/
+0transitions and0newVIAs/1newtrace, while the original cap48 source is preserved
+and resumes its ordinary4VIA/5trace publication and later D_SENSE rejection.
+The independent consumer recomputes a separately validated full147702-cell
+graphspec, checks every path edge/goal face and physical publication lineage,
+and validates measured source-after state plus cached original pre/post bodies.
+Final-source native33/focused6, both actual replay modes, D/LOAD graph modes,
+101 Python methods (two declared file-symlink skips),14 actual reader controls,
+exporter/real Windows cleanup controls and final source audit pass. The unchanged
+1202-input Player/Developer footprints and357-file outputs are audited; no fresh
+browser/electrical/normal3/full30 qualification is claimed. Earlier failures and
+fixture-preparation gaps remain preserved. Whole-board VIA avoidability, routing
+adoption, final layout/access/runtime and playable100 remain unqualified;
+playable100=0/beta held. HARD/PSYCHOTIC remain unavailable and unrun, full30
+owner-excluded, self-hosted runner registration still prerequisite. Next is a
+frozen generic routing-treatment decision and bounded experiment before adoption.
+Publication is pending the normal commit/push workflow for this accepted scope.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

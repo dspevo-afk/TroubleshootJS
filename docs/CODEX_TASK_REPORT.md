@@ -1,4 +1,79 @@
-# Current checkpoint: reduced-cap detached owner published
+# Current checkpoint: actual LOAD12 cap17 accepted — publication pending
+
+Local2026-11-03 / UTC2026-11-04. U=OS-temp/
+tsj-q100-load12-cap17-actual-20261103-r1, branch
+codex/q100-load12-cap17-actual-20261103, HEAD/source parent
+ab6d224db62d2ce7515047101b263887161ccbf3. QU=preserved fixed-prefix bundle/
+load12-cap17-actual-r1. Evidence: docs/task-evidence/Q100/load12-cap17-actual-r1/.
+Final qualification SHA640dfc2441e004956d35fc22ba3216686915fd36545fba3b107775bac18cbff7,
+42317bytes; root final-source audit-r4 PASS0.7687820s.
+
+Finite actual LOAD12/73 detached cap17 branch publishes252nodes/2510length/
+5bends/0flips,17VIAs/89traces,+0holes/+1trace/stage6. Original48 source measured
+after clone before resume at48/48 caps,0expanded,17holes/88traces/same2seeds;
+validated cached original pre/post prove ordinary4VIA/5trace publication and
+resumption to later D_SENSE rejection. Full geometry is checked at subsequent
+original pre, not claimed as an immediate scalar-sample dump. All251 planar
+edges and endpoint goal face bind the independently recomputed147702-cell graph.
+No whole-board feasibility, routing adoption, finalizer/access or playable100 claim.
+
+Final native pins8dbaed61a2ba87441ff786c4e5e486a7189926864d391c14eefcf8b7d4246938,
+1079inputs/850productionJava/223contractJava/86881890bytes. Production Java is
+unchanged. RBD7577134d/entryfa791a61/dispatcher3c9dfe73, helperd16/exporter447/
+consumer0d7a2708/testae389 are frozen and recorded fully in qualification.
+Native baseline48-r3 PASS64.16591s, cap17-r3 PASS63.5647612s,
+focused6-r3 PASS31.6653809s, regression33-r3 PASS129.3129592s,
+Dgraph-r3 PASS65.0056553s, LOADgraph-r3 PASS64.1658707s. PROBE cap17
+19852ms/630units/max667/cleanup0ms; NULL14630ms/300/max1304/cleanup1ms.
+Native aggregate cleanup duration NOT EXPORTED; process/input audit/managed
+scratch cleanup pass. Root awaited each wrapper exit0/no session before successor.
+
+Python101 methods:54current/20baseline/10exporter/17cap17, with two declared
+file-symlink privilege skips. All14 actual reader controls pass:4positive,
+8artifact-bound negatives,2realNTFS path rejections. Five exporter controls,
+real Windows sharing-violation cleanup canary and exact junction cleanup pass.
+Both1202-input production footprints and357-file preserved outputs pass the
+26.2649929s audit. No fresh GWT/browser/electrical/normal3/full30 qualification
+is claimed; unchanged compiled behavior is referenced only within that audit.
+Source-only independent reviews CLEAR for final native guards and consumer
+count correction/objective original-source checks; root integrated review done.
+
+Earlier exporter/consumer shape errors, native cap17-guard leakage into ordinary
+baseline, fixture-preparation gaps, production-audit preparation and first final-
+audit census assumption failures remain preserved. None reclassified PASS.
+Cached diff-check caught3 trailing newline bytes in the consumer. Root removed
+only EOF bytes, proved identical AST, reran17units and all11 cap17 CLI controls
+on final0d7a2708; prior byte-source evidence remains preserved. Exact final raw9
+sources are archived in QU/accepted-source9-r1. Root audit staging-precondition
+failure was resolved by unstaging only the15 intended paths, without worktree edits.
+Final source audit proves SDK9 and all frozenPython28 unchanged; the two owned
+helper files were never members of that bootstrap set. All nine owned source
+files plus runtime identities and raw artifact digests are separately pinned.
+
+No new persistent actor remains. Both cap17 input/source junctions were exactly
+validated and deleted nonrecursively; target/owner evidence retained. Exporter
+output junction removed; locked-temp handle closed/temp removed. Prior failed
+privacy profile/claim remains failure evidence; its separate current-absence
+observation never retroactively passes cleanup. Unowned8928 is untouched.
+Main stays5f05b005 with unrelated9tracked/6untracked preserved; Desktop e0c36885
+and all prior worktrees/failures unchanged. U's19 raw newline-only helper statuses
+remain unstaged and canonically unchanged. No commit/push/mail for U yet.
+Prior prerequisite b8473f7e/receiptab6d224d and Gmail1a1a42b61de83015 stay verified.
+
+Original90s/640/5s/120s/32768/request1M/branch100K/grid250K/order3/source48/trans4/
+cost60 and layout26/dependency28 remain. Full30 owner-excluded. Protected HARD
+unread/unrun this scope; historical unread UNCERTIFIED. HARD/PSYCHOTIC unavailable;
+playable100=0/beta held. Self-hosted runner registration remains prerequisite.
+Next: restage/review explicit15paths, cached review/check, normal commit/push to
+origin/codex/q100-physical-feasibility, exact remote proof and one completion Gmail;
+then publication receipt. Next unstarted implementation is a frozen generic
+routing-treatment experiment. Read-only next-step audit corrected the naive cost
+comparison: actual Search includes seed/secondary/turn costs, so cost100 is not
+a justified crossing for these witnesses; no treatment/default change is adopted.
+
+
+
+# Historical checkpoint: reduced-cap detached owner published
 
 Local2026-11-03 / UTC2026-11-04. Candidate T=OS-temp/
 tsj-q100-load12-cap17-20261103-r1, branch

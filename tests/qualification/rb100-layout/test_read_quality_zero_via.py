@@ -1380,6 +1380,39 @@ class Load12BranchWireTests(unittest.TestCase):
             reader._validate_load12_branch_event(event, scalar, allocation)
         self.assertEqual(caught.exception.code, expected)
 
+    def test_expected_load12_via_cap_defaults_to_strict_48_and_accepts_17(self):
+        _scalar, event, _summary, _allocation = _load12_branch_fixture()
+        self.assertEqual(
+            reader._validate_load12_source(event["pre"]["source"])["grid"][
+                "maximumVias"], 48)
+        self.assertEqual(
+            reader._validate_load12_pre(event["pre"])["source"]["grid"][
+                "maximumVias"], 48)
+
+        cap17 = event["pre"]
+        cap17["source"]["grid"]["maximumVias"] = 17
+        with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+            reader._validate_load12_pre(cap17)
+        self.assertEqual(caught.exception.code, "LOAD12_GRID_DOMAIN_INVALID")
+        self.assertEqual(
+            reader._validate_load12_pre(
+                cap17, expected_maximum_vias=17)["source"]["grid"][
+                    "maximumVias"], 17)
+
+    def test_expected_load12_via_cap_is_an_exact_bounded_integer(self):
+        _scalar, event, _summary, _allocation = _load12_branch_fixture()
+        for invalid in (True, False, 0, 49, 17.0, "17", None):
+            with self.subTest(expected_maximum_vias=invalid):
+                with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+                    reader._validate_load12_source(
+                        event["pre"]["source"], invalid)
+                self.assertEqual(caught.exception.code,
+                                 "LOAD12_EXPECTED_VIA_CAP_INVALID")
+                with self.assertRaises(reader.QualityZeroViaInputError) as caught:
+                    reader._validate_load12_pre(event["pre"], invalid)
+                self.assertEqual(caught.exception.code,
+                                 "LOAD12_EXPECTED_VIA_CAP_INVALID")
+
     def test_trace_compaction_matches_unequal_same_direction_segments(self):
         trace = {
             "xPoints": [0, 10, 30, 45, 40, 40, 40, 50],
