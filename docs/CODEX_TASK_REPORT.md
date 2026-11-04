@@ -1,13 +1,17 @@
-# Current checkpoint: cost240 milestone validated; final review/publication pending
+# Current checkpoint: cost240 published; next owner design underway
 
 UTC2026-11-04. W=OS-temp/tsj-q100-load12-cost240-20261104-r1, branch
-codex/q100-load12-cost240-20261104, HEAD/source parent
+codex/q100-load12-cost240-20261104, validated source parent
 f0c2004fabbea74b9367a0bf4fe5332fb49cfa6c. QW=fixed-prefix bundle/load12-cost240-r1.
 Accepted finite packet: docs/task-evidence/Q100/load12-cost240-r1/README.md and
 qualification.json SHA bd7163a2583c129904b3615f79a07eb2431b30066929ca34b4b49275eb13c99b.
 Exact bytes also QW/qualification-final-r2.json; original derivedr1 retained.
-No W commit/push/email yet. Remote origin/codex/q100-physical-feasibility last
-verified f0c2004f. Prior af37323e/f0c2004f + Gmail1a1a4bcda7e00bdc remain published.
+Implementation 1b25be0d1ddf406ef1c2722c864eabd92f0262e1, message "Qualify actual
+LOAD12 cost240 branch replay", normally pushed to origin/codex/q100-physical-feasibility
+and exact remote SHA verified. Completion Gmail1a1a55391cbe9b24 sent once after
+empty exact-SHA sent search. Docs-only publication receipt is current/subsequent
+HEAD; no duplicate completion email. Packet publication.json records the proof.
+Prior af37323e/f0c2004f + Gmail1a1a4bcda7e00bdc remain preserved.
 
 Finite result: actual root9007199254740993, placement-6587958367974952701/
 routing8445301674744508279/request0/index0/attempt4/pass1/LOAD12branch73/BOTTOM1,
@@ -69,10 +73,15 @@ Main5f05b005/unrelated9tracked+6untracked, Desktop e0c36885/80statuses, U f0c200
 19raw-only helpers preserved. W began clean; bootstrapSDK9/Python28/Source9 copied
 onlyauthorizedfiles,23raw-only helpers/canonical0 beforeedits. R12a1352b5c ancestor.
 Rootowns final diff/staging/publication; leaves source-only, no leafpush/mail.
-Next: fresh final source/build/qualification-byte audit; inspectactualdiff and
-explicitstagedpaths; normalcommit/push/remoteverification and ONEcompletionGmail;
-publicationreceipt docs only afterwards, no duplicate email. Then next unstarted
-NEXT_FULL_ROUTE_PLAN.md: bounded copied-owner routing-remainder experiment.
+Final source/build/archive/Python38/qualification audit PASS16.4314255s;
+exact15 staged paths/source8 canonical bytes/qualification match validated records.
+W implementation leaves23 raw-only helper statuses, canonicaldiff0/staged0.
+Next implementation unstarted: NEXT_FULL_ROUTE_PLAN.md bounded copied-owner
+routing-remainder experiment. Fresh bounded read-only explorer is reviewing exact
+Session/replay/finalizer callers, shared mutable state (including possible RNG
+sharing), lifecycle transfer and charged operation boundary. No next code edits
+or runtime yet. Preserve this accepted W; use a fresh isolated worktree for the
+next implementation after the owner prerequisite is concrete.
 
 All90s/640/5s/120cleanup/15shutdown/32768/request1M/branch100K/grid250K/order3/
 cap48/trans4 unchanged, default60/layout26/dependency28. Full30 owner-excluded,
