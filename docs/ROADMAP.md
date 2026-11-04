@@ -323,7 +323,13 @@ adoption, final layout/access/runtime and playable100 remain unqualified;
 playable100=0/beta held. HARD/PSYCHOTIC remain unavailable and unrun, full30
 owner-excluded, self-hosted runner registration still prerequisite. Next is a
 frozen generic routing-treatment decision and bounded experiment before adoption.
-Publication is pending the normal commit/push workflow for this accepted scope.
+Implementation `af37323ebe5fd8698aed9de2ef5d588887df9d8d` was normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified; completion
+Gmail `1a1a4bcda7e00bdc` was sent once. The next private
+[cost240 plan](task-evidence/Q100/load12-cap17-actual-r1/NEXT_COST240_PLAN.md)
+accounts for the actual seed, secondary-face and turn charges; the length-only
+comparison is not a treatment oracle. Cost240 is a bounded hypothesis, with no
+implementation or adoption claimed yet.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

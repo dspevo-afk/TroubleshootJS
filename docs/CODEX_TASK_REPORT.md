@@ -1,9 +1,11 @@
-# Current checkpoint: actual LOAD12 cap17 accepted — publication pending
+# Current checkpoint: actual LOAD12 cap17 published — cost240 plan next
 
 Local2026-11-03 / UTC2026-11-04. U=OS-temp/
 tsj-q100-load12-cap17-actual-20261103-r1, branch
-codex/q100-load12-cap17-actual-20261103, HEAD/source parent
-ab6d224db62d2ce7515047101b263887161ccbf3. QU=preserved fixed-prefix bundle/
+codex/q100-load12-cap17-actual-20261103, validated source parent
+ab6d224db62d2ce7515047101b263887161ccbf3. Published implementation
+ af37323ebe5fd8698aed9de2ef5d588887df9d8d; the docs-only publication receipt is its
+child on the same branch (confirm actual HEAD and remote before continuing). QU=preserved fixed-prefix bundle/
 load12-cap17-actual-r1. Evidence: docs/task-evidence/Q100/load12-cap17-actual-r1/.
 Final qualification SHA640dfc2441e004956d35fc22ba3216686915fd36545fba3b107775bac18cbff7,
 42317bytes; root final-source audit-r4 PASS0.7687820s.
@@ -57,20 +59,25 @@ privacy profile/claim remains failure evidence; its separate current-absence
 observation never retroactively passes cleanup. Unowned8928 is untouched.
 Main stays5f05b005 with unrelated9tracked/6untracked preserved; Desktop e0c36885
 and all prior worktrees/failures unchanged. U's19 raw newline-only helper statuses
-remain unstaged and canonically unchanged. No commit/push/mail for U yet.
+remain unstaged and canonically unchanged. Implementation af37323ebe5fd8698aed9de2ef5d588887df9d8d is normally pushed to
+origin/codex/q100-physical-feasibility and exact remote SHA verified. Completion
+Gmail1a1a4bcda7e00bdc sent ONCE; this documentation receipt gets no second email.
 Prior prerequisite b8473f7e/receiptab6d224d and Gmail1a1a42b61de83015 stay verified.
 
 Original90s/640/5s/120s/32768/request1M/branch100K/grid250K/order3/source48/trans4/
 cost60 and layout26/dependency28 remain. Full30 owner-excluded. Protected HARD
 unread/unrun this scope; historical unread UNCERTIFIED. HARD/PSYCHOTIC unavailable;
 playable100=0/beta held. Self-hosted runner registration remains prerequisite.
-Next: restage/review explicit15paths, cached review/check, normal commit/push to
-origin/codex/q100-physical-feasibility, exact remote proof and one completion Gmail;
-then publication receipt. Next unstarted implementation is a frozen generic
-routing-treatment experiment. Read-only next-step audit corrected the naive cost
-comparison: actual Search includes seed/secondary/turn costs, so cost100 is not
-a justified crossing for these witnesses; no treatment/default change is adopted.
-
+Next: finish normal publication of this docs-only receipt with no duplicate email,
+then implement docs/task-evidence/Q100/load12-cap17-actual-r1/NEXT_COST240_PLAN.md
+in a fresh isolated scope from the verified latest receipt. The private diagnostic
+will keep cap48/source cost60 and test only copied cost240, with immutable instance
+ownership and actual Search/relaxed-bound propagation. No cost240 code or run yet.
+The read-only audit checked real seed/secondary/turn charges: original cost2586,
+zero-transition cost3189; cost100 does not cross them, cost240 prices the old
+four-transition witness3306. First integer crossing211 is only a two-witness
+comparison, not a route prediction. Default adoption and whole-board proof remain
+separate. Keep current native/Player data limits, exact roots and budgets.
 
 
 # Historical checkpoint: reduced-cap detached owner published
