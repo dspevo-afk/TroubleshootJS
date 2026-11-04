@@ -1,8 +1,8 @@
-# Current checkpoint: reduced-cap detached owner — validated, publication pending
+# Current checkpoint: reduced-cap detached owner published
 
 Local2026-11-03 / UTC2026-11-04. Candidate T=OS-temp/
 tsj-q100-load12-cap17-20261103-r1, branch
-`codex/q100-load12-cap17-20261103`, HEAD/source parent
+`codex/q100-load12-cap17-20261103`, validated source parent
 `8f024bda01ddb667453408349d2d24093d0add30`. QA=preserved fixed-prefix bundle/
 load12-cap17-r1. The packet is docs/task-evidence/Q100/load12-cap17-r1/.
 All runtime gates, root review and final-source audit-r2 PASS18.3350241s.
@@ -11,7 +11,10 @@ packetSHAa8cb71d741f59e261f8fe39c16a73dbd5840685caa0b923f51d623649c6b3dac.
 Only CRLF-to-LF normalization differs; all field text/numbers stay exact.
 Audit1079 native/1202 per variant/SDK9/Python28/
 Player archive357/active Developer357 plus final consumed QAhost pins PASS.
-Publication and one completion Gmail remain pending. First root audit's nested
+Implementation`b8473f7ecfb160784ffd2cd07ce045ef9f955098` (Bound detached routing
+copies to explicit VIA caps) was normally pushed to origin/codex/q100-physical-feasibility,
+exact remote SHA verified; completion Gmail`1a1a42b61de83015` sent ONCE.
+This documentation receipt gets no second email. First root audit's nested
 PS5 source-pin metadata is preserved and not used; fresh r2 asserts10 flat pins.
 
 Scope is only the explicit reduced-cap detached-copy prerequisite. Both copied
@@ -73,7 +76,8 @@ short-root tsj-n3h-b5814a84888f/host-output and owned class/output artifacts ret
 as evidence; marker c69217a0774e3c2d68fce14f8dba2baa7eff30e250f2e8f87bc80a711fdb92eb.
 Other checkouts, old failures, unowned8928 and19 raw newline-only helper statuses
 are preserved. Initial T tracked/untracked/staged0; SDK9/frozenPython28 copies
-passed exact SHA/canonical Git proof. No cap-owner publication/Gmail yet.
+passed exact SHA/canonical Git proof. Optional audit-leaf draft is NOT RUN/NOT USED;
+root audit-r2 is the accepted final-source proof.
 
 Protected HARD unread/unrun this scope; historical unread UNCERTIFIED;
 HARD/PSYCHOTIC unavailable, full30 owner-excluded, playable100=0/beta held.
@@ -81,7 +85,7 @@ Limits remain90s/640units/5sunit/120scleanup/32768quantum/request1M/branch100K/
 grid250K/order3/source48/trans4/cost60; compile60s/ordinary60s/actual480s.
 Manual visible Player screenshots NOT APPLICABLE: no Player-flow change.
 No electrical62/human repair/CI renewal; self-hosted runner prerequisite remains.
-Next: normal publication+one Gmail, then frozen actual LOAD12
+Next unstarted: frozen actual LOAD12
 cap17 experiment with separate graphspec/independent legality and publication proof.
 
 # Historical checkpoint: actual LOAD12 branch capture published

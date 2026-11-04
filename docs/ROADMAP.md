@@ -287,8 +287,7 @@ origin/codex/q100-physical-feasibility and its exact remote SHA verified;
 completion Gmail `1a1a3c4e8ffb2d87` was sent once.
 
 The [reduced-cap detached-owner prerequisite](task-evidence/Q100/load12-cap17-r1/README.md)
-is locally accepted after fresh runtime gates and an18.3350241s final-source audit;
-publication is pending.
+is accepted after fresh runtime gates and an18.3350241s final-source audit.
 An explicit allowance configures both copied Session/Search caps without changing
 the original owners or default routing. The literal source48/prefix2 -> cap2 copy
 joins the prior UNDER VIA on TOP through normal Search/Publisher; cap17 entry
@@ -302,6 +301,9 @@ budgets, oracles, normal routing or layout26/dependency28 interpretation changed
 Actual LOAD12/73 cap17 is next and NOT RUN; VIA avoidability, route adoption,
 accepted layout and playable100 remain unqualified. Playable100=0/beta held;
 full30/data boundaries and the self-hosted runner prerequisite remain.
+Implementation`b8473f7ecfb160784ffd2cd07ce045ef9f955098` was normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified; completion
+Gmail`1a1a42b61de83015` was sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

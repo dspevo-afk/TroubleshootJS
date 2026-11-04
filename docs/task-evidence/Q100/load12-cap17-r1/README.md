@@ -1,9 +1,12 @@
 # Reduced-cap detached owner prerequisite
 
 Source parent `8f024bda01ddb667453408349d2d24093d0add30`, branch
-`codex/q100-load12-cap17-20261103`. The implementation is uncommitted.
-All runtime gates and the final-source audit passed. The finite prerequisite is
-locally accepted; publication remains pending.
+`codex/q100-load12-cap17-20261103`. Implementation
+`b8473f7ecfb160784ffd2cd07ce045ef9f955098` (Bound detached routing copies to
+explicit VIA caps) is normally pushed to origin/codex/q100-physical-feasibility;
+the exact remote SHA was verified. Completion Gmail`1a1a42b61de83015` was sent
+once after publication. All runtime gates and the final-source audit passed;
+acceptance covers only this finite prerequisite.
 
 This prerequisite configures an isolated copied owner with a smaller VIA cap.
 It **does not replay actual LOAD12/73 at cap17**. The cap17 check covers copied
@@ -115,5 +118,6 @@ HARD/PSYCHOTIC stay unavailable and full30 stays owner-excluded. Only the three
 approved development roots may run. Playable100=0/beta held. No fresh electrical62,
 human repair or CI result is claimed; the self-hosted runner prerequisite remains.
 There is no visible Player-flow change requiring human screenshot evidence.
-Other checkouts, unowned8928 and prior evidence remain preserved. No completion
-email has been sent for this prerequisite; the prior baseline email stays once-only.
+Other checkouts, unowned8928 and prior evidence remain preserved. No second
+completion email is sent for this documentation receipt or the prior baseline.
+Next is the bounded actual LOAD12/73 cap17 experiment; it remains unstarted.
