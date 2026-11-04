@@ -1,8 +1,9 @@
 # Actual copied A_DRIVE graph capture
 
-Status: **LOCALLY ACCEPTED FINITE CAPTURE ONLY** (2026-11-04).
-Final gates and consumed-input audit pass. Normal publication is pending;
-the exact implementation SHA and notification receipt belong in publication.md.
+Status: **ACCEPTED AND PUBLISHED FINITE CAPTURE ONLY** (2026-11-04).
+Implementation `b9a2146abca9b4a00747d0736deb333cd92ee039` was normally pushed and
+exact remote SHA verified; completion Gmail `1a1a8e9a56ef51ba` was sent once.
+Final gates/source audit pass; see [publication.md](publication.md).
 
 The private diagnostic captures the actual copied `A_DRIVE` BranchSearch graph
 immediately before its unchanged Publisher quality rejection. It exports the

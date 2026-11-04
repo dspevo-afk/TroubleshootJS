@@ -1,14 +1,18 @@
-# Current checkpoint: A_DRIVE graph locally accepted; publication pending
+# Current checkpoint: A_DRIVE graph published; next analysis unstarted
 
 UTC2026-11-04. W=OS-temp/tsj-q100-adrive-graph-20261104-r1,
-branch codex/q100-adrive-graph-20261104, HEAD/sourceparent
+branch codex/q100-adrive-graph-20261104, gate HEAD/sourceparent
 96589b8dfaf17cdd7bc74deec4518ab36891c66a. QW=OS-temp/
 tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/adrive-graph-r1.
-No W commit/push/email yet. Established normal target origin/codex/q100-physical-
-feasibility was verified at96589b8d; local upstream unset. Predecessor guard
-9dc822d4+receipt96589b8d/Gmail1a1a7ed052322950 already published; do not resend.
+Implementation b9a2146abca9b4a00747d0736deb333cd92ee039, message Capture bounded
+copied A_DRIVE graph, normally pushed to origin/codex/q100-physical-feasibility;
+exact remoteSHA verified. Gmail1a1a8e9a56ef51ba SENT_ONCE afterempty exactSHA Sent
+search; NEVERsendagain for this milestone/receipt. Sourceparent96589b8d above
+identifies gate execution, not the published candidate. Local branch upstream
+unset; root uses established explicit normalpush target. Documentation receipt
+pending. Predecessor guard9dc822d4/receipt96589b8d/mail1a1a7ed052322950 preserved.
 
-CAPTURE ONLY locally accepted. Source/command/gates/timing/limits/artifact hashes:
+CAPTURE ONLY accepted and published. Source/command/gates/timing/limits/artifact hashes:
 docs/task-evidence/Q100/adrive-graph-r1/{README.md,qualification.json,
 final-input-audit.json,FAILURES.md,publication.md}. Exact controlled4-record
 capture/raw wrapper+source census/stdout.gz retained in QW/query-graph-r8 and
@@ -56,12 +60,14 @@ weakening. Old sources/failedsequence/raw receipts retained inQW. ArchiveR1
 slowregex failedbeforecopy; verifiedownPID cleanup; correctedR2PASS. All prior
 design/harness failures remain; no unresolved current gate or resource blocker.
 
-NEXT: inspect final actualdiff and git diff--check; stage intended paths ONLY,
-inspect cached diff/check and rawartifact blob hashes; normalcommit/push and
-exactremoteSHAverify, searchSent then ONEnew Gmail; record publication receipt
-without a second email. No further build/tests required for docs-only edits;
-all consumed inputs remain final. Next unstarted is separately frozen bounded
-constraint-aware feasibility/lowerbound using this capturedgraph; no search yet.
+NEXT: finish documentation-only publicationreceipt, audit unchanged consumed
+inputs and exact7 stageddocs, normalcommit/push/remoteverify; NOsecondGmail.
+Actual implementationCandidate is b9a2146abca9b4a00747d0736deb333cd92ee039;
+verify actualGitHEAD beforework. Passing final gates reused only for unchanged
+source. Next unstarted is separate bounded constraint-aware feasibility/lowerbound
+on retainedfrozengraph; no search/treatment yet. Source-only nextcontract draft
+may be inQW/NEXT_ANALYSIS_DRAFT_R1.md, not frozen/accepted analysis. All runtime
+actors cleaned; worktrees/raw evidence/old failure resources remain preserved.
 
 Preserve W42bootstrap raw-EOL-only statuses/exclude unintended staging. Main
 5f05b0059tracked6untracked0staged; Desktop e0c368857tracked73collapseduntracked

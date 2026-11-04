@@ -169,8 +169,13 @@
   "candidate": {
     "branch": "codex/q100-adrive-graph-20261104",
     "sourceParent": "96589b8dfaf17cdd7bc74deec4518ab36891c66a",
-    "publication": "PENDING_NORMAL_COMMIT_PUSH_REMOTE_VERIFICATION",
-    "commit": null
+    "publication": "PUSH_VERIFIED_EXACT_REMOTE_SHA",
+    "commit": "b9a2146abca9b4a00747d0736deb333cd92ee039",
+    "notification": {
+      "kind": "GMAIL",
+      "status": "SENT_ONCE",
+      "messageId": "1a1a8e9a56ef51ba"
+    }
   },
   "code": [
     {

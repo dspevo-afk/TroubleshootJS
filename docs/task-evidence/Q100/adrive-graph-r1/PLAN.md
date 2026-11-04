@@ -3,7 +3,9 @@
 ## Current acceptance — 2026-11-04
 
 R11 actual capture and all final gates are locally accepted for the exact finite
-scope in [README.md](README.md) and qualification.json. Publication is pending.
+scope in [README.md](README.md) and qualification.json. Published implementation
+is `b9a2146abca9b4a00747d0736deb333cd92ee039`; see publication.md for the verified
+remote and one completion Gmail.
 The R10 rejection and provisional estimates below remain historical design
 evidence. No feasibility search or production routing treatment has started.
 

@@ -384,7 +384,9 @@ consumed-input and production identity audits pass; failed harnesses remain FAIL
 Implementation `9dc822d4c15df3ee21c0f06c12339fb145b735f9` is normally pushed and exact remote verified; completion Gmail `1a1a7ed052322950` sent once. Publication is recorded in the packet/current checkpoint. No routing treatment,
 full physical proof or playable100 qualification follows; playable100=0/beta held.
 The subsequent [actual copied A_DRIVE graph capture](task-evidence/Q100/adrive-graph-r1/README.md)
-is now locally accepted as a finite diagnostic; normal publication is pending.
+is accepted as a finite diagnostic. Implementation
+`b9a2146abca9b4a00747d0736deb333cd92ee039` is normally pushed and exact remote
+verified; completion Gmail `1a1a8e9a56ef51ba` was sent once.
 It captures the real BranchSearch's complete directed two-face/history-relaxed
 masks and goal provenance before the unchanged rejection. The exact authored
 case has147702cells/two measured root-face goals; source17holes/88traces and
