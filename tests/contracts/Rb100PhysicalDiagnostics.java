@@ -13,6 +13,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -248,6 +250,12 @@ public final class Rb100PhysicalDiagnostics {
             QualityScalarPurpose.DETACHED_LOAD12_COST240_REMAINDER);
     }
 
+    /** Actual copied A_DRIVE stage1 quality rejection with a bounded independent witness. */
+    static void runLoad12DetachedCost240GuardContracts() {
+        runQualityZeroViaGraphContracts(P07ZeroViaGraphDiagnostics.Target.LOAD12,
+            QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD);
+    }
+
     private static void runQualityZeroViaGraphContracts(
             P07ZeroViaGraphDiagnostics.Target graphTarget) {
         runQualityZeroViaGraphContracts(graphTarget,QualityScalarPurpose.ZERO_VIA_GRAPH);
@@ -297,8 +305,32 @@ public final class Rb100PhysicalDiagnostics {
                     remainderProbe.captureOperationFailure(failure);
                 }
             }
-            System.out.println(remainderProbe.detachedLoad12Cost240RemainderEventJson(
-                remainder,suiteMillis));
+            String remainderEvent=remainderProbe.detachedLoad12Cost240RemainderEventJson(
+                remainder,suiteMillis);
+            boolean guardWireReady=false;
+            if(remainderProbe.isGuardExperiment() && "PASS".equals(remainder.status)) {
+                try {
+                    remainderProbe.prepareDetachedLoad12Cost240GuardEvent(
+                        remainder,suiteMillis,remainderEvent);
+                    guardWireReady=true;
+                } catch(RuntimeException failure) {
+                    remainder.failurePhase="GUARD_WITNESS_PREPARATION";
+                    remainder.failure=append(remainder.failure,failure);
+                    remainder.status="FAIL";
+                    remainderProbe.captureOperationFailure(failure);
+                } catch(Error failure) {
+                    remainder.failurePhase="GUARD_WITNESS_PREPARATION";
+                    remainder.failure=append(remainder.failure,failure);
+                    remainder.status="FAIL";
+                    remainderProbe.captureOperationFailure(failure);
+                }
+                if(!guardWireReady) remainderEvent=
+                    remainderProbe.detachedLoad12Cost240RemainderEventJson(
+                        remainder,suiteMillis);
+            }
+            if(remainderProbe.isGuardExperiment()) writeUtf8Record(remainderEvent);
+            else System.out.println(remainderEvent);
+            if(guardWireReady) remainderProbe.emitDetachedLoad12Cost240GuardEvent();
             if(!"PASS".equals(remainder.status) ||
                     !remainderProbe.remainderExperimentComplete) {
                 remainderProbe.captureOperationFailure(remainder.failure);
@@ -307,8 +339,16 @@ public final class Rb100PhysicalDiagnostics {
             }
             require(suiteMillis<=480000L,
                 "actual LOAD12 copied-order remainder suite remains within its frozen480s ceiling");
-            System.out.println("PASS: RB100 LOAD12 detached cost240 remainder contracts assertions="+
-                (assertions-beforeAssertions));
+            String passMarker=remainderProbe.isGuardExperiment()?
+                "PASS: RB100 LOAD12 detached cost240 guard contracts assertions="+
+                    (assertions-beforeAssertions):
+                "PASS: RB100 LOAD12 detached cost240 remainder contracts assertions="+
+                    (assertions-beforeAssertions);
+            if(remainderProbe.isGuardExperiment()) {
+                require(guardWireReady,"guard PASS marker follows its prevalidated complete witness record");
+                writeUtf8Record(passMarker);
+            }
+            else System.out.println(passMarker);
             return;
         }
         P07PolicyDiagnosticCase baseline=runP07PolicyDiagnosticCase(variant,runId,null,null,
@@ -580,7 +620,7 @@ public final class Rb100PhysicalDiagnostics {
         final long operationStarted = System.nanoTime();
         final Budget budget = new Budget(operationStarted);
         if(qualityProbe!=null && qualityProbe.isRemainderExperiment()) {
-            budget.enableRemainderMetrics();
+            budget.enableRemainderMetrics(qualityProbe.isGuardExperiment());
             qualityProbe.remainderBudget=budget;
         }
         final P07PolicyDiagnosticCase result = new P07PolicyDiagnosticCase(
@@ -3134,18 +3174,22 @@ public final class Rb100PhysicalDiagnostics {
         long maxUnitNanos;
         long unitStarted;
         String unitName;
-        boolean remainderMetricsEnabled;
-        int unitRemainderPhase=-1,unitOwnerSteps,maxOwnerStepsInUnit;
+        boolean remainderMetricsEnabled,guardWitnessMetrics;
+        int unitRemainderPhase=-1,unitOwnerSteps,maxOwnerStepsInUnit,
+            unitGuardSubphase=-1;
         int currentRemainderPhase=-1;
         long remainderPhaseStartedNanos,remainderOperationElapsedNanos=-1L;
         final int[] remainderPhaseCalls=new int[REMAINDER_PHASES.length];
         final long[] remainderPhaseElapsedNanos=new long[REMAINDER_PHASES.length];
         final long[] remainderPhaseOwnerSteps=new long[REMAINDER_PHASES.length];
+        final int[] guardSubphaseCalls=new int[5];
+        final long[] guardSubphaseElapsedNanos=new long[5];
         Budget(long started) { this.started = started; }
-        void enableRemainderMetrics() {
+        void enableRemainderMetrics(boolean guardWitness) {
             if(workUnits!=0 || remainderMetricsEnabled)
                 throw new IllegalStateException("Remainder metrics must start before the first unit");
             remainderMetricsEnabled=true;
+            guardWitnessMetrics=guardWitness;
             currentRemainderPhase=0;
             remainderPhaseStartedNanos=started;
         }
@@ -3157,6 +3201,11 @@ public final class Rb100PhysicalDiagnostics {
             unitStarted = System.nanoTime();
             unitOwnerSteps=0;
             unitRemainderPhase=remainderMetricsEnabled?remainderPhaseFor(name):-1;
+            if(guardWitnessMetrics && unitRemainderPhase==6 &&
+                    !name.startsWith("p07-quality-load12-remainder-ordering-remainder-adrive-guard-"))
+                throw new IllegalStateException("OPERATION_EXCEPTION: guard phase unit lacks its frozen owner prefix");
+            unitGuardSubphase=guardWitnessMetrics && unitRemainderPhase==6?
+                guardSubphaseFor(name):-1;
             if(remainderMetricsEnabled && unitRemainderPhase!=currentRemainderPhase) {
                 closeRemainderPhase(unitStarted);
                 currentRemainderPhase=unitRemainderPhase;
@@ -3170,6 +3219,15 @@ public final class Rb100PhysicalDiagnostics {
             maxOwnerStepsInUnit=Math.max(maxOwnerStepsInUnit,unitOwnerSteps);
             if(unitOwnerSteps>QualityScalarProbe.MAX_MANUAL_STEPS_PER_UNIT)
                 throw new BudgetExceeded("OWNER_STEP_LIMIT",unitName);
+        }
+        private static int guardSubphaseFor(String name) {
+            if(name==null) throw new IllegalArgumentException("Guard unit requires a name");
+            if(name.contains("-adrive-guard-capture-") ||
+                    name.contains("-adrive-guard-handoff")) return 1;
+            if(name.contains("-adrive-guard-recompute-")) return 2;
+            if(name.contains("-adrive-guard-serialize-")) return 3;
+            if(name.contains("-adrive-guard-boundary-")) return 4;
+            return 0;
         }
         private static int remainderPhaseFor(String name) {
             if(name==null) throw new IllegalArgumentException("Remainder unit requires a name");
@@ -3223,8 +3281,13 @@ public final class Rb100PhysicalDiagnostics {
                 remainderPhaseCalls[unitRemainderPhase]++;
                 remainderPhaseOwnerSteps[unitRemainderPhase]+=unitOwnerSteps;
             }
+            if(unitGuardSubphase>=0) {
+                guardSubphaseCalls[unitGuardSubphase]++;
+                guardSubphaseElapsedNanos[unitGuardSubphase]+=elapsed;
+            }
             unitName = null;
             unitRemainderPhase=-1;
+            unitGuardSubphase=-1;
             unitOwnerSteps=0;
             try {
                 if (elapsed > UNIT_LIMIT_NANOS)
@@ -3422,14 +3485,16 @@ public final class Rb100PhysicalDiagnostics {
 
     private enum QualityScalarPurpose {
         ZERO_VIA_GRAPH, DETACHED_LOAD12_BASELINE, DETACHED_LOAD12_CAP17,
-        DETACHED_LOAD12_COST240, DETACHED_LOAD12_COST240_REMAINDER
+        DETACHED_LOAD12_COST240, DETACHED_LOAD12_COST240_REMAINDER,
+        DETACHED_LOAD12_COST240_GUARD
     }
 
     private static boolean isDetachedLoad12Purpose(QualityScalarPurpose purpose) {
         return purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE ||
             purpose==QualityScalarPurpose.DETACHED_LOAD12_CAP17 ||
             purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240 ||
-            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_REMAINDER;
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_REMAINDER ||
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD;
     }
 
     private static boolean isDetachedLoad12Cap17(QualityScalarPurpose purpose) {
@@ -3438,12 +3503,19 @@ public final class Rb100PhysicalDiagnostics {
 
     private static boolean isDetachedLoad12Cost240(QualityScalarPurpose purpose) {
         return purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240 ||
-            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_REMAINDER;
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_REMAINDER ||
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD;
     }
 
     private static boolean isDetachedLoad12Cost240Remainder(
             QualityScalarPurpose purpose) {
-        return purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_REMAINDER;
+        return purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_REMAINDER ||
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD;
+    }
+
+    private static boolean isDetachedLoad12Cost240Guard(
+            QualityScalarPurpose purpose) {
+        return purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_GUARD;
     }
 
     private static boolean capturesDetachedLoad12CostResults(
@@ -3458,6 +3530,29 @@ public final class Rb100PhysicalDiagnostics {
         return sourceMaximumVias;
     }
 
+    private static final class GuardPrefixSnapshot {
+        final int layoutIdentity,traceCount,holeCount;
+        final String geometrySha256,traceRowsSha256,holeRowsSha256;
+        GuardPrefixSnapshot(int layoutIdentity,String geometrySha256,int traceCount,
+                String traceRowsSha256,int holeCount,String holeRowsSha256) {
+            this.layoutIdentity=layoutIdentity; this.geometrySha256=geometrySha256;
+            this.traceCount=traceCount; this.traceRowsSha256=traceRowsSha256;
+            this.holeCount=holeCount; this.holeRowsSha256=holeRowsSha256;
+        }
+        boolean same(GuardPrefixSnapshot other) {
+            return other!=null && layoutIdentity==other.layoutIdentity &&
+                traceCount==other.traceCount && holeCount==other.holeCount &&
+                geometrySha256.equals(other.geometrySha256) &&
+                traceRowsSha256.equals(other.traceRowsSha256) &&
+                holeRowsSha256.equals(other.holeRowsSha256);
+        }
+        String json() {
+            return "{\"layoutIdentity\":"+layoutIdentity+",\"geometrySha256\":\""+
+                geometrySha256+"\",\"traceCount\":"+traceCount+
+                ",\"traceRowsSha256\":\""+traceRowsSha256+"\",\"holeCount\":"+
+                holeCount+",\"holeRowsSha256\":\""+holeRowsSha256+"\"}";
+        }
+    }
     private static final class Load12RemainderPhysicalProof {
         final String geometrySha256,graphSha256;
         final int traceCount,holeCount,viaCount,accessGridCells,accessReachableCells;
@@ -3843,6 +3938,39 @@ public final class Rb100PhysicalDiagnostics {
             detachedOwnersReleased,detachedComparisonComplete,
             detachedSourcePreserved,cap17SourceAfterReplayCaptured;
 
+        private static final int GUARD_ADVANCE=0,GUARD_CAPTURE_BEFORE=1,
+            GUARD_RECOMPUTE=2,GUARD_SERIALIZE=3,GUARD_BOUNDARY=4,
+            GUARD_CAPTURE_AFTER=5,GUARD_COMPLETE=6;
+        int guardStage=GUARD_ADVANCE,guardPass=-1,guardOrdering=-1,
+            guardNetVectorPosition=-1,guardSearchNetIndex=-1,guardBranchOrdinal=-1,
+            guardSearchBranches=-1,guardGridWidth=-1,guardGridHeight=-1,
+            guardGridCells=-1,guardGridOriginX=-1,guardGridOriginY=-1,
+            guardStartCell=-1,guardRootCell=-1,guardEndCell=-1,
+            guardTerminalCell=-1,guardStoredLength=-1,guardStoredBends=-1,
+            guardStoredLastDirection=-1,guardRecomputedLength=-1,
+            guardRecomputedBends=-1,guardTransitionCount=-1,guardDirect=-1,
+            guardPublisherStage=-1,guardQualityIndex=-1,guardReversedSize=-1,
+            guardBoundaryOrderings=-1,guardBoundaryExpansions=-1,
+            guardBoundaryRemaining=-1,guardCapturedNodeRows=-1,
+            guardVerifiedNodeRows=-1,guardPathRowsUtf8Bytes=-1,
+            guardMaximumGroupOwnerSteps;
+        long guardContinuationAdvanceApiCalls,guardContinuationOwnerSteps;
+        Object guardBranchSearch,guardPublisher,guardSearch,guardReceiverSearch,
+            guardStartPad,
+            guardRootPad,guardEndNode,guardFoundTerminal,guardNetVector;
+        int[][] guardNodeRows;
+        byte[] guardNodeArrayBytes,guardWirePrefixBytes,guardWireSuffixBytes;
+        boolean guardWirePrepared;
+        String guardRowsSha256,guardStartPadId,guardRootPadId,
+            guardFoundTerminalPadId,guardTargetJson,guardGridJson,guardLineageJson,
+            guardInputsJson,
+            guardEndpointsJson,guardCheckpointJson,guardBoundaryType,
+            guardBoundaryReason;
+        GuardPrefixSnapshot guardPrefixBefore,guardPrefixAfter;
+        String guardSourceGeometrySha256,guardSourceGeometrySha256After;
+        boolean guardDirectZero,guardLengthOverThreeDirect,guardBendsOver16,
+            guardRejected,guardRejectedBranchPublished,guardSameTypedBoundary,
+            guardWitnessComplete;
         private static final int REMAINDER_IDLE=0,REMAINDER_HANDOFF=1,
             REMAINDER_ADVANCE=2,REMAINDER_TAKE_RESULT=3,REMAINDER_RAW_ORACLES=4,
             REMAINDER_FINALIZE=5,REMAINDER_FINAL_ORACLES=6,REMAINDER_COMPLETE=7;
@@ -3908,6 +4036,10 @@ public final class Rb100PhysicalDiagnostics {
 
         boolean isRemainderExperiment() {
             return isDetachedLoad12Cost240Remainder(purpose);
+        }
+
+        boolean isGuardExperiment() {
+            return isDetachedLoad12Cost240Guard(purpose);
         }
 
         void beginRemainderOuterAdvance() {
@@ -4062,6 +4194,17 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         String nextManualUnitName() {
+            if(isGuardExperiment() && remainderStage==REMAINDER_HANDOFF)
+                return "p07-quality-load12-remainder-ordering-remainder-adrive-guard-handoff";
+            if(isGuardExperiment() && remainderStage==REMAINDER_ADVANCE) {
+                String phase=guardStage==GUARD_CAPTURE_BEFORE?"capture-before":
+                    guardStage==GUARD_RECOMPUTE?"recompute":
+                    guardStage==GUARD_SERIALIZE?"serialize":
+                    guardStage==GUARD_BOUNDARY?"boundary-check":
+                    guardStage==GUARD_CAPTURE_AFTER?"capture-after":"advance";
+                return "p07-quality-load12-remainder-ordering-remainder-adrive-guard-"+
+                    phase+"-"+(remainderAdvanceCalls+1);
+            }
             if(isDetachedLoad12Cost240Remainder(purpose) && remainderCopySetupPending)
                 return "p07-quality-load12-remainder-copy-setup";
             if(isDetachedLoad12Cost240Remainder(purpose) &&
@@ -4857,6 +5000,644 @@ public final class Rb100PhysicalDiagnostics {
             }
         }
 
+        private void advanceLoad12Cost240GuardUnit(Budget budget) {
+            if(!isGuardExperiment() || budget==null || guardWitnessComplete)
+                throw new IllegalStateException("OPERATION_EXCEPTION: invalid A_DRIVE guard unit state");
+            if(guardStage==GUARD_ADVANCE) {
+                advanceLoad12Cost240GuardMicrocall(budget,false);
+                return;
+            }
+            if(guardStage==GUARD_CAPTURE_BEFORE) {
+                captureLoad12Cost240GuardCheckpoint(budget);
+                return;
+            }
+            if(guardStage==GUARD_RECOMPUTE) {
+                recomputeLoad12Cost240GuardMetrics();
+                guardStage=GUARD_SERIALIZE;
+                return;
+            }
+            if(guardStage==GUARD_SERIALIZE) {
+                serializeLoad12Cost240GuardRows();
+                guardStage=GUARD_BOUNDARY;
+                return;
+            }
+            if(guardStage==GUARD_BOUNDARY) {
+                advanceLoad12Cost240GuardMicrocall(budget,true);
+                return;
+            }
+            if(guardStage==GUARD_CAPTURE_AFTER) {
+                captureLoad12Cost240GuardAfterBoundary();
+                return;
+            }
+            throw new IllegalStateException("OPERATION_EXCEPTION: unexpected A_DRIVE guard stage "+guardStage);
+        }
+
+        private void requireLoad12Cost240GuardOwner(Object search) {
+            requireGuardOwnerCondition(search!=null,"receiverSearch.present");
+            requireGuardOwnerCondition(search==guardReceiverSearch,
+                "receiverSearch.matchesRetainedReference");
+            requireGuardOwnerCondition(remainderOwner!=null,"receiverOwner.present");
+            requireGuardOwnerCondition(remainderContinuation!=null,
+                "continuation.present");
+            requireGuardOwnerCondition(P07ScalarReflection.read(remainderOwner,
+                "search")==search,"receiverOwner.search===receiverSearch");
+            requireGuardOwnerCondition(P07ScalarReflection.read(remainderOwner,
+                "candidate")==remainderCopiedLayout,"receiverOwner.candidate===copiedLayout");
+            requireGuardOwnerCondition(P07ScalarReflection.read(remainderOwner,
+                "detachedOrderingContinuation")==remainderContinuation,
+                "receiverOwner.continuation===retainedContinuation");
+            requireGuardOwnerCondition(P07ScalarReflection.read(search,"owner")==
+                remainderOwner,"receiverSearch.owner===receiverOwner");
+            requireGuardOwnerCondition(P07ScalarReflection.read(search,"layout")==
+                remainderCopiedLayout,"receiverSearch.layout===copiedLayout");
+            requireGuardOwnerCondition(System.identityHashCode(remainderOwner)==
+                copiedOwnerIdentity,"receiverOwner.identityMatchesCopy");
+            requireGuardOwnerCondition(System.identityHashCode(search)==
+                copiedSearchIdentity,"receiverSearch.identityMatchesCopy");
+            requireGuardOwnerCondition(System.identityHashCode(remainderCopiedLayout)==
+                copiedLayoutIdentity,"copiedLayout.identityMatchesCopy");
+            requireGuardOwnerCondition(P07ScalarReflection.intField(remainderOwner,
+                "pass")==1,"receiverOwner.passIs1");
+            requireGuardOwnerCondition(P07ScalarReflection.intField(remainderOwner,
+                "completedOrderings")==1,"receiverOwner.completedOrderingsIs1");
+            requireGuardOwnerBoolean(remainderOwner,"orderingLeaseClosed",false,
+                "receiverOwner.orderingLeaseOpen");
+        }
+
+        private void requireGuardOwnerCondition(boolean condition,String label) {
+            if(!condition)
+                throw new IllegalStateException("STALE_OWNER: "+label);
+        }
+
+        private void requireGuardOwnerBoolean(Object owner,String field,
+                boolean expected,String label) {
+            Object reflected=P07ScalarReflection.read(owner,field);
+            if(!(reflected instanceof Boolean))
+                throw new IllegalStateException("STALE_OWNER: "+label+
+                    " expected a reflected Boolean value");
+            boolean actual=((Boolean)reflected).booleanValue();
+            if(actual!=expected)
+                throw new IllegalStateException("STALE_OWNER: "+label+
+                    " expected="+expected+" observed="+actual);
+        }
+
+        private void verifyLoad12Cost240GuardBranchPublisher(Object branch,Object publisher) {
+            if(branch==null || publisher==null ||
+                    P07ScalarReflection.read(publisher,"start")!=
+                        P07ScalarReflection.read(branch,"start") ||
+                    P07ScalarReflection.read(publisher,"root")!=
+                        P07ScalarReflection.read(branch,"root") ||
+                    P07ScalarReflection.read(publisher,"end")!=
+                        P07ScalarReflection.read(branch,"found") ||
+                    P07ScalarReflection.read(publisher,"endTerminal")!=
+                        P07ScalarReflection.read(branch,"foundTerminal") ||
+                    !String.valueOf(P07ScalarReflection.read(publisher,"net")).equals(
+                        String.valueOf(P07ScalarReflection.read(branch,"net"))))
+                throw new IllegalStateException("OBSERVER_FAILURE: actual BranchSearch did not hand off to its Publisher");
+        }
+
+        private boolean isLoad12Cost240GuardRejectingPublisher(Object search,
+                Object publisher) {
+            if(search==null || publisher==null)
+                throw new IllegalStateException("OBSERVER_FAILURE: A_DRIVE publisher metadata is unavailable");
+            PcbPadPlacement start=(PcbPadPlacement)P07ScalarReflection.read(
+                publisher,"start");
+            Object end=P07ScalarReflection.read(publisher,"end");
+            if(start==null || end==null)
+                throw new IllegalStateException("OBSERVER_FAILURE: A_DRIVE publisher endpoints are unavailable");
+            int endCell=P07ScalarReflection.intField(end,"cell");
+            int cells=P07ScalarReflection.intField(search,"cells");
+            if(endCell<0 || endCell>=cells)
+                throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: A_DRIVE Publisher endpoint is outside the live Search grid");
+            int endX=P07ScalarReflection.searchCoordinate(search,"x",endCell);
+            int endY=P07ScalarReflection.searchCoordinate(search,"y",endCell);
+            long direct=Math.abs((long)start.getX()-endX)+
+                Math.abs((long)start.getY()-endY);
+            int length=P07ScalarReflection.intField(publisher,"length");
+            int bends=P07ScalarReflection.intField(publisher,"bends");
+            return direct==0L || (long)length>3L*direct || bends>16;
+        }
+
+        private void advanceLoad12Cost240GuardMicrocall(Budget budget,
+                boolean requireBoundary) {
+            int groupOwnerSteps=0;
+            while(true) {
+                if(!requireBoundary && groupOwnerSteps>=MAX_MANUAL_STEPS_PER_UNIT) break;
+                budget.checkpoint();
+                Object search=guardReceiverSearch;
+                requireLoad12Cost240GuardOwner(search);
+                Object beforeBranch=P07ScalarReflection.read(search,"branch");
+                Object beforePublisher=P07ScalarReflection.read(search,"publisher");
+                if(!requireBoundary && beforePublisher!=null &&
+                        "A_DRIVE".equals(P07ScalarReflection.stringField(search,"currentNet")) &&
+                        P07ScalarReflection.intField(beforePublisher,"stage")==1) {
+                    Vector<?> reversed=(Vector<?>)P07ScalarReflection.read(beforePublisher,"reversed");
+                    if(P07ScalarReflection.intField(beforePublisher,"qualityIndex")==reversed.size()) {
+                        if(guardBranchSearch==null || beforePublisher!=guardPublisher &&
+                                guardPublisher!=null)
+                            throw new IllegalStateException("OBSERVER_FAILURE: pre-guard Publisher lost its retained BranchSearch");
+                        verifyLoad12Cost240GuardBranchPublisher(guardBranchSearch,
+                            beforePublisher);
+                        if(isLoad12Cost240GuardRejectingPublisher(search,beforePublisher)) {
+                            guardPublisher=beforePublisher;
+                            guardSearch=search;
+                            verifyLoad12Cost240GuardBranchPublisher(guardBranchSearch,
+                                guardPublisher);
+                            guardStage=GUARD_CAPTURE_BEFORE;
+                            break;
+                        }
+                    }
+                }
+                if(requireBoundary) {
+                    Vector<?> boundaryReversed=beforePublisher==null?null:
+                        (Vector<?>)P07ScalarReflection.read(beforePublisher,"reversed");
+                    if(beforePublisher!=guardPublisher || beforePublisher==null ||
+                            P07ScalarReflection.intField(beforePublisher,"stage")!=1 ||
+                            boundaryReversed==null ||
+                            P07ScalarReflection.intField(beforePublisher,"qualityIndex")!=
+                                boundaryReversed.size())
+                        throw new IllegalStateException("STALE_OWNER: captured A_DRIVE pre-guard Publisher moved before its unchanged boundary call");
+                }
+                if(beforePublisher==null && beforeBranch!=null)
+                    guardBranchSearch=beforeBranch;
+                if(guardPublisher!=null && beforePublisher==guardPublisher)
+                    verifyLoad12Cost240GuardBranchPublisher(guardBranchSearch,guardPublisher);
+                int beforeExpanded=P07ScalarReflection.intField(
+                    P07ScalarReflection.read(remainderOwner,"budget"),"expanded");
+                PcbLayerRoutingPrototype.DetachedOrderingProgress progress=null;
+                int used=0;
+                guardContinuationAdvanceApiCalls++;
+                try {
+                    progress=remainderContinuation.advance(1);
+                } finally {
+                    used=remainderContinuation.lastWork();
+                    guardContinuationOwnerSteps+=used;
+                    remainderAdvanceCalls++;
+                    remainderOwnerSteps+=used;
+                    budget.recordOwnerSteps(used);
+                }
+                groupOwnerSteps+=used;
+                Object afterBranch=P07ScalarReflection.read(search,"branch");
+                Object afterPublisher=P07ScalarReflection.read(search,"publisher");
+                if(beforePublisher==null && beforeBranch!=null && afterBranch==null &&
+                        afterPublisher!=null) {
+                    guardBranchSearch=beforeBranch;
+                    guardPublisher=afterPublisher;
+                    guardSearch=search;
+                    verifyLoad12Cost240GuardBranchPublisher(guardBranchSearch,guardPublisher);
+                }
+                if(guardPublisher!=null && afterPublisher==guardPublisher)
+                    verifyLoad12Cost240GuardBranchPublisher(guardBranchSearch,guardPublisher);
+                if(beforePublisher!=null && afterPublisher==null &&
+                        progress==PcbLayerRoutingPrototype.DetachedOrderingProgress.WORKING &&
+                        guardPublisher==beforePublisher) {
+                    guardPublisher=null;
+                    guardBranchSearch=null;
+                    guardSearch=null;
+                }
+                int afterExpanded=P07ScalarReflection.intField(
+                    P07ScalarReflection.read(remainderOwner,"budget"),"expanded");
+                if(afterExpanded<beforeExpanded ||
+                        afterExpanded>PcbLayerRoutingPrototype.MAX_EXPANSIONS)
+                    throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: copied request expansion counter regressed or exceeded its limit");
+                remainderExpansions=afterExpanded;
+                remainderOrderings=P07ScalarReflection.intField(
+                    remainderOwner,"completedOrderings");
+                Object ownerBudget=P07ScalarReflection.read(remainderOwner,"budget");
+                remainderRemainingRequestBudget=P07ScalarReflection.intField(ownerBudget,"maximum")-
+                    afterExpanded;
+                if(progress==PcbLayerRoutingPrototype.DetachedOrderingProgress.WORKING) {
+                    requireLoad12Cost240GuardOwner(search);
+                    if(requireBoundary)
+                        throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: unchanged advance(1) did not return the expected typed boundary");
+                    continue;
+                }
+                if(progress==PcbLayerRoutingPrototype.DetachedOrderingProgress.ORDERING_BOUNDARY &&
+                        requireBoundary) {
+                    guardBoundaryType=progress.name();
+                    guardBoundaryReason=remainderContinuation.boundaryReason();
+                    guardBoundaryOrderings=remainderOrderings;
+                    guardBoundaryExpansions=afterExpanded;
+                    guardBoundaryRemaining=remainderRemainingRequestBudget;
+                    guardSameTypedBoundary="ORDERING_BOUNDARY".equals(guardBoundaryType) &&
+                        "A_DRIVE:BRANCH_QUALITY_LIMIT".equals(guardBoundaryReason);
+                    guardRejectedBranchPublished=false;
+                    if(!guardSameTypedBoundary || guardBoundaryOrderings!=2 ||
+                            guardBoundaryExpansions!=774550 || guardBoundaryRemaining!=225450 ||
+                            !remainderContinuation.isComplete() || afterPublisher!=guardPublisher)
+                        throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: actual continuation boundary differs from the captured A_DRIVE guard");
+                    remainderProgressStatus="ORDERING_BOUNDARY";
+                    remainderBoundaryType=guardBoundaryType;
+                    remainderBoundaryReason=guardBoundaryReason;
+                    remainderOrderings=guardBoundaryOrderings;
+                    remainderExpansions=guardBoundaryExpansions;
+                    remainderRemainingRequestBudget=guardBoundaryRemaining;
+                    remainderOutcome="QUALITY_BOUNDARY";
+                    remainderVias=detachedPostViaCount;
+                    guardStage=GUARD_CAPTURE_AFTER;
+                    break;
+                }
+                if(progress==PcbLayerRoutingPrototype.DetachedOrderingProgress.ORDERING_BOUNDARY)
+                    throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: an earlier branch boundary preceded the A_DRIVE pre-guard checkpoint");
+                if(progress==PcbLayerRoutingPrototype.DetachedOrderingProgress.ROUTE_READY)
+                    throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: copied ordering produced a route before the A_DRIVE rejection witness");
+                throw new IllegalStateException("OBSERVER_FAILURE: unknown detached ordering progress");
+            }
+            guardMaximumGroupOwnerSteps=Math.max(guardMaximumGroupOwnerSteps,groupOwnerSteps);
+            remainderMaxOwnerStepsPerUnit=Math.max(remainderMaxOwnerStepsPerUnit,groupOwnerSteps);
+            if(groupOwnerSteps>MAX_MANUAL_STEPS_PER_UNIT)
+                throw new IllegalStateException("BUDGET_EXPIRED: guard group owner work exceeded the unchanged limit");
+        }
+        private int load12GuardPadCell(Object search,PcbPadPlacement pad) {
+            long dx=(long)pad.getX()-P07ScalarReflection.intField(search,"minX");
+            long dy=(long)pad.getY()-P07ScalarReflection.intField(search,"minY");
+            int width=P07ScalarReflection.intField(search,"width");
+            int height=P07ScalarReflection.intField(search,"height");
+            if(dx<0 || dy<0 || dx%PcbLayerRoutingPrototype.GRID!=0 ||
+                    dy%PcbLayerRoutingPrototype.GRID!=0 ||
+                    dx/PcbLayerRoutingPrototype.GRID>=width ||
+                    dy/PcbLayerRoutingPrototype.GRID>=height)
+                throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: actual pad is outside the Search grid map");
+            long formula=(dy/PcbLayerRoutingPrototype.GRID)*width+
+                dx/PcbLayerRoutingPrototype.GRID;
+            int actual=P07ScalarReflection.searchCell(search,pad);
+            if(formula<0 || formula>=((long)width*height) || actual!=(int)formula)
+                throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: production Search.cell differs from its documented pad map");
+            return actual;
+        }
+
+        private GuardPrefixSnapshot captureLoad12GuardPrefix(PcbBoardLayout layout) {
+            if(layout==null || layout!=remainderCopiedLayout ||
+                    System.identityHashCode(layout)!=copiedLayoutIdentity)
+                throw new IllegalStateException("STALE_OWNER: copied prefix layout identity changed");
+            String geometry=layout.geometryFingerprint();
+            String traceCanonical=layout.traceGeometryFingerprint();
+            Vector<PcbTraceGeometry> traceCopy=layout.getTraces();
+            Vector<PcbBoardHole> holeCopy=layout.getHoles();
+            if(traceCopy.size()>100000 || holeCopy.size()>48)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: copied prefix rows exceed their existing geometry caps");
+            Collections.sort(holeCopy,new Comparator<PcbBoardHole>() {
+                public int compare(PcbBoardHole first,PcbBoardHole second) {
+                    return first.id.compareTo(second.id);
+                }
+            });
+            StringBuilder holeRows=new StringBuilder();
+            for(int index=0;index<holeCopy.size();index++) {
+                PcbBoardHole hole=holeCopy.get(index);
+                if(hole==null || hole.id==null || hole.fingerprint()==null ||
+                        index>0 && holeCopy.get(index-1).id.equals(hole.id))
+                    throw new IllegalStateException("OBSERVER_FAILURE: copied prefix hole rows are incomplete or duplicated");
+                String fingerprint=hole.fingerprint();
+                holeRows.append(index).append(':').append(hole.id.length()).append(':')
+                    .append(hole.id).append(':').append(fingerprint.length()).append(':')
+                    .append(fingerprint).append('\n');
+            }
+            return new GuardPrefixSnapshot(System.identityHashCode(layout),
+                sha256Hex(geometry),traceCopy.size(),sha256Hex(traceCanonical),
+                holeCopy.size(),sha256Hex(holeRows.toString()));
+        }
+
+        private String pausedSourceGeometrySha256(String snapshot) {
+            String marker=",\"geometrySha256\":\"";
+            if(snapshot==null)
+                throw new IllegalStateException("STALE_OWNER: paused source snapshot is missing");
+            int markerAt=snapshot.indexOf(marker);
+            if(markerAt<0 || snapshot.indexOf(marker,markerAt+marker.length())>=0)
+                throw new IllegalStateException("STALE_OWNER: paused source geometry digest field is missing or duplicated");
+            int valueStart=markerAt+marker.length();
+            int valueEnd=snapshot.indexOf('"',valueStart);
+            if(valueEnd-valueStart!=64)
+                throw new IllegalStateException("STALE_OWNER: paused source geometry digest is not lowercase SHA-256");
+            String digest=snapshot.substring(valueStart,valueEnd);
+            for(int index=0;index<digest.length();index++) {
+                char ch=digest.charAt(index);
+                if(!((ch>='0' && ch<='9') || (ch>='a' && ch<='f')))
+                    throw new IllegalStateException("STALE_OWNER: paused source geometry digest is not lowercase SHA-256");
+            }
+            return digest;
+        }
+
+        private void captureLoad12Cost240GuardCheckpoint(Budget budget) {
+            if(guardStage!=GUARD_CAPTURE_BEFORE || remainderContinuation==null ||
+                    guardBranchSearch==null || guardPublisher==null ||
+                    guardSearch==null || guardSearch!=guardReceiverSearch)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: missing retained copied BranchSearch/Publisher");
+            requireLoad12Cost240GuardOwner(guardSearch);
+            verifyPausedLoad12Source();
+            guardSourceGeometrySha256=pausedSourceGeometrySha256(
+                remainderSourceAfterJson);
+            verifyLoad12Cost240GuardBranchPublisher(guardBranchSearch,guardPublisher);
+            int stage=P07ScalarReflection.intField(guardPublisher,"stage");
+            int qualityIndex=P07ScalarReflection.intField(guardPublisher,"qualityIndex");
+            Vector<?> reversed=(Vector<?>)P07ScalarReflection.read(guardPublisher,"reversed");
+            int nodeCount=reversed==null?-1:reversed.size();
+            if(stage!=1 || qualityIndex!=nodeCount || nodeCount<1 || nodeCount>4096)
+                throw new IllegalStateException(nodeCount>4096?
+                    "WITNESS_NODE_LIMIT: A_DRIVE path exceeds 4096 captured nodes":
+                    "INCOMPLETE_CAPTURE: Publisher is not at its complete pre-guard stage1 boundary");
+            guardPublisherStage=stage; guardQualityIndex=qualityIndex;
+            guardReversedSize=nodeCount;
+            guardStartPad=P07ScalarReflection.read(guardPublisher,"start");
+            guardRootPad=P07ScalarReflection.read(guardPublisher,"root");
+            guardEndNode=P07ScalarReflection.read(guardPublisher,"end");
+            guardFoundTerminal=P07ScalarReflection.read(guardPublisher,"endTerminal");
+            if(!(guardStartPad instanceof PcbPadPlacement) ||
+                    !(guardRootPad instanceof PcbPadPlacement) || guardEndNode==null)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: Publisher endpoints are missing");
+            guardGridWidth=P07ScalarReflection.intField(guardSearch,"width");
+            guardGridHeight=P07ScalarReflection.intField(guardSearch,"height");
+            guardGridCells=P07ScalarReflection.intField(guardSearch,"cells");
+            guardGridOriginX=P07ScalarReflection.intField(guardSearch,"minX");
+            guardGridOriginY=P07ScalarReflection.intField(guardSearch,"minY");
+            if(guardGridWidth<1 || guardGridHeight<1 ||
+                    (long)guardGridWidth*guardGridHeight!=guardGridCells ||
+                    guardGridCells<1 || guardGridCells>PcbLayerRoutingPrototype.MAX_CELLS)
+                throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: copied Search grid metadata is invalid");
+            guardStartCell=load12GuardPadCell(guardSearch,(PcbPadPlacement)guardStartPad);
+            guardRootCell=load12GuardPadCell(guardSearch,(PcbPadPlacement)guardRootPad);
+            guardEndCell=P07ScalarReflection.intField(guardEndNode,"cell");
+            int endX=P07ScalarReflection.searchCoordinate(guardSearch,"x",guardEndCell);
+            int endY=P07ScalarReflection.searchCoordinate(guardSearch,"y",guardEndCell);
+            guardTerminalCell=guardFoundTerminal==null?-1:
+                load12GuardPadCell(guardSearch,(PcbPadPlacement)guardFoundTerminal);
+            guardStoredLength=P07ScalarReflection.intField(guardPublisher,"length");
+            guardStoredBends=P07ScalarReflection.intField(guardPublisher,"bends");
+            guardStoredLastDirection=P07ScalarReflection.intField(guardPublisher,"lastDirection");
+            Vector<?> nets=(Vector<?>)P07ScalarReflection.read(guardSearch,"nets");
+            String currentNet=P07ScalarReflection.stringField(guardSearch,"currentNet");
+            int netPosition=nets==null?-1:nets.indexOf(currentNet);
+            if(!"A_DRIVE".equals(currentNet) || nets==null || netPosition<0 ||
+                    P07ScalarReflection.intField(guardSearch,"netIndex")<0 ||
+                    P07ScalarReflection.read(guardSearch,"currentRoot")!=guardRootPad ||
+                    P07ScalarReflection.read(guardBranchSearch,"net")==null ||
+                    !currentNet.equals(P07ScalarReflection.read(guardBranchSearch,"net")) ||
+                    P07ScalarReflection.read(guardBranchSearch,"found")!=guardEndNode ||
+                    P07ScalarReflection.read(guardBranchSearch,"foundTerminal")!=guardFoundTerminal)
+                throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: retained branch does not identify live A_DRIVE endpoints");
+            guardNetVector=nets;
+            guardNetVectorPosition=netPosition;
+            guardSearchNetIndex=P07ScalarReflection.intField(guardSearch,"netIndex");
+            guardPass=P07ScalarReflection.intField(guardSearch,"pass");
+            guardOrdering=guardPass+1;
+            guardBranchOrdinal=P07ScalarReflection.intField(guardBranchSearch,"branchOrdinal");
+            guardSearchBranches=P07ScalarReflection.intField(guardSearch,"branches");
+            if(guardPass!=1 || guardOrdering!=2 ||
+                    P07ScalarReflection.intField(remainderOwner,"maximumVias")!=48 ||
+                    P07ScalarReflection.intField(remainderOwner,"viaCost")!=240 ||
+                    P07ScalarReflection.intField(guardSearch,"maximumVias")!=48 ||
+                    P07ScalarReflection.intField(guardSearch,"viaCost")!=240)
+                throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: target is not copied ordering2/cost240/cap48");
+            guardNodeRows=new int[nodeCount][11];
+            Object previousNode=null;
+            for(int index=0;index<nodeCount;index++) {
+                Object node=reversed.get(nodeCount-1-index);
+                if(node==null || P07ScalarReflection.read(node,"previous")!=previousNode)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: actual Publisher node parent chain is discontinuous");
+                int cell=P07ScalarReflection.intField(node,"cell");
+                if(cell<0 || cell>=guardGridCells)
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: captured path cell is outside the actual Search grid");
+                int x=P07ScalarReflection.searchCoordinate(guardSearch,"x",cell);
+                int y=P07ScalarReflection.searchCoordinate(guardSearch,"y",cell);
+                int[] row=guardNodeRows[index];
+                row[0]=cell; row[1]=P07ScalarReflection.intField(node,"layer");
+                row[2]=x; row[3]=y;
+                row[4]=P07ScalarReflection.intField(node,"direction");
+                row[5]=P07ScalarReflection.intField(node,"transitions");
+                row[6]=P07ScalarReflection.intField(node,"cost");
+                row[7]=P07ScalarReflection.intField(node,"heuristic");
+                row[8]=P07ScalarReflection.intField(node,"serial");
+                row[9]=P07ScalarReflection.intField(node,"key");
+                row[10]=index==0?-1:index-1;
+                previousNode=node;
+            }
+            if(guardNodeRows[0][0]!=guardStartCell ||
+                    guardNodeRows[0][4]!=4 || guardNodeRows[0][5]!=0 ||
+                    guardNodeRows[nodeCount-1][0]!=guardEndCell ||
+                    previousNode!=guardEndNode)
+                throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: captured path does not bind the actual Publisher endpoints");
+            guardCapturedNodeRows=nodeCount;
+            guardGridJson="{\"width\":"+guardGridWidth+",\"height\":"+guardGridHeight+
+                ",\"cells\":"+guardGridCells+",\"originX\":"+guardGridOriginX+
+                ",\"originY\":"+guardGridOriginY+",\"pitch\":"+
+                PcbLayerRoutingPrototype.GRID+"}";
+            PcbPadPlacement start=(PcbPadPlacement)guardStartPad;
+            PcbPadPlacement root=(PcbPadPlacement)guardRootPad;
+            String startJson=guardPadEndpointJson(start,guardStartCell);
+            String rootJson=guardPadEndpointJson(root,guardRootCell);
+            String terminalJson=guardFoundTerminal==null?"null":guardPadEndpointJson(
+                (PcbPadPlacement)guardFoundTerminal,guardTerminalCell);
+            guardEndpointsJson="{\"start\":"+startJson+",\"root\":"+rootJson+
+                ",\"end\":{\"identity\":"+System.identityHashCode(guardEndNode)+
+                ",\"x\":"+endX+",\"y\":"+endY+",\"cell\":"+guardEndCell+
+                "},\"foundTerminal\":"+terminalJson+"}";
+            guardTargetJson="{\"ordering\":"+guardOrdering+",\"pass\":"+guardPass+
+                ",\"netId\":\"A_DRIVE\",\"netVectorPosition\":"+guardNetVectorPosition+
+                ",\"searchNetIndex\":"+guardSearchNetIndex+",\"netVectorIdentity\":"+
+                System.identityHashCode(guardNetVector)+",\"branchOrdinal\":"+guardBranchOrdinal+
+                ",\"searchBranches\":"+guardSearchBranches+",\"ownerIdentity\":"+
+                System.identityHashCode(remainderOwner)+",\"searchIdentity\":"+
+                System.identityHashCode(guardSearch)+",\"layoutIdentity\":"+
+                System.identityHashCode(remainderCopiedLayout)+",\"branchIdentity\":"+
+                System.identityHashCode(guardBranchSearch)+",\"publisherIdentity\":"+
+                System.identityHashCode(guardPublisher)+",\"foundNodeIdentity\":"+
+                System.identityHashCode(guardEndNode)+",\"foundTerminalIdentity\":"+
+                (guardFoundTerminal==null?"null":Integer.toString(
+                    System.identityHashCode(guardFoundTerminal)))+"}";
+            PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
+                (PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext;
+            guardInputsJson="{\"rootSeed\":\""+SEED+"\",\"placementSeed\":\""+
+                actualPlacementSeed+"\",\"routingSeed\":\""+
+                ROUTING_DIAGNOSTIC_ROUTING_SEED+"\",\"routeRequestIndex\":"+
+                context.routeRequestIndex()+",\"selectedPlacementIndex\":"+
+                context.selectedPlacementIndex()+",\"selectedPlacementAttempt\":"+
+                context.selectedPlacementAttempt()+",\"sourcePass\":"+load12Binding.pass+
+                ",\"copyMaximumVias\":48,\"copyViaCost\":240}";
+            guardLineageJson="{\"source\":{\"routeSessionIdentity\":"+
+                sourceRouteIdentity+",\"searchIdentity\":"+sourceSearchIdentity+
+                ",\"branchIdentity\":"+sourceBranchIdentity+",\"layoutIdentity\":"+
+                sourceLayoutIdentity+",\"digests\":{\"seeds\":\""+load12SeedSha256+
+                "\",\"netOrder\":\""+load12NetOrderSha256+"\",\"prefixRows\":\""+
+                load12PrefixRowsSha256+"\",\"geometry\":\""+guardSourceGeometrySha256+
+                "\"},\"preserved\":true},\"copy\":{\"ownerIdentity\":"+
+                copiedOwnerIdentity+",\"searchIdentity\":"+copiedSearchIdentity+
+                ",\"branchIdentity\":"+copiedBranchIdentity+",\"layoutIdentity\":"+
+                copiedLayoutIdentity+",\"digests\":{\"seeds\":\""+detachedSeedSha256+
+                "\",\"netOrder\":\""+detachedNetOrderSha256+"\",\"prefixRows\":\""+
+                detachedPrefixRowsSha256+"\",\"initialGeometry\":\""+
+                detachedPreGeometrySha256+"\",\"postGeometry\":\""+
+                detachedPostGeometrySha256+"\",\"publication\":\""+
+                detachedPublicationSha256+"\"},\"requested\":{\"maximumVias\":48,\"viaCost\":240},\"continuationHandoff\":{\"identity\":"+
+                continuationIdentity+",\"ownerIdentity\":"+continuationOwnerIdentity+"}}}";
+            guardPrefixBefore=captureLoad12GuardPrefix(remainderCopiedLayout);
+            budget.checkpoint();
+            guardStage=GUARD_RECOMPUTE;
+        }
+
+        private String guardPadEndpointJson(PcbPadPlacement pad,int cell) {
+            return "{\"padId\":\""+jsonFull(pad.getPadId())+"\",\"identity\":"+
+                System.identityHashCode(pad)+",\"x\":"+pad.getX()+",\"y\":"+
+                pad.getY()+",\"cell\":"+cell+"}";
+        }
+        private void recomputeLoad12Cost240GuardMetrics() {
+            if(guardStage!=GUARD_RECOMPUTE || guardNodeRows==null ||
+                    guardNodeRows.length<1 || guardNodeRows.length>4096 ||
+                    guardPublisher==null || guardSearch==null)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: actual node rows are unavailable for recomputation");
+            long length=0L;
+            int bends=0,transitions=0,lastDirection=4;
+            for(int index=0;index<guardNodeRows.length;index++) {
+                int[] row=guardNodeRows[index];
+                int cell=row[0],layer=row[1],x=row[2],y=row[3],direction=row[4],
+                    nodeTransitions=row[5],cost=row[6],heuristic=row[7],serial=row[8],
+                    key=row[9],parentRow=row[10];
+                if(cell<0 || cell>=guardGridCells || (layer!=0 && layer!=1) ||
+                        direction<0 || direction>4 || nodeTransitions<0 || nodeTransitions>4 ||
+                        cost<0 || heuristic<0 || serial<0 || parentRow!=(index==0?-1:index-1))
+                    throw new IllegalStateException("INCOMPLETE_CAPTURE: node tuple fields or parent index are invalid");
+                long expectedX=(long)guardGridOriginX+(cell%guardGridWidth)*
+                    PcbLayerRoutingPrototype.GRID;
+                long expectedY=(long)guardGridOriginY+(cell/guardGridWidth)*
+                    PcbLayerRoutingPrototype.GRID;
+                long expectedKey=(((long)(nodeTransitions*2+layer)*5L+direction)*
+                    guardGridCells)+cell;
+                if(expectedX!=x || expectedY!=y || expectedKey!=key ||
+                        expectedKey>Integer.MAX_VALUE)
+                    throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: captured node coordinates or Search key differ from the grid formula");
+                if(index==0) {
+                    if(cell!=guardStartCell || direction!=4 || nodeTransitions!=0 ||
+                            parentRow!=-1)
+                        throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: first Publisher node is not the mapped start sentinel");
+                    lastDirection=4;
+                } else {
+                    int[] prior=guardNodeRows[index-1];
+                    if(layer==prior[1]) {
+                        int dx=x-prior[2],dy=y-prior[3],derived=-1;
+                        if(dx==0 && dy==-PcbLayerRoutingPrototype.GRID) derived=0;
+                        else if(dx==PcbLayerRoutingPrototype.GRID && dy==0) derived=1;
+                        else if(dx==0 && dy==PcbLayerRoutingPrototype.GRID) derived=2;
+                        else if(dx==-PcbLayerRoutingPrototype.GRID && dy==0) derived=3;
+                        if(derived<0 || direction!=derived ||
+                                nodeTransitions!=prior[5])
+                            throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: same-layer edge direction or transition count is invalid");
+                        length+=PcbLayerRoutingPrototype.GRID;
+                        if(lastDirection!=4 && lastDirection!=derived) bends++;
+                        lastDirection=derived;
+                    } else {
+                        if(cell!=prior[0] || x!=prior[2] || y!=prior[3] || direction!=4 ||
+                                nodeTransitions!=prior[5]+1)
+                            throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: VIA edge is not a same-cell layer flip");
+                        transitions++;
+                        lastDirection=4;
+                    }
+                }
+            }
+            int[] end=guardNodeRows[guardNodeRows.length-1];
+            PcbPadPlacement start=(PcbPadPlacement)guardStartPad;
+            long direct=Math.abs((long)start.getX()-end[2])+Math.abs((long)start.getY()-end[3]);
+            if(end[0]!=guardEndCell || direct>Integer.MAX_VALUE || length>Integer.MAX_VALUE ||
+                    transitions!=end[5] ||
+                    P07ScalarReflection.intField(guardEndNode,"layer")!=end[1])
+                throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: recomputed path endpoint or accumulated metrics are invalid");
+            guardDirect=(int)direct;
+            guardRecomputedLength=(int)length;
+            guardRecomputedBends=bends;
+            guardTransitionCount=transitions;
+            guardDirectZero=guardDirect==0;
+            guardLengthOverThreeDirect=(long)guardStoredLength>3L*guardDirect;
+            guardBendsOver16=guardStoredBends>16;
+            guardRejected=guardDirectZero || guardLengthOverThreeDirect || guardBendsOver16;
+            if(guardStoredLength!=guardRecomputedLength ||
+                    guardStoredBends!=guardRecomputedBends ||
+                    guardStoredLastDirection!=lastDirection || !guardRejected)
+                throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: independently derived A_DRIVE guard predicate or Publisher metrics differ");
+            guardVerifiedNodeRows=guardNodeRows.length;
+            guardCheckpointJson="{\"publisherStage\":"+guardPublisherStage+
+                ",\"qualityIndex\":"+guardQualityIndex+",\"reversedSize\":"+
+                guardReversedSize+",\"storedLength\":"+guardStoredLength+
+                ",\"storedBends\":"+guardStoredBends+",\"storedLastDirection\":"+
+                guardStoredLastDirection+",\"direct\":"+guardDirect+
+                ",\"recomputedLength\":"+guardRecomputedLength+
+                ",\"recomputedBends\":"+guardRecomputedBends+
+                ",\"transitions\":"+guardTransitionCount+
+                ",\"directZero\":"+guardDirectZero+
+                ",\"lengthOverThreeDirect\":"+guardLengthOverThreeDirect+
+                ",\"bendsOver16\":"+guardBendsOver16+
+                ",\"rejected\":"+guardRejected+"}";
+        }
+
+        private void serializeLoad12Cost240GuardRows() {
+            if(guardStage!=GUARD_SERIALIZE || guardNodeRows==null ||
+                    guardVerifiedNodeRows!=guardNodeRows.length)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: verified node rows are unavailable for canonical serialization");
+            StringBuilder rows=new StringBuilder("[");
+            for(int index=0;index<guardNodeRows.length;index++) {
+                if(index>0) rows.append(',');
+                rows.append('[');
+                int[] row=guardNodeRows[index];
+                for(int column=0;column<row.length;column++) {
+                    if(column>0) rows.append(',');
+                    rows.append(row[column]);
+                }
+                rows.append(']');
+            }
+            rows.append(']');
+            byte[] bytes=rows.toString().getBytes(StandardCharsets.UTF_8);
+            if(bytes.length>1024*1024)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: canonical node array exceeds one MiB");
+            guardNodeArrayBytes=bytes;
+            guardPathRowsUtf8Bytes=bytes.length;
+            guardRowsSha256=sha256Hex(bytes);
+            guardCapturedNodeRows=guardNodeRows.length;
+        }
+
+        private void captureLoad12Cost240GuardAfterBoundary() {
+            if(guardStage!=GUARD_CAPTURE_AFTER || !guardSameTypedBoundary ||
+                    remainderContinuation==null || !remainderContinuation.isComplete() ||
+                    guardPublisher==null || guardBranchSearch==null ||
+                    guardSearch==null || guardSearch!=guardReceiverSearch)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: typed boundary did not retain its actual pre-guard owners");
+            requireGuardOwnerCondition(remainderOwner!=null,"terminalOwner.present");
+            requireGuardOwnerCondition(P07ScalarReflection.read(remainderOwner,
+                "search")==null,"terminalOwner.searchCleared");
+            requireGuardOwnerCondition(P07ScalarReflection.read(remainderOwner,
+                "candidate")==null,"terminalOwner.candidateCleared");
+            requireGuardOwnerCondition(P07ScalarReflection.read(remainderOwner,
+                "detachedOrderingContinuation")==null,
+                "terminalOwner.continuationCleared");
+            requireGuardOwnerBoolean(remainderOwner,"orderingLeaseClosed",true,
+                "terminalOwner.orderingLeaseClosed");
+            requireGuardOwnerCondition(P07ScalarReflection.intField(remainderOwner,
+                "completedOrderings")==2,"terminalOwner.completedOrderingsIs2");
+            requireGuardOwnerCondition(P07ScalarReflection.intField(remainderOwner,
+                "pass")==2,"terminalOwner.passIs2");
+            requireGuardOwnerCondition(P07ScalarReflection.read(guardSearch,
+                "publisher")==guardPublisher,"terminalSearch.retainsPreGuardPublisher");
+            requireGuardOwnerCondition(P07ScalarReflection.intField(guardPublisher,
+                "stage")==1,"preGuardPublisher.stageIs1");
+            requireGuardOwnerCondition(P07ScalarReflection.intField(guardPublisher,
+                "qualityIndex")==guardReversedSize,
+                "preGuardPublisher.qualityIndexEqualsReversedSize");
+            verifyLoad12Cost240GuardBranchPublisher(guardBranchSearch,guardPublisher);
+            verifyPausedLoad12Source();
+            guardSourceGeometrySha256After=pausedSourceGeometrySha256(
+                remainderSourceAfterJson);
+            if(!guardSourceGeometrySha256.equals(guardSourceGeometrySha256After))
+                throw new IllegalStateException("STALE_OWNER: paused source geometry digest changed across the A_DRIVE guard");
+            guardPrefixAfter=captureLoad12GuardPrefix(remainderCopiedLayout);
+            if(!guardPrefixBefore.same(guardPrefixAfter))
+                throw new IllegalStateException("PRODUCTION_BOUNDARY_MISMATCH: copied geometry or prefix rows changed across the rejected A_DRIVE guard");
+            guardRejectedBranchPublished=false;
+            guardStage=GUARD_COMPLETE;
+            guardWitnessComplete=true;
+            remainderStage=REMAINDER_COMPLETE;
+            remainderExperimentComplete=true;
+            budgetCheckpointAfterGuardCapture();
+        }
+
+        private void budgetCheckpointAfterGuardCapture() {
+            if(remainderBudget==null) throw new IllegalStateException("BUDGET_EXPIRED: guard operation lost its monotonic Budget");
+            remainderBudget.checkpoint();
+        }
         private void advanceLoad12ActualRemainder(Budget budget) {
             require(isDetachedLoad12Cost240Remainder(purpose) && budget!=null &&
                 budget.unitName!=null && budget.unitName.startsWith(
@@ -4869,6 +5650,12 @@ public final class Rb100PhysicalDiagnostics {
             int stageAtStart=remainderStage;
             try {
                 budget.checkpoint();
+                if(isGuardExperiment() && remainderStage==REMAINDER_ADVANCE) {
+                    advanceLoad12Cost240GuardUnit(budget);
+                    budget.checkpoint();
+                    remainderLastBudgetUnit=unit;
+                    return;
+                }
                 if(remainderStage==REMAINDER_HANDOFF) {
                     verifyPausedLoad12Source();
                     require(detachedReplay!=null && detachedReplay.isComplete() &&
@@ -4883,25 +5670,75 @@ public final class Rb100PhysicalDiagnostics {
                         "single-use current-order handoff returns its live continuation token");
                     remainderOwner=(PcbLayerRoutingPrototype.Session)
                         P07ScalarReflection.read(remainderContinuation,"owner");
+                    if(isGuardExperiment())
+                        guardReceiverSearch=remainderOwner==null?null:
+                            P07ScalarReflection.read(remainderOwner,"search");
                     continuationIdentity=System.identityHashCode(remainderContinuation);
                     remainderContinuationIdentityCaptured=true;
                     continuationOwnerIdentity=System.identityHashCode(remainderOwner);
                     remainderContinuationOwnerIdentityCaptured=true;
-                    require(remainderContinuation!=null && remainderOwner!=null &&
-                        remainderOwner!=routeSession &&
-                        P07ScalarReflection.read(remainderOwner,"search")==detachedSearch &&
-                        P07ScalarReflection.read(remainderOwner,"candidate")==remainderCopiedLayout &&
-                        P07ScalarReflection.read(remainderOwner,
-                            "detachedOrderingContinuation")==remainderContinuation &&
-                        P07ScalarReflection.intField(remainderOwner,"pass")==1 &&
-                        P07ScalarReflection.intField(remainderOwner,
-                            "completedOrderings")==1 &&
-                        P07ScalarReflection.intField(remainderOwner,"maximumVias")==48 &&
-                        P07ScalarReflection.intField(remainderOwner,"viaCost")==240 &&
-                        System.identityHashCode(remainderOwner)==copiedOwnerIdentity &&
-                        System.identityHashCode(detachedSearch)==copiedSearchIdentity &&
-                        System.identityHashCode(remainderCopiedLayout)==copiedLayoutIdentity,
-                        "exclusive receiver owns the exact copied cost240/cap48 Search and layout");
+                    if(isGuardExperiment()) {
+                        requireGuardOwnerCondition(remainderOwner!=null,
+                            "handoff.receiverOwner.present");
+                        requireGuardOwnerCondition(remainderOwner!=routeSession,
+                            "handoff.receiverOwner.isDetached");
+                        requireGuardOwnerCondition(remainderOwner==P07ScalarReflection.read(
+                            remainderContinuation,"owner"),
+                            "handoff.continuation.owner===receiverOwner");
+                        requireGuardOwnerCondition(guardReceiverSearch!=null,
+                            "handoff.receiverSearch.present");
+                        requireGuardOwnerCondition(P07ScalarReflection.read(remainderOwner,
+                            "search")==guardReceiverSearch,
+                            "handoff.receiverOwner.search===receiverSearch");
+                        requireGuardOwnerCondition(guardReceiverSearch==detachedSearch,
+                            "handoff.receiverSearch===senderSearch");
+                        requireGuardOwnerCondition(P07ScalarReflection.read(
+                            guardReceiverSearch,"owner")==remainderOwner,
+                            "handoff.receiverSearch.owner===receiverOwner");
+                        requireGuardOwnerCondition(P07ScalarReflection.read(
+                            guardReceiverSearch,"layout")==remainderCopiedLayout,
+                            "handoff.receiverSearch.layout===copiedLayout");
+                        requireGuardOwnerCondition(P07ScalarReflection.read(remainderOwner,
+                            "candidate")==remainderCopiedLayout,
+                            "handoff.receiverOwner.candidate===copiedLayout");
+                        requireGuardOwnerCondition(P07ScalarReflection.read(remainderOwner,
+                            "detachedOrderingContinuation")==remainderContinuation,
+                            "handoff.receiverOwner.continuation===transferredContinuation");
+                        requireGuardOwnerCondition(P07ScalarReflection.intField(remainderOwner,
+                            "pass")==1,"handoff.receiverOwner.passIs1");
+                        requireGuardOwnerCondition(P07ScalarReflection.intField(remainderOwner,
+                            "completedOrderings")==1,
+                            "handoff.receiverOwner.completedOrderingsIs1");
+                        requireGuardOwnerCondition(P07ScalarReflection.intField(remainderOwner,
+                            "maximumVias")==48,"handoff.receiverOwner.maximumViasIs48");
+                        requireGuardOwnerCondition(P07ScalarReflection.intField(remainderOwner,
+                            "viaCost")==240,"handoff.receiverOwner.viaCostIs240");
+                        requireGuardOwnerCondition(System.identityHashCode(remainderOwner)==
+                            copiedOwnerIdentity,"handoff.receiverOwner.identityMatchesCopy");
+                        requireGuardOwnerCondition(System.identityHashCode(guardReceiverSearch)==
+                            copiedSearchIdentity,"handoff.receiverSearch.identityMatchesCopy");
+                        requireGuardOwnerCondition(System.identityHashCode(
+                            remainderCopiedLayout)==copiedLayoutIdentity,
+                            "handoff.copiedLayout.identityMatchesCopy");
+                        requireGuardOwnerBoolean(remainderOwner,"orderingLeaseClosed",false,
+                            "handoff.receiverOwner.orderingLeaseOpen");
+                    } else {
+                        require(remainderContinuation!=null && remainderOwner!=null &&
+                            remainderOwner!=routeSession &&
+                            P07ScalarReflection.read(remainderOwner,"search")==detachedSearch &&
+                            P07ScalarReflection.read(remainderOwner,"candidate")==remainderCopiedLayout &&
+                            P07ScalarReflection.read(remainderOwner,
+                                "detachedOrderingContinuation")==remainderContinuation &&
+                            P07ScalarReflection.intField(remainderOwner,"pass")==1 &&
+                            P07ScalarReflection.intField(remainderOwner,
+                                "completedOrderings")==1 &&
+                            P07ScalarReflection.intField(remainderOwner,"maximumVias")==48 &&
+                            P07ScalarReflection.intField(remainderOwner,"viaCost")==240 &&
+                            System.identityHashCode(remainderOwner)==copiedOwnerIdentity &&
+                            System.identityHashCode(detachedSearch)==copiedSearchIdentity &&
+                            System.identityHashCode(remainderCopiedLayout)==copiedLayoutIdentity,
+                            "exclusive receiver owns the exact copied cost240/cap48 Search and layout");
+                    }
                     boolean secondTakeRejected=false;
                     try {
                         detachedReplay.takeOrderingContinuation();
@@ -5496,15 +6333,31 @@ public final class Rb100PhysicalDiagnostics {
             }
         }
 
+        private void clearLoad12GuardOwnerReferences() {
+            guardReceiverSearch=null;
+            guardSearch=null;
+            guardBranchSearch=null;
+            guardPublisher=null;
+            guardStartPad=null;
+            guardRootPad=null;
+            guardEndNode=null;
+            guardFoundTerminal=null;
+            guardNetVector=null;
+            guardNodeRows=null;
+        }
+
         void cleanupDetachedLoad12Owners() {
             if(!isDetachedLoad12Purpose(purpose)) return;
             try {
                 if(remainderContinuation!=null) {
-                    remainderContinuation.release();
-                    remainderContinuation=null;
+                    try { remainderContinuation.release(); }
+                    finally { remainderContinuation=null; }
                 }
             } finally {
-                releaseDetachedLoad12Owners();
+                try { releaseDetachedLoad12Owners(); }
+                finally {
+                    if(isGuardExperiment()) clearLoad12GuardOwnerReferences();
+                }
             }
         }
 
@@ -7376,6 +8229,168 @@ public final class Rb100PhysicalDiagnostics {
                 ",\"suiteLimitMs\":480000,\"failure\":"+failureJson+"}";
         }
 
+        void prepareDetachedLoad12Cost240GuardEvent(P07PolicyDiagnosticCase result,
+                long suiteMillis,String baseEvent) {
+            guardWirePrepared=false;
+            guardWirePrefixBytes=null;
+            guardWireSuffixBytes=null;
+            requireGuardWitnessOperation(result,suiteMillis,baseEvent);
+            String baseMarker="RB100_LOAD12_COST240_REMAINDER_EVENT ";
+            if(baseEvent==null || !baseEvent.startsWith(baseMarker) ||
+                    baseEvent.indexOf('\n')>=0 || baseEvent.indexOf('\r')>=0)
+                throw new IllegalStateException("OPERATION_EXCEPTION: raw base event payload is unavailable for binding");
+            String basePayload=baseEvent.substring(baseMarker.length());
+            byte[] basePayloadBytes=basePayload.getBytes(StandardCharsets.UTF_8);
+            String baseSha256=sha256Hex(basePayloadBytes);
+            String jsonPrefix="{\"protocolVersion\":1,\"schema\":\"rb100-load12-adrive-guard-witness-r1\",\"status\":\"PASS\",\"runId\":\""+
+                jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\",\"scope\":\"ACTUAL_LOAD12_COST240_COPIED_ORDER_ADRIVE_PRE_GUARD\",\"base\":{\"runId\":\""+
+                jsonFull(runId)+"\",\"eventSha256\":\""+baseSha256+"\"},\"inputs\":"+
+                guardInputsJson+",\"lineage\":"+guardLineageJson+",\"target\":"+
+                guardTargetJson+",\"grid\":"+guardGridJson+",\"endpoints\":"+
+                guardEndpointsJson+",\"path\":{\"encoding\":\"cell,layer,x,y,direction,transitions,cost,heuristic,serial,key,parentRow\",\"nodeCount\":"+
+                guardCapturedNodeRows+",\"maximumNodes\":4096,\"rowsSha256\":\""+
+                guardRowsSha256+"\",\"nodes\":";
+            Budget budget=remainderBudget;
+            long phaseNanos=budget.remainderPhaseElapsedNanos[6];
+            long operationNanos=budget.remainderOperationElapsedNanos;
+            long subphaseNanos=0L;
+            for(int index=0;index<5;index++)
+                subphaseNanos+=budget.guardSubphaseElapsedNanos[index];
+            long overheadNanos=phaseNanos-subphaseNanos;
+            String subphases="{\"advance\":{\"controllerUnits\":"+
+                budget.guardSubphaseCalls[0]+",\"elapsedNanos\":"+
+                budget.guardSubphaseElapsedNanos[0]+"},\"capture\":{\"controllerUnits\":"+
+                budget.guardSubphaseCalls[1]+",\"elapsedNanos\":"+
+                budget.guardSubphaseElapsedNanos[1]+"},\"recompute\":{\"controllerUnits\":"+
+                budget.guardSubphaseCalls[2]+",\"elapsedNanos\":"+
+                budget.guardSubphaseElapsedNanos[2]+"},\"serialize\":{\"controllerUnits\":"+
+                budget.guardSubphaseCalls[3]+",\"elapsedNanos\":"+
+                budget.guardSubphaseElapsedNanos[3]+"},\"boundaryCheck\":{\"controllerUnits\":"+
+                budget.guardSubphaseCalls[4]+",\"elapsedNanos\":"+
+                budget.guardSubphaseElapsedNanos[4]+"}}";
+            String work="{\"budgetPhase\":\"orderingRemainder\",\"controllerUnitLimit\":"+
+                WORK_LIMIT+",\"ownerStepsPerUnitLimit\":"+MAX_MANUAL_STEPS_PER_UNIT+
+                ",\"controllerUnits\":"+budget.remainderPhaseCalls[6]+
+                ",\"subphases\":"+subphases+",\"continuationAdvanceApiCalls\":"+
+                guardContinuationAdvanceApiCalls+",\"continuationOwnerSteps\":"+
+                guardContinuationOwnerSteps+",\"maximumGroupOwnerSteps\":"+
+                guardMaximumGroupOwnerSteps+",\"operationElapsedNanos\":"+
+                operationNanos+",\"phaseElapsedNanos\":"+phaseNanos+
+                ",\"overheadElapsedNanos\":"+overheadNanos+
+                ",\"capturedNodeRows\":"+guardCapturedNodeRows+
+                ",\"verifiedNodeRows\":"+guardVerifiedNodeRows+
+                ",\"pathRowsUtf8Bytes\":"+guardPathRowsUtf8Bytes+"}";
+            String suffix="},\"checkpoint\":"+guardCheckpointJson+
+                ",\"boundary\":{\"status\":\"ORDERING_BOUNDARY\",\"type\":\""+
+                guardBoundaryType+"\",\"reason\":"+remainderText(guardBoundaryReason)+
+                ",\"orderings\":"+guardBoundaryOrderings+
+                ",\"cumulativeExpansions\":"+guardBoundaryExpansions+
+                ",\"remainingRequestBudget\":"+guardBoundaryRemaining+
+                ",\"sameTypedBoundary\":"+guardSameTypedBoundary+
+                ",\"rejectedBranchPublished\":"+guardRejectedBranchPublished+
+                "},\"prefix\":{\"before\":"+guardPrefixBefore.json()+
+                ",\"after\":"+guardPrefixAfter.json()+
+                ",\"unchanged\":"+guardPrefixBefore.same(guardPrefixAfter)+
+                "},\"work\":"+work+",\"cleanup\":{\"status\":\""+
+                (result.cleanupPassed?"PASS":"FAIL")+"\",\"elapsedMs\":"+
+                result.cleanupMillis+",\"limitMs\":"+CLEANUP_LIMIT_MILLIS+
+                "},\"qualification\":{\"routeAccepted\":false,\"geometryPublished\":false,\"layoutQualification\":false,\"routeAdoption\":false,\"playable100\":false}}";
+            byte[] jsonPrefixBytes=jsonPrefix.getBytes(StandardCharsets.UTF_8);
+            byte[] suffixBytes=suffix.getBytes(StandardCharsets.UTF_8);
+            long payloadBytes=(long)jsonPrefixBytes.length+guardNodeArrayBytes.length+
+                suffixBytes.length;
+            if(payloadBytes>1024L*1024L ||
+                    guardPathRowsUtf8Bytes!=guardNodeArrayBytes.length)
+                throw new IllegalStateException("WITNESS_BYTES_LIMIT: complete guard payload exceeds one MiB or retained node bytes changed");
+            guardWirePrefixBytes=jsonPrefixBytes;
+            guardWireSuffixBytes=suffixBytes;
+            guardWirePrepared=true;
+        }
+
+        void emitDetachedLoad12Cost240GuardEvent() {
+            if(!guardWirePrepared || guardWirePrefixBytes==null ||
+                    guardWireSuffixBytes==null || guardNodeArrayBytes==null)
+                throw new IllegalStateException("INCOMPLETE_CAPTURE: guard record was not fully prevalidated");
+            byte[] markerBytes="RB100_LOAD12_ADRIVE_GUARD_EVENT ".getBytes(
+                StandardCharsets.UTF_8);
+            System.out.write(markerBytes,0,markerBytes.length);
+            System.out.write(guardWirePrefixBytes,0,guardWirePrefixBytes.length);
+            System.out.write(guardNodeArrayBytes,0,guardNodeArrayBytes.length);
+            System.out.write(guardWireSuffixBytes,0,guardWireSuffixBytes.length);
+            System.out.write('\n');
+            System.out.flush();
+            if(System.out.checkError())
+                throw new IllegalStateException("CLEANUP_FAILED: native guard witness write failed");
+        }
+
+        private void requireGuardWitnessOperation(P07PolicyDiagnosticCase result,
+                long suiteMillis,String baseEvent) {
+            String sourceDigestRecord="\"digests\":{\"seeds\":\""+
+                load12SeedSha256+"\",\"netOrder\":\""+load12NetOrderSha256+
+                "\",\"prefixRows\":\""+load12PrefixRowsSha256+
+                "\",\"geometry\":\""+guardSourceGeometrySha256+"\"}";
+            boolean baseSourceGeometryBound=baseEvent!=null &&
+                guardSourceGeometrySha256!=null && baseEvent.contains(sourceDigestRecord);
+            require(isGuardExperiment() && result!=null && "PASS".equals(result.status) &&
+                result.cleanupPassed && result.cleanupMillis<=CLEANUP_LIMIT_MILLIS &&
+                result.operationMillis<=90000L && result.workUnits<=WORK_LIMIT &&
+                suiteMillis<=480000L && guardWitnessComplete &&
+                guardStage==GUARD_COMPLETE && guardPrefixBefore!=null &&
+                guardPrefixAfter!=null && guardPrefixBefore.same(guardPrefixAfter) &&
+                guardNodeArrayBytes!=null && guardRowsSha256!=null &&
+                guardCapturedNodeRows==guardVerifiedNodeRows &&
+                guardPathRowsUtf8Bytes==guardNodeArrayBytes.length &&
+                guardRejected && guardSameTypedBoundary && !guardRejectedBranchPublished &&
+                "ORDERING_BOUNDARY".equals(guardBoundaryType) &&
+                "A_DRIVE:BRANCH_QUALITY_LIMIT".equals(guardBoundaryReason) &&
+                guardBoundaryOrderings==2 && guardBoundaryExpansions==774550 &&
+                guardBoundaryRemaining==225450 && remainderOutcome.equals("QUALITY_BOUNDARY") &&
+                guardSourceGeometrySha256!=null &&
+                guardSourceGeometrySha256.equals(guardSourceGeometrySha256After) &&
+                baseSourceGeometryBound &&
+                remainderResult==null && remainderFinalization==null &&
+                remainderRawProof==null && remainderFinalProof==null &&
+                !remainderRawOracleStarted && !remainderFinalOracleStarted &&
+                !remainderFinalizerStarted && baseEvent!=null &&
+                baseEvent.startsWith("RB100_LOAD12_COST240_REMAINDER_EVENT ") &&
+                baseEvent.contains("\"status\":\"PASS\"") &&
+                baseEvent.contains("\"runId\":\""+jsonFull(runId)+"\""),
+                "A_DRIVE guard witness is complete only at the unchanged copied-order quality boundary");
+            Budget budget=remainderBudget;
+            long controllerUnits=budget.remainderPhaseCalls[6];
+            long subphaseUnits=0L,subphaseNanos=0L;
+            for(int index=0;index<5;index++) {
+                subphaseUnits+=budget.guardSubphaseCalls[index];
+                subphaseNanos+=budget.guardSubphaseElapsedNanos[index];
+            }
+            long phaseNanos=budget.remainderPhaseElapsedNanos[6];
+            long operationNanos=budget.remainderOperationElapsedNanos;
+            long overheadNanos=phaseNanos-subphaseNanos;
+            require(controllerUnits==subphaseUnits && controllerUnits==
+                    budget.remainderPhaseCalls[6] && controllerUnits>0 &&
+                guardContinuationOwnerSteps==budget.remainderPhaseOwnerSteps[6] &&
+                guardMaximumGroupOwnerSteps<=MAX_MANUAL_STEPS_PER_UNIT &&
+                guardMaximumGroupOwnerSteps<=budget.maxOwnerStepsInUnit &&
+                overheadNanos>=0L && phaseNanos<=operationNanos &&
+                nanosToMillis(operationNanos)==result.operationMillis &&
+                budget.remainderPhaseCalls[9]>0 &&
+                budget.remainderPhaseCalls[10]==0 &&
+                nanosToMillis(phaseNanos)<=result.operationMillis &&
+                guardContinuationAdvanceApiCalls>0 &&
+                guardCapturedNodeRows==guardReversedSize &&
+                guardVerifiedNodeRows==guardReversedSize,
+                "guard groups, microcalls, actual owner work, bounded rows and monotonic phase intervals reconcile");
+            String phaseRecord="{\"name\":\"orderingRemainder\",\"calls\":"+
+                budget.remainderPhaseCalls[6]+",\"ownerSteps\":"+
+                budget.remainderPhaseOwnerSteps[6]+",\"elapsedMs\":"+
+                nanosToMillis(phaseNanos)+"}";
+            require(baseEvent.contains(phaseRecord) &&
+                baseEvent.contains("\"operationElapsedMs\":"+
+                    nanosToMillis(operationNanos)) &&
+                baseEvent.contains("\"cleanup\":{\"status\":\"PASS\",\"elapsedMs\":"+
+                    result.cleanupMillis+",\"limitMs\":"+CLEANUP_LIMIT_MILLIS),
+                "guard witness phase milliseconds, exact operation floor and cleanup cross-bind to the unchanged base event");
+        }
         void requireRemainderOperation(P07PolicyDiagnosticCase result) {
             require(isDetachedLoad12Cost240Remainder(purpose) &&
                 graphTarget==P07ZeroViaGraphDiagnostics.Target.LOAD12 &&
@@ -10204,6 +11219,31 @@ public final class Rb100PhysicalDiagnostics {
         }
     }
 
+    private static void writeUtf8Record(String line) {
+        if(line==null || line.indexOf('\n')>=0 || line.indexOf('\r')>=0)
+            throw new IllegalArgumentException("Native record must contain exactly one line");
+        byte[] bytes=line.getBytes(StandardCharsets.UTF_8);
+        System.out.write(bytes,0,bytes.length);
+        System.out.write('\n');
+        System.out.flush();
+        if(System.out.checkError())
+            throw new IllegalStateException("CLEANUP_FAILED: native stdout record write failed");
+    }
+    private static String sha256Hex(byte[] value) {
+        if(value==null) throw new IllegalArgumentException("SHA-256 input is required");
+        try {
+            byte[] digest=MessageDigest.getInstance("SHA-256").digest(value);
+            StringBuilder hex=new StringBuilder(digest.length*2);
+            for(byte item:digest) {
+                int unsigned=item&0xff;
+                if(unsigned<16) hex.append('0');
+                hex.append(Integer.toHexString(unsigned));
+            }
+            return hex.toString();
+        } catch(NoSuchAlgorithmException impossible) {
+            throw new AssertionError("JDK is missing SHA-256",impossible);
+        }
+    }
     private static String sha256Hex(String value) {
         try {
             byte[] digest = MessageDigest.getInstance("SHA-256").digest(

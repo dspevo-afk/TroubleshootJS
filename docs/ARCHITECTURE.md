@@ -607,6 +607,33 @@ and requires result identity to match the copied layout. Its synthetic success
 controls do not attest an actual route. The [remainder packet](task-evidence/Q100/load12-remainder-r1/README.md)
 records the observed boundary and unavailable independent two-layer access proof.
 
+The private --cost240-guard mode observes the same copied current ordering.
+Its test adapter retains the receiver's Search before sender cleanup, then
+retains the actual BranchSearch across its transfer to Publisher. Cached scalar
+reflection identifies a rejecting A_DRIVE stage1 checkpoint without traversing
+paths or geometry on the microcall loop. Reflected primitive booleans use type
+and value checks; their wrapper identities are not ownership identities.
+Every attempted advance(1) contributes its actual lastWork in finally to the
+existing controller group. API calls, owner steps and controller groups remain
+separate counters under the same operation and unit limits.
+
+The adapter copies at most4096 primitive path rows, derives metrics, serializes
+UTF-8 and hashes the rows inside charged units. The final report streams those
+retained immutable bytes beside bounded metadata and the exact base-payload
+hash. Source snapshots and copied-prefix fingerprints are checked before and
+after the unchanged guard call; retained live references are released during
+cleanup. This diagnostic changes neither the production predicate nor routing.
+
+read_load12_adrive_guard.py owns a separate strict three-record transport and
+actual-command validator. It loads the unchanged base reader through a private,
+hash-bound module, closes the source inventory, binds the selected checkout and
+raw base payload, and independently recomputes grid cells, path keys, edges,
+layer transitions, length, bends, direct distance and guard predicates. Prefix
+digests are checked for lineage and equality; they provide no independent P08
+or whole-layout qualification. The [guard plan](task-evidence/Q100/adrive-guard-r1/PLAN.md)
+keeps route adoption, finalizer, physical oracles and playable100 acceptance
+outside this finite diagnostic. No Player control or model epoch is added.
+
 P07TwoLayerContractTest also owns the matched seven-point prior-via tree-join
 contract. A fresh FULLER Session with explicit requestcap2 creates a via and
 later reaches that exact existing barrel by a TOP planar branch. Read-only

@@ -373,6 +373,19 @@ epoch change or playable100 qualification follows; playable100=0/beta held.
 Next is the [copied A_DRIVE pre-guard witness](task-evidence/Q100/load12-remainder-r1/NEXT_A_DRIVE_PLAN.md)
 under unchanged operation/work/oracle limits, before another treatment.
 
+The [copied A_DRIVE pre-guard witness](task-evidence/Q100/adrive-guard-r1/README.md)
+is accepted as a finite diagnostic. Actual branch142 has82 nodes, length770 and
+direct190, exceeding the unchanged570 gate; bends5/transitions4 are within bounds.
+Independent recomputation reproduces the same typed boundary and preserved
+source/prefix. Final native2/8/33(original22), six diagnostic/reader pairs,
+Python193PASS/3declared skips, actual Player/Developer builds, privacy/E06State10/
+Current9, exactly3 approved MEDIUM roots and owned-profile cleanup pass. Final
+consumed-input and production identity audits pass; failed harnesses remain FAIL.
+Publication is recorded in the packet/current checkpoint. No routing treatment,
+full physical proof or playable100 qualification follows; playable100=0/beta held.
+Next is the [actual copied A_DRIVE graph/constraint diagnostic](task-evidence/Q100/adrive-guard-r1/NEXT_GRAPH_PLAN.md),
+including the complete legal goal set before any further treatment.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

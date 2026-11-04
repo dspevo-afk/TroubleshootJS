@@ -21,6 +21,7 @@ param(
     [switch]$Rb100Load12Cap17Replay,
     [switch]$Rb100Load12Cost240Replay,
     [switch]$Rb100Load12Cost240RemainderReplay,
+    [switch]$Rb100Load12Cost240GuardReplay,
     [switch]$Rb100ConvergenceTrace,
     [switch]$Rb100AdaptiveStudy,
     [string]$Rb100DiagnosticFault = '',
@@ -117,6 +118,18 @@ if ($Rb100Load12Cost240RemainderReplay) {
     }
 }
 
+if ($Rb100Load12Cost240GuardReplay) {
+    if ($Rb100Load12Cap17Replay -or $Rb100Load12Cost240Replay -or
+            $Rb100Load12Cost240RemainderReplay -or $Rb100NoPathPrefixCapture -or
+            $Rb100FaultMatrix -or $Rb100ConvergenceTrace -or $Rb100AdaptiveStudy -or
+            $Rb100DiagnosticFault -or $Rb100DiagnosticDt -ne '0.0001') {
+        throw '-Rb100Load12Cost240GuardReplay excludes all other RB100 diagnostic modes.'
+    }
+    if ($Suite.Count -ne 1 -or
+            $Suite[0] -cne 'Rb100Load12DetachedBaselineContractTest') {
+        throw '-Rb100Load12Cost240GuardReplay requires exactly -Suite Rb100Load12DetachedBaselineContractTest.'
+    }
+}
 function Write-Q30CasePlanMetadataFailure {
     param(
         [Parameter(Mandatory = $true)][string]$Seed,
@@ -1424,6 +1437,10 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
                 $Rb100Load12Cost240RemainderReplay) {
             $testArguments += '--cost240-remainder'
         }
+        if ($testClass -eq 'Rb100Load12DetachedBaselineContractTest' -and
+                $Rb100Load12Cost240GuardReplay) {
+            $testArguments += '--cost240-guard'
+        }
         if ($testClass -eq 'Q30PlanContractTest' -and
                 $PSBoundParameters.ContainsKey('Q30PlanSeeds')) {
             $planSeedTexts = @($Q30PlanSeeds | ForEach-Object {
@@ -1735,6 +1752,10 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         if ($testClass -eq 'Rb100Load12DetachedBaselineContractTest' -and
                 $Rb100Load12Cost240RemainderReplay) {
             $expectedMarker = 'RB100 LOAD12 detached cost240 remainder contracts '
+        }
+        if ($testClass -eq 'Rb100Load12DetachedBaselineContractTest' -and
+                $Rb100Load12Cost240GuardReplay) {
+            $expectedMarker = 'RB100 LOAD12 detached cost240 guard contracts '
         }
         if (-not (Test-CurrentContractPassMarker -Stdout $tested.Stdout `
                     -Marker $expectedMarker `

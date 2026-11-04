@@ -1,4 +1,70 @@
-# Current checkpoint: LOAD12 remainder published; next A_DRIVE witness
+# Current checkpoint: A_DRIVE finite guard diagnostic validated; publication pending
+
+UTC2026-11-04. Active Z=OS-temp/tsj-q100-adrive-guard-20261104-r1,
+branch codex/q100-adrive-guard-20261104; HEAD/sourceparent
+44f1fa699fd64a67f6da7528c66d57750ac89236. No Z commit/push/email yet.
+QZ=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/adrive-guard-r1.
+Predecessor93df46c0+44f receipt published; Gmail1a1a70d01c868c83 once, do not repeat.
+
+Scope: actual copied A_DRIVE preguard witness; no production treatment. Root
+9007199254740993/placement-6587958367974952701/routing8445301674744508279,
+request/index0/attempt4/pass1, LOAD12sourcebranch73/cost60/copy240/cap48.
+Actual A_DRIVEbranch142/netpos24/next25/order2:82nodes, length770/direct190,
+770>570, bends5/transitions4. Same BRANCH_QUALITY_LIMIT at774550/remaining225450.
+Source17holes88traces preserved/unresumed; copiedprefix37/177 unchanged.
+PathSHA a2d33696158882cf3d6bd4c949c021c4456a00b325b80fe3815b09df2db15c10.
+Prefixdigests are observed lineage, not independent whole-layout qualification.
+
+Final manifest6260778c6b16670038e22a8e8ae4ad329d2a2e6d2216ede96bda820edd6d6458,
+1079=850prod223contractJava6static;87245070summedbytes/228661rawmanifestbytes.
+Production850 unchanged. Diagnostic00cb2c4e..., baselineaf3cc823..., PS32f60f2c...;
+reader e43e4676..., test6581adc0.... Py42pins66fdd070..., parent40 unchanged;
+SDK9pins8ecf7b84..., normal3source24pins11bd111c.../18unchanged snapshots.
+Exact hashes and artifacts in packet final-input-audit.json and qualification.json.
+
+FINAL GATES PASS: nativequeryr4/independentreaderR2 47.174s/4.945s; new26methods
+25PASS/1Windowsfile-symlinkskip; old170 168PASS/2same declared skips; junction/
+CLI/wrongSHA/wrongcommand selected-host controls PASS. Prereq2 48.602s, focused8
+53.242s, regression33(original22)133.679s; six old queries376.449s and readers
+53.586s PASS. Actual JDK8/GWT Player87.706s/Developer130.750s,5permutations+link;
+Player357archive, privacy1+7JS73.892s, E06State10 198.624s, Current9 223.741s PASS.
+Distinct root-final-compiled-review-r1 PASS per-variant maintainedowner identities;
+Player/currentDeveloper input/output compared correctly, no cross-variant equality.
+Normal3 six phases349.506s PASS exactapprovedroots underfourcandidateenvelope;
+full30ownerexcluded. Exactprofilecleanup1677ms plus wrongreceiptnegativePASS;
+no process terminated. Raw sequence PROCESS/CLEANUP_PENDING labels preserved and
+closed only by subsequent distinct validators/cleanup receipts, not rewritten.
+Final-source-audit-r2 PASS and post-normal3 productionidentityaudit-r3 PASS.
+Focused8/Player evidence reused only after auditing all consumed inputs/outputs.
+Separate unexported operation/cleanup timings stay NOT_EXPORTED; Current9
+resourceSuccess/cleanupelapsed not exported. Java eventcleanup0ms is distinct.
+
+Wholeoperation16793ms/405groups/maxunit1371ms/max32768ownersteps. Remainder63
+groups/1835183advance(1)calls=ownersteps; capture82rows4248UTF8bytes charged.
+90s/640/5s and all work/request/branch/grid/VIA/transition/payload limits unchanged.
+Native v5 exact original keys;3record transport; rawbaseSHA/hash-boundbasehelper.
+Failure ledger retains stale receiver, reflectedBoolean identity, nullgeometry,
+fixture, oldreader pin, PS5arrays/defaultroot, sourcecensus and compiledaggregate
+failures. Fresh fixed runtime/source gates only; no failedaggregate madePASS.
+
+No active task actor/matrix/profile. OwnerRoot=OS-temp/tsj-n3h-e2e51f73a5c3:
+marker1f37ece4... and rawhostbeb858e2... retained, exactprofile absent, host
+cleanupPASS/survivors0; marker-bound PID9560/start639294141225595631 absent.
+Profile helper does not recheckport; host owns listenercleanup. Uncertain8928
+untouched. Main5f05b005 9tracked6untracked and Desktope0c36885 7tracked73collapsed
+untracked(89files),0staged preserved. Z27LF-only source/7parentpacket rawbyte
+restorations preserved/excluded from stage. Desktop only readonlyJDK provider.
+
+Packet docs/architecture/roadmap updated; root final integrated diff/stage review,
+normalcommit/push and exactremote verification then ONE completion Gmail remain.
+Next unstarted: packet NEXT_GRAPH_PLAN.md actual A_DRIVE copied-prefix graph and
+complete legal goal set/constraint semantics, after this milestone publication.
+No shorterpath existence/boardimpossibility/fullphysical/adoption/service proof;
+independenttwofaceaccess unavailable, playable100=0, betaheld. ProtectedHARD unread/
+unrun current scope; historical unreadUNCERTIFIED; HARD/PSYCHOTIC unavailable/unrun.
+Selfhostedrunner registration prerequisite. Continue standing roadmap until stop.
+
+# Historical checkpoint: LOAD12 copied remainder published
 
 UTC2026-11-04. Active Y=OS-temp/tsj-q100-load12-remainder-20261104-r1, branch
 codex/q100-load12-remainder-20261104. Accepted implementation/candidate
