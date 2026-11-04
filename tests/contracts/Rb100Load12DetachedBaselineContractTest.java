@@ -13,6 +13,11 @@ public final class Rb100Load12DetachedBaselineContractTest {
             Rb100PhysicalDiagnostics.runLoad12DetachedCap17Contracts();
             return;
         }
-        throw new IllegalArgumentException("Expected no arguments or exactly --cap17");
+        if(args.length==1 && "--cost240".equals(args[0])) {
+            Rb100PhysicalDiagnostics.runLoad12DetachedCost240Contracts();
+            return;
+        }
+        throw new IllegalArgumentException(
+            "Expected no arguments, exactly --cap17, or exactly --cost240");
     }
 }

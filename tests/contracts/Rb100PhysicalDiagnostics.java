@@ -2,6 +2,8 @@ package com.lushprojects.circuitjs1.client;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -234,6 +236,12 @@ public final class Rb100PhysicalDiagnostics {
             QualityScalarPurpose.DETACHED_LOAD12_CAP17);
     }
 
+    /** Actual LOAD12 source at48/60 with one detached, ordinary Search at48/240. */
+    static void runLoad12DetachedCost240Contracts() {
+        runQualityZeroViaGraphContracts(P07ZeroViaGraphDiagnostics.Target.LOAD12,
+            QualityScalarPurpose.DETACHED_LOAD12_COST240);
+    }
+
     private static void runQualityZeroViaGraphContracts(
             P07ZeroViaGraphDiagnostics.Target graphTarget) {
         runQualityZeroViaGraphContracts(graphTarget,QualityScalarPurpose.ZERO_VIA_GRAPH);
@@ -293,8 +301,10 @@ public final class Rb100PhysicalDiagnostics {
             observed.qualitySubsetMarkerJson);
         System.out.println(qualityScalarOperationJson(observed,probeOperationId,"PROBE"));
 
-        if(!"PASS".equals(observed.status))
+        if(!"PASS".equals(observed.status)) {
+            probe.captureOperationFailure(observed.failure);
             System.out.println(probe.failureProgressJson());
+        }
         probe.requireTerminalOperation(observed);
         boolean pairPassed=qualityScalarPairPassed(baseline,observed,variant);
         String event=probe.eventJson(observed);
@@ -320,6 +330,16 @@ public final class Rb100PhysicalDiagnostics {
                 "quality scalar cap17 suite remains within its frozen480s ceiling");
             System.out.println(probe.detachedLoad12Cap17EventJson(observed,pairPassed));
             System.out.println("PASS: RB100 LOAD12 detached cap17 contracts assertions="+
+                (assertions-beforeAssertions));
+            return;
+        }
+        if(purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240) {
+            probe.requirePathSnapshotUnchanged();
+            long suiteMillis=nanosToMillis(System.nanoTime()-suiteStarted);
+            require(suiteMillis<=480000L,
+                "quality scalar cost240 suite remains within its frozen480s ceiling");
+            System.out.println(probe.detachedLoad12Cost240EventJson(observed,pairPassed));
+            System.out.println("PASS: RB100 LOAD12 detached cost240 contracts assertions="+
                 (assertions-beforeAssertions));
             return;
         }
@@ -3211,16 +3231,34 @@ public final class Rb100PhysicalDiagnostics {
     }
 
     private enum QualityScalarPurpose {
-        ZERO_VIA_GRAPH, DETACHED_LOAD12_BASELINE, DETACHED_LOAD12_CAP17
+        ZERO_VIA_GRAPH, DETACHED_LOAD12_BASELINE, DETACHED_LOAD12_CAP17,
+        DETACHED_LOAD12_COST240
     }
 
     private static boolean isDetachedLoad12Purpose(QualityScalarPurpose purpose) {
         return purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE ||
-            purpose==QualityScalarPurpose.DETACHED_LOAD12_CAP17;
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_CAP17 ||
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240;
     }
 
     private static boolean isDetachedLoad12Cap17(QualityScalarPurpose purpose) {
         return purpose==QualityScalarPurpose.DETACHED_LOAD12_CAP17;
+    }
+
+    private static boolean isDetachedLoad12Cost240(QualityScalarPurpose purpose) {
+        return purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240;
+    }
+
+    private static boolean capturesDetachedLoad12CostResults(
+            QualityScalarPurpose purpose) {
+        return isDetachedLoad12Cap17(purpose) || isDetachedLoad12Cost240(purpose);
+    }
+
+    private static int detachedLoad12TargetMaximumVias(QualityScalarPurpose purpose,
+            int sourceMaximumVias) {
+        if(isDetachedLoad12Cap17(purpose)) return 17;
+        if(isDetachedLoad12Cost240(purpose)) return 48;
+        return sourceMaximumVias;
     }
 
     private static final class QualityScalarProbe
@@ -3274,13 +3312,19 @@ public final class Rb100PhysicalDiagnostics {
             load12NetOrder;
         int load12PathNodeCount=-1,load12TransitionCount=-1,load12PrefixHoleCount=-1,
             load12PostHoleCount=-1,load12CreatedHoleCount=-1,load12CreatedTraceCount=-1;
+        int load12PathEndCost=-1,detachedPathEndCost=-1;
         int load12PreViaCount=-1,load12PreTraceCount=-1,
             load12PostViaCount=-1,load12PostTraceCount=-1,load12CreatedViaCount=-1;
         int load12Pass=-1,load12NetPosition=-1,load12NextFetch=-1,
             load12BranchOrdinal=-1,load12SearchBranches=-1,load12PrimaryLayer=-1,
             load12MaximumVias=-1,load12SessionMaximumVias=-1,
+            load12SearchViaCost=-1,load12SessionViaCost=-1,
             cap17SourceAfterReplaySessionMaximumVias=-1,
             cap17SourceAfterReplaySearchMaximumVias=-1,
+            detachedSourceAfterReplaySessionViaCost=-1,
+            detachedSourceAfterReplaySearchViaCost=-1,
+            detachedSourceAfterReplayQueueSize=-1,
+            detachedSourceAfterReplayBestSize=-1,
             cap17SourceAfterReplayBranchExpanded=-1,
             cap17SourceAfterReplayHoleCount=-1,
             cap17SourceAfterReplayTraceCount=-1,
@@ -3313,7 +3357,9 @@ public final class Rb100PhysicalDiagnostics {
             detachedCreatedViaCount=-1,detachedCreatedTraceCount=-1,
             detachedLastBudgetUnit,detachedObserverChecks,
             detachedPublisherLastStage=-1,detachedSessionMaximumVias=-1,
-            detachedSearchMaximumVias=-1,detachedFailureQueueSize=-1,
+            detachedSearchMaximumVias=-1,detachedSessionViaCost=-1,
+            detachedSearchViaCost=-1,detachedPrimaryLayer=-1,
+            detachedFailureQueueSize=-1,
             detachedFailureExpanded=-1,detachedFailureLastWork=-1;
         long detachedCopyLastReportedWork,detachedCopyEntries,
             detachedReplayEntryTotalWork,detachedReplayPublicationTotalWork,
@@ -3325,7 +3371,9 @@ public final class Rb100PhysicalDiagnostics {
             load12SeedSha256,load12NetOrderSha256,load12PrefixRowsSha256,
             load12PublicationSha256,load12SeedJson,detachedPreJson,detachedPostJson,
             detachedFailurePhase,detachedFailureType,detachedFailureMessage,
-            cap17SourceAfterReplaySeedsJson;
+            cap17SourceAfterReplaySeedsJson,operationFailureStack;
+        PcbLayerRoutingPrototype.Policy detachedPolicy;
+        boolean operationFailureStackTruncated;
         String load12NetId,load12StartPadId,load12RootPadId;
         int targetAccountingBefore=-1,targetAccountingAfter=-1;
         boolean targetCaptured,qualityRejected,targetRequestAccounted,
@@ -3390,6 +3438,35 @@ public final class Rb100PhysicalDiagnostics {
                     "\"failureQueueSize\":"+detachedFailureQueueSize+","+
                     "\"failureExpanded\":"+detachedFailureExpanded+","+
                     "\"failureLastWork\":"+detachedFailureLastWork+"}" : "";
+            String detachedCost240=isDetachedLoad12Cost240(purpose)?
+                ",\"detachedCost240\":{\"status\":\"FAILURE_UNCLASSIFIED\",\"phase\":\""+
+                    (detachedFailurePhase==null?detachedPhaseName(detachedPhase):
+                        detachedFailurePhase)+"\",\"sourceSessionMaximumVias\":"+
+                    load12SessionMaximumVias+",\"sourceSearchMaximumVias\":"+
+                    load12MaximumVias+",\"sourceSessionViaCost\":"+
+                    load12SessionViaCost+",\"sourceSearchViaCost\":"+
+                    load12SearchViaCost+",\"requestedMaximumVias\":48,"+
+                    "\"requestedViaCost\":240,\"copiedSessionMaximumVias\":"+
+                    detachedSessionMaximumVias+",\"copiedSearchMaximumVias\":"+
+                    detachedSearchMaximumVias+",\"copiedSessionViaCost\":"+
+                    detachedSessionViaCost+",\"copiedSearchViaCost\":"+
+                    detachedSearchViaCost+",\"copyAdvanceCalls\":"+
+                    detachedCopyAdvanceCalls+",\"copyWorkSteps\":"+
+                    detachedCopyLastReportedWork+",\"replayToPreCalls\":"+
+                    detachedReplayEntryCalls+",\"replayToPreWork\":"+
+                    detachedReplayEntryTotalWork+",\"replayToPostCalls\":"+
+                    detachedReplayPublicationCalls+",\"replayToPostWork\":"+
+                    detachedReplayPublicationTotalWork+",\"failureType\":"+
+                    (detachedFailureType==null?"null":"\""+
+                        jsonFull(detachedFailureType)+"\"")+",\"failureMessage\":"+
+                    (detachedFailureMessage==null?"null":"\""+
+                        jsonFull(detachedFailureMessage)+"\"")+",\"failureQueueSize\":"+
+                    detachedFailureQueueSize+",\"failureExpanded\":"+
+                    detachedFailureExpanded+",\"failureLastWork\":"+
+                    detachedFailureLastWork+",\"operationFailureStack\":"+
+                    (operationFailureStack==null?"null":"\""+
+                        jsonFull(operationFailureStack)+"\"")+",\"operationFailureStackTruncated\":"+
+                    operationFailureStackTruncated+"}" : "";
             return "RB100_QUALITY_GRAPH_FAILURE_PROGRESS {\"schema\":\"q100-quality-capture-failure-progress-r1\","+
                 "\"status\":\"OBSERVATION_ONLY_NOT_QUALIFICATION\",\"target\":\""+graphTarget.name()+
                 "\",\"manualGroups\":"+manualGroups+",\"manualSliceSteps\":"+manualSliceSteps+
@@ -3398,7 +3475,7 @@ public final class Rb100PhysicalDiagnostics {
                 ",\"prefixAllocationAdvanceCalls\":"+prefixAllocationAdvanceCalls+
                 ",\"graphAdvanceCalls\":"+graphAdvanceCalls+",\"qualityRejected\":"+qualityRejected+
                 ",\"load12PreComplete\":"+load12PreComplete+",\"load12PostComplete\":"+load12PostComplete+
-                ",\"graph\":"+graph+detachedCap17+"}";
+                ",\"graph\":"+graph+detachedCap17+detachedCost240+"}";
         }
 
         private static String detachedPhaseName(int phase) {
@@ -3454,6 +3531,19 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         void armReadyGuard() { readyGuardRequested=true; }
+
+        void captureOperationFailure(Throwable failure) {
+            if(!isDetachedLoad12Cost240(purpose) || failure==null) return;
+            StringWriter text=new StringWriter();
+            PrintWriter writer=new PrintWriter(text);
+            failure.printStackTrace(writer);
+            writer.flush();
+            String stack=text.toString();
+            final int maximumCharacters=16384;
+            operationFailureStackTruncated=stack.length()>maximumCharacters;
+            operationFailureStack=operationFailureStackTruncated?
+                stack.substring(0,maximumCharacters):stack;
+        }
 
         void guardNoUnexpectedReady(SeededPcbLayoutGenerator.Session generatorSession) {
             if(!readyGuardRequested || generatorSession==null) return;
@@ -3684,6 +3774,8 @@ public final class Rb100PhysicalDiagnostics {
                 P07ScalarReflection.read(search,"policy");
             int primaryLayer=P07ScalarReflection.intField(search,"primary");
             int maximumVias=P07ScalarReflection.intField(search,"maximumVias");
+            int searchViaCost=P07ScalarReflection.intField(search,"viaCost");
+            int sessionViaCost=P07ScalarReflection.intField(routeSession,"viaCost");
             PcbBoardLayout layout=(PcbBoardLayout)P07ScalarReflection.read(search,"layout");
             PcbBoardLayout template=(PcbBoardLayout)P07ScalarReflection.read(routeSession,"template");
             PcbBoardHole[] prefixHoles=(PcbBoardHole[])
@@ -3699,6 +3791,7 @@ public final class Rb100PhysicalDiagnostics {
                 primaryLayer==PcbCopperLayer.BOTTOM.ordinal() &&
                 maximumVias==48 && policy.transitions==4 && layout!=null &&
                 P07ScalarReflection.intField(routeSession,"maximumVias")==48 &&
+                searchViaCost==policy.viaCost && sessionViaCost==policy.viaCost &&
                 template!=null && template.getHoleCount()==0 &&
                 template.getHoles().isEmpty() && start!=null && root!=null &&
                 P07ScalarReflection.read(search,"currentRoot")==root &&
@@ -3723,7 +3816,7 @@ public final class Rb100PhysicalDiagnostics {
             load12Seeds=seeds;
             load12Binding=new Load12BranchBinding(search,branch,nets,netOrder,
                 searchNetIndex,currentNet,branchOrdinal,searchBranches,pass,policy,
-                primaryLayer,maximumVias,layout,template,prefixHoles,start,root);
+                primaryLayer,maximumVias,searchViaCost,layout,template,prefixHoles,start,root);
             if(isDetachedLoad12Purpose(purpose)) {
                 require(budget!=null && "QUALITY_PROBE".equals(operationId) &&
                     graphTarget==P07ZeroViaGraphDiagnostics.Target.LOAD12,
@@ -3737,6 +3830,8 @@ public final class Rb100PhysicalDiagnostics {
                 load12MaximumVias=maximumVias;
                 load12SessionMaximumVias=P07ScalarReflection.intField(
                     routeSession,"maximumVias");
+                load12SearchViaCost=searchViaCost;
+                load12SessionViaCost=sessionViaCost;
                 load12NetOrder=netOrder.clone();
                 load12GridWidth=P07ScalarReflection.intField(search,"width");
                 load12GridHeight=P07ScalarReflection.intField(search,"height");
@@ -3772,6 +3867,18 @@ public final class Rb100PhysicalDiagnostics {
                 routeSession instanceof PcbLayerRoutingPrototype.Session &&
                 detachedCopyTask==null && detachedPhase==DETACHED_IDLE,
                 "detached baseline copy begins once from the actual initial LOAD12 branch");
+            if(isDetachedLoad12Cost240(purpose)) {
+                Object sourceQueue=P07ScalarReflection.read(load12Binding.branch,"queue");
+                require(load12Binding.maximumVias==48 &&
+                    load12Binding.viaCost==60 && load12SessionMaximumVias==48 &&
+                    load12SearchViaCost==60 && load12SessionViaCost==60 &&
+                    load12Binding.policy.viaCost==60 &&
+                    P07ScalarReflection.intField(load12Binding.branch,"expanded")==0 &&
+                    P07ScalarReflection.intField(sourceQueue,"size")==2 &&
+                    load12Seeds.nodeCount()==2 &&
+                    P07ScalarReflection.read(load12Binding.search,"publisher")==null,
+                    "cost240 override starts only at the untouched source 48/60 two-seed frontier");
+            }
             SeededPcbLayoutGenerator.AttemptObserver detachedObserver=
                 new SeededPcbLayoutGenerator.AttemptObserver() {
                     public void check(int attempt) {
@@ -3790,22 +3897,28 @@ public final class Rb100PhysicalDiagnostics {
                 if(isDetachedLoad12Cap17(purpose))
                     detachedCopyTask=PcbLayerRoutingPrototype.beginDetachedBranchCopy(
                         (PcbLayerRoutingPrototype.Session)routeSession,detachedObserver,17);
+                else if(isDetachedLoad12Cost240(purpose))
+                    detachedCopyTask=PcbLayerRoutingPrototype.beginDetachedBranchCopy(
+                        (PcbLayerRoutingPrototype.Session)routeSession,detachedObserver,
+                        48,240);
                 else
                     detachedCopyTask=PcbLayerRoutingPrototype.beginDetachedBranchCopy(
                         (PcbLayerRoutingPrototype.Session)routeSession,detachedObserver);
                 require(detachedCopyTask!=null && !detachedCopyTask.isComplete() &&
                     "COPY_LAYOUT".equals(detachedCopyTask.phase()) &&
                     (!isDetachedLoad12Cap17(purpose) ||
-                        P07ScalarReflection.intField(detachedCopyTask,"maximumVias")==17),
+                        P07ScalarReflection.intField(detachedCopyTask,"maximumVias")==17) &&
+                    (!isDetachedLoad12Cost240(purpose) ||
+                        P07ScalarReflection.intField(detachedCopyTask,"maximumVias")==48),
                     "typed detached owner starts at its charged initial layout-copy phase");
             } catch(RuntimeException failure) {
                 recordDetachedFailure(failure);
-                if(isDetachedLoad12Cap17(purpose))
+                if(capturesDetachedLoad12CostResults(purpose))
                     detachedFailurePhase="COPY_LAYOUT_INIT";
                 throw failure;
             } catch(Error failure) {
                 recordDetachedFailure(failure);
-                if(isDetachedLoad12Cap17(purpose))
+                if(capturesDetachedLoad12CostResults(purpose))
                     detachedFailurePhase="COPY_LAYOUT_INIT";
                 throw failure;
             }
@@ -3921,7 +4034,7 @@ public final class Rb100PhysicalDiagnostics {
                     verifyDetachedPreBoundary();
                     if(complete) {
                         detachedPreResult=detachedPreCursor.result();
-                        if(isDetachedLoad12Cap17(purpose))
+                        if(capturesDetachedLoad12CostResults(purpose))
                             detachedPreJson=detachedPreResult.toJson();
                         detachedMetrics=load12DetachedMetrics(detachedPreResult);
                         detachedPreGeometrySha256=detachedPreResult.prefixGeometrySha256();
@@ -3930,7 +4043,7 @@ public final class Rb100PhysicalDiagnostics {
                             detachedPreResult.prefixHoleCount()==detachedPreHoleCount &&
                             detachedPreResult.pathTupleSha256()!=null &&
                             detachedPreResult.goalFaceBitsSha256()!=null &&
-                            (!isDetachedLoad12Cap17(purpose) ||
+                            (!capturesDetachedLoad12CostResults(purpose) ||
                                 detachedPreJson!=null &&
                                 detachedPreJson.equals(detachedPreResult.toJson())),
                             "detached pre result retains its cursor-derived geometry, path and goal hashes");
@@ -3982,7 +4095,7 @@ public final class Rb100PhysicalDiagnostics {
                     verifyDetachedPostBoundary();
                     if(complete) {
                         detachedPostResult=detachedPostCursor.result();
-                        if(isDetachedLoad12Cap17(purpose))
+                        if(capturesDetachedLoad12CostResults(purpose))
                             detachedPostJson=detachedPostResult.toJson();
                         detachedPostGeometrySha256=detachedPostResult.postGeometrySha256();
                         Load12LayoutCounts post=load12LayoutCounts(
@@ -4013,12 +4126,12 @@ public final class Rb100PhysicalDiagnostics {
                         require(detachedPostGeometrySha256!=null &&
                             detachedPostGeometrySha256.length()==64 &&
                             detachedPostResult.postHoleCount()==detachedPostHoleCount &&
-                            (isDetachedLoad12Cap17(purpose)?
+                            (capturesDetachedLoad12CostResults(purpose)?
                                 detachedCreatedViaCount<=detachedPostResult.createdHoleCount():
                                 detachedPostResult.createdHoleCount()==detachedCreatedViaCount) &&
                             detachedPostResult.createdTraceCount()==
                                 detachedPostTraceCount-detachedPreTraceCount &&
-                            (!isDetachedLoad12Cap17(purpose) ||
+                            (!capturesDetachedLoad12CostResults(purpose) ||
                                 detachedPostJson!=null &&
                                 detachedPostJson.equals(detachedPostResult.toJson())),
                             "detached post result retains actual cursor-derived geometry and publication rows");
@@ -4027,8 +4140,8 @@ public final class Rb100PhysicalDiagnostics {
                         detachedPhase=DETACHED_COMPLETE;
                         verifyLoad12BranchSourceBeforePublication();
                         detachedSourcePreserved=true;
-                        if(isDetachedLoad12Cap17(purpose))
-                            captureCap17SourceStateAfterReplayBeforeResume();
+                        if(capturesDetachedLoad12CostResults(purpose))
+                            captureDetachedSourceStateAfterReplayBeforeResume();
                         releaseDetachedLoad12Owners();
                     }
                 }
@@ -4047,7 +4160,7 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         private void recordDetachedFailure(Throwable failure) {
-            if(!isDetachedLoad12Cap17(purpose)) return;
+            if(!capturesDetachedLoad12CostResults(purpose)) return;
             detachedFailurePhase=detachedPhaseName(detachedPhase);
             detachedFailureType=failure==null?null:failure.getClass().getName();
             detachedFailureMessage=failure==null?null:failure.getMessage();
@@ -4067,8 +4180,8 @@ public final class Rb100PhysicalDiagnostics {
             }
         }
 
-        private void captureCap17SourceStateAfterReplayBeforeResume() {
-            require(isDetachedLoad12Cap17(purpose) && detachedSourcePreserved &&
+        private void captureDetachedSourceStateAfterReplayBeforeResume() {
+            require(capturesDetachedLoad12CostResults(purpose) && detachedSourcePreserved &&
                 detachedReplayPublicationComplete && detachedPostComplete &&
                 detachedPhase==DETACHED_COMPLETE && routeSession!=null &&
                 load12Binding!=null && load12Search==load12Binding.search &&
@@ -4092,12 +4205,26 @@ public final class Rb100PhysicalDiagnostics {
                 P07ScalarReflection.intField(load12Search,"maximumVias");
             cap17SourceAfterReplayBranchExpanded=
                 P07ScalarReflection.intField(load12Branch,"expanded");
+            Object sourceQueue=P07ScalarReflection.read(load12Branch,"queue");
+            Object sourceBest=P07ScalarReflection.read(load12Branch,"best");
+            detachedSourceAfterReplaySessionViaCost=
+                P07ScalarReflection.intField(routeSession,"viaCost");
+            detachedSourceAfterReplaySearchViaCost=
+                P07ScalarReflection.intField(load12Search,"viaCost");
+            detachedSourceAfterReplayQueueSize=P07ScalarReflection.intField(
+                sourceQueue,"size");
+            detachedSourceAfterReplayBestSize=P07ScalarReflection.intField(
+                sourceBest,"size");
             cap17SourceAfterReplayHoleCount=sourceLayout.getHoleCount();
             cap17SourceAfterReplayTraceCount=sourceLayout.getTraces().size();
             cap17SourceAfterReplaySeedsJson=freshSeedJson;
             require(cap17SourceAfterReplaySessionMaximumVias==48 &&
                 cap17SourceAfterReplaySearchMaximumVias==48 &&
+                detachedSourceAfterReplaySessionViaCost==60 &&
+                detachedSourceAfterReplaySearchViaCost==60 &&
                 cap17SourceAfterReplayBranchExpanded==0 &&
+                detachedSourceAfterReplayQueueSize==2 &&
+                detachedSourceAfterReplayBestSize==2 &&
                 cap17SourceAfterReplayHoleCount==17 &&
                 cap17SourceAfterReplayTraceCount==88 &&
                 freshSeedJson!=null && freshSeedJson.equals(load12SeedJson),
@@ -4128,6 +4255,12 @@ public final class Rb100PhysicalDiagnostics {
                 P07ScalarReflection.intField(owner,"maximumVias");
             detachedSearchMaximumVias=P07ScalarReflection.intField(
                 detachedSearch,"maximumVias");
+            detachedSessionViaCost=owner==null?-1:
+                P07ScalarReflection.intField(owner,"viaCost");
+            detachedSearchViaCost=P07ScalarReflection.intField(detachedSearch,"viaCost");
+            detachedPrimaryLayer=P07ScalarReflection.intField(detachedSearch,"primary");
+            detachedPolicy=(PcbLayerRoutingPrototype.Policy)
+                P07ScalarReflection.read(detachedSearch,"policy");
             require(owner!=null && owner!=routeSession && detachedSearch!=load12Search &&
                 detachedBranch!=load12Branch &&
                 P07ScalarReflection.read(detachedSearch,"branch")==detachedBranch &&
@@ -4157,11 +4290,13 @@ public final class Rb100PhysicalDiagnostics {
                 branchOrdinal==load12Binding.branchOrdinal &&
                 currentNet.equals(load12Binding.currentNet) &&
                 P07ScalarReflection.intField(detachedSearch,"pass")==load12Binding.pass &&
-                P07ScalarReflection.intField(detachedSearch,"primary")==
-                    load12Binding.primaryLayer &&
-                detachedSessionMaximumVias==(isDetachedLoad12Cap17(purpose)?17:
+                detachedPrimaryLayer==load12Binding.primaryLayer &&
+                detachedSessionMaximumVias==detachedLoad12TargetMaximumVias(purpose,
                     load12Binding.maximumVias) &&
                 detachedSearchMaximumVias==detachedSessionMaximumVias &&
+                detachedSessionViaCost==(isDetachedLoad12Cost240(purpose)?240:
+                    load12Binding.viaCost) &&
+                detachedSearchViaCost==detachedSessionViaCost &&
                 P07ScalarReflection.intField(detachedSearch,"width")==
                     P07ScalarReflection.intField(load12Binding.search,"width") &&
                 P07ScalarReflection.intField(detachedSearch,"height")==
@@ -4172,7 +4307,7 @@ public final class Rb100PhysicalDiagnostics {
                     P07ScalarReflection.intField(load12Binding.search,"minX") &&
                 P07ScalarReflection.intField(detachedSearch,"minY")==
                     P07ScalarReflection.intField(load12Binding.search,"minY") &&
-                P07ScalarReflection.read(detachedSearch,"policy")==load12Binding.policy &&
+                detachedPolicy==load12Binding.policy &&
                 sameStringArray(netOrder,load12Binding.netOrder) &&
                 start.getPadId().equals(load12Binding.start.getPadId()) &&
                 root.getPadId().equals(load12Binding.root.getPadId()) &&
@@ -4199,15 +4334,18 @@ public final class Rb100PhysicalDiagnostics {
             }
             detachedBinding=new Load12DetachedBinding(owner,detachedSearch,
                 detachedBranch,nets,netOrder,netIndex,currentNet,branchOrdinal,
-                P07ScalarReflection.intField(detachedSearch,"pass"),
-                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
-                P07ScalarReflection.intField(detachedSearch,"primary"),
+                P07ScalarReflection.intField(detachedSearch,"pass"),detachedPolicy,
+                detachedPrimaryLayer,
                 P07ScalarReflection.intField(detachedSearch,"maximumVias"),
+                detachedSearchViaCost,
                 layout,template,holes,start,root,holeIds,holeFingerprints);
             require(detachedBinding.maximumVias==detachedSearchMaximumVias &&
-                detachedBinding.maximumVias==(isDetachedLoad12Cap17(purpose)?17:
-                    load12Binding.maximumVias),
-                "detached branch binding retains the explicitly selected copied VIA allowance");
+                detachedBinding.maximumVias==detachedLoad12TargetMaximumVias(purpose,
+                    load12Binding.maximumVias) &&
+                detachedBinding.viaCost==detachedSearchViaCost &&
+                detachedBinding.viaCost==(isDetachedLoad12Cost240(purpose)?240:
+                    load12Binding.viaCost),
+                "detached branch binding retains the explicitly selected copied VIA allowance and effective cost");
             detachedPrefixHoleIds=holeIds.clone();
             detachedPrefixHoleFingerprints=holeFingerprints.clone();
             detachedNetOrder=netOrder.clone();
@@ -4389,6 +4527,12 @@ public final class Rb100PhysicalDiagnostics {
                 "fresh original and copied branch retain matching seed, ordered-net and prefix identities");
             require(load12PreGeometrySha256.equals(detachedPreGeometrySha256),
                 "fresh original and copied branch retain the same cursor-derived initial prefix geometry");
+            load12PathEndCost=recomputeLoad12PathCost(load12PreResult,
+                load12Binding.policy,load12Binding.primaryLayer,load12Binding.viaCost,
+                "original LOAD12");
+            detachedPathEndCost=recomputeLoad12PathCost(detachedPreResult,
+                detachedPolicy,detachedPrimaryLayer,detachedSearchViaCost,
+                "detached LOAD12");
             if(purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE) {
                 require(load12Metrics.sameAs(detachedMetrics) &&
                     load12Metrics.pathTupleSha256.equals(detachedMetrics.pathTupleSha256) &&
@@ -4428,6 +4572,30 @@ public final class Rb100PhysicalDiagnostics {
                     require(load12PostResult.createdHoleIdAt(index).equals(
                             detachedPostResult.createdHoleIdAt(index)),
                         "same-cap created-hole row matches original at "+index);
+            } else if(isDetachedLoad12Cost240(purpose)) {
+                require(load12SessionMaximumVias==48 && load12MaximumVias==48 &&
+                    load12SessionViaCost==60 && load12SearchViaCost==60 &&
+                    detachedSessionMaximumVias==48 && detachedSearchMaximumVias==48 &&
+                    detachedSessionViaCost==240 && detachedSearchViaCost==240 &&
+                    detachedPrimaryLayer==load12Binding.primaryLayer &&
+                    detachedPolicy==load12Binding.policy &&
+                    detachedPolicy.viaCost==60 &&
+                    load12PathEndCost==load12PreResult.pathCostAt(
+                        load12PreResult.pathNodeCount()-1) &&
+                    detachedPathEndCost==detachedPreResult.pathCostAt(
+                        detachedPreResult.pathNodeCount()-1) &&
+                    load12Metrics.goalSha256.equals(detachedMetrics.goalSha256),
+                    "cost240 copy changes only effective VIA cost and preserves the complete source goal-face mask");
+                require(detachedPreViaCount<=48 && detachedPostViaCount<=48 &&
+                    detachedCreatedViaCount>=0 &&
+                    detachedCreatedViaCount<=detachedPostResult.createdHoleCount() &&
+                    detachedPostResult.postHoleCount()==detachedPostHoleCount &&
+                    detachedPostResult.createdHoleCount()==detachedCreatedHoleIds.length &&
+                    detachedPostResult.createdTraceCount()==detachedCreatedTraceCount &&
+                    prefixRowsRetained(detachedPrefixHoleIds,
+                        detachedPrefixHoleFingerprints,detachedPostHoleIds,
+                        detachedPostHoleFingerprints),
+                    "cost240 normal publication preserves the prefix and remains within its actual48-VIA cap");
             } else {
                 require(isDetachedLoad12Cap17(purpose) &&
                     load12Metrics.goalSha256.equals(detachedMetrics.goalSha256),
@@ -4467,6 +4635,8 @@ public final class Rb100PhysicalDiagnostics {
                 P07ScalarReflection.read(binding.search,"policy")==binding.policy &&
                 P07ScalarReflection.intField(binding.search,"primary")==binding.primaryLayer &&
                 P07ScalarReflection.intField(binding.search,"maximumVias")==binding.maximumVias &&
+                P07ScalarReflection.intField(binding.search,"viaCost")==binding.viaCost &&
+                P07ScalarReflection.intField(routeSession,"viaCost")==binding.viaCost &&
                 P07ScalarReflection.read(binding.search,"layout")==binding.layout &&
                 P07ScalarReflection.read(routeSession,"template")==binding.template &&
                 binding.template.getHoleCount()==0 && binding.template.getHoles().isEmpty(),
@@ -4741,13 +4911,13 @@ public final class Rb100PhysicalDiagnostics {
                 load12PreResult==null && load12PreJson==null,
                 "LOAD12 pre result is materialized once after its bounded cursor completes");
             P07AcceptedBranchCaptureDiagnostics.PreResult result=load12PreCursor.result();
-            String body=isDetachedLoad12Cap17(purpose)?result.toJson():
+            String body=capturesDetachedLoad12CostResults(purpose)?result.toJson():
                 isDetachedLoad12Purpose(purpose)?null:result.toJson();
             require(result.pathNodeCount()>=2 && result.pathNodeCount()<=4096 &&
                 result.transitionCount()>=0 && result.transitionCount()<=4 &&
                 result.prefixHoleCount()==load12Binding.prefixHoles.length &&
                 result.branchOrdinal()==73 && "LOAD12".equals(result.netId()) &&
-                (isDetachedLoad12Cap17(purpose)?body!=null:
+                (capturesDetachedLoad12CostResults(purpose)?body!=null:
                     isDetachedLoad12Purpose(purpose) ||
                     body!=null && body.equals(result.toJson())),
                 "LOAD12 pre result exposes the actual bounded path and captured prefix inventory");
@@ -4838,14 +5008,14 @@ public final class Rb100PhysicalDiagnostics {
                 load12PostResult==null && load12PostJson==null,
                 "LOAD12 post result is materialized once after its bounded cursor completes");
             P07AcceptedBranchCaptureDiagnostics.PostResult result=load12PostCursor.result();
-            String body=isDetachedLoad12Cap17(purpose)?result.toJson():
+            String body=capturesDetachedLoad12CostResults(purpose)?result.toJson():
                 isDetachedLoad12Purpose(purpose)?null:result.toJson();
             require(load12PreResult!=null &&
                 result.postHoleCount()>=load12PreResult.prefixHoleCount() &&
                 result.postHoleCount()<=48 && result.createdHoleCount()>=0 &&
                 result.createdHoleCount()<=result.postHoleCount() &&
                 result.createdTraceCount()>=0 && result.createdTraceCount()<=100000 &&
-                (isDetachedLoad12Cap17(purpose)?body!=null:
+                (capturesDetachedLoad12CostResults(purpose)?body!=null:
                     isDetachedLoad12Purpose(purpose) ||
                     body!=null && body.equals(result.toJson())),
                 "LOAD12 post result exposes actual bounded publication counts and immutable JSON");
@@ -6328,6 +6498,276 @@ public final class Rb100PhysicalDiagnostics {
                 ",\"bends\":"+metrics.bends+",\"flips\":"+metrics.flips+"}";
         }
 
+        private String detachedLoad12Cost240PathJson(Load12DetachedMetrics metrics,
+                int endCost) {
+            require(metrics!=null && metrics.pathTupleSha256!=null &&
+                metrics.goalSha256!=null && metrics.nodeCount>=2 &&
+                metrics.planarLength>=0 && metrics.bends>=0 && metrics.flips>=0 &&
+                endCost>=0,
+                "cost240 path values come only from the cursor-captured actual PreResult");
+            return "{\"pathTupleSha256\":\""+metrics.pathTupleSha256+
+                "\",\"goalFaceBitsSha256\":\""+metrics.goalSha256+
+                "\",\"nodeCount\":"+metrics.nodeCount+
+                ",\"planarLength\":"+metrics.planarLength+
+                ",\"bends\":"+metrics.bends+",\"flips\":"+metrics.flips+
+                ",\"transitionCount\":"+metrics.flips+
+                ",\"endCost\":"+endCost+"}";
+        }
+
+        String detachedLoad12Cost240EventJson(P07PolicyDiagnosticCase result,
+                boolean pairPassed) {
+            requireTerminalOperation(result);
+            PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
+                (PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext;
+            boolean sourceResumed=qualityRejected && targetRequestAccounted &&
+                load12CaptureReleased;
+            require(pairPassed && isDetachedLoad12Cost240(purpose) &&
+                graphTarget==P07ZeroViaGraphDiagnostics.Target.LOAD12 &&
+                result!=null && result.qualityScalarProbe==this &&
+                "PASS".equals(result.status) && result.cleanupPassed &&
+                result.operationMillis<=90000L && result.workUnits<=WORK_LIMIT &&
+                result.maxUnitMillis<=nanosToMillis(UNIT_LIMIT_NANOS) &&
+                result.cleanupMillis<=CLEANUP_LIMIT_MILLIS && context!=null &&
+                detachedComparisonComplete && detachedSourcePreserved &&
+                cap17SourceAfterReplayCaptured &&
+                cap17SourceAfterReplaySessionMaximumVias==48 &&
+                cap17SourceAfterReplaySearchMaximumVias==48 &&
+                detachedSourceAfterReplaySessionViaCost==60 &&
+                detachedSourceAfterReplaySearchViaCost==60 &&
+                cap17SourceAfterReplayBranchExpanded==0 &&
+                detachedSourceAfterReplayQueueSize==2 &&
+                detachedSourceAfterReplayBestSize==2 &&
+                cap17SourceAfterReplayHoleCount==17 &&
+                cap17SourceAfterReplayTraceCount==88 &&
+                cap17SourceAfterReplaySeedsJson!=null &&
+                cap17SourceAfterReplaySeedsJson.equals(load12SeedJson) &&
+                detachedOwnersReleased && detachedReplayPublicationComplete &&
+                detachedPublisherLastStage==6 && detachedPreComplete &&
+                detachedPostComplete && detachedCopyTask==null && detachedReplay==null &&
+                detachedSessionMaximumVias==48 && detachedSearchMaximumVias==48 &&
+                detachedSessionViaCost==240 && detachedSearchViaCost==240 &&
+                load12SessionMaximumVias==48 && load12MaximumVias==48 &&
+                load12SessionViaCost==60 && load12SearchViaCost==60 &&
+                load12CaptureReleased && qualityRejected && targetRequestAccounted &&
+                terminalConfirmed && detachedPreJson!=null &&
+                detachedPostJson!=null && detachedPreJson.startsWith("{") &&
+                detachedPostJson.startsWith("{") && detachedPreResult!=null &&
+                detachedPostResult!=null && load12PreJson!=null &&
+                load12PostJson!=null && load12PreJson.startsWith("{") &&
+                load12PostJson.startsWith("{") && load12Metrics!=null &&
+                detachedMetrics!=null && load12PathEndCost>=0 &&
+                detachedPathEndCost>=0 && load12SeedJson!=null &&
+                detachedSeedJson!=null && load12NetOrder!=null &&
+                detachedNetOrder!=null && load12InitialPrefixHoleIds!=null &&
+                load12InitialPrefixHoleFingerprints!=null &&
+                detachedPrefixHoleIds!=null && detachedPrefixHoleFingerprints!=null &&
+                load12PreGeometrySha256!=null && detachedPreGeometrySha256!=null &&
+                load12PostGeometrySha256!=null && detachedPostGeometrySha256!=null &&
+                load12PublicationSha256!=null && detachedPublicationSha256!=null &&
+                load12Pass==1 && load12NetPosition==3 && load12NextFetch==4 &&
+                load12BranchOrdinal==73 && load12SearchBranches==73 &&
+                "LOAD12".equals(load12NetId) && "JLOAD.1".equals(load12StartPadId) &&
+                "CSTORE_E.1".equals(load12RootPadId) &&
+                load12PrimaryLayer==PcbCopperLayer.BOTTOM.ordinal() &&
+                load12GridWidth==478 && load12GridHeight==309 &&
+                load12GridCells==147702 && load12GridOriginX==30 &&
+                load12GridOriginY==30 && PcbLayerRoutingPrototype.GRID==10 &&
+                load12PreViaCount==17 && load12PreTraceCount==88 &&
+                detachedPreHoleCount==17 && detachedPreViaCount==17 &&
+                detachedPreTraceCount==88 && detachedPostViaCount<=48 &&
+                detachedCreatedViaCount>=0 &&
+                detachedCreatedViaCount<=detachedPostResult.createdHoleCount() &&
+                detachedPostResult.postHoleCount()==detachedPostHoleCount &&
+                detachedPostResult.createdHoleCount()==detachedCreatedHoleIds.length &&
+                detachedPostResult.createdTraceCount()==detachedCreatedTraceCount &&
+                prefixRowsRetained(detachedPrefixHoleIds,
+                    detachedPrefixHoleFingerprints,detachedPostHoleIds,
+                    detachedPostHoleFingerprints) &&
+                detachedCopyAdvanceCalls>0 && detachedCopyLastReportedWork>0 &&
+                detachedCopyEntries>0 && detachedObserverChecks>0 &&
+                detachedReplayEntryCalls>0 && detachedReplayEntryTotalWork>0 &&
+                detachedReplayPublicationCalls>0 &&
+                detachedReplayPublicationTotalWork>0 &&
+                detachedPreAdvanceCalls>0 && detachedPreTotalWork>0 &&
+                detachedPostAdvanceCalls>0 && detachedPostTotalWork>0 &&
+                load12PreAdvanceCalls>0 && load12PreTotalWork>0 &&
+                load12PostAdvanceCalls>0 && load12PostTotalWork>0 &&
+                load12PreAdvanceCalls+load12PostAdvanceCalls<=WORK_LIMIT &&
+                detachedSourcePreserved && sourceResumed && load12CaptureReleased &&
+                graphReceipt==null && graphCursor==null && graphAdvanceCalls==0 &&
+                load12PreResult==null && load12PostResult==null,
+                "cost240 event requires bounded stage6 publication, raw captures, source preservation and normal resumption");
+            verifyLoad12EventHeader();
+            boolean seedEqual=load12SeedJson.equals(detachedSeedJson) &&
+                load12SeedSha256.equals(detachedSeedSha256);
+            boolean netOrderEqual=Arrays.equals(load12NetOrder,detachedNetOrder) &&
+                load12NetOrderSha256.equals(detachedNetOrderSha256);
+            boolean prefixRowsEqual=load12PrefixRowsSha256.equals(
+                detachedPrefixRowsSha256) &&
+                sameStringArray(load12InitialPrefixHoleIds,detachedPrefixHoleIds) &&
+                sameStringArray(load12InitialPrefixHoleFingerprints,
+                    detachedPrefixHoleFingerprints);
+            boolean preGeometryEqual=load12PreGeometrySha256.equals(
+                detachedPreGeometrySha256);
+            boolean goalMaskEqual=load12Metrics.goalSha256.equals(
+                detachedMetrics.goalSha256);
+            require(seedEqual && netOrderEqual && prefixRowsEqual &&
+                preGeometryEqual && goalMaskEqual && detachedSourcePreserved &&
+                sourceResumed,
+                "cost240 replay preserves source seeds, order, prefix, initial geometry, full goal mask and ordinary resumption");
+            boolean pathEqual=load12Metrics.pathTupleSha256.equals(
+                detachedMetrics.pathTupleSha256);
+            boolean postGeometryEqual=load12PostGeometrySha256.equals(
+                detachedPostGeometrySha256);
+            boolean publicationEqual=load12PublicationSha256.equals(
+                detachedPublicationSha256);
+            boolean postRowsEqual=sameStringArray(load12PostHoleIds,detachedPostHoleIds) &&
+                sameStringArray(load12PostHoleFingerprints,detachedPostHoleFingerprints) &&
+                sameStringArray(load12CreatedHoleIds,detachedCreatedHoleIds);
+            String initialSource=detachedLoad12InitialIdentityJson(load12SeedJson,
+                load12NetOrder,load12NetOrderSha256,load12InitialPrefixHoleIds,
+                load12InitialPrefixHoleFingerprints,load12PrefixRowsSha256,
+                load12PreGeometrySha256,load12PreHoleIds.length,
+                load12PreViaCount,load12PreTraceCount);
+            String initialClone=detachedLoad12InitialIdentityJson(detachedSeedJson,
+                detachedNetOrder,detachedNetOrderSha256,detachedPrefixHoleIds,
+                detachedPrefixHoleFingerprints,detachedPrefixRowsSha256,
+                detachedPreGeometrySha256,detachedPreHoleCount,
+                detachedPreViaCount,detachedPreTraceCount);
+            StringBuilder event=new StringBuilder(16384);
+            event.append("RB100_LOAD12_DETACHED_COST240_EVENT {\"protocolVersion\":1")
+                .append(",\"schema\":\"rb100-load12-detached-cost240-r1\",\"status\":\"PASS\"")
+                .append(",\"runId\":\"").append(jsonFull(runId))
+                .append("\",\"operationId\":\"").append(jsonFull(operationId))
+                .append("\",\"scope\":\"ONE_ACTUAL_LOAD12_BRANCH_DETACHED_COST240_REPLAY\"")
+                .append(",\"selector\":{\"rootSeed\":\"").append(SEED)
+                .append("\",\"placementSeed\":\"").append(PLACEMENT_DIAGNOSTIC_SEED)
+                .append("\",\"routingSeed\":\"").append(ROUTING_DIAGNOSTIC_ROUTING_SEED)
+                .append("\",\"routeRequestIndex\":").append(context.routeRequestIndex())
+                .append(",\"selectedPlacementIndex\":").append(context.selectedPlacementIndex())
+                .append(",\"selectedPlacementAttempt\":").append(context.selectedPlacementAttempt())
+                .append(",\"eligiblePlacementAttempts\":")
+                .append(integerArrayJson(context.eligiblePlacementAttempts()))
+                .append(",\"placementFingerprintSha256\":\"")
+                .append(sha256Hex(context.rawPlacementFingerprint()))
+                .append("\",\"pass\":").append(load12Pass)
+                .append(",\"netPosition\":").append(load12NetPosition)
+                .append(",\"nextFetch\":").append(load12NextFetch)
+                .append(",\"branchOrdinal\":").append(load12BranchOrdinal)
+                .append(",\"searchBranches\":").append(load12SearchBranches)
+                .append(",\"netId\":\"").append(jsonFull(load12NetId))
+                .append("\",\"primaryLayer\":\"BOTTOM\",\"startPadId\":\"")
+                .append(jsonFull(load12StartPadId)).append("\",\"rootPadId\":\"")
+                .append(jsonFull(load12RootPadId)).append("\",\"grid\":{\"width\":")
+                .append(load12GridWidth).append(",\"height\":").append(load12GridHeight)
+                .append(",\"cells\":").append(load12GridCells).append(",\"minX\":")
+                .append(load12GridOriginX).append(",\"minY\":").append(load12GridOriginY)
+                .append(",\"pitch\":").append(PcbLayerRoutingPrototype.GRID)
+                .append("},\"prefix\":{\"vias\":").append(load12PreViaCount)
+                .append(",\"traces\":").append(load12PreTraceCount).append("}},\"source\":{")
+                .append("\"sessionMaximumVias\":").append(load12SessionMaximumVias)
+                .append(",\"searchMaximumVias\":").append(load12MaximumVias)
+                .append(",\"sessionViaCost\":").append(load12SessionViaCost)
+                .append(",\"searchViaCost\":").append(load12SearchViaCost)
+                .append(",\"initial\":").append(initialSource)
+                .append(",\"afterReplayBeforeResume\":{\"sessionMaximumVias\":")
+                .append(cap17SourceAfterReplaySessionMaximumVias)
+                .append(",\"searchMaximumVias\":").append(cap17SourceAfterReplaySearchMaximumVias)
+                .append(",\"sessionViaCost\":").append(detachedSourceAfterReplaySessionViaCost)
+                .append(",\"searchViaCost\":").append(detachedSourceAfterReplaySearchViaCost)
+                .append(",\"branchExpanded\":").append(cap17SourceAfterReplayBranchExpanded)
+                .append(",\"frontier\":{\"queueSize\":").append(detachedSourceAfterReplayQueueSize)
+                .append(",\"bestSize\":").append(detachedSourceAfterReplayBestSize)
+                .append(",\"seeds\":").append(cap17SourceAfterReplaySeedsJson).append("}")
+                .append(",\"holeCount\":").append(cap17SourceAfterReplayHoleCount)
+                .append(",\"traceCount\":").append(cap17SourceAfterReplayTraceCount)
+                .append("}},\"clone\":{\"requestedMaximumVias\":48,\"requestedViaCost\":240")
+                .append(",\"sessionMaximumVias\":").append(detachedSessionMaximumVias)
+                .append(",\"searchMaximumVias\":").append(detachedSearchMaximumVias)
+                .append(",\"sessionViaCost\":").append(detachedSessionViaCost)
+                .append(",\"searchViaCost\":").append(detachedSearchViaCost)
+                .append(",\"maximumTransitions\":").append(detachedPolicy.transitions)
+                .append(",\"initial\":").append(initialClone).append(",\"path\":")
+                .append(detachedLoad12Cost240PathJson(detachedMetrics,detachedPathEndCost))
+                .append(",\"preResult\":").append(detachedPreJson)
+                .append(",\"postResult\":").append(detachedPostJson)
+                .append(",\"normalPublisher\":{\"completed\":true,\"stage\":")
+                .append(detachedPublisherLastStage).append(",\"replayComplete\":true")
+                .append(",\"preHoleCount\":").append(detachedPreHoleCount)
+                .append(",\"preViaCount\":").append(detachedPreViaCount)
+                .append(",\"preTraceCount\":").append(detachedPreTraceCount)
+                .append(",\"postHoleCount\":").append(detachedPostHoleCount)
+                .append(",\"postViaCount\":").append(detachedPostViaCount)
+                .append(",\"postTraceCount\":").append(detachedPostTraceCount)
+                .append(",\"createdHoleCount\":").append(detachedPostResult.createdHoleCount())
+                .append(",\"createdViaCount\":").append(detachedCreatedViaCount)
+                .append(",\"createdTraceCount\":").append(detachedCreatedTraceCount)
+                .append("}},\"original\":{\"path\":")
+                .append(detachedLoad12Cost240PathJson(load12Metrics,load12PathEndCost))
+                .append(",\"preGeometrySha256\":\"").append(load12PreGeometrySha256)
+                .append("\",\"postGeometrySha256\":\"").append(load12PostGeometrySha256)
+                .append("\",\"publicationSha256\":\"").append(load12PublicationSha256)
+                .append("\",\"preResult\":").append(load12PreJson)
+                .append(",\"postResult\":").append(load12PostJson)
+                .append(",\"pre\":{\"holeCount\":").append(load12PreHoleIds.length)
+                .append(",\"viaCount\":").append(load12PreViaCount)
+                .append(",\"traceCount\":").append(load12PreTraceCount)
+                .append("},\"post\":{\"holeCount\":").append(load12PostHoleCount)
+                .append(",\"viaCount\":").append(load12PostViaCount)
+                .append(",\"traceCount\":").append(load12PostTraceCount)
+                .append(",\"createdViaCount\":").append(load12CreatedViaCount)
+                .append(",\"createdTraceCount\":").append(load12CreatedTraceCount)
+                .append("}},\"work\":{\"sourceOperation\":{\"operationMs\":")
+                .append(result.operationMillis).append(",\"workUnits\":").append(result.workUnits)
+                .append(",\"maxUnitMs\":").append(result.maxUnitMillis)
+                .append(",\"cleanupMs\":").append(result.cleanupMillis)
+                .append(",\"manualGroups\":").append(manualGroups)
+                .append(",\"manualSliceSteps\":").append(manualSliceSteps)
+                .append("},\"copy\":{\"advanceCalls\":").append(detachedCopyAdvanceCalls)
+                .append(",\"workSteps\":").append(detachedCopyLastReportedWork)
+                .append(",\"copiedEntries\":").append(detachedCopyEntries)
+                .append(",\"lastWork\":").append(detachedCopyLastWork)
+                .append(",\"observerChecks\":").append(detachedObserverChecks)
+                .append("},\"replay\":{\"toPreCalls\":").append(detachedReplayEntryCalls)
+                .append(",\"toPreWork\":").append(detachedReplayEntryTotalWork)
+                .append(",\"toPostCalls\":").append(detachedReplayPublicationCalls)
+                .append(",\"toPostWork\":").append(detachedReplayPublicationTotalWork)
+                .append("},\"cloneCursor\":{\"preAdvanceCalls\":").append(detachedPreAdvanceCalls)
+                .append(",\"preWork\":").append(detachedPreTotalWork)
+                .append(",\"postAdvanceCalls\":").append(detachedPostAdvanceCalls)
+                .append(",\"postWork\":").append(detachedPostTotalWork)
+                .append("},\"sourceCursor\":{\"preAdvanceCalls\":").append(load12PreAdvanceCalls)
+                .append(",\"preWork\":").append(load12PreTotalWork)
+                .append(",\"postAdvanceCalls\":").append(load12PostAdvanceCalls)
+                .append(",\"postWork\":").append(load12PostTotalWork)
+                .append("},\"sourceOutcome\":{\"phase\":\"COMPLETE\",\"qualityRejected\":")
+                .append(qualityRejected).append(",\"targetRequestAccounted\":")
+                .append(targetRequestAccounted).append(",\"sourceResumed\":")
+                .append(sourceResumed).append("}},\"comparison\":{\"initialSeedsEqual\":")
+                .append(seedEqual).append(",\"initialNetOrderEqual\":").append(netOrderEqual)
+                .append(",\"initialPrefixRowsEqual\":").append(prefixRowsEqual)
+                .append(",\"initialPrefixGeometryEqual\":").append(preGeometryEqual)
+                .append(",\"fullGoalFaceBitsEqual\":").append(goalMaskEqual)
+                .append(",\"pathTupleEqualObserved\":").append(pathEqual)
+                .append(",\"postGeometryEqualObserved\":").append(postGeometryEqual)
+                .append(",\"publicationEqualObserved\":").append(publicationEqual)
+                .append(",\"postRowsEqual\":").append(postRowsEqual)
+                .append(",\"prefixRetained\":true,\"sourcePreserved\":")
+                .append(detachedSourcePreserved).append(",\"sourceResumed\":")
+                .append(sourceResumed).append(",\"sourceCostRecurrenceVerified\":true")
+                .append(",\"cloneCostRecurrenceVerified\":true},\"limits\":{")
+                .append("\"operationMs\":90000,\"workUnits\":").append(WORK_LIMIT)
+                .append(",\"unitMs\":").append(nanosToMillis(UNIT_LIMIT_NANOS))
+                .append(",\"cleanupMs\":").append(CLEANUP_LIMIT_MILLIS)
+                .append(",\"quantum\":").append(MAX_MANUAL_STEPS_PER_UNIT)
+                .append(",\"maximumSourceVias\":48,\"maximumDetachedVias\":48")
+                .append(",\"sourceViaCost\":60,\"detachedViaCost\":240")
+                .append(",\"maximumTransitions\":4},\"branchRouteFound\":true")
+                .append(",\"fullBoardFeasibility\":\"UNKNOWN\",\"routeAdoption\":false")
+                .append(",\"layoutQualification\":false,\"playable100\":false}");
+            return event.toString();
+        }
+
         String pathEventJson(P07PolicyDiagnosticCase result,boolean pairPassed) {
             requireTerminalOperation(result);
             require(pairPassed && "QUALITY_PROBE".equals(operationId),
@@ -6888,7 +7328,7 @@ public final class Rb100PhysicalDiagnostics {
         final Object search,netVectorIdentity,branch;
         final String[] netOrder,prefixHoleIds,prefixHoleFingerprints;
         final int searchNetIndex,currentNetPosition,branchOrdinal,searchBranches,
-            pass,primaryLayer,maximumVias;
+            pass,primaryLayer,maximumVias,viaCost;
         final String currentNet,prefixGeometryFingerprint;
         final PcbLayerRoutingPrototype.Policy policy;
         final PcbBoardLayout layout,template;
@@ -6898,7 +7338,7 @@ public final class Rb100PhysicalDiagnostics {
         Load12BranchBinding(Object search,Object branch,Vector<?> netVector,
                 String[] netOrder,int searchNetIndex,String currentNet,int branchOrdinal,
                 int searchBranches,int pass,PcbLayerRoutingPrototype.Policy policy,
-                int primaryLayer,int maximumVias,PcbBoardLayout layout,
+                int primaryLayer,int maximumVias,int viaCost,PcbBoardLayout layout,
                 PcbBoardLayout template,PcbBoardHole[] prefixHoles,
                 PcbPadPlacement start,PcbPadPlacement root) {
             this.search=search;
@@ -6914,6 +7354,7 @@ public final class Rb100PhysicalDiagnostics {
             this.policy=policy;
             this.primaryLayer=primaryLayer;
             this.maximumVias=maximumVias;
+            this.viaCost=viaCost;
             this.layout=layout;
             this.template=template;
             this.prefixHoleArrayIdentity=prefixHoles;
@@ -6934,7 +7375,7 @@ public final class Rb100PhysicalDiagnostics {
         final Object owner,search,branch,netVectorIdentity;
         final String[] netOrder,prefixHoleIds,prefixHoleFingerprints;
         final int searchNetIndex,currentNetPosition,branchOrdinal,pass,primaryLayer,
-            maximumVias;
+            maximumVias,viaCost;
         final String currentNet;
         final PcbLayerRoutingPrototype.Policy policy;
         final PcbBoardLayout layout,template;
@@ -6943,7 +7384,7 @@ public final class Rb100PhysicalDiagnostics {
         Load12DetachedBinding(Object owner,Object search,Object branch,Vector<?> netVector,
                 String[] netOrder,int searchNetIndex,String currentNet,int branchOrdinal,
                 int pass,PcbLayerRoutingPrototype.Policy policy,int primaryLayer,
-                int maximumVias,PcbBoardLayout layout,PcbBoardLayout template,
+                int maximumVias,int viaCost,PcbBoardLayout layout,PcbBoardLayout template,
                 PcbBoardHole[] prefixHoles,PcbPadPlacement start,PcbPadPlacement root,
                 String[] prefixHoleIds,String[] prefixHoleFingerprints) {
             this.owner=owner; this.search=search; this.branch=branch;
@@ -6951,6 +7392,7 @@ public final class Rb100PhysicalDiagnostics {
             this.searchNetIndex=searchNetIndex; currentNetPosition=searchNetIndex-1;
             this.currentNet=currentNet; this.branchOrdinal=branchOrdinal; this.pass=pass;
             this.policy=policy; this.primaryLayer=primaryLayer; this.maximumVias=maximumVias;
+            this.viaCost=viaCost;
             this.layout=layout; this.template=template;
             prefixHoleArrayIdentity=prefixHoles; this.start=start; this.root=root;
             this.prefixHoleIds=prefixHoleIds.clone();
@@ -7018,6 +7460,56 @@ public final class Rb100PhysicalDiagnostics {
             "LOAD12 flip metric is derived from actual path layer transitions");
         return new Load12DetachedMetrics(result.pathNodeCount(),length,bends,flips,
             result.pathTupleSha256(),result.goalFaceBitsSha256());
+    }
+
+    private static int recomputeLoad12PathCost(
+            P07AcceptedBranchCaptureDiagnostics.PreResult result,
+            PcbLayerRoutingPrototype.Policy policy,int primaryLayer,int viaCost,
+            String label) {
+        require(result!=null && policy==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER &&
+            primaryLayer>=0 && primaryLayer<=1 && viaCost>=0 && viaCost<=240 &&
+            result.pathNodeCount()>=2 && result.pathNodeCount()<=4096,
+            label+" cost recurrence is bound to one complete bounded actual PreResult");
+        int layer=result.pathLayerAt(0);
+        require((layer==0 || layer==1) && result.pathDirectionAt(0)==4 &&
+            result.pathTransitionsAt(0)==0,
+            label+" first actual path node is one of the two unmodified seed states");
+        long expected=layer==primaryLayer?0L:policy.secondaryCost;
+        require(result.pathCostAt(0)==expected,
+            label+" first actual node cost independently matches its seed face charge");
+        int transitions=0;
+        for(int index=1;index<result.pathNodeCount();index++) {
+            int beforeLayer=result.pathLayerAt(index-1);
+            int afterLayer=result.pathLayerAt(index);
+            int direction=result.pathDirectionAt(index);
+            int dx=Math.abs(result.pathXAt(index)-result.pathXAt(index-1));
+            int dy=Math.abs(result.pathYAt(index)-result.pathYAt(index-1));
+            if(beforeLayer==afterLayer) {
+                require(direction>=0 && direction<4 && dx+dy==PcbLayerRoutingPrototype.GRID &&
+                    ((dx==0)!=(dy==0)) && result.pathTransitionsAt(index)==transitions,
+                    label+" planar edge is one actual orthogonal step with unchanged VIA count");
+                expected+=PcbLayerRoutingPrototype.GRID+
+                    (afterLayer==primaryLayer?0:policy.secondaryCost)+
+                    (result.pathDirectionAt(index-1)!=4 &&
+                     result.pathDirectionAt(index-1)!=direction?
+                        PcbLayerRoutingPrototype.TURN_COST:0);
+            } else {
+                require((beforeLayer==0 || beforeLayer==1) &&
+                    (afterLayer==0 || afterLayer==1) && dx==0 && dy==0 && direction==4 &&
+                    result.pathTransitionsAt(index)==transitions+1,
+                    label+" face transition is one same-cell VIA with incremented transition count");
+                transitions++;
+                expected+=viaCost;
+            }
+            require(expected<=Integer.MAX_VALUE &&
+                result.pathCostAt(index)==(int)expected,
+                label+" actual node cost matches the independently recomputed Search recurrence at node "+
+                    index);
+        }
+        require(transitions==result.transitionCount() && transitions<=policy.transitions &&
+            result.pathTransitionsAt(result.pathNodeCount()-1)==transitions,
+            label+" actual path VIA count matches its captured PreResult transition census");
+        return (int)expected;
     }
 
     private static Load12LayoutCounts load12LayoutCounts(PcbBoardLayout layout) {

@@ -328,8 +328,18 @@ origin/codex/q100-physical-feasibility, exact remote SHA verified; completion
 Gmail `1a1a4bcda7e00bdc` was sent once. The next private
 [cost240 plan](task-evidence/Q100/load12-cap17-actual-r1/NEXT_COST240_PLAN.md)
 accounts for the actual seed, secondary-face and turn charges; the length-only
-comparison is not a treatment oracle. Cost240 is a bounded hypothesis, with no
-implementation or adoption claimed yet.
+comparison is not a treatment oracle. That plan established a bounded hypothesis
+before implementation. The [cost240 experiment](task-evidence/Q100/load12-cost240-r1/README.md)
+is accepted for the finite diagnostic: its actual detached cap48/cost240 replay
+and independent consumer pass for one new VIA and two new traces, with original cap48/cost60
+preservation and resumption. Final native33/focused7,135 Python methods with two
+declared skips, five positive readers, eight artifact and two NTFS rejection
+controls, actual Player/Developer builds, Player privacy, E06State10, Current9
+and exactly three approved normal MEDIUM roots pass. Earlier failures and the
+retained failed-privacy profile/claim remain recorded. No default adoption or
+whole-board qualification follows; playable100=0/beta held. Publication is recorded
+in the current checkpoint. Next is the bounded copied-owner routing-remainder
+experiment, before any whole-generation treatment decision.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

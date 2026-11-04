@@ -251,6 +251,15 @@ public final class P07RelaxedDistanceBoundContractTest {
             new PcbLayerRoutingPrototype.RelaxedDistanceBound(1, 1, new boolean[2], 0,
                 PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER, null);
         }}, "missing fixed-graph edge callbacks are rejected");
+        expectIllegalArgument(new CheckAction() { public void run() {
+            new PcbLayerRoutingPrototype.RelaxedDistanceBound(1, 1, new boolean[2], 0,
+                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER, -1, new SyntheticGraph(1, 1));
+        }}, "negative effective VIA costs are rejected before field allocation");
+        expectIllegalArgument(new CheckAction() { public void run() {
+            new PcbLayerRoutingPrototype.RelaxedDistanceBound(1, 1, new boolean[2], 0,
+                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
+                PcbLayerRoutingPrototype.MAX_DIAGNOSTIC_VIA_COST+1,new SyntheticGraph(1, 1));
+        }}, "effective VIA costs above the diagnostic bound are rejected");
 
         // A query failure retires the partially built field and must remain observable on
         // every later advance/query; it must not resume after a half-scanned settled state.
@@ -302,6 +311,27 @@ public final class P07RelaxedDistanceBoundContractTest {
     }
 
     private static void runCapacityMaskedDistanceContracts() {
+        // This standalone Dijkstra field accepts any nonnegative VIA edge weight.
+        // Diagnostic Search-copy admission has a stricter floor because its retained
+        // turn heuristic does not model a face change; see the detached replay contract.
+        SyntheticGraph endpointVia=new SyntheticGraph(1,1);
+        endpointVia.vias[0]=true;
+        boolean[] bottomEndpoint=new boolean[] {false,true};
+        boolean[] topEndpoint=new boolean[] {true,false};
+        PcbLayerRoutingPrototype.RelaxedDistanceBound zeroCostEndpoint=
+            verifyBoundAgainstReference(endpointVia,bottomEndpoint,0,0);
+        PcbLayerRoutingPrototype.RelaxedDistanceBound oneCostEndpoint=
+            verifyBoundAgainstReference(endpointVia,bottomEndpoint,0,1);
+        PcbLayerRoutingPrototype.RelaxedDistanceBound zeroCostReverseEndpoint=
+            verifyBoundAgainstReference(endpointVia,topEndpoint,0,0);
+        PcbLayerRoutingPrototype.RelaxedDistanceBound oneCostReverseEndpoint=
+            verifyBoundAgainstReference(endpointVia,topEndpoint,0,1);
+        require(boundViaCost(zeroCostEndpoint)==0 && boundViaCost(zeroCostReverseEndpoint)==0 &&
+            zeroCostEndpoint.value(0,0)==0 && zeroCostReverseEndpoint.value(0,1)==0 &&
+            boundViaCost(oneCostEndpoint)==1 && boundViaCost(oneCostReverseEndpoint)==1 &&
+            oneCostEndpoint.value(0,0)==1 && oneCostReverseEndpoint.value(0,1)==1,
+            "standalone one-cell VIA-distance oracle supports costs zero and one in both face directions");
+
         SyntheticGraph planar=new SyntheticGraph(3,2);
         planar.step(0,0,1); planar.step(0,1,2); planar.step(0,2,5);
         boolean[] planarGoals=new boolean[planar.cells*2]; planarGoals[5]=true;
@@ -319,6 +349,32 @@ public final class P07RelaxedDistanceBoundContractTest {
         require(viaAllowedBound.value(0,0)==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.viaCost &&
             viaAllowedBound.value(0,1)==0,
             "the single VIA is the only literal connection to the opposite-face goal");
+
+        SyntheticGraph weightedVia=new SyntheticGraph(2,1);
+        weightedVia.step(0,0,1); weightedVia.vias[1]=true;
+        boolean[] weightedGoal=new boolean[weightedVia.cells*2];
+        weightedGoal[weightedVia.cells+1]=true;
+        PcbLayerRoutingPrototype.RelaxedDistanceBound defaultCostBound=
+            verifyBoundAgainstReference(weightedVia,weightedGoal,0);
+        PcbLayerRoutingPrototype.RelaxedDistanceBound cost240Bound=
+            verifyBoundAgainstReference(weightedVia,weightedGoal,0,
+                PcbLayerRoutingPrototype.MAX_DIAGNOSTIC_VIA_COST);
+        boolean[] reverseWeightedGoal=new boolean[weightedVia.cells*2];
+        reverseWeightedGoal[1]=true;
+        PcbLayerRoutingPrototype.RelaxedDistanceBound defaultReverseCostBound=
+            verifyBoundAgainstReference(weightedVia,reverseWeightedGoal,0);
+        PcbLayerRoutingPrototype.RelaxedDistanceBound reverseCost240Bound=
+            verifyBoundAgainstReference(weightedVia,reverseWeightedGoal,0,
+                PcbLayerRoutingPrototype.MAX_DIAGNOSTIC_VIA_COST);
+        require(boundViaCost(defaultCostBound)==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.viaCost &&
+            boundViaCost(cost240Bound)==PcbLayerRoutingPrototype.MAX_DIAGNOSTIC_VIA_COST &&
+            boundViaCost(defaultReverseCostBound)==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.viaCost &&
+            boundViaCost(reverseCost240Bound)==PcbLayerRoutingPrototype.MAX_DIAGNOSTIC_VIA_COST &&
+            defaultCostBound.value(0,0)==70 && defaultCostBound.value(1,0)==60 &&
+            cost240Bound.value(0,0)==250 && cost240Bound.value(1,0)==240 &&
+            defaultReverseCostBound.value(1,1)==60 &&
+            reverseCost240Bound.value(1,1)==PcbLayerRoutingPrototype.MAX_DIAGNOSTIC_VIA_COST,
+            "weighted independent path oracle sees default and cost-240 VIA edges in both face directions");
         SyntheticGraph viaMasked=new SyntheticGraph(1,1);
         viaMasked.vias[0]=true; viaMasked.maskVias=true;
         PcbLayerRoutingPrototype.RelaxedDistanceBound viaMaskedBound=
@@ -358,9 +414,24 @@ public final class P07RelaxedDistanceBoundContractTest {
 
     private static PcbLayerRoutingPrototype.RelaxedDistanceBound verifyBoundAgainstReference(
             SyntheticGraph graph, boolean[] goals, int primary) {
+        return verifyBoundAgainstReference(graph,goals,primary,
+            PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.viaCost,false);
+    }
+
+    private static PcbLayerRoutingPrototype.RelaxedDistanceBound verifyBoundAgainstReference(
+            SyntheticGraph graph, boolean[] goals, int primary,int viaCost) {
+        return verifyBoundAgainstReference(graph,goals,primary,viaCost,true);
+    }
+
+    private static PcbLayerRoutingPrototype.RelaxedDistanceBound verifyBoundAgainstReference(
+            SyntheticGraph graph, boolean[] goals, int primary,int viaCost,boolean explicitCost) {
+        int ordinaryCallsBefore=graph.ordinaryCalls,viaCallsBefore=graph.viaCalls;
         final PcbLayerRoutingPrototype.RelaxedDistanceBound bound =
-            new PcbLayerRoutingPrototype.RelaxedDistanceBound(graph.width, graph.height, goals, primary,
-                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER, graph);
+            explicitCost?new PcbLayerRoutingPrototype.RelaxedDistanceBound(
+                graph.width,graph.height,goals,primary,
+                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,viaCost,graph):
+                new PcbLayerRoutingPrototype.RelaxedDistanceBound(graph.width,graph.height,goals,primary,
+                    PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,graph);
         expectIllegalState(new CheckAction() { public void run() { bound.value(0, 0); } },
             "a relaxed-distance value is unavailable before field completion");
         int advances = 0;
@@ -372,7 +443,11 @@ public final class P07RelaxedDistanceBoundContractTest {
         advances++;
         require(bound.getWorkUnits() == advances && bound.isComplete(),
             "the final incremental step completes the field and is counted once");
-        long[][] reference = referenceDistances(graph, goals, primary);
+        int ordinaryCallsAfter=graph.ordinaryCalls,viaCallsAfter=graph.viaCalls;
+        require(bound.getOrdinaryProbes()==ordinaryCallsAfter-ordinaryCallsBefore &&
+                bound.getViaProbes()==viaCallsAfter-viaCallsBefore,
+            "preprocessing counters equal this invocation's independent edge callback observations");
+        long[][] reference = referenceDistances(graph, goals, primary,viaCost);
         for (int layer = 0; layer < 2; layer++) for (int cell = 0; cell < graph.cells; cell++) {
             int expected = reference[layer][cell] >= Long.MAX_VALUE / 8 ? -1 : (int) reference[layer][cell];
             require(bound.value(cell, layer) == expected,
@@ -380,12 +455,11 @@ public final class P07RelaxedDistanceBoundContractTest {
             if (goals[layer * graph.cells + cell])
                 require(bound.value(cell, layer) == 0, "every exact-face goal has zero relaxed distance");
         }
-        require(bound.getOrdinaryProbes() == graph.ordinaryCalls && bound.getViaProbes() == graph.viaCalls,
-            "preprocessing counters equal independent edge callback observations");
         return bound;
     }
 
-    private static long[][] referenceDistances(SyntheticGraph graph, boolean[] goals, int primary) {
+    private static long[][] referenceDistances(SyntheticGraph graph, boolean[] goals, int primary,
+            int viaCost) {
         final long infinity = Long.MAX_VALUE / 4;
         int states = graph.cells * 2;
         long[][] distance = new long[states][states];
@@ -397,8 +471,8 @@ public final class P07RelaxedDistanceBoundContractTest {
                     PcbLayerRoutingPrototype.GRID + (layer == primary ? 0 :
                         PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.secondaryCost);
         for (int cell = 0; cell < graph.cells; cell++) if (graph.referencePermitsVia(cell)) {
-            distance[cell][graph.cells + cell] = PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.viaCost;
-            distance[graph.cells + cell][cell] = PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.viaCost;
+            distance[cell][graph.cells + cell] = viaCost;
+            distance[graph.cells + cell][cell] = viaCost;
         }
         for (int via = 0; via < states; via++) for (int from = 0; from < states; from++) {
             if (distance[from][via] >= infinity) continue;
@@ -415,6 +489,16 @@ public final class P07RelaxedDistanceBoundContractTest {
             result[layer][cell] = best;
         }
         return result;
+    }
+
+    private static int boundViaCost(PcbLayerRoutingPrototype.RelaxedDistanceBound bound) {
+        try {
+            Field field=bound.getClass().getDeclaredField("viaCost");
+            field.setAccessible(true);
+            return field.getInt(bound);
+        } catch(Exception failure) {
+            throw new AssertionError("Relaxed bound retains its effective VIA cost",failure);
+        }
     }
 
     private static void expectIllegalArgument(CheckAction action, String message) {

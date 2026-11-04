@@ -491,6 +491,16 @@ ordinary Search/Publisher to the prior VIA; its cap17 check covers entry scalars
 only. The [reduced-cap packet](task-evidence/Q100/load12-cap17-r1/README.md)
 records this prerequisite separately from actual LOAD12 cap17 routing.
 
+The four-argument detached-copy overload also accepts an explicit effective VIA
+cost for an initial FULLER frontier. Session and Search retain that immutable
+value; Search transitions and both directions of the relaxed-distance field use
+it. Ordinary constructors and the earlier copy overloads retain the source
+policy cost. Before allocating a copy or calling its observer, the explicit
+override must be at least the source cost and TURN_COST, and at most240. This
+preserves the retained seed turn heuristic without rebuilding the frontier;
+standalone relaxed-bound oracle cases may separately price edges at0 or1.
+No enum, normal routing default, model epoch or admission rule changes.
+
 P07DetachedBranchReplayContractTest uses the existing private seven-point
 fixture and independent path, geometry, graph and creator-VIA expectations to
 check the owner API. The original saturated cap2 is preserved, including the
@@ -548,6 +558,21 @@ fails on descriptor-close or temporary-unlink errors. These diagnostic owners
 change no production routing policy, model epoch, Player surface or admission.
 The [actual cap17 packet](task-evidence/Q100/load12-cap17-actual-r1/README.md)
 records its finite qualification boundary.
+
+The same single-suite entry has a separate cost240 mode. It keeps both VIA caps
+at48, copies the actual initial LOAD12 frontier, and changes only the detached
+effective cost from60 to240. Its event retains measured source-after state and
+both original and copied Pre/Post bodies. Clone policy, primary layer and
+effective cost are captured while live so later comparison never dereferences a
+released clone owner. Failure progress retains a bounded Throwable stack;
+exceptions still fail the operation. The private cost240 reader binds the actual
+primary-face ordinal and independently recomputes seed, planar, secondary-face,
+turn and VIA charges before checking masks, goal membership and publication.
+Geometry/publication equality booleans whose clone digests are absent remain
+explicitly unverified producer observations; they are not independent proof.
+The [cost240 packet](task-evidence/Q100/load12-cost240-r1/README.md) records the
+accepted finite experiment and its validation limits. It grants no routing
+adoption or whole-board qualification.
 
 P07TwoLayerContractTest also owns the matched seven-point prior-via tree-join
 contract. A fresh FULLER Session with explicit requestcap2 creates a via and

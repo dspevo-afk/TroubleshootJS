@@ -1,4 +1,85 @@
-# Current checkpoint: actual LOAD12 cap17 published — cost240 plan next
+# Current checkpoint: cost240 milestone validated; final review/publication pending
+
+UTC2026-11-04. W=OS-temp/tsj-q100-load12-cost240-20261104-r1, branch
+codex/q100-load12-cost240-20261104, HEAD/source parent
+f0c2004fabbea74b9367a0bf4fe5332fb49cfa6c. QW=fixed-prefix bundle/load12-cost240-r1.
+Accepted finite packet: docs/task-evidence/Q100/load12-cost240-r1/README.md and
+qualification.json SHA bd7163a2583c129904b3615f79a07eb2431b30066929ca34b4b49275eb13c99b.
+Exact bytes also QW/qualification-final-r2.json; original derivedr1 retained.
+No W commit/push/email yet. Remote origin/codex/q100-physical-feasibility last
+verified f0c2004f. Prior af37323e/f0c2004f + Gmail1a1a4bcda7e00bdc remain published.
+
+Finite result: actual root9007199254740993, placement-6587958367974952701/
+routing8445301674744508279/request0/index0/attempt4/pass1/LOAD12branch73/BOTTOM1,
+grid478x309/prefix17VIA88traces. Detachedcap48/cost240 Search/Publisher225nodes/
+2230length/2bends/1flip/cost2844 ->18VIAs/90traces (+1/+2). Originalcap48/cost60
+222/2170/2/4/cost2586 unchanged/resumed to later D_SENSE rejection.
+Independent currentreader904c130a... verifies primary, allnodecharges, fullcaptured
+masks/goals, publication and measured sourceafter/cachedsourceprepost. Oldgraph602
+is separately recomputed geometryreference, not currentproducercodeproof. Opaque
+geometry/publicationequalityflags remain producerReportedUnverified. No default/
+epoch/adoption/wholeboard/playable100 claim; costfloor=max(sourcecost,TURN35)..240.
+
+Frozen source8/raw archive QW/source8-audit-r1.json +candidate-source8-r1; all
+native1079 rows audited unchanged. NativeSHA375ba454d796552ba67ac32844ccdbb61c76b34e054f11c8b2106806d3c5a1d3,
+1079/850production/223contracts/86949217bytes. Owner836c60e1/detached261c57e4/
+bound9983c396/RBD21ed8832/entry541bcdc9/PSfc5ce206; reader904c130a/testc7be9fca.
+Nativefocused7 PASS32.7685185s; native33/original22 PASS132.3646665s; baseline48
+65.6804034; cap17 64.4073984; Dgraph64.9028937; LOADgraph64.7475938; costr5
+63.2658432s. All exit/native0/termination/inputaudit/managedcleanup PASS; aggregate
+nativecleanuptime NOT EXPORTED. CostPROBE19857ms/631of640/max606/cleanup0;
+NULL14316/300/max1320/cleanup1. Five currentpositive readers PASS.
+
+Python135methods PASS with2 exact file-symlink privilege skips;38 consumedPython
+pins audited. Eightactualartifactrejections PASS107.3372597s; twoactualNTFS
+junctionrejections+exact nonrecursivecleanup PASS in junction-controls-r2-result.json.
+JunctionPS5ASTparsePASS; R1 parsefailure beforeexecution preserved, no links then.
+BothactualfinalsourceJDK8/GWT builds PASS1202inputs/357outputs: Player89.6924838s,
+input5fdb2256.../output807333bb..., exact357output archive; Developer130.7613285s,
+inputf0dcbe49ff72897ba6147884d6f111c7bf1ff7cce5a60686ea68fff57a544473/
+output8070b5e6a4cc6b180af8a8f9edfdfea9378891f6f6681273efb7c647acf5e4b5.
+Playerprivacy-r2 PASS62.8953933s/op30110/cleanup32345/shutdown8503ms;
+E06State10 PASS194.200733s/op146060/cleanup47752/shutdown6937;
+Current9 PASS224.6370726s/cleanup.success true/shutdown6672, aggregatecleanup
+duration NOT EXPORTED. Compiledsource/output identities unchanged. No fresh
+visible-flow screenshots: Player flow unchanged; no full2x31 renewal.
+
+Normal3 ALL R2 phases PASS: ValidateInputs, realSDK9wrongmanifest rejection before
+export, Native export52.217556s, exactmarkerallocation, actualcompiledcapture
+host110.0641618s and independentPASS_FINITE3_DEVELOPMENT_PAYLOADS.
+Exactly roots-2230691771308388107/6702341860553104274/-8360266000248569150, four
+candidate envelope/oneactualattempt perroot. Caseoperation43753/36034/20984ms,
+work506/502/392; eachcasecleanup5ms; hostcleanupPASS1.0503212s/no survivors.
+Normal3 reportsmaxUnitMillis0, not a new independent per-unit timing measurement.
+Rawplan/postprocess underQW/gates/normal3/independent-current-r2.
+Hostowner tsj-n3h-79c0e8879f66 marker545c266e...; exact task profile removed after
+freshprocess/reparsechecks, QW/normal3-profile-cleanup-r1.json PASS; captures remain.
+No active matrix/task actors now. Developer357 active; Player archive357 retained.
+
+All earlier failures preserved: partial-fixture wholeboard assertion/cumulative
+counter; actualcostr3/r4 released-binding NPE (cachedimmutablefacts fix); reader
+digest/.code/prefixparser; legacyPythonwrappercount; empty-stderrcontrolprep;
+pre-runtime QA missingManifest property/pathslash; normal3r1 Git-name recursion;
+junctionr1 PSparse. No budget/oracle weakened. Privacy-r1 failed15s naturalexit
+with17of18recordscomplete; laterabsence is NOT cleanupPASS. Exactfailedprofile+
+claim retained, sameEdge/PS5host canaries and freshprivacy pass do not prove cure.
+OldTfailedprivacy/unowned8928 and unrelated work/evidence untouched.
+
+Main5f05b005/unrelated9tracked+6untracked, Desktop e0c36885/80statuses, U f0c2004f/
+19raw-only helpers preserved. W began clean; bootstrapSDK9/Python28/Source9 copied
+onlyauthorizedfiles,23raw-only helpers/canonical0 beforeedits. R12a1352b5c ancestor.
+Rootowns final diff/staging/publication; leaves source-only, no leafpush/mail.
+Next: fresh final source/build/qualification-byte audit; inspectactualdiff and
+explicitstagedpaths; normalcommit/push/remoteverification and ONEcompletionGmail;
+publicationreceipt docs only afterwards, no duplicate email. Then next unstarted
+NEXT_FULL_ROUTE_PLAN.md: bounded copied-owner routing-remainder experiment.
+
+All90s/640/5s/120cleanup/15shutdown/32768/request1M/branch100K/grid250K/order3/
+cap48/trans4 unchanged, default60/layout26/dependency28. Full30 owner-excluded,
+HARD/PSYCHOTIC unavailable/unrun/protected unreadthisscope/historicalUNCERTIFIED.
+Playable100=0/betaheld; self-hosted CI runner registration prerequisite, noCIclaim.
+
+# Historical checkpoint: actual LOAD12 cap17 published
 
 Local2026-11-03 / UTC2026-11-04. U=OS-temp/
 tsj-q100-load12-cap17-actual-20261103-r1, branch

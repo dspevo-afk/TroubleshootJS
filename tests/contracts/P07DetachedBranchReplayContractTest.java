@@ -12,6 +12,7 @@ public final class P07DetachedBranchReplayContractTest {
     private static final int SOURCE_VIA_CAP=2;
     private static final int POLICY_VIA_CAP=48;
     private static final int REDUCED_VIA_CAP=17;
+    private static final int DIAGNOSTIC_VIA_COST=240;
     private static final int MAX_SOURCE_UNITS=2000000;
     private static final int MAX_REPLAY_UNITS=50000;
     private static final int MAX_COPY_WORK_STEPS=2000000;
@@ -49,8 +50,15 @@ public final class P07DetachedBranchReplayContractTest {
         Source source=captureConsumerEntry(fixture,sourceSession);
         require(source.prefixIds.length==SOURCE_VIA_CAP && source.maximumVias==SOURCE_VIA_CAP,
             "literal consumer begins with its two-VIA prefix at the original saturated cap");
+        require(source.viaCost==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.viaCost &&
+                source.viaCost==60,
+            "normal FULLER Session/Search inherit the immutable policy VIA cost");
 
         verifyInvalidRequestedCaps(source);
+        verifyInvalidRequestedCosts(source);
+        verifyDefaultPolicyCosts(fixture);
+        verifyLowerViaCostCounterexample();
+        verifyAdvancedFrontierRejectsCostOverride();
         Source higherCapSource=freshSource(POLICY_VIA_CAP);
         require(higherCapSource.maximumVias==POLICY_VIA_CAP && higherCapSource.prefixIds.length==2,
             "higher-cap literal source retains its two-hole initial consumer prefix");
@@ -62,16 +70,37 @@ public final class P07DetachedBranchReplayContractTest {
         verifyStaleCopyCanaries();
         verifyChargedRouterCopyFailureCanaries();
 
-        Replay baseline=null,batched=null,entryControl=null;
+        Replay baseline=null,batched=null,entryControl=null,explicitDefault=null,costOverride=null;
         try {
             baseline=runDetached(source,1);
             verifySourceUnchanged(source,"baseline replay");
             batched=runDetached(source,MAX_COPY_QUANTUM);
             verifySourceUnchanged(source,"batched replay");
+            explicitDefault=runDetachedAtCapAndCost(source,MAX_COPY_QUANTUM,
+                source.maximumVias,source.viaCost);
+            verifySourceUnchanged(source,"explicit policy-default cost replay");
+            costOverride=runDetachedAtCapAndCost(source,MAX_COPY_QUANTUM,
+                source.maximumVias,DIAGNOSTIC_VIA_COST);
+            verifySourceUnchanged(source,"diagnostic cost replay");
             require(baseline.maximumVias==source.maximumVias &&
-                    batched.maximumVias==source.maximumVias,
-                "both copy quanta preserve the original Session VIA cap");
+                    batched.maximumVias==source.maximumVias &&
+                    explicitDefault.maximumVias==source.maximumVias &&
+                    costOverride.maximumVias==source.maximumVias,
+                "copy variants preserve the original Session VIA cap");
             verifyDetachedResults(baseline,batched);
+            verifyDetachedResults(baseline,explicitDefault);
+            require(explicitDefault.viaCost==source.viaCost &&
+                    costOverride.viaCost==DIAGNOSTIC_VIA_COST &&
+                    intField(costOverride.owner,"viaCost")==DIAGNOSTIC_VIA_COST &&
+                    intField(costOverride.search,"viaCost")==DIAGNOSTIC_VIA_COST &&
+                    intField(source.owner,"viaCost")==source.viaCost &&
+                    intField(source.search,"viaCost")==source.viaCost,
+                "cost override is immutable on detached Session/Search and isolated from its source");
+            verifyWeightedPathCost(baseline);
+            verifyWeightedPathCost(explicitDefault);
+            verifyWeightedPathCost(costOverride);
+            verifyRelaxedBoundCostPropagation(source);
+            verifyCostOverrideUsesViaSearchAndPublisher();
             entryControl=buildDetached(source,MAX_COPY_QUANTUM);
             verifyNegativeControls(source,entryControl);
             verifySourceUnchanged(source,"negative controls");
@@ -90,6 +119,8 @@ public final class P07DetachedBranchReplayContractTest {
             if(baseline!=null) baseline.handle.release();
             if(batched!=null) batched.handle.release();
             if(entryControl!=null) entryControl.handle.release();
+            if(explicitDefault!=null) explicitDefault.handle.release();
+            if(costOverride!=null) costOverride.handle.release();
         }
         assertions++;
     }
@@ -124,6 +155,248 @@ public final class P07DetachedBranchReplayContractTest {
         throw new AssertionError("literal source exceeded its one-unit capture guard");
     }
 
+    private static Source captureTransitionEntry() throws Exception {
+        LiteralFixture fixture=literalSourceFixture();
+        PcbLayerRoutingPrototype.Session session=PcbLayerRoutingPrototype.begin(
+            fixture.board,fixture.layout,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
+            P06FactoryLinkFixtures.OBSERVER,PcbLayerRoutingPrototype.MAX_EXPANSIONS,POLICY_VIA_CAP);
+        int units=0;
+        while(units<MAX_SOURCE_UNITS) {
+            Object search=field(session,"search");
+            if(search!=null) {
+                Object branch=field(search,"branch");
+                if(branch!=null && intField(search,"pass")==0 &&
+                        intField(branch,"branchOrdinal")==3 &&
+                        "UNDER".equals(stringField(search,"currentNet")) &&
+                        "B.1".equals(((PcbPadPlacement)field(branch,"start")).getPadId()) &&
+                        intField(branch,"expanded")==0 && intField(field(branch,"queue"),"size")==2)
+                    return new Source(fixture,session,search,branch,units);
+            }
+            if(session.advanceSlice(1))
+                throw new AssertionError("crossing source completed before its initial VIA-producing branch");
+            units++;
+        }
+        throw new AssertionError("crossing source exceeded its one-unit initial-branch guard");
+    }
+
+    private static void verifyCostOverrideUsesViaSearchAndPublisher() throws Exception {
+        Source source=captureTransitionEntry();
+        require("UNDER".equals(source.currentNet) && "B.1".equals(source.start.getPadId()) &&
+                source.prefixIds.length==0,
+            "crossing canary captures the virgin VIA-producing UNDER branch before its first expansion");
+        Replay replay=buildDetachedAtCapAndCost(source,MAX_COPY_QUANTUM,
+            source.maximumVias,DIAGNOSTIC_VIA_COST);
+        try {
+            completeCostReplay(replay,MAX_COPY_QUANTUM);
+            require(intField(replay.owner,"viaCost")==DIAGNOSTIC_VIA_COST &&
+                    intField(replay.search,"viaCost")==DIAGNOSTIC_VIA_COST &&
+                    intField(source.owner,"viaCost")==source.viaCost &&
+                    intField(source.search,"viaCost")==source.viaCost,
+                "normal Search and Publisher run on the detached cost while the source stays at policy cost");
+            int transitions=verifyWeightedPathCost(replay);
+            require(transitions>0,
+                "constrained crossing is published through actual Search VIA transitions");
+            verifyCostOverridePhysicalConnectivity(replay,transitions);
+            verifySourceUnchanged(source,"normal cost-override crossing replay");
+        } finally { replay.handle.release(); }
+    }
+
+    private static void verifyRelaxedBoundCostPropagation(Source source) throws Exception {
+        Replay replay=buildDetachedAtCapAndCost(source,MAX_COPY_QUANTUM,
+            source.maximumVias,DIAGNOSTIC_VIA_COST);
+        try {
+            setField(replay.branch,"relaxedBoundStarted",Boolean.TRUE);
+            setField(replay.branch,"relaxedCloneFace",Integer.valueOf(2));
+            Method build=replay.branch.getClass().getDeclaredMethod("advanceRelaxedBoundBuild");
+            build.setAccessible(true);
+            invoke(build,replay.branch);
+            Object bound=field(replay.branch,"relaxedDistanceBound");
+            require(bound!=null && intField(bound,"viaCost")==DIAGNOSTIC_VIA_COST &&
+                    intField(replay.search,"viaCost")==DIAGNOSTIC_VIA_COST,
+                "production Search passes its effective cost into the relaxed VIA bound");
+            verifySourceUnchanged(source,"relaxed-bound cost propagation canary");
+        } finally { replay.handle.release(); }
+    }
+
+    private static void completeCostReplay(Replay replay,int quantum) throws Exception {
+        int calls=0;
+        while(!replay.handle.isComplete()) {
+            replay.handle.advance(quantum);
+            int used=replay.handle.lastWork();
+            require(used>0 && used<=quantum,
+                "cost-override Search/Publisher makes bounded normal progress");
+            if(++calls>MAX_REPLAY_UNITS)
+                throw new AssertionError("cost-override literal replay exceeded its bounded progress guard");
+        }
+        replay.publisher=replay.handle.getPublisherForDiagnostics();
+        require(replay.publisher!=null && field(replay.search,"branch")==null &&
+                field(replay.search,"publisher")==null && field(replay.branch,"found")!=null,
+            "cost-override replay reaches a real Search goal and completes its Publisher");
+        replay.pathRows=pathRows(field(replay.publisher,"end"));
+        replay.traceDelta=traceSignatures(replay.layout,replay.source.prefixTraceCount);
+        replay.postHoleIds=holeIds(replay.layout);
+        replay.postHoleFingerprints=holeFingerprints(replay.layout);
+        replay.postGeometry=replay.layout.geometryFingerprint();
+        replay.postGraph=replay.layout.captureConductorGraph(replay.source.fixture.board).toCanonical();
+        require(intField(replay.publisher,"stage")==6,
+            "cost-override normal Publisher reaches its terminal stage");
+    }
+
+    private static void verifyCostOverridePhysicalConnectivity(Replay replay,int transitions)
+            throws Exception {
+        PcbConductorGraph.Snapshot before=replay.source.prefixLayout
+            .captureConductorGraph(replay.source.fixture.board).pristine();
+        PcbConductorGraph.Snapshot after=replay.layout
+            .captureConductorGraph(replay.source.fixture.board).pristine();
+        require(!before.padsConnected(replay.source.start.getPadId(),replay.source.root.getPadId()) &&
+                after.padsConnected(replay.source.start.getPadId(),replay.source.root.getPadId()),
+            "normal cost-override publication electrically joins the two actual branch endpoints");
+        require(!after.padsConnected("L.1","A.1"),
+            "cost-override crossing publication keeps the independent OVER and UNDER nets isolated");
+        PcbConductorGraph.Snapshot independent=
+            P08ReferenceConductorBuilder.capture(replay.source.fixture.board,replay.layout).pristine();
+        require(independent.padsConnected(replay.source.start.getPadId(),replay.source.root.getPadId()) &&
+                !independent.padsConnected("L.1","A.1"),
+            "independent P08 conductor oracle confirms the partial branch connection and net isolation");
+        new PcbTwoLayerRules(replay.source.fixture.board,replay.layout).validate(replay.layout);
+        replay.layout.validateTraceClearance();
+        int newTraces=0,newHoles=0; boolean startAttached=false;
+        Vector<PcbTraceGeometry> traces=replay.layout.getTraces();
+        Rectangle outline=replay.layout.getBoardOutline();
+        TroubleshootBoard board=replay.source.fixture.board;
+        for(int i=replay.source.prefixTraceCount;i<traces.size();i++) {
+            PcbTraceGeometry trace=traces.get(i); newTraces++;
+            require(replay.source.currentNet.equals(trace.getNetId()) &&
+                    trace.getWidth()==replay.source.fixture.board.getPlacementConstraints()
+                        .getTraceWidthProfile().widthFor(
+                            replay.source.fixture.board.getNet(replay.source.currentNet).getRoutingRole()),
+                "cost-override Publisher emits only current-net traces at the declared width");
+            if(replay.source.start.getPadId().equals(trace.getStartPadId())) startAttached=true;
+            int[] xs=trace.getXPoints(),ys=trace.getYPoints();
+            for(int p=1;p<xs.length;p++) {
+                require((xs[p]==xs[p-1])!=(ys[p]==ys[p-1]),
+                    "cost-override Publisher emits nonzero orthogonal conductive segments");
+                Rectangle stroke=PcbConductorBuilder.stroke(xs[p-1],ys[p-1],xs[p],ys[p],
+                    trace.getWidth());
+                require(PcbTwoLayerRules.inside(outline,stroke),
+                    "cost-override branch copper stays inside the board outline");
+            }
+            validatePublishedTraceCourtyards(replay.layout,board,trace);
+            verifyPublishedTraceEndpoint(replay.layout,board,trace,trace.getStartPadId(),
+                xs[0],ys[0]);
+            verifyPublishedTraceEndpoint(replay.layout,board,trace,trace.getEndPadId(),
+                xs[xs.length-1],ys[ys.length-1]);
+        }
+        for(PcbBoardHole hole:replay.layout.getHoles())
+            if(!containsHole(replay.source.prefixIds,hole.id)) {
+                newHoles++;
+                require(hole.kind==PcbBoardHole.Kind.VIA &&
+                        replay.source.currentNet.equals(hole.netId) &&
+                        hole.id.startsWith("p07-via/"+replay.source.currentNet+"/"+
+                            replay.source.branchOrdinal+"/") &&
+                        pathHasViaTransitionAt(replay,hole.x,hole.y) &&
+                        PcbTwoLayerRules.inside(outline,hole.getBounds()),
+                    "cost-override transition publishes a VIA owned by the routed net");
+            }
+        int matchedTransitions=0;
+        int width=intField(replay.search,"width"),minX=intField(replay.search,"minX"),
+            minY=intField(replay.search,"minY");
+        for(int i=1;i<replay.pathRows.length;i++) {
+            int[] previous=replay.pathRows[i-1],next=replay.pathRows[i];
+            if(next[1]==previous[1]) continue;
+            int x=minX+(next[0]%width)*PcbLayerRoutingPrototype.GRID;
+            int y=minY+(next[0]/width)*PcbLayerRoutingPrototype.GRID;
+            int matches=0;
+            for(PcbBoardHole hole:replay.layout.getHoles())
+                if(!containsHole(replay.source.prefixIds,hole.id) && hole.x==x && hole.y==y)
+                    matches++;
+            require(matches==1,
+                "each cost-override Search face transition retains one Publisher VIA at its node");
+            matchedTransitions++;
+        }
+        require(newTraces>0 && startAttached && newHoles==transitions &&
+                matchedTransitions==transitions,
+            "normal Publisher emits the branch trace and actual VIA transitions");
+    }
+
+    private static boolean pathHasViaTransitionAt(Replay replay,int x,int y) throws Exception {
+        int width=intField(replay.search,"width"),minX=intField(replay.search,"minX"),
+            minY=intField(replay.search,"minY");
+        for(int i=1;i<replay.pathRows.length;i++) {
+            int[] previous=replay.pathRows[i-1],next=replay.pathRows[i];
+            if(next[1]!=previous[1] &&
+                    minX+(next[0]%width)*PcbLayerRoutingPrototype.GRID==x &&
+                    minY+(next[0]/width)*PcbLayerRoutingPrototype.GRID==y) return true;
+        }
+        return false;
+    }
+
+    private static void verifyPublishedTraceEndpoint(PcbBoardLayout layout,TroubleshootBoard board,
+            PcbTraceGeometry trace,String padId,int x,int y) {
+        if(padId==null) return;
+        BoardPad logical=board.getPad(padId);
+        PcbPadPlacement physical=layout.getPad(padId);
+        require(logical!=null && physical!=null && logical.getNetId().equals(trace.getNetId()) &&
+                PcbCopperAccess.hasCopper(physical,trace.getLayer()) &&
+                physical.getX()==x && physical.getY()==y,
+            "cost-override trace endpoint maps to its matching physical and electrical pad");
+    }
+
+    private static void validatePublishedTraceCourtyards(PcbBoardLayout layout,
+            TroubleshootBoard board,PcbTraceGeometry trace) throws Exception {
+        Method validate=PcbBoardLayout.class.getDeclaredMethod("validateTraceCourtyards",
+            TroubleshootBoard.class,PcbTraceGeometry.class,BoardPad.class,BoardPad.class);
+        validate.setAccessible(true);
+        invoke(validate,layout,board,trace,board.getPad(trace.getStartPadId()),
+            board.getPad(trace.getEndPadId()));
+    }
+
+    private static boolean containsHole(String[] ids,String id) {
+        for(String value:ids) if(value.equals(id)) return true;
+        return false;
+    }
+
+    private static int verifyWeightedPathCost(Replay replay) throws Exception {
+        if(replay.pathRows==null || replay.pathRows.length<2)
+            throw new IllegalArgumentException("Missing path for independent weighted-cost oracle");
+        int primary=intField(replay.search,"primary"),width=intField(replay.search,"width");
+        int cells=intField(replay.search,"cells");
+        int expected=replay.pathRows[0][1]==primary?0:
+            PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.secondaryCost;
+        require(replay.pathRows[0][4]==expected,
+            "independent weighted-cost oracle retains the unchanged initial seed charge");
+        int transitions=0;
+        for(int i=1;i<replay.pathRows.length;i++) {
+            int[] previous=replay.pathRows[i-1],next=replay.pathRows[i];
+            int delta=next[0]-previous[0],stepDirection=-1,edgeCost;
+            if(next[1]!=previous[1]) {
+                require(next[0]==previous[0] && next[3]==previous[3]+1 && next[2]==4,
+                    "independent path oracle recognizes a same-cell face transition");
+                edgeCost=replay.viaCost;
+                transitions++;
+            } else {
+                if(delta==-width) stepDirection=0;
+                else if(delta==1 && previous[0]%width+1<width) stepDirection=1;
+                else if(delta==width) stepDirection=2;
+                else if(delta==-1 && previous[0]%width>0) stepDirection=3;
+                require(stepDirection>=0 && next[2]==stepDirection &&
+                        next[3]==previous[3],
+                    "independent path oracle recognizes a single planar grid edge");
+                edgeCost=PcbLayerRoutingPrototype.GRID+
+                    (previous[1]==primary?0:
+                        PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.secondaryCost)+
+                    (previous[2]!=4 && previous[2]!=stepDirection?
+                        PcbLayerRoutingPrototype.TURN_COST:0);
+            }
+            expected+=edgeCost;
+            require(next[4]==expected,
+                "independent weighted node recurrence matches Search at path index "+i);
+        }
+        require(replay.pathRows[replay.pathRows.length-1][4]==expected,
+            "independent weighted path total matches the published goal node");
+        return transitions;
+    }
+
     private static Replay runDetached(Source source,int quantum) throws Exception {
         Replay replay=buildDetached(source,quantum);
         boolean retained=false;
@@ -144,6 +417,20 @@ public final class P07DetachedBranchReplayContractTest {
         try {
             completeReplay(replay,quantum);
             verifySourceUnchanged(source,"explicit-cap detached replay work");
+            retained=true;
+            return replay;
+        } finally {
+            if(!retained) replay.handle.release();
+        }
+    }
+
+    private static Replay runDetachedAtCapAndCost(Source source,int quantum,int maximumVias,
+            int viaCost) throws Exception {
+        Replay replay=buildDetachedAtCapAndCost(source,quantum,maximumVias,viaCost);
+        boolean retained=false;
+        try {
+            completeReplay(replay,quantum);
+            verifySourceUnchanged(source,"explicit-cap-and-cost detached replay work");
             retained=true;
             return replay;
         } finally {
@@ -180,6 +467,96 @@ public final class P07DetachedBranchReplayContractTest {
         finally { if(task!=null) task.cancel(); }
         require(rejected && task==null && checks[0]==0,
             label+" is rejected before starting an observer or copy task");
+    }
+
+    private static void verifyInvalidRequestedCosts(final Source source) throws Exception {
+        expectDetachedCostRejected(source,0,"zero diagnostic VIA cost");
+        expectDetachedCostRejected(source,-1,"negative diagnostic VIA cost");
+        expectDetachedCostRejected(source,1,"VIA cost below the retained turn heuristic floor");
+        expectDetachedCostRejected(source,PcbLayerRoutingPrototype.TURN_COST-1,
+            "VIA cost below TURN_COST");
+        expectDetachedCostRejected(source,source.viaCost-1,
+            "VIA cost below the source policy cost");
+        expectDetachedCostRejected(source,PcbLayerRoutingPrototype.MAX_DIAGNOSTIC_VIA_COST+1,
+            "diagnostic VIA cost above its bounded ceiling");
+        verifySourceUnchanged(source,"invalid explicit VIA cost requests");
+    }
+
+    private static void expectDetachedCostRejected(final Source source,final int viaCost,
+            String label) throws Exception {
+        final int[] checks={0};
+        final SeededPcbLayoutGenerator.AttemptObserver observer=
+            new SeededPcbLayoutGenerator.AttemptObserver() {
+                public void check(int attempt) { checks[0]++; }
+            };
+        PcbLayerRoutingPrototype.DetachedBranchCopyTask task=null;
+        boolean rejected=false;
+        try {
+            task=PcbLayerRoutingPrototype.beginDetachedBranchCopy(
+                source.session,observer,source.maximumVias,viaCost);
+        } catch(IllegalArgumentException expected) { rejected=true; }
+        finally { if(task!=null) task.cancel(); }
+        require(rejected && task==null && checks[0]==0,
+            label+" is rejected before starting an observer or copy task");
+    }
+
+    private static void verifyDefaultPolicyCosts(LiteralFixture fixture) throws Exception {
+        PcbLayerRoutingPrototype.Policy[] policies={PcbLayerRoutingPrototype.Policy.ONE_LAYER,
+            PcbLayerRoutingPrototype.Policy.SPARSE_LINK};
+        for(PcbLayerRoutingPrototype.Policy policy:policies) {
+            PcbLayerRoutingPrototype.Session session=PcbLayerRoutingPrototype.begin(
+                fixture.board,fixture.layout,policy,P06FactoryLinkFixtures.OBSERVER,
+                PcbLayerRoutingPrototype.MAX_EXPANSIONS,policy.vias);
+            require(intField(session,"viaCost")==policy.viaCost && policy.viaCost==0,
+                "ordinary zero-cost policy retains its immutable VIA-cost default: "+policy.name());
+        }
+    }
+
+    private static void verifyLowerViaCostCounterexample() {
+        boolean[] goals=new boolean[8];
+        goals[3]=true; goals[7]=true;
+        int[] distance={20,10,10,0};
+        PcbLayerRoutingPrototype.TurnLowerBound retainedTurnBound=
+            new PcbLayerRoutingPrototype.TurnLowerBound(2,2,goals,distance,
+                P06FactoryLinkFixtures.OBSERVER,0);
+        int retainedSeedHeuristic=retainedTurnBound.value(0,4);
+        int cheaperViaRoute=PcbLayerRoutingPrototype.GRID+1+
+            PcbLayerRoutingPrototype.GRID+
+                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.secondaryCost;
+        int minimumCopyCost=Math.max(
+            PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.viaCost,
+            PcbLayerRoutingPrototype.TURN_COST);
+        require(retainedSeedHeuristic==55 && cheaperViaRoute==23 &&
+                cheaperViaRoute<retainedSeedHeuristic && minimumCopyCost==60,
+            "open 2x2 permits primary-east, VIA, secondary-south at cost 23 below retained turn h=55");
+    }
+
+    private static void verifyAdvancedFrontierRejectsCostOverride() throws Exception {
+        Source source=freshSource();
+        require(intField(source.branch,"expanded")==0,
+            "advanced-frontier canary begins at an unexpanded consumer branch");
+        source.session.advanceSlice(1);
+        int expanded=intField(source.branch,"expanded");
+        require(expanded>0,"advanced-frontier canary performs real Search work first");
+        final int[] checks={0};
+        final SeededPcbLayoutGenerator.AttemptObserver observer=
+            new SeededPcbLayoutGenerator.AttemptObserver() {
+                public void check(int attempt) { checks[0]++; }
+            };
+        PcbLayerRoutingPrototype.DetachedBranchCopyTask task=null;
+        boolean rejected=false;
+        try {
+            task=PcbLayerRoutingPrototype.beginDetachedBranchCopy(source.session,observer,
+                source.maximumVias,DIAGNOSTIC_VIA_COST);
+        } catch(IllegalArgumentException expected) { rejected=true; }
+        finally { if(task!=null) task.cancel(); }
+        require(rejected && task==null && checks[0]==0 &&
+                field(source.session,"search")==source.search &&
+                field(source.search,"branch")==source.branch &&
+                intField(source.branch,"expanded")==expanded &&
+                intField(source.session,"viaCost")==source.viaCost &&
+                intField(source.search,"viaCost")==source.viaCost,
+            "cost override rejects an advanced source before observer or copy mutation");
     }
 
     private static void verifyReducedCapLifecycle(final Source source) throws Exception {
@@ -249,8 +626,19 @@ public final class P07DetachedBranchReplayContractTest {
         return buildDetached(source,quantum,maximumVias,true);
     }
 
+    private static Replay buildDetachedAtCapAndCost(Source source,int quantum,int maximumVias,
+            int viaCost) throws Exception {
+        return buildDetached(source,quantum,maximumVias,true,viaCost,true);
+    }
+
     private static Replay buildDetached(Source source,int quantum,final int maximumVias,
             boolean explicitCap) throws Exception {
+        return buildDetached(source,quantum,maximumVias,explicitCap,
+            source==null?0:source.viaCost,false);
+    }
+
+    private static Replay buildDetached(Source source,int quantum,final int maximumVias,
+            boolean explicitCap,final int viaCost,boolean explicitCost) throws Exception {
         if(source==null || quantum<1 || quantum>MAX_COPY_QUANTUM)
             throw new IllegalArgumentException("Invalid bounded literal replay quantum");
         final int[] detachedChecks={0};
@@ -258,10 +646,12 @@ public final class P07DetachedBranchReplayContractTest {
             new SeededPcbLayoutGenerator.AttemptObserver() {
                 public void check(int attempt) { detachedChecks[0]++; }
             };
-        final PcbLayerRoutingPrototype.DetachedBranchCopyTask copy=
+        final PcbLayerRoutingPrototype.DetachedBranchCopyTask copy=explicitCost?
+            PcbLayerRoutingPrototype.beginDetachedBranchCopy(
+                source.session,detachedObserver,maximumVias,viaCost):
             explicitCap?PcbLayerRoutingPrototype.beginDetachedBranchCopy(
                 source.session,detachedObserver,maximumVias):
-                PcbLayerRoutingPrototype.beginDetachedBranchCopy(source.session,detachedObserver);
+            PcbLayerRoutingPrototype.beginDetachedBranchCopy(source.session,detachedObserver);
         PcbLayerRoutingPrototype.DetachedBranchReplay copiedReplay=null;
         boolean transferred=false;
         try {
@@ -303,7 +693,7 @@ public final class P07DetachedBranchReplayContractTest {
                 handle.getBranchForDiagnostics()==detachedBranch,
             "canceling a completed copier releases only task references, not its returned replay");
         Replay replay=new Replay(source,copy,handle,detachedOwner,detachedSearch,detachedBranch,
-            detachedLayout,maximumVias,detachedObserver,detachedChecks);
+            detachedLayout,maximumVias,viaCost,detachedObserver,detachedChecks);
         require(field(source.owner,"observer")==source.observerRef &&
                 field(detachedOwner,"observer")==detachedObserver &&
                 detachedObserver!=source.observerRef && detachedChecks[0]>0,
@@ -623,7 +1013,7 @@ public final class P07DetachedBranchReplayContractTest {
 
     private static Replay finishOriginalConsumer(Source source) throws Exception {
         Replay replay=new Replay(source,null,null,source.owner,source.search,source.branch,
-            source.layout,source.maximumVias,null,null);
+            source.layout,source.maximumVias,source.viaCost,null,null);
         int units=0;
         while(units<MAX_REPLAY_UNITS) {
             Object publisher=field(source.search,"publisher");
@@ -661,11 +1051,15 @@ public final class P07DetachedBranchReplayContractTest {
             boolean[] expectedGoals,String[] expectedHoleIds,String[] expectedFingerprints)
             throws Exception {
         if(intField(replay.owner,"maximumVias")!=replay.maximumVias ||
-                intField(replay.search,"maximumVias")!=replay.maximumVias)
-            throw new IllegalArgumentException("Detached Session/Search VIA caps differ from the requested cap");
+                intField(replay.search,"maximumVias")!=replay.maximumVias ||
+                intField(replay.owner,"viaCost")!=replay.viaCost ||
+                intField(replay.search,"viaCost")!=replay.viaCost)
+            throw new IllegalArgumentException("Detached Session/Search VIA parameters differ from the request");
         if(intField(source.owner,"maximumVias")!=source.maximumVias ||
-                intField(source.search,"maximumVias")!=source.maximumVias)
-            throw new IllegalArgumentException("Detached copy changed the source Session/Search VIA cap");
+                intField(source.search,"maximumVias")!=source.maximumVias ||
+                intField(source.owner,"viaCost")!=source.viaCost ||
+                intField(source.search,"viaCost")!=source.viaCost)
+            throw new IllegalArgumentException("Detached copy changed the source Session/Search VIA parameters");
         if(expectedOwner!=replay.owner || field(replay.search,"owner")!=expectedOwner ||
                 field(expectedOwner,"search")!=replay.search)
             throw new IllegalArgumentException("Detached route Session owner changed");
@@ -836,7 +1230,8 @@ public final class P07DetachedBranchReplayContractTest {
             "detached replays produce the same literal physical layout fingerprint");
         require(intField(first.publisher,"segments")==intField(second.publisher,"segments") &&
                 intField(first.publisher,"length")==intField(second.publisher,"length") &&
-                intField(first.publisher,"bends")==intField(second.publisher,"bends"),
+                intField(first.publisher,"bends")==intField(second.publisher,"bends") &&
+                first.viaCost==second.viaCost,
             "detached Publisher preserves the measured path and route-quality scalars");
     }
 
@@ -889,6 +1284,8 @@ public final class P07DetachedBranchReplayContractTest {
                 field(source.search,"owner")==source.owner &&
                 intField(source.session,"maximumVias")==source.maximumVias &&
                 intField(source.search,"maximumVias")==source.maximumVias &&
+                intField(source.session,"viaCost")==source.viaCost &&
+                intField(source.search,"viaCost")==source.viaCost &&
                 field(source.search,"branch")==source.branch &&
                 field(source.search,"publisher")==null &&
                 field(source.session,"candidate")==source.layout &&
@@ -1332,7 +1729,7 @@ public final class P07DetachedBranchReplayContractTest {
         final Object faceArrayRef,workspaceRef;
         final PcbNetRouter.Router[] faceRefs,faceSnapshots;
         final String[] faceEffects;
-        final int pass,branchOrdinal,serial,branches,segments,netIndex,maximumVias;
+        final int pass,branchOrdinal,serial,branches,segments,netIndex,maximumVias,viaCost;
         final int budgetMaximum,budgetExpanded,prefixTraceCount,sourceUnits;
         final int[][] seedValues;
         final boolean[] goalValues;
@@ -1371,7 +1768,8 @@ public final class P07DetachedBranchReplayContractTest {
             this.branchOrdinal=intField(branch,"branchOrdinal");
             this.serial=intField(search,"serial"); this.branches=intField(search,"branches");
             this.segments=intField(search,"segments"); this.netIndex=intField(search,"netIndex");
-            this.maximumVias=intField(search,"maximumVias"); this.sourceUnits=sourceUnits;
+            this.maximumVias=intField(search,"maximumVias");
+            this.viaCost=intField(session,"viaCost"); this.sourceUnits=sourceUnits;
             Object budget=field(search,"budget");
             this.budgetMaximum=intField(budget,"maximum");
             this.budgetExpanded=intField(budget,"expanded");
@@ -1397,6 +1795,7 @@ public final class P07DetachedBranchReplayContractTest {
                     "literal prefix hole remains owned by an earlier same-net Publisher");
             require(session==owner && field(session,"search")==search &&
                     field(search,"branch")==branch && field(search,"publisher")==null &&
+                    intField(search,"viaCost")==viaCost &&
                     start.getAttachment()==PcbTerminalAttachment.PLATED_THROUGH_HOLE &&
                     faceRefs.length==2 && workspaceRef!=null,
                 "source is captured before its first consumer branch work unit");
@@ -1423,7 +1822,7 @@ public final class P07DetachedBranchReplayContractTest {
         final int[] observerChecks;
         final PcbBoardLayout layout;
         final PcbPadPlacement start,root;
-        final int maximumVias,budgetMaximum;
+        final int maximumVias,viaCost,budgetMaximum;
         Object publisher;
         int[][] pathRows;
         String[] traceDelta,postHoleIds,postHoleFingerprints;
@@ -1435,13 +1834,13 @@ public final class P07DetachedBranchReplayContractTest {
         Replay(Source source,PcbLayerRoutingPrototype.DetachedBranchCopyTask copyTask,
                 PcbLayerRoutingPrototype.DetachedBranchReplay handle,
                 PcbLayerRoutingPrototype.Session owner,Object search,Object branch,
-                PcbBoardLayout layout,int maximumVias,
+                PcbBoardLayout layout,int maximumVias,int viaCost,
                 SeededPcbLayoutGenerator.AttemptObserver observer,int[] observerChecks)
                 throws Exception {
             this.source=source; this.copyTask=copyTask; this.handle=handle;
             this.owner=owner; this.search=search; this.branch=branch;
             this.observer=observer; this.observerChecks=observerChecks;
-            this.layout=layout; this.maximumVias=maximumVias;
+            this.layout=layout; this.maximumVias=maximumVias; this.viaCost=viaCost;
             this.budgetMaximum=search==null?source.budgetMaximum:
                 intField(field(search,"budget"),"maximum");
             this.start=(PcbPadPlacement)field(branch,"start");

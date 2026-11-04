@@ -17,6 +17,7 @@ final class PcbLayerRoutingPrototype {
         }
     }
     static final int GRID=10, TURN_COST=35, MAX_CELLS=250000, MAX_EXPANSIONS=1000000;
+    static final int MAX_DIAGNOSTIC_VIA_COST=240;
     static final int MAX_BRANCH_EXPANSIONS=100000, ORDERINGS=3;
     enum OrderingProgress { WORKING, ROUTE_READY, COMPLETE }
     /** The single production arithmetic used both by Search and pre-route admission. */
@@ -405,7 +406,30 @@ final class PcbLayerRoutingPrototype {
     /** Opt-in copy with a bounded VIA allowance for the detached owner only. */
     static DetachedBranchCopyTask beginDetachedBranchCopy(Session source,
             SeededPcbLayoutGenerator.AttemptObserver observer,int maximumVias) {
-        return new DetachedBranchCopyTask(source,observer,maximumVias);
+        return new DetachedBranchCopyTask(source,observer,maximumVias,
+            source==null?0:source.viaCost,false);
+    }
+
+    /** Opt-in copy with detached-only VIA allowance and cost, admitted at the original frontier. */
+    static DetachedBranchCopyTask beginDetachedBranchCopy(Session source,
+            SeededPcbLayoutGenerator.AttemptObserver observer,int maximumVias,int viaCost) {
+        if(!validDiagnosticViaCost(viaCost))
+            throw new IllegalArgumentException("Detached diagnostic VIA cost must be in 1.."+
+                MAX_DIAGNOSTIC_VIA_COST);
+        if(source==null || viaCost<minimumDiagnosticViaCost(source))
+            throw new IllegalArgumentException("Detached diagnostic VIA cost must be at least the "+
+                "source and retained turn-heuristic floor");
+        return new DetachedBranchCopyTask(source,observer,maximumVias,viaCost,true);
+    }
+
+    private static boolean validDiagnosticViaCost(int viaCost) {
+        return viaCost>=1 && viaCost<=MAX_DIAGNOSTIC_VIA_COST;
+    }
+
+    private static int minimumDiagnosticViaCost(Session source) {
+        // The copied initial turn heuristic is retained and does not price face changes;
+        // a VIA must cost at least one turn, and must not undercut the source edge cost.
+        return Math.max(source.viaCost,TURN_COST);
     }
 
     /** Copies an actual initial branch; never computes or injects a found path. */
@@ -436,21 +460,24 @@ final class PcbLayerRoutingPrototype {
         private DetachedBranchReplay result;
         private int stage,array=-1,index,metaIndex,face,lastWork;
         private int serial,expanded,maximum,branches,segments,netIndex,pass;
-        private final int maximumVias;
+        private final int maximumVias,viaCost;
         private int netCount,pendingCount,reachedCount;
         private long credits,work,copied;
         private boolean cancelled,complete;
 
         private DetachedBranchCopyTask(Session source,SeededPcbLayoutGenerator.AttemptObserver observer,
-                int maximumVias) {
+                int maximumVias,int viaCost,boolean explicitViaCost) {
             if(source==null || observer==null || observer==source.observer || source.complete ||
                     source.policy!=Policy.FULLER_TWO_LAYER || source.search==null ||
                     source.pendingFixedPrefixCapture!=null || source.pendingFixedPrefixFailure!=null)
                 throw new IllegalArgumentException("Detached copy requires an independent initial FULLER owner");
             this.source=source; this.observer=observer; original=source.search; branch=original.branch;
-            if(branch==null || original.publisher!=null || original.complete ||
+            if((explicitViaCost && (!validDiagnosticViaCost(viaCost) ||
+                    viaCost<minimumDiagnosticViaCost(source))) ||
+                    branch==null || original.publisher!=null || original.complete ||
                     source.candidate!=original.layout || original.owner!=source ||
-                    original.budget!=source.budget || branch.expanded!=0 || branch.found!=null ||
+                    original.budget!=source.budget || original.viaCost!=source.viaCost ||
+                    branch.expanded!=0 || branch.found!=null ||
                     branch.foundTerminal!=null || branch.terminalEmitted || branch.relaxedBoundStarted ||
                     branch.relaxedQueryFaces!=null || branch.relaxedPristineFaces!=null ||
                     branch.relaxedDistanceBound!=null || branch.queue.size()!=2 || branch.best.size()!=2 ||
@@ -466,6 +493,7 @@ final class PcbLayerRoutingPrototype {
                 throw new IllegalArgumentException(
                     "Detached copy VIA cap must fit the source policy and initial prefix");
             this.maximumVias=maximumVias;
+            this.viaCost=explicitViaCost?viaCost:source.viaCost;
             firstSeed=branch.queue.values[0]; secondSeed=branch.queue.values[1];
             requireSeed(firstSeed); requireSeed(secondSeed);
             if(firstSeed.layer==secondSeed.layer || branch.best.get(firstSeed.key)!=firstSeed ||
@@ -583,7 +611,7 @@ final class PcbLayerRoutingPrototype {
         }
         private void createShells() {
             PcbBoardLayout layout=layoutTask.result();
-            owner=new Session(source,observer,templateTask.result(),layout,maximumVias);
+            owner=new Session(source,observer,templateTask.result(),layout,maximumVias,viaCost);
             owner.turnBoundWorkspace=new TurnBoundWorkspace(workspace,copiedInts);
             pads=new PcbPadPlacement[original.pads.length]; parts=new PcbComponentPlacement[original.parts.length];
             terminals=new PcbPadPlacement[branch.reachedTerminals.length];
@@ -628,6 +656,7 @@ final class PcbLayerRoutingPrototype {
             if(source==null || source.complete || source.search!=original || original.branch!=branch ||
                     original.publisher!=null || source.candidate!=sourceLayout || original.layout!=sourceLayout ||
                     source.template!=sourceTemplate || source.budget!=sourceBudget || original.budget!=sourceBudget ||
+                    original.viaCost!=source.viaCost ||
                     sourceBudget.maximum!=maximum || sourceBudget.expanded!=expanded ||
                     original.serial!=serial || original.branches!=branches || original.segments!=segments ||
                     original.netIndex!=netIndex || original.pass!=pass || original.nets!=nets || nets.size()!=netCount ||
@@ -718,6 +747,7 @@ final class PcbLayerRoutingPrototype {
         private final PcbBoardLayout template;
         private final int links;
         private final int maximumVias;
+        private final int viaCost;
         private final Budget budget;
         private final Diagnostics diagnostics;
         private final boolean roleWidths;
@@ -743,10 +773,10 @@ final class PcbLayerRoutingPrototype {
 
         /** Detached single-branch owner; large state is supplied by the charged copy cursor. */
         private Session(Session source,SeededPcbLayoutGenerator.AttemptObserver observer,
-                PcbBoardLayout template,PcbBoardLayout candidate,int maximumVias) {
+                PcbBoardLayout template,PcbBoardLayout candidate,int maximumVias,int viaCost) {
             board=source.board; policy=source.policy; this.observer=observer;
             this.template=template; this.candidate=candidate; links=source.links;
-            this.maximumVias=maximumVias; budget=new Budget(source.budget.maximum);
+            this.maximumVias=maximumVias; this.viaCost=viaCost; budget=new Budget(source.budget.maximum);
             budget.expanded=source.budget.expanded;
             diagnostics=source.diagnostics==null?null:DETACHED_DIAGNOSTICS;
             roleWidths=source.roleWidths; orderingStream=source.orderingStream;
@@ -787,6 +817,7 @@ final class PcbLayerRoutingPrototype {
                 throw new IllegalArgumentException("Invalid fixed-prefix observation session");
             this.board=board; this.policy=policy; this.observer=observer;
             this.maximumVias=maximumVias;
+            viaCost=policy.viaCost;
             this.diagnostics=diagnostics;
             this.orderingStream=orderingStream;
             this.fixedPrefixContext=context;
@@ -1384,7 +1415,7 @@ final class PcbLayerRoutingPrototype {
     /** Incremental Dijkstra field on a directed, fixed-prefix two-face relaxation. */
     static final class RelaxedDistanceBound {
         private static final int INFINITY=Integer.MAX_VALUE/4;
-        private final int width,height,cells,stateCount,primary;
+        private final int width,height,cells,stateCount,primary,viaCost;
         private final Policy policy;
         private final boolean[] goals;
         private FixedGraphEdges edges;
@@ -1396,13 +1427,19 @@ final class PcbLayerRoutingPrototype {
 
         RelaxedDistanceBound(int width,int height,boolean[] goals,int primary,
                 Policy policy,FixedGraphEdges edges) {
+            this(width,height,goals,primary,policy,policy==null?0:policy.viaCost,edges);
+        }
+        RelaxedDistanceBound(int width,int height,boolean[] goals,int primary,
+                Policy policy,int viaCost,FixedGraphEdges edges) {
             long count=(long)width*height;
             if(width<1 || height<1 || count>MAX_CELLS || goals==null ||
                     goals.length!=count*2L || primary<0 || primary>1 ||
-                    policy!=Policy.FULLER_TWO_LAYER || edges==null)
+                    policy!=Policy.FULLER_TWO_LAYER || viaCost<0 ||
+                    viaCost>MAX_DIAGNOSTIC_VIA_COST || edges==null)
                 throw new IllegalArgumentException("Invalid P07 relaxed-distance bound");
             this.width=width; this.height=height; cells=(int)count; stateCount=cells*2;
-            this.goals=goals; this.primary=primary; this.policy=policy; this.edges=edges;
+            this.goals=goals; this.primary=primary; this.policy=policy;
+            this.viaCost=viaCost; this.edges=edges;
             distance=new int[stateCount]; heap=new int[stateCount];
             heapPosition=new int[stateCount];
         }
@@ -1435,7 +1472,7 @@ final class PcbLayerRoutingPrototype {
             if(y+1<height) relaxPredecessor(layer,cell+width,cell,baseDistance);
             viaProbes++;
             if(edges.permitsVia(cell))
-                relax((1-layer)*cells+cell,baseDistance,policy.viaCost);
+                relax((1-layer)*cells+cell,baseDistance,viaCost);
             if(heapSize==0) finish();
             return complete;
         }
@@ -1521,7 +1558,7 @@ final class PcbLayerRoutingPrototype {
         final Policy policy;
         final SeededPcbLayoutGenerator.AttemptObserver observer;
         final Budget budget;
-        final int pass,minX,minY,width,height,cells,primary,maximumVias;
+        final int pass,minX,minY,width,height,cells,primary,maximumVias,viaCost;
         final PcbTwoLayerRules rules;
         final PcbNetRouter.Router[] faces=new PcbNetRouter.Router[2];
         final PcbPadPlacement[] pads;
@@ -1543,6 +1580,7 @@ final class PcbLayerRoutingPrototype {
             observer=owner.observer; budget=owner.budget; pass=source.pass;
             minX=source.minX; minY=source.minY; width=source.width; height=source.height;
             cells=source.cells; primary=source.primary; this.maximumVias=maximumVias;
+            viaCost=owner.viaCost;
             // Rules retain only immutable board/domain constraints, never a mutable layout.
             rules=source.rules; this.pads=pads; this.parts=parts;
             serial=source.serial; branches=source.branches; segments=source.segments;
@@ -1557,6 +1595,7 @@ final class PcbLayerRoutingPrototype {
             this.observer=observer; this.budget=budget; this.pass=pass;
             this.promotedNet=promotedNet;
             this.maximumVias=maximumVias;
+            viaCost=owner.viaCost;
             Rectangle r=layout.getBoardOutline(); minX=r.x+GRID; minY=r.y+GRID;
             GridAdmission grid=gridAdmission(r);
             width=grid.width; height=grid.height;
@@ -1874,7 +1913,7 @@ final class PcbLayerRoutingPrototype {
                 if(relaxedDistanceBound==null) {
                     observer.check(pass);
                     relaxedDistanceBound=new RelaxedDistanceBound(width,height,goal,primary,policy,
-                        fixedGraphEdges());
+                        viaCost,fixedGraphEdges());
                     relaxedBoundWorkUnits++;
                     observer.check(pass);
                     return;
@@ -2015,7 +2054,7 @@ final class PcbLayerRoutingPrototype {
                 if(current.direction!=4 && current.transitions<policy.transitions &&
                         pathViaFits(current) && viaFits(net,x(current.cell),y(current.cell),holes,holeBounds))
                     offer(queue,best,new Node(current.cell,1-current.layer,4,current.transitions+1,
-                        current.cost+policy.viaCost,heuristic(current.cell,4,1-current.layer),serial++,cells,current));
+                        current.cost+viaCost,heuristic(current.cell,4,1-current.layer),serial++,cells,current));
             }
             /** Resumable source-checked copy and physical-mask scan for one selected failure. */
             private final class FixedPrefixCaptureTask {
