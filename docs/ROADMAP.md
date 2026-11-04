@@ -342,7 +342,7 @@ in the current checkpoint. Next is the bounded copied-owner routing-remainder
 experiment, before any whole-generation treatment decision.
 
 The [copied current-order ownership prerequisite](task-evidence/Q100/cost240-remainder-owner-r1/README.md)
-is locally validated for its finite scope. A completed real Publisher transfers
+is accepted and published for its finite scope. A completed real Publisher transfers
 the same copied Session/Search/layout and inherited budget exactly once. Source
 preservation, active/ready cancellation, stale ownership, reentry and error
 cleanup pass. A genuine saved7 cost240/cap48 result passes the production
@@ -352,8 +352,9 @@ expansions remaining and starts no successor ordering. Final-source prerequisite
 focused8/native33, five existing diagnostics/readers, actual Player/Developer
 builds, Player privacy, E06State10, Current9 and exactly three approved normal
 MEDIUM roots pass. Failed harness/host attempts remain preserved; no limits or
-oracles were removed. Publication is recorded in the current checkpoint and
-packet. This grants no actual100 route, default adoption or public admission.
+oracles were removed. Implementation `7f7c50b348c550fdeced94ac915baa712fd44755` is verified on
+origin/codex/q100-physical-feasibility; completion Gmail `1a1a623dbb869e4e`
+was sent once. Publication is recorded in the current checkpoint and packet. This grants no actual100 route, default adoption or public admission.
 Playable100 remains0; beta held. Next is the
 [exact LOAD12 copied-order remainder experiment](task-evidence/Q100/cost240-remainder-owner-r1/NEXT_ACTUAL_REMAINDER_PLAN.md),
 with full physical and access limits recorded before implementation.

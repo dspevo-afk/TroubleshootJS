@@ -1,9 +1,12 @@
-# Current checkpoint: copied-order ownership validated; publication pending
+# Current checkpoint: copied-order ownership published; next experiment
 
 UTC 2026-11-04. Worktree X=OS-temp/tsj-q100-cost240-remainder-20261104-r1;
-branch codex/q100-cost240-remainder-20261104; HEAD/source parent
+branch codex/q100-cost240-remainder-20261104; implementation HEAD
+7f7c50b348c550fdeced94ac915baa712fd44755; validated source parent
 35f732237fe2be863816a49e715599655c6fa18e. QX=fixed-prefix bundle/
-cost240-remainder-owner-r1. No new commit, push or completion email yet.
+cost240-remainder-owner-r1. Implementation normally pushed and exact remote SHA verified; completion
+Gmail1a1a623dbb869e4e sent once after empty exact-SHA sent search.
+Documentation-only publication receipt is current/subsequent HEAD; no duplicate email.
 Prior cost240 implementation 1b25be0d1ddf406ef1c2722c864eabd92f0262e1 and
 receipt35f73223 remain published on origin/codex/q100-physical-feasibility;
 Gmail1a1a55391cbe9b24 was sent once.
@@ -71,10 +74,8 @@ Full30 owner-excluded/full2-by-31 not renewed. Existing focused42/5 are separate
 HARD/PSYCHOTIC unavailable/unrun; protected HARD unread in this scope, historical
 unread UNCERTIFIED. Self-hosted CI runner registration remains a prerequisite.
 
-Next: inspect/stage intended paths, normal commit/push to the established
-origin/codex/q100-physical-feasibility ref, verify exact SHA, then one completion
-Gmail. Record publication separately. Continue the [frozen actual remainder
-scope](task-evidence/Q100/cost240-remainder-owner-r1/NEXT_ACTUAL_REMAINDER_PLAN.md)
+Next: finish the documentation-only publication receipt, then continue the
+[frozen actual remainder scope](task-evidence/Q100/cost240-remainder-owner-r1/NEXT_ACTUAL_REMAINDER_PLAN.md)
 after publication; its design is not routing or independent-access proof.
 
 # Historical checkpoint: cost240 published

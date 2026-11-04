@@ -6,7 +6,10 @@ The finite private prerequisite is locally validated. Its source parent is
 measurements and gate results are recorded in [qualification.json](qualification.json).
 The [plan and coverage addendum](PLAN.md) preceded their respective edits.
 The [final input/resource audit](final-input-audit.json) passes.
-Publication is recorded separately after a verified normal push.
+Implementation `7f7c50b348c550fdeced94ac915baa712fd44755` is published on
+`origin/codex/q100-physical-feasibility`; the exact remote SHA is verified.
+Completion Gmail `1a1a623dbb869e4e` was sent once. The
+[publication receipt](publication.json) records this separately.
 
 A completed `DetachedBranchReplay` can transfer its existing copied Session,
 Search, layout, current pass and inherited request budget to one typed
