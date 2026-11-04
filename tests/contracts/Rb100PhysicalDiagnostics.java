@@ -242,6 +242,12 @@ public final class Rb100PhysicalDiagnostics {
             QualityScalarPurpose.DETACHED_LOAD12_COST240);
     }
 
+    /** Actual LOAD12 copied cost240 branch followed by only its current-order remainder. */
+    static void runLoad12DetachedCost240RemainderContracts() {
+        runQualityZeroViaGraphContracts(P07ZeroViaGraphDiagnostics.Target.LOAD12,
+            QualityScalarPurpose.DETACHED_LOAD12_COST240_REMAINDER);
+    }
+
     private static void runQualityZeroViaGraphContracts(
             P07ZeroViaGraphDiagnostics.Target graphTarget) {
         runQualityZeroViaGraphContracts(graphTarget,QualityScalarPurpose.ZERO_VIA_GRAPH);
@@ -267,6 +273,44 @@ public final class Rb100PhysicalDiagnostics {
             QualityScalarProbe.MAX_MANUAL_STEPS_PER_UNIT==32768,
             "quality scalar diagnostic retains the existing case/work/unit/cleanup budgets");
 
+        if(isDetachedLoad12Cost240Remainder(purpose)) {
+            QualityScalarProbe remainderProbe=new QualityScalarProbe(runId,
+                probeOperationId,variant,graphTarget,purpose);
+            P07PolicyDiagnosticCase remainder=runP07PolicyDiagnosticCase(variant,runId,
+                null,null,"COST240_REMAINDER",probeOperationId,null,remainderProbe,true);
+            long suiteMillis=nanosToMillis(System.nanoTime()-suiteStarted);
+            if("PASS".equals(remainder.status) &&
+                    remainderProbe.remainderExperimentComplete) {
+                try {
+                    remainderProbe.requireRemainderOperation(remainder);
+                    require(suiteMillis<=480000L,
+                        "actual LOAD12 copied-order remainder suite remains within its frozen480s ceiling");
+                } catch(RuntimeException failure) {
+                    remainder.failurePhase="REMAINDER_ACCEPTANCE";
+                    remainder.failure=append(remainder.failure,failure);
+                    remainder.status="FAIL";
+                    remainderProbe.captureOperationFailure(failure);
+                } catch(Error failure) {
+                    remainder.failurePhase="REMAINDER_ACCEPTANCE";
+                    remainder.failure=append(remainder.failure,failure);
+                    remainder.status="FAIL";
+                    remainderProbe.captureOperationFailure(failure);
+                }
+            }
+            System.out.println(remainderProbe.detachedLoad12Cost240RemainderEventJson(
+                remainder,suiteMillis));
+            if(!"PASS".equals(remainder.status) ||
+                    !remainderProbe.remainderExperimentComplete) {
+                remainderProbe.captureOperationFailure(remainder.failure);
+                throw new AssertionError(
+                    "Actual LOAD12 cost240 copied-order remainder operation failed");
+            }
+            require(suiteMillis<=480000L,
+                "actual LOAD12 copied-order remainder suite remains within its frozen480s ceiling");
+            System.out.println("PASS: RB100 LOAD12 detached cost240 remainder contracts assertions="+
+                (assertions-beforeAssertions));
+            return;
+        }
         P07PolicyDiagnosticCase baseline=runP07PolicyDiagnosticCase(variant,runId,null,null,
             "NULL",nullOperationId,null,null,true);
         if(!"PASS".equals(baseline.status) || baseline.policyResult==null ||
@@ -535,6 +579,10 @@ public final class Rb100PhysicalDiagnostics {
             final QualityScalarProbe qualityProbe,final boolean qualityScalarOperation) {
         final long operationStarted = System.nanoTime();
         final Budget budget = new Budget(operationStarted);
+        if(qualityProbe!=null && qualityProbe.isRemainderExperiment()) {
+            budget.enableRemainderMetrics();
+            qualityProbe.remainderBudget=budget;
+        }
         final P07PolicyDiagnosticCase result = new P07PolicyDiagnosticCase(
             variant.name(), SEED, runId);
         result.fixedPrefixMode=mode;
@@ -654,6 +702,8 @@ public final class Rb100PhysicalDiagnostics {
                 new SeededPcbLayoutGenerator.AttemptObserver() {
                     public void check(int attempt) {
                         result.observerChecks++;
+                        if(qualityProbe!=null && qualityProbe.isRemainderExperiment())
+                            qualityProbe.captureRemainderOuterAdvanceOwner(session[0]);
                         budget.checkpoint();
                         if(qualityProbe!=null)
                             qualityProbe.guardNoUnexpectedReady(session[0]);
@@ -670,12 +720,22 @@ public final class Rb100PhysicalDiagnostics {
                         generator[0].begin(candidate[0].board(),result.placementSeed,result.routingSeed) :
                         generator[0].beginWithFixedPrefixObservation(candidate[0].board(),
                             result.placementSeed,result.routingSeed,graphObserver);
-                    if(qualityProbe!=null) qualityProbe.armReadyGuard();
+                    if(qualityProbe!=null) {
+                        qualityProbe.bindAuthoredOwner(generator[0],session[0],candidate[0],
+                            identity[0],result.placementSeed);
+                        qualityProbe.armReadyGuard();
+                    }
                 }
             });
 
             result.phase = "MEDIUM_SESSION_ADVANCE";
             while (!terminal[0]) {
+                if(qualityProbe!=null && qualityProbe.isRemainderExperiment() &&
+                        qualityProbe.remainderExperimentComplete) {
+                    result.sessionTerminalStatus="REMAINDER_EXPERIMENT_COMPLETE";
+                    terminal[0]=true;
+                    break;
+                }
                 if(qualityProbe!=null && qualityProbe.shouldManuallyAdvance(session[0])) {
                     final String unitName=qualityProbe.nextManualUnitName();
                     valueUnit(budget,unitName,
@@ -687,13 +747,28 @@ public final class Rb100PhysicalDiagnostics {
                         });
                     continue;
                 }
+                if(qualityProbe!=null && qualityProbe.isRemainderExperiment() &&
+                        qualityProbe.load12BranchCaptured)
+                    throw new AssertionError(
+                        "actual original LOAD12 generator source resumption is forbidden in this experiment");
                 result.advanceCalls++;
                 try {
                     terminal[0] = valueUnit(budget,
                         "p07-session-advance-" + result.advanceCalls,
                         new UnitValue<Boolean>() {
                             public Boolean run() {
-                                return Boolean.valueOf(session[0].advance());
+                                boolean remainder=qualityProbe!=null &&
+                                    qualityProbe.isRemainderExperiment();
+                                if(remainder)
+                                    qualityProbe.beginRemainderOuterAdvance();
+                                try {
+                                    return Boolean.valueOf(session[0].advance());
+                                } finally {
+                                    if(remainder) {
+                                        budget.recordOwnerSteps(
+                                            qualityProbe.finishRemainderOuterAdvance());
+                                    }
+                                }
                             }
                         }).booleanValue();
                     if(qualityProbe!=null)
@@ -707,76 +782,102 @@ public final class Rb100PhysicalDiagnostics {
                         qualityProbe.observeGeneratorAdvance(session[0]);
                 }
             }
-            result.phase = "TERMINAL_POLICY_RESULT_CAPTURE";
-            valueUnit(budget, "p07-terminal-policy-result-capture", new UnitValue<Object>() {
-                public Object run() {
-                    require(result.advanceCalls > 0 && result.observerChecks > 0,
-                        "P07 policy observation advances the real session under budget checkpoints");
-                    policyResult[0] = session[0].mediumResult();
-                    require(policyResult[0] != null && policyResult[0].getStatistics() != null,
-                        "terminal medium session exposes its actual immutable result receipt");
-                    result.policyResult = policyResult[0];
-                    result.sessionRejection = terminalRejection[0];
-                    if (policyResult[0].accepted()) {
-                        require(terminalRejection[0] == null &&
-                            "ROUTED".equals(result.sessionTerminalStatus) &&
-                            "SUCCESS".equals(policyResult[0].getStatistics().outcome) &&
-                            MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER.equals(
-                                policyResult[0].getStatistics().selectedRoutePolicy) &&
-                            policyResult[0].getLayout() != null &&
-                            session[0].result() == policyResult[0].getLayout(),
-                            "completed medium session returns its selected routed layout and success receipt");
-                    } else {
-                        require(terminalRejection[0] != null &&
-                            "EXHAUSTED".equals(result.sessionTerminalStatus) &&
-                            terminalRejection[0].isExhausted() &&
-                            terminalRejection[0].getSeed() == result.placementSeed &&
-                            "REJECTED".equals(policyResult[0].getStatistics().outcome) &&
-                            policyResult[0].getFailure() != null,
-                            "expected exhausted rejection carries the installed terminal rejected-policy receipt");
-                    }
-                    verifyP07PolicyStatistics(policyResult[0]);
-                    identity[0].requireUnchanged(candidate[0]);
-                    if(captureCollector!=null &&
-                            captureCollector.completedNoPathTarget!=null) {
-                        require(result.boardNetIds!=null &&
-                            result.boardNetIds.equals(new TreeSet<String>(
-                                candidate[0].board().getNetIds())) &&
-                            result.boardNetIds.size()==result.nets,
-                            "completed NO_PATH census verifies the pre-generation net IDs remain unchanged after generation");
-                    }
-                    require(CircuitElm.sim == context[0].sim &&
-                        CirSim.theSim == context[0].sim && context[0].sim.elmList == context[0].rawGraph &&
-                        context[0].rawGraph.isEmpty(),
-                        "P07 geometry session leaves the authored CircuitJS elements uninstalled");
-                    result.solverGraphIdentityStatus = "PASS";
-                    result.boardIdentityStatus = "PASS";
-                    result.captureLayoutOutput();
-                    if(qualityProbe!=null)
-                        qualityProbe.confirmTerminalOperation(result,session[0],generator[0],
-                            policyResult[0]);
-                    if(captureCollector==null) {
-                        if(noPathTarget==null && "NULL".equals(mode))
-                            requireExpectedFixedPrefixPlacement(variant,policyResult[0].getStatistics());
-                        else if(noPathTarget!=null)
-                            requireCompletedNoPathOrderingReceipt(result,noPathTarget);
-                    } else {
-                        require(expectedNull!=null && "PASS".equals(expectedNull.status) &&
-                            expectedNull.policyResult!=null && expectedNull.policyResult.getStatistics()!=null,
-                            "capture run has its terminal null-observer actual-generator baseline");
-                        if(noPathTarget==null)
-                            requireExpectedFixedPrefixPlacement(variant,policyResult[0].getStatistics());
-                        else {
-                            requireCompletedNoPathOrderingReceipt(expectedNull,noPathTarget);
-                            requireCompletedNoPathOrderingReceipt(result,noPathTarget);
+            if(qualityProbe!=null && qualityProbe.isRemainderExperiment()) {
+                result.phase="REMAINDER_EXPERIMENT_TERMINAL_CAPTURE";
+                valueUnit(budget,"p07-remainder-experiment-terminal-capture",
+                    new UnitValue<Object>() {
+                        public Object run() {
+                            require(qualityProbe.remainderExperimentComplete &&
+                                result.advanceCalls>0 && result.observerChecks>0 &&
+                                "REMAINDER_EXPERIMENT_COMPLETE".equals(
+                                    result.sessionTerminalStatus),
+                                "remainder result terminates only after the copied current-order experiment completes");
+                            qualityProbe.verifyPausedLoad12Source();
+                            identity[0].requireUnchanged(candidate[0]);
+                            require(CircuitElm.sim==context[0].sim &&
+                                CirSim.theSim==context[0].sim &&
+                                context[0].sim.elmList==context[0].rawGraph &&
+                                context[0].rawGraph.isEmpty(),
+                                "paused P07 geometry experiment leaves CircuitJS elements uninstalled");
+                            result.solverGraphIdentityStatus="PASS";
+                            result.boardIdentityStatus="PASS";
+                            result.captureLayoutOutput();
+                            return null;
                         }
-                        requireFixedPrefixPairParity(expectedNull,result);
-                        captureCollector.requireComplete(result);
+                    });
+            } else {
+                result.phase = "TERMINAL_POLICY_RESULT_CAPTURE";
+                valueUnit(budget, "p07-terminal-policy-result-capture", new UnitValue<Object>() {
+                    public Object run() {
+                        require(result.advanceCalls > 0 && result.observerChecks > 0,
+                            "P07 policy observation advances the real session under budget checkpoints");
+                        policyResult[0] = session[0].mediumResult();
+                        require(policyResult[0] != null && policyResult[0].getStatistics() != null,
+                            "terminal medium session exposes its actual immutable result receipt");
+                        result.policyResult = policyResult[0];
+                        result.sessionRejection = terminalRejection[0];
+                        if (policyResult[0].accepted()) {
+                            require(terminalRejection[0] == null &&
+                                "ROUTED".equals(result.sessionTerminalStatus) &&
+                                "SUCCESS".equals(policyResult[0].getStatistics().outcome) &&
+                                MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER.equals(
+                                    policyResult[0].getStatistics().selectedRoutePolicy) &&
+                                policyResult[0].getLayout() != null &&
+                                session[0].result() == policyResult[0].getLayout(),
+                                "completed medium session returns its selected routed layout and success receipt");
+                        } else {
+                            require(terminalRejection[0] != null &&
+                                "EXHAUSTED".equals(result.sessionTerminalStatus) &&
+                                terminalRejection[0].isExhausted() &&
+                                terminalRejection[0].getSeed() == result.placementSeed &&
+                                "REJECTED".equals(policyResult[0].getStatistics().outcome) &&
+                                policyResult[0].getFailure() != null,
+                                "expected exhausted rejection carries the installed terminal rejected-policy receipt");
+                        }
+                        verifyP07PolicyStatistics(policyResult[0]);
+                        identity[0].requireUnchanged(candidate[0]);
+                        if(captureCollector!=null &&
+                                captureCollector.completedNoPathTarget!=null) {
+                            require(result.boardNetIds!=null &&
+                                result.boardNetIds.equals(new TreeSet<String>(
+                                    candidate[0].board().getNetIds())) &&
+                                result.boardNetIds.size()==result.nets,
+                                "completed NO_PATH census verifies the pre-generation net IDs remain unchanged after generation");
+                        }
+                        require(CircuitElm.sim == context[0].sim &&
+                            CirSim.theSim == context[0].sim && context[0].sim.elmList == context[0].rawGraph &&
+                            context[0].rawGraph.isEmpty(),
+                            "P07 geometry session leaves the authored CircuitJS elements uninstalled");
+                        result.solverGraphIdentityStatus = "PASS";
+                        result.boardIdentityStatus = "PASS";
+                        result.captureLayoutOutput();
+                        if(qualityProbe!=null && !qualityProbe.isRemainderExperiment())
+                            qualityProbe.confirmTerminalOperation(result,session[0],generator[0],
+                                policyResult[0]);
+                        if(captureCollector==null) {
+                            if(noPathTarget==null && "NULL".equals(mode))
+                                requireExpectedFixedPrefixPlacement(variant,policyResult[0].getStatistics());
+                            else if(noPathTarget!=null)
+                                requireCompletedNoPathOrderingReceipt(result,noPathTarget);
+                        } else {
+                            require(expectedNull!=null && "PASS".equals(expectedNull.status) &&
+                                expectedNull.policyResult!=null && expectedNull.policyResult.getStatistics()!=null,
+                                "capture run has its terminal null-observer actual-generator baseline");
+                            if(noPathTarget==null)
+                                requireExpectedFixedPrefixPlacement(variant,policyResult[0].getStatistics());
+                            else {
+                                requireCompletedNoPathOrderingReceipt(expectedNull,noPathTarget);
+                                requireCompletedNoPathOrderingReceipt(result,noPathTarget);
+                            }
+                            requireFixedPrefixPairParity(expectedNull,result);
+                            captureCollector.requireComplete(result);
+                        }
+                        return null;
                     }
-                    return null;
-                }
-            });
-            if(policyResult[0].accepted()) {
+                });
+            }
+            if(!(qualityProbe!=null && qualityProbe.isRemainderExperiment() &&
+                    policyResult[0]==null) && policyResult[0].accepted()) {
                 result.phase="AUTHORED_INDEPENDENT_PHYSICAL_SUBSETS";
                 unit(budget,"p07-authored-independent-physical-subsets",new UnitAction() {
                     public void run() {
@@ -788,8 +889,12 @@ public final class Rb100PhysicalDiagnostics {
             }
             result.qualitySubsetMarkerJson="RB100_CAPACITY_BOUND_PHYSICAL_SUBSETS {\"protocol\":\"rb100-physical-subsets-v1\",\"runId\":\""+jsonFull(runId)+
                 "\",\"variant\":\""+variant.name()+"\",\"status\":\""+
-                (policyResult[0].accepted()?"PASS_GEOMETRY_CLEARANCE_GRAPH_RASTER_ONLY":
-                    "NOT_RUN_NO_LAYOUT")+"\",\"independentTwoLayerAccess\":false,"+
+                (qualityProbe!=null && qualityProbe.isRemainderExperiment()?
+                    (policyResult[0]!=null && policyResult[0].accepted()?
+                        "PASS_GEOMETRY_CLEARANCE_GRAPH_RASTER_ONLY":"NOT_RUN_NO_LAYOUT"):
+                    (policyResult[0].accepted()?
+                        "PASS_GEOMETRY_CLEARANCE_GRAPH_RASTER_ONLY":"NOT_RUN_NO_LAYOUT"))+
+                    "\",\"independentTwoLayerAccess\":false,"+
                 "\"layoutQualification\":false}";
             if(!qualityScalarOperation) System.out.println(result.qualitySubsetMarkerJson);
             if(captureCollector!=null) {
@@ -841,16 +946,25 @@ public final class Rb100PhysicalDiagnostics {
             if (result.failurePhase == null) result.failurePhase = result.phase;
             result.failure = append(result.failure, failure);
         }
-        result.operationMillis = nanosToMillis(System.nanoTime() - operationStarted);
+        if(budget.remainderMetricsEnabled)
+            result.operationMillis=nanosToMillis(budget.finishRemainderPhases());
+        else
+            result.operationMillis = nanosToMillis(System.nanoTime() - operationStarted);
         cleanupDiagnosticCase(result, context[0], candidate[0]);
         result.workUnits = budget.workUnits;
         result.maxUnitMillis = budget.maxUnitMillis();
+        boolean remainderExperiment=qualityProbe!=null &&
+            qualityProbe.isRemainderExperiment();
         result.status = result.failure == null && result.cleanupPassed &&
-            result.policyResult != null && result.inputMetadata != null &&
+            (remainderExperiment?
+                qualityProbe.remainderExperimentComplete &&
+                    "REMAINDER_EXPERIMENT_COMPLETE".equals(result.sessionTerminalStatus):
+                result.policyResult != null &&
+                    ("ROUTED".equals(result.sessionTerminalStatus) ||
+                        "EXHAUSTED".equals(result.sessionTerminalStatus))) &&
+            result.inputMetadata != null &&
             result.boardIdentityStatus.equals("PASS") &&
             result.solverGraphIdentityStatus.equals("PASS") &&
-            ("ROUTED".equals(result.sessionTerminalStatus) ||
-                "EXHAUSTED".equals(result.sessionTerminalStatus)) &&
             result.operationMillis <= nanosToMillis(CASE_LIMIT_NANOS) &&
             result.workUnits <= WORK_LIMIT && result.maxUnitMillis <=
                 nanosToMillis(UNIT_LIMIT_NANOS) ? "PASS" : "FAIL";
@@ -3011,18 +3125,88 @@ public final class Rb100PhysicalDiagnostics {
     }
 
     private static final class Budget {
+        private static final String[] REMAINDER_PHASES={"sourcePreparation",
+            "copySetup","copyAdvance","branchReplay","branchCapture",
+            "orderingHandoff","orderingRemainder","resultTake",
+            "rawPhysicalOracles","finalizationAndReporting","finalPhysicalOracles"};
         final long started;
         int workUnits;
         long maxUnitNanos;
         long unitStarted;
         String unitName;
+        boolean remainderMetricsEnabled;
+        int unitRemainderPhase=-1,unitOwnerSteps,maxOwnerStepsInUnit;
+        int currentRemainderPhase=-1;
+        long remainderPhaseStartedNanos,remainderOperationElapsedNanos=-1L;
+        final int[] remainderPhaseCalls=new int[REMAINDER_PHASES.length];
+        final long[] remainderPhaseElapsedNanos=new long[REMAINDER_PHASES.length];
+        final long[] remainderPhaseOwnerSteps=new long[REMAINDER_PHASES.length];
         Budget(long started) { this.started = started; }
+        void enableRemainderMetrics() {
+            if(workUnits!=0 || remainderMetricsEnabled)
+                throw new IllegalStateException("Remainder metrics must start before the first unit");
+            remainderMetricsEnabled=true;
+            currentRemainderPhase=0;
+            remainderPhaseStartedNanos=started;
+        }
         void beginUnit(String name) {
             checkpoint();
             if (workUnits >= WORK_LIMIT) throw new BudgetExceeded("WORK_LIMIT", name);
             workUnits++;
             unitName = name;
             unitStarted = System.nanoTime();
+            unitOwnerSteps=0;
+            unitRemainderPhase=remainderMetricsEnabled?remainderPhaseFor(name):-1;
+            if(remainderMetricsEnabled && unitRemainderPhase!=currentRemainderPhase) {
+                closeRemainderPhase(unitStarted);
+                currentRemainderPhase=unitRemainderPhase;
+                remainderPhaseStartedNanos=unitStarted;
+            }
+        }
+        void recordOwnerSteps(int steps) {
+            if(!remainderMetricsEnabled || unitName==null || steps<0)
+                throw new IllegalStateException("Actual owner work is outside a remainder value unit");
+            unitOwnerSteps+=steps;
+            maxOwnerStepsInUnit=Math.max(maxOwnerStepsInUnit,unitOwnerSteps);
+            if(unitOwnerSteps>QualityScalarProbe.MAX_MANUAL_STEPS_PER_UNIT)
+                throw new BudgetExceeded("OWNER_STEP_LIMIT",unitName);
+        }
+        private static int remainderPhaseFor(String name) {
+            if(name==null) throw new IllegalArgumentException("Remainder unit requires a name");
+            if(name.startsWith("p07-quality-load12-remainder-copy-setup")) return 1;
+            if(name.startsWith("p07-quality-load12-detached-copy-advance")) return 2;
+            if(name.startsWith("p07-quality-load12-detached-prepare") ||
+                    name.startsWith("p07-quality-load12-detached-pre-entry") ||
+                    name.startsWith("p07-quality-load12-detached-replay-advance")) return 3;
+            if(name.startsWith("p07-quality-load12-detached-pre-advance") ||
+                    name.startsWith("p07-quality-load12-detached-post-advance")) return 4;
+            if(name.startsWith("p07-quality-load12-remainder-ordering-handoff")) return 5;
+            if(name.startsWith("p07-quality-load12-remainder-ordering-remainder")) return 6;
+            if(name.startsWith("p07-quality-load12-remainder-result-take")) return 7;
+            if(name.startsWith("p07-quality-load12-remainder-raw-physical-oracles")) return 8;
+            if(name.startsWith("p07-quality-load12-remainder-finalizer-and-scoring") ||
+                    name.startsWith("p07-remainder-experiment-terminal-capture") ||
+                    name.startsWith("p07-final-report-preparation")) return 9;
+            if(name.startsWith("p07-quality-load12-remainder-final-physical-oracles")) return 10;
+            if(name.startsWith("p07-quality-load12-remainder-"))
+                throw new IllegalStateException("Unclassified remainder controller unit: "+name);
+            return 0;
+        }
+        private void closeRemainderPhase(long now) {
+            if(currentRemainderPhase>=0) {
+                remainderPhaseElapsedNanos[currentRemainderPhase]+=
+                    Math.max(0L,now-remainderPhaseStartedNanos);
+            }
+        }
+        long finishRemainderPhases() {
+            if(!remainderMetricsEnabled) return -1L;
+            if(remainderOperationElapsedNanos>=0L) return remainderOperationElapsedNanos;
+            long stopped=System.nanoTime();
+            closeRemainderPhase(stopped);
+            currentRemainderPhase=-1;
+            remainderPhaseStartedNanos=0L;
+            remainderOperationElapsedNanos=Math.max(0L,stopped-started);
+            return remainderOperationElapsedNanos;
         }
         void checkpoint() {
             long now = System.nanoTime();
@@ -3035,7 +3219,13 @@ public final class Rb100PhysicalDiagnostics {
             long elapsed = System.nanoTime() - unitStarted;
             if (elapsed > maxUnitNanos) maxUnitNanos = elapsed;
             String ended = unitName;
+            if(remainderMetricsEnabled && unitRemainderPhase>=0) {
+                remainderPhaseCalls[unitRemainderPhase]++;
+                remainderPhaseOwnerSteps[unitRemainderPhase]+=unitOwnerSteps;
+            }
             unitName = null;
+            unitRemainderPhase=-1;
+            unitOwnerSteps=0;
             try {
                 if (elapsed > UNIT_LIMIT_NANOS)
                     throw new BudgetExceeded("UNIT_DEADLINE", ended);
@@ -3232,13 +3422,14 @@ public final class Rb100PhysicalDiagnostics {
 
     private enum QualityScalarPurpose {
         ZERO_VIA_GRAPH, DETACHED_LOAD12_BASELINE, DETACHED_LOAD12_CAP17,
-        DETACHED_LOAD12_COST240
+        DETACHED_LOAD12_COST240, DETACHED_LOAD12_COST240_REMAINDER
     }
 
     private static boolean isDetachedLoad12Purpose(QualityScalarPurpose purpose) {
         return purpose==QualityScalarPurpose.DETACHED_LOAD12_BASELINE ||
             purpose==QualityScalarPurpose.DETACHED_LOAD12_CAP17 ||
-            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240;
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240 ||
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_REMAINDER;
     }
 
     private static boolean isDetachedLoad12Cap17(QualityScalarPurpose purpose) {
@@ -3246,7 +3437,13 @@ public final class Rb100PhysicalDiagnostics {
     }
 
     private static boolean isDetachedLoad12Cost240(QualityScalarPurpose purpose) {
-        return purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240;
+        return purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240 ||
+            purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_REMAINDER;
+    }
+
+    private static boolean isDetachedLoad12Cost240Remainder(
+            QualityScalarPurpose purpose) {
+        return purpose==QualityScalarPurpose.DETACHED_LOAD12_COST240_REMAINDER;
     }
 
     private static boolean capturesDetachedLoad12CostResults(
@@ -3259,6 +3456,267 @@ public final class Rb100PhysicalDiagnostics {
         if(isDetachedLoad12Cap17(purpose)) return 17;
         if(isDetachedLoad12Cost240(purpose)) return 48;
         return sourceMaximumVias;
+    }
+
+    private static final class Load12RemainderPhysicalProof {
+        final String geometrySha256,graphSha256;
+        final int traceCount,holeCount,viaCount,accessGridCells,accessReachableCells;
+        final long productionClearancePairs,independentClearancePairs,
+            orderedPadPairs,rasterPadPairs,rasterPointCount,courtyardPairs,escapeTargets;
+        Load12RemainderPhysicalProof(String geometrySha256,String graphSha256,
+                int traceCount,int holeCount,int viaCount,int accessGridCells,
+                int accessReachableCells,long productionClearancePairs,
+                long independentClearancePairs,long orderedPadPairs,long rasterPadPairs,
+                long rasterPointCount,long courtyardPairs,long escapeTargets) {
+            this.geometrySha256=geometrySha256; this.graphSha256=graphSha256;
+            this.traceCount=traceCount; this.holeCount=holeCount; this.viaCount=viaCount;
+            this.accessGridCells=accessGridCells; this.accessReachableCells=accessReachableCells;
+            this.productionClearancePairs=productionClearancePairs;
+            this.independentClearancePairs=independentClearancePairs;
+            this.orderedPadPairs=orderedPadPairs; this.rasterPadPairs=rasterPadPairs;
+            this.rasterPointCount=rasterPointCount; this.courtyardPairs=courtyardPairs;
+            this.escapeTargets=escapeTargets;
+        }
+    }
+
+    private static Load12RemainderPhysicalProof verifyLoad12RemainderPhysicalLayout(
+            TroubleshootBoard board,PcbBoardLayout layout,
+            Rb100ElectricalPilot.Candidate authored,BoardIdentity identity) {
+        require(board!=null && layout!=null && authored!=null && identity!=null &&
+            authored.board()==board,
+            "remainder physical checks bind the actual authored board and its captured identity");
+        Rb100PhysicalReference.P03Metrics p03=
+            Rb100PhysicalReference.verifyLiteralP03(board,layout);
+        final Object evidence;
+        try {
+            Method validator=P07OrderingCandidatesContractTest.class.getDeclaredMethod(
+                "validateAcceptedOutput",TroubleshootBoard.class,PcbBoardLayout.class);
+            validator.setAccessible(true);
+            evidence=validator.invoke(null,board,layout);
+        } catch(InvocationTargetException wrapped) {
+            Throwable cause=wrapped.getCause();
+            if(cause instanceof RuntimeException) throw (RuntimeException)cause;
+            if(cause instanceof Error) throw (Error)cause;
+            throw new IllegalStateException("Independent authored100 physical oracle failed",cause);
+        } catch(ReflectiveOperationException failure) {
+            throw new IllegalStateException("Could not bind maintained authored100 physical oracles",failure);
+        }
+        require(evidence!=null,"maintained authored100 physical oracles return their evidence");
+        PcbTraceClearance.Statistics clearance=
+            (PcbTraceClearance.Statistics)P07ScalarReflection.read(evidence,"clearance");
+        PcbConductorGraph graph=(PcbConductorGraph)P07ScalarReflection.read(evidence,"graph");
+        P07LayeredRasterOracle.Metrics raster=(P07LayeredRasterOracle.Metrics)
+            P07ScalarReflection.read(evidence,"raster");
+        long orderedPairs=((Long)P07ScalarReflection.read(evidence,"orderedPadPairs")).longValue();
+        long independentClearance=((Long)P07ScalarReflection.read(
+            evidence,"referenceClearancePairs")).longValue();
+        long expectedPairs=(long)board.getPadIds().size()*board.getPadIds().size();
+        require(clearance!=null && graph!=null && raster!=null &&
+            expectedPairs==60516L && orderedPairs==expectedPairs &&
+            raster.getOrderedPadPairs()==expectedPairs &&
+            p03.courtyardPairs==4950 && p03.escapeTargets==24354L,
+            "raw/final physical evidence covers geometry, clearance, P08 graph, all ordered pad pairs, layered raster and authored P03 witnesses");
+        Vector<PcbFootprint> footprints=new Vector<PcbFootprint>();
+        for(PcbComponentPlacement placement:layout.getComponents()) {
+            BoardComponent component=board.getComponent(placement.getComponentId());
+            require(component!=null,"access oracle placement resolves an authored board component");
+            Vector<PcbPadPlacement> pads=new Vector<PcbPadPlacement>();
+            for(String padId:component.getPadIds()) {
+                PcbPadPlacement pad=layout.getPad(padId);
+                require(pad!=null,"access oracle resolves every authored terminal placement");
+                pads.add(pad);
+            }
+            footprints.add(new PcbFootprint(placement,pads));
+        }
+        int freeCells=PcbAccessPlanner.validate(layout.getBoardOutline(),footprints,
+            board.getPlacementConstraints().getTraceWidthProfile().maximumWidth());
+        Rectangle outline=layout.getBoardOutline();
+        int accessWidth=outline.width/PcbAccessPlanner.GRID+1;
+        int accessHeight=outline.height/PcbAccessPlanner.GRID+1;
+        long accessCells=(long)accessWidth*accessHeight;
+        require(accessCells<=MAX_ACCESS_CELLS && freeCells>0 && freeCells<=accessCells,
+            "production two-layer access validation remains inside the700000-cell bound");
+        identity.requireUnchanged(authored);
+        int vias=0;
+        for(PcbBoardHole hole:layout.getHoles())
+            if(hole.kind==PcbBoardHole.Kind.VIA) vias++;
+        return new Load12RemainderPhysicalProof(
+            sha256Hex(layout.geometryFingerprint()),sha256Hex(graph.toCanonical()),
+            layout.getTraces().size(),layout.getHoleCount(),vias,(int)accessCells,freeCells,
+            clearance.exactPairs,independentClearance,orderedPairs,
+            raster.getOrderedPadPairs(),raster.getRasterPointCount(),
+            p03.courtyardPairs,p03.escapeTargets);
+    }
+
+    private static final class Load12RemainderFinalization {
+        final String status,reasonType,reason,layoutSha256,winnerLayoutSha256;
+        final boolean selected;
+        final int attempt,winnerAttempt;
+        final long placementScore,area,winnerPlacementScore,winnerArea;
+        final double quality,winnerQuality;
+        final PcbBoardLayout layout,winnerLayout;
+        Load12RemainderFinalization(String status,String reasonType,String reason,
+                PcbBoardLayout layout,PcbBoardLayout winnerLayout,boolean selected,
+                int attempt,long placementScore,long area,double quality,int winnerAttempt,
+                long winnerPlacementScore,long winnerArea,double winnerQuality) {
+            this.status=status; this.reasonType=reasonType; this.reason=reason;
+            this.layout=layout; this.winnerLayout=winnerLayout; this.selected=selected;
+            this.attempt=attempt; this.placementScore=placementScore; this.area=area;
+            this.quality=quality; this.winnerAttempt=winnerAttempt;
+            this.winnerPlacementScore=winnerPlacementScore; this.winnerArea=winnerArea;
+            this.winnerQuality=winnerQuality;
+            layoutSha256=layout==null?null:sha256Hex(layout.geometryFingerprint());
+            winnerLayoutSha256=winnerLayout==null?null:
+                sha256Hex(winnerLayout.geometryFingerprint());
+        }
+    }
+
+    private static final class Load12RemainderOwnerAdapter {
+        final SeededPcbLayoutGenerator generator;
+        final SeededPcbLayoutGenerator.Session outer;
+        final MediumBoardPhysicalPolicy.PlacementCandidate candidate;
+        final TroubleshootBoard board;
+        final BoardIdentity identity;
+        final Rb100ElectricalPilot.Candidate authored;
+        final Method finish,consider;
+        final Field winnerLayout,winnerQuality,winnerArea,winnerAttempt,winnerPlacementScore;
+        Load12RemainderOwnerAdapter(SeededPcbLayoutGenerator generator,
+                SeededPcbLayoutGenerator.Session outer,
+                MediumBoardPhysicalPolicy.PlacementCandidate candidate,
+                TroubleshootBoard board,BoardIdentity identity,
+                Rb100ElectricalPilot.Candidate authored) {
+            try {
+                this.generator=generator; this.outer=outer; this.candidate=candidate;
+                this.board=board; this.identity=identity; this.authored=authored;
+                require(generator!=null && outer!=null && candidate!=null && board!=null &&
+                    identity!=null && authored!=null && authored.board()==board &&
+                    candidate.attempt==4 && candidate.plan!=null,
+                    "finalizer adapter binds the actual selected authored100 candidate");
+                require(P07ScalarReflection.read(outer,"mediumTwoLayerCandidate")==candidate &&
+                    P07ScalarReflection.read(outer,"board")==board &&
+                    P07ScalarReflection.read(outer,"mediumTwoLayerRoute")!=null,
+                    "finalizer adapter uses the same live outer generator Session and current placement candidate");
+                finish=SeededPcbLayoutGenerator.class.getDeclaredMethod(
+                    "finishMediumTwoLayerRoute",TroubleshootBoard.class,Long.TYPE,
+                    MediumBoardPhysicalPolicy.PlacementCandidate.class,
+                    PcbLayerRoutingPrototype.Result.class);
+                finish.setAccessible(true);
+                Method found=null;
+                for(Method method:SeededPcbLayoutGenerator.class.getDeclaredMethods()) {
+                    Class<?>[] parameters=method.getParameterTypes();
+                    if("considerMediumLayout".equals(method.getName()) &&
+                            parameters.length==4 &&
+                            parameters[0]==SeededPcbLayoutGenerator.Session.class &&
+                            parameters[1]==MediumBoardPhysicalPolicy.PlacementCandidate.class &&
+                            parameters[3]==Boolean.TYPE) {
+                        if(found!=null) throw new NoSuchMethodException(
+                            "Ambiguous existing considerMediumLayout method");
+                        found=method;
+                    }
+                }
+                if(found==null) throw new NoSuchMethodException(
+                    "Missing existing considerMediumLayout method");
+                consider=found; consider.setAccessible(true);
+                Class<?> owner=outer.getClass();
+                winnerLayout=owner.getDeclaredField("mediumTwoLayerLayout");
+                winnerQuality=owner.getDeclaredField("mediumTwoLayerQuality");
+                winnerArea=owner.getDeclaredField("mediumTwoLayerArea");
+                winnerAttempt=owner.getDeclaredField("mediumTwoLayerPlacementAttempt");
+                winnerPlacementScore=owner.getDeclaredField("mediumTwoLayerPlacementScore");
+                winnerLayout.setAccessible(true); winnerQuality.setAccessible(true);
+                winnerArea.setAccessible(true); winnerAttempt.setAccessible(true);
+                winnerPlacementScore.setAccessible(true);
+            } catch(ReflectiveOperationException failure) {
+                throw new IllegalStateException("Could not bind actual RB100 finalizer/comparator owner",failure);
+            }
+        }
+
+        Load12RemainderFinalization finalizeAndConsider(long placementSeed,
+                PcbLayerRoutingPrototype.Result result) {
+            require(result!=null && result.accepted() && result.layout!=null &&
+                result.orderings==2 && candidate.attempt==4 &&
+                P07ScalarReflection.read(outer,"mediumTwoLayerCandidate")==candidate,
+                "current-order Result retains pass1 lineage and the real attempt4 placement owner");
+            identity.requireUnchanged(authored);
+            final Object routed;
+            try {
+                routed=finish.invoke(generator,board,Long.valueOf(placementSeed),candidate,result);
+            } catch(InvocationTargetException wrapped) {
+                Throwable cause=wrapped.getCause();
+                if(cause==null) throw new IllegalStateException(
+                    "Actual medium finalizer threw without a cause",wrapped);
+                if(isExpectedLoad12FinalizerRejection(cause)) {
+                    Object kind=cause instanceof PcbBoardLayout.RouteQualityRejectedException?
+                        ((PcbBoardLayout.RouteQualityRejectedException)cause).getKind():
+                        P07ScalarReflection.read(cause,"kind");
+                    String reasonType=kind instanceof Enum?((Enum<?>)kind).name():null;
+                    require(reasonType!=null && cause.getMessage()!=null &&
+                        !cause.getMessage().isEmpty(),
+                        "expected finalizer rejection retains its production reason type and message");
+                    identity.requireUnchanged(authored);
+                    return new Load12RemainderFinalization("REJECTED",
+                        reasonType,cause.getMessage(),null,null,false,
+                        candidate.attempt,candidate.cheapScore,0L,Double.NaN,-1,0L,0L,
+                        Double.NaN);
+                }
+                if(cause instanceof RuntimeException) throw (RuntimeException)cause;
+                if(cause instanceof Error) throw (Error)cause;
+                throw new IllegalStateException("Unexpected actual medium finalizer failure",cause);
+            } catch(IllegalAccessException failure) {
+                throw new IllegalStateException("Could not invoke actual medium finalizer",failure);
+            }
+            try {
+                Object plan=P07ScalarReflection.read(routed,"plan");
+                PcbBoardLayout finalized=(PcbBoardLayout)P07ScalarReflection.read(routed,"layout");
+                require(plan!=null && finalized!=null,
+                    "production finalizer returns the real compacted plan and layout");
+                consider.invoke(generator,outer,candidate,routed,Boolean.TRUE);
+                Rectangle bounds=finalized.getBoardOutline();
+                long area=(long)bounds.width*bounds.height;
+                double quality=finalized.getRouteQualityScore(board);
+                PcbBoardLayout selectedLayout=(PcbBoardLayout)winnerLayout.get(outer);
+                int selectedAttempt=winnerAttempt.getInt(outer);
+                long selectedScore=winnerPlacementScore.getLong(outer);
+                long selectedArea=winnerArea.getLong(outer);
+                double selectedQuality=winnerQuality.getDouble(outer);
+                require(area>0 && candidate.cheapScore>=0 && selectedLayout!=null &&
+                    selectedAttempt>=0 && selectedScore>=0 && selectedArea>0 &&
+                    !Double.isNaN(quality) && !Double.isInfinite(quality) && quality>=0.0 &&
+                    !Double.isNaN(selectedQuality) && !Double.isInfinite(selectedQuality) &&
+                    selectedQuality>=0.0,
+                    "actual final candidate and Session winner retain bounded comparator metrics");
+                boolean selected=selectedLayout==finalized;
+                if(selected)
+                    require(selectedAttempt==candidate.attempt &&
+                        selectedScore==candidate.cheapScore && selectedArea==area &&
+                        Double.compare(selectedQuality,quality)==0,
+                        "same actual Session selects the exact final candidate attempt, score, area and quality");
+                else
+                    require(selectedLayout!=finalized,
+                        "unselected actual candidate retains the real existing Session winner");
+                identity.requireUnchanged(authored);
+                require(P07ScalarReflection.read(outer,"mediumTwoLayerRoute")!=null &&
+                    P07ScalarReflection.read(outer,"mediumTwoLayerCandidate")==candidate,
+                    "direct finalization leaves the paused original route and selected candidate owned by the same outer Session");
+                return new Load12RemainderFinalization(selected?"SELECTED":"UNSELECTED",
+                    null,null,finalized,selectedLayout,selected,candidate.attempt,
+                    candidate.cheapScore,area,quality,selectedAttempt,selectedScore,
+                    selectedArea,selectedQuality);
+            } catch(InvocationTargetException wrapped) {
+                Throwable cause=wrapped.getCause();
+                if(cause instanceof RuntimeException) throw (RuntimeException)cause;
+                if(cause instanceof Error) throw (Error)cause;
+                throw new IllegalStateException("Actual medium comparator failed",cause);
+            } catch(ReflectiveOperationException failure) {
+                throw new IllegalStateException("Could not inspect actual comparator winner",failure);
+            }
+        }
+
+        private static boolean isExpectedLoad12FinalizerRejection(Throwable cause) {
+            return (SeededPcbLayoutGenerator.class.getName()+"$CandidateRejected").equals(
+                    cause.getClass().getName()) ||
+                cause instanceof PcbBoardLayout.RouteQualityRejectedException;
+        }
     }
 
     private static final class QualityScalarProbe
@@ -3385,11 +3843,117 @@ public final class Rb100PhysicalDiagnostics {
             detachedOwnersReleased,detachedComparisonComplete,
             detachedSourcePreserved,cap17SourceAfterReplayCaptured;
 
+        private static final int REMAINDER_IDLE=0,REMAINDER_HANDOFF=1,
+            REMAINDER_ADVANCE=2,REMAINDER_TAKE_RESULT=3,REMAINDER_RAW_ORACLES=4,
+            REMAINDER_FINALIZE=5,REMAINDER_FINAL_ORACLES=6,REMAINDER_COMPLETE=7;
+        final long createdAtNanos=System.nanoTime();
+        SeededPcbLayoutGenerator actualGenerator;
+        SeededPcbLayoutGenerator.Session actualOuterSession;
+        Rb100ElectricalPilot.Candidate actualAuthoredCandidate;
+        BoardIdentity actualBoardIdentity;
+        MediumBoardPhysicalPolicy.PlacementCandidate actualPlacementCandidate;
+        long actualPlacementSeed;
+        int remainderStage=REMAINDER_IDLE,remainderLastBudgetUnit,
+            remainderAdvanceCalls,remainderMaxOwnerStepsPerUnit,
+            remainderSourceBudgetExpandedBefore=-1,
+            remainderRemainingRequestBudget=-1,remainderExpansions=-1,
+            remainderOrderings=-1,remainderVias=-1,
+            sourceRouteIdentity,sourceSearchIdentity,sourceBranchIdentity,sourceLayoutIdentity,
+            sourceQueueIdentity,sourceBestIdentity,
+            copiedOwnerIdentity,copiedSearchIdentity,copiedBranchIdentity,copiedLayoutIdentity,
+            continuationIdentity,continuationOwnerIdentity,rawLayoutIdentity,
+            finalLayoutIdentity,winnerLayoutIdentity;
+        long[] detachedPhaseElapsedNanos=new long[8];long remainderOwnerSteps,remainderHandoffNanos,remainderAdvanceNanos,
+            remainderTakeNanos,remainderRawOracleNanos,remainderFinalizerNanos,
+            remainderFinalOracleNanos,remainderSourcePreparationNanos,
+            remainderCopySetupNanos;
+        String remainderProgressStatus,remainderBoundaryType,remainderBoundaryReason,
+            remainderOutcome,remainderSourceBeforeJson,remainderSourceAfterJson;
+        Budget remainderBudget;
+        PcbLayerRoutingPrototype.DetachedOrderingContinuation remainderContinuation;
+        PcbLayerRoutingPrototype.Session remainderOwner;
+        PcbLayerRoutingPrototype.Result remainderResult;PcbBoardLayout remainderCopiedLayout;
+        Load12RemainderPhysicalProof remainderRawProof,remainderFinalProof;
+        Load12RemainderFinalization remainderFinalization;
+        boolean remainderExperimentComplete,remainderSourceVerified,
+            remainderCopySetupPending,remainderRawOracleStarted,
+            remainderFinalOracleStarted,remainderFinalizerStarted,
+            copiedOwnerBound,remainderHandoffAttempted,
+            remainderContinuationIdentityCaptured,
+            remainderContinuationOwnerIdentityCaptured,
+            remainderHandoffComplete,remainderOuterAdvanceTracking;
+        final IdentityHashMap<PcbLayerRoutingPrototype.Session,Boolean>
+            remainderOuterAdvanceOwners=
+                new IdentityHashMap<PcbLayerRoutingPrototype.Session,Boolean>();
+
         QualityScalarProbe(String runId,String operationId,Rb100Plan.Variant variant,
                 P07ZeroViaGraphDiagnostics.Target graphTarget,
                 QualityScalarPurpose purpose) {
             this.runId=runId; this.operationId=operationId; this.variant=variant;
             this.graphTarget=graphTarget; this.purpose=purpose;
+        }
+
+        void bindAuthoredOwner(SeededPcbLayoutGenerator generator,
+                SeededPcbLayoutGenerator.Session outer,
+                Rb100ElectricalPilot.Candidate authored,BoardIdentity identity,long placementSeed) {
+            if(!isDetachedLoad12Cost240Remainder(purpose)) return;
+            require(actualGenerator==null && generator!=null && outer!=null &&
+                authored!=null && identity!=null && authored.board()!=null &&
+                placementSeed==PLACEMENT_DIAGNOSTIC_SEED,
+                "remainder probe binds the actual authored generator, outer Session and exact placement seed");
+            actualGenerator=generator; actualOuterSession=outer;
+            actualAuthoredCandidate=authored; actualBoardIdentity=identity;
+            actualPlacementSeed=placementSeed;
+        }
+
+        boolean isRemainderExperiment() {
+            return isDetachedLoad12Cost240Remainder(purpose);
+        }
+
+        void beginRemainderOuterAdvance() {
+            require(isRemainderExperiment() && !remainderOuterAdvanceTracking &&
+                remainderOuterAdvanceOwners.isEmpty(),
+                "one outer generator advance owns a fresh exact P07 work census");
+            remainderOuterAdvanceTracking=true;
+        }
+
+        void captureRemainderOuterAdvanceOwner(
+                SeededPcbLayoutGenerator.Session generatorSession) {
+            if(!isRemainderExperiment() || !remainderOuterAdvanceTracking ||
+                    generatorSession==null) return;
+            // P07 clears lastWork before this callback; keep the owner alive across outer replacement.
+            String[] ownerFields={"mediumTwoLayerRoute","packingRoute"};
+            for(String ownerField:ownerFields) {
+                Object value=P07ScalarReflection.read(generatorSession,ownerField);
+                if(value instanceof PcbLayerRoutingPrototype.Session &&
+                        P07ScalarReflection.intField(value,"lastWork")==0)
+                    remainderOuterAdvanceOwners.put(
+                        (PcbLayerRoutingPrototype.Session)value,Boolean.TRUE);
+            }
+        }
+
+        int finishRemainderOuterAdvance() {
+            require(isRemainderExperiment() && remainderOuterAdvanceTracking,
+                "outer generator work census closes only its live remainder advance");
+            int advancedOwners=0,totalSteps=0;
+            try {
+                for(PcbLayerRoutingPrototype.Session owner:
+                        remainderOuterAdvanceOwners.keySet()) {
+                    int lastWork=P07ScalarReflection.intField(owner,"lastWork");
+                    require(lastWork>=0 && lastWork<=MAX_MANUAL_STEPS_PER_UNIT,
+                        "retained actual P07 owner reports bounded work after outer advance");
+                    if(lastWork>0) {
+                        advancedOwners++;
+                        totalSteps+=lastWork;
+                    }
+                }
+                require(advancedOwners<=1 && totalSteps<=MAX_MANUAL_STEPS_PER_UNIT,
+                    "one outer generator advance charges at most one actual P07 slice");
+                return totalSteps;
+            } finally {
+                remainderOuterAdvanceOwners.clear();
+                remainderOuterAdvanceTracking=false;
+            }
         }
 
         public boolean select(PcbLayerRoutingPrototype.FixedPrefixBranchLineage lineage) {
@@ -3491,11 +4055,28 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         boolean shouldManuallyAdvance(SeededPcbLayoutGenerator.Session generatorSession) {
-            return !qualityRejected && generatorSession!=null &&
+            return !qualityRejected &&
+                !(isDetachedLoad12Cost240Remainder(purpose) && remainderExperimentComplete) &&
+                generatorSession!=null &&
                 P07ScalarReflection.read(generatorSession,"mediumTwoLayerRoute")!=null;
         }
 
         String nextManualUnitName() {
+            if(isDetachedLoad12Cost240Remainder(purpose) && remainderCopySetupPending)
+                return "p07-quality-load12-remainder-copy-setup";
+            if(isDetachedLoad12Cost240Remainder(purpose) &&
+                    remainderStage>REMAINDER_IDLE &&
+                    remainderStage<REMAINDER_COMPLETE) {
+                String phase=remainderStage==REMAINDER_HANDOFF?"ordering-handoff":
+                    remainderStage==REMAINDER_ADVANCE?"ordering-remainder":
+                    remainderStage==REMAINDER_TAKE_RESULT?"result-take":
+                    remainderStage==REMAINDER_RAW_ORACLES?"raw-physical-oracles":
+                    remainderStage==REMAINDER_FINALIZE?"finalizer-and-scoring":
+                    remainderStage==REMAINDER_FINAL_ORACLES?"final-physical-oracles":
+                    "unknown";
+                return "p07-quality-load12-remainder-"+phase+"-"+
+                    (remainderAdvanceCalls+1);
+            }
             if(isDetachedLoad12Purpose(purpose) &&
                     detachedPhase>=DETACHED_COPY && detachedPhase<DETACHED_COMPLETE) {
                 if(detachedPhase==DETACHED_COPY)
@@ -3561,6 +4142,22 @@ public final class Rb100PhysicalDiagnostics {
                 "manual single-step driver owns the live generator session before the target rejection");
             Object active=P07ScalarReflection.read(generatorSession,"mediumTwoLayerRoute");
             require(active!=null,"manual single-step driver observes the actual retained P07 owner");
+            if(isDetachedLoad12Cost240Remainder(purpose) && remainderCopySetupPending) {
+                require(load12BranchCaptured && detachedPhase==DETACHED_IDLE &&
+                    routeSession==active && generatorSession==targetGeneratorSession,
+                    "remainder copy setup runs in its own value unit after source capture");
+                remainderCopySetupPending=false;
+                beginDetachedLoad12Copy(budget);
+                manualGroups++;
+                return;
+            }
+            if(isDetachedLoad12Cost240Remainder(purpose) &&
+                    remainderStage>REMAINDER_IDLE &&
+                    remainderStage<REMAINDER_COMPLETE) {
+                advanceLoad12ActualRemainder(budget);
+                manualGroups++;
+                return;
+            }
             if(advanceDetachedLoad12Phase(active,generatorSession,budget)) {
                 manualGroups++;
                 return;
@@ -3633,6 +4230,23 @@ public final class Rb100PhysicalDiagnostics {
                 routeSession=active;
                 targetGeneratorSession=generatorSession;
                 fixedPrefixContext=P07ScalarReflection.read(routeSession,"fixedPrefixContext");
+                if(isDetachedLoad12Cost240Remainder(purpose)) {
+                    require(actualOuterSession==generatorSession &&
+                        actualAuthoredCandidate!=null && actualBoardIdentity!=null &&
+                        actualAuthoredCandidate.board()==P07ScalarReflection.read(
+                            generatorSession,"board"),
+                        "remainder source owner is the same actual authored generator Session");
+                    Object selected=P07ScalarReflection.read(generatorSession,
+                        "mediumTwoLayerCandidate");
+                    require(selected instanceof MediumBoardPhysicalPolicy.PlacementCandidate &&
+                        ((MediumBoardPhysicalPolicy.PlacementCandidate)selected).attempt==4,
+                        "remainder captures the actual placement candidate selected by this live request");
+                    actualPlacementCandidate=
+                        (MediumBoardPhysicalPolicy.PlacementCandidate)selected;
+                    require(actualPlacementCandidate.plan!=null &&
+                        actualPlacementCandidate.attempt==4,
+                        "actual request candidate retains its authored attempt4 planner plan");
+                }
                 require(fixedPrefixContext instanceof PcbLayerRoutingPrototype.FixedPrefixCaptureContext,
                     "probe observer installs the actual generator-owned fixed-prefix context");
                 verifyTargetContext((PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext);
@@ -3657,18 +4271,29 @@ public final class Rb100PhysicalDiagnostics {
                 while(steps<MAX_MANUAL_STEPS_PER_UNIT && !qualityRejected) {
                     budget.checkpoint();
                     Object search=P07ScalarReflection.read(routeSession,"search");
-                    if(search!=null && controlsJson==null)
+                    if(search!=null && controlsJson==null &&
+                            !isDetachedLoad12Cost240Remainder(purpose))
                         controlsJson=runQualityScalarPublisherControls(search,runId);
                     Object load12BranchBeforeSlice=retainLoad12BranchBeforeSlice(search,budget);
                     verifyLoad12ProgressBeforeSlice(search);
                     if(isDetachedLoad12Purpose(purpose) &&
                             detachedPhase==DETACHED_COPY)
                         break;
+                    if(isDetachedLoad12Cost240Remainder(purpose) &&
+                            remainderCopySetupPending)
+                        break;
                     Object branchBeforeSlice=retainTargetBranchBeforeSlice(search);
                     Object publisherBeforeSlice=search==null?null:
                         P07ScalarReflection.read(search,"publisher");
-                    PcbLayerRoutingPrototype.OrderingProgress progress=
-                        ((PcbLayerRoutingPrototype.Session)routeSession).advanceOrderingSlice(1);
+                    PcbLayerRoutingPrototype.OrderingProgress progress;
+                    try {
+                        progress=((PcbLayerRoutingPrototype.Session)routeSession)
+                            .advanceOrderingSlice(1);
+                    } finally {
+                        if(isDetachedLoad12Cost240Remainder(purpose))
+                            budget.recordOwnerSteps(Math.max(0,
+                                P07ScalarReflection.intField(routeSession,"lastWork")));
+                    }
                     manualSliceSteps++;
                     steps++;
                     if(search!=null && targetBranch!=null &&
@@ -3853,19 +4478,48 @@ public final class Rb100PhysicalDiagnostics {
                 require(initialCounts.holes==17 && initialCounts.vias==17 &&
                     initialCounts.traces==88,
                     "actual LOAD12 branch begins with the independently captured17 VIA/88 trace prefix");
+                if(isDetachedLoad12Cost240Remainder(purpose)) {
+                    Object sourceBudget=P07ScalarReflection.read(routeSession,"budget");
+                    Object sourceQueue=P07ScalarReflection.read(branch,"queue");
+                    Object sourceBest=P07ScalarReflection.read(branch,"best");
+                    require(P07ScalarReflection.intField(sourceBudget,"maximum")==
+                            PcbLayerRoutingPrototype.MAX_EXPANSIONS,
+                        "actual LOAD12 source budget uses the named P07 request expansion cap");
+                    sourceRouteIdentity=System.identityHashCode(routeSession);
+                    sourceSearchIdentity=System.identityHashCode(search);
+                    sourceBranchIdentity=System.identityHashCode(branch);
+                    sourceLayoutIdentity=System.identityHashCode(layout);
+                    sourceQueueIdentity=System.identityHashCode(sourceQueue);
+                    sourceBestIdentity=System.identityHashCode(sourceBest);
+                    remainderSourceBudgetExpandedBefore=P07ScalarReflection.intField(
+                        sourceBudget,"expanded");
+                    remainderSourcePreparationNanos=Math.max(0L,
+                        System.nanoTime()-createdAtNanos);
+                    require(actualPlacementCandidate!=null &&
+                        actualPlacementCandidate.attempt==((PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext).selectedPlacementAttempt() &&
+                        P07ScalarReflection.read(targetGeneratorSession,
+                            "mediumTwoLayerCandidate")==actualPlacementCandidate,
+                        "actual LOAD12 source retains the exact outer Session placement candidate");
+                    remainderSourceBeforeJson=pausedLoad12SourceSnapshot();
+                }
                 load12PreViaCount=initialCounts.vias;
                 load12PreTraceCount=initialCounts.traces;
-                beginDetachedLoad12Copy(budget);
+                if(isDetachedLoad12Cost240Remainder(purpose))
+                    remainderCopySetupPending=true;
+                else
+                    beginDetachedLoad12Copy(budget);
             }
             load12BranchCaptured=true;
             verifyLoad12BranchSourceBeforePublication();
         }
 
         private void beginDetachedLoad12Copy(final Budget operationBudget) {
+            long copySetupStarted=System.nanoTime();
             require(isDetachedLoad12Purpose(purpose) &&
-                load12BranchCaptured==false && load12Binding!=null && load12Seeds!=null &&
+                load12Binding!=null && load12Seeds!=null &&
                 routeSession instanceof PcbLayerRoutingPrototype.Session &&
-                detachedCopyTask==null && detachedPhase==DETACHED_IDLE,
+                detachedCopyTask==null && detachedPhase==DETACHED_IDLE &&
+                (!load12BranchCaptured || isDetachedLoad12Cost240Remainder(purpose)),
                 "detached baseline copy begins once from the actual initial LOAD12 branch");
             if(isDetachedLoad12Cost240(purpose)) {
                 Object sourceQueue=P07ScalarReflection.read(load12Binding.branch,"queue");
@@ -3923,6 +4577,8 @@ public final class Rb100PhysicalDiagnostics {
                 throw failure;
             }
             detachedPhase=DETACHED_COPY;
+            if(isDetachedLoad12Cost240Remainder(purpose))
+                remainderCopySetupNanos=Math.max(0L,System.nanoTime()-copySetupStarted);
         }
 
         private boolean advanceDetachedLoad12Phase(Object active,
@@ -3940,6 +4596,7 @@ public final class Rb100PhysicalDiagnostics {
                 "detached phase receives its unique bounded value-unit name");
             long started=System.nanoTime();
             int workUnit=budget.workUnits;
+            int timedDetachedPhase=detachedPhase;
             try {
                 budget.checkpoint();
                 if(detachedPhase==DETACHED_COPY) {
@@ -3947,7 +4604,13 @@ public final class Rb100PhysicalDiagnostics {
                         "detached copy phase retains its live charged owner");
                     long beforeWork=detachedCopyTask.workSteps();
                     long beforeEntries=detachedCopyTask.copiedEntries();
-                    boolean complete=detachedCopyTask.advance(MAX_MANUAL_STEPS_PER_UNIT);
+                    boolean complete;
+                    try {
+                        complete=detachedCopyTask.advance(MAX_MANUAL_STEPS_PER_UNIT);
+                    } finally {
+                        if(isDetachedLoad12Cost240Remainder(purpose))
+                            budget.recordOwnerSteps(detachedCopyTask.lastWork());
+                    }
                     int lastWork=detachedCopyTask.lastWork();
                     long delta=detachedCopyTask.workSteps()-beforeWork;
                     require(complete==detachedCopyTask.isComplete() && lastWork>0 &&
@@ -3984,7 +4647,13 @@ public final class Rb100PhysicalDiagnostics {
                         if(Thread.currentThread().isInterrupted())
                             throw new IllegalStateException(
                                 "detached LOAD12 replay observed operation cancellation");
-                        boolean complete=detachedReplay.advance(1);
+                        boolean complete;
+                        try {
+                            complete=detachedReplay.advance(1);
+                        } finally {
+                            if(isDetachedLoad12Cost240Remainder(purpose))
+                                budget.recordOwnerSteps(detachedReplay.lastWork());
+                        }
                         int lastWork=detachedReplay.lastWork();
                         detachedReplayEntryCalls++;
                         detachedReplayEntryWork+=lastWork;
@@ -4022,7 +4691,13 @@ public final class Rb100PhysicalDiagnostics {
                         detachedPreCursor!=null && !detachedPreCursor.isComplete(),
                         "detached pre cursor retains the copied stage1 branch boundary");
                     verifyDetachedPreBoundary();
-                    boolean complete=detachedPreCursor.advance(MAX_MANUAL_STEPS_PER_UNIT);
+                    boolean complete;
+                    try {
+                        complete=detachedPreCursor.advance(MAX_MANUAL_STEPS_PER_UNIT);
+                    } finally {
+                        if(isDetachedLoad12Cost240Remainder(purpose))
+                            budget.recordOwnerSteps(detachedPreCursor.lastWork());
+                    }
                     int lastWork=detachedPreCursor.lastWork();
                     detachedPreAdvanceCalls++;
                     detachedPreLastWork=lastWork;
@@ -4056,7 +4731,13 @@ public final class Rb100PhysicalDiagnostics {
                         detachedReplay!=null && !detachedReplay.isComplete(),
                         "detached replay resumes only after its complete immutable pre result");
                     verifyDetachedPublicationProgress();
-                    boolean complete=detachedReplay.advance(MAX_MANUAL_STEPS_PER_UNIT);
+                    boolean complete;
+                    try {
+                        complete=detachedReplay.advance(MAX_MANUAL_STEPS_PER_UNIT);
+                    } finally {
+                        if(isDetachedLoad12Cost240Remainder(purpose))
+                            budget.recordOwnerSteps(detachedReplay.lastWork());
+                    }
                     int lastWork=detachedReplay.lastWork();
                     detachedReplayPublicationCalls++;
                     detachedReplayPublicationWork+=lastWork;
@@ -4083,7 +4764,13 @@ public final class Rb100PhysicalDiagnostics {
                         !detachedPostComplete,
                         "detached post cursor starts only at actual Publisher stage6");
                     verifyDetachedPostBoundary();
-                    boolean complete=detachedPostCursor.advance(MAX_MANUAL_STEPS_PER_UNIT);
+                    boolean complete;
+                    try {
+                        complete=detachedPostCursor.advance(MAX_MANUAL_STEPS_PER_UNIT);
+                    } finally {
+                        if(isDetachedLoad12Cost240Remainder(purpose))
+                            budget.recordOwnerSteps(detachedPostCursor.lastWork());
+                    }
                     int lastWork=detachedPostCursor.lastWork();
                     detachedPostAdvanceCalls++;
                     detachedPostLastWork=lastWork;
@@ -4142,7 +4829,15 @@ public final class Rb100PhysicalDiagnostics {
                         detachedSourcePreserved=true;
                         if(capturesDetachedLoad12CostResults(purpose))
                             captureDetachedSourceStateAfterReplayBeforeResume();
-                        releaseDetachedLoad12Owners();
+                        if(isDetachedLoad12Cost240Remainder(purpose)) {
+                            require(detachedCreatedViaCount==1 &&
+                                detachedCreatedTraceCount==2 &&
+                                detachedPostViaCount==18 && detachedPostTraceCount==90,
+                                "charged cost240 Publisher adds exactly one VIA and two traces to the17/88 source prefix");
+                            remainderStage=REMAINDER_HANDOFF;
+                        } else {
+                            releaseDetachedLoad12Owners();
+                        }
                     }
                 }
                 budget.checkpoint();
@@ -4155,7 +4850,236 @@ public final class Rb100PhysicalDiagnostics {
                 recordDetachedFailure(failure);
                 throw failure;
             } finally {
-                manualDriverNanos+=Math.max(0L,System.nanoTime()-started);
+                long elapsed=Math.max(0L,System.nanoTime()-started);
+                manualDriverNanos+=elapsed;
+                if(timedDetachedPhase>=0 && timedDetachedPhase<detachedPhaseElapsedNanos.length)
+                    detachedPhaseElapsedNanos[timedDetachedPhase]+=elapsed;
+            }
+        }
+
+        private void advanceLoad12ActualRemainder(Budget budget) {
+            require(isDetachedLoad12Cost240Remainder(purpose) && budget!=null &&
+                budget.unitName!=null && budget.unitName.startsWith(
+                    "p07-quality-load12-remainder-") &&
+                budget.workUnits>remainderLastBudgetUnit &&
+                (remainderStage==REMAINDER_HANDOFF || remainderContinuation!=null),
+                "copied current-order remainder consumes a fresh value unit on its single live owner");
+            long started=System.nanoTime();
+            int unit=budget.workUnits;
+            int stageAtStart=remainderStage;
+            try {
+                budget.checkpoint();
+                if(remainderStage==REMAINDER_HANDOFF) {
+                    verifyPausedLoad12Source();
+                    require(detachedReplay!=null && detachedReplay.isComplete() &&
+                        detachedReplay.getPublisherForDiagnostics()==detachedPublisher &&
+                        detachedPublisherLastStage==6 && remainderContinuation==null,
+                        "single-use current-order handoff starts only after the copied Publisher stage6 and source snapshot");
+                    long handoffStarted=System.nanoTime();
+                    remainderCopiedLayout=detachedReplay.getLayout();
+                    remainderHandoffAttempted=true;
+                    remainderContinuation=detachedReplay.takeOrderingContinuation();
+                    require(remainderContinuation!=null,
+                        "single-use current-order handoff returns its live continuation token");
+                    remainderOwner=(PcbLayerRoutingPrototype.Session)
+                        P07ScalarReflection.read(remainderContinuation,"owner");
+                    continuationIdentity=System.identityHashCode(remainderContinuation);
+                    remainderContinuationIdentityCaptured=true;
+                    continuationOwnerIdentity=System.identityHashCode(remainderOwner);
+                    remainderContinuationOwnerIdentityCaptured=true;
+                    require(remainderContinuation!=null && remainderOwner!=null &&
+                        remainderOwner!=routeSession &&
+                        P07ScalarReflection.read(remainderOwner,"search")==detachedSearch &&
+                        P07ScalarReflection.read(remainderOwner,"candidate")==remainderCopiedLayout &&
+                        P07ScalarReflection.read(remainderOwner,
+                            "detachedOrderingContinuation")==remainderContinuation &&
+                        P07ScalarReflection.intField(remainderOwner,"pass")==1 &&
+                        P07ScalarReflection.intField(remainderOwner,
+                            "completedOrderings")==1 &&
+                        P07ScalarReflection.intField(remainderOwner,"maximumVias")==48 &&
+                        P07ScalarReflection.intField(remainderOwner,"viaCost")==240 &&
+                        System.identityHashCode(remainderOwner)==copiedOwnerIdentity &&
+                        System.identityHashCode(detachedSearch)==copiedSearchIdentity &&
+                        System.identityHashCode(remainderCopiedLayout)==copiedLayoutIdentity,
+                        "exclusive receiver owns the exact copied cost240/cap48 Search and layout");
+                    boolean secondTakeRejected=false;
+                    try {
+                        detachedReplay.takeOrderingContinuation();
+                    } catch(IllegalStateException expected) {
+                        secondTakeRejected=true;
+                    }
+                    require(secondTakeRejected,
+                        "completed branch sender rejects a second current-order handoff");
+                    releaseDetachedLoad12Owners();
+                    verifyPausedLoad12Source();
+                    remainderHandoffComplete=true;
+                    remainderHandoffNanos+=Math.max(0L,
+                        System.nanoTime()-handoffStarted);
+                    remainderStage=REMAINDER_ADVANCE;
+                } else if(remainderStage==REMAINDER_ADVANCE) {
+                    require(remainderContinuation!=null && remainderOwner!=null &&
+                        P07ScalarReflection.read(remainderOwner,
+                            "detachedOrderingContinuation")==remainderContinuation,
+                        "current-order advancement uses the transferred copied-owner lease");
+                    Object ownerBudget=P07ScalarReflection.read(remainderOwner,"budget");
+                    int beforeExpanded=P07ScalarReflection.intField(ownerBudget,"expanded");
+                    PcbLayerRoutingPrototype.DetachedOrderingProgress progress;
+                    try {
+                        progress=remainderContinuation.advance(MAX_MANUAL_STEPS_PER_UNIT);
+                    } finally {
+                        budget.recordOwnerSteps(remainderContinuation.lastWork());
+                    }
+                    int used=remainderContinuation.lastWork();
+                    int afterExpanded=P07ScalarReflection.intField(ownerBudget,"expanded");
+                    remainderAdvanceCalls++;
+                    remainderOwnerSteps+=used;
+                    remainderMaxOwnerStepsPerUnit=Math.max(
+                        remainderMaxOwnerStepsPerUnit,used);
+                    remainderExpansions=afterExpanded;
+                    remainderOrderings=P07ScalarReflection.intField(
+                        remainderOwner,"completedOrderings");
+                    remainderRemainingRequestBudget=P07ScalarReflection.intField(
+                        ownerBudget,"maximum")-afterExpanded;
+                    require(used>0 && used<=MAX_MANUAL_STEPS_PER_UNIT &&
+                        afterExpanded>=beforeExpanded &&
+                        remainderRemainingRequestBudget>=0,
+                        "each current-order continuation value unit reports bounded owner work and monotonic Search expansions");
+                    if(progress==PcbLayerRoutingPrototype.DetachedOrderingProgress.WORKING) {
+                        require(!remainderContinuation.isComplete(),
+                            "WORKING continuation retains its live same-order Search");
+                    } else if(progress==
+                            PcbLayerRoutingPrototype.DetachedOrderingProgress.ORDERING_BOUNDARY) {
+                        remainderProgressStatus="ORDERING_BOUNDARY";
+                        remainderBoundaryType="ORDERING_BOUNDARY";
+                        remainderBoundaryReason=remainderContinuation.boundaryReason();
+                        remainderOutcome=remainderBoundaryReason!=null &&
+                            remainderBoundaryReason.toUpperCase().contains("QUALITY")?
+                                "QUALITY_BOUNDARY":"NO_ROUTE_BOUNDARY";
+                        remainderVias=load12LayoutCounts(remainderCopiedLayout).vias;
+                        require(remainderBoundaryReason!=null &&
+                            remainderContinuation.isComplete() && remainderOrderings==2,
+                            "typed current-order boundary retains its exact termination reason");
+                        verifyPausedLoad12Source();
+                        remainderStage=REMAINDER_COMPLETE;
+                        remainderExperimentComplete=true;
+                    } else if(progress==
+                            PcbLayerRoutingPrototype.DetachedOrderingProgress.ROUTE_READY) {
+                        remainderProgressStatus="ROUTE_READY";
+                        Object ready=P07ScalarReflection.read(remainderOwner,"readyOrdering");
+                        require(ready instanceof PcbLayerRoutingPrototype.Result &&
+                            P07ScalarReflection.intField(remainderOwner,"pass")==2 &&
+                            P07ScalarReflection.intField(remainderOwner,"completedOrderings")==2 &&
+                            P07ScalarReflection.read(remainderOwner,"search")==null &&
+                            P07ScalarReflection.read(remainderOwner,"candidate")==null,
+                            "current-order success retains the pass1 Result and its advanced pass2 owner boundary");
+                        PcbLayerRoutingPrototype.Result current=
+                            (PcbLayerRoutingPrototype.Result)ready;
+                        remainderOrderings=current.orderings;
+                        remainderExpansions=current.expansions;
+                        remainderVias=current.vias;
+                        remainderRemainingRequestBudget=P07ScalarReflection.intField(
+                            ownerBudget,"maximum")-
+                            P07ScalarReflection.intField(ownerBudget,"expanded");
+                        require(current.accepted() && current.layout==remainderCopiedLayout &&
+                            current.orderings==2 && current.expansions==afterExpanded &&
+                            current.vias<=48 &&
+                            remainderRemainingRequestBudget>=0,
+                            "copied current-order result retains pass1 one-based ordering2, cumulative work and VIA cap");
+                        remainderStage=REMAINDER_TAKE_RESULT;
+                    } else {
+                        throw new AssertionError("Unknown copied current-order progress");
+                    }
+                    budget.checkpoint();
+                } else if(remainderStage==REMAINDER_TAKE_RESULT) {
+                    require(remainderContinuation!=null && remainderOwner!=null,
+                        "one-time ready Result consumption retains the copied continuation");
+                    long takeStarted=System.nanoTime();
+                    Object ready=P07ScalarReflection.read(remainderOwner,"readyOrdering");
+                    remainderResult=remainderContinuation.takeReadyOrdering();
+                    require(remainderResult!=null && remainderResult==ready &&
+                        remainderResult.accepted() && remainderResult.layout==remainderCopiedLayout &&
+                        remainderResult.orderings==2 &&
+                        Boolean.TRUE.equals(P07ScalarReflection.read(remainderOwner,"orderingLeaseClosed")) &&
+                        P07ScalarReflection.read(remainderOwner,
+                            "detachedOrderingContinuation")==null,
+                        "takeReadyOrdering consumes the exact copied current-order Result once");
+                    remainderOrderings=remainderResult.orderings;
+                    remainderExpansions=remainderResult.expansions;
+                    remainderVias=remainderResult.vias;
+                    remainderRemainingRequestBudget=PcbLayerRoutingPrototype.MAX_EXPANSIONS-
+                        remainderResult.expansions;
+                    remainderTakeNanos+=Math.max(0L,System.nanoTime()-takeStarted);
+                    verifyPausedLoad12Source();
+                    remainderStage=REMAINDER_RAW_ORACLES;
+                } else if(remainderStage==REMAINDER_RAW_ORACLES) {
+                    remainderRawOracleStarted=true;
+                    long oracleStarted=System.nanoTime();
+                    remainderRawProof=verifyLoad12RemainderPhysicalLayout(
+                        actualAuthoredCandidate.board(),remainderResult.layout,
+                        actualAuthoredCandidate,actualBoardIdentity);
+                    require(remainderRawProof.viaCount==remainderResult.vias,
+                        "current-order Result VIA count equals the raw independent physical VIA census");
+                    rawLayoutIdentity=System.identityHashCode(remainderResult.layout);
+                    remainderRawOracleNanos+=Math.max(0L,System.nanoTime()-oracleStarted);
+                    verifyPausedLoad12Source();
+                    remainderStage=REMAINDER_FINALIZE;
+                } else if(remainderStage==REMAINDER_FINALIZE) {
+                    remainderFinalizerStarted=true;
+                    long finalizeStarted=System.nanoTime();
+                    Load12RemainderOwnerAdapter adapter=new Load12RemainderOwnerAdapter(
+                        actualGenerator,actualOuterSession,actualPlacementCandidate,
+                        actualAuthoredCandidate.board(),actualBoardIdentity,
+                        actualAuthoredCandidate);
+                    remainderFinalization=adapter.finalizeAndConsider(
+                        actualPlacementSeed,remainderResult);
+                    if("REJECTED".equals(remainderFinalization.status)) {
+                        remainderOutcome="FINALIZER_REJECTED";
+                        remainderStage=REMAINDER_COMPLETE;
+                        remainderExperimentComplete=true;
+                    } else {
+                        finalLayoutIdentity=System.identityHashCode(
+                            remainderFinalization.layout);
+                        winnerLayoutIdentity=remainderFinalization.winnerLayout==null?0:
+                            System.identityHashCode(remainderFinalization.winnerLayout);
+                        remainderStage=REMAINDER_FINAL_ORACLES;
+                    }
+                    remainderFinalizerNanos+=Math.max(0L,
+                        System.nanoTime()-finalizeStarted);
+                    verifyPausedLoad12Source();
+                } else if(remainderStage==REMAINDER_FINAL_ORACLES) {
+                    remainderFinalOracleStarted=true;
+                    long oracleStarted=System.nanoTime();
+                    remainderFinalProof=verifyLoad12RemainderPhysicalLayout(
+                        actualAuthoredCandidate.board(),remainderFinalization.layout,
+                        actualAuthoredCandidate,actualBoardIdentity);
+                    remainderFinalOracleNanos+=Math.max(0L,
+                        System.nanoTime()-oracleStarted);
+                    verifyPausedLoad12Source();
+                    remainderOutcome=remainderFinalization.selected?
+                        "FINALIZED_SELECTED":"FINALIZED_UNSELECTED";
+                    remainderStage=REMAINDER_COMPLETE;
+                    remainderExperimentComplete=true;
+                } else {
+                    throw new IllegalStateException("Unknown copied current-order remainder stage");
+                }
+                budget.checkpoint();
+                remainderLastBudgetUnit=unit;
+            } catch(RuntimeException failure) {
+                if(isDetachedLoad12Cost240Remainder(purpose)) {
+                    detachedFailurePhase="REMAINDER_"+remainderStage;
+                    recordDetachedFailure(failure);
+                }
+                throw failure;
+            } catch(Error failure) {
+                if(isDetachedLoad12Cost240Remainder(purpose)) {
+                    detachedFailurePhase="REMAINDER_"+remainderStage;
+                    recordDetachedFailure(failure);
+                }
+                throw failure;
+            } finally {
+                long elapsed=Math.max(0L,System.nanoTime()-started);
+                manualDriverNanos+=elapsed;
+                if(stageAtStart==REMAINDER_ADVANCE) remainderAdvanceNanos+=elapsed;
             }
         }
 
@@ -4178,6 +5102,68 @@ public final class Rb100PhysicalDiagnostics {
                 if(failure!=null && captureFailure!=failure)
                     failure.addSuppressed(captureFailure);
             }
+        }
+
+        private String pausedLoad12SourceSnapshot() {
+            require(load12Binding!=null && load12Seeds!=null && load12Search==load12Binding.search &&
+                load12Branch==load12Binding.branch && routeSession!=null &&
+                P07ScalarReflection.read(routeSession,"search")==load12Search &&
+                P07ScalarReflection.read(load12Search,"branch")==load12Branch &&
+                P07ScalarReflection.read(load12Search,"publisher")==null &&
+                P07ScalarReflection.read(load12Search,"layout")==load12Binding.layout,
+                "paused LOAD12 source snapshot remains attached to the original initial branch");
+            Object queue=P07ScalarReflection.read(load12Branch,"queue");
+            Object best=P07ScalarReflection.read(load12Branch,"best");
+            Object budget=P07ScalarReflection.read(routeSession,"budget");
+            Load12LayoutCounts counts=load12LayoutCounts(load12Binding.layout);
+            String seedJson=load12Seeds.toJson();
+            require(seedJson!=null && load12SeedSha256.equals(sha256Hex(seedJson)) &&
+                load12NetOrderSha256.equals(netOrderSha256(load12NetOrder)) &&
+                load12PrefixRowsSha256.equals(prefixRowsSha256(
+                    load12InitialPrefixHoleIds,load12InitialPrefixHoleFingerprints)),
+                "paused source digests still derive from its actual source identities");
+            return "{\"pass\":"+P07ScalarReflection.intField(load12Search,"pass")+
+                ",\"netIndex\":"+P07ScalarReflection.intField(load12Search,"netIndex")+
+                ",\"branchOrdinal\":"+P07ScalarReflection.intField(load12Branch,"branchOrdinal")+
+                ",\"branchExpanded\":"+P07ScalarReflection.intField(load12Branch,"expanded")+
+                ",\"queueSize\":"+P07ScalarReflection.intField(queue,"size")+
+                ",\"bestSize\":"+P07ScalarReflection.intField(best,"size")+
+                ",\"holes\":"+counts.holes+",\"vias\":"+counts.vias+
+                ",\"traces\":"+counts.traces+
+                ",\"viaCost\":"+P07ScalarReflection.intField(routeSession,"viaCost")+
+                ",\"maximumVias\":"+P07ScalarReflection.intField(routeSession,"maximumVias")+
+                ",\"searchBudgetExpanded\":"+P07ScalarReflection.intField(budget,"expanded")+
+                ",\"geometrySha256\":\""+sha256Hex(
+                    load12Binding.layout.geometryFingerprint())+
+                "\",\"seedSha256\":\""+load12SeedSha256+
+                "\",\"netOrderSha256\":\""+load12NetOrderSha256+
+                "\",\"prefixRowsSha256\":\""+load12PrefixRowsSha256+"\"}";
+        }
+
+        private void verifyPausedLoad12Source() {
+            require(isDetachedLoad12Cost240Remainder(purpose) &&
+                remainderSourceBeforeJson!=null && load12CaptureReleased==false &&
+                actualOuterSession==targetGeneratorSession && targetGeneratorSession!=null &&
+                actualPlacementCandidate!=null &&
+                P07ScalarReflection.read(targetGeneratorSession,"mediumTwoLayerRoute")==routeSession &&
+                P07ScalarReflection.read(targetGeneratorSession,"mediumTwoLayerCandidate")==
+                    actualPlacementCandidate &&
+                System.identityHashCode(routeSession)==sourceRouteIdentity &&
+                System.identityHashCode(load12Search)==sourceSearchIdentity &&
+                System.identityHashCode(load12Branch)==sourceBranchIdentity &&
+                System.identityHashCode(load12Binding.layout)==sourceLayoutIdentity &&
+                System.identityHashCode(P07ScalarReflection.read(load12Branch,"queue"))==
+                    sourceQueueIdentity &&
+                System.identityHashCode(P07ScalarReflection.read(load12Branch,"best"))==
+                    sourceBestIdentity &&
+                remainderSourceBudgetExpandedBefore==P07ScalarReflection.intField(
+                    P07ScalarReflection.read(routeSession,"budget"),"expanded") &&
+                remainderSourceBeforeJson.equals(pausedLoad12SourceSnapshot()),
+                "actual original source Search, queue, best set, budget, geometry and digests remain unchanged");
+            actualBoardIdentity.requireUnchanged(actualAuthoredCandidate);
+            remainderSourceAfterJson=remainderSourceBeforeJson;
+            remainderSourceVerified=true;
+            detachedSourcePreserved=true;
         }
 
         private void captureDetachedSourceStateAfterReplayBeforeResume() {
@@ -4230,6 +5216,13 @@ public final class Rb100PhysicalDiagnostics {
                 freshSeedJson!=null && freshSeedJson.equals(load12SeedJson),
                 "cap17 after-replay source values match its measured unchanged48-cap, zero-work, 17-hole/88-trace frontier");
             cap17SourceAfterReplayCaptured=true;
+            if(isDetachedLoad12Cost240Remainder(purpose)) {
+                remainderSourceAfterJson=pausedLoad12SourceSnapshot();
+                require(remainderSourceBeforeJson!=null &&
+                    remainderSourceBeforeJson.equals(remainderSourceAfterJson),
+                    "source after-copy snapshot exactly matches its pre-copy state before any source resumption");
+                remainderSourceVerified=true;
+            }
         }
 
         private String detachedUnitPrefix(int phase) {
@@ -4251,6 +5244,13 @@ public final class Rb100PhysicalDiagnostics {
             detachedSearch=detachedReplay.getSearchForDiagnostics();
             detachedBranch=detachedReplay.getBranchForDiagnostics();
             Object owner=P07ScalarReflection.read(detachedSearch,"owner");
+            if(isDetachedLoad12Cost240Remainder(purpose)) {
+                copiedOwnerIdentity=System.identityHashCode(owner);
+                copiedSearchIdentity=System.identityHashCode(detachedSearch);
+                copiedBranchIdentity=System.identityHashCode(detachedBranch);
+                copiedLayoutIdentity=System.identityHashCode(detachedReplay.getLayout());
+                copiedOwnerBound=true;
+            }
             detachedSessionMaximumVias=owner==null?-1:
                 P07ScalarReflection.intField(owner,"maximumVias");
             detachedSearchMaximumVias=P07ScalarReflection.intField(
@@ -4261,10 +5261,20 @@ public final class Rb100PhysicalDiagnostics {
             detachedPrimaryLayer=P07ScalarReflection.intField(detachedSearch,"primary");
             detachedPolicy=(PcbLayerRoutingPrototype.Policy)
                 P07ScalarReflection.read(detachedSearch,"policy");
+            boolean remainder=isDetachedLoad12Cost240Remainder(purpose);
+            Object copiedBudget=remainder && owner!=null?
+                P07ScalarReflection.read(owner,"budget"):null;
+            Object sourceBudget=remainder && routeSession!=null?
+                P07ScalarReflection.read(routeSession,"budget"):null;
             require(owner!=null && owner!=routeSession && detachedSearch!=load12Search &&
                 detachedBranch!=load12Branch &&
                 P07ScalarReflection.read(detachedSearch,"branch")==detachedBranch &&
-                P07ScalarReflection.read(detachedSearch,"publisher")==null,
+                P07ScalarReflection.read(detachedSearch,"publisher")==null &&
+                (!remainder || copiedBudget!=null && sourceBudget!=null &&
+                    P07ScalarReflection.intField(copiedBudget,"maximum")==
+                        PcbLayerRoutingPrototype.MAX_EXPANSIONS &&
+                    P07ScalarReflection.intField(copiedBudget,"maximum")==
+                        P07ScalarReflection.intField(sourceBudget,"maximum")),
                 "copied LOAD12 Search and BranchSearch are separate initial owners");
             int netIndex=P07ScalarReflection.intField(detachedSearch,"netIndex");
             int branchOrdinal=P07ScalarReflection.intField(detachedBranch,"branchOrdinal");
@@ -4487,8 +5497,15 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         void cleanupDetachedLoad12Owners() {
-            if(isDetachedLoad12Purpose(purpose))
+            if(!isDetachedLoad12Purpose(purpose)) return;
+            try {
+                if(remainderContinuation!=null) {
+                    remainderContinuation.release();
+                    remainderContinuation=null;
+                }
+            } finally {
                 releaseDetachedLoad12Owners();
+            }
         }
 
         private void compareLoad12SourceToDetached() {
@@ -6016,6 +7033,411 @@ public final class Rb100PhysicalDiagnostics {
         }
 
         long manualDriverMillis() { return nanosToMillis(manualDriverNanos); }
+
+        private static String remainderText(String value) {
+            return value==null?"null":"\""+jsonFull(value)+"\"";
+        }
+
+        private static String remainderIdentity(int value,boolean captured) {
+            return captured?Integer.toString(value):"null";
+        }
+
+        private static String remainderDouble(double value) {
+            return Double.isNaN(value) || Double.isInfinite(value)?"null":
+                Double.toString(value);
+        }
+
+        private String remainderSelectorJson() {
+            if(load12Binding==null ||
+                    !(fixedPrefixContext instanceof
+                        PcbLayerRoutingPrototype.FixedPrefixCaptureContext)) return "null";
+            PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
+                (PcbLayerRoutingPrototype.FixedPrefixCaptureContext)fixedPrefixContext;
+            return "{\"rootSeed\":\""+SEED+"\",\"placementSeed\":\""+
+                PLACEMENT_DIAGNOSTIC_SEED+"\",\"routingSeed\":\""+
+                ROUTING_DIAGNOSTIC_ROUTING_SEED+"\",\"routeRequestIndex\":"+
+                context.routeRequestIndex()+",\"selectedPlacementIndex\":"+
+                context.selectedPlacementIndex()+",\"selectedPlacementAttempt\":"+
+                context.selectedPlacementAttempt()+",\"pass\":"+load12Binding.pass+
+                ",\"netPosition\":"+load12Binding.currentNetPosition+
+                ",\"nextFetch\":"+load12Binding.searchNetIndex+
+                ",\"branchOrdinal\":"+load12Binding.branchOrdinal+
+                ",\"searchBranches\":"+load12Binding.searchBranches+
+                ",\"netId\":\""+jsonFull(load12NetId)+"\",\"primaryLayer\":\"BOTTOM\""
+                +",\"startPadId\":\""+jsonFull(load12StartPadId)+"\",\"goalPadId\":\""+
+                jsonFull(load12RootPadId)+"\",\"grid\":{\"width\":"+load12GridWidth+
+                ",\"height\":"+load12GridHeight+",\"cells\":"+load12GridCells+
+                ",\"originX\":"+load12GridOriginX+",\"originY\":"+load12GridOriginY+
+                ",\"pitch\":"+PcbLayerRoutingPrototype.GRID+"},\"sourcePrefix\":{\"vias\":"+
+                load12PreViaCount+",\"traces\":"+load12PreTraceCount+
+                ",\"viaCost\":"+load12SessionViaCost+",\"maximumVias\":"+
+                load12MaximumVias+"}}";
+        }
+
+        private String remainderSourceJson() {
+            boolean bound=load12Binding!=null;
+            String geometry=bound?sha256Hex(load12Binding.layout.geometryFingerprint()):null;
+            return "{\"routeSessionIdentity\":"+
+                remainderIdentity(sourceRouteIdentity,bound)+",\"searchIdentity\":"+
+                remainderIdentity(sourceSearchIdentity,bound)+",\"branchIdentity\":"+
+                remainderIdentity(sourceBranchIdentity,bound)+",\"layoutIdentity\":"+
+                remainderIdentity(sourceLayoutIdentity,bound)+",\"digests\":{\"seeds\":"+
+                remainderText(load12SeedSha256)+",\"netOrder\":"+
+                remainderText(load12NetOrderSha256)+",\"prefixRows\":"+
+                remainderText(load12PrefixRowsSha256)+",\"geometry\":"+
+                remainderText(geometry)+"},\"before\":"+
+                (remainderSourceBeforeJson==null?"null":remainderSourceBeforeJson)+
+                ",\"after\":"+(remainderSourceVerified && remainderSourceAfterJson!=null?
+                    remainderSourceAfterJson:"null")+",\"preserved\":"+
+                remainderSourceVerified+"}";
+        }
+
+        private String remainderCopyJson() {
+            String publicationStatus=detachedReplayPublicationComplete &&
+                detachedPublisherLastStage==6?"PUBLISHED":
+                detachedPhase==DETACHED_IDLE?"NOT_RUN":"INCOMPLETE";
+            boolean postReady=detachedPostComplete && detachedPostResult!=null;
+            String handoffStatus=remainderHandoffComplete?"TRANSFERRED":
+                remainderHandoffAttempted?"FAILED":"NOT_RUN";
+            String prefixRetained="null";
+            if(postReady) prefixRetained=Boolean.toString(prefixRowsRetained(
+                detachedPrefixHoleIds,detachedPrefixHoleFingerprints,
+                detachedPostHoleIds,detachedPostHoleFingerprints));
+            return "{\"ownerIdentity\":"+
+                remainderIdentity(copiedOwnerIdentity,copiedOwnerBound)+
+                ",\"searchIdentity\":"+
+                remainderIdentity(copiedSearchIdentity,copiedOwnerBound)+
+                ",\"branchIdentity\":"+
+                remainderIdentity(copiedBranchIdentity,copiedOwnerBound)+
+                ",\"layoutIdentity\":"+
+                remainderIdentity(copiedLayoutIdentity,copiedOwnerBound)+
+                ",\"digests\":{\"seeds\":"+remainderText(detachedSeedSha256)+
+                ",\"netOrder\":"+remainderText(detachedNetOrderSha256)+
+                ",\"prefixRows\":"+remainderText(detachedPrefixRowsSha256)+
+                ",\"initialGeometry\":"+remainderText(detachedPreGeometrySha256)+
+                ",\"postGeometry\":"+remainderText(detachedPostGeometrySha256)+
+                ",\"publication\":"+remainderText(detachedPublicationSha256)+
+                "},\"requested\":{\"maximumVias\":48,\"viaCost\":240},\"publisher\":{\"status\":\""+
+                publicationStatus+"\",\"stage\":"+
+                (detachedPublisherLastStage<0?"null":Integer.toString(detachedPublisherLastStage))+
+                ",\"createdVias\":"+(postReady?Integer.toString(detachedCreatedViaCount):"null")+
+                ",\"createdTraces\":"+(postReady?Integer.toString(detachedCreatedTraceCount):"null")+
+                ",\"postVias\":"+(postReady?Integer.toString(detachedPostViaCount):"null")+
+                ",\"postTraces\":"+(postReady?Integer.toString(detachedPostTraceCount):"null")+
+                ",\"prefixRetained\":"+prefixRetained+"},\"continuationHandoff\":{\"status\":\""+
+                handoffStatus+"\",\"singleUse\":"+remainderHandoffComplete+
+                ",\"identity\":"+remainderIdentity(continuationIdentity,
+                    remainderContinuationIdentityCaptured)+",\"ownerIdentity\":"+
+                remainderIdentity(continuationOwnerIdentity,
+                    remainderContinuationOwnerIdentityCaptured)+"}}";
+        }
+
+        private String remainderProgressJson() {
+            String resultJson="null";
+            if(remainderResult!=null && remainderResult.layout!=null)
+                resultJson="{\"pass\":1,\"orderings\":"+remainderResult.orderings+
+                    ",\"expansions\":"+remainderResult.expansions+",\"vias\":"+
+                    remainderResult.vias+",\"layoutIdentity\":"+
+                    System.identityHashCode(remainderResult.layout)+"}";
+            return "{\"status\":\""+
+                (remainderProgressStatus==null?"NOT_RUN":remainderProgressStatus)+
+                "\",\"boundaryType\":"+remainderText(remainderBoundaryType)+
+                ",\"boundaryReason\":"+remainderText(remainderBoundaryReason)+
+                ",\"phase\":\"CURRENT_ORDER_REMAINDER\",\"orderings\":"+
+                (remainderOrderings<0?"null":Integer.toString(remainderOrderings))+
+                ",\"cumulativeExpansions\":"+
+                (remainderExpansions<0?"null":Integer.toString(remainderExpansions))+
+                ",\"remainingRequestBudget\":"+
+                (remainderRemainingRequestBudget<0?"null":
+                    Integer.toString(remainderRemainingRequestBudget))+
+                ",\"result\":"+resultJson+"}";
+        }
+
+        private String remainderFinalizerJson(P07PolicyDiagnosticCase result) {
+            if(remainderFinalization!=null &&
+                    "REJECTED".equals(remainderFinalization.status))
+                return "{\"status\":\"REJECTED\",\"reasonType\":"+
+                    remainderText(remainderFinalization.reasonType)+
+                    ",\"reason\":"+remainderText(remainderFinalization.reason)+"}";
+            if(remainderFinalization!=null)
+                return "{\"status\":\"ACCEPTED\",\"reasonType\":null,\"reason\":null}";
+            if(remainderFinalizerStarted) {
+                Throwable failure=result==null?null:result.failure;
+                return "{\"status\":\"FAILED\",\"reasonType\":"+
+                    remainderText(failure==null?detachedFailureType:
+                        failure.getClass().getName())+",\"reason\":"+
+                    remainderText(failure==null?detachedFailureMessage:
+                        failure.getMessage())+"}";
+            }
+            return "{\"status\":\"NOT_RUN\",\"reasonType\":null,\"reason\":null}";
+        }
+
+        private String remainderComparatorJson() {
+            if(remainderFinalization==null ||
+                    "REJECTED".equals(remainderFinalization.status))
+                return "{\"status\":\"NOT_RUN\",\"candidate\":null,\"winner\":null}";
+            Load12RemainderFinalization value=remainderFinalization;
+            String candidate="{\"layoutIdentity\":"+
+                System.identityHashCode(value.layout)+",\"attempt\":"+value.attempt+
+                ",\"placementScore\":"+value.placementScore+",\"area\":"+value.area+
+                ",\"quality\":"+remainderDouble(value.quality)+"}";
+            String winner=value.winnerLayout==null?"null":"{\"layoutIdentity\":"+
+                System.identityHashCode(value.winnerLayout)+",\"attempt\":"+
+                value.winnerAttempt+",\"placementScore\":"+value.winnerPlacementScore+
+                ",\"area\":"+value.winnerArea+",\"quality\":"+
+                remainderDouble(value.winnerQuality)+"}";
+            return "{\"status\":\""+(value.selected?"SELECTED":"UNSELECTED")+
+                "\",\"candidate\":"+candidate+",\"winner\":"+winner+"}";
+        }
+
+        private static String remainderGeometryJson(PcbBoardLayout layout,String status) {
+            if(layout==null) return "null";
+            Load12LayoutCounts counts=load12LayoutCounts(layout);
+            return "{\"status\":\""+status+"\",\"layoutIdentity\":"+
+                System.identityHashCode(layout)+",\"sha256\":\""+
+                sha256Hex(layout.geometryFingerprint())+"\",\"traceCount\":"+
+                counts.traces+",\"holeCount\":"+counts.holes+",\"viaCount\":"+
+                counts.vias+"}";
+        }
+
+        private String remainderOraclePhaseJson(Load12RemainderPhysicalProof proof,
+                boolean started) {
+            String status=proof!=null?"PASS":started?"FAIL":"NOT_RUN";
+            String partStatus=proof!=null?"PASS":started?"INCOMPLETE":"NOT_RUN";
+            String measured=proof==null?"null":null;
+            String productionPairs=proof==null?measured:Long.toString(
+                proof.productionClearancePairs);
+            String independentPairs=proof==null?measured:Long.toString(
+                proof.independentClearancePairs);
+            String graphSha=proof==null?"null":remainderText(proof.graphSha256);
+            String orderedChecked=proof==null?"null":Long.toString(proof.orderedPadPairs);
+            String rasterChecked=proof==null?"null":Long.toString(proof.rasterPadPairs);
+            String rasterPoints=proof==null?"null":Long.toString(proof.rasterPointCount);
+            String accessStatus=proof!=null?"PASS":started?"INCOMPLETE":"NOT_RUN";
+            String gridCells=proof==null?"null":Integer.toString(proof.accessGridCells);
+            String reachable=proof==null?"null":Integer.toString(
+                proof.accessReachableCells);
+            return "{\"status\":\""+status+"\",\"productionGeometry\":\""+
+                partStatus+"\",\"twoLayerRules\":\""+partStatus+
+                "\",\"productionClearancePairs\":"+productionPairs+
+                ",\"independentClearancePairs\":"+independentPairs+
+                ",\"graphNetEquality\":\""+partStatus+
+                "\",\"referenceGraphSha256\":"+graphSha+
+                ",\"orderedPadPairsExpected\":60516,\"orderedPadPairsChecked\":"+
+                orderedChecked+",\"rasterPadPairsExpected\":60516,\"rasterPadPairsChecked\":"+
+                rasterChecked+",\"rasterPointCount\":"+rasterPoints+
+                ",\"boardIdentity\":\""+partStatus+
+                "\",\"p03CourtyardExpected\":4950,\"p03CourtyardChecked\":"+
+                (proof==null?"null":Long.toString(proof.courtyardPairs))+
+                ",\"p03EscapeExpected\":24354,\"p03EscapeChecked\":"+
+                (proof==null?"null":Long.toString(proof.escapeTargets))+
+                ",\"productionPlacementAccess\":{\"status\":\""+accessStatus+
+                "\",\"gridCells\":"+gridCells+",\"reachableCells\":"+
+                reachable+",\"cellLimit\":700000}}";
+        }
+
+        private String remainderOraclesJson() {
+            return "{\"raw\":"+remainderOraclePhaseJson(remainderRawProof,
+                remainderRawOracleStarted)+",\"final\":"+
+                remainderOraclePhaseJson(remainderFinalProof,remainderFinalOracleStarted)+
+                ",\"independentTwoLayerAccess\":\"NOT_AVAILABLE\"}";
+        }
+
+        private String remainderLimitsJson() {
+            int requestExpansionLimit=PcbLayerRoutingPrototype.MAX_EXPANSIONS;
+            Object requestOwner=remainderOwner!=null?remainderOwner:routeSession;
+            if(requestOwner!=null) {
+                Object requestBudget=P07ScalarReflection.read(requestOwner,"budget");
+                if(requestBudget!=null) {
+                    requestExpansionLimit=P07ScalarReflection.intField(requestBudget,"maximum");
+                    require(requestExpansionLimit==PcbLayerRoutingPrototype.MAX_EXPANSIONS,
+                        "reported request expansion limit comes from its live P07 owner budget");
+                    if(routeSession!=null) {
+                        Object sourceBudget=P07ScalarReflection.read(routeSession,"budget");
+                        require(sourceBudget!=null && requestExpansionLimit==
+                            P07ScalarReflection.intField(sourceBudget,"maximum"),
+                            "reported copied request limit matches the preserved source budget");
+                    }
+                }
+            }
+            int viaLimit=copiedOwnerBound?detachedSessionMaximumVias:
+                load12Binding==null?
+                    PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.vias:
+                    load12Binding.maximumVias;
+            int transitionLimit=load12Binding==null?
+                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.transitions:
+                load12Binding.policy.transitions;
+            if(copiedOwnerBound)
+                require(viaLimit==PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.vias &&
+                    detachedSearchMaximumVias==viaLimit && detachedSessionViaCost==240 &&
+                    detachedSearchViaCost==detachedSessionViaCost &&
+                    load12Binding!=null && load12MaximumVias==viaLimit &&
+                    load12SessionViaCost==60,
+                    "reported VIA limit follows the live source and copied owner caps");
+            return "{\"requestExpansions\":"+requestExpansionLimit+
+                ",\"branchExpansions\":"+PcbLayerRoutingPrototype.MAX_BRANCH_EXPANSIONS+
+                ",\"gridCells\":"+PcbLayerRoutingPrototype.MAX_CELLS+
+                ",\"orderings\":"+PcbLayerRoutingPrototype.ORDERINGS+
+                ",\"vias\":"+viaLimit+
+                ",\"transitions\":"+transitionLimit+
+                ",\"operationMs\":"+nanosToMillis(CASE_LIMIT_NANOS)+
+                ",\"controllerUnits\":"+WORK_LIMIT+
+                ",\"unitMs\":"+nanosToMillis(UNIT_LIMIT_NANOS)+
+                ",\"ownerStepsPerUnit\":"+MAX_MANUAL_STEPS_PER_UNIT+
+                ",\"cleanupMs\":"+CLEANUP_LIMIT_MILLIS+
+                ",\"shutdownMs\":15000,\"accessCells\":"+MAX_ACCESS_CELLS+
+                ",\"suiteMs\":480000}";
+        }
+
+        private String remainderWorkJson(P07PolicyDiagnosticCase result) {
+            Budget budget=remainderBudget;
+            long[] millis=new long[Budget.REMAINDER_PHASES.length];
+            int last=-1;
+            long assigned=0L;
+            if(budget!=null) {
+                for(int index=0;index<millis.length;index++) {
+                    long nanos=budget.remainderPhaseElapsedNanos[index];
+                    millis[index]=nanosToMillis(nanos);
+                    if(nanos>0 || budget.remainderPhaseCalls[index]>0) last=index;
+                }
+            }
+            long operationMs=result==null?0L:result.operationMillis;
+            if(last<0) last=0;
+            for(int index=0;index<last;index++) assigned+=millis[index];
+            millis[last]=Math.max(0L,operationMs-assigned);
+            StringBuilder phases=new StringBuilder("[");
+            for(int index=0;index<Budget.REMAINDER_PHASES.length;index++) {
+                if(index>0) phases.append(',');
+                int calls=budget==null?0:budget.remainderPhaseCalls[index];
+                long steps=budget==null?0L:budget.remainderPhaseOwnerSteps[index];
+                phases.append("{\"name\":\"").append(Budget.REMAINDER_PHASES[index])
+                    .append("\",\"calls\":").append(calls)
+                    .append(",\"ownerSteps\":").append(steps)
+                    .append(",\"elapsedMs\":").append(millis[index]).append('}');
+            }
+            phases.append(']');
+            long callsTotal=0L;
+            if(budget!=null) for(int calls:budget.remainderPhaseCalls) callsTotal+=calls;
+            return "{\"operationLimitMs\":90000,\"controllerUnitLimit\":"+WORK_LIMIT+
+                ",\"unitLimitMs\":"+nanosToMillis(UNIT_LIMIT_NANOS)+
+                ",\"ownerStepsPerUnitLimit\":"+MAX_MANUAL_STEPS_PER_UNIT+
+                ",\"phases\":"+phases+",\"operationElapsedMs\":"+operationMs+
+                ",\"controllerUnits\":"+(result==null?0:result.workUnits)+
+                ",\"maxUnitElapsedMs\":"+(result==null?0:result.maxUnitMillis)+
+                ",\"maxOwnerStepsInUnit\":"+
+                (budget==null?0:budget.maxOwnerStepsInUnit)+"}";
+        }
+
+        String detachedLoad12Cost240RemainderEventJson(P07PolicyDiagnosticCase result,
+                long suiteMillis) {
+            boolean passed=result!=null && "PASS".equals(result.status) &&
+                result.cleanupPassed && remainderExperimentComplete &&
+                remainderSourceVerified && remainderHandoffComplete &&
+                suiteMillis<=480000L;
+            String outcome=passed?remainderOutcome:"OPERATION_FAILURE";
+            Throwable failure=result==null?null:result.failure;
+            String failureJson=passed?"null":"{\"phase\":"+
+                remainderText(result==null?"UNKNOWN":
+                    result.failurePhase==null?result.phase:result.failurePhase)+
+                ",\"type\":"+remainderText(failure==null?"OperationFailure":
+                    failure.getClass().getName())+",\"message\":"+
+                remainderText(failure==null?"Remainder operation did not complete":
+                    failure.getMessage())+"}";
+            PcbBoardLayout rawLayout=remainderResult==null?null:remainderResult.layout;
+            String rawGeometryStatus=remainderRawProof!=null?"PASS":
+                remainderRawOracleStarted?"FAIL":"NOT_RUN";
+            PcbBoardLayout finalLayout=remainderFinalization==null?null:
+                remainderFinalization.layout;
+            String finalGeometryStatus=remainderFinalProof!=null?"PASS":
+                remainderFinalOracleStarted?"FAIL":"NOT_RUN";
+            String geometry="{\"raw\":"+remainderGeometryJson(rawLayout,
+                rawGeometryStatus)+",\"final\":"+
+                remainderGeometryJson(finalLayout,finalGeometryStatus)+"}";
+            return "RB100_LOAD12_COST240_REMAINDER_EVENT {\"protocolVersion\":1,"+
+                "\"schema\":\"rb100-load12-cost240-remainder-r1\",\"status\":\""+
+                (passed?"PASS":"FAIL")+"\",\"runId\":\""+
+                jsonFull(runId)+"\",\"operationId\":\"QUALITY_PROBE\",\"scope\":"+
+                "\"ACTUAL_LOAD12_COST240_COPIED_CURRENT_ORDER_REMAINDER_ONLY\",\"outcome\":\""+
+                outcome+"\",\"limits\":"+remainderLimitsJson()+
+                ",\"selector\":"+remainderSelectorJson()+
+                ",\"source\":"+remainderSourceJson()+",\"copy\":"+
+                remainderCopyJson()+",\"remainder\":"+remainderProgressJson()+
+                ",\"finalizer\":"+remainderFinalizerJson(result)+
+                ",\"comparator\":"+remainderComparatorJson()+",\"geometry\":"+
+                geometry+",\"oracles\":"+remainderOraclesJson()+",\"work\":"+
+                remainderWorkJson(result)+",\"cleanup\":{\"status\":\""+
+                (result!=null && result.cleanupPassed?"PASS":"FAIL")+
+                "\",\"elapsedMs\":"+(result==null?0:result.cleanupMillis)+
+                ",\"limitMs\":"+CLEANUP_LIMIT_MILLIS+
+                ",\"shutdownElapsedMs\":null},\"sourcePreserved\":"+
+                remainderSourceVerified+",\"sourceResumption\":\"NOT_RUN\",\"ordinaryComparisonComplete\":false,"+
+                "\"layoutQualification\":false,\"routeAdoption\":false,\"playable100\":false,"+
+                "\"beta\":\"held\",\"suiteMs\":"+suiteMillis+
+                ",\"suiteLimitMs\":480000,\"failure\":"+failureJson+"}";
+        }
+
+        void requireRemainderOperation(P07PolicyDiagnosticCase result) {
+            require(isDetachedLoad12Cost240Remainder(purpose) &&
+                graphTarget==P07ZeroViaGraphDiagnostics.Target.LOAD12 &&
+                result!=null && result.qualityScalarProbe==this &&
+                "PASS".equals(result.status) && result.cleanupPassed &&
+                remainderExperimentComplete && remainderSourceVerified &&
+                remainderSourceBeforeJson!=null && remainderSourceAfterJson!=null &&
+                remainderSourceBeforeJson.equals(remainderSourceAfterJson) &&
+                remainderHandoffComplete && copiedOwnerBound &&
+                remainderContinuationIdentityCaptured &&
+                remainderContinuationOwnerIdentityCaptured &&
+                detachedOwnersReleased && detachedCopyTask==null && detachedReplay==null &&
+                remainderContinuation==null && result.operationMillis<=90000L &&
+                result.workUnits<=WORK_LIMIT && result.maxUnitMillis<=
+                    nanosToMillis(UNIT_LIMIT_NANOS) &&
+                result.cleanupMillis<=CLEANUP_LIMIT_MILLIS &&
+                remainderBudget!=null &&
+                remainderBudget.maxOwnerStepsInUnit<=MAX_MANUAL_STEPS_PER_UNIT &&
+                result.boardIdentityStatus.equals("PASS") &&
+                result.solverGraphIdentityStatus.equals("PASS"),
+                "actual LOAD12 copied-order remainder completes within one operation, preserves its source, and releases all owned work");
+            long totalCalls=0L,totalPhaseNanos=0L;
+            for(int index=0;index<Budget.REMAINDER_PHASES.length;index++) {
+                totalCalls+=remainderBudget.remainderPhaseCalls[index];
+                totalPhaseNanos+=remainderBudget.remainderPhaseElapsedNanos[index];
+            }
+            require(totalCalls==result.workUnits &&
+                totalPhaseNanos==remainderBudget.remainderOperationElapsedNanos &&
+                result.operationMillis==nanosToMillis(totalPhaseNanos),
+                "remainder phase controller calls and monotonic elapsed intervals partition the complete operation");
+            require("NO_ROUTE_BOUNDARY".equals(remainderOutcome) ||
+                "QUALITY_BOUNDARY".equals(remainderOutcome) ||
+                "FINALIZER_REJECTED".equals(remainderOutcome) ||
+                "FINALIZED_SELECTED".equals(remainderOutcome) ||
+                "FINALIZED_UNSELECTED".equals(remainderOutcome),
+                "complete remainder operation has an explicit boundary or finalizer outcome");
+            if(remainderProgressStatus.equals("ORDERING_BOUNDARY")) {
+                require(remainderResult==null && remainderBoundaryType!=null &&
+                    remainderBoundaryReason!=null && remainderFinalization==null &&
+                    remainderRawProof==null && remainderFinalProof==null &&
+                    ("NO_ROUTE_BOUNDARY".equals(remainderOutcome) ||
+                        "QUALITY_BOUNDARY".equals(remainderOutcome)),
+                    "typed boundary retains its reason and never invokes route oracles/finalizer");
+            } else {
+                require("ROUTE_READY".equals(remainderProgressStatus) &&
+                    remainderResult!=null && remainderResult.accepted() &&
+                    remainderResult.orderings==2 && remainderVias<=48 &&
+                    remainderRawProof!=null && remainderFinalization!=null,
+                    "route-ready remainder retains the actual order2 Result and required raw proof");
+                if("REJECTED".equals(remainderFinalization.status))
+                    require("FINALIZER_REJECTED".equals(remainderOutcome) &&
+                        remainderFinalProof==null,
+                        "production finalizer rejection is typed and is not scored as a layout");
+                else
+                    require(remainderFinalProof!=null &&
+                        ((remainderFinalization.selected &&
+                            "FINALIZED_SELECTED".equals(remainderOutcome)) ||
+                         (!remainderFinalization.selected &&
+                            "FINALIZED_UNSELECTED".equals(remainderOutcome))),
+                        "accepted finalizer result receives final physical proof and real comparator selection outcome");
+            }
+        }
 
         String eventJson(P07PolicyDiagnosticCase result) {
             requireTerminalOperation(result);

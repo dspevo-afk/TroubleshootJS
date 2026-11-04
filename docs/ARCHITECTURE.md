@@ -589,6 +589,24 @@ keeps source preparation, copy, branch, transfer, remainder and finalization in
 one bounded operation. Small physical fixtures and the genuine saved7 owner
 adapter are separate from the later actual LOAD12 remainder experiment.
 
+The private --cost240-remainder mode uses that lease on the actual authored
+LOAD12 prefix, source cost60/copy240 and cap48. Its test-only adapter retains the
+real generator, outer Session and selected placement candidate. It preserves the
+paused source without resumption and stops before a later ordering/template. A
+ready result must belong to the copied layout; only that real result can enter
+the existing production finalizer/comparator. Ordinary generator completion is
+not inferred from this direct adapter. Typed route rejection stays distinct from
+operation failure and absent finalizer/physical proof remains NOT_RUN.
+
+The driver partitions one operation's charged controller calls, monotonic time
+and actual owner work across preparation/copy/branch/handoff/remainder/reporting
+and conditional physical checks. Search expansions are a separate counter.
+The new strict read_load12_remainder.py consumer binds the exact native source
+inventory/transport and copy lineage, recomputes phase/counter/budget relations,
+and requires result identity to match the copied layout. Its synthetic success
+controls do not attest an actual route. The [remainder packet](task-evidence/Q100/load12-remainder-r1/README.md)
+records the observed boundary and unavailable independent two-layer access proof.
+
 P07TwoLayerContractTest also owns the matched seven-point prior-via tree-join
 contract. A fresh FULLER Session with explicit requestcap2 creates a via and
 later reaches that exact existing barrel by a TOP planar branch. Read-only

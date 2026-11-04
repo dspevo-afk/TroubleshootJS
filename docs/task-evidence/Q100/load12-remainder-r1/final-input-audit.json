@@ -1,0 +1,17 @@
+{
+  "schema": "q100-load12-remainder-final-source-input-audit-v1",
+  "status": "PASS_FINAL_CONSUMED_SOURCE_INPUTS",
+  "nativeInputs": 1079,
+  "nativeManifestSha256": "dcd1521982565b0705dfa78abb0ddaf37fbbec783c1c035a71e50ddd2574b0c5",
+  "nativeInputBytes": 87174701,
+  "nativeManifestBytes": 228661,
+  "pythonFiles": 40,
+  "pythonPinsSha256": "29b52a323e591526500a12067917df15137fd260587fd26d0090e7fa17dfa230",
+  "criticalFiles": 11,
+  "qualificationSha256": "d0178f86b8974e8080312e2ab3bf30ec55cc05b5c31d1594f2259fccb482afae",
+  "productionAuditSha256": "13b650d60d1b3a98346c64060840799c4fe56dec4c38faa0b318c7aca075a64e",
+  "production": "PASS_1202_CURRENT_COMPILER_INPUTS_357_ACTIVE_DEVELOPER_OUTPUTS_AND_357_ARCHIVED_PLAYER_OUTPUTS",
+  "workingTreeSource": "UNCOMMITTED_PARENT_BOUND_CANDIDATE",
+  "rawEvidence": "PRESERVED_OUTSIDE_REPOSITORY",
+  "sourceReuse": "Only unchanged consumed inputs; no pre-fix reader proof reused"
+}

@@ -20,6 +20,7 @@ param(
     [switch]$Rb100NoPathPrefixCapture,
     [switch]$Rb100Load12Cap17Replay,
     [switch]$Rb100Load12Cost240Replay,
+    [switch]$Rb100Load12Cost240RemainderReplay,
     [switch]$Rb100ConvergenceTrace,
     [switch]$Rb100AdaptiveStudy,
     [string]$Rb100DiagnosticFault = '',
@@ -69,6 +70,9 @@ if ($Rb100Load12Cap17Replay) {
     if ($Rb100Load12Cost240Replay) {
         throw '-Rb100Load12Cap17Replay and -Rb100Load12Cost240Replay are mutually exclusive.'
     }
+    if ($Rb100Load12Cost240RemainderReplay) {
+        throw '-Rb100Load12Cap17Replay and -Rb100Load12Cost240RemainderReplay are mutually exclusive.'
+    }
     if ($Suite.Count -ne 1) {
         throw '-Rb100Load12Cap17Replay requires exactly -Suite Rb100Load12DetachedBaselineContractTest.'
     }
@@ -82,6 +86,9 @@ if ($Rb100Load12Cap17Replay) {
     }
 }
 if ($Rb100Load12Cost240Replay) {
+    if ($Rb100Load12Cost240RemainderReplay) {
+        throw '-Rb100Load12Cost240Replay and -Rb100Load12Cost240RemainderReplay are mutually exclusive.'
+    }
     if ($Suite.Count -ne 1) {
         throw '-Rb100Load12Cost240Replay requires exactly -Suite Rb100Load12DetachedBaselineContractTest.'
     }
@@ -89,9 +96,24 @@ if ($Rb100Load12Cost240Replay) {
         throw '-Rb100Load12Cost240Replay requires exactly -Suite Rb100Load12DetachedBaselineContractTest.'
     }
     if ($Rb100NoPathPrefixCapture -or $Rb100Load12Cap17Replay -or
-            $Rb100FaultMatrix -or $Rb100ConvergenceTrace -or $Rb100AdaptiveStudy -or
+            $Rb100Load12Cost240RemainderReplay -or $Rb100FaultMatrix -or
+            $Rb100ConvergenceTrace -or $Rb100AdaptiveStudy -or
             $Rb100DiagnosticFault -or $Rb100DiagnosticDt -ne '0.0001') {
         throw '-Rb100Load12Cost240Replay excludes other RB100 diagnostic modes.'
+    }
+}
+if ($Rb100Load12Cost240RemainderReplay) {
+    if ($Rb100Load12Cap17Replay -or $Rb100Load12Cost240Replay) {
+        throw '-Rb100Load12Cost240RemainderReplay excludes the other LOAD12 replay modes.'
+    }
+    if ($Suite.Count -ne 1 -or
+            $Suite[0] -cne 'Rb100Load12DetachedBaselineContractTest') {
+        throw '-Rb100Load12Cost240RemainderReplay requires exactly -Suite Rb100Load12DetachedBaselineContractTest.'
+    }
+    if ($Rb100NoPathPrefixCapture -or $Rb100FaultMatrix -or
+            $Rb100ConvergenceTrace -or $Rb100AdaptiveStudy -or
+            $Rb100DiagnosticFault -or $Rb100DiagnosticDt -ne '0.0001') {
+        throw '-Rb100Load12Cost240RemainderReplay excludes other RB100 diagnostic modes.'
     }
 }
 
@@ -1398,6 +1420,10 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
                 $Rb100Load12Cost240Replay) {
             $testArguments += '--cost240'
         }
+        if ($testClass -eq 'Rb100Load12DetachedBaselineContractTest' -and
+                $Rb100Load12Cost240RemainderReplay) {
+            $testArguments += '--cost240-remainder'
+        }
         if ($testClass -eq 'Q30PlanContractTest' -and
                 $PSBoundParameters.ContainsKey('Q30PlanSeeds')) {
             $planSeedTexts = @($Q30PlanSeeds | ForEach-Object {
@@ -1705,6 +1731,10 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         if ($testClass -eq 'Rb100Load12DetachedBaselineContractTest' -and
                 $Rb100Load12Cost240Replay) {
             $expectedMarker = 'RB100 LOAD12 detached cost240 contracts '
+        }
+        if ($testClass -eq 'Rb100Load12DetachedBaselineContractTest' -and
+                $Rb100Load12Cost240RemainderReplay) {
+            $expectedMarker = 'RB100 LOAD12 detached cost240 remainder contracts '
         }
         if (-not (Test-CurrentContractPassMarker -Stdout $tested.Stdout `
                     -Marker $expectedMarker `
