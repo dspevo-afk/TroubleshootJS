@@ -534,7 +534,8 @@ original bounds; the prior640-cap failure remains FAIL. Native graph-owner95
 assertions reused only on unchanged inputs; old wrapper false-negative preserved.
 No production/default/epoch/budget/adoption or playable qualification changes.
 Playable100=0/betaHELD; no fresh GWT/Player/electrical/normal3/full30 gate, HARD
-unavailable/unrun. Publication pending. Next is actual same-net transition authority
+unavailable/unrun. Implementation `c38c6084f03f3f47cc7e450fceb00809f898aa68` normally pushed/exact remote verified;
+completion Gmail `1a1add8b9ac9a5b4` sent once. Receipt sends no second email. Next is actual same-net transition authority
 and earlier-prefix ownership analysis before a generic routing treatment.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is

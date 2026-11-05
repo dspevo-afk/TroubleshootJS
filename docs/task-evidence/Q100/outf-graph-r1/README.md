@@ -1,6 +1,7 @@
 # OUT_F ordinary-edge graph diagnostic
 
-ACCEPTED_FINITE_DIAGNOSTIC_ONLY; publication pending. [Qualification](qualification.json),
+ACCEPTED_FINITE_DIAGNOSTIC_ONLY; implementation `c38c6084f03f3f47cc7e450fceb00809f898aa68` published.
+[Publication receipt](PUBLICATION.md). [Qualification](qualification.json),
 [plan](PLAN.md), [v6 wire](WIRE.md), [transport correction](TRANSPORT_AMENDMENT_R1.md),
 [preserved failures](FAILURES.md). Source parent e271e7af; writer6fc5c0b7,
 graph-owner5a6382c4, readera314cdc7, fixturefa2366d1, host04b62ad8.

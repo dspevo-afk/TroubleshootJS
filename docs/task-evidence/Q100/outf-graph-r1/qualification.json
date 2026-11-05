@@ -681,6 +681,22 @@
     "failedScratchAndEvidence": "PRESERVED",
     "priorUncertainE06Resources": "UNRESOLVED_UNTOUCHED"
   },
-  "publication": "PENDING",
+  "publication": {
+    "status": "PUBLISHED_AND_COMPLETION_GMAIL_SENT_ONCE",
+    "sha": "c38c6084f03f3f47cc7e450fceb00809f898aa68",
+    "message": "Capture bounded OUT_F ordinary-edge graph",
+    "localBranch": "codex/q100-outf-graph-20261105",
+    "remote": "origin",
+    "remoteBranch": "codex/q100-physical-feasibility",
+    "remoteExactShaVerified": true,
+    "emailId": "1a1add8b9ac9a5b4",
+    "emailLabels": [
+      "UNREAD",
+      "SENT",
+      "INBOX"
+    ],
+    "duplicateSearchBeforeSend": "EMPTY",
+    "documentationReceiptEmail": "NOT_SENT"
+  },
   "nextUnstarted": "Audit actual same-net VIA/PTH transition authority and earlier-prefix ownership before selecting a generic routing treatment."
 }
