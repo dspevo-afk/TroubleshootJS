@@ -1,9 +1,12 @@
-# Current checkpoint: private net-priority negative accepted locally; publication pending
+# Current checkpoint: private net-priority negative published; OUT_F diagnosis next
 
 UTC2026-11-05. Active Y=OS-temp/tsj-q100-net-priority-20261105-r1,
-branch codex/q100-net-priority-20261105; HEAD/source parent
-0fac75f105e9c4340bda9bba615f4a70f7aa477d. Required gates and final root review
-complete; no implementation commit/push/email yet. QY=OS-temp/tsj-q100-fixed-prefix-
+branch codex/q100-net-priority-20261105. Accepted implementation/candidate
+b82bd4b724915b2d0c66830c0b0479c4c0461b69; source parent
+0fac75f105e9c4340bda9bba615f4a70f7aa477d. Normal push to
+origin/codex/q100-physical-feasibility exact-SHA verified. Connected completion
+Gmail1a1ac22b09d16baa SENT_ONCE; no second email for the documentation receipt.
+Receipt follows accepted implementation under the same normal branch workflow. QY=OS-temp/tsj-q100-fixed-prefix-
 capture-840a8ef24dbb448f830d2786a95a1591/net-priority-r1.
 [Acceptance packet](task-evidence/Q100/net-priority-r1/README.md),
 [source/receipt pins](task-evidence/Q100/net-priority-r1/qualification.json),
@@ -65,12 +68,13 @@ Preserved Main5f05b005 (9tracked/6untracked/0staged), Desktop e0c36885(7/73/0),
 acceptedXclean0fac75f1 and U/V/W/prior EOL/failure evidence. Main receives only
 mirrored checkpoint, Desktop supplies readonly JDK8. Root owns all files after
 worker handoffs; no subagent ran gates or performed publication.
-Next: explicit final diff/staging and staged-byte checks; normal push
-HEAD:origin/codex/q100-physical-feasibility/exact remote SHA verify, then one
-completion Gmail and a receipt commit with no duplicate email. Next unstarted:
-freeze treatment pass1 OUT_F terminal-to-publisher diagnostic under original
-limits; actual100 physical/access/functional/solvability proofs still required.
-Continue roadmap under the standing request; no pending user decision.
+Final staged root review PASS32intendedpaths/22changed-source pins/fourstudytool
+pins/zero unstaged changes/no personal absolute-path additions/diff-checkPASS.
+Implementation committed/pushed/email delivered. Current documentation receipt
+updates publication metadata only; no runtime source changed or gates rerun.
+Next unstarted: freeze treatment pass1 OUT_F terminal-to-publisher diagnostic;
+actual100 physical/access/functional/solvability proofs still required. Continue
+roadmap under the standing request; no pending user decision.
 
 # Historical checkpoint: net-priority implementation and gate recovery
 

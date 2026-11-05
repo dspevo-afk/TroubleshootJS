@@ -78,7 +78,9 @@ The three-argument library API and eight-argument CLI reject implicit context.
 
 The bounded independent R2 review clears the exporter/context source fix only.
 Root separately owns final runtime/evidence acceptance; R1 remains a preserved
-BLOCKED review and earlier failed checks remain FAIL. Publication is pending.
+BLOCKED review and earlier failed checks remain FAIL. Implementation `b82bd4b724915b2d0c66830c0b0479c4c0461b69` is normally pushed to
+`origin/codex/q100-physical-feasibility` and exact-SHA verified. Completion Gmail
+`1a1ac22b09d16baa` was sent once. This documentation receipt sends no second email.
 
 ## Limits and next work
 

@@ -488,8 +488,10 @@ prove search goals, not route completion; no generator finalizer was reached.
 All production/study sources remain unchanged; no new native/GWT/Player or
 population gate ran. Root corrected a graph-provenance overclaim before acceptance.
 The [private minimum-pair pass1 experiment](task-evidence/Q100/net-priority-r1/README.md)
-is locally accepted as a finite negative result after final review; publication
-is pending the normal commit/push workflow. The exporter context regression found
+is accepted and published as `b82bd4b724915b2d0c66830c0b0479c4c0461b69` on
+origin/codex/q100-physical-feasibility; normal push/exact SHA verified and
+completion Gmail `1a1ac22b09d16baa` sent once. The documentation receipt sends no
+second email. The exporter context regression found
 by review is fixed and qualified by fresh real CLI, unit and all-eight-reader gates. All four authored requests end in typed rejection with zero yielded or
 finalized candidates. The complete60-net vectors differ after the same promotion;
 treatment uses997882 expansions versus canonical918222. It is NOT ADOPTED.

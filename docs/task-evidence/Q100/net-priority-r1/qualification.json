@@ -410,5 +410,15 @@
     "sha256": "fd1829c402ddb9c687730a6e120aa1fd5038e79a3b693b21c52fa25c8e1f9d06",
     "priorReview": "R1_BLOCKED_RETAINED_NOT_RECLASSIFIED",
     "runtimeAcceptanceOwner": "ROOT_FROM_RECORDED_ACTUAL_FINAL_GATES"
+  },
+  "publication": {
+    "status": "PUBLISHED_EXACT_REMOTE_VERIFIED_EMAIL_SENT_ONCE",
+    "implementationSha": "b82bd4b724915b2d0c66830c0b0479c4c0461b69",
+    "message": "Evaluate private pass-one minimum-pair net ordering",
+    "localBranch": "codex/q100-net-priority-20261105",
+    "remoteRef": "origin/codex/q100-physical-feasibility",
+    "completionGmailId": "1a1ac22b09d16baa",
+    "completionEmailCount": 1,
+    "receiptEmail": "NO_DUPLICATE"
   }
 }
