@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import itertools
 import json
+import base64
 import copy
 import tempfile
 import unittest
@@ -14,8 +15,8 @@ import read_branch_order_study as reader
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[4]
-DEFAULT_WIRE = Path("docs/task-evidence/Q100/net-priority-r1/WIRE.md")
-PARENT_HEAD = "0fac75f105e9c4340bda9bba615f4a70f7aa477d"
+DEFAULT_WIRE = Path("docs/task-evidence/Q100/outf-boundary-r1/WIRE.md")
+PARENT_HEAD = "a1fa56f34e85e6f241993dcebd9e4c7e491ecda3"
 RUN_ID = "d7b9d7e5-3cc0-4ed5-9f23-fec562db9035"
 PAD_ROWS = (
     ("pad-a", "component-a", 0),
@@ -35,12 +36,12 @@ NET_PRIORITY_PAD_ROWS = (
     ("a-2", "net-alpha", "ca-2", 200, 0),
     ("b-0", "net-beta", "cb-0", 0, 0),
     ("b-1", "net-beta", "cb-1", 500, 0),
-    ("b-2", "net-beta", "cb-2", 501, 0),
+    ("b-2", "net-beta", "cb-2", 510, 0),
     ("g-0", "net-gamma", "cg-0", 0, 0),
-    ("g-1", "net-gamma", "cg-1", 1, 0),
+    ("g-1", "net-gamma", "cg-1", 10, 0),
     ("s-0", "net-single", "cs-0", 10, 10),
-    ("w-0", "net-wide", "cw-0", -1_000_000, -1_000_000),
-    ("w-1", "net-wide", "cw-1", 1_000_000, 1_000_000),
+    ("w-0", "net-wide", "cw-0", -1_000, -1_000),
+    ("w-1", "net-wide", "cw-1", 1_000, 1_000),
 )
 CANONICAL_NET_IDS = ["net-alpha", "net-beta", "net-gamma", "net-wide", "net-single"]
 MINIMUM_PAIR_NET_IDS = ["net-beta", "net-gamma", "net-alpha", "net-wide", "net-single"]
@@ -66,16 +67,19 @@ def _line(value) -> bytes:
 def _pads(group=1, pad_rows=PAD_ROWS):
     rows = []
     for item in pad_rows:
+        role = "SIGNAL"
         if len(item) == 3:
             pad_id, component_id, x = item
             net_id, y = "net-one", 0
         elif len(item) == 4:
             pad_id, net_id, component_id, x = item
             y = 0
-        else:
+        elif len(item) == 5:
             pad_id, net_id, component_id, x, y = item
+        else:
+            pad_id, net_id, component_id, x, y, role = item
         rows.append(dict(record="PAD", group=group, padId=pad_id, netId=net_id,
-                         componentId=component_id, x=x, y=y, role="SIGNAL"))
+                         componentId=component_id, x=x, y=y, role=role))
     return rows
 
 
@@ -182,20 +186,21 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
         "boardSha256": _sha(b"tiny board context"),
     }
     candidate = {
-        "rootSeed": "0", "placementSeed": "0", "routingSeed": "0",
+        "rootSeed": "42", "placementSeed": "5526715536693200536",
+        "routingSeed": "4493419427463069983",
         "variant": "TINY", "layoutVersion": 26,
         "dependencyEpoch": "tsj-generation-dependencies-v28",
         "componentCount": len({row["componentId"] for row in pads}),
         "padCount": len(pads), "netCount": len(net_ids),
         "traceWidthProfile": "ROLE_WIDTHS",
     }
-    arm_id, api, strategy, net_order_strategy, observed_flag = reader.ARMS[arm]
+    arm_id, api, strategy, net_order_strategy, observed_flag, capture_flag = reader.ARMS[arm]
     header = {
         "record": "HEADER", "group": 0, "schema": reader.SCHEMA,
         "runId": run_id, "mode": "TINY_CANARY", "operation": arm,
         "arm": {"id": arm_id, "api": api, "strategy": strategy,
                 "netOrderStrategy": net_order_strategy,
-                "observed": observed_flag},
+                "observed": observed_flag, "publisherCapture": capture_flag},
         "sourceManifestSha256": source_manifest_sha256,
         "wireSha256": wire_sha256,
         "candidate": candidate,
@@ -378,6 +383,9 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
             "netOrderRows": sum(row["record"] == "NET_ORDER" for row in batch),
             "hashInputBytes": hash_bytes,
             "serializedBeforeOwnLineBytes": sum(len(_line(row)) for row in batch),
+            "publisherChunkRows": 0, "publisherResultRows": 0,
+            "diagnosticCopiedEntries": 0, "diagnosticSerializedBytes": 0,
+            "diagnosticHashBytes": 0, "diagnosticUnits": 0,
         })
     rows.append({"record": "FOOTER", "group": 4, "operation": arm,
                  "complete": True, "padCount": len(pads), "branchCount": len(branches),
@@ -398,7 +406,8 @@ def write_fixture(directory, repositoryRoot=REPOSITORY_ROOT, wirePath=None,
                   padRows=PAD_ROWS, startIds=None, diagnosticPrefixesByArm=None,
                   netOrderIdsByArm=None, yieldedPriorByArm=None,
                   promotionNetsByArm=None, pass1NetVisitsByArm=None,
-                  reachPass1ByArm=None):
+                  reachPass1ByArm=None, publisherOutcome="PUBLISHED",
+                  publisherVia="NEW", publisherNonPadGoal=False):
     """Write a pinned READER_FIXTURE and return ``(spec_path, spec_sha256)``."""
     root = Path(repositoryRoot).resolve()
     wire_path = Path(wirePath) if wirePath is not None else DEFAULT_WIRE
@@ -429,6 +438,7 @@ def write_fixture(directory, repositoryRoot=REPOSITORY_ROOT, wirePath=None,
     wire_sha = source_manifest["files"][1]["sha256"]
 
     operation_entries = []
+    operation_rows = {}
     reference_reach_pass1 = (reachPass1ByArm or {}).get(1, True)
     expected_plain_expansions = _expected_callback_count(
         _pads(group=1, pad_rows=padRows),
@@ -441,20 +451,63 @@ def write_fixture(directory, repositoryRoot=REPOSITORY_ROOT, wirePath=None,
             _pads(group=1, pad_rows=padRows),
             yielded_prior=(yieldedPriorByArm or {}).get(1, False),
             promotion_net=(promotionNetsByArm or {}).get(1), reach_pass1=False)
-    for arm in range(4):
+    for arm in range(5):
+        option_arm = 3 if arm == 4 else arm
+        def arm_option(mapping, default=None):
+            mapping = mapping or {}
+            return mapping.get(arm, mapping.get(option_arm, default))
         raw, entry = make_operation(arm, source_manifest_sha256=source_sha,
                                     wire_sha256=wire_sha, padRows=padRows,
                                     startIds=startIds,
-                                    diagnosticPrefixes=(diagnosticPrefixesByArm or {}).get(arm),
-                                    netOrderIds=(netOrderIdsByArm or {}).get(arm),
-                                    yieldedPrior=(yieldedPriorByArm or {}).get(arm, False),
-                                    promotionNet=(promotionNetsByArm or {}).get(arm),
-                                    pass1NetVisits=(pass1NetVisitsByArm or {}).get(arm),
+                                    diagnosticPrefixes=arm_option(diagnosticPrefixesByArm),
+                                    netOrderIds=arm_option(netOrderIdsByArm),
+                                    yieldedPrior=arm_option(yieldedPriorByArm, False),
+                                    promotionNet=arm_option(promotionNetsByArm),
+                                    pass1NetVisits=arm_option(pass1NetVisitsByArm),
                                     expectedExpansions=expected_plain_expansions,
-                                    reachPass1=(reachPass1ByArm or {}).get(
-                                        arm, reference_reach_pass1))
-        (base / entry["receipt"]["path"]).write_bytes(raw)
+                                    reachPass1=arm_option(reachPass1ByArm,
+                                                          reference_reach_pass1))
+        operation_rows[arm] = [json.loads(line) for line in raw.splitlines()]
         operation_entries.append(entry)
+
+    capture_rows = operation_rows[4]
+    has_pass_one_found = any(row["record"] == "BRANCH"
+                             and row["snapshot"]["pass"] == 1
+                             and row["snapshot"]["terminalReason"] == "FOUND"
+                             for row in capture_rows)
+    if has_pass_one_found:
+        target, _grid = _make_publisher_target(
+            capture_rows, outcome=publisherOutcome, via=publisherVia,
+            nonPadGoal=publisherNonPadGoal)
+        following = next((row for row in capture_rows if row["record"] == "BRANCH"
+                          and row["snapshot"]["pass"] == 1
+                          and row["ordinal"] > target["branch"]["ordinal"]), None)
+        if following is not None:
+            following["prefixSha256"] = target["after"]["geometrySha256"]
+            following["prefixBytes"] = target["after"]["geometryBytes"]
+            following["snapshot"]["prefixViaCount"] = len(target["after"]["holes"])
+        _install_publisher_capture(capture_rows, target)
+        # The fifth arm adds observation only. Give its no-capture control the
+        # same full source vectors, grid, and selected branch prefix.
+        treatment_branches = [row for row in capture_rows if row["record"] == "BRANCH"]
+        control_branches = [row for row in operation_rows[3] if row["record"] == "BRANCH"]
+        if len(treatment_branches) == len(control_branches):
+            for control, treatment in zip(control_branches, treatment_branches):
+                control["snapshot"]["gridWidth"] = treatment["snapshot"]["gridWidth"]
+                control["snapshot"]["gridHeight"] = treatment["snapshot"]["gridHeight"]
+                control["snapshot"]["prefixViaCount"] = treatment["snapshot"]["prefixViaCount"]
+                control["prefixSha256"] = treatment["prefixSha256"]
+                control["prefixBytes"] = treatment["prefixBytes"]
+
+    for arm in range(5):
+        rows = operation_rows[arm]
+        _repair_group_ledgers(rows)
+        raw = b"".join(_line(row) for row in rows)
+        (base / operation_entries[arm]["receipt"]["path"]).write_bytes(raw)
+        operation_entries[arm]["receipt"] = {
+            "path": "op-{}.jsonl".format(arm), "bytes": len(raw), "sha256": _sha(raw)}
+        operation_entries[arm]["elapsedToCloseNanos"] = max(
+            1000, 100 * sum(row["record"] == "GROUP" for row in rows))
     index = {
         "schema": "tsj-branch-order-index-v1", "runId": RUN_ID,
         "kind": "READER_FIXTURE", "sourceManifestSha256": source_sha,
@@ -560,12 +613,25 @@ def _repair_group_ledgers(rows):
         row["callbacks"] = sum(item["record"] == "BRANCH" for item in pending)
         row["censusRows"] = sum(item["record"] == "PAD" for item in pending)
         row["netOrderRows"] = sum(item["record"] == "NET_ORDER" for item in pending)
+        chunks = [item for item in pending if item["record"] == "PUB_CHUNK"]
+        pub_results = [item for item in pending if item["record"] == "PUB_RESULT"]
+        row["publisherChunkRows"] = len(chunks)
+        row["publisherResultRows"] = len(pub_results)
         row["diagnosticCloneSteps"] = sum(item.get("ownerSteps", 0)
                                           for item in pending
                                           if item["record"] == "DIAGNOSTIC_CLONE")
+        if row["phase"] == "CAPTURE":
+            row["diagnosticSerializedBytes"] = (
+                sum(len(base64.b64decode(item["data"], validate=True)) for item in chunks)
+                + sum(len(_line(item)) for item in pending
+                      if item["record"] in ("PUB_CHUNK", "PUB_RESULT")))
+        row["diagnosticUnits"] = (row["diagnosticCopiedEntries"]
+                                  + row["diagnosticSerializedBytes"]
+                                  + row["diagnosticHashBytes"])
         required_hash = sum(item["prefixBytes"] for item in pending
                             if item["record"] in ("BRANCH", "NET_ORDER"))
-        row["hashInputBytes"] = max(row["hashInputBytes"], required_hash)
+        row["hashInputBytes"] = max(row["hashInputBytes"],
+                                    required_hash + row["diagnosticHashBytes"])
         pending = []
     footer = rows[-1]
     footer["padCount"] = sum(row["record"] == "PAD" for row in rows)
@@ -580,6 +646,56 @@ def _rewrite_operation(spec_path, arm, mutate, *, repair_groups=True):
         _repair_group_ledgers(rows)
     raw = b"".join(_line(row) for row in rows)
     (Path(spec_path).parent / "op-{}.jsonl".format(arm)).write_bytes(raw)
+    return _refresh_fixture(spec_path)
+
+
+def _publisher_target(spec_path):
+    rows = _read_rows(spec_path, 4)
+    payload = b"".join(base64.b64decode(row["data"], validate=True)
+                        for row in rows if row["record"] == "PUB_CHUNK")
+    return json.loads(payload.decode("utf-8"))
+
+
+def _repack_publisher_target(rows, target):
+    first_chunk = next(i for i, row in enumerate(rows) if row["record"] == "PUB_CHUNK")
+    result = copy.deepcopy(next(row for row in rows if row["record"] == "RESULT"))
+    report = copy.deepcopy(next(row for row in rows
+                                if row["record"] == "GROUP" and row["phase"] == "REPORT"))
+    footer = copy.deepcopy(rows[-1])
+    prefix = copy.deepcopy(rows[:first_chunk])
+    report_group = sum(row["record"] == "GROUP" for row in prefix)
+    result["group"] = report_group
+    report["ordinal"] = report_group
+    footer.update(group=report_group, groupCount=report_group + 1)
+    rebuilt = prefix + [result, report, footer]
+    _install_publisher_capture(rebuilt, target)
+    _repair_group_ledgers(rebuilt)
+    return rebuilt
+
+
+def _rewrite_capture_target(spec_path, mutate, *, reseal_geometry=True):
+    spec_path = Path(spec_path)
+    rows = _read_rows(spec_path, 4)
+    target = _publisher_target(spec_path)
+    mutate(target)
+    if reseal_geometry:
+        for name in ("before", "after"):
+            old = target[name]
+            target[name] = _fixture_geometry(old["staticPrefix"], old["traces"], old["holes"])
+        source_branch = next(row for row in rows
+                             if row["record"] == "BRANCH"
+                             and row["ordinal"] == target["branch"]["ordinal"])
+        source_branch["prefixSha256"] = target["before"]["geometrySha256"]
+        source_branch["prefixBytes"] = target["before"]["geometryBytes"]
+    rebuilt = _repack_publisher_target(rows, target)
+    raw = b"".join(_line(row) for row in rebuilt)
+    (spec_path.parent / "op-4.jsonl").write_bytes(raw)
+    spec = _load_json(spec_path)
+    index_path = spec_path.parent / spec["studyIndex"]["path"]
+    index = _load_json(index_path)
+    index["operations"][4]["elapsedToCloseNanos"] = max(
+        1000, 100 * sum(row["record"] == "GROUP" for row in rebuilt))
+    _write_json(index_path, index)
     return _refresh_fixture(spec_path)
 
 
@@ -619,6 +735,419 @@ def _expected_choice(pads, reached, remaining):
                if distance == boundary)
 
 
+def _fixture_field(value):
+    if value is None:
+        return "-1:"
+    return "{}:{}".format(len(value.encode("utf-16-le")) // 2, value)
+
+
+def _fixture_fingerprint(prefix, traces, holes):
+    def text(value):
+        return "null" if value is None else value
+
+    def java_order(value):
+        raw = value.encode("utf-16-be")
+        return tuple(int.from_bytes(raw[i:i + 2], "big") for i in range(0, len(raw), 2))
+
+    ordered_traces = sorted(
+        traces,
+        key=lambda row: (java_order(row[1]), java_order(text(row[2])),
+                         java_order(text(row[3])), row[4], row[6],
+                         java_order(text(row[0]))))
+    output = [prefix]
+    for source, net, start, end, layer, exposure, width, xs, ys in ordered_traces:
+        output.append("T:{}{}:{}:{}:{}-{}@".format(
+            _fixture_field(source), "TOP" if layer == 0 else "BOTTOM",
+            exposure, net, text(start), text(end)))
+        if width != 9:
+            output.append("W{}:".format(width))
+        output.extend("{},{};".format(x, y) for x, y in zip(xs, ys))
+    for hole_id, kind, net, x, y, drill, land, exposure in sorted(
+            holes, key=lambda row: java_order(row[0])):
+        output.append("H:{}{}{}{},{},{},{},{}".format(
+            _fixture_field(hole_id), kind, _fixture_field(net), x, y, drill, land, exposure))
+    return "".join(output)
+
+
+def _fixture_geometry(prefix, traces, holes):
+    fingerprint = _fixture_fingerprint(prefix, traces, holes)
+    raw = fingerprint.encode("utf-8")
+    return dict(staticPrefix=prefix, traces=copy.deepcopy(traces),
+                holes=copy.deepcopy(holes), geometrySha256=_sha(raw),
+                geometryBytes=len(raw))
+
+
+def _fixture_compact(points):
+    compact = []
+    for point in points:
+        if len(compact) >= 2:
+            a, b = compact[-2], compact[-1]
+            if (a[0] == b[0] == point[0]) or (a[1] == b[1] == point[1]):
+                compact.pop()
+        compact.append(point)
+    return compact
+
+
+def _fixture_path_points(start, end, rejected=False):
+    if rejected:
+        assert start[1] == end[1] and start[0] - end[0] == 10
+        return [(start[0], start[1]), (start[0] + 10, start[1]),
+                (start[0] + 20, start[1]), (start[0] + 10, start[1]),
+                (start[0], start[1]), (end[0], end[1])]
+    points = [(start[0], start[1])]
+    x, y = start
+    while x != end[0]:
+        x += 10 if end[0] > x else -10
+        points.append((x, y))
+    while y != end[1]:
+        y += 10 if end[1] > y else -10
+        points.append((x, y))
+    return points
+
+
+def _fixture_path_nodes(points, width, height, origin_x, origin_y, via_index=None):
+    expanded = []
+    active_layer = 0
+    for index, point in enumerate(points):
+        expanded.append((point[0], point[1], active_layer))
+        if via_index == index:
+            active_layer = 1 - active_layer
+            expanded.append((point[0], point[1], active_layer))
+    nodes = []
+    cost = 0
+    transitions = 0
+    previous_direction = 4
+    for index, (x, y, layer) in enumerate(expanded):
+        cell = ((y - origin_y) // 10) * width + (x - origin_x) // 10
+        if index == 0:
+            direction = 4
+        else:
+            previous = expanded[index - 1]
+            if previous[2] != layer:
+                direction = 4
+                transitions += 1
+                cost += 60
+            else:
+                dx, dy = x - previous[0], y - previous[1]
+                direction = {(0, -10): 0, (10, 0): 1, (0, 10): 2,
+                             (-10, 0): 3}[(dx, dy)]
+                cost += 10 + (35 if previous_direction not in (4, direction) else 0)
+            previous_direction = direction
+        key_value = (((transitions * 2 + layer) * 5 + direction) *
+                     (width * height) + cell)
+        nodes.append([cell, layer, x, y, direction, transitions, cost,
+                      abs(points[-1][0] - x) + abs(points[-1][1] - y),
+                      index, key_value, -1 if index == 0 else index - 1])
+    return nodes
+
+
+def _fixture_publisher_delta(nodes, branch, pads_by_id, net_roles, before_holes,
+                             branch_number):
+    net = branch["netId"]
+    width = {"SIGNAL": 9, "CONTROL": 9, "SUPPLY": 11,
+             "RETURN": 11, "HIGH_CURRENT": 13}[net_roles[net]]
+    traces, holes = [], []
+    known_holes = copy.deepcopy(before_holes)
+    segments = 0
+    piece_number = 0
+    first = 0
+    while first < len(nodes):
+        end = first + 1
+        while end < len(nodes) and nodes[end][1] == nodes[end - 1][1]:
+            end += 1
+        last = end - 1
+        piece = nodes[first:end]
+        if len(piece) > 1:
+            compact = _fixture_compact([(node[2], node[3]) for node in piece])
+            end_pad = None
+            if last == len(nodes) - 1:
+                end_pad = branch["foundTerminalPadId"]
+                if end_pad is None and (nodes[last][2], nodes[last][3]) == (
+                        pads_by_id[branch["rootPadId"]]["x"],
+                        pads_by_id[branch["rootPadId"]]["y"]):
+                    end_pad = branch["rootPadId"]
+            traces.append([
+                "p07/{}/{}/{}".format(net, branch_number, piece_number), net,
+                branch["startPadId"] if first == 0 else None, end_pad, piece[0][1],
+                "EXPOSED", width, [point[0] for point in compact],
+                [point[1] for point in compact],
+            ])
+            segments += len(piece) - 1
+            piece_number += 1
+        if end < len(nodes):
+            x, y = nodes[last][2], nodes[last][3]
+            existing = [row for row in known_holes if row[3:5] == [x, y]]
+            if not existing:
+                row = ["p07-via/{}/{}/{}".format(net, branch_number, piece_number),
+                       "VIA", net, x, y, 2, 6, "EXPOSED"]
+                holes.append(row)
+                known_holes.append(row)
+            else:
+                assert all(row[1] in ("VIA", "PLATED") and row[2] == net
+                           for row in existing)
+        first = end
+    return traces, holes, segments
+
+
+def _install_publisher_capture(rows, target):
+    """Insert independently authored target chunks and CAPTURE ledgers."""
+    result_index = next(i for i, row in enumerate(rows) if row["record"] == "RESULT")
+    report_index = next(i for i, row in enumerate(rows)
+                        if row["record"] == "GROUP" and row["phase"] == "REPORT")
+    footer = copy.deepcopy(rows[-1])
+    result = copy.deepcopy(rows[result_index])
+    report = copy.deepcopy(rows[report_index])
+    prefix = copy.deepcopy(rows[:result_index])
+    checkpoints = target["checkpoints"]
+    checkpoint_sequences = {}
+    for name in ("found", "publisherSeen", "publisherTerminal", "orderingReady", "orderingResult"):
+        checkpoint = checkpoints.get(name)
+        if checkpoint is not None:
+            checkpoint_sequences.setdefault(checkpoint["group"], set()).add(
+                checkpoint["sequence"])
+    for ordinal, sequences in checkpoint_sequences.items():
+        group_row = next(row for row in prefix if row["record"] == "GROUP"
+                         and row["ordinal"] == ordinal)
+        group_row["observerChecks"] = max(group_row["observerChecks"], len(sequences))
+    found_group = checkpoints["found"]["group"]
+    copied_path_entries = 12 * len(target["path"]["nodes"])
+    def copied_geometry_entries(value):
+        return (sum(7 + len(trace[7]) + len(trace[8]) for trace in value["traces"])
+                + 8 * len(value["holes"]))
+    synchronous_entries = {
+        found_group: len(target["branch"]["reachedPadIds"]) + 24
+        + copied_geometry_entries(target["before"])}
+    terminal_group = checkpoints["publisherTerminal"]["group"]
+    after_fingerprint = _fixture_fingerprint(target["after"]["staticPrefix"],
+                                           target["after"]["traces"],
+                                           target["after"]["holes"])
+    synchronous_entries[terminal_group] = (
+        synchronous_entries.get(terminal_group, 0)
+        + copied_geometry_entries(target["after"])
+        + len(after_fingerprint.encode("utf-16-le")) // 2)
+    for ordinal, entries in synchronous_entries.items():
+        assert entries <= reader.LIMITS["snapshotEntries"]
+        group_row = next(row for row in prefix if row["record"] == "GROUP"
+                         and row["ordinal"] == ordinal)
+        group_row["diagnosticCopiedEntries"] = entries
+        group_row["diagnosticUnits"] = entries
+    payload = _json_bytes(target, newline=False)
+    chunks = [payload[offset:offset + reader.LIMITS["publisherChunkBytes"]]
+              for offset in range(0, len(payload), reader.LIMITS["publisherChunkBytes"])]
+    assert chunks and len(payload) <= reader.LIMITS["publisherPayloadBytes"]
+    first_capture_group = sum(row["record"] == "GROUP" for row in prefix)
+    capture_tail = []
+    geometry_bytes = (target["before"]["geometryBytes"]
+                      + target["after"]["geometryBytes"])
+    for index, chunk in enumerate(chunks):
+        group_ordinal = first_capture_group + index
+        pub_chunk = {
+            "record": "PUB_CHUNK", "operation": 4, "group": group_ordinal,
+            "targetId": reader.PUBLISHER_TARGET_ID, "index": index,
+            "offset": index * reader.LIMITS["publisherChunkBytes"],
+            "bytes": len(chunk), "data": base64.b64encode(chunk).decode("ascii"),
+        }
+        batch = [pub_chunk]
+        if index == len(chunks) - 1:
+            batch.append({
+                "record": "PUB_RESULT", "operation": 4, "group": group_ordinal,
+                "targetId": reader.PUBLISHER_TARGET_ID, "payloadBytes": len(payload),
+                "payloadSha256": _sha(payload), "chunkCount": len(chunks),
+            })
+        line_bytes = sum(len(_line(row)) for row in batch)
+        hash_bytes = len(chunk) + len(_line(pub_chunk))
+        if index == len(chunks) - 1:
+            hash_bytes += geometry_bytes + len(_line(batch[-1]))
+        copied_entries = len(chunk) + (copied_path_entries if index == 0 else 0)
+        serialized_bytes = len(chunk) + line_bytes
+        group = {
+            "record": "GROUP", "operation": 4, "ordinal": group_ordinal,
+            "phase": "CAPTURE", "elapsedBeforeOwnLineNanos": 100,
+            "generatorAdvances": 0, "p07Slices": 0, "p07Steps": None,
+            "diagnosticCloneSteps": 0, "accounting": "NOT_APPLICABLE",
+            "observerChecks": 0, "callbacks": 0, "censusRows": 0,
+            "netOrderRows": 0, "hashInputBytes": hash_bytes,
+            "serializedBeforeOwnLineBytes": line_bytes,
+            "publisherChunkRows": 1,
+            "publisherResultRows": 1 if len(batch) == 2 else 0,
+            "diagnosticCopiedEntries": copied_entries,
+            "diagnosticSerializedBytes": serialized_bytes,
+            "diagnosticHashBytes": hash_bytes,
+            "diagnosticUnits": copied_entries + serialized_bytes + hash_bytes,
+        }
+        assert group["diagnosticUnits"] <= 32768
+        capture_tail.extend(batch)
+        capture_tail.append(group)
+    report_group = first_capture_group + len(chunks)
+    result["group"] = report_group
+    report["ordinal"] = report_group
+    footer.update(group=report_group,
+                  groupCount=report_group + 1,
+                  branchCount=sum(row["record"] == "BRANCH" for row in prefix))
+    rows[:] = prefix + capture_tail + [result, report, footer]
+
+
+def _make_publisher_target(rows, *, outcome="PUBLISHED", via="NEW", nonPadGoal=False):
+    header = rows[0]
+    pads = [row for row in rows if row["record"] == "PAD"]
+    branches = [row for row in rows if row["record"] == "BRANCH"]
+    result = next(row for row in rows if row["record"] == "RESULT")
+    net_order = next(row for row in rows if row["record"] == "NET_ORDER")
+    selected = next(row for row in branches
+                    if row["snapshot"]["pass"] == 1
+                    and row["snapshot"]["terminalReason"] == "FOUND")
+    snapshot = selected["snapshot"]
+    pads_by_id = {row["padId"]: row for row in pads}
+    net_roles = {row["netId"]: row["role"] for row in pads}
+    start_pad = pads_by_id[snapshot["startPadId"]]
+    root_pad = pads_by_id[snapshot["rootPadId"]]
+    terminal_id = None if nonPadGoal else snapshot["rootPadId"]
+    endpoint = ((start_pad["x"] + 10, start_pad["y"]) if nonPadGoal
+                else (root_pad["x"], root_pad["y"]))
+    points = _fixture_path_points(
+        (start_pad["x"], start_pad["y"]), endpoint, rejected=(outcome == "REJECTED"))
+    via_index = None
+    before_holes = []
+    prefix_traces = []
+    if via != "NONE" and not nonPadGoal and outcome == "PUBLISHED" and len(points) > 1:
+        via_index = max(1, len(points) // 2)
+        if via == "REUSE":
+            vx, vy = points[via_index]
+            before_holes.append(["prior-compatible-via", "VIA", snapshot["netId"],
+                                 vx, vy, 2, 6, "EXPOSED"])
+    if nonPadGoal:
+        prefix_traces.append([
+            "prefix/trunk", snapshot["netId"], None, None, 0, "EXPOSED", 9,
+            [min(start_pad["x"], endpoint[0]), max(start_pad["x"], endpoint[0])],
+            [start_pad["y"], start_pad["y"]],
+        ])
+    static_prefix = "fixture-static-prefix|"
+    before = _fixture_geometry(static_prefix, prefix_traces, before_holes)
+    # The native snapshot's historical name counts the whole hole array.
+    snapshot["prefixViaCount"] = len(before_holes)
+    selected["prefixSha256"] = before["geometrySha256"]
+    selected["prefixBytes"] = before["geometryBytes"]
+    branch_number = sum(row["snapshot"]["pass"] == 1 and
+                        row["ordinal"] <= selected["ordinal"] for row in branches)
+    min_x = min([row["x"] for row in pads] + [point[0] for point in points])
+    max_x = max([row["x"] for row in pads] + [point[0] for point in points])
+    min_y = min([row["y"] for row in pads] + [point[1] for point in points])
+    max_y = max([row["y"] for row in pads] + [point[1] for point in points])
+    assert all(value % 10 == 0 for value in (min_x, max_x, min_y, max_y))
+    grid_width = (max_x - min_x) // 10 + 1
+    grid_height = (max_y - min_y) // 10 + 1
+    cells = grid_width * grid_height
+    assert cells <= reader.LIMITS["cells"]
+    snapshot["gridWidth"] = grid_width
+    snapshot["gridHeight"] = grid_height
+    nodes = _fixture_path_nodes(points, grid_width, grid_height, min_x, min_y, via_index)
+    reached_pad_ids = {snapshot["rootPadId"]}
+    reached_pad_ids.update(
+        row["snapshot"]["startPadId"] for row in branches
+        if row["snapshot"]["pass"] == 1
+        and row["snapshot"]["netId"] == snapshot["netId"]
+        and row["ordinal"] < selected["ordinal"])
+    target_branch = dict(
+        ordinal=selected["ordinal"],
+        netVectorPosition=net_order["netIds"].index(snapshot["netId"]),
+        netId=snapshot["netId"], startPadId=snapshot["startPadId"],
+        rootPadId=snapshot["rootPadId"],
+        reachedPadIds=sorted(reached_pad_ids),
+        foundTerminalPadId=terminal_id,
+        branchRecordGroup=selected["group"])
+    target = {
+        "schema": "p07-publisher-target-v1",
+        "context": {
+            "sourceManifestSha256": header["sourceManifestSha256"], "operation": 4,
+            "rootSeed": header["candidate"]["rootSeed"],
+            "placementSeed": header["candidate"]["placementSeed"],
+            "routingSeed": header["candidate"]["routingSeed"],
+            "attempt": result["context"]["selectedAttempt"], "request": 0, "pass": 1,
+            "placementSha256": result["context"]["pristineSha256"],
+        },
+        "objects": {"generator": 1, "route": 2, "search": 3, "branch": 4,
+                    "layout": 5, "publisher": 6,
+                    "found": 10000 + len(nodes) - 1,
+                    "terminal": None if terminal_id is None else 7},
+        "branch": target_branch,
+        "grid": {"width": grid_width, "height": grid_height, "cells": cells,
+                 "originX": min_x, "originY": min_y, "pitch": 10,
+                 "primaryLayer": 0, "maximumVias": 48},
+        "checkpoints": {
+            "found": {"group": 2, "sequence": 1},
+            "publisherSeen": {"group": 2, "sequence": 2},
+            "publisherTerminal": {"group": 3, "sequence": 3},
+            "orderingReady": None if outcome == "REJECTED"
+                               else {"group": 3, "sequence": 4},
+            "orderingResult": {"group": 3, "sequence": 4 if outcome == "REJECTED" else 5},
+        },
+        "path": {"encoding":
+                 "cell,layer,x,y,direction,transitions,cost,heuristic,serial,key,parentRow",
+                 "nodes": nodes,
+                 "nodeTokens": [10000 + index for index in range(len(nodes))],
+                 "foundGoal": True},
+        "publisher": {},
+        "ordering": {},
+        "before": before,
+        "after": None,
+        "integrity": {"ownerBindingVerified": True, "immutablePathVerified": True,
+                      "staticGeometryEqual": True, "prefixRowsConserved": True,
+                      "sourceReferencesReleased": True},
+        "limitations": {"routeAdoption": False, "layoutQualification": False,
+                        "playable100": 0, "fullPhysicalProof": "NOT_RUN"},
+    }
+    traces, new_holes, segments = _fixture_publisher_delta(
+        nodes, target_branch, pads_by_id, net_roles, before_holes, branch_number)
+    after_traces = prefix_traces + traces
+    after_holes = before_holes + new_holes
+    target["after"] = _fixture_geometry(static_prefix, after_traces, after_holes)
+    length = bends = 0
+    last_direction = 4
+    for previous, current in zip(nodes, nodes[1:]):
+        if previous[1] != current[1]:
+            last_direction = 4
+        else:
+            length += 10
+            if last_direction not in (4, current[4]):
+                bends += 1
+            last_direction = current[4]
+    direct = abs(start_pad["x"] - nodes[-1][2]) + abs(start_pad["y"] - nodes[-1][3])
+    if outcome == "REJECTED":
+        target["after"] = copy.deepcopy(before)
+        target["publisher"] = {
+            "outcome": "REJECTED", "stage": 1, "qualityIndex": len(nodes),
+            "reversedSize": len(nodes), "storedLength": length,
+            "storedBends": bends, "storedLastDirection": last_direction,
+            "segments": 0, "reason": snapshot["netId"] + ":BRANCH_QUALITY_LIMIT",
+            "sourceHandoff": False, "startReachedAfter": False,
+        }
+        target["ordering"] = {
+            "routerStatus": "ROUTER_REJECTED",
+            "routerReason": snapshot["netId"] + ":BRANCH_QUALITY_LIMIT",
+            "readyLayoutToken": None, "readyPass": None,
+            "finalizerStatus": "NOT_REACHED", "finalizedBefore": 0,
+            "finalizedAfter": 0, "lastFailureDetail": None,
+        }
+    else:
+        target["publisher"] = {
+            "outcome": "PUBLISHED", "stage": 6, "qualityIndex": len(nodes),
+            "reversedSize": len(nodes), "storedLength": length,
+            "storedBends": bends, "storedLastDirection": last_direction,
+            "segments": segments, "reason": None,
+            "sourceHandoff": True, "startReachedAfter": True,
+        }
+        target["ordering"] = {
+            "routerStatus": "READY", "routerReason": "net-one:NO_PATH",
+            "readyLayoutToken": 5, "readyPass": 1,
+            "finalizerStatus": "REJECTED", "finalizedBefore": 0,
+            "finalizedAfter": 0, "lastFailureDetail": "fixture finalizer rejected",
+        }
+    assert target["path"]["nodeTokens"][-1] == target["objects"]["found"]
+    assert (target["objects"]["terminal"] is None) == (terminal_id is None)
+    assert any((direct == 0, length > direct * 3, bends > 16)) == (outcome == "REJECTED")
+    return target, (grid_width, grid_height)
+
+
 class BranchOrderReaderTests(unittest.TestCase):
     def _fixture(self, directory):
         return write_fixture(directory)
@@ -643,21 +1172,421 @@ class BranchOrderReaderTests(unittest.TestCase):
             reader.validate_spec(spec_path, spec_sha)
         self.assertEqual(str(caught.exception), code)
 
-    def test_four_arm_fixture_and_strict_cli_output(self):
+    def test_literal_java_utf16_null_sort_width_fingerprint_preimage_and_sha(self):
+        # Literal native-format oracle: Java compares surrogate code units, so
+        # U+1F600 sorts before U+E000 despite Python's code-point order.
+        traces = [
+            ["\ue000", "net-one", None, None, 0, "EXPOSED", 9, [0, 10], [0, 0]],
+            ["w", "net-one", None, None, 0, "COVERED", 11, [0, 10], [0, 0]],
+            ["\U0001f600", "net-one", None, None, 0, "EXPOSED", 9, [0, 10], [0, 0]],
+            [None, "net-one", None, None, 0, "EXPOSED", 9, [0, 10], [0, 0]],
+        ]
+        holes = [
+            ["\ue000", "VIA", "net-one", 30, 0, 2, 6, "COVERED"],
+            ["\U0001f600", "NON_PLATED", None, 20, 0, 2, 2, "EXPOSED"],
+        ]
+        expected = (
+            "P\U0001f600|T:-1:TOP:EXPOSED:net-one:null-null@0,0;10,0;"
+            "T:2:\U0001f600TOP:EXPOSED:net-one:null-null@0,0;10,0;"
+            "T:1:\ue000TOP:EXPOSED:net-one:null-null@0,0;10,0;"
+            "T:1:wTOP:COVERED:net-one:null-null@W11:0,0;10,0;"
+            "H:2:\U0001f600NON_PLATED-1:20,0,2,2,EXPOSED"
+            "H:1:\ue000VIA7:net-one30,0,2,6,COVERED")
+        expected_sha = "7df85a22b163f06bbabe0b642cf877147ed97174556f908b8e71bc7eafe66eba"
+        self.assertEqual(len(expected.encode("utf-8")), 263)
+        self.assertEqual(_sha(expected.encode("utf-8")), expected_sha)
+        self.assertEqual(_fixture_fingerprint("P\U0001f600|", traces, holes), expected)
+        self.assertEqual(reader.geometry_fingerprint("P\U0001f600|", traces, holes), expected)
+        snapshot = dict(staticPrefix="P\U0001f600|", traces=traces, holes=holes,
+                        geometryBytes=263, geometrySha256=expected_sha)
+        self.assertEqual(reader._geometry_rows(snapshot), (expected, expected.encode("utf-8")))
+
+    def test_published_singleton_layer_piece_has_literal_nodes_trace_via_and_guard(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-publisher-literal-") as directory:
+            spec_path, spec_sha = self._fixture(Path(directory) / "fixture")
+            target = _publisher_target(spec_path)
+            self.assertEqual(target["path"]["nodes"], [
+                [1, 0, 10, 0, 4, 0, 0, 10, 0, 29, -1],
+                [0, 0, 0, 0, 3, 0, 10, 0, 1, 21, 0],
+                [0, 1, 0, 0, 4, 1, 70, 0, 2, 133, 1],
+            ])
+            self.assertEqual(target["before"]["traces"], [])
+            self.assertEqual(target["before"]["holes"], [])
+            self.assertEqual(target["after"]["traces"], [
+                ["p07/net-one/1/0", "net-one", "pad-b", None, 0,
+                 "EXPOSED", 9, [10, 0], [0, 0]]])
+            self.assertEqual(target["after"]["holes"], [
+                ["p07-via/net-one/1/1", "VIA", "net-one", 0, 0, 2, 6, "EXPOSED"]])
+            self.assertEqual(target["publisher"], dict(
+                outcome="PUBLISHED", stage=6, qualityIndex=3, reversedSize=3,
+                storedLength=10, storedBends=0, storedLastDirection=4, segments=1,
+                reason=None, sourceHandoff=True, startReachedAfter=True))
+            self.assertEqual(reader.validate_spec(spec_path, spec_sha)["status"],
+                             "PASS_READER_FIXTURE_ONLY")
+
+    def test_two_piece_publication_and_all_role_widths_have_manual_geometry(self):
+        for role, width in (("SIGNAL", 9), ("SUPPLY", 11), ("HIGH_CURRENT", 13)):
+            with self.subTest(role=role), tempfile.TemporaryDirectory(
+                    prefix="branch-order-publisher-pieces-") as directory:
+                pads = tuple((pad_id, "net-one", component, x, 0, role)
+                             for pad_id, component, x in (
+                                 ("pad-a", "component-a", 0), ("pad-b", "component-b", 40),
+                                 ("pad-c", "component-c", 60), ("pad-d", "component-d", 80)))
+                spec_path, spec_sha = write_fixture(Path(directory) / "fixture", padRows=pads)
+                target = _publisher_target(spec_path)
+                self.assertEqual(target["after"]["traces"], [
+                    ["p07/net-one/1/0", "net-one", "pad-b", None, 0, "EXPOSED",
+                     width, [40, 20], [0, 0]],
+                    ["p07/net-one/1/1", "net-one", None, "pad-a", 1, "EXPOSED",
+                     width, [20, 0], [0, 0]],
+                ])
+                self.assertEqual(target["after"]["holes"], [
+                    ["p07-via/net-one/1/1", "VIA", "net-one", 20, 0, 2, 6, "EXPOSED"]])
+                self.assertEqual([node[6] for node in target["path"]["nodes"]],
+                                 [0, 10, 20, 80, 90, 100])
+                self.assertEqual([target["publisher"][name] for name in
+                                  ("storedLength", "storedBends", "storedLastDirection", "segments")],
+                                 [40, 0, 3, 4])
+                self.assertEqual(reader.validate_spec(spec_path, spec_sha)["status"],
+                                 "PASS_READER_FIXTURE_ONLY")
+
+    def test_compatible_via_reuse_preserves_old_hole_without_duplicate(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-via-reuse-") as directory:
+            spec_path, spec_sha = write_fixture(Path(directory) / "fixture", publisherVia="REUSE")
+            target = _publisher_target(spec_path)
+            expected = [["prior-compatible-via", "VIA", "net-one", 0, 0, 2, 6, "EXPOSED"]]
+            self.assertEqual(target["before"]["holes"], expected)
+            self.assertEqual(target["after"]["holes"], expected)
+            for arm in (3, 4):
+                self.assertEqual(_branch(_read_rows(spec_path, arm), 1)["snapshot"]["prefixViaCount"], 1)
+            self.assertEqual(target["publisher"]["segments"], 1)
+            self.assertEqual(reader.validate_spec(spec_path, spec_sha)["status"],
+                             "PASS_READER_FIXTURE_ONLY")
+
+    def test_nonpad_trace_goal_keeps_terminal_null_and_preserves_prefix(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-nonpad-goal-") as directory:
+            spec_path, spec_sha = write_fixture(
+                Path(directory) / "fixture", publisherNonPadGoal=True)
+            target = _publisher_target(spec_path)
+            self.assertIsNone(target["objects"]["terminal"])
+            self.assertIsNone(target["branch"]["foundTerminalPadId"])
+            self.assertEqual(target["before"]["traces"], [
+                ["prefix/trunk", "net-one", None, None, 0, "EXPOSED", 9, [10, 20], [0, 0]]])
+            self.assertEqual(target["after"]["traces"], target["before"]["traces"] + [
+                ["p07/net-one/1/0", "net-one", "pad-b", None, 0,
+                 "EXPOSED", 9, [10, 20], [0, 0]]])
+            self.assertEqual(target["after"]["holes"], [])
+            self.assertEqual(reader.validate_spec(spec_path, spec_sha)["status"],
+                             "PASS_READER_FIXTURE_ONLY")
+
+    def test_quality_rejection_has_literal_guard_and_unchanged_geometry(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-publisher-rejected-") as directory:
+            spec_path, spec_sha = write_fixture(
+                Path(directory) / "fixture", publisherOutcome="REJECTED")
+            target = _publisher_target(spec_path)
+            self.assertEqual([node[2:4] for node in target["path"]["nodes"]],
+                             [[10, 0], [20, 0], [30, 0], [20, 0], [10, 0], [0, 0]])
+            self.assertEqual(target["publisher"], dict(
+                outcome="REJECTED", stage=1, qualityIndex=6, reversedSize=6,
+                storedLength=50, storedBends=1, storedLastDirection=3, segments=0,
+                reason="net-one:BRANCH_QUALITY_LIMIT", sourceHandoff=False,
+                startReachedAfter=False))
+            self.assertEqual(target["before"], target["after"])
+            self.assertEqual(target["ordering"]["finalizerStatus"], "NOT_REACHED")
+            self.assertIsNone(target["checkpoints"]["orderingReady"])
+            result = reader.validate_spec(spec_path, spec_sha)
+            self.assertEqual(result["status"], "PASS_READER_FIXTURE_ONLY")
+            self.assertEqual(result["publisherOutcomes"][-1], "REJECTED")
+
+    def test_publisher_context_source_branch_and_object_splices_reject(self):
+        cases = (
+            (lambda d: d["context"].update(rootSeed="9007199254740993"), "PUB_CONTEXT_JOIN"),
+            (lambda d: d["context"].update(placementSeed="-5526715536693200536"), "PUB_CONTEXT_JOIN"),
+            (lambda d: d["context"].update(sourceManifestSha256="0" * 64), "PUB_CONTEXT_JOIN"),
+            (lambda d: d["context"].update(request=1), "PUB_CONTEXT_JOIN"),
+            (lambda d: d["branch"].update(startPadId="pad-c"), "PUB_BRANCH_JOIN"),
+            (lambda d: d["branch"].update(branchRecordGroup=1), "PUB_BRANCH_JOIN"),
+            (lambda d: d["branch"].update(reachedPadIds=["pad-a", "pad-a"]), "PUB_REACHED_SET"),
+            (lambda d: d["branch"].update(netVectorPosition=1), "PUB_NET_VECTOR_JOIN"),
+            (lambda d: d["objects"].update(generator=2), "PUB_OBJECT_ALIAS"),
+            (lambda d: d["objects"].update(search=True), "PUB_OBJECT_TOKEN"),
+            (lambda d: d["objects"].update(found=99999), "PUB_PATH_HEADER"),
+            (lambda d: d["path"]["nodeTokens"].__setitem__(0, 2), "PUB_PATH_HEADER"),
+            (lambda d: d["path"]["nodeTokens"].__setitem__(0, 10001), "PUB_PATH_HEADER"),
+            (lambda d: d["objects"].update(terminal=None), "PUB_TERMINAL_OBJECT_JOIN"),
+        )
+        for mutate, code in cases:
+            with self.subTest(code=code, line=mutate.__code__.co_firstlineno), \
+                    tempfile.TemporaryDirectory(prefix="branch-order-publisher-splice-") as directory:
+                spec_path, _ = self._fixture(Path(directory) / "fixture")
+                spec_path, spec_sha = _rewrite_capture_target(spec_path, mutate)
+                self._assert_rejects(spec_path, spec_sha, code)
+
+    def test_publisher_path_parent_grid_key_direction_layer_and_goal_reject(self):
+        def wrong_direction(d):
+            d["path"]["nodes"][1][4] = 1
+            d["path"]["nodes"][1][9] = 7
+
+        cases = (
+            (lambda d: d["path"]["nodes"][1].__setitem__(10, -1), "PUB_PATH_NODE_DOMAIN"),
+            (lambda d: d["path"]["nodes"][1].__setitem__(2, 10), "PUB_PATH_GRID"),
+            (lambda d: d["path"]["nodes"][1].__setitem__(9, 20), "PUB_PATH_KEY"),
+            (wrong_direction, "PUB_PATH_DIRECTION"),
+            (lambda d: d["path"]["nodes"][2].__setitem__(1, 2), "PUB_PATH_NODE_DOMAIN"),
+            (lambda d: d["path"].update(foundGoal=False), "PUB_PATH_HEADER"),
+            (lambda d: d["grid"].update(cells=8), "PUB_GRID_VALUES"),
+            (lambda d: d["publisher"].update(storedLength=20), "PUB_STORED_GUARD"),
+            (lambda d: d["publisher"].update(storedBends=1), "PUB_STORED_GUARD"),
+            (lambda d: d["publisher"].update(storedLastDirection=3), "PUB_STORED_GUARD"),
+        )
+        for mutate, code in cases:
+            with self.subTest(code=code, line=mutate.__code__.co_firstlineno), \
+                    tempfile.TemporaryDirectory(prefix="branch-order-publisher-path-") as directory:
+                spec_path, _ = self._fixture(Path(directory) / "fixture")
+                spec_path, spec_sha = _rewrite_capture_target(spec_path, mutate)
+                self._assert_rejects(spec_path, spec_sha, code)
+
+    def test_publisher_delta_foreign_via_and_rejected_prefix_mutation_reject(self):
+        cases = (
+            ({}, lambda d: d["after"]["traces"][0].__setitem__(6, 11), "PUB_GEOMETRY_DELTA"),
+            ({}, lambda d: d["after"]["traces"][0].__setitem__(0, "p07/net-one/2/0"),
+             "PUB_GEOMETRY_DELTA"),
+            ({}, lambda d: d["after"]["holes"].clear(), "PUB_GEOMETRY_DELTA"),
+            ({}, lambda d: d["after"].update(staticPrefix="changed|"), "PUB_STATIC_PREFIX_CHANGED"),
+            ({"publisherVia": "REUSE"},
+             lambda d: d["after"]["holes"].clear(), "PUB_PREFIX_ROWS_NOT_CONSERVED"),
+            ({"publisherVia": "REUSE"},
+             lambda d: [d[name]["holes"][0].__setitem__(2, "foreign-net")
+                        for name in ("before", "after")], "PUB_VIA_FOREIGN_OR_NPTH"),
+            ({"publisherVia": "REUSE"},
+             lambda d: [d[name]["holes"][0].__setitem__(slice(1, 3), ["NON_PLATED", None])
+                        or d[name]["holes"][0].__setitem__(6, 2)
+                        for name in ("before", "after")], "PUB_VIA_FOREIGN_OR_NPTH"),
+            ({"publisherOutcome": "REJECTED"},
+             lambda d: d["after"]["traces"].append(
+                 ["unexplained", "net-one", None, None, 0, "EXPOSED", 9, [0, 10], [0, 0]]),
+             "PUB_REJECTED_BOUNDARY"),
+        )
+        for options, mutate, code in cases:
+            with self.subTest(code=code, line=mutate.__code__.co_firstlineno), \
+                    tempfile.TemporaryDirectory(prefix="branch-order-publisher-delta-") as directory:
+                spec_path, _ = write_fixture(Path(directory) / "fixture", **options)
+                spec_path, spec_sha = _rewrite_capture_target(spec_path, mutate)
+                self._assert_rejects(spec_path, spec_sha, code)
+
+    def test_publisher_handoff_ready_finalizer_and_partial_capture_reject(self):
+        cases = (
+            (lambda d: d["publisher"].update(sourceHandoff=False), "PUB_PUBLISHED_BOUNDARY"),
+            (lambda d: d["publisher"].update(startReachedAfter=False), "PUB_PUBLISHED_BOUNDARY"),
+            (lambda d: d["publisher"].update(stage=5), "PUB_PUBLISHED_BOUNDARY"),
+            (lambda d: d["publisher"].update(segments=0), "PUB_PUBLISHED_BOUNDARY"),
+            (lambda d: d["checkpoints"].update(publisherSeen=None), "PUB_REQUIRED_CHECKPOINT"),
+            (lambda d: d["checkpoints"].update(orderingReady=None), "PUB_READY_JOIN"),
+            (lambda d: d["checkpoints"]["orderingResult"].update(sequence=4), "PUB_READY_JOIN"),
+            (lambda d: d["ordering"].update(readyLayoutToken=99), "PUB_READY_JOIN"),
+            (lambda d: d["ordering"].update(finalizerStatus="NOT_REACHED"), "PUB_FINALIZER_JOIN"),
+            (lambda d: d["ordering"].update(lastFailureDetail=""), "PUB_REJECTED_COUNTER"),
+            (lambda d: d["ordering"].update(finalizedAfter=1), "PUB_REJECTED_COUNTER"),
+            (lambda d: d["ordering"].update(finalizerStatus="FINALIZED", finalizedAfter=1),
+             "PUB_REQUEST_RECEIPT_JOIN"),
+            (lambda d: d["integrity"].update(sourceReferencesReleased=False), "PUB_INTEGRITY"),
+            (lambda d: d["integrity"].update(ownerBindingVerified=1), "PUB_INTEGRITY"),
+            (lambda d: d["integrity"].update(sourceReferencesReleased=1), "PUB_INTEGRITY"),
+            (lambda d: d["limitations"].update(routeAdoption=0), "PUB_LIMITATIONS"),
+            (lambda d: d["limitations"].update(layoutQualification=0), "PUB_LIMITATIONS"),
+            (lambda d: d["limitations"].update(playable100=False), "PUB_LIMITATIONS"),
+        )
+        cases += tuple((lambda d, value=outcome: d["publisher"].update(outcome=value),
+                        "PUB_CAPTURE_INCOMPLETE") for outcome in
+                       ("NOT_OBSERVED", "AMBIGUOUS", "UNSUPPORTED", "CANCELLED", "ERROR", "UNKNOWN"))
+        for mutate, code in cases:
+            with self.subTest(code=code, line=mutate.__code__.co_firstlineno), \
+                    tempfile.TemporaryDirectory(prefix="branch-order-publisher-boundary-") as directory:
+                spec_path, _ = self._fixture(Path(directory) / "fixture")
+                spec_path, spec_sha = _rewrite_capture_target(spec_path, mutate)
+                self._assert_rejects(spec_path, spec_sha, code)
+
+    def test_publisher_document_and_nested_key_sets_are_closed(self):
+        sections = ((None, "PUB_TARGET_SCHEMA"), ("context", "PUB_CONTEXT_SCHEMA"),
+                    ("objects", "PUB_OBJECTS_SCHEMA"), ("branch", "PUB_BRANCH_SCHEMA"),
+                    ("grid", "PUB_GRID_SCHEMA"), ("path", "PUB_PATH_SCHEMA"),
+                    ("checkpoints", "PUB_CHECKPOINT_SCHEMA"),
+                    ("publisher", "PUB_PUBLISHER_SCHEMA"), ("ordering", "PUB_ORDERING_SCHEMA"),
+                    ("before", "PUB_GEOMETRY_SCHEMA"), ("after", "PUB_GEOMETRY_SCHEMA"))
+        for section, code in sections:
+            for missing in (False, True):
+                with self.subTest(section=section, missing=missing), tempfile.TemporaryDirectory(
+                        prefix="branch-order-publisher-schema-") as directory:
+                    spec_path, _ = self._fixture(Path(directory) / "fixture")
+
+                    def mutate(d):
+                        obj = d if section is None else d[section]
+                        if missing:
+                            # These fields are not consumed by the fixture repacker.
+                            key = {None: "schema", "context": "placementSha256",
+                                   "objects": "terminal", "branch": "netVectorPosition",
+                                   "grid": "pitch", "path": "foundGoal",
+                                   "checkpoints": "orderingReady", "publisher": "stage",
+                                   "ordering": "routerReason", "before": "geometrySha256",
+                                   "after": "geometrySha256"}[section]
+                            obj.pop(key)
+                        else:
+                            obj["unexpected"] = True
+
+                    spec_path, spec_sha = _rewrite_capture_target(
+                        spec_path, mutate, reseal_geometry=False)
+                    self._assert_rejects(spec_path, spec_sha, code)
+
+    def test_publisher_chunks_reject_duplicate_missing_reordered_offset_and_bad_base64(self):
+        def chunks(rows):
+            return [row for row in rows if row["record"] == "PUB_CHUNK"]
+
+        def duplicate(rows):
+            row = chunks(rows)[0]
+            rows.insert(rows.index(row) + 1, copy.deepcopy(row))
+
+        def reorder(rows):
+            first, second = chunks(rows)[:2]
+            # Keep source-group identity valid to isolate transport order.
+            for name in ("index", "offset", "bytes", "data"):
+                first[name], second[name] = second[name], first[name]
+
+        cases = (
+            (duplicate, "PUB_CHUNK_ORDER", True),
+            (lambda rows: rows.remove(chunks(rows)[0]), "PUB_CHUNK_ORDER", True),
+            (reorder, "PUB_CHUNK_ORDER", True),
+            (lambda rows: chunks(rows)[0].update(offset=1), "PUB_CHUNK_ORDER", True),
+            (lambda rows: chunks(rows)[0].update(operation=3), "PUB_CHUNK_IDENTITY", True),
+            (lambda rows: chunks(rows)[0].update(bytes=4097), "PUB_CHUNK_IDENTITY", True),
+            (lambda rows: chunks(rows)[0].update(data="!"), "PUB_CHUNK_BASE64", False),
+            (lambda rows: chunks(rows)[0].update(bytes=1), "PUB_CHUNK_BASE64", False),
+        )
+        for mutate, code, repair in cases:
+            with self.subTest(code=code, line=mutate.__code__.co_firstlineno), \
+                    tempfile.TemporaryDirectory(prefix="branch-order-publisher-chunks-") as directory:
+                spec_path, _ = self._net_order_fixture(Path(directory))
+                self.assertGreater(len(chunks(_read_rows(spec_path, 4))), 1)
+                spec_path, spec_sha = _rewrite_operation(
+                    spec_path, 4, mutate, repair_groups=repair)
+                self._assert_rejects(spec_path, spec_sha, code)
+
+    def test_publisher_result_seal_and_missing_partial_target_reject(self):
+        def result(rows):
+            return next(row for row in rows if row["record"] == "PUB_RESULT")
+
+        cases = (
+            (lambda rows: result(rows).update(payloadSha256="0" * 64), "PUB_RESULT_SEAL"),
+            (lambda rows: result(rows).update(payloadBytes=1), "PUB_RESULT_COUNTS"),
+            (lambda rows: result(rows).update(chunkCount=999), "PUB_RESULT_COUNTS"),
+            (lambda rows: rows.remove(result(rows)), "PUB_RESULT_BEFORE_REQUEST_RESULT"),
+            (lambda rows: rows.__setitem__(slice(None), [row for row in rows
+                 if row["record"] not in ("PUB_CHUNK", "PUB_RESULT")]),
+             "PUB_RESULT_BEFORE_REQUEST_RESULT"),
+        )
+        for mutate, code in cases:
+            with self.subTest(code=code, line=mutate.__code__.co_firstlineno), \
+                    tempfile.TemporaryDirectory(prefix="branch-order-publisher-seal-") as directory:
+                spec_path, _ = self._fixture(Path(directory) / "fixture")
+                spec_path, spec_sha = _rewrite_operation(spec_path, 4, mutate)
+                self._assert_rejects(spec_path, spec_sha, code)
+
+    def test_capture_accounting_conserves_literal_bytes_and_no_owner_work(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-publisher-accounting-") as directory:
+            spec_path, spec_sha = self._fixture(Path(directory) / "fixture")
+            rows = _read_rows(spec_path, 4)
+            target = _publisher_target(spec_path)
+            payload = b"".join(base64.b64decode(row["data"], validate=True)
+                               for row in rows if row["record"] == "PUB_CHUNK")
+            emitted = sum(len(_line(row)) for row in rows
+                          if row["record"] in ("PUB_CHUNK", "PUB_RESULT"))
+            groups = [row for row in rows if row["record"] == "GROUP"]
+            self.assertEqual(sum(row["diagnosticSerializedBytes"] for row in groups),
+                             len(payload) + emitted)
+            self.assertEqual(sum(row["diagnosticHashBytes"] for row in groups),
+                             len(payload) + emitted + target["before"]["geometryBytes"]
+                             + target["after"]["geometryBytes"])
+            # One reached ID plus24 captured metadata entries are synchronous;
+            # the12 entries per raw node are copied later in CAPTURE.
+            self.assertEqual(_group(rows, 2)["diagnosticCopiedEntries"], 25)
+            literal_after = (
+                "fixture-static-prefix|"
+                "T:15:p07/net-one/1/0TOP:EXPOSED:net-one:pad-b-null@10,0;0,0;"
+                "H:19:p07-via/net-one/1/1VIA7:net-one0,0,2,6,EXPOSED")
+            self.assertEqual(_group(rows, 3)["diagnosticCopiedEntries"],
+                             19 + len(literal_after))
+            first_capture = next(row for row in groups if row["phase"] == "CAPTURE")
+            self.assertEqual(first_capture["diagnosticCopiedEntries"], len(payload) + 36)
+            for group in groups:
+                self.assertEqual(group["diagnosticUnits"], group["diagnosticCopiedEntries"]
+                                 + group["diagnosticSerializedBytes"] + group["diagnosticHashBytes"])
+                if group["phase"] == "CAPTURE":
+                    self.assertEqual(group["p07Slices"], 0)
+                    self.assertIsNone(group["p07Steps"])
+                    self.assertLessEqual(group["diagnosticUnits"], 32768)
+            self.assertEqual(reader.validate_spec(spec_path, spec_sha)["status"],
+                             "PASS_READER_FIXTURE_ONLY")
+
+    def test_capture_accounting_missing_work_bytes_time_and_caps_reject(self):
+        def capture(rows):
+            return next(row for row in rows if row["record"] == "GROUP"
+                        and row["phase"] == "CAPTURE")
+
+        def add_hash_byte(rows):
+            row = capture(rows)
+            row["diagnosticHashBytes"] += 1
+            row["diagnosticUnits"] += 1
+            row["hashInputBytes"] += 1
+
+        def add_serialized_byte(rows):
+            row = capture(rows)
+            row["diagnosticSerializedBytes"] += 1
+            row["diagnosticUnits"] += 1
+
+        def omit_snapshot(rows):
+            row = _group(rows, 2)
+            row["diagnosticCopiedEntries"] = row["diagnosticUnits"] = 0
+
+        cases = (
+            (lambda rows: capture(rows).pop("diagnosticHashBytes"), "GROUP_SCHEMA"),
+            (lambda rows: capture(rows).update(diagnosticUnits=0), "DIAGNOSTIC_UNIT_SUM"),
+            (lambda rows: capture(rows).update(diagnosticUnits=32769), "CAPTURE_DIAGNOSTIC_LIMIT"),
+            (lambda rows: capture(rows).update(p07Steps=1), "CAPTURE_OWNER_WORK"),
+            (lambda rows: capture(rows).update(p07Slices=1), "GROUP_LIMIT"),
+            (lambda rows: capture(rows).update(elapsedBeforeOwnLineNanos=5_000_000_001), "GROUP_LIMIT"),
+            (lambda rows: capture(rows).update(serializedBeforeOwnLineBytes=0), "GROUP_RECORD_COUNTS"),
+            (lambda rows: capture(rows).update(hashInputBytes=0), "GROUP_HASH_BYTES"),
+            (lambda rows: _group(rows, 2).update(diagnosticSerializedBytes=1, diagnosticUnits=26),
+             "ADVANCE_DIAGNOSTIC_SCOPE"),
+            (lambda rows: _group(rows, 2).update(
+                diagnosticCopiedEntries=1_048_577, diagnosticUnits=1_048_577),
+             "ADVANCE_DIAGNOSTIC_SCOPE"),
+            (add_hash_byte, "DIAGNOSTIC_HASH_CENSUS"),
+            (add_serialized_byte, "DIAGNOSTIC_OUTPUT_BYTES"),
+            (omit_snapshot, "DIAGNOSTIC_SYNCHRONOUS_SNAPSHOT"),
+        )
+        for mutate, code in cases:
+            with self.subTest(code=code, line=mutate.__code__.co_firstlineno), \
+                    tempfile.TemporaryDirectory(prefix="branch-order-capture-work-") as directory:
+                spec_path, _ = self._fixture(Path(directory) / "fixture")
+                spec_path, spec_sha = _rewrite_operation(spec_path, 4, mutate, repair_groups=False)
+                self._assert_rejects(spec_path, spec_sha, code)
+
+    def test_five_arm_fixture_and_strict_cli_output(self):
         with tempfile.TemporaryDirectory(prefix="branch-order-reader-") as directory:
             spec_path, spec_sha = self._fixture(Path(directory) / "fixture")
             result = reader.validate_spec(spec_path, spec_sha)
             self.assertEqual(result["status"], "PASS_READER_FIXTURE_ONLY")
             self.assertEqual(result["kind"], "READER_FIXTURE")
-            self.assertEqual(result["operations"], 4)
-            self.assertEqual(result["branches"], [0, 3, 3, 3])
-            self.assertEqual(result["routeOutcomes"], ["TYPED_REQUEST_REJECTION"] * 4)
+            self.assertEqual(result["operations"], 5)
+            self.assertEqual(result["branches"], [0, 3, 3, 3, 3])
+            self.assertEqual(result["routeOutcomes"], ["TYPED_REQUEST_REJECTION"] * 5)
+            self.assertEqual(result["publisherOutcomes"], [None, None, None, None, "PUBLISHED"])
             self.assertFalse(any(row["record"] == "NET_ORDER"
                                  for row in _read_rows(spec_path, 0)))
             self.assertEqual(result["netOrderComparison"],
                              {"status": "NO_DIVERGENCE", "netCount": 1})
-            self.assertEqual(result["netOrderAudits"][3]["observedNetIds"], ["net-one"])
-            self.assertEqual(result["netOrderAudits"][3]["minimumPairs"], [
+            self.assertEqual(result["netOrderAudits"][4]["observedNetIds"], ["net-one"])
+            self.assertEqual(result["netOrderAudits"][4]["minimumPairs"], [
                 {"netId": "net-one", "distance": 10, "witnessPadIds": ["pad-a", "pad-b"]}])
             self.assertEqual(result["limitations"]["rootNativeAcceptance"],
                              "NOT_GRANTED_BY_READER")
@@ -670,24 +1599,24 @@ class BranchOrderReaderTests(unittest.TestCase):
                 reader.main(["--spec", str(spec_path), "--spec-sha256", spec_sha,
                              "--output", str(output_path)])
 
-    def test_plus_terminal_pad_ids_survive_four_arm_census_hash_and_choice_checks(self):
+    def test_plus_terminal_pad_ids_survive_five_arm_census_hash_and_choice_checks(self):
         starts = ("UAC.IN+", "UAC.IN+", "UAC.IN+")
         with tempfile.TemporaryDirectory(prefix="branch-order-plus-ids-") as directory:
             spec_path, spec_sha = write_fixture(
                 Path(directory) / "fixture", padRows=PLUS_PAD_ROWS, startIds=starts)
             result = reader.validate_spec(spec_path, spec_sha)
             self.assertEqual(result["status"], "PASS_READER_FIXTURE_ONLY")
-            self.assertEqual(result["branches"], [0, 3, 3, 3])
+            self.assertEqual(result["branches"], [0, 3, 3, 3, 3])
             self.assertEqual(result["netOrderComparison"]["status"], "NO_DIVERGENCE")
             self.assertTrue(all(reader.token(row[0]) for row in PLUS_PAD_ROWS))
 
             manifest = _load_json(Path(spec_path).parent / "source-manifest.json")
             wire = next(row for row in manifest["files"] if row["role"] == "WIRE")
             self.assertEqual(wire["path"],
-                             "docs/task-evidence/Q100/net-priority-r1/WIRE.md")
-            for arm in range(4):
+                             "docs/task-evidence/Q100/outf-boundary-r1/WIRE.md")
+            for arm in range(5):
                 rows = _read_rows(spec_path, arm)
-                self.assertEqual(rows[0]["schema"], "p07-actual-branch-order-study-v4")
+                self.assertEqual(rows[0]["schema"], reader.SCHEMA)
                 pads = [row for row in rows if row["record"] == "PAD"]
                 self.assertEqual([row["padId"] for row in pads],
                                  ["C1.+", "R3.+", "UAC.IN+", "UAC.PRE_L+"])
@@ -727,11 +1656,11 @@ class BranchOrderReaderTests(unittest.TestCase):
             self.assertEqual(treatment["minimumPairs"], [
                 {"netId": "net-alpha", "distance": 100,
                  "witnessPadIds": ["a-0", "a-1"]},
-                {"netId": "net-beta", "distance": 1,
+                {"netId": "net-beta", "distance": 10,
                  "witnessPadIds": ["b-1", "b-2"]},
-                {"netId": "net-gamma", "distance": 1,
+                {"netId": "net-gamma", "distance": 10,
                  "witnessPadIds": ["g-0", "g-1"]},
-                {"netId": "net-wide", "distance": 4_000_000,
+                {"netId": "net-wide", "distance": 4000,
                  "witnessPadIds": ["w-0", "w-1"]},
             ])
             # The lexical witness is the first pair among the tied alpha minima;
@@ -760,7 +1689,7 @@ class BranchOrderReaderTests(unittest.TestCase):
             self.assertEqual(result["status"], "PASS_READER_FIXTURE_ONLY")
             self.assertEqual(result["netOrderAudits"][2]["observedNetIds"], CANONICAL_NET_IDS)
             self.assertEqual(result["netOrderAudits"][3]["observedNetIds"], MINIMUM_PAIR_NET_IDS)
-            for arm in (1, 2, 3):
+            for arm in (1, 2, 3, 4):
                 rows = _read_rows(spec_path, arm)
                 order = _net_order(rows)
                 pass_zero = [row for row in rows if row["record"] == "BRANCH"
@@ -772,15 +1701,12 @@ class BranchOrderReaderTests(unittest.TestCase):
                 self.assertTrue(all(row["snapshot"]["terminalReason"] == "FOUND"
                                     for row in pass_zero))
 
-    def test_pass_one_not_reached_reports_not_observed_without_order_record(self):
+    def test_pass_one_not_reached_cannot_qualify_without_publisher_capture(self):
         with tempfile.TemporaryDirectory(prefix="branch-order-not-reached-") as directory:
             spec_path, spec_sha = write_fixture(
                 Path(directory) / "fixture", reachPass1ByArm={1: False, 2: False, 3: False})
-            result = reader.validate_spec(spec_path, spec_sha)
-            self.assertEqual(result["netOrderComparison"], {
-                "status": "NOT_OBSERVED", "reason": "PASS1_NOT_REACHED"})
-            self.assertEqual(result["netOrderAudits"], [None, None, None, None])
-            for arm in range(4):
+            self._assert_rejects(spec_path, spec_sha, "PUB_RESULT_BEFORE_REQUEST_RESULT")
+            for arm in range(5):
                 self.assertFalse(any(row["record"] == "NET_ORDER"
                                      for row in _read_rows(spec_path, arm)))
 
@@ -904,8 +1830,8 @@ class BranchOrderReaderTests(unittest.TestCase):
                         padId=value))
                 self._assert_rejects(spec_path, spec_sha, "PAD_VALUES_ORDER")
 
-    def test_v1_v2_and_v3_data_headers_are_rejected_without_compatibility_fallback(self):
-        for version in ("v1", "v2", "v3"):
+    def test_v1_through_v4_data_headers_are_rejected_without_compatibility_fallback(self):
+        for version in ("v1", "v2", "v3", "v4"):
             with self.subTest(version=version), \
                     tempfile.TemporaryDirectory(prefix="branch-order-old-header-") as directory:
                 spec_path, _ = self._fixture(Path(directory) / "fixture")
@@ -1313,10 +2239,74 @@ class BranchOrderReaderTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix="branch-order-later-prefix-") as directory:
             spec_path, _ = self._fixture(Path(directory) / "fixture")
             spec_path, spec_sha = _rewrite_operation(
-                spec_path, 3, lambda rows: _branch(rows, 1).update(prefixSha256="4" * 64))
+                spec_path, 3, lambda rows: _branch(rows, 2).update(prefixSha256="4" * 64))
+            # v5 capture/control parity also binds later treatment prefixes.
+            spec_path, spec_sha = _rewrite_operation(
+                spec_path, 4, lambda rows: _branch(rows, 2).update(prefixSha256="4" * 64))
             result = reader.validate_spec(spec_path, spec_sha)
             self.assertEqual(result["netOrderComparison"],
                              {"status": "NO_DIVERGENCE", "netCount": 1})
+
+    def test_publisher_comparison_allows_capture_group_shift_but_preserves_semantics(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-capture-group-shift-") as directory:
+            spec_path, _ = self._fixture(Path(directory) / "fixture")
+            spec = _load_json(spec_path)
+            index = _load_json(spec_path.parent / spec["studyIndex"]["path"])
+            operations = [reader.validate_operation(
+                (spec_path.parent / entry["receipt"]["path"]).read_bytes(), entry,
+                spec["sourceManifest"]["sha256"], index["wireSha256"], arm,
+                index["runId"], "READER_FIXTURE")
+                for arm, entry in enumerate(index["operations"])]
+            expected = {"status": "NO_DIVERGENCE", "netCount": 1}
+            self.assertEqual(reader.validate_study(operations), expected)
+
+            # Comparison-unit regression for the actual tiny failure: inline
+            # CAPTURE inserted91 transport groups before later P07 callbacks.
+            # These parsed-only edits do not certify a raw GROUP ledger, process,
+            # or native run; validate_operation above checks the original packet.
+            shifted = copy.deepcopy(operations)
+            later = next(row for row in shifted[4]["branches"] if row["snapshot"]["pass"] == 2)
+            self.assertEqual(later["group"], 3)
+            self.assertEqual(later["ordinal"], 2)
+            later["group"] += 91
+            self.assertEqual(later["group"], 94)
+            self.assertEqual(reader.validate_study(shifted), expected)
+
+            semantic_changes = (
+                lambda row: row.update(ordinal=3),
+                lambda row: row.update(prefixSha256="9" * 64),
+                lambda row: row.update(prefixBytes=row["prefixBytes"] + 1),
+                lambda row: row["snapshot"].update(startPadId="pad-c"),
+                lambda row: row["snapshot"].update(terminalReason="FOUND"),
+                lambda row: row["snapshot"].update(branchExpanded=2),
+            )
+            for mutate in semantic_changes:
+                with self.subTest(semantic_line=mutate.__code__.co_firstlineno):
+                    changed = copy.deepcopy(shifted)
+                    branch = next(row for row in changed[4]["branches"]
+                                  if row["snapshot"]["pass"] == 2)
+                    mutate(branch)
+                    with self.assertRaises(ValueError) as caught:
+                        reader.validate_study(changed)
+                    self.assertEqual(str(caught.exception), "PUBLISHER_CAPTURE_TREATMENT_PARITY")
+
+            reordered = copy.deepcopy(shifted)
+            reordered[4]["branches"][1:3] = reversed(reordered[4]["branches"][1:3])
+            with self.assertRaises(ValueError) as caught:
+                reader.validate_study(reordered)
+            self.assertEqual(str(caught.exception), "PUBLISHER_CAPTURE_TREATMENT_PARITY")
+
+            # Canonical observed-default/explicit control parity keeps its
+            # original group-sensitive comparison; the exception is only3/4.
+            for arm in (1, 2):
+                with self.subTest(canonical_arm=arm):
+                    changed = copy.deepcopy(shifted)
+                    branch = next(row for row in changed[arm]["branches"]
+                                  if row["snapshot"]["pass"] == 2)
+                    branch["group"] += 91
+                    with self.assertRaises(ValueError) as caught:
+                        reader.validate_study(changed)
+                    self.assertEqual(str(caught.exception), "OBSERVED_CONTROL_PARITY")
 
     def test_pass_zero_treatment_must_preserve_control_prefix(self):
         with tempfile.TemporaryDirectory(prefix="branch-order-pass-zero-") as directory:

@@ -13,7 +13,7 @@ $utf8=[Text.UTF8Encoding]::new($false)
 $repo=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $module=Join-Path $PSScriptRoot 'VerifierIsolation.psm1'
 $reader=Join-Path $repo 'tests/qualification/rb100-layout/branch-tree-study/read_branch_order_study.py'
-$wire=Join-Path $repo 'docs/task-evidence/Q100/net-priority-r1/WIRE.md'
+$wire=Join-Path $repo 'docs/task-evidence/Q100/outf-boundary-r1/WIRE.md'
 $java=Join-Path $JavaHome 'bin/java.exe'
 $javac=Join-Path $JavaHome 'bin/javac.exe'
 function Hash([string]$Path){(Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant()}
@@ -39,8 +39,8 @@ foreach($p in @($repo,$SourceManifestPath,$PythonExe,$java,$javac,$reader,$wire)
 Require ((Hash $PythonExe)-ceq'ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec') 'SELECTED_PYTHON_PIN'
 Require ((Hash $java)-ceq'e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce') 'SELECTED_JAVA_PIN'
 Require ((Hash $javac)-ceq'61fa6463ee5b59004719b9833a16b148740cfa9f2d1f5a95ca598cc90be04c64') 'SELECTED_JAVAC_PIN'
-Require ((Hash $reader)-ceq'f9dd073d8d23c3cc8febef33ffe4f2facf1cd38a1cdfe480940c17a9c86d3ef2') 'READER_PIN'
-Require ((Hash $wire)-ceq'7aa6316d6254021b494d2a46100a5c747d0e4de7dd0bd34141aaf5f40d7f683d') 'WIRE_PIN'
+Require ((Hash $reader)-ceq'95f390e79282f9c049ae171d547c02f06934219558527c63e951c51f637d6931') 'READER_PIN'
+Require ((Hash $wire)-ceq'60f34fb75a5ea9c7eb8fee085fc625a251d1312ad5574fd3168de95f0df9dc93') 'WIRE_PIN'
 Require ((Get-Item -LiteralPath $SourceManifestPath).Length-le4194304) 'SOURCE_MANIFEST_SIZE'
 Require ((Hash $SourceManifestPath)-ceq$SourceManifestSha256) 'SOURCE_MANIFEST_PIN'
 $outer=[Diagnostics.Stopwatch]::StartNew()
@@ -72,7 +72,7 @@ Write-NewJson (Join-Path $OutputRoot 'host-launch.json') ([ordered]@{
 $preflight=@'
 import hashlib, json, pathlib, sys
 reader_path=pathlib.Path(sys.argv[1]); manifest_path=pathlib.Path(sys.argv[2])
-assert hashlib.sha256(reader_path.read_bytes()).hexdigest()=='f9dd073d8d23c3cc8febef33ffe4f2facf1cd38a1cdfe480940c17a9c86d3ef2'
+assert hashlib.sha256(reader_path.read_bytes()).hexdigest()=='95f390e79282f9c049ae171d547c02f06934219558527c63e951c51f637d6931'
 sys.path.insert(0,str(reader_path.parent))
 import read_branch_order_study as r
 raw=r.stable_read(manifest_path,4*1024*1024)
@@ -185,7 +185,7 @@ final class PhysicalSpecificationDeveloperVerifier {
     Assert-VerifierNoReparseAncestors $indexPath
     Require ((Get-Item -LiteralPath $indexPath).Length-le65536) 'INDEX_SIZE'
     $index=Get-Content -LiteralPath $indexPath -Raw -Encoding UTF8|ConvertFrom-Json
-    Require (@($index.operations).Count-eq4-and$index.kind-ceq$kind-and$index.runId-ceq$runId) 'INDEX_IDENTITY'
+    Require (@($index.operations).Count-eq5-and$index.kind-ceq$kind-and$index.runId-ceq$runId) 'INDEX_IDENTITY'
     [long]$armNanos=0;[long]$armCleanup=0
     foreach($op in $index.operations){$armNanos+=[long]$op.elapsedToCloseNanos;$armCleanup+=[long]$op.cleanup.elapsedNanos}
     $phase='SCRATCH_CLEANUP'

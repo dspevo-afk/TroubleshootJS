@@ -504,9 +504,20 @@ resource checks permit only documented evidence reuse; earlier failures remain
 FAIL. V2 qualifier specs distinguish frozen1079 graph oracles from current1080
 captures without changing golden bytes. Full30 remains owner-excluded;
 HARD/PSYCHOTIC unavailable/unrun, playable100=0 and beta held.
-Next unstarted work is to freeze a diagnostic for treatment pass1 OUT_F's
-terminal-search-to-publisher boundary; FOUND alone supplies no path or quality
-reason. Actual100 physical/access/functional/solvability proofs remain outstanding.
+The [OUT_F boundary diagnostic](task-evidence/Q100/outf-boundary-r1/README.md) is
+accepted locally for recorder-only v5 proof. Actual171-node OUT_F path length1700
+exceeds3*direct320; Publisher stage1 rejects OUT_F:BRANCH_QUALITY_LIMIT before
+adding copper. The180-trace/48-hole prefix remains byte-identical and finalizer
+is NOT_REACHED. A preceding29-node tiny path actually publishes and finalizes.
+Final68 reader methods,32 actual CLI controls, selected PS5 host negatives, two
+actual JDK8/native five-arm captures, strict independent reader/root process/
+source/cleanup review and final1080/1202 unchanged-input audit pass. Earlier
+failures remain FAIL. Capture and uncaptured treatment match all routing work/
+semantics; only charged capture group IDs shift. No production/default/epoch/
+budget/adoption or playable qualification changes; playable100=0/betaHELD.
+No fresh GWT/Player/electrical/normal3/full30 gate is claimed. Next is exact OUT_F
+path/earlier-prefix ownership analysis before a bounded generic routing treatment.
+Publication is pending normal commit/push and one completion email.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

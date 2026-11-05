@@ -17,18 +17,22 @@ import java.nio.file.StandardOpenOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
+import java.util.Base64;
+import java.lang.reflect.Modifier;
 import java.util.regex.Pattern;
 
 /** Bounded producer for the frozen actual-generator branch-order report. */
 public final class ActualGeneratorBranchOrderStudy {
     private static final Charset UTF8 = Charset.forName("UTF-8");
-    private static final String SCHEMA = "p07-actual-branch-order-study-v4";
+    private static final String SCHEMA = "p07-actual-branch-order-study-v5";
     private static final String INDEX_SCHEMA = "tsj-branch-order-index-v1";
     private static final String DEPENDENCY_EPOCH = "tsj-generation-dependencies-v28";
     private static final long AUTHORED_ROOT = 9007199254740993L;
@@ -49,22 +53,32 @@ public final class ActualGeneratorBranchOrderStudy {
     private static final int LINE_LIMIT_BYTES = 65536;
     private static final int PAD_LIMIT = 1024;
     private static final int PREFIX_LIMIT_BYTES = 1024 * 1024;
+    private static final int PUBLISHER_PATH_NODE_LIMIT = 4096;
+    private static final int PUBLISHER_SYNC_COPY_LIMIT = 1024 * 1024;
+    private static final int PUBLISHER_PAYLOAD_LIMIT = 2 * 1024 * 1024;
+    private static final int PUBLISHER_CHUNK_BYTES = 4096;
+    private static final int DIAGNOSTIC_GROUP_UNITS = 32768;
+    private static final int PUBLISHER_FOUND_METADATA_ENTRIES = 35;
     private static final Pattern UUID_PATTERN = Pattern.compile(
         "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
     private static final Pattern SHA_PATTERN = Pattern.compile("[0-9a-f]{64}");
 
     private static final String[] ARM_IDS = {
         "PLAIN_ENTRY_RECEIPT_CONTROL", "OBSERVED_DEFAULT_NEAREST",
-        "OBSERVED_EXPLICIT_NEAREST", "SECOND_ORDER_MINIMUM_PAIR"
+        "OBSERVED_EXPLICIT_NEAREST", "SECOND_ORDER_MINIMUM_PAIR",
+        "MINIMUM_PAIR_PUBLISHER_CAPTURE"
     };
     private static final String[] ARM_APIS = {
-        "PLAIN_BEGIN", "BOUNDARY_CONVENIENCE", "BOUNDARY_EXPLICIT", "BOUNDARY_EXPLICIT"
+        "PLAIN_BEGIN", "BOUNDARY_CONVENIENCE", "BOUNDARY_EXPLICIT", "BOUNDARY_EXPLICIT",
+        "BOUNDARY_EXPLICIT"
     };
     private static final String[] ARM_STRATEGIES = {
-        "CANONICAL_NEAREST", "CANONICAL_NEAREST", "CANONICAL_NEAREST", "CANONICAL_NEAREST"
+        "CANONICAL_NEAREST", "CANONICAL_NEAREST", "CANONICAL_NEAREST", "CANONICAL_NEAREST",
+        "CANONICAL_NEAREST"
     };
     private static final String[] ARM_NET_ORDER_STRATEGIES = {
-        "CANONICAL", "CANONICAL", "CANONICAL", "SECOND_ORDER_MINIMUM_PAIR"
+        "CANONICAL", "CANONICAL", "CANONICAL", "SECOND_ORDER_MINIMUM_PAIR",
+        "SECOND_ORDER_MINIMUM_PAIR"
     };
     private static final String[] SNAPSHOT_INTS = {
         "pass", "startX", "startY", "rootX", "rootY", "gridWidth", "gridHeight",
@@ -141,7 +155,7 @@ public final class ActualGeneratorBranchOrderStudy {
         }
 
         void run() throws Exception {
-            for (int operation = 0; operation < 4; operation++) {
+            for (int operation = 0; operation < 5; operation++) {
                 ArmResult result = new ArmRun(this, operation).execute();
                 if (receiptBytes > STUDY_LIMIT_BYTES - result.receiptBytes)
                     throw new IOException("Study JSONL receipts exceeded 32 MiB");
@@ -151,7 +165,7 @@ public final class ActualGeneratorBranchOrderStudy {
                 cleanupNanos += result.cleanupNanos;
                 arms.add(result);
             }
-            if (arms.size() != 4 || receiptBytes > STUDY_LIMIT_BYTES ||
+            if (arms.size() != 5 || receiptBytes > STUDY_LIMIT_BYTES ||
                     cleanupNanos > CLEANUP_LIMIT_NANOS)
                 throw new IOException("Study accounting did not close within its frozen bounds");
             writeIndex();
@@ -222,6 +236,11 @@ public final class ActualGeneratorBranchOrderStudy {
         final Set<String> diagnosticEventKeys = new HashSet<String>();
         final Set<String> padNetIds = new HashSet<String>();
         Object capturedNetOrderSearch;
+        final IdentityHashMap<Object, Integer> publisherIdentityTokens =
+            new IdentityHashMap<Object, Integer>();
+        int nextPublisherIdentityToken = 1;
+        int publisherPollSequence;
+        PublisherCapture publisherCapture;
         String pass0TailNet;
         String pass0TailReason;
         int pass0TerminalCount;
@@ -352,9 +371,18 @@ public final class ActualGeneratorBranchOrderStudy {
                 generatorAdvances++;
                 requestComplete = isRequestZeroComplete();
                 if (requestComplete) request = observeCompletedRequest();
+                if (operation == 4) {
+                    pollPublisherCapture(advance, true);
+                }
                 finishGroup(advance);
                 currentGroup = null;
                 advance.routeForSlice = null;
+                if (operation == 4 && publisherCapture != null &&
+                        publisherCapture.orderingResult != null &&
+                        !publisherCapture.sourceReferencesReleased)
+                    writePublisherCapture();
+                if (operation == 4 && requestComplete)
+                    closePublisherCaptureAfterRequest(advance);
             }
 
             if (capturedContext == null)
@@ -500,6 +528,7 @@ public final class ActualGeneratorBranchOrderStudy {
             lastActualRoute = route;
             if (capturedContext == null) captureActualTemplate(route, group);
             observeDiagnosticClone(route, group);
+            if (operation == 4) pollPublisherCapture(group, false);
         }
 
         private void onNetOrderReady(int pass) {
@@ -661,7 +690,7 @@ public final class ActualGeneratorBranchOrderStudy {
         }
 
         private void appendDiagnosticClone(GroupLedger group, BranchTracking tracked, int face) {
-            if (operation < 1 || operation > 3 || group == null ||
+            if (operation < 1 || operation > 4 || group == null ||
                     !"ADVANCE".equals(group.phase) || face < 0 || face > 1)
                 throw new IllegalStateException("Diagnostic clone event has invalid arm, group, or face");
             long eventLimit = 6L * (candidateHeader.padCount - candidateHeader.netCount);
@@ -999,7 +1028,8 @@ public final class ActualGeneratorBranchOrderStudy {
             }
             validateTerminalClonePair(search, snapshot);
             PcbBoardLayout liveLayout = (PcbBoardLayout)layoutValue;
-            byte[] prefix = utf8(liveLayout.geometryFingerprint());
+            String prefixFingerprint = liveLayout.geometryFingerprint();
+            byte[] prefix = utf8(prefixFingerprint);
             if (prefix.length < 1 || prefix.length > PREFIX_LIMIT_BYTES)
                 throw new IllegalStateException("Live branch-prefix geometry exceeded the 1 MiB bound");
             addHashInput(group, prefix.length);
@@ -1015,8 +1045,1191 @@ public final class ActualGeneratorBranchOrderStudy {
             branch.number("prefixBytes", prefix.length);
             branch.raw("snapshot", snapshotJson(snapshot));
             appendCallbackRecord(group, branch.finish());
+            if (operation == 4 && pass == 1 && "FOUND".equals(terminalReason))
+                captureSelectedFoundBranch(route, search, liveLayout, snapshot,
+                    prefixFingerprint, prefix, prefixSha, branchCount, group);
             branchCount++;
             group.callbacks++;
+        }
+
+        private void captureSelectedFoundBranch(Object route, Object search,
+                PcbBoardLayout layout, PcbLayerRoutingPrototype.BranchSnapshot snapshot,
+                String prefixFingerprint, byte[] prefixBytes, String prefixSha, int branchRecordOrdinal,
+                GroupLedger group) {
+            String netId = stringField(snapshot, "netId");
+            String startPadId = stringField(snapshot, "startPadId");
+            String rootPadId = stringField(snapshot, "rootPadId");
+            boolean authoredTarget = study.mode == Mode.AUTHORED &&
+                "OUT_F".equals(netId) && "RSH_F.1".equals(startPadId) &&
+                "CSTORE_F.2".equals(rootPadId);
+            if (publisherCapture != null) {
+                if (study.mode == Mode.TINY_CANARY) return;
+                if (authoredTarget)
+                    throw new IllegalStateException("Authored P07 publisher target FOUND more than once");
+                return;
+            }
+            if (study.mode == Mode.AUTHORED && !authoredTarget) return;
+
+            if (ownerSession == null || readField(ownerSession, "mediumTwoLayerRoute") != route ||
+                    readField(search, "owner") != route)
+                throw new IllegalStateException("P07 FOUND did not belong to the active request owner's actual route");
+
+            Object branch = readField(search, "branch");
+            Object found = branch == null ? null : readField(branch, "found");
+            Object terminal = branch == null ? null : readField(branch, "foundTerminal");
+            Object branchNet = branch == null ? null : readField(branch, "net");
+            Object start = branch == null ? null : readField(branch, "start");
+            Object root = branch == null ? null : readField(branch, "root");
+            if (branch == null || found == null || !(branchNet instanceof String) ||
+                    !netId.equals(branchNet) || start == null || root == null ||
+                    !startPadId.equals(padId(start)) || !rootPadId.equals(padId(root)) ||
+                    branch != readField(search, "branch"))
+                throw new IllegalStateException("P07 FOUND callback did not retain its actual BranchSearch and Node");
+            verifyImmutableNodeType(found);
+            Object reachedValue = readField(search, "reachedPadIds");
+            Object netsValue = readField(search, "nets");
+            if (!(reachedValue instanceof Vector) || !(netsValue instanceof Vector))
+                throw new IllegalStateException("P07 FOUND callback omitted its actual reached/net vectors");
+            Vector<?> reached = (Vector<?>)reachedValue;
+            Vector<?> nets = (Vector<?>)netsValue;
+            int netVectorPosition = nets.indexOf(netId);
+            int cells = intField(search, "cells");
+            int width = intField(search, "width");
+            int height = intField(search, "height");
+            int minX = intField(search, "minX");
+            int minY = intField(search, "minY");
+            int nodeCell = intField(found, "cell");
+            int nodeLayer = intField(found, "layer");
+            Object goalValue = readField(branch, "goal");
+            if (!(goalValue instanceof boolean[]) || cells != width * height || cells < 1 ||
+                    netVectorPosition < 0 || !netId.equals(nets.get(netVectorPosition)) ||
+                    nodeCell < 0 || nodeCell >= cells || nodeLayer < 0 || nodeLayer > 1 ||
+                    ((boolean[])goalValue).length != cells * 2 ||
+                    !((boolean[])goalValue)[nodeLayer * cells + nodeCell])
+                throw new IllegalStateException("P07 FOUND Node is not an actual goal in its captured Search");
+
+            String[] reachedPadIds = copyReachedPadIds(reached, netId);
+            if (java.util.Arrays.binarySearch(reachedPadIds, startPadId) >= 0)
+                throw new IllegalStateException("P07 FOUND start pad was already in the retained reached-pad vector");
+            int copied = reachedPadIds.length * 2 + PUBLISHER_FOUND_METADATA_ENTRIES;
+            group.diagnosticCopiedEntries += reachedPadIds.length * 2L;
+            group.diagnosticCopiedEntries += PUBLISHER_FOUND_METADATA_ENTRIES;
+            GeometryCapture before = copyGeometry(layout, group, prefixFingerprint, false);
+            copied += before.copiedEntries;
+            if (copied > PUBLISHER_SYNC_COPY_LIMIT)
+                throw new IllegalStateException("Synchronous P07 Publisher snapshot exceeded its frozen entry cap");
+            if (!prefixFingerprint.equals(before.sourceFingerprint))
+                throw new IllegalStateException("P07 Publisher before-geometry differs from its BRANCH prefix");
+            before.geometrySha256 = prefixSha;
+            before.geometryBytes = prefixBytes.length;
+            if (group.diagnosticCopiedEntries > PUBLISHER_SYNC_COPY_LIMIT)
+                throw new IllegalStateException("Synchronous P07 Publisher snapshot exceeded its frozen entry cap");
+
+            int startSegments = intField(search, "segments");
+            int ordinal = branchRecordOrdinal;
+            int searchBranchCount = intField(search, "branches");
+            if (intField(branch, "branchOrdinal") != searchBranchCount)
+                throw new IllegalStateException("P07 target branch ordinal differs from its source Search counter");
+            int maximumVias = intField(search, "maximumVias");
+            int primaryLayer = intField(search, "primary");
+            int startX = intField(start, "x");
+            int startY = intField(start, "y");
+            int rootX = intField(root, "x");
+            int rootY = intField(root, "y");
+            BoardNet targetNet = board.getNet(netId);
+            if (targetNet == null)
+                throw new IllegalStateException("P07 FOUND net disappeared from its candidate board");
+            int traceWidth = board.getPlacementConstraints().getTraceWidthProfile().widthFor(
+                targetNet.getRoutingRole());
+            int pitch = PcbLayerRoutingPrototype.GRID;
+            publisherCapture = new PublisherCapture(
+                publisherToken(ownerSession), publisherToken(route), publisherToken(search),
+                publisherToken(branch), publisherToken(layout), publisherToken(found),
+                terminal == null ? null : Integer.valueOf(publisherToken(terminal)),
+                group.ordinal, nextPublisherSequence(group), 1, ordinal, netVectorPosition,
+                netId, startPadId, rootPadId, reachedPadIds,
+                terminal == null ? null : padId(terminal), group.ordinal,
+                width, height, cells, minX, minY, pitch, primaryLayer, maximumVias,
+                startX, startY, rootX, rootY, traceWidth,
+                nodeLayer * cells + nodeCell, startSegments, true, reached, ownerSession,
+                branch, search, route, layout, found, terminal, before, prefixSha,
+                prefixBytes.length, searchBranchCount);
+        }
+
+        private void pollPublisherCapture(GroupLedger group, boolean afterParentAdvance) {
+            if (operation != 4 || publisherCapture == null ||
+                    publisherCapture.sourceReferencesReleased) return;
+            if (group == null || !"ADVANCE".equals(group.phase))
+                throw new IllegalStateException("P07 Publisher capture poll escaped an ADVANCE group");
+            PublisherCapture capture = publisherCapture;
+            int sequence = nextPublisherSequence(group);
+            Object liveRoute = ownerSession == null ? null : readField(ownerSession, "mediumTwoLayerRoute");
+            if (liveRoute != null && liveRoute != capture.route)
+                throw new IllegalStateException("P07 Publisher capture route changed before its ordering boundary");
+
+            if (capture.publisher == null) {
+                Object livePublisher = readField(capture.search, "publisher");
+                if (livePublisher != null) {
+                    verifyPublisherBinding(capture, livePublisher);
+                    capture.publisher = livePublisher;
+                    capture.publisherToken = publisherToken(livePublisher);
+                    capture.publisherSeen = new CaptureCheckpoint(group.ordinal, sequence);
+                    capture.ownerBindingVerified = true;
+                    group.diagnosticCopiedEntries += 4;
+                }
+            }
+            if (capture.publisher != null && capture.outcome == null)
+                observePublisherTerminal(capture, group, sequence);
+
+            if (capture.outcome != null && capture.routerStatus == null)
+                observeOrderingBoundary(capture, group, sequence);
+
+            if (afterParentAdvance && "READY".equals(capture.routerStatus) &&
+                    capture.orderingResult == null)
+                observeOrderingResult(capture, group, sequence);
+            if (group.diagnosticCopiedEntries > PUBLISHER_SYNC_COPY_LIMIT)
+                throw new IllegalStateException("P07 ADVANCE diagnostic snapshot exceeded its frozen entry cap");
+        }
+
+        private void observeOrderingBoundary(PublisherCapture capture, GroupLedger group,
+                int sequence) {
+            Object ready = readField(capture.route, "readyOrdering");
+            if (ready != null) {
+                int readyPass = intField(ready, "orderings") - 1;
+                if (readyPass == capture.pass) {
+                    Object readyLayout = readField(ready, "layout");
+                    if (!(readyLayout instanceof PcbBoardLayout) || readyLayout != capture.layout)
+                        throw new IllegalStateException("ROUTE_READY omitted the captured pass layout identity");
+                    int finalized = intField(ownerSession, "mediumTwoLayerFinalizedOrderings");
+                    if (finalized < 0 || finalized > 3)
+                        throw new IllegalStateException("ROUTE_READY finalizer count is outside its source bound");
+                    capture.routerStatus = "READY";
+                    capture.routerReason = stringField(capture.route, "reason");
+                    capture.readyLayoutToken = publisherToken(readyLayout);
+                    capture.readyPass = readyPass;
+                    capture.finalizedBefore = finalized;
+                    capture.orderingReady = new CaptureCheckpoint(group.ordinal, sequence);
+                    group.diagnosticCopiedEntries += 7;
+                    return;
+                }
+            }
+            Object currentSearch = readField(capture.route, "search");
+            int currentPass = intField(capture.route, "pass");
+            if (currentSearch != capture.search && currentPass > capture.pass) {
+                capture.routerStatus = "ROUTER_REJECTED";
+                capture.routerReason = stringField(capture.route, "reason");
+                int finalized = intField(ownerSession, "mediumTwoLayerFinalizedOrderings");
+                if (finalized < 0 || finalized > 3)
+                    throw new IllegalStateException("Pre-ready P07 rejection count is outside its source bound");
+                capture.finalizedBefore = finalized;
+                capture.finalizedAfter = finalized;
+                capture.finalizerStatus = "NOT_REACHED";
+                capture.lastFailureDetail = readNullableString(ownerSession,
+                    "mediumTwoLayerLastFailureDetail");
+                capture.orderingResult = new CaptureCheckpoint(group.ordinal, sequence);
+                group.diagnosticCopiedEntries += 8;
+            } else if (currentSearch != capture.search && boolField(capture.route, "complete")) {
+                capture.routerStatus = "ROUTER_REJECTED";
+                capture.routerReason = stringField(capture.route, "reason");
+                int finalized = intField(ownerSession, "mediumTwoLayerFinalizedOrderings");
+                if (finalized < 0 || finalized > 3)
+                    throw new IllegalStateException("Completed pre-ready P07 count is outside its source bound");
+                capture.finalizedBefore = finalized;
+                capture.finalizedAfter = finalized;
+                capture.finalizerStatus = "NOT_REACHED";
+                capture.lastFailureDetail = readNullableString(ownerSession,
+                    "mediumTwoLayerLastFailureDetail");
+                capture.orderingResult = new CaptureCheckpoint(group.ordinal, sequence);
+                group.diagnosticCopiedEntries += 8;
+            }
+        }
+
+        private void observePublisherTerminal(PublisherCapture capture, GroupLedger group,
+                int sequence) {
+            Object livePublisher = readField(capture.search, "publisher");
+            if (livePublisher != null && livePublisher != capture.publisher)
+                throw new IllegalStateException("P07 target Search rebound to a successor Publisher");
+            int stage = intField(capture.publisher, "stage");
+            if (stage == 6) {
+                Object reachedValue = capture.reachedVector;
+                if (!(reachedValue instanceof Vector))
+                    throw new IllegalStateException("P07 target lost its source reached-pad vector");
+                Vector<?> reached = (Vector<?>)reachedValue;
+                int afterSegments = intField(capture.search, "segments");
+                int publisherSegments = intField(capture.publisher, "segments");
+                boolean reachedStart = reached.contains(capture.startPadId);
+                boolean publisherCleared = readField(capture.search, "publisher") == null;
+                if (!publisherCleared || !reachedStart ||
+                        afterSegments - capture.startSegments != publisherSegments)
+                    return;
+                verifyPublishedPublisher(capture, stage);
+                capture.outcome = "PUBLISHED";
+                capture.stage = stage;
+                copyPublisherTerminalNumbers(capture, publisherSegments, group);
+                group.diagnosticCopiedEntries += 5;
+                capture.reason = null;
+                capture.sourceHandoff = true;
+                capture.startReachedAfter = true;
+                String afterFingerprint = capture.layout.geometryFingerprint();
+                capture.after = copyGeometry(capture.layout, group, afterFingerprint, true);
+                capture.publisherTerminal = new CaptureCheckpoint(group.ordinal, sequence);
+                group.diagnosticCopiedEntries += 2;
+                verifyGeometryBoundary(capture);
+                return;
+            }
+            if (stage == 1 && capture.publisher == readField(capture.search, "publisher")) {
+                int qualityIndex = intField(capture.publisher, "qualityIndex");
+                int reversedSize = vectorSize(readField(capture.publisher, "reversed"));
+                if (qualityIndex != reversedSize) return;
+                String expected = capture.netId + ":BRANCH_QUALITY_LIMIT";
+                Object reasonValue = readField(capture.route, "reason");
+                if (!(reasonValue instanceof String) || !expected.equals(reasonValue)) return;
+                capture.outcome = "REJECTED";
+                capture.stage = stage;
+                copyPublisherTerminalNumbers(capture,
+                    intField(capture.publisher, "segments"), group);
+                group.diagnosticCopiedEntries += 5;
+                capture.reason = (String)reasonValue;
+                capture.sourceHandoff = false;
+                capture.startReachedAfter = ((Vector<?>)capture.reachedVector).contains(capture.startPadId);
+                String afterFingerprint = capture.layout.geometryFingerprint();
+                capture.after = copyGeometry(capture.layout, group, afterFingerprint, true);
+                capture.publisherTerminal = new CaptureCheckpoint(group.ordinal, sequence);
+                group.diagnosticCopiedEntries += 2;
+                verifyGeometryBoundary(capture);
+            }
+        }
+
+        private void copyPublisherTerminalNumbers(PublisherCapture capture, int segments,
+                GroupLedger group) {
+            int qualityIndex = intField(capture.publisher, "qualityIndex");
+            int reversedSize = vectorSize(readField(capture.publisher, "reversed"));
+            int length = intField(capture.publisher, "length");
+            int bends = intField(capture.publisher, "bends");
+            int lastDirection = intField(capture.publisher, "lastDirection");
+            if (qualityIndex < 0 || qualityIndex > PUBLISHER_PATH_NODE_LIMIT ||
+                    reversedSize < 1 || reversedSize > PUBLISHER_PATH_NODE_LIMIT ||
+                    length < 0 || length > PUBLISHER_PATH_NODE_LIMIT * 10 ||
+                    bends < 0 || bends > PUBLISHER_PATH_NODE_LIMIT ||
+                    lastDirection < 0 || lastDirection > 4 || segments < 0 || segments > 4095)
+                throw new IllegalStateException("P07 Publisher terminal scalars exceed the frozen wire domain");
+            capture.qualityIndex = qualityIndex;
+            capture.reversedSize = reversedSize;
+            capture.storedLength = length;
+            capture.storedBends = bends;
+            capture.storedLastDirection = lastDirection;
+            capture.segments = segments;
+            group.diagnosticCopiedEntries += 6;
+        }
+
+        private void observeOrderingResult(PublisherCapture capture, GroupLedger group,
+                int sequence) {
+            int finalizedAfter;
+            String detail;
+            if (request != null) {
+                finalizedAfter = request.receipt.finalizedOrderings;
+                detail = readNullableString(ownerSession, "mediumTwoLayerLastFailureDetail");
+            } else if (readField(ownerSession, "mediumTwoLayerRoute") == capture.route) {
+                finalizedAfter = intField(ownerSession, "mediumTwoLayerFinalizedOrderings");
+                detail = readNullableString(ownerSession, "mediumTwoLayerLastFailureDetail");
+            } else {
+                return;
+            }
+            if (finalizedAfter < 0 || finalizedAfter > 3)
+                throw new IllegalStateException("P07 ordering-result finalizer count is outside its source bound");
+            if ("READY".equals(capture.routerStatus)) {
+                if (capture.orderingReady == null || finalizedAfter < capture.finalizedBefore ||
+                        finalizedAfter > capture.finalizedBefore + 1 ||
+                        readField(capture.route, "readyOrdering") != null)
+                    throw new IllegalStateException("Ready P07 parent advance lost its finalizer counter join");
+                if (finalizedAfter == capture.finalizedBefore + 1) {
+                    capture.finalizerStatus = "FINALIZED";
+                } else if (detail != null && detail.length() > 0) {
+                    capture.finalizerStatus = "REJECTED";
+                } else {
+                    throw new IllegalStateException("Ready P07 parent advance omitted its finalizer result");
+                }
+            } else {
+                if (capture.orderingReady != null ||
+                        finalizedAfter != capture.finalizedBefore)
+                    throw new IllegalStateException("Rejected P07 route unexpectedly reached its generator finalizer");
+                capture.finalizerStatus = "NOT_REACHED";
+            }
+            capture.finalizedAfter = finalizedAfter;
+            capture.lastFailureDetail = detail;
+            capture.orderingResult = new CaptureCheckpoint(group.ordinal, sequence);
+            group.diagnosticCopiedEntries += 6;
+        }
+
+        private void closePublisherCaptureAfterRequest(GroupLedger group) {
+            PublisherCapture capture = publisherCapture;
+            if (capture == null || request == null || group == null ||
+                    !"ADVANCE".equals(group.phase))
+                throw new IllegalStateException("P07 Publisher capture did not reach its request receipt");
+            if (capture.outcome == null || capture.publisherSeen == null ||
+                    capture.publisherTerminal == null || capture.orderingResult == null ||
+                    capture.routerStatus == null || capture.finalizerStatus == null ||
+                    !capture.sourceReferencesReleased || capture.payloadSha256 == null ||
+                    capture.payloadBytes < 1 || capture.payloadChunkIndex < 1 ||
+                    capture.reason == null && "REJECTED".equals(capture.outcome) ||
+                    capture.reason != null && "PUBLISHED".equals(capture.outcome))
+                throw new IllegalStateException("P07 Publisher boundary is missing source terminal evidence");
+            if (("READY".equals(capture.routerStatus)) != (capture.orderingReady != null) ||
+                    ("READY".equals(capture.routerStatus) &&
+                        (capture.readyPass != capture.pass || capture.readyLayoutToken <= 0)) ||
+                    ("ROUTER_REJECTED".equals(capture.routerStatus) &&
+                        (capture.readyPass != -1 || capture.readyLayoutToken != -1 ||
+                            !"NOT_REACHED".equals(capture.finalizerStatus))) ||
+                    (!"READY".equals(capture.routerStatus) &&
+                        !"ROUTER_REJECTED".equals(capture.routerStatus)))
+                throw new IllegalStateException("P07 Publisher ordering checkpoint combination is invalid");
+            if (request.context.requestIndex != 0 || request.receipt.attempt != capturedContext.selectedAttempt ||
+                    request.receipt.startedOrderings <= capture.pass ||
+                    request.receipt.completedOrderings <= capture.pass ||
+                    request.receipt.finalizedOrderings < capture.finalizedAfter ||
+                    candidateHeader.rootSeed != (study.mode == Mode.AUTHORED ?
+                        AUTHORED_ROOT : TINY_ROOT))
+                throw new IllegalStateException("P07 Publisher target does not join the complete request receipt");
+            if (capture.outcome.equals("PUBLISHED") &&
+                    (!capture.sourceHandoff || !capture.startReachedAfter || capture.stage != 6))
+                throw new IllegalStateException("P07 Publisher publication lacks its actual stage-6 Search handoff");
+            if (capture.outcome.equals("REJECTED") &&
+                    (!capture.reason.equals(capture.netId + ":BRANCH_QUALITY_LIMIT") ||
+                        capture.stage != 1 || capture.qualityIndex != capture.reversedSize ||
+                        capture.sourceHandoff || capture.startReachedAfter))
+                throw new IllegalStateException("P07 Publisher quality rejection lacks its source stage/reason");
+        }
+
+        private void writePublisherCapture() throws Exception {
+            PublisherCapture capture = publisherCapture;
+            if (capture == null || capture.after == null || capture.publisher == null ||
+                    !capture.ownerBindingVerified || capture.orderingResult == null)
+                throw new IllegalStateException("P07 Publisher capture is NOT_OBSERVED or incomplete");
+            while (!capture.pathCopyComplete) {
+                GroupLedger group = newGroup("CAPTURE", System.nanoTime());
+                currentGroup = group;
+                copyPublisherPath(capture, group);
+                finishGroup(group);
+                currentGroup = null;
+            }
+            while (!capture.pathAuditComplete) {
+                GroupLedger verifyPath = newGroup("CAPTURE", System.nanoTime());
+                currentGroup = verifyPath;
+                advancePublisherPathVerification(capture, verifyPath);
+                finishGroup(verifyPath);
+                currentGroup = null;
+            }
+            GeometryPreparation geometry = null;
+            while (geometry == null || !geometry.complete) {
+                GroupLedger group = newGroup("CAPTURE", System.nanoTime());
+                currentGroup = group;
+                if (geometry == null) geometry = new GeometryPreparation(capture);
+                geometry.advance(group);
+                finishGroup(group);
+                currentGroup = null;
+            }
+            capture.staticGeometryEqual = geometry.staticGeometryEqual;
+            if (!capture.staticGeometryEqual)
+                throw new IllegalStateException("P07 before/after static geometry prefix changed");
+            while (!capture.geometryDeltaComplete) {
+                GroupLedger verifyGeometry = newGroup("CAPTURE", System.nanoTime());
+                currentGroup = verifyGeometry;
+                advancePublisherGeometryDelta(capture, verifyGeometry);
+                finishGroup(verifyGeometry);
+                currentGroup = null;
+            }
+            capture.prefixRowsConserved = true;
+
+            GroupLedger identity = newGroup("CAPTURE", System.nanoTime());
+            currentGroup = identity;
+            verifyPublisherIdentityTokens(capture, identity);
+            finishGroup(identity);
+            currentGroup = null;
+
+            JsonUtf8Stream payload;
+            GroupLedger release = newGroup("CAPTURE", System.nanoTime());
+            currentGroup = release;
+            releasePublisherReferences(capture, release);
+            MetadataCopyLedger metadataCopies = new MetadataCopyLedger();
+            Object targetValue = publisherTargetValue(capture, metadataCopies);
+            release.diagnosticCopiedEntries += metadataCopies.entries;
+            payload = new JsonUtf8Stream(targetValue);
+            finishGroup(release);
+            currentGroup = null;
+
+            MessageDigest payloadDigest = null;
+            boolean resultWritten = false;
+            while (!resultWritten) {
+                GroupLedger group = newGroup("CAPTURE", System.nanoTime());
+                currentGroup = group;
+                if (payloadDigest == null) payloadDigest = sha256Digest();
+                byte[] chunk = payload.nextChunk(PUBLISHER_CHUNK_BYTES);
+                if (chunk.length > 0) {
+                    if (capture.payloadBytes > PUBLISHER_PAYLOAD_LIMIT - chunk.length)
+                        throw new IOException("P07 Publisher target exceeded the 2 MiB payload bound");
+                    capture.payloadBytes += chunk.length;
+                    capture.payloadOffset += chunk.length;
+                    capture.payloadChunkIndex++;
+                    group.diagnosticSerializedBytes += chunk.length;
+                    group.diagnosticHashBytes += chunk.length;
+                    group.diagnosticCopiedEntries += chunk.length;
+                    group.hashInputBytes += chunk.length;
+                    payloadDigest.update(chunk);
+                    JsonObject row = new JsonObject();
+                    row.string("record", "PUB_CHUNK");
+                    row.number("operation", operation);
+                    row.number("group", group.ordinal);
+                    row.string("targetId", "op4/pass1/target0");
+                    row.number("index", capture.payloadChunkIndex - 1);
+                    row.number("offset", capture.payloadOffset - chunk.length);
+                    row.number("bytes", chunk.length);
+                    row.string("data", Base64.getEncoder().encodeToString(chunk));
+                    appendPublisherRecord(group, row.finish(), true);
+                }
+                if (chunk.length == 0) {
+                    if (capture.payloadBytes < 1 || capture.payloadBytes > PUBLISHER_PAYLOAD_LIMIT)
+                        throw new IOException("P07 Publisher target payload is outside its frozen size bound");
+                    capture.payloadSha256 = hex(payloadDigest.digest());
+                    JsonObject result = new JsonObject();
+                    result.string("record", "PUB_RESULT");
+                    result.number("operation", operation);
+                    result.number("group", group.ordinal);
+                    result.string("targetId", "op4/pass1/target0");
+                    result.number("payloadBytes", capture.payloadBytes);
+                    result.string("payloadSha256", capture.payloadSha256);
+                    result.number("chunkCount", capture.payloadChunkIndex);
+                    appendPublisherRecord(group, result.finish(), false);
+                    resultWritten = true;
+                }
+                if (group.diagnosticUnits() > DIAGNOSTIC_GROUP_UNITS)
+                    throw new IOException("P07 Publisher CAPTURE group exceeded 32768 diagnostic units");
+                finishGroup(group);
+                currentGroup = null;
+            }
+        }
+
+        private void copyPublisherPath(PublisherCapture capture, GroupLedger group) {
+            if (group == null || !"CAPTURE".equals(group.phase) ||
+                    capture.pathCopyComplete || capture.pathNodes.isEmpty() && capture.foundCursor == null)
+                throw new IllegalStateException("P07 path copy has no live immutable Node chain");
+            int budget = DIAGNOSTIC_GROUP_UNITS - (int)group.diagnosticUnits();
+            while (capture.foundCursor != null && budget >= 15) {
+                if (capture.pathNodes.size() >= PUBLISHER_PATH_NODE_LIMIT)
+                    throw new IllegalStateException("P07 Publisher path exceeded 4096 Node rows");
+                Object node = capture.foundCursor;
+                verifyImmutableNodeType(node);
+                if (capture.pathSeen.put(node, Boolean.TRUE) != null)
+                    throw new IllegalStateException("P07 Node.previous chain contains a repeated identity");
+                int cell = intField(node, "cell");
+                int layer = intField(node, "layer");
+                int direction = intField(node, "direction");
+                int transitions = intField(node, "transitions");
+                int cost = intField(node, "cost");
+                int heuristic = intField(node, "heuristic");
+                int serial = intField(node, "serial");
+                int key = intField(node, "key");
+                long x = (long)capture.originX + (long)(cell % capture.width) * capture.pitch;
+                long y = (long)capture.originY + (long)(cell / capture.width) * capture.pitch;
+                if (cell < 0 || cell >= capture.cells || x < -1000000L || x > 1000000L ||
+                        y < -1000000L || y > 1000000L)
+                    throw new IllegalStateException("P07 Node is outside its captured raster domain");
+                int[] tuple = {cell, layer, (int)x, (int)y, direction, transitions,
+                    cost, heuristic, serial, key, 0};
+                int nodeToken = publisherToken(node);
+                capture.pathNodes.add(new PathCapture(tuple, nodeToken));
+                capture.pathNodeRefs.add(node);
+                capture.foundCursor = readField(node, "previous");
+                group.diagnosticCopiedEntries += 15;
+                budget -= 15;
+            }
+            if (capture.foundCursor != null) return;
+            if (capture.pathNodes.isEmpty() || capture.pathNodes.size() > PUBLISHER_PATH_NODE_LIMIT)
+                throw new IllegalStateException("P07 Publisher path is empty or outside its frozen row limit");
+            int remaining = DIAGNOSTIC_GROUP_UNITS - (int)group.diagnosticUnits();
+            while (!capture.pathReversed && remaining >= 4) {
+                int last = capture.pathNodes.size() - 1 - capture.pathReverseIndex;
+                if (capture.pathReverseIndex >= last) {
+                    capture.pathReversed = true;
+                    break;
+                }
+                PathCapture pathTemp = capture.pathNodes.get(capture.pathReverseIndex);
+                capture.pathNodes.set(capture.pathReverseIndex, capture.pathNodes.get(last));
+                capture.pathNodes.set(last, pathTemp);
+                Object refTemp = capture.pathNodeRefs.get(capture.pathReverseIndex);
+                capture.pathNodeRefs.set(capture.pathReverseIndex, capture.pathNodeRefs.get(last));
+                capture.pathNodeRefs.set(last, refTemp);
+                capture.pathReverseIndex++;
+                group.diagnosticCopiedEntries += 4;
+                remaining -= 4;
+            }
+            if (!capture.pathReversed && capture.pathReverseIndex >= capture.pathNodes.size() / 2)
+                capture.pathReversed = true;
+            while (capture.pathReversed && capture.pathParentIndex < capture.pathNodes.size() && remaining > 0) {
+                int index = capture.pathParentIndex++;
+                capture.pathNodes.get(index).tuple[10] = index == 0 ? -1 : index - 1;
+                group.diagnosticCopiedEntries++;
+                remaining--;
+            }
+            if (!capture.pathReversed || capture.pathParentIndex < capture.pathNodes.size()) return;
+            Object first = capture.pathNodeRefs.get(0);
+            if (readField(first, "previous") != null ||
+                    capture.pathNodeRefs.get(capture.pathNodeRefs.size() - 1) != capture.found ||
+                    capture.pathNodes.get(capture.pathNodes.size() - 1).nodeToken != capture.foundToken)
+                throw new IllegalStateException("P07 copied Node chain is not the actual start-to-found path");
+            Object reversedValue = readField(capture.publisher, "reversed");
+            if (!(reversedValue instanceof Vector) ||
+                    ((Vector<?>)reversedValue).size() != capture.pathNodeRefs.size())
+                throw new IllegalStateException("P07 Publisher reversed path differs from its found Node chain");
+            Vector<?> reversed = (Vector<?>)reversedValue;
+            int remainingComparisons = DIAGNOSTIC_GROUP_UNITS - (int)group.diagnosticUnits();
+            while (capture.pathVerifyIndex < capture.pathNodeRefs.size() && remainingComparisons >= 2) {
+                int index = capture.pathVerifyIndex++;
+                Object[] references = {reversed.get(reversed.size() - 1 - index),
+                    capture.pathNodeRefs.get(index)};
+                group.diagnosticCopiedEntries += 2;
+                remainingComparisons -= 2;
+                if (references[0] != references[1])
+                    throw new IllegalStateException("P07 Publisher path is not the captured Node.previous chain");
+            }
+            if (capture.pathVerifyIndex == capture.pathNodeRefs.size()) {
+                capture.immutablePathVerified = true;
+                capture.pathCopyComplete = true;
+            }
+        }
+
+        private void advancePublisherPathVerification(PublisherCapture capture, GroupLedger group) {
+            if (!capture.pathCopyComplete || capture.pathNodes.size() != capture.reversedSize ||
+                    capture.pathNodes.size() < 1 || capture.pathNodes.size() > PUBLISHER_PATH_NODE_LIMIT)
+                throw new IllegalStateException("P07 Publisher path/reversed-size join is incomplete");
+            int budget = DIAGNOSTIC_GROUP_UNITS - (int)group.diagnosticUnits();
+            while (capture.pathAuditIndex < capture.pathNodes.size() && budget >= 11) {
+                int index = capture.pathAuditIndex++;
+                int[] node = capture.pathNodes.get(index).tuple;
+                if (node[0] < 0 || node[0] >= capture.cells || node[1] < 0 || node[1] > 1 ||
+                        node[4] < 0 || node[4] > 4 || node[5] < 0 || node[5] > 4 ||
+                        node[10] != (index == 0 ? -1 : index - 1))
+                    throw new IllegalStateException("P07 Publisher path contains an invalid grid tuple");
+                int expectedCell = ((node[3] - capture.originY) / capture.pitch) * capture.width +
+                    (node[2] - capture.originX) / capture.pitch;
+                long key = (((long)node[5] * 2L + node[1]) * 5L + node[4]) * capture.cells + node[0];
+                if (node[2] != capture.originX + (node[0] % capture.width) * capture.pitch ||
+                        node[3] != capture.originY + (node[0] / capture.width) * capture.pitch ||
+                        expectedCell != node[0] || key != node[9])
+                    throw new IllegalStateException("P07 Publisher path cell/key disagrees with its captured grid");
+                if (index == 0) {
+                    if (node[4] != 4 || node[5] != 0)
+                        throw new IllegalStateException("P07 Publisher start Node has invalid direction/transitions");
+                } else {
+                    if (node[1] == capture.pathAuditPriorLayer) {
+                        int dx = node[2] - capture.pathAuditPriorX;
+                        int dy = node[3] - capture.pathAuditPriorY;
+                    int expectedDirection = dx == capture.pitch && dy == 0 ? 1 :
+                        dx == 0 && dy == capture.pitch ? 2 :
+                        dx == -capture.pitch && dy == 0 ? 3 :
+                        dx == 0 && dy == -capture.pitch ? 0 : -1;
+                        if (expectedDirection < 0 || node[4] != expectedDirection ||
+                                node[5] != capture.pathAuditPriorTransitions)
+                            throw new IllegalStateException("P07 Publisher path has a broken same-layer step");
+                        capture.pathAuditLength += capture.pitch;
+                        if (capture.pathAuditLastDirection != 4 &&
+                                capture.pathAuditLastDirection != node[4]) capture.pathAuditBends++;
+                        capture.pathAuditLastDirection = node[4];
+                    } else {
+                        if (node[0] != capture.pathAuditPriorCell || node[4] != 4 ||
+                                node[5] != capture.pathAuditPriorTransitions + 1)
+                            throw new IllegalStateException("P07 Publisher path has a broken layer transition");
+                        capture.pathAuditTransitions++;
+                        capture.pathAuditLastDirection = 4;
+                    }
+                }
+                capture.pathAuditPriorCell = node[0];
+                capture.pathAuditPriorLayer = node[1];
+                capture.pathAuditPriorX = node[2];
+                capture.pathAuditPriorY = node[3];
+                capture.pathAuditPriorTransitions = node[5];
+                group.diagnosticCopiedEntries += 11;
+                budget -= 11;
+            }
+            if (capture.pathAuditIndex < capture.pathNodes.size()) return;
+            if (DIAGNOSTIC_GROUP_UNITS - group.diagnosticUnits() < 2) return;
+            int[] found = capture.pathNodes.get(capture.pathNodes.size() - 1).tuple;
+            group.diagnosticCopiedEntries += 2;
+            if (!capture.foundGoal || found[5] != capture.pathAuditTransitions ||
+                    capture.storedLength != capture.pathAuditLength ||
+                    capture.storedBends != capture.pathAuditBends ||
+                    capture.storedLastDirection != capture.pathAuditLastDirection ||
+                    capture.storedLastDirection < 0 || capture.storedLastDirection > 4)
+                throw new IllegalStateException("P07 Publisher stored guard operands differ from its actual path");
+            int direct = Math.abs(capture.startX - found[2]) +
+                Math.abs(capture.startY - found[3]);
+            boolean qualityRejected = direct == 0 || capture.pathAuditLength > direct * 3 ||
+                capture.pathAuditBends > 16;
+            if (("REJECTED".equals(capture.outcome) && !qualityRejected) ||
+                    ("PUBLISHED".equals(capture.outcome) && qualityRejected))
+                throw new IllegalStateException("P07 Publisher source outcome contradicts its independent OR guard");
+            capture.pathAuditComplete = true;
+        }
+
+        private void advancePublisherGeometryDelta(PublisherCapture capture, GroupLedger group) {
+            if (capture == null || group == null || !"CAPTURE".equals(group.phase) ||
+                    capture.geometryDeltaComplete)
+                throw new IllegalStateException("P07 geometry-delta audit has no unique CAPTURE owner");
+            verifyPublisherGeometryDelta(capture, group);
+        }
+
+        private void verifyPublisherGeometryDelta(PublisherCapture capture, GroupLedger group) {
+            if (capture.outcome.equals("REJECTED")) {
+                if (!capture.before.geometrySha256.equals(capture.after.geometrySha256) ||
+                        !sameGeometryRows(capture.before, capture.after))
+                    throw new IllegalStateException("Rejected P07 Publisher changed raw geometry rows");
+                capture.geometryDeltaComplete = true;
+                return;
+            }
+            if (capture.geometryDeltaExpectedBuilt) {
+                int traceWords = (capture.after.traces.size() + 63) >>> 6;
+                int holeWords = (capture.after.holes.size() + 63) >>> 6;
+                long bitmapEntries = (long)traceWords + holeWords + 2L;
+                if (bitmapEntries > DIAGNOSTIC_GROUP_UNITS - group.diagnosticUnits())
+                    throw new IllegalStateException("P07 geometry row-match bitmap exceeds its CAPTURE group bound");
+                BitSet traceUsed = new BitSet(capture.after.traces.size());
+                BitSet holeUsed = new BitSet(capture.after.holes.size());
+                group.diagnosticCopiedEntries += bitmapEntries;
+                if (!prefixGeometryAndDeltaMatch(capture.before, capture.after,
+                        capture.expectedDeltaTraces, capture.expectedDeltaHoles, traceUsed, holeUsed))
+                    throw new IllegalStateException("P07 Publisher geometry delta does not equal its captured path pieces");
+                capture.geometryDeltaComplete = true;
+                return;
+            }
+            List<TraceCapture> expectedTraces = new ArrayList<TraceCapture>();
+            List<HoleCapture> expectedHoles = new ArrayList<HoleCapture>();
+            int pieceStart = 0, pieceIndex = 0;
+            int rootX = capture.rootX, rootY = capture.rootY;
+            int rootCell = ((rootY - capture.originY) / capture.pitch) * capture.width +
+                (rootX - capture.originX) / capture.pitch;
+            int width = capture.traceWidth;
+            while (pieceStart < capture.pathNodes.size()) {
+                int pieceScan = pieceStart + 1;
+                while (pieceScan < capture.pathNodes.size() &&
+                        capture.pathNodes.get(pieceScan).tuple[1] ==
+                            capture.pathNodes.get(pieceScan - 1).tuple[1]) pieceScan++;
+                int pieceEnd = pieceScan - 1;
+                boolean transition = pieceScan < capture.pathNodes.size();
+                int pathCount = pieceEnd - pieceStart + 1;
+                if (pathCount > 1) {
+                    List<int[]> compact = new ArrayList<int[]>();
+                    for (int index = pieceStart; index <= pieceEnd; index++) {
+                        int[] node = capture.pathNodes.get(index).tuple;
+                        int count = compact.size();
+                        if (count >= 2) {
+                            int[] a = compact.get(count - 2), b = compact.get(count - 1);
+                            if ((a[0] == b[0] && b[0] == node[2]) ||
+                                    (a[1] == b[1] && b[1] == node[3])) compact.remove(count - 1);
+                        }
+                        compact.add(new int[] {node[2], node[3]});
+                        group.diagnosticCopiedEntries += 3;
+                    }
+                    int[] x = new int[compact.size()], y = new int[compact.size()];
+                    for (int index = 0; index < compact.size(); index++) {
+                        x[index] = compact.get(index)[0]; y[index] = compact.get(index)[1];
+                        group.diagnosticCopiedEntries += 2;
+                    }
+                    int[] first = capture.pathNodes.get(pieceStart).tuple;
+                    int[] last = capture.pathNodes.get(pieceEnd).tuple;
+                    String endPadId = null;
+                    if (pieceEnd == capture.pathNodes.size() - 1) {
+                        if (capture.foundTerminalPadId != null) endPadId = capture.foundTerminalPadId;
+                        else if (last[0] == rootCell) endPadId = capture.rootPadId;
+                    }
+                    expectedTraces.add(new TraceCapture(
+                        "p07/" + capture.netId + "/" + capture.searchBranchCount + "/" + pieceIndex++,
+                        capture.netId, pieceStart == 0 ? capture.startPadId : null,
+                        endPadId, first[1], "EXPOSED", width, x, y));
+                    group.diagnosticCopiedEntries += 7;
+                }
+                if (transition) {
+                    int[] last = capture.pathNodes.get(pieceEnd).tuple;
+                    boolean existing = false;
+                    for (HoleCapture hole : capture.before.holes)
+                        if (hole.x == last[2] && hole.y == last[3]) existing = true;
+                    if (!existing)
+                        expectedHoles.add(new HoleCapture(
+                            "p07-via/" + capture.netId + "/" + capture.searchBranchCount + "/" + pieceIndex,
+                            "VIA", capture.netId, last[2], last[3], 2, 6, "EXPOSED"));
+                    if (!existing) group.diagnosticCopiedEntries += 8;
+                }
+                pieceStart = pieceScan;
+            }
+            capture.expectedDeltaTraces.addAll(expectedTraces);
+            capture.expectedDeltaHoles.addAll(expectedHoles);
+            group.diagnosticCopiedEntries += expectedTraces.size() + expectedHoles.size();
+            if (group.diagnosticUnits() > DIAGNOSTIC_GROUP_UNITS)
+                throw new IllegalStateException("P07 Publisher geometry verification exceeded its CAPTURE group bound");
+            capture.geometryDeltaExpectedBuilt = true;
+        }
+
+        private boolean prefixGeometryAndDeltaMatch(GeometryCapture before, GeometryCapture after,
+                List<TraceCapture> expectedTraces, List<HoleCapture> expectedHoles,
+                BitSet traceUsed, BitSet holeUsed) {
+            for (TraceCapture row : before.traces) {
+                int match = findTrace(after.traces, row, traceUsed);
+                if (match < 0) return false;
+                traceUsed.set(match);
+            }
+            for (HoleCapture row : before.holes) {
+                int match = findHole(after.holes, row, holeUsed);
+                if (match < 0) return false;
+                holeUsed.set(match);
+            }
+            for (TraceCapture row : expectedTraces) {
+                int match = findTrace(after.traces, row, traceUsed);
+                if (match < 0) return false;
+                traceUsed.set(match);
+            }
+            for (HoleCapture row : expectedHoles) {
+                int match = findHole(after.holes, row, holeUsed);
+                if (match < 0) return false;
+                holeUsed.set(match);
+            }
+            return traceUsed.nextClearBit(0) >= after.traces.size() &&
+                holeUsed.nextClearBit(0) >= after.holes.size();
+        }
+
+        private final class GeometryPreparation {
+            private final PublisherCapture capture;
+            private int stage;
+            private int staticCompareIndex;
+            private Utf8HashCursor beforeHash;
+            private Utf8HashCursor afterHash;
+            boolean complete;
+            boolean staticGeometryEqual;
+            GeometryPreparation(PublisherCapture capture) { this.capture = capture; }
+
+            void advance(GroupLedger group) {
+                if (group == null || !"CAPTURE".equals(group.phase) || complete)
+                    throw new IllegalStateException("P07 geometry preparation has no CAPTURE owner");
+                while (!complete) {
+                    if (stage == 0) {
+                        if (!advanceSuffix(capture.before, group)) return;
+                        stage = 1;
+                    } else if (stage == 1) {
+                        if (!verifySuffix(capture.before, group)) return;
+                        stage = 2;
+                    } else if (stage == 2) {
+                        if (!advanceSuffix(capture.after, group)) return;
+                        stage = 3;
+                    } else if (stage == 3) {
+                        if (!verifySuffix(capture.after, group)) return;
+                        stage = 4;
+                    } else if (stage == 4) {
+                        if (!compareStaticPrefixes(group)) return;
+                        stage = 5;
+                    } else if (stage == 5) {
+                        if (beforeHash == null)
+                            beforeHash = new Utf8HashCursor(capture.before.sourceFingerprint,
+                                sha256Digest());
+                        int available = DIAGNOSTIC_GROUP_UNITS - (int)group.diagnosticUnits();
+                        int hashed = beforeHash.advance(available);
+                        group.diagnosticHashBytes += hashed;
+                        group.hashInputBytes += hashed;
+                        if (beforeHash.isDone()) {
+                            capture.before.geometrySha256 = beforeHash.finishSha256();
+                            capture.before.geometryBytes = beforeHash.byteCount();
+                            if (!capture.before.geometrySha256.equals(capture.beforeSha256) ||
+                                    capture.before.geometryBytes != capture.beforeBytes)
+                                throw new IllegalStateException("P07 captured BRANCH geometry hash did not reproduce");
+                            stage = 6;
+                        }
+                        if (stage != 6) return;
+                    } else if (stage == 6) {
+                        if (afterHash == null)
+                            afterHash = new Utf8HashCursor(capture.after.sourceFingerprint,
+                                sha256Digest());
+                        int available = DIAGNOSTIC_GROUP_UNITS - (int)group.diagnosticUnits();
+                        int hashed = afterHash.advance(available);
+                        group.diagnosticHashBytes += hashed;
+                        group.hashInputBytes += hashed;
+                        if (afterHash.isDone()) {
+                            capture.after.geometryBytes = afterHash.byteCount();
+                            if (capture.after.geometryBytes < 1 ||
+                                    capture.after.geometryBytes > PREFIX_LIMIT_BYTES)
+                                throw new IllegalStateException("P07 after-geometry fingerprint exceeded its 1 MiB bound");
+                            capture.after.geometrySha256 = afterHash.finishSha256();
+                            complete = true;
+                        }
+                        if (!complete) return;
+                    } else {
+                        throw new IllegalStateException("Invalid P07 geometry-preparation state");
+                    }
+                    if (group.diagnosticUnits() >= DIAGNOSTIC_GROUP_UNITS) return;
+                }
+                staticGeometryEqual = true;
+            }
+
+            private boolean advanceSuffix(GeometryCapture geometry, GroupLedger group) {
+                if (!geometry.suffixBuilt) {
+                    if (geometry.suffixCursor == null) {
+                        geometry.suffixCursor = new GeometrySuffixCursor(geometry);
+                        geometry.suffixBuilder = new StringBuilder();
+                    }
+                    int available = DIAGNOSTIC_GROUP_UNITS - (int)group.diagnosticUnits();
+                    int maxChars = available / 2;
+                    if (maxChars < 1) return false;
+                    String chunk = geometry.suffixCursor.nextChunk(maxChars);
+                    if (chunk.length() > 0) {
+                        geometry.suffixBuilder.append(chunk);
+                        group.diagnosticCopiedEntries += (long)chunk.length() * 2L;
+                    }
+                    if (geometry.suffixCursor.isDone()) {
+                        geometry.staticPrefixLength = geometry.sourceFingerprint.length() -
+                            geometry.suffixBuilder.length();
+                        if (geometry.staticPrefixLength < 0)
+                            throw new IllegalStateException("P07 geometry suffix exceeds its source fingerprint");
+                        geometry.suffixBuilt = true;
+                    }
+                    return geometry.suffixBuilt;
+                }
+                return true;
+            }
+
+            private boolean verifySuffix(GeometryCapture geometry, GroupLedger group) {
+                if (geometry.suffixVerified) return true;
+                int remaining = geometry.suffixBuilder.length() - geometry.suffixCompareIndex;
+                if (remaining <= 0) {
+                    geometry.suffixVerified = true;
+                    geometry.suffixBuilder = null;
+                    geometry.suffixCursor = null;
+                    return true;
+                }
+                int available = DIAGNOSTIC_GROUP_UNITS - (int)group.diagnosticUnits();
+                int count = Math.min(remaining, available / 2);
+                if (count < 1) return false;
+                char[] source = new char[count];
+                char[] expected = new char[count];
+                int sourceAt = geometry.staticPrefixLength + geometry.suffixCompareIndex;
+                for (int index = 0; index < count; index++) {
+                    source[index] = geometry.sourceFingerprint.charAt(sourceAt + index);
+                    expected[index] = geometry.suffixBuilder.charAt(geometry.suffixCompareIndex + index);
+                }
+                group.diagnosticCopiedEntries += (long)count * 2L;
+                for (int index = 0; index < count; index++)
+                    if (source[index] != expected[index])
+                        throw new IllegalStateException("P07 raw trace/hole rows do not reconstruct source geometry");
+                geometry.suffixCompareIndex += count;
+                if (geometry.suffixCompareIndex == geometry.suffixBuilder.length()) {
+                    geometry.suffixVerified = true;
+                    geometry.suffixBuilder = null;
+                    geometry.suffixCursor = null;
+                }
+                return geometry.suffixVerified;
+            }
+
+            private boolean compareStaticPrefixes(GroupLedger group) {
+                GeometryCapture before = capture.before, after = capture.after;
+                if (before.staticPrefixLength != after.staticPrefixLength)
+                    throw new IllegalStateException("P07 before/after static geometry prefix length changed");
+                int remaining = before.staticPrefixLength - staticCompareIndex;
+                if (remaining <= 0) {
+                    staticGeometryEqual = true;
+                    return true;
+                }
+                int available = DIAGNOSTIC_GROUP_UNITS - (int)group.diagnosticUnits();
+                int count = Math.min(remaining, available / 2);
+                if (count < 1) return false;
+                char[] left = new char[count], right = new char[count];
+                for (int index = 0; index < count; index++) {
+                    left[index] = before.sourceFingerprint.charAt(staticCompareIndex + index);
+                    right[index] = after.sourceFingerprint.charAt(staticCompareIndex + index);
+                }
+                group.diagnosticCopiedEntries += (long)count * 2L;
+                for (int index = 0; index < count; index++)
+                    if (left[index] != right[index])
+                        throw new IllegalStateException("P07 before/after static geometry prefix changed");
+                staticCompareIndex += count;
+                staticGeometryEqual = staticCompareIndex == before.staticPrefixLength;
+                return staticGeometryEqual;
+            }
+        }
+
+        private int findTrace(List<TraceCapture> rows, TraceCapture expected, BitSet used) {
+            for (int index = 0; index < rows.size(); index++)
+                if (!used.get(index) && sameTrace(rows.get(index), expected)) return index;
+            return -1;
+        }
+
+        private int findHole(List<HoleCapture> rows, HoleCapture expected, BitSet used) {
+            for (int index = 0; index < rows.size(); index++)
+                if (!used.get(index) && sameHole(rows.get(index), expected)) return index;
+            return -1;
+        }
+
+        private void verifyPublisherBinding(PublisherCapture capture, Object publisher) {
+            if (readField(capture.generatorOwner, "mediumTwoLayerRoute") != capture.route ||
+                    readField(capture.search, "owner") != capture.route)
+                throw new IllegalStateException("P07 Publisher source route/Search binding changed");
+            Object publisherNet = readField(publisher, "net");
+            if (!(publisherNet instanceof String) || !capture.netId.equals(publisherNet) ||
+                    readField(publisher, "start") != readField(capture.branch, "start") ||
+                    readField(publisher, "root") != readField(capture.branch, "root") ||
+                    readField(publisher, "end") != capture.found ||
+                    readField(publisher, "endTerminal") != capture.terminal)
+                throw new IllegalStateException("P07 Publisher does not own the captured FOUND path and endpoints");
+        }
+
+        private void verifyPublisherIdentityTokens(PublisherCapture capture, GroupLedger group) {
+            if (capture == null || group == null || !"CAPTURE".equals(group.phase) ||
+                    capture.publisher == null || capture.pathNodeRefs.size() != capture.pathNodes.size())
+                throw new IllegalStateException("P07 identity-token verification lacks its captured graph");
+            requirePublisherToken(capture.generatorOwner, capture.generatorToken);
+            requirePublisherToken(capture.route, capture.routeToken);
+            requirePublisherToken(capture.search, capture.searchToken);
+            requirePublisherToken(capture.branch, capture.branchToken);
+            requirePublisherToken(capture.layout, capture.layoutToken);
+            requirePublisherToken(capture.found, capture.foundToken);
+            requirePublisherToken(capture.publisher, capture.publisherToken);
+            group.diagnosticCopiedEntries += 7;
+            if (capture.terminal == null) {
+                if (capture.terminalToken != null)
+                    throw new IllegalStateException("P07 null terminal has a non-null identity token");
+            } else {
+                if (capture.terminalToken == null)
+                    throw new IllegalStateException("P07 terminal identity token is absent");
+                requirePublisherToken(capture.terminal, capture.terminalToken.intValue());
+                group.diagnosticCopiedEntries++;
+            }
+            for (int index = 0; index < capture.pathNodes.size(); index++) {
+                PathCapture row = capture.pathNodes.get(index);
+                requirePublisherToken(capture.pathNodeRefs.get(index), row.nodeToken);
+                group.diagnosticCopiedEntries++;
+            }
+            if (group.diagnosticUnits() > DIAGNOSTIC_GROUP_UNITS)
+                throw new IllegalStateException("P07 identity-token verification exceeded its CAPTURE bound");
+        }
+
+        private void requirePublisherToken(Object source, int expected) {
+            Integer actual = source == null ? null : publisherIdentityTokens.get(source);
+            if (expected <= 0 || actual == null || actual.intValue() != expected)
+                throw new IllegalStateException("P07 source object identity token changed before closure");
+        }
+
+        private void releasePublisherReferences(PublisherCapture capture, GroupLedger group) {
+            if (capture == null || group == null || !"CAPTURE".equals(group.phase) ||
+                    capture.sourceReferencesReleased || publisherCapture != capture)
+                throw new IllegalStateException("P07 source graph release has no unique CAPTURE owner");
+            long references = publisherIdentityTokens.size() + capture.pathNodeRefs.size() +
+                capture.pathSeen.size() + 10L;
+            if (references > DIAGNOSTIC_GROUP_UNITS - group.diagnosticUnits())
+                throw new IllegalStateException("P07 source-reference release exceeded its CAPTURE budget");
+            publisherIdentityTokens.clear();
+            capture.releaseGraphReferences();
+            group.diagnosticCopiedEntries += references;
+            if (!publisherIdentityTokens.isEmpty() || capture.hasGraphReferences())
+                throw new IllegalStateException("P07 source graph references survived capture closure");
+            capture.sourceReferencesReleased = true;
+        }
+
+        private void verifyPublishedPublisher(PublisherCapture capture, int stage) {
+            if (stage != 6 || intField(capture.publisher, "stage") != 6)
+                throw new IllegalStateException("P07 published target changed Publisher identity");
+            if (readField(capture.publisher, "end") != capture.found ||
+                    readField(capture.publisher, "endTerminal") != capture.terminal)
+                throw new IllegalStateException("P07 completed Publisher changed its found endpoint");
+        }
+
+        private void verifyGeometryBoundary(PublisherCapture capture) {
+            if (capture.after == null || capture.before == null ||
+                    capture.before.sourceFingerprint == null ||
+                    capture.after.sourceFingerprint == null ||
+                    capture.after.traces == null || capture.after.holes == null)
+                throw new IllegalStateException("P07 geometry snapshot is incomplete");
+        }
+
+        private int publisherToken(Object value) {
+            if (value == null) throw new IllegalArgumentException("Cannot tokenize a null P07 owner");
+            Integer token = publisherIdentityTokens.get(value);
+            if (token != null) return token.intValue();
+            if (nextPublisherIdentityToken <= 0 || nextPublisherIdentityToken == Integer.MAX_VALUE)
+                throw new IllegalStateException("P07 per-operation identity token space is exhausted");
+            int created = nextPublisherIdentityToken++;
+            publisherIdentityTokens.put(value, Integer.valueOf(created));
+            return created;
+        }
+
+        private int nextPublisherSequence(GroupLedger group) {
+            if (group == null || !"ADVANCE".equals(group.phase) ||
+                    publisherPollSequence == Integer.MAX_VALUE)
+                throw new IllegalStateException("P07 Publisher checkpoint has no bounded live poll");
+            return ++publisherPollSequence;
+        }
+
+        private String[] copyReachedPadIds(Vector<?> reached, String netId) {
+            if (reached == null || reached.size() > PAD_LIMIT)
+                throw new IllegalStateException("P07 reached-pad vector is outside the captured domain");
+            String[] result = new String[reached.size()];
+            Set<String> unique = new HashSet<String>();
+            for (int index = 0; index < result.length; index++) {
+                Object value = reached.get(index);
+                if (!(value instanceof String) || !token((String)value))
+                    throw new IllegalStateException("P07 reached-pad vector contains an invalid pad ID");
+                BoardPad logical = board.getPad((String)value);
+                if (logical == null || !netId.equals(logical.getNetId()))
+                    throw new IllegalStateException("P07 reached-pad vector crossed its source net");
+                result[index] = (String)value;
+                if (!unique.add(result[index]))
+                    throw new IllegalStateException("P07 reached-pad vector contains duplicate pad IDs");
+            }
+            java.util.Arrays.sort(result);
+            return result;
+        }
+
+        private GeometryCapture copyGeometry(PcbBoardLayout layout, GroupLedger group,
+                String sourceFingerprint, boolean countFingerprintEntries) {
+            if (layout == null || group == null || !"ADVANCE".equals(group.phase))
+                throw new IllegalStateException("P07 geometry snapshot escaped its actual ADVANCE owner");
+            Vector<PcbTraceGeometry> traces = layout.getTraces();
+            Vector<PcbBoardHole> holes = layout.getHoles();
+            List<TraceCapture> traceRows = new ArrayList<TraceCapture>(traces.size());
+            List<HoleCapture> holeRows = new ArrayList<HoleCapture>(holes.size());
+            int copied = 0;
+            for (PcbTraceGeometry trace : traces) {
+                if (trace == null) throw new IllegalStateException("P07 layout contains a null trace");
+                int[] x = trace.getXPoints();
+                int[] y = trace.getYPoints();
+                if (x == null || y == null || x.length != y.length || trace.getNetId() == null)
+                    throw new IllegalStateException("P07 trace coordinates are incomplete");
+                copied += 8 + x.length + y.length;
+                if (copied > PUBLISHER_SYNC_COPY_LIMIT)
+                    throw new IllegalStateException("Synchronous P07 geometry snapshot exceeded its frozen entry cap");
+                traceRows.add(new TraceCapture(trace.getSourceId(), trace.getNetId(),
+                    trace.getStartPadId(), trace.getEndPadId(), trace.getLayer().ordinal(),
+                    trace.getExposure().name(), trace.getWidth(), x, y));
+            }
+            Collections.sort(traceRows, new Comparator<TraceCapture>() {
+                public int compare(TraceCapture a, TraceCapture b) {
+                    int result = a.netId.compareTo(b.netId);
+                    if (result != 0) return result;
+                    result = String.valueOf(a.startPadId).compareTo(String.valueOf(b.startPadId));
+                    if (result != 0) return result;
+                    result = String.valueOf(a.endPadId).compareTo(String.valueOf(b.endPadId));
+                    if (result != 0) return result;
+                    result = a.layer < b.layer ? -1 : a.layer == b.layer ? 0 : 1;
+                    if (result != 0) return result;
+                    result = a.width < b.width ? -1 : a.width == b.width ? 0 : 1;
+                    return result != 0 ? result :
+                        String.valueOf(a.sourceId).compareTo(String.valueOf(b.sourceId));
+                }
+            });
+            for (PcbBoardHole hole : holes) {
+                if (hole == null) throw new IllegalStateException("P07 layout contains a null hole");
+                copied += 9;
+                if (copied > PUBLISHER_SYNC_COPY_LIMIT)
+                    throw new IllegalStateException("Synchronous P07 geometry snapshot exceeded its frozen entry cap");
+                holeRows.add(new HoleCapture(hole.id, hole.kind.name(), hole.netId,
+                    hole.x, hole.y, hole.drillRadius, hole.landRadius, hole.exposure.name()));
+            }
+            if (countFingerprintEntries) {
+                if (sourceFingerprint == null)
+                    throw new IllegalStateException("P07 after-geometry fingerprint snapshot is missing");
+                copied += sourceFingerprint.length();
+            }
+            group.diagnosticCopiedEntries += copied;
+            if (group.diagnosticCopiedEntries > PUBLISHER_SYNC_COPY_LIMIT)
+                throw new IllegalStateException("Synchronous P07 geometry snapshot exceeded its frozen entry cap");
+            return new GeometryCapture(sourceFingerprint, traceRows, holeRows, copied);
+        }
+
+        private boolean sameGeometryRows(GeometryCapture first, GeometryCapture second) {
+            if (first.traces.size() != second.traces.size() ||
+                    first.holes.size() != second.holes.size()) return false;
+            for (int index = 0; index < first.traces.size(); index++) {
+                TraceCapture row = first.traces.get(index);
+                boolean checked = false;
+                for (int prior = 0; prior < index; prior++)
+                    if (sameTrace(row, first.traces.get(prior))) { checked = true; break; }
+                if (checked) continue;
+                int firstMatches = 0, secondMatches = 0;
+                for (TraceCapture candidate : first.traces)
+                    if (sameTrace(row, candidate)) firstMatches++;
+                for (TraceCapture candidate : second.traces)
+                    if (sameTrace(row, candidate)) secondMatches++;
+                if (firstMatches != secondMatches) return false;
+            }
+            for (int index = 0; index < first.holes.size(); index++) {
+                HoleCapture row = first.holes.get(index);
+                boolean checked = false;
+                for (int prior = 0; prior < index; prior++)
+                    if (sameHole(row, first.holes.get(prior))) { checked = true; break; }
+                if (checked) continue;
+                int firstMatches = 0, secondMatches = 0;
+                for (HoleCapture candidate : first.holes)
+                    if (sameHole(row, candidate)) firstMatches++;
+                for (HoleCapture candidate : second.holes)
+                    if (sameHole(row, candidate)) secondMatches++;
+                if (firstMatches != secondMatches) return false;
+            }
+            return true;
+        }
+
+        private boolean sameTrace(TraceCapture a, TraceCapture b) {
+            return equalNullable(a.sourceId, b.sourceId) && equalNullable(a.netId, b.netId) &&
+                equalNullable(a.startPadId, b.startPadId) && equalNullable(a.endPadId, b.endPadId) &&
+                a.layer == b.layer && a.exposure.equals(b.exposure) && a.width == b.width &&
+                java.util.Arrays.equals(a.xPoints, b.xPoints) &&
+                java.util.Arrays.equals(a.yPoints, b.yPoints);
+        }
+
+        private boolean sameHole(HoleCapture a, HoleCapture b) {
+            return a.id.equals(b.id) && a.kind.equals(b.kind) && equalNullable(a.netId, b.netId) &&
+                a.x == b.x && a.y == b.y && a.drillRadius == b.drillRadius &&
+                a.landRadius == b.landRadius && a.exposure.equals(b.exposure);
+        }
+
+        private boolean equalNullable(String a, String b) {
+            return a == null ? b == null : a.equals(b);
+        }
+
+        private void verifyImmutableNodeType(Object node) {
+            if (node == null || !Modifier.isFinal(node.getClass().getModifiers()) ||
+                    !"com.lushprojects.circuitjs1.client.PcbLayerRoutingPrototype$Node".
+                        equals(node.getClass().getName()))
+                throw new IllegalStateException("P07 captured found object is not the immutable source Node type");
+            String[] names = {"cell", "layer", "direction", "transitions", "cost",
+                "heuristic", "serial", "key", "previous"};
+            for (String name : names) {
+                try {
+                    Field field = node.getClass().getDeclaredField(name);
+                    if (!Modifier.isFinal(field.getModifiers()))
+                        throw new IllegalStateException("P07 Node path field is not immutable: " + name);
+                } catch (NoSuchFieldException absent) {
+                    throw new IllegalStateException("P07 immutable Node path field disappeared: " + name, absent);
+                }
+            }
+        }
+
+        private int vectorSize(Object value) {
+            if (!(value instanceof Vector)) throw new IllegalStateException("P07 Publisher vector changed type");
+            return ((Vector<?>)value).size();
+        }
+
+        private String padId(Object value) {
+            if (value == null) throw new IllegalArgumentException("Missing P07 pad endpoint");
+            Object id = readField(value, "padId");
+            if (!(id instanceof String) || !token((String)id))
+                throw new IllegalStateException("P07 pad endpoint has an invalid identity");
+            return (String)id;
+        }
+
+        private String stringField(Object value, String name) {
+            Object field = readField(value, name);
+            if (!(field instanceof String))
+                throw new IllegalStateException("P07 source field is not a string: " + name);
+            return (String)field;
+        }
+
+        private String readNullableString(Object value, String name) {
+            Object field = readField(value, name);
+            if (field != null && !(field instanceof String))
+                throw new IllegalStateException("P07 nullable source field is not a string: " + name);
+            return (String)field;
         }
 
         private boolean isRequestZeroComplete() {
@@ -1153,6 +2366,14 @@ public final class ActualGeneratorBranchOrderStudy {
             padNetIds.clear();
             capturedContext = null;
             lastActualRoute = null;
+            if (publisherCapture != null && !publisherCapture.sourceReferencesReleased) {
+                publisherCapture.releaseGraphReferences();
+                publisherCapture.sourceReferencesReleased = true;
+            }
+            publisherIdentityTokens.clear();
+            if (!publisherIdentityTokens.isEmpty() ||
+                    publisherCapture != null && publisherCapture.hasGraphReferences())
+                throw new IllegalStateException("P07 source graph references survived owner cleanup");
             ownerSession = null;
             generator = null;
             if (sink != null && !sink.isClosed())
@@ -1166,6 +2387,7 @@ public final class ActualGeneratorBranchOrderStudy {
             arm.string("strategy", ARM_STRATEGIES[operation]);
             arm.string("netOrderStrategy", ARM_NET_ORDER_STRATEGIES[operation]);
             arm.bool("observed", operation != 0);
+            arm.bool("publisherCapture", operation == 4);
             JsonObject candidate = new JsonObject();
             candidate.string("rootSeed", Long.toString(candidateHeader.rootSeed));
             candidate.string("placementSeed", Long.toString(candidateHeader.placementSeed));
@@ -1193,6 +2415,10 @@ public final class ActualGeneratorBranchOrderStudy {
             limits.number("requestExpansions", 1000000);
             limits.number("branchExpansions", 100000);
             limits.number("cells", 250000);
+            limits.number("pathNodes", PUBLISHER_PATH_NODE_LIMIT);
+            limits.number("snapshotEntries", PUBLISHER_SYNC_COPY_LIMIT);
+            limits.number("publisherPayloadBytes", PUBLISHER_PAYLOAD_LIMIT);
+            limits.number("publisherChunkBytes", PUBLISHER_CHUNK_BYTES);
             JsonObject header = new JsonObject();
             header.string("record", "HEADER");
             header.number("group", 0);
@@ -1254,6 +2480,170 @@ public final class ActualGeneratorBranchOrderStudy {
             return result.finish();
         }
 
+        private Object publisherTargetValue(final PublisherCapture capture,
+                MetadataCopyLedger metadataCopies) {
+            if (capture.payloadBytes != 0 || capture.payloadChunkIndex != 0 ||
+                    capture.payloadSha256 != null || !capture.sourceReferencesReleased ||
+                    !capture.ownerBindingVerified || !capture.immutablePathVerified ||
+                    !capture.staticGeometryEqual || !capture.prefixRowsConserved)
+                throw new IllegalStateException("P07 Publisher target closed before its evidence and references");
+            StreamObject context = new StreamObject(
+                new String[] {"sourceManifestSha256","operation","rootSeed","placementSeed",
+                    "routingSeed","attempt","request","pass","placementSha256"},
+                new Object[] {study.sourceManifestSha256, Integer.valueOf(operation),
+                    Long.toString(candidateHeader.rootSeed), Long.toString(candidateHeader.placementSeed),
+                    Long.toString(candidateHeader.routingSeed), Integer.valueOf(capturedContext.selectedAttempt),
+                    Integer.valueOf(capturedContext.requestIndex), Integer.valueOf(capture.pass),
+                    capturedContext.pristineSha256}, metadataCopies);
+            StreamObject objects = new StreamObject(
+                new String[] {"generator","route","search","branch","layout","publisher","found","terminal"},
+                new Object[] {Integer.valueOf(capture.generatorToken), Integer.valueOf(capture.routeToken),
+                    Integer.valueOf(capture.searchToken), Integer.valueOf(capture.branchToken),
+                    Integer.valueOf(capture.layoutToken), Integer.valueOf(capture.publisherToken),
+                    Integer.valueOf(capture.foundToken), capture.terminalToken}, metadataCopies);
+            StreamObject branch = new StreamObject(
+                new String[] {"ordinal","netVectorPosition","netId","startPadId","rootPadId",
+                    "reachedPadIds","foundTerminalPadId","branchRecordGroup"},
+                new Object[] {Integer.valueOf(capture.ordinal), Integer.valueOf(capture.netVectorPosition),
+                    capture.netId, capture.startPadId, capture.rootPadId,
+                    stringArray(capture.reachedPadIds), capture.foundTerminalPadId,
+                    Integer.valueOf(capture.branchRecordGroup)}, metadataCopies);
+            StreamObject grid = new StreamObject(
+                new String[] {"width","height","cells","originX","originY","pitch",
+                    "primaryLayer","maximumVias"},
+                new Object[] {Integer.valueOf(capture.width), Integer.valueOf(capture.height),
+                    Integer.valueOf(capture.cells), Integer.valueOf(capture.originX),
+                    Integer.valueOf(capture.originY), Integer.valueOf(capture.pitch),
+                    Integer.valueOf(capture.primaryLayer), Integer.valueOf(capture.maximumVias)},
+                metadataCopies);
+            StreamObject checkpoints = new StreamObject(
+                new String[] {"found","publisherSeen","publisherTerminal","orderingReady","orderingResult"},
+                new Object[] {checkpointValue(capture.foundCheckpoint, metadataCopies),
+                    checkpointValue(capture.publisherSeen, metadataCopies),
+                    checkpointValue(capture.publisherTerminal, metadataCopies),
+                    checkpointValue(capture.orderingReady, metadataCopies),
+                    checkpointValue(capture.orderingResult, metadataCopies)}, metadataCopies);
+            StreamArray nodes = new StreamArray(new JsonArrayAccess() {
+                public int size() { return capture.pathNodes.size(); }
+                public Object value(int index) {
+                    final int[] tuple = capture.pathNodes.get(index).tuple;
+                    return new StreamArray(new JsonArrayAccess() {
+                        public int size() { return 11; }
+                        public Object value(int item) { return Integer.valueOf(tuple[item]); }
+                    });
+                }
+            });
+            StreamArray nodeTokens = new StreamArray(new JsonArrayAccess() {
+                public int size() { return capture.pathNodes.size(); }
+                public Object value(int index) {
+                    return Integer.valueOf(capture.pathNodes.get(index).nodeToken);
+                }
+            });
+            StreamObject path = new StreamObject(
+                new String[] {"encoding","nodes","nodeTokens","foundGoal"},
+                new Object[] {"cell,layer,x,y,direction,transitions,cost,heuristic,serial,key,parentRow",
+                    nodes, nodeTokens, Boolean.valueOf(capture.foundGoal)}, metadataCopies);
+            StreamObject publisher = new StreamObject(
+                new String[] {"outcome","stage","qualityIndex","reversedSize","storedLength",
+                    "storedBends","storedLastDirection","segments","reason","sourceHandoff",
+                    "startReachedAfter"},
+                new Object[] {capture.outcome, Integer.valueOf(capture.stage),
+                    Integer.valueOf(capture.qualityIndex), Integer.valueOf(capture.reversedSize),
+                    Integer.valueOf(capture.storedLength), Integer.valueOf(capture.storedBends),
+                    Integer.valueOf(capture.storedLastDirection), Integer.valueOf(capture.segments),
+                    capture.reason, Boolean.valueOf(capture.sourceHandoff),
+                    Boolean.valueOf(capture.startReachedAfter)}, metadataCopies);
+            Object readyLayout = "READY".equals(capture.routerStatus) ?
+                Integer.valueOf(capture.readyLayoutToken) : null;
+            Object readyPass = "READY".equals(capture.routerStatus) ?
+                Integer.valueOf(capture.readyPass) : null;
+            StreamObject ordering = new StreamObject(
+                new String[] {"routerStatus","routerReason","readyLayoutToken","readyPass",
+                    "finalizerStatus","finalizedBefore","finalizedAfter","lastFailureDetail"},
+                new Object[] {capture.routerStatus, capture.routerReason, readyLayout, readyPass,
+                    capture.finalizerStatus, Integer.valueOf(capture.finalizedBefore),
+                    Integer.valueOf(capture.finalizedAfter), capture.lastFailureDetail}, metadataCopies);
+            StreamObject before = geometryValue(capture.before, metadataCopies);
+            StreamObject after = geometryValue(capture.after, metadataCopies);
+            StreamObject integrity = new StreamObject(
+                new String[] {"ownerBindingVerified","immutablePathVerified","staticGeometryEqual",
+                    "prefixRowsConserved","sourceReferencesReleased"},
+                new Object[] {Boolean.valueOf(capture.ownerBindingVerified),
+                    Boolean.valueOf(capture.immutablePathVerified),
+                    Boolean.valueOf(capture.staticGeometryEqual),
+                    Boolean.valueOf(capture.prefixRowsConserved),
+                    Boolean.valueOf(capture.sourceReferencesReleased)}, metadataCopies);
+            StreamObject limitations = new StreamObject(
+                new String[] {"routeAdoption","layoutQualification","playable100","fullPhysicalProof"},
+                new Object[] {Boolean.FALSE, Boolean.FALSE, Integer.valueOf(0), "NOT_RUN"},
+                metadataCopies);
+            return new StreamObject(
+                new String[] {"schema","context","objects","branch","grid","checkpoints","path",
+                    "publisher","ordering","before","after","integrity","limitations"},
+                new Object[] {"p07-publisher-target-v1", context, objects, branch, grid, checkpoints,
+                    path, publisher, ordering, before, after, integrity, limitations}, metadataCopies);
+        }
+
+        private StreamObject geometryValue(final GeometryCapture geometry,
+                MetadataCopyLedger metadataCopies) {
+            StreamArray traces = new StreamArray(new JsonArrayAccess() {
+                public int size() { return geometry.traces.size(); }
+                public Object value(int index) {
+                    final TraceCapture row = geometry.traces.get(index);
+                    return new StreamArray(new JsonArrayAccess() {
+                        public int size() { return 9; }
+                        public Object value(int item) {
+                            switch (item) {
+                            case 0: return row.sourceId;
+                            case 1: return row.netId;
+                            case 2: return row.startPadId;
+                            case 3: return row.endPadId;
+                            case 4: return Integer.valueOf(row.layer);
+                            case 5: return row.exposure;
+                            case 6: return Integer.valueOf(row.width);
+                            case 7: return intArray(row.xPoints);
+                            default: return intArray(row.yPoints);
+                            }
+                        }
+                    });
+                }
+            });
+            StreamArray holes = new StreamArray(new JsonArrayAccess() {
+                public int size() { return geometry.holes.size(); }
+                public Object value(int index) {
+                    final HoleCapture row = geometry.holes.get(index);
+                    return new StreamArray(new JsonArrayAccess() {
+                        public int size() { return 8; }
+                        public Object value(int item) {
+                            switch (item) {
+                            case 0: return row.id;
+                            case 1: return row.kind;
+                            case 2: return row.netId;
+                            case 3: return Integer.valueOf(row.x);
+                            case 4: return Integer.valueOf(row.y);
+                            case 5: return Integer.valueOf(row.drillRadius);
+                            case 6: return Integer.valueOf(row.landRadius);
+                            default: return row.exposure;
+                            }
+                        }
+                    });
+                }
+            });
+            return new StreamObject(
+                new String[] {"staticPrefix","traces","holes","geometrySha256","geometryBytes"},
+                new Object[] {new StreamString(geometry.sourceFingerprint, geometry.staticPrefixLength),
+                    traces, holes, geometry.geometrySha256, Integer.valueOf(geometry.geometryBytes)},
+                metadataCopies);
+        }
+
+        private StreamObject checkpointValue(CaptureCheckpoint checkpoint,
+                MetadataCopyLedger metadataCopies) {
+            if (checkpoint == null) return null;
+            return new StreamObject(new String[] {"group","sequence"},
+                new Object[] {Integer.valueOf(checkpoint.group), Integer.valueOf(checkpoint.sequence)},
+                metadataCopies);
+        }
+
         private void finishReportGroupAndFooter(GroupLedger report) throws IOException {
             if (padCount != candidateHeader.padCount || request == null)
                 throw new IllegalStateException("Final report census is incomplete");
@@ -1301,6 +2691,16 @@ public final class ActualGeneratorBranchOrderStudy {
                     (group.diagnosticCloneSteps > 0 && (group.p07Slices != 1 ||
                         group.p07Steps == null || group.diagnosticCloneSteps > group.p07Steps.intValue())))
                 throw new IllegalStateException("Group diagnostic clone units do not reconcile to measured raw P07 work");
+            if (group.publisherChunkRows < 0 || group.publisherResultRows < 0 ||
+                    group.diagnosticCopiedEntries < 0 || group.diagnosticSerializedBytes < 0 ||
+                    group.diagnosticHashBytes < 0 ||
+                    group.diagnosticUnits() > Long.MAX_VALUE ||
+                    (group.publisherChunkRows > 0 || group.publisherResultRows > 0) && operation != 4)
+                throw new IllegalStateException("P07 Publisher diagnostic GROUP accounting is invalid");
+            if ("CAPTURE".equals(group.phase) &&
+                    (group.p07Slices != 0 || group.p07Steps != null ||
+                        group.diagnosticUnits() > DIAGNOSTIC_GROUP_UNITS))
+                throw new IllegalStateException("P07 CAPTURE group exceeded its owner-free 32768-unit bound");
             long beforeOwnLine = elapsed(group.startedNanos, System.nanoTime());
             sink.writeLine(groupJson(group, beforeOwnLine));
             sink.flush();
@@ -1334,6 +2734,12 @@ public final class ActualGeneratorBranchOrderStudy {
             row.number("callbacks", group.callbacks);
             row.number("netOrderRows", group.netOrderRows);
             row.number("censusRows", group.censusRows);
+            row.number("publisherChunkRows", group.publisherChunkRows);
+            row.number("publisherResultRows", group.publisherResultRows);
+            row.number("diagnosticCopiedEntries", group.diagnosticCopiedEntries);
+            row.number("diagnosticSerializedBytes", group.diagnosticSerializedBytes);
+            row.number("diagnosticHashBytes", group.diagnosticHashBytes);
+            row.number("diagnosticUnits", group.diagnosticUnits());
             row.number("hashInputBytes", group.hashInputBytes);
             row.number("serializedBeforeOwnLineBytes", group.serializedBeforeOwnLineBytes);
             return row.finish();
@@ -1342,6 +2748,20 @@ public final class ActualGeneratorBranchOrderStudy {
             if (group == null || group != currentGroup)
                 throw new IllegalStateException("JSONL record has no current owner group");
             group.serializedBeforeOwnLineBytes += sink.writeLine(json);
+        }
+
+        private void appendPublisherRecord(GroupLedger group, String json, boolean chunk)
+                throws IOException {
+            if (operation != 4 || group == null || group != currentGroup ||
+                    !"CAPTURE".equals(group.phase))
+                throw new IllegalStateException("P07 Publisher record has no CAPTURE group owner");
+            int bytes = sink.writeLine(json);
+            group.serializedBeforeOwnLineBytes += bytes;
+            group.diagnosticSerializedBytes += bytes;
+            group.diagnosticHashBytes += bytes;
+            group.hashInputBytes += bytes;
+            if (chunk) group.publisherChunkRows++;
+            else group.publisherResultRows++;
         }
 
         private void appendCallbackRecord(GroupLedger group, String json) {
@@ -1371,6 +2791,11 @@ public final class ActualGeneratorBranchOrderStudy {
         long callbacks;
         long netOrderRows;
         long censusRows;
+        long publisherChunkRows;
+        long publisherResultRows;
+        long diagnosticCopiedEntries;
+        long diagnosticSerializedBytes;
+        long diagnosticHashBytes;
         long hashInputBytes;
         long serializedBeforeOwnLineBytes;
         Object routeForSlice;
@@ -1378,6 +2803,299 @@ public final class ActualGeneratorBranchOrderStudy {
             this.ordinal = ordinal;
             this.phase = phase;
             this.startedNanos = startedNanos;
+        }
+        long diagnosticUnits() {
+            if (diagnosticCopiedEntries < 0 || diagnosticSerializedBytes < 0 ||
+                    diagnosticHashBytes < 0 ||
+                    diagnosticCopiedEntries > Long.MAX_VALUE - diagnosticSerializedBytes ||
+                    diagnosticCopiedEntries + diagnosticSerializedBytes > Long.MAX_VALUE - diagnosticHashBytes)
+                throw new IllegalStateException("P07 diagnostic unit sum overflowed");
+            return diagnosticCopiedEntries + diagnosticSerializedBytes + diagnosticHashBytes;
+        }
+    }
+
+    private static final class CaptureCheckpoint {
+        final int group;
+        final int sequence;
+        CaptureCheckpoint(int group, int sequence) {
+            if (group < 1 || sequence < 1)
+                throw new IllegalArgumentException("Invalid P07 Publisher checkpoint");
+            this.group = group;
+            this.sequence = sequence;
+        }
+    }
+
+    private static final class TraceCapture {
+        final String sourceId, netId, startPadId, endPadId, exposure;
+        final int layer, width;
+        final int[] xPoints, yPoints;
+        TraceCapture(String sourceId, String netId, String startPadId, String endPadId,
+                int layer, String exposure, int width, int[] xPoints, int[] yPoints) {
+            this.sourceId = sourceId; this.netId = netId;
+            this.startPadId = startPadId; this.endPadId = endPadId;
+            this.layer = layer; this.exposure = exposure; this.width = width;
+            this.xPoints = xPoints; this.yPoints = yPoints;
+        }
+    }
+
+    private static final class HoleCapture {
+        final String id, kind, netId, exposure;
+        final int x, y, drillRadius, landRadius;
+        HoleCapture(String id, String kind, String netId, int x, int y,
+                int drillRadius, int landRadius, String exposure) {
+            this.id = id; this.kind = kind; this.netId = netId;
+            this.x = x; this.y = y; this.drillRadius = drillRadius;
+            this.landRadius = landRadius; this.exposure = exposure;
+        }
+    }
+
+    private static final class GeometryCapture {
+        final String sourceFingerprint;
+        final List<TraceCapture> traces;
+        final List<HoleCapture> holes;
+        final int copiedEntries;
+        int staticPrefixLength = -1;
+        int geometryBytes = -1;
+        String geometrySha256;
+        StringBuilder suffixBuilder;
+        GeometrySuffixCursor suffixCursor;
+        int suffixCompareIndex;
+        boolean suffixBuilt, suffixVerified;
+        GeometryCapture(String sourceFingerprint, List<TraceCapture> traces,
+                List<HoleCapture> holes, int copiedEntries) {
+            this.sourceFingerprint = sourceFingerprint;
+            this.traces = traces; this.holes = holes;
+            this.copiedEntries = copiedEntries;
+        }
+    }
+
+    private static final class GeometrySuffixCursor {
+        private final GeometryCapture geometry;
+        private int traceIndex, tracePart, pointIndex;
+        private int holeIndex, holePart;
+        private String part;
+        private int partOffset;
+        GeometrySuffixCursor(GeometryCapture geometry) { this.geometry = geometry; }
+        String nextChunk(int maxChars) {
+            if (maxChars < 1) return "";
+            StringBuilder result = new StringBuilder(maxChars);
+            while (result.length() < maxChars) {
+                if (part == null || partOffset >= part.length()) {
+                    part = nextPart();
+                    partOffset = 0;
+                    if (part == null) break;
+                    if (part.length() == 0) continue;
+                }
+                int count = Math.min(maxChars - result.length(), part.length() - partOffset);
+                result.append(part, partOffset, partOffset + count);
+                partOffset += count;
+            }
+            return result.toString();
+        }
+        boolean isDone() {
+            return (part == null || partOffset >= part.length()) &&
+                traceIndex >= geometry.traces.size() && holeIndex >= geometry.holes.size();
+        }
+        private String nextPart() {
+            while (traceIndex < geometry.traces.size()) {
+                TraceCapture row = geometry.traces.get(traceIndex);
+                switch (tracePart) {
+                case 0: tracePart++; return "T:";
+                case 1: tracePart++; return fingerprintField(row.sourceId);
+                case 2: tracePart++; return PcbCopperLayer.values()[row.layer].toString();
+                case 3: tracePart++; return ":";
+                case 4: tracePart++; return row.exposure;
+                case 5: tracePart++; return ":";
+                case 6: tracePart++; return String.valueOf(row.netId);
+                case 7: tracePart++; return ":";
+                case 8: tracePart++; return String.valueOf(row.startPadId);
+                case 9: tracePart++; return "-";
+                case 10: tracePart++; return String.valueOf(row.endPadId);
+                case 11: tracePart++; return "@";
+                case 12:
+                    tracePart++;
+                    return row.width == PcbTraceRules.TRACE_WIDTH ?
+                        "" : "W" + row.width + ":";
+                default:
+                    if (pointIndex < row.xPoints.length) {
+                        int index = pointIndex++;
+                        return row.xPoints[index] + "," + row.yPoints[index] + ";";
+                    }
+                    traceIndex++; tracePart=0; pointIndex=0;
+                    break;
+                }
+            }
+            while (holeIndex < geometry.holes.size()) {
+                HoleCapture row = geometry.holes.get(holeIndex);
+                switch (holePart) {
+                case 0: holePart++; return "H:";
+                case 1: holePart++; return fingerprintField(row.id);
+                case 2: holePart++; return row.kind;
+                case 3: holePart++; return fingerprintField(row.netId);
+                default:
+                    holeIndex++; holePart=0;
+                    return row.x + "," + row.y + "," + row.drillRadius + "," +
+                        row.landRadius + "," + row.exposure;
+                }
+            }
+            return null;
+        }
+    }
+
+    private static String fingerprintField(String value) {
+        return value == null ? "-1:" : value.length() + ":" + value;
+    }
+
+    private static final class Utf8HashCursor {
+        private final String value;
+        private final MessageDigest digest;
+        private int charIndex, byteCount, pendingOffset;
+        private byte[] pending;
+        private String result;
+        Utf8HashCursor(String value, MessageDigest digest) {
+            if (value == null || digest == null) throw new IllegalArgumentException("Missing UTF8 hash input");
+            this.value = value; this.digest = digest;
+        }
+        int advance(int maxBytes) {
+            if (maxBytes < 0 || result != null) throw new IllegalArgumentException("Invalid UTF8 hash budget");
+            int updated = 0;
+            while (updated < maxBytes) {
+                if (pending == null || pendingOffset == pending.length) {
+                    pending = null; pendingOffset = 0;
+                    if (charIndex >= value.length()) break;
+                    int current = value.charAt(charIndex++);
+                    if (current < 0x80) pending = new byte[] {(byte)current};
+                    else if (current < 0x800)
+                        pending = new byte[] {(byte)(0xc0 | (current >> 6)),
+                            (byte)(0x80 | (current & 0x3f))};
+                    else if (Character.isHighSurrogate((char)current)) {
+                        if (charIndex >= value.length() || !Character.isLowSurrogate(value.charAt(charIndex)))
+                            throw new IllegalArgumentException("Unpaired high surrogate in P07 geometry");
+                        int codePoint = Character.toCodePoint((char)current, value.charAt(charIndex++));
+                        pending = new byte[] {(byte)(0xf0 | (codePoint >> 18)),
+                            (byte)(0x80 | ((codePoint >> 12) & 0x3f)),
+                            (byte)(0x80 | ((codePoint >> 6) & 0x3f)),
+                            (byte)(0x80 | (codePoint & 0x3f))};
+                    } else if (Character.isLowSurrogate((char)current))
+                        throw new IllegalArgumentException("Unpaired low surrogate in P07 geometry");
+                    else pending = new byte[] {(byte)(0xe0 | (current >> 12)),
+                        (byte)(0x80 | ((current >> 6) & 0x3f)),
+                        (byte)(0x80 | (current & 0x3f))};
+                }
+                int count = Math.min(maxBytes - updated, pending.length - pendingOffset);
+                digest.update(pending, pendingOffset, count);
+                pendingOffset += count; updated += count; byteCount += count;
+            }
+            return updated;
+        }
+        boolean isDone() {
+            return charIndex >= value.length() && (pending == null || pendingOffset == pending.length);
+        }
+        String finishSha256() {
+            if (!isDone() || result != null) throw new IllegalStateException("UTF8 hash is not terminal");
+            result = hex(digest.digest());
+            return result;
+        }
+        int byteCount() { return byteCount; }
+    }
+
+    private static final class PathCapture {
+        final int[] tuple;
+        final int nodeToken;
+        PathCapture(int[] tuple, int nodeToken) {
+            this.tuple = tuple; this.nodeToken = nodeToken;
+        }
+    }
+
+    private static final class PublisherCapture {
+        final int generatorToken, routeToken, searchToken, branchToken, layoutToken, foundToken;
+        final Integer terminalToken;
+        final int foundGroup, foundSequence, pass, ordinal, netVectorPosition;
+        final String netId, startPadId, rootPadId;
+        final String[] reachedPadIds;
+        final String foundTerminalPadId;
+        final int branchRecordGroup;
+        final int width, height, cells, originX, originY, pitch, primaryLayer, maximumVias;
+        final int startX, startY, rootX, rootY, traceWidth;
+        final int foundGridIndex, startSegments, searchBranchCount;
+        final boolean foundGoal;
+        final GeometryCapture before;
+        final String beforeSha256;
+        final int beforeBytes;
+        final List<PathCapture> pathNodes = new ArrayList<PathCapture>();
+        final List<Object> pathNodeRefs = new ArrayList<Object>();
+        final List<TraceCapture> expectedDeltaTraces = new ArrayList<TraceCapture>();
+        final List<HoleCapture> expectedDeltaHoles = new ArrayList<HoleCapture>();
+        final IdentityHashMap<Object, Boolean> pathSeen = new IdentityHashMap<Object, Boolean>();
+        Object generatorOwner, route, search, branch, found, terminal, publisher, foundCursor;
+        PcbBoardLayout layout;
+        Vector<?> reachedVector;
+        int publisherToken;
+        String outcome, reason, routerStatus, routerReason, finalizerStatus, lastFailureDetail;
+        int stage=-1, qualityIndex=-1, reversedSize=-1, storedLength=-1, storedBends=-1,
+            storedLastDirection=-1, segments=-1, finalizedBefore=-1, finalizedAfter=-1,
+            readyPass=-1, readyLayoutToken=-1;
+        boolean sourceHandoff, startReachedAfter, ownerBindingVerified,
+            immutablePathVerified, staticGeometryEqual, prefixRowsConserved,
+            sourceReferencesReleased;
+        GeometryCapture after;
+        CaptureCheckpoint foundCheckpoint, publisherSeen, publisherTerminal,
+            orderingReady, orderingResult;
+        boolean pathCopyComplete, pathReversed;
+        boolean pathAuditComplete, geometryDeltaComplete, geometryDeltaExpectedBuilt;
+        int pathReverseIndex, pathParentIndex;
+        int pathVerifyIndex=0;
+        int pathAuditIndex, pathAuditLength, pathAuditBends, pathAuditTransitions;
+        int pathAuditLastDirection=4, pathAuditPriorCell=-1, pathAuditPriorLayer=-1;
+        int pathAuditPriorX, pathAuditPriorY, pathAuditPriorTransitions;
+        int payloadChunkIndex, payloadOffset, payloadBytes;
+        String payloadSha256;
+
+        PublisherCapture(int generatorToken, int routeToken, int searchToken,
+                int branchToken, int layoutToken, int foundToken, Integer terminalToken,
+                int foundGroup, int foundSequence, int pass, int ordinal,
+                int netVectorPosition, String netId, String startPadId,
+                String rootPadId, String[] reachedPadIds, String foundTerminalPadId,
+                int branchRecordGroup, int width, int height, int cells,
+                int originX, int originY, int pitch, int primaryLayer, int maximumVias,
+                int startX, int startY, int rootX, int rootY, int traceWidth,
+                int foundGridIndex, int startSegments, boolean foundGoal,
+                Vector<?> reachedVector, Object generatorOwner, Object branch, Object search, Object route,
+                PcbBoardLayout layout, Object found, Object terminal, GeometryCapture before,
+                String beforeSha256, int beforeBytes, int searchBranchCount) {
+            this.generatorToken=generatorToken; this.routeToken=routeToken;
+            this.searchToken=searchToken; this.branchToken=branchToken;
+            this.layoutToken=layoutToken; this.foundToken=foundToken;
+            this.terminalToken=terminalToken; this.foundGroup=foundGroup;
+            this.foundSequence=foundSequence; this.pass=pass; this.ordinal=ordinal;
+            this.netVectorPosition=netVectorPosition; this.netId=netId;
+            this.startPadId=startPadId; this.rootPadId=rootPadId;
+            this.reachedPadIds=reachedPadIds; this.foundTerminalPadId=foundTerminalPadId;
+            this.branchRecordGroup=branchRecordGroup; this.width=width;
+            this.height=height; this.cells=cells; this.originX=originX;
+            this.originY=originY; this.pitch=pitch; this.primaryLayer=primaryLayer;
+            this.maximumVias=maximumVias; this.foundGridIndex=foundGridIndex;
+            this.startX=startX; this.startY=startY; this.rootX=rootX; this.rootY=rootY;
+            this.traceWidth=traceWidth;
+            this.startSegments=startSegments; this.searchBranchCount=searchBranchCount;
+            this.foundGoal=foundGoal;
+            this.reachedVector=reachedVector; this.generatorOwner=generatorOwner;
+            this.branch=branch; this.search=search;
+            this.route=route; this.layout=layout; this.found=found;
+            this.terminal=terminal; this.before=before; this.beforeSha256=beforeSha256;
+            this.beforeBytes=beforeBytes; this.foundCursor=found;
+            this.foundCheckpoint=new CaptureCheckpoint(foundGroup, foundSequence);
+            this.ownerBindingVerified=false;
+        }
+        void releaseGraphReferences() {
+            generatorOwner=null; route=null; search=null; branch=null; layout=null; found=null;
+            terminal=null; publisher=null; foundCursor=null; reachedVector=null;
+            pathNodeRefs.clear(); pathSeen.clear();
+        }
+        boolean hasGraphReferences() {
+            return generatorOwner != null || route != null || search != null || branch != null || layout != null ||
+                found != null || terminal != null || publisher != null || foundCursor != null ||
+                reachedVector != null || !pathNodeRefs.isEmpty() || !pathSeen.isEmpty();
         }
     }
 
@@ -1676,6 +3394,252 @@ public final class ActualGeneratorBranchOrderStudy {
             value.append(quote(name)).append(':');
         }
     }
+
+    private interface JsonArrayAccess {
+        int size();
+        Object value(int index);
+    }
+
+    private static final class StreamArray {
+        final JsonArrayAccess access;
+        StreamArray(JsonArrayAccess access) {
+            if (access == null || access.size() < 0)
+                throw new IllegalArgumentException("Invalid streamed JSON array");
+            this.access = access;
+        }
+    }
+
+    private static final class MetadataCopyLedger {
+        long entries;
+        void add(int keyCount, int valueCount) {
+            if (keyCount < 0 || valueCount < 0 || entries > Long.MAX_VALUE - keyCount - valueCount)
+                throw new IllegalStateException("P07 target metadata copy count overflowed");
+            entries += (long)keyCount + valueCount;
+        }
+    }
+
+    private static final class StreamObject {
+        final String[] keys;
+        final Object[] values;
+        StreamObject(String[] keys, Object[] values) {
+            this(keys, values, null);
+        }
+        StreamObject(String[] keys, Object[] values, MetadataCopyLedger metadataCopies) {
+            if (keys == null || values == null || keys.length != values.length)
+                throw new IllegalArgumentException("Invalid streamed JSON object");
+            this.keys = keys; this.values = values;
+            if (metadataCopies != null) metadataCopies.add(keys.length, values.length);
+        }
+    }
+
+    private static final class StreamString {
+        final String value;
+        final int length;
+        StreamString(String value, int length) {
+            if (value == null || length < 0 || length > value.length())
+                throw new IllegalArgumentException("Invalid streamed JSON string slice");
+            this.value = value; this.length = length;
+        }
+    }
+
+    private abstract static class JsonFrame {
+        abstract String advance(JsonUtf8Stream stream);
+    }
+
+    private static final class JsonUtf8Stream {
+        private final ArrayList<JsonFrame> frames = new ArrayList<JsonFrame>();
+        private final Object root;
+        private String pendingFragment;
+        private int pendingFragmentOffset;
+        private boolean rootPending = true;
+        private boolean terminalEmptyPending;
+        private boolean done;
+        JsonUtf8Stream(Object root) {
+            if (root == null) throw new IllegalArgumentException("Missing streamed JSON root");
+            this.root = root;
+        }
+        byte[] nextChunk(int maximumBytes) {
+            if (maximumBytes < 1 || done)
+                throw new IllegalStateException("P07 target JSON stream is already complete");
+            if (terminalEmptyPending) {
+                terminalEmptyPending = false;
+                done = true;
+                return new byte[0];
+            }
+            java.io.ByteArrayOutputStream output = new java.io.ByteArrayOutputStream(maximumBytes);
+            while (output.size() < maximumBytes) {
+                if (pendingFragment == null) {
+                    pendingFragment = nextFragment();
+                    pendingFragmentOffset = 0;
+                    if (pendingFragment == null) {
+                        if (output.size() == 0) done = true;
+                        else terminalEmptyPending = true;
+                        break;
+                    }
+                    if (pendingFragment.length() == 0) {
+                        pendingFragment = null;
+                        continue;
+                    }
+                }
+                char current = pendingFragment.charAt(pendingFragmentOffset);
+                int codePoint;
+                int consumedChars = 1;
+                if (Character.isHighSurrogate(current)) {
+                    if (pendingFragmentOffset + 1 >= pendingFragment.length() ||
+                            !Character.isLowSurrogate(pendingFragment.charAt(pendingFragmentOffset + 1)))
+                        throw new IllegalArgumentException("Unpaired high surrogate in streamed P07 JSON");
+                    codePoint = Character.toCodePoint(current,
+                        pendingFragment.charAt(pendingFragmentOffset + 1));
+                    consumedChars = 2;
+                } else if (Character.isLowSurrogate(current)) {
+                    throw new IllegalArgumentException("Unpaired low surrogate in streamed P07 JSON");
+                } else {
+                    codePoint = current;
+                }
+                int encodedBytes = codePoint <= 0x7f ? 1 : codePoint <= 0x7ff ? 2 :
+                    codePoint <= 0xffff ? 3 : 4;
+                if (output.size() + encodedBytes > maximumBytes) {
+                    if (output.size() == 0)
+                        throw new IllegalArgumentException("UTF-8 chunk bound cannot hold the next code point");
+                    break;
+                }
+                if (encodedBytes == 1) {
+                    output.write(codePoint);
+                } else if (encodedBytes == 2) {
+                    output.write(0xc0 | (codePoint >>> 6));
+                    output.write(0x80 | (codePoint & 0x3f));
+                } else if (encodedBytes == 3) {
+                    output.write(0xe0 | (codePoint >>> 12));
+                    output.write(0x80 | ((codePoint >>> 6) & 0x3f));
+                    output.write(0x80 | (codePoint & 0x3f));
+                } else {
+                    output.write(0xf0 | (codePoint >>> 18));
+                    output.write(0x80 | ((codePoint >>> 12) & 0x3f));
+                    output.write(0x80 | ((codePoint >>> 6) & 0x3f));
+                    output.write(0x80 | (codePoint & 0x3f));
+                }
+                pendingFragmentOffset += consumedChars;
+                if (pendingFragmentOffset == pendingFragment.length()) {
+                    pendingFragment = null;
+                    pendingFragmentOffset = 0;
+                }
+            }
+            return output.toByteArray();
+        }
+        private String nextFragment() {
+            if (rootPending) {
+                rootPending = false;
+                pushValue(root);
+            }
+            while (!frames.isEmpty()) {
+                JsonFrame frame = frames.get(frames.size() - 1);
+                String fragment = frame.advance(this);
+                if (fragment != null) return fragment;
+            }
+            return null;
+        }
+        private void pushValue(Object value) {
+            if (value instanceof StreamObject) frames.add(new ObjectFrame((StreamObject)value));
+            else if (value instanceof StreamArray) frames.add(new ArrayFrame((StreamArray)value));
+            else if (value instanceof StreamString) frames.add(new StringFrame((StreamString)value));
+            else if (value instanceof String) frames.add(new StringFrame(new StreamString(
+                (String)value, ((String)value).length())));
+            else if (value == null || value instanceof Number || value instanceof Boolean)
+                frames.add(new ScalarFrame(value));
+            else throw new IllegalArgumentException("Unsupported streamed JSON value: " +
+                value.getClass().getName());
+        }
+        private void popFrame() { frames.remove(frames.size() - 1); }
+    }
+
+    private static final class ObjectFrame extends JsonFrame {
+        final StreamObject object;
+        int index;
+        boolean opened, awaitingChild, commaSent;
+        ObjectFrame(StreamObject object) { this.object = object; }
+        String advance(JsonUtf8Stream stream) {
+            if (!opened) { opened = true; return "{"; }
+            if (awaitingChild) awaitingChild = false;
+            if (index >= object.keys.length) { stream.popFrame(); return "}"; }
+            if (index > 0 && !commaSent) { commaSent = true; return ","; }
+            commaSent = false;
+            int current = index++;
+            awaitingChild = true;
+            stream.pushValue(object.values[current]);
+            return quote(object.keys[current]) + ":";
+        }
+    }
+
+    private static final class ArrayFrame extends JsonFrame {
+        final StreamArray array;
+        int index;
+        boolean opened, awaitingChild, commaSent;
+        ArrayFrame(StreamArray array) { this.array = array; }
+        String advance(JsonUtf8Stream stream) {
+            if (!opened) { opened = true; return "["; }
+            if (awaitingChild) awaitingChild = false;
+            if (index >= array.access.size()) { stream.popFrame(); return "]"; }
+            if (index > 0 && !commaSent) { commaSent = true; return ","; }
+            commaSent = false;
+            Object value = array.access.value(index++);
+            awaitingChild = true;
+            stream.pushValue(value);
+            return null;
+        }
+    }
+
+    private static final class ScalarFrame extends JsonFrame {
+        final String value;
+        boolean emitted;
+        ScalarFrame(Object value) { this.value = value == null ? "null" : value.toString(); }
+        String advance(JsonUtf8Stream stream) {
+            if (!emitted) { emitted = true; return value; }
+            stream.popFrame();
+            return null;
+        }
+    }
+
+    private static final class StringFrame extends JsonFrame {
+        private static final char[] HEX = "0123456789abcdef".toCharArray();
+        final StreamString value;
+        int index, state;
+        StringFrame(StreamString value) { this.value = value; }
+        String advance(JsonUtf8Stream stream) {
+            if (state == 0) { state = 1; return "\""; }
+            if (index < value.length) {
+                char current = value.value.charAt(index++);
+                if (current == '"' || current == '\\') return "\\" + current;
+                if (current < 0x20)
+                    return "\\u00" + HEX[(current >>> 4) & 15] + HEX[current & 15];
+                if (Character.isHighSurrogate(current)) {
+                    if (index >= value.length || !Character.isLowSurrogate(value.value.charAt(index)))
+                        throw new IllegalArgumentException("Unpaired high surrogate in streamed P07 JSON");
+                    char[] pair = {current, value.value.charAt(index++)};
+                    return new String(pair);
+                }
+                if (Character.isLowSurrogate(current))
+                    throw new IllegalArgumentException("Unpaired low surrogate in streamed P07 JSON");
+                return String.valueOf(current);
+            }
+            if (state == 1) { state = 2; return "\""; }
+            stream.popFrame();
+            return null;
+        }
+    }
+
+    private static StreamArray intArray(final int[] values) {
+        return new StreamArray(new JsonArrayAccess() {
+            public int size() { return values.length; }
+            public Object value(int index) { return Integer.valueOf(values[index]); }
+        });
+    }
+
+    private static StreamArray stringArray(final String[] values) {
+        return new StreamArray(new JsonArrayAccess() {
+            public int size() { return values.length; }
+            public Object value(int index) { return values[index]; }
+        });
+    }
     private static String snapshotJson(PcbLayerRoutingPrototype.BranchSnapshot snapshot) {
         if (snapshot == null) throw new IllegalStateException("Missing immutable P07 BranchSnapshot");
         JsonObject json = new JsonObject();
@@ -1883,6 +3847,13 @@ public final class ActualGeneratorBranchOrderStudy {
             }
         }
         return result.append('"').toString();
+    }
+    private static MessageDigest sha256Digest() {
+        try {
+            return MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException impossible) {
+            throw new IllegalStateException("SHA-256 is unavailable", impossible);
+        }
     }
     private static String sha256(byte[] value) {
         if (value == null) throw new IllegalArgumentException("Missing SHA-256 preimage");

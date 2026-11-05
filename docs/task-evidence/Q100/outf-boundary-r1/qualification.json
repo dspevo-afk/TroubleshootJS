@@ -1,0 +1,777 @@
+{
+  "schema": "q100-outf-publisher-boundary-qualification-v1",
+  "status": "ACCEPTED_FINITE_PUBLISHER_BOUNDARY_DIAGNOSTIC",
+  "sourceParent": "a1fa56f34e85e6f241993dcebd9e4c7e491ecda3",
+  "branch": "codex/q100-outf-boundary-20261105",
+  "layoutVersion": 26,
+  "dependencyEpoch": "tsj-generation-dependencies-v28",
+  "interpretation": "Actual found path rejected before publication by length quality guard; not a routing fix or whole-board impossibility proof.",
+  "sourceClosure": {
+    "base": {
+      "bytes": 87535768,
+      "contracts": 224,
+      "manifestBytes": 228856,
+      "manifestSha256": "92e4a3ba69de6a8666f9789e7facafb5d2a6d8461f42c0f2ccca8e95f7141e7b",
+      "production": 850,
+      "rows": 1080,
+      "static": 6
+    },
+    "studyInputs": 1084,
+    "compilerInputs": 1075,
+    "changedInputs": [
+      {
+        "bytes": 220326,
+        "path": "tests/qualification/rb100-layout/java/ActualGeneratorBranchOrderStudy.java",
+        "role": "WRITER",
+        "sha256": "a70f106a61500b289005620e54b3fedc7cab4051d3c90a80f6b9b05825e7dddb"
+      },
+      {
+        "bytes": 17690,
+        "path": "scripts/verify-rb100-branch-order-study.ps1",
+        "role": "HOST",
+        "sha256": "d330b60ab7b5749d075904077888e7a2cc98eb565c69a5449155b66ae42f8819"
+      },
+      {
+        "bytes": 94569,
+        "path": "tests/qualification/rb100-layout/branch-tree-study/read_branch_order_study.py",
+        "role": "READER",
+        "sha256": "95f390e79282f9c049ae171d547c02f06934219558527c63e951c51f637d6931"
+      },
+      {
+        "bytes": 14503,
+        "path": "docs/task-evidence/Q100/outf-boundary-r1/WIRE.md",
+        "role": "WIRE",
+        "sha256": "60f34fb75a5ea9c7eb8fee085fc625a251d1312ad5574fd3168de95f0df9dc93"
+      }
+    ],
+    "testInput": {
+      "bytes": 133877,
+      "sha256": "b66e68e511b76675774cfa1fb99b673792e6b3fb710eb8c3e82b54f8f1aaeaea"
+    },
+    "planSha256": "1c6e65b4c7c0002c0cb6c8e54f2a42118059281f0ad7008ffeec0adc478944fc",
+    "wireSha256": "60f34fb75a5ea9c7eb8fee085fc625a251d1312ad5574fd3168de95f0df9dc93",
+    "finalAudit": {
+      "path": "final-input-audit-r1/result.json",
+      "bytes": 1931,
+      "sha256": "8c3da25cbd55d5028b4a6f275d694f104e0dea81aec2266c6fbada1a548c43bf"
+    }
+  },
+  "authored": {
+    "mode": "AUTHORED",
+    "sourceManifestSha256": "0b2b2f620568ca7f69cafb76310f3a6c72c42e2247909731fb6a9274a9f24398",
+    "review": {
+      "path": "host-prep-r2/host-authored-v5-r1-root-review-v2.json",
+      "bytes": 82826,
+      "sha256": "3c17d4467175d287352bfafb5f0b0d6346da5e242e987b5aa3ca58b063a3c665"
+    },
+    "runId": "c509edbe-5111-4374-ba8f-5f8717991741",
+    "studyIndexSha256": "ea755c54ddca479d2ac293d9b9ffc8bd3fc3db8ada53116c7a4846b3b871533e",
+    "receipts": [
+      {
+        "path": "op-0.jsonl",
+        "bytes": 79519,
+        "sha256": "04ad30ce262c3200c8a69b8d2d4a2efe7e8dc14edb523257bf5345689e559773"
+      },
+      {
+        "path": "op-1.jsonl",
+        "bytes": 371047,
+        "sha256": "c55640c81dc80e2db113928ec0bbf14b970b6f1d178507ad28ced58891d5384d"
+      },
+      {
+        "path": "op-2.jsonl",
+        "bytes": 371043,
+        "sha256": "6867b5fe417af11639b6c9d8f0582916078bff0fbee7c7aebae50a606b1c7d60"
+      },
+      {
+        "path": "op-3.jsonl",
+        "bytes": 389344,
+        "sha256": "f4115c100d6d4638139c51ed2d05ff85e71e871c668d30fb11096ac6395d8725"
+      },
+      {
+        "path": "op-4.jsonl",
+        "bytes": 1239020,
+        "sha256": "e4518d6e5ff65677ffc7d1cd98fa158b5af6e3cdbda9fc0a609d7c46458e551f"
+      }
+    ],
+    "operations": [
+      {
+        "branchCount": 0,
+        "captureGroups": 0,
+        "cleanupNanos": 1387700,
+        "diagnosticUnits": 0,
+        "elapsedToCloseNanos": 9713637900,
+        "groups": 101,
+        "logicalWork": {
+          "diagnosticCloneSteps": 0,
+          "expansions": 918222,
+          "generatorAdvances": 98,
+          "p07OwnerSteps": 3005967,
+          "p07Slices": 92,
+          "routingOwnerSteps": 3005967
+        },
+        "maxFullGroupNanos": 1373930000,
+        "maxPerGroupP07Steps": 32768,
+        "operation": 0,
+        "publisherChunks": 0,
+        "publisherResults": 0
+      },
+      {
+        "branchCount": 308,
+        "captureGroups": 0,
+        "cleanupNanos": 497100,
+        "diagnosticUnits": 0,
+        "elapsedToCloseNanos": 9851846300,
+        "groups": 101,
+        "logicalWork": {
+          "diagnosticCloneSteps": 8,
+          "expansions": 918222,
+          "generatorAdvances": 98,
+          "p07OwnerSteps": 3005975,
+          "p07Slices": 92,
+          "routingOwnerSteps": 3005967
+        },
+        "maxFullGroupNanos": 954545700,
+        "maxPerGroupP07Steps": 32768,
+        "operation": 1,
+        "publisherChunks": 0,
+        "publisherResults": 0
+      },
+      {
+        "branchCount": 308,
+        "captureGroups": 0,
+        "cleanupNanos": 594700,
+        "diagnosticUnits": 0,
+        "elapsedToCloseNanos": 9337858500,
+        "groups": 101,
+        "logicalWork": {
+          "diagnosticCloneSteps": 8,
+          "expansions": 918222,
+          "generatorAdvances": 98,
+          "p07OwnerSteps": 3005975,
+          "p07Slices": 92,
+          "routingOwnerSteps": 3005967
+        },
+        "maxFullGroupNanos": 862087700,
+        "maxPerGroupP07Steps": 32768,
+        "operation": 2,
+        "publisherChunks": 0,
+        "publisherResults": 0
+      },
+      {
+        "branchCount": 326,
+        "captureGroups": 0,
+        "cleanupNanos": 465000,
+        "diagnosticUnits": 0,
+        "elapsedToCloseNanos": 9137665000,
+        "groups": 104,
+        "logicalWork": {
+          "diagnosticCloneSteps": 8,
+          "expansions": 997882,
+          "generatorAdvances": 101,
+          "p07OwnerSteps": 3108267,
+          "p07Slices": 95,
+          "routingOwnerSteps": 3108259
+        },
+        "maxFullGroupNanos": 692187200,
+        "maxPerGroupP07Steps": 32768,
+        "operation": 3,
+        "publisherChunks": 0,
+        "publisherResults": 0
+      },
+      {
+        "branchCount": 326,
+        "captureGroups": 180,
+        "cleanupNanos": 482200,
+        "diagnosticUnits": 4678657,
+        "elapsedToCloseNanos": 9760652000,
+        "groups": 284,
+        "logicalWork": {
+          "diagnosticCloneSteps": 8,
+          "expansions": 997882,
+          "generatorAdvances": 101,
+          "p07OwnerSteps": 3108267,
+          "p07Slices": 95,
+          "routingOwnerSteps": 3108259
+        },
+        "maxFullGroupNanos": 905946800,
+        "maxPerGroupP07Steps": 32768,
+        "operation": 4,
+        "publisherChunks": 137,
+        "publisherResults": 1
+      }
+    ],
+    "target": {
+      "branch": {
+        "branchRecordGroup": 57,
+        "foundTerminalPadId": "CSTORE_F.2",
+        "netId": "OUT_F",
+        "netVectorPosition": 28,
+        "ordinal": 248,
+        "reachedPadIds": [
+          "CSTORE_F.2"
+        ],
+        "rootPadId": "CSTORE_F.2",
+        "startPadId": "RSH_F.1"
+      },
+      "context": {
+        "attempt": 4,
+        "operation": 4,
+        "pass": 1,
+        "placementSeed": "-6587958367974952701",
+        "placementSha256": "6553ad3df059c6bfe2980efe39ff951d3f6322fc0694b2c96e26508f8d3dfe2e",
+        "request": 0,
+        "rootSeed": "9007199254740993",
+        "routingSeed": "8445301674744508279",
+        "sourceManifestSha256": "0b2b2f620568ca7f69cafb76310f3a6c72c42e2247909731fb6a9274a9f24398"
+      },
+      "derivationScope": "Raw-path guard arithmetic repeated here; full target semantics remain with pinned independent reader.",
+      "derivedGuard": {
+        "anyRejectPredicate": true,
+        "bends": 4,
+        "direct": 320,
+        "lastDirection": 2,
+        "length": 1700,
+        "predicates": {
+          "bendsOver16": false,
+          "directZero": false,
+          "lengthOverThreeTimesDirect": true
+        }
+      },
+      "geometry": {
+        "after": {
+          "bytes": 271606,
+          "holes": 48,
+          "sha256": "cbc98315295693be7cddc31d0327f6f89e5819fedb2b4ad1d65a25e7decc2739",
+          "traces": 180
+        },
+        "before": {
+          "bytes": 271606,
+          "holes": 48,
+          "sha256": "cbc98315295693be7cddc31d0327f6f89e5819fedb2b4ad1d65a25e7decc2739",
+          "traces": 180
+        }
+      },
+      "ordering": {
+        "finalizedAfter": 0,
+        "finalizedBefore": 0,
+        "finalizerStatus": "NOT_REACHED",
+        "lastFailureDetail": null,
+        "readyLayoutToken": null,
+        "readyPass": null,
+        "routerReason": "OUT_F:BRANCH_QUALITY_LIMIT",
+        "routerStatus": "ROUTER_REJECTED"
+      },
+      "outcome": "REJECTED",
+      "pathNodes": 171,
+      "payloadBytes": 557331,
+      "payloadSha256": "c9c88b1f8853cbb6ea805ee0835a824b613fd4568dc0e8a4061c39709627edae",
+      "publisher": {
+        "outcome": "REJECTED",
+        "qualityIndex": 171,
+        "reason": "OUT_F:BRANCH_QUALITY_LIMIT",
+        "reversedSize": 171,
+        "segments": 0,
+        "sourceHandoff": false,
+        "stage": 1,
+        "startReachedAfter": false,
+        "storedBends": 4,
+        "storedLastDirection": 2,
+        "storedLength": 1700
+      },
+      "transitions": 0
+    },
+    "processes": {
+      "compiler-process.json": {
+        "processId": 20856,
+        "processStartTicks": "639294996960973092",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "5a63604761c45d7d50b0b1b6e3a6128b43a62a0f527e6e88a33f9b8609b0d017"
+      },
+      "java-version-process.json": {
+        "processId": 2200,
+        "processStartTicks": "639294996956355197",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "1cc134eee0b09c82ff01739623f30b95dcd265223e8377d051fa0b4ac3c6cfa3"
+      },
+      "javac-version-process.json": {
+        "processId": 9284,
+        "processStartTicks": "639294996957619065",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "093d38b1803630d161f7efde8eaa306c6caa951a692e87dfa3c3d5e394872baf"
+      },
+      "native-process.json": {
+        "processId": 20208,
+        "processStartTicks": "639294997209832963",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stdoutSha256": "e9c2bc3f0108f374095515c05d9fd0c59063f8ff596ea4086eda5b3b2b696973",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "post-source-process.json": {
+        "processId": 34460,
+        "processStartTicks": "639294997689903273",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stdoutSha256": "083f0fe978d7ff42f5ab86865ac7b993b4bae910cdd075061088d2f472a761ad",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "pre-launch-source-process.json": {
+        "processId": 30852,
+        "processStartTicks": "639294997032136965",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stdoutSha256": "083f0fe978d7ff42f5ab86865ac7b993b4bae910cdd075061088d2f472a761ad",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "reader-process.json": {
+        "processId": 26192,
+        "processStartTicks": "639294998075932415",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "source-preflight-process.json": {
+        "processId": 11344,
+        "processStartTicks": "639294996782112909",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stdoutSha256": "083f0fe978d7ff42f5ab86865ac7b993b4bae910cdd075061088d2f472a761ad",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "toolPins": {
+      "executableSha256": "e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce",
+      "compilerExecutableSha256": "61fa6463ee5b59004719b9833a16b148740cfa9f2d1f5a95ca598cc90be04c64",
+      "powershellExecutableSha256": "60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f",
+      "isolationModuleSha256": "fb07ad540e22a225a11b8a12e9dc8e5a20d88f58f89cf32a5fd347613530954c"
+    },
+    "timing": {
+      "nativeEnvelopeNanos": 86583157900,
+      "nativeMinusArmUpperNanos": 38781498200,
+      "outerIncludingChildTeardownSeconds": 148.19052489999999,
+      "allNonArmUpperNanos": 100388865200,
+      "exactCleanup": "NOT_EXPORTED",
+      "finalReceiptClose": "NOT_EXPORTED"
+    },
+    "scratchRemoved": true
+  },
+  "tiny": {
+    "mode": "TINY_CANARY",
+    "sourceManifestSha256": "a92aded6e38882dbd534157488a9d3bbbb998d351c0ca2c662412689acafe7de",
+    "review": {
+      "path": "host-prep-r2/host-tiny-v5-r3-root-review-v2.json",
+      "bytes": 54850,
+      "sha256": "ac031809f55451a7c3849b02b7c002c91619a118a3d2b86629cddba1f5131bf3"
+    },
+    "runId": "8574da2b-17d8-4955-bc33-e30e28ef96c6",
+    "studyIndexSha256": "7089ca6d3d98a1ff10caa506249943ddb6ab6249d1d0c5ff248a1e1e00772e9f",
+    "receipts": [
+      {
+        "path": "op-0.jsonl",
+        "bytes": 43106,
+        "sha256": "685cad2b8fa7388f0b82f7ba18efacaaf65a728cc6dcba151d701704eaf2666c"
+      },
+      {
+        "path": "op-1.jsonl",
+        "bytes": 317042,
+        "sha256": "9dcf00bdd030f33d57d0bc51a0ea1721e9adbcfefab149f88f8a2948c8cc75fc"
+      },
+      {
+        "path": "op-2.jsonl",
+        "bytes": 317036,
+        "sha256": "26a014d32ae2c4dc655a24aea5b34b0ba8112672a5b93702aa87bff0512b5012"
+      },
+      {
+        "path": "op-3.jsonl",
+        "bytes": 316594,
+        "sha256": "99dd6ed1f92eb0a71959571db3cd10790fecfe43af24246da1e893ed953dea6f"
+      },
+      {
+        "path": "op-4.jsonl",
+        "bytes": 733030,
+        "sha256": "9ec2be480d5b7faa8f208e51ce915ddfe80b03f7cb5754ce5f08e10c95651999"
+      }
+    ],
+    "operations": [
+      {
+        "branchCount": 0,
+        "captureGroups": 0,
+        "cleanupNanos": 225100,
+        "diagnosticUnits": 0,
+        "elapsedToCloseNanos": 3909835100,
+        "groups": 53,
+        "logicalWork": {
+          "diagnosticCloneSteps": 0,
+          "expansions": 669398,
+          "generatorAdvances": 50,
+          "p07OwnerSteps": 1352198,
+          "p07Slices": 44,
+          "routingOwnerSteps": 1352198
+        },
+        "maxFullGroupNanos": 750537000,
+        "maxPerGroupP07Steps": 32768,
+        "operation": 0,
+        "publisherChunks": 0,
+        "publisherResults": 0
+      },
+      {
+        "branchCount": 291,
+        "captureGroups": 0,
+        "cleanupNanos": 23300,
+        "diagnosticUnits": 0,
+        "elapsedToCloseNanos": 3806035200,
+        "groups": 53,
+        "logicalWork": {
+          "diagnosticCloneSteps": 4,
+          "expansions": 669398,
+          "generatorAdvances": 50,
+          "p07OwnerSteps": 1352202,
+          "p07Slices": 44,
+          "routingOwnerSteps": 1352198
+        },
+        "maxFullGroupNanos": 389182100,
+        "maxPerGroupP07Steps": 32768,
+        "operation": 1,
+        "publisherChunks": 0,
+        "publisherResults": 0
+      },
+      {
+        "branchCount": 291,
+        "captureGroups": 0,
+        "cleanupNanos": 26900,
+        "diagnosticUnits": 0,
+        "elapsedToCloseNanos": 3532455900,
+        "groups": 53,
+        "logicalWork": {
+          "diagnosticCloneSteps": 4,
+          "expansions": 669398,
+          "generatorAdvances": 50,
+          "p07OwnerSteps": 1352202,
+          "p07Slices": 44,
+          "routingOwnerSteps": 1352198
+        },
+        "maxFullGroupNanos": 399561000,
+        "maxPerGroupP07Steps": 32768,
+        "operation": 2,
+        "publisherChunks": 0,
+        "publisherResults": 0
+      },
+      {
+        "branchCount": 291,
+        "captureGroups": 0,
+        "cleanupNanos": 26600,
+        "diagnosticUnits": 0,
+        "elapsedToCloseNanos": 3739639400,
+        "groups": 52,
+        "logicalWork": {
+          "diagnosticCloneSteps": 4,
+          "expansions": 666877,
+          "generatorAdvances": 49,
+          "p07OwnerSteps": 1323718,
+          "p07Slices": 43,
+          "routingOwnerSteps": 1323714
+        },
+        "maxFullGroupNanos": 329262600,
+        "maxPerGroupP07Steps": 32768,
+        "operation": 3,
+        "publisherChunks": 0,
+        "publisherResults": 0
+      },
+      {
+        "branchCount": 291,
+        "captureGroups": 91,
+        "cleanupNanos": 25500,
+        "diagnosticUnits": 2233519,
+        "elapsedToCloseNanos": 4042066200,
+        "groups": 143,
+        "logicalWork": {
+          "diagnosticCloneSteps": 4,
+          "expansions": 666877,
+          "generatorAdvances": 49,
+          "p07OwnerSteps": 1323718,
+          "p07Slices": 43,
+          "routingOwnerSteps": 1323714
+        },
+        "maxFullGroupNanos": 451905500,
+        "maxPerGroupP07Steps": 32768,
+        "operation": 4,
+        "publisherChunks": 67,
+        "publisherResults": 1
+      }
+    ],
+    "target": {
+      "branch": {
+        "branchRecordGroup": 26,
+        "foundTerminalPadId": "C5.2",
+        "netId": "CTRL_RETURN",
+        "netVectorPosition": 0,
+        "ordinal": 97,
+        "reachedPadIds": [
+          "C5.2"
+        ],
+        "rootPadId": "C5.2",
+        "startPadId": "CIN.-"
+      },
+      "context": {
+        "attempt": 4,
+        "operation": 4,
+        "pass": 1,
+        "placementSeed": "5526715536693200536",
+        "placementSha256": "2ee4b0a3416a6a278cc7730c4e8387f0f6064051e6be8e3e61da69ea6955589f",
+        "request": 0,
+        "rootSeed": "42",
+        "routingSeed": "4493419427463069983",
+        "sourceManifestSha256": "a92aded6e38882dbd534157488a9d3bbbb998d351c0ca2c662412689acafe7de"
+      },
+      "derivationScope": "Raw-path guard arithmetic repeated here; full target semantics remain with pinned independent reader.",
+      "derivedGuard": {
+        "anyRejectPredicate": false,
+        "bends": 2,
+        "direct": 240,
+        "lastDirection": 2,
+        "length": 280,
+        "predicates": {
+          "bendsOver16": false,
+          "directZero": false,
+          "lengthOverThreeTimesDirect": false
+        }
+      },
+      "geometry": {
+        "after": {
+          "bytes": 134371,
+          "holes": 0,
+          "sha256": "f3521c99ac5b4bf239add5ab6d353f021d5203d36ec7f2e0ef8a8bba80c16db9",
+          "traces": 1
+        },
+        "before": {
+          "bytes": 134269,
+          "holes": 0,
+          "sha256": "2ee4b0a3416a6a278cc7730c4e8387f0f6064051e6be8e3e61da69ea6955589f",
+          "traces": 0
+        }
+      },
+      "ordering": {
+        "finalizedAfter": 2,
+        "finalizedBefore": 1,
+        "finalizerStatus": "FINALIZED",
+        "lastFailureDetail": null,
+        "readyLayoutToken": 5,
+        "readyPass": 1,
+        "routerReason": "NO_PATH",
+        "routerStatus": "READY"
+      },
+      "outcome": "PUBLISHED",
+      "pathNodes": 29,
+      "payloadBytes": 272135,
+      "payloadSha256": "4d89cbd0019d43de41a1afb921464bcb24260146001e2b8ae0f8e0c81f9606b6",
+      "publisher": {
+        "outcome": "PUBLISHED",
+        "qualityIndex": 29,
+        "reason": null,
+        "reversedSize": 29,
+        "segments": 28,
+        "sourceHandoff": true,
+        "stage": 6,
+        "startReachedAfter": true,
+        "storedBends": 2,
+        "storedLastDirection": 2,
+        "storedLength": 280
+      },
+      "transitions": 0
+    },
+    "processes": {
+      "compiler-process.json": {
+        "processId": 16172,
+        "processStartTicks": "639294987597642522",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "5a63604761c45d7d50b0b1b6e3a6128b43a62a0f527e6e88a33f9b8609b0d017"
+      },
+      "java-version-process.json": {
+        "processId": 38412,
+        "processStartTicks": "639294987590848227",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "1cc134eee0b09c82ff01739623f30b95dcd265223e8377d051fa0b4ac3c6cfa3"
+      },
+      "javac-version-process.json": {
+        "processId": 25928,
+        "processStartTicks": "639294987593523734",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "093d38b1803630d161f7efde8eaa306c6caa951a692e87dfa3c3d5e394872baf"
+      },
+      "native-process.json": {
+        "processId": 26144,
+        "processStartTicks": "639294987843548865",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stdoutSha256": "e9c2bc3f0108f374095515c05d9fd0c59063f8ff596ea4086eda5b3b2b696973",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "post-source-process.json": {
+        "processId": 1976,
+        "processStartTicks": "639294988035872826",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stdoutSha256": "5ad8db0b6939b86a21acd3d0c8f2cb2999e20887503e1a6abf3c12a275c27230",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "pre-launch-source-process.json": {
+        "processId": 37856,
+        "processStartTicks": "639294987665488446",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stdoutSha256": "5ad8db0b6939b86a21acd3d0c8f2cb2999e20887503e1a6abf3c12a275c27230",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "reader-process.json": {
+        "processId": 27440,
+        "processStartTicks": "639294988414181161",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "source-preflight-process.json": {
+        "processId": 2920,
+        "processStartTicks": "639294987404951859",
+        "exitCode": 0,
+        "terminationProven": true,
+        "stdoutSha256": "5ad8db0b6939b86a21acd3d0c8f2cb2999e20887503e1a6abf3c12a275c27230",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "toolPins": {
+      "executableSha256": "e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce",
+      "compilerExecutableSha256": "61fa6463ee5b59004719b9833a16b148740cfa9f2d1f5a95ca598cc90be04c64",
+      "powershellExecutableSha256": "60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f",
+      "isolationModuleSha256": "fb07ad540e22a225a11b8a12e9dc8e5a20d88f58f89cf32a5fd347613530954c"
+    },
+    "timing": {
+      "nativeEnvelopeNanos": 57036465100,
+      "nativeMinusArmUpperNanos": 38006433300,
+      "outerIncludingChildTeardownSeconds": 119.31554759999999,
+      "allNonArmUpperNanos": 100285515800,
+      "exactCleanup": "NOT_EXPORTED",
+      "finalReceiptClose": "NOT_EXPORTED"
+    },
+    "scratchRemoved": true
+  },
+  "readerUnits": {
+    "status": "PASS",
+    "methods": 68,
+    "testElapsedSeconds": 18.383,
+    "outerIncludingProcessCleanupSeconds": 18.8184733,
+    "exactCleanup": "NOT_EXPORTED",
+    "evidence": {
+      "path": "reader-units-v5-r6/result.json",
+      "bytes": 274,
+      "sha256": "b597cae0cd02860614730b2591992e534b443b3a524fc7e84131e1731a3dbcb6"
+    }
+  },
+  "actualCli": {
+    "status": "PASS",
+    "controls": 32,
+    "positives": 4,
+    "negatives": 27,
+    "junction": 1,
+    "outerIncludingPreparationAndJunctionCleanupSeconds": 15.985717699999999,
+    "evidence": {
+      "path": "cli-prep-r2/runs/cli-v5-r4/result.json",
+      "bytes": 34413,
+      "sha256": "c87e5b0660e83e7a1972fdb054eeec4aa9234fb73057e1452cdf13247addc5db"
+    }
+  },
+  "actualSelectedHostControls": [
+    {
+      "name": "wrong-manifest-v5-final-r3",
+      "status": "PASS_ACTUAL_PRE_NAMESPACE_WRONG_MANIFEST_REJECTION_ONLY",
+      "evidence": {
+        "path": "host-prep-r2/wrong-manifest-v5-final-r3/result.json",
+        "bytes": 521,
+        "sha256": "4715cd567e5cc512e2293486916f54ed9cac51b171c8159bbbd58294381a16b9"
+      }
+    },
+    {
+      "name": "wrong-source-v5-final-r3",
+      "status": "PASS_ACTUAL_RAW_SOURCE_PREFLIGHT_REJECTION_AND_SCRATCH_CLEANUP_ONLY",
+      "evidence": {
+        "path": "host-prep-r2/wrong-source-v5-final-r3/result.json",
+        "bytes": 822,
+        "sha256": "1d0537fa899c04bcd06148871a43badf75bc0746d5258b2dcb0d2e327315c749"
+      }
+    },
+    {
+      "name": "wrong-bridge-v5-final-r4",
+      "status": "PASS_ACTUAL_WRONG_BRIDGE_REJECTION_AND_OWNED_SCRATCH_CLEANUP_ONLY",
+      "evidence": {
+        "path": "host-prep-r2/wrong-bridge-v5-final-r4/result.json",
+        "bytes": 944,
+        "sha256": "78e225a775711b53950ad898a8c3c827be961dac07288603a9243191164d544f"
+      }
+    }
+  ],
+  "reusedProductionEvidence": {
+    "status": "UNCHANGED_INPUT_REUSE_ONLY",
+    "nativeInputs": 1080,
+    "productionInputRowsPerVariant": 1202,
+    "playerInputDigest": "b6e91f8b4bd7dc9f8964b3f3237ece9ddadcba480c7ce63ac7687a89e54c657b",
+    "developerInputDigest": "c58c1f21833586f253901cc87558d405c7edca367e2764d0201d0822e8ece85b",
+    "newGwtBuild": "NOT_RUN",
+    "compiledDefaultElectricalNormal3": "NOT_RUN",
+    "visiblePlayer": "NOT_APPLICABLE_RECORDER_ONLY"
+  },
+  "budgets": {
+    "operationNanos": 90000000000,
+    "groups": 640,
+    "groupNanos": 5000000000,
+    "p07StepsPerSlice": 32768,
+    "cleanupNanos": 120000000000,
+    "nativeNanos": 480000000000,
+    "outerNanos": 1800000000000,
+    "requestExpansions": 1000000,
+    "branchExpansions": 100000,
+    "cells": 250000,
+    "holes": 48,
+    "transitions": 4,
+    "orderings": 3,
+    "newSnapshotEntries": 1048576,
+    "captureUnitsPerGroup": 32768
+  },
+  "limits": {
+    "productionChange": false,
+    "defaultAdoption": false,
+    "layoutQualification": false,
+    "physicalAccessFunctionalSolvability": "NOT_RUN",
+    "playable100": 0,
+    "beta": "HELD",
+    "full30": "OWNER_EXCLUDED",
+    "hardPsychotic": "UNAVAILABLE_UNRUN",
+    "protectedHard": "UNREAD_UNRUN_IN_THIS_SCOPE_HISTORICAL_UNREAD_UNCERTIFIED"
+  },
+  "resources": {
+    "successfulScratch": "REMOVED_WITH_PROOF",
+    "failedCompileScratch": "RETAINED_AS_EVIDENCE",
+    "wrongKindControlScratch": "REMOVED_WITH_PROOF",
+    "browserPreview": "NOT_STARTED",
+    "oldUncertainE06R1": "PRESERVED_NOT_REVALIDATED"
+  },
+  "next": "Analyze the exact captured OUT_F path and earlier prefix ownership before freezing a bounded generic earlier-routing treatment; no limit increase or adoption implied.",
+  "integratedReview": {
+    "root": "PASS_ACTUAL_DIFF_AND_DIFF_CHECK",
+    "independent": "PASS_SOURCE_REVIEW",
+    "scope": "Final writer/reader/tests/host versus frozen PLAN/WIRE; identity, op3/4 semantics parity, path/Publisher truth and bounded lifecycle; no runtime by reviewer.",
+    "gateAuthority": "Actual fresh gates were run and reviewed by root; source review grants no runtime proof."
+  }
+}

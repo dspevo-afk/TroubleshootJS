@@ -1,4 +1,54 @@
-# Current checkpoint: private net-priority negative published; OUT_F diagnosis next
+# Current checkpoint: OUT_F diagnostic locally accepted; publication pending
+
+UTC2026-11-05. Active Z=OS-temp/tsj-q100-outf-boundary-20261105-r1,
+branch codex/q100-outf-boundary-20261105; HEAD/source parent
+a1fa56f34e85e6f241993dcebd9e4c7e491ecda3. QZ=OS-temp/tsj-q100-fixed-prefix-
+capture-840a8ef24dbb448f830d2786a95a1591/outf-boundary-r1.
+[Accepted diagnostic](task-evidence/Q100/outf-boundary-r1/README.md),
+[qualification](task-evidence/Q100/outf-boundary-r1/qualification.json),
+[preserved failures](task-evidence/Q100/outf-boundary-r1/FAILURES.md).
+No production source/default/epoch change. Final writer a70f106a, reader95f390e7,
+hostd330b60a, testsb66e68e5, PLAN1c6e65b4/WIRE60f34fb7 (full pins in packet).
+
+Exact authored root9007199254740993/place-6587958367974952701/route8445301674744508279,
+request0/attempt4/pass1/ordinal248/group57/OUT_F/RSH_F.1/root-terminalCSTORE_F.2:
+171 actual nodes, length1700/direct320/bends4/zero transitions. Actual Publisher
+stage1 REJECTED OUT_F:BRANCH_QUALITY_LIMIT, zero segments/no handoff/unreached.
+Only length>3*direct is true. Geometry180traces/48holes/271606bytes, SHA
+cbc98315295693be7cddc31d0327f6f89e5819fedb2b4ad1d65a25e7decc2739 unchanged.
+ROUTER_REJECTED/finalizerNOT_REACHED0->0. All4requests reject; playable100 stays0.
+Arm3/4 complete vectors/branch semantics/request/work/geometry match; only charged
+capture transport groups shift. No route fix/adoption or impossibility inference.
+
+PASS preceding tiny actual publication29nodes/280len/240direct/2bends/stage6,
+one trace/READYpass1/finalized1->2. PASS final units68,actual CLI32, final selected
+PS5 manifest/source/bridge negatives, both JDK8 compile1075/native five-arm/readers,
+separate root raw path/guard/geometry/process/source/report/cleanup review. Authored
+source manifest0b2b2f620568ca7f69cafb76310f3a6c72c42e2247909731fb6a9274a9f24398;
+tiny a92aded6e38882dbd534157488a9d3bbbb998d351c0ca2c662412689acafe7de.
+Authored outer148.1905249s/native86.5831579s/all-nonarm upper100.3888652s<120;
+tiny outer119.3155476s/all-nonarm upper100.2855158s<120. Exact cleanup and final
+receipt close NOT_EXPORTED. Original time/work/file caps retained. R4 new snapshot
+cap1048576 preceded v5 data runtime; CAPTURE remains32768 units/group.
+
+Final source audit1080 native/1202 production pervariant equals accepted inputs
+in Z and clean Y. Prior finite production evidence reused only on that boundary;
+no fresh GWT/compiled/default/electrical/normal3/full30 proof. Visible Player N/A.
+Earlier units/CLI wrapper/compile/parity/control-orchestration failures preserved.
+Successful scratch and failed wrong-kind scratch removed with proof; failed
+compile scratch retained as evidence. No browser/preview started. Old uncertain
+E06R1 consumed-close resources unchanged/unresolved. Main9tracked/6untracked/0staged,
+Desktop7/73/0 and clean Y donor at a1fa preserved (final census still due).
+HARD/PSYCHOTIC unavailable/unrun; protected bodies unread/unrun here, historical
+unread UNCERTIFIED. Full30 owner-excluded; only3approved development roots allowed
+if later needed. Playable100=0/betaHELD; physical/access/functional/solvability pending.
+
+Next: finish integrated source/diff/staged review, normal commit/push/exact remote
+verification and one completion Gmail. No publication/email for this scope yet.
+Then exact OUT_F path/earlier-prefix ownership analysis before a frozen generic
+routing treatment; no limit rise/adoption implied by this negative result.
+
+# Historical checkpoint: private net-priority experiment published
 
 UTC2026-11-05. Active Y=OS-temp/tsj-q100-net-priority-20261105-r1,
 branch codex/q100-net-priority-20261105. Accepted implementation/candidate

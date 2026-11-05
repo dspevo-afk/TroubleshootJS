@@ -270,7 +270,7 @@ physical-oracle owners. Its separate PS5/JDK8 host closes source/tool/bridge
 inputs before launch and requires independent reading plus root process review.
 No production default,epoch or Player surface changes.
 
-The current [v4 wire](task-evidence/Q100/net-priority-r1/WIRE.md) replaces the
+The preceding [v4 wire](task-evidence/Q100/net-priority-r1/WIRE.md) replaced the
 farthest arm with minimum-pair net ordering and canonical nearest branches. Its
 NET_ORDER record captures the actual installed Search vector and pristine
 placement at the optional callback boundary. The independent reader reconstructs
@@ -281,7 +281,22 @@ establish the copper prefix of a later differing branch or a playable layout.
 Raw preparation work remains charged. Current native source closure is1080 base
 inputs plus writer, host, reader and wire, with the exact base pinned by the
 reader. Historical v1/v3 packets retain their own source-bound acceptance;
-current headers reject those older formats.
+current v5 headers reject versions1 through4.
+
+The current [v5 diagnostic](task-evidence/Q100/outf-boundary-r1/README.md) adds a
+matching fifth minimum-pair arm, recording the actual selected FOUND Node chain
+and its actual Publisher through existing native reflection/observer boundaries.
+No production hook is added. Native identity equality binds the generator Session,
+route, Search, BranchSearch, Node and Publisher; temporary identity registries and
+graph references are released before serialization. The recorder samples actual
+pre/post fingerprint strings and raw geometry, Publisher stage/quality/handoff,
+router READY/rejection and causal finalizer transition. Charged bounded CAPTURE
+groups serialize canonical chunks; the strict reader recomputes path/guard,
+geometry fingerprints/deltas, accounting and original request outcome. Only the
+operation3/4 cross-arm comparison excludes transport operation/group IDs;
+all semantic fields and individual group authority remain checked. A tiny actual
+published path qualifies the observation path before the authored quality reject.
+This private evidence closes no production routing or playable100 qualification.
 
 Cap17 and cost240 qualifier v2 input specs require a relative
 `frozenOracleDirectory` for the retained 1079-input graph oracle. These readers
