@@ -1,6 +1,9 @@
 # Source-bound branch-order report reader
 
-Status: locally validated reader/wire prerequisite; publication pending.
+Status: accepted reader/wire prerequisite. Implementation
+ac6543321860e7032cb3a884d99cb0d26a0eeb57 was normally pushed to
+origin/codex/q100-physical-feasibility and exact remote SHA verified.
+Completion Gmail 1a1aa7d776d0a009 SENT ONCE; no second email for the receipt.
 No authored operation,Java study producer or new JDK8 driver has run. Playable100
 remains0 and beta remains held. This packet implements the reader substep in
 [PLAN.md](PLAN.md); [WIRE.md](WIRE.md) freezes report protocolv1.
@@ -76,6 +79,11 @@ timing metadata containing legitimate floats. Only that external helper was
 corrected; the wire/reader remained strict and the complete fresh audit passes.
 Two source-review findings were fixed before final tests/controls; no pre-fix
 PASS is reused for the changed behavior.
+
+After publication,the receipt helper's implicit Windows text encoding failed on
+the historical report. Its two partially rewritten task documents were preserved
+externally and restored from the published commit,then updated with explicit
+UTF-8. The corrected narrow diff passes; tested reader/protocol bytes never changed.
 
 Next: implement the isolated actual-generator Java producer and selected PS5/JDK8
 driver,freeze their complete source/tool/native-bridge inventory,and run real tiny

@@ -1,8 +1,11 @@
-# Current checkpoint: branch-order reader prerequisite validated; publication pending
+# Current checkpoint: branch-order reader prerequisite published; producer next
 
 UTC2026-11-05. Active X=OS-temp/tsj-q100-branch-tree-study-20261105-r1,
-branch codex/q100-branch-tree-study-20261105, HEAD/sourceparent
-273c7fce3b98ab68a83fc5ea395dba523a48a561. No new commit/push/Gmail yet.
+branch codex/q100-branch-tree-study-20261105, sourceparent
+273c7fce3b98ab68a83fc5ea395dba523a48a561. Accepted implementation/candidate
+ac6543321860e7032cb3a884d99cb0d26a0eeb57; documentation receipt follows.
+Normal push to origin/codex/q100-physical-feasibility exact-SHA verified.
+Completion Gmail 1a1aa7d776d0a009 SENT ONCE; do not resend for either commit.
 QX=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/
 branch-tree-study-r1. See branch-tree-study-r1/README.md and qualification.json.
 Reader prerequisite only; no Java producer/new PS5-JDK8 driver/authored study ran.
@@ -38,9 +41,9 @@ canonical readers,builds,privacy/Current9/E06StateR2/normal-development3. No fre
 native/GWT/Player/population gate or full30/full2-by-31 renewal. No Player flow
 change; visible input/screenshots NOT_APPLICABLE. No epoch/default/budget change.
 
-Next: root integrated/staged diff/privacy checks,normal commit/push to established
-origin/codex/q100-physical-feasibility,exact remote SHA proof and one new completion
-Gmail; then isolated actual-generator Java producer/selected PS5-JDK8 driver,
+Root integrated/staged diff,explicit11-path/frozen-raw-byte/privacy checks PASS;
+qualification and reader bytes preserved in Git. X clean after implementation.
+Next: isolated actual-generator Java producer/selected PS5-JDK8 driver,
 complete source/tool/bridge freeze and real tiny controls before authored execution.
 Exact authored separate root9007199254740993/layout-6587958367974952701/
 route8445301674744508279/request0/attempt4 only; unchanged90s/640/5s/32768 and
