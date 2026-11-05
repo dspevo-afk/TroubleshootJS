@@ -1,6 +1,8 @@
 # P07 branch-order diagnostic prerequisite
 
-Status: **LOCALLY ACCEPTED SOURCE/LIFECYCLE PREREQUISITE** (2026-11-05); publication pending.
+Status: **ACCEPTED AND PUBLISHED SOURCE/LIFECYCLE PREREQUISITE** (2026-11-05).
+Implementation `4e8248a9d4f01bf3b0ae1bf0bb646772deaf480f` normally pushed/exact remote verified;
+completion Gmail `1a1aa2d370b5b1b5` sent once. See [publication.md](publication.md).
 This is the source and lifecycle prerequisite permitted by the frozen [R2 plan](PLAN.md).
 The actual authored baseline/control/treatment study is **NOT RUN**. Playable100
 remains0 and public beta remains held.

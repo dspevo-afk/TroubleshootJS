@@ -217,6 +217,13 @@
     "ambient8928": "UNTOUCHED",
     "otherWorktrees": "PRESERVED"
   },
-  "publication": "PENDING_NORMAL_COMMIT_PUSH_AND_ONE_COMPLETION_GMAIL",
+  "publication": {
+    "status": "NORMAL_PUSH_EXACT_REMOTE_VERIFIED_GMAIL_SENT_ONCE",
+    "implementationSha": "4e8248a9d4f01bf3b0ae1bf0bb646772deaf480f",
+    "message": "Add bounded P07 branch-order diagnostic controls",
+    "remote": "origin/codex/q100-physical-feasibility",
+    "completionGmailId": "1a1aa2d370b5b1b5",
+    "receiptEmail": "NOT_REQUIRED_DO_NOT_DUPLICATE"
+  },
   "nextUnstarted": "Freeze authored actual-generator branch-order wire/reader and execute bounded controls/treatment"
 }

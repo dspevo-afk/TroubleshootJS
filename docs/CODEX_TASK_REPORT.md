@@ -1,11 +1,13 @@
-# Current checkpoint: branch-order prerequisite locally accepted; publication pending
+# Current checkpoint: branch-order prerequisite published; authored wire next
 
 UTC2026-11-05. Active V=OS-temp/tsj-q100-branch-tree-order-20261104-r1,
-branch codex/q100-branch-tree-order-20261104, HEAD/sourceparent
-21e990e128b6f374da0cba3bbfd680b951f1b2cf. External QV=OS-temp/
+branch codex/q100-branch-tree-order-20261104, sourceparent
+21e990e128b6f374da0cba3bbfd680b951f1b2cf. Accepted implementation/candidate
+4e8248a9d4f01bf3b0ae1bf0bb646772deaf480f; documentation receipt follows it. External QV=OS-temp/
 tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/branch-tree-order-r1.
-No new commit, push or completion email yet. Required source/lifecycle gates PASS;
-root integrated publication review underway. See the branch-tree-order-r1 packet.
+Normal push to origin/codex/q100-physical-feasibility exact-SHA verified.
+Completion Gmail 1a1aa2d370b5b1b5 SENT ONCE; never resend for this milestone.
+Required source/lifecycle gates and root integrated/staged reviews PASS. See the branch-tree-order-r1 packet.
 
 Scope is the source/unit prerequisite explicitly allowed by frozen PLAN R2
 SHA2a135f6751dc77fb0bdd4382786d1dc18a6bdb353b134bd210108ef68bf362f9.
@@ -80,13 +82,13 @@ Ambient8928 untouched. No active task gate/worker actor remains.
 
 Preserved Main5f05b005:9tracked/6untracked/0staged; Desktop e0c36885:
 7tracked/73collapseduntracked/0staged, readonlyJDK8provider. W6f905668 raw42EOL
-changes preserved; U21e990e1 clean. V intendedchanges only, stageexplicitpaths.
+changes preserved; U21e990e1 clean. V implementation clean after commit; publication receipt docs only next.
 Only report top mirrored to Main. Prior graphb9a2146a/receipt6f905668/Gmail
 1a1a8e9a56ef51ba and lengthe2e3c5d/receipt21e990e1/Gmail1a1a940143ba9f27
 remain published/sentonce; never resend. Prior evidence and other worktrees stay.
 
-Next: finish integrateddiff/stagedchecks, normalcommit/push exactacceptedSHA and
-one completion Gmail; then freeze actual authored wire/independent reader.
+Next: normal commit/push this documentation receipt without another email;
+then freeze actual authored wire/independent reader.
 Explicitly distinguish plain-entry receipt control from full observed controls
 before execution. Three approved normal MEDIUM development roots only;
 full30 owner-excluded, full2-by-31 notrenewed. ProtectedHARD unread/unrun here,

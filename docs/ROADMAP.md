@@ -1,6 +1,6 @@
 # TroubleshootJS: Current Roadmap
 
-**Updated:** 2026-11-04 · **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
+**Updated:** 2026-11-04 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
 
 ## Current product checkpoint
 
@@ -434,7 +434,8 @@ roots pass. The new consumer passes23tests and real CLI/junction controls.
 Normal3's exact owned profile cleanup passes; the original E06R1 failed namespace
 remains uncertain and preserved, with no recovery PASS claimed. Other failed
 attempts remain FAIL. Full30 is owner-excluded; HARD/PSYCHOTIC unavailable/unrun.
-Publication is pending normal commit/push and one completion Gmail.
+Implementation `4e8248a9d4f01bf3b0ae1bf0bb646772deaf480f` is normally pushed/exact remote verified;
+completion Gmail `1a1aa2d370b5b1b5` sent once.
 The actual authored branch-order baseline/control/treatment study is NOT_RUN.
 Next is its frozen wire/independent reader, explicitly separating the plain
 entrypoint receipt control from observed full-branch controls, then bounded
