@@ -32,7 +32,7 @@ final class P07ZeroViaGraphDiagnostics {
 
     private P07ZeroViaGraphDiagnostics() { }
 
-    enum Target { D_SENSE, LOAD12 }
+    enum Target { D_SENSE, LOAD12, OUT_F }
 
     interface GraphInput {
         String sourceKind();
@@ -81,7 +81,8 @@ final class P07ZeroViaGraphDiagnostics {
                     input.pathNodeCount() < 2 || input.pathNodeCount() > MAX_PATH_NODES)
                 throw new IllegalArgumentException("Invalid P07 zero-via graph context");
             String expectedKind = target == Target.D_SENSE ? "D_SENSE_PUBLISHER_PATH" :
-                "LOAD12_ACCEPTED_PRE_RESULT";
+                target == Target.LOAD12 ? "LOAD12_ACCEPTED_PRE_RESULT" :
+                "OUT_F_REJECTED_PUBLISHER_PATH";
             if (!expectedKind.equals(input.sourceKind()))
                 throw new IllegalArgumentException("P07 zero-via target and source kind differ");
             long cellCount = (long) width * (long) height;
@@ -106,10 +107,11 @@ final class P07ZeroViaGraphDiagnostics {
             for(int face=0;face<2;face++) if(!net.equals(readField(faces[face],"activeNetId")) ||
                     ((Integer)readField(faces[face],"activeTraceWidth")).intValue()!=expectedTraceWidth)
                 throw new IllegalArgumentException("P07 actual face Router is not prepared for its target net/trace width");
+            boolean noPreResult = target == Target.D_SENSE || target == Target.OUT_F;
             if (reached.length > MAX_REACHED_PADS || input.seedLayerMask() != initialLayerMask ||
-                    target == Target.D_SENSE &&
-                        (input.pathTupleSha256() != null || input.goalFaceBitsSha256() != null ||
-                            input.goalCellCount() != -1) ||
+                    noPreResult && (input.pathTupleSha256() != null ||
+                        input.goalFaceBitsSha256() != null || input.goalCellCount() != -1 ||
+                        input.expectedGoalFaceMaskAt(0) != -1) ||
                     target == Target.LOAD12 &&
                         (!isSha256(input.pathTupleSha256()) ||
                             !isSha256(input.goalFaceBitsSha256()) ||
@@ -831,7 +833,7 @@ private static final class EffectWalker {
         private long workSteps,copyEntries,comparisonEntries,geometryBytes,effectUnits;
         private long reachedPadChecks,pathNodes,pathEdgesVerified,tupleBytes,activeMillis;
         private boolean liveBeforeVerified,liveAfterVerified,liveEffectsUnchanged,goalVerified,originalPathVerified;
-        private boolean complete,activeMeasured,tupleFinalized;
+        private boolean complete,activeMeasured,tupleFinalized,aborted;
         private String pathTupleSha256,goalFaceBitsSha256,prefixGeometrySha256;
         private TextToken pendingTuple;
         private final NumberScratch tupleNumbers=new NumberScratch();
@@ -851,19 +853,25 @@ private static final class EffectWalker {
         }
 
         boolean advance(int maximumWork){
-            if(maximumWork<1||maximumWork>MAX_ADVANCE_WORK)throw new IllegalArgumentException("P07 zero-via advance work must be in 1..32768");
-            lastWork=0;if(complete)return true;advanceCalls++;
-            if(context.callerFaces[TOP]!=context.faces[TOP] || context.callerFaces[BOTTOM]!=context.faces[BOTTOM])
-                throw changed("caller replaced a retained physical face Router");
-            int remaining=maximumWork;
-            while(remaining>0&&!complete){
-                int enteredStage=stage;
-                if(utf8CreditsPending>0){utf8CreditsPending--;phaseWork[enteredStage]++;lastWork++;workSteps++;remaining--;continue;}
-                step();phaseWork[enteredStage]++;lastWork++;workSteps++;remaining--;
-            }
-            if(lastWork<1||lastWork>maximumWork)throw new IllegalStateException("P07 zero-via cursor made an invalid debit");
-            if(complete&&result==null)buildResult();
-            return complete;
+            if(complete){lastWork=0;return true;}
+            if(aborted){lastWork=0;return false;}
+            lastWork=0;
+            try{
+                if(maximumWork<1||maximumWork>MAX_ADVANCE_WORK)throw new IllegalArgumentException("P07 zero-via advance work must be in 1..32768");
+                advanceCalls++;
+                if(context.callerFaces[TOP]!=context.faces[TOP] || context.callerFaces[BOTTOM]!=context.faces[BOTTOM])
+                    throw changed("caller replaced a retained physical face Router");
+                int remaining=maximumWork;
+                while(remaining>0&&!complete){
+                    int enteredStage=stage;
+                    if(utf8CreditsPending>0){utf8CreditsPending--;phaseWork[enteredStage]++;lastWork++;workSteps++;remaining--;continue;}
+                    step();phaseWork[enteredStage]++;lastWork++;workSteps++;remaining--;
+                }
+                if(lastWork<1||lastWork>maximumWork)throw new IllegalStateException("P07 zero-via cursor made an invalid debit");
+                if(complete&&result==null)buildResult();
+                return complete;
+            }catch(RuntimeException failure){abortAfterFailure();throw failure;}
+            catch(Error failure){abortAfterFailure();throw failure;}
         }
         private void step(){
             if(stage==INITIALIZE){
@@ -996,6 +1004,10 @@ private static final class EffectWalker {
                 if(tupleFinalized)throw changed("path import advanced beyond its finalizer");
                 tupleFinalized=true;pathTupleSha256=hex(tupleDigest.digest());
                 if(context.input.pathTupleSha256()!=null&&!context.input.pathTupleSha256().equals(pathTupleSha256))throw changed("LOAD12 source path tuple hash mismatch");
+                if((context.target==Target.D_SENSE||context.target==Target.OUT_F) &&
+                        (context.input.pathTupleSha256()!=null || context.input.goalFaceBitsSha256()!=null ||
+                            context.input.goalCellCount()!=-1))
+                    throw changed("target without PreResult metadata supplied an external path/goal result");
                 goalIndex=0;stage=GOAL_COPY;return;
             }
             int i=pathIndex;
@@ -1022,10 +1034,16 @@ private static final class EffectWalker {
             int mask=(top?1:0)|(bottom?2:0);goalFaces[c]=(char)mask;goalCells++;
             if(mask!=0)goalUnionCellCount++;
             if(context.target==Target.LOAD12&&context.input.expectedGoalFaceMaskAt(c)!=mask)throw changed("live goal cell differs from immutable PreResult");
+            if((context.target==Target.D_SENSE||context.target==Target.OUT_F) &&
+                    context.input.expectedGoalFaceMaskAt(c)!=-1)
+                throw changed("target without PreResult metadata supplied an external goal mask");
             goalDigest.update((byte)('0'+mask));
             if(goalIndex==context.cells){
                 goalFaceBitsSha256=hex(goalDigest.digest());
                 if(context.target==Target.LOAD12&&(!goalFaceBitsSha256.equals(context.input.goalFaceBitsSha256())||goalUnionCellCount!=context.input.goalCellCount()))throw changed("live goal hash/union differs from immutable PreResult");
+                if((context.target==Target.D_SENSE||context.target==Target.OUT_F) &&
+                        (context.input.goalFaceBitsSha256()!=null || context.input.goalCellCount()!=-1))
+                    throw changed("target without PreResult metadata supplied an external goal result");
                 stage=QUERY_PREP_GUARD;
             }
         }
@@ -1082,6 +1100,32 @@ private static final class EffectWalker {
         }
         private IllegalStateException changed(String message){return new IllegalStateException("P07 zero-via "+message);}
         int lastWork(){return lastWork;} boolean isComplete(){return complete;}
+        boolean isAborted(){return aborted;}
+        boolean sourcesReleased(){
+            return context==null&&pristine[TOP]==null&&pristine[BOTTOM]==null&&
+                query[TOP]==null&&query[BOTTOM]==null&&reachedSnapshot==null&&goalFaces==null&&
+                topMasks==null&&bottomMasks==null&&path==null&&effectBaseline[TOP]==null&&
+                effectBaseline[BOTTOM]==null&&copyTask==null&&comparisonTask==null&&
+                copyShellRouter==null&&copyRowSource==null&&geometryWalker==null&&
+                geometryBaseline==null&&effectWalker==null&&pendingTuple==null&&
+                prefixBuilder==null&&bodyPrefix==null&&bodySuffix==null&&emitLiteral==null;
+        }
+        void cancel(){
+            if(complete||aborted)return;
+            aborted=true;lastWork=0;releaseIncompleteSources();
+        }
+        private void abortAfterFailure(){
+            if(result!=null)return;
+            complete=false;aborted=true;releaseIncompleteSources();
+        }
+        private void releaseIncompleteSources(){
+            context=null;pristine[TOP]=pristine[BOTTOM]=query[TOP]=query[BOTTOM]=null;
+            reachedSnapshot=null;goalFaces=null;topMasks=null;bottomMasks=null;path=null;
+            effectBaseline[TOP]=effectBaseline[BOTTOM]=null;copyTask=null;comparisonTask=null;
+            copyShellRouter=null;copyRowSource=null;geometryWalker=null;geometryBaseline=null;
+            effectWalker=null;pendingTuple=null;prefixBuilder=null;bodyPrefix=null;bodySuffix=null;
+            emitLiteral=null;copyShellPending=false;copyRowStage=-1;
+        }
         String failureProgressJson(){
             return "{\"complete\":"+complete+",\"stage\":"+stage+",\"advanceCalls\":"+advanceCalls+
                 ",\"workSteps\":"+workSteps+",\"copyEntries\":"+copyEntries+
@@ -1099,14 +1143,41 @@ private static final class EffectWalker {
         final int width,height,cells,originX,originY,pitch,startCell,endCell,endLayer,initialLayerMask,pathNodeCount,pathTransitionCount,pathPlanarEdgeCount,goalUnionCellCount,advanceCalls,ordinaryQueries,goalCells,encodedCells;
         final long workSteps,copyEntries,comparisonEntries,geometryBytes,effectUnits,reachedPadChecks,pathNodes,pathEdgesVerified,tupleBytes,serializedUtf16Units,activeMillis;
         final boolean liveBeforeVerified,liveAfterVerified,liveEffectsUnchanged,goalVerified,originalPathVerified;
-        private final String header;private final char[] top,bottom,goals;private final long[] phaseWork;
+        private final String header;private char[] top,bottom,goals;private final long[] phaseWork;
+        private boolean bodyReleased;
         private Result(Context c,String geometry,String tuple,String goalHash,boolean before,boolean after,boolean effects,boolean goal,boolean path,int start,int end,int endLayer,int nodes,int transitions,int planar,int union,int queries,int goalCells,int encoded,int calls,long steps,long copies,long comparisons,long geometryBytes,long effectUnits,long reachedChecks,long pathNodes,long pathEdges,long tupleBytes,long serialized,long millis,String header,char[] top,char[] bottom,char[] goals,long[] phases){
             target=c.target;sourceKind=c.input.sourceKind();pathTupleSha256=tuple;goalFaceBitsSha256=goalHash;prefixGeometrySha256=geometry;width=c.width;height=c.height;cells=c.cells;originX=c.originX;originY=c.originY;pitch=c.pitch;startCell=start;endCell=end;this.endLayer=endLayer;initialLayerMask=c.initialLayerMask;pathNodeCount=nodes;pathTransitionCount=transitions;pathPlanarEdgeCount=planar;goalUnionCellCount=union;advanceCalls=calls;ordinaryQueries=queries;this.goalCells=goalCells;encodedCells=encoded;workSteps=steps;copyEntries=copies;comparisonEntries=comparisons;this.geometryBytes=geometryBytes;this.effectUnits=effectUnits;reachedPadChecks=reachedChecks;this.pathNodes=pathNodes;pathEdgesVerified=pathEdges;this.tupleBytes=tupleBytes;serializedUtf16Units=serialized;activeMillis=millis;liveBeforeVerified=before;liveAfterVerified=after;liveEffectsUnchanged=effects;goalVerified=goal;originalPathVerified=path;this.header=header;this.top=top;this.bottom=bottom;this.goals=goals;phaseWork=phases;if(top==null||bottom==null||goals==null||top.length!=cells||bottom.length!=cells||goals.length!=cells||bodyLength()!=serialized)throw new IllegalStateException("Immutable graph body has inconsistent dimensions");
         }
-        int bodyLength(){return header.length()+top.length+bottom.length+goals.length+BOTTOM_SEPARATOR.length()+GOAL_SEPARATOR.length()+BODY_SUFFIX.length();}
+        int bodyLength(){
+            if(bodyReleased)throw new IllegalStateException("Immutable graph body masks were released");
+            return header.length()+top.length+bottom.length+goals.length+BOTTOM_SEPARATOR.length()+GOAL_SEPARATOR.length()+BODY_SUFFIX.length();
+        }
+        char bodyCharAt(int index){
+            int length=bodyLength();
+            if(index<0||index>=length)throw new IndexOutOfBoundsException();
+            if(index<header.length())return header.charAt(index);
+            index-=header.length();
+            if(index<top.length)return top[index];
+            index-=top.length;
+            if(index<BOTTOM_SEPARATOR.length())return BOTTOM_SEPARATOR.charAt(index);
+            index-=BOTTOM_SEPARATOR.length();
+            if(index<bottom.length)return bottom[index];
+            index-=bottom.length;
+            if(index<GOAL_SEPARATOR.length())return GOAL_SEPARATOR.charAt(index);
+            index-=GOAL_SEPARATOR.length();
+            if(index<goals.length)return goals[index];
+            index-=goals.length;
+            return BODY_SUFFIX.charAt(index);
+        }
+        long[] phaseWorkCopy(){return phaseWork.clone();}
+        boolean bodyReleased(){return bodyReleased;}
+        void releaseBodyMasks(){
+            if(!bodyReleased){top=null;bottom=null;goals=null;bodyReleased=true;}
+        }
         void writeBody(java.io.PrintStream output){
             if(output==null||output.getClass()!=java.io.PrintStream.class)
                 throw new IllegalArgumentException("Graph output requires an exact PrintStream");
+            if(bodyReleased)throw new IllegalStateException("Immutable graph body masks were released");
             output.print(header);output.print(top);output.print(BOTTOM_SEPARATOR);output.print(bottom);
             output.print(GOAL_SEPARATOR);output.print(goals);output.print(BODY_SUFFIX);
         }
@@ -1151,18 +1222,41 @@ private static final class EffectWalker {
     private static int direction(int fromX,int fromY,int toX,int toY){if(toY<fromY)return 0;if(toX>fromX)return 1;if(toY>fromY)return 2;if(toX<fromX)return 3;throw new IllegalArgumentException("P07 path contains a zero-length planar edge");}
     private static final class LiteralPhysicalInput implements GraphInput {
         private final int[][] path;private final int[] transitions;private final int seedMask,originX,originY,width,height,pitch;
-        LiteralPhysicalInput(int[][] source,int seedMask,PcbPadPlacement start,int originX,int originY,int width,int height,int pitch){path=source;this.seedMask=seedMask;this.originX=originX;this.originY=originY;this.width=width;this.height=height;this.pitch=pitch;if(path==null||path.length<2||path.length>MAX_PATH_NODES||path[0]==null||path[0].length<3||path[0][0]!=start.getX()||path[0][1]!=start.getY())throw new IllegalArgumentException("Invalid literal graph path");transitions=new int[path.length];for(int i=1;i<path.length;i++){if(path[i]==null||path[i].length<3)throw new IllegalArgumentException("Invalid literal graph path row");transitions[i]=transitions[i-1]+(path[i][2]==path[i-1][2]?0:1);}}
-        public String sourceKind(){return "D_SENSE_PUBLISHER_PATH";}public int seedLayerMask(){return seedMask;}public int pathNodeCount(){return path.length;}
+        private final String kind,pathHash,goalHash;private final int goalCount,expectedGoalMask;
+        LiteralPhysicalInput(int[][] source,int seedMask,PcbPadPlacement start,int originX,int originY,int width,int height,int pitch){
+            this(source,seedMask,start,originX,originY,width,height,pitch,
+                "D_SENSE_PUBLISHER_PATH",null,null,-1,-1);
+        }
+        LiteralPhysicalInput(int[][] source,int seedMask,PcbPadPlacement start,int originX,int originY,
+                int width,int height,int pitch,String kind,String pathHash,String goalHash,
+                int goalCount,int expectedGoalMask){
+            path=source;this.seedMask=seedMask;this.originX=originX;this.originY=originY;
+            this.width=width;this.height=height;this.pitch=pitch;this.kind=kind;
+            this.pathHash=pathHash;this.goalHash=goalHash;this.goalCount=goalCount;
+            this.expectedGoalMask=expectedGoalMask;
+            if(path==null||path.length<2||path.length>MAX_PATH_NODES||path[0]==null||path[0].length<3||
+                    path[0][0]!=start.getX()||path[0][1]!=start.getY())
+                throw new IllegalArgumentException("Invalid literal graph path");
+            transitions=new int[path.length];
+            for(int i=1;i<path.length;i++){
+                if(path[i]==null||path[i].length<3)throw new IllegalArgumentException("Invalid literal graph path row");
+                transitions[i]=transitions[i-1]+(path[i][2]==path[i-1][2]?0:1);
+            }
+        }
+        public String sourceKind(){return kind;}public int seedLayerMask(){return seedMask;}public int pathNodeCount(){return path.length;}
         private int[] row(int i){if(i<0||i>=path.length)throw new IndexOutOfBoundsException();return path[i];}
         public int pathCellAt(int i){int[] r=row(i);return cell(r[0],r[1],originX,originY,width,height,pitch);}public int pathXAt(int i){return row(i)[0];}public int pathYAt(int i){return row(i)[1];}public int pathLayerAt(int i){return row(i)[2];}
         public int pathDirectionAt(int i){if(i==0)return 4;int[] a=row(i-1),b=row(i);return a[2]==b[2]?direction(a[0],a[1],b[0],b[1]):4;}
         public int pathTransitionsAt(int i){row(i);return transitions[i];}public int pathCostAt(int i){return i*2;}public int pathHeuristicAt(int i){return 0;}public int pathSerialAt(int i){return i;}
         public int pathKeyAt(int i){int t=pathTransitionsAt(i),layer=pathLayerAt(i),d=pathDirectionAt(i),c=pathCellAt(i);return (int)(((((long)t*2+layer)*5+d)*(long)width*height)+c);}
-        public String pathTupleSha256(){return null;}public String goalFaceBitsSha256(){return null;}public int goalCellCount(){return -1;}public int expectedGoalFaceMaskAt(int cell){return -1;}
+        public String pathTupleSha256(){return pathHash;}public String goalFaceBitsSha256(){return goalHash;}
+        public int goalCellCount(){return goalCount;}public int expectedGoalFaceMaskAt(int cell){return expectedGoalMask;}
     }
 
     static void runContracts() {
         numericFragmentContracts();
+        outfTargetAndStreamContracts();
+        incompleteCursorReleaseContracts();
         Fixture fixture = new Fixture("P07_ZERO_VIA_GRAPH_MAIN");
         PcbNetRouter.Router[] faces = fixture.faces();
         PcbPadPlacement start = fixture.layout.getPad("START.1");
@@ -1300,7 +1394,7 @@ private static final class EffectWalker {
                 one.copyRowSource==null && one.prefixBuilder==null && one.pendingTuple==null &&
                 one.bodyPrefix==null && one.bodySuffix==null && one.emitLiteral==null &&
                 one.topMasks==null && one.bottomMasks==null && one.goalFaces==null &&
-                one.advance(1) && one.lastWork()==0 && one.result()==resultOne,
+                one.sourcesReleased() && one.advance(1) && one.lastWork()==0 && one.result()==resultOne,
             "completed cursors release live sources and transferred masks before repeat completion");
         final java.io.ByteArrayOutputStream subclassBytes=new java.io.ByteArrayOutputStream();
         java.io.PrintStream subclass=new java.io.PrintStream(subclassBytes) {
@@ -1332,6 +1426,174 @@ private static final class EffectWalker {
         System.out.println("PASS: P07 zero-via graph contracts assertions=" + Contract.checks);
     }
 
+    private static void outfTargetAndStreamContracts() {
+        Fixture fixture=new Fixture("P07_ZERO_VIA_GRAPH_OUT_F_TARGET");
+        PcbNetRouter.Router[] faces=fixture.faces();
+        PcbPadPlacement start=fixture.layout.getPad("START.1");
+        PcbPadPlacement root=fixture.layout.getPad("ROOT.1");
+        PcbPadPlacement[] reached={fixture.layout.getPad("REACHED.1")};
+        boolean[] goals=fixture.actualGoals(faces,root,reached);
+        int[][] path=fixture.sourcePath();
+        LiteralPhysicalInput input=new LiteralPhysicalInput(path,3,start,fixture.originX,fixture.originY,
+            fixture.width,fixture.height,fixture.pitch,"OUT_F_REJECTED_PUBLISHER_PATH",null,null,-1,-1);
+        Context context=new Context(Target.OUT_F,fixture.layout,faces,"N",start,root,reached,goals,
+            fixture.width,fixture.height,fixture.originX,fixture.originY,fixture.pitch,3,input);
+        Cursor cursor=begin(context);
+        drain(cursor,MAX_ADVANCE_WORK);
+        Result result=cursor.result();
+        require(result.target==Target.OUT_F &&
+                "OUT_F_REJECTED_PUBLISHER_PATH".equals(result.sourceKind) &&
+                result.initialLayerMask==3 && result.originalPathVerified && result.goalVerified,
+            "OUT_F accepts the explicit rejected-publisher source kind and both actual seed faces");
+        String printStreamBody=renderFixtureBody(result);
+        StringBuilder incremental=new StringBuilder(result.bodyLength());
+        for(int index=0;index<result.bodyLength();index++)incremental.append(result.bodyCharAt(index));
+        String counterKey="\"serializedUtf16Units\":";
+        int counterOffset=printStreamBody.indexOf(counterKey)+counterKey.length();
+        StringBuilder paddedCounter=new StringBuilder(19);
+        String counterDigits=Long.toString(result.serializedUtf16Units);
+        for(int i=counterDigits.length();i<19;i++)paddedCounter.append(' ');
+        paddedCounter.append(counterDigits);
+        require(printStreamBody.contentEquals(incremental) && counterOffset>=counterKey.length() &&
+                printStreamBody.substring(counterOffset,counterOffset+19).contentEquals(paddedCounter),
+            "incremental immutable body access preserves exact PrintStream bytes and 19-column spaces");
+        long[] phases=result.phaseWorkCopy();
+        long phaseTotal=0;
+        for(long phase:phases){if(phase<0)throw new AssertionError("Negative phase work");phaseTotal+=phase;}
+        require(phases.length==32 && phaseTotal==result.workSteps &&
+                phases.length==result.phaseWorkCopy().length,
+            "safe phase-work copy exposes all 32 reconciled nonnegative owner counters");
+        phases[0]=-1;
+        require(result.phaseWorkCopy()[0]>=0,
+            "mutating an exported phase-work copy cannot alter the immutable Result");
+
+        boolean rejected=false;
+        try {
+            GraphInput wrongKind=new LiteralPhysicalInput(path,3,start,fixture.originX,fixture.originY,
+                fixture.width,fixture.height,fixture.pitch,"D_SENSE_PUBLISHER_PATH",null,null,-1,-1);
+            new Context(Target.OUT_F,fixture.layout,faces,"N",start,root,reached,goals,
+                fixture.width,fixture.height,fixture.originX,fixture.originY,fixture.pitch,3,wrongKind);
+        } catch(IllegalArgumentException expected) {rejected=true;}
+        require(rejected,"OUT_F rejects a source kind borrowed from the D_SENSE target");
+        rejected=false;
+        try {
+            GraphInput preResult=new LiteralPhysicalInput(path,3,start,fixture.originX,fixture.originY,
+                fixture.width,fixture.height,fixture.pitch,"OUT_F_REJECTED_PUBLISHER_PATH",
+                sha256("path metadata"),sha256("goal metadata"),1,-1);
+            new Context(Target.OUT_F,fixture.layout,faces,"N",start,root,reached,goals,
+                fixture.width,fixture.height,fixture.originX,fixture.originY,fixture.pitch,3,preResult);
+        } catch(IllegalArgumentException expected) {rejected=true;}
+        require(rejected,"OUT_F rejects fabricated external PreResult hashes and counts");
+        rejected=false;
+        try {
+            GraphInput goalOracle=new LiteralPhysicalInput(path,3,start,fixture.originX,fixture.originY,
+                fixture.width,fixture.height,fixture.pitch,"OUT_F_REJECTED_PUBLISHER_PATH",null,null,-1,0);
+            new Context(Target.OUT_F,fixture.layout,faces,"N",start,root,reached,goals,
+                fixture.width,fixture.height,fixture.originX,fixture.originY,fixture.pitch,3,goalOracle);
+        } catch(IllegalArgumentException expected) {rejected=true;}
+        require(rejected,"OUT_F rejects an external goal-mask oracle even with null hashes");
+
+        boolean bounds=false;
+        try {result.bodyCharAt(result.bodyLength());} catch(IndexOutOfBoundsException expected) {bounds=true;}
+        require(bounds,"incremental body access rejects an index at the stream boundary");
+        result.releaseBodyMasks();
+        require(result.bodyReleased(),"the bounded output owner can release transferred masks after streaming");
+        boolean released=false;
+        try {result.bodyCharAt(0);} catch(IllegalStateException expected) {released=true;}
+        require(released,"released Result masks cannot be read through the incremental adapter");
+    }
+
+    private static void incompleteCursorReleaseContracts() {
+        Fixture fixture=new Fixture("P07_ZERO_VIA_GRAPH_OUT_F_RELEASE");
+        PcbNetRouter.Router[] faces=fixture.faces();
+        PcbPadPlacement start=fixture.layout.getPad("START.1"),root=fixture.layout.getPad("ROOT.1");
+        PcbPadPlacement[] reached={fixture.layout.getPad("REACHED.1")};
+        boolean[] goals=fixture.actualGoals(faces,root,reached);
+        int[][] path=fixture.sourcePath();
+        LiteralPhysicalInput input=new LiteralPhysicalInput(path,3,start,fixture.originX,fixture.originY,
+            fixture.width,fixture.height,fixture.pitch,"OUT_F_REJECTED_PUBLISHER_PATH",null,null,-1,-1);
+
+        Cursor cancelled=begin(new Context(Target.OUT_F,fixture.layout,faces,"N",start,root,reached,goals,
+            fixture.width,fixture.height,fixture.originX,fixture.originY,fixture.pitch,3,input));
+        advanceUntilLiveCopyTask(cancelled);
+        require(cancelled.context!=null && cancelled.copyTask!=null && cancelled.copyShellRouter!=null &&
+                !((Boolean)readField(cancelled.copyTask,"complete")).booleanValue(),
+            "cancellation begins with a live retained Context, Router and copy task");
+        long cancelledWork=cancelled.workSteps;
+        cancelled.cancel();
+        requireIncompleteCursorReleased(cancelled,cancelledWork,
+            "explicit cancellation releases active Router-copy references");
+
+        Cursor capAbort=begin(new Context(Target.OUT_F,fixture.layout,faces,"N",start,root,reached,goals,
+            fixture.width,fixture.height,fixture.originX,fixture.originY,fixture.pitch,3,input));
+        advanceUntilLiveEffectWalker(capAbort);
+        require(capAbort.context!=null && capAbort.pristine[TOP]!=null &&
+                capAbort.geometryBaseline!=null && capAbort.effectWalker!=null &&
+                capAbort.stage==Cursor.EFFECT_BEFORE,
+            "capture-cap abort begins with live Context, Router snapshot, geometry and effect walkers");
+        long capAbortWork=capAbort.workSteps;
+        int remainingCaptureUnits=0;
+        if(remainingCaptureUnits<1) capAbort.cancel();
+        requireIncompleteCursorReleased(capAbort,capAbortWork,
+            "a frozen capture-cap abort releases active geometry/effect-walker references");
+
+        Cursor error=begin(new Context(Target.OUT_F,fixture.layout,faces,"N",start,root,reached,goals,
+            fixture.width,fixture.height,fixture.originX,fixture.originY,fixture.pitch,3,input));
+        advanceUntilLiveEffectWalker(error);
+        require(error.context!=null && error.pristine[TOP]!=null && error.geometryBaseline!=null &&
+                error.effectWalker!=null,
+            "source-binding error begins with live Context, Router snapshot and walkers");
+        long errorWork=error.workSteps;
+        PcbNetRouter.Router originalTop=faces[TOP];
+        String originalTopEffects=originalTop.fixedGraphObservationEffects();
+        String successorEffects=faces[BOTTOM].fixedGraphObservationEffects();
+        boolean rejected=false;
+        try {faces[TOP]=faces[BOTTOM];error.advance(1);}
+        catch(IllegalStateException expected) {rejected=true;}
+        finally {faces[TOP]=originalTop;}
+        require(rejected && error.isAborted(),
+            "a late source-binding error aborts the active capture before a successor graph is read");
+        requireIncompleteCursorReleased(error,errorWork,
+            "a late source-binding error releases active geometry/effect-walker references");
+        require(originalTopEffects.equals(originalTop.fixedGraphObservationEffects()) &&
+                successorEffects.equals(faces[BOTTOM].fixedGraphObservationEffects()),
+            "the aborted stale cursor leaves both restored live Routers unchanged");
+    }
+
+    private static void advanceUntilLiveCopyTask(Cursor cursor) {
+        long start=cursor.workSteps;
+        while(cursor.copyTask==null) {
+            if(cursor.isComplete() || cursor.isAborted() || cursor.workSteps-start>=250000L)
+                throw new AssertionError("Cursor did not reach a live Router copy task within its fixture bound");
+            cursor.advance(1);
+        }
+    }
+
+    private static void advanceUntilLiveEffectWalker(Cursor cursor) {
+        long start=cursor.workSteps;
+        while(cursor.effectWalker==null) {
+            if(cursor.isComplete() || cursor.isAborted() || cursor.workSteps-start>=250000L)
+                throw new AssertionError("Cursor did not reach a live effect walker within its fixture bound");
+            cursor.advance(1);
+        }
+    }
+
+    private static void requireIncompleteCursorReleased(Cursor cursor,long frozenWork,String message) {
+        require(!cursor.isComplete() && cursor.isAborted() && cursor.sourcesReleased() &&
+                cursor.context==null && cursor.copyTask==null && cursor.comparisonTask==null &&
+                cursor.copyShellRouter==null && cursor.copyRowSource==null && cursor.geometryWalker==null &&
+                cursor.geometryBaseline==null && cursor.effectWalker==null && cursor.path==null &&
+                cursor.reachedSnapshot==null,
+            message);
+        cursor.cancel();
+        require(cursor.isAborted() && cursor.sourcesReleased() && cursor.workSteps==frozenWork,
+            "repeated cancellation preserves released cursor state and charged work");
+        require(!cursor.advance(1) && cursor.lastWork()==0 && cursor.workSteps==frozenWork,
+            "released cursor cannot resume stale work or change successor state");
+        boolean hidden=false;
+        try {cursor.result();} catch(IllegalStateException expected) {hidden=true;}
+        require(hidden,"an aborted cursor cannot expose a successful Result");
+    }
     private static String renderFixtureBody(Result result) {
         if(result.cells>10000)throw new IllegalArgumentException("Full String rendering is limited to the small fixture");
         java.io.ByteArrayOutputStream bytes=new java.io.ByteArrayOutputStream();
@@ -1450,11 +1712,16 @@ private static final class EffectWalker {
             if (cursor.isComplete()) throw new AssertionError("Copy canary unexpectedly completed before any copy entry");
         }
         occupy(faces[TOP], fixture.originX, fixture.originY, "BLOCK");
+        String failedLiveState=faces[TOP].fixedGraphObservationEffects();
         boolean rejected = false;
         try { drain(cursor, MAX_ADVANCE_WORK); }
         catch (IllegalStateException expected) { rejected = true; }
-        require(rejected && !cursor.isComplete(),
-            "mutation of an already-copied live Router cell is rejected before result publication");
+        long failedWork=cursor.workSteps;
+        require(rejected && !cursor.isComplete() && cursor.isAborted() && cursor.sourcesReleased(),
+            "mutation after Router rows were copied rejects and releases the active cursor sources");
+        require(!cursor.advance(1) && cursor.lastWork()==0 && cursor.workSteps==failedWork &&
+                failedLiveState.equals(faces[TOP].fixedGraphObservationEffects()),
+            "failed copied-source validation cannot resume stale work or mutate its live Router");
         boolean hidden = false;
         try { cursor.result(); } catch (IllegalStateException expected) { hidden = true; }
         require(hidden, "a failed live-state comparison cannot publish a partial graph");
@@ -1632,6 +1899,8 @@ private static final class EffectWalker {
         try { drain(cursor,MAX_ADVANCE_WORK); }
         catch (IllegalStateException expected) { rejected = true; }
         require(rejected && !cursor.isComplete(), message);
+        require(cursor.isAborted() && cursor.sourcesReleased(),
+            "a failed cursor releases every retained graph source before returning");
         boolean hidden = false;
         try { cursor.result(); } catch (IllegalStateException expected) { hidden = true; }
         require(hidden, "a rejected source mutation or path cannot publish a partial graph");

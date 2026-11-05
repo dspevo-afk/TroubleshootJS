@@ -15,8 +15,8 @@ import read_branch_order_study as reader
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[4]
-DEFAULT_WIRE = Path("docs/task-evidence/Q100/outf-boundary-r1/WIRE.md")
-PARENT_HEAD = "a1fa56f34e85e6f241993dcebd9e4c7e491ecda3"
+DEFAULT_WIRE = Path("docs/task-evidence/Q100/outf-graph-r1/WIRE.md")
+PARENT_HEAD = "e271e7afc5e961bfe90de866a661b732da2587c4"
 RUN_ID = "d7b9d7e5-3cc0-4ed5-9f23-fec562db9035"
 PAD_ROWS = (
     ("pad-a", "component-a", 0),
@@ -200,7 +200,8 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
         "runId": run_id, "mode": "TINY_CANARY", "operation": arm,
         "arm": {"id": arm_id, "api": api, "strategy": strategy,
                 "netOrderStrategy": net_order_strategy,
-                "observed": observed_flag, "publisherCapture": capture_flag},
+                "observed": observed_flag, "publisherCapture": capture_flag,
+                "graphCapture": False},
         "sourceManifestSha256": source_manifest_sha256,
         "wireSha256": wire_sha256,
         "candidate": candidate,
@@ -384,6 +385,7 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
             "hashInputBytes": hash_bytes,
             "serializedBeforeOwnLineBytes": sum(len(_line(row)) for row in batch),
             "publisherChunkRows": 0, "publisherResultRows": 0,
+            "graphChunkRows": 0, "graphResultRows": 0, "graphCursorSteps": 0,
             "diagnosticCopiedEntries": 0, "diagnosticSerializedBytes": 0,
             "diagnosticHashBytes": 0, "diagnosticUnits": 0,
         })
@@ -407,8 +409,12 @@ def write_fixture(directory, repositoryRoot=REPOSITORY_ROOT, wirePath=None,
                   netOrderIdsByArm=None, yieldedPriorByArm=None,
                   promotionNetsByArm=None, pass1NetVisitsByArm=None,
                   reachPass1ByArm=None, publisherOutcome="PUBLISHED",
-                  publisherVia="NEW", publisherNonPadGoal=False):
+                  publisherVia="NEW", publisherNonPadGoal=False, graphCapture=False,
+                  resumeAfterCapture=False):
     """Write a pinned READER_FIXTURE and return ``(spec_path, spec_sha256)``."""
+    if graphCapture:
+        padRows = GRAPH_PAD_ROWS
+        publisherOutcome, publisherVia = "REJECTED", "NONE"
     root = Path(repositoryRoot).resolve()
     wire_path = Path(wirePath) if wirePath is not None else DEFAULT_WIRE
     if not wire_path.is_absolute():
@@ -486,13 +492,23 @@ def write_fixture(directory, repositoryRoot=REPOSITORY_ROOT, wirePath=None,
             following["prefixSha256"] = target["after"]["geometrySha256"]
             following["prefixBytes"] = target["after"]["geometryBytes"]
             following["snapshot"]["prefixViaCount"] = len(target["after"]["holes"])
-        _install_publisher_capture(capture_rows, target)
+        if graphCapture:
+            source = next(row for row in capture_rows if row["record"] == "BRANCH"
+                          and row["ordinal"] == target["branch"]["ordinal"])
+            source["snapshot"].update(goalsTop=5, goalsBottom=5)
+            capture_rows[0]["arm"]["graphCapture"] = True
+            _install_graph_capture(capture_rows, target)
+        else:
+            _install_publisher_capture(capture_rows, target)
         # The fifth arm adds observation only. Give its no-capture control the
         # same full source vectors, grid, and selected branch prefix.
         treatment_branches = [row for row in capture_rows if row["record"] == "BRANCH"]
         control_branches = [row for row in operation_rows[3] if row["record"] == "BRANCH"]
         if len(treatment_branches) == len(control_branches):
             for control, treatment in zip(control_branches, treatment_branches):
+                if graphCapture:
+                    for key in ("goalsTop", "goalsBottom"):
+                        control["snapshot"][key] = treatment["snapshot"][key]
                 control["snapshot"]["gridWidth"] = treatment["snapshot"]["gridWidth"]
                 control["snapshot"]["gridHeight"] = treatment["snapshot"]["gridHeight"]
                 control["snapshot"]["prefixViaCount"] = treatment["snapshot"]["prefixViaCount"]
@@ -501,6 +517,8 @@ def write_fixture(directory, repositoryRoot=REPOSITORY_ROOT, wirePath=None,
 
     for arm in range(5):
         rows = operation_rows[arm]
+        if resumeAfterCapture:
+            _resume_fixture_parent(rows)
         _repair_group_ledgers(rows)
         raw = b"".join(_line(row) for row in rows)
         (base / operation_entries[arm]["receipt"]["path"]).write_bytes(raw)
@@ -615,17 +633,23 @@ def _repair_group_ledgers(rows):
         row["netOrderRows"] = sum(item["record"] == "NET_ORDER" for item in pending)
         chunks = [item for item in pending if item["record"] == "PUB_CHUNK"]
         pub_results = [item for item in pending if item["record"] == "PUB_RESULT"]
+        graph_chunks = [item for item in pending if item["record"] == "GRAPH_CHUNK"]
+        graph_results = [item for item in pending if item["record"] == "GRAPH_RESULT"]
         row["publisherChunkRows"] = len(chunks)
         row["publisherResultRows"] = len(pub_results)
+        row["graphChunkRows"] = len(graph_chunks)
+        row["graphResultRows"] = len(graph_results)
         row["diagnosticCloneSteps"] = sum(item.get("ownerSteps", 0)
                                           for item in pending
                                           if item["record"] == "DIAGNOSTIC_CLONE")
         if row["phase"] == "CAPTURE":
             row["diagnosticSerializedBytes"] = (
-                sum(len(base64.b64decode(item["data"], validate=True)) for item in chunks)
+                sum(len(base64.b64decode(item["data"], validate=True)) for item in chunks + graph_chunks)
                 + sum(len(_line(item)) for item in pending
-                      if item["record"] in ("PUB_CHUNK", "PUB_RESULT")))
-        row["diagnosticUnits"] = (row["diagnosticCopiedEntries"]
+                      if item["record"] in ("PUB_CHUNK", "PUB_RESULT",
+                                            "GRAPH_CHUNK", "GRAPH_RESULT")))
+        row["diagnosticUnits"] = (row["graphCursorSteps"]
+                                  + row["diagnosticCopiedEntries"]
                                   + row["diagnosticSerializedBytes"]
                                   + row["diagnosticHashBytes"])
         required_hash = sum(item["prefixBytes"] for item in pending
@@ -970,6 +994,7 @@ def _install_publisher_capture(rows, target):
             "serializedBeforeOwnLineBytes": line_bytes,
             "publisherChunkRows": 1,
             "publisherResultRows": 1 if len(batch) == 2 else 0,
+            "graphChunkRows": 0, "graphResultRows": 0, "graphCursorSteps": 0,
             "diagnosticCopiedEntries": copied_entries,
             "diagnosticSerializedBytes": serialized_bytes,
             "diagnosticHashBytes": hash_bytes,
@@ -1148,6 +1173,316 @@ def _make_publisher_target(rows, *, outcome="PUBLISHED", via="NEW", nonPadGoal=F
     return target, (grid_width, grid_height)
 
 
+# Literal, directed, no-via graph. Grid cells are row-major in two rows of seven.
+# TOP: 1->0; 1<->2<->3->4->5; 3->10->9->8. BOTTOM:
+# 1->2->3->10->9->8->7->0. Cell6 is unreachable on both faces.
+GRAPH_PAD_ROWS = (
+    ("pad-a", "OUT_F", "component-a", 0, 0),
+    ("pad-b", "OUT_F", "component-b", 10, 0),
+    ("pad-c", "OUT_F", "component-c", 30, 0),
+    ("pad-d", "OUT_F", "component-d", 60, 10),
+)
+GRAPH_TOP = "0aae2000088000"
+GRAPH_BOTTOM = "02240001888000"
+GRAPH_GOALS = "33020130102000"
+GRAPH_WORK_KEYS = (
+    "advanceCalls", "workSteps", "copyEntries", "comparisonEntries",
+    "geometryBytes", "effectUnits", "ordinaryQueries", "goalCells",
+    "reachedPadChecks", "encodedCells", "pathNodes", "pathEdgesVerified",
+    "tupleBytes", "serializedUtf16Units", "activeMillis",
+)
+
+
+def _fixture_tuple_bytes(nodes):
+    # WIRE section5, independently of the reader's tuple serializer.
+    return "\n".join(
+        ",".join(str(value) for value in
+                 (index, node[10], node[0], node[2], node[3], node[1],
+                  node[4], node[5], node[6], node[7], node[8], node[9]))
+        for index, node in enumerate(nodes)).encode("ascii")
+
+
+def _graph_body_bytes(body):
+    # The owner r5 format has compact ordered objects and exactly19 SPACE-padded
+    # columns per work integer. Never derive this spelling from reader output.
+    parts = []
+    for name, value in body.items():
+        if name == "work" and type(value) is dict:
+            work = []
+            for key, number in value.items():
+                text = (format(number, "19d").encode("ascii") if type(number) is int
+                        else _json_bytes(number, newline=False))
+                work.append(_json_bytes(key, newline=False) + b":" + text)
+            raw = b"{" + b",".join(work) + b"}"
+        else:
+            raw = json.dumps(value, ensure_ascii=True, separators=(",", ":"),
+                             allow_nan=False).encode("ascii")
+        parts.append(_json_bytes(name, newline=False) + b":" + raw)
+    return b"{" + b",".join(parts) + b"}"
+
+
+def _graph_payload_bytes(graph, *, body_raw=None):
+    return b"{" + b",".join(
+        _json_bytes(name, newline=False) + b":"
+        + ((_graph_body_bytes(value) if body_raw is None else body_raw)
+           if name == "body" else _json_bytes(value, newline=False))
+        for name, value in graph.items()) + b"}"
+
+
+def _make_graph_target(target):
+    nodes = target["path"]["nodes"]
+    assert [node[0] for node in nodes] == [1, 2, 3, 2, 1, 0]
+    assert all(node[1] == 0 and node[5] == 0 for node in nodes)
+    assert target["grid"]["width"] == 7 and target["grid"]["height"] == 2
+    tuple_bytes = _fixture_tuple_bytes(nodes)
+    body = {
+        "schema": "p07-zero-via-graph-r5",
+        "stability": {
+            "prefixGeometrySha256": target["before"]["geometrySha256"],
+            "liveBeforeVerified": True, "liveAfterVerified": True,
+            "liveEffectsUnchanged": True, "goalVerified": True,
+            "originalPathVerified": True,
+        },
+        "grid": {
+            "width": 7, "height": 2, "cells": 14, "originX": 0, "originY": 0,
+            "pitch": 10, "startCell": 1, "initialLayerMask": 3,
+            "endCell": 0, "endLayer": 0, "goalUnionCellCount": 7,
+        },
+        "path": {"nodeCount": 6, "planarEdgeCount": 5, "transitionCount": 0,
+                 "tupleSha256": _sha(tuple_bytes)},
+        "work": dict(zip(GRAPH_WORK_KEYS,
+                         (1, 20000, 10, 10, 2 * target["before"]["geometryBytes"],
+                          2, 76, 14, 0, 42, 6, 5, len(tuple_bytes), 0, 0))),
+        "masks": {"topStepsHex": GRAPH_TOP, "bottomStepsHex": GRAPH_BOTTOM,
+                  "goalFacesHex": GRAPH_GOALS},
+    }
+    body["work"]["serializedUtf16Units"] = len(_graph_body_bytes(body))
+    graph = {
+        "schema": "p07-outf-rejected-publisher-graph-v1",
+        "targetId": "op4/pass1/target0",
+        "publisherPayloadSha256": _sha(_json_bytes(target, newline=False)),
+        "context": copy.deepcopy(target["context"]),
+        "objects": copy.deepcopy(target["objects"]),
+        "branch": copy.deepcopy(target["branch"]),
+        "source": {
+            "target": "OUT_F", "sourceKind": "OUT_F_REJECTED_PUBLISHER_PATH",
+            "policy": "FULLER_TWO_LAYER", "initialLayerMask": 3,
+            "activeTraceWidth": 9, "facesToken": 20001,
+            "routerTokens": [20002, 20003], "goalArrayToken": 20004,
+            "reachedTerminalsArrayToken": 20005, "startPadToken": 20006,
+            "rootPadToken": target["objects"]["terminal"], "reachedPthPadIds": [],
+        },
+        "goalFacesSha256": _sha(GRAPH_GOALS.encode("ascii")),
+        "phaseWork": [0] * 32,
+        "body": body,
+        "integrity": {"nativeSourceBound": True, "parentPaused": True,
+                      "retainedSourceUnchanged": True, "cursorSourcesReleased": True,
+                      "producerSourcesReleased": True},
+        "limitations": {"model": "DIRECTED_PER_FACE_ORDINARY_EDGES",
+                        "lengthEligibilityOnly": True, "legalSearchHistory": "NOT_RUN",
+                        "publicationQualified": False, "layoutQualification": False,
+                        "routeAdoption": False, "playable100": 0,
+                        "fullPhysicalProof": "NOT_RUN"},
+    }
+    # These are fixture ledger units, never fabricated native owner measurements.
+    graph["phaseWork"][3] = 20000
+    return graph
+
+
+def _capture_group(ordinal, *, steps=0, copied=0):
+    return dict(record="GROUP", operation=4, ordinal=ordinal, phase="CAPTURE",
+                elapsedBeforeOwnLineNanos=100, generatorAdvances=0, p07Slices=0,
+                p07Steps=None, diagnosticCloneSteps=0, accounting="NOT_APPLICABLE",
+                observerChecks=0, callbacks=0, censusRows=0, netOrderRows=0,
+                hashInputBytes=0, serializedBeforeOwnLineBytes=0,
+                publisherChunkRows=0, publisherResultRows=0, graphChunkRows=0,
+                graphResultRows=0, graphCursorSteps=steps,
+                diagnosticCopiedEntries=copied, diagnosticSerializedBytes=0,
+                diagnosticHashBytes=0, diagnosticUnits=steps + copied)
+
+
+def _seal_graph_capture_ledgers(rows, target):
+    # Reconcile only actual serialized data, preserving owner cursor work.
+    pending = []
+    for row in rows:
+        if row["record"] != "GROUP":
+            pending.append(row)
+            continue
+        if row["phase"] == "CAPTURE":
+            row["diagnosticHashBytes"] = sum(
+                len(base64.b64decode(item["data"], validate=True))
+                for item in pending if item["record"] in ("PUB_CHUNK", "GRAPH_CHUNK"))
+            row["diagnosticHashBytes"] += sum(
+                len(_line(item)) for item in pending if item["record"] in
+                ("PUB_CHUNK", "PUB_RESULT", "GRAPH_CHUNK", "GRAPH_RESULT"))
+            if any(item["record"] == "PUB_RESULT" for item in pending):
+                row["diagnosticHashBytes"] += (target["before"]["geometryBytes"]
+                                                + target["after"]["geometryBytes"])
+            row["hashInputBytes"] = row["diagnosticHashBytes"]
+        pending = []
+    _repair_group_ledgers(rows)
+
+
+def _append_graph_output(rows, graph, *, body_raw=None):
+    result_index = next(i for i, row in enumerate(rows) if row["record"] == "RESULT")
+    result, report, footer = copy.deepcopy(rows[result_index:])
+    prefix = rows[:result_index]
+    payload = _graph_payload_bytes(graph, body_raw=body_raw)
+    chunk_size = 4096
+    count = (len(payload) + chunk_size - 1) // chunk_size
+    ordinal = sum(row["record"] == "GROUP" for row in prefix)
+    for index, offset in enumerate(range(0, len(payload), chunk_size)):
+        chunk = payload[offset:offset + chunk_size]
+        batch = [dict(record="GRAPH_CHUNK", operation=4, group=ordinal,
+                      targetId="op4/pass1/target0", index=index, offset=offset,
+                      bytes=len(chunk), data=base64.b64encode(chunk).decode("ascii"))]
+        if index == count - 1:
+            batch.append(dict(record="GRAPH_RESULT", operation=4, group=ordinal,
+                              targetId="op4/pass1/target0", payloadBytes=len(payload),
+                              payloadSha256=_sha(payload), chunkCount=count))
+        prefix.extend(batch)
+        prefix.append(_capture_group(ordinal, copied=len(chunk)))
+        ordinal += 1
+    result["group"] = report["ordinal"] = footer["group"] = ordinal
+    footer["groupCount"] = ordinal + 1
+    rows[:] = prefix + [result, report, footer]
+
+
+def _install_graph_capture(rows, target, *, graph=None):
+    _install_publisher_capture(rows, target)
+    first = next(i for i, row in enumerate(rows) if row["record"] == "PUB_CHUNK")
+    ordinal = rows[first]["group"]
+    # Cursor/source release precedes every output group; checkpoints remain real
+    # existing source-group IDs, and every later record retains current binding.
+    for row in rows[first:]:
+        if row["record"] == "GROUP":
+            row["ordinal"] += 1
+        elif "group" in row:
+            row["group"] += 1
+    rows.insert(first, _capture_group(ordinal, steps=20000, copied=128))
+    _append_graph_output(rows, _make_graph_target(target) if graph is None else graph)
+    _seal_graph_capture_ledgers(rows, target)
+
+
+def _graph_target(spec_path):
+    payload = b"".join(base64.b64decode(row["data"], validate=True)
+                       for row in _read_rows(spec_path, 4)
+                       if row["record"] == "GRAPH_CHUNK")
+    return json.loads(payload.decode("ascii"))
+
+
+def _rewrite_graph_target(spec_path, mutate, *, reseal_body=True, body_transform=None):
+    rows = _read_rows(spec_path, 4)
+    graph = _graph_target(spec_path)
+    mutate(graph)
+    if reseal_body:
+        graph["body"]["work"]["serializedUtf16Units"] = len(_graph_body_bytes(graph["body"]))
+    raw = _graph_body_bytes(graph["body"])
+    if body_transform is not None:
+        raw = body_transform(raw)
+    first = next(i for i, row in enumerate(rows) if row["record"] == "GRAPH_CHUNK")
+    tail = copy.deepcopy(rows[next(i for i, row in enumerate(rows)
+                                  if row["record"] == "RESULT"):])
+    rows[:] = rows[:first] + tail
+    _append_graph_output(rows, graph, body_raw=raw)
+    _seal_graph_capture_ledgers(rows, _publisher_target(spec_path))
+    return _rewrite_operation(spec_path, 4, lambda old: old.__setitem__(slice(None), rows))
+
+
+def _resume_fixture_parent(rows):
+    """Move the existing pass2 callback batch after sealed capture output.
+
+    The final pre-output ADVANCE still owns Publisher checkpoints and snapshot
+    copying. Split its ten routing units across two five-unit slices, keeping
+    total owner work, branch semantics and checkpoint identities unchanged.
+    Apply this same split to every arm so the five-arm work oracle survives.
+    """
+    original = _group(rows, 3)
+    events = [row for row in rows if row.get("group") == 3
+              and row["record"] in ("BRANCH", "DIAGNOSTIC_CLONE")]
+    clone_steps = sum(row.get("ownerSteps", 0) for row in events)
+    callback_hash_bytes = sum(row["prefixBytes"] for row in events if row["record"] == "BRANCH")
+    new_steps = 5 + clone_steps
+    original["p07Steps"] -= new_steps
+    original["hashInputBytes"] -= callback_hash_bytes
+    rows[:] = [row for row in rows if not any(row is event for event in events)]
+    result_index = next(i for i, row in enumerate(rows) if row["record"] == "RESULT")
+    result = rows[result_index]
+    ordinal = result["group"]
+    continuation = copy.deepcopy(original)
+    continuation.update(ordinal=ordinal, p07Steps=new_steps, observerChecks=1,
+                        callbacks=0, censusRows=0, netOrderRows=0,
+                        diagnosticCloneSteps=clone_steps, diagnosticCopiedEntries=0,
+                        diagnosticSerializedBytes=0, diagnosticHashBytes=0,
+                        diagnosticUnits=0, hashInputBytes=callback_hash_bytes)
+    for event in events:
+        event["group"] = ordinal
+    result["logicalWork"]["generatorAdvances"] += 1
+    result["logicalWork"]["p07Slices"] += 1
+    # Only the existing REPORT/footer follow this newly inserted source group.
+    result["group"] += 1
+    report = next(row for row in rows if row["record"] == "GROUP" and row["phase"] == "REPORT")
+    report["ordinal"] += 1
+    rows[-1]["group"] += 1
+    rows[-1]["groupCount"] += 1
+    rows[result_index:result_index] = events + [continuation]
+    _repair_group_ledgers(rows)
+
+
+def _rewrite_source_provenance(spec_path, source_sha):
+    """Explicit fixture-only repin after changing the source manifest's roles.
+
+    Preserve record/group identities and cursor work. Ordinary negative mutators
+    deliberately do not call this helper or repair cross-document source joins.
+    """
+    spec_path = Path(spec_path)
+    spec = _load_json(spec_path)
+    manifest_path = spec_path.parent / spec["sourceManifest"]["path"]
+    if source_sha != _sha(manifest_path.read_bytes()):
+        raise ValueError("fixture provenance must pin the actual source manifest")
+
+    def recode(rows, prefix, payload):
+        chunks = [row for row in rows if row["record"] == prefix + "_CHUNK"]
+        # Only fixed-width SHA replacements are authorized here: retain every
+        # existing chunk boundary, group, index, offset and decoded byte count.
+        if len(payload) != sum(row["bytes"] for row in chunks):
+            raise ValueError("fixture provenance changed a payload length")
+        offset = 0
+        for row in chunks:
+            end = offset + row["bytes"]
+            row["data"] = base64.b64encode(payload[offset:end]).decode("ascii")
+            offset = end
+        seal = next(row for row in rows if row["record"] == prefix + "_RESULT")
+        seal.update(payloadBytes=len(payload), payloadSha256=_sha(payload), chunkCount=len(chunks))
+
+    rewritten = []
+    for arm in range(5):
+        rows = _read_rows(spec_path, arm)
+        rows[0]["sourceManifestSha256"] = source_sha
+        if arm == 4 and any(row["record"] == "PUB_CHUNK" for row in rows):
+            target = _publisher_target(spec_path)
+            target["context"]["sourceManifestSha256"] = source_sha
+            publisher_payload = _json_bytes(target, newline=False)
+            recode(rows, "PUB", publisher_payload)
+            if rows[0]["arm"]["graphCapture"]:
+                graph = _graph_target(spec_path)
+                original = b"".join(base64.b64decode(row["data"], validate=True)
+                                    for row in rows if row["record"] == "GRAPH_CHUNK")
+                body = _graph_body_bytes(graph["body"])
+                if body not in original:
+                    raise ValueError("fixture provenance requires a canonical unchanged graph body")
+                graph["context"]["sourceManifestSha256"] = source_sha
+                graph["publisherPayloadSha256"] = _sha(publisher_payload)
+                recode(rows, "GRAPH", _graph_payload_bytes(graph, body_raw=body))
+            _seal_graph_capture_ledgers(rows, target)
+        else:
+            _repair_group_ledgers(rows)
+        rewritten.append(b"".join(_line(row) for row in rows))
+    for arm, raw in enumerate(rewritten):
+        (spec_path.parent / "op-{}.jsonl".format(arm)).write_bytes(raw)
+    return _refresh_fixture(spec_path)
+
+
 class BranchOrderReaderTests(unittest.TestCase):
     def _fixture(self, directory):
         return write_fixture(directory)
@@ -1171,6 +1506,656 @@ class BranchOrderReaderTests(unittest.TestCase):
         with self.assertRaises(ValueError) as caught:
             reader.validate_spec(spec_path, spec_sha)
         self.assertEqual(str(caught.exception), code)
+
+    def _graph_fixture(self, directory):
+        return write_fixture(Path(directory) / "fixture", graphCapture=True)
+
+    def _assert_graph_rejects(self, spec_path, spec_sha):
+        # TypeError/KeyError are implementation defects, never negative proof.
+        with self.assertRaises(ValueError):
+            reader.validate_spec(spec_path, spec_sha)
+
+    def test_explicit_source_provenance_repin_preserves_disabled_and_enabled_streams(self):
+        for enabled in (False, True):
+            with self.subTest(graphCapture=enabled), tempfile.TemporaryDirectory(
+                    prefix="branch-order-source-provenance-") as directory:
+                spec_path, spec_sha = write_fixture(Path(directory) / "fixture", graphCapture=enabled)
+                self.assertEqual(reader.validate_spec(spec_path, spec_sha)["status"],
+                                 "PASS_READER_FIXTURE_ONLY")
+                before = [_read_rows(spec_path, arm) for arm in range(5)]
+                before_pub = _publisher_target(spec_path)
+                before_graph = _graph_target(spec_path) if enabled else None
+                # Match the CLI preparation's explicit fixture-only source rows.
+                paths = (
+                    ("TEST", Path(__file__).resolve().relative_to(REPOSITORY_ROOT).as_posix()),
+                    ("HOST", "scripts/verify-rb100-branch-order-study.ps1"),
+                    ("WRITER", "tests/qualification/rb100-layout/java/ActualGeneratorBranchOrderStudy.java"),
+                )
+                def add_roles(manifest):
+                    for role, relative in paths:
+                        raw = (REPOSITORY_ROOT / relative).read_bytes()
+                        manifest["files"].append(dict(role=role, path=relative,
+                                                     bytes=len(raw), sha256=_sha(raw)))
+                spec_path, _ = _rewrite_manifest(spec_path, add_roles)
+                source_sha = _load_json(spec_path)["sourceManifest"]["sha256"]
+                spec_path, spec_sha = _rewrite_source_provenance(spec_path, source_sha)
+                result = reader.validate_spec(spec_path, spec_sha)
+                self.assertEqual(result["status"], "PASS_READER_FIXTURE_ONLY")
+                after = [_read_rows(spec_path, arm) for arm in range(5)]
+                for arm in range(5):
+                    self.assertEqual(after[arm][0]["sourceManifestSha256"], source_sha)
+                    self.assertEqual([row["record"] for row in before[arm]],
+                                     [row["record"] for row in after[arm]])
+                    self.assertEqual([row.get("group") for row in before[arm]],
+                                     [row.get("group") for row in after[arm]])
+                    self.assertEqual([row for row in before[arm] if row["record"] == "GROUP"],
+                                     [row for row in after[arm] if row["record"] == "GROUP"])
+                    self.assertEqual([row for row in before[arm] if row["record"] in
+                                      ("PAD", "BRANCH", "NET_ORDER", "RESULT", "FOOTER")],
+                                     [row for row in after[arm] if row["record"] in
+                                      ("PAD", "BRANCH", "NET_ORDER", "RESULT", "FOOTER")])
+                expected_pub = copy.deepcopy(before_pub)
+                expected_pub["context"]["sourceManifestSha256"] = source_sha
+                self.assertEqual(_publisher_target(spec_path), expected_pub)
+                for prefix in (("PUB", "GRAPH") if enabled else ("PUB",)):
+                    old_chunks = [row for row in before[4] if row["record"] == prefix + "_CHUNK"]
+                    new_chunks = [row for row in after[4] if row["record"] == prefix + "_CHUNK"]
+                    self.assertEqual([{key: value for key, value in row.items() if key != "data"}
+                                      for row in old_chunks],
+                                     [{key: value for key, value in row.items() if key != "data"}
+                                      for row in new_chunks])
+                    payload = b"".join(base64.b64decode(row["data"], validate=True)
+                                       for row in new_chunks)
+                    seal = next(row for row in after[4] if row["record"] == prefix + "_RESULT")
+                    self.assertEqual(seal["payloadSha256"], _sha(payload))
+                    self.assertEqual(seal["payloadBytes"], len(payload))
+                if enabled:
+                    expected_graph = copy.deepcopy(before_graph)
+                    expected_graph["context"]["sourceManifestSha256"] = source_sha
+                    expected_graph["publisherPayloadSha256"] = _sha(
+                        _json_bytes(expected_pub, newline=False))
+                    self.assertEqual(_graph_target(spec_path), expected_graph)
+                    self.assertEqual(_graph_body_bytes(_graph_target(spec_path)["body"]),
+                                     _graph_body_bytes(before_graph["body"]))
+                    payload = b"".join(base64.b64decode(row["data"], validate=True)
+                                       for row in after[4] if row["record"] == "GRAPH_CHUNK")
+                    self.assertIn(_graph_body_bytes(before_graph["body"]), payload)
+                    self.assertEqual(len(result["graphDiagnostics"][4]["faces"]), 2)
+                else:
+                    self.assertEqual(result["graphDiagnostics"], [None] * 5)
+
+    def test_provenance_repin_does_not_make_ordinary_graph_mutator_heal_wrong_joins(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-source-join-negative-") as directory:
+            spec_path, _ = self._graph_fixture(directory)
+            spec = _load_json(spec_path)
+            source_sha = spec["sourceManifest"]["sha256"]
+            spec_path, spec_sha = _rewrite_source_provenance(spec_path, source_sha)
+            reader.validate_spec(spec_path, spec_sha)
+            spec_path, spec_sha = _rewrite_graph_target(
+                spec_path, lambda graph: graph["context"].update(sourceManifestSha256="0" * 64))
+            self.assertEqual(_graph_target(spec_path)["context"]["sourceManifestSha256"], "0" * 64)
+            self.assertEqual(_publisher_target(spec_path)["context"]["sourceManifestSha256"], source_sha)
+            self._assert_rejects(spec_path, spec_sha, "GRAPH_CONTEXT_JOIN")
+
+    def _resumed_fixture(self, directory, *, graph):
+        return write_fixture(
+            Path(directory) / "fixture", graphCapture=graph, resumeAfterCapture=True,
+            diagnosticPrefixesByArm={1: {2: 31}, 2: {2: 31}, 3: {2: 31}})
+
+    def test_parent_source_callbacks_resume_after_complete_publisher_output_group(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-pub-parent-resume-") as directory:
+            spec_path, spec_sha = self._resumed_fixture(directory, graph=False)
+            result = reader.validate_spec(spec_path, spec_sha)
+            self.assertEqual(result["status"], "PASS_READER_FIXTURE_ONLY")
+            self.assertEqual(result["graphDiagnostics"], [None] * 5)
+            rows = _read_rows(spec_path, 4)
+            seal = next(row for row in rows if row["record"] == "PUB_RESULT")
+            seal_group = _group(rows, seal["group"])
+            resumed = _branch(rows, 2)
+            resumed_group = _group(rows, resumed["group"])
+            self.assertLess(rows.index(seal), rows.index(seal_group))
+            self.assertLess(rows.index(seal_group), rows.index(resumed))
+            self.assertGreater(resumed["group"], seal["group"])
+            self.assertEqual(resumed_group["phase"], "ADVANCE")
+            self.assertEqual(resumed_group["callbacks"], 1)
+            self.assertEqual(resumed_group["diagnosticCloneSteps"], 2)
+            self.assertEqual(resumed_group["p07Steps"], 7)
+            self.assertEqual(_publisher_target(spec_path)["checkpoints"]["publisherTerminal"]["group"], 3)
+            for arm in range(5):
+                arm_rows = _read_rows(spec_path, arm)
+                logical = next(row["logicalWork"] for row in arm_rows if row["record"] == "RESULT")
+                self.assertEqual(logical["generatorAdvances"], 4)
+                self.assertEqual(logical["p07Slices"], 4)
+                self.assertEqual(logical["routingOwnerSteps"], 30)
+                self.assertEqual(logical["p07OwnerSteps"], 30 if arm == 0 else 32)
+            self.assertEqual(result["netOrderComparison"], {"status": "NO_DIVERGENCE", "netCount": 1})
+
+    def test_parent_source_callbacks_resume_after_complete_graph_output_group(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-graph-parent-resume-") as directory:
+            spec_path, spec_sha = self._resumed_fixture(directory, graph=True)
+            result = reader.validate_spec(spec_path, spec_sha)
+            self.assertEqual(result["status"], "PASS_READER_FIXTURE_ONLY")
+            rows = _read_rows(spec_path, 4)
+            seal = next(row for row in rows if row["record"] == "GRAPH_RESULT")
+            seal_group = _group(rows, seal["group"])
+            resumed = _branch(rows, 2)
+            self.assertLess(rows.index(seal_group), rows.index(resumed))
+            self.assertEqual(_group(rows, resumed["group"])["phase"], "ADVANCE")
+            self.assertEqual(_group(rows, resumed["group"])["diagnosticCloneSteps"], 2)
+            self.assertEqual(_graph_target(spec_path)["branch"]["branchRecordGroup"], 2)
+            self.assertEqual(_graph_target(spec_path)["body"]["work"]["workSteps"], 20000)
+            self.assertEqual([face["lengthEligibleGoalCount"] for face in
+                              result["graphDiagnostics"][4]["faces"]], [2, 2])
+            result_row = next(row for row in rows if row["record"] == "RESULT")
+            self.assertEqual(result_row["logicalWork"]["routingOwnerSteps"], 30)
+            self.assertEqual(result_row["logicalWork"]["p07OwnerSteps"], 32)
+            self.assertEqual(result["netOrderComparison"], {"status": "NO_DIVERGENCE", "netCount": 1})
+
+    def test_source_callbacks_stay_forbidden_during_pending_capture_streams(self):
+        # Each callback is a real existing fixture source row; relocation leaves
+        # its semantics intact and deliberately violates only the pending-output
+        # lifecycle boundary before GROUP/choice validators can accept it.
+        stages = ((False, "PUB_CHUNK", "CAPTURE_OUTPUT_INTERLEAVING"),
+                  (False, "PUB_RESULT", "CAPTURE_OUTPUT_INTERLEAVING"),
+                  (True, "CURSOR", "GRAPH_CAPTURE_SOURCE_INTERLEAVING"),
+                  (True, "PUB_RESULT_GROUP", "GRAPH_CAPTURE_SOURCE_INTERLEAVING"),
+                  (True, "GRAPH_CHUNK", "GRAPH_CAPTURE_SOURCE_INTERLEAVING"),
+                  (True, "GRAPH_RESULT", "GRAPH_CAPTURE_SOURCE_INTERLEAVING"))
+        for (graph, stage, code), kind in itertools.product(stages, ("BRANCH", "DIAGNOSTIC_CLONE", "NET_ORDER")):
+            with self.subTest(graph=graph, stage=stage, kind=kind), tempfile.TemporaryDirectory(
+                    prefix="branch-order-parent-pending-") as directory:
+                spec_path, _ = self._resumed_fixture(directory, graph=graph)
+                def move_callback(rows):
+                    if kind == "NET_ORDER":
+                        callback = copy.deepcopy(_net_order(rows))
+                    else:
+                        callback = next(row for row in rows if row["record"] == kind
+                                        and (row["snapshot"]["pass"] if kind == "BRANCH" else row["pass"]) == 2)
+                        rows.remove(callback)
+                    if stage == "CURSOR":
+                        boundary = next(row for row in rows if row["record"] == "GROUP"
+                                        and row["graphCursorSteps"])
+                    elif stage == "PUB_RESULT_GROUP":
+                        seal = next(row for row in rows if row["record"] == "PUB_RESULT")
+                        boundary = _group(rows, seal["group"])
+                    else:
+                        boundary = next(row for row in rows if row["record"] == stage)
+                    callback["group"] = boundary.get("group", boundary.get("ordinal"))
+                    if boundary["record"] == "GROUP":
+                        callback["group"] = boundary["ordinal"] + 1
+                    rows.insert(rows.index(boundary) + 1, callback)
+                spec_path, spec_sha = _rewrite_operation(spec_path, 4, move_callback, repair_groups=False)
+                self._assert_rejects(spec_path, spec_sha, code)
+
+    def test_resumed_callbacks_remain_forbidden_after_operation_result(self):
+        for graph, kind in itertools.product((False, True), ("BRANCH", "DIAGNOSTIC_CLONE", "NET_ORDER")):
+            with self.subTest(graph=graph, kind=kind), tempfile.TemporaryDirectory(
+                    prefix="branch-order-parent-after-result-") as directory:
+                spec_path, _ = self._resumed_fixture(directory, graph=graph)
+                def after_result(rows):
+                    if kind == "NET_ORDER":
+                        callback = copy.deepcopy(_net_order(rows))
+                    else:
+                        # Keep the valid pre-RESULT callback and its GROUP ledger
+                        # intact so this duplicate reaches the closure guard.
+                        callback = copy.deepcopy(next(
+                            row for row in rows if row["record"] == kind
+                            and (row["snapshot"]["pass"] if kind == "BRANCH" else row["pass"]) == 2))
+                    result = next(row for row in rows if row["record"] == "RESULT")
+                    callback["group"] = result["group"]
+                    rows.insert(rows.index(result) + 1, callback)
+                spec_path, spec_sha = _rewrite_operation(spec_path, 4, after_result, repair_groups=False)
+                self._assert_rejects(spec_path, spec_sha, "CAPTURE_AFTER_RESULT")
+
+    def test_graph_literal_two_face_directed_goals_and_fixture_authority(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-graph-literal-") as directory:
+            spec_path, spec_sha = self._graph_fixture(directory)
+            graph = _graph_target(spec_path)
+            target = _publisher_target(spec_path)
+            self.assertEqual(graph["source"]["reachedPthPadIds"], [])
+            self.assertEqual(graph["source"]["rootPadToken"], target["objects"]["terminal"])
+            self.assertEqual(graph["body"]["masks"], dict(
+                topStepsHex="0aae2000088000", bottomStepsHex="02240001888000",
+                goalFacesHex="33020130102000"))
+            # Independent decimal preimage, including parentRow before cell.
+            literal_tuple = (
+                b"0,-1,1,10,0,0,4,0,0,10,0,57\n"
+                b"1,0,2,20,0,0,1,0,10,20,1,16\n"
+                b"2,1,3,30,0,0,1,0,20,30,2,17\n"
+                b"3,2,2,20,0,0,3,0,65,20,3,44\n"
+                b"4,3,1,10,0,0,3,0,75,10,4,43\n"
+                b"5,4,0,0,0,0,3,0,85,0,5,42")
+            self.assertEqual(_fixture_tuple_bytes(target["path"]["nodes"]), literal_tuple)
+            self.assertEqual(graph["body"]["path"]["tupleSha256"], _sha(literal_tuple))
+            self.assertEqual(graph["goalFacesSha256"], _sha(b"33020130102000"))
+            result = reader.validate_spec(spec_path, spec_sha)
+            self.assertEqual(result["status"], "PASS_READER_FIXTURE_ONLY")
+            self.assertEqual(result["publisherOutcomes"], [None, None, None, None, "REJECTED"])
+            self.assertEqual(result["graphDiagnostics"][:4], [None] * 4)
+            diagnostic = result["graphDiagnostics"][4]
+            self.assertEqual(set(diagnostic), set((
+                "targetId", "publisherPayloadSha256", "graphPayloadSha256",
+                "prefixGeometrySha256", "pathTupleSha256", "goalFacesSha256", "faces", "scope")))
+            self.assertEqual(diagnostic["scope"], "ORDINARY_EDGE_LENGTH_ONLY")
+            self.assertEqual(diagnostic["targetId"], "op4/pass1/target0")
+            self.assertEqual(diagnostic["publisherPayloadSha256"], graph["publisherPayloadSha256"])
+            self.assertEqual(diagnostic["prefixGeometrySha256"], target["before"]["geometrySha256"])
+            self.assertEqual(diagnostic["pathTupleSha256"], _sha(literal_tuple))
+            self.assertEqual(diagnostic["goalFacesSha256"], _sha(b"33020130102000"))
+            payload = b"".join(base64.b64decode(row["data"], validate=True)
+                               for row in _read_rows(spec_path, 4)
+                               if row["record"] == "GRAPH_CHUNK")
+            self.assertEqual(diagnostic["graphPayloadSha256"], _sha(payload))
+            self.assertEqual(diagnostic["faces"], [
+                dict(layer=0, goalFaceCount=5, reachableGoalCount=4, lengthEligibleGoalCount=2,
+                     shortestReachable=dict(cell=1, x=10, y=0, direct=0, edges=0, length=0,
+                                            pathNodeCount=1, pathSha256=_sha(b"0,0,1")),
+                     shortestLengthEligible=dict(cell=0, x=0, y=0, direct=10, edges=1,
+                                                 length=10, pathNodeCount=2,
+                                                 pathSha256=_sha(b"0,0,1\n1,0,0")),
+                     foundEndpointLength=10),
+                dict(layer=1, goalFaceCount=5, reachableGoalCount=4, lengthEligibleGoalCount=2,
+                     shortestReachable=dict(cell=1, x=10, y=0, direct=0, edges=0, length=0,
+                                            pathNodeCount=1, pathSha256=_sha(b"0,1,1")),
+                     shortestLengthEligible=dict(cell=3, x=30, y=0, direct=20, edges=2,
+                                                 length=20, pathNodeCount=3,
+                                                 pathSha256=_sha(b"0,1,1\n1,1,2\n2,1,3")),
+                     foundEndpointLength=None),
+            ])
+
+    def test_graph_bfs_and_heap_dijkstra_have_independent_literal_distances(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-graph-distances-") as directory:
+            spec_path, _ = self._graph_fixture(directory)
+            graph = _graph_target(spec_path)
+            distances = reader._graph_distances(graph)
+            self.assertEqual([face["layer"] for face in distances], [0, 1])
+            # Literal directed distances to EVERY cell, including unreachable
+            # cells, do not use either algorithm to generate the other's oracle.
+            self.assertEqual(distances[0]["bfsEdges"],
+                             [1, 0, 1, 2, 3, 4, None, None, 5, 4, 3, None, None, None])
+            self.assertEqual(distances[0]["dijkstraLength"],
+                             [10, 0, 10, 20, 30, 40, None, None, 50, 40, 30, None, None, None])
+            self.assertEqual(distances[1]["bfsEdges"],
+                             [7, 0, 1, 2, None, None, None, 6, 5, 4, 3, None, None, None])
+            self.assertEqual(distances[1]["dijkstraLength"],
+                             [70, 0, 10, 20, None, None, None, 60, 50, 40, 30, None, None, None])
+            self.assertEqual(distances[0]["bfsParent"][0], 1)
+            self.assertEqual(distances[1]["bfsParent"][0], 7)
+
+    def test_graph_each_goal_uses_own_direct_distance_and_excludes_direct_zero(self):
+        # TOP goal5's40 <= 3*40, while the found endpoint's threshold is only30.
+        # TOP goal8's50 > 3*10; BOTTOM root0's70 > 3*10. Found-path length50
+        # is never the shortest-distance oracle. These are analysis-only cases;
+        # singleton masks intentionally do not claim a valid source/PUB join.
+        cases = ((0, 0, 10, True), (0, 1, 0, False), (0, 5, 40, True),
+                 (0, 6, None, False), (0, 8, 50, False),
+                 (1, 0, 70, False), (1, 1, 0, False), (1, 3, 20, True),
+                 (1, 6, None, False), (1, 10, 30, True))
+        with tempfile.TemporaryDirectory(prefix="branch-order-graph-singletons-") as directory:
+            spec_path, _ = self._graph_fixture(directory)
+            original = _graph_target(spec_path)
+            for layer, cell, length, eligible in cases:
+                with self.subTest(layer=layer, cell=cell):
+                    graph = copy.deepcopy(original)
+                    goals = ["0"] * 14
+                    goals[cell] = str(1 << layer)
+                    graph["body"]["masks"]["goalFacesHex"] = "".join(goals)
+                    face = reader.analyze_graph(graph)[layer]
+                    self.assertEqual(face["goalFaceCount"], 1)
+                    self.assertEqual(face["reachableGoalCount"], int(length is not None))
+                    self.assertEqual(face["lengthEligibleGoalCount"], int(eligible))
+                    if length is None:
+                        self.assertIsNone(face["shortestReachable"])
+                    else:
+                        self.assertEqual(face["shortestReachable"]["cell"], cell)
+                        self.assertEqual(face["shortestReachable"]["length"], length)
+                    if eligible:
+                        self.assertEqual(face["shortestLengthEligible"]["cell"], cell)
+                        self.assertEqual(face["shortestLengthEligible"]["length"], length)
+                    else:
+                        self.assertIsNone(face["shortestLengthEligible"])
+
+    def test_graph_directed_tie_witness_follows_north_east_south_west_order(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-graph-tie-") as directory:
+            spec_path, _ = self._graph_fixture(directory)
+            graph = _graph_target(spec_path)
+            graph["body"]["grid"].update(width=3, height=2, cells=6, startCell=0,
+                                           endCell=4, endLayer=0)
+            graph["body"]["masks"].update(topStepsHex="640200", bottomStepsHex="000000",
+                                            goalFacesHex="000010")
+            face = reader.analyze_graph(graph)[0]
+            self.assertEqual(face["shortestLengthEligible"], dict(
+                cell=4, x=10, y=10, direct=20, edges=2, length=20, pathNodeCount=3,
+                pathSha256=_sha(b"0,0,0\n1,0,1\n2,0,4")))
+            self.assertEqual(face["foundEndpointLength"], 20)
+            # Reversing only the final edge removes the goal's reachability;
+            # a neighbor's reverse edge never supplies the outgoing edge.
+            graph["body"]["masks"]["topStepsHex"] = "600010"
+            face = reader.analyze_graph(graph)[0]
+            self.assertEqual(face["reachableGoalCount"], 0)
+            self.assertIsNone(face["shortestReachable"])
+            self.assertIsNone(face["shortestLengthEligible"])
+            self.assertIsNone(face["foundEndpointLength"])
+
+    def test_graph_body_literal_padding_and_disjoint_work_ledger(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-graph-ledger-") as directory:
+            spec_path, spec_sha = self._graph_fixture(directory)
+            reader.validate_spec(spec_path, spec_sha)
+            graph, target = _graph_target(spec_path), _publisher_target(spec_path)
+            body = graph["body"]
+            raw = _graph_body_bytes(body)
+            self.assertTrue(raw.startswith(b'{"schema":"p07-zero-via-graph-r5","stability":'))
+            self.assertIn(b'"advanceCalls":                  1,"workSteps":              20000', raw)
+            self.assertEqual(body["work"]["serializedUtf16Units"], len(raw))
+            self.assertEqual(body["work"]["ordinaryQueries"], 76)
+            self.assertEqual(body["work"]["goalCells"], 14)
+            self.assertEqual(body["work"]["encodedCells"], 42)
+            self.assertEqual(body["work"]["pathNodes"], 6)
+            self.assertEqual(body["work"]["pathEdgesVerified"], 5)
+            self.assertEqual(len(graph["phaseWork"]), 32)
+            self.assertEqual(sum(graph["phaseWork"]), 20000)
+            rows = _read_rows(spec_path, 4)
+            groups = [row for row in rows if row["record"] == "GROUP"]
+            cursor = [row for row in groups if row["graphCursorSteps"]]
+            self.assertEqual([row["graphCursorSteps"] for row in cursor], [20000])
+            first_output = next(i for i, row in enumerate(rows) if row["record"] == "PUB_CHUNK")
+            self.assertLess(rows.index(cursor[0]), first_output)
+            pub_end = next(i for i, row in enumerate(rows) if row["record"] == "PUB_RESULT")
+            graph_start = next(i for i, row in enumerate(rows) if row["record"] == "GRAPH_CHUNK")
+            self.assertLess(pub_end, graph_start)
+            self.assertEqual(cursor[0]["diagnosticSerializedBytes"], 0)
+            self.assertEqual(cursor[0]["diagnosticHashBytes"], 0)
+            self.assertEqual(sum(row["graphChunkRows"] for row in groups),
+                             sum(row["record"] == "GRAPH_CHUNK" for row in rows))
+            self.assertEqual(sum(row["graphResultRows"] for row in groups), 1)
+            self.assertEqual(sum(row["diagnosticHashBytes"] for row in groups),
+                             target["before"]["geometryBytes"] + target["after"]["geometryBytes"]
+                             + sum(row["bytes"] for row in rows if row["record"] in
+                                   ("PUB_CHUNK", "GRAPH_CHUNK"))
+                             + sum(len(_line(row)) for row in rows if row["record"] in
+                                   ("PUB_CHUNK", "PUB_RESULT", "GRAPH_CHUNK", "GRAPH_RESULT")))
+            for group in groups:
+                self.assertEqual(group["diagnosticUnits"], group["graphCursorSteps"]
+                                 + group["diagnosticCopiedEntries"]
+                                 + group["diagnosticSerializedBytes"] + group["diagnosticHashBytes"])
+                if group["phase"] == "CAPTURE":
+                    self.assertLessEqual(group["diagnosticUnits"], 32768)
+                    self.assertIsNone(group["p07Steps"])
+            # Literal inherited owner lower-bound oracle deliberately omits
+            # encodedCells, whose mask encoding overlaps body serialization.
+            lower = sum(body["work"][name] for name in GRAPH_WORK_KEYS
+                        if name not in ("advanceCalls", "workSteps", "encodedCells", "activeMillis"))
+            self.assertGreaterEqual(body["work"]["workSteps"], lower)
+
+    def test_graph_enablement_requires_exact_boolean_and_only_operation_four(self):
+        cases = ((0, True), (1, True), (3, True), (4, 1), (4, None))
+        for arm, value in cases:
+            with self.subTest(arm=arm, value=value), tempfile.TemporaryDirectory(
+                    prefix="branch-order-graph-enable-") as directory:
+                spec_path, _ = self._graph_fixture(directory)
+                spec_path, spec_sha = _rewrite_operation(
+                    spec_path, arm, lambda rows: rows[0]["arm"].update(graphCapture=value))
+                self._assert_graph_rejects(spec_path, spec_sha)
+
+    def test_graph_enabled_missing_or_disabled_extra_payload_rejects(self):
+        def remove_graph(rows):
+            rows[:] = [row for row in rows if row["record"] not in ("GRAPH_CHUNK", "GRAPH_RESULT")]
+        cases = (remove_graph,
+                 lambda rows: rows[0]["arm"].update(graphCapture=False),
+                 lambda rows: rows[0]["arm"].pop("graphCapture"))
+        for mutate in cases:
+            with self.subTest(line=mutate.__code__.co_firstlineno), tempfile.TemporaryDirectory(
+                    prefix="branch-order-graph-missing-") as directory:
+                spec_path, _ = self._graph_fixture(directory)
+                spec_path, spec_sha = _rewrite_operation(spec_path, 4, mutate)
+                self._assert_graph_rejects(spec_path, spec_sha)
+
+    def test_graph_enabled_lane_rejects_independently_valid_published_source(self):
+        # Construct a genuine fixture PUBLISHED target, rather than changing an
+        # outcome label on an otherwise rejected target. A post-publication
+        # prefix cannot supply the retained rejected-Publisher graph lane.
+        raw, entry = make_operation(4, padRows=GRAPH_PAD_ROWS)
+        rows = [json.loads(line) for line in raw.splitlines()]
+        rejected_rows = copy.deepcopy(rows)
+        rejected, _ = _make_publisher_target(rejected_rows, outcome="REJECTED", via="NONE")
+        graph = _make_graph_target(rejected)
+        published, _ = _make_publisher_target(rows, outcome="PUBLISHED", via="NONE")
+        rows[0]["arm"]["graphCapture"] = True
+        selected = next(row for row in rows if row["record"] == "BRANCH"
+                        and row["ordinal"] == published["branch"]["ordinal"])
+        selected["snapshot"].update(goalsTop=5, goalsBottom=5)
+        for key in ("context", "objects", "branch"):
+            graph[key] = copy.deepcopy(published[key])
+        graph["publisherPayloadSha256"] = _sha(_json_bytes(published, newline=False))
+        tuple_bytes = _fixture_tuple_bytes(published["path"]["nodes"])
+        graph["body"]["path"].update(nodeCount=2, planarEdgeCount=1,
+                                      tupleSha256=_sha(tuple_bytes))
+        graph["body"]["work"].update(pathNodes=2, pathEdgesVerified=1, tupleBytes=len(tuple_bytes))
+        graph["body"]["work"]["serializedUtf16Units"] = len(_graph_body_bytes(graph["body"]))
+        _install_graph_capture(rows, published, graph=graph)
+        raw = b"".join(_line(row) for row in rows)
+        entry["receipt"].update(bytes=len(raw), sha256=_sha(raw))
+        entry["elapsedToCloseNanos"] = 100 * sum(row["record"] == "GROUP" for row in rows)
+        with self.assertRaisesRegex(ValueError, "^GRAPH_"):
+            reader.validate_operation(raw, entry, "1" * 64, "2" * 64, 4, RUN_ID, "READER_FIXTURE")
+
+    def test_graph_closed_wrapper_nested_keys_and_primitive_flags(self):
+        sections = ((), ("context",), ("objects",), ("branch",), ("source",),
+                    ("body",), ("body", "stability"), ("body", "grid"),
+                    ("body", "path"), ("body", "work"), ("body", "masks"),
+                    ("integrity",), ("limitations",))
+        for path, extra in itertools.product(sections, (False, True)):
+            with self.subTest(path=path, extra=extra), tempfile.TemporaryDirectory(
+                    prefix="branch-order-graph-schema-") as directory:
+                spec_path, _ = self._graph_fixture(directory)
+                def mutate(graph):
+                    value = graph
+                    for key in path:
+                        value = value[key]
+                    if extra:
+                        value["unexpected"] = 1
+                    else:
+                        value.pop(next(iter(value)))
+                spec_path, spec_sha = _rewrite_graph_target(spec_path, mutate)
+                self._assert_graph_rejects(spec_path, spec_sha)
+        for section, key, value in (
+                ("integrity", "nativeSourceBound", 1),
+                ("integrity", "cursorSourcesReleased", False),
+                ("integrity", "producerSourcesReleased", False),
+                ("integrity", "parentPaused", False),
+                ("integrity", "retainedSourceUnchanged", False),
+                ("limitations", "publicationQualified", True),
+                ("limitations", "routeAdoption", 0),
+                ("limitations", "playable100", False)):
+            with self.subTest(section=section, key=key), tempfile.TemporaryDirectory(
+                    prefix="branch-order-graph-flags-") as directory:
+                spec_path, _ = self._graph_fixture(directory)
+                spec_path, spec_sha = _rewrite_graph_target(
+                    spec_path, lambda graph: graph[section].update({key: value}))
+                self._assert_graph_rejects(spec_path, spec_sha)
+
+    def test_graph_pub_context_branch_geometry_and_seal_joins_reject(self):
+        cases = (
+            lambda g: g.update(schema="p07-zero-via-graph-r5"),
+            lambda g: g.update(targetId="op4/pass1/target1"),
+            lambda g: g.update(publisherPayloadSha256="0" * 64),
+            lambda g: g["context"].update(rootSeed="43"),
+            lambda g: g["context"].update(sourceManifestSha256="0" * 64),
+            lambda g: g["context"].update(pass_=1),
+            lambda g: g["objects"].update(search=20000),
+            lambda g: g["branch"].update(branchRecordGroup=1),
+            lambda g: g["branch"].update(foundTerminalPadId="pad-c"),
+            lambda g: g["body"]["stability"].update(prefixGeometrySha256="0" * 64),
+            lambda g: g["body"]["stability"].update(liveAfterVerified=1),
+            lambda g: g["body"]["stability"].update(liveEffectsUnchanged=False),
+        )
+        for mutate in cases:
+            with self.subTest(line=mutate.__code__.co_firstlineno), tempfile.TemporaryDirectory(
+                    prefix="branch-order-graph-join-") as directory:
+                spec_path, _ = self._graph_fixture(directory)
+                spec_path, spec_sha = _rewrite_graph_target(spec_path, mutate)
+                self._assert_graph_rejects(spec_path, spec_sha)
+
+    def test_graph_source_tokens_pad_alias_face_and_reached_ids_reject(self):
+        changes = (
+            ("target", "D_SENSE"), ("sourceKind", "D_SENSE_PUBLISHER_PATH"),
+            ("policy", "SINGLE_FACE"), ("initialLayerMask", 1), ("activeTraceWidth", 11),
+            ("facesToken", True), ("facesToken", 0), ("facesToken", 2147483648),
+            ("facesToken", 1), ("facesToken", 10000), ("goalArrayToken", 20001),
+            ("routerTokens", [20002, 20002]), ("routerTokens", [20002, True]),
+            ("routerTokens", [20002]), ("reachedTerminalsArrayToken", 20004),
+            ("startPadToken", 7), ("rootPadToken", 20007), ("rootPadToken", 20006),
+            ("reachedPthPadIds", ["pad-a"]), ("reachedPthPadIds", ["pad-b"]),
+            ("reachedPthPadIds", ["foreign"]), ("reachedPthPadIds", ["pad-c", "pad-c"]),
+        )
+        for key, value in changes:
+            with self.subTest(key=key, value=value), tempfile.TemporaryDirectory(
+                    prefix="branch-order-graph-source-") as directory:
+                spec_path, _ = self._graph_fixture(directory)
+                spec_path, spec_sha = _rewrite_graph_target(
+                    spec_path, lambda graph: graph["source"].update({key: value}))
+                self._assert_graph_rejects(spec_path, spec_sha)
+
+    def test_graph_grid_goal_masks_and_original_directed_path_reject(self):
+        def change_mask(graph, name, cell, nibble):
+            old = graph["body"]["masks"][name]
+            graph["body"]["masks"][name] = old[:cell] + nibble + old[cell + 1:]
+        cases = (
+            lambda g: g["body"]["grid"].update(startCell=True),
+            lambda g: g["body"]["grid"].update(startCell=2),
+            lambda g: g["body"]["grid"].update(endLayer=1),
+            lambda g: g["body"]["grid"].update(initialLayerMask=1),
+            lambda g: g["body"]["grid"].update(originX=10),
+            lambda g: g["body"]["grid"].update(goalUnionCellCount=8),
+            lambda g: g.update(goalFacesSha256="0" * 64),
+            lambda g: change_mask(g, "goalFacesHex", 0, "2"),
+            lambda g: change_mask(g, "goalFacesHex", 2, "1"),
+            lambda g: change_mask(g, "topStepsHex", 0, "1"),
+            lambda g: change_mask(g, "topStepsHex", 6, "2"),
+            lambda g: change_mask(g, "bottomStepsHex", 13, "4"),
+            # Existing destination->source reverse edge is insufficient.
+            lambda g: change_mask(g, "topStepsHex", 1, "2"),
+            lambda g: change_mask(g, "topStepsHex", 3, "6"),
+            lambda g: g["body"]["masks"].update(topStepsHex="F" * 14),
+            lambda g: g["body"]["masks"].update(bottomStepsHex="0" * 13),
+            lambda g: g["body"]["masks"].update(goalFacesHex="4" * 14),
+            lambda g: g["body"]["masks"].update(goalFacesHex=[0] * 14),
+            lambda g: g["body"]["masks"].update(topStepsHex=None),
+            lambda g: g["body"]["path"].update(tupleSha256="0" * 64),
+            lambda g: g["body"]["path"].update(transitionCount=1),
+            lambda g: g["body"]["path"].update(planarEdgeCount=4),
+        )
+        for mutate in cases:
+            with self.subTest(line=mutate.__code__.co_firstlineno), tempfile.TemporaryDirectory(
+                    prefix="branch-order-graph-path-") as directory:
+                spec_path, _ = self._graph_fixture(directory)
+                spec_path, spec_sha = _rewrite_graph_target(spec_path, mutate)
+                self._assert_graph_rejects(spec_path, spec_sha)
+
+    def test_graph_work_phase_calls_byte_lengths_and_elapsed_reject(self):
+        changes = (("advanceCalls", 2), ("workSteps", 19999), ("copyEntries", 0),
+                   ("comparisonEntries", 0), ("copyEntries", 30000),
+                   ("geometryBytes", 0), ("ordinaryQueries", 75),
+                   ("goalCells", 13), ("encodedCells", 41), ("pathNodes", 5),
+                   ("pathEdgesVerified", 4), ("tupleBytes", 1),
+                   ("serializedUtf16Units", 1), ("activeMillis", 1),
+                   ("effectUnits", True), ("copyEntries", -1), ("workSteps", 2**63))
+        for key, value in changes:
+            with self.subTest(key=key, value=value), tempfile.TemporaryDirectory(
+                    prefix="branch-order-graph-work-") as directory:
+                spec_path, _ = self._graph_fixture(directory)
+                spec_path, spec_sha = _rewrite_graph_target(
+                    spec_path, lambda graph: graph["body"]["work"].update({key: value}),
+                    reseal_body=False)
+                self._assert_graph_rejects(spec_path, spec_sha)
+        for value in ([20000] * 31, [True] + [0] * 31, [-1, 20001] + [0] * 30,
+                      [19999] + [0] * 31, [2**63] + [0] * 31):
+            with self.subTest(phase=value[:2]), tempfile.TemporaryDirectory(
+                    prefix="branch-order-graph-phase-") as directory:
+                spec_path, _ = self._graph_fixture(directory)
+                spec_path, spec_sha = _rewrite_graph_target(
+                    spec_path, lambda graph: graph.update(phaseWork=value))
+                self._assert_graph_rejects(spec_path, spec_sha)
+
+    def test_graph_canonical_body_order_padding_and_duplicate_fields_reject(self):
+        transforms = (
+            lambda raw: raw.replace(b'"advanceCalls":                  1', b'"advanceCalls":1'),
+            lambda raw: raw.replace(b'"advanceCalls":                  1',
+                                    b'"advanceCalls":0000000000000000001'),
+            lambda raw: raw.replace(b'"schema":"p07-zero-via-graph-r5",',
+                                    b'"schema":"p07-zero-via-graph-r5","schema":"x",'),
+            lambda raw: raw.replace(b'"width":7,"height":2', b'"height":2,"width":7'),
+        )
+        for transform in transforms:
+            with self.subTest(line=transform.__code__.co_firstlineno), tempfile.TemporaryDirectory(
+                    prefix="branch-order-graph-canonical-") as directory:
+                spec_path, _ = self._graph_fixture(directory)
+                spec_path, spec_sha = _rewrite_graph_target(
+                    spec_path, lambda graph: None, body_transform=transform)
+                self._assert_graph_rejects(spec_path, spec_sha)
+
+    def test_graph_chunk_identity_order_base64_and_result_seal_reject(self):
+        def chunk(rows):
+            return next(row for row in rows if row["record"] == "GRAPH_CHUNK")
+        def result(rows):
+            return next(row for row in rows if row["record"] == "GRAPH_RESULT")
+        cases = (
+            (lambda rows: chunk(rows).update(index=1), True),
+            (lambda rows: chunk(rows).update(offset=1), True),
+            (lambda rows: chunk(rows).update(operation=3), True),
+            (lambda rows: chunk(rows).update(targetId="op4/pass1/target1"), True),
+            (lambda rows: chunk(rows).update(group=1), True),
+            (lambda rows: chunk(rows).update(bytes=4097), True),
+            (lambda rows: chunk(rows).update(data="!"), False),
+            (lambda rows: chunk(rows).update(data=True), False),
+            (lambda rows: chunk(rows).update(data=chunk(rows)["data"] + "="), False),
+            (lambda rows: result(rows).update(payloadSha256="0" * 64), True),
+            (lambda rows: result(rows).update(payloadBytes=1), True),
+            (lambda rows: result(rows).update(chunkCount=999), True),
+            (lambda rows: rows.remove(result(rows)), True),
+            (lambda rows: rows.remove(chunk(rows)), True),
+            (lambda rows: rows.insert(rows.index(chunk(rows)), copy.deepcopy(chunk(rows))), True),
+        )
+        for mutate, repair in cases:
+            with self.subTest(line=mutate.__code__.co_firstlineno), tempfile.TemporaryDirectory(
+                    prefix="branch-order-graph-chunks-") as directory:
+                spec_path, _ = self._graph_fixture(directory)
+                spec_path, spec_sha = _rewrite_operation(spec_path, 4, mutate, repair_groups=repair)
+                self._assert_graph_rejects(spec_path, spec_sha)
+
+    def test_graph_group_counts_work_conservation_caps_and_output_order_reject(self):
+        def cursor(rows):
+            return next(row for row in rows if row["record"] == "GROUP" and row["graphCursorSteps"])
+        def output(rows):
+            return next(row for row in rows if row["record"] == "GROUP" and row["graphChunkRows"])
+        def remove_all_copies(rows):
+            for row in rows:
+                if row["record"] == "GROUP":
+                    row["diagnosticUnits"] -= row["diagnosticCopiedEntries"]
+                    row["diagnosticCopiedEntries"] = 0
+        def graph_before_pub(rows):
+            pub = next(i for i, row in enumerate(rows) if row["record"] == "PUB_CHUNK")
+            graph = next(i for i, row in enumerate(rows) if row["record"] == "GRAPH_CHUNK")
+            rows[pub], rows[graph] = rows[graph], rows[pub]
+        cases = (
+            lambda rows: cursor(rows).update(graphCursorSteps=32769, diagnosticUnits=32897),
+            lambda rows: cursor(rows).update(graphCursorSteps=True),
+            lambda rows: cursor(rows).update(graphCursorSteps=19999, diagnosticUnits=20127),
+            lambda rows: cursor(rows).update(diagnosticUnits=20000),
+            remove_all_copies,
+            lambda rows: output(rows).update(graphChunkRows=0),
+            lambda rows: output(rows).update(diagnosticSerializedBytes=0),
+            lambda rows: output(rows).update(diagnosticHashBytes=0),
+            lambda rows: output(rows).update(p07Steps=0),
+            lambda rows: _group(rows, 1).update(graphCursorSteps=1),
+            graph_before_pub,
+        )
+        for mutate in cases:
+            with self.subTest(line=mutate.__code__.co_firstlineno), tempfile.TemporaryDirectory(
+                    prefix="branch-order-graph-groups-") as directory:
+                spec_path, _ = self._graph_fixture(directory)
+                spec_path, spec_sha = _rewrite_operation(spec_path, 4, mutate, repair_groups=False)
+                self._assert_graph_rejects(spec_path, spec_sha)
 
     def test_literal_java_utf16_null_sort_width_fingerprint_preimage_and_sha(self):
         # Literal native-format oracle: Java compares surrogate code units, so
@@ -1478,10 +2463,10 @@ class BranchOrderReaderTests(unittest.TestCase):
             (lambda rows: result(rows).update(payloadSha256="0" * 64), "PUB_RESULT_SEAL"),
             (lambda rows: result(rows).update(payloadBytes=1), "PUB_RESULT_COUNTS"),
             (lambda rows: result(rows).update(chunkCount=999), "PUB_RESULT_COUNTS"),
-            (lambda rows: rows.remove(result(rows)), "PUB_RESULT_BEFORE_REQUEST_RESULT"),
+            (lambda rows: rows.remove(result(rows)), "CAPTURE_RESULT_BEFORE_REQUEST_RESULT"),
             (lambda rows: rows.__setitem__(slice(None), [row for row in rows
                  if row["record"] not in ("PUB_CHUNK", "PUB_RESULT")]),
-             "PUB_RESULT_BEFORE_REQUEST_RESULT"),
+             "CAPTURE_RESULT_BEFORE_REQUEST_RESULT"),
         )
         for mutate, code in cases:
             with self.subTest(code=code, line=mutate.__code__.co_firstlineno), \
@@ -1581,6 +2566,7 @@ class BranchOrderReaderTests(unittest.TestCase):
             self.assertEqual(result["branches"], [0, 3, 3, 3, 3])
             self.assertEqual(result["routeOutcomes"], ["TYPED_REQUEST_REJECTION"] * 5)
             self.assertEqual(result["publisherOutcomes"], [None, None, None, None, "PUBLISHED"])
+            self.assertEqual(result["graphDiagnostics"], [None] * 5)
             self.assertFalse(any(row["record"] == "NET_ORDER"
                                  for row in _read_rows(spec_path, 0)))
             self.assertEqual(result["netOrderComparison"],
@@ -1613,7 +2599,7 @@ class BranchOrderReaderTests(unittest.TestCase):
             manifest = _load_json(Path(spec_path).parent / "source-manifest.json")
             wire = next(row for row in manifest["files"] if row["role"] == "WIRE")
             self.assertEqual(wire["path"],
-                             "docs/task-evidence/Q100/outf-boundary-r1/WIRE.md")
+                             "docs/task-evidence/Q100/outf-graph-r1/WIRE.md")
             for arm in range(5):
                 rows = _read_rows(spec_path, arm)
                 self.assertEqual(rows[0]["schema"], reader.SCHEMA)
@@ -1705,7 +2691,7 @@ class BranchOrderReaderTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix="branch-order-not-reached-") as directory:
             spec_path, spec_sha = write_fixture(
                 Path(directory) / "fixture", reachPass1ByArm={1: False, 2: False, 3: False})
-            self._assert_rejects(spec_path, spec_sha, "PUB_RESULT_BEFORE_REQUEST_RESULT")
+            self._assert_rejects(spec_path, spec_sha, "CAPTURE_RESULT_BEFORE_REQUEST_RESULT")
             for arm in range(5):
                 self.assertFalse(any(row["record"] == "NET_ORDER"
                                      for row in _read_rows(spec_path, arm)))
@@ -1830,8 +2816,8 @@ class BranchOrderReaderTests(unittest.TestCase):
                         padId=value))
                 self._assert_rejects(spec_path, spec_sha, "PAD_VALUES_ORDER")
 
-    def test_v1_through_v4_data_headers_are_rejected_without_compatibility_fallback(self):
-        for version in ("v1", "v2", "v3", "v4"):
+    def test_v1_through_v5_data_headers_are_rejected_without_compatibility_fallback(self):
+        for version in ("v1", "v2", "v3", "v4", "v5"):
             with self.subTest(version=version), \
                     tempfile.TemporaryDirectory(prefix="branch-order-old-header-") as directory:
                 spec_path, _ = self._fixture(Path(directory) / "fixture")
@@ -2289,6 +3275,17 @@ class BranchOrderReaderTests(unittest.TestCase):
                     with self.assertRaises(ValueError) as caught:
                         reader.validate_study(changed)
                     self.assertEqual(str(caught.exception), "PUBLISHER_CAPTURE_TREATMENT_PARITY")
+
+            # Every snapshot field remains semantic. Only the outer operation
+            # identity and transport GROUP may differ between arms3/4.
+            for field, value in shifted[4]["branches"][-1]["snapshot"].items():
+                with self.subTest(snapshot_field=field):
+                    changed = copy.deepcopy(shifted)
+                    replacement = (not value if type(value) is bool else
+                                   value + 1 if type(value) is int else value + "-changed")
+                    changed[4]["branches"][-1]["snapshot"][field] = replacement
+                    with self.assertRaisesRegex(ValueError, "^PUBLISHER_CAPTURE_TREATMENT_PARITY$"):
+                        reader.validate_study(changed)
 
             reordered = copy.deepcopy(shifted)
             reordered[4]["branches"][1:3] = reversed(reordered[4]["branches"][1:3])

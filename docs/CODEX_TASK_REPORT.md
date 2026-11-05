@@ -1,4 +1,57 @@
-# Current checkpoint: OUT_F diagnostic published; next path/prefix audit
+# Current checkpoint: OUT_F ordinary-edge graph accepted locally; publication pending
+
+UTC2026-11-05. ACTIVE W=OS-temp/tsj-q100-outf-graph-20261105-r1,
+branch codex/q100-outf-graph-20261105, HEAD/source parent e271e7afc5e961bfe90de866a661b732da2587c4.
+Implementation UNCOMMITTED/0staged, no graph push/email. Root owns integrated
+acceptance/publication; workers source-only completed. QG=OS-temp/tsj-q100-fixed-
+prefix-capture-840a8ef24dbb448f830d2786a95a1591/outf-graph-r1.
+[Accepted evidence](task-evidence/Q100/outf-graph-r1/README.md),
+[qualification](task-evidence/Q100/outf-graph-r1/qualification.json),
+[failures](task-evidence/Q100/outf-graph-r1/FAILURES.md).
+
+Current codewriter6fc5c0b7/286297B, owner5a6382c4, readera314cdc7,
+testfa2366d1/90methods, host04b62ad8. PLAN76770083/WIRE0bd76a4f/amend056bba03.
+Source20/model26/deps28 unchanged. Base6478608c1080rows/87552927B; onlygraphowner
+native rowchanged;1079others/850production equalacceptedZ. Final1202inputs per
+variant/81552040B byte-identical. No freshGWT/Player/electrical/normal3/full30
+qualification. Actualnative95 reused ONLYafter consumedinputaudit; wrapperFAILretained.
+
+PASS final90units/27.609s,54CLI/21.7824231s,three selectedhost negatives,
+actualJDK8format8274chunks/144results/74negatives and focusedUTF8; sourceR2
+CLEAR_ONLY6fc. FreshTiny4 finiteactualpublication/finalization/97resumedbranches
+123groups; Auth2 complete628groups/524CAPTURE,302cursorcalls/9885287work,
+196PUB/157GRAPHchunks and both seals. Root full reader/oracles/process/cleanup
+review PASS, exactcurrentcode/source closes. Nativeauth87.445885001s,
+cleanup upper38.238245701s, allnonarm98.8636785s<120, outer148.0713178s;
+Tiny allnonarm99.9189864s<120/outer119.991129s. Finalreceiptclose NOT_EXPORTED.
+All newchildtermination/sourceStable/successscratchremoved. Priorfailures remainFAIL.
+
+Exactauthroot9007199254740993/place-6587958367974952701/route8445301674744508279,
+request0/attempt4/pass1/ordinal248/vector28/group57/OUT_F/RSH_F.1/CSTORE_F.2.
+Prefix180traces48holes271606B cbc98315295693be7cddc31d0327f6f89e5819fedb2b4ad1d65a25e7decc2739 unchanged.
+ActualPublisher171nodes/1700length/direct320/4bends/0flip rejects stage1;0copper/
+handoff/finalizer. OrdinaryTOPgoal1unreachable, BOTTOMgoal1shortest1700>960;
+bothBFS/heap agree zero lengtheligible. No VIA/PTH/history/allpathimpossibility/
+wholeboard/adoption proof. All5requests reject; playable100=0/betaHELD.
+
+Next: inspect integrated/stageddiff, exactsource-byte checkout closure andnormal
+commit/push to verifiedorigin/codex/q100-physical-feasibility (remotee271 before
+publication), verifyacceptedSHA, sendONEestablishedcompletionGmail, recordreceipt.
+Then Audit actual same-net VIA/PTH transition authority and earlier-prefix ownership before selecting a generic routing treatment.
+External next-scope proposal NEXT_TRANSITION_PREFIX_SCOPE_R1.md pending/readonly.
+
+Main5f05b005 branchcodex/q100-physical-feasibility,9tracked/6untracked/0staged,
+reportmirroronly. Desktope0c36885 branchcodex/task43p-final-recovery,
+7tracked/73untracked/0staged preserved/read-onlyJDK. CleanZ e271/Y a1fa preserved.
+PriorPublisher7cd/e271/email1a1acfc83d6f6b36 alreadysentONCE; no duplicate.
+FailedTinyR1scratch/failedAuthR1scratch42bb8aec12154b2f97b84a2bedf99f96 preserved.
+OlduncertainE06R1 browser14116/start639294472690745890/port58320 andpreview34180/
+start639294472514546595/port58264 plus14unknownchildren untouched; shutdown
+FAIL15011ms>15000/closeAttemptedtrue. Ambient8928 untouched. No newliveprocess.
+ProtectedHARDunread/unrunhere/historicalUNCERTIFIED; HARD/PSYCHOTIC unavailable/
+unrun; full30ownerEXCLUDED; only3approvednormalroots iflaterneeded. No goalcreated.
+
+# Historical checkpoint: OUT_F Publisher diagnostic published
 
 UTC2026-11-05. Active Z=OS-temp/tsj-q100-outf-boundary-20261105-r1,
 branch codex/q100-outf-boundary-20261105; implementation HEAD

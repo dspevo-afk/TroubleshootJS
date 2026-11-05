@@ -25,14 +25,13 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
-import java.util.Base64;
 import java.lang.reflect.Modifier;
 import java.util.regex.Pattern;
 
 /** Bounded producer for the frozen actual-generator branch-order report. */
 public final class ActualGeneratorBranchOrderStudy {
     private static final Charset UTF8 = Charset.forName("UTF-8");
-    private static final String SCHEMA = "p07-actual-branch-order-study-v5";
+    private static final String SCHEMA = "p07-actual-branch-order-study-v6";
     private static final String INDEX_SCHEMA = "tsj-branch-order-index-v1";
     private static final String DEPENDENCY_EPOCH = "tsj-generation-dependencies-v28";
     private static final long AUTHORED_ROOT = 9007199254740993L;
@@ -57,8 +56,34 @@ public final class ActualGeneratorBranchOrderStudy {
     private static final int PUBLISHER_SYNC_COPY_LIMIT = 1024 * 1024;
     private static final int PUBLISHER_PAYLOAD_LIMIT = 2 * 1024 * 1024;
     private static final int PUBLISHER_CHUNK_BYTES = 4096;
+    private static final int CHUNK_LINE_BUFFER_BYTES = 8192;
+    private static final long OUTPUT_ROW_TIME_RESERVE_NANOS = 250000000L;
+    private static final long OUTPUT_CLOSE_TIME_RESERVE_NANOS = 250000000L;
     private static final int DIAGNOSTIC_GROUP_UNITS = 32768;
     private static final int PUBLISHER_FOUND_METADATA_ENTRIES = 35;
+    private static final String PUBLISHER_PREFIX_SHA256 =
+        "cbc98315295693be7cddc31d0327f6f89e5819fedb2b4ad1d65a25e7decc2739";
+    private static final String BASE64_ALPHABET =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    private static final String PUB_CHUNK_PREFIX =
+        "{\"record\":\"PUB_CHUNK\",\"operation\":4,\"group\":";
+    private static final String GRAPH_CHUNK_PREFIX =
+        "{\"record\":\"GRAPH_CHUNK\",\"operation\":4,\"group\":";
+    private static final String CHUNK_TARGET_INDEX =
+        ",\"targetId\":\"op4/pass1/target0\",\"index\":";
+    private static final String CHUNK_OFFSET = ",\"offset\":";
+    private static final String CHUNK_BYTES = ",\"bytes\":";
+    private static final String CHUNK_DATA = ",\"data\":\"";
+    private static final String CHUNK_LINE_SUFFIX = "\"}\n";
+    private static final String RESULT_PREFIX_PUB =
+        "{\"record\":\"PUB_RESULT\",\"operation\":4,\"group\":";
+    private static final String RESULT_PREFIX_GRAPH =
+        "{\"record\":\"GRAPH_RESULT\",\"operation\":4,\"group\":";
+    private static final String RESULT_TARGET_PAYLOAD =
+        ",\"targetId\":\"op4/pass1/target0\",\"payloadBytes\":";
+    private static final String RESULT_HASH = ",\"payloadSha256\":\"";
+    private static final String RESULT_CHUNKS = "\",\"chunkCount\":";
+    private static final String JSON_LINE_SUFFIX = "}\n";
     private static final Pattern UUID_PATTERN = Pattern.compile(
         "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
     private static final Pattern SHA_PATTERN = Pattern.compile("[0-9a-f]{64}");
@@ -1374,6 +1399,13 @@ public final class ActualGeneratorBranchOrderStudy {
                     capture.reason == null && "REJECTED".equals(capture.outcome) ||
                     capture.reason != null && "PUBLISHED".equals(capture.outcome))
                 throw new IllegalStateException("P07 Publisher boundary is missing source terminal evidence");
+            if (graphCaptureEnabled() && (capture.graph == null || capture.graph.result == null ||
+                    !capture.graph.producerSourcesReleased || !capture.graph.cursorSourcesReleased ||
+                    capture.graph.payloadSha256 == null || capture.graph.payloadBytes < 1 ||
+                    capture.graph.payloadChunkIndex < 1 || capture.graph.graphResultRows != 1 ||
+                    !capture.graph.result.bodyReleased()) ||
+                    !graphCaptureEnabled() && capture.graph != null)
+                throw new IllegalStateException("P07 graph output/release boundary is incomplete for this arm");
             if (("READY".equals(capture.routerStatus)) != (capture.orderingReady != null) ||
                     ("READY".equals(capture.routerStatus) &&
                         (capture.readyPass != capture.pass || capture.readyLayoutToken <= 0)) ||
@@ -1446,66 +1478,617 @@ public final class ActualGeneratorBranchOrderStudy {
             finishGroup(identity);
             currentGroup = null;
 
+            if (graphCaptureEnabled()) captureOutfGraph(capture);
+
             JsonUtf8Stream payload;
+            ChunkLineBuffer lineBuffer;
             GroupLedger release = newGroup("CAPTURE", System.nanoTime());
             currentGroup = release;
+            if (capture.graph != null && (capture.graph.result == null ||
+                    capture.graph.phaseWork == null || capture.graph.phaseWork.length != 32))
+                throw new IllegalStateException("P07 graph owner result/phase copy is not in its release boundary");
             releasePublisherReferences(capture, release);
+            if (capture.graph != null && (!capture.graph.cursorSourcesReleased ||
+                    !capture.graph.producerSourcesReleased || capture.graph.hasNativeReferences()))
+                throw new IllegalStateException("P07 graph diagnostic references survived the release boundary");
             MetadataCopyLedger metadataCopies = new MetadataCopyLedger();
-            Object targetValue = publisherTargetValue(capture, metadataCopies);
+            payload = new JsonUtf8Stream(publisherTargetValue(capture, metadataCopies));
             release.diagnosticCopiedEntries += metadataCopies.entries;
-            payload = new JsonUtf8Stream(targetValue);
-            finishGroup(release);
+            release.diagnosticCopiedEntries += PUBLISHER_CHUNK_BYTES;
+            lineBuffer = new ChunkLineBuffer();
+            release.diagnosticCopiedEntries += lineBuffer.capacity();
+            try {
+                finishGroup(release);
+                currentGroup = null;
+                writePayloadRecords(capture, payload, lineBuffer, false);
+                if (graphCaptureEnabled()) writeOutfGraphPayload(capture, lineBuffer);
+            } finally {
+                payload.releaseIncomplete();
+                if (lineBuffer.capacity() > 0) lineBuffer.release();
+            }
+        }
+
+        private void writePayloadRecords(PublisherCapture capture, JsonUtf8Stream payload,
+                ChunkLineBuffer lineBuffer, boolean graphTarget) throws Exception {
+            if (capture == null || payload == null || lineBuffer == null)
+                throw new IllegalStateException("P07 bounded payload stream has no target owner");
+            OutfGraphCapture graph = graphTarget ? capture.graph : null;
+            if (graphTarget && graph == null)
+                throw new IllegalStateException("P07 graph payload has no sealed graph owner");
+            MessageDigest payloadDigest = null;
+            boolean payloadComplete = false;
+            boolean resultWritten = false;
+            String payloadSha256 = null;
+            try {
+                while (!resultWritten) {
+                    GroupLedger group = newGroup("CAPTURE", System.nanoTime());
+                    currentGroup = group;
+                    if (!payloadComplete) {
+                        if (payloadDigest == null) {
+                            payloadDigest = sha256Digest();
+                            group.diagnosticCopiedEntries++;
+                        }
+                        while (!payloadComplete) {
+                            long currentBytes = graphTarget ? graph.payloadBytes : capture.payloadBytes;
+                            long currentOffset = graphTarget ? graph.payloadOffset : capture.payloadOffset;
+                            long currentIndex = graphTarget ? graph.payloadChunkIndex : capture.payloadChunkIndex;
+                            long remainingPayload = PUBLISHER_PAYLOAD_LIMIT - currentBytes;
+                            int maximumBytes = maximumPayloadChunkBytes(group, graphTarget,
+                                currentIndex, currentOffset, remainingPayload);
+                            if (maximumBytes < 1) break;
+                            int chunkBytes = payload.nextChunk(maximumBytes);
+                            if (chunkBytes == 0) {
+                                if (currentBytes < 1 || currentBytes > PUBLISHER_PAYLOAD_LIMIT)
+                                    throw new IOException(graphTarget ?
+                                        "P07 OUT_F graph payload is outside its frozen size bound" :
+                                        "P07 Publisher target payload is outside its frozen size bound");
+                                payloadSha256 = hex(payloadDigest.digest());
+                                payloadComplete = true;
+                                group.diagnosticCopiedEntries++;
+                                payloadDigest = null;
+                                break;
+                            }
+                            if (remainingPayload < chunkBytes || chunkBytes > PUBLISHER_CHUNK_BYTES)
+                                throw new IOException(graphTarget ?
+                                    "P07 OUT_F graph target exceeded the 2 MiB payload bound" :
+                                    "P07 Publisher target exceeded the 2 MiB payload bound");
+                            long nextOffset = currentOffset;
+                            int nextIndex = (int)currentIndex;
+                            byte[] payloadBytes = payload.chunkBuffer();
+                            if (graphTarget) {
+                                graph.payloadBytes += chunkBytes;
+                                graph.payloadOffset += chunkBytes;
+                                graph.payloadChunkIndex++;
+                            } else {
+                                capture.payloadBytes += chunkBytes;
+                                capture.payloadOffset += chunkBytes;
+                                capture.payloadChunkIndex++;
+                            }
+                            group.diagnosticCopiedEntries += chunkBytes;
+                            group.diagnosticSerializedBytes += chunkBytes;
+                            group.diagnosticHashBytes += chunkBytes;
+                            group.hashInputBytes += chunkBytes;
+                            payloadDigest.update(payloadBytes, 0, chunkBytes);
+                            appendPayloadChunkRecord(group, lineBuffer, payloadBytes, chunkBytes,
+                                graphTarget, nextIndex, nextOffset);
+                        }
+                    }
+                    if (payloadComplete && !resultWritten) {
+                        if (group != currentGroup || !"CAPTURE".equals(group.phase) || operation != 4)
+                            throw new IllegalStateException("P07 payload result has no exact CAPTURE group owner");
+                        long payloadBytes = graphTarget ? graph.payloadBytes : capture.payloadBytes;
+                        long chunkCount = graphTarget ? graph.payloadChunkIndex : capture.payloadChunkIndex;
+                        int resultBytes = payloadResultLineLength(graphTarget, group.ordinal,
+                            payloadBytes, payloadSha256, chunkCount);
+                        long resultUnits = 2L * resultBytes + payload.releaseReferenceCount();
+                        if (graphTarget) {
+                            resultUnits += 1L; // OutfGraphCapture's JsonUtf8Stream field
+                            if (graph.phaseWork != null) resultUnits++;
+                            if (graph.routerTokens != null) resultUnits++;
+                            if (graph.reachedPthPadIds != null)
+                                resultUnits += 1L + graph.reachedPthPadCount;
+                            resultUnits += 3L; // transferred TOP/BOTTOM/goal mask arrays
+                            resultUnits += 1L; // shared chunk-line buffer field
+                        } else if (capture.graph != null) {
+                            resultUnits += capture.graph.pathRows == null ? 0L :
+                                1L + capture.graph.pathRows.length;
+                            resultUnits += capture.pathNodes.size();
+                        } else {
+                            resultUnits += 1L; // shared chunk-line buffer field for TINY
+                        }
+                        long availableUnits = DIAGNOSTIC_GROUP_UNITS - group.diagnosticUnits();
+                        long priorRows = group.publisherChunkRows + group.graphChunkRows;
+                        if (resultUnits <= availableUnits && outputGroupTimeFits(group, priorRows + 1L)) {
+                            if (graphTarget) graph.payloadSha256 = payloadSha256;
+                            else capture.payloadSha256 = payloadSha256;
+                            int actualBytes = lineBuffer.writeResultLine(graphTarget, group.ordinal,
+                                payloadBytes, payloadSha256, chunkCount);
+                            if (actualBytes != resultBytes)
+                                throw new IllegalStateException("P07 payload-result line length preflight changed");
+                            int written = sink.writeRawLine(lineBuffer, actualBytes, group.ordinal);
+                            if (written != resultBytes)
+                                throw new IOException("P07 payload-result line byte length changed during write");
+                            group.serializedBeforeOwnLineBytes += written;
+                            group.diagnosticSerializedBytes += written;
+                            group.diagnosticHashBytes += written;
+                            group.hashInputBytes += written;
+                            if (graphTarget) {
+                                group.graphResultRows++;
+                                graph.graphResultRows++;
+                            } else {
+                                group.publisherResultRows++;
+                            }
+                            resultWritten = true;
+                            group.diagnosticCopiedEntries += payload.release();
+                            if (graphTarget) {
+                                graph.payload = null;
+                                group.diagnosticCopiedEntries++;
+                                if (graph.phaseWork != null) {
+                                    graph.phaseWork = null;
+                                    group.diagnosticCopiedEntries++;
+                                }
+                                if (graph.routerTokens != null) {
+                                    graph.routerTokens = null;
+                                    group.diagnosticCopiedEntries++;
+                                }
+                                if (graph.reachedPthPadIds != null) {
+                                    group.diagnosticCopiedEntries += 1L + graph.reachedPthPadCount;
+                                    graph.reachedPthPadIds = null;
+                                    graph.reachedPthPadCount = 0;
+                                }
+                                if (graph.result == null || graph.result.bodyReleased())
+                                    throw new IllegalStateException("P07 OUT_F masks were released before terminal stream closure");
+                                graph.result.releaseBodyMasks();
+                                group.diagnosticCopiedEntries += 3;
+                                lineBuffer.release();
+                                group.diagnosticCopiedEntries++;
+                            } else {
+                                if (capture.graph != null) {
+                                    int copiedRows = capture.graph.pathRows == null ? 0 :
+                                        capture.graph.pathRows.length;
+                                    if (capture.graph.pathRows != null) {
+                                        capture.graph.pathRows = null;
+                                        group.diagnosticCopiedEntries += (long)copiedRows + 1L;
+                                    }
+                                    int listRows = capture.pathNodes.size();
+                                    capture.pathNodes.clear();
+                                    group.diagnosticCopiedEntries += listRows;
+                                } else {
+                                    lineBuffer.release();
+                                    group.diagnosticCopiedEntries++;
+                                }
+                            }
+                        }
+                    }
+                    if (!resultWritten && group.publisherChunkRows + group.graphChunkRows == 0)
+                        throw new IOException("P07 payload CAPTURE group could not make bounded output progress");
+                    if (group.diagnosticUnits() > DIAGNOSTIC_GROUP_UNITS)
+                        throw new IOException("P07 payload CAPTURE group exceeded 32768 diagnostic units");
+                    finishGroup(group);
+                    currentGroup = null;
+                }
+                if (graphTarget) {
+                    if (graph.payloadBytes < 1 || graph.payloadBytes > PUBLISHER_PAYLOAD_LIMIT ||
+                            graph.payloadOffset != graph.payloadBytes || graph.payloadChunkIndex < 1 ||
+                            graph.graphResultRows != 1 || !graph.result.bodyReleased())
+                        throw new IllegalStateException("P07 OUT_F graph output counters or closure did not close");
+                } else {
+                    if (capture.payloadBytes < 1 || capture.payloadBytes > PUBLISHER_PAYLOAD_LIMIT ||
+                            capture.payloadOffset != capture.payloadBytes || capture.payloadChunkIndex < 1 ||
+                            capture.payloadSha256 == null)
+                        throw new IllegalStateException("P07 Publisher output counters did not close");
+                }
+            } finally {
+                payload.releaseIncomplete();
+            }
+        }
+
+        private int maximumPayloadChunkBytes(GroupLedger group, boolean graphTarget,
+                long nextIndex, long nextOffset, long remainingPayload) {
+            if (group == null || group != currentGroup || remainingPayload < 0)
+                throw new IllegalArgumentException("Invalid bounded payload preflight owner or remainder");
+            long priorRows = group.publisherChunkRows + group.graphChunkRows;
+            if (!outputGroupTimeFits(group, priorRows + 1L)) return 0;
+            int high = (int)Math.min((long)PUBLISHER_CHUNK_BYTES,
+                remainingPayload == 0 ? 1L : remainingPayload);
+            if (high < 1) return 0;
+            int low = 0;
+            long available = DIAGNOSTIC_GROUP_UNITS - group.diagnosticUnits();
+            while (low < high) {
+                int middle = low + (high - low + 1) / 2;
+                int lineBytes = payloadChunkLineLength(graphTarget, group.ordinal,
+                    nextIndex, nextOffset, middle);
+                long units = 3L * middle + 2L * lineBytes;
+                if (units <= available) low = middle;
+                else high = middle - 1;
+            }
+            // A residual group allowance must hold any UTF-8 code point. A
+            // smaller payload-cap remainder is still a real cap/EOF probe.
+            if (low > 0 && low < 4 && (long)low < remainingPayload) return 0;
+            return low;
+        }
+
+        private boolean outputGroupTimeFits(GroupLedger group, long nextOutputRows) {
+            if (group == null || nextOutputRows < 1 || nextOutputRows > 16) return false;
+            long reserve = nextOutputRows * OUTPUT_ROW_TIME_RESERVE_NANOS +
+                OUTPUT_CLOSE_TIME_RESERVE_NANOS;
+            long elapsedNanos = elapsed(group.startedNanos, System.nanoTime());
+            return reserve < GROUP_LIMIT_NANOS && elapsedNanos <= GROUP_LIMIT_NANOS - reserve;
+        }
+
+        private static int payloadChunkLineLength(boolean graphTarget, int group, long index,
+                long offset, int bytes) {
+            return ChunkLineBuffer.chunkLineLength(graphTarget, group, index, offset, bytes);
+        }
+
+        private static int payloadResultLineLength(boolean graphTarget, int group, long bytes,
+                String sha256, long chunks) {
+            return ChunkLineBuffer.resultLineLength(graphTarget, group, bytes, sha256, chunks);
+        }
+
+        private void appendPayloadChunkRecord(GroupLedger group, ChunkLineBuffer lineBuffer,
+                byte[] payloadBytes, int chunkBytes, boolean graphTarget, int index, long offset)
+                throws IOException {
+            if (operation != 4 || group == null || group != currentGroup ||
+                    !"CAPTURE".equals(group.phase) || payloadBytes == null ||
+                    chunkBytes < 1 || chunkBytes > PUBLISHER_CHUNK_BYTES)
+                throw new IllegalStateException("P07 chunk record has no bounded source group");
+            int expectedBytes = lineBuffer.writeChunkLine(graphTarget, group.ordinal, index,
+                offset, payloadBytes, chunkBytes);
+            int written = sink.writeRawLine(lineBuffer, expectedBytes, group.ordinal);
+            if (written != expectedBytes)
+                throw new IOException("P07 payload-chunk line byte length changed during write");
+            group.serializedBeforeOwnLineBytes += written;
+            group.diagnosticSerializedBytes += written;
+            group.diagnosticHashBytes += written;
+            group.hashInputBytes += written;
+            if (graphTarget) group.graphChunkRows++;
+            else group.publisherChunkRows++;
+        }
+
+        private void captureOutfGraph(final PublisherCapture capture) throws Exception {
+            if (!graphCaptureEnabled() || operation != 4 || capture == null ||
+                    capture.graph != null || capture.outcome == null)
+                throw new IllegalStateException("P07 OUT_F graph capture has no unique authored Publisher target");
+            long parentAdvancesBefore = generatorAdvances;
+            GroupLedger bind = newGroup("CAPTURE", System.nanoTime());
+            currentGroup = bind;
+            OutfGraphCapture graph = new OutfGraphCapture();
+            capture.graph = graph;
+            bindOutfGraphSource(capture, graph, bind);
+            finishGroup(bind);
             currentGroup = null;
 
-            MessageDigest payloadDigest = null;
-            boolean resultWritten = false;
-            while (!resultWritten) {
+            while (!graph.cursor.isComplete()) {
                 GroupLedger group = newGroup("CAPTURE", System.nanoTime());
                 currentGroup = group;
-                if (payloadDigest == null) payloadDigest = sha256Digest();
-                byte[] chunk = payload.nextChunk(PUBLISHER_CHUNK_BYTES);
-                if (chunk.length > 0) {
-                    if (capture.payloadBytes > PUBLISHER_PAYLOAD_LIMIT - chunk.length)
-                        throw new IOException("P07 Publisher target exceeded the 2 MiB payload bound");
-                    capture.payloadBytes += chunk.length;
-                    capture.payloadOffset += chunk.length;
-                    capture.payloadChunkIndex++;
-                    group.diagnosticSerializedBytes += chunk.length;
-                    group.diagnosticHashBytes += chunk.length;
-                    group.diagnosticCopiedEntries += chunk.length;
-                    group.hashInputBytes += chunk.length;
-                    payloadDigest.update(chunk);
-                    JsonObject row = new JsonObject();
-                    row.string("record", "PUB_CHUNK");
-                    row.number("operation", operation);
-                    row.number("group", group.ordinal);
-                    row.string("targetId", "op4/pass1/target0");
-                    row.number("index", capture.payloadChunkIndex - 1);
-                    row.number("offset", capture.payloadOffset - chunk.length);
-                    row.number("bytes", chunk.length);
-                    row.string("data", Base64.getEncoder().encodeToString(chunk));
-                    appendPublisherRecord(group, row.finish(), true);
+                long remaining = DIAGNOSTIC_GROUP_UNITS - group.diagnosticUnits();
+                if (remaining < 1) {
+                    graph.cursor.cancel();
+                    throw new IOException("P07 OUT_F graph cursor has no remaining frozen CAPTURE units");
                 }
-                if (chunk.length == 0) {
-                    if (capture.payloadBytes < 1 || capture.payloadBytes > PUBLISHER_PAYLOAD_LIMIT)
-                        throw new IOException("P07 Publisher target payload is outside its frozen size bound");
-                    capture.payloadSha256 = hex(payloadDigest.digest());
-                    JsonObject result = new JsonObject();
-                    result.string("record", "PUB_RESULT");
-                    result.number("operation", operation);
-                    result.number("group", group.ordinal);
-                    result.string("targetId", "op4/pass1/target0");
-                    result.number("payloadBytes", capture.payloadBytes);
-                    result.string("payloadSha256", capture.payloadSha256);
-                    result.number("chunkCount", capture.payloadChunkIndex);
-                    appendPublisherRecord(group, result.finish(), false);
-                    resultWritten = true;
-                }
-                if (group.diagnosticUnits() > DIAGNOSTIC_GROUP_UNITS)
-                    throw new IOException("P07 Publisher CAPTURE group exceeded 32768 diagnostic units");
+                int maximumWork = (int)Math.min((long)STEP_LIMIT, remaining);
+                graph.cursor.advance(maximumWork);
+                int charged = graph.cursor.lastWork();
+                if (charged < 1 || charged > maximumWork || charged > STEP_LIMIT)
+                    throw new IOException("P07 OUT_F cursor lastWork did not fit its single CAPTURE debit");
+                group.graphCursorCalls++;
+                group.graphCursorSteps = charged;
+                graph.advanceCalls++;
+                graph.cursorSteps += charged;
                 finishGroup(group);
                 currentGroup = null;
+                if (generatorAdvances != parentAdvancesBefore)
+                    throw new IllegalStateException("Parent generation advanced during OUT_F graph capture");
             }
+
+            GroupLedger phases = newGroup("CAPTURE", System.nanoTime());
+            currentGroup = phases;
+            graph.result = graph.cursor.result();
+            graph.cursorSourcesReleased = graph.cursor.sourcesReleased();
+            if (!graph.cursorSourcesReleased)
+                throw new IllegalStateException("Completed P07 OUT_F cursor retained live source references");
+            if (graph.advanceCalls != graph.result.advanceCalls ||
+                    graph.cursorSteps != graph.result.workSteps || graph.cursorSteps < 1 ||
+                    graph.result.target != P07ZeroViaGraphDiagnostics.Target.OUT_F ||
+                    !"OUT_F_REJECTED_PUBLISHER_PATH".equals(graph.result.sourceKind) ||
+                    graph.result.initialLayerMask != 3 || graph.result.pathNodeCount != capture.pathNodes.size() ||
+                    graph.result.endCell != capture.foundGridIndex % capture.cells ||
+                    graph.result.endLayer != capture.foundGridIndex / capture.cells ||
+                    !graph.result.prefixGeometrySha256.equals(capture.beforeSha256) ||
+                    !graph.result.prefixGeometrySha256.equals(capture.after.geometrySha256) ||
+                    graph.result.geometryBytes != 2L * capture.before.geometryBytes ||
+                    !graph.result.liveBeforeVerified || !graph.result.liveAfterVerified ||
+                    !graph.result.liveEffectsUnchanged || !graph.result.goalVerified ||
+                    !graph.result.originalPathVerified)
+                throw new IllegalStateException("P07 OUT_F Result did not conserve the actual retained source");
+            if (!PUBLISHER_PREFIX_SHA256.equals(capture.beforeSha256) ||
+                    capture.before.geometryBytes != 271606 || capture.after.geometryBytes != 271606 ||
+                    capture.before.traces.size() != 180 || capture.after.traces.size() != 180 ||
+                    capture.before.holes.size() != 48 || capture.after.holes.size() != 48 ||
+                    !capture.before.geometrySha256.equals(capture.after.geometrySha256))
+                throw new IllegalStateException("P07 OUT_F graph did not retain the frozen unchanged 180/48 prefix");
+            if (graph.result.width != 478 || graph.result.height != 309 || graph.result.cells != 147702 ||
+                    graph.result.originX != 30 || graph.result.originY != 30 || graph.result.pitch != 10 ||
+                    graph.result.pathNodeCount != 171 || graph.result.pathPlanarEdgeCount != 170 ||
+                    graph.result.pathTransitionCount != 0)
+                throw new IllegalStateException("P07 OUT_F graph grid/path differs from the frozen authored witness");
+            graph.phaseWork = graph.result.phaseWorkCopy();
+            long phaseTotal = 0;
+            if (graph.phaseWork.length != 32)
+                throw new IllegalStateException("P07 OUT_F Result phase work is not exactly 32 entries");
+            for (int index = 0; index < graph.phaseWork.length; index++) {
+                long value = graph.phaseWork[index];
+                if (value < 0 || phaseTotal > Long.MAX_VALUE - value)
+                    throw new IllegalStateException("P07 OUT_F phase work is negative or overflows");
+                phaseTotal += value;
+            }
+            phases.diagnosticCopiedEntries += graph.phaseWork.length;
+            if (phaseTotal != graph.cursorSteps || graph.result.workSteps != phaseTotal ||
+                    graph.result.activeMillis < 0 || graph.result.activeMillis > OPERATION_LIMIT_NANOS / 1000000L ||
+                    graph.result.serializedUtf16Units != graph.result.bodyLength() ||
+                    graph.result.serializedUtf16Units > PREFIX_LIMIT_BYTES)
+                throw new IllegalStateException("P07 OUT_F phase/body work does not reconcile to cursor groups");
+            graph.nativeSourceBound = true;
+            graph.parentPaused = generatorAdvances == parentAdvancesBefore;
+            graph.retainedSourceUnchanged = graph.result.liveBeforeVerified &&
+                graph.result.liveAfterVerified && graph.result.liveEffectsUnchanged;
+            if (!graph.parentPaused || !graph.retainedSourceUnchanged)
+                throw new IllegalStateException("P07 OUT_F source or paused-parent integrity did not close");
+            finishGroup(phases);
+            currentGroup = null;
+        }
+
+        private static int graphSourceTokenAt(OutfGraphCapture graph, int index) {
+            switch (index) {
+            case 0: return graph.facesToken;
+            case 1: return graph.routerTokens[0];
+            case 2: return graph.routerTokens[1];
+            case 3: return graph.goalArrayToken;
+            case 4: return graph.reachedArrayToken;
+            default: throw new IndexOutOfBoundsException();
+            }
+        }
+
+        private static boolean matchesPublisherObjectToken(int token, PublisherCapture capture) {
+            return token == capture.generatorToken || token == capture.routeToken ||
+                token == capture.searchToken || token == capture.branchToken ||
+                token == capture.layoutToken || token == capture.publisherToken ||
+                token == capture.foundToken || token == capture.terminalToken.intValue();
+        }
+
+        private void bindOutfGraphSource(PublisherCapture capture, OutfGraphCapture graph,
+                GroupLedger group) {
+            if (group == null || group != currentGroup || !"CAPTURE".equals(group.phase) ||
+                    study.mode != Mode.AUTHORED || operation != 4 || ownerSession == null ||
+                    capture.generatorOwner != ownerSession || capture.route == null ||
+                    capture.search == null || capture.branch == null || capture.publisher == null ||
+                    capture.layout == null || capture.found == null || capture.terminal == null ||
+                    capture.terminalToken == null || capture.outcome == null ||
+                    !"REJECTED".equals(capture.outcome) || capture.pass != 1 ||
+                    capture.ordinal != 248 || capture.netVectorPosition != 28 ||
+                    !"OUT_F".equals(capture.netId) || !"RSH_F.1".equals(capture.startPadId) ||
+                    !"CSTORE_F.2".equals(capture.rootPadId) ||
+                    !"CSTORE_F.2".equals(capture.foundTerminalPadId) ||
+                    capture.branchRecordGroup != 57 || capture.stage != 1 ||
+                    capture.qualityIndex != 171 || capture.reversedSize != 171 ||
+                    capture.sourceHandoff || capture.startReachedAfter ||
+                    !"OUT_F:BRANCH_QUALITY_LIMIT".equals(capture.reason) ||
+                    !"ROUTER_REJECTED".equals(capture.routerStatus) ||
+                    !"NOT_REACHED".equals(capture.finalizerStatus) ||
+                    capture.finalizedBefore != 0 || capture.finalizedAfter != 0 ||
+                    !capture.pathCopyComplete || !capture.pathAuditComplete ||
+                    !capture.staticGeometryEqual || !capture.prefixRowsConserved)
+                throw new IllegalStateException("P07 OUT_F is not the exact retained AUTHORED stage-1 quality rejection");
+            if (candidateHeader.rootSeed != AUTHORED_ROOT || candidateHeader.placementSeed != AUTHORED_PLACEMENT ||
+                    candidateHeader.routingSeed != AUTHORED_ROUTING || capturedContext == null ||
+                    capturedContext.requestIndex != 0 || capture.pass != 1 ||
+                    capture.layout != readField(capture.search, "layout") ||
+                    readField(capture.search, "publisher") != null &&
+                        capture.publisher != readField(capture.search, "publisher") ||
+                    capture.found != readField(capture.branch, "found") ||
+                    capture.terminal != readField(capture.publisher, "endTerminal") ||
+                    capture.found != readField(capture.publisher, "end") ||
+                    !capture.netId.equals(readField(capture.branch, "net")) ||
+                    !capture.netId.equals(readField(capture.publisher, "net")))
+                throw new IllegalStateException("P07 OUT_F branch/Pub/Search references are not the captured identities");
+            Object policy = readField(capture.search, "policy");
+            if (!(policy instanceof Enum<?>) ||
+                    !"FULLER_TWO_LAYER".equals(((Enum<?>)policy).name()))
+                throw new IllegalStateException("P07 OUT_F source did not use FULLER_TWO_LAYER seed-face policy");
+            Object facesValue = readField(capture.search, "faces");
+            Object goalsValue = readField(capture.branch, "goal");
+            Object reachedValue = readField(capture.branch, "reachedTerminals");
+            Object startValue = readField(capture.branch, "start");
+            Object rootValue = readField(capture.branch, "root");
+            if (!(facesValue instanceof PcbNetRouter.Router[]) ||
+                    !(goalsValue instanceof boolean[]) || !(reachedValue instanceof PcbPadPlacement[]) ||
+                    !(startValue instanceof PcbPadPlacement) || !(rootValue instanceof PcbPadPlacement))
+                throw new IllegalStateException("P07 OUT_F retained Search/BranchSearch graph containers are unavailable");
+            PcbNetRouter.Router[] faces = (PcbNetRouter.Router[])facesValue;
+            boolean[] goals = (boolean[])goalsValue;
+            PcbPadPlacement[] reached = (PcbPadPlacement[])reachedValue;
+            PcbPadPlacement start = (PcbPadPlacement)startValue;
+            PcbPadPlacement root = (PcbPadPlacement)rootValue;
+            if (faces.length != 2 || goals.length != capture.cells * 2 || reached.length > 4096 ||
+                    faces[0] == faces[1] || capture.layout.getPad(capture.startPadId) != start ||
+                    capture.layout.getPad(capture.rootPadId) != root ||
+                    !capture.startPadId.equals(start.getPadId()) || !capture.rootPadId.equals(root.getPadId()) ||
+                    root != capture.terminal || !start.getPadId().equals("RSH_F.1") ||
+                    !root.getPadId().equals("CSTORE_F.2"))
+                throw new IllegalStateException("P07 OUT_F endpoints or retained graph containers changed identity");
+            if (capture.width != 478 || capture.height != 309 || capture.cells != 147702 ||
+                    capture.originX != 30 || capture.originY != 30 || capture.pitch != 10 ||
+                    capture.pathNodes.size() != 171 || capture.traceWidth <= 0)
+                throw new IllegalStateException("P07 OUT_F source grid/path/role width is outside the frozen witness");
+
+            int beforeTokens = publisherIdentityTokens.size();
+            graph.facesToken = publisherToken(faces);
+            graph.routerTokens = new int[] {publisherToken(faces[0]), publisherToken(faces[1])};
+            graph.goalArrayToken = publisherToken(goals);
+            graph.reachedArrayToken = publisherToken(reached);
+            graph.startPadToken = publisherToken(start);
+            graph.rootPadToken = publisherToken(root);
+            if (publisherIdentityTokens.size() - beforeTokens != 6)
+                throw new IllegalStateException("P07 OUT_F graph containers/endpoints did not receive the six expected new identity tokens");
+            if (graph.facesToken == graph.routerTokens[0] || graph.facesToken == graph.routerTokens[1] ||
+                    graph.routerTokens[0] == graph.routerTokens[1] || graph.facesToken == graph.goalArrayToken ||
+                    graph.facesToken == graph.reachedArrayToken || graph.routerTokens[0] == graph.goalArrayToken ||
+                    graph.routerTokens[1] == graph.goalArrayToken || graph.routerTokens[0] == graph.reachedArrayToken ||
+                    graph.routerTokens[1] == graph.reachedArrayToken || graph.goalArrayToken == graph.reachedArrayToken)
+                throw new IllegalStateException("P07 OUT_F five source container/router tokens collide");
+            for (int sourceIndex = 0; sourceIndex < 5; sourceIndex++) {
+                int sourceToken = graphSourceTokenAt(graph, sourceIndex);
+                if (matchesPublisherObjectToken(sourceToken, capture))
+                    throw new IllegalStateException("P07 OUT_F source token collides with a PUB object token");
+                for (PathCapture node : capture.pathNodes) if (sourceToken == node.nodeToken)
+                    throw new IllegalStateException("P07 OUT_F source token collides with a PUB Node token");
+            }
+            if (graph.startPadToken == graph.rootPadToken ||
+                    graph.rootPadToken != capture.terminalToken.intValue() ||
+                    graph.startPadToken == capture.terminalToken.intValue())
+                throw new IllegalStateException("P07 OUT_F placed endpoint tokens do not establish the required terminal alias");
+
+            graph.reachedPthPadIds = new String[reached.length];
+            String priorPadId = null;
+            for (PcbPadPlacement pad : reached) {
+                if (pad == null || capture.layout.getPad(pad.getPadId()) != pad ||
+                        pad.getAttachment() != PcbTerminalAttachment.PLATED_THROUGH_HOLE ||
+                        pad == root || pad.getPadId().equals(capture.rootPadId))
+                    throw new IllegalStateException("P07 OUT_F BranchSearch reached array is not its actual PTH subset");
+                BoardPad logical = board.getPad(pad.getPadId());
+                if (logical == null || !capture.netId.equals(logical.getNetId()) ||
+                        priorPadId != null && priorPadId.compareTo(pad.getPadId()) >= 0 ||
+                        !pad.getPadId().equals(capture.startPadId) &&
+                            java.util.Arrays.binarySearch(capture.reachedPadIds, pad.getPadId()) < 0)
+                    throw new IllegalStateException("P07 OUT_F reached PTH IDs are unsorted, duplicate, or outside PUB reachability");
+                priorPadId = pad.getPadId();
+                if (pad == start || pad.getPadId().equals(capture.startPadId)) continue;
+                graph.reachedPthPadIds[graph.reachedPthPadCount++] = pad.getPadId();
+            }
+
+            graph.faces = faces;
+            graph.goals = goals;
+            graph.reached = reached;
+            graph.start = start;
+            graph.root = root;
+            graph.initialLayerMask = 3;
+            graph.activeTraceWidth = capture.traceWidth;
+            graph.policy = "FULLER_TWO_LAYER";
+            PathCapture[] pathRows = new PathCapture[capture.pathNodes.size()];
+            for (int index = 0; index < pathRows.length; index++)
+                pathRows[index] = capture.pathNodes.get(index);
+            graph.pathRows = pathRows;
+            graph.input = new PublisherPathGraphInput(pathRows);
+            graph.context = new P07ZeroViaGraphDiagnostics.Context(
+                P07ZeroViaGraphDiagnostics.Target.OUT_F,capture.layout,faces,capture.netId,
+                start,root,reached,goals,capture.width,capture.height,capture.originX,capture.originY,
+                capture.pitch,graph.initialLayerMask,graph.input);
+            if (graph.context.expectedTraceWidth != capture.traceWidth)
+                throw new IllegalStateException("P07 OUT_F Router role width differs from the actual Publisher net role");
+            graph.cursor = P07ZeroViaGraphDiagnostics.begin(graph.context);
+            group.diagnosticCopiedEntries += publisherIdentityTokens.size() - beforeTokens;
+            group.diagnosticCopiedEntries += 7; // five container/router tokens and two placed-pad tokens
+            group.diagnosticCopiedEntries += 20; // Context target, references, copied face slots and eight scalars
+            group.diagnosticCopiedEntries += 1; // GraphInput's retained path-view reference
+            group.diagnosticCopiedEntries += 1; // Cursor's retained Context reference
+            group.diagnosticCopiedEntries += 8; // OutfGraphCapture's source/container references
+            group.diagnosticCopiedEntries += 1; // PublisherCapture's OutfGraphCapture reference
+            group.diagnosticCopiedEntries += pathRows.length; // detached immutable path-row reference copy
+            group.diagnosticCopiedEntries += 1; // OutfGraphCapture's path-row reference
+            group.diagnosticCopiedEntries += 3; // stored policy, initial-layer mask, and active width
+            group.diagnosticCopiedEntries += graph.reachedPthPadCount; // copied sorted pad-ID references
+        }
+
+        private void writeOutfGraphPayload(PublisherCapture capture, ChunkLineBuffer lineBuffer)
+                throws Exception {
+            OutfGraphCapture graph = capture == null ? null : capture.graph;
+            if (!graphCaptureEnabled() || graph == null || graph.result == null ||
+                    graph.phaseWork == null || !capture.sourceReferencesReleased ||
+                    !graph.cursorSourcesReleased || !graph.producerSourcesReleased ||
+                    graph.hasNativeReferences() || graph.payloadBytes != 0 ||
+                    graph.payloadChunkIndex != 0 || graph.payloadSha256 != null ||
+                    capture.payloadSha256 == null || lineBuffer == null)
+                throw new IllegalStateException("P07 OUT_F graph payload has not crossed its sealed release boundary");
+            GroupLedger targetGroup = newGroup("CAPTURE", System.nanoTime());
+            currentGroup = targetGroup;
+            MetadataCopyLedger metadataCopies = new MetadataCopyLedger();
+            graph.payload = new JsonUtf8Stream(outfGraphTargetValue(capture, graph, metadataCopies));
+            targetGroup.diagnosticCopiedEntries += metadataCopies.entries;
+            targetGroup.diagnosticCopiedEntries += PUBLISHER_CHUNK_BYTES;
+            finishGroup(targetGroup);
+            currentGroup = null;
+
+            writePayloadRecords(capture, graph.payload, lineBuffer, true);
+            if (graph.payloadBytes < 1 || graph.payloadBytes > PUBLISHER_PAYLOAD_LIMIT ||
+                    graph.payloadChunkIndex < 1 || graph.payloadOffset != graph.payloadBytes ||
+                    graph.graphResultRows != 1 || !graph.result.bodyReleased())
+                throw new IllegalStateException("P07 OUT_F graph output counters or closure did not close");
+        }
+
+        private StreamObject outfGraphTargetValue(final PublisherCapture capture,
+                final OutfGraphCapture graph, MetadataCopyLedger metadataCopies) {
+            P07ZeroViaGraphDiagnostics.Result result = graph.result;
+            if (result == null || result.bodyReleased() || graph.phaseWork == null ||
+                    graph.phaseWork.length != 32 || graph.policy == null ||
+                    graph.initialLayerMask != 3 || graph.facesToken <= 0 ||
+                    graph.goalArrayToken <= 0 || graph.reachedArrayToken <= 0 ||
+                    graph.routerTokens == null || graph.routerTokens.length != 2 ||
+                    graph.startPadToken <= 0 || graph.rootPadToken <= 0 ||
+                    graph.reachedPthPadIds == null || graph.reachedPthPadCount < 0 ||
+                    graph.reachedPthPadCount > graph.reachedPthPadIds.length)
+                throw new IllegalStateException("P07 OUT_F immutable source metadata is incomplete");
+            StreamObject context = new StreamObject(
+                new String[] {"sourceManifestSha256","operation","rootSeed","placementSeed",
+                    "routingSeed","attempt","request","pass","placementSha256"},
+                new Object[] {study.sourceManifestSha256,Integer.valueOf(operation),
+                    Long.toString(candidateHeader.rootSeed),Long.toString(candidateHeader.placementSeed),
+                    Long.toString(candidateHeader.routingSeed),Integer.valueOf(capturedContext.selectedAttempt),
+                    Integer.valueOf(capturedContext.requestIndex),Integer.valueOf(capture.pass),
+                    capturedContext.pristineSha256},metadataCopies);
+            StreamObject objects = new StreamObject(
+                new String[] {"generator","route","search","branch","layout","publisher","found","terminal"},
+                new Object[] {Integer.valueOf(capture.generatorToken),Integer.valueOf(capture.routeToken),
+                    Integer.valueOf(capture.searchToken),Integer.valueOf(capture.branchToken),
+                    Integer.valueOf(capture.layoutToken),Integer.valueOf(capture.publisherToken),
+                    Integer.valueOf(capture.foundToken),capture.terminalToken},metadataCopies);
+            StreamObject branch = new StreamObject(
+                new String[] {"ordinal","netVectorPosition","netId","startPadId","rootPadId",
+                    "reachedPadIds","foundTerminalPadId","branchRecordGroup"},
+                new Object[] {Integer.valueOf(capture.ordinal),Integer.valueOf(capture.netVectorPosition),
+                    capture.netId,capture.startPadId,capture.rootPadId,
+                    stringArray(capture.reachedPadIds),capture.foundTerminalPadId,
+                    Integer.valueOf(capture.branchRecordGroup)},metadataCopies);
+            StreamArray routerTokens = intArray(graph.routerTokens);
+            StreamArray reachedPth = stringArray(graph.reachedPthPadIds,graph.reachedPthPadCount);
+            StreamObject source = new StreamObject(
+                new String[] {"target","sourceKind","policy","initialLayerMask","activeTraceWidth",
+                    "facesToken","routerTokens","goalArrayToken","reachedTerminalsArrayToken",
+                    "startPadToken","rootPadToken","reachedPthPadIds"},
+                new Object[] {"OUT_F",result.sourceKind,graph.policy,Integer.valueOf(graph.initialLayerMask),
+                    Integer.valueOf(graph.activeTraceWidth),Integer.valueOf(graph.facesToken),routerTokens,
+                    Integer.valueOf(graph.goalArrayToken),Integer.valueOf(graph.reachedArrayToken),
+                    Integer.valueOf(graph.startPadToken),Integer.valueOf(graph.rootPadToken),reachedPth},
+                metadataCopies);
+            StreamArray phases = new StreamArray(new LongArrayAccess(graph.phaseWork));
+            metadataCopies.addEntries(1); // detached phase-array accessor reference
+            Object integrity = new StreamObject(
+                new String[] {"nativeSourceBound","parentPaused","retainedSourceUnchanged",
+                    "cursorSourcesReleased","producerSourcesReleased"},
+                new Object[] {Boolean.valueOf(graph.nativeSourceBound),Boolean.valueOf(graph.parentPaused),
+                    Boolean.valueOf(graph.retainedSourceUnchanged),Boolean.valueOf(graph.cursorSourcesReleased),
+                    Boolean.valueOf(graph.producerSourcesReleased)},metadataCopies);
+            Object limitations = new StreamObject(
+                new String[] {"model","lengthEligibilityOnly","legalSearchHistory","publicationQualified",
+                    "layoutQualification","routeAdoption","playable100","fullPhysicalProof"},
+                new Object[] {"DIRECTED_PER_FACE_ORDINARY_EDGES",Boolean.TRUE,"NOT_RUN",Boolean.FALSE,
+                    Boolean.FALSE,Boolean.FALSE,Integer.valueOf(0),"NOT_RUN"},metadataCopies);
+            return new StreamObject(
+                new String[] {"schema","targetId","publisherPayloadSha256","context","objects","branch",
+                    "source","goalFacesSha256","phaseWork","body","integrity","limitations"},
+                new Object[] {"p07-outf-rejected-publisher-graph-v1","op4/pass1/target0",
+                    capture.payloadSha256,context,objects,branch,source,result.goalFaceBitsSha256,phases,
+                    new StreamRaw(result,result.bodyLength()),integrity,limitations},metadataCopies);
         }
 
         private void copyPublisherPath(PublisherCapture capture, GroupLedger group) {
@@ -1975,6 +2558,10 @@ public final class ActualGeneratorBranchOrderStudy {
                 throw new IllegalStateException("P07 Publisher does not own the captured FOUND path and endpoints");
         }
 
+        private boolean graphCaptureEnabled() {
+            return operation == 4 && study.mode == Mode.AUTHORED;
+        }
+
         private void verifyPublisherIdentityTokens(PublisherCapture capture, GroupLedger group) {
             if (capture == null || group == null || !"CAPTURE".equals(group.phase) ||
                     capture.publisher == null || capture.pathNodeRefs.size() != capture.pathNodes.size())
@@ -2015,16 +2602,35 @@ public final class ActualGeneratorBranchOrderStudy {
             if (capture == null || group == null || !"CAPTURE".equals(group.phase) ||
                     capture.sourceReferencesReleased || publisherCapture != capture)
                 throw new IllegalStateException("P07 source graph release has no unique CAPTURE owner");
+            long graphReferences = capture.graph == null ? 0L : capture.graph.nativeReferenceCount();
+            long observationReferences = capture.graph == null ? 0L :
+                (lastActualRoute == null ? 0L : 1L) +
+                (validatedDiagnosticRoute == null ? 0L : 1L) +
+                (capturedNetOrderSearch == null ? 0L : 1L);
             long references = publisherIdentityTokens.size() + capture.pathNodeRefs.size() +
-                capture.pathSeen.size() + 10L;
+                capture.pathSeen.size() + graphReferences + observationReferences + 10L;
             if (references > DIAGNOSTIC_GROUP_UNITS - group.diagnosticUnits())
                 throw new IllegalStateException("P07 source-reference release exceeded its CAPTURE budget");
             publisherIdentityTokens.clear();
             capture.releaseGraphReferences();
+            if (capture.graph != null) {
+                // These observer handles only point at the retired pass-1 graph;
+                // the next parent slice rebinds its route and no later pass-1
+                // NET_ORDER comparison is eligible after orderingResult.
+                lastActualRoute = null;
+                validatedDiagnosticRoute = null;
+                capturedNetOrderSearch = null;
+            }
             group.diagnosticCopiedEntries += references;
             if (!publisherIdentityTokens.isEmpty() || capture.hasGraphReferences())
                 throw new IllegalStateException("P07 source graph references survived capture closure");
             capture.sourceReferencesReleased = true;
+            if (capture.graph != null) {
+                capture.graph.producerSourcesReleased = capture.graph.cursorSourcesReleased &&
+                    !capture.graph.hasNativeReferences();
+                if (!capture.graph.producerSourcesReleased)
+                    throw new IllegalStateException("P07 graph diagnostic sources remain after producer release");
+            }
         }
 
         private void verifyPublishedPublisher(PublisherCapture capture, int stage) {
@@ -2370,6 +2976,8 @@ public final class ActualGeneratorBranchOrderStudy {
                 publisherCapture.releaseGraphReferences();
                 publisherCapture.sourceReferencesReleased = true;
             }
+            if (publisherCapture != null && publisherCapture.graph != null)
+                publisherCapture.graph.releaseEverything();
             publisherIdentityTokens.clear();
             if (!publisherIdentityTokens.isEmpty() ||
                     publisherCapture != null && publisherCapture.hasGraphReferences())
@@ -2388,6 +2996,7 @@ public final class ActualGeneratorBranchOrderStudy {
             arm.string("netOrderStrategy", ARM_NET_ORDER_STRATEGIES[operation]);
             arm.bool("observed", operation != 0);
             arm.bool("publisherCapture", operation == 4);
+            arm.bool("graphCapture", graphCaptureEnabled());
             JsonObject candidate = new JsonObject();
             candidate.string("rootSeed", Long.toString(candidateHeader.rootSeed));
             candidate.string("placementSeed", Long.toString(candidateHeader.placementSeed));
@@ -2523,22 +3132,20 @@ public final class ActualGeneratorBranchOrderStudy {
                     checkpointValue(capture.publisherTerminal, metadataCopies),
                     checkpointValue(capture.orderingReady, metadataCopies),
                     checkpointValue(capture.orderingResult, metadataCopies)}, metadataCopies);
-            StreamArray nodes = new StreamArray(new JsonArrayAccess() {
-                public int size() { return capture.pathNodes.size(); }
-                public Object value(int index) {
-                    final int[] tuple = capture.pathNodes.get(index).tuple;
-                    return new StreamArray(new JsonArrayAccess() {
-                        public int size() { return 11; }
-                        public Object value(int item) { return Integer.valueOf(tuple[item]); }
-                    });
-                }
-            });
-            StreamArray nodeTokens = new StreamArray(new JsonArrayAccess() {
-                public int size() { return capture.pathNodes.size(); }
-                public Object value(int index) {
-                    return Integer.valueOf(capture.pathNodes.get(index).nodeToken);
-                }
-            });
+            PathCapture[] pathRows;
+            if (capture.graph != null) {
+                if (capture.graph.pathRows == null)
+                    throw new IllegalStateException("P07 Publisher detached path rows were released before serialization");
+                pathRows = capture.graph.pathRows;
+            } else {
+                pathRows = new PathCapture[capture.pathNodes.size()];
+                for (int index = 0; index < pathRows.length; index++)
+                    pathRows[index] = capture.pathNodes.get(index);
+                metadataCopies.addEntries(pathRows.length); // detached path-row references
+            }
+            StreamArray nodes = new StreamArray(new PathNodesArrayAccess(pathRows));
+            StreamArray nodeTokens = new StreamArray(new PathTokensArrayAccess(pathRows));
+            metadataCopies.addEntries(2L + pathRows.length); // accessor-held arrays and tuple-row references
             StreamObject path = new StreamObject(
                 new String[] {"encoding","nodes","nodeTokens","foundGoal"},
                 new Object[] {"cell,layer,x,y,direction,transitions,cost,heuristic,serial,key,parentRow",
@@ -2584,55 +3191,17 @@ public final class ActualGeneratorBranchOrderStudy {
                     path, publisher, ordering, before, after, integrity, limitations}, metadataCopies);
         }
 
-        private StreamObject geometryValue(final GeometryCapture geometry,
+        private static StreamObject geometryValue(GeometryCapture geometry,
                 MetadataCopyLedger metadataCopies) {
-            StreamArray traces = new StreamArray(new JsonArrayAccess() {
-                public int size() { return geometry.traces.size(); }
-                public Object value(int index) {
-                    final TraceCapture row = geometry.traces.get(index);
-                    return new StreamArray(new JsonArrayAccess() {
-                        public int size() { return 9; }
-                        public Object value(int item) {
-                            switch (item) {
-                            case 0: return row.sourceId;
-                            case 1: return row.netId;
-                            case 2: return row.startPadId;
-                            case 3: return row.endPadId;
-                            case 4: return Integer.valueOf(row.layer);
-                            case 5: return row.exposure;
-                            case 6: return Integer.valueOf(row.width);
-                            case 7: return intArray(row.xPoints);
-                            default: return intArray(row.yPoints);
-                            }
-                        }
-                    });
-                }
-            });
-            StreamArray holes = new StreamArray(new JsonArrayAccess() {
-                public int size() { return geometry.holes.size(); }
-                public Object value(int index) {
-                    final HoleCapture row = geometry.holes.get(index);
-                    return new StreamArray(new JsonArrayAccess() {
-                        public int size() { return 8; }
-                        public Object value(int item) {
-                            switch (item) {
-                            case 0: return row.id;
-                            case 1: return row.kind;
-                            case 2: return row.netId;
-                            case 3: return Integer.valueOf(row.x);
-                            case 4: return Integer.valueOf(row.y);
-                            case 5: return Integer.valueOf(row.drillRadius);
-                            case 6: return Integer.valueOf(row.landRadius);
-                            default: return row.exposure;
-                            }
-                        }
-                    });
-                }
-            });
+            GeometryPayloadSnapshot snapshot = new GeometryPayloadSnapshot(geometry);
+            long rows = (long)snapshot.traces.length + snapshot.holes.length;
+            metadataCopies.addEntries(2L * rows + 6L); // detached row arrays, row views, scalar snapshot and accessors
+            StreamArray traces = new StreamArray(new TraceRowsArrayAccess(snapshot.traces));
+            StreamArray holes = new StreamArray(new HoleRowsArrayAccess(snapshot.holes));
             return new StreamObject(
                 new String[] {"staticPrefix","traces","holes","geometrySha256","geometryBytes"},
-                new Object[] {new StreamString(geometry.sourceFingerprint, geometry.staticPrefixLength),
-                    traces, holes, geometry.geometrySha256, Integer.valueOf(geometry.geometryBytes)},
+                new Object[] {new StreamString(snapshot.sourceFingerprint, snapshot.staticPrefixLength),
+                    traces, holes, snapshot.geometrySha256, Integer.valueOf(snapshot.geometryBytes)},
                 metadataCopies);
         }
 
@@ -2691,12 +3260,21 @@ public final class ActualGeneratorBranchOrderStudy {
                     (group.diagnosticCloneSteps > 0 && (group.p07Slices != 1 ||
                         group.p07Steps == null || group.diagnosticCloneSteps > group.p07Steps.intValue())))
                 throw new IllegalStateException("Group diagnostic clone units do not reconcile to measured raw P07 work");
+            boolean graphRows = group.graphCursorSteps > 0 || group.graphChunkRows > 0 ||
+                group.graphResultRows > 0;
             if (group.publisherChunkRows < 0 || group.publisherResultRows < 0 ||
+                    group.graphCursorSteps < 0 || group.graphCursorSteps > STEP_LIMIT ||
+                    group.graphCursorCalls < 0 || group.graphCursorCalls > 1 ||
+                    (group.graphCursorCalls == 1) != (group.graphCursorSteps > 0) ||
+                    group.graphChunkRows < 0 || group.graphResultRows < 0 ||
+                    group.graphResultRows > 1 ||
                     group.diagnosticCopiedEntries < 0 || group.diagnosticSerializedBytes < 0 ||
                     group.diagnosticHashBytes < 0 ||
                     group.diagnosticUnits() > Long.MAX_VALUE ||
-                    (group.publisherChunkRows > 0 || group.publisherResultRows > 0) && operation != 4)
-                throw new IllegalStateException("P07 Publisher diagnostic GROUP accounting is invalid");
+                    (group.publisherChunkRows > 0 || group.publisherResultRows > 0) && operation != 4 ||
+                    graphRows && (!graphCaptureEnabled() || operation != 4 ||
+                        !"CAPTURE".equals(group.phase)))
+                throw new IllegalStateException("P07 Publisher/graph diagnostic GROUP accounting is invalid");
             if ("CAPTURE".equals(group.phase) &&
                     (group.p07Slices != 0 || group.p07Steps != null ||
                         group.diagnosticUnits() > DIAGNOSTIC_GROUP_UNITS))
@@ -2736,6 +3314,9 @@ public final class ActualGeneratorBranchOrderStudy {
             row.number("censusRows", group.censusRows);
             row.number("publisherChunkRows", group.publisherChunkRows);
             row.number("publisherResultRows", group.publisherResultRows);
+            row.number("graphChunkRows", group.graphChunkRows);
+            row.number("graphResultRows", group.graphResultRows);
+            row.number("graphCursorSteps", group.graphCursorSteps);
             row.number("diagnosticCopiedEntries", group.diagnosticCopiedEntries);
             row.number("diagnosticSerializedBytes", group.diagnosticSerializedBytes);
             row.number("diagnosticHashBytes", group.diagnosticHashBytes);
@@ -2748,20 +3329,6 @@ public final class ActualGeneratorBranchOrderStudy {
             if (group == null || group != currentGroup)
                 throw new IllegalStateException("JSONL record has no current owner group");
             group.serializedBeforeOwnLineBytes += sink.writeLine(json);
-        }
-
-        private void appendPublisherRecord(GroupLedger group, String json, boolean chunk)
-                throws IOException {
-            if (operation != 4 || group == null || group != currentGroup ||
-                    !"CAPTURE".equals(group.phase))
-                throw new IllegalStateException("P07 Publisher record has no CAPTURE group owner");
-            int bytes = sink.writeLine(json);
-            group.serializedBeforeOwnLineBytes += bytes;
-            group.diagnosticSerializedBytes += bytes;
-            group.diagnosticHashBytes += bytes;
-            group.hashInputBytes += bytes;
-            if (chunk) group.publisherChunkRows++;
-            else group.publisherResultRows++;
         }
 
         private void appendCallbackRecord(GroupLedger group, String json) {
@@ -2793,6 +3360,10 @@ public final class ActualGeneratorBranchOrderStudy {
         long censusRows;
         long publisherChunkRows;
         long publisherResultRows;
+        long graphChunkRows;
+        long graphResultRows;
+        long graphCursorSteps;
+        long graphCursorCalls;
         long diagnosticCopiedEntries;
         long diagnosticSerializedBytes;
         long diagnosticHashBytes;
@@ -2805,12 +3376,12 @@ public final class ActualGeneratorBranchOrderStudy {
             this.startedNanos = startedNanos;
         }
         long diagnosticUnits() {
-            if (diagnosticCopiedEntries < 0 || diagnosticSerializedBytes < 0 ||
-                    diagnosticHashBytes < 0 ||
-                    diagnosticCopiedEntries > Long.MAX_VALUE - diagnosticSerializedBytes ||
-                    diagnosticCopiedEntries + diagnosticSerializedBytes > Long.MAX_VALUE - diagnosticHashBytes)
+            if (graphCursorSteps < 0 || diagnosticCopiedEntries < 0 || diagnosticSerializedBytes < 0 ||
+                    diagnosticHashBytes < 0 || graphCursorSteps > Long.MAX_VALUE - diagnosticCopiedEntries ||
+                    graphCursorSteps + diagnosticCopiedEntries > Long.MAX_VALUE - diagnosticSerializedBytes ||
+                    graphCursorSteps + diagnosticCopiedEntries + diagnosticSerializedBytes > Long.MAX_VALUE - diagnosticHashBytes)
                 throw new IllegalStateException("P07 diagnostic unit sum overflowed");
-            return diagnosticCopiedEntries + diagnosticSerializedBytes + diagnosticHashBytes;
+            return graphCursorSteps + diagnosticCopiedEntries + diagnosticSerializedBytes + diagnosticHashBytes;
         }
     }
 
@@ -2866,6 +3437,23 @@ public final class ActualGeneratorBranchOrderStudy {
             this.sourceFingerprint = sourceFingerprint;
             this.traces = traces; this.holes = holes;
             this.copiedEntries = copiedEntries;
+        }
+    }
+
+    private static final class GeometryPayloadSnapshot {
+        final String sourceFingerprint;
+        final int staticPrefixLength;
+        final TraceCapture[] traces;
+        final HoleCapture[] holes;
+        final String geometrySha256;
+        final int geometryBytes;
+        GeometryPayloadSnapshot(GeometryCapture source) {
+            sourceFingerprint = source.sourceFingerprint;
+            staticPrefixLength = source.staticPrefixLength;
+            traces = source.traces.toArray(new TraceCapture[source.traces.size()]);
+            holes = source.holes.toArray(new HoleCapture[source.holes.size()]);
+            geometrySha256 = source.geometrySha256;
+            geometryBytes = source.geometryBytes;
         }
     }
 
@@ -3007,6 +3595,90 @@ public final class ActualGeneratorBranchOrderStudy {
         }
     }
 
+    private static final class OutfGraphCapture {
+        PcbNetRouter.Router[] faces;
+        boolean[] goals;
+        PcbPadPlacement[] reached;
+        PcbPadPlacement start,root;
+        P07ZeroViaGraphDiagnostics.GraphInput input;
+        P07ZeroViaGraphDiagnostics.Context context;
+        P07ZeroViaGraphDiagnostics.Cursor cursor;
+        P07ZeroViaGraphDiagnostics.Result result;
+        PathCapture[] pathRows;
+        JsonUtf8Stream payload;
+        long[] phaseWork;
+        int facesToken,goalArrayToken,reachedArrayToken,startPadToken,rootPadToken;
+        int[] routerTokens;
+        int initialLayerMask,activeTraceWidth;
+        String policy;
+        String[] reachedPthPadIds;
+        int reachedPthPadCount;
+        long advanceCalls,cursorSteps,payloadBytes,payloadOffset;
+        int payloadChunkIndex,graphResultRows;
+        String payloadSha256;
+        boolean nativeSourceBound,parentPaused,retainedSourceUnchanged,
+            cursorSourcesReleased,producerSourcesReleased;
+
+        long nativeReferenceCount() {
+            long count=0;
+            if(faces!=null)count++;
+            if(goals!=null)count++;
+            if(reached!=null)count++;
+            if(start!=null)count++;
+            if(root!=null)count++;
+            if(input!=null)count++;
+            if(context!=null)count++;
+            if(cursor!=null)count++;
+            return count;
+        }
+        boolean hasNativeReferences(){return nativeReferenceCount()!=0;}
+        void releaseNativeSources(){
+            if(cursor!=null){
+                if(!cursor.isComplete())cursor.cancel();
+                if(cursor.isComplete())cursorSourcesReleased=cursor.sourcesReleased();
+                if(!cursor.sourcesReleased())
+                    throw new IllegalStateException("P07 OUT_F graph Cursor did not release retained references");
+            }
+            context=null;input=null;faces=null;goals=null;reached=null;start=null;root=null;cursor=null;
+        }
+        void releaseEverything(){
+            releaseNativeSources();
+            if(payload!=null){payload.releaseIncomplete();payload=null;}
+            phaseWork=null;reachedPthPadIds=null;routerTokens=null;
+            if(result!=null){result.releaseBodyMasks();result=null;}
+        }
+    }
+
+    private static final class PublisherPathGraphInput implements P07ZeroViaGraphDiagnostics.GraphInput {
+        private final PathCapture[] rows;
+        PublisherPathGraphInput(PathCapture[] rows) {
+            if (rows == null || rows.length < 2 || rows.length > PUBLISHER_PATH_NODE_LIMIT)
+                throw new IllegalArgumentException("Invalid detached Publisher path rows");
+            this.rows = rows;
+        }
+        private PathCapture row(int index) {
+            if (index < 0 || index >= rows.length) throw new IndexOutOfBoundsException();
+            return rows[index];
+        }
+        public String sourceKind() { return "OUT_F_REJECTED_PUBLISHER_PATH"; }
+        public int seedLayerMask() { return 3; }
+        public int pathNodeCount() { return rows.length; }
+        public int pathCellAt(int index) { return row(index).tuple[0]; }
+        public int pathXAt(int index) { return row(index).tuple[2]; }
+        public int pathYAt(int index) { return row(index).tuple[3]; }
+        public int pathLayerAt(int index) { return row(index).tuple[1]; }
+        public int pathDirectionAt(int index) { return row(index).tuple[4]; }
+        public int pathTransitionsAt(int index) { return row(index).tuple[5]; }
+        public int pathCostAt(int index) { return row(index).tuple[6]; }
+        public int pathHeuristicAt(int index) { return row(index).tuple[7]; }
+        public int pathSerialAt(int index) { return row(index).tuple[8]; }
+        public int pathKeyAt(int index) { return row(index).tuple[9]; }
+        public String pathTupleSha256() { return null; }
+        public String goalFaceBitsSha256() { return null; }
+        public int goalCellCount() { return -1; }
+        public int expectedGoalFaceMaskAt(int cell) { return -1; }
+    }
+
     private static final class PublisherCapture {
         final int generatorToken, routeToken, searchToken, branchToken, layoutToken, foundToken;
         final Integer terminalToken;
@@ -3050,6 +3722,7 @@ public final class ActualGeneratorBranchOrderStudy {
         int pathAuditPriorX, pathAuditPriorY, pathAuditPriorTransitions;
         int payloadChunkIndex, payloadOffset, payloadBytes;
         String payloadSha256;
+        OutfGraphCapture graph;
 
         PublisherCapture(int generatorToken, int routeToken, int searchToken,
                 int branchToken, int layoutToken, int foundToken, Integer terminalToken,
@@ -3090,12 +3763,14 @@ public final class ActualGeneratorBranchOrderStudy {
         void releaseGraphReferences() {
             generatorOwner=null; route=null; search=null; branch=null; layout=null; found=null;
             terminal=null; publisher=null; foundCursor=null; reachedVector=null;
+            if (graph != null) graph.releaseNativeSources();
             pathNodeRefs.clear(); pathSeen.clear();
         }
         boolean hasGraphReferences() {
             return generatorOwner != null || route != null || search != null || branch != null || layout != null ||
                 found != null || terminal != null || publisher != null || foundCursor != null ||
-                reachedVector != null || !pathNodeRefs.isEmpty() || !pathSeen.isEmpty();
+                reachedVector != null || !pathNodeRefs.isEmpty() || !pathSeen.isEmpty() ||
+                graph != null && graph.hasNativeReferences();
         }
     }
 
@@ -3259,7 +3934,163 @@ public final class ActualGeneratorBranchOrderStudy {
             this.maxFullGroupNanos = maxFullGroupNanos;
         }
     }
+    private static final class ChunkLineBuffer {
+        private byte[] value = new byte[CHUNK_LINE_BUFFER_BYTES];
+        private int length;
+        private int preparedGroup = -1;
+        private boolean prepared;
+        int capacity() { return value == null ? 0 : value.length; }
+        boolean isPrepared(int expectedLength, int expectedGroup) {
+            return value != null && prepared && preparedGroup == expectedGroup &&
+                expectedLength == length && length >= 2 &&
+                value[length - 1] == (byte)'\n' && value[length - 2] == (byte)'}';
+        }
+        void release() {
+            if (value == null) throw new IllegalStateException("P07 JSONL line buffer was released twice");
+            value = null;
+            length = 0;
+            prepared = false;
+            preparedGroup = -1;
+        }
+        int writeChunkLine(boolean graphTarget, int group, int index, long offset,
+                byte[] payload, int payloadLength) {
+            if (value == null || group < 0 || group >= GROUP_LIMIT || index < 0 ||
+                    index > PUBLISHER_PAYLOAD_LIMIT || offset < 0 || offset > PUBLISHER_PAYLOAD_LIMIT ||
+                    payload == null || payload == value || payloadLength < 1 ||
+                    payloadLength > PUBLISHER_CHUNK_BYTES || payloadLength > payload.length ||
+                    offset > (long)PUBLISHER_PAYLOAD_LIMIT - payloadLength)
+                throw new IllegalArgumentException("Invalid bounded P07 chunk line fields");
+            length = 0;
+            prepared = false;
+            preparedGroup = -1;
+            length = appendAscii(value, length, graphTarget ? GRAPH_CHUNK_PREFIX : PUB_CHUNK_PREFIX);
+            length = appendDecimal(value, length, group);
+            length = appendAscii(value, length, CHUNK_TARGET_INDEX);
+            length = appendDecimal(value, length, index);
+            length = appendAscii(value, length, CHUNK_OFFSET);
+            length = appendDecimal(value, length, offset);
+            length = appendAscii(value, length, CHUNK_BYTES);
+            length = appendDecimal(value, length, payloadLength);
+            length = appendAscii(value, length, CHUNK_DATA);
+            length = appendBase64(value, length, payload, payloadLength);
+            length = appendAscii(value, length, CHUNK_LINE_SUFFIX);
+            if (length != chunkLineLength(graphTarget, group, index, offset, payloadLength) ||
+                    length > LINE_LIMIT_BYTES)
+                throw new IllegalStateException("P07 chunk line length changed after preflight");
+            preparedGroup = group;
+            prepared = true;
+            return length;
+        }
+        int writeResultLine(boolean graphTarget, int group, long payloadBytes,
+                String sha256, long chunkCount) {
+            if (value == null || group < 0 || group >= GROUP_LIMIT || payloadBytes < 1 ||
+                    payloadBytes > PUBLISHER_PAYLOAD_LIMIT || chunkCount < 1 ||
+                    chunkCount > payloadBytes || sha256 == null || sha256.length() != 64)
+                throw new IllegalArgumentException("Invalid bounded P07 payload result fields");
+            for (int index = 0; index < sha256.length(); index++) {
+                char current = sha256.charAt(index);
+                if (!(current >= '0' && current <= '9') && !(current >= 'a' && current <= 'f'))
+                    throw new IllegalArgumentException("P07 payload seal is not lowercase SHA-256");
+            }
+            length = 0;
+            prepared = false;
+            preparedGroup = -1;
+            length = appendAscii(value, length, graphTarget ? RESULT_PREFIX_GRAPH : RESULT_PREFIX_PUB);
+            length = appendDecimal(value, length, group);
+            length = appendAscii(value, length, RESULT_TARGET_PAYLOAD);
+            length = appendDecimal(value, length, payloadBytes);
+            length = appendAscii(value, length, RESULT_HASH);
+            length = appendAscii(value, length, sha256);
+            length = appendAscii(value, length, RESULT_CHUNKS);
+            length = appendDecimal(value, length, chunkCount);
+            length = appendAscii(value, length, JSON_LINE_SUFFIX);
+            if (length != resultLineLength(graphTarget, group, payloadBytes, sha256, chunkCount) ||
+                    length > LINE_LIMIT_BYTES)
+                throw new IllegalStateException("P07 result line length changed after preflight");
+            preparedGroup = group;
+            prepared = true;
+            return length;
+        }
+        static int chunkLineLength(boolean graphTarget, int group, long index, long offset, int bytes) {
+            // Length-only preflight permits offset==payload cap for the 1-byte EOF probe;
+            // writeChunkLine independently rejects any actual bytes past the frozen cap.
+            if (group < 0 || group >= GROUP_LIMIT || index < 0 || index > PUBLISHER_PAYLOAD_LIMIT ||
+                    offset < 0 || offset > PUBLISHER_PAYLOAD_LIMIT ||
+                    bytes < 1 || bytes > PUBLISHER_CHUNK_BYTES)
+                throw new IllegalArgumentException("Invalid P07 chunk line preflight fields");
+            int base64Length = 4 * ((bytes + 2) / 3);
+            long length = (graphTarget ? GRAPH_CHUNK_PREFIX.length() : PUB_CHUNK_PREFIX.length()) +
+                decimalLength(group) + CHUNK_TARGET_INDEX.length() + decimalLength(index) +
+                CHUNK_OFFSET.length() + decimalLength(offset) + CHUNK_BYTES.length() +
+                decimalLength(bytes) + CHUNK_DATA.length() + base64Length + CHUNK_LINE_SUFFIX.length();
+            if (length > LINE_LIMIT_BYTES) throw new IllegalArgumentException("P07 chunk line exceeded 64 KiB");
+            return (int)length;
+        }
+        static int resultLineLength(boolean graphTarget, int group, long payloadBytes,
+                String sha256, long chunks) {
+            if (group < 0 || group >= GROUP_LIMIT || payloadBytes < 1 ||
+                    payloadBytes > PUBLISHER_PAYLOAD_LIMIT || chunks < 1 || chunks > payloadBytes ||
+                    sha256 == null || sha256.length() != 64)
+                throw new IllegalArgumentException("Invalid P07 result line preflight fields");
+            long length = (graphTarget ? RESULT_PREFIX_GRAPH.length() : RESULT_PREFIX_PUB.length()) +
+                decimalLength(group) + RESULT_TARGET_PAYLOAD.length() + decimalLength(payloadBytes) +
+                RESULT_HASH.length() + 64 + RESULT_CHUNKS.length() + decimalLength(chunks) +
+                JSON_LINE_SUFFIX.length();
+            if (length > LINE_LIMIT_BYTES) throw new IllegalArgumentException("P07 result line exceeded 64 KiB");
+            return (int)length;
+        }
+        private static int decimalLength(long value) {
+            if (value < 0) throw new IllegalArgumentException("Negative P07 JSON decimal");
+            int digits = 1;
+            while (value >= 10) { value /= 10; digits++; }
+            return digits;
+        }
+        private static int appendDecimal(byte[] target, int index, long value) {
+            if (value < 0) throw new IllegalArgumentException("Negative P07 JSON decimal");
+            long divisor = 1;
+            while (value / divisor >= 10) {
+                if (divisor > Long.MAX_VALUE / 10) throw new IllegalArgumentException("P07 decimal overflow");
+                divisor *= 10;
+            }
+            while (divisor > 0) {
+                target[index++] = (byte)('0' + (value / divisor));
+                value %= divisor;
+                divisor /= 10;
+            }
+            return index;
+        }
+        private static int appendAscii(byte[] target, int index, String text) {
+            if (text == null || index < 0 || index > target.length - text.length())
+                throw new IllegalArgumentException("P07 line buffer capacity was exceeded");
+            boolean suffix = text == CHUNK_LINE_SUFFIX || text == JSON_LINE_SUFFIX;
+            for (int at = 0; at < text.length(); at++) {
+                char current = text.charAt(at);
+                if (current > 0x7f || current == '\r' || current < 0x20 &&
+                        !(suffix && current == '\n' && at == text.length() - 1))
+                    throw new IllegalArgumentException("P07 protocol field is not single-line ASCII");
+                target[index++] = (byte)current;
+            }
+            return index;
+        }
+        private static int appendBase64(byte[] target, int index, byte[] source, int count) {
+            int end = index + 4 * ((count + 2) / 3);
+            if (end > target.length) throw new IllegalArgumentException("P07 line buffer capacity was exceeded");
+            for (int at = 0; at < count; at += 3) {
+                int first = source[at] & 0xff;
+                int second = at + 1 < count ? source[at + 1] & 0xff : 0;
+                int third = at + 2 < count ? source[at + 2] & 0xff : 0;
+                target[index++] = (byte)BASE64_ALPHABET.charAt(first >>> 2);
+                target[index++] = (byte)BASE64_ALPHABET.charAt(((first & 3) << 4) | (second >>> 4));
+                target[index++] = at + 1 < count ?
+                    (byte)BASE64_ALPHABET.charAt(((second & 15) << 2) | (third >>> 6)) : (byte)'=';
+                target[index++] = at + 2 < count ? (byte)BASE64_ALPHABET.charAt(third & 63) : (byte)'=';
+            }
+            return index;
+        }
+    }
+
     private static final class JsonlSink {
+        private final OutputStream fileOutput;
         private final OutputStream output;
         private final MessageDigest digest;
         private final long priorStudyBytes;
@@ -3273,8 +4104,9 @@ public final class ActualGeneratorBranchOrderStudy {
             } catch (NoSuchAlgorithmException impossible) {
                 throw new IllegalStateException("SHA-256 is unavailable", impossible);
             }
-            output = new BufferedOutputStream(Files.newOutputStream(path,
-                StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE));
+            fileOutput = Files.newOutputStream(path,
+                StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
+            output = new BufferedOutputStream(fileOutput);
         }
         int writeLine(String line) throws IOException {
             if (closed) throw new IOException("JSONL receipt is already closed");
@@ -3293,9 +4125,26 @@ public final class ActualGeneratorBranchOrderStudy {
             bytes += raw.length;
             return raw.length;
         }
+        int writeRawLine(ChunkLineBuffer row, int length, int group) throws IOException {
+            if (closed) throw new IOException("JSONL receipt is already closed");
+            if (row == null || group < 0 || group >= GROUP_LIMIT || length < 2 ||
+                    length > row.capacity() || length > LINE_LIMIT_BYTES ||
+                    !row.isPrepared(length, group))
+                throw new IOException("Raw JSONL row is not a sealed bounded producer line");
+            if (bytes > RECEIPT_LIMIT_BYTES - length)
+                throw new IOException("Per-arm JSONL receipt exceeded 8 MiB");
+            if (priorStudyBytes > STUDY_LIMIT_BYTES - bytes - length)
+                throw new IOException("Four-arm JSONL receipts exceeded 32 MiB");
+            output.flush();
+            fileOutput.write(row.value, 0, length);
+            digest.update(row.value, 0, length);
+            bytes += length;
+            return length;
+        }
         void flush() throws IOException {
             if (closed) throw new IOException("Cannot flush a closed JSONL receipt");
             output.flush();
+            fileOutput.flush();
         }
         void closeComplete() throws IOException {
             if (closed) throw new IOException("JSONL receipt was closed more than once");
@@ -3400,6 +4249,108 @@ public final class ActualGeneratorBranchOrderStudy {
         Object value(int index);
     }
 
+    private static final class PathNodesArrayAccess implements JsonArrayAccess {
+        private final PathCapture[] rows;
+        PathNodesArrayAccess(PathCapture[] rows) { this.rows = rows; }
+        public int size() { return rows.length; }
+        public Object value(int index) {
+            if (index < 0 || index >= rows.length) throw new IndexOutOfBoundsException();
+            return new StreamArray(new PathTupleArrayAccess(rows[index].tuple));
+        }
+    }
+
+    private static final class PathTupleArrayAccess implements JsonArrayAccess {
+        private final int[] tuple;
+        PathTupleArrayAccess(int[] tuple) { this.tuple = tuple; }
+        public int size() { return 11; }
+        public Object value(int index) {
+            if (index < 0 || index >= 11) throw new IndexOutOfBoundsException();
+            return Integer.valueOf(tuple[index]);
+        }
+    }
+
+    private static final class PathTokensArrayAccess implements JsonArrayAccess {
+        private final PathCapture[] rows;
+        PathTokensArrayAccess(PathCapture[] rows) { this.rows = rows; }
+        public int size() { return rows.length; }
+        public Object value(int index) {
+            if (index < 0 || index >= rows.length) throw new IndexOutOfBoundsException();
+            return Integer.valueOf(rows[index].nodeToken);
+        }
+    }
+
+    private static final class TraceRowsArrayAccess implements JsonArrayAccess {
+        private final TraceCapture[] rows;
+        TraceRowsArrayAccess(TraceCapture[] rows) { this.rows = rows; }
+        public int size() { return rows.length; }
+        public Object value(int index) {
+            if (index < 0 || index >= rows.length) throw new IndexOutOfBoundsException();
+            return new StreamArray(new TraceFieldsArrayAccess(rows[index]));
+        }
+    }
+
+    private static final class TraceFieldsArrayAccess implements JsonArrayAccess {
+        private final TraceCapture row;
+        TraceFieldsArrayAccess(TraceCapture row) { this.row = row; }
+        public int size() { return 9; }
+        public Object value(int index) {
+            switch (index) {
+            case 0: return row.sourceId;
+            case 1: return row.netId;
+            case 2: return row.startPadId;
+            case 3: return row.endPadId;
+            case 4: return Integer.valueOf(row.layer);
+            case 5: return row.exposure;
+            case 6: return Integer.valueOf(row.width);
+            case 7: return intArray(row.xPoints);
+            case 8: return intArray(row.yPoints);
+            default: throw new IndexOutOfBoundsException();
+            }
+        }
+    }
+
+    private static final class HoleRowsArrayAccess implements JsonArrayAccess {
+        private final HoleCapture[] rows;
+        HoleRowsArrayAccess(HoleCapture[] rows) { this.rows = rows; }
+        public int size() { return rows.length; }
+        public Object value(int index) {
+            if (index < 0 || index >= rows.length) throw new IndexOutOfBoundsException();
+            return new StreamArray(new HoleFieldsArrayAccess(rows[index]));
+        }
+    }
+
+    private static final class HoleFieldsArrayAccess implements JsonArrayAccess {
+        private final HoleCapture row;
+        HoleFieldsArrayAccess(HoleCapture row) { this.row = row; }
+        public int size() { return 8; }
+        public Object value(int index) {
+            switch (index) {
+            case 0: return row.id;
+            case 1: return row.kind;
+            case 2: return row.netId;
+            case 3: return Integer.valueOf(row.x);
+            case 4: return Integer.valueOf(row.y);
+            case 5: return Integer.valueOf(row.drillRadius);
+            case 6: return Integer.valueOf(row.landRadius);
+            case 7: return row.exposure;
+            default: throw new IndexOutOfBoundsException();
+            }
+        }
+    }
+
+    private static final class LongArrayAccess implements JsonArrayAccess {
+        private final long[] values;
+        LongArrayAccess(long[] values) {
+            if (values == null) throw new IllegalArgumentException("Missing detached phase-work array");
+            this.values = values;
+        }
+        public int size() { return values.length; }
+        public Object value(int index) {
+            if (index < 0 || index >= values.length) throw new IndexOutOfBoundsException();
+            return Long.valueOf(values[index]);
+        }
+    }
+
     private static final class StreamArray {
         final JsonArrayAccess access;
         StreamArray(JsonArrayAccess access) {
@@ -3416,6 +4367,11 @@ public final class ActualGeneratorBranchOrderStudy {
                 throw new IllegalStateException("P07 target metadata copy count overflowed");
             entries += (long)keyCount + valueCount;
         }
+        void addEntries(long count) {
+            if (count < 0 || entries > Long.MAX_VALUE - count)
+                throw new IllegalStateException("P07 target metadata copy count overflowed");
+            entries += count;
+        }
     }
 
     private static final class StreamObject {
@@ -3429,6 +4385,16 @@ public final class ActualGeneratorBranchOrderStudy {
                 throw new IllegalArgumentException("Invalid streamed JSON object");
             this.keys = keys; this.values = values;
             if (metadataCopies != null) metadataCopies.add(keys.length, values.length);
+        }
+    }
+
+    private static final class StreamRaw {
+        final P07ZeroViaGraphDiagnostics.Result result;
+        final int length;
+        StreamRaw(P07ZeroViaGraphDiagnostics.Result result,int length){
+            if(result==null||length<1||length!=result.bodyLength())
+                throw new IllegalArgumentException("Invalid immutable raw graph body");
+            this.result=result;this.length=length;
         }
     }
 
@@ -3448,31 +4414,50 @@ public final class ActualGeneratorBranchOrderStudy {
 
     private static final class JsonUtf8Stream {
         private final ArrayList<JsonFrame> frames = new ArrayList<JsonFrame>();
-        private final Object root;
+        private Object root;
+        private byte[] chunkBuffer = new byte[PUBLISHER_CHUNK_BYTES];
+        private int chunkLength;
         private String pendingFragment;
         private int pendingFragmentOffset;
         private boolean rootPending = true;
         private boolean terminalEmptyPending;
         private boolean done;
+        private boolean released;
         JsonUtf8Stream(Object root) {
             if (root == null) throw new IllegalArgumentException("Missing streamed JSON root");
             this.root = root;
         }
-        byte[] nextChunk(int maximumBytes) {
-            if (maximumBytes < 1 || done)
+        int nextChunk(int maximumBytes) {
+            if (maximumBytes < 1 || maximumBytes > PUBLISHER_CHUNK_BYTES || done || released)
                 throw new IllegalStateException("P07 target JSON stream is already complete");
+            chunkLength = 0;
             if (terminalEmptyPending) {
                 terminalEmptyPending = false;
                 done = true;
-                return new byte[0];
+                return 0;
             }
-            java.io.ByteArrayOutputStream output = new java.io.ByteArrayOutputStream(maximumBytes);
-            while (output.size() < maximumBytes) {
+            while (chunkLength < maximumBytes) {
+                if (rootPending) {
+                    rootPending = false;
+                    pushValue(root);
+                }
+                if (pendingFragment == null && !frames.isEmpty() &&
+                        frames.get(frames.size() - 1) instanceof RawFrame) {
+                    RawFrame raw = (RawFrame)frames.get(frames.size() - 1);
+                    int copied = raw.appendTo(chunkBuffer, chunkLength, maximumBytes - chunkLength);
+                    chunkLength += copied;
+                    if (raw.isComplete()) popFrame();
+                    else if (copied == 0)
+                        throw new IllegalStateException("P07 raw ASCII frame made no bounded progress");
+                    continue;
+                }
                 if (pendingFragment == null) {
                     pendingFragment = nextFragment();
                     pendingFragmentOffset = 0;
                     if (pendingFragment == null) {
-                        if (output.size() == 0) done = true;
+                        if (!frames.isEmpty() && frames.get(frames.size() - 1) instanceof RawFrame)
+                            continue;
+                        if (chunkLength == 0) done = true;
                         else terminalEmptyPending = true;
                         break;
                     }
@@ -3498,25 +4483,25 @@ public final class ActualGeneratorBranchOrderStudy {
                 }
                 int encodedBytes = codePoint <= 0x7f ? 1 : codePoint <= 0x7ff ? 2 :
                     codePoint <= 0xffff ? 3 : 4;
-                if (output.size() + encodedBytes > maximumBytes) {
-                    if (output.size() == 0)
+                if (chunkLength + encodedBytes > maximumBytes) {
+                    if (chunkLength == 0)
                         throw new IllegalArgumentException("UTF-8 chunk bound cannot hold the next code point");
                     break;
                 }
                 if (encodedBytes == 1) {
-                    output.write(codePoint);
+                    chunkBuffer[chunkLength++] = (byte)codePoint;
                 } else if (encodedBytes == 2) {
-                    output.write(0xc0 | (codePoint >>> 6));
-                    output.write(0x80 | (codePoint & 0x3f));
+                    chunkBuffer[chunkLength++] = (byte)(0xc0 | (codePoint >>> 6));
+                    chunkBuffer[chunkLength++] = (byte)(0x80 | (codePoint & 0x3f));
                 } else if (encodedBytes == 3) {
-                    output.write(0xe0 | (codePoint >>> 12));
-                    output.write(0x80 | ((codePoint >>> 6) & 0x3f));
-                    output.write(0x80 | (codePoint & 0x3f));
+                    chunkBuffer[chunkLength++] = (byte)(0xe0 | (codePoint >>> 12));
+                    chunkBuffer[chunkLength++] = (byte)(0x80 | ((codePoint >>> 6) & 0x3f));
+                    chunkBuffer[chunkLength++] = (byte)(0x80 | (codePoint & 0x3f));
                 } else {
-                    output.write(0xf0 | (codePoint >>> 18));
-                    output.write(0x80 | ((codePoint >>> 12) & 0x3f));
-                    output.write(0x80 | ((codePoint >>> 6) & 0x3f));
-                    output.write(0x80 | (codePoint & 0x3f));
+                    chunkBuffer[chunkLength++] = (byte)(0xf0 | (codePoint >>> 18));
+                    chunkBuffer[chunkLength++] = (byte)(0x80 | ((codePoint >>> 12) & 0x3f));
+                    chunkBuffer[chunkLength++] = (byte)(0x80 | ((codePoint >>> 6) & 0x3f));
+                    chunkBuffer[chunkLength++] = (byte)(0x80 | (codePoint & 0x3f));
                 }
                 pendingFragmentOffset += consumedChars;
                 if (pendingFragmentOffset == pendingFragment.length()) {
@@ -3524,15 +4509,42 @@ public final class ActualGeneratorBranchOrderStudy {
                     pendingFragmentOffset = 0;
                 }
             }
-            return output.toByteArray();
+            return chunkLength;
+        }
+        byte[] chunkBuffer() {
+            if (released || chunkBuffer == null) throw new IllegalStateException("P07 target chunk buffer was released");
+            return chunkBuffer;
+        }
+        long releaseReferenceCount() {
+            if (released) throw new IllegalStateException("P07 target stream was already released");
+            return frames.size() + (root == null ? 0 : 1) +
+                (pendingFragment == null ? 0 : 1) + (chunkBuffer == null ? 0 : 1);
+        }
+        long release() {
+            if (!done || released) throw new IllegalStateException("P07 target stream is not at its terminal boundary");
+            return releaseContents();
+        }
+        long releaseIncomplete() {
+            if (released) return 0;
+            done = true;
+            return releaseContents();
+        }
+        private long releaseContents() {
+            long references = releaseReferenceCount();
+            frames.clear();
+            root = null;
+            pendingFragment = null;
+            pendingFragmentOffset = 0;
+            rootPending = false;
+            terminalEmptyPending = false;
+            chunkBuffer = null;
+            released = true;
+            return references;
         }
         private String nextFragment() {
-            if (rootPending) {
-                rootPending = false;
-                pushValue(root);
-            }
             while (!frames.isEmpty()) {
                 JsonFrame frame = frames.get(frames.size() - 1);
+                if (frame instanceof RawFrame) return null;
                 String fragment = frame.advance(this);
                 if (fragment != null) return fragment;
             }
@@ -3541,6 +4553,7 @@ public final class ActualGeneratorBranchOrderStudy {
         private void pushValue(Object value) {
             if (value instanceof StreamObject) frames.add(new ObjectFrame((StreamObject)value));
             else if (value instanceof StreamArray) frames.add(new ArrayFrame((StreamArray)value));
+            else if (value instanceof StreamRaw) frames.add(new RawFrame((StreamRaw)value));
             else if (value instanceof StreamString) frames.add(new StringFrame((StreamString)value));
             else if (value instanceof String) frames.add(new StringFrame(new StreamString(
                 (String)value, ((String)value).length())));
@@ -3599,6 +4612,27 @@ public final class ActualGeneratorBranchOrderStudy {
         }
     }
 
+    private static final class RawFrame extends JsonFrame {
+        final StreamRaw value;
+        int index;
+        RawFrame(StreamRaw value){this.value=value;}
+        String advance(JsonUtf8Stream stream){
+            throw new IllegalStateException("P07 raw body must use direct indexed ASCII emission");
+        }
+        int appendTo(byte[] output,int offset,int maximumBytes){
+            if(output==null||offset<0||maximumBytes<0||offset>output.length-maximumBytes)
+                throw new IllegalArgumentException("Invalid P07 direct raw output bounds");
+            int count=Math.min(maximumBytes,value.length-index);
+            for(int end=offset+count;offset<end;offset++){
+                char current=value.result.bodyCharAt(index++);
+                if(current>0x7f)throw new IllegalStateException("P07 graph body is not compact ASCII");
+                output[offset]=(byte)current;
+            }
+            return count;
+        }
+        boolean isComplete(){return index==value.length;}
+    }
+
     private static final class StringFrame extends JsonFrame {
         private static final char[] HEX = "0123456789abcdef".toCharArray();
         final StreamString value;
@@ -3635,8 +4669,13 @@ public final class ActualGeneratorBranchOrderStudy {
     }
 
     private static StreamArray stringArray(final String[] values) {
+        return stringArray(values, values == null ? -1 : values.length);
+    }
+    private static StreamArray stringArray(final String[] values, final int length) {
+        if(values==null||length<0||length>values.length)
+            throw new IllegalArgumentException("Invalid bounded string-array slice");
         return new StreamArray(new JsonArrayAccess() {
-            public int size() { return values.length; }
+            public int size() { return length; }
             public Object value(int index) { return values[index]; }
         });
     }

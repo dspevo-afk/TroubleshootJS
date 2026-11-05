@@ -6,15 +6,16 @@ review of the actual compiler, process, context and cleanup evidence.
 from __future__ import annotations
 import argparse
 import base64
+from collections import Counter, deque
 import hashlib
+import heapq
 import json
 import os
-from collections import Counter
 from pathlib import Path
 import re
 import stat
 
-SCHEMA = 'p07-actual-branch-order-study-v5'
+SCHEMA = 'p07-actual-branch-order-study-v6'
 KINDS = ('READER_FIXTURE', 'TINY_NATIVE', 'AUTHORED')
 ARMS = (
     ('PLAIN_ENTRY_RECEIPT_CONTROL', 'PLAIN_BEGIN', 'CANONICAL_NEAREST', 'CANONICAL', False, False),
@@ -49,21 +50,27 @@ GROUP_FIELDS = ('record operation ordinal phase elapsedBeforeOwnLineNanos '
                 'generatorAdvances p07Slices p07Steps diagnosticCloneSteps accounting observerChecks '
                 'callbacks censusRows netOrderRows hashInputBytes serializedBeforeOwnLineBytes '
                 'publisherChunkRows publisherResultRows diagnosticCopiedEntries '
+                'graphChunkRows graphResultRows graphCursorSteps '
                 'diagnosticSerializedBytes diagnosticHashBytes diagnosticUnits').split()
 NET_ORDER_FIELDS = ('record operation group pass strategy promotedNet completedOrderings '
                     'yieldedOrderings prefixSha256 prefixBytes netIds').split()
 PUB_CHUNK_FIELDS = ('record operation group targetId index offset bytes data').split()
 PUB_RESULT_FIELDS = ('record operation group targetId payloadBytes payloadSha256 chunkCount').split()
+GRAPH_CHUNK_FIELDS = ('record operation group targetId index offset bytes data').split()
+GRAPH_RESULT_FIELDS = ('record operation group targetId payloadBytes payloadSha256 chunkCount').split()
 PUBLISHER_TARGET_SCHEMA = 'p07-publisher-target-v1'
 PUBLISHER_TARGET_ID = 'op4/pass1/target0'
+GRAPH_TARGET_SCHEMA = 'p07-outf-rejected-publisher-graph-v1'
+GRAPH_TARGET_ID = 'op4/pass1/target0'
+GRAPH_BODY_SCHEMA = 'p07-zero-via-graph-r5'
 DIAGNOSTIC_CLONE_FIELDS = ('record operation ordinal group pass netId startPadId rootPadId '
                            'faceIndex prefixViaCount ownerSteps').split()
 DIAGNOSTIC_BOUND_PROOFS = ('relaxedBoundObservationChecked relaxedBoundLiveLayoutStable '
                             'relaxedBoundRouterStateStable relaxedBoundRouterEffectsStable').split()
-BASE_SHA = '92e4a3ba69de6a8666f9789e7facafb5d2a6d8461f42c0f2ccca8e95f7141e7b'
+BASE_SHA = '6478608ca73d2a62791cd04d69ce697f8285b64b8925933a81c2c50ef5b78100'
 BASE_ROWS = 1080
-BASE_MANIFEST_BYTES = 228856
-BASE_SOURCE_BYTES = 87535768
+BASE_MANIFEST_BYTES = 208338
+BASE_SOURCE_BYTES = 87552927
 TOKEN = re.compile(r'[-+A-Za-z0-9_.:]{1,128}\Z')
 HEX = re.compile(r'[0-9a-f]{64}\Z')
 
@@ -75,6 +82,19 @@ def need(condition, code):
 
 def keys(value, names, code):
     need(type(value) is dict and set(value) == set(names), code)
+
+
+def same_json_value(left, right):
+    """Compare JSON values without Python's bool/int equality coercion."""
+    if type(left) is not type(right):
+        return False
+    if type(left) is dict:
+        return set(left) == set(right) and all(
+            same_json_value(left[name], right[name]) for name in left)
+    if type(left) is list:
+        return len(left) == len(right) and all(
+            same_json_value(a, b) for a, b in zip(left, right))
+    return left == right
 
 
 def integer(value, lo=0, hi=2**63-1):
@@ -873,6 +893,612 @@ def _validate_publisher_document(raw, chunk_rows, result_row, result_line, opera
                                + document['after']['geometryBytes']))
 
 
+def _json_space(raw, position):
+    while position < len(raw) and raw[position] in b' \t\r\n':
+        position += 1
+    return position
+
+
+def _json_string_end(raw, position):
+    need(position < len(raw) and raw[position] == 34, 'GRAPH_BODY_EXTRACT')
+    position += 1
+    while position < len(raw):
+        value = raw[position]
+        if value == 34:
+            return position + 1
+        if value == 92:
+            position += 2
+        else:
+            position += 1
+    raise ValueError('GRAPH_BODY_EXTRACT')
+
+
+def _json_value_end(raw, position):
+    position = _json_space(raw, position)
+    need(position < len(raw), 'GRAPH_BODY_EXTRACT')
+    if raw[position] == 34:
+        return _json_string_end(raw, position)
+    if raw[position] not in (91, 123):
+        end = position
+        while end < len(raw) and raw[end] not in b',]} \t\r\n':
+            end += 1
+        need(end > position, 'GRAPH_BODY_EXTRACT')
+        return end
+    stack = [125 if raw[position] == 123 else 93]
+    position += 1
+    while position < len(raw) and stack:
+        value = raw[position]
+        if value == 34:
+            position = _json_string_end(raw, position)
+            continue
+        if value == 123:
+            stack.append(125)
+        elif value == 91:
+            stack.append(93)
+        elif value in (125, 93):
+            need(value == stack[-1], 'GRAPH_BODY_EXTRACT')
+            stack.pop()
+            if not stack:
+                return position + 1
+        position += 1
+    raise ValueError('GRAPH_BODY_EXTRACT')
+
+
+def _top_level_value_bytes(raw, wanted):
+    """Return one top-level JSON value's exact token bytes, excluding whitespace."""
+    position = _json_space(raw, 0)
+    need(position < len(raw) and raw[position] == 123, 'GRAPH_BODY_EXTRACT')
+    position += 1
+    while True:
+        position = _json_space(raw, position)
+        need(position < len(raw), 'GRAPH_BODY_EXTRACT')
+        if raw[position] == 125:
+            break
+        key_end = _json_string_end(raw, position)
+        key = strict_json(raw[position:key_end])
+        need(type(key) is str, 'GRAPH_BODY_EXTRACT')
+        position = _json_space(raw, key_end)
+        need(position < len(raw) and raw[position] == 58, 'GRAPH_BODY_EXTRACT')
+        value_start = _json_space(raw, position + 1)
+        value_end = _json_value_end(raw, value_start)
+        if key == wanted:
+            return raw[value_start:value_end]
+        position = _json_space(raw, value_end)
+        need(position < len(raw), 'GRAPH_BODY_EXTRACT')
+        if raw[position] == 44:
+            position += 1
+            continue
+        need(raw[position] == 125, 'GRAPH_BODY_EXTRACT')
+        break
+    raise ValueError('GRAPH_BODY_MISSING')
+
+
+def _canonical_graph_body(body):
+    stability_names = ('prefixGeometrySha256', 'liveBeforeVerified', 'liveAfterVerified',
+                       'liveEffectsUnchanged', 'goalVerified', 'originalPathVerified')
+    grid_names = ('width', 'height', 'cells', 'originX', 'originY', 'pitch', 'startCell',
+                  'initialLayerMask', 'endCell', 'endLayer', 'goalUnionCellCount')
+    path_names = ('nodeCount', 'planarEdgeCount', 'transitionCount', 'tupleSha256')
+    work_names = ('advanceCalls', 'workSteps', 'copyEntries', 'comparisonEntries',
+                  'geometryBytes', 'effectUnits', 'ordinaryQueries', 'goalCells',
+                  'reachedPadChecks', 'encodedCells', 'pathNodes', 'pathEdgesVerified',
+                  'tupleBytes', 'serializedUtf16Units', 'activeMillis')
+    masks_names = ('topStepsHex', 'bottomStepsHex', 'goalFacesHex')
+
+    def quoted(value):
+        need(type(value) is str and value.isascii(), 'GRAPH_BODY_ASCII')
+        return json.dumps(value, ensure_ascii=True, separators=(',', ':')).encode('ascii')
+
+    def scalar(value):
+        if type(value) is str:
+            return quoted(value)
+        if type(value) is bool:
+            return b'true' if value else b'false'
+        need(type(value) is int, 'GRAPH_BODY_SCALAR')
+        return str(value).encode('ascii')
+
+    def obj(fields):
+        return b'{' + b','.join(quoted(name) + b':' + value for name, value in fields) + b'}'
+
+    stability = obj((name, scalar(body['stability'][name]))
+                    for name in stability_names)
+    grid = obj((name, scalar(body['grid'][name])) for name in grid_names)
+    path = obj((name, scalar(body['path'][name])) for name in path_names)
+    work = obj((name, str(body['work'][name]).rjust(19, ' ').encode('ascii'))
+               for name in work_names)
+    masks = obj((name, scalar(body['masks'][name])) for name in masks_names)
+    return obj((('schema', scalar(body['schema'])), ('stability', stability),
+                ('grid', grid), ('path', path), ('work', work), ('masks', masks)))
+
+
+def _graph_distances(document):
+    """Compute directed ordinary-edge distances independently by BFS and Dijkstra."""
+    body = document['body']
+    grid = body['grid']
+    masks = body['masks']
+    width, height, cells = grid['width'], grid['height'], grid['cells']
+    start = grid['startCell']
+    top, bottom = masks['topStepsHex'], masks['bottomStepsHex']
+    bfs_results = []
+    for layer, mask in enumerate((top, bottom)):
+        distance = [None] * cells
+        parent = [None] * cells
+        distance[start] = 0
+        queue = deque([start])
+        while queue:
+            cell = queue.popleft()
+            x, y = cell % width, cell // width
+            flags = int(mask[cell], 16)
+            # Stable witness order: north, east, south, west.
+            neighbors = ((1, cell - width, y > 0),
+                         (2, cell + 1, x + 1 < width),
+                         (4, cell + width, y + 1 < height),
+                         (8, cell - 1, x > 0))
+            for bit, neighbor, inside in neighbors:
+                if inside and flags & bit and distance[neighbor] is None:
+                    distance[neighbor] = distance[cell] + 1
+                    parent[neighbor] = cell
+                    queue.append(neighbor)
+        bfs_results.append((distance, parent))
+
+    dijkstra_results = []
+    for layer, mask in enumerate((top, bottom)):
+        distance = [None] * cells
+        distance[start] = 0
+        pending = [(0, start)]
+        while pending:
+            physical, cell = heapq.heappop(pending)
+            if distance[cell] != physical:
+                continue
+            x, y = cell % width, cell // width
+            flags = int(mask[cell], 16)
+            # Independent coordinate and bit enumeration for the heap oracle.
+            candidates = ((8, x - 1, y, x > 0),
+                          (4, x, y + 1, y + 1 < height),
+                          (2, x + 1, y, x + 1 < width),
+                          (1, x, y - 1, y > 0))
+            for bit, nx, ny, inside in candidates:
+                if not inside or not flags & bit:
+                    continue
+                neighbor = ny * width + nx
+                candidate = physical + grid['pitch']
+                if distance[neighbor] is None or candidate < distance[neighbor]:
+                    distance[neighbor] = candidate
+                    heapq.heappush(pending, (candidate, neighbor))
+        dijkstra_results.append(distance)
+
+    return [dict(layer=layer, bfsEdges=bfs_results[layer][0],
+                 dijkstraLength=dijkstra_results[layer],
+                 bfsParent=bfs_results[layer][1]) for layer in range(2)]
+
+
+def analyze_graph(document):
+    """Return bounded per-seed-face ordinary-edge length diagnostics."""
+    body = document['body']
+    grid = body['grid']
+    masks = body['masks']
+    width, height, cells, pitch = grid['width'], grid['height'], grid['cells'], grid['pitch']
+    start = grid['startCell']
+    initial_mask = document['source']['initialLayerMask']
+    sx = grid['originX'] + (start % width) * pitch
+    sy = grid['originY'] + (start // width) * pitch
+    found_cell, found_layer = grid['endCell'], grid['endLayer']
+    distances = _graph_distances(document)
+    faces = []
+
+    def make_witness(layer, cell, owner):
+        bfs, dijkstra, parent = owner['bfsEdges'], owner['dijkstraLength'], owner['bfsParent']
+        reverse = [cell]
+        current = cell
+        while current != start:
+            current = parent[current]
+            need(current is not None and len(reverse) <= cells, 'GRAPH_BFS_PARENT')
+            reverse.append(current)
+        route = list(reversed(reverse))
+        mask = masks['topStepsHex' if layer == 0 else 'bottomStepsHex']
+        for left, right in zip(route, route[1:]):
+            lx, ly = left % width, left // width
+            rx, ry = right % width, right // width
+            bit = (1 if rx == lx and ry == ly - 1 else
+                   2 if rx == lx + 1 and ry == ly else
+                   4 if rx == lx and ry == ly + 1 else
+                   8 if rx == lx - 1 and ry == ly else 0)
+            need(bit != 0 and int(mask[left], 16) & bit, 'GRAPH_WITNESS_EDGE')
+        edges = bfs[cell]
+        length = dijkstra[cell]
+        need(edges is not None and length == edges * pitch, 'GRAPH_WITNESS_DISTANCE')
+        direct = abs((cell % width) * pitch + grid['originX'] - sx) + abs(
+            (cell // width) * pitch + grid['originY'] - sy)
+        preimage = '\n'.join(f'{index},{layer},{node}'
+                             for index, node in enumerate(route)).encode('ascii')
+        return dict(cell=cell, x=grid['originX'] + (cell % width) * pitch,
+                    y=grid['originY'] + (cell // width) * pitch, direct=direct,
+                    edges=edges, length=length, pathNodeCount=len(route),
+                    pathSha256=sha(preimage))
+
+    for owner in distances:
+        layer = owner['layer']
+        if not initial_mask & (1 << layer):
+            continue
+        goal_characters = [ord(ch) - 48 for ch in masks['goalFacesHex']]
+        goals = [cell for cell, value in enumerate(goal_characters)
+                 if value & (1 << layer)]
+        bfs, dijkstra = owner['bfsEdges'], owner['dijkstraLength']
+        for cell in goals:
+            expected = None if bfs[cell] is None else bfs[cell] * pitch
+            need(dijkstra[cell] == expected, 'GRAPH_ORACLE_DISAGREEMENT')
+        reachable = [cell for cell in goals if dijkstra[cell] is not None]
+        eligible = [cell for cell in reachable
+                    if (abs(grid['originX'] + (cell % width) * pitch - sx)
+                        + abs(grid['originY'] + (cell // width) * pitch - sy)) > 0
+                    and dijkstra[cell] <= 3 * (
+                        abs(grid['originX'] + (cell % width) * pitch - sx)
+                        + abs(grid['originY'] + (cell // width) * pitch - sy))]
+        shortest = min(reachable, key=lambda cell: (dijkstra[cell], cell), default=None)
+        shortest_eligible = min(eligible, key=lambda cell: (dijkstra[cell], cell), default=None)
+        faces.append(dict(layer=layer, goalFaceCount=len(goals),
+                          reachableGoalCount=len(reachable),
+                          lengthEligibleGoalCount=len(eligible),
+                          shortestReachable=(None if shortest is None else
+                                             make_witness(layer, shortest, owner)),
+                          shortestLengthEligible=(None if shortest_eligible is None else
+                                                   make_witness(layer, shortest_eligible, owner)),
+                          foundEndpointLength=(dijkstra[found_cell]
+                              if found_layer == layer else None)))
+    return faces
+
+
+def validate_graph_document(raw, graph_chunks, result_row, result_line, publisher_capture,
+                            header, result, entry, source_sha, branches, net_order, groups, pads):
+    document = strict_json(raw)
+    keys(document, ('schema', 'targetId', 'publisherPayloadSha256', 'context', 'objects',
+                    'branch', 'source', 'goalFacesSha256', 'phaseWork', 'body', 'integrity',
+                    'limitations'), 'GRAPH_DOCUMENT_SCHEMA')
+    need(document['schema'] == GRAPH_TARGET_SCHEMA and document['targetId'] == GRAPH_TARGET_ID,
+         'GRAPH_DOCUMENT_IDENTITY')
+    need(type(graph_chunks) is list and graph_chunks, 'GRAPH_CHUNKS_MISSING')
+    payload = b''
+    for index, (row, line, decoded) in enumerate(graph_chunks):
+        keys(row, GRAPH_CHUNK_FIELDS, 'GRAPH_CHUNK_SCHEMA')
+        need(row['record'] == 'GRAPH_CHUNK' and integer(row['operation'], 4, 4)
+             and row['targetId'] == GRAPH_TARGET_ID and integer(row['group'], 0, 639)
+             and integer(row['index'], 0, LIMITS['publisherPayloadBytes'])
+             and row['index'] == index and integer(row['offset'], 0, LIMITS['publisherPayloadBytes'])
+             and row['offset'] == len(payload) and integer(row['bytes'], 1, LIMITS['publisherChunkBytes'])
+             and type(row['data']) is str, 'GRAPH_CHUNK_IDENTITY')
+        try:
+            encoded = row['data'].encode('ascii')
+            actual = base64.b64decode(encoded, validate=True)
+        except (UnicodeEncodeError, ValueError):
+            raise ValueError('GRAPH_CHUNK_BASE64')
+        need(base64.b64encode(actual).decode('ascii') == row['data']
+             and actual == decoded and len(actual) == row['bytes'], 'GRAPH_CHUNK_BASE64')
+        payload += actual
+        need(len(payload) <= LIMITS['publisherPayloadBytes'], 'GRAPH_PAYLOAD_LIMIT')
+    keys(result_row, GRAPH_RESULT_FIELDS, 'GRAPH_RESULT_SCHEMA')
+    need(type(result_line) is bytes and result_row['record'] == 'GRAPH_RESULT'
+         and integer(result_row['operation'], 4, 4) and result_row['targetId'] == GRAPH_TARGET_ID
+         and integer(result_row['group'], 0, 639)
+         and integer(result_row['payloadBytes'], 1, LIMITS['publisherPayloadBytes'])
+         and digest(result_row['payloadSha256'])
+         and integer(result_row['chunkCount'], 1, LIMITS['publisherPayloadBytes'])
+         and result_row['payloadBytes'] == len(payload)
+         and result_row['chunkCount'] == len(graph_chunks)
+         and result_row['payloadSha256'] == sha(payload) and payload == raw,
+         'GRAPH_RESULT_SEAL')
+
+    publisher = publisher_capture['document']
+    need(document['publisherPayloadSha256'] == publisher_capture['payloadSha256'],
+         'GRAPH_PUBLISHER_SEAL_JOIN')
+    context = document['context']
+    keys(context, ('sourceManifestSha256', 'operation', 'rootSeed', 'placementSeed',
+                   'routingSeed', 'attempt', 'request', 'pass', 'placementSha256'),
+         'GRAPH_CONTEXT_SCHEMA')
+    need(same_json_value(context, publisher['context'])
+         and context['sourceManifestSha256'] == source_sha,
+         'GRAPH_CONTEXT_JOIN')
+    need(type(result) is dict and result['winner'] is None
+         and publisher['publisher']['outcome'] == 'REJECTED', 'GRAPH_REQUEST_DISPOSITION')
+
+    objects = document['objects']
+    object_names = ('generator', 'route', 'search', 'branch', 'layout', 'publisher',
+                    'found', 'terminal')
+    keys(objects, object_names, 'GRAPH_OBJECTS_SCHEMA')
+    need(same_json_value(objects, publisher['objects']), 'GRAPH_OBJECTS_JOIN')
+    branch = document['branch']
+    branch_names = ('ordinal', 'netVectorPosition', 'netId', 'startPadId', 'rootPadId',
+                    'reachedPadIds', 'foundTerminalPadId', 'branchRecordGroup')
+    keys(branch, branch_names, 'GRAPH_BRANCH_SCHEMA')
+    need(same_json_value(branch, publisher['branch']), 'GRAPH_BRANCH_JOIN')
+    branch_matches = [row for row in branches if row['ordinal'] == branch['ordinal']
+                      and row['snapshot']['pass'] == context['pass']
+                      and row['snapshot']['terminalReason'] == 'FOUND']
+    need(len(branch_matches) == 1 and net_order is not None, 'GRAPH_BRANCH_SOURCE_JOIN')
+    branch_row = branch_matches[0]
+    pads_by_id = {row['padId']: row for row in pads}
+    need(branch['startPadId'] in pads_by_id and branch['rootPadId'] in pads_by_id,
+         'GRAPH_ENDPOINT_PAD_JOIN')
+
+    source = document['source']
+    source_names = ('target', 'sourceKind', 'policy', 'initialLayerMask', 'activeTraceWidth',
+                    'facesToken', 'routerTokens', 'goalArrayToken', 'reachedTerminalsArrayToken',
+                    'startPadToken', 'rootPadToken', 'reachedPthPadIds')
+    keys(source, source_names, 'GRAPH_SOURCE_SCHEMA')
+    need(source['target'] == 'OUT_F'
+         and source['sourceKind'] == 'OUT_F_REJECTED_PUBLISHER_PATH'
+         and source['policy'] == 'FULLER_TWO_LAYER'
+         and integer(source['initialLayerMask'], 3, 3)
+         and integer(source['activeTraceWidth'], 1, 2**31-1), 'GRAPH_SOURCE_IDENTITY')
+    roles = {row['netId']: row['role'] for row in pads}
+    widths = {'HIGH_CURRENT': 13, 'SUPPLY': 11, 'RETURN': 11,
+              'CONTROL': 9, 'SIGNAL': 9}
+    need(branch['netId'] in roles and roles[branch['netId']] in widths
+         and source['activeTraceWidth'] == widths[roles[branch['netId']]],
+         'GRAPH_ACTIVE_ROLE_WIDTH')
+    need(type(source['routerTokens']) is list and len(source['routerTokens']) == 2
+         and all(integer(value, 1, 2**31-1) for value in source['routerTokens'])
+         and type(source['reachedPthPadIds']) is list
+         and all(token(value) for value in source['reachedPthPadIds'])
+         and source['reachedPthPadIds'] == sorted(set(source['reachedPthPadIds'])),
+         'GRAPH_SOURCE_ARRAYS')
+    for name in ('facesToken', 'goalArrayToken', 'reachedTerminalsArrayToken',
+                 'startPadToken', 'rootPadToken'):
+        need(integer(source[name], 1, 2**31-1), 'GRAPH_SOURCE_TOKEN')
+    eligible_pth = set(branch['reachedPadIds']) - {branch['rootPadId'], branch['startPadId']}
+    need(set(source['reachedPthPadIds']) <= eligible_pth
+         and all(value in pads_by_id and pads_by_id[value]['netId'] == branch['netId']
+                 for value in source['reachedPthPadIds']), 'GRAPH_PTH_SUBSET')
+    if header['mode'] == 'AUTHORED':
+        need(source['reachedPthPadIds'] == [], 'GRAPH_AUTHORED_PTH_CENSUS')
+
+    pub_tokens = {value for value in objects.values() if value is not None}
+    node_tokens = set(publisher['path']['nodeTokens'])
+    endpoint_tokens = (source['startPadToken'], source['rootPadToken'])
+    container_tokens = (source['facesToken'], source['routerTokens'][0],
+                        source['routerTokens'][1], source['goalArrayToken'],
+                        source['reachedTerminalsArrayToken'])
+    need(len(set(container_tokens)) == 5
+         and not (set(container_tokens) & (pub_tokens | node_tokens | set(endpoint_tokens))),
+         'GRAPH_CONTAINER_TOKEN_COLLISION')
+    need(source['startPadToken'] != source['rootPadToken'], 'GRAPH_ENDPOINT_TOKEN_ALIAS')
+    for pad_token, pad_id in zip(endpoint_tokens, (branch['startPadId'], branch['rootPadId'])):
+        if branch['foundTerminalPadId'] == pad_id:
+            need(objects['terminal'] is not None and pad_token == objects['terminal'],
+                 'GRAPH_TERMINAL_TOKEN_JOIN')
+        else:
+            need(pad_token not in pub_tokens, 'GRAPH_PAD_TOKEN_COLLISION')
+        need(pad_token not in node_tokens, 'GRAPH_NODE_TOKEN_COLLISION')
+
+    phase_work = document['phaseWork']
+    need(type(phase_work) is list and len(phase_work) == 32
+         and all(integer(value) for value in phase_work), 'GRAPH_PHASE_WORK_SCHEMA')
+    # Keep every charged Cursor stage from the frozen owner.  COMPLETE is an
+    # explicit stage but cannot consume a charged unit; unassigned indices are
+    # unused in this owner revision.
+    active_phases = {0, 1, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+                     18, 19, 20, 22, 24, 25, 26, 28, 29}
+    need(all(value == 0 for index, value in enumerate(phase_work)
+             if index not in active_phases), 'GRAPH_UNUSED_PHASE_WORK')
+
+    body = document['body']
+    keys(body, ('schema', 'stability', 'grid', 'path', 'work', 'masks'), 'GRAPH_BODY_SCHEMA')
+    need(body['schema'] == GRAPH_BODY_SCHEMA, 'GRAPH_BODY_IDENTITY')
+    stability = body['stability']
+    stability_names = ('prefixGeometrySha256', 'liveBeforeVerified', 'liveAfterVerified',
+                       'liveEffectsUnchanged', 'goalVerified', 'originalPathVerified')
+    keys(stability, stability_names, 'GRAPH_STABILITY_SCHEMA')
+    need(digest(stability['prefixGeometrySha256'])
+         and all(type(stability[name]) is bool and stability[name] is True
+                 for name in stability_names[1:]), 'GRAPH_STABILITY_VALUES')
+    pub_before, pub_after = publisher['before'], publisher['after']
+    need(stability['prefixGeometrySha256'] == pub_before['geometrySha256']
+         == pub_after['geometrySha256'] == branch_row['prefixSha256']
+         and pub_before['geometryBytes'] == pub_after['geometryBytes'] == branch_row['prefixBytes'],
+         'GRAPH_PREFIX_GEOMETRY_JOIN')
+
+    grid = body['grid']
+    grid_names = ('width', 'height', 'cells', 'originX', 'originY', 'pitch', 'startCell',
+                  'initialLayerMask', 'endCell', 'endLayer', 'goalUnionCellCount')
+    keys(grid, grid_names, 'GRAPH_GRID_SCHEMA')
+    pub_grid = publisher['grid']
+    need(all(integer(grid[name], 1, LIMITS['cells']) for name in ('width', 'height', 'cells'))
+         and grid['cells'] == grid['width'] * grid['height']
+         and integer(grid['originX'], -1_000_000, 1_000_000)
+         and integer(grid['originY'], -1_000_000, 1_000_000)
+         and integer(grid['pitch'], 10, 10)
+         and integer(grid['startCell'], 0, grid['cells']-1)
+         and integer(grid['endCell'], 0, grid['cells']-1)
+         and integer(grid['endLayer'], 0, 1)
+         and integer(grid['goalUnionCellCount'], 1, grid['cells'])
+         and (grid['width'], grid['height'], grid['cells'], grid['originX'], grid['originY'],
+              grid['pitch']) == (pub_grid['width'], pub_grid['height'], pub_grid['cells'],
+                                 pub_grid['originX'], pub_grid['originY'], pub_grid['pitch'])
+         and grid['initialLayerMask'] == source['initialLayerMask'] == 3,
+         'GRAPH_GRID_VALUES')
+    nodes = publisher['path']['nodes']
+    need(grid['startCell'] == nodes[0][0] and grid['endCell'] == nodes[-1][0]
+         and grid['endLayer'] == nodes[-1][1], 'GRAPH_GRID_PATH_JOIN')
+
+    masks = body['masks']
+    keys(masks, ('topStepsHex', 'bottomStepsHex', 'goalFacesHex'), 'GRAPH_MASK_SCHEMA')
+    for name in ('topStepsHex', 'bottomStepsHex'):
+        value = masks[name]
+        need(type(value) is str and len(value) == grid['cells']
+             and re.fullmatch('[0-9a-f]{' + str(grid['cells']) + '}', value) is not None,
+             'GRAPH_STEP_MASK')
+    goal_faces = masks['goalFacesHex']
+    need(type(goal_faces) is str and len(goal_faces) == grid['cells']
+         and re.fullmatch('[0-3]{' + str(grid['cells']) + '}', goal_faces) is not None,
+         'GRAPH_GOAL_MASK')
+    need(digest(document['goalFacesSha256'])
+         and document['goalFacesSha256'] == sha(goal_faces.encode('ascii')),
+         'GRAPH_GOAL_HASH')
+    goal_values = [ord(value) - 48 for value in goal_faces]
+    need(sum(value != 0 for value in goal_values) == grid['goalUnionCellCount']
+         and sum(bool(value & 1) for value in goal_values) == branch_row['snapshot']['goalsTop']
+         and sum(bool(value & 2) for value in goal_values) == branch_row['snapshot']['goalsBottom']
+         and goal_values[grid['endCell']] & (1 << grid['endLayer']),
+         'GRAPH_GOAL_BRANCH_JOIN')
+    for mask in (masks['topStepsHex'], masks['bottomStepsHex']):
+        for cell, character in enumerate(mask):
+            flags = int(character, 16)
+            x, y = cell % grid['width'], cell // grid['width']
+            need(not (y == 0 and flags & 1) and not (x + 1 == grid['width'] and flags & 2)
+                 and not (y + 1 == grid['height'] and flags & 4)
+                 and not (x == 0 and flags & 8), 'GRAPH_STEP_BOUNDARY')
+
+    graph_path = body['path']
+    keys(graph_path, ('nodeCount', 'planarEdgeCount', 'transitionCount', 'tupleSha256'),
+         'GRAPH_PATH_SCHEMA')
+    need(integer(graph_path['nodeCount'], 1, LIMITS['pathNodes'])
+         and integer(graph_path['planarEdgeCount'], 0, LIMITS['pathNodes']-1)
+         and integer(graph_path['transitionCount'], 0, LIMITS['transitionCap'])
+         and digest(graph_path['tupleSha256'])
+         and graph_path['nodeCount'] == len(nodes), 'GRAPH_PATH_VALUES')
+    planar_edges = sum(left[1] == right[1] for left, right in zip(nodes, nodes[1:]))
+    transitions = len(nodes) - 1 - planar_edges
+    tuple_rows = []
+    for index, node in enumerate(nodes):
+        cell, layer, x, y, direction, vias, cost, heuristic, serial, key_value, parent = node
+        tuple_rows.append(','.join(str(value) for value in
+                          (index, parent, cell, x, y, layer, direction, vias, cost,
+                           heuristic, serial, key_value)))
+        if index:
+            previous = nodes[index - 1]
+            if layer == previous[1]:
+                dx, dy = x - previous[2], y - previous[3]
+                bit = (1 if (dx, dy) == (0, -grid['pitch']) else
+                       2 if (dx, dy) == (grid['pitch'], 0) else
+                       4 if (dx, dy) == (0, grid['pitch']) else
+                       8 if (dx, dy) == (-grid['pitch'], 0) else 0)
+                need(bit != 0 and int(masks['topStepsHex' if layer == 0 else
+                                              'bottomStepsHex'][previous[0]], 16) & bit,
+                     'GRAPH_PATH_DIRECTED_EDGE')
+    tuple_preimage = '\n'.join(tuple_rows).encode('ascii')
+    need(graph_path['planarEdgeCount'] == planar_edges
+         and graph_path['transitionCount'] == transitions and transitions == 0
+         and graph_path['tupleSha256'] == sha(tuple_preimage), 'GRAPH_PATH_HASH_OR_COUNT')
+
+    work = body['work']
+    work_names = ('advanceCalls', 'workSteps', 'copyEntries', 'comparisonEntries',
+                  'geometryBytes', 'effectUnits', 'ordinaryQueries', 'goalCells',
+                  'reachedPadChecks', 'encodedCells', 'pathNodes', 'pathEdgesVerified',
+                  'tupleBytes', 'serializedUtf16Units', 'activeMillis')
+    keys(work, work_names, 'GRAPH_WORK_SCHEMA')
+    need(integer(entry['elapsedToCloseNanos'], 1, LIMITS['operationNanos'])
+         and all(integer(work[name]) for name in work_names)
+         and work['advanceCalls'] > 0 and work['workSteps'] > 0
+         and work['copyEntries'] > 0 and work['comparisonEntries'] > 0,
+         'GRAPH_WORK_VALUES')
+    cursor_groups = [group for group in groups if group['graphCursorSteps'] > 0]
+    cursor_steps = sum(group['graphCursorSteps'] for group in groups)
+    need(work['advanceCalls'] == len(cursor_groups)
+         and work['workSteps'] == cursor_steps == sum(phase_work)
+         and work['ordinaryQueries'] == 2 * (
+             2 * grid['height'] * (grid['width'] - 1)
+             + 2 * grid['width'] * (grid['height'] - 1))
+         and work['goalCells'] == grid['cells']
+         and work['encodedCells'] == 3 * grid['cells']
+         and work['pathNodes'] == graph_path['nodeCount']
+         and work['pathEdgesVerified'] == graph_path['nodeCount'] - 1
+         and work['geometryBytes'] == 2 * pub_before['geometryBytes']
+         and work['tupleBytes'] == len(tuple_preimage)
+         and work['serializedUtf16Units'] <= 1_000_000
+         and work['activeMillis'] <= entry['elapsedToCloseNanos'] // 1_000_000,
+         'GRAPH_WORK_CONSERVATION')
+    lower_bound_names = ('copyEntries', 'comparisonEntries', 'geometryBytes', 'effectUnits',
+                         'ordinaryQueries', 'goalCells', 'reachedPadChecks', 'pathNodes',
+                         'pathEdgesVerified', 'tupleBytes', 'serializedUtf16Units')
+    need(work['workSteps'] >= sum(work[name] for name in lower_bound_names),
+         'GRAPH_WORK_LOWER_BOUND')
+    need(work['advanceCalls'] == len(cursor_groups) and all(
+             group['graphCursorSteps'] <= 32768 for group in cursor_groups),
+         'GRAPH_CURSOR_GROUP_CONSERVATION')
+
+    body_raw = _top_level_value_bytes(raw, 'body')
+    canonical_body = _canonical_graph_body(body)
+    need(body_raw == canonical_body and work['serializedUtf16Units'] == len(body_raw),
+         'GRAPH_BODY_CANONICAL_BYTES')
+
+    integrity = document['integrity']
+    integrity_names = ('nativeSourceBound', 'parentPaused', 'retainedSourceUnchanged',
+                       'cursorSourcesReleased', 'producerSourcesReleased')
+    keys(integrity, integrity_names, 'GRAPH_INTEGRITY_SCHEMA')
+    need(all(type(integrity[name]) is bool and integrity[name] is True
+             for name in integrity_names), 'GRAPH_INTEGRITY')
+    limitations = document['limitations']
+    limitations_names = ('model', 'lengthEligibilityOnly', 'legalSearchHistory',
+                         'publicationQualified', 'layoutQualification', 'routeAdoption',
+                         'playable100', 'fullPhysicalProof')
+    keys(limitations, limitations_names, 'GRAPH_LIMITATIONS_SCHEMA')
+    need(limitations['model'] == 'DIRECTED_PER_FACE_ORDINARY_EDGES'
+         and type(limitations['lengthEligibilityOnly']) is bool
+         and limitations['lengthEligibilityOnly'] is True
+         and limitations['legalSearchHistory'] == 'NOT_RUN'
+         and type(limitations['publicationQualified']) is bool
+         and limitations['publicationQualified'] is False
+         and type(limitations['layoutQualification']) is bool
+         and limitations['layoutQualification'] is False
+         and type(limitations['routeAdoption']) is bool
+         and limitations['routeAdoption'] is False
+         and type(limitations['playable100']) is int and limitations['playable100'] == 0
+         and limitations['fullPhysicalProof'] == 'NOT_RUN',
+         'GRAPH_LIMITATIONS')
+
+    if header['mode'] == 'AUTHORED':
+        need(context['operation'] == 4 and context['attempt'] == 4 and context['request'] == 0
+             and context['pass'] == 1
+             and (context['rootSeed'], context['placementSeed'], context['routingSeed'])
+                 == ('9007199254740993', '-6587958367974952701', '8445301674744508279')
+             and (branch['ordinal'], branch['netVectorPosition'], branch['netId'],
+                  branch['startPadId'], branch['rootPadId'], branch['foundTerminalPadId'],
+                  branch['branchRecordGroup'], branch['reachedPadIds'])
+                 == (248, 28, 'OUT_F', 'RSH_F.1', 'CSTORE_F.2', 'CSTORE_F.2', 57,
+                     ['CSTORE_F.2'])
+             and branch_row['snapshot']['terminalReason'] == 'FOUND'
+             and (source['target'], source['sourceKind'], source['policy'],
+                  source['initialLayerMask'], source['reachedPthPadIds'])
+                 == ('OUT_F', 'OUT_F_REJECTED_PUBLISHER_PATH', 'FULLER_TWO_LAYER', 3, [])
+             and (grid['width'], grid['height'], grid['cells'], grid['originX'],
+                  grid['originY'], grid['pitch']) == (478, 309, 147702, 30, 30, 10)
+             and pub_before == pub_after
+             and len(pub_before['traces']) == 180 and len(pub_before['holes']) == 48
+             and pub_before['geometryBytes'] == 271606
+             and pub_before['geometrySha256']
+                 == 'cbc98315295693be7cddc31d0327f6f89e5819fedb2b4ad1d65a25e7decc2739'
+             and (graph_path['nodeCount'], graph_path['planarEdgeCount'],
+                  graph_path['transitionCount']) == (171, 170, 0)
+             and (work['ordinaryQueries'], work['goalCells']) == (1178468, 147702),
+             'GRAPH_AUTHORED_IDENTITY')
+        start_pad = pads_by_id[branch['startPadId']]
+        found_node = nodes[-1]
+        path_length = sum(grid['pitch'] for left, right in zip(nodes, nodes[1:])
+                          if left[1] == right[1])
+        direct = abs(start_pad['x'] - found_node[2]) + abs(start_pad['y'] - found_node[3])
+        bends = 0
+        previous_direction = 4
+        for left, right in zip(nodes, nodes[1:]):
+            if left[1] != right[1]:
+                previous_direction = 4
+            else:
+                if previous_direction != 4 and right[4] != previous_direction:
+                    bends += 1
+                previous_direction = right[4]
+        need((path_length, bends, direct, grid['endLayer']) == (1700, 4, 320, 1),
+             'GRAPH_AUTHORED_PATH_METRICS')
+    else:
+        need(header['mode'] == 'TINY_CANARY', 'GRAPH_FIXTURE_MODE')
+
+    diagnostics = analyze_graph(document)
+    serialized_bytes = len(raw) + sum(len(line) for _row, line, _decoded in graph_chunks) \
+        + len(result_line)
+    capture_hash_bytes = len(raw) + sum(len(line) for _row, line, _decoded in graph_chunks) \
+        + len(result_line)
+    return dict(document=document, payloadBytes=len(raw), payloadSha256=sha(raw),
+                serializedBytes=serialized_bytes, captureHashBytes=capture_hash_bytes,
+                diagnostics=diagnostics)
+
+
 def validate_pad_census(pads, candidate):
     need([p['padId'] for p in pads]==sorted({p['padId'] for p in pads})
          and len({p['netId'] for p in pads})==candidate['netCount']
@@ -1012,11 +1638,17 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
     need(h['record']=='HEADER' and integer(h['group'],0,0) and h['schema']==SCHEMA and h['runId']==run_id
          and integer(h['operation'],0,4) and h['operation']==arm and h['sourceManifestSha256']==source_sha
          and h['wireSha256']==wire_sha and h['limits']==LIMITS, 'HEADER_IDENTITY')
-    keys(h['arm'],('id','api','strategy','netOrderStrategy','observed','publisherCapture'),'ARM_SCHEMA')
+    keys(h['arm'],('id','api','strategy','netOrderStrategy','observed','publisherCapture',
+                   'graphCapture'),'ARM_SCHEMA')
     need(tuple(h['arm'][x] for x in
                ('id','api','strategy','netOrderStrategy','observed','publisherCapture'))==ARMS[arm]
          and type(h['arm']['observed']) is bool
-         and type(h['arm']['publisherCapture']) is bool, 'ARM_IDENTITY')
+         and type(h['arm']['publisherCapture']) is bool
+         and type(h['arm']['graphCapture']) is bool, 'ARM_IDENTITY')
+    graph_capture_enabled = h['arm']['graphCapture']
+    if arm != 4 or kind != 'READER_FIXTURE':
+        need(graph_capture_enabled is (arm == 4 and kind == 'AUTHORED'),
+             'ARM_GRAPH_CAPTURE')
     c = h['candidate']
     keys(c,('rootSeed','placementSeed','routingSeed','variant','layoutVersion','dependencyEpoch',
             'componentCount','padCount','netCount','traceWidthProfile'),'CANDIDATE_SCHEMA')
@@ -1043,12 +1675,28 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
     branch_positions=[]; diagnostic_events=[]; net_order_rows=[]; net_order_positions=[]
     publisher_chunks=[]; publisher_result=None; publisher_result_line=None
     publisher_payload_bytes=0
+    graph_chunks=[]; graph_result=None; graph_result_line=None; graph_payload_bytes=0
+    publisher_output_started=False; publisher_capture_closed=False
+    graph_output_started=False; graph_capture_closed=False
+    graph_cursor_started=False
+    group_graph_chunks=0; group_graph_results=0
     branch_seen=False; report_seen=False; report_closed=False
     pass_one_seen=False
     for line_index,(row,line) in enumerate(zip(rows[:-1],lines[:-1])):
         need(not report_closed, 'TRAILING_REPORT_RECORD')
         need(type(row) is dict and type(row.get('record')) is str, 'RECORD_TYPE')
         typ=row['record']
+        if result is not None:
+            need(typ == 'GROUP', 'CAPTURE_AFTER_RESULT')
+        source_record = typ in ('PAD', 'BRANCH', 'NET_ORDER', 'DIAGNOSTIC_CLONE')
+        if graph_capture_enabled and graph_cursor_started and not graph_capture_closed:
+            need(not source_record, 'GRAPH_CAPTURE_SOURCE_INTERLEAVING')
+        capture_closed = graph_capture_closed if graph_capture_enabled else publisher_capture_closed
+        if (publisher_output_started or publisher_result is not None) and not capture_closed:
+            allowed_output = (('PUB_CHUNK', 'PUB_RESULT', 'GRAPH_CHUNK', 'GRAPH_RESULT',
+                               'RESULT', 'GROUP') if graph_capture_enabled else
+                              ('PUB_CHUNK', 'PUB_RESULT', 'RESULT', 'GROUP'))
+            need(typ in allowed_output, 'CAPTURE_OUTPUT_INTERLEAVING')
         if typ=='HEADER': need(row is h,'EXTRA_HEADER')
         elif typ=='PAD':
             keys(row,('record','group','padId','netId','componentId','x','y','role'),'PAD_SCHEMA')
@@ -1095,6 +1743,7 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
         elif typ=='PUB_CHUNK':
             keys(row, PUB_CHUNK_FIELDS, 'PUB_CHUNK_SCHEMA')
             need(arm == 4 and result is None and publisher_result is None
+                 and not graph_output_started
                  and row['operation'] == 4 and row['targetId'] == PUBLISHER_TARGET_ID
                  and integer(row['group'], 0, 639) and row['group'] == current_group
                  and integer(row['index'], 0, LIMITS['publisherPayloadBytes'])
@@ -1114,10 +1763,12 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
             need(publisher_payload_bytes <= LIMITS['publisherPayloadBytes'],
                  'PUB_PAYLOAD_LIMIT')
             publisher_chunks.append((row, line, decoded))
+            publisher_output_started = True
             group_publisher_chunks += 1
         elif typ=='PUB_RESULT':
             keys(row, PUB_RESULT_FIELDS, 'PUB_RESULT_SCHEMA')
             need(arm == 4 and result is None and publisher_result is None
+                 and not graph_output_started
                  and row['operation'] == 4 and row['targetId'] == PUBLISHER_TARGET_ID
                  and integer(row['group'], 0, 639) and row['group'] == current_group
                  and integer(row['payloadBytes'], 1, LIMITS['publisherPayloadBytes'])
@@ -1130,6 +1781,49 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
             publisher_result = row
             publisher_result_line = line
             group_publisher_results += 1
+        elif typ=='GRAPH_CHUNK':
+            keys(row, GRAPH_CHUNK_FIELDS, 'GRAPH_CHUNK_SCHEMA')
+            need(graph_capture_enabled and arm == 4 and result is None
+                 and publisher_result is not None and graph_result is None
+                 and row['record'] == 'GRAPH_CHUNK'
+                 and integer(row['operation'], 4, 4) and row['targetId'] == GRAPH_TARGET_ID
+                 and integer(row['group'], 0, 639) and row['group'] == current_group
+                 and integer(row['index'], 0, LIMITS['publisherPayloadBytes'])
+                 and integer(row['offset'], 0, LIMITS['publisherPayloadBytes'])
+                 and integer(row['bytes'], 1, LIMITS['publisherChunkBytes'])
+                 and type(row['data']) is str, 'GRAPH_CHUNK_IDENTITY')
+            need(row['index'] == len(graph_chunks)
+                 and row['offset'] == graph_payload_bytes, 'GRAPH_CHUNK_ORDER')
+            try:
+                encoded = row['data'].encode('ascii')
+                decoded = base64.b64decode(encoded, validate=True)
+            except (UnicodeEncodeError, ValueError):
+                raise ValueError('GRAPH_CHUNK_BASE64')
+            need(base64.b64encode(decoded).decode('ascii') == row['data']
+                 and len(decoded) == row['bytes'], 'GRAPH_CHUNK_BASE64')
+            graph_payload_bytes += len(decoded)
+            need(graph_payload_bytes <= LIMITS['publisherPayloadBytes'], 'GRAPH_PAYLOAD_LIMIT')
+            graph_chunks.append((row, line, decoded))
+            group_graph_chunks += 1
+            graph_output_started = True
+        elif typ=='GRAPH_RESULT':
+            keys(row, GRAPH_RESULT_FIELDS, 'GRAPH_RESULT_SCHEMA')
+            need(graph_capture_enabled and arm == 4 and result is None
+                 and publisher_result is not None and graph_result is None
+                 and row['record'] == 'GRAPH_RESULT'
+                 and integer(row['operation'], 4, 4) and row['targetId'] == GRAPH_TARGET_ID
+                 and integer(row['group'], 0, 639) and row['group'] == current_group
+                 and integer(row['payloadBytes'], 1, LIMITS['publisherPayloadBytes'])
+                 and digest(row['payloadSha256'])
+                 and integer(row['chunkCount'], 1, LIMITS['publisherPayloadBytes']),
+                 'GRAPH_RESULT_IDENTITY')
+            need(graph_chunks and row['chunkCount'] == len(graph_chunks)
+                 and row['payloadBytes'] == graph_payload_bytes,
+                 'GRAPH_RESULT_COUNTS')
+            graph_result = row
+            graph_result_line = line
+            group_graph_results += 1
+            graph_output_started = True
         elif typ=='DIAGNOSTIC_CLONE':
             keys(row,DIAGNOSTIC_CLONE_FIELDS,'DIAGNOSTIC_CLONE_SCHEMA')
             need(arm in (1,2,3,4) and integer(row['operation'],1,4) and row['operation']==arm
@@ -1148,9 +1842,13 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
                       'winner','physical','logicalWork','boundary'),'RESULT_SCHEMA')
             need(result is None and integer(row['operation'],0,4) and row['operation']==arm
                  and row['proof']=='COMPLETE', 'RESULT_IDENTITY')
-            need((arm == 4 and publisher_result is not None)
-                 or (arm != 4 and not publisher_chunks and publisher_result is None),
-                 'PUB_RESULT_BEFORE_REQUEST_RESULT')
+            need((arm == 4 and publisher_result is not None
+                  and ((graph_capture_enabled and graph_result is not None)
+                       or (not graph_capture_enabled and not graph_chunks
+                           and graph_result is None)))
+                 or (arm != 4 and not publisher_chunks and publisher_result is None
+                     and not graph_chunks and graph_result is None),
+                 'CAPTURE_RESULT_BEFORE_REQUEST_RESULT')
             result=row;report_seen=True
         elif typ=='GROUP':
             keys(row,GROUP_FIELDS,'GROUP_SCHEMA')
@@ -1161,12 +1859,14 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
             for n in ('elapsedBeforeOwnLineNanos','observerChecks','callbacks','censusRows',
                       'netOrderRows','hashInputBytes','serializedBeforeOwnLineBytes',
                       'diagnosticCloneSteps','publisherChunkRows','publisherResultRows',
+                      'graphChunkRows','graphResultRows','graphCursorSteps',
                       'diagnosticCopiedEntries','diagnosticSerializedBytes',
                       'diagnosticHashBytes','diagnosticUnits'):
                 need(integer(row[n]),'GROUP_NUMBER')
             need(row['elapsedBeforeOwnLineNanos']<=LIMITS['groupNanos']
                  and integer(row['generatorAdvances'],0,1) and integer(row['p07Slices'],0,1)
-                 and row['p07Slices']<=row['generatorAdvances'], 'GROUP_LIMIT')
+                 and row['p07Slices']<=row['generatorAdvances']
+                 and row['graphCursorSteps']<=32768, 'GROUP_LIMIT')
             need(row['generatorAdvances']==(1 if row['phase']=='ADVANCE' else 0), 'GROUP_PHASE_WORK')
             if row['phase'] == 'CAPTURE':
                 need(row['generatorAdvances'] == 0 and row['p07Slices'] == 0
@@ -1176,6 +1876,14 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
                      and row['diagnosticCloneSteps'] == 0, 'CAPTURE_OWNER_WORK')
                 need(arm == 4 and row['diagnosticUnits'] <= 32768,
                      'CAPTURE_DIAGNOSTIC_LIMIT')
+                need((row['graphChunkRows'] == 0 and row['graphResultRows'] == 0
+                      and row['graphCursorSteps'] == 0)
+                     or (graph_capture_enabled and arm == 4),
+                     'GRAPH_CAPTURE_GROUP')
+                if row['graphCursorSteps']:
+                    need(group_publisher_chunks == 0 and group_publisher_results == 0
+                         and group_graph_chunks == 0 and group_graph_results == 0,
+                         'GRAPH_CURSOR_OUTPUT_ORDER')
             elif row['p07Slices']:
                 need(row['accounting']=='MEASURED' and integer(row['p07Steps'],0,32768)
                      and row['observerChecks']>=1,'P07_ACCOUNTING')
@@ -1184,12 +1892,17 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
                  and row['netOrderRows']==group_net_orders
                  and row['publisherChunkRows']==group_publisher_chunks
                  and row['publisherResultRows']==group_publisher_results
+                  and row['graphChunkRows']==group_graph_chunks
+                  and row['graphResultRows']==group_graph_results
                  and row['serializedBeforeOwnLineBytes']==group_bytes, 'GROUP_RECORD_COUNTS')
-            need(row['diagnosticUnits'] == row['diagnosticCopiedEntries']
+            need(row['diagnosticUnits'] == row['graphCursorSteps']
+                 + row['diagnosticCopiedEntries']
                  + row['diagnosticSerializedBytes'] + row['diagnosticHashBytes'],
                  'DIAGNOSTIC_UNIT_SUM')
             if arm != 4:
                 need(row['publisherChunkRows'] == 0 and row['publisherResultRows'] == 0
+                     and row['graphChunkRows'] == 0 and row['graphResultRows'] == 0
+                     and row['graphCursorSteps'] == 0
                      and row['diagnosticCopiedEntries'] == 0
                      and row['diagnosticSerializedBytes'] == 0
                      and row['diagnosticHashBytes'] == 0
@@ -1202,11 +1915,19 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
                 need(row['diagnosticUnits'] <= 32768, 'CAPTURE_DIAGNOSTIC_LIMIT')
             else:
                 need(row['diagnosticCopiedEntries'] == 0
+                     and row['graphChunkRows'] == 0 and row['graphResultRows'] == 0
+                     and row['graphCursorSteps'] == 0
                      and row['diagnosticSerializedBytes'] == 0
                      and row['diagnosticHashBytes'] == 0
                      and row['diagnosticUnits'] == 0, 'DIAGNOSTIC_PHASE')
             if row['publisherChunkRows'] or row['publisherResultRows']:
                 need(row['phase'] == 'CAPTURE', 'PUB_CAPTURE_PHASE')
+            if row['graphChunkRows'] or row['graphResultRows'] or row['graphCursorSteps']:
+                need(graph_capture_enabled and arm == 4 and row['phase'] == 'CAPTURE',
+                     'GRAPH_CAPTURE_PHASE')
+            if row['graphCursorSteps']:
+                need(not publisher_output_started and not graph_output_started,
+                     'GRAPH_CURSOR_RESTART')
             need(row['diagnosticCloneSteps']==group_diagnostic_clones,
                  'DIAGNOSTIC_CLONE_GROUP_COUNT')
             need(row['diagnosticCloneSteps']<=(row['p07Steps'] or 0),
@@ -1226,6 +1947,13 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
             groups.append(row);current_group+=1;group_bytes=0;group_callbacks=0;group_pads=0
             group_diagnostic_clones=0;group_net_orders=0
             group_publisher_chunks=0;group_publisher_results=0
+            group_graph_chunks=0;group_graph_results=0
+            if row['graphCursorSteps'] > 0:
+                graph_cursor_started = True
+            if row['publisherResultRows'] > 0:
+                publisher_capture_closed = True
+            if row['graphResultRows'] > 0:
+                graph_capture_closed = True
             need(current_group<=640,'GROUP_COUNT');continue
         else:raise ValueError('UNEXPECTED_RECORD')
         need(integer(row.get('group'),0,639) and row['group']==current_group,'RECORD_GROUP')
@@ -1317,6 +2045,7 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
              and physical['access']==physical['functional']=='NOT_RUN','FINALIZED_DISPOSITION')
         required_hash_bytes+=w['geometryBytes']
     publisher_capture = None
+    graph_capture = None
     if arm == 4:
         need(publisher_result is not None and publisher_chunks,
              'PUB_CAPTURE_MISSING')
@@ -1331,6 +2060,27 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
         need(all(row['group'] > terminal_group
                  for row, _line, _decoded in publisher_chunks), 'PUB_CHUNK_SOURCE_ORDER')
         need(publisher_result['group'] > result_group, 'PUB_RESULT_SOURCE_ORDER')
+        cursor_groups = [group for group in groups if group['graphCursorSteps'] > 0]
+        if graph_capture_enabled:
+            populated_checkpoints = [value for value in checkpoints.values() if value is not None]
+            need(cursor_groups and min(group['ordinal'] for group in cursor_groups)
+                 > max(value['group'] for value in populated_checkpoints),
+                 'GRAPH_CURSOR_CHECKPOINT_ORDER')
+            first_output_group = min(row['group'] for row, _line, _decoded in publisher_chunks)
+            need(max(group['ordinal'] for group in cursor_groups) < first_output_group,
+                 'GRAPH_CURSOR_BEFORE_OUTPUT')
+            need(graph_result is not None and graph_chunks and graph_result_line is not None,
+                 'GRAPH_CAPTURE_MISSING')
+            graph_payload = b''.join(decoded for _row, _line, decoded in graph_chunks)
+            graph_capture = validate_graph_document(
+                graph_payload, graph_chunks, graph_result, graph_result_line,
+                publisher_capture, h, result, entry, source_sha, branches, net_order,
+                groups, pads)
+        else:
+            need(not graph_chunks and graph_result is None
+                 and all(group['graphCursorSteps'] == 0 and group['graphChunkRows'] == 0
+                         and group['graphResultRows'] == 0 for group in groups),
+                 'GRAPH_DISABLED_RECORD')
         emitted_by_group = {}
         for row, line, decoded in publisher_chunks:
             bucket = emitted_by_group.setdefault(row['group'], [0, 0])
@@ -1338,6 +2088,13 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
             bucket[1] += len(line)
         emitted_by_group.setdefault(publisher_result['group'], [0, 0])[1] += len(
             publisher_result_line)
+        for row, line, decoded in graph_chunks:
+            bucket = emitted_by_group.setdefault(row['group'], [0, 0])
+            bucket[0] += len(decoded)
+            bucket[1] += len(line)
+        if graph_result is not None:
+            emitted_by_group.setdefault(graph_result['group'], [0, 0])[1] += len(
+                graph_result_line)
         for group in groups:
             decoded_bytes, line_bytes = emitted_by_group.get(group['ordinal'], (0, 0))
             need(group['diagnosticSerializedBytes'] == decoded_bytes + line_bytes,
@@ -1348,15 +2105,24 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
         expected_serialized = (publisher_capture['payloadBytes']
                                + sum(len(line) for _row, line, _decoded in publisher_chunks)
                                + len(publisher_result_line))
+        if graph_capture is not None:
+            expected_serialized += graph_capture['payloadBytes'] \
+                + sum(len(line) for _row, line, _decoded in graph_chunks) \
+                + len(graph_result_line)
         need(sum(group['diagnosticSerializedBytes'] for group in groups)
              == expected_serialized, 'DIAGNOSTIC_SERIALIZED_CENSUS')
+        expected_hash_bytes = publisher_capture['captureHashBytes']
+        if graph_capture is not None:
+            expected_hash_bytes += graph_capture['captureHashBytes']
         need(sum(group['diagnosticHashBytes'] for group in groups)
-             == publisher_capture['captureHashBytes'], 'DIAGNOSTIC_HASH_CENSUS')
+             == expected_hash_bytes, 'DIAGNOSTIC_HASH_CENSUS')
         path_node_count = len(publisher_capture['document']['path']['nodes'])
         path_copy_floor = path_node_count * 12
         capture_copies = sum(group['diagnosticCopiedEntries'] for group in groups
                              if group['phase'] == 'CAPTURE')
         need(capture_copies >= path_copy_floor, 'DIAGNOSTIC_PATH_COPY_CENSUS')
+        if graph_capture is not None:
+            need(capture_copies >= path_copy_floor + 32, 'GRAPH_METADATA_COPY_FLOOR')
         found_group = checkpoints['found']['group']
         terminal_group = checkpoints['publisherTerminal']['group']
         before_geometry = publisher_capture['document']['before']
@@ -1379,8 +2145,11 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
                  for group, floor in synchronous_copy_floors.items()),
              'DIAGNOSTIC_SYNCHRONOUS_SNAPSHOT')
         required_hash_bytes += publisher_capture['captureHashBytes']
+        if graph_capture is not None:
+            required_hash_bytes += graph_capture['captureHashBytes']
     else:
-        need(not publisher_chunks and publisher_result is None,
+        need(not publisher_chunks and publisher_result is None and not graph_chunks
+             and graph_result is None and not graph_capture_enabled,
              'PUB_NON_CAPTURE_RECORD')
     need(sum(g['hashInputBytes'] for g in groups)>=required_hash_bytes,'HASH_INPUT_CENSUS')
     lw=result['logicalWork'];keys(lw,('generatorAdvances','p07Slices','p07OwnerSteps',
@@ -1403,7 +2172,8 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
     return dict(header=h,pads=pads,branches=branches,groups=groups,
                 diagnosticClones=[row for _,row in diagnostic_events],
                 netOrder=net_order,netOrderAudit=net_order_audit,
-                result=result,choices=choices,publisherCapture=publisher_capture)
+                result=result,choices=choices,publisherCapture=publisher_capture,
+                graphCapture=graph_capture)
 
 
 def comparable_branch(row):
@@ -1530,7 +2300,7 @@ def check_source_manifest(raw, base):
             need(row['path']=='tests/qualification/rb100-layout/branch-tree-study/read_branch_order_study.py',
                  'READER_SOURCE_PATH')
         elif row['role']=='WIRE':
-            need(row['path']=='docs/task-evidence/Q100/outf-boundary-r1/WIRE.md','WIRE_SOURCE_PATH')
+            need(row['path']=='docs/task-evidence/Q100/outf-graph-r1/WIRE.md','WIRE_SOURCE_PATH')
         elif row['role']=='WRITER':
             need(row['path'].startswith('tests/qualification/rb100-layout/java/')
                  and row['path'].endswith('.java'),'WRITER_SOURCE_PATH')
@@ -1639,6 +2409,23 @@ def validate_spec(path, expected_sha):
                                           (spec['studyIndex'],base,65536)]:
         file_ref(ref,root,maximum)
     need(stable_read(path,4*1024*1024)==original,'SPEC_CHANGED')
+    graph_diagnostics=[]
+    for operation in ops:
+        graph=operation['graphCapture']
+        if graph is None:
+            graph_diagnostics.append(None)
+            continue
+        document=graph['document']
+        publisher=operation['publisherCapture']
+        graph_diagnostics.append(dict(
+            targetId=GRAPH_TARGET_ID,
+            publisherPayloadSha256=publisher['payloadSha256'],
+            graphPayloadSha256=graph['payloadSha256'],
+            prefixGeometrySha256=document['body']['stability']['prefixGeometrySha256'],
+            pathTupleSha256=document['body']['path']['tupleSha256'],
+            goalFacesSha256=document['goalFacesSha256'],
+            faces=graph['diagnostics'],
+            scope='ORDINARY_EDGE_LENGTH_ONLY'))
     return dict(schema='tsj-branch-order-reader-result-v1',status=status,kind=spec['kind'],
                 specSha256=expected_sha,sourceManifestSha256=sha(source),indexSha256=sha(index_raw),
                 operations=5,branches=[len(o['branches']) for o in ops],
@@ -1648,6 +2435,7 @@ def validate_spec(path, expected_sha):
                 publisherOutcomes=[None if o['publisherCapture'] is None else
                                    o['publisherCapture']['document']['publisher']['outcome']
                                    for o in ops],
+                graphDiagnostics=graph_diagnostics,
                 limitations=dict(rootNativeAcceptance='NOT_GRANTED_BY_READER',
                                  tailFoundPublication='UNKNOWN_WITHOUT_LATER_SELECTION_OR_YIELD',
                                  gridOnlyOrdering='UNSUPPORTED_MISSING_BRANCH_PROOF',

@@ -521,6 +521,22 @@ Implementation `7cd565b361c9853a8044373ab3f49d499c8325ba` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
 `1a1acfc83d6f6b36` sent once. The documentation receipt sends no second email.
 
+The [OUT_F ordinary-edge graph diagnostic](task-evidence/Q100/outf-graph-r1/README.md)
+is accepted locally for its recorded privatev6 source. TOP's one goal is unreachable;
+BOTTOM's ordinary-edge shortest path is1700/direct320, already matching the actual
+rejected171-node path and exceeding its960 length limit. Queue BFS and independent
+heap Dijkstra agree: zero length-eligible goals on either face. This proves neither
+VIA/PTH/history legality nor all-path/board impossibility. Fresh final-source90
+reader methods,54actualCLI controls, JDK8 format/UTF8 canaries, selectedhost controls,
+two actual five-arm native runs, root source/process/cleanup/oracle review and
+final1080/1202input audit pass. Authored capture completes628/640groups under all
+original bounds; the prior640-cap failure remains FAIL. Native graph-owner95
+assertions reused only on unchanged inputs; old wrapper false-negative preserved.
+No production/default/epoch/budget/adoption or playable qualification changes.
+Playable100=0/betaHELD; no fresh GWT/Player/electrical/normal3/full30 gate, HARD
+unavailable/unrun. Publication pending. Next is actual same-net transition authority
+and earlier-prefix ownership analysis before a generic routing treatment.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

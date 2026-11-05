@@ -281,9 +281,9 @@ establish the copper prefix of a later differing branch or a playable layout.
 Raw preparation work remains charged. Current native source closure is1080 base
 inputs plus writer, host, reader and wire, with the exact base pinned by the
 reader. Historical v1/v3 packets retain their own source-bound acceptance;
-current v5 headers reject versions1 through4.
+current v6 headers reject versions1 through5.
 
-The current [v5 diagnostic](task-evidence/Q100/outf-boundary-r1/README.md) adds a
+The preceding [v5 diagnostic](task-evidence/Q100/outf-boundary-r1/README.md) adds a
 matching fifth minimum-pair arm, recording the actual selected FOUND Node chain
 and its actual Publisher through existing native reflection/observer boundaries.
 No production hook is added. Native identity equality binds the generator Session,
@@ -297,6 +297,37 @@ operation3/4 cross-arm comparison excludes transport operation/group IDs;
 all semantic fields and individual group authority remain checked. A tiny actual
 published path qualifies the observation path before the authored quality reject.
 This private evidence closes no production routing or playable100 qualification.
+
+The [v6 OUT_F graph diagnostic](task-evidence/Q100/outf-graph-r1/README.md) binds
+the same retained rejected Publisher path to the actual Search face Routers and
+BranchSearch goal/reached/start/root containers. The test-side
+`P07ZeroViaGraphDiagnostics` owner explicitly distinguishes OUT_F's rejected-path
+input from LOAD12's pre-result metadata. Its staged cursor preserves native
+identity, geometry, prepared net/role width, effects and original path edges,
+copies ordinary directed per-face masks and releases its sources on completion,
+cancellation, cap or error. Read-only indexed ASCII body and copied phase-work
+accessors support bounded transport without exposing mutable masks.
+
+The recorder pauses the parent until cursor/source release and complete PUB then
+GRAPH stream seals. Static payload adapters retain copied metadata rather than an
+implicit enclosing recorder/parent reference; this closes the transitive retention
+gap found in the earlier anonymous serializers. One reusable private line buffer
+emits canonical ASCII/base64 rows and validates them during construction. The sink
+accepts only its prepared row for the exact group. Preflight reserves remaining
+units using actual chunk and JSONL lengths; copy, serialization, hash, constructor
+and release work stay inside timed CAPTURE groups. Cursor work is charged once in
+`graphCursorSteps`, separately from producer work. The original operation, group,
+work, file and cleanup caps remain authoritative. Parent callbacks may resume only
+after the required sealing GROUP; operation RESULT remains a strict closure.
+
+The independent reader joins source tokens, Publisher/graph seals, path/goal hashes
+and geometry, then compares queue BFS with heap Dijkstra for each eligible start
+face. Each reachable goal uses its own positive Manhattan distance and three-times
+length predicate. These are ordinary-edge length diagnostics: VIA/PTH transitions,
+bends, path history, legal publication, whole-board routing and functional admission
+remain separate. The tiny native canary has graph capture disabled and must still
+actually publish/finalize. Qualification and actual authored budget fit are recorded
+in the evidence packet; this ownership changes no production behavior or epoch.
 
 Cap17 and cost240 qualifier v2 input specs require a relative
 `frozenOracleDirectory` for the retained 1079-input graph oracle. These readers
