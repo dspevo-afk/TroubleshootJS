@@ -1,6 +1,10 @@
 # Canonical pass1 prefix reconciliation
 
-Status: accepted documentation/analysis substep; publication pending.
+Status: accepted documentation/analysis substep, published as
+1211a432c4b26f0322a892637989d9c305c4b439. Normal push to
+origin/codex/q100-physical-feasibility, exact remote SHA verified.
+Completion Gmail 1a1ab22de1ac53f4 SENT ONCE; no second email for this receipt.
+The frozen qualification records its pre-publication status.
 This closes the branch-order study's next diagnostic question as a bounded
 SOURCE_BOUND_INFERENCE. It adds no production change or routing acceptance.
 Playable100 remains0; public beta stays held.

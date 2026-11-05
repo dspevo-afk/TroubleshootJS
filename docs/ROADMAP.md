@@ -476,7 +476,9 @@ is recorded below. Authored routed physical/access/functional and playable100
 acceptance remain outstanding; beta stays held.
 
 The [canonical pass1 prefix reconciliation](task-evidence/Q100/canonical-pass1-reuse-r1/README.md)
-is accepted as documentation/analysis; publication is pending. Both observed
+is accepted as documentation/analysis and published as
+1211a432c4b26f0322a892637989d9c305c4b439; normal push/exact remote verified,
+completion Gmail 1a1ab22de1ac53f4 sent once. Both observed
 canonical tails join the exact prior D_SENSE prefix at localbranch117/global230.
 A separately accepted D graph capture uses the same1079 raw base inputs and
 independent BFS/heap Dijkstra bounds650/8010 against630 with48of48 vias. This

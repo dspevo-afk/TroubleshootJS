@@ -1,9 +1,11 @@
 # Current checkpoint: canonical prefix reconciled; frozen net-priority implementation next
 
 UTC2026-11-05. Active X=OS-temp/tsj-q100-branch-tree-study-20261105-r1,
-branch codex/q100-branch-tree-study-20261105, actual HEAD/sourceparent
-f0f76bbd85c0ce46b3de67db4e9ac175b3bacd95. Documentation/analysis accepted locally,
-publication pending. Packet docs/task-evidence/Q100/canonical-pass1-reuse-r1/
+branch codex/q100-branch-tree-study-20261105. Documentation/analysis implementation
+1211a432c4b26f0322a892637989d9c305c4b439 normally pushed/exact remote verified.
+Gmail 1a1ab22de1ac53f4 SENT ONCE; no duplicate receipt email.
+Source parentf0f76bbd85c0ce46b3de67db4e9ac175b3bacd95. Packet
+docs/task-evidence/Q100/canonical-pass1-reuse-r1/
 qualification.json SHAf7a0092b7742a33070453eabcd3d84561a60278bcb7d9e6d4e39d0fed2272925; next PLAN frozen before code/runtime.
 Prior actual-study implementation6b3087b66ef6a91edb9af9adda566e9c56b79960 and
 receiptf0f76bbd normally pushed/exact verified; Gmail1a1ab0527f89dce3 SENT ONCE.
@@ -31,8 +33,8 @@ Independent entire60-net oracle; charge/cache pair preparation. D_SENSE has4pads
 min210/diameter1240; illustrative rank13 afterpromotion vs15 observed is no
 capacity/solvability proof. Two-pad-first28 not selected. PLAN lists finalgates.
 
-Next: normal doc publication/exactSHA/one Gmail, then isolated net-priority
-implementation from this frozen plan; preserve X as exact accepted source.
+Next: isolated net-priority implementation from this frozen plan; preserve X
+as exact accepted source. This doc receipt needs no new runtime or secondemail.
 QX=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/branch-tree-study-r1.
 No current runtime actors. Two old failedscratch trees/file evidence preserved;
 old E06R1 namespace uncertain/unrecovered, ambient8928 untouched. Main5f05b005
