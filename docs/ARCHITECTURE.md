@@ -655,6 +655,22 @@ records hashes for exact controlled native artifacts retained in task-owned
 scratch for a separately scoped later analysis. No alternative search or routing
 treatment runs in this capture mode.
 
+The separate offline analyze_load12_adrive_relaxed_bound.py adapter consumes this
+exact retained capture through the unchanged hash-pinned reader at its original
+source checkout. It rechecks bootstrap and selected-checkout helpers, source and
+raw artifacts; it never resumes the owner or changes the graph. Its0-1 BFS state
+is(face,cell,new-transitions), with planar pitch length/VIA zero length and the
+necessary remaining-hole/transition cap. Per-goal Manhattan pruning uses each
+goal's own3x-direct limit; the queue must drain before bounded exclusion. Omitted
+bends/prior-via spacing make a superset, so exclusion is specific to the frozen
+prefix and does not prove a board impossible. A non-excluded result grants no
+feasibility. No witness, selected endpoint or geometry is emitted. Private test
+observation of finalized distances is absent from normal API/CLI results.
+One90s/640group/5s budget covers validation,32768-entry decoding/validation,
+32768-token search groups, rechecks and one result preparation; opaque reader
+work stays NOT_EXPORTED and actualP07steps0. Diagnostic1Mlabels/250Kqueue caps
+are separate from production limits. See the [length-bound packet](task-evidence/Q100/adrive-relaxed-length-r1/README.md).
+
 P07TwoLayerContractTest also owns the matched seven-point prior-via tree-join
 contract. A fresh FULLER Session with explicit requestcap2 creates a via and
 later reaches that exact existing barrel by a TOP planar branch. Read-only

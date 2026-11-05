@@ -1,4 +1,66 @@
-# Current checkpoint: A_DRIVE graph published; next analysis unstarted
+# Current checkpoint: A_DRIVE bounded length exclusion accepted locally
+
+UTC2026-11-04. U=OS-temp/tsj-q100-adrive-length-bound-20261104-r1,
+branch codex/q100-adrive-length-bound-20261104, sourceparent/HEAD
+6f905668caf7c62c0cfb42818200fbb86649c99e. QN=OS-temp/
+tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/adrive-length-bound-r1.
+Publication PENDING; no new commit/push/mail yet. Previous captureb9a2146a and
+receipt6f905668 verified remotely, Gmail1a1a8e9a56ef51ba SENTONCE; never resend.
+
+Python-only relaxed-length diagnostic accepted for the retained exact A_DRIVE
+graph0c73ce21/738743B. Both complete goals114144/261846 have NO_PATH_WITHIN_LIMIT
+under570 length and4transitions, even without bends/history spacing. This is
+necessary-guard exclusion of this fixed graph, NOT whole-board impossibility,
+global above-limit minimum, route/adoption/geometry/playable proof. Source and
+copied37holes177traces unchanged; exact root9007199254740993, placement
+-6587958367974952701/routing8445301674744508279/request/index0/attempt4/pass1.
+
+Final analyzer005b2c869188a0f2b2bd33df3fe248fe1a5a95710d2dc7cb96bfb9d41bb7b7e5;
+test17b4c238ff5f8a55b8a847f864c7c52a60ae69efc739838049a6d856d0dbadd6.
+Py46 freeze-r4 SHA5958327a63cb4ead68712f7dd7cf02b855a8bd2ebc53d85e8e9b53540c463b10,
+8632raw/1989614sum bytes; old44 exact. FrozenPLAN R2 D7cb074 unchanged.
+Newunits length-python-r4 PASS12/0skips incl1024BF comparisons of all kept
+distances/goal minima/class/counters. actual-r4 PASS_COMPLETE_EXCLUDED:
+6006labels/finalizations,73572tokens,peak359/pending0;59groups/640,
+operation7.124s/90,max4.689s/5,report1ms,actualP07steps0. Host7.4386683s
+includingchildteardown; selectedcleanupsplit NOT_EXPORTED, terminationproven.
+WrongSHA-r3/tamperedreceipt-r2/realjunction-negative-r2 expectedREJECTEDexit2
+at correctboundary; originals/source stable. Exactjunctionlinkremoved,
+regular targetretained;operation1.6632662s/cleanup0.01078s. Noactors/listeners.
+Rootreview-r2 SHA dd7adf350cc38c5e455f6b26767922c0db3528c19980e8a06a51bf031d8e6322
+PASSFINITEFIXEDGRAPHONLY. Source-only independentreview limitedPASS;
+retaineddistance testgap corrected/freshlygated; reviewer executednothing.
+
+Final reuse-input-audit-r2 and build-identity-reuse-r2 PASS native1079/
+850production/223contractJava,oldPy44/SDK9/normal3sources24/oldhosts28/exes,
+1202compilerinputs/357outputs pervariant plusPlayerarchive357. Prior W gates
+reused on auditedunchangedinputs, no freshGWT/native/population claim. No
+Java/routing/model/epoch/Player changes. Visibleinput/screenshots N/A.
+See docs/task-evidence/Q100/adrive-relaxed-length-r1/{README,PLAN,FAILURES}.md
+and controlledqualification/input-audit JSON. Raw logs/captures stay QN/QW.
+PS5 60c9b298/Pythonad169/modulefb07 unchanged; oneboundedchild perhost, allclosed.
+
+Preserved failures: bootstrapindex/EOL, PS5arraycensus preflight, positive-r1
+checkoutbinding and-r2 per-net vs whole-prefixcensus; oldreader neverweakened.
+Rootreview-r2 initially readstill-runningbuildaudit result tooearly; no result
+written; awaitedexactsession and reranreadonlyreview successfully. All previous
+native/privacy/Normal3 failures remain FAIL. No deadline/work/oracle increases.
+
+NEXT: finaldoc/diff/source/stageaudit, normalcommit/push origin target
+codex/q100-physical-feasibility/exactSHAverify, ONEnew milestoneGmail. Then bounded
+sourceaudit/frozen earlier-prefix/order treatment or necessarydiagnostic; same
+fixedgraph cannotmeetguard. Rootownsallruntime/files/publication; workersread-only.
+NoactiveOSactor/matrix/profile/port; taskjunctionlinksremoved, targetsretained.
+Wimmutable6f905668 (42rawEOL/canonical0/staged0/untracked0), Main5f05b005
+9tracked6untracked0staged (onlyreporttopmirrored), Desktop e0c36885
+7tracked73collapseduntracked(89files)0staged preserved. Uncertain8928 untouched.
+ProtectedHARD bodies unread/unrun CURRENT, historicalunreadUNCERTIFIED;
+HARD/PSYCHOTIC unavailable/unrun,full30ownerexcluded, only3approvedMEDIUMroots.
+Playable100=0/betaheld; noaccess/humanrepair/visual/FPS/allseed/capacity renewal.
+Self-hostedWindowsCI runnerregistration prerequisite; no remoteCIgreen claim.
+Continue standing roadmap until user explicitly stops.
+
+# Historical checkpoint: A_DRIVE graph published
 
 UTC2026-11-04. W=OS-temp/tsj-q100-adrive-graph-20261104-r1,
 branch codex/q100-adrive-graph-20261104, gate HEAD/sourceparent
@@ -9,8 +71,8 @@ copied A_DRIVE graph, normally pushed to origin/codex/q100-physical-feasibility;
 exact remoteSHA verified. Gmail1a1a8e9a56ef51ba SENT_ONCE afterempty exactSHA Sent
 search; NEVERsendagain for this milestone/receipt. Sourceparent96589b8d above
 identifies gate execution, not the published candidate. Local branch upstream
-unset; root uses established explicit normalpush target. Documentation receipt
-pending. Predecessor guard9dc822d4/receipt96589b8d/mail1a1a7ed052322950 preserved.
+unset; root uses established explicit normalpush target. Documentation receipt6f905668caf7c62c0cfb42818200fbb86649c99e
+was normally pushed and exactremoteverified; no secondGmail. Predecessor guard9dc822d4/receipt96589b8d/mail1a1a7ed052322950 preserved.
 
 CAPTURE ONLY accepted and published. Source/command/gates/timing/limits/artifact hashes:
 docs/task-evidence/Q100/adrive-graph-r1/{README.md,qualification.json,

@@ -401,8 +401,23 @@ final consumed-input/variant audits pass. The first privacy cleanup and Normal3
 preflight failures remain FAIL; exact recovery and fresh strict gates pass.
 No search, route treatment, physical admission or playable100 claim follows.
 Playable100=0/beta held; full30 excluded and HARD/PSYCHOTIC unavailable/unrun.
-Next is separately frozen bounded constraint-aware feasibility/lower-bound
-analysis of this retained frozen graph before a routing treatment.
+The subsequent [bounded relaxed length analysis](task-evidence/Q100/adrive-relaxed-length-r1/README.md)
+is locally accepted for this exact retained graph. Neither complete root-face
+goal has a path within570 length/four transitions, even with bends and prior-via
+spacing relaxed. This excludes the fixed prefix under necessary guards, without
+proving whole-board impossibility or an exact minimum above570. The unchanged
+strict reader validates the original capture/source checkout. Fresh12methods,
+1024 independent retained-state/goal Bellman-Ford comparisons, real positive,
+wrong-SHA/tampered-receipt/junction controls and root review pass. Final source,
+variant and archived Player audits justify unchanged-input gate reuse; no new
+production/native/GWT/population qualification is claimed. The operation uses
+59/640groups,7.124s/90s,max4.689s/5s and0actualP07steps. Failed integration and
+host attempts remain preserved. Publication is pending in the packet/checkpoint.
+No routing/model/epoch/budget change or playable100 admission follows;
+playable100=0/beta held, full30 excluded and HARD/PSYCHOTIC unavailable/unrun.
+Next is a bounded source audit and frozen generic earlier-prefix/order treatment
+or necessary diagnostic. The identical fixed graph cannot meet the length guard;
+actual physical/access/functional proofs remain required before adoption.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
