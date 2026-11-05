@@ -41,8 +41,9 @@ measured negative result,not a timeout or route success.
 Authored physical/access/functional checks are NOT_RUN because no winner exists.
 There is no board/all-path impossibility claim. Other placements/requests,
 first-viable generation,default adoption and playable100 remain separate. The
-canonical pass1 trace has no failed terminal branch but no yield; isolating that
-pre-yield/quality boundary is next. A tail FOUND alone proves no publication result.
+canonical pass1 trace has no failed terminal branch but no yield. Its subsequent
+[prefix reconciliation](../canonical-pass1-reuse-r1/README.md) records the bounded
+source-based inference and next experiment. A tail FOUND alone proves no publication result.
 
 ## Contract corrections and gates
 

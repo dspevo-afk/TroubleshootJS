@@ -1,71 +1,44 @@
-# Current checkpoint: branch-order study published; canonical pass1 diagnosis next
+# Current checkpoint: canonical prefix reconciled; frozen net-priority implementation next
 
 UTC2026-11-05. Active X=OS-temp/tsj-q100-branch-tree-study-20261105-r1,
-branch codex/q100-branch-tree-study-20261105. Implementation 6b3087b66ef6a91edb9af9adda566e9c56b79960
-normally pushed to origin/codex/q100-physical-feasibility and exact remote SHA
-verified. Gmail 1a1ab0527f89dce3 SENT ONCE; never resend for the receipt.
-Source parent0a1e370e08a932b55efc961433e26f98f3bec8ac. Producer/host/v3 report
-accepted for finite private execution only; routing NOT_ADOPTED. See
-docs/task-evidence/Q100/branch-tree-study-v3-r1/README.md and qualification.json
-SHAa9d391b63a124bdbc234094e5415dcba7ead7b6709fd7ba63ac6d0bf208e85a1.
+branch codex/q100-branch-tree-study-20261105, actual HEAD/sourceparent
+f0f76bbd85c0ce46b3de67db4e9ac175b3bacd95. Documentation/analysis accepted locally,
+publication pending. Packet docs/task-evidence/Q100/canonical-pass1-reuse-r1/
+qualification.json SHAf7a0092b7742a33070453eabcd3d84561a60278bcb7d9e6d4e39d0fed2272925; next PLAN frozen before code/runtime.
+Prior actual-study implementation6b3087b66ef6a91edb9af9adda566e9c56b79960 and
+receiptf0f76bbd normally pushed/exact verified; Gmail1a1ab0527f89dce3 SENT ONCE.
+Prior reader Gmail1a1aa7d776d0a009 also SENT ONCE; no receipt duplicates.
+
+Current nearest op1/2 pass1 tailglobal230/localbranch117 matches D_SENSE,
+U2D.SENSOR/rootCFLT_D.1, exact prefix98d389.../269607B, pristine6553ad.../252676B,
+root9007199254740993/place-6587958367974952701/route8445301674744508279/request0/
+attempt4.117 FOUND rows are search goals, not published links or complete routing.
+Zero yields means no generator finalizer/comparator. Separate accepted QV D
+capture binds the SAME1079 raw base inputs/87478294B/manifest68b1489... and
+current authored freeze0a9b6a6a...; BFS/heap both650TOP/8010BOTTOM vs630 at48/48.
+SOURCE_BOUND_INFERENCE only: V3 captured no masks/graph digest/path/pass1reason.
+No fresh current path650/66nodes, BRANCH_QUALITY_LIMIT or graph equality claimed.
+Root rejected/corrected initial source-review provenance overclaim; oldnote kept.
+
+Fresh pinned data/source joins and census arithmetic PASS; four changed-source
+contracts reviewed, source-only leaves complete. No production/study source edit,
+new native/graph/Dijkstra/GWT/Player/normal run. Existing final43 reader tests,
+17CLIcontrols/tiny/authored remain attached to6b3087b6 tested bytes. Current
+layout26/dependency28/defaults/budgets unchanged, playable100=0/betaHELD.
+Frozen next treatment: opt-in pass1 minimum pair distance/net-ID order, no-pair
+nets last, existing failed-net promotion then canonical nearest branches.
+Independent entire60-net oracle; charge/cache pair preparation. D_SENSE has4pads,
+min210/diameter1240; illustrative rank13 afterpromotion vs15 observed is no
+capacity/solvability proof. Two-pad-first28 not selected. PLAN lists finalgates.
+
+Next: normal doc publication/exactSHA/one Gmail, then isolated net-priority
+implementation from this frozen plan; preserve X as exact accepted source.
 QX=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/branch-tree-study-r1.
-Prior reader-v1ac654332/receipt0a1e370e published/exactverified; Gmail1a1aa7d776d0a009
-SENT ONCE,never resend. Root owns allfiles; leaves complete; no heavygate/actor active.
-
-Authored separate root9007199254740993/layout-6587958367974952701/route8445301674744508279/
-request0/actualattempt4. Nearest plain/default/explicit controls match context,
-census,receipt,winner(none),physical disposition,98advances/92slices,918222expansions
-and3005967routing ownersteps. Rawsteps3005967/3005975/3005975; observed8verified
-extra clone units each. Farthest has1000000expansions,124advances/118slices,
-raw3862501/diagnostic10/routing3862491. No arm yields/finalizes a route. Treatment
-comparisonComplete=false/TOTAL_SEARCH_LIMIT is a typed budget rejection,not a
-timeout. NOT_ADOPTED; no board/all-path impossibility or otherrequest outcome.
-Firstpass1difference branch114,C_COIL_LOW/rootDC.A: nearestQC.D,farthestKC.A2,
-sameprefix6553ad3df059c6bfe2980efe39ff951d3f6322fc0694b2c96e26508f8d3dfe2e.
-Authored physical/access/functional NOT_RUN,no winner. Playable100=0/betaHELD.
-
-Finalsource Java067f45f61a090e3bbff9bbaeac34bdebaedcae18d6aa2c64bd22dec35120ced5,
-hostfe928cd05b64b6bd57521448ec32a0ed88ada8663e8300062b8df6c46717f533,
-reader3c41dc9970bd826447599a44d173248545094b6df0f36d22a5a6ea41a768d21d,
-test433db01dbf95dc8523577af17556113cdc764eaf37ae49855b18e0b1dcc48c0c.
-PLAN6ca51d5e.../WIREbc7379b8... frozen; literalplusIDs preserved. Actual live
-DIAGNOSTIC_CLONE transitions reconcile with later complete/stable snapshots,
-keeping allraw32768/640/5s/90s caps. Zero-capacity common work stays included.
-No hardcodedoffset,removedguard or unexplainedwork allowance. Raw v2 failure staysFAIL.
-
-Final freshgates PASS: selectedPS5/Python43units/0skips4.0305403s inclteardown;
-17actualCLIcontrols(1syntheticpositive/16expectedexit1negativesinclrealjunction);
-wrongmanifest0.7580735s pre-namespace/JVM; actualwrongbridgeguard pre-compiler/
-native with exact owned scratch cleanup. Root actualsource/process/native reviews
-PASS for tiny andauthored. Tinypublicsaved42/v12:54components/131pads,fouractual
-arms,physicalsubsets for eachwinner,291/291/282observedbranches,0/4/4/6cloneevents.
-Authored308/308/263branches,0/8/8/10cloneevents. Source1079base+4roles=1083;
-javac1074inputs/source7/target7/empty-sourcepath,three exact maintainedbridges.
-Tinyfreeze75a3d901.../authored0a9b6a6a...; qualifiedbridgemanifeste31649f0ea2a5740c998c4859bdc595b2ca75651e689ff56b1d146e721b3cd8b.
-Authored outer144.457678s inclteardown,native77.414082001s/cleanupenvelope38.048133201s;
-arms9.7434074/9.9176027/9.5104875/10.1944512s,maxgroup1.3125927s. Conservative
-whole non-arm upperbound105.091729201s(includescompile/preflight/reader/finalclose),
-tiny98.319613601s,proves120s bound without claiming exactcleanup. 480s/1800s hold.
-
-Final reuseaudits PASS native1079/1073Java,flatPython46,production1202pervariant/
-Developer357 and exactPlayerarchive357. Existing regression/GWT/privacy/Current/
-E06State/normal3 evidence reused onlyonunchangedconsumedinputs; nonefreshlyrenewed.
-Fresh oldnative2/8/33,GWT/Player/normal3 NOT_RUN; no production/default/epoch/model
-change. VisiblePlayer input/screenshots NOT_APPLICABLE. Full30/full2by31 notrenewed.
-Bounded source reviews no blockingfindings; producerzerocapfailfast asymmetry is
-nonblocking becauseactualflagsserialized and finalreader43rdtestenforcesproof.
-
-Final diff/privacy/stagedrawbyte checks PASS for19 intendedpaths; staged source
-matches testedbytes. Documentation receipt needs no new runtime or secondmail.
-Next: isolate canonicalpass1 no-yield/quality boundary from exactdata/source before
-another routing treatment; don'tinfer PublisherfailurefromtailFOUND alone.
-Preserve compile/v1plus/v2parity failures andsourcecaptures; two failedscratch
-trees remain asfileevidence with provenchildexit. Success/controlscratch removed,
-currentactors terminated. Main5f05b005 dirty9/6,Desktop e0c36885 dirty7/73collapsed,
-U/W/V andolderuncertainE06R1 namespace preserved; no oldrecovery/cleanupPASS.
-Ambient8928 untouched. Threeapprovednormalroots/fourcandidate envelope; full30
-ownerexcluded,HARD bodiesunread/unrunhere,historicalunreadUNCERTIFIED. HARD/
-PSYCHOTIC unavailable/unrun; CI self-hosted registration prerequisite. No Q100admission.
+No current runtime actors. Two old failedscratch trees/file evidence preserved;
+old E06R1 namespace uncertain/unrecovered, ambient8928 untouched. Main5f05b005
+dirty9/6/staged0; Desktop e0c36885 dirty7/73/staged0; U/W/V preserved. Full30
+owner-excluded; HARD bodies unread/unrun here,historicalunreadUNCERTIFIED;
+HARD/PSYCHOTIC unavailable/unrun. CI self-hosted registration prerequisite.
 
 # Historical checkpoint: actual-generator producer/host implementation in progress
 

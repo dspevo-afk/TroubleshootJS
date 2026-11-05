@@ -471,9 +471,25 @@ For exact separate root9007199254740993/request0/attempt4,nearest controls use
 yields or finalizes a route. First pass1 divergence is independently proven on
 C_COIL_LOW,QC.D versus KC.A2,with the same pre-Publisher prefix. The treatment is
 NOT_ADOPTED; routing remains unqualified. This proves neither board impossibility
-nor another placement/request outcome. Next is bounded isolation of the canonical
-pass1 no-yield/quality boundary before another routing treatment. Authored routed
-physical/access/functional and playable100 acceptance remains outstanding; beta stays held.
+nor another placement/request outcome. The canonical pre-yield reconciliation
+is recorded below. Authored routed physical/access/functional and playable100
+acceptance remain outstanding; beta stays held.
+
+The [canonical pass1 prefix reconciliation](task-evidence/Q100/canonical-pass1-reuse-r1/README.md)
+is accepted as documentation/analysis; publication is pending. Both observed
+canonical tails join the exact prior D_SENSE prefix at localbranch117/global230.
+A separately accepted D graph capture uses the same1079 raw base inputs and
+independent BFS/heap Dijkstra bounds650/8010 against630 with48of48 vias. This
+supports a cross-run SOURCE_BOUND_INFERENCE, not a V3 graph-digest comparison,
+current selected path or freshly exported pass1 reason. The117 FOUND callbacks
+prove search goals, not route completion; no generator finalizer was reached.
+All production/study sources remain unchanged; no new native/GWT/Player or
+population gate ran. Root corrected a graph-provenance overclaim before acceptance.
+The [next private experiment is frozen](task-evidence/Q100/canonical-pass1-reuse-r1/PLAN.md):
+generic minimum-pair-distance pass1 net priority, preserving failed-net promotion,
+canonical nearest branches and all budgets. Independent full60-net ordering and
+actual final-source gates precede any experiment acceptance or adoption. No
+routing/default/epoch change yet; playable100=0,beta held and data limits remain.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
