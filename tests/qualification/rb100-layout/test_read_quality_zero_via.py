@@ -1792,8 +1792,8 @@ class SourceBoundRunTests(unittest.TestCase):
         self.assertEqual(reader.RESULT_SCHEMA,
                          "q100-quality-zero-via-reader-result-v5")
         self.assertEqual(reader.SOURCE_REVISION, 20)
-        self.assertEqual(reader.SOURCE_INPUT_COUNT, 1079)
-        self.assertEqual(reader.CONTRACT_JAVA_COUNT, 223)
+        self.assertEqual(reader.SOURCE_INPUT_COUNT, 1080)
+        self.assertEqual(reader.CONTRACT_JAVA_COUNT, 224)
         self.assertEqual(len(reader.QUALITY_REQUIRED_INPUTS), 14)
         self.assertEqual(reader.SUITES, {
             "D_SENSE": "Rb100QualityZeroViaGraphContractTest",
@@ -1858,7 +1858,7 @@ class SourceBoundRunTests(unittest.TestCase):
         self.assertNotIn("target", legacy)
         self.assertNotIn("suite", legacy)
 
-        for count in (1077, 1078, 1080, True, 1079.0):
+        for count in (1077, 1078, 1079, 1081, True, 1079.0):
             spec = dict(base, inputCount=count)
             with self.subTest(input_count=count):
                 with self.assertRaises(reader.QualityZeroViaInputError) as caught:

@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 /** Bounded producer for the frozen actual-generator branch-order report. */
 public final class ActualGeneratorBranchOrderStudy {
     private static final Charset UTF8 = Charset.forName("UTF-8");
-    private static final String SCHEMA = "p07-actual-branch-order-study-v3";
+    private static final String SCHEMA = "p07-actual-branch-order-study-v4";
     private static final String INDEX_SCHEMA = "tsj-branch-order-index-v1";
     private static final String DEPENDENCY_EPOCH = "tsj-generation-dependencies-v28";
     private static final long AUTHORED_ROOT = 9007199254740993L;
@@ -55,13 +55,16 @@ public final class ActualGeneratorBranchOrderStudy {
 
     private static final String[] ARM_IDS = {
         "PLAIN_ENTRY_RECEIPT_CONTROL", "OBSERVED_DEFAULT_NEAREST",
-        "OBSERVED_EXPLICIT_NEAREST", "SECOND_ORDER_FARTHEST"
+        "OBSERVED_EXPLICIT_NEAREST", "SECOND_ORDER_MINIMUM_PAIR"
     };
     private static final String[] ARM_APIS = {
         "PLAIN_BEGIN", "BOUNDARY_CONVENIENCE", "BOUNDARY_EXPLICIT", "BOUNDARY_EXPLICIT"
     };
     private static final String[] ARM_STRATEGIES = {
-        "CANONICAL_NEAREST", "CANONICAL_NEAREST", "CANONICAL_NEAREST", "SECOND_ORDER_FARTHEST"
+        "CANONICAL_NEAREST", "CANONICAL_NEAREST", "CANONICAL_NEAREST", "CANONICAL_NEAREST"
+    };
+    private static final String[] ARM_NET_ORDER_STRATEGIES = {
+        "CANONICAL", "CANONICAL", "CANONICAL", "SECOND_ORDER_MINIMUM_PAIR"
     };
     private static final String[] SNAPSHOT_INTS = {
         "pass", "startX", "startY", "rootX", "rootY", "gridWidth", "gridHeight",
@@ -217,6 +220,16 @@ public final class ActualGeneratorBranchOrderStudy {
         BranchTracking branchTracking;
         String justTerminalBranchKey;
         final Set<String> diagnosticEventKeys = new HashSet<String>();
+        final Set<String> padNetIds = new HashSet<String>();
+        Object capturedNetOrderSearch;
+        String pass0TailNet;
+        String pass0TailReason;
+        int pass0TerminalCount;
+        int pass1TerminalCount;
+        int netOrderRecordCount;
+        boolean pass0AllFound = true;
+        boolean pass0EarlierAllFound = true;
+        boolean netOrderCaptured;
         long diagnosticCloneSteps;
         CapturedContext capturedContext;
         CandidateHeader candidateHeader;
@@ -444,10 +457,13 @@ public final class ActualGeneratorBranchOrderStudy {
                     candidateHeader.routingSeed);
                 return;
             }
-            final PcbLayerRoutingPrototype.Diagnostics diagnostics =
-                new PcbLayerRoutingPrototype.Diagnostics() {
+            final PcbLayerRoutingPrototype.NetOrderDiagnostics diagnostics =
+                new PcbLayerRoutingPrototype.NetOrderDiagnostics() {
                     public void onTerminalBranch(PcbLayerRoutingPrototype.BranchSnapshot snapshot) {
                         self.onTerminalBranch(snapshot);
+                    }
+                    public void onNetOrderReady(int pass) {
+                        self.onNetOrderReady(pass);
                     }
                 };
             if (operation == 1) {
@@ -456,11 +472,14 @@ public final class ActualGeneratorBranchOrderStudy {
                 ownerSession = generator.beginWithP07RequestBoundary(board,
                     candidateHeader.placementSeed, candidateHeader.routingSeed, configuration);
             } else {
-                PcbLayerRoutingPrototype.BranchOrderStrategy strategy = operation == 2 ?
-                    PcbLayerRoutingPrototype.BranchOrderStrategy.CANONICAL_NEAREST :
-                    PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST;
+                PcbLayerRoutingPrototype.BranchOrderStrategy strategy =
+                    PcbLayerRoutingPrototype.BranchOrderStrategy.CANONICAL_NEAREST;
+                PcbLayerRoutingPrototype.NetOrderStrategy netOrderStrategy = operation == 2 ?
+                    PcbLayerRoutingPrototype.NetOrderStrategy.CANONICAL :
+                    PcbLayerRoutingPrototype.NetOrderStrategy.SECOND_ORDER_MINIMUM_PAIR;
                 SeededPcbLayoutGenerator.P07RequestBoundaryConfiguration configuration =
-                    new SeededPcbLayoutGenerator.P07RequestBoundaryConfiguration(strategy, diagnostics);
+                    new SeededPcbLayoutGenerator.P07RequestBoundaryConfiguration(
+                        strategy, netOrderStrategy, diagnostics);
                 ownerSession = generator.beginWithP07RequestBoundary(board,
                     candidateHeader.placementSeed, candidateHeader.routingSeed, configuration);
             }
@@ -481,6 +500,27 @@ public final class ActualGeneratorBranchOrderStudy {
             lastActualRoute = route;
             if (capturedContext == null) captureActualTemplate(route, group);
             observeDiagnosticClone(route, group);
+        }
+
+        private void onNetOrderReady(int pass) {
+            checkOperationDeadline();
+            if (pass < 0 || pass >= 3)
+                throw new IllegalStateException("P07 NET_ORDER callback used an unsupported pass");
+            if (operation == 0 || request != null)
+                throw new IllegalStateException("P07 NET_ORDER callback escaped an observed live request");
+            if (pass != 1) return;
+            GroupLedger group = currentGroup;
+            if (group == null || !"ADVANCE".equals(group.phase))
+                throw new IllegalStateException("P07 NET_ORDER callback ran outside an ADVANCE group");
+            if (ownerSession == null)
+                throw new IllegalStateException("P07 NET_ORDER callback lost its generator owner");
+            Object route = readField(ownerSession, "mediumTwoLayerRoute");
+            if (!(route instanceof PcbLayerRoutingPrototype.Session))
+                throw new IllegalStateException("P07 NET_ORDER callback lost its actual route owner");
+            Object search = readField(route, "search");
+            if (search == null || intField(search, "pass") != pass)
+                throw new IllegalStateException("P07 NET_ORDER callback does not own the actual pass-1 Search");
+            captureActualNetOrder(route, search, group);
         }
 
         private void observeDiagnosticClone(Object route, GroupLedger group) {
@@ -729,6 +769,14 @@ public final class ActualGeneratorBranchOrderStudy {
             byte[] censusBytes = utf8(census.toString());
             addHashInput(group, censusBytes.length);
             String censusSha = sha256(censusBytes);
+            padNetIds.clear();
+            for (PadRow row : rows) {
+                if (!token(row.netId))
+                    throw new IllegalStateException("Actual PAD census contains an invalid net identity");
+                padNetIds.add(row.netId);
+            }
+            if (padNetIds.size() != candidateHeader.netCount)
+                throw new IllegalStateException("Actual PAD census does not cover every candidate net");
             int requestIndex = intField(ownerSession, "mediumTwoLayerAttempts");
             Object selectedValue = readField(ownerSession, "mediumTwoLayerCandidate");
             if (!(selectedValue instanceof MediumBoardPhysicalPolicy.PlacementCandidate))
@@ -746,6 +794,114 @@ public final class ActualGeneratorBranchOrderStudy {
                 group.censusRows++;
                 padCount++;
             }
+        }
+
+        private void captureActualNetOrder(Object route, Object search, GroupLedger group) {
+            if (operation == 0)
+                throw new IllegalStateException("Plain operation received a P07 NET_ORDER callback");
+            if (request != null)
+                throw new IllegalStateException("P07 NET_ORDER observation arrived after the request result");
+            if (group == null || !"ADVANCE".equals(group.phase))
+                throw new IllegalStateException("P07 NET_ORDER observation ran outside an ADVANCE group");
+            if (search == null || intField(search, "pass") != 1)
+                throw new IllegalStateException("P07 NET_ORDER callback lost its actual pass-1 Search");
+            if (netOrderCaptured || netOrderRecordCount != 0)
+                throw new IllegalStateException("Actual pass-1 NET_ORDER callback was duplicated");
+            Object netsValue = readField(search, "nets");
+            if (netsValue == null)
+                throw new IllegalStateException("P07 NET_ORDER callback arrived before the full net vector was installed");
+            if (!(netsValue instanceof Vector))
+                throw new IllegalStateException("Actual pass-1 Search.nets has an unexpected type");
+            if (readField(search, "netOrderPreparation") != null ||
+                    readField(search, "currentNet") != null || intField(search, "netIndex") != 0 ||
+                    readField(search, "branch") != null || readField(search, "publisher") != null)
+                throw new IllegalStateException("Actual pass-1 net order was partial or observed after routing began");
+            if (capturedContext == null || padCount != candidateHeader.padCount ||
+                    padNetIds.size() != candidateHeader.netCount)
+                throw new IllegalStateException("Actual pass-1 net order preceded its complete PAD census");
+
+            Object actualBranchStrategy = readField(route, "branchOrderStrategy");
+            Object actualNetOrderStrategy = readField(route, "netOrderStrategy");
+            if (actualBranchStrategy == null || actualNetOrderStrategy == null ||
+                    !ARM_STRATEGIES[operation].equals(actualBranchStrategy.toString()) ||
+                    !ARM_NET_ORDER_STRATEGIES[operation].equals(actualNetOrderStrategy.toString()))
+                throw new IllegalStateException("Actual P07 owner strategies disagree with the declared arm");
+
+            int completedOrderings = intField(route, "completedOrderings");
+            int yieldedOrderings = intField(route, "yieldedOrderings");
+            if (completedOrderings != 1 || (yieldedOrderings != 0 && yieldedOrderings != 1))
+                throw new IllegalStateException("Actual pass-1 ordering counters are outside the frozen boundary");
+            Object promotedValue = readField(search, "promotedNet");
+            String promotedNet;
+            if (promotedValue == null) promotedNet = null;
+            else if (promotedValue instanceof String) promotedNet = (String)promotedValue;
+            else throw new IllegalStateException("Actual pass-1 promotion has an unexpected type");
+            if (yieldedOrderings == 1) {
+                if (promotedNet != null || !pass0AllFound ||
+                        pass0TerminalCount != candidateHeader.padCount - candidateHeader.netCount)
+                    throw new IllegalStateException("Yielded pass 0 lacks complete all-FOUND terminal authority");
+            } else {
+                if (pass0TerminalCount < 1 || !pass0EarlierAllFound || pass0TailNet == null ||
+                        !("NO_PATH".equals(pass0TailReason) ||
+                            "BRANCH_SEARCH_LIMIT".equals(pass0TailReason)) ||
+                        promotedNet == null || !promotedNet.equals(pass0TailNet))
+                    throw new IllegalStateException("Non-yielded pass 0 lacks closed failed-net promotion authority");
+            }
+            if (promotedNet != null && (!token(promotedNet) || !padNetIds.contains(promotedNet)))
+                throw new IllegalStateException("Actual pass-1 promotion is outside the PAD census");
+
+            Object layoutValue = readField(search, "layout");
+            if (!(layoutValue instanceof PcbBoardLayout))
+                throw new IllegalStateException("Actual pass-1 Search omitted its live layout");
+            String prefixFingerprint = ((PcbBoardLayout)layoutValue).geometryFingerprint();
+            byte[] prefix = utf8(prefixFingerprint);
+            if (prefix.length < 1 || prefix.length > PREFIX_LIMIT_BYTES)
+                throw new IllegalStateException("Actual pass-1 ordering prefix exceeded the 1 MiB bound");
+            String prefixSha = sha256(prefix);
+            if (!prefixFingerprint.equals(capturedContext.pristineGeometry) ||
+                    prefix.length != capturedContext.pristineBytes ||
+                    !prefixSha.equals(capturedContext.pristineSha256))
+                throw new IllegalStateException("Actual pass-1 Search.layout differs from its pristine request placement");
+
+            Vector<?> actualNets = (Vector<?>)netsValue;
+            int netCount = actualNets.size();
+            if (netCount != candidateHeader.netCount || netCount != padNetIds.size())
+                throw new IllegalStateException("Actual pass-1 net vector does not match the PAD census count");
+            Set<String> seenNets = new HashSet<String>();
+            StringBuilder netIds = new StringBuilder("[");
+            for (int index = 0; index < netCount; index++) {
+                Object value = actualNets.get(index);
+                if (!(value instanceof String))
+                    throw new IllegalStateException("Actual pass-1 net vector contains a non-string identity");
+                String netId = (String)value;
+                if (!token(netId) || !padNetIds.contains(netId) || !seenNets.add(netId))
+                    throw new IllegalStateException("Actual pass-1 net vector has an invalid, unknown, or duplicate identity");
+                if (index != 0) netIds.append(',');
+                netIds.append(quote(netId));
+            }
+            netIds.append(']');
+            if (seenNets.size() != padNetIds.size())
+                throw new IllegalStateException("Actual pass-1 net vector omitted a PAD census net");
+
+            JsonObject row = new JsonObject();
+            row.string("record", "NET_ORDER");
+            row.number("operation", operation);
+            row.number("group", group.ordinal);
+            row.number("pass", 1);
+            row.string("strategy", ARM_NET_ORDER_STRATEGIES[operation]);
+            if (promotedNet == null) row.raw("promotedNet", "null");
+            else row.string("promotedNet", promotedNet);
+            row.number("completedOrderings", completedOrderings);
+            row.number("yieldedOrderings", yieldedOrderings);
+            row.string("prefixSha256", prefixSha);
+            row.number("prefixBytes", prefix.length);
+            row.raw("netIds", netIds.toString());
+            addHashInput(group, prefix.length);
+            appendCallbackRecord(group, row.finish());
+            group.netOrderRows++;
+            netOrderRecordCount++;
+            netOrderCaptured = true;
+            capturedNetOrderSearch = search;
         }
         @SuppressWarnings("unchecked")
         private int[] eligibleRouteAttempts(Object owner) {
@@ -816,6 +972,31 @@ public final class ActualGeneratorBranchOrderStudy {
             Object layoutValue = readField(search, "layout");
             if (!(layoutValue instanceof PcbBoardLayout))
                 throw new IllegalStateException("Terminal branch callback lost Search.layout");
+            int pass = intField(snapshot, "pass");
+            Object netValue = readField(snapshot, "netId");
+            Object reasonValue = readField(snapshot, "terminalReason");
+            if (pass < 0 || pass >= 3 || !(netValue instanceof String) ||
+                    !(reasonValue instanceof String))
+                throw new IllegalStateException("Actual terminal branch omitted its bounded pass identity");
+            String terminalNet = (String)netValue;
+            String terminalReason = (String)reasonValue;
+            if (!token(terminalNet) || !padNetIds.contains(terminalNet) ||
+                    !("FOUND".equals(terminalReason) || "NO_PATH".equals(terminalReason) ||
+                        "TOTAL_SEARCH_LIMIT".equals(terminalReason) ||
+                        "BRANCH_SEARCH_LIMIT".equals(terminalReason)))
+                throw new IllegalStateException("Actual terminal branch escaped the census or reason domain");
+            if (pass == 0) {
+                if (pass0TerminalCount > 0 && !"FOUND".equals(pass0TailReason))
+                    pass0EarlierAllFound = false;
+                pass0TerminalCount++;
+                pass0TailNet = terminalNet;
+                pass0TailReason = terminalReason;
+                if (!"FOUND".equals(terminalReason)) pass0AllFound = false;
+            } else if (pass == 1) {
+                if (!netOrderCaptured || search != capturedNetOrderSearch)
+                    throw new IllegalStateException("Pass-1 branch advanced without its actual NET_ORDER row");
+                pass1TerminalCount++;
+            }
             validateTerminalClonePair(search, snapshot);
             PcbBoardLayout liveLayout = (PcbBoardLayout)layoutValue;
             byte[] prefix = utf8(liveLayout.geometryFingerprint());
@@ -966,6 +1147,10 @@ public final class ActualGeneratorBranchOrderStudy {
             justTerminalBranchKey = null;
             diagnosticEventKeys.clear();
             validatedDiagnosticRoute = null;
+            capturedNetOrderSearch = null;
+            pass0TailNet = null;
+            pass0TailReason = null;
+            padNetIds.clear();
             capturedContext = null;
             lastActualRoute = null;
             ownerSession = null;
@@ -979,6 +1164,7 @@ public final class ActualGeneratorBranchOrderStudy {
             arm.string("id", ARM_IDS[operation]);
             arm.string("api", ARM_APIS[operation]);
             arm.string("strategy", ARM_STRATEGIES[operation]);
+            arm.string("netOrderStrategy", ARM_NET_ORDER_STRATEGIES[operation]);
             arm.bool("observed", operation != 0);
             JsonObject candidate = new JsonObject();
             candidate.string("rootSeed", Long.toString(candidateHeader.rootSeed));
@@ -1071,6 +1257,11 @@ public final class ActualGeneratorBranchOrderStudy {
         private void finishReportGroupAndFooter(GroupLedger report) throws IOException {
             if (padCount != candidateHeader.padCount || request == null)
                 throw new IllegalStateException("Final report census is incomplete");
+            if (netOrderRecordCount < 0 || netOrderRecordCount > 1 ||
+                    netOrderCaptured != (netOrderRecordCount == 1) ||
+                    (operation == 0 && netOrderRecordCount != 0) ||
+                    (pass1TerminalCount > 0 && netOrderRecordCount != 1))
+                throw new IllegalStateException("NET_ORDER event count does not close against the actual pass-1 trace");
             long beforeOwnLine = elapsed(report.startedNanos, System.nanoTime());
             sink.writeLine(groupJson(report, beforeOwnLine));
             sink.flush();
@@ -1102,6 +1293,10 @@ public final class ActualGeneratorBranchOrderStudy {
         private void finishGroup(GroupLedger group) throws IOException {
             if (group == null || group != currentGroup)
                 throw new IllegalStateException("GROUP ledger does not own its records");
+            if (group.netOrderRows < 0 || group.netOrderRows > 1 ||
+                    (group.netOrderRows > 0 && (operation == 0 || !"ADVANCE".equals(group.phase) ||
+                        group.p07Slices != 1 || group.observerChecks < 1)))
+                throw new IllegalStateException("NET_ORDER row lacks its measured ADVANCE group owner");
             if (group.diagnosticCloneSteps < 0 ||
                     (group.diagnosticCloneSteps > 0 && (group.p07Slices != 1 ||
                         group.p07Steps == null || group.diagnosticCloneSteps > group.p07Steps.intValue())))
@@ -1137,6 +1332,7 @@ public final class ActualGeneratorBranchOrderStudy {
             row.string("accounting", group.p07Slices == 1 ? "MEASURED" : "NOT_APPLICABLE");
             row.number("observerChecks", group.observerChecks);
             row.number("callbacks", group.callbacks);
+            row.number("netOrderRows", group.netOrderRows);
             row.number("censusRows", group.censusRows);
             row.number("hashInputBytes", group.hashInputBytes);
             row.number("serializedBeforeOwnLineBytes", group.serializedBeforeOwnLineBytes);
@@ -1173,6 +1369,7 @@ public final class ActualGeneratorBranchOrderStudy {
         long diagnosticCloneSteps;
         long observerChecks;
         long callbacks;
+        long netOrderRows;
         long censusRows;
         long hashInputBytes;
         long serializedBeforeOwnLineBytes;

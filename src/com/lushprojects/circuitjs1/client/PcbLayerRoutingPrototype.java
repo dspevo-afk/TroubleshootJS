@@ -17,6 +17,7 @@ final class PcbLayerRoutingPrototype {
         }
     }
     enum BranchOrderStrategy { CANONICAL_NEAREST, SECOND_ORDER_FARTHEST }
+    enum NetOrderStrategy { CANONICAL, SECOND_ORDER_MINIMUM_PAIR }
     static final int GRID=10, TURN_COST=35, MAX_CELLS=250000, MAX_EXPANSIONS=1000000;
     static final int MAX_DIAGNOSTIC_VIA_COST=240;
     static final int MAX_BRANCH_EXPANSIONS=100000, ORDERINGS=3;
@@ -79,6 +80,10 @@ final class PcbLayerRoutingPrototype {
     /** Optional per-request observations; absent from every production overload by default. */
     interface Diagnostics {
         void onTerminalBranch(BranchSnapshot snapshot);
+    }
+    /** Optional passive boundary after the complete pass-one net vector is installed. */
+    interface NetOrderDiagnostics extends Diagnostics {
+        void onNetOrderReady(int pass);
     }
     /** One opt-in, per-request hook for a complete failed-prefix graph only. */
     interface FixedPrefixGraphObserver {
@@ -388,12 +393,19 @@ final class PcbLayerRoutingPrototype {
     static Session beginOrderingCandidates(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
             SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias,
             Diagnostics diagnostics,BranchOrderStrategy branchOrderStrategy) {
+        return beginOrderingCandidates(board,placement,policy,observer,maximum,maximumVias,
+            diagnostics,branchOrderStrategy,NetOrderStrategy.CANONICAL);
+    }
+    static Session beginOrderingCandidates(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
+            SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias,
+            Diagnostics diagnostics,BranchOrderStrategy branchOrderStrategy,
+            NetOrderStrategy netOrderStrategy) {
         if(policy!=Policy.FULLER_TWO_LAYER)
             throw new IllegalArgumentException("P07 ordering stream requires FULLER_TWO_LAYER");
-        if(branchOrderStrategy==null)
-            throw new IllegalArgumentException("Missing P07 branch-order strategy");
+        if(branchOrderStrategy==null || netOrderStrategy==null)
+            throw new IllegalArgumentException("Missing P07 ordering strategy");
         return new Session(board,placement,policy,observer,maximum,maximumVias,diagnostics,true,
-            null,null,branchOrderStrategy);
+            null,null,branchOrderStrategy,netOrderStrategy);
     }
     /** Generator-owned, opt-in capture; its terminal hook is separate from ordinary diagnostics. */
     static Session beginOrderingCandidatesWithFixedPrefixObservation(TroubleshootBoard board,
@@ -408,12 +420,21 @@ final class PcbLayerRoutingPrototype {
             PcbBoardLayout placement,Policy policy,SeededPcbLayoutGenerator.AttemptObserver observer,
             int maximum,int maximumVias,Diagnostics diagnostics,FixedPrefixCaptureContext context,
             FixedPrefixGraphObserver captureObserver,BranchOrderStrategy branchOrderStrategy) {
+        return beginOrderingCandidatesWithFixedPrefixObservation(board,placement,policy,observer,
+            maximum,maximumVias,diagnostics,context,captureObserver,branchOrderStrategy,
+            NetOrderStrategy.CANONICAL);
+    }
+    static Session beginOrderingCandidatesWithFixedPrefixObservation(TroubleshootBoard board,
+            PcbBoardLayout placement,Policy policy,SeededPcbLayoutGenerator.AttemptObserver observer,
+            int maximum,int maximumVias,Diagnostics diagnostics,FixedPrefixCaptureContext context,
+            FixedPrefixGraphObserver captureObserver,BranchOrderStrategy branchOrderStrategy,
+            NetOrderStrategy netOrderStrategy) {
         if(policy!=Policy.FULLER_TWO_LAYER || context==null || captureObserver==null)
             throw new IllegalArgumentException("Invalid actual P07 fixed-prefix observation request");
-        if(branchOrderStrategy==null)
-            throw new IllegalArgumentException("Missing P07 branch-order strategy");
+        if(branchOrderStrategy==null || netOrderStrategy==null)
+            throw new IllegalArgumentException("Missing P07 ordering strategy");
         return new Session(board,placement,policy,observer,maximum,maximumVias,diagnostics,true,
-            context,captureObserver,branchOrderStrategy);
+            context,captureObserver,branchOrderStrategy,netOrderStrategy);
     }
     static Result route(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
             SeededPcbLayoutGenerator.AttemptObserver observer) {
@@ -1015,6 +1036,7 @@ final class PcbLayerRoutingPrototype {
         private final int maximumVias;
         private final int viaCost;
         private final BranchOrderStrategy branchOrderStrategy;
+        private final NetOrderStrategy netOrderStrategy;
         private final Budget budget;
         private final Diagnostics diagnostics;
         private final boolean roleWidths;
@@ -1048,6 +1070,7 @@ final class PcbLayerRoutingPrototype {
             this.template=template; this.candidate=candidate; links=source.links;
             this.maximumVias=maximumVias; this.viaCost=viaCost; budget=new Budget(source.budget.maximum);
             branchOrderStrategy=source.branchOrderStrategy;
+            netOrderStrategy=source.netOrderStrategy;
             budget.expanded=source.budget.expanded;
             diagnostics=source.diagnostics==null?null:DETACHED_DIAGNOSTICS;
             roleWidths=source.roleWidths; orderingStream=source.orderingStream;
@@ -1087,9 +1110,17 @@ final class PcbLayerRoutingPrototype {
                 SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias,
                 Diagnostics diagnostics,boolean orderingStream,FixedPrefixCaptureContext context,
                 FixedPrefixGraphObserver captureObserver,BranchOrderStrategy branchOrderStrategy) {
+            this(board,placement,policy,observer,maximum,maximumVias,diagnostics,orderingStream,
+                context,captureObserver,branchOrderStrategy,NetOrderStrategy.CANONICAL);
+        }
+        private Session(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
+                SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias,
+                Diagnostics diagnostics,boolean orderingStream,FixedPrefixCaptureContext context,
+                FixedPrefixGraphObserver captureObserver,BranchOrderStrategy branchOrderStrategy,
+                NetOrderStrategy netOrderStrategy) {
             if(board==null || placement==null || policy==null || observer==null ||
                     maximum<1 || maximum>MAX_EXPANSIONS || maximumVias<0 || maximumVias>policy.vias ||
-                    branchOrderStrategy==null)
+                    branchOrderStrategy==null || netOrderStrategy==null)
                 throw new IllegalArgumentException("Invalid P07 request");
             if(orderingStream && policy!=Policy.FULLER_TWO_LAYER)
                 throw new IllegalArgumentException("P07 ordering stream requires FULLER_TWO_LAYER");
@@ -1099,6 +1130,7 @@ final class PcbLayerRoutingPrototype {
             this.maximumVias=maximumVias;
             viaCost=policy.viaCost;
             this.branchOrderStrategy=branchOrderStrategy;
+            this.netOrderStrategy=netOrderStrategy;
             this.diagnostics=diagnostics;
             this.orderingStream=orderingStream;
             this.fixedPrefixContext=context;
@@ -1439,6 +1471,19 @@ final class PcbLayerRoutingPrototype {
             if(diagnostics==null) return;
             try {
                 diagnostics.onTerminalBranch(snapshot);
+            } catch(RuntimeException failure) {
+                abortAfterDiagnosticFailure(failure);
+                throw failure;
+            } catch(Error failure) {
+                abortAfterDiagnosticFailure(failure);
+                throw failure;
+            }
+        }
+        private void emitNetOrderReady(int pass) {
+            if(!orderingStream || !roleWidths || pass!=1 ||
+                    !(diagnostics instanceof NetOrderDiagnostics)) return;
+            try {
+                ((NetOrderDiagnostics)diagnostics).onNetOrderReady(pass);
             } catch(RuntimeException failure) {
                 abortAfterDiagnosticFailure(failure);
                 throw failure;
@@ -1916,6 +1961,124 @@ final class PcbLayerRoutingPrototype {
         private void finish() { complete=true; edges=null; heap=null; }
     }
     private static final class Search {
+        private static final class NetPairMetric {
+            final String netId;
+            final boolean paired;
+            final long minimumDistance;
+            NetPairMetric(String netId,boolean paired,long minimumDistance) {
+                this.netId=netId; this.paired=paired; this.minimumDistance=minimumDistance;
+            }
+        }
+        /** Pair metrics, ordering and vector materialization each advance as charged search work. */
+        private final class NetOrderPreparation {
+            private static final int PAIRS=0, SORT=1, MATERIALIZE=2, COMPLETE=3;
+            private final Vector<String> netIds=board.getNetIds();
+            private final Vector<NetPairMetric> metrics=new Vector<NetPairMetric>();
+            private final Vector<String> preparedNetOrder=new Vector<String>();
+            private int stage=PAIRS,netIndex,firstIndex,secondIndex,sortIndex=1,sortCursor=-1,writeIndex;
+            private Vector<String> currentPadIds;
+            private long currentMinimum=Long.MAX_VALUE;
+            private boolean currentHasPair,complete;
+            private NetPairMetric sortValue;
+            NetOrderPreparation() {
+                if(netIds==null) throw new IllegalStateException("P07 board has no net identity list");
+            }
+            boolean advanceOne() {
+                if(complete) return true;
+                if(stage==PAIRS) return advancePair();
+                if(stage==SORT) return advanceSort();
+                if(stage==MATERIALIZE) return advanceMaterialize();
+                throw new IllegalStateException("Invalid P07 net-order preparation stage");
+            }
+            private boolean advancePair() {
+                if(currentPadIds==null) {
+                    if(netIndex>=netIds.size()) {
+                        stage=SORT;
+                        return false;
+                    }
+                    String netId=netIds.get(netIndex);
+                    BoardNet net=board.getNet(netId);
+                    if(net==null || !netId.equals(net.getId()))
+                        throw new IllegalStateException("P07 net-order preparation has an invalid net identity");
+                    currentPadIds=net.getPadIds();
+                    firstIndex=0; secondIndex=1;
+                    currentMinimum=Long.MAX_VALUE; currentHasPair=false;
+                    if(currentPadIds.size()<2) {
+                        metrics.add(new NetPairMetric(netId,false,Long.MAX_VALUE));
+                        netIndex++;
+                        currentPadIds=null;
+                    }
+                    return false;
+                }
+                String firstId=currentPadIds.get(firstIndex),secondId=currentPadIds.get(secondIndex);
+                PcbPadPlacement first=layout.getPad(firstId),second=layout.getPad(secondId);
+                if(first==null || second==null)
+                    throw new IllegalStateException("P07 net-order preparation is missing an actual placed pad");
+                long dx=(long)first.getX()-(long)second.getX();
+                long dy=(long)first.getY()-(long)second.getY();
+                if(dx<0) dx=-dx;
+                if(dy<0) dy=-dy;
+                long distance=dx+dy;
+                if(!currentHasPair || distance<currentMinimum) currentMinimum=distance;
+                currentHasPair=true;
+                secondIndex++;
+                if(secondIndex>=currentPadIds.size()) {
+                    firstIndex++;
+                    secondIndex=firstIndex+1;
+                    if(secondIndex>=currentPadIds.size()) {
+                        metrics.add(new NetPairMetric(netIds.get(netIndex),true,currentMinimum));
+                        netIndex++;
+                        currentPadIds=null;
+                    }
+                }
+                return false;
+            }
+            private boolean advanceSort() {
+                if(sortIndex>=metrics.size()) {
+                    stage=MATERIALIZE;
+                    return false;
+                }
+                if(sortValue==null) {
+                    sortValue=metrics.get(sortIndex);
+                    sortCursor=sortIndex-1;
+                }
+                if(sortCursor>=0 && compareMetrics(metrics.get(sortCursor),sortValue)>0) {
+                    metrics.set(sortCursor+1,metrics.get(sortCursor));
+                    sortCursor--;
+                    if(sortCursor<0) {
+                        metrics.set(0,sortValue);
+                        sortIndex++;
+                        sortValue=null;
+                    }
+                } else {
+                    metrics.set(sortCursor+1,sortValue);
+                    sortIndex++;
+                    sortCursor=-1;
+                    sortValue=null;
+                }
+                return false;
+            }
+            private int compareMetrics(NetPairMetric first,NetPairMetric second) {
+                if(first.paired!=second.paired) return first.paired?-1:1;
+                if(first.paired && first.minimumDistance!=second.minimumDistance)
+                    return first.minimumDistance<second.minimumDistance?-1:1;
+                return first.netId.compareTo(second.netId);
+            }
+            private boolean advanceMaterialize() {
+                if(writeIndex<metrics.size()) {
+                    preparedNetOrder.add(metrics.get(writeIndex++).netId);
+                    return false;
+                }
+                stage=COMPLETE;
+                complete=true;
+                return true;
+            }
+            Vector<String> takeNetOrder() {
+                if(!complete || stage!=COMPLETE)
+                    throw new IllegalStateException("P07 net-order preparation is incomplete");
+                return preparedNetOrder;
+            }
+        }
         final Session owner;
         final TroubleshootBoard board;
         final PcbBoardLayout layout;
@@ -1929,6 +2092,7 @@ final class PcbLayerRoutingPrototype {
         final PcbComponentPlacement[] parts;
         int serial,branches,segments;
         private Vector<String> nets;
+        private NetOrderPreparation netOrderPreparation;
         private int netIndex;
         private String currentNet;
         private final String promotedNet;
@@ -2002,6 +2166,17 @@ final class PcbLayerRoutingPrototype {
                 return;
             }
             if(nets==null) {
+                if(owner.orderingStream && owner.roleWidths && pass==1 &&
+                        owner.netOrderStrategy==NetOrderStrategy.SECOND_ORDER_MINIMUM_PAIR) {
+                    if(netOrderPreparation==null) netOrderPreparation=new NetOrderPreparation();
+                    if(netOrderPreparation.advanceOne()) {
+                        nets=netOrderPreparation.takeNetOrder();
+                        netOrderPreparation=null;
+                        promoteFailedNet();
+                        owner.emitNetOrderReady(pass);
+                    }
+                    return;
+                }
                 nets=board.getNetIds();
                 Collections.sort(nets,new Comparator<String>() { public int compare(String a,String b) {
                     int ap=pass==1?-board.getNet(a).getPadIds().size():PcbNetRouter.priority(board,a);
@@ -2009,12 +2184,8 @@ final class PcbLayerRoutingPrototype {
                     return ap==bp?a.compareTo(b):ap<bp?-1:1;
                 }});
                 if(pass==2) Collections.reverse(nets);
-                if(promotedNet!=null) {
-                    int failedIndex=nets.indexOf(promotedNet);
-                    if(failedIndex<0)
-                        throw new IllegalStateException("P07 failed-net promotion owner is not in canonical routing order");
-                    if(failedIndex>0) nets.insertElementAt(nets.remove(failedIndex),0);
-                }
+                promoteFailedNet();
+                owner.emitNetOrderReady(pass);
                 return;
             }
             if(currentPadIds!=null && !currentPadIds.isEmpty()) {
@@ -2046,6 +2217,13 @@ final class PcbLayerRoutingPrototype {
                 return;
             }
             complete=true;
+        }
+        private void promoteFailedNet() {
+            if(promotedNet==null) return;
+            int failedIndex=nets.indexOf(promotedNet);
+            if(failedIndex<0)
+                throw new IllegalStateException("P07 failed-net promotion owner is not in canonical routing order");
+            if(failedIndex>0) nets.insertElementAt(nets.remove(failedIndex),0);
         }
         private PcbPadPlacement[] reachedPthTerminals(String net,PcbPadPlacement root) {
             Vector<PcbPadPlacement> values=new Vector<PcbPadPlacement>();

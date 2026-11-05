@@ -52,16 +52,25 @@ class SeededPcbLayoutGenerator {
     /** Immutable opt-in configuration for one actual P07 request-zero boundary. */
     static final class P07RequestBoundaryConfiguration {
         final PcbLayerRoutingPrototype.BranchOrderStrategy branchOrderStrategy;
+        final PcbLayerRoutingPrototype.NetOrderStrategy netOrderStrategy;
         final PcbLayerRoutingPrototype.Diagnostics diagnostics;
         P07RequestBoundaryConfiguration(PcbLayerRoutingPrototype.Diagnostics diagnostics) {
-            this(PcbLayerRoutingPrototype.BranchOrderStrategy.CANONICAL_NEAREST,diagnostics);
+            this(PcbLayerRoutingPrototype.BranchOrderStrategy.CANONICAL_NEAREST,
+                PcbLayerRoutingPrototype.NetOrderStrategy.CANONICAL,diagnostics);
         }
         P07RequestBoundaryConfiguration(
                 PcbLayerRoutingPrototype.BranchOrderStrategy branchOrderStrategy,
                 PcbLayerRoutingPrototype.Diagnostics diagnostics) {
-            if(branchOrderStrategy==null)
-                throw new IllegalArgumentException("Missing P07 request-boundary branch-order strategy");
+            this(branchOrderStrategy,PcbLayerRoutingPrototype.NetOrderStrategy.CANONICAL,diagnostics);
+        }
+        P07RequestBoundaryConfiguration(
+                PcbLayerRoutingPrototype.BranchOrderStrategy branchOrderStrategy,
+                PcbLayerRoutingPrototype.NetOrderStrategy netOrderStrategy,
+                PcbLayerRoutingPrototype.Diagnostics diagnostics) {
+            if(branchOrderStrategy==null || netOrderStrategy==null)
+                throw new IllegalArgumentException("Missing P07 request-boundary ordering strategy");
             this.branchOrderStrategy=branchOrderStrategy;
+            this.netOrderStrategy=netOrderStrategy;
             this.diagnostics=diagnostics;
         }
     }
@@ -163,12 +172,19 @@ class SeededPcbLayoutGenerator {
     Session beginWithFixedPrefixObservation(TroubleshootBoard board,long seed,long routingSeed,
             PcbLayerRoutingPrototype.FixedPrefixGraphObserver captureObserver,
             PcbLayerRoutingPrototype.BranchOrderStrategy branchOrderStrategy) {
+        return beginWithFixedPrefixObservation(board,seed,routingSeed,captureObserver,branchOrderStrategy,
+            PcbLayerRoutingPrototype.NetOrderStrategy.CANONICAL);
+    }
+    Session beginWithFixedPrefixObservation(TroubleshootBoard board,long seed,long routingSeed,
+            PcbLayerRoutingPrototype.FixedPrefixGraphObserver captureObserver,
+            PcbLayerRoutingPrototype.BranchOrderStrategy branchOrderStrategy,
+            PcbLayerRoutingPrototype.NetOrderStrategy netOrderStrategy) {
         if(captureObserver==null)
             throw new IllegalArgumentException("Missing fixed-prefix observation owner");
-        if(branchOrderStrategy==null)
-            throw new IllegalArgumentException("Missing PCB branch-order strategy");
+        if(branchOrderStrategy==null || netOrderStrategy==null)
+            throw new IllegalArgumentException("Missing PCB ordering strategy");
         return new Session(board,seed,routingSeed,attemptObserver,null,captureObserver,
-            branchOrderStrategy);
+            branchOrderStrategy,netOrderStrategy,null);
     }
     /** Opt-in real-generator stop at the first completed P07 request boundary. */
     Session beginWithP07RequestBoundary(TroubleshootBoard board,long seed,long routingSeed,
@@ -182,7 +198,7 @@ class SeededPcbLayoutGenerator {
         if(configuration==null)
             throw new IllegalArgumentException("Missing P07 request-boundary configuration");
         return new Session(board,seed,routingSeed,attemptObserver,null,captureObserver,
-            configuration.branchOrderStrategy,configuration);
+            configuration.branchOrderStrategy,configuration.netOrderStrategy,configuration);
     }
     /** Advances one placement attempt or one retained route slice per generation work unit. */
     final class Session {
@@ -192,6 +208,7 @@ class SeededPcbLayoutGenerator {
         private final SupportedEnvelope envelope;
         private final PcbLayerRoutingPrototype.FixedPrefixGraphObserver fixedPrefixGraphObserver;
         private final PcbLayerRoutingPrototype.BranchOrderStrategy branchOrderStrategy;
+        private final PcbLayerRoutingPrototype.NetOrderStrategy netOrderStrategy;
         private final P07RequestBoundaryConfiguration p07RequestBoundaryConfiguration;
         private final GenerationStatistics statistics=new GenerationStatistics();
         private PcbRoutingRejectedException lastFailure;
@@ -274,14 +291,26 @@ class SeededPcbLayoutGenerator {
                 PcbLayerRoutingPrototype.FixedPrefixGraphObserver fixedPrefixGraphObserver,
                 PcbLayerRoutingPrototype.BranchOrderStrategy branchOrderStrategy,
                 P07RequestBoundaryConfiguration p07RequestBoundaryConfiguration) {
-            if(branchOrderStrategy==null)
-                throw new IllegalArgumentException("Missing PCB branch-order strategy");
+            this(board,seed,routingSeed,observer,envelope,fixedPrefixGraphObserver,branchOrderStrategy,
+                p07RequestBoundaryConfiguration==null?PcbLayerRoutingPrototype.NetOrderStrategy.CANONICAL:
+                    p07RequestBoundaryConfiguration.netOrderStrategy,p07RequestBoundaryConfiguration);
+        }
+        Session(TroubleshootBoard board,long seed,long routingSeed,AttemptObserver observer,
+                SupportedEnvelope envelope,
+                PcbLayerRoutingPrototype.FixedPrefixGraphObserver fixedPrefixGraphObserver,
+                PcbLayerRoutingPrototype.BranchOrderStrategy branchOrderStrategy,
+                PcbLayerRoutingPrototype.NetOrderStrategy netOrderStrategy,
+                P07RequestBoundaryConfiguration p07RequestBoundaryConfiguration) {
+            if(branchOrderStrategy==null || netOrderStrategy==null)
+                throw new IllegalArgumentException("Missing PCB ordering strategy");
             if(p07RequestBoundaryConfiguration!=null &&
-                    p07RequestBoundaryConfiguration.branchOrderStrategy!=branchOrderStrategy)
-                throw new IllegalArgumentException("Mismatched P07 request-boundary branch-order strategy");
+                    (p07RequestBoundaryConfiguration.branchOrderStrategy!=branchOrderStrategy ||
+                    p07RequestBoundaryConfiguration.netOrderStrategy!=netOrderStrategy))
+                throw new IllegalArgumentException("Mismatched P07 request-boundary ordering strategy");
             this.envelope=envelope;
             this.fixedPrefixGraphObserver=fixedPrefixGraphObserver;
             this.branchOrderStrategy=branchOrderStrategy;
+            this.netOrderStrategy=netOrderStrategy;
             this.p07RequestBoundaryConfiguration=p07RequestBoundaryConfiguration;
             if(board==null)throw new IllegalArgumentException("Missing logical board for PCB generation");
             this.board=board;this.seed=seed;this.routingSeed=routingSeed;
@@ -691,14 +720,15 @@ class SeededPcbLayoutGenerator {
                             session.board,placement,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
                             session.observer,PcbLayerRoutingPrototype.MAX_EXPANSIONS,
                             PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.vias,diagnostics,
-                            session.branchOrderStrategy);
+                            session.branchOrderStrategy,session.netOrderStrategy);
                     } else {
                         session.mediumTwoLayerRoute=
                             PcbLayerRoutingPrototype.beginOrderingCandidatesWithFixedPrefixObservation(
                                 session.board,placement,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
                                 session.observer,PcbLayerRoutingPrototype.MAX_EXPANSIONS,
                                 PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.vias,diagnostics,context,
-                                session.fixedPrefixGraphObserver,session.branchOrderStrategy);
+                                session.fixedPrefixGraphObserver,session.branchOrderStrategy,
+                                session.netOrderStrategy);
                     }
                     session.mediumTwoLayerElapsedMillis+=System.currentTimeMillis()-started;
                     return advanceMediumTwoLayerRoute(session);

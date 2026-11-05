@@ -4,8 +4,22 @@ from __future__ import annotations
 import copy
 import hashlib
 import unittest
+from pathlib import Path
 
 import read_load12_cap17 as reader
+
+
+def _source_graphspec_evidence_fixture():
+    return {
+        "inputSpecSha256": reader.SOURCE_GRAPH_INPUT_SPEC_SHA256,
+        "inputPinsSha256": reader.SOURCE_GRAPH_PINS_SHA256,
+        "inputCount": 1079,
+        "inputBytes": 86_847_809,
+        "readerAndHelperSha256": {
+            "currentReader": "d16c7385a604aa3e126ae7fd39f98d6b8fe5753c2ea6bb2d8244dc8b74ce5cbc",
+        },
+        "exporterSha256": "4475aaded5c56c79ab236ba58fdefa1ca89926e08df67a151aacdd7a0b52e112",
+    }
 
 
 def _goal_hash(bits):
@@ -526,22 +540,35 @@ class ClosedInputAndCapTests(unittest.TestCase):
                                  "CAP17_SOURCE_OR_CLONE_CAP_INVALID")
 
     def test_input_spec_explicitly_binds_both_source_artifacts(self):
+        self.assertEqual("p07-load12-detached-cap17-input-v2",
+                         reader.INPUT_SCHEMA)
         spec = {
             "schema": reader.INPUT_SCHEMA, "target": "LOAD12",
             "purpose": reader.PURPOSE, "suite": reader.SUITE,
             "sourceRoot": "source", "pinsPath": "pins.json",
-            "pinsSha256": "a" * 64, "inputCount": 1079,
+            "pinsSha256": "a" * 64, "inputCount": 1080,
             "inputBytes": 100, "sourceSnapshotRevision": 20,
             "resultPath": "result.json", "stdoutPath": "stdout.txt",
             "receiptPath": "receipt.txt", "stderrPath": "stderr.txt",
             "graphspecPath": "graphspec.json",
             "graphspecSha256": "b" * 64,
             "sourceGraphInputSpecPath": "source-graph-input.json",
+            "frozenOracleDirectory": "../frozen-oracle/tests/qualification/rb100-layout",
             "sourceGraphInputSpecSha256": reader.SOURCE_GRAPH_INPUT_SPEC_SHA256,
         }
         legacy = reader._validate_input_spec_identity(spec)
         self.assertNotIn("graphspecPath", legacy)
         self.assertNotIn("sourceGraphInputSpecPath", legacy)
+        self.assertNotIn("frozenOracleDirectory", legacy)
+        old_spec = dict(spec)
+        del old_spec["frozenOracleDirectory"]
+        with self.assertRaises(reader.Load12Cap17InputError) as caught:
+            reader._validate_input_spec_identity(old_spec)
+        self.assertEqual(caught.exception.code, "INPUT_SPEC_KEYS_INVALID")
+        invalid = dict(spec, schema="p07-load12-detached-cap17-input-v1")
+        with self.assertRaises(reader.Load12Cap17InputError) as caught:
+            reader._validate_input_spec_identity(invalid)
+        self.assertEqual(caught.exception.code, "INPUT_SPEC_IDENTITY_INVALID")
         for field, value in (("graphspecSha256", "bad"),
                              ("sourceGraphInputSpecSha256", "c" * 64)):
             with self.subTest(field=field):
@@ -550,6 +577,59 @@ class ClosedInputAndCapTests(unittest.TestCase):
                     reader._validate_input_spec_identity(invalid)
                 self.assertEqual(caught.exception.code,
                                  "INPUT_SPEC_IDENTITY_INVALID")
+        invalid = dict(spec, inputCount=1079)
+        with self.assertRaises(reader.Load12Cap17InputError) as caught:
+            reader._validate_input_spec_identity(invalid)
+        self.assertEqual(caught.exception.code, "INPUT_SPEC_IDENTITY_INVALID")
+        invalid = dict(spec, frozenOracleDirectory="C:\\private\\frozen-oracle")
+        with self.assertRaises(reader.Load12Cap17InputError) as caught:
+            reader._validate_input_spec_identity(invalid)
+        self.assertEqual(caught.exception.code, "INPUT_SPEC_IDENTITY_INVALID")
+
+
+class FrozenGraphspecSourceCountTests(unittest.TestCase):
+    def test_frozen_graphspec_uses_1079_while_current_spec_uses_1080(self):
+        self.assertEqual(1080, reader.SOURCE_INPUT_COUNT)
+        self.assertEqual(1079, reader.FROZEN_SOURCE_GRAPH_INPUT_COUNT)
+        self.assertEqual(
+            "d16c7385a604aa3e126ae7fd39f98d6b8fe5753c2ea6bb2d8244dc8b74ce5cbc",
+            reader.FROZEN_SOURCE_GRAPH_READER_SHA256)
+        self.assertEqual(
+            "4475aaded5c56c79ab236ba58fdefa1ca89926e08df67a151aacdd7a0b52e112",
+            reader.FROZEN_SOURCE_GRAPH_EXPORTER_SHA256)
+        self.assertNotEqual(reader.FROZEN_SOURCE_GRAPH_READER_SHA256,
+                            reader.QUALITY_READER_SHA256)
+        self.assertEqual(86847809, reader.FROZEN_SOURCE_GRAPH_INPUT_BYTES)
+
+        evidence = _source_graphspec_evidence_fixture()
+        reader._validate_source_graphspec_evidence(evidence)
+        tampered_frozen = dict(evidence, inputCount=1080)
+        with self.assertRaises(reader.Load12Cap17InputError) as caught:
+            reader._validate_source_graphspec_evidence(tampered_frozen)
+        self.assertEqual(caught.exception.code,
+                         "SOURCE_GRAPH_SPEC_EVIDENCE_INVALID")
+        tampered_current = dict(evidence)
+        tampered_current["readerAndHelperSha256"] = dict(
+            evidence["readerAndHelperSha256"],
+            currentReader=reader.QUALITY_READER_SHA256)
+        with self.assertRaises(reader.Load12Cap17InputError) as caught:
+            reader._validate_source_graphspec_evidence(tampered_current)
+        self.assertEqual(caught.exception.code,
+                         "SOURCE_GRAPH_SPEC_EVIDENCE_INVALID")
+        tampered_exporter = dict(
+            evidence, exporterSha256=
+            "63e6457f4af9f45cdf620b172a90114fb4b3f2bd8779bc104ae6f78b935287c2")
+        with self.assertRaises(reader.Load12Cap17InputError) as caught:
+            reader._validate_source_graphspec_evidence(tampered_exporter)
+        self.assertEqual(caught.exception.code,
+                         "SOURCE_GRAPH_SPEC_EVIDENCE_INVALID")
+
+    def test_current_checkout_cannot_supply_the_frozen_exporter(self):
+        with self.assertRaises(reader.Load12Cap17InputError) as caught:
+            reader._load_frozen_graphspec_exporter(
+                Path(reader.__file__).resolve().parent)
+        self.assertEqual(caught.exception.code,
+                         "FROZEN_GRAPH_SPEC_EXPORTER_HASH_MISMATCH")
 
     def test_cli_accepts_only_the_closed_spec_and_digest_pair(self):
         self.assertEqual(reader._parse_cli([

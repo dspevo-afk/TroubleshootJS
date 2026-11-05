@@ -487,11 +487,24 @@ current selected path or freshly exported pass1 reason. The117 FOUND callbacks
 prove search goals, not route completion; no generator finalizer was reached.
 All production/study sources remain unchanged; no new native/GWT/Player or
 population gate ran. Root corrected a graph-provenance overclaim before acceptance.
-The [next private experiment is frozen](task-evidence/Q100/canonical-pass1-reuse-r1/PLAN.md):
-generic minimum-pair-distance pass1 net priority, preserving failed-net promotion,
-canonical nearest branches and all budgets. Independent full60-net ordering and
-actual final-source gates precede any experiment acceptance or adoption. No
-routing/default/epoch change yet; playable100=0,beta held and data limits remain.
+The [private minimum-pair pass1 experiment](task-evidence/Q100/net-priority-r1/README.md)
+is locally accepted as a finite negative result after final review; publication
+is pending the normal commit/push workflow. The exporter context regression found
+by review is fixed and qualified by fresh real CLI, unit and all-eight-reader gates. All four authored requests end in typed rejection with zero yielded or
+finalized candidates. The complete60-net vectors differ after the same promotion;
+treatment uses997882 expansions versus canonical918222. It is NOT ADOPTED.
+Defaults, nearest branch choice, physics, epochs and all budgets remain unchanged.
+Final2372-assertion fixture, native2/8/33, Python52+413 (six declared skips),
+72saved/20bounds/sixliteral comparison, eight native/reader diagnostic pairs,
+actual Player/Developer builds and exact rebuilds, Current9, E06State10, Player
+privacy and exact3 normal MEDIUM development roots pass. Final source/input and
+resource checks permit only documented evidence reuse; earlier failures remain
+FAIL. V2 qualifier specs distinguish frozen1079 graph oracles from current1080
+captures without changing golden bytes. Full30 remains owner-excluded;
+HARD/PSYCHOTIC unavailable/unrun, playable100=0 and beta held.
+Next unstarted work is to freeze a diagnostic for treatment pass1 OUT_F's
+terminal-search-to-publisher boundary; FOUND alone supplies no path or quality
+reason. Actual100 physical/access/functional/solvability proofs remain outstanding.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

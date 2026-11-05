@@ -684,7 +684,7 @@ class NativeTransportTests(unittest.TestCase):
         receipt = b"receipt artifact"
         stderr = b""
         return {
-            "inputCount": 1_079,
+            "inputCount": 1_080,
             "inputBytes": 123_456,
             "pinsSha256": "a" * 64,
             "stdoutRaw": stdout,
@@ -857,7 +857,7 @@ class InputManifestTests(unittest.TestCase):
 
     def test_complete_manifest_binds_all_native_inputs_and_closed_java_census(self):
         result = reader._audit_inputs_manifest(self.raw, self.spec, self.root)
-        self.assertEqual(1_079, result["inputCount"])
+        self.assertEqual(1_080, result["inputCount"])
         self.assertEqual(self.spec["inputBytes"], result["inputBytes"])
         self.assertEqual(self.spec["pinsSha256"], result["pinsSha256"])
         self.assertEqual(reader.SOURCE_INPUT_COUNT, len(result["pinMap"]))
@@ -903,14 +903,14 @@ class InputManifestTests(unittest.TestCase):
                 "sourceRoot": str(self.root),
                 "pinsPath": str(pins_path),
                 "pinsSha256": self.spec["pinsSha256"],
-                "inputCount": 1_079,
+                "inputCount": 1_080,
                 "inputBytes": self.spec["inputBytes"],
                 "sourceSnapshotRevision": 20,
                 **artifact_paths,
             }
             checked_spec, context = reader._validate_input_spec(spec, spec_directory)
             self.assertEqual(spec, checked_spec)
-            self.assertEqual(1_079, context["inputCount"])
+            self.assertEqual(1_080, context["inputCount"])
             self.assertEqual(self.spec["pinsSha256"], context["pinsSha256"])
 
     def test_source_and_capture_artifacts_are_rechecked_for_immutability(self):
@@ -942,7 +942,7 @@ class InputManifestTests(unittest.TestCase):
                 "pinsPath": pins_path.resolve(),
                 "pinsRaw": pins_raw,
                 "pinMap": {"fixture": {"bytes": 1, "sha256": _sha("x")}},
-                "inputCount": 1_079,
+                "inputCount": 1_080,
                 "inputBytes": 123,
                 "artifacts": artifacts,
                 "artifactRaw": artifact_raw,

@@ -13,6 +13,43 @@ import read_load12_cost240 as reader
 import test_read_quality_scalars as scalar_fixtures
 
 
+def _source_graphspec_evidence_fixture():
+    return {
+        "inputSpecSha256": reader.SOURCE_GRAPH_INPUT_SPEC_SHA256,
+        "inputPinsSha256": reader.SOURCE_GRAPH_PINS_SHA256,
+        "inputCount": 1079,
+        "inputBytes": 86_847_809,
+        "readerAndHelperSha256": {
+            "currentReader": "d16c7385a604aa3e126ae7fd39f98d6b8fe5753c2ea6bb2d8244dc8b74ce5cbc",
+        },
+        "exporterSha256": "4475aaded5c56c79ab236ba58fdefa1ca89926e08df67a151aacdd7a0b52e112",
+    }
+
+
+def _current_input_spec_fixture():
+    return {
+        "schema": reader.INPUT_SCHEMA,
+        "target": "LOAD12",
+        "purpose": reader.PURPOSE,
+        "suite": reader.SUITE,
+        "sourceRoot": "source",
+        "pinsPath": "pins.json",
+        "pinsSha256": "a" * 64,
+        "inputCount": 1080,
+        "inputBytes": 100,
+        "sourceSnapshotRevision": 20,
+        "resultPath": "result.json",
+        "stdoutPath": "stdout.txt",
+        "receiptPath": "receipt.txt",
+        "stderrPath": "stderr.txt",
+        "graphspecPath": "graphspec.json",
+        "graphspecSha256": reader.SOURCE_GRAPH_SPEC_SHA256,
+        "sourceGraphInputSpecPath": "source-graph-input.json",
+        "frozenOracleDirectory": "../frozen-oracle/tests/qualification/rb100-layout",
+        "sourceGraphInputSpecSha256": reader.SOURCE_GRAPH_INPUT_SPEC_SHA256,
+    }
+
+
 def _node(index, x, y, layer, direction, transitions, cost):
     return {
         "index": index,
@@ -297,6 +334,71 @@ class Cost240ProtocolTests(unittest.TestCase):
         expected = "602fb4b250f22e8ab55b40ee124ac9dfc7b6575d3268132ae2123b0076b78df1"
         self.assertEqual(64, len(expected))
         self.assertEqual(expected, reader.SOURCE_GRAPH_SPEC_SHA256)
+
+    def test_frozen_graphspec_and_current_input_counts_stay_distinct(self):
+        self.assertEqual("p07-load12-detached-cost240-input-v2",
+                         reader.INPUT_SCHEMA)
+        self.assertEqual(1080, reader.SOURCE_INPUT_COUNT)
+        self.assertEqual(1079, reader.FROZEN_SOURCE_GRAPH_INPUT_COUNT)
+        self.assertEqual(
+            "d16c7385a604aa3e126ae7fd39f98d6b8fe5753c2ea6bb2d8244dc8b74ce5cbc",
+            reader.FROZEN_SOURCE_GRAPH_READER_SHA256)
+        self.assertEqual(
+            "4475aaded5c56c79ab236ba58fdefa1ca89926e08df67a151aacdd7a0b52e112",
+            reader.FROZEN_SOURCE_GRAPH_EXPORTER_SHA256)
+        self.assertNotEqual(reader.FROZEN_SOURCE_GRAPH_READER_SHA256,
+                            reader.QUALITY_READER_SHA256)
+        self.assertEqual(86847809, reader.FROZEN_SOURCE_GRAPH_INPUT_BYTES)
+
+        spec = _current_input_spec_fixture()
+        legacy = reader._validate_input_spec_identity(spec)
+        self.assertNotIn("frozenOracleDirectory", legacy)
+        old_spec = dict(spec)
+        del old_spec["frozenOracleDirectory"]
+        with self.assertRaises(reader.Load12Cost240InputError) as caught:
+            reader._validate_input_spec_identity(old_spec)
+        self.assertEqual(caught.exception.code, "INPUT_SPEC_KEYS_INVALID")
+        with self.assertRaises(reader.Load12Cost240InputError) as caught:
+            reader._validate_input_spec_identity(
+                dict(spec, schema="p07-load12-detached-cost240-input-v1"))
+        self.assertEqual(caught.exception.code, "INPUT_SPEC_IDENTITY_INVALID")
+        with self.assertRaises(reader.Load12Cost240InputError) as caught:
+            reader._validate_input_spec_identity(dict(spec, inputCount=1079))
+        self.assertEqual(caught.exception.code, "INPUT_SPEC_IDENTITY_INVALID")
+        with self.assertRaises(reader.Load12Cost240InputError) as caught:
+            reader._validate_input_spec_identity(
+                dict(spec, frozenOracleDirectory="C:\\private\\frozen-oracle"))
+        self.assertEqual(caught.exception.code, "INPUT_SPEC_IDENTITY_INVALID")
+
+        evidence = _source_graphspec_evidence_fixture()
+        reader._validate_source_graphspec_evidence(evidence)
+        with self.assertRaises(reader.Load12Cost240InputError) as caught:
+            reader._validate_source_graphspec_evidence(
+                dict(evidence, inputCount=1080))
+        self.assertEqual(caught.exception.code,
+                         "SOURCE_GRAPH_SPEC_EVIDENCE_INVALID")
+        tampered_current = dict(evidence)
+        tampered_current["readerAndHelperSha256"] = dict(
+            evidence["readerAndHelperSha256"],
+            currentReader=reader.QUALITY_READER_SHA256)
+        with self.assertRaises(reader.Load12Cost240InputError) as caught:
+            reader._validate_source_graphspec_evidence(tampered_current)
+        self.assertEqual(caught.exception.code,
+                         "SOURCE_GRAPH_SPEC_EVIDENCE_INVALID")
+        tampered_exporter = dict(
+            evidence, exporterSha256=
+            "63e6457f4af9f45cdf620b172a90114fb4b3f2bd8779bc104ae6f78b935287c2")
+        with self.assertRaises(reader.Load12Cost240InputError) as caught:
+            reader._validate_source_graphspec_evidence(tampered_exporter)
+        self.assertEqual(caught.exception.code,
+                         "SOURCE_GRAPH_SPEC_EVIDENCE_INVALID")
+
+    def test_current_checkout_cannot_supply_the_frozen_exporter(self):
+        with self.assertRaises(reader.Load12Cost240InputError) as caught:
+            reader._load_frozen_graphspec_exporter(
+                Path(reader.__file__).resolve().parent)
+        self.assertEqual(caught.exception.code,
+                         "FROZEN_GRAPH_SPEC_EXPORTER_HASH_MISMATCH")
 
     def test_main_returns_sanitized_exit_two_for_reader_error(self):
         output = io.StringIO()

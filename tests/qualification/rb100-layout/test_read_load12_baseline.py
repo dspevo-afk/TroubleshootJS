@@ -183,7 +183,7 @@ class InputSpecTests(unittest.TestCase):
             "sourceRoot": "source",
             "pinsPath": "pins.json",
             "pinsSha256": SHA_A,
-            "inputCount": 1079,
+            "inputCount": 1080,
             "inputBytes": 123,
             "sourceSnapshotRevision": 20,
             "resultPath": "result.json",
@@ -208,6 +208,8 @@ class InputSpecTests(unittest.TestCase):
                 {"sourceSnapshotRevision": True},
                 {"inputCount": 1067},
                 {"inputCount": 1078},
+                {"inputCount": 1079},
+                {"inputCount": 1081},
                 {"inputCount": True},
                 {"inputBytes": 0},
                 {"inputBytes": True},
@@ -219,11 +221,11 @@ class InputSpecTests(unittest.TestCase):
                 with self.assertRaises(reader.Load12BaselineInputError):
                     reader._validate_input_spec_identity(spec)
 
-    def test_source_epoch_is_the_frozen_1079_223_census(self):
+    def test_source_epoch_is_the_frozen_1080_224_census(self):
         self.assertEqual(reader.SOURCE_REVISION, 20)
-        self.assertEqual(reader.SOURCE_INPUT_COUNT, 1079)
+        self.assertEqual(reader.SOURCE_INPUT_COUNT, 1080)
         self.assertEqual(reader.SOURCE_JAVA_COUNT, 850)
-        self.assertEqual(reader.CONTRACT_JAVA_COUNT, 223)
+        self.assertEqual(reader.CONTRACT_JAVA_COUNT, 224)
         self.assertIn("tests/contracts/Rb100Load12DetachedBaselineContractTest.java",
                       reader.REQUIRED_NATIVE_INPUTS)
         self.assertIn("tests/contracts/P07AcceptedBranchCaptureDiagnostics.java",
@@ -474,7 +476,7 @@ class NativeRunTests(unittest.TestCase):
 
     def test_native_envelope_hashes_exit_and_cleanup_are_strict(self):
         stdout, receipt, stderr = b"stdout", b"receipt", b"stderr"
-        context = {"inputCount": 1079, "inputBytes": 123, "pinsSha256": SHA_A}
+        context = {"inputCount": 1080, "inputBytes": 123, "pinsSha256": SHA_A}
         run = _valid_native_run(stdout, receipt, stderr)
         run["stdoutSha256"] = SHA_B
         with self.assertRaises(reader.Load12BaselineInputError):

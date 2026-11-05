@@ -1,9 +1,10 @@
 """Export a portable, separately validated cap48 LOAD12 source graphspec.
 
-The maintained quality-zero-via reader remains the owner of all source,
-receipt, graph-mask and LOAD12-pre validation.  This adapter calls its public
-validation entry point, binds the same bounded artifact bytes to that report,
-and reparses those bytes only to retain the full already-validated records.
+The explicitly selected frozen quality-zero-via reader owns the original
+1079-input source, receipt, graph-mask and LOAD12-pre validation. This adapter
+calls that pinned reader's public entry point, binds the same bounded artifact
+bytes to its report, and retains the full already-validated records. The helper
+directory is mandatory and relative to the source input spec.
 """
 from __future__ import annotations
 
@@ -28,7 +29,7 @@ HEX_MASK_RE = re.compile(r"[0-9a-f]+\Z", re.ASCII)
 
 SOURCE_SPEC_SHA256 = "20c469e804d64a7740c0a9d79066841045bb672c6d2fbc26099b89c1a52f7298"
 SOURCE_PINS_SHA256 = "0516a02dc18a221f0f71a50720e8c84004770f39cc588306cd463e472b72a82f"
-CURRENT_READER_SHA256 = "d16c7385a604aa3e126ae7fd39f98d6b8fe5753c2ea6bb2d8244dc8b74ce5cbc"
+FROZEN_READER_SHA256 = "d16c7385a604aa3e126ae7fd39f98d6b8fe5753c2ea6bb2d8244dc8b74ce5cbc"
 SOURCE_INPUT_COUNT = 1079
 SOURCE_INPUT_BYTES = 86847809
 SOURCE_REVISION = 20
@@ -171,14 +172,25 @@ def _read_bounded(path: Path, limit: int, code: str,
         _fail(code + "_READ_FAILED")
 
 
-def _load_public_reader() -> Tuple[types.ModuleType, bytes, Path]:
+def _load_frozen_reader(spec_argument: str, frozen_oracle_directory: str
+                        ) -> Tuple[types.ModuleType, bytes, Path]:
     own_path = Path(os.path.abspath(__file__))
     _need(not _has_reparse_component(own_path) and own_path.is_file(),
           "EXPORTER_SOURCE_INVALID")
-    reader_path = own_path.parent / "read_quality_zero_via.py"
-    raw = _read_bounded(reader_path, 2 * 1024 * 1024, "CURRENT_READER")
-    _need(_sha256(raw) == CURRENT_READER_SHA256,
-          "CURRENT_READER_HASH_MISMATCH")
+    _need(type(spec_argument) is str and 0 < len(spec_argument) <= MAX_PATH_CHARS and
+          type(frozen_oracle_directory) is str and
+          0 < len(frozen_oracle_directory) <= MAX_PATH_CHARS and
+          not Path(frozen_oracle_directory).anchor,
+          "FROZEN_ORACLE_DIRECTORY_INVALID")
+    spec_path = Path(os.path.abspath(spec_argument))
+    _need(not _has_reparse_component(spec_path), "SOURCE_SPEC_REPARSE_PATH")
+    directory = Path(os.path.abspath(spec_path.parent / frozen_oracle_directory))
+    _need(directory.is_dir() and not _has_reparse_component(directory),
+          "FROZEN_ORACLE_DIRECTORY_INVALID")
+    reader_path = directory / "read_quality_zero_via.py"
+    raw = _read_bounded(reader_path, 2 * 1024 * 1024, "FROZEN_READER")
+    _need(_sha256(raw) == FROZEN_READER_SHA256,
+          "FROZEN_READER_HASH_MISMATCH")
     module = types.ModuleType("_tsj_load12_graphspec_source_reader")
     module.__file__ = os.fspath(reader_path)
     module.__package__ = ""
@@ -187,21 +199,25 @@ def _load_public_reader() -> Tuple[types.ModuleType, bytes, Path]:
         exec(compile(source, os.fspath(reader_path), "exec", dont_inherit=True),
              module.__dict__)
     except (UnicodeDecodeError, SyntaxError, ValueError, TypeError):
-        _fail("CURRENT_READER_SOURCE_INVALID")
+        _fail("FROZEN_READER_SOURCE_INVALID")
     return module, raw, reader_path
 
 
-def _parse_cli(argv: Sequence[str]) -> Tuple[str, str, str]:
-    _need(type(argv) in (list, tuple) and len(argv) == 6 and
+def _parse_cli(argv: Sequence[str]) -> Tuple[str, str, str, str]:
+    _need(type(argv) in (list, tuple) and len(argv) == 8 and
           argv[0] == "--input-spec" and argv[2] == "--input-spec-sha256" and
-          argv[4] == "--output", "CLI_ARGUMENTS_INVALID")
-    spec_path, spec_sha, output_path = argv[1], argv[3], argv[5]
+          argv[4] == "--frozen-oracle-directory" and
+          argv[6] == "--output", "CLI_ARGUMENTS_INVALID")
+    spec_path, spec_sha, frozen_directory, output_path = (
+        argv[1], argv[3], argv[5], argv[7])
     _need(type(spec_path) is str and 0 < len(spec_path) <= MAX_PATH_CHARS and
           type(output_path) is str and 0 < len(output_path) <= MAX_PATH_CHARS and
+          type(frozen_directory) is str and 0 < len(frozen_directory) <= MAX_PATH_CHARS and
+          not Path(frozen_directory).anchor and
           type(spec_sha) is str and SHA256_RE.fullmatch(spec_sha) is not None,
           "CLI_ARGUMENTS_INVALID")
     _need(spec_sha == SOURCE_SPEC_SHA256, "SOURCE_SPEC_HASH_NOT_APPROVED")
-    return spec_path, spec_sha, output_path
+    return spec_path, spec_sha, frozen_directory, output_path
 
 
 def _prepare_output_path(value: str) -> Path:
@@ -312,7 +328,7 @@ def _validate_report_envelope(report: Any, reader_sha: str,
     source = report.get("source")
     artifacts = report.get("artifacts")
     _need(type(source) is dict and type(artifacts) is dict and
-          source.get("readerSha256") == reader_sha == CURRENT_READER_SHA256 and
+          source.get("readerSha256") == reader_sha == FROZEN_READER_SHA256 and
           source.get("pinsSha256") == SOURCE_PINS_SHA256 and
           source.get("inputCount") == SOURCE_INPUT_COUNT and
           source.get("inputBytes") == SOURCE_INPUT_BYTES and
@@ -840,7 +856,7 @@ def _validate_graphspec_envelope(value: Any) -> None:
           evidence["inputCount"] == SOURCE_INPUT_COUNT and
           evidence["inputBytes"] == SOURCE_INPUT_BYTES and
           evidence["readerAndHelperSha256"]["currentReader"] ==
-          CURRENT_READER_SHA256 and
+          FROZEN_READER_SHA256 and
           evidence["nativeInputPins"].get(
               "tests/contracts/Rb100PhysicalDiagnostics.java", {}).get("sha256") ==
           evidence["producerCodeSha256"][
@@ -899,11 +915,14 @@ def _make_summary(graphspec: Mapping[str, Any], raw: bytes) -> Dict[str, Any]:
 
 
 def build_verified_graphspec(spec_argument: str,
-                             spec_sha: str) -> Tuple[Dict[str, Any], bytes]:
+                             spec_sha: str,
+                             frozen_oracle_directory: str
+                             ) -> Tuple[Dict[str, Any], bytes]:
     """Validate the approved source and return its canonical graphspec bytes.
 
     This public API is read-only: it has no output path and does not create or
-    modify files. Callers can independently recompute the portable artifact.
+    modify files. The required helper directory is relative to the approved
+    source spec. Callers can independently recompute the portable artifact.
     """
     _need(type(spec_sha) is str and SHA256_RE.fullmatch(spec_sha) is not None,
           "CLI_ARGUMENTS_INVALID")
@@ -911,7 +930,8 @@ def build_verified_graphspec(spec_argument: str,
     own_path = Path(os.path.abspath(__file__))
     exporter_raw = _read_bounded(own_path, 2 * 1024 * 1024, "EXPORTER_SOURCE")
     exporter_sha = _sha256(exporter_raw)
-    reader, reader_raw, reader_path = _load_public_reader()
+    reader, reader_raw, reader_path = _load_frozen_reader(
+        spec_argument, frozen_oracle_directory)
     report = reader.run_validation(spec_argument, spec_sha)
     _validate_report_envelope(report, _sha256(reader_raw), spec_sha)
     spec, context, parsed = _load_context_and_records(
@@ -928,9 +948,11 @@ def build_verified_graphspec(spec_argument: str,
 
 
 def run_export(spec_argument: str, spec_sha: str,
+               frozen_oracle_directory: str,
                output_argument: str) -> Dict[str, Any]:
     output_path = _prepare_output_path(output_argument)
-    graphspec, raw = build_verified_graphspec(spec_argument, spec_sha)
+    graphspec, raw = build_verified_graphspec(
+        spec_argument, spec_sha, frozen_oracle_directory)
     output_path = _prepare_output_path(output_argument)
     _write_atomic_exclusive(output_path, raw)
     return _make_summary(graphspec, raw)
@@ -938,9 +960,9 @@ def run_export(spec_argument: str, spec_sha: str,
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
     try:
-        spec_path, spec_sha, output_path = _parse_cli(
+        spec_path, spec_sha, frozen_directory, output_path = _parse_cli(
             list(sys.argv[1:] if argv is None else argv))
-        summary = run_export(spec_path, spec_sha, output_path)
+        summary = run_export(spec_path, spec_sha, frozen_directory, output_path)
         sys.stdout.buffer.write(_canonical_json(summary) + b"\n")
         sys.stdout.buffer.flush()
         return 0

@@ -12,13 +12,14 @@ from pathlib import Path
 import re
 import stat
 
-SCHEMA = 'p07-actual-branch-order-study-v3'
+SCHEMA = 'p07-actual-branch-order-study-v4'
 KINDS = ('READER_FIXTURE', 'TINY_NATIVE', 'AUTHORED')
 ARMS = (
-    ('PLAIN_ENTRY_RECEIPT_CONTROL', 'PLAIN_BEGIN', 'CANONICAL_NEAREST', False),
-    ('OBSERVED_DEFAULT_NEAREST', 'BOUNDARY_CONVENIENCE', 'CANONICAL_NEAREST', True),
-    ('OBSERVED_EXPLICIT_NEAREST', 'BOUNDARY_EXPLICIT', 'CANONICAL_NEAREST', True),
-    ('SECOND_ORDER_FARTHEST', 'BOUNDARY_EXPLICIT', 'SECOND_ORDER_FARTHEST', True),
+    ('PLAIN_ENTRY_RECEIPT_CONTROL', 'PLAIN_BEGIN', 'CANONICAL_NEAREST', 'CANONICAL', False),
+    ('OBSERVED_DEFAULT_NEAREST', 'BOUNDARY_CONVENIENCE', 'CANONICAL_NEAREST', 'CANONICAL', True),
+    ('OBSERVED_EXPLICIT_NEAREST', 'BOUNDARY_EXPLICIT', 'CANONICAL_NEAREST', 'CANONICAL', True),
+    ('SECOND_ORDER_MINIMUM_PAIR', 'BOUNDARY_EXPLICIT', 'CANONICAL_NEAREST',
+     'SECOND_ORDER_MINIMUM_PAIR', True),
 )
 LIMITS = dict(operationNanos=90_000_000_000, groups=640, groupNanos=5_000_000_000,
               p07Steps=32768, receiptBytes=8*1024*1024, lineBytes=65536,
@@ -40,12 +41,17 @@ RECEIPT_FIELDS = ('attempt startedOrderings completedOrderings yieldedOrderings 
                   'comparisonComplete termination').split()
 GROUP_FIELDS = ('record operation ordinal phase elapsedBeforeOwnLineNanos '
                 'generatorAdvances p07Slices p07Steps diagnosticCloneSteps accounting observerChecks '
-                'callbacks censusRows hashInputBytes serializedBeforeOwnLineBytes').split()
+                'callbacks censusRows netOrderRows hashInputBytes serializedBeforeOwnLineBytes').split()
+NET_ORDER_FIELDS = ('record operation group pass strategy promotedNet completedOrderings '
+                    'yieldedOrderings prefixSha256 prefixBytes netIds').split()
 DIAGNOSTIC_CLONE_FIELDS = ('record operation ordinal group pass netId startPadId rootPadId '
                            'faceIndex prefixViaCount ownerSteps').split()
 DIAGNOSTIC_BOUND_PROOFS = ('relaxedBoundObservationChecked relaxedBoundLiveLayoutStable '
                             'relaxedBoundRouterStateStable relaxedBoundRouterEffectsStable').split()
-BASE_SHA = '68b1489b28cb5cec4f17289021e009f7048bfa869a3538aed7be44060ef9efbd'
+BASE_SHA = '92e4a3ba69de6a8666f9789e7facafb5d2a6d8461f42c0f2ccca8e95f7141e7b'
+BASE_ROWS = 1080
+BASE_MANIFEST_BYTES = 228856
+BASE_SOURCE_BYTES = 87535768
 TOKEN = re.compile(r'[-+A-Za-z0-9_.:]{1,128}\Z')
 HEX = re.compile(r'[0-9a-f]{64}\Z')
 
@@ -147,6 +153,79 @@ def pad_bytes(pads):
                    for row in pads).encode('utf-8')
 
 
+def audit_net_order(row, pads, branches, arm):
+    """Rebuild both candidate vectors from PAD rows; producer metrics are ignored."""
+    by_net = {}
+    for pad in pads:
+        by_net.setdefault(pad['netId'], []).append(pad)
+    net_ids = sorted(by_net)
+    canonical = sorted(net_ids, key=lambda net: (-len(by_net[net]), net))
+    pair_metrics = {}
+    witnesses = {}
+    for net in net_ids:
+        net_pads = sorted(by_net[net], key=lambda pad: pad['padId'])
+        best = None
+        for left_index, left in enumerate(net_pads):
+            for right in net_pads[left_index + 1:]:
+                distance = abs(left['x'] - right['x']) + abs(left['y'] - right['y'])
+                candidate = (distance, left['padId'], right['padId'])
+                if best is None or candidate < best:
+                    best = candidate
+        if best is not None:
+            pair_metrics[net] = best[0]
+            witnesses[net] = (best[1], best[2])
+    minimum_pair = sorted(pair_metrics, key=lambda net: (pair_metrics[net], net))
+    minimum_pair.extend(net for net in net_ids if net not in pair_metrics)
+    base_order = canonical if arm in (1, 2) else minimum_pair
+    expected = list(base_order)
+    if row['promotedNet'] is not None:
+        need(row['promotedNet'] in expected, 'NET_ORDER_PROMOTION_CENSUS')
+        expected.remove(row['promotedNet'])
+        expected.insert(0, row['promotedNet'])
+    need(row['netIds'] == expected, 'NET_ORDER_VECTOR')
+
+    # Pass-one callback order may omit an unvisited tail, but every callback
+    # net must remain an order-preserving subsequence of the captured vector.
+    callback_nets = []
+    for branch in branches:
+        snapshot = branch['snapshot']
+        if snapshot['pass'] == 1 and (not callback_nets or callback_nets[-1] != snapshot['netId']):
+            callback_nets.append(snapshot['netId'])
+    cursor = 0
+    for callback_net in callback_nets:
+        try:
+            cursor = row['netIds'].index(callback_net, cursor) + 1
+        except ValueError:
+            raise ValueError('NET_ORDER_BRANCH_SUBSEQUENCE')
+
+    return dict(strategy=row['strategy'], canonicalNetIds=canonical,
+                minimumPairNetIds=minimum_pair, expectedNetIds=expected,
+                baseNetIds=base_order,
+                minimumPairs=[dict(netId=net, distance=pair_metrics[net],
+                                  witnessPadIds=list(witnesses[net]))
+                              for net in sorted(pair_metrics)],
+                singletonNetIds=[net for net in net_ids if net not in pair_metrics],
+                observedNetIds=list(row['netIds']))
+
+
+def validate_net_order_promotion(row, branches, pad_count, net_count):
+    """Bind promotion to complete pass-zero branch observations."""
+    pass_zero = [branch['snapshot'] for branch in branches if branch['snapshot']['pass'] == 0]
+    need(pass_zero and row['completedOrderings'] == 1, 'NET_ORDER_PRIOR_COUNTERS')
+    if row['yieldedOrderings'] == 1:
+        need(row['promotedNet'] is None
+             and len(pass_zero) == pad_count - net_count
+             and all(snapshot['terminalReason'] == 'FOUND' for snapshot in pass_zero),
+             'NET_ORDER_YIELDED_PROMOTION')
+    else:
+        last = pass_zero[-1]
+        need(not all(snapshot['terminalReason'] == 'FOUND' for snapshot in pass_zero),
+             'NET_ORDER_AMBIGUOUS_PROMOTION')
+        need(all(snapshot['terminalReason'] == 'FOUND' for snapshot in pass_zero[:-1])
+             and last['terminalReason'] in ('NO_PATH', 'BRANCH_SEARCH_LIMIT')
+             and row['promotedNet'] == last['netId'], 'NET_ORDER_FAILED_PROMOTION')
+
+
 def validate_receipt(r):
     keys(r, RECEIPT_FIELDS, 'RECEIPT_SCHEMA')
     for name in RECEIPT_FIELDS[:7]: need(integer(r[name], -1 if name == 'selectedOrdering' else 0), 'RECEIPT_NUMBER')
@@ -170,6 +249,26 @@ def validate_receipt(r):
              'RECEIPT_FIRST_SUCCESS')
 
 
+def validate_pad_census(pads, candidate):
+    need([p['padId'] for p in pads]==sorted({p['padId'] for p in pads})
+         and len({p['netId'] for p in pads})==candidate['netCount']
+         and len({p['componentId'] for p in pads})==candidate['componentCount'], 'PAD_CENSUS')
+
+
+def validate_snapshot_shape(snapshot):
+    keys(snapshot, SNAP_INTS+SNAP_BOOLS+SNAP_STRINGS, 'SNAPSHOT_SCHEMA')
+    need(all(token(snapshot[n]) for n in ('netId','startPadId','rootPadId'))
+         and type(snapshot['terminalReason']) is str, 'SNAPSHOT_IDENTIFIERS')
+    need(all(integer(snapshot[n],-2**31,2**31-1) for n in SNAP_INTS)
+         and all(type(snapshot[n]) is bool for n in SNAP_BOOLS), 'SNAPSHOT_TYPES')
+    need(all(integer(snapshot[n],0,2**31-1) for n in SNAP_INTS if n not in
+             ('startX','startY','rootX','rootY','initialManhattanDistance',
+              'minimumExploredManhattanDistance'))
+         and integer(snapshot['initialManhattanDistance'],-1,2**31-1)
+         and integer(snapshot['minimumExploredManhattanDistance'],-1,2**31-1),
+         'SNAPSHOT_COUNT_DOMAIN')
+
+
 def audit_choices(branches, pads, arm):
     by_id = {p['padId']:p for p in pads}
     nets = {}
@@ -177,17 +276,8 @@ def audit_choices(branches, pads, arm):
     states = {}; seen = {}; prior = None; total = 0; choices = []
     for row in branches:
         s = row['snapshot']
-        keys(s, SNAP_INTS+SNAP_BOOLS+SNAP_STRINGS, 'SNAPSHOT_SCHEMA')
+        validate_snapshot_shape(s)
         p = s['pass']; net = s['netId']
-        need(all(token(s[n]) for n in ('netId','startPadId','rootPadId'))
-             and type(s['terminalReason']) is str, 'SNAPSHOT_IDENTIFIERS')
-        need(all(integer(s[n],-2**31,2**31-1) for n in SNAP_INTS)
-             and all(type(s[n]) is bool for n in SNAP_BOOLS), 'SNAPSHOT_TYPES')
-        need(all(integer(s[n],0,2**31-1) for n in SNAP_INTS if n not in
-                 ('startX','startY','rootX','rootY','initialManhattanDistance',
-                  'minimumExploredManhattanDistance'))
-             and integer(s['initialManhattanDistance'],-1,2**31-1)
-             and integer(s['minimumExploredManhattanDistance'],-1,2**31-1), 'SNAPSHOT_COUNT_DOMAIN')
         need(integer(p,0,2) and net in nets and s['terminalReason'] in
              ('FOUND','NO_PATH','TOTAL_SEARCH_LIMIT','BRANCH_SEARCH_LIMIT'), 'BRANCH_TERMINAL')
         need(integer(s['gridWidth'],1,250000) and integer(s['gridHeight'],1,250000)
@@ -220,16 +310,14 @@ def audit_choices(branches, pads, arm):
         distances = {a:min(abs(by_id[a]['x']-by_id[b]['x'])+abs(by_id[a]['y']-by_id[b]['y'])
                            for b in reached) for a in remaining}
         nearest = min(remaining,key=lambda a:(distances[a],a))
-        farthest = min(remaining,key=lambda a:(-distances[a],a))
-        expected = farthest if arm==3 and p==1 else nearest
-        need(s['startPadId']==expected, 'INDEPENDENT_CHOICE')
+        need(s['startPadId']==nearest, 'INDEPENDENT_CHOICE')
         for which in ('start','root'):
             pad = by_id.get(s[which+'PadId'])
             need(pad is not None and pad['netId']==net
                  and (s[which+'X'],s[which+'Y'])==(pad['x'],pad['y']), 'BRANCH_ENDPOINT')
-        choices.append(dict(nearest=nearest,farthest=farthest,reached=tuple(reached),
+        choices.append(dict(nearest=nearest,reached=tuple(reached),
                             remaining=tuple(remaining)))
-        remaining.remove(expected); prior = row
+        remaining.remove(nearest); prior = row
     return choices, total
 
 
@@ -300,8 +388,8 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
     need(h['record']=='HEADER' and integer(h['group'],0,0) and h['schema']==SCHEMA and h['runId']==run_id
          and integer(h['operation'],0,3) and h['operation']==arm and h['sourceManifestSha256']==source_sha
          and h['wireSha256']==wire_sha and h['limits']==LIMITS, 'HEADER_IDENTITY')
-    keys(h['arm'],('id','api','strategy','observed'),'ARM_SCHEMA')
-    need(tuple(h['arm'][x] for x in ('id','api','strategy','observed'))==ARMS[arm]
+    keys(h['arm'],('id','api','strategy','netOrderStrategy','observed'),'ARM_SCHEMA')
+    need(tuple(h['arm'][x] for x in ('id','api','strategy','netOrderStrategy','observed'))==ARMS[arm]
          and type(h['arm']['observed']) is bool, 'ARM_IDENTITY')
     c = h['candidate']
     keys(c,('rootSeed','placementSeed','routingSeed','variant','layoutVersion','dependencyEpoch',
@@ -320,9 +408,10 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
              'AUTHORED_CANDIDATE')
     else: need(h['mode']=='TINY_CANARY' and c['variant']=='TINY', 'TINY_CANDIDATE')
     pads=[]; branches=[]; groups=[]; result=None; current_group=0; group_bytes=0
-    group_callbacks=0; group_pads=0; group_diagnostic_clones=0
-    branch_positions=[]; diagnostic_events=[]
+    group_callbacks=0; group_pads=0; group_diagnostic_clones=0; group_net_orders=0
+    branch_positions=[]; diagnostic_events=[]; net_order_rows=[]; net_order_positions=[]
     branch_seen=False; report_seen=False; report_closed=False
+    pass_one_seen=False
     for line_index,(row,line) in enumerate(zip(rows[:-1],lines[:-1])):
         need(not report_closed, 'TRAILING_REPORT_RECORD')
         need(type(row) is dict and type(row.get('record')) is str, 'RECORD_TYPE')
@@ -340,8 +429,36 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
             need(not report_seen and arm!=0 and integer(row['operation'],0,3) and row['operation']==arm
                  and integer(row['ordinal']) and row['ordinal']==len(branches) and digest(row['prefixSha256'])
                  and integer(row['prefixBytes'],1,LIMITS['prefixBytes']), 'BRANCH_IDENTITY')
+            validate_snapshot_shape(row['snapshot'])
             branches.append(row);branch_positions.append(line_index)
             group_callbacks+=1;branch_seen=True
+            if type(row.get('snapshot')) is dict and row['snapshot'].get('pass') == 1:
+                pass_one_seen=True
+                need(len(net_order_rows)==1 and net_order_positions[0] < line_index,
+                     'NET_ORDER_MISSING_OR_LATE')
+        elif typ=='NET_ORDER':
+            keys(row,NET_ORDER_FIELDS,'NET_ORDER_SCHEMA')
+            need(not net_order_rows, 'NET_ORDER_DUPLICATE')
+            need(not report_seen and arm in (1,2,3) and not pass_one_seen
+                 and len(pads)==c['padCount'], 'NET_ORDER_POSITION')
+            validate_pad_census(pads,c)
+            need(integer(row['operation'],1,3) and row['operation']==arm
+                 and integer(row['group'],0,639) and row['group']==current_group
+                 and integer(row['pass'],1,1) and row['strategy']==ARMS[arm][3],
+                 'NET_ORDER_IDENTITY')
+            need(row['promotedNet'] is None or token(row['promotedNet']),
+                 'NET_ORDER_PROMOTION_TYPE')
+            need(integer(row['completedOrderings'],1,1)
+                 and integer(row['yieldedOrderings'],0,1)
+                 and digest(row['prefixSha256'])
+                 and integer(row['prefixBytes'],1,LIMITS['prefixBytes']),
+                 'NET_ORDER_VALUES')
+            net_ids=row['netIds']
+            need(type(net_ids) is list and all(token(net) for net in net_ids)
+                 and len(net_ids)==len(set(net_ids))
+                 and set(net_ids)=={pad['netId'] for pad in pads}, 'NET_ORDER_CENSUS')
+            net_order_rows.append(row);net_order_positions.append(line_index)
+            group_net_orders+=1
         elif typ=='DIAGNOSTIC_CLONE':
             keys(row,DIAGNOSTIC_CLONE_FIELDS,'DIAGNOSTIC_CLONE_SCHEMA')
             need(arm in (1,2,3) and integer(row['operation'],1,3) and row['operation']==arm
@@ -367,7 +484,8 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
                  and integer(row['ordinal'],0,639) and row['ordinal']==current_group
                  and row['phase'] in ('SETUP','ADVANCE','PHYSICAL','REPORT'), 'GROUP_IDENTITY')
             for n in ('elapsedBeforeOwnLineNanos','observerChecks','callbacks','censusRows',
-                      'hashInputBytes','serializedBeforeOwnLineBytes','diagnosticCloneSteps'):
+                      'netOrderRows','hashInputBytes','serializedBeforeOwnLineBytes',
+                      'diagnosticCloneSteps'):
                 need(integer(row[n]),'GROUP_NUMBER')
             need(row['elapsedBeforeOwnLineNanos']<=LIMITS['groupNanos']
                  and integer(row['generatorAdvances'],0,1) and integer(row['p07Slices'],0,1)
@@ -378,6 +496,7 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
                      and row['observerChecks']>=1,'P07_ACCOUNTING')
             else:need(row['accounting']=='NOT_APPLICABLE' and row['p07Steps'] is None,'P07_ABSENCE')
             need(row['callbacks']==group_callbacks and row['censusRows']==group_pads
+                 and row['netOrderRows']==group_net_orders
                  and row['serializedBeforeOwnLineBytes']==group_bytes, 'GROUP_RECORD_COUNTS')
             need(row['diagnosticCloneSteps']==group_diagnostic_clones,
                  'DIAGNOSTIC_CLONE_GROUP_COUNT')
@@ -386,15 +505,16 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
             if group_diagnostic_clones:
                 need(row['phase']=='ADVANCE' and row['p07Slices']==1
                      and row['accounting']=='MEASURED','DIAGNOSTIC_CLONE_GROUP')
-            if group_callbacks or group_pads:
+            if group_callbacks or group_pads or group_net_orders:
                 need(row['phase']=='ADVANCE' and row['p07Slices']==1,'LIVE_OWNER_OBSERVATION_GROUP')
             need(row['hashInputBytes']>=sum(b['prefixBytes'] for b in branches
-                 if b['group']==current_group), 'GROUP_HASH_BYTES')
+                 if b['group']==current_group)+sum(order['prefixBytes'] for order in net_order_rows
+                 if order['group']==current_group), 'GROUP_HASH_BYTES')
             if report_seen:
                 need(row['phase']=='REPORT','FINAL_GROUP_PHASE')
                 report_closed=True
             groups.append(row);current_group+=1;group_bytes=0;group_callbacks=0;group_pads=0
-            group_diagnostic_clones=0
+            group_diagnostic_clones=0;group_net_orders=0
             need(current_group<=640,'GROUP_COUNT');continue
         else:raise ValueError('UNEXPECTED_RECORD')
         need(integer(row.get('group'),0,639) and row['group']==current_group,'RECORD_GROUP')
@@ -407,12 +527,11 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
          and all(integer(f[n]) for n in ('padCount','branchCount','groupCount'))
          and f['padCount']==len(pads)==c['padCount'] and f['branchCount']==len(branches)
          and f['groupCount']==len(groups),'FOOTER_CENSUS')
-    need([p['padId'] for p in pads]==sorted({p['padId'] for p in pads})
-         and len({p['netId'] for p in pads})==c['netCount']
-         and len({p['componentId'] for p in pads})==c['componentCount'],'PAD_CENSUS')
+    validate_pad_census(pads,c)
     need(all(len({p['role'] for p in pads if p['netId']==net})==1
              for net in {p['netId'] for p in pads}), 'NET_ROLE_CENSUS')
     need(len(branches)<=3*(len(pads)-c['netCount']),'BRANCH_CAP')
+    need(bool(net_order_rows)==pass_one_seen, 'NET_ORDER_PRESENCE')
     context=result['context']
     keys(context,('requestIndex','selectedAttempt','eligibleAttempts','pristineSha256','pristineBytes',
                   'padCensusSha256','boardSha256'),'CONTEXT_SCHEMA')
@@ -437,9 +556,26 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
                  and r['comparisonComplete'] is False, 'TOTAL_LIMIT_CONTINUATION')
         need({b['snapshot']['pass'] for b in branches}==set(range(r['startedOrderings'])),
              'MISSING_ORDERING_BRANCH_PROOF')
+    net_order=None;net_order_audit=None
+    if net_order_rows:
+        net_order=net_order_rows[0]
+        need(net_order_positions[0] > max(i for i,row in enumerate(rows)
+             if row['record']=='PAD'), 'NET_ORDER_AFTER_CENSUS')
+        pass_zero_positions=[position for position,branch in zip(branch_positions,branches)
+                             if type(branch.get('snapshot')) is dict
+                             and branch['snapshot'].get('pass')==0]
+        need(pass_zero_positions and net_order_positions[0] > max(pass_zero_positions),
+             'NET_ORDER_AFTER_PASS0')
+        need(net_order['prefixSha256']==context['pristineSha256']
+             and net_order['prefixBytes']==context['pristineBytes'],
+             'NET_ORDER_PRISTINE_PREFIX')
+        validate_net_order_promotion(net_order,branches,c['padCount'],c['netCount'])
+        net_order_audit=audit_net_order(net_order,pads,branches,arm)
     validate_diagnostic_clones(diagnostic_events,branches,branch_positions,pads,groups,arm)
     diagnostic_clone_steps=sum(row['ownerSteps'] for _,row in diagnostic_events)
-    required_hash_bytes=sum(b['prefixBytes'] for b in branches)+len(pad_bytes(pads))+context['pristineBytes']
+    required_hash_bytes=(sum(b['prefixBytes'] for b in branches)
+                         +sum(order['prefixBytes'] for order in net_order_rows)
+                         +len(pad_bytes(pads))+context['pristineBytes'])
     boundary=result['boundary']
     keys(boundary,('requestCount','outcomeCount','routeRetired','candidateRetired','generatorComplete',
                    'eventObserved','successorAdvanceCalls'),'BOUNDARY_SCHEMA')
@@ -489,11 +625,18 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
          'FINAL_TIMING_BOUND')
     return dict(header=h,pads=pads,branches=branches,groups=groups,
                 diagnosticClones=[row for _,row in diagnostic_events],
+                netOrder=net_order,netOrderAudit=net_order_audit,
                 result=result,choices=choices)
 
 
 def comparable_branch(row):
     return {k:row[k] for k in ('ordinal','prefixSha256','prefixBytes','snapshot')}
+
+
+def comparable_net_order(row):
+    if row is None:
+        return None
+    return {k:v for k,v in row.items() if k not in ('operation','group')}
 
 
 def validate_study(ops):
@@ -519,6 +662,7 @@ def validate_study(ops):
          and default['result']['logicalWork']==explicit['result']['logicalWork']
          and [comparable_diagnostic_clone(x) for x in default['diagnosticClones']]
          ==[comparable_diagnostic_clone(x) for x in explicit['diagnosticClones']]
+         and comparable_net_order(default['netOrder'])==comparable_net_order(explicit['netOrder'])
          and [comparable_branch(x) for x in ops[1]['branches']]
          ==[comparable_branch(x) for x in ops[2]['branches']], 'OBSERVED_CONTROL_PARITY')
     control=ops[2];treatment=ops[3]
@@ -533,26 +677,19 @@ def validate_study(ops):
     treatment_events=[comparable_diagnostic_clone(e) for e in treatment['diagnosticClones']
                       if e['pass']==0]
     need(control_events==treatment_events, 'PASS0_DIAGNOSTIC_CLONE_PARITY')
-    cb=[(i,b) for i,b in enumerate(control['branches']) if b['snapshot']['pass']==1]
-    tb=[(i,b) for i,b in enumerate(treatment['branches']) if b['snapshot']['pass']==1]
-    divergence={'status':'NOT_OBSERVED' if not cb or not tb else 'NO_DIVERGENCE'}
-    for (ci,c),(ti,t) in zip(cb,tb):
-        cs=c['snapshot'];ts=t['snapshot']
-        if (cs['netId'],cs['rootPadId'],cs['startPadId']) != (ts['netId'],ts['rootPadId'],ts['startPadId']):
-            a=control['choices'][ci];b=treatment['choices'][ti]
-            need(cs['netId']==ts['netId'] and cs['rootPadId']==ts['rootPadId']
-                 and c['prefixSha256']==t['prefixSha256'] and c['prefixBytes']==t['prefixBytes']
-                 and a['reached']==b['reached'] and a['remaining']==b['remaining']
-                 and a['nearest']!=b['farthest'] and cs['startPadId']==a['nearest']
-                 and ts['startPadId']==b['farthest'], 'DIVERGENCE_CAUSAL_PROOF')
-            divergence=dict(status='FOUND',controlOrdinal=c['ordinal'],treatmentOrdinal=t['ordinal'],
-                            netId=cs['netId'],rootPadId=cs['rootPadId'],nearest=a['nearest'],
-                            farthest=b['farthest'],prefixSha256=c['prefixSha256'])
-            break
-        need(comparable_branch(c)==comparable_branch(t),'EARLIER_NONSELECTION_DIFFERENCE')
-    if divergence['status']=='NO_DIVERGENCE' and len(cb)!=len(tb):
-        divergence={'status':'NOT_OBSERVED','reason':'UNEQUAL_PASS1_TRACE_COVERAGE'}
-    return divergence
+    control_order=control['netOrder'];treatment_order=treatment['netOrder']
+    if control_order is None or treatment_order is None:
+        return dict(status='NOT_OBSERVED',reason='PASS1_NOT_REACHED')
+    need(all(control_order[name]==treatment_order[name] for name in
+             ('completedOrderings','yieldedOrderings','promotedNet','prefixSha256','prefixBytes')),
+         'TREATMENT_NET_ORDER_CONTEXT')
+    control_nets=control_order['netIds'];treatment_nets=treatment_order['netIds']
+    for index,(control_net,treatment_net) in enumerate(zip(control_nets,treatment_nets)):
+        if control_net!=treatment_net:
+            return dict(status='FOUND',firstDifferingIndex=index,
+                        controlNetId=control_net,treatmentNetId=treatment_net)
+    need(len(control_nets)==len(treatment_nets),'TREATMENT_NET_ORDER_LENGTH')
+    return dict(status='NO_DIVERGENCE',netCount=len(control_nets))
 
 
 def check_source_manifest(raw, base):
@@ -580,7 +717,7 @@ def check_source_manifest(raw, base):
             need(row['path']=='tests/qualification/rb100-layout/branch-tree-study/read_branch_order_study.py',
                  'READER_SOURCE_PATH')
         elif row['role']=='WIRE':
-            need(row['path']=='docs/task-evidence/Q100/branch-tree-study-v3-r1/WIRE.md','WIRE_SOURCE_PATH')
+            need(row['path']=='docs/task-evidence/Q100/net-priority-r1/WIRE.md','WIRE_SOURCE_PATH')
         elif row['role']=='WRITER':
             need(row['path'].startswith('tests/qualification/rb100-layout/java/')
                  and row['path'].endswith('.java'),'WRITER_SOURCE_PATH')
@@ -594,18 +731,20 @@ def check_source_manifest(raw, base):
     if manifest['kind']=='READER_FIXTURE':
         need(manifest['baseManifest'] is None and 'BASE_SOURCE' not in roles,'FIXTURE_SOURCE_SCOPE')
     else:
-        need(roles.count('BASE_SOURCE')==1079 and roles.count('WRITER')>=1
-             and roles.count('HOST')>=1,'NATIVE_SOURCE_CLOSURE')
+        need(roles.count('BASE_SOURCE')==BASE_ROWS and roles.count('WRITER')==1
+             and roles.count('HOST')==1 and roles.count('READER')==1
+             and roles.count('WIRE')==1 and len(files)==BASE_ROWS+4,
+             'NATIVE_SOURCE_CLOSURE')
         keys(manifest['baseManifest'],('path','bytes','sha256'),'BASE_MANIFEST_REF')
         need(manifest['baseManifest']['sha256']==BASE_SHA
-             and manifest['baseManifest']['bytes']==228662
+             and manifest['baseManifest']['bytes']==BASE_MANIFEST_BYTES
              and type(manifest['baseManifest']['path']) is str
              and Path(manifest['baseManifest']['path']).name=='inputs.json','BASE_MANIFEST_DECLARATION')
         b,p=file_ref(manifest['baseManifest'],base,4*1024*1024)
-        need(sha(b)==BASE_SHA and len(b)==228662,'BASE_MANIFEST_PIN')
-        pins=strict_json(b);need(type(pins) is list and len(pins)==1079,'BASE_MANIFEST_CENSUS')
+        need(sha(b)==BASE_SHA and len(b)==BASE_MANIFEST_BYTES,'BASE_MANIFEST_PIN')
+        pins=strict_json(b);need(type(pins) is list and len(pins)==BASE_ROWS,'BASE_MANIFEST_CENSUS')
         actual=[{k:r[k] for k in ('path','bytes','sha256')} for r in files if r['role']=='BASE_SOURCE']
-        need(actual==pins and sum(r['bytes'] for r in actual)==87478294,'BASE_SOURCE_ROWS')
+        need(actual==pins and sum(r['bytes'] for r in actual)==BASE_SOURCE_BYTES,'BASE_SOURCE_ROWS')
         pinned.append((manifest['baseManifest'],base,4*1024*1024))
     # Close the complete role/path/base census before reading any source body.
     for row in files:
@@ -651,7 +790,7 @@ def validate_spec(path, expected_sha):
         cleanup+=c['elapsedNanos']
         ops.append(validate_operation(data,entry,sha(source),wire,arm,index['runId'],spec['kind']))
     need(cleanup<=120_000_000_000,'CUMULATIVE_CLEANUP_LIMIT')
-    divergence=validate_study(ops)
+    net_order_comparison=validate_study(ops)
     if spec['kind']=='READER_FIXTURE':
         need(spec['transport'] is None,'FIXTURE_TRANSPORT')
         status='PASS_READER_FIXTURE_ONLY'
@@ -689,7 +828,9 @@ def validate_spec(path, expected_sha):
     need(stable_read(path,4*1024*1024)==original,'SPEC_CHANGED')
     return dict(schema='tsj-branch-order-reader-result-v1',status=status,kind=spec['kind'],
                 specSha256=expected_sha,sourceManifestSha256=sha(source),indexSha256=sha(index_raw),
-                operations=4,branches=[len(o['branches']) for o in ops],divergence=divergence,
+                operations=4,branches=[len(o['branches']) for o in ops],
+                netOrderComparison=net_order_comparison,
+                netOrderAudits=[o['netOrderAudit'] for o in ops],
                 routeOutcomes=[o['result']['route'] for o in ops],
                 limitations=dict(rootNativeAcceptance='NOT_GRANTED_BY_READER',
                                  tailFoundPublication='UNKNOWN_WITHOUT_LATER_SELECTION_OR_YIELD',

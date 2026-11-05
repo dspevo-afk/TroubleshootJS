@@ -1,0 +1,15 @@
+# These current consumers embed raw hashes of one another.
+export_load12_graphspec.py -text
+test_export_load12_graphspec.py -text
+read_load12_adrive_graph.py -text
+read_load12_baseline.py -text
+read_load12_adrive_guard.py -text
+read_load12_cap17.py -text
+read_load12_cost240.py -text
+read_load12_remainder.py -text
+read_quality_zero_via.py -text
+test_read_load12_baseline.py -text
+test_read_load12_cap17.py -text
+test_read_load12_cost240.py -text
+test_read_load12_remainder.py -text
+test_read_quality_zero_via.py -text

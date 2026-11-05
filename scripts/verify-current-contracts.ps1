@@ -1116,6 +1116,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         @{ Name = 'P07GridEligibilityContractTest'; Marker = 'P07 grid eligibility contracts ' },
         @{ Name = 'P07BranchDiagnosticsContractTest'; Marker = 'P07 branch diagnostics contracts ' },
         @{ Name = 'P07OrderingCandidatesContractTest'; Marker = 'P07 ordering candidates contracts ' },
+        @{ Name = 'P07NetOrderContractTest'; Marker = 'P07 net-order contracts assertions=' },
         @{ Name = 'P07RelaxedDistanceBoundContractTest'; Marker = 'P07 relaxed bound contracts ' },
         @{ Name = 'P07GeometryEpochDiagnosticContractTest'; Marker = 'P07 geometry epoch diagnostic contracts ' },
         @{ Name = 'P07ReachedPthContractTest'; Marker = 'P07 reached PTH contracts ' },

@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
 
-INPUT_SCHEMA = "p07-load12-detached-cap17-input-v1"
+INPUT_SCHEMA = "p07-load12-detached-cap17-input-v2"
 RUN_SCHEMA = "q100-quality-zero-via-native-run-v5"
 RESULT_SCHEMA = "p07-load12-detached-cap17-reader-result-v1"
 TARGET = "LOAD12"
@@ -25,8 +25,14 @@ PURPOSE = "ACTUAL_CAP17"
 SUITE = "Rb100Load12DetachedBaselineContractTest"
 ENTRY_SCRIPT = "scripts/verify-current-contracts.ps1"
 SOURCE_REVISION = 20
-SOURCE_INPUT_COUNT = 1079
-CONTRACT_JAVA_COUNT = 223
+SOURCE_INPUT_COUNT = 1080
+CONTRACT_JAVA_COUNT = 224
+FROZEN_SOURCE_GRAPH_INPUT_COUNT = 1079
+FROZEN_SOURCE_GRAPH_INPUT_BYTES = 86_847_809
+FROZEN_SOURCE_GRAPH_READER_SHA256 = (
+    "d16c7385a604aa3e126ae7fd39f98d6b8fe5753c2ea6bb2d8244dc8b74ce5cbc")
+FROZEN_SOURCE_GRAPH_EXPORTER_SHA256 = (
+    "4475aaded5c56c79ab236ba58fdefa1ca89926e08df67a151aacdd7a0b52e112")
 LAYOUT_VERSION = 26
 DEPENDENCY_EPOCH = "tsj-generation-dependencies-v28"
 
@@ -55,9 +61,7 @@ CLEANUP_LINE = "CLEANUP: current JVM contract classes and task-owned scratch rem
 # The current reader SHA is frozen only after the root reviewed its narrow
 # default-48/expected-cap helper change.
 QUALITY_READER_SHA256 = (
-    "d16c7385a604aa3e126ae7fd39f98d6b8fe5753c2ea6bb2d8244dc8b74ce5cbc")
-GRAPH_SPEC_EXPORTER_SHA256 = (
-    "4475aaded5c56c79ab236ba58fdefa1ca89926e08df67a151aacdd7a0b52e112")
+    "17f4407a5954fe1a706b53af6181d0fc2c94acb23041b15726f74636577d3a61")
 
 MAX_WORK_UNITS = 640
 MAX_WORK_QUANTUM = 32_768
@@ -92,11 +96,12 @@ DECIMAL_LONG_RE = re.compile(r"-?(?:0|[1-9][0-9]*)\Z", re.ASCII)
 INPUT_SPEC_KEYS = frozenset((
     "schema target purpose suite sourceRoot pinsPath pinsSha256 inputCount inputBytes "
     "sourceSnapshotRevision resultPath stdoutPath receiptPath stderrPath "
-    "graphspecPath graphspecSha256 sourceGraphInputSpecPath "
+    "graphspecPath graphspecSha256 sourceGraphInputSpecPath frozenOracleDirectory "
     "sourceGraphInputSpecSha256").split())
 LEGACY_INPUT_SPEC_KEYS = INPUT_SPEC_KEYS - frozenset((
     "target", "purpose", "suite", "graphspecPath", "graphspecSha256",
-    "sourceGraphInputSpecPath", "sourceGraphInputSpecSha256"))
+    "sourceGraphInputSpecPath", "sourceGraphInputSpecSha256",
+    "frozenOracleDirectory"))
 REQUIRED_NATIVE_INPUTS = frozenset({
     "scripts/verify-current-contracts.ps1",
     "tests/contracts/current-contract-runner-contract.ps1",
@@ -292,18 +297,39 @@ def _load_helpers() -> Tuple[types.ModuleType, types.ModuleType,
     return quality, frozen, scalar, ledger, capture, hashes
 
 
-def _load_graphspec_exporter(directory: Path
-                             ) -> Tuple[types.ModuleType, bytes, Path]:
-    path = directory / "export_load12_graphspec.py"
-    raw = _read_local(path, MAX_READER_BYTES, "GRAPH_SPEC_EXPORTER")
-    _need(_sha256(raw) == GRAPH_SPEC_EXPORTER_SHA256,
-          "GRAPH_SPEC_EXPORTER_HASH_MISMATCH")
+def _load_frozen_graphspec_exporter(directory: Path
+                                    ) -> Tuple[types.ModuleType, bytes, Path,
+                                               bytes, Path]:
+    _need(directory.is_dir() and not _has_reparse_component(directory) and
+          not _is_reparse(directory), "FROZEN_ORACLE_DIRECTORY_INVALID")
+    exporter_path = directory / "export_load12_graphspec.py"
+    exporter_raw = _read_local(
+        exporter_path, MAX_READER_BYTES, "FROZEN_GRAPH_SPEC_EXPORTER")
+    _need(_sha256(exporter_raw) == FROZEN_SOURCE_GRAPH_EXPORTER_SHA256,
+          "FROZEN_GRAPH_SPEC_EXPORTER_HASH_MISMATCH")
+    reader_path = directory / "read_quality_zero_via.py"
+    reader_raw = _read_local(
+        reader_path, MAX_READER_BYTES, "FROZEN_GRAPH_SPEC_READER")
+    _need(_sha256(reader_raw) == FROZEN_SOURCE_GRAPH_READER_SHA256,
+          "FROZEN_GRAPH_SPEC_READER_HASH_MISMATCH")
     module = _exec_private(
-        raw, path, "_p07_load12_cap17_graphspec_exporter",
-        "GRAPH_SPEC_EXPORTER_SOURCE_INVALID")
-    _need(callable(getattr(module, "build_verified_graphspec", None)),
-          "GRAPH_SPEC_EXPORTER_API_INVALID")
-    return module, raw, path
+        exporter_raw, exporter_path, "_p07_load12_cap17_frozen_graphspec_exporter",
+        "FROZEN_GRAPH_SPEC_EXPORTER_SOURCE_INVALID")
+    _need(callable(getattr(module, "build_verified_graphspec", None)) and
+          callable(getattr(module, "_load_public_reader", None)) and
+          getattr(module, "SOURCE_SPEC_SHA256", None) ==
+          SOURCE_GRAPH_INPUT_SPEC_SHA256 and
+          getattr(module, "SOURCE_PINS_SHA256", None) ==
+          SOURCE_GRAPH_PINS_SHA256 and
+          getattr(module, "CURRENT_READER_SHA256", None) ==
+          FROZEN_SOURCE_GRAPH_READER_SHA256 and
+          getattr(module, "SOURCE_INPUT_COUNT", None) ==
+          FROZEN_SOURCE_GRAPH_INPUT_COUNT and
+          getattr(module, "SOURCE_INPUT_BYTES", None) ==
+          FROZEN_SOURCE_GRAPH_INPUT_BYTES and
+          getattr(module, "SOURCE_REVISION", None) == SOURCE_REVISION,
+          "FROZEN_GRAPH_SPEC_EXPORTER_IDENTITY_INVALID")
+    return module, exporter_raw, exporter_path, reader_raw, reader_path
 
 
 def _ledger_call(ledger: types.ModuleType, function, fallback: str,
@@ -339,6 +365,7 @@ def _validate_input_spec_identity(spec: Any) -> Dict[str, Any]:
           type(spec["inputCount"]) is int and
           spec["inputCount"] == SOURCE_INPUT_COUNT and
           _integer(spec["inputBytes"], 1, 512 * 1024 * 1024) and
+          _is_relative_path_reference(spec["frozenOracleDirectory"]) and
           type(spec["pinsSha256"]) is str and
           SHA256_RE.fullmatch(spec["pinsSha256"]) is not None and
           type(spec["graphspecSha256"]) is str and
@@ -509,14 +536,41 @@ def _resolve_bound_path(value: Any, base: Path, code: str,
                         value, base, code)
 
 
+def _is_relative_path_reference(value: Any) -> bool:
+    if type(value) is not str or not 0 < len(value) <= MAX_PATH_CHARS:
+        return False
+    try:
+        return not Path(value).anchor
+    except (TypeError, ValueError):
+        return False
+
+
+def _validate_source_graphspec_evidence(evidence: Any) -> None:
+    _need(type(evidence) is dict and
+          type(evidence.get("readerAndHelperSha256")) is dict and
+          evidence.get("inputSpecSha256") ==
+          SOURCE_GRAPH_INPUT_SPEC_SHA256 and
+          evidence.get("inputPinsSha256") ==
+          SOURCE_GRAPH_PINS_SHA256 and
+          type(evidence.get("inputCount")) is int and
+          evidence.get("inputCount") == FROZEN_SOURCE_GRAPH_INPUT_COUNT and
+          type(evidence.get("inputBytes")) is int and
+          evidence.get("inputBytes") == FROZEN_SOURCE_GRAPH_INPUT_BYTES and
+          evidence["readerAndHelperSha256"].get("currentReader") ==
+          FROZEN_SOURCE_GRAPH_READER_SHA256 and
+          evidence.get("exporterSha256") ==
+          FROZEN_SOURCE_GRAPH_EXPORTER_SHA256,
+          "SOURCE_GRAPH_SPEC_EVIDENCE_INVALID")
+
+
 def _validate_source_graphspec(spec: Mapping[str, Any], spec_path: Path,
                                graphspec_path: Path, graphspec_raw: bytes,
                                source_spec_path: Path,
                                source_spec_raw: bytes,
-                               exporter: types.ModuleType,
                                ledger: types.ModuleType,
                                quality: types.ModuleType
-                               ) -> Tuple[Dict[str, Any], bytes]:
+                               ) -> Tuple[Dict[str, Any], bytes,
+                                          Tuple[Tuple[Path, bytes, str], ...]]:
     _need(_sha256(source_spec_raw) == SOURCE_GRAPH_INPUT_SPEC_SHA256,
           "SOURCE_GRAPH_INPUT_SPEC_SHA256_MISMATCH")
     _need(0 < len(graphspec_raw) <= MAX_GRAPH_SPEC_BYTES and
@@ -532,19 +586,7 @@ def _validate_source_graphspec(spec: Mapping[str, Any], spec_path: Path,
           graphspec.get("scope") == "SOURCE_CAP48_LOAD12_REFERENCE_ONLY",
           "SOURCE_GRAPH_SPEC_IDENTITY_INVALID")
     evidence = graphspec.get("sourceEvidence")
-    _need(type(evidence) is dict and
-          type(evidence.get("readerAndHelperSha256")) is dict and
-          evidence.get("inputSpecSha256") ==
-          SOURCE_GRAPH_INPUT_SPEC_SHA256 and
-          evidence.get("inputPinsSha256") ==
-          SOURCE_GRAPH_PINS_SHA256 and
-          evidence.get("inputCount") == SOURCE_INPUT_COUNT and
-          evidence.get("inputBytes") == 86_847_809 and
-          evidence["readerAndHelperSha256"].get("currentReader") ==
-          QUALITY_READER_SHA256 and
-          evidence.get("exporterSha256") ==
-          GRAPH_SPEC_EXPORTER_SHA256,
-          "SOURCE_GRAPH_SPEC_EVIDENCE_INVALID")
+    _validate_source_graphspec_evidence(evidence)
     _need(type(graphspec.get("sourceGraph")) is dict and
           type(graphspec["sourceGraph"].get("event")) is dict and
           type(graphspec["sourceGraph"]["event"].get("diagnostic")) is dict and
@@ -552,8 +594,14 @@ def _validate_source_graphspec(spec: Mapping[str, Any], spec_path: Path,
           "SOURCE_GRAPH_SPEC_MASKS_INVALID")
 
     source_spec_sha = spec["sourceGraphInputSpecSha256"]
+    frozen_directory = _resolve_bound_path(
+        spec["frozenOracleDirectory"], spec_path.parent,
+        "FROZEN_ORACLE_DIRECTORY", ledger)
+    (frozen_exporter, frozen_exporter_raw, frozen_exporter_path,
+     frozen_reader_raw, frozen_reader_path) = _load_frozen_graphspec_exporter(
+         frozen_directory)
     try:
-        recomputed, canonical = exporter.build_verified_graphspec(
+        recomputed, canonical = frozen_exporter.build_verified_graphspec(
             os.fspath(source_spec_path), source_spec_sha)
     except Exception as error:
         _fail(_safe_foreign_code(error, "SOURCE_GRAPH_RECOMPUTE_FAILED"))
@@ -575,7 +623,13 @@ def _validate_source_graphspec(spec: Mapping[str, Any], spec_path: Path,
           source_pre["path"]["goal"]["faceBitsSha256"] == SOURCE_GOAL_SHA256 and
           graphspec["prefixGeometrySha256"] == SOURCE_PREFIX_GEOMETRY_SHA256,
           "SOURCE_GRAPH_SPEC_ANCHORS_INVALID")
-    return graphspec, canonical
+    frozen_source_inputs = (
+        (frozen_exporter_path, frozen_exporter_raw,
+         "FROZEN_GRAPH_SPEC_EXPORTER"),
+        (frozen_reader_path, frozen_reader_raw,
+         "FROZEN_GRAPH_SPEC_READER"),
+    )
+    return graphspec, canonical, frozen_source_inputs
 
 
 def _java_length(value: str) -> int:
@@ -1234,11 +1288,10 @@ def _validate_native_artifacts(spec_argument: str, spec_sha256: str,
     graphspec_raw = _ledger_call(
         ledger, ledger._read_bounded, "GRAPH_SPEC_READ_FAILED",
         graphspec_path, MAX_GRAPH_SPEC_BYTES, "GRAPH_SPEC")
-    exporter, exporter_raw, exporter_path = _load_graphspec_exporter(
-        Path(os.path.abspath(__file__)).parent)
-    graphspec, graphspec_canonical = _validate_source_graphspec(
-        spec, spec_path, graphspec_path, graphspec_raw, source_spec_path,
-        source_spec_raw, exporter, ledger, quality)
+    (graphspec, graphspec_canonical,
+     frozen_graphspec_sources) = _validate_source_graphspec(
+         spec, spec_path, graphspec_path, graphspec_raw, source_spec_path,
+         source_spec_raw, ledger, quality)
 
     artifacts = context["artifacts"]
     result_raw = _ledger_call(
@@ -1296,16 +1349,16 @@ def _validate_native_artifacts(spec_argument: str, spec_sha256: str,
             (artifacts["receiptPath"], receipt_raw, MAX_CAPTURE_BYTES,
              "RUN_RECEIPT", False),
             (artifacts["stderrPath"], stderr_raw, MAX_CAPTURE_BYTES,
-             "RUN_STDERR", True),
-            (exporter_path, exporter_raw, MAX_READER_BYTES,
-             "GRAPH_SPEC_EXPORTER", False)):
+             "RUN_STDERR", True)):
         again = _ledger_call(ledger, ledger._read_bounded,
                              code + "_REVALIDATION_FAILED",
                              path, limit, code, allow_empty=allow_empty)
         _need(again == expected,
               code + "_CHANGED_DURING_VALIDATION")
+    for path, expected, code in frozen_graphspec_sources:
+        again = _read_local(path, MAX_READER_BYTES, code)
+        _need(again == expected, code + "_CHANGED_DURING_VALIDATION")
     _need(_sha256(graphspec_canonical) == spec["graphspecSha256"] and
-          _sha256(exporter_raw) == GRAPH_SPEC_EXPORTER_SHA256 and
           _sha256(_read_local(Path(os.path.abspath(__file__)),
                               MAX_READER_BYTES, "READER_SOURCE")) == own_sha,
           "CAP17_SOURCE_OR_EXPORTER_CHANGED_DURING_VALIDATION")

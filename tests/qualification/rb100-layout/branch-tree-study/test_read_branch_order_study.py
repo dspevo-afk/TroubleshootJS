@@ -14,8 +14,8 @@ import read_branch_order_study as reader
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[4]
-DEFAULT_WIRE = Path("docs/task-evidence/Q100/branch-tree-study-v3-r1/WIRE.md")
-PARENT_HEAD = "273c7fce3b98ab68a83fc5ea395dba523a48a561"
+DEFAULT_WIRE = Path("docs/task-evidence/Q100/net-priority-r1/WIRE.md")
+PARENT_HEAD = "0fac75f105e9c4340bda9bba615f4a70f7aa477d"
 RUN_ID = "d7b9d7e5-3cc0-4ed5-9f23-fec562db9035"
 PAD_ROWS = (
     ("pad-a", "component-a", 0),
@@ -29,6 +29,23 @@ PLUS_PAD_ROWS = (
     ("UAC.IN+", "component-a", 10),
     ("UAC.PRE_L+", "component-b", 30),
 )
+NET_PRIORITY_PAD_ROWS = (
+    ("a-0", "net-alpha", "ca-0", 0, 0),
+    ("a-1", "net-alpha", "ca-1", 100, 0),
+    ("a-2", "net-alpha", "ca-2", 200, 0),
+    ("b-0", "net-beta", "cb-0", 0, 0),
+    ("b-1", "net-beta", "cb-1", 500, 0),
+    ("b-2", "net-beta", "cb-2", 501, 0),
+    ("g-0", "net-gamma", "cg-0", 0, 0),
+    ("g-1", "net-gamma", "cg-1", 1, 0),
+    ("s-0", "net-single", "cs-0", 10, 10),
+    ("w-0", "net-wide", "cw-0", -1_000_000, -1_000_000),
+    ("w-1", "net-wide", "cw-1", 1_000_000, 1_000_000),
+)
+CANONICAL_NET_IDS = ["net-alpha", "net-beta", "net-gamma", "net-wide", "net-single"]
+MINIMUM_PAIR_NET_IDS = ["net-beta", "net-gamma", "net-alpha", "net-wide", "net-single"]
+PROMOTED_CANONICAL_NET_IDS = ["net-wide", "net-alpha", "net-beta", "net-gamma", "net-single"]
+PROMOTED_MINIMUM_PAIR_NET_IDS = ["net-wide", "net-beta", "net-gamma", "net-alpha", "net-single"]
 PRISTINE_BYTES = 16
 
 
@@ -47,16 +64,68 @@ def _line(value) -> bytes:
 
 
 def _pads(group=1, pad_rows=PAD_ROWS):
-    return [dict(record="PAD", group=group, padId=pad_id, netId="net-one",
-                 componentId=component_id, x=x, y=0, role="SIGNAL")
-            for pad_id, component_id, x in pad_rows]
+    rows = []
+    for item in pad_rows:
+        if len(item) == 3:
+            pad_id, component_id, x = item
+            net_id, y = "net-one", 0
+        elif len(item) == 4:
+            pad_id, net_id, component_id, x = item
+            y = 0
+        else:
+            pad_id, net_id, component_id, x, y = item
+        rows.append(dict(record="PAD", group=group, padId=pad_id, netId=net_id,
+                         componentId=component_id, x=x, y=y, role="SIGNAL"))
+    return rows
+
+
+def _expected_net_ids(pads, strategy):
+    by_net = {}
+    for pad in pads:
+        by_net.setdefault(pad["netId"], []).append(pad)
+    if strategy == "CANONICAL":
+        return sorted(by_net, key=lambda net: (-len(by_net[net]), net))
+    paired = {}
+    for net, rows in by_net.items():
+        distances = [
+            (abs(left["x"] - right["x"]) + abs(left["y"] - right["y"]),
+             left["padId"], right["padId"])
+            for index, left in enumerate(sorted(rows, key=lambda row: row["padId"]))
+            for right in sorted(rows, key=lambda row: row["padId"])[index + 1:]
+        ]
+        if distances:
+            paired[net] = min(distances)[0]
+    return (sorted(paired, key=lambda net: (paired[net], net))
+            + sorted(set(by_net) - set(paired)))
+
+
+def _expected_callback_count(pads, *, yielded_prior=False, promotion_net=None,
+                             net_order_ids=None, pass1_net_visits=None,
+                             reach_pass1=True):
+    by_net = {}
+    for pad in pads:
+        by_net.setdefault(pad["netId"], []).append(pad)
+    canonical = _expected_net_ids(pads, "CANONICAL")
+    if yielded_prior:
+        count = sum(len(rows) - 1 for rows in by_net.values())
+    else:
+        failed = promotion_net if promotion_net is not None else canonical[0]
+        count = 1 + sum(len(by_net[net]) - 1 for net in canonical[:canonical.index(failed)])
+    if reach_pass1:
+        visits = (pass1_net_visits if pass1_net_visits is not None else
+                  [net for net in (net_order_ids or canonical) if len(by_net[net]) > 1][:1])
+        count += (sum(len(by_net[net]) - 1 for net in visits)
+                  if pass1_net_visits is not None else len(visits))
+        count += 1 if any(len(rows) > 1 for rows in by_net.values()) else 0
+    return count
 
 
 def _snapshot(pass_number, start_pad_id, *, total_expanded, reached_count=1,
               terminal="NO_PATH", branch_expanded=1, expanded_top=1, expanded_bottom=0,
-              pads=None, root_pad_id=None, prefix_via_count=0, relaxed_bound=False):
+              pads=None, root_pad_id=None, net_id="net-one", prefix_via_count=0,
+              relaxed_bound=False):
     rows = _pads() if pads is None else pads
-    by_id = {row["padId"]: row for row in rows}
+    by_id = {row["padId"]: row for row in rows if row["netId"] == net_id}
     start = by_id[start_pad_id]
     root_id = min(by_id) if root_pad_id is None else root_pad_id
     root = by_id[root_id]
@@ -66,7 +135,8 @@ def _snapshot(pass_number, start_pad_id, *, total_expanded, reached_count=1,
         "rootX": root["x"], "rootY": root["y"],
         "gridWidth": 10, "gridHeight": 10, "goalsTop": 2, "goalsBottom": 2,
         "prefixViaCount": prefix_via_count, "reachedPadCount": reached_count,
-        "initialManhattanDistance": abs(start["x"] - root["x"]),
+        "initialManhattanDistance": (abs(start["x"] - root["x"])
+                                     + abs(start["y"] - root["y"])),
         "minimumExploredManhattanDistance": 0,
         "branchExpanded": branch_expanded, "totalExpanded": total_expanded,
         "expandedTop": expanded_top, "expandedBottom": expanded_bottom,
@@ -80,14 +150,16 @@ def _snapshot(pass_number, start_pad_id, *, total_expanded, reached_count=1,
         "relaxedBoundLiveLayoutStable": relaxed_bound,
         "relaxedBoundRouterStateStable": relaxed_bound,
         "relaxedBoundRouterEffectsStable": relaxed_bound,
-        "netId": "net-one", "startPadId": start_pad_id,
+        "netId": net_id, "startPadId": start_pad_id,
         "rootPadId": root_id, "terminalReason": terminal,
     }
 
 
 def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
                    wire_sha256=None, padRows=PAD_ROWS, startIds=None,
-                   diagnosticPrefixes=None):
+                   diagnosticPrefixes=None, netOrderIds=None, yieldedPrior=False,
+                   promotionNet=None, pass1NetVisits=None, expectedExpansions=None,
+                   reachPass1=True):
     """Return a complete tiny JSONL operation and its post-close index entry."""
     if source_manifest_sha256 is None:
         source_manifest_sha256 = "1" * 64
@@ -96,6 +168,9 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
     observed = arm != 0
     diagnostic_prefixes = {} if diagnosticPrefixes is None else dict(diagnosticPrefixes)
     pads = _pads(group=1, pad_rows=padRows)
+    net_ids = sorted({row["netId"] for row in pads})
+    by_net = {net: sorted((row for row in pads if row["netId"] == net),
+                          key=lambda row: row["padId"]) for net in net_ids}
     root_pad_id = min(row["padId"] for row in pads)
     context = {
         "requestIndex": 0,
@@ -110,14 +185,16 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
         "rootSeed": "0", "placementSeed": "0", "routingSeed": "0",
         "variant": "TINY", "layoutVersion": 26,
         "dependencyEpoch": "tsj-generation-dependencies-v28",
-        "componentCount": 4, "padCount": 4, "netCount": 1,
+        "componentCount": len({row["componentId"] for row in pads}),
+        "padCount": len(pads), "netCount": len(net_ids),
         "traceWidthProfile": "ROLE_WIDTHS",
     }
-    arm_id, api, strategy, observed_flag = reader.ARMS[arm]
+    arm_id, api, strategy, net_order_strategy, observed_flag = reader.ARMS[arm]
     header = {
         "record": "HEADER", "group": 0, "schema": reader.SCHEMA,
         "runId": run_id, "mode": "TINY_CANARY", "operation": arm,
         "arm": {"id": arm_id, "api": api, "strategy": strategy,
+                "netOrderStrategy": net_order_strategy,
                 "observed": observed_flag},
         "sourceManifestSha256": source_manifest_sha256,
         "wireSha256": wire_sha256,
@@ -125,48 +202,124 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
         "limits": dict(reader.LIMITS),
     }
     branches = []
-    diagnostic_events_by_pass = {}
+    branches_by_pass = {0: [], 1: [], 2: []}
+    diagnostic_events_by_pass = {0: [], 1: [], 2: []}
     diagnostic_events = []
-    if observed:
-        if startIds is None:
-            nearest, farthest, later_nearest = "pad-b", "pad-d", "pad-b"
-        else:
-            nearest, farthest, later_nearest = startIds
-        starts = (nearest, farthest if arm == 3 else nearest, later_nearest)
-        for pass_number, start_pad_id in enumerate(starts):
-            prefix_vias = diagnostic_prefixes.get(pass_number, 0)
-            has_diagnostic_bound = pass_number in diagnostic_prefixes
-            branch_events = []
-            if has_diagnostic_bound:
+    prefix_vias_by_pass = diagnostic_prefixes
+    canonical_net_ids = _expected_net_ids(pads, "CANONICAL")
+    failed_net = (None if yieldedPrior else
+                  promotionNet if promotionNet is not None else canonical_net_ids[0])
+    base_order_net_ids = _expected_net_ids(pads, net_order_strategy)
+    if netOrderIds is not None:
+        order_net_ids = list(netOrderIds)
+    else:
+        order_net_ids = list(base_order_net_ids)
+        if failed_net is not None:
+            order_net_ids.remove(failed_net)
+            order_net_ids.insert(0, failed_net)
+
+    def append_net_branches(pass_number, net_id, *, complete, terminal_last="FOUND"):
+        net_pads = by_net[net_id]
+        remaining = [row["padId"] for row in net_pads[1:]]
+        reached = [net_pads[0]["padId"]]
+        branch_count = len(remaining) if complete else min(1, len(remaining))
+        for local_index in range(branch_count):
+            start_pad_id = _expected_choice(pads, reached, remaining)
+            prefix_vias = prefix_vias_by_pass.get(pass_number, 0)
+            has_bound = (pass_number in prefix_vias_by_pass and local_index == 0
+                         and not diagnostic_events_by_pass[pass_number])
+            terminal = terminal_last if local_index == branch_count - 1 else "FOUND"
+            snapshot = _snapshot(
+                pass_number, start_pad_id, total_expanded=len(branches) + 1,
+                reached_count=len(reached), terminal=terminal, pads=pads,
+                root_pad_id=net_pads[0]["padId"], net_id=net_id,
+                prefix_via_count=prefix_vias, relaxed_bound=has_bound)
+            branch = {
+                "record": "BRANCH", "operation": arm, "ordinal": len(branches),
+                "group": pass_number + 1,
+                "prefixSha256": _sha(
+                    "same-prefix-pass-{}-branch-{}".format(
+                        pass_number, len(branches)).encode("ascii")),
+                "prefixBytes": 64, "snapshot": snapshot,
+            }
+            branches.append(branch)
+            branches_by_pass[pass_number].append(branch)
+            reached.append(start_pad_id)
+            remaining.remove(start_pad_id)
+            if has_bound:
+                events = []
                 for face_index in (0, 1):
                     event = {
                         "record": "DIAGNOSTIC_CLONE", "operation": arm,
                         "ordinal": len(diagnostic_events), "group": pass_number + 1,
-                        "pass": pass_number, "netId": "net-one",
-                        "startPadId": start_pad_id, "rootPadId": root_pad_id,
+                        "pass": pass_number, "netId": net_id,
+                        "startPadId": start_pad_id, "rootPadId": net_pads[0]["padId"],
                         "faceIndex": face_index, "prefixViaCount": prefix_vias,
                         "ownerSteps": 1,
                     }
                     diagnostic_events.append(event)
-                    branch_events.append(event)
-                diagnostic_events_by_pass[pass_number] = branch_events
-            branches.append({
-                "record": "BRANCH", "operation": arm, "ordinal": pass_number,
-                "group": pass_number + 1,
-                "prefixSha256": _sha(("same-prefix-pass-{}".format(pass_number)).encode("ascii")),
-                "prefixBytes": 64,
-                "snapshot": _snapshot(pass_number, start_pad_id,
-                                      total_expanded=pass_number + 1, pads=pads,
-                                      root_pad_id=root_pad_id,
-                                      prefix_via_count=prefix_vias,
-                                      relaxed_bound=has_diagnostic_bound),
-            })
+                    diagnostic_events_by_pass[pass_number].append(event)
+                    events.append(event)
+                return events
+        return []
+
+    net_order_row = None
+    if observed:
+        if yieldedPrior:
+            for net_id in canonical_net_ids:
+                append_net_branches(0, net_id, complete=True, terminal_last="FOUND")
+        else:
+            for net_id in canonical_net_ids:
+                if net_id == failed_net:
+                    append_net_branches(0, net_id, complete=False, terminal_last="NO_PATH")
+                    break
+                append_net_branches(0, net_id, complete=True, terminal_last="FOUND")
+
+        if reachPass1:
+            row = {
+                "record": "NET_ORDER", "operation": arm, "group": 2, "pass": 1,
+                "strategy": net_order_strategy,
+                "promotedNet": None if yieldedPrior else failed_net,
+                "completedOrderings": 1, "yieldedOrderings": 1 if yieldedPrior else 0,
+                "prefixSha256": context["pristineSha256"],
+                "prefixBytes": context["pristineBytes"], "netIds": order_net_ids,
+            }
+            net_order_row = row
+
+            paired_pass_one = [net for net in order_net_ids if len(by_net[net]) > 1]
+            visits = pass1NetVisits if pass1NetVisits is not None else paired_pass_one[:1]
+            for net_id in visits:
+                append_net_branches(1, net_id,
+                                    complete=pass1NetVisits is not None or len(visits) > 1)
+            pass_two_net = next((net for net in canonical_net_ids if len(by_net[net]) > 1), None)
+            if pass_two_net is not None:
+                append_net_branches(2, pass_two_net, complete=False, terminal_last="NO_PATH")
+
+        if startIds is not None:
+            # A narrow fixture hook for endpoint/tie tests; it only adjusts the
+            # first branch in each pass and never defines an expected order.
+            for pass_number, start_id in enumerate(startIds):
+                if branches_by_pass[pass_number]:
+                    branch = branches_by_pass[pass_number][0]
+                    net_id = branch["snapshot"]["netId"]
+                    net_pads = by_net[net_id]
+                    branch["snapshot"]["startPadId"] = start_id
+                    branch["snapshot"]["startX"] = next(p["x"] for p in net_pads
+                                                         if p["padId"] == start_id)
+                    branch["snapshot"]["startY"] = next(p["y"] for p in net_pads
+                                                         if p["padId"] == start_id)
+
+    expansion_count = (len(branches) if observed else
+                       (expectedExpansions if expectedExpansions is not None else
+                        _expected_callback_count(pads, reach_pass1=reachPass1)))
+    started_orderings = 3 if reachPass1 else 1
 
     receipt = {
-        "attempt": 0, "startedOrderings": 3, "completedOrderings": 3,
+        "attempt": 0, "startedOrderings": started_orderings,
+        "completedOrderings": started_orderings,
         "yieldedOrderings": 0, "finalizedOrderings": 0,
-        "selectedOrdering": -1, "expansions": 3,
-        "guidanceStarted": True, "comparisonComplete": True,
+        "selectedOrdering": -1, "expansions": expansion_count,
+        "guidanceStarted": True, "comparisonComplete": reachPass1,
         "termination": "net-one:NO_PATH",
     }
     result = {
@@ -181,7 +334,7 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
         "logicalWork": {"generatorAdvances": 3, "p07Slices": 3,
                         "p07OwnerSteps": 30 + len(diagnostic_events),
                         "diagnosticCloneSteps": len(diagnostic_events),
-                        "routingOwnerSteps": 30, "expansions": 3},
+                        "routingOwnerSteps": 30, "expansions": expansion_count},
         "boundary": {"requestCount": 1, "outcomeCount": 1,
                      "routeRetired": True, "candidateRetired": True,
                      "generatorComplete": False, "eventObserved": observed,
@@ -192,9 +345,10 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
     # plain control keeps the three owner slices but emits neither clone nor BRANCH rows.
     batches = [
         [header],
-        pads + diagnostic_events_by_pass.get(0, []) + (branches[0:1] if observed else []),
-        diagnostic_events_by_pass.get(1, []) + (branches[1:2] if observed else []),
-        diagnostic_events_by_pass.get(2, []) + (branches[2:3] if observed else []),
+        pads + diagnostic_events_by_pass[0] + branches_by_pass[0],
+        ([net_order_row] if net_order_row is not None else [])
+        + diagnostic_events_by_pass[1] + branches_by_pass[1],
+        diagnostic_events_by_pass[2] + branches_by_pass[2],
         [result],
     ]
     phases = ("SETUP", "ADVANCE", "ADVANCE", "ADVANCE", "REPORT")
@@ -205,7 +359,9 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
         pads_here = [row for row in batch if row["record"] == "PAD"]
         clones_here = [row for row in batch if row["record"] == "DIAGNOSTIC_CLONE"]
         is_advance = phases[ordinal] == "ADVANCE"
-        hash_bytes = sum(row["prefixBytes"] for row in branches_here)
+        hash_bytes = (sum(row["prefixBytes"] for row in branches_here)
+                      + sum(row["prefixBytes"] for row in batch
+                            if row["record"] == "NET_ORDER"))
         if ordinal == 1:
             hash_bytes += len(reader.pad_bytes(pads)) + context["pristineBytes"]
         rows.append({
@@ -219,11 +375,12 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
             "accounting": "MEASURED" if is_advance else "NOT_APPLICABLE",
             "observerChecks": 1 if is_advance else 0,
             "callbacks": len(branches_here), "censusRows": len(pads_here),
+            "netOrderRows": sum(row["record"] == "NET_ORDER" for row in batch),
             "hashInputBytes": hash_bytes,
             "serializedBeforeOwnLineBytes": sum(len(_line(row)) for row in batch),
         })
     rows.append({"record": "FOOTER", "group": 4, "operation": arm,
-                 "complete": True, "padCount": 4, "branchCount": len(branches),
+                 "complete": True, "padCount": len(pads), "branchCount": len(branches),
                  "groupCount": 5})
     raw = b"".join(_line(row) for row in rows)
     entry = {
@@ -238,7 +395,10 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
 
 
 def write_fixture(directory, repositoryRoot=REPOSITORY_ROOT, wirePath=None,
-                  padRows=PAD_ROWS, startIds=None, diagnosticPrefixesByArm=None):
+                  padRows=PAD_ROWS, startIds=None, diagnosticPrefixesByArm=None,
+                  netOrderIdsByArm=None, yieldedPriorByArm=None,
+                  promotionNetsByArm=None, pass1NetVisitsByArm=None,
+                  reachPass1ByArm=None):
     """Write a pinned READER_FIXTURE and return ``(spec_path, spec_sha256)``."""
     root = Path(repositoryRoot).resolve()
     wire_path = Path(wirePath) if wirePath is not None else DEFAULT_WIRE
@@ -269,11 +429,30 @@ def write_fixture(directory, repositoryRoot=REPOSITORY_ROOT, wirePath=None,
     wire_sha = source_manifest["files"][1]["sha256"]
 
     operation_entries = []
+    reference_reach_pass1 = (reachPass1ByArm or {}).get(1, True)
+    expected_plain_expansions = _expected_callback_count(
+        _pads(group=1, pad_rows=padRows),
+        yielded_prior=(yieldedPriorByArm or {}).get(1, False),
+        promotion_net=(promotionNetsByArm or {}).get(1),
+        net_order_ids=(netOrderIdsByArm or {}).get(1),
+        pass1_net_visits=(pass1NetVisitsByArm or {}).get(1))
+    if (reachPass1ByArm or {}).get(1) is False:
+        expected_plain_expansions = _expected_callback_count(
+            _pads(group=1, pad_rows=padRows),
+            yielded_prior=(yieldedPriorByArm or {}).get(1, False),
+            promotion_net=(promotionNetsByArm or {}).get(1), reach_pass1=False)
     for arm in range(4):
         raw, entry = make_operation(arm, source_manifest_sha256=source_sha,
                                     wire_sha256=wire_sha, padRows=padRows,
                                     startIds=startIds,
-                                    diagnosticPrefixes=(diagnosticPrefixesByArm or {}).get(arm))
+                                    diagnosticPrefixes=(diagnosticPrefixesByArm or {}).get(arm),
+                                    netOrderIds=(netOrderIdsByArm or {}).get(arm),
+                                    yieldedPrior=(yieldedPriorByArm or {}).get(arm, False),
+                                    promotionNet=(promotionNetsByArm or {}).get(arm),
+                                    pass1NetVisits=(pass1NetVisitsByArm or {}).get(arm),
+                                    expectedExpansions=expected_plain_expansions,
+                                    reachPass1=(reachPass1ByArm or {}).get(
+                                        arm, reference_reach_pass1))
         (base / entry["receipt"]["path"]).write_bytes(raw)
         operation_entries.append(entry)
     index = {
@@ -363,6 +542,10 @@ def _event(rows, ordinal):
                 and row["ordinal"] == ordinal)
 
 
+def _net_order(rows):
+    return next(row for row in rows if row["record"] == "NET_ORDER")
+
+
 def _pad(rows, pad_id):
     return next(row for row in rows if row["record"] == "PAD" and row["padId"] == pad_id)
 
@@ -376,11 +559,12 @@ def _repair_group_ledgers(rows):
         row["serializedBeforeOwnLineBytes"] = sum(len(_line(item)) for item in pending)
         row["callbacks"] = sum(item["record"] == "BRANCH" for item in pending)
         row["censusRows"] = sum(item["record"] == "PAD" for item in pending)
+        row["netOrderRows"] = sum(item["record"] == "NET_ORDER" for item in pending)
         row["diagnosticCloneSteps"] = sum(item.get("ownerSteps", 0)
                                           for item in pending
                                           if item["record"] == "DIAGNOSTIC_CLONE")
         required_hash = sum(item["prefixBytes"] for item in pending
-                            if item["record"] == "BRANCH")
+                            if item["record"] in ("BRANCH", "NET_ORDER"))
         row["hashInputBytes"] = max(row["hashInputBytes"], required_hash)
         pending = []
     footer = rows[-1]
@@ -422,7 +606,7 @@ def _rewrite_index(spec_path, mutate):
     return _write_spec(spec_path, spec)
 
 
-def _expected_choice(pads, reached, remaining, *, farthest=False):
+def _expected_choice(pads, reached, remaining):
     by_id = {row["padId"]: row for row in pads}
     distances = {
         candidate: min(abs(by_id[candidate]["x"] - by_id[known]["x"])
@@ -430,7 +614,7 @@ def _expected_choice(pads, reached, remaining, *, farthest=False):
                        for known in reached)
         for candidate in remaining
     }
-    boundary = (max if farthest else min)(distances.values())
+    boundary = min(distances.values())
     return min(candidate for candidate, distance in distances.items()
                if distance == boundary)
 
@@ -438,6 +622,21 @@ def _expected_choice(pads, reached, remaining, *, farthest=False):
 class BranchOrderReaderTests(unittest.TestCase):
     def _fixture(self, directory):
         return write_fixture(directory)
+
+    def _net_order_fixture(self, directory, **overrides):
+        options = dict(
+            netOrderIdsByArm={1: PROMOTED_CANONICAL_NET_IDS,
+                              2: PROMOTED_CANONICAL_NET_IDS,
+                              3: PROMOTED_MINIMUM_PAIR_NET_IDS},
+            promotionNetsByArm={1: "net-wide", 2: "net-wide", 3: "net-wide"},
+            pass1NetVisitsByArm={
+                1: ["net-wide", "net-alpha", "net-beta", "net-gamma"],
+                2: ["net-wide", "net-alpha", "net-beta", "net-gamma"],
+                3: ["net-wide", "net-beta", "net-gamma", "net-alpha"],
+            })
+        options.update(overrides)
+        return write_fixture(Path(directory) / "fixture", padRows=NET_PRIORITY_PAD_ROWS,
+                             **options)
 
     def _assert_rejects(self, spec_path, spec_sha, code):
         with self.assertRaises(ValueError) as caught:
@@ -453,12 +652,13 @@ class BranchOrderReaderTests(unittest.TestCase):
             self.assertEqual(result["operations"], 4)
             self.assertEqual(result["branches"], [0, 3, 3, 3])
             self.assertEqual(result["routeOutcomes"], ["TYPED_REQUEST_REJECTION"] * 4)
-            self.assertEqual(result["divergence"], {
-                "status": "FOUND", "controlOrdinal": 1, "treatmentOrdinal": 1,
-                "netId": "net-one", "rootPadId": "pad-a", "nearest": "pad-b",
-                "farthest": "pad-d",
-                "prefixSha256": _sha(b"same-prefix-pass-1"),
-            })
+            self.assertFalse(any(row["record"] == "NET_ORDER"
+                                 for row in _read_rows(spec_path, 0)))
+            self.assertEqual(result["netOrderComparison"],
+                             {"status": "NO_DIVERGENCE", "netCount": 1})
+            self.assertEqual(result["netOrderAudits"][3]["observedNetIds"], ["net-one"])
+            self.assertEqual(result["netOrderAudits"][3]["minimumPairs"], [
+                {"netId": "net-one", "distance": 10, "witnessPadIds": ["pad-a", "pad-b"]}])
             self.assertEqual(result["limitations"]["rootNativeAcceptance"],
                              "NOT_GRANTED_BY_READER")
             output_path = Path(directory) / "cli-result.json"
@@ -471,26 +671,23 @@ class BranchOrderReaderTests(unittest.TestCase):
                              "--output", str(output_path)])
 
     def test_plus_terminal_pad_ids_survive_four_arm_census_hash_and_choice_checks(self):
-        starts = ("UAC.IN+", "R3.+", "UAC.IN+")
+        starts = ("UAC.IN+", "UAC.IN+", "UAC.IN+")
         with tempfile.TemporaryDirectory(prefix="branch-order-plus-ids-") as directory:
             spec_path, spec_sha = write_fixture(
                 Path(directory) / "fixture", padRows=PLUS_PAD_ROWS, startIds=starts)
             result = reader.validate_spec(spec_path, spec_sha)
             self.assertEqual(result["status"], "PASS_READER_FIXTURE_ONLY")
             self.assertEqual(result["branches"], [0, 3, 3, 3])
-            self.assertEqual(result["divergence"]["status"], "FOUND")
-            self.assertEqual(result["divergence"]["rootPadId"], "C1.+")
-            self.assertEqual(result["divergence"]["nearest"], "UAC.IN+")
-            self.assertEqual(result["divergence"]["farthest"], "R3.+")
+            self.assertEqual(result["netOrderComparison"]["status"], "NO_DIVERGENCE")
             self.assertTrue(all(reader.token(row[0]) for row in PLUS_PAD_ROWS))
 
             manifest = _load_json(Path(spec_path).parent / "source-manifest.json")
             wire = next(row for row in manifest["files"] if row["role"] == "WIRE")
             self.assertEqual(wire["path"],
-                             "docs/task-evidence/Q100/branch-tree-study-v3-r1/WIRE.md")
+                             "docs/task-evidence/Q100/net-priority-r1/WIRE.md")
             for arm in range(4):
                 rows = _read_rows(spec_path, arm)
-                self.assertEqual(rows[0]["schema"], "p07-actual-branch-order-study-v3")
+                self.assertEqual(rows[0]["schema"], "p07-actual-branch-order-study-v4")
                 pads = [row for row in rows if row["record"] == "PAD"]
                 self.assertEqual([row["padId"] for row in pads],
                                  ["C1.+", "R3.+", "UAC.IN+", "UAC.PRE_L+"])
@@ -498,12 +695,201 @@ class BranchOrderReaderTests(unittest.TestCase):
                 self.assertEqual(result_row["context"]["padCensusSha256"],
                                  reader.sha(reader.pad_bytes(pads)))
                 branches = [row for row in rows if row["record"] == "BRANCH"]
-                if arm in (1, 2):
-                    self.assertEqual([row["snapshot"]["startPadId"] for row in branches],
-                                     ["UAC.IN+"] * 3)
-                elif arm == 3:
-                    self.assertEqual([row["snapshot"]["startPadId"] for row in branches],
-                                     ["UAC.IN+", "R3.+", "UAC.IN+"])
+                self.assertEqual([row["snapshot"]["startPadId"] for row in branches],
+                                 ["UAC.IN+"] * (3 if arm else 0))
+
+    def test_full_net_order_oracle_covers_minimum_not_root_distance_ties_singleton_and_wide(self):
+        visits = {
+            1: ["net-wide", "net-alpha", "net-beta", "net-gamma"],
+            2: ["net-wide", "net-alpha", "net-beta", "net-gamma"],
+            3: ["net-wide", "net-beta", "net-gamma", "net-alpha"],
+        }
+        with tempfile.TemporaryDirectory(prefix="branch-order-net-order-positive-") as directory:
+            spec_path, spec_sha = write_fixture(
+                Path(directory) / "fixture", padRows=NET_PRIORITY_PAD_ROWS,
+                netOrderIdsByArm={1: PROMOTED_CANONICAL_NET_IDS,
+                                  2: PROMOTED_CANONICAL_NET_IDS,
+                                  3: PROMOTED_MINIMUM_PAIR_NET_IDS},
+                promotionNetsByArm={1: "net-wide", 2: "net-wide", 3: "net-wide"},
+                pass1NetVisitsByArm=visits)
+            result = reader.validate_spec(spec_path, spec_sha)
+            self.assertEqual(result["status"], "PASS_READER_FIXTURE_ONLY")
+            self.assertEqual(result["netOrderComparison"], {
+                "status": "FOUND", "firstDifferingIndex": 1,
+                "controlNetId": "net-alpha", "treatmentNetId": "net-beta"})
+            control, treatment = result["netOrderAudits"][2:4]
+            self.assertEqual(control["observedNetIds"], PROMOTED_CANONICAL_NET_IDS)
+            self.assertEqual(treatment["observedNetIds"], PROMOTED_MINIMUM_PAIR_NET_IDS)
+            self.assertEqual(control["expectedNetIds"], PROMOTED_CANONICAL_NET_IDS)
+            self.assertEqual(treatment["minimumPairNetIds"], MINIMUM_PAIR_NET_IDS)
+            self.assertEqual(treatment["expectedNetIds"], PROMOTED_MINIMUM_PAIR_NET_IDS)
+            self.assertEqual(treatment["singletonNetIds"], ["net-single"])
+            self.assertEqual(treatment["minimumPairs"], [
+                {"netId": "net-alpha", "distance": 100,
+                 "witnessPadIds": ["a-0", "a-1"]},
+                {"netId": "net-beta", "distance": 1,
+                 "witnessPadIds": ["b-1", "b-2"]},
+                {"netId": "net-gamma", "distance": 1,
+                 "witnessPadIds": ["g-0", "g-1"]},
+                {"netId": "net-wide", "distance": 4_000_000,
+                 "witnessPadIds": ["w-0", "w-1"]},
+            ])
+            # The lexical witness is the first pair among the tied alpha minima;
+            # equal minimum distances between beta/gamma use net-ID order.
+            self.assertEqual(MINIMUM_PAIR_NET_IDS[:2], ["net-beta", "net-gamma"])
+            self.assertNotEqual(MINIMUM_PAIR_NET_IDS,
+                                ["net-gamma", "net-alpha", "net-beta",
+                                 "net-wide", "net-single"])
+            for arm, expected in ((1, visits[1]), (2, visits[2]), (3, visits[3])):
+                rows = _read_rows(spec_path, arm)
+                pass_one_nets = []
+                for branch in (row for row in rows if row["record"] == "BRANCH"
+                               and row["snapshot"]["pass"] == 1):
+                    if not pass_one_nets or pass_one_nets[-1] != branch["snapshot"]["netId"]:
+                        pass_one_nets.append(branch["snapshot"]["netId"])
+                self.assertEqual(pass_one_nets, expected)
+
+    def test_yielded_pass_zero_authorizes_null_promotion_only_with_complete_found_census(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-yielded-promotion-") as directory:
+            spec_path, spec_sha = write_fixture(
+                Path(directory) / "fixture", padRows=NET_PRIORITY_PAD_ROWS,
+                netOrderIdsByArm={1: CANONICAL_NET_IDS, 2: CANONICAL_NET_IDS,
+                                  3: MINIMUM_PAIR_NET_IDS},
+                yieldedPriorByArm={1: True, 2: True, 3: True})
+            result = reader.validate_spec(spec_path, spec_sha)
+            self.assertEqual(result["status"], "PASS_READER_FIXTURE_ONLY")
+            self.assertEqual(result["netOrderAudits"][2]["observedNetIds"], CANONICAL_NET_IDS)
+            self.assertEqual(result["netOrderAudits"][3]["observedNetIds"], MINIMUM_PAIR_NET_IDS)
+            for arm in (1, 2, 3):
+                rows = _read_rows(spec_path, arm)
+                order = _net_order(rows)
+                pass_zero = [row for row in rows if row["record"] == "BRANCH"
+                             and row["snapshot"]["pass"] == 0]
+                self.assertEqual(order["completedOrderings"], 1)
+                self.assertEqual(order["yieldedOrderings"], 1)
+                self.assertIsNone(order["promotedNet"])
+                self.assertEqual(len(pass_zero), len(NET_PRIORITY_PAD_ROWS) - 5)
+                self.assertTrue(all(row["snapshot"]["terminalReason"] == "FOUND"
+                                    for row in pass_zero))
+
+    def test_pass_one_not_reached_reports_not_observed_without_order_record(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-not-reached-") as directory:
+            spec_path, spec_sha = write_fixture(
+                Path(directory) / "fixture", reachPass1ByArm={1: False, 2: False, 3: False})
+            result = reader.validate_spec(spec_path, spec_sha)
+            self.assertEqual(result["netOrderComparison"], {
+                "status": "NOT_OBSERVED", "reason": "PASS1_NOT_REACHED"})
+            self.assertEqual(result["netOrderAudits"], [None, None, None, None])
+            for arm in range(4):
+                self.assertFalse(any(row["record"] == "NET_ORDER"
+                                     for row in _read_rows(spec_path, arm)))
+
+    def test_net_order_record_presence_uniqueness_and_prebranch_position_are_closed(self):
+        def remove_order(rows):
+            rows.remove(_net_order(rows))
+
+        def duplicate_order(rows):
+            order = _net_order(rows)
+            rows.insert(rows.index(order) + 1, copy.deepcopy(order))
+
+        def move_order_after_first_pass_one_branch(rows):
+            order = _net_order(rows)
+            rows.remove(order)
+            first = next(i for i, row in enumerate(rows)
+                         if row["record"] == "BRANCH" and row["snapshot"]["pass"] == 1)
+            rows.insert(first + 1, order)
+
+        for arm, mutate, code in (
+                (3, remove_order, "NET_ORDER_MISSING_OR_LATE"),
+                (3, duplicate_order, "NET_ORDER_DUPLICATE"),
+                (3, move_order_after_first_pass_one_branch, "NET_ORDER_MISSING_OR_LATE")):
+            with self.subTest(arm=arm, code=code), tempfile.TemporaryDirectory(
+                    prefix="branch-order-net-order-position-") as directory:
+                spec_path, _ = self._net_order_fixture(Path(directory))
+                spec_path, spec_sha = _rewrite_operation(spec_path, arm, mutate)
+                self._assert_rejects(spec_path, spec_sha, code)
+
+    def test_net_order_schema_strategy_census_and_complete_vector_are_independent(self):
+        cases = (
+            (lambda rows: _net_order(rows).update(extra=True), "NET_ORDER_SCHEMA"),
+            (lambda rows: _net_order(rows).pop("strategy"), "NET_ORDER_SCHEMA"),
+            (lambda rows: _net_order(rows).update(strategy="CANONICAL"), "NET_ORDER_IDENTITY"),
+            (lambda rows: _net_order(rows).__setitem__("pass", 2), "NET_ORDER_IDENTITY"),
+            (lambda rows: _net_order(rows)["netIds"].pop(), "NET_ORDER_CENSUS"),
+            (lambda rows: _net_order(rows)["netIds"].__setitem__(1,
+                 _net_order(rows)["netIds"][0]), "NET_ORDER_CENSUS"),
+            (lambda rows: _net_order(rows)["netIds"].__setitem__(0, "unknown-net"),
+             "NET_ORDER_CENSUS"),
+            (lambda rows: _net_order(rows)["netIds"].__setitem__(slice(0, 2),
+                 ["net-beta", "net-wide"]),
+             "NET_ORDER_VECTOR"),
+        )
+        for mutate, code in cases:
+            with self.subTest(code=code, mutate=mutate.__code__.co_firstlineno), \
+                    tempfile.TemporaryDirectory(prefix="branch-order-net-order-schema-") as directory:
+                spec_path, _ = self._net_order_fixture(Path(directory))
+                spec_path, spec_sha = _rewrite_operation(spec_path, 3, mutate)
+                self._assert_rejects(spec_path, spec_sha, code)
+
+    def test_net_order_counters_promotion_and_ambiguous_all_found_pass_are_rejected(self):
+        def mark_final_pass_zero_found(rows):
+            pass_zero = [row for row in rows if row["record"] == "BRANCH"
+                         and row["snapshot"]["pass"] == 0]
+            pass_zero[-1]["snapshot"]["terminalReason"] = "FOUND"
+
+        cases = (
+            (lambda rows: _net_order(rows).update(completedOrderings=2), "NET_ORDER_VALUES"),
+            (lambda rows: _net_order(rows).update(yieldedOrderings=True), "NET_ORDER_VALUES"),
+            (lambda rows: _net_order(rows).update(promotedNet="net-beta"),
+             "NET_ORDER_FAILED_PROMOTION"),
+            (mark_final_pass_zero_found, "NET_ORDER_AMBIGUOUS_PROMOTION"),
+        )
+        for mutate, code in cases:
+            with self.subTest(code=code, mutate=mutate.__code__.co_firstlineno), \
+                    tempfile.TemporaryDirectory(prefix="branch-order-net-order-promotion-") as directory:
+                spec_path, _ = self._net_order_fixture(Path(directory))
+                spec_path, spec_sha = _rewrite_operation(spec_path, 3, mutate)
+                self._assert_rejects(spec_path, spec_sha, code)
+
+        with tempfile.TemporaryDirectory(prefix="branch-order-net-order-yielded-bad-") as directory:
+            spec_path, _ = self._net_order_fixture(
+                Path(directory), yieldedPriorByArm={1: True, 2: True, 3: True},
+                netOrderIdsByArm={1: CANONICAL_NET_IDS, 2: CANONICAL_NET_IDS,
+                                  3: MINIMUM_PAIR_NET_IDS},
+                pass1NetVisitsByArm={
+                    1: ["net-alpha", "net-beta", "net-gamma", "net-wide"],
+                    2: ["net-alpha", "net-beta", "net-gamma", "net-wide"],
+                    3: ["net-beta", "net-gamma", "net-alpha", "net-wide"]})
+            spec_path, spec_sha = _rewrite_operation(
+                spec_path, 3, lambda rows: _net_order(rows).update(promotedNet="net-alpha"))
+            self._assert_rejects(spec_path, spec_sha, "NET_ORDER_YIELDED_PROMOTION")
+
+    def test_pass_one_callbacks_must_be_an_order_preserving_vector_subsequence(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-subsequence-") as directory:
+            spec_path, spec_sha = self._net_order_fixture(
+                Path(directory), pass1NetVisitsByArm={
+                    1: ["net-alpha", "net-beta"], 2: ["net-alpha", "net-beta"],
+                    3: ["net-alpha", "net-beta"]})
+            with self.assertRaisesRegex(ValueError, "NET_ORDER_BRANCH_SUBSEQUENCE"):
+                reader.validate_spec(spec_path, spec_sha)
+
+    def test_net_order_group_row_and_hash_preimage_ledgers_are_required(self):
+        cases = (
+            (lambda rows: _group(rows, 2).pop("netOrderRows"), "GROUP_SCHEMA", False),
+            (lambda rows: _group(rows, 2).update(netOrderRows=0),
+             "GROUP_RECORD_COUNTS", False),
+            (lambda rows: _group(rows, 2).update(serializedBeforeOwnLineBytes=0),
+             "GROUP_RECORD_COUNTS", False),
+            (lambda rows: _group(rows, 2).update(hashInputBytes=1),
+             "GROUP_HASH_BYTES", False),
+        )
+        for mutate, code, repair in cases:
+            with self.subTest(code=code, mutate=mutate.__code__.co_firstlineno), \
+                    tempfile.TemporaryDirectory(prefix="branch-order-net-order-ledger-") as directory:
+                spec_path, _ = self._net_order_fixture(Path(directory))
+                spec_path, spec_sha = _rewrite_operation(
+                    spec_path, 3, mutate, repair_groups=repair)
+                self._assert_rejects(spec_path, spec_sha, code)
 
     def test_plus_is_the_only_new_token_character(self):
         self.assertTrue(reader.token("UAC.IN+"))
@@ -518,8 +904,8 @@ class BranchOrderReaderTests(unittest.TestCase):
                         padId=value))
                 self._assert_rejects(spec_path, spec_sha, "PAD_VALUES_ORDER")
 
-    def test_v1_and_v2_data_headers_are_rejected_without_compatibility_fallback(self):
-        for version in ("v1", "v2"):
+    def test_v1_v2_and_v3_data_headers_are_rejected_without_compatibility_fallback(self):
+        for version in ("v1", "v2", "v3"):
             with self.subTest(version=version), \
                     tempfile.TemporaryDirectory(prefix="branch-order-old-header-") as directory:
                 spec_path, _ = self._fixture(Path(directory) / "fixture")
@@ -792,10 +1178,9 @@ class BranchOrderReaderTests(unittest.TestCase):
                 spec_path, spec_sha = _rewrite_operation(spec_path, 1, mutate)
                 self._assert_rejects(spec_path, spec_sha, code)
 
-    def test_tiny_exhaustive_choice_oracle_covers_nearest_farthest_and_ties(self):
-        # Exhaust all 3^3 placements around a fixed root. This oracle finds the
-        # extremal distance first, then independently chooses the lexical ID
-        # among equal-distance candidates.
+    def test_tiny_exhaustive_choice_oracle_keeps_nearest_for_every_arm_and_ties(self):
+        # Exhaust all 3^3 placements around a fixed root. The branch policy is
+        # canonical nearest in every pass and arm, with lexical ID ties.
         for xs in itertools.product((-1, 0, 1), repeat=3):
             pads = [dict(padId=pad_id, netId="net-one", componentId="c-" + pad_id,
                          x=x, y=0, role="SIGNAL")
@@ -805,8 +1190,7 @@ class BranchOrderReaderTests(unittest.TestCase):
             for pass_number in range(3):
                 reached = ["pad-a"]
                 remaining = ["pad-b", "pad-c", "pad-d"]
-                choose_far = pass_number == 1
-                start = _expected_choice(pads, reached, remaining, farthest=choose_far)
+                start = _expected_choice(pads, reached, remaining)
                 branches.append({"snapshot": _snapshot(
                     pass_number, start, total_expanded=pass_number + 1, pads=pads)})
             choices, total = reader.audit_choices(branches, pads, arm=3)
@@ -814,12 +1198,9 @@ class BranchOrderReaderTests(unittest.TestCase):
             for pass_number, choice in enumerate(choices):
                 expected_near = _expected_choice(
                     pads, ["pad-a"], ["pad-b", "pad-c", "pad-d"])
-                expected_far = _expected_choice(
-                    pads, ["pad-a"], ["pad-b", "pad-c", "pad-d"], farthest=True)
                 self.assertEqual(choice["nearest"], expected_near)
-                self.assertEqual(choice["farthest"], expected_far)
                 self.assertEqual(branches[pass_number]["snapshot"]["startPadId"],
-                                 expected_far if pass_number == 1 else expected_near)
+                                 expected_near)
 
     def test_multireached_branch_requires_found_then_updates_reached_set(self):
         pads = _pads()
@@ -914,12 +1295,12 @@ class BranchOrderReaderTests(unittest.TestCase):
             spec_path, spec_sha = _rewrite_operation(spec_path, 1, remove_last_pass)
             self._assert_rejects(spec_path, spec_sha, "MISSING_ORDERING_BRANCH_PROOF")
 
-    def test_observed_control_and_causal_prefix_mismatches_are_rejected(self):
+    def test_observed_control_and_pristine_order_prefix_mismatches_are_rejected(self):
         cases = (
             (2, lambda rows: _branch(rows, 1).update(prefixSha256="3" * 64),
              "OBSERVED_CONTROL_PARITY"),
-            (3, lambda rows: _branch(rows, 1).update(prefixSha256="4" * 64),
-             "DIVERGENCE_CAUSAL_PROOF"),
+            (3, lambda rows: _net_order(rows).update(prefixSha256="4" * 64),
+             "NET_ORDER_PRISTINE_PREFIX"),
         )
         for arm, mutate, code in cases:
             with self.subTest(arm=arm), \
@@ -927,6 +1308,15 @@ class BranchOrderReaderTests(unittest.TestCase):
                 spec_path, _ = self._fixture(Path(directory) / "fixture")
                 spec_path, spec_sha = _rewrite_operation(spec_path, arm, mutate)
                 self._assert_rejects(spec_path, spec_sha, code)
+
+    def test_treatment_later_branch_prefix_is_not_the_ordering_comparison(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-later-prefix-") as directory:
+            spec_path, _ = self._fixture(Path(directory) / "fixture")
+            spec_path, spec_sha = _rewrite_operation(
+                spec_path, 3, lambda rows: _branch(rows, 1).update(prefixSha256="4" * 64))
+            result = reader.validate_spec(spec_path, spec_sha)
+            self.assertEqual(result["netOrderComparison"],
+                             {"status": "NO_DIVERGENCE", "netCount": 1})
 
     def test_pass_zero_treatment_must_preserve_control_prefix(self):
         with tempfile.TemporaryDirectory(prefix="branch-order-pass-zero-") as directory:

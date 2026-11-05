@@ -229,6 +229,19 @@ seam changes no default policy, interpretation epoch, electrical model or Player
 surface; its source/unit prerequisite and remaining authored experiment are
 tracked in the [branch-order plan](task-evidence/Q100/branch-tree-order-r1/PLAN.md).
 
+A separate immutable `NetOrderStrategy` carries the private minimum-pair
+experiment through the generator request and detached routing continuation.
+Only an ordering stream with ROLE_WIDTHS in internal pass1 can use it. Search
+prepares each net's minimum Manhattan distance across all actual placed pad
+pairs with long arithmetic, sorts paired nets by minimum then net ID, and puts
+singleton nets last by ID. Pair preparation, insertion sorting and vector
+materialization consume ordinary owner work. Search installs the complete
+vector before applying existing failed-net promotion. Default callers retain
+canonical ordering; branch choice, other passes, limits and epochs are unchanged.
+An optional `NetOrderDiagnostics` callback fires after that installation and
+promotion, before branch work. Callback failure uses the existing latched
+diagnostic failure cleanup. Ordinary diagnostics receive no additional callback.
+
 `SeededPcbLayoutGenerator` also owns an opt-in request-zero observation boundary
 for two-layer Medium boards. It creates context from the actual pristine chosen
 placement, forwards the request's diagnostics, records the ordinary typed receipt
@@ -256,6 +269,35 @@ template/route through retirement,and reuses the existing native-context and
 physical-oracle owners. Its separate PS5/JDK8 host closes source/tool/bridge
 inputs before launch and requires independent reading plus root process review.
 No production default,epoch or Player surface changes.
+
+The current [v4 wire](task-evidence/Q100/net-priority-r1/WIRE.md) replaces the
+farthest arm with minimum-pair net ordering and canonical nearest branches. Its
+NET_ORDER record captures the actual installed Search vector and pristine
+placement at the optional callback boundary. The independent reader reconstructs
+the complete order from PAD coordinates and separately checks prior-pass yield
+or failed-net promotion authority. A vector difference is attributed only under
+matching census, context, counters, promotion and pristine prefix; it does not
+establish the copper prefix of a later differing branch or a playable layout.
+Raw preparation work remains charged. Current native source closure is1080 base
+inputs plus writer, host, reader and wire, with the exact base pinned by the
+reader. Historical v1/v3 packets retain their own source-bound acceptance;
+current headers reject those older formats.
+
+Cap17 and cost240 qualifier v2 input specs require a relative
+`frozenOracleDirectory` for the retained 1079-input graph oracle. These readers
+bind current1080 native captures and current modules separately from the exact
+older reader/exporter pair. Bounded no-reparse reads, full canonical graph
+recomputation and post-read hash checks preserve the old oracle bytes; v1 or
+omitted-directory specs reject. This is an explicit frozen test oracle, not a
+cross-version production compatibility layer.
+
+The graph exporter separately owns the fixed1079 source reference. Its current
+API and CLI require an explicit spec-relative frozen-reader directory and the
+exact d16 reader; source spec, pins, count and byte sum stay bound to that older
+capture. Regenerated artifacts identify the current exporter hash. Cap17/cost240
+do not load that current exporter: they use the exact retained4475 exporter/d16
+pair to compare the original canonical bytes. Actual CLI checks separately prove
+the regenerated artifact differs only in exporter provenance.
 
 `VerifierIsolation` owns browser shutdown proof separately from generation. Its
 bound-receipt wait retains a completed natural-exit proof only within that wait,

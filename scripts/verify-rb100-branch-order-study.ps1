@@ -13,7 +13,7 @@ $utf8=[Text.UTF8Encoding]::new($false)
 $repo=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $module=Join-Path $PSScriptRoot 'VerifierIsolation.psm1'
 $reader=Join-Path $repo 'tests/qualification/rb100-layout/branch-tree-study/read_branch_order_study.py'
-$wire=Join-Path $repo 'docs/task-evidence/Q100/branch-tree-study-v3-r1/WIRE.md'
+$wire=Join-Path $repo 'docs/task-evidence/Q100/net-priority-r1/WIRE.md'
 $java=Join-Path $JavaHome 'bin/java.exe'
 $javac=Join-Path $JavaHome 'bin/javac.exe'
 function Hash([string]$Path){(Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant()}
@@ -39,8 +39,8 @@ foreach($p in @($repo,$SourceManifestPath,$PythonExe,$java,$javac,$reader,$wire)
 Require ((Hash $PythonExe)-ceq'ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec') 'SELECTED_PYTHON_PIN'
 Require ((Hash $java)-ceq'e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce') 'SELECTED_JAVA_PIN'
 Require ((Hash $javac)-ceq'61fa6463ee5b59004719b9833a16b148740cfa9f2d1f5a95ca598cc90be04c64') 'SELECTED_JAVAC_PIN'
-Require ((Hash $reader)-ceq'3c41dc9970bd826447599a44d173248545094b6df0f36d22a5a6ea41a768d21d') 'READER_PIN'
-Require ((Hash $wire)-ceq'bc7379b8e1b7f17299b4787fe8e0ca119708cfc818109dadb00acba78dffc885') 'WIRE_PIN'
+Require ((Hash $reader)-ceq'f9dd073d8d23c3cc8febef33ffe4f2facf1cd38a1cdfe480940c17a9c86d3ef2') 'READER_PIN'
+Require ((Hash $wire)-ceq'7aa6316d6254021b494d2a46100a5c747d0e4de7dd0bd34141aaf5f40d7f683d') 'WIRE_PIN'
 Require ((Get-Item -LiteralPath $SourceManifestPath).Length-le4194304) 'SOURCE_MANIFEST_SIZE'
 Require ((Hash $SourceManifestPath)-ceq$SourceManifestSha256) 'SOURCE_MANIFEST_PIN'
 $outer=[Diagnostics.Stopwatch]::StartNew()
@@ -72,7 +72,7 @@ Write-NewJson (Join-Path $OutputRoot 'host-launch.json') ([ordered]@{
 $preflight=@'
 import hashlib, json, pathlib, sys
 reader_path=pathlib.Path(sys.argv[1]); manifest_path=pathlib.Path(sys.argv[2])
-assert hashlib.sha256(reader_path.read_bytes()).hexdigest()=='3c41dc9970bd826447599a44d173248545094b6df0f36d22a5a6ea41a768d21d'
+assert hashlib.sha256(reader_path.read_bytes()).hexdigest()=='f9dd073d8d23c3cc8febef33ffe4f2facf1cd38a1cdfe480940c17a9c86d3ef2'
 sys.path.insert(0,str(reader_path.parent))
 import read_branch_order_study as r
 raw=r.stable_read(manifest_path,4*1024*1024)
@@ -152,7 +152,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         }elseif($row.role-ceq'WRITER'){$paths+=@(Join-Path $repo $row.path)}
     }
     foreach($b in $bridges){$paths+=@(Join-Path $scratch $b.name)}
-    Require ($paths.Count-eq1074) 'COMPILER_SOURCE_CENSUS'
+    Require ($paths.Count-eq1075) 'COMPILER_SOURCE_CENSUS'
     $argsPath=Join-Path $scratch 'sources.txt'
     [IO.File]::WriteAllLines($argsPath,@($paths|ForEach-Object{'"'+$_.Replace('\','/')+'"'}),$utf8)
     [IO.File]::Copy($argsPath,(Join-Path $OutputRoot 'compiler-sources.txt'),$false)
@@ -223,7 +223,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         sourceManifestSha256=$SourceManifestSha256;nativeElapsedNanos=$nativeNanos;cleanupEnvelopeNanos=$cleanupNanos;
         cleanupEnvelope='CONSERVATIVE_NATIVE_MINUS_SUM_ARM_INTERVALS';scratchRemoved=$scratchRemoved;
         outerElapsedBeforeOwnReceiptNanos=(Nanos $outer);separateFinalReceiptCloseElapsed='NOT_EXPORTED';
-        compiledProductionEvidence='UNCHANGED_BASE_NOT_RENEWED';layoutQualification=$false;playable100=0;beta='HELD'})
+        compiledProductionEvidence='FINAL_PRODUCTION_GATES_NOT_RUN_HERE';layoutQualification=$false;playable100=0;beta='HELD'})
     Write-Output 'REPORTED_NATIVE_STUDY_ROOT_ACCEPTANCE_REQUIRED'
 }catch{
     $failure=$_

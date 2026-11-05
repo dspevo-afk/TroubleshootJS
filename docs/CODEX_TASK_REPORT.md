@@ -1,46 +1,277 @@
-# Current checkpoint: canonical prefix reconciled; frozen net-priority implementation next
+# Current checkpoint: private net-priority negative accepted locally; publication pending
 
-UTC2026-11-05. Active X=OS-temp/tsj-q100-branch-tree-study-20261105-r1,
-branch codex/q100-branch-tree-study-20261105. Documentation/analysis implementation
-1211a432c4b26f0322a892637989d9c305c4b439 normally pushed/exact remote verified.
-Gmail 1a1ab22de1ac53f4 SENT ONCE; no duplicate receipt email.
-Source parentf0f76bbd85c0ce46b3de67db4e9ac175b3bacd95. Packet
-docs/task-evidence/Q100/canonical-pass1-reuse-r1/
-qualification.json SHAf7a0092b7742a33070453eabcd3d84561a60278bcb7d9e6d4e39d0fed2272925; next PLAN frozen before code/runtime.
-Prior actual-study implementation6b3087b66ef6a91edb9af9adda566e9c56b79960 and
-receiptf0f76bbd normally pushed/exact verified; Gmail1a1ab0527f89dce3 SENT ONCE.
-Prior reader Gmail1a1aa7d776d0a009 also SENT ONCE; no receipt duplicates.
+UTC2026-11-05. Active Y=OS-temp/tsj-q100-net-priority-20261105-r1,
+branch codex/q100-net-priority-20261105; HEAD/source parent
+0fac75f105e9c4340bda9bba615f4a70f7aa477d. Required gates and final root review
+complete; no implementation commit/push/email yet. QY=OS-temp/tsj-q100-fixed-prefix-
+capture-840a8ef24dbb448f830d2786a95a1591/net-priority-r1.
+[Acceptance packet](task-evidence/Q100/net-priority-r1/README.md),
+[source/receipt pins](task-evidence/Q100/net-priority-r1/qualification.json),
+[preserved failures](task-evidence/Q100/net-priority-r1/FAILURES.md).
 
-Current nearest op1/2 pass1 tailglobal230/localbranch117 matches D_SENSE,
-U2D.SENSOR/rootCFLT_D.1, exact prefix98d389.../269607B, pristine6553ad.../252676B,
-root9007199254740993/place-6587958367974952701/route8445301674744508279/request0/
-attempt4.117 FOUND rows are search goals, not published links or complete routing.
-Zero yields means no generator finalizer/comparator. Separate accepted QV D
-capture binds the SAME1079 raw base inputs/87478294B/manifest68b1489... and
-current authored freeze0a9b6a6a...; BFS/heap both650TOP/8010BOTTOM vs630 at48/48.
-SOURCE_BOUND_INFERENCE only: V3 captured no masks/graph digest/path/pass1reason.
-No fresh current path650/66nodes, BRANCH_QUALITY_LIMIT or graph equality claimed.
-Root rejected/corrected initial source-review provenance overclaim; oldnote kept.
+Private minimum-pair net order is opt-in ROLE_WIDTHS/orderingStream/pass1, with
+charged preparation/sort/vector work and existing failed-net promotion afterward.
+Actual-vector hook precedes branch work. Defaults, nearest choice, physics,
+epochs26/v28, costs and budgets unchanged. Exact separate root9007199254740993/
+place-6587958367974952701/route8445301674744508279/request0/attempt4: all4 typed
+rejections,0yield/0finalized/winnernull. Canonical918222exp/308observedbranches;
+treatment997882/326. NOT_ADOPTED; playable100=0/betaHELD. FOUND is no path,
+publisher/quality reason, physical/access/functional or impossibility proof.
 
-Fresh pinned data/source joins and census arithmetic PASS; four changed-source
-contracts reviewed, source-only leaves complete. No production/study source edit,
-new native/graph/Dijkstra/GWT/Player/normal run. Existing final43 reader tests,
-17CLIcontrols/tiny/authored remain attached to6b3087b6 tested bytes. Current
-layout26/dependency28/defaults/budgets unchanged, playable100=0/betaHELD.
-Frozen next treatment: opt-in pass1 minimum pair distance/net-ID order, no-pair
-nets last, existing failed-net promotion then canonical nearest branches.
-Independent entire60-net oracle; charge/cache pair preparation. D_SENSE has4pads,
-min210/diameter1240; illustrative rank13 afterpromotion vs15 observed is no
-capacity/solvability proof. Two-pad-first28 not selected. PLAN lists finalgates.
+Final closed native1080=850production+224contracts+6static/87535768bytes,
+manifestSHA92e4a3ba69de6a8666f9789e7facafb5d2a6d8461f42c0f2ccca8e95f7141e7b.
+Study1084/compiler1075;49Python unit inputs and all four study tools rechecked.
+PASS: fixture2372; selected native2/8/33 incloriginal22; finalPythonR6 52+413,
+six declared file-symlink skips; CLI25 and source/bridge/junction controls;
+v4 tiny/authored finite root reviews; saved72/20bounds/sixliteral comparison.
+After exporter fix all8 independent diagnostic readers and3v2negatives ran fresh
+on the unchanged8native captures: QY/native-gates-prep-r1/remaining-readers-exporter-r2/result.json
+PASS11controls/current42+44pins/native1080/fullquery-source trees stablebeforeafter.
+No pre-fix Python pass is reused as final-source proof.
 
-Next: isolated net-priority implementation from this frozen plan; preserve X
-as exact accepted source. This doc receipt needs no new runtime or secondemail.
-QX=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/branch-tree-study-r1.
-No current runtime actors. Two old failedscratch trees/file evidence preserved;
-old E06R1 namespace uncertain/unrecovered, ambient8928 untouched. Main5f05b005
-dirty9/6/staged0; Desktop e0c36885 dirty7/73/staged0; U/W/V preserved. Full30
-owner-excluded; HARD bodies unread/unrun here,historicalunreadUNCERTIFIED;
-HARD/PSYCHOTIC unavailable/unrun. CI self-hosted registration prerequisite.
+ReviewR1 blocked publication for mixed exporter1079 spec/pins/bytes and new1080
+reader/count. Fixed: exporter now requires explicit spec-relative frozen d16
+reader, retains exact1079 context and produces current provenance. Cap/cost use
+old4475/d16 pair for unchanged canonical oracle; unused current-exporter bindings
+retired. Actual exporter CLI1positive+6negatives PASS inclrealjunction removed/
+targetpreserved. Independent exact-byte comparison permits ONLY exporterSHA to
+differ from old602fb graph; oldoracle untouched. Source-only reviewR2 CLEAR,
+QY/FINAL_ACCEPTANCE_REVIEW_R2.md SHAfd1829c402ddb9c687730a6e120aa1fd5038e79a3b693b21c52fa25c8e1f9d06.
+Root separately accepts final actual gate evidence. Earlier failures stay FAIL.
+
+Actual JDK8/GWT Player/Developer builds and exact fresh rebuilds PASS1202inputs/
+357outputs. Current9/E06State10/privacy1 pass final compiled root reviewR5.
+Privacycleanup35024ms<120000/shutdown9628ms<15000. Fresh source/output auditR2
+confirms native/build/compiled consumed inputs unchanged after Python-only fixes,
+so these runs and exact3 normal MEDIUM roots/four-candidate envelope remain valid.
+Normal3sixphases380.160s; hostcleanup1.119s; exact owned profile removal1721ms,
+outer5.015s<120s and wrong-allocation canary PASS. Separate cleanup resolves raw
+sequence's pending-profile status. Owned tsj-n3h-4c21e00f0d29 profile gone; raw
+owner/host retained. All new actors terminal, both actual junctions removed,
+targets preserved; no gate active. Retain normal build outputs/external evidence.
+Unexported operation/cleanup splits remain NOT_EXPORTED, not guessed.
+
+Full30 owner-excluded; full maintained native matrix/full seed/value/role Python
+oracles NOT_RUN; full2-by-31 electrical NOT_RENEWED. HARD/PSYCHOTIC unavailable/
+unrun; protected bodies unread/unrun here, historical unread UNCERTIFIED. No
+Player flow changed: manual input/screenshots N/A. Self-hosted CI runner setup
+still prerequisite, no CI-green claim. Old consumed-close E06R1 failed cleanup
+uncertified at OS-temp/TroubleshootJS/verify/5e446ea3a88b6a0e3f74/
+2d6ce12b44f341dc9ecf94032b36930d/manifest.json: browser14116/start639294472690745890/
+port58320,preview34180/start639294472514546595/port58264,14descendant tuples missing.
+Do not terminate uncertain resources. New passes do not certify that namespace.
+
+Preserved Main5f05b005 (9tracked/6untracked/0staged), Desktop e0c36885(7/73/0),
+acceptedXclean0fac75f1 and U/V/W/prior EOL/failure evidence. Main receives only
+mirrored checkpoint, Desktop supplies readonly JDK8. Root owns all files after
+worker handoffs; no subagent ran gates or performed publication.
+Next: explicit final diff/staging and staged-byte checks; normal push
+HEAD:origin/codex/q100-physical-feasibility/exact remote SHA verify, then one
+completion Gmail and a receipt commit with no duplicate email. Next unstarted:
+freeze treatment pass1 OUT_F terminal-to-publisher diagnostic under original
+limits; actual100 physical/access/functional/solvability proofs still required.
+Continue roadmap under the standing request; no pending user decision.
+
+# Historical checkpoint: net-priority implementation and gate recovery
+
+UTC2026-11-05. Active Y=OS-temp/tsj-q100-net-priority-20261105-r1,
+branch codex/q100-net-priority-20261105, HEAD/source parent
+0fac75f105e9c4340bda9bba615f4a70f7aa477d. Implementation remains uncommitted,
+unpushed and unaccepted; no new email. QY=OS-temp/tsj-q100-fixed-prefix-capture-
+840a8ef24dbb448f830d2786a95a1591/net-priority-r1. Frozen plan canonical-pass1-
+reuse-r1/PLAN.md SHA1e09cf1a8b29b8551ea85d23ba35df1bdd26050f2f20e30f58b257d30274f1d4;
+v4 wire net-priority-r1/WIRE.md SHA7aa6316d6254021b494d2a46100a5c747d0e4de7dd0bd34141aaf5f40d7f683d.
+
+Private minimum-pair net order is opt-in ROLE_WIDTHS/orderingStream/pass1 only;
+pair metrics, sorting and vector materialization charged through existing work.
+Failed-net promotion follows sorting. Optional NetOrderDiagnostics hook observes
+complete installed vector before branch work. Defaults, other passes, nearest
+branches, physics, costs, budgets and epochs unchanged. Native source review and
+hook amendment CLEAR SOURCE_ONLY; current integrated source review CLEAR SOURCE_ONLY (QY/INTEGRATED_SOURCE_REVIEW_R2.md).
+Root owns all repository files after final four-file handoff. One leaf prepares
+only new external final reader adapters; other source-only leaves completed.
+No worker executes runtimes or publication.
+
+Final LF native base QY/native-freeze-r4/inputs.json
+SHA92e4a3ba69de6a8666f9789e7facafb5d2a6d8461f42c0f2ccca8e95f7141e7b,
+228856 raw bytes/87535768 summed bytes/1080=850production+224contracts+6static.
+R5 actual maintained P07NetOrderContractTest PASS2372, native29.0601625s including
+compile/child cleanup, outer41.3437424s, exit0/termination/sourceStable true.
+Wrong-manifest pre-namespace rejection PASS expected raw1/0.763888s. No separate
+native operation/cleanup split exported. R4 pre-LF PASS preserved, not final-byte
+proof. Prior R1 array census, R2 fixture compile and R3 scratch-sort inspection
+failures preserved; assertions/oracles unchanged. Owned exact-byte attributes
+and narrow LF normalization avoid raw-byte pin changes during Git publication.
+
+Current producer03237bd3c44f8008b6c8fe2eb3ebc3ee4184bbd28a4c16b24c090da70393683a;
+hostd23042334db231108cd7c40cbca911450f3bcdd1c0da1b33dfce0618f2e9cadc;
+readerf9dd073d8d23c3cc8febef33ffe4f2facf1cd38a1cdfe480940c17a9c86d3ef2.
+Python R3 final reader PASS52/0skips/5.5591581s; flat PASS408/5declared
+file-symlink skips/54.9309686s. Selected Python-B/PS5, exit0, termination and all49
+source inputs stable. R2 pre-frozen-reference-fix PASS52/404 preserved but no
+longer the flat final-source proof. Prior Python failures retained; no oracle or
+expected rejection code weakened. All13 flat exact-byte attribute paths retained.
+Actual CLI25=2positive+23negative PASS,
+plus real NTFS junction rejection PASS with exact link removed/target preserved.
+Initial CLI sequencer failed parameter binding before child namespace; corrected
+by omitting absent ExpectedError argument. Prepared expected ledger codes and
+last-pass0 ambiguity mutation corrected before actual control execution.
+
+Native v4 sources frozen1084/base1080/compiler1075. Tiny manifestc91c6d7e5d33f7dc7df8a37ae372c58b855b8a50894e5f3d00846fa979ebd3a7;
+authored20ae58f04338d7be662e03c6535f4bc315e7507a205f2e3838980f94e2e604cb.
+Actual saved42/v12 tiny four arms PASS finite root review R2; all REQUEST_FINALIZED,
+34-net full vectors differ atindex1 RAIL5/AC_LINE, observed291branches each.
+Outer119.5655961s, native56.051824101s, conservativecleanup39.837850701s;
+non-arm includingcompile/preflight/reader/finalreceipt upper103.351622701s<120s.
+No access/functional/playable100 proof. Current bridge manifest519B
+SHAe31649f0ea2a5740c998c4859bdc595b2ca75651e689ff56b1d146e721b3cd8b.
+Real wrong-source closed BASE_SOURCE_ROWS/pre-JVM rejection and wrongbridge
+COMPILE_GUARD/precompiler rejection PASS expected rawhost1; exact owned scratch
+removed with separate measured cleanup. Source bodies and budgets unchanged.
+Review wrapper R1 finished assertions/wrote receipt then failed stale summary key;
+R2 audits all1084 source rows and exits0 with fresh receipt. R1 not acceptance.
+
+Exact authored separate root9007199254740993/place-6587958367974952701/
+route8445301674744508279/request0/attempt4 completed PASS finite root review R2.
+All four typed request rejections; controls918222 expansions/308observedbranches,
+treatment997882/326branches, all0yield/0finalized/winnernull. Allthree orderings
+complete; final request termination A_COIL_LOW:NO_PATH. Full60-net vectors differ
+atindex1 CTRL_RETURN/RAIL12 after common C_COIL_LOW promotion. No default adoption,
+no route/impossibility/path/quality inference. Outer141.5287897s/native77.8643256s;
+conservativecleanup38.409183s/non-arm upper102.073647101s<120s. Scratch removed,
+allchildren terminal,1084 source rows still match. Existing caps/oracles retained.
+
+Final selected native2/8/33 all PASS, root QY/native-final-root-review-r3.json.
+Elapsed59.0658513/61.3139837/147.8228554s includingcompile/childcleanup;
+exit0/terminationtrue/cleanupPASS/1080inputs stable. Original sequencer R1 FAILED
+on regression footer: it expected full-matrix wording for an explicit selected
+suite list. Maintained source always emits focused wording for explicit Suite.
+Root R3 validates exact actual suite sets/33including original22, focused footer,
+raw result/output/receipt hashes, process observations, host pins and cleanup.
+No source/assertion/budget change or native rerun. Full maintained matrix and
+its separate full seed/value/role Python oracles NOT_RUN; R1 failure preserved.
+
+Actual final Player JDK8/GWT build PASS94.564615s,1202inputs/357outputs,
+inputb6e91f8b4bd7dc9f8964b3f3237ece9ddadcba480c7ce63ac7687a89e54c657b /
+output28fe93c15e573b1eac344e0d08c3a4b4932a8e7aa0f1417d91980e19b495c9d7.
+Exact357 Player files archived before Developer. Developer build PASS136.0769337s,
+inputc58c1f21833586f253901cc87558d405c7edca367e2764d0201d0822e8ece85b /
+output67ac65d06a2643c8b62664f0239b0f90c08cad9054edc12ebdd982918d62955a.
+Active war is Developer. Actual production wrapper7fc069191195b9237ae1434ab83408d67449fbf0bca7354b7ae27b072a881c5d
+was last written11:51:44.835Z, before Player11:54:55.681Z and Developer11:58:26.577Z
+launches; both launches and post-source checks bind7fc. Earlier handoff5dd was
+interim/no runtime proof. Build/archive source stayed unchanged during runs.
+Root owns repo and external prepared files except the four Python files assigned below.
+Compiled Current9/E06State10 PASS, wrapper242.7932524/212.1983923s, source/output
+identities stable. Current browser shutdown7790ms<15000, cleanupsuccess true;
+aggregate operation/cleanup split not exported by wrapper. E06 has10 PASS routes
+and cleanupsuccess true. No fresh browser/preview actors remain; old uncertain
+E06R1 remains separate and uncertified.
+
+Y sparse bootstrap omitted some tracked support; root materialized exact
+HEAD-canonical-equal accepted V raw capacity-bound qualification metadata,
+maintained verify-a03-browser/preview scripts and adrive graph WIRE_SPEC only.
+Receipts maintained-gate-support-r1/maintained-preview-support-r1/graph-wire-
+support-r1. No compiled outputs/protected bodies copied; nativebase unchanged.
+Fresh six saved native cohorts PASS72 public structural cases,456.4710582s
+includingcompile/childcleanup. Independent reader PASS72/20retained bounds/six
+literal physical and non-timing expectations; no all72 geometry claim. Root
+saved-final-root-review-r1.json closes raw captures/source/process/cleanup,
+real CLI5negatives+NTFSjunction, selected-host2prechild negatives and liveY1080/
+pinnedV-Y map+five metadata negatives. Historical W/V raw oracles unchanged;
+W live source audit NOT_RENEWED due42rawEOL drift; old audit historical only.
+No normal-population expansion.
+
+All eight current native diagnostic captures PASS,519.9763112s combined launcher
+including repeated compiles/childcleanup. No further JVM rerun needed if consumed
+native1080 stays unchanged. R1 launcher failure preserved (truncated pin). R2
+then FAILED preparing readers: it compared current1080 to older authoring recipes.
+Root preparerR3 pins five exact read-only recipe files/count1079 and emits only
+current1080 specs; no graph oracle bytes changed. Actual six-reader sequence:
+baseline/D/LOAD PASS, cap17 FAIL rawexit2 SOURCE_GRAPH_SPEC_EVIDENCE_INVALID.
+Cause: current-count migration also changed the frozen graph oracle context.
+Worker net_priority_census_consumers now owns ONLY read_load12_cap17.py,
+read_load12_cost240.py and corresponding two test files under rb100-layout.
+No worker runtimes. Must distinguish exact frozen1079 oracle from current1080
+capture, preserve every frozen helper/graph/path/hash, add literal regression
+expectations and refresh only direct current pins. Those four Python files are
+WRITELOCKED to that worker until handoff; other sources root-owned. Fresh Python
+unit and affected reader/source-pin gates required after fix; old failures remain.
+No changed production Java/GWT/native inputs, no native/build rerun required.
+
+Output-swap failures retained: R1 positive failed uppercase variant status before
+mutation; R2 installed exact Player28fe and archived Developer67ac but the parent
+incorrectly treated all copy/validation time126.507s as cleanup, so that timing
+gate FAIL remains. R3 phase-separated Developer restore PASS: total108.9152245s,
+operation94.0767794s, cleanup13.9253818s and conservative host cleanup14.8392022s
+under unchanged120s. Actual R3 wrong-digest/held-lock canaries PASS. R3 Player
+restore FAIL before mutation because the already-verified Developer archive
+exists. R4 helper7311da4e16df8792ec943abfa44713f7ea84aa76cbc7bba4c1af2f8c68479f9c
+and host1a79f30ba6b24f72f12f5435bbb77421b70e4447b067e84b2b208e233ebb9fcf
+handed off. Actual R4 wrong-digest/held-lock canaries PASS; R4 Player restore PASS,
+run restore-player-for-privacy-net-priority-r4: operation97.6965755s,
+cleanup15.0007477s, conservative host cleanup15.982364s under120s. It reuses
+only the exact357-file archive with full pinned R2 identity/provenance checks.
+Old archives, failures and outputs retained. Player privacy/final compiled
+review/normal3 remain NOT_RUN. No publication or email for this implementation.
+
+Frozen-reference correction now requires v2 current cap17/cost240 input specs
+with relative frozenOracleDirectory. Exact old qualityd16/exporter4475 modules
+must independently reproduce canonical frozen1079 graph bytes; current1080
+native and current quality17f/exportercce remain separately pinned. No golden
+change. Final cap17 SHA6efe7f9d493f7ff5a8fc24f59af7fd3818e598fd9c546e9b7f0491619302c256;
+cost240 SHA522de368f6e0fd8d0e3fd5fdf8bd10d6bcd31e3fc6a7652138bd756f6dc7cca1.
+Read-only frozen-reference source review CLEAR_SOURCE_ONLY; successful external
+frozen-directory loading requires actual CLI proof still pending. Branch host
+reviewer owns only new external current caller/pin/reader adapters. Normal3 cleanup
+adapter source handed off SHA c6657ab2011561f9c4fd96a2e854fbe4534e43150b2800bea0dd7d1dbfb1a42b.
+Fresh units now PASS as above; remaining five independent readers required. Production
+and native1080 inputs unchanged; audited reuse prevents repeating eight JVMs.
+Visible Player input/screenshots N/A (no visible flow change). Older uncertain
+E06R1 consumed-close namespace preserved/uncertified, ambient8928 untouched.
+
+Prior published1211a432c4b26f0322a892637989d9c305c4b439/receipt0fac75f1 and
+completion Gmail1a1ab22de1ac53f4 SENT ONCE; no duplicate. Accepted X clean0fac;
+Main5f05b005 preserved9tracked/6collapseduntracked/staged0 except mirrored top;
+Desktop e0c36885 preserved7tracked/73collapseduntracked/staged0; U/W/V preserved.
+Playable100=0/beta held. Approved normal roots -2230691771308388107,
+6702341860553104274,-8360266000248569150 only. Full30 owner-excluded; HARD bodies
+unread/unrun here, historical unread UNCERTIFIED; HARD/PSYCHOTIC unavailable/unrun.
+CI self-hosted runner registration prerequisite. No user decision pending.
+
+
+Root finish-compiled-normal3-r1 FAILED at PlayerPrivacy. Maintained Q100Player
+setup rawexit2/9.3328694s: production-build receipt still Developer after the
+output-only restore. Failure preserved; no receipt edited or synthesized.
+Actual fresh Player build PASS98.6995388s and fresh Developer136.9916184s reproduce
+exact original1202input/357output hashes. PrivacyR2 PASS1route/67.6321267s;
+cleanup35024ms<120000, browser shutdown9628ms<15000, all owned actors cleaned.
+Final source identity audit PASS. Compiled root reviewerR4 failed one stale wrapper
+path; R5 changes that exact path only and PASSES all build/archive/privacy/Current9/
+E06State10 assertions. R5 SHA38e4d432debcad6f200f91615c6b9539260b4d435edf156855a9a4ea3ffc4add.
+Root compiled result QY/production-gates-prep-r1/root-final-compiled-review-net-priority-r1/result.json.
+Normal3 final six-phase sequence PASS exact3/four-candidate envelope; no full30.
+Task-only profile tsj-n3h-4c21e00f0d29/host-output/profile removed. Actual wrong-
+allocation canary and exact cleanup PASS via run-normal3-profile-cleanup-final-r1.ps1;
+all raw host/owner evidence retained, no process terminated. Cleanup raw receipt
+production-gates-prep-r1/normal3-profile-cleanup-net-priority-r1.json; root wrapper
+normal3-profile-cleanup-host-final-r1/{WrongAllocation,ExactCleanup}-result.json.
+
+Remaining current independent reader sequence RUNNING session1135, script
+native-gates-prep-r1/run-remaining-readers-final-r3.ps1 SHA32a9cf173dfcff661c0d1f4193b2dbaefa253520db8e07418a766d01cc9cbf66.
+Output remaining-readers-final-r2/result.json. Prior R2 sequencer failed before any
+reader because inline PS5 JSON-array wrapping counted1 not1080; R3 separates parse
+and array materialization, preserving every assertion and old failure namespace.
+Root also corrected two boolean identity expressions before first execution.
+Refresh preparer PASS preparation only; cap/cost v2 specs and relative frozenOracleDirectory
+emitted with graph/reference fields unchanged. Current parent42 pins SHAa533e7c6120a82ef9675ad19dc70ba59772480db2d0c3e8f694b1a1b36da5155,
+7855raw/1772689sourcebytes; graph44 SHA5db58b5fa61f053f91ed4330725a8db29a4b124246e14d552e7e969a7e53f58e,
+8232raw/1905801sourcebytes. Remaining cap/cost/remainder/guard/graph reader proofs and
+three actual v2 boundary negatives pending. No native/build/browser runtime active.
+After success: root final source/evidence review, sanitize packet, roadmap/report,
+explicit stage/diff/byte checks, normal commit/push/exact remote verify and one Gmail.
+No new publication/email. Main9tracked/6untracked/0staged, Desktop7/73/0 and Xclean preserved.
+
 
 # Historical checkpoint: actual-generator producer/host implementation in progress
 
