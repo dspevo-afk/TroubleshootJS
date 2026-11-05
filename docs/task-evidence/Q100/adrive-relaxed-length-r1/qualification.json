@@ -4,8 +4,13 @@
   "candidate": {
     "branch": "codex/q100-adrive-length-bound-20261104",
     "sourceParent": "6f905668caf7c62c0cfb42818200fbb86649c99e",
-    "publication": "PENDING",
-    "notification": "NOT_SENT"
+    "publication": "PUSH_VERIFIED_EXACT_REMOTE_SHA",
+    "notification": {
+      "kind": "GMAIL",
+      "status": "SENT_ONCE",
+      "messageId": "1a1a940143ba9f27"
+    },
+    "commit": "e2e3c5d99786e0c0c29b3e2de9174525092477f2"
   },
   "scope": "Necessary length/cap exclusion in the exact retained fixed graph; no routing treatment or board-impossibility claim",
   "rootReview": {

@@ -412,7 +412,9 @@ wrong-SHA/tampered-receipt/junction controls and root review pass. Final source,
 variant and archived Player audits justify unchanged-input gate reuse; no new
 production/native/GWT/population qualification is claimed. The operation uses
 59/640groups,7.124s/90s,max4.689s/5s and0actualP07steps. Failed integration and
-host attempts remain preserved. Publication is pending in the packet/checkpoint.
+host attempts remain preserved. Implementation `e2e3c5d99786e0c0c29b3e2de9174525092477f2`
+is normally pushed and exact remote verified; completion Gmail `1a1a940143ba9f27`
+was sent once. The packet/checkpoint records publication.
 No routing/model/epoch/budget change or playable100 admission follows;
 playable100=0/beta held, full30 excluded and HARD/PSYCHOTIC unavailable/unrun.
 Next is a bounded source audit and frozen generic earlier-prefix/order treatment

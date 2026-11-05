@@ -1,6 +1,9 @@
 # A_DRIVE fixed-prefix relaxed length bound
 
-Status: **LOCALLY ACCEPTED FINITE DIAGNOSTIC; PUBLICATION PENDING** (2026-11-04).
+Status: **ACCEPTED AND PUBLISHED FINITE DIAGNOSTIC** (2026-11-04).
+Implementation `e2e3c5d99786e0c0c29b3e2de9174525092477f2` was normally pushed and
+exact remote SHA verified; completion Gmail `1a1a940143ba9f27` was sent once.
+See [publication.md](publication.md).
 Source parent `6f905668caf7c62c0cfb42818200fbb86649c99e`, branch
 `codex/q100-adrive-length-bound-20261104`. The frozen [R2 plan](PLAN.md) is
 unchanged, SHA-256 `d7cb074e9703daa022f852e775417427bf20e561f2d236482169b61038f395c2`.
