@@ -1,6 +1,10 @@
 # Actual-generator branch-order experiment
 
-Status: finite private execution/report locally accepted; publication pending.
+Status: finite private execution/report accepted and published as
+6b3087b66ef6a91edb9af9adda566e9c56b79960. Normal push to
+origin/codex/q100-physical-feasibility and exact remote SHA verified.
+Completion Gmail 1a1ab0527f89dce3 SENT ONCE; no second email for this receipt.
+The frozen qualification packet records pre-publication status.
 Routing result: NOT_ADOPTED. Farthest pass1 produced no finalized authored route at
 the existing cap. Playable100 remains0 and public beta remains held.
 

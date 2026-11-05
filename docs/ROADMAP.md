@@ -456,7 +456,9 @@ below supersedes its next-action checkpoint. Full30 excluded,HARD/PSYCHOTIC
 unavailable/unrun,playable100=0,beta held.
 
 The [actual-generator branch-order study](task-evidence/Q100/branch-tree-study-v3-r1/README.md)
-is locally validated as a finite private report; publication is pending. Forty-
+is validated as a finite private report and published as
+6b3087b66ef6a91edb9af9adda566e9c56b79960 on origin/codex/q100-physical-feasibility;
+exact remote SHA verified, completion Gmail 1a1ab0527f89dce3 sent once. Forty-
 three reader tests,seventeen real CLI controls,source/bridge rejection canaries,
 and actual four-arm tiny/authored PS5/JDK8 runs pass independent reading and root
 process/context review. V3 preserves real '+' pad IDs and accounts for verified

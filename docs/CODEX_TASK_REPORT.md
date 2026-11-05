@@ -1,9 +1,11 @@
-# Current checkpoint: actual branch-order study validated; negative result, publication pending
+# Current checkpoint: branch-order study published; canonical pass1 diagnosis next
 
 UTC2026-11-05. Active X=OS-temp/tsj-q100-branch-tree-study-20261105-r1,
-branch codex/q100-branch-tree-study-20261105, actual HEAD/sourceparent
-0a1e370e08a932b55efc961433e26f98f3bec8ac. Current producer/host/v3 report is locally
-accepted for finite private execution only; no new commit/push/email yet. See
+branch codex/q100-branch-tree-study-20261105. Implementation 6b3087b66ef6a91edb9af9adda566e9c56b79960
+normally pushed to origin/codex/q100-physical-feasibility and exact remote SHA
+verified. Gmail 1a1ab0527f89dce3 SENT ONCE; never resend for the receipt.
+Source parent0a1e370e08a932b55efc961433e26f98f3bec8ac. Producer/host/v3 report
+accepted for finite private execution only; routing NOT_ADOPTED. See
 docs/task-evidence/Q100/branch-tree-study-v3-r1/README.md and qualification.json
 SHAa9d391b63a124bdbc234094e5415dcba7ead7b6709fd7ba63ac6d0bf208e85a1.
 QX=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/branch-tree-study-r1.
@@ -53,9 +55,9 @@ change. VisiblePlayer input/screenshots NOT_APPLICABLE. Full30/full2by31 notrene
 Bounded source reviews no blockingfindings; producerzerocapfailfast asymmetry is
 nonblocking becauseactualflagsserialized and finalreader43rdtestenforcesproof.
 
-Next: root finaldiff/privacy/stagedrawbyte checks,normalcommit/push established
-origin/codex/q100-physical-feasibility/exactSHAproof and one completionGmail. Then
-isolate canonicalpass1 no-yield/quality boundary from exactdata/source before
+Final diff/privacy/stagedrawbyte checks PASS for19 intendedpaths; staged source
+matches testedbytes. Documentation receipt needs no new runtime or secondmail.
+Next: isolate canonicalpass1 no-yield/quality boundary from exactdata/source before
 another routing treatment; don'tinfer PublisherfailurefromtailFOUND alone.
 Preserve compile/v1plus/v2parity failures andsourcecaptures; two failedscratch
 trees remain asfileevidence with provenchildexit. Success/controlscratch removed,
