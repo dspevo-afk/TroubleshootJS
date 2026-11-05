@@ -517,7 +517,9 @@ semantics; only charged capture group IDs shift. No production/default/epoch/
 budget/adoption or playable qualification changes; playable100=0/betaHELD.
 No fresh GWT/Player/electrical/normal3/full30 gate is claimed. Next is exact OUT_F
 path/earlier-prefix ownership analysis before a bounded generic routing treatment.
-Publication is pending normal commit/push and one completion email.
+Implementation `7cd565b361c9853a8044373ab3f49d499c8325ba` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
+`1a1acfc83d6f6b36` sent once. The documentation receipt sends no second email.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
