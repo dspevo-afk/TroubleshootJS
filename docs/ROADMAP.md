@@ -538,6 +538,21 @@ unavailable/unrun. Implementation `c38c6084f03f3f47cc7e450fceb00809f898aa68` nor
 completion Gmail `1a1add8b9ac9a5b4` sent once. Receipt sends no second email. Next is actual same-net transition authority
 and earlier-prefix ownership analysis before a generic routing treatment.
 
+The [OUT_F saturated-prefix ledger audit](task-evidence/Q100/outf-prefix-ledger-r1/README.md)
+is accepted for the same exact private branch. All48 holes are typed VIA on11
+other nets; OUT_F has none and its four pads are PTH. All246 pad identities and
+coordinates reconcile to the source-owned native fingerprints. The current
+source upper bound of48 blocks every transition before the later reuse check.
+Scoped source review confirms the captured ordinary graph is a lower bound for
+the actual branch goals, excluding its960 length ceiling at this fixed prefix.
+This establishes no whole-board impossibility, new route or playable100 layout.
+The frozen reader recomputes the prior complete report exactly; independent
+geometry reconstruction, ledger reconciliations and input/source checks pass.
+Documentation/source-data audit only: no fresh native/GWT/Player/electrical/
+normal3/full30 qualification, production change, budget change or adoption.
+Earlier failures/restrictions remain. Publication pending; playable100=0/betaHELD.
+Next is one separately frozen generic earlier-prefix or endpoint-order experiment.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

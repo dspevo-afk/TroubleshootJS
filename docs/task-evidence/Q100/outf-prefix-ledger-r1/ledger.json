@@ -1,0 +1,805 @@
+{
+  "schema": "tsj-outf-saturated-prefix-ledger-v1",
+  "status": "VALIDATED_DERIVED_SOURCE_DATA_AUDIT_ONLY",
+  "parent": "9d1204535f0c0d30250973be40ef37b6a3554917",
+  "acceptedGraphImplementation": "c38c6084f03f3f47cc7e450fceb00809f898aa68",
+  "planSha256": "cab5b5dcc62f0136f3568bd72097f1b8b299a6045d5705b8c4c5005a65a82add",
+  "candidate": {
+    "sourceManifestSha256": "8bc48095905b2e34b3315653c12e54262a8ef6aa4770f9db2c8a59239d4f40ab",
+    "operation": 4,
+    "rootSeed": "9007199254740993",
+    "placementSeed": "-6587958367974952701",
+    "routingSeed": "8445301674744508279",
+    "attempt": 4,
+    "request": 0,
+    "pass": 1,
+    "placementSha256": "6553ad3df059c6bfe2980efe39ff951d3f6322fc0694b2c96e26508f8d3dfe2e"
+  },
+  "branch": {
+    "ordinal": 248,
+    "netVectorPosition": 28,
+    "netId": "OUT_F",
+    "startPadId": "RSH_F.1",
+    "rootPadId": "CSTORE_F.2",
+    "reachedPadIds": [
+      "CSTORE_F.2"
+    ],
+    "foundTerminalPadId": "CSTORE_F.2",
+    "branchRecordGroup": 57
+  },
+  "inputs": {
+    "receiptBytes": 2067050,
+    "receiptSha256": "f9d0b6ea02470d8fc901489ce3ef7653cf1a5acae799390f8150fd852f2322fe",
+    "publisherPayloadBytes": 557331,
+    "publisherPayloadSha256": "dc18ace29fe1f729c097374dcb7f6e995655febc26ecea22df89a63d2e7fcea8",
+    "sourceManifestSha256": "8bc48095905b2e34b3315653c12e54262a8ef6aa4770f9db2c8a59239d4f40ab",
+    "readerSpecSha256": "8efd13459930ba54a5c1d1fcacbe7fe99a497b5cec8ae1bcef7154e32503902f"
+  },
+  "prefix": {
+    "traces": 180,
+    "totalHoles": 48,
+    "geometryBytes": 271606,
+    "geometrySha256": "cbc98315295693be7cddc31d0327f6f89e5819fedb2b4ad1d65a25e7decc2739",
+    "holeCountsByKind": {
+      "VIA": 48
+    },
+    "holeCountsByNet": {
+      "AUX_GATE": 1,
+      "A_DRIVE": 2,
+      "A_SENSE": 3,
+      "CTRL_RETURN": 9,
+      "D_CMD": 5,
+      "D_SENSE": 5,
+      "HV_POS": 1,
+      "HV_RETURN": 1,
+      "LOAD12": 7,
+      "MON_SENSE": 3,
+      "RAIL5": 11
+    },
+    "holes": [
+      {
+        "id": "p07-via/AUX_GATE/91/1",
+        "kind": "VIA",
+        "netId": "AUX_GATE",
+        "x": 3550,
+        "y": 1230,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/A_DRIVE/85/1",
+        "kind": "VIA",
+        "netId": "A_DRIVE",
+        "x": 3790,
+        "y": 2470,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/A_DRIVE/86/1",
+        "kind": "VIA",
+        "netId": "A_DRIVE",
+        "x": 3810,
+        "y": 2310,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/A_SENSE/93/1",
+        "kind": "VIA",
+        "netId": "A_SENSE",
+        "x": 3800,
+        "y": 1850,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/A_SENSE/93/2",
+        "kind": "VIA",
+        "netId": "A_SENSE",
+        "x": 3800,
+        "y": 1780,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/A_SENSE/94/1",
+        "kind": "VIA",
+        "netId": "A_SENSE",
+        "x": 4290,
+        "y": 1870,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/CTRL_RETURN/18/1",
+        "kind": "VIA",
+        "netId": "CTRL_RETURN",
+        "x": 3490,
+        "y": 1950,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/CTRL_RETURN/18/2",
+        "kind": "VIA",
+        "netId": "CTRL_RETURN",
+        "x": 3450,
+        "y": 1950,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/CTRL_RETURN/28/1",
+        "kind": "VIA",
+        "netId": "CTRL_RETURN",
+        "x": 3020,
+        "y": 1930,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/CTRL_RETURN/28/2",
+        "kind": "VIA",
+        "netId": "CTRL_RETURN",
+        "x": 3020,
+        "y": 1970,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/CTRL_RETURN/42/1",
+        "kind": "VIA",
+        "netId": "CTRL_RETURN",
+        "x": 2440,
+        "y": 1710,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/CTRL_RETURN/42/2",
+        "kind": "VIA",
+        "netId": "CTRL_RETURN",
+        "x": 2440,
+        "y": 1750,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/CTRL_RETURN/43/1",
+        "kind": "VIA",
+        "netId": "CTRL_RETURN",
+        "x": 2250,
+        "y": 1670,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/CTRL_RETURN/47/1",
+        "kind": "VIA",
+        "netId": "CTRL_RETURN",
+        "x": 2530,
+        "y": 1680,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/CTRL_RETURN/49/1",
+        "kind": "VIA",
+        "netId": "CTRL_RETURN",
+        "x": 3450,
+        "y": 1400,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/D_CMD/100/1",
+        "kind": "VIA",
+        "netId": "D_CMD",
+        "x": 3490,
+        "y": 1840,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/D_CMD/100/2",
+        "kind": "VIA",
+        "netId": "D_CMD",
+        "x": 3440,
+        "y": 1840,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/D_CMD/100/3",
+        "kind": "VIA",
+        "netId": "D_CMD",
+        "x": 3440,
+        "y": 1440,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/D_CMD/100/4",
+        "kind": "VIA",
+        "netId": "D_CMD",
+        "x": 3370,
+        "y": 1340,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/D_CMD/99/1",
+        "kind": "VIA",
+        "netId": "D_CMD",
+        "x": 3510,
+        "y": 610,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/D_SENSE/96/1",
+        "kind": "VIA",
+        "netId": "D_SENSE",
+        "x": 3540,
+        "y": 1970,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/D_SENSE/97/1",
+        "kind": "VIA",
+        "netId": "D_SENSE",
+        "x": 3250,
+        "y": 1730,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/D_SENSE/97/2",
+        "kind": "VIA",
+        "netId": "D_SENSE",
+        "x": 3490,
+        "y": 1730,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/D_SENSE/98/1",
+        "kind": "VIA",
+        "netId": "D_SENSE",
+        "x": 4150,
+        "y": 1640,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/D_SENSE/98/2",
+        "kind": "VIA",
+        "netId": "D_SENSE",
+        "x": 3500,
+        "y": 1640,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/HV_POS/103/1",
+        "kind": "VIA",
+        "netId": "HV_POS",
+        "x": 1470,
+        "y": 1350,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/HV_RETURN/116/1",
+        "kind": "VIA",
+        "netId": "HV_RETURN",
+        "x": 1510,
+        "y": 1280,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/LOAD12/62/1",
+        "kind": "VIA",
+        "netId": "LOAD12",
+        "x": 2230,
+        "y": 1930,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/LOAD12/62/2",
+        "kind": "VIA",
+        "netId": "LOAD12",
+        "x": 2230,
+        "y": 1970,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/LOAD12/65/1",
+        "kind": "VIA",
+        "netId": "LOAD12",
+        "x": 2590,
+        "y": 1670,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/LOAD12/65/2",
+        "kind": "VIA",
+        "netId": "LOAD12",
+        "x": 2590,
+        "y": 1750,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/LOAD12/68/1",
+        "kind": "VIA",
+        "netId": "LOAD12",
+        "x": 4590,
+        "y": 1420,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/LOAD12/68/2",
+        "kind": "VIA",
+        "netId": "LOAD12",
+        "x": 3490,
+        "y": 1420,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/LOAD12/68/3",
+        "kind": "VIA",
+        "netId": "LOAD12",
+        "x": 3390,
+        "y": 1420,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/MON_SENSE/109/1",
+        "kind": "VIA",
+        "netId": "MON_SENSE",
+        "x": 2700,
+        "y": 970,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/MON_SENSE/110/1",
+        "kind": "VIA",
+        "netId": "MON_SENSE",
+        "x": 1950,
+        "y": 1070,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/MON_SENSE/110/2",
+        "kind": "VIA",
+        "netId": "MON_SENSE",
+        "x": 2080,
+        "y": 1070,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/RAIL5/69/1",
+        "kind": "VIA",
+        "netId": "RAIL5",
+        "x": 3490,
+        "y": 1820,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/RAIL5/70/1",
+        "kind": "VIA",
+        "netId": "RAIL5",
+        "x": 3390,
+        "y": 1820,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/RAIL5/71/1",
+        "kind": "VIA",
+        "netId": "RAIL5",
+        "x": 3350,
+        "y": 1970,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/RAIL5/71/2",
+        "kind": "VIA",
+        "netId": "RAIL5",
+        "x": 3350,
+        "y": 1880,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/RAIL5/74/1",
+        "kind": "VIA",
+        "netId": "RAIL5",
+        "x": 3780,
+        "y": 1820,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/RAIL5/74/2",
+        "kind": "VIA",
+        "netId": "RAIL5",
+        "x": 3780,
+        "y": 1770,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/RAIL5/75/1",
+        "kind": "VIA",
+        "netId": "RAIL5",
+        "x": 3620,
+        "y": 2440,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/RAIL5/75/2",
+        "kind": "VIA",
+        "netId": "RAIL5",
+        "x": 3380,
+        "y": 2380,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/RAIL5/77/1",
+        "kind": "VIA",
+        "netId": "RAIL5",
+        "x": 4210,
+        "y": 1440,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/RAIL5/83/1",
+        "kind": "VIA",
+        "netId": "RAIL5",
+        "x": 3970,
+        "y": 2450,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      },
+      {
+        "id": "p07-via/RAIL5/83/2",
+        "kind": "VIA",
+        "netId": "RAIL5",
+        "x": 3930,
+        "y": 2450,
+        "drillRadius": 2,
+        "landRadius": 6,
+        "exposure": "EXPOSED"
+      }
+    ],
+    "currentNetHoleIds": [],
+    "allPadCount": 246,
+    "currentNetPads": [
+      {
+        "padId": "CSTORE_F.2",
+        "netId": "OUT_F",
+        "x": 2720,
+        "y": 820,
+        "escape": [
+          0,
+          -1,
+          35
+        ],
+        "attachment": "PLATED_THROUGH_HOLE",
+        "mountingSide": "TOP",
+        "exposure": "EXPOSED",
+        "padBounds": [
+          2707,
+          807,
+          26,
+          26
+        ],
+        "probeBounds": [
+          2705,
+          805,
+          30,
+          30
+        ],
+        "copperFaces": [
+          "TOP",
+          "BOTTOM"
+        ],
+        "fingerprintRecord": "CSTORE_F.2@2720,820 escape=0,-1,35 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=2707,807,26,26 probe=2705,805,30,30"
+      },
+      {
+        "padId": "DF.A",
+        "netId": "OUT_F",
+        "x": 1950,
+        "y": 260,
+        "escape": [
+          -1,
+          0,
+          50
+        ],
+        "attachment": "PLATED_THROUGH_HOLE",
+        "mountingSide": "TOP",
+        "exposure": "EXPOSED",
+        "padBounds": [
+          1937,
+          247,
+          26,
+          26
+        ],
+        "probeBounds": [
+          1935,
+          245,
+          30,
+          30
+        ],
+        "copperFaces": [
+          "TOP",
+          "BOTTOM"
+        ],
+        "fingerprintRecord": "DF.A@1950,260 escape=-1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=1937,247,26,26 probe=1935,245,30,30"
+      },
+      {
+        "padId": "JOF.2",
+        "netId": "OUT_F",
+        "x": 2320,
+        "y": 1930,
+        "escape": [
+          0,
+          -1,
+          35
+        ],
+        "attachment": "PLATED_THROUGH_HOLE",
+        "mountingSide": "TOP",
+        "exposure": "EXPOSED",
+        "padBounds": [
+          2307,
+          1917,
+          26,
+          26
+        ],
+        "probeBounds": [
+          2305,
+          1915,
+          30,
+          30
+        ],
+        "copperFaces": [
+          "TOP",
+          "BOTTOM"
+        ],
+        "fingerprintRecord": "JOF.2@2320,1930 escape=0,-1,35 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=2307,1917,26,26 probe=2305,1915,30,30"
+      },
+      {
+        "padId": "RSH_F.1",
+        "netId": "OUT_F",
+        "x": 2960,
+        "y": 740,
+        "escape": [
+          -1,
+          0,
+          50
+        ],
+        "attachment": "PLATED_THROUGH_HOLE",
+        "mountingSide": "TOP",
+        "exposure": "EXPOSED",
+        "padBounds": [
+          2947,
+          727,
+          26,
+          26
+        ],
+        "probeBounds": [
+          2945,
+          725,
+          30,
+          30
+        ],
+        "copperFaces": [
+          "TOP",
+          "BOTTOM"
+        ],
+        "fingerprintRecord": "RSH_F.1@2960,740 escape=-1,0,50 attachment=PLATED_THROUGH_HOLE mount=TOP exposure=EXPOSED pad=2947,727,26,26 probe=2945,725,30,30"
+      }
+    ]
+  },
+  "transitionBound": {
+    "policy": "FULLER_TWO_LAYER",
+    "policyTransitions": 4,
+    "policyHoleMaximum": 48,
+    "actualMaximum": "NOT_EXPORTED; SOURCE_CONSTRAINED_TO_AT_MOST_48",
+    "currentPrefixHoleCount": 48,
+    "cases": [
+      {
+        "currentTransitions": 0,
+        "requiredTotal": 49,
+        "policyMaximum": 48,
+        "blocked": true
+      },
+      {
+        "currentTransitions": 1,
+        "requiredTotal": 50,
+        "policyMaximum": 48,
+        "blocked": true
+      },
+      {
+        "currentTransitions": 2,
+        "requiredTotal": 51,
+        "policyMaximum": 48,
+        "blocked": true
+      },
+      {
+        "currentTransitions": 3,
+        "requiredTotal": 52,
+        "policyMaximum": 48,
+        "blocked": true
+      }
+    ],
+    "pathViaFitsBeforeViaFits": true,
+    "compatibleExistingHoleLookupReached": false
+  },
+  "ordinaryGraph": {
+    "targetId": "op4/pass1/target0",
+    "publisherPayloadSha256": "dc18ace29fe1f729c097374dcb7f6e995655febc26ecea22df89a63d2e7fcea8",
+    "graphPayloadSha256": "2903b948ddaba14228d263685648ccb6d117092589b7696d944864e20350204a",
+    "prefixGeometrySha256": "cbc98315295693be7cddc31d0327f6f89e5819fedb2b4ad1d65a25e7decc2739",
+    "pathTupleSha256": "5d59ae5107d61d08a8b48cd5583d1031bd67a522d8fcbf68467472ea3ec8a990",
+    "goalFacesSha256": "9fd21b5318371520957b8c55e2d68ace5eb4c2d6c05a5bebad0841be350912e4",
+    "faces": [
+      {
+        "layer": 0,
+        "goalFaceCount": 1,
+        "reachableGoalCount": 0,
+        "lengthEligibleGoalCount": 0,
+        "shortestReachable": null,
+        "shortestLengthEligible": null,
+        "foundEndpointLength": null
+      },
+      {
+        "layer": 1,
+        "goalFaceCount": 1,
+        "reachableGoalCount": 1,
+        "lengthEligibleGoalCount": 0,
+        "shortestReachable": {
+          "cell": 38031,
+          "x": 2720,
+          "y": 820,
+          "direct": 320,
+          "edges": 170,
+          "length": 1700,
+          "pathNodeCount": 171,
+          "pathSha256": "dd2d80e8b96b7693e6491ab60647e6330f45492f266bbb0eee5ed79a7bf707a9"
+        },
+        "shortestLengthEligible": null,
+        "foundEndpointLength": 1700
+      }
+    ],
+    "scope": "ORDINARY_EDGE_LENGTH_ONLY"
+  },
+  "sources": [
+    {
+      "path": "tests/qualification/rb100-layout/branch-tree-study/read_branch_order_study.py",
+      "bytes": 137864,
+      "sha256": "a314cdc732069bca17f73a724cd21295af334d9baead82fcdb13bf0600c5554e"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java",
+      "bytes": 169802,
+      "sha256": "759831c91345aedab9e78d8c83785019f7e59287a18f4f99f7af14876776c474"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbPadPlacement.java",
+      "bytes": 5202,
+      "sha256": "bfe7f77b9ca77250a1b08ff35a1a7cd5c469ac6e13deb26011814a7cce2b27b7"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbCopperAccess.java",
+      "bytes": 1450,
+      "sha256": "a31d5e74b60615fb30bb57c1ea4f2f787d4550e4a9027a9e839a32f4abe59b8c"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbBoardLayout.java",
+      "bytes": 91180,
+      "sha256": "ba2b00da838846f61e07388a1f97806146a7891e6628b08b38e6db20d0178eee"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbTerminalAttachment.java",
+      "bytes": 207,
+      "sha256": "18383d3ffc54ae3db7bf57ff79c8e1e2fa22a178706a4dd0135e3f760482f8b4"
+    },
+    {
+      "path": "src/com/lushprojects/circuitjs1/client/PcbCopperLayer.java",
+      "bytes": 495,
+      "sha256": "e84912595c66892b9440678e2d6637763c957af02f2f7963c06dd26de75944a6"
+    }
+  ],
+  "validation": {
+    "frozenReaderFullReportRecomputedExactly": true,
+    "nativeGeometryHashRebuilt": true,
+    "all246PadIdentityCoordinateJoin": true,
+    "independentPadMembershipScan": true,
+    "independentHoleNetCountReconciliation": true,
+    "inputSourceCloseHashesStable": true,
+    "elapsedSeconds": 17.98944650008343,
+    "newNativeRun": "NOT_RUN",
+    "newGwt": "NOT_RUN",
+    "newPlayer": "NOT_APPLICABLE",
+    "normalThree": "NOT_RUN",
+    "full30": "EXCLUDED_BY_OWNER"
+  },
+  "limits": {
+    "freshNativeQualification": false,
+    "routingAdoption": false,
+    "layoutQualification": false,
+    "wholeBoardImpossibility": false,
+    "playable100": 0,
+    "beta": "HELD",
+    "hardPsychotic": "UNAVAILABLE_UNRUN",
+    "protectedHard": "UNREAD_UNRUN_HERE_HISTORICAL_UNCERTIFIED"
+  },
+  "publication": "PENDING"
+}
