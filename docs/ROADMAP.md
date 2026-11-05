@@ -441,6 +441,20 @@ Next is its frozen wire/independent reader, explicitly separating the plain
 entrypoint receipt control from observed full-branch controls, then bounded
 execution on the pristine actual candidate at cost60/cap48. Playable100=0/beta held.
 
+The [source-bound branch-order reader/wire prerequisite](task-evidence/Q100/branch-tree-study-r1/README.md)
+is locally validated. Frozen R3 distinguishes a plain receipt-only control and
+three observed arms; four per-arm receipts preserve independent90s/640group/5s/
+32768step accounting. The independent census/reached/choice oracle,strict report
+and source binding,33tests,actual positive fixture CLI and seven negative controls
+including a real junction pass. Exact native1079,Python46,GWT1202/Developer357 and
+Player archive357 audits justify unchanged-input evidence reuse; no production,
+new native/GWT or population qualification is renewed. Prior failed attempts stay
+preserved. Publication is pending normal push and one new completion Gmail.
+The authored study remains NOT_RUN. Next is the isolated actual-generator Java
+producer/PS5-JDK8 driver,complete source/tool/bridge freeze and real tiny host
+canaries before exact authored controls/treatment. Full30 excluded,HARD/PSYCHOTIC
+unavailable/unrun,playable100=0,beta held.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

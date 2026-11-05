@@ -1,0 +1,598 @@
+"""Strict, read-only independent branch-choice evidence consumer.
+
+Fixture acceptance certifies this reader only. Native reports still require root
+review of the actual compiler, process, context and cleanup evidence.
+"""
+from __future__ import annotations
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import stat
+
+SCHEMA = 'p07-actual-branch-order-study-v1'
+KINDS = ('READER_FIXTURE', 'TINY_NATIVE', 'AUTHORED')
+ARMS = (
+    ('PLAIN_ENTRY_RECEIPT_CONTROL', 'PLAIN_BEGIN', 'CANONICAL_NEAREST', False),
+    ('OBSERVED_DEFAULT_NEAREST', 'BOUNDARY_CONVENIENCE', 'CANONICAL_NEAREST', True),
+    ('OBSERVED_EXPLICIT_NEAREST', 'BOUNDARY_EXPLICIT', 'CANONICAL_NEAREST', True),
+    ('SECOND_ORDER_FARTHEST', 'BOUNDARY_EXPLICIT', 'SECOND_ORDER_FARTHEST', True),
+)
+LIMITS = dict(operationNanos=90_000_000_000, groups=640, groupNanos=5_000_000_000,
+              p07Steps=32768, receiptBytes=8*1024*1024, lineBytes=65536,
+              padRows=1024, prefixBytes=1024*1024, viaCost=60, holeCap=48,
+              transitionCap=4, orderings=3, requestExpansions=1_000_000,
+              branchExpansions=100_000, cells=250_000)
+SNAP_INTS = ('pass startX startY rootX rootY gridWidth gridHeight goalsTop goalsBottom '
+             'prefixViaCount reachedPadCount initialManhattanDistance '
+             'minimumExploredManhattanDistance branchExpanded totalExpanded '
+             'expandedTop expandedBottom frontierCount bestStateCount '
+             'relaxedBoundWorkUnits relaxedBoundOrdinaryProbes relaxedBoundViaProbes '
+             'relaxedBoundRefreshes').split()
+SNAP_BOOLS = ('relaxedBoundStarted relaxedBoundComplete relaxedBoundObservationChecked '
+              'relaxedBoundLiveLayoutStable relaxedBoundRouterStateStable '
+              'relaxedBoundRouterEffectsStable').split()
+SNAP_STRINGS = ['netId', 'startPadId', 'rootPadId', 'terminalReason']
+RECEIPT_FIELDS = ('attempt startedOrderings completedOrderings yieldedOrderings '
+                  'finalizedOrderings selectedOrdering expansions guidanceStarted '
+                  'comparisonComplete termination').split()
+GROUP_FIELDS = ('record operation ordinal phase elapsedBeforeOwnLineNanos '
+                'generatorAdvances p07Slices p07Steps accounting observerChecks '
+                'callbacks censusRows hashInputBytes serializedBeforeOwnLineBytes').split()
+BASE_SHA = '68b1489b28cb5cec4f17289021e009f7048bfa869a3538aed7be44060ef9efbd'
+TOKEN = re.compile(r'[-A-Za-z0-9_.:]{1,128}\Z')
+HEX = re.compile(r'[0-9a-f]{64}\Z')
+
+
+def need(condition, code):
+    if not condition:
+        raise ValueError(code)
+
+
+def keys(value, names, code):
+    need(type(value) is dict and set(value) == set(names), code)
+
+
+def integer(value, lo=0, hi=2**63-1):
+    return type(value) is int and lo <= value <= hi
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def digest(value):
+    return type(value) is str and HEX.fullmatch(value) is not None
+
+
+def token(value):
+    return type(value) is str and TOKEN.fullmatch(value) is not None
+
+
+def strict_json(raw):
+    need(type(raw) is bytes and not raw.startswith(b'\xef\xbb\xbf'), 'JSON_BOM')
+    def pairs(rows):
+        out = {}
+        for k, v in rows:
+            need(k not in out, 'JSON_DUPLICATE_KEY')
+            out[k] = v
+        return out
+    def reject(_):
+        raise ValueError('JSON_NONINTEGER')
+    def number(text):
+        need(text != '-0', 'JSON_NEGATIVE_ZERO')
+        return int(text)
+    value = json.loads(raw.decode('utf-8', errors='strict'), object_pairs_hook=pairs,
+                       parse_int=number, parse_float=reject, parse_constant=reject)
+    def strings(v):
+        if type(v) is str:
+            need(not any(0xD800 <= ord(c) <= 0xDFFF for c in v), 'JSON_SURROGATE')
+        elif type(v) is dict:
+            for k, item in v.items(): strings(k); strings(item)
+        elif type(v) is list:
+            for item in v: strings(item)
+    strings(value)
+    return value
+
+
+def no_reparse(path):
+    p = Path(os.path.abspath(path))
+    for item in (p, *p.parents):
+        st = item.lstat()
+        need(not stat.S_ISLNK(st.st_mode) and not getattr(st, 'st_file_attributes', 0) & 0x400,
+             'REPARSE_PATH')
+    return p
+
+
+def stable_read(path, maximum=8*1024*1024):
+    p = no_reparse(path)
+    before = p.stat()
+    need(stat.S_ISREG(before.st_mode) and before.st_size <= maximum, 'FILE_SIZE_TYPE')
+    def shared(st): return st.st_dev, st.st_ino, st.st_size, st.st_mtime_ns, st.st_nlink
+    with p.open('rb') as stream:
+        opened = os.fstat(stream.fileno()); raw = stream.read(maximum+1)
+        closed = os.fstat(stream.fileno())
+    after = p.stat()
+    # Windows path stat and fstat expose different ctime values: preserve their
+    # stability within each API while comparing shared identity across the APIs.
+    need(shared(before) == shared(opened) == shared(closed) == shared(after)
+         and before.st_ctime_ns == after.st_ctime_ns
+         and opened.st_ctime_ns == closed.st_ctime_ns and len(raw) == after.st_size,
+         'FILE_CHANGED')
+    no_reparse(p)
+    return raw
+
+
+def file_ref(ref, base, maximum=8*1024*1024, relative=False):
+    keys(ref, ('path', 'bytes', 'sha256'), 'FILE_REF_SCHEMA')
+    need(type(ref['path']) is str and integer(ref['bytes'], 0, maximum)
+         and digest(ref['sha256']), 'FILE_REF_VALUE')
+    if relative:
+        need(re.fullmatch(r'op-[0-3]\.jsonl', ref['path']) is not None, 'RECEIPT_PATH')
+    p = Path(ref['path'])
+    p = p if p.is_absolute() else Path(base)/p
+    raw = stable_read(p, maximum)
+    need(len(raw) == ref['bytes'] and sha(raw) == ref['sha256'], 'FILE_PIN')
+    return raw, p
+
+
+def pad_bytes(pads):
+    return ''.join('\t'.join(str(row[k]) for k in ('padId','netId','componentId','x','y','role'))+'\n'
+                   for row in pads).encode('utf-8')
+
+
+def validate_receipt(r):
+    keys(r, RECEIPT_FIELDS, 'RECEIPT_SCHEMA')
+    for name in RECEIPT_FIELDS[:7]: need(integer(r[name], -1 if name == 'selectedOrdering' else 0), 'RECEIPT_NUMBER')
+    need(integer(r['attempt'],0,5) and integer(r['startedOrderings'],1,3)
+         and integer(r['completedOrderings'],1,r['startedOrderings'])
+         and integer(r['yieldedOrderings'],0,r['completedOrderings'])
+         and integer(r['finalizedOrderings'],0,r['yieldedOrderings'])
+         and integer(r['selectedOrdering'],-1,r['startedOrderings']-1)
+         and integer(r['expansions'],0,1_000_000), 'RECEIPT_BOUNDS')
+    need(type(r['guidanceStarted']) is bool and type(r['comparisonComplete']) is bool
+         and type(r['termination']) is str and 0 < len(r['termination'].encode()) <= 256,
+         'RECEIPT_TERMINAL')
+    need(r['selectedOrdering'] < 0 or r['finalizedOrderings'] > 0, 'RECEIPT_WINNER')
+    if r['comparisonComplete']:
+        need(r['startedOrderings'] == r['completedOrderings'] == 3
+             and r['termination'] != 'TOTAL_SEARCH_LIMIT', 'RECEIPT_COMPARISON')
+    if r['termination'] == 'ORDERINGS_COMPLETE':
+        need(r['comparisonComplete'] and r['yieldedOrderings'] > 0, 'RECEIPT_COMPLETE')
+    if r['termination'] == 'FIRST_SUCCESS_UNGUIDED':
+        need(not r['guidanceStarted'] and not r['comparisonComplete'] and r['yieldedOrderings'] == 1,
+             'RECEIPT_FIRST_SUCCESS')
+
+
+def audit_choices(branches, pads, arm):
+    by_id = {p['padId']:p for p in pads}
+    nets = {}
+    for p in pads: nets.setdefault(p['netId'],[]).append(p['padId'])
+    states = {}; seen = {}; prior = None; total = 0; choices = []
+    for row in branches:
+        s = row['snapshot']
+        keys(s, SNAP_INTS+SNAP_BOOLS+SNAP_STRINGS, 'SNAPSHOT_SCHEMA')
+        p = s['pass']; net = s['netId']
+        need(all(token(s[n]) for n in ('netId','startPadId','rootPadId'))
+             and type(s['terminalReason']) is str, 'SNAPSHOT_IDENTIFIERS')
+        need(all(integer(s[n],-2**31,2**31-1) for n in SNAP_INTS)
+             and all(type(s[n]) is bool for n in SNAP_BOOLS), 'SNAPSHOT_TYPES')
+        need(all(integer(s[n],0,2**31-1) for n in SNAP_INTS if n not in
+                 ('startX','startY','rootX','rootY','initialManhattanDistance',
+                  'minimumExploredManhattanDistance'))
+             and integer(s['initialManhattanDistance'],-1,2**31-1)
+             and integer(s['minimumExploredManhattanDistance'],-1,2**31-1), 'SNAPSHOT_COUNT_DOMAIN')
+        need(integer(p,0,2) and net in nets and s['terminalReason'] in
+             ('FOUND','NO_PATH','TOTAL_SEARCH_LIMIT','BRANCH_SEARCH_LIMIT'), 'BRANCH_TERMINAL')
+        need(integer(s['gridWidth'],1,250000) and integer(s['gridHeight'],1,250000)
+             and s['gridWidth']*s['gridHeight'] <= 250000 and integer(s['prefixViaCount'],0,48),
+             'BRANCH_GRID_HOLES')
+        need(integer(s['branchExpanded'],0,100000) and integer(s['totalExpanded'],0,1000000)
+             and integer(s['expandedTop']) and integer(s['expandedBottom'])
+             and s['expandedTop']+s['expandedBottom'] == s['branchExpanded'], 'BRANCH_EXPANSIONS')
+        total += s['branchExpanded']; need(total == s['totalExpanded'], 'CUMULATIVE_EXPANSIONS')
+        if prior:
+            ps = prior['snapshot']; need(p >= ps['pass'], 'PASS_ORDER')
+            if p == ps['pass']:
+                need(ps['terminalReason'] == 'FOUND', 'FOLLOWED_FAILED_BRANCH')
+                old = states[(p,ps['netId'])]
+                old['reached'].append(ps['startPadId'])
+                if net != ps['netId']:
+                    need(not old['remaining'], 'LEFT_UNFINISHED_NET')
+        key = (p,net)
+        if key not in states:
+            need(net not in seen.setdefault(p,set()), 'NET_REVISIT')
+            seen[p].add(net)
+            ordered = sorted(nets[net]); need(len(ordered)>1, 'SINGLE_PAD_BRANCH')
+            states[key] = {'reached':[ordered[0]],'remaining':ordered[1:]}
+        else:
+            need(prior is not None and prior['snapshot']['pass']==p
+                 and prior['snapshot']['netId']==net, 'NET_REVISIT')
+        state = states[key]; remaining = state['remaining']; reached = state['reached']
+        need(remaining and s['rootPadId']==sorted(nets[net])[0]
+             and s['reachedPadCount']==len(reached), 'BRANCH_ROOT_REACHED')
+        distances = {a:min(abs(by_id[a]['x']-by_id[b]['x'])+abs(by_id[a]['y']-by_id[b]['y'])
+                           for b in reached) for a in remaining}
+        nearest = min(remaining,key=lambda a:(distances[a],a))
+        farthest = min(remaining,key=lambda a:(-distances[a],a))
+        expected = farthest if arm==3 and p==1 else nearest
+        need(s['startPadId']==expected, 'INDEPENDENT_CHOICE')
+        for which in ('start','root'):
+            pad = by_id.get(s[which+'PadId'])
+            need(pad is not None and pad['netId']==net
+                 and (s[which+'X'],s[which+'Y'])==(pad['x'],pad['y']), 'BRANCH_ENDPOINT')
+        choices.append(dict(nearest=nearest,farthest=farthest,reached=tuple(reached),
+                            remaining=tuple(remaining)))
+        remaining.remove(expected); prior = row
+    return choices, total
+
+
+def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
+    need(raw and len(raw)<=LIMITS['receiptBytes'] and raw.endswith(b'\n') and b'\r' not in raw,
+         'RECEIPT_ENCODING_SIZE')
+    lines = raw.splitlines(keepends=True)
+    need(all(len(x)<=LIMITS['lineBytes'] and x!=b'\n' for x in lines), 'LINE_SIZE_EMPTY')
+    rows = [strict_json(x[:-1]) for x in lines]
+    h = rows[0]
+    keys(h, ('record','group','schema','runId','mode','operation','arm','sourceManifestSha256',
+             'wireSha256','candidate','limits'), 'HEADER_SCHEMA')
+    need(h['record']=='HEADER' and integer(h['group'],0,0) and h['schema']==SCHEMA and h['runId']==run_id
+         and integer(h['operation'],0,3) and h['operation']==arm and h['sourceManifestSha256']==source_sha
+         and h['wireSha256']==wire_sha and h['limits']==LIMITS, 'HEADER_IDENTITY')
+    keys(h['arm'],('id','api','strategy','observed'),'ARM_SCHEMA')
+    need(tuple(h['arm'][x] for x in ('id','api','strategy','observed'))==ARMS[arm]
+         and type(h['arm']['observed']) is bool, 'ARM_IDENTITY')
+    c = h['candidate']
+    keys(c,('rootSeed','placementSeed','routingSeed','variant','layoutVersion','dependencyEpoch',
+            'componentCount','padCount','netCount','traceWidthProfile'),'CANDIDATE_SCHEMA')
+    for name in ('rootSeed','placementSeed','routingSeed'):
+        need(type(c[name]) is str and re.fullmatch(r'0|-?[1-9][0-9]*',c[name]) is not None
+             and -2**63<=int(c[name])<2**63, 'SEED_TRANSPORT')
+    need(c['layoutVersion']==26 and c['dependencyEpoch']=='tsj-generation-dependencies-v28'
+         and c['traceWidthProfile']=='ROLE_WIDTHS' and integer(c['padCount'],2,1024)
+         and integer(c['netCount'],1,c['padCount']-1)
+         and integer(c['componentCount'],1,c['padCount']), 'CANDIDATE_VALUES')
+    if kind=='AUTHORED':
+        need(h['mode']=='AUTHORED' and tuple(c[x] for x in ('rootSeed','placementSeed','routingSeed'))
+             ==('9007199254740993','-6587958367974952701','8445301674744508279')
+             and c['variant']=='SEPARATE' and c['componentCount']==100 and c['padCount']==246,
+             'AUTHORED_CANDIDATE')
+    else: need(h['mode']=='TINY_CANARY' and c['variant']=='TINY', 'TINY_CANDIDATE')
+    pads=[]; branches=[]; groups=[]; result=None; current_group=0; group_bytes=0
+    group_callbacks=0; group_pads=0; branch_seen=False; report_seen=False; report_closed=False
+    for row,line in zip(rows[:-1],lines[:-1]):
+        need(not report_closed, 'TRAILING_REPORT_RECORD')
+        need(type(row) is dict and type(row.get('record')) is str, 'RECORD_TYPE')
+        typ=row['record']
+        if typ=='HEADER': need(row is h,'EXTRA_HEADER')
+        elif typ=='PAD':
+            keys(row,('record','group','padId','netId','componentId','x','y','role'),'PAD_SCHEMA')
+            need(not branch_seen and not report_seen and all(token(row[n]) for n in
+                 ('padId','netId','componentId','role')) and integer(row['x'],-1_000_000,1_000_000)
+                 and integer(row['y'],-1_000_000,1_000_000), 'PAD_VALUES_ORDER')
+            pads.append(row); group_pads+=1
+        elif typ=='BRANCH':
+            keys(row,('record','operation','ordinal','group','prefixSha256','prefixBytes','snapshot'),
+                 'BRANCH_SCHEMA')
+            need(not report_seen and arm!=0 and integer(row['operation'],0,3) and row['operation']==arm
+                 and integer(row['ordinal']) and row['ordinal']==len(branches) and digest(row['prefixSha256'])
+                 and integer(row['prefixBytes'],1,LIMITS['prefixBytes']), 'BRANCH_IDENTITY')
+            branches.append(row);group_callbacks+=1;branch_seen=True
+        elif typ=='RESULT':
+            keys(row,('record','operation','group','proof','route','context','receipt','outcome',
+                      'winner','physical','logicalWork','boundary'),'RESULT_SCHEMA')
+            need(result is None and integer(row['operation'],0,3) and row['operation']==arm
+                 and row['proof']=='COMPLETE', 'RESULT_IDENTITY')
+            result=row;report_seen=True
+        elif typ=='GROUP':
+            keys(row,GROUP_FIELDS,'GROUP_SCHEMA')
+            need(integer(row['operation'],0,3) and row['operation']==arm
+                 and integer(row['ordinal'],0,639) and row['ordinal']==current_group
+                 and row['phase'] in ('SETUP','ADVANCE','PHYSICAL','REPORT'), 'GROUP_IDENTITY')
+            for n in ('elapsedBeforeOwnLineNanos','observerChecks','callbacks','censusRows',
+                      'hashInputBytes','serializedBeforeOwnLineBytes'):
+                need(integer(row[n]),'GROUP_NUMBER')
+            need(row['elapsedBeforeOwnLineNanos']<=LIMITS['groupNanos']
+                 and integer(row['generatorAdvances'],0,1) and integer(row['p07Slices'],0,1)
+                 and row['p07Slices']<=row['generatorAdvances'], 'GROUP_LIMIT')
+            need(row['generatorAdvances']==(1 if row['phase']=='ADVANCE' else 0), 'GROUP_PHASE_WORK')
+            if row['p07Slices']:
+                need(row['accounting']=='MEASURED' and integer(row['p07Steps'],0,32768)
+                     and row['observerChecks']>=1,'P07_ACCOUNTING')
+            else:need(row['accounting']=='NOT_APPLICABLE' and row['p07Steps'] is None,'P07_ABSENCE')
+            need(row['callbacks']==group_callbacks and row['censusRows']==group_pads
+                 and row['serializedBeforeOwnLineBytes']==group_bytes, 'GROUP_RECORD_COUNTS')
+            if group_callbacks or group_pads:
+                need(row['phase']=='ADVANCE' and row['p07Slices']==1,'LIVE_OWNER_OBSERVATION_GROUP')
+            need(row['hashInputBytes']>=sum(b['prefixBytes'] for b in branches
+                 if b['group']==current_group), 'GROUP_HASH_BYTES')
+            if report_seen:
+                need(row['phase']=='REPORT','FINAL_GROUP_PHASE')
+                report_closed=True
+            groups.append(row);current_group+=1;group_bytes=0;group_callbacks=0;group_pads=0
+            need(current_group<=640,'GROUP_COUNT');continue
+        else:raise ValueError('UNEXPECTED_RECORD')
+        need(integer(row.get('group'),0,639) and row['group']==current_group,'RECORD_GROUP')
+        group_bytes+=len(line)
+    f=rows[-1]
+    keys(f,('record','group','operation','complete','padCount','branchCount','groupCount'),'FOOTER_SCHEMA')
+    need(result is not None and groups and groups[-1]['phase']=='REPORT'
+         and group_bytes==0 and f['record']=='FOOTER' and integer(f['operation'],0,3) and f['operation']==arm
+         and integer(f['group'],0,639) and f['group']==len(groups)-1 and f['complete'] is True
+         and all(integer(f[n]) for n in ('padCount','branchCount','groupCount'))
+         and f['padCount']==len(pads)==c['padCount'] and f['branchCount']==len(branches)
+         and f['groupCount']==len(groups),'FOOTER_CENSUS')
+    need([p['padId'] for p in pads]==sorted({p['padId'] for p in pads})
+         and len({p['netId'] for p in pads})==c['netCount']
+         and len({p['componentId'] for p in pads})==c['componentCount'],'PAD_CENSUS')
+    need(all(len({p['role'] for p in pads if p['netId']==net})==1
+             for net in {p['netId'] for p in pads}), 'NET_ROLE_CENSUS')
+    need(len(branches)<=3*(len(pads)-c['netCount']),'BRANCH_CAP')
+    context=result['context']
+    keys(context,('requestIndex','selectedAttempt','eligibleAttempts','pristineSha256','pristineBytes',
+                  'padCensusSha256','boardSha256'),'CONTEXT_SCHEMA')
+    eligible=context['eligibleAttempts']
+    need(integer(context['requestIndex'],0,0) and integer(context['selectedAttempt'],0,5)
+         and type(eligible) is list and 1<=len(eligible)<=6
+         and all(integer(x,0,5) for x in eligible) and len(set(eligible))==len(eligible)
+         and eligible[0]==context['selectedAttempt'] and digest(context['pristineSha256'])
+         and integer(context['pristineBytes'],1,LIMITS['prefixBytes'])
+         and context['padCensusSha256']==sha(pad_bytes(pads)) and digest(context['boardSha256']),
+         'CONTEXT_VALUES')
+    if kind=='AUTHORED':need(context['selectedAttempt']==4,'ACTUAL_ATTEMPT')
+    required_hash_bytes=sum(b['prefixBytes'] for b in branches)+len(pad_bytes(pads))+context['pristineBytes']
+    boundary=result['boundary']
+    keys(boundary,('requestCount','outcomeCount','routeRetired','candidateRetired','generatorComplete',
+                   'eventObserved','successorAdvanceCalls'),'BOUNDARY_SCHEMA')
+    need(boundary==dict(requestCount=1,outcomeCount=1,routeRetired=True,candidateRetired=True,
+                       generatorComplete=False,eventObserved=arm!=0,successorAdvanceCalls=0),
+         'REQUEST_BOUNDARY')
+    need(all(type(boundary[n]) is bool for n in ('routeRetired','candidateRetired','generatorComplete','eventObserved'))
+         and all(integer(boundary[n]) for n in ('requestCount','outcomeCount','successorAdvanceCalls')),
+         'REQUEST_BOUNDARY_TYPES')
+    r=result['receipt'];validate_receipt(r)
+    need(r['attempt']==context['selectedAttempt'] and type(result['outcome']) is str
+         and 0<len(result['outcome'].encode())<=2048,'RESULT_OUTCOME')
+    physical=result['physical']
+    keys(physical,('connectivity','clearanceKeepout','layeredRaster','access','functional'),
+         'PHYSICAL_SCHEMA')
+    if result['winner'] is None:
+        need(result['route']=='TYPED_REQUEST_REJECTION' and r['finalizedOrderings']==0
+             and r['selectedOrdering']==-1 and all(x=='NOT_RUN' for x in physical.values()),
+             'REJECTED_DISPOSITION')
+    else:
+        w=result['winner'];keys(w,('geometrySha256','geometryBytes','attempt','ordering','quality'),
+                               'WINNER_SCHEMA')
+        need(result['route']=='REQUEST_FINALIZED' and digest(w['geometrySha256'])
+             and integer(w['geometryBytes'],1,LIMITS['prefixBytes']) and integer(w['attempt'],0,5)
+             and w['attempt']==r['attempt'] and integer(w['ordering'],0,2)
+             and w['ordering']==r['selectedOrdering'] and r['finalizedOrderings']>0
+             and type(w['quality']) is str and 0<len(w['quality'].encode())<=4096
+             and all(physical[x]=='PASS' for x in ('connectivity','clearanceKeepout','layeredRaster'))
+             and physical['access']==physical['functional']=='NOT_RUN','FINALIZED_DISPOSITION')
+        required_hash_bytes+=w['geometryBytes']
+    need(sum(g['hashInputBytes'] for g in groups)>=required_hash_bytes,'HASH_INPUT_CENSUS')
+    lw=result['logicalWork'];keys(lw,('generatorAdvances','p07Slices','p07OwnerSteps','expansions'),
+                                 'LOGICAL_WORK_SCHEMA')
+    measured=dict(generatorAdvances=sum(g['generatorAdvances'] for g in groups),
+                  p07Slices=sum(g['p07Slices'] for g in groups),
+                  p07OwnerSteps=sum(g['p07Steps'] or 0 for g in groups),expansions=r['expansions'])
+    need(lw==measured and all(integer(x) for x in lw.values()) and lw['p07Slices']>0,
+         'LOGICAL_WORK_COUNTS')
+    choices=[]
+    if arm:
+        choices,total=audit_choices(branches,pads,arm)
+        need(total==r['expansions'],'RECEIPT_EXPANSION_SUM')
+        total_limit_rows=[i for i,b in enumerate(branches)
+                          if b['snapshot']['terminalReason']=='TOTAL_SEARCH_LIMIT']
+        if total_limit_rows:
+            need(total_limit_rows==[len(branches)-1] and r['termination']=='TOTAL_SEARCH_LIMIT'
+                 and r['comparisonComplete'] is False, 'TOTAL_LIMIT_CONTINUATION')
+        need({b['snapshot']['pass'] for b in branches}==set(range(r['startedOrderings'])),
+             'MISSING_ORDERING_BRANCH_PROOF')
+    need(integer(entry['elapsedToCloseNanos'],1,LIMITS['operationNanos'])
+         and integer(entry['maxFullGroupNanos'],1,LIMITS['groupNanos'])
+         and entry['maxFullGroupNanos']>=max(g['elapsedBeforeOwnLineNanos'] for g in groups)
+         and entry['elapsedToCloseNanos']>=sum(g['elapsedBeforeOwnLineNanos'] for g in groups),
+         'FINAL_TIMING_BOUND')
+    return dict(header=h,pads=pads,branches=branches,groups=groups,result=result,choices=choices)
+
+
+def comparable_branch(row):
+    return {k:row[k] for k in ('ordinal','prefixSha256','prefixBytes','snapshot')}
+
+
+def validate_study(ops):
+    need(len(ops)==4,'FOUR_OPERATIONS')
+    def logical(o):return {k:o['result'][k] for k in
+                           ('proof','route','context','receipt','outcome','winner','physical','logicalWork')}
+    need(ops[0]['header']['candidate']==ops[1]['header']['candidate']
+         and pad_bytes(ops[0]['pads'])==pad_bytes(ops[1]['pads'])
+         and logical(ops[0])==logical(ops[1]),'PLAIN_CONTROL_PARITY')
+    need(ops[1]['header']['candidate']==ops[2]['header']['candidate']
+         and pad_bytes(ops[1]['pads'])==pad_bytes(ops[2]['pads']) and logical(ops[1])==logical(ops[2])
+         and [comparable_branch(x) for x in ops[1]['branches']]
+         ==[comparable_branch(x) for x in ops[2]['branches']], 'OBSERVED_CONTROL_PARITY')
+    control=ops[2];treatment=ops[3]
+    need(control['header']['candidate']==treatment['header']['candidate']
+         and pad_bytes(control['pads'])==pad_bytes(treatment['pads'])
+         and control['result']['context']==treatment['result']['context'],'TREATMENT_CONTEXT')
+    cb=[(i,b) for i,b in enumerate(control['branches']) if b['snapshot']['pass']==0]
+    tb=[(i,b) for i,b in enumerate(treatment['branches']) if b['snapshot']['pass']==0]
+    need([comparable_branch(b) for _,b in cb]==[comparable_branch(b) for _,b in tb], 'PASS0_PARITY')
+    cb=[(i,b) for i,b in enumerate(control['branches']) if b['snapshot']['pass']==1]
+    tb=[(i,b) for i,b in enumerate(treatment['branches']) if b['snapshot']['pass']==1]
+    divergence={'status':'NOT_OBSERVED' if not cb or not tb else 'NO_DIVERGENCE'}
+    for (ci,c),(ti,t) in zip(cb,tb):
+        cs=c['snapshot'];ts=t['snapshot']
+        if (cs['netId'],cs['rootPadId'],cs['startPadId']) != (ts['netId'],ts['rootPadId'],ts['startPadId']):
+            a=control['choices'][ci];b=treatment['choices'][ti]
+            need(cs['netId']==ts['netId'] and cs['rootPadId']==ts['rootPadId']
+                 and c['prefixSha256']==t['prefixSha256'] and c['prefixBytes']==t['prefixBytes']
+                 and a['reached']==b['reached'] and a['remaining']==b['remaining']
+                 and a['nearest']!=b['farthest'] and cs['startPadId']==a['nearest']
+                 and ts['startPadId']==b['farthest'], 'DIVERGENCE_CAUSAL_PROOF')
+            divergence=dict(status='FOUND',controlOrdinal=c['ordinal'],treatmentOrdinal=t['ordinal'],
+                            netId=cs['netId'],rootPadId=cs['rootPadId'],nearest=a['nearest'],
+                            farthest=b['farthest'],prefixSha256=c['prefixSha256'])
+            break
+        need(comparable_branch(c)==comparable_branch(t),'EARLIER_NONSELECTION_DIFFERENCE')
+    if divergence['status']=='NO_DIVERGENCE' and len(cb)!=len(tb):
+        divergence={'status':'NOT_OBSERVED','reason':'UNEQUAL_PASS1_TRACE_COVERAGE'}
+    return divergence
+
+
+def check_source_manifest(raw, base):
+    manifest=strict_json(raw)
+    keys(manifest,('schema','kind','parentHead','repositoryRoot','baseManifest','files'),
+         'SOURCE_MANIFEST_SCHEMA')
+    need(manifest['schema']=='tsj-branch-order-sources-v1' and manifest['kind'] in KINDS
+         and type(manifest['parentHead']) is str
+         and re.fullmatch('[0-9a-f]{40}',manifest['parentHead']) is not None,
+         'SOURCE_MANIFEST_IDENTITY')
+    root=Path(manifest['repositoryRoot']);need(root.is_absolute(),'SOURCE_ROOT')
+    no_reparse(root)
+    need(root.resolve()==Path(__file__).resolve().parents[4], 'SOURCE_REPOSITORY_IDENTITY')
+    files=manifest['files'];need(type(files) is list and 2<=len(files)<=4096,'SOURCE_FILE_COUNT')
+    seen=set();roles=[];pinned=[]
+    for row in files:
+        keys(row,('role','path','bytes','sha256'),'SOURCE_FILE_SCHEMA')
+        need(row['role'] in ('BASE_SOURCE','WRITER','HOST','READER','WIRE','TEST')
+             and type(row['path']) is str and not Path(row['path']).is_absolute()
+             and '\\' not in row['path'] and ':' not in row['path']
+             and all(x not in ('','.','..') for x in row['path'].split('/'))
+             and row['path'].casefold() not in seen,'SOURCE_FILE_PATH_ROLE')
+        seen.add(row['path'].casefold());roles.append(row['role'])
+        if row['role']=='READER':
+            need(row['path']=='tests/qualification/rb100-layout/branch-tree-study/read_branch_order_study.py',
+                 'READER_SOURCE_PATH')
+        elif row['role']=='WIRE':
+            need(row['path']=='docs/task-evidence/Q100/branch-tree-study-r1/WIRE.md','WIRE_SOURCE_PATH')
+        elif row['role']=='WRITER':
+            need(row['path'].startswith('tests/qualification/rb100-layout/java/')
+                 and row['path'].endswith('.java'),'WRITER_SOURCE_PATH')
+        elif row['role']=='HOST':
+            need(row['path']=='scripts/verify-rb100-branch-order-study.ps1','HOST_SOURCE_PATH')
+        elif row['role']=='TEST':
+            need(row['path'].startswith('tests/qualification/rb100-layout/branch-tree-study/')
+                 and row['path'].endswith('.py'),'TEST_SOURCE_PATH')
+    need(roles.count('READER')==roles.count('WIRE')==1,'SOURCE_ROLES')
+    wire=next(row['sha256'] for row in files if row['role']=='WIRE')
+    if manifest['kind']=='READER_FIXTURE':
+        need(manifest['baseManifest'] is None and 'BASE_SOURCE' not in roles,'FIXTURE_SOURCE_SCOPE')
+    else:
+        need(roles.count('BASE_SOURCE')==1079 and roles.count('WRITER')>=1
+             and roles.count('HOST')>=1,'NATIVE_SOURCE_CLOSURE')
+        keys(manifest['baseManifest'],('path','bytes','sha256'),'BASE_MANIFEST_REF')
+        need(manifest['baseManifest']['sha256']==BASE_SHA
+             and manifest['baseManifest']['bytes']==228662
+             and type(manifest['baseManifest']['path']) is str
+             and Path(manifest['baseManifest']['path']).name=='inputs.json','BASE_MANIFEST_DECLARATION')
+        b,p=file_ref(manifest['baseManifest'],base,4*1024*1024)
+        need(sha(b)==BASE_SHA and len(b)==228662,'BASE_MANIFEST_PIN')
+        pins=strict_json(b);need(type(pins) is list and len(pins)==1079,'BASE_MANIFEST_CENSUS')
+        actual=[{k:r[k] for k in ('path','bytes','sha256')} for r in files if r['role']=='BASE_SOURCE']
+        need(actual==pins and sum(r['bytes'] for r in actual)==87478294,'BASE_SOURCE_ROWS')
+        pinned.append((manifest['baseManifest'],base,4*1024*1024))
+    # Close the complete role/path/base census before reading any source body.
+    for row in files:
+        ref={k:row[k] for k in ('path','bytes','sha256')}
+        _,p=file_ref(ref,root,100*1024*1024)
+        pinned.append((ref,root,100*1024*1024))
+        if row['role']=='READER':need(p.resolve()==Path(__file__).resolve(),'READER_SOURCE_IDENTITY')
+    return manifest,wire,pinned
+
+
+def validate_spec(path, expected_sha):
+    need(digest(expected_sha),'SPEC_DIGEST_ARGUMENT')
+    original=stable_read(path,4*1024*1024);need(sha(original)==expected_sha,'SPEC_DIGEST')
+    spec=strict_json(original);keys(spec,('schema','kind','sourceManifest','studyIndex','transport'),
+                                  'SPEC_SCHEMA')
+    need(spec['schema']=='tsj-branch-order-reader-input-v1' and spec['kind'] in KINDS,'SPEC_KIND')
+    base=Path(path).absolute().parent
+    source,sp=file_ref(spec['sourceManifest'],base,4*1024*1024)
+    manifest,wire,pins=check_source_manifest(source,sp.parent)
+    need(manifest['kind']==spec['kind'],'SOURCE_KIND')
+    index_raw,ip=file_ref(spec['studyIndex'],base,65536);index=strict_json(index_raw)
+    keys(index,('schema','runId','kind','sourceManifestSha256','wireSha256','operations'),
+         'INDEX_SCHEMA')
+    need(index['schema']=='tsj-branch-order-index-v1' and index['kind']==spec['kind']
+         and type(index['runId']) is str
+         and re.fullmatch('[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',index['runId'])
+         and index['sourceManifestSha256']==sha(source) and index['wireSha256']==wire
+         and type(index['operations']) is list and len(index['operations'])==4,'INDEX_IDENTITY')
+    ops=[];cleanup=0;total_bytes=0;extra_pins=[]
+    for arm,entry in enumerate(index['operations']):
+        keys(entry,('operation','armId','receipt','elapsedToCloseNanos','maxFullGroupNanos','cleanup'),
+             'INDEX_OPERATION_SCHEMA')
+        keys(entry['receipt'],('path','bytes','sha256'),'INDEX_RECEIPT_SCHEMA')
+        need(integer(entry['operation'],0,3) and entry['operation']==arm and entry['armId']==ARMS[arm][0]
+             and entry['receipt']['path']=='op-'+str(arm)+'.jsonl','INDEX_OPERATION_ORDER')
+        data,p=file_ref(entry['receipt'],ip.parent,LIMITS['receiptBytes'],relative=True)
+        extra_pins.append((entry['receipt'],ip.parent,LIMITS['receiptBytes']))
+        total_bytes+=len(data);need(total_bytes<=32*1024*1024,'STUDY_BYTE_CAP')
+        c=entry['cleanup'];keys(c,('status','elapsedNanos','ownersReleased','contextRestored'),
+                              'CLEANUP_SCHEMA')
+        need(c['status']=='PASS' and integer(c['elapsedNanos'],0,120_000_000_000)
+             and c['ownersReleased'] is True and c['contextRestored'] is True,'CLEANUP_PROOF')
+        cleanup+=c['elapsedNanos']
+        ops.append(validate_operation(data,entry,sha(source),wire,arm,index['runId'],spec['kind']))
+    need(cleanup<=120_000_000_000,'CUMULATIVE_CLEANUP_LIMIT')
+    divergence=validate_study(ops)
+    if spec['kind']=='READER_FIXTURE':
+        need(spec['transport'] is None,'FIXTURE_TRANSPORT')
+        status='PASS_READER_FIXTURE_ONLY'
+    else:
+        tr,tp=file_ref(spec['transport'],base,1024*1024);t=strict_json(tr)
+        keys(t,('schema','kind','sourceManifestSha256','indexSha256','compileExitCode','exitCode',
+                'terminationProven','sourcesStable','processId','processStartTicks',
+                'executableSha256','compilerExecutableSha256','powershellExecutableSha256',
+                'isolationModuleSha256','compilerTerminationProven',
+                'nativeElapsedNanos','cleanupElapsedNanos','cleanupStatus'),
+             'TRANSPORT_SCHEMA')
+        need(t['schema']=='tsj-branch-order-native-transport-v1' and t['kind']==spec['kind']
+             and t['sourceManifestSha256']==sha(source) and t['indexSha256']==sha(index_raw)
+             and type(t['compileExitCode']) is int and t['compileExitCode']==0
+             and type(t['exitCode']) is int and t['exitCode']==0
+             and t['terminationProven'] is True and t['sourcesStable'] is True
+             and integer(t['processId'],1) and type(t['processStartTicks']) is str
+             and re.fullmatch('[1-9][0-9]*',t['processStartTicks'])
+             and t['executableSha256']=='e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce'
+             and t['compilerExecutableSha256']=='61fa6463ee5b59004719b9833a16b148740cfa9f2d1f5a95ca598cc90be04c64'
+             and t['powershellExecutableSha256']=='60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f'
+             and t['isolationModuleSha256']=='fb07ad540e22a225a11b8a12e9dc8e5a20d88f58f89cf32a5fd347613530954c'
+             and t['compilerTerminationProven'] is True
+             and integer(t['nativeElapsedNanos'],1,480_000_000_000)
+             and integer(t['cleanupElapsedNanos'],cleanup,120_000_000_000)
+             and t['cleanupStatus']=='PASS','NATIVE_TRANSPORT_PROOF')
+        need(t['nativeElapsedNanos']>=sum(x['elapsedToCloseNanos'] for x in index['operations'])
+             +t['cleanupElapsedNanos'],
+             'NATIVE_TIME_CENSUS')
+        extra_pins.append((spec['transport'],base,1024*1024))
+        status='VALIDATED_NATIVE_REPORT_ONLY_ROOT_ACCEPTANCE_REQUIRED'
+    for ref,root,maximum in pins+extra_pins+[(spec['sourceManifest'],base,4*1024*1024),
+                                          (spec['studyIndex'],base,65536)]:
+        file_ref(ref,root,maximum)
+    need(stable_read(path,4*1024*1024)==original,'SPEC_CHANGED')
+    return dict(schema='tsj-branch-order-reader-result-v1',status=status,kind=spec['kind'],
+                specSha256=expected_sha,sourceManifestSha256=sha(source),indexSha256=sha(index_raw),
+                operations=4,branches=[len(o['branches']) for o in ops],divergence=divergence,
+                routeOutcomes=[o['result']['route'] for o in ops],
+                limitations=dict(rootNativeAcceptance='NOT_GRANTED_BY_READER',
+                                 tailFoundPublication='UNKNOWN_WITHOUT_LATER_SELECTION_OR_YIELD',
+                                 gridOnlyOrdering='UNSUPPORTED_MISSING_BRANCH_PROOF',
+                                 layoutQualification=False,defaultAdoption=False,playable100=0,beta='HELD'))
+
+
+def main(argv=None):
+    p=argparse.ArgumentParser();p.add_argument('--spec',required=True)
+    p.add_argument('--spec-sha256',required=True);p.add_argument('--output',required=True)
+    a=p.parse_args(argv);result=validate_spec(a.spec,a.spec_sha256)
+    out=Path(a.output).absolute();no_reparse(out.parent)
+    with out.open('xb') as stream:
+        stream.write((json.dumps(result,sort_keys=True,indent=2,allow_nan=False)+'\n').encode())
+
+
+if __name__=='__main__': main()

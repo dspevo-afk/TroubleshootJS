@@ -1,0 +1,3 @@
+# Preserve the frozen scope/protocol byte identities.
+PLAN.md -text
+WIRE.md -text

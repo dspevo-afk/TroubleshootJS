@@ -1,4 +1,135 @@
-# Current checkpoint: branch-order prerequisite published; authored wire next
+# Current checkpoint: branch-order reader prerequisite validated; publication pending
+
+UTC2026-11-05. Active X=OS-temp/tsj-q100-branch-tree-study-20261105-r1,
+branch codex/q100-branch-tree-study-20261105, HEAD/sourceparent
+273c7fce3b98ab68a83fc5ea395dba523a48a561. No new commit/push/Gmail yet.
+QX=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/
+branch-tree-study-r1. See branch-tree-study-r1/README.md and qualification.json.
+Reader prerequisite only; no Java producer/new PS5-JDK8 driver/authored study ran.
+Root owns all files; source-only leaves finished; no heavy gate or actor active.
+
+Frozen PLAN e25b6c85efecbb7dc1864842f48eb49d343aa09aa62eeef4401cd766a3566cc5,
+WIRE f27498a6e3ad8a5df4eb0d0d00fe9466af66081c38455f151b250bd8ee6ec98a.
+Their pending status records freeze time; README/qualification are current status.
+Final reader202cb0bcc323dec50bcaad3bdeaff4c42b2b20a9b8840d94e86f8c8ae0fee911,
+testd3a7f0c08ef5e89b4813bb4ffacfa4adee9dcb2e59890079cf10c2d538b4f80f.
+Dedicated directory and local attributes preserve actual tested source bytes.
+Independent pad/reached/choice oracle,strict schema/hash/source/path handling,
+receipt/control parity and first-divergence prefix proof grant reader claims only.
+Fixture output PASS_READER_FIXTURE_ONLY; native-format output still requires root
+real process/context acceptance. Grid-only started ordering lacks v1 branch proof.
+
+Final actual selected PS5/Python3.13 gates PASS: reader-units-r4 33methods/0skips,
+2.2391416s including child teardown; CLI fixture0.4049679s and seven expected
+raw-exit1 negative controls including actual NTFS junction. Each terminates and
+negative creates no output. Junction operation0.9175757s/cleanup0.0493009s; exact
+owned link removed nonrecursively and target/spec preserved. Three native metadata
+unit methods mock source closure; no actual JVM/PID proof. Root reconciled final
+source copies,commands/tool pins,PID/start receipts,exits,outputs and evidence.
+Qualification SHA e0092d512faa39e29e5944acff0495b20832cf1c472566a4f9dfefccf6e4f162.
+Limited source post-fix review covers total-limit continuation and full transport
+cleanup timing; no pre-fix PASS reused. Unit cwd/import and fixture syntax failures,
+old-float metadata audit failure and earlier source findings remain external.
+
+Fresh unchanged-input audits PASS native1079/1073Java and original flatPython46 in
+X/V,production1202 each variant/Developer357 and exact Player archive357. Reuse
+only on unchanged consumed inputs: prior native2/8/33,saved72/20/sixgeometries,
+canonical readers,builds,privacy/Current9/E06StateR2/normal-development3. No fresh
+native/GWT/Player/population gate or full30/full2-by-31 renewal. No Player flow
+change; visible input/screenshots NOT_APPLICABLE. No epoch/default/budget change.
+
+Next: root integrated/staged diff/privacy checks,normal commit/push to established
+origin/codex/q100-physical-feasibility,exact remote SHA proof and one new completion
+Gmail; then isolated actual-generator Java producer/selected PS5-JDK8 driver,
+complete source/tool/bridge freeze and real tiny controls before authored execution.
+Exact authored separate root9007199254740993/layout-6587958367974952701/
+route8445301674744508279/request0/attempt4 only; unchanged90s/640/5s/32768 and
+120s cleanup/480s native/1800s outer bounds. No actual study result/adoption yet.
+
+Prior implementation4e8248a9/receipt273c7fce normally pushed/exact verified;
+Gmail1a1aa2d370b5b1b5 SENT ONCE,do not resend. Preserve Main5f05b005 dirty9/6,
+Desktop e0c36885 dirty7/73collapsed,cleanU21e990e1,WEOL-only42 and cleanV273c7fce.
+Old uncertain E06R1 namespace5e446ea3a88b6a0e3f74/2d6ce12b44f341dc9ecf94032b36930d
+remains untouched: browser14116/start639294472690745890/port58320,preview34180/
+start639294472514546595/port58264. No safe replay/descendant proof or cleanup PASS.
+Ambient8928 untouched. Normal MEDIUM only three approved roots/fourcandidate
+envelope; full30 owner-excluded. Protected HARD bodies unread/unrun here,historical
+unread UNCERTIFIED. HARD/PSYCHOTIC unavailable/unrun. Playable100=0/betaHELD;
+self-hosted CI registration remains prerequisite. Continue standing roadmap work.
+
+# Historical checkpoint: authored R3 source design reviewed; wire still unfrozen
+
+UTC2026-11-05. Active X=OS-temp/tsj-q100-branch-tree-study-20261105-r1,
+branch codex/q100-branch-tree-study-20261105, HEAD/sourceparent
+273c7fce3b98ab68a83fc5ea395dba523a48a561. QX=OS-temp/
+tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/branch-tree-study-r1.
+No new study commit/push/email. Product/native source unchanged; R3/wire DRAFT.
+
+Completed prerequisite implementation4e8248a9d4f01bf3b0ae1bf0bb646772deaf480f
+and documentation receipt273c7fce3b98ab68a83fc5ea395dba523a48a561 are normally
+pushed/exact remote verified on origin/codex/q100-physical-feasibility.
+Completion Gmail1a1aa2d370b5b1b5 SENT ONCE, never resend for either commit.
+Accepted V=OS-temp/tsj-q100-branch-tree-order-20261104-r1 is clean273c7fce.
+All source/lifecycle prerequisite gates/limits and failures remain in the
+branch-tree-order-r1 packet and historical checkpoint below.
+
+X bootstrap PASS:1157 selected trusted files,1079native/46Python, no nestedAGENTS,
+canonical/staged/untracked0 before the current report edit. Protected qualification
+bodies NOT_SELECTED_OR_MATERIALIZED; historical unread UNCERTIFIED. Exact native
+raw manifest remains68b1489b28cb5cec4f17289021e009f7048bfa869a3538aed7be44060ef9efbd,
+228662raw/87478294summed bytes. Bootstrap scriptb6ad9dc7... and full receipt areQX.
+Only report top changed inX and mirroredMain; no code writer or heavy gate active.
+
+Next scope: tests/scripts/private report and independent-reader study on the exact
+actual-generator pristine separate authored root9007199254740993, placement
+-6587958367974952701/routing8445301674744508279/request0/attempt4. Defaultcost60,
+cap48/fourtransitions/threeorders/1Mrequest/100Kbranch/250Kcells,90s/640groups/
+5sgroup/32768owner-step quantum and all physical/electrical oracles unchanged.
+R3 must honestly distinguish four operations: literal plain begin() receipt-only
+control, observed default canonical, observed explicit canonical, pass1farthest.
+Plain has no diagnostic/fullbranch/seal claim; it must stop before successorcall.
+Observedcontrols match completebranches andlogicalreceipts; treatmentpass0matches.
+Independent pad/reached reconstruction and pre-Publisher prefix comparison must
+prove actualgenericfirstdivergence, not expansion-count changes alone.
+
+External QX/PLAN_R3_DRAFT.md SHAd1727d47a8b65e40000c114e0105b0cb8d29bc10cf5d79e9ca302a8333958e70
+is NOT_FROZEN and does not authorize an authored run. Source-only wire/harness/budget reviews are complete; no code worker or heavy
+gate is active. Root owns all code/spec/publication. Only administrative
+bootstrap/checkpoint scripts ran; no new study writer/parser/test/native/browser/
+CIM/authored operation ran. Prior QV draft and PLAIN_ENTRY_BOUNDARY_DESIGN remain.
+Actual note hashes: WIRE_R3_REVIEW714c26b1...; HARNESS_REUSE_MAP9b5b3e48...;
+BUDGET_ACCOUNTING_REVIEW2ece3cdc... . Root integrated decisions are
+QX/R3_ADMISSION_DECISIONS.md SHA
+f1c94f1e080b2a64b703822cb2002f2210bdfd6a3bc06061957e818c2daa4d20.
+QX/WIRE_DRAFT_R2.md SHA0f276e98... is preserved but NOT_FROZEN. Root chooses
+four per-arm data receipts plus pinnedStudyIndex,90s through each data flush/close,
+one cumulative120s cleanup/terminalmetadata budget,5s actualfullgroups,
+640totalgroups,32768exactP07steps from retainedroute.lastWork(). No physics/
+operation cap increased. ExistingAttemptObserver captures actualroute/template
+before firstslice, so plaincontrol needs no reconstructedplacement or production
+API change. Prefer new qualification fixture/dedicated driver preserving old
+1079native/1202GWT bytes. Independent oracle uses actualpadcensus/reached sets.
+Next action: close logicalWork/budget/cleanup/StudyIndex schemas and full source/
+tool inventory; freezeR3/wire, then implement and test the isolatedharness/reader/
+hostcanaries before authored controls/treatment. Audit exactinputs before reuse;
+do not silently waive a required freshgate.
+
+Preserve Main5f05b005 dirty9tracked/6untracked/0staged; Desktop e0c36885
+dirty7tracked/73collapseduntracked/0staged. Desktop supplies readonly pinnedJDK8.
+U21e990e1 clean; W6f905668 raw42EOL-only changes preserved. V273c7fce clean.
+Old failed E06R1 namespace remains uncertain atOS-temp/TroubleshootJS/verify/
+5e446ea3a88b6a0e3f74/2d6ce12b44f341dc9ecf94032b36930d. Browser14116/
+start639294472690745890/port58320 andpreview34180/start639294472514546595/
+port58264 recorded; no protected-descendant tuple proof or safe replay cleanup.
+Leave oldresources/journals/profiles untouched; no recovery PASS. Fresh E06R2 and
+Normal3 cleanup do not certify that old namespace. Ambient8928 untouched.
+
+Three approvednormalMEDIUM roots/fourcandidateenvelope only. Full30ownerexcluded,
+full2-by-31 notrenewed. HARD bodies unread/unrun here; HARD/PSYCHOTIC unavailable/
+unrun; historical unread UNCERTIFIED. Playable100=0/betaHELD. Self-hosted CI runner
+setup remains a prerequisite; noCI-greenclaim. No routine permission needed.
+
+# Historical checkpoint: branch-order prerequisite published; authored wire next
 
 UTC2026-11-05. Active V=OS-temp/tsj-q100-branch-tree-order-20261104-r1,
 branch codex/q100-branch-tree-order-20261104, sourceparent

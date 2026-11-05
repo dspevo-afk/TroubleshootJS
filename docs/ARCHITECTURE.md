@@ -238,6 +238,15 @@ event prevents successor `advance()` before mutation; errors latch and retire
 the stream without fabricating an event. The boundary neither substitutes for
 normal finalization nor reports a rejected request as generator success.
 
+The private qualification reader in `rb100-layout/branch-tree-study` consumes
+source-pinned per-arm receipts and a separate process/index record. It reconstructs
+branch-choice expectations from the pad census without replacing the solver or
+live PCB graph. It separates search FOUND from proven publication,compares plain
+receipt controls and observed branch controls,and requires matching prefixes for
+first-choice attribution. Fixture acceptance is explicitly separate from native
+process/context acceptance. The [reader packet](task-evidence/Q100/branch-tree-study-r1/README.md)
+records its scope; no production default,epoch or Player surface changes.
+
 `VerifierIsolation` owns browser shutdown proof separately from generation. Its
 bound-receipt wait retains a completed natural-exit proof only within that wait,
 bound to the same record, retained attestation, process handle, PID and creation
