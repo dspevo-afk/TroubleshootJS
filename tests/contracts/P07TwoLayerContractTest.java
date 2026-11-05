@@ -33,6 +33,7 @@ public final class P07TwoLayerContractTest {
         viaCapBounds();
         sameSessionPriorViaTreeJoin();
         negatives(); barriers(); surfacePadEnvelope();
+        P07BranchTreeOrderContractTest.run();
         System.out.println("PASS: P07 two-layer contracts assertions="+checks);
     }
     private static void gridOwnershipBoundaries() {
@@ -1176,5 +1177,569 @@ public final class P07TwoLayerContractTest {
         reject(new Runnable(){public void run(){rules.validate(padDrill);}},"via cannot drill through a component pad");
         reject(new Runnable(){public void run(){new PcbBoardHole("same-face",PcbBoardHole.Kind.VIA,"PRIMARY",200,300,2,6,
             PcbCopperLayer.TOP,PcbCopperLayer.TOP,PcbCopperAccess.Exposure.EXPOSED);}},"same-face declaration is not plating");
+    }
+}
+
+/** Independent P07 branch-order literals and real ordering-stream guards. */
+final class P07BranchTreeOrderContractTest {
+    private static int checks;
+    private static final SeededPcbLayoutGenerator.AttemptObserver NOOP =
+        new SeededPcbLayoutGenerator.AttemptObserver() {
+            public void check(int attempt) { }
+        };
+
+    private P07BranchTreeOrderContractTest() { }
+
+    public static void main(String[] args) { run(); }
+
+    static void run() {
+        chooserUsesIndependentManhattanLiterals();
+        actualRoleWidthOrderingGuards();
+        actualLegacyUniformPassTwoGuard();
+        invalidAndDefaultEntrypointsPreserveInputs();
+        detachedCopyCancelAndErrorKeepStrategy();
+        System.out.println("PASS: P07 branch-tree order contracts assertions="+checks+" layoutQualification=false");
+    }
+
+    private static void chooserUsesIndependentManhattanLiterals() {
+        ChoiceFixture fixture=choiceFixture();
+        String before=fixture.layout.geometryFingerprint();
+        java.util.Vector<String> reached=ids("A.1","M.1");
+        java.util.Vector<String> remaining=ids("X.1","Y.1","Z.1");
+        String reachedBefore=reached.toString(),remainingBefore=remaining.toString();
+
+        // Literal minima: X=min(330,10)=10, Y=min(180,160)=160,
+        // Z=min(130,210)=130. The independent winners are X and Y.
+        eq("X.1",PcbNetRouter.chooseNext(fixture.layout,remaining,reached),
+            "nearest is computed against every reached pad");
+        eq("Y.1",PcbNetRouter.chooseFarthest(fixture.layout,remaining,reached),
+            "farthest is the maximum of each candidate's nearest reached distance");
+        eq("X.1",PcbLayerRoutingPrototype.chooseBranchPad(fixture.layout,remaining,reached,0,true,
+            PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST),
+            "ROLE_WIDTHS pass zero retains nearest");
+        eq("Y.1",PcbLayerRoutingPrototype.chooseBranchPad(fixture.layout,remaining,reached,1,true,
+            PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST),
+            "ROLE_WIDTHS pass one selects the nondegenerate farthest branch");
+        eq("X.1",PcbLayerRoutingPrototype.chooseBranchPad(fixture.layout,remaining,reached,2,true,
+            PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST),
+            "ROLE_WIDTHS pass two retains nearest");
+        eq("X.1",PcbLayerRoutingPrototype.chooseBranchPad(fixture.layout,remaining,reached,1,true,
+            PcbLayerRoutingPrototype.BranchOrderStrategy.CANONICAL_NEAREST),
+            "explicit canonical strategy retains nearest in pass one");
+        for(int pass=0;pass<PcbLayerRoutingPrototype.ORDERINGS;pass++)
+            eq("X.1",PcbLayerRoutingPrototype.chooseBranchPad(fixture.layout,remaining,reached,pass,false,
+                PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST),
+                "non-role-width chooser guard retains nearest in pass "+pass);
+
+        // Both C and D are 80 Manhattan units from A; D is first in this
+        // canonical remaining vector and must win the tie.
+        eq("D.1",PcbNetRouter.chooseNext(fixture.layout,ids("D.1","C.1"),ids("A.1")),
+            "nearest ties preserve canonical remaining order");
+        // E=(390,440) and B=(630,200) are each 460 from A; E is first.
+        eq("E.1",PcbNetRouter.chooseFarthest(fixture.layout,ids("E.1","B.1"),ids("A.1")),
+            "farthest ties preserve canonical remaining order");
+        eq("B.1",PcbNetRouter.chooseNext(fixture.layout,ids("B.1"),reached),
+            "nearest accepts a single remaining pad");
+        eq("B.1",PcbNetRouter.chooseFarthest(fixture.layout,ids("B.1"),reached),
+            "farthest accepts a single remaining pad");
+        require(before.equals(fixture.layout.geometryFingerprint()) &&
+            reachedBefore.equals(reached.toString()) && remainingBefore.equals(remaining.toString()),
+            "chooser calls preserve the layout and caller-owned vectors");
+    }
+
+    private static void actualRoleWidthOrderingGuards() {
+        BranchRun defaultRun=runNoViaStream(PcbTraceWidthProfile.ROLE_WIDTHS,null);
+        BranchRun explicitNearest=runNoViaStream(PcbTraceWidthProfile.ROLE_WIDTHS,
+            PcbLayerRoutingPrototype.BranchOrderStrategy.CANONICAL_NEAREST);
+        BranchRun treatment=runNoViaStream(PcbTraceWidthProfile.ROLE_WIDTHS,
+            PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST);
+        sameRun(defaultRun,explicitNearest,
+            "default and explicit-nearest P07 owners produce identical actual branch snapshots");
+        firstStart(defaultRun,0,"N","C.1");
+        firstStart(defaultRun,1,"N","C.1");
+        firstStart(defaultRun,2,"N","C.1");
+        firstStart(treatment,0,"N","C.1");
+        firstStart(treatment,1,"N","D.1");
+        firstStart(treatment,2,"N","C.1");
+        samePass(defaultRun,treatment,0,"treatment preserves actual pass-zero branch starts");
+        samePass(defaultRun,treatment,2,"treatment preserves actual pass-two branch starts");
+        require(!sameFirstStart(defaultRun,treatment,1,"N"),
+            "actual ROLE_WIDTHS pass one is where the owner first diverges");
+    }
+
+    private static void actualLegacyUniformPassTwoGuard() {
+        BranchRun uniform=runNoViaStream(PcbTraceWidthProfile.UNIFORM,
+            PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST);
+        firstStart(uniform,0,"N","C.1");
+        firstStart(uniform,1,"N","C.1");
+        // Remaining ids are B, C, D: legacy-uniform pass two keeps its
+        // historical lexical first-element rule (B), which is neither the
+        // nearest C nor the farthest D in this literal fixture.
+        firstStart(uniform,2,"N","B.1");
+    }
+
+    private static void invalidAndDefaultEntrypointsPreserveInputs() {
+        RoutingFixture fixture=chordFixture(PcbTraceWidthProfile.ROLE_WIDTHS);
+        String input=fixture.layout.geometryFingerprint();
+        String pads=fixture.board.getPadIds().toString();
+        boolean rejected=false;
+        try {
+            PcbLayerRoutingPrototype.beginOrderingCandidates(fixture.board,fixture.layout,
+                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,NOOP,
+                PcbLayerRoutingPrototype.MAX_EXPANSIONS,0,null,null);
+        } catch(IllegalArgumentException expected) { rejected=true; }
+        require(rejected && input.equals(fixture.layout.geometryFingerprint()) &&
+            fixture.layout.getTraces().isEmpty() && fixture.layout.getHoles().isEmpty() &&
+            pads.equals(fixture.board.getPadIds().toString()),
+            "null P07 strategy rejects before changing placement or board identity");
+
+        PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
+            new PcbLayerRoutingPrototype.FixedPrefixCaptureContext(11L,17L,new int[]{0},0,0,input);
+        PcbLayerRoutingPrototype.FixedPrefixGraphObserver capture=
+            new PcbLayerRoutingPrototype.FixedPrefixGraphObserver() {
+                public boolean select(PcbLayerRoutingPrototype.FixedPrefixBranchLineage lineage) { return false; }
+                public void onGraph(PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot snapshot) { }
+            };
+        rejected=false;
+        try {
+            PcbLayerRoutingPrototype.beginOrderingCandidatesWithFixedPrefixObservation(
+                fixture.board,fixture.layout,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,NOOP,
+                PcbLayerRoutingPrototype.MAX_EXPANSIONS,0,null,context,capture,null);
+        } catch(IllegalArgumentException expected) { rejected=true; }
+        require(rejected && input.equals(fixture.layout.geometryFingerprint()) &&
+            fixture.layout.getTraces().isEmpty() && fixture.layout.getHoles().isEmpty(),
+            "null fixed-prefix strategy rejects before mutating the supplied layout");
+
+        SeededPcbLayoutGenerator generator=new SeededPcbLayoutGenerator();
+        SeededPcbLayoutGenerator.Session ordinary=generator.begin(fixture.board,11L,17L);
+        SeededPcbLayoutGenerator.Session diagnostic=generator.beginWithBranchOrderStrategy(
+            fixture.board,11L,17L,PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST);
+        eq(PcbLayerRoutingPrototype.BranchOrderStrategy.CANONICAL_NEAREST,
+            strategyOf(ordinary),"normal generator entrypoint stores canonical nearest");
+        eq(PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST,
+            strategyOf(diagnostic),"explicit generator entrypoint stores the requested immutable strategy");
+        SeededPcbLayoutGenerator.Session ordinaryCapture=generator.beginWithFixedPrefixObservation(
+            fixture.board,11L,17L,capture);
+        SeededPcbLayoutGenerator.Session diagnosticCapture=generator.beginWithFixedPrefixObservation(
+            fixture.board,11L,17L,capture,
+            PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST);
+        eq(PcbLayerRoutingPrototype.BranchOrderStrategy.CANONICAL_NEAREST,
+            strategyOf(ordinaryCapture),"normal fixed-prefix generator entrypoint remains nearest");
+        eq(PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST,
+            strategyOf(diagnosticCapture),"strategy-aware fixed-prefix generator entrypoint retains strategy");
+        rejected=false;
+        try { generator.beginWithBranchOrderStrategy(fixture.board,11L,17L,null); }
+        catch(IllegalArgumentException expected) { rejected=true; }
+        require(rejected && input.equals(fixture.layout.geometryFingerprint()) &&
+            fixture.layout.getTraces().isEmpty() && fixture.layout.getHoles().isEmpty(),
+            "null generator strategy rejects without touching the existing candidate");
+    }
+
+    private static void detachedCopyCancelAndErrorKeepStrategy() {
+        RoutingFixture sourceFixture=chordFixture(PcbTraceWidthProfile.ROLE_WIDTHS);
+        String original=sourceFixture.layout.geometryFingerprint();
+        final ArmedObserver sourceObserver=new ArmedObserver();
+        PcbLayerRoutingPrototype.Session source=PcbLayerRoutingPrototype.beginOrderingCandidates(
+            sourceFixture.board,sourceFixture.layout,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
+            sourceObserver,PcbLayerRoutingPrototype.MAX_EXPANSIONS,0,null,
+            PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST);
+        stopAtInitialBranch(source);
+        PcbLayerRoutingPrototype.DetachedBranchCopyTask copy=
+            PcbLayerRoutingPrototype.beginDetachedBranchCopy(source,NOOP,0,60);
+        int copyCalls=0;
+        while(!copy.isComplete()) {
+            copy.advance(32768);
+            if(++copyCalls>10000) throw new AssertionError("small detached strategy copy exceeded its local guard");
+        }
+        PcbLayerRoutingPrototype.DetachedBranchReplay replay=copy.result();
+        Object copiedOwner=fieldValue(replay,"owner");
+        eq(PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST,
+            strategyOf(copiedOwner),"detached copied Session keeps the source's immutable strategy");
+        replay.cancel();
+        copy.cancel();
+        require(fieldValue(replay,"owner")==null &&
+            PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST.equals(strategyOf(source)) &&
+            original.equals(sourceFixture.layout.geometryFingerprint()) &&
+            sourceFixture.layout.getTraces().isEmpty() && sourceFixture.layout.getHoles().isEmpty(),
+            "detached cancellation releases only its copy and leaves the source strategy/input intact");
+
+        RoutingFixture cancelledFixture=chordFixture(PcbTraceWidthProfile.ROLE_WIDTHS);
+        String cancelledInput=cancelledFixture.layout.geometryFingerprint();
+        PcbLayerRoutingPrototype.Session cancelledSource=PcbLayerRoutingPrototype.beginOrderingCandidates(
+            cancelledFixture.board,cancelledFixture.layout,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
+            new ArmedObserver(),PcbLayerRoutingPrototype.MAX_EXPANSIONS,0,null,
+            PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST);
+        stopAtInitialBranch(cancelledSource);
+        PcbLayerRoutingPrototype.DetachedBranchCopyTask cancelledCopy=
+            PcbLayerRoutingPrototype.beginDetachedBranchCopy(cancelledSource,NOOP,0,60);
+        cancelledCopy.advance(1);
+        cancelledCopy.cancel();
+        require("CANCELLED".equals(cancelledCopy.phase()) &&
+            PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST.equals(
+                strategyOf(cancelledSource)) &&
+            cancelledInput.equals(cancelledFixture.layout.geometryFingerprint()) &&
+            cancelledFixture.layout.getTraces().isEmpty() && cancelledFixture.layout.getHoles().isEmpty(),
+            "cancelled detached copy preserves source strategy and exact input placement");
+
+        RoutingFixture failedFixture=chordFixture(PcbTraceWidthProfile.ROLE_WIDTHS);
+        final RuntimeException sentinel=new IllegalStateException("branch-order observer error sentinel");
+        final ArmedObserver errorObserver=new ArmedObserver();
+        errorObserver.failure=sentinel;
+        PcbLayerRoutingPrototype.Session failed=PcbLayerRoutingPrototype.beginOrderingCandidates(
+            failedFixture.board,failedFixture.layout,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
+            errorObserver,PcbLayerRoutingPrototype.MAX_EXPANSIONS,0,null,
+            PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST);
+        String failedInput=failedFixture.layout.geometryFingerprint();
+        errorObserver.armed=true;
+        boolean propagated=false;
+        try { failed.advanceOrderingSlice(1); }
+        catch(RuntimeException expected) { propagated=expected==sentinel; }
+        require(propagated &&
+            PcbLayerRoutingPrototype.BranchOrderStrategy.SECOND_ORDER_FARTHEST.equals(strategyOf(failed)) &&
+            failedInput.equals(failedFixture.layout.geometryFingerprint()) &&
+            failedFixture.layout.getTraces().isEmpty() && failedFixture.layout.getHoles().isEmpty(),
+            "observer error remains exact, latches cleanup, and cannot change the immutable strategy/input");
+    }
+
+    private static BranchRun runNoViaStream(PcbTraceWidthProfile profile,
+            PcbLayerRoutingPrototype.BranchOrderStrategy strategy) {
+        final RoutingFixture fixture=chordFixture(profile);
+        final String input=fixture.layout.geometryFingerprint();
+        final String boardPads=fixture.board.getPadIds().toString();
+        final BranchCollector collector=new BranchCollector();
+        PcbLayerRoutingPrototype.Session session;
+        if(strategy==null)
+            session=PcbLayerRoutingPrototype.beginOrderingCandidates(fixture.board,fixture.layout,
+                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,NOOP,
+                PcbLayerRoutingPrototype.MAX_EXPANSIONS,0,collector);
+        else
+            session=PcbLayerRoutingPrototype.beginOrderingCandidates(fixture.board,fixture.layout,
+                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,NOOP,
+                PcbLayerRoutingPrototype.MAX_EXPANSIONS,0,collector,strategy);
+        int advances=0;
+        while(true) {
+            if(++advances>10000) throw new AssertionError("literal three-chord stream exceeded bounded advance guard");
+            PcbLayerRoutingPrototype.OrderingProgress progress=session.advanceOrderingSlice(32768);
+            if(progress==PcbLayerRoutingPrototype.OrderingProgress.COMPLETE) break;
+            if(progress==PcbLayerRoutingPrototype.OrderingProgress.ROUTE_READY)
+                throw new AssertionError("three pairwise-crossing nets unexpectedly yielded a no-via layout");
+        }
+        PcbLayerRoutingPrototype.OrderingSummary summary=session.orderingSummary();
+        boolean allOrderingsCompleted=summary.orderings==PcbLayerRoutingPrototype.ORDERINGS &&
+            summary.completedOrderings==PcbLayerRoutingPrototype.ORDERINGS &&
+            summary.yieldedOrderings==0 && summary.expansions<=PcbLayerRoutingPrototype.MAX_EXPANSIONS;
+        require(allOrderingsCompleted,allOrderingsCompleted?
+            "literal no-via stream actually completes all three P07 orderings":
+            "literal no-via stream actually completes all three P07 orderings"+
+                runDetails(summary,collector.snapshots));
+        require(collector.snapshots.size()>0 && collector.snapshots.size()<=15,
+            "actual terminal branch snapshots remain within the three-order literal pad bound");
+        require(input.equals(fixture.layout.geometryFingerprint()) &&
+            boardPads.equals(fixture.board.getPadIds().toString()) &&
+            fixture.layout.getTraces().isEmpty() && fixture.layout.getHoles().isEmpty(),
+            "failed actual orderings preserve source board identity, geometry, and copper");
+        return new BranchRun(collector.snapshots,summary);
+    }
+
+    private static void stopAtInitialBranch(PcbLayerRoutingPrototype.Session session) {
+        for(int index=0;index<64;index++) {
+            Object search=fieldValue(session,"search");
+            if(search!=null && fieldValue(search,"branch")!=null) return;
+            PcbLayerRoutingPrototype.OrderingProgress progress=session.advanceOrderingSlice(1);
+            if(progress!=PcbLayerRoutingPrototype.OrderingProgress.WORKING)
+                throw new AssertionError("fresh literal stream ended before its first branch-copy boundary");
+        }
+        throw new AssertionError("fresh literal stream did not reach an initial live P07 branch");
+    }
+
+    private static void firstStart(BranchRun run,int pass,String net,String expected) {
+        String observed=null;
+        for(PcbLayerRoutingPrototype.BranchSnapshot snapshot:run.snapshots)
+            if(snapshot.pass==pass && net.equals(snapshot.netId)) { observed=snapshot.startPadId; break; }
+        String message="actual Search selected the expected "+net+" branch in pass "+pass+
+            " expected="+expected+" actual="+observed;
+        require(equal(expected,observed),equal(expected,observed)?message:message+runDetails(run));
+    }
+
+    private static boolean sameFirstStart(BranchRun first,BranchRun second,int pass,String net) {
+        return equal(firstStartValue(first,pass,net),firstStartValue(second,pass,net));
+    }
+
+    private static String firstStartValue(BranchRun run,int pass,String net) {
+        for(PcbLayerRoutingPrototype.BranchSnapshot snapshot:run.snapshots)
+            if(snapshot.pass==pass && net.equals(snapshot.netId)) return snapshot.startPadId;
+        return null;
+    }
+
+    private static void samePass(BranchRun first,BranchRun second,int pass,String message) {
+        java.util.Vector<PcbLayerRoutingPrototype.BranchSnapshot> a=passSnapshots(first,pass);
+        java.util.Vector<PcbLayerRoutingPrototype.BranchSnapshot> b=passSnapshots(second,pass);
+        int firstPrior=expansionsBeforePass(first,pass);
+        int secondPrior=expansionsBeforePass(second,pass);
+        boolean same=sameSnapshots(a,b,firstPrior,secondPrior);
+        require(same,same?message:message+" first"+runDetails(first)+" second"+runDetails(second));
+    }
+
+    private static int expansionsBeforePass(BranchRun run,int pass) {
+        int cumulative=0,prior=0;
+        for(PcbLayerRoutingPrototype.BranchSnapshot snapshot:run.snapshots) {
+            cumulative+=snapshot.branchExpanded;
+            require(snapshot.totalExpanded==cumulative,
+                "literal stream cumulative request budget equals every completed branch expansion sum");
+            if(snapshot.pass<pass) prior=cumulative;
+        }
+        return prior;
+    }
+
+    private static void sameRun(BranchRun first,BranchRun second,String message) {
+        boolean same=first.summary.expansions==second.summary.expansions &&
+            first.summary.orderings==second.summary.orderings &&
+            first.summary.completedOrderings==second.summary.completedOrderings &&
+            first.summary.yieldedOrderings==second.summary.yieldedOrderings &&
+            equal(first.summary.termination,second.summary.termination) &&
+            sameSnapshots(first.snapshots,second.snapshots);
+        require(same,same?message:message+" first"+runDetails(first)+" second"+runDetails(second));
+    }
+
+    private static String runDetails(BranchRun run) {
+        return runDetails(run.summary,run.snapshots);
+    }
+
+    private static String runDetails(PcbLayerRoutingPrototype.OrderingSummary summary,
+            java.util.Vector<PcbLayerRoutingPrototype.BranchSnapshot> snapshots) {
+        StringBuilder details=new StringBuilder("; summary{expansions=");
+        details.append(summary.expansions).append(",orderings=").append(summary.orderings)
+            .append(",completed=").append(summary.completedOrderings)
+            .append(",yielded=").append(summary.yieldedOrderings)
+            .append(",guided=").append(summary.guidanceStarted)
+            .append(",comparisonComplete=").append(summary.comparisonComplete)
+            .append(",termination=").append(summary.termination).append("}; terminalSnapshots[")
+            .append(snapshots.size()).append("]=");
+        int limit=Math.min(15,snapshots.size());
+        for(int index=0;index<limit;index++) {
+            if(index>0) details.append('|');
+            PcbLayerRoutingPrototype.BranchSnapshot snapshot=snapshots.get(index);
+            details.append(snapshot.pass).append('/').append(snapshot.netId).append('/')
+                .append(snapshot.startPadId).append("->").append(snapshot.rootPadId)
+                .append('@').append(snapshot.startX).append(',').append(snapshot.startY)
+                .append(':').append(snapshot.terminalReason).append("{branch=")
+                .append(snapshot.branchExpanded).append(",total=").append(snapshot.totalExpanded)
+                .append(",vias=").append(snapshot.prefixViaCount)
+                .append(",reached=").append(snapshot.reachedPadCount).append('}');
+        }
+        if(snapshots.size()>limit) details.append("|...");
+        return details.toString();
+    }
+
+    private static java.util.Vector<PcbLayerRoutingPrototype.BranchSnapshot> passSnapshots(
+            BranchRun run,int pass) {
+        java.util.Vector<PcbLayerRoutingPrototype.BranchSnapshot> result=
+            new java.util.Vector<PcbLayerRoutingPrototype.BranchSnapshot>();
+        for(PcbLayerRoutingPrototype.BranchSnapshot snapshot:run.snapshots)
+            if(snapshot.pass==pass) result.add(snapshot);
+        return result;
+    }
+
+    private static boolean sameSnapshots(
+            java.util.Vector<PcbLayerRoutingPrototype.BranchSnapshot> first,
+            java.util.Vector<PcbLayerRoutingPrototype.BranchSnapshot> second) {
+        return sameSnapshots(first,second,0,0);
+    }
+
+    private static boolean sameSnapshots(
+            java.util.Vector<PcbLayerRoutingPrototype.BranchSnapshot> first,
+            java.util.Vector<PcbLayerRoutingPrototype.BranchSnapshot> second,
+            int firstPrior,int secondPrior) {
+        if(first.size()!=second.size()) return false;
+        for(int index=0;index<first.size();index++) {
+            PcbLayerRoutingPrototype.BranchSnapshot a=first.get(index),b=second.get(index);
+            if(a.pass!=b.pass || !equal(a.netId,b.netId) || !equal(a.startPadId,b.startPadId) ||
+                    !equal(a.rootPadId,b.rootPadId) || !equal(a.terminalReason,b.terminalReason) ||
+                    a.branchExpanded!=b.branchExpanded || a.totalExpanded-firstPrior!=b.totalExpanded-secondPrior ||
+                    a.prefixViaCount!=b.prefixViaCount || a.reachedPadCount!=b.reachedPadCount)
+                return false;
+        }
+        return true;
+    }
+
+    private static ChoiceFixture choiceFixture() {
+        PcbBoardLayout layout=new PcbBoardLayout(1100,650,new Rectangle(100,100,600,400),
+            new Rectangle(820,120,200,400));
+        addChoicePad(layout,"A.1",170,200);
+        addChoicePad(layout,"M.1",510,200);
+        addChoicePad(layout,"X.1",500,200);
+        addChoicePad(layout,"Y.1",350,200);
+        addChoicePad(layout,"Z.1",300,200);
+        addChoicePad(layout,"D.1",170,280);
+        addChoicePad(layout,"C.1",250,200);
+        addChoicePad(layout,"B.1",630,200);
+        addChoicePad(layout,"E.1",390,440);
+        return new ChoiceFixture(layout);
+    }
+
+    private static void addChoicePad(PcbBoardLayout layout,String id,int x,int y) {
+        layout.addPad(new PcbPadPlacement(id,x,y,0,0,0,
+            new Rectangle(x-4,y-4,8,8),new Rectangle(x-6,y-6,12,12)));
+    }
+
+    private static RoutingFixture chordFixture(PcbTraceWidthProfile profile) {
+        TroubleshootBoard board=new TroubleshootBoard("P07_BRANCH_TREE_THREE_CHORDS");
+        board.addNet(new BoardNet("M",BoardNet.RoutingRole.HIGH_CURRENT));
+        board.addNet(new BoardNet("P",BoardNet.RoutingRole.SUPPLY));
+        board.addNet(new BoardNet("N",BoardNet.RoutingRole.SIGNAL));
+        PcbBoardLayout layout=new PcbBoardLayout(1100,650,new Rectangle(100,100,600,400),
+            new Rectangle(820,120,200,400));
+        addPhysicalPoint(board,layout,"M1","M",110,110,PcbRotation.DEG_0,PcbBoardSide.TOP);
+        addPhysicalPoint(board,layout,"M2","M",690,490,PcbRotation.DEG_180,PcbBoardSide.TOP);
+        addPhysicalPoint(board,layout,"P1","P",510,110,PcbRotation.DEG_0);
+        addPhysicalPoint(board,layout,"P2","P",110,490,PcbRotation.DEG_0);
+        addPhysicalPoint(board,layout,"A","N",110,300,PcbRotation.DEG_0);
+        addPhysicalPoint(board,layout,"B","N",690,240,PcbRotation.DEG_180);
+        addPhysicalPoint(board,layout,"C","N",690,300,PcbRotation.DEG_180);
+        addPhysicalPoint(board,layout,"D","N",690,110,PcbRotation.DEG_180);
+        java.util.Vector<PcbPlacementConstraints.Part> parts=
+            new java.util.Vector<PcbPlacementConstraints.Part>();
+        java.util.Vector<String> componentIds=board.getComponentIds();
+        java.util.Collections.sort(componentIds);
+        for(String componentId:componentIds)
+            parts.add(new PcbPlacementConstraints.Part(componentId,"branch-order","Branch order",
+                "board",PcbPlacementConstraints.Anchor.NONE,20));
+        board.setPlacementConstraints(new PcbPlacementConstraints(parts,
+            new java.util.Vector<PcbPlacementConstraints.Barrier>(),PcbCopperLayer.TOP,
+            PcbPlacementConstraints.DEFAULT_PHYSICAL_POLICY_ID,
+            PcbPlacementConstraints.DEFAULT_PHYSICAL_POLICY_VERSION,1,false,profile));
+        board.validate();
+        layout.validateAgainst(board);
+        assertPhysicalPad(layout,"M1.1",110,110,PcbBoardSide.TOP);
+        assertPhysicalPad(layout,"M2.1",690,490,PcbBoardSide.TOP);
+        assertPhysicalPad(layout,"P1.1",510,110,PcbBoardSide.BOTTOM);
+        assertPhysicalPad(layout,"P2.1",110,490,PcbBoardSide.BOTTOM);
+        assertPhysicalPad(layout,"A.1",110,300,PcbBoardSide.BOTTOM);
+        assertPhysicalPad(layout,"B.1",690,240,PcbBoardSide.BOTTOM);
+        assertPhysicalPad(layout,"C.1",690,300,PcbBoardSide.BOTTOM);
+        assertPhysicalPad(layout,"D.1",690,110,PcbBoardSide.BOTTOM);
+        return new RoutingFixture(board,layout);
+    }
+
+    private static void addPhysicalPoint(TroubleshootBoard board,PcbBoardLayout layout,
+            String id,String net,int x,int y,PcbRotation rotation) {
+        addPhysicalPoint(board,layout,id,net,x,y,rotation,PcbBoardSide.BOTTOM);
+    }
+
+    private static void addPhysicalPoint(TroubleshootBoard board,PcbBoardLayout layout,
+            String id,String net,int x,int y,PcbRotation rotation,PcbBoardSide mountingSide) {
+        PhysicalPackage physical=P06FactoryLinkFixtures.TEST_POINT;
+        BoardComponent component=new BoardComponent(id,physical.getId(),physical,id);
+        board.addComponent(component);
+        board.addPad(new BoardPad(id+".1",id,"1",net));
+        PcbPackagePose reference=new PcbPackagePose(100,100,rotation,mountingSide);
+        Point local=physical.getGeometry().placedAt(reference).getPadPoint(0);
+        PcbPackagePose pose=new PcbPackagePose(100+x-local.x,100+y-local.y,rotation,mountingSide);
+        PcbFootprint footprint=PcbFootprint.fromPhysicalPackage(component,pose,physical.getGeometry());
+        layout.addComponent(footprint.getPlacement());
+        for(PcbPadPlacement pad:footprint.getPads()) layout.addPad(pad);
+    }
+
+    private static void assertPhysicalPad(PcbBoardLayout layout,String padId,int x,int y,
+            PcbBoardSide mountingSide) {
+        PcbPadPlacement pad=layout.getPad(padId);
+        require(pad!=null && pad.getX()==x && pad.getY()==y &&
+            pad.getAttachment()==PcbTerminalAttachment.PLATED_THROUGH_HOLE &&
+            pad.getMountingSide()==mountingSide &&
+            PcbCopperAccess.hasCopper(pad,PcbCopperLayer.TOP) &&
+            PcbCopperAccess.hasCopper(pad,PcbCopperLayer.BOTTOM),
+            "literal PTH point "+padId+" keeps its board XY and declared "+mountingSide+
+                " mount with copper on both faces");
+    }
+
+    private static PcbLayerRoutingPrototype.BranchOrderStrategy strategyOf(Object session) {
+        Object value=fieldValue(session,"branchOrderStrategy");
+        if(!(value instanceof PcbLayerRoutingPrototype.BranchOrderStrategy))
+            throw new AssertionError("strategy field is absent or has an unexpected value owner");
+        try {
+            java.lang.reflect.Field field=session.getClass().getDeclaredField("branchOrderStrategy");
+            require(java.lang.reflect.Modifier.isFinal(field.getModifiers()),
+                "stored branch-order strategy is immutable");
+        } catch(ReflectiveOperationException failure) {
+            throw new AssertionError("branch-order strategy field must be inspectable",failure);
+        }
+        return (PcbLayerRoutingPrototype.BranchOrderStrategy)value;
+    }
+
+    private static Object fieldValue(Object target,String name) {
+        if(target==null) throw new AssertionError("cannot inspect null owner field "+name);
+        Class<?> type=target.getClass();
+        while(type!=null) {
+            try {
+                java.lang.reflect.Field field=type.getDeclaredField(name);
+                field.setAccessible(true);
+                return field.get(target);
+            } catch(NoSuchFieldException missing) { type=type.getSuperclass(); }
+            catch(ReflectiveOperationException failure) {
+                throw new AssertionError("cannot read owner field "+name,failure);
+            }
+        }
+        throw new AssertionError("owner field is absent: "+name);
+    }
+
+    private static java.util.Vector<String> ids(String... values) {
+        java.util.Vector<String> result=new java.util.Vector<String>();
+        for(String value:values) result.add(value);
+        return result;
+    }
+
+    private static void eq(Object expected,Object actual,String message) {
+        require(equal(expected,actual),message+" expected="+expected+" actual="+actual);
+    }
+
+    private static boolean equal(Object first,Object second) {
+        return first==null?second==null:first.equals(second);
+    }
+
+    private static void require(boolean condition,String message) {
+        checks++;
+        if(!condition) throw new AssertionError(message);
+    }
+
+    private static final class ArmedObserver implements SeededPcbLayoutGenerator.AttemptObserver {
+        boolean armed;
+        RuntimeException failure;
+        public void check(int attempt) { if(armed && failure!=null) throw failure; }
+    }
+
+    private static final class BranchCollector implements PcbLayerRoutingPrototype.Diagnostics {
+        final java.util.Vector<PcbLayerRoutingPrototype.BranchSnapshot> snapshots=
+            new java.util.Vector<PcbLayerRoutingPrototype.BranchSnapshot>();
+        public void onTerminalBranch(PcbLayerRoutingPrototype.BranchSnapshot snapshot) {
+            require(snapshot!=null && snapshot.pass>=0 &&
+                snapshot.pass<PcbLayerRoutingPrototype.ORDERINGS && snapshot.startPadId!=null &&
+                snapshot.rootPadId!=null && snapshot.terminalReason!=null,
+                "actual P07 branch callback carries bounded terminal identity");
+            if(snapshots.size()>=15) throw new AssertionError("literal branch snapshot cap exceeded");
+            snapshots.add(snapshot);
+        }
+    }
+
+    private static final class ChoiceFixture {
+        final PcbBoardLayout layout;
+        ChoiceFixture(PcbBoardLayout layout) { this.layout=layout; }
+    }
+
+    private static final class RoutingFixture {
+        final TroubleshootBoard board;
+        final PcbBoardLayout layout;
+        RoutingFixture(TroubleshootBoard board,PcbBoardLayout layout) {
+            this.board=board; this.layout=layout;
+        }
+    }
+
+    private static final class BranchRun {
+        final java.util.Vector<PcbLayerRoutingPrototype.BranchSnapshot> snapshots;
+        final PcbLayerRoutingPrototype.OrderingSummary summary;
+        BranchRun(java.util.Vector<PcbLayerRoutingPrototype.BranchSnapshot> snapshots,
+                PcbLayerRoutingPrototype.OrderingSummary summary) {
+            this.snapshots=new java.util.Vector<PcbLayerRoutingPrototype.BranchSnapshot>(snapshots);
+            this.summary=summary;
+        }
     }
 }

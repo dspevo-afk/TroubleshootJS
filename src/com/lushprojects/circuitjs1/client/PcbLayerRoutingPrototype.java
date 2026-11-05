@@ -16,11 +16,22 @@ final class PcbLayerRoutingPrototype {
             this.secondaryCost=secondaryCost; this.underpasses=underpasses;
         }
     }
+    enum BranchOrderStrategy { CANONICAL_NEAREST, SECOND_ORDER_FARTHEST }
     static final int GRID=10, TURN_COST=35, MAX_CELLS=250000, MAX_EXPANSIONS=1000000;
     static final int MAX_DIAGNOSTIC_VIA_COST=240;
     static final int MAX_BRANCH_EXPANSIONS=100000, ORDERINGS=3;
     enum OrderingProgress { WORKING, ROUTE_READY, COMPLETE }
     enum DetachedOrderingProgress { WORKING, ROUTE_READY, ORDERING_BOUNDARY }
+    /** Applies the diagnostic strategy only to the guarded ROLE_WIDTHS second ordering. */
+    static String chooseBranchPad(PcbBoardLayout layout,Vector<String> remaining,
+            Vector<String> reached,int pass,boolean roleWidths,BranchOrderStrategy strategy) {
+        if(layout==null || remaining==null || remaining.isEmpty() || reached==null || reached.isEmpty() ||
+                pass<0 || pass>=ORDERINGS || strategy==null)
+            throw new IllegalArgumentException("Invalid P07 branch-choice request");
+        if(roleWidths && pass==1 && strategy==BranchOrderStrategy.SECOND_ORDER_FARTHEST)
+            return PcbNetRouter.chooseFarthest(layout,remaining,reached);
+        return PcbNetRouter.chooseNext(layout,remaining,reached);
+    }
     /** The single production arithmetic used both by Search and pre-route admission. */
     static final class GridAdmission {
         final int width,height;
@@ -358,23 +369,51 @@ final class PcbLayerRoutingPrototype {
             throw new IllegalArgumentException("P07 ordering stream requires FULLER_TWO_LAYER");
         return beginOrderingCandidates(board,placement,policy,observer,MAX_EXPANSIONS,policy.vias,null);
     }
+    static Session beginOrderingCandidates(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
+            SeededPcbLayoutGenerator.AttemptObserver observer,BranchOrderStrategy branchOrderStrategy) {
+        if(branchOrderStrategy==null)
+            throw new IllegalArgumentException("Missing P07 branch-order strategy");
+        if(policy==null)
+            throw new IllegalArgumentException("P07 ordering stream requires FULLER_TWO_LAYER");
+        return beginOrderingCandidates(board,placement,policy,observer,MAX_EXPANSIONS,policy.vias,
+            null,branchOrderStrategy);
+    }
     /** The caller may reduce the existing expansion/via limits for bounded canaries. */
     static Session beginOrderingCandidates(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
             SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias,
             Diagnostics diagnostics) {
+        return beginOrderingCandidates(board,placement,policy,observer,maximum,maximumVias,
+            diagnostics,BranchOrderStrategy.CANONICAL_NEAREST);
+    }
+    static Session beginOrderingCandidates(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
+            SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias,
+            Diagnostics diagnostics,BranchOrderStrategy branchOrderStrategy) {
         if(policy!=Policy.FULLER_TWO_LAYER)
             throw new IllegalArgumentException("P07 ordering stream requires FULLER_TWO_LAYER");
-        return new Session(board,placement,policy,observer,maximum,maximumVias,diagnostics,true);
+        if(branchOrderStrategy==null)
+            throw new IllegalArgumentException("Missing P07 branch-order strategy");
+        return new Session(board,placement,policy,observer,maximum,maximumVias,diagnostics,true,
+            null,null,branchOrderStrategy);
     }
     /** Generator-owned, opt-in capture; its terminal hook is separate from ordinary diagnostics. */
     static Session beginOrderingCandidatesWithFixedPrefixObservation(TroubleshootBoard board,
             PcbBoardLayout placement,Policy policy,SeededPcbLayoutGenerator.AttemptObserver observer,
             int maximum,int maximumVias,Diagnostics diagnostics,FixedPrefixCaptureContext context,
             FixedPrefixGraphObserver captureObserver) {
+        return beginOrderingCandidatesWithFixedPrefixObservation(board,placement,policy,observer,
+            maximum,maximumVias,diagnostics,context,captureObserver,
+            BranchOrderStrategy.CANONICAL_NEAREST);
+    }
+    static Session beginOrderingCandidatesWithFixedPrefixObservation(TroubleshootBoard board,
+            PcbBoardLayout placement,Policy policy,SeededPcbLayoutGenerator.AttemptObserver observer,
+            int maximum,int maximumVias,Diagnostics diagnostics,FixedPrefixCaptureContext context,
+            FixedPrefixGraphObserver captureObserver,BranchOrderStrategy branchOrderStrategy) {
         if(policy!=Policy.FULLER_TWO_LAYER || context==null || captureObserver==null)
             throw new IllegalArgumentException("Invalid actual P07 fixed-prefix observation request");
+        if(branchOrderStrategy==null)
+            throw new IllegalArgumentException("Missing P07 branch-order strategy");
         return new Session(board,placement,policy,observer,maximum,maximumVias,diagnostics,true,
-            context,captureObserver);
+            context,captureObserver,branchOrderStrategy);
     }
     static Result route(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
             SeededPcbLayoutGenerator.AttemptObserver observer) {
@@ -975,6 +1014,7 @@ final class PcbLayerRoutingPrototype {
         private final int links;
         private final int maximumVias;
         private final int viaCost;
+        private final BranchOrderStrategy branchOrderStrategy;
         private final Budget budget;
         private final Diagnostics diagnostics;
         private final boolean roleWidths;
@@ -1007,6 +1047,7 @@ final class PcbLayerRoutingPrototype {
             board=source.board; policy=source.policy; this.observer=observer;
             this.template=template; this.candidate=candidate; links=source.links;
             this.maximumVias=maximumVias; this.viaCost=viaCost; budget=new Budget(source.budget.maximum);
+            branchOrderStrategy=source.branchOrderStrategy;
             budget.expanded=source.budget.expanded;
             diagnostics=source.diagnostics==null?null:DETACHED_DIAGNOSTICS;
             roleWidths=source.roleWidths; orderingStream=source.orderingStream;
@@ -1032,14 +1073,23 @@ final class PcbLayerRoutingPrototype {
         private Session(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
                 SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias,
                 Diagnostics diagnostics,boolean orderingStream) {
-            this(board,placement,policy,observer,maximum,maximumVias,diagnostics,orderingStream,null,null);
+            this(board,placement,policy,observer,maximum,maximumVias,diagnostics,orderingStream,
+                null,null,BranchOrderStrategy.CANONICAL_NEAREST);
         }
         private Session(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
                 SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias,
                 Diagnostics diagnostics,boolean orderingStream,FixedPrefixCaptureContext context,
                 FixedPrefixGraphObserver captureObserver) {
+            this(board,placement,policy,observer,maximum,maximumVias,diagnostics,orderingStream,
+                context,captureObserver,BranchOrderStrategy.CANONICAL_NEAREST);
+        }
+        private Session(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
+                SeededPcbLayoutGenerator.AttemptObserver observer,int maximum,int maximumVias,
+                Diagnostics diagnostics,boolean orderingStream,FixedPrefixCaptureContext context,
+                FixedPrefixGraphObserver captureObserver,BranchOrderStrategy branchOrderStrategy) {
             if(board==null || placement==null || policy==null || observer==null ||
-                    maximum<1 || maximum>MAX_EXPANSIONS || maximumVias<0 || maximumVias>policy.vias)
+                    maximum<1 || maximum>MAX_EXPANSIONS || maximumVias<0 || maximumVias>policy.vias ||
+                    branchOrderStrategy==null)
                 throw new IllegalArgumentException("Invalid P07 request");
             if(orderingStream && policy!=Policy.FULLER_TWO_LAYER)
                 throw new IllegalArgumentException("P07 ordering stream requires FULLER_TWO_LAYER");
@@ -1048,6 +1098,7 @@ final class PcbLayerRoutingPrototype {
             this.board=board; this.policy=policy; this.observer=observer;
             this.maximumVias=maximumVias;
             viaCost=policy.viaCost;
+            this.branchOrderStrategy=branchOrderStrategy;
             this.diagnostics=diagnostics;
             this.orderingStream=orderingStream;
             this.fixedPrefixContext=context;
@@ -1973,8 +2024,8 @@ final class PcbLayerRoutingPrototype {
                 boolean lexical=pass==2 &&
                     board.getPlacementConstraints().getTraceWidthProfile().isLegacyUniform() &&
                     board.getNet(currentNet).getRoutingRole()!=BoardNet.RoutingRole.RETURN;
-                String next=lexical?currentPadIds.firstElement():
-                    PcbNetRouter.chooseNext(layout,currentPadIds,reachedPadIds);
+                String next=lexical?currentPadIds.firstElement():chooseBranchPad(layout,
+                    currentPadIds,reachedPadIds,pass,owner.roleWidths,owner.branchOrderStrategy);
                 currentPadIds.remove(next);
                 PcbPadPlacement start=layout.getPad(next);
                 branches++;

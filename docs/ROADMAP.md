@@ -421,6 +421,25 @@ Next is a bounded source audit and frozen generic earlier-prefix/order treatment
 or necessary diagnostic. The identical fixed graph cannot meet the length guard;
 actual physical/access/functional proofs remain required before adoption.
 
+The [branch-order source/lifecycle prerequisite](task-evidence/Q100/branch-tree-order-r1/README.md)
+is locally accepted. An explicit immutable P07 strategy reuses the existing
+farthest chooser only for ROLE_WIDTHS/internalpass1; default and legacy paths,
+epochs26/28, electrical truth and every budget/oracle remain unchanged. The real
+generator can expose a completed request-zero receipt after retiring its route,
+then seal successor advance while remaining incomplete. Focused tiny contracts,
+native2/8/33, fresh72/20 retained bounds and six literal geometries, all eight
+canonical predecessor diagnostics/readers, actual Player/Developer builds,
+compiled privacy/Current9/fresh E06State10 and exact3 normal MEDIUM development
+roots pass. The new consumer passes23tests and real CLI/junction controls.
+Normal3's exact owned profile cleanup passes; the original E06R1 failed namespace
+remains uncertain and preserved, with no recovery PASS claimed. Other failed
+attempts remain FAIL. Full30 is owner-excluded; HARD/PSYCHOTIC unavailable/unrun.
+Publication is pending normal commit/push and one completion Gmail.
+The actual authored branch-order baseline/control/treatment study is NOT_RUN.
+Next is its frozen wire/independent reader, explicitly separating the plain
+entrypoint receipt control from observed full-branch controls, then bounded
+execution on the pristine actual candidate at cost60/cap48. Playable100=0/beta held.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

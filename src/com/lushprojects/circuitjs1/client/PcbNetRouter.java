@@ -360,7 +360,7 @@ final class PcbNetRouter {
         }
         return best;
     }
-    private static String chooseFarthest(PcbBoardLayout layout,Vector<String> remaining,Vector<String> reached) {
+    static String chooseFarthest(PcbBoardLayout layout,Vector<String> remaining,Vector<String> reached) {
         String best=remaining.get(0);long farthest=-1;
         for(String id:remaining) {
             long nearest=Long.MAX_VALUE;PcbPadPlacement a=layout.getPad(id);

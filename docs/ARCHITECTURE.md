@@ -220,6 +220,24 @@ explicit incomplete status. Observer, cancellation and unexpected failures latch
 and retire the stream; later calls cannot revive a pending route or complete a
 failed job. Current replay/cache identities include the new interpretation.
 
+An internal immutable branch-order strategy supports the private Q100 experiment.
+Normal entry points select canonical nearest-to-reached. The explicit treatment
+reuses P05's farthest chooser only for ROLE_WIDTHS internal pass1; pass0/pass2,
+root/net order and the legacy-uniform pass2 lexical exception stay on their
+existing paths. Detached Session copies retain the same strategy. This opt-in
+seam changes no default policy, interpretation epoch, electrical model or Player
+surface; its source/unit prerequisite and remaining authored experiment are
+tracked in the [branch-order plan](task-evidence/Q100/branch-tree-order-r1/PLAN.md).
+
+`SeededPcbLayoutGenerator` also owns an opt-in request-zero observation boundary
+for two-layer Medium boards. It creates context from the actual pristine chosen
+placement, forwards the request's diagnostics, records the ordinary typed receipt
+and outcome, retires the route stream, then publishes an immutable event with no
+live board/layout/session reference. The generator remains incomplete. A sealed
+event prevents successor `advance()` before mutation; errors latch and retire
+the stream without fabricating an event. The boundary neither substitutes for
+normal finalization nor reports a rejected request as generator success.
+
 `VerifierIsolation` owns browser shutdown proof separately from generation. Its
 bound-receipt wait retains a completed natural-exit proof only within that wait,
 bound to the same record, retained attestation, process handle, PID and creation

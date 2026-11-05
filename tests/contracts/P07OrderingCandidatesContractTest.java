@@ -242,6 +242,7 @@ public final class P07OrderingCandidatesContractTest {
         verifyPostYieldDiagnosticFailure(runId);
         verifyDetachedOrderingFinalizer(runId);
         verifyDetachedOrderingBoundary(runId);
+        verifyActualP07RequestBoundary(runId,amDiagnostic);
         MediumBoardPhysicalPolicy.Result generated=runActualGeneratorReceiptCase(runId);
         int assertions=checks-before;
         System.out.println("P07_ORDERING_STREAM_SUITE {\"protocol\":"+quote(STREAM_PROTOCOL)+
@@ -430,6 +431,58 @@ public final class P07OrderingCandidatesContractTest {
         public void check(int attempt) {
             calls++;
             if(failure!=null && calls>=throwAtCall) throw failure;
+        }
+    }
+
+    private static final class RequestBoundaryDiagnostics
+            implements PcbLayerRoutingPrototype.Diagnostics {
+        int calls;
+        PcbLayerRoutingPrototype.BranchSnapshot first;
+        final RuntimeException failure;
+        final Vector<PcbLayerRoutingPrototype.BranchSnapshot> snapshots=
+            new Vector<PcbLayerRoutingPrototype.BranchSnapshot>();
+        final int maxSnapshots;
+        RequestBoundaryDiagnostics(RuntimeException failure,TroubleshootBoard board) {
+            this.failure=failure;
+            maxSnapshots=PcbLayerRoutingPrototype.ORDERINGS*
+                (board.getPadIds().size()-board.getNetIds().size());
+            require(maxSnapshots>0,"request-boundary callback cap derives from the actual board");
+        }
+        public void onTerminalBranch(PcbLayerRoutingPrototype.BranchSnapshot snapshot) {
+            require(snapshot!=null && snapshots.size()<maxSnapshots,
+                "request-boundary collector retains every callback inside its physical census");
+            calls++;
+            snapshots.add(snapshot);
+            if(first==null) first=snapshot;
+            if(failure!=null) throw failure;
+        }
+    }
+
+    private static final class ActualRequestBoundaryRun {
+        final Rb56Plan plan;
+        final TroubleshootBoard board;
+        final SeededPcbLayoutGenerator.Session session;
+        final SeededPcbLayoutGenerator.P07RequestBoundaryEvent event;
+        final RequestBoundaryDiagnostics diagnostics;
+        final int[] observerCalls;
+        final int advances;
+        final String planBefore,boardBefore;
+        ActualRequestBoundaryRun(Rb56Plan plan,TroubleshootBoard board,
+                SeededPcbLayoutGenerator.Session session,
+                SeededPcbLayoutGenerator.P07RequestBoundaryEvent event,
+                RequestBoundaryDiagnostics diagnostics,int[] observerCalls,int advances,
+                String planBefore,String boardBefore) {
+            this.plan=plan; this.board=board; this.session=session; this.event=event;
+            this.diagnostics=diagnostics; this.observerCalls=observerCalls; this.advances=advances;
+            this.planBefore=planBefore; this.boardBefore=boardBefore;
+        }
+    }
+
+    private static final class RequestBoundaryState {
+        final String canonical;
+        RequestBoundaryState(String canonical) { this.canonical=canonical; }
+        boolean sameAs(RequestBoundaryState other) {
+            return other!=null && canonical.equals(other.canonical);
         }
     }
 
@@ -1794,6 +1847,421 @@ public final class P07OrderingCandidatesContractTest {
         throw new AssertionError("latched P07 failure allowed a later API call");
     }
 
+
+    private static void verifyActualP07RequestBoundary(String runId,StreamRun independent) {
+        verifyP07RequestBoundaryPreflight();
+        ActualRequestBoundaryRun convenience=runActualP07RequestBoundary(false);
+        verifyP07RequestBoundaryEvent(convenience);
+        ActualRequestBoundaryRun explicitNearest=runActualP07RequestBoundary(true);
+        verifyP07RequestBoundaryEvent(explicitNearest);
+        verifyP07RequestBoundaryParity(convenience,explicitNearest);
+        require(convenience.event.context().selectedPlacementAttempt()==independent.prepared.fixture.candidateAttempt &&
+            convenience.event.context().rawPlacementFingerprint().equals(independent.prepared.inputGeometry),
+            "request zero selects the independently frozen saved7 candidate4 pristine placement");
+        PcbBoardLayout boundaryWinner=(PcbBoardLayout)observedField(convenience.session,"mediumTwoLayerLayout");
+        require(boundaryWinner!=null && boundaryWinner.geometryFingerprint().equals(
+            ((PcbBoardLayout)observedField(independent.owner.session,"mediumTwoLayerLayout")).geometryFingerprint()),
+            "request-zero finalizer winner matches the independent saved7 ordering-stream physical oracle");
+        verifyP07RequestBoundaryRetry(convenience);
+        verifyP07RequestBoundaryRetry(explicitNearest);
+        verifyP07RequestBoundaryDiagnosticsFailure(runId);
+        System.out.println("P07_REQUEST_BOUNDARY_CONTRACT {\"protocol\":\"p07-request-boundary-contract-v1\""+
+            ",\"runId\":"+quote(runId)+",\"status\":\"PASS_REQUEST_BOUNDARY_CONTRACT_ONLY\""+
+            ",\"rootSeed\":\"42\",\"placementVersion\":7,"+
+            "\"requestIndex\":0,\"selectedPlacementAttempt\":"+
+            convenience.event.context().selectedPlacementAttempt()+
+            ",\"advancesToBoundary\":"+convenience.advances+
+            ",\"receiptTermination\":"+quote(convenience.event.receipt().termination)+
+            ",\"routeOutcome\":"+quote(convenience.event.routeOutcome())+
+            ",\"diagnosticCallbacks\":"+convenience.diagnostics.calls+
+            ",\"explicitNearestParity\":true,"+
+            "\"diagnosticFailureNoCompletedRequest\":true,"+
+            "\"layoutQualification\":false,\"adoption\":false}");
+    }
+
+    private static void verifyP07RequestBoundaryPreflight() {
+        for(Field field:SeededPcbLayoutGenerator.P07RequestBoundaryConfiguration.class.getDeclaredFields())
+            if(!Modifier.isStatic(field.getModifiers()))
+                require(Modifier.isFinal(field.getModifiers()),
+                    "P07 request-boundary configuration retains immutable instance fields");
+        expectIllegalArgument(new Runnable(){public void run(){
+            new SeededPcbLayoutGenerator.P07RequestBoundaryConfiguration(
+                (PcbLayerRoutingPrototype.BranchOrderStrategy)null,null);
+        }},"P07 request-boundary configuration rejects a null branch-order strategy");
+
+        final Rb56Plan plan=requestBoundaryPlan();
+        final TroubleshootBoard mediumBoard=plan.board();
+        final String planBefore=plan.canonical();
+        final String boardBefore=logicalBoardFingerprint(mediumBoard);
+        final CountingObserver observer=new CountingObserver();
+        final SeededPcbLayoutGenerator generator=new SeededPcbLayoutGenerator(
+            StandardPcbFootprintProviders.createRegistry(),observer);
+        final SeededPcbLayoutGenerator.P07RequestBoundaryConfiguration configuration=
+            new SeededPcbLayoutGenerator.P07RequestBoundaryConfiguration(
+                (PcbLayerRoutingPrototype.Diagnostics)null);
+        expectIllegalArgument(new Runnable(){public void run(){
+            generator.beginWithP07RequestBoundary(mediumBoard,plan.layoutSeed,plan.routingSeed,null);
+        }},"P07 request-boundary entry rejects a null configuration before generation work");
+
+        final TroubleshootBoard nonMedium=requestBoundaryPreflightBoard(
+            "P07_BOUNDARY_NON_MEDIUM",false);
+        final PcbPlacementConstraints nonMediumConstraints=nonMedium.getPlacementConstraints();
+        require(nonMediumConstraints.usesDefaultPhysicalPolicy() &&
+            !MediumBoardPhysicalPolicy.selected(nonMediumConstraints) &&
+            !nonMediumConstraints.requiresTwoLayerRouting,
+            "preflight negative uses a valid default single-face board configuration");
+        expectIllegalArgument(new Runnable(){public void run(){
+            generator.beginWithP07RequestBoundary(nonMedium,0L,0L,configuration);
+        }},"P07 request-boundary entry rejects a non-Medium board before generation work");
+
+        final TroubleshootBoard mediumSingleLayer=requestBoundaryPreflightBoard(
+            "P07_BOUNDARY_MEDIUM_SINGLE_LAYER",true);
+        final PcbPlacementConstraints literalMediumSingleLayer=mediumSingleLayer.getPlacementConstraints();
+        require(MediumBoardPhysicalPolicy.selected(mediumSingleLayer.getPlacementConstraints()) &&
+            !mediumSingleLayer.getPlacementConstraints().requiresTwoLayerRouting,
+            "preflight negative uses valid literal Medium policy constraints without a two-layer requirement");
+        expectIllegalArgument(new Runnable(){public void run(){
+            generator.beginWithP07RequestBoundary(mediumSingleLayer,0L,0L,configuration);
+        }},"P07 request-boundary entry rejects Medium constraints without required two-layer routing");
+        require(observer.calls==0 && mediumSingleLayer.getPlacementConstraints()==literalMediumSingleLayer &&
+            planBefore.equals(plan.canonical()) && boardBefore.equals(logicalBoardFingerprint(mediumBoard)),
+            "null and invalid boundary configurations reject before observer, board or plan mutation");
+    }
+
+    private static TroubleshootBoard requestBoundaryPreflightBoard(String id,boolean mediumPolicy) {
+        TroubleshootBoard board=new TroubleshootBoard(id);
+        BoardComponent resistor=new BoardComponent("R","RESISTOR",PhysicalPackages.AXIAL_RESISTOR);
+        board.addComponent(resistor);
+        board.addNet(new BoardNet("A"));
+        board.addNet(new BoardNet("B"));
+        board.addPad(new BoardPad("R.1","R","1","A"));
+        board.addPad(new BoardPad("R.2","R","2","B"));
+        PcbPlacementConstraints ordinary=PcbPlacementConstraints.standard(board);
+        PcbPlacementConstraints constraints=mediumPolicy?
+            new PcbPlacementConstraints(ordinary.getParts(),ordinary.getBarriers(),PcbCopperLayer.TOP,
+                MediumBoardPhysicalPolicy.ID,MediumBoardPhysicalPolicy.VERSION,1,false):ordinary;
+        board.setPlacementConstraints(constraints);
+        board.validate();
+        return board;
+    }
+
+    private static Rb56Plan requestBoundaryPlan() {
+        Rb56Plan plan=Rb56Plan.resolve(42L,7);
+        require(SeededPcbLayoutGenerator.CURRENT_VERSION==26 &&
+            "tsj-generation-dependencies-v28".equals(GenerationDependencyContext.INTERPRETATION_EPOCH),
+            "actual request-boundary fixture is pinned to layout-26/dependency-28 interpretation");
+        require(plan.seed==42L && plan.placementInterpretationVersion==7 &&
+            plan.layoutSeed==5526715536693200536L && plan.routingSeed==4493419427463069983L &&
+            "RB56_CH2_SHARED_HYSTERETIC_A_NMOS_B_BJT_S5_true_S12_true_F2_O0_B5_false"
+                .equals(plan.topology()),
+            "actual request-boundary fixture preserves the saved7/root42 identity and named seeds");
+        return plan;
+    }
+
+    private static ActualRequestBoundaryRun runActualP07RequestBoundary(boolean explicitNearest) {
+        final Rb56Plan plan=requestBoundaryPlan();
+        final TroubleshootBoard board=plan.board();
+        final String planBefore=plan.canonical();
+        final String boardBefore=logicalBoardFingerprint(board);
+        require(board.getPlacementConstraints().requiresTwoLayerRouting &&
+            MediumBoardPhysicalPolicy.selected(board.getPlacementConstraints()),
+            "actual request-boundary fixture uses the real saved Medium two-layer constraints");
+        final int[] observerCalls={0};
+        final RequestBoundaryDiagnostics diagnostics=new RequestBoundaryDiagnostics(null,board);
+        SeededPcbLayoutGenerator.AttemptObserver observer=new SeededPcbLayoutGenerator.AttemptObserver() {
+            public void check(int attempt) { observerCalls[0]++; }
+        };
+        SeededPcbLayoutGenerator generator=new SeededPcbLayoutGenerator(
+            StandardPcbFootprintProviders.createRegistry(),observer);
+        final SeededPcbLayoutGenerator.P07RequestBoundaryConfiguration configuration=explicitNearest?
+            new SeededPcbLayoutGenerator.P07RequestBoundaryConfiguration(
+                PcbLayerRoutingPrototype.BranchOrderStrategy.CANONICAL_NEAREST,diagnostics):
+            new SeededPcbLayoutGenerator.P07RequestBoundaryConfiguration(diagnostics);
+        SeededPcbLayoutGenerator.Session session=generator.beginWithP07RequestBoundary(
+            board,plan.layoutSeed,plan.routingSeed,configuration);
+        require(session.p07RequestBoundaryEvent()==null && !observedBoolean(session,"complete"),
+            "actual generator boundary event starts absent on an incomplete session");
+        int advances=0;
+        while(session.p07RequestBoundaryEvent()==null) {
+            if(++advances>640)
+                throw new AssertionError("actual request-zero generator boundary exceeded the unchanged 640-advance bound");
+            boolean complete=session.advance();
+            if(complete)
+                throw new AssertionError("request-boundary mode completed the generator before publishing its request event");
+        }
+        return new ActualRequestBoundaryRun(plan,board,session,
+            session.p07RequestBoundaryEvent(),diagnostics,observerCalls,advances,planBefore,boardBefore);
+    }
+
+    private static void verifyP07RequestBoundaryEvent(final ActualRequestBoundaryRun run) {
+        SeededPcbLayoutGenerator.P07RequestBoundaryEvent event=run.event;
+        require(event!=null,"actual request-zero P07 boundary event is present");
+        PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=event.context();
+        MediumBoardPhysicalPolicy.OrderingSearchReceipt receipt=event.receipt();
+        require(context!=null && receipt!=null && event.routeOutcome()!=null &&
+            event.routeOutcome().length()>0,
+            "completed actual P07 request exposes separate context, receipt and route outcome fields");
+        require(context.routeRequestIndex()==0 && context.layoutSeed()==run.plan.layoutSeed &&
+            context.routingSeed()==run.plan.routingSeed,
+            "actual event records request zero and the exact named placement and routing seeds");
+        int[] eligible=context.eligiblePlacementAttempts();
+        require(eligible!=null && eligible.length>0 && eligible.length<=6,
+            "actual event retains the bounded real route-eligible placement list");
+        TreeSet<Integer> uniqueAttempts=new TreeSet<Integer>();
+        for(int attempt:eligible)
+            require(uniqueAttempts.add(Integer.valueOf(attempt)),
+                "actual request event retains unique eligible placement attempts");
+        require(context.selectedPlacementIndex()>=0 && context.selectedPlacementIndex()<eligible.length &&
+            context.selectedPlacementAttempt()==receipt.attempt &&
+            eligible[context.selectedPlacementIndex()]==receipt.attempt,
+            "actual selected placement attempt matches both its immutable context and typed receipt");
+        require(receipt.attempt>=0 && receipt.startedOrderings>=1 &&
+            receipt.startedOrderings<=PcbLayerRoutingPrototype.ORDERINGS &&
+            receipt.completedOrderings>=1 && receipt.completedOrderings<=receipt.startedOrderings &&
+            receipt.expansions>=0 && receipt.expansions<=PcbLayerRoutingPrototype.MAX_EXPANSIONS &&
+            receipt.termination!=null && receipt.termination.length()>0,
+            "actual request event retains a bounded typed ordering receipt");
+        String rawFingerprint=context.rawPlacementFingerprint();
+        require(rawFingerprint!=null && rawFingerprint.length()>0,
+            "actual request event retains the pristine chosen-placement fingerprint");
+        for(Field field:event.getClass().getDeclaredFields())
+            if(!Modifier.isStatic(field.getModifiers()))
+                require(Modifier.isFinal(field.getModifiers()),
+                    "actual request-boundary event exposes only final instance fields");
+        for(Field field:context.getClass().getDeclaredFields())
+            if(!Modifier.isStatic(field.getModifiers()))
+                require(Modifier.isFinal(field.getModifiers()),
+                    "actual request context exposes only final instance fields");
+        for(Field field:receipt.getClass().getDeclaredFields())
+            if(!Modifier.isStatic(field.getModifiers()))
+                require(Modifier.isFinal(field.getModifiers()),
+                    "actual ordering receipt exposes only final instance fields");
+        int[] preserved=new int[eligible.length];
+        System.arraycopy(eligible,0,preserved,0,eligible.length);
+        int[] returned=context.eligiblePlacementAttempts();
+        returned[0]=returned[0]==Integer.MAX_VALUE?Integer.MIN_VALUE:Integer.MAX_VALUE;
+        require(sameRequestBoundaryInts(preserved,context.eligiblePlacementAttempts()),
+            "actual event context returns a defensive array copy of eligible attempts");
+
+        @SuppressWarnings("unchecked")
+        Vector<MediumBoardPhysicalPolicy.OrderingSearchReceipt> receipts=
+            (Vector<MediumBoardPhysicalPolicy.OrderingSearchReceipt>)observedField(
+                run.session,"mediumOrderingSearchReceipts");
+        @SuppressWarnings("unchecked")
+        Vector<String> outcomes=(Vector<String>)observedField(run.session,"mediumRouteOutcomes");
+        int matchingOutcomes=0;
+        for(String outcome:outcomes) if(event.routeOutcome().equals(outcome)) matchingOutcomes++;
+        require(receipts.size()==1 && receipts.firstElement()==receipt &&
+            observedInt(run.session,"mediumTwoLayerAttempts")==1 && matchingOutcomes==1,
+            "request-zero event binds exactly one stored receipt and its separate actual route outcome");
+        require(!observedBoolean(run.session,"complete") && run.session.mediumResult()==null &&
+            observedField(run.session,"mediumPolicyResult")==null,
+            "request-boundary session stays incomplete without fabricating a Medium result");
+        expectIllegalState(new Runnable(){public void run(){run.session.result();}},
+            "request-boundary session rejects final generator result access");
+        require(run.session.p07RequestBoundaryEvent()==event,
+            "request-boundary session retains its same immutable event after result rejection");
+        requireP07RequestBoundaryStreamRetired(run.session);
+        require(run.diagnostics.calls>0 && run.diagnostics.first!=null &&
+            run.diagnostics.first.pass>=0 && run.diagnostics.first.pass<PcbLayerRoutingPrototype.ORDERINGS,
+            "configuration diagnostics receive a real terminal-branch callback from the P07 stream");
+        require(run.planBefore.equals(run.plan.canonical()) &&
+            run.boardBefore.equals(logicalBoardFingerprint(run.board)),
+            "actual P07 request-boundary observation leaves the caller plan and logical board unchanged");
+    }
+
+    private static void verifyP07RequestBoundaryParity(ActualRequestBoundaryRun first,
+            ActualRequestBoundaryRun second) {
+        SeededPcbLayoutGenerator.P07RequestBoundaryEvent a=first.event,b=second.event;
+        PcbLayerRoutingPrototype.FixedPrefixCaptureContext ac=a.context(),bc=b.context();
+        require(sameP07RequestBoundaryReceipt(a.receipt(),b.receipt()),
+            "default and explicit canonical-nearest configurations preserve request receipt parity");
+        require(a.routeOutcome().equals(b.routeOutcome()),
+            "default and explicit canonical-nearest configurations preserve the separate route outcome");
+        require(ac.layoutSeed()==bc.layoutSeed() && ac.routingSeed()==bc.routingSeed() &&
+            ac.routeRequestIndex()==bc.routeRequestIndex() &&
+            ac.selectedPlacementIndex()==bc.selectedPlacementIndex() &&
+            ac.selectedPlacementAttempt()==bc.selectedPlacementAttempt() &&
+            ac.rawPlacementFingerprint().equals(bc.rawPlacementFingerprint()) &&
+            sameRequestBoundaryInts(ac.eligiblePlacementAttempts(),bc.eligiblePlacementAttempts()),
+            "default and explicit canonical-nearest configurations preserve actual event context parity");
+        require(first.diagnostics.calls==second.diagnostics.calls &&
+            first.diagnostics.snapshots.size()==first.diagnostics.calls &&
+            second.diagnostics.snapshots.size()==second.diagnostics.calls,
+            "default and explicit canonical-nearest configurations retain every bounded terminal callback");
+        for(int index=0;index<first.diagnostics.calls;index++) {
+            PcbLayerRoutingPrototype.BranchSnapshot one=first.diagnostics.snapshots.get(index);
+            PcbLayerRoutingPrototype.BranchSnapshot two=second.diagnostics.snapshots.get(index);
+            for(Field field:PcbLayerRoutingPrototype.BranchSnapshot.class.getDeclaredFields()) {
+                if(Modifier.isStatic(field.getModifiers())) continue;
+                require(Modifier.isFinal(field.getModifiers()) &&
+                    (field.getType()==Integer.TYPE || field.getType()==Boolean.TYPE || field.getType()==String.class),
+                    "branch parity compares immutable primitive/string snapshot fields only");
+                try {
+                    field.setAccessible(true);
+                    Object left=field.get(one),right=field.get(two);
+                    require(left==null?right==null:left.equals(right),
+                        "complete request-boundary branch parity at callback "+index+" field "+field.getName());
+                } catch(IllegalAccessException failure) {
+                    throw new AssertionError("cannot compare terminal branch field "+field.getName(),failure);
+                }
+            }
+        }
+        PcbBoardLayout firstLayout=(PcbBoardLayout)observedField(first.session,"mediumTwoLayerLayout");
+        PcbBoardLayout secondLayout=(PcbBoardLayout)observedField(second.session,"mediumTwoLayerLayout");
+        require(firstLayout==null?secondLayout==null:secondLayout!=null &&
+            firstLayout.geometryFingerprint().equals(secondLayout.geometryFingerprint()),
+            "default and explicit canonical-nearest preserve the exact finalized physical winner");
+    }
+
+    private static boolean sameP07RequestBoundaryReceipt(
+            MediumBoardPhysicalPolicy.OrderingSearchReceipt first,
+            MediumBoardPhysicalPolicy.OrderingSearchReceipt second) {
+        return first.attempt==second.attempt &&
+            first.startedOrderings==second.startedOrderings &&
+            first.completedOrderings==second.completedOrderings &&
+            first.yieldedOrderings==second.yieldedOrderings &&
+            first.finalizedOrderings==second.finalizedOrderings &&
+            first.selectedOrdering==second.selectedOrdering &&
+            first.expansions==second.expansions &&
+            first.guidanceStarted==second.guidanceStarted &&
+            first.comparisonComplete==second.comparisonComplete &&
+            first.termination.equals(second.termination);
+    }
+
+    private static boolean sameRequestBoundaryInts(int[] first,int[] second) {
+        if(first==null || second==null || first.length!=second.length) return false;
+        for(int i=0;i<first.length;i++) if(first[i]!=second[i]) return false;
+        return true;
+    }
+
+    private static void verifyP07RequestBoundaryRetry(final ActualRequestBoundaryRun run) {
+        RequestBoundaryState before=requestBoundaryState(run.session,run.observerCalls[0],run.diagnostics.calls);
+        try {
+            run.session.advance();
+            throw new AssertionError("sealed P07 request-boundary session allowed a successor advance");
+        } catch(IllegalStateException expected) {
+            require("P07 request-zero diagnostic boundary is sealed".equals(expected.getMessage()),
+                "sealed request boundary rejects before successor-attempt mutation");
+        }
+        require(run.session.p07RequestBoundaryEvent()==run.event &&
+            !observedBoolean(run.session,"complete") && run.session.mediumResult()==null,
+            "sealed request retry retains the event and does not complete or publish a Medium result");
+        require(before.sameAs(requestBoundaryState(run.session,run.observerCalls[0],run.diagnostics.calls)),
+            "sealed request retry preserves attempt, cursors, statistics and callback counts");
+        expectIllegalState(new Runnable(){public void run(){run.session.result();}},
+            "sealed request boundary continues to reject final result access");
+        require(before.sameAs(requestBoundaryState(run.session,run.observerCalls[0],run.diagnostics.calls)) &&
+            run.planBefore.equals(run.plan.canonical()) &&
+            run.boardBefore.equals(logicalBoardFingerprint(run.board)),
+            "result rejection leaves the sealed request and caller-owned fixture unchanged");
+    }
+
+    private static RequestBoundaryState requestBoundaryState(Object session,int observerCalls,
+            int diagnosticCalls) {
+        Object statistics=observedField(session,"statistics");
+        @SuppressWarnings("unchecked")
+        Vector<?> receipts=(Vector<?>)observedField(session,"mediumOrderingSearchReceipts");
+        @SuppressWarnings("unchecked")
+        Vector<?> outcomes=(Vector<?>)observedField(session,"mediumRouteOutcomes");
+        @SuppressWarnings("unchecked")
+        Vector<?> ranked=(Vector<?>)observedField(session,"mediumRankedAttempts");
+        @SuppressWarnings("unchecked")
+        Vector<?> scores=(Vector<?>)observedField(session,"mediumPlacementScores");
+        StringBuilder state=new StringBuilder();
+        state.append(observedInt(session,"attempt")).append('|')
+            .append(observedInt(session,"mediumPlacementAttempt")).append('|')
+            .append(observedInt(session,"mediumRouteAttempt")).append('|')
+            .append(observedInt(session,"mediumRouteStage")).append('|')
+            .append(observedInt(session,"mediumTwoLayerAttempts")).append('|')
+            .append(observedInt(session,"mediumTwoLayerSuccesses")).append('|')
+            .append(observedInt(session,"mediumTwoLayerCheckpoint")).append('|')
+            .append(observedInt(session,"mediumTwoLayerFinalizedOrderings")).append('|')
+            .append(observedInt(session,"mediumTwoLayerSelectedOrdering")).append('|')
+            .append(observedInt(session,"mediumPlacementRejections")).append('|')
+            .append(((Long)observedField(session,"mediumPlacementEvaluations")).longValue()).append('|')
+            .append(((Long)observedField(session,"mediumTwoLayerElapsedMillis")).longValue()).append('|')
+            .append(observedInt(statistics,"placements")).append('|')
+            .append(observedInt(statistics,"routes")).append('|')
+            .append(observedInt(statistics,"expansions")).append('|')
+            .append(((Long)observedField(statistics,"routeMillis")).longValue()).append('|')
+            .append(receipts.size()).append('|').append(outcomes.size()).append('|')
+            .append(ranked.size()).append('|').append(scores.size()).append('|')
+            .append(observerCalls).append('|').append(diagnosticCalls);
+        return new RequestBoundaryState(state.toString());
+    }
+
+    private static void requireP07RequestBoundaryStreamRetired(Object session) {
+        require(observedField(session,"mediumTwoLayerRoute")==null &&
+            observedField(session,"mediumTwoLayerCandidate")==null &&
+            observedField(session,"mediumTwoLayerRequestContext")==null,
+            "request boundary retires the live P07 stream, placement candidate and request context");
+        require(observedInt(session,"mediumTwoLayerCheckpoint")==-1 &&
+            observedInt(session,"mediumTwoLayerFinalizedOrderings")==0 &&
+            observedInt(session,"mediumTwoLayerSelectedOrdering")==-1 &&
+            observedField(session,"mediumTwoLayerLastFailureDetail")==null &&
+            ((Long)observedField(session,"mediumTwoLayerElapsedMillis")).longValue()==0L,
+            "request boundary clears its live route cursors and transient request accounting");
+    }
+
+    private static void verifyP07RequestBoundaryDiagnosticsFailure(String runId) {
+        final Rb56Plan plan=requestBoundaryPlan();
+        final TroubleshootBoard board=plan.board();
+        final RuntimeException expected=new RuntimeException("P07 boundary diagnostics sink sentinel");
+        final RequestBoundaryDiagnostics diagnostics=new RequestBoundaryDiagnostics(expected,board);
+        final int[] observerCalls={0};
+        SeededPcbLayoutGenerator.AttemptObserver observer=new SeededPcbLayoutGenerator.AttemptObserver() {
+            public void check(int attempt) { observerCalls[0]++; }
+        };
+        SeededPcbLayoutGenerator generator=new SeededPcbLayoutGenerator(
+            StandardPcbFootprintProviders.createRegistry(),observer);
+        SeededPcbLayoutGenerator.P07RequestBoundaryConfiguration configuration=
+            new SeededPcbLayoutGenerator.P07RequestBoundaryConfiguration(diagnostics);
+        SeededPcbLayoutGenerator.Session session=generator.beginWithP07RequestBoundary(
+            board,plan.layoutSeed,plan.routingSeed,configuration);
+        require(session.p07RequestBoundaryEvent()==null,"diagnostic-failure session starts without an event");
+        int advances=0;
+        RuntimeException propagated=null;
+        while(propagated==null) {
+            if(++advances>640)
+                throw new AssertionError("P07 diagnostics failure was not reached inside the unchanged 640-advance bound");
+            try {
+                if(session.advance())
+                    throw new AssertionError("diagnostics failure canary completed the generator before the request boundary");
+            } catch(RuntimeException failure) { propagated=failure; }
+        }
+        require(propagated==expected && diagnostics.calls==1,
+            "real P07 Diagnostics sink propagates the exact sentinel object at its first callback");
+        require(session.p07RequestBoundaryEvent()==null && !observedBoolean(session,"complete") &&
+            observedField(session,"mediumPolicyResult")==null &&
+            observedField(session,"mediumOrderingFailure")==expected &&
+            observedInt(session,"mediumTwoLayerAttempts")==0,
+            "diagnostics exception aborts the actual request without inventing completion or a result");
+        requireP07RequestBoundaryStreamRetired(session);
+        @SuppressWarnings("unchecked")
+        Vector<?> receipts=(Vector<?>)observedField(session,"mediumOrderingSearchReceipts");
+        require(receipts.isEmpty(),
+            "diagnostics exception does not store a completed P07 receipt or request-boundary event");
+        RuntimeException resultFailure=null;
+        try { session.mediumResult(); }
+        catch(RuntimeException failure) { resultFailure=failure; }
+        require(resultFailure==expected,
+            "Medium result access rethrows the same latched diagnostics exception object");
+        RequestBoundaryState beforeRetry=requestBoundaryState(session,observerCalls[0],diagnostics.calls);
+        RuntimeException retryFailure=null;
+        try { session.advance(); }
+        catch(RuntimeException failure) { retryFailure=failure; }
+        require(retryFailure==expected && diagnostics.calls==1 && session.p07RequestBoundaryEvent()==null,
+            "failed diagnostics session re-advance rethrows the same object without another callback or event");
+        require(beforeRetry.sameAs(requestBoundaryState(session,observerCalls[0],diagnostics.calls)),
+            "failed diagnostics re-advance preserves attempt, cursors, statistics and callback counts");
+        System.out.println("P07_REQUEST_BOUNDARY_CANARY {\"protocol\":\"p07-request-boundary-contract-v1\""+
+            ",\"runId\":"+quote(runId)+",\"caseId\":\"SAVED7_ROOT42_DIAGNOSTICS_FAILURE\""+
+            ",\"status\":\"PASS\",\"advanceUnits\":"+advances+
+            ",\"diagnosticCallbacks\":"+diagnostics.calls+
+            ",\"sameExceptionLatched\":true,\"completedRequest\":false"+
+            ",\"layoutQualification\":false,\"adoption\":false}");
+    }
 
     private static MediumBoardPhysicalPolicy.Result runActualGeneratorReceiptCase(String runId) {
         final Rb56Plan plan=Rb56Plan.resolve(42L,7);

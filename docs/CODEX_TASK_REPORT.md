@@ -1,4 +1,99 @@
-# Current checkpoint: A_DRIVE bounded length exclusion published
+# Current checkpoint: branch-order prerequisite locally accepted; publication pending
+
+UTC2026-11-05. Active V=OS-temp/tsj-q100-branch-tree-order-20261104-r1,
+branch codex/q100-branch-tree-order-20261104, HEAD/sourceparent
+21e990e128b6f374da0cba3bbfd680b951f1b2cf. External QV=OS-temp/
+tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/branch-tree-order-r1.
+No new commit, push or completion email yet. Required source/lifecycle gates PASS;
+root integrated publication review underway. See the branch-tree-order-r1 packet.
+
+Scope is the source/unit prerequisite explicitly allowed by frozen PLAN R2
+SHA2a135f6751dc77fb0bdd4382786d1dc18a6bdb353b134bd210108ef68bf362f9.
+Immutable opt-in farthest strategy affects only ROLE_WIDTHS/internalpass1.
+Default nearest, root/net order, legacy lexical exception, costs/caps, epochs26/28,
+CircuitJS models and all physical/time/work predicates remain unchanged. The real
+generator's immutable request-zero event follows receipt/outcome recording and
+stream retirement, stays incomplete and seals successor advance before mutation.
+Actual authored branch-order study NOT_RUN; wire not frozen; no adoption.
+
+Final native1079=850production+223contract+6static,228662raw/87478294sumB:
+native-freeze-r10/inputs.json SHA
+68b1489b28cb5cec4f17289021e009f7048bfa869a3538aed7be44060ef9efbd.
+Only five code deltas versus W/f27; final source audit1079per-side PASS.
+P07f21b69aa.../Net92347537.../Generator3fc036b4...;
+Orderingfbf705ab.../TwoLayerfd6536a3.... Root owns all files, no source writers.
+
+Final gates:
+- Tiny-r8 PASS205branch/13112TwoLayer/486651Ordering assertions,65.3075729s
+ includingcompile/teardown. Saved7/root42/request0/actualattempt4,51advances,
+ 291complete terminal snapshots; immutable event/receipt/context, sealed retry,
+ diagnostic failure, independent pristine geometry/finalized winner and control
+ parity. Wrong-manifest actual native canaries reject before child launch.
+- Native2/8/33 PASS58.8612357/63.0198107/149.5887782s includingcompile/teardown;
+ original22 included, exact33suite list retained, exit0/termination/cleanupPASS.
+ Root reviewc1c4a3ef89886d22d7b5991255464b27f47967bdecf333bd8c0d75871f7e1556.
+- Fresh saved72/20 PASS: six12-case historical structural cohorts, ten same-side
+ bounds per side, six original literal physical hashes per side, unchanged raw
+ compactness/geometry predicates. Consumer final23tests PASS, ten actual CLI
+ negatives inclrealjunction plus3real-capture metadata adapter negatives PASS.
+ Positive specdfc90f3130053439f7fdd954f0e792922c44638bad4390b548ba0252df9768d9;
+ result941debac8cf1fabc7ee7cc92cd9dd42f6d5ffc0e791c17fec8e26ec86c555c17.
+ No all72geometry equality or normal-population claim. Raw originals untouched.
+- All eight canonical predecessor native/independent-reader pairs PASS:
+ baseline/cap17/D/load/cost240/remainder/guard/graph. Root composite
+ a83e2bc8ad023c3f8e7150c782d56a9a2e47a39594705e18cb801d6e0d4eb4de.
+ Strict graph review3ca037c1... proves graph0c73ce21.../patha2d33696...
+ byteexact against acceptedW.621groups/max1329ms/operation28.726s/cleanup1ms;
+ actual native60.462277s/reader5.1178987s includingchildteardown. No route claim.
+- Actual selected PS5/JDK8/GWT scripts/build.ps1 Player/Developer PASS,
+ 94.611427/143.3687989s,1202inputs/357outputs; exactPlayer357 archived.
+ Compiled privacy/Current9/freshE06StateR2/10 PASS. Current shutdown7701ms;
+ E06R2operation168923ms/cleanup51432ms against120000/shutdown7316ms against15000.
+ Strict compiled reviewccc8e91def57f1b4e02431b1d119bb300cd4c8ea42e5a68bc7943eed6549fa59.
+- Normal3R2 six phases PASS on exactapproved roots/four-candidate envelope, each
+ accepts first candidate. Sequence380.6704105s includingchildcleanup; compiled
+ operations48.542/40.267/24.805s,hostcleanup1.1563243s. Exactownedprofilecleanup
+ PASS1688ms/120000; no survivors, no process terminated. Root review
+ a3bd0cc240fb7c187e72650ca0e512d28175a2b630ae89c92b6a3abdb3ef1139.
+- Python46 rawbytes match clean acceptedU21e990e1;44also match graph manifest.
+ Reuse only unchanged prior Python test evidence; actual8readers/newconsumer
+ controls ran fresh. Reuse audit376bc333def1d83513052f58954646c0e5dc924cf787e457df3ad7c86607b9ec.
+
+Preserve all failed tiny/compiler/host/reader/preparation attempts in FAILURES.md
+and external raw namespaces. Original Normal3R1 run-ID guard failure and saved
+wrapperR1 whitespace-count failure remain FAIL; fresh corrected runs prove the
+new hosts. Consumer ctime cross-API correction retains within-API stability,
+cross-API shared identity and all hash/re-read checks. No native oracle weakened.
+No visible Player flow changed; manual input/screenshots NOT_APPLICABLE. Native
+hosts do not export separate operation/cleanup; their times include compilation
+and child teardown. Independent leaf source reviews were limited, root executes.
+
+Original E06R1 FAIL remains:10functional routes passed, naturalshutdown15011ms
+exceeds15000,operation179268ms/cleanup27840ms/resourceSuccess=false. Maintained
+recovery FAIL at preparation because closeAttempted=true. No journal/owner/limit
+bypass. Retained OS-temp/TroubleshootJS/verify/5e446ea3a88b6a0e3f74/
+2d6ce12b44f341dc9ecf94032b36930d browser14116/start639294472690745890/
+port58320 andpreview34180/start639294472514546595/port58264 remain uncertain.
+No persisted14descendant tuples support full closure; preserve resources and
+raw evidence. FreshE06R2 and Normal3 cleanup do not certify the old namespace.
+Ambient8928 untouched. No active task gate/worker actor remains.
+
+Preserved Main5f05b005:9tracked/6untracked/0staged; Desktop e0c36885:
+7tracked/73collapseduntracked/0staged, readonlyJDK8provider. W6f905668 raw42EOL
+changes preserved; U21e990e1 clean. V intendedchanges only, stageexplicitpaths.
+Only report top mirrored to Main. Prior graphb9a2146a/receipt6f905668/Gmail
+1a1a8e9a56ef51ba and lengthe2e3c5d/receipt21e990e1/Gmail1a1a940143ba9f27
+remain published/sentonce; never resend. Prior evidence and other worktrees stay.
+
+Next: finish integrateddiff/stagedchecks, normalcommit/push exactacceptedSHA and
+one completion Gmail; then freeze actual authored wire/independent reader.
+Explicitly distinguish plain-entry receipt control from full observed controls
+before execution. Three approved normal MEDIUM development roots only;
+full30 owner-excluded, full2-by-31 notrenewed. ProtectedHARD unread/unrun here,
+historical unread UNCERTIFIED; HARD/PSYCHOTIC unavailable/unrun. Playable100=0,
+beta held. Self-hosted CI runner setup remains a prerequisite, noCI-greenclaim.
+
+# Historical checkpoint: A_DRIVE bounded length exclusion published
 
 UTC2026-11-04. U=OS-temp/tsj-q100-adrive-length-bound-20261104-r1,
 branch codex/q100-adrive-length-bound-20261104, sourceparent
@@ -6,7 +101,8 @@ branch codex/q100-adrive-length-bound-20261104, sourceparent
 e2e3c5d99786e0c0c29b3e2de9174525092477f2. QN=OS-temp/
 tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/adrive-length-bound-r1.
 Normal push/exact remote SHA verified; Gmail1a1a940143ba9f27 SENTONCE.
-Documentation receipt pending; NEVERsend a second completion email. Previous captureb9a2146a and
+Documentation receipt21e990e128b6f374da0cba3bbfd680b951f1b2cf
+was normally pushed and exactremoteverified; NOsecondGmail. Previous captureb9a2146a and
 receipt6f905668 verified remotely, Gmail1a1a8e9a56ef51ba SENTONCE; never resend.
 
 Python-only relaxed-length diagnostic accepted for the retained exact A_DRIVE

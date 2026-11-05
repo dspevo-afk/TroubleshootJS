@@ -49,6 +49,40 @@ class SeededPcbLayoutGenerator {
         void check(int attempt);
     }
 
+    /** Immutable opt-in configuration for one actual P07 request-zero boundary. */
+    static final class P07RequestBoundaryConfiguration {
+        final PcbLayerRoutingPrototype.BranchOrderStrategy branchOrderStrategy;
+        final PcbLayerRoutingPrototype.Diagnostics diagnostics;
+        P07RequestBoundaryConfiguration(PcbLayerRoutingPrototype.Diagnostics diagnostics) {
+            this(PcbLayerRoutingPrototype.BranchOrderStrategy.CANONICAL_NEAREST,diagnostics);
+        }
+        P07RequestBoundaryConfiguration(
+                PcbLayerRoutingPrototype.BranchOrderStrategy branchOrderStrategy,
+                PcbLayerRoutingPrototype.Diagnostics diagnostics) {
+            if(branchOrderStrategy==null)
+                throw new IllegalArgumentException("Missing P07 request-boundary branch-order strategy");
+            this.branchOrderStrategy=branchOrderStrategy;
+            this.diagnostics=diagnostics;
+        }
+    }
+
+    /** Immutable request receipt; it deliberately retains no live generator or board owner. */
+    static final class P07RequestBoundaryEvent {
+        private final PcbLayerRoutingPrototype.FixedPrefixCaptureContext context;
+        private final MediumBoardPhysicalPolicy.OrderingSearchReceipt receipt;
+        private final String routeOutcome;
+        private P07RequestBoundaryEvent(
+                PcbLayerRoutingPrototype.FixedPrefixCaptureContext context,
+                MediumBoardPhysicalPolicy.OrderingSearchReceipt receipt,String routeOutcome) {
+            if(context==null || receipt==null || routeOutcome==null)
+                throw new IllegalArgumentException("Invalid P07 request-boundary event");
+            this.context=context; this.receipt=receipt; this.routeOutcome=routeOutcome;
+        }
+        PcbLayerRoutingPrototype.FixedPrefixCaptureContext context() { return context; }
+        MediumBoardPhysicalPolicy.OrderingSearchReceipt receipt() { return receipt; }
+        String routeOutcome() { return routeOutcome; }
+    }
+
     private static final AttemptObserver DEFAULT_ATTEMPT_OBSERVER =
         new AttemptObserver() {
             public void check(int attempt) { GenerationWorkScope.check(); }
@@ -77,6 +111,13 @@ class SeededPcbLayoutGenerator {
     }
     Session begin(TroubleshootBoard board,long seed,long routingSeed) {
         return new Session(board,seed,routingSeed,attemptObserver);
+    }
+    /** Package-private diagnostic entrypoint; normal generator entrypoints stay canonical. */
+    Session beginWithBranchOrderStrategy(TroubleshootBoard board,long seed,long routingSeed,
+            PcbLayerRoutingPrototype.BranchOrderStrategy branchOrderStrategy) {
+        if(branchOrderStrategy==null)
+            throw new IllegalArgumentException("Missing PCB branch-order strategy");
+        return new Session(board,seed,routingSeed,attemptObserver,null,null,branchOrderStrategy);
     }
     PcbBoardLayout generate(TroubleshootBoard board, long seed, long routingSeed, SupportedEnvelope envelope) {
         Session session = new Session(board,seed,routingSeed,attemptObserver,envelope);
@@ -115,9 +156,33 @@ class SeededPcbLayoutGenerator {
     /** Opt-in generator-owned fixed-prefix diagnostics; ordinary callers remain on the null path. */
     Session beginWithFixedPrefixObservation(TroubleshootBoard board,long seed,long routingSeed,
             PcbLayerRoutingPrototype.FixedPrefixGraphObserver captureObserver) {
+        return beginWithFixedPrefixObservation(board,seed,routingSeed,captureObserver,
+            PcbLayerRoutingPrototype.BranchOrderStrategy.CANONICAL_NEAREST);
+    }
+    /** Diagnostic strategy follows the real generator-owned P07 ordering stream. */
+    Session beginWithFixedPrefixObservation(TroubleshootBoard board,long seed,long routingSeed,
+            PcbLayerRoutingPrototype.FixedPrefixGraphObserver captureObserver,
+            PcbLayerRoutingPrototype.BranchOrderStrategy branchOrderStrategy) {
         if(captureObserver==null)
             throw new IllegalArgumentException("Missing fixed-prefix observation owner");
-        return new Session(board,seed,routingSeed,attemptObserver,null,captureObserver);
+        if(branchOrderStrategy==null)
+            throw new IllegalArgumentException("Missing PCB branch-order strategy");
+        return new Session(board,seed,routingSeed,attemptObserver,null,captureObserver,
+            branchOrderStrategy);
+    }
+    /** Opt-in real-generator stop at the first completed P07 request boundary. */
+    Session beginWithP07RequestBoundary(TroubleshootBoard board,long seed,long routingSeed,
+            P07RequestBoundaryConfiguration configuration) {
+        return beginWithP07RequestBoundary(board,seed,routingSeed,configuration,null);
+    }
+    /** May also retain the existing bounded fixed-prefix observer for the same real request. */
+    Session beginWithP07RequestBoundary(TroubleshootBoard board,long seed,long routingSeed,
+            P07RequestBoundaryConfiguration configuration,
+            PcbLayerRoutingPrototype.FixedPrefixGraphObserver captureObserver) {
+        if(configuration==null)
+            throw new IllegalArgumentException("Missing P07 request-boundary configuration");
+        return new Session(board,seed,routingSeed,attemptObserver,null,captureObserver,
+            configuration.branchOrderStrategy,configuration);
     }
     /** Advances one placement attempt or one retained route slice per generation work unit. */
     final class Session {
@@ -126,6 +191,8 @@ class SeededPcbLayoutGenerator {
         private final AttemptObserver observer;
         private final SupportedEnvelope envelope;
         private final PcbLayerRoutingPrototype.FixedPrefixGraphObserver fixedPrefixGraphObserver;
+        private final PcbLayerRoutingPrototype.BranchOrderStrategy branchOrderStrategy;
+        private final P07RequestBoundaryConfiguration p07RequestBoundaryConfiguration;
         private final GenerationStatistics statistics=new GenerationStatistics();
         private PcbRoutingRejectedException lastFailure;
         private PcbBoardLayout bestLayout;
@@ -149,6 +216,8 @@ class SeededPcbLayoutGenerator {
         private int mediumPlacementAttempt, mediumRouteAttempt, mediumRouteStage;
         private PcbLayerRoutingPrototype.Session mediumTwoLayerRoute;
         private MediumBoardPhysicalPolicy.PlacementCandidate mediumTwoLayerCandidate;
+        private PcbLayerRoutingPrototype.FixedPrefixCaptureContext mediumTwoLayerRequestContext;
+        private P07RequestBoundaryEvent p07RequestBoundaryEvent;
         private long mediumTwoLayerElapsedMillis;
         private int mediumTwoLayerCheckpoint=-1;
         private int mediumTwoLayerFinalizedOrderings;
@@ -180,16 +249,40 @@ class SeededPcbLayoutGenerator {
         private long mediumSelectedRouteQualityMilli = -1;
         private MediumBoardPhysicalPolicy.Result mediumPolicyResult;
         Session(TroubleshootBoard board,long seed,long routingSeed,AttemptObserver observer) {
-            this(board,seed,routingSeed,observer,null,null);
+            this(board,seed,routingSeed,observer,null,null,
+                PcbLayerRoutingPrototype.BranchOrderStrategy.CANONICAL_NEAREST);
         }
         Session(TroubleshootBoard board,long seed,long routingSeed,AttemptObserver observer,SupportedEnvelope envelope) {
-            this(board,seed,routingSeed,observer,envelope,null);
+            this(board,seed,routingSeed,observer,envelope,null,
+                PcbLayerRoutingPrototype.BranchOrderStrategy.CANONICAL_NEAREST);
         }
         Session(TroubleshootBoard board,long seed,long routingSeed,AttemptObserver observer,
                 SupportedEnvelope envelope,
                 PcbLayerRoutingPrototype.FixedPrefixGraphObserver fixedPrefixGraphObserver) {
+            this(board,seed,routingSeed,observer,envelope,fixedPrefixGraphObserver,
+                PcbLayerRoutingPrototype.BranchOrderStrategy.CANONICAL_NEAREST);
+        }
+        Session(TroubleshootBoard board,long seed,long routingSeed,AttemptObserver observer,
+                SupportedEnvelope envelope,
+                PcbLayerRoutingPrototype.FixedPrefixGraphObserver fixedPrefixGraphObserver,
+                PcbLayerRoutingPrototype.BranchOrderStrategy branchOrderStrategy) {
+            this(board,seed,routingSeed,observer,envelope,fixedPrefixGraphObserver,
+                branchOrderStrategy,null);
+        }
+        Session(TroubleshootBoard board,long seed,long routingSeed,AttemptObserver observer,
+                SupportedEnvelope envelope,
+                PcbLayerRoutingPrototype.FixedPrefixGraphObserver fixedPrefixGraphObserver,
+                PcbLayerRoutingPrototype.BranchOrderStrategy branchOrderStrategy,
+                P07RequestBoundaryConfiguration p07RequestBoundaryConfiguration) {
+            if(branchOrderStrategy==null)
+                throw new IllegalArgumentException("Missing PCB branch-order strategy");
+            if(p07RequestBoundaryConfiguration!=null &&
+                    p07RequestBoundaryConfiguration.branchOrderStrategy!=branchOrderStrategy)
+                throw new IllegalArgumentException("Mismatched P07 request-boundary branch-order strategy");
             this.envelope=envelope;
             this.fixedPrefixGraphObserver=fixedPrefixGraphObserver;
+            this.branchOrderStrategy=branchOrderStrategy;
+            this.p07RequestBoundaryConfiguration=p07RequestBoundaryConfiguration;
             if(board==null)throw new IllegalArgumentException("Missing logical board for PCB generation");
             this.board=board;this.seed=seed;this.routingSeed=routingSeed;
             this.observer=observer==null?attemptObserver:observer;
@@ -200,8 +293,13 @@ class SeededPcbLayoutGenerator {
             if (!mediumPolicy && !constraints.usesDefaultPhysicalPolicy())
                 throw new IllegalArgumentException("Unsupported physical placement policy: " +
                     constraints.getPhysicalPolicyIdentity());
+            if(p07RequestBoundaryConfiguration!=null &&
+                    (!mediumPolicy || !constraints.requiresTwoLayerRouting))
+                throw new IllegalArgumentException("P07 request-boundary configuration requires a two-layer medium board");
         }
         boolean advance() {
+            if(p07RequestBoundaryEvent!=null)
+                throw new IllegalStateException("P07 request-zero diagnostic boundary is sealed");
             rethrowMediumOrderingFailure();
             if(complete)throw new IllegalStateException("PCB planning is already complete");
             if (packingActive) return advancePackingProbe(this);
@@ -257,6 +355,7 @@ class SeededPcbLayoutGenerator {
             rethrowMediumOrderingFailure();
             return mediumPolicyResult;
         }
+        P07RequestBoundaryEvent p07RequestBoundaryEvent() { return p07RequestBoundaryEvent; }
         private void rethrowMediumOrderingFailure() {
             if (mediumOrderingFailure instanceof RuntimeException)
                 throw (RuntimeException)mediumOrderingFailure;
@@ -567,11 +666,13 @@ class SeededPcbLayoutGenerator {
                 try {
                     PcbBoardLayout placement=candidate.plan.materialize();
                     long started=System.currentTimeMillis();
-                    if(session.fixedPrefixGraphObserver==null) {
-                        session.mediumTwoLayerRoute=PcbLayerRoutingPrototype.beginOrderingCandidates(
-                            session.board,placement,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
-                            session.observer);
-                    } else {
+                    PcbLayerRoutingPrototype.Diagnostics diagnostics=
+                        session.p07RequestBoundaryConfiguration==null?null:
+                            session.p07RequestBoundaryConfiguration.diagnostics;
+                    session.mediumTwoLayerRequestContext=null;
+                    PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=null;
+                    if(session.fixedPrefixGraphObserver!=null ||
+                            session.p07RequestBoundaryConfiguration!=null) {
                         int[] eligibleAttempts=new int[routeCandidates.size()];
                         if(eligibleAttempts.length<1 || eligibleAttempts.length>6)
                             throw new IllegalStateException("Fixed-prefix observation route eligibility is outside the six-candidate bound");
@@ -580,16 +681,24 @@ class SeededPcbLayoutGenerator {
                         if(session.mediumTwoLayerAttempts<0 ||
                                 session.mediumTwoLayerAttempts>=MediumBoardPhysicalPolicy.ROUTING_CANDIDATES)
                             throw new IllegalStateException("Fixed-prefix route request index is outside the P07 bound");
-                        PcbLayerRoutingPrototype.FixedPrefixCaptureContext context=
-                            new PcbLayerRoutingPrototype.FixedPrefixCaptureContext(session.seed,
-                                session.routingSeed,eligibleAttempts,candidate.attempt,
-                                session.mediumTwoLayerAttempts,placement.geometryFingerprint());
+                        context=new PcbLayerRoutingPrototype.FixedPrefixCaptureContext(session.seed,
+                            session.routingSeed,eligibleAttempts,candidate.attempt,
+                            session.mediumTwoLayerAttempts,placement.geometryFingerprint());
+                        session.mediumTwoLayerRequestContext=context;
+                    }
+                    if(session.fixedPrefixGraphObserver==null) {
+                        session.mediumTwoLayerRoute=PcbLayerRoutingPrototype.beginOrderingCandidates(
+                            session.board,placement,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
+                            session.observer,PcbLayerRoutingPrototype.MAX_EXPANSIONS,
+                            PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.vias,diagnostics,
+                            session.branchOrderStrategy);
+                    } else {
                         session.mediumTwoLayerRoute=
                             PcbLayerRoutingPrototype.beginOrderingCandidatesWithFixedPrefixObservation(
                                 session.board,placement,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
                                 session.observer,PcbLayerRoutingPrototype.MAX_EXPANSIONS,
-                                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.vias,null,context,
-                                session.fixedPrefixGraphObserver);
+                                PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.vias,diagnostics,context,
+                                session.fixedPrefixGraphObserver,session.branchOrderStrategy);
                     }
                     session.mediumTwoLayerElapsedMillis+=System.currentTimeMillis()-started;
                     return advanceMediumTwoLayerRoute(session);
@@ -697,6 +806,11 @@ class SeededPcbLayoutGenerator {
             throw new IllegalStateException("Completed P07 ordering stream omitted its summary");
         MediumBoardPhysicalPolicy.PlacementCandidate candidate=session.mediumTwoLayerCandidate;
         int routeCheckpoint=session.mediumTwoLayerCheckpoint;
+        PcbLayerRoutingPrototype.FixedPrefixCaptureContext requestContext=
+            session.mediumTwoLayerRequestContext;
+        if(session.p07RequestBoundaryConfiguration!=null &&
+                (requestContext==null || requestContext.routeRequestIndex()!=0))
+            throw new IllegalStateException("Completed P07 request lost its actual request-zero context");
         MediumBoardPhysicalPolicy.OrderingSearchReceipt receipt =
             new MediumBoardPhysicalPolicy.OrderingSearchReceipt(candidate.attempt,
                 summary.orderings, summary.completedOrderings, summary.yieldedOrderings,
@@ -711,9 +825,11 @@ class SeededPcbLayoutGenerator {
         session.statistics.routeMillis+=session.mediumTwoLayerElapsedMillis;
         session.mediumOrderingSearchReceipts.add(receipt);
 
+        String routeOutcome;
         if (session.mediumTwoLayerFinalizedOrderings > 0) {
-            session.mediumRouteOutcomes.add(MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER + "@" +
-                candidate.attempt + "=SUCCESS");
+            routeOutcome=MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER + "@" +
+                candidate.attempt + "=SUCCESS";
+            session.mediumRouteOutcomes.add(routeOutcome);
         } else {
             String detail=session.mediumTwoLayerLastFailureDetail;
             if (detail == null) {
@@ -722,7 +838,8 @@ class SeededPcbLayoutGenerator {
                     PcbRoutingRejectedException.Kind.ROUTING, routeCheckpoint,
                     session.seed, detail);
             }
-            session.mediumRouteOutcomes.add(routeFailure(true, candidate, detail));
+            routeOutcome=routeFailure(true, candidate, detail);
+            session.mediumRouteOutcomes.add(routeOutcome);
         }
         session.mediumTwoLayerSuccesses = countMediumSuccesses(
             session.mediumRouteOutcomes, MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER);
@@ -735,6 +852,10 @@ class SeededPcbLayoutGenerator {
         session.mediumTwoLayerFinalizedOrderings=0;
         session.mediumTwoLayerSelectedOrdering=-1;
         session.mediumTwoLayerLastFailureDetail=null;
+        session.mediumTwoLayerRequestContext=null;
+        if(session.p07RequestBoundaryConfiguration!=null)
+            session.p07RequestBoundaryEvent=new P07RequestBoundaryEvent(
+                requestContext,receipt,routeOutcome);
         return false;
     }
 
@@ -748,6 +869,7 @@ class SeededPcbLayoutGenerator {
         session.mediumTwoLayerFinalizedOrderings=0;
         session.mediumTwoLayerSelectedOrdering=-1;
         session.mediumTwoLayerLastFailureDetail=null;
+        session.mediumTwoLayerRequestContext=null;
     }
     private static int mediumPlacementIndex(Session session, int placementAttempt) {
         for (int index = 0; index < session.mediumPlacements.size(); index++)
