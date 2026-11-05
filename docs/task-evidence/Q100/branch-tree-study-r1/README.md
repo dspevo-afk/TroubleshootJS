@@ -4,6 +4,8 @@ Status: accepted reader/wire prerequisite. Implementation
 ac6543321860e7032cb3a884d99cb0d26a0eeb57 was normally pushed to
 origin/codex/q100-physical-feasibility and exact remote SHA verified.
 Completion Gmail 1a1aa7d776d0a009 SENT ONCE; no second email for the receipt.
+This v1 reader-only packet applies to that exact recorded implementation.
+The current producer/report execution is in the [v3 packet](../branch-tree-study-v3-r1/README.md).
 No authored operation,Java study producer or new JDK8 driver has run. Playable100
 remains0 and beta remains held. This packet implements the reader substep in
 [PLAN.md](PLAN.md); [WIRE.md](WIRE.md) freezes report protocolv1.

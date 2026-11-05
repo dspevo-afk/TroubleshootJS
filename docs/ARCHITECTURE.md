@@ -244,8 +244,18 @@ branch-choice expectations from the pad census without replacing the solver or
 live PCB graph. It separates search FOUND from proven publication,compares plain
 receipt controls and observed branch controls,and requires matching prefixes for
 first-choice attribution. Fixture acceptance is explicitly separate from native
-process/context acceptance. The [reader packet](task-evidence/Q100/branch-tree-study-r1/README.md)
-records its scope; no production default,epoch or Player surface changes.
+process/context acceptance. The original [reader packet](task-evidence/Q100/branch-tree-study-r1/README.md)
+is attached to its recorded v1 candidate. Current [v3 qualification](task-evidence/Q100/branch-tree-study-v3-r1/README.md)
+preserves literal plus-sign pad identities and records live diagnostic pristine-
+router clone transitions through the existing owner observer. The reader joins
+each event pair to its later complete/stable branch snapshot. Raw owner work and
+all resource caps remain authoritative; completed-request routing work excludes
+only those verified diagnostic units. Zero-capacity common work stays included.
+`ActualGeneratorBranchOrderStudy` drives the real generator,retains its actual
+template/route through retirement,and reuses the existing native-context and
+physical-oracle owners. Its separate PS5/JDK8 host closes source/tool/bridge
+inputs before launch and requires independent reading plus root process review.
+No production default,epoch or Player surface changes.
 
 `VerifierIsolation` owns browser shutdown proof separately from generation. Its
 bound-receipt wait retains a completed natural-exit proof only within that wait,

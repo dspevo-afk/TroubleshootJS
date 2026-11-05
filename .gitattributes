@@ -15,3 +15,6 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
+# Keep the isolated study host byte-identical to its frozen source receipt.
+scripts/verify-rb100-branch-order-study.ps1 -text

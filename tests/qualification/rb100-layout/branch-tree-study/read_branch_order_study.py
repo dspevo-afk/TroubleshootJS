@@ -12,7 +12,7 @@ from pathlib import Path
 import re
 import stat
 
-SCHEMA = 'p07-actual-branch-order-study-v1'
+SCHEMA = 'p07-actual-branch-order-study-v3'
 KINDS = ('READER_FIXTURE', 'TINY_NATIVE', 'AUTHORED')
 ARMS = (
     ('PLAIN_ENTRY_RECEIPT_CONTROL', 'PLAIN_BEGIN', 'CANONICAL_NEAREST', False),
@@ -39,10 +39,14 @@ RECEIPT_FIELDS = ('attempt startedOrderings completedOrderings yieldedOrderings 
                   'finalizedOrderings selectedOrdering expansions guidanceStarted '
                   'comparisonComplete termination').split()
 GROUP_FIELDS = ('record operation ordinal phase elapsedBeforeOwnLineNanos '
-                'generatorAdvances p07Slices p07Steps accounting observerChecks '
+                'generatorAdvances p07Slices p07Steps diagnosticCloneSteps accounting observerChecks '
                 'callbacks censusRows hashInputBytes serializedBeforeOwnLineBytes').split()
+DIAGNOSTIC_CLONE_FIELDS = ('record operation ordinal group pass netId startPadId rootPadId '
+                           'faceIndex prefixViaCount ownerSteps').split()
+DIAGNOSTIC_BOUND_PROOFS = ('relaxedBoundObservationChecked relaxedBoundLiveLayoutStable '
+                            'relaxedBoundRouterStateStable relaxedBoundRouterEffectsStable').split()
 BASE_SHA = '68b1489b28cb5cec4f17289021e009f7048bfa869a3538aed7be44060ef9efbd'
-TOKEN = re.compile(r'[-A-Za-z0-9_.:]{1,128}\Z')
+TOKEN = re.compile(r'[-+A-Za-z0-9_.:]{1,128}\Z')
 HEX = re.compile(r'[0-9a-f]{64}\Z')
 
 
@@ -229,6 +233,61 @@ def audit_choices(branches, pads, arm):
     return choices, total
 
 
+def comparable_diagnostic_clone(row):
+    return {k:v for k,v in row.items() if k not in ('operation','group')}
+
+
+def validate_diagnostic_clones(events, branches, branch_positions, pads, groups, arm):
+    need(arm != 0 or not events, 'DIAGNOSTIC_CLONE_PLAIN')
+    pad_by_id = {row['padId']:row for row in pads}
+    pads_by_net = {}
+    for row in pads:
+        pads_by_net.setdefault(row['netId'], set()).add(row['padId'])
+    groups_by_id = {row['ordinal']:row for row in groups}
+    seen_keys = set(); matched = {i:[] for i in range(len(branches))}
+    for position,row in events:
+        key=(row['pass'],row['netId'],row['startPadId'],row['rootPadId'],row['faceIndex'])
+        need(key not in seen_keys, 'DIAGNOSTIC_CLONE_DUPLICATE')
+        seen_keys.add(key)
+        need(row['netId'] in pads_by_net
+             and row['startPadId'] in pad_by_id and row['rootPadId'] in pad_by_id
+             and pad_by_id[row['startPadId']]['netId']==row['netId']
+             and pad_by_id[row['rootPadId']]['netId']==row['netId'],
+             'DIAGNOSTIC_CLONE_CENSUS')
+        group=groups_by_id.get(row['group'])
+        need(group is not None and group['phase']=='ADVANCE' and group['p07Slices']==1
+             and group['accounting']=='MEASURED' and row['ownerSteps']<=group['p07Steps'],
+             'DIAGNOSTIC_CLONE_GROUP')
+        candidates=[]
+        for i,branch in enumerate(branches):
+            snapshot=branch['snapshot']
+            if (snapshot['pass'],snapshot['netId'],snapshot['startPadId'],snapshot['rootPadId'],
+                snapshot['prefixViaCount']) == (
+                    row['pass'],row['netId'],row['startPadId'],row['rootPadId'],
+                    row['prefixViaCount']):
+                candidates.append(i)
+        need(len(candidates)==1, 'DIAGNOSTIC_CLONE_BRANCH_MATCH')
+        branch_index=candidates[0]
+        need(position < branch_positions[branch_index], 'DIAGNOSTIC_CLONE_ORDER')
+        matched[branch_index].append((position,row))
+
+    for i,branch in enumerate(branches):
+        snapshot=branch['snapshot']
+        branch_events=matched[i]
+        if snapshot['relaxedBoundStarted']:
+            need(snapshot['relaxedBoundComplete'] is True
+                 and all(snapshot[name] is True for name in DIAGNOSTIC_BOUND_PROOFS),
+                 'DIAGNOSTIC_CLONE_PROOF')
+        expected=(snapshot['relaxedBoundStarted'] and snapshot['prefixViaCount']<LIMITS['holeCap'])
+        if expected:
+            need([row['faceIndex'] for _,row in branch_events]==[0,1]
+                 and sum(row['ownerSteps'] for _,row in branch_events)==2,
+                 'DIAGNOSTIC_CLONE_PAIR')
+        else:
+            need(not branch_events, 'DIAGNOSTIC_CLONE_UNEXPECTED')
+    need(len(events)<=2*3*(len(pads)-len(pads_by_net)), 'DIAGNOSTIC_CLONE_CAP')
+
+
 def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
     need(raw and len(raw)<=LIMITS['receiptBytes'] and raw.endswith(b'\n') and b'\r' not in raw,
          'RECEIPT_ENCODING_SIZE')
@@ -261,8 +320,10 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
              'AUTHORED_CANDIDATE')
     else: need(h['mode']=='TINY_CANARY' and c['variant']=='TINY', 'TINY_CANDIDATE')
     pads=[]; branches=[]; groups=[]; result=None; current_group=0; group_bytes=0
-    group_callbacks=0; group_pads=0; branch_seen=False; report_seen=False; report_closed=False
-    for row,line in zip(rows[:-1],lines[:-1]):
+    group_callbacks=0; group_pads=0; group_diagnostic_clones=0
+    branch_positions=[]; diagnostic_events=[]
+    branch_seen=False; report_seen=False; report_closed=False
+    for line_index,(row,line) in enumerate(zip(rows[:-1],lines[:-1])):
         need(not report_closed, 'TRAILING_REPORT_RECORD')
         need(type(row) is dict and type(row.get('record')) is str, 'RECORD_TYPE')
         typ=row['record']
@@ -279,7 +340,21 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
             need(not report_seen and arm!=0 and integer(row['operation'],0,3) and row['operation']==arm
                  and integer(row['ordinal']) and row['ordinal']==len(branches) and digest(row['prefixSha256'])
                  and integer(row['prefixBytes'],1,LIMITS['prefixBytes']), 'BRANCH_IDENTITY')
-            branches.append(row);group_callbacks+=1;branch_seen=True
+            branches.append(row);branch_positions.append(line_index)
+            group_callbacks+=1;branch_seen=True
+        elif typ=='DIAGNOSTIC_CLONE':
+            keys(row,DIAGNOSTIC_CLONE_FIELDS,'DIAGNOSTIC_CLONE_SCHEMA')
+            need(arm in (1,2,3) and integer(row['operation'],1,3) and row['operation']==arm
+                 and integer(row['ordinal']) and row['ordinal']==len(diagnostic_events)
+                 and integer(row['pass'],0,2) and all(token(row[name]) for name in
+                     ('netId','startPadId','rootPadId')),
+                 'DIAGNOSTIC_CLONE_IDENTITY')
+            need(integer(row['faceIndex'],0,1), 'DIAGNOSTIC_CLONE_FACE')
+            need(integer(row['prefixViaCount'],0,LIMITS['holeCap']-1),
+                 'DIAGNOSTIC_CLONE_CAPACITY')
+            need(integer(row['ownerSteps']) and row['ownerSteps']==1,
+                 'DIAGNOSTIC_CLONE_STEPS')
+            diagnostic_events.append((line_index,row));group_diagnostic_clones+=1
         elif typ=='RESULT':
             keys(row,('record','operation','group','proof','route','context','receipt','outcome',
                       'winner','physical','logicalWork','boundary'),'RESULT_SCHEMA')
@@ -292,7 +367,7 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
                  and integer(row['ordinal'],0,639) and row['ordinal']==current_group
                  and row['phase'] in ('SETUP','ADVANCE','PHYSICAL','REPORT'), 'GROUP_IDENTITY')
             for n in ('elapsedBeforeOwnLineNanos','observerChecks','callbacks','censusRows',
-                      'hashInputBytes','serializedBeforeOwnLineBytes'):
+                      'hashInputBytes','serializedBeforeOwnLineBytes','diagnosticCloneSteps'):
                 need(integer(row[n]),'GROUP_NUMBER')
             need(row['elapsedBeforeOwnLineNanos']<=LIMITS['groupNanos']
                  and integer(row['generatorAdvances'],0,1) and integer(row['p07Slices'],0,1)
@@ -304,6 +379,13 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
             else:need(row['accounting']=='NOT_APPLICABLE' and row['p07Steps'] is None,'P07_ABSENCE')
             need(row['callbacks']==group_callbacks and row['censusRows']==group_pads
                  and row['serializedBeforeOwnLineBytes']==group_bytes, 'GROUP_RECORD_COUNTS')
+            need(row['diagnosticCloneSteps']==group_diagnostic_clones,
+                 'DIAGNOSTIC_CLONE_GROUP_COUNT')
+            need(row['diagnosticCloneSteps']<=(row['p07Steps'] or 0),
+                 'DIAGNOSTIC_CLONE_STEP_CAP')
+            if group_diagnostic_clones:
+                need(row['phase']=='ADVANCE' and row['p07Slices']==1
+                     and row['accounting']=='MEASURED','DIAGNOSTIC_CLONE_GROUP')
             if group_callbacks or group_pads:
                 need(row['phase']=='ADVANCE' and row['p07Slices']==1,'LIVE_OWNER_OBSERVATION_GROUP')
             need(row['hashInputBytes']>=sum(b['prefixBytes'] for b in branches
@@ -312,6 +394,7 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
                 need(row['phase']=='REPORT','FINAL_GROUP_PHASE')
                 report_closed=True
             groups.append(row);current_group+=1;group_bytes=0;group_callbacks=0;group_pads=0
+            group_diagnostic_clones=0
             need(current_group<=640,'GROUP_COUNT');continue
         else:raise ValueError('UNEXPECTED_RECORD')
         need(integer(row.get('group'),0,639) and row['group']==current_group,'RECORD_GROUP')
@@ -342,6 +425,20 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
          and context['padCensusSha256']==sha(pad_bytes(pads)) and digest(context['boardSha256']),
          'CONTEXT_VALUES')
     if kind=='AUTHORED':need(context['selectedAttempt']==4,'ACTUAL_ATTEMPT')
+    r=result['receipt'];validate_receipt(r)
+    choices=[]
+    if arm:
+        choices,total=audit_choices(branches,pads,arm)
+        need(total==r['expansions'],'RECEIPT_EXPANSION_SUM')
+        total_limit_rows=[i for i,b in enumerate(branches)
+                          if b['snapshot']['terminalReason']=='TOTAL_SEARCH_LIMIT']
+        if total_limit_rows:
+            need(total_limit_rows==[len(branches)-1] and r['termination']=='TOTAL_SEARCH_LIMIT'
+                 and r['comparisonComplete'] is False, 'TOTAL_LIMIT_CONTINUATION')
+        need({b['snapshot']['pass'] for b in branches}==set(range(r['startedOrderings'])),
+             'MISSING_ORDERING_BRANCH_PROOF')
+    validate_diagnostic_clones(diagnostic_events,branches,branch_positions,pads,groups,arm)
+    diagnostic_clone_steps=sum(row['ownerSteps'] for _,row in diagnostic_events)
     required_hash_bytes=sum(b['prefixBytes'] for b in branches)+len(pad_bytes(pads))+context['pristineBytes']
     boundary=result['boundary']
     keys(boundary,('requestCount','outcomeCount','routeRetired','candidateRetired','generatorComplete',
@@ -352,7 +449,6 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
     need(all(type(boundary[n]) is bool for n in ('routeRetired','candidateRetired','generatorComplete','eventObserved'))
          and all(integer(boundary[n]) for n in ('requestCount','outcomeCount','successorAdvanceCalls')),
          'REQUEST_BOUNDARY_TYPES')
-    r=result['receipt'];validate_receipt(r)
     need(r['attempt']==context['selectedAttempt'] and type(result['outcome']) is str
          and 0<len(result['outcome'].encode())<=2048,'RESULT_OUTCOME')
     physical=result['physical']
@@ -374,30 +470,26 @@ def validate_operation(raw, entry, source_sha, wire_sha, arm, run_id, kind):
              and physical['access']==physical['functional']=='NOT_RUN','FINALIZED_DISPOSITION')
         required_hash_bytes+=w['geometryBytes']
     need(sum(g['hashInputBytes'] for g in groups)>=required_hash_bytes,'HASH_INPUT_CENSUS')
-    lw=result['logicalWork'];keys(lw,('generatorAdvances','p07Slices','p07OwnerSteps','expansions'),
+    lw=result['logicalWork'];keys(lw,('generatorAdvances','p07Slices','p07OwnerSteps',
+                                     'diagnosticCloneSteps','routingOwnerSteps','expansions'),
                                  'LOGICAL_WORK_SCHEMA')
+    raw_owner_steps=sum(g['p07Steps'] or 0 for g in groups)
     measured=dict(generatorAdvances=sum(g['generatorAdvances'] for g in groups),
                   p07Slices=sum(g['p07Slices'] for g in groups),
-                  p07OwnerSteps=sum(g['p07Steps'] or 0 for g in groups),expansions=r['expansions'])
+                  p07OwnerSteps=raw_owner_steps,
+                  diagnosticCloneSteps=diagnostic_clone_steps,
+                  routingOwnerSteps=raw_owner_steps-diagnostic_clone_steps,
+                  expansions=r['expansions'])
     need(lw==measured and all(integer(x) for x in lw.values()) and lw['p07Slices']>0,
          'LOGICAL_WORK_COUNTS')
-    choices=[]
-    if arm:
-        choices,total=audit_choices(branches,pads,arm)
-        need(total==r['expansions'],'RECEIPT_EXPANSION_SUM')
-        total_limit_rows=[i for i,b in enumerate(branches)
-                          if b['snapshot']['terminalReason']=='TOTAL_SEARCH_LIMIT']
-        if total_limit_rows:
-            need(total_limit_rows==[len(branches)-1] and r['termination']=='TOTAL_SEARCH_LIMIT'
-                 and r['comparisonComplete'] is False, 'TOTAL_LIMIT_CONTINUATION')
-        need({b['snapshot']['pass'] for b in branches}==set(range(r['startedOrderings'])),
-             'MISSING_ORDERING_BRANCH_PROOF')
     need(integer(entry['elapsedToCloseNanos'],1,LIMITS['operationNanos'])
          and integer(entry['maxFullGroupNanos'],1,LIMITS['groupNanos'])
          and entry['maxFullGroupNanos']>=max(g['elapsedBeforeOwnLineNanos'] for g in groups)
          and entry['elapsedToCloseNanos']>=sum(g['elapsedBeforeOwnLineNanos'] for g in groups),
          'FINAL_TIMING_BOUND')
-    return dict(header=h,pads=pads,branches=branches,groups=groups,result=result,choices=choices)
+    return dict(header=h,pads=pads,branches=branches,groups=groups,
+                diagnosticClones=[row for _,row in diagnostic_events],
+                result=result,choices=choices)
 
 
 def comparable_branch(row):
@@ -406,13 +498,27 @@ def comparable_branch(row):
 
 def validate_study(ops):
     need(len(ops)==4,'FOUR_OPERATIONS')
-    def logical(o):return {k:o['result'][k] for k in
-                           ('proof','route','context','receipt','outcome','winner','physical','logicalWork')}
+    def result_parity(o):return {k:o['result'][k] for k in
+                                 ('proof','route','context','receipt','outcome','winner','physical')}
+    plain=ops[0];default=ops[1];explicit=ops[2]
     need(ops[0]['header']['candidate']==ops[1]['header']['candidate']
          and pad_bytes(ops[0]['pads'])==pad_bytes(ops[1]['pads'])
-         and logical(ops[0])==logical(ops[1]),'PLAIN_CONTROL_PARITY')
+         and result_parity(plain)==result_parity(default), 'PLAIN_CONTROL_PARITY')
+    plain_work=plain['result']['logicalWork']
+    for observed in (default,explicit):
+        observed_work=observed['result']['logicalWork']
+        need(all(observed_work[name]==plain_work[name]
+                 for name in ('generatorAdvances','p07Slices','expansions'))
+             and observed_work['routingOwnerSteps']==plain_work['routingOwnerSteps']
+             and observed_work['p07OwnerSteps']-plain_work['p07OwnerSteps']
+                 == observed_work['diagnosticCloneSteps']-plain_work['diagnosticCloneSteps'],
+             'PLAIN_CONTROL_PARITY')
     need(ops[1]['header']['candidate']==ops[2]['header']['candidate']
-         and pad_bytes(ops[1]['pads'])==pad_bytes(ops[2]['pads']) and logical(ops[1])==logical(ops[2])
+         and pad_bytes(ops[1]['pads'])==pad_bytes(ops[2]['pads'])
+         and result_parity(default)==result_parity(explicit)
+         and default['result']['logicalWork']==explicit['result']['logicalWork']
+         and [comparable_diagnostic_clone(x) for x in default['diagnosticClones']]
+         ==[comparable_diagnostic_clone(x) for x in explicit['diagnosticClones']]
          and [comparable_branch(x) for x in ops[1]['branches']]
          ==[comparable_branch(x) for x in ops[2]['branches']], 'OBSERVED_CONTROL_PARITY')
     control=ops[2];treatment=ops[3]
@@ -422,6 +528,11 @@ def validate_study(ops):
     cb=[(i,b) for i,b in enumerate(control['branches']) if b['snapshot']['pass']==0]
     tb=[(i,b) for i,b in enumerate(treatment['branches']) if b['snapshot']['pass']==0]
     need([comparable_branch(b) for _,b in cb]==[comparable_branch(b) for _,b in tb], 'PASS0_PARITY')
+    control_events=[comparable_diagnostic_clone(e) for e in control['diagnosticClones']
+                    if e['pass']==0]
+    treatment_events=[comparable_diagnostic_clone(e) for e in treatment['diagnosticClones']
+                      if e['pass']==0]
+    need(control_events==treatment_events, 'PASS0_DIAGNOSTIC_CLONE_PARITY')
     cb=[(i,b) for i,b in enumerate(control['branches']) if b['snapshot']['pass']==1]
     tb=[(i,b) for i,b in enumerate(treatment['branches']) if b['snapshot']['pass']==1]
     divergence={'status':'NOT_OBSERVED' if not cb or not tb else 'NO_DIVERGENCE'}
@@ -469,7 +580,7 @@ def check_source_manifest(raw, base):
             need(row['path']=='tests/qualification/rb100-layout/branch-tree-study/read_branch_order_study.py',
                  'READER_SOURCE_PATH')
         elif row['role']=='WIRE':
-            need(row['path']=='docs/task-evidence/Q100/branch-tree-study-r1/WIRE.md','WIRE_SOURCE_PATH')
+            need(row['path']=='docs/task-evidence/Q100/branch-tree-study-v3-r1/WIRE.md','WIRE_SOURCE_PATH')
         elif row['role']=='WRITER':
             need(row['path'].startswith('tests/qualification/rb100-layout/java/')
                  and row['path'].endswith('.java'),'WRITER_SOURCE_PATH')

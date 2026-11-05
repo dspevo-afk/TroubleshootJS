@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import itertools
 import json
+import copy
 import tempfile
 import unittest
 from pathlib import Path
@@ -13,7 +14,7 @@ import read_branch_order_study as reader
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[4]
-DEFAULT_WIRE = Path("docs/task-evidence/Q100/branch-tree-study-r1/WIRE.md")
+DEFAULT_WIRE = Path("docs/task-evidence/Q100/branch-tree-study-v3-r1/WIRE.md")
 PARENT_HEAD = "273c7fce3b98ab68a83fc5ea395dba523a48a561"
 RUN_ID = "d7b9d7e5-3cc0-4ed5-9f23-fec562db9035"
 PAD_ROWS = (
@@ -21,6 +22,12 @@ PAD_ROWS = (
     ("pad-b", "component-b", 10),
     ("pad-c", "component-c", 30),
     ("pad-d", "component-d", 60),
+)
+PLUS_PAD_ROWS = (
+    ("C1.+", "component-c", 0),
+    ("R3.+", "component-d", 60),
+    ("UAC.IN+", "component-a", 10),
+    ("UAC.PRE_L+", "component-b", 30),
 )
 PRISTINE_BYTES = 16
 
@@ -39,51 +46,57 @@ def _line(value) -> bytes:
     return _json_bytes(value)
 
 
-def _pads(group=1):
+def _pads(group=1, pad_rows=PAD_ROWS):
     return [dict(record="PAD", group=group, padId=pad_id, netId="net-one",
                  componentId=component_id, x=x, y=0, role="SIGNAL")
-            for pad_id, component_id, x in PAD_ROWS]
+            for pad_id, component_id, x in pad_rows]
 
 
 def _snapshot(pass_number, start_pad_id, *, total_expanded, reached_count=1,
               terminal="NO_PATH", branch_expanded=1, expanded_top=1, expanded_bottom=0,
-              pads=None):
+              pads=None, root_pad_id=None, prefix_via_count=0, relaxed_bound=False):
     rows = _pads() if pads is None else pads
     by_id = {row["padId"]: row for row in rows}
     start = by_id[start_pad_id]
-    root = by_id["pad-a"]
+    root_id = min(by_id) if root_pad_id is None else root_pad_id
+    root = by_id[root_id]
     return {
         "pass": pass_number,
         "startX": start["x"], "startY": start["y"],
         "rootX": root["x"], "rootY": root["y"],
         "gridWidth": 10, "gridHeight": 10, "goalsTop": 2, "goalsBottom": 2,
-        "prefixViaCount": 0, "reachedPadCount": reached_count,
+        "prefixViaCount": prefix_via_count, "reachedPadCount": reached_count,
         "initialManhattanDistance": abs(start["x"] - root["x"]),
         "minimumExploredManhattanDistance": 0,
         "branchExpanded": branch_expanded, "totalExpanded": total_expanded,
         "expandedTop": expanded_top, "expandedBottom": expanded_bottom,
         "frontierCount": 0, "bestStateCount": 1,
-        "relaxedBoundWorkUnits": 0, "relaxedBoundOrdinaryProbes": 0,
-        "relaxedBoundViaProbes": 0, "relaxedBoundRefreshes": 0,
-        "relaxedBoundStarted": False, "relaxedBoundComplete": False,
-        "relaxedBoundObservationChecked": False,
-        "relaxedBoundLiveLayoutStable": False,
-        "relaxedBoundRouterStateStable": False,
-        "relaxedBoundRouterEffectsStable": False,
+        "relaxedBoundWorkUnits": 2 if relaxed_bound else 0,
+        "relaxedBoundOrdinaryProbes": 1 if relaxed_bound else 0,
+        "relaxedBoundViaProbes": 1 if relaxed_bound else 0,
+        "relaxedBoundRefreshes": 1 if relaxed_bound else 0,
+        "relaxedBoundStarted": relaxed_bound, "relaxedBoundComplete": relaxed_bound,
+        "relaxedBoundObservationChecked": relaxed_bound,
+        "relaxedBoundLiveLayoutStable": relaxed_bound,
+        "relaxedBoundRouterStateStable": relaxed_bound,
+        "relaxedBoundRouterEffectsStable": relaxed_bound,
         "netId": "net-one", "startPadId": start_pad_id,
-        "rootPadId": "pad-a", "terminalReason": terminal,
+        "rootPadId": root_id, "terminalReason": terminal,
     }
 
 
 def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
-                   wire_sha256=None):
+                   wire_sha256=None, padRows=PAD_ROWS, startIds=None,
+                   diagnosticPrefixes=None):
     """Return a complete tiny JSONL operation and its post-close index entry."""
     if source_manifest_sha256 is None:
         source_manifest_sha256 = "1" * 64
     if wire_sha256 is None:
         wire_sha256 = "2" * 64
     observed = arm != 0
-    pads = _pads(group=1)
+    diagnostic_prefixes = {} if diagnosticPrefixes is None else dict(diagnosticPrefixes)
+    pads = _pads(group=1, pad_rows=padRows)
+    root_pad_id = min(row["padId"] for row in pads)
     context = {
         "requestIndex": 0,
         "selectedAttempt": 0,
@@ -112,16 +125,41 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
         "limits": dict(reader.LIMITS),
     }
     branches = []
+    diagnostic_events_by_pass = {}
+    diagnostic_events = []
     if observed:
-        starts = ("pad-b", "pad-d" if arm == 3 else "pad-b", "pad-b")
+        if startIds is None:
+            nearest, farthest, later_nearest = "pad-b", "pad-d", "pad-b"
+        else:
+            nearest, farthest, later_nearest = startIds
+        starts = (nearest, farthest if arm == 3 else nearest, later_nearest)
         for pass_number, start_pad_id in enumerate(starts):
+            prefix_vias = diagnostic_prefixes.get(pass_number, 0)
+            has_diagnostic_bound = pass_number in diagnostic_prefixes
+            branch_events = []
+            if has_diagnostic_bound:
+                for face_index in (0, 1):
+                    event = {
+                        "record": "DIAGNOSTIC_CLONE", "operation": arm,
+                        "ordinal": len(diagnostic_events), "group": pass_number + 1,
+                        "pass": pass_number, "netId": "net-one",
+                        "startPadId": start_pad_id, "rootPadId": root_pad_id,
+                        "faceIndex": face_index, "prefixViaCount": prefix_vias,
+                        "ownerSteps": 1,
+                    }
+                    diagnostic_events.append(event)
+                    branch_events.append(event)
+                diagnostic_events_by_pass[pass_number] = branch_events
             branches.append({
                 "record": "BRANCH", "operation": arm, "ordinal": pass_number,
                 "group": pass_number + 1,
                 "prefixSha256": _sha(("same-prefix-pass-{}".format(pass_number)).encode("ascii")),
                 "prefixBytes": 64,
                 "snapshot": _snapshot(pass_number, start_pad_id,
-                                      total_expanded=pass_number + 1, pads=pads),
+                                      total_expanded=pass_number + 1, pads=pads,
+                                      root_pad_id=root_pad_id,
+                                      prefix_via_count=prefix_vias,
+                                      relaxed_bound=has_diagnostic_bound),
             })
 
     receipt = {
@@ -141,20 +179,22 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
                      "layeredRaster": "NOT_RUN", "access": "NOT_RUN",
                      "functional": "NOT_RUN"},
         "logicalWork": {"generatorAdvances": 3, "p07Slices": 3,
-                        "p07OwnerSteps": 30, "expansions": 3},
+                        "p07OwnerSteps": 30 + len(diagnostic_events),
+                        "diagnosticCloneSteps": len(diagnostic_events),
+                        "routingOwnerSteps": 30, "expansions": 3},
         "boundary": {"requestCount": 1, "outcomeCount": 1,
                      "routeRetired": True, "candidateRetired": True,
                      "generatorComplete": False, "eventObserved": observed,
                      "successorAdvanceCalls": 0},
     }
 
-    # Census and callbacks belong to ADVANCE groups. The plain control has the
-    # same three owner slices and work counters but deliberately emits no BRANCH.
+    # Census, clone observations, and callbacks belong to ADVANCE groups. The
+    # plain control keeps the three owner slices but emits neither clone nor BRANCH rows.
     batches = [
         [header],
-        pads + (branches[0:1] if observed else []),
-        branches[1:2] if observed else [],
-        branches[2:3] if observed else [],
+        pads + diagnostic_events_by_pass.get(0, []) + (branches[0:1] if observed else []),
+        diagnostic_events_by_pass.get(1, []) + (branches[1:2] if observed else []),
+        diagnostic_events_by_pass.get(2, []) + (branches[2:3] if observed else []),
         [result],
     ]
     phases = ("SETUP", "ADVANCE", "ADVANCE", "ADVANCE", "REPORT")
@@ -163,6 +203,7 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
         rows.extend(batch)
         branches_here = [row for row in batch if row["record"] == "BRANCH"]
         pads_here = [row for row in batch if row["record"] == "PAD"]
+        clones_here = [row for row in batch if row["record"] == "DIAGNOSTIC_CLONE"]
         is_advance = phases[ordinal] == "ADVANCE"
         hash_bytes = sum(row["prefixBytes"] for row in branches_here)
         if ordinal == 1:
@@ -172,7 +213,9 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
             "phase": phases[ordinal], "elapsedBeforeOwnLineNanos": 100,
             "generatorAdvances": 1 if is_advance else 0,
             "p07Slices": 1 if is_advance else 0,
-            "p07Steps": 10 if is_advance else None,
+            "p07Steps": 10 + sum(row["ownerSteps"] for row in clones_here)
+            if is_advance else None,
+            "diagnosticCloneSteps": sum(row["ownerSteps"] for row in clones_here),
             "accounting": "MEASURED" if is_advance else "NOT_APPLICABLE",
             "observerChecks": 1 if is_advance else 0,
             "callbacks": len(branches_here), "censusRows": len(pads_here),
@@ -194,7 +237,8 @@ def make_operation(arm, *, run_id=RUN_ID, source_manifest_sha256=None,
     return raw, entry
 
 
-def write_fixture(directory, repositoryRoot=REPOSITORY_ROOT, wirePath=None):
+def write_fixture(directory, repositoryRoot=REPOSITORY_ROOT, wirePath=None,
+                  padRows=PAD_ROWS, startIds=None, diagnosticPrefixesByArm=None):
     """Write a pinned READER_FIXTURE and return ``(spec_path, spec_sha256)``."""
     root = Path(repositoryRoot).resolve()
     wire_path = Path(wirePath) if wirePath is not None else DEFAULT_WIRE
@@ -227,7 +271,9 @@ def write_fixture(directory, repositoryRoot=REPOSITORY_ROOT, wirePath=None):
     operation_entries = []
     for arm in range(4):
         raw, entry = make_operation(arm, source_manifest_sha256=source_sha,
-                                    wire_sha256=wire_sha)
+                                    wire_sha256=wire_sha, padRows=padRows,
+                                    startIds=startIds,
+                                    diagnosticPrefixes=(diagnosticPrefixesByArm or {}).get(arm))
         (base / entry["receipt"]["path"]).write_bytes(raw)
         operation_entries.append(entry)
     index = {
@@ -312,6 +358,11 @@ def _group(rows, ordinal):
                 and row["ordinal"] == ordinal)
 
 
+def _event(rows, ordinal):
+    return next(row for row in rows if row["record"] == "DIAGNOSTIC_CLONE"
+                and row["ordinal"] == ordinal)
+
+
 def _pad(rows, pad_id):
     return next(row for row in rows if row["record"] == "PAD" and row["padId"] == pad_id)
 
@@ -325,6 +376,9 @@ def _repair_group_ledgers(rows):
         row["serializedBeforeOwnLineBytes"] = sum(len(_line(item)) for item in pending)
         row["callbacks"] = sum(item["record"] == "BRANCH" for item in pending)
         row["censusRows"] = sum(item["record"] == "PAD" for item in pending)
+        row["diagnosticCloneSteps"] = sum(item.get("ownerSteps", 0)
+                                          for item in pending
+                                          if item["record"] == "DIAGNOSTIC_CLONE")
         required_hash = sum(item["prefixBytes"] for item in pending
                             if item["record"] == "BRANCH")
         row["hashInputBytes"] = max(row["hashInputBytes"], required_hash)
@@ -415,6 +469,202 @@ class BranchOrderReaderTests(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 reader.main(["--spec", str(spec_path), "--spec-sha256", spec_sha,
                              "--output", str(output_path)])
+
+    def test_plus_terminal_pad_ids_survive_four_arm_census_hash_and_choice_checks(self):
+        starts = ("UAC.IN+", "R3.+", "UAC.IN+")
+        with tempfile.TemporaryDirectory(prefix="branch-order-plus-ids-") as directory:
+            spec_path, spec_sha = write_fixture(
+                Path(directory) / "fixture", padRows=PLUS_PAD_ROWS, startIds=starts)
+            result = reader.validate_spec(spec_path, spec_sha)
+            self.assertEqual(result["status"], "PASS_READER_FIXTURE_ONLY")
+            self.assertEqual(result["branches"], [0, 3, 3, 3])
+            self.assertEqual(result["divergence"]["status"], "FOUND")
+            self.assertEqual(result["divergence"]["rootPadId"], "C1.+")
+            self.assertEqual(result["divergence"]["nearest"], "UAC.IN+")
+            self.assertEqual(result["divergence"]["farthest"], "R3.+")
+            self.assertTrue(all(reader.token(row[0]) for row in PLUS_PAD_ROWS))
+
+            manifest = _load_json(Path(spec_path).parent / "source-manifest.json")
+            wire = next(row for row in manifest["files"] if row["role"] == "WIRE")
+            self.assertEqual(wire["path"],
+                             "docs/task-evidence/Q100/branch-tree-study-v3-r1/WIRE.md")
+            for arm in range(4):
+                rows = _read_rows(spec_path, arm)
+                self.assertEqual(rows[0]["schema"], "p07-actual-branch-order-study-v3")
+                pads = [row for row in rows if row["record"] == "PAD"]
+                self.assertEqual([row["padId"] for row in pads],
+                                 ["C1.+", "R3.+", "UAC.IN+", "UAC.PRE_L+"])
+                result_row = next(row for row in rows if row["record"] == "RESULT")
+                self.assertEqual(result_row["context"]["padCensusSha256"],
+                                 reader.sha(reader.pad_bytes(pads)))
+                branches = [row for row in rows if row["record"] == "BRANCH"]
+                if arm in (1, 2):
+                    self.assertEqual([row["snapshot"]["startPadId"] for row in branches],
+                                     ["UAC.IN+"] * 3)
+                elif arm == 3:
+                    self.assertEqual([row["snapshot"]["startPadId"] for row in branches],
+                                     ["UAC.IN+", "R3.+", "UAC.IN+"])
+
+    def test_plus_is_the_only_new_token_character(self):
+        self.assertTrue(reader.token("UAC.IN+"))
+        self.assertTrue(reader.token("UAC.PRE_L+"))
+        self.assertTrue(reader.token("C1.+"))
+        for pad_id in ("pad id", "pad\tid", "pad/id", 'pad"id', "pad-é"):
+            with self.subTest(pad_id=pad_id), \
+                    tempfile.TemporaryDirectory(prefix="branch-order-invalid-pad-id-") as directory:
+                spec_path, _ = self._fixture(Path(directory) / "fixture")
+                spec_path, spec_sha = _rewrite_operation(
+                    spec_path, 0, lambda rows, value=pad_id: _pad(rows, "pad-b").update(
+                        padId=value))
+                self._assert_rejects(spec_path, spec_sha, "PAD_VALUES_ORDER")
+
+    def test_v1_and_v2_data_headers_are_rejected_without_compatibility_fallback(self):
+        for version in ("v1", "v2"):
+            with self.subTest(version=version), \
+                    tempfile.TemporaryDirectory(prefix="branch-order-old-header-") as directory:
+                spec_path, _ = self._fixture(Path(directory) / "fixture")
+                spec_path, spec_sha = _rewrite_operation(
+                    spec_path, 0,
+                    lambda rows, value=version:
+                        rows[0].update(schema="p07-actual-branch-order-study-" + value))
+                self._assert_rejects(spec_path, spec_sha, "HEADER_IDENTITY")
+
+    def test_diagnostic_clone_pair_proves_two_steps_and_normalizes_control(self):
+        prefixes = {1: {0: 31}, 2: {0: 31}, 3: {0: 31}}
+        with tempfile.TemporaryDirectory(prefix="branch-order-clone-positive-") as directory:
+            spec_path, spec_sha = write_fixture(
+                Path(directory) / "fixture", diagnosticPrefixesByArm=prefixes)
+            result = reader.validate_spec(spec_path, spec_sha)
+            self.assertEqual(result["status"], "PASS_READER_FIXTURE_ONLY")
+            plain_rows = _read_rows(spec_path, 0)
+            default_rows = _read_rows(spec_path, 1)
+            plain = next(row for row in plain_rows if row["record"] == "RESULT")["logicalWork"]
+            default = next(row for row in default_rows if row["record"] == "RESULT")["logicalWork"]
+            self.assertEqual(plain["p07OwnerSteps"], 30)
+            self.assertEqual(plain["diagnosticCloneSteps"], 0)
+            self.assertEqual(plain["routingOwnerSteps"], 30)
+            self.assertEqual(default["p07OwnerSteps"], 32)
+            self.assertEqual(default["diagnosticCloneSteps"], 2)
+            self.assertEqual(default["routingOwnerSteps"], 30)
+            self.assertEqual([_event(default_rows, i)["faceIndex"] for i in range(2)], [0, 1])
+            self.assertEqual(_group(default_rows, 1)["diagnosticCloneSteps"], 2)
+            self.assertEqual(_group(default_rows, 1)["p07Steps"], 12)
+
+    def test_missing_duplicate_and_late_diagnostic_pairs_are_rejected(self):
+        cases = []
+
+        def remove_second_face(rows):
+            rows.remove(_event(rows, 1))
+
+        cases.append((remove_second_face, "DIAGNOSTIC_CLONE_PAIR", True))
+
+        def duplicate_first_face(rows):
+            duplicate = copy.deepcopy(_event(rows, 0))
+            duplicate["ordinal"] = 2
+            branch = _branch(rows, 0)
+            rows.insert(rows.index(branch), duplicate)
+
+        cases.append((duplicate_first_face, "DIAGNOSTIC_CLONE_DUPLICATE", True))
+
+        def move_pair_after_branch(rows):
+            pair = [_event(rows, 0), _event(rows, 1)]
+            for event in pair:
+                rows.remove(event)
+            branch = _branch(rows, 0)
+            insert_at = rows.index(branch) + 1
+            rows[insert_at:insert_at] = pair
+
+        cases.append((move_pair_after_branch, "DIAGNOSTIC_CLONE_ORDER", True))
+        for mutate, code, repair in cases:
+            with self.subTest(code=code), \
+                    tempfile.TemporaryDirectory(prefix="branch-order-clone-pair-") as directory:
+                spec_path, _ = write_fixture(
+                    Path(directory) / "fixture", diagnosticPrefixesByArm={1: {0: 31}})
+                spec_path, spec_sha = _rewrite_operation(
+                    spec_path, 1, mutate, repair_groups=repair)
+                self._assert_rejects(spec_path, spec_sha, code)
+
+    def test_unmatched_misclassified_face_capacity_and_partial_proof_reject(self):
+        cases = (
+            (lambda rows: _event(rows, 0).update(startPadId="pad-c"),
+             "DIAGNOSTIC_CLONE_BRANCH_MATCH"),
+            (lambda rows: _event(rows, 0).update(netId="other-net"),
+             "DIAGNOSTIC_CLONE_CENSUS"),
+            (lambda rows: _event(rows, 0).update(faceIndex=2), "DIAGNOSTIC_CLONE_FACE"),
+            (lambda rows: _event(rows, 0).update(prefixViaCount=48),
+             "DIAGNOSTIC_CLONE_CAPACITY"),
+            (lambda rows: _branch(rows, 0)["snapshot"].update(
+                relaxedBoundRouterEffectsStable=False), "DIAGNOSTIC_CLONE_PROOF"),
+            (lambda rows: _branch(rows, 0)["snapshot"].update(
+                relaxedBoundStarted=False), "DIAGNOSTIC_CLONE_UNEXPECTED"),
+        )
+        for mutate, code in cases:
+            with self.subTest(code=code), \
+                    tempfile.TemporaryDirectory(prefix="branch-order-clone-proof-") as directory:
+                spec_path, _ = write_fixture(
+                    Path(directory) / "fixture", diagnosticPrefixesByArm={1: {0: 31}})
+                spec_path, spec_sha = _rewrite_operation(spec_path, 1, mutate)
+                self._assert_rejects(spec_path, spec_sha, code)
+
+    def test_zero_capacity_started_partial_bound_still_lacks_required_proof(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-zero-cap-partial-") as directory:
+            spec_path, _ = self._fixture(Path(directory) / "fixture")
+            spec_path, spec_sha = _rewrite_operation(
+                spec_path, 1,
+                lambda rows: _branch(rows, 0)["snapshot"].update(
+                    prefixViaCount=48, relaxedBoundStarted=True,
+                    relaxedBoundComplete=False))
+            self._assert_rejects(spec_path, spec_sha, "DIAGNOSTIC_CLONE_PROOF")
+
+    def test_diagnostic_clone_group_and_boolean_counters_are_exact(self):
+        cases = (
+            (lambda rows: _event(rows, 0).update(extra=True),
+             "DIAGNOSTIC_CLONE_SCHEMA", True),
+            (lambda rows: _event(rows, 0).pop("netId"),
+             "DIAGNOSTIC_CLONE_SCHEMA", True),
+            (lambda rows: _group(rows, 1).update(diagnosticCloneSteps=1),
+             "DIAGNOSTIC_CLONE_GROUP_COUNT", False),
+            (lambda rows: _group(rows, 1).update(diagnosticCloneSteps=True),
+             "GROUP_NUMBER", False),
+            (lambda rows: _event(rows, 0).update(ordinal=True),
+             "DIAGNOSTIC_CLONE_IDENTITY", True),
+            (lambda rows: _event(rows, 0).update(ownerSteps=True),
+             "DIAGNOSTIC_CLONE_STEPS", True),
+            (lambda rows: _event(rows, 0).update(faceIndex=True),
+             "DIAGNOSTIC_CLONE_FACE", True),
+        )
+        for mutate, code, repair in cases:
+            with self.subTest(code=code), \
+                    tempfile.TemporaryDirectory(prefix="branch-order-clone-count-") as directory:
+                spec_path, _ = write_fixture(
+                    Path(directory) / "fixture", diagnosticPrefixesByArm={1: {0: 31}})
+                spec_path, spec_sha = _rewrite_operation(
+                    spec_path, 1, mutate, repair_groups=repair)
+                self._assert_rejects(spec_path, spec_sha, code)
+
+    def test_diagnostic_classification_cannot_mask_raw_step_cap(self):
+        with tempfile.TemporaryDirectory(prefix="branch-order-clone-raw-cap-") as directory:
+            spec_path, _ = write_fixture(
+                Path(directory) / "fixture", diagnosticPrefixesByArm={1: {0: 31}})
+            spec_path, spec_sha = _rewrite_operation(
+                spec_path, 1, lambda rows: _group(rows, 1).update(
+                    p07Steps=reader.LIMITS["p07Steps"] + 1))
+            self._assert_rejects(spec_path, spec_sha, "P07_ACCOUNTING")
+
+    def test_unexplained_raw_work_difference_still_fails_normalized_parity(self):
+        prefixes = {1: {0: 31}, 2: {0: 31}, 3: {0: 31}}
+        with tempfile.TemporaryDirectory(prefix="branch-order-clone-unexplained-") as directory:
+            spec_path, _ = write_fixture(
+                Path(directory) / "fixture", diagnosticPrefixesByArm=prefixes)
+
+            def add_unclassified_step(rows):
+                _group(rows, 1)["p07Steps"] += 1
+                logical = next(row for row in rows if row["record"] == "RESULT")["logicalWork"]
+                logical["p07OwnerSteps"] += 1
+                logical["routingOwnerSteps"] += 1
+
+            spec_path, spec_sha = _rewrite_operation(spec_path, 1, add_unclassified_step)
+            self._assert_rejects(spec_path, spec_sha, "PLAIN_CONTROL_PARITY")
 
     def test_strict_json_rejects_duplicate_float_nonfinite_bom_and_invalid_utf8(self):
         invalid = (

@@ -1,0 +1,925 @@
+{
+  "actualCliControls": [
+    {
+      "elapsedIncludingChildTeardownSeconds": 0.5382137,
+      "expectedError": null,
+      "name": "fixture-positive-v3-r1",
+      "rawExitCode": 0,
+      "result": {
+        "bytes": 1012,
+        "path": "reader-control-fixture-positive-v3-r1/result.json",
+        "sha256": "26d5f606fcbde2272dc9965c2d6097dcbc6e63c97381f69cb08be5fc9f1661a1"
+      }
+    },
+    {
+      "elapsedIncludingChildTeardownSeconds": 0.47759809999999997,
+      "expectedError": "RECEIPT_ENCODING_SIZE",
+      "name": "truncated-receipt-v3-r1",
+      "rawExitCode": 1,
+      "result": {
+        "bytes": 1043,
+        "path": "reader-control-truncated-receipt-v3-r1/result.json",
+        "sha256": "a1cbe3560b4ac87a2bdde51d58f527b93dc3b01c9c936bc0b41f43617400debf"
+      }
+    },
+    {
+      "elapsedIncludingChildTeardownSeconds": 0.4342699,
+      "expectedError": "FILE_PIN",
+      "name": "wire-pin-v3-r1",
+      "rawExitCode": 1,
+      "result": {
+        "bytes": 1020,
+        "path": "reader-control-wire-pin-v3-r1/result.json",
+        "sha256": "9ba2297f37d44c8ccb8844559cfae81940df20d3a8c51aa776c340126098bbfb"
+      }
+    },
+    {
+      "elapsedIncludingChildTeardownSeconds": 0.41641629999999996,
+      "expectedError": "TOTAL_LIMIT_CONTINUATION",
+      "name": "total-limit-v3-r1",
+      "rawExitCode": 1,
+      "result": {
+        "bytes": 1045,
+        "path": "reader-control-total-limit-v3-r1/result.json",
+        "sha256": "967f5e4b4c01a28c07a7c523886d874a9b1c95388269915ae0e2547fcff78d55"
+      }
+    },
+    {
+      "elapsedIncludingChildTeardownSeconds": 0.4164266,
+      "expectedError": "DIVERGENCE_CAUSAL_PROOF",
+      "name": "causal-prefix-v3-r1",
+      "rawExitCode": 1,
+      "result": {
+        "bytes": 1035,
+        "path": "reader-control-causal-prefix-v3-r1/result.json",
+        "sha256": "9937dbe1bba477d73845c31c603c0586e09e1bd124ce3b5dc19293cac54787b8"
+      }
+    },
+    {
+      "elapsedIncludingChildTeardownSeconds": 0.40856349999999997,
+      "expectedError": "HEADER_IDENTITY",
+      "name": "old-header-v1-v3-r1",
+      "rawExitCode": 1,
+      "result": {
+        "bytes": 1037,
+        "path": "reader-control-old-header-v1-v3-r1/result.json",
+        "sha256": "a660a2527fa0d82f68b7e5ace3698eb302ff90eb34e196b53dc1906dc8609d17"
+      }
+    },
+    {
+      "elapsedIncludingChildTeardownSeconds": 0.3991683,
+      "expectedError": "HEADER_IDENTITY",
+      "name": "old-header-v2-v3-r1",
+      "rawExitCode": 1,
+      "result": {
+        "bytes": 1027,
+        "path": "reader-control-old-header-v2-v3-r1/result.json",
+        "sha256": "c00e8c1bb3931d45c49e1341f6a71c02baadedd8800262907c3b12a260849747"
+      }
+    },
+    {
+      "elapsedIncludingChildTeardownSeconds": 0.40585279999999996,
+      "expectedError": "PAD_VALUES_ORDER",
+      "name": "invalid-token-v3-r1",
+      "rawExitCode": 1,
+      "result": {
+        "bytes": 1038,
+        "path": "reader-control-invalid-token-v3-r1/result.json",
+        "sha256": "66343829a4e14cd6d59107a2011c2a5ed439e2a0773f5f0bb475f021f04d832c"
+      }
+    },
+    {
+      "elapsedIncludingChildTeardownSeconds": 0.42195449999999995,
+      "expectedError": "DIAGNOSTIC_CLONE_PAIR",
+      "name": "clone-missing-v3-r1",
+      "rawExitCode": 1,
+      "result": {
+        "bytes": 1043,
+        "path": "reader-control-clone-missing-v3-r1/result.json",
+        "sha256": "9f57abd28a66cedb101b1021d070adcf73f24f64ba4734adabaa5d255caac7c7"
+      }
+    },
+    {
+      "elapsedIncludingChildTeardownSeconds": 0.4336371,
+      "expectedError": "DIAGNOSTIC_CLONE_DUPLICATE",
+      "name": "clone-duplicate-v3-r1",
+      "rawExitCode": 1,
+      "result": {
+        "bytes": 1038,
+        "path": "reader-control-clone-duplicate-v3-r1/result.json",
+        "sha256": "c831180fc1a60718e80cdb92b34bd30b79636e7e013542a32af66a848f15f27d"
+      }
+    },
+    {
+      "elapsedIncludingChildTeardownSeconds": 0.4236583,
+      "expectedError": "DIAGNOSTIC_CLONE_FACE",
+      "name": "clone-face-v3-r1",
+      "rawExitCode": 1,
+      "result": {
+        "bytes": 1033,
+        "path": "reader-control-clone-face-v3-r1/result.json",
+        "sha256": "879a2638808d1c1950a9bc7eacf95a391e3f4dadd95369e776764c36a4cd0f37"
+      }
+    },
+    {
+      "elapsedIncludingChildTeardownSeconds": 0.4179564,
+      "expectedError": "DIAGNOSTIC_CLONE_STEPS",
+      "name": "clone-owner-bool-v3-r1",
+      "rawExitCode": 1,
+      "result": {
+        "bytes": 1034,
+        "path": "reader-control-clone-owner-bool-v3-r1/result.json",
+        "sha256": "55126102276bd6a037971afbe08e8903c9f72b62a1fb36ced6b10168fe9892a5"
+      }
+    },
+    {
+      "elapsedIncludingChildTeardownSeconds": 0.40468529999999997,
+      "expectedError": "P07_ACCOUNTING",
+      "name": "clone-raw-cap-v3-r1",
+      "rawExitCode": 1,
+      "result": {
+        "bytes": 1036,
+        "path": "reader-control-clone-raw-cap-v3-r1/result.json",
+        "sha256": "ea6c26c98d6a59c6ecf7406ed0671f5c0e5bd3782b7635925a3a293dec1f5609"
+      }
+    },
+    {
+      "elapsedIncludingChildTeardownSeconds": 0.418786,
+      "expectedError": "DIAGNOSTIC_CLONE_PROOF",
+      "name": "zero-cap-partial-v3-r1",
+      "rawExitCode": 1,
+      "result": {
+        "bytes": 1033,
+        "path": "reader-control-zero-cap-partial-v3-r1/result.json",
+        "sha256": "b92feabbacb8015cd92ccbc6ed2f3932427e356ca6ac78ddbba503d02090bca1"
+      }
+    },
+    {
+      "elapsedIncludingChildTeardownSeconds": 0.3769763,
+      "expectedError": "JSON_DUPLICATE_KEY",
+      "name": "duplicate-json-v3-r1",
+      "rawExitCode": 1,
+      "result": {
+        "bytes": 1030,
+        "path": "reader-control-duplicate-json-v3-r1/result.json",
+        "sha256": "a10bc29d1bc69a19df1ce4126e64a5561a6d84542fe5d772ba3b764c5008adb2"
+      }
+    },
+    {
+      "elapsedIncludingChildTeardownSeconds": 0.4211816,
+      "expectedError": "SPEC_DIGEST",
+      "name": "wrong-spec-v3-r1",
+      "rawExitCode": 1,
+      "result": {
+        "bytes": 1022,
+        "path": "reader-control-wrong-spec-v3-r1/result.json",
+        "sha256": "dced862870a1368700ee28a751a38ca9ea2ad47d53c71eb6d765b54fa070be69"
+      }
+    }
+  ],
+  "authored": {
+    "bridgeManifestSha256": "e31649f0ea2a5740c998c4859bdc595b2ca75651e689ff56b1d146e721b3cd8b",
+    "cleanupEnvelopeNanos": 38048133201,
+    "compilerInputs": 1074,
+    "divergence": {
+      "controlOrdinal": 114,
+      "farthest": "KC.A2",
+      "nearest": "QC.D",
+      "netId": "C_COIL_LOW",
+      "prefixSha256": "6553ad3df059c6bfe2980efe39ff951d3f6322fc0694b2c96e26508f8d3dfe2e",
+      "rootPadId": "DC.A",
+      "status": "FOUND",
+      "treatmentOrdinal": 114
+    },
+    "evidence": [
+      {
+        "bytes": 686,
+        "path": "host-authored-v3-r1/result.json",
+        "sha256": "b078facd07840e64b8225e49f5621a6f7f2be32eab9d66a8f0f739c6bd83bc6b"
+      },
+      {
+        "bytes": 2021,
+        "path": "host-authored-v3-r1/launch.json",
+        "sha256": "d6a7c99286b0dbd218c7b611286f935fba3ee62531c26e6885eab2b27c51192c"
+      },
+      {
+        "bytes": 2166,
+        "path": "host-authored-v3-r1/process.json",
+        "sha256": "0110cedb0987e66374b6c62fe7520ca16da4f56c1a29ee72ecdc7666d462310c"
+      },
+      {
+        "bytes": 929,
+        "path": "host-authored-v3-r1/driver/java-version-process.json",
+        "sha256": "7e22a1eafe0d115e590dae79fbb9adb40cc99c250a138f0b011d26846f64b10f"
+      },
+      {
+        "bytes": 787,
+        "path": "host-authored-v3-r1/driver/javac-version-process.json",
+        "sha256": "411fe1a0bd0bb6d818f478aed719e24eaa2045bd56f123b6579be3c0ceee4861"
+      },
+      {
+        "bytes": 1606,
+        "path": "host-authored-v3-r1/driver/source-preflight-process.json",
+        "sha256": "1621c9e36220c700c6666bb807701a3a7f3442213b69b2c2fedacb00affba8d6"
+      },
+      {
+        "bytes": 1606,
+        "path": "host-authored-v3-r1/driver/pre-launch-source-process.json",
+        "sha256": "ade95ec8f94f735a707a4d39513e63bd8bff5d53722fd49aedd85fe23f5cbc41"
+      },
+      {
+        "bytes": 2018,
+        "path": "host-authored-v3-r1/driver/compiler-process.json",
+        "sha256": "8cb9d335e8bbf0f5d3ccc86c612eb375e1061a2532013e28d357ad5a8db36233"
+      },
+      {
+        "bytes": 1749,
+        "path": "host-authored-v3-r1/driver/native-process.json",
+        "sha256": "c8f80a729a6ea2361916c6d933f0a7e1b31c1a7c9cd9f43fd55b68a585c01588"
+      },
+      {
+        "bytes": 1605,
+        "path": "host-authored-v3-r1/driver/post-source-process.json",
+        "sha256": "5779bcf6516538ba3aad2d4baa431a9e4d6e3f855dede8d3fa70949fcdf946e9"
+      },
+      {
+        "bytes": 1564,
+        "path": "host-authored-v3-r1/driver/reader-process.json",
+        "sha256": "8c675a4646da0bab9a69989e96f1c3b61f153e4fae13b77e0f8956c4c21303ec"
+      },
+      {
+        "bytes": 724,
+        "path": "host-authored-v3-r1/driver/host-result.json",
+        "sha256": "9fbb94b85531e6394442d1a5aae4e61cfa99ca92422de4bf697151c8f8122f7b"
+      },
+      {
+        "bytes": 1086,
+        "path": "host-authored-v3-r1/driver/host-launch.json",
+        "sha256": "4cfb63a291b4020901c5d1981e11f7802bb3505210ce371d8bd91b9b675629b5"
+      },
+      {
+        "bytes": 1231,
+        "path": "host-authored-v3-r1/driver/reader-result.json",
+        "sha256": "57ac69c2125e7b91a1f0d4b5f22de731bc68a37a8a764785546f023b1c70163d"
+      },
+      {
+        "bytes": 1129,
+        "path": "host-authored-v3-r1/driver/reader-input.json",
+        "sha256": "47f35c7dac6d1b2edc7b72fb57fbf36a5380fbba34de2b6ae3633259260a8af1"
+      },
+      {
+        "bytes": 1013,
+        "path": "host-authored-v3-r1/driver/transport.json",
+        "sha256": "26a8ea38579f9b42691eeba8a59617387c419e35bf9beee9d60a22f8b52b8cbd"
+      },
+      {
+        "bytes": 519,
+        "path": "host-authored-v3-r1/driver/scratch-bridge-inputs.json",
+        "sha256": "e31649f0ea2a5740c998c4859bdc595b2ca75651e689ff56b1d146e721b3cd8b"
+      },
+      {
+        "bytes": 150144,
+        "path": "host-authored-v3-r1/driver/compiler-sources.txt",
+        "sha256": "8be826e6538af4f2d6e1c17bc5a7a7676889730f0c8e2dce267cd028a24ec8da"
+      },
+      {
+        "bytes": 1620,
+        "path": "host-authored-v3-r1/driver/data/study-index.json",
+        "sha256": "a5ec16476fb1f34231fd1c18fdff2c540d3d3bdb100fcfa0a411308c3b692701"
+      }
+    ],
+    "limitations": {
+      "beta": "HELD",
+      "defaultAdoption": false,
+      "full30": "OWNER_EXCLUDED",
+      "layoutQualification": false,
+      "playable100": 0,
+      "protectedHard": "UNREAD_UNRUN_THIS_SCOPE_HISTORICAL_UNCERTIFIED",
+      "rootScope": "EXACT_SOURCE_BOUND_PRIVATE_REPORT_AND_ACTUAL_PROCESS_CONTEXT_ONLY"
+    },
+    "mode": "AUTHORED",
+    "nativeElapsedNanos": 77414082001,
+    "operations": [
+      {
+        "cleanupNanos": 1385200,
+        "elapsedToCloseNanos": 9743407400,
+        "events": 0,
+        "groups": 101,
+        "maxFullGroupNanos": 1312592700,
+        "operation": 0,
+        "physical": {
+          "access": "NOT_RUN",
+          "clearanceKeepout": "NOT_RUN",
+          "connectivity": "NOT_RUN",
+          "functional": "NOT_RUN",
+          "layeredRaster": "NOT_RUN"
+        },
+        "receipt": {
+          "attempt": 4,
+          "comparisonComplete": true,
+          "completedOrderings": 3,
+          "expansions": 918222,
+          "finalizedOrderings": 0,
+          "guidanceStarted": true,
+          "selectedOrdering": -1,
+          "startedOrderings": 3,
+          "termination": "A_COIL_LOW:NO_PATH",
+          "yieldedOrderings": 0
+        },
+        "route": "TYPED_REQUEST_REJECTION",
+        "winner": null,
+        "work": {
+          "diagnosticCloneSteps": 0,
+          "expansions": 918222,
+          "generatorAdvances": 98,
+          "p07OwnerSteps": 3005967,
+          "p07Slices": 92,
+          "routingOwnerSteps": 3005967
+        }
+      },
+      {
+        "cleanupNanos": 490500,
+        "elapsedToCloseNanos": 9917602700,
+        "events": 8,
+        "groups": 101,
+        "maxFullGroupNanos": 716390000,
+        "operation": 1,
+        "physical": {
+          "access": "NOT_RUN",
+          "clearanceKeepout": "NOT_RUN",
+          "connectivity": "NOT_RUN",
+          "functional": "NOT_RUN",
+          "layeredRaster": "NOT_RUN"
+        },
+        "receipt": {
+          "attempt": 4,
+          "comparisonComplete": true,
+          "completedOrderings": 3,
+          "expansions": 918222,
+          "finalizedOrderings": 0,
+          "guidanceStarted": true,
+          "selectedOrdering": -1,
+          "startedOrderings": 3,
+          "termination": "A_COIL_LOW:NO_PATH",
+          "yieldedOrderings": 0
+        },
+        "route": "TYPED_REQUEST_REJECTION",
+        "winner": null,
+        "work": {
+          "diagnosticCloneSteps": 8,
+          "expansions": 918222,
+          "generatorAdvances": 98,
+          "p07OwnerSteps": 3005975,
+          "p07Slices": 92,
+          "routingOwnerSteps": 3005967
+        }
+      },
+      {
+        "cleanupNanos": 591900,
+        "elapsedToCloseNanos": 9510487500,
+        "events": 8,
+        "groups": 101,
+        "maxFullGroupNanos": 853709100,
+        "operation": 2,
+        "physical": {
+          "access": "NOT_RUN",
+          "clearanceKeepout": "NOT_RUN",
+          "connectivity": "NOT_RUN",
+          "functional": "NOT_RUN",
+          "layeredRaster": "NOT_RUN"
+        },
+        "receipt": {
+          "attempt": 4,
+          "comparisonComplete": true,
+          "completedOrderings": 3,
+          "expansions": 918222,
+          "finalizedOrderings": 0,
+          "guidanceStarted": true,
+          "selectedOrdering": -1,
+          "startedOrderings": 3,
+          "termination": "A_COIL_LOW:NO_PATH",
+          "yieldedOrderings": 0
+        },
+        "route": "TYPED_REQUEST_REJECTION",
+        "winner": null,
+        "work": {
+          "diagnosticCloneSteps": 8,
+          "expansions": 918222,
+          "generatorAdvances": 98,
+          "p07OwnerSteps": 3005975,
+          "p07Slices": 92,
+          "routingOwnerSteps": 3005967
+        }
+      },
+      {
+        "cleanupNanos": 511000,
+        "elapsedToCloseNanos": 10194451200,
+        "events": 10,
+        "groups": 127,
+        "maxFullGroupNanos": 612208300,
+        "operation": 3,
+        "physical": {
+          "access": "NOT_RUN",
+          "clearanceKeepout": "NOT_RUN",
+          "connectivity": "NOT_RUN",
+          "functional": "NOT_RUN",
+          "layeredRaster": "NOT_RUN"
+        },
+        "receipt": {
+          "attempt": 4,
+          "comparisonComplete": false,
+          "completedOrderings": 3,
+          "expansions": 1000000,
+          "finalizedOrderings": 0,
+          "guidanceStarted": true,
+          "selectedOrdering": -1,
+          "startedOrderings": 3,
+          "termination": "TOTAL_SEARCH_LIMIT",
+          "yieldedOrderings": 0
+        },
+        "route": "TYPED_REQUEST_REJECTION",
+        "winner": null,
+        "work": {
+          "diagnosticCloneSteps": 10,
+          "expansions": 1000000,
+          "generatorAdvances": 124,
+          "p07OwnerSteps": 3862501,
+          "p07Slices": 118,
+          "routingOwnerSteps": 3862491
+        }
+      }
+    ],
+    "outerElapsedIncludingChildTeardownSeconds": 144.457678,
+    "run": "host-authored-v3-r1",
+    "sourceInputs": 1083,
+    "sourceManifestSha256": "0a9b6a6a89182fe2966f50b6a48d56e6842ea493c5421ae5c53bf3cfef604e7a",
+    "sourceParent": "0a1e370e08a932b55efc961433e26f98f3bec8ac",
+    "status": "PASS_ROOT_FINITE_NATIVE_STUDY_REVIEW_ONLY",
+    "totalNonArmScope": "CONSERVATIVE_INCLUDES_COMPILE_PREFLIGHT_READER_FINAL_RECEIPT_NOT_EXACT_CLEANUP",
+    "totalNonArmUpperBoundNanos": 105091729201
+  },
+  "candidate": {
+    "componentCount": 100,
+    "dependencyEpoch": "tsj-generation-dependencies-v28",
+    "layoutVersion": 26,
+    "netCount": 60,
+    "padCount": 246,
+    "placementSeed": "-6587958367974952701",
+    "rootSeed": "9007199254740993",
+    "routingSeed": "8445301674744508279",
+    "traceWidthProfile": "ROLE_WIDTHS",
+    "variant": "SEPARATE"
+  },
+  "failuresPreserved": [
+    "host-tiny-r1 COMPILE_FAIL 3 checked callback guard exceptions; no JVM",
+    "host-tiny-r2 NATIVE_FAIL v1 rejected genuine plus IDs",
+    "host-tiny-v2-r1 INDEPENDENT_READER_FAIL raw owner parity includes diagnostic-only clones",
+    "early helper import/syntax/encoding/newline failures"
+  ],
+  "finalSources": [
+    {
+      "bytes": 42564,
+      "path": "tests/qualification/rb100-layout/branch-tree-study/read_branch_order_study.py",
+      "sha256": "3c41dc9970bd826447599a44d173248545094b6df0f36d22a5a6ea41a768d21d"
+    },
+    {
+      "bytes": 56650,
+      "path": "tests/qualification/rb100-layout/branch-tree-study/test_read_branch_order_study.py",
+      "sha256": "433db01dbf95dc8523577af17556113cdc764eaf37ae49855b18e0b1dcc48c0c"
+    },
+    {
+      "bytes": 14543,
+      "path": "docs/task-evidence/Q100/branch-tree-study-v3-r1/WIRE.md",
+      "sha256": "bc7379b8e1b7f17299b4787fe8e0ca119708cfc818109dadb00acba78dffc885"
+    },
+    {
+      "bytes": 2659,
+      "path": "docs/task-evidence/Q100/branch-tree-study-v3-r1/PLAN.md",
+      "sha256": "6ca51d5e2996aa6dc9e6444f91f3c3eb6ba8e18c9fa21de293f9cdda2fd8b391"
+    },
+    {
+      "bytes": 92370,
+      "path": "tests/qualification/rb100-layout/java/ActualGeneratorBranchOrderStudy.java",
+      "sha256": "067f45f61a090e3bbff9bbaeac34bdebaedcae18d6aa2c64bd22dec35120ced5"
+    },
+    {
+      "bytes": 17688,
+      "path": "scripts/verify-rb100-branch-order-study.ps1",
+      "sha256": "fe928cd05b64b6bd57521448ec32a0ed88ada8663e8300062b8df6c46717f533"
+    }
+  ],
+  "hostGuards": [
+    {
+      "bytes": 519,
+      "path": "host-wrong-manifest-v3-r1/result.json",
+      "sha256": "6e29daacbc823bf17077a27260920361763b5f71ae2a39391bd3dc92b7a9bf19"
+    },
+    {
+      "bytes": 539,
+      "path": "host-bridge-reject-v3-r1/control-review-r1.json",
+      "sha256": "1a468a6326e7daba3d49f5555770897bde3e09cd719f8357a1a86d2b2dbda72b"
+    }
+  ],
+  "junction": {
+    "cleanupSeconds": 0.051884599999999996,
+    "operationIncludingChildTeardownSeconds": 0.9967282,
+    "result": {
+      "bytes": 444,
+      "path": "junction-control-v3-r1/result.json",
+      "sha256": "6155c5f80ce2ed5d60f22f6286de5a57503d7b5d3bf3bdd6abd36fe347fe2e2e"
+    }
+  },
+  "limitations": {
+    "beta": "HELD",
+    "boardImpossibility": "NOT_PROVEN",
+    "ci": "SELF_HOSTED_RUNNER_REGISTRATION_PREREQUISITE",
+    "defaultAdoption": false,
+    "full2By31": "NOT_RENEWED",
+    "full30": "OWNER_EXCLUDED",
+    "hardPsychotic": "UNAVAILABLE_UNRUN",
+    "layoutQualification": false,
+    "otherPlacementsRequests": "NOT_QUALIFIED",
+    "physicalAccessFunctionalAuthored": "NOT_RUN_NO_WINNER",
+    "playable100": 0,
+    "protectedHard": "UNREAD_UNRUN_THIS_SCOPE_HISTORICAL_UNCERTIFIED",
+    "visiblePlayerFlow": "NOT_APPLICABLE"
+  },
+  "nextUnstarted": "Isolate canonical pass1 no-yield/quality boundary from exact data/source before another routing treatment",
+  "nonblockingFollowup": "Producer zero-capacity fail-fast proof flags are narrower than final reader; actual flags serialized and reader rejects incomplete proof",
+  "publication": "PENDING",
+  "resources": {
+    "ambient8928": "UNTOUCHED",
+    "currentChildProcesses": "TERMINATION_PROVEN",
+    "currentSuccessScratch": "REMOVED_WITH_VERIFIED_OWNERSHIP",
+    "oldE06R1": "PRESERVED_UNCERTAIN_NO_RECOVERY_PASS",
+    "oldFailureScratch": "PRESERVED_WITH_SOURCE_AND_RAW_FAILURE_EVIDENCE"
+  },
+  "reuse": {
+    "freshOldRegressionNativeGwtPlayerNormalExecution": false,
+    "receipts": [
+      {
+        "bytes": 3475,
+        "path": "production-reuse-final-v3-r1/result.json",
+        "sha256": "e2129582a0934c3149b672f76dd36c82b1bdd7de4ca5b72bd5125af823bd6927"
+      },
+      {
+        "bytes": 755,
+        "path": "unchanged-base-audit-final-v3-r1.json",
+        "sha256": "ce5713166047f17dc143f8e090e3f053a71c51a4903e4e0e2659fe84f23a7d90"
+      },
+      {
+        "bytes": 585,
+        "path": "player-archive-reuse-final-v3-r1.json",
+        "sha256": "3a15f162d03923d4422730826d1aa208504fd239218714ee6ef0cff3d803c9c0"
+      }
+    ],
+    "status": "UNCHANGED_CONSUMED_INPUTS_ONLY"
+  },
+  "routingDecision": "NOT_ADOPTED_NO_AUTHORED_WINNER_WITHIN_EXISTING_BUDGET",
+  "schema": "tsj-actual-generator-branch-order-qualification-v3",
+  "sourceOnlyReviews": [
+    {
+      "bytes": 8707,
+      "path": "DIAGNOSTIC_WORK_CLASSIFICATION_REVIEW.md",
+      "sha256": "9156a3436ae77809ff1933d941d82378fc5e1252e94ea599c25c36727fa0e50b"
+    },
+    {
+      "bytes": 5761,
+      "path": "V3_EVENT_SOURCE_REVIEW_R1.md",
+      "sha256": "684f2a97abe7ffc95b22887a34815350934ffb8b9527212dbed687ced36ff93c"
+    },
+    {
+      "bytes": 3997,
+      "path": "HOST_SOURCE_REVIEW_R1.md",
+      "sha256": "a550b0c52818a343fa80899bcbfc92586b44ea8ffb01612aa435cb4da951e36a"
+    },
+    {
+      "bytes": 5218,
+      "path": "HOST_POSTFIX_AND_JAVA_BOUNDARY_REVIEW.md",
+      "sha256": "0eb2f1e810fd2252964b1f0271e602af294149ff98c8369e92ecaf99779c3bff"
+    }
+  ],
+  "sourceParent": "0a1e370e08a932b55efc961433e26f98f3bec8ac",
+  "status": "PASS_FINITE_PRIVATE_EXECUTION_REPORT_ONLY",
+  "tiny": {
+    "bridgeManifestSha256": "e31649f0ea2a5740c998c4859bdc595b2ca75651e689ff56b1d146e721b3cd8b",
+    "cleanupEnvelopeNanos": 37908321600,
+    "compilerInputs": 1074,
+    "divergence": {
+      "controlOrdinal": 97,
+      "farthest": "LED1.K",
+      "nearest": "CIN.-",
+      "netId": "CTRL_RETURN",
+      "prefixSha256": "2ee4b0a3416a6a278cc7730c4e8387f0f6064051e6be8e3e61da69ea6955589f",
+      "rootPadId": "C5.2",
+      "status": "FOUND",
+      "treatmentOrdinal": 97
+    },
+    "evidence": [
+      {
+        "bytes": 666,
+        "path": "host-tiny-v3-r1/result.json",
+        "sha256": "a20bac80124f7224c719fe6ea7f13255c39d41e4b553707846322dec51431e54"
+      },
+      {
+        "bytes": 1872,
+        "path": "host-tiny-v3-r1/launch.json",
+        "sha256": "0b44ee893e557438fe0f08554072ceb8d1b79f3485b7dd2b3dd675b81fa727be"
+      },
+      {
+        "bytes": 2014,
+        "path": "host-tiny-v3-r1/process.json",
+        "sha256": "67617b4a75a9718e3cf0615f9829e269c0d70bea9e18b93e55cbac3d297b4b1c"
+      },
+      {
+        "bytes": 930,
+        "path": "host-tiny-v3-r1/driver/java-version-process.json",
+        "sha256": "e626e9593a773ff14b6b20dbc18ebf129c1fffecab0ef01fbb01f3cc6b7c61f5"
+      },
+      {
+        "bytes": 787,
+        "path": "host-tiny-v3-r1/driver/javac-version-process.json",
+        "sha256": "65b2cd6d9cf01928446bf153aab93fc31211a2cdebcc0d1788ea9b692d347df1"
+      },
+      {
+        "bytes": 1607,
+        "path": "host-tiny-v3-r1/driver/source-preflight-process.json",
+        "sha256": "796c69fc04f96b91c158a86f8bdfbfa463ad777bd319af5fb6f7c2c51a3ca3b3"
+      },
+      {
+        "bytes": 1608,
+        "path": "host-tiny-v3-r1/driver/pre-launch-source-process.json",
+        "sha256": "1ae03239fb78a9d264107e151f94a7329bd745c72b411da50a0e2d63327cd89b"
+      },
+      {
+        "bytes": 2018,
+        "path": "host-tiny-v3-r1/driver/compiler-process.json",
+        "sha256": "9b8975bab06366137d02800f4f74c68ed1e0f91500bc363b6f2acef237b3480d"
+      },
+      {
+        "bytes": 1748,
+        "path": "host-tiny-v3-r1/driver/native-process.json",
+        "sha256": "a0edca7cfcaa16e2ba8dfa35be9a423ff4a600d0cd6b0f3f252fe7ae97b245f3"
+      },
+      {
+        "bytes": 1608,
+        "path": "host-tiny-v3-r1/driver/post-source-process.json",
+        "sha256": "18436f4c4ff1e4d27e2238bb9d4407497032a6ed34cd4c88963b47bcfe6aaa60"
+      },
+      {
+        "bytes": 1557,
+        "path": "host-tiny-v3-r1/driver/reader-process.json",
+        "sha256": "59d33a8a319bd041688b5db1004f494ef0c60dffb8086159f1de6f988383b606"
+      },
+      {
+        "bytes": 730,
+        "path": "host-tiny-v3-r1/driver/host-result.json",
+        "sha256": "4f335539fa25390145b8d1a88eddb3b968fbc95d005269a6734a560cce323b37"
+      },
+      {
+        "bytes": 1085,
+        "path": "host-tiny-v3-r1/driver/host-launch.json",
+        "sha256": "4d311ccd465b25002831b69257bcfc8c77508663e55ebf4b691271b51ab56802"
+      },
+      {
+        "bytes": 1211,
+        "path": "host-tiny-v3-r1/driver/reader-result.json",
+        "sha256": "d2bee975c79ad35b5173ff9cb4ecee38df7208e458a8dc0966d0329a8938e91d"
+      },
+      {
+        "bytes": 1124,
+        "path": "host-tiny-v3-r1/driver/reader-input.json",
+        "sha256": "fe9ef66d661f2ff6519ded3eae4f6f437803ca29e6e716b8151dfdb5e2d16318"
+      },
+      {
+        "bytes": 1016,
+        "path": "host-tiny-v3-r1/driver/transport.json",
+        "sha256": "e985fb7e5ce5d9256e04eb4fb283f9cc42cfba2bf2062dc50c3c11e78a489e03"
+      },
+      {
+        "bytes": 519,
+        "path": "host-tiny-v3-r1/driver/scratch-bridge-inputs.json",
+        "sha256": "e31649f0ea2a5740c998c4859bdc595b2ca75651e689ff56b1d146e721b3cd8b"
+      },
+      {
+        "bytes": 150144,
+        "path": "host-tiny-v3-r1/driver/compiler-sources.txt",
+        "sha256": "7e8e05fdae8d8fc59527ef10883a375a2350828dec8d0613dcbc55b71bf1a0d6"
+      },
+      {
+        "bytes": 1617,
+        "path": "host-tiny-v3-r1/driver/data/study-index.json",
+        "sha256": "1920fa765e07e910b50000b987ca614e7f584cafe9d70385c2d2f21bd8a8dfc3"
+      }
+    ],
+    "limitations": {
+      "beta": "HELD",
+      "defaultAdoption": false,
+      "full30": "OWNER_EXCLUDED",
+      "layoutQualification": false,
+      "playable100": 0,
+      "protectedHard": "UNREAD_UNRUN_THIS_SCOPE_HISTORICAL_UNCERTIFIED",
+      "rootScope": "EXACT_SOURCE_BOUND_PRIVATE_REPORT_AND_ACTUAL_PROCESS_CONTEXT_ONLY"
+    },
+    "mode": "TINY_CANARY",
+    "nativeElapsedNanos": 54103849100,
+    "operations": [
+      {
+        "cleanupNanos": 193400,
+        "elapsedToCloseNanos": 4147819400,
+        "events": 0,
+        "groups": 53,
+        "maxFullGroupNanos": 816601700,
+        "operation": 0,
+        "physical": {
+          "access": "NOT_RUN",
+          "clearanceKeepout": "PASS",
+          "connectivity": "PASS",
+          "functional": "NOT_RUN",
+          "layeredRaster": "PASS"
+        },
+        "receipt": {
+          "attempt": 4,
+          "comparisonComplete": true,
+          "completedOrderings": 3,
+          "expansions": 669398,
+          "finalizedOrderings": 3,
+          "guidanceStarted": true,
+          "selectedOrdering": 2,
+          "startedOrderings": 3,
+          "termination": "ORDERINGS_COMPLETE",
+          "yieldedOrderings": 3
+        },
+        "route": "REQUEST_FINALIZED",
+        "winner": {
+          "attempt": 4,
+          "geometryBytes": 150228,
+          "geometrySha256": "9c31439bb3384465b1286f05a53e793a2c70c57da5be776b303049021986538d",
+          "ordering": 2,
+          "quality": "276721.0295908147"
+        },
+        "work": {
+          "diagnosticCloneSteps": 0,
+          "expansions": 669398,
+          "generatorAdvances": 50,
+          "p07OwnerSteps": 1352198,
+          "p07Slices": 44,
+          "routingOwnerSteps": 1352198
+        }
+      },
+      {
+        "cleanupNanos": 23800,
+        "elapsedToCloseNanos": 3812325300,
+        "events": 4,
+        "groups": 53,
+        "maxFullGroupNanos": 330391000,
+        "operation": 1,
+        "physical": {
+          "access": "NOT_RUN",
+          "clearanceKeepout": "PASS",
+          "connectivity": "PASS",
+          "functional": "NOT_RUN",
+          "layeredRaster": "PASS"
+        },
+        "receipt": {
+          "attempt": 4,
+          "comparisonComplete": true,
+          "completedOrderings": 3,
+          "expansions": 669398,
+          "finalizedOrderings": 3,
+          "guidanceStarted": true,
+          "selectedOrdering": 2,
+          "startedOrderings": 3,
+          "termination": "ORDERINGS_COMPLETE",
+          "yieldedOrderings": 3
+        },
+        "route": "REQUEST_FINALIZED",
+        "winner": {
+          "attempt": 4,
+          "geometryBytes": 150228,
+          "geometrySha256": "9c31439bb3384465b1286f05a53e793a2c70c57da5be776b303049021986538d",
+          "ordering": 2,
+          "quality": "276721.0295908147"
+        },
+        "work": {
+          "diagnosticCloneSteps": 4,
+          "expansions": 669398,
+          "generatorAdvances": 50,
+          "p07OwnerSteps": 1352202,
+          "p07Slices": 44,
+          "routingOwnerSteps": 1352198
+        }
+      },
+      {
+        "cleanupNanos": 23100,
+        "elapsedToCloseNanos": 3629716800,
+        "events": 4,
+        "groups": 53,
+        "maxFullGroupNanos": 294911900,
+        "operation": 2,
+        "physical": {
+          "access": "NOT_RUN",
+          "clearanceKeepout": "PASS",
+          "connectivity": "PASS",
+          "functional": "NOT_RUN",
+          "layeredRaster": "PASS"
+        },
+        "receipt": {
+          "attempt": 4,
+          "comparisonComplete": true,
+          "completedOrderings": 3,
+          "expansions": 669398,
+          "finalizedOrderings": 3,
+          "guidanceStarted": true,
+          "selectedOrdering": 2,
+          "startedOrderings": 3,
+          "termination": "ORDERINGS_COMPLETE",
+          "yieldedOrderings": 3
+        },
+        "route": "REQUEST_FINALIZED",
+        "winner": {
+          "attempt": 4,
+          "geometryBytes": 150228,
+          "geometrySha256": "9c31439bb3384465b1286f05a53e793a2c70c57da5be776b303049021986538d",
+          "ordering": 2,
+          "quality": "276721.0295908147"
+        },
+        "work": {
+          "diagnosticCloneSteps": 4,
+          "expansions": 669398,
+          "generatorAdvances": 50,
+          "p07OwnerSteps": 1352202,
+          "p07Slices": 44,
+          "routingOwnerSteps": 1352198
+        }
+      },
+      {
+        "cleanupNanos": 20200,
+        "elapsedToCloseNanos": 4605666000,
+        "events": 6,
+        "groups": 63,
+        "maxFullGroupNanos": 183958200,
+        "operation": 3,
+        "physical": {
+          "access": "NOT_RUN",
+          "clearanceKeepout": "PASS",
+          "connectivity": "PASS",
+          "functional": "NOT_RUN",
+          "layeredRaster": "PASS"
+        },
+        "receipt": {
+          "attempt": 4,
+          "comparisonComplete": true,
+          "completedOrderings": 3,
+          "expansions": 769162,
+          "finalizedOrderings": 2,
+          "guidanceStarted": true,
+          "selectedOrdering": 2,
+          "startedOrderings": 3,
+          "termination": "ORDERINGS_COMPLETE",
+          "yieldedOrderings": 2
+        },
+        "route": "REQUEST_FINALIZED",
+        "winner": {
+          "attempt": 4,
+          "geometryBytes": 150711,
+          "geometrySha256": "037bf834ed44b0d07ea20ef8fe61db1b2afea05e71153dd010bacf3e0fb83e62",
+          "ordering": 2,
+          "quality": "279546.20315157616"
+        },
+        "work": {
+          "diagnosticCloneSteps": 6,
+          "expansions": 769162,
+          "generatorAdvances": 60,
+          "p07OwnerSteps": 1712227,
+          "p07Slices": 54,
+          "routingOwnerSteps": 1712221
+        }
+      }
+    ],
+    "outerElapsedIncludingChildTeardownSeconds": 114.5151411,
+    "run": "host-tiny-v3-r1",
+    "sourceInputs": 1083,
+    "sourceManifestSha256": "75a3d9016d4452b7eb1ceba89fe1f2b98c735f8488f0e9882b5ebc9c844e6612",
+    "sourceParent": "0a1e370e08a932b55efc961433e26f98f3bec8ac",
+    "status": "PASS_ROOT_FINITE_NATIVE_STUDY_REVIEW_ONLY",
+    "totalNonArmScope": "CONSERVATIVE_INCLUDES_COMPILE_PREFLIGHT_READER_FINAL_RECEIPT_NOT_EXACT_CLEANUP",
+    "totalNonArmUpperBoundNanos": 98319613601
+  },
+  "units": {
+    "elapsedIncludingChildTeardownSeconds": 4.0305403,
+    "inputs": {
+      "bytes": 871,
+      "path": "reader-v3-units-r2/inputs.json",
+      "sha256": "3a0e7e0a3db72983a69b1f80c273d76bf065c8336628c886fc9d2218e9499a92"
+    },
+    "methods": 43,
+    "nativeMetadataMockLimit": "NOT_ACTUAL_JVM_AUTHORITY",
+    "result": {
+      "bytes": 424,
+      "path": "reader-v3-units-r2/result.json",
+      "sha256": "aa82ebebf652b52c269daffec2ed6eb548616362dd59e9c94857275b6c40c37a"
+    },
+    "skips": 0
+  }
+}

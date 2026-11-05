@@ -1,6 +1,6 @@
 # TroubleshootJS: Current Roadmap
 
-**Updated:** 2026-11-04 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
+**Updated:** 2026-11-05 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
 
 ## Current product checkpoint
 
@@ -436,10 +436,8 @@ remains uncertain and preserved, with no recovery PASS claimed. Other failed
 attempts remain FAIL. Full30 is owner-excluded; HARD/PSYCHOTIC unavailable/unrun.
 Implementation `4e8248a9d4f01bf3b0ae1bf0bb646772deaf480f` is normally pushed/exact remote verified;
 completion Gmail `1a1aa2d370b5b1b5` sent once.
-The actual authored branch-order baseline/control/treatment study is NOT_RUN.
-Next is its frozen wire/independent reader, explicitly separating the plain
-entrypoint receipt control from observed full-branch controls, then bounded
-execution on the pristine actual candidate at cost60/cap48. Playable100=0/beta held.
+That prerequisite did not execute the authored study; its later reader and actual
+generator execution are recorded below. Playable100=0/beta held.
 
 The [source-bound branch-order reader/wire prerequisite](task-evidence/Q100/branch-tree-study-r1/README.md)
 is accepted and published as `ac6543321860e7032cb3a884d99cb0d26a0eeb57`.
@@ -453,10 +451,27 @@ including a real junction pass. Exact native1079,Python46,GWT1202/Developer357 a
 Player archive357 audits justify unchanged-input evidence reuse; no production,
 new native/GWT or population qualification is renewed. Prior failed attempts stay
 preserved. The documentation receipt requires no second completion email.
-The authored study remains NOT_RUN. Next is the isolated actual-generator Java
-producer/PS5-JDK8 driver,complete source/tool/bridge freeze and real tiny host
-canaries before exact authored controls/treatment. Full30 excluded,HARD/PSYCHOTIC
+That v1 reader-only scope did not execute the authored study. The later v3 result
+below supersedes its next-action checkpoint. Full30 excluded,HARD/PSYCHOTIC
 unavailable/unrun,playable100=0,beta held.
+
+The [actual-generator branch-order study](task-evidence/Q100/branch-tree-study-v3-r1/README.md)
+is locally validated as a finite private report; publication is pending. Forty-
+three reader tests,seventeen real CLI controls,source/bridge rejection canaries,
+and actual four-arm tiny/authored PS5/JDK8 runs pass independent reading and root
+process/context review. V3 preserves real '+' pad IDs and accounts for verified
+diagnostic clone units while keeping every raw-work/time cap. Earlier compile,
+v1 identifier and v2 raw-parity failures remain FAIL. All1079 old native inputs,
+46 old Python inputs and production/archive inputs are unchanged; production
+evidence reuse renews no general electrical,population or Player qualification.
+For exact separate root9007199254740993/request0/attempt4,nearest controls use
+918222 expansions and farthest reaches the unchanged1000000 request cap; neither
+yields or finalizes a route. First pass1 divergence is independently proven on
+C_COIL_LOW,QC.D versus KC.A2,with the same pre-Publisher prefix. The treatment is
+NOT_ADOPTED; routing remains unqualified. This proves neither board impossibility
+nor another placement/request outcome. Next is bounded isolation of the canonical
+pass1 no-yield/quality boundary before another routing treatment. Authored routed
+physical/access/functional and playable100 acceptance remains outstanding; beta stays held.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

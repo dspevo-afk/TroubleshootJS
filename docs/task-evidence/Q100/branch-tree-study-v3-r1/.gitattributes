@@ -1,0 +1,3 @@
+# Preserve frozen protocol/source identity bytes.
+WIRE.md -text
+PLAN.md -text
