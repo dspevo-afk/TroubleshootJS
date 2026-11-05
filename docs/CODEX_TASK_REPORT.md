@@ -1,4 +1,4 @@
-# Current checkpoint: OUT_F saturated-prefix ledger accepted; publication next
+# Current checkpoint: OUT_F saturated-prefix ledger published; next experiment scope
 
 UTC2026-11-05. Active W=OS-temp/tsj-q100-outf-graph-20261105-r1,
 branch codex/q100-outf-prefix-ledger-20261105, HEAD/source parent
@@ -11,7 +11,9 @@ QL=OS-temp task evidence/outf-prefix-ledger-r1, sibling to prior QG/outf-graph-r
 
 Prior graph implementationc38c6084f03f3f47cc7e450fceb00809f898aa68 and receipt
 9d1204535f0c0d30250973be40ef37b6a3554917 normally pushed/exact remote verified;
-Gmail1a1add8b9ac9a5b4 SENT_ONCE, no duplicate. Current ledger publication pending.
+Gmail1a1add8b9ac9a5b4 SENT_ONCE, no duplicate. Current ledger implementation3178bd903e8fef153c46d238b890995ca0a363d0
+normally pushed/exact remote verified; Gmail1a1adf6c2fb9ee69 SENT_ONCE.
+Documentation receipt next, no second email.
 Root owns integration/acceptance/publication; optional source reviewer scopedCLEAR.
 Reviewer original87a84f29 preserved; no runtime by reviewer. Root notes its
 non-plated subcheck wording is overbroad: source tests coordinate/net, not kind.
@@ -23,7 +25,7 @@ Derivation17.98944650008343s, exit0; no new native/cleanup duration or qualifica
 Receipt2067050B/f9d0b6ea;196 sealedPUBchunks557331B/dc18ace2. Independent native
 geometry reconstruction180traces48holes271606B/cbc98315. All246pad identities/
 coordinates join nativefingerprints; independent membership/count reconciliations
-and consumedsource/inputclosechecks pass. Final staging/input audit pending.
+and consumedsource/inputclosechecks pass. Final13pin input-close and exact7path rawstaged audits PASS.
 
 Exactroot9007199254740993/place-6587958367974952701/route8445301674744508279,
 request0/attempt4/pass1/ordinal248/vector28/group57 OUT_F/RSH_F.1/CSTORE_F.2.
@@ -37,11 +39,10 @@ Playable100=0/betaHELD. No new native/GWT/Player/electrical/normal3/full30 run.
 HARD/PSYCHOTIC unavailable/unrun; protectedbodies unread/unrunhere/historical
 unreadUNCERTIFIED; full30ownerEXCLUDED, only3approvednormalroots iflaterneeded.
 
-Next: inspect/stage explicit docs/data paths, normal commit/push/exactSHA proof,
-one completion Gmail for this distinct ledger milestone, then receipt without
-second email. Separately freeze one generic earlier-prefix/endpoint-order
-experiment before code/runtime. Optional bounded next-scope source recommendation
-in progress; no treatment selected/implemented by this audit.
+Next: documentation receipt normal commit/push without second email; then
+separately freeze one generic earlier-prefix/endpoint-order experiment before
+code/runtime. Optional bounded next-scope source recommendation in progress;
+no treatment selected/implemented by this audit.
 
 Main5f05b005 branchcodex/q100-physical-feasibility,9tracked/6untracked/0staged,
 reportmirroronly. Desktope0c36885 branchcodex/task43p-final-recovery,

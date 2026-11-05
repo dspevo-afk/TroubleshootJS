@@ -1,6 +1,6 @@
 # OUT_F saturated-prefix ledger audit
 
-Accepted derived source/data audit; publication pending. [Frozen scope](PLAN.md),
+Accepted derived source/data audit; [publication verified](PUBLICATION.md). [Frozen scope](PLAN.md),
 [complete typed ledger](ledger.json), [preceding native graph qualification](../outf-graph-r1/README.md).
 Commands, hashes, source review and explicit gate limits are in [validation](VALIDATION.md).
 This reuses the accepted native packet; no production or diagnostic producer

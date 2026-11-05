@@ -550,7 +550,10 @@ The frozen reader recomputes the prior complete report exactly; independent
 geometry reconstruction, ledger reconciliations and input/source checks pass.
 Documentation/source-data audit only: no fresh native/GWT/Player/electrical/
 normal3/full30 qualification, production change, budget change or adoption.
-Earlier failures/restrictions remain. Publication pending; playable100=0/betaHELD.
+Earlier failures/restrictions remain. Implementation3178bd903e8fef153c46d238b890995ca0a363d0
+normally pushed/exact remote verified on origin/codex/q100-physical-feasibility;
+completion Gmail1a1adf6c2fb9ee69 sent once. Receipt sends no second email.
+Playable100=0/betaHELD.
 Next is one separately frozen generic earlier-prefix or endpoint-order experiment.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
