@@ -1,0 +1,415 @@
+{
+  "cases": [
+    {
+      "profile": "BASE",
+      "recordBytes": 377135,
+      "recordSha256": "108b66d6ff45111e6dee2be0e912af4089cce0a6463a2e5c6358d42096c2bf4f",
+      "result": {
+        "boundary": {
+          "candidateRetired": true,
+          "eventObserved": true,
+          "generatorComplete": false,
+          "outcomeCount": 1,
+          "requestCount": 1,
+          "routeRetired": true,
+          "successorAdvanceCalls": 0
+        },
+        "context": {
+          "boardSha256": "0f45ad4433c3c4b145a66046c9afda5963d6ca64f1498036f6803bec686cf655",
+          "eligibleAttempts": [
+            4,
+            2,
+            3,
+            0,
+            1
+          ],
+          "padCensusSha256": "5b2a7f850e7559e37f42ea9ee8041ccfdb64d8cac790ea0fae2f168bc3815e2c",
+          "pristineBytes": 252676,
+          "pristineSha256": "6553ad3df059c6bfe2980efe39ff951d3f6322fc0694b2c96e26508f8d3dfe2e",
+          "requestIndex": 0,
+          "selectedAttempt": 4
+        },
+        "group": 100,
+        "logicalWork": {
+          "diagnosticCloneSteps": 8,
+          "expansions": 918222,
+          "generatorAdvances": 98,
+          "p07OwnerSteps": 3005975,
+          "p07Slices": 92,
+          "routingOwnerSteps": 3005967
+        },
+        "operation": 1,
+        "outcome": "P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:A_COIL_LOW:NO_PATH",
+        "physical": {
+          "access": "NOT_RUN",
+          "clearanceKeepout": "NOT_RUN",
+          "connectivity": "NOT_RUN",
+          "functional": "NOT_RUN",
+          "layeredRaster": "NOT_RUN"
+        },
+        "proof": "COMPLETE",
+        "receipt": {
+          "attempt": 4,
+          "comparisonComplete": true,
+          "completedOrderings": 3,
+          "expansions": 918222,
+          "finalizedOrderings": 0,
+          "guidanceStarted": true,
+          "selectedOrdering": -1,
+          "startedOrderings": 3,
+          "termination": "A_COIL_LOW:NO_PATH",
+          "yieldedOrderings": 0
+        },
+        "record": "RESULT",
+        "route": "TYPED_REQUEST_REJECTION",
+        "winner": null
+      },
+      "summary": {
+        "branchCount": 308,
+        "lastBranch": {
+          "bestStateCount": 25,
+          "branchExpanded": 25,
+          "expandedBottom": 21,
+          "expandedTop": 4,
+          "frontierCount": 0,
+          "goalsBottom": 1,
+          "goalsTop": 1,
+          "gridHeight": 309,
+          "gridWidth": 478,
+          "initialManhattanDistance": 620,
+          "minimumExploredManhattanDistance": 590,
+          "netId": "A_COIL_LOW",
+          "pass": 2,
+          "prefixViaCount": 48,
+          "reachedPadCount": 1,
+          "relaxedBoundComplete": false,
+          "relaxedBoundLiveLayoutStable": false,
+          "relaxedBoundObservationChecked": false,
+          "relaxedBoundOrdinaryProbes": 0,
+          "relaxedBoundRefreshes": 0,
+          "relaxedBoundRouterEffectsStable": false,
+          "relaxedBoundRouterStateStable": false,
+          "relaxedBoundStarted": false,
+          "relaxedBoundViaProbes": 0,
+          "relaxedBoundWorkUnits": 0,
+          "rootPadId": "DA.A",
+          "rootX": 3540,
+          "rootY": 2700,
+          "startPadId": "QA.C",
+          "startX": 3870,
+          "startY": 2410,
+          "terminalReason": "NO_PATH",
+          "totalExpanded": 918222
+        },
+        "prefixViaCountHistogram": {
+          "0": 73,
+          "10": 15,
+          "11": 9,
+          "12": 8,
+          "13": 7,
+          "14": 9,
+          "15": 10,
+          "16": 2,
+          "17": 6,
+          "19": 3,
+          "2": 48,
+          "20": 1,
+          "21": 4,
+          "22": 5,
+          "23": 17,
+          "24": 1,
+          "25": 2,
+          "26": 2,
+          "27": 11,
+          "28": 2,
+          "29": 2,
+          "3": 10,
+          "30": 4,
+          "31": 3,
+          "32": 1,
+          "33": 2,
+          "34": 1,
+          "35": 4,
+          "36": 3,
+          "37": 2,
+          "38": 2,
+          "39": 5,
+          "4": 1,
+          "40": 1,
+          "41": 2,
+          "42": 1,
+          "43": 2,
+          "45": 2,
+          "46": 1,
+          "47": 2,
+          "48": 3,
+          "5": 3,
+          "6": 6,
+          "7": 4,
+          "8": 4,
+          "9": 2
+        },
+        "sumBranchExpanded": 918222,
+        "totalExpanded": 918222
+      },
+      "terminalCapFacts": {
+        "branchExpanded": 25,
+        "expectedBranchPrice": 60,
+        "frontierCount": 0,
+        "geometricFeasibility": "NOT_PROVEN",
+        "maximumBranchTransitions": 4,
+        "prefixViaCount": 48,
+        "priceObservation": "DERIVED_NOT_EXPORTED",
+        "remainingBranchTransitions": 0,
+        "remainingHoleSlots": 0,
+        "terminalReason": "NO_PATH",
+        "totalExpanded": 918222
+      }
+    },
+    {
+      "profile": "RAMP",
+      "recordBytes": 384463,
+      "recordSha256": "afd36d53cc1ae58cbc3f8db99b37b23e55cbbc16573922d3e3156bdc4f55a276",
+      "result": {
+        "boundary": {
+          "candidateRetired": true,
+          "eventObserved": true,
+          "generatorComplete": false,
+          "outcomeCount": 1,
+          "requestCount": 1,
+          "routeRetired": true,
+          "successorAdvanceCalls": 0
+        },
+        "context": {
+          "boardSha256": "0f45ad4433c3c4b145a66046c9afda5963d6ca64f1498036f6803bec686cf655",
+          "eligibleAttempts": [
+            4,
+            2,
+            3,
+            0,
+            1
+          ],
+          "padCensusSha256": "5b2a7f850e7559e37f42ea9ee8041ccfdb64d8cac790ea0fae2f168bc3815e2c",
+          "pristineBytes": 252676,
+          "pristineSha256": "6553ad3df059c6bfe2980efe39ff951d3f6322fc0694b2c96e26508f8d3dfe2e",
+          "requestIndex": 0,
+          "selectedAttempt": 4
+        },
+        "group": 103,
+        "logicalWork": {
+          "diagnosticCloneSteps": 8,
+          "expansions": 1000000,
+          "generatorAdvances": 101,
+          "p07OwnerSteps": 3093047,
+          "p07Slices": 95,
+          "routingOwnerSteps": 3093039
+        },
+        "operation": 1,
+        "outcome": "P07_FULLER_TWO_LAYER@4=REJECTED:P07_FULLER_TWO_LAYER:TOTAL_SEARCH_LIMIT",
+        "physical": {
+          "access": "NOT_RUN",
+          "clearanceKeepout": "NOT_RUN",
+          "connectivity": "NOT_RUN",
+          "functional": "NOT_RUN",
+          "layeredRaster": "NOT_RUN"
+        },
+        "proof": "COMPLETE",
+        "receipt": {
+          "attempt": 4,
+          "comparisonComplete": false,
+          "completedOrderings": 3,
+          "expansions": 1000000,
+          "finalizedOrderings": 0,
+          "guidanceStarted": true,
+          "selectedOrdering": -1,
+          "startedOrderings": 3,
+          "termination": "TOTAL_SEARCH_LIMIT",
+          "yieldedOrderings": 0
+        },
+        "record": "RESULT",
+        "route": "TYPED_REQUEST_REJECTION",
+        "winner": null
+      },
+      "summary": {
+        "branchCount": 314,
+        "lastBranch": {
+          "bestStateCount": 81553,
+          "branchExpanded": 53998,
+          "expandedBottom": 29822,
+          "expandedTop": 24176,
+          "frontierCount": 30790,
+          "goalsBottom": 79,
+          "goalsTop": 59,
+          "gridHeight": 309,
+          "gridWidth": 478,
+          "initialManhattanDistance": 2600,
+          "minimumExploredManhattanDistance": 990,
+          "netId": "C_COIL_LOW",
+          "pass": 2,
+          "prefixViaCount": 38,
+          "reachedPadCount": 2,
+          "relaxedBoundComplete": false,
+          "relaxedBoundLiveLayoutStable": false,
+          "relaxedBoundObservationChecked": false,
+          "relaxedBoundOrdinaryProbes": 0,
+          "relaxedBoundRefreshes": 0,
+          "relaxedBoundRouterEffectsStable": false,
+          "relaxedBoundRouterStateStable": false,
+          "relaxedBoundStarted": false,
+          "relaxedBoundViaProbes": 0,
+          "relaxedBoundWorkUnits": 0,
+          "rootPadId": "DC.A",
+          "rootX": 4270,
+          "rootY": 220,
+          "startPadId": "KC.A2",
+          "startX": 2940,
+          "startY": 2820,
+          "terminalReason": "TOTAL_SEARCH_LIMIT",
+          "totalExpanded": 1000000
+        },
+        "prefixViaCountHistogram": {
+          "0": 68,
+          "1": 5,
+          "10": 1,
+          "11": 17,
+          "13": 27,
+          "14": 6,
+          "15": 4,
+          "16": 2,
+          "17": 7,
+          "18": 5,
+          "19": 4,
+          "2": 34,
+          "20": 7,
+          "21": 15,
+          "22": 3,
+          "23": 7,
+          "24": 1,
+          "25": 10,
+          "27": 6,
+          "28": 3,
+          "29": 5,
+          "3": 17,
+          "31": 3,
+          "32": 2,
+          "33": 3,
+          "34": 5,
+          "35": 1,
+          "36": 5,
+          "37": 1,
+          "38": 2,
+          "39": 1,
+          "4": 3,
+          "41": 1,
+          "43": 1,
+          "44": 4,
+          "46": 1,
+          "48": 2,
+          "5": 12,
+          "6": 1,
+          "7": 5,
+          "8": 1,
+          "9": 6
+        },
+        "sumBranchExpanded": 1000000,
+        "totalExpanded": 1000000
+      },
+      "terminalCapFacts": {
+        "branchExpanded": 53998,
+        "expectedBranchPrice": 107,
+        "frontierCount": 30790,
+        "geometricFeasibility": "NOT_PROVEN",
+        "maximumBranchTransitions": 4,
+        "prefixViaCount": 38,
+        "priceObservation": "DERIVED_NOT_EXPORTED",
+        "remainingBranchTransitions": 4,
+        "remainingHoleSlots": 10,
+        "terminalReason": "TOTAL_SEARCH_LIMIT",
+        "totalExpanded": 1000000
+      }
+    }
+  ],
+  "causality": "NOT_PROVEN",
+  "comparison": {
+    "equalIdentityPrefix": 231,
+    "firstAlignedSnapshotDifference": {
+      "fields": [
+        {
+          "base": 4283,
+          "field": "bestStateCount",
+          "ramp": 4453
+        },
+        {
+          "base": 2486,
+          "field": "branchExpanded",
+          "ramp": 2619
+        },
+        {
+          "base": 1777,
+          "field": "expandedBottom",
+          "ramp": 1909
+        },
+        {
+          "base": 709,
+          "field": "expandedTop",
+          "ramp": 710
+        },
+        {
+          "base": 2017,
+          "field": "frontierCount",
+          "ramp": 2077
+        },
+        {
+          "base": 11032,
+          "field": "totalExpanded",
+          "ramp": 11165
+        }
+      ],
+      "identity": [
+        0,
+        "BIAS_AC",
+        "RENAC.1",
+        "CBIAS.1"
+      ],
+      "index": 59
+    },
+    "firstGeometryDigestDifference": {
+      "base": {
+        "bytes": 259161,
+        "sha256": "7a77184d7b5d292f57b7b58c82dcabc75ce8e65525452f9cddcdb08ef2cafaea"
+      },
+      "index": 60,
+      "ramp": {
+        "bytes": 259035,
+        "sha256": "56e5677fcf89db963d9e857769a3507a9e7b4defdbf879b44ce0c52b83a04d65"
+      }
+    },
+    "firstIdentityDifference": {
+      "baseIdentity": [
+        2,
+        "D_SENSE",
+        "U2D.SENSOR",
+        "CFLT_D.1"
+      ],
+      "index": 231,
+      "rampIdentity": [
+        1,
+        "D_SENSE",
+        "RPIN_D.1",
+        "CFLT_D.1"
+      ]
+    }
+  },
+  "decision": "NOT_ADOPTED",
+  "electricalMeasurements": "NOT_RUN",
+  "feasibleContinuation": "NOT_PROVEN",
+  "geometryDigestMeaning": "serialized geometry fingerprint; not complete physical/search-state equality",
+  "nativeRun": "NOT_RUN",
+  "planSha256": "3b50a694a4eb78bbfc2b88a0c96cc5f3dfc2b640eef622704888ab8d05f6fc48",
+  "playable100": 0,
+  "qualificationSha256": "b4bb35cfbe2f6452f416c7cd9b7e283490a4fc8b42820817154a9c2e55a1b57e",
+  "schema": "tsj-via-price-trace-audit-v1",
+  "scope": "TWO_ACCEPTED_CANONICAL_REQUEST_RECEIPTS_ONLY",
+  "sourceContractSha256": "7dca9055cd8e0f5271598d5dc2dcb502147e306967e4668d275958cc96e89337",
+  "status": "PASS_FINITE_TRACE_AUDIT_ONLY"
+}

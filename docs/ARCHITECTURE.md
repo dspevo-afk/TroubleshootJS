@@ -25,6 +25,14 @@ The [first-request packet](task-evidence/Q100/prefix-via-price-first-request-r1/
 records its limits and rejected native-only price treatment. It changes no Player
 capability, electrical model, production route policy, epoch or public admission.
 
+The standalone native-evidence audit_trace.py consumes only the two pinned
+authored receipts and their accepted qualification. It preserves ordered branch
+identities, independently reconciles expansion accounting and separates metric,
+geometry-digest and identity divergence. Digest semantics come from the unchanged
+geometry serializer; no search-state or feasible-path equality is inferred.
+Its [finite trace audit](task-evidence/Q100/prefix-via-price-trace-r1/README.md)
+reuses source-closed native evidence without changing routing or electrical owners.
+
 CirSim owns reduced nonlinear matrix ordering at the end of simplification,
 before its original matrix/right-side backups. ReducedMatrixOrdering derives a
 deterministic greedy minimum-degree permutation from the undirected union of the

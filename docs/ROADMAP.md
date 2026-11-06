@@ -589,11 +589,26 @@ negatives and nine reader CLI controls pass. Cleanup upper bounds remain below39
 or below40s including each capture negative, under120s. Production/defaults,
 epochs, budgets and independent oracles are unchanged. No GWT/Player/electrical/
 population renewal or supported-envelope proof; playable100=0/betaHELD.
-Next is a separately frozen source/receipt diagnosis of search exhaustion before
-another routing treatment. Full30 owner-excluded and protected restrictions remain.
+The separately frozen source/receipt follow-up below addresses its recorded
+diagnosis step. Full30 owner-excluded and protected restrictions remain.
 Implementation87ae18c631d17d1617426f869b10f3da1ba96953 normally pushed/exact
 remote verified on origin/codex/q100-physical-feasibility; completion
 Gmail1a1ae82e3399e237 SENT_ONCE. Documentation receipt sends no second email.
+
+The [canonical trace and cap audit](task-evidence/Q100/prefix-via-price-trace-r1/README.md)
+is complete as a finite source/receipt diagnosis. First changed metrics are at
+branch59(BIAS_AC), first geometry-digest difference at60, and first ordered
+identity mismatch at231. BASE308/RAMP314 rows independently reconcile to
+918222/1000000expansions. BASE's last48-hole prefix has no Search flip headroom;
+RAMP's different38-hole prefix has branch-start headroom but exhausts the global
+cap with a live frontier. No path feasibility or causal attribution is proved.
+Nine final literal tests, five actual CLI controls, separate PS5 parser/count
+oracle, fresh1084+22 source closure before/after and both unchanged operation
+readers pass. Initial file-metadata, fixture syntax and PS5 oracle failures are
+preserved and corrected. No new native/GWT/Player/electrical/population renewal,
+production change, budget change or adoption; playable100=0/betaHELD.
+Next is a separately frozen canonical fixed-prefix capture/reachability scope
+before another routing treatment. Full30/protected exclusions remain unchanged.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

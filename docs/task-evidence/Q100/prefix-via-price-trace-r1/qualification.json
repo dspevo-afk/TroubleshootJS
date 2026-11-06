@@ -1,0 +1,212 @@
+{
+  "allChildrenTerminated": true,
+  "beta": "HELD",
+  "cli": {
+    "inputEofNegative": "REJECTED_AT_PINNED_INPUT_HASH",
+    "negative": 4,
+    "positive": 1,
+    "status": "PASS",
+    "stdout": "EXACT_BOUNDED_NEWLINE_TERMINATED_MARKER",
+    "total": 5
+  },
+  "copies": [
+    {
+      "bytes": 4591,
+      "path": "PLAN_R1.md",
+      "sha256": "3b50a694a4eb78bbfc2b88a0c96cc5f3dfc2b640eef622704888ab8d05f6fc48"
+    },
+    {
+      "bytes": 2220,
+      "path": "SOURCE_CONTRACT.json",
+      "sha256": "7dca9055cd8e0f5271598d5dc2dcb502147e306967e4668d275958cc96e89337"
+    },
+    {
+      "bytes": 9330,
+      "path": "audit_trace.py",
+      "sha256": "29295fbd55d4dfa07d2d1e1ef3839921789b31a38c9594cd8bff63b093c808c9"
+    },
+    {
+      "bytes": 6988,
+      "path": "test_audit_trace.py",
+      "sha256": "24cc1c68db94ec53a2444068d3eaf418e178da155d3f8f1d1844ee40b9e3c61d"
+    }
+  ],
+  "decision": "NOT_ADOPTED",
+  "firstDifferenceFacts": [
+    {
+      "facts": {
+        "branchExpanded": 2486,
+        "expectedBranchPrice": 60,
+        "frontierCount": 2017,
+        "geometricFeasibility": "NOT_PROVEN",
+        "maximumBranchTransitions": 4,
+        "prefixViaCount": 3,
+        "priceObservation": "DERIVED_NOT_EXPORTED",
+        "remainingBranchTransitions": 4,
+        "remainingHoleSlots": 45,
+        "terminalReason": "FOUND",
+        "totalExpanded": 11032
+      },
+      "geometryDigest": {
+        "bytes": 258800,
+        "sha256": "d54621ddd5fc38d79ec58309660f3c0617032466a345433b176e48c3f610eb40"
+      },
+      "identity": [
+        0,
+        "BIAS_AC",
+        "RENAC.1",
+        "CBIAS.1"
+      ],
+      "index": 59,
+      "profile": "BASE"
+    },
+    {
+      "facts": {
+        "branchExpanded": 2619,
+        "expectedBranchPrice": 63,
+        "frontierCount": 2077,
+        "geometricFeasibility": "NOT_PROVEN",
+        "maximumBranchTransitions": 4,
+        "prefixViaCount": 3,
+        "priceObservation": "DERIVED_NOT_EXPORTED",
+        "remainingBranchTransitions": 4,
+        "remainingHoleSlots": 45,
+        "terminalReason": "FOUND",
+        "totalExpanded": 11165
+      },
+      "geometryDigest": {
+        "bytes": 258800,
+        "sha256": "d54621ddd5fc38d79ec58309660f3c0617032466a345433b176e48c3f610eb40"
+      },
+      "identity": [
+        0,
+        "BIAS_AC",
+        "RENAC.1",
+        "CBIAS.1"
+      ],
+      "index": 59,
+      "profile": "RAMP"
+    }
+  ],
+  "full30": "OWNER_EXCLUDED",
+  "hardPsychotic": "UNAVAILABLE_UNREAD_UNRUN_HERE",
+  "historicalProtectedBoundary": "UNCERTIFIED",
+  "independentOracle": {
+    "bytes": 315,
+    "sha256": "df11d863673a9c41623fe82e91e9c2f14d2065dddcdaf5c7c7703eed52a9e3b8"
+  },
+  "independentOracleRawReceipt": {
+    "bytes": 326,
+    "sha256": "34bd1f5faabfe97f1031478ac3cc47a28b108759ca9bc45a7046636d4592aaaf"
+  },
+  "initialFailures": [
+    "CLI1 FILE_CHANGED from cross-provider ctime mismatch before output",
+    "unit import syntax error literal backtick-n; fixed source archived by worker with original hash",
+    "independent PS5 oracle Measure-Object scriptblock property unsupported; fixed without changing expectations"
+  ],
+  "lineEndingNormalization": {
+    "attributes": "LF",
+    "publicOracle": "CRLF_TO_LF; original receipt pin retained",
+    "statCanary": "CRLF_TO_LF",
+    "status": "SEMANTICS_UNCHANGED",
+    "testOriginalSha256": "d07b15d535302e4d07f43953cee679f33c72e6c9c4d384d2d37484e801638c35"
+  },
+  "newGwtPlayerElectricalPopulation": "NOT_RUN",
+  "newNativeCleanupTiming": "NOT_EXPORTED",
+  "newNativeRun": "NOT_RUN",
+  "newPersistentResources": false,
+  "parent": "01d3f2f2f4f36f4d2b630e06e377de6bcf4a60c1",
+  "planSha256": "3b50a694a4eb78bbfc2b88a0c96cc5f3dfc2b640eef622704888ab8d05f6fc48",
+  "playable100": 0,
+  "priorQualificationSha256": "b4bb35cfbe2f6452f416c7cd9b7e283490a4fc8b42820817154a9c2e55a1b57e",
+  "result": {
+    "bytes": 11680,
+    "sha256": "b5c8844d0021e56b914736a29a0932a39eac4a8b889ac5d8112946d7c44d6315"
+  },
+  "reusedSource": [
+    {
+      "baseRows": 1084,
+      "extraRows": 22,
+      "receipt": {
+        "bytes": 2181,
+        "sha256": "c0e1f07faf7346e5a2456213b5ad04263c7b204b3cd87a02cc89ca6a82709b91"
+      },
+      "stage": "pre",
+      "status": "PASS",
+      "wallMs": 17583.473400000003
+    },
+    {
+      "baseRows": 1084,
+      "extraRows": 22,
+      "receipt": {
+        "bytes": 2172,
+        "sha256": "11e8e8ed381ebf8dbf13c58b8406a908143774e9cf8de51c91bd1e3c6ed52b01"
+      },
+      "stage": "post",
+      "status": "PASS",
+      "wallMs": 17463.6488
+    }
+  ],
+  "revalidatedReceipts": [
+    {
+      "baseline": "PASS_EXACT_BASE_AUTHORED_OP1",
+      "profile": "BASE",
+      "receipt": {
+        "bytes": 21885,
+        "sha256": "5881c955b6ac49fb814b46e4c76dbc883cd6846a76eeea669b16daa9c1f79ae8"
+      },
+      "status": "PASS_ONE_REQUEST_DIAGNOSTIC_ONLY",
+      "wallMs": 375.69230000000005
+    },
+    {
+      "baseline": "NOT_APPLICABLE",
+      "profile": "RAMP",
+      "receipt": {
+        "bytes": 22218,
+        "sha256": "716d6f7d69abec7b99ab11cfb856944772e36c974bea9e1ee2941ed92c8c0343"
+      },
+      "status": "PASS_ONE_REQUEST_DIAGNOSTIC_ONLY",
+      "wallMs": 364.1831
+    }
+  ],
+  "review": "ROOT_INTEGRATION_AND_INDEPENDENT_LITERAL_TESTS; READ_ONLY_SOURCE_CLARIFICATION; NO_INDEPENDENT_RUNTIME_REVIEW",
+  "schema": "tsj-via-price-trace-qualification-v1",
+  "sourceContractSha256": "7dca9055cd8e0f5271598d5dc2dcb502147e306967e4668d275958cc96e89337",
+  "statCanary": [
+    {
+      "crossProviderCtimeDiffers": true,
+      "handleCtimeStable": true,
+      "pathCtimeStable": true,
+      "role": "BASE",
+      "sharedIdentityFieldsStable": true
+    },
+    {
+      "crossProviderCtimeDiffers": true,
+      "handleCtimeStable": true,
+      "pathCtimeStable": true,
+      "role": "RAMP",
+      "sharedIdentityFieldsStable": true
+    },
+    {
+      "crossProviderCtimeDiffers": true,
+      "handleCtimeStable": true,
+      "pathCtimeStable": true,
+      "role": "QUALIFICATION",
+      "sharedIdentityFieldsStable": true
+    }
+  ],
+  "status": "ACCEPTED_FINITE_SOURCE_RECEIPT_AUDIT_ONLY",
+  "test": {
+    "bytes": 6988,
+    "sha256": "24cc1c68db94ec53a2444068d3eaf418e178da155d3f8f1d1844ee40b9e3c61d"
+  },
+  "tool": {
+    "bytes": 9330,
+    "sha256": "29295fbd55d4dfa07d2d1e1ef3839921789b31a38c9594cd8bff63b093c808c9"
+  },
+  "units": {
+    "elapsedSeconds": 0.002,
+    "methods": 9,
+    "passed": 9
+  }
+}
