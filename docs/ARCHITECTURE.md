@@ -73,6 +73,21 @@ independent graph/cut/map/geometry oracles and compares NULL/OBSERVE route seman
 This [finite stage packet](task-evidence/Q100/canonical-prefix-rejection-stages-r1/README.md)
 changes no production owner, routing rule, electrical behavior, epoch or admission.
 
+The standalone cut-sensitivity adapter consumes that genuine qualified capture
+and opens only explicitly selected outgoing planar bits in disposable graph
+variants. The immutable base and all other fields remain unchanged. Shared
+unchanged payload lists are checked after codec calls; each variant becomes the
+existing exact immutable graph type before analysis. A bounded BFS and the
+unchanged minimum-VIA oracle run sequentially; an independent consumer rebuilds
+the masks and checks full directed closure with DFS. Offline groups and copies
+are measured separately from new native P07 work, which remains zero. The host
+binds both original/current source inventories, actual selected processes and
+cleanup through proven exit. Existing Windows parent text framing is parsed
+locally while raw receipts and copied streams retain their exact bytes. The
+[finite sensitivity packet](task-evidence/Q100/canonical-cut-sensitivity-r1/README.md)
+answers only the four frozen mask-opening hypotheses; it changes no physical or
+electrical owner, routing policy, model epoch or Player admission.
+
 CirSim owns reduced nonlinear matrix ordering at the end of simplification,
 before its original matrix/right-side backups. ReducedMatrixOrdering derives a
 deterministic greedy minimum-degree permutation from the undirected union of the

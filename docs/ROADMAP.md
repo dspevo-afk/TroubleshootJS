@@ -671,6 +671,24 @@ Implementation `f4df753d4a3a82ed46b64444ae47b15c5a21cad2` was normally pushed an
 verified on origin/codex/q100-physical-feasibility. Connected completion Gmail
 `1a1b058cf7b48533` was sent once. This documentation receipt sends no second email.
 
+The [canonical cut-edge sensitivity](task-evidence/Q100/canonical-cut-sensitivity-r1/README.md)
+is locally accepted for the same exact BASE prefix. CONTROL, four B_SENSE bits,
+four B_REF bits and all eight bits reach12/16/16/20 states respectively; none
+reaches the goal, and all minimum-VIA results are null. The fourteen geometric
+cut bits and all other graph fields stay unchanged. These local directed openings
+are insufficient; whole-net removal, broader prefix changes and board feasibility
+remain unqualified. Final21 literal tests, selected host canary, seven host
+rejections, four-case independent DFS/VIA/source/process verification, twelve
+semantic reader rejections plus a separately labelled synthetic data control and
+final source closure pass. The full analysis host closes in88.805s under120s;
+offline work uses403 final groups under640 and a0.363s maximum under5s.
+All850 production files remain unchanged; no new native P07 search, routing
+adoption, GWT/Player/electrical/population renewal or playable100 admission.
+Playable100=0/betaHELD; full30/protected/HARD/PSYCHOTIC boundaries remain.
+Next is [deeper geometric-reason attribution](task-evidence/Q100/canonical-cut-sensitivity-r1/NEXT_GEOMETRIC_REASON_PLAN.md),
+with the already accepted9 legal-move/5 traversal split retained as its baseline.
+Publication of this locally accepted packet is pending the normal staged review.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

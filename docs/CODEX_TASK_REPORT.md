@@ -1,4 +1,63 @@
-# Current checkpoint: canonical predicate-stage diagnosis published
+# Current checkpoint: P7 accepted; publication pending
+
+UTC2026-11-06. Active D OS-temp/tsj-q100-cut-sensitivity-20261106-r1,
+branch codex/q100-cut-sensitivity-20261106, HEAD/source parent
+23f94f8f4ea8025fe24475fabcb194840e472fd8. Root owns publication. Three intended
+docs plus25 sanitized packet files; no production changes. Main5f05b005 retains
+9tracked/6untracked/0staged; Desktop e0c36885 retains7/73/0. C23f94/B831d/
+V8302/W9661 and all prior failure evidence stay preserved. Old E06/ambient
+resources remain untouched. No live P7 child/helper remains.
+
+Packet docs/task-evidence/Q100/canonical-cut-sensitivity-r1/ is locally accepted.
+Qualification0e525d30969ef70979c8e33d055bdc3921107ea46baf21653324e31e5cb6133a;
+input1f4113ee86424063b16ad13a4dfc9540af16099beeb0560fd6315bde691a0dd7.
+Actual ANALYZE R2+selected independent DFS/VIA/source/process consumer PASS.
+CONTROL/SENSE/REF/BOTH open0/4/4/8 bits and reach12/16/16/20 states with
+23/31/31/39 directed edges; all goals0, unreachable, minimumVIA null. All14
+geometric bits and other graph fields remain unchanged. Only these local mask
+openings are excluded; no whole-net removal, routing benefit, unique trace,
+board-impossibility or production-adoption claim follows.
+
+Exact approved BASE/SEPARATE root9007199254740993,
+placement-6587958367974952701/routing8445301674744508279,
+request0/attempt4/pass2 A_COIL_LOW QA.C->DA.A, receipt307/lineage77/H48;
+prefix6b49cfb2/raw+canonical graphff6466d2 unchanged. Original90s/640/5s,
+8MiB/64KiB/4096/1M clone/120s cleanup limits remain; new native P07 work0.
+
+Final21 literal tests R5 PASS0.003s (core05d5172b/testd0e4d6a0 unchanged).
+Final actual CANARY R3+consumer PASS, seven host negatives R4 PASS. Final
+reader controls R4 PASS: one labelled synthetic copied-data control and12 exact
+rejections,56446.139ms/13 terminated children; genuine P6 parent bytes unchanged.
+Source-close R1 PASS1084 unchanged rows in D/C,850 production files/144 pins,
+2772.272ms work/3668.8ms process. All25 packet copies match tested source/data;
+source/privacy/EOF/AST gates pass. Reader1404e87d/host8848a644/worker d7b039c2,
+controls414468db/9f7468c8. No copied private paths or raw process logs.
+
+ANALYZE parent40649.793ms, math1323.8701ms/401 groups, final worker402 plus
+host closure403; max362.658ms. Worker1555.9037ms, full host88805.2538ms<120s,
+internal cleanup63721.178ms, consumer6934.3738ms. Actual task children
+terminated and wrapper process scratch removed. Source/array copies and oracle
+calls are measured offline, not fabricated P07 steps/advances/expansions.
+
+Earlier failed source/literal/host/reader/controller attempts remain FAIL or
+NOT_RUN as recorded in packet FAILURES.md and private receipts; notably failed
+ANALYZE R1 stopped after genuine parent PASS before worker, with sourceAfter
+NOT_RUN and aggregate cleanup FAIL. They are not reclassified by final passes.
+Independent review was static worker scope before the final Windows metadata
+fix; root reviewed the integration and ran all final gates. No GWT/Player/
+electrical/population renewal because production files remain unchanged.
+
+Next: actual/cached byte, privacy and diff review; normal implementation commit,
+push/exact remote proof and one completion Gmail, then documentation receipt
+without a second email. P6 implf4df753d/receipt23f94f8f mail1a1b058cf7b48533
+was SENT_ONCE and must never be duplicated. No P7 commit/push/email yet.
+After publication, next unstarted scope is deeper geometric subpredicate/owner
+attribution for original14 edges; retain P6's already accepted9 legal-move/5
+traverse split and freeze the new passive-observer protocol before implementation.
+Playable100=0/betaHELD; full30 excluded. HARD/PSYCHOTIC unavailable/unread/
+unrun here; historical protected unread boundary UNCERTIFIED.
+
+# Historical checkpoint: canonical predicate-stage diagnosis published
 
 UTC 2026-11-06. Active C: OS-temp/tsj-q100-prefix-gates-20261106-r1,
 branch codex/q100-prefix-gates-20261106. Native source parent831d69a41d9504bf;
