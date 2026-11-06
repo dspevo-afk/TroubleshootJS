@@ -1,76 +1,60 @@
-# Current checkpoint: canonical predicate-stage diagnosis locally accepted
+# Current checkpoint: canonical predicate-stage diagnosis published
 
-UTC 2026-11-06. Active C=OS-temp/tsj-q100-prefix-gates-20261106-r1,
-branch codex/q100-prefix-gates-20261106, HEAD/source parent
-831d69a41d9504bfb845caef6942e9ef58c9d6d2. Root owns publication; no P6push/email
-yet. Intended scope26packetfiles+3docs, no production/native-owner file edits.
-Main5f05b005 preserves9tracked/6collapsed untracked/0staged (report mirror only);
-Desktop e0c36885 preserves7/73/0. B831d/V83027040/W96611058 immutable/clean.
-All1084 source rows/850 production sources unchanged. Unrelated work preserved.
+UTC 2026-11-06. Active C: OS-temp/tsj-q100-prefix-gates-20261106-r1,
+branch codex/q100-prefix-gates-20261106. Native source parent831d69a41d9504bf;
+implementationf4df753d4a3a82ed46b64444ae47b15c5a21cad2 normally pushed and exact remote SHA verified
+on origin/codex/q100-physical-feasibility. Connected completion Gmail
+1a1b058cf7b48533 SENT_ONCE. This documentation receipt sends no second email.
+Root owns subsequent work. No P7 tool or sensitivity case has run.
 
-P5 COMPLETE/PUBLISHED impl14825e78d107a543507b040b1719934f906bf833,
-receipt831d69a4; exact remote verified origin/codex/q100-physical-feasibility.
-Gmail1a1af97a6bdbc13c SENT_ONCE; neverduplicate. No P6email sent yet.
-
-P6 packet docs/task-evidence/Q100/canonical-prefix-rejection-stages-r1.
-External evidence=OS-temp/tsj-q100-fixed-prefix-capture-
+P6 packet: docs/task-evidence/Q100/canonical-prefix-rejection-stages-r1.
+External evidence: OS-temp/tsj-q100-fixed-prefix-capture-
 840a8ef24dbb448f830d2786a95a1591/canonical-prefix-rejection-stages-r1;
-negativecontrols adjacent canonical-prefix-stage-negative-controls-r3.
-Final input-pins-r6 SHA
-b640587f9cb1ac3f3ec8feff85940f4b7a9c8fda37570b50bfa30c39fd067771;
-qualification-r6 SHAd7f39f1a77e302e9e883b4aedbdeb9c416a93cf4cfa85029710b04da5b25d692.
-PLAN31547c75/PROTOCOL4b795d77/effectiveADDENDUM_R2 3da49dcb;
-baselinef94eca24/zero-delta08916736/full-cut1a1d7739.
+final semantic controls adjacent in canonical-prefix-stage-negative-controls-r3.
+Final input-pins-r6 SHAb640587f9cb1ac3f3ec8feff85940f4b7a9c8fda37570b50bfa30c39fd067771; qualification-r6
+SHAd7f39f1a77e302e9e883b4aedbdeb9c416a93cf4cfa85029710b04da5b25d692. Public tools match all22 tested source/data
+copies exactly;29 implementation paths and cached whitespace/privacy checks PASS.
 
 Exact BASE/SEPARATE root9007199254740993/place-6587958367974952701/
-route8445301674744508279,req0/attempt4/pass2 A_COIL_LOW QA.C->DA.A,
-global307/local77/H48. Prefix6b49cfb2/graphff6466d2 unchanged. All22 outgoing
-cutqueries/results/maps match P5; actual14 zero-delta endpoint events are
-9LEGAL_MOVE_REJECTED/5TRAVERSE_REJECTED, with no extra reachedPTH endpoints.
-These top-level guards do not identify every nested rule, prove boardimpossible,
-assign unique blocked traces or establish a rerouting benefit. Playable100=0.
+route8445301674744508279, request0/attempt4/pass2 A_COIL_LOW QA.C->DA.A,
+receipt307/lineage77/H48, prefix6b49cfb2/graphff6466d2. All22 query results/maps
+retain parity. The14 observed root events are9 LEGAL_MOVE_REJECTED and5
+TRAVERSE_REJECTED; no extra reached PTH endpoints. This is top-level diagnosis,
+not every nested blocker, unique trace ownership, a route or rerouting benefit.
 
-Actual final-source four1080-input JDK8 host+strictreader modes PASS: CANARY,
-NULL,OBSERVE,CALLBACK_THROW. Canary849+73 assertions(29blocker/27stage),
-23Pythonmethods PASS0.013s,5selectedhost and18selectedreader negatives PASS.
-Native finalsource/bridges/processes/orderedroute/graph/sourceproof/cleanupPASS;
-combined observationunits3335/prior1668,throw1646/prior0. Actual firstcallback
-throw proves detachment/reference/owner/context cleanup and partial parity only.
-Max work13.918323900s/90s; maxcleanupincludingoverflow51.041323400s/120s.
-Final sourcecloseR9PASS1084rows/0changes/84extras. All childtermination/success
-scratch and18ownedcontrol-copy cleanup proven. No persistent final P6process.
-Independent helper/adapter and prior reader review PASS_STATIC_ONLY/no blocker;
-root verified the final EOF-only reader delta leaves its parsed AST unchanged.
-root actual gates remain authoritative. Packetcopy/privacy/syntax/staged checks
-and normal publication are root's remaining acceptance/publication sequence.
+Four final1080-input JDK8/native+strict-reader modes PASS (including actual
+first-callback exception cleanup),849+73 assertions,23 Python tests, five host
+and18 semantic reader negatives, final1084-row/84-extra closure PASS. All850
+production sources unchanged. Normal units3335/prior1668; throw1646/prior0,
+one event and partial374177B/no footer. All final children terminated, scratch
+and18 success-copy workspaces removed. Independent source review records its
+actual scope; root owns the final EOF-only delta and fresh source-bound gates.
+Raw failures, source snapshots and failed packaging remain preserved externally.
+No GWT/Player/electrical/population qualification renewed; no routing adoption.
 
-Helper054979fc/adapter9936a10c/reader1d58c06e/test005e8f7d;
-builder8d741d4d/manifestfad637a4/overlay0432eed2/diffd0d38383. Overlay preserves
-128629 original Routerbytes; actualRouter92347537 and BASELayerPrototype70cacaac
-are separate roles. Host0ae3d0cb/auditor5ac397ce/makerc9ebb2e0 unchanged.
-All earlier failures remain in FAILURES.md and original external receipts/sources:
-source labels/preparation/reader bindings/UUID/sidecars/scope, emptyPTHguard,
-cross-mode totals/no-opfixture, driver parameters/outputguard and late testprivacy.
-Privacy failed before publication;19-file partialpacket preserved externally,
-fixture sanitized, all final native/CLI gates freshly repeated underb640587f.
-Preserve R2failedscratch OS-temp/tsj-canonical-prefix-stage-native-
-4d27a0c035b84cbcaca0ef86653f4806/creation639295506046689252; no R2cleanupPASS.
+Main5f05b005 retains9tracked/6untracked/0staged (report mirror only); Desktop
+e0c36885 retains7/73/0. B831d/V83027040/W96611058 remain immutable and clean.
+P5 implementation14825e78d107a543507b040b1719934f906bf833/receipt831d69a4,
+Gmail1a1af97a6bdbc13c already published/SENT_ONCE; never duplicate it.
+Preserve failed R2 scratch OS-temp/tsj-canonical-prefix-stage-native-
+4d27a0c035b84cbcaca0ef86653f4806, creation639295506046689252 (no R2cleanup PASS).
+Old E06 browser14116/preview34180 plus14 uncertain children and ambient8928
+remain untouched. No persistent final P6 process. All unrelated work preserved.
 
-Next unstarted: frozen four-case conditional cut-edge sensitivity diagnostic,
-NEXT_SENSITIVITY_PLAN.md. Control; observed4B_SENSE edges opened;4B_REF;all8,
-keeping14geometric rejections/allotherbitsunchanged. Not actual netremoval,
-routing or physical qualification. Detailed pinned input/work protocol required
-before tools/cases. No sensitivity case/tool has run. Native P07hasno ready
-victim-ripup seam; separate one-face Routerpolicy is not imported.
+Next unstarted milestone: NEXT_SENSITIVITY_PLAN.md. Freeze detailed pinned input/
+work protocol, then four conditional graph cases (control; four B_SENSE cut edges
+opened; four B_REF; all eight), preserving14 geometric rejections/all other bits.
+Requires this published qualification; grants no real net removal or physical
+route. Oracle API audit complete: both start faces(mask3), directed steps, exact
+immutable FixedPrefixGraph, one validated variant at a time. P07 has no ready
+victim-ripup seam; separate one-face Router policy is not imported.
 
-Original90s/640groups/5s/32768P07slice/1Mexpansions/48holes/4flips,
-8MiBaggregate/64KiBlines+payload/120scleanup/480snative/1800souter and
-4096copy/clone<=1M/combinedunits<=32768 unchanged. CircuitJS truth; no routing
-treatment/epoch/adoption or GWT/Player/electrical/population renewal. BetaHELD,
-full30excluded; HARD/PSYCHOTIC unavailable/unread/unrunhere, historicalunread
-UNCERTIFIED. Old E06browser14116/preview34180 plus14uncertainchildren/ambient8928
-untouched. OptionaljunctionNOT_RUN blockedbypolicy; noretry. Publishonlyvalidated
-work to established normalref, verifyexactSHA, sendoneconnectedcompletionGmail.
+All original90s/640groups/5s/32768P07slice/1Mexpansions/48holes/4flips,
+8MiBaggregate/64KiB lines+payload/120s cleanup/480s native/1800s outer and
+4096 copy/clone<=1M/combinedunits<=32768 remain. CircuitJS is electrical truth.
+Playable100=0/betaHELD; full30 explicitly excluded. HARD/PSYCHOTIC unavailable,
+unread/unrun here; historical protected unread boundary UNCERTIFIED. Optional
+junction NOT_RUN after policy rejection; no retry. Continue until owner says stop.
 
 # Historical checkpoint: canonical cut attribution published; next scope preparation
 

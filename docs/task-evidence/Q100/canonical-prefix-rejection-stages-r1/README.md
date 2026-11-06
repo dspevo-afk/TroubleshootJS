@@ -71,3 +71,11 @@ the8 prior occupancy conflicts do not assign unique trace ownership. Physical
 finalizer/connectivity/access and functional proofs remain required for adoption.
 Playable100=0/betaHELD; full30 owner-excluded; HARD/PSYCHOTIC remain unavailable,
 unread/unrun here. Historical protected unread boundary remains UNCERTIFIED.
+
+## Publication
+
+Implementation `f4df753d4a3a82ed46b64444ae47b15c5a21cad2` was normally pushed and exact remote SHA
+verified on origin/codex/q100-physical-feasibility. Connected completion Gmail
+`1a1b058cf7b48533` was sent once. This documentation receipt sends no second email.
+
+[Publication receipt](PUBLICATION.json).

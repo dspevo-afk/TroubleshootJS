@@ -1,0 +1,15 @@
+{
+  "schema": "tsj-canonical-prefix-stage-publication-v1",
+  "implementation": "f4df753d4a3a82ed46b64444ae47b15c5a21cad2",
+  "message": "Diagnose canonical prefix predicate stages",
+  "localBranch": "codex/q100-prefix-gates-20261106",
+  "publishedRef": "refs/heads/codex/q100-physical-feasibility",
+  "remote": "https://github.com/dspevo-afk/TroubleshootJS.git",
+  "verifiedRemoteSha": "f4df753d4a3a82ed46b64444ae47b15c5a21cad2",
+  "gmailMessageId": "1a1b058cf7b48533",
+  "email": "SENT_ONCE",
+  "qualificationSha256": "d7f39f1a77e302e9e883b4aedbdeb9c416a93cf4cfa85029710b04da5b25d692",
+  "inputPinsSha256": "b640587f9cb1ac3f3ec8feff85940f4b7a9c8fda37570b50bfa30c39fd067771",
+  "nextUnstarted": "Four-case conditional cut-edge sensitivity diagnostic before choosing a generic routing treatment; no adoption",
+  "documentationReceiptRequiresSecondEmail": false
+}
