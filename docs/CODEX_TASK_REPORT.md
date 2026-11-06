@@ -1,4 +1,70 @@
-# Current checkpoint: canonical prefix capture published; blocker scope preparation
+# Current checkpoint: canonical cut attribution accepted; publication pending
+
+UTC 2026-11-06. Active B=OS-temp/tsj-q100-prefix-blockers-20261106-r1,
+branch codex/q100-prefix-blockers-20261106, HEAD/source parent
+83027040b3314b3131ae1d315db58f51a3c4231d. Root owns final diff/staging/publish.
+P5 finite cut-attribution is locally ACCEPTED; no P5 commit/push/email yet.
+Immutable V clean83027040 and W clean96611058 preserved. Main5f05b005
+preserves9tracked/6collapsed untracked/0staged (report mirror only); Desktop
+e0c36885 preserves7/73/0. No unrelated work discarded.
+
+P4 implementation2a9fcdd6d72e9dd9f12d92d8fb3b2d4ea5816768/receipt83027040
+normally pushed/exact remote verified on origin/codex/q100-physical-feasibility;
+Gmail1a1af0613e89587d SENT_ONCE. Never duplicate.
+
+P5 external=OS-temp/tsj-q100-fixed-prefix-capture-
+840a8ef24dbb448f830d2786a95a1591/canonical-prefix-blockers-r1.
+Repo packet docs/task-evidence/Q100/canonical-prefix-blockers-r1.
+Final input-pins-r7 SHA
+1e570d555c919755d82e5e0f0c728425c7aa313c3bd2c123ebfd874832a7b636;
+qualification-r7/packetqualification SHA
+301fca39736eca2b21c40b8dc92ca01e0c58b45493b103d3a8d3bee53624922e.
+Frozen PLAN6128ea85/PROTOCOLd03ab20b/effectiveADDENDUM_R2 0c8607e6,
+baseline98c19ae6 (1084 rows/one native-writer delta/850 production unchanged),
+cut1a1d7739. Native owner264c89e5/adapterb5370fa2/inspectorce71efd9/
+host305c86e4/readerc20bfc3d. All delivered tools match tested bytes.
+
+Exact private BASE SEPARATE root9007199254740993/place-6587958367974952701/
+route8445301674744508279/request0/attempt4/pass2 A_COIL_LOW QA.C->DA.A/H48,
+global307/local77/prefix265894B SHA6b49cfb2/graph3324982B SHAff6466d2.
+All22 outgoing cut queries match the12-state/23-edge directed graph. Eight
+record foreign clearance rejection (4B_SENSE/4B_REF, eachnet3 prefixtraces);
+14 record no foreign occupancy rejection. Net-level counts are not unique traces
+or proof a reroute opens a path. Live router/effects/geometry unchanged; independent
+geometry/census proof passes; exact graph/routing retained with611 P07 capture
+advances and1668 separately bounded native observation units. Attribution31693B,
+four-artifact aggregate5628758B<8MiB. Null/empty MIXED marker remain distinct.
+
+Final1079-input JDK8 native AND strict selected-reader CANARYcanary-r7,
+CONTROLcontrol-r3, CAPTUREcapture-r3, INSPECTOR_THROWinspector-throw-r2 PASS.
+Maintained849+46 adapter/helper assertions (29 inspector),13 focused tests0.014s,
+five actual host negatives and eight semantic reader negatives PASS. Exception
+occurs after real pristine copy/compare, before queries; full native wall+post
+cleanup is charged. All cleanup including overflow<=53.697687s<120s; normal
+work<=13.657005s<90s. Final selected source closure PASS1084+31. Final parent
+chain ended0; all selected children terminated and accepted scratch removed.
+Reader-negative R2 copied workspaces removed. Earlier failures, initial eight
+controller copies and all raw source/process evidence remain preserved.
+
+Only the native test owner gains inspector/cleanup hooks;850 production files
+unchanged. No GWT/Player/electrical/normal3/population renewal; full30 EXCLUDED by
+owner. No production strategy, seed sweep, fakeop4, epoch/cap change or adoption.
+Keep640groups/5sgroup/32768P07slice/1Mexpansions/48holes/4flips,
+copy4096/eachclone<=1M/total observationunits<=32768/64KiB attribution+lines,
+60scompile/480snative/1800souter. Playable100=0/betaHELD. HARD/PSYCHOTIC
+unavailable and unread/unrun here; historical unread boundary UNCERTIFIED.
+Old E06 browser14116/preview34180 plus14 unknown children and ambient8928
+untouched. Optional old junction NOT_RUN after automatic approval rejection
+blocked by policy, no retry/link creation. No goal.
+
+Next: root final packet/diff/staged review, explicit25 intended paths, normal
+commit/push/exactSHA to origin/codex/q100-physical-feasibility, then connected
+completion Gmail once. Follow with documentation receipt only, no duplicate email.
+Next unstarted milestone: separately frozen rejection-stage diagnosis of14
+zero-delta queries before any routing treatment. Read-only source audit recommends
+this rather than importing a different route owner's rip-up/order policy.
+
+# Historical checkpoint: canonical prefix capture published; blocker scope preparation
 
 UTC 2026-11-06. Active V=OS-temp/tsj-q100-canonical-prefix-20261106-r1,
 branch codex/q100-canonical-prefix-capture-20261106, implementation HEAD

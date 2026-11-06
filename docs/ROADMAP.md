@@ -634,6 +634,21 @@ full30 owner-excluded and protected/HARD/PSYCHOTIC boundaries remain. Next is a
 separately frozen obstruction attribution or routing-treatment scope using this
 accepted graph before production adoption.
 
+The [canonical cut attribution](task-evidence/Q100/canonical-prefix-blockers-r1/README.md)
+is locally accepted for the same exact BASE prefix. All22 outgoing planar cut
+queries reproduce the graph. Eight record foreign clearance rejection: four
+B_SENSE and four B_REF;14 record none. Source-bound trace rows reconstruct the
+prefix/census, and live routers/effects/geometry stay unchanged. These are net-level
+observations, not unique blocked traces or a rerouting benefit. Final1079-input
+JDK8 canary/control/capture/expected-inspector-exception plus strict readers,
+13 focused tests, five host and eight semantic reader negatives pass under the
+original limits. Preparation, compile, fixture, Windows stat/path and initial cut
+reader failures remain preserved. Only a native test owner changes; all850
+production files remain unchanged. No GWT/Player/electrical/population renewal.
+Playable100=0/betaHELD; full30/protected/HARD/PSYCHOTIC boundaries remain. Next is
+a separately frozen rejection-stage diagnosis for14 zero-delta cuts before any
+routing treatment or adoption.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

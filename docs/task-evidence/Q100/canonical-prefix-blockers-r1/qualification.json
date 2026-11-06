@@ -1,0 +1,933 @@
+{
+  "addendumSha256": "0c8607e6b7e57c80224ba57a5d69a09bf461a538418caf290986f455e9205dda",
+  "beta": "HELD",
+  "caseRuns": [
+    {
+      "allProcessesTerminated": true,
+      "captureNegativeWallMs": 146.5414,
+      "cleanupAccounting": "NATIVE_RESIDUAL_PLUS_POST_SOURCE",
+      "cleanupConservativeUpperMs": 39582.844000000005,
+      "compilerSources": 1079,
+      "hostReceipt": {
+        "bytes": 1136,
+        "path": "canary-r7/host-result.json",
+        "sha256": "6e0a42c363a470a6b19ad9c53689e817a735fd1d5aab4fc3f3b0fc865879f060"
+      },
+      "includingCaptureNegativeCleanupUpperMs": 39729.38540000001,
+      "mode": "CANARY",
+      "name": "canary-r7",
+      "nativeExitCode": 0,
+      "nativeReceipt": {
+        "bytes": 1647,
+        "path": "canary-r7/native-process.json",
+        "sha256": "8e911b756249deeca1e2a365d745e1b407d90f69c0d142923a82729ef965c498"
+      },
+      "nativeWallMs": 2006.3383000000001,
+      "outerElapsedMs": 84521.5282,
+      "outerReceipt": {
+        "bytes": 3130,
+        "path": "canary-r7-outer.json",
+        "sha256": "78c9847b55d85f041ed56162ef01369b7dcc08c0284c65c37068863641c71c62"
+      },
+      "postSourceAndScratchCleanupMs": 39409.319200000005,
+      "readerProcess": {
+        "bytes": 2453,
+        "path": "canary-r7-reader-process.json",
+        "sha256": "d841e91360a13c0fa14d58aafeb4ca80403e557428193cc4031b111c3e925c58"
+      },
+      "result": {
+        "canary": {
+          "assertions": 46,
+          "elapsedNanos": 1832813500,
+          "groups": 2,
+          "inspectorAssertions": 29,
+          "layoutQualification": false,
+          "maximumGroupNanos": 1540064100,
+          "schema": "tsj-canonical-prefix-blocker-canary-v1",
+          "status": "PASS"
+        },
+        "cleanupUpperMs": 39582.844000000005,
+        "comparison": "NOT_APPLICABLE",
+        "graphDiagnosis": null,
+        "inputPinsSha256": "1e570d555c919755d82e5e0f0c728425c7aa313c3bd2c123ebfd874832a7b636",
+        "layoutQualification": false,
+        "mode": "CANARY",
+        "runId": "097af423-e744-4d7b-a6d5-f12e6f1cd5b6",
+        "schema": "tsj-canonical-prefix-blocker-reader-result-v1",
+        "scope": "CANONICAL_BASE_REQ0_PREFIX_CUT_ONLY",
+        "status": "PASS_CANARY_ONLY"
+      },
+      "scratchRemoved": true,
+      "wrapperWorkNanos": 1832813500
+    },
+    {
+      "allProcessesTerminated": true,
+      "captureNegativeWallMs": 148.5335,
+      "cleanupAccounting": "NATIVE_RESIDUAL_PLUS_POST_SOURCE",
+      "cleanupConservativeUpperMs": 39628.1808,
+      "compilerSources": 1079,
+      "hostReceipt": {
+        "bytes": 1121,
+        "path": "control-r3/host-result.json",
+        "sha256": "3465cc4669900a4dd193064676ecd1c288fc46f90cb215b8c1383f72ae13a9ec"
+      },
+      "includingCaptureNegativeCleanupUpperMs": 39776.7143,
+      "mode": "CONTROL",
+      "name": "control-r3",
+      "nativeExitCode": 0,
+      "nativeReceipt": {
+        "bytes": 2465,
+        "path": "control-r3/native-process.json",
+        "sha256": "b62b6ff72403229aa3e4b1484a1ce3a726bfd3a5f62ff52c00c0ff8b2b416dd9"
+      },
+      "nativeWallMs": 13723.9874,
+      "operationReceipt": {
+        "bytes": 377136,
+        "path": "control-r3/data/op-1.jsonl",
+        "sha256": "fbfa7ef4df25b08a4a4b4db50613f0dd92fccac1f685455f80b4e86ea22a9069"
+      },
+      "outerElapsedMs": 96461.52620000001,
+      "outerReceipt": {
+        "bytes": 3134,
+        "path": "control-r3-outer.json",
+        "sha256": "84f6857d745bfa7b50d19f84fb8a890bd6682bf22d77fb90011a6ff49d6e2d91"
+      },
+      "postSourceAndScratchCleanupMs": 39489.4732,
+      "readerProcess": {
+        "bytes": 2378,
+        "path": "control-r3-reader-process.json",
+        "sha256": "67da7089ec47666573819f06a06901f3f055515dc6b20f97f06bf2287508e796"
+      },
+      "result": {
+        "cleanupUpperMs": 39628.1808,
+        "comparison": "PASS_P4_CONTROL_ROUTE_PARITY",
+        "graphDiagnosis": null,
+        "inputPinsSha256": "1e570d555c919755d82e5e0f0c728425c7aa313c3bd2c123ebfd874832a7b636",
+        "layoutQualification": false,
+        "mode": "CONTROL",
+        "operation": {
+          "groupCount": 101,
+          "receiptBytes": 377136,
+          "selection": {
+            "callbacks": 0,
+            "calls": 0,
+            "selected": 0,
+            "snapshotDropped": true
+          }
+        },
+        "runId": "3f6a28cd-03a9-4a5f-ac70-7bbb02db0156",
+        "schema": "tsj-canonical-prefix-blocker-reader-result-v1",
+        "scope": "CANONICAL_BASE_REQ0_PREFIX_CUT_ONLY",
+        "status": "PASS_CONTROL_ONLY"
+      },
+      "scratchRemoved": true,
+      "wrapperWorkNanos": 13585279800
+    },
+    {
+      "allProcessesTerminated": true,
+      "attribution": {
+        "bytes": 31693,
+        "path": "capture-r3/data/prefix-blockers.json",
+        "sha256": "77273a2a36c6a088e212594c061e0e886b498cdfd2689caa396464d423ffdb4c"
+      },
+      "captureNegativeWallMs": 146.4801,
+      "cleanupAccounting": "NATIVE_RESIDUAL_PLUS_POST_SOURCE",
+      "cleanupConservativeUpperMs": 39462.6455,
+      "compilerSources": 1079,
+      "hostReceipt": {
+        "bytes": 1114,
+        "path": "capture-r3/host-result.json",
+        "sha256": "29732daa4f40b3f9c6cedff91851de3b2db3e86ed5fb4b74f101b315435418fc"
+      },
+      "includingCaptureNegativeCleanupUpperMs": 39609.1256,
+      "index": {
+        "attribution": {
+          "bytes": 31693,
+          "path": "prefix-blockers.json",
+          "sha256": "77273a2a36c6a088e212594c061e0e886b498cdfd2689caa396464d423ffdb4c"
+        },
+        "kind": "AUTHORED",
+        "layoutQualification": false,
+        "mode": "CAPTURE",
+        "operation": {
+          "armId": "OBSERVED_DEFAULT_NEAREST",
+          "cleanup": {
+            "contextRestored": true,
+            "elapsedNanos": 1191000,
+            "ownersReleased": true,
+            "status": "PASS"
+          },
+          "elapsedToCloseNanos": 13219086300,
+          "maxFullGroupNanos": 1296272300,
+          "operation": 1,
+          "receipt": {
+            "bytes": 457510,
+            "path": "op-1.jsonl",
+            "sha256": "6d266a37db864aa2f6c54dccf0fe2ef17ff4d3a79128faad4aac47d4ead6eaeb"
+          }
+        },
+        "profile": "BASE",
+        "runId": "93fc5f96-d2af-44df-959d-d9a3d7f8c32b",
+        "schema": "tsj-canonical-prefix-blocker-index-v1",
+        "scope": "CANONICAL_BASE_REQ0_PREFIX_CUT_ONLY",
+        "selection": {
+          "callbacks": 1,
+          "calls": 2,
+          "selected": 1,
+          "snapshotDropped": true
+        },
+        "sourceManifestSha256": "1e570d555c919755d82e5e0f0c728425c7aa313c3bd2c123ebfd874832a7b636",
+        "target": {
+          "lineageBranchOrdinal": 77,
+          "receiptBranchOrdinal": 307
+        },
+        "transport": {
+          "bytes": 5138203,
+          "facts": {
+            "bytes": 520467,
+            "sha256": "7779f554aac838fb666c905db55573c4b79a774fd84f0c1c77308c3eabcf20d3"
+          },
+          "graph": {
+            "bytes": 3324982,
+            "sha256": "ff6466d21600fc07de94a2cc35ae9a369558219207d0bb2734dbda27ab1e4f0a"
+          },
+          "path": "fixed-prefix.jsonl",
+          "sha256": "5f0d7a035683764b6ac6241d232e480ecbea5f180e3cae09444c7d311c076bfa"
+        },
+        "wireSha256": "0bd76a4fe4261a8abe5c92b2b0b5f50000077e9541e7ca7e84e9af3ed1661cfb"
+      },
+      "mode": "CAPTURE",
+      "name": "capture-r3",
+      "nativeExitCode": 0,
+      "nativeReceipt": {
+        "bytes": 2476,
+        "path": "capture-r3/native-process.json",
+        "sha256": "ef61e4100b606d259d9bfaca47aa416e05fc25eb43d66a7c852f13d1ecf1506c"
+      },
+      "nativeWallMs": 13805.4838,
+      "operationReceipt": {
+        "bytes": 457510,
+        "path": "capture-r3/data/op-1.jsonl",
+        "sha256": "6d266a37db864aa2f6c54dccf0fe2ef17ff4d3a79128faad4aac47d4ead6eaeb"
+      },
+      "outerElapsedMs": 96449.3468,
+      "outerReceipt": {
+        "bytes": 3132,
+        "path": "capture-r3-outer.json",
+        "sha256": "1598542d07b3a4e6c65fcc4b513703d28c24bcbc529c2bada43f44fb67a1dfa0"
+      },
+      "postSourceAndScratchCleanupMs": 39314.1668,
+      "readerProcess": {
+        "bytes": 5990,
+        "path": "capture-r3-reader-process.json",
+        "sha256": "81bc0c26c33ce6c0835aadb094019331b2c8ab9b9043548a8964a5bc6347f068"
+      },
+      "result": {
+        "attributionTotals": {
+          "comparisonEntries": 4007598,
+          "comparisonUnits": 987,
+          "copyEntries": 2670740,
+          "copyUnits": 658,
+          "elapsedNanos": 54810400,
+          "foreignCongestionQueries": 8,
+          "geometryRowEntries": 2177,
+          "geometryRowUnits": 1,
+          "maximumUnitNanos": 5730200,
+          "queryCount": 22,
+          "queryUnits": 22,
+          "unattributedQueries": 14
+        },
+        "captureAccounting": {
+          "capture": {
+            "groupCount": 254,
+            "logicalWork": {
+              "diagnosticCloneSteps": 8,
+              "expansions": 918222,
+              "generatorAdvances": 251,
+              "p07OwnerSteps": 3006586,
+              "p07Slices": 245,
+              "routingOwnerSteps": 3006578
+            }
+          },
+          "control": {
+            "groupCount": 101,
+            "logicalWork": {
+              "diagnosticCloneSteps": 8,
+              "expansions": 918222,
+              "generatorAdvances": 98,
+              "p07OwnerSteps": 3005975,
+              "p07Slices": 92,
+              "routingOwnerSteps": 3005967
+            }
+          },
+          "p07OwnerStepsDelta": 611
+        },
+        "cleanupUpperMs": 39462.6455,
+        "comparison": "PASS_CONTROL_ROUTE_AND_GRAPH_PARITY",
+        "graphDiagnosis": {
+          "claim": "FINITE_PREFIX_QUERY_ATTRIBUTION_ONLY",
+          "cutQueryCount": 22,
+          "electrical": false,
+          "foreignCongestionQueries": 8,
+          "graphSha256": "ff6466d21600fc07de94a2cc35ae9a369558219207d0bb2734dbda27ab1e4f0a",
+          "layout": false,
+          "prefixHoleCountsByKind": {
+            "NON_PLATED": 0,
+            "PLATED": 0,
+            "VIA": 48
+          },
+          "prefixTraceNetCounts": [
+            {
+              "netId": "AC_FUSED",
+              "traceCount": 0
+            },
+            {
+              "netId": "AC_LINE",
+              "traceCount": 0
+            },
+            {
+              "netId": "AC_RETURN",
+              "traceCount": 0
+            },
+            {
+              "netId": "AUX_BASE",
+              "traceCount": 1
+            },
+            {
+              "netId": "AUX_GATE",
+              "traceCount": 3
+            },
+            {
+              "netId": "AUX_RETURN",
+              "traceCount": 0
+            },
+            {
+              "netId": "A_CMD",
+              "traceCount": 1
+            },
+            {
+              "netId": "A_COIL_LOW",
+              "traceCount": 0
+            },
+            {
+              "netId": "A_DRIVE",
+              "traceCount": 4
+            },
+            {
+              "netId": "A_RAW",
+              "traceCount": 0
+            },
+            {
+              "netId": "A_REF",
+              "traceCount": 5
+            },
+            {
+              "netId": "A_SENSE",
+              "traceCount": 3
+            },
+            {
+              "netId": "BIAS_AC",
+              "traceCount": 0
+            },
+            {
+              "netId": "B_CMD",
+              "traceCount": 1
+            },
+            {
+              "netId": "B_COIL_LOW",
+              "traceCount": 3
+            },
+            {
+              "netId": "B_DRIVE",
+              "traceCount": 2
+            },
+            {
+              "netId": "B_RAW",
+              "traceCount": 0
+            },
+            {
+              "netId": "B_REF",
+              "traceCount": 3
+            },
+            {
+              "netId": "B_SENSE",
+              "traceCount": 3
+            },
+            {
+              "netId": "CTRL_RETURN",
+              "traceCount": 0
+            },
+            {
+              "netId": "C_CMD",
+              "traceCount": 4
+            },
+            {
+              "netId": "C_COIL_LOW",
+              "traceCount": 8
+            },
+            {
+              "netId": "C_DRIVE",
+              "traceCount": 4
+            },
+            {
+              "netId": "C_RAW",
+              "traceCount": 0
+            },
+            {
+              "netId": "C_SENSE",
+              "traceCount": 3
+            },
+            {
+              "netId": "D_CMD",
+              "traceCount": 6
+            },
+            {
+              "netId": "D_COIL_LOW",
+              "traceCount": 4
+            },
+            {
+              "netId": "D_DRIVE",
+              "traceCount": 2
+            },
+            {
+              "netId": "D_RAW",
+              "traceCount": 0
+            },
+            {
+              "netId": "D_SENSE",
+              "traceCount": 3
+            },
+            {
+              "netId": "EN5",
+              "traceCount": 1
+            },
+            {
+              "netId": "ENABLE_AC",
+              "traceCount": 1
+            },
+            {
+              "netId": "E_DRAIN",
+              "traceCount": 1
+            },
+            {
+              "netId": "E_DRIVE",
+              "traceCount": 2
+            },
+            {
+              "netId": "FB_AC",
+              "traceCount": 3
+            },
+            {
+              "netId": "F_DRAIN",
+              "traceCount": 3
+            },
+            {
+              "netId": "F_DRIVE",
+              "traceCount": 2
+            },
+            {
+              "netId": "HV_POS",
+              "traceCount": 0
+            },
+            {
+              "netId": "HV_RETURN",
+              "traceCount": 0
+            },
+            {
+              "netId": "LOAD12",
+              "traceCount": 0
+            },
+            {
+              "netId": "MON_CMD",
+              "traceCount": 1
+            },
+            {
+              "netId": "MON_FILTER",
+              "traceCount": 4
+            },
+            {
+              "netId": "MON_REF",
+              "traceCount": 2
+            },
+            {
+              "netId": "MON_SENSE",
+              "traceCount": 12
+            },
+            {
+              "netId": "NC_A",
+              "traceCount": 0
+            },
+            {
+              "netId": "NC_B",
+              "traceCount": 0
+            },
+            {
+              "netId": "NC_C",
+              "traceCount": 0
+            },
+            {
+              "netId": "NC_D",
+              "traceCount": 0
+            },
+            {
+              "netId": "OUT_A",
+              "traceCount": 1
+            },
+            {
+              "netId": "OUT_B",
+              "traceCount": 1
+            },
+            {
+              "netId": "OUT_C",
+              "traceCount": 3
+            },
+            {
+              "netId": "OUT_D",
+              "traceCount": 2
+            },
+            {
+              "netId": "OUT_E",
+              "traceCount": 7
+            },
+            {
+              "netId": "OUT_F",
+              "traceCount": 8
+            },
+            {
+              "netId": "PRE_L",
+              "traceCount": 4
+            },
+            {
+              "netId": "RAIL12",
+              "traceCount": 0
+            },
+            {
+              "netId": "RAIL3V3",
+              "traceCount": 0
+            },
+            {
+              "netId": "RAIL5",
+              "traceCount": 0
+            },
+            {
+              "netId": "SENSE_LED",
+              "traceCount": 1
+            },
+            {
+              "netId": "SENSE_ZENER",
+              "traceCount": 1
+            }
+          ],
+          "productionFeasibility": "UNKNOWN",
+          "q100": false,
+          "route": false,
+          "unattributedQueries": 14
+        },
+        "inputPinsSha256": "1e570d555c919755d82e5e0f0c728425c7aa313c3bd2c123ebfd874832a7b636",
+        "layoutQualification": false,
+        "mode": "CAPTURE",
+        "operation": {
+          "groupCount": 254,
+          "lineageBranchOrdinal": 77,
+          "receiptBranchOrdinal": 307,
+          "receiptBytes": 457510
+        },
+        "runId": "93fc5f96-d2af-44df-959d-d9a3d7f8c32b",
+        "schema": "tsj-canonical-prefix-blocker-reader-result-v1",
+        "scope": "CANONICAL_BASE_REQ0_PREFIX_CUT_ONLY",
+        "status": "PASS_CAPTURE_ATTRIBUTION_ONLY"
+      },
+      "scratchRemoved": true,
+      "transport": {
+        "bytes": 5138203,
+        "path": "capture-r3/data/fixed-prefix.jsonl",
+        "sha256": "5f0d7a035683764b6ac6241d232e480ecbea5f180e3cae09444c7d311c076bfa"
+      },
+      "wrapperWorkNanos": 13657005100
+    },
+    {
+      "allProcessesTerminated": true,
+      "captureNegativeWallMs": 147.4643,
+      "cleanupAccounting": "FULL_NATIVE_WALL_PLUS_POST_SOURCE",
+      "cleanupConservativeUpperMs": 53550.223,
+      "compilerSources": 1079,
+      "hostReceipt": {
+        "bytes": 1132,
+        "path": "inspector-throw-r2/host-result.json",
+        "sha256": "840f0dd5eb177a215e123db7bca998afc28424d3d09778f1592733f0d075517c"
+      },
+      "includingCaptureNegativeCleanupUpperMs": 53697.6873,
+      "mode": "INSPECTOR_THROW",
+      "name": "inspector-throw-r2",
+      "nativeExitCode": 1,
+      "nativeReceipt": {
+        "bytes": 22749,
+        "path": "inspector-throw-r2/native-process.json",
+        "sha256": "0fe14d8afdf44546375ca60bc92ba86deb4d73e8aaa40b19be56bd1a4a333d7c"
+      },
+      "nativeWallMs": 13807.8693,
+      "outerElapsedMs": 96292.32890000001,
+      "outerReceipt": {
+        "bytes": 3157,
+        "path": "inspector-throw-r2-outer.json",
+        "sha256": "c1e93bfc0a05a9f613b203596c825f36edd95e13aa395c78db7843f2773821fe"
+      },
+      "postSourceAndScratchCleanupMs": 39742.3537,
+      "readerProcess": {
+        "bytes": 2738,
+        "path": "inspector-throw-r2-reader-process.json",
+        "sha256": "50b8ab9ca6a5deb86d3c1874c77a01f24141852bbee45a2eefbcad28a7e9de06"
+      },
+      "result": {
+        "attributionTotals": {
+          "comparisonEntries": 1190004,
+          "comparisonUnits": 294,
+          "copyEntries": 594984,
+          "copyUnits": 147,
+          "elapsedNanos": 48690800,
+          "foreignCongestionQueries": 0,
+          "geometryRowEntries": 2177,
+          "geometryRowUnits": 1,
+          "maximumUnitNanos": 6263700,
+          "queryCount": 0,
+          "queryUnits": 0,
+          "unattributedQueries": 0
+        },
+        "cleanupUpperMs": 53550.223,
+        "comparison": "PASS_CONTROL_PREFIX_THROUGH_BRANCH_307",
+        "graphDiagnosis": null,
+        "inputPinsSha256": "1e570d555c919755d82e5e0f0c728425c7aa313c3bd2c123ebfd874832a7b636",
+        "layoutQualification": false,
+        "mode": "INSPECTOR_THROW",
+        "partialOperation": {
+          "exceptionStage": "AFTER_PRISTINE_COPY",
+          "prefixBytesThroughBranch307": 374178,
+          "receiptBytes": 374178
+        },
+        "runId": "2c7449a5-5e55-4443-b220-d6e57c1f3ce5",
+        "schema": "tsj-canonical-prefix-blocker-reader-result-v1",
+        "scope": "CANONICAL_BASE_REQ0_PREFIX_CUT_ONLY",
+        "status": "PASS_EXPECTED_INSPECTOR_THROW_CLEANUP_ONLY"
+      },
+      "scratchRemoved": true,
+      "wrapperWorkNanos": 13638834900
+    }
+  ],
+  "cutInputSha256": "1a1d7739d3a8ce4409896b56477c68f38b12b8d77f0d0264e16b0b3cf1bf70c5",
+  "extraFiles": 31,
+  "hostNegatives": [
+    {
+      "case": "pins-hash",
+      "exitCode": 1,
+      "expected": "INPUT_PINS_HASH",
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wallMs": 800.3905000000001
+    },
+    {
+      "case": "context",
+      "exitCode": 1,
+      "expected": "INPUT_CONTEXT",
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wallMs": 699.9659
+    },
+    {
+      "case": "self-pin",
+      "exitCode": 1,
+      "expected": "SELF_PIN",
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wallMs": 699.3619
+    },
+    {
+      "case": "source-row",
+      "exitCode": 1,
+      "expected": "PREFLIGHT_FAILED",
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wallMs": 1607.4589
+    },
+    {
+      "case": "prerequisite-only",
+      "exitCode": 1,
+      "expected": "PREREQUISITE_ONLY_CANARY",
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wallMs": 662.2637000000001
+    }
+  ],
+  "inputPins": {
+    "bytes": 260237,
+    "path": "input-pins-r7.json",
+    "sha256": "1e570d555c919755d82e5e0f0c728425c7aa313c3bd2c123ebfd874832a7b636"
+  },
+  "inputPinsSha256": "1e570d555c919755d82e5e0f0c728425c7aa313c3bd2c123ebfd874832a7b636",
+  "layoutQualification": false,
+  "limitsUnchanged": true,
+  "literalTests": {
+    "count": 13,
+    "receipt": {
+      "bytes": 3579,
+      "path": "literal-tests-r5-process.json",
+      "sha256": "22a00a8872eedd9ddf478e06147667fdfaa64f75a77240ff2caa35f21e0d5e57"
+    }
+  },
+  "nativeOwnerDelta": [
+    {
+      "after": {
+        "bytes": 288493,
+        "sha256": "264c89e58e0e29b3375520459d627d945ec28cd747065647181ce118d75dd9f6"
+      },
+      "before": {
+        "bytes": 286902,
+        "sha256": "955076d5b4c63c592107acb51640958af042b7019885b4a3ce2b001393e4c8d4"
+      },
+      "path": "tests/qualification/rb100-layout/java/ActualGeneratorBranchOrderStudy.java"
+    }
+  ],
+  "nextUnstarted": "Separately frozen rejection-stage diagnosis for14 zero-delta cut queries before routing treatment",
+  "p4QualificationSha256": "0cc91c276bba8b6e1de867a732d9f34d3cea78dcadb28250ef99a3948687ce53",
+  "parent": "83027040b3314b3131ae1d315db58f51a3c4231d",
+  "planSha256": "6128ea850b934a36864c6be048419c520afb942c380911186ba0c2d26bdbf05c",
+  "playable100": 0,
+  "productionFilesUnchanged": 850,
+  "protocolSha256": "d03ab20bf2736f1c023498fcbdd13c6e76099080bf226f5da74def0a242d5e94",
+  "publishedCopies": [
+    {
+      "bytes": 7267,
+      "path": "PLAN_R1.md",
+      "sha256": "6128ea850b934a36864c6be048419c520afb942c380911186ba0c2d26bdbf05c"
+    },
+    {
+      "bytes": 8249,
+      "path": "PROTOCOL_R1.md",
+      "sha256": "d03ab20bf2736f1c023498fcbdd13c6e76099080bf226f5da74def0a242d5e94"
+    },
+    {
+      "bytes": 2861,
+      "path": "ADDENDUM_R1.md",
+      "sha256": "d5ea742f3c2be1faa167c991965a5932d227df054537e921f3533ca8ce70263a"
+    },
+    {
+      "bytes": 4308,
+      "path": "ADDENDUM_R2.md",
+      "sha256": "0c8607e6b7e57c80224ba57a5d69a09bf461a538418caf290986f455e9205dda"
+    },
+    {
+      "bytes": 3256,
+      "path": "READER_SCOPE.md",
+      "sha256": "d3937bc4cfee8ad80ca0039d02655fb0dd5124491955c43a3f556b07f96b76a5"
+    },
+    {
+      "bytes": 5299,
+      "path": "FAILURES.md",
+      "sha256": "af669abfcce7e9809450f98107efed93d36c58d6b407ff4393047287712c11c6"
+    },
+    {
+      "bytes": 8252,
+      "path": "cut-input-r1.json",
+      "sha256": "1a1d7739d3a8ce4409896b56477c68f38b12b8d77f0d0264e16b0b3cf1bf70c5"
+    },
+    {
+      "bytes": 7893,
+      "path": "audit_inputs.py",
+      "sha256": "f31101bcac4940ee6e75fccc227f584d16a83243c05f8447bb6c33e0e031a2e1"
+    },
+    {
+      "bytes": 4889,
+      "path": "make_inputs.py",
+      "sha256": "60682a99f63e590ed9e4068d54558a6b764df73c09754c2ddebefa24c66235f4"
+    },
+    {
+      "bytes": 19256,
+      "path": "run-native.ps1",
+      "sha256": "305c86e4b7d53532b42a810888fb810bbb681af434e791c259d17cc1001857b1"
+    },
+    {
+      "bytes": 112250,
+      "path": "read_blockers.py",
+      "sha256": "c20bfc3daaa7fb8f7c428b47f29288cc6889c814f488c7caf1128023c214032b"
+    },
+    {
+      "bytes": 11400,
+      "path": "test_read_blockers.py",
+      "sha256": "f471a271f9fa8e458d8d5cb3e9cb20e1bd3818a4f0f4f5684ecca2ad0ce4a87e"
+    },
+    {
+      "bytes": 3681,
+      "path": "prepare_cut_input_r1.py",
+      "sha256": "bce7b9bf39c1101a2cf0ced75fafde64b80dba3af22ce6715be6efa55c35b8ab"
+    },
+    {
+      "bytes": 83206,
+      "path": "source/CanonicalPrefixCaptureStudy.java",
+      "sha256": "b5370fa281b34f3e4c36a5b5ae652e75a8fcdac0ad33489ece4d4bc488cd6c4a"
+    },
+    {
+      "bytes": 78496,
+      "path": "source/CanonicalPrefixBlockerInspector.java",
+      "sha256": "ce71efd9cf16c00e9747f6759b64406b8f2b342ea2e93e5961c91afd9c12e297"
+    },
+    {
+      "bytes": 1712,
+      "path": "source/CanonicalPrefixCutQueries.java",
+      "sha256": "4effc3deb4808feb18b295f368a2f2c5df4c312c4da17e77ad74daf2bdf8b401"
+    },
+    {
+      "bytes": 31693,
+      "path": "prefix-blockers.json",
+      "sha256": "77273a2a36c6a088e212594c061e0e886b498cdfd2689caa396464d423ffdb4c"
+    }
+  ],
+  "readerNegatives": {
+    "cases": [
+      {
+        "actualReason": "ATTRIBUTION_IDENTITY",
+        "case": "source-manifest-mismatch",
+        "copiedBytes": 5795212,
+        "exitCode": 2,
+        "expectedReason": "ATTRIBUTION_IDENTITY",
+        "receipt": {
+          "bytes": 2961,
+          "path": "reader-negative-controls-r2/source-manifest-mismatch-receipt.json",
+          "sha256": "002697b85b3edcb7e4069f6732542203db4b8b3d527b029fab0045bbdf68cf31"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "workspaceRemoved": true
+      },
+      {
+        "actualReason": "ATTRIBUTION_IDENTITY",
+        "case": "run-context-mismatch",
+        "copiedBytes": 5795200,
+        "exitCode": 2,
+        "expectedReason": "ATTRIBUTION_IDENTITY",
+        "receipt": {
+          "bytes": 2957,
+          "path": "reader-negative-controls-r2/run-context-mismatch-receipt.json",
+          "sha256": "a9e879a5b5cf2671bd0d75bfb8b2828daf2906d869e7a2fdb0616044db3c2b5c"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "workspaceRemoved": true
+      },
+      {
+        "actualReason": "ATTRIBUTION_IDENTITY",
+        "case": "lineage-mismatch",
+        "copiedBytes": 5795188,
+        "exitCode": 2,
+        "expectedReason": "ATTRIBUTION_IDENTITY",
+        "receipt": {
+          "bytes": 2937,
+          "path": "reader-negative-controls-r2/lineage-mismatch-receipt.json",
+          "sha256": "0d71afb56e108b002cfed48d24253a0156254da65a12683e884fadb5f5a0a911"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "workspaceRemoved": true
+      },
+      {
+        "actualReason": "TARGET_OCCUPIED_NET",
+        "case": "unknown-owner",
+        "copiedBytes": 5795194,
+        "exitCode": 2,
+        "expectedReason": "TARGET_OCCUPIED_NET",
+        "receipt": {
+          "bytes": 2925,
+          "path": "reader-negative-controls-r2/unknown-owner-receipt.json",
+          "sha256": "04d5eb46d817d95e08ee18134712d50e28583b3a96cb0491e8cfefad07e73861"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "workspaceRemoved": true
+      },
+      {
+        "actualReason": "CONFLICTS_DELTA_NET",
+        "case": "mixed-sentinel-owner",
+        "copiedBytes": 5795222,
+        "exitCode": 2,
+        "expectedReason": "CONFLICTS_DELTA_NET",
+        "receipt": {
+          "bytes": 2946,
+          "path": "reader-negative-controls-r2/mixed-sentinel-owner-receipt.json",
+          "sha256": "232cd02e063f11d30ee7337746c14685b06b262614289b412d826428b81cf3b8"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "workspaceRemoved": true
+      },
+      {
+        "actualReason": "CONGESTION_DELTA_ARITHMETIC",
+        "case": "bad-congestion-delta",
+        "copiedBytes": 5795200,
+        "exitCode": 2,
+        "expectedReason": "CONGESTION_DELTA_ARITHMETIC",
+        "receipt": {
+          "bytes": 2968,
+          "path": "reader-negative-controls-r2/bad-congestion-delta-receipt.json",
+          "sha256": "cf9074db1ff978bf7c30439514d924324686cf444cee1421d167f78d9f7151e8"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "workspaceRemoved": true
+      },
+      {
+        "actualReason": "ATTRIBUTION_ENCODING",
+        "case": "trailing-attribution-eof",
+        "copiedBytes": 5795213,
+        "exitCode": 2,
+        "expectedReason": "ATTRIBUTION_ENCODING",
+        "receipt": {
+          "bytes": 2961,
+          "path": "reader-negative-controls-r2/trailing-attribution-eof-receipt.json",
+          "sha256": "970a988f3585cfd4fccda07d818a94f43b5532cb7a03935117311d44651c8906"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "workspaceRemoved": true
+      },
+      {
+        "actualReason": "LIFECYCLE_BINDING",
+        "case": "cleanup-false",
+        "copiedBytes": 5795180,
+        "exitCode": 2,
+        "expectedReason": "LIFECYCLE_BINDING",
+        "receipt": {
+          "bytes": 2919,
+          "path": "reader-negative-controls-r2/cleanup-false-receipt.json",
+          "sha256": "15d05732991d95c6ec22aed2ded7703cce81a9f44e744359575f9aeec05fd30b"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "workspaceRemoved": true
+      }
+    ],
+    "count": 8,
+    "status": "PASS_ALL_EXPECTED_REJECTIONS",
+    "summary": {
+      "bytes": 4497,
+      "path": "reader-negative-controls-r2/results.json",
+      "sha256": "78ec10c2e68b250685e8c7024932a93db4b002d5bd463a76c2645dc6f27cc223"
+    }
+  },
+  "schema": "tsj-canonical-prefix-blocker-qualification-v1",
+  "scope": "CANONICAL_BASE_REQ0_PREFIX_CUT_ONLY",
+  "sourceClose": {
+    "receipt": {
+      "bytes": 2185,
+      "path": "final-source-close-r7-process.json",
+      "sha256": "b047d16f13419dbd858286dcbd7c2a00bc912951929ce1c73aef4014d0bfcaa7"
+    },
+    "result": {
+      "changedRows": 1,
+      "extraFiles": 31,
+      "pinsSha256": "1e570d555c919755d82e5e0f0c728425c7aa313c3bd2c123ebfd874832a7b636",
+      "sourceRows": 1084,
+      "status": "PASS_CANONICAL_PREFIX_BLOCKER_INPUT_CLOSURE_ONLY"
+    },
+    "wallMs": 17640.1744
+  },
+  "sourceRows": 1084,
+  "status": "PASS_FINITE_CUT_ATTRIBUTION_ONLY"
+}

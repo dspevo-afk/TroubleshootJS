@@ -46,6 +46,20 @@ The [canonical capture packet](task-evidence/Q100/canonical-prefix-capture-r1/RE
 accepts only that exact private prefix diagnosis. Production routing, electrical
 owners, epochs, Player capabilities and supported admission remain unchanged.
 
+CanonicalPrefixBlockerInspector uses an optional native TerminalPrefixInspector
+callback on actual terminal branch receipts. The existing owner still controls
+candidate, search, context and cleanup; a final callback reports actual release.
+The inspector borrows source references only during the callback, clones its
+reference wrapper and probes separate bounded Router copies. Untouched pristine
+copies, effect hashes and geometry hashes prove live state unchanged. Its bounded
+sidecar reports exact query congestion/conflict deltas and structured prefix rows;
+the independent reader rederives the directed cut, reconstructs geometry and
+reconciles real net-neighbor arithmetic. A deliberate exception verifies owner/
+context cleanup and dropped temporary references. Host path canonicalization and
+within-API file metadata stability bind actual Windows processes without changing
+production routing or electrical owners. The [finite attribution packet](task-evidence/Q100/canonical-prefix-blockers-r1/README.md)
+records acceptance and limits; rejection-stage diagnosis remains separate.
+
 CirSim owns reduced nonlinear matrix ordering at the end of simplification,
 before its original matrix/right-side backups. ReducedMatrixOrdering derives a
 deterministic greedy minimum-degree permutation from the undirected union of the

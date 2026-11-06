@@ -30,6 +30,13 @@ import java.util.regex.Pattern;
 
 /** Bounded producer for the frozen actual-generator branch-order report. */
 public final class ActualGeneratorBranchOrderStudy {
+    interface TerminalPrefixInspector {
+        void onTerminalPrefix(Object search, PcbBoardLayout layout,
+                PcbLayerRoutingPrototype.BranchSnapshot snapshot, String prefixFingerprint,
+                String prefixSha256, int prefixBytes, int receiptBranchOrdinal, int groupOrdinal);
+        void afterOwnersClosed(boolean ownersReleased, boolean contextRestored);
+    }
+
     private static final Charset UTF8 = Charset.forName("UTF-8");
     private static final String SCHEMA = "p07-actual-branch-order-study-v6";
     private static final String INDEX_SCHEMA = "tsj-branch-order-index-v1";
@@ -245,6 +252,7 @@ public final class ActualGeneratorBranchOrderStudy {
         final Study study;
         final int operation;
         final PcbLayerRoutingPrototype.FixedPrefixGraphObserver fixedPrefixGraphObserver;
+        final TerminalPrefixInspector terminalPrefixInspector;
         final long operationStarted = System.nanoTime();
         JsonlSink sink;
         NativeContextFacade nativeContext;
@@ -288,17 +296,27 @@ public final class ActualGeneratorBranchOrderStudy {
         long generatorAdvances;
 
         ArmRun(Study study, int operation) {
-            this(study, operation, null);
+            this(study, operation, null, null);
         }
 
         ArmRun(Study study, int operation,
                 PcbLayerRoutingPrototype.FixedPrefixGraphObserver fixedPrefixGraphObserver) {
+            this(study, operation, fixedPrefixGraphObserver, null);
+        }
+
+        ArmRun(Study study, int operation,
+                PcbLayerRoutingPrototype.FixedPrefixGraphObserver fixedPrefixGraphObserver,
+                TerminalPrefixInspector terminalPrefixInspector) {
             if (fixedPrefixGraphObserver != null && operation != 1)
                 throw new IllegalArgumentException(
                     "Fixed-prefix graph observation is supported only for operation 1");
+            if (terminalPrefixInspector != null && operation != 1)
+                throw new IllegalArgumentException(
+                    "Terminal-prefix inspection is supported only for operation 1");
             this.study = study;
             this.operation = operation;
             this.fixedPrefixGraphObserver = fixedPrefixGraphObserver;
+            this.terminalPrefixInspector = terminalPrefixInspector;
         }
 
         ArmResult execute() throws Exception {
@@ -333,6 +351,13 @@ public final class ActualGeneratorBranchOrderStudy {
                         contextRestored = true;
                     } catch (Throwable closeError) {
                         failure = appendFailure(failure, closeError);
+                    }
+                }
+                if (terminalPrefixInspector != null) {
+                    try {
+                        terminalPrefixInspector.afterOwnersClosed(ownersReleased, contextRestored);
+                    } catch (Throwable inspectorError) {
+                        failure = appendFailure(failure, inspectorError);
                     }
                 }
                 electricalCandidate = null;
@@ -1084,6 +1109,9 @@ public final class ActualGeneratorBranchOrderStudy {
             if (operation == 4 && pass == 1 && "FOUND".equals(terminalReason))
                 captureSelectedFoundBranch(route, search, liveLayout, snapshot,
                     prefixFingerprint, prefix, prefixSha, branchCount, group);
+            if (terminalPrefixInspector != null)
+                terminalPrefixInspector.onTerminalPrefix(search, liveLayout, snapshot,
+                    prefixFingerprint, prefixSha, prefix.length, branchCount, group.ordinal);
             branchCount++;
             group.callbacks++;
         }
