@@ -6,6 +6,11 @@ and23 edges, agreeing with the maintained minimum-VIA oracle. This accepts the
 finite diagnostic only. No production route or playable100 layout is accepted;
 public beta remains held.
 
+Implementation `2a9fcdd6d72e9dd9f12d92d8fb3b2d4ea5816768` was normally pushed
+to origin/codex/q100-physical-feasibility and exact remote SHA verified. Completion
+Gmail `1a1af0613e89587d` was sent once. The [publication receipt](PUBLICATION.md)
+sends no second email.
+
 [Qualification](qualification.json), [zero-capacity result](zero-capacity-result.json),
 [frozen plan](PLAN_R1.md), [transport protocol](PROTOCOL_R1.md),
 [host bindings](ADDENDUM_R1.md), [validation](VALIDATION.md),

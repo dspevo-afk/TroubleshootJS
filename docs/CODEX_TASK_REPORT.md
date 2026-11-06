@@ -1,8 +1,9 @@
-# Current checkpoint: canonical prefix capture accepted locally; publication pending
+# Current checkpoint: canonical prefix capture published; blocker scope preparation
 
 UTC 2026-11-06. Active V=OS-temp/tsj-q100-canonical-prefix-20261106-r1,
-branch codex/q100-canonical-prefix-capture-20261106, source parent/HEAD
-96611058bc41f208a0de677bf06c677c909471e3. Root owns acceptance/publication.
+branch codex/q100-canonical-prefix-capture-20261106, implementation HEAD
+2a9fcdd6d72e9dd9f12d92d8fb3b2d4ea5816768; runtime source parent96611058.
+Root owns acceptance/publication. Documentation receipt follows.
 Old W=OS-temp/tsj-q100-outf-graph-20261105-r1 stays clean/immutable at9661,
 preserving all old source-bound references. V is an exact1090-path source
 whitelist plus .git. Only two native-test owners changed;850 production files
@@ -49,10 +50,19 @@ Failed CONTROL1 and two preflight-negative scratch directories remain preserved
 with creation/process evidence. Optional agent review was source-only/bounded;
 root owns integrated acceptance. No independent runtime review was performed.
 
-Publication PENDING: integrated diff/staging checks, normal commit/push/exactSHA
-verification and one established completion Gmail remain. No P4 email sent yet.
-Next unstarted milestone: frozen obstruction attribution or routing-treatment
-decision using the accepted graph before production adoption. GWT/visible Player/
+PUBLISHED implementation2a9fcdd6d72e9dd9f12d92d8fb3b2d4ea5816768, message
+Capture canonical failed-prefix graph, normal push to
+origin/codex/q100-physical-feasibility and exact remote SHA verified. Integrated
+diff/diff-check and exact27-path raw staged source/privacy audit PASS;15 delivered
+copies match tested bytes. Connected Gmail1a1af0613e89587d SENT_ONCE after empty
+exact-SHA sent search; raw response persisted externally. Do not duplicate email.
+Documentation receipt follows, without a second completion message. Initial full
+historical-report mirror comparison was overbroad; corrected current-prefix
+comparison passes and both historical bodies remain separately preserved. Three
+new-doc EOF blank lines were trimmed before final passing whitespace checks.
+Next milestone preparation is active: single copper/clearance blocker attribution
+on this exact canonical prefix. Read-only source seam assessment is in progress;
+no next native execution, treatment, cap or production change is started yet. GWT/visible Player/
 electrical/population gates NOT APPLICABLE to unchanged production/visible flow;
 no qualification is renewed. Whole candidate envelope remains unqualified.
 

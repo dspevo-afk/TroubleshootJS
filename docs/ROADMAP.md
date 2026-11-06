@@ -626,7 +626,10 @@ host and seven targeted reader negatives, process/bridge/source closure and actu
 cleanup all pass within original limits. Initial context, footer/comparison and
 fixture failures remain preserved. Only two native-test owners changed; all850
 production files are unchanged, with no GWT/Player/electrical/population renewal.
-Publication is pending in the current checkpoint. Playable100=0/betaHELD;
+Implementation2a9fcdd6d72e9dd9f12d92d8fb3b2d4ea5816768 was normally pushed and
+exact remote SHA verified on origin/codex/q100-physical-feasibility;
+Gmail1a1af0613e89587d SENT_ONCE. Documentation receipt sends no second email.
+Playable100=0/betaHELD;
 full30 owner-excluded and protected/HARD/PSYCHOTIC boundaries remain. Next is a
 separately frozen obstruction attribution or routing-treatment scope using this
 accepted graph before production adoption.
