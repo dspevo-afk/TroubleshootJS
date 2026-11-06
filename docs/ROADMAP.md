@@ -571,9 +571,26 @@ The optional junction negative is NOT_RUN after automatic approval rejection.
 Production, default routing, epochs and budgets are unchanged. This qualifies
 price/copy machinery only: Phase2 authored comparison, qualification controller,
 GWT/Player/electrical/population renewal and playable100 remain unqualified.
-Next is a separately frozen exact Phase2 actual-generator comparison; the prior
-canonical control covered one request, not the entire candidate envelope.
+The separately frozen Phase2 follow-up below covers one canonical request,
+not the entire candidate envelope.
 Playable100=0/betaHELD; full30 owner-excluded and protected restrictions remain.
+
+The [canonical prefix via-price first-request comparison](task-evidence/Q100/prefix-via-price-first-request-r1/README.md)
+is complete as a finite native diagnostic; treatment NOT_ADOPTED. BASE exactly
+reproduces the approved canonical request0/attempt4 after only frozen header/time
+normalization, rejecting A_COIL_LOW:NO_PATH at918222expansions. RAMP reaches the
+unchanged1000000 search cap with comparisonComplete=false and0yielded/finalized
+orderings. Both observe saturated48-VIA prefixes; their last branches differ,
+so48 versus38 at those branches establishes no ten-VIA saving or feasible layout.
+Three real JDK8/PS5 commands compile1077 sources each, including a genuine TINY
+request-finalization prerequisite. Source/bridge/process/receipt/cleanup gates,
+nine passing unit methods(one optional reparse NOT_RUN), four selected-host
+negatives and nine reader CLI controls pass. Cleanup upper bounds remain below39s
+or below40s including each capture negative, under120s. Production/defaults,
+epochs, budgets and independent oracles are unchanged. No GWT/Player/electrical/
+population renewal or supported-envelope proof; playable100=0/betaHELD.
+Next is a separately frozen source/receipt diagnosis of search exhaustion before
+another routing treatment. Full30 owner-excluded and protected restrictions remain.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

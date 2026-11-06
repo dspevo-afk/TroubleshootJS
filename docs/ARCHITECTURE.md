@@ -14,6 +14,17 @@ older evidence packets describe their own historical candidates.
 
 ## Audit corrections and current execution boundaries
 
+The native-only PrefixViaFirstRequestStudy evidence adapter reflectively invokes
+the existing ActualGeneratorBranchOrderStudy ArmRun for operation1 in a fresh JVM;
+the original owner creates/restores its context, candidate and route. It bypasses
+the five-arm Study.run without changing that owner or fabricating absent arms.
+A bounded one-operation descriptor preserves actual ArmResult receipt/timing/
+cleanup fields. A narrow outer reader binds source/bridge/process evidence and
+then calls the unchanged operation validator; whole-study parity remains separate.
+The [first-request packet](task-evidence/Q100/prefix-via-price-first-request-r1/README.md)
+records its limits and rejected native-only price treatment. It changes no Player
+capability, electrical model, production route policy, epoch or public admission.
+
 CirSim owns reduced nonlinear matrix ordering at the end of simplification,
 before its original matrix/right-side backups. ReducedMatrixOrdering derives a
 deterministic greedy minimum-degree permutation from the undirected union of the

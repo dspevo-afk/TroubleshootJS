@@ -1,55 +1,57 @@
-# Current checkpoint: via-price Phase1 published; Phase2 scope next
+# Current checkpoint: canonical via-price diagnostic complete; publication next
 
-UTC 2026-11-06. Active worktree: OS-temp/tsj-q100-outf-graph-20261105-r1.
-Branch: codex/q100-prefix-via-ramp-20261105. Source parent:
-30b2a1cbbb02b39dbc275a82755902e61043b714. Production source is unchanged.
-[Evidence packet](task-evidence/Q100/prefix-via-price-prereq-r1/README.md).
-Implementation e9206182e094605f2962f05b903217278bf63514 normally pushed; exact
-remote verified on origin/codex/q100-physical-feasibility. Gmail1a1ae503d87d825e
-SENT_ONCE. Publication receipt records delivery; no second email. Earlier
-ledger3178bd90/receipt30b2/email
-1a1adf6c2fb9ee69 and graphc38c/9d12/email1a1add8b9ac9a5b4 were published once.
+UTC2026-11-06. Active OS-temp/tsj-q100-outf-graph-20261105-r1, branch
+codex/q100-prefix-via-first-request-20261106, source parent/actual HEAD
+3eb2a701eedcaf3e5b717ac7a3e6712510074f3a. Root owns acceptance/publication.
+[Evidence](task-evidence/Q100/prefix-via-price-first-request-r1/README.md).
+Current milestone is a complete finite diagnostic; treatment NOT_ADOPTED.
+Production/defaults/epochs/budgets/oracles unchanged. No layout accepted.
 
-Phase1 PASS: BASE3 and RAMP1 each compile1076 sources and pass221 assertions.
-Real H=2/M=48 source/copy prices are60/60 and62/62; raised override stays120.
-Source unchanged; actual zero/saturated guards and native output-cap negatives
-pass. Canary work0.6662132s/0.365132s. Conservative cleanup upper bounds
-38.8305816s/38.4352868s are below120s; outer81.0105672s/80.5685346s.
-Compiler, audit and native children terminate; successful scratch is removed.
-Strict independent readers,10 Python methods,10 real CLI controls and3 final
-PS5 source/hash negatives pass. The cap belongs to the selected producer, not
-a separately bounded OS pipe. All actual native/source/cleanup gates are closed.
+Exact authored SEPARATE root9007199254740993/place-6587958367974952701/
+route8445301674744508279, request0/placement4 only. BASE exactly matches prior
+canonical op1 after ONLY frozen header run/source and group-time normalization:
+918222expansions,A_COIL_LOW:NO_PATH,comparisonComplete=true. RAMP reaches
+unchanged1000000cap,TOTAL_SEARCH_LIMIT,comparisonComplete=false. Both yield/
+finalize0. Both observe48-VIA prefixes; last BASEA_COIL_LOW48 vs RAMPC_COIL_LOW38
+are different branches, not ten VIAs saved or proof of feasible continuation.
+No successor/five-arm study/whole-envelope proof or production adoption.
 
-External QR: OS-temp/tsj-q100-fixed-prefix-capture-
-840a8ef24dbb448f830d2786a95a1591/prefix-via-ramp-r1.
-PLAN2d640b3d/boundary9fae9c7a; overlays-r5 manifest3eae9f5b;
-input-pins-r4 dd1247bde28ba4ea87373e90422e5ae3e1a9e602c9b7f512c15dbcfe961e7a1d.
-Baseline router759831c9 unchanged; overlay70cacaac; Canary780fc152.
-All8 delivered codefiles match tested bytes. Sanitized note5950a013->cd8a4ab6:
-delivered recipe replayc8b37644 reproduces all compiler-source bytes/patch and
-its1084+19 source closure passes. Note metadata differs; no new native run claimed.
+PASS: BASE/TINY1,BASE/AUTH1,RAMP/AUTH1 real selectedPS5/JDK8 commands each compile
+1077sources. TINY genuine request finalization; combinedgroups55/103/106.
+Work5.4702402/13.2428076/13.2458189s; hostcleanupupper38.4641248/38.5489685/
+38.9026820s<120. Including capture-negativewall38.6086069/38.6858216/39.0366063s.
+Outer88.2022481/94.6014689/94.9598508s. All actual children terminated;
+all3successfulscratchroots removed with identity checks. Source1084+22, bridges,
+compilerlists, intents/argv/PID/exactticks, descriptor/receipt/EOF/cleanup PASS.
+Final9unit methodsPASS/one optionalreparse NOT_RUN;4PS5host negatives and
+9actualreaderCLI controls(1positive/8negative inclboundEOF) PASS.
+Native producer combined8MiB cap proven; no independently bounded OS pipe claim.
 
-Preserve BASE1/2 compiler failures and scratch d1afeca2c1774768a70dad8ff8470605/
-8d4733c55ee54aa0888c09798092f639; their children terminated. Unrun STUDY/oldhost
-and earlier profiles remain external. Optional junction negative is NOT_RUN:
-automatic approval review rejected the owned-temp create/read/remove command
-with reason 'blocked by policy'. No process/junction was created; carry this
-limit into the final answer. Root resolved bounded source-review findings;
-no independent final runtime reviewer is claimed.
+External P2=OS-temp/tsj-q100-fixed-prefix-capture-
+840a8ef24dbb448f830d2786a95a1591/prefix-via-first-request-r1.
+PLAN571a288d/PROTOCOL429feb12; final22inputpinsa4786afdca13bcc7c8890be06faaed1bf4e3eeab68ff0608b8cd58f660bbf1d7.
+Wrapper3ad73a67/readere27bfeab/testc60bf4aa; qualificationb4bb35cfbe2f6452f416c7cd9b7e283490a4fc8b42820817154a9c2e55a1b57e.
+Six public codefiles/nine copied inputs match final tested bytes; raw personal
+manifests and process logs remain external. Root resolved precompile findings;
+independent host review source-only, no independent final runtime review claimed.
 
-Next: freeze Phase2 actual authored comparison. A bounded source-only
-entrypoint question is with via_ramp_host_path; no Phase2 implementation or run.
-Old canonical op1 covered ONE
-request0/attempt4 (generatorComplete=false), not the candidate envelope.
-Its terminal A_COIL_LOW:NO_PATH followed earlier D_SENSE quality failure.
-No authored/controller/GWT/Player/electrical/normal3/full30 renewal or routing
-adoption. Playable100=0; beta held. Full30 remains owner-excluded.
+Next: final integrated/staged/source audits, explicit commit/normal push to
+origin/codex/q100-physical-feasibility and exactSHAverification, then ONE Gmail.
+Publication NOT_YET_DONE for this milestone; no success notification yet.
+Phase1 e9206182/receipt3eb2 published; Gmail1a1ae503d87d825e SENT_ONCE, no repeat.
+Next unstarted milestone: separately freeze a source/receipt diagnosis of the
+treatment's search exhaustion before another routing change; source-only leaf
+recommendation pending. Playable100=0/betaHELD. No GWT/Player/electrical/normal3/
+full30 renewal. Full30 owner-excluded; HARD/PSYCHOTIC unavailable/unrun, protected
+bodies unread/unrun here, historical unread boundary UNCERTIFIED.
 
-Main5f05b005 retains9 tracked/6 untracked/0 staged; only report mirror changed.
-Desktop e0c36885 retains7/73/0. No new live processes or browser/preview.
-Old uncertain E06 resources14116/34180,14unknown children and ambient8928 stay
-untouched. HARD/PSYCHOTIC unavailable/unrun; protected bodies unread/unrun here,
-historical boundary UNCERTIFIED. All original limits/oracles remain. No goal.
+Main5f05b005 preserves9tracked/6untracked/0staged(reportmirroronly); Desktop
+e0c36885 preserves7/73/0. Earlier failures/scratch/evidence untouched. Optional
+junction NOT_RUN after automatic approval rejection 'blocked by policy'; no
+junction created/retried. Initial optional symlink test reported unavailable;
+original test archived, final fixture skipped without link creation. No alternate
+privilege route. No new live/persistent process. Old uncertain E06 browser14116/
+preview34180 and14unknownchildren, ambient8928 untouched. No goal.
 
 # Historical checkpoint: OUT_F saturated-prefix ledger published; next experiment scope
 
