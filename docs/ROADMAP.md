@@ -591,6 +591,9 @@ epochs, budgets and independent oracles are unchanged. No GWT/Player/electrical/
 population renewal or supported-envelope proof; playable100=0/betaHELD.
 Next is a separately frozen source/receipt diagnosis of search exhaustion before
 another routing treatment. Full30 owner-excluded and protected restrictions remain.
+Implementation87ae18c631d17d1617426f869b10f3da1ba96953 normally pushed/exact
+remote verified on origin/codex/q100-physical-feasibility; completion
+Gmail1a1ae82e3399e237 SENT_ONCE. Documentation receipt sends no second email.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

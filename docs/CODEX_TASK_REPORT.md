@@ -1,7 +1,7 @@
-# Current checkpoint: canonical via-price diagnostic complete; publication next
+# Current checkpoint: canonical via-price diagnostic published; next diagnosis scope
 
 UTC2026-11-06. Active OS-temp/tsj-q100-outf-graph-20261105-r1, branch
-codex/q100-prefix-via-first-request-20261106, source parent/actual HEAD
+codex/q100-prefix-via-first-request-20261106, source parent
 3eb2a701eedcaf3e5b717ac7a3e6712510074f3a. Root owns acceptance/publication.
 [Evidence](task-evidence/Q100/prefix-via-price-first-request-r1/README.md).
 Current milestone is a complete finite diagnostic; treatment NOT_ADOPTED.
@@ -35,9 +35,10 @@ Six public codefiles/nine copied inputs match final tested bytes; raw personal
 manifests and process logs remain external. Root resolved precompile findings;
 independent host review source-only, no independent final runtime review claimed.
 
-Next: final integrated/staged/source audits, explicit commit/normal push to
-origin/codex/q100-physical-feasibility and exactSHAverification, then ONE Gmail.
-Publication NOT_YET_DONE for this milestone; no success notification yet.
+Implementation87ae18c631d17d1617426f869b10f3da1ba96953 normally pushed to
+origin/codex/q100-physical-feasibility; exactremoteverified. Gmail1a1ae82e3399e237
+SENT_ONCE. Final17-path rawstagedaudit/diffcheck PASS. Publication receipt records
+delivery; no second completion email.
 Phase1 e9206182/receipt3eb2 published; Gmail1a1ae503d87d825e SENT_ONCE, no repeat.
 Next unstarted milestone: separately freeze a source/receipt diagnosis of the
 treatment's search exhaustion before another routing change; source-only leaf

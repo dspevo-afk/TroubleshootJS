@@ -5,6 +5,11 @@ is accepted. The finite native diagnostic and its evidence checks are complete.
 Production routing/defaults, layout26/dependency28, limits and oracles are unchanged.
 Playable100 remains0 and public beta stays held.
 
+Implementation87ae18c631d17d1617426f869b10f3da1ba96953 was normally pushed to
+origin/codex/q100-physical-feasibility and exact remote SHA verified. Completion
+Gmail1a1ae82e3399e237 was sent once. The [publication receipt](PUBLICATION.md)
+sends no second email.
+
 The [frozen plan](PLAN_R1.md), [adapter protocol](PROTOCOL_R1.md),
 [validation](VALIDATION.md), [qualification](qualification.json) and
 [failures/exclusions](FAILURES.md) define the actual scope. This follows the
