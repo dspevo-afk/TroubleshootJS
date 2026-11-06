@@ -1,0 +1,172 @@
+{
+  "schema": "tsj-prefix-via-price-prerequisite-v1",
+  "status": "ACCEPTED_PHASE1_ONLY_PUBLICATION_PENDING",
+  "parent": "30b2a1cbbb02b39dbc275a82755902e61043b714",
+  "branch": "codex/q100-prefix-via-ramp-20261105",
+  "planSha256": "2d640b3d36cca2ae2613718e356e84ed603abf3ccf813f4a1372f35b28e72bce",
+  "boundarySha256": "9fae9c7ab6e2404c9aa157122f4c0e331830766de336fc3ff6dfd0b36b6ca68f",
+  "originalRouterSha256": "759831c91345aedab9e78d8c83785019f7e59287a18f4f99f7af14876776c474",
+  "overlayRouterSha256": "70cacaacc97cb3f01a1ad6221753e4d80a05479ba6663cd5dc6474a00dc4fb21",
+  "overlayManifestSha256": "3eae9f5b82cd7a9b8e3c4c478e93baa4517550d1ae72046ca9c0ed5076548a7e",
+  "inputPinsSha256": "dd1247bde28ba4ea87373e90422e5ae3e1a9e602c9b7f512c15dbcfe961e7a1d",
+  "sources": [
+    {
+      "path": "run-canary.ps1",
+      "bytes": 15409,
+      "sha256": "bdda98712c7ba2f1765f75faf9a1ccaa8b5ef7490e16ef3125633cb2152242b0"
+    },
+    {
+      "path": "audit_inputs.py",
+      "bytes": 3942,
+      "sha256": "24c50af0e4f7eb25accef55722883be62bca7ff5e90de057e143f09c452bc779"
+    },
+    {
+      "path": "make_inputs.py",
+      "bytes": 3025,
+      "sha256": "15318c90b8a57c166b317262fc144fe1c25286a1f902d629608cbf95f5acd399"
+    },
+    {
+      "path": "read_canary.py",
+      "bytes": 10719,
+      "sha256": "db180e94f35bebdcd19ce86ebee84c84324a2a3359888e15298823ae67a1b95d"
+    },
+    {
+      "path": "test_read_canary.py",
+      "bytes": 3659,
+      "sha256": "47d1c00e5861ef8264380875f26cea8dd4b5f37aa7f3a65118a0577f6c835619"
+    },
+    {
+      "path": "source/prepare_overlay.py",
+      "bytes": 13978,
+      "sha256": "62e916a1a23d425b728191f7e2689bc4e6a89af6d6f01485dae001bbdae650d9"
+    },
+    {
+      "path": "source/PrefixViaRampSupport.java",
+      "bytes": 6736,
+      "sha256": "0235706674a3ec697534b3f2db5419af79eb5297d9d42d0d7ccbf54d2d39d342"
+    },
+    {
+      "path": "source/PrefixViaRampCanary.java",
+      "bytes": 29906,
+      "sha256": "780fc152ea29caf50c5764afeee8dde2e7d37c10b7b6a5ecb90348783597199e"
+    }
+  ],
+  "compiledInputsPerMode": 1076,
+  "baselineSourceRows": 1084,
+  "extraInputRows": 19,
+  "native": {
+    "BASE": {
+      "authoredRun": "NOT_RUN",
+      "cleanupConservativeUpperMs": 38830.581600000005,
+      "inputPinsSha256": "dd1247bde28ba4ea87373e90422e5ae3e1a9e602c9b7f512c15dbcfe961e7a1d",
+      "layoutQualification": false,
+      "mode": "BASE",
+      "native": {
+        "assertions": 221,
+        "authoredRun": "NOT_RUN",
+        "baseViaCost": 60,
+        "canaryWorkElapsedNanos": 666213200,
+        "captureOutput": "PASS",
+        "copiedBase60Price": 60,
+        "copiedRaisedPrice": 120,
+        "copyGate": "PASS",
+        "copyMaximumVias": 48,
+        "copyPrefixHoles": 2,
+        "layoutQualification": false,
+        "literalPath": "PASS",
+        "mode": "BASE",
+        "phase2": "NOT_RUN",
+        "price": "PASS",
+        "priceRows": 11,
+        "realBranch": "PASS",
+        "saturatedCapGuard": "PASS",
+        "schema": "tsj-prefix-via-ramp-canary-v1",
+        "scope": "PREFIX_VIA_PRICE_PREREQUISITE_ONLY",
+        "sourceBranchPrice": 60,
+        "sourceUnchanged": "PASS",
+        "zeroCapGuard": "PASS"
+      },
+      "nativeWallMs": 778.0066,
+      "phase2": "NOT_RUN",
+      "postSourceAndScratchCleanupMs": 37895.262200000005,
+      "status": "PASS_PHASE1_CANARY_RECEIPTS_ONLY"
+    },
+    "RAMP": {
+      "authoredRun": "NOT_RUN",
+      "cleanupConservativeUpperMs": 38435.2868,
+      "inputPinsSha256": "dd1247bde28ba4ea87373e90422e5ae3e1a9e602c9b7f512c15dbcfe961e7a1d",
+      "layoutQualification": false,
+      "mode": "RAMP",
+      "native": {
+        "assertions": 221,
+        "authoredRun": "NOT_RUN",
+        "baseViaCost": 60,
+        "canaryWorkElapsedNanos": 365132000,
+        "captureOutput": "PASS",
+        "copiedBase60Price": 62,
+        "copiedRaisedPrice": 120,
+        "copyGate": "PASS",
+        "copyMaximumVias": 48,
+        "copyPrefixHoles": 2,
+        "layoutQualification": false,
+        "literalPath": "PASS",
+        "mode": "RAMP",
+        "phase2": "NOT_RUN",
+        "price": "PASS",
+        "priceRows": 11,
+        "realBranch": "PASS",
+        "saturatedCapGuard": "PASS",
+        "schema": "tsj-prefix-via-ramp-canary-v1",
+        "scope": "PREFIX_VIA_PRICE_PREREQUISITE_ONLY",
+        "sourceBranchPrice": 62,
+        "sourceUnchanged": "PASS",
+        "zeroCapGuard": "PASS"
+      },
+      "nativeWallMs": 496.63480000000004,
+      "phase2": "NOT_RUN",
+      "postSourceAndScratchCleanupMs": 37799.470700000005,
+      "status": "PASS_PHASE1_CANARY_RECEIPTS_ONLY"
+    }
+  },
+  "validation": {
+    "readerMethods": 10,
+    "actualCliControls": 10,
+    "finalHostNegatives": 3,
+    "selectedProducerOverflowNegatives": 2,
+    "genericEmitterReproducesInputPinsExactly": true,
+    "optionalJunction": "NOT_RUN_AUTO_APPROVAL_REVIEW_REJECTED",
+    "applicationSourceChanged": false
+  },
+  "limits": {
+    "authoredRun": "NOT_RUN",
+    "phase2": "NOT_RUN",
+    "qualificationController": "NOT_RUN",
+    "gwt": "NOT_RUN",
+    "player": "NOT_APPLICABLE",
+    "electrical": "NOT_RUN",
+    "normalThree": "NOT_RUN",
+    "full30": "EXCLUDED_BY_OWNER",
+    "playable100": 0,
+    "beta": "HELD",
+    "hardPsychotic": "UNAVAILABLE_UNRUN",
+    "protectedHard": "UNREAD_UNRUN_HERE_HISTORICAL_UNCERTIFIED"
+  },
+  "resources": {
+    "successScratchRemoved": true,
+    "successfulChildrenTerminationProven": true,
+    "failedCompilerScratchPreserved": true,
+    "uncertainE06AndAmbientBrowser": "UNTOUCHED"
+  },
+  "publication": "PENDING",
+  "sanitizedSourceNote": {
+    "status": "SANITIZED_DOCUMENTATION_ONLY",
+    "originalSha256": "5950a01314d7e874268bd72759ddf6b1571003888ba9441e6969ba3587de425b",
+    "publishedSha256": "cd8a4ab6d3fc239f5515ce3fcffbf112d0c0324e6ee70b16652ca7d8114f6ec8",
+    "bytes": 3987
+  },
+  "publishedRecipeReplay": {
+    "status": "PASS_IDENTICAL_COMPILER_BYTES",
+    "nativeRerun": "NOT_RUN",
+    "manifestSha256": "c8b37644dc81341a616b4c009f9bc649dd55423fe2f5038eb558e395a944c141"
+  }
+}

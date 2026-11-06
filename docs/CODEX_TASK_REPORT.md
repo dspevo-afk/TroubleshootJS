@@ -1,4 +1,55 @@
-# Current checkpoint: OUT_F saturated-prefix ledger published; next experiment scope
+# Current checkpoint: via-price Phase1 locally accepted; publication next
+
+UTC 2026-11-06. Active worktree: OS-temp/tsj-q100-outf-graph-20261105-r1.
+Branch: codex/q100-prefix-via-ramp-20261105. Source parent/HEAD:
+30b2a1cbbb02b39dbc275a82755902e61043b714. Production source is unchanged.
+[Evidence packet](task-evidence/Q100/prefix-via-price-prereq-r1/README.md).
+No Phase1 commit, push or email yet. Earlier ledger3178bd90/receipt30b2/email
+1a1adf6c2fb9ee69 and graphc38c/9d12/email1a1add8b9ac9a5b4 were published once.
+
+Phase1 PASS: BASE3 and RAMP1 each compile1076 sources and pass221 assertions.
+Real H=2/M=48 source/copy prices are60/60 and62/62; raised override stays120.
+Source unchanged; actual zero/saturated guards and native output-cap negatives
+pass. Canary work0.6662132s/0.365132s. Conservative cleanup upper bounds
+38.8305816s/38.4352868s are below120s; outer81.0105672s/80.5685346s.
+Compiler, audit and native children terminate; successful scratch is removed.
+Strict independent readers,10 Python methods,10 real CLI controls and3 final
+PS5 source/hash negatives pass. The cap belongs to the selected producer, not
+a separately bounded OS pipe. All actual native/source/cleanup gates are closed.
+
+External QR: OS-temp/tsj-q100-fixed-prefix-capture-
+840a8ef24dbb448f830d2786a95a1591/prefix-via-ramp-r1.
+PLAN2d640b3d/boundary9fae9c7a; overlays-r5 manifest3eae9f5b;
+input-pins-r4 dd1247bde28ba4ea87373e90422e5ae3e1a9e602c9b7f512c15dbcfe961e7a1d.
+Baseline router759831c9 unchanged; overlay70cacaac; Canary780fc152.
+All8 delivered codefiles match tested bytes. Sanitized note5950a013->cd8a4ab6:
+delivered recipe replayc8b37644 reproduces all compiler-source bytes/patch and
+its1084+19 source closure passes. Note metadata differs; no new native run claimed.
+
+Preserve BASE1/2 compiler failures and scratch d1afeca2c1774768a70dad8ff8470605/
+8d4733c55ee54aa0888c09798092f639; their children terminated. Unrun STUDY/oldhost
+and earlier profiles remain external. Optional junction negative is NOT_RUN:
+automatic approval review rejected the owned-temp create/read/remove command
+with reason 'blocked by policy'. No process/junction was created; carry this
+limit into the final answer. Root resolved bounded source-review findings;
+no independent final runtime reviewer is claimed.
+
+Next: final diff/staged/raw-byte checks; normal commit/push to
+origin/codex/q100-physical-feasibility; verify exact SHA; send ONE Phase1
+completion Gmail; record receipt without another email. Then freeze Phase2
+actual authored comparison. It is NOT_RUN. Old canonical op1 covered ONE
+request0/attempt4 (generatorComplete=false), not the candidate envelope.
+Its terminal A_COIL_LOW:NO_PATH followed earlier D_SENSE quality failure.
+No authored/controller/GWT/Player/electrical/normal3/full30 renewal or routing
+adoption. Playable100=0; beta held. Full30 remains owner-excluded.
+
+Main5f05b005 retains9 tracked/6 untracked/0 staged; only report mirror changed.
+Desktop e0c36885 retains7/73/0. No new live processes or browser/preview.
+Old uncertain E06 resources14116/34180,14unknown children and ambient8928 stay
+untouched. HARD/PSYCHOTIC unavailable/unrun; protected bodies unread/unrun here,
+historical boundary UNCERTIFIED. All original limits/oracles remain. No goal.
+
+# Historical checkpoint: OUT_F saturated-prefix ledger published; next experiment scope
 
 UTC2026-11-05. Active W=OS-temp/tsj-q100-outf-graph-20261105-r1,
 branch codex/q100-outf-prefix-ledger-20261105, HEAD/source parent

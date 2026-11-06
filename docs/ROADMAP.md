@@ -1,6 +1,6 @@
 # TroubleshootJS: Current Roadmap
 
-**Updated:** 2026-11-05 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
+**Updated:** 2026-11-06 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
 
 ## Current product checkpoint
 
@@ -555,6 +555,22 @@ normally pushed/exact remote verified on origin/codex/q100-physical-feasibility;
 completion Gmail1a1adf6c2fb9ee69 sent once. Receipt sends no second email.
 Playable100=0/betaHELD.
 Next is one separately frozen generic earlier-prefix or endpoint-order experiment.
+
+The [prefix via-price Phase1 prerequisite](task-evidence/Q100/prefix-via-price-prereq-r1/README.md)
+is accepted locally for native-only BASE/RAMP overlays; publication pending.
+Both actual JDK8 artifacts pass221 assertions, preserving a real two-VIA prefix
+and detached copies at price60 vs62, with explicit raised cost120, unchanged
+source and actual zero/saturated guards. Source/bridge closure, actual compiler/
+native process and argv binding, output-cap negatives, ten reader methods, ten
+actual CLI controls and three finalPS5 hash negatives pass. Conservative cleanup
+upper38.8305816s/38.4352868s stays below120s; original failures remain FAIL.
+The optional junction negative is NOT_RUN after automatic approval rejection.
+Production, default routing, epochs and budgets are unchanged. This qualifies
+price/copy machinery only: Phase2 authored comparison, qualification controller,
+GWT/Player/electrical/population renewal and playable100 remain unqualified.
+Next is a separately frozen exact Phase2 actual-generator comparison; the prior
+canonical control covered one request, not the entire candidate envelope.
+Playable100=0/betaHELD; full30 owner-excluded and protected restrictions remain.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
