@@ -1,9 +1,12 @@
-# Current checkpoint: canonical cut attribution accepted; publication pending
+# Current checkpoint: canonical cut attribution published; next scope preparation
 
 UTC 2026-11-06. Active B=OS-temp/tsj-q100-prefix-blockers-20261106-r1,
 branch codex/q100-prefix-blockers-20261106, HEAD/source parent
-83027040b3314b3131ae1d315db58f51a3c4231d. Root owns final diff/staging/publish.
-P5 finite cut-attribution is locally ACCEPTED; no P5 commit/push/email yet.
+83027040b3314b3131ae1d315db58f51a3c4231d. Accepted implementation/current source
+candidate14825e78d107a543507b040b1719934f906bf833 was normally pushed/exact
+remote verified on origin/codex/q100-physical-feasibility. Connected completion
+Gmail1a1af97a6bdbc13c SENT_ONCE; raw response/state persisted in externalP5.
+This documentation receipt sends no second email. Root owns next scope.
 Immutable V clean83027040 and W clean96611058 preserved. Main5f05b005
 preserves9tracked/6collapsed untracked/0staged (report mirror only); Desktop
 e0c36885 preserves7/73/0. No unrelated work discarded.
@@ -57,12 +60,14 @@ Old E06 browser14116/preview34180 plus14 unknown children and ambient8928
 untouched. Optional old junction NOT_RUN after automatic approval rejection
 blocked by policy, no retry/link creation. No goal.
 
-Next: root final packet/diff/staged review, explicit25 intended paths, normal
-commit/push/exactSHA to origin/codex/q100-physical-feasibility, then connected
-completion Gmail once. Follow with documentation receipt only, no duplicate email.
-Next unstarted milestone: separately frozen rejection-stage diagnosis of14
-zero-delta queries before any routing treatment. Read-only source audit recommends
-this rather than importing a different route owner's rip-up/order policy.
+Root packet/privacy/syntax review, explicit25-path staged byte review and
+both diff-checks PASS. Accepted source/tools remain unchanged; current changes
+are documentation publication receipt only, no rebuild needed. After normal
+receipt commit/push/exact remote verification, freeze B at that receipt to retain
+source-bound evidence. Next unstarted milestone: separately frozen rejection-stage
+diagnosis of14 zero-delta queries before any routing treatment; source audit
+recommends this before importing another route owner's rip-up/order policy.
+Bootstrap an exact source-whitelist successor and freeze its plan before editing.
 
 # Historical checkpoint: canonical prefix capture published; blocker scope preparation
 
