@@ -1,6 +1,6 @@
 # Canonical base directed cut sensitivity
 
-**Publication state:** `LOCALLY_ACCEPTED_PUBLICATION_PENDING`
+**Publication state:** `PUBLISHED`
 **Result status:** `PASS_CONDITIONAL_CUT_SENSITIVITY_ONLY`
 **Scope:** `CANONICAL_BASE_DIRECTED_CUT_SENSITIVITY_ONLY`
 
@@ -12,8 +12,11 @@ It does not change the solver, board, captured graph, routing policy, or P07 sea
 ## Disposition
 
 The frozen candidate and its selected host, consumer, source-stability, cleanup,
-and negative gates passed. Repository integration and publication remain pending
-root review. This draft makes no commit, push, email, or production-adoption claim.
+and negative gates passed root review. Implementation commit `316eba54af74ce5b7d14996677118f75f39c1757`
+was normally pushed and its exact remote SHA verified on
+`origin/codex/q100-physical-feasibility`. Completion Gmail `1a1b0db5d47f0af1`
+was sent once. This documentation receipt sends no second email and grants no
+production adoption.
 
 The unchanged P6 parent proof returned `PASS_STAGE_OBSERVATIONS_ONLY`. The P7
 analysis returned all four ordered cases and preserved the captured base. The
