@@ -1,6 +1,6 @@
 # Prefix via-price native prerequisite
 
-Accepted locally for Phase1; publication pending.
+Accepted Phase1; [publication verified](PUBLICATION.md).
 [Frozen plan](PLAN_R1.md) and [Phase1 coverage clarification](PHASE1_BOUNDARY_R1.md).
 
 This prerequisite tests a native-only source overlay, keeping repository

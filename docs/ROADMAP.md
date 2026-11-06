@@ -557,7 +557,10 @@ Playable100=0/betaHELD.
 Next is one separately frozen generic earlier-prefix or endpoint-order experiment.
 
 The [prefix via-price Phase1 prerequisite](task-evidence/Q100/prefix-via-price-prereq-r1/README.md)
-is accepted locally for native-only BASE/RAMP overlays; publication pending.
+is accepted for native-only BASE/RAMP overlays. Implementation
+e9206182e094605f2962f05b903217278bf63514 normally pushed/exact remote verified
+on origin/codex/q100-physical-feasibility; Gmail1a1ae503d87d825e sent once.
+The documentation receipt sends no second email.
 Both actual JDK8 artifacts pass221 assertions, preserving a real two-VIA prefix
 and detached copies at price60 vs62, with explicit raised cost120, unchanged
 source and actual zero/saturated guards. Source/bridge closure, actual compiler/

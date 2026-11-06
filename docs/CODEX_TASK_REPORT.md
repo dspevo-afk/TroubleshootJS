@@ -1,10 +1,13 @@
-# Current checkpoint: via-price Phase1 locally accepted; publication next
+# Current checkpoint: via-price Phase1 published; Phase2 scope next
 
 UTC 2026-11-06. Active worktree: OS-temp/tsj-q100-outf-graph-20261105-r1.
-Branch: codex/q100-prefix-via-ramp-20261105. Source parent/HEAD:
+Branch: codex/q100-prefix-via-ramp-20261105. Source parent:
 30b2a1cbbb02b39dbc275a82755902e61043b714. Production source is unchanged.
 [Evidence packet](task-evidence/Q100/prefix-via-price-prereq-r1/README.md).
-No Phase1 commit, push or email yet. Earlier ledger3178bd90/receipt30b2/email
+Implementation e9206182e094605f2962f05b903217278bf63514 normally pushed; exact
+remote verified on origin/codex/q100-physical-feasibility. Gmail1a1ae503d87d825e
+SENT_ONCE. Publication receipt records delivery; no second email. Earlier
+ledger3178bd90/receipt30b2/email
 1a1adf6c2fb9ee69 and graphc38c/9d12/email1a1add8b9ac9a5b4 were published once.
 
 Phase1 PASS: BASE3 and RAMP1 each compile1076 sources and pass221 assertions.
@@ -34,10 +37,9 @@ with reason 'blocked by policy'. No process/junction was created; carry this
 limit into the final answer. Root resolved bounded source-review findings;
 no independent final runtime reviewer is claimed.
 
-Next: final diff/staged/raw-byte checks; normal commit/push to
-origin/codex/q100-physical-feasibility; verify exact SHA; send ONE Phase1
-completion Gmail; record receipt without another email. Then freeze Phase2
-actual authored comparison. It is NOT_RUN. Old canonical op1 covered ONE
+Next: freeze Phase2 actual authored comparison. A bounded source-only
+entrypoint question is with via_ramp_host_path; no Phase2 implementation or run.
+Old canonical op1 covered ONE
 request0/attempt4 (generatorComplete=false), not the candidate envelope.
 Its terminal A_COIL_LOW:NO_PATH followed earlier D_SENSE quality failure.
 No authored/controller/GWT/Player/electrical/normal3/full30 renewal or routing

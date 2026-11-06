@@ -1,6 +1,6 @@
 {
   "schema": "tsj-prefix-via-price-prerequisite-v1",
-  "status": "ACCEPTED_PHASE1_ONLY_PUBLICATION_PENDING",
+  "status": "ACCEPTED_PHASE1_ONLY_PUBLISHED",
   "parent": "30b2a1cbbb02b39dbc275a82755902e61043b714",
   "branch": "codex/q100-prefix-via-ramp-20261105",
   "planSha256": "2d640b3d36cca2ae2613718e356e84ed603abf3ccf813f4a1372f35b28e72bce",
@@ -157,7 +157,14 @@
     "failedCompilerScratchPreserved": true,
     "uncertainE06AndAmbientBrowser": "UNTOUCHED"
   },
-  "publication": "PENDING",
+  "publication": {
+    "implementation": "e9206182e094605f2962f05b903217278bf63514",
+    "target": "origin/codex/q100-physical-feasibility",
+    "normalPush": true,
+    "exactRemoteVerified": true,
+    "gmailId": "1a1ae503d87d825e",
+    "completionEmail": "SENT_ONCE"
+  },
   "sanitizedSourceNote": {
     "status": "SANITIZED_DOCUMENTATION_ONLY",
     "originalSha256": "5950a01314d7e874268bd72759ddf6b1571003888ba9441e6969ba3587de425b",
