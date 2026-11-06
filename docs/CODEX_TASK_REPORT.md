@@ -1,7 +1,7 @@
-# Current checkpoint: canonical trace audit accepted; publication next
+# Current checkpoint: canonical trace audit published; fixed-prefix scope next
 
 UTC2026-11-06. Active OS-temp/tsj-q100-outf-graph-20261105-r1, branch
-codex/q100-prefix-via-trace-20261106, source parent/current HEAD
+codex/q100-prefix-via-trace-20261106, source parent
 01d3f2f2f4f36f4d2b630e06e377de6bcf4a60c1. Root owns acceptance/publication.
 [Packet](task-evidence/Q100/prefix-via-price-trace-r1/README.md).
 Finite source/receipt audit complete; no production/default/epoch/budget change.
@@ -39,9 +39,10 @@ fixes it. Initial fixtureSyntaxError05c9472f preserved/reconstructed exact;
 diff is only literalbacktick-n ->newline, assertions unchanged. PS5 oracle
 Measure-Object selector failure preserved; projection fixes selected path.
 
-Next: integrated/staged/raw audits, explicit commit/normalpush to
-origin/codex/q100-physical-feasibility, exactSHAverify and ONE completionGmail.
-Current trace milestone publication NOT_YET_DONE. Prior P2 implementation
+Implementation46124173140938400eb4820ae36474a1ded5a337 normallypushed to
+origin/codex/q100-physical-feasibility, exactremoteverified. Gmail1a1ae9c49b9d2305
+SENT_ONCE. Final15-path rawstagedaudit/diffchecks PASS; publication receipt
+records delivery, no second email. Prior P2 implementation
 87ae18c631d17d1617426f869b10f3da1ba96953/receipt01d3f2f2 normallypushed/
 remoteverified; Gmail1a1ae82e3399e237 SENT_ONCE, no duplicate. Phase1mail
 1a1ae503d87d825e also SENT_ONCE. Next unstarted milestone is canonical fixed-prefix

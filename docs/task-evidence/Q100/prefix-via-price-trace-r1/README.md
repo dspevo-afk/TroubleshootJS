@@ -5,6 +5,11 @@ recorded geometry fingerprint at branch60. Their first231 branch identities
 match. This is a finite source/receipt diagnosis; the treatment remains
 **NOT_ADOPTED**, with no production change or playable100 layout.
 
+Implementation46124173140938400eb4820ae36474a1ded5a337 normally pushed to
+origin/codex/q100-physical-feasibility, exact SHA verified; completion
+Gmail1a1ae9c49b9d2305 SENT_ONCE. The [publication receipt](PUBLICATION.md)
+sends no second email.
+
 [Result](result.json), [qualification](qualification.json),
 [frozen plan](PLAN_R1.md), [source contract](SOURCE_CONTRACT.json),
 [validation](VALIDATION.md) and [failures](FAILURES.md) preserve the boundary.

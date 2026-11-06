@@ -609,6 +609,9 @@ preserved and corrected. No new native/GWT/Player/electrical/population renewal,
 production change, budget change or adoption; playable100=0/betaHELD.
 Next is a separately frozen canonical fixed-prefix capture/reachability scope
 before another routing treatment. Full30/protected exclusions remain unchanged.
+Implementation46124173140938400eb4820ae36474a1ded5a337 normally pushed/exact
+remote verified on origin/codex/q100-physical-feasibility;
+Gmail1a1ae9c49b9d2305 SENT_ONCE. Documentation receipt sends no second email.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
