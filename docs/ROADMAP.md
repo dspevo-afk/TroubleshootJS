@@ -652,6 +652,21 @@ Implementation14825e78d107a543507b040b1719934f906bf833 normally pushed/exact
 remote verified on origin/codex/q100-physical-feasibility;
 Gmail1a1af97a6bdbc13c SENT_ONCE. Documentation receipt sends no second email.
 
+The [canonical prefix predicate-stage diagnosis](task-evidence/Q100/canonical-prefix-rejection-stages-r1/README.md)
+is locally accepted for the same exact BASE prefix and its14 zero-delta outgoing
+cut queries. Actual callbacks report9 LEGAL_MOVE_REJECTED, 5 TRAVERSE_REJECTED.
+All22 query results/maps/counters, ordered routing, graph bytes and P07 accounting
+retain parity. Live router/effects/geometry, observer detachment and owner/context
+cleanup pass, including the actual first-callback exception. Four final1080-input
+JDK8/strict-reader modes,73 adapter/helper plus849 maintained assertions,
+23 tests, five host/18 reader
+negatives and final source closure pass under original limits. Initial reader
+source-role/parent-chain failures remain preserved. No production source changes,
+GWT/Player/electrical/population renewal, routing adoption or playable100 admission.
+Playable100=0/betaHELD; full30/protected/HARD/PSYCHOTIC boundaries remain. Next is
+the [frozen four-case cut-edge sensitivity scope](task-evidence/Q100/canonical-prefix-rejection-stages-r1/NEXT_SENSITIVITY_PLAN.md)
+before choosing a generic routing treatment and full physical/access/runtime qualification.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

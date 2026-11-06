@@ -1,4 +1,78 @@
-# Current checkpoint: canonical cut attribution published; next scope preparation
+# Current checkpoint: canonical predicate-stage diagnosis locally accepted
+
+UTC 2026-11-06. Active C=OS-temp/tsj-q100-prefix-gates-20261106-r1,
+branch codex/q100-prefix-gates-20261106, HEAD/source parent
+831d69a41d9504bfb845caef6942e9ef58c9d6d2. Root owns publication; no P6push/email
+yet. Intended scope26packetfiles+3docs, no production/native-owner file edits.
+Main5f05b005 preserves9tracked/6collapsed untracked/0staged (report mirror only);
+Desktop e0c36885 preserves7/73/0. B831d/V83027040/W96611058 immutable/clean.
+All1084 source rows/850 production sources unchanged. Unrelated work preserved.
+
+P5 COMPLETE/PUBLISHED impl14825e78d107a543507b040b1719934f906bf833,
+receipt831d69a4; exact remote verified origin/codex/q100-physical-feasibility.
+Gmail1a1af97a6bdbc13c SENT_ONCE; neverduplicate. No P6email sent yet.
+
+P6 packet docs/task-evidence/Q100/canonical-prefix-rejection-stages-r1.
+External evidence=OS-temp/tsj-q100-fixed-prefix-capture-
+840a8ef24dbb448f830d2786a95a1591/canonical-prefix-rejection-stages-r1;
+negativecontrols adjacent canonical-prefix-stage-negative-controls-r3.
+Final input-pins-r6 SHA
+b640587f9cb1ac3f3ec8feff85940f4b7a9c8fda37570b50bfa30c39fd067771;
+qualification-r6 SHAd7f39f1a77e302e9e883b4aedbdeb9c416a93cf4cfa85029710b04da5b25d692.
+PLAN31547c75/PROTOCOL4b795d77/effectiveADDENDUM_R2 3da49dcb;
+baselinef94eca24/zero-delta08916736/full-cut1a1d7739.
+
+Exact BASE/SEPARATE root9007199254740993/place-6587958367974952701/
+route8445301674744508279,req0/attempt4/pass2 A_COIL_LOW QA.C->DA.A,
+global307/local77/H48. Prefix6b49cfb2/graphff6466d2 unchanged. All22 outgoing
+cutqueries/results/maps match P5; actual14 zero-delta endpoint events are
+9LEGAL_MOVE_REJECTED/5TRAVERSE_REJECTED, with no extra reachedPTH endpoints.
+These top-level guards do not identify every nested rule, prove boardimpossible,
+assign unique blocked traces or establish a rerouting benefit. Playable100=0.
+
+Actual final-source four1080-input JDK8 host+strictreader modes PASS: CANARY,
+NULL,OBSERVE,CALLBACK_THROW. Canary849+73 assertions(29blocker/27stage),
+23Pythonmethods PASS0.013s,5selectedhost and18selectedreader negatives PASS.
+Native finalsource/bridges/processes/orderedroute/graph/sourceproof/cleanupPASS;
+combined observationunits3335/prior1668,throw1646/prior0. Actual firstcallback
+throw proves detachment/reference/owner/context cleanup and partial parity only.
+Max work13.918323900s/90s; maxcleanupincludingoverflow51.041323400s/120s.
+Final sourcecloseR9PASS1084rows/0changes/84extras. All childtermination/success
+scratch and18ownedcontrol-copy cleanup proven. No persistent final P6process.
+Independent helper/adapter and prior reader review PASS_STATIC_ONLY/no blocker;
+root verified the final EOF-only reader delta leaves its parsed AST unchanged.
+root actual gates remain authoritative. Packetcopy/privacy/syntax/staged checks
+and normal publication are root's remaining acceptance/publication sequence.
+
+Helper054979fc/adapter9936a10c/reader1d58c06e/test005e8f7d;
+builder8d741d4d/manifestfad637a4/overlay0432eed2/diffd0d38383. Overlay preserves
+128629 original Routerbytes; actualRouter92347537 and BASELayerPrototype70cacaac
+are separate roles. Host0ae3d0cb/auditor5ac397ce/makerc9ebb2e0 unchanged.
+All earlier failures remain in FAILURES.md and original external receipts/sources:
+source labels/preparation/reader bindings/UUID/sidecars/scope, emptyPTHguard,
+cross-mode totals/no-opfixture, driver parameters/outputguard and late testprivacy.
+Privacy failed before publication;19-file partialpacket preserved externally,
+fixture sanitized, all final native/CLI gates freshly repeated underb640587f.
+Preserve R2failedscratch OS-temp/tsj-canonical-prefix-stage-native-
+4d27a0c035b84cbcaca0ef86653f4806/creation639295506046689252; no R2cleanupPASS.
+
+Next unstarted: frozen four-case conditional cut-edge sensitivity diagnostic,
+NEXT_SENSITIVITY_PLAN.md. Control; observed4B_SENSE edges opened;4B_REF;all8,
+keeping14geometric rejections/allotherbitsunchanged. Not actual netremoval,
+routing or physical qualification. Detailed pinned input/work protocol required
+before tools/cases. No sensitivity case/tool has run. Native P07hasno ready
+victim-ripup seam; separate one-face Routerpolicy is not imported.
+
+Original90s/640groups/5s/32768P07slice/1Mexpansions/48holes/4flips,
+8MiBaggregate/64KiBlines+payload/120scleanup/480snative/1800souter and
+4096copy/clone<=1M/combinedunits<=32768 unchanged. CircuitJS truth; no routing
+treatment/epoch/adoption or GWT/Player/electrical/population renewal. BetaHELD,
+full30excluded; HARD/PSYCHOTIC unavailable/unread/unrunhere, historicalunread
+UNCERTIFIED. Old E06browser14116/preview34180 plus14uncertainchildren/ambient8928
+untouched. OptionaljunctionNOT_RUN blockedbypolicy; noretry. Publishonlyvalidated
+work to established normalref, verifyexactSHA, sendoneconnectedcompletionGmail.
+
+# Historical checkpoint: canonical cut attribution published; next scope preparation
 
 UTC 2026-11-06. Active B=OS-temp/tsj-q100-prefix-blockers-20261106-r1,
 branch codex/q100-prefix-blockers-20261106, HEAD/source parent

@@ -60,6 +60,19 @@ within-API file metadata stability bind actual Windows processes without changin
 production routing or electrical owners. The [finite attribution packet](task-evidence/Q100/canonical-prefix-blockers-r1/README.md)
 records acceptance and limits; rejection-stage diagnosis remains separate.
 
+CanonicalPrefixStageStudy composes the unchanged P5 blocker inspector with a
+native-only stage inspector. A surgical native PcbNetRouter source overlay calls
+a passive observer at the original endpoint short-circuit returns, evaluating each
+predicate once in original order. The bounds/endpoint loop remains byte-identical.
+The observer attaches only to the inspector's already-compared disposable query
+copy, never live/pristine owners, and is not copied into other routers. Actual
+end/reached order and early success define emitted events; finally blocks detach
+and release references, including deliberate first-callback failure. The strict
+reader binds the exact source/overlay transform and real P5 parent chain, retains
+independent graph/cut/map/geometry oracles and compares NULL/OBSERVE route semantics.
+This [finite stage packet](task-evidence/Q100/canonical-prefix-rejection-stages-r1/README.md)
+changes no production owner, routing rule, electrical behavior, epoch or admission.
+
 CirSim owns reduced nonlinear matrix ordering at the end of simplification,
 before its original matrix/right-side backups. ReducedMatrixOrdering derives a
 deterministic greedy minimum-degree permutation from the undirected union of the
