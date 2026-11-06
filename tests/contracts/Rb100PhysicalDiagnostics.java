@@ -1532,7 +1532,6 @@ public final class Rb100PhysicalDiagnostics {
     private static FixedPrefixGraphEmission serializeFixedPrefixGraph(
             FixedPrefixCaptureCollector collector,Rb100Plan.Variant variant) {
         PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot graph=collector.snapshot;
-        int cells=graph.cellCount();
         String caseId;
         if(collector.completedNoPathTarget!=null) {
             require(collector.completedNoPathTarget.requestIndex==
@@ -1545,6 +1544,27 @@ public final class Rb100PhysicalDiagnostics {
             caseId=variant==Rb100Plan.Variant.SHARED_HYSTERETIC_LINEAR?
                 "RB100_SHARED_HYSTERETIC_LINEAR_REQ0":"RB100_SEPARATE_DIRECT_SWITCHING_REQ0";
         }
+        String canonical=canonicalFixedPrefixGraphPayload(graph,caseId);
+        int bytes=canonical.getBytes(StandardCharsets.UTF_8).length;
+        return new FixedPrefixGraphEmission(caseId,canonical,sha256Hex(canonical),bytes);
+    }
+
+    static String canonicalFixedPrefixGraphPayloadForStudy(
+            PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot graph,String caseId) {
+        return canonicalFixedPrefixGraphPayload(graph,caseId);
+    }
+
+    private static String canonicalFixedPrefixGraphPayload(
+            PcbLayerRoutingPrototype.FixedPrefixGraphSnapshot graph,String caseId) {
+        if(graph==null) throw new IllegalArgumentException("Missing fixed-prefix graph snapshot");
+        if(caseId==null || caseId.length()<1 || caseId.length()>128)
+            throw new IllegalArgumentException("Fixed-prefix graph case ID must contain1..128 simple ASCII characters");
+        for(int i=0;i<caseId.length();i++) {
+            char c=caseId.charAt(i);
+            if(!((c>='A' && c<='Z') || (c>='0' && c<='9') || c=='_'))
+                throw new IllegalArgumentException("Fixed-prefix graph case ID must use uppercase ASCII letters, digits, or underscore");
+        }
+        int cells=graph.cellCount();
         StringBuilder payload=new StringBuilder(Math.min(8388608,64+cells*12));
         payload.append("{\"caseId\":\"").append(caseId)
             .append("\",\"goals\":[");
@@ -1576,7 +1596,7 @@ public final class Rb100PhysicalDiagnostics {
         int bytes=canonical.getBytes(StandardCharsets.UTF_8).length;
         require(bytes>0 && bytes<=8*1024*1024,
             "each canonical fixed-prefix graph is independently bounded to8MiB");
-        return new FixedPrefixGraphEmission(caseId,canonical,sha256Hex(canonical),bytes);
+        return canonical;
     }
 
     private static String integerArrayJson(int[] values) {

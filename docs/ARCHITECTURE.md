@@ -33,6 +33,19 @@ geometry serializer; no search-state or feasible-path equality is inferred.
 Its [finite trace audit](task-evidence/Q100/prefix-via-price-trace-r1/README.md)
 reuses source-closed native evidence without changing routing or electrical owners.
 
+CanonicalPrefixCaptureStudy extends that native-only evidence path through an
+optional operation1 observer argument in ArmRun. The existing generator capture
+seam constructs immutable snapshots inside measured P07 work; a package-private
+diagnostics bridge shares the original graph serializer. Completed evidence reads
+the existing immutable RequestObservation.context after live owner cleanup, then
+drops snapshot/buffer references. The bounded sidecar has its own protocol and
+does not fabricate Publisher operation4 records. The strict reader preserves
+ordered routing semantics while validating actual capture work/groups separately;
+an independent directed planar BFS checks zero-VIA connectivity at H48.
+The [canonical capture packet](task-evidence/Q100/canonical-prefix-capture-r1/README.md)
+accepts only that exact private prefix diagnosis. Production routing, electrical
+owners, epochs, Player capabilities and supported admission remain unchanged.
+
 CirSim owns reduced nonlinear matrix ordering at the end of simplification,
 before its original matrix/right-side backups. ReducedMatrixOrdering derives a
 deterministic greedy minimum-degree permutation from the undirected union of the

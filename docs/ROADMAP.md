@@ -613,6 +613,24 @@ Implementation46124173140938400eb4820ae36474a1ded5a337 normally pushed/exact
 remote verified on origin/codex/q100-physical-feasibility;
 Gmail1a1ae9c49b9d2305 SENT_ONCE. Documentation receipt sends no second email.
 
+The [canonical failed-prefix capture](task-evidence/Q100/canonical-prefix-capture-r1/README.md)
+is locally accepted for one actual BASE SEPARATE request0/attempt4/pass2
+A_COIL_LOW prefix. Receipt ordinal307 is lineage ordinal77 within that pass.
+All308 routing branches match CONTROL;611 additional measured P07 steps exactly
+bind the immutable capture work. Its H48 graph has no zero-VIA continuation:
+independent directed BFS exhausts12 states/23 edges, agreeing with the maintained
+minimum-VIA oracle. This establishes fixed-graph connectivity only, not board
+impossibility or a treatment benefit. Final1077-source JDK8 canary/control/capture/
+expected-missing-target gates,849+15 canary assertions,22 literal methods, four
+host and seven targeted reader negatives, process/bridge/source closure and actual
+cleanup all pass within original limits. Initial context, footer/comparison and
+fixture failures remain preserved. Only two native-test owners changed; all850
+production files are unchanged, with no GWT/Player/electrical/population renewal.
+Publication is pending in the current checkpoint. Playable100=0/betaHELD;
+full30 owner-excluded and protected/HARD/PSYCHOTIC boundaries remain. Next is a
+separately frozen obstruction attribution or routing-treatment scope using this
+accepted graph before production adoption.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

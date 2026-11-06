@@ -1,60 +1,70 @@
-# Current checkpoint: canonical trace audit published; fixed-prefix scope next
+# Current checkpoint: canonical prefix capture accepted locally; publication pending
 
-UTC2026-11-06. Active OS-temp/tsj-q100-outf-graph-20261105-r1, branch
-codex/q100-prefix-via-trace-20261106, source parent
-01d3f2f2f4f36f4d2b630e06e377de6bcf4a60c1. Root owns acceptance/publication.
-[Packet](task-evidence/Q100/prefix-via-price-trace-r1/README.md).
-Finite source/receipt audit complete; no production/default/epoch/budget change.
-Treatment NOT_ADOPTED, playable100=0/betaHELD. No new native generator run.
+UTC 2026-11-06. Active V=OS-temp/tsj-q100-canonical-prefix-20261106-r1,
+branch codex/q100-canonical-prefix-capture-20261106, source parent/HEAD
+96611058bc41f208a0de677bf06c677c909471e3. Root owns acceptance/publication.
+Old W=OS-temp/tsj-q100-outf-graph-20261105-r1 stays clean/immutable at9661,
+preserving all old source-bound references. V is an exact1090-path source
+whitelist plus .git. Only two native-test owners changed;850 production files
+remain unchanged. No protected bodies outside the source whitelist materialized.
 
-Exact accepted BASE/RAMP request0/attempt4 same SEPARATE root9007199254740993/
-place-6587958367974952701/route8445301674744508279 only. Source semantics:
-prefix digest hashes serialized geometryFingerprint, not complete physical/search
-state; duplicate digests/identities must remain. All branchExpanded sums/cumulative
-totals reconcile: BASE308rows/918222, RAMP314/1000000. First metrics differ at
-branch59(pass0BIAS_AC/RENAC.1/CBIAS.1),H3/derivedprice60vs63; first geometrydigest
-diff60, orderedidentityprefix231. Later positions not matched after identitysplit.
-Last BASEA_COIL_LOW H48/25exp/frontier0, RAMP C_COIL_LOW H38/53998exp/frontier30790.
-Branch-start headroom0vs4 flips, not per-node residual budget, ten VIAs saved,
-feasibility, all-path impossibility or search-cause proof. RAMP comparison stays
-incomplete/TOTAL_SEARCH_LIMIT; next needs fixed-prefix capture/reachability scope.
+The [canonical capture packet](task-evidence/Q100/canonical-prefix-capture-r1/README.md)
+is accepted for its finite scope. Actual BASE SEPARATE root9007199254740993,
+place-6587958367974952701/route8445301674744508279/request0/attempt4/pass2
+A_COIL_LOW QA.C->DA.A/H48/branch25,total918222/NO_PATH/frontier0.
+Global receipt307 is local lineage77. Prefix265894B SHA
+6b49cfb2d42a83007824b15c8c7a7c89cdadf627fed9b6d9d966692af0323ddb.
+Graph3324982B SHA
+ff6466d21600fc07de94a2cc35ae9a369558219207d0bb2734dbda27ab1e4f0a.
+Independent directed planar BFS exhausts12states/23edges and no vertical flips;
+maintained minimum-VIA oracle agrees. Fixed-graph diagnosis only; no board
+impossibility, route adoption or layout acceptance. Playable100=0/betaHELD.
 
-PASS final9literalmethods/0.002s;5real selectedCLI controls(1positive4negative)
-including pinnedEOF rejection, qualificationhash, outputreuse, oversizedinput.
-Separate actualPS5 JSON/count oracle agrees59/60/231 and308/314/expansion sums.
-Frozen P2 auditor rechecks1084+22 before/after in17.5834734/17.4636488s;
-both existing operation receipts freshly revalidate, BASE exactcanonicalparity.
-All children terminate; no new persistentresources. Old native times/cleanup are
-historical only, not new measurements. No GWT/Player/electrical/population renewal.
+PASS final CANARY4/CONTROL3/CAPTURE2/MISSING_TARGET1: each1077-source actual JDK8
+compile under selected PS5/VerifierIsolation; maintained849+adapter15 canaries,
+all308 routing branches/control parity, actual capture611 additional P07 steps
+bound exactly to captureWorkUnits, expected zero-selection negative exit1 after
+owner/context cleanup, four actual producer8MiB overflow negatives and complete
+source/bridge/process binding. Owner groups101 to254 plus3 wrapper groups;
+aggregate5596928B<8MiB. Work/native wall/cleanup upper/outer wall seconds:
+canary1.7358782/1.9699138/39.2118986/83.0571937;
+control13.2991908/13.4401034/39.0723681/95.2117871;
+capture13.8912005/14.0356442/38.5320099/94.9721865;
+missing14.4435212/14.6122587/49.0963226/107.9940603.
+All successful children terminated/scratch removed; adding overflow negatives
+still keeps each conservative cleanup upper below120s. Caps/oracles unchanged.
+PASS22 final literal methods0.014s, four actual host negatives, seven targeted
+reader CLI negatives including resealed EOF/context/lineage failures. Independent
+zero audit50.106079s; final1084+24 input close17.5424249s. Final R4 input SHA
+ca06e1ab3c1a7bcb11dab90cba7b64dc9d95b031b09d76678f408d9fa0f0f7e0.
+Two native hashes955076d5/450c79fd; adapter22896093. Raw local artifacts, exact
+manifest/process arguments and preserved revisions remain in external P4 root
+OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591/
+canonical-prefix-capture-r1. Only sanitized references/code/results are delivered.
 
-External P3=OS-temp/tsj-q100-fixed-prefix-capture-
-840a8ef24dbb448f830d2786a95a1591/prefix-via-price-trace-r1.
-PLAN3b50a694/CONTRACT7dca9055; tool29295fbd/test24cc1c68;
-resultb5c8844d/qualification85b623241898906377fc9d8bd9a657e17aaa9a15a2d5329c4715aadfc6c7594f.
-Code/control/publicdata copies exact. Root reviewed integration; leaf tests and
-source clarification only; no independent agent runtime reviewer claimed.
-Initial CLI FILE_CHANGED from cross-providerctime FAIL preserved(code6aa62f16).
-Realstatcanary proves separateproviderctimepairs stable; maintainedcomparison
-fixes it. Initial fixtureSyntaxError05c9472f preserved/reconstructed exact;
-diff is only literalbacktick-n ->newline, assertions unchanged. PS5 oracle
-Measure-Object selector failure preserved; projection fixes selected path.
+Preserved failures: empty-index bootstrap, released-context CONTROL1, invalid
+CAPTURE1 footer and scheduling comparison, supplemental BFS fixtures and initial
+negative-harness error label. Corrected final gates above replace no failure.
+Failed CONTROL1 and two preflight-negative scratch directories remain preserved
+with creation/process evidence. Optional agent review was source-only/bounded;
+root owns integrated acceptance. No independent runtime review was performed.
 
-Implementation46124173140938400eb4820ae36474a1ded5a337 normallypushed to
-origin/codex/q100-physical-feasibility, exactremoteverified. Gmail1a1ae9c49b9d2305
-SENT_ONCE. Final15-path rawstagedaudit/diffchecks PASS; publication receipt
-records delivery, no second email. Prior P2 implementation
-87ae18c631d17d1617426f869b10f3da1ba96953/receipt01d3f2f2 normallypushed/
-remoteverified; Gmail1a1ae82e3399e237 SENT_ONCE, no duplicate. Phase1mail
-1a1ae503d87d825e also SENT_ONCE. Next unstarted milestone is canonical fixed-prefix
-capture/reachability scope; no new treatment or runtime has started for that.
+Publication PENDING: integrated diff/staging checks, normal commit/push/exactSHA
+verification and one established completion Gmail remain. No P4 email sent yet.
+Next unstarted milestone: frozen obstruction attribution or routing-treatment
+decision using the accepted graph before production adoption. GWT/visible Player/
+electrical/population gates NOT APPLICABLE to unchanged production/visible flow;
+no qualification is renewed. Whole candidate envelope remains unqualified.
 
-Main5f05b005 preserves9tracked/6untracked/0staged(reportmirroronly); Desktop
-e0c36885 preserves7/73/0. Old evidence/scratch/uncertain E06 browser14116/
-preview34180 and14unknownchildren, ambient8928 untouched. Previous optional
-reparse/junction NOT_RUN after automatic approval rejection 'blocked by policy'
-and unavailable support; no linkcreation attempted here. Full30 owner-excluded;
-HARD/PSYCHOTIC unavailable/unread/unrun here, historical unread UNCERTIFIED.
-No goal. All original caps/oracles remain.
+Main5f05b005 preserves9tracked/6collapsed untracked/0staged (report mirror only);
+Desktop e0c36885 preserves7/73/0. Other worktrees/old failure evidence preserved.
+Old uncertain E06 browser14116/preview34180 plus14 unknown children and ambient
+8928 remain untouched. Prior optional junction check NOT_RUN after automatic
+approval review rejected it as blocked by policy; no equivalent retry or link
+creation here. Full30 owner-excluded; HARD/PSYCHOTIC unavailable and unread/unrun
+here; historical protected unread boundary UNCERTIFIED. No goal.
+Previous P3 Gmail1a1ae9c49b9d2305, P2 Gmail1a1ae82e3399e237 and P1
+Gmail1a1ae503d87d825e are SENT_ONCE; never duplicate them.
 
 # Historical checkpoint: OUT_F saturated-prefix ledger published; next experiment scope
 

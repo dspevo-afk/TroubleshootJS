@@ -1,0 +1,74 @@
+{
+  "acceptance": {
+    "actualCaptureAttested": false,
+    "electrical": false,
+    "layout": false,
+    "q100": false,
+    "route": false
+  },
+  "agreement": {
+    "exactAgreement": true,
+    "minimumViaCountIsZero": false,
+    "zeroViaBfsReachable": false
+  },
+  "capacityFacts": {
+    "prefixHoleCount": 48,
+    "prefixViaCount": 48,
+    "remainingHoles": 0,
+    "viaMaskSemantics": "RELAXED_GEOMETRY_OMITS_REMAINING_HOLE_CAP"
+  },
+  "graph": {
+    "bytes": 3324982,
+    "caseId": "CANONICAL_SEPARATE_REQ0_PASS2_A_COIL_LOW",
+    "cellCount": 147702,
+    "graphSha256": "ff6466d21600fc07de94a2cc35ae9a369558219207d0bb2734dbda27ab1e4f0a",
+    "height": 309,
+    "sha256": "ff6466d21600fc07de94a2cc35ae9a369558219207d0bb2734dbda27ab1e4f0a",
+    "stateCount": 295404,
+    "width": 478
+  },
+  "inputPinsSha256": "ca06e1ab3c1a7bcb11dab90cba7b64dc9d95b031b09d76678f408d9fa0f0f7e0",
+  "layoutQualification": false,
+  "mode": "CAPTURE",
+  "productionFeasibility": "UNKNOWN",
+  "qualificationMinimumVia": {
+    "claim": "ZERO_VIA_CONNECTIVITY_ONLY",
+    "minimumViaCount": null,
+    "productionFeasibility": "UNKNOWN",
+    "reachable": false,
+    "schema": "p07-fixed-prefix-minimum-vias-v1",
+    "status": "ZERO_VIA_ROUTE_EXCLUDED",
+    "termination": "FRONTIER_EXHAUSTED"
+  },
+  "runId": "07e0f654-d4a0-41de-833c-589a60f5ad3f",
+  "schema": "tsj-canonical-prefix-zero-capacity-v1",
+  "scope": "FIXED_CANONICAL_GRAPH_ZERO_VIA_CONNECTIVITY_ONLY",
+  "status": "PASS_ZERO_VIA_DIAGNOSIS_ONLY",
+  "zeroViaBfs": {
+    "cellCount": 147702,
+    "directedPlanarEdgesExamined": 23,
+    "directions": {
+      "E": 2,
+      "N": 1,
+      "S": 4,
+      "W": 8
+    },
+    "goalState": null,
+    "goalTests": 12,
+    "layerEncoding": {
+      "BOTTOM": 1,
+      "TOP": 0
+    },
+    "maximumQueueStates": 4,
+    "reachable": false,
+    "startStates": [
+      114148,
+      261850
+    ],
+    "stateCapacity": 295404,
+    "statesVisited": 12,
+    "termination": "FRONTIER_EXHAUSTED",
+    "verticalTransitionsExamined": 0,
+    "viaMaskUsedForConnectivity": false
+  }
+}

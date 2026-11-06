@@ -244,6 +244,7 @@ public final class ActualGeneratorBranchOrderStudy {
     private static final class ArmRun {
         final Study study;
         final int operation;
+        final PcbLayerRoutingPrototype.FixedPrefixGraphObserver fixedPrefixGraphObserver;
         final long operationStarted = System.nanoTime();
         JsonlSink sink;
         NativeContextFacade nativeContext;
@@ -287,8 +288,17 @@ public final class ActualGeneratorBranchOrderStudy {
         long generatorAdvances;
 
         ArmRun(Study study, int operation) {
+            this(study, operation, null);
+        }
+
+        ArmRun(Study study, int operation,
+                PcbLayerRoutingPrototype.FixedPrefixGraphObserver fixedPrefixGraphObserver) {
+            if (fixedPrefixGraphObserver != null && operation != 1)
+                throw new IllegalArgumentException(
+                    "Fixed-prefix graph observation is supported only for operation 1");
             this.study = study;
             this.operation = operation;
+            this.fixedPrefixGraphObserver = fixedPrefixGraphObserver;
         }
 
         ArmResult execute() throws Exception {
@@ -523,7 +533,8 @@ public final class ActualGeneratorBranchOrderStudy {
                 SeededPcbLayoutGenerator.P07RequestBoundaryConfiguration configuration =
                     new SeededPcbLayoutGenerator.P07RequestBoundaryConfiguration(diagnostics);
                 ownerSession = generator.beginWithP07RequestBoundary(board,
-                    candidateHeader.placementSeed, candidateHeader.routingSeed, configuration);
+                    candidateHeader.placementSeed, candidateHeader.routingSeed, configuration,
+                    fixedPrefixGraphObserver);
             } else {
                 PcbLayerRoutingPrototype.BranchOrderStrategy strategy =
                     PcbLayerRoutingPrototype.BranchOrderStrategy.CANONICAL_NEAREST;
