@@ -790,7 +790,7 @@ then whole-route/finalizer/clearance/connectivity/access/runtime/functional proo
 before adoption; do not infer a new ranking from the uniform metric.
 
 The [failed-net-first whole-ordering experiment](task-evidence/Q100/failed-first-ordering-r1/README.md)
-is locally accepted for the same authored placement. Two fresh actual pass2
+is accepted and published for the same authored placement. Two fresh actual pass2
 Sessions preserve captured settings and prior promotion; only the trial moves
 the actual failed net to the front. The control fails on A_COIL_LOW at478497
 expansions; the trial fails on B_COIL_LOW at554488. Both visit44nets and return
@@ -807,6 +807,9 @@ No complete authored layout, feasibility, admission, full30/HARD/PSYCHOTIC or
 population renewal is granted; playable100=0/betaHELD, historical unread
 UNCERTIFIED. Next is a bounded multi-net failure-feedback ordering scope review,
 then actual physical/access/runtime/functional proof before production adoption.
+Implementation `ae0141c7c5985d4a0aac8cc590354d459b8cad5a` was normally pushed to
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
+Gmail `1a1b71378096fa9e` was sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

@@ -1,4 +1,55 @@
-# Current checkpoint: failed-first finite diagnostic accepted; publication checks pass
+# Current checkpoint: failed-first experiment published; failure-cohort scope review next
+
+UTC2026-11-07. Standing roadmap continues. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106.
+Implementation ae0141c7c5985d4a0aac8cc590354d459b8cad5a
+"Validate failed-net-first whole-ordering experiment" normally pushed to
+origin/codex/q100-physical-feasibility and exact remote SHA verified.
+Connected completion Gmail1a1b71378096fa9e SENT_ONCE after exact-SHA duplicate
+search returned none. This receipt needs no second completion email.
+
+Accepted finite evidence: docs/task-evidence/Q100/failed-first-ordering-r1/README.md.
+Both fresh actual Sessions reject NO_PATH/null layout after44 visited nets:
+control A_COIL_LOW478497 expansions; stable failed-first B_COIL_LOW554488.
+No complete authored layout, routing treatment or production adoption qualified.
+Captured root9007199254740993/placement-6587958367974952701/
+routing8445301674744508279/request0/placement4/pass2/priorD_SENSE unchanged.
+Fresh-budget comparison is not original cumulative-budget parity or restart policy.
+
+Final1090-source JDK8 compile/4138classes PASS. Final independent authored/
+canary consumers55.9694394/55.5759773s,15 literal methods incl17 conductor
+fixtures,31 authenticated semantic rejection controls and actual helper/host/
+input/cleanup gates PASS. Native17.6685058s/366groups/9926855units/max1.2680703s/
+32768units; export12.6131ms and domaincleanup1.277ms inside cutoff. Host process
+elapsed18.0394927s includes cleanup; isolated OS cleanup duration not exposed.
+All returned task processes termination/log/rootabsence proven. Earlier R3
+accounting-unqualified data and every compiler/host/oracle/source failure preserved.
+
+Staged publication audit PASS:22 intended paths,19 packet files,8 exact executed
+source blobs, private-path/credential scans, both diff checks, zero production paths.
+Packet-local attributes recognize CRLF and preserve the reader's existing terminal
+blank line as exact hashed evidence; other whitespace checks remain. Scoped agent
+packet review found one finalizer wording overclaim; root corrected architecture
+to Search/Publisher rejection with full-layout finalizers NOT_RUN before commit.
+No full independent final-code-review PASS is claimed.
+
+Production850/P9frozen19 and old parent inputs remain immutable. All90s/640groups/
+5s32768/copy1M4096/originalexpansioncaps/48holes4flips/compile60native480reader180/
+cleanup120 limits remain. No GWT/Player/electrical/population renewal. Full30
+owner-excluded; HARD/PSYCHOTIC unavailable/unrun, protected bodies unread here;
+historical unread UNCERTIFIED. Playable100=0/betaHELD. Self-hosted CI prerequisite
+remains; no CI run claimed. No new persistent process or heavy matrix active.
+
+Main5f05b005 preserves9 tracked/6 untracked/0staged; Desktop e0c36885 preserves
+7tracked/73untracked/0staged. Only Main report mirror updated. Old uncertain
+browser/preview resources and failure evidence untouched. E clean after implementation;
+only this documentation receipt follows it. Runtime resources are not silently reused.
+Next: bounded multi-net failure-feedback ordering scope review, then freeze the
+smallest actual-owner experiment in a new task-owned OS-temp root before edits.
+Keep existing limits, exact identities and independent oracles; physical/access/
+runtime/functional plus production/Player/regression/admission proof precedes adoption.
+
+# Historical checkpoint: failed-first finite diagnostic accepted; publication checks pass
 
 UTC2026-11-07. Standing roadmap continues. Active E OS-temp/
 tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
