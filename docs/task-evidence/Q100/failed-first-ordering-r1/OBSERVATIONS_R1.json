@@ -1,0 +1,89 @@
+{
+  "cleanupNanos": 1277000,
+  "consumer": {
+    "controlDisposition": "NO_PATH",
+    "controlLayoutConnectivity": null,
+    "controlTraversedCount": 44,
+    "feasibilityClaimed": false,
+    "layoutQualification": false,
+    "manifestSha256": "cb1a321d543e933426273e32ae9ce7f5554cb5b142b6ad2b302ca5cb450ed124",
+    "netCount": 60,
+    "operation1Sha256": "66df6597314b80063bdd449b8fe38cf7a1972bafdfe7ecfa697b32069bf0f670",
+    "orderChange": "MOVED",
+    "playable100Accepted": false,
+    "productionAdopted": false,
+    "readerSha256": "62bd6145efe0b19a21543024f903fe8e04ef91c8cf37a0953b6e392b28c729e6",
+    "resultSha256": "d596bad7d65f24ee70884f3d8e79c2166a1f7beb6bfeb5fe2e3786d2896160c4",
+    "routingTreatmentSelected": false,
+    "schema": "tsj-failed-first-reader-v1",
+    "status": "PASS_ISOLATED_ORDERING_DIAGNOSIS_ONLY",
+    "trialDisposition": "NO_PATH",
+    "trialLayoutConnectivity": null,
+    "trialTraversedCount": 44
+  },
+  "control": {
+    "complete": false,
+    "disposition": "NO_PATH",
+    "errorClass": null,
+    "errorMessage": null,
+    "expanded": 478497,
+    "maximumExpansions": 1000000,
+    "ownerComplete": true,
+    "pass": 3,
+    "passes": 1,
+    "reason": "A_COIL_LOW:NO_PATH"
+  },
+  "copiedEntries": 35924,
+  "copyChunks": 10476,
+  "nativeMarker": {
+    "elapsedNanos": 17668505800,
+    "finalExportNanos": 12613100,
+    "maxGroupNanos": 1268070300,
+    "maximumUnitsPerGroup": 32768,
+    "resultBytes": 44611,
+    "resultSha256": "d596bad7d65f24ee70884f3d8e79c2166a1f7beb6bfeb5fe2e3786d2896160c4",
+    "schema": "tsj-failed-first-marker-v1",
+    "status": "COMPLETED_DIAGNOSTIC",
+    "totalGroups": 366,
+    "totalUnits": 9926855
+  },
+  "priorPromotedNetId": "D_SENSE",
+  "reference": {
+    "groupOrdinal": 98,
+    "lineageOrdinal": 77,
+    "netId": "A_COIL_LOW",
+    "pass": 2,
+    "prefixGeometryBytes": 265894,
+    "prefixGeometrySha256": "6b49cfb2d42a83007824b15c8c7a7c89cdadf627fed9b6d9d966692af0323ddb",
+    "prefixHoleCount": 48,
+    "prefixViaCount": 48,
+    "reachedPadCount": 1,
+    "reachedPadIds": [
+      "DA.A"
+    ],
+    "reachedPthPadCount": 0,
+    "reachedPthPadIds": [],
+    "receiptOrdinal": 307,
+    "rootPadId": "DA.A",
+    "startPadId": "QA.C",
+    "terminalReason": "NO_PATH"
+  },
+  "schema": "tsj-failed-first-public-observations-v1",
+  "seeds": {
+    "placementSeed": "-6587958367974952701",
+    "rootSeed": "9007199254740993",
+    "routingSeed": "8445301674744508279"
+  },
+  "trial": {
+    "complete": false,
+    "disposition": "NO_PATH",
+    "errorClass": null,
+    "errorMessage": null,
+    "expanded": 554488,
+    "maximumExpansions": 1000000,
+    "ownerComplete": true,
+    "pass": 3,
+    "passes": 1,
+    "reason": "B_COIL_LOW:NO_PATH"
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "conductorFixtureCases": 17,
+  "electricalPopulationRenewal": false,
+  "full30": "OWNER_EXCLUDED",
+  "gates": [
+    {
+      "call": "prepare-call-r4",
+      "childExitCode": 0,
+      "elapsedMs": 18646.010700000003,
+      "hostLimitMs": 60000,
+      "parentReceiptSha256": "c87cf26f4eae3b7d2f20f831985251f35ae53b4b88307fc39c7aefcc66d3e385",
+      "processRootAndLogsAbsent": true,
+      "status": "PASS",
+      "terminationProven": true
+    },
+    {
+      "call": "compile-call-r4",
+      "childExitCode": 0,
+      "elapsedMs": 7469.1493,
+      "hostLimitMs": 60000,
+      "parentReceiptSha256": "eea154780702c3644da07d977eb811583127911b702a4b090544d9e95db2b545",
+      "processRootAndLogsAbsent": true,
+      "status": "PASS",
+      "terminationProven": true
+    },
+    {
+      "call": "finalize-call-r4",
+      "childExitCode": 0,
+      "elapsedMs": 33441.9591,
+      "hostLimitMs": 60000,
+      "parentReceiptSha256": "18fc3af0c3eb73deee3174c81677db9617ce456b1e6c4ab1d21a3c87e2a07995",
+      "processRootAndLogsAbsent": true,
+      "status": "PASS",
+      "terminationProven": true
+    },
+    {
+      "call": "native-canary-r4",
+      "childExitCode": 0,
+      "elapsedMs": 499.0337,
+      "hostLimitMs": 480000,
+      "parentReceiptSha256": "85b5979262c16a3479f4d0954bc66bd8bb8b815297a84291feb8f6196e742ba7",
+      "processRootAndLogsAbsent": true,
+      "status": "PASS",
+      "terminationProven": true
+    },
+    {
+      "call": "native-args-r4",
+      "childExitCode": 1,
+      "elapsedMs": 414.6555,
+      "hostLimitMs": 480000,
+      "parentReceiptSha256": "17fcfc062fadc8e49ba8185dfa7e98ab740fda38e5e262fd9c1a2a5a62ca4518",
+      "processRootAndLogsAbsent": true,
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true
+    },
+    {
+      "call": "native-path-r4",
+      "childExitCode": 1,
+      "elapsedMs": 498.20430000000005,
+      "hostLimitMs": 480000,
+      "parentReceiptSha256": "91a94c62c2826948f71253f2a2d472c3b41b04211d75a503f197517e1805ac09",
+      "processRootAndLogsAbsent": true,
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true
+    },
+    {
+      "call": "native-observe-r4",
+      "childExitCode": 0,
+      "elapsedMs": 18039.492700000003,
+      "hostLimitMs": 480000,
+      "parentReceiptSha256": "24217cc5ca9ec500c3217d9c131848a0964f80d3ff7cbe4595294af056eb0139",
+      "processRootAndLogsAbsent": true,
+      "status": "PASS",
+      "terminationProven": true
+    },
+    {
+      "call": "literal-final-call-r4",
+      "childExitCode": 0,
+      "elapsedMs": 397.5061,
+      "hostLimitMs": 180000,
+      "parentReceiptSha256": "0a15dd9ed179bf613d53aadc000c03f7ab111dfb03099ff36f19c6c1ce74f234",
+      "processRootAndLogsAbsent": true,
+      "status": "PASS",
+      "terminationProven": true
+    },
+    {
+      "call": "reader-observe-call-r2",
+      "childExitCode": 0,
+      "elapsedMs": 55969.4394,
+      "hostLimitMs": 180000,
+      "parentReceiptSha256": "425da8ff46624a27e5af5cbfaaf086eefbb4690afe195e727acd885fba292541",
+      "processRootAndLogsAbsent": true,
+      "status": "PASS",
+      "terminationProven": true
+    },
+    {
+      "call": "reader-canary-call-r4",
+      "childExitCode": 0,
+      "elapsedMs": 55575.977300000006,
+      "hostLimitMs": 180000,
+      "parentReceiptSha256": "41b07e8a21e4a5f1abddd4f4e66cdc8ad8a5dbfcdcf05531ee680b41a4ca859a",
+      "processRootAndLogsAbsent": true,
+      "status": "PASS",
+      "terminationProven": true
+    },
+    {
+      "call": "semantic-controls-call-r2",
+      "childExitCode": 0,
+      "elapsedMs": 56206.3295,
+      "hostLimitMs": 180000,
+      "parentReceiptSha256": "6022ecc25c48ceae102ed569d84b6b3f0436cd61cfc4566ce469f337c92665b7",
+      "processRootAndLogsAbsent": true,
+      "status": "PASS",
+      "terminationProven": true
+    },
+    {
+      "call": "helper-read-canary-call-r2",
+      "childExitCode": 0,
+      "elapsedMs": 373.827,
+      "hostLimitMs": 60000,
+      "parentReceiptSha256": "72d87aeb458abf38358038fc18ff60580a51bd6306a5bbefe612508bca12155b",
+      "processRootAndLogsAbsent": true,
+      "status": "PASS",
+      "terminationProven": true
+    },
+    {
+      "call": "helper-negative-name-r4",
+      "childExitCode": 2,
+      "elapsedMs": 368.947,
+      "hostLimitMs": 60000,
+      "parentReceiptSha256": "44ec06a62260a348a473884746fa828d3251fb14838c3cde21a34df0f415a577",
+      "processRootAndLogsAbsent": true,
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true
+    },
+    {
+      "call": "helper-negative-nonempty-r4",
+      "childExitCode": 2,
+      "elapsedMs": 366.9647,
+      "hostLimitMs": 60000,
+      "parentReceiptSha256": "ad7b5cb44c1cf721e50ae4f77417b9765b340e06bc10de281bd8c9438fcf985a",
+      "processRootAndLogsAbsent": true,
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true
+    },
+    {
+      "call": "helper-negative-junction-r4",
+      "childExitCode": 2,
+      "elapsedMs": 366.2008,
+      "hostLimitMs": 60000,
+      "parentReceiptSha256": "0cf2eebaa1a6451e3bed79a3bd93edcfac8fec995fd3ea0c42f2c58e23b0eacd",
+      "processRootAndLogsAbsent": true,
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true
+    }
+  ],
+  "hardPsychotic": "UNAVAILABLE_UNRUN",
+  "literalTestMethods": 15,
+  "productionBuild": "NOT_APPLICABLE_UNCHANGED",
+  "schema": "tsj-failed-first-public-gates-v1",
+  "semanticRejectionCases": 31,
+  "visiblePlayer": "NOT_APPLICABLE_UNCHANGED"
+}

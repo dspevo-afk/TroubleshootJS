@@ -144,6 +144,27 @@ nets. The [finite outlet packet](task-evidence/Q100/initial-outlets-r1/README.md
 records a uniform score across56 paired nets, so this metric selects no ordering.
 Production routing, electrical owners, epochs and admission remain unchanged.
 
+FailedFirstRoutingStudy composes the genuine operation1 callback, capturing the
+actual Search vector, prior promotion, next-net cursor and request settings.
+After the original owner releases/restores its context, two fresh actual
+Sessions compute the same pass2 order at a verified pre-net boundary. The
+control preserves it; the trial stable-moves only the observed failed net.
+Each uses fresh budget0 and the original limits, then advances its own real
+Search/Publisher rejection path. Full-layout finalizers are not run for these
+failed arms. Pass3 rejects without a fallback. Owner
+completion and a complete returned layout are distinct. This native-only
+adapter does not adopt budget-reset behavior in the production generator.
+
+The strict consumer binds source/class/process/data identity, genuine P07
+records, ordered traversal, explicit wrapper polling and owner-work counters,
+copy/hash/export bounds and cleanup. It derives cursor semantics from
+currentNet=nets.get(netIndex++). A new independent layer-aware conductor check
+validates complete output mapping/connectivity/widths; native routing geometry
+remains the obstacle/finalizer authority. The [finite paired packet](task-evidence/Q100/failed-first-ordering-r1/README.md)
+records two NO_PATH outcomes and selects no treatment. CircuitJS electrical
+owners, production routing, Player capabilities, epochs and admission stay as
+recorded before this diagnostic.
+
 CirSim owns reduced nonlinear matrix ordering at the end of simplification,
 before its original matrix/right-side backups. ReducedMatrixOrdering derives a
 deterministic greedy minimum-degree permutation from the undirected union of the

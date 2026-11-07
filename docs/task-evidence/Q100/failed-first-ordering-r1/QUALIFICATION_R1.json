@@ -1,0 +1,65 @@
+{
+  "budgetsChanged": false,
+  "classBytes": 19266484,
+  "classCount": 4138,
+  "classInventorySha256": "672ca79e8c8e00bdf65dd406c4fbd042461be145a36fdd244be92153deca7f6f",
+  "compilerSourceCount": 1090,
+  "full30Renewed": false,
+  "hardPsychoticRun": false,
+  "historicalProtectedUnread": "UNCERTIFIED",
+  "layoutQualification": false,
+  "operation1Sha256": "66df6597314b80063bdd449b8fe38cf7a1972bafdfe7ecfa697b32069bf0f670",
+  "playable100Accepted": false,
+  "productionAdopted": false,
+  "publicBeta": "HELD",
+  "publication": "NOT_YET_PUBLISHED",
+  "resultSha256": "d596bad7d65f24ee70884f3d8e79c2166a1f7beb6bfeb5fe2e3786d2896160c4",
+  "routingTreatmentSelected": false,
+  "runManifestSha256": "cb1a321d543e933426273e32ae9ce7f5554cb5b142b6ad2b302ca5cb450ed124",
+  "schema": "tsj-failed-first-public-qualification-v1",
+  "sourceCopies": [
+    {
+      "bytes": 142412,
+      "path": "source/FailedFirstRoutingStudy.java",
+      "sha256": "8a6249c09cb9283f134203d75c680401ae7fedb9f80a6438989e86e5d0a18773"
+    },
+    {
+      "bytes": 14200,
+      "path": "source/FailedFirstFixtures.java",
+      "sha256": "dd333ff9c448ce012c3c1a4e603be39b70e1ac1d8d7ef79509d12ab21bd17619"
+    },
+    {
+      "bytes": 21783,
+      "path": "source/WIRE_R1.md",
+      "sha256": "aaf0852450e069c442497734ff2233b8ee0229d99760cf58eca21baa8d6d78e7"
+    },
+    {
+      "bytes": 42188,
+      "path": "build_inputs.py",
+      "sha256": "a8bc3cd64cd5dac3edd36679b4d9300deb722cdfad07431fe5e2658cf9c0cbae"
+    },
+    {
+      "bytes": 83630,
+      "path": "read_failed_first.py",
+      "sha256": "62bd6145efe0b19a21543024f903fe8e04ef91c8cf37a0953b6e392b28c729e6"
+    },
+    {
+      "bytes": 33277,
+      "path": "test_read_failed_first.py",
+      "sha256": "1ebebecd38796d55d4b6fa4e3097131b289d27c17ae8105be3ee5a43963ee3e7"
+    },
+    {
+      "bytes": 16507,
+      "path": "Semantic-Controls-R1.py",
+      "sha256": "8704d3a288c7a141efc1b14a47223830c94ed1f68c4948b30a8b03e4bca61226"
+    },
+    {
+      "bytes": 7572,
+      "path": "PLAN_R1.md",
+      "sha256": "77ff9bbbea59afa6bf55aa94078cdf7a8f81f1959dec8396fe3c0b0d90563771"
+    }
+  ],
+  "sourceManifestSha256": "399c01b4088d099e23ad5cc09b57ecf702b0d372e6537b33b21bb16bcb0eb85b",
+  "sourceParent": "18e763bbee0ca32cc42e02a838e2191d6ac436cd",
+  "status": "ACCEPTED_FINITE_DIAGNOSTIC"
+}

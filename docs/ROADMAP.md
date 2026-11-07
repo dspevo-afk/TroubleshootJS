@@ -789,6 +789,25 @@ Next is a different frozen bounded routing/access experiment,
 then whole-route/finalizer/clearance/connectivity/access/runtime/functional proof
 before adoption; do not infer a new ranking from the uniform metric.
 
+The [failed-net-first whole-ordering experiment](task-evidence/Q100/failed-first-ordering-r1/README.md)
+is locally accepted for the same authored placement. Two fresh actual pass2
+Sessions preserve captured settings and prior promotion; only the trial moves
+the actual failed net to the front. The control fails on A_COIL_LOW at478497
+expansions; the trial fails on B_COIL_LOW at554488. Both visit44nets and return
+NO_PATH/null layout. The ordering changes the failure and is not adopted.
+This is a fresh-budget pair, not original pass2 cumulative-budget parity or a
+production restart policy. Final1090-source JDK8 compile/4138classes,15 literal
+test methods including17 conductor fixtures, complete source/process/data and
+canary consumers,31 authenticated semantic rejections and real host/input/
+cleanup controls pass. Corrected native work is17.6685058s/366groups, maximum
+1.2680703s/32768units; every existing limit remains. Earlier R3 observations
+remain accounting-unqualified; all source/oracle/host failures are preserved.
+Production850/P9frozen19 and electrical/Player behavior remain unchanged.
+No complete authored layout, feasibility, admission, full30/HARD/PSYCHOTIC or
+population renewal is granted; playable100=0/betaHELD, historical unread
+UNCERTIFIED. Next is a bounded multi-net failure-feedback ordering scope review,
+then actual physical/access/runtime/functional proof before production adoption.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

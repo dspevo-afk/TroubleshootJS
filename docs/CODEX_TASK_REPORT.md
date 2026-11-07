@@ -1,4 +1,506 @@
-# Current checkpoint: initial-outlet diagnostic published; different routing experiment next
+# Current checkpoint: failed-first finite diagnostic accepted; publication checks pass
+
+UTC2026-11-07. Standing roadmap continues. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEAD18e763bbee0ca32cc42e02a838e2191d6ac436cd. Remote origin/codex/q100-physical-feasibility
+still exactly18e (verified this turn). Prior9d32/18e Gmail1a1b64b17a866cd2
+SENT_ONCE. No new commit/push/email yet. Main5f05b005 preserves9tracked6untracked;
+Desktop e0c36885 preserves7tracked73untracked, both0staged. Other work intact.
+
+Accepted native-only scope at OS-temp/tsj-q100-failed-first-b9a0968471ab4187a791fc7f71bd3274.
+Final producer8a6249c09cb9283f134203d75c680401ae7fedb9f80a6438989e86e5d0a18773,
+WIREaaf0852450e069c442497734ff2233b8ee0229d99760cf58eca21baa8d6d78e7,
+fixturedd333ff9c448ce012c3c1a4e603be39b70e1ac1d8d7ef79509d12ab21bd17619,
+helpera8bc3cd64cd5dac3edd36679b4d9300deb722cdfad07431fe5e2658cf9c0cbae,
+reader62bd6145efe0b19a21543024f903fe8e04ef91c8cf37a0953b6e392b28c729e6,
+tests1ebebecd38796d55d4b6fa4e3097131b289d27c17ae8105be3ee5a43963ee3e7,
+controls8704d3a288c7a141efc1b14a47223830c94ed1f68c4948b30a8b03e4bca61226.
+PLAN77ff9bbbea59afa6bf55aa94078cdf7a8f81f1959dec8396fe3c0b0d90563771 frozen.
+All current code ROOT-owned/held; leaves finished, no pending edits.
+
+R4 full1090-source JDK8build PASS/4138classes/19266484bytes. Runmanifestcb1a321d543e933426273e32ae9ce7f5554cb5b142b6ad2b302ca5cb450ed124,
+sourceManifest399c01b4088d099e23ad5cc09b57ecf702b0d372e6537b33b21bb16bcb0eb85b.
+Nativecanary499.034ms/actualargs+junction negatives414.656/498.204ms PASS.
+Authorednative18.0394927s, marker17.6685058s/366groups/9926855units/max1.2680703s/
+32768units, export12.6131ms/domaincleanup1.277ms. Result44611B SHA
+d596bad7d65f24ee70884f3d8e79c2166a1f7beb6bfeb5fe2e3786d2896160c4;
+genuineop1SHA66df6597314b80063bdd449b8fe38cf7a1972bafdfe7ecfa697b32069bf0f670.
+Both fresh NO_PATH: controlA_COIL_LOW478497expansions/44visited, trial
+B_COIL_LOW554488/44. Eachbudget0/max1M/pass3/passes1/oneSearch; priorD_SENSE.
+No complete authoredlayout/feasibility/productiontreatment qualified.
+
+FINAL actual independent authoredconsumer PASS55.9694394s; finalcanaryconsumer
+PASS55.5759773s.15literal testmethodsPASS397.5061ms incl17conductorcases.
+31actualdata semanticmutationsPASS56.2063295s afterauthenticatinggenuinebaseline;
+controlr1badminimumtarget preserved, readernotweakened. Finalhelper2read/hash
+positives+4negatives PASS373.827ms and3freshpreflight rejectionsPASSunder369ms.
+All returnedprocesses termination/log/rootabsence proven. Hostelapsedincludes
+cleanup; isolatedOScleanup duration notexposed, nativedomaincleanupseparate.
+R3native remains ACCOUNTING-UNQUALIFIED, neverreusedforchangedpollingcode.
+All constructor/API/host/oracle/framing failures and source snapshots preserved.
+
+Local accepted packet19files now docs/task-evidence/Q100/failed-first-ordering-r1
+copied byte-exact from private publication-draft-r3. Python gatedCRLF/LF bytes
+preserved via packet-local Git attributes; all8 actual staged blob hashes match
+the executed originals. Attributes recognize CRLF and preserve only the reader's
+existing terminal blank line; other whitespace checks remain. Both diff checks,
+22-path staging scope and private-path/credential scans PASS. Scoped independent
+packet review found one architecture finalizer overclaim; root corrected it to
+the real Search/Publisher rejection path, with full-layout finalizers NOT_RUN.
+Publication preparationR2 incorrectlyrequiredLFforallPython andFAILed; R3
+privacy/source/gate auditPASS445.050ms. No runtimebyte normalization. Roadmap/
+architectureupdated; no production850/P9frozen19/oldparent paths changed.
+Next ROOT: normalcommit/push/remoteSHAverification, onecompletionGmail, receipt.
+Then begin bounded multi-net failure-feedback ordering scope review, not another
+width-first repeat or productionadoption withoutphysical/runtime/functional proof.
+
+All90s/640groups/5s32768/copy1M4096/originalexpansioncaps/48holes4flips/
+compile60native480reader180cleanup120 preserved. No GWT/Player/electrical/
+population renewal. Full30 owner-excluded; HARD/PSYCHOTIC unavailable/unrun,
+protectedbodies unreadhere/historicalunreadUNCERTIFIED. Playable100=0/betaHELD.
+No new persistentprocess or heavy matrix active. Old uncertainresources untouched.
+Never duplicate prior Gmail; no success publication with unresolvedblocker.
+
+# Historical checkpoint: R4 native pair rebuilt with explicit poll work; reader fixes pending
+
+UTC2026-11-07. Standing roadmap continues. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEAD18e763bbee0ca32cc42e02a838e2191d6ac436cd. Prior9d32/18e normally published/
+verified; Gmail1a1b64b17a866cd2 SENT_ONCE. No new publication/email/staged changes.
+Main5f05b005 preserves9tracked6untracked; Desktop e0c36885 preserves7/73.
+Only E checkpoint/Main mirror changed. Playable100=0/betaHELD. Full30 excluded;
+HARD/PSYCHOTIC unavailable/unrun/protectedbodies unread here; historical unread
+UNCERTIFIED. Old unrelated failures/resources and parent sources remain intact.
+
+Root task OS-temp/tsj-q100-failed-first-b9a0968471ab4187a791fc7f71bd3274.
+Root sole Study/WIRE writer. PLAN77ff9bbbea59afa6bf55aa94078cdf7a8f81f1959dec8396fe3c0b0d90563771
+frozen. Corrected CURRENT producer8a6249c09cb9283f134203d75c680401ae7fedb9f80a6438989e86e5d0a18773;
+WIREaaf0852450e069c442497734ff2233b8ee0229d99760cf58eca21baa8d6d78e7;
+fixturedd333ff9c448ce012c3c1a4e603be39b70e1ac1d8d7ef79509d12ab21bd17619;
+helpera8bc3cd64cd5dac3edd36679b4d9300deb722cdfad07431fe5e2658cf9c0cbae.
+R3 source63286/WIRE591d/data remain HISTORICAL ACCOUNTING-UNQUALIFIED: root
+found missing explicit per-advance fixed-state-polling charge. Added1 bounded
+wrapper unit per dispatch/poll; native lastWork remains separate. Old source/
+wire archived source-revisions/native-r3-accounting-unqualified. Do not reuse
+R3 native/reader PASS as corrected producer acceptance. Old private
+publication-draft-r1 is obsolete/unpublished, not for copying to Git.
+
+Fresh R4 build complete through maintained actual host: prepare18.646s,
+1090-source JDK8 compile7.469s, finalize33.442s;4138classes/19266484bytes.
+j8-failed-first-r4/run-manifest.json SHA
+cb1a321d543e933426273e32ae9ce7f5554cb5b142b6ad2b302ca5cb450ed124;
+sourceManifest399c01b4088d099e23ad5cc09b57ecf702b0d372e6537b33b21bb16bcb0eb85b.
+Native-canary-r4 PASS499.034ms. Actualargs/junction expected rejections PASS
+414.656/498.204ms, targets unchanged/verified link-only cleanup. Actual authored
+native-observe-r4 COMPLETED_DIAGNOSTIC18.0394927s parent, native17.6685058s,
+366groups/9926855units/max1.2680703s/32768units, export12.6131ms.
+Result44611bytes SHA d596bad7d65f24ee70884f3d8e79c2166a1f7beb6bfeb5fe2e3786d2896160c4.
+Both fresh NO_PATH outcomes remain A_COIL_LOW478497expansions/control44visited
+versus B_COIL_LOW554488/trial44, priorpromotionD_SENSE; expanded0/max1M both,
+pass3/passes1/ownerComplete true/complete-layout false/no fallback. No returned
+layout/finalizer proof. Native observations remain pending independent acceptance.
+
+Reader historical candidate28db0e96.../tests32b7... passed13literal methods
+(incl17conductor fixtures), actualcanary semantic component, and fullsource/
+host/canary consumer56.185s on R3. AuthoredconsumerR1 FAIL28.576s
+BF_CAPTURED_VECTOR_BINDING: actual Search.netIndex is next-entry cursor
+(currentNet=nets.get(netIndex++)); failednet index43/liveSearchIndex44. Reader
+incorrectly used current0-based lookup. Snapshot reader-observe-failed-r1 kept.
+Reader leaf now owns cursor range1..N/index-1 fix, first/last/off-by-one tests,
+new wrapperUnits>=advanceCalls floor/negative, currentWIREAAF pin and controls.
+Do not run old28db onR4 as final. Await fresh reader/test hashes, pureliterals,
+fullactualcanary and authoredconsumer, then Semantic-Controls-R1.py using R4
+paths/cb1manifest (old1db... script pinsR3 and must be updated). All runtime gates
+ROOT ONLY, leaves no heavy runs/spawn/stage/publish.
+
+Bounded independent static audit on actualR3 data found no OTHER mismatch in
+captured/fresh/work validators beyond cursor and missingpoll floor; scope/hash
+reported, no final acceptance PASS. Source helper ctime/foreignJSON corrections
+already real-host tested; historicalprepare/finalizer failures remain preserved.
+No production850/P9frozen19/JDK/GWT jar/oldnative/helper/data/class path changed.
+All90s/640groups/5s32768/copy1M4096/originalexpansioncaps/48holes4flips/
+compile60native480reader180cleanup120 bounds preserved. No GWT/Player/electrical/
+population renewal. No expensive matrix/persistent task process active now.
+Next finish independent R4 gates, source/privacy/review/publication packet,
+normalcommit/push/remoteSHA andonecompletionGmail; then nexteligible scope.
+
+# Historical checkpoint: failed-first native pair completed; independent canary oracle correction
+
+UTC2026-11-07. Standing roadmap continues. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEAD18e763bbee0ca32cc42e02a838e2191d6ac436cd. Prior9d32/18e published/verified;
+Gmail1a1b64b17a866cd2 SENT_ONCE. No new publication/email. Playable100=0/betaHELD.
+Main5f05b005 preserves9tracked6untracked; Desktop e0c36885 preserves7/73.
+Only E checkpoint/Main mirror edited. No staged changes, production edits or
+GWT/Player/electrical/population qualification renewal. Full30 excluded;
+HARD/PSYCHOTIC unavailable/unrun/protectedbodies unread here, historical unread
+UNCERTIFIED. Old uncertain resources preserved. No live task process now.
+
+Experiment root OS-temp/tsj-q100-failed-first-b9a0968471ab4187a791fc7f71bd3274.
+PLAN77ff9bbbea59afa6bf55aa94078cdf7a8f81f1959dec8396fe3c0b0d90563771 frozen.
+ROOT sole Study/WIRE writer; all Java/helper fragments integrated. Candidate:
+Study63286c41a74ee0482038bdead35ee1646a68003b6a62f6f03e8b9a49d2e9dd30;
+WIRE591d603f038f04e804de7d22aa9934b0a48a8e458369d4b0685d1fa0c220259d;
+fixturedd333ff9c448ce012c3c1a4e603be39b70e1ac1d8d7ef79509d12ab21bd17619;
+helpera8bc3cd64cd5dac3edd36679b4d9300deb722cdfad07431fe5e2658cf9c0cbae.
+Source folder exact3 files; commonA319 fragment moved byte-preserved to taskroot
+(it had been mistakenly placed in source/ and triggered closure rejection).
+All previous source/helper/classes/raw paths outside this new task remain intact.
+
+Actual build: prepare-r1 FAILcrossAPIctime (fixedwithinAPI/sharedidentity),
+prepare-r2 FAILextra source fragment (preserved/moved), prepare-r3 PASS18.405s;
+actual1090-source JDK8 compile-r3 PASS7.382s. Finalize-r3 FAILinvalidPythoncanonical
+comparison for foreignPS5receipts. Helpera8 removesonlythat assumption; strict
+parse/typedrequest/owner/process/exit/cleanup/rawhash checks remain. Realhost
+canary PASS18.434s: actualcompile accepted,3 wrongclaims rejected. Fresh finalizer
+finalize-call-r3b PASS38.185s: all compiler inputs unchanged/revalidated, actual
+4138classes/19266472bytes inventoried. Reused javac only across helper validator
+fix; no Java/WIRE/tool/argfile/class change. Old failed finalization remainsFAIL.
+Runmanifest j8-failed-first-r3/run-manifest.json SHA
+f88782ebc0b2ec851627ea05b492a1c7ebcb06ebf40e82951ba03f232ebc9dca;
+sourceManifest7d1265bfc6f8bdb0743a7fb7d647c74f34d7242513f73d49bb40d0a8d0e2bbc0.
+
+Final-source native-canary-r3 PASS438.064ms; actualargs/junction rejections
+PASS372.758/346.551ms, no target mutation/link-only cleanup. native-observe-r3
+COMPLETED_DIAGNOSTIC17.489s parent; marker17.1179696s/246groups/6484122units,
+max1.3295334s/32768units; export12.3474ms. Result44597bytes SHA
+7fd193044650d6e9c7a9b27645a33a4692a48cc8a0ae5df5b5001cdfc3f32545.
+Actual priorpromotion D_SENSE; failed-first MOVED A_COIL_LOW. Control NO_PATH
+A_COIL_LOW at478497expansions/44visited; trial NO_PATH B_COIL_LOW at554488/44.
+Each fresh maximum1M/pass3/passes1/ownerComplete true/complete-layout false;
+no returned layout/fullfinalizer proof. Both budgets fresh0 (not original pass2
+cumulative-budget parity), global source/copy/work/cleanup guards held. These
+are native observations PENDING complete independent acceptance, no adoption.
+
+Final readera94a928db105580b8cf5f9d6e7829d99dc922a1709bf5ca88e87b033bb682c4d
+and tests04f1a56ec2ff397bf8cb9dc6c31444446916242bea1ce23837dd1d8808a99eb8:
+final literals PASS404.344ms/12tests (includes17conductor fixtures). Full actual
+canary reader R1 FAIL27.758s BF_CANARY_OPEN_FIXTURE_IDENTITY. Reader oracle had
+wrong literalorder NET_A,NET_B; real P07pass2 reverses role priority, so actual
+order NET_B,NET_A (expanded52correct). Snapshot archived reader-canary-failed-r1.
+Reader leaf now owns source-derived oracle fix/tests and Semantic-Controls-R1.py
+ONLY, no heavy runs. Authored complete consumer NOT RUN yet. Root must rerun
+fresh final literals+actualcanary+authored consumer after fix, then actualdata
+controls/source/privacy/publication gates. No Java rebuild for reader-only fix.
+
+Every failed gate preserved, cleanup proven for returned processes. No expensive
+matrix active now. All90s/640/5s32768/copy1M4096/originalexpansioncaps/48holes/
+fourflips/compile60native480reader180cleanup120 limits unchanged. Do not publish
+until complete independent gates/root review pass. Root owns acceptance/normal
+commit/push/remote verification and oneGmail; no duplicate prior email.
+
+# Historical checkpoint: integrated failed-first canary passes; full build prepare blocker
+
+UTC2026-11-07 15:50. Standing roadmap continues. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEAD18e763bbee0ca32cc42e02a838e2191d6ac436cd. Prior9d32/18e published/verified;
+Gmail1a1b64b17a866cd2 SENT_ONCE. No new publication/email. Playable100=0/betaHELD.
+Main5f05b005 preserves9tracked6untracked; Desktop e0c36885 preserves7/73.
+Only E checkpoint/Main mirror edited. Unrelated work/old failures preserved.
+
+Experiment root OS-temp/tsj-q100-failed-first-b9a0968471ab4187a791fc7f71bd3274.
+Frozen PLAN77ff9bbbea59afa6bf55aa94078cdf7a8f81f1959dec8396fe3c0b0d90563771.
+Actual captured pass2 vector vs stable actual-failed-net-first fresh pair, both
+expanded0/capturedsettings/priorpromotion. Not old cumulative-budget parity or
+restart adoption.90s/640groups/5s32768/copy1M4096/originalexpansioncaps/48holes/
+fourflips/compile60native480reader180cleanup120 unchanged. Production untouched.
+
+ROOT NOW SOLE WRITER Study/WIRE after native handoff0FED/BF276, archived
+source-revisions/root-integration-r0. Integrated commonA319, physicalE959, root
+records/export and canaryEC5 fragments. Current Study BC33ed1adafd420551c899409fc2418ad037bb2dbdd02a4d84541d4d01a77752,
+WIRE a0c44234203c4d0a1efcd257bab37040a3875f56c524e36dfe2ec20316969be8 (not final frozen).
+Root fixed Meter.beforeOperation per-unit group explosion with capacity batching,
+complete-layout vs ownerComplete, typed strategy comparisons/ctor, Result.outcome,
+actualStudy class,8MiBreceipt/64KiBrawline, preexport JSON-tree accounting and
+global pre-copy ledger. Last copy-accounting audit pending; do not assume complete.
+
+Actual focused Study compile r1 FAIL906.722ms (missingoldPadLandJson+string/enum
+conditional);4805 source retained. Fixed core3ccb829522ed7fdfa0a1ba25892d95a3f5f91907c8ca3d0daef628b4e417aa9e
+component compile r2 PASS944.829ms; real --canary PASS481.585ms: openFOUND,
+blockedNO_PATH, activeexception exactidentity/referencecleanup PASS.3CC source
+archived source-revisions/study-component-r2-pass. These are parent4120classes
+plus fresh2source COMPONENT gates, not final1090-source proof. Root changed
+copyledger after3CC, so final fresh canary remains required. Fixturedd333 frozen;
+earlier directactualSession/constructor gates and failures in EARLY_GATES_R1-3.
+
+Reader literal earlyR1 FAIL5tests+1error, R2 FAIL1error; archived pairs/logs.
+Corrected earlyR3 PASS399.666ms/12tests incl17 independent conductor fixtures.
+Held reader cd4bd92edd6679e31d04e41d4dbc20f0e191321e571fe63f31ae0af275b5197b,
+tests04f1a56ec2ff397bf8cb9dc6c31444446916242bea1ce23837dd1d8808a99eb8.
+Reader still pins olderdraftWIRE; set finalhash then rerun freshfinaltests.
+Independent conductor scope only: native fullgeometry remains separate.
+
+FULL1090 BUILD R1: prepare-call-r1 FAIL375.2008ms, childexit2,
+PARENT_HELPER_OPEN_CHANGED; compiler/finalizer NOT RUN. Helper414c archived
+source-revisions/helper-prepare-failed-r1. Actual file-stat-probe-call-r1
+PASS586.018ms proves same dev/ino/size/mtime/birthtime, stablewithin-lstat and
+within-fstat; crossAPI ctime differs on selected Python3.13Windows. Adapter now
+owns helperfix ONLY (retain withinAPI stability and sharedidentity/type/reparse/
+hash/limits), plus read-only copy-audit draft. No unchangedcommand rerun yet.
+
+All source/body/host failures preserved, returned process cleanup proven. No
+heavy matrix/persistent process active. j8-failed-first-r1 empty preparedstage
+retained. Parent/old850/P9frozen19/native/helper/raw/class paths immutable.
+Leaves no heavy runs/spawn/stage/publish; root gates/publication only. Next fix
+helper selected-host boundary, positive/negativecanaries, finishcopyaudit,
+freezefinalsources/WIRE/reader, fresh1090build/canary/authoredpair/actualcontrols,
+review then normalpublish andoneGmail. No success publication with blocker.
+Full30 excluded; HARD/PSYCHOTIC unavailable/unrun/protectedbodies unread here;
+historical unread UNCERTIFIED. Old uncertain resources untouched.
+
+# Historical checkpoint: failed-net-first integration; real fixture owner gates pass
+
+UTC2026-11-07 15:13. Standing roadmap continues. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEAD18e763bbee0ca32cc42e02a838e2191d6ac436cd. Prior9d32/18e published/verified;
+Gmail1a1b64b17a866cd2 SENT_ONCE. No new publication/email. Playable100=0/betaHELD.
+
+Current experiment root OS-temp/tsj-q100-failed-first-b9a0968471ab4187a791fc7f71bd3274.
+Frozen PLAN77ff9bbbea59afa6bf55aa94078cdf7a8f81f1959dec8396fe3c0b0d90563771;
+latest WIRE EA85d4b9dbd269d684a86d5f793a6145dbad1258c533bb99631d3924d4dafaa4.
+Both fresh pass2 owners match actual captured vector/settings/priorpromotion,
+expanded0; onlytrial stablemoves actualfailednet. Not old cumulative-budget parity
+or restart adoption.90s/640groups/5s/32768units/copy1M4096/original expansioncaps/
+48holes4flips/compile60native480reader180cleanup120 unchanged. No production edit.
+
+Early real gates in EARLY_GATES_R1/R2/R3.md with raw failed/successful receipts:
+fixture dd333ff9c448ce012c3c1a4e603be39b70e1ac1d8d7ef79509d12ab21bd17619
+constructor PASS; additional actual Session probe PASS424.0002ms after fresh
+component compile794.3576ms/authenticated parent1088sources4120classes. OPEN
+SUCCESS:271ownerunits/52expansions/2traces/0holes, fullvalidateGeometry+twoLayer
+PASS. BLOCKED NET_A:NO_PATH145units/28expansions, nullreturnedlayout/pass3,
+exactly1ordering. Each1group. This is old actualowner+newfixture proof ONLY,
+not new Study wrapper/capture/meter/canary acceptance.
+
+Helper414c9bd15e6a232d6309f67bb16b9c4561e6d4ac27c9cd80b9232a89804d34c3
+static review CLEAR and3 real preflight rejection controls PASS no mutation;
+prepare/finalize/audit still NOT RUN. SelectedPS5 syntax/newline/junction probe
+PASS; R3 launcher0c4a2c8e35227edc34e5c3f6a1e7ea0b90086fd6d5001e18e4d93648c5afaa50
+also suppresses harness diagnostic output from function return. Real selectedPS5
+function-return probe PASS369.8046ms/actualfixturestdout, cleanup proven.
+Earlier compile/constructor/wrapper failures and safe-stopped recovery retained.
+
+Integration still WIP: native owns Study/WIRE/callbacks/canary/export; adapter
+owns PhysicalLayoutMethods.fragment.java; fixture leaf now owns StudyCommon.
+fragment.java (JSON/reflection/hash/Meter/parser helpers); reader owns strict
+read_failed_first.py/tests; inspector owns ConductorMethods/Tests.fragment.py,
+now persisted, for reader integration. Fragments are not extra compiler sources
+or runtime imports. Leaves no heavy runs/spawn/stage/publish. Root gates only.
+Root/API-review caught and sent native nonexistent oldCapture$Study (use actual
+ActualGeneratorBranchOrderStudy$Study), Result.outcome not reason, pre-initpass
+check order, complete-layout vs ownerComplete, reason allowlist and qualitystage
+distinctions. Native addressing. Root also flagged metadataUnits1 omitting Meter
+charges/unmeasured initial hash/setup; full accounting must be reconciled before
+freeze. No final-source compile possible yet; all required Study gates NOT RUN.
+
+No heavy matrix/persistent task process active; only small task-owned evidence/
+emptytarget/control dirs remain, verified junctions removed. Immutable parent/
+old850/P9frozen19/native/helper/raw/class paths preserved. Main5f05b005 keeps
+9tracked6untracked; Desktop e0c36885 keeps7tracked73untracked; only E checkpoint
+and Main mirror edited. Old uncertain resources untouched. Full30 excluded;
+HARD/PSYCHOTIC unavailable/unrun/protectedbodies unread here, historical unread
+UNCERTIFIED. Next integrate/freeze sources and contracts, real1090build/canaries/
+paired authored run, independent literal/actualdata gates, review then publish.
+
+# Historical checkpoint: failed-net-first implementation; early component gates pass
+
+UTC2026-11-07. Standing roadmap continues. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEAD18e763bbee0ca32cc42e02a838e2191d6ac436cd. Prior9d32/18e published and verified;
+completion Gmail1a1b64b17a866cd2 SENT_ONCE, never duplicate. No new publication.
+Playable100=0/betaHELD. No production/admission/epoch/budget/oracle change.
+
+New experiment root OS-temp/tsj-q100-failed-first-b9a0968471ab4187a791fc7f71bd3274.
+PLAN_R1.md77ff9bbbea59afa6bf55aa94078cdf7a8f81f1959dec8396fe3c0b0d90563771
+frozen: actual captured pass2 vector control versus stable actual-failed-net-first
+trial; both fresh owners start expanded0 at identical captured settings including
+prior promotion. Not old pass2 cumulative-budget parity or restart adoption.
+Combined capture/pair/export90s/640groups/5s/32768units; copy1M/4096, original
+expansioncaps/48holes/fourflips/compile60/native480/reader180/cleanup120 unchanged.
+
+Early actual gates recorded in EARLY_GATES_R1.md/R2.md; raw failures retained.
+Fixture1b8 compile FAIL (contains Rectangle API); A050 compiles but constructors
+FAIL (mistaken full-courtyard direction). Full courtyard spans pad; directional
+body keep-out is correct operand. Full courtyard containment/nonoverlap remain.
+Final fixture dd333ff9c448ce012c3c1a4e603be39b70e1ac1d8d7ef79509d12ab21bd17619
+fresh JDK8 component compile PASS781.345ms, real open/blocked constructors
+PASS367.1786ms. Only structural/census proof, no route/finalizer proof. Parent IO
+helper87951c6c/manifest36e80ef3 freshly authenticated1088sources/4120classes.
+
+Helper414c9bd15e6a232d6309f67bb16b9c4561e6d4ac27c9cd80b9232a89804d34c3
+static independent review CLEAR. Three actual preflight rejections PASS with
+specificname/nonempty/junction codes, real childexit2 and no input mutation.
+Full prepare/finalize/audit NOT RUN. Pre-fix B3 helper bytes NOT archived.
+Selected PS5 host probe PASS595.051ms: syntax, LF/CRLF exact matching and real
+junction identity/link-only cleanup. Earlier wrapper newline bugs and safe-stopped
+modern-PS recovery attempt retained. Verified selected-PS5 recovery removed only
+owned link; targets preserved. All returned process cleanup proven.
+
+Disjoint leaves: native owns Study/WIRE (incomplete incremental source); adapter
+owns PhysicalLayoutMethods.fragment.java for native to integrate; reader owns
+read_failed_first.py/tests; inspector owns ConductorMethods/Tests.fragment.py
+for reader to integrate; fixture is frozen. No extra runtime dependency/Java
+source count change. Root owns all actual gates/integration/publication. Leaves
+no heavy runs/spawn/stage/commit/push/notify. Contract finalization pending.
+FOUND needs genuine whole-owner finalizers/full physical operands and independent
+multi-net conductor proof; old one-branch oracles cannot certify a whole layout.
+
+No heavy matrix/persistent task process active. Parent/old850/P9frozen19/native/
+helper/raw/class paths immutable. Main5f05b005 preserves9tracked/6untracked;
+Desktop e0c36885 preserves7tracked/73untracked. Only E checkpoint/Main mirror
+dirty. Old uncertain browser/preview/R7 resources untouched. Full30 excluded;
+HARD/PSYCHOTIC unavailable/unrun, protected bodies unread here; historical unread
+UNCERTIFIED. Next: integrate/freeze Study/WIRE/helper/reader and run fresh1090
+source build plus real complete-net/no-fallback/active-error/paired native gates.
+
+# Historical checkpoint: failed-net-first implementation; early fixture runtime failure
+
+UTC2026-11-07. Standing roadmap continues. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEAD18e763bbee0ca32cc42e02a838e2191d6ac436cd. Prior9d32/18e published and verified;
+completion Gmail1a1b64b17a866cd2 SENT_ONCE, never duplicate. No new publication.
+Playable100=0/betaHELD. No production/admission/epoch/budget/oracle change.
+
+New native-only experiment root OS-temp/tsj-q100-failed-first-b9a0968471ab4187a791fc7f71bd3274.
+PLAN_R1.md77ff9bbbea59afa6bf55aa94078cdf7a8f81f1959dec8396fe3c0b0d90563771
+frozen: actual captured pass2 vector control versus stable actual-failed-net-first
+trial; both fresh owners start expanded0 at identical captured settings, including
+prior promotion. Not old pass2 cumulative-budget parity or restart adoption.
+Combined capture/control/trial/export must fit90s/640groups/5s/32768units;
+copy1M/4096/originalexpansioncaps/48holes/fourflips and all host limits unchanged.
+
+Early REAL component gates only: parent IO helper87951c6c.../manifest36e80ef3...
+authenticated1088sources/4120classes during fixture-prepare-r1/r2 (r2 9190.060ms).
+Fixture1b8dd146 compile FAIL796.003ms: four unsupported Rectangle.contains(rect)
+calls. Original source/logs preserved. Corrected A050ca66 compile PASS811.505ms,
+bootstrap warning only. Constructor probe fixture-native-r2 FAIL373.254ms,
+childexit1: requireOutward courtyard/body assertion. No constructor PASS, routing
+or full1090build proof. A050 source archived source-revisions/fixture-failed-r2.
+Both real returned process receipts prove termination and process-root absence.
+Fixture owner diagnosing actual geometry; assertions stay. Failures are not PASS.
+
+Helper now raw414c9bd15e6a232d6309f67bb16b9c4561e6d4ac27c9cd80b9232a89804d34c3,
+AST only, not runtime gated: distinct parent sourceParent474c versus child18e.
+Pre-fix B3 helper was NOT archived by root; do not claim preserved bytes.
+Native leaf owns NEW Study/WIRE (still writing); fixture leaf owns NEW fixture;
+reader leaf owns NEW read_failed_first.py/test_read_failed_first.py; inspector
+read-only reviews helper. Root owns actual gates/integration/publication. Leaves
+no heavy runs/spawn/stage/commit/push/notify. Source/WIRE contract not final yet.
+FOUND requires genuine whole-owner finalizers plus full physical operands and
+independent multi-net conductor proof; old one-branch oracles cannot certify it.
+
+No heavy matrix/persistent process active. Parent/old850/P9frozen19/native/helper/
+raw/class paths immutable. Main5f05b005 preserves9tracked/6untracked; Desktop
+e0c36885 preserves7tracked/73untracked. Only E checkpoint/Main mirror dirty.
+Old uncertain browser/preview/R7 resources untouched. Full30 owner-excluded;
+HARD/PSYCHOTIC unavailable/unrun, protected bodies unread here; historical unread
+UNCERTIFIED. Next: resolve fixture runtime cause, fresh component gate, reconcile
+final Study/WIRE/helper/reader, fresh1090build and actual canaries/paired gates.
+
+# Historical checkpoint: failed-net-first paired scope frozen; implementation in progress
+
+UTC2026-11-07. Standing roadmap continues until owner stops. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEAD18e763bbee0ca32cc42e02a838e2191d6ac436cd. Implementation9d32c83c4b6ab357e1e75b80a36c131513566a5a
+and receipt18e normally pushed/remote verified. Completion Gmail1a1b64b17a866cd2
+SENT_ONCE, never duplicate. Earlier ce8/474c mail1a1b5dfc1c336500 also SENT_ONCE.
+Initial-outlet accepted result uniform5 across56pairs/4singletons/896queries;
+16literal/24actualrejections/fullconsumer/native1088build/allfinalgates passed.
+No ordering from that metric, production/admission change or playable100.
+
+New root OS-temp/tsj-q100-failed-first-b9a0968471ab4187a791fc7f71bd3274.
+PLAN_R1.md SHA77ff9bbbea59afa6bf55aa94078cdf7a8f81f1959dec8396fe3c0b0d90563771
+CONTRACT FROZEN; SCOPE_DRAFT_R1.md2441d19d... and both source reviews preserved.
+Experiment: paired fresh whole-pass2 captured-order control and stable failed-
+net-first trial; actual terminal failure drives the generic rule, not a seed/net
+hardcode. Both fresh attempts have identical captured settings/caps and expanded0;
+one original Session shares budget across passes, so this explicitly is NOT old
+pass2 cumulative-budget parity or adoption of a reset/restart policy. Combined
+capture+pair still fits unchanged90s/640groups/5s/32768unit envelope.
+
+Capture live Search.nets/promotedNet, terminal failure/livecurrentNet agreement,
+actual policy/max/VIA/cost/strategies/budget via composite genuine old Capture
+forwarder. Old runArm concrete parameter cannot take decorator; use real
+Study/ArmRun constructor, no fictional old NET_ORDER/manifest/host/receipt.
+Prior promotion matters: seed it in BOTH fresh Sessions, let owner compute vector,
+verify exact captured order, then only trial stable-moves actualfailednet before
+any net starts. Pristine state must be proven. Already-first skips duplicate trial.
+pass2/passes0 owner advances genuine finalizers; rejection atpass3 creates no
+fallback Search. Full all-net physical checks needed forFOUND; no partial proof.
+
+Disjoint implementation leaves active, no heavy runs allowed to leaves:
+canonical_capture_native_seams owns source/FailedFirstRoutingStudy.java and
+source/WIRE_R1.md; copper_free_fixtures owns source/FailedFirstFixtures.java,
+real-package two-net open/blocked canaries; canonical_capture_adapter owns
+build_inputs.py, authenticating unchanged parentinitialOutlet helper87951c6c...
+and actual manifest36e80ef3.../1088sources/4120classes, appending two NEWJava
+sources for fresh1090-source build. Parent/old850/P9frozen19/oldnative files and
+data remain immutable/path-preserved. No reader implementation assigned yet;
+agree WIRE/API first, then assign independent reader/tests. Root owns all
+host/integration/acceptance/publication. Leaves no spawn/stage/commit/push/notify.
+
+No new compile/native/route/runtime proof; source files may still be being written.
+All90s/640/5s/32768/copy1M/4096/originalexpansioncaps/48holes4flips and
+compile60/native480/reader180/cleanup120 limits remain. No heavy matrix/persistent
+task process running. Main5f05b005 preserves9tracked/6untracked; Desktop
+e0c36885 preserves7/73. Only E checkpoint and Main mirror dirty; unrelated/sparse/
+old uncertain browser/preview/R7 resources untouched. Full30 excluded,
+HARD/PSYCHOTIC unavailable/unrun, protected bodies unread here, historical unread
+UNCERTIFIED. Playable100=0/betaHELD. Next: collect new source/WIRE/helper/fixture
+hashes/APIs, reconcile contracts, assign reader, run early actual complete-net/
+blocked/no-fallback/active-failure canaries, then fresh final-source paired gates.
+No new milestone publication/email until required proof and root review pass.
+
+# Historical checkpoint: failed-net-first draft source review
+
+UTC2026-11-07. Standing roadmap continues until owner stops. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEAD18e763bbee0ca32cc42e02a838e2191d6ac436cd (publication receipt, normally pushed/
+remoteSHA verified). Initial-outlet implementation9d32c83c4b6ab357e1e75b80a36c131513566a5a
+published; Gmail1a1b64b17a866cd2 SENT_ONCE, never resend. Previous ce8/474c mail
+1a1b5dfc1c336500 also SENT_ONCE. E was clean before this checkpoint; Main/Desktop
+unrelated state remains preserved.
+
+Completed outlet result is uniform:60nets/4singletons/56pairs/896queries,
+all56minimumscores5. Fresh1088-source JDK8/4120classes,16literal,24actual-data
+rejections, complete consumer/canaries/real negatives/finalsource+staged audits
+pass. No degree-based ordering selected or production/admission change.
+Public packet docs/task-evidence/Q100/initial-outlets-r1 and private OS-temp/
+tsj-q100-initial-outlets-7377fc69eb384d7dbef0140fbe649b43 remain unchanged.
+
+New private root OS-temp/tsj-q100-failed-first-b9a0968471ab4187a791fc7f71bd3274.
+SCOPE_DRAFT_R1.md SHA2441d19d7a7b374fc4ed7c860c7c6e90661f2e33b9f2fcca9047409860fc58f4
+is DRAFT/NOT FROZEN/NOT RUN. Hypothesis: one whole pass2 restart on the identical
+unrouted placement, moving only its actual failed net to the front of the actual
+captured net vector and preserving every other order/geometry/width/selector/
+predicate/budget. Generic failure-based rule; no seed/net hardcode in treatment.
+Capture original order including previous failed-net promotion before original
+owners close; no fabricated old NET_ORDER rows/manifests/host/receipts.
+Counterfactual starts0copper/holes as a whole normal ordering does, retaining
+max48holes/four flips and all original search limits. Full genuine Session
+finalizers/all-net physical checks are required for FOUND, no branch substitute.
+
+Read-only leaves review disjoint questions: canonical_capture_adapter covers
+TerminalPrefixInspector/ArmRun and capture-vector/extra callback accounting;
+canonical_capture_native_seams covers Session.advanceWork/Search completion/
+Finalizer/budget and safe one-pass initialization. No files/runs/spawn/publication
+authorized to these leaves. Root owns scope. No new source implementation,
+manifest, compile, native run, accepted routing law or routing evidence yet.
+
+Exact reference remains BASE/SEPARATE root9007199254740993,
+placement-6587958367974952701/routing8445301674744508279, request0/attempt4/pass2,
+QA.C-to-DA.A, globalreceipt307/local77, prefix6b49cfb2..., originalH48.
+Copper-free branch alone previouslyFOUND620units/0holes. Private width-first
+pass2 earlier returned no layout and is NOT ADOPTED; do not repeat it.
+All850 production/P9frozen19/previous native sources/data stay immutable and
+path-preserved. Keep90s/640/5s/32768/copy1M/4096 and60/480/180/120s limits.
+No heavy gate or newly owned persistent process. Old uncertain resources remain.
+Main5f05b0059tracked/6untracked; Desktop e0c368857/73; only report mirror dirty.
+Full30 excluded; HARD/PSYCHOTIC unavailable/unrun, protected bodies unread here,
+historical unread UNCERTIFIED. Playable100=0/betaHELD. Next: resolve actual
+capture/owner seams and freeze a small bounded experiment before implementation.
+
+# Historical checkpoint: initial-outlet publication receipt
 
 UTC2026-11-07. Standing roadmap continues until owner stops. E OS-temp/
 tsj-q100-geometric-reasons-20261106-r1, local codex/q100-geometric-reasons-20261106.
