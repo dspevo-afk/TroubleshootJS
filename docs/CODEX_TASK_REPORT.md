@@ -1,4 +1,48 @@
-# Current checkpoint: initial-outlet diagnostic accepted locally; publication next
+# Current checkpoint: initial-outlet diagnostic published; different routing experiment next
+
+UTC2026-11-07. Standing roadmap continues until owner stops. E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, local codex/q100-geometric-reasons-20261106.
+Implementation9d32c83c4b6ab357e1e75b80a36c131513566a5a, message Add validated
+initial-outlet distribution diagnostic, normally pushed to origin/codex/q100-
+physical-feasibility and exact remote SHA verified. Completion Gmail
+1a1b64b17a866cd2 SENT_ONCE after empty exact-SHA sent search. Private root
+publication-notification-r1.json records it; never duplicate for this milestone
+or its documentation receipt. Earlier ce8/474c mail1a1b5dfc1c336500 also SENT_ONCE.
+
+Accepted finite BASE/SEPARATE metric:60nets/4singletons/56pairs/896queries,
+all56minimumscores5/uniform. No ordering selected, routing/VIA published,
+feasibility/admission or playable100 granted; betaHELD. Fresh1088-source JDK8/
+4120classes, native+original-route canaries,16literal,24actual-data rejection
+controls, complete consumer, real input/junction/failed-build negatives and
+final source/privacy/link audit PASS. Root staged audit confirms23intendedpaths,
+20packetfiles and10verbatimsourcecopies; diff/checks passed. Root owns integrated
+acceptance. Bounded independent static accounting review only; no broad host/
+privacy review or pre-fix runtime PASS claimed.
+
+Private evidence OS-temp/tsj-q100-initial-outlets-7377fc69eb384d7dbef0140fbe649b43;
+j8-initial-r2 manifest36e80ef3..., native-data-r2 and native-observe-r2/parent.json,
+fullconsumer reader-observe-r4, finalaudit publication-check-r2, indexCheck-Staged-R1.
+Public docs/task-evidence/Q100/initial-outlets-r1 contains exact gated sources,
+returned summaries, limits/failures. All source/data/class/runtime inputs remain
+unchanged after acceptance; this receipt changes documentation only. Original850/
+P9frozen19 and every budget/oracle unchanged. No new GWT/Player/electrical/population
+proof. Preserve all earlier failed sources/receipts, including partial-prefix
+reader assumptions and root publication-checker key mistake.
+
+All returned new children terminated with roots/logs absent; owned junctions
+removed, empty targets/classes/evidence retained. No heavy gate running. Old
+uncertain browser/preview/R7 resources untouched. Main5f05b005 retains9tracked/
+6untracked, Desktop e0c36885 retains7/73 normal status; unrelated/sparse data
+preserved. Only E report/roadmap/README receipt and mirrored Main report dirty.
+Full30 excluded; HARD/PSYCHOTIC unavailable/unrun, protected bodies unread here,
+historical unread UNCERTIFIED; playable100=0/betaHELD.
+
+Next unstarted: freeze a different bounded physical-routing/access experiment,
+then actual whole-route/finalizer/clearance/connectivity/access/runtime/functional
+proof before adoption. Uniform local degree is not a new ordering law. Continue
+routine authorized roadmap work; root owns next scope/acceptance/publication.
+
+# Historical checkpoint: initial-outlet local acceptance before publication
 
 UTC2026-11-07. Standing roadmap continues until owner stops. E OS-temp/
 tsj-q100-geometric-reasons-20261106-r1, local codex/q100-geometric-reasons-20261106,

@@ -76,3 +76,9 @@ first-step metric supplies no basis for choosing a new ordering.
 [QUALIFICATION_R1.json](QUALIFICATION_R1.json), [VALIDATION.md](VALIDATION.md),
 [FAILURES.md](FAILURES.md) and [SOURCE_COPIES_R1.json](SOURCE_COPIES_R1.json)
 record candidate, limits, failures and exact source copies.
+
+Implementation `9d32c83c4b6ab357e1e75b80a36c131513566a5a` is published on
+`origin/codex/q100-physical-feasibility`; the exact remote SHA was verified.
+Completion Gmail `1a1b64b17a866cd2` was sent once. The qualification JSON retains
+the accepted prepublication snapshot. This documentation receipt changes no
+gated source/input/result and sends no duplicate completion email.
