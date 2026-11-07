@@ -119,6 +119,19 @@ The [P9 packet](task-evidence/Q100/canonical-reservation-provenance-r1/README.md
 qualifies one cache cell's provenance; production routing/electrical owners,
 model epochs, Player capabilities and admission remain unchanged.
 
+The native-only CopperFreeBranchStudy authenticates that same actual operation1
+terminal callback, detaches its unrouted placement and invokes a fresh normal P07
+Search for the same directed first branch. It retains every pad/domain/courtyard
+constraint and stops at the first Publisher completion. The consumer authenticates
+the existing input auditor, exact compiler/class closure and genuine v6 receipt
+semantic API, then independently reconstructs the new branch geometry. Global
+receipt ordinal and pass-local lineage are distinct identities. Original two-layer,
+quality and conductor owners validate the partial route; the full routing-geometry
+API includes all-net continuity and remains a later whole-board admission gate.
+Literal controls separately exercise that full API and cleanup with an installed
+Search/BranchSearch. The [finite branch packet](task-evidence/Q100/copper-free-branch-r1/README.md)
+changes no production owner, routing rule, epoch, electrical behavior or admission.
+
 CirSim owns reduced nonlinear matrix ordering at the end of simplification,
 before its original matrix/right-side backups. ReducedMatrixOrdering derives a
 deterministic greedy minimum-degree permutation from the undirected union of the

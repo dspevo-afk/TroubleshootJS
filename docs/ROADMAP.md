@@ -747,6 +747,25 @@ its exact remote SHA verified on origin/codex/q100-physical-feasibility.
 Completion Gmail `1a1b5215e6de4f14` was sent once. This publication receipt sends
 no second completion email for that milestone.
 
+The [copper-free same-branch diagnostic](task-evidence/Q100/copper-free-branch-r1/README.md)
+is locally accepted for the exact authored BASE/SEPARATE request0/attempt4/pass2
+QA.C-to-DA.A branch. A fresh Search on the identical placement, before prefix
+copper, publishes one620-unit width13 trace with2turns/0holes/114expansions.
+The independent complete consumer accepts source/process/data binding, global
+receipt307 versus local lineage77 and physical branch reconstruction. Actual
+1087-source JDK8 build, active-branch cleanup canary,47 literal tests and21+13
+actual-data rejection controls pass. Earlier compile, checker-applicability,
+fixture, framing, ordinal and source-binding failures remain failures.
+The full routing-geometry API includes all-net continuity and is not applied to
+this isolated branch; native partial owners and independent checks pass, while
+the positive literal separately passes the unchanged full-board gate. No unique
+blocker or successful whole-board ordering follows. Production850/P9frozen19,
+all caps and electrical/Player behavior remain unchanged. No GWT/population renewal,
+full30, HARD/PSYCHOTIC or playable100 admission. Historical unread remains UNCERTIFIED;
+playable100=0/betaHELD. Next is one frozen bounded ordering/access experiment,
+then actual whole-route/finalizer/clearance/connectivity/access/runtime/functional
+proof before adoption. Publication is pending the final source audit and root review.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

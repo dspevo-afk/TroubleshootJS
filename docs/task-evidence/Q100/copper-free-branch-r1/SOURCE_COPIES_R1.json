@@ -1,0 +1,58 @@
+{
+  "schema": "tsj-copper-free-source-copies-v1",
+  "sourceParent": "59a11b0ef37a582b85fa157c5803df42ecd69ab2",
+  "exactSourceCopies": 10,
+  "files": [
+    {
+      "path": "source/CopperFreeBranchStudy.java",
+      "bytes": 72390,
+      "sha256": "6b7c7f6f57e16362b4fff188d0597c126ba90817973701967a117b6946af712f"
+    },
+    {
+      "path": "source/CopperFreeBranchFixtures.java",
+      "bytes": 8671,
+      "sha256": "ad299a40d2513665885a405c073fec0b84033c0db191bbac5b49595313c12baa"
+    },
+    {
+      "path": "source/WIRE_R1.md",
+      "bytes": 15640,
+      "sha256": "e88411039b6b7438a768280779ac3abbec256ef7995ff305e0bf33c5c2f736a5"
+    },
+    {
+      "path": "read_counterfactual.py",
+      "bytes": 71988,
+      "sha256": "dbe7ee4411d78217d08f118967dee873d63551d908747266145d12d1c44b5806"
+    },
+    {
+      "path": "test_counterfactual.py",
+      "bytes": 22099,
+      "sha256": "338b0005171ee80bb925d9b55356ec86382815e39086aa7e91a368ac14814cb6"
+    },
+    {
+      "path": "PLAN_R1.md",
+      "bytes": 7147,
+      "sha256": "e394fd975547bf0fc9bb79d9c0b628d9564e84f06bf0b5788465d32b214f8ccd"
+    },
+    {
+      "path": "Prepare-Compile-R1.py",
+      "bytes": 5004,
+      "sha256": "5456ddbe81f3cc146dd4ea64da000b49fed97acd215ed793dd40d882f031701d"
+    },
+    {
+      "path": "Finalize-Compile-R1.py",
+      "bytes": 4499,
+      "sha256": "d03d4a7fbb105168b589b3cd1e4750ab1a984f1b3f978f603e9b19f8c8a805a6"
+    },
+    {
+      "path": "Semantic-Controls-R1.py",
+      "bytes": 4066,
+      "sha256": "6281f175d10d67a047183dc208cd8db12b5d49c58a603d42da4ebe8a0042f76c"
+    },
+    {
+      "path": "Branch-Geometry-Controls-R1.py",
+      "bytes": 4243,
+      "sha256": "554e11a21d992b51969c3804c531847fa0c54e457bc545a9494d28a68d396325"
+    }
+  ],
+  "privateEnvironmentRequired": true
+}

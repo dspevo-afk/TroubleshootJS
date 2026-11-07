@@ -1,0 +1,8 @@
+* -text
+# Preserve exact gated source bytes, including their original line endings/EOF.
+read_counterfactual.py whitespace=blank-at-eol,space-before-tab,-blank-at-eof,cr-at-eol
+source/WIRE_R1.md whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+OBSERVATIONS_R1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+CANARY_CONTROLS_R1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+SEMANTIC_CONTROLS_R1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+GEOMETRY_CONTROLS_R1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

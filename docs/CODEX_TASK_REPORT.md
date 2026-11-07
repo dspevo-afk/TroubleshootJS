@@ -1,4 +1,65 @@
-# Current checkpoint: P9 published; same-slot contributor planning next
+# Current checkpoint: copper-free branch diagnostic accepted locally; publication next
+
+UTC 2026-11-07. Standing roadmap continues until owner stops. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEAD59a11b0ef37a582b85fa157c5803df42ecd69ab2. Intended changes: Q100 copper-free
+packet20files and roadmap/architecture/report. No production edits. P9 d36c6e13/
+receipt59a11b0e pushed/verified; Gmail1a1b5215e6de4f14 SENT_ONCE, never duplicate.
+No new diagnostic commit/push/email yet; root review/staging/publication next.
+
+Finite accepted case: same BASE/SEPARATE root9007199254740993,
+placement-6587958367974952701/routing8445301674744508279, request0/attempt4/pass2,
+QA.C-to-DA.A, global receipt307/pass-local lineage77, prefix6b49cfb2... . Identical
+placement before prefix copper: initialH0 versus originalH48, max48/four transitions,
+all pads/courtyards/predicates/roles unchanged. Actual fresh Search/first Publisher
+FOUND63nodes/1trace/0holes/114expansions; independent trace620,width13,2turns,
+cost690, selected endpoints connected. No unique blocker, whole-board feasibility,
+ordering treatment or production adoption follows. Playable100=0/betaHELD.
+
+NativeStudy6b7c7f6f/fixturead299a40/WIREe8841103 HOLD; readerDBE7EE44/tests338B0005
+HOLD. Original850 production/P9frozen19 unchanged. Final1087-source JDK8 compile
+PASS7669.9794ms,4109classes bound. Manifestd70952ca8e13a3a1395c81cc561da5c2db3877f42c681540e6922c71c97fa816,
+class inventoryc70e4c73.... Native canary419.2117ms PASS with actual installed
+Search/Branch at injected phase BRANCH_SEARCH and real finally release. OBS
+12891.392ms PASS; full independent consumer10899.4116ms PASS. Literal47/47,
+authenticated actual-data semantic21/21 and geometry13/13 expected rejections pass;
+real native args/junction and consumer digest/wrong-operation negatives reject.
+
+Measured work12.4253682s/105groups/max1.1771971s/32768units meets90s/640/5s caps.
+Measured native cleanup1.3692ms+0.0338ms; composite parent-minus-work upper bound
+is below120s, includes export/JVM/helper overhead and is not isolated cleanup.
+Full routingGeometry includes all-net continuity: NOT_APPLICABLE for partial OBS,
+allNet NOT_RUN. Native2layer/quality/conductor and independent branch proof PASS;
+positive literal separately passes unchanged full-board validator. PLAN e394fd97
+records this API applicability, not an oracle relaxation.
+
+Private root OS-temp/tsj-q100-branch-first-628b039cd39440b18a2e2131211b61c8;
+data native-data-r4, native parent native-observe-call-r4/parent.json, manifest
+j8-final-r4/run-manifest.json. Packet docs/task-evidence/Q100/copper-free-branch-r1
+has10 exact source/input copies plus10 supplements, returned outputs verbatim,
+no raw operand/manifest/log/class/source-list bodies or personal absolute paths.
+Publication/privacy/link/source-copy/final-input audit PASS10826.1797ms:20files,
+10copies/4returned outputs, parent3456/class4109/native outputs unchanged.
+
+Preserve all failures: initial compile field typo, blocked full-validator misuse,
+fixture E/W overlap, expected-message space, stale plan pin, source-root omissions,
+host CRLF/compiler warnings/path aliases/console framing and duplicate-v6 ordinal/
+clone assumptions. Genuine parent input/receipt APIs now reused unchanged; no old
+host/index fabricated. Earlier injection PASS covers setup only, not active branch.
+Static core review found that blocker; revised fix CLEAR_STATIC_ONLY, then runtime
+F4 passed. Root owns integrated acceptance, publication and mail.
+
+All final children have actual proven exits/absent logs+roots. Owned junctions
+removed nonrecursively after checks; empty targets/classes/evidence retained. Old
+uncertain browser/server children and R7 unknown proof untouched. Main5f05b005
+preserves9tracked/6untracked, Desktop e0c36885 preserves7/73 normal status; sparse
+definitions/unrelated data unchanged. No heavy gate running. Full30 excluded;
+HARD/PSYCHOTIC unavailable/unrun, protected bodies unread here, historical unread
+UNCERTIFIED. No GWT/Player/electrical/population renewal. After publication, next is
+one frozen bounded ordering/access experiment, then whole-route physical/access/
+runtime/functional proof before adoption. Continue routine authorized work.
+
+# Historical checkpoint: P9 published; same-slot contributor planning next
 
 UTC 2026-11-07. Standing roadmap continues until owner stops. Active E OS-temp/
 tsj-q100-geometric-reasons-20261106-r1, local branch codex/q100-geometric-reasons-20261106.
