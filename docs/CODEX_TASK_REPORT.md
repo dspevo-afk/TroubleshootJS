@@ -1,4 +1,60 @@
-# Current checkpoint: copper-free branch diagnostic published; ordering/access scope next
+# Current checkpoint: initial-outlet diagnostic accepted locally; publication next
+
+UTC2026-11-07. Standing roadmap continues until owner stops. E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, local codex/q100-geometric-reasons-20261106,
+HEAD474c0efa072be8cceed019c95a8079a6181bc680. New milestone not yet committed/
+pushed/emailed. Prior ce8b5c4e/receipt474c0efa are published; Gmail1a1b5dfc1c336500
+SENT_ONCE, never duplicate. Root review/staging/publication is next.
+
+Accepted finite metric: exact BASE/SEPARATE root9007199254740993,
+placement-6587958367974952701/routing8445301674744508279, request0/attempt4/pass2.
+All60nets:4singletons,56pairs,896actualquerycalls; all56scores5, distinct1,
+uniform. This metric supplies no ranking discrimination. No ordering selected,
+route/VIA published, feasibility/admission or playable100 granted; betaHELD.
+
+Private root OS-temp/tsj-q100-initial-outlets-7377fc69eb384d7dbef0140fbe649b43.
+NativeCD20C513/WIRE97279DCD/helper87951C6C/readerD4A1A51A/tests88F01D5D/
+controlsAF70F685 HOLD. Final1088-source JDK8 compile PASS7376.5425ms,
+4120classes/inventory534a7159..., manifest36e80ef3be066a4bc146adb193b90fd7da9bc33b9f5288b154d06f0af13593d9.
+Native-data-r2 receipt61455b89.../resulte5921bb2..., actual nativeparent
+native-observe-r2/parent.json. Original850/P9frozen19 byte-identical.
+
+Nativecanary399.1806ms, originalrealSearchcanary426.6315ms, source literal16/16
+433.6363ms, complete consumer17936.9079ms and24/24 actual-data specific-code
+rejections17989.4948ms PASS. Nativeargs/junction, readerwrongdigest/operation
+and genuinefailed-build finalizer negatives reject. Actual installed-router
+injection/finally release and cold replay pass. No hidden metadata fabricated.
+Work12.2925936s/3020787units/168groups/max1.2443619s/32768units; export10.3504ms/
+18units/1group; native cleanup1.3504ms actualsum. Whole nativeparent12.7019824s
+includes JVM/host and is a conservative whole-call upper bound, not isolated cleanup.
+All90s/640/5s/32768/copy1M/4096/48holes/4flips and60/480/180/120s caps unchanged.
+
+Packet docs/task-evidence/Q100/initial-outlets-r1 has20files:10exactsourcecopies,
+4verbatimreturnedoutputs and6supplements. Final publication/input auditR2 PASS
+9033.7389ms: all20files/copies/15actualgates/privacy/links/data/source1088/classes4120
+unchanged. Producer evidence reused only after authenticating the unchanged
+consumed closure through reader-only corrections. No GWT/Player/electrical/
+population renewal. All new returned children terminated, roots/logs absent;
+owned junctions removed, empty targets/classes/evidence retained.
+
+Preserve failures: static Path-factory and work-accounting gaps; false authored
+replay claim; junction cleanup String indexing; malformed oversized literal;
+Map/LHM javac type; generic compile-error code; consoleLF/CRLF wrapper;
+omitted required GROUP sum; wrong demand for allnets visited by failed prefix;
+root packetchecker old inventory key. Corrected source and fresh gates pass,
+old failures/versions/receipts stay in FAILURES.md/EVIDENCE_R1.md. Bounded static
+accounting review CLEAR on F09, root audited CD20's one type-only diff; no whole-
+host independent review or pre-fix runtime PASS claimed.
+
+Main5f05b005 preserves9tracked/6untracked; Desktop e0c36885 preserves7/73 normal
+status; unrelated data/sparse definitions and old uncertain browser/preview/R7
+resources untouched. Full30 excluded; HARD/PSYCHOTIC unavailable/unrun, protected
+bodies unread here, historical unread UNCERTIFIED. Playable100=0/betaHELD.
+Next: inspect/stage explicit intended paths, checks/commit/normalpush origin/
+codex/q100-physical-feasibility, verifySHA, one newcompletionGmail. Then freeze a
+different bounded routing/access experiment; uniform degree is not an ordering law.
+
+# Historical checkpoint: copper-free diagnostic publication receipt
 
 UTC 2026-11-07. Standing roadmap continues until owner stops. Active E OS-temp/
 tsj-q100-geometric-reasons-20261106-r1, local codex/q100-geometric-reasons-20261106.

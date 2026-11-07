@@ -132,6 +132,18 @@ Literal controls separately exercise that full API and cleanup with an installed
 Search/BranchSearch. The [finite branch packet](task-evidence/Q100/copper-free-branch-r1/README.md)
 changes no production owner, routing rule, epoch, electrical behavior or admission.
 
+InitialOutletStudy reuses that genuine operation1 capture for an all-net local
+metric on dedicated copper-free Router faces. It invokes the unchanged normal
+first-pair selector and planar permission predicates in both endpoint directions;
+it advances no branch and publishes no copper. Both layout copies are prebounded
+and charged, and hashing, net enumeration, query and export phases retain the
+original work limits. The consumer derives every pair from the complete PAD
+census, cross-checks observed branches when present, and independently conserves
+GROUP steps and JSON tree/export units. A failed prefix need not have visited all
+nets. The [finite outlet packet](task-evidence/Q100/initial-outlets-r1/README.md)
+records a uniform score across56 paired nets, so this metric selects no ordering.
+Production routing, electrical owners, epochs and admission remain unchanged.
+
 CirSim owns reduced nonlinear matrix ordering at the end of simplification,
 before its original matrix/right-side backups. ReducedMatrixOrdering derives a
 deterministic greedy minimum-degree permutation from the undirected union of the

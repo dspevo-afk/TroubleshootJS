@@ -1,0 +1,58 @@
+{
+  "schema": "tsj-initial-outlet-source-copies-v1",
+  "sourceParent": "474c0efa072be8cceed019c95a8079a6181bc680",
+  "exactSourceCopies": 10,
+  "files": [
+    {
+      "path": "source/InitialOutletStudy.java",
+      "bytes": 79586,
+      "sha256": "cd20c513dee92e170c0c83d4beb7441bad96fbd8f09fdc1dec62f0b4deb04ff9"
+    },
+    {
+      "path": "source/WIRE_R1.md",
+      "bytes": 13757,
+      "sha256": "97279dcd9de3a915977eb0c0d22fa0a8d58f18541cf41a15222a7498872f4224"
+    },
+    {
+      "path": "PLAN_R1.md",
+      "bytes": 6038,
+      "sha256": "d78724b8b26f93b0dc935aa863a50f8fd1efa20b3faeb3401dcd7bea27ead0d2"
+    },
+    {
+      "path": "build_inputs.py",
+      "bytes": 38675,
+      "sha256": "87951c6c464fe4a39ae0b908017a7e857036e543c26b5332ee683839440c4d76"
+    },
+    {
+      "path": "read_initial_outlets.py",
+      "bytes": 41766,
+      "sha256": "d4a1a51aaef19c6cac9d7785ac8c1f9f075b40c2bbbc9289b00758eafeca4074"
+    },
+    {
+      "path": "test_initial_outlets.py",
+      "bytes": 18196,
+      "sha256": "88f01d5dd4d6c9f3f555b73f5e56998b140cc7fbc9b99a1a21f1ae2d14788243"
+    },
+    {
+      "path": "Semantic-Controls-R1.py",
+      "bytes": 17641,
+      "sha256": "af70f685df0a1148d3c65dcd7ed4d8d2f2dc321c150cf5660f8b65e5cea79f34"
+    },
+    {
+      "path": "Host-Path-Controls-R1.py",
+      "bytes": 1276,
+      "sha256": "77c25c03e743b30818519113b13168544d75005afb4b57e9786a402e61671e22"
+    },
+    {
+      "path": "Check-Preexport-Units-R1.py",
+      "bytes": 888,
+      "sha256": "bc4d5fe4db4c96f8b006b7eb76ddb862eb48ef0bacafee10e177c28827b24c70"
+    },
+    {
+      "path": "SOURCE_REVIEW_R1.md",
+      "bytes": 2738,
+      "sha256": "c635903ed6d31672efb6d9ab3ee0a806f9b38b98b1c162198c04daf1bb756498"
+    }
+  ],
+  "privateEnvironmentRequired": true
+}

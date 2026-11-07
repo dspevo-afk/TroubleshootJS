@@ -769,6 +769,23 @@ was normally pushed to origin/codex/q100-physical-feasibility and the exact remo
 SHA verified. Completion Gmail1a1b5dfc1c336500 was sent once; this documentation
 receipt sends no second completion email.
 
+The [initial first-branch outlet diagnostic](task-evidence/Q100/initial-outlets-r1/README.md)
+is locally accepted for the same exact authored BASE/SEPARATE placement. Actual
+unchanged Router predicates measure60 nets:4 singletons,56 pairs and896 queries.
+Every paired net has the same minimum score5; this local metric provides no
+ordering discrimination and no treatment is selected. Source/process/data-bound
+full consumer, fresh1088-source JDK8 compile/4120 classes,16 literal tests,
+24 actual-data rejection controls, active-query cleanup/cold replay and real
+input/junction/failed-build negatives pass. Genuine GROUP totals and the full
+pre-export JSON tree are checked independently. Earlier compile, wrapper, framing,
+schema and partial-prefix interpretation failures remain preserved. Production850/
+P9frozen19, all caps and electrical/Player behavior are unchanged; no fresh GWT/
+population/full30/HARD/PSYCHOTIC or playable100 admission follows. Historical
+unread remains UNCERTIFIED; playable100=0/betaHELD. Final packet/input audit passes;
+root publication is next. Next is a different frozen bounded routing/access experiment,
+then whole-route/finalizer/clearance/connectivity/access/runtime/functional proof
+before adoption; do not infer a new ranking from the uniform metric.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion
