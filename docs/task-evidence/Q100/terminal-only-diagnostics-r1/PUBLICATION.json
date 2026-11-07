@@ -1,0 +1,12 @@
+{
+  "branch": "codex/q100-terminal-only-20261107",
+  "commitMessage": "Separate terminal telemetry from relaxed-bound observations",
+  "completionEmail": "NOT_SENT",
+  "implementationCommit": null,
+  "nextUnstarted": "Bounded cohort scalar-telemetry comparison with authenticated input, strict wire and callback/copy ledger",
+  "remote": "origin",
+  "remoteBranch": "codex/q100-physical-feasibility",
+  "schema": "tsj-terminal-only-publication-v1",
+  "sourceParent": "d97472291e8a2a12e57e79109b189821a181eb27",
+  "status": "VALIDATED_NOT_PUBLISHED"
+}

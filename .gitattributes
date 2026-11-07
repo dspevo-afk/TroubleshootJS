@@ -24,3 +24,4 @@ src/com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.java -text
 src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java -text
 scripts/verify-current-contracts.ps1 -text
 tests/contracts/P07NetOrderContractTest.java -text
+tests/contracts/P07TerminalOnlyDiagnosticsContractTest.java -text

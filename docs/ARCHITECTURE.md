@@ -350,6 +350,14 @@ strips identify the reached pad they actually contact. Restricted-policy face
 limits remain separate from FULLER's two-face PTH capability. A nullable per-request
 diagnostic copies terminal branch counters; sink failures retire that request
 and rethrow on retry without publishing its private routing prefix.
+The opt-in `TerminalOnlyDiagnostics` marker preserves those immutable scalar
+snapshots and callback failure semantics without enabling the optional relaxed-
+bound pristine copies when via capacity remains. Existing full diagnostics keep
+their comparisons; zero-capacity comparisons remain mandatory in every mode.
+Detached owners preserve terminal-only mode through a no-op sink that retains
+no caller callback. The [focused prerequisite](task-evidence/Q100/terminal-only-diagnostics-r1/README.md)
+qualifies this seam; the subsequent authored cohort telemetry needs its own
+input, callback/copy ledger and NULL/OBSERVE comparison.
 The existing width-independent turn lower bound also orders uniform FULLER
 requests; uniform RESTRICTED keeps its original bound, and the role-width flag
 still owns failed-net promotion. Difficult FULLER branches may construct a

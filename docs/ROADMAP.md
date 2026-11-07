@@ -834,6 +834,20 @@ Implementation `4fe169baaa27debf13f1c6e0328efd10eaff3697` was normally pushed to
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
 Gmail `1a1b76e0eab23062` was sent once.
 
+The [terminal-only diagnostics owner prerequisite](task-evidence/Q100/terminal-only-diagnostics-r1/README.md)
+is locally accepted; publication is pending. An explicit opt-in scalar mode
+avoids diagnostic-only relaxed-bound pristine copies with positive via capacity.
+Old full diagnostics, default routing and mandatory zero-capacity verification
+retain their behavior; detached copies preserve the mode without the caller.
+The focused actual-owner suite, nine retained native suites and both final-source
+JDK8/GWT variants pass. Boundary-injection probes are observation-seam tests,
+not authored route evidence. The earlier immutable-source facade was blocked
+before implementation/run and is not accepted by this prerequisite. Next is a
+bounded cohort scalar-telemetry comparison with authenticated input, strict wire
+and callback/copy ledger. No new authored cohort Session, routing treatment,
+electrical/population renewal, full30 or HARD/PSYCHOTIC qualification is granted.
+Playable100 remains0; beta held and all existing limits remain.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

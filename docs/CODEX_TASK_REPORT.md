@@ -1,4 +1,117 @@
-# Current checkpoint: failure-cohort experiment published; D branch-limit scope review next
+# Current checkpoint: terminal-only owner prerequisite accepted; publication pending
+
+UTC2026-11-07. Standing roadmap continues. Active F OS-temp/
+tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
+baseHEADd97472291e8a2a12e57e79109b189821a181eb27. No implementation commit/push/
+new email yet. Latest prior cohort4fe169ba/receiptd9747229 remains normally
+published on origin/codex/q100-physical-feasibility, Gmail1a1b76e0eab23062 SENT_ONCE.
+
+LOCALLY ACCEPTED owner prerequisite: docs/task-evidence/Q100/terminal-only-diagnostics-r1/README.md.
+TerminalOnlyDiagnostics avoids optional relaxed-bound pristine copies when via
+capacity remains; old full/default behavior and mandatory zero-capacity checks
+remain. Detached copies preserve mode without retaining caller. Ownerc382f3bc
+08f8ad65b3501dad57c927dd5c1f9f1c04914ac79edb772f4b4f4e3e; focusedtest2c20e0bb
+c892e1ff8eb4945805b86c28c354425209449e949610e787ad7ce04e. Maintained runner
+registration and exact test-byte attribute accompany the seam. No policy/epoch/
+solver/admission change. Separate read-only owner review and root integrated
+source/test/runner review clear this finite prerequisite, not authored routing.
+
+All7 final gates PASS, actual0/proven termination and process/log absence:
+buildcanary2.5218477s/2.9905964s wrapper; Player98.8513053/99.1069006s;
+Developer133.7977558/134.0453482s; focused29.596164/29.8446556s;
+nativeA28.9966437/29.2435328s; nativeB54.7399988/55.039311s;
+nativeC29.9719984/30.2326741s. Whole maintained commands include internal cleanup;
+isolated cleanup durations unavailable. Outer stderr0, native scratch cleanup
+markers pass; existing compiler warnings remain visible. Ten selected suites:
+TerminalOnly217421, Branch30, Resumption1185, Relaxed2201, Ordering486652,
+RoleWidth169632, FixedPrefix849, AcceptedCapture3736, Detached92602,
+NetOrder2372 assertions. Boundary injection is labeled non-route evidence.
+
+Both JDK8/GWT variants consume1202inputs/357outputs. Playerinputdc1d610e/output
+28fe93c1; Developerinput377aa4e9/output67ac65d0; complete hashes in SOURCE_PROOF.
+Final1075 available-Java-source inventory stable. Maintained runner deletes its
+source list/classes; no retained compiler/class census or new wire-artifact
+provenance is claimed. Manual Player-flow checks NOT APPLICABLE to private seam.
+No Current/full-native/normal3/full30/electrical/population renewal. All source
+inputs stable; doc/attribute publication work requires no unchanged-code rebuild.
+
+Private task root OS-temp/tsj-q100-cohort-branch-capture-0ee7717444ff43e28cc9e8dc4258f81d/
+terminal-owner-seam-r1 retains plan a06ae522, all real call receipts/failures,
+snapshots, source review and drafts. SOURCE_PROOF6f7a0428c2e1b4390e392daa44f92ac84352fd90c09c2369500044d1d41d8425.
+The initial unsupported sparse add --no-cone attempt was rejected before added
+path hydration; corrected existing-mode --stdin. No native/product gate failed.
+All task-only processes returned; Developer build output/caches remain in F.
+Old uncertain browser14116/58320 and preview34180/58264 remain untouched.
+
+E/N accepted artifacts preserved; E only root checkpoint mirror differs. Main
+5f05b005 retains9tracked6untracked0staged; Desktop e0c36885 retains7/73/0.
+No unrelated work staged. F intentional source/test/runner/attribute/docs/packet
+changes await exact staged diff/blob checks, normal commit/push to established
+origin/codex/q100-physical-feasibility, remote SHA verification and one Gmail.
+
+Original immutable-source D telemetry design stays BLOCKED/NOT IMPLEMENTED/
+NOT RUN/NOT ACCEPTED. Next unstarted work is a separately bound cohort scalar
+telemetry comparison: qualified prior input, strict wire, callback/copy ledger,
+fresh genuine capture and at most2 NULL/OBSERVE[A,B] Sessions under original
+90s640groups5s32768/copy1048576chunk4096/original expansions48holes4flips/
+nativecompile60native480reader180cleanup120 limits. No fresh authored Sessions
+were created here. Full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun/protected
+bodies unread here, historical UNCERTIFIED. Playable100=0/betaHELD.
+
+# Historical checkpoint: cohort published; trial terminal-telemetry proof scope frozen
+
+UTC2026-11-07. Standing roadmap continues. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEADd97472291e8a2a12e57e79109b189821a181eb27. Implementation
+4fe169baaa27debf13f1c6e0328efd10eaff3697 plusreceiptd9747229 normally pushed to
+origin/codex/q100-physical-feasibility; exact latestremoteSHAverified. Gmail
+1a1b76e0eab23062 SENT_ONCE; no secondemailforreceipt andno duplicatepriorGmail.
+
+Accepted packet docs/task-evidence/Q100/failure-cohort-ordering-r1/README.md.
+ActualAfrontcontrol NO_PATHB_COIL_LOW554488exp44visited versus[A,B]trial
+CAP_REJECTEDD_COIL_LOW:BRANCH_SEARCH_LIMIT419905exp43visited. Nolayout/noadoption.
+All15finalR3gates PASS:1090-sourceJDK8/4139classes,24literalmethods/17conductor
+cases,fullauthored/canaryconsumers,41rejections,actualhost/helper/input/cleanup.
+Native16.8425845s479groups/max1.1792758s32768; export13.1154ms/domaincleanup
+1.1988ms. Source/copied8blob/privacy/diff/resourceclosure PASS; failurespreserved.
+Finalproducerdc53245d/helpercb8ae8ee/reader84c8dbf2/testseb2ce2d0/controlse66f597d;
+runmanifest1274185600f9da79412f133ba569fb727eba673c7dd672e53abd8dcc5fd28a56.
+Resultcd44ad1c0db81a8f05d8620f49b78a9e06c2274e6739066b438607f532cf1431.
+No freshgates neededfortheunchangeddocumentation-only publicationreceipt.
+
+NEXTownedroot OS-temp/tsj-q100-cohort-branch-capture-0ee7717444ff43e28cc9e8dc4258f81d.
+PLAN_R1.md6658e8e203cbc1341f8052573b7940f8754779f2b9cf59dd78a5ffe8925e76be;
+SCOPE_REVIEW_R1.mdc6b3a05539ffa86df6ba1627c09038dc01c7ecd3930884b15d8af199157aff08.
+FROZEN_PLAN_R1.json:PROOF_SCOPE_FROZEN/WIRE_PENDING/NOT_IMPLEMENTED/NOT_RUN.
+Selectednextproof: passiveimmutableBranchSnapshot/counter observation viaactual
+Diagnostics.onTerminalBranch,firstnonFOUNDterminaleventoffreshcohorttrial.
+Twofresh[A,B]NULL/OBSERVEarms fromsource-authenticatedacceptedcohortinputplus
+freshgenuineoriginalcapture; nobudgetchange,thirdarm/retry/productionpolicy.
+Needstrictnewwire/authenticatedinput/fresharmidentity/observer-ledger beforecode.
+Bindactualpass/net/reason/expansionstoactualtrialterminalproof; nographexport,
+no fabricatedoriginalP07receipt/307lineage77 claimfortheDfailure.
+
+Correctedread-onlyAPIreviewconfirmsactualEowner759831c91345aedab9e78d8c83785019f7e59287a18f4f99f7af14876776c474
+andgeneratorf08cc9a86fc0ef2bf4f372e2d5f3cac2f7aaf15a71e0dd163870d9691807b638.
+InitialreviewcitedDesktop(differenthashes)andwasUNQUALIFIED; recheckedEbefore
+freeze, recommendationunchanged. Existingfullgraphfactoryrequirescontext+observer
+andorderingStreammode; currentadvanceSlicelegacySessioncan'tsilentlyuseit.
+ScalarcallbackisbeforeexhaustionclearsSearch; laterscalarretiredhookisn'ta
+graphcaptureseam. Futuregraphscope needsverifiedsourcecontext/resumablework.
+No code/native/testfornewDtask; no route-feasibilityproof fromAPIreview.
+
+Rootownsnextwire/ownership/integration/acceptance. Allleavesfinished/HOLD;
+noheavy matrixorpersistenttaskprocessactive. Alloldcohortartifactsimmutable.
+E cleanafterreceipt;thisnext-taskcheckpointisitssolependingchange. Main5f05b005
+preserves9tracked6untracked0staged;Desktop e0c36885 preserves7/73/0; guarded
+Mainreportmirroronlyupdated. Olduncertainbrowser/previewresources untouched.
+All90s640groups5s32768/copy1M4096/originalexpansion48holes4flips/
+compile60native480reader180cleanup120 remain. Production850/P9frozen19 unchanged;
+noGWT/Player/electrical/population/admissionrenewal. Full30excluded;
+HARD/PSYCHOTICunavailableunrun/protectedunreadhere/historicalUNCERTIFIED.
+Playable100=0/betaHELD. Standingworknotstopped;nextdefineboundedtelemetrywire.
+
+# Historical checkpoint: failure-cohort experiment published; D branch-limit scope review next
 
 UTC2026-11-07. Standing roadmap continues. Active E OS-temp/
 tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106.

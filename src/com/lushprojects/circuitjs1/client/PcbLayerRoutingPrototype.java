@@ -81,6 +81,8 @@ final class PcbLayerRoutingPrototype {
     interface Diagnostics {
         void onTerminalBranch(BranchSnapshot snapshot);
     }
+    /** Terminal snapshots without optional relaxed-bound observation when via capacity remains. */
+    interface TerminalOnlyDiagnostics extends Diagnostics { }
     /** Optional passive boundary after the complete pass-one net vector is installed. */
     interface NetOrderDiagnostics extends Diagnostics {
         void onNetOrderReady(int pass);
@@ -451,6 +453,9 @@ final class PcbLayerRoutingPrototype {
         return session.result();
     }
     private static final Diagnostics DETACHED_DIAGNOSTICS=new Diagnostics() {
+        public void onTerminalBranch(BranchSnapshot snapshot) { }
+    };
+    private static final TerminalOnlyDiagnostics DETACHED_TERMINAL_ONLY_DIAGNOSTICS=new TerminalOnlyDiagnostics() {
         public void onTerminalBranch(BranchSnapshot snapshot) { }
     };
     private static final FixedPrefixGraphObserver DETACHED_PREFIX_OBSERVER=new FixedPrefixGraphObserver() {
@@ -1072,7 +1077,9 @@ final class PcbLayerRoutingPrototype {
             branchOrderStrategy=source.branchOrderStrategy;
             netOrderStrategy=source.netOrderStrategy;
             budget.expanded=source.budget.expanded;
-            diagnostics=source.diagnostics==null?null:DETACHED_DIAGNOSTICS;
+            diagnostics=source.diagnostics==null?null:
+                source.diagnostics instanceof TerminalOnlyDiagnostics?
+                    DETACHED_TERMINAL_ONLY_DIAGNOSTICS:DETACHED_DIAGNOSTICS;
             roleWidths=source.roleWidths; orderingStream=source.orderingStream;
             fixedPrefixContext=source.fixedPrefixContext;
             fixedPrefixGraphObserver=source.fixedPrefixGraphObserver==null?null:DETACHED_PREFIX_OBSERVER;
@@ -2392,7 +2399,8 @@ final class PcbLayerRoutingPrototype {
                 return policy==Policy.FULLER_TWO_LAYER && holes.length>=maximumVias;
             }
             private boolean relaxedBoundObservationRequired() {
-                return owner.diagnostics!=null || zeroViaCapacity();
+                return (owner.diagnostics!=null &&
+                    !(owner.diagnostics instanceof TerminalOnlyDiagnostics)) || zeroViaCapacity();
             }
             private boolean shouldStartRelaxedBound() {
                 return policy==Policy.FULLER_TWO_LAYER && !relaxedBoundStarted &&

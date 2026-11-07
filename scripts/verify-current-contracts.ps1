@@ -636,6 +636,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'Rb100Load12DetachedBaselineContractTest' -or
         $Suite -contains 'Rb100P07BranchDiagnosticContractTest' -or
         $Suite -contains 'P07BranchDiagnosticsContractTest' -or
+        $Suite -contains 'P07TerminalOnlyDiagnosticsContractTest' -or
         $Suite -contains 'P07OrderingCandidatesContractTest' -or
         $Suite -contains 'P07RelaxedDistanceBoundContractTest' -or
         $Suite -contains 'P07GeometryEpochDiagnosticContractTest' -or
@@ -688,6 +689,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'Rb100Load12DetachedBaselineContractTest' -or
         $Suite -contains 'Rb100P07BranchDiagnosticContractTest' -or
         $Suite -contains 'P07BranchDiagnosticsContractTest' -or
+        $Suite -contains 'P07TerminalOnlyDiagnosticsContractTest' -or
         $Suite -contains 'P07OrderingCandidatesContractTest' -or
         $Suite -contains 'P07RelaxedDistanceBoundContractTest' -or
         $Suite -contains 'P07GeometryEpochDiagnosticContractTest' -or
@@ -1115,6 +1117,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         @{ Name = 'P07TwoLayerContractTest'; Marker = 'P07 two-layer contracts ' },
         @{ Name = 'P07GridEligibilityContractTest'; Marker = 'P07 grid eligibility contracts ' },
         @{ Name = 'P07BranchDiagnosticsContractTest'; Marker = 'P07 branch diagnostics contracts ' },
+        @{ Name = 'P07TerminalOnlyDiagnosticsContractTest'; Marker = 'P07 terminal-only diagnostics contracts ' },
         @{ Name = 'P07OrderingCandidatesContractTest'; Marker = 'P07 ordering candidates contracts ' },
         @{ Name = 'P07NetOrderContractTest'; Marker = 'P07 net-order contracts assertions=' },
         @{ Name = 'P07RelaxedDistanceBoundContractTest'; Marker = 'P07 relaxed bound contracts ' },
