@@ -1,4 +1,112 @@
-# Current checkpoint: P8 published and emailed; P9 contract freeze next
+# Current checkpoint: P9 contract freeze; documentation publication pending
+
+UTC 2026-11-07. Continue until owner stops. Active E is OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEAD4623f1e5680503527a4423c2ca31fb09ede3cbb8. Origin/codex/q100-physical-feasibility
+still contains that exact SHA. Only intended report/roadmap/docs change here;
+zero staged before publication. Main5f05b005 preserves9tracked/6untracked;
+Desktop e0c36885 preserves7/73. Sparse configuration and unrelated work unchanged.
+Report alone mirrors to Main under exact prior-hash guard.
+
+P8 implementationa36240da and receipt4623f1e5 remain published; completion Gmail
+1a1b3ce1e581472d SENT_ONCE. Do not repeat that email. P9 is a separate contract
+substep, not a capture/runtime acceptance. Seven Markdown contracts plus exact
+CONTRACT_SET_R1 ledger now define the one-slot diagnostic. Code, inputs generator,
+actual1085-source JDK8 compile, selected-host/native/reader/controls/cleanup gates
+are NOT RUN. No production/GWT/Player/electrical/population proof is renewed.
+
+Same authored BASE root9007199254740993/place-6587958367974952701/
+route8445301674744508279, req0/attempt4/pass2/receipt307/lineage77/H48,
+A_COIL_LOW QA.C->DA.A; prefix6b49cfb2/graphff6466d2 and original22/selected14
+unchanged. Target parent11/compact10/layer1/bit8, (382,238)->(381,238), H[381][238].
+Actual FULLER source uses outlet6; the query-copy zero does not describe copied
+corridors. Capture raw owner courtyard/prepared corridor, independently derive
+and compare, then aggregate contributors. Prepared corridor/observed MIXED are
+comparison values only. NULL has no tap; OBSERVE retains246 pads; TAP_THROW
+contains its exact sentinel and discards DTO. No edge opening or route treatment.
+
+Static evidence only:14 actual relevant source-file pins match; independent
+schema arithmetic H47/F11/PAD26 gives6208 capture/release and6454 serialization.
+Existing dependency3437 leaves/283692817B and3456 future total are manifest
+arithmetic, NOT source-body closure. Top27, compile1085, exact54/106 host leaves,
+12/17 roles, modeOrder8/13; runtime remains unqualified. Source/host and raw/native/
+reader/control consistency passed bounded read-only review. Root resolved the
+header/footer wording and empty reached-PTH invariant against published P8.
+STATIC_FREEZE_REVIEW_R1 is PASS_DOCUMENT_CONTRACT_FREEZE_ONLY; ledger SHA
+e5e5325644128e2f989e161e31eb1dcb669bfa2e3bfc74fe7f05821cf67bcf2d.
+Actual P6 callback total is bound from its marker (qualified P8=1646,
+prior0), preserving current source/oracles rather than stale zero-total prose.
+
+Private planning root OS-temp/tsj-q100-reservation-provenance-
+9f553163342745b1aade3f8b3b60fefd creation639296150004214634; its new input child
+canonical-reservation-provenance-r1 creation639296189017385625 contains contracts
+only. Preserve drafts, static-source R1 bookkeeping failure/null artifact and R2
+PASS14, and assembly R1 stale-label assertion caught before ledger/publication.
+No actual gate was passed by either failed helper. No persistent process, preview,
+compiled output or native capture launched. Old E06/8928/uncertain resources and
+all prior failed/private evidence stay preserved; no global cleanup claim.
+
+Keep90s/640actual+wrappergroups/5s/32768units/clone1048576/chunk4096/1Mexpansions,
+48holes/4flips/64KiB/8MiBoperation+8MiBhost/40MiBsuite; compile60/audit60/
+native480/reader180/outer1800/cleanup120s. Final native work is whole P9 elapsed
+minus authentic P6 Arm cleanup; credit excludes P9 cleanup, tail/final-index work.
+Full30 owner-excluded; HARD/PSYCHOTIC unavailable/unrun, protected bodies unread
+here, historical unread UNCERTIFIED. Playable100=0/betaHELD. Next: complete normal
+commit/push for this checked documentation-only substep and
+notify once, then implement and freshly qualify P9 under these frozen contracts.
+
+# Historical checkpoint: P9 contract research before integration
+
+UTC 2026-11-07. Continue until owner stops. Active E:
+OS-temp/tsj-q100-geometric-reasons-20261106-r1, local branch
+codex/q100-geometric-reasons-20261106. Actual HEAD4623f1e5680503527a4423c2ca31fb09ede3cbb8,
+"Record geometric diagnosis publication", normally pushed and remote exact SHA
+verified on origin/codex/q100-physical-feasibility. Implementationa36240da2a6be00597cf7299ca89743a14196278
+is published; completion Gmail1a1b3ce1e581472d SENT_ONCE, no second receipt email.
+E was clean before this report-only checkpoint. Main5f05b005 preserves9tracked /
+6untracked; Desktop e0c36885 preserves7/73. Sparse checkout unchanged; only report
+mirrors to Main under hash guard. All unrelated work/failure evidence preserved.
+
+P8 final actual SOURCE33/CANARY17/SUITE8 PASS/currentReader0372/Testffa88; full
+P4/P5/P6/P8,4modes,boththrows,5host/5reader controls,12actualsemanticCLIcases,
+all source/output/process/cleanup gates. Published47 exact sources+12supplements,
+all62 intended paths and source bytes/diff checks verified. Native final1083-source
+JDK8, consumerfull86.095s, cleanup79.696s under original180s/120s. Fourteen first
+guards9escape/4MIXEDreservation/1courtyard; no physical route/adoption/uniqueowner.
+All850production unchanged; no GWT/Player/electrical/population renewal. Full
+evidence, exact final hashes, limits and failed histories remain below/in packet.
+
+P9 scope now CONTRACT RESEARCH ONLY: independently reconstruct the MIXED sentinel
+for parent11/layer1/bit8/(382,238)->(381,238), horizontal slot[381][238]. Same
+BASEroot9007199254740993/place-6587958367974952701/route8445301674744508279,
+req0/attempt4/pass2/receipt307/lineage77/H48, prefix6b49cfb2/graphff6466d2,
+original22/selected14/order unchanged. Published NEXT_RESERVATION_PROVENANCE_PLAN
+requires separate exact input/payload/host/work/cleanup contracts frozen BEFORE
+producer work. Existing receipts lack actual pad bounds/escape/width/clearance /
+touch operands. Capture remains NOT_STARTED; no new tap/code/build/native run.
+
+Private planning root OS-temp/tsj-q100-reservation-provenance-
+9f553163342745b1aade3f8b3b60fefd, creation639296150004214634, contains only
+CONTRACT_FREEZE_NOTES_R0.md. Three leaves are read-only on bounded questions:
+canonical_capture_reader = complete raw operand schema/types/oracle primitives;
+prefix_blocker_inspector = minimal disposable-query tap/overlay/lifecycle seam;
+base_gate_runner = reusable source/host/reader owners versus P9-owned new schemas.
+No leaf may write producer/source, run tests/native, spawn, stage or publish.
+Next root action: integrate their precise source findings and freeze the new
+contracts before assigning any implementation. Preserve original P8 source/pins
+and never forge an old full host/index/receipt or re-root its qualified chain.
+
+Retain90swork/640actual+wrappergroups/5s/32768units/clone1048576/chunk4096,
+1Mexpansions/48holes/4flips/64KiB/8MiBoperation+8MiBhost/40MiBsuite,
+compile60/audit60/native480/reader180/outer1800/cleanup120s. One slot only, no edge
+opening, constraint relaxation, broader prefix/net removal/order/policy/epoch or
+budget change. CircuitJS electrical truth; independent geometry/reserve oracle,
+not Java-computed contributors as expected answer. Playable100=0/betaHELD,
+full30excluded/HARD/PSYCHOTICunavailable; protected bodies unread/unrun here,
+historical unread UNCERTIFIED. Old E06/8928 resources/uncertain children and
+all private evidence retained. No new persistent process or preview launched.
+
+# Historical checkpoint: P8 publication receipt before P9 research
 
 UTC 2026-11-07. Continue until owner stops. P8 implementation
 a36240da2a6be00597cf7299ca89743a14196278, "Diagnose canonical geometric rejections",

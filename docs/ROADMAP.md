@@ -713,6 +713,20 @@ its exact remote SHA verified on origin/codex/q100-physical-feasibility.
 Completion Gmail `1a1b3ce1e581472d` was sent once. This documentation receipt
 sends no second completion email.
 
+The [one-slot reservation diagnostic contracts](task-evidence/Q100/canonical-reservation-provenance-r1/PLAN_R1.md)
+are frozen as a documentation-only prerequisite. The exact parent11 horizontal
+slot retains its original BASE seeds, prefix, graph and22/14 query order. The
+raw schema preserves actual prepared corridors and independently reconstructs
+their FULLER outlet6 geometry before reservation aggregation. Source/host/reader,
+literal controls, work/cleanup and byte contracts retain every existing limit;
+NULL captures nothing and the contained tap control discards its DTO. Static
+14-owner source-pin checks and bounded contract reviews support the freeze only.
+Implementation, actual1085-source compile, selected-host controls, native capture
+and independent runtime result are NOT RUN. Next is that implementation and fresh
+qualification; no routing treatment, production/admission change or renewed
+electrical/Player/population proof follows. Playable100=0/betaHELD; full30 remains
+owner-excluded, HARD/PSYCHOTIC unavailable/unrun, historical unread UNCERTIFIED.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion
