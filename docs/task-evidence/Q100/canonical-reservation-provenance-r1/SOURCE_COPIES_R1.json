@@ -1,0 +1,128 @@
+{
+  "candidateGitParent": "fcc0b6cdcc25ad4765e37ad7d50bd6ccfabe5e71",
+  "derivedFiles": 2,
+  "directFiles": 17,
+  "fileCount": 19,
+  "files": [
+    {
+      "bytes": 964,
+      "origin": "DIRECT",
+      "path": "CONTRACT_SET_R1.json",
+      "sha256": "e5e5325644128e2f989e161e31eb1dcb669bfa2e3bfc74fe7f05821cf67bcf2d"
+    },
+    {
+      "bytes": 15631,
+      "origin": "DIRECT",
+      "path": "CONTROLS_R1.md",
+      "sha256": "1a3211b13a28bca2e464ddff0040de1535ad0416fbc9d199cbc838eba2bd9542"
+    },
+    {
+      "bytes": 20440,
+      "origin": "DIRECT",
+      "path": "HOST_R1.md",
+      "sha256": "383c4c6e0f84d26f82a12a6fed7c1df9cbec2a9dabaf8ccb0b633b48124adeda"
+    },
+    {
+      "bytes": 10777,
+      "origin": "DIRECT",
+      "path": "NATIVE_WORK_R1.md",
+      "sha256": "466dce215c587791d1532d1f491048d33c48e6ce98ec4d721ea21b7c1afb753e"
+    },
+    {
+      "bytes": 5981,
+      "origin": "DIRECT",
+      "path": "PLAN_R1.md",
+      "sha256": "58c5356c92a3b9bba69477c3d8d73d1d02570994c57e7de6cb6094554dab2c84"
+    },
+    {
+      "bytes": 16493,
+      "origin": "DIRECT",
+      "path": "RAW_OPERANDS_AND_ORACLE_R1.md",
+      "sha256": "b9085663d1eec730ad67f8459cd2d9095681cc5d59d82f6abda0061f761f8794"
+    },
+    {
+      "bytes": 10518,
+      "origin": "DIRECT",
+      "path": "READER_R1.md",
+      "sha256": "699852083f9189deca9804fe661e3237e812b813b6eebeded2505733cd956ff9"
+    },
+    {
+      "bytes": 22083,
+      "origin": "DIRECT",
+      "path": "SOURCE_INPUTS_R1.md",
+      "sha256": "c5da5a407397dffdb2d989fb612ccde7bcf2d8bc217fd43db03f46e88ef64abe"
+    },
+    {
+      "bytes": 41809,
+      "origin": "DIRECT",
+      "path": "audit_inputs.py",
+      "sha256": "f2080fa993046bb24627233403a3e499ce843044c7403e8bad5bdfe09ea56998"
+    },
+    {
+      "bytes": 7908,
+      "origin": "DIRECT",
+      "path": "build_overlay.py",
+      "sha256": "a6b5fa66006a0f2a4124d5b4cc34b4b827b4d4d5b0b355f3c658278342a8ef64"
+    },
+    {
+      "bytes": 7864,
+      "origin": "DIRECT",
+      "path": "make_inputs.py",
+      "sha256": "bd82483888fd2a5fee9e1128e4f1c7ccf583222577e2965991972036dc70d65e"
+    },
+    {
+      "bytes": 142669,
+      "origin": "DERIVED",
+      "path": "overlays-r1/PcbNetRouter.java",
+      "sha256": "67965d18e81c284a2afd6a8fe318177a635ca57edbd6ca5cbca0f3fa8e285a88"
+    },
+    {
+      "bytes": 2089,
+      "origin": "DERIVED",
+      "path": "overlays-r1/overlay-manifest.json",
+      "sha256": "d0c2144c47f49aa42c656013fa3baba2ecbf50781a82f8601ad982560dcc785c"
+    },
+    {
+      "bytes": 144910,
+      "origin": "DIRECT",
+      "path": "read_provenance.py",
+      "sha256": "6314c3cfe896319634fbbb322206e9236e662d150c9da6ca2a707c5c2ea9674d"
+    },
+    {
+      "bytes": 90879,
+      "origin": "DIRECT",
+      "path": "run-controls.ps1",
+      "sha256": "a251f014ded0a9b6bfb4ca424ce79961cb38e7ded2755cc57d2ebcaa4d481571"
+    },
+    {
+      "bytes": 123406,
+      "origin": "DIRECT",
+      "path": "run-provenance.ps1",
+      "sha256": "85d55e06468bba7879c67fcc7862e31e5ffddef3046e48d050222096088571df"
+    },
+    {
+      "bytes": 2017,
+      "origin": "DIRECT",
+      "path": "source/CanonicalReservationProvenanceCanary.java",
+      "sha256": "21123518e8bc4a103819910e8fa9ed0d42ae6d7a35bdaa81a419efba03b1edc1"
+    },
+    {
+      "bytes": 115715,
+      "origin": "DIRECT",
+      "path": "source/CanonicalReservationProvenanceStudy.java",
+      "sha256": "545d3cd19fb17743b69c0bcbda38487f509d8d3369fc43b28b70aec1eeaea31f"
+    },
+    {
+      "bytes": 31461,
+      "origin": "DIRECT",
+      "path": "test_provenance.py",
+      "sha256": "33dceb1f03e069b66f42fbf32ea783b99a18fdcc1e28266994926b355ba3fb07"
+    }
+  ],
+  "inputSha256": "2d717040c9b78244cf591857af96cba51bb52366af6c270e70b741db0468bf08",
+  "pathBase": ".",
+  "schema": "tsj-q100-reservation-source-copies-v1",
+  "sourceInventorySha256": "bbf01a9e919d6be5cd8fe72387852fd126a3b1ca72ad7c9343c6a2b9f8b0833e",
+  "sourceParent": "4623f1e5680503527a4423c2ca31fb09ede3cbb8",
+  "status": "PASS_COPIED_SOURCE_BYTES_ONLY"
+}

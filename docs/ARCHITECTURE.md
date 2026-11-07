@@ -106,6 +106,19 @@ mutations. The [finite P8 packet](task-evidence/Q100/canonical-geometric-prefix-
 qualifies14 first-guard observations only, with no production owner, electrical
 model, routing policy, epoch or admission change.
 
+CanonicalReservationProvenanceStudy adds a native-only decorator to that existing
+P8 observer on an already-compared disposable query. One detached 246-pad snapshot
+preserves raw geometry, prepared corridors and the actual nullable reservation;
+NULL has no capture and the contained TAP sentinel discards its DTO. The P9 adapter
+supplies authenticated current invocation metadata to the genuine P8 ancestry and
+uses its unchanged inner semantic kernels with actual payload byte objects.
+The independent consumer rederives the one slot and exposes only contributor
+counts/digests, preserving original22/selected14 proofs and cross-mode parity.
+Complete measured work intervals and separate cleanup retain the existing caps.
+The [P9 packet](task-evidence/Q100/canonical-reservation-provenance-r1/README.md)
+qualifies one cache cell's provenance; production routing/electrical owners,
+model epochs, Player capabilities and admission remain unchanged.
+
 CirSim owns reduced nonlinear matrix ordering at the end of simplification,
 before its original matrix/right-side backups. ReducedMatrixOrdering derives a
 deterministic greedy minimum-degree permutation from the undirected union of the

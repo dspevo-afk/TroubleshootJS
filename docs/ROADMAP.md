@@ -721,11 +721,26 @@ their FULLER outlet6 geometry before reservation aggregation. Source/host/reader
 literal controls, work/cleanup and byte contracts retain every existing limit;
 NULL captures nothing and the contained tap control discards its DTO. Static
 14-owner source-pin checks and bounded contract reviews support the freeze only.
-Implementation, actual1085-source compile, selected-host controls, native capture
-and independent runtime result are NOT RUN. Next is that implementation and fresh
-qualification; no routing treatment, production/admission change or renewed
+The contract freeze alone grants no implementation or runtime proof; the R15
+qualification below completes that separate boundary. No routing treatment,
+production/admission change or renewed
 electrical/Player/population proof follows. Playable100=0/betaHELD; full30 remains
 owner-excluded, HARD/PSYCHOTIC unavailable/unrun, historical unread UNCERTIFIED.
+
+The [one-slot reservation provenance diagnostic](task-evidence/Q100/canonical-reservation-provenance-r1/README.md)
+is locally accepted for the exact authored BASE/SEPARATE parent11 slot. Independent
+raw-geometry reconstruction finds2 pads from2 distinct nets and matches the captured
+MIXED value; it establishes neither unique ownership nor routing feasibility.
+Original22/selected14, NULL/OBSERVE/TAP parity, original throws, fresh1085-source
+JDK8 hosts, source12/host10/reader10 controls, literal12+16 and semantic16 pass.
+The complete controller exits0 in637.104s; the SUITE composite cleanup upper bound
+is101.922s under120s. Earlier failures and R7 unknown process proof stay preserved.
+All limits/oracles remain;850 production files and routing/electrical behavior are
+unchanged. No GWT/Player/population renewal or playable100 admission follows.
+Next is a frozen physical routing treatment or necessary diagnostic informed by
+this finite provenance, then real route/finalizer/clearance/connectivity/access/
+functional proofs. Full30 stays excluded; HARD/PSYCHOTIC unavailable/unrun,
+historical unread UNCERTIFIED; playable100=0/betaHELD.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

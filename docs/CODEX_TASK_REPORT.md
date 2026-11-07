@@ -1,19 +1,881 @@
-# Current checkpoint: P9 contract freeze; documentation publication pending
+# Current checkpoint: P9 R15 finite diagnostic accepted locally; publication next
+
+UTC 2026-11-07. Standing roadmap continues until owner stops. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEADfcc0b6cdcc25ad4765e37ad7d50bd6ccfabe5e71. Only intended P9 packet/globaldocs edits;
+22 intended paths staged; no unrelated index changes. Main5f05b005 preserves9tracked/6untracked; Desktop e0c36885 preserves7/73.
+Contract/P8 push and once-sent emails remain; no P9 runtime commit/push/email yet.
+
+R15 full combined qualification PASS: outer exit0/637103.9118ms, stdout14344B/stderr0,
+returned termination proof/process root absent. Session87145 FINISHED. Status
+PASS_RESERVATION_SUITE_CONTROLS_ONLY; source12/host10/reader10/literal12+16/semantic16
+all pass;38 returned child receipts independently checked with absent logs/roots.
+Fresh CANARY qualifies before authored SUITE. All5 native modes, original22/selected14,
+four NULL/OBSERVE/TAP parity flags, strict source/transport/slot/accounting/cleanup
+oracles pass. Genuine inputs/outputs unchanged, source final rechecked. SUITE17 child
+roles terminate. Native phase82605.3203ms/childwalls69713.7392ms/validcredits27296.9415ms/
+charged55308.3788ms; parent203142.1959ms. Composite cleanup upper101921.7177ms<120000,
+not an isolated cleanup duration. All original budgets/oracles remain unchanged.
+
+Independent result PASS_RESERVATION_PROVENANCE_DIAGNOSTIC_ONLY: exact authored
+BASE/SEPARATE parent11/compact10 BOTTOM H[381][238], original seeds/graph/prefix unchanged.
+Expected/captured MIXED match;2 distinct pad indices/2 distinct nets, set digest
+75f2f591e62749c0522e0e9dfb9cb739e4d7dfeceb99cc65de34d4fcf8f937de.
+No unique blocker, route feasibility, net removal or treatment adoption inferred.
+Playable100=0/betaHELD. Contributor IDs and raw operands remain private.
+
+Private planning root OS-temp/tsj-q100-reservation-provenance-
+9f553163342745b1aade3f8b3b60fefd, source child canonical-reservation-provenance-r1.
+R15 frozen19: reader6314c3cfe896319634fbbb322206e9236e662d150c9da6ca2a707c5c2ea9674d,
+Study545d3cd19fb17743b69c0bcbda38487f509d8d3369fc43b28b70aec1eeaea31f.
+Pins2d717040c9b78244cf591857af96cba51bb52366af6c270e70b741db0468bf08,
+inventorybbf01a9e919d6be5cd8fe72387852fd126a3b1ca72ad7c9343c6a2b9f8b0833e.
+Actual output OS-temp/tsj-p9-s15-53bb49a1; suite-controller-call-r15 retained.
+All input owners HOLD; root owns integration/publication. No heavy gate running.
+
+Local publication packet prepared in E docs/task-evidence/Q100/
+canonical-reservation-provenance-r1:19 exact source copies+8 publication supplements=27files.
+OBSERVATIONS/SEMANTIC outputs exact returned bytes; QUALIFICATIONfcfc0a43... records
+finite work/cleanup/source proof. Source-copy ledger17direct/2derived agrees with
+frozen input bytes. Publication helper exit0/540.9200ms checked all38 process receipts.
+Eight original contracts unchanged; no private pins/logs/source lists/operand bodies
+or contributor IDs copied. README/VALIDATION/FAILURES reviewed; original failures,
+NOTRUN R5/R10 and R7 unknown unreturned process stay unupgraded. Architecture/roadmap
+record only this finite native boundary.19 source files have no personal path/address
+pattern matches. Existing .gitignore masks JSON; only the5 intended public JSONs
+will be explicitly force-added, with no ignore-rule change.
+
+Post-documentation consumed-input recheck PASS7049.4315ms/exit0/361Bstdout/stderr0,
+returned termination/log-root absence; all3456 bodies and current pins/inventory unchanged.
+Publication checker PASS19 exact source copies/27files/2 exact returned outputs/
+relative links/privacy patterns. Normal remote stillfcc0b6cd on established target;
+origin verified GitHub dspevo-afk/TroubleshootJS; local branch has no upstream.
+Initial plain add respected sparse restrictions; explicit --sparse selected only
+the intended paths without changing sparse definitions. First cached check identified
+preserved Router CRLF/controller final blank line; publication-only attributes
+recognize CRLF with default whitespace checks and permit only that snapshot EOF.
+No source bytes or runtime assertions changed. Final cached diff check exit0/empty
+output;22 staged paths/zero unstaged. All19 staged source blobs match gated hashes.
+27-file copy/privacy/link checks pass again. Final post-attribute input audit
+PASS7056.6731ms/exit0/stderr0, all3456 inputs unchanged/process-root absence proved.
+Root reviewed architecture/roadmap/evidence diffs and exact source-copy agreement.
+Next: normal commit/push after final cached check,
+then explicit staging/commit/normal push to established origin/codex/q100-physical-feasibility,
+verify exact remote SHA, send established Gmail once and record publication receipt.
+No P9 publication/notification yet. Next unstarted scope after publication is a frozen
+physical routing treatment or necessary diagnostic informed by this one cache cell,
+then actual route/finalizer/clearance/connectivity/access/functional proofs.
+Full30 excluded; HARD/PSYCHOTIC unavailable/unrun, protected bodies unread here;
+historical unread UNCERTIFIED. No GWT/Player/electrical/population/modest-host/human
+renewal. All unrelated work, old resources/failures and R7 uncertain process proof
+preserved; no global cleanup claim. Focused stagej8-d95e3def retained; no new servers/browsers.
+
+# Historical checkpoint: P9 R15 final-source combined qualification running
+
+UTC 2026-11-07. Standing roadmap continues until owner stops. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEADfcc0b6cdcc25ad4765e37ad7d50bd6ccfabe5e71; only report dirty/zero staged.
+Contract/P8 pushes and once-sent emails unchanged; no P9 runtime publication/email.
+Main5f05b005 preserves9tracked/6untracked; Desktop e0c36885 preserves7/73; zero staged.
+
+Private planning root OS-temp/tsj-q100-reservation-provenance-
+9f553163342745b1aade3f8b3b60fefd; child canonical-reservation-provenance-r1.
+R15 frozen19; root owns host/controller/reader/Study/Canary; all input owners HOLD.
+Reader6314c3cfe896319634fbbb322206e9236e662d150c9da6ca2a707c5c2ea9674d;
+Study545d3cd19fb17743b69c0bcbda38487f509d8d3369fc43b28b70aec1eeaea31f.
+Other program/overlay/contracts unchanged from R14. Genuine P8 ancestor now gets
+only its required authenticated current invocation pinsSha/p6 pinsPath/baseRepository.
+NULL common sidecar scope10/11 fixed; native-index NULL capture ordinals stay null.
+Export group/credit now covers actual delegate return through cutoff, with stream
+restore/registration clear/stdout clear/DTO cleanup measured separately and subtracted.
+Actual preflight handoff timestamp is immediately before P8 call; return timestamp
+immediately after, before P9 flush/check. Full5s and90s caps/formula remain exact.
+Source-only review accepted export alignment in1a180b7e and found preflight gap;
+root then corrected handoff/return in545d3cd1. No independent runtime PASS from review.
+
+R14 retained real NULL P8 component PASS after invocation-context augmentation:
+exit0/30596.0531ms, input recheck/output snapshot stable. Initial private helper
+SyntaxError attempt remains separately preserved; second unique root owns real receipts.
+Root OBS P8 component also PASS30307.753ms. Next scoped OBS operand reconstruction
+passed but native-index credit check FAILED30495.9867ms at P9_NATIVE_INDEX_WORK:
+old credit omitted23600ns of its declared outside interval. Preserved component
+roots p9-p8-semantic-null-r2-bc647cd7...,p9-observe-component-75c28d9c...,
+p9-observe-operands-3dd33d56...; none is whole P9 acceptance. No oracle relaxed.
+
+R15 maker PASS6222.8607ms; source preparation PASS9017.8562ms/1085 sources/3bridges;
+actual selected JDK8 full1085 compile PASS7433.6863ms, stdout0/stderr204B warnings.
+Private control serializer probe compile561.7074ms/stderr92B warnings; native
+NULL425.3992ms/TAP359.3392ms exit0. Selected-I-B consumer384.0978ms exit0/stderr0,
+NULL799B/TAP1068B both ACCEPT. Authored fixtures only; TAP flags prove no cleanup.
+Evidence focused-compile-prepare-r3,focused-compiler-call-r3,focused-control-*-r2,
+control-sidecar-consumer-call-r2; stage OS-temp/tsj-p9-j8-d95e3def owned/retained.
+This compile/component evidence does not qualify native clock runtime or SUITE.
+
+Current complete combined R15 RUNNING, unified session87145, suite-controller-call-r15,
+output OS-temp/tsj-p9-s15-53bb49a1; actual PS5 owner/request/receipts retained.
+Pins2d717040c9b78244cf591857af96cba51bb52366af6c270e70b741db0468bf08,
+inventorybbf01a9e919d6be5cd8fe72387852fd126a3b1ca72ad7c9343c6a2b9f8b0833e.
+R15 fresh internal CANARY QUALIFIED: actual reader exit0/
+PASS_RESERVATION_HOST_CANARY_ONLY, source rechecked/12child roots absent; all5actual
+reader CLI negatives verified exact exit2/code/empty stdout/termination/root absence.
+Authored SUITE RUNNING; its reader,5CLI negatives,semantic16/final closure pending.
+Next monitoractual result; no input edits until gate ends. Only complete applicable
+gates/integrated review allow normal publication and one new Gmail. PrivateFAILURES
+draft needs R14/R15 final update. Caps/exactseed/slot/oracles unchanged. Full30 excluded;
+HARD/PSYCHOTIC unavailable/unrun, protected bodies unread here, historical unread
+UNCERTIFIED. Playable100=0/betaHELD; no production/GWT/Player/electrical/population
+renewal. All unrelated work, old resources/failures and R7 uncertain process proof
+preserved; no global cleanup claim.
+
+# Historical checkpoint: P9 R14 native suite complete; semantic reader failed
+
+UTC 2026-11-07. Standing roadmap continues. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEADfcc0b6cdcc25ad4765e37ad7d50bd6ccfabe5e71; only report dirty/zero staged.
+Contract/P8 pushes/once-sent Gmail unchanged. No P9 runtime acceptance/publication.
+Main5f05b005 preserves9tracked/6untracked; Desktop e0c36885 preserves7/73; zero staged.
+
+R14 whole run FAILED at SUITE_READER_POSITIVE/P9_P8_SEMANTIC. Root exit2/
+585869.0098ms; controller585341.0769ms/32returned processes. Session28949 FINISHED.
+Output OS-temp/tsj-p9-s14-a2c674d5 and suite-controller-call-r14 retained. Fresh
+internal CANARY qualified including realreader/5exact CLI negatives/source recheck/
+12child roots absent; SUITE native NULL,OBSERVE,TAP_THROW,CALLBACK_THROW,REASON_THROW
+all completed with their required host dispositions. Host status remains
+HOST_COMPLETE_READER_PENDING. Actual SUITE reader passed host/process/compiler/
+canary/output validation before semantic integration, then failed; no full
+independent P8/P9 result/parity, semantic16 or final reader recheck acceptance.
+
+Source unchanged: readerfea92539/Studycff84769, all19 inputs HOLD. Diagnostic reader
+trace R1 exit2/400.5046ms stopped at noncanonical forward-slash output argument;
+preserved as invocation failure. R2 uses actual canonical paths, real source audit,
+exit2/27084.3206ms; actual exception chain KeyError 'pinsSha' in pinned P8
+_p6_normal_operation. P9 caller omitted current-invocation metadata after genuine
+load_semantic_parent. Old P8 caller supplies pinsSha=current invocation hash,
+pinsPath=genuine p6Context pins path, baseRepository=actual repository. Next fix
+belongs only to P9 reader assembly; no old manifest/reader/host fabrication.
+
+Separate known NULL producer mismatch confirmed by actual native serializer +
+independent reader component: JSONL common scope ordinals null vs10/11. Minimal
+producer fix is unconditional sidecar scope10/11; native-index NULL capture ordinals
+must remain null. Authored synthetic fixture inputs only; TAP flags assigned and
+prove no lifecycle. Native NULL361.6268ms/TAP432.0124ms exit0; selected-I-B consumer
+exit0/412.2539ms observed NULL P9_HEADER_FIELDS and TAP ACCEPT (not NULL transport
+PASS). Private focused-control-* and control-sidecar-consumer-call-r1 preserved.
+
+No heavy gate running. Leaf building bounded real P8 semantic-component checker
+against untouched R14 data/source: genuine parent/current invocation augmentation,
+real7-byte-object projections, original22+selected14 oracles, no skipped exceptions
+or whole-host claim. All19 source files HOLD until its final recheck. Then root
+owns P9reader fix; native owner Study2-line fix after explicit release; source freeze,
+focused serializer/parser checks and fresh combined full gate required. Other owners
+HOLD. Private FAILURES draftd152afce needs finalR14 update. Old resources, allfailures
+and R7 unknown nested process proof stay unupgraded. No runtime success email.
+Caps/seed/exactslot/oracles unchanged. Full30 excluded; HARD/PSYCHOTIC unavailable/
+unrun, protected bodies unread here, historical unread UNCERTIFIED. Playable100=0/
+betaHELD; no production/GWT/Player/electrical/population renewal.
+
+# Historical checkpoint: P9 R14 combined qualification running after census fix
+
+UTC 2026-11-07. Standing roadmap continues until owner stops. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEADfcc0b6cdcc25ad4765e37ad7d50bd6ccfabe5e71; only report dirty/zero staged.
+Contract/P8 publications and once-sent Gmail unchanged. No P9 runtime publication.
+Main5f05b005 preserves9tracked/6untracked; Desktop e0c36885 preserves7/73; zero staged.
+
+R14 19-file freeze/maker PASS6232.6354ms. Only change from R13 is Study
+cff847698de1dc706052ddf9aedf27acabdf66b8d0015bb03b7afce7a448c9ec:
+P8 selected queryCount/returned count require SELECTED.length14, fine0/14 by mode.
+Exactselected14 order and independent original22 P6/P8 reader unchanged. No coarse14
+assumption added for NULL; genuine P8 reader binds actual sidecar/index coarse sums.
+Old27a49803 source archived; R13 failure and complete bundle stay preserved below.
+Readerfea92539/host85d55e06/controllera251f014/auditorf2080fa9/makerbd824838 unchanged.
+
+Actual source-bound focused preparation PASS9051.5903ms/1085 sources/three copied
+bridges/final input recheck. Real selected JDK8 full1085 compile PASS6975.4544ms,
+stdout0/stderr204B warnings. Extra private read-only metadata probe compile
+PASS543.6061ms/stderr92B warnings; probe JVM PASS456.0652ms/stdout227B/stderr0.
+It directly decoded retained genuine R13 NULL marker/index/P6 cleanup/receipt,
+p8Units6081, actual receipt254groups/820lines, wrong run identity rejected, refs
+dropped. It never invoked generation and does NOT qualify P9 SUITE. Evidence
+focused-compile-prepare-r2,focused-compiler-call-r2,focused-metadata-probe-compile-r1,
+focused-metadata-probe-call-r1. Stage OS-temp/tsj-p9-j8-9669fa50 has recorded owner;
+extra probe class is component-only; final host builds its own fresh exact1085.
+Prepare-Focused-Compile-R2.py700496ba and ReservationP8MetadataProbe.java private.
+
+Current full combined R14 RUNNING: suite-controller-call-r14, unified session28949,
+output OS-temp/tsj-p9-s14-a2c674d5. Exact PS5 launch owner/request/receipts retained.
+Pinsf99157feb306080470d3490770f09df4406aa8d11e85486c75b30727fb105d1e,
+inventoryddc3efd50a0993598cdbc146f8f850f837cd8e27f54cab38c5a23e142b53a7e1.
+All19 inputs HOLD; one heavy matrix. Root owns host/controller/reader/Canary;
+native owner Study HOLD. R14 fresh internal CANARY qualified: actual reader exit0/PASS_RESERVATION_HOST_CANARY_ONLY,
+source rechecked/12child roots absent; all5reader CLI negatives freshly verified
+exact exit2/code/empty stdout/termination/root absence. Authored SUITE now RUNNING;
+whole SUITE reader/5negatives/semantic16/final closure still pending. R13 CANARY
+passed for its recorded source; it is not reused as current-Java qualification.
+No accepted P9 sidecar/index/slot result yet; no P9 runtime acceptance/email.
+
+Read-only source review found another producer mismatch: NULL sidecar header
+queryOrdinal/parentOrdinal null versus independent reader's scope10/11. Native-index
+NULL capture ordinals correctly stay null and must not change. Minimal next producer
+fix is always sidecar scope10/11 (no query capture/getter); all19 running inputs HOLD.
+Real selected-JDK8 serializer component confirmed NULL->P9_HEADER_FIELDS, TAP->ACCEPT
+at actual selected-I-B readerfea92539. Native fixture processes exit0/361.6268ms and
+432.0124ms; consumer exit0/412.2539ms observes that expected pre-fix rejection, not
+successful NULL transport. Authored synthetic serializer inputs only; TAP flags were
+assigned fixture values, no real capture/cleanup proof. No generator or file writes.
+Private NativeControlSidecarProbe.java/Check-Control-Sidecars-R1.py and focused-control-*
+plus control-sidecar-consumer-call-r1 retained. Active bounded R14 remains unchanged
+to preserve owned cleanup/proof; any result is provisional, no acceptance yet.
+
+Next monitoractual R14; preserve any failure, no weakened limits or success claim.
+After complete applicable gates: sanitized packet/integrated review/normal push
+and one new completion Gmail. Private FAILURES draft needs R13/R14 final update.
+Exact root/slot/oracles/caps unchanged. Full30 excluded; HARD/PSYCHOTIC unavailable/
+unrun, protected bodies unread here, historical unread UNCERTIFIED. Playable100=0/
+betaHELD; no production/GWT/Player/electrical/population renewal. All old unrelated
+work/resources/failures and R7 uncertain process proof preserved; no global cleanup.
+
+# Historical checkpoint: P9 R13 CANARY qualified; authored NULL wrapper rejected
+
+UTC 2026-11-07. Continue until owner stops. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEADfcc0b6cdcc25ad4765e37ad7d50bd6ccfabe5e71; only report dirty/zero staged.
+Contract/P8 publications and once-sent Gmail unchanged; no P9 runtime publication.
+Main5f05b005 preserves9tracked/6untracked; Desktop e0c36885 preserves7/73; zero staged.
+
+R13 combined run FAILED, root exit2/471195.01ms, controller470618.5803ms/31 returned
+processes, phaseSUITE_HOST_POSITIVE/HOST_POSITIVE_PROCESS. Session57751 FINISHED.
+Output OS-temp/tsj-p9-s13-77b8ad66 and suite-controller-call-r13 preserved. Its fresh
+precase CANARY fully qualified at readerfea92539/Study27a49803 and R13 pins7b88c4a0:
+source12/literal12+16/host5, real JDK8 compile/P6/P8/P9/native argument5 controls,
+independent readerexit0, five actual reader CLI exact-code negatives, source recheck,
+12 child exit/log-root absence. Then SUITE early host controls passed and NULL began.
+
+Genuine P8 NULL completed/markerwork14336980600ns/aggregate5667809B; new P9 wrapper
+then exit1 IOException at readP8Evidence1137: expected22 in P8 selected-query counts.
+Actual immutable P8 index has queryCount14/returned14/coarse14/fine0 with exact
+selected14 order. Actual P6 prefix-stages has original22 rows and3335 total units;
+P8 prior3335+owned2746=6081. P6 index cleanupPASS/ownersReleased/contextRestored.
+These are producer/retained-metadata facts, not independent whole-suite acceptance.
+Wrapper source assumed full22 at the wrong evidence owner. No OBSERVE/TAP/original
+throws started; no successful P9 sidecar/index or slot diagnosis yet. NULL raw output
+was inspected only after the complete current CANARY qualified.
+
+Failed host codeNULL_P8_PROCESS/phaseNULL/cleanupErrornull. Actual scratch intent
+path now absent; NULL process returned exit1/terminationtrue/log root absent.
+Complete failed-process bundlef157a2e7bc0f4ebabf1f78d2369ce93c, manifest
+42e43530dd522e5c20f3ae5f1efcb101fc1064aae2ccdd40716ee3225250a649 retained.
+R7 unknown nested process proof and all previous failures/resources stay unupgraded.
+
+No gate currently running. Native owner reviewing minimal selected-count correction
+and next metadata fields; no edit authorized yet. Root owns host/controller/reader/
+Canary; other inputs HOLD. Next preserve original22 independent P6/P8 reader oracle,
+fix native selected14 census at its actual owner, focused real-JDK8 metadata component,
+then fresh freeze/pins/current combined CANARY-to-SUITE and semantic16. Reader remains
+fea92539884d669f9d6614983b264f4d2090c41e2033933d02a5bc966037d572; other hashes below.
+Private sanitized FAILURES draft611d0152 is not published/acceptance and will need
+R13 failure update. No runtime publication/email until complete applicable gates.
+Original exact slot/seed/oracles/caps unchanged. Full30 excluded; HARD/PSYCHOTIC
+unavailable/unrun, protected bodies unread here, historical unread UNCERTIFIED.
+Playable100=0/betaHELD; no production/GWT/Player/electrical/population renewal.
+
+# Historical checkpoint: P9 R13 combined CANARY-to-SUITE running
+
+UTC 2026-11-07. Standing roadmap continues until owner stops. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEADfcc0b6cdcc25ad4765e37ad7d50bd6ccfabe5e71; only report dirty/zero staged.
+Contract/P8 push and once-sent Gmail unchanged; no P9 runtime publication/email.
+Main5f05b005 preserves9tracked/6untracked; Desktop e0c36885 preserves7/73; zero staged.
+
+R13 freeze19 inputs bfbd5c03; maker PASS6179.8052ms. Current reader
+fea92539884d669f9d6614983b264f4d2090c41e2033933d02a5bc966037d572;
+all other program/native/contract hashes unchanged from below. Pins
+7b88c4a0e4391960180f4eca5cf514d1cd51e8bea7613fbc9739cfbbd5d86d9f,
+inventory122c2a9b39c7de82167b7a1b38d1689422502f3d0ae2fb7297f7205f6cd54acc.
+Root owns host/controller/reader/Canary; all19 input files HOLD while actual gate runs.
+Private planning root unchanged below. One expensive matrix: suite-controller-call-r13,
+unified session57751, output OS-temp/tsj-p9-s13-77b8ad66. Exact selected PS5 launch
+owner/request/real bounded receipts retained. This combined controller first qualifies
+fresh complete CANARY (source12/literal/host5/actualcompile/native/reader+5negatives)
+before authored SUITE. No requirement/gate omitted; it is the existing frozen sequence.
+Fresh R13 precase CANARY QUALIFIED: actual independent reader exit0/status
+PASS_RESERVATION_HOST_CANARY_ONLY,3456 source leaves rechecked,12 child exits/log
+absence proved. All five actual reader CLI negatives exit2 with exact digest/
+elapsed-type/exit/termination/timing codes, empty stdout and absent process roots.
+Controller advanced past this gate and SUITE early controls to authored SUITE.
+Whole R13 SUITE/semantic acceptance remains RUNNING, no publication.
+
+Focused final-reader closure component PASS: actual R12 CANARY54files/16dirs,
+51indexed artifacts/all HOST; synthetic SUITE106files/30dirs; three in-memory
+operation/extra-row/SHA negatives return exact codes; actual tree unchanged.
+Selected-I-B exit0/125.1287ms, helperb88578a7, result299e6603 in private
+p9-r12-tree-index-component-67728bc719d94680a886001f945eebc2. Component only.
+Win32 identity ABI now explicitly typed for HANDLE/LPCWSTR/FILETIME/BOOL and
+CloseHandle success required. Real pre-fix positive had passed; no false claim
+that old path necessarily failed. Final-reader actual selected-I-B identity component
+exit0/402.1425ms, stdout376B/stderr0, actual25positives/24wrongticks/24missingpaths
+rejected; handles276 before/after. directory-time-component-call-r1 retains real
+bounded receipt/streams, logs absent. This does not replace full host qualification.
+R11/R12 failures and archived readers preserved; source-only reviews scoped below.
+
+Only complete current combined gates/semantic16/source-output-resource proofs and
+integrated diff review permit runtime publication. Caps/oracles/exact one-slot BASE
+identity unchanged. Full30 excluded; HARD/PSYCHOTIC unavailable/unrun, protected
+bodies unread here, historical unread UNCERTIFIED. Playable100=0/betaHELD;
+no production/GWT/Player/electrical/population renewal. All old work/resources/
+failures, including R7 uncertain process proof, preserved. No global cleanup claim.
+
+# Historical checkpoint: P9 reader closure corrections after R12 failure
+
+UTC 2026-11-07. Standing roadmap work continues. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEADfcc0b6cdcc25ad4765e37ad7d50bd6ccfabe5e71; only report dirty/zero staged.
+Contract/P8 publications and once-sent emails unchanged. No P9 runtime publication.
+Main5f05b005 preserves9tracked/6untracked; Desktop e0c36885 preserves7/73; zero staged.
+
+R12 full CANARY FAILED P9_OUTPUT_TREE_CENSUS after real host completed; controller
+exit2, root311585.1495ms/controller311016.3214ms, 20 returned processes. Output
+OS-temp/tsj-p9-c12-6310845e, canary-controller-call-r12 retained. No authored operation.
+Actual files54 exactly match; expected directories13 vs actual16: reader omitted
+controls/P9_BAD_INPUT_SHA, controls/P9_BAD_MODE, controls/P9_BAD_UUID, required
+ancestors of explicit empty control directories. Reader now closes ancestors over
+both leaves and empty dirs. Independent source/schema review also identified
+stale reader operation labels for non-runs artifacts; HOST_R1 requires HOST for
+all such rows, as actual host emits. Reader-only mapping corrected, no host/raw
+artifact/schema/budget/oracle change. Old readercfa6c284 archived.
+
+Current private readerba1c84246ffc09d824a43417ca36f85f50df817a261a7b78e27f00bc0a8025f9.
+Root owns host/controller/reader/Canary; other19-file input owners HOLD. No gate
+currently running; R13 not frozen/run yet. Private root unchanged from below.
+Source review of compact-JSON change found no contract blocker (not runtime proof).
+Actual selected-I-B compact component exit0/472.4262ms, stdout414B/stderr0, returned
+process/log roots absent: 27 retained JSON docs, real host/canary markers,3 positives,
+10 rejects,3 framing rejects, canonical operand accepted/altered bytes rejected.
+Evidence compact-json-component-call-r1; helper218691a3 in private
+p9-compact-json-reader-check-34cf3c3ffc624623a253ba2b179c1741. Pure component only.
+Source-only native lifecycle review finds no blocker in OBS246 historical count,
+TAP DTO drop/sentinel forwarding, or NULL capture isolation; no authored runtime proof.
+
+Next: focused actual-tree/index closure components plus downstream review; then
+fresh19-file freeze/maker/full CANARY including actualreader+5 negatives. Only
+complete current CANARY permits authored SUITE with own precase CANARY and semantic16.
+No P9 authored output read/run. No acceptance/publication before all final gates.
+Original exact identity/oracles/caps remain. Full30 excluded; HARD/PSYCHOTIC
+unavailable/unrun, protected bodies unread here, historical unread UNCERTIFIED.
+Playable100=0/betaHELD; no production/GWT/Player/electrical/population renewal.
+All old resources/failures and R7 uncertain process proof preserved, no global cleanup.
+
+# Historical checkpoint: P9 R12 CANARY at strict compact-JSON boundary
+
+UTC 2026-11-07. Standing roadmap work continues until owner stops. Active E
+OS-temp/tsj-q100-geometric-reasons-20261106-r1, branch
+codex/q100-geometric-reasons-20261106, HEADfcc0b6cdcc25ad4765e37ad7d50bd6ccfabe5e71.
+Only report dirty/zero staged. Contract publication and Gmail1a1b4147e4326b53
+SENT_ONCE; P8 Gmail1a1b3ce1e581472d SENT_ONCE. No P9 runtime publication/email.
+Main5f05b005 preserves9tracked/6untracked; Desktop e0c36885 preserves7/73; both
+zero staged, verified again. Sparse/unrelated work and old failure resources stay.
+
+R11 whole CANARY FAILED at independent reader P9_HOST_RESULT after actual host
+completed source12/literal12+16/host5, JDK8/P6/P8/P9/native five argument controls,
+source rechecks and its cleanup. Host status remains HOST_CANARY_COMPLETE_READER_PENDING,
+not whole acceptance. Outer exit2/302893.1368ms, controller302388.2039ms/20 returned
+processes. Output OS-temp/tsj-p9-c11-e339505e and canary-controller-call-r11 preserved.
+Actual host JSON includes wallMs6637.7970000000059; Python reserialization changes
+it to6637.797000000006. Both represent the same double. Frozen contract requires
+compact finite ASCII JSON, not Python numeric/string spellings. Reader now checks
+strict JSON plus no whitespace outside strings, retaining duplicate/nonfinite/
+overflow/BOM/ASCII/framing rejection, downstream closed schemas/types/order,
+exact raw hashes and canonical operand rules. No host/native/oracle change.
+Old readerc3aea04a archived under private source-revisions-r1.
+
+Planning root OS-temp/tsj-q100-reservation-provenance-
+9f553163342745b1aade3f8b3b60fefd. Root owns host/controller/reader/Canary; other
+input owners HOLD. R12 19-file freeze, eight unchanged contracts. Reader
+cfa6c28463faf66d4d02ce40aff0b3b9a73d29b317a608d6902f2fb723f25bef;
+host85d55e06/controllera251f014/auditorf2080fa9/makerbd824838/Study27a49803 unchanged.
+Maker PASS17771.7881ms. Pinsfe264d21b7ca4fe5344aaafd29571744dc2efdc0eab524fb1b953aaa6b37e60e,
+inventory186b8e84fd0b05f0d231759bfc7aed4697e7859baa20a3069426860595289cf3.
+Actual R12 CANARY running unified session19446, root-call canary-controller-call-r12,
+output OS-temp/tsj-p9-c12-6310845e. Actual owner/returned receipts retained by pinned
+bounded module. One expensive matrix; do not edit its19 inputs. A separate read-only
+component review/test of compact parsing is pending, not whole qualification.
+
+No authored P9 operation run or output read. Only complete current CANARY permits
+SUITE (which owns another precase CANARY). Then actual reader negatives/semantic16,
+source/output/resource proof and integrated review precede runtime publication.
+Budgets90s/640groups/5s/32768units/64KiB/8+8/40MiB;60/60/480/180/1800/120s unchanged.
+Exact authored BASE/SEPARATE parent11 slot identity and independent oracles unchanged.
+Full30 excluded; HARD/PSYCHOTIC unavailable/unrun, protected bodies unread here;
+historical unread UNCERTIFIED. Playable100=0/betaHELD. No production/GWT/Player/
+electrical/population renewal. R7 unreturned nested process proof remains uncertain;
+old resources and all prior failures preserved, no global cleanup claim.
+
+# Historical checkpoint: P9 R11 CANARY running after compiler/consumer seams
+
+UTC 2026-11-07. Continue until owner stops. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEADfcc0b6cdcc25ad4765e37ad7d50bd6ccfabe5e71; only report dirty/zero staged.
+Contract milestone pushed/remote-verified/Gmail1a1b4147e4326b53 SENT_ONCE; P8 mail
+1a1b3ce1e581472d also SENT_ONCE. No P9 runtime acceptance/publication/email.
+Main5f05b005 preserves9tracked/6untracked; Desktop e0c36885 preserves7/73.
+Sparse/unrelated changes and prior resources/evidence remain preserved.
+
+Planning root OS-temp/tsj-q100-reservation-provenance-
+9f553163342745b1aade3f8b3b60fefd; P9 child canonical-reservation-provenance-r1
+has19 frozen files. Root now owns host/controller/reader and Canary; source leaf
+owns auditor/maker, native leaf Study/overlay, reader leaf test; all HOLD. Current
+host85d55e06468bba7879c67fcc7862e31e5ffddef3046e48d050222096088571df;
+controllera251f014ded0a9b6bfb4ca424ce79961cb38e7ded2755cc57d2ebcaa4d481571;
+readerc3aea04abdcafa1c81448f5526905cf3eebd6a7db27dc7593cb9395d4a9a87de;
+auditorf2080fa993046bb24627233403a3e499ce843044c7403e8bad5bdfe09ea56998;
+makerbd82483888fd2a5fee9e1128e4f1c7ccf583222577e2965991972036dc70d65e;
+Study27a49803/test33dceb1f/Canary21123518/G2 a6b5fa66+67965d18+d0c2144c.
+Eight frozen contracts unchanged; no production/seed/epoch/route/budget/oracle changes.
+
+R9 whole CANARY FAILED at P8_CANARY_SCHEMA, root exit2/290738.8296ms, after all
+source12/literal12+16/host5, actual host1085 JDK8 compile exit0/stderr204B warnings,
+P6 native PASS73 (+849 prefix assertions) and P8 native PASS31/assertions1089.
+Host expected an invented schema; unchanged pinned P8 actually emits
+ tsj-q100-geometric-reason-canary-v1. Host/reader now bind that one real schema;
+wrong aliases rejected, no producer/oracle weakened. Source-only/in-memory actual
+selected-PS5 parser check accepts retained real31-case stdout and rejects a changed
+schema. R9 output OS-temp/tsj-p9-c9-2cda6fbf and complete failure bundlea8a54ab6...
+remain. No authored P9 operation. Focused JDK8/P9-literal8 passes remain below;
+they certify only their source subset, not whole host/reader/CANARY acceptance.
+
+Root also corrected native bad-SHA fixture from syntactically-valid64 zeroes to
+not-a-sha256 in host+reader argv expectations. Source/reader digest controls retain
+their genuine wrong-hash semantics. Before any bad native-SHA control could run,
+actual selected JVM component using unchanged compiled R9 Java rejected malformed
+arg2: exit1/350.4847ms, stdout empty/164B exact PREFLIGHT INVALID_INPUT_SHA256 frame,
+both existing sibling output dirs stayed empty. No generation. This is a component,
+not full CANARY. Private focused-bad-sha-call-r1 and Check-R10P8Parser-R1 retained.
+
+R10 maker PASS6308.3414ms; full R10 CANARY NOT RUN because root identified another
+guaranteed current-consumer mismatch first. Reader expected original bridge source
+paths, while host compiles three owned copies and removes scratch before consume.
+Both reader compiler-list/process sites now request only the three substitutions
+using authenticated host.cleanup.scratchPath. Auditor's readonly optional-target
+enumerator now accepts strict canonical absolute missing scratch suffixes after
+cleanup, checks all existing ancestors are directories/no reparse, rejects aliases/
+relative/file ancestors, and admits no new file body. Default genuine1085-source
+closure/whitelist/FQN set unchanged. Maker cached-auditor pin refreshed. Actual
+selected-I-B component: exactly3 substitutions and identical1085 names before/after
+verified scratch removal; seven relative/dot/parent/separator/trailingdot/file/
+fileancestor negatives reject. Reparse fixture NOT RUN; code source-inspected.
+No wholehost proof from this metadata component. Old scripts/evidence preserved at
+OS-temp/tsj-p9-bridge-enumeration-preserve-e601cadec6b24062a0f7eb903852779f.
+
+R11 freeze binds19 current files; maker PASS6203.3477ms. Pinsd4f1417a30b20ad34d20b5dd6ef9b5d7800f134f391719324bb714dc3451b82f,
+inventorya2f882bf650efd1e6b255facd421b91fd2c411a8bce1f6e2e355befa04cb19ef.
+Actual full CANARY RUNNING in unified session27072; private root-call evidence
+canary-controller-call-r11; output OS-temp/tsj-p9-c11-e339505e. owner.json records
+selected PS5 PID/start/executable before pinned bounded launch. One heavy matrix.
+Next: final-source source12/literal/host5, actual host1085 compile/P6+P8+P9/native
+preflight controls, source/output/resource closure, actual reader+five CLI negatives.
+Only then may authored P9 SUITE begin/read output; SUITE owns precase CANARY.
+No current complete CANARY or whole reader/SUITE acceptance. Do not edit inputs
+while this gate runs; preserve all failures; no success publication until accepted.
+
+Keep exact authored BASE/SEPARATE identity and independent oracles below. Budgets
+90s/640groups/5s/32768units/64KiB/8+8/40MiB;60/60/480/180/1800/120s unchanged.
+Full30 owner-excluded; HARD/PSYCHOTIC unavailable/unrun, protected bodies unread
+here, historical unread UNCERTIFIED. Playable100=0/betaHELD. No GWT/Player/
+electrical/population renewal. Old uncertain resources and R7 unreturned nested
+process proof remain unupgraded; no global cleanup claim.
+
+# Historical checkpoint: P9 R9 real host compiler and P8 schema failure
 
 UTC 2026-11-07. Continue until owner stops. Active E is OS-temp/
 tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
-HEAD4623f1e5680503527a4423c2ca31fb09ede3cbb8. Origin/codex/q100-physical-feasibility
-still contains that exact SHA. Only intended report/roadmap/docs change here;
-zero staged before publication. Main5f05b005 preserves9tracked/6untracked;
+HEADfcc0b6cdcc25ad4765e37ad7d50bd6ccfabe5e71. Contract milestone pushed/remote-verified
+and Gmail1a1b4147e4326b53 SENT_ONCE; P8 Gmail1a1b3ce1e581472d also SENT_ONCE.
+No P9 runtime publication/email. E report-only dirty/zero staged; Main5f05b005
+preserves9tracked/6untracked and Desktop e0c36885 preserves7/73. Sparse/unrelated
+work and prior failures/resources stay preserved. Report mirror remains guarded.
+
+Private planning root OS-temp/tsj-q100-reservation-provenance-
+9f553163342745b1aade3f8b3b60fefd/P9 child canonical-reservation-provenance-r1
+has19 frozen files. All owners HOLD; root owns host/controller, leaves source/
+reader/Study/overlay, root Canary. Current hostdb68d0e170512c511e834e45823a8a42cd746f9262c990efed2a97306fff4a85;
+controllera251f014ded0a9b6bfb4ca424ce79961cb38e7ded2755cc57d2ebcaa4d481571;
+auditor2b7b4038/maker52f37357/Study27a49803/Canary21123518/reader cfb21714/
+test33dceb1f/G2 a6b5fa66+67965d18+d0c2144c. Eight frozen contracts unchanged.
+No production/epoch/seed/route policy/budget/oracle changes.
+
+R8 maker/auditor passed6.2074/6.9856s after the observed-size read fix. Actual
+R8 CANARY passed source12/literal12+16/host5, and the positive host source audit
+passed. It FAILED at COMPILE/P9_BRIDGE_MANIFEST_FORMAT before compiler invocation,
+root exit2/251700.3700ms. The genuine pinned519B bridge manifest e31649f0... has
+16CR/17LF; host wrongly required noCR. Output OS-temp/tsj-p9-c8-83fbd265 preserves
+host-failure, intents/source process and complete failure bundle04ea8cf8...;
+created scratch is verified absent; cleanupError=null. Original manifest unchanged.
+
+Root adapter now hashes the exact raw bridge bytes against the genuine P6 pin,
+then parses their original CRLF/LF JSON whitespace with unchanged three-row/name/
+bytes/hash/source checks. No manifest rewrite or historical re-root. Previous host
+e23ff5c4 preserved as planning/host-before-r9-bridge-format.ps1. All earlier failures
+including R7 nested60s audit timeout/missing termination proof remain below.
+
+R9 actual maker PASS6173.0718ms. Pins318d48c80cc6269aee8f9a651e22de710f658e44a3531053f64faeda4937b91e,
+inventoryae0f1dbe237e50a5c1d1b0c11562c5fd1032bfddc5d0fcbc1a8b6262be6420cb.
+Root ran a separate focused compile to expose Java integration errors without
+claiming whole-host qualification: Prepare-Focused-Compile-R1.py authenticates
+actual auditor2b7, validates full3456-source context, copies/hash-checks the three
+pinned bridges, uses its exact expected_compiler_sources(bridge dir)1085 whitelist,
+then rechecks source inputs. Actual prep exit0/9057.0712ms. Stage OS-temp/
+tsj-p9-j8-84d4701f (owner.json retains creation/PID/executable); compiler list SHA
+9d97fe0cc4bcecc5d9ce28c574d6a261bb6d66eaa33fe3df64c42a2b53287b53.
+Actual selected JDK8 source7/target7 compile PASS exit0/7421.6562ms; stderr204B
+warnings retained, stdout empty, termination proven/log roots absent. Root then
+ran real zero-arg P9 native adapter canary: exit0/506.7093ms, exact311B frame,
+8 ordered cases PASS_LITERAL_NATIVE_ADAPTER_ONLY, stderr empty/reaped. No authored
+operation or physical/layout proof. Private focused-compile-prepare-r1,
+focused-compiler-call-r1 and focused-p9-canary-call-r1 retain actual receipts/streams.
+These focus gates do NOT certify the actual host/compiler/consumer wrapper.
+
+Full R9 CANARY is RUNNING via unified session55928. Private root evidence
+canary-controller-call-r9; output OS-temp/tsj-p9-c9-2cda6fbf; owner.json records
+selected PS5 PID/start/executable before bounded launch. Latest observed source
+controls SRC01..07 pass, SRC08 in progress. One heavy matrix only. Next: all current
+source12/literal/earlyhost5, actual host1085 compile/native canaries/source closure,
+actual reader+five negatives. Only full CANARY pass allows authored P9 SUITE;
+SUITE owns its own precase CANARY. Do not edit frozen inputs during this run.
+
+Whole CANARY/reader/SUITE remain unqualified; no production/GWT/Player/electrical/
+population renewal. Exact authored BASE/SEPARATE identity and independent oracles
+remain below. Budgets unchanged:90s/640groups/5s/32768units/64KiB/8+8/40MiB;
+60/60/480/180/1800/120s. Full30 owner-excluded; HARD/PSYCHOTIC unavailable/unrun,
+protected bodies unread here, historical unread UNCERTIFIED. Playable100=0/betaHELD.
+Publish/email runtime milestone only after all actual final-source acceptance.
+
+# Historical checkpoint: P9 R8 audit improvement and bridge preflight
+
+UTC 2026-11-07. Continue until owner stops. Active E is OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEADfcc0b6cdcc25ad4765e37ad7d50bd6ccfabe5e71. Contract milestone remains normally
+pushed/remote-verified; Gmail1a1b4147e4326b53 SENT_ONCE. P8 Gmail1a1b3ce1e581472d
+also SENT_ONCE. No P9 runtime publication/email. E report-only dirty, zero staged.
+Main5f05b005 preserves9tracked/6untracked; Desktop e0c36885 preserves7/73. Sparse,
+unrelated work, prior evidence and old browser/preview resources remain untouched.
+
+Private planning root is OS-temp/tsj-q100-reservation-provenance-
+9f553163342745b1aade3f8b3b60fefd; P9 input child canonical-reservation-provenance-r1
+has19 files. All owners HOLD. Root owns host/controller; native leaf Study and
+source/reader leaves hold. Current auditor2b7b40381b505e6516a2bfb0c2653689b9c3b80903d85dfc468ad819272a028e,
+maker52f37357eb76832f484a092fc954be1550483f536afbe0f012372651d800da15,
+Study27a49803d8e97ff00d36da73ee27783ae89de2b59553c116c91c1a267dba1f8b,
+hoste23ff5c477e245a28fe9d7e19d371d93d8a986383a391113a46db48f687d9a16,
+controllera251f014ded0a9b6bfb4ca424ce79961cb38e7ded2755cc57d2ebcaa4d481571,
+readercfb21714/test33dceb1f/Canary21123518 and G2 a6b5fa66/67965d18/d0c2144c.
+Eight frozen contracts unchanged; no production/epoch/seed/route/budget changes.
+
+R7 maker PASS56861.7168ms. Actual R7 CANARY passed source12/literal12+16/host5,
+then FAILED at positive host SOURCE_PREFLIGHT before output creation/compiler/
+native, root exit2/272179.5669ms. The nested auditor exceeded60000ms; actual
+unreturned-call elapsed60408.0721ms, process=null/terminationProven=false. Do not
+upgrade that missing proof. Retained failure bundle OS-temp/
+tsj-p9-reservation-failure-r1-5ddf1d20b2754e6ab10c9c74320240df (manifest648398eb...,
+complete=false), and pinned helper log root TroubleshootJS/verify-process-
+3156ca5a56534506afa73de3fec02723. Other returned wrapper/child receipts ended with
+proven termination/absent owned logs. Old and uncertain resources stay preserved.
+
+Root diagnostic-only audit/profile against unchanged R7 returned exit0 in
+57852.4369ms; stack samples repeatedly identify Reads.read's stream.read(limit+1),
+including final recheck. This does not turn the nested-host timeout into PASS.
+Default100MiB was requested for each tiny file. Source owner changed only read
+amount to observed before.st_size+1 after the existing size<=limit guard; all
+before/open/fstat/end/reparse/length/hash/stability checks remain unchanged.
+Maker cached-auditor pin refreshed. Selected Windows Python-I-B AST and actual-file
+components PASS: exact limit/hash, oversize/hash rejection, small observed read,
+real append during read rejected, cached-growth recheck rejected. Old scripts and
+components retained in OS-temp/tsj-p9-input-read-bound-preserve-
+15e359e2400141e98eb328d71bae738b; component-result SHA0fe29faf...
+
+Native source-only review found OBSERVE erased historical padRowsRetained before
+index serialization. Authorized minimal fix preserves its246 serialized-row count;
+DTO clear/null/release/reference guards and TAP's0 remain unchanged. Exact old
+Study129ff25f archived in planning/source-revisions-r1; new27a49803 changes only
+that reset to a historical-count comment. No runtime proof inferred from review.
+
+R8 freeze binds19 current files. Actual maker PASS6207.4233ms; separate actual
+auditor PASS6985.5808ms with all3456 files/3437existing/17direct/2derived/850production/
+27top and exact closure. Pinsbd2b80d4de63c4fa722db40db5de385e135fa0c9bbae5bda382430ed6e02fac0,
+inventory6e0d2779a6436238e8a4630f1c1f9f0c07352938f8f1b64dba4b0d47e6a8fb43.
+Actual CANARY controller RUNNING in unified session63394; private call evidence
+canary-controller-call-r8, output OS-temp/tsj-p9-c8-83fbd265. owner.json records
+selected PS5 PID/start/executable before pinned bounded-process launch. No other
+heavy gate runs. Next: full current source12/literal/earlyhost5/1085-source JDK8/
+native/reader+five negatives; only then may authored SUITE start/read P9 case
+output. SUITE owns precase CANARY. Preserve failures; no runtime acceptance until
+all actual final-source gates pass, then normal publication/email once.
+
+Compiler/native/whole-reader/CANARY/SUITE remain unqualified. No production/GWT/
+Player/electrical/population renewal. Keep exact authored BASE/SEPARATE identity
+below and frozen oracles/budgets:90s/640groups/5s/32768units/64KiB/8+8/40MiB;
+60/60/480/180/1800/120s. Full30 owner-excluded; HARD/PSYCHOTIC unavailable/unrun,
+protected bodies unread here, historical unread UNCERTIFIED. Playable100=0/betaHELD.
+
+# Historical checkpoint: P9 R7 input creation and earlier preflights
+
+UTC 2026-11-07. Continue until owner stops. Active E is OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEADfcc0b6cdcc25ad4765e37ad7d50bd6ccfabe5e71. Contract milestone remains pushed,
+remote-verified and emailed once (Gmail1a1b4147e4326b53); P8 notification1a1b3ce1e581472d
+also SENT_ONCE. No P9 runtime acceptance/publication/email. E report-only dirty,
+zero staged. Main5f05b005 preserves9tracked/6untracked; Desktop e0c36885 preserves7/73.
+Sparse state, unrelated work, old resources and all prior evidence remain untouched.
+
+Private planning root stays OS-temp/tsj-q100-reservation-provenance-
+9f553163342745b1aade3f8b3b60fefd. Its P9 input child has19 declared files.
+Eight contract inputs/G2 outputs unchanged. Current auditor2e26a636/maker4225980d,
+reader cfb21714/test33dceb1f, Study129ff25f/Canary21123518 hold. Root now owns host
+and controller after explicitly interrupting their former owners and transferring
+write ownership; leaves remain held. Current hoste23ff5c477e245a28fe9d7e19d371d93d8a986383a391113a46db48f687d9a16;
+controllera251f014ded0a9b6bfb4ca424ce79961cb38e7ded2755cc57d2ebcaa4d481571.
+Prior bytes archived outside the strict input root. Bounded independent read-only
+review found no issue in those R3 root-binding changes; it does not certify R4.
+
+Actual R1 maker/auditor pass at58559.3949/57905.3289ms; first actual CANARY failed
+INPUT_PREFLIGHT_INPUT_PINS_CANONICAL at970.5878ms, before output/compile/native.
+PowerShell switch-continue escaping cause/fix and11171-byte exact component proof
+remain below. R2 maker passed at56951.053ms; pinsc5539ad05301e3a9e58c548ba4b3c8fc174677b212fb4a8cbc36a3fd2c4a3dcb,
+inventoryfff998e653711b020208cfc7415dc802c2d47447d3f0533c87452d6ed6353cce.
+R2 CANARY failed INPUT_PREFLIGHT_ROLE_PIN_ROW, exit2/1129.216ms, again before
+output creation/source controls/compiler/native. Both failures/real receipts/
+streams persist in private canary-controller-call-r1/r2; owned process/log roots
+are absent and termination proven for every returned root call. No old/global
+cleanup claim. R1/R2 success belongs to their candidates, not current changed code.
+
+Cause: generated Router is a nested P9 derived inventory row, not a top27 leaf.
+Controller now authenticates that row's origin/kind/role/path, canonical root,
+actual bytes/hash after inventory parse. Q now derives from the authenticated
+original Source33 path and fixed digest, not P9's unrelated planning parent.
+Host compiler selection also previously matched only the relative path; actual
+metadata has3 such Router rows under different roots. It now selects P9/derived/
+ROUTER_OVERLAY and binds the P9 root/canonical role path. Selected-PS5 AST and
+actual extracted-host-filter component PASS:3 original rows ->1 derived row;
+Router bytes/hash bind and genuine11171 pins bytes still match. This is metadata
+component proof only; Check-R3Metadata-R1.ps1/tool trace retained. No cap, namespace,
+source root, predicate, seed, epoch, route or oracle changed.
+
+R3 maker PASS exit0/57286.3721ms; pins91e4eb7d3a4e432e336602c1432c2a59e4df85c15092616399f665385ea8f110,
+inventoryba46c77aa65cbbf5b5fbea5e21960ac4e5fa9930d292c8c0e435e6f01daaabd2.
+R3 actual CANARY FAILED exit2/57392.4352ms at SOURCE_MUTATION before SRC02 launch.
+It created output OS-temp/tsj-p9-c3-f5faad1f and genuinely passed SRC01 pins-digest
+CLI rejection (exit1/296.1348ms), then stopped. One actual child receipt/decoded
+streams persist; root/stdout35B exposed a separate unintended parent-path echo.
+All returned processes ended with proven termination/log absence; no compiler,
+JDK/native scratch or authored P9 case ran. Failure and partial fixture dirs stay.
+
+Root fixed remaining inventory helpers to use separate row.origin plus relative
+row.path (no P9/ prefix), copy only19 declared P9 files and select SRC06 proof by
+its actual relative path. Source failures now identify their exact case phase;
+parent-directory return is voided so it cannot pollute completion stdout. Bulk
+strict ASCII encoder/decoder replace interpreted per-byte checks, preserving
+non-ASCII/CR and LF-inclusive64KiB rejections. Actual selected-PS5 extracted
+component PASS:3456-row canonical roundtrip5124.2012ms,19 P9 relative leaves,
+three absolute/origin lookups and ASCII127 acceptance/128 encoder+decoder rejection.
+Check-R4Inventory-R1.ps1/tool trace retain this component-only result. Bounded
+source-owner read-only review found all12 mutations align with auditor2e26's
+first rejection codes; it did not run the CLI. Only SRC01 has actually passed.
+
+Reader ordering fix is frozen: reader cfb21714ba1f7ae858a5e8cc11e3155529deacbf836785a438fed630e3a09ae9,
+test33dceb1f03e069b66f42fbf32ea783b99a18fdcc1e28266994926b355ba3fb07.
+Cheap canonical pins/self/auditor authentication plus authenticated actual WinAPI
+Python image/hash precede shared parent-envelope rejection; valid parent still
+runs full3456-source audit, complete host/native and final source/output rechecks.
+Root bounded code review found no concrete issue. AST, synthetic four malformed
+parent components and literal12/16 pass; actual reader CLI still NOT RUN. Optional
+bounded independent bootstrap review is in progress. No limit/schema/oracle changes.
+
+R4 actual maker PASS57094.0113ms, pinsf26fe152/inventory6c1781f5. R4 CANARY then
+passed all12 actual auditor CLI controls and literal12/16, but FAILED at
+CANARY_HOST_CONTROLS_HOST_CONTROL_SEMANTICS (exit2/154165.9993ms). Private output
+OS-temp/tsj-p9-c4-6f0e90f4 retains14 real child receipts/streams:12 source controls,
+literal and first host control. No compiler/native/scratch/authored case. Host01
+fixture incorrectly supplied the valid digest. The valid host input path then
+exposed a separate real host bug: local $matches in Require-PinnedRow was clobbered
+by -cmatch's automatic $Matches, causing a bytes-property exception. Both are fixed;
+Require-SourceRow had the same cause and now also uses a distinct local name.
+Previous bytes preserved outside the strict input root.
+
+R5 maker PASS57199.8373ms (pins145334bc/inventoryeba927b6). Its CANARY was NOT RUN:
+root found the next guaranteed early-contract issue before repeating the matrix.
+Host03's wrong PLAN hash would reach a generic audit-process error. Host now
+validates all27 top file schemas/lengths/digests immediately after its self pin and
+before output creation/auditor invocation, preserving exact P9_INPUT_FILE_HASH.
+No counts/caps/oracles change. Selected-PS5 actual AST-extracted helper components
+pass: valid file/source rows survive regex; wrong file hash rejects; actual top-file
+loop accepts correct metadata and rejects the wrong PLAN digest. These are
+component-only results, not selected-host qualification. Check-R5HostRows-R1 and
+Check-R6HostRows-R1/tool traces retained. Reader/bootstrap independent source-only
+review found no concrete issue in the specified ordering/success path; no runtime
+proof was inferred from it. Prior R4 controls qualify their candidate only.
+
+R6 maker PASS exit0/56725.4543ms; pins9e75ab2f/inventoryf533a863. Its actual CANARY
+passed all12 source CLI controls, literal12/16 and HOST01/02/03 with exact codes
+P9_INPUT_PINS_HASH/P9_INPUT_SELF_PIN/P9_INPUT_FILE_HASH. It FAILED at HOST04's
+HOST_CONTROL_EXIT, exit2/175781.133ms; private output OS-temp/tsj-p9-c6-24a1d0d7
+retains17 actual child receipts/streams. HOST04 itself exited1 with exact
+OUTPUT_EXISTS and all output/scratch/compiler/native flags false, but stdout had
+303B of Import-Module's unapproved-verb warning. No compile/native/scratch/authored
+P9 run. R6 failure/root receipts and unchanged existing empty target are preserved;
+all returned processes ended with proven termination/absent process/log roots.
+
+Root changed only the actual Import-Module invocation to -DisableNameChecking,
+keeping -ErrorAction Stop and exact pinned module bytes. This disables naming
+advice only; no global setting or error handling is weakened. Selected-PS5 actual
+AST-extracted import component PASS:0 output, bounded command exported, nonexistent
+module still fails with Modules_ModuleNotFound. Check-R7Import-R1/tool trace retained.
+Previous hostfb61 source is archived outside the strict input root. No routine
+permission needed; no runtime acceptance/publication/email before complete gates.
+
+R7 integration freeze binds all19 current bytes; other18 match R6 exactly.
+Actual maker is RUNNING via unified session93429 with private maker-call-r7 and
+inputs-r7. owner.json records exact selected PS5 PID/start/executable before the
+unchanged bounded module's child launch/cleanup. Next: actual CANARY in fresh short
+external output; final-source source12/literal/earlyhost5/1085-source JDK8/native/
+reader+five negatives must pass before authored SUITE. SUITE owns precase CANARY.
+No other heavy gate runs. Do not overwrite or relabel older passing/failed evidence.
+R6 passing controls apply to its candidate only; current complete CANARY unqualified.
+
+Complete source12/compiler/native/actual-reader/selected-host success and authored P9 SUITE
+remain NOT RUN/unqualified. No production/GWT/Player/electrical/population renewal.
+Keep exact authored BASE/SEPARATE identity and independent oracles. All frozen
+budgets remain (90s/640groups/5s/32768units/64KiB/8+8/40MiB;
+60/60/480/180/1800/120s). Full30 owner-excluded; HARD/PSYCHOTIC unavailable/unrun,
+protected bodies unread here, historical unread UNCERTIFIED. Playable100=0/betaHELD.
+Resolve actual blockers before runtime acceptance/publication/completion email.
+
+# Historical checkpoint: P9 R2 input creation after first preflight fix
+
+UTC 2026-11-07. Continue until owner stops. E remains OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEADfcc0b6cdcc25ad4765e37ad7d50bd6ccfabe5e71. P9 contract publication/remote
+verification/Gmail1a1b4147e4326b53 SENT_ONCE remains complete; P8 Gmail1a1b3ce1e581472d
+also SENT_ONCE. No runtime milestone is published or emailed. E report-only dirty,
+zero staged; Main5f05b005 preserves9tracked/6untracked, Desktop e0c36885 preserves7/73.
+Report mirrors to Main only under exact prior-hash guard. Other work/sparse state
+and all earlier failure/resource evidence remain preserved.
+
+Private planning root remains OS-temp/tsj-q100-reservation-provenance-
+9f553163342745b1aade3f8b3b60fefd, with nineteen files in its
+canonical-reservation-provenance-r1 input child. All owners HOLD. Stable source:
+auditor2e26a636/maker4225980d, host31c3fe1d, reader6f88823d/test2be09d26,
+Study129ff25f/rootCanary21123518; G2 buildera6b5fa66/Router67965d18/proofd0c2144c.
+Eight frozen contract bytes match published copies. Input auditor no longer embeds
+a personal absolute path: explicit Source33 argument/pins path plus fixed digest,
+basenames and embedded original path links bind genuine Q. Bounded independent
+read-only review found no concrete issue in this change. Public APIs/counts stay.
+Native/reader now preserve actual P8 integer direction3, physical3850/2410->3840/2410,
+grid382/238->381/238; include metadata units, actual two TAP timing segments with
+zero TAP credit, correct reservation-index.json, final post-cleanup guard and
+actual duplicate/aggregate canary boundaries. Reader P8 projection contains only
+seven actual unchanged byte references. Fresh literal12/16 pass, not a whole run.
+
+R1 INTEGRATION_FREEZE SHA544f85a4 bound controller3dfb6cd2. Actual maker PASS,
+exit0/58559.3949ms; separate actual auditor PASS, exit0/57905.3289ms under60s each.
+Pins SHA0cb3c39f78337b4ca6b344b8d4b1ff772c6d2f51098c97c67e1e57b657b8dfbd;
+inventory3c004a7e406ef9b4413b289b4ad8055e1e342c36a82c812b062b1c26eb8627a3,
+748646B. Counts3437existing+17direct+2derived=3456;850production/top27.
+These passes belong to R1, not the changed current controller.
+
+First actual CANARY controller R1 FAILED at INPUT_PREFLIGHT_INPUT_PINS_CANONICAL,
+exit2/970.5878ms, before output creation/source controls/compiler/native. Its actual
+receipt/streams are retained in private canary-controller-call-r1. Root harness
+returned all three real receipts with proven termination and absent owned logs/
+process roots. No global cleanup or old-resource claim. Cause: switch-arm continue
+in the JSON string escape loop appended each escaped character again. Actual first
+mismatch byte38 was an extra backslash. Controllerbf638c6785ec46ba0db9a9d97b18e009b70069620a8bfc4c40ec26e10ba04a87
+(88888B) replaces switch with if/elseif; selected-PS5 AST-extracted serializer now
+matches all11171 genuine pins bytes exactly. R1 failure/pins stay preserved.
+
+R2 integration freeze changes only controller. Fresh maker is running through
+Invoke-RootCall-R1 in private maker-call-r2/inputs-r2, unified session80035;
+owner.json records exact selected PS5 PID/start/executable before launch, unchanged
+bounded-process module owns child/reaping. Root-call harness28aab617 positive/
+negative transport results and the initial mistaken-LF review remain recorded
+below. Do not rerun/overwrite R1. Next: accept or diagnose R2 maker, then actual
+CANARY controller with twelve source controls, literal child, five early host
+negatives, actual1085-source JDK8/native argument canaries, reader+five negatives.
+The host audits fresh source before compile/native and after native. Only after
+CANARY passes may authored SUITE start; it owns its own precase CANARY.
+
+Compiler/native/actual-reader/selected-host success, source12, authored P9 and
+SUITE remain NOT RUN / unqualified. No production/GWT/Player/electrical/population
+renewal. Keep exact BASE/SEPARATE identity, independent oracles and all frozen
+budgets below (90s/640groups/5s/32768units/64KiB/8+8/40MiB;60/60/480/180/1800/120s).
+Full30 owner-excluded; HARD/PSYCHOTIC unavailable/unrun, protected bodies unread
+here, historical unread UNCERTIFIED. Playable100=0, betaHELD. Resolve actual
+blockers before any runtime acceptance/publication/email; then continue roadmap.
+
+# Historical checkpoint: P9 implementation integration, gates pending
+
+UTC 2026-11-07. Continue until owner stops. E remains OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEAD fcc0b6cdcc25ad4765e37ad7d50bd6ccfabe5e71. Published contract milestone is
+verified on origin/codex/q100-physical-feasibility; Gmail1a1b4147e4326b53
+SENT_ONCE. P8 Gmail1a1b3ce1e581472d also SENT_ONCE. Do not duplicate either.
+Only this report is dirty in E, zero staged. Main5f05b005 preserves9tracked/
+6untracked; Desktop e0c36885 preserves7/73. Exact statuses rechecked; unrelated
+worktrees, sparse configuration, prior failures and resources remain untouched.
+
+P9 private root is the canonical-reservation-provenance-r1 child of OS-temp/
+tsj-q100-reservation-provenance-9f553163342745b1aade3f8b3b60fefd. All19 planned
+files exist; nine program files are being integrated against the eight frozen
+contract inputs and two G2 outputs. Source auditor171ed7ae/maker4222ab12 and G2
+buildera6b5fa66/Router67965d18/proofd0c2144c hold. Root Canary21123518 holds.
+Host31c3fe1d holds after selected-PS5 AST and extracted marker/classifier checks
+only. Controller66362a78 passed AST but a bounded independent read-only review
+found raw returned receipts were validated before retention and attempt-write
+failures swallowed; owner is correcting this. Native Study/reader/test still
+changing; no current-source compile or whole-run acceptance is claimed.
+
+Root inspected actual published P8 target parent11/compact10: direction is the
+exact integer3; physical3850/2410->3840/2410, grid382/238->381/238. Root's earlier
+string-direction advice was wrong; native/reader owners are correcting it to the
+existing P8 contract, with no contract or oracle change. Native index filename
+must match HOST reservation-index.json. Review also found metadata units omitted
+from the native combined sum and weak fixture-only duplicate/output guards;
+owner is fixing these before freeze. Existing four reader development FAILs,
+corrected fresh tests and both failed G2 insertions remain recorded below.
+
+A private root-call runner28aab617 uses the selected PS5 and unchanged process
+module. Actual isolated Python positive exit0 and negative exit3 were retained,
+with termination proven and process/log roots absent. The first negative review
+wrongly expected LF from Windows text stderr and FAILED; actual retained CRLF
+bytes were inspected and rechecked without rerunning or altering source. This
+proves only root harness transport/reaping, no P9 selected-host acceptance.
+
+Next: finish owner fixes, freeze hashes, run actual maker/auditor/body closure,
+then serial early CANARY and final SUITE with all frozen controls. No P9 authored
+case, compile/native/reader/host/source12 controls or heavy gate has run. No new
+persistent process/preview or production/GWT/Player/electrical/population proof.
+Keep all frozen identities, independent oracles and budgets below; full30 remains
+owner-excluded, HARD/PSYCHOTIC unavailable/unrun, protected bodies unread here
+and historical unread UNCERTIFIED. Playable100=0, betaHELD. Do not publish P9
+runtime acceptance or email it until actual final-source acceptance passes.
+
+# Historical checkpoint: P9 contracts published; implementation in progress
+
+UTC 2026-11-07. Continue until owner stops. Active E is OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEADfcc0b6cdcc25ad4765e37ad7d50bd6ccfabe5e71, Freeze one-slot reservation diagnostic
+contracts. Normally pushed; exact SHA verified on origin/codex/q100-physical-feasibility.
+E was clean after publication; this receipt/checkpoint is report-only, zero staged. Main5f05b005 preserves9tracked/6untracked;
 Desktop e0c36885 preserves7/73. Sparse configuration and unrelated work unchanged.
 Report alone mirrors to Main under exact prior-hash guard.
 
 P8 implementationa36240da and receipt4623f1e5 remain published; completion Gmail
-1a1b3ce1e581472d SENT_ONCE. Do not repeat that email. P9 is a separate contract
-substep, not a capture/runtime acceptance. Seven Markdown contracts plus exact
-CONTRACT_SET_R1 ledger now define the one-slot diagnostic. Code, inputs generator,
-actual1085-source JDK8 compile, selected-host/native/reader/controls/cleanup gates
-are NOT RUN. No production/GWT/Player/electrical/population proof is renewed.
+1a1b3ce1e581472d SENT_ONCE. Do not repeat that email. The separate P9 contract
+substep was published as fcc0b6cd; completion Gmail1a1b4147e4326b53 SENT_ONCE
+after exact-SHA duplicate search returned empty. Private publication receipt SHA
+3d57687dc8a10b30ab4c2e8ffd570dc34c1e984fafc5bd326e57dd9e4f45e9cb.
+Do not repeat either completion email. No capture/runtime acceptance. Seven Markdown contracts plus exact
+CONTRACT_SET_R1 ledger define the one-slot diagnostic. Implementation is assigned
+and in progress; actual1085-source JDK8 compile, selected-host/native/reader/
+controls/cleanup gates remain NOT RUN. No P9 authored case has run. No production/GWT/Player/electrical/population proof is renewed.
 
 Same authored BASE root9007199254740993/place-6587958367974952701/
 route8445301674744508279, req0/attempt4/pass2/receipt307/lineage77/H48,
@@ -39,10 +901,44 @@ prior0), preserving current source/oracles rather than stale zero-total prose.
 
 Private planning root OS-temp/tsj-q100-reservation-provenance-
 9f553163342745b1aade3f8b3b60fefd creation639296150004214634; its new input child
-canonical-reservation-provenance-r1 creation639296189017385625 contains contracts
-only. Preserve drafts, static-source R1 bookkeeping failure/null artifact and R2
+canonical-reservation-provenance-r1 creation639296189017385625 starts with eight
+immutable contracts; nine program files and two derived leaves are being authored.
+Native owner prefix_blocker_inspector owns builder/Study/derived; root owns the
+Canary frame wrapper via stable Study.runCanaries(); source
+owner base_gate_runner owns maker/auditor; canonical_capture_reader owns reader/
+test; host_retention_finish owns host; prefix_blocker_owner owns controller.
+Leaves preserve others, never publish/spawn, and run no heavy gate until root
+coordinates all final current files. IMPLEMENTATION_COORDINATION_R1 records APIs.
+SUITE owns its precase CANARY host/reader/negative proof at fixed sibling paths;
+common source/literal controls run once, both host/reader mode sets run before
+acceptance. Controller host/consumer results are ordered arrays, no new CLI args
+or summary keys; all retained success evidence shares40MiB. Source-auditor
+launch intents are constructed in memory before invocation (preflight precedes
+output creation); actual receipts/argv/walls prove the calls. Other declared
+intent files remain persistent pre-launch. No extra fields/leaves are invented.
+Metadata units count scalar entries, not4096-entry chunks. Preserve drafts,
+static-source R1 bookkeeping failure/null artifact and R2
 PASS14, and assembly R1 stale-label assertion caught before ledger/publication.
-No actual gate was passed by either failed helper. No persistent process, preview,
+No actual gate was passed by either failed helper. Interim Reader3b08/Test9e116
+passed development12/16 only. Root cached3b08 and reproduced4 additional FAILs:
+zero-area intersection, unsupported negative courtyard-distance rejection, huge
+raw opposite-face escape and complete=1 accepted. PURE_READER_COUNTEREXAMPLES_R1
+and PURE_READER_BEFORE_FIX_R1 preserve them; owner is fixing these plus strict
+type/width/copper/line-bound findings. No pre-fix PASS qualifies current source. Reader4f0919/Test37fd18 fresh literal
+12/16 and root same4 counterexamples now PASS development-only; exact source and
+PURE_READER_COUNTEREXAMPLES_R2 retained. Live reader integration remains pending.
+Source auditor171ed7ae/maker4222ab12 are ready/holding with component checks and
+bounded independent fixes review: canonical aliases reject, early -I/-B guards,
+maker verifies cached auditor bytes before exec; full body/input gates NOT RUN.
+G2 strict proof first FAILED formatting mismatch; archive preserved. Root then
+wrongly approved80101 offset, caught invalid nested method by actual diff before
+compile. Raw CRLF byte inspection corrected PASSIVE to80109/DETACH71035. Final
+buildera6b5fa66/Router67965d18/manifestd0c2144c pass strict3-edit/4-complement
+component proof and root actual-diff review only; Study/Canary compile NOT RUN.
+Native metadata census is scalar leaves of actual P8 marker11 + P8 index + P6
+index + one actual receipt record leaf/line. Byte passes are both indices+receipt
+once plus3 sidecar passes, ceil(bytes/4096) each; index4 units separately.
+No persistent process, preview,
 compiled output or native capture launched. Old E06/8928/uncertain resources and
 all prior failed/private evidence stay preserved; no global cleanup claim.
 
@@ -51,9 +947,11 @@ Keep90s/640actual+wrappergroups/5s/32768units/clone1048576/chunk4096/1Mexpansion
 native480/reader180/outer1800/cleanup120s. Final native work is whole P9 elapsed
 minus authentic P6 Arm cleanup; credit excludes P9 cleanup, tail/final-index work.
 Full30 owner-excluded; HARD/PSYCHOTIC unavailable/unrun, protected bodies unread
-here, historical unread UNCERTIFIED. Playable100=0/betaHELD. Next: complete normal
-commit/push for this checked documentation-only substep and
-notify once, then implement and freshly qualify P9 under these frozen contracts.
+here, historical unread UNCERTIFIED. Playable100=0/betaHELD. Next: integrate the
+nine program files/derived proof, review actual edits, close exact fresh inputs,
+then serially run early CANARY and final-source SUITE with all frozen controls.
+Do not publish P9 diagnostic acceptance or send its completion email until those
+actual gates and root acceptance pass.
 
 # Historical checkpoint: P9 contract research before integration
 
