@@ -1,4 +1,1519 @@
-# Current checkpoint: P7 published; deeper geometric attribution is next
+# Current checkpoint: P8 final candidate accepted; explicit staging and publication
+
+UTC 2026-11-07. Continue until owner stops. Active E is
+OS-temp/tsj-q100-geometric-reasons-20261106-r1, branch
+codex/q100-geometric-reasons-20261106, HEAD0891474cadc4b9e00d7911e81c124721a11efb87.
+Three intended docs and two P8 evidence folders are staged; all seven intended
+JSONs included by exact force-add under the existing evidence ignore rule.
+Actual62paths, no commit/push/email yet. Non-cone sparse checkout unchanged.
+Main5f05b005 preserves9tracked/6untracked; Desktop e0c36885 preserves7/73. Only
+report mirrored to Main with hash guard. P7 published316eba54/receipt0891474 /
+Gmail1a1b0db5d47f0af1 sent once. Preserve all unrelated work and prior evidence.
+
+Final P8 is locally accepted for exact BASE root9007199254740993 /
+place-6587958367974952701 / route8445301674744508279, req0/attempt4/pass2,
+receipt307/lineage77/H48, prefix6b49cfb2/graphff6466d2, original22/selected14.
+Actual first guards:9 start-escape direction/4 MIXED face reservation/1 QA courtyard.
+All22 P5/P6 projections, six parity boundaries and both exception paths pass.
+No unique owner, valid constraint relaxation, physical route, board feasibility,
+policy/epoch change or playable100 admission follows. All850production unchanged.
+
+Private Q=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
+BASE=Q/canonical-geometric-prefix-study-r1. Final frozen hashes:
+Study5c87dce6244934879bc0c4681ce40cbc97fdad81ed677211772838ac4e3adf9a;
+Inspectorf834651cd9ce977713b5345897d054bc541d4297f77e50661f545f55b3973afd;
+Hosta5ed8009be43e1986b91c243347715fbaa1fe3713563972dd071d02fd7ff53fe;
+Reader0372a850b058f1fe37f37d80dcbd0f467ee60c1b50b63ddbd22394c21416eba9;
+Testffa88f8e6bfb5507c437d8dcbac456333fd02807a8632d62d3ab48c069e24320.
+Controllerc495e515/Makera10de16b/Auditora1ccce88/contracts c02fab1a/HOST9eedb0bb
+and observer qualification755f921b/pins11b3fa45 unchanged. All writers frozen.
+EOF quality issue fixed by removing4terminalLFbytes, identical prefix/AST,
+onefinalLF retained; no whitespace exemption added. Old175a passes preserved.
+
+SOURCE33 PASS final17stable, pins
+b3bca1391fcb8e229e6f34dddddfc52ae77447a02a064d9e7eb8a30e7bc8ba7a;
+result1d002779...20355, helper40056 exit0/proven33413.656ms. Historical function
+probes/12cases retain old-auditor-result fixture limitation, not whole-host proof.
+CANARY17 PASS actualwholehost/11exactrows, outer50c9fa20...5afeb;
+controller214412.0118ms, consumer44699.5635/full45309.5269ms,
+cleanup52568.3687<120000/source+outputs unchanged/owned resources absent.
+SUITE8 PASS actual fresh whole gates, no historical adapters: Q/
+geometric-prefix-suite-controls-r8-937528a7cb052a2e03b67efad2c639dd.
+Owner29312/start639296140214941652 absent/exec52458 chunkc3a725 exit0;
+controller8780/start639296140220592004 exit0/proven396053.4945ms/exactCRLFstdout.
+Consumer29044/start639296142060634115 exit0/proven84984.2617ms /
+full86094.8497<180000. SemanticCLI23484/start639296143315271886 exit0/proven,
+85762.0312ms, positive+all12 exact cases/genuineoutput unchanged. All5host+5reader
+negative controls pass. Normal/oldthrow/newthrow units6081/6081/1646/5965;
+groups257/257/101/101. Nativewalls13467.9667/13061.0147/12361.6156/12745.4448ms;
+nativephase55526.1794, cleanup29276.85+tail50419.0109=79695.8609<120000.
+All28receipt owners/roots absent; scratchc877e857...2e49f creation639296140610382856
+actuallyabsent. Source1084/850/25/current17 and80outputs12396181B rehashedunchanged.
+Final actual1083-source JDK8/P6+31-caseP8/four native input controls pass.
+Outer77b92fdc...3cc17 / closeout117772f6...32ed0 (tool/postexit only, not module
+receipt) / controls13a45281...f3009 / parentcc765b8f...5abe5 / host987be83a...8f215 /
+consumerdb47e772...a8240 / closure0c34b6c0...af04a / semantic80db67b9...ae388.
+Root reviewed actual full receipts. All earlier failed runs remain FAIL.
+
+Final private packet Q/publication-sources-draft-r2-9e7d0ba0f38d4cc99d55b5c6b4194ab1:
+59files/1484211B,47exactsourcecopies/1405334B, replaced only verified prior task-owned
+files in E. OBSERVATIONS exactreturnedUTF8 SHA721a78f7...6c184; semantic18416fbe...8a78f.
+No private pins/rawprocess logs/personal paths copied. Source-only ledger covers47;
+12authored supplements are Git-bound. Private enclosing draft inventory46 excluded.
+README resolutionroot wording fixed; optional source-only reviewer confirmed59
+boundary and no other scope blocker. Root verified all59 staged files equal final
+controlled packet bytes, all47 source blobs match authenticated inventory, all62
+paths exact, and no unstaged changes at that boundary. Personal-path/private-log
+scan PASS. Full and cached git diff--check PASS after real EOF fix. Source33/C17/S8
+remain final-source runtime proof; later edits are authored docs only.
+Next: final report-stage check; commit; verify
+branch/remote; normal push to origin/codex/q100-physical-feasibility; verify SHA;
+one connected Gmail; record publication receipt without duplicate completion mail.
+
+Limits90s/640actual+wrappergroups/5s,32768units/clone1048576/chunk4096,
+1Mexpansions/48holes/4flips,64KiBframing,8MiBoperation+8MiBhost/40MiBsuite,
+compile60/audit60/native480/reader180/outer1800/cleanup120s unchanged.
+Playable100=0/betaHELD, full30 owner-excluded, HARD/PSYCHOTIC unavailable/unrun;
+protected bodies unread/unrun here, historical unread UNCERTIFIED. No GWT/Player /
+electrical/population or arbitrary-clone replay renewal; original external pinned
+path/tool/parent chain required. Old E06/8928 resources/uncertain children,
+failure evidence and other worktrees preserved. Next unstarted milestone is P9
+one-slot MIXED reservation provenance; publication then separate contract freeze
+must precede its passive native capture.
+
+# Historical checkpoint: P8 SOURCE R33/CANARY R17 accepted before SUITE R8 result
+
+UTC 2026-11-07. Continue until owner stops. Active E is
+OS-temp/tsj-q100-geometric-reasons-20261106-r1, branch
+codex/q100-geometric-reasons-20261106, HEAD0891474cadc4b9e00d7911e81c124721a11efb87.
+Tracked changes: architecture/roadmap/report; new P8 BASE and frozen-observer
+evidence folders;55 paths currently staged from prior qualified175a candidate.
+Seven intended JSON artifacts are ignored by the repository rule and must be
+force-added by exact path after refresh (expected62 total); no ignore-rule change.
+No commit. Non-cone sparse checkout unchanged. Main5f05b005
+preserves9tracked/6untracked; Desktop e0c36885 preserves7/73. Only the report is
+mirrored to Main under a prior-hash guard. P7 published316eba54/receipt0891474,
+Gmail1a1b0db5d47f0af1 sent once. No P8 commit/push/email yet.
+
+P8 finite geometric-reason diagnosis is locally accepted for prior175a+ffa88
+after root actual full
+receipts review:14 original selected cut queries report9 start-direction guards,
+4 MIXED face reservations and1 QA courtyard guard. Original22 P5/P6 projections,
+NULL/OBSERVE route/graph/result/effect/source parity and both distinct exception
+paths pass. This establishes no unique owner, valid relaxation, routing benefit
+or physical-board feasibility. Same BASE root9007199254740993 /
+place-6587958367974952701 / route8445301674744508279, req0/attempt4/pass2,
+receipt307/lineage77/H48, prefix6b49cfb2/graphff6466d2. No new seed/order/policy /
+epoch/adoption; all850 production/1084 baseline source inputs unchanged.
+
+Private Q=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
+BASE=Q/canonical-geometric-prefix-study-r1. Frozen source candidate:
+Study5c87dce6244934879bc0c4681ce40cbc97fdad81ed677211772838ac4e3adf9a;
+Inspectorf834651cd9ce977713b5345897d054bc541d4297f77e50661f545f55b3973afd;
+Hosta5ed8009be43e1986b91c243347715fbaa1fe3713563972dd071d02fd7ff53fe;
+Reader0372a850b058f1fe37f37d80dcbd0f467ee60c1b50b63ddbd22394c21416eba9;
+Testffa88f8e6bfb5507c437d8dcbac456333fd02807a8632d62d3ab48c069e24320.
+Controllerc495e515/Makera10de16b/Auditora1ccce88 and contracts c02fab1a/HOST9eedb0bb
+unchanged; observer qualification755f921b/pins11b3fa45 immutable. All writers frozen.
+Staged git diff--check found a real extra-blank-EOF issue in copiedReader175a.
+No attribute suppression added: private reader now has exactly one final LF,
+four redundant terminal LF bytes removed; identical prefix and AST verified.
+Archive175a is source-revisions/reader-pre-eof-blankline-r1.py; new0372 is152376B.
+Old SOURCE32/C16/S7 remain PASS for175a, not proof of the new byte-pinned candidate.
+SOURCE33 PASS with SAME wrapper7623de3c/helper25f5efea/Testffa88 and dynamic
+expectedReader0372; owner9548/start639296134703500252, exec53471, Q/
+geometric-prefix-source-gates-r33-80fb23ced3575719833471100b325a1d.
+Root actual-receipt reviewed: final17/source1084/850/25 stable; result1d002779...
+20355, pinsb3bca1391fcb8e229e6f34dddddfc52ae77447a02a064d9e7eb8a30e7bc8ba7a.
+Owner9548 absent/exec53471 chunk2e916f exit0; helper40056/start639296135978068382
+exit0/proven/root absent33413.656ms, historical4modes/12sourcecases pass/4485inputs /
+110outputs unchanged. Scope remains historical-function only/oldclosure NOTRUN.
+CANARY17 PASS/root actual-receipt reviewed, normal075037/fb07/c495 on those pins,
+owner11704 /
+start639296137114217092, exec69090, Q/geometric-prefix-canary-controls-r17-
+60a9c34f346f02abf78f321f088511ce. No historical fixtures in actual whole gates.
+Owner11704 absent/exec69090 chunk32fcf9 exit0; controller9808 exit0/proven214412.0118ms,
+exactstdout/empty stderr; all11 exact rows pass. Consumer8188 exit0/proven44699.5635ms /
+full45309.5269<180000; source1084/850/25/output45files214914B unchanged;
+cleanup52568.3687<120000, owned roots/scratch absent. Outer50c9fa20...5afeb /
+controls888e3fd4...74c04 / consumer5632ab75...8f36c7 / closure8e8d0a32...3b320.
+SUITE8 running normal actual whole gates, owner29312/start639296140214941652,
+exec52458, Q/geometric-prefix-suite-controls-r8-937528a7cb052a2e03b67efad2c639dd;
+no historical fixtures/candidate writes. Final result pending; then regenerate
+exact final qualified packet. Private R2 packet-preparer/replacement helper are
+prepared, not executed; they require actualS8PASS and verify all59old task-owned
+files before replacing only those paths, with no deletion or unrelated writes.
+New private source-only DRAFT46files/1400307B is Q/publication-sources-draft-r2-
+9e7d0ba0f38d4cc99d55b5c6b4194ab1; not copied into E/accepted as whole-host proof.
+No publication/email or new-source runtime acceptance yet.
+
+SOURCE32 PASS final17stability, pins
+b8ff63c7c8bbdaf5292f157fb0b625ca4ca064d3d16c0f407a8a37d35ad1d12f;
+resulta159a9b9...682b4. Its historical source functions/12 cases retain a declared
+old-auditor-result fixture; no old-closure/full-host claim from those probes.
+CANARY16 PASS actual whole host/11 exact rows, outerd63489a4...86897;
+controller214106.2275ms, consumer44651.642/full45264.8445ms,
+cleanup52209.9864<120000, source/output unchanged, owned roots/scratch absent.
+SUITE7 PASS actual fresh whole gates, no historical adapters: Q/
+geometric-prefix-suite-controls-r7-cb959ce63f0adf33702bade1f844cae5.
+Owner9296/start639296119697429731 absent/exec3626 chunk41e7aa exit0;
+controller16960/start639296119703064082 exit0/proven,395805.0961ms/exactCRLFstdout.
+Consumer8232/start639296121550538934 exit0/proven84693.4004ms/full85837.9606<180000;
+all6 parity flags true. SemanticCLI28588/start639296122800503211 exit0/proven,
+85204.9109ms, positive and all12 exact synthetic cases pass/output unchanged.
+Normal combinedunits6081/6081; old/new throws1646/5965; groups257/257/101/101.
+Native walls13923.7627/12822.5049/12446.5131/12278.1103ms; nativephase55282.5072,
+cleanupcharge28811.1942+tail51303.3395=80114.5337<120000. All28 actual owners/roots
+absent; scratch2a174814...3959a creation639296120091682388 actuallyabsent. All25input
+rows/80outputfiles12396216B rehashed unchanged. Actual final1083-source JDK8,
+maintained P6/P8 canaries and four native input rejections pass.
+Outer60e7c584...b4190 / controls e4da6c07...3485f / parent e8c36b13...22d6d /
+host40bf47c9...0701f / consumerf502e564...c966a / closurea862c4b4...7ec51 /
+semantic6ccbb796...59cf4 / explicit tool+postexit observation77f8bfb5...924b1.
+The last file is not a fabricated module receipt. All prior failures remain FAIL.
+
+Prepared exact controlled packet at Q/publication-sources-draft-r2-
+22730755b2b943079d638310a19163da and copied only its two source folders to
+docs/task-evidence/Q100:59 files/1483772B,47 exact source copies/1405338B.
+Source inventory separates17 BASE/27 CANARY/qualification+memo/selected outer.
+OBSERVATIONS is exact returned consumer UTF8, SHAd15f2560...7a061; semantic result
+18416fbe...8a78f. No private pins/raw process logs/personal paths copied. Source
+bytes and controlled-file scan pass. Root integrated roadmap/ownership/validation,
+failure summary and next one-slot provenance plan; optional read-only packet
+review complete (read-only/source scope): private top-level draft inventory46 is
+NOT copied; the
+actual two-folder tree has59 files (47 source copies plus12 authored supplements).
+The source-only ledger intentionally excludes supplements, all bound by Git.
+README pathBase wording will name the containing Q100 resolution root explicitly.
+Reviewer confirmed E28BASE+31CANARY=59 and47 source+12 supplements; no other
+source-only scope blocker. Seven ignored JSON inclusions and wording are the
+remaining review actions, alongside root's fresh byte-pin qualification.
+Prior staged packet still has175a and must be replaced only after new gates.
+Next: SOURCE33/C17/S8; then refresh packet, verify full/staged diffs and47 source
+blobs, normal commit/push to established origin/codex/q100-physical-
+feasibility, verify SHA, then one connected Gmail. Publication remains pending.
+
+Limits90s/640actual+wrappergroups/5s,32768units/clone1048576/chunk4096,
+1Mexpansions/48holes/4flips,64KiBframing,8MiBoperation+8MiBhost/40MiBsuite and
+compile60/audit60/native480/reader180/outer1800/cleanup120s unchanged.
+Playable100=0/betaHELD; full30 excluded/HARD/PSYCHOTIC unavailable/unrun,
+protected bodies unread/unrun here/historical unread UNCERTIFIED. No GWT/Player /
+electrical/population renewal or arbitrary-clone replay qualified; original
+external path/tool/parent chain needed. Old E06/8928 resources, uncertain children,
+failure evidence and other worktrees preserved. P9 one-slot reservation provenance
+is NOT STARTED and waits for P8 publication and a separate contract freeze.
+
+# Historical checkpoint: P8 SOURCE R32/CANARY R16 accepted before SUITE R7 result
+
+UTC 2026-11-07. Continue until owner stops. Active E is
+OS-temp/tsj-q100-geometric-reasons-20261106-r1, branch
+codex/q100-geometric-reasons-20261106, HEAD0891474cadc4b9e00d7911e81c124721a11efb87.
+Only report tracked-dirty/zero staged; non-cone sparse checkout unchanged.
+Main5f05b005 preserves9tracked/6untracked, Desktop e0c36885 preserves7/73.
+Production850/baseline1084 unchanged. P7 published316eba54/receipt0891474,
+Gmail1a1b0db5d47f0af1 sent once. No P8 commit/push/email or final source copy.
+
+Private Q=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
+BASE=Q/canonical-geometric-prefix-study-r1. Last frozen sources:
+Study5c87dce6244934879bc0c4681ce40cbc97fdad81ed677211772838ac4e3adf9a;
+Inspectorf834651cd9ce977713b5345897d054bc541d4297f77e50661f545f55b3973afd;
+Hosta5ed8009be43e1986b91c243347715fbaa1fe3713563972dd071d02fd7ff53fe;
+Reader175a0d0f34de77cf9dfeee09c9e497ff2ff39245db1eab756446f97b2388bbc0.
+Reader175a and native/host frozen; no active writer. Test harness now
+ffa88f8e6bfb5507c437d8dcbac456333fd02807a8632d62d3ab48c069e24320 (24801B):
+three str(path) conversions at validate_bundle call plus reason-row insertion-order
+serialization, root exactdiff CLEAR. Positive byte equality/all12 expectations
+remain strict; summary/manifest sorting stays unchanged. Frozen NATIVE_R1 sorted
+keys apply only to source inventory, not reason JSONL. Original3b6 intermediate
+preserved at source-revisions/test_read_geometric_prefix-pre-reason-key-order-r1.py.
+Archive01167 preserved at source-revisions/test_read_geometric_prefix-pre-reader-cli-paths-r1.py.
+Archive10ea preserved at
+source-revisions/reader-pre-callback-marker-context-r1.py; root reviewed exactdiff.
+Controllerc495e515/Makera10de16b/Auditora1ccce88 and contractsc02fab1a/HOST9eedb0bb
+unchanged; observer prerequisite755f921b/pins11b3fa45 immutable.
+
+SOURCE R28 and CANARY R14 passed for the PREVIOUS2dc reader only. SUITE R5
+failed independent reader HOST_PROCESS_SUMMARY_CENSUS; the10ea source fix moves
+complete census after the existing four-native-role validator. Exactthrow1 is
+supported by both actual pinned producers (P8 main130/P6 main132), with source
+review CLEAR. Original general nonzero contract bytes remain unchanged.
+SOURCE R29 FAIL: Q/geometric-prefix-source-gates-r29-
+18ff33e7bdfcebe4530ae7b39bebe66d, pins
+4c2ebb58a607eb9073c8aca4c7ee288fd637dac734581440a4ee9a4827c82367,
+result640bb7dd2be71baf2e9d69f0658e82fde9aa0d17e78dd67a30f53fed209414ef.
+Historical source-function probe passed14 genuine process roles/two synthetic
+exit2 rejections, complete NULL/OBSERVE14queries/257groups/6081units and P6/P8
+cross parity, then CALLBACK_THROW_MARKER_FAILED. All4485 inputs/110 historical
+output entries unchanged; final wrapper stability stage NOT REACHED.
+Helper38360/start639296085697872814 exit1/proven/root absent,33163.5358ms;
+owner3064/start639296084417396865 absent, actual exec45856/chunk3b2a22 exit1.
+Trace247a0332...e3152/result8d66edfe...f2d1a/callfdba457b...057f3 preserved.
+Helper62ba2909/wrapperab212a0f before/after unchanged; no native/build scratch.
+The helper's declared synthetic local auditor dependency reuses only the genuine
+three S5 auditor stdout results for old41fda. Old self-file closure is NOT
+revalidated, no original consumer retried, and no whole-host acceptance inferred.
+
+Cause: genuine P6._exception_marker needs inclusive work and selected role wall
+metadata; current adapter supplied native/runId only. Root approved a bounded
+in-memory descriptor for the unchanged inner P6._exception_run kernel, derived
+from the actual native marker, runId and measured role wall. It must not forge an
+old P6 root/index/receipt or call P6.validate_run/main. Authoritative P6 marker,
+partial receipt, prefix, P5/P6 stage/capture/cut and work checks remain. Current
+P8 CALLBACK workNanos stays null/no credit; actual argv binds the marker inputSHA.
+Final85c fix extracts only bounded first-line inclusiveWorkNanos (strict int/90s /
+actual role-wall bound), then calls unchanged P6._exception_run once with the
+local descriptor. Only a top-level P6 pins copy receives the actual completed
+BASE NULL path; original pins/module/global unchanged. No host receipt emitted.
+Independent read-only source review pending. SOURCE R30 released using the SAME
+reviewed wrapperab212a0f/helper62ba2909 with new expectedReader85c. Actual owner
+35528/start639296093772595784, execsession3942, Q/
+geometric-prefix-source-gates-r30-12e3cdca2a1ab565ea8d297e5c16787a,
+creation639296093776835590. SOURCE R30 FAIL inside historical source-function
+probe at MAINTAINED_REASON_THROW_SOURCE_FUNCTION: KeyError facts at current
+reader1977. Actual normal modes/crossparity AND old CALLBACK_THROW passed that
+scoped probe (callback1query/101groups/1646units, EXPECTED_THROW); new REASON_THROW
+and historical timing remain unqualified. All4485 inputs/110 outputs unchanged,
+no fingerprint error; helper body33199.9288ms. Freshpins
+e6d64600c60be3c3b6a48164dfc161b5b6fc670419ac26627d624f8283750f19.
+Root read actualtrace/result. R30 owner35528 absent/exec3942 chunkde047a exit1;
+helper1616/start639296095044810973 exit1/proven/root absent,33427.2597ms. Final
+wrapper stability NOT REACHED; helper/wrapper hashes unchanged. Resultffa4f5a8...
+acf40, historicalresult8943ddd1...938f8, callbcf24c3a...666ce, tracec00842dd...87a2a
+preserved. No native/build scratch; original S5 and all evidence unchanged.
+New175a fix/root exactdiff reviewed: four authoritative NULL fields (facts,
+operation, cutDocument, receipt) come from actual null_run.p6 in all reason-throw
+P5/P6/prefix/sidecar calls. No fake fields, fallback or guard/oracle changes.
+Archive85c at source-revisions/reader-pre-reason-throw-null-context-r1.py retained.
+SOURCE R31 PASS/root actual-receipt reviewed with unchanged wrapperab212a0f /
+helper62ba2909, Reader175a. Owner39960/start639296098315181239 absent,
+exec27707/chunk19475b exit0, Q/
+geometric-prefix-source-gates-r31-ceb4886ddd7ac1df006b8a1ac82fc114,
+creation639296098319316333. Freshpins
+8da404bca0f314b294988cde6ca9b15d8b5393d186b7e1977aff2be4cba441e0;
+resulta1d1fe9153e5b5b76b6a4077e6882475f946e7318dd36cb7ed40f52e3aea2eea.
+Final source17/1084/850/25 stable; all prior source probes pass. Historical S5
+source functions now pass all4 modes, P6/P8 parity,14roles and2exactexit2 negatives;
+NULL/OBSERVE14queries/257groups/6081units, CALLBACK1query/101groups/1646units,
+REASON1query/fine1coarse0/101groups/5965units; historical cleanup80569.974<120000.
+All4485inputs/110outputs unchanged; historicalresult939edf4d...1d013.
+Helper27480/start639296099577191411 exit0/proven/root absent,32787.5342ms;
+call87c919e4...1e13d; helper/wrapper before=after. These remain source-function
+tests with the single declared historical auditor-result fixture: old closure
+NOT revalidated, current whole reader/host and12 semantic controls NOT RUN.
+Fresh CANARY R15 PASS/root actual-receipt reviewed, Q/
+geometric-prefix-canary-controls-r15-6f32d3470bab590b0f7bb294a02bc5d5.
+Normal075037/fb07/c495/explicitR31pins; owner21204 absent/exec37561 chunkc9f489
+exit0; controller3696/start639296100857595592 exit0/proven/root absent,
+215771.171ms, exactCRLFstdout/empty stderr. All11 rows/fivehost+fivereader
+negatives pass exactcodes. Consumer19316/start639296102166019673 exit0/proven/
+root absent44623.6005ms, fullclosure45229.2778<180000; source1084/850/25 and
+output45files214935B unchanged. Scratchc7431586...338e1c creation639296101247961324
+removed/actuallyabsent, cleanup52474.6949<120000. Outer384aa3c4...03d98 /
+controlsb28774ad...6cc96 / consumeraee277c2...3b22a / closure28fb8e39...a4cde.
+HOST_CANARY_ONLY, no BASE qualification. SUITE R6 ran on the same frozen
+source/pins/normalouter; owner26076/start639296104138841073, exec44576, Q/
+geometric-prefix-suite-controls-r6-b2202503af9c5a362222fdbd83ad18a8.
+Actual full gates used no historical source-fixture adapter. Aggregate FAIL at
+SYNTHETIC_REASON_CONTROLS/SEMANTIC_PROCESS_FAILED. Actual positive independent
+consumer passed PASS_Q100_GEOMETRIC_PREFIX_OBSERVATIONS_ONLY (allP4/P5/P6/P8 /
+boththrows) and all5host+5reader rejection rows passed. Twelve semantic controls
+did NOT run: actual semantic604/start639296107237482380 exit2/proven,
+297.1579ms, empty stdout, GENUINE_BUNDLE_INPUT_PINS_PATH. Rootread actualresults;
+overall outer309903.1597ms FAIL, pins unchanged. Closeout: owner26076 absent /
+exec44576 chunkabfc9c exit1; controller1936/start639296104144463583 exit1/proven /
+root absent. Positivehost20356 exit0/proven/root absent179900.5703ms. Root reviewed
+actual consumer38156/start639296105988516709 exit0/proven/root absent84532.9843ms,
+fullclosure85643.7589<180000; all6 parityflags true,14rows9escape/4reservation /
+1courtyard. Certifiedcleanup79147.1122<120000, nativephase55268.7853/charge28883.1433 /
+tail50263.9689ms; scratchf8096d33...7edf9 creation639296104536924229 actuallyabsent.
+Output80files12396219B unchanged, source1084/850/25. Outer306957a8...0a45c /
+controls0075a8dd...7a3e6 / parentf48eaa58...c32bf / host62692621...4f08d /
+consumer817fe6b8...a910e / closurebab1e201...86c54 / semantic32f12c43...f4fcf retained.
+Cause: harness run530 passes pathlib paths into Reader.validate_bundle, whose
+public canonical boundary requires strings; actual consumer CLI strings passed.
+Only the harness caller changed, no Reader relaxation/fixture change. Its bounded
+API audit found remaining calls, state/summary keys and fingerprint shapes align;
+Static review also caught sorted reason reserialization would fail the actual
+native authored key order; ffa88 preserves parsed order without deleting the
+positive byte-equality guard. Static parse only, no runtime proof for newffa88.
+R31/C15/S6 evidence describes
+the prior175a+01167 candidate. No publication or runtime retry released.
+Root reviewed and released SOURCE R32 with private R3 source-function probe of
+the12 cases using
+actual historical S5 normal results/current test source; no new-host/old-closure
+or whole semantic CLI claim. Original private helper/wrapper remain unchanged.
+New helper check-historical-s5-source-functions-r3.py SHA
+25f5efeae10de1d7778468372a1a9bdfca1f904ee20c28818ec755bc2749373a (20190B) /
+wrapper run-source-gates-r32.ps1 SHA
+7623de3c1ff397292578b9907d7e48062574dc38811d3502100b2d1d9c9365e6 (19437B).
+They authenticate currentffa88 test source/self/reader via fresh pins, then pass
+only the exact five-field return_context projection from actual historical
+normal results into unchanged run_semantic_controls. All12 literal id/code
+expectations/positive bytes/output stability remain. Whole semantic CLI and
+current whole host remain NOT RUN; historical auditor fixture scope unchanged.
+SOURCE R32 PASS/root actual-receipt reviewed: Q/
+geometric-prefix-source-gates-r32-b25419c7afdd62ce3af09071e887a522,
+freshpinsb8ff63c7c8bbdaf5292f157fb0b625ca4ca064d3d16c0f407a8a37d35ad1d12f;
+resulta159a9b93b572751c30c81303cc24e7208eb3b1eb862adc346440505321682b4.
+Owner12236/start639296113682434111 absent/exec51824 chunk91cf32 exit0; source17 /
+1084/850/25 stable. All historical4modes/parity/boththrows/timing/14roles/2exit2
+and all12 exact source-function cases pass, positive bytes and outputs unchanged;
+old4485inputs/110outputs unchanged. Helper15352/start639296114945923086 exit0 /
+proven/root absent33364.9972ms; helper/wrapper hashes before=after. Historical
+resultd913fff4...ede27/call465398d7...e8801. Old audit fixture1 and old-closure /
+whole-current-reader/full-semantic-CLI NOT RUN limits remain explicit.
+Fresh CANARY R16 PASS/root actual-receipt reviewed: Q/
+geometric-prefix-canary-controls-r16-38935baea23fe97145375a67131c6e64.
+Normal075037/fb07/c495/explicitR32pins; owner33012 absent/exec2589 chunkd2f0da
+exit0; controller28636/start639296116495076194 exit0/proven/root absent,
+214106.2275ms/exactCRLFstdout/empty stderr. All11 exact rows pass. Consumer20372 /
+start639296117800476651 exit0/proven/root absent44651.642ms/full45264.8445<180000;
+source1084/850/25/output45files214926B unchanged. Scratch86d5c6b1...bd62a creation
+639296116886784533 removed/actuallyabsent, cleanup52209.9864<120000.
+Outerd63489a4...86897 / controls2afe00ec...8dd0a / consumerd82d3a24...d7130 /
+closure90d1db34...7020e. HOST_CANARY_ONLY, no BASE acceptance.
+SUITE R7 running on same frozen source/pins/normalouter, owner9296 /
+start639296119697429731, exec3626, Q/geometric-prefix-suite-controls-r7-
+cb959ce63f0adf33702bade1f844cae5. Actual native/fullreader/semanticCLI gates only,
+no historical adapters/fixtures. Result pending; all17 sources frozen/no writer
+or publication. Root must review final receipts before accepting/publishing.
+Independent source review CLEAR for85c callback projection, no runtime claim.
+Next: review harness fix/probe prep and fresh source gates, then fresh actual
+host/native/reader/12 synthetic controls and final
+source/output/process/cleanup gates. Publish only after acceptance; one Gmail.
+
+Same BASE root9007199254740993/place-6587958367974952701/route8445301674744508279,
+req0/attempt4/pass2/receipt307/lineage77/H48, prefix6b49cfb2/graphff6466d2,
+original22/selected14. Limits90s/640actual+wrappergroups/5s,32768units,
+clone1048576/chunk4096,1Mexpansions/48holes/4flips,64KiBframing,
+8MiBoperation+8MiBhost/40MiBsuite and compile60/audit60/native480/reader180 /
+outer1800/cleanup120s unchanged. Playable100=0/betaHELD, full30 excluded,
+HARD/PSYCHOTIC unavailable; protected bodies unread/unrun here, historical unread
+UNCERTIFIED. No new seeds/order/policy/epoch/adoption, GWT/Player/electrical or
+population renewal. Prior failures, old E06/8928 resources and uncertain children
+preserved. Publication draft46files from R26 remains stale/private. Conditional
+next scope after P8 is one-slot MIXED reservation provenance, not started; see
+historical planning facts below. Public replay needs the original external pinned
+path/tool/parent chain; arbitrary-clone reproduction is not qualified.
+
+# Historical checkpoint: P8 SOURCE R29 failure before callback adapter correction
+
+UTC 2026-11-07. Continue until owner stops. Active E is
+OS-temp/tsj-q100-geometric-reasons-20261106-r1, branch
+codex/q100-geometric-reasons-20261106, HEAD0891474cadc4b9e00d7911e81c124721a11efb87.
+Only report tracked-dirty/zero staged; sparse checkout unchanged. Main5f05b005
+preserves9tracked/6untracked; Desktop e0c36885 preserves7/73. Production850 /
+baseline1084 unchanged. P7 published316eba54/receipt0891474; Gmail1a1b0db5d47f0af1
+sent once. No P8 commit/push/email. No source writer active.
+
+Private Q=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
+BASE=Q/canonical-geometric-prefix-study-r1. Current frozen sources:
+Study5c87dce6244934879bc0c4681ce40cbc97fdad81ed677211772838ac4e3adf9a;
+Inspectorf834651cd9ce977713b5345897d054bc541d4297f77e50661f545f55b3973afd;
+Hosta5ed8009be43e1986b91c243347715fbaa1fe3713563972dd071d02fd7ff53fe;
+Reader10ea4232931d660d74138742fb677ebfd1a24ec13ab7fdc639f4a10325ce0c5a.
+Controllerc495e515/Makera10de16b/Auditora1ccce88 unchanged. Contracts c02fab1a /
+HOST9eedb0bb and immutable observer prerequisite755f921b/pins11b3fa45 unchanged.
+Reader retains explicit nullable endpoint authority, and throw total is
+prior3335+own2630=5965. The old formula removed prior work twice. Strict types,
+defaults, correlation, groups and limits remain. Source-only review CLEAR; this
+is not runtime acceptance. Pre-fix04c reader preserved in source-revisions.
+
+SOURCE R28 PASS/source-input scope accepted after root actual-receipt review:
+Q/geometric-prefix-source-gates-r28-edfadbc443742dd3019f67985aba49a5;
+pins41fda591a4e792ae71ea5cffd961a89d46eea72c6d304c97727271349c553144;
+result0e2a201058587ebd468da7ec3bb3897ea2ba21db9ae708c2128b19f567db056f.
+Owner22276/start639296064181047481 exited0/absent: actual runner exec session70710,
+completion chunk5d9348 retained exit_code0. No separate parent module receipt;
+saved launch owner.json is RUNNING intent, not completion proof. All prior gates,
+actual partition/counter source probes, genuine parent closure+8 controls pass.
+New helper3451be50: real14 historical fine events+4 specific mutations; synthetic
+nullableNone positive+2 correlation mutations; actual throw arithmetic AST
+3335+2630=5965/raw98+wrapper3=101 and3 synthetic total/group rejection cases pass.
+Python5528/start639296065151893226 exit0/TerminationProven, 29363.3953ms;
+historical6 files/current reader/pins unchanged. Helper result4f12b27d...8fb7ca,
+parent0c34aa1c...d5a9c. Source1084/850/25, baseline88031179B unchanged.
+These probes do not establish full historical closure, sidecar, throw or host
+acceptance. R27 and older passing gates describe their own earlier candidates.
+
+Fresh CANARY R14 PASS/root actual-receipt reviewed: Q/
+geometric-prefix-canary-controls-r14-28f8d3db75c56d0ce75f6dc50de4dd2b.
+Normal outer075037/selectedPS5/fb07, explicit R28 pins. Owner26732 absent/exec0;
+controller38828/start639296069784504521 exit0/TerminationProven/root absent,
+219047.8269ms, exactCRLFstdout/empty stderr; all11 rows (5host/positive/5reader)
+pass exact codes. Consumer16684/start639296071127435372 exit0/proven/root absent,
+45578.9968ms, full closure46204.4387<180000; source1084/850/25/output45files214927B
+unchanged. Scratch78bebe47...3d349 creation639296070190328420 removed/actually
+absent; cleanup54247.5693<120000. Outerccaa9ffb...13684 / controls3666cf10...a99ab /
+consumer17182cf4...5f75f / closure1c35d1e5...05df3. HOST_CANARY_ONLY, no BASE claim.
+
+SUITE R5 FAIL at INDEPENDENT_CONSUMER, output Q/
+geometric-prefix-suite-controls-r5-6a99a5a31836da172070b8388083ca24, same frozen
+source/pins/normal outer, launchowner36568/start639296073092945289. Host reached
+independent reader; actual reader exit2/TerminationProven,36518.5266ms, exact
+HOST_PROCESS_SUMMARY_CENSUS rejection. Controller CONSUMER_PROCESS_FAILED; no
+full semantics/12-control acceptance. Runner preserving final resource/receipt
+facts; no retry released. Actual host has all14 expected roles. Root inspected
+reader: its SUITE loop validates four descriptors but has not added their native
+processes to summary/wall/raw state before strict census. Reader owner has a
+bounded assignment to integrate the existing strict mode-process path; archive
+2dc bytes first, keep census/arguments/status/timing/cleanup checks strict.
+Reader10ea is now frozen/root exact-diff reviewed;2dc archive retained. The
+existing `_validate_operation_processes` is the sole native receipt validator.
+Complete census/order moved after that call; exact exit1 is now required for both
+throw receipts. No copied host summaries or duplicate native validator added.
+Source review only; R28/R14 remain proof for the previous2dc candidate.
+S5 closeout: owner36568 absent; controller14364 exit1/proven/root absent,
+223498.0697ms; positivehost39952 exit0/proven/root absent,182244.1254ms.
+NULL/OBSERVE/CALLBACK/REASON actual walls14512.5707/13138.6913/12616.0019 /
+12839.8496ms, all proven/root absent. Consumer7636/start639296074965327948
+exit2/proven/root absent,36518.5266ms, exact census rejection/root reviewed.
+Scratch edba11a9cd1e4572b0445f4f99b1ac84 creation639296073490054097 removed/actually
+absent; producer-derived cleanup80569.974<120000 is NOT reader-certified.
+Output80files12396185B unchanged. Outer7899e8fe...27d81, controlsb783698e...10d6f,
+parente8cc2541...b2a63, host52bf9b2e...2d03e, consumerb7e99aa5...9e40d retained.
+Full semantics/12controls/5readernegatives NOT RUN after that rejection.
+
+Root reviewed and released SOURCE R29 (wrapper run-source-gates-r29-r2.ps1,
+SHAab212a0f91c3ab20e1243a1a7aeea660d0cad89836a681e6b1e7a6f7e254086a),
+retaining all R28 gates plus a bounded historical source-function probe through
+current process/mode/parity/throw validators on
+genuine sealed S5 data. A declared local dependency adapter may return only the
+authenticated original S5 auditor result for its exact old41fda tuple, requiring
+all3actual audit receipts/sourceChecks to agree. Current reader/source pins bind
+separately. This synthetic dependency reuse does NOT revalidate the old self-file
+closure, create a current host envelope or establish whole-reader/host acceptance.
+Helper check-historical-s5-source-functions-r2.py SHA
+62ba290958908fefad477e7d3517f5f94bb1b1e23f0affb61d7c9100d9109049. Root caught
+and corrected a private unexecuted R1 flow assumption: common10 then native4,
+complete14 census, and parse actual completion markers explicitly (callee returns
+None). Both original private R1 files remain preserved/NOT RUN. Two copied-receipt
+exit2 negatives supplement genuine four-mode source functions. Independent source
+review CLEAR: P8 REASON_THROW emits/returns1 then main130 System.exit(1); actual
+P6 CALLBACK_THROW emits/returns1 then its main132 System.exit(1). No valid other
+nonzero path found for these pinned invocations. This source-specific exact1 fact
+does not change frozen READER's general nonzero wording or qualify another
+launcher. SOURCE29 now owner3064/start639296084417396865, execsession45856,
+Q/geometric-prefix-source-gates-r29-18ff33e7bdfcebe4530ae7b39bebe66d,
+creation639296084423577617; before helper/wrapper hashes match. Results pending;
+no native/CANARY/SUITE release before root review. No candidate writer active.
+No completed BASE acceptance; fresh final gates remain required before publication.
+SOURCE R29 FAIL at HISTORICAL_S5_HOST_PROCESS_AND_NATIVE_SOURCE_FUNCTIONS;
+freshpins4c2ebb58a607eb9073c8aca4c7ee288fd637dac734581440a4ee9a4827c82367.
+All prior source gates reached/passed, but no final stability/PASS asserted. The
+declared historical source-function probe passed14 actual process roles and2
+specific copied-receipt exit2 rejections, NULL/OBSERVE14queries/257groups/6081units
+and maintained P6/P8 cross-mode parity. It then rejected CALLBACK_THROW_MARKER_FAILED
+inside current `_validate_callback_throw`2087 calling P6._exception_marker.
+Actual helper wall33163.5358ms; all4485 explicit inputs/110 historical output
+entries unchanged, fingerprintErrornull. No complete callback/reason throw,
+historical timing or whole-reader acceptance; no new native run. Runner finishing
+owner/receipt/hash closeout. Reader owner alone assigned a bounded cause fix
+against genuine pinned P6 API/marker/producer context, preserving10ea archive;
+no retry released. Normal-mode source-function progress does not reclassify S5
+or Source29 as a passing whole gate. Trace/history remain preserved.
+Conditional next-scope source review (NOT STARTED): historical14 events are
+source-consistent9 start-direction/4 MIXED face reservations/1 courtyard, with no
+direct owner-bug proof. For representative parent11, layer1/bit8 edge
+(382,238)->(381,238), existing P4 PAD rows have identity/net/role/position only;
+P5 trace/hole rows and P6 events do not expose reservation contributors. A future
+separately frozen one-slot provenance diagnostic needs actual pad bounds, escape
+vectors/lengths/corridors, pad/active widths and clearance, grid origin/scale and
+profiled touch operands for horizontal slot[381][238]. Independently reconstruct
+contributing nets/sentinel with original writes/route unchanged. New native
+observation required; no relaxation, unique owner or feasibility inferred. This
+is planning only and must wait for P8 acceptance/publication.
+Prior SUITE3 OUTPUT_CENSUS and SUITE4 OPERATION_OUTPUT_LIMIT,
+all earlier native/reader failures and raw evidence remain failures/preserved.
+
+Same authored BASE root9007199254740993/place-6587958367974952701 /
+route8445301674744508279, req0/attempt4/pass2/receipt307/lineage77/H48;
+prefix6b49cfb2/graphff6466d2/original22/selected14. Limits90s/640actual+wrapper
+groups/5s,32768units/clone1048576/chunk4096,1Mexpansions/48holes/4flips,
+64KiBframing,8MiBoperation+8MiBhost/40MiBsuite and compile60/audit60/native480 /
+reader180/outer1800/cleanup120s unchanged. No new seed/order/policy/epoch/adoption.
+Latest46-source publication draft is stale (R26/a243); refresh only after actual
+acceptance. No production build, Player, electrical or population renewal claimed.
+Playable100=0/betaHELD; full30 excluded, HARD/PSYCHOTIC unavailable, protected
+bodies unread/unrun here; historical unread UNCERTIFIED. Old E06/8928 resources,
+uncertain children, prior failures and all other worktrees preserved.
+
+# Historical checkpoint: P8 partition/default fixes before SOURCE R27
+
+UTC 2026-11-06. Continue until owner stops. Active E:
+OS-temp/tsj-q100-geometric-reasons-20261106-r1, branch
+codex/q100-geometric-reasons-20261106, HEAD0891474cadc4b9e00d7911e81c124721a11efb87.
+Only report tracked-dirty/zero staged; sparse checkout unchanged. Main5f05b005
+preserves9tracked/6untracked; Desktop e0c36885 preserves7/73, all unstaged.
+Production850/baseline1084 unchanged. P7 published316eba54/receipt0891474, remote
+verified; Gmail1a1b0db5d47f0af1 sent once. No P8 commit/push/email.
+
+Private Q=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
+BASE=Q/canonical-geometric-prefix-study-r1. Current frozen/root-reviewed sources:
+Study5c87dce6244934879bc0c4681ce40cbc97fdad81ed677211772838ac4e3adf9a;
+Inspectorf834651cd9ce977713b5345897d054bc541d4297f77e50661f545f55b3973afd;
+Hosta5ed8009be43e1986b91c243347715fbaa1fe3713563972dd071d02fd7ff53fe;
+Reader04c1770af661a5ab79391c28f10e6e7ae3ee5c25714f8b180c629aa2012add22.
+Controllerc495e515/Makera10de16b/Auditora1ccce88 unchanged; no active writer.
+Both incremental fixes frozen/root-reviewed; pre-edita5 ancestor7e/ReaderBD
+preserved. Host casts rowname before StartsWith, keeping Boolean partition tests;
+all8MiB/8MiB/40MiB/equality/64KiB checks unchanged. Reader retains strict active
+field validation and overrides only those expected-default values; inactive
+defaults stay strict, UNKNOWN horizontal0, END owner uses correlated endpoint.
+SOURCE R27 now owner19896/start639296059795621557 at Q/
+geometric-prefix-source-gates-r27-af2948354641a50074bbb584880dc6c2,
+reviewed1dee36cf/b149bf88/027ae600 source and partition/event probes. New current
+pins are pending. No CANARY/SUITE/native retry until root SOURCE review. R26/a243
+and CANARY13 prove only the previous7e/BD host/reader candidate.
+Contracts c02fab1a/HOST9eedb0bb unchanged; observer prerequisite755f921b/pins11b3fa45
+stays immutable. No new seed, order, routing policy, epoch or adoption.
+
+SOURCE R26 PASS/current17 stable: Q/geometric-prefix-source-gates-r26-
+90c1c58391d8200e54c136ba6ec82a0d; pins
+a243d62bf0c3b02fa5869cf552aaaea97fce508296fccfbd66c9fd8caf5abf0d;
+result2a5a6c6f...92052. Owner30604/start639296043915310761 exited0/absent.
+Actual selected PS5 counter probe: historical19 native files12143999B plus
+synthetic host219143 ->12363142; CANARYadds0; duplicate/missing-native and
+aggregate+1 reject exact codes. Source/data unchanged; this is source-function
+scope only, not whole-host acceptance. Parent closure and8 loader controls pass;
+source1084/850/25, inventorydba31be3...2de8/88031179B. Counter77fa233e...faf6f /
+parentf6142160...7d42. Independent scoped Reader review CLEAR strict18-field map,
+P6/cut ordinals, authenticated direction enum/bit and facts, both contexts/API.
+
+Fresh CANARY R13 PASS/root-reviewed, outer17692/start639296046368619157 absent, Q/
+geometric-prefix-canary-controls-r13-a92c43461c8f5748dbefb52078b199c6.
+Normal075037/fb07/c495 path/currenta243/7e75/bd86/5c/f834. Controller40316/
+start639296046374280478 exit0/proven216264.6512ms; all5host+positive+5reader rows
+pass exact codes. Consumer11456 exit0/proven44862.5086ms, closure45478.5098<180000;
+roots absent; source1084/850/25/output45files214929B unchanged. Scratchbd9d1863...
+53378 creation639296046764936468 removed, cleanupupper53087.0553<120000.
+Outer6f91709b...5dc69/controls f1db28c8...e0099/consumer575a1f3a...749ae.
+Fresh SUITE R4 FAIL OPERATION_OUTPUT_LIMIT at OUTPUT_INDEX after host-result
+emitted, Q/geometric-prefix-suite-controls-r4-bbce64186c02f04f141a0fec89b24e86.
+All4 native calls returned expected statuses; sourcepost PASS/pins unchanged.
+Host40268/start639296049616159665 exit1/proven181363.8244ms; controller7624/
+start639296049577794071 exit1/proven185547.385ms; owner35084 absent. Scratchb68b23ff...
+98156 creation639296049966176185 removed/cleanupErrornull. All process roots absent.
+Actual operation partitions: NULL5671656/OBSERVE5680495/CALLBACK385286/REASON430938B,
+each<8MiB. ModeSum12168375+host227817=12396192/80files<40MiB, host<8MiB. Host owner
+read-only audits all writtenOutputBytes/OPERATION_OUTPUT_LIMIT uses: whole counter
+now includes native bytes, while a later check still uses operation scope.
+Failurebundleacaa13ba...35b25/manifest2b0aaded...ddf79; outerae94a8c7...d4ca8,
+controls5b930345...3e452, parentff33daf7...f40a7, failurea7f7d714...a1591 preserved.
+Consumer/12semantic controls NOT RUN; intermediate HOST_COMPLETE_READER_PENDING
+file never establishes host acceptance when the process subsequently rejects.
+Read-only normal diagnostic R4 FAIL/closed owner25808 absent, Q/
+geometric-prefix-two-normal-diagnostic-r4-f6ea44479be80667d180220a2c4b46ff;
+reviewed5d6a95f6/b9e6c4ec, actualBD86/a243/SUITE4data, p5Directions context from
+authenticated P5. NULLinner14queries/fine0/coarse14/index/group257/units6081 passed;
+OBSERVE failed REASON_EVENT_DEFAULTS at q10/parent11: valid MIXED reservation
+('', ownerNetnull) was incorrectly required to have inactive null state/value.
+Python17056/start639296053151888850 exit1/proven36444.2993ms; all4482 inputfiles/
+99 outputentries unchanged, no fingerprinterror. No complete OBSERVE/crossmode
+or fullhost acceptance; fulltrace c26d8428...4a1/result55b85a94...7d49 retained.
+Native focused R3/older CANARY R12 passed on
+previous host50c/ReaderE0A; reuse only their stated prerequisite scope. Current
+native compile/modes and host/reader boundaries must pass fresh final gates.
+
+Previous SUITE3 failed OUTPUT_INDEX byte equality, not filenames/caps: all77
+indexed artifacts/18dirs match, total12378246; missingcounter12143999 is exactly
+15NATIVE_DATA+4MODE_INDEX. Fix accounts only those19 once before index/footer,
+retaining both exact equalities and caps. Parallel read-only R2/R3 diagnostics
+closed all4482 input/98 output fingerprints unchanged; exposed missing
+p5.P5_INPUT_SHA binding (correctp6 constant) and rich identity fields absent from
+P6 rows. Reader now binds all18 to validated P6/cut/facts/direction sources,
+retains strict types/values and outer ordinal; no omitted fields or fake context.
+All prior failures/archives preserved below/in Q; no actual fourteen-reason
+qualification yet. No P8 publication until full host+independent reader+controls
+and cleanup pass. Host cause proved Boolean-to-string cast, not an excessive
+whole counter: every row fell into first operation because even 'False' is
+truthy. Corrected only predicate typing. Reader defaults corrected only by API
+active/inactive rules. Next: inspect R27 actual partition positives/4 exact
+negative limits, real14historical event positives/4 mutations and all prior source
+gates, then fresh current CANARY/SUITE. Scoped probes never qualify wholehost.
+No larger cap, changed partition contract, omitted defaults or skipped equality.
+Normal commit/push and one Gmail only after verified acceptance.
+
+Same BASE root9007199254740993/place-6587958367974952701/route8445301674744508279;
+req0/attempt4/pass2, receipt307/lineage77/H48, prefix6b49cfb2/graphff6466d2,
+original22/selected14. Limits90s/640actual+wrappergroups/5s,32768units,clone1048576/
+chunk4096,1Mexpansions/48holes/4flips,64KiBframing,8MiBoperation+8MiBhost/40MiBsuite;
+compile60/audit60/native480/reader180/outer1800/cleanup120s unchanged.
+Fresh source draft from R26 is Q/publication-sources-draft-r2-
+1444e62fc9384ec1ad6fdf111683f694:46files/1398023B plus2 authored draft notes.
+Byte-identical source copies/relative hashes and personal-path scan pass; DRAFT,
+unaccepted/unpublished. Earlier source drafts remain preserved.
+Playable100=0/betaHELD. Full30 excluded; HARD/PSYCHOTIC unavailable, protected bodies
+unread/unrun here; historical unread UNCERTIFIED. No GWT/Player/electrical/population
+renewal. Old E06/8928 resources/uncertain children and other worktrees untouched.
+
+# Historical checkpoint: P8 output-accounting and identity diagnosis before R26
+
+UTC 2026-11-06. Continue until owner stops. Active E is
+OS-temp/tsj-q100-geometric-reasons-20261106-r1, branch
+codex/q100-geometric-reasons-20261106, HEAD0891474cadc4b9e00d7911e81c124721a11efb87.
+Only report tracked-dirty/zero staged; sparse checkout unchanged. Main5f05b005
+retains9tracked/6untracked; Desktop e0c36885 retains7/73, all unstaged/preserved.
+Baseline850 production/1084 source unchanged. No production/GWT/Player renewal.
+P7 published316eba54/receipt0891474, remote verified; Gmail1a1b0db5d47f0af1 sent
+once. No P8 commit/push/email. Playable100=0/betaHELD, full30 excluded,
+HARD/PSYCHOTIC unavailable; protected bodies unread/unrun here, historical unread
+UNCERTIFIED. Preserve all earlier failures, old resources and other worktrees.
+
+Private Q=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
+BASE=Q/canonical-geometric-prefix-study-r1. Frozen contractsc02fab1a/HOST9eedb0bb;
+immutable prerequisite CANARY755f921b, pins11b3fa45. Current candidate:
+Study5c87dce6244934879bc0c4681ce40cbc97fdad81ed677211772838ac4e3adf9a;
+Inspectorf834651cd9ce977713b5345897d054bc541d4297f77e50661f545f55b3973afd;
+Readerbd86dedfd2656f9abb4479f8c8cccf41eebbf845fbbab0c636c260a767738418;
+Host7e75d373652faf19c2b4568c29a6f1c07126bcfd7346708a345e12db68c4c077;
+Controllerc495e515/Makera10de16b/Auditora1ccce88 unchanged. Both disjoint fixes
+are frozen/root-diff-reviewed. Host adds only19 native-role files once to the
+existing counter before index/footer with40MiB cap/equalities retained. Reader
+fixes the P6 constant and binds strict18-field identity to authenticated P6/cut/
+facts with proper ordinal and direction-enum/bit parity; both contexts migrated.
+No wire, budget, role, allowlist or native5c87/f834 change. Previous50c/E0A
+preserved. Separate Reader source review runs read-only. No source writer active.
+Batch SOURCE R26 running owner30604/start639296043915310761 at Q/
+geometric-prefix-source-gates-r26-90c1c58391d8200e54c136ba6ec82a0d,
+wrappere49f5c5b/probeba95819c. Real selected PS5 native-byte counter probe uses
+genuine19 historical data files and explicitly synthetic counter/list cases;
+full prior source gates plus new maker/pins follow. Stop first failure. No native/
+CANARY/SUITE now. R25/28b7 evidence remains pre-fix prerequisite only.
+
+Read-only TWO_NATIVE_NORMAL diagnostic R2 FAILed at p5.P5_INPUT_SHA (missing API);
+the same latent binding exists in maintained Reader1863. P6 owns that constant;
+its genuine callers pass it unchanged to P5. Private R3 corrected that helper
+symbol only and reached actual NULL P4/P5/P6 graph/cut/attribution/stage validation,
+then FAILed REASON_QUERY_IDENTITY at Reader721: the identity loop expects fields
+from P6 query rows which exist only in validated cut/facts/operation context.
+Q/geometric-prefix-two-normal-diagnostic-r3-352582ccd19c6461f08df07e3f66ab94;
+Python12920/start639296032993413305 exit1/proven/rootabsent32402.7756ms; owner1616
+absent. All4482 explicit inputfiles/98 outputentries unchanged, no fingerprint
+error. No complete normal mode or whole-host acceptance. Resulta72aefc2...e2dd /
+receipt d5e2dc4d...67783. Preserve both failures and actual original28b7/SUITE3 data.
+
+SOURCE R25 PASS final17/current5c87 stability,1084/850/25 and actual parent closure+8controls.
+Q/geometric-prefix-source-gates-r25-7ad2bd46ac9c22cf6ab3ef6d51164861;
+pins28b7f23bcd7498c3a833d3a17198e349edc0d322e8780c7ca89f99485ef05c71;
+result12f82ee1...cdb42; owner7932/start639296018489029175 exit0/absent.
+Focused R3 PASS lifecycle/protocol/parent-completion ONLY at Q/
+geometric-prefix-focused-reason-throw-r3-b312efe64ea64037e3c8681cb41bc19c,
+same5f01/5126 runner/checker, exact5c87/f834/E0A and fresh28b7 pins. Owner37116/
+start639296019823687297 exit0/absent. Native20300/start639296020171759847
+expectedexit1/proven,12900.1933ms, exactsinglemarker/suppressed0/fourfiles;
+fine1/coarse0, P5/P6 exact22/22, groups101/640,units5965/32768,431487B/8MiB.
+Actual1083compile PASS7018.8975ms; validator35660 exit0/proven29501.3635ms;
+postaudit27716 exit0/proven26649.9324ms, all roots absent/current pins unchanged.
+Scratch0867b26c...1c34c creation639296020098398303 removed; inclusive cleanup
+90738.0282ms<120000. Result6accd948...83e9a/checker2f87b55e...1b8bf/native571994a9...ddc9b.
+Root read actual receipts/marker/result and accepted ONLY that bounded scope.
+Full CANARY R12 PASS/root-reviewed on same28b7/currentcode, Q/
+geometric-prefix-canary-controls-r12-09cd568334289a9c7519da27689424fe.
+Outer5516 absent; controller5004/start639296021737104382 exit0/proven,
+216318.1999ms. All five host and five reader rejection controls pass; consumer
+39052/start639296023042308849 exit0/proven45277.6488ms, closure45894.7064ms<180000.
+Output45files214921B unchanged; scratch3fb2312b...aa244 removed, cleanupupper
+52534.7711ms<120000. Outerb650623c...1a2b1/controls212a4ef8...92109/consumer45336641...bc61b.
+
+SUITE R3 FAIL OUTPUT_CENSUS at OUTPUT_INDEX after all four actual native modes
+returned expected statuses. Q/geometric-prefix-suite-controls-r3-
+13040f9e0500b135c79a3b69d604a47c. Host11960/start639296025123623562 exit1/proven/
+root absent180646.0153ms; controller7456/start639296025083903916 exit1/proven/
+root absent185000.888ms; outer29364 absent. Sourcepost608 exit0/proven with pins
+unchanged; scratcha8c8697a...bdb74 creation639296025474723202 removed/cleanupErrornull.
+Reader and twelve semantic controls NOT RUN. Index/footer already emitted:
+77 indexed artifacts plus index/footer =79files excluding host-failure, names
+match; bytes12363142+14373+731=12378246. Get-OutputClosure also asserts physical
+total equals writtenOutputBytes. Actual counter omits native-owned bytes entirely:
+15 NATIVE_DATA=12138732 plus4 MODE_INDEX=5267 =>12143999 missing. Host-owned234247
+plus that exact gap equals physical12378246. All77 artifact hashes/lengths and18
+dirs match. Root approved accounting once for only allowlisted native data/index
+files before index/footer, preserving both equalities and all existing caps.
+Completefailurebundle94a5da2f...3fb4f/manifest64a336f8...cec39; outer9c1b4ed4...d78c,
+controlsFAILc12e3e76...a08ca0c, parent3cd22309...428e1, failure0705689b...0edb retained.
+Reader exact P6 builder and P6-root old-branch loader fixes have passed real
+positive+negative checks and independent scoped source review. Native proof work
+is measured once as metadata, starting before callback preparation/allocation.
+Prior unselected OneShot offers are valid; strict zero selected/callback/refs and
+normal requireOneCapture remain. Source/contract evidence for these fixes below.
+
+Prior0cec/f834 focused JDK8 R2 FAIL Q/geometric-prefix-focused-reason-throw-r2-
+ef44ba09b0d7e503aaf7ad184df298fa. Compile1083 PASS7401.2096ms. Native30360/
+start639296013362202069 exit1/proven/root absent,14128.0084ms: first fine sentinel
+plus suppressed 'Actual request omitted its observation' at completed-request
+context reader957 -> exception-parent proof669. Only partial op1; FOUR_FILES FAIL.
+Post-audit PASS26834.0548ms, current pins/source unchanged. Owned scratch0c721250...
+00dc6c creation639296013284989853 removed; inclusive cleanup92298.7142ms<120000,
+cleanupErrornull. Owner15696/start639296013008452298 absent/exit1; no owned live
+process/build scratch. Native raw67ba511b...de80c, stderrd58cc99d...74fe6,
+result95b47a7b...3ea25. Prior focused R1/SUITE R2 remain FAIL, never reclassified.
+
+Root/independent contract and actual callee reviews confirmed ArmRun.request and
+P07RequestBoundaryEvent exist only after completion. They are not early-throw
+oracles. Existing actual P5/P6/P8 owner contextRestored/cleanup checks plus the
+candidate/terminal prefix and actual partial-receipt-to-NULL parity retain the
+frozen proof. Root approved minimal5c Study-only removal of the exceptional
+completed-summary read/postcheck/local. Normal completed context reads unchanged;
+no duplicate context snapshot/reflection/parser/wire field. Pre-edit0cec/f834
+preserved. Root inspected exact diff and released same db71/840c SOURCE wrappers
+with new pins, then5f01/5126 focused JDK8 under exact5c/f834 hashes; both passed.
+Next: inspect actual R26 counter/source/parent checks and independent scoped
+Reader review, then fresh CANARY and SUITE with new pins; final native compile/
+modes run there. No dropping fields/types or fake context. Counter probe expected
+12143999 nativebytes,219143 host-before-index ->12363142, CANARYadds0; duplicate,
+missing-native and aggregate+1 negatives must reject exact codes.
+Unchanged native focused evidence is prerequisite only, not renewed host proof.
+No skipping equality, larger cap, broader allowlist, invented receipt or changed
+oracle. No old full28b7 validator retry after source edits.
+Actual fourteen BASE reasons remain unqualified; no P8 publication before all pass.
+Same authored root9007199254740993/place-6587958367974952701/route8445301674744508279,
+req0/attempt4/pass2, receipt307/lineage77/H48, prefix6b49cfb2/graphff6466d2,
+original22/selected14. Limits90s/640actualgroups/5s,32768units,clone1048576/
+chunk4096,1Mexpansions/48holes/4flips,64KiBframing,8MiBoperation+8MiBhost/40MiBsuite;
+compile60/audit60/native480/reader180/outer1800/cleanup120seconds unchanged.
+Private source draftR2-32922ad3...ada02 is stale/unaccepted46files/1394675B.
+Old E06/8928 resources/uncertain children untouched. Root owns acceptance,
+normal publication and one connected Gmail per accepted published milestone.
+
+# Historical checkpoint: P8 source R24 and early selector-proof correction
+
+SOURCE R24 passed prior0cec/f834/E0A final17/1084/850/25 and real parent closure+8
+controls at Q/geometric-prefix-source-gates-r24-bb9f44c9049d989dad95806352e41c66;
+pins3e66625b92517b59fe5c6c26fd2b17a5ae9c28e97623cc53a1479e4c9b4e4097,
+result80ad47888ecbbcd1d2fe32c4c65df5926bad7750dd6c1a3b6dabd79dff998ed1;
+owner40896/start639296011596623175 exited0/absent. Its following focused R2
+failed the completion-only summary lookup as recorded above; no acceptance renewal.
+
+UTC 2026-11-06. Continue the owner's roadmap until told to stop. Active E:
+OS-temp/tsj-q100-geometric-reasons-20261106-r1, branch
+codex/q100-geometric-reasons-20261106, HEAD
+0891474cadc4b9e00d7911e81c124721a11efb87. Report-only tracked change; zero staged.
+Existing non-cone sparse checkout is unchanged. Main 5f05b005 retains nine tracked
+and six untracked changes; Desktop e0c36885 retains seven and 73. Both are
+unstaged and preserved. Production850/source1084 baseline remains unchanged.
+
+P7 COMPLETE/PUBLISHED: implementation316eba54, receipt0891474, remote
+origin/codex/q100-physical-feasibility verified; Gmail1a1b0db5d47f0af1 sent once.
+P8 has no publication or email. Playable100=0; beta HELD. HARD/PSYCHOTIC remain
+unavailable and protected bodies unread/unrun here; historical unread boundary
+remains UNCERTIFIED. Full30 is owner-excluded. No population renewal is claimed.
+
+Private Q is OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591;
+BASE is Q/canonical-geometric-prefix-study-r1. Immutable CANARY prerequisite:
+qualification755f921b...e43276, R9 pins11b3fa45...462a5a. Frozen BASE contracts:
+CONTRACT_SETc02fab1a...380c1; HOST R3 9eedb0bb...00253. Previous sources, contracts,
+failed receipts and traces remain preserved. Source/publication drafts are private
+and unaccepted; their inventories must be refreshed after current edits.
+
+Last SOURCE R20 and CANARY R11 passed for Studyc7a4388a/Inspector1b69d1dd,
+Host50c6b7a2/Reader115fbbd2/Controllerc495e515, pins23ec0c49...6562f.
+CANARY receipt123903f1...f036 and controls7578ab47...417 prove the real host,
+consumer, negatives and cleanup only. They do not qualify fourteen BASE reasons
+and will not count as final-source evidence after these native/reader changes.
+
+Actual SUITE R2 FAIL: normal NULL/OBSERVE and expected CALLBACK_THROW completed;
+REASON_THROW failed its exact marker because the intended first fine callback
+threw before graph capture could be scheduled. The extra requireOneCapture()
+proof then added a suppressed exception. Native3544/start639295972380636319,
+exit1/proven,12073.1038ms; controller18372/start639295971170356974 exit1/proven,
+156147.4658ms, inputs unchanged. Complete failure bundle433acdcf...b32f manifest
+9e8cd6de...c7f1 retained; owned scratch removed. No independent semantic pass.
+Producer-only OBSERVE distribution9/4/1 is unqualified.
+
+Read-only diagnostic then FAILed P6_DYNAMIC_MODULE before either normal semantic
+pass: genuine P6 source closure requested its already-pinned overlay builder,
+which the owned loader rejected. Actual Python17080/start639295985577310657,
+exit1/proven/root absent,39002.7627ms; all4482 inputfiles/90 outputentries unchanged.
+Diagnostic Q/geometric-prefix-two-normal-diagnostic-r1-c6a56abfc7f34466a17d570d151fb706.
+
+Latest candidate frozen/root-reviewed; prior native FAIL below: Study is
+0cecb6760f4815db30ecd52d61d1b3a4a17c836dead1f541d0f4b03662de1024 (107067B);
+Inspector f834651cd9ce977713b5345897d054bc541d4297f77e50661f545f55b3973afd
+(162626B). Reader is
+e0a3da79ae4c6a9ef40222774efc40eaf58567b37e8c23711092f1cb464b29de.
+Native owner changed Study to prove zero selected lineages/graph callbacks for the early throw,
+actual candidate/context/terminal prefix and cleanup. The completed NULL graph
+is the parent authority, bound through actual partial-prefix/P5/P6 parity; no
+second capture is fabricated. Normal capture remains strict. Reader owner adds
+the exact P6 builder from parent pins and exact old branch READER from the
+validated P6 source closure, checking path/name/SHA/length before cache lookup.
+It executes cached authenticated bytes; P4/oracle paths remain unchanged. No new
+dependency, frozen oracle omission, baseline edit or protocol-field change.
+The separate reader source review cleared exact P6 calls, manifest row and cached
+authenticated-byte authority; no runtime evidence is inferred from that review.
+Exact pre-edit native pair and reader115f remain in task-owned temp archives.
+Independent native source review cleared the parent-reference/cleanup semantics
+but found the new prefix hashing/copy work between P6 and P8 lacked an explicit
+P8 metadata charge. Final native fix starts timing before callback preparation
+and allocation, charges the complete proof once through the existing metadata
+ledger, and preserves primary/suppressed failure identity. Root reviewed both
+incremental diffs; reviewer found no other material issue. All prior705f/1b69 and
+86cb/3a variants remain preserved. No source writer is active.
+
+SOURCE R21 FAIL at genuine parent closure: P5_GRAPH_CONTEXT_SEMANTIC_MODULE_UNPINNED.
+Maker/auditor/input/inventory passed; pins7aa6d1c1...59b48f. Python31532/
+start639295996950143961 exit1/proven,27709.9995ms. Evidence Q/
+geometric-prefix-source-gates-r21-20716ced5bbd1aa2b134c9f3545c1640. Focused
+compile/native NOT RUN, no compile scratch created. P6 builder loading progressed;
+P5 then requested its old branch reader under the authenticated P6 repository,
+but the owned adapter only recognizes paths relative to current E. Exact branch
+case now uses validated P6 closure repo/sourceRows READER authority137864B/a314cdc7
+and checks requests before cached returns. No parent rewrite, new dependency or
+generic import permission. Parent-chain R2 aggregate FAIL was a private helper
+CRLF-versus-LF frame mismatch. Its actual helper19660/start639296004483502342
+passed genuine closure and all eight controls in29846.6327ms; post-audit14824
+passed26932.5288ms. Termination/root absence/source stability proven; no native.
+Root inspected raw receipts and accepted only that component, not aggregate R2.
+Versioned helpers now emit explicit LF bytes; original failure/bytes preserved.
+
+SOURCE R23 PASS for prior779/f834/E0A: final17 stability, actual closure+eight controls and all prior
+source/API/mapping checks. Q/geometric-prefix-source-gates-r23-
+f9e6d010f6de93cb719a37a29a852e99, pins
+1ca879c7e496285b8f6fd7218720881b8ce99e9a77b802954ae9c68bcc3db876;
+result6de74fbe...9cc6d. Owner27900/start639296005954907017 exit0/absent.
+Bounded-call wall sum93820.5451ms; no whole-gate monotonic timer is claimed.
+Focused JDK8 R1 FAIL, owner14656/start639296007442364873 absent/exit1, at Q/
+geometric-prefix-focused-reason-throw-r1-7259004ecf11b1e68568216e410362ea.
+Exact1083 compile PASS7305.8001ms. Native5804/start639296007794063087 exit1/proven/
+root absent,13678.8851ms: intended first fine sentinel plus suppressed
+'Expected early P8 throw must precede graph selection/capture' from
+OneShotObserver.requireNoCapture. Only op-1.jsonl374175B; checker FAIL FOUR_FILES.
+Post-audit PASS26906.6115ms, sources/pins unchanged. Owned scratch3307de26...0ae3
+creation639296007717822440 removed; inclusive native+validator+post+scratch
+cleanup92034.5465ms below120000, cleanupErrornull. Final result12a4d2cb...ae263.
+No live owned child/scratch from that failed run. Diagnosis: NULL selection.calls2,
+selected1/callback1; its first308 BRANCH rows match the actual failed partial
+through target307. Prior ordinal113 C_COIL_LOW/BRANCH_SEARCH_LIMIT is the sole
+earlier non-FOUND offer. Contract review confirms no zero-offer oracle. Latest
+Study now allows prior rejected offers, keeps nonnegative counter sanity and zero
+selected/callback/lineage/snapshot, and states the timing applies to THIS target.
+No new exact census, receipt parser or wire field; normal capture stays strict.
+Pre-edit779/f834 preserved. Root reviewed and released fresh SOURCE R24 using
+unchangeddb71/840c private gates, then focusedR2 on PASS/new pins. All writers are
+frozen; stop first failure. No CANARY/SUITE until actual focused result review.
+RunnerR2 5f01e4f5/checkerR2 5126d759 use fresh pins, exact sentinel/suppressed0/four
+artifacts, full22-query completion projections, cleanup and actual GROUP+3
+accounting. This focused gate cannot qualify crossmode semantics. Separate native
+source reviews cleared the reader bindings and native semantic boundaries;
+root verified the final timestamp correction. Next: fix the actual selector-offer
+proof with fresh pins and focused native evidence; then final SOURCE, CANARY
+and SUITE including independent unchanged semantic validators and all controls.
+No P8 publication until all required gates pass.
+Private source draft from exact R23 pins and authenticated CANARY inputs:
+Q/publication-sources-draft-r2-32922ad3dec74290bb22b14be47ada02,46files/1394675B,
+relative hashes only; no private pins/logs/personal paths. DRAFT ONLY, unaccepted;
+now stale for the new Study and must be refreshed before any publication.
+Same authored BASE root9007199254740993/place-6587958367974952701/
+route8445301674744508279; req0/attempt4/pass2, receipt307/lineage77/H48,
+prefix6b49cfb2/graphff6466d2; original22 and selected14. No new seeds/candidates,
+order, routing policy, epoch or adoption. Limits unchanged:90s/640 actualgroups/
+5s,32768 combined units,clone1048576/chunk4096,1Mexpansions,48holes/4flips,
+64KiB framing,8MiB operation+8MiB host/40MiB suite; compile60/audit60/native480/
+reader180/outer1800/cleanup120 seconds. No GWT/Player/electrical renewal is needed
+or claimed for this native evidence-only change. Old E06/8928 resources and
+uncertain children stay untouched. Root owns acceptance and normal publication.
+
+# Historical checkpoint: P8 expected-throw diagnosis before current fixes
+
+UTC 2026-11-06. Continue the authorized roadmap until the owner stops. Active E:
+OS-temp/tsj-q100-geometric-reasons-20261106-r1, branch
+codex/q100-geometric-reasons-20261106, HEAD 0891474cadc4b9e00d7911e81c124721a11efb87.
+Only the task report is tracked-dirty; nothing staged. Existing non-cone sparse
+checkout stays unchanged. Main 5f05b005 retains 9 tracked/6 untracked changes;
+Desktop e0c36885 retains 7/73, both unstaged. Older worktrees and failure evidence
+are preserved. Remote codex/q100-physical-feasibility was verified at 0891474.
+
+P7 is complete: implementation 316eba54af74ce5b7d14996677118f75f39c1757,
+publication receipt 0891474; Gmail 1a1b0db5d47f0af1 sent once. Do not duplicate.
+P8 has no commit, push or completion email yet. Playable100=0; beta remains held.
+
+Private Q: OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591.
+BASE is Q/canonical-geometric-prefix-study-r1. Its immutable focused prerequisite
+canonical-geometric-reasons-r1 remains qualified only for the observer: R9 pins
+11b3fa45...462a5a, qualification755f921b...e43276; actual receipt/source reuse
+audit passed. No original parent, prerequisite code or earlier receipt was changed.
+
+Current frozen BASE code:
+- Study c7a4388a9d5fa7ee7057d3ddfc84ba19590c788a152809d5f09d9d3340ebed18.
+- Inspector 1b69d1dd8665ac1ebfccc665513c49447f5289ae7507d8ecb1f3900a4fea2198.
+- Host 50c6b7a232c201be2a18e8308d6622a49ab252dfeb2d873cdca8a7b968bc38a6.
+- Reader 115fbbd2943b87da714d95a813d9dcd81d24fdc7d71474a5b2bc01b113cc45a6.
+- Controller c495e515bf5f1d16600a5b294093b0f773555bc9cf8f7bcfafd9ac1ab90eae17.
+- Maker a10de16b/auditor a1ccce88/harness01167ed0 are unchanged.
+
+HOST_R1 R3 is 9eedb0bb1dd2d7e900b83f9968e52695730a4aa45e2daa1d9e3d1c620cc00253;
+CONTRACT_SET is c02fab1ad0b0802b8b2449f974de01c3042274c1b68a625ea2538c7ddeb380c1.
+R2/earlier drafts are archived. The unchanged selected fb07 process module returns
+exactly eleven fields, no Data field. R3 corrects that unsupported draft claim;
+extra/missing fields still reject. Exception.Data failure metadata is unchanged.
+Stream authority is UTF8(original returned strings), not raw OS-pipe bytes.
+
+SOURCE R12 passes: 17 final files, format/AST, 1084 source rows, 850 production
+files, 25 direct inputs and exact authenticated source bytes 88,031,179. Pins:
+de97199b4e4ee0c95f3a01806a34e1a6a5bf04d90106d462f899646108041d04.
+Inventory dba31be32c8d0d838fa8a1859c2a37a62a619b517515714ef519e59ce4a02de8.
+Both implementations pass all 42 CANARY/77 SUITE artifact role+operation entries.
+The actual reader input/prerequisite/inventory chain and five rejection controls
+pass. A real selected format process (14084/start639295930231181242) passes the
+common eleven-field validator; four malformed variants reject. Compact receipt
+serialization passes exact single-LF and quoted/CRLF string roundtrip checks.
+These are source-function gates, not whole-host or BASE acceptance.
+
+CANARY R8 finished FAIL via sole executor root/base_gate_runner, unchanged normal
+outer/module path, Q/geometric-prefix-canary-controls-r8-f9efae72d4d6481f99baf8ca478be572.
+Outer owner PID11472/start639295931309532435; gate-runner-canary-r8-owner.json.
+Host20308/start639295931355826522 exit0/proven,126250.6839ms; reader7904/
+start639295932620827369 exit2/proven/logrootabsent,9090.5887ms, exact
+HOST_OUTPUT_IDENTITY. Controller15032/start639295931316826039 exit1/proven,
+139808.7527ms/inputsunchanged; five host negatives pass. Reader negatives not run.
+Cause: reader compares Unix ctime using FILETIME epoch offset to .NET ticks.
+Recorded ticks equal a fresh .NET creation-time read exactly; no stale directory.
+Reader owner replaces this one cross-API conversion with checked Windows native
+directory creation time and the exact .NET epoch. Existing same-API stable-read
+metadata remains unchanged. Runner prepares real .NET/native positive and tick
+mismatch/missing/non-directory guards in the established source gate; no symlink
+or blocked-junction retry. Reader8e8e frozen/ASTPASS; root inspected the native
+structure, flags, exact conversion, path guards and checked finally CloseHandle.
+R13 early real API guard PASS25.9629ms: .NETcreation639295937289436234 matches
+before/after child write while LastWrite changes; wrong+1/missing/non-directory
+all reject exactHOST_OUTPUT_IDENTITY, then positive passes again. Fixture owner
+3320/start639295937279502773; windows-creation-fixture.json retained privately.
+SOURCE R13 ALLPASS: all17 snapshots/AST, compact receipt, real Windows API,
+mapping119, maker/auditor1084/850/25 and input/common-process rejection gates.
+Current pinsfe73058fd36b83451c1f5a8ecdfa7a51745fe7a31a1d847f43ebae69fc3de569.
+Normal CANARY R9 FAIL Q/geometric-prefix-canary-controls-r9-
+1621defbe1d64394a2a5b4cd45ae5b62; outer38684/start639295938047683393,
+owner gate-runner-canary-r9-owner.json. Host36908/start639295938091732940
+exit0/proven,127209.8770ms; reader5244/start639295939367059709 exit2/proven/
+logrootabsent,9232.9164ms, exactUNEXPECTED_FAILURE. Controller19008/
+start639295938053235150 exit1/proven,140905.7949ms/inputsunchanged; five host
+negatives pass. No reader negatives or SUITE. Root authorizes only a private,
+source-authenticated diagnostic of validate_bundle and identical CLI result
+serialization against this SAME genuine pins/output/parent. Preserve the CLI
+failure; capture full private traceback and input/output before/after hashes.
+No fake context, predicate changes, new host matrix or input mutation. Code8e8e
+Diagnostic completed against the same context: KeyError('pid') at reader1267,
+validate_host_launch final six comparisons read top-level identity instead of
+the actual nested host object. Trace in Q/geometric-prefix-r9-diagnostic-r1-
+6b8cbb82dc1e469e95f5cc886d4ee896/exception-traceback.utf8. Python21852/
+start639295942580619331 exit1/proven/logrootabsent,10868.6593ms; phase
+VALIDATE_BUNDLE. All1222inputfiles/54outputentries fingerprints unchanged.
+This diagnostic renews no acceptance; R9 stays FAIL. Reader owner corrects the
+six bindings without changing fields/values/guards. Reader5ebb frozen/ASTPASS;
+root inspected the narrow nested-object change and released SOURCE R14 with
+host5367/controllerc495/contracts9eed+c02 unchanged. Runner prepares a fresh
+source-function regression against the genuine historical R9 host envelope and
+its actual context, explicitly not whole/current-host or P6 acceptance. No
+serialized receipt or parent rewrite. Authenticate current reader code separately;
+do not bypass historical pins' obsolete reader self-hash or claim their complete
+current closure. Fresh historical envelope component check PASS109.1943ms with
+three exact identity mismatch rejections; seven consumed files and54historical
+output entries unchanged. Source R14 ALLPASS including all usual fresh gates;
+current pinsbc438dada78dd0565196821c9cc4b9381f9438bc5f245ace6ab15dff700a4bfa,
+source1084/850/25 and inventorydba31 unchanged. Normal CANARY R10 running at
+Q/geometric-prefix-canary-controls-r10-05da61156a3c437ca51c159ab48c4ec4;
+outer6516/start639295946862601895, gate-runner-canary-r10-owner.json.
+CANARY R10 FINAL PASS accepted after root read actual outer/controls/consumer:
+controller21624/start639295946868287957 exit0/proven/rootabsent,
+215185.8217ms; exact PASS_PREFIX_CANARY_CONTROLS_ONLY and empty stderr.
+Outer SHA b2b521c5a098c320e485ee3b5ecfac4f3b519694847836a896cad3197aa8ef81;
+controls SHA62ba58b2684f4e9decec99d46b3dbd08d286e51392676a4d48731eafbca7b9b4.
+All five host/five reader negatives pass. Consumer26680/start639295948179668892
+exit0/proven/rootabsent,44938.782ms; closure45548.5455ms/180s, cleanup52640.2964ms/
+120s. Source1084/850/25; output45files214928B unchanged; operations empty and
+layoutfalse. This accepts CANARY only, not actual fourteen reasons.
+
+Root released original SUITE with SAMEbc438 pins via unchanged outer/controller/
+module. SUITE R1 FAIL Q/geometric-prefix-suite-controls-r1-
+64e23b9bc26046ab92c8991e54651941; owner gate-runner-suite-r1-owner.json,
+outer25500/start639295950495478507. Ordered NULL/OBSERVE/CALLBACK_THROW/
+REASON_THROW on exact approved authored BASE only. It stopped after NULL;
+OBSERVE and both throws remain NOT RUN. Native NULL1964/start639295951312889210
+exit0/proven/emptyStderr,15146.5124ms; markerwork15010112200ns and5667824Bdata.
+Actual14queries fine0/coarse14, independently summed0/14; prior3335+own2746=
+6081units/query14, cleanup/source flags true. Host rejected REASON_FOOTER_COUNTS
+because it wrongly expects NULLcoarse0. Frozen NATIVE132-137 permits same-call
+coarse parity; current producer attaches14 and reader parity agrees. Host owner
+fixes exact normalcoarse14/throw0 and stale global phase label (actual BASE_NULL,
+reported P8_LITERAL_CANARY). No native, contract, caps or oracle relaxation.
+Scratchb2701be29a394b8c81db90f55b252b39/creation639295950892355026 removed;
+completefailurebundlec381f937... manifest60e06b11347bce229f189480a74602d465c38df01199137232c06ea32e60c3ed.
+Controller3872/start639295950501118241 exit1/proven,118960.7951ms,inputsunchanged.
+Runner prepares actual historical NULL-footer source-function regression with
+count rejection controls, then fresh current source/CANARY R11 before SUITE R2.
+SOURCE R15 early actualNULL footer check FAIL REASON_FOOTER_ARITHMETIC after
+count correction passed. All units/nanos reconcile: owned2746+prior3335=6081,
+own33416800ns/max6109400ns; sole failed predicate nestedgroup2746>640.
+Authoritative NATIVE316-321 explicitly counts only actual scheduler GROUP rows
+plus3wrapper groups against640. Independent receipt count is254GROUP rows,
+therefore257actual+wrapper; branchordinal307 is not a group count. Nested
+observation groups equal charged owned units2746 and allocate112row+2634outside.
+Host50c6 frozen/PS5ASTPASS replaces only that wrong-category640 predicate with
+exact nestedgroup==ownedunits; actual640/5s/90s/32768 checks stay. Reader owner
+aligns only analogous nested reason-work fields to unit accounting. Reader3ffb
+frozen/ASTPASS; root inspected only reason row/outside/footer MAX_UNITS domains
+plus exact group/charged-unit and allocation equalities. All actual640/90s/5s
+guards remain. No generic cap change. Incoming98dd and old5367 hosts archived.
+Historical fixture
+will authenticate old5367 archive separately from new currenthost bytes, without
+altering old context. Both hashes released for next source gate, including actual
+NULLfooter positive6081 and count/unit rejection controls plus scoped extracted
+work-block tests. Old CANARY R10 acceptance remains attached to5367/5ebb only;
+fresh current CANARY R11 is required before SUITE R2. Root/base_gate_runner
+sole executor; no live full E matrix. Further source review confirmed P6 NULL
+events are empty while P8 NULL carries coarse witnesses. Reader b1fa fixes that
+mode-aware correlation: strict coarse types/query identity for every mode,
+OBSERVE retains exact P6 event matching, NULL retains unchanged exact cross-mode
+coarse parity against OBSERVE. No P6 event fabrication or predicate re-evaluation.
+Root inspected the scalar/type/direction guards and unchanged parity path.
+SOURCE R19 released (prepared versions16-18 were not run), wrapperfd05ec66...
+b459ea, with realNULLfooter controls and explicitly scoped extracted work/coarse/
+synthetic-parity tests; all usual source gates remain. Fresh CANARY R11 follows
+only if all pass; SUITE R2 remains unstarted. SOURCE R19 early extracted-work
+positive FAIL REASON_FOOTER_WORK_TYPE on outside aggregate entries; hostfooter
+positive6081/count negatives pass. Reader4240/start639295963544156405 exit1/
+proven/logrootabsent,188.3123ms. Actual outside copyEntries2670740/copyUnits658,
+comparisonEntries5343464/comparisonUnits1316;14rowcopy/comparison entries0.
+NATIVE144-150 allocates shared clone/comparison totals outside. Native individual
+clone guard1048576/advance4096 is unchanged; reader wrongly applied that per-copy
+cap to aggregate fields. Owner aligns row/outside/footer aggregates to charged
+units*4096, including the invalid interrupted query-count-scaled footer bound.
+No arbitrary larger cap or native/global-budget change. Original failure and
+sidecar remain intact; no maker/pins/CANARY ran in R19. Reader115f frozen/ASTPASS;
+root inspected only aggregate entry type/related-unit bounds at row/outside/
+footer. Host50c6 and controllerc495 unchanged. Next source gate released with
+actual aggregate positives and one-entry-over-charged-chunk negatives, all
+previous tests and scopes retained. SOURCE R20 ALLPASS: current50c6/115f/c495,
+1084source/850production/25inputs/inventorydba31; new work-block actual aggregate
+positive plus12 strict negatives, actualNULL coarse/synthetic parity plus5
+negatives and footer6081 controls all pass in their explicit source-only scopes.
+Current pins23ec0c49aca335edb4f8b74f6df8c4cac30b28dbabe83d19070b808d9166562f.
+Fresh CANARY R11 running Q/geometric-prefix-canary-controls-r11-
+6cdfd725e5ac4d27ae30e0422745543d, outer38864/start639295968008154601,
+owner gate-runner-canary-r11-owner.json. No concurrent full matrix; SUITE R2
+CANARY R11 FINAL PASS accepted after root actual outer/controls/consumer reads
+and current hashes verified. Outer123903f1c98dd65d2e0c9efbe513dac0a2a5edf730d75bce7427592864adf036;
+controller40832/start639295968015553519 exit0/proven/rootabsent,215109.8941ms,
+exact PASS_PREFIX_CANARY_CONTROLS_ONLY/emptyStderr/inputsunchanged. Five host and
+five reader negatives pass. Consumer45073.8999ms/closure45684.1078ms, cleanup
+52731.9503ms/120s; source1084/850/25/output45files214915B unchanged/layoutfalse.
+Root released SUITE R2 on SAME23ec/current50c6/115f/c495/9eed+c02, unchanged
+normal outer/module. Active Q/geometric-prefix-suite-controls-r2-
+942bb6982ecc4010a0761f53d17eb88d; outer17376/start639295971164803290,
+owner gate-runner-suite-r2-owner.json, original four modes only. SUITE R2 FAIL
+at correct phaseBASE_REASON_THROW/REASON_THROW_MARKER. NULL/OBSERVE exit0 and
+CALLBACK_THROW expectedexit1 retained. REASON_THROW3544/start639295972380636319
+exit1/proven,12073.1038ms: intended FIRST_GEOMETRIC_REASON_CALLBACK but a
+suppressed 'Actual fixed-prefix observer did not capture exactly once' from
+Study.OneShotObserver.requireOneCapture1621→expectedP8ExceptionGraphSha256550→
+p8Run196. No expected marker/four-file bundle, only partial op1. This is NOT an
+accepted expected throw; marker/suppressed-zero/four-file requirements stay.
+Full raw trace in R2/positive/runs/REASON_THROW.stderr. Scratch2f1eacd86ab04e46b8a6bc53c10f6c14/
+creation639295971561117497 removed/cleanupnull. Completefailurebundle
+433acdcf819e465ea7e499dec433b32f manifest
+9e8cd6de68c8d8028122dc8e906895b58ae6e6528bfbb6a75e70531395ccc7f1.
+Controller18372/start639295971170356974 exit1/proven,156147.4658ms/inputsunchanged.
+No independent reader/semantic gate ran. Producer OBSERVE14 rows report
+START_ESCAPE_DIRECTION9/EMPTY_FACE_RESERVATION4/COMPONENT_COURTYARD1, unqualified.
+Native owner and a separate read-only seam reviewer diagnose genuine callback
+ordering/available actual graph proof. No edits until root approves a bounded
+proposal; no hardcoded actual graph, predicate rerun, delayed first fine
+exception, baseline/P5/P6 changes or budget relaxation. Independent source review
+confirmed diagnostics run BEFORE graph select/lineage/task creation. Independent
+contract/reader review confirmed no new throw-run graph is required: four partial
+files and existing P5 partial-prefix-through-BRANCH307 parity against the genuine
+NULL P4 graph, plus full P5/P6/source/query proofs, are the frozen oracle.
+Root approved a mode-specific native fix requiring zero outer graph capture,
+actual candidate/request/terminal-prefix proof, and parent graph reference only;
+normal capture remains strict. No new wire fields or oracle omission.
+Read-only TWO_NATIVE_NORMAL_SEMANTICS_DIAGNOSTIC finished FAIL P6_DYNAMIC_MODULE
+before either normal semantic pass. SAME23ec/currentc7+1b/50c6/115f/c495;
+fingerprints4482inputfiles/90outputentries unchanged. Trace in Q/
+geometric-prefix-two-normal-diagnostic-r1-c6a56abfc7f34466a17d570d151fb706;
+Python17080/start639295985577310657 exit1/proven/logrootabsent,39002.7627ms.
+Owned P6 loader permits only P5 reader and rejects the genuine already-pinned
+P6 overlay builder during source closure. Reader owner handles exact authenticated
+builder allowance, no unrestricted imports or parent/baseline change.
+Native EDIT HOLD RELEASED after fingerprints closed. Approved mode-specific
+Study/Inspector fix may proceed under all constraints above. No normal semantic
+acceptance was obtained; no host envelope/operation row was fabricated. Native
+and reader owners edit disjoint files. Root reviews hashes/diffs before focused
+final-source JDK8 REASON_THROW, then fresh full source/CANARY/SUITE gates.
+No live full E matrix.
+No P8 acceptance/publication until native+strictconsumer+allcontrols and
+cleanup pass. Prior SUITE1 remainsFAIL. A private publication-source draft of46
+whitelisted files/1381716B exists at Q/publication-sources-draft-r1-
+89868aa057cb4cb69f358e1190389867, source inventory hashes/relative paths only,
+no private pins/logs; draft is NOT ACCEPTED/PUBLISHED. E remains report-only dirty.
+Editorial note queued for a separate publication erratum: frozen NATIVE62's
+provisional 'IDs/layer strings' wording conflicts with its exact inherited P6
+identity requirement; actual P6/native/reader layer is integer0/1. Do not alter
+running/frozen contract bytes or receipts; no runtime type change is required.
+A read-only reviewer checks only compiler/bridge/canary receipt schemas against
+genuine prior host output; no tests or input changes. Root must inspect receipts,
+independent consumer, source/stream/output closure, negative controls and cleanup.
+No SUITE until CANARY acceptance. Actual fourteen BASE reasons remain NOT RUN.
+
+Prior actual host runs compiled 1083 JDK8 inputs and passed P6 849+73 assertions,
+P8 31 cases/1089 assertions and four native preflight controls. Whole CANARY still
+failed at index or reader boundaries; none is reclassified. R7 reached compact
+parent parsing, then rejected the fictitious Data requirement. All failures and
+raw returned receipts remain below/in private evidence. Optional ad hoc PS
+context test was NOT RUN after launch failure/policy rejection; do not retry it.
+Normal actual preflight now covers that path. No global setting or module changed.
+
+Same authored BASE root9007199254740993/place-6587958367974952701/
+route8445301674744508279, request0/attempt4/pass2, A_COIL_LOW QA.C->DA.A,
+receipt307/lineage77/H48; prefix6b49cfb2/graphff6466d2, original22/selected14.
+No new seed, candidate, order, policy, epoch or adoption. P6 total includes P5
+once; P8 footer measures its own work. Owner-index order has no independent
+oracle; preserve ID/net census, bounds and observed-index consistency limits.
+All runtime/output bounds stay:90s/640groups/5s,32768units,clone1048576,
+chunk4096,1Mexpansions,48holes,4flips,64KiB,8MiB per operation/metadata and
+40MiB suite; compile60/audit60/native480/reader180/outer1800/cleanup120 seconds.
+The uncontracted 64MiB source-input assertion was replaced by the exact frozen
+1084-row byte census; required GWT jars alone exceed64MiB. No approved cap changed.
+
+No GWT/Player/electrical/population renewal. Full30 is owner-excluded.
+HARD/PSYCHOTIC remain unavailable; protected bodies are unread/unrun here;
+historical unread remains UNCERTIFIED. Old E06/8928 resources and uncertain
+children remain untouched. Successful test scratch/process roots were removed;
+evidence outputs are retained. Root owns final acceptance, normal publication
+and one connected Gmail per accepted published milestone.
+
+# Historical checkpoint: P8 prerequisite handoff before CANARY R8: P8 host completes; independent reader preflight fixes
+
+UTC2026-11-06. Active E OS-temp/tsj-q100-geometric-reasons-20261106-r1,
+branch codex/q100-geometric-reasons-20261106, HEAD0891474cadc4b9e00d7911e81c124721a11efb87.
+Existing non-cone sparse checkout: do not expand protected paths. Only report
+tracked/0staged;850production/1084source unchanged. Main5f05b005 retains9tracked/
+6untracked, Desktop e0c36885 retains7/73, both0staged. Older worktrees/failures
+and oldE06/8928 resources untouched; no new persistent helper.
+
+P7 COMPLETE/PUBLISHED impl316eba54af74ce5b7d14996677118f75f39c1757,
+receipt0891474; remote codex/q100-physical-feasibility still0891474 verified.
+Gmail1a1b0db5d47f0af1 SENT_ONCE, never duplicate. No P8 commit/push/email.
+
+External Q=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591.
+BASE=Q/canonical-geometric-prefix-study-r1. Frozen prerequisite CANARY root
+canonical-geometric-reasons-r1 remains unchanged: qualification755f921b...e43276,
+R9pins11b3fa45...462a5a; scoped actualreceipt/source reuse review CLEAR.
+BASE frozen CONTRACT_SETc02fab1ad0b0802b8b2449f974de01c3042274c1b68a625ea2538c7ddeb380c1;
+HOST_R1 amendedR3 9eedb0bb1dd2d7e900b83f9968e52695730a4aa45e2daa1d9e3d1c620cc00253 defines UTF8(originalreturnedtext) stream
+authority, not rawOS-pipe BOM/invalidUTF8 preservation. Originaldraft preserved.
+
+Current frozen code: Study c7a4388a9d5fa7ee7057d3ddfc84ba19590c788a152809d5f09d9d3340ebed18;
+Inspector1b69d1dd8665ac1ebfccc665513c49447f5289ae7507d8ecb1f3900a4fea2198;
+Host536749f0c52aacd9eeb0fa34e217388b00bbbebf17cb2bf2ae2ad9cf48f85afc;
+Readerd5b5a9b0002a8e9055471eb7042e40faf9820716d31683772e174dd5bdda8824;
+Harness01167ed0/Makera10de16b/Auditora1ccce88 unchanged;
+Controllerc495e515bf5f1d16600a5b294093b0f773555bc9cf8f7bcfafd9ac1ab90eae17.
+NativefocusedJDK8 compileR3 PASS1083sources; fullhostR4 also compiles1083 and
+passesP6 849+73assertions/P8 31cases+1089assertions/4nativepreflightcontrols/
+sourcepost, but wholeCANARYR4 FAIL OUTPUT_INDEX/OUTPUT_ROLE. Scratchremoved/
+terminationproven, noaggregatePASS orindependentreader. Completefailurebundle
+5873bf9cb60343efa547a2d41f2e785c manifestf7cca48e...3678e1 retained.
+
+R4failed code5b3b/pins4936edac...7689d6. Currentfix exactcanary/controlartifact
+allowlists and suffix-derived operation; reader fixes8negativecontrolstreams.
+Root reviewed both; selectedPS5 hostAST/PythonreaderAST PASS. Prior failures
+remainFAIL: P6manifestformat, compilehelpers, hostordering/P6role/stalecall/
+writerpin andoutputindex. Details/receipts below; no assertions or caps weakened.
+Sourcefunction retentionR4 PASS real170905Breceipt+130000Bstdout, unchanged
+helper/catchclosure verified sincef00d; only that evidence boundary is reused.
+Adhoc extractedcontext NOT RUN (UseShellExecute failure, then policy rejection
+beforelaunch). No retry of blockedcall. ActualnormalCANARYR3 passedthat context.
+
+SOURCER6 FAIL beforemaker/pins/fullhost: hostpuremapping PASS42CANARY/77SUITE
++andunknownreject; Pythonreader mapping failed runs/CALLBACK_THROW.stderr
++operation (genericruns split retainedextension). Child18540/start639295911653928760
++exit1/proven/logrootabsent,286.5743ms; Q/geometric-prefix-source-gates-r6-
++6b7a7a9744e14d07ba885c6242b6c1c0 preserved. Reader2e7d fixes exact8runstreams;
++root reviewed/ASTPASS. SourceR7 PASS17finalformat/AST/mapping/maker/auditor,
+1084source/850production/25extras, inventorydba31be3 unchanged. Pins
+fb02b94f586981240c67482a5e37a3ba9628064cd1056f8eab89ef1942c5d404;
+Q/geometric-prefix-source-gates-r7-e2c90b68159c42a6bce0f371adfe5510.
+Rootactualreceipt reviewPASS: hostmapping281.8008ms, Pythonreader28460/
+start639295912784367128 exit0/proven/logrootabsent,143.5424ms fullcall;
+known42CANARY/77SUITE matchbothfields, unknownrole rejects/defaultHOST retained.
+NormalCANARYR5 FAIL independentconsumer, Q/geometric-prefix-canary-controls-r5-
+76bff58d87de4982a04b7cbec7a66af0. Realhost40772/start639295913471486830
+exit0/proven/emptyStderr,HOST_CANARY_COMPLETE_READER_PENDING,128027.7025ms;
+scratchaff7873b0ed54fbf8c3387a84b6756c6/creation639295913835960743 removedtrue.
+Actualcontinuousnativecharge3489.7206ms+fullparenttail49340.3056ms=52830.0262ms
+under120s. Reader32180/start639295914755110556 exit2/proven/logrootabsent,
+167.7636ms exactJDK_FILE_BINDING; outer17624/start639295913432773363 exit1/
+132767.9078ms,inputsunchanged. All5hostnegativesPASS; readernegatives NOT RUN.
+No wholeCANARY acceptance. Root readactualhostcleanup/timing plusconsumerfail.
+
+Readerpreflightbatch: correctJavaHome/bin exactexe binding; actualfrozenCANARY
+schema; qualification.sourceClosure.sourceRows; productionclassifier src/850
+(BASE_SOURCE is1080); sourceinputbytes bound to authenticatedexact1084-row
+census88,031,179B. RequiredGWTjars70,300,865Balone exceed uncontracted reader
+64MiB assertion; frozenSOURCE/INPUTS/HOST/READER contracts contain no suchinput
+aggregate. Replaceinventedguardwith cumulative<=exactauthsum andfinalequality,
+preserveperfile/hash/count andallapprovedruntime/outputcaps. Theseadditional
+schema/classifier/byte findings are SOURCE review, not reachedruntime failures.
+Readerd5b5 frozen/ASTPASS, root reviewed five-hunk diff against genuine contracts.
+SOURCE R8b FAIL focused inventory SOURCE_INVENTORY_CANARY_PARITY after actual
+input/prerequisite helpers passed. Pinsff82ca307804d0f3acfbeb491c687c43a31e123cc03e0a7b6aec11278371129b;
+reader20892/start639295918936199712 exit1/proven/logrootabsent,401.3136ms.
+Both inventories1084/unique1084, ZERO path/role/bytes/hash differences; original
+R9array order differs from required newordinalJSONL order (firstdifference2).
+Sourcecontract requires per-entry equality, not inheritedarrayorder. Reader
+owner aligns parity to sortedexactR9rows; privatehelper gets independent
+canonicalby-path tuple proof, originalfailure preserved. No fullhost retry yet.
+Reader9c7c frozen/ASTPASS; root inspected inherited1084 exactfields/types/paths/
+hashes/uniqueness then exact-path sort parity. SOURCE R9 ALLPASS in
+Q/geometric-prefix-source-gates-r9-4fa8525ca4e1481781d44f9605c965ab, pins
+6d21731c94de76228b688028d450e6b1eb959a6144dbec7261af34f026b1421c.
+Independent helperR3 d080a239 input/prerequisite/inventory positive+5exact
+synthetic negatives PASS8991.4083ms, fullcall9120.6151ms; Python30492/
+start639295921160591108 exit0/proven/logrootabsent. All1084/850/25/
+88,031,179B/source hashes unchanged; both119 mapping entries pass. Root read
+actual results/process receipt. Normal CANARY R6 FAIL independentconsumer in
+Q/geometric-prefix-canary-controls-r6-26872c34162f4ddf9a23e99eccd63e9a.
+Host22604/start639295921604785776 exit0/proven/emptyStderr,126860.1162ms;
+reader21160/start639295922876556242 exit2/proven/logrootabsent,9142.6734ms,
+exactPARENT_RECEIPT_FRAMING. Outer27284/start639295921566516602 exit1/proven,
+140465.8484ms/inputsunchanged; all5hostnegativesPASS, readernegativesNOTRUN.
+Cause controller Save emits prettyJSON with internalCRLF; strictparentparser
+requires oneLF-framed JSON. Root archivesad39 and adds ONLY-Compress to Save,
+preserving all process field/string values. No parent/native parser weakening.
+SOURCE R10 privatefixture FAIL beforemaker/pins: correct compactJSON rejected
+by fixture's double-only .NET type assumption (PS5 yields System.Decimal).
+Candidate unchanged. Root authorizes JSON finite-number exact1.25 type scope,
+excluding bool/string/array; int7 and booleans remain strict. Original failure
+preserved. Corrected sourcefunction Save fixture PASS249B/singleLF/noCR/exact
+quotes+CRLF roundtrip, actual types Decimal/Int32/Boolean. SOURCE R11 active
+on controllerc495/host5367/reader9c7 with allotherchecks unchanged; then usual
+CANARYR7 ifallPASS. Soleexecutorroot/base_gate_runner; no concurrent full matrix.
+SOURCE R11 ALLPASS currentcontroller/host/reader, pins
+22f2e0aa04d183b5e84101823b28e0e79a42b518cd1e704ecc5c64b450081b39.
+CANARY R7 FAIL independentconsumer PARENT_PROCESS_FIELDS after compactparent
+framing advanced. Host23260/start639295926730229556 exit0/proven,127292.6320ms;
+reader38052/start639295928006452739 exit2/proven/logrootabsent,9131.0822ms;
+outer26420/start639295926689440096 exit1/proven,141125.2981ms/inputsunchanged.
+All5hostnegativesPASS; no readernegatives/SUITE. EvidenceQ/
+geometric-prefix-canary-controls-r7-cab73d682dde48ed93db1fc993c48f0a preserved.
+Root+runner independently confirmed selected fb07 returnobject and genuine
+parent/compiler/auditor/native receipts have exactly11fields, no Data. Draft
+HOSTR2 prose/reader erroneously requiredData. Root archives958/225 and freezes
+HOSTR3 exact11/noextraData before readerfix; Exception.Data failuremetadata,
+API/source850 andeverybudget/value/identity/stream/cleanup check unchanged.
+Readerd5b5a9b0 frozen/ASTPASS; root inspected exactly2Data removals and verified
+HOST9eed/CONTRACTc02 hashes. SourceR12 released with currentrealformat process
+common-schema sourcefunctionpositive+4syntheticrejections; mappingtable same
+withupdatedcontractpin. IfallPASS usualCANARYR8 runs with freshpins. Root/
+base_gate_runner soleexecutor; SUITE remainsNOTRUN, no blockedlauncher retries.
+No blockedPScontextlauncher retry/environment change; no SUITE/publication/email.
+No SUITE until rootinspects actualCANARY receipts/sourceclosure/cleanup/finalguard.
+Actual14 BASE reasons NOT RUN. Root owns finalacceptance/publication/one email.
+
+Same authoredBASE9007199254740993/place-6587958367974952701/route8445301674744508279,
+req0/attempt4/pass2 A_COIL_LOW QA.C->DA.A receipt307/lineage77/H48;
+prefix6b49cfb2/graphff6466d2,22parent/14selected unchanged. No newseed/candidate/
+order/policy/epoch/adoption. P6total alreadyincludesP5prior, addonce; P8footer
+observerworkonly, wrapper includesactualP07/P5/P6. Ownerindex order independent
+oracle unavailable; validate IDs/netcensus/indexbounds/observedconsistency only.
+Caps90swork/640actual+wrapper/5s/32768units, clone1048576/chunk4096/1Mexpansions/
+48holes/4flips/64KiB,8MiBpernative+8MiBmeta/40MiBsuite; compile60/audit60/
+native480/reader180/outer1800/cleanup120s unchanged, continuousnative/finaltail.
+No GWT/Player/electrical/population renewal. Playable100=0/betaHELD. Full30
+EXCLUDED; HARD/PSYCHOTIC unavailable/protectedbodies unread/unrun here;
+historical unread UNCERTIFIED. Continue until owner stops.
+
+# Historical checkpoint: P8 host gates before mapping fix: P8 CANARY index-role fix; native canaries passed only
+
+UTC2026-11-06. Active E OS-temp/tsj-q100-geometric-reasons-20261106-r1,
+branch codex/q100-geometric-reasons-20261106, HEAD0891474cadc4b9e00d7911e81c124721a11efb87.
+Only tracked report edit/0staged;850production/1084source unchanged.
+Main5f05b005 retains9tracked/6untracked, Desktop e0c36885 retains7/73, both0staged.
+D0891/C23f94/B831d/V8302/W9661 and all failures/unrelated resources preserved.
+
+P7 COMPLETE/PUBLISHED impl316eba54af74ce5b7d14996677118f75f39c1757,
+receipt0891474cadc4b9e00d7911e81c124721a11efb87 verified on
+origin/codex/q100-physical-feasibility; Gmail1a1b0db5d47f0af1 SENT_ONCE.
+Never duplicate. Four0/4/4/8-bit openings reach12/16/16/20 states, goals0/
+minimumVIA null; excludes only those local openings, not board feasibility.
+
+External Q=OS-temp/tsj-q100-fixed-prefix-capture-840a8ef24dbb448f830d2786a95a1591.
+Frozen canonical-geometric-reasons-r1 prerequisite CANARY_QUALIFICATION_R1.json
+755f921b...e43276/inputR9 11b3fa45...462a5a remains PASS only for the observer.
+Actual JDK8 1081sources, P6 849contracts+73adapter assertions, P8 31cases/
+1089assertions,5host/4reader negatives and independent consumer passed;
+outer112080.0651ms, cleanup41482.208ms/120s, consumer17599.0939ms/180s.
+Scoped actual-receipt/source reuse review CLEAR. OriginalR6/R7 failures remain.
+This does not qualify actual14 reasons or renew originalP6 full-host evidence.
+
+NewBASE directory canonical-geometric-prefix-study-r1. Current contracts:
+INPUTS9c2002d2/SOURCE836b0d57/NATIVE62b55f64/READER74de4b54/CONTROL51527072;
+HOST_R1 R2=958eca33561713d620b2524f1efd708ff03b11877eabf4a0ef8207295f81357c;
+CONTRACT_SET_R1=225832f91de2ee2e7278f4105cad7bf5e96c6e86fd3da9181e0cc0e1df4da676.
+OriginalHOSTc7b825/CONTRACTe747 archived before amendment; BASE R2 pins below.
+
+Current source candidates (full hashes in files/evidence):
+Study c7a4388a9d5fa7ee7057d3ddfc84ba19590c788a152809d5f09d9d3340ebed18;
+Inspector1b69d1dd8665ac1ebfccc665513c49447f5289ae7507d8ecb1f3900a4fea2198;
+Host5b3bcc2a181d4c4cc9e12242f31e90e5190fb7bcc0f895f832464f928f364735;
+Reader5503b7ad9fabe6079cf55fe59bb4d6fa1a38ea31ded53ababc9969ee3a01bfd7;
+Harness01167ed0/Makera10de16b/Auditora1ccce88/Controllerad391930.
+All core writers stopped. Host owner freezes5b3b writer-binding fix;
+root/base_gate_runner owns private actual gate orchestration.
+No other build/test matrix may run concurrently in E.
+
+Focused JDK8 R3 PASS1083sources/exit0/termination, sourcepre/post oldR9 PASS
+1084/850/46; scratch7adb33...removed, cleanup37874.6481ms/120s. No nativecases.
+R1 FAIL privateauditor-prefix parser beforecompiler; R2 genuinejavac FAIL11
+Inspector missinghelper/ctor/constant refs,7.7769s/exit1/proven/cleanup38.1857s.
+Both preserved; 07Inspector archived before1b fix. Study5ec/b0cd/14b archived;
+peer fixes actualouterobserverdrop before classification and combinedproof/
+export5s group; prep+combinedexport+post remains3 with realGROUP+3<=640.
+
+Reader87a archived/fixed5503: oldthrow prior0 is separate from nonzero P6
+total, host operation binds actualP6total; P8ownunits null. Fresh focusedreview
+clears that predicate;14ordinals matchP6, ownerindex canonical order remains
+independently unavailable (use ID/net census,bounds,observedindex consistency).
+Actualearlyreaderwrongdigest R2 PASS87a boundary only; R1 missingpath fixture
+failedPATH_MISSING and staysFAIL. Full positive reader/SUITE NOT RUN.
+
+Host804/655/751 preserved. f00d immediately registers returnedprocess before
+validation, exports full private failure receipts/UTF8 strings outside success
+root, smallsummary refs and explicit write errors; count0 creates no bundle.
+ActualPS5.1 AST PASS; no wholehost run. Real fb07 module byte probes establish
+TEXT authority: ASCII survives, BOM stripped, FF replaced; qualify only exact
+UTF8(originalreceiptstrings), not rawOS-byte/BOM/invalidUTF8 support. Native
+FILE byte/framing/hash assertions and every success limit unchanged. Failure-
+only128MiB/file256MiBstorage preserves rejected evidence, never raiseslivecaps.
+
+Current selected gate work: root/base_gate_runner owns private execution.
+Realretention finalR4 PASS Q/geometric-prefix-retention-source-r4-
+8f9682681c3b4d91a91a680422e7bd54/independent-result.json. ActualPython6268/
+start639295887793425921 exits7,130000Bstdout/full170905Breceipt; actualcatch
+7456/start639295887779609593 exits1 with exactreject and929Bsummary. Complete
+privatebundle80d73d485259428890c7731112aa473e manifest
+e3f5a70dcaf25271b59437c37e666afb289f73d7c7c44c3e7446bfd330b5e43d;
+independentfullobject/UTF8string/ref/hash/census/owner/creation checks pass.
+Terminations/logrootsproven; failurebundle intentionallypreserved as evidence.
+R1blankScriptBlockidentity/R2filepathcomparison/R3Storealias harnessfailures
+remainFAIL; R4 usesactualGetModuleFileNameW/pinnedimage, sourcef00d unchanged.
+
+Actualsource/inputR2 PASS Q/geometric-prefix-source-gates-r2-
+b57c413407ac4fd89f0587c6b41b0d16/result.json: final17format/PythonAST, selected
+PS5AST4 and finalbytes unchanged. Maker27242.7103ms/PID20676/
+start639295889872429299, auditor26778.7607ms/PID34352/
+start639295890144905656, bothexit0/termtrue/logrootsabsent. Actualinputpins
+8475597c0a7dbee8e926d9fb4325ebef2a856188b2c409b3ccd0764ad4730d1e;
+sourceinventorydba31be32c8d0d838fa8a1859c2a37a62a619b517515714ef519e59ce4a02de8.
+Closure1084source/850production/25extras. SourceR1failedMakerP6_PINS_FORMAT,
+nooutputs: newcanonicalreserialize incorrectly demanded sortedkeys of genuine
+unsortedb640 parent. RemovedONLYthat demand in makera10de16b/auditora1ccce88;
+rawSHA/duplicate-safeparse/schema/parent/authoracles stay. Oldsource/failure
+preserved; genuineparent unchanged. No similarreader/hostdemand found.
+
+ActualCANARYR1 FAIL Q/geometric-prefix-canary-controls-r1-
+c705efb91a774d75beb9f979cd34394f: all5host negatives PASS, positive rejected
+INPUT_FILE_ORDER/INPUT_PINS before output/scratch/compiler/native. Positive
+PID39552/start639295890724099612 exit1/terminationtrue/logrootabsent,
+wall847.9823ms; controller22976/start639295890684186729 exit1,5160.1816ms,
+terminationtrue/logrootabsent and inputs unchanged. Failed evidence preserved.
+Cause: Pythoncasefold orders read_geometric_prefix.py before READER_R1.md;
+.NET OrdinalIgnoreCase uppercases and reverses them. Host owner changes only
+the comparison to lower-invariant ordinal for this exact ASCII25-path census.
+Existing path/hash/type/unique/census assertions remain. Source/input pins must
+be regenerated for changedhost; R2 pins remain immutable historical evidence.
+Actualsource/inputR3 PASS Q/geometric-prefix-source-gates-r3-
+dc06146da8a1479b92e6f343e938eab4,17format/selectedPS5AST4/1084source/850prod/
+25extras; pinsd8ce8fc8db7190dfd56be1ec8a5f2dea4201ecf2ff8a2d6ac5019e41486d5254.
+Inventorydba31be3 unchanged. Focused actualPS5 AST-extracted comparator check
+beb8e5fedc0e154755dc9170653bafd07f0455123d9fcfcd945c5899f549295a proves
+all25 fullpaths ASCII/strictorder/no duplicates; realpairPASS/reverseREJECT.
+
+CANARYR2 FAIL Q/geometric-prefix-canary-controls-r2-
+cc51e04d1365402ba67b726e46c0e459: all5host negativesPASS; positive fails
+StrictMode missing role/phaseINPUT_PINS beforeoutput/scratch/compiler/native.
+PID40428/start639295895482986340,1181.6223ms/exit1/terminationtrue/logrootabsent;
+outer36292/start639295895443367369,5480.1498ms/exit1/proven,inputsunchanged.
+Cause host reads role from P6 files rows (onlypath/bytes/hash); WIRE role lives
+in authenticated sourceRows. Host-only schemafix+focusedcontextgate assigned.
+R2failure/c2c2source archived. Host677 fix uses unique authenticated
+P6sourceRows WIRE with exact path/33064bytes/role/SHA+canonicalfile proof.
+Removed undefined Load-SourceInventory call; precedingLoad-AuthenticatedContexts
+already validates/retains inventory. IndependentCommandAST scan finds no other
+undefinedcustomhelper. Rootdiff vs f00d onlycomparator/wire/stalecall hunks;
+unchangedretention/catchclosure allows scopedR4 source-function evidence reuse.
+PS5AST PASS677. Separate extracted-context helper NOT RUN: first ad hoc
+EncodedCommand PS5 launch failed UseShellExecute/env error; second inline
+temp-harness create/invoke/cleanup exec was blockedbypolicy beforelaunch.
+No harnesscreated, noenvironmentmodified, noretry/alternatelaunch of that call.
+Root uses the originally required normalwholehost CANARY to cover preflight.
+This optionalhelper omission does not stand in for a PASS.
+
+Actualsource/inputR4 PASS Q/geometric-prefix-source-gates-r4-
+b0376e3d5ae3499a8ebfe503b598581a/result.json:17format/PS5AST4/1084source/
+850production/25extras, finalbytes unchanged. Inputpins
+05f6b51b6797e7a5903231d9cd31ff43abe975299e384c2235e7ae76826127dd,
+sourceinventorydba31be32c8d0d838fa8a1859c2a37a62a619b517515714ef519e59ce4a02de8.
+NormalCANARYR3 FAIL Q/geometric-prefix-canary-controls-r3-
+766773887d8d421fad3b6f6f2038066f. All5hostnegativesPASS; positive passes genuine
+Load-AuthenticatedContexts/sourcepreflight, then SCRATCH_CREATE/MODE_ROLE_PIN
+beforecompiler/native. Host35456/start639295902172274344 exit1/proven,
+parent40438.5039ms; controller16256/start639295902133465988 exit1/proven,
+44626.4514ms, inputsunchanged. Scratch8cdfe2fc620249ab8016352904faeb90/
+creation639295902525191054 removedtrue/cleanupErrornull. Realreturned source
+auditor receipt preserved in normaloutput and completeprivatefailurebundle
+90b3f837733c4aed86bb0a7836ee3ca6 manifest
+a306d92bf70f1097025c20eb315bf33f27e091d2e6e94c946e2a0bb9de4f5f5c.
+Cause: compiler loop seeks all10 modeFiles in canaryfiles; 9there, maintained
+writer in sourceRows only (alreadyauthenticated). Host owner fixes that one
+binding through exact WRITER source row/currenthash, preserves other9filespins.
+Host5b3b frozen/selectedPS5ASTPASS; actualsource/inputR5 PASS17files/
+PS5AST/1084source/850production/25extras, inputpins
+4936edac4f09cb04b839ffdbe3252839f3379dc3c4cc6c7e23b589b9a67689d6.
+Inventorydba31be3 unchanged; maker26786.2639ms/PID32844 and auditor26748.1123ms/
+PID16464 exit0/terminationtrue/logrootsabsent.
+
+NormalCANARYR4 FAIL Q/geometric-prefix-canary-controls-r4-
+2b168fb5379a49f89d5749366fb0e845, phaseOUTPUT_INDEX/codeOUTPUT_ROLE after real
+1083-input JDK8compilePASS, P6 849+73assertions/P8 31cases+1089assertionsPASS,
+four exactnativepreflightcontrolsPASS and sourcepostPASS. WholeCANARY is FAIL;
+independentreader/negativecontrols NOT RUN. P8literalwork278738800ns/64groups/
+max76415900ns/868units, not actualBASEreasons. Positive33956/
+start639295906695397480 exit1/proven/logrootabsent,parent127435.556ms.
+Scratch22f541f32c2b48a187823ede5972f34e/creation639295907047809423 removedtrue/
+cleanupErrornull. Completeprivatefailurebundle5873bf9cb60343efa547a2d41f2e785c
+manifestf7cca48ed340092a927b6c2fa4520d4624be27ee01e0d05939dab896ec3678e1.
+Cause host dashprefix groups miss .stdout/.stderr names; reader independently
+has same operation lookup defect for4negative stream pairs. Separatehost/reader
+owners align exactmapping to frozencontract. Runner adds source-function-only
+mapping coverage in usualselectedgate, no blockedharness/launcher retry.
+No activefullmatrix, no SUITE/actual14reasons, no P8 publication/email.
+Remote codex/q100-physical-feasibility still0891474 verified.
+
+Earlier actual source-only checks:17devformat/PythonAST PASS; currentcontroller
+PS5AST+realfilesystem function canary PASS, independentreview9825scopeCLEAR
+then root strictfieldtypesad39. Newinputimage helpers got freshstaticreview and
+actual6realWindowsimage/hash/path cases PASS (48.9852ms/child389.6314ms), not
+wholemaker/auditor. PrivateR1 newline wrapperFAIL preserved/R2binaryLF passes.
+All returned sourcecanary child roots and ownedfixtures cleaned; oldE06/8928
+resources untouched. Gate runner records any new PIDs/start/exe/temp identities.
+
+Same authoredBASE9007199254740993/place-6587958367974952701/route8445301674744508279,
+req0/attempt4/pass2 A_COIL_LOW QA.C->DA.A receipt307/lineage77/H48,
+prefix6b49cfb2/graphff6466d2;22parent/14selected unchanged. No newseed/candidate/
+order/policy/epoch/adoption. P6prior includesP5 ONCE; P8footerobserverworkonly,
+wrapper includesactualP07/P5/P6. Caps90s/640actual+wrapper/5s/32768units/slice,
+1Mexpansions/clone1048576/chunk4096/48holes/4flips/64KiB;8MiBpernative plus
+8MiBmeta derive40MiBsuite. Compile60/audit60/native480/reader180/outer1800/
+cleanup120s, fullcontinuous native interval/parent finaltail charged.
+
+No P8 commit/push/email; playable100=0/betaHELD. CircuitJS truth unchanged.
+No GWT/Player/electrical/population renewal. Full30 EXCLUDED; HARD/PSYCHOTIC
+unavailable/protected bodies unread/unrun here; historical unread UNCERTIFIED.
+Continue until owner stops. Root owns final acceptance/publication/one email.
+
+# Historical checkpoint: P7 published; deeper geometric attribution is next
 
 UTC2026-11-06. Active D OS-temp/tsj-q100-cut-sensitivity-20261106-r1,
 branch codex/q100-cut-sensitivity-20261106. Tested source parent23f94f8f;

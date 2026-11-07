@@ -1,0 +1,153 @@
+{
+  "acceptedUtcDate": "2026-11-07",
+  "cleanup": {
+    "boundMs": 120000,
+    "cleanupStartOffsetMs": 129173.9413,
+    "finalHostTailMs": 50419.010899999994,
+    "nativePhaseChargeMs": 29276.85000000001,
+    "processRootsAbsent": true,
+    "scratchRemoved": true,
+    "upperBoundMs": 79695.8609
+  },
+  "compiler": {
+    "sourceCount": 1083,
+    "sourceList": "compiler-sources.txt",
+    "sourceListBytes": 151765,
+    "sourceListSha256": "fa773319be266b7be5c41de5bb6a45edf01c512957c6c358b67bad88018e2e22"
+  },
+  "gates": {
+    "canary17": {
+      "controllerWallMs": 214412.0118,
+      "historicalFixtureUsed": false,
+      "outerSha256": "50c9fa20f9781ed1d84fdcbbe9197ccc06b82b0d2fc2b7ba2975ed5ae925afeb",
+      "status": "PASS_HOST_CANARY_ONLY"
+    },
+    "source33": {
+      "resultSha256": "1d00277979e7050a00db3093fa9c5493ebd359bc46a0d272e9529cbff6a20355",
+      "scope": "SOURCE INPUTS; historical function probes include a declared original-auditor-result fixture, not a whole-host acceptance",
+      "status": "PASS_SOURCE_INPUT_GATES_ONLY"
+    },
+    "suite8": {
+      "consumerClosureSha256": "0c34b6c04660107b168d054d9edc0090cb55a38a506cde0edf2bf95fa52af04a",
+      "consumerFullClosureMs": 86094.8497,
+      "consumerReceiptSha256": "db47e7726a7f97b413cafbaa18c6cd33d692503d4256a794ab7406ecbe1a8240",
+      "consumerWallMs": 84984.2617,
+      "controllerWallMs": 396053.49450000003,
+      "controlsSha256": "13a4528150497c7d1200f14d3876b7886999108d7c849fb25d0413a58c1f3009",
+      "historicalFixtureUsed": false,
+      "hostSha256": "987be83a188ae07d42cfeb568cd8c2c0a44baf7ab744610bca7bea16f3d8f215",
+      "hostWallMs": 179592.9522,
+      "outerSha256": "77b92fdcbcd739522cdd67446373a0de88c8592122187fb4c335b38c5933cc17",
+      "parentSha256": "cc765b8fb1b072a8c151fb0be11bade324c652c3808564db3a47471463f5abe5",
+      "semanticCliWallMs": 85762.0312,
+      "semanticReceiptSha256": "80db67b96d2c51be43e47a1c2149c08525df9a3b69d8099f83e3dca8109ae388",
+      "status": "PASS_PREFIX_SUITE_CONTROLS_AND_REASON_OBSERVATIONS_ONLY",
+      "toolAndPostexitObservationSha256": "117772f6f219856ee5d48d4b4c240ad0692ca7f813f0ab8a60afb8ab29732ed0"
+    }
+  },
+  "layoutQualification": false,
+  "limits": {
+    "auditMs": 60000,
+    "cleanupMs": 120000,
+    "compileMs": 60000,
+    "compilerListBytes": 1048576,
+    "groupNanos": 5000000000,
+    "groups": 640,
+    "hostEvidenceBytes": 8388608,
+    "inventoryBytes": 1048576,
+    "lineBytes": 65536,
+    "nativeMs": 480000,
+    "observationUnits": 32768,
+    "operationBytes": 8388608,
+    "outerMs": 1800000,
+    "readerMs": 180000,
+    "suiteBytes": 41943040,
+    "workNanos": 90000000000
+  },
+  "limitsAndExclusions": {
+    "arbitraryCloneReplayQualified": false,
+    "beta": "HELD",
+    "full30": "OWNER_EXCLUDED",
+    "gwtPlayerElectricalPopulationRenewal": false,
+    "hardPsychotic": "UNAVAILABLE_UNRUN",
+    "historicalUnreadBoundary": "UNCERTIFIED",
+    "playable100": 0,
+    "productionChanged": 0,
+    "protectedBodies": "UNREAD_UNRUN_HERE"
+  },
+  "nativeCanaries": {
+    "inputControls": [
+      {
+        "dataDirectoryUnchanged": true,
+        "exitCode": 1,
+        "expectedFailureCode": "INVALID_MODE",
+        "name": "P8_BAD_MODE",
+        "observedFailureCode": "INVALID_MODE",
+        "terminationProven": true
+      },
+      {
+        "dataDirectoryUnchanged": true,
+        "exitCode": 1,
+        "expectedFailureCode": "INVALID_RUN_UUID",
+        "name": "P8_BAD_UUID",
+        "observedFailureCode": "INVALID_RUN_UUID",
+        "terminationProven": true
+      },
+      {
+        "dataDirectoryUnchanged": true,
+        "exitCode": 1,
+        "expectedFailureCode": "INVALID_INPUT_SHA256",
+        "name": "P8_BAD_INPUT_SHA",
+        "observedFailureCode": "INVALID_INPUT_SHA256",
+        "terminationProven": true
+      },
+      {
+        "dataDirectoryUnchanged": true,
+        "exitCode": 1,
+        "expectedFailureCode": "OUTPUT_DIRECTORY_NOT_EMPTY",
+        "name": "P8_NONEMPTY_DATA",
+        "observedFailureCode": "OUTPUT_DIRECTORY_NOT_EMPTY",
+        "terminationProven": true
+      }
+    ],
+    "p6": {
+      "assertions": 73,
+      "blockerAssertions": 29,
+      "elapsedNanos": 1837752400,
+      "groups": 2,
+      "layoutQualification": false,
+      "maximumGroupNanos": 1524267300,
+      "schema": "tsj-canonical-prefix-stage-canary-v1",
+      "stageAssertions": 27,
+      "status": "PASS"
+    },
+    "p8": {
+      "assertions": 1089,
+      "caseCount": 31,
+      "groups": 64,
+      "layoutQualification": false,
+      "maximumGroupNanos": 33698800,
+      "schema": "tsj-q100-geometric-reason-canary-v1",
+      "status": "PASS",
+      "totalObservationUnits": 868,
+      "workNanos": 100452600
+    }
+  },
+  "observationsSha256": "721a78f7fe2d7d6447797b20145c24c0dcf1657f5670a99e0f501a08dbd6c184",
+  "publication": "NOT_RECORDED_HERE; see repository publication receipt",
+  "runtimeInputSha256": "b3bca1391fcb8e229e6f34dddddfc52ae77447a02a064d9e7eb8a30e7bc8ba7a",
+  "schema": "tsj-p8-fixed-prefix-reason-qualification-v1",
+  "semanticControlsSha256": "18416fbed1b9189abf764a5840924422a8af6a465970d410ed8d75912fb8a78f",
+  "sourceClosure": {
+    "extraFiles": 25,
+    "pinsSha256": "b3bca1391fcb8e229e6f34dddddfc52ae77447a02a064d9e7eb8a30e7bc8ba7a",
+    "productionFiles": 850,
+    "sourceInventorySha256": "dba31be32c8d0d838fa8a1859c2a37a62a619b517515714ef519e59ce4a02de8",
+    "sourceRows": 1084,
+    "status": "PASS_Q100_GEOMETRIC_PREFIX_INPUTS_ONLY"
+  },
+  "sourceCopiesSha256": "5455335c6af44a8ed8e09d869a2846506e14db88cf196f71f32ba398984c77ab",
+  "sourceParent": "0891474cadc4b9e00d7911e81c124721a11efb87",
+  "sourceSha256": "dba31be32c8d0d838fa8a1859c2a37a62a619b517515714ef519e59ce4a02de8",
+  "status": "ACCEPTED_FINITE_DIAGNOSTIC_ONLY"
+}

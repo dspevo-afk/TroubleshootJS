@@ -1,6 +1,6 @@
 # TroubleshootJS: Current Roadmap
 
-**Updated:** 2026-11-06 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
+**Updated:** 2026-11-07 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
 
 ## Current product checkpoint
 
@@ -690,6 +690,25 @@ with the already accepted9 legal-move/5 traversal split retained as its baseline
 Implementation `316eba54af74ce5b7d14996677118f75f39c1757` was normally pushed and its exact remote SHA
 verified on origin/codex/q100-physical-feasibility. Completion Gmail
 `1a1b0db5d47f0af1` was sent once. This documentation receipt sends no second email.
+
+The [canonical geometric-reason diagnosis](task-evidence/Q100/canonical-geometric-prefix-study-r1/README.md)
+is locally accepted for the same exact BASE prefix. Its14 original geometric cut
+queries report9 start-pad escape-direction guards,4 MIXED face reservations and1
+QA courtyard guard. These are actual first-guard observations; contributing pad
+nets, unique trace ownership, a valid relaxation and board feasibility remain
+unqualified. Original22 P5/P6 projections, route/graph/effect/source parity and
+both distinct callback exception paths pass. Final1,083-source JDK8 compile,
+maintained P6 and31-case P8 canaries, four native input controls, five host/five
+reader rejections, the whole independent consumer and12 fresh semantic CLI cases
+pass. The full suite closes in396.053s under1800s, the consumer in86.095s under180s,
+and conservative native cleanup in79.696s under120s. Earlier native, host,
+reader and harness failures remain preserved. All850 production files are
+unchanged; no GWT/Player/electrical/population renewal, policy, epoch, route
+adoption or playable100 admission follows. Playable100=0/betaHELD; full30 is
+owner-excluded, HARD/PSYCHOTIC unavailable/unrun, historical unread UNCERTIFIED.
+Next is the [one-slot reservation provenance scope](task-evidence/Q100/canonical-geometric-prefix-study-r1/NEXT_RESERVATION_PROVENANCE_PLAN.md),
+with its input/transport/work contracts frozen before a new passive capture.
+Publication status is recorded in the current task checkpoint.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

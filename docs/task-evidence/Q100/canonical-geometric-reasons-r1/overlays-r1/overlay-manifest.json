@@ -1,0 +1,276 @@
+{
+  "builder": {
+    "path": "build_overlay.py",
+    "sha256": "e62fbb833e3751ff2f53b38958b5b8ddf946ff210b18cfcf3b5052e19ab15ec0"
+  },
+  "frozenDocuments": {
+    "API_SCHEMA_R1.md": {
+      "sha256": "915583d2594a74135bd3269c74a8c190cfb1d47c9d0aa28062b24578e17de7ff"
+    },
+    "PLAN_R1.md": {
+      "sha256": "0bf95e2de4d2662f7d57604c910dab89081abcc11a7597288b19ffdaecc9dc93"
+    }
+  },
+  "inputs": {
+    "E production Router": {
+      "bytes": 129081,
+      "path": "E/src/com/lushprojects/circuitjs1/client/PcbNetRouter.java",
+      "sha256": "92347537ca59629f91d6a72596cd59d6520cff2deebb3681f22d6d9ec82c21ec"
+    },
+    "E production rules": {
+      "bytes": 24212,
+      "path": "src/com/lushprojects/circuitjs1/client/PcbTwoLayerRules.java",
+      "sha256": "b04f9906d726117412d62b6022ea5b8e2f26bf111063292b0d7560f51b0fb8cf"
+    },
+    "accepted P6 Router overlay": {
+      "bytes": 131787,
+      "path": "P6/overlays-r1/PcbNetRouter.java",
+      "sha256": "0432eed2ac4e84c647aee867cc1856bff7969280b094794bc0acb95907d66d94"
+    }
+  },
+  "outputs": {
+    "PcbNetRouter.java": {
+      "bytes": 142148,
+      "sha256": "3bc847e015e1b379dcafcb1e39eb4964e65e7a57d6ef06ed2c710cca1ff48f2f"
+    },
+    "PcbTwoLayerRules.java": {
+      "bytes": 25536,
+      "sha256": "9e59ae5969b593617042bb2a571aab4037235a13f06e03379d341eaf80ae94d9"
+    },
+    "overlay.diff": {
+      "bytes": 18722,
+      "sha256": "589feae7abd614f31c791032881444589c38f813521e107d0b4a595db9ee1cd6"
+    }
+  },
+  "proof": {
+    "emptyFaceReservationPredicateEvaluatedOnce": true,
+    "nonWhitelistedBytesIdentical": true,
+    "originalDomainGuardExpressionsRetained": true,
+    "originalRouterGuardExpressionsRetained": true,
+    "p6BoundsAndEndpointLoopByteIdentical": true,
+    "p6CanOccupyBodyByteIdentical": true,
+    "p6CoarseObserverSeamByteIdentical": true,
+    "predicateOrder": [
+      "isLegalMove",
+      "canTraverse",
+      "canOccupy"
+    ],
+    "productionFilesChanged": false,
+    "routerReasonObserverCopiedToFixedGraphCopies": false,
+    "rulesObserverIsPerCallOnly": true,
+    "rulesObserverStoredOnSharedRulesObject": false
+  },
+  "reasonSitesExactlyOnce": {
+    "ADJACENT_RESERVATION": 1,
+    "COMPONENT_COURTYARD": 1,
+    "DOMAIN_CORRIDOR_OVERLAP": 1,
+    "DOMAIN_MEMBERSHIP_SIDE": 1,
+    "DOMAIN_UNKNOWN_NET": 1,
+    "EMPTY_FACE_RESERVATION": 1,
+    "END_ESCAPE_DIRECTION": 1,
+    "PAD_ESCAPE_INTERSECTION": 1,
+    "PROFILED_PAD_TOUCH": 1,
+    "START_ESCAPE_DIRECTION": 1
+  },
+  "routerEdits": [
+    {
+      "label": "fixed-graph-reason-api-and-default-null-field",
+      "overlayBytes": 2479,
+      "overlayOffset": 24499,
+      "overlaySha256": "2f06a72a715cb2c509d2b279ebcd09b53d346dfb7c960d7897403941bc4e8403",
+      "sourceBytes": 0,
+      "sourceOffset": 24499,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "start-escape-first-false-site",
+      "overlayBytes": 614,
+      "overlayOffset": 50329,
+      "overlaySha256": "31a0bc07b4bb4dc8a5994b6ee050b52749a42afe4d3035226c751359f223a53e",
+      "sourceBytes": 422,
+      "sourceOffset": 47850,
+      "sourceSha256": "83e994de806b0e61014aff022ebe039d20a46e6d0745151442d17596c541e660"
+    },
+    {
+      "label": "end-escape-first-false-site",
+      "overlayBytes": 788,
+      "overlayOffset": 50945,
+      "overlaySha256": "382723efb1af5f6912af744f41069a7dc1e62a6f60c0888a74dfc9e7b06715e9",
+      "sourceBytes": 600,
+      "sourceOffset": 48274,
+      "sourceSha256": "33458a7f42e3f8a682ed1c30ee19e74e91d95c2bf30993706eba65b108afb434"
+    },
+    {
+      "label": "per-call-domain-reason-adapter",
+      "overlayBytes": 203,
+      "overlayOffset": 54644,
+      "overlaySha256": "776caab91fae9f8d3d783e08be81519fbd278e8a4961ae6877f9e279300a3244",
+      "sourceBytes": 67,
+      "sourceOffset": 51785,
+      "sourceSha256": "8c232496125f68a5ec414e44da1b262cd2826bea69f9c02660b09f28702960a5"
+    },
+    {
+      "label": "empty-face-reservation-single-evaluation",
+      "overlayBytes": 295,
+      "overlayOffset": 55335,
+      "overlaySha256": "a17fef719152eb37834ac80959f94ae5293dedfa163225eaf10fce252efe99a5",
+      "sourceBytes": 62,
+      "sourceOffset": 52340,
+      "sourceSha256": "5ec3ac539a0d2ab0fbf2b8094201ae4353e997cef3d917f4f220a237c9da68d8"
+    },
+    {
+      "label": "adjacent-reservation-first-false-site",
+      "overlayBytes": 300,
+      "overlayOffset": 56503,
+      "overlaySha256": "06b369bd176971c459fa2acf97ef6106138926673c6721021ae52eafde396f21",
+      "sourceBytes": 99,
+      "sourceOffset": 53275,
+      "sourceSha256": "e69034205563856237236d436c8d11477b5cc84d921265f2d49fac0e19936627"
+    },
+    {
+      "label": "pad-escape-reservation-first-false-site",
+      "overlayBytes": 320,
+      "overlayOffset": 57475,
+      "overlaySha256": "a39ace28d875ecc7ce6986f747e18c7892a089a2c86aa3898aa08a6a22afe410",
+      "sourceBytes": 80,
+      "sourceOffset": 54046,
+      "sourceSha256": "3386418a6cfb04b42ca83bce2e97f91cc7312b60f62b93f2e82c7822cf00f613"
+    },
+    {
+      "label": "profiled-pad-touch-first-false-site",
+      "overlayBytes": 350,
+      "overlayOffset": 57797,
+      "overlaySha256": "0bdfcb156f5a554868511e46c7f5dc81d9172ab10c899594eef3248491a1834b",
+      "sourceBytes": 140,
+      "sourceOffset": 54128,
+      "sourceSha256": "514b441ba400ca38752705a60ee22984e84ef659bdaf13aeb22d16082945b7ab"
+    },
+    {
+      "label": "component-courtyard-first-false-site",
+      "overlayBytes": 336,
+      "overlayOffset": 59227,
+      "overlaySha256": "c9299bc450276edc14c983c3daa255eb3e8837bad5c78872577c61827c9b2664",
+      "sourceBytes": 152,
+      "sourceOffset": 55348,
+      "sourceSha256": "66ceca925b3ea23b69ba3169d389adf385ca63c787bc55aec1a2fb0c80ce9c71"
+    },
+    {
+      "label": "fixed-graph-reason-attachment-and-recording-api",
+      "overlayBytes": 6298,
+      "overlayOffset": 70093,
+      "overlaySha256": "4577b52d408993f8c04687cbceb6f3de1a08aa78ca8fed9fa74f89745d216c0b",
+      "sourceBytes": 0,
+      "sourceOffset": 66030,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "routerUnchangedSegments": [
+    {
+      "bytes": 24499,
+      "overlayOffset": 0,
+      "sha256": "7d0f50392b80f9e8a5e52f57b583f3b20d809a3bc6757373aed9152223d84035",
+      "sourceOffset": 0
+    },
+    {
+      "bytes": 23351,
+      "overlayOffset": 26978,
+      "sha256": "3185a35aa067dc4054a132dec061881702d466dec0d98dc70e8c8e8993a7cc3c",
+      "sourceOffset": 24499
+    },
+    {
+      "bytes": 2,
+      "overlayOffset": 50943,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "sourceOffset": 48272
+    },
+    {
+      "bytes": 2911,
+      "overlayOffset": 51733,
+      "sha256": "78ad4224ffb24d11c525d67face59fd484d5f4b96bc0c5e18e228d6f0f6e5daa",
+      "sourceOffset": 48874
+    },
+    {
+      "bytes": 488,
+      "overlayOffset": 54847,
+      "sha256": "f2345a04a5a67c1feb716a37a6218d91fa52917d413375b0339357ed63601d03",
+      "sourceOffset": 51852
+    },
+    {
+      "bytes": 873,
+      "overlayOffset": 55630,
+      "sha256": "ce8ca7242e3cb4cdc4d4e60b8fa05e91730ef450c0a890a072aa23285ad1b3b0",
+      "sourceOffset": 52402
+    },
+    {
+      "bytes": 672,
+      "overlayOffset": 56803,
+      "sha256": "1019ebf93c6d685982b1214c6f5ed9e7777e1044e1a495472724a9c6659c29a8",
+      "sourceOffset": 53374
+    },
+    {
+      "bytes": 2,
+      "overlayOffset": 57795,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "sourceOffset": 54126
+    },
+    {
+      "bytes": 1080,
+      "overlayOffset": 58147,
+      "sha256": "f03dbcb0213a625dbcf8094c52d5015a1d4b4d218105061071405286dcb5675c",
+      "sourceOffset": 54268
+    },
+    {
+      "bytes": 10530,
+      "overlayOffset": 59563,
+      "sha256": "2d97033e1e8366267d1ed7796866a55330a9f37d01ab6680493a913885412204",
+      "sourceOffset": 55500
+    },
+    {
+      "bytes": 65757,
+      "overlayOffset": 76391,
+      "sha256": "f35d666a7f8b9f0a42036386df3f00787a45f04430a7dae1fc936ccbbe47e446",
+      "sourceOffset": 66030
+    }
+  ],
+  "rulesEdits": [
+    {
+      "label": "per-call-domain-reason-interface",
+      "overlayBytes": 202,
+      "overlayOffset": 215,
+      "overlaySha256": "8920632cf6b9c1a229eb23aeb8d20a6101d9cf9caf9005aaba91736ba2a1ee4f",
+      "sourceBytes": 0,
+      "sourceOffset": 215,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "observer-aware-single-domain-predicate-body",
+      "overlayBytes": 2201,
+      "overlayOffset": 3483,
+      "overlaySha256": "98a67153dd18ee32bd7cf6a46b14e7ada856391cb25961083ad6e78715f3f871",
+      "sourceBytes": 1079,
+      "sourceOffset": 3281,
+      "sourceSha256": "775d96c3feabdba5e57e5a493602b8b9738a56b52592608dc970388083da1295"
+    }
+  ],
+  "rulesUnchangedSegments": [
+    {
+      "bytes": 215,
+      "overlayOffset": 0,
+      "sha256": "d22d0375ad6af432546383845ea00b89e4c6b3991fcc8ef9d37aceed202a729c",
+      "sourceOffset": 0
+    },
+    {
+      "bytes": 3066,
+      "overlayOffset": 417,
+      "sha256": "76730b83ec995f3ef565fcce3e0452b41bbac2b34ab6e5ca17c7a7048b8e0a58",
+      "sourceOffset": 215
+    },
+    {
+      "bytes": 19852,
+      "overlayOffset": 5684,
+      "sha256": "8a3b5d7122a0c53155a6d1cff7b01432a58811c5d9ab06cdaefd6886c4d59b19",
+      "sourceOffset": 4360
+    }
+  ],
+  "schema": "tsj-q100-geometric-reasons-overlay-manifest-r1"
+}

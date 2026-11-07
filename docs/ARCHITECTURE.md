@@ -88,6 +88,24 @@ locally while raw receipts and copied streams retain their exact bytes. The
 answers only the four frozen mask-opening hypotheses; it changes no physical or
 electrical owner, routing policy, model epoch or Player admission.
 
+CanonicalGeometricPrefixStudy composes the unchanged P5/P6 terminal inspectors
+with a third native inspector owning separate bounded disposable query copies.
+The frozen Router/rules overlay observes original short-circuit guards once in
+their existing order; NULL/OBSERVE results, source effects and geometry retain
+parity. Its reader authenticates cached parent modules, reconstructs identities
+from validated P6/cut/facts/direction sources, and validates every actual native
+process receipt before the complete role census. The old callback exception uses P6's
+unchanged inner semantic kernel with a local descriptor derived from the real
+marker and selected process wall; no old host/index/receipt is synthesized.
+The new fine-first exception precedes graph selection, so measured immutable
+terminal-prefix proof binds it to the completed NULL graph without claiming a
+second capture or a completed request summary. The strict outer keeps source,
+transport, work, file and cleanup boundaries separate. Its source-authenticated
+semantic harness preserves native reason-row bytes and tests twelve explicit
+mutations. The [finite P8 packet](task-evidence/Q100/canonical-geometric-prefix-study-r1/README.md)
+qualifies14 first-guard observations only, with no production owner, electrical
+model, routing policy, epoch or admission change.
+
 CirSim owns reduced nonlinear matrix ordering at the end of simplification,
 before its original matrix/right-side backups. ReducedMatrixOrdering derives a
 deterministic greedy minimum-degree permutation from the undirected union of the
