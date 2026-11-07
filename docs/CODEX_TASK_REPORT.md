@@ -1,4 +1,62 @@
-# Current checkpoint: P8 final candidate accepted; explicit staging and publication
+# Current checkpoint: P8 published and emailed; P9 contract freeze next
+
+UTC 2026-11-07. Continue until owner stops. P8 implementation
+a36240da2a6be00597cf7299ca89743a14196278, "Diagnose canonical geometric rejections",
+was normally pushed and exact remote SHA verified on
+origin/codex/q100-physical-feasibility. Local branch remains
+codex/q100-geometric-reasons-20261106 in active E:
+OS-temp/tsj-q100-geometric-reasons-20261106-r1. Completion Gmail
+1a1b3ce1e581472d SENT_ONCE after duplicate search returned no match; private
+notification receipt saved at Q/p8-publication-notification-r1.json. Do not repeat
+that email for this documentation receipt. E was clean after implementation push;
+only roadmap/report receipt edits are pending. Main5f05b005 preserves9tracked /
+6untracked, Desktop e0c36885 preserves7/73. Only report mirrors to Main with hash
+guard; no unrelated work, protected data, history or other worktrees changed.
+
+Accepted finite P8 result:14 original selected geometric cut queries report
+9 escape-direction guards/4 MIXED face reservations/1 QA courtyard. Full22 P5/P6,
+six route/graph/effect/source parity flags and both exception paths pass. Same
+authored BASE root9007199254740993 / place-6587958367974952701 /
+route8445301674744508279, req0/attempt4/pass2/receipt307/lineage77/H48,
+prefix6b49cfb2/graphff6466d2. No unique-owner, valid relaxation, routing benefit,
+physical-board feasibility, new policy/epoch or playable100 admission.
+
+Final sourceReader0372a850/Testffa88/Study5c87/InspectorF834/Hosta5ed unchanged,
+pinsb3bca1391fcb8e229e6f34dddddfc52ae77447a02a064d9e7eb8a30e7bc8ba7a.
+SOURCE33/CANARY17/SUITE8 actual final gates PASS. Final1083-source JDK8,
+four modes, independent P4/P5/P6/P8,5host/5reader controls and12 actual semantic
+CLI cases pass. Whole suite396053.4945ms, consumerfull86094.8497<180000,
+semantic85762.0312<180000, cleanup79695.8609<120000. All28owned owners/roots and
+scratch absent; final25inputs/80outputs12396181B unchanged. Actual whole gates
+use no historical fixture; supplemental source probes retain their declared
+old-auditor-result fixture limits. All earlier failures remain failures.
+
+Published packet59files/1484211B:47 exact source copies/1405334B plus12 authored
+supplements. All62 intended staged paths, including7explicit ignoredJSONs,
+matched the controlled tree; all47 staged source blobs and publication hashes
+verified. Full/cached diff--check PASS after real EOF fix, no new exemption.
+Independent packet scope review resolved JSON inclusion and pathBase wording.
+No raw private pins/process logs/personal paths published. Original external
+pinned path/tool/parent environment remains required; arbitrary-clone replay is
+unqualified. No production850/GWT/Player/electrical/population renewal.
+
+Next unstarted milestone P9: one-slot MIXED reservation provenance, parent11 /
+layer1/bit8/(382,238)->(381,238)/slot[381][238]. Existing P4/P5/P6 receipts lack
+actual pad bounds, escape geometry, widths/clearance and touch operands. Follow
+the published NEXT_RESERVATION_PROVENANCE_PLAN.md: separately freeze exact input,
+payload, host/work/cleanup contracts before any passive disposable-owner capture;
+independently reconstruct contributors/sentinel, no edge opening or adoption.
+First finish normal receipt commit/push (no second email), then begin that freeze.
+
+Limits90s/640actual+wrappergroups/5s/32768units/clone1048576/chunk4096,
+1Mexpansions/48holes/4flips/64KiB/8MiBoperation+8MiBhost/40MiBsuite and
+compile60/audit60/native480/reader180/outer1800/cleanup120s unchanged.
+Playable100=0/betaHELD, full30 excluded, HARD/PSYCHOTIC unavailable/unrun;
+protected bodies unread/unrun here/historical unread UNCERTIFIED. Old E06/8928
+resources/uncertain children, all private failures/scratch and other worktrees
+remain preserved. No current gate/native process running; private evidence kept.
+
+# Historical checkpoint: P8 final candidate acceptance before publication
 
 UTC 2026-11-07. Continue until owner stops. Active E is
 OS-temp/tsj-q100-geometric-reasons-20261106-r1, branch

@@ -708,7 +708,10 @@ adoption or playable100 admission follows. Playable100=0/betaHELD; full30 is
 owner-excluded, HARD/PSYCHOTIC unavailable/unrun, historical unread UNCERTIFIED.
 Next is the [one-slot reservation provenance scope](task-evidence/Q100/canonical-geometric-prefix-study-r1/NEXT_RESERVATION_PROVENANCE_PLAN.md),
 with its input/transport/work contracts frozen before a new passive capture.
-Publication status is recorded in the current task checkpoint.
+Implementation `a36240da2a6be00597cf7299ca89743a14196278` was normally pushed and
+its exact remote SHA verified on origin/codex/q100-physical-feasibility.
+Completion Gmail `1a1b3ce1e581472d` was sent once. This documentation receipt
+sends no second completion email.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
