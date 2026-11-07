@@ -1,8 +1,7 @@
 # Terminal-only diagnostics owner prerequisite
 
-**Locally accepted source prerequisite; publication pending.** All seven selected
-final-source gates pass and root's prerequisite review is complete. This is not
-a commit, push or publication receipt. [VALIDATION.md](VALIDATION.md) records the
+**Accepted and published source prerequisite.** All seven selected
+final-source gates pass and root's prerequisite review is complete. [PUBLICATION.json](PUBLICATION.json) records the verified commit and single completion email. [VALIDATION.md](VALIDATION.md) records the
 actual commands' timing boundaries and retained evidence limits. The frozen
 plan retains its original status; it is not the current gate report.
 
@@ -53,5 +52,6 @@ Raw paths, process identities and logs remain private. The maintained native
 runner removes its compiler source list/classes; an available-source inventory
 is not an exact compiler-argument or class census. No new diagnostic wire or
 artifact-provenance qualification is inferred. Root owns final source/scope and
-publication diff/hash checks, staging, normal push and notification. Publication
-is still pending; no commit, push or completion notification is claimed here.
+publication diff/hash checks, staging, normal push and notification. The frozen
+source proof records the pre-publication gate closure; PUBLICATION.json is the
+current publication receipt.

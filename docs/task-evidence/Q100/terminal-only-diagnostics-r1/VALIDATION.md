@@ -1,8 +1,9 @@
 # Validation record
 
-**Locally accepted source prerequisite; publication pending.** All seven selected
-final-source gates pass. Root completed prerequisite review; final publication
-source/scope/diff/hash checks remain root-owned. No commit/push/email is claimed.
+**Accepted and published source prerequisite.** All seven selected
+final-source gates pass. Root completed prerequisite review and publication source/scope/diff/hash checks.
+The exact implementation commit is remotely verified; one completion Gmail was sent.
+[PUBLICATION.json](PUBLICATION.json) records its identity.
 
 Source parent d97472291e8a2a12e57e79109b189821a181eb27; branch
 codex/q100-terminal-only-20261107. Final owner SHA-256:
