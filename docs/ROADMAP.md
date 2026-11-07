@@ -811,6 +811,26 @@ Implementation `ae0141c7c5985d4a0aac8cc590354d459b8cad5a` was normally pushed to
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
 Gmail `1a1b71378096fa9e` was sent once.
 
+The [bounded two-net failure-cohort experiment](task-evidence/Q100/failure-cohort-ordering-r1/README.md)
+is locally accepted for that same authored placement. Its fresh single-failure
+control reproduces B_COIL_LOW:NO_PATH at554488 expansions/44visited. The trial
+promotes the captured A failure and the control's actual B failure in that order;
+it rejects at D_COIL_LOW:BRANCH_SEARCH_LIMIT,419905 expansions/43visited. Both
+return null layouts. The treatment is not adopted and proves no whole-board
+impossibility. Exactly two fresh Sessions, original settings and all existing
+budgets remain; this is not a production restart or cumulative-budget policy.
+Final1090-source JDK8 build/4139classes,24 literal methods including17 conductor
+cases, complete authored/canary consumers,41 authenticated rejection controls
+and real helper/host/input/cleanup gates pass. Native work is16.8425845s across
+479groups, maximum1.1792758s/32768units. The failed source-framing preparation,
+reader ordinal mismatch and skipped-control contract defect remain recorded;
+the corrected final source received fresh gates. Production850/P9frozen19,
+electrical and Player behavior remain unchanged. No full30/HARD/PSYCHOTIC or
+population renewal is granted; playable100=0/betaHELD and historical unread
+remains UNCERTIFIED. Next is bounded diagnosis or routing treatment for the
+observed D branch-limit failure, followed by physical/access/runtime/functional
+and separately scoped production/admission proof before adoption.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

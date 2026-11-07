@@ -1,0 +1,45 @@
+{
+  "files": [
+    {
+      "bytes": 6668,
+      "path": "PLAN_R1.md",
+      "sha256": "e2cef26d301af9a8350cd39b2f5bc9d5a296c0840d5327578404c68a2896b04b"
+    },
+    {
+      "bytes": 176818,
+      "path": "source/FailureCohortRoutingStudy.java",
+      "sha256": "dc53245d52c7187868b40456b3952cdb2ecf20bc920b2354ff400f60ff68410d"
+    },
+    {
+      "bytes": 14200,
+      "path": "source/FailedFirstFixtures.java",
+      "sha256": "dd333ff9c448ce012c3c1a4e603be39b70e1ac1d8d7ef79509d12ab21bd17619"
+    },
+    {
+      "bytes": 20459,
+      "path": "source/WIRE_R1.md",
+      "sha256": "c7bf55d15f8166e7d8c767abd3f068ee88087b6a9132f9331af7d21c5c202362"
+    },
+    {
+      "bytes": 43382,
+      "path": "build_inputs.py",
+      "sha256": "cb8ae8eee78ca90293925b90eec1d8b0ed545668a7dd3a29e4ab169f39542ae2"
+    },
+    {
+      "bytes": 92761,
+      "path": "read_failure_cohort.py",
+      "sha256": "84c8dbf2805ab5607f1e79f1d1fa67cc1a2e4ec06d3a22fdd44771ce48d03b52"
+    },
+    {
+      "bytes": 60844,
+      "path": "test_read_failure_cohort.py",
+      "sha256": "eb2ce2d025901dde8ccafa33114bd6be9c6dc8a5fffc503d450cb1d8504d34d8"
+    },
+    {
+      "bytes": 20519,
+      "path": "Semantic-Controls-R1.py",
+      "sha256": "e66f597d6d0e80952ec14628451b52b9aa94855a42d61b5f2c0777e55faee9e2"
+    }
+  ],
+  "schema": "tsj-failure-cohort-source-copies-v1"
+}

@@ -165,6 +165,18 @@ records two NO_PATH outcomes and selects no treatment. CircuitJS electrical
 owners, production routing, Player capabilities, epochs and admission stay as
 recorded before this diagnostic.
 
+FailureCohortRoutingStudy extends the same private actual-owner path with an
+A-front control and one stable first-observed `[A,B]` cohort trial. It borrows
+the real Search across one advance call, detaches its terminal net/cursor when
+the owner clears it, and binds promotion, reason, traversal and reference release.
+The independent consumer distinguishes that transition from the following
+finishRejected call. Fixed observation work and terminal evidence are charged
+separately; lastWork is read once on normal return or exception. Non-NO_PATH
+control skips retain any proven failed ID and cannot authorize another Session.
+The [finite cohort packet](task-evidence/Q100/failure-cohort-ordering-r1/README.md)
+records NO_PATH versus a branch-search cap, without a returned layout or adopted
+treatment. Production routing, solver, Player, epochs and admission are unchanged.
+
 CirSim owns reduced nonlinear matrix ordering at the end of simplification,
 before its original matrix/right-side backups. ReducedMatrixOrdering derives a
 deterministic greedy minimum-degree permutation from the undirected union of the

@@ -1,53 +1,237 @@
-# Current checkpoint: failed-first experiment published; failure-cohort scope review next
+# Current checkpoint: cohort finite diagnostic accepted; publication checks next
 
 UTC2026-11-07. Standing roadmap continues. Active E OS-temp/
-tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106.
-Implementation ae0141c7c5985d4a0aac8cc590354d459b8cad5a
-"Validate failed-net-first whole-ordering experiment" normally pushed to
-origin/codex/q100-physical-feasibility and exact remote SHA verified.
-Connected completion Gmail1a1b71378096fa9e SENT_ONCE after exact-SHA duplicate
-search returned none. This receipt needs no second completion email.
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEAD474a8354ceb2e50fa2adbb31e23cf73a0d9c86fd. Exact origin/codex/q100-physical-feasibility
+still474a verified this turn. Prior ae0141c7/474a8354 Gmail1a1b71378096fa9e
+SENT_ONCE. No newcommit/push/email. Main5f05b005 retains9tracked6untracked0staged;
+Desktop e0c36885 retains7/73/0; only guarded Main report mirror updated.
 
-Accepted finite evidence: docs/task-evidence/Q100/failed-first-ordering-r1/README.md.
-Both fresh actual Sessions reject NO_PATH/null layout after44 visited nets:
-control A_COIL_LOW478497 expansions; stable failed-first B_COIL_LOW554488.
-No complete authored layout, routing treatment or production adoption qualified.
-Captured root9007199254740993/placement-6587958367974952701/
-routing8445301674744508279/request0/placement4/pass2/priorD_SENSE unchanged.
-Fresh-budget comparison is not original cumulative-budget parity or restart policy.
+Accepted native-only task OS-temp/tsj-q100-failure-cohort-7344d764fad44f5d9cb21d6f67df0d34.
+Final producerdc53245d52c7187868b40456b3952cdb2ecf20bc920b2354ff400f60ff68410d,
+helpercb8ae8eee78ca90293925b90eec1d8b0ed545668a7dd3a29e4ab169f39542ae2,
+reader84c8dbf2805ab5607f1e79f1d1fa67cc1a2e4ec06d3a22fdd44771ce48d03b52,
+testseb2ce2d025901dde8ccafa33114bd6be9c6dc8a5fffc503d450cb1d8504d34d8,
+controlse66f597d6d0e80952ec14628451b52b9aa94855a42d61b5f2c0777e55faee9e2.
+WIREc7bf55d15f8166e7d8c767abd3f068ee88087b6a9132f9331af7d21c5c202362,
+fixturedd333ff9/PLANe2cef26d frozen. All leaf/source writers HOLD; rootownsacceptance.
 
-Final1090-source JDK8 compile/4138classes PASS. Final independent authored/
-canary consumers55.9694394/55.5759773s,15 literal methods incl17 conductor
-fixtures,31 authenticated semantic rejection controls and actual helper/host/
-input/cleanup gates PASS. Native17.6685058s/366groups/9926855units/max1.2680703s/
-32768units; export12.6131ms and domaincleanup1.277ms inside cutoff. Host process
-elapsed18.0394927s includes cleanup; isolated OS cleanup duration not exposed.
-All returned task processes termination/log/rootabsence proven. Earlier R3
-accounting-unqualified data and every compiler/host/oracle/source failure preserved.
+FreshR3 actual1090-sourceJDK8/4139classes/19289113bytes PASS. Runmanifest
+1274185600f9da79412f133ba569fb727eba673c7dd672e53abd8dcc5fd28a56,
+sourceManifestc04a7579d042bcb8d4b2a9b4799c3e03ec3ad34eda228856205b7deaa1ba6bc4.
+Nativefullcanary422.3646ms andargs/junctionexpectedrejectionsPASS. Authorednative
+17.2136031s parent/marker16.8425845s479groups13119323units/max1.1792758s32768,
+export13.1154ms/domaincleanup1.1988ms insidecutoff. Result46323B SHA
+cd44ad1c0db81a8f05d8620f49b78a9e06c2274e6739066b438607f532cf1431;
+genuineop1cc2463e37c9636f1407434fd2f0d69fda660699e4899059273d1b72a71e02e58.
+ControlAfront NO_PATH B_COIL_LOW554488exp44visited; trial[A,B] CAP_REJECTED
+D_COIL_LOW:BRANCH_SEARCH_LIMIT419905exp43visited. Bothpass3/passes1/nolayout,
+fullfinalizersNOT_RUN. GenericorderingusesactualdistinctNO_PATHcontrolfeedback;
+exact2freshSessions maximum, originalsettings/budget0/max1M, notproductionrestart.
 
-Staged publication audit PASS:22 intended paths,19 packet files,8 exact executed
-source blobs, private-path/credential scans, both diff checks, zero production paths.
-Packet-local attributes recognize CRLF and preserve the reader's existing terminal
-blank line as exact hashed evidence; other whitespace checks remain. Scoped agent
-packet review found one finalizer wording overclaim; root corrected architecture
-to Search/Publisher rejection with full-layout finalizers NOT_RUN before commit.
-No full independent final-code-review PASS is claimed.
+Final24literalmethods incl17conductorcases PASS425.4578ms. Fullauthoredconsumer
+PASS57.2158642s/canaryconsumerPASS56.3855316s/41actual-baselinecontrols
+PASS56.2525929s(38semantic+3marker). Finalhelper2read/hashpositive+4specific
+negativePASS367.707ms;3prefexpectedchild2PASS447.097/446.395/450.747ms.
+Closingpacket audit verifies all15returnedprocess termination/root/logabsence,
+all8current sourcebytes, source/dataidentity andprivacy. Hosttimingsincludecleanup;
+isolatedOScleanupdurationnotexposed. No heavy matrix/persistenttaskprocessactive.
 
-Production850/P9frozen19 and old parent inputs remain immutable. All90s/640groups/
-5s32768/copy1M4096/originalexpansioncaps/48holes4flips/compile60native480reader180/
-cleanup120 limits remain. No GWT/Player/electrical/population renewal. Full30
-owner-excluded; HARD/PSYCHOTIC unavailable/unrun, protected bodies unread here;
-historical unread UNCERTIFIED. Playable100=0/betaHELD. Self-hosted CI prerequisite
-remains; no CI run claimed. No new persistent process or heavy matrix active.
+Failurespreserved: R1prepareNATIVE_SOURCE_FRAMING18.2596s(oneCRLF,no compiler),
+R2fullreaderBF_TERMINAL_FAILURE_BINDING28.1366s(wrongordinal==total; exact+1
+finishRejectedrelation fixedwithnegatives),2outdatedliteralcanaryordinals, and
+nonNO_PATHskipdroppingprovedID contrarytoWIRE. Root's earlier null-ID interpretation
+waswrong; nativeoneconditional+reader equalityfixed, scopedreviewerpost-fix
+confirmedactualchangedline, allfinalR3sourcegatesfresh. No pre-fixreview/22tests/
+R2nativePASS reused asfinal. Publication-prep firstassumedstatusPASS rows; actual
+strictcase/rejectedWith schema+41uniqueBFcodes nowchecked, no runtimegateweakened.
 
-Main5f05b005 preserves9 tracked/6 untracked/0staged; Desktop e0c36885 preserves
-7tracked/73untracked/0staged. Only Main report mirror updated. Old uncertain
-browser/preview resources and failure evidence untouched. E clean after implementation;
-only this documentation receipt follows it. Runtime resources are not silently reused.
-Next: bounded multi-net failure-feedback ordering scope review, then freeze the
-smallest actual-owner experiment in a new task-owned OS-temp root before edits.
-Keep existing limits, exact identities and independent oracles; physical/access/
-runtime/functional plus production/Player/regression/admission proof precedes adoption.
+Accepted19-file packet copiedlocallyto docs/task-evidence/Q100/failure-cohort-ordering-r1.
+Roadmap/architectureupdated; publicsources+sanitizedsummaries only. Packet-local
+attributes preserve8exactsourceartifacts; stagedblobchecks stillrequired. Next
+ROOT: inspectactualdiff/privacy,explicitstage22paths (git add --sparse forpacket),
+cachedsourcebyte/diffchecks, normalcommit/push/remoteSHA andonecompletionGmail,
+thenreceipt. No newpublishedmilestone/emailyet. Nextunstartedafterthis: bounded
+diagnosis/treatmentofDbranchlimit thenphysical/access/runtime/functional/adoptionproof.
+
+Production850/P9frozen19/oldparentsource/helper/data/classes/tools immutable.
+All90s640groups5s32768/copy1M4096/originalexpansion48holes4flips/
+compile60native480reader180cleanup120 unchanged. NoGWT/Player/electrical/
+populationrenewal;full30ownerexcluded;HARD/PSYCHOTICunavailableunrun/protected
+bodiesunreadhere/historicalUNCERTIFIED. Playable100=0/betaHELD. CIprerequisite
+remainsrecorded/norunclaimed; olduncertainbrowser/previewresources untouched.
+
+# Historical checkpoint: cohort Java core integrated; final canary and independent gates pending
+
+UTC2026-11-07. Standing roadmap continues. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEAD474a8354ceb2e50fa2adbb31e23cf73a0d9c86fd. Prior ae0141c7 implementation+
+474a8354 receipt normally pushed/remoteverified; Gmail1a1b71378096fa9e SENT_ONCE.
+No new commit/push/email. E only checkpointmodified; Main5f05b005 keeps9tracked/
+6untracked0staged, Desktop e0c36885 keeps7/73/0. Guarded Main mirror only updated.
+
+Task N OS-temp/tsj-q100-failure-cohort-7344d764fad44f5d9cb21d6f67df0d34.
+PLANe2cef26d301af9a8350cd39b2f5bc9d5a296c0840d5327578404c68a2896b04b frozen.
+ROOT-final WIREc7bf55d15f8166e7d8c767abd3f068ee88087b6a9132f9331af7d21c5c202362
+UTF8/LF20459bytes frozen; root owns wire now. Earlier pre-netpasses0 corrected
+to1 atSearch-ready boundary (serializedinitialstill0); exactcanary DTOs and
+terminalEvidenceUnits formula frozen. Two freeze assertions found ba45 lacked
+terminalLF; source-revisions retains ba45 and FAILURES_WIP.md records failures.
+
+Root owns new source/FailureCohortRoutingStudy.java CURRENTpartial
+e6c0437ff53dd4b8f9c75fabc4e1742647a9c32bdd89e7829a001125bf20a77d.
+ROOT-owned source/FailedFirstFixtures.java byteexactdd333ff9 retained. Current
+Java contains genuinecapture, single-A-first control, [A,B]trial gating/stable
+cohort, per-call realretiredSearch proof, explicitexceptionattempt accounting,
+aliasdrop andwork-floor checks. OLDcanarymethods are STILL present/pending
+replacement; do NOT run or qualify this partial source. Root's integration
+script first rejected a constructor-signature string before output; fixed.
+TerminalMethods.fragment.java a82b211e3cac37e4a49aa8c0f4381f27ff58f8a940712b16018ec8a8da62474f
+was supplied by boundedcohort_java leaf andintegrated. Whole-adapter worker
+earlier returned NO_SOURCE_CHANGED; root split work. No source was lost.
+
+Focusedactual JDK8 component compile14fae6a0... PASS992.402ms/exit0 withsource7
+warning only; realprocess termination/logabsence proven andsource snapshot
+retained component-compile-r1. This is OLDpartialcode/typecheckonly, not fresh
+final-source qualification; subsequent work/referencechecks changed the source.
+No authored/nativecanary or fullfinalsource build/gates have run for this task.
+
+SelectedPS5/Python/module/harness pins andrealhostpositive431.770ms/expected
+negative335.349ms PASS. Candidatehelperbef42063cf8c05f921d83bf1c6edbd1e7595cab251cc53875e9e925d6b7ebb4b
+actualbadname/nonempty/junction rejections445.220/375.365/369.859ms PASS; valid
+empty stage rejects SOURCE_PINS_UNFROZEN18.7318716s/no mutation. All process/
+root/logabsence proofs pass, host timingsincludecleanup (isolatedOScleanup not
+exposed). Helper positives2/read+hash and4specificnegative canarypreparednotrun.
+Finalpinnedhelper controls mustrerunfresh; earlybef420 gates notsilentlyreused.
+
+Leafownership: cohort_native NOWonly CanaryMethods.fragment.java outside source,
+notwire/mainJava; implements newexactcanaryDTOs, realMeter.sessionConstructorEntries
+snapshots forzero-trial proof, andactualONEfailing-call workdelta. Root increments
+constructor ledger atactualreflectiveentry andextendsFaultDiagnostics.State fields.
+cohort_reader owns new read_failure_cohort.py/test_read_failure_cohort.py/
+Semantic-Controls-R1.py; activeimplementation withfinalwirec7bf known. Keep17
+independentconductorcases/old31controls plusnewproof/gating negatives; SOURCE/
+HELPER/MANIFEST pins pending. cohort_helper owns N/build_inputs.py butcompleted/
+HOLD waiting finalJava+wireSHA; usefollowup_task torestart, notsend_message.
+
+NEXT ROOT: integrate actualcanaryfragment; removeobsolete single-move private
+helpers/oldcanary; reviewactualsource/work/copy/reference accounting. Freezefinal
+JavaSHA, havehelperpinJava+c7bf andhold, thenactualfullclosed-source JDK8build,
+finalhelper/nativecanary/args/junction/authored run, pureliterals/fullindependent
+authored+canary consumers/semanticrejections. Root owns every heavy gate. Preserve
+every failedcandidate. Only afterallrequiredgates andpublicationprivacy/diff/source
+blobchecks pass: normalcommit/push/remoteSHA plusonecompletionGmail andreceipt.
+
+Production850/P9frozen19/oldparent source/helper/data/classes/tools immutable.
+All90s640groups5s32768/copy1M4096/originalexpansion48holes4flips/
+compile60native480reader180cleanup120 unchanged. No productionrestartpolicy,
+GWT/Player/electrical/population renewal. Full30excluded; HARD/PSYCHOTIC
+unavailable/unrun/protectedbodies unreadhere; historicalunreadUNCERTIFIED.
+Playable100=0/betaHELD. Self-hostedCIprerequisite persists. No heavy matrix/
+persistent taskprocess active; old uncertain browser/preview resources untouched.
+
+# Historical checkpoint: two-net cohort wire in progress; real host preflight passes
+
+UTC2026-11-07. Standing roadmap continues. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEAD474a8354ceb2e50fa2adbb31e23cf73a0d9c86fd. Prior implementation
+ae0141c7c5985d4a0aac8cc590354d459b8cad5a plus receipt474a8354 normally published/
+remote-verified; completion Gmail1a1b71378096fa9e SENT_ONCE. No new publication.
+E has only this pre-existing next-task checkpoint change; zero staged/untracked.
+Main5f05b005 retains9tracked6untracked0staged; Desktop e0c36885 retains7/73/0.
+Only guarded Main report mirror updated; prior failures/resources untouched.
+
+New owned task OS-temp/tsj-q100-failure-cohort-7344d764fad44f5d9cb21d6f67df0d34.
+Frozen PLANe2cef26d301af9a8350cd39b2f5bc9d5a296c0840d5327578404c68a2896b04b;
+scopeReviewebbde24ca251d5c1126bb308eff2a280f269dad8b9558c9ea2927c4073c98ca4.
+Actual-source scope: genuine operation1, single-A-first fresh control, then
+first-observed cohort[A,B] fresh trial with B from actual control NO_PATH.
+Exactly2fresharms maximum, no retry/loop/third cohort/productionrestart policy.
+Both freshbudget0/originalmax1M; not original cumulative-budget parity.
+ControlFOUND/non-NO_PATH/identical trialorder skip explicitly; malformed/missing/
+unknown/repeated required failure identity rejects before trial mutation.
+Retain the real active Search across one advance, inspect its terminal currentNet/
+netIndex when owner clears it, bind actual previousFailedNet/reason/pass2->3,
+and drop all aliases. No inference from traversal tail/error string alone.
+
+Root real selectedPS5/Python/module/harness pins verified. Genuine isolated
+Python positive431.7699ms and expected childexit2 negative335.3494ms PASS;
+termination proven and process root/stdout/stderr paths absent. Host durations
+include cleanup, no isolated OS cleanup timing exposed. New build/native/helper
+launchers parse under selectedPS5; NOT RUN. Original8source hashes match;
+newROOT-owned FailedFirstFixtures.java byteexactdd333ff9 retained. No heavy
+matrix or persistent task process active.
+
+Leaf ownership: cohort_native writes N/source/WIRE_R1.md first and HOLDS for
+rootGO before new FailureCohortRoutingStudy.java; compact normative delta over
+immutable oldWIREaaf08524 accepted inprinciple. New schemas tsj-failure-cohort-*
+and FAILURE_COHORT_INPUT_REJECTED. cohort_helper owns only N/build_inputs.py,
+path/closure scaffold GO with fail-closed newJava/wire pins until frozen;
+retain authenticated initial-outlets parent1088 and oldhost/stat/foreignJSON
+semantics, append newStudy+byteexactfixture. cohort_reader owns new reader/test/
+semanticcontrols but is completed/HOLD pending wire; use followup_task to start
+it, not send_message. Explicit correction: newcontrol is stableMove(A) rather
+than capturedorder. Keep wrapperunderreport vs metadata-treefloor tests distinct.
+Root owns launchers, fixture, integrated acceptance and every heavy gate.
+
+NEXT: review actual wire/terminal proof and bounded work accounting, freezeSHA,
+GO native+reader, complete helper source pins, final-source compile/realcanary/
+authored/independent gates. No newJava/native/layout/acceptance PASS yet. Prior
+single-first result remains two NO_PATH arms/44visited/no complete layout.
+Production850/P9frozen19/oldparent inputs immutable; all90s640groups5s32768/
+copy1M4096/originalexpansion48holes4flips/compile60native480reader180cleanup120
+remain. No GWT/Player/electrical/population renewal. Full30 excluded;
+HARD/PSYCHOTIC unavailable/unrun/protectedbodies unread here; historical unread
+UNCERTIFIED. Playable100=0/betaHELD. Self-hosted CI prerequisite remains.
+Old uncertain browser/preview processes untouched. No duplicate completion email.
+
+# Historical checkpoint: failed-first published; two-net failure-cohort plan frozen
+
+UTC2026-11-07. Standing roadmap continues. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,
+HEAD474a8354ceb2e50fa2adbb31e23cf73a0d9c86fd. Implementation
+ae0141c7c5985d4a0aac8cc590354d459b8cad5a and receipt474a8354 normally pushed to
+origin/codex/q100-physical-feasibility; exact latest remote SHA verified.
+Completion Gmail1a1b71378096fa9e SENT_ONCE; no second email for the receipt.
+
+Accepted packet docs/task-evidence/Q100/failed-first-ordering-r1/README.md.
+Fresh captured-order control NO_PATH A_COIL_LOW478497expansions; failed-first
+trial NO_PATH B_COIL_LOW554488; both44visited/null layout. Final1090-source
+JDK8/4138classes,15literal methods/17 conductor cases, full authored/canary
+source/class/process/data consumers,31 semantic rejections and real host/helper/
+input/cleanup gates PASS. Native17.6685058s/366groups/max1.2680703s32768units,
+export12.6131ms/domaincleanup1.277ms inside cutoff. Host18.0394927s includes
+cleanup; isolated OS cleanup duration not exposed. All returned task processes
+termination/log/rootabsence proven. Public8 source blobs match executed bytes;
+scope/privacy/diff checks pass. Scoped packet review corrected one architecture
+finalizer overclaim before publication. Old R3 accounting-unqualified data and
+all source/compiler/host/oracle failures remain preserved.
+
+Next private task OS-temp/tsj-q100-failure-cohort-7344d764fad44f5d9cb21d6f67df0d34.
+PLAN_R1.md SHAe2cef26d301af9a8350cd39b2f5bc9d5a296c0840d5327578404c68a2896b04b;
+SCOPE_REVIEW_R1.md SHAebbde24ca251d5c1126bb308eff2a280f269dad8b9558c9ea2927c4073c98ca4.
+FROZEN_PLAN_R1.json records NOT_IMPLEMENTED/NOT_RUN. Owner-API explorer confirms
+the checked pre-net seam; no routing success claimed. Exactly two fresh actual
+Sessions after genuine operation1: one-failure-first control, then stable cohort
+[captured failure, actual control failure] trial if valid and changed. Capture
+the control's terminal Search/currentNet before handleExhausted clears it; bind
+the actual transition, not just traversal tail/error text. One stable partition
+preserves cohort order. No loop/third cohort/fallback/production restart policy.
+NEXT ROOT: define source/wire/helper/consumer contract and explicit terminal/
+skipped-trial states, then bounded implementation, canaries and final-source
+native/independent gates. Published parent/source/data paths stay immutable.
+
+Production850/P9frozen19 unchanged. All90s/640groups/5s32768/copy1M4096/
+originalexpansioncaps/48holes4flips/compile60native480reader180cleanup120 remain.
+No GWT/Player/electrical/population renewal. Full30 owner-excluded;
+HARD/PSYCHOTIC unavailable/unrun/protected bodies unread here; historical unread
+UNCERTIFIED. Playable100=0/betaHELD; self-hosted CI prerequisite remains.
+Physical/access/runtime/functional plus production/Player/regression/save/privacy/
+epoch/admission proof precedes adoption. No heavy matrix/persistent process active;
+leaves finished. Old uncertain browser/preview resources untouched.
+Main5f05b005 preserves9tracked6untracked0staged; Desktop e0c36885 preserves
+7tracked73untracked0staged. Only guarded Main report mirror updated. E was clean
+after publication; this next-task checkpoint is its sole pending change.
 
 # Historical checkpoint: failed-first finite diagnostic accepted; publication checks pass
 
