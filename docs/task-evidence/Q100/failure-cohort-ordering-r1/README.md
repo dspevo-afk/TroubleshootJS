@@ -1,9 +1,10 @@
 # Observed failure-cohort ordering experiment
 
-Accepted for the recorded finite native diagnostic; **publication pending**.
-All 15 final R3 runtime gates and root's source-byte/privacy/resource closure
-checks pass. Final integrated documentation/diff/hash review remains before
-publication. The immutable pre-run plan retains its original freeze status;
+Accepted for the recorded finite native diagnostic and published as
+`4fe169baaa27debf13f1c6e0328efd10eaff3697` on
+`origin/codex/q100-physical-feasibility`; exact remote SHA verified. Completion
+Gmail `1a1b76e0eab23062` was sent once. All 15 final R3 runtime gates,
+source-byte/privacy/resource checks and integrated publication review pass. The immutable pre-run plan retains its original freeze status;
 current results belong here and in [VALIDATION.md](VALIDATION.md).
 
 Retaining the first observed failed net at the front and promoting the next

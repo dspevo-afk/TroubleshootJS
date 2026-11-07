@@ -1,4 +1,53 @@
-# Current checkpoint: cohort finite diagnostic accepted; publication checks next
+# Current checkpoint: failure-cohort experiment published; D branch-limit scope review next
+
+UTC2026-11-07. Standing roadmap continues. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106.
+Implementation 4fe169baaa27debf13f1c6e0328efd10eaff3697
+"Validate bounded two-net failure-cohort routing" normally pushed to
+origin/codex/q100-physical-feasibility and exact remote SHA verified.
+Connected Gmail1a1b76e0eab23062 SENT_ONCE after exact-SHA duplicate search returned
+none. This documentation receipt needs no second completion email.
+
+Accepted packet docs/task-evidence/Q100/failure-cohort-ordering-r1/README.md.
+Actual controlAfront NO_PATH B_COIL_LOW554488exp/44visited; cohort[A,B] trial
+CAP_REJECTED D_COIL_LOW:BRANCH_SEARCH_LIMIT419905exp/43visited. Bothnolayout;
+fullfinalizersNOT_RUN. Genericactualfeedback/2freshSessions/originalsettings,
+budget0/max1M/48holes4flips; no productionrestart/cumulativebudgetpolicy adopted.
+
+All15 finalR3 runtime gates PASS: actualclosed1090-sourceJDK8/4139classes/
+19289113bytes; nativefullowner/args/junction;24literalmethods incl17conductorcases;
+fullauthored/canaryconsumers57.2158642/56.3855316s;41authenticatedrejections
+56.2525929s; finalhelper2read/hashpositives+4specificnegatives and3preflight
+controls. Nativeparent17.2136031s/marker16.8425845s479groups13119323units/
+max1.1792758s32768/export13.1154ms/domaincleanup1.1988ms insidecutoff.
+Process termination/root/logabsence verified; hosttimingsincludeOScleanup,
+isolatedOScleanupdurationnotexposed. Current8sourceblobs matchactualgatedbytes;
+22-path stagedscope/privacy/diffcheck PASS; no formatting exceptions needed.
+
+Finalsource producerdc53245d/helpercb8ae8ee/reader84c8dbf2/testseb2ce2d0/
+controlse66f597d/WIREc7bf55d1/fixturedd333ff9/PLANe2cef26d. Runmanifest
+1274185600f9da79412f133ba569fb727eba673c7dd672e53abd8dcc5fd28a56.
+Resultcd44ad1c0db81a8f05d8620f49b78a9e06c2274e6739066b438607f532cf1431,
+genuineop1cc2463e37c9636f1407434fd2f0d69fda660699e4899059273d1b72a71e02e58.
+R1sourceframing/R2ordinal mismatch/nonNO_PATHskip contract defect andallold
+failures retained; correctedfinalsource receivedfreshR3gates. ScopedJavaaudit
+foundskipdefect andpost-fixspecificlineclosure, nofullindependentreviewclaimed.
+
+No production850/P9frozen19/oldparentchanges. All90s640groups5s32768/copy1M4096/
+originalexpansion48hole4flip/compile60native480reader180cleanup120 unchanged.
+No GWT/Player/electrical/population renewal; full30ownerexcluded;
+HARD/PSYCHOTICunavailableunrun/protectedbodiesunreadhere/historicalUNCERTIFIED.
+Playable100=0/betaHELD. CIprerequisiterecorded/norunclaimed. No heavy matrix/
+persistenttaskprocess active; old uncertain browser/preview resources untouched.
+Main5f05b005 preserves9tracked6untracked0staged; Desktop e0c36885 preserves7/73/0.
+Only guardedMainreportmirror updated; E clean afterimplementation, followedonly
+by this documentationreceipt. All task-ownedprivateevidence retained under
+OS-temp/tsj-q100-failure-cohort-7344d764fad44f5d9cb21d6f67df0d34.
+Next unstarted: bounded diagnosis/treatment oftheDbranchlimit, thenactual
+physical/access/runtime/functional andproduction/Player/regression/save/privacy/
+epoch/admission proof beforeanyproduction adoption. Standingworknotstopped.
+
+# Historical checkpoint: cohort finite diagnostic accepted; publication checks next
 
 UTC2026-11-07. Standing roadmap continues. Active E OS-temp/
 tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,

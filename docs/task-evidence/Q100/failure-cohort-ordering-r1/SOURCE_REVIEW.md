@@ -1,7 +1,7 @@
 # Source and review boundary
 
-Accepted finite diagnostic; **publication pending integrated review**. Root owns
-integrated acceptance and publication. No separate full independent-code-review,
+Accepted finite diagnostic; publication is recorded in
+[QUALIFICATION_R1.json](QUALIFICATION_R1.json). Root owns integrated acceptance. No separate full independent-code-review,
 independent-reader-code-review or electrical-review PASS is claimed.
 
 Source parent474a8354ceb2e50fa2adbb31e23cf73a0d9c86fd. Final producer SHA-256:
@@ -67,8 +67,8 @@ bodies unread here, historical unread UNCERTIFIED. Playable100=0/beta HELD and
 the self-hosted CI prerequisite remain unchanged.
 
 The packet preserves exact gated source bytes with packet-local Git attributes;
-staged blob/hash checks and the final publication diff review remain root-owned.
+root verified staged blob hashes and the final publication diff.
 Raw operands, manifest bodies, class trees, process identities and logs remain
 private in the original path-bound environment. Public summaries and sources do
-not qualify an arbitrary clone for turnkey replay. No publication or completion
-notification has occurred for this packet at this draft.
+not qualify an arbitrary clone for turnkey replay. Implementation publication and its once-only completion notification are recorded
+in QUALIFICATION_R1.json.

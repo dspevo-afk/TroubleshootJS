@@ -1,6 +1,7 @@
 # Validation record
 
-Accepted finite native diagnostic; **publication pending integrated review**.
+Accepted finite native diagnostic; publication is recorded in
+[QUALIFICATION_R1.json](QUALIFICATION_R1.json).
 Source parent474a8354ceb2e50fa2adbb31e23cf73a0d9c86fd. Final R3 candidate:
 producer dc53245d, helper cb8ae8ee, reader 84c8dbf2, tests eb2ce2d0,
 controls e66f597d, fixture dd333ff9, wire c7bf55d1 and plan e2cef26d.

@@ -812,7 +812,7 @@ Implementation `ae0141c7c5985d4a0aac8cc590354d459b8cad5a` was normally pushed to
 Gmail `1a1b71378096fa9e` was sent once.
 
 The [bounded two-net failure-cohort experiment](task-evidence/Q100/failure-cohort-ordering-r1/README.md)
-is locally accepted for that same authored placement. Its fresh single-failure
+is accepted and published for that same authored placement. Its fresh single-failure
 control reproduces B_COIL_LOW:NO_PATH at554488 expansions/44visited. The trial
 promotes the captured A failure and the control's actual B failure in that order;
 it rejects at D_COIL_LOW:BRANCH_SEARCH_LIMIT,419905 expansions/43visited. Both
@@ -830,6 +830,9 @@ population renewal is granted; playable100=0/betaHELD and historical unread
 remains UNCERTIFIED. Next is bounded diagnosis or routing treatment for the
 observed D branch-limit failure, followed by physical/access/runtime/functional
 and separately scoped production/admission proof before adoption.
+Implementation `4fe169baaa27debf13f1c6e0328efd10eaff3697` was normally pushed to
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
+Gmail `1a1b76e0eab23062` was sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

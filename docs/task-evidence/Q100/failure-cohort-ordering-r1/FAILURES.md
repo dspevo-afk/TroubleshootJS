@@ -1,6 +1,7 @@
 # Development failures and reuse boundaries
 
-The final R3 finite diagnostic is accepted; **publication review pending**.
+The final R3 finite diagnostic is accepted and published; details are in
+[QUALIFICATION_R1.json](QUALIFICATION_R1.json).
 Original failed sources, receipts and private evidence remain retained. Later
 success does not erase failed attempts or extend earlier component scope.
 
@@ -14,7 +15,7 @@ success does not erase failed attempts or extend earlier component scope.
 | Authored independent consumer R2 | FAIL BF_TERMINAL_FAILURE_BINDING after28.1365581s. The reader required terminal ordinal == advanceCalls. Actual owner lifecycle clears the exhausted Search, then makes one final finishRejected call; ordinal+1 == advanceCalls is the exact relation. The reader was corrected and two ordinal mutants added. The old22-test PASS was not reused. Initial correction testing also exposed two outdated literal-canary ordinals; those fixtures were corrected before the final24-test pass. |
 | Scoped Java review | Found that a non-NO_PATH skipped trial must retain a proven failed ID when terminal evidence exists, as the frozen wire requires. Root corrected the one conditional argument and reader equality, producing final sourcedc53245d. A post-fix read-only check closed this specific finding; it was not a full independent code/reader/electrical review. |
 | Publication-summary preparation | First attempt assumed each control row contained statusPASS. Actual strict rows have exactly case/rejectedWith. The preparation logic was corrected to require those two keys,41 unique expected BF-code cases and the real all-expected flag. No runtime assertion, control or gate was weakened. |
-| Final R3 | All15 fresh runtime gates, current-source byte/privacy checks and root resource closure passed. This accepts only the recorded finite diagnostic; publication still requires integrated diff/hash review. |
+| Final R3 | All15 fresh runtime gates, current-source byte/privacy checks and root resource closure passed. Integrated publication diff and staged-source hash checks also passed. This accepts only the recorded finite diagnostic. |
 
 Final-helper real read/hash controls passed two positives/four specific negatives;
 its bad-name/nonempty-stage/junction controls rejected with expected childexit2.
