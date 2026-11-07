@@ -1,4 +1,43 @@
-# Current checkpoint: copper-free branch diagnostic accepted locally; publication next
+# Current checkpoint: copper-free branch diagnostic published; ordering/access scope next
+
+UTC 2026-11-07. Standing roadmap continues until owner stops. Active E OS-temp/
+tsj-q100-geometric-reasons-20261106-r1, local codex/q100-geometric-reasons-20261106.
+Implementation ce8b5c4e4088e51d87bb5c63f604573588b06077, message Add validated
+copper-free branch routing diagnostic, normally pushed to origin/codex/q100-physical-
+feasibility and exact remote SHA verified. Gmail1a1b5dfc1c336500 SENT_ONCE after
+empty exact-SHA sent search. Private publication-notification-r1.json records it;
+do not resend for this milestone or its documentation receipt.
+
+Exact BASE/SEPARATE request0/attempt4/pass2 QA.C-to-DA.A branch routes before prefix
+copper on the identical placement:63nodes/620units/width13/2turns/0holes/114expansions.
+Global receipt307 and local lineage77 are distinct. No unique blocker, whole-board
+ordering, production treatment or playable100 admission follows; playable100=0/betaHELD.
+Final1087-source JDK8 compile, actual active-branch cleanup canary, authenticated
+independent consumer, literal47/47, semantic21/21 and geometry13/13 rejection
+controls pass. Native argument/junction and reader negatives reject. Final source/
+packet audit and staged diff checks pass. All prior failures stay preserved below.
+The unchanged full routing-geometry API includes all-net continuity: NOT_APPLICABLE
+to partial OBS; allNet NOT_RUN. Original partial checks and independent geometry
+pass; the positive literal separately passes unchanged full geometry. Original
+850 production/P9frozen19 and every limit remain unchanged. No fresh GWT/Player/
+electrical/population proof. This receipt changes documentation only.
+
+Evidence: docs/task-evidence/Q100/copper-free-branch-r1 (20 frozen acceptance files);
+private OS-temp/tsj-q100-branch-first-628b039cd39440b18a2e2131211b61c8, final stage
+j8-final-r4, native-data-r4, native-observe-call-r4/parent.json. No heavy gate running;
+all final children have proven exit/absent roots/logs. Owned junctions removed.
+Old uncertain browser/preview children and R7 unknown process proof remain untouched.
+Main5f05b005 retains9tracked/6untracked; Desktop e0c36885 retains7/73 normal status.
+Only E documentation receipt and mirrored Main report are now intended changes;
+unrelated files/sparse definitions preserved. Full30 owner-excluded; HARD/PSYCHOTIC
+unavailable/unrun, protected bodies unread here, historical unread UNCERTIFIED.
+
+Next: freeze one bounded generic ordering/access hypothesis after read-only owner
+review. No new law or treatment selected yet; no new runtime proof. Then actual
+whole-route/finalizer/clearance/connectivity/access/runtime/functional gates before
+adoption. Read-only reviews started; root owns acceptance/publication. Continue.
+
+# Historical checkpoint: copper-free diagnostic prepublication acceptance
 
 UTC 2026-11-07. Standing roadmap continues until owner stops. Active E OS-temp/
 tsj-q100-geometric-reasons-20261106-r1, branch codex/q100-geometric-reasons-20261106,

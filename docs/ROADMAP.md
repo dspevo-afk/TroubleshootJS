@@ -764,7 +764,10 @@ all caps and electrical/Player behavior remain unchanged. No GWT/population rene
 full30, HARD/PSYCHOTIC or playable100 admission. Historical unread remains UNCERTIFIED;
 playable100=0/betaHELD. Next is one frozen bounded ordering/access experiment,
 then actual whole-route/finalizer/clearance/connectivity/access/runtime/functional
-proof before adoption. Publication is pending the final source audit and root review.
+proof before adoption. Implementation ce8b5c4e4088e51d87bb5c63f604573588b06077
+was normally pushed to origin/codex/q100-physical-feasibility and the exact remote
+SHA verified. Completion Gmail1a1b5dfc1c336500 was sent once; this documentation
+receipt sends no second completion email.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

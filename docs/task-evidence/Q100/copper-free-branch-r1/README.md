@@ -67,3 +67,9 @@ unread UNCERTIFIED. Actual whole-route finalization, clearance, connectivity,
 access, runtime and functional proofs remain required before adopting a later
 routing treatment. Next is one frozen bounded ordering/access experiment informed
 by this isolated-branch result.
+
+Implementation `ce8b5c4e4088e51d87bb5c63f604573588b06077` is published on
+`origin/codex/q100-physical-feasibility`; the exact remote SHA was verified.
+Completion Gmail `1a1b5dfc1c336500` was sent once. The qualification JSON preserves
+the accepted prepublication snapshot; this documentation receipt changes no gated
+source, input, returned output or acceptance result and sends no duplicate email.
