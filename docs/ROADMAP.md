@@ -969,7 +969,9 @@ separately scoped authored experiment. Playable100=0/betaHELD; Full30EXCLUDED;
 HARD/PSYCHOTIC unavailable/unrun; historical protected unread UNCERTIFIED.
 
 The [generic selected-observation V2 wire prerequisite](task-evidence/Q100/native-selected-observation-wire-v2-r1/README.md)
-is locally accepted for the exact native candidate; publication is pending.
+is accepted and published as `dfccca05d604935c29cadf1e96552027bd3e55e8` on
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified. Completion
+Gmail `1a1bb49499634913` sent once.
 It carries the atomic terminal/head pair through an18-key strict wire, shared
 charged materializer, unchanged bounded publisher and independent read-only
 consumer. Six generic states pass actual native/reader gates, with one selected

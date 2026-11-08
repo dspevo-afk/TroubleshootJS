@@ -1,4 +1,4 @@
-# Current checkpoint: generic selected-observation V2 locally accepted; publication pending
+# Current checkpoint: generic selected-observation V2 published; full integration next
 
 UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
@@ -9,7 +9,9 @@ preserves9tracked/6untracked/staged0; E d9747229 report M; Desktop e0c36885
 preserves7tracked/73untracked/staged0. Main/E mirror report only. AGENTS
 a3dec836f3ceb136cede52b5674f281b2459696c69aa74041fee7213f93fd95d unchanged.
 Q implementation710b1a12/receiptdd2b18f4/Gmail1a1bb09d4dcd0939 SENT_ONCE;
-do not duplicate. R has NO publication/email yet.
+do not duplicate. R implementationdfccca05d604935c29cadf1e96552027bd3e55e8
+normally pushed/exact remote verified; Gmail1a1bb49499634913 SENT_ONCE. Receipt
+carries this checkpoint; verify actual HEAD before continuation. Do not email again.
 
 R owned OS-temp/tsj-q100-selected-head-wire-096f9160b79240859a393749151619f2.
 Operative PLAN_R1.md8df4b6fadf69fd0038c1c50fc9a3f2cb2e03ff0aee4b5ade44c4fa220cb40848;
@@ -77,9 +79,13 @@ Production GWT/visible Player/electrical/population NOT APPLICABLE/not renewed.
 Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; protected bodies unread here,
 historical unread UNCERTIFIED. Playable100=0/betaHELD.
 
-NEXT: root final staged diff/byte/privacy checks, normal commit/push/exact remote,
-one completion Gmail after verified publication; then freeze full result/marker/
-R7/source-bound host integration before any separate authored experiment. No new
+PUBLISHED:24path final staged diff/byte/privacy PASS, treea7f5d45e8f530f8510a001429153774c96e0f015;
+staged review06edb628f43b4fa226d658d8c6e7852977a4db4c8a194d2340bc28cf9ca05869.
+Implementationdfccca05d604935c29cadf1e96552027bd3e55e8 normally pushed to known
+origin/codex/q100-physical-feasibility and exact ls-remote verified. Zero prior
+subject matches; completion Gmail1a1bb49499634913 SENT_ONCE. No receipt email.
+NEXT: freeze full result/marker/R7/source-bound host integration before any
+separate authored experiment. No new
 owned persistent process/server/browser/junction. R scratch/build/evidence retained.
 Old uncertain browser14116/start639294472690745890/port58320, preview34180/
 start639294472514546595/port58264+14uncertainchildren and D timeout logs untouched;
