@@ -1080,7 +1080,10 @@ expectation failure remains preserved and resolved from unchanged owner source.
 All native entry profiles stay denied. No full-D/H1/result/marker/export,
 production/Player/electrical/population or playable100 qualification follows.
 Budgets/oracles unchanged; Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
-historical protected unread UNCERTIFIED. Publication is pending final review.
+historical protected unread UNCERTIFIED. Implementation
+`8aa94e15b66f373ef02e7e65ca9cabcb52fd7c15` normally pushed to
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
+Gmail `1a1bcf578152f8ae` sent once.
 Next is frozen genuine full-D V2 assembly/ledger/context/host migration under
 one original plus exactly NULL/OBSERVE.
 

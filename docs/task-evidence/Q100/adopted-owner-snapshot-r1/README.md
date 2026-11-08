@@ -1,7 +1,8 @@
 # Adopted-owner snapshot and token lifecycle
 
-Locally accepted for this bounded synthetic component; publication is pending
-final staged review. Exactly two changes derive from V Study7d62a0f3: main always
+Accepted and published as `8aa94e15b66f373ef02e7e65ca9cabcb52fd7c15`; exact
+remote SHA verified, Gmail `1a1bcf578152f8ae` sent once. See [publication](PUBLICATION_R1.md).
+Exactly two changes derive from V Study7d62a0f3: main always
 denies, and the closed snapshot requires positive prior groups with the original
 owner started and adopted. All other snapshot/token guards remain. The generic
 R7 point, ledger and work plan stay unchanged and do not accept adopted accounting.

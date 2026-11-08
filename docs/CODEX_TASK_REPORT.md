@@ -1,11 +1,13 @@
-# Current checkpoint: W adopted-owner snapshot locally accepted; publication pending
+# Current checkpoint: W adopted-owner snapshot published; full-D scope next
 
 UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
 tsj-q100-terminal-only-20261107-r1, codex/q100-terminal-only-20261107,
-HEAD7ddbda918e655c9059fc1ad3296a2bf2929a3310. Origin dspevo-afk/TroubleshootJS,
+Implementation8aa94e15b66f373ef02e7e65ca9cabcb52fd7c15; this documentation
+receipt follows it, verify actual HEAD. Origin dspevo-afk/TroubleshootJS,
 normal target codex/q100-physical-feasibility, no upstream. V implementation
 7d404c6edfa8d1bdb27b1305b880541bc600ed42/receipt7ddbda91 remotely verified;
-Gmail1a1bccb124565398 SENT_ONCE. No W commit/push/Gmail yet.
+Gmail1a1bccb124565398 SENT_ONCE. W normal push and exact remote SHA verified;
+Gmail1a1bcf578152f8ae SENT_ONCE. No receipt email. F clean before this doc receipt.
 Main5f05b005 keeps9tracked/6untracked/staged0; E d9747229 report M/staged0;
 Desktop e0c36885 keeps7tracked/73untracked/staged0. Only Main/E reports mirrored.
 F was clean before W report/code/evidence/docs; no unrelated path changed.
@@ -59,9 +61,10 @@ standard cr-at-eol attribute. Actual Git validCRLF0/real trailing-space2 canary
 passes; initial check remains FAIL in CRLF_POLICY_R1. Source/classes/proofs
 rehashed unchanged; no native rerun required on this evidence-attribute boundary.
 
-Next actual diff/index/byte/privacy checks, intended staging, normal commit/push/
-exact remote, one W Gmail and receipt. No unresolved implementation blocker.
-Then freeze genuine full-D V2 assembly/ledger/context/host migration, preserving
+Root actual22-path staged review passes: tree5773a16db5fd43ffbb98d4318e28f58ac53f0073,
+diffSHA672ea5c1341d0b784cd8948c8326d643cdbdd9be0e682b60d545e90cf8ea3054.
+Next finish this documentation receipt, then freeze genuine full-D V2
+assembly/ledger/context/host migration, preserving
 one original plus exactly two NULL/OBSERVE arms, no extra control/retry here.
 All budgets/oracles/epochs unchanged; production/GWT/Player/electrical/population
 NP/not renewed. No old D input/result/descriptor/compiled-input DATA or protected
