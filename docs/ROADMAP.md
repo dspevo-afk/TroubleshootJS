@@ -968,6 +968,22 @@ Next is strict wire/reader and metadata/export accounting integration before any
 separately scoped authored experiment. Playable100=0/betaHELD; Full30EXCLUDED;
 HARD/PSYCHOTIC unavailable/unrun; historical protected unread UNCERTIFIED.
 
+The [generic selected-observation V2 wire prerequisite](task-evidence/Q100/native-selected-observation-wire-v2-r1/README.md)
+is locally accepted for the exact native candidate; publication is pending.
+It carries the atomic terminal/head pair through an18-key strict wire, shared
+charged materializer, unchanged bounded publisher and independent read-only
+consumer. Six generic states pass actual native/reader gates, with one selected
+head; fourteen host rejections and five real junction controls pass. Fresh JDK8
+three-source/177-class build and native materializer/retained contracts pass.
+Generator22 and reader14 tests pass; four OS-symlink skips are complemented by
+the real junction controls and verified literal unlink. Earlier environment,
+test-line-ending, dot-alias and host-assertion failures remain preserved. No
+production, budget, authored experiment, Player/GWT or population renewal follows.
+Next is separately frozen full result/marker/R7/source-bound host integration,
+then any separately scoped authored experiment and physical/access/runtime proof.
+Playable100=0/betaHELD; Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
+historical protected unread UNCERTIFIED.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

@@ -1,0 +1,52 @@
+{
+  "beforeLaunchPythonAlias": "SELECTED_PYTHON_EXECUTABLE_PIN_READ_FAILED; NO_CHILD_TEST_STARTED",
+  "calls": [
+    {
+      "childExitCode": 1,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "generator-units-r2",
+      "processElapsedMs": 1019.6233000000001,
+      "receipts": {
+        "owner.json": "f853b99c78074ec1ae2eeee28c4a294fb98c9a9cdbdf5d57c2ad68f3572b8184",
+        "parent.json": "cef2a30d5fa6b37ef4408d5cdfa874f278e90088e77747c9db4fb96be2d558cd",
+        "process.json": "7d486bc336de9a871af670774f84fb8f3428e25fa38bb193029f77fd034429d2",
+        "request.json": "aa19a650ed1479d6f861114bd34dd477432d8d6c542854229a3c9be08bda9ccc",
+        "result.json": "412d41df97af10d034343c5a617fc32e272a642769d0a60e9c3ddd01c6af06eb",
+        "stderr.txt": "941d60951a7c86285b697c5728c159217cef1644f6f67a5054132a593fd6a87e",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "FAIL_PRESERVED_NOT_RECLASSIFIED",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1267.3374000000001
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "generator-noncanonical-r1",
+      "processElapsedMs": 363.11220000000003,
+      "receipts": {
+        "owner.json": "2c26e9b24bc3eff9023ffc224117660f7184cac4214e8ee99de03be9340f2725",
+        "parent.json": "098e1b486ea7172beca52e28ce99e34a4f1690f16a9fa9003d7298097412ce08",
+        "process.json": "b6757d943085cfed7fa39e0c76ead94559ea2f49ac1dac7ea54c412f96306817",
+        "request.json": "427f921ff1eb071ec53206af18940eeb8ae413956d011debe11cb22fd825ad72",
+        "result.json": "1107cfa24f23f1d6ccc8f0cac0146940759f20ce2d47df0705819dbe7c7490b8",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "1307c38787f0fe9edeef4d308caa0d505e752efd0cb963343550ccc0348e803a"
+      },
+      "status": "FAIL_EXPECTED_REJECTION_BUT_CHILD_SUCCEEDED_PRESERVED",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 600.8758
+    }
+  ],
+  "nativePreCanonicalFix": "R1_NATIVE_AND_READER_PASS_ONLY_PRE_FIX_HOST_BOUNDARY; FINAL_R2_NATIVE_AND_READER_FRESH",
+  "negativeHarnessFailure": "EXPECTED_CANONICAL_THEN_LINE_BUT_ACTUAL_FRAMING_REJECTION; RAW_EXPECTED_CHILD2_PRESERVED; NO_CHILD_RERUN; CORRECT_FRAMING_CODE_AUDITED",
+  "noncanonicalFailure": "REDUNDANT_DOT_SEGMENT_ACCEPTED_BY_PATH_NORMALIZATION; GENERATOR_RAW_SPELLING_PREFLIGHT_FIXED; FINAL25_UNITS_AND_ACTUAL_NEGATIVE_PASS",
+  "oracleOrBudgetWeakening": false,
+  "rootCallEnvironment": "GET_FILEHASH_UNAVAILABLE_BEFORE_TEST_LAUNCH; FAILED_CALL_RECEIPT_PRESERVED; CHILD_ONLY_PSMODULEPATH_FIXED",
+  "schema": "tsj-selected-wire-failures-v1",
+  "sourceReviewBlockers": "PREFIX_OWNER_REASON_AND_POST_ABORT_PARENT_ONE_UNIT_FIXED_BEFORE_FIRST_NATIVE_COMPILE",
+  "summaryHarnessFailure": "EXPECTED_caseCount_BUT_READER_DOCUMENTED_cases; READER_SUCCEEDED; HOST_CORRECTED_AND_REUSED_UNCHANGED_AUTHENTICATED_RECEIPT_BEFORE_EXCLUSIVE_ARTIFACT_WRITE",
+  "unitFailure": "EXACT_WINDOWS_CRLF_VS_LF_SUBPROCESS_STDERR; FIXED_TEST_TO_EXACT_OS_LINE_ENDING_WITHOUT_WIRE_CHANGE"
+}

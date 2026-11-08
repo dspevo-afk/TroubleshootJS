@@ -94,10 +94,30 @@ before either copy, respecting the adapter's int chunk ceiling. Live release
 counters exclude stale calls. The supported selected four-argument observer API
 accepts a separate stale-rejection Meter and changes no original state; the
 normal sink remains a live-only adapter. The [bounded prerequisite](task-evidence/Q100/native-selection-observer-meter-r1/README.md)
-qualifies generic fixtures and exact logical copy/validation charges. Main and
-resultMap deny execution/export, so strict wire/reader, metadata/serialization
-accounting and authored integration stay separate. Production/GWT and physical
-or electrical behavior are unchanged.
+qualifies generic fixtures and exact logical copy/validation charges. That Q
+source revision denies main/resultMap; its wire/export acceptance is separate.
+Production/GWT and physical or electrical behavior are unchanged.
+
+The [generic native V2 overlay](task-evidence/Q100/native-selected-observation-wire-v2-r1/README.md)
+derives that Q observer source and restores only a sealed18-key observation map.
+One shared materializer precharges18+33S+10H+18 entries for OBSERVE, or18 for NULL;
+four fixed metadata operations stay outside callback charges. Direct DTO writers
+avoid transient field arrays. The existing tuple-copy counter now counts both
+terminal and head DTOs: D+H chunks,33D+10H fields,69D+V+21H units. No duplicate
+mutable head counter is introduced. Selected scalar values keep Java int wrap
+and selected-before-refresh semantics; no path witness is inferred.
+
+A canary-only entry validates mode/UUID/pins before Parent/Session/input access.
+Three injected P06 frames and three literal callback contexts produce the six
+generic states through the existing bounded canonical stdout owner. The new
+independent standard-library reader owns strict V2 order/domain/binding/copy
+equations, exact canonical bytes and a read-only checked-I/O CLI. Root separately
+authenticates sources/classes/tools and returned process receipts before exclusive
+artifact materialization; pure semantic validation is not execution authentication.
+The generator rejects raw dot/separator aliases before loading; existing pinned
+owners retain real-path, identity, reparse and exclusive-output responsibility.
+Full authored result/marker/R7/source-bound host integration remains separate;
+no production/GWT/Player, electrical, population or physical behavior changes.
 
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch

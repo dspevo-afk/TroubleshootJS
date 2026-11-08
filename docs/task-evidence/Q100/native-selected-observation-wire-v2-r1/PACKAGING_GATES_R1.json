@@ -1,0 +1,28 @@
+{
+  "finalGatesSha256": "928ecf474c50e06a3a473e14be92e5670a233197de527958840e89be43a91d7d",
+  "newAuthoredInvocations": 0,
+  "publicCodeBytesExact": true,
+  "publicDerivedAndProofByteEqual": true,
+  "publicGeneratorActualCli": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "public-generator-positive-r1",
+    "processElapsedMs": 461.21590000000003,
+    "receipts": {
+      "owner.json": "bb4d1d7e086981a92708a3c19ed93335bc091aefebb90944a316aa495ee17a6f",
+      "parent.json": "ea19bd3b10502d82e0e43dc8584061b05e00dae93fa7fbd846213379b7ea9b62",
+      "process.json": "d8d8c820fed7808570dc8e96ce4a3494a9d1523d0c0530878b5214c3ab43a58f",
+      "request.json": "0bd724255c62e7b0ba90983b152ca7976d73abfb645647fe95057b60349eabde",
+      "result.json": "3b491e934d787aa7ecacccc508a7a94886285e216b07f699d023e3d7e9534713",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "1307c38787f0fe9edeef4d308caa0d505e752efd0cb963343550ccc0348e803a"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 713.7969
+  },
+  "schema": "tsj-selected-wire-package-check-v1",
+  "sourceClassesToolsRehashedUnchanged": true,
+  "status": "PASS"
+}

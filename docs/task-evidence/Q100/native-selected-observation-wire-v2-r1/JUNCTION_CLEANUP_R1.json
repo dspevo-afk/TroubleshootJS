@@ -1,0 +1,12 @@
+{
+  "isolatedCleanupDurationMs": null,
+  "linkIdentityAndCreationTicksMatchedBeforeRemoval": true,
+  "linksRemoved": 5,
+  "literalNonrecursiveRemovalToolChunk": "df34c4",
+  "lstatAbsentAfterRemoval": true,
+  "outputTargetStillEmpty": true,
+  "readOnlyIdentityCheckToolChunk": "1faae2",
+  "schema": "tsj-selected-wire-junction-cleanup-v1",
+  "status": "PASS",
+  "targetFilesUnchanged": true
+}

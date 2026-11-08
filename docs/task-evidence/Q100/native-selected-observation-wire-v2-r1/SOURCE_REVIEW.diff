@@ -1,0 +1,335 @@
+--- qualified-Q/CohortTerminalTelemetryStudy.java
++++ native-V2/CohortTerminalTelemetryStudy.java
+@@ -28,2 +28,9 @@
+-    public static void main(String[] args) {
+-        throw new IllegalStateException("SELECTION_CONSUMER_COMPONENT_ONLY");
++    public static void main(String[] args) throws Exception {
++        long started=System.nanoTime();
++        if (args==null || args.length!=4 ||
++                !"SELECTED_OBSERVATION_CANARIES_V2".equals(args[0]) ||
++                args[1]==null || !UUID.matcher(args[1]).matches() ||
++                args[2]==null || !SHA.matcher(args[2]).matches() ||
++                args[3]==null || !SHA.matcher(args[3]).matches())
++            throw new IllegalStateException("SELECTED_WIRE_CANARY_ONLY");
++        SelectedObservationWireCanary.run(args,started);
+@@ -298 +305 @@
+-        m.copy(17);
++        m.copy(18);
+@@ -300 +307 @@
+-        out.put("schema","tsj-cohort-terminal-observation-v1");
++        out.put("schema","tsj-cohort-terminal-observation-v2");
+@@ -312 +319 @@
+-        out.put("selectedSnapshot",null);
++        out.put("selectedSnapshot",null); out.put("selectedHead",null);
+@@ -313,0 +321,16 @@
++    }
++
++    /** Shared metadata owner; callers seal the observer before materialization. */
++    static Map<String,Object> materializeObservation(TerminalSink sink,SetupMeter m)
++            throws Exception {
++        if (sink==null) return nullObservation(m);
++        m.copy(18);
++        m.charge(1); // selected-reference inspection, outside observer units
++        if (field(sink.observer,"selected")!=null) m.copy(33);
++        m.charge(1); // head-reference inspection, outside observer units
++        if (field(sink.observer,"selectedHead")!=null) m.copy(10);
++        m.charge(1); // sealed result-map operation, outside observer units
++        Map<String,Object> observerResult=sink.observer.resultMap();
++        m.copy(18);
++        m.charge(1); // mutable outer-map construction, outside observer units
++        return new java.util.LinkedHashMap<String,Object>(observerResult);
+@@ -976,9 +999 @@
+-    Map<String,Object> observation;
+-    if (sink==null) observation=nullObservation(m);
+-    else {
+-        m.copy(17);
+-        if (field(sink.observer,"selected")!=null) m.copy(33);
+-        Map<String,Object> observerResult=sink.observer.resultMap();
+-        m.copy(17);
+-        observation=new java.util.LinkedHashMap<String,Object>(observerResult);
+-    }
++    Map<String,Object> observation=materializeObservation(sink,m);
+@@ -1298,0 +1314,5 @@
++        if (test(m,new Guard() { public boolean evaluate() throws Exception {
++                return obs==null || obs.size()!=18 ||
++                    !"tsj-cohort-terminal-observation-v2".equals(obs.get("schema")) ||
++                    !obs.containsKey("selectedHead");
++            } })) throw new IOException("OBSERVER_V2_SCHEMA");
+@@ -1318,0 +1339,10 @@
++        m.charge(1); // selected-head reference inspection
++        final Object selectedHead=obs.get("selectedHead");
++        if (test(m,new Guard() { public boolean evaluate() throws Exception {
++                return selectedHead!=null && (!(selectedHead instanceof Map) ||
++                    ((Map<?,?>)selectedHead).size()!=10);
++            } }) || test(m,new Guard() { public boolean evaluate() throws Exception {
++                return (selectedHead!=null)!=
++                    ("FIRST_NON_FOUND".equals(state) && selected instanceof Map &&
++                     "BRANCH_SEARCH_LIMIT".equals(((Map<?,?>)selected).get("terminalReason")));
++            } })) throw new IOException("OBSERVER_SELECTED_HEAD_STATE");
+@@ -1406,95 +1436 @@
+-        Parent p=new Parent(); SetupMeter m=new SetupMeter(p,p.meter(started));
+-        SetupResult setup=readInput(m,args.descriptorSha);
+-        final Object original=captureWithSetup(p,p.inputs(args),m,setup);
+-        // Merge guarantees a closed native Meter. These five boundary reads
+-        // open a new metadata group; remove its prepaid units from the sampled
+-        // capture delta. Completed groups exclude this still-open metadata group.
+-        m.charge(5);
+-        final long originalWrapper=((Number)field(m.meter,"units")).longValue()-setup.units-5;
+-        final int originalGroups=((Number)field(original,"groupCount")).intValue()+
+-            ((Number)field(m.meter,"groups")).intValue()-setup.groups;
+-        Object capture=field(original,"captureData"), legacy=field(original,"legacyCapture");
+-        PadProof proof=verifyFreshOriginal(original,setup.data,m);
+-        GridBinding grid=actualGrid((PcbBoardLayout)field(legacy,"template"),m);
+-        Cohort cohort=deriveCohort(setup.data,(List<String>)field(capture,"netIds"),m);
+-        m.copy(1); String captureId=uuidApart(m,args.runId);
+-        m.copy(2); String nullId=uuidApart(m,args.runId,captureId);
+-        m.copy(3); String observeId=uuidApart(m,args.runId,captureId,nullId);
+-        Map<String,Object> originalJson=originalDto(original,args,proof,captureId,m); m.finish();
+-        final ArmResult n=executeArm(p,m,capture,legacy,cohort,proof,grid,"NULL",nullId,started);
+-        final ArmResult o=executeArm(p,m,capture,legacy,cohort,proof,grid,"OBSERVE",observeId,started);
+-        boolean same=parity(n.fresh,o.fresh,m);
+-        boolean expected=finiteReference(n.fresh,m) && finiteReference(o.fresh,m);
+-        m.charge(1);
+-        if (expected) {
+-            final Object selected=o.observation.get("selectedSnapshot");
+-            if (test(m,new Guard() { public boolean evaluate() throws Exception { return !(selected instanceof Map); } }) ||
+-                test(m,new Guard() { public boolean evaluate() throws Exception { return !"FIRST_NON_FOUND".equals(o.observation.get("state")); } })) expected=false;
+-            else {
+-                final Map<String,Object> snap=(Map<String,Object>)selected;
+-                expected=test(m,new Guard() { public boolean evaluate() throws Exception { return "D_COIL_LOW".equals(snap.get("netId")); } }) &&
+-                    test(m,new Guard() { public boolean evaluate() throws Exception { return "BRANCH_SEARCH_LIMIT".equals(snap.get("terminalReason")); } }) &&
+-                    test(m,new Guard() { public boolean evaluate() throws Exception { return Integer.valueOf(419905).equals(snap.get("totalExpanded")); } });
+-            }
+-        }
+-        final Map<String,Object> originalTemplate=(Map<String,Object>)originalJson.get("template");
+-        final boolean copyEffects=test(m,new Guard() { public boolean evaluate() throws Exception { return originalTemplate.get("effectsBeforeSha256").equals(
+-            originalTemplate.get("effectsAfterSha256")); } });
+-        final boolean sourceGeometry=test(m,new Guard() { public boolean evaluate() throws Exception { return originalTemplate.get("geometryBeforeSha256").equals(
+-            originalTemplate.get("geometryAfterSha256")); } }) &&
+-            test(m,new Guard() { public boolean evaluate() throws Exception { return originalTemplate.get("geometryBeforeSha256").equals(n.cleanup.get("sourceGeometryBeforeSha256")); } }) &&
+-            test(m,new Guard() { public boolean evaluate() throws Exception { return n.cleanup.get("sourceGeometryBeforeSha256").equals(n.cleanup.get("sourceGeometryAfterSha256")); } }) &&
+-            test(m,new Guard() { public boolean evaluate() throws Exception { return n.cleanup.get("sourceGeometryAfterSha256").equals(o.cleanup.get("sourceGeometryBeforeSha256")); } }) &&
+-            test(m,new Guard() { public boolean evaluate() throws Exception { return o.cleanup.get("sourceGeometryBeforeSha256").equals(o.cleanup.get("sourceGeometryAfterSha256")); } });
+-        m.charge(1);
+-        if (same) same=test(m,new Guard() { public boolean evaluate() throws Exception { return sourceGeometry; } }) && test(m,new Guard() { public boolean evaluate() throws Exception { return Boolean.TRUE.equals(n.cleanup.get("contextRestored")); } }) &&
+-            test(m,new Guard() { public boolean evaluate() throws Exception { return Boolean.TRUE.equals(o.cleanup.get("contextRestored")); } }) &&
+-            test(m,new Guard() { public boolean evaluate() throws Exception { return Boolean.TRUE.equals(n.cleanup.get("adapterBoardTemplateAliasesDropped")); } }) &&
+-            test(m,new Guard() { public boolean evaluate() throws Exception { return Boolean.TRUE.equals(o.cleanup.get("adapterBoardTemplateAliasesDropped")); } });
+-        m.copy(5);
+-        Map<String,Object> nullArm=new java.util.LinkedHashMap<String,Object>();
+-        nullArm.put("armRole","NULL"); nullArm.put("armId",nullId);
+-        nullArm.put("freshRun",field(n.fresh,"json")); nullArm.put("observation",n.observation); nullArm.put("cleanup",n.cleanup);
+-        m.copy(5);
+-        Map<String,Object> observeArm=new java.util.LinkedHashMap<String,Object>();
+-        observeArm.put("armRole","OBSERVE"); observeArm.put("armId",observeId);
+-        observeArm.put("freshRun",field(o.fresh,"json")); observeArm.put("observation",o.observation); observeArm.put("cleanup",o.cleanup);
+-        m.copy(2);
+-        Map<String,Object> arms=new java.util.LinkedHashMap<String,Object>(); arms.put("null",nullArm); arms.put("observe",observeArm);
+-        m.copy(2);
+-        Map<String,Object> cohortJson=new java.util.LinkedHashMap<String,Object>();
+-        cohortJson.put("netIds",cohort.netIds); cohortJson.put("requestedNetIds",cohort.requested);
+-        m.copy(10);
+-        Map<String,Object> cleanup=new java.util.LinkedHashMap<String,Object>();
+-        cleanup.put("schema","tsj-cohort-terminal-cleanup-v1");
+-        cleanup.put("originalCaptureOwnersReleased",field(original,"ownersReleased"));
+-        cleanup.put("originalCaptureContextRestored",field(original,"contextRestored"));
+-        cleanup.put("nullArmAliasesDropped",n.cleanup.get("adapterBoardTemplateAliasesDropped"));
+-        cleanup.put("observeArmAliasesDropped",o.cleanup.get("adapterBoardTemplateAliasesDropped"));
+-        cleanup.put("sourceGeometryUnchanged",Boolean.valueOf(sourceGeometry));
+-        cleanup.put("effectsScope","ORIGINAL_CAPTURE_COPY_ONLY");
+-        cleanup.put("originalCaptureCopyEffectsUnchanged",Boolean.valueOf(copyEffects));
+-        cleanup.put("contextRestored",Boolean.valueOf(test(m,new Guard() { public boolean evaluate() throws Exception { return Boolean.TRUE.equals(field(original,"contextRestored")); } }) &&
+-            test(m,new Guard() { public boolean evaluate() throws Exception { return Boolean.TRUE.equals(n.cleanup.get("contextRestored")); } }) && test(m,new Guard() { public boolean evaluate() throws Exception { return Boolean.TRUE.equals(o.cleanup.get("contextRestored")); } })));
+-        final long cleanupNanos=((Number)field(original,"cleanupNanos")).longValue()+
+-            ((Number)n.cleanup.get("cleanupNanos")).longValue()+((Number)o.cleanup.get("cleanupNanos")).longValue();
+-        cleanup.put("cleanupNanos",Long.valueOf(cleanupNanos));
+-        m.copy(13);
+-        Map<String,Object> result=new java.util.LinkedHashMap<String,Object>();
+-        result.put("schema","tsj-cohort-terminal-result-v1"); result.put("mode","OBSERVED_COHORT_TERMINAL_TELEMETRY");
+-        result.put("status","COMPLETED_DIAGNOSTIC_ONLY"); result.put("runId",args.runId);
+-        result.put("sourceManifestSha256",args.manifestSha); result.put("wireContractSha256",args.wireSha);
+-        result.put("descriptorSha256",args.descriptorSha); result.put("qualifiedPrior",setup.data.get("qualifiedPrior"));
+-        result.put("originalCapture",originalJson); result.put("cohort",cohortJson); result.put("arms",arms);
+-        // Export/accounting is a separate required chunk; placeholders cannot be accepted.
+-        result.put("work",null); result.put("cleanup",cleanup); m.finish();
+-        if (test(m,new Guard() { public boolean evaluate() throws Exception { return originalWrapper<0; } }) || test(m,new Guard() { public boolean evaluate() throws Exception { return originalGroups<1; } }) ||
+-            test(m,new Guard() { public boolean evaluate() throws Exception { return cleanupNanos>120000000000L; } }) || test(m,new Guard() { public boolean evaluate() throws Exception { return !copyEffects; } }))
+-            throw new IOException("ORIGINAL_ACCOUNTING_OR_EFFECTS");
+-        m.finish();
+-        m.copy(2); // the two detached comparison booleans, before their copy
+-        m.charge(1); // comparison control allocation, before metadata closes
+-        Comparison comparison=new Comparison(result,same,expected,m);
+-        comparison.workPlan=captureR7WorkPlan(setup,original,originalWrapper,originalGroups,
+-            n,o,started,m,result);
+-        return comparison;
++        throw new IllegalStateException("SELECTED_WIRE_CANARY_ONLY");
+@@ -1915,20 +1851,33 @@
+-        String[] keys = {"pass","netId","startPadId","rootPadId","startX","startY","rootX","rootY",
+-            "gridWidth","gridHeight","goalsTop","goalsBottom","prefixViaCount","reachedPadCount",
+-            "initialManhattanDistance","minimumExploredManhattanDistance","branchExpanded","totalExpanded",
+-            "expandedTop","expandedBottom","frontierCount","bestStateCount","terminalReason",
+-            "relaxedBoundStarted","relaxedBoundComplete","relaxedBoundObservationChecked",
+-            "relaxedBoundLiveLayoutStable","relaxedBoundRouterStateStable","relaxedBoundRouterEffectsStable",
+-            "relaxedBoundWorkUnits","relaxedBoundOrdinaryProbes","relaxedBoundViaProbes","relaxedBoundRefreshes"};
+-        Object[] values = {Integer.valueOf(pass),netId,startPadId,rootPadId,
+-            Integer.valueOf(startX),Integer.valueOf(startY),Integer.valueOf(rootX),Integer.valueOf(rootY),
+-            Integer.valueOf(gridWidth),Integer.valueOf(gridHeight),Integer.valueOf(goalsTop),
+-            Integer.valueOf(goalsBottom),Integer.valueOf(prefixViaCount),Integer.valueOf(reachedPadCount),
+-            Integer.valueOf(initialManhattanDistance),Integer.valueOf(minimumExploredManhattanDistance),
+-            Integer.valueOf(branchExpanded),Integer.valueOf(totalExpanded),Integer.valueOf(expandedTop),
+-            Integer.valueOf(expandedBottom),Integer.valueOf(frontierCount),Integer.valueOf(bestStateCount),
+-            terminalReason,Boolean.valueOf(relaxedBoundStarted),Boolean.valueOf(relaxedBoundComplete),
+-            Boolean.valueOf(relaxedBoundObservationChecked),Boolean.valueOf(relaxedBoundLiveLayoutStable),
+-            Boolean.valueOf(relaxedBoundRouterStateStable),Boolean.valueOf(relaxedBoundRouterEffectsStable),
+-            Integer.valueOf(relaxedBoundWorkUnits),Integer.valueOf(relaxedBoundOrdinaryProbes),
+-            Integer.valueOf(relaxedBoundViaProbes),Integer.valueOf(relaxedBoundRefreshes)};
+-        for (int i = 0; i < keys.length; i++) out.put(p + keys[i], values[i]);
++        out.put(p+"pass",Integer.valueOf(pass));
++        out.put(p+"netId",netId);
++        out.put(p+"startPadId",startPadId);
++        out.put(p+"rootPadId",rootPadId);
++        out.put(p+"startX",Integer.valueOf(startX));
++        out.put(p+"startY",Integer.valueOf(startY));
++        out.put(p+"rootX",Integer.valueOf(rootX));
++        out.put(p+"rootY",Integer.valueOf(rootY));
++        out.put(p+"gridWidth",Integer.valueOf(gridWidth));
++        out.put(p+"gridHeight",Integer.valueOf(gridHeight));
++        out.put(p+"goalsTop",Integer.valueOf(goalsTop));
++        out.put(p+"goalsBottom",Integer.valueOf(goalsBottom));
++        out.put(p+"prefixViaCount",Integer.valueOf(prefixViaCount));
++        out.put(p+"reachedPadCount",Integer.valueOf(reachedPadCount));
++        out.put(p+"initialManhattanDistance",Integer.valueOf(initialManhattanDistance));
++        out.put(p+"minimumExploredManhattanDistance",Integer.valueOf(minimumExploredManhattanDistance));
++        out.put(p+"branchExpanded",Integer.valueOf(branchExpanded));
++        out.put(p+"totalExpanded",Integer.valueOf(totalExpanded));
++        out.put(p+"expandedTop",Integer.valueOf(expandedTop));
++        out.put(p+"expandedBottom",Integer.valueOf(expandedBottom));
++        out.put(p+"frontierCount",Integer.valueOf(frontierCount));
++        out.put(p+"bestStateCount",Integer.valueOf(bestStateCount));
++        out.put(p+"terminalReason",terminalReason);
++        out.put(p+"relaxedBoundStarted",Boolean.valueOf(relaxedBoundStarted));
++        out.put(p+"relaxedBoundComplete",Boolean.valueOf(relaxedBoundComplete));
++        out.put(p+"relaxedBoundObservationChecked",Boolean.valueOf(relaxedBoundObservationChecked));
++        out.put(p+"relaxedBoundLiveLayoutStable",Boolean.valueOf(relaxedBoundLiveLayoutStable));
++        out.put(p+"relaxedBoundRouterStateStable",Boolean.valueOf(relaxedBoundRouterStateStable));
++        out.put(p+"relaxedBoundRouterEffectsStable",Boolean.valueOf(relaxedBoundRouterEffectsStable));
++        out.put(p+"relaxedBoundWorkUnits",Integer.valueOf(relaxedBoundWorkUnits));
++        out.put(p+"relaxedBoundOrdinaryProbes",Integer.valueOf(relaxedBoundOrdinaryProbes));
++        out.put(p+"relaxedBoundViaProbes",Integer.valueOf(relaxedBoundViaProbes));
++        out.put(p+"relaxedBoundRefreshes",Integer.valueOf(relaxedBoundRefreshes));
+@@ -1946,0 +1896,12 @@
++    }
++    void writeResult(java.util.Map<String,Object> out) {
++        out.put("branchOrdinal",Integer.valueOf(branchOrdinal));
++        out.put("cell",Integer.valueOf(cell));
++        out.put("layer",Integer.valueOf(layer));
++        out.put("direction",Integer.valueOf(direction));
++        out.put("transitions",Integer.valueOf(transitions));
++        out.put("cost",Integer.valueOf(cost));
++        out.put("storedHeuristic",Integer.valueOf(storedHeuristic));
++        out.put("serial",Integer.valueOf(serial));
++        out.put("key",Integer.valueOf(key));
++        out.put("storedPriority",Integer.valueOf(storedPriority));
+@@ -2120 +2081,53 @@
+-        throw new IllegalStateException("SELECTION_CONSUMER_NO_WIRE");
++        if (!sealed) throw new IllegalStateException("Seal observer before result access");
++        if (poisoned) throw new IllegalStateException("Observer request had an active rejection");
++        // headCopies is the sole H counter; tuple copies include both DTOs in V2.
++        if (inCallback || dispatches<0 || dispatches>spec.maxCallbacks ||
++                accepted!=dispatches || found<0 || failures<0 ||
++                found+failures!=dispatches || failures>1 || headCopies<0 || headCopies>1 ||
++                copiedSlots!=33L*dispatches+10L*headCopies ||
++                copyChunks!=dispatches+headCopies || headReleases!=headCopies ||
++                releases!=dispatches || selections!=dispatches || inspections!=copiedSlots ||
++                checks<dispatches || checks>94L*dispatches+12L*headCopies ||
++                unitsCharged!=69L*dispatches+checks+21L*headCopies ||
++                unitsMeasured!=unitsCharged || groupSamples!=dispatches ||
++                (failures==0 && selected!=null) || (failures==1 && selected==null) ||
++                (headCopies==1)!=(selectedHead!=null) ||
++                (selectedHead!=null)!=(selected!=null &&
++                    "BRANCH_SEARCH_LIMIT".equals(selected.terminalReason)))
++            throw new IllegalStateException("Observer counters or selection are incomplete");
++        if ((failures==1 && selectedCallbackOrdinal!=dispatches) ||
++                (failures==0 && selectedCallbackOrdinal!=0))
++            throw new IllegalStateException("Selected failure is not the final callback");
++
++        java.util.Map<String,Object> out=new java.util.LinkedHashMap<String,Object>();
++        out.put("schema","tsj-cohort-terminal-observation-v2");
++        out.put("mode","OBSERVE");
++        out.put("state",failures==0?"NO_FAILURE":"FIRST_NON_FOUND");
++        out.put("callbackCount",Integer.valueOf((int)dispatches));
++        out.put("foundCallbackCount",Integer.valueOf((int)found));
++        out.put("nonFoundCallbackCount",Integer.valueOf((int)failures));
++        out.put("firstNetOrdinal",accepted==0?null:Integer.valueOf(firstOrdinal));
++        out.put("lastNetOrdinal",accepted==0?null:Integer.valueOf(lastOrdinal));
++        out.put("lastCallbackTotalExpanded",accepted==0?null:Integer.valueOf(lastTotal));
++        out.put("selectedCallbackOrdinal",failures==0?null:Integer.valueOf(selectedCallbackOrdinal));
++        out.put("transientTupleCopies",Integer.valueOf((int)copyChunks));
++        out.put("transientFieldCopies",Integer.valueOf((int)copiedSlots));
++        out.put("validationCount",Integer.valueOf((int)checks));
++        out.put("observerUnits",Integer.valueOf((int)unitsCharged));
++        out.put("copiedEntries",Integer.valueOf((int)copiedSlots));
++        out.put("copyChunks",Integer.valueOf((int)copyChunks));
++        java.util.Map<String,Object> snapshot=null;
++        if (selected!=null) {
++            snapshot=new java.util.LinkedHashMap<String,Object>();
++            selected.writeResult(snapshot,"");
++            snapshot=java.util.Collections.unmodifiableMap(snapshot);
++        }
++        out.put("selectedSnapshot",snapshot);
++        java.util.Map<String,Object> head=null;
++        if (selectedHead!=null) {
++            head=new java.util.LinkedHashMap<String,Object>();
++            selectedHead.writeResult(head);
++            head=java.util.Collections.unmodifiableMap(head);
++        }
++        out.put("selectedHead",head);
++        return java.util.Collections.unmodifiableMap(out);
+@@ -3653 +3666 @@
+-            r5Require("tsj-cohort-terminal-canary-v1".equals(value),"R9_CANARY_SCHEMA");
++            r5Require("tsj-selected-observation-wire-canary-v2".equals(value),"R9_CANARY_SCHEMA");
+@@ -3657 +3670 @@
+-            r5Require("OWNER_CANARIES_RECORDED_ONLY".equals(value),"R9_CANARY_STATUS");
++            r5Require("GENERIC_OBSERVATIONS_RECORDED_ONLY".equals(value),"R9_CANARY_STATUS");
+@@ -4216,36 +4229,5 @@
+-    Parent parent=new Parent();
+-    SetupMeter meter=new SetupMeter(parent,parent.meter(started));
+-    Map<String,Object> complete=null,blocked=null,generic=null,direct=null,source=null,body=null;
+-    R9CanaryPublication publication=null;
+-    try {
+-        String completeId=uuidApart(meter,args.runId);
+-        String blockedId=uuidApart(meter,args.runId,completeId);
+-        complete=r9CanaryArmDto(args,meter,R9CanaryProfile.FAILED_FIRST_OPEN,completeId,started);
+-        blocked=r9CanaryArmDto(args,meter,R9CanaryProfile.FAILED_FIRST_BLOCKED,blockedId,started);
+-        generic=runR9GenericCallbackThrow(meter,started);
+-        direct=runR9DirectOwnerAbortReuse(meter,started);
+-        meter.copy(2);
+-        source=new java.util.LinkedHashMap<String,Object>();
+-        source.put("sourceSha256","4ed1c8561adf1619a8b7ffbd21e23fdf2544dcaafe541af4e5d2b2b1e95cabe4");
+-        source.put("localAliasRelease","SOURCE_ONLY");
+-        meter.copy(11);
+-        body=new java.util.LinkedHashMap<String,Object>();
+-        body.put("schema","tsj-cohort-terminal-canary-v1");
+-        body.put("status","OWNER_CANARIES_RECORDED_ONLY");
+-        body.put("runId",args.runId); body.put("sourceManifestSha256",args.manifestSha);
+-        body.put("wireContractSha256",args.wireSha);
+-        body.put("complete",complete); body.put("blocked",blocked);
+-        body.put("nonBranchQuality",null); // explicitly unqualified, never a fabricated case
+-        body.put("genericCallbackThrow",generic); body.put("directOwnerAbortReuse",direct);
+-        body.put("sourceReview",source);
+-        complete=null;blocked=null;generic=null;direct=null;source=null;
+-        publication=prepareR9CanaryPublication(body,meter,started);
+-        publishR9CanaryStdout(body,meter,started,publication);
+-    } finally {
+-        body=null;publication=null;complete=null;blocked=null;generic=null;direct=null;source=null;
+-        meter=null;parent=null;
+-    }
+-}
+-
+-}
+-
++    throw new IllegalStateException("SELECTED_WIRE_CANARY_ONLY");
++}
++
++}
++

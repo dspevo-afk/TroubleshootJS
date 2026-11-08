@@ -1,4 +1,91 @@
-# Current checkpoint: atomic selected-head observer/Meter prerequisite published; strict wire next
+# Current checkpoint: generic selected-observation V2 locally accepted; publication pending
+
+UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
+tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
+base HEADdd2b18f426a17f1616cb711542f1b0704503db15. Before R only report M/staged0.
+Normal origin dspevo-afk/TroubleshootJS target codex/q100-physical-feasibility,
+no local upstream. Verify actual candidate/HEAD before continuation. Main5f05b005
+preserves9tracked/6untracked/staged0; E d9747229 report M; Desktop e0c36885
+preserves7tracked/73untracked/staged0. Main/E mirror report only. AGENTS
+a3dec836f3ceb136cede52b5674f281b2459696c69aa74041fee7213f93fd95d unchanged.
+Q implementation710b1a12/receiptdd2b18f4/Gmail1a1bb09d4dcd0939 SENT_ONCE;
+do not duplicate. R has NO publication/email yet.
+
+R owned OS-temp/tsj-q100-selected-head-wire-096f9160b79240859a393749151619f2.
+Operative PLAN_R1.md8df4b6fadf69fd0038c1c50fc9a3f2cb2e03ff0aee4b5ade44c4fa220cb40848;
+WIRE_V2.md bebf6775a66a8702862d421fd9fd180364b8c0fcb393b8e9f34b1369e052dc80.
+Public code tests/qualification/rb100-layout/native-selected-observation-wire-v2-r1;
+packet docs/task-evidence/Q100/native-selected-observation-wire-v2-r1. Frozen plan
+and clarification review copies strip terminal empty lines only; raw wire pin
+and all6tested code bytes preserved. Earlier drafts/failures private and intact.
+
+LOCAL PASS: final generator9898a0e07f121e73ccd7bd69f478bf9c98b4b60d07fbb955e1c254f3e6cae4c6;
+driver0ca7ced84345b31ae5ad505550d02fa4a6abe7b420f0cd3327762c9235cacf10;
+reader685e18d44f322a61d36f1aafa430cb562a5a7f536e2aa9c2640be929881d646b;
+derivedStudy88986781508aa34783d11e651082122f4bf8e0710a2263b39cc9b597fce9a8cf.
+Production ownerc382 unchanged, native owner7bf4ab57 and Q parentd6485b0b pinned.
+Actual JDK8/source7/target7/empty-sourcepath3source compile1332.803ms operation/
+1792.0814ms wrapper,177classes595638B:126Study/46owner/5driver. All177explicit
+fresh-namespace class refs resolve fresh; owner46/228706B byte-equal P. Denied
+old assembler removes classes; no old145-name superset or full1092source claim.
+Inherited4288classes19644833B and tools rehashed. Final path-preflight-only
+generator fix regenerates exact Java/proof bytes; unchanged compiled sources,
+classes/tools/receipts audited to reuse the actual compile. Final native/reader
+fresh:457.7872/707.4877ms native operation/wrapper,370.5935/616.7883ms reader,
+6cases/1head/9579B. Final manifestf422a3fcb77f6c7e9833b4792176698fdaac969a4880a961d31236f99570146c;
+packet897db05949756ba10e376494de15bd869fd838355aa67ce2ebc6d38a0e3d801f.
+Root authenticated source/class/tool/process closure and independent semantics
+before checked exclusive accepted write/readback. Pure reader is not host proof.
+
+Generator25declared/22PASS/3OS-symlinkSKIP; reader15/14PASS/1OS-symlinkSKIP.
+All14final host negatives +5real junction controls PASS_EXPECTED_REJECTION,
+child2/wrapper1 (Java denialchild1). Five links revalidated then literal native
+nonrecursive unlinks shell0, lstat absent/target files unchanged/output empty.
+Fresh4source retained test compile: materializer13assertions/2cases/0Sessions,
+terminal217421/branch30/relaxed2201 assertions PASS. Test Session total unmeasured.
+Two native producer invocations,3actual injected driver Sessions each=6driver
+begins; separate existing generic helpers not aggregated. No authored run/arm/
+control/retry. Existing D original+exactly2arms stays the only authored comparison.
+All returned process/root/log cleanup proven; isolated cleanup time unmeasured.
+
+PROOFS: final928ecf474c50e06a3a473e14be92e5670a233197de527958840e89be43a91d7d;
+packagingab5dd0499d6cc7857d3456f1bee78a12ab3f773daf7434a4f5e25e875fb28a45.
+Public actual regeneration reproduces derived/proof exact. Root source/binary/
+receipt review plus two bounded source reviewers; net-prefix/+1abort-charge
+blockers fixed before compilation. Final source review no blocker; no agent
+runtime claim. Separate guard tests real unsealed/active-null-poison paths.
+
+FAIL preserved: initial Python alias executable pin read and inherited PS5
+Get-FileHash module-path failure before test launch (scoped child module path
+fixed); first24unit run20PASS/3SKIP/1FAIL on CRLF error-line oracle
+(now exact OS line ending); initial dot-path control expected reject but child0
+wrote only task scratch (now all4raw path spellings checked before load/write).
+Host initially expected caseCount instead of documented cases after readerPASS,
+then expected wrong CANONICAL/LINE error for framing control; raw receipts reused
+only after exact unchanged input audit, no child rerun/no artifact before checks.
+Earlier FAILs remain FAIL; no budget/oracle weakened.
+
+Cause/boundary:18ordered observation keys, atomic33terminal+optional10head,
+copied fields33D+10H/chunksD+H/units69D+V+21H; materializer separately branch79/4,
+ordinary failure69/3,FOUND/QUALITY36/2,NULL18/1. Existing canonical publisher
+retains fee3*ceil(bytes/4096); no new metrics sidechannel. Selected/popped head
+is not frontier minimum/path witness. Old authored/R9 entry modes deny before
+Parent/input/Session. All90s/640groups/5s/32768units/copy1048576/chunk4096,
+compile/suite60s/wrapper480s/reader180s/cleanup120s/local100000/global1m intact.
+Full result/marker/R7/source-bound authored host NOT RUN/NOT QUALIFIED; next scope.
+Production GWT/visible Player/electrical/population NOT APPLICABLE/not renewed.
+Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; protected bodies unread here,
+historical unread UNCERTIFIED. Playable100=0/betaHELD.
+
+NEXT: root final staged diff/byte/privacy checks, normal commit/push/exact remote,
+one completion Gmail after verified publication; then freeze full result/marker/
+R7/source-bound host integration before any separate authored experiment. No new
+owned persistent process/server/browser/junction. R scratch/build/evidence retained.
+Old uncertain browser14116/start639294472690745890/port58320, preview34180/
+start639294472514546595/port58264+14uncertainchildren and D timeout logs untouched;
+old unlink remains UNCERTIFIED. Preserve all unrelated worktree/evidence data.
+
+# Historical checkpoint: atomic selected-head observer/Meter prerequisite published; strict wire next
 
 UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,

@@ -1,0 +1,3 @@
+*.json -text
+*.diff -text
+WIRE_V2.md -text
