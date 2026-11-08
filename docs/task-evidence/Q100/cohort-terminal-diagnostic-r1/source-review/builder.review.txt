@@ -1,0 +1,1574 @@
+# SOURCE REVIEW ONLY: NOT_BUILD_SOURCE_NOT_REPLAY
+# role=builder originalSha256=271db07f1b1dbd0a30e8016024b4fe87f89b3050447dd4bab64ff8a135751321 originalBytes=77246
+# Absolute Windows path text/byte literals are represented by numbered tokens.
+# Review normalization removes terminal empty lines only.
+import sys
+
+if not (sys.flags.isolated and sys.dont_write_bytecode):
+    sys.stderr.write("COHORT_TERMINAL_BUILD_FAIL PYTHON_ISOLATION\n")
+    raise SystemExit(2)
+
+import hashlib
+import json
+import os
+import re
+import stat
+import types
+from pathlib import Path
+
+
+D_ROOT = Path("<PATH_0002>")
+N_ROOT = Path("<PATH_0003>")
+E_ROOT = Path("<PATH_0004>")
+F_ROOT = Path("<PATH_0005>")
+T_ROOT = Path("<PATH_0006>")
+U_ROOT = Path("<PATH_0007>")
+H_ROOT = Path("<PATH_0008>")
+BASE_OVERLAY = Path("<PATH_0009>")
+
+TASK_NAME = D_ROOT.name
+STAGE_NAME = "j8-cohort-terminal-r4"
+COMPILE_CALL_NAME = "compile-call-r4"
+DESCRIPTOR_PATH = D_ROOT / "prior-input-r4" / "descriptor.json"
+STAGE_PATH = D_ROOT / STAGE_NAME
+N_RUN_MANIFEST = N_ROOT / "j8-failure-cohort-r3" / "run-manifest.json"
+N_SOURCE_MANIFEST = N_ROOT / "j8-failure-cohort-r3" / "source-manifest.json"
+N_CLASS_INVENTORY = N_ROOT / "j8-failure-cohort-r3" / "class-inventory.json"
+N_RESULT = N_ROOT / "native-data-r3" / "result.json"
+N_OPERATION1 = N_ROOT / "native-data-r3" / "op-1.jsonl"
+D_SOURCE = D_ROOT / "source"
+D_STUDY_SOURCE = D_SOURCE / "CohortTerminalTelemetryStudy.java"
+D_WIRE_SOURCE = D_SOURCE / "WIRE_R2.md"
+F_OWNER_SOURCE = F_ROOT / "src" / "com" / "lushprojects" / "circuitjs1" / "client" / "PcbLayerRoutingPrototype.java"
+H_HARNESS = H_ROOT / "Invoke-RootCall-R1.ps1"
+PYTHON_TOOL = Path("<PATH_0010>")
+PS5_TOOL = Path("<PATH_0011>")
+E_VERIFIER = E_ROOT / "scripts" / "VerifierIsolation.psm1"
+
+N_RUN_SHA256 = "1274185600f9da79412f133ba569fb727eba673c7dd672e53abd8dcc5fd28a56"
+N_SOURCE_SHA256 = "c04a7579d042bcb8d4b2a9b4799c3e03ec3ad34eda228856205b7deaa1ba6bc4"
+N_CLASS_SHA256 = "753705026b76b13a6218eadd22bd8942d9fc5cc5cde47dae6a26038613217691"
+N_BUILDER_SHA256 = "cb8ae8eee78ca90293925b90eec1d8b0ed545668a7dd3a29e4ab169f39542ae2"
+N_READER_SHA256 = "84c8dbf2805ab5607f1e79f1d1fa67cc1a2e4ec06d3a22fdd44771ce48d03b52"
+F_SOURCE_PARENT = "4618ae3519340bbdcecef331a8007f932d146318"
+F_OWNER_SHA256 = "c382f3bc08f8ad65b3501dad57c927dd5c1f9f1c04914ac79edb772f4b4f4e3e"
+BASE_OVERLAY_SHA256 = "70cacaacc97cb3f01a1ad6221753e4d80a05479ba6663cd5dc6474a00dc4fb21"
+D_DESCRIPTOR_DOC_SHA256 = "573b3e64083456597c7a3cba09a011843515785d2f1cc780eb574d75e2655ad4"
+D_PLAN_DOC_SHA256 = "47da41ea19c9bf7d47c893724d8b0f28902bca77f7faabe5e9406edc1d5cb2d2"
+D_WIRE_SHA256 = "31a81de89f91655fa64f348a0cdcc543ed13429eccf62a16286b6f4a5f55ca70"
+LITERAL_CODEC_SHA256 = "58ac9b029097d63e078adb70044e31aed29cd5e8d3bea1afee8b54df01a278e9"
+PAD_HELPER_SOURCE_SHA256 = "5c39150dad347bfa7dba5b902f149b4da61551dddc76def5176c2dbc84853c64"
+PAD_HELPER_SHA256 = "541543170f9d48428f41ae881c596384597543ec03453fc9f9ea8d14033275a0"
+PRIOR_OBSERVATION_SHA256 = "d2dd656567031515aa520528f2cb8343c9252558b3108bcc4eb840c887e9edcb"
+D_QUALIFICATION_SHA256 = {
+    "owner.json": "e7b6b298e318b9c38b6148b58e247444918e4508c277491a9b1621e36d9165b9",
+    "parent.json": "bbb69795cb76739d8add30c7d4c4b753707a9763c6069573d9897d794be25c28",
+    "process.json": "04580d43849a0beb6867ef69b4e67eb1fbb6454e03a065bd0b9163dd3e041acd",
+    "request.json": "cb4529a85507a59a70c0ff978488743e192cf8f0cb44982971b8c6a32bccdaa6",
+    "result.json": "efb8ad987d12ad771afe4114059878b15c4ae9682819a46a7b4e7b8847782fef",
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout.txt": "a08ca3ccfd3390d39ec37314a86f42f1a1b33c1b6d8104e417447e95f47d1d52",
+}
+RAW_READER_SUMMARY_KEYS = {
+    "schema", "status", "manifestSha256", "readerSha256", "resultSha256",
+    "operation1Sha256", "trialDisposition", "netCount", "controlDisposition",
+    "trialOutcomeDisposition", "controlTraversedCount", "trialTraversedCount",
+    "controlLayoutConnectivity", "trialLayoutConnectivity", "layoutQualification",
+    "routingTreatmentSelected", "productionAdopted", "feasibilityClaimed",
+    "playable100Accepted",
+}
+
+MAX_DESCRIPTOR_BYTES = 1024 * 1024
+MAX_GENERATED_BYTES = 1024 * 1024
+MAX_SOURCE_BYTES = 4 * 1024 * 1024
+MAX_WIRE_BYTES = 102152
+MAX_MANIFEST_BYTES = 16 * 1024 * 1024
+MAX_SMALL_JSON_BYTES = 256 * 1024
+MAX_CLASS_BYTES = 256 * 1024 * 1024
+MAX_CLASS_INVENTORY_BYTES = 4 * 1024 * 1024
+MAX_CLASS_COUNT = 10000
+MAX_COMPILER_LIST_BYTES = 2 * 1024 * 1024
+MAX_COPY_CHUNK_BYTES = 4096
+COMPILE_LIMIT_MS = 60000
+MAX_RUN_MANIFEST_BYTES = 16 * 1024 * 1024
+HEX = re.compile(r"[0-9a-f]{64}\Z")
+STAGE_RE = re.compile(re.escape(STAGE_NAME) + r"\Z")
+COMPILE_CALL_RE = re.compile(re.escape(COMPILE_CALL_NAME) + r"\Z")
+
+
+class BuildInputError(ValueError):
+    def __init__(self, code):
+        super().__init__(code)
+        self.code = code
+
+
+def _need(condition, code):
+    if not condition:
+        raise BuildInputError(code)
+
+
+def _sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def _is_reparse(info):
+    return stat.S_ISLNK(info.st_mode) or bool(
+        getattr(info, "st_file_attributes", 0) & 0x400)
+
+
+def _inside(path, root, code):
+    try:
+        path.relative_to(root)
+    except ValueError:
+        raise BuildInputError(code) from None
+
+
+def _bootstrap_read(path, expected_path, limit, expected_sha, code):
+    _need(str(path) == str(expected_path), code + "_EXPECTED")
+    try:
+        resolved = path.resolve(strict=True)
+        info = path.lstat()
+    except (OSError, RuntimeError, ValueError):
+        raise BuildInputError(code + "_PATH") from None
+    _need(path.is_absolute() and str(resolved) == str(path)
+          and stat.S_ISREG(info.st_mode) and not _is_reparse(info), code + "_IDENTITY")
+    for parent in (path, *path.parents):
+        try:
+            current = parent.lstat()
+        except OSError:
+            raise BuildInputError(code + "_COMPONENT") from None
+        _need(not _is_reparse(current), code + "_REPARSE")
+    try:
+        raw = path.read_bytes()
+    except OSError:
+        raise BuildInputError(code + "_READ") from None
+    _need(0 < len(raw) <= limit and _sha(raw) == expected_sha, code + "_HASH")
+    return raw
+
+
+def _load_n_builder():
+    path = N_ROOT / "build_inputs.py"
+    raw = _bootstrap_read(path, path, 2 * 1024 * 1024, N_BUILDER_SHA256,
+                          "N_BUILD_HELPER")
+    module = types.ModuleType("_tsj_authenticated_n_build_inputs")
+    module.__file__ = str(path)
+    try:
+        exec(compile(raw, str(path), "exec"), module.__dict__)
+    except Exception:
+        raise BuildInputError("N_BUILD_HELPER_LOAD") from None
+    _need(callable(getattr(module, "validate_run_manifest", None)),
+          "N_BUILD_HELPER_API")
+    return module
+
+
+def _load_prior_reader(n_builder):
+    cached = getattr(n_builder, "_r2_pinned_prior_reader", None)
+    if cached is not None:
+        return cached
+    path = n_builder._canonical(str(N_ROOT / "read_failure_cohort.py"),
+                                "N_READER_SOURCE_PATH")
+    raw = n_builder._read_file(path, 2 * 1024 * 1024, "N_READER_SOURCE")
+    _need(len(raw) == 92761 and _sha(raw) == N_READER_SHA256,
+          "N_READER_SOURCE_PIN")
+    module = types.ModuleType("_tsj_authenticated_n_failure_cohort_reader")
+    module.__file__ = str(path)
+    try:
+        exec(compile(raw, str(path), "exec"), module.__dict__)
+    except Exception:
+        raise BuildInputError("N_READER_SOURCE_LOAD") from None
+    _need(callable(getattr(module, "_validate_call", None))
+          and callable(getattr(module, "_validate_run", None))
+          and callable(getattr(module, "validate_manifest", None)),
+          "N_READER_SOURCE_API")
+    n_builder._r2_pinned_prior_reader = module
+    return module
+
+
+def _load_descriptor_helper(n_builder):
+    path = D_ROOT / "descriptor_inputs_r2.py"
+    path = n_builder._canonical(str(path), "D_DESCRIPTOR_HELPER")
+    raw = n_builder._read_file(path, MAX_SOURCE_BYTES, "D_DESCRIPTOR_HELPER")
+    module = types.ModuleType("_tsj_descriptor_inputs_r2")
+    module.__file__ = str(path)
+    try:
+        exec(compile(raw, str(path), "exec"), module.__dict__)
+    except Exception:
+        raise BuildInputError("D_DESCRIPTOR_HELPER_LOAD") from None
+    _need(callable(getattr(module, "derive_descriptor", None))
+          and callable(getattr(module, "generate_input_java", None)),
+          "D_DESCRIPTOR_HELPER_API")
+    return module, raw
+
+
+def _load_n_context(n_builder):
+    _preflight_evidence(n_builder)
+    try:
+        context = n_builder.validate_run_manifest(str(N_RUN_MANIFEST), N_RUN_SHA256)
+    except n_builder.BuildInputError as failure:
+        code = getattr(failure, "code", None)
+        if type(code) is str and re.fullmatch(r"[A-Z0-9_]{1,96}", code):
+            raise BuildInputError("N_" + code) from None
+        raise BuildInputError("N_RUN_MANIFEST_VALIDATE") from None
+    except (Exception, SystemExit) as failure:
+        kind = re.sub(r"[^A-Za-z0-9_]", "_", type(failure).__name__).upper()[:48]
+        raise BuildInputError("N_RUN_MANIFEST_INTERNAL_" + (kind or "ERROR")) from None
+    _need(type(context) is dict and context.get("sourceSha") == N_RUN_SHA256
+          and context.get("path") == N_RUN_MANIFEST, "N_CONTEXT_BINDING")
+    _need(type(context.get("manifest")) is dict
+          and context["manifest"].get("sourceParent") == "474a8354ceb2e50fa2adbb31e23cf73a0d9c86fd"
+          and context["manifest"].get("compilerSourceCount") == 1090,
+          "N_CONTEXT_CENSUS")
+    _need(type(context.get("sources")) is list and len(context["sources"]) == 1090
+          and type(context.get("sourcePaths")) is list
+          and len(context["sourcePaths"]) == 1090,
+          "N_CONTEXT_SOURCES")
+    inventory = context.get("classInventory")
+    _need(type(inventory) is dict and inventory.get("classCount") == 4139
+          and inventory.get("totalBytes") == 19289113,
+          "N_CONTEXT_CLASSES")
+    return context
+
+
+def _check_allowed(path, code):
+    allowed = (D_ROOT, N_ROOT, E_ROOT, F_ROOT, T_ROOT, U_ROOT)
+    if any(path == root or root in path.parents for root in allowed):
+        return
+    anchors = {
+        H_HARNESS, PYTHON_TOOL, PS5_TOOL, E_VERIFIER, BASE_OVERLAY,
+    }
+    _need(path in anchors, code)
+
+
+def _read_ref(n_builder, role, path, expected_bytes, expected_sha, limit, code):
+    canonical = n_builder._canonical(str(path), code + "_PATH")
+    _check_allowed(canonical, code + "_ALLOWLIST")
+    raw = n_builder._read_file(canonical, limit, code)
+    _need(len(raw) == expected_bytes and _sha(raw) == expected_sha, code + "_PIN")
+    return {"role": role, "path": str(canonical), "bytes": len(raw),
+            "sha256": _sha(raw)}, raw
+
+
+def _actual_ref(n_builder, role, path, limit, code):
+    canonical = n_builder._canonical(str(path), code + "_PATH")
+    _check_allowed(canonical, code + "_ALLOWLIST")
+    raw = n_builder._read_file(canonical, limit, code)
+    return {"role": role, "path": str(canonical), "bytes": len(raw),
+            "sha256": _sha(raw)}, raw
+
+
+def _directory(n_builder, path, expected_names, code):
+    canonical = n_builder._canonical(str(path), code + "_PATH")
+    _check_allowed(canonical, code + "_ALLOWLIST")
+    n_builder._lstat_directory(canonical, code)
+    names = n_builder._directory_names(canonical, code)
+    _need(len(names) == len(expected_names) and set(names) == set(expected_names),
+          code + "_CLOSURE")
+    return canonical
+
+
+def _pinned_rows(n_builder):
+    nroot = N_ROOT
+    _directory(n_builder, nroot / "native-observe-r3", [
+        "owner.json", "parent.json", "process.json", "request.json",
+        "result.json", "stderr.txt", "stdout.txt",
+    ], "NATIVE_OBSERVE_DIRECTORY")
+    _directory(n_builder, nroot / "native-data-r3", [
+        "op-1.jsonl", "result.json",
+    ], "NATIVE_DATA_DIRECTORY")
+    rows = []
+    specs = [
+        ("call-owner", nroot / "native-observe-r3" / "owner.json", 547,
+         "1559355863aae9b680eeab3334c35953b4d239f42ab774b83173053b25808e79"),
+        ("call-parent", nroot / "native-observe-r3" / "parent.json", 1811,
+         "8ac7a7ffc92dfb316be50a9da490d5ad51c494dd986fb18b7e821ca27e32c857"),
+        ("call-process", nroot / "native-observe-r3" / "process.json", 2049,
+         "f07359e62cb1fb0b0dd51b4334b9cdc79d9a51db8f358e672ac2c5e86ee58aef"),
+        ("call-request", nroot / "native-observe-r3" / "request.json", 885,
+         "29a725862bd01151b67ef3d839de066b3e05d845f1744acf2153a51754ca244a"),
+        ("call-result", nroot / "native-observe-r3" / "result.json", 178,
+         "c2dd1f6267219e8055cd043f803c1c836fcad7e51849de8862693fba5e089a7c"),
+        ("call-stderr", nroot / "native-observe-r3" / "stderr.txt", 0,
+         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"),
+        ("call-stdout", nroot / "native-observe-r3" / "stdout.txt", 328,
+         "42dacdb5c346b4595a2d4d07436723f4be8206ff778d31a233906318d484d0a5"),
+        ("data-op-1", N_OPERATION1, 377138,
+         "cc2463e37c9636f1407434fd2f0d69fda660699e4899059273d1b72a71e02e58"),
+        ("data-result", N_RESULT, 46323,
+         "cd44ad1c0db81a8f05d8620f49b78a9e06c2274e6739066b438607f532cf1431"),
+    ]
+    raw_by_role = {}
+    for role, path, byte_count, digest in specs:
+        limit = 8 * 1024 * 1024 if role in ("data-op-1", "data-result") else 256 * 1024
+        ref, raw = _read_ref(n_builder, role, path, byte_count, digest, limit,
+                             "PRIOR_" + role.upper().replace("-", "_"))
+        rows.append(ref)
+        raw_by_role[role] = raw
+    return rows, raw_by_role
+
+
+def _qualification_refs(n_builder):
+    directory = D_ROOT / "prior-input-qualify-r2"
+    _directory(n_builder, directory, list(D_QUALIFICATION_SHA256), "QUALIFICATION_DIRECTORY")
+    rows = []
+    raw_by_name = {}
+    for name in ("owner.json", "parent.json", "process.json", "request.json",
+                 "result.json", "stderr.txt", "stdout.txt"):
+        path = directory / name
+        raw = n_builder._read_file(n_builder._canonical(str(path), "QUALIFICATION_PATH"),
+                                   512 * 1024, "QUALIFICATION_" + name.upper().replace(".", "_"))
+        digest = _sha(raw)
+        _need(digest == D_QUALIFICATION_SHA256[name], "QUALIFICATION_PIN_" + name.upper())
+        role = "qualification-" + name.replace(".json", "").replace(".txt", "")
+        rows.append({"role": role, "path": str(path), "bytes": len(raw),
+                     "sha256": digest})
+        raw_by_name[name] = raw
+    return rows, raw_by_name
+
+
+def _provider_refs(n_builder):
+    specs = [
+        ("prior-reader-source", N_ROOT / "read_failure_cohort.py", 92761,
+         N_READER_SHA256, 2 * 1024 * 1024),
+        ("prior-builder-source", N_ROOT / "build_inputs.py", 43382,
+         N_BUILDER_SHA256, 2 * 1024 * 1024),
+        ("D-qualification-launcher", D_ROOT / "Launch-Prior-Qualification-R2.ps1", 3059,
+         "bd6c739fa58168ec045c5941c8bcf402ea29bdc93d9aae4dbb851b9a06495684",
+         128 * 1024),
+        ("H-root-call-harness", H_HARNESS, 2941,
+         "28aab617e686d2a4eec074a46b2e2861f6fa7c008544b33f7b070f0c6d77ea1d",
+         128 * 1024),
+        ("E-imported-verifier-module", E_VERIFIER, 1040144,
+         "fb07ad540e22a225a11b8a12e9dc8e5a20d88f58f89cf32a5fd347613530954c",
+         2 * 1024 * 1024),
+    ]
+    rows = []
+    for role, path, size, digest, limit in specs:
+        ref, _raw = _read_ref(n_builder, role, path, size, digest, limit,
+                              "PROVIDER_" + role.upper().replace("-", "_"))
+        rows.append(ref)
+    return rows
+
+
+def _tool_refs(n_builder):
+    specs = [
+        ("selected-Python-3.13", PYTHON_TOOL, 171744,
+         "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec"),
+        ("selected-PS5", PS5_TOOL, 495616,
+         "60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f"),
+    ]
+    rows = []
+    for role, path, size, digest in specs:
+        ref, _raw = _read_ref(n_builder, role, path, size, digest,
+                              2 * 1024 * 1024, "TOOL_" + role.upper())
+        rows.append(ref)
+    return rows
+
+
+def _observation_ref(n_builder):
+    return _read_ref(
+        n_builder, "qualification-projection",
+        D_ROOT / "PRIOR_INPUT_QUALIFICATION_R2.json", 3916,
+        PRIOR_OBSERVATION_SHA256, 128 * 1024, "OBSERVATION_PROJECTION",
+    )
+
+
+def _closure_refs(n_builder, n_context):
+    manifest = n_context["manifest"]
+    inventory = n_context["classInventory"]
+    _need(manifest.get("sourceParent") == "474a8354ceb2e50fa2adbb31e23cf73a0d9c86fd"
+          and n_context.get("sourceSha") == N_RUN_SHA256
+          and manifest.get("compilerSourceCount") == 1090
+          and inventory.get("classCount") == 4139
+          and inventory.get("totalBytes") == 19289113,
+          "N_CLOSURE_FIXED")
+    specs = [
+        ("prior-run-manifest", N_RUN_MANIFEST, 274475, N_RUN_SHA256),
+        ("prior-source-manifest", N_SOURCE_MANIFEST, 273546, N_SOURCE_SHA256),
+        ("prior-class-inventory", N_CLASS_INVENTORY, 717708, N_CLASS_SHA256),
+    ]
+    refs = []
+    for role, path, size, digest in specs:
+        ref, _raw = _read_ref(n_builder, role, path, size, digest,
+                              4 * 1024 * 1024, "N_CLOSURE_" + role.upper())
+        refs.append(ref)
+    return {
+        "sourceParent": manifest["sourceParent"],
+        "runManifestRef": refs[0],
+        "sourceManifestRef": refs[1],
+        "classInventoryRef": refs[2],
+        "sourceCount": len(n_context["sources"]),
+        "classCount": inventory["classCount"],
+        "classBytes": inventory["totalBytes"],
+    }
+
+
+def _native_copy_allowance_source(n_builder):
+    specs = {
+        "sourceProofRef": (
+            "copy-allowance-proof", T_ROOT / "SOURCE_PROOF_R1.json", 17280,
+            "79a84b0383ad45dbc1b748eee7111e812db6ab1b5ca359958114578c297b3ced",
+        ),
+        "immutableParentRef": (
+            "immutable-native-parent", N_ROOT / "source" / "FailureCohortRoutingStudy.java",
+            176818, "dc53245d52c7187868b40456b3952cdb2ecf20bc920b2354ff400f60ff68410d",
+        ),
+        "derivedSourceRef": (
+            "derived-native-parent", T_ROOT / "source" / "FailureCohortRoutingStudy.java",
+            177428, "c33f6f696fb52fedce583f19f47f3ff44ca01bca3c9b97410291d5284642d88b",
+        ),
+        "generatorRef": (
+            "copy-allowance-generator", T_ROOT / "generate_parent_overlay.py", 6564,
+            "843afb6b7ffc0c0cde92814887893f3fbc43698df6eb12cef2e7aad18db2e98d",
+        ),
+        "transformDiffRef": (
+            "copy-allowance-transform-diff",
+            T_ROOT / "source" / "FailureCohortRoutingStudy-copy-allowance.diff", 4287,
+            "19b6ebf033c8539a71b1d999db375d6166100dd008c3db17d9fe144440a2a4f9",
+        ),
+    }
+    result = {
+        "schema": "tsj-native-copy-allowance-source-v1",
+        "status": "PASS_BOUNDED_PREREQUISITE_ONLY",
+        "authenticatedNRowOrdinal": 1088,
+    }
+    for field, (role, path, byte_count, digest) in specs.items():
+        ref, _raw = _read_ref(n_builder, role, path, byte_count, digest,
+                              4 * 1024 * 1024, "NATIVE_COPY_" + field.upper())
+        result[field] = ref
+    return result
+
+
+def _native_shared_budget_source(n_builder):
+    specs = {
+        "sourceProofRef": (
+            "shared-budget-source-proof", U_ROOT / "SOURCE_PROOF_FINAL_R2.json", 53293,
+            "dca062a8e14f14667ab13bd7317d13e16768dde330e8ddb92b675a89c53ebcb6",
+        ),
+        "copyAllowanceProofRef": (
+            "copy-allowance-source-proof", T_ROOT / "SOURCE_PROOF_R1.json", 17280,
+            "79a84b0383ad45dbc1b748eee7111e812db6ab1b5ca359958114578c297b3ced",
+        ),
+        "copyAllowanceParentRef": (
+            "copy-allowance-derived-parent",
+            T_ROOT / "source" / "FailureCohortRoutingStudy.java", 177428,
+            "c33f6f696fb52fedce583f19f47f3ff44ca01bca3c9b97410291d5284642d88b",
+        ),
+        "captureParentRef": (
+            "immutable-capture-parent", N_ROOT / "source" / "FailureCohortRoutingStudy.java",
+            176818, "dc53245d52c7187868b40456b3952cdb2ecf20bc920b2354ff400f60ff68410d",
+        ),
+        "derivedCaptureRef": (
+            "derived-capture-source",
+            U_ROOT / "source-r3" / "FailureCohortRoutingStudy.java", 182535,
+            "4ed1c8561adf1619a8b7ffbd21e23fdf2544dcaafe541af4e5d2b2b1e95cabe4",
+        ),
+        "captureDiffRef": (
+            "capture-source-diff",
+            U_ROOT / "source-r2" / "FailureCohortRoutingStudy-shared-budget.diff", 10286,
+            "fcb464f3662618a61d37ee2e295b7cd8d224dcf24011a049f619a915dda77c11",
+        ),
+        "branchOrderParentRef": (
+            "immutable-branch-order-parent",
+            E_ROOT / "tests" / "qualification" / "rb100-layout" / "java" /
+            "ActualGeneratorBranchOrderStudy.java", 288493,
+            "264c89e58e0e29b3375520459d627d945ec28cd747065647181ce118d75dd9f6",
+        ),
+        "derivedBranchOrderRef": (
+            "derived-branch-order-source",
+            U_ROOT / "source-r3" / "ActualGeneratorBranchOrderStudy.java", 290009,
+            "01b7445716e98774f327f78957a870a027242d24acf70b99373a1df1a335f53b",
+        ),
+        "branchOrderDiffRef": (
+            "branch-order-source-diff",
+            U_ROOT / "source-r2" / "ActualGeneratorBranchOrderStudy-shared-budget.diff", 4952,
+            "38865b895a39a5d87e3caf46f60ec8745ad5c0ac9278603623dca72fafa89376",
+        ),
+        "generatorRef": (
+            "shared-budget-generator", U_ROOT / "generate_shared_budget_overlay.py", 22727,
+            "20496e4e7e324a3e0f4f8e0749b3d228115dfd3f4bc0a5706849551e2e0e2f85",
+        ),
+    }
+    result = {
+        "schema": "tsj-native-shared-capture-budget-source-v1",
+        "status": "PASS_BOUNDED_NATIVE_PREREQUISITE_ONLY",
+        "baseOverlayRowOrdinal": 11,
+        "branchOrderOwnerRowOrdinal": 1081,
+        "captureOwnerRowOrdinal": 1088,
+        "currentFSourceParent": F_SOURCE_PARENT,
+    }
+    for field, (role, path, byte_count, digest) in specs.items():
+        ref, _raw = _read_ref(n_builder, role, path, byte_count, digest,
+                              4 * 1024 * 1024, "NATIVE_SHARED_" + field.upper())
+        result[field] = ref
+    return result
+
+
+def _preflight_evidence(n_builder):
+    # Fail on malformed or mistyped pins before the roughly 29 second N closure
+    # validation. This is read-only and does not claim semantic qualification.
+    for name, value in globals().items():
+        if "SHA256" not in name:
+            continue
+        if type(value) is str:
+            _need(HEX.fullmatch(value) is not None, "PIN_FORMAT_" + name)
+        elif type(value) is dict:
+            for key, digest in value.items():
+                _need(type(key) is str and HEX.fullmatch(digest) is not None,
+                      "PIN_FORMAT_" + name)
+
+    rows, raw_by_role = _pinned_rows(n_builder)
+    evidence, evidence_raw = _qualification_refs(n_builder)
+    _observation, observation_raw = _observation_ref(n_builder)
+    providers = _provider_refs(n_builder)
+    tools = _tool_refs(n_builder)
+    contracts = _contract_refs(n_builder)
+    _need(len(rows) == 9 and len(evidence) == 7 and len(providers) == 5
+          and len(tools) == 2 and len(contracts) == 3,
+          "PREFLIGHT_REFERENCE_COUNTS")
+    projection = n_builder._json_load(observation_raw, 128 * 1024,
+                                      "OBSERVATION_PROJECTION")
+    summary = n_builder._json_load(evidence_raw["stdout.txt"], 1024,
+                                   "QUALIFICATION_STDOUT")
+    _need(type(projection) is dict and type(summary) is dict
+          and projection.get("status") == "PASS_PRIOR_INPUT_ONLY"
+          and projection.get("projectionIsFrozenDescriptor") is False
+          and projection.get("qualificationSummary") == summary,
+          "PREFLIGHT_OBSERVATION_BINDING")
+    q_hashes = projection.get("qualificationReceiptHashes")
+    _need(type(q_hashes) is dict
+          and q_hashes == D_QUALIFICATION_SHA256,
+          "PREFLIGHT_QUALIFICATION_RECEIPTS")
+    expected_artifacts = [
+        ("native-observe-r3/owner.json", 547,
+         "1559355863aae9b680eeab3334c35953b4d239f42ab774b83173053b25808e79"),
+        ("native-observe-r3/parent.json", 1811,
+         "8ac7a7ffc92dfb316be50a9da490d5ad51c494dd986fb18b7e821ca27e32c857"),
+        ("native-observe-r3/process.json", 2049,
+         "f07359e62cb1fb0b0dd51b4334b9cdc79d9a51db8f358e672ac2c5e86ee58aef"),
+        ("native-observe-r3/request.json", 885,
+         "29a725862bd01151b67ef3d839de066b3e05d845f1744acf2153a51754ca244a"),
+        ("native-observe-r3/result.json", 178,
+         "c2dd1f6267219e8055cd043f803c1c836fcad7e51849de8862693fba5e089a7c"),
+        ("native-observe-r3/stderr.txt", 0,
+         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"),
+        ("native-observe-r3/stdout.txt", 328,
+         "42dacdb5c346b4595a2d4d07436723f4be8206ff778d31a233906318d484d0a5"),
+        ("native-data-r3/op-1.jsonl", 377138,
+         "cc2463e37c9636f1407434fd2f0d69fda660699e4899059273d1b72a71e02e58"),
+        ("native-data-r3/result.json", 46323,
+         "cd44ad1c0db81a8f05d8620f49b78a9e06c2274e6739066b438607f532cf1431"),
+    ]
+    actual_artifacts = []
+    for row in rows:
+        rel = Path(row["path"]).relative_to(N_ROOT).as_posix()
+        actual_artifacts.append((rel, row["bytes"], row["sha256"]))
+    _need(actual_artifacts == expected_artifacts, "PREFLIGHT_ARTIFACT_PINS")
+    projected_artifacts = projection.get("approvedPriorArtifactRows")
+    _need(type(projected_artifacts) is list and len(projected_artifacts) == 9,
+          "PREFLIGHT_PROJECTION_ARTIFACTS")
+    projected_tuples = [
+        (row.get("path"), row.get("bytes"), row.get("sha256"))
+        for row in projected_artifacts if type(row) is dict
+    ]
+    _need(projected_tuples == expected_artifacts, "PREFLIGHT_PROJECTION_ARTIFACT_BINDING")
+    result = n_builder._json_load(raw_by_role["data-result"], 8 * 1024 * 1024,
+                                  "PRIOR_RESULT")
+    pad = _pad_identity(n_builder, result)
+    _need(projection.get("projectedCohortNetIds")
+          == result.get("trialDisposition", {}).get("cohortNetIds")
+          and projection.get("capturedVectorCount")
+          == len(result.get("capturedOrder", {}).get("netIds", []))
+          and projection.get("padLandCount") == pad["padCount"] == 246,
+          "PREFLIGHT_RAW_PROJECTION_BINDING")
+    descriptor_module, generator_raw = _load_descriptor_helper(n_builder)
+    _helper_refs(n_builder, generator_raw)
+    prior_reader = _load_prior_reader(n_builder)
+    _need(len(generator_raw) > 0
+          and callable(getattr(descriptor_module, "project_generated_data", None))
+          and callable(getattr(descriptor_module, "generate_input_java", None))
+          and callable(getattr(prior_reader, "_validate_call", None))
+          and callable(getattr(prior_reader, "_validate_run", None)),
+          "PREFLIGHT_GENERATOR_API")
+
+
+def _parse_qualification(n_builder, n_context, raw_by_name):
+    reader = n_context.get("baseReader")
+    _need(reader is not None and callable(getattr(reader, "host_document", None)),
+          "N_READER_HOST_API")
+    def host(name):
+        try:
+            return reader.host_document(raw_by_name[name], 512 * 1024)
+        except Exception:
+            raise BuildInputError("QUALIFICATION_HOST_" + name.upper()) from None
+
+    owner = host("owner.json")
+    parent = host("parent.json")
+    process = host("process.json")
+    request = host("request.json")
+    wrapper_result = host("result.json")
+    _need(type(owner) is dict and type(parent) is dict and type(process) is dict
+          and type(request) is dict and type(wrapper_result) is dict,
+          "QUALIFICATION_RECEIPT_SHAPE")
+    _need(parent.get("schema") == "tsj-q100-reservation-provenance-parent-v1"
+          and process.get("ExitCode") == 0 and process.get("TerminationProven") is True
+          and parent.get("process") == process,
+          "QUALIFICATION_PROCESS_BINDING")
+    _need(owner.get("schema") == "tsj-p9-root-call-owner-v1"
+          and owner.get("script") == str(H_HARNESS)
+          and owner.get("request") == str(D_ROOT / "prior-input-qualify-r2" / "request.json")
+          and owner.get("executable") == str(PS5_TOOL),
+          "QUALIFICATION_OWNER_BINDING")
+    _need(request.get("FilePath") == process.get("FilePath")
+          and request.get("Arguments") == process.get("Arguments")
+          and request.get("LimitMs") == 180000,
+          "QUALIFICATION_REQUEST_BINDING")
+    _need(process.get("ExitCode") == wrapper_result.get("exitCode") == 0
+          and process.get("TerminationProven") is wrapper_result.get("terminationProven") is True
+          and process.get("Stderr") == ""
+          and len(raw_by_name["stderr.txt"]) == wrapper_result.get("stderrBytes") == 0
+          and len(raw_by_name["stdout.txt"]) == wrapper_result.get("stdoutBytes") == 812
+          and process.get("Stdout", "").encode("utf-8") == raw_by_name["stdout.txt"],
+          "QUALIFICATION_OUTPUT_BINDING")
+    expected_args = [
+        "-I", "-B", str(N_ROOT / "read_failure_cohort.py"),
+        "--manifest", str(N_RUN_MANIFEST), "--manifest-sha", N_RUN_SHA256,
+        "--parent", str(N_ROOT / "native-observe-r3" / "parent.json"),
+        "--data", str(N_ROOT / "native-data-r3"),
+    ]
+    _need(request.get("Arguments") == expected_args, "QUALIFICATION_ARGUMENTS")
+    _need(process.get("FilePath") == str(PYTHON_TOOL).replace("\\", "/"),
+          "QUALIFICATION_PYTHON")
+    for key in ("ProcessRoot", "StdoutLog", "StderrLog"):
+        value = process.get(key)
+        _need(type(value) is str and Path(value).is_absolute()
+              and not Path(value).exists(), "QUALIFICATION_CLEANUP_" + key.upper())
+    stdout_doc = n_builder._json_load(raw_by_name["stdout.txt"], 1024, "QUALIFICATION_STDOUT")
+    _need(type(stdout_doc) is dict and set(stdout_doc) == RAW_READER_SUMMARY_KEYS
+          and _sha(raw_by_name["stdout.txt"]) == D_QUALIFICATION_SHA256["stdout.txt"],
+          "QUALIFICATION_READER_OUTPUT")
+    _need(stdout_doc.get("schema") == "tsj-failure-cohort-reader-v1"
+          and stdout_doc.get("status") == "PASS_OBSERVED_FAILURE_COHORT_DIAGNOSIS_ONLY"
+          and stdout_doc.get("controlDisposition") == "NO_PATH"
+          and stdout_doc.get("trialDisposition") == "TRIAL_EXECUTED"
+          and stdout_doc.get("trialOutcomeDisposition") == "CAP_REJECTED"
+          and stdout_doc.get("controlLayoutConnectivity") is None
+          and stdout_doc.get("trialLayoutConnectivity") is None,
+          "QUALIFICATION_READER_SUMMARY")
+    _need(type(stdout_doc.get("layoutQualification")) is bool
+          and type(stdout_doc.get("routingTreatmentSelected")) is bool
+          and type(stdout_doc.get("productionAdopted")) is bool
+          and type(stdout_doc.get("feasibilityClaimed")) is bool
+          and type(stdout_doc.get("playable100Accepted")) is bool,
+          "QUALIFICATION_READER_CLAIMS")
+    reader_summary = {
+        "schema": stdout_doc["schema"],
+        "status": stdout_doc["status"],
+        "manifestSha256": stdout_doc["manifestSha256"],
+        "readerSha256": stdout_doc["readerSha256"],
+        "resultSha256": stdout_doc["resultSha256"],
+        "operation1Sha256": stdout_doc["operation1Sha256"],
+        "netCount": stdout_doc["netCount"],
+        "controlDisposition": stdout_doc["controlDisposition"],
+        "controlTraversed": stdout_doc["controlTraversedCount"],
+        "trialLabel": stdout_doc["trialDisposition"],
+        "trialTraversed": stdout_doc["trialTraversedCount"],
+        "trialOutcome": stdout_doc["trialOutcomeDisposition"],
+        "claims": {
+            "layoutQualification": stdout_doc["layoutQualification"],
+            "routingTreatmentSelected": stdout_doc["routingTreatmentSelected"],
+            "productionAdopted": stdout_doc["productionAdopted"],
+            "feasibilityClaimed": stdout_doc["feasibilityClaimed"],
+            "playable100Accepted": stdout_doc["playable100Accepted"],
+        },
+    }
+    elapsed_process = str(parent.get("elapsedMs"))
+    elapsed_wrapper = str(wrapper_result.get("totalElapsedMs"))
+    _need(elapsed_process == "112691.18650000001"
+          and elapsed_wrapper == "112943.8217", "QUALIFICATION_ELAPSED")
+    outcome = {
+        "exitCode": 0,
+        "terminationProven": True,
+        "processRootAndLogsAbsent": True,
+        "stderrBytes": 0,
+        "stdoutBytes": 812,
+        "processElapsedMs": elapsed_process,
+        "wrapperTotalElapsedMs": elapsed_wrapper,
+        "readerOutputSha256": _sha(raw_by_name["stdout.txt"]),
+    }
+    return reader_summary, outcome, stdout_doc
+
+
+def _pad_identity(n_builder, prior_result):
+    path = n_builder._canonical(str(D_ROOT / "pad_identity_r2.py"), "PAD_HELPER_PATH")
+    raw = n_builder._read_file(path, 128 * 1024, "PAD_HELPER")
+    _need(len(raw) == 2405 and _sha(raw) == PAD_HELPER_SOURCE_SHA256,
+          "PAD_HELPER_SOURCE_PIN")
+    module = types.ModuleType("_tsj_pad_identity_r2")
+    module.__file__ = str(path)
+    try:
+        exec(compile(raw, str(path), "exec"), module.__dict__)
+        value = module.pad_identity(prior_result["source"]["padLands"])
+    except Exception:
+        raise BuildInputError("PAD_IDENTITY_DERIVE") from None
+    _need(value.get("encoding") == "TSJ_PAD_LAND_ASCII_V1"
+          and value.get("padCount") == 246
+          and value.get("canonicalBytes") == 20651
+          and value.get("maximumChunkBytes") == 94
+          and value.get("sha256") == PAD_HELPER_SHA256,
+          "PAD_IDENTITY_PIN")
+    return value
+
+
+def _prior_inputs(n_builder, n_context, write_descriptor=None):
+    descriptor_module, generator_raw = _load_descriptor_helper(n_builder)
+    artifact_rows, artifact_raws = _pinned_rows(n_builder)
+    reader = _load_prior_reader(n_builder)
+    _need(callable(getattr(reader, "_validate_call", None)), "N_READER_CALL_API")
+    try:
+        native_call = reader._validate_call(
+            n_context,
+            str(N_ROOT / "native-observe-r3" / "parent.json"),
+            canary=False,
+            data_path=str(N_ROOT / "native-data-r3"),
+        )
+    except Exception as failure:
+        code = getattr(failure, "code", None)
+        if type(code) is str and re.fullmatch(r"[A-Z0-9_]{1,96}", code):
+            raise BuildInputError("N_NATIVE_CALL_" + code) from None
+        raise BuildInputError("N_NATIVE_CALL_VALIDATION") from None
+    _need(type(native_call) is tuple and len(native_call) == 5
+          and type(native_call[1]) is dict, "N_NATIVE_CALL_CONTEXT")
+    evidence_rows, evidence_raws = _qualification_refs(n_builder)
+    observation_ref, observation_raw = _observation_ref(n_builder)
+    provider_rows = _provider_refs(n_builder)
+    tool_rows = _tool_refs(n_builder)
+    closure = _closure_refs(n_builder, n_context)
+    native_copy_source = _native_copy_allowance_source(n_builder)
+    native_shared_source = _native_shared_budget_source(n_builder)
+    prior_result = n_builder._json_load(artifact_raws["data-result"], 8 * 1024 * 1024,
+                                        "PRIOR_RESULT")
+    operation_raw = artifact_raws["data-op-1"]
+    _need(type(prior_result) is dict, "PRIOR_RESULT_DOCUMENT")
+    reader_summary, outcome, raw_reader_summary = _parse_qualification(
+        n_builder, n_context, evidence_raws)
+    observation_doc = n_builder._json_load(observation_raw, 128 * 1024,
+                                           "OBSERVATION_PROJECTION")
+    _need(type(observation_doc) is dict
+          and observation_doc.get("status") == "PASS_PRIOR_INPUT_ONLY"
+          and observation_doc.get("projectionIsFrozenDescriptor") is False
+          and observation_doc.get("newAuthoredSessions") == 0
+          and observation_doc.get("qualificationSummary") == raw_reader_summary,
+          "OBSERVATION_CROSSCHECK")
+    pad = _pad_identity(n_builder, prior_result)
+    descriptor = descriptor_module.derive_descriptor(
+        observation_ref=observation_ref,
+        evidence_files=evidence_rows,
+        outcome=outcome,
+        reader_summary=reader_summary,
+        approved_prior_artifact_rows=artifact_rows,
+        prior_source_closure=closure,
+        native_copy_allowance_source=native_copy_source,
+        native_shared_budget_source=native_shared_source,
+        provider_source_refs=provider_rows,
+        provider_tool_refs=tool_rows,
+        prior_result=prior_result,
+        prior_result_raw=artifact_raws["data-result"],
+        prior_operation_raw=operation_raw,
+        pad_identity=pad,
+    )
+    descriptor_raw = descriptor_module.canonical_json(descriptor)
+    _need(len(descriptor_raw) <= MAX_DESCRIPTOR_BYTES, "DESCRIPTOR_SIZE")
+    descriptor_sha = _sha(descriptor_raw)
+    expected_descriptor = descriptor_module.validate_descriptor(
+        descriptor_module.strict_document(descriptor_raw))
+    _need(expected_descriptor == descriptor, "DESCRIPTOR_ROUNDTRIP")
+    descriptor_dir = DESCRIPTOR_PATH.parent
+    if write_descriptor is True:
+        _need(not descriptor_dir.exists(), "DESCRIPTOR_DIRECTORY_EXISTS")
+        n_builder._create_directory(descriptor_dir, "DESCRIPTOR_DIRECTORY")
+        n_builder._write_new(DESCRIPTOR_PATH, descriptor_raw, MAX_DESCRIPTOR_BYTES,
+                             "DESCRIPTOR")
+    elif write_descriptor is False:
+        path = n_builder._canonical(str(DESCRIPTOR_PATH), "DESCRIPTOR_PATH")
+        raw = n_builder._read_file(path, MAX_DESCRIPTOR_BYTES, "DESCRIPTOR")
+        _need(raw == descriptor_raw and _sha(raw) == descriptor_sha,
+              "DESCRIPTOR_REDERIVATION")
+        names = n_builder._directory_names(descriptor_dir, "DESCRIPTOR_DIRECTORY")
+        _need(len(names) == 1 and set(names) == {"descriptor.json"},
+              "DESCRIPTOR_DIRECTORY_CLOSURE")
+    else:
+        _need(write_descriptor is None, "DESCRIPTOR_WRITE_MODE")
+    generated = descriptor_module.generate_input_java(descriptor, descriptor_sha, prior_result)
+    _need(len(generated) <= MAX_GENERATED_BYTES
+          and b"<PATH_0012>" not in generated
+          and b"<PATH_0013>" not in generated,
+          "GENERATED_PATH_PRIVACY")
+    return {
+        "descriptorModule": descriptor_module,
+        "generatorRaw": generator_raw,
+        "descriptor": descriptor,
+        "descriptorRaw": descriptor_raw,
+        "descriptorSha256": descriptor_sha,
+        "generatedRaw": generated,
+        "priorResultRaw": artifact_raws["data-result"],
+        "priorResult": prior_result,
+        "priorOperationRaw": operation_raw,
+        "priorProcess": native_call[1],
+        "priorReaderSummary": reader_summary,
+        "artifactRows": artifact_rows,
+        "qualificationRows": evidence_rows,
+        "providerRows": provider_rows,
+        "toolRows": tool_rows,
+        "closure": closure,
+        "nativeCopyAllowanceSource": native_copy_source,
+        "nativeSharedBudgetSource": native_shared_source,
+        "priorReaderModule": reader,
+    }
+
+
+def _helper_refs(n_builder, descriptor_module_raw):
+    helper_path = n_builder._canonical(str(Path(__file__)), "BUILD_HELPER_SELF")
+    helper_raw = n_builder._read_file(helper_path, MAX_SOURCE_BYTES, "BUILD_HELPER_SELF")
+    generator_path = n_builder._canonical(str(D_ROOT / "descriptor_inputs_r2.py"),
+                                          "GENERATOR_PATH")
+    generator_disk = n_builder._read_file(generator_path, MAX_SOURCE_BYTES,
+                                          "GENERATOR_SOURCE_RECHECK")
+    _need(generator_disk == descriptor_module_raw, "GENERATOR_SOURCE_CHANGED")
+    codec_path = n_builder._canonical(str(D_ROOT / "input_literals_r2.py"), "CODEC_PATH")
+    pad_path = n_builder._canonical(str(D_ROOT / "pad_identity_r2.py"), "PAD_IDENTITY_PATH")
+    codec_raw = n_builder._read_file(codec_path, 128 * 1024, "CODEC_SOURCE")
+    pad_raw = n_builder._read_file(pad_path, 128 * 1024, "PAD_IDENTITY_SOURCE")
+    _need(_sha(codec_raw) == LITERAL_CODEC_SHA256, "CODEC_SOURCE_HASH")
+    _need(len(pad_raw) == 2405 and _sha(pad_raw) == PAD_HELPER_SOURCE_SHA256,
+          "PAD_IDENTITY_SOURCE_HASH")
+    return [
+        {"role": "D-build-helper", "path": str(helper_path),
+         "bytes": len(helper_raw), "sha256": _sha(helper_raw)},
+        {"role": "D-descriptor-generator", "path": str(generator_path),
+         "bytes": len(descriptor_module_raw), "sha256": _sha(descriptor_module_raw)},
+        {"role": "D-literal-codec", "path": str(codec_path),
+         "bytes": len(codec_raw), "sha256": _sha(codec_raw)},
+        {"role": "D-pad-identity-helper", "path": str(pad_path),
+         "bytes": len(pad_raw), "sha256": _sha(pad_raw)},
+    ]
+
+
+def _contract_refs(n_builder):
+    specs = [
+        ("descriptor-contract", D_ROOT / "DESCRIPTOR_R2.md", 0, D_DESCRIPTOR_DOC_SHA256,
+         256 * 1024),
+        ("plan-contract", D_ROOT / "PLAN_R2.md", 0, D_PLAN_DOC_SHA256, 256 * 1024),
+        ("wire-contract", D_WIRE_SOURCE, 0, D_WIRE_SHA256, MAX_WIRE_BYTES),
+    ]
+    result = []
+    for role, path, _unused_size, digest, limit in specs:
+        canonical = n_builder._canonical(str(path), "CONTRACT_PATH")
+        _check_allowed(canonical, "CONTRACT_ALLOWLIST")
+        raw = n_builder._read_file(canonical, limit, "CONTRACT_SOURCE")
+        _need(_sha(raw) == digest, "CONTRACT_HASH_" + role.upper())
+        result.append({"role": role, "path": str(canonical), "bytes": len(raw),
+                       "sha256": _sha(raw)})
+    return result
+
+
+def _read_source(n_builder, path, limit, code):
+    canonical = n_builder._canonical(str(path), code + "_PATH")
+    raw = n_builder._read_file(canonical, limit, code)
+    _need(raw.endswith(b"\n") and b"\r" not in raw
+          and not raw.startswith(b"\xef\xbb\xbf"), code + "_FRAMING")
+    try:
+        raw.decode("utf-8", errors="strict")
+    except UnicodeDecodeError:
+        raise BuildInputError(code + "_UTF8") from None
+    return canonical, raw
+
+
+def _source_identity(n_builder, n_context, prior, stage):
+    _directory(n_builder, D_SOURCE, ["CohortTerminalTelemetryStudy.java", "WIRE_R2.md"],
+               "D_SOURCE_DIRECTORY")
+    _need(F_OWNER_SHA256 == "c382f3bc08f8ad65b3501dad57c927dd5c1f9f1c04914ac79edb772f4b4f4e3e"
+          and BASE_OVERLAY_SHA256 == "70cacaacc97cb3f01a1ad6221753e4d80a05479ba6663cd5dc6474a00dc4fb21",
+          "OWNER_SOURCE_PINS")
+    n_sources = n_context["sources"]
+    n_paths = n_context["sourcePaths"]
+    _need(len(n_sources) == len(n_paths) == 1090, "N_SOURCE_COUNT")
+    native = prior["descriptor"]["nativeSharedBudgetSource"]
+    branch_parent = native["branchOrderParentRef"]
+    capture_parent = native["captureParentRef"]
+    branch_derived = native["derivedBranchOrderRef"]
+    capture_derived = native["derivedCaptureRef"]
+    replacement_specs = [
+        (11, str(BASE_OVERLAY), 170500, BASE_OVERLAY_SHA256,
+         "BASE_OVERLAY_ROW", str(F_OWNER_SOURCE), "F-current-owner", 0, F_OWNER_SHA256),
+        (1081, branch_parent["path"], branch_parent["bytes"], branch_parent["sha256"],
+         "BRANCH_ORDER_ROW", branch_derived["path"],
+         branch_derived["role"], branch_derived["bytes"], branch_derived["sha256"]),
+        (1088, capture_parent["path"], capture_parent["bytes"], capture_parent["sha256"],
+         "CAPTURE_OWNER_ROW", capture_derived["path"],
+         capture_derived["role"], capture_derived["bytes"], capture_derived["sha256"]),
+    ]
+    replacement_indexes = []
+    replacement_rows = {}
+    for ordinal, old_path, old_bytes, old_sha, code, new_path, new_role, new_bytes, new_sha in replacement_specs:
+        old_row = n_sources[ordinal]
+        _need(n_paths[ordinal] == old_path
+              and old_row == {"path": old_path, "bytes": old_bytes, "sha256": old_sha},
+              code + "_AUTHENTICATED_POSITION")
+        _need(sum(1 for row in n_sources if row.get("path") == old_path
+                  and row.get("sha256") == old_sha) == 1,
+              code + "_UNIQUE")
+        if ordinal == 11:
+            base_path = n_builder._canonical(old_path, "BASE_OVERLAY_PATH")
+            base_raw = n_builder._read_file(base_path, MAX_SOURCE_BYTES, "BASE_OVERLAY")
+            _need(len(base_raw) == old_bytes and _sha(base_raw) == old_sha,
+                  "BASE_OVERLAY_AUTHENTICATION")
+            owner_ref, _owner_raw = _actual_ref(
+                n_builder, new_role, new_path, MAX_SOURCE_BYTES, "F_OWNER")
+            _need(owner_ref["sha256"] == new_sha, "F_OWNER_HASH")
+            replacement_rows[ordinal] = {
+                "path": str(owner_ref["path"]),
+                "bytes": owner_ref["bytes"],
+                "sha256": owner_ref["sha256"],
+            }
+        else:
+            canonical_new = n_builder._canonical(str(new_path), code + "_DERIVED_PATH")
+            _check_allowed(canonical_new, code + "_DERIVED_ALLOWLIST")
+            derived_raw = n_builder._read_file(canonical_new, MAX_SOURCE_BYTES,
+                                                code + "_DERIVED_SOURCE")
+            _need(len(derived_raw) == new_bytes and _sha(derived_raw) == new_sha,
+                  code + "_DERIVED_PIN")
+            replacement_rows[ordinal] = {
+                "path": str(canonical_new), "bytes": len(derived_raw),
+                "sha256": _sha(derived_raw),
+            }
+        replacement_indexes.append(ordinal)
+    _need(replacement_indexes == [11, 1081, 1088]
+          and len(set(replacement_indexes)) == 3,
+          "SOURCE_REPLACEMENT_ORDINALS")
+    study_path, study_raw = _read_source(n_builder, D_STUDY_SOURCE, MAX_SOURCE_BYTES,
+                                         "D_STUDY_SOURCE")
+    wire_path, wire_raw = _read_source(n_builder, D_WIRE_SOURCE, MAX_WIRE_BYTES,
+                                       "D_WIRE_SOURCE")
+    _need(_sha(wire_raw) == D_WIRE_SHA256, "D_WIRE_SOURCE_PIN")
+    generated_path = n_builder._canonical(
+        str(stage / "generated-source" / "com" / "lushprojects" / "circuitjs1" /
+            "client" / "CohortTerminalTelemetryInput.java"),
+        "GENERATED_SOURCE_PATH", require_exists=False,
+    )
+    source_rows = [dict(row) for row in n_sources]
+    for ordinal in replacement_indexes:
+        source_rows[ordinal] = replacement_rows[ordinal]
+    _need(all(source_rows[index] == n_sources[index]
+              for index in range(len(n_sources)) if index not in replacement_rows),
+          "UNREPLACED_N_SOURCE_ROWS_CHANGED")
+    source_rows.extend([
+        {"path": str(study_path), "bytes": len(study_raw), "sha256": _sha(study_raw)},
+        {"path": str(generated_path), "bytes": len(prior["generatedRaw"]),
+         "sha256": _sha(prior["generatedRaw"])},
+    ])
+    paths = [row["path"] for row in source_rows]
+    _need(len(source_rows) == 1092 and len(set(os.path.normcase(path) for path in paths)) == 1092,
+          "D_SOURCE_COUNT_OR_DUPLICATE")
+    for row in source_rows:
+        _need(set(row) == {"path", "bytes", "sha256"}
+              and type(row["bytes"]) is int and row["bytes"] > 0
+              and HEX.fullmatch(row["sha256"]) is not None,
+              "D_SOURCE_ROW")
+    compiler_list = "".join('"' + path.replace("\\", "/") + '"\n'
+                            for path in paths).encode("utf-8")
+    _need(len(compiler_list) <= MAX_COMPILER_LIST_BYTES, "COMPILER_LIST_SIZE")
+    return {
+        "sources": source_rows,
+        "sourcePaths": paths,
+        "compilerSourceCount": len(source_rows),
+        "compilerList": compiler_list,
+        "wire": {"path": str(wire_path), "bytes": len(wire_raw),
+                 "sha256": _sha(wire_raw)},
+        "studyRaw": study_raw,
+        "wireRaw": wire_raw,
+        "generatedSourcePath": generated_path,
+        "generatedSourceRaw": prior["generatedRaw"],
+        "baseOverlayRowIndex": 11,
+        "replacementOrdinals": replacement_indexes,
+        "unchangedSourceRows": 1087,
+    }
+
+
+def _compile_request(stage, n_context):
+    classes = stage / "classes"
+    empty_sourcepath = stage / "empty-sourcepath"
+    javac = n_context.get("javac")
+    jars = n_context.get("jars")
+    _need(type(javac) is dict and type(javac.get("path")) is str
+          and type(jars) is dict
+          and set(jars) == {"gwt-user-2.7.0.jar", "gwt-dev-2.7.0.jar"},
+          "N_TOOL_SET")
+    classpath = ";".join((
+        str(classes), jars["gwt-user-2.7.0.jar"]["path"],
+        jars["gwt-dev-2.7.0.jar"]["path"],
+    ))
+    arguments = [
+        "-source", "7", "-target", "7", "-encoding", "UTF-8",
+        "-classpath", classpath, "-sourcepath", str(empty_sourcepath),
+        "-d", str(classes), "@" + str(stage / "compiler-sources.txt"),
+    ]
+    return {"FilePath": javac["path"], "Arguments": arguments,
+            "LimitMs": COMPILE_LIMIT_MS}
+
+
+def _manifest_identity(n_builder, n_context, prior, stage):
+    identity = _source_identity(n_builder, n_context, prior, stage)
+    helper_refs = _helper_refs(n_builder, prior["generatorRaw"])
+    contract_refs = _contract_refs(n_builder)
+    request = _compile_request(stage, n_context)
+    request_raw = n_builder._canonical_json(request)
+    tools = [dict(row) for row in n_context["manifest"]["tools"]]
+    manifest = {
+        "schema": "tsj-cohort-terminal-source-input-r2-v2",
+        "sourceParent": F_SOURCE_PARENT,
+        "priorSourceParent": n_context["manifest"]["sourceParent"],
+        "priorRunManifestPath": str(N_RUN_MANIFEST),
+        "priorRunManifestSha256": N_RUN_SHA256,
+        "priorSourceManifestPath": str(N_SOURCE_MANIFEST),
+        "priorSourceManifestSha256": N_SOURCE_SHA256,
+        "priorClassInventoryPath": str(N_CLASS_INVENTORY),
+        "priorClassInventorySha256": N_CLASS_SHA256,
+        "priorClosureAudit": {
+            "schema": "tsj-prior-input-closure-audit-r2-v2",
+            "status": "PASS_PRIOR_INPUT_CLOSURE_ONLY",
+            "sourceCount": 1090,
+            "classCount": 4139,
+            "classBytes": 19289113,
+            "resultSha256": prior["descriptor"]["qualification"]["readerSummary"]["resultSha256"],
+            "operation1Sha256": prior["descriptor"]["priorOperationReference"]["operation1Sha256"],
+            "readerOutputSha256": prior["descriptor"]["qualification"]["outcome"]["readerOutputSha256"],
+        },
+        "descriptorPath": str(DESCRIPTOR_PATH),
+        "descriptorBytes": len(prior["descriptorRaw"]),
+        "descriptorSha256": prior["descriptorSha256"],
+        "helperSourceRefs": helper_refs,
+        "contractRefs": contract_refs,
+        "generatedInputPath": str(identity["generatedSourcePath"]),
+        "generatedInputBytes": len(identity["generatedSourceRaw"]),
+        "generatedInputSha256": _sha(identity["generatedSourceRaw"]),
+        "baseOverlayRowIndex": identity["baseOverlayRowIndex"],
+        "replacementOrdinals": identity["replacementOrdinals"],
+        "compilerSourceCount": identity["compilerSourceCount"],
+        "compilerListPath": str(stage / "compiler-sources.txt"),
+        "compilerListBytes": len(identity["compilerList"]),
+        "compilerListSha256": _sha(identity["compilerList"]),
+        "compilerRequestPath": str(stage / "compiler-request.json"),
+        "compilerRequestSha256": _sha(request_raw),
+        "classesRoot": str(stage / "classes"),
+        "emptySourcepath": str(stage / "empty-sourcepath"),
+        "generatedSourceRoot": str(stage / "generated-source"),
+        "sources": identity["sources"],
+        "tools": tools,
+        "wire": identity["wire"],
+    }
+    return manifest, identity, request, request_raw
+
+
+def _canonical_stage(n_builder, stage_value, require_empty):
+    stage = n_builder._canonical(stage_value, "STAGE_PATH", require_exists=False)
+    _need(stage == STAGE_PATH and stage.parent == D_ROOT
+          and STAGE_RE.fullmatch(stage.name) is not None, "STAGE_LOCATION")
+    if require_empty:
+        _need(not stage.exists(), "STAGE_ALREADY_EXISTS")
+    else:
+        n_builder._lstat_directory(stage, "STAGE_DIRECTORY")
+    return stage
+
+
+def _write_prepared_stage(n_builder, stage, identity, manifest, request, request_raw):
+    n_builder._create_directory(stage, "STAGE_DIRECTORY")
+    n_builder._create_directory(stage / "generated-source", "GENERATED_SOURCE_ROOT")
+    package_dir = stage / "generated-source" / "com"
+    n_builder._create_directory(package_dir, "GENERATED_PACKAGE_ROOT")
+    package_dir = package_dir / "lushprojects"
+    n_builder._create_directory(package_dir, "GENERATED_PACKAGE")
+    package_dir = package_dir / "circuitjs1"
+    n_builder._create_directory(package_dir, "GENERATED_PACKAGE")
+    package_dir = package_dir / "client"
+    n_builder._create_directory(package_dir, "GENERATED_PACKAGE")
+    _need(package_dir / "CohortTerminalTelemetryInput.java"
+          == identity["generatedSourcePath"], "GENERATED_LOCATION")
+    n_builder._write_new(identity["generatedSourcePath"], identity["generatedSourceRaw"],
+                         MAX_GENERATED_BYTES, "GENERATED_SOURCE")
+    n_builder._create_directory(stage / "classes", "CLASSES_ROOT")
+    n_builder._create_directory(stage / "empty-sourcepath", "EMPTY_SOURCEPATH")
+    n_builder._write_new(stage / "compiler-sources.txt", identity["compilerList"],
+                         MAX_COMPILER_LIST_BYTES, "COMPILER_LIST")
+    n_builder._write_new(stage / "compiler-request.json", request_raw,
+                         MAX_SMALL_JSON_BYTES, "COMPILER_REQUEST")
+    manifest_raw = n_builder._canonical_json(manifest)
+    _need(len(manifest_raw) <= MAX_MANIFEST_BYTES, "SOURCE_MANIFEST_SIZE")
+    n_builder._write_new(stage / "source-manifest.json", manifest_raw,
+                         MAX_MANIFEST_BYTES, "SOURCE_MANIFEST")
+    expected = {
+        "generated-source", "classes", "empty-sourcepath", "compiler-sources.txt",
+        "compiler-request.json", "source-manifest.json",
+    }
+    names = n_builder._directory_names(stage, "STAGE_DIRECTORY")
+    _need(len(names) == len(expected) and set(names) == expected,
+          "PREPARED_STAGE_CLOSURE")
+    return manifest_raw
+
+
+def prepare(stage_value=STAGE_PATH):
+    n_builder = _load_n_builder()
+    stage = _canonical_stage(n_builder, stage_value, require_empty=True)
+    n_context = _load_n_context(n_builder)  # One complete N validation for this entry.
+    _need(not DESCRIPTOR_PATH.exists(), "DESCRIPTOR_ALREADY_EXISTS")
+    prior = _prior_inputs(n_builder, n_context, write_descriptor=None)
+    manifest, identity, request, request_raw = _manifest_identity(
+        n_builder, n_context, prior, stage)
+    descriptor_dir = DESCRIPTOR_PATH.parent
+    _need(not descriptor_dir.exists() and not DESCRIPTOR_PATH.exists(),
+          "DESCRIPTOR_DIRECTORY_EXISTS")
+    n_builder._create_directory(descriptor_dir, "DESCRIPTOR_DIRECTORY")
+    n_builder._write_new(DESCRIPTOR_PATH, prior["descriptorRaw"],
+                         MAX_DESCRIPTOR_BYTES, "DESCRIPTOR")
+    manifest_raw = _write_prepared_stage(n_builder, stage, identity, manifest,
+                                         request, request_raw)
+    return {
+        "schema": "tsj-cohort-terminal-prepared-r2-v2",
+        "status": "PREPARED_ONLY",
+        "stagePath": str(stage),
+        "descriptorPath": str(DESCRIPTOR_PATH),
+        "descriptorSha256": prior["descriptorSha256"],
+        "generatedInputPath": str(identity["generatedSourcePath"]),
+        "generatedInputBytes": len(identity["generatedSourceRaw"]),
+        "generatedInputSha256": _sha(identity["generatedSourceRaw"]),
+        "sourceManifestPath": str(stage / "source-manifest.json"),
+        "sourceManifestSha256": _sha(manifest_raw),
+        "compilerListPath": str(stage / "compiler-sources.txt"),
+        "compilerListSha256": _sha(identity["compilerList"]),
+        "compilerRequestPath": str(stage / "compiler-request.json"),
+        "compilerRequestSha256": _sha(request_raw),
+        "compilerSourceCount": identity["compilerSourceCount"],
+        "priorClosureAudit": manifest["priorClosureAudit"],
+    }
+
+
+def _generated_source_closure(n_builder, stage, generated_path):
+    root = stage / "generated-source"
+    _directory(n_builder, root, ["com"], "GENERATED_ROOT")
+    package = root / "com"
+    _directory(n_builder, package, ["lushprojects"], "GENERATED_COM")
+    package = package / "lushprojects"
+    _directory(n_builder, package, ["circuitjs1"], "GENERATED_LUSHPROJECTS")
+    package = package / "circuitjs1"
+    _directory(n_builder, package, ["client"], "GENERATED_CIRCUITJS")
+    package = package / "client"
+    _directory(n_builder, package, ["CohortTerminalTelemetryInput.java"],
+               "GENERATED_CLIENT")
+    _need(package / "CohortTerminalTelemetryInput.java" == generated_path,
+          "GENERATED_SOURCE_CLOSURE_PATH")
+
+
+def _validate_stage_closure(n_builder, stage, *, finalized):
+    _need(type(finalized) is bool, "STAGE_PHASE_TYPE")
+    expected = {
+        "generated-source", "classes", "empty-sourcepath", "compiler-sources.txt",
+        "compiler-request.json", "source-manifest.json",
+    }
+    if finalized:
+        expected.update(("class-inventory.json", "run-manifest.json"))
+    names = n_builder._directory_names(stage, "STAGE_DIRECTORY")
+    _need(len(names) == len(expected) and set(names) == expected,
+          "FINAL_STAGE_CLOSURE" if finalized else "PRE_FINALIZE_STAGE_CLOSURE")
+
+
+def _validate_source_input(n_builder, n_context, stage, expected_sha, *, finalized=False):
+    _need(type(expected_sha) is str and HEX.fullmatch(expected_sha) is not None,
+          "SOURCE_MANIFEST_SHA_TYPE")
+    _validate_stage_closure(n_builder, stage, finalized=finalized)
+    n_builder._lstat_directory(stage / "classes", "CLASSES_ROOT")
+    empty_sourcepath = n_builder._canonical(str(stage / "empty-sourcepath"),
+                                            "EMPTY_SOURCEPATH")
+    n_builder._lstat_directory(empty_sourcepath, "EMPTY_SOURCEPATH")
+    _need(not n_builder._directory_names(empty_sourcepath, "EMPTY_SOURCEPATH"),
+          "EMPTY_SOURCEPATH_NOT_EMPTY")
+    prior = _prior_inputs(n_builder, n_context, write_descriptor=False)
+    manifest, identity, request, request_raw = _manifest_identity(
+        n_builder, n_context, prior, stage)
+    source_path = n_builder._canonical(str(stage / "source-manifest.json"),
+                                       "SOURCE_MANIFEST_PATH")
+    source_raw = n_builder._read_file(source_path, MAX_MANIFEST_BYTES, "SOURCE_MANIFEST")
+    _need(_sha(source_raw) == expected_sha
+          and source_raw == n_builder._canonical_json(manifest),
+          "SOURCE_MANIFEST_BINDING")
+    compiler_list = n_builder._read_file(stage / "compiler-sources.txt",
+                                         MAX_COMPILER_LIST_BYTES, "COMPILER_LIST")
+    _need(compiler_list == identity["compilerList"], "COMPILER_LIST_BINDING")
+    request_path = n_builder._canonical(str(stage / "compiler-request.json"),
+                                        "COMPILER_REQUEST_PATH")
+    request_disk = n_builder._read_file(request_path, MAX_SMALL_JSON_BYTES,
+                                        "COMPILER_REQUEST")
+    _need(request_disk == request_raw and request == n_builder._strict_document(
+        request_disk, MAX_SMALL_JSON_BYTES, "COMPILER_REQUEST"),
+        "COMPILER_REQUEST_BINDING")
+    _generated_source_closure(n_builder, stage, identity["generatedSourcePath"])
+    generated_disk = n_builder._read_file(identity["generatedSourcePath"],
+                                          MAX_GENERATED_BYTES, "GENERATED_SOURCE")
+    _need(generated_disk == identity["generatedSourceRaw"]
+          and _sha(generated_disk) == manifest["generatedInputSha256"],
+          "GENERATED_SOURCE_BINDING")
+    return prior, manifest, identity, request, request_raw, source_raw
+
+
+def _host_document(reader, n_builder, path, limit, code):
+    canonical = n_builder._canonical(str(path), code + "_PATH")
+    raw = n_builder._read_file(canonical, limit, code)
+    try:
+        value = reader.host_document(raw, limit)
+    except Exception:
+        raise BuildInputError(code + "_JSON") from None
+    return canonical, raw, value
+
+
+def _validate_compile_call(n_builder, n_context, call_value, stage, expected_request):
+    call_dir = n_builder._canonical(call_value, "COMPILE_CALL_PATH")
+    _need(call_dir == D_ROOT / COMPILE_CALL_NAME and call_dir.parent == D_ROOT
+          and COMPILE_CALL_RE.fullmatch(call_dir.name) is not None,
+          "COMPILE_CALL_LOCATION")
+    _directory(n_builder, call_dir, [
+        "owner.json", "parent.json", "process.json", "request.json",
+        "result.json", "stderr.txt", "stdout.txt",
+    ], "COMPILE_CALL_DIRECTORY")
+    reader = n_context.get("baseReader")
+    process_module = n_context.get("processModule")
+    _need(reader is not None and callable(getattr(reader, "host_document", None))
+          and callable(getattr(reader, "_validate_owner_call", None))
+          and process_module is not None, "COMPILE_CALL_KERNELS")
+    parent_path, parent_raw, parent = _host_document(
+        reader, n_builder, call_dir / "parent.json", MAX_SMALL_JSON_BYTES, "COMPILE_PARENT")
+    _request_path, request_raw, request = _host_document(
+        reader, n_builder, call_dir / "request.json", MAX_SMALL_JSON_BYTES,
+        "COMPILE_REQUEST_RECEIPT")
+    _process_path, process_raw, process = _host_document(
+        reader, n_builder, call_dir / "process.json", MAX_SMALL_JSON_BYTES,
+        "COMPILE_PROCESS")
+    owner_path, owner_raw, owner = _host_document(
+        reader, n_builder, call_dir / "owner.json", MAX_SMALL_JSON_BYTES, "COMPILE_OWNER")
+    result_path, result_raw, result = _host_document(
+        reader, n_builder, call_dir / "result.json", MAX_SMALL_JSON_BYTES, "COMPILE_RESULT")
+    _need(type(parent) is dict and type(process) is dict
+          and type(request) is dict and type(owner) is dict and type(result) is dict,
+          "COMPILE_CALL_SHAPE")
+    _need(parent.get("schema") == "tsj-q100-reservation-provenance-parent-v1"
+          and parent.get("process") == process and request == expected_request,
+          "COMPILE_CALL_BINDING")
+    _need(owner.get("schema") == "tsj-p9-root-call-owner-v1"
+          and owner.get("request") == str(call_dir / "request.json"),
+          "COMPILE_OWNER_BINDING")
+    _need(process.get("ExitCode") == 0 and process.get("TerminationProven") is True
+          and result.get("status") == "RETURNED" and result.get("exitCode") == 0
+          and result.get("terminationProven") is True,
+          "COMPILE_NOT_SUCCESS")
+    stdout_raw = n_builder._read_file(call_dir / "stdout.txt", 2 * 1024 * 1024,
+                                     "COMPILE_STDOUT")
+    stderr_raw = n_builder._read_file(call_dir / "stderr.txt", 2 * 1024 * 1024,
+                                     "COMPILE_STDERR")
+    _need(process.get("Stdout", "").encode("utf-8") == stdout_raw
+          and process.get("Stderr", "").encode("utf-8") == stderr_raw,
+          "COMPILE_OUTPUT_BINDING")
+    for key in ("ProcessRoot", "StdoutLog", "StderrLog"):
+        value = process.get(key)
+        _need(type(value) is str and Path(value).is_absolute()
+              and not Path(value).exists(), "COMPILE_CLEANUP_" + key.upper())
+    try:
+        reader._validate_owner_call(
+            call_dir, parent_path, parent, request, process,
+            expected_request["FilePath"], expected_request["Arguments"],
+            COMPILE_LIMIT_MS, process_module,
+            required_stdout="", expected_stderr=reader.COMPILE_STDERR,
+        )
+    except Exception as failure:
+        code = getattr(failure, "code", None)
+        if type(code) is str and re.fullmatch(r"[A-Z0-9_]{1,96}", code):
+            raise BuildInputError("COMPILE_OWNER_" + code) from None
+        raise BuildInputError("COMPILE_OWNER_VALIDATION") from None
+    return {
+        "directory": call_dir,
+        "parentPath": parent_path,
+        "parentRaw": parent_raw,
+        "parent": parent,
+        "processRaw": process_raw,
+        "process": process,
+        "requestRaw": request_raw,
+        "request": request,
+        "ownerPath": owner_path,
+        "ownerRaw": owner_raw,
+        "resultPath": result_path,
+        "resultRaw": result_raw,
+    }
+
+
+def _inventory_classes(n_builder, stage, source_manifest_sha):
+    classes = n_builder._canonical(str(stage / "classes"), "CLASSES_ROOT")
+    try:
+        inventory, inventory_raw = n_builder._inventory_class_tree(
+            classes, source_manifest_sha)
+    except n_builder.BuildInputError as failure:
+        code = getattr(failure, "code", None)
+        if type(code) is str and re.fullmatch(r"[A-Z0-9_]{1,96}", code):
+            raise BuildInputError("D_CLASS_" + code) from None
+        raise BuildInputError("D_CLASS_INVENTORY") from None
+    paths = {row["path"] for row in inventory["entries"]}
+    required = {
+        "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy.class",
+        "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryInput.class",
+    }
+    _need(required.issubset(paths), "D_STUDY_CLASSES_MISSING")
+    return inventory, inventory_raw
+
+
+def _expected_run_manifest(source_manifest, build):
+    run = dict(source_manifest)
+    run["schema"] = "tsj-cohort-terminal-source-r2-run-v2"
+    run["build"] = build
+    return run
+
+
+def finalize(stage_value, compile_call_directory, source_manifest_sha256):
+    n_builder = _load_n_builder()
+    stage = _canonical_stage(n_builder, stage_value, require_empty=False)
+    n_context = _load_n_context(n_builder)  # One complete N validation for this entry.
+    prior, input_manifest, identity, request, request_raw, source_raw = _validate_source_input(
+        n_builder, n_context, stage, source_manifest_sha256)
+    call = _validate_compile_call(n_builder, n_context, compile_call_directory,
+                                  stage, request)
+    inventory, inventory_raw = _inventory_classes(n_builder, stage,
+                                                   _sha(source_raw))
+    inventory_path = stage / "class-inventory.json"
+    build = {
+        "sourceManifestPath": str(stage / "source-manifest.json"),
+        "sourceManifestSha256": _sha(source_raw),
+        "compileCallDirectory": str(call["directory"]),
+        "compileParentPath": str(call["parentPath"]),
+        "compileParentSha256": _sha(call["parentRaw"]),
+        "classInventoryPath": str(inventory_path),
+        "classInventorySha256": _sha(inventory_raw),
+        "classCount": inventory["classCount"],
+        "classBytes": inventory["totalBytes"],
+    }
+    run_manifest = _expected_run_manifest(input_manifest, build)
+    run_raw = n_builder._canonical_json(run_manifest)
+    _need(len(run_raw) <= MAX_RUN_MANIFEST_BYTES, "RUN_MANIFEST_SIZE")
+    n_builder._write_new(inventory_path, inventory_raw, MAX_CLASS_INVENTORY_BYTES,
+                         "CLASS_INVENTORY")
+    n_builder._write_new(stage / "run-manifest.json", run_raw,
+                         MAX_RUN_MANIFEST_BYTES, "RUN_MANIFEST")
+    _validate_stage_closure(n_builder, stage, finalized=True)
+    return {
+        "schema": "tsj-cohort-terminal-finalized-r2-v2",
+        "status": "FINALIZED_ONLY",
+        "runManifestPath": str(stage / "run-manifest.json"),
+        "runManifestSha256": _sha(run_raw),
+        "sourceManifestSha256": _sha(source_raw),
+        "descriptorSha256": prior["descriptorSha256"],
+        "generatedInputSha256": _sha(identity["generatedSourceRaw"]),
+        "compilerSourceCount": identity["compilerSourceCount"],
+        "classCount": inventory["classCount"],
+        "classBytes": inventory["totalBytes"],
+    }
+
+
+def _validated_context(n_builder, n_context, prior, run_path, run_raw, run_manifest,
+                       input_manifest, identity, source_raw, inventory, call):
+    # Keep both the authenticated receipt bytes and parser projection. Pad rows
+    # used by the consumer's independent coordinate checks come from this parsed
+    # op-1 snapshot; canonical pad-land identity still comes from priorResult.
+    first_line = prior["priorOperationRaw"].split(b"\n", 1)[0]
+    try:
+        prior_header = n_builder._json_load(first_line, 64 * 1024, "PRIOR_OPERATION_HEADER")
+    except BuildInputError:
+        raise BuildInputError("PRIOR_OPERATION_HEADER") from None
+    host_reader = n_context["baseReader"]
+    prior_reader = prior["priorReaderModule"]
+    parse_operation = getattr(host_reader, "_parse_operation1", None)
+    process = prior["priorProcess"]
+    _need(callable(parse_operation) and type(process) is dict
+          and type(process.get("Arguments")) is list
+          and len(process["Arguments"]) == 9
+          and type(n_context.get("p07Reader")) is types.ModuleType
+          and type(n_context.get("wire")) is dict
+          and n_context["wire"].get("sha256") == prior_reader.WIRE_SHA256,
+          "PRIOR_OPERATION_PARSER_API")
+    try:
+        parsed_operation = parse_operation(
+            prior["priorOperationRaw"], prior["priorResult"]["operation1"],
+            process["Arguments"][5], n_context["sourceSha"],
+            prior_reader.WIRE_SHA256, n_context["p07Reader"],
+        )
+    except Exception:
+        raise BuildInputError("PRIOR_OPERATION_PARSE") from None
+    _need(type(parsed_operation) is dict and type(parsed_operation.get("pads")) is list,
+          "PRIOR_OPERATION_PARSED_SHAPE")
+    context = {
+        "manifest": run_manifest,
+        "sourceSha": _sha(run_raw),
+        "path": run_path,
+        "sourceManifest": input_manifest,
+        "sourceManifestSha256": _sha(source_raw),
+        "sourcePaths": [row["path"] for row in input_manifest["sources"]],
+        "sources": input_manifest["sources"],
+        "tools": input_manifest["tools"],
+        "wire": input_manifest["wire"],
+        "classInventory": inventory,
+        "classesRoot": n_context.get("classesRoot"),
+        "generatedSourcePath": identity["generatedSourcePath"],
+        "generatedSourceRaw": identity["generatedSourceRaw"],
+        "generatedSourceSha256": _sha(identity["generatedSourceRaw"]),
+        "descriptor": prior["descriptor"],
+        "descriptorRaw": prior["descriptorRaw"],
+        "descriptorPath": str(DESCRIPTOR_PATH),
+        "descriptorSha256": prior["descriptorSha256"],
+        "priorResultRaw": prior["priorResultRaw"],
+        "priorResult": prior["priorResult"],
+        "priorOperation1Raw": prior["priorOperationRaw"],
+        "priorOperation1Header": prior_header,
+        "priorParsedOperation1": parsed_operation,
+        "priorReaderSummary": prior["priorReaderSummary"],
+        "nContext": n_context,
+        "baseReader": prior_reader,
+        "priorReaderModule": prior_reader,
+        "hostReader": host_reader,
+        "processModule": n_context.get("processModule"),
+        "java": n_context.get("java"),
+        "javac": n_context.get("javac"),
+        "jars": n_context.get("jars"),
+        "parentAuditor": n_context.get("parentAuditor"),
+        "compileCall": call,
+    }
+    context["sourceManifestPath"] = run_path.parent / "source-manifest.json"
+    context["classesRoot"] = run_path.parent / "classes"
+    return context
+
+
+def validate_run_manifest(path_value, expected_sha256):
+    n_builder = _load_n_builder()
+    run_path = n_builder._canonical(path_value, "RUN_MANIFEST_PATH")
+    _need(run_path.name == "run-manifest.json"
+          and run_path.parent == STAGE_PATH, "RUN_MANIFEST_LOCATION")
+    stage = _canonical_stage(n_builder, run_path.parent, require_empty=False)
+    run_raw = n_builder._read_file(run_path, MAX_RUN_MANIFEST_BYTES, "RUN_MANIFEST")
+    _need(type(expected_sha256) is str and HEX.fullmatch(expected_sha256) is not None
+          and _sha(run_raw) == expected_sha256, "RUN_MANIFEST_HASH")
+    run_manifest = n_builder._strict_document(run_raw, MAX_RUN_MANIFEST_BYTES,
+                                              "RUN_MANIFEST")
+    _need(type(run_manifest) is dict
+          and run_manifest.get("schema") == "tsj-cohort-terminal-source-r2-run-v2"
+          and type(run_manifest.get("build")) is dict, "RUN_MANIFEST_SCHEMA")
+    n_context = _load_n_context(n_builder)  # One complete N validation for this entry.
+    build = run_manifest["build"]
+    source_sha = build.get("sourceManifestSha256")
+    prior, input_manifest, identity, request, request_raw, source_raw = _validate_source_input(
+        n_builder, n_context, stage, source_sha, finalized=True)
+    call = _validate_compile_call(n_builder, n_context,
+                                  build.get("compileCallDirectory"), stage, request)
+    inventory, inventory_raw = _inventory_classes(n_builder, stage, source_sha)
+    inventory_path = n_builder._canonical(str(stage / "class-inventory.json"),
+                                          "CLASS_INVENTORY_PATH")
+    inventory_disk = n_builder._read_file(inventory_path, MAX_CLASS_INVENTORY_BYTES,
+                                          "CLASS_INVENTORY")
+    _need(inventory_disk == inventory_raw
+          and _sha(inventory_disk) == build.get("classInventorySha256"),
+          "CLASS_INVENTORY_BINDING")
+    expected_build = {
+        "sourceManifestPath": str(stage / "source-manifest.json"),
+        "sourceManifestSha256": _sha(source_raw),
+        "compileCallDirectory": str(call["directory"]),
+        "compileParentPath": str(call["parentPath"]),
+        "compileParentSha256": _sha(call["parentRaw"]),
+        "classInventoryPath": str(inventory_path),
+        "classInventorySha256": _sha(inventory_raw),
+        "classCount": inventory["classCount"],
+        "classBytes": inventory["totalBytes"],
+    }
+    _need(build == expected_build
+          and run_raw == n_builder._canonical_json(
+              _expected_run_manifest(input_manifest, expected_build)),
+          "RUN_MANIFEST_IDENTITY")
+    _validate_stage_closure(n_builder, stage, finalized=True)
+    _need(n_builder._read_file(run_path, MAX_RUN_MANIFEST_BYTES,
+                               "RUN_MANIFEST_RECHECK") == run_raw,
+          "RUN_MANIFEST_CHANGED")
+    context = _validated_context(n_builder, n_context, prior, run_path, run_raw,
+                                 run_manifest, input_manifest, identity,
+                                 source_raw, inventory, call)
+    context["sourceManifestPath"] = stage / "source-manifest.json"
+    return context
+
+
+def audit(run_manifest_path, run_manifest_sha256):
+    return validate_run_manifest(run_manifest_path, run_manifest_sha256)
+
+
+def _emit(value):
+    raw = json.dumps(value, ensure_ascii=True, sort_keys=True,
+                     separators=(",", ":"), allow_nan=False).encode("ascii")
+    sys.stdout.buffer.write(raw + b"\n")
+    sys.stdout.buffer.flush()
+
+
+def _audit_summary(context):
+    return {
+        "schema": "tsj-cohort-terminal-source-audit-r2-v2",
+        "status": "SOURCE_AUDIT_ONLY",
+        "sourceSha256": context["sourceSha"],
+        "sourceRows": len(context["sourcePaths"]),
+        "compilerSourceCount": context["manifest"]["compilerSourceCount"],
+        "descriptorSha256": context["descriptorSha256"],
+        "generatedInputSha256": context["generatedSourceSha256"],
+        "classCount": context["classInventory"]["classCount"],
+        "classBytes": context["classInventory"]["totalBytes"],
+        "wireSha256": context["wire"]["sha256"],
+    }
+
+
+def main(argv=None):
+    import argparse
+    parser = argparse.ArgumentParser(prog="build_inputs_r2.py")
+    commands = parser.add_subparsers(dest="command", required=True)
+    prep = commands.add_parser("prepare")
+    prep.add_argument("stage", nargs="?", default=str(STAGE_PATH))
+    finish = commands.add_parser("finalize")
+    finish.add_argument("stage")
+    finish.add_argument("compile_call_directory")
+    finish.add_argument("source_manifest_sha256")
+    check = commands.add_parser("audit")
+    check.add_argument("run_manifest")
+    check.add_argument("run_manifest_sha256")
+    args = parser.parse_args(argv)
+    try:
+        if args.command == "prepare":
+            result = prepare(args.stage)
+        elif args.command == "finalize":
+            result = finalize(args.stage, args.compile_call_directory,
+                              args.source_manifest_sha256)
+        else:
+            result = _audit_summary(audit(args.run_manifest, args.run_manifest_sha256))
+        _emit(result)
+        return 0
+    except BuildInputError as failure:
+        code = failure.code if re.fullmatch(r"[A-Z0-9_]{1,96}", failure.code) else "INVALID_ERROR_CODE"
+        sys.stderr.write("COHORT_TERMINAL_BUILD_FAIL " + code + "\n")
+        sys.stderr.flush()
+        return 2
+    except Exception as failure:
+        code = getattr(failure, "code", None)
+        if type(code) is str and re.fullmatch(r"[A-Z0-9_]{1,96}", code):
+            sys.stderr.write("COHORT_TERMINAL_BUILD_FAIL N_" + code + "\n")
+            sys.stderr.flush()
+            return 2
+        kind = re.sub(r"[^A-Za-z0-9_]", "_", type(failure).__name__).upper()[:48]
+        sys.stderr.write("COHORT_TERMINAL_BUILD_FAIL INTERNAL_" + (kind or "ERROR") + "\n")
+        sys.stderr.flush()
+        return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

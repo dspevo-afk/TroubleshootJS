@@ -1,0 +1,155 @@
+{
+  "cleanupLimits": "FINAL_RESOURCE_STATE_PROVEN; ORIGINAL_UNLINK_SEQUENCE_NOT_CERTIFIED",
+  "exporterSha256": "df9c297f4eb491117bade351ceedf26ccef5059e47ad9a7f36006000f1a10923",
+  "freshGates": [
+    {
+      "exitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "phase": "source-export-unit-call-r3",
+      "processElapsedMs": 458.42130000000003,
+      "processRootAndLogsAbsent": true,
+      "receiptHashes": {
+        "owner.json": "2c2f77cf4ce335b4d0699b779b2ccbe1db0c45a2a1d5228e936662ae79639f2f",
+        "parent.json": "bbeb7fa35810a7ceeab7276a09e924c36f8ed20cc8e274f2252db94e3e321fab",
+        "process.json": "758daeaff34240c5fca1ee5c0e19852d7a9007ff72defe404b17779fd4118d3a",
+        "request.json": "2d6ce8fadc15ab4b43474aef1285f41a1ce8d966057c4aff363872f25e446a86",
+        "result.json": "ac00161e13454af3ae5cb7956818685dfd4d1bfba03e2abc309c06c1966b25f2",
+        "stderr.txt": "c58c74b995f408343597e73195729568d109cbd24f261907550a507863554116",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 921.4528
+    },
+    {
+      "exitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "phase": "source-export-positive-call-r3",
+      "processElapsedMs": 488.4194,
+      "processRootAndLogsAbsent": true,
+      "receiptHashes": {
+        "owner.json": "b23675cbaab64a7ca95d934effe41311d569c5f3754a17d2daf4e75c96429773",
+        "parent.json": "5f4291cf2a4b5d635151c91459c338d92dfd31294182842555fbbfdd5b99ba50",
+        "process.json": "cc21672acf4f213b1dfd643dc63477405ec719e17483341b700dd0f76a9e8e7e",
+        "request.json": "2a17f1ae0e13e9af7b863e8efa4c563f4ebed9559b719b8c4cc11337fc1951e7",
+        "result.json": "b18c30769f088e4a3864282e8b9043bf392e473aff033f57c548e5fe75f14cd8",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "f951f4268147b9b37fe0d8d78698296b657600aad77b35044b79d2cced9d7e77"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 746.1104
+    },
+    {
+      "exitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "phase": "source-export-occupied-call-r2",
+      "processElapsedMs": 474.0534,
+      "processRootAndLogsAbsent": true,
+      "receiptHashes": {
+        "owner.json": "19b0720cea6ffa235b78616a7eeb9a03c8248477357f16bf6e14f8b5b841f695",
+        "parent.json": "a63b31680c9e18d767e96a38f079cd59e033d67cd04ec779b8d89b8fcbc57716",
+        "process.json": "61dbf93da2327ec8aef24dfe9a67b0a096a8a9ab42b4a35348d190ebf426a694",
+        "request.json": "2a17f1ae0e13e9af7b863e8efa4c563f4ebed9559b719b8c4cc11337fc1951e7",
+        "result.json": "2382c69125eed77fd774f03666faf56835741587c0829d4549366da646a65db8",
+        "stderr.txt": "55f29a39b2aa03d50e7ecb3ee3a022cf0ce6e49d1df6f2a593e2ca5b7420ca42",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 737.5847
+    },
+    {
+      "exitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "phase": "source-export-bad-hash-call-r2",
+      "processElapsedMs": 473.1086,
+      "processRootAndLogsAbsent": true,
+      "receiptHashes": {
+        "owner.json": "c9ef955a39f0e87471845fbe06fb066f7b49828a33ef56659237f427009eb9b6",
+        "parent.json": "cb198b8b7ceb43cbddfcfe6e0f29b1fa2177aaa53bceb6b30b10ca7834cb89d8",
+        "process.json": "adb7f2c266bfccecb9f121a3ca8632ccfa8b99684da2ff2c19150e37a8c63e75",
+        "request.json": "78ad798e698c94b0f950c42973a6d94c90a6d4adb29b0643951e23ddb5030b02",
+        "result.json": "01e5fb07d766c24bbc049da8c401178ef08abcc7b69ebb8cd041848a7b75944a",
+        "stderr.txt": "093ea3382ae0f7f1f23884537fba130742c77995540823ec7c66d4384e045a31",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 736.8528
+    }
+  ],
+  "junctions": {
+    "freshLiteralCanary": "VERIFIED_OWNER_JUNCTION; SELECTED_NONRECURSIVE_LITERAL_UNLINK_RETURNED0; LINK_ABSENT_SENTINEL_TARGET_UNCHANGED",
+    "originalLinkFinalState": "BOTH_LSTAT_ABSENT_TARGETS_INTACT",
+    "originalNegativeControls": "BOTH_JUNCTIONS_REJECTED",
+    "originalUnlinkOperation": "UNCERTIFIED_ACTION; INITIAL_CLEANUP_REQUEST_REJECTED_BY_AUTOMATIC_APPROVAL_REVIEW; SUBSEQUENT_IDENTITY_AND_LITERAL_REQUESTS_FOUND_LINKS_ALREADY_ABSENT",
+    "remainingOwnedJunctions": 0
+  },
+  "newNativeCalls": 0,
+  "pathLiteralCount": 21,
+  "playable100": 0,
+  "preservedEarlierFailures": {
+    "details": "STR_ONLY_REDACTOR_LEFT_PATH_BYTE_LITERAL_GUARDS; FINAL_FIX_PRESERVES_BYTES_LITERAL_TYPE",
+    "preflightFailure": "WORKER_SHA_TRANSCRIPTION_REJECTED_BEFORE_EXECUTION; ACTUAL_BYTES_ROOT_VERIFIED",
+    "proofSha256": "6308951114aeb1964231ba579d1c64992c9a7e84395db0be197ee74682e4df8b"
+  },
+  "priorStagedCheckFailure": "EXACT_NATIVE_REVIEW_HAD_EXTRA_BLANK_LINE_AT_EOF; OLD_REVIEW_FILES_ARCHIVED_UNCHANGED; NO_GIT_WHITESPACE_RULE_DISABLED",
+  "reuseBoundary": {
+    "allPathParserReadWriteAndPinDefinitionsConstants": "IDENTICAL_AST",
+    "changedAstFunctions": [
+      "project_source",
+      "export_review_sources"
+    ],
+    "exportFunctionBeforeProjection": "IDENTICAL_AST; ALL_FOUR_NEGATIVE_GUARDS_RUN_BEFORE_CHANGED_PROJECTION",
+    "priorProofSha256": "6308951114aeb1964231ba579d1c64992c9a7e84395db0be197ee74682e4df8b",
+    "reusedCases": "REAL_INPUT_AND_OUTPUT_JUNCTION_REJECTION_ONLY"
+  },
+  "reusedJunctionGates": [
+    {
+      "exitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "phase": "source-export-input-junction-call-r1",
+      "processElapsedMs": 402.1417,
+      "processRootAndLogsAbsent": true,
+      "receiptHashes": {
+        "owner.json": "17bde1dad3557991e07d885cf3eb0b8e908fc1af3c5c8e1f05dd56aba997afa0",
+        "parent.json": "acc0a6616e68de92d5d3511a10ea34841453857524f511acd677cb4afd950b8e",
+        "process.json": "cfcec25d6e92e640d4eef7740ffdd6ad882d835ca0fbdaf0bbdb5ec296bdff15",
+        "request.json": "b0796e1a4d3058da9892d75b78e9d135a1e8be5c3b12ce9864c4486d1d04b7ea",
+        "result.json": "60faf21f9194b2c533f4f2c6c938ebef8c42fc3633b7517d4e3b2054cdc56be5",
+        "stderr.txt": "b45fb37426c6c90e301c45352032c1a2e2d836af0442247e23a6a58169b80ed2",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 672.5227
+    },
+    {
+      "exitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "phase": "source-export-output-junction-call-r1",
+      "processElapsedMs": 398.194,
+      "processRootAndLogsAbsent": true,
+      "receiptHashes": {
+        "owner.json": "6832b4c967cc88e2cdd5434d647aea1157b99877628141399caaf97c8868ff66",
+        "parent.json": "c3e242b575a13d69f09ec70059bf643befe3433edb008cafeb1709ed1abf0b47",
+        "process.json": "a90902e5647915871cf4f02d28659232d6d144163943fd5ca9b6a8fa6dbda93a",
+        "request.json": "2b12e84aa53f30fad0fbe60674c88205f15a0d1d1c4ef0079d85aec95498ed8f",
+        "result.json": "53e89753e4cfdc3ed08e59cb40781808e9820bfc271bf4dd30c71bb093327013",
+        "stderr.txt": "752a749db78243fd2ead68fc5aebb3e881263a910439772182fb96abc2f5272b",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 669.1585
+    }
+  ],
+  "reviewFileCount": 5,
+  "reviewNormalization": "ONLY_TERMINAL_EMPTY_LINES; ONE_ORIGINAL_STYLE_FINAL_ENDING; ORIGINAL_SOURCE_SHA_UNCHANGED",
+  "schema": "tsj-source-review-export-gates-v2",
+  "sourceExportManifestSha256": "66f2a20ff26c8858fc0e68b911c82a275d90cdd543e1e53e1e0e6253096dc026",
+  "status": "PASS_PACKAGING_ONLY_NOT_REPLAY",
+  "testsSha256": "01f6bb1cf24b0a9e75927969e091434697af71b9b973bce8f8a1219e18a602b2",
+  "unitTests": 9
+}

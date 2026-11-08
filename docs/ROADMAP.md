@@ -909,6 +909,24 @@ Implementation `427a7fbfccb05c5b831ccd89ee25b7d925e03082` is normally pushed to
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified;
 completion Gmail `1a1ba0236ea79ef9` sent once.
 
+The [bounded authored cohort terminal diagnostic](task-evidence/Q100/cohort-terminal-diagnostic-r1/README.md)
+is locally accepted; publication is pending. One fresh original and exactly two
+NULL/OBSERVE arms preserve route parity and independently match
+D_COIL_LOW:BRANCH_SEARCH_LIMIT/419905 expansions/43 traversed nets. Actual fresh
+receipt307/lineage77,246 PAD identities, original-copy geometry/effects,
+owner-group/copy reconciliation and cleanup pass. Final1092-source JDK8 compile
+produces4288 classes; typed four-fixture canary/host, real occupied-output and
+bad-hash controls,76 final consumer tests and6 unchanged stage-closure tests pass.
+The authored native run takes17.644s;465 groups and1.205s maximum group stay
+within unchanged limits. Two consumer role defects were corrected against the
+frozen contract; the same captured bytes passed without another native run.
+All failed build/host/reader attempts remain recorded. Source review projections
+retain original hashes and are not a standalone replay or compiler source.
+Both routes remain rejected; playable100=0/betaHELD. No production, Player/GWT,
+electrical/population, full30 or HARD/PSYCHOTIC renewal follows. Next is bounded
+diagnosis or a frozen routing treatment for the observed branch cap, followed
+by actual physical/access/runtime/functional proof before any adoption.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

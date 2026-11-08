@@ -59,6 +59,20 @@ a deep freeze or content-mutation detector. The [component prerequisite](task-ev
 qualifies formatter/metadata/transport bytes and limits; typed owner-mode/host
 materialization and full D acceptance remain separate. No production owner changes.
 
+The native cohort terminal evidence adapter composes one original capture and
+two fresh NULL/OBSERVE arms under one producer-start Meter. Setup, live owner
+credits, callbacks, metadata and bounded export share the original limits.
+Detached scalar terminal evidence comes from the retired actual search;
+NULL has no callback state and OBSERVE retains its matching tuple. Original
+identity,246 PAD endpoints, route parity, owner-group census and export copies
+are checked independently. Original-copy effects are the bounded effects oracle.
+The host authenticates source/class/process/descriptor closure; its canary mode
+alone exclusively writes the captured bytes after semantic acceptance and then
+rechecks them. The [bounded authored diagnostic](task-evidence/Q100/cohort-terminal-diagnostic-r1/README.md)
+qualifies this native evidence path for its exact failing routes, with no
+production routing or electrical change. Published source projections are for
+review; private pinned dependencies prevent standalone public replay.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,
