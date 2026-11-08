@@ -1,4 +1,50 @@
-# Current checkpoint: Z-A components accepted; normalizer in progress
+# Current checkpoint: Z-A published; Z-B normalizer source review next
+
+UTC 2026-11-08. Active F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107. Z-A implementation
+fce6ace716022502dd49eb88cd85bcb3051adfac normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified.
+Gmail1a1bd954448c4636 SENT_ONCE; this documentation receipt gets no second mail.
+Verify actual HEAD after receipt. Origin dspevo-afk/TroubleshootJS; no upstream.
+X/Y receipts and completion mails remain verified/SENT_ONCE as recorded below.
+Root actual47-path staged tree d9659434c5241399296eeee245a5d8a907993e71,
+patch9e4216cc0d268f84594791c2da56297f9d35ea2e147ad95eb21e5c872a014153,
+byte/privacy/whitespace and real-space rejection checks passed. F clean after Z-A
+before receipt. Main5f05b005 retains9tracked/6untracked/staged0; E d9747229 report M;
+Desktop e0c36885 retains7tracked/73untracked/staged0. Main/E report mirrors only.
+
+Z OS-temp/tsj-q100-current-context-kernel-1e995d2a67ea4b128961c43605a5cc7c.
+Published current-context-kernel-r1 contains only achieved codec/pure-kernel
+components. Final proof02879b00c9dfecadf0131fc420d8e07dfc5ad66904784fe641270c2476b9672c;
+codecC1F27377/extractora0fed412/test52f090c4/kernel f87c3ef7/provenance215ad455.
+Final28 tests/0SKIP private and public; JDK8 syntheticfactory4072 assertions/
+3major51 classes/271entry inventory; no real routing/Session/original. Kernel
+13N/67P7bindings inverseAST and syntheticruntime pass. Three failed adapters and
+EOF index failure preserved; affected final-source gates renewed. Actual native
+setup work remains unqualified; inventory271/staticfactory290 is not a Meter proof.
+
+Z-B worker normal_prior_normalizer_z1 owns only normalize_prior.py,
+test_normalize_prior.py and optional notes in Z; source-only, no execute/spawn/
+stage/publish/mail. Coherent source draft now reported; collect final hashes and
+review before any execution. API normalize_prior(role_bytes,allowlist_bytes,
+authority,kernel_callbacks,codec_callbacks). Authority self-hash/currentSourceAuthority
+shape needs root review for acyclic identity and truthful external source/tool/
+directory/resource snapshots. No normalizer or full N-run positive accepted.
+Other leaves stopped. No actual20-role normal-prior body/read transition. Do not
+run old D descriptor/result/generated-input, old module/builder/CLI or protected/
+heldout DATA. One real original+exactly NULL/OBSERVE remains unspent/gated; no extra
+control/original/arm/retry. No persistent process/link; private source/synthetic
+DATA/classes/receipts retained. Old uncertain resources untouched, details below.
+
+Next complete normalizer source review and meaningful synthetic/context/authority/
+semantic gates, then explicit phase record before pinned normal-prior ingest and
+fresh current host/native/class/work/capture gates. Root must not publish missing
+prior/native qualification as completed. Caps/seeds/oracles/epochs unchanged;
+Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historical protected unreadUNCERTIFIED;
+full-D/H1 unqualified; playable100=0/betaHELD. CircuitJS remains truth. Production/
+GWT/visible Player NOT APPLICABLE, electrical/population not renewed for Z-A.
+
+# Historical checkpoint: Z-A accepted before publication
 
 UTC 2026-11-08. Active F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107, HEAD1bf0265715f0a9b1b54282dae048bb96550d1a00.

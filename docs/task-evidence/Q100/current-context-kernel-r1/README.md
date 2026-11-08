@@ -1,6 +1,9 @@
 # Current context and pure prior kernel components
 
-Accepted locally for component scope; final index review/publication pending.
+Accepted and published for component scope. Implementation
+`fce6ace716022502dd49eb88cd85bcb3051adfac` is verified on
+`origin/codex/q100-physical-feasibility`; Gmail `1a1bd954448c4636` sent once.
+See [publication](PUBLICATION_R1.md).
 This adds a pure current context codec, deterministic V2 Java DATA emitter and a
 standalone N/P07 semantic kernel. [Scope](SCOPE_R1.md) separates this achieved
 substep from the normalizer, host and genuine producer that remain in progress.

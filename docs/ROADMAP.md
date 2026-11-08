@@ -1127,7 +1127,10 @@ assertions with3 major51 classes. The kernel preserves13 N/67 P07 source binding
 under an independent inverse-prefix AST audit; synthetic P07/N runtime positives
 and rejections pass. Three test/canary adapter failures remain preserved. Normalizer
 integration and full N/prior/native/OriginalArm qualification are not completed or
-renewed here; no real20-role body was read. Publication pending final review. Next
+renewed here; no real20-role body was read. Implementation
+`fce6ace716022502dd49eb88cd85bcb3051adfac` normally pushed to
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
+Gmail `1a1bd954448c4636` sent once. Next
 is current normalizer completion and source/authority gates before explicit data
 ingest. Original caps/seeds/oracles and Full30EXCLUDED/HARD-PSYCHOTIC unavailable/
 unrun/historical unreadUNCERTIFIED/playable100=0/betaHELD remain.
