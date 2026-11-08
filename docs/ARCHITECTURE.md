@@ -222,6 +222,16 @@ externally frozen private root identities and operational phase transition.
 Real normal-role ingest and semantic/native qualification remain gated; this
 component is accepted only on synthetic I/O and pinned allowlist metadata.
 
+The [current context/pure kernel components](task-evidence/Q100/current-context-kernel-r1/README.md)
+own structural canonical context validation, deterministic V2 input DATA and the
+source-preserving N/P07 semantic closure. Runtime identity remains separate;
+dataJson returns a fresh nativeProjection Map. Entry inventory is not total
+factory/setup work. Pure-kernel provenance and inverse-prefix AST audit retain
+the independent oracles; synthetic fixtures check actual renamed execution.
+These components do not authenticate real prior records, admit a normalizer or
+enable full-D. The caller's root/phase/source authority and later reconciliation
+remain required before real data and the one genuine producer invocation.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

@@ -1,0 +1,32 @@
+{
+  "containerConstructors": 16,
+  "counts": {
+    "booleanArguments": 6,
+    "integerValueOfCalls": 13,
+    "listAdds": 186,
+    "listConstructors": 6,
+    "mapConstructors": 10,
+    "mapPuts": 69
+  },
+  "entryComponents": {
+    "capture": 147,
+    "ownerSettings": 11,
+    "prior": 90,
+    "rootProjection": 6,
+    "seeds": 4,
+    "sourceIdentity": 13
+  },
+  "entryInventory": 271,
+  "entryMutations": 255,
+  "explicitFactoryApiDemand": 290,
+  "generatedDataSha256": "c8a25f88ccf523e030e7e1c14073255b78b9358687ac65088339a237bea80089",
+  "nativeMeterCounters": "NOT_MEASURED_NOT_QUALIFIED",
+  "originalCaptures": 0,
+  "realOracleBodiesRead": 0,
+  "requirement": "ALL_ACTUAL_FACTORY_AND_PREFLIGHT_COSTS_MUST_BE_ADMITTED_IN_REAL_SETUP_BEFORE_CAPTURE; ENTRYCOUNT_IS_NOT_TOTALWORK",
+  "routingRuns": 0,
+  "scalarBoxingCallDemand": 19,
+  "sessions": 0,
+  "status": "INDEPENDENT_STATIC_INVENTORY_OF_SYNTHETIC_GENERATED_DATA_ONLY",
+  "vmInternalCost": "NOT_MEASURED; BOUNDED_API_MODEL_REQUIRES_LATER_NATIVE_SOURCE_AUDIT"
+}

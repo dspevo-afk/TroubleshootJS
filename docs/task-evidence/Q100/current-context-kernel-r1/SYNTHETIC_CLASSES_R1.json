@@ -1,0 +1,41 @@
+{
+  "classes": [
+    {
+      "bytes": 8094,
+      "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryInputV2.class",
+      "sha256": "1493476872f2ec49e84ba9b7c0b6248333d6d9301c9d3d5f0726b32820586b49"
+    },
+    {
+      "bytes": 6638,
+      "path": "com/lushprojects/circuitjs1/client/ContextInputCanary.class",
+      "sha256": "84c9b79fea1443c884e31f0aaf142524f78bc6f6fbc5917f23b3bd46ef06773e"
+    },
+    {
+      "bytes": 498,
+      "path": "com/lushprojects/circuitjs1/client/LiteralInputCanary.class",
+      "sha256": "740f5bdd5e6d81674b37f56becf3708baab63657ff46ece883c88a203f78e4ab"
+    }
+  ],
+  "compile": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "synthetic-data-compile-r1",
+    "processElapsedMs": 1069.7033000000001,
+    "receipts": {
+      "owner.json": "c8bba4e13b7a812ab3d43e704a327a03be3da81da57bed59d90aaae6599d8c35",
+      "parent.json": "432be04d1bd6471295395995ecaec30cfa8e7c65e203597897d8e606254d957d",
+      "process.json": "628b942966d25f3ffa55b8ced4d6bbdc6e2b3418f10d1c3fef2e91c6d874a6f6",
+      "request.json": "03733416a0d7bb098a28975b8199062967b9ee22abeeb92bc7ce7592bd6453a5",
+      "result.json": "d03091df22fc4ef35e5773d924166c43b4f94cd44d1dc9ee378badde1e064eae",
+      "stderr.txt": "594d455b0e001a516f324c4d1ddb94936d8c6ac3719e15df99fb919eb4a2c913",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 1313.7759
+  },
+  "inheritedClasses": 0,
+  "major": 51,
+  "scope": "SYNTHETIC_DATA_AND_FACTORY_CANARY_ONLY"
+}

@@ -1120,6 +1120,18 @@ normalizer/pure-parser implementation, with generated API/types and entry-count
 accounting defined before execution. Full30EXCLUDED, HARD/PSYCHOTIC unavailable/
 unrun, historical unreadUNCERTIFIED, playable100=0/betaHELD; caps/seeds/oracles stay.
 
+The [current context and pure prior kernel components](task-evidence/Q100/current-context-kernel-r1/README.md)
+are locally accepted as a necessary source/component substep. Private and public
+28-test suites pass without skips; the JDK8 synthetic DATA factory passes4072
+assertions with3 major51 classes. The kernel preserves13 N/67 P07 source bindings
+under an independent inverse-prefix AST audit; synthetic P07/N runtime positives
+and rejections pass. Three test/canary adapter failures remain preserved. Normalizer
+integration and full N/prior/native/OriginalArm qualification are not completed or
+renewed here; no real20-role body was read. Publication pending final review. Next
+is current normalizer completion and source/authority gates before explicit data
+ingest. Original caps/seeds/oracles and Full30EXCLUDED/HARD-PSYCHOTIC unavailable/
+unrun/historical unreadUNCERTIFIED/playable100=0/betaHELD remain.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

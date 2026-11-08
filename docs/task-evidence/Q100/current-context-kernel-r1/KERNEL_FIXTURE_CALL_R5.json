@@ -1,0 +1,19 @@
+{
+  "childExitCode": 0,
+  "isolatedCleanupDurationMs": null,
+  "ownedRootAndLogsAbsent": true,
+  "phase": "kernel-synthetic-fixture-r5",
+  "processElapsedMs": 424.391,
+  "receipts": {
+    "owner.json": "93c7e6855a5aea3d05e3f4619bd9a071324a62a13a83c2be1bc323d93ecb4223",
+    "parent.json": "a0f95bcbcdb6ed8db25f82588aad5321632a419966fa2d062d0d9f95fe3de296",
+    "process.json": "e921955332a606289665bc5b54fd192dbbc82b018f0de939bea1e6a58dfafe15",
+    "request.json": "1b0d99484dd281603ef10d696e1a00d934f7f18ae8630a1be1b84626b62c1e4d",
+    "result.json": "f15433c1b04b24f477ab30d9a00178cf46d0765289d1c902cdc0c8058470d355",
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout.txt": "c68c2db16e94d0c215f3c13a6565c8b131eb28db46740299a49526e5284bc6d3"
+  },
+  "status": "PASS",
+  "terminationProven": true,
+  "wrapperTotalElapsedMs": 665.1353
+}

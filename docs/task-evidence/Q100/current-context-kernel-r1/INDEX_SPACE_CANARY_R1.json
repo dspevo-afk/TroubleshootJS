@@ -1,0 +1,8 @@
+{
+  "actualSpaceBeforeCRRejected": true,
+  "bytePinnedPlanPreserved": true,
+  "diagnosticSha256": "c99cca77bfbb88dbed8f0c18db7431c197437ee295ae5091e91337d4eec9eff2",
+  "exitCode": 2,
+  "file": "PLAN_R1.md",
+  "status": "EXPECTED_REJECTION"
+}

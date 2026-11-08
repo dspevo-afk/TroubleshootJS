@@ -1,0 +1,33 @@
+{
+  "facadeTargets": {
+    "result_tree_minimum_units": "N__result_tree_minimum_units",
+    "stable_cohort_order": "N_stable_cohort_order",
+    "validate_operation": "P07_validate_operation",
+    "validate_prior_run": "N__validate_run",
+    "validate_prior_terminal_failure": "N__validate_terminal_failure"
+  },
+  "kernelExecuted": false,
+  "kernelSha256": "f87c3ef799a47f14955240111d7af20737db3c329242c036f449eb1002f11873",
+  "limit": "STRUCTURAL_AST_EQUIVALENCE_UNDER_INVERSE_PREFIX_MAP; LEXICAL_SEMANTICS_ALSO_NEED_RUNTIME_FIXTURES",
+  "modules": [
+    {
+      "bindings": 13,
+      "closureAstSha256": "24c62bc186ebde2a6647a97f15db382388c2c47c878a2caf799b7a501f3c79a1",
+      "inverseAstMatchesOriginal": true,
+      "label": "N",
+      "sourceSha256": "84c8dbf2805ab5607f1e79f1d1fa67cc1a2e4ec06d3a22fdd44771ce48d03b52",
+      "statements": 13
+    },
+    {
+      "bindings": 67,
+      "closureAstSha256": "95e41d9f1e3f2f9d7c60e7cd4595a15cc150246033b9a020bfa402338f9e56f6",
+      "inverseAstMatchesOriginal": true,
+      "label": "P07",
+      "sourceSha256": "a314cdc732069bca17f73a724cd21295af334d9baead82fcdb13bf0600c5554e",
+      "statements": 66
+    }
+  ],
+  "provenanceSha256": "215ad455f799117d30ca9a7e3101ee9326c8af4fdd30295c4fd0d28331a7436f",
+  "realOracleBodiesRead": 0,
+  "status": "PASS_INDEPENDENT_INVERSE_PREFIX_AST_AUDIT_ONLY"
+}

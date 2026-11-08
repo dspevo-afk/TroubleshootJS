@@ -1,0 +1,73 @@
+{
+  "codec": {
+    "bytes": 21653,
+    "role": "CURRENT_CODEC_SOURCE",
+    "sha256": "c1f27377d5d7a6c83384e34cc2ded334b0b022cfb68722265533976c0661ba27"
+  },
+  "eofOnlySourceCorrection": {
+    "leafReviewRemainsBoundToPreEofSource": true,
+    "newSha256": "a0fed4127673b665b5fb977cbd5ff06f95612d3bfc3786dfb98816a4edeebf7e",
+    "oldSha256": "56dcfe2a247051d1926374df05c9d95db17cba07823babf0069fbcb63c59967c",
+    "rootFinalReview": true,
+    "sourceAstUnchanged": true
+  },
+  "extractor": {
+    "bytes": 45816,
+    "role": "CURRENT_EXTRACTOR_SOURCE",
+    "sha256": "a0fed4127673b665b5fb977cbd5ff06f95612d3bfc3786dfb98816a4edeebf7e"
+  },
+  "independentInverseAst": {
+    "facadeTargets": {
+      "result_tree_minimum_units": "N__result_tree_minimum_units",
+      "stable_cohort_order": "N_stable_cohort_order",
+      "validate_operation": "P07_validate_operation",
+      "validate_prior_run": "N__validate_run",
+      "validate_prior_terminal_failure": "N__validate_terminal_failure"
+    },
+    "kernelExecuted": false,
+    "kernelSha256": "f87c3ef799a47f14955240111d7af20737db3c329242c036f449eb1002f11873",
+    "limit": "STRUCTURAL_AST_EQUIVALENCE_UNDER_INVERSE_PREFIX_MAP; LEXICAL_SEMANTICS_ALSO_NEED_RUNTIME_FIXTURES",
+    "modules": [
+      {
+        "bindings": 13,
+        "closureAstSha256": "24c62bc186ebde2a6647a97f15db382388c2c47c878a2caf799b7a501f3c79a1",
+        "inverseAstMatchesOriginal": true,
+        "label": "N",
+        "sourceSha256": "84c8dbf2805ab5607f1e79f1d1fa67cc1a2e4ec06d3a22fdd44771ce48d03b52",
+        "statements": 13
+      },
+      {
+        "bindings": 67,
+        "closureAstSha256": "95e41d9f1e3f2f9d7c60e7cd4595a15cc150246033b9a020bfa402338f9e56f6",
+        "inverseAstMatchesOriginal": true,
+        "label": "P07",
+        "sourceSha256": "a314cdc732069bca17f73a724cd21295af334d9baead82fcdb13bf0600c5554e",
+        "statements": 66
+      }
+    ],
+    "provenanceSha256": "215ad455f799117d30ca9a7e3101ee9326c8af4fdd30295c4fd0d28331a7436f",
+    "realOracleBodiesRead": 0,
+    "status": "PASS_INDEPENDENT_INVERSE_PREFIX_AST_AUDIT_ONLY"
+  },
+  "independentLeafReview": {
+    "extractorSha256": "56dcfe2a247051d1926374df05c9d95db17cba07823babf0069fbcb63c59967c",
+    "limits": "NOT_FORMAL_LEXICAL_EQUIVALENCE_PROOF_NOT_RUNTIME_PASS",
+    "result": "NO_BLOCKING_SEMANTIC_MISMATCH_FOUND",
+    "scope": "PINNED_N_P07_LEXICAL_CLOSURE_AND_NAMESPACE_SOURCE_ONLY_NO_EXECUTION"
+  },
+  "normalDataReadTransition": false,
+  "preExecutionFindings": [
+    "P07_RECORD_STRING_SCHEMA_NOT_INTEGER",
+    "P07_TOKEN_COORDINATE_AND_GROUP_BOUNDS",
+    "JSON_DICTIONARY_KEYS_ARE_STRINGS",
+    "EMPTY_JAVA_LITERAL_PARITY",
+    "PRESERVE_AST_LINES_AND_LOOKUP_SCOPE_BEFORE_RENAME",
+    "PYTHON313_LAMBDA_AND_PEP709_COMPREHENSION_SCOPE_AND_SHADOWING",
+    "GENERATED_NAMESPACE_CAPTURE_REJECTION",
+    "REGISTERED_TEST_SUBJECT_MODULE"
+  ],
+  "remainingMilestone": "NORMALIZER_SOURCE_IN_PROGRESS_NOT_ACCEPTED",
+  "scope": "CONTEXT_CODEC_GENERATED_DATA_AND_PURE_PRIOR_KERNEL_ONLY",
+  "status": "PASS_ROOT_FINAL_SOURCE_COMPONENT_REVIEW",
+  "unresolvedComponentBlockers": []
+}

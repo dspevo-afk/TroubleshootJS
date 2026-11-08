@@ -1,0 +1,22 @@
+{
+  "algorithmUnchanged": true,
+  "cause": "EXTRA_BLANK_LINE_AT_EOF",
+  "command": "git diff --cached --check",
+  "contextAndFactoryInputsUnchanged": true,
+  "exitCode": 2,
+  "file": "extract_prior_kernel.py",
+  "freshGateFiles": [
+    "EXTRACTOR_UNITS_R3.json",
+    "EXTRACTOR_DERIVE_R3.json",
+    "KERNEL_AST_AUDIT_R3.json",
+    "KERNEL_FIXTURE_GATE_R5.json",
+    "RUNTIME_UNITS_GATE_R2.json",
+    "FINAL_SOURCE_PUBLIC_R2.json"
+  ],
+  "newSourceSha256": "a0fed4127673b665b5fb977cbd5ff06f95612d3bfc3786dfb98816a4edeebf7e",
+  "oldSourceRetained": true,
+  "oldSourceSha256": "56dcfe2a247051d1926374df05c9d95db17cba07823babf0069fbcb63c59967c",
+  "realOracleBodiesRead": 0,
+  "requiredFinalSourceExtractorGates": "PASS_FRESH_PRIVATE_PUBLIC_UNITS_DERIVATION_AST_AND_RUNTIME",
+  "status": "FAIL_PRESERVED_THEN_SOURCE_FIXED"
+}

@@ -1,0 +1,27 @@
+{
+  "call": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "extractor-units-r2",
+    "processElapsedMs": 390.89340000000004,
+    "receipts": {
+      "owner.json": "e059b67c51e6320c7e8e7dade0471317360a3bf9efe0690413bb1411746f5d22",
+      "parent.json": "d0525553094d82c74cb98cfe27ce1542aa4aaf5aa2fa2130bd3522cae7949f6a",
+      "process.json": "31209b918fbf4b0caae155c616475a171ae4262f3b73ce56c9450661877b3bf6",
+      "request.json": "8d8229707574ab6627931587420199c89c31ad0408767d35142d2a6b15340e24",
+      "result.json": "519b46eaff7183863b21e5f69f18e8a60ff840d62dbe15badf233aacc3041c77",
+      "stderr.txt": "7fb7f5ffa7c6c9b428a34174da50cf0a117af4b30a5bf6cff6c82a64c71a9221",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 639.7453
+  },
+  "inputSha256": "b65d2fe428ce465087931b547c4f44db611cde3ea5c3d9e5ea4b687ce69d8815",
+  "oldModulesLoaded": 0,
+  "originalCaptures": 0,
+  "realOracleBodiesRead": 0,
+  "sessions": 0,
+  "status": "PASS_SYNTHETIC_SOURCE_EXTRACTOR_ONLY"
+}

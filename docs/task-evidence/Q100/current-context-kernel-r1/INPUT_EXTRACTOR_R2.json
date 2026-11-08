@@ -1,0 +1,72 @@
+{
+  "authority": [
+    {
+      "bytes": 4734,
+      "role": "PARENT_CONTEXT_CONTRACT",
+      "sha256": "3536015e2bf93078b9d5b05d6963faf8b136dec98fe088a65a3da62af0e5bbcc"
+    },
+    {
+      "bytes": 39114,
+      "role": "LEGACY_PROJECTION_SOURCE",
+      "sha256": "2cebcf6a26c61a3600c9ffcf5e1f1268e62bd966598a57e7d71587173d5b8724"
+    },
+    {
+      "bytes": 647,
+      "role": "LITERAL_ENCODER_SOURCE",
+      "sha256": "58ac9b029097d63e078adb70044e31aed29cd5e8d3bea1afee8b54df01a278e9"
+    },
+    {
+      "bytes": 137864,
+      "role": "P07_PURE_PARSER_SOURCE",
+      "sha256": "a314cdc732069bca17f73a724cd21295af334d9baead82fcdb13bf0600c5554e"
+    },
+    {
+      "bytes": 92761,
+      "role": "N_PURE_READER_SOURCE",
+      "sha256": "84c8dbf2805ab5607f1e79f1d1fa67cc1a2e4ec06d3a22fdd44771ce48d03b52"
+    },
+    {
+      "bytes": 71988,
+      "role": "LEGACY_PURE_PAD_AND_OPERATION_SOURCE",
+      "sha256": "dbe7ee4411d78217d08f118967dee873d63551d908747266145d12d1c44b5806"
+    },
+    {
+      "bytes": 194524,
+      "role": "PUBLIC_SYNTHETIC_P07_FIXTURE_SOURCE",
+      "sha256": "fa2366d1bc48f036c9b3f3eb2b6944633f8b386a7070902d8051dd92ef462973"
+    }
+  ],
+  "files": [
+    {
+      "bytes": 4561,
+      "role": "PLAN_R1.md",
+      "sha256": "c41cf30eb17f1f9dba5c18d2a1add2ec98cdae05ec55d0050c821819de8c3ea8"
+    },
+    {
+      "bytes": 45817,
+      "role": "extract_prior_kernel.py",
+      "sha256": "56dcfe2a247051d1926374df05c9d95db17cba07823babf0069fbcb63c59967c"
+    },
+    {
+      "bytes": 6500,
+      "role": "test_extract_prior_kernel.py",
+      "sha256": "52f090c44cda517bf290363aa89100618de6e34e778cfabc6fe78437c11d1c8e"
+    },
+    {
+      "bytes": 3380,
+      "role": "root_extraction_gates_r1.py",
+      "sha256": "4923ecc1934b9a5b66c16ebfc03e887807dd4a8f744ea4cb91db109ed6e69782"
+    },
+    {
+      "bytes": 10797,
+      "role": "root_gates_r1.py",
+      "sha256": "0e396c2310ed51c7940bc77923879c88fe7514781f69b157613f454eabeb3dc1"
+    }
+  ],
+  "normalPriorBatches": 0,
+  "oracleBodiesRead": 0,
+  "originalCaptures": 0,
+  "schema": "tsj-current-context-source-input-v1",
+  "scope": "SYNTHETIC_COMPONENT_ONLY_NO_PRIOR_QUALIFICATION",
+  "sessions": 0
+}

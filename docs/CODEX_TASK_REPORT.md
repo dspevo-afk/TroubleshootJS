@@ -1,4 +1,77 @@
-# Current checkpoint: Y fixed-role reader published; context implementation next
+# Current checkpoint: Z-A components accepted; normalizer in progress
+
+UTC 2026-11-08. Active F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107, HEAD1bf0265715f0a9b1b54282dae048bb96550d1a00.
+Origin dspevo-afk/TroubleshootJS; no upstream; normal target
+origin/codex/q100-physical-feasibility. Y381fffd9/receipt1bf02657/
+Gmail1a1bd4f6aaf99530 and X1915ab43/receipteabbd4e2/Gmail1a1bd3977bf84370
+published/verified/SENT_ONCE. No duplicate receipt mail. F clean after Y before Z;
+now intended Z-A public source/evidence/docs only. Main5f05b005 retains9tracked/
+6untracked/staged0; E d9747229 report M/staged0; Desktop e0c36885 retains7tracked/
+73untracked/staged0. Main/E report mirrors only; unrelated changes preserved.
+
+Z OS-temp/tsj-q100-current-context-kernel-1e995d2a67ea4b128961c43605a5cc7c.
+PLANc41cf30e froze sequence/API before execution. Public component code/packet
+current-context-kernel-r1. CodecC1F27377/test2a9479e9; extractora0fed412/test52f090c4;
+kernel f87c3ef799a47f14955240111d7af20737db3c329242c036f449eb1002f11873,
+provenance215ad455f799117d30ca9a7e3101ee9326c8af4fdd30295c4fd0d28331a7436f.
+Final component proof 02879b00c9dfecadf0131fc420d8e07dfc5ad66904784fe641270c2476b9672c.
+
+Accepted scope Z-A: codec structural/static context + deterministic V2 Java DATA,
+source-only pure N/P07 extraction and synthetic runtime execution. Z-B normalizer
+remains IN PROGRESS/unaccepted/private, not part of claimed completion. No gates
+for real prior/native are waived. Codec11/extractor9/runtime8 tests pass both
+private/public (28/0SKIP each); public generator reproduces kernel/provenance
+byte-for-byte. JDK8 syntheticfactory4072 assertions/271 entries/3major51 classes,
+zero inherited classes/routing/Session/original. Compile1069.7033ms op/1313.7759ms
+wrapper; factory461.2046/720.951. Entry inventory6+90+147+11+4+13=271;
+static factory16constructors+255mutations+19boxing=290 explicit calls, NOT native
+Meter work or VM cost; all actual setup costs still need admission before capture.
+Pure kernel13 N/67 P07 bindings; independent inverse-prefix AST source match,
+source-only leafreview (actual56dc SHA, no blocking mismatch); runtime fixture
+4positives/8exception rejections including tiny-as-AUTHORED rejection. Full N-run
+positive/prior authentication remains NOT RUN. No formal lexical proof claimed.
+
+Three gate failures preserved with raw receipts and original sources: test module
+subscript after loader changed to ModuleType (0 cases); wrong P7 error-class
+assumption; N machine code property vs unprefixed exception text. Only adapters
+fixed, no assertion/oracle weakening. Final synthetic runtime596.4625/842.3042ms;
+all returned processes terminate, owned roots/logs absent; isolated cleanup null.
+No new persistent process/link. Task source/synthetic DATA/classes/receipts retained;
+old uncertain browser14116/start639294472690745890/port58320, preview34180/
+start639294472514546595/port58264+14children and oldD timeout/unlink uncertainty
+remain untouched. Earlier X/Y failures/one Y symlink SKIP remain historical.
+
+Index exit2 for extra EOF blank line preserved; extractor EOF trimmed (AST
+unchanged), final source a0fed412. Fresh extractor9/derive/inverseAST/runtime8 and
+public9+8 gates pass on final bytes; generated kernel/provenance unchanged.
+Final extraction396.5101/642.6394ms; runtime424.391/665.1353ms. Earlier passes are
+historical. Independent leafreview still bound56dc source; root audited finalAST.
+
+Root actual index/diff/privacy/byte/whitespace review and normal commit/push/exact
+remote plus one Z-A component Gmail/receipt are next. No unresolved Z-A blocker.
+Worker normal_prior_normalizer_z1 owns only normalize_prior.py/test_normalize_prior.py
+(and optional notes) in Z; source-only, no execute/spawn/stage/publish/notify.
+Other leaves stopped. API normalize_prior(role_bytes,allowlist_bytes,authority,
+kernel_callbacks,codec_callbacks) planned; root must review complete source/gates.
+No actual20-role body or data-read transition; allowlistc487 remains unread.
+Current native/host/normalizer and one original+exactly NULL/OBSERVE remain gated;
+no extra control/original/arm/retry. Source maps/hostfieldinventory and callback
+exception distinctions are retained privately; old D helper SOURCE2ce/271 and
+PADhelper5c3915 read only as source, never old module/data execution. Public P7
+fixture Sourcefa2366d1 came from exact Gitblob1bf02657 (sparse file omitted), only
+selected pure definitions executed with current P7 namespace, no old module/CLI.
+
+Next current normalizer completion, component/source/authority/semantic tests and
+explicit data phase record before normal-only input derivation, then fresh current
+host/native class/work/capture gates before genuine invocation. Root must preserve
+all independent original/PAD/group/export/source/cleanup checks. Caps/seeds/epochs/
+oracles unchanged; Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historical
+protected unreadUNCERTIFIED; full-D/H1 unqualified; playable100=0/betaHELD. CircuitJS
+remains truth. Production/GWT/visible Player gates NOT APPLICABLE; electrical/
+population not renewed. Actual pinned normal-prior DATA remains unread here.
+
+# Historical checkpoint: Y published before Z source implementation
 
 UTC 2026-11-08. Active F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107. Y implementation
