@@ -910,7 +910,7 @@ Implementation `427a7fbfccb05c5b831ccd89ee25b7d925e03082` is normally pushed to
 completion Gmail `1a1ba0236ea79ef9` sent once.
 
 The [bounded authored cohort terminal diagnostic](task-evidence/Q100/cohort-terminal-diagnostic-r1/README.md)
-is locally accepted; publication is pending. One fresh original and exactly two
+is accepted and published. One fresh original and exactly two
 NULL/OBSERVE arms preserve route parity and independently match
 D_COIL_LOW:BRANCH_SEARCH_LIMIT/419905 expansions/43 traversed nets. Actual fresh
 receipt307/lineage77,246 PAD identities, original-copy geometry/effects,
@@ -926,6 +926,10 @@ Both routes remain rejected; playable100=0/betaHELD. No production, Player/GWT,
 electrical/population, full30 or HARD/PSYCHOTIC renewal follows. Next is bounded
 diagnosis or a frozen routing treatment for the observed branch cap, followed
 by actual physical/access/runtime/functional proof before any adoption.
+Implementation `66fd2d7c12992f1cf88f013ac25c79528de9c568` is verified on
+`origin/codex/q100-physical-feasibility`; completion Gmail `1a1ba9693e5350af` sent once.
+The next source-only scalar diagnosis has started; no new authored invocation
+is part of that substep.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

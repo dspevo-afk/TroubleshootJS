@@ -1,7 +1,8 @@
 # Bounded authored cohort terminal diagnostic
 
-Locally accepted for the exact recorded native candidate; publication is recorded
-in PUBLICATION.md after remote verification. The single authored comparison now
+Accepted and published as `66fd2d7c12992f1cf88f013ac25c79528de9c568` on
+`origin/codex/q100-physical-feasibility`; exact remote SHA verified and completion
+Gmail `1a1ba9693e5350af` sent once. See [publication receipt](PUBLICATION.md). The single authored comparison now
 has independently validated original identity, NULL/OBSERVE route parity,
 terminal scalar evidence, shared accounting, export and cleanup.
 
