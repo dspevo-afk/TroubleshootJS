@@ -852,7 +852,7 @@ Implementation `5410fb34109688b8524335b17251691798d0a6da` is normally pushed to
 Gmail `1a1b7accaaca64c3` was sent once.
 
 The [native capture copy-allowance prerequisite](task-evidence/Q100/native-copy-allowance-r1/README.md)
-is locally accepted; publication is pending. An exact checked native-only overlay
+is accepted and published. An exact checked native-only overlay
 carries a per-Meter effective remaining allowance through capture preflight and
 all wrapper data-copy guards. Defaults, global limits and structural bounds stay
 unchanged. Actual selected JDK8 focused/default canaries and the unchanged
@@ -865,6 +865,9 @@ Next is explicit R2 source-contract integration, exact setup/capture copy mergin
 bounded export and independent host/native/consumer gates. The full authored
 comparison remains NOT RUN/NOT ACCEPTED; playable100=0/betaHELD. No full30,
 HARD/PSYCHOTIC, electrical or population renewal is granted.
+Implementation `7fe4cddb82b3ccda54e603f3e19a6e4007fcc94e` is normally pushed to
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
+Gmail `1a1b893e9af1226b` was sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

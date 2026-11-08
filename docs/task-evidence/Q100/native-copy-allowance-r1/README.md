@@ -1,6 +1,8 @@
 # Native copy-allowance prerequisite
 
-Status: locally accepted for the bounded native-only seam; publication pending.
+Status: accepted and published as `7fe4cddb82b3ccda54e603f3e19a6e4007fcc94e` on
+`origin/codex/q100-physical-feasibility`; exact remote SHA verified.
+Completion Gmail `1a1b893e9af1226b` sent once.
 
 The historical capture adapter admits copies against its full global limit,
 then resets shared copy counters to callback-local counts. A caller's already

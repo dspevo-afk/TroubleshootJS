@@ -1,11 +1,12 @@
-# Current checkpoint: native copy allowance accepted; publication pending
+# Current checkpoint: native copy allowance published; R2 integration continues
 
 UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
-HEAD32d3ec922dd33cce0aa9602443f6b8f3a3da3627. The prior implementation5410fb34
-and receipt32d3ec92 remain exact origin/codex/q100-physical-feasibility;
-Gmail1a1b7accaaca64c3 SENT_ONCE. New native-only copy-allowance prerequisite
-is locally accepted and awaiting normal commit/push; no new email yet.
+Published implementation 7fe4cddb82b3ccda54e603f3e19a6e4007fcc94e (Bound native capture copies
+by remaining allowance) is exact origin/codex/q100-physical-feasibility;
+Gmail1a1b893e9af1226b SENT_ONCE after exact-SHA duplicate search returned zero.
+The native-only prerequisite is complete; this documentation receipt follows.
+Prior owner prerequisite5410fb34/32d3ec92 and email remain preserved; no duplicate.
 
 Packet docs/task-evidence/Q100/native-copy-allowance-r1 contains the complete
 readable native diff, sanitized source/process/class proof, actual default-reader
