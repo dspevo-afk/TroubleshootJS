@@ -1,8 +1,9 @@
-# Current checkpoint: native selected-head prerequisite accepted locally; publication pending
+# Current checkpoint: native selected-head prerequisite published; consumer integration next
 
 UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
-actual HEADda46e92f8ff8913131d92acbaf9c367660b37d96. Before this package F had
+accepted implementation bd5a4c6675a5d25aa40ffe989bf7a93b51b79157. The publication receipt
+commit carries this checkpoint; verify actual HEAD before next edits. F had
 only report M/staged0. Main5f05b005 preserves9tracked/6untracked/staged0; E d9747229
 report M; Desktop e0c36885 preserves7tracked/73untracked/staged0. Main/E receive
 only this checkpoint mirror; unrelated data/changes/failures remain untouched.
@@ -58,10 +59,12 @@ Owner Search.advanceOne unit is not primitive instruction accounting. Future D
 consumer must charge all ten scalar copies/validation/serialization once under
 its original shared Meter; integration remains NOT RUN/NOT ACCEPTED.
 
-NEXT: inspect integrated/staged diff, normal commit/push, verify exact remote SHA,
-send one completion Gmail and record receipt. Component publication/notification
-NOT DONE. After publication scope the consumer integration/independent oracle;
-no additional authored run is part of the current component. No routing-cap,
+PUBLISHED: bd5a4c6675a5d25aa40ffe989bf7a93b51b79157 — Qualify native branch-limit selection provenance —
+normal push/ls-remote exact on origin/codex/q100-physical-feasibility. Staged17path
+byte/diff review passed, treeef17b234. Gmail1a1bace2763845e7 SENT_ONCE after zero
+duplicate search. Receipt commit/docs only; do not email again. NEXT: separately
+scope consumer/Meter/wire integration and independent generic-fixture oracle. No
+additional authored invocation belongs to this component; no routing-cap,
 production adoption or physical/access/runtime/functional qualification inferred.
 
 Resources: no new persistent process/browser/server/junction. Two P junctions

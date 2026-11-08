@@ -933,7 +933,9 @@ causes this receipt; post-pop queue/index and obstacle-free distance do not prov
 feasibility. No further authored invocation is part of that substep.
 
 The [native selected-head provenance prerequisite](task-evidence/Q100/native-branch-limit-selection-r1/README.md)
-is locally accepted for its bounded generic-fixture scope; publication is pending.
+is accepted and published as `bd5a4c6675a5d25aa40ffe989bf7a93b51b79157` on
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
+Gmail `1a1bace2763845e7` sent once. Its acceptance is bounded to generic fixtures.
 An opt-in owner overlay records ten immutable integers from the identity-live
 node already popped at the local cap, before refresh/expansion. Existing terminal
 snapshot/default modes and abort owner remain. Final JDK8 three-source compile,

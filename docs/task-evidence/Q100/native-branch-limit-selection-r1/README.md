@@ -1,6 +1,8 @@
 # Native branch-limit selection provenance
 
-Accepted locally for this bounded native-only component. Publication is pending.
+Accepted and published as `bd5a4c6675a5d25aa40ffe989bf7a93b51b79157` on
+`origin/codex/q100-physical-feasibility`; exact remote SHA verified. Completion
+Gmail `1a1bace2763845e7` sent once. See [publication receipt](PUBLICATION.md).
 The opt-in overlay records ten immutable integers from the identity-live node
 already selected and popped at the local branch cap, before expansion and
 heuristic refresh. It preserves the existing terminal snapshot and dispatches
