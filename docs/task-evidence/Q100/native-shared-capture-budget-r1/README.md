@@ -1,6 +1,8 @@
 # Native shared original-capture budget prerequisite
 
-Status: locally accepted for the bounded guard seam; publication pending.
+Status: accepted and published as `f2f1488b8d1f8f3ffb266eb63ed3537350d51e92` on
+`origin/codex/q100-physical-feasibility`; exact remote SHA verified.
+Completion Gmail `1a1b8d862463d32b` sent once.
 
 The old native producer and original ArmRun each enforced separate group/time
 scopes, then rejected aggregate overruns after capture returned. This overlay

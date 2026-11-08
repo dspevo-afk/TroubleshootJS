@@ -1,0 +1,18 @@
+{
+  "beta": "HELD",
+  "completionGmailId": "1a1b8d862463d32b",
+  "duplicateSearchCount": 0,
+  "emailStatus": "SENT_ONCE",
+  "fullDComparison": "NOT_RUN_NOT_ACCEPTED",
+  "implementationSha": "f2f1488b8d1f8f3ffb266eb63ed3537350d51e92",
+  "localBranch": "codex/q100-terminal-only-20261107",
+  "message": "Share native capture group and deadline budgets",
+  "playable100": 0,
+  "remote": "origin",
+  "remoteExactSha": "f2f1488b8d1f8f3ffb266eb63ed3537350d51e92",
+  "remoteRef": "refs/heads/codex/q100-physical-feasibility",
+  "schema": "tsj-native-shared-capture-budget-publication-v1",
+  "sourceProofSha256": "dca062a8e14f14667ab13bd7317d13e16768dde330e8ddb92b675a89c53ebcb6",
+  "stagedScopeAuditSha256": "d1df84a21f9b0f18187e6a2e9f8b9d676eff76efa8733bcc2688cfcc9668c83f",
+  "status": "PUSH_VERIFIED"
+}

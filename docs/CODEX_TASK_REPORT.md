@@ -1,11 +1,12 @@
-# Current checkpoint: shared capture budget prerequisite accepted; publication pending
+# Current checkpoint: shared capture budget published; D integration next
 
 UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
-HEAD2a4cd45f96d270ec2331c6c27fc86330782c7429 is exact remote
-origin/codex/q100-physical-feasibility. Prior copy prerequisite7fe4cddb/receipt2a4cd45f
-and Gmail1a1b893e9af1226b SENT_ONCE remain preserved. New shared-budget component
-is locally accepted, awaiting normal commit/push; no new completion email yet.
+Published implementation f2f1488b8d1f8f3ffb266eb63ed3537350d51e92 (Share native capture
+group and deadline budgets) is exact origin/codex/q100-physical-feasibility;
+Gmail1a1b8d862463d32b SENT_ONCE after exact-SHA duplicate search returned zero.
+This documentation receipt follows; no second receipt email. Prior copy
+prerequisite7fe4cddb/2a4cd45f and Gmail1a1b893e9af1226b remain preserved.
 
 Owned U OS-temp/tsj-q100-shared-capture-budget-09b455afcdac46049a6d4abbb4a40fab
 implements only a native capture-budget seam. Frozen IMPLEMENTATION_SPEC_R1.md

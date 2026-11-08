@@ -870,7 +870,7 @@ Implementation `7fe4cddb82b3ccda54e603f3e19a6e4007fcc94e` is normally pushed to
 Gmail `1a1b893e9af1226b` was sent once.
 
 The [native shared capture-budget prerequisite](task-evidence/Q100/native-shared-capture-budget-r1/README.md)
-is locally accepted; publication is pending. One producer-start meter now reaches
+is accepted and published. One producer-start meter now reaches
 original-owner group admission and cooperative deadline checks. Wrapper, open
 and live owner groups share the unchanged640 ceiling; actual owner ordinals are
 adopted once before readback. Old null/default behavior, local completion checks,
@@ -884,6 +884,9 @@ D source/descriptor/adapter integration of three substitutions, then exact
 accounting/export and host/native/consumer gates before its bounded comparison.
 No full1092-source, Player/electrical/population or playable100 proof is granted.
 Full30 excluded; HARD/PSYCHOTIC unavailable/unrun; playable100=0/betaHELD.
+Implementation `f2f1488b8d1f8f3ffb266eb63ed3537350d51e92` is normally pushed to
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
+Gmail `1a1b8d862463d32b` was sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
