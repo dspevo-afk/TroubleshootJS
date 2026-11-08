@@ -1004,6 +1004,25 @@ No production, budget, Player/GWT, electrical, population or playable100 renewal
 Playable100=0/betaHELD; Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
 historical protected unread UNCERTIFIED.
 
+The [natural generic routing reference prerequisite](task-evidence/Q100/natural-generic-routing-reference-r1/README.md)
+is locally accepted for two real ordinary routing runs through the existing owner.
+OPEN naturally finds two traces with zero holes; BLOCKED naturally stops at
+NET_A:NO_PATH with terminal evidence. An independently frozen fixture oracle
+binds settings, orders, pads, roles, dimensions, outline, tray and PTH identity;
+the unchanged independent conductor closure validates OPEN copper. Fresh final
+JDK8 build173classes, generator26PASS/3OS-linkSKIP, final reader20PASS, native
+text56cases/58assertions/zeroSessions and retained native contracts pass. Nineteen
+host negatives and nine actual Windows junction cases reject as expected; eight
+links removed, seven targets unchanged. Source/class/tool/process/public-byte
+checks pass. Unrun source and root harness/packaging failures remain preserved.
+One producer invocation starts exactly two natural Sessions, with no authored
+original, OriginalArm, new NULL/OBSERVE arm, H1 or R7 proof. No production/GWT/
+Player/electrical/population renewal. Next is coordinated full result/marker/R7/
+source-bound host migration using these genuine generic references. All budgets
+remain unchanged; playable100=0/betaHELD; Full30EXCLUDED; HARD/PSYCHOTIC unavailable/
+unrun; protected bodies unread here, historical unread UNCERTIFIED.
+Publication status is recorded in the current task checkpoint.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

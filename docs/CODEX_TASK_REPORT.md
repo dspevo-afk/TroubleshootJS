@@ -1,93 +1,74 @@
-# Current checkpoint: general observation consumer published; full migration next
+# Current checkpoint: natural generic routing reference accepted; publication next
 
-UTC2026-11-08. Standing roadmap continues. F OS-temp/
+UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
-base HEAD8dd8175ce09617d5bd3dda774311c09a52e47dad. Before S clean; after source
-checkpoint only report M/staged0. Origin dspevo-afk/TroubleshootJS normal target
-codex/q100-physical-feasibility; no local upstream. Verify actual HEAD/candidate.
-Main5f05b005 preserves9tracked/6untracked/staged0; E d9747229 report M; Desktop
-e0c36885 preserves7tracked/73untracked/staged0. Main/E mirror report only.
-AGENTS a3dec836 unchanged. R implementationdfccca05d604935c29cadf1e96552027bd3e55e8,
-receipt8dd8175c normally pushed/exact remote verified; Gmail1a1bb49499634913
-SENT_ONCE. Do not duplicate. S implementationf9253d306846164e1d16387aca1b415301c42dac
-normally pushed/exact remote verified; Gmail1a1bb6d74e5dc143 SENT_ONCE. Receipt
-carries this checkpoint; verify actual HEAD before continuation. Do not email again.
+baseHEAD218e7f7761bd4b573b7adfa5ba6175bf31e35b9a; verify actual HEAD.
+Before T report-only M/staged0. Now intended T code/evidence and three docs only.
+Normal origin target codex/q100-physical-feasibility; no local upstream.
+R dfccca05+receipt8dd8175c published/Gmail1a1bb49499634913 SENT_ONCE.
+S f9253d30+receipt218e7f77 published/Gmail1a1bb6d74e5dc143 SENT_ONCE.
+Do not duplicate. Main5f05b005 preserves9tracked/6untracked/staged0; E d9747229
+report-only M; Desktop e0c36885 preserves7tracked/73untracked/staged0.
+Main/E mirror report only. AGENTS a3dec836 unchanged.
 
-S owned OS-temp/tsj-q100-full-wire-scope-acdbb08b28f04a68b5624db24a4ea0cb.
-PLAN_R1.md1553c590953a43651661d8de1f63f059e361d21a4100a7fba3526ed99c55281f;
-clarification35e7474fc78db05bb6e3c93c2bd6c509ee0b98344231b91b32b1ac16a52dfd56.
-Earlier draft/source checkpoints and all unrun/failed source revisions preserved.
-Code tests/qualification/rb100-layout/general-observation-consumer-v2-r1;
-packet docs/task-evidence/Q100/general-observation-consumer-v2-r1. Root owns
-handoffs/acceptance; all source workers and bounded reviewer finished/stopped.
+T owned OS-temp/tsj-q100-full-result-host-scope-8a4920c8b40c4619b71514d8455c465a.
+Code tests/qualification/rb100-layout/natural-generic-routing-reference-r1;
+evidence docs/task-evidence/Q100/natural-generic-routing-reference-r1.
+PLAN_R2 0dd298d8bb027d983d324806466a38cc9c589e4f699695b7abd3178b2d7db327;
+WIRE_R2 dd738f0bbac0edc4f4cbaf4a0d2bba80ebeda9a581d79c052e29df8976e73dd6;
+fixture spec5d2b62c98bd229a73be0e54e4b6adcde4d5080fb87046d8bd770455f80c1224a.
+Five final source pins in INPUT_R1 plus separate text-test pin; all workers stopped.
+Independent SOURCE_ONLY R2 recheck and READONLY_CLASS audit found no blockers.
 
-LOCAL PASS final kernel502ff2e1dec1c4d01ddb4e2841aae6f7e4073a62975c1cc9668a09cf5a52b89c;
-generator6d82b87eb6795afcb91a50bcfc3170e7333ba08dda1cc6c64bf2ab8360334e84;
-testkernel6c0bc60f451488fa2aac3d662433b449d287a30e195ee06e82a1c615290da476;
-testgenerator24a7af8ecc656de1ec049fe3fa09e7907c9cd86716752201a2ba3a2529c9aa46;
-testadapter833df3a60ca91f0054781178d321eade14df947caf022caee9fb10cab29ce53f.
-Derived generic7fd4d9d160e4e769cc0d83e85e52d28f3a2955fb5ad4ead09553fc6b6969e6fb;
-fullcomponentf23a965ef3bc28a78ef06158efb9c7c50c375dc164d7e2840e5d350f51db58c3.
-Same source kernel embedded once in each, immutable scalar mapping results.
-Exact R fixed context/case/parser/I/O/CLI and D work-summation function bytes
-remain unchanged. V1 observation rules retired, private N_ROOT default retired;
-no runtime arbitrary-loader/sys.path/version resolver added. Full component
-main denies GENERAL_OBSERVATION_COMPONENT_ONLY before args/host/data/artifacts.
+LOCAL PASS: actual selectedPython-I-B native generator29declared/26PASS/3OS-linkSKIP;
+reader initially19PASS/1optional-packetSKIP then fresh final20PASS/0SKIP. Actual
+final-source JDK8 producer3sources/173classes/563848B,46P-owner classes byte equal.
+All173 explicit fresh-namespace Class targets resolve fresh; arbitrary reflection
+and broad dependency qualification outside that audit. Native geometry policy
+56cases/58assertions/0Sessions PASS. Retained native contracts PASS materializer13/
+2cases/0Sessions, terminal217421, branch30, relaxed2201; other totals unmeasured.
+One natural producer invocation/exactly2Sessions OPEN FOUND/SUCCESS/two traces/
+zero holes and BLOCKED NET_A:NO_PATH/natural terminal/null layout. Producer473.084ms
+operation/709.1715ms wrapper; independent reader446.9566ms/687.2463ms. Accepted
+packet17495B SHAe227c53d5fa7de35b024c1ff24d465515c55204f769bcff622ecb8e9a4c798ca;
+runId b36bb438-65ac-48f2-a754-560d4250d5eb; producer manifestdf27c7750f61e4d4c959d60988a3381d64b6e94737da785e2b5ff76eaa811ada.
+Fixture oracle is source-frozen, not derived from output; unchanged pure24469B
+conductor SHA4da7537bedb805aaebd4f70d9d3a1e978a70d2f26df5e3f53243dd7bfa30525e.
 
-Actual selectedPython-I-B kernel24PASS/0SKIP; generator20declared/19PASS/1OS-link
-SKIP; derived generic retained15/14PASS/1OS-linkSKIP; adapter4PASS. Total63declared/
-61PASS/2SKIP. Six accepted generic DTO projections compare exact independent
-unit/copy/chunk facts; branch mutations and fixed-profile protections reject.
-Actual generic CLI returns exact old R summary (6cases/1head/9579B) in352.7959ms
-operation/596.7332ms wrapper; fullcomponentchild2/wrapper1 in350.9385/586.0708ms.
-No full result/original/fresh-run or R7 capture is constructed by projections.
-Seven final actual host controls and seven real junction controls pass expected
-rejection; seven links identity/type/target/creation ticks revalidated then
-literal native nonrecursive unlinks shell0; lstat absent/six targets unchanged/
-owned output empty. Returned process/root/log cleanup proven; isolated cleanup
-duration unmeasured. No new persistent browser/server/process/junction.
+Nineteen actual host negatives and nine actual Windows junction cases pass expected
+rejection (Python child2/wrapper1; native child1/wrapper1). All8junction identities/
+types/targets/creation ticks revalidated before literal nonrecursive unlink;
+lstat absent/7targetSHA unchanged/owned outputs empty. Returned task process roots/
+logs absent. Isolated wrapper cleanup duration remains null. Public8code bytes
+match tested sources; both public generators reproduce exact derived sources/
+proofs, public reader returns exact independent summary. Tools, sources, fresh/
+inherited classes and all returned closures rehashed unchanged. No producer rerun.
+FINAL_GATES_R1 SHAaa88f01a93f7a1408268bbec37b9e271b87a7719df304b8e54a991e3d10c208a;
+PUBLIC_GATES SHA3126ea6b8f52f923c71054a90f35c4ac0d2e8d5e37573f481b3b85f8ee300fed.
 
-R consumed-input reuse audited: unchanged3Java sources/177freshclasses/4288
-inherited classes/tools and compile/native/reader returned closures; accepted
-generic packet897db05949756ba10e376494de15bd869fd838355aa67ce2ebc6d38a0e3d801f
-unchanged. S new native/authored invocations0; no captured D body/descriptor/
-compiled-input data read, no old D CLI/builder run. Generic regression evidence
-reused across adapter-test-only fix after source/test/tool byte revalidation.
-Actual public generator reproduces exact two derived consumers/proof; all8public
-code bytes match tested sources. Root source/generated diff/receipts review and
-bounded independent SOURCE_ONLY recheck pass; no agent runtime claim.
+Preserved: geometry path source blocker fixed BEFORE execution/R1UNRUN; root
+host expectation initially named later terminal guard but actual earlier accounting
+rejected. Corrected expectation/reused exact audited closure; no code/oracle change.
+Packaging lookup used retired function name, then drive-path heuristic matched two
+Java percent-d escaped-newline format strings. Correct current owner lookup/exact
+nonpath classification, all partial bytes audited; both failures preserved. No
+application runtime failure or budget weakening. Old evidence/versions retained.
 
-PROOFS finalbffdb1f1b58ccd3efc500669fd59d214abbda531dc688784257576f44d284c24;
-packaginga745b1e0023b3766eb3454cb6761c13b96fa94abdb29ebfd1e8b53974ab2b49d.
-Source review found public context accepted list rows/nonset memberships, could
-raise raw TypeError and bypass shape checks in NULL/success/quality. Before any
-execution root added strict shared context admission/all-state negatives and
-pinned final kernel; predecessorb1956142 remains UNRUN. First adapter suite
-FAIL4assertions/17errors retained: wrong tuple order and wrong expected error
-owner. Fixed exact oracle projection/classes, expected literal values unchanged;
-fresh adapter4PASS. Packaging scanner initially matched Python int-colon-escaped
-newline as a drive path; word-boundary correction confirms no private path;
-code sources unchanged. No failure reclassified, oracle/budget weakened.
+Boundary GENERIC_NATURAL_ROUTING_REFERENCE_ONLY: no authored original/OriginalArm,
+new D invocation, NULL/OBSERVE comparison, H1, full result/marker/R7 qualification.
+Fixed factory is inherited bounded logical API operation; VM allocations unmeasured.
+No captured D body/descriptor/compiled-input data or protected body read here;
+historical protected-unread UNCERTIFIED. Full30EXCLUDED; HARD/PSYCHOTIC unavailable/
+unrun; playable100=0/betaHELD. ProductionGWT/Player/electrical/population gates NOT
+APPLICABLE/not renewed. All90s/640groups/5s/32768units/copy1048576/chunk4096/
+compile-suite60s/wrapper480s/reader180s/cleanup120s/branch100000/global1m/depth64/
+visits1m unchanged. All T scratch/classes retained; no new persistent resources.
 
-Boundary: general observation semantics/adapters only. Full result/marker/R7
-aggregate/source-bound host NOT QUALIFIED and next unstarted scope. Existing
-D one original+exactly2arms unchanged; no new experiment. Production/native/GWT/
-visible Player/electrical/population gates NOT APPLICABLE/not renewed here.
-All90s/640groups/5s/32768units/copy1048576/chunk4096/compile-suite60s/
-wrapper480s/reader180s/cleanup120s/local100000/global1m unchanged. Full30EXCLUDED;
-HARD/PSYCHOTIC unavailable/unrun; protected bodies unread here, historical unread
-UNCERTIFIED. Playable100=0/betaHELD.
-
-PUBLISHED:25path final staged diff/byte/privacy PASS, treeddcfb5d25792ad2a75441aa73bfe301e8a1cb9eb;
-staged reviewbbb4687020de0f3e90e3aa2824e5ab527cc55435d7763f68338c97c4ad674130.
-Implementationf9253d306846164e1d16387aca1b415301c42dac normally pushed to known
-origin/codex/q100-physical-feasibility and exact ls-remote verified. Zero prior
-subject matches; completion Gmail1a1bb6d74e5dc143 SENT_ONCE. No receipt email.
-NEXT: freeze coordinated full result/marker/R7/source-bound host migration
-before any separate authored experiment. No routine permission needed. F intended code/evidence/docs changes
-only; unrelated worktrees/evidence and R/S private scratch/build retained.
-Old uncertain browser14116/start639294472690745890/port58320 and preview34180/
-start639294472514546595/port58264+14uncertainchildren, old D timeout logs and
+NEXT: actual final diff/staged-byte/privacy review, normal commit/push/remote
+verification and one established Gmail. Then freeze full result/marker/R7/host
+migration using genuine generic references; no authored retry implicitly authorized.
+Old uncertain browser14116/start639294472690745890/port58320, preview34180/
+start639294472514546595/port58264+14uncertainchildren, oldD timeout logs and
 UNCERTIFIED unlink untouched. No broad cleanup/reset/history rewrite.
 
 # Historical checkpoint: generic selected-observation V2 published; full integration next

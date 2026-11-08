@@ -137,6 +137,24 @@ does not admit full results/markers, aggregate R7 plans or authored host executi
 those callers/protocols require the next coordinated scope. No production,
 electrical or Player behavior changes.
 
+The [natural generic routing reference adapter](task-evidence/Q100/natural-generic-routing-reference-r1/README.md)
+borrows the actual FailedFirstFixtures templates and calls the shared runFresh
+owner with captured=null and explicit GENERIC_ROUTING_REFERENCE_V1 kind. It
+returns genuine FreshRun JSON plus actual cleanup, constructor and before/after
+source-geometry facts under the existing Meter and publication owners. It does
+not invent an OriginalArm or authored capture. The new packet's exact structural
+component-string leaf uses the existing4096 geometry allowance; ordinary256 and
+all time/unit/copy/export limits remain unchanged.
+
+Its standalone read-only consumer ports the expected-context seam to a frozen
+source fixture context, preserving run semantics and the byte-identical pure
+conductor validator. The source oracle supplies pad rows, role membership and
+requested nets independently of returned layout data; explicit dimensions,
+outline, tray and PTH binding supplement copper connectivity/clearance checks.
+Natural NO_PATH must carry terminal evidence. This native-only qualification
+adds no electrical solver, production policy, Player flow or playable admission.
+Full result/marker/R7/source-bound host integration is still separate.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

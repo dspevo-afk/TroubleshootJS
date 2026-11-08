@@ -1,0 +1,2671 @@
+{
+  "R7": "NOT_QUALIFIED",
+  "actualNaturalProducerInvocations": 1,
+  "actualNaturalProducerSessionBegins": 2,
+  "beta": "HELD",
+  "classAudit": {
+    "allMajor": 51,
+    "bytes": 563848,
+    "distinctFreshNamespaceTargets": 173,
+    "files": 173,
+    "independentReadOnlyRecheck": "MATCHED_ROOT; NOT_REFLECTION_OR_BROAD_DEPENDENCY_REQUALIFICATION",
+    "oldCanaryReferences": 0,
+    "status": "PASS_EXPLICIT_CONSTANT_CLASS_REFERENCES_ONLY",
+    "unresolved": []
+  },
+  "conductorClosureBytes": 24469,
+  "conductorClosureSha256": "4da7537bedb805aaebd4f70d9d3a1e978a70d2f26df5e3f53243dd7bfa30525e",
+  "derivedReaderSha256": "4f9573c223025c564c7063f7de8e31f79b777845b92a332cb85ee418e8394d72",
+  "derivedStudySha256": "8581ca447ca5d7fde0c56970daa9ea7fc38a1f2ea97eeb8b911621f3ccedfa14",
+  "fixedFactoryModel": "INHERITED_BOUNDED_LOGICAL_API_OPERATION; INTERNAL_VM_ALLOCATIONS_NOT_MEASURED",
+  "fixtureOracleSha256": "5d2b62c98bd229a73be0e54e4b6adcde4d5080fb87046d8bd770455f80c1224a",
+  "full30": "EXCLUDED",
+  "fullD": false,
+  "gates": {
+    "ACCEPTANCE_R1": {
+      "acceptedBytes": 17495,
+      "acceptedSha256": "e227c53d5fa7de35b024c1ff24d465515c55204f769bcff622ecb8e9a4c798ca",
+      "context": {
+        "runId": "b36bb438-65ac-48f2-a754-560d4250d5eb",
+        "sourceSha256": "df27c7750f61e4d4c959d60988a3381d64b6e94737da785e2b5ff76eaa811ada",
+        "wireSha256": "dd738f0bbac0edc4f4cbaf4a0d2bba80ebeda9a581d79c052e29df8976e73dd6"
+      },
+      "exclusiveAcceptedWriteReadback": true,
+      "native": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "native-reference-r1",
+        "processElapsedMs": 473.084,
+        "receipts": {
+          "owner.json": "2497556cdd1d1f00eb37eb34357a26de03c11d9fac9a8013ec17d0a61642a079",
+          "parent.json": "435ffddbbd101750e0491053f2c424997e699c760a69ba75f3737192a991cd57",
+          "process.json": "3d01cbab87df88461a53b29d618508df5ba72fe97820ab94faf15c9026348cc0",
+          "request.json": "66066a1fa83e6a9735e293ebf21ce4ddff7bf4f02852cab70839a6c96b70de96",
+          "result.json": "97dc28a028952f10b1d777f667613fa956db572813ef7cb5d748e467ad7324f8",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "e227c53d5fa7de35b024c1ff24d465515c55204f769bcff622ecb8e9a4c798ca"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 709.1715
+      },
+      "newAuthoredInvocations": 0,
+      "reader": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "independent-reader-positive-r1",
+        "processElapsedMs": 446.95660000000004,
+        "receipts": {
+          "owner.json": "d9946202e3a8becca09142c8d9bb1a290f4575d65604d2300ba01f1432cde4a1",
+          "parent.json": "8c8c977fa1ee69ffa7d1b14dfd0ec5f5ae9df332da00cf5727ee95bf3cbb0e83",
+          "process.json": "535c7f95849d5cff1a93b1087509a9a5df0138538dd46ba423bb7b2b9ca5778e",
+          "request.json": "069daea89b6425b491236b870a9a20cadd8a75b34f157779a659bb5448809b4f",
+          "result.json": "adacc6e408d9a4deaf3317dc72c9d571212cb7201fc64f39520199e3507ef78a",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "e94ec742520356aa4ad68acaae0ebc661c22207a5704d80581c70b0ab2d3e6d8"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 687.2463
+      },
+      "schema": "tsj-natural-reference-acceptance-v1",
+      "sourceClassesToolsProcessBound": true,
+      "status": "PASS_NATURAL_GENERIC_REFERENCE_ONLY",
+      "summary": {
+        "found": 1,
+        "fullD": false,
+        "inputBytes": 17495,
+        "inputSha256": "e227c53d5fa7de35b024c1ff24d465515c55204f769bcff622ecb8e9a4c798ca",
+        "newAuthoredInvocations": 0,
+        "noPath": 1,
+        "references": 2,
+        "runId": "b36bb438-65ac-48f2-a754-560d4250d5eb",
+        "schema": "tsj-generic-routing-reference-reader-summary-v1",
+        "sourceManifestSha256": "df27c7750f61e4d4c959d60988a3381d64b6e94737da785e2b5ff76eaa811ada",
+        "status": "PASS_NATURAL_GENERIC_REFERENCE_ONLY",
+        "wireContractSha256": "dd738f0bbac0edc4f4cbaf4a0d2bba80ebeda9a581d79c052e29df8976e73dd6"
+      }
+    },
+    "EARLY_NATIVE_GENERATOR_R1": {
+      "calls": [
+        {
+          "childExitCode": 0,
+          "isolatedCleanupDurationMs": null,
+          "ownedRootAndLogsAbsent": true,
+          "phase": "native-generator-units-r1",
+          "processElapsedMs": 1675.9875000000002,
+          "receipts": {
+            "owner.json": "90b27f6177d1413b7b705c25fc5b70d25940e1187fb70e15319e5271b9600f3a",
+            "parent.json": "43741345d413010a005304ca7937eb1289907022d90671037b4b7f927fa1d8be",
+            "process.json": "1c3e302fa2ee9a9216c3ebc85519186172814a8b3529fbae85350f87dbf7500f",
+            "request.json": "0d47e6baa3485df4fdc8a7bad4a1e447d213ee8bbf9f2c4ce3f5f9f1095d446f",
+            "result.json": "25df6c1830fc8c33f06f5de33fe3b87e19bae9c87b363aada9a113a15ac44486",
+            "stderr.txt": "dfb91690ffcb52a939d49cc95ea19d49dbe054ed17583594a061e8de3f3e9e0a",
+            "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "status": "PASS",
+          "terminationProven": true,
+          "wrapperTotalElapsedMs": 2103.8837000000003
+        },
+        {
+          "childExitCode": 0,
+          "isolatedCleanupDurationMs": null,
+          "ownedRootAndLogsAbsent": true,
+          "phase": "native-generator-positive-r1",
+          "processElapsedMs": 364.8423,
+          "receipts": {
+            "owner.json": "35d3d55ffd974b760a9f043d412f2a93c9c2e44d8efa18737116e2cff8812b72",
+            "parent.json": "6773ea7312d853ec92973cf0d33e71a25cd97d6a231b39145fad8ccbc9109a9e",
+            "process.json": "f3e6c23b5ef85710c12caff990ef1e3e3a8c0297ca85b5b0b87fa6292f86d81a",
+            "request.json": "3bab3c1805ae40f95a0c35eb2b7b69be9bd490a3855376a140881525f38e947f",
+            "result.json": "a27e7ebd835f05bac7c2bda0558ace1b49e1de739d69597a2cd834094b2b3935",
+            "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.txt": "dc2bab2104bb224b81bbd6b02dbcf7d81320d4675881a977f7a929cfbc71a1c7"
+          },
+          "status": "PASS",
+          "terminationProven": true,
+          "wrapperTotalElapsedMs": 605.5669
+        }
+      ],
+      "schema": "tsj-natural-reference-early-generator-v1",
+      "sourceProof": {
+        "authoredInvocations": 0,
+        "baseGeneratorSha256": "d11df617dc255257e3ac42cba45a9a8d78482f4fec9ea52f846a6f48f97ce1f0",
+        "budgets": "UNCHANGED",
+        "changes": [
+          "GENERIC_REFERENCE_MAIN",
+          "HEADER_KEY_COUNT",
+          "HEADER_KEYS",
+          "HEADER_SCHEMA",
+          "HEADER_STATUS",
+          "HEADER_MEMBERS",
+          "GEOMETRY_PATH_STATES",
+          "GEOMETRY_MAP_TRANSITIONS",
+          "GEOMETRY_CONTAINER_TYPES"
+        ],
+        "derivedBytes": 229656,
+        "derivedSha256": "8581ca447ca5d7fde0c56970daa9ea7fc38a1f2ea97eeb8b911621f3ccedfa14",
+        "fixtureOracleSha256": "5d2b62c98bd229a73be0e54e4b6adcde4d5080fb87046d8bd770455f80c1224a",
+        "fullD": false,
+        "geometryPathChange": "EXISTING_ALLOWANCE_NEW_ENVELOPE_EXACT_CASE_MAP_AND_COMPONENT_LIST",
+        "geometryTextLimit": 4096,
+        "geometryValuePath": "references.{OPEN,BLOCKED}.run.layout.components[index].geometryCanonical",
+        "headerAllocation": "EXISTING_SCALAR_SWITCH_NO_KEY_ARRAY",
+        "headerMemberInspections": "PRECHARGED_TYPE_AND_MAP_SIZE",
+        "ioHelperSha256": "df9c297f4eb491117bade351ceedf26ccef5059e47ad9a7f36006000f1a10923",
+        "ordinaryTextLimit": 256,
+        "packetSchema": "tsj-generic-routing-reference-v1",
+        "packetStatus": "GENERIC_NATURAL_REFERENCES_RECORDED_ONLY",
+        "physicalOwnerSha256": "7bf4ab57198ff9444381ec5d677c1a2bc309bfa3e7f01b188c631ffe5f2b966c",
+        "physicalQualification": false,
+        "productionOwner": "UNCHANGED",
+        "publicationFee": "3*ceil(bytes/4096)",
+        "publicationOwner": "UNCHANGED_R9_BODY_METER_TREE_COUNT_BYTE_COPY_STDOUT",
+        "references": "ORDERED_MAP_OPEN_BLOCKED",
+        "rootKeys": [
+          "schema",
+          "status",
+          "runId",
+          "sourceManifestSha256",
+          "wireContractSha256",
+          "references",
+          "sourceReview"
+        ],
+        "schema": "tsj-generic-routing-reference-overlay-v1",
+        "solverQualification": false,
+        "sourceReviewKeys": 7,
+        "status": "GENERATED_NATIVE_ONLY_NOT_COMPILED",
+        "studyParentBytes": 229578,
+        "studyParentSha256": "88986781508aa34783d11e651082122f4bf8e0710a2263b39cc9b597fce9a8cf",
+        "wireContractSha256": "dd738f0bbac0edc4f4cbaf4a0d2bba80ebeda9a581d79c052e29df8976e73dd6"
+      },
+      "status": "PASS_ACTUAL_SOURCE_GENERATION_ONLY"
+    },
+    "EARLY_READER_GATES_R1": {
+      "calls": [
+        {
+          "childExitCode": 0,
+          "isolatedCleanupDurationMs": null,
+          "ownedRootAndLogsAbsent": true,
+          "phase": "reader-generator-units-r1",
+          "processElapsedMs": 1107.9127,
+          "receipts": {
+            "owner.json": "cf6c91144148f2d19b5c322efb8f6dac6868b0f4b548015a40c6c59fbf4f1cb3",
+            "parent.json": "6ad6a3f0b569eed48b336155c122e9a826f8e746cd88079841a6fc354a833c47",
+            "process.json": "5691c9257aeb732253fa3a3b196d3a3625fe98dd6334bddc87eda391e93bd9a4",
+            "request.json": "d55f8e91caaac74423f9c27857df2a6083c00fe586c1e1499553c213bd4fb6fe",
+            "result.json": "398176c179369687ff043f28927d5d26fbdaa9b9aa11258db868bb17e00a3075",
+            "stderr.txt": "7ff9de5a7e1ca76ab1288284ce1d737b56666d4cc0e7194d0700d333dffda5b7",
+            "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "status": "PASS",
+          "terminationProven": true,
+          "wrapperTotalElapsedMs": 1354.6019000000001
+        },
+        {
+          "childExitCode": 0,
+          "isolatedCleanupDurationMs": null,
+          "ownedRootAndLogsAbsent": true,
+          "phase": "reader-generator-positive-r1",
+          "processElapsedMs": 481.99420000000003,
+          "receipts": {
+            "owner.json": "11b75abd54ee0ce621ad0933e1b1d211bfac858a2db9a964db68886671b355cb",
+            "parent.json": "f05bcda84e002588c5d1c65298a91d27a43ef7eaae649f1d1f241452575090d8",
+            "process.json": "8a02a43f02e0e6d8e95c0512e7c4adf2c557f9d4ca9728612840373d5b4a93f3",
+            "request.json": "3c3b28f91209c6ef41b667417deab2d72020556f3c503ea3ddd1edc3a806998d",
+            "result.json": "99f45abfe95a2e4b8750384cec1d35af01b1540dde4fc414f42e3ac19c06c9a7",
+            "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.txt": "21ceb9afc7479340246b91d1104f20692395d71af35770ea72dd70db931fe221"
+          },
+          "status": "PASS",
+          "terminationProven": true,
+          "wrapperTotalElapsedMs": 721.2501000000001
+        }
+      ],
+      "schema": "tsj-natural-reference-early-reader-v1",
+      "sourceProof": {
+        "authoredInvocations": 0,
+        "baseGeneratorSha256": "d11df617dc255257e3ac42cba45a9a8d78482f4fec9ea52f846a6f48f97ce1f0",
+        "budgets": "UNCHANGED",
+        "conductorClosureByteEqual": true,
+        "conductorClosureBytes": 24469,
+        "conductorClosureSha256": "4da7537bedb805aaebd4f70d9d3a1e978a70d2f26df5e3f53243dd7bfa30525e",
+        "contractClarificationSha256": "2c403b4ad8d8b68219096b1dc271988f5cb8f7ed4fd767181deee26b4153585a",
+        "derivedBytes": 58179,
+        "derivedSha256": "4f9573c223025c564c7063f7de8e31f79b777845b92a332cb85ee418e8394d72",
+        "extracted": [
+          {
+            "byteEqual": true,
+            "derivedBytes": 210,
+            "derivedSha256": "5caf48988119b1c8a2e75a7c4277ed4d6713b97f0313d5f457fe0f91570edb72",
+            "name": "ReaderError",
+            "parent": "TRANSPORT",
+            "sourceBytes": 210,
+            "sourceSha256": "5caf48988119b1c8a2e75a7c4277ed4d6713b97f0313d5f457fe0f91570edb72"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 81,
+            "derivedSha256": "4e875044a5605a5d42264e6e0a7240968698294fbe66bca0492a519a98a384d7",
+            "name": "need",
+            "parent": "TRANSPORT",
+            "sourceBytes": 81,
+            "sourceSha256": "4e875044a5605a5d42264e6e0a7240968698294fbe66bca0492a519a98a384d7"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 96,
+            "derivedSha256": "bef02dd88a408cb36f31097796dad399d5670d2b2f1a8c315d92ea2e8fda48b6",
+            "name": "integer",
+            "parent": "TRANSPORT",
+            "sourceBytes": 96,
+            "sourceSha256": "bef02dd88a408cb36f31097796dad399d5670d2b2f1a8c315d92ea2e8fda48b6"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 98,
+            "derivedSha256": "eb30f42b41ac4d09e28f2ae4ed60b487ef01c2e7b18317777076731aa992e705",
+            "name": "keys",
+            "parent": "TRANSPORT",
+            "sourceBytes": 98,
+            "sourceSha256": "eb30f42b41ac4d09e28f2ae4ed60b487ef01c2e7b18317777076731aa992e705"
+          },
+          {
+            "byteEqual": false,
+            "derivedBytes": 1613,
+            "derivedSha256": "314f1b582c6b5bb718674de92b684797763ba50f584e46f55214e24dc1eaefb3",
+            "name": "_tree",
+            "parent": "TRANSPORT",
+            "sourceBytes": 975,
+            "sourceSha256": "cf2dfdbd7dc195bc40e5c7d627ae08b5fff69076ff44d138104b22308f18a6f6"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 159,
+            "derivedSha256": "806487b5a44411e876165441a820153a0b06d86ba4c6ff1a846a8545b60c4931",
+            "name": "_pairs",
+            "parent": "TRANSPORT",
+            "sourceBytes": 159,
+            "sourceSha256": "806487b5a44411e876165441a820153a0b06d86ba4c6ff1a846a8545b60c4931"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 56,
+            "derivedSha256": "986b2b52038297bf0bb8316eb409a7a5be4b16891c5055fc7b0a9229c5c44313",
+            "name": "_no_number",
+            "parent": "TRANSPORT",
+            "sourceBytes": 56,
+            "sourceSha256": "986b2b52038297bf0bb8316eb409a7a5be4b16891c5055fc7b0a9229c5c44313"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 180,
+            "derivedSha256": "c136b3c22305ec3787c66dba6692a2cb056dcdf3dee901ab982e4351ebc7a6bb",
+            "name": "canonical_line",
+            "parent": "TRANSPORT",
+            "sourceBytes": 180,
+            "sourceSha256": "c136b3c22305ec3787c66dba6692a2cb056dcdf3dee901ab982e4351ebc7a6bb"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 611,
+            "derivedSha256": "dd5d4327b5396795f0dcbef70643005bb326977897d25cf71a63a30935aa6944",
+            "name": "parse_packet",
+            "parent": "TRANSPORT",
+            "sourceBytes": 611,
+            "sourceSha256": "dd5d4327b5396795f0dcbef70643005bb326977897d25cf71a63a30935aa6944"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 1674,
+            "derivedSha256": "40db1e1e767815a980f4c2b47491237a397c37879b5316e50b7960c92cce9e2e",
+            "name": "_bootstrap_base",
+            "parent": "TRANSPORT",
+            "sourceBytes": 1674,
+            "sourceSha256": "40db1e1e767815a980f4c2b47491237a397c37879b5316e50b7960c92cce9e2e"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 702,
+            "derivedSha256": "073022e130b6aa87e40de09611f38fecadcb5065d103bbf6b6f6cc2ebfeeeb74",
+            "name": "checked_read",
+            "parent": "TRANSPORT",
+            "sourceBytes": 702,
+            "sourceSha256": "073022e130b6aa87e40de09611f38fecadcb5065d103bbf6b6f6cc2ebfeeeb74"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 17,
+            "derivedSha256": "3085fd0cf836e2bf1a49affed3dd8ac9d630c95ff24ff603637627197f0be174",
+            "name": "MAX_GROUPS",
+            "parent": "RUN",
+            "sourceBytes": 17,
+            "sourceSha256": "3085fd0cf836e2bf1a49affed3dd8ac9d630c95ff24ff603637627197f0be174"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 29,
+            "derivedSha256": "63ee67cd53fc964aec4e454f507e771133ace0032789ec7668e03a80c7ba441a",
+            "name": "MAX_GROUP_NS",
+            "parent": "RUN",
+            "sourceBytes": 29,
+            "sourceSha256": "63ee67cd53fc964aec4e454f507e771133ace0032789ec7668e03a80c7ba441a"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 25,
+            "derivedSha256": "e0add843e4a791210dd52847a637c5589ca36cc336c91903fcdb89045e8cf7ae",
+            "name": "MAX_GROUP_UNITS",
+            "parent": "RUN",
+            "sourceBytes": 25,
+            "sourceSha256": "e0add843e4a791210dd52847a637c5589ca36cc336c91903fcdb89045e8cf7ae"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 27,
+            "derivedSha256": "fd3b2fe86bfa84a2e995386618f4fed402dfd1202ac766b8db508a3517b1e9d3",
+            "name": "MAX_EXPANSIONS",
+            "parent": "RUN",
+            "sourceBytes": 27,
+            "sourceSha256": "fd3b2fe86bfa84a2e995386618f4fed402dfd1202ac766b8db508a3517b1e9d3"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 14,
+            "derivedSha256": "186367f2a572ed8cbb2e74fc52870dc6189274ecdfa7dbb5145a3b831ac70046",
+            "name": "MAX_VIAS",
+            "parent": "RUN",
+            "sourceBytes": 14,
+            "sourceSha256": "186367f2a572ed8cbb2e74fc52870dc6189274ecdfa7dbb5145a3b831ac70046"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 20,
+            "derivedSha256": "4755b8b593e65f0b856fb34778c5fdb5d19e00e68233f7cd1a7d62a308e10e2a",
+            "name": "MAX_TRANSITIONS",
+            "parent": "RUN",
+            "sourceBytes": 20,
+            "sourceSha256": "4755b8b593e65f0b856fb34778c5fdb5d19e00e68233f7cd1a7d62a308e10e2a"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 29,
+            "derivedSha256": "25864ae54f51d0af14cc355434bf5af4d350c475b44e13ae15216586d04181b7",
+            "name": "MAX_COPY_ENTRIES",
+            "parent": "RUN",
+            "sourceBytes": 29,
+            "sourceSha256": "25864ae54f51d0af14cc355434bf5af4d350c475b44e13ae15216586d04181b7"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 18,
+            "derivedSha256": "068fed55f362bd88d825364dbc38ac9e821a0d2aa92dd5e3b2a1c1e9b7aaa9cf",
+            "name": "COPY_CHUNK",
+            "parent": "RUN",
+            "sourceBytes": 18,
+            "sourceSha256": "068fed55f362bd88d825364dbc38ac9e821a0d2aa92dd5e3b2a1c1e9b7aaa9cf"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 112,
+            "derivedSha256": "d04adbb3dc74b7e6b36816c8af3f52e89bdfb8e0ddc71614379dad33815956ee",
+            "name": "exact_keys",
+            "parent": "RUN",
+            "sourceBytes": 112,
+            "sourceSha256": "d04adbb3dc74b7e6b36816c8af3f52e89bdfb8e0ddc71614379dad33815956ee"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 119,
+            "derivedSha256": "84b8985fa2193f4fd10bfc03b345b9b5c734a790c73b62a8df90f5e162ef9f65",
+            "name": "is_int",
+            "parent": "RUN",
+            "sourceBytes": 119,
+            "sourceSha256": "84b8985fa2193f4fd10bfc03b345b9b5c734a790c73b62a8df90f5e162ef9f65"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 799,
+            "derivedSha256": "5f80afd875553c79d5a87dfc14f4690ca9869a3d0ea5b4c2413b179b775492d6",
+            "name": "stable_cohort_order",
+            "parent": "RUN",
+            "sourceBytes": 799,
+            "sourceSha256": "5f80afd875553c79d5a87dfc14f4690ca9869a3d0ea5b4c2413b179b775492d6"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 2248,
+            "derivedSha256": "14c72eb8c6ce03d5ce23830e9e6a59ee799c3afc06f43487e6b4d7111b721b41",
+            "name": "_validate_terminal_failure",
+            "parent": "RUN",
+            "sourceBytes": 2248,
+            "sourceSha256": "14c72eb8c6ce03d5ce23830e9e6a59ee799c3afc06f43487e6b4d7111b721b41"
+          },
+          {
+            "byteEqual": false,
+            "derivedBytes": 8278,
+            "derivedSha256": "0d10f4bfbd15a51e7749c0108cb6bef7429bb303002e8e1b9c93a11c96a96663",
+            "name": "_validate_run",
+            "parent": "RUN",
+            "sourceBytes": 7973,
+            "sourceSha256": "d83226dcac385fc63432d86c8391052e476294e17a4bc0e05d15d132d8130de2"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 120,
+            "derivedSha256": "8d8739dc3d03b567401b37c680ae462499fa99f851744437ab9afd13f51bc370",
+            "name": "ConductorError",
+            "parent": "RUN",
+            "sourceBytes": 120,
+            "sourceSha256": "8d8739dc3d03b567401b37c680ae462499fa99f851744437ab9afd13f51bc370"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 124,
+            "derivedSha256": "d7d7f2b653f993d5ec80a1dd25bb364a0ab25bc38ca7aafeff4c8be7809ca11e",
+            "name": "_CONDUCTOR_ROLE_WIDTHS",
+            "parent": "RUN",
+            "sourceBytes": 124,
+            "sourceSha256": "d7d7f2b653f993d5ec80a1dd25bb364a0ab25bc38ca7aafeff4c8be7809ca11e"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 144,
+            "derivedSha256": "46698a3c5ce93ca636ce66fae62b7ea43a94884d5c9cc72d5622c8defc4fc7ca",
+            "name": "_CONDUCTOR_ROLE_CANONICAL",
+            "parent": "RUN",
+            "sourceBytes": 144,
+            "sourceSha256": "46698a3c5ce93ca636ce66fae62b7ea43a94884d5c9cc72d5622c8defc4fc7ca"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 38,
+            "derivedSha256": "a7fb6b59de5b5d721180cfce465830de8fdd046ab962ebc56ef7d5006f5de34b",
+            "name": "_CONDUCTOR_LAYERS",
+            "parent": "RUN",
+            "sourceBytes": 38,
+            "sourceSha256": "a7fb6b59de5b5d721180cfce465830de8fdd046ab962ebc56ef7d5006f5de34b"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 46,
+            "derivedSha256": "2592ce867d6938518006536e5bd68b1100753b74a81f5fdb3c2e00bc0766b0a8",
+            "name": "_CONDUCTOR_EXPOSURES",
+            "parent": "RUN",
+            "sourceBytes": 46,
+            "sourceSha256": "2592ce867d6938518006536e5bd68b1100753b74a81f5fdb3c2e00bc0766b0a8"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 64,
+            "derivedSha256": "47e4216184e275253fd78b3d115ff94fc2627a6ec870f6914703a80d9511c9fd",
+            "name": "_CONDUCTOR_ATTACHMENTS",
+            "parent": "RUN",
+            "sourceBytes": 64,
+            "sourceSha256": "47e4216184e275253fd78b3d115ff94fc2627a6ec870f6914703a80d9511c9fd"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 56,
+            "derivedSha256": "3c5a41a52a6bfb57877019a95c5da2b345b9d6cacde428e48c5fe52d4728707d",
+            "name": "_CONDUCTOR_HOLE_KINDS",
+            "parent": "RUN",
+            "sourceBytes": 56,
+            "sourceSha256": "3c5a41a52a6bfb57877019a95c5da2b345b9d6cacde428e48c5fe52d4728707d"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 33,
+            "derivedSha256": "5cc69a167f96a615a16eace5e9388b4169ba03cd6e814d5a37ff6dd9100eb606",
+            "name": "_CONDUCTOR_MAX_COORD",
+            "parent": "RUN",
+            "sourceBytes": 33,
+            "sourceSha256": "5cc69a167f96a615a16eace5e9388b4169ba03cd6e814d5a37ff6dd9100eb606"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 28,
+            "derivedSha256": "35c4c56f2bc6aa429075d57ae0e32896b6e5adc25357d8eb2c6f19f6109775d8",
+            "name": "_CONDUCTOR_MAX_IDS",
+            "parent": "RUN",
+            "sourceBytes": 28,
+            "sourceSha256": "35c4c56f2bc6aa429075d57ae0e32896b6e5adc25357d8eb2c6f19f6109775d8"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 37,
+            "derivedSha256": "bdeb5670b17b10e9bb4423e8067a0864180ccc84d7dee15e8707179a0861db5d",
+            "name": "_CONDUCTOR_MAX_TRACE_POINTS",
+            "parent": "RUN",
+            "sourceBytes": 37,
+            "sourceSha256": "bdeb5670b17b10e9bb4423e8067a0864180ccc84d7dee15e8707179a0861db5d"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 22,
+            "derivedSha256": "464dbddd8e330ff86756bf9b1539b05dab773351aa6a243456b12f4caac275c0",
+            "name": "_CONDUCTOR_CELL",
+            "parent": "RUN",
+            "sourceBytes": 22,
+            "sourceSha256": "464dbddd8e330ff86756bf9b1539b05dab773351aa6a243456b12f4caac275c0"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 31,
+            "derivedSha256": "52a31fec919d3e6f608f95a69dd27c1a3f577e6f643d71b271ba2ae772a9f0fa",
+            "name": "_CONDUCTOR_MAX_SHAPES",
+            "parent": "RUN",
+            "sourceBytes": 31,
+            "sourceSha256": "52a31fec919d3e6f608f95a69dd27c1a3f577e6f643d71b271ba2ae772a9f0fa"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 37,
+            "derivedSha256": "ae478d1ef768edfd48b6ed3d5181e174e670a55d13f7b9cf57d817e2e51e8605",
+            "name": "_CONDUCTOR_MAX_BUCKET_REFS",
+            "parent": "RUN",
+            "sourceBytes": 37,
+            "sourceSha256": "ae478d1ef768edfd48b6ed3d5181e174e670a55d13f7b9cf57d817e2e51e8605"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 39,
+            "derivedSha256": "3011152b870f48a186832ae20d22c42066702206e9ae56dd997f5150b3206ec5",
+            "name": "_CONDUCTOR_MAX_CONTACT_TESTS",
+            "parent": "RUN",
+            "sourceBytes": 39,
+            "sourceSha256": "3011152b870f48a186832ae20d22c42066702206e9ae56dd997f5150b3206ec5"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 38,
+            "derivedSha256": "e6caaf2bcb1e74936f33a1a6fb6caed555d2a2dbadda1600b174501505e807ff",
+            "name": "_CONDUCTOR_MAX_CELLS_PER_SHAPE",
+            "parent": "RUN",
+            "sourceBytes": 38,
+            "sourceSha256": "e6caaf2bcb1e74936f33a1a6fb6caed555d2a2dbadda1600b174501505e807ff"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 245,
+            "derivedSha256": "eb2bead663959e58e655a34bde5e7803b6ca528c42e37ee1dea0b98eacf93144",
+            "name": "_CONDUCTOR_LAYOUT_KEYS",
+            "parent": "RUN",
+            "sourceBytes": 245,
+            "sourceSha256": "eb2bead663959e58e655a34bde5e7803b6ca528c42e37ee1dea0b98eacf93144"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 229,
+            "derivedSha256": "d05fd689fb0cfe6a68fe1686467e0e01e0d051330555acd02739212bae08c27f",
+            "name": "_CONDUCTOR_PAD_KEYS",
+            "parent": "RUN",
+            "sourceBytes": 229,
+            "sourceSha256": "d05fd689fb0cfe6a68fe1686467e0e01e0d051330555acd02739212bae08c27f"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 123,
+            "derivedSha256": "416f7c71cbd3bcdbcacd0dc7f217581abbe8489ff8f2afa1d91e8b3c79e3f315",
+            "name": "_CONDUCTOR_TRACE_KEYS",
+            "parent": "RUN",
+            "sourceBytes": 123,
+            "sourceSha256": "416f7c71cbd3bcdbcacd0dc7f217581abbe8489ff8f2afa1d91e8b3c79e3f315"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 105,
+            "derivedSha256": "4507893908a5f33fed7aaaaac0de0b6508e20988d1fa4ac3a5d176b3362f62d2",
+            "name": "_CONDUCTOR_HOLE_KEYS",
+            "parent": "RUN",
+            "sourceBytes": 105,
+            "sourceSha256": "4507893908a5f33fed7aaaaac0de0b6508e20988d1fa4ac3a5d176b3362f62d2"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 211,
+            "derivedSha256": "f421e7c6708249fad98d26ce759a688b47f0bb2c675998b6bd6e5ea014b2696f",
+            "name": "_CONDUCTOR_CLEARANCE_KEYS",
+            "parent": "RUN",
+            "sourceBytes": 211,
+            "sourceSha256": "f421e7c6708249fad98d26ce759a688b47f0bb2c675998b6bd6e5ea014b2696f"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 95,
+            "derivedSha256": "aef57804160e579222c686f29d8d8aa8f46155594b7b909d8f238828fa2ca0c6",
+            "name": "_conductor_need",
+            "parent": "RUN",
+            "sourceBytes": 95,
+            "sourceSha256": "aef57804160e579222c686f29d8d8aa8f46155594b7b909d8f238828fa2ca0c6"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 169,
+            "derivedSha256": "136398cc1269b5cb1d17e3204485c64b0bb6e30a25438f5bbdbcd052d9e1a728",
+            "name": "_conductor_id",
+            "parent": "RUN",
+            "sourceBytes": 169,
+            "sourceSha256": "136398cc1269b5cb1d17e3204485c64b0bb6e30a25438f5bbdbcd052d9e1a728"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 132,
+            "derivedSha256": "a6c2498116aa6120783061bec8bc37c95b06fe9e0ae327fc57f20fc299b593c1",
+            "name": "_conductor_int",
+            "parent": "RUN",
+            "sourceBytes": 132,
+            "sourceSha256": "a6c2498116aa6120783061bec8bc37c95b06fe9e0ae327fc57f20fc299b593c1"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 151,
+            "derivedSha256": "c6abbfa613b3bb7592384f8b8e2118cdb3659be38d4580d0bae2bd9eeb4474d0",
+            "name": "_conductor_coordinate",
+            "parent": "RUN",
+            "sourceBytes": 151,
+            "sourceSha256": "c6abbfa613b3bb7592384f8b8e2118cdb3659be38d4580d0bae2bd9eeb4474d0"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 135,
+            "derivedSha256": "1714cf613c1f1c90e988c6b85cbf585be169c87d35049fd296df9f9cc60b2f60",
+            "name": "_conductor_exact_object",
+            "parent": "RUN",
+            "sourceBytes": 135,
+            "sourceSha256": "1714cf613c1f1c90e988c6b85cbf585be169c87d35049fd296df9f9cc60b2f60"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 463,
+            "derivedSha256": "6e6ae133c7934c8d3658087a99f5b17e8f93cad077f37a273f310272f032a69b",
+            "name": "_conductor_rectangle",
+            "parent": "RUN",
+            "sourceBytes": 463,
+            "sourceSha256": "6e6ae133c7934c8d3658087a99f5b17e8f93cad077f37a273f310272f032a69b"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 221,
+            "derivedSha256": "756b0f2e8c090bb0c828c82c91d3582e8ab9beb11231a8b02903266e4aef5455",
+            "name": "_conductor_contains_rect",
+            "parent": "RUN",
+            "sourceBytes": 221,
+            "sourceSha256": "756b0f2e8c090bb0c828c82c91d3582e8ab9beb11231a8b02903266e4aef5455"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 152,
+            "derivedSha256": "46b731a958794bcbe5270ef5bb2200797d77b165c32ef9e54b9ecbb9b294b120",
+            "name": "_conductor_contains_point",
+            "parent": "RUN",
+            "sourceBytes": 152,
+            "sourceSha256": "46b731a958794bcbe5270ef5bb2200797d77b165c32ef9e54b9ecbb9b294b120"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 145,
+            "derivedSha256": "11fc175ec08ddcbd8ca697e466cd944fc2e654077c371fb65b4ce826eabccf60",
+            "name": "_conductor_touch",
+            "parent": "RUN",
+            "sourceBytes": 145,
+            "sourceSha256": "11fc175ec08ddcbd8ca697e466cd944fc2e654077c371fb65b4ce826eabccf60"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 307,
+            "derivedSha256": "77731821b88b99a5c4768c837183405c6570f815ad7222ba7f984d9b79566e6d",
+            "name": "_conductor_stroke",
+            "parent": "RUN",
+            "sourceBytes": 307,
+            "sourceSha256": "77731821b88b99a5c4768c837183405c6570f815ad7222ba7f984d9b79566e6d"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 324,
+            "derivedSha256": "ed6d01bf9afb7539590f5bf8cb829ff023df992548ba40be5f86211adcdcb1d0",
+            "name": "_conductor_copy",
+            "parent": "RUN",
+            "sourceBytes": 324,
+            "sourceSha256": "ed6d01bf9afb7539590f5bf8cb829ff023df992548ba40be5f86211adcdcb1d0"
+          },
+          {
+            "byteEqual": true,
+            "derivedBytes": 20376,
+            "derivedSha256": "edb370a53e1d92710d1bf4a7fc5eefb3018272e3d5e9718ee61462d2b5a1c43a",
+            "name": "validate_complete_layout",
+            "parent": "RUN",
+            "sourceBytes": 20376,
+            "sourceSha256": "edb370a53e1d92710d1bf4a7fc5eefb3018272e3d5e9718ee61462d2b5a1c43a"
+          }
+        ],
+        "fixtureSpecSha256": "5d2b62c98bd229a73be0e54e4b6adcde4d5080fb87046d8bd770455f80c1224a",
+        "fullD": false,
+        "ioHelperSha256": "df9c297f4eb491117bade351ceedf26ccef5059e47ad9a7f36006000f1a10923",
+        "planSha256": "0dd298d8bb027d983d324806466a38cc9c589e4f699695b7abd3178b2d7db327",
+        "runReaderSha256": "84c8dbf2805ab5607f1e79f1d1fa67cc1a2e4ec06d3a22fdd44771ce48d03b52",
+        "schema": "tsj-generic-routing-reference-reader-overlay-v1",
+        "status": "GENERATED_SOURCE_ONLY_NOT_EXECUTED",
+        "transformations": [
+          "FROZEN_GENERIC_EXPECTED_CONTEXT_SEAM",
+          "NATURAL_NO_PATH_TERMINAL_REQUIRED",
+          "WIRE_INSERTION_ORDER",
+          "SOURCE_FROZEN_PAD_AND_RECTANGLE_BINDING",
+          "TRANSPORT_TREE_VISITS_EXACTLY_1000000",
+          "TRANSPORT_EXACT_STRUCTURAL_COMPONENT_GEOMETRY_4096_ORDINARY_256",
+          "NEW_READ_ONLY_ENVELOPE_AND_CLI"
+        ],
+        "transportReaderSha256": "685e18d44f322a61d36f1aafa430cb562a5a7f536e2aa9c2640be929881d646b",
+        "treeTextPolicy": {
+          "geometryMaximum": 4096,
+          "geometryPath": [
+            "references",
+            "OPEN_OR_BLOCKED",
+            "run",
+            "layout",
+            "components",
+            "ACTUAL_LIST_INDEX",
+            "geometryCanonical"
+          ],
+          "geometryValueType": "STRING",
+          "indexOrigin": "ENUMERATE_REAL_LIST_ONLY",
+          "keys": "ORDINARY_256",
+          "ordinaryMaximum": 256,
+          "pathTokens": "TUPLE_NOT_JOINED_TEXT"
+        },
+        "wireContractSha256": "dd738f0bbac0edc4f4cbaf4a0d2bba80ebeda9a581d79c052e29df8976e73dd6"
+      },
+      "status": "PASS_GENERIC_LITERAL_SOURCE_AND_CLI_GATES_ONLY"
+    },
+    "FINAL_READER_GATES_R1": {
+      "call": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-with-actual-packet-r1",
+        "processElapsedMs": 1099.6172000000001,
+        "receipts": {
+          "owner.json": "37c8a86f9e8d3181e17e3bd8abc48f16b715d73dc2b527903cde256def635ced",
+          "parent.json": "eb3e72f63f21fb0267c4c5a20f590e89bc917d79b9d21c3b74f3b7384f779b20",
+          "process.json": "41be474c50eb8ac315c8a77ca6384af7508149969860eeb1789cfe0faab8fca5",
+          "request.json": "a7e4d1e331a53f2d6f8ab7e0e9452f74a19ba2fbfd6219ceca6ebfbd8b145898",
+          "result.json": "ff6d75afa939027fec94562cae23683bc52c57979e30938d1386ec1445b8af3e",
+          "stderr.txt": "fc63880711d4671a0c1062739cdfaee97fba645bc1a5302f1ed5794134519ddc",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 1350.0931
+      },
+      "declared": 20,
+      "newAuthoredInvocations": 0,
+      "note": "UNIT_OPTIONAL_PACKET_CASE_USES_PACKET_IDS_FOR_SEMANTICS_ONLY; ROOT_ACTUAL_READER_CLI_SEPARATELY_BINDS_EXTERNAL_EXPECTED_IDS",
+      "passed": 20,
+      "referenceFacts": {
+        "BLOCKED": {
+          "advanceCalls": 8,
+          "componentGeometryCharacters": [],
+          "constructors": {
+            "after": 2,
+            "before": 1
+          },
+          "copiedEntries": 286,
+          "copyChunks": 108,
+          "disposition": "NO_PATH",
+          "expanded": 2,
+          "groups": 6,
+          "holes": null,
+          "ownerCleanupNanos": 201,
+          "ownerUnits": 7,
+          "reason": "NET_A:NO_PATH",
+          "sourceGeometryStable": true,
+          "traces": null,
+          "wrapperUnits": 479
+        },
+        "OPEN": {
+          "advanceCalls": 271,
+          "componentGeometryCharacters": [
+            1083,
+            1081,
+            1081,
+            1083
+          ],
+          "constructors": {
+            "after": 1,
+            "before": 0
+          },
+          "copiedEntries": 611,
+          "copyChunks": 260,
+          "disposition": "FOUND",
+          "expanded": 52,
+          "groups": 9,
+          "holes": 0,
+          "ownerCleanupNanos": 300,
+          "ownerUnits": 271,
+          "reason": "SUCCESS",
+          "sourceGeometryStable": true,
+          "traces": 2,
+          "wrapperUnits": 2172
+        }
+      },
+      "schema": "tsj-natural-reference-final-reader-v1",
+      "skipped": 0,
+      "sourceClassesToolsRehashedUnchanged": true,
+      "status": "PASS_ACTUAL_REFERENCE_AND_MUTATIONS"
+    },
+    "NATIVE_GATES_R1": {
+      "call": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "native-reference-r1",
+        "processElapsedMs": 473.084,
+        "receipts": {
+          "owner.json": "2497556cdd1d1f00eb37eb34357a26de03c11d9fac9a8013ec17d0a61642a079",
+          "parent.json": "435ffddbbd101750e0491053f2c424997e699c760a69ba75f3737192a991cd57",
+          "process.json": "3d01cbab87df88461a53b29d618508df5ba72fe97820ab94faf15c9026348cc0",
+          "request.json": "66066a1fa83e6a9735e293ebf21ce4ddff7bf4f02852cab70839a6c96b70de96",
+          "result.json": "97dc28a028952f10b1d777f667613fa956db572813ef7cb5d748e467ad7324f8",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "e227c53d5fa7de35b024c1ff24d465515c55204f769bcff622ecb8e9a4c798ca"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 709.1715
+      },
+      "newAuthoredInvocations": 0,
+      "schema": "tsj-natural-reference-native-gate-v1",
+      "status": "RETURNED_CANONICAL_PACKET_PENDING_INDEPENDENT_READER"
+    },
+    "RETAINED_GATES_R1": {
+      "calls": [
+        {
+          "childExitCode": 0,
+          "isolatedCleanupDurationMs": null,
+          "output": "PASS SelectedObservationMaterializerGuard assertions=13 cases=2 sessions=0",
+          "ownedRootAndLogsAbsent": true,
+          "phase": "retained-SelectedObservationMaterializerGuard-r1",
+          "processElapsedMs": 365.4964,
+          "receipts": {
+            "owner.json": "e7265e6c00fcb82137776e7f8686d7ef786fae884eb869d6744365c03a01a5a3",
+            "parent.json": "d218348f78155250be86240fac9a1270cb815da3f397770e9b1a5799d9548874",
+            "process.json": "00938fe93e462a63e9b550788b93f48a3a1d27c9f9ead6692c926d2f407f4156",
+            "request.json": "b1b37581d2d93742200b0ae4a8a2c09652ae10f7d7abf585e171ea471b47361c",
+            "result.json": "d67f636790443ddda69757a8aa1bc24333b913bdd99758f18f75e0298c816f9b",
+            "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.txt": "6a8d6034a0297870577d308934898e2431ba824bbacf8e4ae96b8be343b4f886"
+          },
+          "status": "PASS",
+          "terminationProven": true,
+          "wrapperTotalElapsedMs": 608.6576
+        },
+        {
+          "childExitCode": 0,
+          "isolatedCleanupDurationMs": null,
+          "output": "PASS: P07 terminal-only diagnostics contracts assertions=217421",
+          "ownedRootAndLogsAbsent": true,
+          "phase": "retained-P07TerminalOnlyDiagnosticsContractTest-r1",
+          "processElapsedMs": 1044.5481,
+          "receipts": {
+            "owner.json": "02584f12874a4742186621acd0a4bd856ed59214c448a3279152b2ff612e411d",
+            "parent.json": "fc7e5c3f16e908872fe7146bcbb566b188024669c7ae3d3297e401fc9b7e17e7",
+            "process.json": "02f17470a71ab44e837c40ad2c3866919009915739de31fd70cf681c2af9b540",
+            "request.json": "dfb7a44aadd2d2c109710f5e6ca70fab84602306ea8707232b8407d357575cc2",
+            "result.json": "ffc80b3d67fe3cbc2319fa83d0e37b51a72a6d7cb5605e6b9ee420fb497d022b",
+            "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.txt": "4ebbc29e0a1be49f0b9b061573751b4adf43a96d6d99ae7f29462accd7a03e08"
+          },
+          "status": "PASS",
+          "terminationProven": true,
+          "wrapperTotalElapsedMs": 1289.0520000000001
+        },
+        {
+          "childExitCode": 0,
+          "isolatedCleanupDurationMs": null,
+          "output": "PASS: P07 branch diagnostics contracts assertions=30",
+          "ownedRootAndLogsAbsent": true,
+          "phase": "retained-P07BranchDiagnosticsContractTest-r1",
+          "processElapsedMs": 465.85630000000003,
+          "receipts": {
+            "owner.json": "43fac8a266b1c706915bf13564fb1127f164ab375fc183fbadaeaea35524337a",
+            "parent.json": "a54d7dfd6ccf8e2bba36dcddac5f7eb138ab93e47fc746be2aeb650abfd508cf",
+            "process.json": "3bd9ecb992c92565ed7f289e40f946b341ff97d860d9fc67f79441bb6b97d7d4",
+            "request.json": "8114f55b3d1c315ee2a353df81fa9f4a9a4f7749f6d4e1408fdf5998e5429a0c",
+            "result.json": "76c4f150ca6252fa5ea6063eecc3de6ff7a4edfc5bcb6a3dd6f7512d0091afc5",
+            "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.txt": "97c1f90aa77fa71942843c6948ce73ad23fdf71a24ecb91fce8a5986d86dc2af"
+          },
+          "status": "PASS",
+          "terminationProven": true,
+          "wrapperTotalElapsedMs": 705.9644000000001
+        },
+        {
+          "childExitCode": 0,
+          "isolatedCleanupDurationMs": null,
+          "output": "P07_LAZY_BOUND_QUERY_CLONE_CANARY {\"protocol\":\"p07-relaxed-distance-bound-contract-v1\",\"runId\":\"03e698b3-a7ff-465c-bfe6-51437333eb1a\",\"caseId\":\"SEED5_V10_CANDIDATE1\",\"profile\":\"SAVED_PROFILE_V10\",\"layoutVersion\":26,\"dependencyEpoch\":\"tsj-generation-dependencies-v28\",\"currentInputGeometrySha256\":\"d2e6750eac2ad9f8ef4e2f47ef665e91b4283dc07fc510301d58262ce572a02c\",\"historicalLayout24PrefixInputGeometrySha256\":\"1c6136104db257aebfa692c2c6689fe620a658276062d783f36fbef10dd3cc19\",\"placementInterpretationVersion\":10,\"candidateAttempt\":1,\"candidate\":1,\"declaredCaseCanaryCount\":1,\"attempt\":1,\"checkpointOrdinal\":6,\"observedCallbacks\":6,\"sentinelPropagated\":true,\"partialCloneDiscarded\":true,\"throwKind\":\"RuntimeException\",\"expectedThrowableClass\":\"java.lang.IllegalStateException\",\"sourceCloneStateParity\":true,\"cacheWarmMethod\":\"freeLayerCell\",\"cacheWarmNetId\":\"BIAS_AC\",\"cacheWarmFreeCellResult\":true,\"queryCacheWarmed\":true,\"queryActiveNetMatchesWarmNet\":true,\"queryActiveTraceWidthPositive\":true,\"liveActiveNetRemainsNull\":true,\"cacheDifferenceScope\":\"DERIVED_CURRENT_NET_PREPARATION_STATE\",\"livePristineStableAfterQueryWarm\":true,\"liveWarmedQueryDiffers\":true,\"pristineWarmedQueryDiffers\":true,\"liveEffectsStableAfterQueryWarm\":true,\"pristineEffectsStableAfterQueryWarm\":true,\"inputLayoutStableAfterQueryWarm\":true,\"liveStateUnchanged\":true,\"liveEffectsUnchanged\":true,\"elapsedMs\":0,\"observerArmScope\":\"AFTER_CONSTRUCTION_AND_PRISTINE_COPY\",\"timingScope\":\"NATIVE_CLONE_CHECKPOINT_ONLY_NOT_GWT_DEADLINE_PROOF\",\"scope\":\"FOCUSED_RELAXED_DISTANCE_BOUND_ALGORITHM_AND_CLONE_CONTRACTS_ONLY\",\"layoutQualification\":false,\"adoption\":false}\nP07_LAZY_BOUND_QUERY_CLONE_CANARY {\"protocol\":\"p07-relaxed-distance-bound-contract-v1\",\"runId\":\"03e698b3-a7ff-465c-bfe6-51437333eb1a\",\"caseId\":\"SEED5_V11_CANDIDATE1\",\"profile\":\"SAVED_PROFILE_V11\",\"layoutVersion\":26,\"dependencyEpoch\":\"tsj-generation-dependencies-v28\",\"currentInputGeometrySha256\":\"cdcea4ef17eab9551755be90f2bf615999141787fb60c6806f4bae0b0e057ae6\",\"historicalLayout24PrefixInputGeometrySha256\":\"b21527ea02b45b9fdfb6233fb116d42a32077da84709674efe3b59b36e15c43f\",\"placementInterpretationVersion\":11,\"candidateAttempt\":1,\"candidate\":1,\"declaredCaseCanaryCount\":1,\"attempt\":1,\"checkpointOrdinal\":6,\"observedCallbacks\":6,\"sentinelPropagated\":true,\"partialCloneDiscarded\":true,\"throwKind\":\"RuntimeException\",\"expectedThrowableClass\":\"java.lang.IllegalStateException\",\"sourceCloneStateParity\":true,\"cacheWarmMethod\":\"freeLayerCell\",\"cacheWarmNetId\":\"BIAS_AC\",\"cacheWarmFreeCellResult\":true,\"queryCacheWarmed\":true,\"queryActiveNetMatchesWarmNet\":true,\"queryActiveTraceWidthPositive\":true,\"liveActiveNetRemainsNull\":true,\"cacheDifferenceScope\":\"DERIVED_CURRENT_NET_PREPARATION_STATE\",\"livePristineStableAfterQueryWarm\":true,\"liveWarmedQueryDiffers\":true,\"pristineWarmedQueryDiffers\":true,\"liveEffectsStableAfterQueryWarm\":true,\"pristineEffectsStableAfterQueryWarm\":true,\"inputLayoutStableAfterQueryWarm\":true,\"liveStateUnchanged\":true,\"liveEffectsUnchanged\":true,\"elapsedMs\":0,\"observerArmScope\":\"AFTER_CONSTRUCTION_AND_PRISTINE_COPY\",\"timingScope\":\"NATIVE_CLONE_CHECKPOINT_ONLY_NOT_GWT_DEADLINE_PROOF\",\"scope\":\"FOCUSED_RELAXED_DISTANCE_BOUND_ALGORITHM_AND_CLONE_CONTRACTS_ONLY\",\"layoutQualification\":false,\"adoption\":false}\nP07_RELAXED_DISTANCE_BOUND_SUITE {\"protocol\":\"p07-relaxed-distance-bound-contract-v1\",\"runId\":\"03e698b3-a7ff-465c-bfe6-51437333eb1a\",\"status\":\"PASS_FOCUSED_CONTRACT_ONLY\",\"fieldAlgorithmContracts\":true,\"refreshContracts\":true,\"nativeCloneCancellationCanaryCount\":2,\"assertions\":2201,\"scope\":\"FOCUSED_RELAXED_DISTANCE_BOUND_ALGORITHM_AND_CLONE_CONTRACTS_ONLY\",\"layoutQualification\":false,\"adoption\":false}\nPASS: P07 relaxed bound contracts fieldAlgorithm=true refresh=true cloneCanaries=2 assertions=2201 scope=FOCUSED_RELAXED_DISTANCE_BOUND_ALGORITHM_AND_CLONE_CONTRACTS_ONLY layoutQualification=false adoption=false",
+          "ownedRootAndLogsAbsent": true,
+          "phase": "retained-P07RelaxedDistanceBoundContractTest-r1",
+          "processElapsedMs": 953.4404000000001,
+          "receipts": {
+            "owner.json": "e28931ec2ad2b426dac87ef3a7004bc8ebee9873f8ded81b3faf66f5785ff2a0",
+            "parent.json": "98f885def6d76d80e1de62509c3924487954400471d79656e29da8db437d32e8",
+            "process.json": "80bbdac078ad19441e75081b3f689a4befd65ecf67242ce5138409da5376ae7d",
+            "request.json": "17420e8945c051d4cfd355c42534162882dc68120cb2c1de6aafcd69d4e8e2ba",
+            "result.json": "e6f8079b07d8bcf5b34839c9791758a03af655fb22ec92b978c9e1942954bb73",
+            "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.txt": "5de70074a24f4c4c0bc439aa6488106f42340f549fb7f127daf4c109464f5c98"
+          },
+          "status": "PASS",
+          "terminationProven": true,
+          "wrapperTotalElapsedMs": 1195.362
+        }
+      ],
+      "classes": [
+        {
+          "bytes": 1021,
+          "path": "com/lushprojects/circuitjs1/client/P07BranchDiagnosticsContractTest$1.class",
+          "sha256": "30b307df4cac0699f0b1124d14c16eb09f51ec92ff019dda545da4d3fd8bf713"
+        },
+        {
+          "bytes": 1020,
+          "path": "com/lushprojects/circuitjs1/client/P07BranchDiagnosticsContractTest$2.class",
+          "sha256": "681316c77e79adaeb69f8db12c44207bdd7c74039657acb84ea47c0b766d6018"
+        },
+        {
+          "bytes": 1235,
+          "path": "com/lushprojects/circuitjs1/client/P07BranchDiagnosticsContractTest$3.class",
+          "sha256": "5b7d614e7a0cc58ed54ee40f70fd51783ad4c89dc1bc64aac75af16d93976153"
+        },
+        {
+          "bytes": 11763,
+          "path": "com/lushprojects/circuitjs1/client/P07BranchDiagnosticsContractTest.class",
+          "sha256": "04e8f610e1b5ebb56c265ff8c055ae02bef92c64a793953717f58c28b85de7a5"
+        },
+        {
+          "bytes": 1039,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$1.class",
+          "sha256": "3752454f8bf0bf5579262f169fc014a3f7f753c508af2052b40e9583240610c6"
+        },
+        {
+          "bytes": 1042,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$10.class",
+          "sha256": "c15c54a5826b8b7d8199724735de614d2d6ea24cff81b96c092fca2d139d89ce"
+        },
+        {
+          "bytes": 1041,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$11.class",
+          "sha256": "2492200e5b0250f55458759563502f4a5e8df8759ad60cbc4cdd80484b9f833f"
+        },
+        {
+          "bytes": 1049,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$12.class",
+          "sha256": "59346c48c5ad782f9dc5e731136efe7a913650d7f71be2ac864eb8b03d431f38"
+        },
+        {
+          "bytes": 1048,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$13.class",
+          "sha256": "2a03ffc376ff3dd9d4f768dec9a6f06bc2b9228da6aa900280a6e7b728415f0a"
+        },
+        {
+          "bytes": 1047,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$14.class",
+          "sha256": "e5f21188baf0ec65fb95e9d069e2bc0befb992e7cd327134607d9e388ac3951f"
+        },
+        {
+          "bytes": 1330,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$15.class",
+          "sha256": "41bbad548afa6e7e904e3592485940f0f9c15084a44d59aef7b9463a8248c9d7"
+        },
+        {
+          "bytes": 1765,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$16.class",
+          "sha256": "5b12b3ce3482d840716defdceaeb3a2c3667628dd7161ac4c4382ed32ed0f941"
+        },
+        {
+          "bytes": 1421,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$2.class",
+          "sha256": "5b5923a4721ef5f8bf22ad23f9fdad95d14b897f77ad962ff9bcd5984f33f219"
+        },
+        {
+          "bytes": 1421,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$3.class",
+          "sha256": "a5e43e65dca29b3f32fcea1816f66a18411992854548a12b90ef80068d6c2183"
+        },
+        {
+          "bytes": 1427,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$4.class",
+          "sha256": "7b8b762ebe1b0b02efccc0de858e836b57ff0bc66a1856cd55659d61de9f5b01"
+        },
+        {
+          "bytes": 1421,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$5.class",
+          "sha256": "81dba9704dc942d972b7b08eb24ddc1604331740af7e6ec4fc8e4ffb8ee814ed"
+        },
+        {
+          "bytes": 1414,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$6.class",
+          "sha256": "7137a06f80dd830cc365f568043e833a80460bf7f5d1437cd5f97c634b67ecbe"
+        },
+        {
+          "bytes": 1279,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$7.class",
+          "sha256": "b7d87a7c60df0a3e47093ab753936af8f114ba41495d5be34cd36548e778ba9e"
+        },
+        {
+          "bytes": 1423,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$8.class",
+          "sha256": "5971087384e9c6617678119411aa51e499918799694a37ba5a18c6f48e52de52"
+        },
+        {
+          "bytes": 1425,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$9.class",
+          "sha256": "c56b68420400c822caed16affe146e55b4ba80fa9cd17876de99625f1813bf8a"
+        },
+        {
+          "bytes": 339,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$CheckAction.class",
+          "sha256": "63fa1a75f0e7c73256e5072ac66abeefcd00704ab74af55381b7755a8312b0eb"
+        },
+        {
+          "bytes": 906,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$CloneFixture.class",
+          "sha256": "801ccf29fd9ef4b16de2f7ca345c3cb4610d1fc72ca2d26ea7ca37cd85e2cae4"
+        },
+        {
+          "bytes": 2108,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest$SyntheticGraph.class",
+          "sha256": "6299a16298fa9a7bf7f168b5b0a623ef0543a6ba8d8200e6219e837d8fcf8044"
+        },
+        {
+          "bytes": 37747,
+          "path": "com/lushprojects/circuitjs1/client/P07RelaxedDistanceBoundContractTest.class",
+          "sha256": "49f7a65f6d46beb4544cba20c763321e147197a216c5c448b909e6abd5b38298"
+        },
+        {
+          "bytes": 697,
+          "path": "com/lushprojects/circuitjs1/client/P07TerminalOnlyDiagnosticsContractTest$1.class",
+          "sha256": "a62395c6c43bb3449dcfe5d5c9c605585b082def15ed0c0ed6cd2e875d399272"
+        },
+        {
+          "bytes": 1787,
+          "path": "com/lushprojects/circuitjs1/client/P07TerminalOnlyDiagnosticsContractTest$BoundProbe.class",
+          "sha256": "e824edc94b0e74a9c314929dcf075229a6c1e56fd1eb3cc66ba4f923e1f7810f"
+        },
+        {
+          "bytes": 1499,
+          "path": "com/lushprojects/circuitjs1/client/P07TerminalOnlyDiagnosticsContractTest$RouteRun.class",
+          "sha256": "6ab19a56eda8ceab74706cd00a33ed22eacc170e0bd242801c5215ca78355926"
+        },
+        {
+          "bytes": 1360,
+          "path": "com/lushprojects/circuitjs1/client/P07TerminalOnlyDiagnosticsContractTest$SnapshotCapture.class",
+          "sha256": "03396984d78a08876f1eb886ed99f0b634fe7ca5c71317643623e257e1fc9d12"
+        },
+        {
+          "bytes": 740,
+          "path": "com/lushprojects/circuitjs1/client/P07TerminalOnlyDiagnosticsContractTest$TerminalCapture.class",
+          "sha256": "8042c7aaf5d01ce797e2e12d292a183eb7b53b4ea6d09cedf66662c782b92b0e"
+        },
+        {
+          "bytes": 24692,
+          "path": "com/lushprojects/circuitjs1/client/P07TerminalOnlyDiagnosticsContractTest.class",
+          "sha256": "119e70176de3d611d78aa41b72735cf2abed33dbdbfa57267b257321a12fe893"
+        },
+        {
+          "bytes": 7352,
+          "path": "com/lushprojects/circuitjs1/client/SelectedObservationMaterializerGuard.class",
+          "sha256": "acf453a782396edc00829e0031925ba0cb40b591e3f8579411a59a43ef225e1e"
+        }
+      ],
+      "compile": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "compile-retained-r1",
+        "processElapsedMs": 962.8146,
+        "receipts": {
+          "owner.json": "9b64f117eb0b83fb5f3e281ca142d9b896817d13e3a86e3ee024413e51fdccc3",
+          "parent.json": "74b9377149becd875192c450c765d8b43a26f0f582aa06c8b58cc1242f1ffb0d",
+          "process.json": "7f5fb90869eff06fb1dc9670362a38b3153ec960eb66b5485ece8346e3e6c816",
+          "request.json": "a6b5e7936d2e9bdb31f029595ef5303bd7a95f82738ef2b12e4ab717537b7547",
+          "result.json": "bbfe6d8f49d8a37ddc75e16d779d06cd62579af5eb0c02ccc651e03194f3d115",
+          "stderr.txt": "594d455b0e001a516f324c4d1ddb94936d8c6ac3719e15df99fb919eb4a2c913",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 1215.1345000000001
+      },
+      "newAuthoredInvocations": 0,
+      "schema": "tsj-natural-reference-retained-v1",
+      "sessionCounts": "NOT_MEASURED_EXCEPT_MATERIALIZER_ASSERTED_ZERO",
+      "sourceCount": 4,
+      "sources": [
+        {
+          "bytes": 32090,
+          "role": "P07TerminalOnlyDiagnosticsContractTest.java",
+          "sha256": "2c20e0bbc892e1ff8eb4945805b86c28c354425209449e949610e787ad7ce04e"
+        },
+        {
+          "bytes": 13666,
+          "role": "P07BranchDiagnosticsContractTest.java",
+          "sha256": "05886ad8f8a65506007d7523cc92833f2d54f8c18e87cf6e181f73419f22c9cf"
+        },
+        {
+          "bytes": 55210,
+          "role": "P07RelaxedDistanceBoundContractTest.java",
+          "sha256": "9983c396ec48938ac488203ab7655cbad232bcc751be01578565fa3269a287e9"
+        },
+        {
+          "bytes": 6169,
+          "role": "SelectedObservationMaterializerGuard.java",
+          "sha256": "7d8f5e7fad7034cabaf8b03db77d3597635d3b6f56dce106dad7749df73f5ba8"
+        }
+      ],
+      "status": "PASS_BOUNDED_NATIVE_CONTRACTS_ONLY"
+    },
+    "TEXT_POLICY_GATES_R1": {
+      "classes": [
+        {
+          "bytes": 8528,
+          "path": "com/lushprojects/circuitjs1/client/GenericReferenceTextPolicyContract.class",
+          "sha256": "5c23b3bfce154366f459e2e1ebfb0d3d1716dd418d7d8f14944199af57239214"
+        }
+      ],
+      "compile": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "compile-text-policy-r1",
+        "processElapsedMs": 743.1888,
+        "receipts": {
+          "owner.json": "8fc3c0bdf29e6f33cea2a97bb0c52ff7a663283b30a0cc910cfebf99192031e8",
+          "parent.json": "776b8415bebfe6ff73958bb6eb023b2386198a05ae919b880cdac4d2b83533f4",
+          "process.json": "b0e0d8dbb49dadbdb240b56f2e3f839823a7b8a3e16fb051e174565fc1488361",
+          "request.json": "97d658cefaec3cb59f4a1bc21ed4bbe323e173087e2fbcf9d19c430bd74dd37a",
+          "result.json": "e85813e87e6e9e3560d2df07f4f81aa771c318f120e61b7e42b0d264c1bf0bd9",
+          "stderr.txt": "594d455b0e001a516f324c4d1ddb94936d8c6ac3719e15df99fb919eb4a2c913",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 984.2416000000001
+      },
+      "newAuthoredInvocations": 0,
+      "newSessionBegins": 0,
+      "output": "PASS assertions=58 testCases=56 sessions=0",
+      "run": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "native-text-policy-r1",
+        "processElapsedMs": 388.163,
+        "receipts": {
+          "owner.json": "efd3aad6cad6e269c29f2d916180946ee40303915c45d29a0963842eacc1b612",
+          "parent.json": "84f25c41d811536949f853d91987428de0de9be9b93fbfe9396413e77bafa164",
+          "process.json": "6dc66964e7a01bbf0817cbecd854727cbc5a2c1d92f602fd9dda8a7c00890c59",
+          "request.json": "328a593bd61b239f36ff54a20195ccb41ec6a4d6a07453c97c4401ebb4313ca8",
+          "result.json": "afde330f7043f2cdbe41f29d5bbe5a89881081e51cddc708338ced5d317d8c35",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "c5919c3552b2c9c0300ca7f8a1656d16db3b9a1005e56221273adf665dec347b"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 627.8834
+      },
+      "schema": "tsj-natural-reference-text-policy-v1",
+      "status": "PASS_ACTUAL_NATIVE_TEXT_POLICY_ONLY"
+    }
+  },
+  "hardPsychotic": "UNAVAILABLE_UNRUN",
+  "hostControls": {
+    "calls": [
+      {
+        "childExitCode": 2,
+        "error": "GENERIC_REFERENCE_OVERLAY_FAIL STUDY_HASH",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-native-study-r1",
+        "processElapsedMs": 352.8245,
+        "receipts": {
+          "owner.json": "ee31624ef6a7840b53d6cb77eaa2c07a8ed83b044a27390fa1f76aa0381b9813",
+          "parent.json": "9cb5583a2381a2360c89c9b3deb4e78a2ac1e8b7fabd28d9dc820f61dd7ea3c6",
+          "process.json": "d3422ef075e1a7a0d8fa3419c923cd79209d6dbe83aaf8a99b1c19bc1dc5e81c",
+          "request.json": "71a4c0022caf0155a5770f847f48771a3c2cf79105c90f09753add5961eda248",
+          "result.json": "9f52b251e4ca85b7723d8996fce93a02371e560ee521c647a69f1ea94b76c55c",
+          "stderr.txt": "673170b7a58a463141d603fbd0c00f54f8a883225045af076345fc27274c6e40",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 602.1815
+      },
+      {
+        "childExitCode": 2,
+        "error": "GENERIC_REFERENCE_OVERLAY_FAIL OUTPUT_NOT_EMPTY",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-native-occupied-r1",
+        "processElapsedMs": 343.5586,
+        "receipts": {
+          "owner.json": "5e1d5a71b7798fdc3a26ff0e5c9748305bcc5d1772a26a77d757f611d7a1efd5",
+          "parent.json": "f2d128c49de69c8fad1200f6f8aa879e12e64ebcc79b5a3ce49442449a1e95e1",
+          "process.json": "b504b0f4de0757d99e165d525b82f432391f9e9c3700ccd4e2922ae28a92ab5c",
+          "request.json": "ab374574e288d10dc7bf0e5d6926828192a2e77848b2ebe9dd49b7fb94fc234a",
+          "result.json": "483fbd053ff47767968d52648236558a4930e09103e9ecee739bed30887edc86",
+          "stderr.txt": "064a01c025cc2b903172795fb3f33c5b78dc34283e0d4709c89282272acfead6",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 582.5049
+      },
+      {
+        "childExitCode": 2,
+        "error": "GENERIC_REFERENCE_OVERLAY_FAIL BASE_GENERATOR_HASH",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-native-base-r1",
+        "processElapsedMs": 433.88480000000004,
+        "receipts": {
+          "owner.json": "2ad7822046ada72ecd390db40b3614032160fe60b9a3ade6c099d49d9651ed21",
+          "parent.json": "2de4e7a02c7f9e22a75e45a4f5760e9554c9bd59b51da13a1e2ea7c160b40cab",
+          "process.json": "f0fa00aba693e66f3cddc871e2baaa5873790f3ad9791049c826cfb349b3bec8",
+          "request.json": "6972eca2f2e829f560f2df5b8bf1ccfc2980caf1c12c56c2bbd0a68c4287b1db",
+          "result.json": "8d1ae4ce1f64cf630a13ce7ea06a4e2e77896d0a4f4ddbe999779306ea2034c4",
+          "stderr.txt": "f4afbd7d5f70dc4c8a35cb9c5416f6cb1bddad4a35265aac56f5bd4220194b88",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 672.0964
+      },
+      {
+        "childExitCode": 2,
+        "error": "GENERIC_REFERENCE_OVERLAY_FAIL OWNER_SOURCE_CANONICAL",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-native-alias-r1",
+        "processElapsedMs": 344.1752,
+        "receipts": {
+          "owner.json": "8ea2d77ead77a3c6c6e01cc34b6b75b6b4618f01150b86562bffdc5be6f680af",
+          "parent.json": "a95fa162e2e9d3ffc1171d135a3ae155b74722c39c582932d065627bd2284ff8",
+          "process.json": "409944a5852c553cb50b61af92cf3241c598dc31de754f6f2c17d2fa2158fe06",
+          "request.json": "5d723a2033d1f0cdabc97460b36074282a3da1cb78da2b696c94678134e14f4d",
+          "result.json": "53182d1b4ef2857a8b8085e19564915c2bfbb3d66d101866c7f2950bc7a07258",
+          "stderr.txt": "685a496d9ca9e6955cf194b16aa7772cb9b6b68c1cc3d58f3127bea59e553af1",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 582.1069
+      },
+      {
+        "childExitCode": 2,
+        "error": "GENERIC_REFERENCE_READER_GENERATOR_FAIL RUN_READER_HASH",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-generator-run-r1",
+        "processElapsedMs": 361.5373,
+        "receipts": {
+          "owner.json": "7da01d9624830042855d14089cafb39b2bc972ab0215efcc2d9b549094326c0d",
+          "parent.json": "23e3e2837c10c7b6861de3387128d5c1daa5193b89957d519f99225a9b12d9c0",
+          "process.json": "ddd46ce75358a20841dc263131ab5beff805efe2f2ad767705974476650b82f8",
+          "request.json": "3ccde28107c4c3eda2c9bb931ccd6ecde9f305395d37c62a9984d257e5a20ff6",
+          "result.json": "b1b79bafbee0babf722e724003fd0a88fa6bb3002bd8febb4b21aa216de1de8a",
+          "stderr.txt": "31d58dc59bcfa4321f8b8107ca7ae18980e4e362229417b19a471a5ffb944d89",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 596.7524000000001
+      },
+      {
+        "childExitCode": 2,
+        "error": "GENERIC_REFERENCE_READER_GENERATOR_FAIL FIXTURE_SPEC_HASH",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-generator-spec-r1",
+        "processElapsedMs": 437.2726,
+        "receipts": {
+          "owner.json": "c79dbae378885fc13230572675b96b9543e159d251ad2520d7dea7843f1f9531",
+          "parent.json": "7b1170ed0d9efedd0fe45c315012cb18c39daa77dbf78f4406b3c9fb6a1cbb85",
+          "process.json": "5f41008b7f3a68a74e42f2c31a99e1220e7039442bd5f4a5747f774176a8a8c0",
+          "request.json": "47580a0df5b7e6eac962a95de72e649d7d39c472a43c366800b50436e5b1ddbb",
+          "result.json": "540d70fe6460825436964a739d16948e191766a9994d449cf3840c957dc7e44c",
+          "stderr.txt": "798de9dda7b9fd7cc0275bd0479bedea1d16076f5aa1709e81aead900123c993",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 686.2327
+      },
+      {
+        "childExitCode": 2,
+        "error": "GENERIC_REFERENCE_READER_GENERATOR_FAIL OUTPUT_NOT_EMPTY",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-generator-occupied-r1",
+        "processElapsedMs": 350.985,
+        "receipts": {
+          "owner.json": "6b5661b9fabd4a9e4369e1761873b7543984c18baf9ae2f6f75f8115f5661bb8",
+          "parent.json": "f1cf446186c9a5bf13cc593ab19e2d6513504013c6b83c007a851bc0b292719f",
+          "process.json": "3ec14e798a9adeb8ac07aa70b23098a8ef7427a19711ce4128d3644fad622663",
+          "request.json": "cded3f2b908fa48947f4bfdf35c6d79f662d66a51439a1ba4438d740d9044ca4",
+          "result.json": "99855f5ab10b745adba53a129f395ada422ee2079aba2a59ca2c4a318829efaa",
+          "stderr.txt": "9f1eda37e92f6e3f0ce11e7e3a696c6c11386ed24ae5bd1e84ee0407f73bd1be",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 585.2127
+      },
+      {
+        "childExitCode": 2,
+        "error": "GENERIC_REFERENCE_READER_GENERATOR_FAIL INPUT_CANONICAL",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-generator-alias-r1",
+        "processElapsedMs": 343.59360000000004,
+        "receipts": {
+          "owner.json": "35b08b4738c92d39ecbf45301a647aa3667d4a9d8fd388c14f0ebb19830c0a61",
+          "parent.json": "74cfff9a2fb26bac92536104111cf224788bed9a1950aca4995a115d1f4c7a78",
+          "process.json": "f085890b95150372d1e0055e50f38535b3b2953a8ca86968986bf82bbb96ae87",
+          "request.json": "ffed3d7cbc5a34b7d9dcdf9346a01e29683bcc164adb76483bb6eba8d58a524b",
+          "result.json": "0b9c451c4cb9a366015130fb99a6a0deee7453d4b883bae5ab7e8475d204b290",
+          "stderr.txt": "1795f2792ee19b395b029af79ba4aa98c3559807330852067d09158b814d48d6",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 582.1183
+      },
+      {
+        "childExitCode": 2,
+        "error": "SW_PACKET_IDENTITY",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-reader-identity-r1",
+        "processElapsedMs": 360.99490000000003,
+        "receipts": {
+          "owner.json": "284e5ba937be7ab88af9ca52d337371979ac3d2c3a45345aedaf50caf3ba6a91",
+          "parent.json": "d6f2c6b0a7a0f32f442791cdbb23c6224ff93cbb6d27fe1b8cc4c5569cbb30d5",
+          "process.json": "d2310c406bb1b6340daeecf28fb9a540ed53a8dd316acf6bde5f170305fd0e08",
+          "request.json": "462c50e3c0c1911bad158a9c73f2396dea0f900b39572fbf11008ca3a934be44",
+          "result.json": "68afc160e6431f2b8eae55629850805f0ae19b35f1e81a8285becad3d32c5ea2",
+          "stderr.txt": "d07a87c9253784ee98e3d956dd99afbee4ea0855fa79ad84b5c3e222560d46c0",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 598.4214000000001
+      },
+      {
+        "childExitCode": 2,
+        "error": "SW_FIXTURE_SPEC_HASH",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-reader-spec-r1",
+        "processElapsedMs": 436.0151,
+        "receipts": {
+          "owner.json": "c078ae5a0c98a964cc79087c525df61f45315a74b93fabe330465e3ba8c89cad",
+          "parent.json": "616c859a4975c258a1f1043b6663f76871b0530c31bb990a22479e54e5b7f6b9",
+          "process.json": "a96bcf6fe150ad816e7357b9406a1aa622e8eb801c8f1b2a5e87a077cf724227",
+          "request.json": "41d4bd4aec813f126d45d9a602a1184bc49eb41d8f40a08b7562c8d81c02e305",
+          "result.json": "e3b80cd9b3f5d5e2f50ca55b464cb41f124072a4ca57b36887ec1f8603670e76",
+          "stderr.txt": "0884e012922066cd513225bfc5b562a74dd4f91db399b0986fd775ba7af35e22",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 669.8466000000001
+      },
+      {
+        "childExitCode": 2,
+        "error": "SW_CANONICAL",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-reader-noncanonical-r1",
+        "processElapsedMs": 455.8826,
+        "receipts": {
+          "owner.json": "d5f4b784b7dea05de8a5b54b934ee3a712be0cb724bde5ddc6dc8a9cd33d299b",
+          "parent.json": "955957d2775927dd062b21991660d5e43eb6963419839ad7758a39e2c34cc559",
+          "process.json": "fe474210783866f87fedb02858ee237b8057099cd0fdbd42ceda71853c7f2137",
+          "request.json": "efcba7dab6d9ea806bce9ffbc267d596a278ebbb2168fbec68135c0659711769",
+          "result.json": "eb234c93ca57f215b766f4542418085abb509346a1aa3482502078afad5b59c7",
+          "stderr.txt": "186af83fb85b2128e0c8a90f9820458db603bd4a0e4a30f5683a41221e3fc774",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 696.0104
+      },
+      {
+        "childExitCode": 2,
+        "error": "SW_TERMINAL_EVIDENCE_ACCOUNTING",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-reader-missing-terminal-r1",
+        "processElapsedMs": 626.8122000000001,
+        "receipts": {
+          "owner.json": "4a4b127ddf56ad4fec0ab8e4eb9caa42a0189ecc7c86cd7fcee7871474c856bb",
+          "parent.json": "88bf432dc852da7605d60526ff99a7776e593b09342c0888efa0b9bdef4c960e",
+          "process.json": "c5c036e61ca852d422fb41b5cf007fbeedcdbbd24b6fb6712669d198574e6f6b",
+          "request.json": "d1b3c194cbe873187a85d33bbd1a99568d8a34f781880778a4d1f88c4a1b8fcb",
+          "result.json": "428bcc13df973b23442d86bb30fd6bc4908d4e7573a35b217df787e3d089f092",
+          "stderr.txt": "671fc9a7ce258f1b333fd01dcd50d2016145ed094f89797c77b96ee4913a9e51",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 873.4602
+      },
+      {
+        "childExitCode": 2,
+        "error": "SW_CONDUCTOR_NET_DISCONNECTED",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-reader-missing-copper-r1",
+        "processElapsedMs": 373.8509,
+        "receipts": {
+          "owner.json": "b2b587e100bb2b691e71922abbce6c253a4a3825eef028da1dc130f416ac85a0",
+          "parent.json": "54d7fca87ccd1df2fecb5ce61d7b43bdf85f76083f86be4ffd4b1fbfc429fd8d",
+          "process.json": "c0902aa47d9f047a7b3022b4ddce83b90d5595c7eb9e77e313374af765e1779f",
+          "request.json": "27aac37eb3833d26221dab4f8a9dc95bb14be6f09ee87558326dfeadfd974ee1",
+          "result.json": "422e8a690ee5f47b98a7e755b66af12cb16be92521e5bf7a06247916527cbe43",
+          "stderr.txt": "91d8e73780994c2d737ea6f52f1aa8097fd05e27ef6eb7da7f221fb0fe0eb991",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 624.2469
+      },
+      {
+        "childExitCode": 2,
+        "error": "SW_TEXT",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-reader-geometry-overflow-r1",
+        "processElapsedMs": 390.4314,
+        "receipts": {
+          "owner.json": "b08cf8f7657f99b8d8b3039759f14a4993d461f27dd0b58811157f35b9423c1b",
+          "parent.json": "49a05aebe3ace5a67f98ec4828dd8e6160c1e622c091adae3d2fbc22b261caaa",
+          "process.json": "e02b7c664e435e3630c1e4d0b27b53345e079e71fb7124077ae47f8dcb587b72",
+          "request.json": "5d8e6e4b7ee66188aa49e15c5236427424ae10b1f77502dbb11dd09352e0d4af",
+          "result.json": "0700e5c4be8226d5391543d7adcf3cc77a551487803e3ddd8eba661955e95d70",
+          "stderr.txt": "515b25f93ad0b219ba2f8b4d1605bc0bf47258ac0da4fbcddc6b3a90bf105bb3",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 629.1396000000001
+      },
+      {
+        "childExitCode": 2,
+        "error": "SW_GEOMETRY_TEXT_TYPE",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-reader-geometry-type-r1",
+        "processElapsedMs": 365.25370000000004,
+        "receipts": {
+          "owner.json": "3d53ef0dc793681579f32e82e1e82ff097b4c1718b53688d47766b25d894fd0e",
+          "parent.json": "fa87dac8fed54e54139b397a6d66ea73f7a697a74b653a842731d15985297b81",
+          "process.json": "c50006f34623a7dad2f838ca4c66d62ee36220968eac03293343a40f862a61b4",
+          "request.json": "49d57125d35af31d889496aec681a51759c5a0c7c1b3a57cd0e25dbc6503492d",
+          "result.json": "30449854f8540a1acb8e263b1502ee65659942b28672fb28ba7a04018fed6e99",
+          "stderr.txt": "8a22a8f6f0626ea202139e641f025e08c4042707928bbe8f240909985c39dc41",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 605.9552
+      },
+      {
+        "childExitCode": 1,
+        "error": "GENERIC_ROUTING_REFERENCE_ONLY",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-native-old-authored-r1",
+        "processElapsedMs": 335.5812,
+        "receipts": {
+          "owner.json": "841c09b5fccff6d6593613a0ad05d7cc57f1f0719a1700ba2165c4700a31197b",
+          "parent.json": "e17f810b7106514b689a1f129a1bd7c94db34458e26a45565881c714916a5d27",
+          "process.json": "f0e3849f35a4d7643f38bafc1ae8235e64a2b94cff73af5655be5ec4083c2ed4",
+          "request.json": "ad15f92597e60be70e7e381e177af7ad4d6eddc3d93dbd82f0148253b5b935c5",
+          "result.json": "843e9e193e0b16eaf1703f581c42171d778307d2140e1019044a15d8dde9966f",
+          "stderr.txt": "904bfc4b8e3134ee08bc0f0acc7ed42dc0cf1e742f187f4c812ffdeb5ee81d3f",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 579.6014
+      },
+      {
+        "childExitCode": 1,
+        "error": "GENERIC_ROUTING_REFERENCE_ONLY",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-native-old-generic-r1",
+        "processElapsedMs": 339.5147,
+        "receipts": {
+          "owner.json": "8de1a9619615d4541148fa445c4ea52ff7584ad2ebdad67461010c153f93b17a",
+          "parent.json": "5eb740f7a5d159ae2336b978f517ff1d48dfb639d71d1180152a235d5173d7f1",
+          "process.json": "4e4defdd32874321572322c22e6b04520cf96ac4ed9415a7e95ce2ddffe3d43b",
+          "request.json": "8c0fc3b16f4ba0f41094b874bc4fff545b10c014b9a5e848262c4ef6b2875f8a",
+          "result.json": "6d1a001a206eb474f6d35b5e2b45ef400164fdac165411abc7783e3b41e685f6",
+          "stderr.txt": "904bfc4b8e3134ee08bc0f0acc7ed42dc0cf1e742f187f4c812ffdeb5ee81d3f",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 579.8822
+      },
+      {
+        "childExitCode": 1,
+        "error": "GENERIC_ROUTING_REFERENCE_ONLY",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-native-bad-uuid-r1",
+        "processElapsedMs": 338.8269,
+        "receipts": {
+          "owner.json": "7fa04054922d637281306a29d25be94b0952d841983c24c297b766b8e67d9675",
+          "parent.json": "133f644d5f8066ee28bd222f9d2f8b774728a714ba1644befffaa9694a39beeb",
+          "process.json": "a856fbd0fa6f8e6350b1a4886c7609fe35454a2d39cca0e304ae202a4e2b9595",
+          "request.json": "b2890db40c760c7d481b925a087e6bb388632da9f62ec2f1074ca90dcd53bda3",
+          "result.json": "20cf6f506fbdf18da31ed4e3fe99ea2d9619d77f8f49ccbb6bfeeb35d30ecf06",
+          "stderr.txt": "904bfc4b8e3134ee08bc0f0acc7ed42dc0cf1e742f187f4c812ffdeb5ee81d3f",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 579.5256
+      },
+      {
+        "childExitCode": 1,
+        "error": "GENERIC_ROUTING_REFERENCE_ONLY",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-native-bad-wire-r1",
+        "processElapsedMs": 338.88120000000004,
+        "receipts": {
+          "owner.json": "06b516cf9243faa2301d55a9a1ce5f9d452fd1ae09a97cdeeb76b8aa3bd1f62c",
+          "parent.json": "103e145a45a67b2a3278982025c8385c92d2f9c68d68f60929ac9f8a34e3455d",
+          "process.json": "35486ed26a52256971d4caad60be7047927878802b28accde375698ca447ca02",
+          "request.json": "e78082f1d104a19b56c51a54fd01b2e20c6c9d4eae1d8f45f2b9ff5ef84d3d32",
+          "result.json": "a76ba1c7a16f31c922394f5b62144d0face7a8867430e597edba7bcf1b1950b6",
+          "stderr.txt": "904bfc4b8e3134ee08bc0f0acc7ed42dc0cf1e742f187f4c812ffdeb5ee81d3f",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 590.4581000000001
+      }
+    ],
+    "count": 19,
+    "newAuthoredInvocations": 0,
+    "newSessionBegins": 0,
+    "occupiedSentinelPreserved": true,
+    "ownedOutputEmpty": true,
+    "schema": "tsj-natural-reference-host-controls-v1",
+    "sessionEvidence": "SOURCE_EARLY_GUARD_PRECEDES_PARENT_FIXTURE_SESSION; NOT_INJECTED_COUNTER",
+    "status": "PASS_EXPECTED_REJECTIONS"
+  },
+  "isolatedWrapperCleanupDurationMs": null,
+  "junctionCleanup": {
+    "isolatedCleanupDurationMs": null,
+    "linksAbsent": 8,
+    "noPersistentJunctions": true,
+    "ownedOutputsEmpty": true,
+    "schema": "tsj-natural-reference-junction-cleanup-v1",
+    "status": "PASS_LITERAL_NONRECURSIVE_UNLINK_VERIFIED",
+    "targetsUnchanged": 7
+  },
+  "junctionControls": {
+    "calls": [
+      {
+        "childExitCode": 2,
+        "error": "GENERIC_REFERENCE_OVERLAY_FAIL BASE_GENERATOR_REPARSE",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "junction-native-base-r1",
+        "processElapsedMs": 345.9015,
+        "receipts": {
+          "owner.json": "55438992e8019e2220a19416f78efefd0c034340dfb1eb17d50f2acb8fafd22a",
+          "parent.json": "ab4cfbeb0859ee6481436422eb62492fcfdacad50d2f0084eff0749d9ddb0bc2",
+          "process.json": "1d047fa16a58935be3bc5650dcfe6b556ce168f7e5d3ea25c3a4bacd1017e5a7",
+          "request.json": "c478572c45afe803bc0cd534a2f9cc8f92a903a266fbca5060cead73ba627afe",
+          "result.json": "d6781d268f6e7c0493629a0e482c75f90fd0e3a2882d6caf11b4250682bb55a0",
+          "stderr.txt": "8ad331695637740343eb7a2271f7e624fe0d888919bcc15bfc9eb316816f28c5",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 587.7723
+      },
+      {
+        "childExitCode": 2,
+        "error": "GENERIC_REFERENCE_OVERLAY_FAIL IO_HELPER_REPARSE",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "junction-native-helper-r1",
+        "processElapsedMs": 341.5292,
+        "receipts": {
+          "owner.json": "c23d78e5148ae2ac8576710e8f657d772cb7fbe2499df0786d13e73b3a0990f0",
+          "parent.json": "1da46c0332e9b1732f4ae2bd24ce9ce826dcf418a5358c6e8cd200db7933a427",
+          "process.json": "83bce9487537dea4a9f7c8e888af62a57f2083aa77687da275e563c15c8e1df8",
+          "request.json": "5354fd02722dda1c125fbd9acef52724d09be96a7ff490c67f78b33184627e6a",
+          "result.json": "172c5d6c80bc2375df3c0bf29fc6c0b8b85aca901c36ab5c5c166cf961262dda",
+          "stderr.txt": "82d2385e9ac6f950995c0015bbdf98a71eaa1edfc03af7ee871f6ec87421d53c",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 582.5991
+      },
+      {
+        "childExitCode": 2,
+        "error": "GENERIC_REFERENCE_OVERLAY_FAIL OWNER_SOURCE_CANONICAL",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "junction-native-study-r1",
+        "processElapsedMs": 348.6211,
+        "receipts": {
+          "owner.json": "9f985865fe817837237b9f519f1f949be67eb88af06298e895e8695f14df0ac7",
+          "parent.json": "61e562876bd93f493f079465c74132aeffeb9139a62f40dedcc99d3dabb278b3",
+          "process.json": "b52a699011d53a134c8e2c5932b29e6ce8530b1059a0c1013af81dce6e53dca4",
+          "request.json": "264536b56e1aecee44a5cd41876d83ae5ae95a774e807addc0ab93ba3a8bdf6e",
+          "result.json": "12fc866b1485665a068b6941d4c37a2c22a73aa972dc38502e3ad9997e3799b9",
+          "stderr.txt": "685a496d9ca9e6955cf194b16aa7772cb9b6b68c1cc3d58f3127bea59e553af1",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 581.7135000000001
+      },
+      {
+        "childExitCode": 2,
+        "error": "GENERIC_REFERENCE_OVERLAY_FAIL OUTPUT_DIRECTORY_CANONICAL",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "junction-native-output-r1",
+        "processElapsedMs": 343.97090000000003,
+        "receipts": {
+          "owner.json": "d6c8802e76487fd89eb19c2155529366fe09d752b7d86477c649162875b26093",
+          "parent.json": "f74275bf2f9d1608de47e26122045ff18a6ab1800d7d2df1e691049bb3bfc8c3",
+          "process.json": "16eccbbea54fbef49159728cbe437c765fa7a7a2f4f0f6607cde78d2b4da12ac",
+          "request.json": "c11edfbc0671824d34aeecc04ddcba8847e12e356a53f9c26bae078614d28802",
+          "result.json": "fe978611cb7fac64fa90cdce77eaa10653447711f62845ea53bdb9de328fd8a7",
+          "stderr.txt": "f968990e40b41353613a46676fbf2da4494b64752ca2c5e338f96af5ee83e5a6",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 579.3859
+      },
+      {
+        "childExitCode": 2,
+        "error": "GENERIC_REFERENCE_READER_GENERATOR_FAIL RUN_READER_CANONICAL",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "junction-generator-run-r1",
+        "processElapsedMs": 351.69820000000004,
+        "receipts": {
+          "owner.json": "fb5cec602088343a1e0f96d2a17cde8fabff19c253cda80e8f66d686c96725b2",
+          "parent.json": "7d98b9e58e8271399f40784f49fffd2cf1c7dcbdcdffe5088b18e779bf5449ed",
+          "process.json": "6ef5735e0257f724b800c059652515679516b17c4ba17a12a392fc90b1207a20",
+          "request.json": "efa8a954a55cf7eda07348a075f9585924d25a3240fdfbc6368a375c10cf32d7",
+          "result.json": "6bba12bb5ee8372885591fc5b1e0d3dad847c097e0d9bea9ae2f50939485f720",
+          "stderr.txt": "8828a0d9ddc56105630b24bcc8f291fce91d4de5d2986ec68a35e1da27de3fff",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 585.0898000000001
+      },
+      {
+        "childExitCode": 2,
+        "error": "GENERIC_REFERENCE_READER_GENERATOR_FAIL TRANSPORT_READER_CANONICAL",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "junction-generator-transport-r1",
+        "processElapsedMs": 348.4481,
+        "receipts": {
+          "owner.json": "bf59210bc1bf5e74d3b5cda95160a9c0f83a482d5e0efa7c22c9eb5def5a045e",
+          "parent.json": "30a35494672422237cbfb35bdc3a856e51e27cab3b12513755f4aa96ea5bc7f6",
+          "process.json": "37ef66ba5b3a7bafe119a88ff988ca8eff7bfca3ec9cd5296894091fb6a0e117",
+          "request.json": "808fa22a21bf232f5bdfd697d7255ee100d420b3cdaad52ebd05db5004911f9e",
+          "result.json": "1bcb4d90f4279d482c8e73f9a2e4de9da3cd1ad5614934515f018922fb3c8b7b",
+          "stderr.txt": "0a704aa051095c70531c1a56bc2c74055f193b5f593d0452b56e4b935ddfff72",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 589.1201
+      },
+      {
+        "childExitCode": 2,
+        "error": "GENERIC_REFERENCE_READER_GENERATOR_FAIL FIXTURE_SPEC_CANONICAL",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "junction-generator-spec-r1",
+        "processElapsedMs": 346.47090000000003,
+        "receipts": {
+          "owner.json": "e89be3a411b5d5115c75acc054edc3a9eab124dc7fe8f7bcb92c522614bd9976",
+          "parent.json": "ed3dfccd6565e8737190b3d7d24a4e97c61fd66ebf059242b83339d5387a0be7",
+          "process.json": "bdea226f3b8370bc461263862c519190fd305a1ff240ffb3e4d015dd38ccd247",
+          "request.json": "a9ae42d308956e7333b0be5083d7387dcf8127734524954e7d6c8a8ce76bc793",
+          "result.json": "2c0995f990fe59c77d3160e0d3b89e693b3a84501f00e80c65464c20c8204f59",
+          "stderr.txt": "0773b3cef2bb5a8aaab6988a6042549662e7104f1c49a5cfb3948e10808500aa",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 586.1893
+      },
+      {
+        "childExitCode": 2,
+        "error": "SW_IO_CANONICAL",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "junction-reader-packet-r1",
+        "processElapsedMs": 360.53900000000004,
+        "receipts": {
+          "owner.json": "dcf72cbed988d7055b03d2642cd136541a2bf1c928272789ff9841f6051b354a",
+          "parent.json": "19d386cbb18e493433e343972d85f1f7f7dfc8d56eb81c10fa62397d6f42d988",
+          "process.json": "6e521140700ebee041256bd1faf5049e495c039e0ae33529922a3ecfd04b576e",
+          "request.json": "b71a43bc20d72b792259655f85663d0fa036744747c55160a7b1b40c6d975568",
+          "result.json": "123fe60394fc17e0346a9d6f17c393893fd88af2c699c47c2766795991cdb31a",
+          "stderr.txt": "640f27d8e88ef906a5eb597c9d1a6d98c6ee30d40d7abdb9f567401a048ea90b",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 598.4316
+      },
+      {
+        "childExitCode": 2,
+        "error": "SW_IO_CANONICAL",
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "junction-reader-spec-r1",
+        "processElapsedMs": 349.84180000000003,
+        "receipts": {
+          "owner.json": "e05c03c5861cd56ce0134dbef94321e894a43cfdcc777e54c9558f5cce3d77f4",
+          "parent.json": "9ac85855dffbeac5cdf66d3ba0c613988890aab75e69169a3b1efb0fbeacb3cc",
+          "process.json": "03ff0f848717c302063f74526fe89088b657edd7a3585fb6106fd7fb98b4a2fe",
+          "request.json": "b173dbbe71e7941160e0bbc1f01b92a4768be6f3866406090f24e1206c51749f",
+          "result.json": "9b977fdb5c6fd679adc6eb7f9335b8e3cfb64b58710a319b4c7ae198e423dc37",
+          "stderr.txt": "640f27d8e88ef906a5eb597c9d1a6d98c6ee30d40d7abdb9f567401a048ea90b",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 592.1391
+      }
+    ],
+    "count": 9,
+    "links": 8,
+    "newAuthoredInvocations": 0,
+    "newSessionBegins": 0,
+    "schema": "tsj-natural-reference-junction-controls-v1",
+    "status": "PASS_EXPECTED_REJECTIONS_PENDING_UNLINK"
+  },
+  "limits": "UNCHANGED",
+  "newAuthoredInvocations": 0,
+  "originalArm": false,
+  "parentCommit": "218e7f7761bd4b573b7adfa5ba6175bf31e35b9a",
+  "planSha256": "0dd298d8bb027d983d324806466a38cc9c589e4f699695b7abd3178b2d7db327",
+  "playable100": 0,
+  "producerManifestSha256": "df27c7750f61e4d4c959d60988a3381d64b6e94737da785e2b5ff76eaa811ada",
+  "productionGwtPlayerElectricalPopulation": "NOT_APPLICABLE_NOT_RENEWED",
+  "protectedBodies": "UNREAD_HERE_HISTORICAL_UNREAD_UNCERTIFIED",
+  "retainedOtherSessionCounts": "NOT_MEASURED",
+  "returnedClosures": [
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "compile-producer-r1",
+      "processElapsedMs": 1212.5472,
+      "receipts": {
+        "owner.json": "2b4ea742122908339efd227c5f136d89e2a098c1e591b7ad86c8c7e2f107cc0d",
+        "parent.json": "760c741ddb9cd6f71e94fae236ee9f14dfc38ddef5c63d9e2eeff488398b3888",
+        "process.json": "567fb37e92b54949d2e7fbaf78021c824368c4b75c7e1486eac361722e40123f",
+        "request.json": "b2af21784efee28faa9588fbdea08eca8ffe34c43f69debb8e6f214a96890a1b",
+        "result.json": "ae04d264ea9eccedcb8dae8671bba764734a08aebdf95c1d96b2a853c245cdad",
+        "stderr.txt": "594d455b0e001a516f324c4d1ddb94936d8c6ac3719e15df99fb919eb4a2c913",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1459.5618000000002
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "compile-retained-r1",
+      "processElapsedMs": 962.8146,
+      "receipts": {
+        "owner.json": "9b64f117eb0b83fb5f3e281ca142d9b896817d13e3a86e3ee024413e51fdccc3",
+        "parent.json": "74b9377149becd875192c450c765d8b43a26f0f582aa06c8b58cc1242f1ffb0d",
+        "process.json": "7f5fb90869eff06fb1dc9670362a38b3153ec960eb66b5485ece8346e3e6c816",
+        "request.json": "a6b5e7936d2e9bdb31f029595ef5303bd7a95f82738ef2b12e4ab717537b7547",
+        "result.json": "bbfe6d8f49d8a37ddc75e16d779d06cd62579af5eb0c02ccc651e03194f3d115",
+        "stderr.txt": "594d455b0e001a516f324c4d1ddb94936d8c6ac3719e15df99fb919eb4a2c913",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1215.1345000000001
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "compile-text-policy-r1",
+      "processElapsedMs": 743.1888,
+      "receipts": {
+        "owner.json": "8fc3c0bdf29e6f33cea2a97bb0c52ff7a663283b30a0cc910cfebf99192031e8",
+        "parent.json": "776b8415bebfe6ff73958bb6eb023b2386198a05ae919b880cdac4d2b83533f4",
+        "process.json": "b0e0d8dbb49dadbdb240b56f2e3f839823a7b8a3e16fb051e174565fc1488361",
+        "request.json": "97d658cefaec3cb59f4a1bc21ed4bbe323e173087e2fbcf9d19c430bd74dd37a",
+        "result.json": "e85813e87e6e9e3560d2df07f4f81aa771c318f120e61b7e42b0d264c1bf0bd9",
+        "stderr.txt": "594d455b0e001a516f324c4d1ddb94936d8c6ac3719e15df99fb919eb4a2c913",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 984.2416000000001
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-generator-alias-r1",
+      "processElapsedMs": 343.59360000000004,
+      "receipts": {
+        "owner.json": "35b08b4738c92d39ecbf45301a647aa3667d4a9d8fd388c14f0ebb19830c0a61",
+        "parent.json": "74cfff9a2fb26bac92536104111cf224788bed9a1950aca4995a115d1f4c7a78",
+        "process.json": "f085890b95150372d1e0055e50f38535b3b2953a8ca86968986bf82bbb96ae87",
+        "request.json": "ffed3d7cbc5a34b7d9dcdf9346a01e29683bcc164adb76483bb6eba8d58a524b",
+        "result.json": "0b9c451c4cb9a366015130fb99a6a0deee7453d4b883bae5ab7e8475d204b290",
+        "stderr.txt": "1795f2792ee19b395b029af79ba4aa98c3559807330852067d09158b814d48d6",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 582.1183
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-generator-occupied-r1",
+      "processElapsedMs": 350.985,
+      "receipts": {
+        "owner.json": "6b5661b9fabd4a9e4369e1761873b7543984c18baf9ae2f6f75f8115f5661bb8",
+        "parent.json": "f1cf446186c9a5bf13cc593ab19e2d6513504013c6b83c007a851bc0b292719f",
+        "process.json": "3ec14e798a9adeb8ac07aa70b23098a8ef7427a19711ce4128d3644fad622663",
+        "request.json": "cded3f2b908fa48947f4bfdf35c6d79f662d66a51439a1ba4438d740d9044ca4",
+        "result.json": "99855f5ab10b745adba53a129f395ada422ee2079aba2a59ca2c4a318829efaa",
+        "stderr.txt": "9f1eda37e92f6e3f0ce11e7e3a696c6c11386ed24ae5bd1e84ee0407f73bd1be",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 585.2127
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-generator-run-r1",
+      "processElapsedMs": 361.5373,
+      "receipts": {
+        "owner.json": "7da01d9624830042855d14089cafb39b2bc972ab0215efcc2d9b549094326c0d",
+        "parent.json": "23e3e2837c10c7b6861de3387128d5c1daa5193b89957d519f99225a9b12d9c0",
+        "process.json": "ddd46ce75358a20841dc263131ab5beff805efe2f2ad767705974476650b82f8",
+        "request.json": "3ccde28107c4c3eda2c9bb931ccd6ecde9f305395d37c62a9984d257e5a20ff6",
+        "result.json": "b1b79bafbee0babf722e724003fd0a88fa6bb3002bd8febb4b21aa216de1de8a",
+        "stderr.txt": "31d58dc59bcfa4321f8b8107ca7ae18980e4e362229417b19a471a5ffb944d89",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 596.7524000000001
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-generator-spec-r1",
+      "processElapsedMs": 437.2726,
+      "receipts": {
+        "owner.json": "c79dbae378885fc13230572675b96b9543e159d251ad2520d7dea7843f1f9531",
+        "parent.json": "7b1170ed0d9efedd0fe45c315012cb18c39daa77dbf78f4406b3c9fb6a1cbb85",
+        "process.json": "5f41008b7f3a68a74e42f2c31a99e1220e7039442bd5f4a5747f774176a8a8c0",
+        "request.json": "47580a0df5b7e6eac962a95de72e649d7d39c472a43c366800b50436e5b1ddbb",
+        "result.json": "540d70fe6460825436964a739d16948e191766a9994d449cf3840c957dc7e44c",
+        "stderr.txt": "798de9dda7b9fd7cc0275bd0479bedea1d16076f5aa1709e81aead900123c993",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 686.2327
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-native-alias-r1",
+      "processElapsedMs": 344.1752,
+      "receipts": {
+        "owner.json": "8ea2d77ead77a3c6c6e01cc34b6b75b6b4618f01150b86562bffdc5be6f680af",
+        "parent.json": "a95fa162e2e9d3ffc1171d135a3ae155b74722c39c582932d065627bd2284ff8",
+        "process.json": "409944a5852c553cb50b61af92cf3241c598dc31de754f6f2c17d2fa2158fe06",
+        "request.json": "5d723a2033d1f0cdabc97460b36074282a3da1cb78da2b696c94678134e14f4d",
+        "result.json": "53182d1b4ef2857a8b8085e19564915c2bfbb3d66d101866c7f2950bc7a07258",
+        "stderr.txt": "685a496d9ca9e6955cf194b16aa7772cb9b6b68c1cc3d58f3127bea59e553af1",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 582.1069
+    },
+    {
+      "childExitCode": 1,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-native-bad-uuid-r1",
+      "processElapsedMs": 338.8269,
+      "receipts": {
+        "owner.json": "7fa04054922d637281306a29d25be94b0952d841983c24c297b766b8e67d9675",
+        "parent.json": "133f644d5f8066ee28bd222f9d2f8b774728a714ba1644befffaa9694a39beeb",
+        "process.json": "a856fbd0fa6f8e6350b1a4886c7609fe35454a2d39cca0e304ae202a4e2b9595",
+        "request.json": "b2890db40c760c7d481b925a087e6bb388632da9f62ec2f1074ca90dcd53bda3",
+        "result.json": "20cf6f506fbdf18da31ed4e3fe99ea2d9619d77f8f49ccbb6bfeeb35d30ecf06",
+        "stderr.txt": "904bfc4b8e3134ee08bc0f0acc7ed42dc0cf1e742f187f4c812ffdeb5ee81d3f",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 579.5256
+    },
+    {
+      "childExitCode": 1,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-native-bad-wire-r1",
+      "processElapsedMs": 338.88120000000004,
+      "receipts": {
+        "owner.json": "06b516cf9243faa2301d55a9a1ce5f9d452fd1ae09a97cdeeb76b8aa3bd1f62c",
+        "parent.json": "103e145a45a67b2a3278982025c8385c92d2f9c68d68f60929ac9f8a34e3455d",
+        "process.json": "35486ed26a52256971d4caad60be7047927878802b28accde375698ca447ca02",
+        "request.json": "e78082f1d104a19b56c51a54fd01b2e20c6c9d4eae1d8f45f2b9ff5ef84d3d32",
+        "result.json": "a76ba1c7a16f31c922394f5b62144d0face7a8867430e597edba7bcf1b1950b6",
+        "stderr.txt": "904bfc4b8e3134ee08bc0f0acc7ed42dc0cf1e742f187f4c812ffdeb5ee81d3f",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 590.4581000000001
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-native-base-r1",
+      "processElapsedMs": 433.88480000000004,
+      "receipts": {
+        "owner.json": "2ad7822046ada72ecd390db40b3614032160fe60b9a3ade6c099d49d9651ed21",
+        "parent.json": "2de4e7a02c7f9e22a75e45a4f5760e9554c9bd59b51da13a1e2ea7c160b40cab",
+        "process.json": "f0fa00aba693e66f3cddc871e2baaa5873790f3ad9791049c826cfb349b3bec8",
+        "request.json": "6972eca2f2e829f560f2df5b8bf1ccfc2980caf1c12c56c2bbd0a68c4287b1db",
+        "result.json": "8d1ae4ce1f64cf630a13ce7ea06a4e2e77896d0a4f4ddbe999779306ea2034c4",
+        "stderr.txt": "f4afbd7d5f70dc4c8a35cb9c5416f6cb1bddad4a35265aac56f5bd4220194b88",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 672.0964
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-native-occupied-r1",
+      "processElapsedMs": 343.5586,
+      "receipts": {
+        "owner.json": "5e1d5a71b7798fdc3a26ff0e5c9748305bcc5d1772a26a77d757f611d7a1efd5",
+        "parent.json": "f2d128c49de69c8fad1200f6f8aa879e12e64ebcc79b5a3ce49442449a1e95e1",
+        "process.json": "b504b0f4de0757d99e165d525b82f432391f9e9c3700ccd4e2922ae28a92ab5c",
+        "request.json": "ab374574e288d10dc7bf0e5d6926828192a2e77848b2ebe9dd49b7fb94fc234a",
+        "result.json": "483fbd053ff47767968d52648236558a4930e09103e9ecee739bed30887edc86",
+        "stderr.txt": "064a01c025cc2b903172795fb3f33c5b78dc34283e0d4709c89282272acfead6",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 582.5049
+    },
+    {
+      "childExitCode": 1,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-native-old-authored-r1",
+      "processElapsedMs": 335.5812,
+      "receipts": {
+        "owner.json": "841c09b5fccff6d6593613a0ad05d7cc57f1f0719a1700ba2165c4700a31197b",
+        "parent.json": "e17f810b7106514b689a1f129a1bd7c94db34458e26a45565881c714916a5d27",
+        "process.json": "f0e3849f35a4d7643f38bafc1ae8235e64a2b94cff73af5655be5ec4083c2ed4",
+        "request.json": "ad15f92597e60be70e7e381e177af7ad4d6eddc3d93dbd82f0148253b5b935c5",
+        "result.json": "843e9e193e0b16eaf1703f581c42171d778307d2140e1019044a15d8dde9966f",
+        "stderr.txt": "904bfc4b8e3134ee08bc0f0acc7ed42dc0cf1e742f187f4c812ffdeb5ee81d3f",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 579.6014
+    },
+    {
+      "childExitCode": 1,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-native-old-generic-r1",
+      "processElapsedMs": 339.5147,
+      "receipts": {
+        "owner.json": "8de1a9619615d4541148fa445c4ea52ff7584ad2ebdad67461010c153f93b17a",
+        "parent.json": "5eb740f7a5d159ae2336b978f517ff1d48dfb639d71d1180152a235d5173d7f1",
+        "process.json": "4e4defdd32874321572322c22e6b04520cf96ac4ed9415a7e95ce2ddffe3d43b",
+        "request.json": "8c0fc3b16f4ba0f41094b874bc4fff545b10c014b9a5e848262c4ef6b2875f8a",
+        "result.json": "6d1a001a206eb474f6d35b5e2b45ef400164fdac165411abc7783e3b41e685f6",
+        "stderr.txt": "904bfc4b8e3134ee08bc0f0acc7ed42dc0cf1e742f187f4c812ffdeb5ee81d3f",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 579.8822
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-native-study-r1",
+      "processElapsedMs": 352.8245,
+      "receipts": {
+        "owner.json": "ee31624ef6a7840b53d6cb77eaa2c07a8ed83b044a27390fa1f76aa0381b9813",
+        "parent.json": "9cb5583a2381a2360c89c9b3deb4e78a2ac1e8b7fabd28d9dc820f61dd7ea3c6",
+        "process.json": "d3422ef075e1a7a0d8fa3419c923cd79209d6dbe83aaf8a99b1c19bc1dc5e81c",
+        "request.json": "71a4c0022caf0155a5770f847f48771a3c2cf79105c90f09753add5961eda248",
+        "result.json": "9f52b251e4ca85b7723d8996fce93a02371e560ee521c647a69f1ea94b76c55c",
+        "stderr.txt": "673170b7a58a463141d603fbd0c00f54f8a883225045af076345fc27274c6e40",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 602.1815
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-reader-geometry-overflow-r1",
+      "processElapsedMs": 390.4314,
+      "receipts": {
+        "owner.json": "b08cf8f7657f99b8d8b3039759f14a4993d461f27dd0b58811157f35b9423c1b",
+        "parent.json": "49a05aebe3ace5a67f98ec4828dd8e6160c1e622c091adae3d2fbc22b261caaa",
+        "process.json": "e02b7c664e435e3630c1e4d0b27b53345e079e71fb7124077ae47f8dcb587b72",
+        "request.json": "5d8e6e4b7ee66188aa49e15c5236427424ae10b1f77502dbb11dd09352e0d4af",
+        "result.json": "0700e5c4be8226d5391543d7adcf3cc77a551487803e3ddd8eba661955e95d70",
+        "stderr.txt": "515b25f93ad0b219ba2f8b4d1605bc0bf47258ac0da4fbcddc6b3a90bf105bb3",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 629.1396000000001
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-reader-geometry-type-r1",
+      "processElapsedMs": 365.25370000000004,
+      "receipts": {
+        "owner.json": "3d53ef0dc793681579f32e82e1e82ff097b4c1718b53688d47766b25d894fd0e",
+        "parent.json": "fa87dac8fed54e54139b397a6d66ea73f7a697a74b653a842731d15985297b81",
+        "process.json": "c50006f34623a7dad2f838ca4c66d62ee36220968eac03293343a40f862a61b4",
+        "request.json": "49d57125d35af31d889496aec681a51759c5a0c7c1b3a57cd0e25dbc6503492d",
+        "result.json": "30449854f8540a1acb8e263b1502ee65659942b28672fb28ba7a04018fed6e99",
+        "stderr.txt": "8a22a8f6f0626ea202139e641f025e08c4042707928bbe8f240909985c39dc41",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 605.9552
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-reader-identity-r1",
+      "processElapsedMs": 360.99490000000003,
+      "receipts": {
+        "owner.json": "284e5ba937be7ab88af9ca52d337371979ac3d2c3a45345aedaf50caf3ba6a91",
+        "parent.json": "d6f2c6b0a7a0f32f442791cdbb23c6224ff93cbb6d27fe1b8cc4c5569cbb30d5",
+        "process.json": "d2310c406bb1b6340daeecf28fb9a540ed53a8dd316acf6bde5f170305fd0e08",
+        "request.json": "462c50e3c0c1911bad158a9c73f2396dea0f900b39572fbf11008ca3a934be44",
+        "result.json": "68afc160e6431f2b8eae55629850805f0ae19b35f1e81a8285becad3d32c5ea2",
+        "stderr.txt": "d07a87c9253784ee98e3d956dd99afbee4ea0855fa79ad84b5c3e222560d46c0",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 598.4214000000001
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-reader-missing-copper-r1",
+      "processElapsedMs": 373.8509,
+      "receipts": {
+        "owner.json": "b2b587e100bb2b691e71922abbce6c253a4a3825eef028da1dc130f416ac85a0",
+        "parent.json": "54d7fca87ccd1df2fecb5ce61d7b43bdf85f76083f86be4ffd4b1fbfc429fd8d",
+        "process.json": "c0902aa47d9f047a7b3022b4ddce83b90d5595c7eb9e77e313374af765e1779f",
+        "request.json": "27aac37eb3833d26221dab4f8a9dc95bb14be6f09ee87558326dfeadfd974ee1",
+        "result.json": "422e8a690ee5f47b98a7e755b66af12cb16be92521e5bf7a06247916527cbe43",
+        "stderr.txt": "91d8e73780994c2d737ea6f52f1aa8097fd05e27ef6eb7da7f221fb0fe0eb991",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 624.2469
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-reader-missing-terminal-r1",
+      "processElapsedMs": 626.8122000000001,
+      "receipts": {
+        "owner.json": "4a4b127ddf56ad4fec0ab8e4eb9caa42a0189ecc7c86cd7fcee7871474c856bb",
+        "parent.json": "88bf432dc852da7605d60526ff99a7776e593b09342c0888efa0b9bdef4c960e",
+        "process.json": "c5c036e61ca852d422fb41b5cf007fbeedcdbbd24b6fb6712669d198574e6f6b",
+        "request.json": "d1b3c194cbe873187a85d33bbd1a99568d8a34f781880778a4d1f88c4a1b8fcb",
+        "result.json": "428bcc13df973b23442d86bb30fd6bc4908d4e7573a35b217df787e3d089f092",
+        "stderr.txt": "671fc9a7ce258f1b333fd01dcd50d2016145ed094f89797c77b96ee4913a9e51",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 873.4602
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-reader-noncanonical-r1",
+      "processElapsedMs": 455.8826,
+      "receipts": {
+        "owner.json": "d5f4b784b7dea05de8a5b54b934ee3a712be0cb724bde5ddc6dc8a9cd33d299b",
+        "parent.json": "955957d2775927dd062b21991660d5e43eb6963419839ad7758a39e2c34cc559",
+        "process.json": "fe474210783866f87fedb02858ee237b8057099cd0fdbd42ceda71853c7f2137",
+        "request.json": "efcba7dab6d9ea806bce9ffbc267d596a278ebbb2168fbec68135c0659711769",
+        "result.json": "eb234c93ca57f215b766f4542418085abb509346a1aa3482502078afad5b59c7",
+        "stderr.txt": "186af83fb85b2128e0c8a90f9820458db603bd4a0e4a30f5683a41221e3fc774",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 696.0104
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "host-reader-spec-r1",
+      "processElapsedMs": 436.0151,
+      "receipts": {
+        "owner.json": "c078ae5a0c98a964cc79087c525df61f45315a74b93fabe330465e3ba8c89cad",
+        "parent.json": "616c859a4975c258a1f1043b6663f76871b0530c31bb990a22479e54e5b7f6b9",
+        "process.json": "a96bcf6fe150ad816e7357b9406a1aa622e8eb801c8f1b2a5e87a077cf724227",
+        "request.json": "41d4bd4aec813f126d45d9a602a1184bc49eb41d8f40a08b7562c8d81c02e305",
+        "result.json": "e3b80cd9b3f5d5e2f50ca55b464cb41f124072a4ca57b36887ec1f8603670e76",
+        "stderr.txt": "0884e012922066cd513225bfc5b562a74dd4f91db399b0986fd775ba7af35e22",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 669.8466000000001
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "independent-reader-positive-r1",
+      "processElapsedMs": 446.95660000000004,
+      "receipts": {
+        "owner.json": "d9946202e3a8becca09142c8d9bb1a290f4575d65604d2300ba01f1432cde4a1",
+        "parent.json": "8c8c977fa1ee69ffa7d1b14dfd0ec5f5ae9df332da00cf5727ee95bf3cbb0e83",
+        "process.json": "535c7f95849d5cff1a93b1087509a9a5df0138538dd46ba423bb7b2b9ca5778e",
+        "request.json": "069daea89b6425b491236b870a9a20cadd8a75b34f157779a659bb5448809b4f",
+        "result.json": "adacc6e408d9a4deaf3317dc72c9d571212cb7201fc64f39520199e3507ef78a",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e94ec742520356aa4ad68acaae0ebc661c22207a5704d80581c70b0ab2d3e6d8"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 687.2463
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "junction-generator-run-r1",
+      "processElapsedMs": 351.69820000000004,
+      "receipts": {
+        "owner.json": "fb5cec602088343a1e0f96d2a17cde8fabff19c253cda80e8f66d686c96725b2",
+        "parent.json": "7d98b9e58e8271399f40784f49fffd2cf1c7dcbdcdffe5088b18e779bf5449ed",
+        "process.json": "6ef5735e0257f724b800c059652515679516b17c4ba17a12a392fc90b1207a20",
+        "request.json": "efa8a954a55cf7eda07348a075f9585924d25a3240fdfbc6368a375c10cf32d7",
+        "result.json": "6bba12bb5ee8372885591fc5b1e0d3dad847c097e0d9bea9ae2f50939485f720",
+        "stderr.txt": "8828a0d9ddc56105630b24bcc8f291fce91d4de5d2986ec68a35e1da27de3fff",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 585.0898000000001
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "junction-generator-spec-r1",
+      "processElapsedMs": 346.47090000000003,
+      "receipts": {
+        "owner.json": "e89be3a411b5d5115c75acc054edc3a9eab124dc7fe8f7bcb92c522614bd9976",
+        "parent.json": "ed3dfccd6565e8737190b3d7d24a4e97c61fd66ebf059242b83339d5387a0be7",
+        "process.json": "bdea226f3b8370bc461263862c519190fd305a1ff240ffb3e4d015dd38ccd247",
+        "request.json": "a9ae42d308956e7333b0be5083d7387dcf8127734524954e7d6c8a8ce76bc793",
+        "result.json": "2c0995f990fe59c77d3160e0d3b89e693b3a84501f00e80c65464c20c8204f59",
+        "stderr.txt": "0773b3cef2bb5a8aaab6988a6042549662e7104f1c49a5cfb3948e10808500aa",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 586.1893
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "junction-generator-transport-r1",
+      "processElapsedMs": 348.4481,
+      "receipts": {
+        "owner.json": "bf59210bc1bf5e74d3b5cda95160a9c0f83a482d5e0efa7c22c9eb5def5a045e",
+        "parent.json": "30a35494672422237cbfb35bdc3a856e51e27cab3b12513755f4aa96ea5bc7f6",
+        "process.json": "37ef66ba5b3a7bafe119a88ff988ca8eff7bfca3ec9cd5296894091fb6a0e117",
+        "request.json": "808fa22a21bf232f5bdfd697d7255ee100d420b3cdaad52ebd05db5004911f9e",
+        "result.json": "1bcb4d90f4279d482c8e73f9a2e4de9da3cd1ad5614934515f018922fb3c8b7b",
+        "stderr.txt": "0a704aa051095c70531c1a56bc2c74055f193b5f593d0452b56e4b935ddfff72",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 589.1201
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "junction-native-base-r1",
+      "processElapsedMs": 345.9015,
+      "receipts": {
+        "owner.json": "55438992e8019e2220a19416f78efefd0c034340dfb1eb17d50f2acb8fafd22a",
+        "parent.json": "ab4cfbeb0859ee6481436422eb62492fcfdacad50d2f0084eff0749d9ddb0bc2",
+        "process.json": "1d047fa16a58935be3bc5650dcfe6b556ce168f7e5d3ea25c3a4bacd1017e5a7",
+        "request.json": "c478572c45afe803bc0cd534a2f9cc8f92a903a266fbca5060cead73ba627afe",
+        "result.json": "d6781d268f6e7c0493629a0e482c75f90fd0e3a2882d6caf11b4250682bb55a0",
+        "stderr.txt": "8ad331695637740343eb7a2271f7e624fe0d888919bcc15bfc9eb316816f28c5",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 587.7723
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "junction-native-helper-r1",
+      "processElapsedMs": 341.5292,
+      "receipts": {
+        "owner.json": "c23d78e5148ae2ac8576710e8f657d772cb7fbe2499df0786d13e73b3a0990f0",
+        "parent.json": "1da46c0332e9b1732f4ae2bd24ce9ce826dcf418a5358c6e8cd200db7933a427",
+        "process.json": "83bce9487537dea4a9f7c8e888af62a57f2083aa77687da275e563c15c8e1df8",
+        "request.json": "5354fd02722dda1c125fbd9acef52724d09be96a7ff490c67f78b33184627e6a",
+        "result.json": "172c5d6c80bc2375df3c0bf29fc6c0b8b85aca901c36ab5c5c166cf961262dda",
+        "stderr.txt": "82d2385e9ac6f950995c0015bbdf98a71eaa1edfc03af7ee871f6ec87421d53c",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 582.5991
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "junction-native-output-r1",
+      "processElapsedMs": 343.97090000000003,
+      "receipts": {
+        "owner.json": "d6c8802e76487fd89eb19c2155529366fe09d752b7d86477c649162875b26093",
+        "parent.json": "f74275bf2f9d1608de47e26122045ff18a6ab1800d7d2df1e691049bb3bfc8c3",
+        "process.json": "16eccbbea54fbef49159728cbe437c765fa7a7a2f4f0f6607cde78d2b4da12ac",
+        "request.json": "c11edfbc0671824d34aeecc04ddcba8847e12e356a53f9c26bae078614d28802",
+        "result.json": "fe978611cb7fac64fa90cdce77eaa10653447711f62845ea53bdb9de328fd8a7",
+        "stderr.txt": "f968990e40b41353613a46676fbf2da4494b64752ca2c5e338f96af5ee83e5a6",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 579.3859
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "junction-native-study-r1",
+      "processElapsedMs": 348.6211,
+      "receipts": {
+        "owner.json": "9f985865fe817837237b9f519f1f949be67eb88af06298e895e8695f14df0ac7",
+        "parent.json": "61e562876bd93f493f079465c74132aeffeb9139a62f40dedcc99d3dabb278b3",
+        "process.json": "b52a699011d53a134c8e2c5932b29e6ce8530b1059a0c1013af81dce6e53dca4",
+        "request.json": "264536b56e1aecee44a5cd41876d83ae5ae95a774e807addc0ab93ba3a8bdf6e",
+        "result.json": "12fc866b1485665a068b6941d4c37a2c22a73aa972dc38502e3ad9997e3799b9",
+        "stderr.txt": "685a496d9ca9e6955cf194b16aa7772cb9b6b68c1cc3d58f3127bea59e553af1",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 581.7135000000001
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "junction-reader-packet-r1",
+      "processElapsedMs": 360.53900000000004,
+      "receipts": {
+        "owner.json": "dcf72cbed988d7055b03d2642cd136541a2bf1c928272789ff9841f6051b354a",
+        "parent.json": "19d386cbb18e493433e343972d85f1f7f7dfc8d56eb81c10fa62397d6f42d988",
+        "process.json": "6e521140700ebee041256bd1faf5049e495c039e0ae33529922a3ecfd04b576e",
+        "request.json": "b71a43bc20d72b792259655f85663d0fa036744747c55160a7b1b40c6d975568",
+        "result.json": "123fe60394fc17e0346a9d6f17c393893fd88af2c699c47c2766795991cdb31a",
+        "stderr.txt": "640f27d8e88ef906a5eb597c9d1a6d98c6ee30d40d7abdb9f567401a048ea90b",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 598.4316
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "junction-reader-spec-r1",
+      "processElapsedMs": 349.84180000000003,
+      "receipts": {
+        "owner.json": "e05c03c5861cd56ce0134dbef94321e894a43cfdcc777e54c9558f5cce3d77f4",
+        "parent.json": "9ac85855dffbeac5cdf66d3ba0c613988890aab75e69169a3b1efb0fbeacb3cc",
+        "process.json": "03ff0f848717c302063f74526fe89088b657edd7a3585fb6106fd7fb98b4a2fe",
+        "request.json": "b173dbbe71e7941160e0bbc1f01b92a4768be6f3866406090f24e1206c51749f",
+        "result.json": "9b977fdb5c6fd679adc6eb7f9335b8e3cfb64b58710a319b4c7ae198e423dc37",
+        "stderr.txt": "640f27d8e88ef906a5eb597c9d1a6d98c6ee30d40d7abdb9f567401a048ea90b",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 592.1391
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "native-generator-positive-r1",
+      "processElapsedMs": 364.8423,
+      "receipts": {
+        "owner.json": "35d3d55ffd974b760a9f043d412f2a93c9c2e44d8efa18737116e2cff8812b72",
+        "parent.json": "6773ea7312d853ec92973cf0d33e71a25cd97d6a231b39145fad8ccbc9109a9e",
+        "process.json": "f3e6c23b5ef85710c12caff990ef1e3e3a8c0297ca85b5b0b87fa6292f86d81a",
+        "request.json": "3bab3c1805ae40f95a0c35eb2b7b69be9bd490a3855376a140881525f38e947f",
+        "result.json": "a27e7ebd835f05bac7c2bda0558ace1b49e1de739d69597a2cd834094b2b3935",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "dc2bab2104bb224b81bbd6b02dbcf7d81320d4675881a977f7a929cfbc71a1c7"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 605.5669
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "native-generator-units-r1",
+      "processElapsedMs": 1675.9875000000002,
+      "receipts": {
+        "owner.json": "90b27f6177d1413b7b705c25fc5b70d25940e1187fb70e15319e5271b9600f3a",
+        "parent.json": "43741345d413010a005304ca7937eb1289907022d90671037b4b7f927fa1d8be",
+        "process.json": "1c3e302fa2ee9a9216c3ebc85519186172814a8b3529fbae85350f87dbf7500f",
+        "request.json": "0d47e6baa3485df4fdc8a7bad4a1e447d213ee8bbf9f2c4ce3f5f9f1095d446f",
+        "result.json": "25df6c1830fc8c33f06f5de33fe3b87e19bae9c87b363aada9a113a15ac44486",
+        "stderr.txt": "dfb91690ffcb52a939d49cc95ea19d49dbe054ed17583594a061e8de3f3e9e0a",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 2103.8837000000003
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "native-reference-r1",
+      "processElapsedMs": 473.084,
+      "receipts": {
+        "owner.json": "2497556cdd1d1f00eb37eb34357a26de03c11d9fac9a8013ec17d0a61642a079",
+        "parent.json": "435ffddbbd101750e0491053f2c424997e699c760a69ba75f3737192a991cd57",
+        "process.json": "3d01cbab87df88461a53b29d618508df5ba72fe97820ab94faf15c9026348cc0",
+        "request.json": "66066a1fa83e6a9735e293ebf21ce4ddff7bf4f02852cab70839a6c96b70de96",
+        "result.json": "97dc28a028952f10b1d777f667613fa956db572813ef7cb5d748e467ad7324f8",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e227c53d5fa7de35b024c1ff24d465515c55204f769bcff622ecb8e9a4c798ca"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 709.1715
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "native-text-policy-r1",
+      "processElapsedMs": 388.163,
+      "receipts": {
+        "owner.json": "efd3aad6cad6e269c29f2d916180946ee40303915c45d29a0963842eacc1b612",
+        "parent.json": "84f25c41d811536949f853d91987428de0de9be9b93fbfe9396413e77bafa164",
+        "process.json": "6dc66964e7a01bbf0817cbecd854727cbc5a2c1d92f602fd9dda8a7c00890c59",
+        "request.json": "328a593bd61b239f36ff54a20195ccb41ec6a4d6a07453c97c4401ebb4313ca8",
+        "result.json": "afde330f7043f2cdbe41f29d5bbe5a89881081e51cddc708338ced5d317d8c35",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "c5919c3552b2c9c0300ca7f8a1656d16db3b9a1005e56221273adf665dec347b"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 627.8834
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "reader-generator-positive-r1",
+      "processElapsedMs": 481.99420000000003,
+      "receipts": {
+        "owner.json": "11b75abd54ee0ce621ad0933e1b1d211bfac858a2db9a964db68886671b355cb",
+        "parent.json": "f05bcda84e002588c5d1c65298a91d27a43ef7eaae649f1d1f241452575090d8",
+        "process.json": "8a02a43f02e0e6d8e95c0512e7c4adf2c557f9d4ca9728612840373d5b4a93f3",
+        "request.json": "3c3b28f91209c6ef41b667417deab2d72020556f3c503ea3ddd1edc3a806998d",
+        "result.json": "99f45abfe95a2e4b8750384cec1d35af01b1540dde4fc414f42e3ac19c06c9a7",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "21ceb9afc7479340246b91d1104f20692395d71af35770ea72dd70db931fe221"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 721.2501000000001
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "reader-generator-units-r1",
+      "processElapsedMs": 1107.9127,
+      "receipts": {
+        "owner.json": "cf6c91144148f2d19b5c322efb8f6dac6868b0f4b548015a40c6c59fbf4f1cb3",
+        "parent.json": "6ad6a3f0b569eed48b336155c122e9a826f8e746cd88079841a6fc354a833c47",
+        "process.json": "5691c9257aeb732253fa3a3b196d3a3625fe98dd6334bddc87eda391e93bd9a4",
+        "request.json": "d55f8e91caaac74423f9c27857df2a6083c00fe586c1e1499553c213bd4fb6fe",
+        "result.json": "398176c179369687ff043f28927d5d26fbdaa9b9aa11258db868bb17e00a3075",
+        "stderr.txt": "7ff9de5a7e1ca76ab1288284ce1d737b56666d4cc0e7194d0700d333dffda5b7",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1354.6019000000001
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "reader-with-actual-packet-r1",
+      "processElapsedMs": 1099.6172000000001,
+      "receipts": {
+        "owner.json": "37c8a86f9e8d3181e17e3bd8abc48f16b715d73dc2b527903cde256def635ced",
+        "parent.json": "eb3e72f63f21fb0267c4c5a20f590e89bc917d79b9d21c3b74f3b7384f779b20",
+        "process.json": "41be474c50eb8ac315c8a77ca6384af7508149969860eeb1789cfe0faab8fca5",
+        "request.json": "a7e4d1e331a53f2d6f8ab7e0e9452f74a19ba2fbfd6219ceca6ebfbd8b145898",
+        "result.json": "ff6d75afa939027fec94562cae23683bc52c57979e30938d1386ec1445b8af3e",
+        "stderr.txt": "fc63880711d4671a0c1062739cdfaee97fba645bc1a5302f1ed5794134519ddc",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1350.0931
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "retained-P07BranchDiagnosticsContractTest-r1",
+      "processElapsedMs": 465.85630000000003,
+      "receipts": {
+        "owner.json": "43fac8a266b1c706915bf13564fb1127f164ab375fc183fbadaeaea35524337a",
+        "parent.json": "a54d7dfd6ccf8e2bba36dcddac5f7eb138ab93e47fc746be2aeb650abfd508cf",
+        "process.json": "3bd9ecb992c92565ed7f289e40f946b341ff97d860d9fc67f79441bb6b97d7d4",
+        "request.json": "8114f55b3d1c315ee2a353df81fa9f4a9a4f7749f6d4e1408fdf5998e5429a0c",
+        "result.json": "76c4f150ca6252fa5ea6063eecc3de6ff7a4edfc5bcb6a3dd6f7512d0091afc5",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "97c1f90aa77fa71942843c6948ce73ad23fdf71a24ecb91fce8a5986d86dc2af"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 705.9644000000001
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "retained-P07RelaxedDistanceBoundContractTest-r1",
+      "processElapsedMs": 953.4404000000001,
+      "receipts": {
+        "owner.json": "e28931ec2ad2b426dac87ef3a7004bc8ebee9873f8ded81b3faf66f5785ff2a0",
+        "parent.json": "98f885def6d76d80e1de62509c3924487954400471d79656e29da8db437d32e8",
+        "process.json": "80bbdac078ad19441e75081b3f689a4befd65ecf67242ce5138409da5376ae7d",
+        "request.json": "17420e8945c051d4cfd355c42534162882dc68120cb2c1de6aafcd69d4e8e2ba",
+        "result.json": "e6f8079b07d8bcf5b34839c9791758a03af655fb22ec92b978c9e1942954bb73",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "5de70074a24f4c4c0bc439aa6488106f42340f549fb7f127daf4c109464f5c98"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1195.362
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "retained-P07TerminalOnlyDiagnosticsContractTest-r1",
+      "processElapsedMs": 1044.5481,
+      "receipts": {
+        "owner.json": "02584f12874a4742186621acd0a4bd856ed59214c448a3279152b2ff612e411d",
+        "parent.json": "fc7e5c3f16e908872fe7146bcbb566b188024669c7ae3d3297e401fc9b7e17e7",
+        "process.json": "02f17470a71ab44e837c40ad2c3866919009915739de31fd70cf681c2af9b540",
+        "request.json": "dfb7a44aadd2d2c109710f5e6ca70fab84602306ea8707232b8407d357575cc2",
+        "result.json": "ffc80b3d67fe3cbc2319fa83d0e37b51a72a6d7cb5605e6b9ee420fb497d022b",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "4ebbc29e0a1be49f0b9b061573751b4adf43a96d6d99ae7f29462accd7a03e08"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1289.0520000000001
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "retained-SelectedObservationMaterializerGuard-r1",
+      "processElapsedMs": 365.4964,
+      "receipts": {
+        "owner.json": "e7265e6c00fcb82137776e7f8686d7ef786fae884eb869d6744365c03a01a5a3",
+        "parent.json": "d218348f78155250be86240fac9a1270cb815da3f397770e9b1a5799d9548874",
+        "process.json": "00938fe93e462a63e9b550788b93f48a3a1d27c9f9ead6692c926d2f407f4156",
+        "request.json": "b1b37581d2d93742200b0ae4a8a2c09652ae10f7d7abf585e171ea471b47361c",
+        "result.json": "d67f636790443ddda69757a8aa1bc24333b913bdd99758f18f75e0298c816f9b",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "6a8d6034a0297870577d308934898e2431ba824bbacf8e4ae96b8be343b4f886"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 608.6576
+    }
+  ],
+  "review": "ROOT_DIFF_SOURCE_PROOF_CLASS_AND_RECEIPT_REVIEW; INDEPENDENT_SOURCE_ONLY_R2_NO_BLOCKERS_AND_READONLY_CLASS_AUDIT",
+  "schema": "tsj-natural-generic-reference-final-v1",
+  "sourceAndClassToolClosureRehashed": true,
+  "sourcePins": {
+    "GenericRoutingReferenceCanary.java": "68c78e29148d062969943b6ddf77bba15e3ca352ce03b16000eb9dfcded9e9c0",
+    "generate_generic_reference_overlay.py": "365d3020e38e96c252a0458634187234da5a88fb23d21521b3720e86c270dc5f",
+    "generate_generic_reference_reader.py": "a1995cffd691bd28058c5310d64db95d263f06063c59101ec00ae211a0ec1fbf",
+    "test_generic_reference_overlay.py": "ab9c67da35b023b88b7330ca75288507d63d8e552b71c72167b4c517e89eedc1",
+    "test_generic_reference_reader.py": "b52ae2875d6c1939945656a4a0d6b8d784dc8e5e7ae7fb44bbd31e4e143c7d44"
+  },
+  "status": "PASS_NATURAL_GENERIC_REFERENCE_ONLY",
+  "testCounts": {
+    "nativeGeneratorDeclared": 29,
+    "nativeGeneratorOsSymlinkSkipped": 3,
+    "nativeGeneratorPassed": 26,
+    "nativeTextAssertions": 58,
+    "nativeTextCases": 56,
+    "nativeTextSessions": 0,
+    "readerEarlyDeclared": 20,
+    "readerEarlyOptionalPacketSkipped": 1,
+    "readerEarlyPassed": 19,
+    "readerFinalDeclared": 20,
+    "readerFinalPassed": 20,
+    "readerFinalSkipped": 0
+  },
+  "textPolicyTestSha256": "7722ed0876b8e464f8fc619f126ae9ee45b7bd5f2351830eff93b9fe5be67a78",
+  "wireSha256": "dd738f0bbac0edc4f4cbaf4a0d2bba80ebeda9a581d79c052e29df8976e73dd6"
+}

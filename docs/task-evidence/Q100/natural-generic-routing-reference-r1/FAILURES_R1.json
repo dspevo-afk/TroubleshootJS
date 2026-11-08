@@ -1,0 +1,20 @@
+{
+  "oracleOrBudgetWeakening": false,
+  "rootHarness": {
+    "actual": "SW_TERMINAL_EVIDENCE_ACCOUNTING",
+    "cause": "Pinned run accounting rejects absent terminal earlier than explicit natural-terminal guard",
+    "childExitCode": 2,
+    "expected": "SW_NATURAL_NO_PATH_TERMINAL_REQUIRED",
+    "oracleOrBudgetChanged": false,
+    "phase": "host-reader-missing-terminal-r1",
+    "resolution": "Correct root expectation; reuse exact audited returned closure; run remaining fresh controls",
+    "sourceChanged": false,
+    "status": "FAIL_ROOT_EXPECTED_ERROR_OWNER_ONLY",
+    "wrapperExitCode": 1
+  },
+  "runtimeProductFailures": 0,
+  "schema": "tsj-natural-reference-preserved-failures-v1",
+  "sourceBlocker": "OLD_R9_ENVELOPE_CLASSIFIED_NATURAL_GEOMETRY_AS_ORDINARY256; R1_UNRUN",
+  "sourceFix": "EXACT_STRUCTURAL_COMPONENT_GEOMETRY4096_PATH; ALL_BOUNDS_UNCHANGED",
+  "unrunSourceArchive": "PRIVATE_SOURCE_REVISIONS_R1; NO_EXECUTION"
+}

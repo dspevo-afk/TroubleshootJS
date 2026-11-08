@@ -1,0 +1,255 @@
+{
+  "schema": "tsj-generic-routing-reference-fixtures-v1",
+  "kind": "GENERIC_ROUTING_REFERENCE_V1",
+  "fixtureSourceSha256": "dd333ff9c448ce012c3c1a4e603be39b70e1ac1d8d7ef79509d12ab21bd17619",
+  "physicalOwnerSha256": "7bf4ab57198ff9444381ec5d677c1a2bc309bfa3e7f01b188c631ffe5f2b966c",
+  "runOwnerSha256": "4ed1c8561adf1619a8b7ffbd21e23fdf2544dcaafe541af4e5d2b2b1e95cabe4",
+  "initial": {
+    "pass": 2,
+    "passes": 0,
+    "expanded": 0,
+    "maximumExpansions": 1000000,
+    "maximumVias": 48,
+    "priorPromotedNetId": null,
+    "policy": "FULLER_TWO_LAYER",
+    "viaCost": 60,
+    "policyTransitions": 4,
+    "policyVias": 48,
+    "branchOrderStrategy": "CANONICAL_NEAREST",
+    "netOrderStrategy": "CANONICAL",
+    "roleWidths": true,
+    "capturedOrderingStream": false,
+    "sessionOrderingStream": false,
+    "instrumentationModeDifference": false,
+    "routingRelevantSettingsMatch": true,
+    "traceCount": 0,
+    "holeCount": 0
+  },
+  "cases": {
+    "OPEN": {
+      "boardId": "FAILED_FIRST_OPEN",
+      "cohortNetIds": [
+        "NET_A",
+        "NET_B"
+      ],
+      "computedNetIds": [
+        "NET_B",
+        "NET_A"
+      ],
+      "requestedNetIds": [
+        "NET_A",
+        "NET_B"
+      ],
+      "layoutDimensions": {
+        "width": 900,
+        "height": 700
+      },
+      "outline": {
+        "x": 100,
+        "y": 100,
+        "width": 600,
+        "height": 500
+      },
+      "partsTray": {
+        "x": 720,
+        "y": 120,
+        "width": 160,
+        "height": 400
+      },
+      "grid": {
+        "width": 59,
+        "height": 49,
+        "originX": 110,
+        "originY": 110
+      },
+      "pads": [
+        {
+          "padId": "A1.1",
+          "netId": "NET_A",
+          "componentId": "A1",
+          "role": "HIGH_CURRENT",
+          "x": 260,
+          "y": 300,
+          "access": "PTH"
+        },
+        {
+          "padId": "A2.1",
+          "netId": "NET_A",
+          "componentId": "A2",
+          "role": "HIGH_CURRENT",
+          "x": 500,
+          "y": 300,
+          "access": "PTH"
+        },
+        {
+          "padId": "B1.1",
+          "netId": "NET_B",
+          "componentId": "B1",
+          "role": "CONTROL",
+          "x": 260,
+          "y": 450,
+          "access": "PTH"
+        },
+        {
+          "padId": "B2.1",
+          "netId": "NET_B",
+          "componentId": "B2",
+          "role": "CONTROL",
+          "x": 500,
+          "y": 450,
+          "access": "PTH"
+        }
+      ],
+      "roleByNet": {
+        "NET_A": "HIGH_CURRENT",
+        "NET_B": "CONTROL"
+      },
+      "expectedOutcome": {
+        "disposition": "FOUND",
+        "reason": "SUCCESS",
+        "traversedNetIds": [
+          "NET_A",
+          "NET_B"
+        ],
+        "searchCount": 1,
+        "terminalRequired": false
+      }
+    },
+    "BLOCKED": {
+      "boardId": "FAILED_FIRST_BLOCKED",
+      "cohortNetIds": [
+        "NET_A",
+        "NET_B"
+      ],
+      "computedNetIds": [
+        "BLOCK_W_NET",
+        "BLOCK_S_NET",
+        "BLOCK_N_NET",
+        "BLOCK_E_NET",
+        "NET_B",
+        "NET_A"
+      ],
+      "requestedNetIds": [
+        "NET_A",
+        "NET_B",
+        "BLOCK_W_NET",
+        "BLOCK_S_NET",
+        "BLOCK_N_NET",
+        "BLOCK_E_NET"
+      ],
+      "layoutDimensions": {
+        "width": 900,
+        "height": 700
+      },
+      "outline": {
+        "x": 100,
+        "y": 100,
+        "width": 600,
+        "height": 500
+      },
+      "partsTray": {
+        "x": 720,
+        "y": 120,
+        "width": 160,
+        "height": 400
+      },
+      "grid": {
+        "width": 59,
+        "height": 49,
+        "originX": 110,
+        "originY": 110
+      },
+      "pads": [
+        {
+          "padId": "A1.1",
+          "netId": "NET_A",
+          "componentId": "A1",
+          "role": "HIGH_CURRENT",
+          "x": 260,
+          "y": 300,
+          "access": "PTH"
+        },
+        {
+          "padId": "A2.1",
+          "netId": "NET_A",
+          "componentId": "A2",
+          "role": "HIGH_CURRENT",
+          "x": 500,
+          "y": 300,
+          "access": "PTH"
+        },
+        {
+          "padId": "B1.1",
+          "netId": "NET_B",
+          "componentId": "B1",
+          "role": "CONTROL",
+          "x": 260,
+          "y": 450,
+          "access": "PTH"
+        },
+        {
+          "padId": "B2.1",
+          "netId": "NET_B",
+          "componentId": "B2",
+          "role": "CONTROL",
+          "x": 500,
+          "y": 450,
+          "access": "PTH"
+        },
+        {
+          "padId": "BLOCK_E.1",
+          "netId": "BLOCK_E_NET",
+          "componentId": "BLOCK_E",
+          "role": "SIGNAL",
+          "x": 520,
+          "y": 300,
+          "access": "PTH"
+        },
+        {
+          "padId": "BLOCK_W.1",
+          "netId": "BLOCK_W_NET",
+          "componentId": "BLOCK_W",
+          "role": "SIGNAL",
+          "x": 480,
+          "y": 300,
+          "access": "PTH"
+        },
+        {
+          "padId": "BLOCK_N.1",
+          "netId": "BLOCK_N_NET",
+          "componentId": "BLOCK_N",
+          "role": "SIGNAL",
+          "x": 500,
+          "y": 280,
+          "access": "PTH"
+        },
+        {
+          "padId": "BLOCK_S.1",
+          "netId": "BLOCK_S_NET",
+          "componentId": "BLOCK_S",
+          "role": "SIGNAL",
+          "x": 500,
+          "y": 320,
+          "access": "PTH"
+        }
+      ],
+      "roleByNet": {
+        "NET_A": "HIGH_CURRENT",
+        "NET_B": "CONTROL",
+        "BLOCK_E_NET": "SIGNAL",
+        "BLOCK_W_NET": "SIGNAL",
+        "BLOCK_N_NET": "SIGNAL",
+        "BLOCK_S_NET": "SIGNAL"
+      },
+      "expectedOutcome": {
+        "disposition": "NO_PATH",
+        "reason": "NET_A:NO_PATH",
+        "traversedNetIds": [
+          "NET_A"
+        ],
+        "searchCount": 1,
+        "terminalRequired": true
+      }
+    }
+  }
+}

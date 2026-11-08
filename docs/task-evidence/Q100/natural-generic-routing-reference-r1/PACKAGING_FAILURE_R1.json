@@ -1,0 +1,7 @@
+{
+  "status": "FAIL_PACKAGING_HELPER_ONLY",
+  "cause": "Diff lookup used retired _validate_run name; current generated owner is validate_generic_fixture_run",
+  "resolution": "Use actual current owner name; preserve and byte-audit existing partial package; no production or test source change",
+  "applicationGateImpact": "NONE",
+  "oracleOrBudgetChanged": false
+}
