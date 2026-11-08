@@ -851,6 +851,21 @@ Implementation `5410fb34109688b8524335b17251691798d0a6da` is normally pushed to
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
 Gmail `1a1b7accaaca64c3` was sent once.
 
+The [native capture copy-allowance prerequisite](task-evidence/Q100/native-copy-allowance-r1/README.md)
+is locally accepted; publication is pending. An exact checked native-only overlay
+carries a per-Meter effective remaining allowance through capture preflight and
+all wrapper data-copy guards. Defaults, global limits and structural bounds stay
+unchanged. Actual selected JDK8 focused/default canaries and the unchanged
+independent default reader pass;16 parent plus2 final canary classes are measured.
+Owner75/prior4139 class inventories remain exact. Four actual generator controls
+reject invalid source/output paths; earlier generator, invocation, fixture and
+audit-script failures remain recorded. Legacy dispatch order is source-reviewed,
+not a new runtime dispatch claim. No production/GWT/Player behavior changed.
+Next is explicit R2 source-contract integration, exact setup/capture copy merging,
+bounded export and independent host/native/consumer gates. The full authored
+comparison remains NOT RUN/NOT ACCEPTED; playable100=0/betaHELD. No full30,
+HARD/PSYCHOTIC, electrical or population renewal is granted.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

@@ -1,4 +1,322 @@
-# Current checkpoint: terminal-only prerequisite published; telemetry contract next
+# Current checkpoint: native copy allowance accepted; publication pending
+
+UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
+tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
+HEAD32d3ec922dd33cce0aa9602443f6b8f3a3da3627. The prior implementation5410fb34
+and receipt32d3ec92 remain exact origin/codex/q100-physical-feasibility;
+Gmail1a1b7accaaca64c3 SENT_ONCE. New native-only copy-allowance prerequisite
+is locally accepted and awaiting normal commit/push; no new email yet.
+
+Packet docs/task-evidence/Q100/native-copy-allowance-r1 contains the complete
+readable native diff, sanitized source/process/class proof, actual default-reader
+semantics, failures and integrated review. Generic exact-source transformer and
+focused canary live under tests/qualification/rb100-layout/native-copy-allowance-r1.
+Immutable N parent dc53245d is derived to c33f6f69; generator843afb6b and final
+canarycd5280ea are pinned. Per-Meter remaining capacity reaches callback and all
+wrapper data-copy guards. Default1,048,576/chunk4096/static bounds unchanged.
+
+Actual selected JDK8 focused gate PASS432.7276ms operation/686.9629ms wrapper;
+final canary-only compile PASS785.5672/1041.3296 with expected92B warning.
+Existing native default gate PASS451.7978/718.4758 and unchanged independent N
+reader PASS. Native parent compile PASS1013.5552/1276.9589; source audit
+PASS30215.4425/30472.3243. All successful process gates actual0/proven process
+and log absence. Isolated cleanup duration unavailable, not invented. Measured
+16 native parent plus2 final canary classes; dependency75/prior4139 inventories
+unchanged. Source proof79a84b0383ad45dbc1b748eee7111e812db6ab1b5ca359958114578c297b3ced.
+Final canary override changes no parent classes used by the default gate.
+Four real generator negatives returned actual2/EXPECTED_REJECTION; owned NTFS
+junctions removed nonrecursively after identity checks. Earlier generator,
+argument-spelling, fixture-expectation and root audit schema/sort failures remain.
+
+Root integrated review plus separate read-only review found no functional
+blocker. Runtime proof is genuine fixture preflight/counters; dispatch order is
+SOURCE_ONLY. Rejection tests use source layout while exact-capacity uses live
+candidate, with independently equal geometry/counts checked. No legacy dispatch
+or private cleanup flag is fabricated. Private stale worker notes are historical,
+not final evidence. Native-only changes require no new GWT/Player/electrical gate;
+production owner c382f3bc and accepted seven-gate build inputs remain unchanged.
+
+Private D OS-temp/tsj-q100-cohort-branch-capture-0ee7717444ff43e28cc9e8dc4258f81d
+remains full comparison NOT RUN/NOT ACCEPTED. New allowance-contract worker owns
+only the explicit second native source substitution/amendment; root owns F docs.
+It must preserve1088 other N rows/order and1092 total derived sources. Actual
+setup273 must constrain capture-local checks, merge exactly once and restore
+default only after guarded aggregation. This integration, remaining exact phases,
+bounded export, host/consumer and full native source/class gates remain required.
+The adapter77ca1f8a stays fail-closed/work=null and uncompiled/unrun on HOLD.
+Accepted private observer627ffa (691 assertions/141 cases), input transport
+ed3d3c1e/0f44d149 (273 slots/type-sensitive signed-long tree proof), and reader
+74874cb9/tests87b9db16 (21 units PASS) remain bounded prerequisites only.
+Full details and preserved revisions are in the preceding historical checkpoint.
+
+No new authored100 capture or Session. Exactly one fresh original then at most
+two NULL/OBSERVE[AB] arms remain future scope; no third control/retry. Original
+budgets/oracles/seeds unchanged. Playable100=0/betaHELD; full30 EXCLUDED;
+HARD/PSYCHOTIC unavailable/unrun, protected bodies unread here and historical
+unread UNCERTIFIED. Main5f05b005 preserves9tracked/6untracked/0staged;
+Desktop e0c36885 preserves7/73/0; E d9747229 only report mirror changed.
+All current task processes returned; owned raw receipts/classes/revisions retained.
+Old uncertain browser14116/58320 and preview34180/58264 remain untouched.
+
+# Historical checkpoint: native copy-budget prerequisite; bounded observer/input/reader checks pass
+
+UTC2026-11-07 23:14. Standing roadmap continues. F OS-temp/
+tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
+HEAD32d3ec922dd33cce0aa9602443f6b8f3a3da3627. Published implementation5410fb34
+and receipt32d3ec92 remain exact remote origin/codex/q100-physical-feasibility;
+Gmail1a1b7accaaca64c3 SENT_ONCE. No new milestone publication/email for private
+component work. F/E only report pending. Main5f05b005 preserves9tracked6untracked
+0staged; Desktop e0c36885 preserves7/73/0. No production code changed after the
+accepted seven-gate owner prerequisite; no new GWT/Player/electrical/population
+qualification is claimed. Normal Developer outputs/caches retained.
+
+Private D OS-temp/tsj-q100-cohort-branch-capture-
+0ee7717444ff43e28cc9e8dc4258f81d. Full authored comparison NOT RUN/NOT ACCEPTED.
+R2 now BLOCKED on immutable-parent baseline enforcement: callback preflight
+and wrapper checks omit preexisting setup273 copies; restoring them afterward
+is too late. No existing hook or finite margin is source-proven. See private
+COPY_BASELINE_BOUNDARY_R2.md. Next owned T OS-temp/tsj-q100-copy-allowance-
+1b55803c41f54cb9b016c03f5a9d75df, PLAN_R1.md frozen/NOT RUN/NOT ACCEPTED. Worker
+native_copy_allowance_r1 owns a checked source transformer and actual-JDK8
+canary source only; root executes. A per-meter effective remaining allowance
+must reach callback and wrapper checks with default unchanged. N/E/F originals
+stay immutable; any accepted overlay requires explicit R2 source-contract update.
+Original PLAN_R1 remains BLOCKED; frozen R2 revisions1..3 are archived exactly.
+Current rev4 WIRE95ec667713dafe3dd28d3507e580f870fa72bae59b0a4e7a22ba2e54a6f772c0,
+DESCRIPTOR7f3e5ab94d40dc3fe63d3674e51acd1cb7f3e6f15e7f76718383c5bb842e2a5c,
+PLANf24832dc9cc2fda7d8dc34743504bbcb96ad0924c574faecd490d654a0d8bee5.
+Source/WIRE copy matches. Correct N owner row is BASE overlay70caca, replaced
+at its authenticated position by F c382f3bc;1089 other rows/order unchanged,
+then adapter+generated input =>1092 derived sources, actual full classes NOT RUN.
+BASE recorder is inert in the reviewed original-capture chain; no unchanged-
+source assertion is made. Original live Search copy-effects oracle is preserved;
+fresh detached-template arms make no unsupported equivalent effects claim.
+Capture dispositions are explicit nested raw NO_PATH/CAP_REJECTED strings;
+missing top-level fields are never invented JSON nulls. All revisions/failures
+are retained in D/contract-revisions-r2 and FAILURES_R2_WIP.md.
+
+BOUNDED OBSERVER ACCEPTED ONLY: final fragment627ffa56277f79f81632653c68568f339fdd04f0d4e5ab54cfe412045a8b8d10.
+Exact actual JDK8 two-source canary stage observer-canary-r2-3:691 assertions/
+141cases/75classes, compile1055.5559ms/runtime539.8298ms, wrapper1309.0141/
+783.1878ms; actual0/proven process+log absence, runtime stderr0, compile92B
+expected bootstrap warning. Evidence38a034843d4d42d8a866db6e557ed64880a0fc24aaa814ee1d6a8e33fcd724ba;
+acceptanceFD8D41211D85F8B6A90E380D45396FCE0F3DE135ACC52AA10B4EBE33F71FBFB2.
+Fresh exact-source review CLEAR: V<=89, relaxed subgroup<=12, unchanged V92/
+512callback capacity, actual charges69+V. Prior25f44 and7e091 runtime smoke PASS
+were rejected by source review, never reused as accepted proof. All raw candidates
+and reviews retained. Shared N dependency audit1090sources/4139classes PASS
+29772.2968ms/30022.4353wrapper; no consumed N source/class was modified. This is
+not the final1092-source/class gate. Outer quality/export/host proof stays separate.
+
+READ-ONLY INPUT TRANSPORT PASS: helpered3d3c1ebb30f999089cdee6bca5ae602d35acc1b6044cb91ad7cd9f80850e68,
+descriptor helper0f44d1496f04bb35afaa632b60368b67ada71e01b72dee0e77de90dcd33487cc.
+Projection3 actual28792.8736ms/29039.5961wrapper under60s, actual0/proven
+cleanup/stdout738B/stderr0. Candidate descriptor38e11421d436bf9551d1883ab2a3c342adbbaaa9413febd6b2cb7404cb45248a,
+11622B; generated Java11f6ef02dc5c494d62b88f77a77a2cdb18a33c97976459449c749d79bf4b938c,
+21401B;273 data slots. Actual generated-data-only JDK8 compile618.9993ms/
+runtime353.5247ms, wrapper876.5183/612.4072ms, actual0/proven cleanup, two
+classes. Type-sensitive complete semantic-tree equality, three exact signed-long
+seed roundtrips and disjoint fresh mutable copies PASS. Evidence61436b5a6bfb8fcc064d500656614e36312275c6c75f3e52dfbeb03b0d8be1b3.
+Final canonical descriptor directory was NOT created; no authored Session.
+Projection1 failed pin transcription;2 failed wrong reader API; both source/
+call failures archived. No full prior112s reader repeated; each phase uses one
+N closure validation. Earlier literal/all-ASCII and246-pad Python/Java canonical
+identity checks remain limited passing prerequisites, not actual fresh-template proof.
+
+D implementation remains private/fail-closed. Adapter writer telemetry_accounting_r2 owns the Java source; current77ca1f8a
+adds exact post-owner/context/parity guards but is uncompiled/unrun and on HOLD.
+Main stays fail-closed/work=null; copy adoption, other exact phases, export and
+actual R2 canary remain unfinished. Snapshot20ea1b77 with real generated input
+compiled in1051.3058ms/1299.6281wrapper, actual0/proven cleanup; this is a
+two-source development check, not1092-source/runtime proof. Earlier stub-only
+API smoke921.9608ms is NEVER generated-input/runtime proof.
+Reader74874cb903d2d03bc6cdd24034ed858e8a9238e2d080afe4448e57f47756b0f4
+and tests87b9db161fd5a1a56271ac6655463101781b51d8bfbf43cdb6430e8b42cc088a
+actual21-method unit gate PASS467.0746ms/716.9519wrapper, actual0/proven
+cleanup, stdout0/stderr125B expected unittest OK. Two earlier failed fixtures/
+code paths are archived and not reclassified. Signed world coordinates bind
+actual pads; selected grid dimensions bind independently to478x309 from genuine
+prior parsed selectedBranch.snapshot after source/template identity. Exact
+outline is not inferred. Full helper/parent-process consumer remains unimplemented
+and main fails closed. Other leaves HOLD; no new authored capture or Session.
+
+Next complete the bounded T native allowance source/canaries and real default
+regression, then explicitly amend the R2 source closure if accepted. Resume D
+accounting/export and independent host controls; final source/native/consumer
+gates remain required before accepting or publishing the full comparison. Exactly one genuine
+fresh original capture then at most two NULL/OBSERVE[AB] Sessions; no third
+control/retry. D_COIL_LOW:BRANCH_SEARCH_LIMIT/419905/43 is post-run oracle only.
+All90s/640groups/5s/32768units/copy1048576/chunk4096/1Mexp/48holes/4transitions/
+compile60/native480/reader180/cleanup120 limits unchanged. All current task-only
+processes returned; raw stages/classes/receipts retained. Old uncertain browser
+14116/58320 and preview34180/58264 untouched. Full30 EXCLUDED; HARD/PSYCHOTIC
+unavailable/unrun, protected bodies unread here, historical unread UNCERTIFIED.
+Playable100=0/betaHELD. No partial full-comparison success or duplicate email.
+
+# Historical checkpoint: R2 telemetry implementation underway
+
+UTC2026-11-07. Standing roadmap continues. Active F OS-temp/
+tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
+HEAD32d3ec922dd33cce0aa9602443f6b8f3a3da3627. Accepted implementation5410fb34
+and receipt32d3ec92 normally pushed to origin/codex/q100-physical-feasibility,
+exact remote verified; Gmail1a1b7accaaca64c3 SENT_ONCE. No second notification.
+Accepted terminal-only packet records seven PASS gates: build canary, actual
+final-source JDK8/GWT Player and Developer, ten native suites. Production owner
+c382f3bc08f8ad65b3501dad57c927dd5c1f9f1c04914ac79edb772f4b4f4e3e.
+
+Private active D: OS-temp/tsj-q100-cohort-branch-capture-
+0ee7717444ff43e28cc9e8dc4258f81d. Original PLAN_R1 remains frozen BLOCKED;
+its pre-callback copy limitation was resolved only by the separate accepted
+owner prerequisite. New PLAN_R2.md0d3ee6a23ff85386e1701402e067dfc59fcc78e64317dd4ffa6eb6f9d52c6042,
+WIRE_R2.mddebb805aaf1c793125dfe64057200b3b602221fe50f43294e4016dffb64cb205,
+DESCRIPTOR_R2.md4c4d5c5c4023a9eab69e7cb9b253ffcf7b41eefb4846a580c11e4336ac6e4f7e
+are FROZEN FOR IMPLEMENTATION; full comparison NOT RUN/NOT ACCEPTED.
+GENERATED_INPUT_API_R2.md fixes three data-only methods; no JVM input parser.
+
+Completed limited prerequisites: genuine prior N qualification PASS112691.1865ms
+process/112943.8217ms wrapper under180s, source audit PASS28512.8551/28758.2923ms
+under60s. Literal transport actual selected JDK8 compile/runtime PASS11positive,
+13negative and5exact signed-long roundtrips; evidence4a727508e7bbd5c9c46607c7823ba0f72f33e157d9fc949a21c0aedadd95e416.
+Independent Python/Java canonical246-pad identity agrees:
+541543170f9d48428f41ae881c596384597543ec03453fc9f9ea8d14033275a0,
+20651bytes/max94-byte chunk. Java compile601.1007ms/runtime368.3279ms, actual0,
+termination/process/log absence proven; cross-language evidence3f86768e46bb3ce3f4cf27a244b695f623a1ed26e8f867384126b0a36840bff6.
+Python19negatives and separate scoped source review CLEAR. Fresh actual-template
+identity and new authored Sessions remain NOT RUN. Prior projection failure
+retained in D/FAILURES_R2_WIP.md; never reclassified.
+
+One writer each: observer_component_r2 owns observer fragment;
+telemetry_adapter_r2 owns Java adapter; telemetry_input_r2 owns descriptor/helper;
+cohort_reader owns consumer/tests; base_gate_runner owns component-canary source.
+Root owns integration/execution/publication. Partial sources fail closed and are
+not evidence. At most one genuine original capture and two fresh NULL/OBSERVE
+[A,B] Sessions, no third control/retry. Expected D_COIL_LOW cap419905/43 is a
+post-run oracle only. Parent old N closure remains immutable; new compiler
+closure derives1092sources with exact F-owner substitution; actual new classes
+must be measured. One N closure validation perprepare/finalize, no duplicate
+full112s reader. All90s/640groups/5s/32768units/copy1048576/chunk4096/1Mexp/
+48holes/4transitions/compile60/native480/reader180/cleanup120 limits unchanged.
+
+No new GWT/Player/electrical/normal3/full30 qualification; full30 EXCLUDED.
+HARD/PSYCHOTIC unavailable/unrun; protected bodies unread here, historical unread
+UNCERTIFIED. Playable100=0/betaHELD. No heavy native matrix currently running.
+F/E only report pending; Main5f05b005 preserves9tracked6untracked0staged;
+Desktop e0c36885 preserves7/73/0. Old uncertain browser14116/58320 and preview
+34180/58264 resources untouched. Next finish source components, execute focused
+actual canaries, then final-source native/source/class/consumer gates before
+any new comparison acceptance/publication.
+
+# Historical checkpoint: owner prerequisite published; revised telemetry contract in design
+
+UTC2026-11-07. Standing roadmap continues. Active F OS-temp/
+tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
+actualHEAD32d3ec922dd33cce0aa9602443f6b8f3a3da3627. Implementation
+5410fb34109688b8524335b17251691798d0a6da plus receipt32d3ec92 normally pushed to
+origin/codex/q100-physical-feasibility; exact latest remote SHA verified. Completion
+Gmail1a1b7accaaca64c3 SENT_ONCE after exact-SHA duplicate query returned0. No
+second email for receipt; no duplicate previous cohort notification.
+
+Accepted packet docs/task-evidence/Q100/terminal-only-diagnostics-r1/README.md.
+New TerminalOnlyDiagnostics separates scalar snapshots from optional positive-
+capacity pristine copies. Old full/default behavior and mandatory zero-capacity
+verification remain; detached copies preserve mode without retaining caller.
+Ownerc382f3bc08f8ad65b3501dad57c927dd5c1f9f1c04914ac79edb772f4b4f4e3e;
+test2c20e0bbc892e1ff8eb4945805b86c28c354425209449e949610e787ad7ce04e.
+All7 selected gates PASS: buildcanary, both actual final JDK8/GWT variants and
+ten native suites (new217421 assertions plus nine retained suites). Final1202
+build inputs/357outputs each;1075available Java source inventory stable. Native
+source/class list is cleaned by maintained runner, not a retained census. Full
+timing, raw-receipt hashes and limits in SOURCE_PROOF6f7a0428c2e1b4390e392daa44f92ac84352fd90c09c2369500044d1d41d8425.
+Root14-path staged/byte/privacy/diff checks and read-only owner review pass.
+Documentation-only receipt needed no rebuild. Task-only processes all returned;
+F retains normal Developer build outputs/caches; old uncertain resources untouched.
+
+NEXTownedroot OS-temp/tsj-q100-cohort-branch-capture-0ee7717444ff43e28cc9e8dc4258f81d.
+PLAN_R1.md6658e8e2 stays frozen BLOCKED/NOT IMPLEMENTED/NOT RUN/NOT ACCEPTED;
+ACCOUNTING_BOUNDARY_R1.md preserves its pre-callback copy limitation. Revised
+PLAN_R2_DRAFT.md 4eb47d89d5b94e8b0f273bdff5987293b4805215b0ab07d3fc82314d39686ec6 is DRAFT/NOT IMPLEMENTED/NOT RUN/NOT ACCEPTED.
+
+R2 COMPONENT PROGRESS (not comparison acceptance): input_literals_r2.py58ac9b029097d63e078adb70044e31aed29cd5e8d3bea1afee8b54df01a278e9
+implements the defined printable-ASCII/octal literal boundary. Actual selected
+JDK8 compiler/runtime canary PASS11positive13rejectioncases/5exact signed-long
+roundtrips, classcount1; compile547.8456ms/runtime359.2191ms, real0/proven roots
+and log absence. Evidence INPUT_LITERAL_CANARY_R2.json4a727508e7bbd5c9c46607c7823ba0f72f33e157d9fc949a21c0aedadd95e416;
+owned literal-canary-r2 source/class/receipts retained. Compiler's existing92B
+bootstrap warning is explicitly expected, runtime stderr0.
+pad_identity_r2.py Python literal/order/19rejection checks PASS; qualified246-row
+canonical identity541543170f9d48428f41ae881c596384597543ec03453fc9f9ea8d14033275a0,
+20651bytes/max94-byte chunk. PAD_IDENTITY_PYTHON_R2.json0b842efb5a06c25f9e27996caad8702c5b2021d44a0c6200b2eb8fdb2e87e0ed.
+Java actual-template comparison NOT RUN. Separate read-only six-file review
+CLEAR within codec/identity scope; no tests run by that reviewer.
+
+Actual parent N build_inputs.py audit cost canary PASS28512.8551ms process/
+28758.2923ms wrapper underunchanged60s; actual0/proven process/log absence,
+stdout321B/stderr0,1090sources/4139classes. SOURCE_AUDIT_DECISION_R2.md chooses
+one complete N validate_run_manifest perprepare/finalize entry, no immediate
+duplicate recheck; binddirectprior/qualifier/provider/descriptorhashes too.
+This does not certify new-helper60s performance. No repeated112s old-reader
+path insideprepare60/newconsumer180. All heavy calls are finished/closed.
+
+Root defined OBSERVER_COMPONENT_SPEC_R2.md for a private fragment only. First
+implementation leaf returned no file within its window; no partial proof was
+reused. Fresh leaf observer_component_r2 (LunaMAX, fork none) owns ONLY
+draft-components/TerminalTelemetryObserver.fragment.java, currently implementing;
+root will integrate/build/canary. Enclosing adapter/wire is NOT implemented or
+frozen. Ledger e3948bd4 is draftnorms69+actualV,V<=92,max161under512;512+parent104
+fits4096reserve; P+1=247 source-proven afterpad/net bijection. No unused capacity
+is charged. Generic parent's private FaultDiagnostics fields remain unobservable;
+meter-delta fallback and separately owned direct runtime canary are distinct.
+Quality rejection afterFOUND has NON_BRANCH_REJECTION/no invented snapshot.
+Root corrected wire draft int32/domain bounds and exact generic fallbackdelta
+against parent finally; currentdraftfile hashes in private root, no acceptance.
+Descriptor draft9d8584b241f11ae88c49e3e49649d94f8f046c0ebbc7ebf9c76e0bc0a6cd64ae
+uses seven actual qualifier files +separate provider refs, exact namedseedobject,
+PRIVATE canonicalabs paths/fixedroots; generated/public outputs contain no paths.
+One broad helper search emitted existing S final-acceptance.json metadata/hash
+census; resultunused, stopped; no protected HARD payload was in that artifact.
+
+Root and bounded leaves drafting strict wire, descriptor and observer-ledger
+MDs before implementation. D/WIRE_R2_DRAFT.md, DESCRIPTOR_R2_DRAFT.md and
+OBSERVER_LEDGER_R2_DRAFT.md are not frozen/accepted. No heavy matrix or new
+authored/native D run is active. Prior-input qualification is separately PASS.
+
+New source parent is32d3ec92; oldE/N sources/helpers/data/classes/tools remain
+immutable. Revised compiler closure keeps N1090 rows/order, substitutes only
+current F owner for oldE759831c9 and appends adapter plus generated data-only
+input class (derived1092, actual typed class census still to measure).
+INPUT_TRANSPORT_DECISION_R2.md defines safe octal ASCII constants, stage-owned
+generated source and independent canonical246-row pad identity. No JVM parser
+or new production change is planned. Fresh prior old-reader qualification PASS
+112691.1865ms process/112943.8217ms wrapper under180s, actual0/proven process/log
+absence/stdout812B/stderr0. D/prior-input-qualify-r2 retains genuine receipts;
+PRIOR_INPUT_QUALIFICATION_R2.json d2dd656567031515aa520528f2cb8343c9252558b3108bcc4eb840c887e9edcb
+binds9old artifacts and qualification receipt hashes, derived[AB]/60nets/246pads.
+This is NOT a frozen descriptor or new comparison acceptance. Cached proof
+requires auditing all consumed closure unchanged; do not repeat full112s reader
+inside prepare60/new consumer180. Initial projection guard confused rawstatus
+RUN with reasonTRIAL_EXECUTED, failed0.2196965s before write/graph; corrected
+against frozen N wire, archived47341444 source+FAILURES_R2_WIP. Corrected
+projection PASS_PRIOR_INPUT_ONLY0.1213914s; no native gate reclassification. New genuine capture
+then at most2 fresh NULL/OBSERVE[A,B] Sessions; no A-front third control/retry.
+Authenticated60-net vector supports source-proven callback reserve within4096.
+Original receipt307/lineage77 remains original-operation-only. Generic parent
+runFresh private FaultDiagnostics flags are not observable for a new sink; use
+explicitly labeled actual direct-owner canary and source proof, never invented
+generic runtime flags. Exact canary/accounting contract still to freeze.
+
+All90s640groups5s32768/copy1048576chunk4096/original1Mexp48holes4flips/
+nativecompile60native480reader180cleanup120 limits remain. No authored D Sessions
+were created by the owner prerequisite. No Current/full-native/normal3/full30/
+electrical/population/admission renewal; manual Player checks not applicable to
+the private seam. Full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun, protected
+bodies unread here, historical UNCERTIFIED. Playable100=0/betaHELD.
+E only root checkpoint differs; Main5f05b005 retains9tracked6untracked0staged,
+Desktop e0c36885 retains7/73/0. F was clean after receipt; this next-contract
+checkpoint is its sole pending change. Old browser14116/58320 and preview34180/
+58264 uncertainty preserved. Next finish/freeze R2 wire, then input qualification
+and bounded implementation/canaries/final-source native/consumer gates.
+
+# Historical checkpoint: terminal-only prerequisite published; telemetry contract next
 
 UTC2026-11-07. Standing roadmap continues. Active F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,

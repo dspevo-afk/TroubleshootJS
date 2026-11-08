@@ -25,6 +25,17 @@ The [first-request packet](task-evidence/Q100/prefix-via-price-first-request-r1/
 records its limits and rejected native-only price treatment. It changes no Player
 capability, electrical model, production route policy, epoch or public admission.
 
+The native capture copy-allowance overlay derives one exact historical
+FailureCohortRoutingStudy source with a checked transformer. Each Meter retains
+the original default copy ceiling and can carry a smaller effective allowance
+into CaptureData before the legacy callback. Callback preflight, ordinary copy
+reservation, fingerprint and pad-land guards share that allowance; static
+structural bounds and published global limits remain unchanged. The dependent
+caller must subtract actual preexisting setup copies and merge the ledgers once
+before restoring the default. The [bounded native prerequisite](task-evidence/Q100/native-copy-allowance-r1/README.md)
+qualifies this seam only; its full R2 accounting/export integration is separate.
+It changes no production electrical or routing owner.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

@@ -1,0 +1,3 @@
+*.py -text
+*.java -text
+*.md text eol=lf
