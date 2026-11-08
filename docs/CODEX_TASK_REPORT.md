@@ -1,9 +1,11 @@
-# Current checkpoint: natural generic routing reference accepted; publication next
+# Current checkpoint: natural generic routing reference published; full-result mapping next
 
 UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
-baseHEAD218e7f7761bd4b573b7adfa5ba6175bf31e35b9a; verify actual HEAD.
-Before T report-only M/staged0. Now intended T code/evidence and three docs only.
+implementationHEAD e2733a09a64dc3ee846f8c8e2f9073ea8445474a; receipt commit carries
+this checkpoint, verify actual HEAD.
+Before T report-only M/staged0. T33path implementation committed; after publication
+F clean before this receipt. This receipt updates intended docs/evidence only.
 Normal origin target codex/q100-physical-feasibility; no local upstream.
 R dfccca05+receipt8dd8175c published/Gmail1a1bb49499634913 SENT_ONCE.
 S f9253d30+receipt218e7f77 published/Gmail1a1bb6d74e5dc143 SENT_ONCE.
@@ -64,9 +66,15 @@ APPLICABLE/not renewed. All90s/640groups/5s/32768units/copy1048576/chunk4096/
 compile-suite60s/wrapper480s/reader180s/cleanup120s/branch100000/global1m/depth64/
 visits1m unchanged. All T scratch/classes retained; no new persistent resources.
 
-NEXT: actual final diff/staged-byte/privacy review, normal commit/push/remote
-verification and one established Gmail. Then freeze full result/marker/R7/host
-migration using genuine generic references; no authored retry implicitly authorized.
+PUBLISHED: implementatione2733a09a64dc3ee846f8c8e2f9073ea8445474a normally pushed
+and exact origin target SHA verified. Final actual33path diff/byte/privacy checks
+PASS, tree08ba3549bd5ad635ea91fd69545489fbbee10f27; review21004656eb2be045df64adb7f27224e5a6c0b46038a1a205b75fa1953307f9fe.
+Initial CRLF cached-check failure on two packaging notes corrected with LF-only
+public projection; raw private originals preserved, no application source change.
+Zero prior Sent subject matches; completion Gmail1a1bbcc900c484af SENT_ONCE.
+No duplicate/receipt email. NEXT: source-only full result/marker/R7/host caller
+mapping begun by two bounded leaves; root freezes next coherent scope before
+implementation/execution. No authored retry implicitly authorized.
 Old uncertain browser14116/start639294472690745890/port58320, preview34180/
 start639294472514546595/port58264+14uncertainchildren, oldD timeout logs and
 UNCERTIFIED unlink untouched. No broad cleanup/reset/history rewrite.
