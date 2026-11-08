@@ -1,0 +1,425 @@
+{
+  "junctionCleanup": {
+    "isolatedCleanupDurationMs": null,
+    "junctionsCreated": 1,
+    "junctionsRemoved": 1,
+    "status": "CLEANED_VERIFIED_OWNED_JUNCTION_NONRECURSIVELY",
+    "targetUnchanged": true
+  },
+  "junctionCreation": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "reader-junction-create-r1",
+    "processElapsedMs": 462.3596,
+    "receipts": {
+      "owner.json": "27e247e0c4a32c975946670512b34d767bd6168f4b616717300f111b5aed6804",
+      "parent.json": "8bb3893c8388e99494120778244f6dbc7b74dc38fb53ef9b205f2d44d2943ade",
+      "process.json": "75dae4f350b8ba90229480c67a309d2289930c66e5bdb3f7c782f6d9c6585499",
+      "request.json": "94d26d7f4887d8ae929490fbdb04d3a5ac9134b00dc3f959040371d914296be2",
+      "result.json": "13b0be8fcc72e81458fd40714cb1dfee2bfaa1ea4584fdff5b3b7ac89c9d2a19",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 703.2822
+  },
+  "nativeOrBuildOrSessionCalls": 0,
+  "negatives": [
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-os-sha-r1",
+        "processElapsedMs": 348.04220000000004,
+        "receipts": {
+          "owner.json": "d7cf7da7985b2019caaf3c17982b002737dbf6a9c399eec35004717974a2193e",
+          "parent.json": "df545da2702687639acfc64a54622e0bf5f16bdb00e6a0ac40fbdbcd473f1858",
+          "process.json": "52b1b6d163b95eff2b5f2c028872092c3641ddd74960931acb36c05ead706db1",
+          "request.json": "f4b5adf7337bb3ae49535c6ea5da883149738fe12f2997912d07040102f79921",
+          "result.json": "1b3ae189d0327f5297fdb3edc5379d49a20c370f941de0e1375d67faa74b3c7d",
+          "stderr.txt": "1965c6d92c8cc6ce8f9c4ca3cb42db55014638e1ce4767e706a099cd839f6f98",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 592.4759
+      },
+      "case": "sha",
+      "expectedCode": "SHA256",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-os-length-r1",
+        "processElapsedMs": 350.06850000000003,
+        "receipts": {
+          "owner.json": "2b1f436e0ac9bb5040069af87bf4401562572f1030229667d1d52b203eeaa846",
+          "parent.json": "07f444861724a3936708fb5c4f4ebd74b48c590dcbf54b1c891c1bd03e383e64",
+          "process.json": "46aec5a9915faa9809b3ad1f3a569a8d727c51bfae4419a7442d7c5220c7cbc8",
+          "request.json": "50e82922fc2db69cf539351dc3c35b6e19e48380a5934d51e5284b439d2403d7",
+          "result.json": "4d755d3ca2deab413cbfd439bf1cdbc88b792f0672b0d949bf6d265d89302784",
+          "stderr.txt": "d3f1a307524c449e743cf2fa2355c570378e0580561ec17589ab50e4bce16282",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 595.4888000000001
+      },
+      "case": "length",
+      "expectedCode": "EXPECTED_BYTES",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-os-size-r1",
+        "processElapsedMs": 353.48920000000004,
+        "receipts": {
+          "owner.json": "3c41a0ad66471d4189087190eb108152b0613eccf05e40e25eea38971149a322",
+          "parent.json": "275bc42c699ede4732479bf034f0e46a6ef91d7a6b91dad61e1516aee1e4997e",
+          "process.json": "361454d286bd6f1de4d8838df5a449cfe373d1b0ed09a1ccd9a73c78d5b5f453",
+          "request.json": "d9d9ca427d7fe710b969af4c401fecee29224e51e8d4a6181bb0a17184ce8435",
+          "result.json": "39b252a2160bf7ba1a48f1af67db313a7c1e1ba74875931b4cae71e9b2f481f5",
+          "stderr.txt": "5f3e702eb08927a28c0a7234455d58ead999c4b3cd9363d947c95c22a735b395",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 599.9305
+      },
+      "case": "size",
+      "expectedCode": "SIZE",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-os-bool-limit-r1",
+        "processElapsedMs": 345.3355,
+        "receipts": {
+          "owner.json": "b58b1c9de76097b64171edb6384b4bb62ae0f628369151afb7a0844dab659180",
+          "parent.json": "713ca1ade9177a2cffab30d62c6eeb6dbcedb5d7bcded85911c22fe75d90ba1f",
+          "process.json": "3e55ce6e334612ee12fcb9443f97ffbad59561c1f13cc79c7e51e9bada3242ac",
+          "request.json": "ab13d638bac1d176cd7fb45728cb41dc42abab941c8d93e17d41ac08bf4de5bc",
+          "result.json": "5110c7c29709fdac586b2c0ae5f7a78972cf7192d066c494ee63a002561e854b",
+          "stderr.txt": "5f3e702eb08927a28c0a7234455d58ead999c4b3cd9363d947c95c22a735b395",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 587.5212
+      },
+      "case": "bool-limit",
+      "expectedCode": "SIZE",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-os-bool-length-r1",
+        "processElapsedMs": 431.34610000000004,
+        "receipts": {
+          "owner.json": "6a5e6cfc2f6d0762aa9f7c0c7210bb5967b13e7c3c0de123145704d3250396b5",
+          "parent.json": "e7f44684e97b745d2fec07d799b97ed4ee5a7cdda27a23adce1bf764dbcfd678",
+          "process.json": "88cc0512ffb566b92a7f27b08c62407e33b77f9d856c929120a6359221dfbc19",
+          "request.json": "f71ebf6b266cabd126eccb472c9611f64f8b252345bd1f51914086b7d58e7b47",
+          "result.json": "3338941c365cabe42b8c4bba2af70fee4184ecd920365d84de2d0e87c1148073",
+          "stderr.txt": "d3f1a307524c449e743cf2fa2355c570378e0580561ec17589ab50e4bce16282",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 674.7834
+      },
+      "case": "bool-length",
+      "expectedCode": "EXPECTED_BYTES",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-os-zero-disallowed-r1",
+        "processElapsedMs": 344.2456,
+        "receipts": {
+          "owner.json": "258007811bd0c2979116690e1e900e7b72ddde09f3f53401bfbf202ee48348e2",
+          "parent.json": "08666c8bf779efe70aca500e846ceaf5e6b44a7decff62178a42e0785db4ffc3",
+          "process.json": "e786b87bb284f16ef24171352efb299e48a4129cf010bc2ea8670c77d74232db",
+          "request.json": "2d06e48c740b05dcc2737d6dfa7d72632e4051f3c3565bd3d47562f9ab3d7927",
+          "result.json": "c1e14dd4db6c8df64a53bdea1b4c8af43a9d8d0eeed1f83248cbbbd16f58d109",
+          "stderr.txt": "677bc239bebea03b9eee1af18c0010160850b22cd0b5e6fd61f3cb3a5a1b1074",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 589.4653000000001
+      },
+      "case": "zero-disallowed",
+      "expectedCode": "ZERO_ROLE",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-os-role-r1",
+        "processElapsedMs": 433.3682,
+        "receipts": {
+          "owner.json": "19c0a6f5b6e543f2feb0abefafd9bb55e9a024a1b5644afc5e136e80b99dda32",
+          "parent.json": "e6cbac27877c217f31c78492c91f6ce608004a92b803dd2f3873a5767b81d5d5",
+          "process.json": "e0cdd11c9cafad9d760ad07d47142f3beee6c3b1820b067e58ea2ba93517b827",
+          "request.json": "9054d7fc40e722e029337280b8fb36da6d78b2878fadee2a1194221b4dd308b0",
+          "result.json": "cdef8a73256191fd11acca195303b3a561e93ebe3ae3505ea72614f76515ea3a",
+          "stderr.txt": "64d20b693f77cfa62e5f56c8d9e5af40eb04a5008e07ddb2ba735197f6a73add",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 683.3113000000001
+      },
+      "case": "role",
+      "expectedCode": "UNKNOWN_ROLE",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-os-extra-root-r1",
+        "processElapsedMs": 440.6046,
+        "receipts": {
+          "owner.json": "05cb87460d2cffd9ea053978dc9ddff12379dcac645846539dc2a0f8edf73679",
+          "parent.json": "4ca1ca0e92c83055ae9518136eecb5be4be9f6f5b1aaf59309e4e462365c21fe",
+          "process.json": "54717c7af664a95b8278c11aeb8943cfa12a86e572df93b8f6643eddbc78308a",
+          "request.json": "ac3bd1431ef3aad94c8d08262ccfbd7c2981ff75c3ac8ddc1b64d915c0c384a1",
+          "result.json": "07b40ae528f931fcca9746af961ff7d3290c5172a636a65e1dc0e33ab7fb74b5",
+          "stderr.txt": "e0a0601a538b84b52e828b070ae7c13971f0a9ebe3892c79bfac838f4ae1f14d",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 689.014
+      },
+      "case": "extra-root",
+      "expectedCode": "ROOTS",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-os-noncanonical-r1",
+        "processElapsedMs": 606.9895,
+        "receipts": {
+          "owner.json": "a1f9d1f43d0021c436fb94f8623f59d5211eb8ee2af77fa696266b8d0f7d21c6",
+          "parent.json": "343b4c19a6ffaa19904c7c1553d8028622f6f10f113bd19195051147e67a1706",
+          "process.json": "786e82b31f6d2fce8bbe7df2574b30ac9e25495819f3ed0250b2a225c5d35790",
+          "request.json": "46a6c268c6d5179208be6dd8a2fcf471d0d2b6da86a8e78512f8a852db47b10b",
+          "result.json": "74fb9c11b542d09656e578602937faa80038f8f2489eb9a34ecfc687aa61631c",
+          "stderr.txt": "cf563cdf54cd773c8a6422815d4b54de02e691aa0aecc2fed822f6099e169a32",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 870.9206
+      },
+      "case": "noncanonical",
+      "expectedCode": "NONCANONICAL",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-os-escape-r1",
+        "processElapsedMs": 435.014,
+        "receipts": {
+          "owner.json": "0d487b8f7e1cc2191fbd0726983dafa096df2de4020a3edbb1b73f3646f1f31d",
+          "parent.json": "86fab5648edb9404ffb98b2724d10cb4e39f5417bc80589b8506b6283c4e3066",
+          "process.json": "35be95b0d902af194705c81e8842ac2f595dbfaface944afc7cbe893ab6ca67c",
+          "request.json": "394c855d8b012b83f023c2af5e944db47732b644f8a64f0eb8994034fad3e029",
+          "result.json": "81e17999150321492611b6114cab17b5a449ab5e4d7e5c07c43d344b8e786702",
+          "stderr.txt": "ab472dc98f1dc4fa19d7b1ee3bd914622055b27526f1482d053ebd76c96e8937",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 684.8705
+      },
+      "case": "escape",
+      "expectedCode": "ROLE_PATH",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-os-junction-r1",
+        "processElapsedMs": 346.8183,
+        "receipts": {
+          "owner.json": "0dc51973fe7b23953aad0cfb281e48b2659a8cbf5880814ef00029674958ce15",
+          "parent.json": "2c7aca0eab9bc508b96c054af22fd5b7c01236a2f3a0bf13047dd63757a2bd20",
+          "process.json": "7a88e5b80c95eaf9b760834d10910a2f28b0edb536a7e33bb8a66e05a8696e43",
+          "request.json": "a874fc37a1fdcb301901a24860aa20ff91a61b1eb3b9f79c4240ed916d9a4fc0",
+          "result.json": "bf1ffce1ab837edbae18b2d69a6e3b7f87e396077901899b305b765855f421ae",
+          "stderr.txt": "cdd0f987f4876152a13c20b1fce37017391251fff158ba31892288082a3b3382",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 597.5771
+      },
+      "case": "junction",
+      "expectedCode": "REPARSE",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-os-directory-r1",
+        "processElapsedMs": 354.50620000000004,
+        "receipts": {
+          "owner.json": "838e27af58074d626ef505683f75b382a64c75cff4055d790dcc4000882fd539",
+          "parent.json": "948b0134968b9a6cb4ba17dbd65015224715db84276c6538bf052e62f8891d0c",
+          "process.json": "28e0ef6b67266b89be3c36a59fce1197f3377f3ebcd70351015ee23aefcae8ec",
+          "request.json": "5612c455f373461a8fba15630213b74419d3ac8af527bf0de47de69663a8f85c",
+          "result.json": "c9632129b072e3230e8ebc50b975605ba1b9e080dbdb4f3ed051fae42ad3d0f6",
+          "stderr.txt": "8033dfa48deb61b980c8b620f5d4b9cb4b8f3a2fd741e829cfedf8d7afdbfe88",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 604.4763
+      },
+      "case": "directory",
+      "expectedCode": "REGULAR",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-os-contract-r1",
+        "processElapsedMs": 348.5768,
+        "receipts": {
+          "owner.json": "03b474a6b4d207d92b99878eb6667cd39e9c6cb53b415dadeb21d6b190c406ef",
+          "parent.json": "96f17a6a03cc687a012015c20899e5ae1d400bacfa6d16b3159f632a11270238",
+          "process.json": "07a5d8221688afe3324a39331925ec4ef8de3502262ff09a7713af2ec35dc059",
+          "request.json": "10f1f57d87222bab8eaa1fcb01cff57651fd50d26738c422de0fbfce03ceb91b",
+          "result.json": "2f9ef56043af7f3fbe6b52ad8b0956b0c75f2055760438276f6003548bf6a769",
+          "stderr.txt": "b73c466a3183de046876707115b77eca5719569d7a1c7a9248d8081201ed21ab",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 594.8695
+      },
+      "case": "contract",
+      "expectedCode": "CONTRACT_SHA256",
+      "status": "EXPECTED_REJECTION"
+    }
+  ],
+  "normalOracleBatches": 0,
+  "oracleBodiesRead": 0,
+  "positives": [
+    {
+      "call": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-os-positive-r1",
+        "processElapsedMs": 350.8091,
+        "receipts": {
+          "owner.json": "d592a656db195315635d163068c200aba0833446a5466ac921e45d0c691362eb",
+          "parent.json": "90e923e139434587dfa565a356ba9e02f3813b7606199533729b2461be8ebd7b",
+          "process.json": "3d7b607c43c2aeb1084f1ae17e4026b8fed4c3e9c5d7b90733d02f1713f6c2fa",
+          "request.json": "b2ceee5feec76cd9598941af6fbff1cb64768c8bc893b316a0d07bcad3387676",
+          "result.json": "8f7874a5d2383e025af8378ea6205043a39caadb14d37d5a0ff9a54ac60817ff",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "1dc226c66d2e5d261326119f2e12376fe8eb52c304f029aced4c411fd6e3a053"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 602.3408000000001
+      },
+      "case": "positive",
+      "summary": {
+        "bytes": 27,
+        "evidence": {
+          "finalSha256Recheck": "PASS",
+          "fullD": "NOT_CLAIMED",
+          "qualification": "NOT_CLAIMED",
+          "roleCount": 1,
+          "roles": [
+            {
+              "bytes": 27,
+              "role": "N_PRIOR_OPERATION1",
+              "root": "N",
+              "sha256": "f2d65031baa70f6b89c5815d6cd3fe12a607f7658536c88185afb070436921be"
+            }
+          ],
+          "scope": "SYNTHETIC",
+          "semanticValidation": "NOT_PERFORMED"
+        },
+        "roleCount": 1,
+        "sha256": "f2d65031baa70f6b89c5815d6cd3fe12a607f7658536c88185afb070436921be",
+        "status": "PASS_SYNTHETIC_BYTE_READER_ONLY"
+      }
+    },
+    {
+      "call": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-os-contract-positive-r1",
+        "processElapsedMs": 346.0317,
+        "receipts": {
+          "owner.json": "e9082b3d174bec0e88b83df99cf164333dc7ae0301340350bf49b38324c3d733",
+          "parent.json": "b911e0428e90cb361628e8047fd52f56bcb7716e288479fbd8a68480e62149cb",
+          "process.json": "695e4d5f7beb262499a656248301ca21cd8e856f8da6228bc24cea12b2399adb",
+          "request.json": "64aece1d902393e54516293d32ad6d7e697542aa5ed2ed13d7f57e5d560ff394",
+          "result.json": "d057c8324f57da8e9b2afe50ebe53e7ff7fd942499e83b9c0cd0a1abac62bcab",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "99d1f719b5ab9b3ad9a5cbd386693448165ae8f74359678d386ba766142b67fa"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 590.2642000000001
+      },
+      "case": "contract-positive",
+      "summary": {
+        "evidence": {
+          "allowlistSha256": "c487eae6ed0e070aaad75dccd14d23313ed9da2c6bda7f93bfeb886109f20f91",
+          "finalSha256Recheck": "PASS",
+          "roleCount": 20,
+          "scope": "PINNED_ALLOWLIST_METADATA_ONLY"
+        },
+        "status": "PASS_ALLOWLIST_METADATA_ONLY"
+      }
+    }
+  ],
+  "schema": "tsj-fixed-role-reader-selected-os-controls-v1",
+  "sourceContractToolsRechecked": true,
+  "status": "PASS_SYNTHETIC_BYTE_READER_AND_METADATA_ONLY"
+}

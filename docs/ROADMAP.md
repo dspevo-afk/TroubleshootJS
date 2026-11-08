@@ -1104,6 +1104,19 @@ phase gates, then pinned normal-prior ingest and the single original/NULL/OBSERV
 producer only when all required proofs exist. Existing limits/oracles/seeds and
 Full30EXCLUDED/HARD-PSYCHOTIC unavailable/playable100=0/betaHELD remain.
 
+The [fixed-role normal-prior byte reader](task-evidence/Q100/fixed-role-reader-r1/README.md)
+is accepted for component scope on synthetic files and pinned metadata only.
+It authenticates20 fixed roles with bounded canonical Windows I/O, handle/path/
+ancestor checks and final SHA rereads. Six unit methods pass; one symlink test is
+SKIP for unavailable privilege. A real directory junction separately proves
+reparse rejection. Two actual positives,13 exact-code expected rejections and
+public byte/summary reproduction pass. No normal-prior role body or native run
+is consumed. Later caller root-freeze/phase gating and all independent semantic
+checks remain required. Publication pending final index review. Next is context
+normalizer/pure-parser implementation, with generated API/types and entry-count
+accounting defined before execution. Full30EXCLUDED, HARD/PSYCHOTIC unavailable/
+unrun, historical unreadUNCERTIFIED, playable100=0/betaHELD; caps/seeds/oracles stay.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

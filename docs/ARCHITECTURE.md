@@ -213,6 +213,15 @@ and explicitly accounts deferred flat-work operations. Its656-byte schema marker
 bound is distinct from the722-byte transport ceiling. This checker does not own
 data ingest, native assembly or normal admission; those phases remain gated.
 
+The [fixed-role byte reader](task-evidence/Q100/fixed-role-reader-r1/README.md)
+owns bounded authentication of the exact20 frozen normal-prior role entries.
+It pins metadata, canonical Windows path/ancestor and handle identity, lengths,
+SHA and final rereads; it returns bytes without decoding or following manifests.
+Its private synthetic seam cannot claim normal admission. The caller owns the
+externally frozen private root identities and operational phase transition.
+Real normal-role ingest and semantic/native qualification remain gated; this
+component is accepted only on synthetic I/O and pinned allowlist metadata.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

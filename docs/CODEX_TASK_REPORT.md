@@ -1,4 +1,62 @@
-# Current checkpoint: X contract published; fixed-role reader source next
+# Current checkpoint: Y fixed-role reader accepted; publication pending
+
+UTC 2026-11-08. Active F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107, HEAD eabbd4e2c55b004608439adba09f5c9955ccadf9.
+Origin dspevo-afk/TroubleshootJS; no upstream; normal target
+origin/codex/q100-physical-feasibility. X1915ab43/receipteabbd4e2 remotely verified;
+Gmail1a1bd3977bf84370 SENT_ONCE. V/W notifications remain SENT_ONCE. F was clean
+before intended Y source/evidence/docs. Main5f05b005 retains9tracked/6untracked/
+staged0; E d9747229 report-only M; Desktop e0c36885 retains7tracked/73untracked/
+staged0. Main/E report mirror only. No unrelated edits or resources discarded.
+
+Y OS-temp/tsj-q100-fixed-role-reader-4fb644a479b04b98ba0d1b33c6687127.
+Public code/evidence fixed-role-reader-r1. Reader3114b1abe807e73de4cdd78939b5ab76c2623cf3de501b193a746219b16160a4;
+test e07ef529e0bf701c36d62c764d1a4e00d6437a1e49ee5d74fc94ed02d657cf20.
+Final proof 23d1c35b3f1b611ba49c8664233b84332524a0bb0623841fdcd0b66e7d8f7306.
+Accepted BYTE_READER_COMPONENT_ONLY, not normal20-role batch or semantics.
+Exact role metadata, Windows canonical/reparse/containment, opened-handle identity,
+bounds/knownlength/SHA and final role/contract/root rechecks. No decoding or
+manifest following. Caller must freeze actual private roots and record later
+phase transition; pinned allowlist remains unread/unchanged. No normal DATA CLI.
+
+Final selected-I-B unit gate:7 methods,6PASS/1SKIP (directory symlink privilege).
+Actual PowerShell junction separately rejects REPARSE; owned identity revalidated,
+removed nonrecursively, target unchanged. Two positives and13 exact-code exit2
+EXPECTED_REJECTION controls pass. Public byte-identical source and exact positive
+summary reproduction pass. Units458.053ms operation/709.8276ms wrapper; public
+units445.098/714.2029ms. All selected processes terminated, owned roots/logs absent;
+isolated cleanup duration null. No new persistent process or link. One earlier
+SKIP fixture was verified from child-time/identities/tree/synthetic bytes and
+removed nonrecursively; test-only checked cleanup fixed and final gates rerun.
+Pre-execution metadata/test import/zero/cleanup findings resolved. No unexpected
+runtime failure or weakened assertion. Final-source leaf review SOURCE_ONLY;
+root owns actual integrated acceptance. Both leaves stopped.
+
+No actual20-role body, old D descriptor/result/generated DATA, protected/held-out
+body or oldbuilder/CLI/native/Java/GWT/producer/Session read/run. No phase transition
+for oracle DATA. Private synthetic fixtures/source/drafts/receipts retained; no
+links. Old uncertain browser14116/start639294472690745890/port58320 and preview
+34180/start639294472514546595/port58264 plus14children untouched. OldD timeout log
+and unlink proof remain UNCERTIFIED. Do not clean uncertain resources.
+
+Publication index gate exit2 preserved:CRLF in pinned PLAN/cleanup evidence.
+Narrow file-specific cr-at-eol attributes preserve exact bytes; both real-space
+canaries reject. Product/test/canary/contract/tool inputs unchanged; no rerun
+needed for evidence/attribute-only fix. See INDEX_WHITESPACE_FAILURE_R1.
+
+Next actual diff/index/bytes/privacy/whitespace checks, normal commit/push/exact
+remote verification and one byte-reader-component Gmail/receipt. Then current
+context normalizer and pure independent N/P07 parser extraction. Private
+NEXT_CONTEXT_SOURCE_MAP_R1 notes legacy mapping and unresolved generated API
+member types/dataEntries rule: root must define before implementation execution,
+retaining measured preflight costs. This is routine implementation scope, no
+budget/oracle relaxation. Actual prior ingest and one original+NULL/OBSERVE stay
+gated; no extra control/original/arm/retry. Native/full-D/H1 remains unqualified.
+Production/GWT/Player/electrical/population NOT APPLICABLE/not renewed. Caps/seeds/
+oracles/epochs unchanged; Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
+historical protected unreadUNCERTIFIED; playable100=0/betaHELD.
+
+# Historical checkpoint: X contract published; fixed-role reader source next
 
 UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
 tsj-q100-terminal-only-20261107-r1 on codex/q100-terminal-only-20261107.

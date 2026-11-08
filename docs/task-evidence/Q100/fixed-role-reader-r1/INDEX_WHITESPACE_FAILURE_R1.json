@@ -1,0 +1,31 @@
+{
+  "canaries": [
+    {
+      "actualSpaceBeforeCRRejected": true,
+      "exitCode": 2,
+      "file": "PLAN_R1.md",
+      "status": "EXPECTED_REJECTION",
+      "stdoutSha256": "c247904bfb13285d782ddfa38ec9c115721d8e4a420f84f8012e957e79bfbaaf"
+    },
+    {
+      "actualSpaceBeforeCRRejected": true,
+      "exitCode": 2,
+      "file": "SKIPPED_FIXTURE_CLEANUP_R1.json",
+      "status": "EXPECTED_REJECTION",
+      "stdoutSha256": "92262b076e3db8bdfcc65d52ab2da3725e8d78bc111e043323f90d1e41c7c8ef"
+    }
+  ],
+  "cause": "BYTE_PINNED_CRLF_INTERPRETED_AS_TRAILING_WHITESPACE",
+  "command": "git diff --cached --check",
+  "failedExitCode": 2,
+  "files": [
+    "PLAN_R1.md",
+    "SKIPPED_FIXTURE_CLEANUP_R1.json"
+  ],
+  "fix": "FILE_SPECIFIC_CR_AT_EOL_ATTRIBUTES_PRESERVE_EXECUTED_INPUT_BYTES",
+  "inputEvidenceBytesPreserved": true,
+  "newRuntimeOrOracleQualification": false,
+  "readerAndTestsUnchanged": true,
+  "schema": "tsj-fixed-role-reader-index-whitespace-failure-v1",
+  "status": "FAIL_PRESERVED_THEN_FIXED"
+}
