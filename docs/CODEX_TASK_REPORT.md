@@ -1,4 +1,63 @@
-# Current checkpoint: W adopted-owner snapshot published; full-D scope next
+# Current checkpoint: X full-D source contract accepted; publication pending
+
+UTC2026-11-08. Standing roadmap continues. F OS-temp/
+tsj-q100-terminal-only-20261107-r1, codex/q100-terminal-only-20261107,
+HEAD5df4d05094e98a41b5c53a873a0217138689e72d; normal target origin/
+codex/q100-physical-feasibility, dspevo-afk/TroubleshootJS, no upstream.
+W8aa94e15/receipt5df4d050/Gmail1a1bcf578152f8ae and V7d404c6e/receipt7ddbda91/
+Gmail1a1bccb124565398 published/verified/SENT_ONCE. No duplicate receipt email.
+Main5f05b005 preserves9tracked/6untracked/staged0; E d9747229 report-only M;
+Desktop e0c36885 preserves7tracked/73untracked/staged0. Main/E report mirror only.
+F intended contract code/evidence/architecture/roadmap/report changes; no unrelated edit.
+
+X OS-temp/tsj-q100-full-d-v2-scope-58b8776ea0b3412ba8510049791811bb.
+Public code/evidence full-d-v2-contract-r1 under tests/qualification/rb100-layout
+and docs/task-evidence/Q100. PLAN5ae3b8d8/WIRE1abecdf5/CONTEXT3536015e/
+PREPAY2d696832/MARKER886a2a9a/ROLESc487eae6 are frozen, independently source-checked.
+FINAL_GATES_R1 e30bb6baa87a47fc89498bea6fad29bb97b6d15b04f036113c0557872df341d5.
+Checkerbf6c0877a26afa90b56f06167cd0776c9b4bc7bd6d93feccfde88da21989e2f7;
+testsf101528cbe3f970e20954a2feb5ca2ef03a564e1cd468f608094e16b0ddd5b69.
+
+Accepted scope SOURCE_CONTRACT_ONLY:14-key656B schema marker within722transport,
+acyclic current context/runtime IDs;20normal-only role pins compared with
+authority source AST without reading listed bodies or executing old builder.
+Exact seeded decimal strings retained; context3keys/native projection5, flat34
+work plan44fields/26constructor scalar copies,35initial work entries and34final
+numeric copies. Corrected18residual subtractions ->26freeze units; boundary9 and
+finalization38 under explicit bounded API model, primitive VM cost unmeasured.
+None of these planned native counts is claimed as measured runtime proof.
+
+Actual8tests/0SKIP, selected Python-I-B positive396.2718ms op/633.2212ms wrapper;
+units375.4889/616.3641ms. Five actual exact-code CLI rejections:marker bound657,
+role pin, source pin, oldCLI andreal Windows source junction. One link identity
+revalidated/nonrecursively removed; source copy unchanged. Independent source/
+math worksheet and public exact byte/summary reproduction pass; public positive
+397.7633/640.4833ms. Source/contract/tool pins rechecked. Returned processes
+terminate, owned roots/logs absent; isolated cleanup duration null. No new persistent process.
+
+Three failures preserved:source specification17subtract/freeze25 miscount fixed
+to18/26; unsupported AST expression raisedwrong exception ->ContractError rejection;
+private long methods counted asfields ->bound field region, addregression. No
+assertion/oracle/budget weakened. Earlier source-only compatibility findings
+(Windows handle/pathctime, helper identity, names/AST call forms/booleans) fixed
+before execution. Root reviewed final source and owns actual acceptance.
+
+No oracle DATA/old D descriptor/result/generated input/protected body read; no
+oldbuilder/CLI/native/Java/GWT build/producer/Session. All leaves stopped. Private
+drafts, code/spec revisions, failures, fixtures and copied source remain; old
+uncertain resources untouched. The20role allowance remains gated by PLAN source/
+reader checks; no data-ingest or current full-D entry is enabled here.
+
+Next final actual diff/index/bytes/privacy checks, intended staging/normal commit/
+push/exact remote and one contract-only Gmail/receipt. No unresolved contract blocker.
+Then source-only current normalizer/pure-parser/host/native implementation; reader/
+component evidence before pinned normal-prior ingest and one original+NULL/OBSERVE,
+no extra control/original/arm/retry. No full-D/H1/playable acceptance. All original
+caps/seeds/oracles/epochs unchanged; production/Player/electrical/population not
+renewed. Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historical protected
+unread UNCERTIFIED; playable100=0/betaHELD.
+
+# Historical checkpoint: W adopted-owner snapshot published; full-D scope next
 
 UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
 tsj-q100-terminal-only-20261107-r1, codex/q100-terminal-only-20261107,

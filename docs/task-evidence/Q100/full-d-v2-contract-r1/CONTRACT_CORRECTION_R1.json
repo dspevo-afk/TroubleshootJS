@@ -1,0 +1,42 @@
+{
+  "actualParts": {
+    "metadataChunks": 3,
+    "metadataCopies": 3,
+    "metadataGroups": 4,
+    "metadataUnits": 8
+  },
+  "actualSubtracts": 18,
+  "budgetsChanged": false,
+  "cause": "Nested originalGroups-originalOwnerGroups subtraction omitted by manual source audit",
+  "correctedFreezePrepayment": 26,
+  "expectedSubtracts": 17,
+  "failure": {
+    "childExitCode": 1,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "independent-source-audit-r1",
+    "processElapsedMs": 523.2143,
+    "receipts": {
+      "owner.json": "96d1b8a5cff46b28f511ae4065e0c1be3c4f3447eeec70a0caa65bcbacc9170d",
+      "parent.json": "97471bfbb8174c550995ca0aa5b9a3396c930f497741082e1a6ff043237708d1",
+      "process.json": "bc22972e5f72801c579d9a43f96bd495d2261bba11d46810f9c56d0f08110292",
+      "request.json": "fd88cc8025ae57624e384864112025b8281f1c7fa112fa4ae962df731fb777ac",
+      "result.json": "9c69a072ec141f217c81a5bc6226e41f287fdb7a107ce50fe57bd9cbdacdb0bc",
+      "stderr.txt": "a90db568977e37040f698b5742e58912f7ca620a5552fb666e9fe72358e42f9a",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "FAIL_SOURCE_CONTRACT_SPECIFICATION",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 991.3289000000001
+  },
+  "nativeSourceChanged": false,
+  "oldFreezePrepayment": 25,
+  "oldSourceAndSpec": {
+    "PREPAYMENT_R1.md": "3dbfe96df6ab15ad425dc953023378171793a78858edf8dcae9ba5930c65dca5",
+    "REVIEW_R1.md": "3d533a4f9f695af9e268b98f3a5a3ac5587e81c5f139ece3a6c79eb066fdc049",
+    "independent_contract_audit_r1.py": "2042833f1d1fca3819fd519e440e1ac244cf5cf76cef43ccc6007cd022141018"
+  },
+  "oracleDataRead": false,
+  "schema": "tsj-full-d-v2-contract-correction-v1",
+  "status": "FAILED_CHECK_PRESERVED_AND_SPEC_CORRECTED"
+}

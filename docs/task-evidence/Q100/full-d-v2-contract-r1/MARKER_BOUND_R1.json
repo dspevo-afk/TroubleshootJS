@@ -1,0 +1,58 @@
+{
+  "actualRuntimeProof": false,
+  "boundBytes": 656,
+  "fixedQuotedValueBytes": 355,
+  "keyQuotedBytes": 206,
+  "limits": [
+    {
+      "key": "resultBytes",
+      "maximum": "1048576"
+    },
+    {
+      "key": "elapsedNanos",
+      "maximum": "90000000000"
+    },
+    {
+      "key": "finalExportNanos",
+      "maximum": "5000000000"
+    },
+    {
+      "key": "totalGroups",
+      "maximum": "640"
+    },
+    {
+      "key": "totalUnits",
+      "maximum": "9223372036854775807"
+    },
+    {
+      "key": "maxGroupNanos",
+      "maximum": "5000000000"
+    },
+    {
+      "key": "maximumUnitsPerGroup",
+      "maximum": "32768"
+    }
+  ],
+  "numberDigitBytes": 65,
+  "orderedKeys": [
+    "schema",
+    "status",
+    "runId",
+    "sourceManifestSha256",
+    "wireContractSha256",
+    "inputContextSha256",
+    "resultSha256",
+    "resultBytes",
+    "elapsedNanos",
+    "finalExportNanos",
+    "totalGroups",
+    "totalUnits",
+    "maxGroupNanos",
+    "maximumUnitsPerGroup"
+  ],
+  "punctuationAndLf": 30,
+  "requiresNativePreflightBounds": true,
+  "schema": "tsj-full-d-v2-marker-bound-v1",
+  "status": "FROZEN_SOURCE_CONTRACT_ONLY",
+  "transportCeilingBytes": 722
+}

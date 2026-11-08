@@ -1087,6 +1087,20 @@ Gmail `1a1bcf578152f8ae` sent once.
 Next is frozen genuine full-D V2 assembly/ledger/context/host migration under
 one original plus exactly NULL/OBSERVE.
 
+The [full-D V2 protocol/accounting freeze](task-evidence/Q100/full-d-v2-contract-r1/README.md)
+is accepted for source-contract scope only. It fixes outer/context/runtime-ID
+boundaries,20normal-only unread role pins,656schema/722transport marker bounds
+and flat34 work prepayments. Actual source checking corrected18 nested residual
+subtractions and26freeze units; initial failed source/spec/unit checks remain.
+Eight tests, actual selected Python positive, five exact-code CLI negatives with
+real junction cleanup, independent source/math audit and exact public source/
+summary reproduction pass. No oracle DATA, old builder, native/build/Session or
+full-D/H1/playable proof is exercised. Publication pending final review. Next is
+source-only normalizer/pure-parser/host/native implementation under the frozen
+phase gates, then pinned normal-prior ingest and the single original/NULL/OBSERVE
+producer only when all required proofs exist. Existing limits/oracles/seeds and
+Full30EXCLUDED/HARD-PSYCHOTIC unavailable/playable100=0/betaHELD remain.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

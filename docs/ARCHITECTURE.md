@@ -204,6 +204,15 @@ The canary proves lifecycle with synthetic scalar demand and zero capture/
 runFresh/Sessions. It emits no result or marker and does not restore full-D, H1
 or authored accounting. The generic R7 ledger stays unavailable for adopted use.
 
+The [full-D V2 source-contract checker](task-evidence/Q100/full-d-v2-contract-r1/README.md)
+owns read-only validation of named contract metadata against pinned source AST
+and Java inventories. It opens no oracle role paths and executes no builder.
+The contract separates canonical authored data from current runtime identity,
+retains independent prior/P07/observation oracles and the original/two-arm limit,
+and explicitly accounts deferred flat-work operations. Its656-byte schema marker
+bound is distinct from the722-byte transport ceiling. This checker does not own
+data ingest, native assembly or normal admission; those phases remain gated.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

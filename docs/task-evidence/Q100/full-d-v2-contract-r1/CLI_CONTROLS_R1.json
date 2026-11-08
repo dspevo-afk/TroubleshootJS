@@ -1,0 +1,151 @@
+{
+  "controls": [
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "contract-negative-marker-bound-r1",
+        "processElapsedMs": 408.7928,
+        "receipts": {
+          "owner.json": "9b43446080df748d2eea8d251db6f8717f3dd5d25cc8fcfc894530ba5997749d",
+          "parent.json": "d7e88dac96662b35f195502cdc283cb3adcd66183c638b461ed6bc1e36916e79",
+          "process.json": "f8f8eba01ae7f0c4839c3e45a8f86b915dcc0c99eb94d0c699e88e71f766f384",
+          "request.json": "1d3543cc420f39202bd3434834da16ff423d1bb53f9aca5ff81b38b3a3a7264c",
+          "result.json": "5140cfd285295924ed3a37dc41ba29eba0e675a098c21ac23288c0af4540d209",
+          "stderr.txt": "54deebd99920132b4adb4951601674af79a6a3a677a991192bccd48dae0e8897",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 661.3058
+      },
+      "case": "marker-bound",
+      "expectedCode": "MARKER_FORMULA",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "contract-negative-role-pin-r1",
+        "processElapsedMs": 391.1356,
+        "receipts": {
+          "owner.json": "82149dbcae6611ffcc45c4fd9c65bc5be89d605e73fe86e0fc71d1b76cd1588f",
+          "parent.json": "9028ad177f207e71573414171b496bf35b33091d6fa7b703922f535d6028fd8e",
+          "process.json": "4d2b643883edad402eea49477641d18f55234715f51f4aee3ce5c3443992be33",
+          "request.json": "b383a2fc6a15a6b2d68f86879b8f894e538c1f0477d1a43b5f7705bceb8f429a",
+          "result.json": "7cb6197ba34f0c41fe40a1ae58ad358ec5ca96d8a66010d1832ed0f0578c2444",
+          "stderr.txt": "66f89d0a2c87dd004815c37c047ff878a46a4559c24b0c979ff0e0c015584e67",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 630.2471
+      },
+      "case": "role-pin",
+      "expectedCode": "ALLOWLIST_PIN",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "contract-negative-source-pin-r1",
+        "processElapsedMs": 357.5491,
+        "receipts": {
+          "owner.json": "dc1523b723fb06c520665996059f2ae44efe50577e66f44c2d1f661f20bfabdb",
+          "parent.json": "1b95acd0a6aa565fa0499a25a1082350de1964978850b52128f1dc508532e63e",
+          "process.json": "87f69fe0fd4d36b38d8b2d29902d147b123adf7a2633f884ef65cb1b746d4637",
+          "request.json": "bb37dcf2ef424e6dec9007dab6e47314295af77d8376790d81207fe15287b6a1",
+          "result.json": "1607d2f928d84e27e6ee864a3c387f4f8dc591e24944b82922047d3a5f10a5e9",
+          "stderr.txt": "433cdbb1237aab84a0bd27d618b7f90b8f6c1ed6b28022725a949e770a09ec95",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 606.7022000000001
+      },
+      "case": "source-pin",
+      "expectedCode": "SOURCE_HASH",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "contract-negative-old-cli-r1",
+        "processElapsedMs": 347.3585,
+        "receipts": {
+          "owner.json": "ea4bc6b792c5255459f2f3e7f4356240442c47479bf3ec000d03a530a3cc5365",
+          "parent.json": "dafedeba17f05ee131abdd6895e54f6980cccbfc29c39e6e51f4e15eec3e955f",
+          "process.json": "3bea244dc2c2ccbacb08aa8be253ab53d0f879609763fdb7ca55632e2d330edb",
+          "request.json": "a509b87d8a15de40dd43dc85ed9a1c1b7ccc1d532f1cf490b05568a1225c21c5",
+          "result.json": "fe13e84cb8fc0304b2c04189ba612c32d3f43c1ecd4ff529511e0f66bdae53cd",
+          "stderr.txt": "dd85efe51e731bc943a5ab793837110754e5dc6cde328158ce625d54b0e7bbad",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 593.8111
+      },
+      "case": "old-cli",
+      "expectedCode": "CLI_ARGUMENTS",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "contract-negative-source-junction-r1",
+        "processElapsedMs": 355.7352,
+        "receipts": {
+          "owner.json": "22d9d7235d14294fa03e46041f021ff9fde20846c5c535900c580c463f141ac4",
+          "parent.json": "5b41dc03816a4733555b14a9c49309be2a335c6d3e42c77d4586c05f89c39d0c",
+          "process.json": "2117be742d074dffcf8a0737a88a5045035e90a0a095bb7f74796fbfa1133d51",
+          "request.json": "06eb637f845af69422f9f83a4af02c47155273d77eb70198e287d8932a513e44",
+          "result.json": "9f485add9df858d5f63780c0852547a2237b759b92588f84c7e6f7cd5dfe2ed7",
+          "stderr.txt": "d1ebbed7fa79375835ff97fab2c2002ab7e7a37f1bf5561428716f27d200fcf3",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 605.5577000000001
+      },
+      "case": "source-junction",
+      "expectedCode": "CANONICAL",
+      "status": "EXPECTED_REJECTION"
+    }
+  ],
+  "junctionCreation": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "contract-junction-create-r1",
+    "processElapsedMs": 466.3772,
+    "receipts": {
+      "owner.json": "108d99110534df3b0d163bb3ba4b18938553c116bb68dfa6b36a684d835d0578",
+      "parent.json": "599ed3b8c8593b9bc5b5e19c9127dbfdc19263c2398c508ccbf42a19a0e20e47",
+      "process.json": "acdad8b1ce2ce3e7400e24aaebc2436089daaa2842f1495a31cf44ec90aa1d45",
+      "request.json": "caae2038997b5c31e7a396311612dd18e2e6002a522310ebb87c7cd2bb5310ee",
+      "result.json": "4097c404985584bf329ab90ecbdb6d6f0ebdf90c3f4f05ed2e77e37606758eac",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 724.2983
+  },
+  "junctionsCreated": 1,
+  "junctionsRemoved": 1,
+  "nativeOrBuildOrSessionCalls": 0,
+  "oracleDataRead": false,
+  "schema": "tsj-full-d-v2-source-contract-cli-controls-v1",
+  "sourceAndContractInputsRechecked": true,
+  "sourceCopyUnchanged": true,
+  "status": "EXPECTED_REJECTIONS_CONFIRMED"
+}
