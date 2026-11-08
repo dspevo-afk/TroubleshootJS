@@ -1,13 +1,15 @@
-# Current checkpoint: generic native R7 reference locally accepted; publication pending
+# Current checkpoint: generic native R7 reference published; full-D scope mapping
 
 UTC2026-11-08. Standing roadmap continues. F OS-temp/tsj-q100-terminal-only-20261107-r1,
-codex/q100-terminal-only-20261107, HEAD2ea50ea301b7348722bff958aa0e52909e9601d7.
+codex/q100-terminal-only-20261107, implementation7d404c6edfa8d1bdb27b1305b880541bc600ed42.
+This documentation receipt follows it; verify actual HEAD rather than inferring it.
 Origin dspevo-afk/TroubleshootJS target codex/q100-physical-feasibility, no upstream.
-Before V report M/staged0; now intended code/evidence/architecture/roadmap/report only.
+V39 intended paths committed; F clean before this intended documentation receipt.
 Main5f05b005 preserves9tracked/6untracked/staged0; E d9747229 report M/staged0;
 Desktop e0c36885 preserves7tracked/73untracked/staged0. Main/E mirror report only.
 AGENTS a3dec836 unchanged. Uaccdedcc/receipt2ea50ea/Gmail1a1bc21b36bdccd0 and
-T/R/S emails below SENT_ONCE; never duplicate. No V publication/Gmail yet.
+T/R/S emails below SENT_ONCE; never duplicate. V normal push and exact remote SHA
+verified; completion Gmail1a1bccb124565398 SENT_ONCE. No receipt email is due.
 
 V OS-temp/tsj-q100-native-reference-export-scope-cbd8cd5bfa9d4ac59f797a88da78517f.
 PLAN56fccb76/WIRE4142410d/MARKER_BOUND8f92dd8e frozen before implementation.
@@ -55,8 +57,10 @@ All returned processes terminate and roots/logs absent; isolated cleanup duratio
 null. No new persistent resources. All workers stopped. Old uncertain browser/
 preview/children/D timeout evidence untouched; private scratch/classes retained.
 
-Next final actual diff/byte/privacy/staged checks, normal commit/push/exact remote,
-one completion Gmail and receipt; then freeze full-D/OriginalArm/H1 migration scope.
+Root actual39-path index/byte/privacy and staged whitespace review passed;
+tree edbcf2c219747dbcf73168fddf0b2d4c752b8025, diffSHA b000959b6c037bd56990a36a8b5e78f72af4d4e1a5ed90abbab3fe96e318215b.
+Next finish this documentation receipt, then freeze full-D/OriginalArm/H1 migration
+scope. A bounded SOURCE_ONLY dependency mapping is in progress, with no execution.
 No new authored capture/NULL-OBSERVE arm/retry here. All original caps/oracles
 unchanged. GWT/Player/electrical/population NOT APPLICABLE/not renewed; Full30
 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; protected bodies unread here/historical
