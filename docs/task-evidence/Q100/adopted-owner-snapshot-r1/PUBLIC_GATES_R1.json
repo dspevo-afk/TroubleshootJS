@@ -1,0 +1,29 @@
+{
+  "byteEqualityAllowsReusingExactFinalSourceNativeGates": true,
+  "call": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "public-generator-r1",
+    "processElapsedMs": 366.99010000000004,
+    "receipts": {
+      "owner.json": "4ed34c7a8dd2da30da13bbbb253fc132fdf6ab076609498e7cac243cd82d20f9",
+      "parent.json": "9e5ccedde35dee94bf8aa751c3d40ad67b31546df839547e98167fec2f60bdb1",
+      "process.json": "0d1c066e498d3d89308325a42bf8dac73d99b62c56958f259c09e436df34c915",
+      "request.json": "16e23617af82259d503991941720ea84451d31fc054eb2e579af7faed537b031",
+      "result.json": "90b6bb03cdf39ab34383de23eadc0b9af00909e037df7ce18f00187ba53b7690",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "8b93027c316e903fadf11526553b44632f317610d22b4dd9ce877c0bd502207a"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 613.4075
+  },
+  "exactCompiledCanarySource": true,
+  "freshAndInheritedClassesRehashed": true,
+  "generatedProofSha256": "0f24dfd8b5ce4df73a6cbac72c740b6909f75b6ce13d97728dd41ab64d9f7d2a",
+  "generatedStudySha256": "1ae31054a430c00bf926ff4deff8091892bae267f05257aa0d869000226f7bd1",
+  "repeatedNativeExecution": false,
+  "schema": "tsj-adopted-snapshot-public-gates-v1",
+  "status": "PASS_EXACT_PUBLIC_SOURCE_REPRODUCTION"
+}

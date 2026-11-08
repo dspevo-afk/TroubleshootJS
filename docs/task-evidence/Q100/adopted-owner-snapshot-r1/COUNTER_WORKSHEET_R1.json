@@ -1,0 +1,36 @@
+{
+  "facts": [
+    {
+      "C": 2,
+      "M": 665,
+      "R": 4097,
+      "aggregateAfter": 640,
+      "aggregateBefore": 639,
+      "chunkDelta": 6,
+      "copyAdmissionDelta": 8891,
+      "exactCopyCapacity": false,
+      "groupDelta": 1,
+      "name": "aggregate_639_to_640",
+      "unitDelta": 13
+    },
+    {
+      "C": 2,
+      "M": 665,
+      "R": 4097,
+      "aggregateAfter": 640,
+      "aggregateBefore": 639,
+      "chunkDelta": 6,
+      "copyAdmissionDelta": 8891,
+      "exactCopyCapacity": true,
+      "groupDelta": 1,
+      "name": "exact_copy_capacity",
+      "unitDelta": 13
+    }
+  ],
+  "fileOrMarkerProof": false,
+  "originalCaptureOrRoutingProof": false,
+  "primitiveVmAllocationAccounting": false,
+  "schema": "tsj-adopted-snapshot-independent-counter-worksheet-v1",
+  "status": "PASS_ACTUAL_METER_DELTAS_FOR_SYNTHETIC_SCALAR_DEMAND_ONLY",
+  "stdoutSha256": "0aa1a0701de8d95883f969f193eb23765172c9bddac16213a7b449e2d91ea717"
+}

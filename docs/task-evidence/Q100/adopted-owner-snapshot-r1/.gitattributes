@@ -1,0 +1,4 @@
+*.json -text
+*.md -text
+*.txt -text
+NATIVE_SUMMARY.txt whitespace=cr-at-eol

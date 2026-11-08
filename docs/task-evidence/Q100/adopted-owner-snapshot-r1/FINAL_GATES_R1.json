@@ -1,0 +1,1761 @@
+{
+  "callerJunctionsRemoved": 1,
+  "evidence": {
+    "COUNTER_WORKSHEET_R1.json": {
+      "sha256": "536943d94210ee202a7d23221c2870a6a46b1c24aa79bcf4559dd7eb8ad53bf0",
+      "value": {
+        "facts": [
+          {
+            "C": 2,
+            "M": 665,
+            "R": 4097,
+            "aggregateAfter": 640,
+            "aggregateBefore": 639,
+            "chunkDelta": 6,
+            "copyAdmissionDelta": 8891,
+            "exactCopyCapacity": false,
+            "groupDelta": 1,
+            "name": "aggregate_639_to_640",
+            "unitDelta": 13
+          },
+          {
+            "C": 2,
+            "M": 665,
+            "R": 4097,
+            "aggregateAfter": 640,
+            "aggregateBefore": 639,
+            "chunkDelta": 6,
+            "copyAdmissionDelta": 8891,
+            "exactCopyCapacity": true,
+            "groupDelta": 1,
+            "name": "exact_copy_capacity",
+            "unitDelta": 13
+          }
+        ],
+        "fileOrMarkerProof": false,
+        "originalCaptureOrRoutingProof": false,
+        "primitiveVmAllocationAccounting": false,
+        "schema": "tsj-adopted-snapshot-independent-counter-worksheet-v1",
+        "status": "PASS_ACTUAL_METER_DELTAS_FOR_SYNTHETIC_SCALAR_DEMAND_ONLY",
+        "stdoutSha256": "0aa1a0701de8d95883f969f193eb23765172c9bddac16213a7b449e2d91ea717"
+      }
+    },
+    "EARLY_GATES_R1.json": {
+      "sha256": "287510095f68e9788f104f5bc59de6b933a66e5e7dbbe7fcf59b93f786e3467f",
+      "value": {
+        "calls": [
+          {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "generator-units-r1",
+            "processElapsedMs": 496.5896,
+            "receipts": {
+              "owner.json": "f76be527ba49ca04ee838b23f7e112b6d931e0e024e6e77de3fe22bbc5f2690b",
+              "parent.json": "4b9d3c2af6edb8b8227fb86fa8f805010bdaba19e60ae1345a1b00a701091a69",
+              "process.json": "2dec5a565ccc0b5efa1b732394434b8fde61a188464bb405cbfb2be1ffbddcad",
+              "request.json": "f1ae8a233c88afab736684bb3354a820908b19b924521e428c31d4668c2dfb97",
+              "result.json": "b11c09d12cba5ddcf2c2fbda10a72a90f5c4ac1234c305e6c4adfe0ed08ebef9",
+              "stderr.txt": "7d4edae47700d162cd7984fbc5dcbaf3da0079c5468b1ade29b51693dbdc714c",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 919.4795
+          },
+          {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "generator-positive-r1",
+            "processElapsedMs": 369.463,
+            "receipts": {
+              "owner.json": "df14824c2ebdd383e945992a213b205041c648086521e66280f9ec47c5743d4f",
+              "parent.json": "701b26c26456b49c30cd79237f87ed029bf94366ef97e593fc22a4b0712e6619",
+              "process.json": "fc1e70966a53dabcf89cd3676f93e25255200075e219d7918acfdd7db409fb0d",
+              "request.json": "bf25cd07c1f19f261c3b23b5573b3dd16f74ba1c38795460fd7cf254c2d46021",
+              "result.json": "ed6e0cb104eca4ab3cfcca412b92ee51de655f6c786c5dee3fd49be3bd70c4d7",
+              "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "stdout.txt": "8b93027c316e903fadf11526553b44632f317610d22b4dd9ce877c0bd502207a"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 617.5238
+          },
+          {
+            "childExitCode": 2,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "generator-occupied-r1",
+            "processElapsedMs": 350.7447,
+            "receipts": {
+              "owner.json": "3688b634f39ced5124aafe2ff86a911919e2ff2ff0bfd238d00a7e03a029e6df",
+              "parent.json": "9b7ea3c385b56243f4223df3494af96cbeb056581f279085de5dd1f8486f9f6b",
+              "process.json": "de0a164cc808322fa62d02a590090685116481926f8428f6e2b79efc7ab2806c",
+              "request.json": "bf25cd07c1f19f261c3b23b5573b3dd16f74ba1c38795460fd7cf254c2d46021",
+              "result.json": "cbab4dc09caeaf5d34ef97696927a8e753041d364fb5f5bcc8d00bd9e2578cae",
+              "stderr.txt": "925fba4c027ce87ae0bff2721f1dd71e28eef2346ce6cd4ccc0225a89c669718",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS_EXPECTED_REJECTION",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 585.4782
+          }
+        ],
+        "generatorInputs": {
+          "generate_adopted_snapshot_overlay.py": "5690f759af9e53a0fc1d15dae907cc37123b266eb5529b1548ba2f555a12e07c",
+          "test_generate_adopted_snapshot_overlay.py": "bb7f1e186d1f0e060153ae86516269e80ce1bcdf5015066c6405deee3e0454c6"
+        },
+        "nativeExecution": "NOT_RUN",
+        "schema": "tsj-adopted-snapshot-early-gates-v1",
+        "sourceFiles": {
+          "CohortTerminalTelemetryStudy.java": "1ae31054a430c00bf926ff4deff8091892bae267f05257aa0d869000226f7bd1",
+          "SOURCE_PROOF.json": "0f24dfd8b5ce4df73a6cbac72c740b6909f75b6ce13d97728dd41ab64d9f7d2a"
+        },
+        "sourceProofSha256": "0f24dfd8b5ce4df73a6cbac72c740b6909f75b6ce13d97728dd41ab64d9f7d2a",
+        "status": "PASS_ACTUAL_SELECTED_GENERATOR"
+      }
+    },
+    "JUNCTION_FAILURE_R1.json": {
+      "sha256": "189f1f3731533456c390d7676053c9934ada6191538c1d1864612226ac1e4bf9",
+      "value": {
+        "actual": "OWNER_SOURCE_CANONICAL",
+        "cause": "Unchanged exporter canonical path check precedes ancestor reparse check",
+        "expected": "OWNER_SOURCE_REPARSE",
+        "failedCall": {
+          "childExitCode": 2,
+          "isolatedCleanupDurationMs": null,
+          "ownedRootAndLogsAbsent": true,
+          "phase": "junction-cli-study-r1",
+          "processElapsedMs": 353.2086,
+          "receipts": {
+            "owner.json": "3dafb3c90779a89821389b7c510d308098edfb47eec34e05ec45b723a005dc5e",
+            "parent.json": "0a754fe24189612ae0bad94cdd6b487d20debe252e45f7408eb1a7627d800983",
+            "process.json": "ff99861b19f7a6c89701154a10911b3753059dab51f3f77e13d6a4bdce4de637",
+            "request.json": "a95e85c570226f9a944790e60845c17765b87ab980e3e3bf4fc80c62ec678099",
+            "result.json": "f8fd4c6852c932ad3309665a89f9444fdd3b8f2d67c88cfd73ec335faa637a5d",
+            "stderr.txt": "9c5a028bf03b07c11aeee2e8ec3aeb306195e0b918106fced0396e99fb64b0e3",
+            "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "status": "FAIL_ROOT_EXPECTED_DIAGNOSTIC",
+          "terminationProven": true,
+          "wrapperTotalElapsedMs": 605.5741
+        },
+        "fix": "Change root expected code only; retain actual owner and exact code assertion",
+        "linkStillOwnedAndVerified": true,
+        "productionOrGeneratorChanged": false,
+        "rootScriptSha256": "0daa3bcd3fdf4b38b492eac33973f4f6407b8b34d0b56e17c6c753eba2bca3d0",
+        "schema": "tsj-adopted-junction-failure-v1",
+        "status": "FAIL_PRESERVED"
+      }
+    },
+    "JUNCTION_GATES_R2.json": {
+      "sha256": "34d313b606c1b9f10121e2a65041774cb97e5cfa0d83514f18ec01a27d3aac1e",
+      "value": {
+        "cleanup": "IDENTITY_REVALIDATED_LITERAL_NONRECURSIVE_RMDIR",
+        "controls": [
+          {
+            "call": {
+              "childExitCode": 2,
+              "isolatedCleanupDurationMs": null,
+              "ownedRootAndLogsAbsent": true,
+              "phase": "junction-cli-base-r1",
+              "processElapsedMs": 340.8379,
+              "receipts": {
+                "owner.json": "a2f871dd81a98a3b18bf22809405e516866969eb79fa2f55605965aba9118657",
+                "parent.json": "907aaf32867bfe1550592e8bcf6fe930750b7a541b3e9fe1eef4722a0f5c8b95",
+                "process.json": "10094ada6628f7e6dae53184626f5fb14010cfaf05adb205d1f817aa9f1f991b",
+                "request.json": "a31d643bab23f76eb98bbad3281675ea01854f029ae589e5be20d61266b6b0d0",
+                "result.json": "c6ae6876462db43ae0f72dc980f1927c22ca459486a0b3f28cb828cb776c749b",
+                "stderr.txt": "bea781486e7fddf44d655f818fc4ddda0610507e51f1604f30154199dfbcf783",
+                "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+              },
+              "status": "PASS_EXPECTED_REJECTION",
+              "terminationProven": true,
+              "wrapperTotalElapsedMs": 576.0442
+            },
+            "exactCode": "BASE_GENERATOR_REPARSE",
+            "reused": "UNCHANGED_LINK_TARGETS_GENERATOR_AND_INPUTS_RECHECKED",
+            "role": "base"
+          },
+          {
+            "call": {
+              "childExitCode": 2,
+              "isolatedCleanupDurationMs": null,
+              "ownedRootAndLogsAbsent": true,
+              "phase": "junction-cli-study-r2",
+              "processElapsedMs": 353.4117,
+              "receipts": {
+                "owner.json": "51fcb0f85cf278021512241f900fbc73dd1d575551bc4b1194327e24b573ccd1",
+                "parent.json": "e193c114089861cf14fcc987d5d00b9317ecd93fd1ff5fce8688e79455092069",
+                "process.json": "1529b1cea3f63a65281f7b1666e111bf12d4ce80910191efa2312d65e8369c21",
+                "request.json": "6e129b72ae9f5a6b30d0b2088cfb5321f499913120f191fac68014ae2ab30b7f",
+                "result.json": "dc56ff16a2a35e61e237ae0c112e83a36fdf1d9d8a0739c775aeebbbb97fcde4",
+                "stderr.txt": "9c5a028bf03b07c11aeee2e8ec3aeb306195e0b918106fced0396e99fb64b0e3",
+                "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+              },
+              "status": "PASS_EXPECTED_REJECTION",
+              "terminationProven": true,
+              "wrapperTotalElapsedMs": 594.8987000000001
+            },
+            "exactCode": "OWNER_SOURCE_CANONICAL",
+            "normalOutputEmpty": true,
+            "role": "study",
+            "targetsUnchanged": true
+          },
+          {
+            "call": {
+              "childExitCode": 2,
+              "isolatedCleanupDurationMs": null,
+              "ownedRootAndLogsAbsent": true,
+              "phase": "junction-cli-helper-r2",
+              "processElapsedMs": 430.06600000000003,
+              "receipts": {
+                "owner.json": "b5c038e65cdd73a541040910f23afef570eceb3afd8e9b4e4e7abb3196e08a51",
+                "parent.json": "e4a492b7c7580e8b181e9958dab0728949148f4ed946a30d1624cf9c2c4eeaef",
+                "process.json": "cb780348f25284e618feba8182035ac51f52131add0c973980767e9cac2c03fd",
+                "request.json": "92adf7a147361ae542ee19ad9345405d3a04a78495240d8dc4f7d0994cd62a7d",
+                "result.json": "dbbcf1c2cf67d29abc1ff736662a90061678fc1aa7c8af5a97b02dfe9ae324e2",
+                "stderr.txt": "4417ba018def2716674130493cc86927a3d005356b4ceb3f671f528d634afba6",
+                "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+              },
+              "status": "PASS_EXPECTED_REJECTION",
+              "terminationProven": true,
+              "wrapperTotalElapsedMs": 669.1955
+            },
+            "exactCode": "IO_HELPER_REPARSE",
+            "normalOutputEmpty": true,
+            "role": "helper",
+            "targetsUnchanged": true
+          },
+          {
+            "call": {
+              "childExitCode": 2,
+              "isolatedCleanupDurationMs": null,
+              "ownedRootAndLogsAbsent": true,
+              "phase": "junction-cli-output-r2",
+              "processElapsedMs": 348.06350000000003,
+              "receipts": {
+                "owner.json": "538fbbf77be02d768af60354f393ae834f859e5384cc1e934ddcd40c231e5c4d",
+                "parent.json": "5dc37f145c4a066d1de520329cb56a0c8f84e9941cfa20819e538c4e0b5987f4",
+                "process.json": "7a64990be3282a62418eaea5ee9eaa3cfdde59bdf0672845be3e45e43d00effe",
+                "request.json": "7f23d80d4cac4a09a561627d178303d855c024b896ae50dc6de944dd802339ba",
+                "result.json": "55186336740c1dd5a4edc2b0c4386d3bdae407cbc2a27b93ea207fcd09f0d9af",
+                "stderr.txt": "b07b7d81ffbc62c81150013e0465ca22895e7c51900a16aa265e98f52c3ec1ce",
+                "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+              },
+              "status": "PASS_EXPECTED_REJECTION",
+              "terminationProven": true,
+              "wrapperTotalElapsedMs": 593.2273
+            },
+            "exactCode": "OUTPUT_DIRECTORY_CANONICAL",
+            "normalOutputEmpty": true,
+            "role": "output",
+            "targetsUnchanged": true
+          }
+        ],
+        "creation": {
+          "childExitCode": 0,
+          "isolatedCleanupDurationMs": null,
+          "ownedRootAndLogsAbsent": true,
+          "phase": "junction-create-r1",
+          "processElapsedMs": 457.6897,
+          "receipts": {
+            "owner.json": "e71bd9cd99019a8649221aecb3e41f772ccba8368d3fd263f93c64c808d7b0be",
+            "parent.json": "fd27498f362c3ebbbe17399e0c6a77d8a8b041e3e8ad37fc6542441fc5799c9b",
+            "process.json": "64161ac29d476e39bde21467c903450e71b3275ff2ca1750fd4011c7b6263c53",
+            "request.json": "451458ff0798315e8d43ec82cf66c223be04a6b50f0fb77af0a314691b56e3f5",
+            "result.json": "5704cb2301258d8ddaa95be0403355cd2c6ea0852a37c24b598aff807a23941c",
+            "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "status": "PASS",
+          "terminationProven": true,
+          "wrapperTotalElapsedMs": 714.1284
+        },
+        "linkCount": 1,
+        "linksRemoved": 1,
+        "preservedFailureSha256": "189f1f3731533456c390d7676053c9934ada6191538c1d1864612226ac1e4bf9",
+        "schema": "tsj-adopted-snapshot-junction-gates-v1",
+        "skippedCases": 0,
+        "status": "PASS_ACTUAL_SELECTED_WINDOWS_JUNCTIONS",
+        "targetBytesUnchanged": true,
+        "targetFileCount": 3
+      }
+    },
+    "NATIVE_GATES_R1.json": {
+      "sha256": "02c18b0f356f6ff21470a315ec8bd1bb2255ed3ce77cc24d54a53ca809f7cd4c",
+      "value": {
+        "canaryStdout": "{\"canary\":\"ADOPTED_SNAPSHOT_CANARY_PASS\",\"profile\":\"ADOPTED_SNAPSHOT_COMPONENT_ONLY\",\"assertions\":552,\"snapshotCases\":37,\"tokenCases\":16,\"meterFixtures\":15,\"ownerFixtures\":13,\"actualCaptureOriginalCalls\":0,\"actualRunFreshCalls\":0,\"authoredSessionCalls\":0,\"actualSessionConstructorEntries\":0,\"actualExporterOrResultMarker\":false,\"syntheticByteDemandOnly\":true,\"studyModeInitialization\":\"AUTHORED_GUARD_ONLY\",\"fullDProof\":false,\"H1Proof\":false,\"snapshotReadPrepayment\":19,\"snapshotAllocationUnits\":1,\"limits\":{\"groups\":640,\"groupNanos\":5000000000,\"unitsPerGroup\":32768,\"copiedEntries\":1048576,\"copyChunkSize\":4096,\"markerBound\":666},\"positiveFrames\":[{\"name\":\"aggregate_639_to_640\",\"R\":4097,\"C\":2,\"M\":665,\"syntheticByteDemandOnly\":true,\"preUnits\":657,\"postUnits\":670,\"preGroups\":638,\"postGroups\":639,\"prePriorGroups\":1,\"postPriorGroups\":1,\"preAggregateGroups\":639,\"postAggregateGroups\":640,\"preCopiedEntries\":0,\"postCopiedEntries\":8891,\"preCopyChunks\":0,\"postCopyChunks\":6,\"preMeasureCount\":638,\"postMeasureCount\":639,\"copyAllowance\":1048576,\"preMaxGroupNanos\":5200,\"postMaxGroupNanos\":50400,\"preMaxGroupUnits\":20,\"postMaxGroupUnits\":20,\"sessionConstructorEntries\":0,\"actualExportUnits\":13,\"actualExportNanos\":50400,\"actualMeasureCount\":639,\"originalOwnerStarted\":true,\"originalOwnerAdopted\":true,\"originalOwnerActive\":false,\"inFlightOwnerGroups\":0},{\"name\":\"exact_copy_capacity\",\"R\":4097,\"C\":2,\"M\":665,\"syntheticByteDemandOnly\":true,\"preUnits\":910,\"postUnits\":923,\"preGroups\":638,\"postGroups\":639,\"prePriorGroups\":1,\"postPriorGroups\":1,\"preAggregateGroups\":639,\"postAggregateGroups\":640,\"preCopiedEntries\":1039685,\"postCopiedEntries\":1048576,\"preCopyChunks\":254,\"postCopyChunks\":260,\"preMeasureCount\":638,\"postMeasureCount\":639,\"copyAllowance\":1048576,\"preMaxGroupNanos\":1356301,\"postMaxGroupNanos\":1356301,\"preMaxGroupUnits\":254,\"postMaxGroupUnits\":254,\"sessionConstructorEntries\":0,\"actualExportUnits\":13,\"actualExportNanos\":22900,\"actualMeasureCount\":639,\"originalOwnerStarted\":true,\"originalOwnerAdopted\":true,\"originalOwnerActive\":false,\"inFlightOwnerGroups\":0}]}\r\n",
+        "canaryStdoutSha256": "0aa1a0701de8d95883f969f193eb23765172c9bddac16213a7b449e2d91ea717",
+        "classesUnchanged": true,
+        "entryDenials": [
+          {
+            "childExitCode": 1,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "entry-denied-no-args-r1",
+            "processElapsedMs": 424.73900000000003,
+            "receipts": {
+              "owner.json": "7931f13015640a7af036a4bddfa80501107b5af9811d3638d46a1ee8f1a2b8b7",
+              "parent.json": "46488030b0ab3fdb237914dc65dc0cad26d5dbea3d7a409442b0598b206b4bde",
+              "process.json": "d9ba6a6df45a494badaf50b41f1313db02160dca8221f4a02f44403d36f680ff",
+              "request.json": "e26bda8763fc70b9518d14e0be74efc7310214cce2845839871859dd86e63d27",
+              "result.json": "726b9321471a06368a32ca3f3b40a835621693bd45b139a59691ba95d0cb99ef",
+              "stderr.txt": "a00b335edadb70ad9d8e4c20348f3783a96ea3089f58e1d9a050b4a445d1093d",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS_EXPECTED_REJECTION",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 661.7087
+          },
+          {
+            "childExitCode": 1,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "entry-denied-authored-mode-r1",
+            "processElapsedMs": 342.5453,
+            "receipts": {
+              "owner.json": "83e4af695da6f895ba3cd2243c2539f352b88c93a0a2b8dcf715915be69e2b70",
+              "parent.json": "4b08875fa7a58f0d698c3df691a252d417c16a576e85cdb250ebaf918d802053",
+              "process.json": "238bac688464779f86857a3e196b607c5df5bf5b0c2548887cc3cb376c19f2ed",
+              "request.json": "0ac414a7d8740c8ebf90d69539c89e3fd61ee794c6df700b4f3c334d09f6bb44",
+              "result.json": "88b63bf1977d82eb25b8c7ef278ee613944eba85ece97bd4847f28eedf797a06",
+              "stderr.txt": "a00b335edadb70ad9d8e4c20348f3783a96ea3089f58e1d9a050b4a445d1093d",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS_EXPECTED_REJECTION",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 591.2148000000001
+          },
+          {
+            "childExitCode": 1,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "entry-denied-generic-mode-r1",
+            "processElapsedMs": 343.5903,
+            "receipts": {
+              "owner.json": "d1953fb03839ada12e81901232266b89dc66b59617e343ad68daf64919d95064",
+              "parent.json": "c9cd5d52663273effdd82760bd89bfe5dcce2212873e188dea7ed4fe6a811859",
+              "process.json": "4aae07604f7fb93c001e347bb6ff9c923656e9bd57407aed081fb657f87e221c",
+              "request.json": "92772df1a7c4f78d8b721a4ffe29761a0245c2d1c37e5b11257e561a9f3e5d69",
+              "result.json": "0e101dca84b744e7724ffca6ee13ae6a46f67d92385007417289cded093e9ef6",
+              "stderr.txt": "a00b335edadb70ad9d8e4c20348f3783a96ea3089f58e1d9a050b4a445d1093d",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS_EXPECTED_REJECTION",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 591.7570000000001
+          }
+        ],
+        "positive": {
+          "childExitCode": 0,
+          "isolatedCleanupDurationMs": null,
+          "ownedRootAndLogsAbsent": true,
+          "phase": "adopted-native-r1",
+          "processElapsedMs": 405.1958,
+          "receipts": {
+            "owner.json": "dda186e00084d478725eb3ef450e2e3e770f28040c8ce06b4fcf0f197badcab5",
+            "parent.json": "f29d3a4542a2a92bd17426fb57bfba508a81238a8e22e912938ab4a4f2379e44",
+            "process.json": "b01ec5eb6dbbc9d707d74f46eabccfa0d43244c6e8f10f5a2073b1702abed2e3",
+            "request.json": "84018eecebd63342c964db010e6a04c9b7a55d2893be2fc5b774c3db99208712",
+            "result.json": "714b6dc8a5f15b86d7f096ae3bbd7fc164dc01007d193888d06e5e82091aacac",
+            "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.txt": "0aa1a0701de8d95883f969f193eb23765172c9bddac16213a7b449e2d91ea717"
+          },
+          "status": "PASS",
+          "terminationProven": true,
+          "wrapperTotalElapsedMs": 653.2182
+        },
+        "schema": "tsj-adopted-snapshot-native-gates-v1",
+        "scope": "SYNTHETIC_LIFECYCLE_ONLY_NO_CAPTURE_OR_SESSION",
+        "scratchEmpty": true
+      }
+    },
+    "PRODUCER_MANIFEST_R1.json": {
+      "sha256": "2e5a1679400366b0646f0b1b7ab9f2ca69fc0510e0dbe3741cd9cebe839b8653",
+      "value": {
+        "classBytes": 645442,
+        "classCount": 212,
+        "classes": [
+          {
+            "bytes": 704,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$1.class",
+            "sha256": "c7405d966fd72a602c7cb6e08906bb5750849776608e9cae8145a4f386d3e2f2"
+          },
+          {
+            "bytes": 894,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$10.class",
+            "sha256": "774e9c54d77ed7cea7485e37a212cb7ac201915f3374549daad606ae7bcad725"
+          },
+          {
+            "bytes": 894,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$11.class",
+            "sha256": "868b3165677dfede6a4b986f5bb65fd32f2dbcc5c35e48aa9769fe3f3c32ccee"
+          },
+          {
+            "bytes": 889,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$12.class",
+            "sha256": "a2f97d19cdf666cadc72e912bdcd39f5d15e1a444ab99ccb078aeac53719ed4b"
+          },
+          {
+            "bytes": 1682,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$13.class",
+            "sha256": "78b6f5e9fccaa10d10ab6fe1a272cba5864c235cac161bd54ee098caebb78199"
+          },
+          {
+            "bytes": 1680,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$14.class",
+            "sha256": "3da7de5e201d5c455ba65c70922ac884ce40e1941710899d6988ac5d56ea42a0"
+          },
+          {
+            "bytes": 1512,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$15.class",
+            "sha256": "c61addde98d1e85483453771eefaa0ace280060e38a935836791d81d19bd98dd"
+          },
+          {
+            "bytes": 1512,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$16.class",
+            "sha256": "832350ec15634d65b9907dec241fdc513f9202eccf6e22a0b7af06ade39f8e10"
+          },
+          {
+            "bytes": 1644,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$17.class",
+            "sha256": "8fa2207f5701152c8dcc3e8bd9d047d9e44d9eb266ec54f5a6f9d0ba290a0913"
+          },
+          {
+            "bytes": 1510,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$18.class",
+            "sha256": "7f9ade2437b1fdf63751e68f3901328d5c25997fb3dc103c1d18662d6e7e66d2"
+          },
+          {
+            "bytes": 1510,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$19.class",
+            "sha256": "18cea8d06d7cd2adadae5bc2a756fbde9718c0aaf19af6bc874c0053943238f2"
+          },
+          {
+            "bytes": 729,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$2.class",
+            "sha256": "e9f2033d865a7ce184381234c11b5a60ae40424a2cb1ee8c5dcc075abd764487"
+          },
+          {
+            "bytes": 1510,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$20.class",
+            "sha256": "4d01fb04c57c24974ebcdad96d2b130c88e42776d8b1c8b4a032d19d0623e221"
+          },
+          {
+            "bytes": 1509,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$21.class",
+            "sha256": "18053cc02826d797783f2980bc0e5b18ba2777a69537eff64cd037c543bb0600"
+          },
+          {
+            "bytes": 1236,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$22.class",
+            "sha256": "4cf98a0309fc115a5039a5081ead490ae9df6060791c55b1716fd89e3680f383"
+          },
+          {
+            "bytes": 1225,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$23.class",
+            "sha256": "3e753764d5410f71681e2ff847eeea83103c51a5cae642f3f529d44be14d2edb"
+          },
+          {
+            "bytes": 1236,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$24.class",
+            "sha256": "1e8d4b3823b769d6e8b86408de79ab462b96fffcd92140a3f105f7bce28e66c2"
+          },
+          {
+            "bytes": 1483,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$25.class",
+            "sha256": "d662bdd4cdabe502b2f9bdc4a6950536af60e7b731d7004bb965117ab8d44b61"
+          },
+          {
+            "bytes": 1911,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$26.class",
+            "sha256": "bb4bf3b2fba9c798f653451757da2598d9ff6ca32a37f21a06cb485cbb408db3"
+          },
+          {
+            "bytes": 1243,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$27.class",
+            "sha256": "071624174e5f5d6830a5e40eed5d8bbee5b614e3773b9b20cb3b5e852b1549e3"
+          },
+          {
+            "bytes": 1243,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$28.class",
+            "sha256": "7adddedb3250391d3155391b64e28eb111cf0efd53f913f921ea2fc0e4cde617"
+          },
+          {
+            "bytes": 1230,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$29.class",
+            "sha256": "db930eced436f8ed244f247e6948fe5b97bafdf41c69fd24c05e103a59ac260f"
+          },
+          {
+            "bytes": 1179,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$3.class",
+            "sha256": "ccf7fc91fa6e67b0a00f14dcd24629628ced5a2cfc143bb1d7c3e5b528920767"
+          },
+          {
+            "bytes": 1192,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$30.class",
+            "sha256": "e891384c19d539594f27262b401207cc265b3a5bb2ca34c7362bab17cb6e6edf"
+          },
+          {
+            "bytes": 1191,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$31.class",
+            "sha256": "6fd7e9af2b0c8c86e649b6500ba922afa4e8c45ce5ae6f25e7cbd9e8c9310f02"
+          },
+          {
+            "bytes": 1516,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$4.class",
+            "sha256": "94d4ace760c092c1f14fcbdf6cd0392d2bd671a24bd0e4360fd7ebf98eb78010"
+          },
+          {
+            "bytes": 1516,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$5.class",
+            "sha256": "8aa3f8ec83c335b034b02f351fd8375852e42edf7d8c2c80d7150546bc23c50f"
+          },
+          {
+            "bytes": 1518,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$6.class",
+            "sha256": "03c5f3f4ecb69bfadd5c76b57c2ae1bcdd37332a8933ff5005f6918b574179da"
+          },
+          {
+            "bytes": 1616,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$7.class",
+            "sha256": "678530cdc5676a06feca32840d395e9277229951a0e8ccde62be597928e12203"
+          },
+          {
+            "bytes": 1616,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$8.class",
+            "sha256": "20efdb25f9a36f40f3709bffd10e41543a42e3426904b5879d3a5d073c79fb7a"
+          },
+          {
+            "bytes": 1520,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$9.class",
+            "sha256": "0b52f11955979b30d1eea0d5aa9add0adf764494b9453667b52870a5c5ea07be"
+          },
+          {
+            "bytes": 335,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$Action.class",
+            "sha256": "d66fe4e3630408c4bf45cc321ad3cfd5698ab344ff0bd6da39e26637e154802b"
+          },
+          {
+            "bytes": 5295,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$Harness.class",
+            "sha256": "440519fb530c769a7c00043d3c87307849822ac21abc23fed82cd68fc248ad61"
+          },
+          {
+            "bytes": 3515,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$OwnerLease.class",
+            "sha256": "dc94b28aaefe6465fc88fbb6c6147ce039cab503093a951a4e3319352d70fae8"
+          },
+          {
+            "bytes": 1180,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$SnapshotFrame.class",
+            "sha256": "60dff4ebf3c96234666639d5519b5160409566b4c57babea1c41fbda138f7b1e"
+          },
+          {
+            "bytes": 1598,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary$TokenFrame.class",
+            "sha256": "171e6aab0d4e621b88793187a250cb0575795080115efd65734517dbad7142f6"
+          },
+          {
+            "bytes": 34216,
+            "path": "com/lushprojects/circuitjs1/client/AdoptedSnapshotCanary.class",
+            "sha256": "9771c26ce95e2ecb9ab7740bf583dc966d9ef8634e53bdbab9d6758c36da1182"
+          },
+          {
+            "bytes": 1924,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$1.class",
+            "sha256": "4f9de6e51064e2bf82552d427ded5ad2b687add964708bc4f8a5e2582a79f62f"
+          },
+          {
+            "bytes": 999,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$10.class",
+            "sha256": "36b6f04304e8ab1f5c71acc07433a6717f5a658eddd7e6cef5c229bed7d94872"
+          },
+          {
+            "bytes": 1003,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$11.class",
+            "sha256": "a6015950ce51230ac75ca77c75a4090cfe3514d56b9041da6600b605fe325c68"
+          },
+          {
+            "bytes": 1064,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$12.class",
+            "sha256": "fd86080f6e482681e16aaca87642fb9ce1083c3926949a9c486afe7bfe38277b"
+          },
+          {
+            "bytes": 1232,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$13.class",
+            "sha256": "684163fed972bea1206e341496af02dbe59dadb2dad6d4d5f69e3542c33ef53b"
+          },
+          {
+            "bytes": 1181,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$14.class",
+            "sha256": "b45a3f9e377176a2883e7ebbb5ea2a9e3e1ed5d18800a3297548cd423de9981d"
+          },
+          {
+            "bytes": 1186,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$15.class",
+            "sha256": "953a390ab7bc92ea72e780709118f269fdf28bd8e7128def9208a93e62cc4a19"
+          },
+          {
+            "bytes": 1191,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$16.class",
+            "sha256": "232e4d38baa0de8c2fd0a823436d388616de5b1bdfad14f042ab8acedf0fdcfc"
+          },
+          {
+            "bytes": 1193,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$17.class",
+            "sha256": "13dd92b0897d718ed2463d0a7e836c65a492910b08eea4045235a403a72774b9"
+          },
+          {
+            "bytes": 1201,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$18.class",
+            "sha256": "eb3cdf7ca88c610133fcbd09efb8faed25b4d40c9ffb6a8164ddf53cdfc42c7c"
+          },
+          {
+            "bytes": 1180,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$19.class",
+            "sha256": "3344def33f49a40da512b7587e4e4c79580093cb5eb349e6d69cd93d7c46ca9d"
+          },
+          {
+            "bytes": 983,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$2.class",
+            "sha256": "924897ccd37eeffef53063a3bf4c090472aab7baec0b09855c58079ff079d36e"
+          },
+          {
+            "bytes": 1244,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$20.class",
+            "sha256": "7d58f9d2ac22bb334f4ca8c2f87efc4ade12b6640636b4b7d239367d5da713c0"
+          },
+          {
+            "bytes": 1176,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$21.class",
+            "sha256": "0ddc9f14c5a5b7adcb5b969273a04f3085e91949be4af7134793c7bdd8fa224e"
+          },
+          {
+            "bytes": 1092,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$22.class",
+            "sha256": "56e7d8f089b74a2699f668879ff80a39f7395c110b8f4d8bf8ff914e6602ba34"
+          },
+          {
+            "bytes": 1060,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$23.class",
+            "sha256": "d0dc38da4b9d48fae284afa55c0794f44a3b48eb72df77d6c7924f1b1f58e7ac"
+          },
+          {
+            "bytes": 1278,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$24.class",
+            "sha256": "6cea988032830932315e3eeb5a9bffd24208503e3422ba500b3f9517bd335af9"
+          },
+          {
+            "bytes": 1165,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$25.class",
+            "sha256": "fd49a101e2bb2cbaa7407e1dadcabfd22c0109f2f4ab10f94b426dc3abb047a4"
+          },
+          {
+            "bytes": 941,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$26.class",
+            "sha256": "5ffa59e499f91e702e104be2050ac2268de658dda1698a97bd25672f0d3284da"
+          },
+          {
+            "bytes": 938,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$27.class",
+            "sha256": "97b7a49401bf23d220fef3866b33e1c76d5544470595589d5ed1311913b4ca8e"
+          },
+          {
+            "bytes": 935,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$28.class",
+            "sha256": "0801d109d8cb70dead6920892f3a610f072fc2427bec25a96122311ffb1d9e85"
+          },
+          {
+            "bytes": 973,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$29.class",
+            "sha256": "9d049f46d5b314bad36b1273132ae28fb2a31bfdebc58b219a4f098dc3ff24c0"
+          },
+          {
+            "bytes": 1152,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$3.class",
+            "sha256": "b0a75b12fe004df6d7a5295b122a73904b284490ab8b6f254618348041c77575"
+          },
+          {
+            "bytes": 1059,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$30.class",
+            "sha256": "3e0394e1d1502b3949bbe031e644c3b62edf98d90a3a60aab085aa246555bff8"
+          },
+          {
+            "bytes": 934,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$31.class",
+            "sha256": "6900f67ed7567e250e159ea90635489c389a9382f22f5b659a1b9d06e04cde88"
+          },
+          {
+            "bytes": 1160,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$32.class",
+            "sha256": "f7d5d0d4dfce52e4bd07ab3122730474066af51bf8694ecb96d2d9135a5b4844"
+          },
+          {
+            "bytes": 1053,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$33.class",
+            "sha256": "0328d2be43da898081a9e1af3890e7be7b4c1b649f5818af6acac7637962ee0c"
+          },
+          {
+            "bytes": 1401,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$34.class",
+            "sha256": "cf78aafc1927ad6a4751b60316806def4f237b03a9e226dd9662dbc974b5f533"
+          },
+          {
+            "bytes": 1019,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$35.class",
+            "sha256": "ebd058634c9d0f1ecaa752ccfd238a8373f73e61b891bce524f5e5273c97e6f7"
+          },
+          {
+            "bytes": 1055,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$36.class",
+            "sha256": "e12808145e0ef2d05cf79e2f0ca1061d1dbdc9183b151efdf95be71dbabe5d0b"
+          },
+          {
+            "bytes": 971,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$37.class",
+            "sha256": "9676c503cfb0e8234ca50ec53c920f28b51cabb50c99227454ad1e1d22d51322"
+          },
+          {
+            "bytes": 1029,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$38.class",
+            "sha256": "c1894189995b305e3cbee9d76baa172a077834ca02f833a8f16bf4fcb766e35b"
+          },
+          {
+            "bytes": 1066,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$39.class",
+            "sha256": "05e2a5487ca33f612a40df9e2c221b90ebffc93f252913daba28175543c95019"
+          },
+          {
+            "bytes": 1100,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$4.class",
+            "sha256": "62d58b610cad651e8fad4cf7ddb89ad53d4fc94338db14c9c4c4ae245ee17b22"
+          },
+          {
+            "bytes": 971,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$40.class",
+            "sha256": "f09908bf8bc8dd73d76f817714e7c9e2495117137e27d27c15e291191a92f2ca"
+          },
+          {
+            "bytes": 1023,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$41.class",
+            "sha256": "fbf6ff6dfcfa28f89a676c1ca22b0f4cc447d045d11fb888b43f6bf661f11cab"
+          },
+          {
+            "bytes": 1033,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$42.class",
+            "sha256": "a4a8001094d99a6063126ddb989df768b5e97e3b5a7317565bf6e5ec838de67c"
+          },
+          {
+            "bytes": 1023,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$43.class",
+            "sha256": "077291bf66d467b1f081dbd87e0b7ca45838af90904593fb23e15771a50dd341"
+          },
+          {
+            "bytes": 965,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$44.class",
+            "sha256": "a1967b29113804b2289c2af0fb9a6fc21c1466798db151d5506691240110e9eb"
+          },
+          {
+            "bytes": 939,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$45.class",
+            "sha256": "edbf7df793359781722fd1a4c943786172a5b78986a02fa7d9d1f3b10bc3ed38"
+          },
+          {
+            "bytes": 965,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$46.class",
+            "sha256": "31b7f9b501aaf7d209df9fc555292732bf5f3d8e0700966d503a838623ab891d"
+          },
+          {
+            "bytes": 1209,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$47.class",
+            "sha256": "14c87016aae2acd726363f7338a414f90ad700ea68b33340ca0e88370d3d8cb0"
+          },
+          {
+            "bytes": 1212,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$48.class",
+            "sha256": "7aab64d319ca8a5d6ba294a8420980a6fd264d52ef52f00dba78d2006c002f50"
+          },
+          {
+            "bytes": 978,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$49.class",
+            "sha256": "64ff31bd35b52a98a8043074636b8fbeaba730963859ad0fc2b7663f17cc5c16"
+          },
+          {
+            "bytes": 1144,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$5.class",
+            "sha256": "e2bbcd333dcecdfe0b15b38d501e25ea72755b18a08bac9ea390515aaf617a0a"
+          },
+          {
+            "bytes": 1211,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$50.class",
+            "sha256": "8c77a63ef43bf1d7576a05dec33f58ab1331a833f69c08ffb8f3ab3954a23bf7"
+          },
+          {
+            "bytes": 1401,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$51.class",
+            "sha256": "def7d77e7edeea22309f41c96e31a760df7e2e71ae5dc33c6dfee2423a4577c1"
+          },
+          {
+            "bytes": 1197,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$52.class",
+            "sha256": "270d9d6423311f262fa33562d22ad5781eee4f398492ff9865f3305228a31ebd"
+          },
+          {
+            "bytes": 1024,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$53.class",
+            "sha256": "d9c3bff74ca37ae867e38fd39bf705fb6bc01622f4cef81c0599d5e862a44540"
+          },
+          {
+            "bytes": 993,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$54.class",
+            "sha256": "2cd1a5f76cbdfbd79bb0ef7789585c155b12b095c19564f01757f6ba3c2af720"
+          },
+          {
+            "bytes": 937,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$55.class",
+            "sha256": "f70560092290ef4c1a3655ffb00a743497d128cc6ab2c87223e9dced124b871d"
+          },
+          {
+            "bytes": 1062,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$56.class",
+            "sha256": "80f5d65554147ae70fde1f78cd629cbfc5af7180501d2506a39e11c323c71e26"
+          },
+          {
+            "bytes": 1228,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$57.class",
+            "sha256": "542a1deaa78061410a945361b232021ee5be7bbbb2f3b0d6595ddf7f48e8ccc4"
+          },
+          {
+            "bytes": 1176,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$58.class",
+            "sha256": "e1ef674d2ec96a1ba24e9dfee3d08b9be9f5445c2c6e2775b86689808569a1e5"
+          },
+          {
+            "bytes": 1190,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$59.class",
+            "sha256": "9a187c9dbdf82fe8d8ecac23e6a5a859bafd653de9c3bdf4c68f4c17901d0f37"
+          },
+          {
+            "bytes": 935,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$6.class",
+            "sha256": "ce5357f4390e780247ae32609797bd4b9c99293aa915973c8c3dfb1d27a2dc56"
+          },
+          {
+            "bytes": 1203,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$60.class",
+            "sha256": "372bf25f7b7d6bc21c6b3f2c8306ce904efba99fd3c8dff4834cbf39603d7f76"
+          },
+          {
+            "bytes": 965,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$61.class",
+            "sha256": "dde6779d006fd9b7e96e3e79cbfa2d04af93799653672f2fa7d6089be37d88f8"
+          },
+          {
+            "bytes": 1209,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$62.class",
+            "sha256": "2ae080915873c18ea2fe7f764d116e60cb69aa797879ea198dc54f3a71dc4689"
+          },
+          {
+            "bytes": 1186,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$63.class",
+            "sha256": "f695946c7b17b0fea439d0f1280cad75266e87d64504bab6ed845b0ba2cb35f8"
+          },
+          {
+            "bytes": 920,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$64.class",
+            "sha256": "7700215ee24536aff92ad3434bfe6209d275a707896e8b8d087d2e0db490cffd"
+          },
+          {
+            "bytes": 1001,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$65.class",
+            "sha256": "41af6d80321d5efd7b11f158ab78c7899dbb62451c390da8e456def1007ecc8b"
+          },
+          {
+            "bytes": 1005,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$66.class",
+            "sha256": "14c2c37260e723ffa1dc8cbfc66dafa7c4af02a1d406728117c483673f962e78"
+          },
+          {
+            "bytes": 1029,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$67.class",
+            "sha256": "dd761c78549e9b1a16fe85f01fad151d6c2ac4616bb6b97b49dea15d59e8dddb"
+          },
+          {
+            "bytes": 1051,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$68.class",
+            "sha256": "ef65f047be66a22534d718ed142016bbd89591a70d078a700872bdf4a50ac0eb"
+          },
+          {
+            "bytes": 1151,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$69.class",
+            "sha256": "97a7e034f2c02710105862d350f982dce3b262c3e4cba031de9980dc38b45081"
+          },
+          {
+            "bytes": 943,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$7.class",
+            "sha256": "1125070bf755f644cb2b64dc984921e2ecd2ce39e1fa1e50196ac50155ef3fd8"
+          },
+          {
+            "bytes": 1030,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$70.class",
+            "sha256": "0e7be9349c58f29c7dc5e342a3882f65d5ec8eaebb0a758d5179760a80268371"
+          },
+          {
+            "bytes": 1055,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$71.class",
+            "sha256": "52912c72bee094bd625bfe0872b8f578665155ce48c33491a9d12ae32057069c"
+          },
+          {
+            "bytes": 1012,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$72.class",
+            "sha256": "24efe1ecbf96bc745e841bb054fe2b5bc31acb1fa5b7291bae9bf581b244c795"
+          },
+          {
+            "bytes": 1106,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$73.class",
+            "sha256": "0874419a31faccd450ba4c6ffd90af63af359275148b9e063d909f91e7c10680"
+          },
+          {
+            "bytes": 1085,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$74.class",
+            "sha256": "0fd71a7d317ba029fa6da523fc1f16e238c60e0a6733dfcdb0ca53037271bc2d"
+          },
+          {
+            "bytes": 1098,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$75.class",
+            "sha256": "693afa4702b1f8a7bb2b31418ea8ff0d5cbbfefcd318faadd433919fc73f143e"
+          },
+          {
+            "bytes": 1118,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$76.class",
+            "sha256": "eaf1622108eb8f8cf81a75e066fa17de7daf2907efd879fa26e69c04e39d3e23"
+          },
+          {
+            "bytes": 1090,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$77.class",
+            "sha256": "4d6da8e621c5b68cbd22dd446125799f7d8e2a2339fb0ade396c565ebb65facd"
+          },
+          {
+            "bytes": 1038,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$8.class",
+            "sha256": "db1f56a67bf3ff051388a29a70a454f6080b6711d238c2024474cc1b8ba1a2f6"
+          },
+          {
+            "bytes": 1100,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$9.class",
+            "sha256": "c35edd55c9fc67c497a237cd2059c54812ee9b19572a3d0473e3392b59db6cae"
+          },
+          {
+            "bytes": 2962,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$Arguments.class",
+            "sha256": "89b6ed4a82940d6df0296abccd7873a5ff8558554aef1bf02b048510c444a146"
+          },
+          {
+            "bytes": 811,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$ArmResult.class",
+            "sha256": "7d9cbb2c16132df342829c8174eb8565e41d33efb45ae120e0f011f4f1fc6ca0"
+          },
+          {
+            "bytes": 431,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$CanonicalJsonSink.class",
+            "sha256": "1413f9127a594194cdec25054ab476e420a8d12714addd50e6478f90ca9d4e55"
+          },
+          {
+            "bytes": 427,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$CanonicalJsonVisits.class",
+            "sha256": "71a68ade858f2934e4d3f7be637e6572e12deb62220f8c091c392c1f8c9945e3"
+          },
+          {
+            "bytes": 666,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$Cohort.class",
+            "sha256": "5b4a8b6ad95d8e03dfc93fffcf3784aa6bdc9782a201c9a8e469ca57a9d9a3e0"
+          },
+          {
+            "bytes": 1255,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$Comparison.class",
+            "sha256": "1d06e23ac621228f903d4bda05a5d703d74e2eebf9ca7f19b9b0ff8b353db4ef"
+          },
+          {
+            "bytes": 1147,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$ContextAudit$1.class",
+            "sha256": "5cca14ef04ae0477e3d6c5dee0dadaa81c1969f77483824e421e97dbf4e71201"
+          },
+          {
+            "bytes": 1147,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$ContextAudit$2.class",
+            "sha256": "812141b7f8c9c6bead421784cab58cfd9b955d9b873677c6c76f9ce194f606af"
+          },
+          {
+            "bytes": 1147,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$ContextAudit$3.class",
+            "sha256": "0976075d7af6181c135742cd37454f160666df3b3438e172c51ccff8ed9f5b4b"
+          },
+          {
+            "bytes": 1288,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$ContextAudit$4.class",
+            "sha256": "def9fc65d92f6b6d025ed13c9b8ff9bd113f6986bfd5b8a538b1e02f9b41d192"
+          },
+          {
+            "bytes": 1286,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$ContextAudit$5.class",
+            "sha256": "aeb69eb826a2befbbf34c87d330eebccc2925a78f0487d9b5b8f6690092557bd"
+          },
+          {
+            "bytes": 4345,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$ContextAudit.class",
+            "sha256": "66ea4d76e863de06f707e3e5e88ea8342979c879f503f0a760c0331013770660"
+          },
+          {
+            "bytes": 1329,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$DetachedHead.class",
+            "sha256": "e43a7b6d288caafbac8b52e1a7aafc2e22e8df9b71db8bdab049e1e46bc758b0"
+          },
+          {
+            "bytes": 3863,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$DetachedTerminal.class",
+            "sha256": "30d5cc932349e0f25703f9d2de9392beeb3bf415bba3040a6dd35e5140a52998"
+          },
+          {
+            "bytes": 3620,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$GenericR7Arguments.class",
+            "sha256": "7f4ed17ae967e190286cb64274eb0160e54d138e63c68e4b52ef461e59aa9940"
+          },
+          {
+            "bytes": 466,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$GridBinding.class",
+            "sha256": "35e52d3bf6dc232543b16edfc28473de547cf8de055c9a53c4dbaf369ab2ab88"
+          },
+          {
+            "bytes": 359,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$Guard.class",
+            "sha256": "6b235ace89025331103d15582404936b3ba5396cfff3ee5356e9d35851d52e87"
+          },
+          {
+            "bytes": 8684,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$ObservationSpec.class",
+            "sha256": "e35131c39bf8199ff5003542368b28f0db606287599d4451e53763bdf0bc038e"
+          },
+          {
+            "bytes": 2958,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$ObserverMeter.class",
+            "sha256": "324011e5d852b7af5a5985eebdcbf3ec92c4e17809e43b61fa11f4cdf50c8d15"
+          },
+          {
+            "bytes": 527,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$PadIdentity.class",
+            "sha256": "9d573e4aaf6d6ca8b82d610c9bc02fec8218c047b593d4d790ef06584ff59283"
+          },
+          {
+            "bytes": 870,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$PadProof.class",
+            "sha256": "3d7cabc3a849b44149d33622032fee016c56663d8a07ba22b66353d6a6f9095b"
+          },
+          {
+            "bytes": 3849,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$Parent.class",
+            "sha256": "e4f76d361838ff1796c875baf65a5afaae810652ea5c40e82ca0713bd5871be1"
+          },
+          {
+            "bytes": 413,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R5AfterResultWrite.class",
+            "sha256": "5593b5ad1fd132a2bf1ea5e29b762a378e11b1abe9f0280b100c1f1c2f0767bc"
+          },
+          {
+            "bytes": 1659,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R5BodySink.class",
+            "sha256": "ab860c11d7e96ff08435dc0b64c98bead7e8c7a7714f3ec34b7a06189c8160f3"
+          },
+          {
+            "bytes": 3562,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R5CompareSink.class",
+            "sha256": "c0f9a88a1edb632cedbc6cd95602aebe3bae1cdb976cd43d1152ae65dc9ee6ad"
+          },
+          {
+            "bytes": 1306,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R5CountSink.class",
+            "sha256": "a82ecacfaeb306cb5b9ab7cc3b71101326dd86a8afb17572fdd014aa3ef43fc3"
+          },
+          {
+            "bytes": 883,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R5ExportMetrics.class",
+            "sha256": "e255aa4257a6c046621ccbe0beeb5ed691b5e4978a43548460b57a57b882fa35"
+          },
+          {
+            "bytes": 2331,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R5FileIdentity.class",
+            "sha256": "0b67c270c5764f1f1feb69963051dcaae6315afb9e360f957b928d25d26fcce9"
+          },
+          {
+            "bytes": 1111,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R5MarkerSink.class",
+            "sha256": "529bd3818eb29cc1c48bb8a949bcfbe9fa5da6f94ad251e3025f76707c2a3dbb"
+          },
+          {
+            "bytes": 2833,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R5Output.class",
+            "sha256": "8d2d0e668e0e0e839e49e9912a38486b77ae94e153c42bbde85b1688f56363e9"
+          },
+          {
+            "bytes": 4037,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R5PublicationToken.class",
+            "sha256": "447219540285a50b138c840be326aa6b6cf14fcd070e14878e2ceb565a5b6689"
+          },
+          {
+            "bytes": 5165,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R5Snapshot.class",
+            "sha256": "d2ca561c3eae0fae5ad4ed8f8648d4ffc8634225c5008728dba0f7cbe293b903"
+          },
+          {
+            "bytes": 1260,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R5WindowsIdentity.class",
+            "sha256": "00bac14f4ef8dc0d187cf8727167b272b3e4478874beb3ec55d86e5a55552ab9"
+          },
+          {
+            "bytes": 1022,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R5WorkFinalizer.class",
+            "sha256": "5c192086875f165fb02d3f8db8a12da19fc06f8fa33b1c45afd94f5c13c74141"
+          },
+          {
+            "bytes": 3338,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R5WriteSink.class",
+            "sha256": "c4bd88f04a4e2c438b74737a2ee8c24520d7c8cbebba0650275e206c6b64b643"
+          },
+          {
+            "bytes": 7834,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R7MeterLedger.class",
+            "sha256": "c3a188f6175943a76c72f569a2e475da97f3482112d7bc7f80aa4bda73ece715"
+          },
+          {
+            "bytes": 3210,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R7MeterPoint.class",
+            "sha256": "6fc1379096664b0925c012212c4e7cb6d57770c15c60ce05fea34855b078a24e"
+          },
+          {
+            "bytes": 6995,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R7WorkPlan.class",
+            "sha256": "bc8546773e09b978fa42b52c277853b1403517549e300826a77fb763477d9b09"
+          },
+          {
+            "bytes": 1575,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R9CanaryProfile.class",
+            "sha256": "57fbae88005986a35ed72115853ec254e15c2b7d443d25b0ef72060c84027087"
+          },
+          {
+            "bytes": 5664,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R9CanaryPublication.class",
+            "sha256": "7756070d83bdb0688e0a61b5f194dba046d20034c089c6439467009cc826b065"
+          },
+          {
+            "bytes": 1711,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R9CanaryPublicationMetrics.class",
+            "sha256": "146cecb7dac486c1a4057bd8de02a903045249fc669ac9ba00ee725a30941d35"
+          },
+          {
+            "bytes": 2815,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R9CanaryStdoutSink.class",
+            "sha256": "f1223af558c812a28311105e186983e8622f0f9c4e495edfef3625bcc0027b66"
+          },
+          {
+            "bytes": 694,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R9FixtureLegacy.class",
+            "sha256": "b6e8c42b35459f8fe0c3f5a7bb60134bac74dcecfaed542d1009d82ab5454e20"
+          },
+          {
+            "bytes": 626,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R9TextPolicyLedger.class",
+            "sha256": "67101d9da7ac327bc013c6aebfb91b3aa68832fc6fada7386cacbc26c277d5da"
+          },
+          {
+            "bytes": 1918,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$R9ThrowingTerminalDiagnostics.class",
+            "sha256": "f7e8de2e45d2a03c2c2d5ffea073440a3c460a56863811230d08f4bb747566fa"
+          },
+          {
+            "bytes": 478,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$ResultTreeAccounting.class",
+            "sha256": "7b05fbb5dfdc75fb80db1d5c68056e7fd13e6cc4d1b7033807d137c3e3bed2be"
+          },
+          {
+            "bytes": 2310,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$SetupMeter.class",
+            "sha256": "9b7e54ceeaec6417acf12024280ad39e973a5dab331b5d7be48651d3e6688778"
+          },
+          {
+            "bytes": 772,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$SetupResult.class",
+            "sha256": "3141772aa297b53bc0d15f3bf0c4e9d4193218d88a52f2567f1c3fd939805fb7"
+          },
+          {
+            "bytes": 511,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$TerminalObserverMeter.class",
+            "sha256": "a309c5ee0fad9b7f7a01151cb716efe618f1a80a8938461008b7e707c28d50e8"
+          },
+          {
+            "bytes": 2625,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$TerminalSink.class",
+            "sha256": "6e612718f9ba051dc72df5b14ece8b04df986faf3f7c362adde3abdb3e101706"
+          },
+          {
+            "bytes": 23455,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$TerminalTelemetryObserver.class",
+            "sha256": "c40731566acc8ca470423fb6ef21c8803cf522b6d858a1156ea21722afea64e6"
+          },
+          {
+            "bytes": 108848,
+            "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy.class",
+            "sha256": "c70435960a0b75bb534360cdbe9436f77feddbce4b82b15baf490fece619b7ac"
+          },
+          {
+            "bytes": 729,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$1.class",
+            "sha256": "245d8979273f975917f213acde5bbe8d2376672f3ceaf2d614306bf01ca00fb6"
+          },
+          {
+            "bytes": 753,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$2.class",
+            "sha256": "8649a55341dd5cb026792c1051c8795bf896a7ca962e17a6fa46a609a0291faf"
+          },
+          {
+            "bytes": 1113,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$3.class",
+            "sha256": "710684611b516f3201ba2e22b3892d171919dff0ce446269be0d547d2d80b879"
+          },
+          {
+            "bytes": 1042,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$4.class",
+            "sha256": "1641b4810dd007e1f1feb6d537aeb655b104c66517696f0ebfc6a2c6810e9f76"
+          },
+          {
+            "bytes": 1282,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$BranchLimitSelection.class",
+            "sha256": "f66d8868ea6bbd641374a517b65abe2ff8d1f7529cb933f1a92764fcbff3e350"
+          },
+          {
+            "bytes": 869,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$BranchLimitSelectionDiagnostics.class",
+            "sha256": "0cd7e2809c706b3475c8b657950b73fd213ef34453e3b533806d4c26f01fe722"
+          },
+          {
+            "bytes": 1352,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$BranchOrderStrategy.class",
+            "sha256": "04384f9e796d79598ace658d3a64a1ca425c60d0411c3fddef34cc84d44b19f9"
+          },
+          {
+            "bytes": 2370,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$BranchSnapshot.class",
+            "sha256": "8e2ceadac4f33df8b477d97eac88763f0a1abedf4cc396f920e78f78a1097b12"
+          },
+          {
+            "bytes": 432,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$Budget.class",
+            "sha256": "30d3c66e07bd16e1d732c114871fd55678769c41c6591b256fc2e7882361a4fc"
+          },
+          {
+            "bytes": 22866,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$DetachedBranchCopyTask.class",
+            "sha256": "07c323ab6e88f6f7b649534cea22c17f32b1457fe02cef5590fa9eecb2db3dad"
+          },
+          {
+            "bytes": 10848,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$DetachedBranchReplay.class",
+            "sha256": "8bb69370e8a5f68f401f51afd6fc5bc9cf9479423cc9241a8b2b67ba1f2d1d30"
+          },
+          {
+            "bytes": 12875,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$DetachedOrderingContinuation.class",
+            "sha256": "2f196d84c08a3e345f462ebd8e9dd0e7a9a18f7da4cb0ef44c2d4a5c3226954c"
+          },
+          {
+            "bytes": 1427,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$DetachedOrderingProgress.class",
+            "sha256": "676b14cc5b0688a2cce8ce20f8fe2edbaba99997bce58ffb3f92f1eca70bc09f"
+          },
+          {
+            "bytes": 500,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$Diagnostics.class",
+            "sha256": "1072111cb943268e1ed78330aac4b67dd6fd970e88f25509cf8562d5005fd05d"
+          },
+          {
+            "bytes": 404,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$Exhausted.class",
+            "sha256": "9583805889034d4202dee1df1af44bd951241b9e0216b7c1af2490fe9d145459"
+          },
+          {
+            "bytes": 353,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$FixedGraphEdges.class",
+            "sha256": "4eabac7fd02f851a7f1aa0f75788007fcbf94cee69c3b1054c3488c037cdfbb2"
+          },
+          {
+            "bytes": 4908,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$FixedPrefixBranchLineage.class",
+            "sha256": "acfc68fb570ee805c61a8b675cf83fb3ec251c7f7499189ac6d6c7983df96e08"
+          },
+          {
+            "bytes": 1945,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$FixedPrefixCaptureContext.class",
+            "sha256": "d6a64aab41e065a2f155fbfe960240a8bee0bc45dc03ddc2107634b65bdfe0a0"
+          },
+          {
+            "bytes": 781,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$FixedPrefixGraphObserver.class",
+            "sha256": "6f01f311b231aa522a117c31937c28c6044b08e7f470bf594a16d93c7604f068"
+          },
+          {
+            "bytes": 4275,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$FixedPrefixGraphSnapshot.class",
+            "sha256": "84972e1dab5393fcb2ffdaa3894b6687954314091608782fb6098e05fef8e334"
+          },
+          {
+            "bytes": 2091,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$FixedPrefixHole.class",
+            "sha256": "3750a4be6dab6f46fe6e13cc5b9e15f64f998e687c0d885eba1acd0b5b2cecb3"
+          },
+          {
+            "bytes": 844,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$GridAdmission.class",
+            "sha256": "3ab75d2af21cf5e50febc632faa24895b6daf34ea4e5352d8b5f35c4e8ad1813"
+          },
+          {
+            "bytes": 436,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$NetOrderDiagnostics.class",
+            "sha256": "fbe827c3e5f4ff25262c745efc281033a7cfc427d488ba8f7f8186f7f304edab"
+          },
+          {
+            "bytes": 1327,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$NetOrderStrategy.class",
+            "sha256": "a98381376ca037324db1cb4fa399103f956f3764211b0b8aa7626b398d5cd7c7"
+          },
+          {
+            "bytes": 1392,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$Node.class",
+            "sha256": "248d29d63526d404306c5a821d4006f912f26a9f208065254c579eaef3e4dd4e"
+          },
+          {
+            "bytes": 2021,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$NodeIndex.class",
+            "sha256": "8d73fce55e18769b8c55d87f8d0ccac17235c622df6ef0f4639cecfbae10eb69"
+          },
+          {
+            "bytes": 2016,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$NodeQueue.class",
+            "sha256": "79dbe5589c6f46bedbd4fee7caed433d05bcc1912cc441277d24cf7b4f11e2fc"
+          },
+          {
+            "bytes": 1362,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$OrderingProgress.class",
+            "sha256": "457a8e7097f61eb437d4aafef04baf4b379d5f9481d15be56a039a09328cb3ad"
+          },
+          {
+            "bytes": 981,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$OrderingSummary.class",
+            "sha256": "06612acb41fa19fa2399bc4654f47712552ef4c83b3c69cfdc2017f4e50d5284"
+          },
+          {
+            "bytes": 1645,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$Policy.class",
+            "sha256": "e118d404cfba2dfe2b569652b359351c0bfb85ca952fe1c5057c8d524e911588"
+          },
+          {
+            "bytes": 5156,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$RelaxedDistanceBound.class",
+            "sha256": "313392aa9d2b9cb21e27d42bbb39480f9e3862b94ec4924cdda9e61cd933aa8c"
+          },
+          {
+            "bytes": 1071,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$Result.class",
+            "sha256": "36daf5534c7d187badb192264d17033fdca8b5712a80c437b454b922277166c0"
+          },
+          {
+            "bytes": 1741,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$Search$1.class",
+            "sha256": "fe9d142708a8f912116e975520d26ae003c11b88216bbc3cf972ce7763b73ba9"
+          },
+          {
+            "bytes": 1397,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$Search$2.class",
+            "sha256": "38903ede2a436d21461420fbcb1676503110d54347b75088045e26be359347d2"
+          },
+          {
+            "bytes": 3126,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$Search$BranchSearch$1.class",
+            "sha256": "2dd1e1fdd5b2b31a7a6f50b756861f3b15b5831dee8d4e1ff773285305135bef"
+          },
+          {
+            "bytes": 11903,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$Search$BranchSearch$FixedPrefixCaptureTask.class",
+            "sha256": "915eb414e5886ecc5b9ab3986d0d8646edb306ea5de39a15f7ffe54735312b73"
+          },
+          {
+            "bytes": 21053,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$Search$BranchSearch.class",
+            "sha256": "906d92fff0d4887e6024c77dcd376f6b0feb9c6fab64cac739ccb00ee2b7f6ca"
+          },
+          {
+            "bytes": 5109,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$Search$NetOrderPreparation.class",
+            "sha256": "b00578640b4a2775b1cca9f29b67539b8f11e6867e9d1e3e16b3743634081c4a"
+          },
+          {
+            "bytes": 646,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$Search$NetPairMetric.class",
+            "sha256": "92ed000bd85dfddcdc20136a6ff57a0e519ea57e228987c05e99fecfe9a58bce"
+          },
+          {
+            "bytes": 8121,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$Search$Publisher.class",
+            "sha256": "153ba26c74abe0ac994f7b36a24f7e6e9f509bb7e12943ce3359e3a3fb585774"
+          },
+          {
+            "bytes": 21486,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$Search.class",
+            "sha256": "4d49123255290caa093741828845cf8454e57294f3144462336db769d2960787"
+          },
+          {
+            "bytes": 34278,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$Session.class",
+            "sha256": "98e9e96fcbed3e76c47c39d6303ee23bfdd2b13d3a83f9b63e9b980c172dcd5d"
+          },
+          {
+            "bytes": 411,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$TerminalOnlyDiagnostics.class",
+            "sha256": "81a8fd8fdba9a8b0e7a7a2401bc5ff2b1017e7a678ec6cc95500f4da26bb3c75"
+          },
+          {
+            "bytes": 2200,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$TurnBoundWorkspace.class",
+            "sha256": "9439a558c2e8ab6fd378b44a6a75a423782071c8aafba78b3a92eb1f63f9201a"
+          },
+          {
+            "bytes": 5434,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype$TurnLowerBound.class",
+            "sha256": "609f9750ae3afef03ccbf8f23549657988d44e147cb07079483052d5c9fec41a"
+          },
+          {
+            "bytes": 20335,
+            "path": "com/lushprojects/circuitjs1/client/PcbLayerRoutingPrototype.class",
+            "sha256": "82bfd55f8f7eafb05c61985f9fb8fcedbac7e0522be816454766faf4817f0dda"
+          }
+        ],
+        "compile": {
+          "childExitCode": 0,
+          "isolatedCleanupDurationMs": null,
+          "ownedRootAndLogsAbsent": true,
+          "phase": "compile-native-r1",
+          "processElapsedMs": 1291.1392,
+          "receipts": {
+            "owner.json": "2f47ef013ecc2b358f5e4d95b79bb82b8b9d8e1019cab7f3a9ff7d7c2bd8458f",
+            "parent.json": "f638e74d3ba3c9fe4b24e02e50c204ecaa9747a662b80c1a9deec7dd9a752b66",
+            "process.json": "d446df1348789416a46669bf604a1b318a36aaad092511632bf5719942cb58a4",
+            "request.json": "847083c5bec2d389df7279a00328e491e5db88bef6adc02cc7a8f30fb6d5c708",
+            "result.json": "7c277ae47288dc99d00caa4d6f4f39a586f5a0b7a50f2a8eb6c82e967854d60b",
+            "stderr.txt": "594d455b0e001a516f324c4d1ddb94936d8c6ac3719e15df99fb919eb4a2c913",
+            "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "status": "PASS",
+          "terminationProven": true,
+          "wrapperTotalElapsedMs": 1551.8967
+        },
+        "inheritedClosure": {
+          "classBytes": 19644833,
+          "classFilesRehashed": 4288,
+          "inventorySha256": "7fe14c6f95ae1c99ddfb3f81d975ff7f9ee2a6e1851b09e32d9ca8f0d47889f9",
+          "jars": [
+            {
+              "bytes": 32024115,
+              "role": "GWT_DEPENDENCY",
+              "sha256": "d3721bcdd7c6855a524801212dd74548967d8fb65cbc212a20890732ff2c6948"
+            },
+            {
+              "bytes": 38276750,
+              "role": "GWT_DEPENDENCY",
+              "sha256": "c7321e367fc24e5c7ad97b74d1cf2980c45fbd7cbe1fd412f8a8ba128f685135"
+            }
+          ],
+          "toolsRehashed": true
+        },
+        "namespace": {
+          "classMajor": 51,
+          "explicitReferencesChecked": 1307,
+          "freshClassCount": 212,
+          "reflectionClosureClaim": false,
+          "status": "PASS_EXPLICIT_CONSTANT_CLASS_CLOSURE"
+        },
+        "noOriginalArmMaterialization": true,
+        "ownerByteEqualQualifiedP": true,
+        "ownerClassCount": 46,
+        "planSha256": "e743dabea44a88940d83f28f8413b36247decfe782a4d2c4a818562b6b346d0e",
+        "schema": "tsj-adopted-snapshot-native-manifest-v1",
+        "scope": "SYNTHETIC_ADOPTED_OWNER_LIFECYCLE_ONLY",
+        "sourceProofSha256": "0f24dfd8b5ce4df73a6cbac72c740b6909f75b6ce13d97728dd41ab64d9f7d2a",
+        "sourceReviewSha256": "b692ba6cdc772303c2ddf3e485f3d688289e75c07f16872210246ee07b204167",
+        "sources": [
+          {
+            "bytes": 172568,
+            "role": "PcbLayerRoutingPrototype.java",
+            "sha256": "7bf4ab57198ff9444381ec5d677c1a2bc309bfa3e7f01b188c631ffe5f2b966c"
+          },
+          {
+            "bytes": 239584,
+            "role": "CohortTerminalTelemetryStudy.java",
+            "sha256": "1ae31054a430c00bf926ff4deff8091892bae267f05257aa0d869000226f7bd1"
+          },
+          {
+            "bytes": 55330,
+            "role": "AdoptedSnapshotCanary.java",
+            "sha256": "260ada177f9fbf237650336dc3d3d653956be156d46efd87ed88efb50719e535"
+          }
+        ],
+        "tools": [
+          {
+            "bytes": 171744,
+            "role": "python3.13.exe",
+            "sha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec"
+          },
+          {
+            "bytes": 495616,
+            "role": "powershell.exe",
+            "sha256": "60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f"
+          },
+          {
+            "bytes": 2941,
+            "role": "Invoke-RootCall-R1.ps1",
+            "sha256": "28aab617e686d2a4eec074a46b2e2861f6fa7c008544b33f7b070f0c6d77ea1d"
+          },
+          {
+            "bytes": 304768,
+            "role": "java.exe",
+            "sha256": "e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce"
+          },
+          {
+            "bytes": 24192,
+            "role": "javac.exe",
+            "sha256": "61fa6463ee5b59004719b9833a16b148740cfa9f2d1f5a95ca598cc90be04c64"
+          }
+        ]
+      }
+    },
+    "RETAINED_GATES_R1.json": {
+      "sha256": "116f77f55f35ee44250674f7725dd18cbd49d351418538ebf00cb151aeb33dcb",
+      "value": {
+        "calls": [
+          {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "retained-compile-r1",
+            "processElapsedMs": 889.2378,
+            "receipts": {
+              "owner.json": "dea1737980cb94981fa8f1d9217dceeb9c4b1ce60bf0e60fd1fe875ed848d6ab",
+              "parent.json": "503cef520a6a181353b7d26e60109ec1420635bbb7eb6499f9bbebaa44a3931b",
+              "process.json": "551c3aa2f2b1eab0ec93c7dc5cf88a9f85d2123710157227cef75e2c158c8ad5",
+              "request.json": "474fc5845305e0a3ddb8a4da9e1ab437934ac9f8643fc7a80b43c11e55c44d55",
+              "result.json": "2f2d32575fe0c0ea14012f9c4609e9c8459c019c97d6634ec5fc19e1853e2cfa",
+              "stderr.txt": "594d455b0e001a516f324c4d1ddb94936d8c6ac3719e15df99fb919eb4a2c913",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 1148.7340000000002
+          },
+          {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "retained-shared-owner-r1",
+            "processElapsedMs": 456.79580000000004,
+            "receipts": {
+              "owner.json": "66617aa85259f008f9877dd55ff75f9d438308316c46bf9aa2a3a1a083e4c4d3",
+              "parent.json": "c19328f157c92a742f8d5885bec5db6b14a9cb363799b1dcaeb29711963f9cff",
+              "process.json": "277ac5f5b1d28968a3f9ee13d64a1d8ab5429b817808c69ffa349aa1191017ab",
+              "request.json": "37f7c1cfec2aef39b5298b880a330a066bec9e7f5a032596af8e119dafc8f385",
+              "result.json": "3a532e367504d50d9794a5c220d60e276c8143b81927a992544923c0864cac54",
+              "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "stdout.txt": "a020e28f4a025932271ddbf1357523282d9d2f608db2d702f95f80dadb1580b1"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 707.9920000000001
+          }
+        ],
+        "classes": [
+          {
+            "bytes": 924,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$1.class",
+            "sha256": "0865f951a018a0ad67fc94da31403536cdc31f6a23cb0e7cf7c3a1e1f4f45ef6"
+          },
+          {
+            "bytes": 1176,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$10.class",
+            "sha256": "69835f79e6f4dcd03418ffe4a169d0ba865c67cc2e07fdcd94c3ea13a194a7f3"
+          },
+          {
+            "bytes": 913,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$11.class",
+            "sha256": "c7e467d9882c2c16fc55570ea558eecce7404055beb781a4a82b97aa0e0190d0"
+          },
+          {
+            "bytes": 905,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$12.class",
+            "sha256": "1ac225071f38d1d73f037810115972455b480758def9cb5761f3496d1fd18d36"
+          },
+          {
+            "bytes": 901,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$13.class",
+            "sha256": "2d8f462429ab9720ddaf55068a38fbe2ebf1a883bc2450b75a217c4e2ab9cbf2"
+          },
+          {
+            "bytes": 926,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$14.class",
+            "sha256": "a06af418b2aeb0a12dbde1b43310e8c6078c10db9debda4c8849d79fae956361"
+          },
+          {
+            "bytes": 878,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$15.class",
+            "sha256": "b0243dfb84e509ae2925d01ed4626b6898d9589749f5d666c3b8919d363ee7b9"
+          },
+          {
+            "bytes": 926,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$16.class",
+            "sha256": "88f877406af57e2aad7c7071c81229d99393ba7cc515a928225b17af059c1b0f"
+          },
+          {
+            "bytes": 872,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$17.class",
+            "sha256": "939585de7fc668082d2ba06c571218040f5cb10d321814d7894c885330ce4717"
+          },
+          {
+            "bytes": 925,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$2.class",
+            "sha256": "cf9848f7b1c5b2183617eb0c55ed4e8220876f35c45e7ec18338fbffcf3f0c99"
+          },
+          {
+            "bytes": 1097,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$3.class",
+            "sha256": "8d7c21d453c8f1db5f5e641b04ca0f039ae3201e54ac27f92cfda57c16d87481"
+          },
+          {
+            "bytes": 909,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$4.class",
+            "sha256": "ca9252d275a3434342fb22606d41cecf22b342146232d0ace9fa56c559f4ac4e"
+          },
+          {
+            "bytes": 925,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$5.class",
+            "sha256": "2085acf443ed31f8007c8f9f4b76c8db5d811e9d9ae0f832a97f302933de721f"
+          },
+          {
+            "bytes": 1097,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$6.class",
+            "sha256": "26e0bfb436d1efca786232c6422c880c8dd0de48d4e4e8e5cd103bb9e0fed898"
+          },
+          {
+            "bytes": 972,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$7.class",
+            "sha256": "f9193de34f48d464bb999f2c78cfcc1d08bae9b50f0584514e5e436d61b325b0"
+          },
+          {
+            "bytes": 904,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$8.class",
+            "sha256": "2dd7cd07a286c8e5059d93bc458e040b056e1367413f162c5ca0520c06108377"
+          },
+          {
+            "bytes": 1175,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$9.class",
+            "sha256": "9f766e124fa64a9597b4e78b301ce1336cebe48a16b9db2a4266f709db754cfa"
+          },
+          {
+            "bytes": 347,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$Action.class",
+            "sha256": "9450553926f1e6fff17ff6207b0d5d1707ebb381ad518c030ebf80b2d1177ef9"
+          },
+          {
+            "bytes": 2176,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary$Frame.class",
+            "sha256": "88f30de4073b4f87f30ec60ae1da2f157da6a0da7a278c2dfb76d541716d8f00"
+          },
+          {
+            "bytes": 15518,
+            "path": "com/lushprojects/circuitjs1/client/SharedCaptureBudgetCanary.class",
+            "sha256": "d0b326d413fb0f1b6cead719715e576bdfd47f37d3104040941ab82af1c7f8d9"
+          }
+        ],
+        "inputSourceAndClassesUnchanged": true,
+        "schema": "tsj-adopted-retained-gates-v1",
+        "scratchEmpty": true,
+        "source": {
+          "bytes": 14700,
+          "role": "SharedCaptureBudgetCanary.java",
+          "sha256": "f063ca841e1734d7c95ce1d80fa3306d6c82f25cf12d0a11233fcfe3af5658cb"
+        },
+        "status": "PASS",
+        "stdout": "SHARED_CAPTURE_BUDGET_CANARY_PASS assertions=120 frames=6 wrapperGroups=2556 ownerAdmissions=6 actualCaptureCalls=0 authoredSessions=0 automaticExecuteCleanup=SOURCE_ONLY\r\n"
+      }
+    },
+    "SOURCE_REVIEW_R1.json": {
+      "sha256": "b692ba6cdc772303c2ddf3e485f3d688289e75c07f16872210246ee07b204167",
+      "value": {
+        "adoptedOnlyPredicate": true,
+        "derivedSha256": "1ae31054a430c00bf926ff4deff8091892bae267f05257aa0d869000226f7bd1",
+        "diffSha256": "64d5e73df7c28675a9cfb6aba0df2a466dbbfa1be7ebb88c5223723eafd008c6",
+        "mainAlwaysDenied": true,
+        "otherSourceBytesUnchanged": true,
+        "parentSha256": "7d62a0f343a270056bfd7e536145a47874ccc90c10cd24b93ec89ee6d6f94570",
+        "schema": "tsj-adopted-snapshot-independent-source-review-v1",
+        "sourceProofSha256": "0f24dfd8b5ce4df73a6cbac72c740b6909f75b6ce13d97728dd41ab64d9f7d2a",
+        "status": "PASS_EXACT_TWO_NATIVE_TRANSFORMS"
+      }
+    }
+  },
+  "finalSources": [
+    {
+      "bytes": 9015,
+      "role": "generate_adopted_snapshot_overlay.py",
+      "sha256": "5690f759af9e53a0fc1d15dae907cc37123b266eb5529b1548ba2f555a12e07c"
+    },
+    {
+      "bytes": 19780,
+      "role": "test_generate_adopted_snapshot_overlay.py",
+      "sha256": "bb7f1e186d1f0e060153ae86516269e80ce1bcdf5015066c6405deee3e0454c6"
+    },
+    {
+      "bytes": 55330,
+      "role": "AdoptedSnapshotCanary.java",
+      "sha256": "260ada177f9fbf237650336dc3d3d653956be156d46efd87ed88efb50719e535"
+    }
+  ],
+  "fixtureScope": "REAL_OWNER_APIS_SYNTHETIC_SCALAR_TOKEN_DEMAND_NO_ORIGINALARM_OR_EXPORTER",
+  "isolatedCleanupDurationMs": null,
+  "limitations": [
+    "NO_FULL_D_OR_H1",
+    "NO_RESULT_MARKER_OR_FILE_EXPORT_PROOF",
+    "NO_PRIMITIVE_VM_ALLOCATION_ACCOUNTING",
+    "NO_REFLECTION_CLASS_CLOSURE_CLAIM",
+    "NO_GWT_PLAYER_ELECTRICAL_POPULATION_RENEWAL",
+    "FULL30_EXCLUDED",
+    "HARD_PSYCHOTIC_UNAVAILABLE_UNRUN",
+    "HISTORICAL_PROTECTED_UNREAD_UNCERTIFIED",
+    "PLAYABLE100_ZERO_BETA_HELD"
+  ],
+  "newCaptureCalls": 0,
+  "newPersistentResources": 0,
+  "newRunFreshCalls": 0,
+  "newSessions": 0,
+  "parentImplementation": "7d404c6edfa8d1bdb27b1305b880541bc600ed42",
+  "parentReceipt": "7ddbda918e655c9059fc1ad3296a2bf2929a3310",
+  "planSha256": "e743dabea44a88940d83f28f8413b36247decfe782a4d2c4a818562b6b346d0e",
+  "schema": "tsj-adopted-snapshot-final-gates-v1",
+  "sourceMapSha256": "b28139f16955d375f069260efa12084cf6a6669fcd657fe8e2d53973c9b1d8d4",
+  "sourceReview": {
+    "findingsFixedBeforeExecution": true,
+    "preExecutionFindings": [
+      "GENERATED_SOURCE_PROOF_BINDING",
+      "INHERITED_RUNTIME_CLOSURE_RECHECKS"
+    ],
+    "rootOwnsFinalSourceAndRuntimeAcceptance": true,
+    "scope": "SOURCE_ONLY_BOUNDED_MAPS_AND_ROOT_WIRING_DELTA"
+  },
+  "status": "PASS_ADOPTED_OWNER_SNAPSHOT_TOKEN_COMPONENT_ONLY"
+}

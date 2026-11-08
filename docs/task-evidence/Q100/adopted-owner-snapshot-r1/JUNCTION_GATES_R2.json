@@ -1,0 +1,131 @@
+{
+  "cleanup": "IDENTITY_REVALIDATED_LITERAL_NONRECURSIVE_RMDIR",
+  "controls": [
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "junction-cli-base-r1",
+        "processElapsedMs": 340.8379,
+        "receipts": {
+          "owner.json": "a2f871dd81a98a3b18bf22809405e516866969eb79fa2f55605965aba9118657",
+          "parent.json": "907aaf32867bfe1550592e8bcf6fe930750b7a541b3e9fe1eef4722a0f5c8b95",
+          "process.json": "10094ada6628f7e6dae53184626f5fb14010cfaf05adb205d1f817aa9f1f991b",
+          "request.json": "a31d643bab23f76eb98bbad3281675ea01854f029ae589e5be20d61266b6b0d0",
+          "result.json": "c6ae6876462db43ae0f72dc980f1927c22ca459486a0b3f28cb828cb776c749b",
+          "stderr.txt": "bea781486e7fddf44d655f818fc4ddda0610507e51f1604f30154199dfbcf783",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 576.0442
+      },
+      "exactCode": "BASE_GENERATOR_REPARSE",
+      "reused": "UNCHANGED_LINK_TARGETS_GENERATOR_AND_INPUTS_RECHECKED",
+      "role": "base"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "junction-cli-study-r2",
+        "processElapsedMs": 353.4117,
+        "receipts": {
+          "owner.json": "51fcb0f85cf278021512241f900fbc73dd1d575551bc4b1194327e24b573ccd1",
+          "parent.json": "e193c114089861cf14fcc987d5d00b9317ecd93fd1ff5fce8688e79455092069",
+          "process.json": "1529b1cea3f63a65281f7b1666e111bf12d4ce80910191efa2312d65e8369c21",
+          "request.json": "6e129b72ae9f5a6b30d0b2088cfb5321f499913120f191fac68014ae2ab30b7f",
+          "result.json": "dc56ff16a2a35e61e237ae0c112e83a36fdf1d9d8a0739c775aeebbbb97fcde4",
+          "stderr.txt": "9c5a028bf03b07c11aeee2e8ec3aeb306195e0b918106fced0396e99fb64b0e3",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 594.8987000000001
+      },
+      "exactCode": "OWNER_SOURCE_CANONICAL",
+      "normalOutputEmpty": true,
+      "role": "study",
+      "targetsUnchanged": true
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "junction-cli-helper-r2",
+        "processElapsedMs": 430.06600000000003,
+        "receipts": {
+          "owner.json": "b5c038e65cdd73a541040910f23afef570eceb3afd8e9b4e4e7abb3196e08a51",
+          "parent.json": "e4a492b7c7580e8b181e9958dab0728949148f4ed946a30d1624cf9c2c4eeaef",
+          "process.json": "cb780348f25284e618feba8182035ac51f52131add0c973980767e9cac2c03fd",
+          "request.json": "92adf7a147361ae542ee19ad9345405d3a04a78495240d8dc4f7d0994cd62a7d",
+          "result.json": "dbbcf1c2cf67d29abc1ff736662a90061678fc1aa7c8af5a97b02dfe9ae324e2",
+          "stderr.txt": "4417ba018def2716674130493cc86927a3d005356b4ceb3f671f528d634afba6",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 669.1955
+      },
+      "exactCode": "IO_HELPER_REPARSE",
+      "normalOutputEmpty": true,
+      "role": "helper",
+      "targetsUnchanged": true
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "junction-cli-output-r2",
+        "processElapsedMs": 348.06350000000003,
+        "receipts": {
+          "owner.json": "538fbbf77be02d768af60354f393ae834f859e5384cc1e934ddcd40c231e5c4d",
+          "parent.json": "5dc37f145c4a066d1de520329cb56a0c8f84e9941cfa20819e538c4e0b5987f4",
+          "process.json": "7a64990be3282a62418eaea5ee9eaa3cfdde59bdf0672845be3e45e43d00effe",
+          "request.json": "7f23d80d4cac4a09a561627d178303d855c024b896ae50dc6de944dd802339ba",
+          "result.json": "55186336740c1dd5a4edc2b0c4386d3bdae407cbc2a27b93ea207fcd09f0d9af",
+          "stderr.txt": "b07b7d81ffbc62c81150013e0465ca22895e7c51900a16aa265e98f52c3ec1ce",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 593.2273
+      },
+      "exactCode": "OUTPUT_DIRECTORY_CANONICAL",
+      "normalOutputEmpty": true,
+      "role": "output",
+      "targetsUnchanged": true
+    }
+  ],
+  "creation": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "junction-create-r1",
+    "processElapsedMs": 457.6897,
+    "receipts": {
+      "owner.json": "e71bd9cd99019a8649221aecb3e41f772ccba8368d3fd263f93c64c808d7b0be",
+      "parent.json": "fd27498f362c3ebbbe17399e0c6a77d8a8b041e3e8ad37fc6542441fc5799c9b",
+      "process.json": "64161ac29d476e39bde21467c903450e71b3275ff2ca1750fd4011c7b6263c53",
+      "request.json": "451458ff0798315e8d43ec82cf66c223be04a6b50f0fb77af0a314691b56e3f5",
+      "result.json": "5704cb2301258d8ddaa95be0403355cd2c6ea0852a37c24b598aff807a23941c",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 714.1284
+  },
+  "linkCount": 1,
+  "linksRemoved": 1,
+  "preservedFailureSha256": "189f1f3731533456c390d7676053c9934ada6191538c1d1864612226ac1e4bf9",
+  "schema": "tsj-adopted-snapshot-junction-gates-v1",
+  "skippedCases": 0,
+  "status": "PASS_ACTUAL_SELECTED_WINDOWS_JUNCTIONS",
+  "targetBytesUnchanged": true,
+  "targetFileCount": 3
+}

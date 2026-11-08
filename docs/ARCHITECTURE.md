@@ -195,6 +195,15 @@ all consumed inputs are rechecked. The qualified profile covers two ordinary
 references and synthetic owner guards; full-D/OriginalArm/H1, authored routing,
 electrical/Player behavior and playable100 remain separate boundaries.
 
+The [adopted-owner snapshot component](task-evidence/Q100/adopted-owner-snapshot-r1/README.md)
+derives a distinct native-only Study whose main denies all profiles. Its closed
+snapshot requires positive prior groups adopted once on the same Meter, while
+retaining existing closed-state, identity, clock, copy and token owners. Actual
+ArmRun admissions supply prior credits; groupMeasures counts wrapper groups only.
+The canary proves lifecycle with synthetic scalar demand and zero capture/
+runFresh/Sessions. It emits no result or marker and does not restore full-D, H1
+or authored accounting. The generic R7 ledger stays unavailable for adopted use.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

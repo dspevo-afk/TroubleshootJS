@@ -1,0 +1,30 @@
+{
+  "actual": "OWNER_SOURCE_CANONICAL",
+  "cause": "Unchanged exporter canonical path check precedes ancestor reparse check",
+  "expected": "OWNER_SOURCE_REPARSE",
+  "failedCall": {
+    "childExitCode": 2,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "junction-cli-study-r1",
+    "processElapsedMs": 353.2086,
+    "receipts": {
+      "owner.json": "3dafb3c90779a89821389b7c510d308098edfb47eec34e05ec45b723a005dc5e",
+      "parent.json": "0a754fe24189612ae0bad94cdd6b487d20debe252e45f7408eb1a7627d800983",
+      "process.json": "ff99861b19f7a6c89701154a10911b3753059dab51f3f77e13d6a4bdce4de637",
+      "request.json": "a95e85c570226f9a944790e60845c17765b87ab980e3e3bf4fc80c62ec678099",
+      "result.json": "f8fd4c6852c932ad3309665a89f9444fdd3b8f2d67c88cfd73ec335faa637a5d",
+      "stderr.txt": "9c5a028bf03b07c11aeee2e8ec3aeb306195e0b918106fced0396e99fb64b0e3",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "FAIL_ROOT_EXPECTED_DIAGNOSTIC",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 605.5741
+  },
+  "fix": "Change root expected code only; retain actual owner and exact code assertion",
+  "linkStillOwnedAndVerified": true,
+  "productionOrGeneratorChanged": false,
+  "rootScriptSha256": "0daa3bcd3fdf4b38b492eac33973f4f6407b8b34d0b56e17c6c753eba2bca3d0",
+  "schema": "tsj-adopted-junction-failure-v1",
+  "status": "FAIL_PRESERVED"
+}

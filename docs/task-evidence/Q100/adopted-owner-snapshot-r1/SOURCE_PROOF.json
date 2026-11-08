@@ -1,0 +1,20 @@
+{
+  "authoredInvocations": 0,
+  "baseGeneratorSha256": "d11df617dc255257e3ac42cba45a9a8d78482f4fec9ea52f846a6f48f97ce1f0",
+  "budgets": "UNCHANGED",
+  "changes": [
+    "DENY_ALL_MAIN_ENTRIES",
+    "REQUIRE_ADOPTED_OWNER_FOR_CLOSED_SNAPSHOT"
+  ],
+  "closedSnapshot": "PRIOR_GROUPS_POSITIVE_AND_ORIGINAL_OWNER_STARTED_AND_ADOPTED",
+  "derivedBytes": 239584,
+  "derivedSha256": "1ae31054a430c00bf926ff4deff8091892bae267f05257aa0d869000226f7bd1",
+  "ioHelperSha256": "df9c297f4eb491117bade351ceedf26ccef5059e47ad9a7f36006000f1a10923",
+  "mainEntry": "DENY_BEFORE_ARGUMENT_PARSING_OR_IO",
+  "otherSnapshotGuards": "UNCHANGED",
+  "physicalOwner": "UNCHANGED",
+  "schema": "tsj-native-adopted-snapshot-overlay-r1",
+  "status": "GENERATED_NATIVE_ONLY_NOT_COMPILED",
+  "studyParentBytes": 240144,
+  "studyParentSha256": "7d62a0f343a270056bfd7e536145a47874ccc90c10cd24b93ec89ee6d6f94570"
+}

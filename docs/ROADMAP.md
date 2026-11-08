@@ -1068,6 +1068,22 @@ UNCERTIFIED. Implementation `7d404c6edfa8d1bdb27b1305b880541bc600ed42` was
 normally pushed to `origin/codex/q100-physical-feasibility`, exact remote SHA
 verified. Completion Gmail `1a1bccb124565398` sent once.
 
+The [adopted-owner snapshot/token prerequisite](task-evidence/Q100/adopted-owner-snapshot-r1/README.md)
+is locally accepted for its synthetic lifecycle profile. Real admission/adoption,
+mandatory positive prior groups, snapshot identity/spent/stale/foreign guards,
+aggregate639->640 and exact copy-capacity token checks pass with zero capture/
+runFresh/Sessions. Final JDK8 build212classes, unchanged46physical-owner bytes,
+native552assertions, retained shared-owner120, independent returned-counter
+equations, generator11PASS/2privileged-symlinkSKIP, four real Windows junction
+controls and exact public source reproduction pass. The initial root diagnostic
+expectation failure remains preserved and resolved from unchanged owner source.
+All native entry profiles stay denied. No full-D/H1/result/marker/export,
+production/Player/electrical/population or playable100 qualification follows.
+Budgets/oracles unchanged; Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
+historical protected unread UNCERTIFIED. Publication is pending final review.
+Next is frozen genuine full-D V2 assembly/ledger/context/host migration under
+one original plus exactly NULL/OBSERVE.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

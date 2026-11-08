@@ -1,4 +1,74 @@
-# Current checkpoint: generic native R7 reference published; full-D scope mapping
+# Current checkpoint: W adopted-owner snapshot locally accepted; publication pending
+
+UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
+tsj-q100-terminal-only-20261107-r1, codex/q100-terminal-only-20261107,
+HEAD7ddbda918e655c9059fc1ad3296a2bf2929a3310. Origin dspevo-afk/TroubleshootJS,
+normal target codex/q100-physical-feasibility, no upstream. V implementation
+7d404c6edfa8d1bdb27b1305b880541bc600ed42/receipt7ddbda91 remotely verified;
+Gmail1a1bccb124565398 SENT_ONCE. No W commit/push/Gmail yet.
+Main5f05b005 keeps9tracked/6untracked/staged0; E d9747229 report M/staged0;
+Desktop e0c36885 keeps7tracked/73untracked/staged0. Only Main/E reports mirrored.
+F was clean before W report/code/evidence/docs; no unrelated path changed.
+
+W OS-temp/tsj-q100-authored-r7-migration-898f11a9195e412ebd3c9892fd241b90.
+PLANe743dabe/SOURCE_MAPb28139f1 frozen before source/runtime. Public code/packet
+use adopted-owner-snapshot-r1 under tests/qualification/rb100-layout and
+docs/task-evidence/Q100. Native source1ae31054 is exactly V7d62a0f3 with main
+denial and positive-prior/started/adopted snapshot predicate. Other snapshot/token
+guards, generic R7 point/ledger/plan, shared4ed1c856 and physical7bf4ab57 unchanged.
+Full-D remains disabled; W does not fabricate OriginalArm or generic accounting.
+
+FINAL_GATES_R1 16e292c09b7879fccd7be8c025b7f62eb7074d72e0f14f250f810320c13a9630;
+PUBLIC_GATES_R1 f01b371be1e0211533ee70651d69bac6e70c74336104e9d92a0fb1da914ce6f1.
+Final JDK8 build212classes/645442B/allmajor51; all46physical-owner classes equal V;
+1307explicit constant-class links resolve fresh, reflection closure not claimed.
+Producer manifest2e5a1679400366b0646f0b1b7ab9f2ca69fc0510e0dbe3741cd9cebe839b8653.
+Native canary260ada17 passes552assertions/37snapshot/16token cases,15Meters/13owner
+fixtures, zero captureOriginal/runFresh/Sessions. Actual owner admission/adoption
+sets positive flags/counters; mutations occur only in labelled negative guards.
+Actual start/adopt0 state rejects; failed capture is spent. Group/copy limits,
+foreign/stale/reuse, bound scalar/list/closed-measure/token guards pass.
+
+Independent root worksheet checks two actual synthetic-demand frames R4097/C2/
+M665:13units/8891copy admissions/6chunks/+1group; wrapper638->639, prior1 unchanged,
+aggregate639->640 and exact capacity1048576. No exporter/result/marker invocation,
+OriginalArm, authored comparison, natural H1 or physical/electrical proof.
+Native405.1958ms op/653.2182ms wrapper; compile1291.1392/1551.8967ms. Retained
+shared-owner120assertions/6frames passes456.7958/707.9920ms; automatic execute
+cleanup SOURCE_ONLY. Three actual native main calls deny child1/stdout empty.
+
+Generator5690f759/testbb7f1e18:13declared11PASS/2privileged-symlinkSKIP. Actual
+generator positive/occupied negative and four real Windows junction roles pass.
+One owned link revalidated/nonrecursively removed; three copied targets unchanged.
+Initial root expectedREPARSE but unchanged exporter rejects earlierCANONICAL;
+failed assertion/script/raw receipts preserved, only expected code fixed from
+source. Root SOURCE_ONLY wiring review found missing derived-proof/inherited-
+closure rechecks; fixed before execution, delta review clear. Final canary draft
+Java7 capture/signature and missing-boundary fixes resolved before first compile.
+No post-fix review promoted to runtime proof. Root owns actual acceptance.
+
+Public generator366.9901/613.4075ms reproduces exact Study/proof; public canary
+equals compiled bytes. No repeated native run. Sources/tools/fresh212/inherited
+4288classes and jars rehashed across gates/final boundary. All returned processes
+terminate, temporary process roots/logs absent; isolated cleanup duration null.
+No new persistent resource. All workers stopped. Private source/classes/scratch/
+copied targets and failures retained; old uncertain resources untouched.
+
+First staged check rejected raw summary CRLF; exact bytes preserved with narrow
+standard cr-at-eol attribute. Actual Git validCRLF0/real trailing-space2 canary
+passes; initial check remains FAIL in CRLF_POLICY_R1. Source/classes/proofs
+rehashed unchanged; no native rerun required on this evidence-attribute boundary.
+
+Next actual diff/index/byte/privacy checks, intended staging, normal commit/push/
+exact remote, one W Gmail and receipt. No unresolved implementation blocker.
+Then freeze genuine full-D V2 assembly/ledger/context/host migration, preserving
+one original plus exactly two NULL/OBSERVE arms, no extra control/retry here.
+All budgets/oracles/epochs unchanged; production/GWT/Player/electrical/population
+NP/not renewed. No old D input/result/descriptor/compiled-input DATA or protected
+body read; opaque class hashing only. Full30EXCLUDED; HARD/PSYCHOTIC unavailable/
+unrun; historical protected unread UNCERTIFIED; playable100=0/betaHELD.
+
+# Historical checkpoint: generic native R7 reference published; full-D scope mapping
 
 UTC2026-11-08. Standing roadmap continues. F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107, implementation7d404c6edfa8d1bdb27b1305b880541bc600ed42.
