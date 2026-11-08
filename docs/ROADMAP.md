@@ -1095,7 +1095,10 @@ subtractions and26freeze units; initial failed source/spec/unit checks remain.
 Eight tests, actual selected Python positive, five exact-code CLI negatives with
 real junction cleanup, independent source/math audit and exact public source/
 summary reproduction pass. No oracle DATA, old builder, native/build/Session or
-full-D/H1/playable proof is exercised. Publication pending final review. Next is
+full-D/H1/playable proof is exercised. Implementation
+`1915ab43169ec2ed60a0dd328b850fdba015fcbc` normally pushed to
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
+Gmail `1a1bd3977bf84370` sent once. Next is
 source-only normalizer/pure-parser/host/native implementation under the frozen
 phase gates, then pinned normal-prior ingest and the single original/NULL/OBSERVE
 producer only when all required proofs exist. Existing limits/oracles/seeds and

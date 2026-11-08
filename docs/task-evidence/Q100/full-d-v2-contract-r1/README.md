@@ -1,6 +1,9 @@
 # Full-D V2 contract freeze
 
-Accepted for source-contract validation only; publication awaits final review.
+Accepted and published for source-contract validation only. Implementation
+`1915ab43169ec2ed60a0dd328b850fdba015fcbc` is verified on
+`origin/codex/q100-physical-feasibility`; completion Gmail
+`1a1bd3977bf84370` sent once. See [publication](PUBLICATION_R1.md).
 This freezes the coordinated outer wire, acyclic context,20 normal-prior role
 pins, marker maximum and corrected authored work prepayments. It does not enable
 or qualify a producer, OriginalArm, H1, data ingest or playable board.

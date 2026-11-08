@@ -1,4 +1,30 @@
-# Current checkpoint: X full-D source contract accepted; publication pending
+# Current checkpoint: X contract published; fixed-role reader source next
+
+UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
+tsj-q100-terminal-only-20261107-r1 on codex/q100-terminal-only-20261107.
+X implementation1915ab43169ec2ed60a0dd328b850fdba015fcbc normally pushed to
+origin/codex/q100-physical-feasibility and exact remote SHA verified. Completion
+Gmail1a1bd3977bf84370 SENT_ONCE; this documentation receipt gets no second email.
+No upstream configured. Verify actual HEAD after this receipt. Main5f05b005
+keeps9tracked/6untracked/staged0; E d9747229 report M/staged0; Desktop e0c36885
+keeps7tracked/73untracked/staged0. Main/E report mirrors only; F clean after X.
+Root actual staged review24paths/tree32fd57e9/diffe38a128c passed; source/index
+bytes matched. Contract-only acceptance and all X gates/limits are preserved
+immediately below; no native/data/full-D acceptance is implied by publication.
+
+Next eligible substep: source-only fixed-role reader for20 exact normal-prior
+roles, with synthetic and actual selected-OS positive/rejection/recheck gates.
+Y OS-temp/tsj-q100-fixed-role-reader-4fb644a479b04b98ba0d1b33c6687127.
+One leaf owns reader/test source; root owns plan, integration and all execution.
+No actual N/D role body reads, normalizer/native/producer or Session in this
+substep. PLAN_R1 source/reader prerequisites remain required before recording
+any later data-read transition. No extra original/control/arm/retry is granted.
+No new persistent process; uncertain old resources/failures remain untouched.
+Existing caps/seeds/oracles unchanged; production/Player/electrical/population
+not renewed. Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historical protected
+unread UNCERTIFIED; playable100=0/betaHELD.
+
+# Historical checkpoint: X full-D source contract accepted before publication
 
 UTC2026-11-08. Standing roadmap continues. F OS-temp/
 tsj-q100-terminal-only-20261107-r1, codex/q100-terminal-only-20261107,
