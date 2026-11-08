@@ -155,6 +155,25 @@ Natural NO_PATH must carry terminal evidence. This native-only qualification
 adds no electrical solver, production policy, Player flow or playable admission.
 Full result/marker/R7/source-bound host integration is still separate.
 
+The [source-bound natural-reference host reader](task-evidence/Q100/source-bound-natural-reference-host-r1/README.md)
+mechanically combines the pure T consumer and retained owner-call/class-tree
+kernel with a current explicit admission adapter. The parent CLI is retired;
+only host identifier tokens gain the RH_ prefix. The external context supplies
+source/class/tool paths and identities independently of receipts. Expected
+compiler/native argv is rebuilt from fixed roles/classpath/source-list bytes.
+Published T proof and fixed producer manifest supply independent native/compile
+receipt pins; exact nine-file call closure includes the two rootcaller logs.
+Source bytes, inventories, class trees, tools and receipts are rechecked after
+exclusive output/readback. Lexists guards supplement the inherited cleanup check.
+
+Legacy class metadata keeps its entries/classCount/totalBytes shape; ordinary
+class sidecars use the existing files/count/bytes inventory schema. The existing
+host owner handles empty receipt streams and the exporter handles nonempty assets
+and exclusive writes. Pinned raw CRLF host source is preserved; no old data loader,
+version resolver, fabricated original or replacement physical/electrical owner is
+added. This finite T-profile host acceptance does not qualify full result/marker/
+R7 export integration, authored experiments, Player behavior or playable layouts.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

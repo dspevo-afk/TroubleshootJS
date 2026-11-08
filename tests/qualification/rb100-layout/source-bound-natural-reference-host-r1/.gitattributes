@@ -1,0 +1,2 @@
+*.py -text
+read_source_bound_reference_v1.py whitespace=cr-at-eol

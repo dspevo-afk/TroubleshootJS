@@ -1,83 +1,96 @@
-# Current checkpoint: natural generic routing reference published; full-result mapping next
+# Current checkpoint: source-bound natural-reference host accepted; publication next
 
-UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
+UTC2026-11-08. Standing roadmap continues. F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
-implementationHEAD e2733a09a64dc3ee846f8c8e2f9073ea8445474a; receipt commit carries
-this checkpoint, verify actual HEAD.
-Before T report-only M/staged0. T33path implementation committed; after publication
-F clean before this receipt. This receipt updates intended docs/evidence only.
-Normal origin target codex/q100-physical-feasibility; no local upstream.
-R dfccca05+receipt8dd8175c published/Gmail1a1bb49499634913 SENT_ONCE.
-S f9253d30+receipt218e7f77 published/Gmail1a1bb6d74e5dc143 SENT_ONCE.
-Do not duplicate. Main5f05b005 preserves9tracked/6untracked/staged0; E d9747229
-report-only M; Desktop e0c36885 preserves7tracked/73untracked/staged0.
-Main/E mirror report only. AGENTS a3dec836 unchanged.
+baseHEADb616088a61d38623c19db45b305bdabe65465e33; verify actual HEAD.
+Origin dspevo-afk/TroubleshootJS normal target codex/q100-physical-feasibility,
+no upstream. Before U report-only M/staged0; now intended U6code/15evidence and
+three docs only. Main5f05b005 preserves9tracked/6untracked/staged0; E d9747229
+report-only M; Desktop e0c36885 preserves7tracked/73untracked/staged0. Main/E
+mirror report only. AGENTS a3dec836 unchanged. All unrelated work preserved.
 
-T owned OS-temp/tsj-q100-full-result-host-scope-8a4920c8b40c4619b71514d8455c465a.
-Code tests/qualification/rb100-layout/natural-generic-routing-reference-r1;
-evidence docs/task-evidence/Q100/natural-generic-routing-reference-r1.
-PLAN_R2 0dd298d8bb027d983d324806466a38cc9c589e4f699695b7abd3178b2d7db327;
-WIRE_R2 dd738f0bbac0edc4f4cbaf4a0d2bba80ebeda9a581d79c052e29df8976e73dd6;
-fixture spec5d2b62c98bd229a73be0e54e4b6adcde4d5080fb87046d8bd770455f80c1224a.
-Five final source pins in INPUT_R1 plus separate text-test pin; all workers stopped.
-Independent SOURCE_ONLY R2 recheck and READONLY_CLASS audit found no blockers.
+T PUBLISHED e2733a09a64dc3ee846f8c8e2f9073ea8445474a plus receiptb616088a,
+normal push/exact remote verified. Gmail1a1bbcc900c484af SENT_ONCE. R/S emails
+1a1bb49499634913/1a1bb6d74e5dc143 SENT_ONCE; never duplicate. T natural OPEN/
+BLOCKED2references, independent fixture/copper proof and173fresh/46P classes
+remain attached to T, not a renewed producer. T19negatives/9junction cases PASS,
+8links removed. All T source/failures/classes/receipts retained. Playable100=0.
 
-LOCAL PASS: actual selectedPython-I-B native generator29declared/26PASS/3OS-linkSKIP;
-reader initially19PASS/1optional-packetSKIP then fresh final20PASS/0SKIP. Actual
-final-source JDK8 producer3sources/173classes/563848B,46P-owner classes byte equal.
-All173 explicit fresh-namespace Class targets resolve fresh; arbitrary reflection
-and broad dependency qualification outside that audit. Native geometry policy
-56cases/58assertions/0Sessions PASS. Retained native contracts PASS materializer13/
-2cases/0Sessions, terminal217421, branch30, relaxed2201; other totals unmeasured.
-One natural producer invocation/exactly2Sessions OPEN FOUND/SUCCESS/two traces/
-zero holes and BLOCKED NET_A:NO_PATH/natural terminal/null layout. Producer473.084ms
-operation/709.1715ms wrapper; independent reader446.9566ms/687.2463ms. Accepted
-packet17495B SHAe227c53d5fa7de35b024c1ff24d465515c55204f769bcff622ecb8e9a4c798ca;
-runId b36bb438-65ac-48f2-a754-560d4250d5eb; producer manifestdf27c7750f61e4d4c959d60988a3381d64b6e94737da785e2b5ff76eaa811ada.
-Fixture oracle is source-frozen, not derived from output; unchanged pure24469B
-conductor SHA4da7537bedb805aaebd4f70d9d3a1e978a70d2f26df5e3f53243dd7bfa30525e.
+U owned OS-temp/tsj-q100-result-envelope-scope-918c3d4e43d7497b9718cbbe52a056a3.
+Code tests/qualification/rb100-layout/source-bound-natural-reference-host-r1;
+packet docs/task-evidence/Q100/source-bound-natural-reference-host-r1.
+PLAN_R1 a9c70b514b191b3e4a27137e85a4b13786c30ad43de0db88af27f05e79753e02;
+WIRE_R1 4d1376c3c303fcc8c67222be040c0173f0af58d2d39f70fcc0fe081ffd127834;
+clarifR1 b63b76d6a05b8f4a41929a29f9c04c63b340f388972d93f93675aa8994e9ade2;
+clarifR2 2143f12c0d7ff9a1915ff1aca8941b403fff8483e88768e16dddb909f755d1bb.
+CONTEXT_R2 a11e3362b1fbdbaded6fbd17fbea87f7aedfee1110c2288242458472ab036c0c;
+R1 preserved UNRUN. Sidecars173/563848B SHA273c19d7a0d8e5c3613c5c194eb2b9bc9b7ae3522d9f3cb473f6f8e3649b5ffe;
+4288/19644833B SHA1cff8e2b4ed4397f884104b160a035333ddda3685d1ced4605c8ceef3a7be7e0.
+All workers stopped. Independent SOURCE_ONLY contract/source rechecks found no
+remaining concrete blocker after listed fixes; no agent runtime claim.
 
-Nineteen actual host negatives and nine actual Windows junction cases pass expected
-rejection (Python child2/wrapper1; native child1/wrapper1). All8junction identities/
-types/targets/creation ticks revalidated before literal nonrecursive unlink;
-lstat absent/7targetSHA unchanged/owned outputs empty. Returned task process roots/
-logs absent. Isolated wrapper cleanup duration remains null. Public8code bytes
-match tested sources; both public generators reproduce exact derived sources/
-proofs, public reader returns exact independent summary. Tools, sources, fresh/
-inherited classes and all returned closures rehashed unchanged. No producer rerun.
-FINAL_GATES_R1 SHAaa88f01a93f7a1408268bbec37b9e271b87a7719df304b8e54a991e3d10c208a;
-PUBLIC_GATES SHA3126ea6b8f52f923c71054a90f35c4ac0d2e8d5e37573f481b3b85f8ee300fed.
+FINAL SOURCE gen4cd8b914bb734091bcdea038da0cc22e0b5aa76d61bdf5510a1e240da6ed5f68;
+gentest1deac5e1bd08b0e40b099f8bc8beb569a8d473f0682c309e32b75469bd8857b8;
+adapterd41ba71e2b5c22760c3a0e0086982339c2613aa855fb0d8b8694b32eac59a2c1;
+readertest338b244f6d94bdf967e641c65e88944648a07795a17da3b60bd7e108c49cc02e.
+Derived-r7aab50f96d1beb412a1d291f550ab75462ccfa768e2b088adb178ca859c33757b;
+proof3a1df795c28acd4244e432427279c835bfba75b0e5ce2ceb5e6c8f183106845b.
+Retained host25nodes/10constants use RH_ identifier-only rename; raw CRLF retained.
+T pure reader/conductor bytes unchanged; old CLI retired/new exact final guard.
 
-Preserved: geometry path source blocker fixed BEFORE execution/R1UNRUN; root
-host expectation initially named later terminal guard but actual earlier accounting
-rejected. Corrected expectation/reused exact audited closure; no code/oracle change.
-Packaging lookup used retired function name, then drive-path heuristic matched two
-Java percent-d escaped-newline format strings. Correct current owner lookup/exact
-nonpath classification, all partial bytes audited; both failures preserved. No
-application runtime failure or budget weakening. Old evidence/versions retained.
+LOCAL FINAL PASS full CLI host-admission-positive-r5 3022.5019ms operation/
+3265.8097ms wrapper; same17495B packet SHAe227c53d5fa7de35b024c1ff24d465515c55204f769bcff622ecb8e9a4c798ca.
+Independent context/source/class/tool/compile/native argv and fixed seven-file
+receipt pins, exact9regularcall files/wrapper semantics, strong lexists, exclusive
+write/readback plus consumed material/class trees rechecks pass. Legacy metadata
+keeps actual entries schema; ordinary sidecars measured honestly. No fabricated
+run/original. Final gen10PASS/0SKIP, reader13PASS/0SKIP incl actualcontext and real
+junction/dangling/cleanup, focusedjunction1PASS. Twenty actual CLI negatives and
+seven real junction CLI cases PASS_EXPECTED_REJECTION child2/wrapper1. Six root
+links revalidated(path/type/target/creation), literal nonrecursive unlink shell0;
+4files/173class targets unchanged, outputs empty, links lstat absent. All returned
+process roots/logs absent; isolated cleanup duration null. Zero new Java/native
+producer/authored invocations. T consumed sources/classes/tools rehashed unchanged.
 
-Boundary GENERIC_NATURAL_ROUTING_REFERENCE_ONLY: no authored original/OriginalArm,
-new D invocation, NULL/OBSERVE comparison, H1, full result/marker/R7 qualification.
-Fixed factory is inherited bounded logical API operation; VM allocations unmeasured.
-No captured D body/descriptor/compiled-input data or protected body read here;
-historical protected-unread UNCERTIFIED. Full30EXCLUDED; HARD/PSYCHOTIC unavailable/
-unrun; playable100=0/betaHELD. ProductionGWT/Player/electrical/population gates NOT
-APPLICABLE/not renewed. All90s/640groups/5s/32768units/copy1048576/chunk4096/
-compile-suite60s/wrapper480s/reader180s/cleanup120s/branch100000/global1m/depth64/
-visits1m unchanged. All T scratch/classes retained; no new persistent resources.
+Public6code bytes match tests; public generator reproduces source/proof exactly,
+public CLI summary/accepted bytes exact (3015.3233ms/3260.0733ms). Public proof
+SHA22d864388a6ff0eaa223b326d32f28caa3ab6f60027f272ec3034916bde22ddf.
+FINAL_GATES SHA308c41c0696f5b5aa284123f62ecc72f88cbc172fb777876cea31d1d86455d16.
+Standard cr-at-eol whitespace attr on generated file preserves pinned CRLF;
+real Git canary goodCRLF exit0/actual trailing-space exit2. No global config change.
+Synthetic Windows argv literals use task/sdk/jdk8 only; no personal path admitted.
 
-PUBLISHED: implementatione2733a09a64dc3ee846f8c8e2f9073ea8445474a normally pushed
-and exact origin target SHA verified. Final actual33path diff/byte/privacy checks
-PASS, tree08ba3549bd5ad635ea91fd69545489fbbee10f27; review21004656eb2be045df64adb7f27224e5a6c0b46038a1a205b75fa1953307f9fe.
-Initial CRLF cached-check failure on two packaging notes corrected with LF-only
-public projection; raw private originals preserved, no application source change.
-Zero prior Sent subject matches; completion Gmail1a1bbcc900c484af SENT_ONCE.
-No duplicate/receipt email. NEXT: source-only full result/marker/R7/host caller
-mapping begun by two bounded leaves; root freezes next coherent scope before
-implementation/execution. No authored retry implicitly authorized.
-Old uncertain browser14116/start639294472690745890/port58320, preview34180/
-start639294472514546595/port58264+14uncertainchildren, oldD timeout logs and
-UNCERTIFIED unlink untouched. No broad cleanup/reset/history rewrite.
+Failures/source archives r1..r9 retained: generator guard/parser/name/mock and
+adapter I/O/legacy/junction source blockers fixed before their runtime; first
+unit FAIL(10declared/5fail/3error/1skip) singleAssign tuple vs CLI_FLAGS, corrected
+cause/no oracle change. Real generator failures selected Windows ctime handle/
+path mismatch and pinnedCRLF rejection; commonhandle fields plus fullpath pre/post
+ctime retained, exact rawCRLF/hash kept. Adapter positives failed unfrozen proof
+colocation, empty asset-reader vs hoststream owner, invented compile notes; fixed
+explicit proof path+SHA, existing RH__read zero branch, strict qualified92B warning.
+Initial reader13/2errors wrong expected exception owner; exact RH_ class correction
+only, fresh13PASS. One root alias expected later path guard, actual CLI rejects
+earlier; audited unchanged rejection reused after expectation correction. All
+failed positives remain FAIL in final receipts; only intentional negatives pass.
+No failure reclassified or hash/oracle/budget weakened. Private raw data retained.
+
+Final staged check found one extra adapter EOF blank line copied verbatim into
+generated source. Removed only that line; all23units, actualpositive,20CLI
+negatives,7CLI junctions, focusedjunction and public reproduction rerun fresh on
+final source. Old staged candidate/source/failure retained, no suppressed check.
+
+NEXT: final actual diff/staged-byte/privacy checks, normal commit/push/exact remote
+verification, then ONE U Gmail. U not published yet; no duplicate T/receipt email.
+Native full result/marker/R7 migration remains next/unstarted. No OriginalArm/H1/
+NULL-OBSERVE comparison or authored retry implied. Source4MiB/hostJSON8MiB/context-
+packet1MiB/classes10000-268435456B and original90s/640groups/5s/32768units/
+copy1048576/chunk4096/branch100000/global1m/suite60s/reader180s/wrapper480s/
+cleanup120s remain. ProductionGWT/Player/electrical/population NOT APPLICABLE/not
+renewed. Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; protected bodies unread
+here, historical unread UNCERTIFIED; playable100=0/betaHELD. No new persistent
+resources. Old uncertain browser14116/start639294472690745890/port58320 and
+preview34180/start639294472514546595/port58264+14uncertainchildren, D timeout logs/
+UNCERTIFIED unlink untouched. All scratch/classes/evidence retained.
 
 # Historical checkpoint: generic selected-observation V2 published; full integration next
 

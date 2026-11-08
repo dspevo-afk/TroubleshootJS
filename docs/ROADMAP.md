@@ -1025,6 +1025,23 @@ Implementation `e2733a09a64dc3ee846f8c8e2f9073ea8445474a` was normally pushed to
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified. Completion
 Gmail `1a1bbcc900c484af` sent once.
 
+The [source-bound natural-reference host prerequisite](task-evidence/Q100/source-bound-natural-reference-host-r1/README.md)
+is locally accepted for the unchanged genuine T reference packet. The standalone
+consumer binds independent source/class/tool identities, compiler/native argv,
+fixed receipt pins, exact nine-file call closures and routing/copper semantics,
+then exclusively writes/readbacks and rechecks the same17495B body. Final generator
+10 and reader13 pass without skips, including actual context and Windows junction/
+dangling/cleanup cases. Twenty actual CLI negatives and seven real junction cases
+reject; six links removed and four files/173copied classes unchanged. Public code
+reproduces exact source/proof, summary and accepted bytes. Initial source, test and
+real host compatibility failures remain preserved and resolved; no hash/oracle/
+budget weakened. New Java/native producer and authored invocations remain zero.
+This accepts current T-profile host admission; full native result/marker/R7
+migration is next, with no fabricated OriginalArm. No production/GWT/Player/
+electrical/population renewal; playable100=0/betaHELD; Full30EXCLUDED;
+HARD/PSYCHOTIC unavailable/unrun; historical protected unread UNCERTIFIED.
+Publication status is recorded in the current checkpoint.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

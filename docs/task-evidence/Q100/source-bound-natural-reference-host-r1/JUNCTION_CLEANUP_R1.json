@@ -1,0 +1,10 @@
+{
+  "classFilesUnchanged": 173,
+  "filesUnchanged": 4,
+  "isolatedCleanupDurationMs": null,
+  "linksAbsent": 6,
+  "noPersistentJunctions": true,
+  "ownedOutputsEmpty": true,
+  "schema": "tsj-source-bound-host-junction-cleanup-v1",
+  "status": "PASS_LITERAL_NONRECURSIVE_UNLINK_AND_TARGET_RECHECK"
+}

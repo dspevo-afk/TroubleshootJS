@@ -1,0 +1,49 @@
+{
+  "accepted17495ByteEqual": true,
+  "codeFiles": 6,
+  "derivedByteEqual": true,
+  "generator": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "public-generator-r2",
+    "processElapsedMs": 459.7626,
+    "receipts": {
+      "owner.json": "e198d81ebedcbd451246eefe36496be01ba430fc0be7211eaf6dc1ba27c1bd33",
+      "parent.json": "8bc42f8bbf8f1768e478e37f9adaecb1e8e9644e4c29b4db12388ca6503e4fa5",
+      "process.json": "c4e515adac99df848b921cae4271e0dd62feedfd9998d49cd3d765d5271485c0",
+      "request.json": "ab3b5544cee3a81b2ebd555d42e5deb1a8ae78cadff445ac98dabfa508a831b9",
+      "result.json": "72a61875e7432d4350c9d08b3c283a18e4d87bb57aed151cc569c40d897e091b",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "8ee22cabdf67d0f99683a7c31549a7312866411884cce1a29553074094867461"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 700.5506
+  },
+  "newAuthoredInvocations": 0,
+  "newNativeProducerInvocations": 0,
+  "reader": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "public-admission-r2",
+    "processElapsedMs": 3015.3233,
+    "receipts": {
+      "owner.json": "03f0dfd179ec733dfd2854e9b5bb04c2652b490ca478ade76260a9e6075872ba",
+      "parent.json": "38950acc8577c44015353008881678fd80ea3d660d3ab74e8435fb3add85bc99",
+      "process.json": "de5d27b161b6af6f317bc5b95fdf0becd8cb82f50b31436d893400aaf89c846e",
+      "request.json": "72871c0abe44a8a7c600467a288c758edef4243029882ac7ca976ac2c7a6c758",
+      "result.json": "c9dc975b90dbace5ec865c47d3531b9c812165a4f32b5e4765c54fa389e2ed80",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "b96153400bde9408172df011787229de52f0754c87b0f8570e5cb913be190c41"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 3260.0733
+  },
+  "schema": "tsj-source-bound-host-public-gates-v1",
+  "sourceProofByteEqual": true,
+  "status": "PASS_EXACT_PUBLIC_CODE_GENERATION_PROOF_SUMMARY_ACCEPTED_BYTES",
+  "summaryByteEqual": true
+}

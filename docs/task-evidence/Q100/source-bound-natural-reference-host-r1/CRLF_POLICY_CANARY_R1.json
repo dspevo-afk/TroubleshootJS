@@ -1,0 +1,11 @@
+{
+  "attribute": "demo.py -text whitespace=cr-at-eol",
+  "badExitCode": 2,
+  "badOutput": "demo.py:1: trailing whitespace.\n+value = 1 \r\n",
+  "globalConfigurationChanged": false,
+  "goodExitCode": 0,
+  "rawSourceBytesPreserved": true,
+  "schema": "tsj-preserved-crlf-attribute-canary-v1",
+  "scope": "GENERATED_READER_ONLY;CRLF_BYTES_PRESERVE_SOURCE_OWNER_PROOF;ALL_OTHER_WHITESPACE_CHECKS_RETAINED",
+  "status": "PASS_VALID_CRLF_AND_REAL_TRAILING_SPACE_REJECTION"
+}

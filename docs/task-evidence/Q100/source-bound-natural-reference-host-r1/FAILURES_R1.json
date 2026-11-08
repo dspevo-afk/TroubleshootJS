@@ -1,0 +1,350 @@
+{
+  "archive": "PRIVATE_SOURCE_REVISIONS_R1_THROUGH_R10",
+  "laterSourceRevisions": {
+    "adapterPath": {
+      "resolution": "CONTEXT_DECLARED_CANONICAL_PROOF_PATH_PLUS_FIXED_SHA;NO_UNFROZEN_COLOCATION"
+    },
+    "junctionTest": {
+      "actualExecution": "NOT_RUN",
+      "cleanup": "NONRECURSIVE_OWNED_LITERAL_PATH_UNLINK_MUST_PROPAGATE_FAILURE",
+      "handleCloseFailure": "PROPAGATES",
+      "launchAndRevalidation": "LSTAT_DEV_INO_MODE_ATTRIBUTES_REPARSE_TAG_CREATION_READLINK"
+    },
+    "legacyMetadata": {
+      "actualFields": [
+        "classCount",
+        "entries",
+        "schema",
+        "sourceManifestSha256",
+        "totalBytes"
+      ],
+      "actualPinnedSchema": "tsj-failure-cohort-classes-v1",
+      "ordinarySidecarSchemaUnchanged": true,
+      "resolution": "PARSE_ACTUAL_METADATA_ENTRIES;PASS_ENTRIES_TO_EXISTING_CLASS_TREE_ADAPTER",
+      "sha256": "7fe14c6f95ae1c99ddfb3f81d975ff7f9ee2a6e1851b09e32d9ca8f0d47889f9"
+    },
+    "limits": {
+      "hostMetadataJson": 8388608,
+      "originalClassAndNativeBudgets": "UNCHANGED",
+      "packetAndContext": 1048576,
+      "sourceDerived": 4194304
+    },
+    "schema": "tsj-source-bound-host-root-source-revisions-v1",
+    "sourcePins": {
+      "generate_reference_host_admission.py": "4cd8b914bb734091bcdea038da0cc22e0b5aa76d61bdf5510a1e240da6ed5f68",
+      "reference_host_adapter.py": "6a253ff0862fe979f49517a9eb52b52f30b59ffd982562a818b2df70f2ce8560",
+      "test_generate_reference_host_admission.py": "1deac5e1bd08b0e40b099f8bc8beb569a8d473f0682c309e32b75469bd8857b8",
+      "test_reference_host_admission.py": "2dc9f6b9b891fa9f7aa6f1337d7b9033e2aba1ff3c405c5b57dbf2a7c44b0da0"
+    },
+    "status": "SOURCE_FIXES_BEFORE_FINAL_FULL_ADAPTER_ACCEPTANCE"
+  },
+  "oracleOrBudgetWeakening": false,
+  "runtime": {
+    "GENERATOR_POSITIVE_FAILURE_R1.json": {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "generator-positive-r1",
+        "processElapsedMs": 351.2807,
+        "receipts": {
+          "owner.json": "321201db92451b9aa3015f081c97d99fb527bbb5abe997946c6d84070f8388c4",
+          "parent.json": "b8bc50e9bfa197a97e456e180de8d3635f0b5dbf4b24d805847b13233863e790",
+          "process.json": "b6fbb1bdce1d83efeb1b3b2b84e461b322dee67c1e4aeaf432aabdc9da22c1f5",
+          "request.json": "9c834ab9f3ee781c285c991f906b9a5d7525641039a1bb6fdfef9a91e5ff0bbe",
+          "result.json": "699e663b60eb097bce833ea29e1188ec5525dd87064d5ba14058244714fb1cd1",
+          "stderr.txt": "1081ea131b039fa2a4368c6c21796eda167c3410b46c9f94dbb82bc24f8aa05c",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 603.6707
+      },
+      "cause": "SELECTED_PYTHON_PATH_LSTAT_AND_HANDLE_FSTAT_CTIME_DIFFER_FOR_SAME_REGULAR_FILE;OTHER_IDENTITY_FIELDS_EQUAL",
+      "derivedDirectoryEmpty": true,
+      "diagnostic": {
+        "st_ctime_ns": [
+          1794130306476790900,
+          1794131424743136500
+        ],
+        "st_dev": [
+          6689634467329012652,
+          6689634467329012652
+        ],
+        "st_file_attributes": [
+          32,
+          32
+        ],
+        "st_ino": [
+          2251799816134070,
+          2251799816134070
+        ],
+        "st_mode": [
+          33206,
+          33206
+        ],
+        "st_mtime_ns": [
+          1794131424743136500,
+          1794131424743136500
+        ],
+        "st_size": [
+          15705,
+          15705
+        ]
+      },
+      "error": "IO_HELPER_IDENTITY",
+      "hashPinsOrBudgetWeakening": false,
+      "newAdapterRuntime": "NOT_RUN",
+      "newAuthoredInvocations": 0,
+      "newNativeProducerInvocations": 0,
+      "resolution": "COMPARE_COMMON_HANDLE_FIELDS_DEV_INO_MODE_SIZE_MTIME_ATTRIBUTES;RETAIN_FULL_LSTAT_CTIME_IN_BEFORE_AFTER_PATH_RECHECK",
+      "schema": "tsj-source-bound-host-generator-positive-failure-v1",
+      "status": "FAIL_PRESERVED_NOT_RECLASSIFIED"
+    },
+    "GENERATOR_POSITIVE_FAILURE_R2.json": {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "generator-positive-r2",
+        "processElapsedMs": 357.9603,
+        "receipts": {
+          "owner.json": "0d584d01de43412c8f87a4b86591be4fba9479a3ab4b8b65f8cfa9e4366c1ef8",
+          "parent.json": "fb57a1f8e1f3ca20dc6f4afb7d91869d456ff4f4a796cb3e6ba131461929e814",
+          "process.json": "0268c6598e8cda1ec9e59932a480523a1c744032c793b1bf01778c7cd5989467",
+          "request.json": "e658f6c2ebd3d0685251fc72e9fa78102cda1964a01fec344be997b38096c7dc",
+          "result.json": "a3fab8e2e00c454c7cde1f80d616cd0f26ad0fb4840760254095f6061ab23a2a",
+          "stderr.txt": "9db6a669d16813b5e777ee82d82069e3f0d433cdd7061e0aa07b488d33301aaa",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 612.0814
+      },
+      "cause": "PINNED_ACTUAL_HOST_SOURCE_IS_CRLF;NEW_GENERATOR_INCORRECTLY_DEMANDED_LF_ONLY",
+      "derivedDirectoryEmpty": true,
+      "error": "HOST_READER_LINE_ENDINGS",
+      "hashPinsOrBudgetWeakening": false,
+      "newAdapterRuntime": "NOT_RUN",
+      "newAuthoredInvocations": 0,
+      "newNativeProducerInvocations": 0,
+      "resolution": "ACCEPT_PINNED_SOURCE_LF_OR_CRLF_WITHOUT_NORMALIZATION;PRESERVE_ALL_NON_IDENTIFIER_BYTES;NO_BARE_CR",
+      "schema": "tsj-source-bound-host-generator-positive-failure-v1",
+      "sourceLineEndings": {
+        "bareLf": 1326,
+        "crlf": 47
+      },
+      "status": "FAIL_PRESERVED_NOT_RECLASSIFIED"
+    },
+    "GENERATOR_UNIT_FAILURE_R1.json": {
+      "call": {
+        "childExitCode": 1,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "generator-units-r1",
+        "processElapsedMs": 436.0577,
+        "receipts": {
+          "owner.json": "cd2ea2786fb29dd6d2eec9d9fa81691e7b0202859e1910a0e00001eb0f741601",
+          "parent.json": "e60da8709575549ef598f3c861758335b772b80b1ff8de672a9e8da70ace264b",
+          "process.json": "7243e2a023fee1e283a719d5fe900507879092cd46dd366bc13a669ae0e7aa9a",
+          "request.json": "1f6b577da4fc7a29b1ddecf209365fcae950052c5a4eaca574fcdcf7fce7b53f",
+          "result.json": "e68fed857f25dd24a484d294cc48137fe46f339e059dd895db1899a0d9402ac8",
+          "stderr.txt": "716ac2a81d5a30e1b43cb0a04504b50298f4dbac24cbb6f4d193852595b2f389",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 859.2218
+      },
+      "cause": "TOP_NAME_RETURNS_SINGLE_ASSIGNMENT_AS_TUPLE_BUT_REFERENCE_CLI_FILTER_EXPECTS_STRING;CLI_FLAGS_NOT_RETIRED",
+      "declared": 10,
+      "errors": 3,
+      "failures": 5,
+      "impact": "SYNTHETIC_AND_REAL_REFERENCE_DERIVATION_REJECT;NO_ADAPTER_RUNTIME",
+      "oracleOrBudgetChanged": false,
+      "resolution": "NORMALIZE_SINGLE_ASSIGNMENT_OWNER_NAME;PRESERVE_MULTI_TARGET_TUPLE;NO_ASSERTION_WEAKENING",
+      "schema": "tsj-source-bound-host-generator-failure-v1",
+      "skipped": 1,
+      "sourceArchive": "source-revisions-r2",
+      "status": "FAIL_PRESERVED_NOT_RECLASSIFIED"
+    },
+    "HOST_ADMISSION_FAILURE_R1.json": {
+      "acceptedDirectoryEmpty": true,
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-admission-positive-r1",
+        "processElapsedMs": 363.4931,
+        "receipts": {
+          "owner.json": "d5954edd95e1359efa05b5b7c1739b48031f47385bc65784675511c5d5578f7d",
+          "parent.json": "a9a07eea87e4cce05011ea912e804d7c4acb1c2831455a5fc70d255bad26631d",
+          "process.json": "c58f323e5fe5aabe53e780d951f6a0f1cd931e55602314454f8412fad399f431",
+          "request.json": "949018531e42b99524d5b80688a4ae8227417b5bc25f2bd2d24793762f1b1866",
+          "result.json": "6efbb8d44cd0022fd5a7a3bf60e6ac52d2987725df51831ef8f7c392cfd1f900",
+          "stderr.txt": "4f8a0c5c64e139a03da6a9b77afafd1f3ae2cafe60626d4851ada9dd16271f54",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 608.1936000000001
+      },
+      "cause": "ADAPTER_ADDED_UNFROZEN_SAME_DIRECTORY_REQUIREMENT;ROOT_CONTEXT_EXPLICITLY_SELECTS_PUBLISHED_T_PROOF_PATH",
+      "error": "SW_ADMISSION_CONTEXT_NATIVE_PROOF_PATH",
+      "hashPinsOrBudgetWeakening": false,
+      "newAuthoredInvocations": 0,
+      "newNativeProducerInvocations": 0,
+      "resolution": "KEEP_EXPLICIT_CANONICAL_CONTEXT_PATH_AND_FIXED_PROOF_SHA;REMOVE_UNREQUESTED_COLOCATION_RULE",
+      "schema": "tsj-source-bound-host-admission-failure-v1",
+      "status": "FAIL_PRESERVED_NOT_RECLASSIFIED"
+    },
+    "HOST_ADMISSION_FAILURE_R2.json": {
+      "acceptedDirectoryEmpty": true,
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-admission-positive-r2",
+        "processElapsedMs": 1651.8751,
+        "receipts": {
+          "owner.json": "6f5c96e719e29ef87fecba132b5231b49e1b90b6b66399fa089bfaccf7b4a0d0",
+          "parent.json": "ae8b9f91b40484a7e5ddc15410ba3affeb46e0e5b9f6a5f42cde055823ae416a",
+          "process.json": "f78080efda83ee170804840e40e141290e847f6a0d3fefe78df9b0028c14a3f5",
+          "request.json": "8d726cd47886586c475dfce2b52708d6f42560c9b6bbe5e8251a781aa68c7a50",
+          "result.json": "d25316272eb020c51e527234e5edbba4a7ca8f4097663a1714c954312af4b7fb",
+          "stderr.txt": "7dc37cab6b28fdd4e97eb4b2c1b76ed8fc0697cb4d5758dc6eb17432a2712f0b",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 1888.1929
+      },
+      "cause": "EXISTING_EXPORTER_NONEMPTY_ASSET_READER_CANNOT_READ_VALID_ZERO_BYTE_HOST_STREAMS",
+      "error": "SW_ADMISSION_COMPILECALL_STDOUT_TXT_READ",
+      "hashPinsOrBudgetWeakening": false,
+      "newAuthoredInvocations": 0,
+      "newNativeProducerInvocations": 0,
+      "resolution": "USE_EXISTING_HOST_RH_READ_FOR_EXPLICIT_ZERO_BYTE_RECEIPT_CASE_WITH_STRONG_PRE_POST_PATH_IDENTITY;KEEP_NONEMPTY_EXPORTER_OWNER_AND_ALL_DIGEST_PINS",
+      "schema": "tsj-source-bound-host-admission-failure-v1",
+      "status": "FAIL_PRESERVED_NOT_RECLASSIFIED"
+    },
+    "HOST_ADMISSION_FAILURE_R3.json": {
+      "acceptedDirectoryEmpty": true,
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "host-admission-positive-r3",
+        "processElapsedMs": 1674.0165000000002,
+        "receipts": {
+          "owner.json": "04701e4541d116537ff070c9381ac4d1e34342fe4db39fcc8c790b26da64480e",
+          "parent.json": "3586c11bde8346e0855efd4a825146c83a2e051ae8a9185992e6cd0152171209",
+          "process.json": "7e51c15266380efc50dc43f14eceed73e89beb6049be60c0c92fda84d6e74d7f",
+          "request.json": "649b95ac20a78e2512f485607abd31898c126777d074064dc55cda35e61ca48c",
+          "result.json": "c33f9c7da32d5b07cb4c3bc72ae054690dbff0cca5a674abd047865302fab9d3",
+          "stderr.txt": "6c1d01f601dfd2aba974c70b9dd0c1f6a4c36ed327ddb0395c1dd00f8309622e",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 1912.0815
+      },
+      "cause": "ADAPTER_EXPECTED_UNCHECKED_NOTES_ABSENT_FROM_QUALIFIED_T_BUILD",
+      "error": "BF_PROCESS_STDERR",
+      "expectedQualifiedStderrBytes": 92,
+      "expectedQualifiedStderrSha256": "594d455b0e001a516f324c4d1ddb94936d8c6ac3719e15df99fb919eb4a2c913",
+      "newAuthoredInvocations": 0,
+      "newNativeProducerInvocations": 0,
+      "oracleOrBudgetWeakening": false,
+      "resolution": "EXACT_FROZEN_92_BYTE_BOOTSTRAP_WARNING;KEEP_STRICT_BYTE_COUNT_AND_FIXED_COMPILER_RECEIPT_HASHES",
+      "schema": "tsj-source-bound-host-admission-failure-v1",
+      "status": "FAIL_PRESERVED_NOT_RECLASSIFIED"
+    },
+    "HOST_HARNESS_EXPECTATION_R1.json": {
+      "actual": "CLI_PATH_ALIAS",
+      "cause": "Raw lexical alias rejects in CLI parser before generate input-path fence",
+      "childExitCode": 2,
+      "expected": "INPUT_PATH",
+      "phase": "host-generator-alias-r1",
+      "resolution": "Correct expected early owner; audit and reuse unchanged returned rejection; no application source or oracle change",
+      "status": "FAIL_ROOT_EXPECTED_ERROR_OWNER_ONLY",
+      "wrapperExitCode": 1
+    },
+    "READER_UNIT_FAILURE_R1.json": {
+      "actualContextCase": "PASS_WITHIN_FAILED_SUITE;NOT_WHOLE_SUITE_PASS",
+      "actualErrorOwner": "RH_ReaderError",
+      "affected": [
+        "EXTRA_CONTEXT_KEY",
+        "EXTRA_NATIVE_RECEIPT_PIN"
+      ],
+      "call": {
+        "childExitCode": 1,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "reader-units-final-r1",
+        "processElapsedMs": 3186.176,
+        "receipts": {
+          "owner.json": "09ae8e68e9c0fb5ce8c6636c5021f139ab3a069f6d9538b029a44eff3e34f910",
+          "parent.json": "9d2f62140fb202240f54b295fe3c18ed524489ddf59e3cec7f7e3ea787cb8780",
+          "process.json": "9464482d77be55ea984c5640755cf470da138d743fa1f2bd9f4adf83b35b6f2e",
+          "request.json": "0022274f925b3fc0c25b86f6c7fe7cfeff2c34d59677f6383252d2ac6dc46499",
+          "result.json": "e092495f9c4e4ee5cda2b857479dbfb2e09565620fb46492ceb8704974495715",
+          "stderr.txt": "4f34d178f5f9bc4833fff9d81825a26d2caca7af224cd7e89e0e9c75a7ecc228",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 3419.7223000000004
+      },
+      "cause": "NEGATIVE_TESTS_EXPECT_REFERENCE_READER_ERROR_WHERE_UNCHANGED_HOST_EXACT_KEYS_OWNS_REJECTION",
+      "declared": 13,
+      "errors": 2,
+      "newAuthoredInvocations": 0,
+      "newNativeProducerInvocations": 0,
+      "oracleOrBudgetWeakening": false,
+      "resolution": "EXPECT_EXACT_HOST_ERROR_CLASS_FOR_THOSE_TWO_ASSERTIONS_ONLY;NO_LITERAL_ORACLE_CHANGE",
+      "schema": "tsj-source-bound-host-reader-unit-failure-v1",
+      "status": "FAIL_PRESERVED_NOT_RECLASSIFIED"
+    }
+  },
+  "schema": "tsj-source-bound-host-preserved-failures-v1",
+  "sourceRevisions": {
+    "applicationExecution": "NOT_RUN",
+    "corrections": [
+      "REQUIRE_EXACT_ONE_FINAL_CONVENTIONAL_ENTRY_GUARD",
+      "RETAIN_PARENT_CLI_EXCLUSION_ALLOW_NEW_ADAPTER_PARSER",
+      "CORRECT_PREFIX_ASSERTION_AND_AUTHENTICATED_BOOTSTRAP_TEST_SETUP",
+      "ADD_NEGATIVES_FOR_MISSING_WRONG_DUPLICATE_EARLY_GUARD",
+      "KEEP_SOURCE_OUTPUT4M_NOT_DRAFT16M",
+      "ADAPTER_WRITER_OWNS_GUARD_IO_CORRECTIONS_AND_TESTS"
+    ],
+    "findings": [
+      "GENERATOR_REJECTED_NORMAL_ENTRY_GUARD_AND_EMITTED_NONE",
+      "TEST_RH_CLASS_TREE_IDENTIFIER_MISSPELLED",
+      "OCCUPIED_OUTPUT_TEST_MISSING_HELPER_PIN_MOCK"
+    ],
+    "independentReviewScope": "GENERATOR_SOURCE_ONLY;NO_PARTIAL_ADAPTER_REVIEW",
+    "oracleOrBudgetWeakening": false,
+    "preservedRevision": "source-revisions-r1",
+    "rootIntegrationFindings": [
+      "GENERATOR_WRONGLY_FORBADE_CURRENT_ADAPTER_PARSE_ARGS_NAME",
+      "ADAPTER_DRAFT_MISSING_MAIN_GUARD",
+      "ADAPTER_DRAFT_DUPLICATED_EXCLUSIVE_WRITE_INSTEAD_OF_EXISTING_IO_OWNER"
+    ],
+    "schema": "tsj-source-bound-host-source-revision-v1",
+    "sourcePins": {
+      "generate_reference_host_admission.py": "cc8d849b5924dfd4be83483397abfa205c0d1c28581291d094649a0db504d722",
+      "test_generate_reference_host_admission.py": "1deac5e1bd08b0e40b099f8bc8beb569a8d473f0682c309e32b75469bd8857b8"
+    },
+    "status": "SOURCE_BLOCKERS_FIXED_BEFORE_ANY_U_GENERATION_OR_ADAPTER_RUNTIME"
+  },
+  "stagedEofFailure": {
+    "beforeSha256": "228966f92fb19457b805cb92dfd2812cfc2279f09e0e7f15583fe0aad063da7e",
+    "cause": "ONE_EXTRA_BLANK_LINE_AT_ADAPTER_EOF_AND_VERBATIM_GENERATED_COPY",
+    "error": "tests/qualification/rb100-layout/source-bound-natural-reference-host-r1/read_source_bound_reference_v1.py:2190: new blank line at EOF.\ntests/qualification/rb100-layout/source-bound-natural-reference-host-r1/reference_host_adapter.py:798: new blank line at EOF.\n",
+    "oracleOrBudgetChanged": false,
+    "resolution": "REMOVE_ONLY_EXTRA_EOF_NEWLINE;FRESH_FINAL_SOURCE_GENERATION_TESTS_CLI_NEGATIVES_JUNCTIONS_AND_PUBLIC_REPRODUCTION",
+    "status": "FAIL_FINAL_STAGED_CHECK_PRESERVED"
+  },
+  "status": "PRESERVED_RESOLVED_NOT_RECLASSIFIED"
+}
