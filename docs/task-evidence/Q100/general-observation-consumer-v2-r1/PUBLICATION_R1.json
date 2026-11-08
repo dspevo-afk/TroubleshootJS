@@ -1,0 +1,158 @@
+{
+  "beta": "HELD",
+  "duplicateSearchBeforeSend": 0,
+  "exactRemoteShaVerified": true,
+  "finalGatesSha256": "bffdb1f1b58ccd3efc500669fd59d214abbda531dc688784257576f44d284c24",
+  "gmailId": "1a1bb6d74e5dc143",
+  "gmailStatus": "SENT_ONCE",
+  "gmailSubject": "TroubleshootJS: general observation V2 consumer pushed",
+  "implementationCommit": "f9253d306846164e1d16387aca1b415301c42dac",
+  "message": "Qualify general observation V2 consumer adapters",
+  "nextUnstarted": "FULL_RESULT_MARKER_R7_SOURCE_BOUND_HOST_MIGRATION",
+  "playable100": 0,
+  "publishedRef": "refs/heads/codex/q100-physical-feasibility",
+  "pushAndRemoteVerificationToolChunk": "d8193f",
+  "remote": "origin",
+  "schema": "tsj-general-observation-publication-v1",
+  "stagedReview": {
+    "RConsumedSourcesClassesToolsReceiptsRehashedUnchanged": true,
+    "allPublishedSourceBytesExact": true,
+    "intendedPaths": [
+      {
+        "bytes": 506150,
+        "path": "docs/ARCHITECTURE.md",
+        "sha256": "76f0ce6419037f1e5d68d4dfa357ee3051ed8f8e7391d5c45dd2d6b40e5428d2"
+      },
+      {
+        "bytes": 931268,
+        "path": "docs/CODEX_TASK_REPORT.md",
+        "sha256": "8ecc50533c874fc2abb02bb1f69e0dc2667c6a28247b975b270180607616cd33"
+      },
+      {
+        "bytes": 90159,
+        "path": "docs/ROADMAP.md",
+        "sha256": "9d4fc1574ec30d251fa0a391721257f81730abd31cf8f8a2c412411ab63b8f03"
+      },
+      {
+        "bytes": 26,
+        "path": "docs/task-evidence/Q100/general-observation-consumer-v2-r1/.gitattributes",
+        "sha256": "9fc81e2345e9dcb0d969a04738e7030ff9a4e2bc00808a4d58d4014851e610d6"
+      },
+      {
+        "bytes": 1542,
+        "path": "docs/task-evidence/Q100/general-observation-consumer-v2-r1/CONTRACT_CLARIFICATION_R1.md",
+        "sha256": "35e7474fc78db05bb6e3c93c2bd6c509ee0b98344231b91b32b1ac16a52dfd56"
+      },
+      {
+        "bytes": 1883,
+        "path": "docs/task-evidence/Q100/general-observation-consumer-v2-r1/FAILURES_R1.json",
+        "sha256": "6aa8a081a1ab60e389312527c6931b6fb95e1dbec53c296c8a25d1ef1d9ce52e"
+      },
+      {
+        "bytes": 28920,
+        "path": "docs/task-evidence/Q100/general-observation-consumer-v2-r1/FINAL_GATES_R1.json",
+        "sha256": "bffdb1f1b58ccd3efc500669fd59d214abbda531dc688784257576f44d284c24"
+      },
+      {
+        "bytes": 464,
+        "path": "docs/task-evidence/Q100/general-observation-consumer-v2-r1/GENERIC_READER_SUMMARY.json",
+        "sha256": "03d6f748cd18830e5de4a86b6838b0ed7270e710b4d1cd7bb567b988e8c9be82"
+      },
+      {
+        "bytes": 391,
+        "path": "docs/task-evidence/Q100/general-observation-consumer-v2-r1/JUNCTION_CLEANUP_R1.json",
+        "sha256": "e4c4f6d61f74628734921bc78999ced36dd8eafa0164dd2b9a5134457fb42bd0"
+      },
+      {
+        "bytes": 1474,
+        "path": "docs/task-evidence/Q100/general-observation-consumer-v2-r1/PACKAGING_GATES_R1.json",
+        "sha256": "a745b1e0023b3766eb3454cb6761c13b96fa94abdb29ebfd1e8b53974ab2b49d"
+      },
+      {
+        "bytes": 8490,
+        "path": "docs/task-evidence/Q100/general-observation-consumer-v2-r1/PLAN.md",
+        "sha256": "1553c590953a43651661d8de1f63f059e361d21a4100a7fba3526ed99c55281f"
+      },
+      {
+        "bytes": 3672,
+        "path": "docs/task-evidence/Q100/general-observation-consumer-v2-r1/README.md",
+        "sha256": "eeea0545ccc0e081f6bdfb72aa8fc36cacf3c808dde7c05f276bec01575b5e18"
+      },
+      {
+        "bytes": 2840,
+        "path": "docs/task-evidence/Q100/general-observation-consumer-v2-r1/REVIEW.md",
+        "sha256": "1f1483750fdcd94695c2d0ab0af1311623d2e4c9c26c90791dcb68b2d175782d"
+      },
+      {
+        "bytes": 761,
+        "path": "docs/task-evidence/Q100/general-observation-consumer-v2-r1/R_REUSE_R1.json",
+        "sha256": "d68291feb25779ef2f98914433ce406652706206300e17c3d033b42e90c4ee7e"
+      },
+      {
+        "bytes": 33214,
+        "path": "docs/task-evidence/Q100/general-observation-consumer-v2-r1/SOURCE_FULL.diff",
+        "sha256": "09479b81753055210484db6fc47c2222ff86c247e159a8986c79bdb1904e8edc"
+      },
+      {
+        "bytes": 22515,
+        "path": "docs/task-evidence/Q100/general-observation-consumer-v2-r1/SOURCE_GENERIC.diff",
+        "sha256": "20c0bbf787f070127d5a5be32bf38ac916c11f4909f59d8a8d21d24c0a01c62d"
+      },
+      {
+        "bytes": 1705,
+        "path": "docs/task-evidence/Q100/general-observation-consumer-v2-r1/SOURCE_PROOF.json",
+        "sha256": "bc52cf66ac1e9980032c53c07fb36884554a56eed1145f0d96409ab35a8288a8"
+      },
+      {
+        "bytes": 11,
+        "path": "tests/qualification/rb100-layout/general-observation-consumer-v2-r1/.gitattributes",
+        "sha256": "c452b3ce3bcfb0b1edf9d6c669bb76af501b5a6b0649d0e2f8695a75955bd5e9"
+      },
+      {
+        "bytes": 14537,
+        "path": "tests/qualification/rb100-layout/general-observation-consumer-v2-r1/generate_general_observation_readers.py",
+        "sha256": "6d82b87eb6795afcb91a50bcfc3170e7333ba08dda1cc6c64bf2ab8360334e84"
+      },
+      {
+        "bytes": 16734,
+        "path": "tests/qualification/rb100-layout/general-observation-consumer-v2-r1/observation_v2_kernel.py",
+        "sha256": "502ff2e1dec1c4d01ddb4e2841aae6f7e4073a62975c1cc9668a09cf5a52b89c"
+      },
+      {
+        "bytes": 115770,
+        "path": "tests/qualification/rb100-layout/general-observation-consumer-v2-r1/read_full_observation_component_v2.py",
+        "sha256": "f23a965ef3bc28a78ef06158efb9c7c50c375dc164d7e2840e5d350f51db58c3"
+      },
+      {
+        "bytes": 36679,
+        "path": "tests/qualification/rb100-layout/general-observation-consumer-v2-r1/read_selected_observation_v2.py",
+        "sha256": "7fd4d9d160e4e769cc0d83e85e52d28f3a2955fb5ad4ead09553fc6b6969e6fb"
+      },
+      {
+        "bytes": 15532,
+        "path": "tests/qualification/rb100-layout/general-observation-consumer-v2-r1/test_general_observation_adapters.py",
+        "sha256": "833df3a60ca91f0054781178d321eade14df947caf022caee9fb10cab29ce53f"
+      },
+      {
+        "bytes": 26490,
+        "path": "tests/qualification/rb100-layout/general-observation-consumer-v2-r1/test_generate_general_observation_readers.py",
+        "sha256": "24a7af8ecc656de1ec049fe3fa09e7907c9cd86716752201a2ba3a2529c9aa46"
+      },
+      {
+        "bytes": 28953,
+        "path": "tests/qualification/rb100-layout/general-observation-consumer-v2-r1/test_observation_v2_kernel.py",
+        "sha256": "6c0bc60f451488fa2aac3d662433b449d287a30e195ee06e82a1c615290da476"
+      }
+    ],
+    "privatePathCredentialScan": true,
+    "schema": "tsj-general-observation-staged-review-v1",
+    "stageTree": "ddcfb5d25792ad2a75441aa73bfe301e8a1cb9eb",
+    "stagedBytesChecked": true,
+    "stagedDiffCheck": true,
+    "status": "PASS",
+    "unstagedDiffCheck": true
+  },
+  "stagedReviewSha256": "bbb4687020de0f3e90e3aa2824e5ab527cc55435d7763f68338c97c4ad674130",
+  "status": "PUBLISHED_VERIFIED_GMAIL_SENT_ONCE",
+  "workingBranch": "codex/q100-terminal-only-20261107"
+}

@@ -987,7 +987,9 @@ Playable100=0/betaHELD; Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
 historical protected unread UNCERTIFIED.
 
 The [general observation V2 consumer prerequisite](task-evidence/Q100/general-observation-consumer-v2-r1/README.md)
-is locally accepted for its exact Python component candidate; publication is pending.
+is accepted and published as `f9253d306846164e1d16387aca1b415301c42dac` on
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified. Completion
+Gmail `1a1bb6d74e5dc143` sent once.
 One independent source kernel now serves both generated consumers, with the
 generic fixture profile retained and the full component CLI denied before data
 access. Multi-net, ordinal, preceding-FOUND, relaxed, scoped-quality and selected

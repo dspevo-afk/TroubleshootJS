@@ -1,4 +1,4 @@
-# Current checkpoint: general observation consumer locally accepted; publication pending
+# Current checkpoint: general observation consumer published; full migration next
 
 UTC2026-11-08. Standing roadmap continues. F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
@@ -9,7 +9,9 @@ Main5f05b005 preserves9tracked/6untracked/staged0; E d9747229 report M; Desktop
 e0c36885 preserves7tracked/73untracked/staged0. Main/E mirror report only.
 AGENTS a3dec836 unchanged. R implementationdfccca05d604935c29cadf1e96552027bd3e55e8,
 receipt8dd8175c normally pushed/exact remote verified; Gmail1a1bb49499634913
-SENT_ONCE. Do not duplicate. S has NO publication/email yet.
+SENT_ONCE. Do not duplicate. S implementationf9253d306846164e1d16387aca1b415301c42dac
+normally pushed/exact remote verified; Gmail1a1bb6d74e5dc143 SENT_ONCE. Receipt
+carries this checkpoint; verify actual HEAD before continuation. Do not email again.
 
 S owned OS-temp/tsj-q100-full-wire-scope-acdbb08b28f04a68b5624db24a4ea0cb.
 PLAN_R1.md1553c590953a43651661d8de1f63f059e361d21a4100a7fba3526ed99c55281f;
@@ -76,10 +78,13 @@ wrapper480s/reader180s/cleanup120s/local100000/global1m unchanged. Full30EXCLUDE
 HARD/PSYCHOTIC unavailable/unrun; protected bodies unread here, historical unread
 UNCERTIFIED. Playable100=0/betaHELD.
 
-NEXT: final staged diff/byte/privacy checks, normal commit/push/exact remote,
-one completion Gmail only after verified publication. Then freeze coordinated
-full result/marker/R7/source-bound host migration before any separate authored
-experiment. No routine permission needed. F intended code/evidence/docs changes
+PUBLISHED:25path final staged diff/byte/privacy PASS, treeddcfb5d25792ad2a75441aa73bfe301e8a1cb9eb;
+staged reviewbbb4687020de0f3e90e3aa2824e5ab527cc55435d7763f68338c97c4ad674130.
+Implementationf9253d306846164e1d16387aca1b415301c42dac normally pushed to known
+origin/codex/q100-physical-feasibility and exact ls-remote verified. Zero prior
+subject matches; completion Gmail1a1bb6d74e5dc143 SENT_ONCE. No receipt email.
+NEXT: freeze coordinated full result/marker/R7/source-bound host migration
+before any separate authored experiment. No routine permission needed. F intended code/evidence/docs changes
 only; unrelated worktrees/evidence and R/S private scratch/build retained.
 Old uncertain browser14116/start639294472690745890/port58320 and preview34180/
 start639294472514546595/port58264+14uncertainchildren, old D timeout logs and
