@@ -1,0 +1,147 @@
+--- immutable/FailureCohortRoutingStudy.java
++++ shared-budget/FailureCohortRoutingStudy.java
+@@ -108 +108,3 @@
+-        meter.priorGroups=original.groupCount;
++        if(meter.priorGroups!=original.groupCount || meter.originalOwnerActive ||
++                meter.inFlightOwnerGroups!=0 || !meter.originalOwnerAdopted)
++            throw new IllegalStateException("original owner group count was not adopted exactly once");
+@@ -279,0 +282 @@
++        Class<?> armType=null;
+@@ -282,0 +286,2 @@
++        boolean ownerStarted=false,ownerAdoptionAttempted=false,ownerAdopted=false,executeEntered=false;
++        Throwable primaryFailure=null;
+@@ -298 +303,3 @@
+-            Class<?> armType=Class.forName("com.lushprojects.circuitjs1.client.ActualGeneratorBranchOrderStudy$ArmRun");
++            armType=Class.forName("com.lushprojects.circuitjs1.client.ActualGeneratorBranchOrderStudy$ArmRun");
++            Class<?> budgetType=Class.forName(
++                "com.lushprojects.circuitjs1.client.ActualGeneratorBranchOrderStudy$SharedOwnerBudget");
+@@ -301 +308 @@
+-                ActualGeneratorBranchOrderStudy.TerminalPrefixInspector.class);
++                ActualGeneratorBranchOrderStudy.TerminalPrefixInspector.class,budgetType);
+@@ -303 +310 @@
+-            armRun=ac.newInstance(study,Integer.valueOf(1),null,decorator);
++            armRun=ac.newInstance(study,Integer.valueOf(1),null,decorator,meter);
+@@ -305,0 +313,2 @@
++            meter.beginOriginalOwner();
++            ownerStarted=true;
+@@ -307 +316,14 @@
+-            armResult=invoke(execute,armRun);
++            try {
++                armResult=execute.invoke(armRun);
++                executeEntered=true;
++            } catch(InvocationTargetException wrapped) {
++                executeEntered=true;
++                Throwable cause=wrapped.getCause();
++                if(cause instanceof Exception) throw (Exception)cause;
++                if(cause instanceof Error) throw (Error)cause;
++                throw new IllegalStateException("maintained invocation failed",cause);
++            }
++            int actualOwnerGroups=intField(armRun,"nextGroupOrdinal");
++            ownerAdoptionAttempted=true;
++            meter.adoptOriginalOwner(actualOwnerGroups);
++            ownerAdopted=true;
+@@ -314,0 +337,4 @@
++        } catch(Throwable failure) {
++            primaryFailure=failure;
++            rethrow(failure);
++            return null;
+@@ -316,3 +342,37 @@
+-            long releaseStarted=System.nanoTime();
+-            armResult=null; armRun=null; study=null; decorator=null;
+-            if(built!=null) built.cleanupNanos+=elapsed(releaseStarted,System.nanoTime());
++            Throwable cleanupFailure=null;
++            try {
++                if(ownerStarted && !ownerAdoptionAttempted) {
++                    try {
++                        int actualOwnerGroups=armRun==null?0:intField(armRun,"nextGroupOrdinal");
++                        ownerAdoptionAttempted=true;
++                        meter.adoptOriginalOwner(actualOwnerGroups);
++                        ownerAdopted=true;
++                    } catch(Throwable adoptionFailure) {
++                        cleanupFailure=adoptionFailure;
++                    }
++                }
++            } finally {
++                try {
++                    if(armRun!=null && !executeEntered) {
++                        try {
++                            Method clear=armType.getDeclaredMethod("clearSharedOwnerBudget");
++                            clear.setAccessible(true);
++                            invoke(clear,armRun);
++                        } catch(Throwable clearFailure) {
++                            if(cleanupFailure==null) cleanupFailure=clearFailure;
++                            else if(clearFailure!=cleanupFailure) cleanupFailure.addSuppressed(clearFailure);
++                        }
++                    }
++                } finally {
++                    long releaseStarted=System.nanoTime();
++                    armResult=null; armRun=null; study=null; decorator=null;
++                    if(built!=null) built.cleanupNanos+=elapsed(releaseStarted,System.nanoTime());
++                }
++            }
++            if(cleanupFailure!=null) {
++                if(primaryFailure!=null) {
++                    if(cleanupFailure!=primaryFailure) primaryFailure.addSuppressed(cleanupFailure);
++                } else {
++                    rethrow(cleanupFailure);
++                }
++            }
+@@ -1903 +1963 @@
+-private static final class Meter {
++private static final class Meter implements ActualGeneratorBranchOrderStudy.SharedOwnerBudget {
+@@ -1909,2 +1969,2 @@
+-    int groups,groupUnits,maxGroupUnits,priorGroups,copyChunks;
+-    boolean open;
++    int groups,groupUnits,maxGroupUnits,priorGroups,copyChunks,inFlightOwnerGroups;
++    boolean open,originalOwnerStarted,originalOwnerActive,originalOwnerAdopted;
+@@ -1923,0 +1984,40 @@
++    void beginOriginalOwner() {
++        if(open)
++            throw new IllegalStateException("original owner must start between wrapper groups");
++        if(priorGroups!=0 || originalOwnerStarted || originalOwnerActive || originalOwnerAdopted)
++            throw new IllegalStateException("original owner budget can start only once before adoption");
++        check();
++        originalOwnerStarted=true;
++        originalOwnerActive=true;
++        inFlightOwnerGroups=0;
++    }
++
++    void adoptOriginalOwner(int actualOrdinal) {
++        if(!originalOwnerStarted || !originalOwnerActive || originalOwnerAdopted)
++            throw new IllegalStateException("original owner budget is not active for adoption");
++        if(actualOrdinal<0 || actualOrdinal!=inFlightOwnerGroups)
++            throw new IllegalStateException("actual original owner ordinal differs from admitted groups");
++        if(priorGroups!=0)
++            throw new IllegalStateException("original owner groups were already adopted");
++        priorGroups=actualOrdinal;
++        inFlightOwnerGroups=0;
++        originalOwnerActive=false;
++        originalOwnerAdopted=true;
++    }
++
++    public void checkOuterDeadline() {
++        check();
++    }
++
++    public void admitOwnerGroup(int ordinal) {
++        check();
++        if(!originalOwnerStarted || !originalOwnerActive || originalOwnerAdopted)
++            throw new IllegalStateException("original owner group admission is not active");
++        if(ordinal<0 || ordinal!=inFlightOwnerGroups)
++            throw new IllegalStateException("original owner group ordinal is not the next admitted ordinal");
++        long occupied=(long)groups+(long)priorGroups+(long)inFlightOwnerGroups+(open?1L:0L);
++        if(occupied>=MAX_GROUPS)
++            throw new IllegalStateException("native owner exceeded 640 aggregate measured groups");
++        inFlightOwnerGroups++;
++    }
++
+@@ -1927 +2027 @@
+-        if(groups+priorGroups>=MAX_GROUPS)
++        if((long)groups+(long)priorGroups+(long)inFlightOwnerGroups>=MAX_GROUPS)
+@@ -1962 +2062,2 @@
+-        if(groups+priorGroups>MAX_GROUPS || groupUnits>STEP_LIMIT)
++        if((long)groups+(long)priorGroups+(long)inFlightOwnerGroups+(open?1L:0L)>MAX_GROUPS ||
++                groupUnits>STEP_LIMIT)
+@@ -1979 +2080 @@
+-        if(groups+priorGroups>MAX_GROUPS)
++        if((long)groups+(long)priorGroups+(long)inFlightOwnerGroups>MAX_GROUPS)

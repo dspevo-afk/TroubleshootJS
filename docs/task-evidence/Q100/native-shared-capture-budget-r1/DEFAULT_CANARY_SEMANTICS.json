@@ -1,0 +1,43 @@
+{
+  "facts": {
+    "activeExceptionCleanup": true,
+    "blockedNoFallback": true,
+    "openPositive": {
+      "allNetsConnected": true,
+      "conductorShapeCount": 10,
+      "connectedNetCount": 2,
+      "holeCount": 0,
+      "interlayerLinkCount": 4,
+      "netCount": 2,
+      "padCount": 4,
+      "roleTraceCounts": {
+        "CONTROL": 1,
+        "HIGH_CURRENT": 1,
+        "RETURN": 0,
+        "SIGNAL": 0,
+        "SUPPLY": 0
+      },
+      "sameLayerContactMerges": 0,
+      "singletonNetCount": 0,
+      "traceCount": 2,
+      "traceExposureCounts": {
+        "COVERED": 0,
+        "EXPOSED": 2
+      },
+      "traceLayerCounts": {
+        "BOTTOM": 2,
+        "TOP": 0
+      },
+      "viaCount": 0
+    },
+    "stableTransform": true
+  },
+  "fullR2Comparison": "NOT_RUN_NOT_ACCEPTED",
+  "nativeStdoutBytes": 17367,
+  "nativeStdoutSha256": "590a61a10a6753ec2e9f3bcd77ed8e453245784ba18e2eb5255924cb9ceab84b",
+  "newAuthoredSessions": 0,
+  "parentReaderSha256": "84c8dbf2805ab5607f1e79f1d1fa67cc1a2e4ec06d3a22fdd44771ce48d03b52",
+  "schema": "tsj-native-shared-default-canary-semantic-evidence-v1",
+  "sourceScope": "TRANSFORMED_NATIVE_CAPTURE_AND_STUDY_DEFAULT_FIXTURES_CURRENT_F_OWNER",
+  "status": "PASS_DEFAULT_CANARY_SEMANTICS_ONLY"
+}

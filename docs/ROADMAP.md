@@ -869,6 +869,22 @@ Implementation `7fe4cddb82b3ccda54e603f3e19a6e4007fcc94e` is normally pushed to
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
 Gmail `1a1b893e9af1226b` was sent once.
 
+The [native shared capture-budget prerequisite](task-evidence/Q100/native-shared-capture-budget-r1/README.md)
+is locally accepted; publication is pending. One producer-start meter now reaches
+original-owner group admission and cooperative deadline checks. Wrapper, open
+and live owner groups share the unchanged640 ceiling; actual owner ordinals are
+adopted once before readback. Old null/default behavior, local completion checks,
+fees, physics and limits remain. Actual JDK8 three-source compile/92 class files,
+120 focused guard assertions, default fixtures/independent reader and retained
+copy-allowance canary pass. Six real generator rejection controls and final
+root/read-only review pass. The first generated source was rejected for two
+timing/lifecycle defects and received fresh corrected gates. Automatic execute
+cleanup remains source-only; no authored capture or Session ran. Next is explicit
+D source/descriptor/adapter integration of three substitutions, then exact
+accounting/export and host/native/consumer gates before its bounded comparison.
+No full1092-source, Player/electrical/population or playable100 proof is granted.
+Full30 excluded; HARD/PSYCHOTIC unavailable/unrun; playable100=0/betaHELD.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

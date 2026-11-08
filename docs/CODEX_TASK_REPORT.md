@@ -1,4 +1,151 @@
-# Current checkpoint: native copy allowance published; R2 integration continues
+# Current checkpoint: shared capture budget prerequisite accepted; publication pending
+
+UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
+tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
+HEAD2a4cd45f96d270ec2331c6c27fc86330782c7429 is exact remote
+origin/codex/q100-physical-feasibility. Prior copy prerequisite7fe4cddb/receipt2a4cd45f
+and Gmail1a1b893e9af1226b SENT_ONCE remain preserved. New shared-budget component
+is locally accepted, awaiting normal commit/push; no new completion email yet.
+
+Owned U OS-temp/tsj-q100-shared-capture-budget-09b455afcdac46049a6d4abbb4a40fab
+implements only a native capture-budget seam. Frozen IMPLEMENTATION_SPEC_R1.md
+and prospective D/SHARED_BUDGET_SOURCE_CONTRACT_R1.md define its separate scope.
+Checked generator 20496e4e7e324a3e0f4f8e0749b3d228115dfd3f4bc0a5706849551e2e0e2f85
+derives T capture c33f6f69 to4ed1c8561adf1619a8b7ffbd21e23fdf2544dcaafe541af4e5d2b2b1e95cabe4
+and native study264c89e5 to01b7445716e98774f327f78957a870a027242d24acf70b99373a1df1a335f53b.
+One actual producer-start Meter enforces aggregate wrapper/open/live owner credits
+and cooperative outer deadlines. Actual owner ordinal is adopted once BEFORE
+readback. Default/null constructors, local+3 preflight, fees and limits remain.
+
+Final selected JDK8 source/target1.7 compile PASS1190.2851ms operation/
+1456.8611ms wrapper. Three sources/92 compiler class files:16 capture/56 native
+study/20 focused canary. Actual real-method focused canary120 assertions,
+6 guard frames/2556 actual wrapper groups/6 admissions PASS643.527/889.5754ms.
+Default fixtures PASS469.3092/725.9124ms; unchanged N semantic reader PASS,
+facts2e9f36fd. Exact retained copy canary on new classes PASS596.8505/877.883ms.
+Fresh N1090-source/4139-class audit PASS29313.6699/29760.6744ms; owner75/prior4139
+inventories unchanged. All positive process gates actual0/proven process+log
+absence; compile92B warning/runtime stderr0. Isolated cleanup duration null.
+Six actual generator negatives exit2/EXPECTED_REJECTION, owned junctions removed
+nonrecursively after identity checks; targets/sentinel retained. Limits unchanged.
+
+Root and fresh read-only final-source review found no functional blocker. The
+first generated source9f029073 had generator PASS but SOURCE REVIEW FAIL for
+constructor work outside its wrapper group and unmeasured guard-release cleanup.
+It was not compiled/run; raw outputs/script/notes retained. Both defects fixed
+and corrected source received all fresh gates. Final focused canary f063ca84
+never invokes execute/capture/Session; automatic execute cleanup SOURCE_ONLY.
+Explicit actual clear/adoption/group/deadline behavior is runtime-tested. No
+private owner/context flags are fabricated; timing is cooperative, not preemptive.
+
+Accepted proofdca062a8e14f14667ab13bd7317d13e16768dde330e8ddb92b675a89c53ebcb6
+and public packet docs/task-evidence/Q100/native-shared-capture-budget-r1 retain
+sanitized receipts, compiler census, default facts, failures and review. Generic
+transformer/canary are under tests/qualification/rb100-layout/native-shared-capture-budget-r1.
+Generator EOF blank removed after staged whitespace FAIL; AST/output bytes
+identical, fresh host gates and exact native-input reuse audit PASS.
+No production/GWT/Player/electrical/population renewal is claimed; current F
+production owner c382f3bc is unchanged. No authored100 capture or Session ran.
+
+Private D full comparison remains NOT RUN/NOT ACCEPTED. Rev5 WIRE574fc571,
+DESCRIPTORa1c16589, PLAN192f08eb and doc reviewdc961f22 remain their old two-row
+contract, not permission to launch U. Next explicitly amend source/descriptor/
+adapter for THREE authenticated replacements,1087 retained N rows/order plus two
+D rows =>1092. Final class census must be actual. Merge must verify already-
+adopted native owner groups/retired live state, not require zero or add again.
+D source7f729c04 still main-closed/work=null; its earlier25-check data-only ledger
+proof remains bounded rev4 fixture evidence, not U/full integration. Full exact
+accounting/export/host/native/consumer and fresh-original identity gates remain.
+
+Source reader clarified work has34 keys, not32, and final-export e is marker-only:
+no export-unit fixed point is required. D/EXPORT_SOURCE_FACTS_R3.md records actual
+Meter APIs, result-tree minimum and old post-hoc allocation/copy gaps. Generic
+source-unverified advice is NOT ACCEPTED; no new export implementation is claimed.
+All implementation/review leaves HOLD; no heavy matrix active. All launched owned
+processes returned; raw stages/classes/revisions remain. F new intended packet/
+code/docs await staging; E only report mirror. Main5f05b005 preserves9tracked/
+6untracked/0staged; Desktop e0c36885 preserves7/73/0. Old uncertain browser14116/
+58320 and preview34180/58264 untouched. Full30 EXCLUDED; HARD/PSYCHOTIC
+unavailable/unrun, protected bodies unread here/historical unread UNCERTIFIED.
+Playable100=0/betaHELD; no partial full-comparison success or duplicate email.
+
+# Historical checkpoint: copy prerequisite published; shared capture budget design
+
+UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
+tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
+HEAD2a4cd45f96d270ec2331c6c27fc86330782c7429 is exact remote
+origin/codex/q100-physical-feasibility. Implementation7fe4cddb82b3ccda54e603f3e19a6e4007fcc94e
+(Bound native capture copies by remaining allowance) and publication receipt2a4cd45f
+are normally pushed/verified. Completion Gmail1a1b893e9af1226b SENT_ONCE;
+exact-SHA duplicate query returned zero before sending. No second receipt email.
+
+Native copy-allowance prerequisite COMPLETE ONLY FOR ITS BOUNDED SCOPE. Public
+packet docs/task-evidence/Q100/native-copy-allowance-r1 and generic checked
+transformer/canary record source proof79a84b03, actual JDK8 focused/default and
+independent default-reader passes,16 parent+2 final canary classes, unchanged
+owner75/prior4139 class inventories and4 real expected generator rejections.
+Root/separate read-only review found no functional blocker. Legacy dispatch
+order remains SOURCE_ONLY; fixture preflight/counters are actual runtime proof.
+All failures, raw receipts and compiler revisions retained. Source and budget
+defaults unchanged. No new production/GWT/Player/electrical/population renewal.
+
+Private D OS-temp/tsj-q100-cohort-branch-capture-0ee7717444ff43e28cc9e8dc4258f81d
+full comparison BLOCKED / NOT RUN / NOT ACCEPTED. Copy baseline helpers now
+use actual setup entries, retain bookkeeping work fees without inflating data
+copies, require closed/unadopted unchanged setup, constrain capture-local copies,
+merge once and restore default only after overflow/counter guards. Candidate
+7f729c04bfadab0aede38cd465c3b2275dff3478a412153cc9182443726842f8 is private/WIP;
+main remains fail-closed/work=null. The first bounded compile18a failed actual1
+on prior accounting lambdas under source1.7:521.25ms operation/780.4628ms
+wrapper. That candidate/receipt is retained.101 guards were converted to Java7
+anonymous guards with expression/order preserved; observer627ffa is unchanged.
+
+Final data-only setup-ledger canary PASS25 checks/133 actual classes. Actual
+JDK8 compile1029.1769ms/runtime470.2526ms; wrapper1289.8595/738.9985ms,
+actual0/proven process+log absence. Compile92B expected warning/runtime stderr0.
+Evidence23acee0ae1a39b10ce2f4357a0b6454a82664a53c7a8e1907e4a7e443be6aa91.
+It uses actual rev4 generated projection fixture11f6ef02:273 slots,4584 setup
+units, one copy chunk. Four synthetic numeric ledger cases prove guards only;
+no actual captureWithSetup/original or authored Session was invoked. This is
+three-source development proof, not1092-source/full-comparison qualification.
+Isolated cleanup duration unavailable; child/wrapper elapsed remain separate.
+
+Rev5 contracts are reviewed for DOCUMENTATION SCOPE ONLY: WIRE574fc571 (source
+copy identical), DESCRIPTORa1c16589, PLAN192f08eb, amendment24c08999; old rev4
+four files archived/hash-verified. Root reviewdc961f22ea86438f6384666a3c73da65ec4164d788881070f4311bab134cff3e.
+The documented two-row substitution preserves1088 N rows/order and derives1092;
+strict descriptor-v2 helpers/final generated input are NOT IMPLEMENTED/RUN.
+Future setup count must be measured, not fixed273. Any shared-budget derivative
+needs another explicit source/descriptor/adapter contract revision.
+
+Source-only shared-budget boundary529dde2ed79d2818c4ada6969686366cd94e6096cf7d11e919be3758f9a5caca
+proves original ArmRun has its own640-group count and later-start90s clock;
+setup/wrapper combined checks occur after return.307/77 identify branches,
+not group reserves. Existing per-group5s guards run locally; combined P07+
+diagnostic/callback units are receipt-checked later. No combined live proof is
+claimed. Next required native seam must enforce shared admission and the outer
+absolute deadline, adopt actual owner groups once and release guard references.
+
+New owned U OS-temp/tsj-q100-shared-capture-budget-09b455afcdac46049a6d4abbb4a40fab
+has ownership.json and frozen PLAN_R1.md for SOURCE DESIGN ONLY, not code/run
+acceptance. shared_budget_design_r1 owns only DESIGN_R1.md; original N/T/E/F
+sources stay immutable. A separate source-bound export advisor owns only private
+D/EXPORT_PLAN_SOURCE_BOUND_R3.md; no new advice/API is accepted. All producer/
+helper writers HOLD; no heavy matrix active.
+After design review, implement/qualify the minimal native shared budget hook,
+amend source contracts explicitly, then resume exact D accounting/export/host
+and source/native/consumer gates before the one original plus two-arm comparison.
+
+F only report pending/0staged; E d9747229 only report mirror. Main5f05b005
+preserves9tracked/6untracked/0staged; Desktop e0c36885 preserves7/73/0. Owned raw
+receipts/classes/revisions retained, all launched current processes returned.
+Old uncertain browser14116/58320 and preview34180/58264 untouched. All original
+90s/640/5s/32768/copy1048576/chunk4096/1Mexp/48holes/4transition and host limits
+remain. Full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; protected bodies
+unread here, historical unread UNCERTIFIED. Playable100=0/betaHELD. No partial
+full-comparison success or duplicate completion notification.
+
+# Historical checkpoint: native copy allowance published; R2 integration continues
 
 UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,

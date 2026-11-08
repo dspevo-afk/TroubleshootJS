@@ -36,6 +36,17 @@ before restoring the default. The [bounded native prerequisite](task-evidence/Q1
 qualifies this seam only; its full R2 accounting/export integration is separate.
 It changes no production electrical or routing owner.
 
+The native shared-budget overlay passes that same producer-start Meter through
+an optional SharedOwnerBudget interface to the actual native ArmRun. Group
+admission accounts for wrapper, open and live owner credits; actual ordinals
+are adopted once before readback. Existing owner checks also query the outer
+deadline cooperatively. Null/default constructors and local completion checks
+retain their behavior. An unconditional finally clears the guard reference;
+the [bounded prerequisite](task-evidence/Q100/native-shared-capture-budget-r1/README.md)
+qualifies real private-method guards and explicit clearing, while automatic
+execute cleanup and full authored integration remain separate proof boundaries.
+This changes no production routing or electrical owner.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

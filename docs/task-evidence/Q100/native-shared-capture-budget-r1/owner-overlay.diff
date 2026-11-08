@@ -1,0 +1,53 @@
+--- immutable/ActualGeneratorBranchOrderStudy.java
++++ shared-budget/ActualGeneratorBranchOrderStudy.java
+@@ -32,0 +33,5 @@
++    interface SharedOwnerBudget {
++        void checkOuterDeadline();
++        void admitOwnerGroup(int ordinal);
++    }
++
+@@ -291,0 +297 @@
++        SharedOwnerBudget sharedOwnerBudget;
+@@ -299 +305 @@
+-            this(study, operation, null, null);
++            this(study, operation, null, null, null);
+@@ -304 +310 @@
+-            this(study, operation, fixedPrefixGraphObserver, null);
++            this(study, operation, fixedPrefixGraphObserver, null, null);
+@@ -309,0 +316,7 @@
++            this(study, operation, fixedPrefixGraphObserver, terminalPrefixInspector, null);
++        }
++
++        ArmRun(Study study, int operation,
++                PcbLayerRoutingPrototype.FixedPrefixGraphObserver fixedPrefixGraphObserver,
++                TerminalPrefixInspector terminalPrefixInspector,
++                SharedOwnerBudget sharedOwnerBudget) {
+@@ -319,0 +333 @@
++            this.sharedOwnerBudget = sharedOwnerBudget;
+@@ -335 +349 @@
+-                long cleanupStarted = System.nanoTime();
++                try { long cleanupStarted = System.nanoTime();
+@@ -375,0 +390,10 @@
++                } finally {
++                    long guardReleaseStarted = System.nanoTime();
++                    boolean hadSharedOwnerBudget = sharedOwnerBudget != null;
++                    try {
++                        clearSharedOwnerBudget();
++                    } finally {
++                        if (hadSharedOwnerBudget && result != null)
++                            result.cleanupNanos += elapsed(guardReleaseStarted, System.nanoTime());
++                    }
++                }
+@@ -3287,0 +3312,5 @@
++            if (sharedOwnerBudget != null) {
++                sharedOwnerBudget.admitOwnerGroup(nextGroupOrdinal);
++                int admittedOrdinal = nextGroupOrdinal++;
++                return new GroupLedger(admittedOrdinal, phase, started);
++            }
+@@ -3331,0 +3361 @@
++            if (sharedOwnerBudget != null) sharedOwnerBudget.checkOuterDeadline();
+@@ -3334,0 +3365,4 @@
++        }
++
++        void clearSharedOwnerBudget() {
++            sharedOwnerBudget = null;
