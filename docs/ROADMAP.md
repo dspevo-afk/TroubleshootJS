@@ -951,7 +951,9 @@ runtime/functional proof and playable100 remain pending; playable100=0/betaHELD.
 Full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun, historical unread UNCERTIFIED.
 
 The [atomic selected-head observer/Meter prerequisite](task-evidence/Q100/native-selection-observer-meter-r1/README.md)
-is locally accepted for its generic native scope; publication is pending.
+is accepted and published as `710b1a12200dc1332afe7d5e77979e975f0c5854` on
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified. Completion
+Gmail `1a1bb09d4dcd0939` sent once. Scope remains generic native only.
 The same Meter now charges the ten-field detached head, checks43-entry/two-chunk
 capacity before copying, and owns atomic context selection/rollback. Supported
 stale selected calls carry a separate rejection Meter; the normal sink is live-only.

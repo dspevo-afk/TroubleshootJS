@@ -1,7 +1,9 @@
 # Atomic selected-head observer/Meter prerequisite
 
-Accepted locally for the bounded native callback/copy/Meter scope; publication
-is pending. The existing observer now detaches the ten-int selected-head record
+Accepted and published as `710b1a12200dc1332afe7d5e77979e975f0c5854` on
+`origin/codex/q100-physical-feasibility`; exact remote SHA verified. Completion
+Gmail `1a1bb09d4dcd0939` sent once. See [publication receipt](PUBLICATION.md).
+The existing observer now detaches the ten-int selected-head record
 and terminal context in one operation, using the same shared Meter and existing
 rollback/poison/seal owner. Complete43-entry/two-chunk capacity is checked before
 either copy. The supported selected stale-entry API accepts a separate rejection

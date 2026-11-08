@@ -1,8 +1,9 @@
-# Current checkpoint: atomic selected-head observer/Meter prerequisite accepted locally; publication pending
+# Current checkpoint: atomic selected-head observer/Meter prerequisite published; strict wire next
 
 UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
-actual HEADbdb2bd64d48ab54ef7655a54af88447e59746171. Before Q only report M,
+accepted implementation 710b1a12200dc1332afe7d5e77979e975f0c5854. Publication receipt carries
+this checkpoint; verify actual HEAD before new edits. Before Q only report M,
 staged0. Main5f05b005 preserves9tracked/6untracked/staged0; E d9747229 report M;
 Desktop e0c36885 preserves7tracked/73untracked/staged0. Main/E mirror report only.
 Origin dspevo-afk/TroubleshootJS; normal targetcodex/q100-physical-feasibility,
@@ -69,9 +70,11 @@ operations ran. Separate controls, read-only identities and four explicit litera
 nonrecursive native unlink cmdlets returned shell0; lstat absence/targets intact.
 No P/D failure reclassified or independent oracle/budget weakened.
 
-NEXT: integrated/staged diff+byte review, normal commit/push, exact remote verify,
-one completion Gmail, receipt. Q publication/notification NOT DONE. Then scope
-strict current-only wire/reader and metadata/export accounting integration with
+PUBLISHED 710b1a12200dc1332afe7d5e77979e975f0c5854, normal push/exact ls-remote on
+origin/codex/q100-physical-feasibility. Final20path staged byte/privacy/diff check
+PASS, tree7d32cb7b. Gmail1a1bb09d4dcd0939 SENT_ONCE after zero duplicate query.
+Do not email receipt again. NEXT: scope strict current-only wire/reader and
+metadata/export accounting integration with
 independent generic/host gates before any separate authored experiment. Existing
 D accepted proof2ed83d65 still covers one original and exactly twoNULL/OBSERVE arms;
 no additional authored original/control/retry ran in Q. Playable100=0/betaHELD;
