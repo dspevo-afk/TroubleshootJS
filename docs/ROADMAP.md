@@ -928,8 +928,25 @@ diagnosis or a frozen routing treatment for the observed branch cap, followed
 by actual physical/access/runtime/functional proof before any adoption.
 Implementation `66fd2d7c12992f1cf88f013ac25c79528de9c568` is verified on
 `origin/codex/q100-physical-feasibility`; completion Gmail `1a1ba9693e5350af` sent once.
-The next source-only scalar diagnosis has started; no new authored invocation
-is part of that substep.
+The source-backed scalar interpretation is complete: local100000, not global1m,
+causes this receipt; post-pop queue/index and obstacle-free distance do not prove
+feasibility. No further authored invocation is part of that substep.
+
+The [native selected-head provenance prerequisite](task-evidence/Q100/native-branch-limit-selection-r1/README.md)
+is locally accepted for its bounded generic-fixture scope; publication is pending.
+An opt-in owner overlay records ten immutable integers from the identity-live
+node already popped at the local cap, before refresh/expansion. Existing terminal
+snapshot/default modes and abort owner remain. Final JDK8 three-source compile,
+eight-group/587-assertion canary, retained terminal217421/branch30/relaxed2201
+assertions, eight final-public-source Python tests, real CLI positive and five
+source-identical host negative controls pass. Failed R1 fixture parity remains
+recorded; identical queue/index frames pass without weakening the equality oracle.
+No production, cap, electrical or epoch change and no authored run occurred.
+This is not a path witness or naturally exhausted100000-step route proof.
+Next is separately scoped consumer/Meter/wire integration with explicit charges
+and independent acceptance before any new authored experiment. Physical/access/
+runtime/functional proof and playable100 remain pending; playable100=0/betaHELD.
+Full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun, historical unread UNCERTIFIED.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

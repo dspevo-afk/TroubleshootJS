@@ -1,0 +1,36 @@
+{
+  "authoredInvocations": 0,
+  "budgets": "UNCHANGED",
+  "changes": [
+    "OPT_IN_MARKER",
+    "PRIMITIVE_SELECTION_DTO",
+    "DETACHED_NOOP_MARKER",
+    "DETACHED_MODE_BEFORE_SUPERTYPE",
+    "SHARED_SESSION_DISPATCH_AND_ABORT",
+    "TERMINAL_LOCAL_NODE_PARAMETER",
+    "CONSTANT_SIZE_OPT_IN_SELECTION",
+    "ONLY_LOCAL_CAP_SUPPLIES_SELECTED_NODE"
+  ],
+  "defaultBranchSnapshot": "UNCHANGED",
+  "derivedBytes": 172568,
+  "derivedSha256": "7bf4ab57198ff9444381ec5d677c1a2bc309bfa3e7f01b188c631ffe5f2b966c",
+  "ioHelperSha256": "df9c297f4eb491117bade351ceedf26ccef5059e47ad9a7f36006000f1a10923",
+  "observationMeaning": "IDENTITY_LIVE_HEAD_SELECTED_AND_POPPED_AT_LOCAL_CAP_BEFORE_EXPANSION_AND_REFRESH; NOT_MINIMUM_LEGAL_PATH_WITNESS",
+  "parentBytes": 170361,
+  "parentSha256": "c382f3bc08f8ad65b3501dad57c927dd5c1f9f1c04914ac79edb772f4b4f4e3e",
+  "productionOwner": "UNCHANGED_PRIVATE_NATIVE_OVERLAY_ONLY",
+  "schema": "tsj-native-branch-limit-selection-overlay-v1",
+  "selectionFields": [
+    "branchOrdinal",
+    "cell",
+    "layer",
+    "direction",
+    "transitions",
+    "cost",
+    "storedHeuristic",
+    "serial",
+    "key",
+    "storedPriority"
+  ],
+  "status": "GENERATED_NATIVE_ONLY_NOT_COMPILED"
+}

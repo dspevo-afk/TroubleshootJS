@@ -73,6 +73,19 @@ qualifies this native evidence path for its exact failing routes, with no
 production routing or electrical change. Published source projections are for
 review; private pinned dependencies prevent standalone public replay.
 
+The native selected-head overlay derives from the pinned production P07 owner
+without editing it. BranchLimitSelectionDiagnostics opts into a ten-int immutable
+selection paired with the unchanged BranchSnapshot only at local branch cap.
+The source node passed to emission is identity-live and already polled; cap
+handling precedes heuristic refresh. Session's existing abort/latch owner handles
+callback errors; detached copies preserve mode through a static caller-free
+no-op. No live Node or parent chain is exposed. The [bounded native prerequisite](task-evidence/Q100/native-branch-limit-selection-r1/README.md)
+qualifies generic injected boundary frames and actual small-route mode parity.
+It preserves one Search.advanceOne owner credit, not primitive instruction
+accounting. D consumer copying, validation, serialization and shared Meter/wire
+integration require their own explicit charges and gates. Production/GWT,
+authored capture, physical feasibility and route witness proof are unchanged.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

@@ -1,105 +1,76 @@
-# Current checkpoint: bounded diagnostic published; source-only scalar diagnosis started
+# Current checkpoint: native selected-head prerequisite accepted locally; publication pending
 
-UTC2026-11-08. Standing roadmap continues. F OS-temp/
-tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107.
-Accepted implementation66fd2d7c12992f1cf88f013ac25c79528de9c568, message
-Qualify bounded cohort terminal diagnostic, normal push verified exactly on
-origin/codex/q100-physical-feasibility. Connected Gmail1a1ba9693e5350af SENT_ONCE.
-DO NOT duplicate this completion or the prior text component's notice1a1ba0236ea79ef9.
-This documentation receipt is based on implementation66fd2d7c and receives no
-second email. Confirm actual HEAD before resuming; no self-referential HEAD pin.
+UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
+tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
+actual HEADda46e92f8ff8913131d92acbaf9c367660b37d96. Before this package F had
+only report M/staged0. Main5f05b005 preserves9tracked/6untracked/staged0; E d9747229
+report M; Desktop e0c36885 preserves7tracked/73untracked/staged0. Main/E receive
+only this checkpoint mirror; unrelated data/changes/failures remain untouched.
+Normal publication target remains origin/codex/q100-physical-feasibility, no
+configured upstream; do not push another remote or force-push.
 
-Exactly ONE authored normal invocation completed; one original capture and TWO
-fresh NULL/OBSERVE arms. Native retries=0. DO NOT RUN ANOTHER AUTHORED INVOCATION.
-Private small-fixture Sessions total22. Playable100=0/betaHELD; both authored
-routes remain CAP_REJECTED. Full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
-protected bodies unread here, historical unread UNCERTIFIED. No production,
-GWT/Player/electrical/population qualification is renewed by this native scope.
+Last published66fd2d7c12992f1cf88f013ac25c79528de9c568/receiptda46e92f verified;
+Gmail1a1ba9693e5350af SENT_ONCE. No duplicate. D result proof2ed83d65319a3985a081b5307865fe53eae2de408574c9b7e58eb144fd9b8525
+retains one original and exactly TWO fresh NULL/OBSERVE arms. No further authored
+original/control/retry ran in P. Playable100=0/betaHELD; Full30 EXCLUDED;
+HARD/PSYCHOTIC unavailable/unrun; protected bodies unread here, historical unread
+UNCERTIFIED. Exact signed-long interpretation and all existing budgets remain.
 
-D OS-temp/tsj-q100-cohort-branch-capture-0ee7717444ff43e28cc9e8dc4258f81d:
-FINAL_AUTHORED_COMPARISON_GATES_R1.json
-2ed83d65319a3985a081b5307865fe53eae2de408574c9b7e58eb144fd9b8525
-status PASS_FINITE_AUTHORED_DIAGNOSTIC_ONLY. Study8f7c3775c1479d86798464f75fb107c4e5bd1e5bda6ab93f4e39b14beaf6b221;
-finalreader2d53b33fb77e85c6c36f46b013612883866cffea2996596751ffcb2d30e2bc0a;
-builder271db07f1b1dbd0a30e8016024b4fe87f89b3050447dd4bab64ff8a135751321.
-WIRE31a81de89f91655fa64f348a0cdcc543ed13429eccf62a16286b6f4a5f55ca70.
-Canonical R4 run manifestbb83eb91b5f135a6de812cb8762eb1d2679271aa00e178069dc629b84a417f8d;
-source manifestea8adac46d53156c2e4be3ff73e708707de1c19a41a846f599058aa3ca83794e.
-Actual1092-source JDK8 compile/finalize,4288classes/19644833B. Prepare29731.0669ms,
-compile8066.1003ms, finalize48236.8235ms; exit0/proven process-root/log absence.
-R4 entries equal R3 classes; generated59474332/descriptorDATAe4b22dd6 unchanged.
+P OS-temp/tsj-q100-pending-node-provenance-a2d64dad609f43be973f5099fc581057.
+Frozen PLAN87dcd34af7ba78e5f9d5ae0b91655755df7c35466bff8983437b34cb94036f84.
+Native-only owner overlay7bf4ab57198ff9444381ec5d677c1a2bc309bfa3e7f01b188c631ffe5f2b966c
+from unchanged productionc382f3bc. Public code tests/qualification/rb100-layout/
+native-branch-limit-selection-r1; sanitized evidence docs/task-evidence/Q100/
+native-branch-limit-selection-r1. Generator d11df617; tests7aed235b; final canary
+52101ac91adca2227cdf72ee5d247382cfd4571e5cfeacdf806059269cd0ce0c.
+Final proof1686af71b6173b44af45a956d44075b808ef3af1d634c613ff57f6d2210dc4c5;
+early proof235eaf6fa143a44d5292d948272a54a613335df7cd6f24b05eab48c82dccf521.
 
-Authored-native-call-r1 exit0 in17643.6517ms child/17900.1503ms wrapper.
-RunUUID29bc4796-654c-45d8-bb48-7c61110eaf76. Result16509B SHAe0324d3dcf97df44ac7939700c7c15add3a29ede4f37fe9c76c17c3e72d0ddb2;
-fresh op-1 377134B SHA987615f3fbcbd9d0d0f4610cc9aaf44f01c7024b2e1fcb6bc85aa1e7c796ce02.
-Actual fresh receipt307/lineage77; request0/attempt4/pass2. Exact decimal seeds:
-root9007199254740993, placement-6587958367974952701, routing8445301674744508279.
-Both arms independently match D_COIL_LOW:BRANCH_SEARCH_LIMIT/419905expanded/
-43traversed and preserve route parity. NULL NOT_ENABLED/no callback/snapshot;
-OBSERVE FIRST_NON_FOUND,76callbacks/75found, actual terminal tuple retained.
-Native marker465groups/12695355units; operation17.2367483s, finalexport46.5443ms,
-maximum group1.2045748s, maximum32768units. Finalcopy79558entries/13259chunks;
-R16509/C5/M639 gives28exportunits/33689entries/12chunks. All caps unchanged.
+LOCAL PASS: actual final-source JDK8 compile1159.2942ms/1417.0342ms wrapper,
+three sources/60classes/300342B; owner46/228706B byte-equal early probe. Expected
+92B bootstrap warning only. R2 canary674.738ms/931.851ms wrapper:8groups/587
+assertions/16fixtures/18beginCalls/1detachedCopy, generic injected boundary only,
+authored0. Retained terminal217421 (981.4384ms), branch30 (471.1185ms), relaxed2201
+(904.0594ms) assertions pass. Final public Python8tests453.3013ms and real positive
+385.339ms pass, generating identical owner/proof. Five early real selected-host
+negative controls reused only with identical source/helper/parent bytes; expected
+exit2 rejection, not ordinary PASS. Actual D source audit1092/4288/19644833B passes;
+final audit rehashes all4288 inherited classes, tools and selected sources.
+All returned processes prove termination/owned root+log absence; isolated cleanup
+time unmeasured. No full1092-source overlay/GWT/Player/electrical renewal claim.
 
-Final authored-reader-call-r3 exit0/30187.7774ms, strict1646B summary. Full source/
-class/typed owner/process/raw-byte binding, original/PAD identity, N kernel,
-parity/finite oracles, cleanup, R8 GROUP census and R7 copy reconciliation PASS.
-New final-source tests76 PASS (63reader+3realhostparser+4prioridentity+6roleoracles).
-Stageclosure6 reused only after unchangedbuilder/input audit. Final canary-host
-proof028a1a14759730a07536228ec677efb460024638d3e8f9daf9b8d33000becc88
-reused after AST audit: only _expected_prior_ref/_validate_finite_expectation
-changed, each called only by normal validate_result; all canary/host definitions,
-constants/dependencies unchanged. No extra canary or native run for these fixes.
+FAILURE preserved: reported worker draft2d68e0e5 did not pin actual bytes. Root
+reconstructed93437d6e from the unrun draft, corrected two shadowed assertion calls
+and reviewed actual bytes before Java. R1 source5d80f807 compiled then failed exit1
+on frontierCount because old/new injected frames differed. R2 gives both frames
+the same stale/chosen/later queue and index entries plus two advances; full
+field-for-field oracle retained, owner/caps unchanged. R1 raw classes/receipts
+remain, partial Session count NOT RETURNED. Retained suite Sessions unmeasured;
+no lifetime aggregate inferred. Earlier D failures are unchanged.
 
-Preserved reader R1 QUALIFIED_PRIOR_BINDING and R2 FINITE_REFERENCE_MISMATCH are
-FAIL, not PASS. Independent frozen-contract review confirmed consumer defects:
-parent ref must be unique approved call-parent8ac7..., not separate qualification
-Pythonparentbbb697...; NULL must remain NOT_ENABLED while OBSERVE matches
-its actual tuple. No reason/419905/43 oracle value changed. Same genuine result/
-op-1 bytes revalidated, never rewritten or rerun. Both old readers archived.
-Earlier R2 owner-path failure, R3 host timeout, real phase-closure diagnostic,
-R4 postwrite host parser-arity failure, and all original evidence remain.
-R4 canary file stays failed evidence; R5 real host passed30.3338482s with exclusive
-write/readback/recheck. Occupied-output and bad-manifest SHA controls reject.
+Root integrated source/receipt/byte review PASS for bounded scope. Leaf semantics
+review and final canary review: SOURCE_ONLY, no blocker, no runtime run claimed.
+Selection is fresh identity-live head already popped, not pending heap contents,
+minimum legal path or witness. Stored h may predate the completed relaxed bound.
+No scan, repoll, path chain or live Node retention. One opt-in callback reuses
+Session abort/latch; detached static no-op preserves mode without caller.
+Owner Search.advanceOne unit is not primitive instruction accounting. Future D
+consumer must charge all ten scalar copies/validation/serialization once under
+its original shared Meter; integration remains NOT RUN/NOT ACCEPTED.
 
-Limits: compile60/nativewrapper480/reader180/cleanup120s as original WIRE/PLAN;
-earlier R3 caller90/60 mismatch retained as failure. Authored90s/640groups/5s/
-32768units/copy1048576/chunk4096 and routing caps unchanged. Python always-I-B.
+NEXT: inspect integrated/staged diff, normal commit/push, verify exact remote SHA,
+send one completion Gmail and record receipt. Component publication/notification
+NOT DONE. After publication scope the consumer integration/independent oracle;
+no additional authored run is part of the current component. No routing-cap,
+production adoption or physical/access/runtime/functional qualification inferred.
 
-Publication gates PASSED: final source-review exporterdf9c297f/tests01f6bb1c,
-9 tests and actual pinned four-source export PASS. Fresh occupied/hash controls reject; two real
-input/output junction cases reused on identical guards/prefix before projection. Public packet contains byte-pinned review
-projections, source/result/export proofs and scoped validation/failure/review.
-No private path, parent source, raw process receipt/class or replay claim.
-EXPORT_PROOF58f33621cd69e90d86e3cb5290d337cfa8c54afca31874f84d4fec12fc49b7cd.
-Staged check caught terminal blank line in the exact source review. Five owned
-reviews archived unchanged before review-only EOF normalization. Original source
-pins/native classes/data unchanged; fresh9 tests and actual export gates pass.
-No Git whitespace rule disabled. Curated .txt/.json need explicit sparse force-add.
-First positive rejected path byte literals before writing; str+bytes literal
-projection now retains types. Mistyped handoff SHA rejected before execution.
-Initial junction cleanup request rejected by automatic approval review; both
-original links now physically absent and targets unchanged, original unlink
-action UNCERTIFIED. Fresh verified-owner literal nonrecursive unlink canary
-returned0 with absent link/unchanged sentinel. No owned junction remains.
-No native/consumer source changed for these packaging fixes. Root owns all files;
-all leaf writers finished. Final staged audit53501da1 verified21 paths, pinned bytes/document-only Git EOL
-equivalence, privacy/source/proof pins and both diff checks. Commit66fd2d7c normally
-pushed and remotely verified; completion Gmail1a1ba9693e5350af sent once.
-NEXT IN PROGRESS: leaf shared_budget_review_r2 is reading only accepted scalar
-facts and exact compiled PcbNetRouter67965d18e81c284a2afd6a8fe318177a635ca57edbd6ca5cbca0f3fa8e285a88.
-Return source-proven cap/frontier/distance semantics and smallest justified data-
-only next diagnosis; no edits/runs/new original/control/Session in this substep.
-Then bounded diagnosis/routing treatment for this observed branch cap, followed by
-real physical/access/runtime/functional proof before any adoption/playable100.
-
-Resources: all root native/reader/test calls returned/proven cleanup; no new
-persistent browser/server. R3 timeout logs OS-temp/TroubleshootJS/
-verify-process-ebc137b2bbd5462d969a6eddf73816f7 retained0B, no returned exit proof.
-Old uncertain browser14116/start639294472690745890/port58320, preview34180/
-start639294472514546595/port58264+14 uncertain children and old logs untouched.
-F report M plus task-owned new exporter folder only; Main5f05b005 retains9tracked/
-6untracked/staged0, E d9747229 report M, Desktop e0c36885 unrelated80 paths preserved.
+Resources: no new persistent process/browser/server/junction. Two P junctions
+identities revalidated, literal nonrecursive removals each returned0; links absent
+and targets unchanged. P source/classes/raw receipts retained. Old uncertain
+browser14116/start639294472690745890/port58320, preview34180/
+start639294472514546595/port58264+14uncertainchildren untouched. D old timeout logs
+remain; original unlink UNCERTIFIED, links absent/targets intact and separate
+literal-unlink canary passed. No cleanup, budget or global setting weakened.
 
 # Historical checkpoint: shared budget published; v3 source transport in progress
 
