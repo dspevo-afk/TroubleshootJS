@@ -1,0 +1,32 @@
+{
+  "actualCallerReceiptsRevalidated": true,
+  "completeMarkerBytes": 643,
+  "expectedGoodReferenceCallRetained": true,
+  "fixture": "SYNTHETIC_ZERO_SESSION_EXPORTER_GUARD_NOT_A_NATURAL_REFERENCE",
+  "host": {
+    "childExitCode": 2,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "host-reject-real-post-marker-failure-r1",
+    "processElapsedMs": 1883.086,
+    "receipts": {
+      "owner.json": "87c0b629537086896d66d96cc7a7ef7b4951419b167da7ba87b5e8b022dc6094",
+      "parent.json": "5d750a75e5aa0520bc7dbf8f074e1f6bc84ec266d22a3a21ea7a7cd2ff12a438",
+      "process.json": "cfe512f89361739ec000674babc9abfda72179b7574ba11cbea62561bd88aa11",
+      "request.json": "0672df4d89e53c279cb949bee840ef5339448bfcf4672218afe3fe3fdd77430c",
+      "result.json": "93c5a57156aa87594cb2b5410ab56b843c284087fdc9c7b6e1388196e6a05a90",
+      "stderr.txt": "2881b661a5f347f7b28e6cda1722af5b3a716175e6cb495d642a4d363a14831d",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "PASS_EXPECTED_REJECTION",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 2163.2723
+  },
+  "hostOutputEmpty": true,
+  "newAuthoredInvocations": 0,
+  "newSuccessfulReferenceProducers": 0,
+  "note": "NEGATIVE_CAPTURE_USES_REAL_NONZERO_GUARD_RECEIPTS_AND_IS_REJECTED_AT_ZERO_EXIT_PROFILE_BEFORE_EXPECTED_GOOD_CALL_BINDING",
+  "realNativeGuardChildExit": 1,
+  "schema": "tsj-generic-r7-real-post-marker-host-rejection-v1",
+  "status": "PASS_EXPECTED_REJECTION"
+}

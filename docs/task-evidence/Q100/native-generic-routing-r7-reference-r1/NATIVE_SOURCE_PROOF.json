@@ -1,0 +1,117 @@
+{
+  "R7": false,
+  "actualSessionConstructorEntriesExpected": 2,
+  "authoredInvocations": 0,
+  "baseGeneratorSha256": "d11df617dc255257e3ac42cba45a9a8d78482f4fec9ea52f846a6f48f97ce1f0",
+  "closedPreExportReads": 19,
+  "compile": "NOT_RUN",
+  "derivedDriverBytes": 23660,
+  "derivedDriverSha256": "79ce0a7c1c4db10267bf20ab26b48ae5845a92bfc296e3c41fcd8c48600315eb",
+  "derivedStudyBytes": 240144,
+  "derivedStudySha256": "7d62a0f343a270056bfd7e536145a47874ccc90c10cd24b93ec89ee6d6f94570",
+  "driverChanges": [
+    "GENERIC_RESULT_DRIVER",
+    "IMMEDIATE_RUN_METER_BOUNDARIES",
+    "R7_MODE_WIRE_IDENTITY"
+  ],
+  "driverParentSha256": "68c78e29148d062969943b6ddf77bba15e3ca352ce03b16000eb9dfcded9e9c0",
+  "finalizerBindingReadAndGuardPrepaymentUnits": 8,
+  "finalizerElapsedSlotWrites": 1,
+  "finalizerExistingNumericSlotWrites": 1,
+  "freshRunLedgerCopiesPerRun": 7,
+  "freshRunParentCallPrepayment": 4,
+  "freshRunReadPrepaymentPerRun": 28,
+  "freshRunReturnedAndScalarFields": 11,
+  "freshRunTotalPrepaymentPerRun": 51,
+  "frozenAndFinalizerLongWrapperCopies": 24,
+  "frozenAndFinalizerSlotWritePrepaymentUnits": 24,
+  "fullD": false,
+  "geometryPath": "references.{OPEN,BLOCKED}.run.layout.components[].geometryCanonical",
+  "geometryPathLimitBytes": 4096,
+  "ioHelperSha256": "df9c297f4eb491117bade351ceedf26ccef5059e47ad9a7f36006000f1a10923",
+  "markerMaximumBytes": 666,
+  "markerMaximumEquation": "quotedKeys207+punctuationAndLf30+fixedQuotedValues375+decimalMaxima54=666",
+  "nativeExecution": "NOT_RUN",
+  "nativeSupportSections": {
+    "GENERIC_ARGUMENTS": {
+      "bytes": 3445,
+      "sha256": "d2deaffd138c3aa1464d2cd481e868b18cb05b3d6d04771525d1bbce4b03eb26"
+    },
+    "MARKER_METHODS": {
+      "bytes": 2154,
+      "sha256": "a2fae79d82d38454e3f82c964f60eaa51fc7704b1db8519ccf682e91fb8a3024"
+    },
+    "OUTPUT_CLASS": {
+      "bytes": 1742,
+      "sha256": "6344fecafdfeab11fe44c374f03a5edbf91ac1b0524d777abf7fbac7cba417e9"
+    },
+    "R7_CORE": {
+      "bytes": 19291,
+      "sha256": "d17d4b4417aef531c4e7ad7c662def223d4158404cd354ace30f7ee326703b75"
+    },
+    "WORK_VALIDATION": {
+      "bytes": 6555,
+      "sha256": "fe7b826038f3f876f34663a518c4a0799c800b310228d040a7ad8963ab83f9ec"
+    }
+  },
+  "nativeSupportSha256": "57abe8c240c9a14351a474290c2fbd0a394a319e5c117e467616b34cfc23ebf5",
+  "observedOriginalFlagsExpected": [
+    false,
+    false,
+    false
+  ],
+  "observedPriorAndInflightGroupsExpected": 0,
+  "ordinaryStringLimitBytes": 256,
+  "outputs": [
+    "CohortTerminalTelemetryStudy.java",
+    "GenericRoutingReferenceCanary.java",
+    "SOURCE_PROOF.json"
+  ],
+  "phaseBoundaryBoundedGuardsPerPoint": 3,
+  "phaseBoundaryListSizeReads": 4,
+  "phaseBoundaryPrepaymentUnits": 304,
+  "phaseBoundaryReadUnitsPerPoint": 76,
+  "phaseBoundaryReflectedFields": 72,
+  "phaseFreezeControlPrepaymentUnits": 22,
+  "phaseFreezeSubtractionAndGuardUnits": 22,
+  "phaseLedgerObjectAllocations": 5,
+  "phasePointPrepaidCopies": 109,
+  "phasePointStoredSlots": 109,
+  "planSha256": "56fccb76c7170faeb101fce60ebe036e1125b2b05c79ada2425252b64740164f",
+  "r5SnapshotAllocationUnits": 1,
+  "recordRunControlPrepaymentPerRun": 16,
+  "schema": "tsj-generic-r7-export-overlay-v1",
+  "status": "GENERATED_SOURCE_ONLY_NOT_COMPILED",
+  "studyChanges": [
+    "EXACT_SIX_ARGUMENT_MODE",
+    "GENERIC_ARGUMENT_PARSER",
+    "R5_FINALIZER_BINDING",
+    "GENERIC_EMPTY_TO_RESULT_OUTPUT",
+    "R5_SNAPSHOT_NO_ORIGINAL_STATE",
+    "GENERIC_WORK_SHAPE_AND_EQUATIONS",
+    "GENERIC_RESULT_OUTPUT_CLASS",
+    "GENERIC_FOURTEEN_KEY_MARKER",
+    "GENERIC_R7_METER_LEDGER",
+    "R5_OUTPUT_ARGUMENT_TYPE_1",
+    "R5_OUTPUT_ARGUMENT_TYPE_2",
+    "R5_OUTPUT_DIRECTORY_ROLE",
+    "R5_FINALIZER_WORK_BINDING",
+    "R5_CANARY_COUNT_GEOMETRY_PATH",
+    "R5_CANARY_WRITE_GEOMETRY_PATH",
+    "R5_CANARY_READBACK_GEOMETRY_PATH",
+    "R5_EXPORT_WORK_FIELDS"
+  ],
+  "studyParentSha256": "8581ca447ca5d7fde0c56970daa9ea7fc38a1f2ea97eeb8b911621f3ccedfa14",
+  "wireContractSha256": "4142410d8719f2e3b73edc9481ba9a2a40f0476f19f242844e97b42bde366741",
+  "wireSourceSha256": "4142410d8719f2e3b73edc9481ba9a2a40f0476f19f242844e97b42bde366741",
+  "workBodySlotReplacementCopies": 1,
+  "workLimitWrapperCopies": 6,
+  "workMapAllocationUnits": 7,
+  "workMapAllocations": 7,
+  "workPhaseNumericSlotWrites": 23,
+  "workPlanArgumentGuardUnits": 1,
+  "workPlanReferenceAndStateCopies": 14,
+  "workSlotInspectionUnits": 2,
+  "workTreeEntries": 36,
+  "workTreeEntryCopies": 37
+}

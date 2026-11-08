@@ -1,0 +1,110 @@
+{
+  "attribute": "*.py -text whitespace=cr-at-eol",
+  "calls": [
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "crlf-git-init-r1",
+      "processElapsedMs": 415.156,
+      "receipts": {
+        "owner.json": "5ed1f60be6fdaa7ec7706b0fb99d96c2d46225ef55e4d4a8242b7912e8240b82",
+        "parent.json": "5594e7993b6379041b00787a99c741c2b9e7feb5bda5c5247e62a5cf85e458c9",
+        "process.json": "0bbfe548e699298f1d682c2a23cab54149f10677a2661a54eeafeea460263707",
+        "request.json": "6b21acb0efadeb5875e796b4784eaaeae8ad8586a7c6380fcc367b1c6420e19f",
+        "result.json": "181cccf836304e57af6ebd51bf9219e87b3446ce28cd50e74f6e1b1d0ae280d9",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 668.075
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "crlf-good-stage-r1",
+      "processElapsedMs": 324.7923,
+      "receipts": {
+        "owner.json": "d849f4e8c5ac325ea6852d5b9e0d7940e3510be2da9ec26b36d03ed931368fc2",
+        "parent.json": "00f5092fb605bf6567bfa596adceab70976b99c05700e26e94c68b3398423098",
+        "process.json": "f897bc0fa17b568cbabacc14595e51af94281ec8cc066efd653f99974558e31b",
+        "request.json": "8ba3a46fa9221e62c3672dcd0ac677a742aa1f7c7d2d0207ba1da823d88f26ec",
+        "result.json": "6cd04ed2d7d0dc2bb45945dc6959db1692fd889856991bf3f77ad21cb8b78cdd",
+        "stderr.txt": "27c51123b0695a2886e7887d49f40ec1e9681190c0f62ae5e15c1e08b2c4ed22",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 575.9089
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "crlf-good-check-r1",
+      "processElapsedMs": 399.32640000000004,
+      "receipts": {
+        "owner.json": "f449f1b5ba283ff5e4c912fcf3e9bd6904e7326947189d9a107652d3eb29ed11",
+        "parent.json": "cf6cb200a8ffa6c10fb4d55d4a893ae1c996b3969099053b16efcf7d0a32de02",
+        "process.json": "e0c21dcbb5440d8263559e4b68d4dc4dcd785153121ca984c4031e197466023f",
+        "request.json": "104adc89bd085fbcffe83be66c30a4a80dee5df3cc833478119492a0cc66247e",
+        "result.json": "695b080f42a2f8c8704fb9dac924bd06a5fe93463b2dd672c7bc093ff35e0ef4",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 648.9211
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "crlf-bad-stage-r1",
+      "processElapsedMs": 409.4599,
+      "receipts": {
+        "owner.json": "9516d1d7e1806ed0640d292c6ab4fb992ce051d8a0f4448a54f8750a6e681265",
+        "parent.json": "13082acf7075ddb33f6675706c15e85445ed91abab1cedef7d6a89840f402424",
+        "process.json": "e86e8dfeb1cb5041c647da19f422b64487c41c78cd56296aded43f35737abe00",
+        "request.json": "6d9738741be555243eaaff45253b8fb444afe4f44e5ad1053f1f9a793a931103",
+        "result.json": "1e4111bc077e84300e166878baca5874390314b6ad449dbbec09415f530e1b4a",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 660.3574
+    },
+    {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "crlf-real-trailing-space-check-r1",
+      "processElapsedMs": 486.0729,
+      "receipts": {
+        "owner.json": "8b45be692921fb792dfc58624c15bdb0562e9fb7c65310ac9113b7f714ce15d2",
+        "parent.json": "7610040f606ca18d6bf481b43c221b4c8a964d760282a7a292a68507f8fa9bf9",
+        "process.json": "25eab75d8c6878b2ce801dff2bb4a4efc39c79925b2c499e614210dadc34ccb1",
+        "request.json": "104adc89bd085fbcffe83be66c30a4a80dee5df3cc833478119492a0cc66247e",
+        "result.json": "628a9574cb0e3e09d2305b17d5702518f45488ad6fe7b5b85713dbc9e0f3bcce",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "2d953c892c0219a3a2078afbe679418101768956daa877324c0e6fba73c4d108"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 723.3772
+    }
+  ],
+  "git": {
+    "bytes": 45032,
+    "role": "SELECTED_GIT",
+    "sha256": "4ab2b391de7fb5eb3afb34b5bd19ee7f71d0450bf7e4c207b201a0392e3825ae"
+  },
+  "globalConfigChanged": false,
+  "realTrailingWhitespaceExitCode": 2,
+  "schema": "tsj-generic-r7-crlf-policy-canary-v1",
+  "status": "PASS_POLICY_CANARY",
+  "validCrlfExitCode": 0
+}

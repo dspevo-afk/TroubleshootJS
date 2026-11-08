@@ -1044,6 +1044,28 @@ Implementation `accdedcc403e7154fa56bda20afe12e3e386b2ce` was normally pushed to
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified. Completion
 Gmail `1a1bc21b36bdccd0` sent once.
 
+The [generic native result/marker R7 prerequisite](task-evidence/Q100/native-generic-routing-r7-reference-r1/README.md)
+is locally accepted for two ordinary OPEN/BLOCKED routing references. One real
+producer constructs exactly two Sessions, writes an18158B result and emits a655B
+marker. Closed same-Meter phase deltas and actual post-publication unit/group/copy
+checks pass under unchanged limits. The independent reader retains fixture/copper
+oracles and derived-demand checks; the host binds approved source/class/tool/argv
+and pre-frozen caller receipts before exclusive result/marker readback/rechecks.
+Actual final-source JDK8 build176classes/583973B keeps all46routing-owner classes
+byte-equal. Native source7, kernel15, host generator18, actual-context host17,
+native owner78 and retained materializer/terminal/branch/relaxed/text contracts
+pass. Reader generator has12PASS/1privileged-symlink SKIP, with actual Windows
+junction controls covering the selected boundary. Twenty-six CLI and two junction
+CLI controls reject. A separate synthetic zero-Session exporter emits a complete
+marker then fails its actual counter assertion; the host rejects the real nonzero
+caller. Public source/proof/summary/accepted bytes reproduce exactly. Initial
+source/test/compiler/privilege failures remain preserved and resolved. No oracle
+or budget is weakened. Full-D/OriginalArm/H1 migration is the next scope to freeze
+before further authored routing work; no new authored invocation is made here.
+Production/GWT/Player/electrical/population are not renewed. Playable100=0/betaHELD;
+Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historical protected unread
+UNCERTIFIED. Publication and completion notification remain pending final review.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

@@ -1,4 +1,71 @@
-# Current checkpoint: source-bound natural-reference host published; native export next
+# Current checkpoint: generic native R7 reference locally accepted; publication pending
+
+UTC2026-11-08. Standing roadmap continues. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107, HEAD2ea50ea301b7348722bff958aa0e52909e9601d7.
+Origin dspevo-afk/TroubleshootJS target codex/q100-physical-feasibility, no upstream.
+Before V report M/staged0; now intended code/evidence/architecture/roadmap/report only.
+Main5f05b005 preserves9tracked/6untracked/staged0; E d9747229 report M/staged0;
+Desktop e0c36885 preserves7tracked/73untracked/staged0. Main/E mirror report only.
+AGENTS a3dec836 unchanged. Uaccdedcc/receipt2ea50ea/Gmail1a1bc21b36bdccd0 and
+T/R/S emails below SENT_ONCE; never duplicate. No V publication/Gmail yet.
+
+V OS-temp/tsj-q100-native-reference-export-scope-cbd8cd5bfa9d4ac59f797a88da78517f.
+PLAN56fccb76/WIRE4142410d/MARKER_BOUND8f92dd8e frozen before implementation.
+Code tests/qualification/rb100-layout/native-generic-routing-r7-reference-r1;
+packet docs/task-evidence/Q100/native-generic-routing-r7-reference-r1.
+FINAL_GATES_R1 777b3c998f84f5e65b2b16c45586599626a6e79f64bb964740b5638d78f7f942;
+PUBLIC_GATES_R1 2e74ec0139d726234c73ecdc7d36d77d1d7e038df77cea40493aba8a85dcf382.
+Actual final-source JDK8 build176classes583973B/all major51; all46P byte-equal;
+1059 explicit constant-class links resolve fresh (reflection closure not claimed).
+Producer manifest d587c69e5a9e22c089b134c7d46cb05264666d1cbd5477c682ad99880a184514.
+One genuine reference producer/2actual Session entries: natural OPEN FOUND/SUCCESS
+2traces0holes; BLOCKED NET_A:NO_PATH/null layout; geometry stable, constructors0->1->2.
+Native18158B result SHAe5223c5133001a9626ce171d9c395069ce7579efdf17e03714107cc490393e38;
+sole655B marker. Native operation598.3596ms/wrapper849.9957ms; independent reader
+392.9811/819.4547ms; actual host3141.9237/3386.1813ms. Pre-call source/argv and raw
+returned receipts freeze before semantics; captureSHA284eb58b45b264c2d5f5276123a2b959b050076fced7932fe74664658a27606b.
+Actual same-Meter phase/export/post-publication assertions and source/class/tool/
+argv/caller-bound zero exit qualify generic R7 only. Pure demand stays DERIVED.
+
+Fresh native source7, kernel15, hostgen18, actual-context host17PASS; readergen
+12PASS/1privileged-symlink SKIP with real selected Windows junction coverage.
+Retained materializer13assertions/2cases0Sessions, terminal217421, branch30,
+relaxed2201 and text56cases58assertions0Sessions PASS; other retained Session totals
+unmeasured. Native owner guards78PASS on final guard6044fe04602c2da46b2ae9e94d2f7bf469cdc4d3d74cd2b3d11a398bda1d25a9.
+Separate labelled synthetic zero-Session exporter emits643B complete marker then
+fails actual R5_METER_CHANGED/nonzero; real host rejects at zero-exit profile and
+writes nothing. It is not natural-reference/constructor evidence. 26CLI+2junction
+CLI expected-code controls pass; seven denied native entries, no extra successful
+reference producer/authored invocation. All caller links revalidated/nonrecursively
+removed, targets unchanged before owned cleanup. Failed scratch/evidence retained.
+Public generators reproduce exact source/proofs; public reader/host summaries and
+accepted bytes exact. Public host3153.6656/3397.7795ms. Standard cr-at-eol canary
+validCRLF exit0/real trailing-space exit2; no global setting changed.
+
+All six failed child gates preserved as FAIL: two Python oracle fixtures, one
+native-transform duplicate end anchor, Java7 final capture, unavailable symlink
+privilege, and reflected map-key access. Root fixed causes; selected Windows
+junction replaced privilege-dependent creation without skip or privilege change.
+Earlier source-only binding/copy/prepayment/visibility/splice/error-owner issues
+are archived and resolved. Independent reviews were bounded SOURCE_ONLY; root
+owns actual tests and final integration, no pre-fix review reused as runtime PASS.
+Current core gen6c65f283/support57abe8c2, study7d62a0f3/driver79ce0a7c;
+pure be426ddb/host97457eba. Full SHAs/pins/receipts/limits in V and public packet.
+All returned processes terminate and roots/logs absent; isolated cleanup duration
+null. No new persistent resources. All workers stopped. Old uncertain browser/
+preview/children/D timeout evidence untouched; private scratch/classes retained.
+
+Next final actual diff/byte/privacy/staged checks, normal commit/push/exact remote,
+one completion Gmail and receipt; then freeze full-D/OriginalArm/H1 migration scope.
+No new authored capture/NULL-OBSERVE arm/retry here. All original caps/oracles
+unchanged. GWT/Player/electrical/population NOT APPLICABLE/not renewed; Full30
+EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; protected bodies unread here/historical
+unread UNCERTIFIED; playable100=0/betaHELD. No unresolved implementation blocker.
+Final staged check caught one extra EOF blank line in the kernel test. Removed
+only that line, newtest0d239c21; fresh15PASS/0SKIP. Producer/consumer/generator
+inputs/classes/tools/receipts rehashed unchanged; public reproduction reused on
+that audited boundary. Final private proofR2 is public FINAL_GATES_R1.json.
+# Historical checkpoint: U published and V source development
 
 UTC2026-11-08. Standing roadmap continues. F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
@@ -97,6 +164,89 @@ resources. Old uncertain browser14116/start639294472690745890/port58320 and
 preview34180/start639294472514546595/port58264+14uncertainchildren, D timeout logs/
 UNCERTIFIED unlink untouched. All scratch/classes/evidence retained.
 
+V ACTIVE FROZEN SCOPE: owned OS-temp/tsj-q100-native-reference-export-scope-cbd8cd5bfa9d4ac59f797a88da78517f.
+Actual F HEAD2ea50ea301b7348722bff958aa0e52909e9601d7; report-only M/staged0.
+PLAN_R1 SHA56fccb76c7170faeb101fce60ebe036e1125b2b05c79ada2425252b64740164f;
+WIRE_R1 SHA4142410d8719f2e3b73edc9481ba9a2a40f0476f19f242844e97b42bde366741;
+MARKER_BOUND_R1 SHA8f92dd8e71dfc20974b08b51e407634a5e57d0c3e2882ecae1042cd73e683f9e.
+FROZEN_SCOPE_R1 binds plans/maps/input pins before implementation/runtime. Maximum
+marker666B includes LF, independently computed from fixed strings/numeric limits.
+Scope real generic native-owned result.json/sole marker/same-Meter phase ledger,
+independent pure and source-bound host admission. Exactly two ordinary OPEN/
+BLOCKED fixtures per successful producer; no authored/original retry. Native6args;
+empty native output separate from call receipt. Actual post-publication counter
+assertions plus caller-bound zero exit mandatory; pure byte formulas DERIVED only.
+All original caps/oracles preserved. No V milestone published or Gmail sent.
+
+PURE KERNEL92fa2b28fca261b4f0b44d0f9dbc6acab7a1529e9508ba5e1757614e816e213c;
+test6d926b56bbc5570d4566e5083bf3d4dae4eee627316bd78deacd23fe0f2161ba.
+Actual selected Python-I-B/RootCall pure-kernel-units-r1:15PASS/0SKIP, operation
+664.4636ms/wrapper918.8585ms. Existing T references projected into clearly
+SYNTHETIC UNIT phase accounting; no V native/Meter proof. Before execution fixed
+harness false-success exit and impossible maximum-capacity rejection.
+
+Readergen813253dfc00910cb149be8cd8730ee092c4405e3a58af9b75fd42982d531ab70;
+CLIc690907f32115e3a93f7b0938965df5a9f943a0f1956dc5921ed5e971a541fdd;
+testf66c0c6801d85fef9f1fd45283833c495b46682f7bbf24c9c8e50b9806798884.
+Root pre-runtime review fixed known Windows fstat/lstat ctime regression via
+common-handle fields while retaining full path ctime+hash; source/derived4MiB,
+proofJSON8MiB kept separate. First unit FAIL13declared/11P/1F/1SKIP: synthetic
+AST-guard fixture failed earlier fixed hash owner. Authenticated only that mutated
+UNIT source to test AST guard; production pins unchanged. Failure/source archived.
+Fresh reader-generator-units-r2:13declared/12PASS/1privileged-symlink SKIP;
+actual checked CLI source generation PASS514.6536ms/761.3055ms and occupied-output
+negative child2 PASS, sentinel unchanged. Derived be426ddb51605c57e1acc5a33edebcd168bc599dd152a9cbd32b8106435b632b.
+READER_GENERATOR_GATES_R1 records source-only gates; native result admission pending.
+
+Hostgen92172c0dc5ee9a5410699ad53cf4805b2e0a08ab8ca53dcb2945cb79ef2d32ec;
+gentestb86bb2bce76086d74bba2fce069ccfa5ebc314a18f36446ca28529cad063680b.
+Independent SOURCE review clear on inherited extraction/IO and current middle-
+module string-expression handling. Prior4bbc archived. First unit FAIL18declared/
+16P/1F/1SKIP: test wrongly expected one partial output though owner writes both
+before readback. Exact two-output preservation and actual disk/proof hash asserted;
+oldtest300a archived; r2 17PASS/1optional SKIP, r3 all18PASS/0SKIP with actual five
+sources. No generator weakened. FAILURES_R1 retains ordinary FAIL unchanged.
+
+Hostadaptere2f0126f6117c1862c0255877e5ba2c785878f5428391ecf72cea64ee7a19213;
+adaptertest27aef9859637722960df72b7f17125268448f8875220d360f2985e43ae5caeef.
+Independent review a8de source found tools-list/tuple positive blocker and omitted
+GR7 kernel error catch (fail-closed generic diagnostic). Root archived a8de/test76,
+fixed ordered list/tuple comparison and explicit error owner, added tuple/order/
+nonzero-error tests. Fresh hostgen CLI PASS484.0764ms/723.7848ms; generated host
+97457eba215f7de8a1bd03c6049148e414852f1ce524e4da9c79c0e05c775db8.
+Host units17declared/16PASS/1actual-context SKIP. Focused actual Windows junction
+1PASS423.7596ms/671.8862ms; the full suite also executes the real junction/dangling
+case. Both owned links revalidated and removed, targets intentionally empty then
+removed, strong absence asserted. No persistent resources. All returned calls
+prove termination/root+log absence; isolated cleanup duration null. These are
+source/host-unit gates only, no actual native counter acceptance. See
+HOST_READER_SOURCE_GATES_R1; actual context remains NOT RUN.
+
+Native core writer generic_r7_native_r1 owns support/gen/generator-tests drafts in
+literal V/ subfolder after path misunderstanding; finish there then root integrates
+byte-equal copies after handoff. Pre-correction supportb14424... archived. Native
+provisional review found body/child-map identity, numeric boxing, retained slots
+and reflection/control prepayment gaps. Writer corrected draft model to four
+points x(18field reads*4+List.size+3guards)=304units,109 retained-slot copies,
+5allocations; final integrated review/pin still pending. Native lexical output
+aliases require raw and real-path string equality before Parent. No final native
+handoff, source generation, compile or producer invocation yet. False-original/
+zero-prior source expectations remain UNOBSERVED. Guard ownership transferred to
+new leaf generic_r7_native_guard_r1, sole task-root GenericR7NativeGuard.java writer;
+synthetic zero-Session guards separate from real fixture proof. Leaves source-only,
+no execution/stage/publish/notify; root owns integration and acceptance.
+
+Root helpers root_gates_v1.py/kernel_gate_v1.py/reader_gates_v1.py/
+host_reader_gates_v1.py/retained_gates_v1.py/freeze_host_context_v1.py prepared.
+Trusted pre-call source/argv and raw returned receipt pins freeze before semantic
+admission, no circular prior V proof. All V native/build/export/actual-context gates
+NOT RUN; zero V native producer/authored invocations. No protected body read.
+Next corrected native handoff/review/prepayment freeze, actual sourcegen/JDK8 build
+and real two-fixture export, actual reader/host acceptance, focused native/OS/CLI
+controls, retained contracts, final public reproduction/diff/publication. Full-D/
+NULL-OBSERVE/H1 remain separate. Full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
+historical protected-unread UNCERTIFIED; playable100=0/beta HELD. Old uncertain
+resources and all prior failure evidence remain untouched; scratch retained.
 # Historical checkpoint: generic selected-observation V2 published; full integration next
 
 UTC2026-11-08. Standing roadmap continues. Active F OS-temp/

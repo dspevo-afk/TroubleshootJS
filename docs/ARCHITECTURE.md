@@ -174,6 +174,27 @@ version resolver, fabricated original or replacement physical/electrical owner i
 added. This finite T-profile host acceptance does not qualify full result/marker/
 R7 export integration, authored experiments, Player behavior or playable layouts.
 
+The [generic native R7 reference prerequisite](task-evidence/Q100/native-generic-routing-r7-reference-r1/README.md)
+gives the native producer ownership of a result file and one marker. Four closed
+Meter boundaries isolate the two real runFresh deltas; setup is the actual first
+boundary and metadata is the checked residual. A bound work plan retains result,
+work and child-map identities and fills existing numeric slots from prepaid
+scalars. The existing file identity, count/write/readback, digest and single-use
+publication owners retain the original limits. All three formatter passes share
+the same exact typed geometry exception. Actual counter checks follow marker
+publication and remain fatal on failure.
+
+The independent consumer preserves T's fixture, routing and copper oracles and
+labels byte-length export equations as derived demand. The current host also
+binds root-approved sources/classes/tools, independently reconstructed argv and
+the actual seven authority receipts plus two wrapper files. A trusted pre-call
+freeze and externally pinned raw returned capture precede semantic admission;
+no prior published proof is required for this first profile. Native result.json
+is separate from the caller receipt. Exclusive accepted result/marker copies and
+all consumed inputs are rechecked. The qualified profile covers two ordinary
+references and synthetic owner guards; full-D/OriginalArm/H1, authored routing,
+electrical/Player behavior and playable100 remain separate boundaries.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,
