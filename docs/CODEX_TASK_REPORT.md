@@ -1,11 +1,12 @@
-# Current checkpoint: source-bound natural-reference host accepted; publication next
+# Current checkpoint: source-bound natural-reference host published; native export next
 
 UTC2026-11-08. Standing roadmap continues. F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
-baseHEADb616088a61d38623c19db45b305bdabe65465e33; verify actual HEAD.
+implementationHEAD accdedcc403e7154fa56bda20afe12e3e386b2ce; this receipt
+commit carries checkpoint, verify actual HEAD.
 Origin dspevo-afk/TroubleshootJS normal target codex/q100-physical-feasibility,
-no upstream. Before U report-only M/staged0; now intended U6code/15evidence and
-three docs only. Main5f05b005 preserves9tracked/6untracked/staged0; E d9747229
+no upstream. Before U report-only M/staged0; U24path implementation committed, F clean
+before this receipt. Receipt owns intended docs/evidence only. Main5f05b005 preserves9tracked/6untracked/staged0; E d9747229
 report-only M; Desktop e0c36885 preserves7tracked/73untracked/staged0. Main/E
 mirror report only. AGENTS a3dec836 unchanged. All unrelated work preserved.
 
@@ -79,8 +80,12 @@ generated source. Removed only that line; all23units, actualpositive,20CLI
 negatives,7CLI junctions, focusedjunction and public reproduction rerun fresh on
 final source. Old staged candidate/source/failure retained, no suppressed check.
 
-NEXT: final actual diff/staged-byte/privacy checks, normal commit/push/exact remote
-verification, then ONE U Gmail. U not published yet; no duplicate T/receipt email.
+PUBLISHED accdedcc403e7154fa56bda20afe12e3e386b2ce, normal push/exact remote
+verified. Final actual24path diff/byte/privacy PASS, treeef1b76ccf72ff5aa458e8dea36786e9dbdc3953d;
+reviewdc5b8b5670ac51213f3beaa19c3fa7515db3fda2e8d9f49fd65706c8b3e2785f.
+Zero prior Sent subject matches; U Gmail1a1bc21b36bdccd0 SENT_ONCE. No receipt
+email/duplicates. NEXT: freeze coordinated native result/marker/R7 migration scope
+from existing real owners and generic references; source mapping precedes edits.
 Native full result/marker/R7 migration remains next/unstarted. No OriginalArm/H1/
 NULL-OBSERVE comparison or authored retry implied. Source4MiB/hostJSON8MiB/context-
 packet1MiB/classes10000-268435456B and original90s/640groups/5s/32768units/

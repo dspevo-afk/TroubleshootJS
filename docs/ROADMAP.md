@@ -1040,7 +1040,9 @@ This accepts current T-profile host admission; full native result/marker/R7
 migration is next, with no fabricated OriginalArm. No production/GWT/Player/
 electrical/population renewal; playable100=0/betaHELD; Full30EXCLUDED;
 HARD/PSYCHOTIC unavailable/unrun; historical protected unread UNCERTIFIED.
-Publication status is recorded in the current checkpoint.
+Implementation `accdedcc403e7154fa56bda20afe12e3e386b2ce` was normally pushed to
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified. Completion
+Gmail `1a1bc21b36bdccd0` sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
