@@ -1112,7 +1112,10 @@ SKIP for unavailable privilege. A real directory junction separately proves
 reparse rejection. Two actual positives,13 exact-code expected rejections and
 public byte/summary reproduction pass. No normal-prior role body or native run
 is consumed. Later caller root-freeze/phase gating and all independent semantic
-checks remain required. Publication pending final index review. Next is context
+checks remain required. Implementation
+`381fffd98ff7b00a781460dfefdbb58fb62b0dcd` normally pushed to
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
+Gmail `1a1bd4f6aaf99530` sent once. Next is context
 normalizer/pure-parser implementation, with generated API/types and entry-count
 accounting defined before execution. Full30EXCLUDED, HARD/PSYCHOTIC unavailable/
 unrun, historical unreadUNCERTIFIED, playable100=0/betaHELD; caps/seeds/oracles stay.

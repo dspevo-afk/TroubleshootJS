@@ -1,7 +1,9 @@
 # Frozen normal-prior byte reader
 
-Accepted for byte-reader component scope only; publication is pending final
-index review. The module authenticates the exact 20 frozen role entries and
+Accepted and published for byte-reader component scope only. Implementation
+`381fffd98ff7b00a781460dfefdbb58fb62b0dcd` is verified on
+`origin/codex/q100-physical-feasibility`; Gmail `1a1bd4f6aaf99530` sent once.
+See [publication](PUBLICATION_R1.md). The module authenticates the exact 20 frozen role entries and
 returns bytes with path-free evidence. It does not decode role bodies, follow
 manifest paths or establish prior semantic qualification. No actual normal-prior
 body was read for this substep.

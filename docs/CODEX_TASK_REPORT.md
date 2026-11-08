@@ -1,4 +1,38 @@
-# Current checkpoint: Y fixed-role reader accepted; publication pending
+# Current checkpoint: Y fixed-role reader published; context implementation next
+
+UTC 2026-11-08. Active F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107. Y implementation
+381fffd98ff7b00a781460dfefdbb58fb62b0dcd normally pushed to
+origin/codex/q100-physical-feasibility and exact remote SHA verified.
+Connected Gmail1a1bd4f6aaf99530 SENT_ONCE; no receipt email. This documentation
+receipt follows Y; verify actual HEAD. X1915ab43/receipteabbd4e2/Gmail1a1bd3977bf84370
+also verified/SENT_ONCE. Origin dspevo-afk/TroubleshootJS; no upstream.
+Root actual18-path index review tree954732a7/diff8bcd78f2 passed byte/privacy/
+whitespace checks. F clean after Y before this doc receipt. Main5f05b005 keeps
+9tracked/6untracked/staged0; E d9747229 report M/staged0; Desktop e0c36885 keeps
+7tracked/73untracked/staged0. Main/E report mirror only; unrelated work preserved.
+
+Y accepted only for synthetic byte I/O and pinned metadata, as detailed below.
+Final proof23d1c35b3f1b611ba49c8664233b84332524a0bb0623841fdcd0b66e7d8f7306.
+Six unit methods PASS; directory-symlink method SKIP for unavailable privilege;
+real directory-junction EXPECTED_REJECTION proves reparse boundary separately.
+Two actual positives/13 exact-code negatives and public reproduction pass.
+Initial index CRLF failure and cleanup correction preserved; narrow attributes
+retain raw pins and actual-space canaries reject. All processes terminate; owned
+junction and skipped fixture removed, private synthetic fixtures retained without
+links. No new persistent process. Old uncertain resources untouched.
+
+Next current context normalizer and pure independent N/P07 parser implementation.
+Private Y/NEXT_CONTEXT_SOURCE_MAP_R1.md records source seams and generated member
+signature/dataEntries ambiguity to settle explicitly before execution. Root may
+make this routine implementation choice within original bounds; no user decision
+or budget/oracle relaxation is needed. No actual20-role DATA read or producer
+phase transition yet. Preserve one original+exactly NULL/OBSERVE, no extra control/
+original/arm/retry. Full-D/H1 unqualified; production/Player/electrical/population
+not renewed; Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historical protected
+unreadUNCERTIFIED; playable100=0/betaHELD.
+
+# Historical checkpoint: Y reader accepted before publication
 
 UTC 2026-11-08. Active F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107, HEAD eabbd4e2c55b004608439adba09f5c9955ccadf9.
