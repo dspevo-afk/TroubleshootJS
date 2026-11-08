@@ -950,6 +950,22 @@ and independent acceptance before any new authored experiment. Physical/access/
 runtime/functional proof and playable100 remain pending; playable100=0/betaHELD.
 Full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun, historical unread UNCERTIFIED.
 
+The [atomic selected-head observer/Meter prerequisite](task-evidence/Q100/native-selection-observer-meter-r1/README.md)
+is locally accepted for its generic native scope; publication is pending.
+The same Meter now charges the ten-field detached head, checks43-entry/two-chunk
+capacity before copying, and owns atomic context selection/rollback. Supported
+stale selected calls carry a separate rejection Meter; the normal sink is live-only.
+Final JDK8 three-source/220-class build, nine-group/15245-assertion native canary,
+fresh retained terminal217421/branch30/relaxed2201 contracts and final-source host
+controls pass. Python12cases pass/one OS-symlink case skips, complemented by four
+real junction cases among eight exact CLI rejections. Delimiter failure, pre-fix
+private-core proof and source-review API blocker remain recorded; corrected
+supported API passes fresh gates. Main/resultMap deny export. No production,
+epoch, budget, wire/reader, authored, Player/GWT or population renewal follows.
+Next is strict wire/reader and metadata/export accounting integration before any
+separately scoped authored experiment. Playable100=0/betaHELD; Full30EXCLUDED;
+HARD/PSYCHOTIC unavailable/unrun; historical protected unread UNCERTIFIED.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

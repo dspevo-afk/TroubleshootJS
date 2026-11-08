@@ -86,6 +86,19 @@ accounting. D consumer copying, validation, serialization and shared Meter/wire
 integration require their own explicit charges and gates. Production/GWT,
 authored capture, physical feasibility and route witness proof are unchanged.
 
+The native D observer/Meter overlay pairs a detached ten-int selected head with
+the existing terminal context in one callback operation. TerminalSink opts into
+the P selected mode; existing observer rollback restores both selections on
+post-commit failure. Shared-Meter preflight admits all43fields and two chunks
+before either copy, respecting the adapter's int chunk ceiling. Live release
+counters exclude stale calls. The supported selected four-argument observer API
+accepts a separate stale-rejection Meter and changes no original state; the
+normal sink remains a live-only adapter. The [bounded prerequisite](task-evidence/Q100/native-selection-observer-meter-r1/README.md)
+qualifies generic fixtures and exact logical copy/validation charges. Main and
+resultMap deny execution/export, so strict wire/reader, metadata/serialization
+accounting and authored integration stay separate. Production/GWT and physical
+or electrical behavior are unchanged.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

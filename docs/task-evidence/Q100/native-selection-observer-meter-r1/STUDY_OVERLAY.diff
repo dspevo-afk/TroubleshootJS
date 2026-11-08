@@ -1,0 +1,259 @@
+--- a/CohortTerminalTelemetryStudy.java
++++ b/CohortTerminalTelemetryStudy.java
+@@ -29,25 +29 @@
+-        final long started=System.nanoTime();
+-        try {
+-            Arguments parsed = Arguments.parse(args);
+-            if (!parsed.descriptorSha.equals(CohortTerminalTelemetryInput.descriptorSha256()))
+-                throw new IOException("descriptor SHA does not match compiled input");
+-            if ("COHORT_TERMINAL_CANARIES".equals(args[0])) {
+-                runR9OwnerCanaries(parsed,started);
+-                return;
+-            }
+-            // Invoking this mode consumes the single authorized authored run.
+-            // The host must complete final source/class/canary gates first.
+-            Comparison comparison=null;
+-            try {
+-                comparison=assemble(parsed,started);
+-                exportR5(parsed,comparison.result,comparison.meter,started,
+-                    comparison.workPlan.pre,comparison.workPlan);
+-            } finally {
+-                // The result/plan own detached DTOs and the one Meter only.
+-                // Export failures discard that Meter/output; never finish/retry.
+-                comparison=null;
+-            }
+-        } catch (Throwable failure) {
+-            failure.printStackTrace(System.err);
+-            System.exit(1);
+-        }
++        throw new IllegalStateException("SELECTION_CONSUMER_COMPONENT_ONLY");
+@@ -383 +359 @@
+-    static final class TerminalSink implements PcbLayerRoutingPrototype.TerminalOnlyDiagnostics {
++    static final class TerminalSink implements PcbLayerRoutingPrototype.BranchLimitSelectionDiagnostics {
+@@ -390 +366,2 @@
+-        public void onTerminalBranch(PcbLayerRoutingPrototype.BranchSnapshot snapshot) {
++        private void dispatch(PcbLayerRoutingPrototype.BranchSnapshot snapshot,
++                PcbLayerRoutingPrototype.BranchLimitSelection selection) {
+@@ -393,4 +370,14 @@
+-            try { observer.observe(requestId,snapshot); }
+-            finally { meter.insideOwner=false; }
+-        }
+-    }
++            try {
++                if (selection==null) observer.observe(requestId,snapshot);
++                else observer.observeSelected(requestId,snapshot,selection);
++            } finally { meter.insideOwner=false; }
++        }
++        public void onTerminalBranch(PcbLayerRoutingPrototype.BranchSnapshot snapshot) {
++            dispatch(snapshot,null);
++        }
++        public void onBranchLimitSelected(PcbLayerRoutingPrototype.BranchSnapshot snapshot,
++                PcbLayerRoutingPrototype.BranchLimitSelection selection) {
++            dispatch(snapshot,selection);
++        }
++    }
++
+@@ -1950,0 +1938,12 @@
++static final class DetachedHead {
++    final int branchOrdinal,cell,layer,direction,transitions,cost,storedHeuristic,
++        serial,key,storedPriority;
++    DetachedHead(int branchOrdinal,int cell,int layer,int direction,int transitions,int cost,
++            int storedHeuristic,int serial,int key,int storedPriority) {
++        this.branchOrdinal=branchOrdinal; this.cell=cell; this.layer=layer;
++        this.direction=direction; this.transitions=transitions; this.cost=cost;
++        this.storedHeuristic=storedHeuristic; this.serial=serial; this.key=key;
++        this.storedPriority=storedPriority;
++    }
++}
++
+@@ -1958,0 +1958 @@
++    private DetachedHead selectedHead;
+@@ -1959,0 +1960 @@
++    private long headCopies, headReleases;
+@@ -1970 +1971 @@
+-        observe(requestId, snapshot, null);
++        observe(requestId,snapshot,null,null);
+@@ -1975 +1976,20 @@
+-        if (sealed) { rejectStale(snapshot, staleRejectionMeter); return; }
++        observe(requestId,snapshot,null,staleRejectionMeter);
++    }
++
++    synchronized void observeSelected(String requestId,
++            PcbLayerRoutingPrototype.BranchSnapshot snapshot,
++            PcbLayerRoutingPrototype.BranchLimitSelection head) {
++        observe(requestId,snapshot,head,null);
++    }
++
++    synchronized void observeSelected(String requestId,
++            PcbLayerRoutingPrototype.BranchSnapshot snapshot,
++            PcbLayerRoutingPrototype.BranchLimitSelection head,
++            TerminalObserverMeter staleRejectionMeter) {
++        observe(requestId,snapshot,head,staleRejectionMeter);
++    }
++
++    private synchronized void observe(String requestId, PcbLayerRoutingPrototype.BranchSnapshot snapshot,
++            PcbLayerRoutingPrototype.BranchLimitSelection suppliedHead,
++            TerminalObserverMeter staleRejectionMeter) {
++        if (sealed) { rejectStale(snapshot,suppliedHead,staleRejectionMeter); return; }
+@@ -1976,0 +1997 @@
++        PcbLayerRoutingPrototype.BranchLimitSelection borrowedHead=suppliedHead;
+@@ -1977,0 +1999 @@
++        DetachedHead headTuple=null, oldSelectedHead=selectedHead;
+@@ -1979,0 +2002,2 @@
++        int requiredFields=FIELD_COUNT+(borrowedHead==null?0:10);
++        int requiredChunks=borrowedHead==null?1:2;
+@@ -1990 +2014,2 @@
+-            validation(); if (countersNearOverflow()) throw new IllegalStateException("Observer counter overflow");
++            validation(); if (countersNearOverflow(requiredFields,requiredChunks))
++                throw new IllegalStateException("Observer counter overflow");
+@@ -1996 +2021 @@
+-            validation(); if (FIELD_COUNT != 33 || FIELD_COUNT > 4096)
++            validation(); if (FIELD_COUNT != 33 || requiredFields > 4096)
+@@ -2000 +2025 @@
+-            if (copies < 0 || copies > COPY_CAPACITY-FIELD_COUNT)
++            if (copies < 0 || copies > COPY_CAPACITY-requiredFields)
+@@ -2004 +2029,2 @@
+-            if (chunks < 0 || chunks == Long.MAX_VALUE || copyChunks == Long.MAX_VALUE)
++            if (chunks < 0 || chunks > Integer.MAX_VALUE-requiredChunks ||
++                    copyChunks < 0 || copyChunks > Long.MAX_VALUE-requiredChunks)
+@@ -2006 +2032 @@
+-            validation(); if (copiedSlots > Long.MAX_VALUE-FIELD_COUNT)
++            validation(); if (copiedSlots < 0 || copiedSlots > Long.MAX_VALUE-requiredFields)
+@@ -2012,2 +2038,8 @@
+-            int ordinal=validateTuple(tuple, requestId);
+-            commit(tuple, ordinal); committed=true;
++            if (borrowedHead!=null) {
++                copyChunks++; meter.beginCopyChunk(10);
++                headTuple=detachHead(borrowedHead);
++                headCopies++;
++            }
++            int ordinal=validateTuple(tuple,requestId);
++            validateSelection(tuple,headTuple);
++            commit(tuple,ordinal,headTuple); committed=true;
+@@ -2021 +2053,5 @@
+-            tuple=null;
++            if (borrowedHead != null) {
++                try { headReleases++; unit(); } catch (Throwable t) { failure=append(failure,t); }
++                borrowedHead=null;
++            }
++            tuple=null; headTuple=null;
+@@ -2037 +2073,2 @@
+-                lastOrdinal=oldOrdinal; lastTotal=oldTotal; selected=oldSelected;
++                lastOrdinal=oldOrdinal; lastTotal=oldTotal;
++                selected=oldSelected; selectedHead=oldSelectedHead;
+@@ -2048,0 +2086 @@
++            PcbLayerRoutingPrototype.BranchLimitSelection head,
+@@ -2050,0 +2089 @@
++        PcbLayerRoutingPrototype.BranchLimitSelection borrowedHead=head;
+@@ -2065,0 +2105,8 @@
++            if (borrowedHead != null) {
++                try {
++                    if (rejectionMeter == null || !rejectionMeter.isOpen())
++                        throw new IllegalStateException("Cannot meter stale head release");
++                    rejectionMeter.charge(1);
++                } catch (Throwable t) { primary=append(primary,t); }
++                borrowedHead=null;
++            }
+@@ -2073,34 +2120 @@
+-        if (!sealed) throw new IllegalStateException("Seal observer before result access");
+-        if (poisoned) throw new IllegalStateException("Observer request had an active rejection");
+-        if (accepted != dispatches || found + failures != dispatches || failures > 1 ||
+-                copiedSlots != FIELD_COUNT * dispatches || copyChunks != dispatches ||
+-                (failures == 0 && selected != null) || (failures == 1 && selected == null))
+-            throw new IllegalStateException("Observer counters or selection are incomplete");
+-        if (failures == 1 && selectedCallbackOrdinal != dispatches)
+-            throw new IllegalStateException("Selected failure is not the final callback");
+-
+-        java.util.Map<String, Object> out = new java.util.LinkedHashMap<String, Object>();
+-        out.put("schema", "tsj-cohort-terminal-observation-v1");
+-        out.put("mode", "OBSERVE");
+-        out.put("state", failures == 0 ? "NO_FAILURE" : "FIRST_NON_FOUND");
+-        out.put("callbackCount", Integer.valueOf((int)dispatches));
+-        out.put("foundCallbackCount", Integer.valueOf((int)found));
+-        out.put("nonFoundCallbackCount", Integer.valueOf((int)failures));
+-        out.put("firstNetOrdinal", accepted == 0 ? null : Integer.valueOf(firstOrdinal));
+-        out.put("lastNetOrdinal", accepted == 0 ? null : Integer.valueOf(lastOrdinal));
+-        out.put("lastCallbackTotalExpanded", accepted == 0 ? null : Integer.valueOf(lastTotal));
+-        out.put("selectedCallbackOrdinal", failures == 0 ? null : Integer.valueOf(selectedCallbackOrdinal));
+-        out.put("transientTupleCopies", Integer.valueOf((int)copyChunks));
+-        out.put("transientFieldCopies", Integer.valueOf((int)copiedSlots));
+-        out.put("validationCount", Integer.valueOf((int)checks));
+-        out.put("observerUnits", Integer.valueOf((int)unitsCharged));
+-        out.put("copiedEntries", Integer.valueOf((int)copiedSlots));
+-        out.put("copyChunks", Integer.valueOf((int)copyChunks));
+-        java.util.Map<String, Object> snapshot = null;
+-        if (selected != null) {
+-            snapshot = new java.util.LinkedHashMap<String, Object>();
+-            selected.writeResult(snapshot, "");
+-            snapshot = java.util.Collections.unmodifiableMap(snapshot);
+-        }
+-        out.put("selectedSnapshot", snapshot);
+-        return java.util.Collections.unmodifiableMap(out);
++        throw new IllegalStateException("SELECTION_CONSUMER_NO_WIRE");
+@@ -2111 +2125 @@
+-    private boolean countersNearOverflow() {
++    private boolean countersNearOverflow(int requiredFields,int requiredChunks) {
+@@ -2113 +2127,2 @@
+-            copiedSlots > Long.MAX_VALUE-512 || copyChunks > Long.MAX_VALUE-512 ||
++            copiedSlots > Long.MAX_VALUE-requiredFields ||
++            copyChunks > Long.MAX_VALUE-requiredChunks ||
+@@ -2115 +2130,2 @@
+-            releases > Long.MAX_VALUE-512 || accepted > Long.MAX_VALUE-512 ||
++            releases > Long.MAX_VALUE-512 || headCopies > Long.MAX_VALUE-512 ||
++            headReleases > Long.MAX_VALUE-512 || accepted > Long.MAX_VALUE-512 ||
+@@ -2170,0 +2187,22 @@
++    }
++
++    private int readHead(PcbLayerRoutingPrototype.BranchLimitSelection s,int f) {
++        chargeReadCopy();
++        switch (f) {
++        case 0: return s.branchOrdinal;
++        case 1: return s.cell;
++        case 2: return s.layer;
++        case 3: return s.direction;
++        case 4: return s.transitions;
++        case 5: return s.cost;
++        case 6: return s.storedHeuristic;
++        case 7: return s.serial;
++        case 8: return s.key;
++        case 9: return s.storedPriority;
++        default: throw new IllegalArgumentException("Invalid selected-head field");
++        }
++    }
++
++    private DetachedHead detachHead(PcbLayerRoutingPrototype.BranchLimitSelection s) {
++        return new DetachedHead(readHead(s,0),readHead(s,1),readHead(s,2),readHead(s,3),
++            readHead(s,4),readHead(s,5),readHead(s,6),readHead(s,7),readHead(s,8),readHead(s,9));
+@@ -2272,0 +2311,23 @@
++    private void validateSelection(DetachedTerminal t,DetachedHead h) {
++        validation(); boolean branchLimit="BRANCH_SEARCH_LIMIT".equals(t.terminalReason);
++        validation(); if (branchLimit!=(h!=null)) throw invalid("selected head presence mismatch");
++        if (h==null) return;
++        validation(); if (h.branchOrdinal<1) throw invalid("selected branch ordinal below range");
++        int cells=t.gridWidth*t.gridHeight;
++        validation(); if (h.cell<0 || h.cell>=cells) throw invalid("selected cell outside grid");
++        validation(); if (h.layer<0 || h.layer>1) throw invalid("selected layer outside range");
++        validation(); if (h.direction<0 || h.direction>4) throw invalid("selected direction outside range");
++        validation(); if (h.transitions<0 || h.transitions>48-t.prefixViaCount)
++            throw invalid("selected transitions outside range");
++        validation(); if (h.cost<0) throw invalid("selected cost below range");
++        validation(); if (h.storedHeuristic<0) throw invalid("selected heuristic below range");
++        validation(); if (h.serial<0) throw invalid("selected serial below range");
++        validation(); if (h.key!=(((h.transitions*2+h.layer)*5+h.direction)*cells)+h.cell)
++            throw invalid("selected key mismatch");
++        validation(); if (h.storedPriority!=h.cost+h.storedHeuristic)
++            throw invalid("selected stored priority mismatch");
++        validation(); if (t.branchExpanded!=100000 || t.totalExpanded>=1000000)
++            throw invalid("selected branch cap counters mismatch");
++        validation(); if (t.bestStateCount<1) throw invalid("selected best-state count below range");
++    }
++
+@@ -2297 +2358 @@
+-    private void commit(DetachedTerminal tuple, int ordinal) {
++    private void commit(DetachedTerminal tuple,int ordinal,DetachedHead head) {
+@@ -2302 +2363,4 @@
+-        else { failures++; selected=tuple; selectedCallbackOrdinal=(int)dispatches; }
++        else {
++            failures++; selected=tuple; selectedHead=head;
++            selectedCallbackOrdinal=(int)dispatches;
++        }

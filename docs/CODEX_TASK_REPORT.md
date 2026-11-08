@@ -1,79 +1,90 @@
-# Current checkpoint: native selected-head prerequisite published; consumer integration next
+# Current checkpoint: atomic selected-head observer/Meter prerequisite accepted locally; publication pending
 
 UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
-accepted implementation bd5a4c6675a5d25aa40ffe989bf7a93b51b79157. The publication receipt
-commit carries this checkpoint; verify actual HEAD before next edits. F had
-only report M/staged0. Main5f05b005 preserves9tracked/6untracked/staged0; E d9747229
-report M; Desktop e0c36885 preserves7tracked/73untracked/staged0. Main/E receive
-only this checkpoint mirror; unrelated data/changes/failures remain untouched.
-Normal publication target remains origin/codex/q100-physical-feasibility, no
-configured upstream; do not push another remote or force-push.
+actual HEADbdb2bd64d48ab54ef7655a54af88447e59746171. Before Q only report M,
+staged0. Main5f05b005 preserves9tracked/6untracked/staged0; E d9747229 report M;
+Desktop e0c36885 preserves7tracked/73untracked/staged0. Main/E mirror report only.
+Origin dspevo-afk/TroubleshootJS; normal targetcodex/q100-physical-feasibility,
+no local upstream. Do not force-push or touch unrelated data/worktrees/evidence.
 
-Last published66fd2d7c12992f1cf88f013ac25c79528de9c568/receiptda46e92f verified;
-Gmail1a1ba9693e5350af SENT_ONCE. No duplicate. D result proof2ed83d65319a3985a081b5307865fe53eae2de408574c9b7e58eb144fd9b8525
-retains one original and exactly TWO fresh NULL/OBSERVE arms. No further authored
-original/control/retry ran in P. Playable100=0/betaHELD; Full30 EXCLUDED;
-HARD/PSYCHOTIC unavailable/unrun; protected bodies unread here, historical unread
-UNCERTIFIED. Exact signed-long interpretation and all existing budgets remain.
+Last P implementationbd5a4c6675a5d25aa40ffe989bf7a93b51b79157 and receiptbdb2bd64
+normally pushed/verified, Gmail1a1bace2763845e7 SENT_ONCE. Do not duplicate.
+Q OS-temp/tsj-q100-selection-consumer-dd93afa29eab4a44a136b28d44a3e0f4.
+Operative PLAN_R2.md d5139caaddb5d3a2903016c63ca38dc47897197487ea34c1675315eff2e09321;
+earlier draft/R1 and three clarifications preserved. Root corrected the private
+reader filename to read_cohort_terminal_r2.py (actual file/request+2d53b33f verified,
+not run/modified). Public packet docs/task-evidence/Q100/native-selection-observer-meter-r1;
+code tests/qualification/rb100-layout/native-selection-observer-meter-r1.
 
-P OS-temp/tsj-q100-pending-node-provenance-a2d64dad609f43be973f5099fc581057.
-Frozen PLAN87dcd34af7ba78e5f9d5ae0b91655755df7c35466bff8983437b34cb94036f84.
-Native-only owner overlay7bf4ab57198ff9444381ec5d677c1a2bc309bfa3e7f01b188c631ffe5f2b966c
-from unchanged productionc382f3bc. Public code tests/qualification/rb100-layout/
-native-branch-limit-selection-r1; sanitized evidence docs/task-evidence/Q100/
-native-branch-limit-selection-r1. Generator d11df617; tests7aed235b; final canary
-52101ac91adca2227cdf72ee5d247382cfd4571e5cfeacdf806059269cd0ce0c.
-Final proof1686af71b6173b44af45a956d44075b808ef3af1d634c613ff57f6d2210dc4c5;
-early proof235eaf6fa143a44d5292d948272a54a613335df7cd6f24b05eab48c82dccf521.
+CURRENT FINAL SOURCE: generator e4046715fdf1adb8feee58ebe5a9e3751c8c0e31b3517c97a8a66857faca42b5;
+tests712efb819e34814ad563681ab64a6dbcee6e66d6c53a821844d04de73c028ba1;
+canary2203b4d17ae8755cc5807aa175efb9514849b393b4b67c3204d6de6a1a60e925;
+derived Study d6485b0b0f9c518431d440fcb57e477143d50cae78302c29598d12aaa4601dbd.
+Production ownerc382 unchanged; qualified native owner7bf4ab57 unchanged. D
+parent8f7c3775, reader2d53b33f, WIRE31a81de8, original/classes/data/receipts intact.
 
-LOCAL PASS: actual final-source JDK8 compile1159.2942ms/1417.0342ms wrapper,
-three sources/60classes/300342B; owner46/228706B byte-equal early probe. Expected
-92B bootstrap warning only. R2 canary674.738ms/931.851ms wrapper:8groups/587
-assertions/16fixtures/18beginCalls/1detachedCopy, generic injected boundary only,
-authored0. Retained terminal217421 (981.4384ms), branch30 (471.1185ms), relaxed2201
-(904.0594ms) assertions pass. Final public Python8tests453.3013ms and real positive
-385.339ms pass, generating identical owner/proof. Five early real selected-host
-negative controls reused only with identical source/helper/parent bytes; expected
-exit2 rejection, not ordinary PASS. Actual D source audit1092/4288/19644833B passes;
-final audit rehashes all4288 inherited classes, tools and selected sources.
-All returned processes prove termination/owned root+log absence; isolated cleanup
-time unmeasured. No full1092-source overlay/GWT/Player/electrical renewal claim.
+LOCAL PASS final native1257.7298ms compile/1510.147ms wrapper;3sources/220classes/
+656516B,46owner classes228706B byte-equal P;146fresh Study names shadow all145old.
+Final canary643.6398ms/904.8526ms wrapper:15245assertions/9groups/9fixtures/
+9beginCalls/34headDtoCopies/0ownerDetachedCopies, authored0. Generic pass/cap/
+layer/minimum frames are explicitly injected; no natural100000-step route claim.
+Pre-fix native invocation also returned9begins/34headDTO copies, separately
+preserved and NOT final stale-API evidence; no lifetime Session total inferred.
+Fresh retained3source/30class/107506B compile and terminal217421/branch30/
+relaxed2201 assertions pass on final owner. Retained Session counts NOT MEASURED.
+Final public Python13declared/12PASS/1OS-symlinkSKIP, complemented by4real junction
+cases; all8fresh final-source CLI negatives reject exact codes, childexit2/wrapper1.
+Public regeneration reproduces exact derived/proof bytes. Main actual CLI denies
+before args/assembly, expectedchild1. No GWT/Player/electrical/population renewal.
 
-FAILURE preserved: reported worker draft2d68e0e5 did not pin actual bytes. Root
-reconstructed93437d6e from the unrun draft, corrected two shadowed assertion calls
-and reviewed actual bytes before Java. R1 source5d80f807 compiled then failed exit1
-on frontierCount because old/new injected frames differed. R2 gives both frames
-the same stale/chosen/later queue and index entries plus two advances; full
-field-for-field oracle retained, owner/caps unchanged. R1 raw classes/receipts
-remain, partial Session count NOT RETURNED. Retained suite Sessions unmeasured;
-no lifetime aggregate inferred. Earlier D failures are unchanged.
+PROOFS: final5c4ad7b40e33cb171ff9b179e1d48b77e5b7377b06477f03af5b12749130d418;
+retainedd3122aab55540186693242b5fc59857f39b8c113cc722cecef93c2a6ff20cfeb;
+early actual adapteraef55e7080e9db5539d944ecd0523e3ceee73e38e9e4e81412a6d1214e0cd097
+(14assertions/noSession, unchanged adapter only); cleanup350e58451fd75e9efeff94413c5b5fbf9b687f5ea343e659a3a657dd17496f5f.
+Final4288inherited classes/19644833B and tools rehashed unchanged; no full1092-source
+overlay build claim. Returned processes prove termination/root+logs absence;
+isolated cleanup duration unmeasured. Code public/private bytes identical.
 
-Root integrated source/receipt/byte review PASS for bounded scope. Leaf semantics
-review and final canary review: SOURCE_ONLY, no blocker, no runtime run claimed.
-Selection is fresh identity-live head already popped, not pending heap contents,
-minimum legal path or witness. Stored h may predate the completed relaxed bound.
-No scan, repoll, path chain or live Node retention. One opt-in callback reuses
-Session abort/latch; detached static no-op preserves mode without caller.
-Owner Search.advanceOne unit is not primitive instruction accounting. Future D
-consumer must charge all ten scalar copies/validation/serialization once under
-its original shared Meter; integration remains NOT RUN/NOT ACCEPTED.
+Cause/limits: atomic unchanged33field terminal plus10int head copy through existing
+Meter/observer. Ordinary90checks159units33copies1chunk; selected102checks192units
+43copies2chunks; FOUND91checks160units. Extra20copyunits +12predicates +1live-head
+release. Explicit selected4arg API accepts separate stale rejection Meter3units,
+no original state mutation; normal sink live3arg does NOT supply a stale Meter.
+MainSELECTION_CONSUMER_COMPONENT_ONLY and resultMapSELECTION_CONSUMER_NO_WIRE deny
+export. This closes callback/copy/Meter only, NOT full D metadata/export/wire/reader.
+Owner logical operations are not primitive instruction accounting. Selected head
+already polled before refresh is not heap contents, minimum legal path or witness.
 
-PUBLISHED: bd5a4c6675a5d25aa40ffe989bf7a93b51b79157 — Qualify native branch-limit selection provenance —
-normal push/ls-remote exact on origin/codex/q100-physical-feasibility. Staged17path
-byte/diff review passed, treeef17b234. Gmail1a1bace2763845e7 SENT_ONCE after zero
-duplicate search. Receipt commit/docs only; do not email again. NEXT: separately
-scope consumer/Meter/wire integration and independent generic-fixture oracle. No
-additional authored invocation belongs to this component; no routing-cap,
-production adoption or physical/access/runtime/functional qualification inferred.
+Failures preserved: R1generator inline end delimiter caused6errors/1skip before
+Java generation. Corrected exact prefix and unique end checks. Pre-run unit source
+indent/error-owner fixes preserved. Independent SOURCE_ONLY review found missing
+supported selected stale-meter API; root added4arg entry and replaced canary's
+private-core reflection. Fresh final build/runtime pass; exact final source review
+reports blocker resolved/no other scoped blocker, no agent runtime claim. One
+control harness misread wrapper1 vs child2; raw expected rejection was retained,
+unrun cases resumed, all final controls fresh. Combined dynamic cleanup command
+auto-review REJECTED BEFORE PROCESS LAUNCH (only reason blocked by policy), no
+operations ran. Separate controls, read-only identities and four explicit literal
+nonrecursive native unlink cmdlets returned shell0; lstat absence/targets intact.
+No P/D failure reclassified or independent oracle/budget weakened.
 
-Resources: no new persistent process/browser/server/junction. Two P junctions
-identities revalidated, literal nonrecursive removals each returned0; links absent
-and targets unchanged. P source/classes/raw receipts retained. Old uncertain
-browser14116/start639294472690745890/port58320, preview34180/
-start639294472514546595/port58264+14uncertainchildren untouched. D old timeout logs
-remain; original unlink UNCERTIFIED, links absent/targets intact and separate
-literal-unlink canary passed. No cleanup, budget or global setting weakened.
+NEXT: integrated/staged diff+byte review, normal commit/push, exact remote verify,
+one completion Gmail, receipt. Q publication/notification NOT DONE. Then scope
+strict current-only wire/reader and metadata/export accounting integration with
+independent generic/host gates before any separate authored experiment. Existing
+D accepted proof2ed83d65 still covers one original and exactly twoNULL/OBSERVE arms;
+no additional authored original/control/retry ran in Q. Playable100=0/betaHELD;
+Full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; protected bodies unread here,
+historical unread UNCERTIFIED. Seeds/epochs/budgets unchanged:90s/640groups/5s/
+32768units/copy1048576/chunk4096; compile/suite60s, wrapper480s/reader180s/cleanup120s,
+local100000/global1m. Python always-I-B. No physical/access/runtime qualification.
+
+Resources: no new persistent process/browser/server/junction. All4Qjunctions gone;
+owned source/classes/receipts retained outside Git. Old uncertain browser14116/
+start639294472690745890/port58320 and preview34180/start639294472514546595/
+port58264+14uncertainchildren untouched. Old D unlink remains UNCERTIFIED and old
+timeout logs preserved. No unrelated files, credentials or absolute paths staged.
 
 # Historical checkpoint: shared budget published; v3 source transport in progress
 
