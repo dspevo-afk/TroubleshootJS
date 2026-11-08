@@ -1,4 +1,91 @@
-# Current checkpoint: generic selected-observation V2 published; full integration next
+# Current checkpoint: general observation consumer locally accepted; publication pending
+
+UTC2026-11-08. Standing roadmap continues. F OS-temp/
+tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
+base HEAD8dd8175ce09617d5bd3dda774311c09a52e47dad. Before S clean; after source
+checkpoint only report M/staged0. Origin dspevo-afk/TroubleshootJS normal target
+codex/q100-physical-feasibility; no local upstream. Verify actual HEAD/candidate.
+Main5f05b005 preserves9tracked/6untracked/staged0; E d9747229 report M; Desktop
+e0c36885 preserves7tracked/73untracked/staged0. Main/E mirror report only.
+AGENTS a3dec836 unchanged. R implementationdfccca05d604935c29cadf1e96552027bd3e55e8,
+receipt8dd8175c normally pushed/exact remote verified; Gmail1a1bb49499634913
+SENT_ONCE. Do not duplicate. S has NO publication/email yet.
+
+S owned OS-temp/tsj-q100-full-wire-scope-acdbb08b28f04a68b5624db24a4ea0cb.
+PLAN_R1.md1553c590953a43651661d8de1f63f059e361d21a4100a7fba3526ed99c55281f;
+clarification35e7474fc78db05bb6e3c93c2bd6c509ee0b98344231b91b32b1ac16a52dfd56.
+Earlier draft/source checkpoints and all unrun/failed source revisions preserved.
+Code tests/qualification/rb100-layout/general-observation-consumer-v2-r1;
+packet docs/task-evidence/Q100/general-observation-consumer-v2-r1. Root owns
+handoffs/acceptance; all source workers and bounded reviewer finished/stopped.
+
+LOCAL PASS final kernel502ff2e1dec1c4d01ddb4e2841aae6f7e4073a62975c1cc9668a09cf5a52b89c;
+generator6d82b87eb6795afcb91a50bcfc3170e7333ba08dda1cc6c64bf2ab8360334e84;
+testkernel6c0bc60f451488fa2aac3d662433b449d287a30e195ee06e82a1c615290da476;
+testgenerator24a7af8ecc656de1ec049fe3fa09e7907c9cd86716752201a2ba3a2529c9aa46;
+testadapter833df3a60ca91f0054781178d321eade14df947caf022caee9fb10cab29ce53f.
+Derived generic7fd4d9d160e4e769cc0d83e85e52d28f3a2955fb5ad4ead09553fc6b6969e6fb;
+fullcomponentf23a965ef3bc28a78ef06158efb9c7c50c375dc164d7e2840e5d350f51db58c3.
+Same source kernel embedded once in each, immutable scalar mapping results.
+Exact R fixed context/case/parser/I/O/CLI and D work-summation function bytes
+remain unchanged. V1 observation rules retired, private N_ROOT default retired;
+no runtime arbitrary-loader/sys.path/version resolver added. Full component
+main denies GENERAL_OBSERVATION_COMPONENT_ONLY before args/host/data/artifacts.
+
+Actual selectedPython-I-B kernel24PASS/0SKIP; generator20declared/19PASS/1OS-link
+SKIP; derived generic retained15/14PASS/1OS-linkSKIP; adapter4PASS. Total63declared/
+61PASS/2SKIP. Six accepted generic DTO projections compare exact independent
+unit/copy/chunk facts; branch mutations and fixed-profile protections reject.
+Actual generic CLI returns exact old R summary (6cases/1head/9579B) in352.7959ms
+operation/596.7332ms wrapper; fullcomponentchild2/wrapper1 in350.9385/586.0708ms.
+No full result/original/fresh-run or R7 capture is constructed by projections.
+Seven final actual host controls and seven real junction controls pass expected
+rejection; seven links identity/type/target/creation ticks revalidated then
+literal native nonrecursive unlinks shell0; lstat absent/six targets unchanged/
+owned output empty. Returned process/root/log cleanup proven; isolated cleanup
+duration unmeasured. No new persistent browser/server/process/junction.
+
+R consumed-input reuse audited: unchanged3Java sources/177freshclasses/4288
+inherited classes/tools and compile/native/reader returned closures; accepted
+generic packet897db05949756ba10e376494de15bd869fd838355aa67ce2ebc6d38a0e3d801f
+unchanged. S new native/authored invocations0; no captured D body/descriptor/
+compiled-input data read, no old D CLI/builder run. Generic regression evidence
+reused across adapter-test-only fix after source/test/tool byte revalidation.
+Actual public generator reproduces exact two derived consumers/proof; all8public
+code bytes match tested sources. Root source/generated diff/receipts review and
+bounded independent SOURCE_ONLY recheck pass; no agent runtime claim.
+
+PROOFS finalbffdb1f1b58ccd3efc500669fd59d214abbda531dc688784257576f44d284c24;
+packaginga745b1e0023b3766eb3454cb6761c13b96fa94abdb29ebfd1e8b53974ab2b49d.
+Source review found public context accepted list rows/nonset memberships, could
+raise raw TypeError and bypass shape checks in NULL/success/quality. Before any
+execution root added strict shared context admission/all-state negatives and
+pinned final kernel; predecessorb1956142 remains UNRUN. First adapter suite
+FAIL4assertions/17errors retained: wrong tuple order and wrong expected error
+owner. Fixed exact oracle projection/classes, expected literal values unchanged;
+fresh adapter4PASS. Packaging scanner initially matched Python int-colon-escaped
+newline as a drive path; word-boundary correction confirms no private path;
+code sources unchanged. No failure reclassified, oracle/budget weakened.
+
+Boundary: general observation semantics/adapters only. Full result/marker/R7
+aggregate/source-bound host NOT QUALIFIED and next unstarted scope. Existing
+D one original+exactly2arms unchanged; no new experiment. Production/native/GWT/
+visible Player/electrical/population gates NOT APPLICABLE/not renewed here.
+All90s/640groups/5s/32768units/copy1048576/chunk4096/compile-suite60s/
+wrapper480s/reader180s/cleanup120s/local100000/global1m unchanged. Full30EXCLUDED;
+HARD/PSYCHOTIC unavailable/unrun; protected bodies unread here, historical unread
+UNCERTIFIED. Playable100=0/betaHELD.
+
+NEXT: final staged diff/byte/privacy checks, normal commit/push/exact remote,
+one completion Gmail only after verified publication. Then freeze coordinated
+full result/marker/R7/source-bound host migration before any separate authored
+experiment. No routine permission needed. F intended code/evidence/docs changes
+only; unrelated worktrees/evidence and R/S private scratch/build retained.
+Old uncertain browser14116/start639294472690745890/port58320 and preview34180/
+start639294472514546595/port58264+14uncertainchildren, old D timeout logs and
+UNCERTIFIED unlink untouched. No broad cleanup/reset/history rewrite.
+
+# Historical checkpoint: generic selected-observation V2 published; full integration next
 
 UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,

@@ -1,0 +1,31 @@
+{
+  "codeFiles": 8,
+  "earlierScannerFalsePositive": "LETTER_COLON_BACKSLASH_N_INSIDE_PYTHON_int_NEWLINE_SOURCE_ANCHOR; WORD_BOUNDARY_FIX; NO_PRIVATE_PATH_PRESENT; NO_SOURCE_CHANGE",
+  "finalGatesSha256": "bffdb1f1b58ccd3efc500669fd59d214abbda531dc688784257576f44d284c24",
+  "newAuthoredInvocations": 0,
+  "privatePathScan": true,
+  "publicGeneratorActualCli": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "public-generator-positive-r1",
+    "processElapsedMs": 380.35,
+    "receipts": {
+      "owner.json": "f7cd1256826ffe91a4af6b47740788f9b080a9f7ddfd2a874027349575472269",
+      "parent.json": "110e98b2e97b1f34826a8134af44757f1c1a135b4c3ec30e950e7ecd13a233d3",
+      "process.json": "1d6e1943effc771992f218c70fa90cb6f87c0c3e199b5d68c49b8835db60f2c4",
+      "request.json": "f5048717a9306cb6cab20e6d512c4d5995926955318080872b2d01998f9d0ccc",
+      "result.json": "710955ac99c4dbcb0ec681f44a37adb21b7addd04fdd084263506e9c25e85c9e",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "759ad60d637e634031969daa279b66a228271b2d544b19a64e3dfe10b779432e"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 629.942
+  },
+  "publicOutputsByteEqual": true,
+  "publicSourceAndDerivedBytesExact": true,
+  "schema": "tsj-general-observation-package-gates-v1",
+  "sourcePrivateDefaultRetired": true,
+  "status": "PASS"
+}

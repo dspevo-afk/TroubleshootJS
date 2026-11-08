@@ -986,6 +986,22 @@ then any separately scoped authored experiment and physical/access/runtime proof
 Playable100=0/betaHELD; Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
 historical protected unread UNCERTIFIED.
 
+The [general observation V2 consumer prerequisite](task-evidence/Q100/general-observation-consumer-v2-r1/README.md)
+is locally accepted for its exact Python component candidate; publication is pending.
+One independent source kernel now serves both generated consumers, with the
+generic fixture profile retained and the full component CLI denied before data
+access. Multi-net, ordinal, preceding-FOUND, relaxed, scoped-quality and selected
+head semantics pass24 kernel tests. Generator19, retained generic14 and adapter4
+tests pass; two OS-symlink skips are complemented by seven real junction controls.
+Seven additional actual host controls reject as expected. The unchanged accepted
+generic packet passes the new reader after source/class/tool/receipt reuse audit;
+no native or authored invocation was added. Source context and test-harness
+failures remain preserved. Full result/marker/R7/source-bound host acceptance
+remains the next unstarted scope; no fake original or full-R7 proof was used.
+No production, budget, Player/GWT, electrical, population or playable100 renewal.
+Playable100=0/betaHELD; Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
+historical protected unread UNCERTIFIED.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

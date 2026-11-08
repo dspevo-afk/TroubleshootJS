@@ -119,6 +119,24 @@ owners retain real-path, identity, reparse and exclusive-output responsibility.
 Full authored result/marker/R7/source-bound host integration remains separate;
 no production/GWT/Player, electrical, population or physical behavior changes.
 
+The [general observation V2 kernel](task-evidence/Q100/general-observation-consumer-v2-r1/README.md)
+owns the independent profile-neutral18/33/10-field semantic rules for both
+consumer projections. Checked generation embeds one identical source definition
+in each standalone reader; it adds no runtime loader or version resolver. Strict
+context shapes are admitted before every state return. Snapshot binding retains
+general multi-net order, authenticated tuple pad rows and per-net membership;
+the kernel returns an immutable mapping of scalar accounting facts.
+
+The generic wrapper keeps its fixed context/case/parser/I/O/CLI function bytes
+and projects pad dictionaries into the general tuple/set view. The full component
+wrapper retires V1 observation rules and delegates to the same kernel. Existing
+work-phase summation is unchanged because observer totals already include head
+copies. Its private absolute dependency default is retired, and its main denies
+before argument parsing, host/data access or artifacts. This component acceptance
+does not admit full results/markers, aggregate R7 plans or authored host execution;
+those callers/protocols require the next coordinated scope. No production,
+electrical or Player behavior changes.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,
