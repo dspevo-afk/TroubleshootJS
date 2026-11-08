@@ -47,6 +47,18 @@ qualifies real private-method guards and explicit clearing, while automatic
 execute cleanup and full authored integration remain separate proof boundaries.
 This changes no production routing or electrical owner.
 
+The native canary text overlay keeps the ordinary/authenticated ASCII256
+formatter and introduces an exact geometryCanonical leaf exception for the
+three canary arm paths only. Required map/list types and an absorbing ordinary
+path state are shared by charged Java metadata validation and both count/emit
+passes; the independent Python policy enforces the same domain. Geometry values
+are bounded4096, actual escaping still counts toward3C/R/C, and all native caps
+remain unchanged. The checkpoint binds object and Meter identity; the caller
+must own the entire unchanged body exclusively through publication. It is not
+a deep freeze or content-mutation detector. The [component prerequisite](task-evidence/Q100/native-canary-text-r2/README.md)
+qualifies formatter/metadata/transport bytes and limits; typed owner-mode/host
+materialization and full D acceptance remain separate. No production owner changes.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

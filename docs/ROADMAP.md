@@ -1,6 +1,6 @@
 # TroubleshootJS: Current Roadmap
 
-**Updated:** 2026-11-07 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
+**Updated:** 2026-11-08 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
 
 ## Current product checkpoint
 
@@ -887,6 +887,24 @@ Full30 excluded; HARD/PSYCHOTIC unavailable/unrun; playable100=0/betaHELD.
 Implementation `f2f1488b8d1f8f3ffb266eb63ed3537350d51e92` is normally pushed to
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified; completion
 Gmail `1a1b8d862463d32b` was sent once.
+
+The [native canary geometry-text prerequisite](task-evidence/Q100/native-canary-text-r2/README.md)
+is accepted locally for its bounded component; publication pending. Valid
+small-fixture geometry1083 exceeded the old256 value cap. The exact canary-only
+geometry leaf now permits4096 with shared Java path/type enforcement and an
+independent Python rule; ordinary keys/identifiers/default/authored values and
+all budgets remain unchanged. Final-source JDK8 component compile,26 default
+cases/17 rejects,7 synthetic encodings/29 rejects,8 Python tests,6 real-Meter
+depth/visit cases and19523 preserved-DTO bytes/C5/15 units pass independent
+oracles. Both million-visit cases use481of640 groups. The checked transformer
+reproduces the compiled source; six real negative controls including two NTFS
+junctions and8 fresh public-copy tests pass. Verified link-only cleanup retains
+both targets. No new Session/capture or1092-source/full-D/Player/electrical/
+population qualification is claimed. Next is actual generic throw/direct abort
+owner canaries, typed host/materialization/independent consumption and fresh
+source/class gates before the bounded authored comparison. Caller-exclusive body
+ownership remains required. Full30 excluded; HARD/PSYCHOTIC unavailable/unrun;
+playable100=0/betaHELD; historical protected unread UNCERTIFIED.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

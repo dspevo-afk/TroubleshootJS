@@ -1,4 +1,157 @@
-# Current checkpoint: shared capture budget published; D integration next
+# Current checkpoint: native canary text component accepted; publication pending
+
+UTC2026-11-08. Standing roadmap continues. F OS-temp/
+tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
+pre-publication HEAD4618ae3519340bbdcecef331a8007f932d146318. Normal target
+origin/codex/q100-physical-feasibility. Prior implf2f1488b/receipt4618ae35/
+Gmail1a1b8d862463d32b SENT_ONCE preserved. This component is locally accepted;
+new commit/push/email pending. Full D NOT RUN/NOT ACCEPTED. Authored original/
+capture/ArmRun.execute=0; authored D stable-[A,B] Session calls=0. Playable100=0,
+betaHELD. Full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historical protected
+unread UNCERTIFIED. Productionc382 unchanged; no GWT/Player/electrical renewal.
+
+Private D OS-temp/tsj-q100-cohort-branch-capture-0ee7717444ff43e28cc9e8dc4258f81d:
+Study dacca39996a54ac3c65e8507367cf06401e8b289922b207a3ee0c4e6e22def98/216099B,
+main STILL fail-closed. R5/R7 components and R9 fixture/transport/text helpers
+integrated. Canonical prior-input-r2 and j8-cohort-terminal-r2 remain ABSENT.
+WIRE root/source93504204/93766B, contracta4672d33, DESCRIPTOR86ef9ff5,
+PLANa98ed828, builderc28d90ea. Reader baselineef135579/42tests was scoped PASS;
+separately owned R9 fixture-context reader patch is unrun/pins pending. Do not
+mistake that work for main/CLI/full-D acceptance. Auth R5 contract2f13 unchanged.
+
+Packet prepared for publication docs/task-evidence/Q100/native-canary-text-r2 and
+tests/qualification/rb100-layout/native-canary-text-r2: exact4ea parent to dacca
+checked transformer, shared formatterf63/policy8196, independent Pythondab163d6/
+tests7bb31d36. Only the three canary geometry leaves permit4096 printable ASCII;
+keys/ordinary/default/authored256 and budgets unchanged. A/B recheck path/types;
+exclusive unchanged body ownership is still a caller obligation, not a deep
+freeze or same-length valid-mutation detector. Pure-source review confirms
+default callback sequence and policy/fee parity, not full owner execution.
+
+R9_TEXT_POLICY_GATES_R2.json cce37628fdfa920bebc01e90f53111bcdcd8034bd961300c5cb1ec04a0f6d99f:
+PASS component source/6sources/156classes. Compile1219.0256ms child/1490.4442ms
+wrapper; default26cases/17rejects/20402057checks520.5341/769.1922ms; synthetic
+7encodings/29rejects/20735checks446.2748/708.8225ms; actual preserved DTO
+serialization420.2074/668.5196ms,19523B/C5/15units/copies19523/chunks5 with
+independent Python exact bytes and four extended geometry values. Body explicitly
+has synthetic identity/throw/source placeholders: NOT an owner-canary document.
+Python8tests658.1753/917.8855ms. Existing reader42tests431.6447/677.807ms retain
+ef135 source scope only. All exit0, proven termination/root+log absence;
+isolated cleanup duration null. Test fixture construction outside Meter is not
+production allocation proof. No new Session/capture in these component gates.
+
+R9_TEXT_NATIVE_LIMITS_GATES_R2.json dac83674305261d2fe51d9e2c417afeb7429fe095475ff3842a355dca78ae5b1:
+PASS6 real-Meter cases/24assertions/one added test class. Compile808.3253/
+1098.8561ms, runtime5067.1247/5315.2758ms. Depth64 empty Map/List pass;65 reject.
+Actual1048576 value visits use15728668 units/481groups; extra visit rejects
+at15728670/481. Independent source fee formulas match; copies/chunks0, closed,
+no cleanup failure. Native90s/640/5s/32768 and all original caps preserved.
+
+PUBLIC_TEXT_CONTROLS_GATES_R2.json3a1339943d9c3117efe9e7116e2fca30332eeddd756529713c07a4884e083cc7:
+real public transformer reproduces compiled dacca byte-for-byte. Six expected
+exit2 rejections cover wrong hash/name, occupied output, source/output NTFS
+junctions and outside OS-temp; not producer PASS. Public-copy Python8 passes.
+Typed argv/exe/process/rawstream/termination/root+logs audited; owned junctions
+then verified and deleted nonrecursively, both targets retained. Separate cleanup
+receipt retained; no new persistent process/link. All raw failures preserved.
+
+Motivating R9_REAL_FIXTURE_PROBE_R1.jsona18138ca remains OBSERVED_UNQUALIFIED:
+TWO real small-fixture Sessions, separate Meter each, oldStudy4ea. OpenFOUND52
+observed expansions; blockedNO_PATH2, actual pass2/grid59x49. Exactly four1083
+geometry values exposed the strict256 blocker. This is neither shared whole-owner
+canary budget nor typed host/consumer acceptance. Earlier 610 integrated R5/R7
+proof4f46f523, stdout-only synthetic prototype8f9b1bf4, R8 PAD/GROUPfe2afe82
+and all prior Windows/timeout/driver failures retain their original source scopes.
+
+NEXT: integrate separately drafted R9 owner-mode assembly and actual generic
+throw/direct abort helpers888b25d7; they are uncompiled/unrun. Finish source-bound
+fixture grid/PAD/kind and correct U parent sourceReview reader binding, then
+typed single-host materialization/consumer and final1092-source closure. Only
+after those required gates: sole fresh authored original and TWO NULL/OBSERVE
+stable-[A,B] arms, no third/control/retry. D_COIL_LOW:BRANCH_SEARCH_LIMIT/419905/43
+stays post-run oracle, never selector; receipt307/lineage77 must be actual fresh.
+
+Resources: Python always-I-B; one matrix at a time; none active. Old uncertain
+browser14116/start639294472690745890/port58320, preview34180/start639294472514546595/
+port58264+14 uncertain children and prior timeout logs remain untouched.
+F intended packet/docs changes only; main9tracked/6untracked and Desktop7tracked/
+73untracked preserved; E report-only mirror. No staged changes yet.
+
+# Historical checkpoint: shared budget published; v3 source transport in progress
+
+UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
+tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
+HEAD4618ae3519340bbdcecef331a8007f932d146318 is exact remote
+origin/codex/q100-physical-feasibility. Shared-budget implementation
+f2f1488b8d1f8f3ffb266eb63ed3537350d51e92 and receipt4618ae35 normally pushed/
+verified; Gmail1a1b8d862463d32b SENT_ONCE, duplicate query zero. No receipt email.
+Earlier copy/terminal-only milestones and emails remain preserved; no duplicates.
+
+U native guard prerequisite COMPLETE FOR BOUNDED SCOPE: source proofdca062a8,
+generator20496e4e, capture4ed1c856 and study01b74457. Actual JDK8 three-source/
+92-class compile,120 guard assertions, existing default fixtures/independent
+reader, exact retained copy canary and six fresh real host rejection controls
+pass. First-source review failure and EOF packaging failure remain preserved.
+Final generator output bytes equal compiled input; native-input reuse audited.
+Automatic execute cleanup SOURCE_ONLY; no authored100 capture or Session ran.
+No production/GWT/Player/electrical/population renewal. Public evidence packet:
+docs/task-evidence/Q100/native-shared-capture-budget-r1. Current production owner
+c382f3bc unchanged. All original limits and independent oracles remain.
+
+Private D OS-temp/tsj-q100-cohort-branch-capture-0ee7717444ff43e28cc9e8dc4258f81d
+source nowef43c272af0c1281097bdafb8bfd4c263dfb1e3eabeb9733609a5cbdd2b31e14.
+Allowance entry requires fresh native owner state and a nonempty measured input;
+merge verifies actual retired/adopted owner count and never assigns it again.
+Copy overflow/capacity guards remain. Old7f729/1e956 revisions archived. Main
+stays fail-closed/work=null; full D comparison NOT RUN/NOT ACCEPTED.
+
+Actual four-source JDK8 data-only integration gates PASS:136 class files,
+67 assertions, seven real native private-method owner admissions; four numeric
+ledger boundary fixtures. Compile1581.887ms operation/1881.1502ms wrapper;
+runtime493.6126/746.9109ms. Old T ABI rejection driver PASS444.6749/700.2532ms:
+missing new field rejects before setup reset/capture, counters unchanged. All
+actual0/proven process+log absence; compile92B expected warning/runtime stderr0.
+Evidence566fc1485cb03244a1bbb3cf32334d64db1667f297f2430350359176ceb5125e.
+The generated projection is frozen REV4 fixture11f6ef02/descriptor38e11421:
+273 slots/4584 setup units; this is NOT a final v3 descriptor/source closure.
+No actual captureWithSetup/original/execute/Session was invoked by these tests.
+
+Rev6 contract docs reviewed for DOCUMENTATION SCOPE ONLY: WIRE69686a2f (source
+copy identical), DESCRIPTORcdc5d6b0, PLAN993fb0dc, shared amendment376a6016;
+review01a38cc61027bd98897a6f009fdf3f40d919819e675a8061901e11d4208b083b.
+Rev5 and first rev6 bytes archived. Root clarification51b10027 corrects export
+copies: no final export copy counters exist in the14-key marker. Keep34 work
+keys/14 marker keys; internal export-copy/consumer reconciliation remains open.
+Export bytes/units are marker-only, so no invented export-unit fixed point.
+
+Next active leaf input_transport_v3 owns ONLY build_inputs_r2.py,
+descriptor_inputs_r2.py and INPUT_TRANSPORT_V3_NOTES.md. It must archive old
+ed3d3c1e/0f44d149 first and implement strictdescriptor-v3, exact T/U refs,
+current F parent4618ae35 and THREE N-row substitutions at11/1081/1088. Preserve
+1087 other rows/order plus append adapter/input =>1092; do not append U parents.
+No helper execution/full canonical prepare or native runs by the leaf. Final
+helper hashes/gates remain pending; do not launch partial work. Canonical
+prior-input-r2 remains uncreated. Other source/contract/review leaves HOLD.
+Root next reviews helper changes, runs early real read-only projection/canaries,
+then finishes exact accounting/export and host/native/consumer/fresh-identity
+gates before the one original plus two-arm comparison. No third control/retry.
+
+Observer source audit4a1d4345 records a preexisting raw embedding mismatch:
+fragment627ffa has10CRLF, whereas old7f729/currentef43 embeds normalized LF.
+Normalized fragment1547a8db occurs once and is unchanged across the adoption
+migration; raw byte-exact embedding is NOT claimed. Standalone691 proof retains
+its original unchanged inputs/scope, not full D observer-integration proof.
+No source formatting change or relaxed assertion was made for that audit.
+
+F only checkpoint pending/0staged; E d9747229 only report mirror. Main5f05b005
+preserves9tracked/6untracked/0staged; Desktop e0c36885 preserves7/73/0. All owned
+runtime processes returned; stages/classes/failures retained. No heavy matrix
+active. Old uncertain browser14116/58320 and preview34180/58264 untouched.
+Full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; protected bodies unread here,
+historical unread UNCERTIFIED. Playable100=0/betaHELD; no partial full-comparison
+success or duplicate completion notification.
+
+# Historical checkpoint: shared capture budget published; D integration next
 
 UTC2026-11-08. Standing roadmap continues. Active F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,

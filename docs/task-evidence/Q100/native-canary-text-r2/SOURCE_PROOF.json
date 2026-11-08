@@ -1,0 +1,82 @@
+{
+  "classCount": 156,
+  "classInventorySha256": "abfca769e067d1bc3fa4f640f47278da747a56daf68471ac4d6d1be2ee1d1279",
+  "codeFiles": {
+    ".gitattributes": {
+      "bytes": 79,
+      "sha256": "83a03396ea7decc7b2db9c57f112e0d6275e5fbe3316ffccb0276612506a451e"
+    },
+    "CanonicalJson.fragment.java": {
+      "bytes": 5331,
+      "sha256": "e6318d4bc04691ba2ff8ac4131ae16ca7c6c5806e45690022ce475346b231a88"
+    },
+    "CanonicalJsonCanary.java": {
+      "bytes": 8572,
+      "sha256": "e86b63e514f32b814ef4f46cb1c8ef574482b72bfe7deeb3a24903e372252f68"
+    },
+    "CanonicalJsonHolder.java": {
+      "bytes": 8703,
+      "sha256": "112ac8fc01a27808e4f86ed29e40c61830d5cdaa36106eafcf7c4aafb2c7c96a"
+    },
+    "R9CanaryStdout.fragment.java": {
+      "bytes": 13273,
+      "sha256": "6f475d31468753fed0f81e160efbbeb79a93057a3873065125b28d4569bef35b"
+    },
+    "R9CanaryTextPolicy.fragment.java": {
+      "bytes": 3807,
+      "sha256": "8196c38224cedef7feb4a79dc2edafedcb35ff3bbb46c83f3b4cea2b2877fddf"
+    },
+    "R9CanonicalJson.fragment.java": {
+      "bytes": 8615,
+      "sha256": "f63dbb28ffe9599b7c661f0c089701c47dd86a17aade1f813a9cce2da3ed36d8"
+    },
+    "R9PreservedFixtureSerializationCanary.java": {
+      "bytes": 30594,
+      "sha256": "bf4368fe050c9cd1b24cc342abd459d658f3c26d169455bcddff431fae1e2ccf"
+    },
+    "R9TextPolicyCanary.java": {
+      "bytes": 12564,
+      "sha256": "21da353dc2ee4fbab65105ecaab18641ecf45037bc1425b780ddd35e25145aa1"
+    },
+    "R9TextPolicyLimitsCanary.java": {
+      "bytes": 4731,
+      "sha256": "2c1030c7763fef2cb56fca55864a9e3871630b03673764cdefc4d5ac0c34975a"
+    },
+    "README.md": {
+      "bytes": 4314,
+      "sha256": "2dd43c01fd7b8e6fcc86e022f1683746484184aee4ac5fb33a3ca8ec1562b42a"
+    },
+    "generate_canary_text_overlay.py": {
+      "bytes": 10428,
+      "sha256": "ef1aa72d65ea7efbcd672fa0467376e138e4b936dfff84e6297b982c270ba74d"
+    },
+    "r9_canary_text_policy_r1.py": {
+      "bytes": 5178,
+      "sha256": "dab163d6b0126aeb3b3cc38afeef35c310d746a7234868e345f476e6ee8fc36e"
+    },
+    "test_r9_canary_text_policy_r1.py": {
+      "bytes": 6350,
+      "sha256": "7bb31d360ea1cb662896fc73d5b037c3c5bdbbcc0cb28fec9bb6293dd7977dc0"
+    }
+  },
+  "derivedStudyBytes": 216099,
+  "derivedStudySha256": "dacca39996a54ac3c65e8507367cf06401e8b289922b207a3ee0c4e6e22def98",
+  "externalParentSha256": "4ea0f0950c31d05e86b6339c918381d7bc0dd0d17999b499a7729f0ffd9e7750",
+  "fullD": "NOT_RUN_NOT_ACCEPTED",
+  "generatedInputSha256": "594743322d342ca64587df6c2190f157a6fb1a709cbb3acab0bf9a76695ab385",
+  "preservedFixtureBodySha256": "913894ed4aa926b00b93e213536fd1f00c00531db959600fa04eb433b0171777",
+  "privateLimitsProofSha256": "dac83674305261d2fe51d9e2c417afeb7429fe095475ff3842a355dca78ae5b1",
+  "privateNativeProofSha256": "cce37628fdfa920bebc01e90f53111bcdcd8034bd961300c5cb1ec04a0f6d99f",
+  "privateProbeProofSha256": "a18138ca1fee594f7e333ea9d12610471d52b38af8b3c8954ca2c75e3b1f15d2",
+  "productionBuild": "NOT_APPLICABLE_NO_PRODUCTION_SOURCE_CHANGE",
+  "schema": "tsj-native-canary-text-source-proof-v1",
+  "scope": "NATIVE_COMPONENT_OVERLAY_ONLY",
+  "selectedToolHashes": {
+    "java.exe": "e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce",
+    "javac.exe": "61fa6463ee5b59004719b9833a16b148740cfa9f2d1f5a95ca598cc90be04c64",
+    "powershell.exe": "60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f",
+    "python3.13.exe": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec"
+  },
+  "sourceManifest1092": "NOT_BUILT_NOT_QUALIFIED",
+  "visiblePlayerCheck": "NOT_APPLICABLE_NATIVE_ONLY_COMPONENT"
+}

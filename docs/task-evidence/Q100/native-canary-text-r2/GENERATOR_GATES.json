@@ -1,0 +1,202 @@
+{
+  "authoredCaptures": 0,
+  "derivedStudySha256": "dacca39996a54ac3c65e8507367cf06401e8b289922b207a3ee0c4e6e22def98",
+  "expectedRejections": 6,
+  "fullD": "NOT_RUN_NOT_ACCEPTED",
+  "gates": [
+    {
+      "case": "positive",
+      "exitCode": 0,
+      "expectedReason": null,
+      "outcome": "PASS_EXACT_SOURCE_DERIVATION",
+      "processElapsedMs": 699.4082000000001,
+      "processRootAndLogsAbsent": true,
+      "receiptHashes": {
+        "owner.json": "cdaac86a99466958f671bfb8b2c7ae192fd8ea6bfef9a8ec2532d0d1ccedeb70",
+        "parent.json": "ba1a1800992217c29e8d3b7e93d51624ebf157534bb261e0edca1a025eba55de",
+        "process.json": "aed9489b551962c51f5a2844c6cb64e31a56d610fbfdadfc89bb7d5500405a56",
+        "request.json": "d056890faddc8a891fb7236951c60a03bcb467fb20071e824e71c6c4817b3251",
+        "result.json": "f44b347de5bab9e02ccc5fde9abdff26d53bbf4832f05e0f1e2ac07285b65280",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "706b9940153798013043fd118267a8ae2a63018a1ca678868ddd72c946f9c45f"
+      },
+      "stderrBytes": 0,
+      "stdoutBytes": 157,
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1062.0615
+    },
+    {
+      "case": "wrong-hash",
+      "exitCode": 2,
+      "expectedReason": "source does not match the pinned parent",
+      "outcome": "EXPECTED_REJECTION_NOT_PRODUCER_PASS",
+      "processElapsedMs": 774.2456000000001,
+      "processRootAndLogsAbsent": true,
+      "receiptHashes": {
+        "owner.json": "32bab43577ae23c2f05004326ca4b4c5e00680731b3b6c06307a445988c1d1a2",
+        "parent.json": "8870ea5880b328729b9067614c703d660306c146614d5876e8de5a7c949ba254",
+        "process.json": "47cae0563e0bba898766c99ff25b6e2357ec1b24e3c9e165a7b3dbe69aa9b0e7",
+        "request.json": "c4c0fc0f0f2f1cff58ce00d4ce1c40a510310771016f1ae44a5ae892e919aaa9",
+        "result.json": "373e4e1ce0678f6f454ae693652a53e45424caacc95222088646abfca2da0da1",
+        "stderr.txt": "efe1bf277f407fd92c55953fe0e6259de4aeb58dc615fc30bb99bbfaf651489d",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderrBytes": 206,
+      "stdoutBytes": 0,
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1130.9798
+    },
+    {
+      "case": "wrong-name",
+      "exitCode": 2,
+      "expectedReason": "source filename must be CohortTerminalTelemetryStudy.java",
+      "outcome": "EXPECTED_REJECTION_NOT_PRODUCER_PASS",
+      "processElapsedMs": 661.6409,
+      "processRootAndLogsAbsent": true,
+      "receiptHashes": {
+        "owner.json": "013131a1c94067df313757e4ff33286d2e63b31fa0c01c6bf476a9231359c6b6",
+        "parent.json": "b32f0097c1738f7e9ba0c4a4679d95f0cba6307bbfe5b56d0ed9644fe5c664ae",
+        "process.json": "8d42a25afbaca9decaca4c09f777d16fd4ec2fb9a46bec7ce8cdbbe943fe9661",
+        "request.json": "52f27ba302a4b468bb3bad461bd49edcdf03461a1a44e69cd6d2323b4a9ea02d",
+        "result.json": "a4509c656e5da324f0a5e3e7722ce99dc51bee58dd697a1cd3cfde2779addcac",
+        "stderr.txt": "d63c41db2f1daba1344fc3cffbd4e07d4fe568bf2f033542efde5c9f0aabcf51",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderrBytes": 224,
+      "stdoutBytes": 0,
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1019.3866
+    },
+    {
+      "case": "occupied",
+      "exitCode": 2,
+      "expectedReason": "output directory contains an unexpected entry",
+      "outcome": "EXPECTED_REJECTION_NOT_PRODUCER_PASS",
+      "processElapsedMs": 869.2774000000001,
+      "processRootAndLogsAbsent": true,
+      "receiptHashes": {
+        "owner.json": "a77b64d22a4889b0dfc7ca2f09e569aa0b16d254d3503a778293358a2a839bc3",
+        "parent.json": "5b67a61723d2bce99423cbc084507afa983fa24ff72406898e46852848c8c42e",
+        "process.json": "31d3c63d280a89fc4f7b961acfdd83a113c7bbf9bdc9318db846afff2814e1d2",
+        "request.json": "48f52627a6edde69103af799dbdf7b7385535dd2686b6643af2c094c84ed3164",
+        "result.json": "fcdaf381bafae94d1a0836674be975bf62f741decbd1079e9dde1c9de7e77ce2",
+        "stderr.txt": "02b40fcd5bd91fe4354e3b138cfccdb034b8b081fc7cadc004e3c96c2bf242ad",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderrBytes": 212,
+      "stdoutBytes": 0,
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1208.2799
+    },
+    {
+      "case": "source-junction",
+      "exitCode": 2,
+      "expectedReason": "source: symlink or reparse-point component",
+      "outcome": "EXPECTED_REJECTION_NOT_PRODUCER_PASS",
+      "processElapsedMs": 707.7028,
+      "processRootAndLogsAbsent": true,
+      "receiptHashes": {
+        "owner.json": "7ca3f7a51da961b716802247f11c6fe968a06b86ee7cd21cbb4e6e7eb373d2c7",
+        "parent.json": "046c1fae42ed6c54cbeb5ff3a5ce0251e6ff32ea85949675b167ffac0578ee06",
+        "process.json": "22a5f4055895348cb12c4f2606688e2959e43d6af2e2fa2fbecf177f3a995739",
+        "request.json": "1ceeeda698efb534c649fcbacaceabc71fbba917bcbdaeca2d090be706d881cf",
+        "result.json": "94c5c59b79fbdcc1a5178fbb209f46adda80454e317a872a90229cf06fe974ea",
+        "stderr.txt": "42c076d66f2d6f1abdfa6ac213f4052cb8dcab5988a7a4c9b95f641a17faef89",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderrBytes": 209,
+      "stdoutBytes": 0,
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1072.1386
+    },
+    {
+      "case": "output-junction",
+      "exitCode": 2,
+      "expectedReason": "output directory: symlink or reparse-point component",
+      "outcome": "EXPECTED_REJECTION_NOT_PRODUCER_PASS",
+      "processElapsedMs": 718.8302,
+      "processRootAndLogsAbsent": true,
+      "receiptHashes": {
+        "owner.json": "003a0881e83348f6251e1f2791358460b64074c61fa046a90720ead517d59870",
+        "parent.json": "03fcb55448c484310605fde27cbadaa67d78c8abaa1fefd76f1abcfdf5a930b7",
+        "process.json": "c0fef7df760b98a5b1176b1485d63ae499155ac6fc26d593ed04e4b61db3a496",
+        "request.json": "ca9e0af245a7f1ae3f4648ad5a44981ccf36da0e9f911d6bf9c58e17adc857af",
+        "result.json": "f5340b15754aea4c03cece061558f1a8eb0ab614b777a93b14df227fa932db6b",
+        "stderr.txt": "cf86027d7ae0a523b6fd3ada219a4f7f11ee68104e73fc6d1c546b784e4404c8",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderrBytes": 219,
+      "stdoutBytes": 0,
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1076.6319
+    },
+    {
+      "case": "outside-temp",
+      "exitCode": 2,
+      "expectedReason": "output directory is outside OS temporary storage",
+      "outcome": "EXPECTED_REJECTION_NOT_PRODUCER_PASS",
+      "processElapsedMs": 711.7164,
+      "processRootAndLogsAbsent": true,
+      "receiptHashes": {
+        "owner.json": "b0c4a7681d85c5e5253e60a0b95039a35aa75b51d712fe1c982d9b490b99dd62",
+        "parent.json": "e06446b56d02286dc0b7ea86808f3fcabb0a2a30aba880218f84044a9492584b",
+        "process.json": "e4255f532efb787e0c2291a7237d550682995d3662c931eec6c36b4b956e9911",
+        "request.json": "83d5153ce280e5e23ac1e8d9b15731ceb60cb0753cdc080c7b274d453ce176df",
+        "result.json": "4d1c0100eda3905d77810703043d1270039ea7a8cb029188610da7f21ce0b555",
+        "stderr.txt": "006d48094a10eb56e5a55c3bb61d14e5bf67a974092449a4d51e948c6631468d",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderrBytes": 215,
+      "stdoutBytes": 0,
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1064.3461
+    },
+    {
+      "case": "public-units",
+      "exitCode": 0,
+      "expectedReason": null,
+      "outcome": "PASS_EIGHT_PUBLIC_POLICY_TESTS",
+      "processElapsedMs": 882.1729,
+      "processRootAndLogsAbsent": true,
+      "receiptHashes": {
+        "owner.json": "78bc3579cc831709ae39ac30ebcee11cd0447f67adcc62ef73726751eeb37bd9",
+        "parent.json": "164eefbd8d71c11ebe4aed0e3e1702101dc28546c479a8c5829a90471d3dd492",
+        "process.json": "787a375da1f9f93dc25b462b0cc2701e762e81dda0ec1f94649660824b0516b8",
+        "request.json": "431de342c18811b06acea8e1cdc6966755d59d99b2b18f5d808d819eedd69253",
+        "result.json": "d6891bcb2510a19c73fb442367d243a8105fcd568bc70c8ac09f1f8ac41cf72c",
+        "stderr.txt": "9f19866c8af7bd0425354480972b9749c259e92bd47393c4d7e76dcf44f46db3",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderrBytes": 111,
+      "stdoutBytes": 0,
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1236.7627
+    }
+  ],
+  "generatedProofSha256": "98327a4c42a2d8aa08a25a997bccff0768bc6bd80c6c5b5f73ff90a5e43ac54c",
+  "isolatedCleanupDurationMs": null,
+  "junctionCleanup": {
+    "links": [
+      {
+        "linkAbsent": true,
+        "linkName": "source-junction",
+        "targetRetained": true
+      },
+      {
+        "linkAbsent": true,
+        "linkName": "output-junction",
+        "targetRetained": true
+      }
+    ],
+    "recursive": false,
+    "schema": "tsj-owned-junction-cleanup-v1",
+    "status": "PASS_VERIFIED_LINK_ONLY_DELETE"
+  },
+  "junctionCleanupReceiptSha256": "d226bd13def62a9315b6ca9c41f5dbdb007c53a3a9936dfcb826653f71b052bf",
+  "junctionsExercised": 2,
+  "newSessionCalls": 0,
+  "privateProofSha256": "3a1339943d9c3117efe9e7116e2fca30332eeddd756529713c07a4884e083cc7",
+  "schema": "tsj-public-text-controls-evidence-v1",
+  "sourceByteEqualityWithCompiledComponent": true,
+  "status": "PASS_BOUNDED_TRANSFORMER_AND_PUBLIC_POLICY_TESTS"
+}
