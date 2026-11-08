@@ -889,7 +889,7 @@ Implementation `f2f1488b8d1f8f3ffb266eb63ed3537350d51e92` is normally pushed to
 Gmail `1a1b8d862463d32b` was sent once.
 
 The [native canary geometry-text prerequisite](task-evidence/Q100/native-canary-text-r2/README.md)
-is accepted locally for its bounded component; publication pending. Valid
+is accepted and published for its bounded component. Valid
 small-fixture geometry1083 exceeded the old256 value cap. The exact canary-only
 geometry leaf now permits4096 with shared Java path/type enforcement and an
 independent Python rule; ordinary keys/identifiers/default/authored values and
@@ -905,6 +905,9 @@ owner canaries, typed host/materialization/independent consumption and fresh
 source/class gates before the bounded authored comparison. Caller-exclusive body
 ownership remains required. Full30 excluded; HARD/PSYCHOTIC unavailable/unrun;
 playable100=0/betaHELD; historical protected unread UNCERTIFIED.
+Implementation `427a7fbfccb05c5b831ccd89ee25b7d925e03082` is normally pushed to
+`origin/codex/q100-physical-feasibility`, exact remote SHA verified;
+completion Gmail `1a1ba0236ea79ef9` sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

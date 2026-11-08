@@ -1,6 +1,8 @@
 # Native canary geometry-text prerequisite
 
-Status: accepted locally for the bounded component below; publication pending.
+Status: accepted and published as `427a7fbfccb05c5b831ccd89ee25b7d925e03082` on
+`origin/codex/q100-physical-feasibility`; exact remote SHA verified.
+Completion Gmail `1a1ba0236ea79ef9` sent once.
 
 Two earlier real small-fixture Sessions exposed four valid1083-character
 geometryCanonical values. The256-character formatter rejected that complete

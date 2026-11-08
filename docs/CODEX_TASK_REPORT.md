@@ -1,11 +1,12 @@
-# Current checkpoint: native canary text component accepted; publication pending
+# Current checkpoint: native canary text component published; actual owner canaries next
 
 UTC2026-11-08. Standing roadmap continues. F OS-temp/
 tsj-q100-terminal-only-20261107-r1, branch codex/q100-terminal-only-20261107,
-pre-publication HEAD4618ae3519340bbdcecef331a8007f932d146318. Normal target
-origin/codex/q100-physical-feasibility. Prior implf2f1488b/receipt4618ae35/
-Gmail1a1b8d862463d32b SENT_ONCE preserved. This component is locally accepted;
-new commit/push/email pending. Full D NOT RUN/NOT ACCEPTED. Authored original/
+accepted implementation/candidate 427a7fbfccb05c5b831ccd89ee25b7d925e03082. Normal target
+origin/codex/q100-physical-feasibility, exact remote SHA verified. Message:
+Bound native canary geometry text. Completion Gmail1a1ba0236ea79ef9 SENT_ONCE.
+This documentation receipt requires no duplicate email. Prior U implementation/
+receipt/email remain preserved. Full D NOT RUN/NOT ACCEPTED. Authored original/
 capture/ArmRun.execute=0; authored D stable-[A,B] Session calls=0. Playable100=0,
 betaHELD. Full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historical protected
 unread UNCERTIFIED. Productionc382 unchanged; no GWT/Player/electrical renewal.
@@ -16,7 +17,7 @@ main STILL fail-closed. R5/R7 components and R9 fixture/transport/text helpers
 integrated. Canonical prior-input-r2 and j8-cohort-terminal-r2 remain ABSENT.
 WIRE root/source93504204/93766B, contracta4672d33, DESCRIPTOR86ef9ff5,
 PLANa98ed828, builderc28d90ea. Reader baselineef135579/42tests was scoped PASS;
-separately owned R9 fixture-context reader patch is unrun/pins pending. Do not
+new R9 fixture-context reader6b13acaa/tests183077c2 is unrun and pending root gates. Do not
 mistake that work for main/CLI/full-D acceptance. Auth R5 contract2f13 unchanged.
 
 Packet prepared for publication docs/task-evidence/Q100/native-canary-text-r2 and
@@ -74,8 +75,8 @@ stays post-run oracle, never selector; receipt307/lineage77 must be actual fresh
 Resources: Python always-I-B; one matrix at a time; none active. Old uncertain
 browser14116/start639294472690745890/port58320, preview34180/start639294472514546595/
 port58264+14 uncertain children and prior timeout logs remain untouched.
-F intended packet/docs changes only; main9tracked/6untracked and Desktop7tracked/
-73untracked preserved; E report-only mirror. No staged changes yet.
+F publication receipt changes only; main9tracked/6untracked and Desktop7tracked/
+73untracked preserved; E report-only mirror. No unrelated F changes; receipt staging/commit is next.
 
 # Historical checkpoint: shared budget published; v3 source transport in progress
 
