@@ -1,4 +1,196 @@
-# Current checkpoint: actual R7 export composition accepted
+# Current checkpoint: projection component locally accepted
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD
+f25dfcc880b69d830e24a2bff755ae0a0a25e74a, no upstream. Origin/codex/q100-physical-
+feasibility exactsameSHA verified beforework. Prior e1e26502/receiptf25dfcc8
+published; Gmail1a1c1f0835d2a6cb SENT_ONCE, never repeat. New component accepted
+locally; final stagedreview/commit/normalpush/newcompletionemail PENDING.
+
+U=OS-temp/tsj-q100-result-projections-6f06ff895ac54a989055a0bd8f1cd61a.
+Public tests/qualification/rb100-layout/current-result-projections-r1 and
+proof docs/task-evidence/Q100/current-result-projections-r1/PROOF_R1.json SHA
+e2a07e15d9308209845f8db0107a34360b8166f368d5d545ddfc3ad0afb3532f.
+Sourcefreeze dacf1c353dbb972457c612f0a9fde42529cc25ea377791a658bcc1b268844e4e;
+contract24f40e39/referencebd0c6f08/wireb5b20358 frozenbefore newcode. Helper7609a483,
+canarya0391fd5, oraclefa6eb928,CLI04dbde9b,tests800e9849. Sourcehelpercohort
+transfers existingderiveCohort lists fromsyntheticviews (5units/2copies/1chunk); cleanup23gets/
+20derivedops/Mapalloc/numericmaterialization/copy10=55units/10copies/1chunk.
+No neworderingalgorithm/counter; onlyR7scalarpassedthrough; falseflags/scalarbelow
+sum stayinvalidforseparatesemanticconsumer. No original/ArmResult fabrication,
+producer/graph/Session/routing. Actualstaging/scalarhandoff/fullD remainunqualified.
+
+AllgatesPASS: freshactualJDK8source7target7new2Sources/6major51classes/30143B,
+709.0072msoperation/941.9155wrapper. Q unchangedsyntheticdependencyclosure reused
+onlyafterfullSource/tools/JAR/classes/actualcompileReceipt reauth863Sources/
+2486classes/11953557B. ActualnativeSMOKE2 352.9957/596.0802ms; privateindependent
+reader343.1757/574.7443ms BEFOREactualSUITE15 364.5649/597.3569ms, reader438.636/
+672.1345ms. Pure15private376.3493/635.9218ms; public15fresh370.859/612.6599ms;
+publicactualreaders344.3845/580.1114 and341.7679/573.7982ms. Readercontrols2synthetic
+positive+8expectedexit2;3actualJVMprotocolrejections exit1;2actualJDK8hostcanaries.
+Finalpublicgatebbbffdc552a115a4b14c2765aeda47e77527a10d30fe9935702bf15365e48998
+reauthenticates24actualrequests/callerreceipts,allconsumedinputs; no nativererun
+sinceunchangedpublicJava copiedexact. 640realfinishedgroups blocksnextMapget;
+failedMeters discardedWITHOUTfinish. Aggregatedfixturegroups areseparateMeters,
+notoneproducerenvelope. No componentruntime/puretestunexpectedfailure.
+
+RootSource/integratedAPI/census/authority/ownership/protocol/loader/IO/evidence
+review; independentleafhelper/canarySource reviewPASS onfinal7609/a039, no
+independentnativeexecution. Mutationcoveragelimit:onealiasperarm/onegeometryfield,
+all23gets/20opsreviewed; nofullper-fieldmatrix. PreflightFAIL2 (over-specificsystem-
+pathwhitelist/scannerregexselfmatch) correctedbeforecomponentexecution; rawfiles/
+failuremetadataretained, fullprivacychecknotweakened. UnreleasedoracleParentcount
+fixed1perprocess->2/15percase before release/execution; complete rawdrafthistory
+notclaimed. Frozenauthornotes arehistoricalSource-stage, notlatestgatestatus.
+
+ProductionSource/oldownerAPI unchanged. GWT/PlayerN/A; electrical/populationNOT
+RENEWED; CInotrun(localgates). Actualcohort/qualifiedmetadata sequencing andR7
+scalar-to-cleanup insertionbeforeguard/tree/close3498-3505 NEXT Source design;
+normalassemblystillSELECTED_WIRE_CANARY_ONLY. No workplaceholderread or added
+Meter.cleanupNanos (noneexists). R7scalarcomputedonce3437, passed/storedfinal.
+
+F intendednewtests/evidence/architecture/roadmap/report only, staged0 beforefinal
+review. Main5f05b005(9trackedM/6untracked), E d9747229 reportM, Desktop e0c36885
+(7trackedM/89untrackedfiles) preserved; Main/Ereportmirroronly. All24selected
+childtermination+ownedprocessroot/logabsenceproven; componentnoOSresource,
+no new persistentprocess/link. Processcleanupdurationunmeasured; Source/classes/
+evidence/failuresretained. Uncertainbrowser14116/start639294472690745890/58320,
+preview34180/start639294472514546595/58264+14children, oldDprocess/unlinkUNCERTIFIED
+untouched. All90s/640groups/5s/32768/copy1MiB/chunk4096/Source4MiB/opJSON8MiB/
+result1MiB/class10k256MiB/compile-suite60s/reader180s/wrapper480s/cleanup120s caps,
+seeds/epochs/independentoracles/CircuitJStruth unchanged. Full30EXCLUDED;
+HARD/PSYCHOTICunavailable-unrun; oldnormal20historicalREAD/no reread;
+protectedUnreadUNCERTIFIED; playable100=0/betaHELD; genuineoneoriginal thenexact
+NULL/OBSERVE UNSPENT_GATED. No userdecision needed. Publishvalidatedcomponent,
+then nextSource-onlyhandoff/staging work withoutspendinggenuineenvelope.
+
+# Historical checkpoint: cohort and cleanup projection implementation
+
+UTC2026-11-09. Active F codex/q100-terminal-only-20261107 HEAD
+f25dfcc880b69d830e24a2bff755ae0a0a25e74a, no upstream. Origin/codex/q100-physical-
+feasibility exactsameSHA verified. Prior implementation e1e265024003ace6e81aa27bb2433cf507afcbad
+and receipt f25dfcc8 published; Gmail1a1c1f0835d2a6cb SENT_ONCE, never repeat.
+Prior export proof7810af56 remains its bounded syntheticexport qualification.
+
+S=OS-temp/tsj-q100-semantic-child-source-06e93e5a4bd84bb5a25b6acea5af058c.
+SourceR1-3 priorhashes/findings/checkpoint preserved below. This heartbeat adds
+exact currentconsumer helper admissionsR4(fd979db8),R5(ca8c2747),R6(3d7492b8):
+7key-check/aliaslines+3delegate+15actualorderlines. FullSource8e8c374a/blob7e32a608
+hashedidentityonly; no wholelegacyconsumer. exact_keys checkssets; ordered_keys
+separatelychecksorder. Order=given2cohortIDs first, remainingcapturedIDs stable.
+Existing Java deriveCohort(CURRENT_STUDY558) pureMap/List owner matches; it returns
+2detachedlists onthe60net/2ID contract with255units/122copies/62chunks. No current
+callsite/normalassembly proof. R7cleanupscalar iscomputedonceat3437 fromactual
+owner durations, storedfinal inplan/finalwork; no SetupMeter.cleanupNanos exists.
+Never rereadwork's zero placeholder, addcounter or retimeprocesscleanup. New
+aggregateprojection mustlaterbeinsertedbeforeR7guard/tree/close3498-3505.
+
+U=OS-temp/tsj-q100-result-projections-6f06ff895ac54a989055a0bd8f1cd61a;
+S/NEXT_R1.json pointsU. Frozen PROJECTION_CONTRACT_R1 SHA
+24f40e39a9d52704a51aefbdf05170c25056447009c4b25605e45ad9de04fd4f,
+REFERENCE_R1 bd0c6f081a6a9d11c47befe531debc87ddbccf02541542253b202a6debe491bc,
+CANARY_WIRE_R1 b5b20358c18806889b53c8394be627bd5078f0fd7c282e09e285f0f60a357b59.
+Precodefreeze precedes helper/canary/oracle implementation. Boundedcomponent:
+CurrentResultProjections.cohort(SetupMeter,Cohort) transfers exclusiveactualderived
+listuse intoSource2fieldmap, helper5units/2copies/1chunk. cleanup(meter,capture,
+nullCleanup,observeCleanup,workCleanupNanos) reads23Mapslots/20derivedoperations/
+Mapalloc/numericmaterialization/copy10=55units/10copies/1chunk. It faithfully
+projects false flags/digests and authoritativeR7scalar, no durationreread/retiming.
+Pureprojections are not acceptance; scalarbelowSum fixture muststayinvalidfor
+independentconsumer. Actual childowner/caller/scalarhandoff/fullD remain separate.
+
+Workers Sourceonly/noexecution/noPublish/leaves: /root/projection_helper owns
+U/CurrentResultProjections.java,HELPER_NOTE_R1.md; /root/projection_canary owns
+U/CurrentResultProjectionsCanary.java,CANARY_NOTE_R1.md; /root/projection_oracle
+owns projection_oracle.py,verify_projection_r1.py,test_projection_oracle.py,
+ORACLE_NOTE_R1.md. Root owns actual Sourcefreeze/gates/integration/publication.
+SMOKE2/SUITE15 frozen. Actual currentderiveCohort over explicitlysynthetic fresh
+ordinaryMap/Listfixtures only, no fabricatedOriginalArm/ArmResult. Badcohort
+vectors/errors, falsecleanupviews/scalarpassthrough,3nullguards,640realgroup
+admission-before-Mapread cases. Rootmustreview newSourcebeforeexecution.
+
+Next rootgates: audit/reuse exact Q accepted syntheticSource/tool/JAR/class/
+actualcompile/proc receiptclosure (Q=OS-temp/tsj-q100-current-export-composition-
+ff7bb69379ae48eda94f89b3c69edc68), thenfreshfinalSourceJDK8source7/target7 compile
+newhelper/canary againstaccepteddeps withEMPTYsourcepath. OldactualDclasses
+forbidden. Pureoracle tests/selectedreaderpositive+negativecontrols; actualsmoke
+thenindependentreaderbefore suite; actualJVMprotocolrejections; finalpublicSource/
+bytes/pin/diff/privacy checks. No new build/test/native execution yet thisphase.
+No production/GWT/Player change; electrical/populationNOTRENEWED. Normalassembly
+remainsSELECTED_WIRE_CANARY_ONLY. Do notpublish unresolvedblockersassuccess.
+
+F reportM only/staged0; Main5f05b005(9trackedM/6untracked), E d9747229 reportM,
+Desktop e0c36885(7trackedM/89untrackedfiles) preserved; Main/Ereportmirroronly.
+No new persistentprocess/link; Sources/evidence/oldfailures/knownclassesretained.
+Uncertainbrowser14116/start639294472690745890/58320, preview34180/
+start639294472514546595/58264+14children, oldDprocess/unlinkUNCERTIFIED untouched.
+All90s/640groups/5s/32768/copy1MiB/chunk4096/Source4MiB/opJSON8MiB/result1MiB/
+class10k256MiB/compile-suite60s/reader180s/wrapper480s/cleanup120s caps unchanged.
+Seeds/epochs/oracles/CircuitJStruth unchanged. Full30EXCLUDED; HARD/PSYCHOTIC
+unavailable-unrun; oldnormal20historicalREAD/noreread; protectedunreadUNCERTIFIED;
+playable100=0/betaHELD; genuineoneoriginal thenexactNULL/OBSERVE UNSPENT_GATED.
+
+# Historical checkpoint: semantic child Source audit
+
+UTC2026-11-09. F branch codex/q100-terminal-only-20261107, HEAD
+`f25dfcc880b69d830e24a2bff755ae0a0a25e74a`, no upstream. Implementation
+`e1e265024003ace6e81aa27bb2433cf507afcbad` (Qualify actual R7 export composition)
+and receipt f25dfcc8 normally pushed to origin/codex/q100-physical-feasibility;
+exact remote HEAD verified. Gmail1a1c1f0835d2a6cb SENT_ONCE; no receipt email.
+Prior Gmail IDs remain historical and must not be repeated. Proof7810af56d8ab080061e74a564779c56f560b61e55374d96432d76c6da6477c51.
+
+Delivered test-only actualsetup/constructor/metadata/unfinalizedR7/unusedticket->
+existingexport on oneMeter: SMOKE1 success, SUITE1 receiptSHA failure afterreadback,
+no marker/fabricatedclose, partialMeter discarded; cleanup/stdout proven. Fresh
+JDK8 863Sources/2486classes/11953557B/major51; native2; finalpublicpure13; reader
+controls2positive+8expectedexit2; nativeoutputreaders2; main3expectedexit1 PASS.
+Nativeoriginalinputs unchanged/reauthenticated, notrerun after publicPythonEOF
+trim. StagedEOFcheckFAIL corrected ASTidentical/pinupdate/freshaffectedchecks;
+oldraw/gates/failure retained. Packagingcp1252error fixedUTF8currentprefix with
+historicaltail unchanged. Initial/final documentary consistency leafreviews PASS,
+no independent native execution. Explicit48paths/hash/privacy/diffchecks PASS.
+Receipt initialgitadd lacked--sparse; retried exactpaths, stagedcheckPASS. No
+helper/production/API/epoch/budget/oracle change; GWT/PlayerN/A; electrical/
+populationNOTRENEWED. Normal assembly/full-D/host/lifecycle remain unqualified.
+
+Q=OS-temp/tsj-q100-current-export-composition-ff7bb69379ae48eda94f89b3c69edc68;
+PUBLICATION_R1.json complete; NEXT_R1.json points to
+S=OS-temp/tsj-q100-semantic-child-source-06e93e5a4bd84bb5a25b6acea5af058c.
+Smanifest5c9da48a2bf017ce86d2879df364fed4f9c5d5dc744518176228344020e2f1f3,
+findings9ee2e333ec26fa734942264c3c0a12579d74ef958650287dbc1b1df46771e6a9,
+checkpoint1fc53b07f2e21e5ee75fa780879e9fc00514bebb987577c42c7c77bc72c0fe99.
+Nine alreadyadmitted currentSource/test files authenticated/copied; then narrow
+current full-D validator admission:125selectedlines +13nameddeclarations only,
+no wholelegacyconsumer/builder. Sourceblob7e32a608/SourceSHA8e8c374a identityonly;
+R2manifest103e82057fe4707bab9bd36d3f9502a23010e1725226fbf6b335a9d7d9f508c9,
+R3manifest79ecebd31bb7ae8713aa7abe301602eb5b8c631771af106d5db093dfa245a1d6.
+R2findings37ad7504a8de3dc8dcfde118107489ae6f40f3fa2aca81247df2ac19593343f1;
+currentCHECKPOINT_R2 973604088545df4171042668fca3a72644c9d3c847f6930ef5b3bc4dad2cd81c.
+Recoveredcohort2/outerarms2/arm5/aggregatecleanup10 fieldlists and currentbinding
+rules. Child exact_keys ordering/helper body unadmitted; no assumedmandatorybyte
+order. FreshRun/observation delegateowners not newlyread. Assemble still throws
+SELECTED_WIRE_CANARY_ONLY. No arbitraryfixturesemanticblessing. Next Source-only
+ownership/order/cleanup-ledger/prepayment design for cohort+aggregatecleanup
+projections, exactnarrowhelper/projection/caller admissions, then freeze independent
+literalexpectations beforeimplementation. check_contract.py not admitted. No
+Source/native/producer execution or genuineenvelope spend; semanticacceptanceNOTESTABLISHED.
+Sourceartifactwriter SyntaxError beforewrites corrected; no native/test failure.
+No full legacybuilder/consumer/oldactualD descriptors/results/generatedDATA/
+classes/HARD/heldout access. No OriginalArm/ArmResult fabrication/producer/graph/
+Session/routing. This Source-only gap is not a new published success milestone.
+
+F reportM only/staged0 after checkpoint; Main5f05b005 (9trackedM/6untracked),
+E d9747229 reportM, Desktop e0c36885 (7trackedM/89untrackedfiles) preserved;
+Main/E only reportmirror. Selectedchildren terminated/ownedprocessroots+logs
+absent; caseRootsempty; no new persistentprocess/link. Source/classes/evidence
+retained. Uncertainbrowser14116/start639294472690745890/58320, preview34180/
+start639294472514546595/58264+14children, oldDprocess/unlinkUNCERTIFIED untouched.
+All90s/640groups/5s/32768/copy1MiB/chunk4096 andSource/class/search/reader180s/
+wrapper480s/cleanup120s caps, seeds/epochs/oracles/CircuitJStruth unchanged.
+Full30EXCLUDED; HARD/PSYCHOTICunavailable-unrun; oldnormal20historicalREAD/no reread;
+protectedunreadUNCERTIFIED; playable100=0/betaHELD; genuineoneoriginal thenexact
+NULL/OBSERVE UNSPENT_GATED. No requireduserdecision or new envelope spend.
+
+# Historical checkpoint: actual R7 export composition accepted
 
 UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD
 `e1e265024003ace6e81aa27bb2433cf507afcbad`, no upstream. Prior595fe34d/receipt2ab3

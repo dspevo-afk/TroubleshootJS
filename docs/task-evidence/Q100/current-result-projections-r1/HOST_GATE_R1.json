@@ -1,0 +1,48 @@
+{
+  "status": "PASS_SELECTED_REAL_JDK8_HOST_POSITIVE_AND_NEGATIVE_CANARIES",
+  "positive": {
+    "phase": "projection-host-jdk8-positive-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 335.51910000000004,
+    "wrapperTotalElapsedMs": 759.0817000000001,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "f583951e8080e8952a5a74257019ac1aeda13d66264b05f8ccccc1913bb41e5d",
+      "owner.json": "f56e698f2b9369fd90b67a1f0c438b5ffd5e511124e245057df38a19b70c6de5",
+      "process.json": "6aeb9a69c205c312ac615fd07fc1802ab85ec62e05f1cd00dab67eac4773df42",
+      "parent.json": "ab1317cceb74b61636939ac26647381720d7ba7db0a8647f65ea87401a6d15dc",
+      "result.json": "41c2e200785d229c31b682ad1ab0048b296d90f8fe56533db76787853c9321a9",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr.txt": "1cc134eee0b09c82ff01739623f30b95dcd265223e8377d051fa0b4ac3c6cfa3"
+    }
+  },
+  "negative": {
+    "phase": "projection-host-jdk8-negative-r1",
+    "status": "PASS_EXPECTED_REJECTION",
+    "childExitCode": 1,
+    "processElapsedMs": 291.7751,
+    "wrapperTotalElapsedMs": 520.8183,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "ef897d0cd29cbe8456e0217d3d82793b07c947172e2193ceb261e1ade36167ff",
+      "owner.json": "d16fbccaf580e736ac53adef93634d88dabb566cfa56db762eef7f93a16b79ba",
+      "process.json": "2d1dbfe259bdef5f3fa83e1dc8b9a4c5241dbc892175cc91aa47bd2d160a68c8",
+      "parent.json": "fd5c3f10a86bf4e9aa0877908cb58e741e8fab87589a5cae57091d36fe5abd93",
+      "result.json": "30acfe77991cc6fc2e98dee80a1f08dbb68bea439aacf28d83bfa56011ff009b",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr.txt": "41f20ea8b35c95daf6f702a1d0a5f400d31fccf1b5368427e7c258c242d75126"
+    }
+  },
+  "versionStderrSha256": "1cc134eee0b09c82ff01739623f30b95dcd265223e8377d051fa0b4ac3c6cfa3",
+  "rejectionStderrSha256": "41f20ea8b35c95daf6f702a1d0a5f400d31fccf1b5368427e7c258c242d75126",
+  "actualComponentCalls": 0,
+  "nativeProducerCalls": 0,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "rootOperationElapsedMs": 12499.9157,
+  "separateRootCleanupDurationMs": null
+}

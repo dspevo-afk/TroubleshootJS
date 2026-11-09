@@ -1455,6 +1455,21 @@ playable100=0/beta held and protected data exclusions unchanged. Implementation
 origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail1a1c1f0835d2a6cb sent once. This receipt sends no second email.
 
+The [cohort and aggregate-cleanup projection component](task-evidence/Q100/current-result-projections-r1/README.md)
+is locally accepted with two Source-contract native adapters. It reuses current
+cohort derivation and R7 scalar authority; exact5/55-unit projections, ownership
+transfer, false observations and below-sum passthrough are independently checked.
+Fresh JDK8 compile2Sources/6major51classes reuses the fully reauthenticated863-
+Source synthetic dependency closure. SMOKE2/SUITE15, private/public15 oracle tests,
+actual-output readers, ten selected reader controls, three JVM protocol rejections
+and two actual host canaries pass;24 caller receipts/inputs reauthenticated.
+No production change or genuine producer/graph/Session/routing call; no electrical/
+population renewal. Next is R7 scalar-to-cleanup handoff and cohort/qualified-
+metadata staging Source design, then whole-result/full-D/actual-host lifecycle
+acceptance. Normal assembly remains closed; genuine original,NULL,OBSERVE unspent/
+gated; playable100=0/betaheld, protected data exclusions and all caps unchanged.
+Publication pending final staged review.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

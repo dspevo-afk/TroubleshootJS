@@ -1,0 +1,89 @@
+{
+  "status": "PASS_FINAL_SOURCE_JDK8_PROJECTION_COMPONENT_COMPILE",
+  "sourceFreezeSha256": "dacf1c353dbb972457c612f0a9fde42529cc25ea377791a658bcc1b268844e4e",
+  "sourceCount": 2,
+  "source": [
+    {
+      "role": "CurrentResultProjections.java",
+      "bytes": 8248,
+      "sha256": "7609a483f18a8c3d841327ebc950ee2cbcf627cbf467a6b509487426f062b326"
+    },
+    {
+      "role": "CurrentResultProjectionsCanary.java",
+      "bytes": 23680,
+      "sha256": "a0391fd53033201475a3324bfe654bad673ace27f5bccef8c5d773c3badd768d"
+    }
+  ],
+  "classes": [
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentResultProjections.class",
+      "bytes": 4883,
+      "sha256": "610d78dedb64f57e452cc0a9b219277b07bfbb7c5024bd38af126ebda9cb110e",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentResultProjectionsCanary$1.class",
+      "bytes": 308,
+      "sha256": "496366eb673d09c7ee14ce24001742b6c56c689d0912087d93b4cb782a70977c",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentResultProjectionsCanary$CleanupFixture.class",
+      "bytes": 2772,
+      "sha256": "13e31211ec544dd2c20f07bad447122d864d553fcd175856d7db118155e861c3",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentResultProjectionsCanary$CountingMap.class",
+      "bytes": 991,
+      "sha256": "8b29cbfd5dab24a32be8411487cf85c609a5403e3d5cde335a4532778a9584c6",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentResultProjectionsCanary$ReadCounter.class",
+      "bytes": 621,
+      "sha256": "d3c45a035977db1c0a18a5646f9aaa94f5d4cad52e0624315d50d594b68691a1",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentResultProjectionsCanary.class",
+      "bytes": 20568,
+      "sha256": "ef959a81329f26eb8849322e74a0fc174372b469339b7dc4f644d277cc6f7a66",
+      "major": 51
+    }
+  ],
+  "classCount": 6,
+  "classBytes": 30143,
+  "allMajor51": true,
+  "call": {
+    "phase": "projection-jdk8-compile-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 709.0072,
+    "wrapperTotalElapsedMs": 941.9155000000001,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "dd64e64114ca093c1fb70e840256103277d5cb6f8851911fe7b37040f018db4e",
+      "owner.json": "be7175a8fa835c35827563165cfa23e05f4ba212b0239ce8a49b3833432344c3",
+      "process.json": "27d83d4bee90eb89d499222596aeeb93ad940f5a35adba19247e824cc447dbe2",
+      "parent.json": "720a6369f53d0ce8705786627066938cc0d8392863714ae4e867e61c1f7e113f",
+      "result.json": "5f653794b2b55d838c1a2f310c1c5d22b893beb431bfcf8c5c7a1390821ccedb",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "dependencySourceCount": 863,
+  "dependencyClassCount": 2486,
+  "dependencyClassBytes": 11953557,
+  "dependencyInputsReauthenticated": true,
+  "dependencyFreshCompileReused": true,
+  "actualPriorDataReads": 0,
+  "oldActualDataClassReads": 0,
+  "nativeProducerCalls": 0,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "rootOperationElapsedMs": 11208.5695,
+  "separateRootCleanupDurationMs": null
+}

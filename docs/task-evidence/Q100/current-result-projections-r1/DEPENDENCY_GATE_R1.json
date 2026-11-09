@@ -1,0 +1,12 @@
+{
+  "status": "PASS_ACCEPTED_SYNTHETIC_DEPENDENCY_SOURCE_TOOL_JAR_CLASS_COMPILE_RECEIPT_REAUTHENTICATION",
+  "sourceCount": 863,
+  "classCount": 2486,
+  "classBytes": 11953557,
+  "allMajor51": true,
+  "noNewNativeCall": true,
+  "noOldActualDataClassRead": true,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "rootOperationElapsedMs": 7277.6374,
+  "separateRootCleanupDurationMs": null
+}

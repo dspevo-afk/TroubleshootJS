@@ -1,0 +1,9 @@
+{
+  "status": "ROOT_ACCEPTED_PROJECTION_ORACLE_SOURCE_BEFORE_EXECUTION",
+  "files": {
+    "projection_oracle.py": "fa6eb928cb311c21dd051041a83b4ebfc4ce2a6f200a03edfe6d9ade91d94820",
+    "verify_projection_r1.py": "04dbde9b68202f61cb5be175423da67408b8f5e0b8553561f9b7ff3cb170922a",
+    "test_projection_oracle.py": "800e9849851842e0c5a5929f007eedbd62e1bb926d2d09ab3344191ecf05d52e",
+    "ORACLE_NOTE_R1.md": "6e911b9615345760d0995be56a3fa4d80ef6e904d05c68b702f0371f2b7ed8a3"
+  }
+}

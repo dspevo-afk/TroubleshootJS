@@ -1,0 +1,26 @@
+{
+  "status": "PINNED_CURRENT_KEY_HELPER_SOURCE_ONLY_NO_DATA",
+  "base": "f25dfcc880b69d830e24a2bff755ae0a0a25e74a",
+  "sourceSha256IdentityOnly": "8e8c374a089a13c4defea9c4b5b548eb1bc1242cddabc1faf468dba420695af4",
+  "rows": [
+    {
+      "name": "CurrentFullDKernel_helper_2034_2034.py.txt",
+      "startLine": 2034,
+      "endLine": 2034,
+      "bytes": 46,
+      "sha256": "97fd0420f3ef834bcf10dbfa5525777b392ad7584b1dac1bb57ff7b3419a2d03"
+    },
+    {
+      "name": "CurrentFullDKernel_helper_2099_2104.py.txt",
+      "startLine": 2099,
+      "endLine": 2104,
+      "bytes": 252,
+      "sha256": "7556b16528fbb7bbf1df1d6db51643a5c1a54e695914911651a96887fa2570fc"
+    }
+  ],
+  "wholeSourceSemanticallyAdmitted": false,
+  "nativeCalls": 0,
+  "producerCalls": 0,
+  "dataReads": 0,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

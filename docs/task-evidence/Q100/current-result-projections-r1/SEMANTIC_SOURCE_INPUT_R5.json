@@ -1,0 +1,19 @@
+{
+  "status": "PINNED_CURRENT_STABLE_COHORT_ORDER_SOURCE_ONLY_NO_DATA",
+  "base": "f25dfcc880b69d830e24a2bff755ae0a0a25e74a",
+  "sourceSha256IdentityOnly": "8e8c374a089a13c4defea9c4b5b548eb1bc1242cddabc1faf468dba420695af4",
+  "rows": [
+    {
+      "name": "CurrentFullDKernel_stable_cohort_1455_1457.py.txt",
+      "startLine": 1455,
+      "endLine": 1457,
+      "bytes": 107,
+      "sha256": "f09eb4e74de0e64e0f8aa0fe6967e4b61055c4e2ce8d3a418ca0089fb29bc6b1"
+    }
+  ],
+  "nativeCalls": 0,
+  "producerCalls": 0,
+  "dataReads": 0,
+  "wholeSourceSemanticallyAdmitted": false,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

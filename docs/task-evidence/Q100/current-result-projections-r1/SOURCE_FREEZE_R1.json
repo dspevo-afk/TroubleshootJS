@@ -1,0 +1,93 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_PROJECTION_COMPONENT_SOURCE",
+  "base": "f25dfcc880b69d830e24a2bff755ae0a0a25e74a",
+  "files": [
+    {
+      "role": "CurrentResultProjections.java",
+      "bytes": 8248,
+      "sha256": "7609a483f18a8c3d841327ebc950ee2cbcf627cbf467a6b509487426f062b326"
+    },
+    {
+      "role": "CurrentResultProjectionsCanary.java",
+      "bytes": 23680,
+      "sha256": "a0391fd53033201475a3324bfe654bad673ace27f5bccef8c5d773c3badd768d"
+    },
+    {
+      "role": "projection_oracle.py",
+      "bytes": 23098,
+      "sha256": "fa6eb928cb311c21dd051041a83b4ebfc4ce2a6f200a03edfe6d9ade91d94820"
+    },
+    {
+      "role": "verify_projection_r1.py",
+      "bytes": 8218,
+      "sha256": "04dbde9b68202f61cb5be175423da67408b8f5e0b8553561f9b7ff3cb170922a"
+    },
+    {
+      "role": "test_projection_oracle.py",
+      "bytes": 14085,
+      "sha256": "800e9849851842e0c5a5929f007eedbd62e1bb926d2d09ab3344191ecf05d52e"
+    },
+    {
+      "role": "ORACLE_NOTE_R1.md",
+      "bytes": 3576,
+      "sha256": "6e911b9615345760d0995be56a3fa4d80ef6e904d05c68b702f0371f2b7ed8a3"
+    },
+    {
+      "role": "HELPER_NOTE_R1.md",
+      "bytes": 1458,
+      "sha256": "5358f3ce8a94120a23dc97df298b7ece3e0b51b1e409a8d848b93ce325f51782"
+    },
+    {
+      "role": "CANARY_NOTE_R1.md",
+      "bytes": 4563,
+      "sha256": "cbe23d9831a17f875cf58e7374107e04246df4683d32824f90c335677b4a8f9b"
+    },
+    {
+      "role": "PROJECTION_CONTRACT_R1.md",
+      "bytes": 6916,
+      "sha256": "24f40e39a9d52704a51aefbdf05170c25056447009c4b25605e45ad9de04fd4f"
+    },
+    {
+      "role": "REFERENCE_R1.json",
+      "bytes": 12919,
+      "sha256": "bd0c6f081a6a9d11c47befe531debc87ddbccf02541542253b202a6debe491bc"
+    },
+    {
+      "role": "CANARY_WIRE_R1.json",
+      "bytes": 2951,
+      "sha256": "b5b20358c18806889b53c8394be627bd5078f0fd7c282e09e285f0f60a357b59"
+    },
+    {
+      "role": "root_projection_gates_r1.py",
+      "bytes": 14019,
+      "sha256": "da8120d8b0c9dc64f4eaa20a24c40632f4a02708da02c941b727aa6b579f5284"
+    },
+    {
+      "role": "root_reader_controls_r1.py",
+      "bytes": 6758,
+      "sha256": "23cc1249cde9275f04fa24b6b5e85a9b34b9229bd71151cf7526e83df2cde29a"
+    },
+    {
+      "role": "freeze_projection_sources_r1.py",
+      "bytes": 3923,
+      "sha256": "be9ee334881735bc36be6c3e57e09bb56a330fbebe5de6fd163d084dc19f61b7"
+    },
+    {
+      "role": "COMPONENT_SOURCE_FINDINGS_R1.md",
+      "bytes": 3532,
+      "sha256": "d9c79efd36d177c820eef2ee7ed295b087292a651da416534ea06dca6ca89a01"
+    },
+    {
+      "role": "ROOT_ORACLE_SOURCE_R1.json",
+      "bytes": 480,
+      "sha256": "f4edb3f19d39c7e59a6cfdc3f4c32d042fb3b55d75359f8307ef783511c060f5"
+    },
+    {
+      "role": "ROOT_SOURCE_REVIEW_R1.json",
+      "bytes": 1088,
+      "sha256": "d8bfecdf2c0d1019eb7fc90ca4a9ce33b62d37598aeff162f549ca08fc87646c"
+    }
+  ],
+  "actualProducerCalls": 0,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

@@ -371,6 +371,16 @@ partial Meter, explicitly discarded without inventing a successful close. This
 adds no production owner or API, and supplies no semantic child/full-D/genuine
 producer or normal-host authority. The stdout capture is test transport only.
 
+The [current result projections](task-evidence/Q100/current-result-projections-r1/README.md)
+add a native component owner for cohort and aggregate-cleanup wire maps. Cohort
+transfers the current derivation owner's detached lists under exclusive caller
+ownership; cleanup derives flags/digest relationships from stable views and
+copies the R7-owned scalar. They prepay5/55 units respectively, retain no owner
+objects, add no second ordering algorithm or cleanup counter, and do not grant
+semantic acceptance to false observations. Component/native/reader boundaries are
+qualified; actual cohort/metadata staging and insertion before the R7 ownership/
+accounting close remain separate. Normal assembly and genuine capture stay closed.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

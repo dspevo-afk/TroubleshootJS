@@ -1,0 +1,345 @@
+{
+  "status": "PASS_TWO_SYNTHETIC_REFERENCE_READERS_AND_EIGHT_ACTUAL_REJECTION_CONTROLS",
+  "sourceFreezeSha256": "dacf1c353dbb972457c612f0a9fde42529cc25ea377791a658bcc1b268844e4e",
+  "calls": [
+    {
+      "tag": "reference-positive",
+      "outcome": "PASS_SYNTHETIC_REFERENCE_READER",
+      "code": null,
+      "call": {
+        "phase": "projection-reader-reference-positive-r1",
+        "status": "PASS",
+        "childExitCode": 0,
+        "processElapsedMs": 359.916,
+        "wrapperTotalElapsedMs": 617.5711,
+        "terminationProven": true,
+        "ownedRootAndLogsAbsent": true,
+        "isolatedCleanupDurationMs": null,
+        "receipts": {
+          "request.json": "22e96e8d1b33aab919836986daea22285f9cfabdfbe74255b6a8a65584af7385",
+          "owner.json": "128c5242bc64c439d655f26d9d9a12a5318ec88fee3d6c266a790523ee6e1454",
+          "process.json": "40aef312f98ee8edc1d09eafc670b22a03b8545019a2080b4dea2c056161f443",
+          "parent.json": "97be53437f2e2eb984495b66f01748d8ba6b5b4b56960db3ce38ad0af4753441",
+          "result.json": "7ce0fc291db6eb93ee1e729ddf7b7c752ab4952f5f12b5ece86f8920e1299800",
+          "stdout.txt": "7a0c5a99119b243cc506e401e99784fdecf5e2cbbc3f2d65b4bc20162520a384",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "stdoutSha256": "7a0c5a99119b243cc506e401e99784fdecf5e2cbbc3f2d65b4bc20162520a384",
+      "summary": {
+        "status": "PASS_INDEPENDENT_RESULT_PROJECTIONS",
+        "mode": "SMOKE",
+        "names": [
+          "cohort_transfer",
+          "cleanup_true"
+        ],
+        "caseCount": 2,
+        "resultFacts": {
+          "payloadCases": 2,
+          "expectedErrorCases": 0,
+          "sourceSemanticRejectionCases": 0,
+          "units": 315,
+          "copiedEntries": 134,
+          "copyChunks": 64,
+          "groups": 2,
+          "allInputsUnchanged": true
+        }
+      }
+    },
+    {
+      "tag": "reference-suite",
+      "outcome": "PASS_SYNTHETIC_REFERENCE_READER",
+      "code": null,
+      "call": {
+        "phase": "projection-reader-reference-suite-r1",
+        "status": "PASS",
+        "childExitCode": 0,
+        "processElapsedMs": 373.9746,
+        "wrapperTotalElapsedMs": 615.4252,
+        "terminationProven": true,
+        "ownedRootAndLogsAbsent": true,
+        "isolatedCleanupDurationMs": null,
+        "receipts": {
+          "request.json": "182528cc67a6820ff5361d6f7c5526f34e4b0bf5b37f68022d7d375b274faca3",
+          "owner.json": "9a07a1e57ce8fc0ae9df92e1504c44726a7dcabded8d791dad11d35553152082",
+          "process.json": "9dde7abce69f2c439163e149a9307f8796409c9d5f00e982c56455ceaba022c4",
+          "parent.json": "8ae94b223d7ddf0d9bdd0951474e6016059f6d94ca0aae4531f52bba277546b4",
+          "result.json": "8dc91ebfd1ed0176cc355258cfc4eb93853a6230d672aeccef3fd528b16186d2",
+          "stdout.txt": "c54f5e8df5274a22b49b1a6596efad2d381bebda784c070b5920e17d6232d33c",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "stdoutSha256": "c54f5e8df5274a22b49b1a6596efad2d381bebda784c070b5920e17d6232d33c",
+      "summary": {
+        "status": "PASS_INDEPENDENT_RESULT_PROJECTIONS",
+        "mode": "SUITE",
+        "names": [
+          "cohort_requested_mismatch",
+          "cohort_duplicate_capture",
+          "cohort_missing_capture",
+          "cohort_incompatible_disposition",
+          "cleanup_null_alias_false",
+          "cleanup_observe_alias_false",
+          "cleanup_geometry_false",
+          "cleanup_effects_false",
+          "cleanup_capture_context_false",
+          "cleanup_null_context_false",
+          "cleanup_observe_context_false",
+          "cleanup_owner_false",
+          "cleanup_scalar_below_sum",
+          "argument_guards",
+          "group_guard_before_read"
+        ],
+        "caseCount": 15,
+        "resultFacts": {
+          "payloadCases": 9,
+          "expectedErrorCases": 6,
+          "sourceSemanticRejectionCases": 9,
+          "units": 1793,
+          "copiedEntries": 417,
+          "copyChunks": 156,
+          "groups": 649,
+          "allInputsUnchanged": true
+        }
+      }
+    },
+    {
+      "tag": "wrong-payload",
+      "outcome": "EXPECTED_READER_REJECTION",
+      "code": "SUMMARY_PAYLOAD",
+      "call": {
+        "phase": "projection-reader-wrong-payload-r1",
+        "status": "PASS_EXPECTED_REJECTION",
+        "childExitCode": 2,
+        "processElapsedMs": 375.4594,
+        "wrapperTotalElapsedMs": 634.8026,
+        "terminationProven": true,
+        "ownedRootAndLogsAbsent": true,
+        "isolatedCleanupDurationMs": null,
+        "receipts": {
+          "request.json": "f3dda2fc900d5f29acde90f79ad1e311b6f3b1a29c67d24a0d18e94b7ba044f2",
+          "owner.json": "d5ff66b7b6c8cc541b6faf956751c277634c4388b40c5dddd72e7b52f0077b08",
+          "process.json": "3e984bcc9234f5502a69e1e4b5801070bdfaf54172742794bcf0f0eea8bf12bb",
+          "parent.json": "46cbefa9ae7dac608854943497ad97839ed9466bc8f3a7f2798eecc79cbcd2cf",
+          "result.json": "a1e897571a66da15a3043eb5dd24a75ea1b0f0a0a375b09395f015e1124002a4",
+          "stdout.txt": "e0bf908c33407a418cca55988f27370d50042df8766fdc883597da5e7fe582e9",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "stdoutSha256": "e0bf908c33407a418cca55988f27370d50042df8766fdc883597da5e7fe582e9",
+      "summary": {
+        "status": "REJECTED",
+        "code": "SUMMARY_PAYLOAD"
+      }
+    },
+    {
+      "tag": "wrong-counter",
+      "outcome": "EXPECTED_READER_REJECTION",
+      "code": "SUMMARY_COUNTER",
+      "call": {
+        "phase": "projection-reader-wrong-counter-r1",
+        "status": "PASS_EXPECTED_REJECTION",
+        "childExitCode": 2,
+        "processElapsedMs": 370.2502,
+        "wrapperTotalElapsedMs": 621.6501000000001,
+        "terminationProven": true,
+        "ownedRootAndLogsAbsent": true,
+        "isolatedCleanupDurationMs": null,
+        "receipts": {
+          "request.json": "f6fe41d876981943b2fca61f8583a9d5dd24a6cfd1c9ec653f62420d9bdab954",
+          "owner.json": "e014615e0fed92c98400ef2283fca19843f9e4dd421072623c7b8e984d588c0f",
+          "process.json": "88a8aa930fbb8aa267fb23733dfd62ffe17617825635277a07425ccd2755ef40",
+          "parent.json": "d0166c317d0d90432cb2416d4d21e850c23be7730101476b456bc8f570d85234",
+          "result.json": "e93a5afebae5d0d677441b9be11cb5940e98fbbdd1b35483179d2e7a2ddb0e46",
+          "stdout.txt": "73d310802ebffa0125713fdf047ecc5c28c00542e047fb76a42f7c1683a9969d",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "stdoutSha256": "73d310802ebffa0125713fdf047ecc5c28c00542e047fb76a42f7c1683a9969d",
+      "summary": {
+        "status": "REJECTED",
+        "code": "SUMMARY_COUNTER"
+      }
+    },
+    {
+      "tag": "wrong-parent",
+      "outcome": "EXPECTED_READER_REJECTION",
+      "code": "SUMMARY_COUNTER",
+      "call": {
+        "phase": "projection-reader-wrong-parent-r1",
+        "status": "PASS_EXPECTED_REJECTION",
+        "childExitCode": 2,
+        "processElapsedMs": 353.39500000000004,
+        "wrapperTotalElapsedMs": 594.6952,
+        "terminationProven": true,
+        "ownedRootAndLogsAbsent": true,
+        "isolatedCleanupDurationMs": null,
+        "receipts": {
+          "request.json": "df31be48d0ff8d1f3a50ed007c0ebd5f52c9a4860f876ce1c0cce2a870057b32",
+          "owner.json": "c0b3da302031e52494de5432b27dc4e6c3b6bc400047bddbe440c93bce4121b3",
+          "process.json": "c98fc1092bcaf81028ada3d5e6cbbac8a0fde407d7ccd1831e9e5f4464aec9b7",
+          "parent.json": "8512d1073f8fbdd00f32f140daef569eecec09dabeef4e41fc36c1ab0eb12e4d",
+          "result.json": "2e5ba4fc9738a2a67aaf35f53d8729ac8c93e05a974a6e462952a72958e37bf5",
+          "stdout.txt": "73d310802ebffa0125713fdf047ecc5c28c00542e047fb76a42f7c1683a9969d",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "stdoutSha256": "73d310802ebffa0125713fdf047ecc5c28c00542e047fb76a42f7c1683a9969d",
+      "summary": {
+        "status": "REJECTED",
+        "code": "SUMMARY_COUNTER"
+      }
+    },
+    {
+      "tag": "wrong-clock",
+      "outcome": "EXPECTED_READER_REJECTION",
+      "code": "SUMMARY_CLOCK",
+      "call": {
+        "phase": "projection-reader-wrong-clock-r1",
+        "status": "PASS_EXPECTED_REJECTION",
+        "childExitCode": 2,
+        "processElapsedMs": 452.1155,
+        "wrapperTotalElapsedMs": 689.1088000000001,
+        "terminationProven": true,
+        "ownedRootAndLogsAbsent": true,
+        "isolatedCleanupDurationMs": null,
+        "receipts": {
+          "request.json": "a55bfd7bceacc91758eadfcfad477dad9ac1b9e24474cf49650d1509dc7913b6",
+          "owner.json": "481924e25ddc0ca0cd724b648fa2f2db5f528790bec7ea0641f6d3b8e9ce5638",
+          "process.json": "fe57549527226b302240897583223f8953874eda1e0d994d0bf496db1fae5be6",
+          "parent.json": "764c07e9858ecfb6b2bf2d5457770e57d5bde9664f289cf9a55b49894e1f95ea",
+          "result.json": "3a6acdb548a2b59feaf33ab6d9e4b53806f8b008f395c341caeebc5586e1d296",
+          "stdout.txt": "5c5f81023e4478dc9f7d4095e93aacfd519ee30fdfc2694e0e9e6670f854efee",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "stdoutSha256": "5c5f81023e4478dc9f7d4095e93aacfd519ee30fdfc2694e0e9e6670f854efee",
+      "summary": {
+        "status": "REJECTED",
+        "code": "SUMMARY_CLOCK"
+      }
+    },
+    {
+      "tag": "duplicate-json",
+      "outcome": "EXPECTED_READER_REJECTION",
+      "code": "INPUT_JSON",
+      "call": {
+        "phase": "projection-reader-duplicate-json-r1",
+        "status": "PASS_EXPECTED_REJECTION",
+        "childExitCode": 2,
+        "processElapsedMs": 346.4318,
+        "wrapperTotalElapsedMs": 576.5554000000001,
+        "terminationProven": true,
+        "ownedRootAndLogsAbsent": true,
+        "isolatedCleanupDurationMs": null,
+        "receipts": {
+          "request.json": "42c11855161e11508677f815e5538e3b95831257158b50730560dbc8975fe9b9",
+          "owner.json": "9a413a2b0e8bf2a46a6ac383b4bb535b023582f41984533910d5bba9fd3667f6",
+          "process.json": "de5d8ae8692b3d6b7a18314ee8b176062d41db5accf485c45444d0250306e1e2",
+          "parent.json": "5dbf904a225463561d37350f4d7dda2e72fac0bcb07dd9409ff72eeec58e4406",
+          "result.json": "39af1144bacb45eeddc5277c5fc92ae560ba4b094e4a8731408fa8ee32d690ed",
+          "stdout.txt": "fb078552fd1580e0248ce7e644648a2d7aa6c8cb1fd172aa4ac577985168b5d3",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "stdoutSha256": "fb078552fd1580e0248ce7e644648a2d7aa6c8cb1fd172aa4ac577985168b5d3",
+      "summary": {
+        "status": "REJECTED",
+        "code": "INPUT_JSON"
+      }
+    },
+    {
+      "tag": "oversized",
+      "outcome": "EXPECTED_READER_REJECTION",
+      "code": "INPUT_SIZE",
+      "call": {
+        "phase": "projection-reader-oversized-r1",
+        "status": "PASS_EXPECTED_REJECTION",
+        "childExitCode": 2,
+        "processElapsedMs": 349.75730000000004,
+        "wrapperTotalElapsedMs": 581.6344,
+        "terminationProven": true,
+        "ownedRootAndLogsAbsent": true,
+        "isolatedCleanupDurationMs": null,
+        "receipts": {
+          "request.json": "a436f76ebdd33512d135aad4d764658e328d44e572f896c621f898a6b159ef76",
+          "owner.json": "37b9e4b6ddece095b2b1b2e1a8c3b9642873f1b952aa2513ce704c8eedfd0f35",
+          "process.json": "6c886e55e9aee63a72716b7dd34ab8ed735726641fd69662d6c58feff68ac3b9",
+          "parent.json": "72db09ad5f1dd0bc50318b61b888775211bdb1825c623cf09bae3bb4980d23c5",
+          "result.json": "e6ecfb3364a2856c106019f07ed3ad69651fca90d426a879033c4fe1992d89f9",
+          "stdout.txt": "8014e8fad6df20b7621acd86affdd2940d9171b8ced731efb21d5312f1d86b35",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "stdoutSha256": "8014e8fad6df20b7621acd86affdd2940d9171b8ced731efb21d5312f1d86b35",
+      "summary": {
+        "status": "REJECTED",
+        "code": "INPUT_SIZE"
+      }
+    },
+    {
+      "tag": "changed-source",
+      "outcome": "EXPECTED_READER_REJECTION",
+      "code": "SOURCE_PIN",
+      "call": {
+        "phase": "projection-reader-changed-source-r1",
+        "status": "PASS_EXPECTED_REJECTION",
+        "childExitCode": 2,
+        "processElapsedMs": 347.4411,
+        "wrapperTotalElapsedMs": 585.2985,
+        "terminationProven": true,
+        "ownedRootAndLogsAbsent": true,
+        "isolatedCleanupDurationMs": null,
+        "receipts": {
+          "request.json": "27df5f3a9ef6219ceccd6239cdf7d22aec3b7378c4393c6a5e66777cb26333fa",
+          "owner.json": "0786d1ea1a948bbfebfec1630af860f6fd08c334ba3dd29816bc0931a29e3b47",
+          "process.json": "38a151d2e78dbba049aa960c628c4b4fa082f2dbcbeec257029c6cc371a1df7c",
+          "parent.json": "3d75d3d636ebc46a149683c3db2b58538c4ddc0e477c6953df55f66088387111",
+          "result.json": "787133cec8dc0b70f5268a3e033a977de03b83ab72c08a8e96fe7caa1656d0a9",
+          "stdout.txt": "adfdfdbf950a8d0b884ab81def67241173fcf20a8c59a8cf2dc5c0b82e5f106a",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "stdoutSha256": "adfdfdbf950a8d0b884ab81def67241173fcf20a8c59a8cf2dc5c0b82e5f106a",
+      "summary": {
+        "status": "REJECTED",
+        "code": "SOURCE_PIN"
+      }
+    },
+    {
+      "tag": "existing-junction",
+      "outcome": "EXPECTED_READER_REJECTION",
+      "code": "INPUT_PATH",
+      "call": {
+        "phase": "projection-reader-existing-junction-r1",
+        "status": "PASS_EXPECTED_REJECTION",
+        "childExitCode": 2,
+        "processElapsedMs": 340.64300000000003,
+        "wrapperTotalElapsedMs": 570.1896,
+        "terminationProven": true,
+        "ownedRootAndLogsAbsent": true,
+        "isolatedCleanupDurationMs": null,
+        "receipts": {
+          "request.json": "1878b56fe9ed29684dc8f716ff66aa7b0231b0587575afaf60c16b344c49cda1",
+          "owner.json": "e3c2e682e711d1879450241cba34d9e47d829d01b88b6cce0ddb6fb4fd248f81",
+          "process.json": "6c442a9f50585d5b9950c23e7e5444e5bd23d7fc05c4bc6a067889783dff7ee6",
+          "parent.json": "3485a4dcabf135fbff42fef73dab896bb6742e71c475fae035a1ec330434dea0",
+          "result.json": "99a57db43c87335f33f67dfb0f714216576ed2db1692aa0be3576cb51c9a8168",
+          "stdout.txt": "2f58d94a1226248bf3d648e0c7a39c43e46eb0907bcc26df86ef0d014f7b7f48",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "stdoutSha256": "2f58d94a1226248bf3d648e0c7a39c43e46eb0907bcc26df86ef0d014f7b7f48",
+      "summary": {
+        "status": "REJECTED",
+        "code": "INPUT_PATH"
+      }
+    }
+  ],
+  "nativeObservedSummariesUsed": false,
+  "fixtureClockValuesAreNativeMeasurements": false,
+  "junctionCreatedOrDeleted": false,
+  "junctionProof": "SOURCE_ORDER_PLUS_SELECTED_EXISTING_ALIAS_PATH; NO_INDEPENDENT_OS_BYTE_TRACE",
+  "actualProducerCalls": 0,
+  "genuineEnvelope": "UNSPENT_GATED"
+}
