@@ -297,6 +297,14 @@ canonical rows. Canonical four-field context rows remain unchanged. Strict
 types, denial/cleanup metadata and receipt/count/cohort joins precede context
 construction; component checks alone do not accept a complete prior.
 
+The [qualified normal-prior DATA boundary](task-evidence/Q100/actual-normal-prior-input-r1/README.md)
+authenticates fixed20 inputs under external pre-read authority and materializes
+canonical context, projection and current Java factory DATA. Final rereads and
+exact closure make the completed CLI receipt authoritative; persisted evidence
+remains pending at its earlier write point. The JDK8 DATA factory checks the four
+current methods, projection bytes, seed strings and fresh containers. It constructs
+no graph or Session and establishes neither native Meter charges nor full-D/H1.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

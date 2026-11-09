@@ -1260,6 +1260,17 @@ playable100=0/betaHELD remain. Implementation `a9e42f8be1daca170c5c2ca646d2ffabf
 to origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
 `1a1beddd3e162f00` sent once.
 
+The [actual fixed20 normal-prior input](task-evidence/Q100/actual-normal-prior-input-r1/README.md)
+is locally accepted after the three preserved adapter failures. Fresh source/root
+authority and an exclusive pre-read journal bind the actual20-role qualifier.
+Completed CLI final rereads/exact five-file closure pass; canonical context,
+projection and current Java DATA are materialized. Actual JDK8 three-class DATA
+factory positive/wrong-context negative pass,271entries/4000assertions; no native
+Meter charge, graph/Session/original/routing proof is inferred. Genuine envelope
+unspent/gated. Next current host/native source assembly and its independent
+process/charge/export gates. FullD/H1unqualified/playable100=0/betaHELD, all caps
+and Full30/HARD/protected-data exclusions remain. Publication pending.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

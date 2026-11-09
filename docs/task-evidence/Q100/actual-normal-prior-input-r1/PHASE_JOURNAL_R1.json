@@ -1,0 +1,18 @@
+{
+  "bodyReadsByThisScript": 0,
+  "createdUtc": "2026-11-09T05:55:13Z",
+  "currentHead": "38ca72352add5394816f8c467cb384534c66889c",
+  "full30": "EXCLUDED",
+  "genuineEnvelope": "UNSPENT_GATED",
+  "journalSha256": "dfbc35f0fee674e634971323486b6ed8e29b0bedc6a376c71a3f0d66320a1ec1",
+  "nativeCalls": 0,
+  "normalRolesPreviouslyReadUnderFirstJournal": true,
+  "oldDDescriptorResultGeneratedInput": "DENIED",
+  "oldFailureRoot": "PRESERVED",
+  "previousActualQualificationAttempts": 3,
+  "protectedHeldout": "DENIED",
+  "publishedImplementation": "a9e42f8be1daca170c5c2ca646d2ffabf0cd7b07",
+  "sourceRootRecheck": "PASS",
+  "status": "FRESH_OBSERVATION_FIXED20_JOURNAL_RECORDED_BEFORE_THIS_ATTEMPT",
+  "thisAttemptRoleReadsBeforeJournal": 0
+}

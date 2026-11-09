@@ -1,4 +1,76 @@
-# Current checkpoint: observation correction published; fresh prior qualifier next
+# Current checkpoint: actual normal-prior and DATA factory accepted; publication next
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD38ca72352add5394816f8c467cb384534c66889c,
+normal targetorigin/codex/q100-physical-feasibility, noupstream. Actualprior/factory
+milestone locallyaccepted NOTcommitted/pushed/emailed. Intended newJava canary,
+actual-normal-prior-input-r1 packet and3docs only. Main5f05b005 preserves9tracked/
+6untracked; E d9747229 reportM; Desktop e0c36885 preserves7tracked/89untracked files.
+Prior Gmail1a1beb3670d80f14/1a1bec5ca08bf005/1a1beddd3e162f00 SENT_ONCE.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+ACTUAL_PRIOR_OBSERVATION_GATES_R1.json PASS actualfixed20; Source norm9112/caller
+C567 accepted/publisheda9e42f8b. R5 config6971330d/SOURCE5b68c809/roots005c4ef2,
+journaldfbc35f0 at05:55:13Z BEFOREthisread, exactpaths in
+FRESH_OBSERVATION_PHASE_RECEIPT_PRIVATE_R1.json. CLIexit0, all20auth/independent
+host/metadata/P07/PAD/work/marker/observation/context and finalSOURCE/tool/control/
+resource/role rereads/exact5closure PASS. Operation1214.5002/wrapper1463.1596ms.
+Persistedevidencependingatwrite retained; completedCLIreceipt finalauthority.
+
+Qualified currentcontext67734/SHA4fbdc821ac262bd1a450fe81fea0b2a7629cd37cc1328828d589183dd1b7f5dd;
+projection4307/SHA203b5eced70e934d5aaeec35f601ff427e957a095c742af59398eabc22431b5a;
+JavaDATA21116/SHAaa99fc9f13bf1d088fc9021ca07ae237805471f02829c18ade7563bef50380ca.
+Qualifiedoutputfivefiles remainprivate/sealed forassembly; all3earlierfailed
+outputs/configs/manifests/journals/rawreceipts preserved, not reclassified.
+
+ACTUAL_PRIOR_FACTORY_GATES_R1.json PASS actualDATAfactory only.3freshJDK8classes/
+major51, fourcurrentstaticAPI methods, independentprojectionbytes/freshmaps/no
+aliases/exactsignedseeds/literalescaping;271logicalentries/4000assertions (NOT
+nativeMeterwork/charge). Compile1032.8909/1276.0374ms, positive398.6399/654.3596ms,
+wrongcontextnegative333.3799/569.3918ms. Rootactual-prior-data-factory-r1 source/
+classes retained withOWNER; no inheritedclasses. Javafactoryprocesses2, producer/
+Session/original/routing0. NewpublicJavaCanary5d773db6 exactcompiledbytes.
+Combinedproof9c710742f77b3a827098fee80c067dc40ad39416ab865dd22229237be6512456.
+Source/DATA/classpinsreaudited; returnedchildrenterminate/ownedroots+logsabsent;
+cleanupdurationnull. Rootintegratedreview; actualprioracceptance isfiniteinput/
+factory only. No productionGWT/Playerchange; electrical/population NOTRENEWED.
+
+Next intendeddiff/stage/normalcommit/push/exactremoteverify/oneGmail; then current
+host/nativeSOURCEassembly. full_d_contract_checker_x1 doingboundedSOURCE-only
+inventory ofnextsubstep, noDATA/exec/edit. Genuine original+exactly NULL/OBSERVE
+UNSPENT/GATED; no newroutingcanary. FullD/H1unqualified/playable100=0/betaHELD.
+Normal20 READ underjournals; oldDdescriptor/result/generatedinputDATA/oldbuilders/
+CLIs/manifestfollowing/protectedheldout denied. Full30EXCLUDED/HARD-PSYCHOTIC
+unavailable-unrun/historicalprotected unreadUNCERTIFIED. Allcaps/seeds/epochs/
+oracles/CircuitJS truthunchanged. Preserve allunrelatedwork/failures/history/
+uncertainresources; no newpersistentprocess/link. Standingroadmapcontinues.
+
+# Historical checkpoint: observation-source journal durable; deliberate qualifier next
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD38ca72352add5394816f8c467cb384534c66889c,
+normallypushed/exactremoteverified. Observationa9e42f8b/Gmail1a1beddd3e162f00 sentonce;
+marker/console emails remain sentonce. F cleanbeforejournal, reportWIPnow; otherwork
+andfailures preserved. AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+FreshR5configSHA6971330dabc93d4e20a9fe927345c6367c941b8ee464c7f788853a8a9d261a7a,
+SOURCEmanifestSHA5b68c80980c825b0d876fdb4e23ab4cb1a9b5d2a5167d47d06bbef84ebef8a96,
+rootsSHA005c4ef205fb86752b82831c924fdb923c31fd91da94a627bdd134bf09f9a74b;
+exclusivejournalSHAdfbc35f0fee674e634971323486b6ed8e29b0bedc6a376c71a3f0d66320a1ec1,
+created2026-11-09T05:55:13Z BEFORE THISattempt role reads. Newobservation-r1 output
+empty; exactpaths FRESH_OBSERVATION_PHASE_RECEIPT_PRIVATE_R1.json. SOURCE/root
+preflight528.9275/wrapper774.1016ms and readonlyrecheckPASS; journalwriterbody0.
+CallerC567/norm9112, normproof7bb3/callerproof87a9 validated/published. Private89/
+public89, actual17-role15negative component, optimizednegative, caller19/closed25
+PASS. CompletepriorFAIL from3earlierattempts; no context/Java/currentfullattempt.
+Next ONE deliberatefixed20 qualifier withfrozenR5 authority underselectedRootCall
+180s/wrapper480s. Noautomaticretry/failedrootreuse. All3failedoutputs/configs/
+manifests/journals/receipts preserved; normal20previouslyREAD underjournals.
+Nativeproducer/session0, genuine original+exactly NULL/OBSERVE UNSPENT/GATED.
+OldDdescriptor/result/generatedinputDATA/oldbuilders/CLIs/manifestfollowing/
+protectedheldout denied. Full30EXCLUDED/HARD-PSYCHOTIC unavailable-unrun/historical
+protected unreadUNCERTIFIED/fullD-H1unqualified/playable100=0/betaHELD. Caps/seeds/
+epochs/oracles/CircuitJS unchanged. GWT/PlayerN/A; electrical/population NOTRENEWED.
+No newpersistentprocess/link; preserve uncertainresources/unrelatedwork. Continue.
+
+# Historical checkpoint: observation correction published; fresh prior qualifier next
 
 UTC2026-11-09. F codex/q100-terminal-only-20261107 implementationa9e42f8be1daca170c5c2ca646d2ffabf0cd7b07, normal
 push/exactremoteverified origin/codex/q100-physical-feasibility; noupstream.

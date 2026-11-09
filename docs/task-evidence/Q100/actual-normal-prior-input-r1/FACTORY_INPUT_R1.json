@@ -1,0 +1,41 @@
+{
+  "codec": {
+    "bytes": 21653,
+    "role": "CODEC",
+    "sha256": "c1f27377d5d7a6c83384e34cc2ded334b0b022cfb68722265533976c0661ba27"
+  },
+  "contextSha256": "4fbdc821ac262bd1a450fe81fea0b2a7629cd37cc1328828d589183dd1b7f5dd",
+  "dataOrigin": "ACTUAL_FIXED20_NORMAL_PRIOR",
+  "expectedEntries": 271,
+  "generatedJavaSha256": "aa99fc9f13bf1d088fc9021ca07ae237805471f02829c18ade7563bef50380ca",
+  "nativeProducerCalls": 0,
+  "originalCaptures": 0,
+  "predecessorCanary": {
+    "bytes": 6521,
+    "role": "RETAINED_SYNTHETIC_CANARY_SOURCE",
+    "sha256": "540bd44fe2c80c2a5dca559d1971007d4d26cc41ba112360283f30ddc46e2d76"
+  },
+  "priorGateSha256": "d93cac458dba5d7de74c63d3ceecd397f33e8bf1b9a9f8a1af1774a964502e49",
+  "projectionSha256": "203b5eced70e934d5aaeec35f601ff427e957a095c742af59398eabc22431b5a",
+  "routingRuns": 0,
+  "scope": "QUALIFIED_CURRENT_DATA_FACTORY_ONLY_NO_ROUTING",
+  "sessions": 0,
+  "sourceListSha256": "734547b9288b7cb90cec2342d479b52aa688003321058e7907c110960567f740",
+  "sources": [
+    {
+      "bytes": 21116,
+      "role": "CohortTerminalTelemetryInputV2.java",
+      "sha256": "aa99fc9f13bf1d088fc9021ca07ae237805471f02829c18ade7563bef50380ca"
+    },
+    {
+      "bytes": 6524,
+      "role": "QualifiedPriorInputCanary.java",
+      "sha256": "5d773db638520bd9c385359a43040808094c04db937c0b8609cf263964785ca5"
+    },
+    {
+      "bytes": 635,
+      "role": "LiteralInputCanary.java",
+      "sha256": "68ae556cd7329c515571e73fdc9af101040442da889e0626c8c09c6c45783e7d"
+    }
+  ]
+}

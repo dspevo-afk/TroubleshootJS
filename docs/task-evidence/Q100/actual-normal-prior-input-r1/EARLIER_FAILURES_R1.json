@@ -1,0 +1,164 @@
+{
+  "framing": {
+    "actualNormalBodyPhase": "OPENED_AND_READ_AFTER_DURABLE_JOURNAL",
+    "actualOutputRootDisposition": "PRESERVED_NONEMPTY_WITH_ATTEMPT_AND_FAILURE",
+    "actualPriorAcceptance": "FAIL",
+    "all20ReaderAuthentication": "PASSED_BEFORE_NORMALIZER_CALL_BY_PUBLISHED_CALLER_CONTROL_FLOW",
+    "call": {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "actual-normal-prior-qualify-r1",
+      "processElapsedMs": 724.3113000000001,
+      "receipts": {
+        "owner.json": "417646411cb0e7ac943656d8fe8bbbdd30d91b623eef211b7c84c4205dcca703",
+        "parent.json": "4e67e00e5e024961a322fde9308adef580736e755ea35c6b1881cad11e8552a3",
+        "process.json": "96e4fabc75cb970c4ba7433cfb0d0603850bd7bb22523838a7ec1d5c361608cc",
+        "request.json": "e2bc8e9318427974911c009b6ce9466b57d5df81170f21e0938634e664bf6822",
+        "result.json": "c8ef48bc7285f5e145177d520b375aabe70a11dd7c07cfbe2a151da92f120590",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "24425e85e209092642b12e0bbc32cfd7695f5418c24dffbe992ea2c914a7ce3b"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 973.7947
+    },
+    "code": "NORMALIZER_QUALIFICATION_STDOUT_FRAMING",
+    "failure": {
+      "allowlistSha256": "c487eae6ed0e070aaad75dccd14d23313ed9da2c6bda7f93bfeb886109f20f91",
+      "code": "NORMALIZER_QUALIFICATION_STDOUT_FRAMING",
+      "configSha256": "c8e937946f93f62801450eb989e73016d26736d53e1d2487cb8d8843f0add6eb",
+      "nativeCalls": "NOT_RUN",
+      "phase": "normalization",
+      "phaseJournalSha256": "da979300de4db6e6ace152f2b3837bb3bc02527eb007781c15c0046c638c501f",
+      "roleReadStarted": true,
+      "rootsSha256": "6048aee06aced2b169c87e02572b39c731165aa30f4e1de3f9e9ca008ffc02af",
+      "schema": "tsj-q100-normal-prior-qualification-evidence-v1",
+      "sourceManifestSha256": "e5ea5ac6bd85ffdb0be078895e87b1da4d3d9488469029d8971751ec4846e80d",
+      "status": "FAIL"
+    },
+    "files": [
+      {
+        "bytes": 552,
+        "role": "read-attempt.json",
+        "sha256": "648494c6a1508997927e2b6daba8cc0e76063b997f9e001c8504af828e48b67a"
+      },
+      {
+        "bytes": 623,
+        "role": "failure-evidence.json",
+        "sha256": "e6c089d434406cc3df0579584fdd37e15beebe8d882bac319151f77febcc1023"
+      }
+    ],
+    "generatedContextAndJava": "NOT_PRODUCED",
+    "genuineEnvelope": "UNSPENT_GATED",
+    "isolatedCleanupDurationMs": null,
+    "nativeProducerCalls": 0,
+    "nextAction": "DIAGNOSE_PINNED_QUALIFICATION_STDOUT_FRAMING; NO_AUTOMATIC_RERUN",
+    "phase": "normalization",
+    "resourceObserverReached": true,
+    "status": "FAIL_FIRST_ACTUAL_NORMAL_PRIOR_QUALIFICATION"
+  },
+  "marker": {
+    "call": {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "actual-normal-prior-qualify-crlf-r1",
+      "processElapsedMs": 819.8043,
+      "receipts": {
+        "owner.json": "a9b0e3b5d69ac3d2576f1707b9c0d9388fb1f31ca99d27e2f5f273a372912dfa",
+        "parent.json": "09122dc27e19bf07763a0bd6775fbc9afdb14dad653b54fc04d39440d0d95387",
+        "process.json": "c807ed91254370270c9963692661df7d25cb01f5e42781f8f7c207ef8a95d028",
+        "request.json": "5363f8cf972d3e630af0a3e4c4732550e2170869527a7fde11d9a899a29745d5",
+        "result.json": "c0156e24a55ceb199b00b45d22bb2ea0fed77119b4075754368091eb77db8f6d",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "5671fdfddc35eda1b40cd0ad03231994b8fd7b58165d897c665bbdeadd6ae9ed"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1060.0782000000002
+    },
+    "currentFailureRoot": "PRESERVED_NO_AUTOMATIC_RERUN",
+    "failure": {
+      "allowlistSha256": "c487eae6ed0e070aaad75dccd14d23313ed9da2c6bda7f93bfeb886109f20f91",
+      "code": "NORMALIZER_NATIVE_MARKER_KEYS",
+      "configSha256": "dcaf9d2f76730fe9c8546e2521e0a31b220f82a4453e066dfd282eb489f2b216",
+      "nativeCalls": "NOT_RUN",
+      "phase": "normalization",
+      "phaseJournalSha256": "0acf08e12fcaa8ad5ae6136ed54f696dd39ac97835f7456ddcefdd63e45070d2",
+      "roleReadStarted": true,
+      "rootsSha256": "29a72a292a53537ef40d4c3de4dd4083d3c098ec8fe2115fcc3167ec681885c6",
+      "schema": "tsj-q100-normal-prior-qualification-evidence-v1",
+      "sourceManifestSha256": "d91ad3fb10c9192c3ada615077918e380a2fbb0da302d56fbbd435c72f1cf89e",
+      "status": "FAIL"
+    },
+    "genuineEnvelope": "UNSPENT_GATED",
+    "nativeCalls": 0,
+    "preservedOutputFiles": [
+      {
+        "bytes": 613,
+        "role": "failure-evidence.json",
+        "sha256": "42afacd3d7bb3ffdeb329427f0d632549d446e0ab5b23062fbd84d21f2eccf0a"
+      },
+      {
+        "bytes": 552,
+        "role": "read-attempt.json",
+        "sha256": "243397f783532562828c1c9b4788bbf7549aabe74ae5a5fcbe148726b35d226b"
+      }
+    ],
+    "priorFirstFailure": "PRESERVED",
+    "status": "FAIL_ACTUAL_FIXED20_NORMAL_PRIOR"
+  },
+  "observation": {
+    "call": {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "actual-normal-prior-qualify-marker-r1",
+      "processElapsedMs": 674.0759,
+      "receipts": {
+        "owner.json": "865c15425ba2e847e7c84b77b3f37e0f7458f52bcecb417248672d4e435f0548",
+        "parent.json": "e5310a157e0a3e173573ed1b42432df82501d680d5e6ea71d70f218ba309c76b",
+        "process.json": "de5c3881e2406a3ea26708e6ff6b414482183d7612a44e7030ee99eb49b2b067",
+        "request.json": "7c671cc0e5a7a96f45dd0f9d90ff67fe6f9c40d7f7b16e8bb8469a78400e3ad1",
+        "result.json": "01d96cc0129eb5a035f0612eca57c62dd1ddefb79a337b2e8a6beb8994b2d7b8",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "0aad3984045c1778233db753ba67d28792cfffa967b1749a95779fb1a7d32d6a"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 911.2133
+    },
+    "currentFailureRoot": "PRESERVED_NO_AUTOMATIC_RERUN",
+    "failure": {
+      "allowlistSha256": "c487eae6ed0e070aaad75dccd14d23313ed9da2c6bda7f93bfeb886109f20f91",
+      "code": "NORMALIZER_JSON_NONFINITE",
+      "configSha256": "9e7effc47a7db6e23e4a81dbf49186df2262f8a662511521c787acdd93365ecc",
+      "nativeCalls": "NOT_RUN",
+      "phase": "normalization",
+      "phaseJournalSha256": "ff991c969eae6f8608853e01a4e966b843a9dcc03b49e620b318fc2d56a5f1d2",
+      "roleReadStarted": true,
+      "rootsSha256": "bb68a71ec2e6120393ac7d4b589a3a9604f0809419b4121a0e5e1a3c58c3381b",
+      "schema": "tsj-q100-normal-prior-qualification-evidence-v1",
+      "sourceManifestSha256": "06f1b5aa15b3037b3206c5b7a58974f49240e1b695f80974878d1430abafc040",
+      "status": "FAIL"
+    },
+    "genuineEnvelope": "UNSPENT_GATED",
+    "nativeCalls": 0,
+    "preservedOutputFiles": [
+      {
+        "bytes": 609,
+        "role": "failure-evidence.json",
+        "sha256": "22cbd7c2fbfa8a7472a5eabbdbcb3b0d9d057918c07d1c9032f00a30a639e39b"
+      },
+      {
+        "bytes": 552,
+        "role": "read-attempt.json",
+        "sha256": "48b824ee5feff5045cd195a489086ad4206a6a749554759cf5aa26c78e423e2d"
+      }
+    ],
+    "priorFirstFailure": "PRESERVED",
+    "status": "FAIL_ACTUAL_FIXED20_NORMAL_PRIOR"
+  },
+  "status": "THREE_EARLIER_ACTUAL_FAILURES_PRESERVED_NOT_RECLASSIFIED"
+}
