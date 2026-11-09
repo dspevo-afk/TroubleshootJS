@@ -1450,7 +1450,10 @@ are proven separately. Generic children and synthetic prior credit grant no
 semantic/full-D/original/normal-host authority. Next is semantic current-result
 child construction, then full-D/normal assembly/actual host/lifecycle gates.
 All caps/seeds/epochs/oracles remain; genuine original,NULL,OBSERVE unspent/gated,
-playable100=0/beta held and protected data exclusions unchanged. Publication pending.
+playable100=0/beta held and protected data exclusions unchanged. Implementation
+`e1e265024003ace6e81aa27bb2433cf507afcbad` normally pushed to
+origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
+Gmail1a1c1f0835d2a6cb sent once. This receipt sends no second email.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
