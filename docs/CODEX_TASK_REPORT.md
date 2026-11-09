@@ -1,4 +1,124 @@
-# Current checkpoint: root constructor published
+# Current checkpoint: synthetic metadata/R7 composition accepted
+
+UTC 2026-11-09. F codex/q100-terminal-only-20261107 HEAD
+`a221342de31a9e32c450d3430ef2f1061886f99b`, no upstream. Prior constructor
+implementation5ab70e8e and receipta221342d normally pushed/exact remote verified
+on origin/codex/q100-physical-feasibility; Gmail1a1c183b69b70eef SENT_ONCE.
+Never duplicate prior completion mail. New test-only composition LOCALLY ACCEPTED;
+commit/push/email pending final staged review. Initial staged diff check failed only
+for an extra blank EOF in the public driver note; doc-only trim, original raw
+retained, no compiled/runtime Source change. Root staged audit also rejected an
+unchanged HTTP URL as a drive path; raw failed script retained, token-boundary/
+added-line scan correction. Proof
+`f7424d5b053714493a6f96ea42613fef071b0d3c212a4ba289ce693b901435c9`
+in native-composed-metadata-r1. No helper, production, budget, epoch or oracle change.
+
+C=OS-temp/tsj-q100-composed-metadata-b94360bc855d48338c1998e138bbd0d6.
+SourceR1 79A8F90B/13 and R2 CD237219/7; contract509C1B72/censusE1DC853E.
+Final canary628B2FF8/35461B, build1A1305CF/24634B, runnerB228378C/43758B.
+Actual CurrentV2InputSetup -> codec constructor -> metadata/ticket -> detached R7
+close -> 34-slot finalizer -> prepaid ticket final verification uses SAME real
+Meter/SetupResult/root/snapshot. Four child maps are intentionally generic/empty;
+synthetic prior credit only, no OriginalArm/ArmResult/graph, producer/Session/route.
+No current export/full-D/original authority/normal assembly/host/lifecycle proof.
+
+Independent pre-code M9/L2/Em72/El62, key1101/value1435 chars; guard1099,
+account17136, R7 total18419. U=28712+10P+6B, C=618+2P, chunks23, wrappergroups2
++syntheticprior1. Actual P11: sizes1/4096/4097 give U28828/28828/28834, C640.
+Actual setup10007/478/3/1 attributed once; four caller reads charged4. All34
+finalized work equations and real group census/maxima pass. Synthetic cutoff1ms
+is not measured producer elapsed. Oracle/assertion observations are test harness
+work; actual deadlines/clocks remain. Later finalizer/ticket add no Meter debit.
+
+Final gates PASS, operation/wrapper ms: pure fixture434.6148/679.5506;
+fresh actual JDK8 target7 5503.7664/5752.509,863Sources/2485classes/11954850B/allmajor51;
+SMOKE3 first550.594/789.289; SUITE16 638.6381/892.9619. Three actual main controls
+exit1 EXPECTED REJECTION (not producer PASS): invalid mode422.5894/656.149,
+nonempty root342.2501/574.6425 (marker preserved), extra arg331.4196/568.2284.
+Protocol owned marker/root then removed. Native alias/order/start/prior/authority/
+content/reuse/copy/group/snapshot/split-group controls pass. Public Source bytes
+match compiled/tested bytes; final consumed Source/tool/JAR/class/actual argv/
+process receipts reauthenticated. No unchanged native rerun after public copying.
+
+Root final Source/API/census/protocol/cleanup review; separate leaf Source census
+and rejection-order audit CLEAR, author Source reviews; no independent native run.
+Pre-code bootstrap18 suggestion corrected to zero/closed; Root literal work-key
+and rejection-code drafts corrected before execution, raw retained where written.
+No complete unreleased-draft history claim; no unexpected executed Source/native
+failure. Expected negative cases assert exact codes/state. Counters are at
+operation boundary before cleanup; case timing includes fixture/exercise, cleanup
+separately covers metric capture, real close, identity checks and owned leaf
+removal. All six open meters close, all case directories removed; no expired
+meter discard. Selected children terminated/owned process roots+logs absent;
+process cleanup duration unmeasured. No new persistent process/link. Sources,
+classes/evidence and all prior failures remain preserved.
+
+F intended tests/evidence/architecture/roadmap/report only; staged0 before review.
+Main5f05b005 (9tracked/6untracked), E d9747229 reportM, Desktop e0c36885
+(7tracked/89untracked files) preserved; Main/E report mirrors only. Uncertain
+browser14116/start639294472690745890/58320, preview34180/start639294472514546595/
+58264+14 children and oldD process/unlink UNCERTIFIED untouched. GWT/Player N/A,
+no production/visible change; electrical/population NOT RENEWED. All caps/exact
+seeds/epochs/oracles/CircuitJS truth unchanged. Full30 EXCLUDED; HARD/PSYCHOTIC
+unavailable/unrun; oldnormal20 historical READ/no reread; protected unread
+UNCERTIFIED; playable100=0, beta HELD; genuine original then exact NULL/OBSERVE
+UNSPENT_GATED. Next final review, normal publication/email, then current-result
+export composition Source audit. No user decision required.
+
+# Historical checkpoint: synthetic composition Source implementation
+
+UTC 2026-11-09. F branch codex/q100-terminal-only-20261107, HEAD
+`a221342de31a9e32c450d3430ef2f1061886f99b`; no upstream. Root constructor
+implementation `5ab70e8e7dd2b2fdb306d684c77c09adc17521b1` and receipt a221342d
+normally pushed to origin/codex/q100-physical-feasibility; exact remote verified.
+Completion Gmail `1a1c183b69b70eef` SENT_ONCE. Do not duplicate it or earlier mail.
+Constructor proof EEF15218 remains bounded: final Source10, emitter controls,
+JDK8 861 Sources/2483 major51 classes, actual-meter SMOKE1/SUITE15 PASS. No renewal
+of production, electrical, population, Player or normal-host acceptance.
+
+C=OS-temp/tsj-q100-composed-metadata-b94360bc855d48338c1998e138bbd0d6.
+SourceR1 79A8F90B pins13 admitted Sources; R2 CD237219 pins7 driver/fixture
+Sources. Source audit BF5F4154 and pre-code contract 509C1B72 define test-only
+actual setup -> existing constructor -> metadata/ticket -> detached R7 close ->
+34-slot finalizer -> prepaid ticket verification on the SAME native Meter.
+No new production adapter/caller. Four child maps deliberately lack full-result
+semantics; no fabricated OriginalArm/ArmResult/graph or real capture/Session/route.
+Synthetic prior-group credit uses only existing Meter primitive lifecycle calls.
+
+Pure Source-admitted fixture gate PASS: only _synthetic_context AST-extracted
+from pinned test Source, test module never imported. Fresh synthetic context
+CA2D5B88/66485B and factory C8A25F88/21404B; no historical DATA read. Pre-code
+independent census E1DC853E: M9/L2/Em72/El62, key1101/value1435 characters,
+guard1099 units/11 copies/chunks, account17136, R7 total18419. Whole-meter
+expectation U=28712+10P+6B, C=618+2P, chunks23, wrappergroups2+syntheticprior1;
+P actual receipt-path entries, B4096-byte hash blocks. Setup10007/478/3/1 is
+subtracted once for residual metadata; four additional caller scalar reads cost4.
+Actual selected pure-fixture process PASS434.6148ms operation/679.5506ms wrapper;
+termination/owned-root+logs absence proven, process cleanup duration unmeasured.
+
+Leaf Source mapping complete. An initial bootstrap18 suggestion was corrected:
+InputSetup charges18 itself, so start at0/closed. Root literal work-key draft was
+corrected before first execution and retained in source-history-r1. Leaf canary
+review corrected post-close snapshot rejection to R5_METER_CHANGED (not later
+R5_STALE_SNAPSHOT), original contract BC490340 retained before edit. No executed
+Source/native failure yet. Canary author and driver author are Source-only;
+planned SMOKE3/SUITE16 with receipt1/4096/4097, alias/order/authority/content/
+one-shot/capacity/snapshot/split-group controls. No tests/compile/native yet;
+next Root Source/protocol review, freeze, fresh actual JDK8 then smoke before suite.
+Export/full-D/genuine assembly/normal host/lifecycle remain separate next gates.
+
+F report M only/staged0 before integration. Main5f05b005 (9 tracked/6 untracked),
+E d9747229 (reportM), Desktop e0c36885 (7 tracked/89 untracked files) preserved;
+Main/E report mirrors only. No new persistent process/link. Existing uncertain
+browser14116/start639294472690745890/port58320, preview34180/start639294472514546595/
+port58264+14 children and oldD process/unlink UNCERTIFIED untouched. All failures
+and prior roots retained. All limits/exact seeds/epochs/oracles/CircuitJS truth
+unchanged. GWT/Player N/A absent production/visible changes; no electrical or
+population renewal. Full30 EXCLUDED, HARD/PSYCHOTIC unavailable/unrun, old normal20
+historical READ/no reread, protected unread UNCERTIFIED, playable100=0, beta HELD.
+Genuine original then exact NULL/OBSERVE UNSPENT_GATED. No user decision required.
+
+# Historical checkpoint: root constructor published
 
 UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD5ab70e8e7dd2b2fdb306d684c77c09adc17521b1;
 normal origin/codex/q100-physical-feasibility exactverified/no upstream. Bodyguardaa375049+receipt1b22c5ed

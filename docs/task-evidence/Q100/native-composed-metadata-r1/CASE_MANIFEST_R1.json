@@ -1,0 +1,48 @@
+{
+  "status": "ROOT_ACCEPTED_NATIVE_CASE_MANIFEST",
+  "cases": [
+    {
+      "role": "smoke",
+      "class": "com.lushprojects.circuitjs1.client.ComposedMetadataCanary",
+      "args": [
+        "SMOKE",
+        "TASK_RUN_ROOT"
+      ],
+      "status": "PASS",
+      "names": [
+        "composition_receipt_1_byte",
+        "composition_receipt_4096_bytes",
+        "composition_receipt_4097_bytes"
+      ],
+      "caseShape": "records"
+    },
+    {
+      "role": "suite",
+      "class": "com.lushprojects.circuitjs1.client.ComposedMetadataCanary",
+      "args": [
+        "SUITE",
+        "TASK_RUN_ROOT"
+      ],
+      "status": "PASS",
+      "names": [
+        "ownership_sibling_alias",
+        "ownership_prior_alias",
+        "metadata_repeat_slot",
+        "work_slot_nonempty",
+        "r7_wrong_start",
+        "r7_without_owner_credit",
+        "receipt_changed_after_close",
+        "ticket_wrong_meter",
+        "ticket_wrong_start",
+        "ticket_wrong_path",
+        "ticket_reuse",
+        "finalizer_reuse",
+        "snapshot_rejects_later_meter_work",
+        "final_copy_cap",
+        "group640_snapshot_reject",
+        "intentional_metadata_split_accounted"
+      ],
+      "caseShape": "records"
+    }
+  ]
+}

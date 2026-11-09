@@ -1,0 +1,24 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_SOURCE_BEFORE_NATIVE",
+  "base": "a221342de31a9e32c450d3430ef2f1061886f99b",
+  "files": {
+    "ComposedMetadataCanary.java": "628b2ff839b0d5d115365d20a792d7aa5be81c0bb4a8c3c1b197d07ed1beea97",
+    "CANARY_DESIGN_R1.md": "1127bdd9b5e3cbba6cf319947a6fbce74128f700f881fb158e583abb351745bf",
+    "build_composed_metadata_r1.py": "1a1305cf515e7028116a58a369296ac0644dc52ffc2da39801dc4c47845bc981",
+    "run_composed_metadata_r1.py": "b228378cf0d938f83adf81b65c3784abd32838a9c7350d50a4839412370545ab",
+    "NATIVE_DRIVER_NOTE_R1.md": "b5ff3be488a3e63b98c5ca57ea11cbab5b217160677eef296b61fb6d88d0eab9",
+    "COMPOSITION_CONTRACT_R1.md": "509c1b72783dd2afa5a5b8fb4120ff65cfcf611eba7f6522975e6b3a60efe8b6",
+    "SOURCE_AUDIT_R1.md": "bf5f41545b22f7d09b9fbf7df85743a4af1fd90de4297d71b533309f67f67e79",
+    "derive_synthetic_fixture_r1.py": "add5fcdac0564f0be639e4ea34c88200c9e93c2b9d3c74b26bd991c336870cf8",
+    "emitted/INDEPENDENT_CENSUS_R1.json": "e1dc853e840e4aaaae3fc7ab51f3258ba403fa8112c8fb19274c55c33787ccd5"
+  },
+  "review": "Root final Source/API/order/accounting/19-case/protocol/cleanup review; leaf canary+driver Source author reviews and separate preliminary Source ownership map",
+  "independentCensus": "PRE_CODE_LITERAL_SOURCE_NOT_JAVA_OUTPUT",
+  "nativeRun": "NOT_RUN",
+  "additionalActualMainProtocolControls": [
+    "invalid_mode_empty_root",
+    "nonempty_root_preserves_marker",
+    "extra_argument_empty_root"
+  ],
+  "genuineEnvelope": "UNSPENT_GATED"
+}

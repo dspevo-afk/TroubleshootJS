@@ -1,0 +1,73 @@
+{
+  "genuineEnvelope": "UNSPENT_GATED",
+  "scope": "SYNTHETIC_CONSTRUCTOR_METADATA_R7_TICKET_COMPOSITION_SOURCE_AUDIT",
+  "base": "a221342de31a9e32c450d3430ef2f1061886f99b",
+  "status": "PINNED_SOURCE_ONLY_NO_DATA",
+  "rows": [
+    {
+      "bytes": 234954,
+      "sha256": "9ac45b374c8aeee7a912a4e1452435b71b278aeae0a288e5a75dd82a149c006b",
+      "name": "CURRENT_STUDY.java"
+    },
+    {
+      "bytes": 20119,
+      "sha256": "04b016afa690d2154f0b970640bc30b7c4887b450622444f8f18329bc04c3672",
+      "name": "CurrentV2CanonicalCodec.java"
+    },
+    {
+      "bytes": 22747,
+      "sha256": "7baab4caf45741f00d311e3b3854c794204356bfa03c0f3271399d44087df6a4",
+      "name": "CurrentV2InputSetup.java"
+    },
+    {
+      "bytes": 5704,
+      "sha256": "e2b6b05bc95b9295d15aba5305a188c1eb98cb39db4b689747e2f126a6835198",
+      "name": "CurrentAssemblyMetadata.java"
+    },
+    {
+      "bytes": 3860,
+      "sha256": "8a7a5b0dfe82d4e230adcd1d531e6942664afbd96563dc5d21f40167b41c3832",
+      "name": "CurrentBodyOwnership.java"
+    },
+    {
+      "bytes": 14458,
+      "sha256": "1df7e06085165d025ff79bdd0cdaa7f603c110cc26b6cc6f280d73f52e8d2e41",
+      "name": "CURRENT_RECEIPT_BINDING.java"
+    },
+    {
+      "bytes": 184250,
+      "sha256": "99993fc4f2c32e38fc85d4cea79b7662841a744f35816b95b0b2e8579483915b",
+      "name": "SHARED_OWNER.java"
+    },
+    {
+      "bytes": 23259,
+      "sha256": "de21e233e27f93c8183101a89ed6fdb9a00812d69e1fe38cc47c3f3e573b3eb8",
+      "name": "context_codec.py"
+    },
+    {
+      "bytes": 13235,
+      "sha256": "2a9479e97393273341eb44b71aa6870cb9c0661c87e8985e2bd4c83c193f7f36",
+      "name": "test_context_codec.py"
+    },
+    {
+      "bytes": 5285,
+      "sha256": "b544bb8e9e41277b1593307a751231f562f8ac0669dc72822af7688eeb128789",
+      "name": "CONSTRUCTOR_CONTRACT_R1.md"
+    },
+    {
+      "bytes": 4567,
+      "sha256": "2d6968320ad1707e3eb913429f7b23c6ebd7ee27a1ad1d3b05fec5197e2fed39",
+      "name": "PREPAYMENT_R1.md"
+    },
+    {
+      "bytes": 7363,
+      "sha256": "1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed",
+      "name": "WIRE_R1.md"
+    },
+    {
+      "bytes": 5241,
+      "sha256": "1c273a5e3591e5a662f0486fd68475ad75dc6b8a9b2464502f38a6aae3c09153",
+      "name": "OWNERSHIP_CONTRACT_R1.md"
+    }
+  ]
+}

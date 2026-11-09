@@ -1,0 +1,53 @@
+{
+  "status": "FINAL_GATES_PASS_WITH_EXPECTED_PROTOCOL_REJECTIONS",
+  "executedUnexpectedSourceOrNativeFailures": 0,
+  "preExecutionCorrections": [
+    {
+      "item": "initial leaf sequencing suggestion",
+      "change": "Zero/closed meter before read; helper charges18 itself",
+      "oldSuggestionExecuted": false,
+      "record": "SOURCE_AUDIT_R1 and chat Source findings"
+    },
+    {
+      "item": "Root literal work-key draft",
+      "oldSha256": "dc1e964d79d47d8a4e846b384dc8032f44aa48c48c64f33c1d20fb0eb2b1a88c",
+      "rawRetained": true,
+      "change": "Exact current work-key spellings before first derivation execution",
+      "oldDraftExecuted": false
+    },
+    {
+      "item": "Root pre-code contract",
+      "oldSha256": "bc49034024291e4ca671b640f89cfe20f4da1c30979dd12d785e19ffb2ce5ce4",
+      "rawRetained": true,
+      "change": "Later meter charge fails unchanged with R5_METER_CHANGED before later stale maxima checks",
+      "oldContractExecuted": false
+    }
+  ],
+  "compiledOrNativeSourceCorrectionsAfterFreeze": 0,
+  "completeUnreleasedDraftHistoryClaimed": false,
+  "protocolExit1": "EXPECTED_REJECTION_NOT_NATIVE_PRODUCER_PASS",
+  "nativeExpectedNegatives": "ASSERTED_CODES_AND_STATES",
+  "priorFailuresAndUnrelatedRoots": "PRESERVED",
+  "genuineEnvelope": "UNSPENT_GATED",
+  "publicationFormattingCorrection": {
+    "initialStagedDiffCheck": "FAIL_EXTRA_BLANK_LINE_AT_EOF",
+    "file": "NATIVE_DRIVER_NOTE_R1.md",
+    "originalSourceSha256": "b5ff3be488a3e63b98c5ca57ea11cbab5b217160677eef296b61fb6d88d0eab9",
+    "originalRawRetained": true,
+    "publicTrimmedSha256": "708784ca76831de1ec8f9072afc87c52c3ef17c0d34ee21501d5e47268f9cf28",
+    "change": "Remove only the final empty line from the public uncompiled note",
+    "compiledAndRuntimeSourceChanged": false
+  },
+  "rootPublicationAuditCorrection": {
+    "initialAudit": "FAIL_FALSE_POSITIVE_HTTP_URL_SUFFIX",
+    "originalAuditRawRetained": true,
+    "originalAuditSha256": "64413151fe16fbaf7b108aff00cb9f5620c747f745c0da4b405ad8a96c76b3bd",
+    "diagnosis": "Drive-path regex matched the terminal letter and colon-slash of an unchanged HTTP URL scheme",
+    "change": "Require a token boundary before Windows drive letters; inspect added lines for existing tracked documentation and whole content for new files",
+    "compiledAndRuntimeSourceChanged": false,
+    "secondAudit": "FAIL_LITERAL_PATH_EXAMPLE_IN_AUDIT_HISTORY",
+    "secondAuditRawRetained": true,
+    "secondAuditSha256": "7f1e2527d4a670d9f2639aa70c5c45100464eae6ca61235d7a40e021f395ec5d",
+    "secondCorrection": "Describe the HTTP false positive without publishing a literal drive-shaped example; audit rule remains intact"
+  }
+}

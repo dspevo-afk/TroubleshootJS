@@ -1421,6 +1421,19 @@ exclusions remain. Implementation5ab70e8e7dd2b2fdb306d684c77c09adc17521b1 was no
 pushed to origin/codex/q100-physical-feasibility, exact remote verified; completion
 Gmail1a1c183b69b70eef sent once.
 
+The [synthetic metadata/R7 composition](task-evidence/Q100/native-composed-metadata-r1/README.md)
+is locally accepted on unchanged current helpers. Actual input/setup, root
+construction, metadata/ticket preparation, detached R7 closure, all34 finalized
+work equations and final ticket verification share one native Meter. A frozen
+independent census predicts every normal debit; final863-Source JDK8/2485 major51
+classes, SMOKE3/SUITE16 and three actual main protocol rejection controls pass.
+Alias/order/authority/content/reuse/copy/group/snapshot and split-group boundaries
+pass with separate cleanup proof. Generic empty child maps and synthetic prior
+credit establish neither full-D semantics nor original authority. Next is current
+result export composition, then full-result/normal assembly/actual host/lifecycle
+gates. Genuine original,NULL,OBSERVE remain unspent/gated; playable100=0/beta held,
+data exclusions and every existing cap remain. Publication pending final diff.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

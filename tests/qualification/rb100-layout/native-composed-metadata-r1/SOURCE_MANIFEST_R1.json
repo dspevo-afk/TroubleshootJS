@@ -1,0 +1,30 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_SYNTHETIC_COMPOSITION_SOURCE",
+  "files": [
+    {
+      "role": "ComposedMetadataCanary.java",
+      "bytes": 35461,
+      "sha256": "628b2ff839b0d5d115365d20a792d7aa5be81c0bb4a8c3c1b197d07ed1beea97"
+    },
+    {
+      "role": "build_composed_metadata_r1.py",
+      "bytes": 24634,
+      "sha256": "1a1305cf515e7028116a58a369296ac0644dc52ffc2da39801dc4c47845bc981"
+    },
+    {
+      "role": "run_composed_metadata_r1.py",
+      "bytes": 43758,
+      "sha256": "b228378cf0d938f83adf81b65c3784abd32838a9c7350d50a4839412370545ab"
+    },
+    {
+      "role": "derive_synthetic_fixture_r1.py",
+      "bytes": 5267,
+      "sha256": "add5fcdac0564f0be639e4ea34c88200c9e93c2b9d3c74b26bd991c336870cf8"
+    },
+    {
+      "role": "root_protocol_gates_r1.py",
+      "bytes": 3843,
+      "sha256": "88157e37571a2bc8147a152b1f69841967c53a70a4248a9ad20356cc38ee497e"
+    }
+  ]
+}

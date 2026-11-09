@@ -350,6 +350,16 @@ Existing serialization still rejects incomplete/invalid staged bodies. Construct
 identity/debit and independent canonical bytes are qualified; complete metadata/R7/
 ticket composition, normal assembly and actual host/lifecycle remain separate.
 
+The [synthetic composition canary](task-evidence/Q100/native-composed-metadata-r1/README.md)
+now exercises those existing owners on one real Meter without a new production
+adapter. Input/setup closes its group; constructor and metadata leave the next
+group open for R7's ownership/accounting/snapshot handoff. Setup attribution is
+subtracted once from residual metadata. R7 finalization and the prepaid receipt
+ticket add no Meter work or reopening after closure. Independent whole-body and
+per-group expectations qualify this interaction only. Four generic empty children,
+a synthetic cutoff and synthetic prior-group credit prove no genuine arm content,
+original receipt authority, current export or normal-host/lifecycle acceptance.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the
