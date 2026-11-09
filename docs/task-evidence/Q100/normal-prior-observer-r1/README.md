@@ -1,6 +1,8 @@
 # Observed caller facts component
 
-Accepted locally for bounded SOURCE/tool/resource observation. Publication is next.
+Accepted and published as `a13cbaed827f6d932200230e8fc2c3d3424091b0` on
+origin/codex/q100-physical-feasibility, exact remote SHA verified.
+Gmail `1a1bde9f19777842` SENT_ONCE; [publication](PUBLICATION_R1.md).
 Final gate SHA256 `c6e9c19788c64290fd624f7536521264053ae482965baa3cc29e8a917c194cde`.
 
 observe_caller_facts takes an explicitly authenticated current reader module,

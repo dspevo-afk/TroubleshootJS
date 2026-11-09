@@ -1,4 +1,54 @@
-# Current checkpoint: observer component accepted; publication next
+# Current checkpoint: observer published; gated caller SOURCE in progress
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107. Implementation a13cbaed827f6d932200230e8fc2c3d3424091b0
+normally pushed to origin/codex/q100-physical-feasibility, exact remote SHA
+verified; Gmail1a1bde9f19777842 SENT_ONCE. Receipt gets no second mail; verify actual
+HEAD after documentation receipt. Origin dspevo-afk/TroubleshootJS; no upstream.
+Actual22-path treefa4668c9cd0a367e1d688ebd15b8ce00c82d5103, patch646f894cc212fefe49e649522c31dc5a56723afeadfa986444643cb4cb2eb1b1;
+byte/privacy/whitespace/actual-space rejection/restoration pass. F clean after
+implementation. Main5f05b005 retains9tracked/6untracked/staged0; E d9747229
+reportM/staged0; Desktop e0c36885 retains7tracked/73defaultuntracked entries
+(89files with-uall)/staged0. Main/E report mirrors only; preserve unrelated work.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+Observer69b9/test551e nowpublic normal-prior-caller-r1. Proofc6e9c19788c64290fd624f7536521264053ae482965baa3cc29e8a917c194cde.
+12private/12public/0SKIP, actual5tool/2SOURCE/harness-link positives,10resource
+CLIcases1positive/9expectedreject,2realjunctions verified/removed; publicpositive
+matches and actualtoolwrongSHA rejects. Actualownedreplacement at injectedscan
+seam; injectedPermissionError only, actualACLdenial NOTRUN. Source review scoped
+clear; rootruntime separate. Non-atomic observations; no actual prior resources
+or body. Returnedprocesses terminate and ownedroots/logs absent; cleanup null;
+no persistent process/link. PrivateSOURCE/config/fixtures/receipts preserved.
+Reader00f6, normalizerE872, codecC1/kernelF87/provenance215ad/metadataC487 current;
+earlier3114/5824 historical. Prior publication mails remain SENT_ONCE.
+
+Leaf normal_prior_normalizer_z1 owns only AB/qualify_prior.py/test_qualify_prior.py,
+SOURCE-only/noexecute/spawn/stage/push/mail/DATA read. CLI/configsurface agreed:
+preflight --config/--config-sha/--manifest-output; qualify also requires frozen
+--source-manifest/--source-manifest-sha/--phase-journal/--phase-journal-sha.
+Config exact schema/sourceSpecs/toolSpecs/rootsN_D/scratchRoot/allowlistPath/
+dataOutputRoot; source rolescaller/observer/reader/normalizer/codec/kernel/
+provenance/allowlist, tools exact5. Manifest path-free/acyclic withconfig/source/
+tools/allowlist/provenance/rootbinding hashes, nojournal/context/generatedDATA/
+classes/run/results. Rootbindings canonicalN_Dpaths+stableleafdev/ino/type/mode/
+attrs, fullancestorinspectioneverytime but no unrelated ancestor mtime/ctime
+in cross-phase binding. External journal gates must validate before bodyread.
+Root owns all other integration/config/gates/journal/actualingest/publication.
+No caller execution, actual SOURCE preflight/root authority or journal accepted.
+
+Next collect/review caller SOURCE, test preflight/phase-closed/canonical/output/
+source-root guards on selectedhost, then root journal before fixed20 normal-only
+ingest and actual prior/context qualification. No actual20body, oldD descriptor/
+result/generatedinput, oldbuilders/modules/CLIs, manifestfollowing or protected/
+heldout DATA. One genuine original+exactly NULL/OBSERVE unspent/gated; no extra
+arm/control/original/retry. Full-D/H1/playable100 unqualified/zero/betaHELD.
+Caps/exactseeds/epochs/oracles/CircuitJS truth unchanged; Full30EXCLUDED;
+HARD/PSYCHOTIC unavailable/unrun; historical protected unreadUNCERTIFIED.
+GWT/Player NOT APPLICABLE; electrical/population not renewed. Old uncertain
+resources preserved. Continue standingroadmap; no duplicate completion emails.
+
+# Historical checkpoint: observer component accepted; publication next
 
 UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107, HEAD007ff30a4cf77f530a1ff109df8bdf51cf9f6e04.
