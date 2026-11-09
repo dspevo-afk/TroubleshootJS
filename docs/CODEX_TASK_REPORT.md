@@ -1,9 +1,9 @@
-# Current checkpoint: native V2 codec validated locally
+# Current checkpoint: native V2 codec published
 
-UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD1cd45d7efa279e9283deed1c792b4b3ba1013f29;
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEADccb0dea45e8f049cfa98edac4fb345b4f4234b49;
 normal origin/codex/q100-physical-feasibility exactremoteverified, no upstream.
-Intended native-v2-codec-r1 Source/evidence +ARCH/roadmap/report; publication/mail
-PENDING. Receipte5e30770/receipt1cd45d7e andGmail1a1bfe37cdaa81c7 SENT_ONCE;
+Native-v2-codec-r1 implementation ccb0dea45e8f049cfa98edac4fb345b4f4234b49
+published; Gmail1a1c017cfb3587a5 SENT_ONCE, receipt-onlydocs follow. Neverduplicate. Receipte5e30770/receipt1cd45d7e andGmail1a1bfe37cdaa81c7 SENT_ONCE;
 flatcd4b1c2b/receiptf3be9f7a andGmail1a1bf9a860ca0397 COMPLETE. Never duplicate.
 Main5f05b005 preserves9tracked/6untracked; E d9747229 reportM; Desktop e0c36885
 preserves7tracked/89untracked. Allunrelatedwork/priorfailures/resources stay.
@@ -51,9 +51,10 @@ population NOTRENEWED. Oldbrowser14116/start639294472690745890/58320 andpreview
 34180/start639294472514546595/58264 +14uncertainchildren untouched; oldD verify-
 process-ebc137b2bbd5462d969a6eddf73816f7 lacks terminationproof/oldDunlinkUNCERTIFIED.
 
-Next inspectactualdiff/stagedbytes/diffchecks, normalcommit/push/exactremote,
-onecompletionGmail/receiptfollowup. Then currentnativeassembly/exportintegration,
-input/work/receipt/sameMeter/host/lifecycle gates before anygenuineproducer.
+Root stagedauditPASS exact18paths/finalSourcepins, diffchecksPASS, normalpush
+exactremoteverified. Receipt-onlydocs need no rebuild orsecondemail. Next current
+nativeassembly/exportintegration, input/work/receipt/sameMeter/host/lifecycle
+gates before anygenuineproducer.
 Continue standingroadmap without routinepermission orduplicateemails.
 
 # Historical checkpoint: native V2 codec Source authoring

@@ -1322,7 +1322,10 @@ marker output matches the independent656-byte maximum. Source review, corrected
 oracle drafts and the initial missing-import compile failure are preserved.
 Memory/discard passes are not native file-export or host proof. Current assembly/
 export/prepayment/lifecycle integration remains pending; genuine envelope unspent,
-playable100=0/beta held, budgets/data exclusions unchanged. Publication/email pending.
+playable100=0/beta held, budgets/data exclusions unchanged. Implementation
+`ccb0dea45e8f049cfa98edac4fb345b4f4234b49` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
+`1a1c017cfb3587a5` sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

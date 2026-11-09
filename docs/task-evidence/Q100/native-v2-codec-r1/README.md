@@ -1,7 +1,9 @@
 # Current V2 native canonical codec
 
-Accepted locally for the isolated codec and selected sink cases below;
-publication is pending. Native producer/assembler/exports remain disabled.
+Accepted for the isolated codec and selected sink cases below. Implementation
+`ccb0dea45e8f049cfa98edac4fb345b4f4234b49` is normally pushed to
+origin/codex/q100-physical-feasibility with exact remote SHA verified. Completion
+Gmail `1a1c017cfb3587a5` was sent once; see [publication](PUBLICATION_R1.md). Native producer/assembler/exports remain disabled.
 This is no full-D/H1, file-export, host, electrical or playable100 acceptance.
 
 The new owner formats the current ordered13-key result root and14-key marker.
