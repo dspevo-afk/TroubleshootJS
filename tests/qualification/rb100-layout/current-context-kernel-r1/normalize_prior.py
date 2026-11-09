@@ -1349,6 +1349,36 @@ def _validate_prior_work(work, operation, parsed, reference, control, trial, min
     _need(all(cleanup[key] is True for key in N_CLEANUP_KEYS), "PRIOR_CLEANUP_PROOF")
 
 
+def _validate_native_marker(marker, result_raw: bytes, doc: dict) -> dict:
+    _exact_keys(marker, (
+        "schema", "status", "resultSha256", "resultBytes", "elapsedNanos",
+        "finalExportNanos", "totalGroups", "totalUnits", "maxGroupNanos",
+        "maximumUnitsPerGroup",
+    ), "NATIVE_MARKER_KEYS")
+    work = doc["work"]
+    final_export_units = 5 * ((len(result_raw) + 4095) // 4096) + 3
+    _need(marker["schema"] == N_MARKER_SCHEMA
+          and marker["status"] == "COMPLETED_DIAGNOSTIC"
+          and marker["resultSha256"] == _sha(result_raw)
+          and _is_int(marker["resultBytes"], len(result_raw), len(result_raw))
+          and _is_int(marker["elapsedNanos"], 1, 90_000_000_000)
+          and _is_int(marker["finalExportNanos"], 1, 5_000_000_000)
+          and _is_int(marker["totalGroups"], work["groupsBeforeExport"] + 1,
+                      work["groupsBeforeExport"] + 1)
+          and _is_int(marker["totalUnits"], work["unitsBeforeExport"] + final_export_units,
+                      work["unitsBeforeExport"] + final_export_units)
+          and _is_int(marker["maxGroupNanos"],
+                      max(work["maxGroupNanosBeforeExport"], marker["finalExportNanos"]),
+                      max(work["maxGroupNanosBeforeExport"], marker["finalExportNanos"]))
+          and _is_int(marker["maximumUnitsPerGroup"],
+                      max(work["maximumUnitsPerGroupBeforeExport"], final_export_units),
+                      max(work["maximumUnitsPerGroupBeforeExport"], final_export_units))
+          and final_export_units <= 32768
+          and marker["elapsedNanos"] >= work["elapsedCutoffNanos"]
+          + marker["finalExportNanos"], "NATIVE_MARKER_BINDING")
+    return marker
+
+
 def _validate_qualification_summary(raw, d_parent, d_result, prior_result, role_bytes,
                                     pins, operation_raw, result_raw):
     _need(type(raw) is bytes and 0 < len(raw) <= MAX_QUALIFICATION_STDOUT
@@ -1588,11 +1618,6 @@ def normalize_prior(role_bytes, allowlist_bytes, authority, kernel_callbacks, co
         prior_operation_raw, prior_result_raw)
     n_result_raw = host_calls["nativePrior"]["stdoutRaw"]
     marker = _console_json(n_result_raw, 64 * 1024, "NATIVE_PRIOR_MARKER")
-    _exact_keys(marker, ("schema", "status", "resultSha256", "resultBytes"), "NATIVE_MARKER_KEYS")
-    _need(marker["schema"] == N_MARKER_SCHEMA and marker["status"] == "COMPLETED_DIAGNOSTIC"
-          and marker["resultSha256"] == _sha(prior_result_raw)
-          and _is_int(marker["resultBytes"], 1, MAX_PRIOR_JSON_BYTES)
-          and marker["resultBytes"] == len(prior_result_raw), "NATIVE_MARKER_BINDING")
 
     run_sha = _sha(role_bytes["N_PRIOR_RUN_MANIFEST"])
     source_manifest = metadata[1]
@@ -1603,6 +1628,7 @@ def normalize_prior(role_bytes, allowlist_bytes, authority, kernel_callbacks, co
         prior_operation_raw, operation_entry, prior_id, run_sha, kernel_callbacks)
     prior_facts = _validate_prior_result(prior_result, parsed_operation,
                                          prior_operation_raw, run_sha, kernel_callbacks)
+    _validate_native_marker(marker, prior_result_raw, prior_result)
     _need(parsed_operation["pads"] == prior_result["source"]["padLands"]
           or len(parsed_operation["pads"]) == len(prior_result["source"]["padLands"]) == 246,
           "PRIOR_OPERATION_PAD_COUNT")

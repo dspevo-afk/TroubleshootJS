@@ -1232,6 +1232,18 @@ HARD/PSYCHOTIC unavailable/unrun; historical unreadUNCERTIFIED. Implementation
 `35e36eeec64319b35350e7ac6c488370bb241bee` normally pushed to origin/codex/q100-physical-feasibility,
 exact remote verified; completion Gmail `1a1beb3670d80f14` sent once.
 
+The [complete native marker adapter](task-evidence/Q100/normalizer-native-marker-r1/README.md)
+is locally accepted. A second journalled fixed20 qualifier failed the obsolete
+four-key marker check; failure/output roots remain. All ten pinned marker fields
+now reconcile with validated prior work and the original independent oracle.
+Fresh79 private/79 public tests,420 pure-reference comparisons, two authenticated
+normal-role marker checks,19 caller tests and25 closed CLI controls pass. A canary
+optimization finding is fixed and real negative tested. Complete prior acceptance
+remains FAIL; genuine envelope unspent/gated. Next fresh normal authority before
+deliberate qualification, then current host/native assembly. Caps/oracles and
+Full30EXCLUDED/HARD-PSYCHOTIC unavailable-unrun/historical unreadUNCERTIFIED/
+playable100=0/betaHELD remain. Publication pending.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

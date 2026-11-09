@@ -283,6 +283,13 @@ still requires LF. Role byte authentication, exact summary schema/hash/value and
 historical elapsed bindings precede context acceptance. This framing correction
 and caller pin migration do not establish actual prior or native acceptance.
 
+The [native prior marker adapter](task-evidence/Q100/normalizer-native-marker-r1/README.md)
+reconciles all ten pinned console fields after prior-result work validation.
+Result hash/length, final export chunk charges, total groups/units, maxima and
+elapsed/cutoff bindings preserve the original independent marker oracle. The
+obsolete four-field check is retired. Pure reference and authenticated marker
+component checks alone do not establish full prior or native acceptance.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

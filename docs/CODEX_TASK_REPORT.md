@@ -1,4 +1,115 @@
-# Current checkpoint: console correction published; fresh normal authority next
+# Current checkpoint: full marker component accepted; publication next
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD0ace1dfb549f0c70a3baa5666125d17987b483f7.
+Origin dspevo-afk/TroubleshootJS; no upstream; normal targetcodex/q100-physical-feasibility.
+Marker correction locallyaccepted, NOT committed/pushed/emailed. Intended four
+code files,newpacket,3docs only. Console35e36eee/Gmail1a1beb3670d80f14 sentonce.
+Main5f05b005 preserves9tracked/6untracked; E d9747229 reportM;
+Desktop e0c36885 preserves7tracked/89untracked files. Unrelatedwork preserved.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+Private normalizer-native-marker-r1 Source a612e117/test87556f, caller093d0d,
+canary9933ca, reader863/observer478, codecC1/kernelF87/prov215ad/metaC487 unchanged.
+Normalizer finalproof9b2a2e346a83e7f6d7a4d8d4c0699e5dd833a9e18addc754bac9947b9332721d;
+caller proofc0f90aae80350706e5779c80c6900f1533320fbed1a54117921301cd5e95dd1b. Whole-module scope audit: one fullmarker helper,
+retire obsolete4-key block, helper after validatedpriorwork; caller2pins only.
+79private/79public/0skip,420independentSource-extracted pure reference comparisons,
+actual pinnedNstdout+Nresult marker-component checks, real optimized-interpreter
+rejection,19caller+25closedCLI(4positive21reject) PASS. Verified syntheticroot/
+junction removed. All selected children terminate/ownedprocessroots+logs absent;
+cleanupdurationnull. Independent Source canaryfinding fixed/rechecked; downstream
+source review no additional blocker, no direct_build_context integrationtest.
+
+Actual fullprior FAIL fromtwo attempts: firstSTDOUT_FRAMING preserved; second
+NATIVE_MARKER_KEYS afterfresh0acf journal at05:09:06Z, op819.8043/wrapper1060.0782ms.
+Both failednonempty outputs/configs/SOURCEmanifests/journals/rawreceipts retained.
+No context/projection/Java output. Currentcomponent doesnot reclassify failures.
+Nnormalroles READ underdurablejournal; rootmarkerdiagnosis/canary read only
+authorizedNstdout/Nresult. No fullretry aftermarkerSource change. R1canarySource/
+proofc724 preserved; finalR2 guard/count andexternal authority rechecks proof9b2a.
+
+Next inspect/stageintendedonly, normalcommit/push/exactremoteverify andoneGmail.
+Then fresh emptyoutput/config/SOURCEmanifest/new normal-onlyjournal before ONE
+deliberate fixed20 qualification; do not reusefailedroot or retryautomatically.
+Currenthost/nativeassembly follows prioracceptance. Nativeproducer/session0;
+genuine original+exactly NULL/OBSERVE UNSPENT/GATED. OldDdescriptor/result/generated
+inputDATA, oldbuilders/CLIs, manifestfollowing, protected/heldout bodies denied.
+Full30EXCLUDED/HARD-PSYCHOTIC unavailable-unrun/historicalprotected unreadUNCERTIFIED/
+fullD-H1unqualified/playable100=0/betaHELD. Caps/exactseeds/epochs/oracles/CircuitJS
+truth unchanged. GWT/PlayerN/A; electrical/population NOTRENEWED. No newpersistent
+process/link; failure/historical/uncertainresources preserved. Standingroadmap continues.
+
+# Historical checkpoint: second actual normal qualifier failed on native marker keys
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD0ace1dfb549f0c70a3baa5666125d17987b483f7,
+normally pushed/exactremote verified. Console correction35e36eee published and
+Gmail1a1beb3670d80f14 SENT_ONCE; no duplicate email. F report modified only.
+Main5f05b005 preserves9tracked/6untracked; E d9747229 reportM;
+Desktop e0c36885 preserves7tracked/89untracked files. Preserve unrelatedwork.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+Fresh explicit qualifier after journal0acf08e1 at2026-11-09T05:09:06Z FAIL/exit2:
+NORMALIZER_NATIVE_MARKER_KEYS in normalization. Operation819.8043ms,
+wrapper1060.0782ms. All20 auth/resource observation/qualification-summary gate
+reached by caller control flow. Actual prior acceptance FAIL, no context/Java.
+Returned child termination proven/ownedprocess root+logs absent; cleanupduration
+null. ACTUAL_PRIOR_CRLF_FAILURE_R1.json preserves call/failure. Fresh R3dcaf config,
+d91a SOURCEmanifest/29a7roots/0acfjournal and nonempty failedoutput retained.
+Original R2c8e/e5ea/da97 and first STDOUT_FRAMING failure remain preserved.
+No automatic rerun or outputroot reuse. Native producer/session calls0;
+genuine original+exactly NULL/OBSERVE UNSPENT/GATED.
+
+Root diagnosis authenticated ONLY N_PRIOR_CALL_STDOUT_TXT(328/42dacdb5) through
+reader863 and current journal. NATIVE_MARKER_DIAGNOSTIC_R1.json holds pathfree
+framing/key/type facts; private exact marker retained for root contract diagnosis.
+Next compare pure marker expectation to actual pinned normal producer contract,
+define narrow SOURCE/test correction if warranted, then fresh proofs and caller
+pin authority. Do not weaken independent result/operation/work/PAD/cleanup
+oracles. Console correction remains separately accepted; no prior PASS inferred.
+
+Old D descriptor/result/generated-input DATA, oldbuilders/CLIs, manifestfollowing,
+protected/held-out bodies denied. Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
+historical protected unreadUNCERTIFIED; fullD/H1unqualified/playable100=0/betaHELD.
+Caps/exactseeds/epochs/oracles/CircuitJS truth unchanged. GWT/Player N/A;
+electrical/population NOT RENEWED. No new persistent process/link; preserve all
+failure/historical/uncertainresources. Standing roadmap continues.
+
+# Historical checkpoint: fresh normal journal recorded; deliberate qualifier next
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD0ace1dfb549f0c70a3baa5666125d17987b483f7,
+normal target origin/codex/q100-physical-feasibility exact remote verified.
+Console implementation35e36eee/Gmail1a1beb3670d80f14 SENT_ONCE; receipt no secondmail.
+F clean before fresh journal, reportWIP now. Main5f05b005 preserves9tracked/6untracked;
+E d9747229 reportM; Desktop e0c36885 preserves7tracked/89untracked files.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+Fresh PRIVATE_R3 configSHAdcaf9d2f76730fe9c8546e2521e0a31b220f82a4453e066dfd282eb489f2b216;
+SOURCEmanifestSHAd91ad3fb10c9192c3ada615077918e380a2fbb0da302d56fbbd435c72f1cf89e;
+rootsSHA29a72a292a53537ef40d4c3de4dd4083d3c098ec8fe2115fcc3167ec681885c6.
+Fresh exclusive durable journalSHA0acf08e12fcaa8ad5ae6136ed54f696dd39ac97835f7456ddcefdd63e45070d2,
+created2026-11-09T05:09:06Z before THISattempt role reads. New empty data/control
+roots use crlf-r1 suffix. FRESH_NORMAL_PHASE_RECEIPT_PRIVATE_R1.json holds exact
+paths and authority. SOURCE/root preflight and recheck PASS; this script body0.
+Normal roles were previously read under first da97 journal; not historically
+unread. Original c8e/e5ea/da97 failed output and exit2 receipts remain preserved.
+
+Current caller11c4/norm0b20/reader863/observer478, normalizerproofa0c35e,
+callerproofeffd2149. Sourcefix69private69public+caller19+closedCLI25 and actual
+console boundary PASS; actual full prior acceptance still FAIL fromfirstattempt.
+Next ONE deliberate actual fixed20 qualifier with frozen fresh config/manifest/
+journal through selected RootCall reader180s/wrapper480s. Retain failure and no
+automatic rerun; do not touch failedroot. Only completed CLI after final rereads/
+closure can accept prior/context/Java DATA; pending evidence alone not PASS.
+
+Native producer/session calls0; genuine original+exactly NULL/OBSERVE UNSPENT/GATED.
+Old D descriptor/result/generated-input DATA, oldbuilders/CLIs, manifestfollowing,
+protected/held-out bodies denied. Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
+historical protected unreadUNCERTIFIED; fullD/H1unqualified/playable100=0/betaHELD.
+Allcaps/seeds/epochs/independentoracles/CircuitJS truth unchanged. GWT/Player N/A;
+electrical/population NOT RENEWED. No new persistent process/link. Preserve all
+failure/historical/uncertainresources and unrelatedwork; standingroadmap continues.
+
+# Historical checkpoint: console correction published; fresh normal authority next
 
 UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107 implementation35e36eeec64319b35350e7ac6c488370bb241bee normallypushed/exact
