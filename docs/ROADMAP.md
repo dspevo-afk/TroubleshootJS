@@ -1353,7 +1353,10 @@ qualifies an isolated adapter, with no normal full-D/H1/assembly/host or genuine
 producer acceptance. Next are current assembly prerequisites: checked nine-unit
 original attribution, owner pre-read hash charge, qualifiedPrior12 and the
 receipt.prepare caller, then host/lifecycle gates. Genuine remains unspent/gated;
-playable100=0/beta held and all data exclusions unchanged. Publication pending.
+playable100=0/beta held and all data exclusions unchanged. Implementation
+`8e3daf467c8248a04cf8d988384dcffe50aaf11c` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
+`1a1c0b7e2042d3bc` sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

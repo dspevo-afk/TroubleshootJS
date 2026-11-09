@@ -1,10 +1,12 @@
-# Current checkpoint: V2 input/setup locally accepted, publication pending
+# Current checkpoint: V2 input/setup published
 
-UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD9d70c55c24c31ecb6351d8bb5c96939ad6da06ec;
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD8e3daf467c8248a04cf8d988384dcffe50aaf11c;
 origin https://github.com/dspevo-afk/TroubleshootJS.git; no upstream. Normal push
 remains HEAD:refs/heads/codex/q100-physical-feasibility. Native exportdfe4d5df/
 receipt9d70 and Gmail1a1c0532d059ed7f already published/SENT_ONCE; never duplicate.
-Current input/setup component locally accepted; no new commit/push/email yet.
+Input/setup implementation8e3daf467c8248a04cf8d988384dcffe50aaf11c normally pushed; exact
+remote verified. Gmail1a1c0b7e2042d3bc SENT_ONCE. Receipt-only docs follow; no
+second email or rebuild needed.
 
 Final Source/task root V=OS-temp/tsj-q100-v2-input-setup-final-4e552ff4e6fb4a0ea2fe1a8456aa30d9.
 Original U=OS-temp/tsj-q100-v2-input-setup-m21_zq_8 fully preserved. Helper7BAAB4CA
@@ -37,7 +39,8 @@ helpers; Java unchanged. Retained readerR3 failed at restricted proofwriter;
 R4 exclusive writer passes all strict checks. Prior failures remain FAIL, never
 renamed PASS. Released Source/raw failures/builds/receipts retained in U/V.
 
-F intended3docs plus2newpacketdirs; staged0 before publication review. Main5f05b005
+Root final staged audit PASS exact18 intendedpaths/sourcebytes/diffchecks. F clean
+after implementation commit. Receipt-only roadmap/report changes now intended. Main5f05b005
 preserves9tracked/6untracked, E d9747229 reportM, Desktop e0c36885 preserves7tracked/
 89untracked; only Main/E checkpoint mirrors updated. All selected U/V children
 terminated/ownedroots+logs absent; cleanupduration unmeasured. No persistentprocess
@@ -45,8 +48,8 @@ or link launched. Oldbrowser14116/start639294472690745890/58320 and preview34180
 start639294472514546595/58264+14uncertainchildren remain untouched; oldDverify-process-
 ebc137b2bbd5462d969a6eddf73816f7 terminationunproven/oldDunlinkUNCERTIFIED.
 
-Next action: Root final diff/sourcebyte/staged audits, explicit commit, normal
-push/exactremote verification and one connected Gmail, then receipt docs. Next
+Next action: commit/push receipt docs, verify exactremote, mirror checkpoint; no
+second email. Next
 unstarted implementation is current assembly prerequisites: checked9unit original
 boundary, owner pre-read hash, qualifiedPrior12 and receipt.prepare caller; normal
 host/full-D/H1/lifecycle remain unqualified. Genuine oneoriginal then EXACT
