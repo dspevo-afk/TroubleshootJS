@@ -1487,7 +1487,9 @@ population renewal. Normal assembly remains closed and the genuine envelope
 unspent/gated. Next is R7 scalar-to-cleanup body handoff under an explicit staging
 contract, before full result/full-D/actual-host lifecycle acceptance. All caps,
 exact seeds/epochs, protected data exclusions and playable100=0/betaHELD remain.
-Publication and completion notification are pending.
+Implementation `679f36216087d1a14e25187619ff6bf9f3908e28` normally pushed to
+origin/codex/q100-physical-feasibility; exact remote verified. Completion Gmail
+`1a1c28920295eadb` acknowledged once; the documentation receipt sends no second email.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

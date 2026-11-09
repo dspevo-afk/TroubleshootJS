@@ -25,7 +25,7 @@ the caller's successful finish. Every rejected Meter is discarded without finish
 The maintained input regression preserves81cases/12089assertions; its old false
 RUN profile and Source pins remain historical, rather than current authority.
 
-The corrected candidate is locally accepted for this synthetic component scope.
+The corrected candidate is accepted and published for this synthetic component scope.
 [PROOF_R1.json](PROOF_R1.json) binds Source freeze
 `bb445458907e7ab757e0bb5bc2acfffd6c9352bba5909a91ca43051f3705cdd9`.
 
@@ -90,3 +90,8 @@ no reread; protected/held-out DATA and old actual DATA/classes remain denied.
 
 Next is the R7 scalar handoff under an explicit body-staging contract, before
 whole-result/full-D/actual-host acceptance or any genuine-envelope spend.
+
+Implementation `679f36216087d1a14e25187619ff6bf9f3908e28` was normally pushed to
+origin/codex/q100-physical-feasibility and its exact remote SHA verified. Completion
+Gmail `1a1c28920295eadb` was acknowledged once. The documentation receipt needs no
+second email. [PUBLICATION_R1.json](PUBLICATION_R1.json) records the publication.

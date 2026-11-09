@@ -1,8 +1,8 @@
-# Current checkpoint: RUN input policy and cohort staging accepted locally
+# Current checkpoint: RUN input policy and cohort staging published
 
-UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD/base
-a8273fbab8e2744a9adde2e47eb05662e846285c, no upstream. Intended implementation,
-evidence and docs pending root publication review; staged0. Prior f68277f5/a8273fba
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD
+679f36216087d1a14e25187619ff6bf9f3908e28, no upstream. Implementation normally pushed,
+exact origin/codex/q100-physical-feasibility SHA verified. Prior f68277f5/a8273fba
 projection publication and Gmail1a1c23c3a8e396f7 SENT_ONCE; never repeat.
 
 Corrected native RUN policy to orderChanged=true, matching actual shared-owner
@@ -57,7 +57,7 @@ e0c36885(7trackedM/89untrackedfiles/staged0) preserved; Main/E reportmirroronly.
 No new persistent process/link. Source/classes/evidence/failures retained. Old
 uncertain browser14116/start639294472690745890/58320, preview34180/
 start639294472514546595/58264+14children, oldDprocess/unlinkUNCERTIFIED untouched.
-Publication, exact remote verification and one completion Gmail pending.
+Root integrated/staged/privacy/whitespace review PASS51 paths;10 staged runtime blob hashes matched final-source gates. Independent documentary review PASS; no independent native run. Completion Gmail1a1c28920295eadb SENT_ONCE_ACKNOWLEDGED. Documentation receipt pending; no second email. Only documentation changed after the accepted Source gates.
 
 # Historical checkpoint: R7 projection handoff Source audit
 

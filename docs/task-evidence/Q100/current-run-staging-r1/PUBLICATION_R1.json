@@ -1,0 +1,17 @@
+{
+  "status": "PUBLISHED_VERIFIED_AND_NOTIFIED_ONCE",
+  "implementationSha": "679f36216087d1a14e25187619ff6bf9f3908e28",
+  "message": "Fix RUN input policy and stage cohorts before body creation",
+  "localBranch": "codex/q100-terminal-only-20261107",
+  "pushTarget": "origin/codex/q100-physical-feasibility",
+  "remoteVerifiedSha": "679f36216087d1a14e25187619ff6bf9f3908e28",
+  "proofSha256": "375c9e83d4db2ca4b21975e9d0acad5e8b863041efadb3e2396428d4cbe30ca4",
+  "gmailId": "1a1c28920295eadb",
+  "subject": "TroubleshootJS: RUN input policy and cohort staging pushed",
+  "emailDisposition": "SENT_ONCE_ACKNOWLEDGED",
+  "documentationReceiptNeedsNoSecondEmail": true,
+  "next": "R7 scalar-to-cleanup body handoff under an explicit staging contract",
+  "genuineEnvelope": "UNSPENT_GATED",
+  "playable100": 0,
+  "beta": "HELD"
+}
