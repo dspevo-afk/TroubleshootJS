@@ -1289,6 +1289,19 @@ betaHELD. Implementation `30ef682ff6a8e22064ca25949d71f057c6006ec8` normally
 pushed to origin/codex/q100-physical-feasibility, exact remote verified;
 completion Gmail `1a1bf3c3e1c05dbc` sent once.
 
+The [authored flat native work-plan component](task-evidence/Q100/authored-flat-work-plan-r1/README.md)
+is locally accepted for deterministic Source derivation and synthetic detached
+accounting through the actual shared Meter. One44-field plan replaces the
+generic nested ledger; identity-bound finalization updates34 existing slots
+without reading the closed Meter. Private/public14-method Source suites,
+byte-identical reproduction, fresh JDK8 compilation and564 actual JVM assertions
+pass. Earlier Source/build failures remain preserved. Whole-study dispatch,
+fixture/input production and both exports remain denied. Real DTO capture is
+Source-audited only; current native assembly/export and host/lifecycle gates
+remain pending before the unspent genuine original+NULL/OBSERVE envelope.
+No production, routing, electrical or population renewal; playable100=0/betaHELD.
+All caps and data exclusions remain. Publication and completion email pending.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

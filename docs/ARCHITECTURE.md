@@ -250,6 +250,18 @@ same-Meter, prepayment, export or lifecycle authority; those remain separate
 gates before the unspent genuine envelope. The adapter template is a generation
 input, while the emitted module is the runtime owner.
 
+The [authored flat work-plan overlay](task-evidence/Q100/authored-flat-work-plan-r1/README.md)
+replaces W's generic ledger/plan with one44-field native component while retaining
+the adopted-only checkpoint and actual shared Meter adapter. Real DTO detachment
+and a synthetic scalar canary share the same plan-construction owner. The plan
+binds Meter, checkpoint, body and work identities; prepayment precedes freeze
+and finalization, and finalization replaces only34 existing numeric slots without
+reopening the Meter. Its checked generator pins four Source parents and records
+preserved spans. Study dispatch and both export overloads stay denied. Newly
+authored fixture/input throw stubs and an interface-only carrier permit fresh
+compilation without old input DATA/classes or a replacement Meter. This component
+does not port Q assembly, qualify real DTO capture or enable export/host authority.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

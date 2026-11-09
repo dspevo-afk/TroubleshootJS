@@ -1,0 +1,113 @@
+{
+  "nativeSupport": "NEW_DENY_STUBS_AND_INTERFACE_CARRIER_NO_METER_REPLACEMENT",
+  "parents": [
+    {
+      "bytes": 229578,
+      "role": "R_STUDY.java",
+      "sha256": "88986781508aa34783d11e651082122f4bf8e0710a2263b39cc9b597fce9a8cf"
+    },
+    {
+      "bytes": 239584,
+      "role": "W_STUDY.java",
+      "sha256": "1ae31054a430c00bf926ff4deff8091892bae267f05257aa0d869000226f7bd1"
+    },
+    {
+      "bytes": 4567,
+      "role": "PREPAYMENT_R1.md",
+      "sha256": "2d6968320ad1707e3eb913429f7b23c6ebd7ee27a1ad1d3b05fec5197e2fed39"
+    },
+    {
+      "bytes": 7363,
+      "role": "WIRE_R1.md",
+      "sha256": "1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed"
+    },
+    {
+      "bytes": 4409,
+      "role": "NATIVE_MAP_R1.md",
+      "sha256": "d6625e0c2ab8e2002fc4df68693e96502bffa0e9c44a9f25dc3cfb895c946563"
+    },
+    {
+      "bytes": 207814,
+      "role": "CURRENT_PURE_KERNEL.py",
+      "sha256": "8e8c374a089a13c4defea9c4b5b548eb1bc1242cddabc1faf468dba420695af4"
+    },
+    {
+      "bytes": 233880,
+      "role": "Q_AUTHORED_STUDY.java",
+      "sha256": "d6485b0b0f9c518431d440fcb57e477143d50cae78302c29598d12aaa4601dbd"
+    },
+    {
+      "bytes": 182535,
+      "role": "SHARED_OWNER.java",
+      "sha256": "4ed1c8561adf1619a8b7ffbd21e23fdf2544dcaafe541af4e5d2b2b1e95cabe4"
+    },
+    {
+      "bytes": 172568,
+      "role": "NATIVE_PRIVATE_PCB.java",
+      "sha256": "7bf4ab57198ff9444381ec5d677c1a2bc309bfa3e7f01b188c631ffe5f2b966c"
+    }
+  ],
+  "privateEmission": {
+    "actualPriorDataReads": 0,
+    "generatorSha256": "d10940b04cb7f37108a5523c9acb33cc9421ba0acfffcef2107ad6b0e52d4bbb",
+    "genuineEnvelope": "UNSPENT_GATED",
+    "membersSha256": "3a3034504f72451b2d792424f556a32edd866f68accb8c1b74f1ab5327f34eff",
+    "nativeCalls": 0,
+    "oldDataClassReads": 0,
+    "protectedHeldoutReads": 0,
+    "provenanceBytes": 6465,
+    "provenanceSha256": "0b42c3c585b5656bdd92069b4c17abd55a3e954821de26e6bb68d67d55e6bd75",
+    "status": "PASS_SOURCE_DERIVATION_ONLY",
+    "studyBytes": 229972,
+    "studySha256": "0a7e31b20dabd80a33e5dc5886507817cbc138ce96a37eb20ecc54a6e2ff93e0"
+  },
+  "privateParents": "PINNED_SOURCE_NOT_INCLUDED_NO_STANDALONE_PUBLIC_REPLAY",
+  "publicSources": [
+    {
+      "bytes": 26136,
+      "role": "generate_authored_flat_work_overlay.py",
+      "sha256": "d10940b04cb7f37108a5523c9acb33cc9421ba0acfffcef2107ad6b0e52d4bbb"
+    },
+    {
+      "bytes": 22521,
+      "role": "AuthoredFlatWorkMembers.java",
+      "sha256": "3a3034504f72451b2d792424f556a32edd866f68accb8c1b74f1ab5327f34eff"
+    },
+    {
+      "bytes": 31922,
+      "role": "AuthoredFlatWorkCanary.java",
+      "sha256": "38def52bfe4d365b3f821099cef0d847eb0819aa69d9f0158d01e4cec999ff42"
+    },
+    {
+      "bytes": 566,
+      "role": "CohortTerminalTelemetryInput.java",
+      "sha256": "bc0ff7ab787537f16e211ccfc4d787059aefef86dea3554d27f063b88e67660f"
+    },
+    {
+      "bytes": 958,
+      "role": "ActualGeneratorBranchOrderStudy.java",
+      "sha256": "855ad071798106d0d419d6382af3251240ad2c342d1542eca27dec7d7e4fc2cd"
+    },
+    {
+      "bytes": 265,
+      "role": "PhysicalSpecificationDeveloperVerifier.java",
+      "sha256": "1e1c4e0517aedad06dd0cea1d75aa8b3ce23abf735ec8a607d014ad1f77827a0"
+    },
+    {
+      "bytes": 747,
+      "role": "FailedFirstFixtures.java",
+      "sha256": "a49ec2911e7f9b36c66f3b9be56841707cd1afc127e3b5d716b0d689d137542c"
+    },
+    {
+      "bytes": 13420,
+      "role": "test_flat_work_overlay.py",
+      "sha256": "864eb17ed8591b8caff2de6eed74b80ef3f5f1e68c3870ef34d7551e9c14a2d2"
+    },
+    {
+      "bytes": 6465,
+      "role": "SOURCE_PROOF_R1.json",
+      "sha256": "0b42c3c585b5656bdd92069b4c17abd55a3e954821de26e6bb68d67d55e6bd75"
+    }
+  ],
+  "status": "SOURCE_ROLE_HASH_INVENTORY_NO_DATA_OR_PERSONAL_PATHS"
+}
