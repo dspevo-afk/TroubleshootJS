@@ -1,0 +1,34 @@
+{
+  "status": "FINAL_GATES_PASS_NO_EXECUTED_SOURCE_OR_NATIVE_FAILURE",
+  "preExecutionCorrections": [
+    {
+      "item": "contract/fragment meter type",
+      "oldContractSha256": "02804d983545b7c2853bde1f61b26c262f9234d59d4ad31c6a214d657a22018b",
+      "oldContractRawRetained": true,
+      "change": "Expand shorthand Study.SetupMeter to actual CohortTerminalTelemetryStudy.SetupMeter",
+      "censusChanged": false,
+      "oldFragmentReleasedOrExecuted": false
+    },
+    {
+      "item": "unreleased emitter draft",
+      "change": "Reused established bounded stable Path IO instead of unnecessary Win32 ctypes API",
+      "oldDraftReleasedOrExecuted": false,
+      "rawDraftRetained": false
+    },
+    {
+      "item": "test/CLI harness",
+      "change": "Isolated child Python -I -B, strict emitter args, forwarded unittest args, no skipped required reparse check",
+      "oldDraftReleasedOrExecuted": false
+    }
+  ],
+  "allRawDraftHistoryClaimed": false,
+  "independentOracleSourceUnchanged": true,
+  "scopeLimits": [
+    "constructor only",
+    "headers and children are caller-prevalidated",
+    "two null slots must be filled before serialization",
+    "metadata/R7/ticket composition not exercised here",
+    "completed formatter fixture intentionally fails normal full-D semantics"
+  ],
+  "genuineEnvelope": "UNSPENT_GATED"
+}

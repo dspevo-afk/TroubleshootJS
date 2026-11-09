@@ -1,0 +1,35 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_ROOT_CONSTRUCTOR_SOURCE",
+  "files": [
+    {
+      "role": "RootBodyConstructor.java.fragment",
+      "bytes": 1539,
+      "sha256": "2e1070eb3ff29ffd90a706b061d26edd4a20f8da272ca7b8342f3b03ab977363"
+    },
+    {
+      "role": "generate_root_body.py",
+      "bytes": 6865,
+      "sha256": "60a271c952e20b1ffbe2445c28c6b9724b3b44e3045520f68d487cdc139cb415"
+    },
+    {
+      "role": "test_root_body_source.py",
+      "bytes": 10209,
+      "sha256": "14ea00b82acfea6d378659b2dc757da8d945688ab116284e675a15a9ae74d6c2"
+    },
+    {
+      "role": "RootBodyConstructorCanary.java",
+      "bytes": 20213,
+      "sha256": "5effa63566107bf9e7a27425551ab78c006ca66d64991032da0fc7a7bd33436e"
+    },
+    {
+      "role": "build_root_body_r1.py",
+      "bytes": 23814,
+      "sha256": "c9fd33ea9c8f5e542fc3a0a03c28e7015fe73802139997d9204b193190ae921c"
+    },
+    {
+      "role": "run_root_body_r1.py",
+      "bytes": 39814,
+      "sha256": "a7cf7ab8913c0a378e6fe49efb2f7d4ce999ff705fc2c4a0c115a6f821393a17"
+    }
+  ]
+}

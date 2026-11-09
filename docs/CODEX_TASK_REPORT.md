@@ -1,4 +1,125 @@
-# Current checkpoint: body ownership guard published
+# Current checkpoint: root constructor accepted, publication pending
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD1b22c5edb55b0009ad03037370a5fef72a87112b;
+normal origin/codex/q100-physical-feasibility/no upstream. Bodyguardaa375049+receipt1b22c5ed
+published; Gmail1a1c15b0912e8bc9 SENT_ONCE, neverduplicate. Currentconstructorlocally
+ACCEPTED/commit-push-mailpending. ProofEEF1521824C72D621446A6C70D2549131733660A16FE724888D88BE351F3A32A
+in native-root-body-r1. ExistingcodecowneraddscreateBody, fragment2E1070EB/1539B,
+baseline76FB7BBC/18580B ->emitted04B016AF/20119B; outsideinsertionunchanged. Runtime
+14units/13logicalentries/1chunk beforeoneMap32+13puts; fourchildrefsborrowed, two
+present-nullprior/workslots. Fixedkeyrefs/directedargsincludedlogicalcopycontract;
+no childgetters/traversal/clones/validation/newDTO/ledger/finish. Onlyfreebasicnull-
+Meterguard. Callerprevalidatedheader/children andexclusivestability required; staged
+invalid/incompleteinput stillrejectedbyexistingcodec, noheaderauthenticationclaim.
+
+FreshfinalJDK8 PASS861Sources/2483classes/11916805B/allmajor51,4803.6304/5036.0412ms
+operation/wrapper. ActualMeterSMOKE1 PASS346.4219/586.4562ms FIRST; SUITE15 PASS
+5470.0711/5882.264ms. Exact16frozennames; order/refs/nullslots/trap14/13/1, realcopy/
+allocation-fee/group640/90s/5s/rollbounds andindependentcanonicalbytes+digest PASS.
+FinalpublicSource10 PASS611.3926/844.5271ms; emitter342.1488/577.8525ms reproduces
+compiledcodec exactly. FouractualCLIcontrols(positive/existingoutput/wrongsame-length
+Source/fragment); exit2 expectedreject notnativeproducerPASS. AllconsumedSources/tools/
+JARs/classes/actualargv/processproof reauthenticated; no unchangednative rerun.
+
+D=OS-temp/tsj-q100-root-body-0c3582bbb3a74f55b0a3576cb54fae5e retains16Sourceparents,
+finalcode/fixtures/classes/gates. SourceR1B425E75B/R2A03674E7, finalcontractB544BB8E.
+Initialcontract02804D98rawpreserved(contract-history-r1) aftershorthandStudytype
+clarifiedactualCohortTerminalTelemetryStudy; inventoryunchanged/beforeexecution.
+UnreleasedemitterWindowsAPIdraft removedforexistingboundedIO, testisolation/CLI
+forwardingcorrectedbeforefirstrelease; no executedSource/nativefailures, no complete
+rawdraft-historyclaim. RootfinalSource/API/census/integratedreview, leafSourceowner
+auditbeforedesign; noindependentnativeexecution/finalcodereview. Casesrecordoperation/
+cleanupseparately; expiredMetersdiscardedwithoutOSresource, unexpectedcleanupFAIL.
+Selectedchildren terminated/ownedroots+logsabsent; processcleanupdurationunmeasured.
+No newpersistentprocess/link. Priorroots/failures/uncertainbrowser14116/start639294472690745890/
+58320,preview34180/start639294472514546595/58264+14children,oldDprocess/unlinkUNCERTIFIED
+untouched. Main5f05b0059tracked/6untracked, E d9747229reportM, Desktope0c368857tracked/
+89untrackedfiles preserved; Main/Ereportmirroronly. F intendedconstructor/docs only
+beforestage. No production/visiblechange: GWT/PlayerN/A, electrical/population NOTRENEWED.
+Allcaps/exactseeds/epochs/oracles/CircuitJStruth unchanged. Full30excluded/HARD-PSYCHOTIC
+unavailable-unrun/oldnormal20historicalREAD-no reread/protectedunreadUNCERTIFIED/playable100=0/
+betaHELD/genuineoriginalNULL/OBSERVE UNSPENT_GATED. Nextpublishvalidatedconstructor,
+then syntheticconstructor/metadata/R7/ticketcomposition; whole-result/normalassembly/
+actualhost/lifecycle remainunqualified. No userdecision.
+# Historical checkpoint: root constructor Source implementation
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD1b22c5edb55b0009ad03037370a5fef72a87112b;
+normal origin/codex/q100-physical-feasibility exactverified/no upstream. Bodyguard
+implementationaa375049/receipt1b22c5ed published; Gmail1a1c15b0912e8bc9 SENT_ONCE.
+Neverduplicate priorcompletionemails. BodyguardproofC756F016 remainsitsboundedcandidate;
+no renewedproduction/Player/electrical/population ornormalassemblyqualification.
+
+D=OS-temp/tsj-q100-root-body-0c3582bbb3a74f55b0a3576cb54fae5e. ImmutableSourceR1B425E75B
+ninecurrentparents; R2A03674E7 sevennative/reader/independentoracleSources. Rootcontract
+CONSTRUCTOR_CONTRACT_R1.md02804D983545B7C2853BDE1F61B26C262F9234D59D4AD31C6A214D657A22018B
+frozenbeforecode. CodecprivatecreateBody ownerreusesexistingconstants/BODY_ROOT_KEYS.
+Onlybasicfree nullMeterguard(BODY_CONSTRUCTOR_METER); callerprevalidatedstrings/fourchild
+Maps, no getters/validation/traversal/childcopy. Fixedschema-key refs/directargs/nulls
+includedinlogicalentrytransfer. copy13+allocation1beforeexactLinkedHashMap32+13puts;
+14units/13entries/1chunk. qualifiedPrior/workpresent-null, metadatafillsthenR7fills/
+guards/closes; keepexistingticket. No newDTO/ledger/normalcaller. Callerexclusivestable
+body/children; constructingdoesnotauthenticateheader orcompletearesult.
+
+LeafworkersSourceonly: Luna fragment/emitter/puretests, SolactualMetercanary+literal
+canonicaloracle, Solfresh861Sourcebuild/runtimeadaptation. PlannedSMOKE1/SUITE15
+uniqueconstructor/order/identity/trap/no-extra-validation/admission/deadline/group/
+existingcodec_rejection/independentcanonicalbytecases. ActualtypedParent/SetupMeter
+only,no fakeOriginalArm/ArmResult/graph. Header/formatterimplementationbytesmuststay
+unchangedoutsideexactmemberinsertion. RootSource/debitaudit beforegeneration/compile/
+native. NOTRUN; no imports/generation/tests/compiler/native/DATA/journals/oldclasses/
+producer/Original/Session/routing inD. Normalmain/assembleclosed; genuineoriginalNULL/
+OBSERVE UNSPENT_GATED. No newprocess/link. Existingroots/failures/uncertainresources
+preserved. Main5f05b0059tracked/6untracked, E d9747229reportM, Desktope0c368857tracked/
+89untrackedfiles; Main/Ereportmirroronly. F reportM only/staged0 beforeintegration.
+Allcaps/exactseeds/epochs/oracles/CircuitJStruth unchanged; GWT/PlayerN/A absentproduction/
+visiblechange; electrical/population NOTRENEWED. Full30excluded/HARD-PSYCHOTICunavailable-
+unrun/oldnormal20historicalREAD-no reread/protectedunreadUNCERTIFIED/playable100=0/betaHELD.
+NextRootreview/freezeexactSourcecases,selectedgates,publishvalidatedconstructor; complete
+metadata/R7composition/fullresult/normalhost/lifecycle remainnextscopes. No userdecision.
+# Historical checkpoint: thirteen-key root-body Source audit
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD1b22c5edb55b0009ad03037370a5fef72a87112b;
+normal origin/codex/q100-physical-feasibility exactverified/no upstream. Bodyguard
+implementationaa375049a9f71fd11c230cb0d6bbc7f41042c499 +receipt1b22c5ed published;
+Gmail1a1c15b0912e8bc9 SENT_ONCE. Neverduplicate thisorpriorcompletionemails.
+ProofC756F0160502912122AEA21EF8A6D0BBBC25264E0FA93A3C2C3DBC8E29B4700A accepts only
+standalonebodyownershipguard/exact47BR7insertion/syntheticdetachedscalarhandoff.
+Final860SourceJDK8/2487classes/11919986B/major51, finalpublicSource11/fouractualCLI
+controls/actualhostreparse-before-read/Native9+21 PASS. Exact1m5000011units/nextreject
+5000013; R7all34equations4955/97/5. Source/publicemission andallconsumedinputs/process/
+argv/classbytes reauthenticated; no unchangednative rerun. No production/visible
+change, GWT/PlayerN/A/electrical-population NOTRENEWED. Limits/failures/history inpacket.
+
+D=OS-temp/tsj-q100-root-body-0c3582bbb3a74f55b0a3576cb54fae5e owns9exactSources,
+manifestB425E75B68349611B7471C98F9562B47ADC4B05209FAEAEC570D17DCCB4FEF7C;
+ROOT_FACTORY_SOURCE_MAP_R1.md64BB7EC3943D378B5BA7371A23B1A58556613A9DED1EA89B5B7FB9BBBED29230.
+SOURCE AUDIT ONLY. ExistingCodec76FB ownsheaderconstants/13-keyorder. Candidatefactory
+belongsinsidecodec; directprevalidatedheaderstrings/fourexistingchildMaps, qualifiedPrior/
+work present-null, allsixMapsatserialization. Constructor-onlyallocation1/copy13 suggests
+14units/13entries/1chunk CONDITIONALLY; actualnull/control/getter/fixedkey-accesspolicy
+mustbefrozenbeforeimplementation. No duplicatedheaderauthority orsilentlyfreechecks.
+Metadata.prepare fillsprior/returnsexistingticket; R7fillswork/guard/accounts/closes;
+carrytickettoexport. Exclusivestablebody/childrenrequired, guardnotdeepfreeze/external
+aliasproof. RootintegratedleafSourceanchors; leafverified9pins. No implementation/
+import/generation/test/compiler/native/DATA/journal/oldclasses/producer/Original/Session/
+routing inD. Normalmain/assembleclosed; genuineoriginalNULL/OBSERVE UNSPENT_GATED.
+Nextfreezeconstructorcontract thencomponent/native/syntheticcomposition gates. No userdecision.
+
+ABinitialSourcefailures/rawtestrevisions/nonfinalcompile preserved; withdrawnrunnerCDBD
+raw/lengthmissing/hashonly/notexecuted; unreleasedreaderSourcealsonotretained/notexecuted.
+AC=OS-temp/tsj-q100-body-ownership-final-fe77fa01f4a748d78cbe96a0eb6085a3 retainsfinal
+code/classes/gates; PUBLICATION_R1.json +NEXT_ROOT_R1.txt. Allselectedchildren terminated/
+ownedroots+logsabsent; casecleanupmeasured, processcleanupdurationunmeasured. Deliberately
+expiredgroupMeterdiscardedwithoutOSresources. Automaticreviewblockedtemporaryjunction
+BEFORElaunch; actualexistingWindowsjunctionreadonlycontrols passed; no linkcreated/deleted.
+Priorroots/failures/uncertainbrowser14116/start639294472690745890/58320,preview34180/
+start639294472514546595/58264+14children,oldDprocess/unlinkUNCERTIFIED untouched.
+Main5f05b0059tracked/6untracked; E d9747229reportM; Desktope0c368857tracked/89untracked
+files preserved; Main/Ereportmirroronly. F reportcheckpointM only/staged0 afterpublication.
+Allcaps/exactseeds/epochs/oracles/CircuitJStruth unchanged. Full30excluded/HARD-PSYCHOTIC
+unavailable-unrun/oldnormal20historicalREAD-no reread/protectedunreadUNCERTIFIED/
+playable100=0/betaHELD. Rootconstructor/whole-result/full-D/H1/normalhost/lifecycle unqualified.
+# Historical checkpoint: body ownership guard publication
 
 UTC2026-11-09. F codex/q100-terminal-only-20261107 HEADaa375049a9f71fd11c230cb0d6bbc7f41042c499;
 normal origin/codex/q100-physical-feasibility exactverified/no upstream. Previousmetadatad374e29b/

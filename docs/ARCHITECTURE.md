@@ -340,6 +340,16 @@ with guard work included in actual residual metadata. The standalone guard and
 synthetic R7 handoff are qualified; R9/direct-export bypasses, current root-body
 construction, normal assembly and host/lifecycle remain separate boundaries.
 
+The [current root constructor](task-evidence/Q100/native-root-body-r1/README.md)
+adds a package-private factory inside the emitted codec, retaining its existing
+header constants and key order as the sole authority. It prepays13 logical entry
+copies and one map allocation, borrows four caller-prevalidated child maps, and
+leaves qualifiedPrior/work present-null for their later owners. It does not
+authenticate headers, traverse children, clone the tree or close the Meter.
+Existing serialization still rejects incomplete/invalid staged bodies. Constructor
+identity/debit and independent canonical bytes are qualified; complete metadata/R7/
+ticket composition, normal assembly and actual host/lifecycle remain separate.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

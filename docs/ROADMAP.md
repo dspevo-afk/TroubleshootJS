@@ -1407,6 +1407,18 @@ aa375049a9f71fd11c230cb0d6bbc7f41042c499 was normally pushed to
 origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
 1a1c15b0912e8bc9 sent once.
 
+The [current root constructor](task-evidence/Q100/native-root-body-r1/README.md)
+is locally accepted for its staged thirteen-key Map and14-unit/13-entry/one-chunk
+construction. Final861-Source JDK8 build,2483 major51 classes,10 public Source tests,
+four selected emitter controls and16 native cases pass. Literal order/identity,
+admission/deadline/group boundaries, unchanged header errors and independent
+canonical bytes pass. Final public replay matches the compiled codec; all consumed
+native inputs are reauthenticated. The factory borrows caller-prevalidated inputs
+and does not authenticate them. Next is synthetic constructor/metadata/R7/ticket
+composition, then whole-result/host/lifecycle gates. Normal assembly remains closed;
+genuine original,NULL,OBSERVE unspent/gated, playable100=0/beta held and data
+exclusions remain. Normal publication is pending for this accepted constructor.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

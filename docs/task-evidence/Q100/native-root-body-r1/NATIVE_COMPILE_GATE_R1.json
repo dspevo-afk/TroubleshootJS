@@ -1,0 +1,33 @@
+{
+  "allMajor51": true,
+  "call": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "native-root-body-fresh-jdk8-compile-r1",
+    "processElapsedMs": 4803.6304,
+    "receipts": {
+      "owner.json": "616bac8e83e191bc9e5d5766443731411047324ddf075590f4074a432773fc21",
+      "parent.json": "f64460dab7cb711201e2ad1dcb4d4646d73367a8fade6566a732a488cf73e8db",
+      "process.json": "8e7e0251a1bde179ad0d10183cec17d8ee3a5ccf3b08b4415375c7f9ed4a0b43",
+      "request.json": "575b2c8643dc3d6c517aaf765eb63152ce8b3f0c1a2de99c214768626cafa612",
+      "result.json": "d653250738629a4927384d478b408a2bf3857974d1507c528f8e3e3412cf5bb9",
+      "stderr.txt": "5a63604761c45d7d50b0b1b6e3a6128b43a62a0f527e6e88a33f9b8609b0d017",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 5036.041200000001
+  },
+  "classBytes": 11916805,
+  "classCount": 2483,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "inputSha256": "b409bd103cfcc8414470e18e9ab5f5f18891d17fce4870818dd1b2a8b535658c",
+  "inventorySha256": "d46358aa81440dfa1ce3500fdea19217ac0fde55e55d0289879a6c12f46a0fe0",
+  "isolatedCleanupDurationMs": null,
+  "manifestSha256": "3b129e8958a4fafabd61ade2a716f41e87567ead935e4c4fc360ac1595bd6997",
+  "normalHostAcceptance": "NONE",
+  "runtime": "NOT_RUN",
+  "sourceCount": 861,
+  "status": "PASS_FRESH_NATIVE_ROOT_BODY_COMPILE_ONLY"
+}

@@ -1,0 +1,35 @@
+    /**
+     * Stages the current result body from caller-prevalidated header values and
+     * borrowed child maps. The caller keeps those children stable through later
+     * preparation, R7, and export; the two null slots are filled by later owners.
+     */
+    static Map<String, Object> createBody(
+            CohortTerminalTelemetryStudy.SetupMeter meter,
+            String runId,
+            String sourceManifestSha,
+            String inputContextSha,
+            Map<String, Object> originalCapture,
+            Map<String, Object> cohort,
+            Map<String, Object> arms,
+            Map<String, Object> cleanup) throws Exception {
+        if (meter == null) throw failure("BODY_CONSTRUCTOR_METER");
+
+        meter.copy(13);
+        meter.charge(1);
+        Map<String, Object> body =
+                new java.util.LinkedHashMap<String, Object>(32);
+        body.put(BODY_ROOT_KEYS[0], RESULT_SCHEMA);
+        body.put(BODY_ROOT_KEYS[1], RESULT_MODE);
+        body.put(BODY_ROOT_KEYS[2], RESULT_STATUS);
+        body.put(BODY_ROOT_KEYS[3], runId);
+        body.put(BODY_ROOT_KEYS[4], sourceManifestSha);
+        body.put(BODY_ROOT_KEYS[5], WIRE_CONTRACT_SHA256);
+        body.put(BODY_ROOT_KEYS[6], inputContextSha);
+        body.put(BODY_ROOT_KEYS[7], null);
+        body.put(BODY_ROOT_KEYS[8], originalCapture);
+        body.put(BODY_ROOT_KEYS[9], cohort);
+        body.put(BODY_ROOT_KEYS[10], arms);
+        body.put(BODY_ROOT_KEYS[11], null);
+        body.put(BODY_ROOT_KEYS[12], cleanup);
+        return body;
+    }
