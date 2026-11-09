@@ -1,0 +1,773 @@
+{
+  "actualPriorQualification": "FAIL_THREE_ATTEMPTS_PRESERVED_NOT_RERUN",
+  "beta": "HELD",
+  "capsSeedsEpochsOracles": "UNCHANGED",
+  "code": [
+    {
+      "bytes": 93580,
+      "role": "normalize_prior.py",
+      "sha256": "9112b6b4ceaf9721e92057e9a8ecdb5698fb602725c4131d937acbf1390c0081"
+    },
+    {
+      "bytes": 13682,
+      "role": "test_normalizer_observation.py",
+      "sha256": "ccd687726df7a3039368eda7043945c88f31d82abecc66c53566388897ac1d02"
+    },
+    {
+      "bytes": 5509,
+      "role": "canary_observation_contract_r1.py",
+      "sha256": "dac0fbb1c14b9ae528ea2663dc319ffc655ab03118c95d6de1c06a0ae87ad044"
+    }
+  ],
+  "electricalPopulation": "NOT_RENEWED",
+  "full30": "EXCLUDED",
+  "fullD_H1": "UNQUALIFIED",
+  "gates": [
+    {
+      "actualPriorBodiesRead": 0,
+      "calls": [
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-private-normalize_prior-r1",
+            "processElapsedMs": 375.28700000000003,
+            "receipts": {
+              "owner.json": "c9cba51917a1d86683401ce3e6423f97337b6c4f741ad551cc0e7b0500368b4f",
+              "parent.json": "5a90bbf1c3adf74f10c24df7b5b11017f6f0cc4a485faf4227d5442e45611510",
+              "process.json": "de6b59d733be54303161c7c3aec46e43c86a4bf9eb5aa6233beab6bc115081d8",
+              "request.json": "dca9fc617af542efbc68f552e43d95d81528d563593a6c308bb68a8f347e0f01",
+              "result.json": "2c3e711dc9425643aa66efffd6097054289b512fb461916e6e3d37350e3a5f3a",
+              "stderr.txt": "033ebb21b6bd5415805fa3f4fb75dea13eac26ea33b964ff0aaf66882c58fa41",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 799.9008
+          },
+          "count": 13,
+          "reuse": "CONSUMED_INPUTS_UNCHANGED_AUDITED",
+          "test": "test_normalize_prior.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-private-normalizer_metadata-r1",
+            "processElapsedMs": 509.81320000000005,
+            "receipts": {
+              "owner.json": "af8e8451fe154ceb10c76f69b9f599da76022f7422f681b46b91751c81a8ae3e",
+              "parent.json": "ad36e7d6d3079b9ba76ed0bccff5b17da9acf3eb52b2b85d314af5e8388e6300",
+              "process.json": "d7576f4bc86d9b36540abcda460221ccf890943730d0216cc37c6f0d0b6d1e8d",
+              "request.json": "d8510fff7c6dc8f2a2b47a79d65b8b16f3b12c309ffecd127d62158979ab6566",
+              "result.json": "5ea6341f566959de727aa6ed1d3ccf15cae61e73ec12f47e66d7bbb14ffca1e9",
+              "stderr.txt": "69ca92d4a62b5273751aa8a3248ee487be0bb296d9ecdb7abd1cfcd8c4e0e005",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 741.4134
+          },
+          "count": 9,
+          "reuse": "CONSUMED_INPUTS_UNCHANGED_AUDITED",
+          "test": "test_normalizer_metadata.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-private-normalizer_authorities-r1",
+            "processElapsedMs": 376.4288,
+            "receipts": {
+              "owner.json": "3d79d89bcd677a14f25d068cc7a3895664543ed3522cf4f7625682546c8b24ed",
+              "parent.json": "874e733cdce2802816b6020c6db9ba640fde7f0e106a1ec18a81efa2981245ca",
+              "process.json": "731ee8babbd9cb14fdd8e75be629573ebb6549281d9e2e9751c81c247a899829",
+              "request.json": "806e01a81df6fce880206194d14ff58059a1228bf80bd4efa3d740ee89b25128",
+              "result.json": "7f2ad9744a2512b4b87b17a1c4e613997a36756c9292a2f48d09ca604fd41908",
+              "stderr.txt": "c1afa583ffe0545dce4d85d956a15f7d9b417638d9575aa4b1cfa4f94ac33163",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 621.0811
+          },
+          "count": 10,
+          "reuse": "CONSUMED_INPUTS_UNCHANGED_AUDITED",
+          "test": "test_normalizer_authorities.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-private-normalizer_pad_join-r1",
+            "processElapsedMs": 377.4576,
+            "receipts": {
+              "owner.json": "6d1a0f67a48db4db293e9e66691bc77bc488430887fd6c51456f43d81bc650bc",
+              "parent.json": "7d89984e2d77940921112941cb543ca857f50e43c27ebfb1f2d9ca02b1cf0148",
+              "process.json": "9a85ade874668659ed60acb2d60d9a0f6a616b79a4330e11382b28aa72ec02b4",
+              "request.json": "34ee8efef7c899f45adba887aede6bb3da5fea8e502757d3c5656aed769adcb1",
+              "result.json": "0a20cb4e56aa9f44dc4f6268e60053e1d2a0c28ed931a0a7a0f631181f154f4f",
+              "stderr.txt": "d80c434329c6b3cfaae25854f52ea58182b8b63449e162326f75f0f900c87f09",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 627.0254
+          },
+          "count": 9,
+          "reuse": "CONSUMED_INPUTS_UNCHANGED_AUDITED",
+          "test": "test_normalizer_pad_join.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-private-normalizer_work-r1",
+            "processElapsedMs": 369.5143,
+            "receipts": {
+              "owner.json": "e2b3639f95ea6bc0476f76551404171df6d7cf81d741c0fc683e0406ae3eb6b3",
+              "parent.json": "0447a2e54c9a81616cc991236ed32c1bb33accf72e6ead9c74fdc8b43334bd51",
+              "process.json": "b1d442caa27d880c84c6ebb7abd171d53c79f8eebf9aa64b0973a5d2ce58882f",
+              "request.json": "c4114bb798730f322e60ffc146b1df5ce8ef9d5b61cc72f39ed37abe85e3d186",
+              "result.json": "70fd9d24ae812eb61f9536e94468ad8d5cc8f520a81881c3fd94a90865b171c4",
+              "stderr.txt": "d4110177de1b917fa64eb9f0a8a97fb8a9b6ee781d14eae7f9da06a8a2d65d5b",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 607.4128000000001
+          },
+          "count": 11,
+          "reuse": "CONSUMED_INPUTS_UNCHANGED_AUDITED",
+          "test": "test_normalizer_work.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-private-normalizer_semantics-r1",
+            "processElapsedMs": 384.439,
+            "receipts": {
+              "owner.json": "f81dcc5d90943fb03ea517911a8a48339f50a1e79ee00ea58710c55eb5d50cd0",
+              "parent.json": "9c158bb7d6bac00f3585c6e9d31af043c09dbb02bcdadfbf22bb045cbe9c7be3",
+              "process.json": "b4e6a1b41d57ba61bc860dbcc24e162aa58b6ba31499237ab0b8d76d53f6454f",
+              "request.json": "4e4d5049f6f9d3aa3589313a0c38025f5a36661281f3a5ab170ea4947bc93f25",
+              "result.json": "6cf0dfa9f73f86653e958b0753003583c4dd9ce001fb4678a6b4d9ebf6458f8f",
+              "stderr.txt": "0466b8dee8e1bf11ba88b4923745628e1364e9d9f159909170a1d0f19aec2c9d",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 615.3758
+          },
+          "count": 4,
+          "reuse": "CONSUMED_INPUTS_UNCHANGED_AUDITED",
+          "test": "test_normalizer_semantics.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-private-normalizer_allowlist-r1",
+            "processElapsedMs": 371.54900000000004,
+            "receipts": {
+              "owner.json": "e7eb15fba4d2053d015c06e9809b02cc77f41e47c7130c679ed425d5fbe5797b",
+              "parent.json": "de2b9149bfb3956d8aae8d25a556d5246734038c14604f9cc7a43b2f8466fb6f",
+              "process.json": "8e17433520625a82aab455b3ea9aa169e7d80e4ac01ec340779db771015d959f",
+              "request.json": "a9ec4e15dc5efc1576d4f1ae6af035d2629c4260cbaa6cf8b8d13dc65ceea2e4",
+              "result.json": "c3300fd649c98c93e366da24911a4e4bbc4dfe5c66abe7086e3c29a63d97b8e9",
+              "stderr.txt": "6397cff971a6d66ccef443fd678dc6e35253d4ef07aeb4493129280105deb95b",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 605.8384
+          },
+          "count": 5,
+          "reuse": "CONSUMED_INPUTS_UNCHANGED_AUDITED",
+          "test": "test_normalizer_allowlist.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-private-normalizer_qualification_stdout-r1",
+            "processElapsedMs": 373.25260000000003,
+            "receipts": {
+              "owner.json": "ce2b05982da6590c8eb6992b6a96b84e6c6383b2e99d8bd2a2e106a2d913f2e1",
+              "parent.json": "1cf24761d036aa9da3f8c73a54f50ac80a6224169674e35e2da2eb3ab95bc454",
+              "process.json": "ed96eda012aaf8f59d5fc6c414b49c165f94a1c7816c6098bc17b978a4c193be",
+              "request.json": "401b88621441f72de7ead80c4ec9fb9123d0a6597d6415dfd6115a2c152c7045",
+              "result.json": "39cc89c0eb747fef2b8c6e282497f8e3d514b5a9d8999f18663ccafdda88c3d5",
+              "stderr.txt": "8ca030e8a6040d32088214d4815175ac1d9b9499bac019dd83c7fba65412f6b3",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 609.1563
+          },
+          "count": 8,
+          "reuse": "CONSUMED_INPUTS_UNCHANGED_AUDITED",
+          "test": "test_normalizer_qualification_stdout.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-private-normalizer_native_marker-r1",
+            "processElapsedMs": 396.08660000000003,
+            "receipts": {
+              "owner.json": "4e2031bc362232360dc8234047c5dc5634b64b4b3782c7cf0b36cea60f651b1f",
+              "parent.json": "b31bfe7febc445dde72d32cd5ec067020cd033f1d5244b149ced8171814cd22e",
+              "process.json": "b9c5aa17bc4d0cbc3116d5720e3a43dfe5a1adbc04b7f3ed290932dc0e9b1d1c",
+              "request.json": "4d78ea2800cef841fec9f6143d150fc0569bed52a95ee37b385426347aabc652",
+              "result.json": "e6f46118a6676afdaf248254141e3873106405ac1f25d9965e840a186af21692",
+              "stderr.txt": "ca8eaabb6efca01156410bf8d25395ef7ff60c3fe71fa8b2deb29cdc7b5528ff",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 639.7245
+          },
+          "count": 10,
+          "reuse": "CONSUMED_INPUTS_UNCHANGED_AUDITED",
+          "test": "test_normalizer_native_marker.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-private-focus-r2",
+            "processElapsedMs": 376.1351,
+            "receipts": {
+              "owner.json": "7336c40236d17b28f6327752db7d176596b0f48123c612c5934b7c7a9b055255",
+              "parent.json": "9b32bf54508b8a7e15e861ebade157e6a3e40e5a7b6f26bd6e45836ee8b5046f",
+              "process.json": "ab9c784556ad2e7b9cb36fe5b02cedc838cc96950cb615b8027ca96155edd092",
+              "request.json": "69e31e9836a8abade84fa7998b1b5214fb215c3e89f50113056fa02515553eb6",
+              "result.json": "8690a1b0953aacac7f23e520cc812abce55632b6473d8f34aa340fff703e994d",
+              "stderr.txt": "f3ab3c05a558151669610fb897bd4a159e872aad56d7ff2327c0593a6a06a686",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 614.3634000000001
+          },
+          "count": 10,
+          "reuse": "FRESH_AFTER_FIXTURE_CORRECTION",
+          "test": "test_normalizer_observation.py"
+        }
+      ],
+      "freshTests": 10,
+      "initialFixtureFailure": "PRESERVED_NOT_RECLASSIFIED",
+      "isolatedCleanupDurationMs": null,
+      "nativeCalls": 0,
+      "normalizerSha256": "9112b6b4ceaf9721e92057e9a8ecdb5698fb602725c4131d937acbf1390c0081",
+      "reuseBoundary": "EVERY_CONSUMED_INPUT_UNCHANGED; ONLY_UNUSED_NEW_TEST_CHANGED",
+      "reusedTests": 79,
+      "skipped": 0,
+      "source": [
+        {
+          "bytes": 8445,
+          "role": "test_normalize_prior.py",
+          "sha256": "95296d76ef52e235bcf7c09b4f8dcf1ca8f235b56ae9d5c995ba3ef47a6ce66e"
+        },
+        {
+          "bytes": 5421,
+          "role": "test_normalizer_metadata.py",
+          "sha256": "567987a80aa9e9dc4c95acf4edb4f9b7d95783ade86368518ba1911144d8a714"
+        },
+        {
+          "bytes": 13342,
+          "role": "test_normalizer_authorities.py",
+          "sha256": "510edb44ed658e30da825f912129cdcf59b74fe1f6e33ac568a46dd8adeb80a6"
+        },
+        {
+          "bytes": 2817,
+          "role": "test_normalizer_pad_join.py",
+          "sha256": "7c920162ccf044e07820a1e4c2200cb2b5eb3be62422a15a2a76234b769c74c3"
+        },
+        {
+          "bytes": 7311,
+          "role": "test_normalizer_work.py",
+          "sha256": "65fc069f47fe1ef3c26588f9b32e6272041f11fbebc6ba4709131b96a5008d6c"
+        },
+        {
+          "bytes": 9755,
+          "role": "test_normalizer_semantics.py",
+          "sha256": "5a86d40eb1ad04747bab6032b1b56f69484f57896793b2d39c682c13c394abe7"
+        },
+        {
+          "bytes": 5760,
+          "role": "test_normalizer_allowlist.py",
+          "sha256": "85a9cf129922a42bddb3665c6488c443d8ae5cf904137d498936ac4c7e9f4455"
+        },
+        {
+          "bytes": 5993,
+          "role": "test_normalizer_qualification_stdout.py",
+          "sha256": "aea841688e752443d51498ea82f22a6b47409d74ae00cce6fa58131c026a1ea5"
+        },
+        {
+          "bytes": 8193,
+          "role": "test_normalizer_native_marker.py",
+          "sha256": "87556f46dd7427272f4174d996cb455c3d8c0e786510299cb16fa7c8aead2865"
+        },
+        {
+          "bytes": 93580,
+          "role": "normalize_prior.py",
+          "sha256": "9112b6b4ceaf9721e92057e9a8ecdb5698fb602725c4131d937acbf1390c0081"
+        },
+        {
+          "bytes": 13682,
+          "role": "test_normalizer_observation.py",
+          "sha256": "ccd687726df7a3039368eda7043945c88f31d82abecc66c53566388897ac1d02"
+        },
+        {
+          "bytes": 122882,
+          "role": "prior_kernel.py",
+          "sha256": "f87c3ef799a47f14955240111d7af20737db3c329242c036f449eb1002f11873"
+        },
+        {
+          "bytes": 21653,
+          "role": "context_codec.py",
+          "sha256": "c1f27377d5d7a6c83384e34cc2ded334b0b022cfb68722265533976c0661ba27"
+        },
+        {
+          "bytes": 8659,
+          "role": "PROVENANCE_R1.json",
+          "sha256": "215ad455f799117d30ca9a7e3101ee9326c8af4fdd30295c4fd0d28331a7436f"
+        },
+        {
+          "bytes": 2503,
+          "role": "p07_fixture_port_r1.py",
+          "sha256": "a2b8d9dad2698f77f6472a01960760622e3112e89329fd2bfb9a1895d7ef3ede"
+        }
+      ],
+      "status": "PASS_FINAL_SOURCE_PURE_NORMALIZER_SUITES",
+      "tests": 89
+    },
+    {
+      "actualPriorBodiesRead": 0,
+      "calls": [
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-public-normalize_prior-r1",
+            "processElapsedMs": 372.0307,
+            "receipts": {
+              "owner.json": "118ebf23747bb1bda80ed5ab560e3f10aa163d61a4cf7cbeaf54b07651116032",
+              "parent.json": "d8a749510f6ae72c1f9046f504bc4523114003254b89d855ba7f2d037fc13c34",
+              "process.json": "dbc7641d1c572cf06be7975e91aa0cbb8a6fff1cef82337397e39d475b1508fe",
+              "request.json": "d9c05e3badb759b3388c46bfa211510d9d8f89f19fe8677ff6f6bfd08dab6c03",
+              "result.json": "70e9cc1632b1576b826ec8d3dacf68b63bdbe588aa302980b6a79a60b24354ec",
+              "stderr.txt": "033ebb21b6bd5415805fa3f4fb75dea13eac26ea33b964ff0aaf66882c58fa41",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 600.2090000000001
+          },
+          "count": 13,
+          "test": "test_normalize_prior.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-public-normalizer_metadata-r1",
+            "processElapsedMs": 504.51770000000005,
+            "receipts": {
+              "owner.json": "b29e2c9eb36d7a732a57acf12753547f5e30f2ef072a34ceeaf66e622efb744b",
+              "parent.json": "cb0764ca0092e7a0dd56c4551864b8c6f4fba4860ce99099cf7cb32bb64b53e5",
+              "process.json": "b5f87fc6bc9ed15a1edd2a4923010241cc3855781099d8c2108f89030ed0e4ca",
+              "request.json": "f23ab9ab130523ca86bf4932182b41124ccbb9112e972d5d617b63cedb9a9c26",
+              "result.json": "f8ad624a5df03f0b884b5fcd017317351bcf2fd172f78950645b358ca4d097fb",
+              "stderr.txt": "4a3d2a863716d18fb8cf7375876f61eb0712b14d848576e5d35171734b75c629",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 731.9622
+          },
+          "count": 9,
+          "test": "test_normalizer_metadata.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-public-normalizer_authorities-r1",
+            "processElapsedMs": 373.5597,
+            "receipts": {
+              "owner.json": "c5ff7ff88efdb408261e8123510071c636028a20d8511d3e70dcf5388e9f3c69",
+              "parent.json": "68c91454a6b5ffc7fffc0d0e22ebadf1590536dc52ebac4f1841baa24b4481c4",
+              "process.json": "de23b4537ab82d5057115351477db34bf91f2b453a15a21b0f4fc113867499f6",
+              "request.json": "323741e8070269fecb705f776393b6bc25d6867eaef0371d4f2c401835515a40",
+              "result.json": "c4fea91164679147559c44adc68dc6e0ce7f635baf1001cb8ae68a43bd82b0d4",
+              "stderr.txt": "c1afa583ffe0545dce4d85d956a15f7d9b417638d9575aa4b1cfa4f94ac33163",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 611.5751
+          },
+          "count": 10,
+          "test": "test_normalizer_authorities.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-public-normalizer_pad_join-r1",
+            "processElapsedMs": 372.58340000000004,
+            "receipts": {
+              "owner.json": "31bfc4fd0a2b85e2b6218e4680d5b47a04a5fb3b98bb26fa8bf76388e992dbb1",
+              "parent.json": "74caec2f06db4a3f7b996dfd3ef89aeb18e8424e09ed27897f8ba85e625ee7bc",
+              "process.json": "cc4b208ed55e7b8e864cc81ba369fdecf4dc1855c5ccb3fc93bac348c7ccea7b",
+              "request.json": "b3f4fa152cd9bb77f4421cd54629d9daab494dfc633bead95faf88d0ee1dd1a2",
+              "result.json": "dcfdd3d965492451f000ea5e237c2689addc278929b3c7d8ba51991c3bf4aade",
+              "stderr.txt": "d80c434329c6b3cfaae25854f52ea58182b8b63449e162326f75f0f900c87f09",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 598.4604
+          },
+          "count": 9,
+          "test": "test_normalizer_pad_join.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-public-normalizer_work-r1",
+            "processElapsedMs": 371.7808,
+            "receipts": {
+              "owner.json": "b956f5aca939aef2642b156e147d49573ec4a4025702958099efc727812cd029",
+              "parent.json": "b384df9e216d65a77c3061f30a325abb21032f9c7125cb351827e67f515ec38a",
+              "process.json": "f079f5d13178faf18c76b9f539672c6a7011be3c0b66a50bc438516a973a4aad",
+              "request.json": "d8106a8acc1b2a1c461edb9eb3fa68714432901dfc579393389fa01707f8237c",
+              "result.json": "139320ae81c1a010668d236e62bbe537755ae227b4fe3c0cd1971a172d8e05a4",
+              "stderr.txt": "d4110177de1b917fa64eb9f0a8a97fb8a9b6ee781d14eae7f9da06a8a2d65d5b",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 606.3931
+          },
+          "count": 11,
+          "test": "test_normalizer_work.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-public-normalizer_semantics-r1",
+            "processElapsedMs": 477.1881,
+            "receipts": {
+              "owner.json": "554b59b8876b85a6366211a31b6b579cc36ccff7edc2f65f883f0d11357c89af",
+              "parent.json": "98ba116af790f18c08a1f6a6e14a9cc7bffffb58cc31cf348512a1f3b959e9b6",
+              "process.json": "72cb6cfd90d53940b390546cd17328c841706243963c6a28d8552603fda24f86",
+              "request.json": "d45cd4831e92161c31c9418a38b6176cbdaa0ab456e121e02ba47388e78b6938",
+              "result.json": "5e31da3bfc953bcf140d16dc420c29a783dababca425e7cb8a44c6043892fa98",
+              "stderr.txt": "0466b8dee8e1bf11ba88b4923745628e1364e9d9f159909170a1d0f19aec2c9d",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 716.4175
+          },
+          "count": 4,
+          "test": "test_normalizer_semantics.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-public-normalizer_allowlist-r1",
+            "processElapsedMs": 553.4473,
+            "receipts": {
+              "owner.json": "0a102bf10ce81f5cf3be8839998249e58e854448a57f34fb2dc5395c68b66c67",
+              "parent.json": "b0b772b1fc6c9c686f7401e8b637736cfba21d2b4499c7498ad75fd95c22de05",
+              "process.json": "ef1c7b6e436bc1017980ead13c9a8c768ee7774273b53da9b002d8e099e2ba8f",
+              "request.json": "ab41968be26b9c0540a74743008296f8d9b96186ed6440f8a3f56b2f455cf1f0",
+              "result.json": "0b36891189ff7579471a9c0656747a6aa44bdd8fe1391f7a6eee7c9151713134",
+              "stderr.txt": "6397cff971a6d66ccef443fd678dc6e35253d4ef07aeb4493129280105deb95b",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 780.066
+          },
+          "count": 5,
+          "test": "test_normalizer_allowlist.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-public-normalizer_qualification_stdout-r1",
+            "processElapsedMs": 457.3245,
+            "receipts": {
+              "owner.json": "edd285df1ac1468e6b4020817c4b965076cc487e5813975bc1e0d31c5d1ae37f",
+              "parent.json": "ee7dfc2be8b262774a47d42760ece2816a9a5c87b6ebdae33c572d305dcc3a06",
+              "process.json": "567395a5f2e034993379941fb2e95fdfd150c3a5d7b96dd5be9de899228e0551",
+              "request.json": "33760154359789f6aa110627bb31baa15e14fb922fc4206de678123931770ec5",
+              "result.json": "871f181076f2dceea65abe5a73ba9d9b5a43dbc93cf61a699a5ac1eeac4ef926",
+              "stderr.txt": "9bb2fa3ad2496c63a48a1093055395510f9b79fa342320a4889ce37c3f0f7c32",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 693.6574
+          },
+          "count": 8,
+          "test": "test_normalizer_qualification_stdout.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-public-normalizer_native_marker-r1",
+            "processElapsedMs": 395.3236,
+            "receipts": {
+              "owner.json": "e35bf507e77880eb0107520f359cae77d6690c73b9216a0be009e6347298172b",
+              "parent.json": "40f13ef7198ece0ba0a5d171db4138132016ceb5dae3eece570e8494fd76cef0",
+              "process.json": "119e882333a43573f8aa43012918d87f8f3de2ebba6af020774e61d352d4d7a4",
+              "request.json": "12320a46daa49b8e5f3116cd123552105a356f5b41cdc90ce76b07e72d77be01",
+              "result.json": "f651a047a66990d0fbc40a606cf7b1e13f9ee5aacc9aa6b5ca1e9d36b5427c89",
+              "stderr.txt": "06f4934ca96de95ebc7b0ec23f0931d6bf550cda4914dd74b14c33af9cabd9a3",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 629.5309
+          },
+          "count": 10,
+          "test": "test_normalizer_native_marker.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-observation-public-normalizer_observation-r1",
+            "processElapsedMs": 380.12760000000003,
+            "receipts": {
+              "owner.json": "1270f260e32b1d841d4a04b5bfb40f032b563122f59ef8c485870d1955ea6f5f",
+              "parent.json": "1df8c58b464d3ce33c1c3bdd37e75ee7955c9f2f12246dd8082358ce640ccc52",
+              "process.json": "ff5204725c20c616eb9a726606e2720b5e3aa01910caa6847a0ba8260e6ec7c4",
+              "request.json": "8ab223933c307160227d138d7d14b83835bcaf425a60b6350b3bc37eb6e94dab",
+              "result.json": "8340742b3443f3c94bef6dfa35fb81062933ad13cd7fedc8162fddd8cb8602fc",
+              "stderr.txt": "f3ab3c05a558151669610fb897bd4a159e872aad56d7ff2327c0593a6a06a686",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 614.2664
+          },
+          "count": 10,
+          "test": "test_normalizer_observation.py"
+        }
+      ],
+      "inputSha256": "4a1f275e93ffaf3f656c5687bd82ef33291fadb048d0e46d8227d5016bd3e472",
+      "isolatedCleanupDurationMs": null,
+      "nativeCalls": 0,
+      "normalizerSha256": "9112b6b4ceaf9721e92057e9a8ecdb5698fb602725c4131d937acbf1390c0081",
+      "operationalJournalRead": false,
+      "skipped": 0,
+      "status": "PASS_FINAL_SOURCE_PURE_NORMALIZER_SUITES",
+      "tests": 89
+    },
+    {
+      "call": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "normalizer-observation-component-r1",
+        "processElapsedMs": 392.27430000000004,
+        "receipts": {
+          "owner.json": "4076b5a6c31ca64e2880058c9257e25562129682bc259f25b42b5ff429cf7fb5",
+          "parent.json": "e35dc7408dc068e6eac93edb6053a16fd34371168519ffb9c5aeff388292256a",
+          "process.json": "552daac67a2ce143d82363da66da919b5b5c679fe24d64031166b50167543e58",
+          "request.json": "b294f52dfb0920cc0dca0ac5036c55c26ca99ba0567f305c2c5619826f610f10",
+          "result.json": "0c9429a4b40dc93bc223ab06c510cea9ed43d403e2e323ff29886bfead235e21",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "6f5175bd589fc765a0e15ea43ca3bbf56f7d839eeb540d2511ad4abf907d2648"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 639.3909
+      },
+      "externalRootAuthorityRechecked": true,
+      "fullPriorAcceptance": "NOT_ESTABLISHED_THREE_FAILURES_PRESERVED",
+      "inputSha256": "be979c8e4e7ecf4c7df11742abbc183b71350deb314e3537076a70adc28cfc3b",
+      "nativeCalls": 0,
+      "optimizedRejection": {
+        "childExitCode": 1,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "normalizer-observation-optimized-rejection-r1",
+        "processElapsedMs": 339.9759,
+        "receipts": {
+          "owner.json": "63de8c4e6cd687175ac316468816806512823b01afb9893086f5c5d623d18ba2",
+          "parent.json": "e129dec870fc9602cfe7bf04ae34cde8e1e1c9afe21f4c33b2c06c438394453e",
+          "process.json": "45e098793ceaba35c70ead99d784b5d6db0d904117e85e7dba4e0b3bc45dd3a4",
+          "request.json": "ba0a42eb80cae907d33f10d5888678855431d61e8b1a81618433cb2ad87ff257",
+          "result.json": "976875d4cc965f5787f059ff2090af9a79c649e29927dbbc14af3a44b46b3d1b",
+          "stderr.txt": "02522c375dc38843f29707d8bae34ff6b21b55b8465352201db11ac152b6d40d",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 571.3957
+      },
+      "status": "PASS_AUTHENTICATED_NORMAL_OBSERVATION_COMPONENT_ONLY",
+      "summary": {
+        "artifactFields": 3,
+        "artifactRows": 9,
+        "authenticatedRoleCount": 17,
+        "finiteTimingFields": 2,
+        "fullPriorAcceptance": "NOT_ESTABLISHED",
+        "nativeCalls": 0,
+        "negativeCases": [
+          {
+            "case": "processElapsedMs",
+            "code": "JSON_NONFINITE"
+          },
+          {
+            "case": "processElapsedMs",
+            "code": "JSON_NONFINITE"
+          },
+          {
+            "case": "wrapperTotalElapsedMs",
+            "code": "JSON_NONFINITE"
+          },
+          {
+            "case": "processElapsedMs",
+            "code": "OBSERVATION_TIMING_BINDING"
+          },
+          {
+            "case": "wrapperTotalElapsedMs",
+            "code": "OBSERVATION_TIMING_BINDING"
+          },
+          {
+            "case": "newAuthoredSessions",
+            "code": "OBSERVATION_STATE_BINDING"
+          },
+          {
+            "case": "processRootAndLogsAbsentOnRecheck",
+            "code": "OBSERVATION_STATE_BINDING"
+          },
+          {
+            "case": "isolatedCleanupDurationMs",
+            "code": "OBSERVATION_STATE_BINDING"
+          },
+          {
+            "case": "newNativeComparisonStatus",
+            "code": "OBSERVATION_STATE_BINDING"
+          },
+          {
+            "case": "extra-field",
+            "code": "OBSERVATION_KEYS"
+          },
+          {
+            "case": "row-role",
+            "code": "OBSERVATION_ARTIFACT_ROW_KEYS"
+          },
+          {
+            "case": "row-reorder",
+            "code": "OBSERVATION_ARTIFACT_BINDING"
+          },
+          {
+            "case": "row-sha",
+            "code": "OBSERVATION_ARTIFACT_BINDING"
+          },
+          {
+            "case": "row-count",
+            "code": "OBSERVATION_ARTIFACT_ROWS"
+          },
+          {
+            "case": "float-overflow",
+            "code": "OBSERVATION_TIMING_BINDING"
+          }
+        ],
+        "observationBytes": 3916,
+        "observationSha256": "d2dd656567031515aa520528f2cb8343c9252558b3108bcc4eb840c887e9edcb",
+        "status": "PASS_AUTHENTICATED_NORMAL_OBSERVATION_COMPONENT_ONLY"
+      }
+    }
+  ],
+  "genuineEnvelope": "UNSPENT_GATED",
+  "gwtPlayer": "NOT_APPLICABLE",
+  "hardPsychotic": "UNAVAILABLE_UNRUN",
+  "historicalProtectedUnread": "UNCERTIFIED",
+  "isolatedCleanupDurationMs": null,
+  "nativeCalls": 0,
+  "normalizerSha256": "9112b6b4ceaf9721e92057e9a8ecdb5698fb602725c4131d937acbf1390c0081",
+  "oldDDescriptorResultGeneratedInput": "NOT_READ",
+  "playable100": 0,
+  "preservedFixtureFailure": {
+    "actualPriorBodiesRead": 0,
+    "call": {
+      "childExitCode": 1,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "normalizer-observation-private-normalizer_observation-r1",
+      "processElapsedMs": 461.76770000000005,
+      "receipts": {
+        "owner.json": "317b6b2a3317e676056677626ec3994e373de2c2a8f08f43659e73d689f3c5c3",
+        "parent.json": "333dd27d26dec233f87004d9357cb5f6a8bd5c521da4d0bf983383ea23437ce9",
+        "process.json": "475227bc6926b8de8ba2404d33f6a7ed54b7371bd14a5af17a0b564fda162c20",
+        "request.json": "69e31e9836a8abade84fa7998b1b5214fb215c3e89f50113056fa02515553eb6",
+        "result.json": "8fd280e073cc317768394de613e4258351dc1d8bb4777af375a28cc7e4fff523",
+        "stderr.txt": "cd1156af382df59157134a7b3a5f627e95335c7d1cca98c169ad562f59986f70",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 697.1473000000001
+    },
+    "cause": "SERIALIZED_INFINITY_REJECTS_IN_STRICT_JSON_BEFORE_SEMANTIC_TIMING_GATE",
+    "correction": "EXPECT_EXACT_JSON_NONFINITE_AND_ADD_NONFINITE_HOST_FACT_SEMANTIC_REJECTION",
+    "failed": 1,
+    "nativeCalls": 0,
+    "normalizerSource": "UNCHANGED_9112",
+    "originalTestSha256": "8aba445ca1a18ddbc340862c9a11abebb4a41ce69db1eafa1ffbc929f9cb99f3",
+    "passed": 9,
+    "status": "FAIL_INITIAL_FIXTURE_ERROR_STAGE_EXPECTATION",
+    "tests": 10
+  },
+  "privateTests": 89,
+  "protectedHeldout": "NOT_READ",
+  "publicTests": 89,
+  "skipped": 0,
+  "sourceAudit": {
+    "allOtherModuleAstNodes": "UNCHANGED",
+    "beforeSha256": "a612e1172cec61128f5d2e03fc8d95eb565f3e237d4744e4376dc53a08a2d4c4",
+    "canonicalArtifactRowsAndGlobalParser": "UNCHANGED",
+    "nativeCalls": 0,
+    "normalizerSha256": "9112b6b4ceaf9721e92057e9a8ecdb5698fb602725c4131d937acbf1390c0081",
+    "status": "PASS_OBSERVATION_HELPER_AND_BOUNDARY_ONLY_AST_SCOPE"
+  },
+  "status": "PASS_FIXED_OBSERVATION_ADAPTER_COMPONENT_ONLY"
+}

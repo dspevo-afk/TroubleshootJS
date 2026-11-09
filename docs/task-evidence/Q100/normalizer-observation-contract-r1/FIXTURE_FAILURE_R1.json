@@ -1,0 +1,31 @@
+{
+  "actualPriorBodiesRead": 0,
+  "call": {
+    "childExitCode": 1,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "normalizer-observation-private-normalizer_observation-r1",
+    "processElapsedMs": 461.76770000000005,
+    "receipts": {
+      "owner.json": "317b6b2a3317e676056677626ec3994e373de2c2a8f08f43659e73d689f3c5c3",
+      "parent.json": "333dd27d26dec233f87004d9357cb5f6a8bd5c521da4d0bf983383ea23437ce9",
+      "process.json": "475227bc6926b8de8ba2404d33f6a7ed54b7371bd14a5af17a0b564fda162c20",
+      "request.json": "69e31e9836a8abade84fa7998b1b5214fb215c3e89f50113056fa02515553eb6",
+      "result.json": "8fd280e073cc317768394de613e4258351dc1d8bb4777af375a28cc7e4fff523",
+      "stderr.txt": "cd1156af382df59157134a7b3a5f627e95335c7d1cca98c169ad562f59986f70",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "PASS_EXPECTED_REJECTION",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 697.1473000000001
+  },
+  "cause": "SERIALIZED_INFINITY_REJECTS_IN_STRICT_JSON_BEFORE_SEMANTIC_TIMING_GATE",
+  "correction": "EXPECT_EXACT_JSON_NONFINITE_AND_ADD_NONFINITE_HOST_FACT_SEMANTIC_REJECTION",
+  "failed": 1,
+  "nativeCalls": 0,
+  "normalizerSource": "UNCHANGED_9112",
+  "originalTestSha256": "8aba445ca1a18ddbc340862c9a11abebb4a41ce69db1eafa1ffbc929f9cb99f3",
+  "passed": 9,
+  "status": "FAIL_INITIAL_FIXTURE_ERROR_STAGE_EXPECTATION",
+  "tests": 10
+}

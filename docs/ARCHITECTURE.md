@@ -290,6 +290,13 @@ elapsed/cutoff bindings preserve the original independent marker oracle. The
 obsolete four-field check is retired. Pure reference and authenticated marker
 component checks alone do not establish full prior or native acceptance.
 
+The [normal observation adapter](task-evidence/Q100/normalizer-observation-contract-r1/README.md)
+owns the pinned17-field metadata boundary. Finite float timings join authenticated
+host facts, and historical three-field artifact rows join independently pinned
+canonical rows. Canonical four-field context rows remain unchanged. Strict
+types, denial/cleanup metadata and receipt/count/cohort joins precede context
+construction; component checks alone do not accept a complete prior.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

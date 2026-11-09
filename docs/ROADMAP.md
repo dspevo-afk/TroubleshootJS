@@ -1246,6 +1246,18 @@ playable100=0/betaHELD remain. Implementation `e5aac4896820a69ca4651c91efcbeab7f
 to origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
 `1a1bec5ca08bf005` sent once.
 
+The [pinned observation adapter](task-evidence/Q100/normalizer-observation-contract-r1/README.md)
+is locally accepted. A third fixed20 qualifier rejected finite timing metadata;
+the adapter also expected a nonexistent role field in historical artifact rows.
+Typed timing/receipt/result joins and exact three-field projection now match
+the pinned contract while canonical context/global parser stay unchanged.
+Private89 (79audited unchanged+10fresh), public89fresh, real17-role/15negative
+component canary, optimized rejection,19caller and25closedCLI pass. A fixture
+error-stage failure remains preserved. Actual full prior stillFAIL, genuine
+envelope unspent/gated. Next fresh normal authority before deliberate qualifier,
+then current host/native assembly. All recorded limits/exclusions and
+playable100=0/betaHELD remain. Publication pending.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

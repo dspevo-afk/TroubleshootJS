@@ -1,4 +1,175 @@
-# Current checkpoint: complete marker component published; fresh qualifier next
+# Current checkpoint: observation component accepted; publication next
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD0a54b8a04ed94e11e20fc48238088341c308ecb5,
+origin dspevo-afk/TroubleshootJS/no upstream, normal targetcodex/q100-physical-feasibility.
+Observation correction locallyaccepted NOTcommitted/pushed/emailed. Intended
+normalizer/newtest/canary/caller2pins,newpacket,3docs only. Main5f05b005 preserves
+9tracked/6untracked; E d9747229 reportM; Desktop e0c36885 preserves7tracked/89untracked.
+Marker e5aac489/Gmail1a1bec5ca08bf005; console35e36eee/Gmail1a1beb3670d80f14 sentonce.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+Candidate normalizer9112/testccd687/canarydac0/callerc567; reader863/observer478,
+codecC1/kernelF87/prov215ad/metaC487 unchanged. Normproof7bb3b7467426274fc1bf1a0960129528d321fbc6218cd43a30e6690099bfdbfe;
+callerproof87a9eb9f618bf2a3b54103a3284e15ec740dfd4b99beab0def9a2406f42d1128.
+Exact helper/callsite AST scope, localfinite timings/exact17keys,3-fieldhistorical
+artifactprojection (canonical4unchanged), summarytypes/receipt/count/cohort/
+denial/cleanup joins PASS. Private89=79unchanged-inputauditedreuse+10fresh;
+public89fresh/0skip; actual17-role/15negative component canary,realoptimized
+rejection,19caller/25closedCLI(4positive21reject) PASS. Verifiedsuccessfulroot/
+junctionremoved; children terminate/ownedroots+logsabsent; cleanupdurationnull.
+Initialnew10fixture9PASS1FAIL preserved(old8aba): rawInfinity rejectedearlier
+JSON_NONFINITE; test nowassertsthat and nonfinitehost factsemantictimings separately.
+Source9112unchanged. CanarySourceboundedreviewno blocker; rootintegratedreview.
+
+Fullactualprior FAIL from3attempts; latestJSON_NONFINITE674.0759/911.2133ms after
+ff991c96 journal05:28:35Z. R4config9e7e/SOURCE06f1/rootsbb68/journalff99/nonempty
+failedoutput/rawreceipts preserved withR2framing/R3markerfailures. No context/
+projection/Java produced. Normal20 DATA READ underjournals; actualcomponent17role
+reread after Sourcegates only, no complete retry. CurrentfullcandidateNOTRUN.
+Next intendeddiff/stage/normalcommit/push/exactremote/oneGmail; then fresh empty
+output/config/SOURCEmanifest/journal before deliberate qualifier; no automatic
+rerun orfailedrootreuse. Nativeproducer/session0; genuine original+exactly NULL/
+OBSERVE UNSPENT/GATED. FullD/H1unqualified/playable100=0/betaHELD, Full30EXCLUDED,
+HARD-PSYCHOTIC unavailable-unrun/historicalprotected unreadUNCERTIFIED. OldD
+descriptor/result/generatedinputDATA, oldbuilders/CLIs, manifestfollowing,
+protected/heldout bodies denied. Caps/seeds/epochs/oracles/CircuitJS unchanged.
+GWT/PlayerN/A; electrical/population NOTRENEWED. Preserve unrelatedwork/failures/
+history/uncertainresources; no newpersistentprocess/link. Standingroadmapcontinues.
+
+# Historical checkpoint: observation adapter SOURCE work after third failure
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD0a54b8a04ed94e11e20fc48238088341c308ecb5,
+normalorigin/codex/q100-physical-feasibility exactremoteverified, no upstream.
+Marker implementatione5aac4896820a69ca4651c91efcbeab7ffe93086/receipt0a54b8a0,
+Gmail1a1bec5ca08bf005 SENT_ONCE. Console35e36eeec64319b35350e7ac6c488370bb241bee/
+receipt0ace1dfb/Gmail1a1beb3670d80f14 SENT_ONCE. Never duplicate these emails.
+F reportM only; private SOURCE WIP below. Main5f05b005 preserves9tracked/6untracked;
+E d9747229 reportM; Desktop e0c36885 preserves7tracked/89untracked files.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+Third actualfixed20 qualifier FAIL/exit2 NORMALIZER_JSON_NONFINITE normalization,
+op674.0759/wrapper911.2133ms, proven childtermination/processroot+logsabsence;
+cleanupdurationnull. ACTUAL_PRIOR_MARKER_FAILURE_R1.json preserved. Fresh R4config
+9e7effc4/SOURCE06f1b5aa/rootsbb68a71e/journalff991c96 at05:28:35Z beforebody,
+nonemptyfailedoutput andrawreceipts retained. Two earlier R2c8e/e5ea/da97 framing
+and R3dcaf/d91a/0acf markerfailures retained. No context/projection/Java output,
+nativeproducer/session0. Completeprioracceptance FAIL; noautomaticretry/rootreuse.
+
+Current published normA612/caller093d/reader863/observer478, codecC1/kernelF87/
+prov215ad/metaC487. Normalizerproof9b2a2e346a83e7f6d7a4d8d4c0699e5dd833a9e18addc754bac9947b9332721d;
+callerproofc0f90aae80350706e5779c80c6900f1533320fbed1a54117921301cd5e95dd1b.
+79private79public/420reference/actualmarker2roles/realoptimizednegative/caller19/
+closedCLI25PASS for marker component only. Exactpre-guardcanarySource82fa5d was
+reconstructed from the known4-line patch, SHA matched and archived under
+marker-canary-revisions-r1 for evidence only; final9933ca remains current.
+
+Root inspected ONLY authorized Dobs3916/d2dd6565 through reader863/ff99journal.
+OBSERVATION_NUMBER_DIAGNOSTIC_R1.json has exact17keys/twofinitefloatpaths:
+processElapsedMs112691.18650000001, wrapperTotalElapsedMs112943.8217, matching
+authenticated qualification receipts. No actualNaN/Infinity. Dobs artifact9rows
+have3keys path/bytes/sha; normalizer wrongly expects4includingrole. Canonical
+_artifact_rows4-fieldAPI must stayunchanged; adapt knownpinnedrows at thisboundary.
+Exactbody OBSERVATION_CROSSCHECK_PRIVATE_R1.json staysprivate; no manifestfollowing.
+
+OBSERVATION_CONTRACT_SCOPE_R1.md defines currentSOURCE-only boundedcorrection.
+Private normalizer-observation-r1 copied currentall.py+PROVENANCE only. Worker
+normal_prior_normalizer_z1 ownsONLY normalize_prior.py and new
+test_normalizer_observation.py, leaves(noexec/Data/journal/spawn/stage/push/mail).
+Implement helper _validate_observation_crosscheck(raw,role_bytes,pins,host_calls,
+prior_result,qualification_summary), typedfinite timingjoins, exact17keys/denial/
+cleanup and strict3-fieldrow projection; preserve all79tests/otheroracles and
+n_call_sha_map finalbinding. Root prepared normalizer_observation_gates_r1.py,
+canary_observation_contract_r1.py(17authenticatedroles,15lowerseamnegatives,
+nonoptimizedguard). prior_extractor_review_z1 SOURCE-reviewing canary. No actual
+adaptercanary or newtest/gate executed yet; no currentSOURCE acceptance yet.
+Next obtain releases, rootdiff/ASTaudit,79+newprivate/finalpublicgates, bounded
+actualadaptercanary with externalconfig/SOURCE/journal pins, callerpin migration,
+closedCLI/gates/publication, then fresh authority before later completequalifier.
+
+Genuine original+exactly NULL/OBSERVE UNSPENT/GATED. Normal20 DATA READ under
+journals; oldDdescriptor/result/generatedinputDATA, oldbuilders/CLIs, manifest
+following, protected/heldout bodies denied. Full30EXCLUDED/HARD-PSYCHOTIC
+unavailable-unrun/historicalprotected unreadUNCERTIFIED/fullD-H1unqualified/
+playable100=0/betaHELD. Caps/exactseeds/epochs/oracles/CircuitJS truthunchanged.
+GWT/PlayerN/A; electrical/population NOTRENEWED. No newpersistentprocess/link;
+preserve allfailures/history/uncertainresources/unrelatedwork. Standingroadmapcontinues.
+
+# Historical checkpoint: third qualifier failed; observation numeric contract diagnosis
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD0a54b8a04ed94e11e20fc48238088341c308ecb5,
+normalorigin/codex/q100-physical-feasibility exactremoteverified. Marker e5aac489/
+Gmail1a1bec5ca08bf005; console35e36eee/Gmail1a1beb3670d80f14 SENT_ONCE. F reportM
+only; no SourceWIP yet. Main5f05b005 preserves9tracked/6untracked; E d9747229
+reportM; Desktop e0c36885 preserves7tracked/89untracked files. Preserve unrelatedwork.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+Third deliberate fixed20 qualifier afterfreshff991c96 journal at05:28:35Z FAIL/
+exit2 NORMALIZER_JSON_NONFINITE, normalization. Operation674.0759ms/wrapper911.2133ms;
+terminationproven/ownedprocessroot+logsabsent; cleanupdurationnull. Actual control
+flow reached authenticated20, host/qualification, independentP07/priorresult/work
+and complete native marker before observation decode. Completeprioracceptance
+FAIL; no context/projection/Java output. Native producer/session0, genuine
+original+exactly NULL/OBSERVE UNSPENT/GATED. Noautomaticretry or failedrootreuse.
+
+ACTUAL_PRIOR_MARKER_FAILURE_R1.json preserves thirdcall/failure/files. R4config
+9e7effc4/SOURCE06f1b5aa/rootsbb68a71e/journalff991c96/newnonemptyfailedoutput
+preserved; exactpaths FRESH_MARKER_PHASE_RECEIPT_PRIVATE_R1.json. Earlier R2c8e/
+e5ea/da97 STDOUT_FRAMING and R3dcaf/d91a/0acf NATIVE_MARKER_KEYS failures preserved.
+Current published caller093d/normA612/reader863/observer478, normproof9b2a/caller
+proofc0f90. Marker component79private79public/420reference/actual2roles/Onegative/
+caller19/closedCLI25PASS, separate from actualfullpriorFAIL.
+
+Root diagnosed ONLY already-authorized D_PRIOR_OBSERVATION_CROSSCHECK3916/d2dd6565
+through reader863/currentjournal. OBSERVATION_NUMBER_DIAGNOSTIC_R1.json records
+keys/finitefloatpaths; exactbody stays OBSERVATION_CROSSCHECK_PRIVATE_R1.json.
+No actual NaN/Infinity found. Source _json_load uses JSON_NONFINITE also for ANY
+float when allow_float=False; observation call currently usesFalse. Next reconcile
+actual finite timing metadata with pinned SOURCE contract and authenticatedhost
+receipts, define narrow parser/binding tests without relaxing nonfinite rejection
+or any independent oracles. Source-first fresh gates/pins/authority before later
+deliberate qualifier; no blind allowfloat/global parser relaxation.
+
+Normal20 DATA READ under durablejournals; oldDdescriptor/result/generatedinputDATA,
+oldbuilders/CLIs, manifestfollowing, protected/heldout bodies denied. Full30EXCLUDED;
+HARD-PSYCHOTIC unavailable-unrun; historical protected unreadUNCERTIFIED; fullD/H1
+unqualified/playable100=0/betaHELD. Allcaps/seeds/epochs/oracles/CircuitJS truth
+unchanged. GWT/Player N/A; electrical/population NOTRENEWED. No newpersistent
+process/link; preserve failures/history/uncertainresources. Continue standingroadmap.
+
+# Historical checkpoint: marker-source journal recorded; deliberate qualifier next
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD0a54b8a04ed94e11e20fc48238088341c308ecb5,
+normal origin/codex/q100-physical-feasibility exactremoteverified. Markersource
+e5aac489/Gmail1a1bec5ca08bf005 and console35e36eee/Gmail1a1beb3670d80f14 sentonce.
+F clean beforejournal/reportWIPnow. Otherworktrees/status/resources preserved.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+Fresh PRIVATE_R4 configSHA9e7effc47a7db6e23e4a81dbf49186df2262f8a662511521c787acdd93365ecc,
+SOURCEmanifestSHA06f1b5aa15b3037b3206c5b7a58974f49240e1b695f80974878d1430abafc040,
+rootsSHAbb68a71ec2e6120393ac7d4b589a3a9604f0809419b4121a0e5e1a3c58c3381b.
+Fresh exclusive durable journalSHAff991c969eae6f8608853e01a4e966b843a9dcc03b49e620b318fc2d56a5f1d2,
+created2026-11-09T05:28:35Z BEFORE thisattempt role reads. Newmarker-r1 emptyoutput/
+control roots; exactpaths FRESH_MARKER_PHASE_RECEIPT_PRIVATE_R1.json. SOURCE/root
+preflight605.5571/wrapper849.0302ms andreadonlyrecheckPASS, noDATAreadbyjournal
+script. Previous2actualfailures and nonemptyoutput/config/manifest/journal/raw
+receipts intact. Normalfixed20 previouslyREAD underjournals; protectedunread
+historicallyUNCERTIFIED, deniednow. No nativeproducer/session.
+
+Currentcaller093d/normA612/reader863/observer478, normproof9b2a/callerproofc0f90.
+79private79public/420reference/actual2-rolemarker/optimizednegative/caller19/
+closedCLI25PASS. Next ONE deliberate fullfixed20normal qualifier underselected
+RootCall180s/wrapper480s, noautomaticretry/failedrootreuse. Acceptonlycompleted
+CLI afterfinalinputrereads/exactclosure, neverpendingpersistedevidencealone.
+Complete prioracceptance stillFAIL fromprior2attempts; currentfullsourceNOTRUN.
+Nativegenuine original+exactly NULL/OBSERVE UNSPENT/GATED. OldDdescriptor/result/
+generatedinputDATA, oldbuilders/CLIs, manifestfollowing, protected/heldout denied.
+Full30EXCLUDED/HARD-PSYCHOTIC unavailable-unrun/fullD-H1unqualified/playable100=0/
+betaHELD. Caps/seeds/epochs/oracles/CircuitJS truth unchanged. GWT/PlayerN/A;
+electrical/population NOTRENEWED. No newpersistentprocess/link; preserve all
+uncertainresources/unrelatedwork/failures. Currenthost/nativeassembly follows
+actualprioracceptance. Standingroadmapcontinues.
+
+# Historical checkpoint: complete marker component published; fresh qualifier next
 
 UTC2026-11-09. F codex/q100-terminal-only-20261107 implementatione5aac4896820a69ca4651c91efcbeab7ffe93086,
 normally pushed/exact remote verified origin/codex/q100-physical-feasibility.

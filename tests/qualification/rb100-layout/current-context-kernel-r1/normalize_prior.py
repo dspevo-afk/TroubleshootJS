@@ -702,6 +702,91 @@ def _qualification_hash_map(role_bytes, pins):
     return result
 
 
+def _validate_observation_crosscheck(raw, role_bytes, pins, host_calls,
+                                     prior_result, qualification_summary):
+    observation = _json_load(
+        raw, MAX_OBSERVATION_BYTES, "OBSERVATION_CROSSCHECK", allow_float=True)
+    _exact_keys(observation, (
+        "approvedPriorArtifactRows", "capturedVectorCount", "isolatedCleanupDurationMs",
+        "newAuthoredSessions", "newNativeComparisonStatus", "padLandCount",
+        "processElapsedMs", "processRootAndLogsAbsentOnRecheck", "projectedCohortNetIds",
+        "projectionIsFrozenDescriptor", "projectionSource", "qualificationReceiptHashes",
+        "qualificationSummary", "reuseBoundary", "schema", "status",
+        "wrapperTotalElapsedMs",
+    ), "OBSERVATION_KEYS")
+    _need(observation["schema"]
+          == "tsj-r2-prior-input-qualification-observation-v1"
+          and observation["status"] == "PASS_PRIOR_INPUT_ONLY"
+          and _is_int(observation["newAuthoredSessions"], 0, 0)
+          and observation["newNativeComparisonStatus"]
+              == "NOT_IMPLEMENTED_NOT_RUN_NOT_ACCEPTED"
+          and observation["processRootAndLogsAbsentOnRecheck"] is True
+          and observation["projectionIsFrozenDescriptor"] is False
+          and observation["isolatedCleanupDurationMs"] is None,
+          "OBSERVATION_STATE_BINDING")
+
+    for key in ("projectionSource", "reuseBoundary"):
+        value = observation[key]
+        _need(type(value) is str and bool(value) and "\x00" not in value
+              and len(value) <= MAX_OBSERVATION_BYTES,
+              "OBSERVATION_DESCRIPTION")
+        try:
+            value.encode("utf-8", errors="strict")
+        except UnicodeEncodeError:
+            raise PriorNormalizationError("OBSERVATION_DESCRIPTION") from None
+
+    parent_elapsed = host_calls["qualification"]["parent"]["elapsedMs"]
+    wrapper_elapsed = host_calls["qualification"]["result"]["totalElapsedMs"]
+    _need(type(parent_elapsed) is float and _finite_number(parent_elapsed)
+          and type(wrapper_elapsed) is float and _finite_number(wrapper_elapsed)
+          and type(observation["processElapsedMs"]) is float
+          and _finite_number(observation["processElapsedMs"])
+          and observation["processElapsedMs"] == parent_elapsed
+          and type(observation["wrapperTotalElapsedMs"]) is float
+          and _finite_number(observation["wrapperTotalElapsedMs"])
+          and observation["wrapperTotalElapsedMs"] == wrapper_elapsed,
+          "OBSERVATION_TIMING_BINDING")
+
+    observed_summary = observation["qualificationSummary"]
+    _exact_keys(observed_summary, QUALIFICATION_SUMMARY_KEYS,
+                "OBSERVATION_QUALIFICATION_SUMMARY_KEYS")
+    _need(all(type(observed_summary[key]) is type(qualification_summary[key])
+              and observed_summary[key] == qualification_summary[key]
+              for key in QUALIFICATION_SUMMARY_KEYS),
+          "OBSERVATION_QUALIFICATION_BINDING")
+    expected_receipts = _qualification_hash_map(role_bytes, pins)
+    _need(type(observation["qualificationReceiptHashes"]) is dict
+          and len(expected_receipts) == 7
+          and observation["qualificationReceiptHashes"] == expected_receipts,
+          "OBSERVATION_RECEIPT_HASHES")
+
+    expected_rows = _artifact_rows(role_bytes, pins)
+    expected_projection = [
+        {key: row[key] for key in ("path", "bytes", "sha256")}
+        for row in expected_rows
+    ]
+    projected_rows = observation["approvedPriorArtifactRows"]
+    _need(type(projected_rows) is list and len(projected_rows) == 9,
+          "OBSERVATION_ARTIFACT_ROWS")
+    for row, expected in zip(projected_rows, expected_projection):
+        _exact_keys(row, ("path", "bytes", "sha256"), "OBSERVATION_ARTIFACT_ROW_KEYS")
+        _need(all(type(row[key]) is type(expected[key]) and row[key] == expected[key]
+                  for key in ("path", "bytes", "sha256"))
+              and _is_sha(row["sha256"]), "OBSERVATION_ARTIFACT_BINDING")
+
+    captured_count = len(prior_result["capturedOrder"]["netIds"])
+    pads_count = len(prior_result["source"]["padLands"])
+    cohort_ids = prior_result["trialDisposition"]["cohortNetIds"]
+    _need(captured_count == 60 and pads_count == 246
+          and _is_int(observation["capturedVectorCount"], captured_count, captured_count)
+          and _is_int(observation["padLandCount"], pads_count, pads_count)
+          and type(observation["projectedCohortNetIds"]) is list
+          and all(type(item) is str for item in observation["projectedCohortNetIds"])
+          and observation["projectedCohortNetIds"] == cohort_ids,
+          "OBSERVATION_RAW_RESULT_BINDING")
+    return observation
+
+
 def _validate_prior_metadata(role_bytes, pins):
     run_raw = role_bytes["N_PRIOR_RUN_MANIFEST"]
     source_raw = role_bytes["N_PRIOR_SOURCE_MANIFEST"]
@@ -1633,30 +1718,9 @@ def normalize_prior(role_bytes, allowlist_bytes, authority, kernel_callbacks, co
           or len(parsed_operation["pads"]) == len(prior_result["source"]["padLands"]) == 246,
           "PRIOR_OPERATION_PAD_COUNT")
     # Reconcile authenticated qualification projection against raw independent facts.
-    observation = _json_load(role_bytes["D_PRIOR_OBSERVATION_CROSSCHECK"],
-                             MAX_OBSERVATION_BYTES, "OBSERVATION_CROSSCHECK", allow_float=False)
-    _need(observation.get("status") == "PASS_PRIOR_INPUT_ONLY"
-          and observation.get("projectionIsFrozenDescriptor") is False
-          and type(observation.get("newAuthoredSessions")) is int
-          and observation.get("newAuthoredSessions") == 0
-          and observation.get("qualificationSummary") == qualification_summary,
-          "OBSERVATION_QUALIFICATION_BINDING")
-    _need(observation.get("qualificationReceiptHashes") ==
-          _qualification_hash_map(role_bytes, pins), "OBSERVATION_RECEIPT_HASHES")
-    expected_artifacts = _artifact_rows(role_bytes, pins)
-    projected_artifacts = observation.get("approvedPriorArtifactRows")
-    _need(type(projected_artifacts) is list and len(projected_artifacts) == 9,
-          "OBSERVATION_ARTIFACT_ROWS")
-    for row in projected_artifacts:
-        _exact_keys(row, ("role", "path", "bytes", "sha256"), "OBSERVATION_ARTIFACT_ROW_KEYS")
-    _need(projected_artifacts == expected_artifacts, "OBSERVATION_ARTIFACT_BINDING")
-    pads_count = len(prior_result["source"]["padLands"])
-    captured_count = len(prior_result["capturedOrder"]["netIds"])
-    _need(observation.get("projectedCohortNetIds")
-          == prior_result["trialDisposition"]["cohortNetIds"]
-          and observation.get("capturedVectorCount") == captured_count
-          and observation.get("padLandCount") == pads_count == 246,
-          "OBSERVATION_RAW_RESULT_BINDING")
+    observation = _validate_observation_crosscheck(
+        role_bytes["D_PRIOR_OBSERVATION_CROSSCHECK"], role_bytes, pins, host_calls,
+        prior_result, qualification_summary)
     n_call_sha_map = {name: _sha(role_bytes[role]) for role, name in ROLE_TO_ARTIFACT.items()
                       if name.startswith("call-")}
     _need(observation.get("qualificationReceiptHashes") == _qualification_hash_map(role_bytes, pins),

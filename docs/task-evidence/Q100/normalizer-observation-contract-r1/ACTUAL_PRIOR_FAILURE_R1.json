@@ -1,0 +1,51 @@
+{
+  "call": {
+    "childExitCode": 2,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "actual-normal-prior-qualify-marker-r1",
+    "processElapsedMs": 674.0759,
+    "receipts": {
+      "owner.json": "865c15425ba2e847e7c84b77b3f37e0f7458f52bcecb417248672d4e435f0548",
+      "parent.json": "e5310a157e0a3e173573ed1b42432df82501d680d5e6ea71d70f218ba309c76b",
+      "process.json": "de5c3881e2406a3ea26708e6ff6b414482183d7612a44e7030ee99eb49b2b067",
+      "request.json": "7c671cc0e5a7a96f45dd0f9d90ff67fe6f9c40d7f7b16e8bb8469a78400e3ad1",
+      "result.json": "01d96cc0129eb5a035f0612eca57c62dd1ddefb79a337b2e8a6beb8994b2d7b8",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "0aad3984045c1778233db753ba67d28792cfffa967b1749a95779fb1a7d32d6a"
+    },
+    "status": "PASS_EXPECTED_REJECTION",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 911.2133
+  },
+  "currentFailureRoot": "PRESERVED_NO_AUTOMATIC_RERUN",
+  "failure": {
+    "allowlistSha256": "c487eae6ed0e070aaad75dccd14d23313ed9da2c6bda7f93bfeb886109f20f91",
+    "code": "NORMALIZER_JSON_NONFINITE",
+    "configSha256": "9e7effc47a7db6e23e4a81dbf49186df2262f8a662511521c787acdd93365ecc",
+    "nativeCalls": "NOT_RUN",
+    "phase": "normalization",
+    "phaseJournalSha256": "ff991c969eae6f8608853e01a4e966b843a9dcc03b49e620b318fc2d56a5f1d2",
+    "roleReadStarted": true,
+    "rootsSha256": "bb68a71ec2e6120393ac7d4b589a3a9604f0809419b4121a0e5e1a3c58c3381b",
+    "schema": "tsj-q100-normal-prior-qualification-evidence-v1",
+    "sourceManifestSha256": "06f1b5aa15b3037b3206c5b7a58974f49240e1b695f80974878d1430abafc040",
+    "status": "FAIL"
+  },
+  "genuineEnvelope": "UNSPENT_GATED",
+  "nativeCalls": 0,
+  "preservedOutputFiles": [
+    {
+      "bytes": 609,
+      "role": "failure-evidence.json",
+      "sha256": "22cbd7c2fbfa8a7472a5eabbdbcb3b0d9d057918c07d1c9032f00a30a639e39b"
+    },
+    {
+      "bytes": 552,
+      "role": "read-attempt.json",
+      "sha256": "48b824ee5feff5045cd195a489086ad4206a6a749554759cf5aa26c78e423e2d"
+    }
+  ],
+  "priorFirstFailure": "PRESERVED",
+  "status": "FAIL_ACTUAL_FIXED20_NORMAL_PRIOR"
+}
