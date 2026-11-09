@@ -1,7 +1,8 @@
 # Bounded prior caller SOURCE and phase gate
 
-Locally accepted for SOURCE/preflight/closed-phase boundaries only. Publication
-is pending; the current checkpoint records its exact outcome. Final proof
+Accepted and published for SOURCE/preflight/closed-phase boundaries as `5c745c3ff78cc16e19220b6c4a46ce541bdb58ad`
+on origin/codex/q100-physical-feasibility, exact remote verified. Gmail `1a1be9cc9ce25583`
+SENT_ONCE; [publication](PUBLICATION_R1.md). Final proof
 SHA256 `f1eb1b2e97b7e708bdf762a04383a279208f2137fb8e3853cc73bba08e66b293`. Actual prior qualification is NOT RUN.
 
 qualify_prior.py has separate preflight and qualify commands. Preflight takes
@@ -79,7 +80,7 @@ require explicit caller/reader path+SHA values and the bootstrap canary also
 requires the frozen tool metadata. Supply only independently pinned current
 SOURCE/tools or task-owned synthetic fixtures. Raw paths/IDs/commands stay private.
 
-Next publish this finite boundary, then exclusively record the separate root
+Next exclusively record the separate root
 normal-read phase journal before actual fixed20 normal ingest. Old D descriptor/
 result/generated-input DATA, old builders/CLIs, manifest following, protected/
 held-out DATA remain denied. No genuine producer, GWT, Player, electrical or

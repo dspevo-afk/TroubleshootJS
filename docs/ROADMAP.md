@@ -1214,7 +1214,9 @@ required. Earlier failures are preserved; the caller now uses the shared owner.
 Next separate exclusive normal-read journal before actual fixed20 ingest;
 genuine envelope unspent/gated. Caps/seeds/epochs/oracles/CircuitJS truth unchanged;
 Full30EXCLUDED, HARD/PSYCHOTIC unavailable/unrun, historical unreadUNCERTIFIED,
-playable100=0/betaHELD. Publication is recorded in the packet/current checkpoint.
+playable100=0/betaHELD. Implementation `5c745c3ff78cc16e19220b6c4a46ce541bdb58ad` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
+`1a1be9cc9ce25583` sent once. Publication is recorded in the packet/current checkpoint.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
