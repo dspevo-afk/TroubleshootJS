@@ -1,9 +1,10 @@
-# Current checkpoint: receipt content binding validated locally
+# Current checkpoint: receipt content binding published
 
-UTC2026-11-09. F codex/q100-terminal-only-20261107 HEADf3be9f7a166234089c640c11d7761b37ee75554c;
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEADe5e307702b77c56ac7155e265a465add85e47b62;
 normal push target origin/codex/q100-physical-feasibility, no upstream. Intended
 Source/evidence receipt-content-binding-r1 +ARCH/roadmap/report, publication/email
-PENDING. Flatcd4b1c2b/receiptf3be9f7a published/exactremoteverified and Gmail
+e5e30770 normalpushed/exactremoteverified, Gmail1a1bfe37cdaa81c7 SENT_ONCE.
+Flatcd4b1c2b/receiptf3be9f7a published/exactremoteverified and Gmail
 1a1bf9a860ca0397 SENT_ONCE; never duplicate. Main5f05b005 preserves9tracked/
 6untracked, E d9747229 reportM, Desktop e0c36885 preserves7tracked/89untracked;
 all staged0 before this integration. Unrelatedwork/priorfailures/resources stay.
@@ -54,8 +55,8 @@ independentoracles/CircuitJStruth unchanged. Full30EXCLUDED/HARD-PSYCHOTIC
 unavailable-unrun/historicalprotectedunreadUNCERTIFIED/playable100=0/betaHELD.
 GWT/Player N/A no production/visiblechange; electrical/population NOTRENEWED.
 
-Next inspectintended/stagedbytes/diffchecks; normalcommit/push/exactremoteverify,
-one completionGmail thenreceipt-onlyfollowup. ContinuecurrentV2nativeassembly/
+Rootreviewed exact15stagedpaths/bytes anddiffchecks PASS. Receipt-onlyfollowup
+pending, nosecondmail. NextcurrentV2nativeassembly/
 exportintegration and separatehost/prepayment/lifecyclegates beforegenuinecall.
 
 # Historical checkpoint: receipt content binding Source authoring

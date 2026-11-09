@@ -1,6 +1,8 @@
 # Receipt content binding component
 
-Accepted locally for the isolated native component below. Publication is pending.
+Published as `e5e307702b77c56ac7155e265a465add85e47b62`, exact remote verified;
+completion Gmail `1a1bfe37cdaa81c7` sent once. [Publication](PUBLICATION_R1.md).
+Acceptance covers the isolated native component below.
 The producer, assembler and exports remain disabled. This component establishes
 no genuine capture, full-D/export/H1, physical route or playable100 acceptance.
 

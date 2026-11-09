@@ -1312,7 +1312,7 @@ removed; cleanup rejection/validation attempts remain recorded. The five-second
 guard has direct coverage; delayed-I/O timeout is NOT RUN. Production and visible
 flows are unchanged. Current V2 native assembly/export/host integration remains
 pending before the unspent genuine envelope; playable100=0/beta held and all caps/
-data exclusions remain. Publication and completion email pending.
+data exclusions remain. Implementation `e5e307702b77c56ac7155e265a465add85e47b62` normally pushed to origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail `1a1bfe37cdaa81c7` sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
