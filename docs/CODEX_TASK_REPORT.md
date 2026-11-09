@@ -1,4 +1,111 @@
-# Current checkpoint: Windows reader fix published; observer SOURCE next
+# Current checkpoint: observer component accepted; publication next
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107, HEAD007ff30a4cf77f530a1ff109df8bdf51cf9f6e04.
+Origin dspevo-afk/TroubleshootJS; no upstream; normal targetorigin/codex/
+q100-physical-feasibility. Prior reader/allowlist/normalizer publications and
+mails verified/SENT_ONCE; no duplicates. Intended F observer code/canaries,
+normal-prior-observer-r1 packet and docs only. Main5f05b005 retains9tracked/
+6untracked/staged0; E d9747229 reportM/staged0; Desktop e0c36885 retains7tracked/
+73defaultuntracked entries (89files with-uall)/staged0. Preserve unrelated work.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f,
+PLAN0a1aac12. Observer69b9c662/test551ed80f; current reader00f6d135,
+normalizerE872, codecC1/kernelF87/provenance215ad/metadataC487 unchanged.
+Finalproofc6e9c19788c64290fd624f7536521264053ae482965baa3cc29e8a917c194cde. Private/public12 each/0SKIP; actual
+5tools/2SOURCE/harness-path link match;10synthetic-resource CLIcases1positive/
+9expected exit2,2real junctions verified/removed; publicresourcepositive and
+actualtool wrongSHA rejection pass. Actual file replacement at scan seam;
+PermissionError INJECTED, not actual ACL-denial proof. Private/public units
+995.7762/1245.9884 and1085.0655/1507.7277ms op/wrapper; actualtools365.1743/
+609.468 and387.2695/621.6144. All returned processes terminate, owned roots/logs
+absent, isolatedcleanup null. No persistent process/link. Source/synthetic
+fixtures/configs/receipts retained. Observations non-atomic; final caller checks
+still required. Independent final SOURCE review scopedclear on69b9; rootbyte/
+fixture/integration review. WIP sorting/type/error/cleanup/path issues fixed
+before final gates, not claimed as runtime PASS. No actual prior bodies/resources.
+
+Next root actual diff/index/bytes/privacy/whitespace review, normal commit/push/
+exactremote and one component Gmail. Leaf normal_prior_normalizer_z1 owns only
+AB/qualify_prior.py/test_qualify_prior.py SOURCE-only/no run/spawn/stage/publish/
+mail/DATA read. CLI preflight/qualify, exactconfig schema/source/tool specs,
+acyclicSOURCE manifest, stable rootbindings and separate root phasejournal are
+being implemented. Root owns config/gates/journal/actualingest/publication.
+Actual caller and prior/current host/native qualification NOT RUN. Configmust
+exclude journal/gatehashes toavoidcycles. No actual phasejournal created.
+
+No fixed20body/oldD descriptor/result/generatedinput, oldbuilders/modules/CLIs,
+manifest following or protected/heldout DATA. One genuine original+exactly NULL/
+OBSERVE unspent/gated; no extra arm/control/original/retry. All caps/exactseeds/
+epochs/oracles/CircuitJS truth unchanged; Full30EXCLUDED; HARD/PSYCHOTIC
+unavailable/unrun; historical protected unreadUNCERTIFIED; playable100=0/betaHELD/
+full-D-H1 unqualified. GWT/Player NOT APPLICABLE; electrical/population not renewed.
+Preserve prior failure evidence and old uncertain resources. Continue roadmap.
+
+# Historical checkpoint: private observer gates pass; caller SOURCE in progress
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107, HEAD007ff30a4cf77f530a1ff109df8bdf51cf9f6e04,
+exact remote verified origin/codex/q100-physical-feasibility; no upstream.
+Readerfixee23ef18/Gmail1a1bdc57fe3d1c7b, allowlistfixf31fdcbf/
+Gmail1a1bdb2d592bfe9d and ZB2e4e356f/Gmail1a1bda8f6a858b70 are published/
+verified/SENT_ONCE. No duplicate mails. Only this report M in F after checkpoint;
+no unvalidated implementation staged/published. Main5f05b005 retains9tracked/
+6untracked/staged0; E d9747229 reportM/staged0; Desktop e0c36885 retains7tracked/
+73defaultuntracked entries (89files with-uall)/staged0. Preserve unrelated work.
+
+Current qualified F reader00f6d135/testb0f775a4, normalizerE8725DFF, codecC1F27377,
+kernelF87C3EF7/provenance215ad455, metadataC487. Older private3114/5824 sources
+are historical. Reader proof090f4a82 and normalizer proofac3476c8 recorded below.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f,
+PLAN0a1aac12/CALLER_FLOW_R1. Observer SOURCE69b9c66222ca9f9a63d2d101250bc7986b1e0466635102044f9b6d1a47759cf7;
+test551ed80fb2a78ca583360235bbb904a0129ad5535e40e9f062b5f19e3debfe5c.
+Both released; root owns integration. Independent final SOURCE review scoped
+directory/absence/API boundary clear on69b9, unchanged before/after; root byte-
+fact/fixture review resolved harness path, unsafe cleanup, type/error handling
+and arbitrary scandir-order false rejection before execution. No false runtime
+PASS is inferred from the earlier changing-source WIP review.
+
+Private selected observer12 unit tests PASS/0SKIP: OBSERVER_UNITS_R1.json,
+op995.7762ms/wrapper1245.9884ms. Actual observer five selected tool/two current
+SOURCE byte facts plus exact harness-module path link PASS:
+ACTUAL_OBSERVER_BYTE_GATE_R1.json, op365.1743/wrapper609.468ms. No prior resource
+or role body in that actual tool canary. Separate OBSERVER_RESOURCE_GATES_R1.json
+has10 selected synthetic-resource CLI controls:1positive/9expected exit2,
+including2real directory/absence junctions verified/removed nonrecursively,
+wrong type/extra/existing/outside/hash, actual owned-file replacement at scan
+seam, and injected PermissionError domain rejection. The access error is
+INJECTED, not a real ACL-denial host proof. Test fixtures are unique owned OS-temp
+with identity/containment/no-reparse cleanup guards; unexpected failures preserve.
+All returned processes terminate, owned roots/logs absent; isolatedcleanup null.
+No new persistent process/link. Current public observer copy/gates NOT RUN;
+observer/caller publication waits a coherent achieved scope, no email pending.
+
+Leaf normal_prior_normalizer_z1 now owns only AB/qualify_prior.py/test_qualify_prior.py,
+SOURCE-only/no execute/spawn/stage/publish/mail/DATA read. It was sent exact
+observer path/API/current hashes. Implement bounded preflight + qualify caller,
+acyclic SOURCE-only manifest and separate externally frozen phase journal,
+root directory identity binding, actual trusted callback/source/tool/root/
+resource facts, reader all20 auth-before-decode, normalizer and final rereads.
+Config must not include journal/gate hashes (avoid manifest cycles). Root owns
+all other files/config/gates/journal/DATA/publication. No actual phase journal
+created. Missing/changed/extra/incorrect phase must fail before role-body access.
+
+Next collect/review caller SOURCE, test current preflight/closed-phase guards
+and final selected host/source boundaries. Only after those pass may root
+journal fixed20 normal-only ingest, qualify actual prior/context and later
+current host/native/source-class-work path. No actual20-role body, oldD
+descriptor/result/generatedinput, oldbuilders/modules/CLIs or protected/heldout
+DATA; no manifest following. Genuine one-original+exactly NULL/OBSERVE remains
+unspent/gated; no extra arm/control/original/retry. Full-D/H1/playable100 remain
+unqualified/zero; betaHELD. All caps/exact seeds/epochs/oracles/CircuitJS truth
+unchanged; Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historical protected
+unreadUNCERTIFIED. GWT/Player NOT APPLICABLE; electrical/population not renewed.
+Private source/config/synthetic fixtures/receipts and old uncertain resources
+are preserved. Continue standing roadmap without routine permission questions.
+
+# Historical checkpoint: Windows reader fix published; observer SOURCE next
 
 UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107. Implementation ee23ef185056a9510161efb6c999ac78c0a4251e

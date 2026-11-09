@@ -1,0 +1,31 @@
+{
+  "actualCallerAuthorityQualified": false,
+  "actualPriorBodiesRead": 0,
+  "call": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "observer-units-r1",
+    "processElapsedMs": 995.7762,
+    "receipts": {
+      "owner.json": "b003ab91ba7b3341c9f294c85a06005be2a2ebdb642de62e412e7108596ddcbc",
+      "parent.json": "98cfd142813393d01b4e8c3691be9abb504d02b53fd778481dcd830783a0a5ec",
+      "process.json": "43340128c77c96bbd9ca6bda61e95394ebdaddecadf9fc3706adcf34ece09535",
+      "request.json": "d94d2ae77bc65ecd3976aad2226e4abb5b899d701233072fec57e78b7fb736bb",
+      "result.json": "046057eae0cb8428a4dfc826e8e8a4295ae35297978effdced88a6d0bb2898ee",
+      "stderr.txt": "f465c0d872fc4eb3cf6f8af3ca01a101cd2a70f59722e7e45bd5955bd26faee7",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 1245.9884
+  },
+  "genuineEnvelope": "UNSPENT_GATED",
+  "inputSha256": "769dbca9389ba9f1580a2cf4ab77b749d533902cdf78751240cb18b9cda8ed51",
+  "normalDataPhaseEnabled": false,
+  "realJunctionObserverGate": "NOT_RUN",
+  "selectedActualToolsObserverGate": "NOT_RUN",
+  "skipped": 0,
+  "status": "PASS_SYNTHETIC_OBSERVER_UNIT_BOUNDARIES_ONLY",
+  "tests": 12
+}

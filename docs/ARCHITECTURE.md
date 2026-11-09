@@ -249,6 +249,14 @@ source/provenance, tool/module link, roots and resource observations before
 claiming real prior acceptance. Synthetic component gates do not enable DATA
 access, current native execution or playable layouts.
 
+The [observed caller-facts adapter](task-evidence/Q100/normal-prior-observer-r1/README.md)
+uses an explicitly source-bound current reader for named SOURCE/tool bytes,
+exact shallow resource closure and rechecked absence. It binds the harness's
+selected module path, rejects reparse/escape/change/error and emits actual
+observation evidence. It has no module/path discovery or manifest following.
+Observations are not atomic; caller provenance, root authority, phase gating
+and final reconciliation remain separate. It cannot open a normal DATA phase.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

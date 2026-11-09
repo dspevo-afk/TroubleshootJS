@@ -1,0 +1,73 @@
+{
+  "actualCallerQualified": false,
+  "actualPriorBodiesRead": 0,
+  "call": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "observer-actual-selected-tools-r1",
+    "processElapsedMs": 365.1743,
+    "receipts": {
+      "owner.json": "9c893271ad759a73a6e793a5a6933a157ec5d282a290aaa38e8b5ff5be158853",
+      "parent.json": "0a35f3cacf26f9bf53c6849f2c5104dc8701040e07d50b2e0a6ccd6484dcfe09",
+      "process.json": "26a514f0b75c43202ee6feeecda8cb268226bce580de38d686de1ec93e4c6864",
+      "request.json": "dc107751bbacb1482cc666dc9a25bd72c54aeb0f4a0c60e2964091d2b5373b14",
+      "result.json": "1df4fafcebb4cc5843ef2ddd77d63f85abc7d31d2a172b5847c7b144ed9b089c",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "c0613ad10a5d4f34dd302cb6e3e5f8a22ef65ada7119fa2bacd7c5d229ca0871"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 609.4680000000001
+  },
+  "normalDataPhaseEnabled": false,
+  "observerDirectoryAbsenceHostGate": "NOT_RUN",
+  "status": "PASS_ACTUAL_SELECTED_OBSERVER_BYTE_FACTS_ONLY",
+  "summary": {
+    "actualPriorBodiesRead": 0,
+    "callerQualified": false,
+    "directoryOrPriorResourcesObserved": false,
+    "embeddedModulePath": true,
+    "harnessModuleLinkSha256": "7ce76abc6214ebd266ebfecb47199278ab74540236c5ce52991804b8fd6d3a03",
+    "sourceFacts": [
+      {
+        "bytes": 89006,
+        "role": "currentNormalizer",
+        "sha256": "e8725dff3be9a1d8cf136c7ac89778ffcb0aefd54e809538caad8dcf7143aaa8"
+      },
+      {
+        "bytes": 22089,
+        "role": "currentObserver",
+        "sha256": "69b9c66222ca9f9a63d2d101250bc7986b1e0466635102044f9b6d1a47759cf7"
+      }
+    ],
+    "status": "PASS_ACTUAL_SELECTED_OBSERVER_BYTE_FACTS_ONLY",
+    "toolFacts": [
+      {
+        "bytes": 171744,
+        "role": "qualificationPython",
+        "sha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec"
+      },
+      {
+        "bytes": 495616,
+        "role": "rootCallPowerShell",
+        "sha256": "60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f"
+      },
+      {
+        "bytes": 304768,
+        "role": "nativeJava",
+        "sha256": "e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce"
+      },
+      {
+        "bytes": 2941,
+        "role": "rootCallHarness",
+        "sha256": "28aab617e686d2a4eec074a46b2e2861f6fa7c008544b33f7b070f0c6d77ea1d"
+      },
+      {
+        "bytes": 1040144,
+        "role": "processModule",
+        "sha256": "fb07ad540e22a225a11b8a12e9dc8e5a20d88f58f89cf32a5fd347613530954c"
+      }
+    ]
+  }
+}

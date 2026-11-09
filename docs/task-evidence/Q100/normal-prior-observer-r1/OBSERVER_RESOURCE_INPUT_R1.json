@@ -1,0 +1,31 @@
+{
+  "actualPriorBodiesRead": 0,
+  "files": [
+    {
+      "bytes": 21132,
+      "role": "fixed_role_reader.py",
+      "sha256": "00f6d135b0f86c87f389ebb0efd45aa50b804f7c1fe263b02ffe62bb75b9fbd3"
+    },
+    {
+      "bytes": 22089,
+      "role": "observe_caller_facts.py",
+      "sha256": "69b9c66222ca9f9a63d2d101250bc7986b1e0466635102044f9b6d1a47759cf7"
+    },
+    {
+      "bytes": 15450,
+      "role": "test_observe_caller_facts.py",
+      "sha256": "551ed80fb2a78ca583360235bbb904a0129ad5535e40e9f062b5f19e3debfe5c"
+    },
+    {
+      "bytes": 6376,
+      "role": "root_observer_resources_r1.py",
+      "sha256": "6b8ed8b095e4fb55c19022e29edeab2cfa0f8ac6dafdb4e3a7396d65aaa5fa3a"
+    },
+    {
+      "bytes": 3726,
+      "role": "observer_resource_canary_r1.py",
+      "sha256": "bc6e0085a3c248f77b5fff07e23c0a247a6cc6c0b234d4ba5d9a7ba4470d4372"
+    }
+  ],
+  "fixtures": "UNIQUE_OWNED_SYNTHETIC_ONLY"
+}
