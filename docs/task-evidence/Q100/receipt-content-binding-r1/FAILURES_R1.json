@@ -1,0 +1,36 @@
+{
+  "cleanupAttempts": [
+    {
+      "action": "PowerShell Remove-Item cleanup command",
+      "reason": "blocked by policy",
+      "status": "AUTO_REVIEW_REJECTED_NO_PROCESS_NO_MUTATION"
+    },
+    {
+      "reason": "ConvertFrom-Json converted ISO string to DateTime; comparing formatted string caused a false mismatch",
+      "status": "FAIL_OWNERSHIP_VALIDATION_NO_MUTATION"
+    },
+    {
+      "reason": "Typed UTC ticks/target/type/attributes revalidated; link alone removed and target retained",
+      "status": "PASS_SAFER_NONRECURSIVE_DIRECTORY_DELETE_FALSE"
+    }
+  ],
+  "nativeCompileOrCanaryFailures": 0,
+  "noBudgetOrOracleRelaxation": true,
+  "preservedAuditDraft": {
+    "resolution": "Final ticket stays inside actual export group before finishGroup, no extra admitted wall time",
+    "role": "EXPORT_DOMAIN_BEFORE_TIMING_CLARIFICATION_R1.md",
+    "sha256": "ebcd951316ad2c2143bc7e2756ce5fbde9f4c568177584f42bd74d4363489a79"
+  },
+  "priorFailures": "UNCHANGED_PRIOR_PACKETS_AND_PRIVATE_CONTROLLED_RECEIPTS_RETAINED",
+  "rootIntegrationR2": {
+    "reason": "Create-only evidence writer rejected existing unpublished R1 Source inventory",
+    "resolution": "Archived all four owned R1 records; explicit named-path updates only",
+    "status": "FAIL_CONTROL_WRITE_GUARD_NO_NATIVE_FAILURE"
+  },
+  "stagedDiffCheckR1": {
+    "reason": "mixed CRLF and extra blank EOF in new helper; one CRLF worksheet line",
+    "resolution": "Raw R1 saved; LF/EOF-only normalization; fresh final R2 JDK8/focused/native gates and exact class equality",
+    "status": "FAIL_NO_COMMIT"
+  },
+  "status": "PREEXECUTION_REVIEW_AND_CLEANUP_FAILURES_PRESERVED"
+}

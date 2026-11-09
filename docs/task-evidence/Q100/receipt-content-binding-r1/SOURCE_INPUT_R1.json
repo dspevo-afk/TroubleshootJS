@@ -1,0 +1,136 @@
+{
+  "classInventorySha256": "4f9069a69648f9a47ba5704d44fa1a714972f0707d22c41b99687911c86a8480",
+  "compileInputSha256": "f8ec7d0f4d48f73c69762915e4303f454e44d4ef7177b73e924cb4cbeddd777a",
+  "compileSourceCount": 859,
+  "dependencies": [
+    {
+      "bytes": 32024115,
+      "role": "gwt-user-2.7.0.jar",
+      "sha256": "d3721bcdd7c6855a524801212dd74548967d8fb65cbc212a20890732ff2c6948"
+    },
+    {
+      "bytes": 38276750,
+      "role": "gwt-dev-2.7.0.jar",
+      "sha256": "c7321e367fc24e5c7ad97b74d1cf2980c45fbd7cbe1fd412f8a8ba128f685135"
+    }
+  ],
+  "frozenSourceSha256": "e425c8167c46039114051896d8d06e5798749a7344f9421a94a094b336212ebc",
+  "privateSupport": "PINNED_FLAT_STUDY_SHARED_METER_PCB_SOURCE_NOT_INCLUDED_NO_STANDALONE_PUBLIC_REPLAY",
+  "sourceParents": [
+    {
+      "bytes": 229578,
+      "role": "R_STUDY.java",
+      "sha256": "88986781508aa34783d11e651082122f4bf8e0710a2263b39cc9b597fce9a8cf"
+    },
+    {
+      "bytes": 239584,
+      "role": "W_STUDY.java",
+      "sha256": "1ae31054a430c00bf926ff4deff8091892bae267f05257aa0d869000226f7bd1"
+    },
+    {
+      "bytes": 233880,
+      "role": "Q_AUTHORED_STUDY.java",
+      "sha256": "d6485b0b0f9c518431d440fcb57e477143d50cae78302c29598d12aaa4601dbd"
+    },
+    {
+      "bytes": 182535,
+      "role": "SHARED_OWNER.java",
+      "sha256": "4ed1c8561adf1619a8b7ffbd21e23fdf2544dcaafe541af4e5d2b2b1e95cabe4"
+    },
+    {
+      "bytes": 4567,
+      "role": "PREPAYMENT_R1.md",
+      "sha256": "2d6968320ad1707e3eb913429f7b23c6ebd7ee27a1ad1d3b05fec5197e2fed39"
+    },
+    {
+      "bytes": 7363,
+      "role": "WIRE_R1.md",
+      "sha256": "1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed"
+    },
+    {
+      "bytes": 4409,
+      "role": "NATIVE_MAP_R1.md",
+      "sha256": "d6625e0c2ab8e2002fc4df68693e96502bffa0e9c44a9f25dc3cfb895c946563"
+    },
+    {
+      "bytes": 207814,
+      "role": "CURRENT_PURE_KERNEL.py",
+      "sha256": "8e8c374a089a13c4defea9c4b5b548eb1bc1242cddabc1faf468dba420695af4"
+    },
+    {
+      "bytes": 172568,
+      "role": "NATIVE_PRIVATE_PCB.java",
+      "sha256": "7bf4ab57198ff9444381ec5d677c1a2bc309bfa3e7f01b188c631ffe5f2b966c"
+    },
+    {
+      "bytes": 229972,
+      "role": "CURRENT_FLAT_STUDY.java",
+      "sha256": "0a7e31b20dabd80a33e5dc5886507817cbc138ce96a37eb20ecc54a6e2ff93e0"
+    },
+    {
+      "bytes": 6465,
+      "role": "FLAT_SOURCE_PROOF_R1.json",
+      "sha256": "0b42c3c585b5656bdd92069b4c17abd55a3e954821de26e6bb68d67d55e6bd75"
+    }
+  ],
+  "sources": [
+    {
+      "bytes": 14372,
+      "role": "ReceiptContentBinding.java",
+      "sha256": "7f271ed213d109ea6e185d8418dafff2791e7809c805922ef0f1de44bedc65b9"
+    },
+    {
+      "bytes": 35251,
+      "role": "ReceiptContentBindingCanary.java",
+      "sha256": "efc0d89fd209ed838222b0032d5ebdbed3001cea0a29bc3b34f9550daa167f72"
+    },
+    {
+      "bytes": 3987,
+      "role": "ReceiptContentBindingFocused.java",
+      "sha256": "7614a72e5b2a50bf6d778710e45cc238177312db517bb981573e9ea5b58a371a"
+    },
+    {
+      "bytes": 2654,
+      "role": "ReceiptIdentityHostProbe.java",
+      "sha256": "2b81cdbf313deb7eb37c07ded2e3ef21e13da44eb7e599360194055644415211"
+    },
+    {
+      "bytes": 6189,
+      "role": "RECEIPT_BINDING_SOURCE_WORKSHEET_R1.md",
+      "sha256": "81b74765746afb10f78913c0e6413e64f20703cd394628262ce03ad37d33eb14"
+    }
+  ],
+  "status": "SANITIZED_SOURCE_AND_TOOL_INVENTORY",
+  "tools": [
+    {
+      "bytes": 171744,
+      "role": "python3.13.exe",
+      "sha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec"
+    },
+    {
+      "bytes": 495616,
+      "role": "powershell.exe",
+      "sha256": "60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f"
+    },
+    {
+      "bytes": 24192,
+      "role": "javac.exe",
+      "sha256": "61fa6463ee5b59004719b9833a16b148740cfa9f2d1f5a95ca598cc90be04c64"
+    },
+    {
+      "bytes": 304768,
+      "role": "java.exe",
+      "sha256": "e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce"
+    },
+    {
+      "bytes": 2941,
+      "role": "Invoke-RootCall-R1.ps1",
+      "sha256": "28aab617e686d2a4eec074a46b2e2861f6fa7c008544b33f7b070f0c6d77ea1d"
+    },
+    {
+      "bytes": 1040144,
+      "role": "VerifierIsolation.psm1",
+      "sha256": "fb07ad540e22a225a11b8a12e9dc8e5a20d88f58f89cf32a5fd347613530954c"
+    }
+  ]
+}

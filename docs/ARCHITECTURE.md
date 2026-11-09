@@ -262,6 +262,16 @@ authored fixture/input throw stubs and an interface-only carrier permit fresh
 compilation without old input DATA/classes or a replacement Meter. This component
 does not port Q assembly, qualify real DTO capture or enable export/host authority.
 
+The [receipt content binding component](task-evidence/Q100/receipt-content-binding-r1/README.md)
+owns an initial and one final bounded file hash against supplied original-owner
+byte/SHA authority. It binds the actual Meter start, canonical path and every
+ancestor identity, preserving creation time and leaf size/modification checks.
+Metadata prepays final hash/control demand; the single-use final path performs
+no Meter access. Future export must consume it after result readback and before
+the export group closes, preserving measured time and result-only fee formulas.
+It is a separate qualification owner; current native dispatch/export and full-D
+assembly remain disabled and unqualified.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

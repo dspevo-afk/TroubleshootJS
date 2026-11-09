@@ -1,0 +1,26 @@
+{
+  "behavioralTokenChange": false,
+  "files": [
+    {
+      "beforeBytes": 14413,
+      "beforeSha256": "f266d53ff45a30f25d6bb1fe7fe025b01625e2d108083d5661caa8e1af9cbcc8",
+      "bytes": 14372,
+      "role": "ReceiptContentBinding.java",
+      "sha256": "7f271ed213d109ea6e185d8418dafff2791e7809c805922ef0f1de44bedc65b9"
+    },
+    {
+      "beforeBytes": 6190,
+      "beforeSha256": "4a9f91bb47b6a39ee9fafb4ea5818850295156b6518bfd69af283a50501f876c",
+      "bytes": 6189,
+      "role": "RECEIPT_BINDING_SOURCE_WORKSHEET_R1.md",
+      "sha256": "81b74765746afb10f78913c0e6413e64f20703cd394628262ce03ad37d33eb14"
+    }
+  ],
+  "freshCompiledClassInventory": "ALL_2496_CLASS_BYTES_IDENTICAL_R1_R2",
+  "oldNativeGates": "AT_TIME_PASS_NOT_FINAL_R2_PROOF",
+  "oldSourceRetained": true,
+  "r2CompileGateSha256": "ae384ccca49aa3586f8022ad436df274c868907d51197eae4e35a2eb9afb1f23",
+  "r2NativeGateSha256": "99148211cd7d4f417101286d4a5dcd0b2103d0717ee6269efdaf9dcd0d1a9003",
+  "stagedDiffCheckR1": "FAIL_MIXED_CRLF_AND_EXTRA_BLANK_EOF_NO_COMMIT",
+  "status": "LF_AND_EOF_ONLY_SOURCE_CHANGE_REQUIRES_FRESH_FINAL_GATES"
+}

@@ -1,0 +1,39 @@
+{
+  "execution": "NONE_BY_REVIEWER_ROOT_OWNS_RUNTIME",
+  "files": [
+    {
+      "bytes": 14372,
+      "role": "ReceiptContentBinding.java",
+      "sha256": "7f271ed213d109ea6e185d8418dafff2791e7809c805922ef0f1de44bedc65b9"
+    },
+    {
+      "bytes": 35251,
+      "role": "ReceiptContentBindingCanary.java",
+      "sha256": "efc0d89fd209ed838222b0032d5ebdbed3001cea0a29bc3b34f9550daa167f72"
+    }
+  ],
+  "findingsFixedBeforeExecution": [
+    "ancestor_creation_time",
+    "producer_clock_before_path_IO",
+    "actual_Meter_started_binding",
+    "copy_added_units",
+    "Java7_captured_locals",
+    "matched_expired_Meter_oracle",
+    "junction_target_existing_file_oracle"
+  ],
+  "limits": "Hash deadline guard-only; no slow-I/O timeout, full-D, host or native export acceptance.",
+  "normalizationAudit": {
+    "finalCandidate": "7f271ed213d109ea6e185d8418dafff2791e7809c805922ef0f1de44bedc65b9",
+    "rootProof": "FRESH_R2_JDK8_ALL_2496_CLASS_BYTES_IDENTICAL_SOURCE_LOGIC_UNCHANGED",
+    "sourceOnlyReviewerCandidate": "f266d53ff45a30f25d6bb1fe7fe025b01625e2d108083d5661caa8e1af9cbcc8",
+    "status": "LF_AND_BLANK_EOF_ONLY"
+  },
+  "reviewer": "full_d_contract_checker_x1",
+  "scope": "HELPER_WORKSHEET_FINAL_CANARY_SOURCE_ONLY",
+  "status": "NO_SOURCE_BLOCKER_FINAL_CANDIDATE",
+  "worksheet": {
+    "bytes": 6189,
+    "role": "RECEIPT_BINDING_SOURCE_WORKSHEET_R1.md",
+    "sha256": "81b74765746afb10f78913c0e6413e64f20703cd394628262ce03ad37d33eb14"
+  }
+}

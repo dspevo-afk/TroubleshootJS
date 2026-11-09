@@ -1,4 +1,129 @@
-# Current checkpoint: authored flat work-plan component published
+# Current checkpoint: receipt content binding validated locally
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEADf3be9f7a166234089c640c11d7761b37ee75554c;
+normal push target origin/codex/q100-physical-feasibility, no upstream. Intended
+Source/evidence receipt-content-binding-r1 +ARCH/roadmap/report, publication/email
+PENDING. Flatcd4b1c2b/receiptf3be9f7a published/exactremoteverified and Gmail
+1a1bf9a860ca0397 SENT_ONCE; never duplicate. Main5f05b005 preserves9tracked/
+6untracked, E d9747229 reportM, Desktop e0c36885 preserves7tracked/89untracked;
+all staged0 before this integration. Unrelatedwork/priorfailures/resources stay.
+
+J OS-temp/tsj-q100-current-native-assembly-05ddb05fec974c76ae3efe67100dbffd retained
+plans/maps/11Sourcepins, finalSourcefreeze and controlledgates. Standalonehelper
+7F271ED2/14372B, worksheet81B74765, finalcanaryEFC0D89F. Actualauthority binds
+nativeMeter.started+wrapper, canonicalop1 path/ancestor key+creation, leafsize/
+mtime and suppliedactualowner byte/SHA. Initial+singlefinal hash/EOF; failed/
+foreign attempts retired, finalcallgraph hasnoMeterread/mutation. Exactunits
+116+10P+6B,copies2P+8,chunks3 (P2..4096/B1..2048). Finalhashwalltime staysinside
+futureexportgroup beforefinishGroup; allitscost prepaidMETADATA. Exportintegration
+notqualified. SourceRoot+independentfinalreview noblocker; reviewer noexecution.
+
+PASS fresh final JDK8 target7 compile859Sources ->2496classes/11928137B/allmajor51,
+emptySourcepath/freshclasses+jars/nooldDclasses orInputpayloads. Actualfocused6
+assertions +actualnative20cases/69assertions PASS. 4096boundaries/8MiB, restored
+mtime changedbytes vs oldmetadata baseline, growth/truncation, file/ancestor
+replacement, missing/realjunction, foreign/reuse/start mismatch/expiredMeter,
+unchangedcountervectors andopen-group walltime covered. HASH_DEADLINE is actual
+privateclockguard-only; delayedI/O5stimeoutrun NOTRUN, no generalhost guarantee.
+Compile4845.2958/5089.5391, focused378.2525/611.0107, native753.3154/991.5679ms
+operation/wrapper. Earlier actualWindowshostprobe4 PASS610.4799/892.6545ms.
+Allselectedchildren terminated/ownedrootslogsabsent; isolatedprocesscleanup
+duration unmeasured. All859Sourcebytes/tools/jars andpubliccopies rechecked
+unchanged; no repeatedunchangedmatrix. Finalproofcc7889f5cbdb947a73c534b9b1def0f64f7e76c4df62c2fcb1d54258557cc934.
+
+Ownedactualjunction removedONLYlink nonrecursively, targetintact, ownership/
+creation/target/type verified; R1/R2operations2.1781/2.1744ms, notprocesscleanuptime. Prior
+PowerShellcleanup auto-review rejected 'blocked by policy' beforeexecution;
+typedDateTime validation falsemismatch also failedbeforemutation. Corrected UTC
+ticks +literal Directory.Delete(path,false) succeeded; allattempts recorded.
+No compile/nativefailure. StageddiffR1FAIL mixedCRLF/blankEOF; rawSource retained,
+LF-onlyR2 freshgates PASS/all2496classbytes identical. RootintegrationR2writeguard
+FAIL also preserved/corrected beforepublication. No newpersistentprocess/link. Keep
+retained syntheticfixtures/Source and allolduncertainbrowser14116/start
+639294472690745890/58320, preview34180/start639294472514546595/58264 +14children;
+oldD verify-process-ebc137b2bbd5462d969a6eddf73816f7 no terminationproof and oldD
+unlinkUNCERTIFIED. No uncertainresource touched.
+
+No actualprior/oldD/protected/heldoutDATA/journalread; normalfixed20 remainREAD
+under earlieracceptedjournals. Genuineoriginal+exactlyNULL/OBSERVE UNSPENT_GATED.
+FullD/nativehost/H1/assembly/export/lifecycle NOTQUALIFIED; originalowner's
+after-read hashcharge stillneedslaterprepaymentgate. NativeV2marker/schema,
+missingwrappergroup/verifyBound anddecimal1m key-inclusivevisit policy needport;
+Qboundary9 andcurrentinputassembly stillpending. Allglobalcaps/seeds/epochs/
+independentoracles/CircuitJStruth unchanged. Full30EXCLUDED/HARD-PSYCHOTIC
+unavailable-unrun/historicalprotectedunreadUNCERTIFIED/playable100=0/betaHELD.
+GWT/Player N/A no production/visiblechange; electrical/population NOTRENEWED.
+
+Next inspectintended/stagedbytes/diffchecks; normalcommit/push/exactremoteverify,
+one completionGmail thenreceipt-onlyfollowup. ContinuecurrentV2nativeassembly/
+exportintegration and separatehost/prepayment/lifecyclegates beforegenuinecall.
+
+# Historical checkpoint: receipt content binding Source authoring
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEADf3be9f7a166234089c640c11d7761b37ee75554c,
+normal origin/codex/q100-physical-feasibility exactremoteverified; no upstream.
+Flat componentcd4b1c2b +receiptf3be9f7a published, Gmail1a1bf9a860ca0397 SENT_ONCE.
+No duplicate mail. F reportWIP only; Main5f05b005 preserves9tracked/6untracked;
+E d9747229 reportM; Desktop e0c36885 preserves7tracked/89untracked. Unrelated
+work and all prior failures/resources preserved. H retained final Source,
+controlled gates and fresh build output; no persistent resource was created.
+
+Flat finalproof74c44d9587da44a2b85c370b5257f102ff63b987e89b616d32b09b09256b59ae;
+private/public14 Source methods/0skip, repeated derivation, final JDK8 fresh856
+Sources/2467classes/allmajor51 and actual shared-Meter synthetic564assertions PASS.
+No consumed Source/build/runtime bytes changed after that acceptance; no fresh
+GWT/Player/electrical/population proof. FullD/nativehost/H1/export/lifecycle
+NOTQUALIFIED; realDTO40reads/11adds Source-audited only. Qnineboundary notported.
+
+J OS-temp/tsj-q100-current-native-assembly-05ddb05fec974c76ae3efe67100dbffd owns
+PLAN_R1 and11 explicitly pinned Source copies. SOURCE_PIN_CHECK_R1 PASS only
+hashauthenticity, inventorySHAab5f9860177d32317ba1cc090ed2476cf9674ef89bca685860504318821a40b3.
+No builder/module/generator/producer/Session/routing execution. Rootselected
+Windowsidentityprobe compiled/ran the unchanged H adapter,4 assertions PASS;
+actual unchanged-size/restored-mtime changedbytes pass metadata-only identity,
+proving the content gap. Replacement/missing-file rejects PASS. Compile
+826.9062/1115.7334ms; native610.4799/892.6545ms operation/wrapper. All2467freshH
+classes/jars rechecked before/after; selectedchildren terminated/ownedrootslogs
+absent; cleanupduration unmeasured. Retained syntheticfixture only, no new
+persistentprocess orlink. This is identity-only, notcontent/nativeexport proof.
+Root owns pins/acceptance; leaf Source-only maps: context_projection_map_y1
+EXPORT_SOURCE_MAP_R1, current_context_codec_z1 ASSEMBLY_SOURCE_MAP_R1,
+full_d_contract_checker_x1 EXPORT_DOMAIN_AUDIT_R1. No shared code writers.
+Maps identify missing op-content rehash; oldmarker APIs/identity, missing
+verifyBound/wrappergroup check and native1048576/value-only visits vs current
+1000000/key-inclusive policy remain futureexport work. Q boundary9 not5.
+RECEIPT_BINDING_SCOPE_DRAFT_R1 authorizes Source-only standalone helper:
+pure_prior_extraction_z1 owns ReceiptContentBinding.java +Sourceworksheet;
+normal_prior_normalizer_z1 owns ReceiptContentBindingCanary.java. ExactAPI
+prepare(SetupMeter,long,Path,long,String), verifyFinal(SetupMeter,long). Actual
+owner rawBytes/rawSha authority; bounded initial/final hash, file/ancestoridentity,
+singleuse, noMeterread/mutation afterprepare. Hash-only1unit/4096 model; exact
+fixed/fieldcopy prepayment awaits finalSource inventory/rootacceptance. Final
+ticket runs afterresultreadback before exportfinishGroup so walltime remains
+inside finalExportNanos/5s, no extra time. Draftaudit EBCD9513 preservedhistory;
+Root RECEIPT_TIMING_SELECTION_R1 chooses this placement. Nativecontentgates
+NOTRUN; no broader matrix/producer allowed before final freeze. Both exports/
+main remain denied. Next collect Sourceworksheet, review/freeze exactcharges,
+runSourcechecks/freshJDK8 and actualsyntheticcontent canaries; then integrate.
+Canaryargs2: existingtaskownedfixtureRoot +actualjunction-alias preparedbyRoot.
+
+Genuine original+exactlyNULL/OBSERVE UNSPENT_GATED. Noactualprior/oldD/protected/
+heldoutDATA or journalread inJ; normalfixed20 remains READ under its earlier
+accepted journals. Full30 EXCLUDED; HARD/PSYCHOTIC unavailable-unrun; historical
+protectedunread UNCERTIFIED; playable100=0/betaHELD. Allcaps, exactseeds, epochs,
+independentoracles/CircuitJStruth unchanged. Olduncertain browser14116/start
+639294472690745890/58320 andpreview34180/start639294472514546595/58264 +14children
+remain untouched; oldD verify-process-ebc137b2bbd5462d969a6eddf73816f7 lacks
+terminationproof, oldDunlinkUNCERTIFIED. No new persistentprocess inJ. One task-ownedactualjunction is now prepared
+at J/receipt-binding-fixtures-r1/junction-alias ->junction-target for mandatory
+reparse negative. JUNCTION_RESOURCE_R1 recordscreation/attributes/target;
+Root must revalidatecontainment/identity andremoveONLYlink withoutrecursion
+aftergates. Sourcecanary/nativecontenttests stillNOTRUN. Do notconfuse with
+uncertainoldresources. MAP_ACCEPTANCE_R1 pins export55f63c3b/assembly0549e5ad/
+domainF850F1C8 andchooses receiptbindingprerequisite; exactcounts pending.
+Continue standing roadmap, no routinepermission or duplicate completionmail.
+
+# Historical checkpoint: authored flat work-plan component publication
 
 UTC2026-11-09. F codex/q100-terminal-only-20261107 HEADcd4b1c2b5752f749d4ad670d9ba80c107c391ee8;
 normal push target origin/codex/q100-physical-feasibility, no upstream. Current
