@@ -1,4 +1,42 @@
-# Current checkpoint: Z-B published; normal-only caller/read boundary next
+# Current checkpoint: allowlist admission corrected; publication next
+
+UTC 2026-11-08. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107, HEAD9859f94a3be8aff86ffc390bcb4cd357cffe293f.
+Z-B2e4e356f/receipt9859f94a/Gmail1a1bda8f6a858b70 published/verified/SENT_ONCE.
+No duplicate Z-B mail. Origin dspevo-afk/TroubleshootJS; no upstream; target
+origin/codex/q100-physical-feasibility. Main5f05b005 retains9tracked/6untracked;
+E d9747229 reportM; Desktop e0c36885 retains7tracked/73default untracked entries
+(89files with-uall); staged0 outside F. Main/E report mirrors only; preserveall.
+
+AA OS-temp/tsj-q100-normalizer-allowlist-cb67e19c7f4f4fb8a39e65fb1456e87d;
+PLANec3fa43c froze necessary correction before runtime. Caller SOURCE inspection
+found published582422e5 expects the wrong allowlist envelope and rejects nullable
+D summary limits. Old56 tests/reviews did not prove actual metadata admission.
+Real selected metadata positive reproduced FAIL exit2/ALLOWLIST_KEYS, op462.804ms/
+wrapper721.576ms, retained PUBLISHED_METADATA_FAILURE_R1. No prior bodies opened.
+
+Current corrected AA/F normalizere8725dff; newtest85a9cf12; actual metadata c487
+unchanged. Only allowlist function AST changed; independent corrective SOURCE
+review matches actual metadata/current reader3114. Fresh61private/61public/0SKIP
+pass on currentSOURCE; actual metadata positive360.22/604.0057ms private and
+367.1105/610.2044ms public, regression5 private376.3189/611.5727/public379.3681/
+620.3861. Finalproofac3476c8968fcdee0de34eaa122cf86f8bf163c023da38adfad877d1dc6a60ee. All returned processes terminate,
+owned roots/logs absent; isolatedcleanup null. No new persistent process/link.
+Use AA/F e8725dff next; Z old582422e5 remains historical SOURCE/evidence only.
+
+Next review actual diff/index/bytes/privacy/whitespace, normal commit/push/exact
+remote and one distinct correction completion Gmail. Then implement/freeze real
+normal-only caller SOURCE/authority/roots/host observations and journal before
+actual fixed20 reads; actualprior/currenthost/native/full-D/H1 NOT RUN/unqualified.
+Public allowlist metadata read only, no role body/read phase/oldbuilder/module/CLI,
+oldD descriptor/result/generatedinput, protected/heldout DATA. One genuine
+original+exactly NULL/OBSERVE unspent/gated; no extra arm/control/original/retry.
+Source/synthetic fixtures/receipts/failures and uncertain resources preserved.
+Caps/seeds/epochs/oracles/CircuitJS truth unchanged; Full30EXCLUDED;
+HARD/PSYCHOTIC unavailable/unrun; historical protected unreadUNCERTIFIED;
+playable100=0/betaHELD. GWT/Player NOT APPLICABLE; electrical/population not renewed.
+
+# Historical checkpoint: Z-B published; normal-only caller/read boundary next
 
 UTC 2026-11-08. F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107. Implementation 2e4e356f3a21c9ab9c060822d0dc074cfb05089a

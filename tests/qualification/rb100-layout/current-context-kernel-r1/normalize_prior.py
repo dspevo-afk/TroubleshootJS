@@ -362,39 +362,21 @@ def _validate_allowlist_bytes(raw, expected_sha256=ALLOWLIST_SHA256):
     _need(_is_sha(expected_sha256) and _sha(raw) == expected_sha256,
           "ALLOWLIST_SHA256")
     value = _json_load(raw, MAX_ALLOWLIST_BYTES, "ALLOWLIST", allow_float=False)
-    _exact_keys(value, ("counts", "fields", "oracleBodiesRead", "sourceSha256",
+    _exact_keys(value, ("authoritySourceSha256", "helperSourceSha256",
                         "noRecursiveManifestFollowing", "oldDDescriptorResultGeneratedInputDenied",
                         "protectedAndHeldOutDenied", "qualificationProjectionIsCrosscheckOnly",
                         "readingEnabled", "roleCount", "rootPathsArePrivateAndExternallyFixed",
                         "rows", "schema", "status"), "ALLOWLIST_KEYS")
     _need(value["schema"] == ALLOWLIST_SCHEMA and value["status"] == ALLOWLIST_STATUS
-          and value["oracleBodiesRead"] == 0 and value["roleCount"] == ALLOWLIST_ROLE_COUNT
-          and value["sourceSha256"] == D_BUILDER_SHA256, "ALLOWLIST_IDENTITY")
+          and type(value["roleCount"]) is int and value["roleCount"] == ALLOWLIST_ROLE_COUNT
+          and value["authoritySourceSha256"] == D_BUILDER_SHA256
+          and value["helperSourceSha256"] == D_DESCRIPTOR_SHA256, "ALLOWLIST_IDENTITY")
     _need(value.get("oldDDescriptorResultGeneratedInputDenied") is True
           and value.get("protectedAndHeldOutDenied") is True
           and value.get("qualificationProjectionIsCrosscheckOnly") is True
           and value.get("noRecursiveManifestFollowing") is True
           and value.get("rootPathsArePrivateAndExternallyFixed") is True
           and value.get("readingEnabled") is False, "ALLOWLIST_POLICY")
-    counts = value["counts"]
-    _exact_keys(counts, ("owner", "parent", "on_disk_process", "on_disk_request", "result"),
-                "ALLOWLIST_COUNTS")
-    _need(counts == {"owner": 7, "parent": 3, "on_disk_process": 11,
-                     "on_disk_request": 3, "result": 8}, "ALLOWLIST_COUNT_VALUES")
-    fields = value["fields"]
-    _exact_keys(fields, ("on_disk_process", "on_disk_request", "owner", "parent", "result"),
-                "ALLOWLIST_FIELDS")
-    _need(fields == {
-        "on_disk_process": ["FilePath", "Arguments", "ProcessId", "ProcessStartTicks",
-                            "ExitCode", "Stdout", "Stderr", "StdoutLog", "StderrLog",
-                            "ProcessRoot", "TerminationProven"],
-        "on_disk_request": ["FilePath", "Arguments", "LimitMs"],
-        "owner": ["schema", "pid", "startTicks", "executable", "script", "request",
-                  "createdUtc"],
-        "parent": ["schema", "elapsedMs", "process"],
-        "result": ["status", "elapsedMs", "exitCode", "terminationProven", "stdoutBytes",
-                   "stderrBytes", "processRootAbsent", "totalElapsedMs"],
-    }, "ALLOWLIST_FIELD_VALUES")
     rows = value["rows"]
     _need(type(rows) is list and len(rows) == ALLOWLIST_ROLE_COUNT, "ALLOWLIST_ROLE_COUNT")
     by_role = {}
@@ -416,7 +398,8 @@ def _validate_allowlist_bytes(raw, expected_sha256=ALLOWLIST_SHA256):
         _need(expected_bytes is None or _is_int(expected_bytes, 0, row["maxBytes"]),
               "ALLOWLIST_EXPECTED_LENGTH")
         if "summaryParseMaxBytes" in row:
-            _need(expected_bytes is None and _is_int(row["summaryParseMaxBytes"], 1, 1024),
+            _need(expected_bytes is None and (row["summaryParseMaxBytes"] is None
+                  or _is_int(row["summaryParseMaxBytes"], 1, 1024)),
                   "ALLOWLIST_SUMMARY_LIMIT")
         if "exactContentAuthority" in row:
             _need(row["exactContentAuthority"] == "PINNED_SOURCE_HASH_NO_INITIAL_DATA_SNAPSHOT",

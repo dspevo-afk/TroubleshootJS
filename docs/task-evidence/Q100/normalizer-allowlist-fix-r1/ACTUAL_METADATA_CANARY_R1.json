@@ -1,0 +1,33 @@
+{
+  "actualPriorBodiesRead": 0,
+  "call": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "actual-metadata-after-fix-r1",
+    "processElapsedMs": 360.22,
+    "receipts": {
+      "owner.json": "2df5b51f8200a8b6d665e3255ef02b218337ce898d6df4a04057884995de4c81",
+      "parent.json": "ea9deaa7ce8219eb260cf72bdbfb259115cd6a58b0cedbfa6755741a63440d5b",
+      "process.json": "c33cf7d5049ff7795bd37fd06235fd30af02349c56d1587ba0ad2d442dd3b5de",
+      "request.json": "0295649b87365026fcbad578bbbe465ae343c0104cba81a802242bc68be76068",
+      "result.json": "2c5f5ccb62b24ba97575b31cfbdcc82d245173d15964c9c164df6a89acc8a2b4",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "e0414dede204b98ed4f5e79c77aa97c9acb433390850641f0f15a003b888cc1a"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 604.0057
+  },
+  "genuineEnvelope": "UNSPENT_GATED",
+  "inputSha256": "b896b2fd5941298d1896a7f049bab953e6f6734d4ef103eb5d4b4e71c8770f2b",
+  "normalPriorQualification": "NOT_RUN",
+  "status": "PASS_ACTUAL_PINNED_METADATA_ONLY",
+  "summary": {
+    "actualPriorBodiesRead": 0,
+    "normalPriorAccepted": false,
+    "publicEntryStopsAt": "ROLE_BYTE_MAP",
+    "roleCount": 20,
+    "status": "PASS_ACTUAL_PINNED_METADATA_ONLY"
+  }
+}

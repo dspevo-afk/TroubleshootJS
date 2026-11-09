@@ -1149,6 +1149,16 @@ playable100=0/betaHELD. Implementation `2e4e356f3a21c9ab9c060822d0dc074cfb05089a
 normally pushed to origin/codex/q100-physical-feasibility, exact remote SHA
 verified; completion Gmail `1a1bda8f6a858b70` sent once.
 
+The [frozen allowlist admission correction](task-evidence/Q100/normalizer-allowlist-fix-r1/README.md)
+is locally accepted. The old normalizer rejected the actual public contract;
+its56 synthetic tests missed this positive. The exit2/ALLOWLIST_KEYS failure is
+preserved. The validator now matches the unchanged pinned envelope/null limits;
+fresh61 private/61 public tests and actual metadata-only CLI positives pass.
+No actual prior body or read transition occurred. Real caller/prior/current
+host/native qualification remains pending; one genuine envelope unspent/gated.
+Caps/seeds/oracles and Full30EXCLUDED/HARD-PSYCHOTIC unavailable/unrun/historical
+unreadUNCERTIFIED/playable100=0/betaHELD remain. Publication and correction mail next.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

@@ -1,0 +1,11 @@
+{
+  "actualPriorBodyReadOrQualification": false,
+  "allOtherModuleAstNodesEqual": true,
+  "allowlistSha256": "c487eae6ed0e070aaad75dccd14d23313ed9da2c6bda7f93bfeb886109f20f91",
+  "independentSourceReview": "MATCHES_ACTUAL_PINNED_METADATA_AND_FIXED_READER_SOURCE",
+  "normalizerSha256": "e8725dff3be9a1d8cf136c7ac89778ffcb0aefd54e809538caad8dcf7143aaa8",
+  "previousGap": "56_SYNTHETIC_TESTS_AND_OLD_SOURCE_REVIEW_DID_NOT_PROVE_REAL_METADATA_ADMISSION",
+  "readerSha256": "3114b1abe807e73de4cdd78939b5ab76c2623cf3de501b193a746219b16160a4",
+  "scope": "ALLOWLIST_ENVELOPE_AUTHORITY_HELPER_PINS_AND_D_NULL_SUMMARY_MAPPING",
+  "status": "NO_BLOCKER_IN_CORRECTIVE_SOURCE_SCOPE"
+}

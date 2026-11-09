@@ -1,0 +1,28 @@
+{
+  "actualPriorBodiesRead": 0,
+  "actualRejection": "ALLOWLIST_KEYS",
+  "call": {
+    "childExitCode": 2,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "actual-metadata-before-fix-r1",
+    "processElapsedMs": 462.80400000000003,
+    "receipts": {
+      "owner.json": "7391fa8cb7066d106fb5c8a1ee2de5e586403877947902b7554d78449cf12960",
+      "parent.json": "81ac03b4fb5721ae7b92f980d1b43d74d7a23f5566e50eac52473234f620a36b",
+      "process.json": "04424d3ce9a72ac204d7d517a7babe8553bf3220cd275e5b857204e5c79eba81",
+      "request.json": "381b5a1e9d7f991e6b912e322245de8b88f2a52629cff0da2caf226db24bbc37",
+      "result.json": "f2c5ab30d0e36a1c455d5c8aa3645e2e63cddf4b9ade47f5247cdcbd48707ded",
+      "stderr.txt": "63f94f208ca710ddbe6452e1ba87fea952e74636bf1618db966ba38991124286",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "PASS_EXPECTED_REJECTION",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 721.576
+  },
+  "explanation": "Synthetic component suites missed this actual metadata positive; no actual prior qualification was previously claimed",
+  "genuineEnvelope": "UNSPENT_GATED",
+  "intendedResult": "POSITIVE_METADATA_ADMISSION",
+  "positiveGatePassed": false,
+  "status": "FAIL_ACTUAL_POSITIVE_METADATA_ADMISSION_PRESERVED"
+}

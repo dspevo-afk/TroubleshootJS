@@ -1,5 +1,9 @@
 # Pure normal-prior normalizer component
 
+The subsequent [allowlist admission correction](../normalizer-allowlist-fix-r1/README.md)
+fixes a real metadata-positive gap missed by this packet's56 synthetic tests.
+This packet retains its recorded source and limited evidence.
+
 Accepted and published for pure component scope. Implementation
 `2e4e356f3a21c9ab9c060822d0dc074cfb05089a` is verified on
 `origin/codex/q100-physical-feasibility`; completion Gmail
