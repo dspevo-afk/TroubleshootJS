@@ -1,0 +1,13 @@
+{
+  "actualPriorDataReads": 0,
+  "bodyBlocks": 2,
+  "bodyBytes": 6370,
+  "bodySha256": "dddcea3031a623599ebe11563af8bafb4d63f6a1f8cc4e1965c0a6e53ce16bdf",
+  "codecOrLegacyExecution": "NONE",
+  "javaBytes": 7326,
+  "javaSha256": "ba26f08bb2e003a381fe73e19915f1ef1fb1d1b2cca6d4e5a64b3e0f861ef559",
+  "nativeProducerCalls": 0,
+  "normalHostAcceptance": "INTENTIONALLY_INVALID_SYNTHETIC_CHILDREN",
+  "rootFixtureSha256": "644cf35bb681d75dd6c97c1f881f12383c53f8eb3fb4fcfbcc4bccd5d529d4ab",
+  "status": "ROOT_SYNTHETIC_WIDE_STDLIB_ORACLE_ONLY"
+}

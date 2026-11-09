@@ -1,4 +1,129 @@
-# Current checkpoint: receipt content binding published
+# Current checkpoint: native V2 codec validated locally
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD1cd45d7efa279e9283deed1c792b4b3ba1013f29;
+normal origin/codex/q100-physical-feasibility exactremoteverified, no upstream.
+Intended native-v2-codec-r1 Source/evidence +ARCH/roadmap/report; publication/mail
+PENDING. Receipte5e30770/receipt1cd45d7e andGmail1a1bfe37cdaa81c7 SENT_ONCE;
+flatcd4b1c2b/receiptf3be9f7a andGmail1a1bf9a860ca0397 COMPLETE. Never duplicate.
+Main5f05b005 preserves9tracked/6untracked; E d9747229 reportM; Desktop e0c36885
+preserves7tracked/89untracked. Allunrelatedwork/priorfailures/resources stay.
+
+S OS-temp/tsj-q100-native-v2-codec-70ac547d9c794541a65eeb08312d786b retains13Source
+snapshots/pinproofs, oracleR1/R2failures, correctedR3Source/ASTliteralproof and
+finalR2Sourcefreeze/build/runtime receipts. Codec76FB7BBC18580B, worksheet9E4A7BDC,
+canary485D831F32048B. Fused ordinaryASCII256/depth64/keyinclusive1000000 JSON
+walk; ordered13root/14marker/frozenwire1ab, direct656Marker separate722transport.
+Borrowed body/digest exclusivecallerownership; no newgraph or logicalDTOcopies.
+Selectedsink owns1MiB andblockadmission, privatecontrols withinexistingformatter/
+markerfinalization API. Producer/assembler/main/exports allremain disabled.
+
+PASS independentstdlib/ASTliteraloracles: Base644cf35b6196B gives1177bodybytes,
+wideba26f08b7326B gives6370B/C2; marker656SHA24b60b2eb3b76d4a3989488e33b015026d9d7663f4c22d924d553949e956c79a.
+Fixtures'childmaps intentionallyinvalidnormalfullD, nofakeOriginalArm. Final
+JDK8target7 compile860Sources ->2488classes/11922432B/allmajor51 PASS. Actual
+native63cases/94assertions PASS: actualSharedMeter/R5CountSinkC2delta2,1MiB
+rejection256units/copiesunchanged, admission/descendantprefix guards, independent
+body/markerbytes, order/header/type/domain/cycle/depth64/65/visits1m+1/bounds.
+Memorywrite/compare are notnativefileexport; DiscardSink visits/depthonly,
+no bytecap/Meter/hostproof; markerbytes notpublicationtoken/copylifecycle proof.
+Compile4690.9766/4934.2694ms; native467.6315/706.0425ms operation/wrapper.
+All860Sources/tools/jars/classclosure/publiccopies rechecked; children terminated/
+ownedrootslogsabsent; isolatedcleanupduration unmeasured. No newpersistent
+process/link. IndependentfinalSourceReview48B71ECE no blocker; reviewer noexec.
+Root owns actualgates. Finalproof5bbdf9c473216106bbc094554f9e315bd3bde9ad6ebc3d2c843814f77aae067a.
+
+Preservedfailures: RootR1oraclearmsListwrong (normative6rootcontainersallMap),
+R2arbitrarywirewrong (currentprotocolpinsactualWire); correctedstdlibR3before
+subjectexecution, no codec/oraclerelaxation. FirstactualjavacFAIL missingcanary
+LinkedHashMapimport;5304.0199/5724.7827ms,exit1,terminated/rootabsent. Import-only
+fix actualfreshR2compilePASS. Old6FEESource inhistory/canary-before-import-r1.
+No nativeSuitefailure. Keepallcontrolledreceipts/Source/syntheticfixtures. No
+actualprior/oldD/protected/heldoutDATA/journalread; oldnormal20 remain READunder
+earlieracceptedjournals. No oldDclasses/inputpayloads onclasspath; knownInput/
+fixturestubs denyproduction. Receiptownedjunctions alreadyremoved/targetsintact.
+
+Genuineoriginal+exactlyNULL/OBSERVE UNSPENT_GATED. FullD/nativehost/H1/assembly/
+export/lifecycle NOTQUALIFIED; originalownerafter-readhash andQboundary9 still
+needport. Allcaps,seeds/epochs/oracles/CircuitJStruth unchanged. Full30EXCLUDED/
+HARD-PSYCHOTIC unavailable-unrun/historicalprotectedunreadUNCERTIFIED/
+playable100=0/betaHELD. GWT/PlayerN/A no production/visiblechange; electrical/
+population NOTRENEWED. Oldbrowser14116/start639294472690745890/58320 andpreview
+34180/start639294472514546595/58264 +14uncertainchildren untouched; oldD verify-
+process-ebc137b2bbd5462d969a6eddf73816f7 lacks terminationproof/oldDunlinkUNCERTIFIED.
+
+Next inspectactualdiff/stagedbytes/diffchecks, normalcommit/push/exactremote,
+onecompletionGmail/receiptfollowup. Then currentnativeassembly/exportintegration,
+input/work/receipt/sameMeter/host/lifecycle gates before anygenuineproducer.
+Continue standingroadmap without routinepermission orduplicateemails.
+
+# Historical checkpoint: native V2 codec Source authoring
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD1cd45d7efa279e9283deed1c792b4b3ba1013f29,
+origin/codex/q100-physical-feasibility exactremoteverified, no upstream. Receipt
+componente5e307702b77c56ac7155e265a465add85e47b62 +receipt1cd45d7e published;
+Gmail1a1bfe37cdaa81c7 SENT_ONCE. Flatcd4b1c2b +receiptf3be9f7a/Gmail1a1bf9a860ca0397
+also complete. Never duplicate either. F reportWIP only; Main5f05b005 preserves
+9tracked/6untracked, E d9747229 reportM; Desktop e0c36885 preserves7tracked/
+89untracked. All unrelated work/prior failures/old uncertain resources preserved.
+
+Receiptfinalproofcc7889f5cbdb947a73c534b9b1def0f64f7e76c4df62c2fcb1d54258557cc934,
+helper7f271ed2/canaryEFC0D89F/worksheet81b74765 accepted. FinalJDK8 compile859
+Sources/2496classes/11928137B/major51; focused6 +native20cases/69assertions PASS.
+R1stageddiffFAIL CRLF/blankEOF corrected LF-only, freshR2gates PASS andall2496
+classbytes identical. Earlier cleanupauto-review/DateTime/integrationwriteguard
+failures preserved. Both ownedJjunctions removednonrecursively/targetsintact;
+no newpersistentprocess/link. DelayedI/O5stimeout NOTRUN (actualclockguard-only).
+Receiptcomponent remains separate from disabledcurrentnativeexport/assembly.
+
+S OS-temp/tsj-q100-native-v2-codec-70ac547d9c794541a65eeb08312d786b owns PLAN_R1,
+13explicitSourcecopies, pincheckPASS inventory530349352096d2c68b7cdf57728e679333a5b20208d1ec64fb637bb141be7a65.
+Next selectedslice standaloneCurrentV2CanonicalCodec.java: ordinaryASCII256,
+strictInteger/Long/Boolean/null/List/Map,depth64/KEYinclusive1000000visits;
+13rootV2keys/fixedtags/identitygrammar +14markerkeys/inputContext/typedbounds/
+exact656Marker separate722transport. ExistingCanonicalJsonSink owns1MiB and
+blockadmission. No geometryexception, result-exportpricing unchanged, caller
+exclusivelyownsbody/digest throughpasses/publication (notdeepfreeze).
+StableproposedAPI writeBody(Map,CanonicalJsonSink), typedMarker constructor,
+countMarker(Marker),writeMarker(Marker,exactbyte[]). Root mustfreezecontract/
+sinkprepayment/allocation beforeexecution. No code inF exceptcheckpoint.
+
+Source-only leaves/notalone/onewriter: pure_prior_extraction_z1 ownsONLY codec
+Java+CODEC_SOURCE_WORKSHEET_R1; normal_prior_normalizer_z1 ownsONLY codecCanary;
+full_d_contract_checker_x1 ownsONLY CODEC_CONTRACT_AUDIT_R1. No workers execute,
+spawn, readDATA/journals/classes, stage/publish/mail. Rootownsallgates/integration.
+RootauthoredsyntheticCurrentV2CodecOracle.java6196B SHA644cf35bb681d75dd6c97c1f881f12383c53f8eb3fb4fcfbcc4bccd5d529d4ab
+withPythonstdlibjson only (no subject/legacyimport). BODY_JSON1177B, maxmarker656B
+SHA24b60b2eb3b76d4a3989488e33b015026d9d7663f4c22d924d553949e956c79a. Source
+fixturebody() hasvalid13headers/grammar butchildmaps intentionallyinvalidnormal
+fullD. Markermaxima7typedvalues,digestA5x32. CanarycompilesfixtureSource; noargv
+blob/filesystemDATAtransport. SOURCE-onlyauthoring and fixturegeneration prove
+no currentcodec/runtime/export. No sourcefreeze/build/native inS yet.
+RootoracleR1armsList/R2placeholderwire werewrong; correctedR3armsMapnull/observe
++frozenwire1ab pernormativeSource, no implementationrelaxation. Oldfixtures/
+proofs retainedhistory. Wideoracle7326B SHAba26f08bb2e003a381fe73e19915f1ef1fb1d1b2cca6d4e5a64b3e0f861ef559
+gives6370B/twoblocks; independentrealCountSinkboundarycase pending. SOURCE_PIN_CHECK_R3
+validates13copies+bothcurrentOracleSources. Subjectcodec76FB7BBC18580B releasedSource
+fusedtraversal; worksheet9D0F5E9F6504B pendingexplicitmarkercontrolpricingclarification.
+ContractauditB6F9A74D conditionalSourceonly; wirepinclarification pending. CanarySource
+active. No prewalkatposition0: schemafixed13 only, thenfusedkey-inclusivewriting.
+Digest/bodyexclusiveownership, no new logicalcopies; markercontrolwithinexistingfixed1.
+
+Next collectcontractaudit/core/canarySource and resolveAPI/sink/admission gaps;
+auditUTF8LF/EOF beforefreezing toavoidlastartifactfailure; independently reproduce
+stdliboracle, runfinal-sourceJDK8 and actualSharedMeter/R5CountSink/codec oracles,
+then publishonlyvalidatedcomponent. Continueassembly/export afterwards. Genuine
+original+exactlyNULL/OBSERVE UNSPENT_GATED. FullD/nativehost/H1/assembly/export/
+lifecycle NOTQUALIFIED; originalownerafter-readhash andQboundary9 stillpending.
+Noactualprior/oldD/protected/heldoutDATA/journalread inS; earliernormal20 remain
+READunderacceptedjournals. Full30EXCLUDED/HARD-PSYCHOTIC unavailable-unrun/
+historicalprotectedunreadUNCERTIFIED/playable100=0/betaHELD. Allcaps,exactseeds/
+epochs/independentoracles/CircuitJStruth unchanged. No prod/GWT/Player change.
+Oldbrowser14116/start639294472690745890/58320, preview34180/start639294472514546595/
+58264 +14uncertainchildren; oldD verify-process-ebc137b2bbd5462d969a6eddf73816f7
+lacks terminationproof andoldDunlinkUNCERTIFIED remain untouched. No new S
+persistentprocess/link. Continue standingroadmap without routinepermission.
+
+# Historical checkpoint: receipt content binding publication
 
 UTC2026-11-09. F codex/q100-terminal-only-20261107 HEADe5e307702b77c56ac7155e265a465add85e47b62;
 normal push target origin/codex/q100-physical-feasibility, no upstream. Intended

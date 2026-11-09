@@ -1,0 +1,17 @@
+{
+  "actualCodecExecution": "NOT_RUN",
+  "actualPriorDataReads": 0,
+  "bodyBytes": 1177,
+  "markerBoundParts": [
+    206,
+    355,
+    65,
+    30
+  ],
+  "markerMaxBytes": 656,
+  "nativeProducerCalls": 0,
+  "sourceAuthority": "AST_LITERAL_CONSTANTS_ONLY_NO_MODULE_EXECUTION",
+  "status": "PASS_INDEPENDENT_CURRENT_CONTRACT_AND_CANONICAL_ORACLE_LITERALS",
+  "wideBlocks": 2,
+  "wideBytes": 6370
+}

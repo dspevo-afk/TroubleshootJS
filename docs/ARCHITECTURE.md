@@ -272,6 +272,15 @@ the export group closes, preserving measured time and result-only fee formulas.
 It is a separate qualification owner; current native dispatch/export and full-D
 assembly remain disabled and unqualified.
 
+The [current V2 canonical codec](task-evidence/Q100/native-v2-codec-r1/README.md)
+owns one fused body validation/writing traversal and direct bounded marker output.
+It checks the ordered13-root/14-marker contracts, protocol pin, ordinary domain,
+key-inclusive visits and exact656-byte marker ceiling. The existing sink owns
+body bytes and block admission; callbacks precede data inspections as output
+advances. Body/digest stay borrowed under exclusive caller ownership. This owner
+changes no producer, export or host dispatch and supplies no deeper semantic or
+runtime identity authority; actual file-export integration remains separate.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

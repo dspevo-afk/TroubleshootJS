@@ -1314,6 +1314,16 @@ flows are unchanged. Current V2 native assembly/export/host integration remains
 pending before the unspent genuine envelope; playable100=0/beta held and all caps/
 data exclusions remain. Implementation `e5e307702b77c56ac7155e265a465add85e47b62` normally pushed to origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail `1a1bfe37cdaa81c7` sent once.
 
+The [current V2 native codec prerequisite](task-evidence/Q100/native-v2-codec-r1/README.md)
+is locally accepted for canonical bytes/domain policy and selected actual sink
+admission. Final860-Source JDK8 build and63 native cases/94 assertions pass;
+the actual Meter counts C2 correctly and enforces1MiB at256 blocks. Typed
+marker output matches the independent656-byte maximum. Source review, corrected
+oracle drafts and the initial missing-import compile failure are preserved.
+Memory/discard passes are not native file-export or host proof. Current assembly/
+export/prepayment/lifecycle integration remains pending; genuine envelope unspent,
+playable100=0/beta held, budgets/data exclusions unchanged. Publication/email pending.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion
