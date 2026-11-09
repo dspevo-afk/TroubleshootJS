@@ -1157,7 +1157,9 @@ fresh61 private/61 public tests and actual metadata-only CLI positives pass.
 No actual prior body or read transition occurred. Real caller/prior/current
 host/native qualification remains pending; one genuine envelope unspent/gated.
 Caps/seeds/oracles and Full30EXCLUDED/HARD-PSYCHOTIC unavailable/unrun/historical
-unreadUNCERTIFIED/playable100=0/betaHELD remain. Publication and correction mail next.
+unreadUNCERTIFIED/playable100=0/betaHELD remain. Implementation `f31fdcbf5a191a95921ecb2545478ae68139a94b`
+normally pushed to origin/codex/q100-physical-feasibility, exact remote SHA
+verified; correction Gmail `1a1bdb2d592bfe9d` sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

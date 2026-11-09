@@ -1,6 +1,8 @@
 # Frozen allowlist admission correction
 
-Accepted locally; normal commit/push and one correction completion email pending.
+Accepted and published as `f31fdcbf5a191a95921ecb2545478ae68139a94b` on
+origin/codex/q100-physical-feasibility, exact remote SHA verified.
+Correction Gmail `1a1bdb2d592bfe9d` SENT_ONCE; [publication](PUBLICATION_R1.md).
 Final proof SHA256 `ac3476c8968fcdee0de34eaa122cf86f8bf163c023da38adfad877d1dc6a60ee`.
 
 Caller integration exposed a real defect in the preceding normalizer: its

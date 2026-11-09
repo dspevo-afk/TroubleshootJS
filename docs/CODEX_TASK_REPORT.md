@@ -1,4 +1,48 @@
-# Current checkpoint: allowlist admission corrected; publication next
+# Current checkpoint: allowlist correction published; caller SOURCE in progress
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107. Implementation f31fdcbf5a191a95921ecb2545478ae68139a94b
+normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
+Correction Gmail1a1bdb2d592bfe9d SENT_ONCE; receipt gets no second mail. Verify actual
+HEAD after this documentation receipt. Origin dspevo-afk/TroubleshootJS; no upstream.
+Actual19-path tree4dcf02280962ef2256379ef674101b342310b12b, patchb6ec53ca4f40cfe1ff9af89924ec69d4e020564be4b26380dcd785ea606e7ca6;
+byte/privacy/whitespace and actual trailing-space rejection/restoration pass.
+F clean after implementation. Main5f05b005 retains9tracked/6untracked/staged0;
+E d9747229 reportM/staged0; Desktop e0c36885 retains7tracked/73defaultuntracked
+entries (89files with-uall)/staged0. Main/E report mirrors only; preserveall.
+
+AA OS-temp/tsj-q100-normalizer-allowlist-cb67e19c7f4f4fb8a39e65fb1456e87d.
+Current AA/F normalizere8725dff; test85a9cf12; fixed metadata c487 unchanged;
+proofac3476c8968fcdee0de34eaa122cf86f8bf163c023da38adfad877d1dc6a60ee.
+61private/61public/0SKIP + actual metadata-only CLI positives pass on finalSOURCE.
+Only allowlist function AST changed; corrective source review matches actual
+metadata/current reader3114. Prior published positive exit2/ALLOWLIST_KEYS remains
+FAIL_PRESERVED, not acceptance. ZB56 did not prove real metadata positive.
+Use current AA/F E872; old Z582422e5 SOURCE/evidence is historical. Actual caller
+facts and normal-prior qualification still NOT RUN; fixed20 bodies remain unread.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+PLAN0a1aac1239feda082e4c8df29af414b3b7d852c8948f828c976aa3779ec0b52e.
+SOURCE-only caller/observed-authority scope IN PROGRESS. Leaf context_projection_map_y1
+owns only observe_caller_facts.py/test_observe_caller_facts.py, no run/spawn/stage/
+publish/mail/DATA read. Root owns caller/integration/gates/phase journals. Reuse
+qualified reader canonical/reparse/open identity checks; separately pin actual
+SOURCE/callback/tool/module link and observe real closure/absence, never fabricate
+facts or follow historical manifest rows. No AB runtime/gates accepted yet.
+
+Next review observer SOURCE, run synthetic and actual selected Windows host
+positives/negatives, freeze caller SOURCE/authority and journal before fixed20
+normal-only reads. Then qualify pinned prior/context and current host/native
+source-class-work-capture path. OldD descriptor/result/generatedinput, oldbuilders/
+CLIs/modules, protected/heldout DATA denied. One genuine original+exactly NULL/
+OBSERVE remains unspent/gated; no extra arm/control/original/retry. No new
+persistent process/link; source/synthetic fixtures/receipts/failures and old
+uncertain resources preserved. CircuitJS truth/caps/seeds/epochs/oracles unchanged;
+Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historical protected unread
+UNCERTIFIED; playable100=0/betaHELD; full-D/H1 unqualified. GWT/Player NOT APPLICABLE;
+electrical/population not renewed. No duplicate completion mails.
+
+# Historical checkpoint: allowlist admission corrected; publication next
 
 UTC 2026-11-08. F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107, HEAD9859f94a3be8aff86ffc390bcb4cd357cffe293f.
