@@ -1269,7 +1269,9 @@ factory positive/wrong-context negative pass,271entries/4000assertions; no nativ
 Meter charge, graph/Session/original/routing proof is inferred. Genuine envelope
 unspent/gated. Next current host/native source assembly and its independent
 process/charge/export gates. FullD/H1unqualified/playable100=0/betaHELD, all caps
-and Full30/HARD/protected-data exclusions remain. Publication pending.
+and Full30/HARD/protected-data exclusions remain. Implementation `3741a194c743a556051d74b93fe6ffc6214f2174`
+normally pushed to origin/codex/q100-physical-feasibility, exact remote verified;
+completion Gmail `1a1beec250e27a7e` sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

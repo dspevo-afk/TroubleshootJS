@@ -1,7 +1,8 @@
 # Actual normal-prior input and DATA factory qualification
 
-Locally accepted for the fixed20 normal-prior input and current DATA factory;
-publication pending. Full-D/H1, native producer, routing and playable layouts
+Accepted and published as `3741a194c743a556051d74b93fe6ffc6214f2174` for fixed20 normal-prior input and the
+current DATA factory. Exact remote verified; Gmail `1a1beec250e27a7e` SENT_ONCE.
+[Publication](PUBLICATION_R1.md). Full-D/H1, native producer, routing and playable layouts
 remain unqualified. Genuine original+exactly NULL/OBSERVE remains unspent/gated.
 
 The deliberate qualifier used published norm9112/callerC567 at source candidate
