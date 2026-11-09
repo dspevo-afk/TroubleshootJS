@@ -122,3 +122,9 @@ then exact NULL/OBSERVE remains UNSPENT_GATED.
 
 Next is current-result export composition. Full-D semantics, normal assembly,
 actual host/lifecycle and playable Q100 remain unqualified.
+
+Implementation `595fe34d635ed7d99743fa64b95cab57b1978875` was normally pushed to
+origin/codex/q100-physical-feasibility and verified remotely. Gmail
+`1a1c1a69ec7a7ba8` sent once: the send acknowledgement transport closed, then a
+Sent query confirmed the exact message. No retry or duplicate was sent. This
+publication receipt changes documentation only and sends no second email.
