@@ -222,6 +222,12 @@ externally frozen private root identities and operational phase transition.
 Real normal-role ingest and semantic/native qualification remain gated; this
 component is accepted only on synthetic I/O and pinned allowlist metadata.
 
+The [Windows reader handle-kind correction](task-evidence/Q100/reader-handle-mode-r1/README.md)
+compares file-kind bits across path/open-handle snapshots, because Windows can
+infer executable permission bits from a pathname. Full before/after path mode
+and timestamp checks remain exact; other identity/hash/reparse guards remain.
+This supports selected SOURCE/tool byte authentication without a second resolver.
+
 The [current context/pure kernel components](task-evidence/Q100/current-context-kernel-r1/README.md)
 own structural canonical context validation, deterministic V2 input DATA and the
 source-preserving N/P07 semantic closure. Runtime identity remains separate;

@@ -183,9 +183,11 @@ def _snapshot(st):
 
 
 def _handle_identity(snapshot):
-    # Windows can expose a different ctime through a file handle. Path ctime is
-    # still checked before/after; the handle comparison uses stable identity.
-    return tuple(snapshot[index] for index in (0, 1, 2, 3, 4, 6))
+    # Windows can expose extension-inferred permission bits differently on a
+    # path stat and its opened handle. Compare file kind, not those mode bits.
+    # Path snapshots still compare full mode, size, timestamps and attributes.
+    return (snapshot[0], snapshot[1], stat.S_IFMT(snapshot[2]),
+            snapshot[3], snapshot[4], snapshot[6])
 
 
 def _is_reparse(st):

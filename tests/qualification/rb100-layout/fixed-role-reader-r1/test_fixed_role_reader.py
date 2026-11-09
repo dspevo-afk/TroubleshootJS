@@ -95,6 +95,50 @@ def _row(role="N_PRIOR_OPERATION1", path="fixture.bin", *, root="N", limit=32,
 
 
 class FixedRoleReaderTests(unittest.TestCase):
+    def test_handle_identity_ignores_permission_bits_but_keeps_file_identity(self):
+        base_snapshot = (1, 2, stat.S_IFREG | 0o666, 5, 11, 17, 0x20)
+        base_handle_identity = reader._handle_identity(base_snapshot)
+
+        permission_changed = list(base_snapshot)
+        permission_changed[2] = stat.S_IFREG | 0o777
+        permission_changed = tuple(permission_changed)
+        self.assertEqual(base_handle_identity, reader._handle_identity(permission_changed))
+        # Path before/after comparison retains full mode equality.
+        self.assertNotEqual(base_snapshot, permission_changed)
+
+        changes = (
+            (0, 3),
+            (1, 4),
+            (2, stat.S_IFDIR | 0o666),
+            (3, 6),
+            (4, 12),
+            (6, 0x21),
+        )
+        for index, replacement in changes:
+            changed = list(base_snapshot)
+            changed[index] = replacement
+            with self.subTest(snapshot_index=index):
+                self.assertNotEqual(base_handle_identity,
+                                    reader._handle_identity(tuple(changed)))
+
+    @unittest.skipUnless(sys.platform == "win32" and os.name == "nt",
+                         "Windows extension-inferred stat mode required")
+    def test_windows_exe_fixture_is_read_as_ordinary_bytes_only(self):
+        with _owned_temp_directory() as temp_root:
+            roots, n_root, _d_root = _roots(temp_root)
+            payload = b"synthetic fixture bytes; never launched"
+            executable_named_file = n_root / "fixture.exe"
+            executable_named_file.write_bytes(payload)
+            row = _row(path="fixture.exe", limit=len(payload), expected=len(payload),
+                       digest=hashlib.sha256(payload).hexdigest())
+
+            data, evidence = reader._read_synthetic_roles(
+                roots=roots, rows=[row], synthetic_mode="SYNTHETIC")
+
+            self.assertEqual(data, {"N_PRIOR_OPERATION1": payload})
+            self.assertEqual(evidence["scope"], "SYNTHETIC")
+            self.assertEqual(evidence["finalSha256Recheck"], "PASS")
+
     def test_synthetic_read_is_bounded_and_never_follows_manifest_rows(self):
         with _owned_temp_directory() as temp_root:
             roots, n_root, _d_root = _roots(temp_root)

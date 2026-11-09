@@ -1,4 +1,103 @@
-# Current checkpoint: allowlist correction published; caller SOURCE in progress
+# Current checkpoint: shared Windows reader correction accepted; publication next
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107, HEAD17e91e73ee9b2638273f668da0cac0ac22a04a2a.
+Origin dspevo-afk/TroubleshootJS; no upstream; normal targetorigin/codex/
+q100-physical-feasibility. Prior correctionf31fdcbf/Gmail1a1bdb2d592bfe9d and
+ZB2e4e356f/Gmail1a1bda8f6a858b70 verified/SENT_ONCE. No duplicate mail. Main
+5f05b005 retains9tracked/6untracked/staged0; E d9747229 reportM/staged0; Desktop
+e0c36885 retains7tracked/73defaultuntracked entries (89files with-uall)/staged0.
+Only intended reader source/test/tool-canary, packet and docs change in F.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f,
+PLAN0a1aac12 and reader-handles-r1/PLAN_R1.md. Reader00f6d135/testb0f775a4 now
+accepted for the shared handle-kind component. Fix only_handle_identity S_IFMT;
+all other reader AST nodes/full path snapshots/regular/hash/reparse checks intact.
+Independent SOURCE review scoped clear; no runtime claim by leaf. Real prior
+tool positive FAIL exit2 FILE_CHANGED and metadata-only diagnosis remain preserved.
+Three executable path modes0100777 vs handle0100666 differ only permission bits.
+
+Fresh private/public9 tests each8PASS/1SKIP directory-symlink privilege; actual
+directory-junction rejection/verified nonrecursive removal covers requiredboundary.
+Private2I/O/metadata positives+13exactcode negatives, actual5tool positives, public
+9units/5tool positives/2matching positives and actualexe wrongSHA rejection pass.
+Finalproof090f4a82e8cc87aebb645124a540783dab4b73097402458d16eb1961d40e46ca. Private unit464.3535/708.7072ms, tools348.6288/
+595.317; publicunit466.8308/720.3776, tools458.161/693.0387. Returned processes
+terminate and owned roots/logs absent; isolatedcleanup null. No persistentlink/
+process remains; private source/synthetic configs/fixtures/receipts retained.
+Current AA/F normalizerE872 and metadata c487 stay unchanged, prior proofac3476c8.
+
+Next root diff/index/byte/privacy/whitespace review, normal commit/push/exactremote
+and one distinct reader-correction Gmail. Then observer/caller integration/gates.
+Leaf context_projection_map_y1 owns only AB/observe_caller_facts.py/test_observe_caller_facts.py,
+SOURCE-only/no run/spawn/publish/mail; explicit reader module injected, no alternate
+Win32 reader/default resolver. Root owns all other integration/gates/phase journal.
+Actual observer/caller SOURCE/tool-module/root/resource facts/normalprior/current
+host-native/full-D-H1 remain unqualified. No actual20-role DATA phase or bodies,
+oldD descriptor/result/generatedinput, oldbuilders/modules/CLIs or protected/
+heldout DATA. No manifest following. One genuine original+exactly NULL/OBSERVE
+unspent/gated; no extra arm/control/original/retry. All caps/seeds/epochs/oracles/
+CircuitJS truth preserved; Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
+historical protected unreadUNCERTIFIED; playable100=0/betaHELD. GWT/Player NOT
+APPLICABLE; electrical/population not renewed. Preserve old uncertain resources.
+
+# Historical checkpoint: AB selected-tool identity failure diagnosed; SOURCE fix in progress
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107, HEAD17e91e73ee9b2638273f668da0cac0ac22a04a2a,
+exact remote verified on origin/codex/q100-physical-feasibility; no upstream.
+Allowlist correctionf31fdcbf/Gmail1a1bdb2d592bfe9d and ZB2e4e356f/
+Gmail1a1bda8f6a858b70 published/verified/SENT_ONCE; no duplicate mail. Current
+normalizer AA/F E8725DFF, fixed metadata c487, final61private/61public/0SKIP
+proofac3476c8 as recorded below. F only current report M after this checkpoint;
+no unvalidated implementation staged/published. Main5f05b005 retains9tracked/
+6untracked/staged0; E d9747229 reportM/staged0; Desktop e0c36885 retains7tracked/
+73default untracked entries (89files with-uall)/staged0. Preserve unrelated work.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f,
+PLAN0a1aac12, CALLER_FLOW_R1.md SOURCE-only. DATA phase remains CLOSED.
+Root early real selected-tool read with public fixed-reader3114 FAILED:
+selected-pinned-tool-read-r1 childexit2 qualificationPython:FILE_CHANGED,
+op352.932ms/wrapper600.3566ms, termination/owned-root/log cleanup proven,
+isolatedcleanup null. SELECTED_TOOL_READ_FAILURE_R1.json preserves FAIL;
+nested expected-exit reproduction status is not a positive gate PASS.
+
+Changed metadata-only diagnostic selected-tool-identity-diagnostic-r1 returned0,
+op426.2623ms/wrapper695.409ms; diagnostic only, NOT_GATE_PASS. For Python/PS/JDK
+.exe: path lstat mode33279 vs open-handle fstat33206, only differing identity
+index2; dev/ino/size/mtime/attrs and full before/after path snapshots match.
+Windows extension-inferred execute permission bits cause this false mismatch;
+harness/module match entirely. TOOL_IDENTITY_DIAGNOSTIC_R1.json retained.
+
+Necessary shared-owner fix SOURCE in progress, not accepted: leaf fixed_role_reader_y1
+owns only AB/reader-handles-r1/fixed_role_reader.py/test_fixed_role_reader.py.
+Compare file kind stat.S_IFMT(mode) across path/handle; preserve exact full path
+before/after snapshots, regular-file/dev/ino/size/mtime/attrs checks. Fresh actual
+.exe/tool positives and existingnegative/reparse guards required before adoption.
+Public3114 reader remains unchanged; no permissive alternate reader or override.
+
+Leaf context_projection_map_y1 owns only AB/observe_caller_facts.py and tests,
+SOURCE-only/no execute/spawn/stage/publish/mail. Proposed API observe_caller_facts
+with explicit byte_specs/directories/absence_specs, using current reader owner
+and returning actual source/tool/resource facts plus observation evidence. No
+placeholder facts, manifest path discovery or secondary Win32 resolver. Root
+owns integration/source freezes/all runtime/phase journal/DATA/publication.
+
+Next collect/review shared-reader SOURCE, run focused Windows .exe and genuine
+five selected tool positive/negative canaries, renew applicable reader unit/OS/
+realjunction/source/index gates; preserve failure and limits. Then integrate
+observer and bounded caller SOURCE/authority/host gates. Only after these pass
+and separate root journal may fixed20 normal-only role bodies be read. No actual
+role DATA, oldD descriptor/result/generatedinput, oldbuilder/module/CLI,
+protected/heldout DATA or manifest following. One genuine original+exactly NULL/
+OBSERVE unspent/gated; no extra arm/control/original/retry. No new persistent
+process/link; task SOURCE/configs/receipts/failures and old uncertain resources
+preserved. Caps/seeds/epochs/oracles/CircuitJS truth unchanged; Full30EXCLUDED;
+HARD/PSYCHOTIC unavailable/unrun; historical protected unreadUNCERTIFIED;
+playable100=0/betaHELD/full-D-H1 unqualified. Production/GWT/Player NOT APPLICABLE;
+electrical/population not renewed. This unresolved host gate is not success.
+
+# Historical checkpoint: allowlist correction published; caller SOURCE in progress
 
 UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107. Implementation f31fdcbf5a191a95921ecb2545478ae68139a94b

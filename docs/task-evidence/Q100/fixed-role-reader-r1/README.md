@@ -1,5 +1,9 @@
 # Frozen normal-prior byte reader
 
+A subsequent [Windows handle-kind correction](../reader-handle-mode-r1/README.md)
+fixes executable SOURCE/tool path identity; this packet retains its original3114
+source and recorded byte-reader scope.
+
 Accepted and published for byte-reader component scope only. Implementation
 `381fffd98ff7b00a781460dfefdbb58fb62b0dcd` is verified on
 `origin/codex/q100-physical-feasibility`; Gmail `1a1bd4f6aaf99530` sent once.

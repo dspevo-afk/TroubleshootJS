@@ -1161,6 +1161,17 @@ unreadUNCERTIFIED/playable100=0/betaHELD remain. Implementation `f31fdcbf5a191a9
 normally pushed to origin/codex/q100-physical-feasibility, exact remote SHA
 verified; correction Gmail `1a1bdb2d592bfe9d` sent once.
 
+The [Windows reader handle-kind correction](task-evidence/Q100/reader-handle-mode-r1/README.md)
+is locally accepted. A real executable tool read first failed FILE_CHANGED;
+Windows path/handle execute-bit differences are now normalized by file kind,
+with full path snapshots and other guards retained. Fresh private/public9 tests
+each give8PASS/1symlink-privilegeSKIP; actual5tool positives,2I/O/metadata positives,
+13unchanged rejection controls and a verified real junction pass. Public tool
+hash rejection also passes. No role DATA or genuine envelope was read/run.
+Actual caller/observer qualification remains pending; caps/seeds/oracles and
+Full30EXCLUDED/HARD-PSYCHOTIC unavailable/unrun/historical unreadUNCERTIFIED/
+playable100=0/betaHELD stay. Publication and one completion Gmail are next.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

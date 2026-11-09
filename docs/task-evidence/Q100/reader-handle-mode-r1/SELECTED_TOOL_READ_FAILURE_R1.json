@@ -1,0 +1,29 @@
+{
+  "actualPriorBodiesRead": 0,
+  "call": {
+    "childExitCode": 2,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "selected-pinned-tool-read-r1",
+    "processElapsedMs": 352.932,
+    "receipts": {
+      "owner.json": "73454622a02e47bf5fff49a2de39897d6e6ff2fbddde82315ec77b8864daed9e",
+      "parent.json": "3e5676b312528ada3cc612736aa839af3582c05dbab103c72ee2bc9764b4ef5f",
+      "process.json": "725f70d45f4bf81539200da19e3478af769f266c943b36a87b973e3fdc875ca3",
+      "request.json": "ec332192e5a970dd9f2ed209ecab4fd82f6d87eb253ec7402c7479474df890ff",
+      "result.json": "a19f7e7fdf3225cfc421b2211ad7b1f3f0b091099d944d697391a3c08b034f91",
+      "stderr.txt": "89a17573bb7aa6d6fdc3f293e3b9e030a5ec711acdd734d0e99171c35fd32a01",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "PASS_EXPECTED_REJECTION",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 600.3566000000001
+  },
+  "classification": "HOST_IDENTITY_BOUNDARY_UNRESOLVED",
+  "failure": "qualificationPython:FILE_CHANGED",
+  "intendedResult": "POSITIVE_PINNED_SOURCE_TOOL_READ",
+  "normalDataPhaseEnabled": false,
+  "observerAdapterQualified": false,
+  "originalEnvelope": "UNSPENT_GATED",
+  "status": "FAIL_SELECTED_PINNED_TOOL_POSITIVE"
+}

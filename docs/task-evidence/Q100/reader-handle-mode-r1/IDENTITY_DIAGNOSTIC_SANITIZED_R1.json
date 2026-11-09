@@ -1,0 +1,72 @@
+{
+  "actualPriorBodiesRead": 0,
+  "call": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "selected-tool-identity-diagnostic-r1",
+    "processElapsedMs": 426.26230000000004,
+    "receipts": {
+      "owner.json": "44a1b9c857bb41eae9dfcd4a975b8c7df9b36514027ed8d4f3e5294f470ff2d5",
+      "parent.json": "00c64aeb1742c1f614c79fd396e687a62f000c9f956ded4ab0dda87984bfdbd1",
+      "process.json": "cf03c18d343eaeda44052114c74f1f6e468c4f92b8527e7c47749e78690e062e",
+      "request.json": "d5b2e3b83c32b4a28fdbec4fd78288fa2f97844151f38425b8293b15f3d1408c",
+      "result.json": "fdf0aaff0abfcafca4597b1aaa2ee31ae4f4affcdae67babe39ce3b4fc34e8d3",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "be1593d51e3b5aa46c109f3d293cd6998af2e6b2056f09a011a3c9a81b67b07a"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 695.409
+  },
+  "privateFileIdsOmitted": true,
+  "status": "DIAGNOSTIC_ONLY_NOT_GATE_PASS",
+  "tools": [
+    {
+      "differingIndices": [
+        2
+      ],
+      "handleMode": 33206,
+      "pathBeforeAfterEqual": true,
+      "pathMode": 33279,
+      "realPathUnchanged": true,
+      "role": "qualificationPython"
+    },
+    {
+      "differingIndices": [
+        2
+      ],
+      "handleMode": 33206,
+      "pathBeforeAfterEqual": true,
+      "pathMode": 33279,
+      "realPathUnchanged": true,
+      "role": "rootCallPowerShell"
+    },
+    {
+      "differingIndices": [
+        2
+      ],
+      "handleMode": 33206,
+      "pathBeforeAfterEqual": true,
+      "pathMode": 33279,
+      "realPathUnchanged": true,
+      "role": "nativeJava"
+    },
+    {
+      "differingIndices": [],
+      "handleMode": 33206,
+      "pathBeforeAfterEqual": true,
+      "pathMode": 33206,
+      "realPathUnchanged": true,
+      "role": "rootCallHarness"
+    },
+    {
+      "differingIndices": [],
+      "handleMode": 33206,
+      "pathBeforeAfterEqual": true,
+      "pathMode": 33206,
+      "realPathUnchanged": true,
+      "role": "processModule"
+    }
+  ]
+}
