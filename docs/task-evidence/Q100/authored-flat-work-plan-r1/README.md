@@ -1,7 +1,9 @@
 # Authored flat work-plan component
 
-Accepted locally for Source derivation and synthetic detached native accounting.
-Publication is pending. Full-D native/host/export qualification is not granted;
+Published as `cd4b1c2b5752f749d4ad670d9ba80c107c391ee8`, exact remote verified;
+completion Gmail `1a1bf9a860ca0397` sent once. [Publication](PUBLICATION_R1.md).
+Acceptance covers Source derivation and synthetic detached native accounting.
+Full-D native/host/export qualification is not granted;
 the genuine original followed by exactly NULL and OBSERVE remains unspent and
 gated. Playable100 remains0 and public beta remains held.
 

@@ -1300,7 +1300,7 @@ fixture/input production and both exports remain denied. Real DTO capture is
 Source-audited only; current native assembly/export and host/lifecycle gates
 remain pending before the unspent genuine original+NULL/OBSERVE envelope.
 No production, routing, electrical or population renewal; playable100=0/betaHELD.
-All caps and data exclusions remain. Publication and completion email pending.
+All caps and data exclusions remain. Implementation `cd4b1c2b5752f749d4ad670d9ba80c107c391ee8` normally pushed to origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail `1a1bf9a860ca0397` sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
