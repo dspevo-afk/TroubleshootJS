@@ -324,6 +324,8 @@ units/13 copied entries/two chunks, prepares the existing receipt ticket, then
 replaces the existing null body slot. Failure leaves that body unchanged; the
 helper returns the existing ticket with metadata open. Current hash authenticity
 and absence of aliases elsewhere remain caller/full-body responsibilities.
+The Java codec checks ancestor cycles only; repeated acyclic containers need a
+separate full-body ownership proof or guard before genuine caller composition.
 Actual-Meter synthetic gates qualify construction and ticket preparation only;
 normal assembly, R7 composition, whole-result and host/lifecycle remain closed.
 

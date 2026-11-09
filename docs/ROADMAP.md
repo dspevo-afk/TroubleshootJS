@@ -1381,8 +1381,11 @@ construction and existing receipt preparation. Final862-Source JDK8 build,
 Python exact metadata bytes pass. Canonical context and factory bytes remain
 unchanged. Root audit-script failures are preserved and corrected; the final
 audit reauthenticates all unchanged consumed inputs without rerunning native.
-Normal assembly stays closed. Next is current body/assembly composition with the
-existing R7 close/ticket flow, followed by host/lifecycle qualification. Genuine
+Normal assembly stays closed. Next is the full-body container ownership prerequisite
+before current body/assembly composition and the existing R7 close/ticket flow,
+followed by host/lifecycle qualification. The Java codec checks cycles, not shared
+acyclic subtrees; the caller's exclusive-ownership precondition needs its own proof.
+Genuine
 original,NULL,OBSERVE remains unspent/gated, playable100=0/beta held and data
 exclusions remain. Implementationd374e29b33fa9649f332571d64255b804746953a is normally
 pushed to origin/codex/q100-physical-feasibility, exact remote verified;

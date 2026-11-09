@@ -25,8 +25,13 @@ Native constructor literal must match this frozen authority and paired tests.
 New top map owns12 entries; nested prior receipt/trial remain borrowed exclusively
 from validated input. Input must be the unmutated result of CurrentV2InputSetup
 under caller ownership. No deep copy under12 credits, no input mutation, no alias
-elsewhere in the serialized output. Full-body alias validation remains with the
-existing codec; this component's source binding supplies no genuine host authority.
+elsewhere in the serialized output. Whole-body alias exclusion is an unqualified
+caller/composition responsibility. The existing Java codec rejects ancestor cycles,
+but does not reject repeated acyclic container references; its traversal is not
+proof of exclusive subtree ownership. The paired Python qualified-prior validator
+rejects aliases inside its own value only. This component supplies no genuine
+host authority. This clarification follows the next composition Source audit;
+the accepted native helper, census, tests and caller preconditions are unchanged.
 
 ## Native component and exact logical census
 

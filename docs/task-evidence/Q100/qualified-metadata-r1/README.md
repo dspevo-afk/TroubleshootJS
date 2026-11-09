@@ -23,6 +23,9 @@ The helper checks current-hash format; authenticating the actual current hash is
 a future caller precondition. A different valid lowercase hash is intentionally
 accepted by the helper and rejected against the expected hash by the paired
 consumer. Whole-body alias exclusion and host authentication remain separate.
+The next composition Source audit confirmed that the Java codec detects ancestor
+cycles, but accepts repeated acyclic containers; it cannot supply that ownership
+proof. The paired Python validator rejects aliases within qualifiedPrior only.
 The [contract](COMPONENT_CONTRACT_R1.md) fixes these boundaries before execution.
 
 ## Validation
