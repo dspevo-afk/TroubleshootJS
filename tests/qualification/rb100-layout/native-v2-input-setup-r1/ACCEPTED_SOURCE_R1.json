@@ -1,0 +1,17 @@
+{
+  "status": "PASS_SYNTHETIC_V2_INPUT_SETUP_COMPONENT_ONLY",
+  "files": [
+    {
+      "role": "CurrentV2InputSetup.java",
+      "bytes": 22747,
+      "sha256": "7baab4caf45741f00d311e3b3854c794204356bfa03c0f3271399d44087df6a4"
+    },
+    {
+      "role": "CurrentV2InputSetupCanary.java",
+      "bytes": 45120,
+      "sha256": "a0b04875aefe8bd133a268689c43f509469ff168953e43482d0626d6b4649c2d"
+    }
+  ],
+  "proofSha256": "b653ab5659db9a5ca12197f0838df5cb160fa9f015d25d27588590273d1ef58d",
+  "privateDependenciesRequired": true
+}

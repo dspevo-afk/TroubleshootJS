@@ -1342,6 +1342,19 @@ playable100=0/beta held and all data exclusions unchanged. Implementation
 origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
 `1a1c0532d059ed7f` sent once.
 
+The [current V2 input/setup component](task-evidence/Q100/native-v2-input-setup-r1/README.md)
+is locally accepted for its exact synthetic fixture: final861-Source JDK8 build,
+2495 major51 classes and81 native cases/12089 assertions pass. Independently
+priced setup is10007 units/478 copies/3 chunks; all existing caps remain. Strict
+retained-evidence audit reauthenticates unchanged Sources/tools/JARs/classes and
+actual process/argv receipts after correcting the reader's manual assertion
+census. Earlier launcher, oracle and reader failures remain recorded. This
+qualifies an isolated adapter, with no normal full-D/H1/assembly/host or genuine
+producer acceptance. Next are current assembly prerequisites: checked nine-unit
+original attribution, owner pre-read hash charge, qualifiedPrior12 and the
+receipt.prepare caller, then host/lifecycle gates. Genuine remains unspent/gated;
+playable100=0/beta held and all data exclusions unchanged. Publication pending.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

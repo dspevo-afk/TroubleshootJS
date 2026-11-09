@@ -291,6 +291,18 @@ synthetic Windows file tests qualify selected one/two-block outputs and fatal
 post-publication checks. Exclusive body ownership, unchanged fees and caps remain;
 normal assembly, host/full-D and genuine producer authority are still separate.
 
+The [current V2 input/setup component](task-evidence/Q100/native-v2-input-setup-r1/README.md)
+owns the fresh actual-Meter/start check, four-API factory header, source-priced
+factory/copy admission and complete ordered native-projection validation. Its
+bounded concrete container/domain, alias, uniqueness and binding checks precede
+close; only four prepaid counter reads and the existing SetupResult construction
+follow. The retained map stays under exclusive caller ownership. Exact synthetic
+debit10007/copies478/chunks3 is qualified with the actual shared Meter; injected
+factory headers do not authenticate source/class/full-context/PAD truth. Normal
+readInput/main/assembly are not migrated by this isolated component. Checked
+original attribution, owner hash prepayment, qualifiedPrior construction and
+receipt preparation remain separate caller integration work.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

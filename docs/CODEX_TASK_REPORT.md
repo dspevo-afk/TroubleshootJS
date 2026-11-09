@@ -1,4 +1,140 @@
-# Current checkpoint: native V2 export published
+# Current checkpoint: V2 input/setup locally accepted, publication pending
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD9d70c55c24c31ecb6351d8bb5c96939ad6da06ec;
+origin https://github.com/dspevo-afk/TroubleshootJS.git; no upstream. Normal push
+remains HEAD:refs/heads/codex/q100-physical-feasibility. Native exportdfe4d5df/
+receipt9d70 and Gmail1a1c0532d059ed7f already published/SENT_ONCE; never duplicate.
+Current input/setup component locally accepted; no new commit/push/email yet.
+
+Final Source/task root V=OS-temp/tsj-q100-v2-input-setup-final-4e552ff4e6fb4a0ea2fe1a8456aa30d9.
+Original U=OS-temp/tsj-q100-v2-input-setup-m21_zq_8 fully preserved. Helper7BAAB4CA
+22747B, finalcanaryA0B04875 45120B; publicproofB653AB5659DB9A5CA12197F0838DF5CB160FA9F015D25D27588590273D1EF58D.
+Public paths tests/qualification/rb100-layout/native-v2-input-setup-r1 and matching
+docs/task-evidence/Q100/native-v2-input-setup-r1. Exact byte attributes protect both.
+Actual shared-Meter four-API factory adapter validates fresh/start/header/complete
+ordered projection before close; existing SetupResult retains exact factorymap.
+Normal readInput/main/assembly remain closed. Fixed867+V9140=10007 actualunits,
+copy478/chunks3/actualgroups1. Root Source count before execution; real runtime agrees.
+
+Final V build PASS861Sources/2495classes/11955735B/allmajor51, operation5230.8724ms/
+wrapper5486.1962ms. Native81cases/12089assertions exits0 in553.2586/795.3863ms.
+Strict retained R4 audit PASS (selected Python toolwall7.4460983s), all consumed
+Source/tool/JAR/class/actualprocess/argv pins reauthenticated; no native rerun for
+reader correction. Fixture generation previously PASS405.7606/831.0779ms with
+independent16containers+255edges=271/325visits/3397Stringchars. Synthetic context
+CA2D5B88 66485B, generatedSourceC8A25F88 21404B copied unchanged intoV; no actual DATA.
+Root and independent Source reviews cover helper/debit and finaloracle two-line
+correction; no independent agent nativeexecution. Million-visit runtime boundary
+NOTRUN because earlier profile bounds dominate. GWT/PlayerN/A; electrical/population
+NOTRENEWED. Existing caps/seeds/epochs/oracles/CircuitJS truth unchanged.
+
+Failures retained: U runtimeR1 wrong compile-stderr oracle stopped beforeJava;
+R2 accepts exact four-line javacwarning/notes only. U nativeR2 exit1 (381.6025/
+627.2278ms) oracle counted only255edges, asserted271inventory. V adds1/container,
+keeps271assertion and rebuilds861Sources. V Java thenpassed, readerR2 rejected
+wrong manual11765assertions. Root+leaf independently count12089, including nested
+helpers; Java unchanged. Retained readerR3 failed at restricted proofwriter;
+R4 exclusive writer passes all strict checks. Prior failures remain FAIL, never
+renamed PASS. Released Source/raw failures/builds/receipts retained in U/V.
+
+F intended3docs plus2newpacketdirs; staged0 before publication review. Main5f05b005
+preserves9tracked/6untracked, E d9747229 reportM, Desktop e0c36885 preserves7tracked/
+89untracked; only Main/E checkpoint mirrors updated. All selected U/V children
+terminated/ownedroots+logs absent; cleanupduration unmeasured. No persistentprocess
+or link launched. Oldbrowser14116/start639294472690745890/58320 and preview34180/
+start639294472514546595/58264+14uncertainchildren remain untouched; oldDverify-process-
+ebc137b2bbd5462d969a6eddf73816f7 terminationunproven/oldDunlinkUNCERTIFIED.
+
+Next action: Root final diff/sourcebyte/staged audits, explicit commit, normal
+push/exactremote verification and one connected Gmail, then receipt docs. Next
+unstarted implementation is current assembly prerequisites: checked9unit original
+boundary, owner pre-read hash, qualifiedPrior12 and receipt.prepare caller; normal
+host/full-D/H1/lifecycle remain unqualified. Genuine oneoriginal then EXACT
+NULL/OBSERVE UNSPENT_GATED. Playable100=0/betaHELD, full30EXCLUDED, HARD/PSYCHOTIC
+unavailable/unrun, oldnormal20READhistorically/no reread, protectedunreadUNCERTIFIED.
+Continue standing roadmap without routine permission or duplicate notifications.
+# Historical checkpoint: V2 input/setup Source contract
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD9d70c55c24c31ecb6351d8bb5c96939ad6da06ec;
+normal origin/codex/q100-physical-feasibility exactremoteverified/no upstream.
+Exportdfe4d5dfad800d4a4c165343f488f191dcf31027 +receipt9d70c55c published,
+Gmail1a1c0532d059ed7f SENT_ONCE. Codec ccb0dea4/receipt87c2069b +Gmail1a1c017cfb3587a5
+also published; never duplicate these or earlier emails. F clean before this
+checkpoint; Main5f05b005 preserves9tracked/6untracked, E d9747229 reportM,
+Desktop e0c36885 preserves7tracked/89untracked; staged0. Preserve unrelatedwork.
+
+Accepted export proof05d6ce43024dc60eb181e446023574ff8abc4ac9190b4125e4007e3b5c236192:
+final859-Source JDK8/2487classes/11935114B/major51, smoke2/96, native14/237,
+independent C1/C2 files and private/public reader6 each PASS. Timings/limits/
+failures in published packet. T OS-temp/tsj-q100-native-v2-export-esnd5_xm retains
+all current Source/outputs/classes/receipts. Pre-EOF generator/worksheet raw
+bytes unavailable (late preservation message); hashes/emittedJava/at-timegates/
+freeze failure retained. FinalJava EOF-only delta and classbytes proved. No new
+persistent process/link; all selectedchildren terminated/ownedrootsabsent.
+
+U OS-temp/tsj-q100-v2-input-setup-m21_zq_8 owns immutable PLAN_R1/inventoryR1
+8Sources plus SOURCE_INPUT_R2/FIXTURE_SOURCE_SCOPE_R1 adding ninth named synthetic
+test_context_codec.py Source2A9479E9 (Source-only/AST-port later, notmoduleexecute).
+Root Source/V admission is now accepted for helper7BAAB4CA and synthetic debit
+10007=867+9140; bounded induction and integer constraints are explicit in separate
+Root clarification notes. Fixture generation ONLY passed405.7606ms operation/
+831.0779ms wrapper; selected child terminated and owned root/logs absent, cleanup
+duration unmeasured. Synthetic contextCA2D5B88 66485B and generated JavaC8A25F88
+21404B; independent census16containers/255edges/325visits/290strings/3397chars/
+13Integer/6Boolean matches Source before native. No build/native/actual DATA/
+oldclass/journal/producer/Session/original access. Current Study802D0514/SharedOwner4ED1/receipt1DF7, codecC1F27377
+and corrected map7F96D615 pinned. Prior map8A12 archivedbeforecorrection inT;
+full current fixed seed policy retained. Census271entries=16containers+255edges;
+factory290operations=16ctors+255mutations+13Integer+6Booleanboxings. Do not call
+these19 INTEGERboxings or equate entryinventory with total factory work.
+
+Proposed CurrentV2InputSetup.read(SetupMeter,long,String expectedContextSha,
+Factory4API)->existing5-fieldSetupResult. Normal main/assembly remain disabled;
+no legacy input calls by new component. Contract must settle charged freshMeter/
+start checks, fourAPIcalls, factory290+copy271 beforedataJson, strict ordered/
+typed/alias/domain/compatibility validations,1resultallocation+5copies and4
+post-closecounterreadsprepaidwhileopen. SnapshotmustincludeALLsetupdemandbefore
+capture allowance. Operationalcontractbelow resolves pricing; exactSourceVdebit pending, capsunchanged.
+
+ReleasedSource: prepay5821EE43, policyCD577348, SourceauditB6546048. Rootoperation
+contract89C2B145 chooses fresh18/H72/factory290/copy271/controlalloc3+copy202/
+tail11(copy5+read4+alloc1+finish1), fixed867+V/copy478/chunks3/actualgroups.
+V catalogue prices every getter/type/checkedincrement/iterator/length/char/
+predicate/uniqueness/join; no unpricedrecursiveMap.equals, no keyarrayallocation.
+Root actualhelperinventory and independent synthetic V Sourceaudit are complete:
+generic2699+3397 and strict3044; only the named synthetic factory has been generated.
+Fresh build/native remain NOT RUN pending final canary/driver freeze. No global
+cap change. Tailcopy5 has
+actualR7/receipt Sourceprecedent; m.copy addsunits so do notchargecopies twice.
+Negative nanoTime origins allowed; actualstarted equality required, no rawordering.
+
+Freshforknone leaves: v2_input_setup_source_r1 interrupted beforewritinghelper;
+v2_setup_impl_r2(Sol/high) nowSOLEowner CurrentV2InputSetup.java+worksheet;
+v2_setup_canary_source_r1(LunaMAX) owns
+CurrentV2InputSetupCanary.java+INPUT_SETUP_CANARY_DESIGN_R1.md. Same package
+com.lushprojects.circuitjs1.client; actualnativeownerCohortTerminalTelemetryStudy
+has package-visibleSetupMeter/SetupResult(5fields). Factorynested4typedmethods.
+CanaryRootwilllaterprovide syntheticONLY CohortTerminalTelemetryInputV2 from
+AST-portedfixtureSource, neveractualDATA. SpydataJson expects651units/copy271/
+chunk1 beforefactory; successfulsetup867+V/copy478/chunks3. ExactV expectedunits
+CLI willbeRoot-frozenfromindependentfixtureinventory, notsubjectMeter-derived.
+RootownsallSourceacceptance/gates/publication; Sourceaudit/sourceMapsleaves
+completed. Preserve releasedSource beforefurtheredits. Next reviewSource/helper
+Vinventory, openspecificsyntheticfixturegate onlyafter Sourceacceptance; then
+freshJDK8/actualMeter canaries. No runtime or newpublication yet.
+
+Q9-unit original boundary/ownerpre-readhash/qualifiedPrior12/receiptpreparecaller/
+fullassembly/normalhost/H1/lifecycle remain separate unstarted implementations.
+Genuine oneoriginal then EXACT NULL/OBSERVE UNSPENT_GATED. Full30EXCLUDED,
+HARD-PSYCHOTIC unavailable-unrun, oldnormal20READhistorically/no reread, protected
+unreadboundaryUNCERTIFIED/playable100=0/betaHELD. Allcaps/exactseeds/epochs/
+independentoracles/CircuitJStruth unchanged. GWT/PlayerN/A no production/visible
+change; electrical/population NOTRENEWED. Oldbrowser14116/start639294472690745890/
+58320, preview34180/start639294472514546595/58264 +14uncertainchildren, oldD
+verify-process-ebc137b2bbd5462d969a6eddf73816f7 terminationunproven/oldDunlinkUNCERTIFIED
+untouched. Continue standingroadmap without routinepermission/duplicateemail.
+
+# Historical checkpoint: native V2 export publication
 
 UTC2026-11-09. F codex/q100-terminal-only-20261107 HEADdfe4d5dfad800d4a4c165343f488f191dcf31027;
 origin/codex/q100-physical-feasibility exactverifieddfe4d5dfad800d4a4c165343f488f191dcf31027/no upstream.

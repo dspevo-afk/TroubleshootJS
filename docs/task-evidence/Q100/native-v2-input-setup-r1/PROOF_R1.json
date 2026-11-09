@@ -1,0 +1,202 @@
+{
+  "status": "PASS_SYNTHETIC_V2_INPUT_SETUP_COMPONENT_ONLY",
+  "candidateBase": "9d70c55c24c31ecb6351d8bb5c96939ad6da06ec",
+  "summary": {
+    "status": "PASS_SYNTHETIC_V2_INPUT_SETUP_COMPONENT",
+    "cases": 81,
+    "assertions": 12089,
+    "successfulUnits": 10007,
+    "validatorUnits": 9140,
+    "copiedEntries": 478,
+    "groups": 1,
+    "copyChunks": 3,
+    "freshPositiveMeters": 2,
+    "ownerInstances": 0,
+    "sessions": 0,
+    "originalCaptures": 0,
+    "routingRuns": 0,
+    "normalHostAcceptance": false
+  },
+  "sourceCount": 861,
+  "classCount": 2495,
+  "classBytes": 11955735,
+  "allMajor51": true,
+  "compile": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "native-v2-input-setup-fresh-jdk8-compile-r1",
+    "processElapsedMs": 5230.8724,
+    "receipts": {
+      "owner.json": "18b06d873cbbad8406a532b7526a85c9ffa5501cb8f8910f057c098896b3d63f",
+      "parent.json": "ff9bf1ebf18911e8f62be05edd9d4e00646bd01e308a16fd92981b3adc02f7c5",
+      "process.json": "0ef8c47466b22ae5969d140c322463c8938b11052755b77afdbffb3c7503ba54",
+      "request.json": "39b1964553a07d1f4f2edf8646a1c98d41ce0c02707e9b1e25f3ad3f6cfc5c43",
+      "result.json": "f353f9672b48a89d223a22be5ee4febb5c4eb0cf9f343c1a27180246bdacb4c5",
+      "stderr.txt": "5a63604761c45d7d50b0b1b6e3a6128b43a62a0f527e6e88a33f9b8609b0d017",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 5486.1962
+  },
+  "native": {
+    "phase": "native-v2-input-setup-suite-r2",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 553.2586,
+    "wrapperTotalElapsedMs": 795.3863,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "c0f6206099c9a3c0458a7df5424b516457455c147ad8ab0e3ab801a634c29f77",
+      "owner.json": "d5f8b1a089acc0aaa2a7fd3bb03b0e7278fbda3403b96e18833103b42fec8d65",
+      "process.json": "6dfb939513a8ae788cf721e3e0a018895966c338d5b4da64261be6fcc928b364",
+      "parent.json": "bc9ccd50755749867a8c0966ce87823398529cf5590d926afea1c9fb90578796",
+      "result.json": "5a5d722ff6e977b1dacc045a4d54502432963f000b2b4cd468253e60d3a4d378",
+      "stdout.txt": "20d1e45adbb877a34ed64ea307833e0cc450cbe06d34f359f4f10af4fe8c616f",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "retainedGateSha256": "5da191c742464f16e3acd28a911ab3176e59ee7bc5b27c3a55762d8683e17b17",
+  "buildManifestSha256": "e8dc7daeaaa9d7729607d62b50fbc260955ca3e86b82d814e17b99538e1026fd",
+  "sourceFreezeSha256": "de0512974c28d64e91a03c5457433eba002281eeca3747c67972f1ef2049f262",
+  "classInventorySha256": "17a40a0992b4b894c7b869886675ecb27b615692d98459f615d669b1f5e21b67",
+  "auditControlSha256": "15cf9d3b7fc77f43a15fca611abfaef85b964a2e44a2d73bb05e748a9224f1d3",
+  "sourceFiles": [
+    {
+      "role": "CurrentV2InputSetup.java",
+      "bytes": 22747,
+      "sha256": "7baab4caf45741f00d311e3b3854c794204356bfa03c0f3271399d44087df6a4"
+    },
+    {
+      "role": "CurrentV2InputSetupCanary.java",
+      "bytes": 45120,
+      "sha256": "a0b04875aefe8bd133a268689c43f509469ff168953e43482d0626d6b4649c2d"
+    },
+    {
+      "role": "INPUT_SETUP_OPERATION_CONTRACT_R1.md",
+      "bytes": 8314,
+      "sha256": "89c2b14507708985a32a37869ca357b8b072f57fa0ef48a320a28fb14567b2a3"
+    },
+    {
+      "role": "INPUT_SETUP_IMPLEMENTATION_WORKSHEET_R1.md",
+      "bytes": 12770,
+      "sha256": "95a9ee7181eaf1aab48230fe4968da2ee35b1f17c3e32979b9e4f1e84519efd0"
+    },
+    {
+      "role": "INPUT_SETUP_INDUCTION_CLARIFICATION_R1.md",
+      "bytes": 1688,
+      "sha256": "e2343c59beb0ffdb1eb16f0e2eb48b8e1a0e26618b31a7dd2e64d044a4c986b8"
+    },
+    {
+      "role": "INPUT_SETUP_INTEGER_CLARIFICATION_R1.md",
+      "bytes": 918,
+      "sha256": "5922dc1106f8185aa01d0a45ca33382a1d6d06b8cfc5e3d58c90829a85adb7a9"
+    },
+    {
+      "role": "INPUT_SETUP_CLASS_DOMAIN_R1.md",
+      "bytes": 875,
+      "sha256": "3d2d710571a2b7ba18a511565850cd5ae428b5e5dfd87dec17110a7c589064aa"
+    },
+    {
+      "role": "ASSERTION_SOURCE_RECONCILIATION_R3.md",
+      "bytes": 2969,
+      "sha256": "f918a8a2e3f8109cb8bdc779bb388c676197edeec933bfc14c2c41b1b8c07028"
+    }
+  ],
+  "allConsumedInputsReauthenticated": true,
+  "syntheticFixture": {
+    "status": "PASS_SYNTHETIC_SOURCE_FIXTURE_GENERATION",
+    "counts": {
+      "containers": 16,
+      "maps": 10,
+      "lists": 6,
+      "edges": 255,
+      "visits": 325,
+      "strings": 290,
+      "stringCharacters": 3397,
+      "integers": 13,
+      "booleans": 6,
+      "nulls": 0
+    },
+    "contextSha256": "ca2d5b88b686845889e97de4eea96c4d86f80c1c5ec720aa0d912ba5b675666f",
+    "factoryOperations": 290,
+    "dataEntries": 271,
+    "successfulUnits": 10007,
+    "validatorUnits": 9140,
+    "copiedEntries": 478,
+    "copyChunks": 3,
+    "files": [
+      {
+        "role": "synthetic-context.json",
+        "bytes": 66485,
+        "sha256": "ca2d5b88b686845889e97de4eea96c4d86f80c1c5ec720aa0d912ba5b675666f"
+      },
+      {
+        "role": "emitted/CohortTerminalTelemetryInputV2.java",
+        "bytes": 21404,
+        "sha256": "c8a25f88ccf523e030e7e1c14073255b78b9358687ac65088339a237bea80089"
+      }
+    ],
+    "actualPriorDataReads": 0,
+    "originalCalls": 0,
+    "normalHostAcceptance": false,
+    "genuineEnvelope": "UNSPENT_GATED"
+  },
+  "failuresPreserved": [
+    {
+      "status": "FAIL_PRE_NATIVE",
+      "phase": "U/runtime-r1-compiler-stderr-control",
+      "reason": "Omitted two informational javac unchecked-operation notes; R2 permits exact four-line stderr only."
+    },
+    {
+      "status": "FAIL_NATIVE",
+      "phase": "U/native-suite-r2",
+      "exitCode": 1,
+      "operationElapsedMs": 381.6025,
+      "wrapperElapsedMs": 627.2278,
+      "reason": "Independent oracle counted edges255 but compared inventory271; corrected two container-counter lines and rebuilt all861 Sources."
+    },
+    {
+      "status": "FAIL_READER",
+      "phase": "V/runtime-r2-assertion-census",
+      "reason": "Manual expected11765 omitted nested test helper guards. Root and leaf independently derive12089; Java assertions unchanged."
+    },
+    {
+      "status": "FAIL_READER_WRITER",
+      "phase": "V/retained-reader-r3",
+      "reason": "Preflight-only reuse omitted run_directory required by the old restricted writer. R4 uses its own exclusive proof file; no native rerun."
+    }
+  ],
+  "review": {
+    "helper": "Bounded independent Source review of7BAA, followed by Root worksheet reconciliation before execution.",
+    "finalCanary": "Independent Source comparison confirms exactly two oracle-counter corrections, unchanged81 cases, recomputed12089 assertions.",
+    "root": "Final Source, debit, retained process proof and all consumed Source/tool/JAR/class pins reviewed."
+  },
+  "nativeRerunForReaderCorrection": false,
+  "cleanupDurationMs": null,
+  "productionGwt": "NOT_APPLICABLE_NO_PRODUCTION_SOURCE_CHANGE",
+  "visiblePlayer": "NOT_APPLICABLE_NO_VISIBLE_CHANGE",
+  "electricalPopulation": "NOT_RENEWED",
+  "normalHostAssembly": "NOT_QUALIFIED",
+  "fullD": "NOT_QUALIFIED",
+  "H1": "NOT_QUALIFIED",
+  "genuineEnvelope": "UNSPENT_GATED",
+  "playable100": 0,
+  "beta": "HELD",
+  "full30": "EXCLUDED",
+  "hardPsychotic": "UNAVAILABLE_UNRUN",
+  "protectedUnreadBoundary": "UNCERTIFIED_HISTORICAL_SEARCH",
+  "oldNormal20": "READ_HISTORICALLY_NO_REREAD_HERE",
+  "newActualPriorDataReads": 0,
+  "newOldDataClassReads": 0,
+  "newProtectedHeldoutReads": 0,
+  "newOwnerInstances": 0,
+  "newSessions": 0,
+  "newOriginalCaptures": 0,
+  "newRoutingRuns": 0,
+  "resources": "Selected children terminated and owned roots/logs absent; retained Source, fixtures, classes and failure evidence. No persistent process or link launched.",
+  "next": "Current assembly prerequisites: checked nine-unit original boundary, owner pre-read hash charge, qualifiedPrior12 and receipt.prepare caller; host/lifecycle remain later."
+}
