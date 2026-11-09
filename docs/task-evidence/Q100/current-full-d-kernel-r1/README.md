@@ -1,7 +1,9 @@
 # Current full-D V2 pure semantic kernel
 
-Accepted locally for the Source and synthetic component scope below. Publication
-is pending. Full-D host/native/H1 qualification remains separate; the genuine
+Accepted and published as `30ef682ff6a8e22064ca25949d71f057c6006ec8` for the
+Source and synthetic component scope below. Exact remote verified; completion
+Gmail `1a1bf3c3e1c05dbc` sent once. [Publication](PUBLICATION_R1.md).
+Full-D host/native/H1 qualification remains separate; the genuine
 original followed by exactly NULL and OBSERVE remains unspent and gated.
 
 The new single-file owner exposes

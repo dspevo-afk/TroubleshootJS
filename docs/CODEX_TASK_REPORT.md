@@ -1,12 +1,12 @@
-# Current checkpoint: full-D pure semantic component accepted; publication pending
+# Current checkpoint: full-D pure semantic component published; next Source slice
 
-UTC2026-11-09. F codex/q100-terminal-only-20261107 parentHEAD3c9ff84117c24aa3ee080225e6833e6574594243,
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD30ef682ff6a8e22064ca25949d71f057c6006ec8,
 normal origin/codex/q100-physical-feasibility exactremotechecked; no upstream.
 Intended F changes: current-full-d-kernel-r1 Source/evidence +ARCH/roadmap/report.
 Main5f05b005 preserves9tracked/6untracked; E d9747229 reportM; Desktope0c36885
 preserves7tracked/89untracked. Actualprior/factory3741a194 published,
 Gmail1a1beec250e27a7e SENT_ONCE. Prior mails preserved; no duplicate email.
-Currentcomponent commit/push/Gmail PENDING, never infer publication from localPASS.
+Currentcomponent implementation30ef682ff6a8e22064ca25949d71f057c6006ec8 normalpushed/exactremoteverified; Gmail1a1bf3c3e1c05dbc SENT_ONCE. Finalproof5d52dbaf04598fce6133753155115015b5b2d6f89b4559b221a226f4a326845b. Receipt-only followup no secondmail.
 
 K OS-temp/tsj-q100-current-full-d-kernel-7af449ffadde4dfa88f52e91576c3a90 retains
 Source16snapshots/contracts, root receipts, earlierfailures and exactemission.
@@ -44,8 +44,9 @@ Session/original/routing0 inK. Genuineoriginal+exactlyNULL/OBSERVE UNSPENT/GATED
 Allcaps/seeds/epochs/oracles/CircuitJStruth unchanged. Full30EXCLUDED/HARD-PSYCHOTIC
 unavailable-unrun/protectedheldout denied/historicalprotectedunreadUNCERTIFIED/
 playable100=0/betaHELD. GWT/Player N/A; electrical/population NOTRENEWED.
-Next finishdiff/index/privacychecks, normalcommit/push/exactremoteverify and one
-completionGmail; then freeze next currenthost/native flatwork/finalizer/export
+Diff/index/privacychecks PASS19explicitpaths;9Sourcehashes and all evidenceblobs
+match testedbytes. Two realSourceCLI rejectioncontrols PASSexpectedexit1.
+Next finish publicationreceipt, then freeze currenthost/native flatwork/finalizer/export
 Source slices. Preserve Main/Desktop/E work and previousfailures.
 
 # Historical checkpoint: current full-D semantic kernel SOURCE mapping started
