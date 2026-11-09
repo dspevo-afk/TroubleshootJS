@@ -1,4 +1,50 @@
-# Current checkpoint: ancestor identity published; caller migration next
+# Current checkpoint: bounded caller gate accepted; publication next
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107 HEAD708e550acd22046c5e54a3f856179b5cee53a212.
+Origin dspevo-afk/TroubleshootJS; no upstream; normal targetorigin/codex/
+q100-physical-feasibility708e550a verified. Sharedowner637f7c12/receipt708e550a
+published/Gmail1a1be88e87643046 SENT_ONCE. Newcallergate locallyaccepted,
+NOTcommitted/pushed/emailedyet. Intended4callerSource+normal-prior-caller-gate-r1
+packet+3docs only. Main5f05b005 retains9tracked/6untracked/staged0; E d9747229
+reportM; Desktop e0c36885 retains7tracked/89untrackedfiles/staged0. Reports mirror.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+CallerA8ACFA47/test56383BAA19methods, canariesf7b8862e/d40bbcd6 exactprivate/public.
+Reader863/observer478/proof3b44 current, normalizerE872/codecC1/kernelF87/prov215ad/
+metaC487 unchanged. Duplicatecallerprojectionretired; authenticatedreaderowns
+cross-controlidentity. Bothcopies19PASS/0SKIP,12bootstrap/6output controls,25CLI
+(4positive21closedreject) pass;2realjunctions verified/removed. Sourceprooff1eb1b2e97b7e708bdf762a04383a279208f2137fb8e3853cc73bba08e66b293.
+Rootintegratedreview/currentbytes/privacy/evidence checks; earlier independent
+scopedreviewsnotclaimedaschanged-code runtimeproof. Reaudited57currentcalls.
+
+ActualSOURCE/rootmetadatapreflightPASS, noactualpriorbody/resource. ConfigPRIVATE_R2
+SHAc8e937946f93f62801450eb989e73016d26736d53e1d2487cb8d8843f0add6eb;
+SOURCEmanifestSHAe5ea5ac6bd85ffdb0be078895e87b1da4d3d9488469029d8971751ec4846e80d;
+rootsSHA6048aee06aced2b169c87e02572b39c731165aa30f4e1de3f9e9ca008ffc02af.
+AB/ACTUAL_SOURCE_PREFLIGHT_PRIVATE_R1.json holds exactcontrol/data paths androot
+IDs. Privateconfig/sourcemanifest remainfrozen; controlOWNER/source-manifest,
+emptydataoutput underTemp/TroubleshootJS taskunique roots retainedfornextphase.
+No operationalphase-journal.json created; actual20normalbodies UNREAD.
+
+Outputwrite/flush/readbackwritten-handle identity, stableoutputroot, postwrite
+control/Source/tool/resource/20role rereads andexact5closure remainrequired.
+Persistedevidencependingatwrite; completedCLIreceiptfinalauthority. Fourverified
+successfulsyntheticrootsremoved; acceptedchildtermination/ownedroot+logsabsent,
+cleanupdurationnull. Alloldfailures/ownedfailurefixtures/unknownresources preserved.
+
+Next actualdiff/index/privacy/whitespace, normalcommit/push/exactremote andone
+completionGmailforcallergate. Thenexclusive rootnormal-onlyphasejournal binding
+newcallerproof/config/manifest/roots/allowlist/readerproof/normalizerproof BEFORE
+fixed20 read. Do not executeactualqualifybeforejournal. Actualprioracceptance/
+context/currentJava DATA NOTRUN. OldD descriptor/result/generatedinput DATA,
+oldbuilders/CLIs, manifestfollowing/protected/heldoutDATA denied. Genuineone
+original+exactly NULL/OBSERVE UNSPENT/GATED. Allcaps/exactseeds/epochs/oracles/
+CircuitJS truthunchanged; Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
+historical unreadUNCERTIFIED; fullD/H1unqualified/playable100=0/betaHELD.
+GWT/PlayerNOTAPPLICABLE; electrical/populationnotrenewed. Continue standingroadmap.
+
+# Historical checkpoint: ancestor identity published; caller migration next
 
 UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107. Implementation637f7c1259e42a3b1bf70a9e49a3f5e15e6740b1

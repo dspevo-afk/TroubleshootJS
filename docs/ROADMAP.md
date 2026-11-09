@@ -1204,6 +1204,18 @@ Implementation `637f7c1259e42a3b1bf70a9e49a3f5e15e6740b1` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
 `1a1be88e87643046` sent once. Publication is recorded in the packet/current checkpoint.
 
+The [bounded normal-prior caller gate](task-evidence/Q100/normal-prior-caller-gate-r1/README.md)
+is locally accepted for SOURCE/closed-phase scope. Both copies pass19units,
+12bootstrap/6output controls and25CLI calls (4preflightpositive/21exactreject),
+with2realjunctions removed. Actual eight-SOURCE/five-tool preflight and real N/D
+root metadata pass; no prior body/resource or operational journal. Output-root
+identity, authenticated readback, postwrite rereads and exact closure remain
+required. Earlier failures are preserved; the caller now uses the shared owner.
+Next separate exclusive normal-read journal before actual fixed20 ingest;
+genuine envelope unspent/gated. Caps/seeds/epochs/oracles/CircuitJS truth unchanged;
+Full30EXCLUDED, HARD/PSYCHOTIC unavailable/unrun, historical unreadUNCERTIFIED,
+playable100=0/betaHELD. Publication is recorded in the packet/current checkpoint.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

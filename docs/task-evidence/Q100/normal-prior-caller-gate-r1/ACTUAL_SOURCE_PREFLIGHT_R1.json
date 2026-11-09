@@ -1,0 +1,33 @@
+{
+  "actualPriorBodiesRead": 0,
+  "actualPriorResourcesObserved": false,
+  "call": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "actual-caller-source-preflight-r1",
+    "processElapsedMs": 516.5947,
+    "receipts": {
+      "owner.json": "502e39bd31e5536adfb1d509b3fd3235bf4c8944cfc82d013f7f783e72a46b25",
+      "parent.json": "a2de7efd1ab4231ec3145300fc630fcb1200490a22efb0bda7211ea3fc9a8def",
+      "process.json": "a1df58bb92b77d85d54013b70423dd80451bdafe828d83be65f531de689ba913",
+      "request.json": "b37f05099f8dbf084eb3cf9748c7f23e75bbd6c961e50e3dd79a01a3fa6bef3b",
+      "result.json": "19ffdd333be214309982225f48b3100cfef771019fe7cd7134e070b82af194c8",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "e798c4fa11d52e08a9766bf51a6f4f2ae87c79fcedb34efa61acb4b621e09ca8"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 771.2766
+  },
+  "configSha256": "c8e937946f93f62801450eb989e73016d26736d53e1d2487cb8d8843f0add6eb",
+  "genuineEnvelope": "UNSPENT_GATED",
+  "normalDataPhaseEnabled": false,
+  "operationalJournalCreated": false,
+  "privateAuthorityReceiptSha256": "37acc0b669717fb61faaeb7da556f4bea5eeb1960f8a578ce3088590f368c281",
+  "rootsSha256": "6048aee06aced2b169c87e02572b39c731165aa30f4e1de3f9e9ca008ffc02af",
+  "sourceCount": 8,
+  "sourceManifestSha256": "e5ea5ac6bd85ffdb0be078895e87b1da4d3d9488469029d8971751ec4846e80d",
+  "status": "PASS_ACTUAL_SOURCE_AND_ROOT_METADATA_PREFLIGHT_ONLY",
+  "toolCount": 5
+}

@@ -266,6 +266,16 @@ external resourceFacts keys are unchanged. Unrelated ancestor clocks do not
 become file changes; content, actual identity, reparse and closure guards remain.
 Finite observations are not atomic. Caller migration and DATA authority are separate.
 
+The [bounded normal-prior caller](task-evidence/Q100/normal-prior-caller-gate-r1/README.md)
+owns explicit current SOURCE/tool/provenance authentication, the acyclic SOURCE
+manifest, stable N/D/scratch/output-root authority and the external phase journal.
+Preflight reads only SOURCE and root metadata. Qualify requires the journal before
+its exclusive attempt marker and fixed20 read; it delegates byte/resource identity
+to the qualified reader/observer and semantic reconciliation to the pure normalizer.
+Bounded output readback, final input rereads and exact five-file closure precede
+the completed CLI PASS. Persisted evidence remains pending at write time; final
+authority is the completed receipt. Actual prior qualification remains separate.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

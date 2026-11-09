@@ -1,0 +1,83 @@
+{
+  "actualPriorBodiesRead": 0,
+  "call": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "caller-output-r4",
+    "processElapsedMs": 620.8552000000001,
+    "receipts": {
+      "owner.json": "e8d7a56f5bbd9f8355101ba5b5ab23a30235912fdd201ebc4789eb734f5a89bd",
+      "parent.json": "244d2d56eca99970bee77723a13e45fe7ab6a5d49549450509638470c15c8d82",
+      "process.json": "e9b29a39342686ae8739129af842d2e4376026fb4bde5868739c7c62079820b5",
+      "request.json": "a494e861a0b795ea6caf2a03ee5ba7b1952541343997751623c20ecddb0b9803",
+      "result.json": "da1b1cf83aba8b7d17abd14c971af72fbb34e5dd645636052fbe55abf7b4b15f",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "266c09899a01d711495a256da8ef5b90dd7273d2add7218bec59a2e4cb5ea49e"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 858.3338
+  },
+  "cases": 6,
+  "expectedRejections": 4,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "isolatedCleanupDurationMs": null,
+  "operationalJournalCreated": false,
+  "ownedResourceReceiptSha256": "560ae1139b3aa5a9d12bfefc4ab9b5aa29ebc19bac291c191f220ab1abbf2bf8",
+  "positiveCases": 2,
+  "retainedSyntheticRoots": 1,
+  "status": "PASS_SELECTED_WINDOWS_SYNTHETIC_OUTPUT_HELPERS_ONLY",
+  "summary": {
+    "callerSha256": "a8acfa47fdb7f5b61dd784194c70f279a6fb818f27fe91e8d10904a03961814c",
+    "cases": [
+      {
+        "expectedCode": "PASS",
+        "name": "bounded_exclusive_write_and_readback",
+        "observedCode": "PASS",
+        "readbackBound": true,
+        "status": "PASS"
+      },
+      {
+        "expectedCode": "EXCLUSIVE_OUTPUT_CREATE",
+        "name": "overwrite_rejected",
+        "observedCode": "EXCLUSIVE_OUTPUT_CREATE",
+        "originalBytesPreserved": true,
+        "status": "PASS"
+      },
+      {
+        "control": "owned_fixture_swap_not_external_race_proof",
+        "expectedCode": "ROOTS_CHANGED",
+        "name": "same_name_output_root_replacement",
+        "observedCode": "ROOTS_CHANGED",
+        "status": "PASS",
+        "successorEmpty": true
+      },
+      {
+        "exactFileCount": true,
+        "expectedCode": "PASS",
+        "name": "final_exact_closure_positive",
+        "observedCode": "PASS",
+        "status": "PASS"
+      },
+      {
+        "expectedCode": "READER_SHA256",
+        "name": "closure_wrong_bytes_rejected",
+        "observedCode": "READER_SHA256",
+        "status": "PASS"
+      },
+      {
+        "expectedCode": "OUTPUT_CLOSURE_NAMES",
+        "extraFileCreated": true,
+        "name": "closure_extra_file_rejected",
+        "observedCode": "OUTPUT_CLOSURE_NAMES",
+        "status": "PASS"
+      }
+    ],
+    "fixtureDisposition": "RETAINED_SYNTHETIC_ONLY",
+    "readerSha256": "863a258cbab888cf112b9e927e16a099436632e9a1d43eefe0b70690c30543d8",
+    "rootReplacementControl": "OWNED_FIXTURE_SWAP_NOT_EXTERNAL_RACE_PROOF",
+    "schema": "tsj-normal-prior-caller-output-canary-v1",
+    "status": "PASS"
+  }
+}

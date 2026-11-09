@@ -1,0 +1,246 @@
+{
+  "ancestorOwnerCorrection": "637f7c1259e42a3b1bf70a9e49a3f5e15e6740b1",
+  "controls": [
+    {
+      "actualPriorBodiesRead": 0,
+      "call": {
+        "childExitCode": 1,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "caller-units-r1",
+        "processElapsedMs": 376.17900000000003,
+        "receipts": {
+          "owner.json": "1152b737865c6d8f0a0e29a06c9c072fda6f403e63151a4f50d889fa5dd902e8",
+          "parent.json": "c9fcb603ca663fb981f04ca5f29e3e6ea35da768ccf568f4b9b64de69ccdc0f4",
+          "process.json": "ff2d760cc54d98cd0255791cd3385049acc8b5e5abf73b783ac7003041d5942b",
+          "request.json": "e85d889db5ee11bc19d9c5b335b73564aed0517b715a5177ceaf9d5067e9a099",
+          "result.json": "04fe3b55e1603cfd03cc19afd66a3eead2a63bba1db0358dcee4714f3ca2a5fc",
+          "stderr.txt": "58c719e54c4aee8aea3e5f0534cdad995f46652f60837032e596f51fee51be90",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 803.1455000000001
+      },
+      "cause": "Synthetic allowlist spec maxBytes4MiB exceeded existing1MiB cap; fixture fix required; caller cap retained",
+      "errors": 1,
+      "failures": 1,
+      "passed": 7,
+      "phaseJournalCreated": false,
+      "skipped": 0,
+      "sourceInputs": {
+        "actualPriorBodiesRead": 0,
+        "files": [
+          {
+            "bytes": 58678,
+            "role": "qualify_prior.py",
+            "sha256": "78f3299020c409c91fa6319f1e48059eb3ba0071a80a464997ff5e1553ae1801"
+          },
+          {
+            "bytes": 9319,
+            "role": "test_qualify_prior.py",
+            "sha256": "74facf3bf2e605325c8cae9d2acf6eabf7163f35227b03a869e97ab7ba2911ed"
+          },
+          {
+            "bytes": 1474,
+            "role": "caller_units_gates_r1.py",
+            "sha256": "eb8c99a7d4395e4fe3ab43a6fcf37d0e25608c79a122ab48ec7b3f68d37f840f"
+          }
+        ],
+        "phaseJournalCreated": false
+      },
+      "status": "FAIL_UNEXPECTED_SYNTHETIC_UNIT_RESULT",
+      "tests": 9
+    },
+    {
+      "actualPriorBodiesRead": 0,
+      "callerLaunched": false,
+      "cause": "sys.executable reports MSIX execution alias; native QueryFullProcessImageNameW matches independently pinned selected Store executable",
+      "cleanupMs": null,
+      "code": "SELECTED_PYTHON",
+      "elapsedMs": null,
+      "evidenceHelperFailure": {
+        "callerLaunched": false,
+        "source": {
+          "bytes": 1268,
+          "role": "PRESERVED_EXTRA_PARENTHESIS_HELPER_SOURCE",
+          "sha256": "70b33c3f00e96a5d851ae4d0fa4b7b549327c0890cf7f295b4305be7b9eb8870"
+        },
+        "status": "FAIL_PREEXEC_SYNTAX"
+      },
+      "exitCode": 1,
+      "files": [
+        {
+          "bytes": 26809,
+          "role": "caller_cli_gates_r2.py",
+          "sha256": "29fcee5ce3cdd4797bb2ab83eb564b6564c30c86fe0baff0367906d6ed7cc65e"
+        },
+        {
+          "bytes": 751,
+          "role": "caller_runtime_identity_diag_r1.py",
+          "sha256": "210dc06c646b0810ecb055f89fb957b6a1a51dd948d79e28a33528653df4359c"
+        }
+      ],
+      "fix": "Use actual Windows process-image query; test real positive and wrong-image rejection; keep configured child tool pins, isolation, exact argv and maintained process receipts",
+      "fixtureCreated": false,
+      "operationalJournalCreated": false,
+      "status": "FAIL_DRIVER_PRECALL_ADMISSION"
+    },
+    {
+      "actualExit": 2,
+      "actualPriorBodiesRead": 0,
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "caller-cli-private-r2-preflight-positive",
+        "processElapsedMs": 379.5151,
+        "receipts": {
+          "owner.json": "4cdc2cdc32bcff71972bfc3a468221e42a2cd9a856dfd899f0713426a0e7c6c8",
+          "parent.json": "62662e1d66ebffa634b8d95048646ec4af1f4475a1369f8bab8af14e3b8cf70d",
+          "process.json": "176f143358da4376de24958de3d75ce1fca2138b52d5435c3735af83b943f5c1",
+          "request.json": "ee79ed8dfb1b7d1e213bc4fdc2a5b0946f819d975ba4e04a4081e68158f666df",
+          "result.json": "5878354304cedb7d1d2631b4bf75b5eac8ab817c75f509166340c140f098eace",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "cadc5c44d5752759edd1ad7004dd4fbe19e2777b740a85062db89c8d4bd38f0a"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 626.9769
+      },
+      "cause": "Caller admitted reader SOURCE spec8MiB but observer requires all SOURCE max4MiB",
+      "code": "SOURCE_TOOL_OBSERVATION_SOURCE_SPEC_LIMIT",
+      "driver": {
+        "bytes": 28096,
+        "role": "PRESERVED_DRIVER",
+        "sha256": "e533231a4e255f62e2396aee1193acbdeac1a24b7d55814b2feec27e279ab794"
+      },
+      "expectedExit": 0,
+      "fix": "All SOURCE caps4MiB, allowlist1MiB, tools8MiB; new reader-SOURCE cap regression",
+      "fixtureReceiptSha256": "eece8012cd0efe2cd86b42f297343023b7e317a8ff88bcd74a32863e1d3b6ff7",
+      "markerCreated": false,
+      "operationalJournalCreated": false,
+      "source": {
+        "bytes": 73303,
+        "role": "PRESERVED_4E_CALLER_SOURCE",
+        "sha256": "4e856b0d26d16d5e0d4c608c9226e687731f97334feb34d9d6c2b0e415cec047"
+      },
+      "status": "FAIL_UNEXPECTED_POSITIVE_CLI_RESULT"
+    },
+    {
+      "actualExit": 2,
+      "actualPriorBodiesRead": 0,
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "caller-cli-private-r3-preflight-positive",
+        "processElapsedMs": 431.6306,
+        "receipts": {
+          "owner.json": "8290a51021439fd715b7df70fb0e66e91d6b0399231dc5147f8ce147f1e90923",
+          "parent.json": "06e92bf4efa6a01c3791ccdc7b3a71afe32c2c16b8aefeae0415e4ab94d7a339",
+          "process.json": "669b140b7eb16f4b3c5a51080501b39f1e02e19af10eecf052680a70b2f23f11",
+          "request.json": "58500a21ad1ce644e87fe6194322ae60c25acf07d196aaadbf3dbe8f4552292e",
+          "result.json": "327d0143d622ad6c68e0e5a2ee3c9ed033855b658b8bfa5a800f8a0b5321fc46",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "f42919767147f6813c87b2e0c9cd134c6c4ba08221cf9c7a70c3043f6e475996"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 666.7847
+      },
+      "cause": "Caller reconstructed reader rows without role key, while normalizer preserves full independently authenticated metadata rows",
+      "code": "ALLOWLIST_READER_NORMALIZER_DISAGREEMENT",
+      "driver": {
+        "bytes": 28063,
+        "role": "PRESERVED_DRIVER",
+        "sha256": "04ef80e46dce39e5cad85345593ba82afb218455294f885167135666cc949474"
+      },
+      "expectedExit": 0,
+      "fix": "Include role in exact row comparison; retain all other fields and reject differing role value",
+      "fixtureReceiptSha256": "70094d9cd638ee31abb9676b8f3d3f29a3d1641dfca3759c1e9ebdeeeee95ccc",
+      "markerCreated": false,
+      "operationalJournalCreated": false,
+      "source": {
+        "bytes": 73246,
+        "role": "PRESERVED_C8_CALLER_SOURCE",
+        "sha256": "c8f3db5de51403b3e361b41a83470dbee5c414f8d1cab1aeb3cf86e522e6b09b"
+      },
+      "status": "FAIL_UNEXPECTED_POSITIVE_CLI_RESULT"
+    },
+    {
+      "actualCode": "SOURCE_TOOL_OBSERVATION_SOURCE_READ_FILE_CHANGED",
+      "actualPriorBodiesRead": 0,
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "caller-cli-public-r1-journal-extra-field",
+        "processElapsedMs": 434.8725,
+        "receipts": {
+          "owner.json": "133856308d905d3370b87e6103ce1694dfb3d6a328e98e3fcd05cf733cc15451",
+          "parent.json": "f5eb45c487b42a0ceacad8d4aff06f2a9fc7fc41549b003f3b3be4e16fb555dc",
+          "process.json": "749aa8d4ab900cd8a9a91ac0dcd69253fa77860baa3678032fbf2f9feb45cc70",
+          "request.json": "08bedfb9ecb3efb941f698dd2a4707b7107d070d1cc3bc3ef1d033fabd3b70ff",
+          "result.json": "281069bb822cd87a5af0b30ffc7817d2500768533a796b60ee04c8ce99d53e06",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "f3febdc6ee79e38bf2d805340a80c8474f30bf1d0af22e8fb420578224e24329"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 673.2836
+      },
+      "changedSnapshotField": "UNKNOWN_NOT_CLAIMED",
+      "disposition": "Preserve strict guard and failure; one fresh full public fixture attempt allowed; no relaxed assertion or production change",
+      "evidenceHelperFailure": {
+        "source": {
+          "bytes": 1709,
+          "role": "PRESERVED_EXTRA_PARENTHESIS_HELPER",
+          "sha256": "c0c9c284d48682b9b29d208ee49c02ffa19508eafd0bbb44937e8b5a9ce7b4fb"
+        },
+        "status": "FAIL_PREEXEC_SYNTAX"
+      },
+      "expectedCode": "PHASE_JOURNAL_KEYS",
+      "fixtureReceiptSha256": "66842dd67b85027d2c20bbe1124764b543ae76bbad77c8eeb2eb4d433503e995",
+      "markerCreated": false,
+      "operationalJournalCreated": false,
+      "passedCallsBeforeFailure": 4,
+      "sourceBytesStillPinned": true,
+      "status": "FAIL_UNEXPECTED_SOURCE_STABILITY_REJECTION"
+    },
+    {
+      "actualCode": "SOURCE_TOOL_OBSERVATION_TOOL_CHANGED",
+      "actualPriorBodiesRead": 0,
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "caller-cli-public-r2-preflight-before-replace-n",
+        "processElapsedMs": 500.5751,
+        "receipts": {
+          "owner.json": "263ceadb419a5221c2766763dc2e937d015e937dd3895415bf9011f433e2d0b8",
+          "parent.json": "6476abc72c06adf9fd8233c9baefe0412c9db2f6565f28b758c67453aec85f93",
+          "process.json": "628358ee8f227d6c483c5fe96d971c81c40079bdb628c05669cd631f4cb8e070",
+          "request.json": "d1f2f09ab6c332463a16c81af65fb834eec1b322b6598b0c86209b328f76e569",
+          "result.json": "26f2db16f3a2d1e88e98e962daa557ec777789803a1264bbeee8917f96acb889",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "ee704e79a7bb36a5dd95b8701bbe4fbced51aea95107ada0e673400a1f39da79"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 734.9904
+      },
+      "changedSnapshotField": "UNKNOWN_NOT_CLAIMED",
+      "disposition": "STOP_FULL_RUNS_DIAGNOSE_ACTUAL_SNAPSHOT_CHANGES; no guard relaxation, publication or DATA authorization",
+      "expectedExit": 0,
+      "fixtureReceiptSha256": "0be7d6fd63d2b97d72604eb7a4bb14a50f822e92f60510fab47d64293cd26254",
+      "markerCreated": false,
+      "operationalJournalCreated": false,
+      "passedCallsBeforeFailure": 13,
+      "sourceBytesStillPinned": true,
+      "status": "FAIL_SECOND_UNEXPECTED_BYTE_STABILITY_REJECTION"
+    }
+  ],
+  "exactEarlierFailedSnapshot": "UNKNOWN; CONTROLLED_AND_LIVE_MECHANISM_IN_ANCESTOR_PACKET",
+  "status": "PRESERVED_FAILURES_NOT_RECLASSIFIED"
+}
