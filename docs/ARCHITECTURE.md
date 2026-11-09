@@ -232,6 +232,17 @@ These components do not authenticate real prior records, admit a normalizer or
 enable full-D. The caller's root/phase/source authority and later reconciliation
 remain required before real data and the one genuine producer invocation.
 
+The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
+owns fixed-role byte authentication before decode and historical metadata,
+receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the
+canonical context from independently checked prior representations. The current
+SOURCE authority remains an exact, detached three-field external value; it is
+never part of historical context. This pure API receives trusted source-bound
+callbacks and observed caller facts. The caller must authenticate their actual
+source/provenance, tool/module link, roots and resource observations before
+claiming real prior acceptance. Synthetic component gates do not enable DATA
+access, current native execution or playable layouts.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

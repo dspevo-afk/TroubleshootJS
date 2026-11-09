@@ -1,5 +1,8 @@
 # Current context and pure prior kernel components
 
+Subsequent [pure normalizer component](../normal-prior-normalizer-r1/README.md)
+adds its own synthetic gates; this packet retains its original Z-A scope.
+
 Accepted and published for component scope. Implementation
 `fce6ace716022502dd49eb88cd85bcb3051adfac` is verified on
 `origin/codex/q100-physical-feasibility`; Gmail `1a1bd954448c4636` sent once.

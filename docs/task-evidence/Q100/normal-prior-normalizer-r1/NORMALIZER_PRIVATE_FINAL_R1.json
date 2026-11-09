@@ -1,0 +1,181 @@
+{
+  "actualPriorBodiesRead": 0,
+  "calls": {
+    "authorities": {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "normalizer-authorities-r1",
+      "processElapsedMs": 463.8303,
+      "receipts": {
+        "owner.json": "bb899b51d92b2cad529e5f772cc14843c90955aaf2fe33bdee5cb18a86f38161",
+        "parent.json": "bbedb3bd7cabeaade4b24e3e6c33f6b34aa2de3e74fbcdc1317702b19636ee5a",
+        "process.json": "fa1bd7b2c35f85e3bb1daed99b5d947ed462980ee23c045c8b40fdfded5dd09d",
+        "request.json": "23b364184dc5659e9a8296007eaf5b7b41afdb5887aa4aa8ad8453416a1fda78",
+        "result.json": "0a12c5d36dcb8ec65bec6ca5c66a9c91b690eea8c3e1dbd2d85f83aaf18c25f2",
+        "stderr.txt": "c1afa583ffe0545dce4d85d956a15f7d9b417638d9575aa4b1cfa4f94ac33163",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 717.2373
+    },
+    "metadata": {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "normalizer-final-metadata-r1",
+      "processElapsedMs": 505.91700000000003,
+      "receipts": {
+        "owner.json": "e318586bee3d742c53c417b83ab4a4b04d34ebb940c427912840e0c06343922a",
+        "parent.json": "b89fc9eea13dc8bec2effe8584cf437417aa9363cfdcc51cc7936ee9aa6ae268",
+        "process.json": "51755f7268c007a8c7abddc57c0eb0d42bba9d50df664bdc99e7cbd8cb1817f7",
+        "request.json": "a472ab2333d91b4a03bd9a31cba3215e5d958b6cfecdaa1dc6a4395a28a38016",
+        "result.json": "7bc906f193e3dbf98169ff15f50a38abc1c89bb0d829ec7fdf770b2f4f5c8b2b",
+        "stderr.txt": "4a3d2a863716d18fb8cf7375876f61eb0712b14d848576e5d35171734b75c629",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 923.4848000000001
+    },
+    "pad-join": {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "normalizer-final-pad-join-r1",
+      "processElapsedMs": 467.36060000000003,
+      "receipts": {
+        "owner.json": "bb00e56fea929b5a279e36b4563df3cd747523c4d62a6fe886fc082daeebc3e4",
+        "parent.json": "058f12a0cd0930c03f209b843dcd95a6b7a4e9584ff64587e27c971f09d2a57f",
+        "process.json": "bf666a77b3dbcba228e7607211857994f495f5511b5f09c2bf0e1fc80224c2ec",
+        "request.json": "4bdaece7339cb755d8997bdaa89cb5b61f7a3467965a55c572e396bea603f370",
+        "result.json": "52a16722a039ba1f73a4b27446202e10c29b4164ddc76b0b5365446a78ff2186",
+        "stderr.txt": "d80c434329c6b3cfaae25854f52ea58182b8b63449e162326f75f0f900c87f09",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 716.5104
+    },
+    "seams": {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "normalizer-units-r2",
+      "processElapsedMs": 378.7781,
+      "receipts": {
+        "owner.json": "219ea6407cb183411d223fc63f6d2b9ac79360f573573c0e106277dbeaf433d2",
+        "parent.json": "8ff764b4c8206c02b57e84a82bda6928d13fe7b16cb468a2be977563f78b5888",
+        "process.json": "2e61fe2d6292f627fa894614d2eedf09e59915c579a83a416ac9d97d759847f6",
+        "request.json": "91b8fcd774ae349f0be58c433a8f789cd0368132c7e69149ce51e0b3a95e684b",
+        "result.json": "9a4041bb9db03da7a2325feccb03c7b6f9bbf45c3cffc43ca4724db53a4098aa",
+        "stderr.txt": "033ebb21b6bd5415805fa3f4fb75dea13eac26ea33b964ff0aaf66882c58fa41",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 624.9198
+    },
+    "semantics": {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "normalizer-final-semantics-r1",
+      "processElapsedMs": 388.4724,
+      "receipts": {
+        "owner.json": "aa982a9c53676eb208949d96cbf3b8dff0187b09ae425243afc9f2291f25f5a6",
+        "parent.json": "81c6f7147fc7bedaf56d5a613fb3d253e1257020b8cea02067a29147cfa3dfa7",
+        "process.json": "40b2163f728c397ba4ba86125dfae3d8eef9c3febf47be3a9cfe80872f4ca5d4",
+        "request.json": "f51a0cbc1b14226f4597127d35b0c4ee98f35bb4744278cc3247c65b4d6096ab",
+        "result.json": "84b6ddf0171ef5519a807bca044faad63506db7a58de494df251df2addbc4fab",
+        "stderr.txt": "0466b8dee8e1bf11ba88b4923745628e1364e9d9f159909170a1d0f19aec2c9d",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 628.0018
+    },
+    "work": {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "normalizer-final-work-r1",
+      "processElapsedMs": 377.7114,
+      "receipts": {
+        "owner.json": "f2fe7f24c2fcec97658fa457aed78664132d91380bb1d4ed9074a9a9208ed506",
+        "parent.json": "95a646ae8c39b71a1657b5b3378c6015e1b7846bc4fe72d6cd83f236cc95802f",
+        "process.json": "c4554313c1271624968a7566ba572bf1ef986e8ec92ab5f7fd59775e264fe408",
+        "request.json": "95648a2bc3d449704f419190566dcf731e97b27bc65ba82089250b71f8ca744b",
+        "result.json": "b7c0b14a7df37c4bd96f539e49da6e935f37ff200ab5bd61c3647e3ec6f53eae",
+        "stderr.txt": "d4110177de1b917fa64eb9f0a8a97fb8a9b6ee781d14eae7f9da06a8a2d65d5b",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 622.671
+    }
+  },
+  "counts": {
+    "authorities": 10,
+    "metadata": 9,
+    "pad-join": 9,
+    "seams": 13,
+    "semantics": 4,
+    "work": 11
+  },
+  "inputSha256": "49cea22301d35bc1bab6ac4d44b1d59a1d6e33487332ff57d9f02bc7646b2e54",
+  "oldBuilderModuleLoads": 0,
+  "originalCaptures": 0,
+  "reusedInputsVerified": [
+    "normalizer_r2",
+    "normalizer_authorities_r1"
+  ],
+  "routingRuns": 0,
+  "sessions": 0,
+  "skipped": 0,
+  "sourceReview": {
+    "actualPriorAccepted": false,
+    "callerObligationsNotExecuted": [
+      "ACTUAL_SOURCE_ONLY_MANIFEST_AND_CALLBACK_AUTHENTICATION",
+      "HARNESS_EMBEDDED_MODULE_PATH",
+      "REAL_ROOT_DIRECTORY_RESOURCE_FACTS"
+    ],
+    "directFileProcessDynamicCodeCallsFound": false,
+    "directImports": [
+      "__future__",
+      "hashlib",
+      "json",
+      "math",
+      "ntpath",
+      "re",
+      "typing"
+    ],
+    "independentAuthorityReview": {
+      "callerContractSha256": "50776fde307beb1d667241712623bae0c4d31c9d5b54e46f69a61a8c974bf16c",
+      "result": "NO_PURE_COMPONENT_BLOCKER; CALLER_FACTS_NOT_EXECUTED",
+      "scope": "LINES_1_900_AND_1491_END_PLUS_CALLER_CONTRACT",
+      "sourceSha256": "582422e50015fcf9004e2d81dff3d06dbf42b42f1bdad9d8372463040f857428"
+    },
+    "independentSemanticReview": {
+      "codecFixedLiveSearchIndex44Confirmed": true,
+      "result": "NO_MISMATCH; REVIEWED_FUNCTIONS_UNCHANGED_BY_ROOT_AUTHORITY_TIMING_FIX",
+      "scope": "LINES_880_1495_PAD_ORDER_RESULT_WORK_CONTEXT",
+      "sourceSha256": "3c811916ee9c5e5315b404bd0ff5c327e325c10772073c9ade33ae5457b3cb3b"
+    },
+    "normalizerSha256": "582422e50015fcf9004e2d81dff3d06dbf42b42f1bdad9d8372463040f857428",
+    "rootCorrectionsBeforeFinalGates": [
+      "EXACT_THREE_FIELD_CURRENT_SOURCE_AUTHORITY_AND_DETACHED_RETURN",
+      "SIGNED64_INTEGER_TIMING_REJECTION_AVOIDS_OVERFLOW",
+      "CORRECT_64_CHARACTER_BUILDER_PIN_AND_STATIC_PIN_INVENTORY",
+      "DEFINED_QUALIFICATION_REQUEST_PATH",
+      "REGISTERED_TEST_MODULE_LOADERS_UNDER_ISOLATED_PYTHON",
+      "INDEPENDENT_SYNTHETIC_ORDER_ORACLE_AND_COHERENT_GROUP_CENSUS"
+    ],
+    "staticAuditLimit": "DIRECT_AST_INVENTORY_NOT_GENERAL_PURITY_PROOF; TRUSTED_CALLBACKS_REQUIRE_CALLER_AUTHENTICATION",
+    "status": "PASS_ROOT_PURE_COMPONENT_SOURCE_REVIEW",
+    "unresolvedPureComponentBlockers": []
+  },
+  "status": "PASS_SYNTHETIC_NORMALIZER_COMPONENT_ONLY",
+  "tests": 56
+}

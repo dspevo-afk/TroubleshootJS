@@ -1,4 +1,52 @@
-# Current checkpoint: Z-A published; Z-B normalizer source review next
+# Current checkpoint: Z-B pure normalizer accepted before publication
+
+UTC 2026-11-08. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107, HEADc51232957fec732bf13f01da853d72b429fe59c9.
+Origin dspevo-afk/TroubleshootJS; no upstream; normal target
+origin/codex/q100-physical-feasibility. Z-A fce6ace7/receiptc5123295/
+Gmail1a1bd954448c4636 verified/SENT_ONCE; no duplicate mail. Intended F changes
+only normalizer/test source, normal-prior-normalizer-r1 packet and docs. Main
+5f05b005 retains9tracked/6untracked/staged0; E d9747229 report M/staged0; Desktop
+e0c36885 retains7tracked/73untracked status entries (89 files with-uall)/staged0.
+Main/E report mirrors only; unrelated work and prior failures preserved.
+
+Z OS-temp/tsj-q100-current-context-kernel-1e995d2a67ea4b128961c43605a5cc7c.
+Pure component accepted: normalize_prior582422e5; callercontract50776fde;
+final gated1104bd1daffc918b009e45f5636fe1f03a3852c8d3ac76fd8c1e9c41e528082. Final private/public56 each/0SKIP:
+13seam/9metadata/10authority/9PADjoin/11work/4current-kernel Nrun. Real normal-prior
+qualification NOT RUN. Historical manifest1090/4139 row fixtures and246PAD/60net
+joins are SYNTHETIC, not actual classes/board/native counters. Pure N control/trial
+positive dictionaries execute through current extracted kernel only; no actual
+runFresh/control/arm/Session/original. Authority exact3 keeps SOURCE preDATA hash
+outside canonicalcontext. Real SOURCE-manifest/callback/tool-module/root/resource
+facts remain caller prerequisites, not proven by supplied synthetic self-hashes.
+
+Independent SOURCE reviews scoped authority/entry on582422e5 plus callercontract,
+and semantic880-1495 slices on3c811916 unchanged by root authority/timing fix;
+codec fixed44 confirmed. Root directAST audit is not formal purity proof.
+First root AST adapter failed before fixtures by treating re.compile as dynamic
+compile; failure source/record preserved. Exact re.compile exception fixed only
+the adapter; product/test oracles unchanged. Final gates pass. Earlier malformed
+pin/request/loader/fixture findings fixed before tests. Private op/wrapper ms:
+seam378.7781/624.9198, metadata505.917/923.4848, authority463.8303/717.2373,
+PAD467.3606/716.5104, work377.7114/622.671, Nrun388.4724/628.0018.
+Seam/authority frozen inputs rehashed unchanged for reuse. All returned selected
+processes terminate and owned roots/logs absent; isolatedcleanup null. No new
+persistent process/link; source/synthetic DATA/receipts retained. Old uncertain
+resources stay untouched, details below. All leaves finished/source-only.
+
+Next root diff/index/byte/privacy/whitespace review, normal commit/push/exact
+remote and one component Gmail. Then separately freeze actual caller SOURCE
+authority/roots/observations and journal before fixed20 normal-only ingest; no
+actual-role read or phase transition yet. Old D descriptor/result/generatedinput,
+old builders/CLIs/modules, protected/heldout DATA remain denied. One genuine
+original+exactly NULL/OBSERVE unspent/gated; no extra control/arm/original/retry.
+Current host/native/full-D/H1 unqualified; playable100=0/betaHELD. Caps/seeds/
+epochs/oracles unchanged; Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
+historical protected unreadUNCERTIFIED. GWT/Player NOT APPLICABLE; electrical/
+population not renewed. CircuitJS remains electrical truth.
+
+# Historical checkpoint: Z-A published; Z-B normalizer source review next
 
 UTC 2026-11-08. Active F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107. Z-A implementation

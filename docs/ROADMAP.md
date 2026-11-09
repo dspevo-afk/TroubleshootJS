@@ -1135,6 +1135,18 @@ is current normalizer completion and source/authority gates before explicit data
 ingest. Original caps/seeds/oracles and Full30EXCLUDED/HARD-PSYCHOTIC unavailable/
 unrun/historical unreadUNCERTIFIED/playable100=0/betaHELD remain.
 
+The [pure prior normalizer component](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
+is locally accepted on56 private and56 public synthetic tests without skips.
+It authenticates fixed role bytes before decode and preserves independent
+metadata/receipt/PAD/order/N-run/work/context gates. Scoped source reviews found
+no pure-component blocker; real caller facts and actual prior acceptance remain
+NOT RUN. A root AST audit adapter failure is preserved and corrected without
+changing product oracles. No actual20-role body or genuine envelope was read/run.
+Next freeze the normal-only caller/read phase and qualify the actual pinned prior,
+then current host/native assembly. Caps/seeds/epochs/oracles unchanged;
+Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historical unreadUNCERTIFIED;
+playable100=0/betaHELD. Normal publication and one completion Gmail are next.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion
