@@ -276,6 +276,13 @@ Bounded output readback, final input rereads and exact five-file closure precede
 the completed CLI PASS. Persisted evidence remains pending at write time; final
 authority is the completed receipt. Actual prior qualification remains separate.
 
+The [qualification console parser](task-evidence/Q100/normalizer-console-framing-r1/README.md)
+uses the existing pure console JSON adapter for the fixed812-byte qualification
+summary. One LF or CRLF terminates that console record; the separate JSONL owner
+still requires LF. Role byte authentication, exact summary schema/hash/value and
+historical elapsed bindings precede context acceptance. This framing correction
+and caller pin migration do not establish actual prior or native acceptance.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

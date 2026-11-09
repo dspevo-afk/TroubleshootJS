@@ -1354,8 +1354,7 @@ def _validate_qualification_summary(raw, d_parent, d_result, prior_result, role_
     _need(type(raw) is bytes and 0 < len(raw) <= MAX_QUALIFICATION_STDOUT
           and len(raw) == 812,
           "QUALIFICATION_STDOUT_SIZE")
-    summary = _json_load(raw, MAX_QUALIFICATION_STDOUT, "QUALIFICATION_STDOUT",
-                         allow_float=False, line=True)
+    summary = _console_json(raw, MAX_QUALIFICATION_STDOUT, "QUALIFICATION_STDOUT")
     _exact_keys(summary, QUALIFICATION_SUMMARY_KEYS, "QUALIFICATION_SUMMARY_KEYS")
     _need(summary["schema"] == "tsj-failure-cohort-reader-v1"
           and summary["status"] == QUALIFICATION_STATUS

@@ -1,0 +1,18 @@
+{
+  "actualPriorBodiesReadBeforeJournal": 0,
+  "actualPriorBodiesReadByThisScript": 0,
+  "actualPriorResourcesObserved": false,
+  "createdUtc": "2026-11-09T04:45:28Z",
+  "currentHead": "f40a00a41aa8f1dde0509b5090285b0f2c2c21ed",
+  "full30": "EXCLUDED",
+  "genuineEnvelope": "UNSPENT_GATED",
+  "journalSha256": "da979300de4db6e6ace152f2b3837bb3bc02527eb007781c15c0046c638c501f",
+  "manifestFollowing": "DENIED",
+  "oldBuildersClis": "DENIED",
+  "oldDDescriptorResultGeneratedInput": "DENIED",
+  "protectedHeldout": "DENIED",
+  "publishedCallerImplementation": "5c745c3ff78cc16e19220b6c4a46ce541bdb58ad",
+  "schema": "tsj-root-normal-phase-transition-receipt-v1",
+  "sourceRootRecheck": "PASS",
+  "status": "NORMAL_FIXED_20_READ_OPEN_JOURNAL_RECORDED_BEFORE_BODY"
+}

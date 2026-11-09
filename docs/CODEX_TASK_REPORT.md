@@ -1,4 +1,125 @@
-# Current checkpoint: caller gate published; exclusive normal phase next
+# Current checkpoint: console framing correction accepted; publication next
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107 HEADf40a00a41aa8f1dde0509b5090285b0f2c2c21ed.
+Origin dspevo-afk/TroubleshootJS, no upstream; normal target codex/q100-physical-feasibility.
+Correction locally accepted, not committed/pushed/emailed yet. Intended normalizer,
+new regression/console canary, caller two pins, evidence packet and3docs only.
+Main5f05b005 retains9tracked/6untracked; E d9747229 reportM; Desktop e0c36885
+retains7tracked/89untracked files. Preserve unrelated changes and all failures.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+Normalizer0b20/testaea8, caller11c4, reader863/observer478 exact. Normalizer proof
+a0c35e7734d5e3df0cfba6875c7da294c08f19a390f8dbdb303012c7e5448b9d; caller proof
+effd2149be15555c5d0b6f9fce7974e6ee34cae86697b5863228f1affc9cabc1. One-call AST and two-pin AST audit PASS.
+Private69/public69/0skip, predecessor8 expectedFAIL, actual authorized console
+boundary PASS, caller19/0skip and25closedCLI(4positive21reject) PASS. One verified
+junction and one verified successful synthetic root removed. Returned children
+terminate/owned process roots+logs absent; cleanupduration null. Independent
+SOURCE adapter review no blocker; root integrated review. GWT/Player N/A;
+electrical/population NOT RENEWED. No production Java/GWT/Player edits.
+
+First actual qualification remains FAIL/exit2/NORMALIZER_QUALIFICATION_STDOUT_FRAMING,
+operation724.3113/wrapper973.7947ms after da97 journal at04:45:28Z. Actual normal
+fixed20 bodies READ under journal; resource observer reached by caller control
+flow. No context/projection/Java output; original failed nonempty output,
+c8e config/e5ea manifest/da97 journal and receipts preserved. Only already-authorized
+stdout role was reread for diagnosis/canary (812/a08ca3,CRLF). No full retry.
+
+Next inspect/stage intended-only diff, normal commit/push/exact remote verify,
+one completion Gmail. Then fresh empty output/config/SOURCE manifest/new journal
+for current source before deliberate fixed20 qualifier; no automatic rerun or
+failed-root reuse. Native producer/session calls0; genuine original+exactly NULL/
+OBSERVE UNSPENT/GATED. Old D descriptor/result/generated-input DATA, oldbuilders/
+CLIs, manifest following and protected/held-out bodies remain denied. Full30
+EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historical protected unreadUNCERTIFIED;
+fullD/H1 unqualified/playable100=0/betaHELD. Caps/seeds/epochs/oracles/CircuitJS
+truth unchanged. No new persistent process/link; uncertain resources untouched.
+Prior caller/ancestor Gmail1a1be9cc9ce25583/1a1be88e87643046 SENT_ONCE.
+
+# Historical checkpoint: actual normal-prior normalization failed; CRLF correction
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107 HEADf40a00a41aa8f1dde0509b5090285b0f2c2c21ed.
+Caller5c745c3f and ancestor637f7c12 published/exact remote verified;
+Gmail1a1be9cc9ce25583 and1a1be88e87643046 SENT_ONCE. No duplicate email.
+F report modified only before correction. Main5f05b005 retains9tracked/6untracked;
+E d9747229 reportM; Desktop e0c36885 retains7tracked/89untracked files.
+Preserve unrelated changes, all failures and uncertain resources.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+First actual fixed20 read ran AFTER exclusive journal da979300 at
+2026-11-09T04:45:28Z. Actual prior acceptance FAIL, exit2:
+NORMALIZER_QUALIFICATION_STDOUT_FRAMING. Operation724.3113ms,
+wrapper973.7947ms; termination proven, task process root/logs absent;
+isolated cleanup duration null. All20 authentication and resource observer
+reached before normalization by published caller control flow. Actual normal
+bodies are now READ under journal; never describe them as unread.
+ACTUAL_PRIOR_QUALIFICATION_FAILURE_R1.json preserves receipt and failure.
+Original nonempty data output with read-attempt/failure-evidence remains intact;
+no context/projection/Java output. No automatic rerun or output-root reuse.
+
+Root diagnosis read ONLY already-authorized D_PRIOR_QUALIFICATION_STDOUT_TXT
+through reader863 and exact role SHA. Bytes812, SHAa08ca3ccfd3390d39ec37314a86f42f1a1b33c1b6d8104e417447e95f47d1d52,
+one CRLF terminator/no BOM, valid single JSON object. The E872 normalizer wrongly
+uses LF-only JSONL at qualification-summary call. Next: narrow SOURCE-only reuse
+of existing console parser, full synthetic validator regressions, fresh final
+normalizer gates and caller source/proof pins. Private normalizer-crlf-r1 owns
+only normalizer and new test. Exact812/hash/schema/value/oracles remain.
+Fresh output/config/SOURCE manifest/journal required before any later actual
+read. Original c8e config/e5ea manifest/da97 journal and failed root preserved.
+
+Native producer/session calls0; genuine one original+exactly NULL/OBSERVE
+UNSPENT/GATED. Old D descriptor/result/generated-input DATA, old builders/CLIs,
+manifest following and protected/held-out bodies remain denied. Full30 EXCLUDED;
+HARD/PSYCHOTIC unavailable/unrun; historical protected unread UNCERTIFIED;
+fullD/H1 unqualified; playable100=0; beta HELD. Caps, exact seeds, epochs,
+independent oracles and CircuitJS truth unchanged. GWT/Player NOT APPLICABLE;
+electrical/population qualification NOT RENEWED. No new persistent process/link.
+
+# Historical checkpoint: normal-only journal recorded; actual qualify next
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107 HEADf40a00a41aa8f1dde0509b5090285b0f2c2c21ed,
+normallypushed/exactremoteverified. Callerimplementation5c745c3f andGmail
+1a1be9cc9ce25583 SENT_ONCE; ancestor637f7c12/Gmail1a1be88e87643046 SENT_ONCE.
+No duplicateemails. Origin dspevo-afk/TroubleshootJS; noupstream. F began clean;
+reportWIPonly now. Main5f05b005 retains9tracked/6untracked; E d9747229 reportM;
+Desktop e0c36885 retains7tracked/89untrackedfiles. Preserve unrelatedwork/evidence.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+DurableEXCLUSIVE actualnormal-onlyjournal created2026-11-09T04:45:28Z BEFOREbody:
+SHAda979300de4db6e6ace152f2b3837bb3bc02527eb007781c15c0046c638c501f.
+NORMAL_PHASE_JOURNAL_RECEIPT_PRIVATE_R1.json has exactpath/authority. Gatepublic
+summaryNORMAL_PHASE_JOURNAL_GATE_R1.json; SOURCE/rootreadonlyrecheckPASS.
+Actualpriorbodies/resources stillUNREAD/NOTOBSERVED asofthischeckpoint. Dataoutput
+rootempty; journalstatusALLOW_FIXED_20_NORMAL_PRIOR_READ nowpermits ONLYfixed20
+normalroles viaqualifiedcurrentcaller. No priorbodycall hasbeenmade yet.
+
+FrozenconfigCALLER_CONFIG_PRIVATE_R2.json c8e937946f93f62801450eb989e73016d26736d53e1d2487cb8d8843f0add6eb,
+SOURCEmanifest e5ea5ac6bd85ffdb0be078895e87b1da4d3d9488469029d8971751ec4846e80d,
+roots6048aee06aced2b169c87e02572b39c731165aa30f4e1de3f9e9ca008ffc02af,
+callerproof f1eb1b2e97b7e708bdf762a04383a279208f2137fb8e3853cc73bba08e66b293,
+readerproof3b44/normproofac347/metaC487. CallerA8AC/test5638, reader863/observer478,
+normalizerE872/codecC1/kernelF87/prov215ad exact. CurrentpublishedSOURCE gatespass.
+
+Next runactualqualify ONCEunderselectedRootCall existingreader180s/wrapper480s
+ceilings, passingfrozenconfig/manifest/journalpaths+hashes fromprivatereceipt.
+No oldD descriptor/result/generatedinput DATA, oldbuilders/CLIs, manifestfollowing,
+protected/heldoutDATA or genuineproducer. Readerauthenticatesall20 beforedecode;
+semanticnormalizer/resource observations/finalrereads/exactclosure thenactual
+prior/context/currentJavaDATA acceptance. Preserveattemptmarker/anyfailure and
+reporttruthfully; noautomaticrerunorbudgets/oraclechanges. CompletedCLIreceipt
+isfinalauthority; pendingpersistedevidencealonenotPASS.
+
+Genuineoneoriginal+exactly NULL/OBSERVE UNSPENT/GATED, noextraarm/control/retry.
+Allcaps/exactseeds/epochs/independentoracles/CircuitJS truthunchanged. Full30
+EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historical unreadUNCERTIFIED;
+fullD/H1unqualified/playable100=0/betaHELD. GWT/PlayerNOTAPPLICABLE;
+electrical/populationnotrenewed. No newpersistentprocess/link; privatecontrol,
+emptyoutput andfailure/historicalresources retained. Continue standingroadmap.
+
+# Historical checkpoint: caller gate published; exclusive normal phase next
 
 UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107. Implementation5c745c3ff78cc16e19220b6c4a46ce541bdb58ad normallypushed

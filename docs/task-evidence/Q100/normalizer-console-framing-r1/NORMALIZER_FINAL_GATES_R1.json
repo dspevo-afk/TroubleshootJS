@@ -1,0 +1,519 @@
+{
+  "actualFirstPriorQualification": "FAIL_PRESERVED_NOT_RECLASSIFIED",
+  "actualPriorQualification": "NOT_RERUN_NOT_ACCEPTED",
+  "beta": "HELD",
+  "capsSeedsEpochsOracles": "UNCHANGED",
+  "code": [
+    {
+      "bytes": 88954,
+      "role": "normalize_prior.py",
+      "sha256": "0b20db99ea0cd1efaf9780e40447dc329cc54be29ffea88e1b4b352882b27900"
+    },
+    {
+      "bytes": 5993,
+      "role": "test_normalizer_qualification_stdout.py",
+      "sha256": "aea841688e752443d51498ea82f22a6b47409d74ae00cce6fa58131c026a1ea5"
+    },
+    {
+      "bytes": 3822,
+      "role": "canary_qualification_console_r1.py",
+      "sha256": "f8692631b0d955858615728aa5e6d82369316bb78ba57f5c749d2596f3ac0b8a"
+    }
+  ],
+  "electricalPopulation": "NOT_RENEWED",
+  "full30": "EXCLUDED",
+  "fullD_H1": "UNQUALIFIED",
+  "gates": [
+    {
+      "actualPriorBodiesRead": 0,
+      "calls": [
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-crlf-private-normalize_prior-r1",
+            "processElapsedMs": 371.63100000000003,
+            "receipts": {
+              "owner.json": "40f2b7dffb6c3cfbb457e63ea8ca500cb4a2986f3cacde3bd228d0a5fc463250",
+              "parent.json": "a9bc28f9ad7367478cbc5ea6604d1af8a130cbd41fbd102b723bd80de668c94c",
+              "process.json": "ce7bbe3e93720c800b692dc88169ca0a7dae4078f39b1fac38ab8ea38343f174",
+              "request.json": "01fe3aa99fe7493d6806dd493af69095c77b1a334759e71f817ac0dabd2f2c16",
+              "result.json": "2a47089eec7ab9c5471f2d69a74a2d467260254de88127e5b5f4bc4a33c91441",
+              "stderr.txt": "033ebb21b6bd5415805fa3f4fb75dea13eac26ea33b964ff0aaf66882c58fa41",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 620.273
+          },
+          "count": 13,
+          "test": "test_normalize_prior.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-crlf-private-normalizer_metadata-r1",
+            "processElapsedMs": 503.1288,
+            "receipts": {
+              "owner.json": "25ce5ba902776f773f16892f1f30375ffd50746b86b51320092e9daba6c292fd",
+              "parent.json": "53c5b48b7e0cf11971f33e8cf1d0dbb7fc35a000ff98ebf1819bb58e34f0ef4f",
+              "process.json": "23681145a2c2016a74ec91d155484440c19585027861f3c0d60719575e9ee975",
+              "request.json": "7b8a193fad3adec1bf81a0901d2ec4e75e9b27c91297f97edaebbcfdfe6637fc",
+              "result.json": "d4f2cbdbf82fdcf0dd6bac03a05a40ced52c347da501e6a379f3092258d61454",
+              "stderr.txt": "15eeca3a17415c75d0743f8b8ca8196a780547f14784e5b42de9fd6376bccf37",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 735.248
+          },
+          "count": 9,
+          "test": "test_normalizer_metadata.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-crlf-private-normalizer_authorities-r1",
+            "processElapsedMs": 370.0494,
+            "receipts": {
+              "owner.json": "6a124d072f5d66a63ba41032db301b43436600350a088fa77c41ab12a7e93d01",
+              "parent.json": "45ad5bdbe078cf8342ebada8eb5f7995d7e4737dba9d124aabb5a7d31b213ac9",
+              "process.json": "9b704c9897fdf56bff227b5f97406d86dac4b5d4ecc0f57c2ded841de196cd28",
+              "request.json": "331de1b39c07d40896ec15b83171ee3b2021eebb51eb076c156b726e70177b64",
+              "result.json": "39c07bfbc5706fc86e6e462dd994c8880aa135bb2e665ba7496f4be151d493a0",
+              "stderr.txt": "c1afa583ffe0545dce4d85d956a15f7d9b417638d9575aa4b1cfa4f94ac33163",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 609.0487
+          },
+          "count": 10,
+          "test": "test_normalizer_authorities.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-crlf-private-normalizer_pad_join-r1",
+            "processElapsedMs": 460.4698,
+            "receipts": {
+              "owner.json": "a301cd9856c18cae43c01ce780d4929505b39759a56fc65d480baa94fe3670b1",
+              "parent.json": "9d5b3e7c6d9167fa7e7854c98639ba0985ddebf16b70dd973ba8133a2d0b2f7c",
+              "process.json": "d45c09c13350d57e89c481880a373dc26ae1ac5b8ae9a2e6e2ed056bec9624eb",
+              "request.json": "804eb998ea4b5bcef991dd1fc1b4715fa243850afc9ed6bd03dab2f80aedf9cc",
+              "result.json": "9150144ccd3711af438274e69e22afe43971d0dd0382d60dc0067d441d369eb9",
+              "stderr.txt": "d80c434329c6b3cfaae25854f52ea58182b8b63449e162326f75f0f900c87f09",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 687.6255
+          },
+          "count": 9,
+          "test": "test_normalizer_pad_join.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-crlf-private-normalizer_work-r1",
+            "processElapsedMs": 555.2097,
+            "receipts": {
+              "owner.json": "064d52f698ee2cd078eb938e5b742c5e2dfd54182c62884dfe7d0cde83ff7c94",
+              "parent.json": "04f7eabd51c65a586f9bf84d7e7e92c2f0ffe01bb97ca31edf1a8ca0d3f2d25f",
+              "process.json": "38969585295474d3c7f2f6514ceb8b5eed57b1fd5fff701da428893039d870b8",
+              "request.json": "8ee20f20eecb460dd9745040969b4d05a9802278649af4be40e3990aee03c54c",
+              "result.json": "cbe433468838940b4df0e39ee2fe82580727dcce20521e8b92de87218d24a548",
+              "stderr.txt": "d4110177de1b917fa64eb9f0a8a97fb8a9b6ee781d14eae7f9da06a8a2d65d5b",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 792.1178
+          },
+          "count": 11,
+          "test": "test_normalizer_work.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-crlf-private-normalizer_semantics-r1",
+            "processElapsedMs": 664.9926,
+            "receipts": {
+              "owner.json": "25e7c5ff73a5ffd0db4250ca77f7486ebbe0703c42d072734014f3550bd97b46",
+              "parent.json": "4d725dcb0b4ce6d624451a7a0cbe33f234329f2c38e1f07c1ac8d5e8dac2fdf0",
+              "process.json": "9a36f30b456ca85c7d407566608df1ea3ed1d120931a206f06ad180f48a49796",
+              "request.json": "af73e7102f30202c9b0cfc098652c25feafcc44e39cc916a74ee1fa90a801ed0",
+              "result.json": "37b138fb9c5a29267c7aff7d7f762a55c746097dca2c7786901c51449ee1aabc",
+              "stderr.txt": "0466b8dee8e1bf11ba88b4923745628e1364e9d9f159909170a1d0f19aec2c9d",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 902.9211
+          },
+          "count": 4,
+          "test": "test_normalizer_semantics.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-crlf-private-normalizer_allowlist-r1",
+            "processElapsedMs": 370.2665,
+            "receipts": {
+              "owner.json": "6ef80b9d69765631a79469dd658c6ce75db5864ff44190f4151bfe5f97a5a38d",
+              "parent.json": "d50c52bf335e1ee314fefb3e9ba15e9924940535b01d1880348fb06be77b186b",
+              "process.json": "0030b5c3b61094a47c6601fe4b39d3fd1b03c849f91b5be392b46e7137937492",
+              "request.json": "2f1c623923bad0549785ae2a3dd608dd6191d00c6d3de903f0c81ed693cd227a",
+              "result.json": "c6bc56760db0a33cc3793e5559e02216d32994104d87753fc14ca81b9aa72016",
+              "stderr.txt": "6397cff971a6d66ccef443fd678dc6e35253d4ef07aeb4493129280105deb95b",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 600.75
+          },
+          "count": 5,
+          "test": "test_normalizer_allowlist.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-crlf-private-normalizer_qualification_stdout-r1",
+            "processElapsedMs": 371.8514,
+            "receipts": {
+              "owner.json": "0f9ada566def79636ab13fd6e5f5fb534a6e8e630f67e427fd3ec863273c5c36",
+              "parent.json": "d26d16cbcfc5343892ad77d70b297979973cf6143a85559970f3734467c38c52",
+              "process.json": "a1bccaf111eac5c8097284848ba9ed48e5fc90801716cae564d737348cebbd25",
+              "request.json": "cadb42f106f2c3682b51958b88d48aceec5b4c4e0a1e650d37aaad19ed00f5fa",
+              "result.json": "ce1f6ff872f05a11eaccd11f0f7c2694097a77b297c8e771d3840d5d122555b5",
+              "stderr.txt": "8ca030e8a6040d32088214d4815175ac1d9b9499bac019dd83c7fba65412f6b3",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 608.5069
+          },
+          "count": 8,
+          "test": "test_normalizer_qualification_stdout.py"
+        }
+      ],
+      "inputSha256": "d4221dd0b9ceda5d222fdc99495487caa98fac36e074c848ca25c671f16b6efb",
+      "isolatedCleanupDurationMs": null,
+      "nativeCalls": 0,
+      "normalizerSha256": "0b20db99ea0cd1efaf9780e40447dc329cc54be29ffea88e1b4b352882b27900",
+      "operationalJournalRead": false,
+      "skipped": 0,
+      "status": "PASS_FINAL_SOURCE_PURE_NORMALIZER_SUITES",
+      "tests": 69
+    },
+    {
+      "actualPriorBodiesRead": 0,
+      "calls": [
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-crlf-public-normalize_prior-r1",
+            "processElapsedMs": 371.2513,
+            "receipts": {
+              "owner.json": "aaea2a73e06dacaaaa4c736e8ec5e26bfc81b7704a0092f1f3a687ca69d6c48b",
+              "parent.json": "0bf9afc1fc6f1240eaa92b7f9156e902338d497e06d2e2cf198e647f3761c9a2",
+              "process.json": "43ff5b75e185615f69df96d8bf4c9606dfe7d8c4d839b5bed853c1f7a6fd574e",
+              "request.json": "d9c05e3badb759b3388c46bfa211510d9d8f89f19fe8677ff6f6bfd08dab6c03",
+              "result.json": "e25ceb12a5ff3550421f5c6e8b6762c19a330f88f432223d3da09a9260433845",
+              "stderr.txt": "033ebb21b6bd5415805fa3f4fb75dea13eac26ea33b964ff0aaf66882c58fa41",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 608.9127
+          },
+          "count": 13,
+          "test": "test_normalize_prior.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-crlf-public-normalizer_metadata-r1",
+            "processElapsedMs": 502.0083,
+            "receipts": {
+              "owner.json": "54368846b0417f048252d5d42eae45d2cc806fe937c68c8146ae975566cb36ea",
+              "parent.json": "be7b62821738531c1c794954a74313282add4635b4149a6e138b892d2b82023e",
+              "process.json": "0b1a17900a2683e06b3625abbe1d7eef75d1e87877671714f80e4d3e23d4b1d8",
+              "request.json": "f23ab9ab130523ca86bf4932182b41124ccbb9112e972d5d617b63cedb9a9c26",
+              "result.json": "70296d779c01fdad5d0278d0391f82b2cf2b072a5b33dc382b8cde4c9bd69d7f",
+              "stderr.txt": "35c61631f0e5b60c70d875e3bc9ed2a0a0286e04b113be95354949253483297e",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 737.3247
+          },
+          "count": 9,
+          "test": "test_normalizer_metadata.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-crlf-public-normalizer_authorities-r1",
+            "processElapsedMs": 460.082,
+            "receipts": {
+              "owner.json": "7669aaceba7747146867cd719c04ef4e90ba19c4c1a9267e72c0c9a3cf8f7949",
+              "parent.json": "f4ffe01589429e303577a181ffabe84f592ff3c4dd61029ba04b976c8a5dfcd7",
+              "process.json": "e91e045487c102319adf3ecdb865715cd9b677b28ffa906265d20e152fcccd92",
+              "request.json": "323741e8070269fecb705f776393b6bc25d6867eaef0371d4f2c401835515a40",
+              "result.json": "afb413443efc82d2b437b4666f0a8367d89d587548536d1cefe18999a3232eaf",
+              "stderr.txt": "c1afa583ffe0545dce4d85d956a15f7d9b417638d9575aa4b1cfa4f94ac33163",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 700.8732
+          },
+          "count": 10,
+          "test": "test_normalizer_authorities.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-crlf-public-normalizer_pad_join-r1",
+            "processElapsedMs": 377.7751,
+            "receipts": {
+              "owner.json": "149ec621fe6b54b44f4ac1f10352dc24cccaf51749edd4f7798ede23e1c12458",
+              "parent.json": "dc714622bbece13c80d2301fc379281b3052ecbfb076774c8c601f3f7006849b",
+              "process.json": "e1a7d7965b56bff1b8e92d01c27099fa2a8bd0bf09e7469ca6bd4ff7e78116b0",
+              "request.json": "b3f4fa152cd9bb77f4421cd54629d9daab494dfc633bead95faf88d0ee1dd1a2",
+              "result.json": "931e0b2a80aaab97edb60d4f6587cc6963d61d351d6ee9a8a231768526357966",
+              "stderr.txt": "d80c434329c6b3cfaae25854f52ea58182b8b63449e162326f75f0f900c87f09",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 610.8834
+          },
+          "count": 9,
+          "test": "test_normalizer_pad_join.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-crlf-public-normalizer_work-r1",
+            "processElapsedMs": 365.9436,
+            "receipts": {
+              "owner.json": "e273677378923190229dac05c7799548313953397baba73aea5567e0258e01e8",
+              "parent.json": "268953ca138ff441e5087529f0ef4d1efc9985937c090ad0fdcd88957350a162",
+              "process.json": "4aa4b5969e2a8a04f82772bb62161e8c8ef98acc60815ecdc4bf4e3686b7964e",
+              "request.json": "d8106a8acc1b2a1c461edb9eb3fa68714432901dfc579393389fa01707f8237c",
+              "result.json": "8bc374b2b0fe65457d1036a46286adf11d08d05f2d1c1ae767199e577cd8410e",
+              "stderr.txt": "d4110177de1b917fa64eb9f0a8a97fb8a9b6ee781d14eae7f9da06a8a2d65d5b",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 593.4337
+          },
+          "count": 11,
+          "test": "test_normalizer_work.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-crlf-public-normalizer_semantics-r1",
+            "processElapsedMs": 484.7927,
+            "receipts": {
+              "owner.json": "9d6e3f2c25bfabc7e0c52c14df29b9286e7528d2164209896b6f3c9fc923d66c",
+              "parent.json": "5befc94cf76b417b7a86d3850125ddef6e8d7b0c500568bb317aba16202b4b72",
+              "process.json": "8556e660e80111b860769203f789d173ea236674dccf6d0dc37cece3f8e93dde",
+              "request.json": "d45cd4831e92161c31c9418a38b6176cbdaa0ab456e121e02ba47388e78b6938",
+              "result.json": "4bf22ad69c7d9c052399c63e22838d92cc64c501b7cb5ea9a45588f702e672f3",
+              "stderr.txt": "0466b8dee8e1bf11ba88b4923745628e1364e9d9f159909170a1d0f19aec2c9d",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 719.7559
+          },
+          "count": 4,
+          "test": "test_normalizer_semantics.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-crlf-public-normalizer_allowlist-r1",
+            "processElapsedMs": 367.6829,
+            "receipts": {
+              "owner.json": "b3de3412ea1167baff31fe9e4d0f2a032002c4a0293fc06a52c365ed7e80222e",
+              "parent.json": "94e5ac2d84f9e78baef72e12582b61032451ecaf4dc3e7f119bdfa4c7221cdeb",
+              "process.json": "5a0c368406512851a5e4dd81c362c351799f7fb8111f14a9ead0a5f10ce84158",
+              "request.json": "ab41968be26b9c0540a74743008296f8d9b96186ed6440f8a3f56b2f455cf1f0",
+              "result.json": "8a5e62696e71a0f53be55b9e5465cfc3fbc4ef921b5d22d5ce680bf2fbf4ba51",
+              "stderr.txt": "6397cff971a6d66ccef443fd678dc6e35253d4ef07aeb4493129280105deb95b",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 596.44
+          },
+          "count": 5,
+          "test": "test_normalizer_allowlist.py"
+        },
+        {
+          "call": {
+            "childExitCode": 0,
+            "isolatedCleanupDurationMs": null,
+            "ownedRootAndLogsAbsent": true,
+            "phase": "normalizer-crlf-public-normalizer_qualification_stdout-r1",
+            "processElapsedMs": 378.3517,
+            "receipts": {
+              "owner.json": "80e7f7357ed689ea474e08b63db35153d3ba8bc0f5f892173ad2cff4f8271b54",
+              "parent.json": "9f2ce251686af3a1e24ebc6f4426cfc5afe5963be96217d37d18e2f88e1d0028",
+              "process.json": "7c98b3e3d3cb9ec0bc9b998f401ac388092a149fd844aeac761bfb5125bfbe36",
+              "request.json": "33760154359789f6aa110627bb31baa15e14fb922fc4206de678123931770ec5",
+              "result.json": "050a93422e0a1db7cc9042da6fe31863aa3814bd164aa7713a94655250e232eb",
+              "stderr.txt": "8ca030e8a6040d32088214d4815175ac1d9b9499bac019dd83c7fba65412f6b3",
+              "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "status": "PASS",
+            "terminationProven": true,
+            "wrapperTotalElapsedMs": 622.5224000000001
+          },
+          "count": 8,
+          "test": "test_normalizer_qualification_stdout.py"
+        }
+      ],
+      "inputSha256": "d4221dd0b9ceda5d222fdc99495487caa98fac36e074c848ca25c671f16b6efb",
+      "isolatedCleanupDurationMs": null,
+      "nativeCalls": 0,
+      "normalizerSha256": "0b20db99ea0cd1efaf9780e40447dc329cc54be29ffea88e1b4b352882b27900",
+      "operationalJournalRead": false,
+      "skipped": 0,
+      "status": "PASS_FINAL_SOURCE_PURE_NORMALIZER_SUITES",
+      "tests": 69
+    },
+    {
+      "actualFullPriorQualification": "NOT_RERUN",
+      "call": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "normalizer-crlf-authorized-console-r1",
+        "processElapsedMs": 366.46520000000004,
+        "receipts": {
+          "owner.json": "407b013da40408e5ffd54ee58fef6c70683e98aeade693bdc990d652766cd2b6",
+          "parent.json": "0d7628cd5eb577738def25073dbf2cd522f6cf5c6c5c6f6fe03f9c771bf04c1b",
+          "process.json": "6677c91430d3f630e27450e991a10f6a58f270dd05ed117b7ac468ba11986839",
+          "request.json": "8e7aba6ba3a4350029c8f92e57c8ee158970ab4eca8919408b5f04aaccdb670b",
+          "result.json": "5880b5d28968275d0fa47cac89abe02510be57055c033e4ca05407b55dcf9d7b",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "b074a646352b88f954687ee48b04656191f5c21092bee36b2e1ea62ec686f69a"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 613.817
+      },
+      "inputSha256": "ef604feda7ef034fe3ad99c70132d9025533753995a5310b027ba26cf62130a3",
+      "nativeCalls": 0,
+      "originalFailureRoot": "PRESERVED",
+      "status": "PASS_AUTHORIZED_CONSOLE_BOUNDARY_ONLY",
+      "summary": {
+        "actualPriorAcceptance": "NOT_ESTABLISHED",
+        "bytes": 812,
+        "exactKeys": 19,
+        "exactValues": true,
+        "malformedFramingRejections": 4,
+        "nativeCalls": 0,
+        "roleBodyNamesRead": [
+          "D_PRIOR_QUALIFICATION_STDOUT_TXT"
+        ],
+        "sha256": "a08ca3ccfd3390d39ec37314a86f42f1a1b33c1b6d8104e417447e95f47d1d52",
+        "status": "PASS_AUTHORIZED_CONSOLE_BOUNDARY_ONLY",
+        "terminator": "CRLF"
+      }
+    }
+  ],
+  "genuineEnvelope": "UNSPENT_GATED",
+  "gwtPlayer": "NOT_APPLICABLE",
+  "hardPsychotic": "UNAVAILABLE_UNRUN",
+  "historicalProtectedUnread": "UNCERTIFIED",
+  "independentSourceReview": "NO_BLOCKER_TO_ONE_CALLSITE_REUSE; E872_HELPERS_AND_VALIDATOR_REVIEWED; ROOT_EXACT_AST_INTEGRATION_CHECK",
+  "isolatedCleanupDurationMs": null,
+  "nativeCalls": 0,
+  "normalizerSha256": "0b20db99ea0cd1efaf9780e40447dc329cc54be29ffea88e1b4b352882b27900",
+  "oldDDescriptorResultGeneratedInput": "NOT_READ",
+  "playable100": 0,
+  "privateTests": 69,
+  "protectedHeldout": "NOT_READ_IN_THIS_CORRECTION",
+  "publicTests": 69,
+  "regressionAgainstPredecessor": {
+    "actualPredecessorTestStatus": "FAIL_EXPECTED",
+    "actualPriorBodiesRead": 0,
+    "call": {
+      "childExitCode": 1,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "normalizer-crlf-predecessor-regression-r1",
+      "processElapsedMs": 386.06190000000004,
+      "receipts": {
+        "owner.json": "12536a8dc880ae5fc0fe09110ed3bcef48536b7feed12b8124f41ab10c9e9315",
+        "parent.json": "33e7168b47e0ef3529e4a32420307f6c305f3fa10a99c9842eb9810f96d74134",
+        "process.json": "df8829081270704434dd04ab7098d35e9d92ce14fea19f2829fd7e7bccca3a24",
+        "request.json": "a02507fa1c6556d8fc07081ff173d077a581672b70ae60e81a93281682edd132",
+        "result.json": "263d51f81bf28e17bb15aff84acdd6495a7ff4804ff9a6c641aa807d5f5854a0",
+        "stderr.txt": "c88f0710bc71196bcff30c9ca68223a42ab4f1448357ba160828b554ae41bf12",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 624.3547
+    },
+    "fixtureDisposition": "PRESERVED_SYNTHETIC_SOURCE_ONLY",
+    "nativeCalls": 0,
+    "newTestSha256": "aea841688e752443d51498ea82f22a6b47409d74ae00cce6fa58131c026a1ea5",
+    "predecessorSha256": "e8725dff3be9a1d8cf136c7ac89778ffcb0aefd54e809538caad8dcf7143aaa8",
+    "status": "PASS_REGRESSION_DETECTS_PREDECESSOR_CRLF_FAILURE"
+  },
+  "skipped": 0,
+  "sourceAudit": {
+    "actualPriorAcceptance": "NOT_ESTABLISHED",
+    "allOtherModuleAstNodes": "UNCHANGED",
+    "beforeSha256": "e8725dff3be9a1d8cf136c7ac89778ffcb0aefd54e809538caad8dcf7143aaa8",
+    "byteSizeLimit": 812,
+    "change": "REUSE_EXISTING_CONSOLE_JSON_ADAPTER",
+    "changedFunction": "_validate_qualification_summary",
+    "consoleLimit": 1024,
+    "jsonlPolicy": "UNCHANGED",
+    "nativeCalls": 0,
+    "normalizerSha256": "0b20db99ea0cd1efaf9780e40447dc329cc54be29ffea88e1b4b352882b27900",
+    "schemaHashesTypesValuesTimingWorkCleanupOracles": "UNCHANGED",
+    "status": "PASS_EXACT_SINGLE_CALLSITE_AST_CHANGE"
+  },
+  "status": "PASS_QUALIFICATION_CONSOLE_PARSER_CORRECTION_ONLY"
+}

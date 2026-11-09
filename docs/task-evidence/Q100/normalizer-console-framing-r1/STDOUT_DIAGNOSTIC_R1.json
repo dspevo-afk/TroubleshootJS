@@ -1,0 +1,42 @@
+{
+  "bytes": 812,
+  "crCount": 1,
+  "endsCrLf": true,
+  "endsLf": true,
+  "firstBytesAscii": "b'{\"schema\":\"tsj-failure-cohort-reader-v1\",\"status'",
+  "genuineEnvelope": "UNSPENT_GATED",
+  "json": {
+    "keys": [
+      "controlDisposition",
+      "controlLayoutConnectivity",
+      "controlTraversedCount",
+      "feasibilityClaimed",
+      "layoutQualification",
+      "manifestSha256",
+      "netCount",
+      "operation1Sha256",
+      "playable100Accepted",
+      "productionAdopted",
+      "readerSha256",
+      "resultSha256",
+      "routingTreatmentSelected",
+      "schema",
+      "status",
+      "trialDisposition",
+      "trialLayoutConnectivity",
+      "trialOutcomeDisposition",
+      "trialTraversedCount"
+    ],
+    "rootType": "dict",
+    "status": "ONE_JSON_DOCUMENT"
+  },
+  "lastBytesAscii": "b'ityClaimed\":false,\"playable100Accepted\":false}\\r\\n'",
+  "lfCount": 1,
+  "nativeProducerCalls": 0,
+  "oldDDescriptorResultGeneratedInput": "NOT_READ",
+  "protectedHeldout": "NOT_READ",
+  "role": "D_PRIOR_QUALIFICATION_STDOUT_TXT",
+  "sha256": "a08ca3ccfd3390d39ec37314a86f42f1a1b33c1b6d8104e417447e95f47d1d52",
+  "startsUtf8Bom": false,
+  "status": "DIAGNOSTIC_AUTHORIZED_NORMAL_ROLE_ONLY"
+}

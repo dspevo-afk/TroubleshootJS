@@ -1218,6 +1218,18 @@ playable100=0/betaHELD. Implementation `5c745c3ff78cc16e19220b6c4a46ce541bdb58ad
 origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
 `1a1be9cc9ce25583` sent once. Publication is recorded in the packet/current checkpoint.
 
+The [qualification console framing correction](task-evidence/Q100/normalizer-console-framing-r1/README.md)
+is locally accepted for one parser call and caller SOURCE/proof pin migration.
+The first actual fixed20 read followed its durable normal-only journal and failed
+on pinned CRLF stdout; its exit2 and failed output remain preserved. Actual prior
+acceptance is FAIL, not renewed by the correction. Fresh69 private/69 public
+normalizer tests, predecessor regression detection, actual authenticated console
+boundary,19 caller tests and25 closed CLI controls pass. All hash/schema/value/
+work/cleanup oracles and strict JSONL stay unchanged. Next fresh output/config/
+SOURCE manifest/journal before deliberate actual qualification; genuine envelope
+unspent/gated. No native session, playable100 or beta acceptance. Full30EXCLUDED;
+HARD/PSYCHOTIC unavailable/unrun; historical unreadUNCERTIFIED. Publication pending.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion
