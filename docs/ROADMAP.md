@@ -1273,6 +1273,20 @@ and Full30/HARD/protected-data exclusions remain. Implementation `3741a194c743a5
 normally pushed to origin/codex/q100-physical-feasibility, exact remote verified;
 completion Gmail `1a1beec250e27a7e` sent once.
 
+The [current full-D V2 pure semantic kernel](task-evidence/Q100/current-full-d-kernel-r1/README.md)
+is locally accepted for Source composition and synthetic semantics. The emitted
+self-contained owner retains the pinned N/P07/Observation oracles, independent
+context/runtime authority, strict typed joins and mandatory group/PAD/export
+reconciliation. Final repository-copy36 tests/zero skips, repeated generation,
+fresh prior Source reproduction and an independent structural AST audit pass.
+The authored100/246/60 fixture is no playable100 or native-capture proof; derived
+demand is not Meter accounting. Three failed fixture/audit adapters remain
+preserved. No actual prior/old-D/protected DATA was read and no native producer
+ran in this Source phase. Current full-D host/native/prepayment/export/H1 gates remain
+pending before the unspent original+NULL/OBSERVE envelope. Next freeze those
+current host/native Source slices. All caps/exclusions remain, playable100=0 and
+betaHELD. Publication is pending.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

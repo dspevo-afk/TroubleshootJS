@@ -238,6 +238,18 @@ These components do not authenticate real prior records, admit a normalizer or
 enable full-D. The caller's root/phase/source authority and later reconciliation
 remain required before real data and the one genuine producer invocation.
 
+The [current full-D pure semantic owner](task-evidence/Q100/current-full-d-kernel-r1/README.md)
+composes those pinned dependencies into one self-contained generated module.
+Its adapter takes bounded in-memory current context, independent runtime identity
+and original/result/marker bytes. It owns strict typed joins, the finite two-arm
+oracle, work/cleanup and mandatory original P07 group/PAD and derived export
+reconciliation, returning a deeply immutable summary. Descriptor/module/path
+authority and legacy consumer/main dispatch are absent. Source composition and
+synthetic semantic acceptance do not supply current native host, capture,
+same-Meter, prepayment, export or lifecycle authority; those remain separate
+gates before the unspent genuine envelope. The adapter template is a generation
+input, while the emitted module is the runtime owner.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

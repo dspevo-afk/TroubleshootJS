@@ -1,4 +1,100 @@
-# Current checkpoint: actual normal prior/factory published; current full-D kernel next
+# Current checkpoint: full-D pure semantic component accepted; publication pending
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 parentHEAD3c9ff84117c24aa3ee080225e6833e6574594243,
+normal origin/codex/q100-physical-feasibility exactremotechecked; no upstream.
+Intended F changes: current-full-d-kernel-r1 Source/evidence +ARCH/roadmap/report.
+Main5f05b005 preserves9tracked/6untracked; E d9747229 reportM; Desktope0c36885
+preserves7tracked/89untracked. Actualprior/factory3741a194 published,
+Gmail1a1beec250e27a7e SENT_ONCE. Prior mails preserved; no duplicate email.
+Currentcomponent commit/push/Gmail PENDING, never infer publication from localPASS.
+
+K OS-temp/tsj-q100-current-full-d-kernel-7af449ffadde4dfa88f52e91576c3a90 retains
+Source16snapshots/contracts, root receipts, earlierfailures and exactemission.
+Pure emitted207814B SHA8e8c374a089a13c4defea9c4b5b548eb1bc1242cddabc1faf468dba420695af4;
+provenance22642B SHAc241bc75103425d7d75851c2a109853f1d2019e6a9b14395259415d130a36b30.
+Adapter99420852/genf5c65e91/fulltestda6bdc48/builder4f80ec97/P07testda92cda5.
+Fresh selectedPython-I-B prior N84c8/P07a314 extraction reproducesF87+215ad.
+Selfcontained ASTcomposition replaces source.* imports; namespace inverseproof
+normalizes implicitimport aliases and materializednamespaced __doc__ bindings.
+Independent rootstructuralaudit +realshadowing/runtimefixtures supplement it;
+not a generallexicalproof. Source-only independentreview final994 found noblocker.
+Rootreviewed integratedSource/callers/evidence; no legacywholeconsumer/mainexec.
+
+Finalprivate/public componentgates PASS:36unittestmethods(10P07/19generation/
+7fullsemantic),0skip. Completeindependent100component/246PAD/60net/2groupfixture
+runs realN/P07/Observation and mandatory group/PAD/export on publicAPI. Exact
+D_COIL_LOW:BRANCH_SEARCH_LIMIT419905/43 preserved. StrictBool/Longjoins, bounded
+context-beforewalk,656marker-beforedecode, UUID/string guards andimmutableoutput.
+Publicop/wrapperms: P07420.6577/669.7062, generation2828.9511/3059.1305,
+semantic1877.1531/2111.1418, inverse711.5469/944.0274. Source derivation
+2736.3470/2979.7650; priorSource771.3627/1017.7531. Selectedreturnedchildren
+terminated/ownedrootslogsabsent; isolatedcleanupdurationnull; no persistentprocess
+orlink. RetainSource/evidence and alluncertainoldresources; no broadcleanup.
+
+Threeactualfailedgates preserved: authoredP07R1twofixturelength assertions,
+rootinverseR1implicit __doc__ inventory andR2doc-bindingnormalization. Corrected
+onlyfixtures/auditexpectations, nooracle/budgetrelaxation. Earlierpassingderivation
+keeps its attime NOT_RUN runtime label; completedfinalreceipts establishcomponent.
+Actualnormal20 remainREAD under earlier AB/R5journals; noactualprior/oldD/protected/
+heldoutDATA/journalread inK. FixedPADhash token isnotcomputedsyntheticprovenance.
+Factory271logicalentries/4000assertions remain prioracceptedNOTMetercharge.
+
+FullDhost/native/H1/prepayment/export/lifecycle NOTRUN/UNQUALIFIED; nativeproducer/
+Session/original/routing0 inK. Genuineoriginal+exactlyNULL/OBSERVE UNSPENT/GATED.
+Allcaps/seeds/epochs/oracles/CircuitJStruth unchanged. Full30EXCLUDED/HARD-PSYCHOTIC
+unavailable-unrun/protectedheldout denied/historicalprotectedunreadUNCERTIFIED/
+playable100=0/betaHELD. GWT/Player N/A; electrical/population NOTRENEWED.
+Next finishdiff/index/privacychecks, normalcommit/push/exactremoteverify and one
+completionGmail; then freeze next currenthost/native flatwork/finalizer/export
+Source slices. Preserve Main/Desktop/E work and previousfailures.
+
+# Historical checkpoint: current full-D semantic kernel SOURCE mapping started
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD3c9ff84117c24aa3ee080225e6833e6574594243,
+normallypushed/exactremoteverified origin/codex/q100-physical-feasibility; noupstream.
+Actualprior/factory implementation3741a194c743a556051d74b93fe6ffc6214f2174,
+Gmail1a1beec250e27a7e SENT_ONCE; receipt no secondmail. Earlier emailsframing
+1a1beb3670d80f14,marker1a1bec5ca08bf005,observation1a1beddd3e162f00 sentonce.
+F clean afterreceipt/reportWIPnow. Main5f05b005 preserves9tracked/6untracked;
+E d9747229 reportM; Desktop e0c36885 preserves7tracked/89untracked files.
+
+Actualnormal20/final5closure and JDK8DATAfactory remainaccepted, proof9c710742f77b3a827098fee80c067dc40ad39416ab865dd22229237be6512456.
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f holds
+R5config6971330d/SOURCE5b68c809/roots005c4ef2/journaldfbc35f0 at05:55:13Z and
+qualifiedoutput exactpaths FRESH_OBSERVATION_PHASE_RECEIPT_PRIVATE_R1.json.
+Context4fbdc821/projection203b5ece/JavaDATAaa99fc9f remainprivate/sealed;
+271logicalentries/4000factoryassertions NOTnativeMeterwork. Javafactoryprocesses2,
+nativeproducer/Session/original/routing0. Prior3failedroots/authority/receipts
+preserved. Allacceptedchildrenreturned/ownedprocessroots+logsabsent; cleanupnull.
+
+New K OS-temp/tsj-q100-current-full-d-kernel-7af449ffadde4dfa88f52e91576c3a90.
+Root PLAN_R1.md frozen; SOURCE_INPUT_R1.json SHAdc1598e5b8cc269dbd27a40dcabfb6586f8eae54a58a971aa2ca593ed08f37e5
+pins13explicit SOURCE/contract snapshots inK/source, noDATA/cache/.gitcopy.
+Prior_kernelF87, observationkernel502ff2, oldfullconsumerF23a, codecC1/extractor
+andSourcefixtures/contracts. No codeexecuted/imported fromlegacyconsumer orold
+builders; noactualqualifiedDATA/journalread inKphase. Root froze operativeScope.
+Worker pure_prior_extraction_z1 ownsONLY K/DEPENDENCY_MAP_R1.md, SOURCE-only
+mapping exactpureclosure/currentcontext-runtime API/adapters/provenance/fixtures;
+leaf(noexec/Data/journal/spawn/stage/push/mail). Root reviews beforeassigning
+kernel/testimplementation. Currenthost/nativeSource unavailable/unqualified.
+
+NormativecurrentV2 result13keys/prior12/marker14keys656maxwithin722transport;
+unchangedN/P07+Observationoracles, mandatoryoriginalPAD/group/exportreconciliation,
+finiteD_COIL_LOW419905/43/parity and allbudgets required. Oldfullconsumer I/O/
+modulepath/recursivebuilder/defaultdispatch mustnotenternewpureowner. No Source
+kernelimplementation ornewgates yet; mappingPENDING. Next Rootreviewdependency
+map, definecoherentAPI/ownership thenimplement/source-syntheticqualify kernel.
+Do notrunexistingfullconsumermain or anygenuineproducer.
+
+Genuine original+exactly NULL/OBSERVE UNSPENT/GATED; fullD/H1unqualified/playable100=0/
+betaHELD. Normal20 READ underjournals; oldDdescriptor/result/generatedinputDATA/
+oldbuilders/CLIs/manifestfollowing/protectedheldout denied. Full30EXCLUDED,
+HARD-PSYCHOTIC unavailable-unrun/historicalprotected unreadUNCERTIFIED. Caps/seeds/
+epochs/oracles/CircuitJS truth unchanged. GWT/PlayerN/A; electrical/population
+NOTRENEWED. Preserve unrelatedwork/failures/history/uncertainresources;
+no newpersistentprocess/link. Standingroadmapcontinues without routinepermission.
+
+# Historical checkpoint: actual normal prior/factory published; current full-D kernel next
 
 UTC2026-11-09. F codex/q100-terminal-only-20261107 implementation3741a194c743a556051d74b93fe6ffc6214f2174,
 normally pushed/exactremoteverified origin/codex/q100-physical-feasibility;
