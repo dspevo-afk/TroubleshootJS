@@ -1,7 +1,8 @@
 # Complete native marker reconciliation
 
-Locally accepted for the pure marker adapter and caller pin migration only;
-publication pending. Complete prior qualification remains FAIL from two preserved
+Accepted and published as `e5aac4896820a69ca4651c91efcbeab7ffe93086` for the pure marker adapter and caller
+pin migration only. Exact remote verified; Gmail `1a1bec5ca08bf005` SENT_ONCE.
+[Publication](PUBLICATION_R1.md). Complete prior qualification remains FAIL from two preserved
 attempts. Native producer/session calls0; genuine original+NULL/OBSERVE unspent.
 
 The second deliberate fixed20 normal-only qualifier followed its fresh exclusive

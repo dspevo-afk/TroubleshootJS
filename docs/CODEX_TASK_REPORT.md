@@ -1,4 +1,36 @@
-# Current checkpoint: full marker component accepted; publication next
+# Current checkpoint: complete marker component published; fresh qualifier next
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 implementatione5aac4896820a69ca4651c91efcbeab7ffe93086,
+normally pushed/exact remote verified origin/codex/q100-physical-feasibility.
+Gmail1a1bec5ca08bf005 SENT_ONCE. Receipt no duplicate email; verify actualHEAD afterreceipt.
+Tree432317aa945e731f77f2257fa08a65ba5ce4e73f; patch88dbeadcdd2762ae1b68595c25a52b92426c15c418c2e6ed596d22d8392d3ea2; intended index/exactsource/privacy/whitespace PASS.
+F clean afterimplementation. Main5f05b005 preserves9tracked/6untracked;
+E d9747229 reportM; Desktop e0c36885 preserves7tracked/89untracked files.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+Published normA612/test87556/caller093d/canary9933; reader863/observer478 unchanged.
+Normproof9b2a2e, callerproofc0f90a.79private79public/0skip;420pure-reference
+comparisons; actual authorizedNstdout/Nresult marker-component checks; real -O
+rejection;19caller+25closedCLI(4positive21reject) PASS. Sourcefinding fixed and
+independentlyrechecked; downstream SOURCE interfaces noadditionalblocker, no
+direct_build_context integrationtest. Verifiedsyntheticroot/junction removed;
+all selectedchildren terminate/ownedroots+logsabsent; cleanupdurationnull.
+
+Complete actualprior remains FAIL fromtwo attempts; no context/projection/Java.
+R2c8e/e5ea/da97 firstSTDOUT_FRAMING and R3dcaf/d91a/0acf secondNATIVE_MARKER_KEYS
+failedoutputs/configs/manifests/journals/rawreceipts allpreserved. No fullretry
+aftermarkerSourcechange. Normalfixed20 DATA READ underdurablejournals; protected/
+heldout and oldDdescriptor/result/generatedinput DATA denied. Next fresh empty
+output/config/SOURCEmanifest/new normal-onlyjournal before deliberate fixed20
+qualifier. No automatic rerun or failedrootreuse. Currenthost/nativeassembly
+follows prioracceptance. Nativeproducer/session0; genuine original+exactly NULL/
+OBSERVE UNSPENT/GATED. Full30EXCLUDED/HARD-PSYCHOTIC unavailable-unrun/historical
+protected unreadUNCERTIFIED/fullD-H1unqualified/playable100=0/betaHELD.
+Caps/seeds/epochs/oracles/CircuitJS truth unchanged. GWT/PlayerN/A;
+electrical/population NOTRENEWED. No newpersistentprocess/link; uncertainresources,
+failures/history/unrelatedwork preserved. Console Gmail1a1beb3670d80f14 sentonce.
+
+# Historical checkpoint: full marker component accepted; publication next
 
 UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD0ace1dfb549f0c70a3baa5666125d17987b483f7.
 Origin dspevo-afk/TroubleshootJS; no upstream; normal targetcodex/q100-physical-feasibility.

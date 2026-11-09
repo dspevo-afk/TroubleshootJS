@@ -1242,7 +1242,9 @@ optimization finding is fixed and real negative tested. Complete prior acceptanc
 remains FAIL; genuine envelope unspent/gated. Next fresh normal authority before
 deliberate qualification, then current host/native assembly. Caps/oracles and
 Full30EXCLUDED/HARD-PSYCHOTIC unavailable-unrun/historical unreadUNCERTIFIED/
-playable100=0/betaHELD remain. Publication pending.
+playable100=0/betaHELD remain. Implementation `e5aac4896820a69ca4651c91efcbeab7ffe93086` normally pushed
+to origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
+`1a1bec5ca08bf005` sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
