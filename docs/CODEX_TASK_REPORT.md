@@ -1,9 +1,10 @@
-# Current checkpoint: native V2 export validated locally
+# Current checkpoint: native V2 export published
 
-UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD87c2069b5f5fef2ad6455822d071e1fbc33e465f;
-origin/codex/q100-physical-feasibility last exactverified87c2069b/no upstream.
-Intended native-v2-export-r1 Source/evidence +ARCH/roadmap/report only; publication/
-email PENDING. Codec ccb0dea4/receipt87c2069b and Gmail1a1c017cfb3587a5 SENT_ONCE;
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEADdfe4d5dfad800d4a4c165343f488f191dcf31027;
+origin/codex/q100-physical-feasibility exactverifieddfe4d5dfad800d4a4c165343f488f191dcf31027/no upstream.
+Native-v2-export-r1 implementation dfe4d5dfad800d4a4c165343f488f191dcf31027 published;
+Gmail1a1c0532d059ed7f SENT_ONCE. Root stagedauditPASS exact21paths/pins/diffchecks.
+Receipt-only docs follow; no second email or rebuild needed. Codec ccb0dea4/receipt87c2069b and Gmail1a1c017cfb3587a5 SENT_ONCE;
 all earlier milestone emails stay sent-once. Main5f05b005 preserves9tracked/6untracked,
 E d9747229 reportM, Desktop e0c36885 preserves7tracked/89untracked; staged0 baseline.
 
@@ -51,9 +52,9 @@ Oldbrowser14116/start639294472690745890/58320, preview34180/start639294472514546
 58264 +14uncertainchildren, oldD verify-process-ebc137b2bbd5462d969a6eddf73816f7
 terminationunproven/oldDunlinkUNCERTIFIED untouched. Preserve all unrelated work.
 
-Next actualdiff/stagedbyte checks, normalcommit/push/exactremote and one Gmail,
-then current native input/setup adapter and assembly prerequisites. Continue
-standingroadmap without routine permission or duplicate completion emails.
+Next current native input/setup adapter and assembly prerequisites using the
+Source map8A12B64A. Genuine envelope stays gated. Continue standingroadmap
+without routine permission or duplicate completion emails.
 
 # Historical checkpoint: native V2 export Source integration
 

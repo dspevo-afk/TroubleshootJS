@@ -1337,7 +1337,10 @@ and post-build control failures plus the raw generator-history limit are recorde
 This grants no normal full-D/H1/assembly/host or genuine producer acceptance.
 Next is current V2 input/setup and assembly with the nine-unit boundary and owner
 hash prepayment, then host/lifecycle gates. Genuine envelope unspent/gated,
-playable100=0/beta held and all data exclusions unchanged. Publication/email pending.
+playable100=0/beta held and all data exclusions unchanged. Implementation
+`dfe4d5dfad800d4a4c165343f488f191dcf31027` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
+`1a1c0532d059ed7f` sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

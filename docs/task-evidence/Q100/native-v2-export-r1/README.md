@@ -1,7 +1,9 @@
 # Current native V2 export component
 
-Accepted locally for the selected synthetic transport cases below; publication
-is pending. Normal main/assembly and both generic exports remain denied. This
+Accepted for the selected synthetic transport cases below. Implementation
+`dfe4d5dfad800d4a4c165343f488f191dcf31027` is normally pushed to
+origin/codex/q100-physical-feasibility with exact remote verified. Completion
+Gmail `1a1c0532d059ed7f` was sent once; see [publication](PUBLICATION_R1.md). Normal main/assembly and both generic exports remain denied. This
 is no full-D/H1, normal host, genuine original, electrical or playable100 proof.
 
 The current private Study composes the adopted-only snapshot and flat work plan
