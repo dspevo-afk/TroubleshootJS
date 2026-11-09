@@ -1,0 +1,25 @@
+{
+  "genuineEnvelope": "UNSPENT_GATED",
+  "java": [
+    {
+      "bytes": 234150,
+      "name": "CohortTerminalTelemetryStudy.java",
+      "oldSha256": "2a6c567689a13492300b408d3e8b27b6393474f351d1ef27b85490059965d552",
+      "removedTrailingLfBytes": 1,
+      "sha256": "802d051413bdd0c5dde25bf327f29cbe18a633f82fa4d2f29d1c15996c1c1847"
+    },
+    {
+      "bytes": 14458,
+      "name": "ReceiptContentBinding.java",
+      "oldSha256": "1df7e06085165d025ff79bdd0cdaa7f603c110cc26b6cc6f280d73f52e8d2e41",
+      "removedTrailingLfBytes": 0,
+      "sha256": "1df7e06085165d025ff79bdd0cdaa7f603c110cc26b6cc6f280d73f52e8d2e41"
+    }
+  ],
+  "logicRegionReuse": "Final Java differs only by trailing LF; prior independent unchanged prefix/snapshot/sinks/token/deniedexports/flatplan suffix comparisons remain valid after explicit EOF normalization.",
+  "nativeExecution": "NOT_RUN",
+  "newSourceProofSha256": "817d7a24f86cf7ffe1fc1ec4515ca3b0d4a7675f95848f2d7faa725ff4a4e32c",
+  "oldGeneratorRaw": "UNAVAILABLE_PRE_EDIT_PRESERVATION_MESSAGE_ARRIVED_LATE",
+  "priorRegionByteAuditSha256": "8a8b2b54ac81f5ed13ad7c30d521599f3a145cf6060b0baf4ab8c077eef078d8",
+  "status": "PASS_FINAL_SOURCE_ONLY_EOF_DELTA_AND_UNCHANGED_LOGIC_REGIONS"
+}

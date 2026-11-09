@@ -1,4 +1,117 @@
-# Current checkpoint: native V2 codec published
+# Current checkpoint: native V2 export validated locally
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD87c2069b5f5fef2ad6455822d071e1fbc33e465f;
+origin/codex/q100-physical-feasibility last exactverified87c2069b/no upstream.
+Intended native-v2-export-r1 Source/evidence +ARCH/roadmap/report only; publication/
+email PENDING. Codec ccb0dea4/receipt87c2069b and Gmail1a1c017cfb3587a5 SENT_ONCE;
+all earlier milestone emails stay sent-once. Main5f05b005 preserves9tracked/6untracked,
+E d9747229 reportM, Desktop e0c36885 preserves7tracked/89untracked; staged0 baseline.
+
+T OS-temp/tsj-q100-native-v2-export-esnd5_xm retains Source, fixtures and failures.
+Final deriver389022A6/worksheet9089DF96, Study802D0514 234150B, helper1DF7E060
+14458B, codec76FB7BBC, canary11B33317 47720B, auditEE540329 Source-only no blocker.
+Three-pass V2 export uses W snapshot/flat plan, verifyBound, wrapper-group check,
+exact sibling operation/result closure and timed final receipt path/content.
+Receipt3arg authority uses existing prepaid predicate; fees5C+3/copies2R+32+M/
+chunks2C+2/+1group unchanged. Borrowed body/digest exclusively owned, no deepfreeze.
+Normal main/assembly and generic exports denied; no actual producer/Session/routing.
+
+PASS final fresh JDK8 compile859Sources ->2487classes/11935114B/allmajor51,
+5473.4536/5906.8502ms operation/wrapper. Windows smoke2cases/96assertions PASS
+440.8978/683.7362ms; native14/237 PASS720.8645/954.6106ms. Independent stdlib
+file audit PASS352.5775/591.7052ms:1547/6434B results,628/630B markers,C1/C2,
+8/13units and exact counters/digests. Native live assertions check closed/open/
+retainedgroupUnits; saved JSON omits those2 so independent auditor cannot recheck.
+Private/public reader6 each PASS; Source2repeat+3rejects, unchanged-region/EOF
+proofs and exact currentclass byte comparison PASS. All859consumedSources/frozen
+inputs/publiccopies rechecked. Children terminated/ownedrootsabsent; cleanup
+separate duration unmeasured. No newpersistentprocess/link; controlled outputs
+and both current build directories retained. Finalproof05d6ce43024dc60eb181e446023574ff8abc4ac9190b4125e4007e3b5c236192.
+
+Failures retained: source-copy wrong worksheet name; reader rooted Windows path
+before-I/O guard fixed; Root Source comparator repeated-comment anchor fixed;
+freeze extraLF removed exactly1 (no nativebuild yet then); javacR1PASS but post-
+build control wrongly denied declared ArmResult carrier. That811B SHA7d9cbb2c
+matches earlier accepted inventory metadata; corrected guard pins it and retains
+producer/V2DATA exclusions. Fresh final compile passes; all2487class bytes match.
+Pre-EOF generator/worksheet raw bytes unavailable (worker edited before preserve
+message); verified hashes/at-time gates/emittedJava/proof/freeze failure retained.
+Do not claim complete old raw Source preservation. Final current Source reviewed/
+rerun. No native suite failure. See public FAILURES/REVIEW/FINAL_GATES.
+
+Genuine original+exact NULL/OBSERVE UNSPENT_GATED. Normal fullD/H1/host/assembly/
+lifecycle unqualified; Q9-unit boundary and original-owner after-read hash charge
+still need port. Preparatory Source map8A12B64A INPUT_SETUP_SOURCE_MAP_R1.md now
+maps current4API/271entries vs290factoryoperations; no DATA or execution.
+No actualprior/oldD/protected/heldoutDATA/journal read inT; old normal20 remain
+READ historically. Full30EXCLUDED/HARD-PSYCHOTIC unavailable-unrun/protectedunread
+UNCERTIFIED/playable100=0/betaHELD. Caps/seeds/epochs/oracles/CircuitJStruth stay.
+GWT/PlayerN/A no production/visiblechange; electrical/population NOTRENEWED.
+Oldbrowser14116/start639294472690745890/58320, preview34180/start639294472514546595/
+58264 +14uncertainchildren, oldD verify-process-ebc137b2bbd5462d969a6eddf73816f7
+terminationunproven/oldDunlinkUNCERTIFIED untouched. Preserve all unrelated work.
+
+Next actualdiff/stagedbyte checks, normalcommit/push/exactremote and one Gmail,
+then current native input/setup adapter and assembly prerequisites. Continue
+standingroadmap without routine permission or duplicate completion emails.
+
+# Historical checkpoint: native V2 export Source integration
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD87c2069b5f5fef2ad6455822d071e1fbc33e465f,
+normal origin/codex/q100-physical-feasibility exactremoteverified/no upstream.
+Codec ccb0dea45e8f049cfa98edac4fb345b4f4234b49 +receipt87c2069b published,
+Gmail1a1c017cfb3587a5 SENT_ONCE. Do not duplicate any earlier milestone email.
+F clean before checkpoint; Main5f05b005 preserves9tracked/6untracked, E d9747229
+reportM, Desktop e0c36885 preserves7tracked/89untracked; all staged0.
+
+T OS-temp/tsj-q100-native-v2-export-esnd5_xm owns PLAN_R1,15 explicit Source
+snapshots/inventory and independent stdlib audit_export_files_r1.py. Root copy
+firstfailed nonexistent RECEIPT_WORKSHEET_R1.md; corrected actual Source name
+RECEIPT_WORKSHEET.md, matched existing copies/completedinventory; failurepreserved.
+Source-only workers: pure_prior_extraction_z1 derives Study+current receipt
+helper/worksheet; normal_prior_normalizer_z1 owns nativecanary/design;
+full_d_contract_checker_x1 independentSourceaudit; fixed_role_reader_y1 owns
+rootcontrolbuild/runSources. Leaves noexecution/spawn/DATA/journals/classes/
+stage/publish/mail. Root owns all acceptance/execution/publication.
+
+Current slice: port authored sibling op1/result closure and token/export to
+currentflat W adopted checkpoint, verifyBound beforefinalize, explicit wrapper
+groups, codecV2 all3passes/656marker and finalreceiptticket inside measuredexport.
+Root found sameMeter/start foreignreceiptpath gap: current emittedverifyFinal
+adds suppliedcanonicaloperationpath equality to same existingboundedauthority
+operation, no normalize/allocation/traversal/field/copy. Historicalhelperunchanged;
+prep116+10P+6B/export5C+3/copies2R+32+M/chunks2C+2/+1group unchanged. Source
+audit agrees minimalpathpredicate fitslogicalAPIpricing, candidatepending.
+Main/assemble/oldexports remain denied; no producer/nativeexport/buildrunyet.
+RootSourcegatePASS: deriverA618B3D3/worksheet392E14FC; emittedStudy2A6C5676,
+helper1DF7E060/proof9E8F2859, twoSourceCLIemissions byteidentical; wrongmanifest,
+wrongSourcebytes/nonemptyoutput rejected (expectedexit1,outputs preserved).
+All5Sourcechildren terminated/ownedrootsabsent, timings inT. Rootindependent
+region-bytecomparisonR2PASS includes Wsnapshot/flatplan/sinks/token/denials;
+R1rootcheckerrejected repeatedcommentanchor, exactsignaturefix preserved.
+EmittedSourcepeerreview no blocker, canarycoverage reviewPENDING. Driver
+Source C4984C3B/73168FC2 actualWindows lstat/fstatpositive/cap/empty controlsPASS
+viaexactASTfunctions; no drivertoplevel/build/exportexecution. Rootreader
+controlsR1FAIL Windowsrooted /outside acceptedbyis_absolute untilresolve
+missingpath; fixedrejectanypathanchor, R2sixcontrolsPASS368.9772/611.7304ms,
+exit0/terminated/ownedrootabsent. OldreaderSource+failedreceipts retained.
+CanarySourceauthoring Java7/package/retainedgroupUnits corrections and explicit
+stale/postpublicationfatalcases pending; no fixture expectation relaxed.
+Next acceptcanarySource+independentSourceaudit, freeze finalinputs, freshJDK8
+and early realselectedWindows exportsmoke thenfullcomponent/stdlibfilegates.
+
+Genuine oneoriginal+exactNULL/OBSERVE UNSPENT_GATED. Assembly/input9unitboundary/
+ownerafterreadhash/sourceprepayment/nativehost/fullD/H1/lifecycle unqualified.
+No actualprior/oldD/protected/heldoutDATA/journalread inT; priornormal20 remain
+READ under earlier acceptedjournals. Full30EXCLUDED/HARD-PSYCHOTIC unavailable-
+unrun/historicalprotectedunreadUNCERTIFIED/playable100=0/betaHELD. Allcaps,exact
+seeds/epochs/independentoracles/CircuitJStruth unchanged. GWT/PlayerN/A no
+production/visiblechange; electrical/population NOTRENEWED. No newpersistent
+process/link. Oldbrowser14116/start639294472690745890/58320, preview34180/start
+639294472514546595/58264 +14uncertainchildren, oldD verify-process-ebc137b2bbd5462d969a6eddf73816f7
+terminationunproven/oldDunlinkUNCERTIFIED untouched. Preserveallfailureevidence.
+
+# Historical checkpoint: native V2 codec publication
 
 UTC2026-11-09. F codex/q100-terminal-only-20261107 HEADccb0dea45e8f049cfa98edac4fb345b4f4234b49;
 normal origin/codex/q100-physical-feasibility exactremoteverified, no upstream.

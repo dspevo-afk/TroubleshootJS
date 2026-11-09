@@ -1,0 +1,6 @@
+{
+  "classBytes": 11935114,
+  "classCount": 2487,
+  "comparison": "Two fresh compiles of identical final Java; first driver failed only its erroneous carrier absence control. Current phase output classes only; no old-D class read.",
+  "status": "PASS_ALL_CURRENT_CANDIDATE_CLASS_BYTES_IDENTICAL"
+}

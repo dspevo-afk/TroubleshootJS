@@ -269,8 +269,8 @@ ancestor identity, preserving creation time and leaf size/modification checks.
 Metadata prepays final hash/control demand; the single-use final path performs
 no Meter access. Future export must consume it after result readback and before
 the export group closes, preserving measured time and result-only fee formulas.
-It is a separate qualification owner; current native dispatch/export and full-D
-assembly remain disabled and unqualified.
+It is a separate qualification owner. Normal native dispatch and full-D
+assembly remain disabled; the current export component is qualified below.
 
 The [current V2 canonical codec](task-evidence/Q100/native-v2-codec-r1/README.md)
 owns one fused body validation/writing traversal and direct bounded marker output.
@@ -280,6 +280,16 @@ body bytes and block admission; callbacks precede data inspections as output
 advances. Body/digest stay borrowed under exclusive caller ownership. This owner
 changes no producer, export or host dispatch and supplies no deeper semantic or
 runtime identity authority; actual file-export integration remains separate.
+
+The [current native V2 export component](task-evidence/Q100/native-v2-export-r1/README.md)
+composes the adopted-only snapshot, flat work plan, V2 codec, two-file output
+closure and same-Meter publication token. It binds work before finalization and
+checks wrapper groups. A three-argument receipt ticket binds the exact operation
+path inside the existing prepaid authority control; final content verification
+runs after result readback and before export close, inside measured time. Actual
+synthetic Windows file tests qualify selected one/two-block outputs and fatal
+post-publication checks. Exclusive body ownership, unchanged fees and caps remain;
+normal assembly, host/full-D and genuine producer authority are still separate.
 
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,

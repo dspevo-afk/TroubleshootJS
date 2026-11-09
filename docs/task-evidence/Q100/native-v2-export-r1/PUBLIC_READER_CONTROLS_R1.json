@@ -1,0 +1,25 @@
+{
+  "call": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "native-v2-export-public-reader-controls-r1",
+    "processElapsedMs": 359.5595,
+    "receipts": {
+      "owner.json": "35aeed427a536aac5ba650d2fe08b41f19bbdbdc845fb13cad7195a23da5d40a",
+      "parent.json": "ee0cef79f265bb93e8f22c6645ee3bef113eb0d6e58b4479fcf624806067abb8",
+      "process.json": "81eb3c067c08e946b6fd659e18875a79fef898c4c66d6dd0eb0242258f3f22fb",
+      "request.json": "882614e21818e5af02173acbf513c80af69bdba73c5884c144c11e1185f65b7b",
+      "result.json": "d22bfa86b57a71833508412159997f9957a597a27bddd378b7f081ff5c68fd9d",
+      "stderr.txt": "54fb151637cf9a3bba012d34dd412932c5329f2181252ff1d19747697fbd204e",
+      "stdout.txt": "c2a3960f822782f2d3cc0850999c93ecd87620300060758616427e3d367d0649"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 600.2063
+  },
+  "genuineEnvelope": "UNSPENT_GATED",
+  "nativeTests": "REUSED_AFTER_EXACT_BYTE_COPY_AUDIT_NO_CHANGED_NATIVE_INPUT",
+  "sourceCopies": "EXACT_PRIVATE_SOURCE_BYTES",
+  "status": "PASS_SIX_PUBLIC_COPY_READER_CONTROLS_ONLY"
+}

@@ -1,0 +1,75 @@
+{
+  "forbiddenDataRead": "NONE_IN_THIS_COMPONENT",
+  "genuineEnvelope": "UNSPENT_GATED",
+  "items": [
+    {
+      "cause": "Root requested nonexistent RECEIPT_WORKSHEET_R1.md; actual approved snapshot is RECEIPT_WORKSHEET.md. No subject execution.",
+      "correction": "Existing copied bytes matched parents, completed missing exact Source copy and inventory; retained same owned directory.",
+      "status": "FAIL_SOURCE_COPY_ONLY"
+    },
+    {
+      "cause": "Windows rooted /outside is not Path.is_absolute; attempted resolve outside fixture before failure. No native export or protected data read.",
+      "exitCode": 1,
+      "expectedCorrection": "Reject any relative path anchor before filesystem resolution.",
+      "operationMs": 536.0371,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "export-independent-reader-controls-r1",
+      "readerSha256": "7668d5b90b7941001a74995d7ef1149c96b72268c0581052faaf3403111aead7",
+      "status": "FAIL_ROOT_READER_CONTROLS_ONLY",
+      "terminationProven": true,
+      "wrapperMs": 780.2733
+    },
+    {
+      "cause": "Root selected a repeated generic comment as unique end anchor; assertion rejected it before proof output.",
+      "correction": "Use exact first generic export signature and exact full denied method block.",
+      "isolatedCleanupDurationMs": null,
+      "javaExecution": "NOT_RUN",
+      "observedRootExecSeconds": 0.1612759,
+      "repeatedCommentCount": 0,
+      "status": "FAIL_ROOT_SOURCE_COMPARISON_CONTROL_ONLY"
+    },
+    {
+      "cause": "Generated Study ends with extra LF despite one-final-LF contract. Assertion retained; no freeze JSON was written.",
+      "emittedBeforeFix": {
+        "CohortTerminalTelemetryStudy.java": "2a6c567689a13492300b408d3e8b27b6393474f351d1ef27b85490059965d552",
+        "NATIVE_V2_EXPORT_SOURCE_PROOF_R1.json": "9e8f2859c236a40904f68ce82d782b325776e527ba68aa6d85851eff5a5bde67",
+        "ReceiptContentBinding.java": "1df7e06085165d025ff79bdd0cdaa7f603c110cc26b6cc6f280d73f52e8d2e41"
+      },
+      "genuineEnvelope": "UNSPENT_GATED",
+      "isolatedCleanupDurationMs": null,
+      "nativeCompile": "NOT_RUN",
+      "nativeExport": "NOT_RUN",
+      "phase": "freeze_export_source_r1.py",
+      "preservedControlLocation": "history/freeze-before-eof-r1",
+      "preservedEmittedLocation": "history/emitted-before-eof-r1",
+      "releasedDeriverRaw": "UNAVAILABLE_WORKER_EDITED_BEFORE_PRESERVATION_MESSAGE",
+      "releasedDeriverSha256": "a618b3d35f9f965edb16453b30b38e0726f4bebf7b7ebd03c418a4521af1cf6c",
+      "releasedSourceLimit": "Cannot independently byte-diff previous generator/worksheet; retain their verified hashes and at-time Source gates. Compare final Java directly to retained pre-fix emitted bytes, and review current generator afresh.",
+      "releasedWorksheetSha256": "392e14fc4b293d8cc437e3c85b5b2a3508c2acb83aa427b69eb5fc8bcef49f28",
+      "rootExecSeconds": 0.2557789,
+      "status": "FAIL_FINAL_SOURCE_FORMAT_BEFORE_COMPILER"
+    },
+    {
+      "carrierBytes": 811,
+      "carrierMatchesEarlierAcceptedInventoryBytes": true,
+      "carrierName": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryStudy$ArmResult.class",
+      "carrierSha256": "7d9cbb2c16132df342829c8174eb8565e41d33efb45ae120e0f011f4f1fc6ca0",
+      "cause": "New driver incorrectly prohibited the Study ArmResult carrier class already declared in the unchanged prefix of the accepted flat Study. No carrier object was manufactured.",
+      "correction": "Permit this pinned declared carrier; retain real producer implementation and V2 DATA class exclusions. Fresh corrected-control compile follows.",
+      "genuineEnvelope": "UNSPENT_GATED",
+      "isolatedCleanupDurationMs": null,
+      "javac": "PASS_EXIT0_ACTUAL_FINAL_SOURCE_COMPILE",
+      "javacOperationMs": 4728.994,
+      "javacOwnedRootAndLogsAbsent": true,
+      "javacTerminationProven": true,
+      "javacWrapperMs": 4980.8546,
+      "nativeExport": "NOT_RUN",
+      "phase": "build_native_export_r1.py:423",
+      "priorInventorySha256": "e5f4bf35560bf3621aad030fd16c1a38cdaf11e5a88659fbd929d0f14f444c68",
+      "proofLimit": "Read earlier inventory metadata only, not earlier class bytes. New current candidate class bytes match its row exactly.",
+      "status": "FAIL_POST_COMPILER_CONTROL_NO_COMPILE_GATE_ACCEPTANCE"
+    }
+  ],
+  "rawSourceLimit": "Released pre-EOF generator and worksheet bytes were overwritten before the preservation message arrived. Their verified hashes, at-time source gates, exact emitted Java/proof, freeze control and failure records remain. Final Java is proven to differ only by one trailing LF; current generator is reviewed and rerun afresh.",
+  "status": "FAILURES_RETAINED_WITH_EXPLICIT_RAW_SOURCE_LIMIT"
+}

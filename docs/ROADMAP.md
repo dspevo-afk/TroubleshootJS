@@ -1327,6 +1327,18 @@ playable100=0/beta held, budgets/data exclusions unchanged. Implementation
 origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
 `1a1c017cfb3587a5` sent once.
 
+The [current native V2 export component](task-evidence/Q100/native-v2-export-r1/README.md)
+is locally accepted for selected synthetic Windows transport. Final859-Source
+JDK8 build produces2487 major51 classes; smoke2/96 and native14/237 pass. The
+independent byte/digest/counter audit passes C1/C2 outputs. Receipt path/content
+verification stays inside the measured export group; same-Meter fees/copies,
+stale/foreign rejection and fatal post-marker checks preserve all caps. Source
+and post-build control failures plus the raw generator-history limit are recorded.
+This grants no normal full-D/H1/assembly/host or genuine producer acceptance.
+Next is current V2 input/setup and assembly with the nine-unit boundary and owner
+hash prepayment, then host/lifecycle gates. Genuine envelope unspent/gated,
+playable100=0/beta held and all data exclusions unchanged. Publication/email pending.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion
