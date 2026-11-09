@@ -1256,7 +1256,9 @@ component canary, optimized rejection,19caller and25closedCLI pass. A fixture
 error-stage failure remains preserved. Actual full prior stillFAIL, genuine
 envelope unspent/gated. Next fresh normal authority before deliberate qualifier,
 then current host/native assembly. All recorded limits/exclusions and
-playable100=0/betaHELD remain. Publication pending.
+playable100=0/betaHELD remain. Implementation `a9e42f8be1daca170c5c2ca646d2ffabf0cd7b07` normallypushed
+to origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
+`1a1beddd3e162f00` sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

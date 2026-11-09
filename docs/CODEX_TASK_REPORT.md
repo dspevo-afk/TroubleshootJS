@@ -1,4 +1,37 @@
-# Current checkpoint: observation component accepted; publication next
+# Current checkpoint: observation correction published; fresh prior qualifier next
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 implementationa9e42f8be1daca170c5c2ca646d2ffabf0cd7b07, normal
+push/exactremoteverified origin/codex/q100-physical-feasibility; noupstream.
+Gmail1a1beddd3e162f00 SENT_ONCE; receipt no duplicate email, verify actualHEAD aftercommit.
+Tree90c6af138c2dfef797da76cc8ecbb91df53be8af, patchb08a0af88ca81f85dd8a7b8ce8f5c48d8dd917038e566029479e02aec167e7dc; intended index/exactsource/privacy/whitespace PASS.
+F clean afterimplementation. Main5f05b005 preserves9tracked/6untracked;
+E d9747229 reportM; Desktop e0c36885 preserves7tracked/89untracked files.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+Published norm9112/testccd687/callerc567/canarydac0, reader863/observer478 unchanged.
+Normproof7bb3b7467426274fc1bf1a0960129528d321fbc6218cd43a30e6690099bfdbfe;
+callerproof87a9eb9f618bf2a3b54103a3284e15ec740dfd4b99beab0def9a2406f42d1128.
+Private89(79unchanged-inputreuse+10fresh), public89fresh/0skip, actual17-role15negative
+componentcanary+optimizednegative, caller19+closedCLI25PASS. FixtureerrorstageFAIL
+preserved8aba, correctedtestccd687/source9112unchanged. Rootintegratedreview,
+independentcanarySourcechecknoblocker. Verifiedsuccessroot/junctionremoved;
+returnedchildrenterminate/ownedroots+logsabsent; cleanupdurationnull.
+
+CompleteactualpriorFAIL from3attempts, no context/projection/Java. AllR2c8e/e5ea/
+da97framing, R3dcaf/d91a/0acfmarker, R49e7e/06f1/ff99numberfailures andnonempty
+outputs/configs/SOURCEmanifests/journals/receipts preserved. Current fullsourceNOTRUN.
+Next fresh emptyoutput/config/SOURCEmanifest/journal beforeONEdeliberatefixed20
+qualifier; noautomaticretry/rootreuse. Currenthost/nativeassembly follows prior
+acceptance. Nativeproducer/session0; genuine original+exactly NULL/OBSERVE UNSPENT/
+GATED. Normal20 READ underjournals; oldDdescriptor/result/generatedinputDATA,
+oldbuilders/CLIs/manifestfollowing/protectedheldout denied. Full30EXCLUDED,
+HARD-PSYCHOTIC unavailable-unrun/historicalprotected unreadUNCERTIFIED,
+fullD-H1unqualified/playable100=0/betaHELD. Allcaps/seeds/epochs/oracles/CircuitJS
+truth unchanged. GWT/PlayerN/A; electrical/population NOTRENEWED. Preserve all
+unrelatedwork/failures/history/uncertainresources; no newpersistentprocess/link.
+Prior completion Gmail1a1beb3670d80f14/1a1bec5ca08bf005 sentonce. Standingroadmapcontinues.
+
+# Historical checkpoint: observation component accepted; publication next
 
 UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD0a54b8a04ed94e11e20fc48238088341c308ecb5,
 origin dspevo-afk/TroubleshootJS/no upstream, normal targetcodex/q100-physical-feasibility.

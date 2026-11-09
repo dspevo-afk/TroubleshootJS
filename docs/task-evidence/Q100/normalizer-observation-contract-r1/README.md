@@ -1,6 +1,7 @@
 # Pinned observation metadata reconciliation
 
-Locally accepted for the observation adapter/caller pins only; publication pending.
+Accepted and published as `a9e42f8be1daca170c5c2ca646d2ffabf0cd7b07` for the observation adapter/caller pins only.
+Exact remote verified; Gmail `1a1beddd3e162f00` SENT_ONCE. [Publication](PUBLICATION_R1.md).
 Complete prior qualification remains FAIL from three preserved attempts.
 
 The third journalled normal-only qualifier failed NORMALIZER_JSON_NONFINITE at
