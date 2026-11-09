@@ -1,0 +1,7 @@
+{
+  "genuineEnvelope": "UNSPENT_GATED",
+  "nativeRun": false,
+  "sourceSha256": "e2cf2d0e21a09c97aa56c9ffed0db384b69893496a7f9509374e9012e010e265",
+  "status": "ROOT_ACCEPTED_PURE_SOURCE_CALIBRATION_BEFORE_CANDIDATE_CODE",
+  "testModuleImported": false
+}

@@ -1,0 +1,17 @@
+{
+  "status": "ROOT_ACCEPTED_ORACLE_SOURCE_BEFORE_EXECUTION",
+  "files": [
+    {
+      "role": "export_composition_oracle.py",
+      "sha256": "9af9430a7ded954958be451be5675dd91a7c5f2bebab2f5f0ae1f737e7e86bc0"
+    },
+    {
+      "role": "verify_export_composition_r1.py",
+      "sha256": "c4c7e610e8f9ee14193a7b0ec0192df3dc9811a6392faa410d34a85715455c05"
+    },
+    {
+      "role": "test_export_composition_oracle.py",
+      "sha256": "83b41cc4518294ca5ea8d15c44a4295eb424f8e7da76ffca78a2f8f9aedc519d"
+    }
+  ]
+}

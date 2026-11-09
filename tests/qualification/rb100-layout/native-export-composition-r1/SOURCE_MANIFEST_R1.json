@@ -1,0 +1,55 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_ACTUAL_R7_EXPORT_COMPOSITION_SOURCE",
+  "files": [
+    {
+      "role": "ExportCompositionCanary.java",
+      "bytes": 30748,
+      "sha256": "931b6803fb85f0a0ce5e95498b7430278a15c995998f8d9404a8fb087fa0333f"
+    },
+    {
+      "role": "build_export_composition_r1.py",
+      "bytes": 25537,
+      "sha256": "bfbdfdbcb18d916037998e8f486d268f786a7d16f0c1563d7b65acfcf14b2692"
+    },
+    {
+      "role": "run_export_composition_r1.py",
+      "bytes": 44284,
+      "sha256": "c7514ea198a9f569302bea77093a3dcd1ab36e9775ca77ee3824b39180fc9610"
+    },
+    {
+      "role": "export_composition_oracle.py",
+      "bytes": 22406,
+      "sha256": "9af9430a7ded954958be451be5675dd91a7c5f2bebab2f5f0ae1f737e7e86bc0"
+    },
+    {
+      "role": "verify_export_composition_r1.py",
+      "bytes": 8291,
+      "sha256": "c4c7e610e8f9ee14193a7b0ec0192df3dc9811a6392faa410d34a85715455c05"
+    },
+    {
+      "role": "test_export_composition_oracle.py",
+      "bytes": 14940,
+      "sha256": "83b41cc4518294ca5ea8d15c44a4295eb424f8e7da76ffca78a2f8f9aedc519d"
+    },
+    {
+      "role": "derive_export_fixture_r1.py",
+      "bytes": 9968,
+      "sha256": "e2cf2d0e21a09c97aa56c9ffed0db384b69893496a7f9509374e9012e010e265"
+    },
+    {
+      "role": "root_protocol_gates_r1.py",
+      "bytes": 3943,
+      "sha256": "49d4440b8b0e75dd18fbc8720c9c429dcf1c169f9201a2c06d7b8f371490cfee"
+    },
+    {
+      "role": "root_native_oracle_gate_r1.py",
+      "bytes": 3833,
+      "sha256": "e9e1197a0a5a851ef91b56ca9c35f6bb087d52637a139645fc07e47408ebc71d"
+    },
+    {
+      "role": "ROOT_ORACLE_SOURCE_R1.json",
+      "bytes": 514,
+      "sha256": "863f1c6931d52da52a36547a053fdd25524e5e9fcfe027d32e58bed3e96b11eb"
+    }
+  ]
+}

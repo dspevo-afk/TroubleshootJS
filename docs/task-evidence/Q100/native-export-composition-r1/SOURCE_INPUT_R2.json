@@ -1,0 +1,42 @@
+{
+  "status": "PINNED_SOURCE_ONLY_NO_DATA",
+  "scope": "SYNTHETIC_CURRENT_EXPORT_COMPOSITION_SOURCE_REFERENCES",
+  "base": "2ab3e1cf60b24c5ee12459ff39ca2b3c0e0d8182",
+  "rows": [
+    {
+      "sha256": "de21e233e27f93c8183101a89ed6fdb9a00812d69e1fe38cc47c3f3e573b3eb8",
+      "bytes": 23259,
+      "name": "context_codec.py"
+    },
+    {
+      "sha256": "2a9479e97393273341eb44b71aa6870cb9c0661c87e8985e2bd4c83c193f7f36",
+      "bytes": 13235,
+      "name": "test_context_codec.py"
+    },
+    {
+      "sha256": "add5fcdac0564f0be639e4ea34c88200c9e93c2b9d3c74b26bd991c336870cf8",
+      "bytes": 5267,
+      "name": "derive_synthetic_fixture_r1.py"
+    },
+    {
+      "sha256": "1a1305cf515e7028116a58a369296ac0644dc52ffc2da39801dc4c47845bc981",
+      "bytes": 24634,
+      "name": "build_composed_metadata_r1.py"
+    },
+    {
+      "sha256": "b228378cf0d938f83adf81b65c3784abd32838a9c7350d50a4839412370545ab",
+      "bytes": 43758,
+      "name": "run_composed_metadata_r1.py"
+    },
+    {
+      "sha256": "88157e37571a2bc8147a152b1f69841967c53a70a4248a9ad20356cc38ee497e",
+      "bytes": 3843,
+      "name": "root_protocol_gates_r1.py"
+    },
+    {
+      "sha256": "7bf4ab57198ff9444381ec5d677c1a2bc309bfa3e7f01b188c631ffe5f2b966c",
+      "bytes": 172568,
+      "name": "NATIVE_PRIVATE_PCB.java"
+    }
+  ]
+}

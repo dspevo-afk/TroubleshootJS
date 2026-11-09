@@ -1437,6 +1437,21 @@ was normally pushed to origin/codex/q100-physical-feasibility and verified remot
 completion Gmail1a1c1a69ec7a7ba8 sent once (Sent confirmed after lost transport
 acknowledgement). This documentation receipt sends no second email.
 
+The [actual R7 export composition](task-evidence/Q100/native-export-composition-r1/README.md)
+is locally accepted for one complete synthetic export and one same-size/restored-
+mtime receipt-tampering failure. Actual setup/constructor/metadata/unfinalized R7/
+unused ticket feed the existing exporter on one Meter, with no helper/production
+change. Independent literal result/34-work/14-marker byte and ledger expectations
+pass on real clock facts. Final863-Source JDK8/2486 major51 classes,13 public oracle
+tests, two actual native cases and their private/public independent readers, ten
+selected Python reader controls and three main protocol rejections pass. The
+failure produces no marker or fabricated close; cleanup and stdout restoration
+are proven separately. Generic children and synthetic prior credit grant no
+semantic/full-D/original/normal-host authority. Next is semantic current-result
+child construction, then full-D/normal assembly/actual host/lifecycle gates.
+All caps/seeds/epochs/oracles remain; genuine original,NULL,OBSERVE unspent/gated,
+playable100=0/beta held and protected data exclusions unchanged. Publication pending.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

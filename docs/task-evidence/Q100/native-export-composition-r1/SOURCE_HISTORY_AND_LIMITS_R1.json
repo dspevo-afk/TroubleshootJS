@@ -1,0 +1,71 @@
+{
+  "status": "FINAL_GATES_PASS_NO_UNEXPECTED_EXECUTED_SOURCE_OR_NATIVE_FAILURE",
+  "preExecutionCorrections": [
+    {
+      "item": "result harness read",
+      "oldSha256": "50d39cced644d35c334be4d70b26c205ba29add159c70174f611a50b165ab630",
+      "oldBytes": 29796,
+      "rawRetained": true,
+      "change": "Size-check/readAllBytes replaced by bounded READ/NOFOLLOW stream with at most one excess byte",
+      "oldCodeCompiledOrExecuted": false
+    },
+    {
+      "item": "canary design note",
+      "oldSha256": "778d2951eae9a14ffd7e1f725c3b3c11a3a0689de06b756e6670cc4b8d0c84dd",
+      "oldBytes": 2383,
+      "rawRetained": false,
+      "uncompiled": true,
+      "historyClaim": "HASH_AND_SIZE_ONLY"
+    },
+    {
+      "item": "oracle Source loader",
+      "oldSourcePins": {
+        "export_composition_oracle.py": "bd8c4bd3b5cba4114f2a9d942fee541cfc305fee3845aa46203788af4f2f3d0b",
+        "verify_export_composition_r1.py": "17e1b732bf1e40c944a0886b699a7d3e582223b15e55cd8d3b6410690c0c431a",
+        "test_export_composition_oracle.py": "83199656d5d88879e70f61ac4e8093fedaedb8e7c85b3cd9b7aa8e9cc1bc4247",
+        "ORACLE_DESIGN_R1.md": "5e8b48122c91a4e1ebbb89ffbc5ba8416761b2b028b94dcdc67ffcd3d86e088d"
+      },
+      "allListedRawRetained": true,
+      "change": "Execute exact authenticated raw bytes; bypass source reread and candidate pycache",
+      "oldLoaderExecuted": false
+    },
+    {
+      "item": "unreleased pure oracle draft",
+      "change": "Require positive cutoff and two-group P profile; remove fixture-inclusive operation cap",
+      "draftReleasedOrExecuted": false,
+      "completeRawDraftHistoryClaimed": false
+    }
+  ],
+  "timingClarification": "Operation includes stdout restoration; cleanup separately captures facts/bounded read/identity/removal",
+  "publicUncompiledNoteFormatting": [],
+  "expectedReaderExit2": "EXPECTED_REJECTION_NOT_NATIVE_PRODUCER_PASS",
+  "expectedMainExit1": "EXPECTED_PROTOCOL_REJECTION_NOT_NATIVE_PRODUCER_PASS",
+  "negativeExport": "FINAL_SHA_MISMATCH_WITH_NO_MARKER_OR_GROUP_CLOSE; PARTIAL_METER_DISCARDED_WITHOUT_FINISH",
+  "negativeFiveSecondBound": "MEASURED_ASSERTION_NOT_SOURCE_GUARANTEE_ON_FAILED_TICKET",
+  "sourceOnlyAuthorNotes": "HISTORICAL_AUTHORING_STAGE_NOT_FINAL_GATE_STATUS",
+  "allPriorFailuresAndUnrelatedWork": "PRESERVED",
+  "completeUnreleasedRawHistoryClaimed": false,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "stagedFormattingFailure": {
+    "result": "FAIL_THEN_CORRECTED",
+    "command": "git diff --cached --check",
+    "issue": "Extra final empty line in three Python files",
+    "nativeFailure": false,
+    "correction": "Trim terminal empty lines only; identical AST; update Source pin metadata",
+    "originalPublicRawRetained": true,
+    "freshPublicPureTests": 13,
+    "freshPublicReaderControls": 10,
+    "freshActualNativeOutputReaders": 2,
+    "sourceClosure": "Native Java/tools/jars/classes/argv/process receipts unchanged and reauthenticated",
+    "details": "STAGED_SOURCE_CORRECTION_R1.json",
+    "finalGate": "FINAL_STAGED_GATES_R1.json"
+  },
+  "nativeSourceChangesAfterFrozenExecution": 0,
+  "publicPythonTerminalWhitespaceCorrectionsAfterInitialExecution": 3,
+  "packagingOnlyCorrection": {
+    "failure": "Default cp1252 report decode failed after evidence writes",
+    "correction": "Decode only current checkpoint UTF-8; preserve historical tail bytes unchanged",
+    "testOrNativeFailure": false,
+    "evidenceWritesRetained": true
+  }
+}

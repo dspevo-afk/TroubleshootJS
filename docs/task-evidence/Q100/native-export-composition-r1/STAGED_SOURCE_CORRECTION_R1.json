@@ -1,0 +1,41 @@
+{
+  "status": "STAGED_DIFF_CHECK_FAILURE_CORRECTED_PENDING_FRESH_PYTHON_GATES",
+  "failure": "git diff --cached --check: new blank line at EOF in three Python files",
+  "nativeFailure": false,
+  "rows": [
+    {
+      "role": "export_composition_oracle.py",
+      "beforeSha256": "bd8c4bd3b5cba4114f2a9d942fee541cfc305fee3845aa46203788af4f2f3d0b",
+      "afterSha256": "9af9430a7ded954958be451be5675dd91a7c5f2bebab2f5f0ae1f737e7e86bc0",
+      "beforeBytes": 22407,
+      "afterBytes": 22406,
+      "astUnchanged": true,
+      "change": "Trim final empty lines; retain one LF",
+      "originalRawRetained": true
+    },
+    {
+      "role": "verify_export_composition_r1.py",
+      "beforeSha256": "1befa8c7376eb1edc09cdbdf627e77cc7b47a66ab637d8278ca6eba36c171cf3",
+      "afterSha256": "c4c7e610e8f9ee14193a7b0ec0192df3dc9811a6392faa410d34a85715455c05",
+      "beforeBytes": 8292,
+      "afterBytes": 8291,
+      "astUnchanged": true,
+      "change": "Trim final empty lines; retain one LF",
+      "originalRawRetained": true
+    },
+    {
+      "role": "test_export_composition_oracle.py",
+      "beforeSha256": "68adf2a9e43ba347788e89c11ad86d9d96e558c761d52fdf203962b991c9d308",
+      "afterSha256": "83b41cc4518294ca5ea8d15c44a4295eb424f8e7da76ffca78a2f8f9aedc519d",
+      "beforeBytes": 14941,
+      "afterBytes": 14940,
+      "astUnchanged": true,
+      "change": "Trim final empty lines; retain one LF",
+      "originalRawRetained": true
+    }
+  ],
+  "pinMetadataUpdated": true,
+  "nativeInputsChanged": false,
+  "oldRawAndGatesRetained": true,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

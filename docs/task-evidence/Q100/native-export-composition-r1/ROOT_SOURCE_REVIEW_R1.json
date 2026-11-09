@@ -1,0 +1,33 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_SOURCE_BEFORE_EXECUTION",
+  "base": "2ab3e1cf60b24c5ee12459ff39ca2b3c0e0d8182",
+  "files": {
+    "ExportCompositionCanary.java": "931b6803fb85f0a0ce5e95498b7430278a15c995998f8d9404a8fb087fa0333f",
+    "build_export_composition_r1.py": "bfbdfdbcb18d916037998e8f486d268f786a7d16f0c1563d7b65acfcf14b2692",
+    "run_export_composition_r1.py": "c7514ea198a9f569302bea77093a3dcd1ab36e9775ca77ee3824b39180fc9610",
+    "export_composition_oracle.py": "bd8c4bd3b5cba4114f2a9d942fee541cfc305fee3845aa46203788af4f2f3d0b",
+    "verify_export_composition_r1.py": "1befa8c7376eb1edc09cdbdf627e77cc7b47a66ab637d8278ca6eba36c171cf3",
+    "test_export_composition_oracle.py": "68adf2a9e43ba347788e89c11ad86d9d96e558c761d52fdf203962b991c9d308",
+    "derive_export_fixture_r1.py": "e2cf2d0e21a09c97aa56c9ffed0db384b69893496a7f9509374e9012e010e265",
+    "EXPORT_COMPOSITION_CONTRACT_R1.md": "986377506b007a15e920d1abb852d1b49212ef835fd8f80b3ba8f4638dce533a",
+    "TIMING_CLARIFICATION_R1.md": "294cf7badd063812171b1866fb16d491e910cbe4c036244bcfe03d3aa3551bfb",
+    "REFERENCE_FREEZE_R1.json": "3b55a8f1904483a958b74a618746d3f1eb4ac1fd10af6614cb4c2f700b3d0523",
+    "CANARY_DESIGN_R1.md": "f1e1c1477ac735bf7badf93cf71a7552445b43d94c6762d910e6dab45a92b25a",
+    "NATIVE_DRIVER_NOTE_R1.md": "2169b0e8c9c8958337d0b69ef76d267e5630f1bc627e3d89736ecc3155e7642a",
+    "ORACLE_DESIGN_R1.md": "451916990841f95e513209eedb29e45d99676ff8bceee96b9a7a9baf9f825b76",
+    "SOURCE_FINDINGS_R1.md": "737a3b2b796518d1ad1e233b83bc5b0c952409cbb981e9bb83c20e9f10424be1",
+    "root_pure_gates_r1.py": "9b7f6ae9ce49db9e16a8686095b85edfc3e322de94302a9d682b1d1f38118ad5",
+    "root_protocol_gates_r1.py": "49d4440b8b0e75dd18fbc8720c9c429dcf1c169f9201a2c06d7b8f371490cfee"
+  },
+  "scope": "SYNTHETIC_CURRENT_RESULT_EXPORT_COMPOSITION",
+  "review": "Root final API/order/51-field protocol/counter/clock/literal-byte-oracle/boundedIO/pinned-source-loader/cleanup review; leaf Source mapping and author reviews",
+  "sourceCorrectionsBeforeFirstExecution": [
+    "Bound actual result read instead of size-check then readAllBytes",
+    "Execute authenticated raw oracle Source, bypassing reread and pycache",
+    "Positive cutoff and supported two-group P profile; producer clock excludes fixture-inclusive operation limit"
+  ],
+  "knownHistory": "Old canary raw and four oracle files retained; old uncompiled canary-design raw not located; no complete unreleased history claim",
+  "nativeRun": "NOT_RUN",
+  "oracleTests": "NOT_RUN",
+  "genuineEnvelope": "UNSPENT_GATED"
+}

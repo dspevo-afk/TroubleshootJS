@@ -1,4 +1,202 @@
-# Current checkpoint: synthetic metadata/R7 composition accepted
+# Current checkpoint: actual R7 export composition accepted
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD
+`2ab3e1cf60b24c5ee12459ff39ca2b3c0e0d8182`, no upstream. Prior595fe34d/receipt2ab3
+normally pushed/exact remote verified on origin/codex/q100-physical-feasibility;
+Gmail1a1c1a69ec7a7ba8 SENT_ONCE (Sent confirmed after lost acknowledgement), never
+repeat. New current-export composition LOCALLY ACCEPTED; commit/push/email pending
+final diff/staged review. Proof7810af56d8ab080061e74a564779c56f560b61e55374d96432d76c6da6477c51
+in native-export-composition-r1. No helper/production/API/budget/epoch/oracle change.
+
+Q=OS-temp/tsj-q100-current-export-composition-ff7bb69379ae48eda94f89b3c69edc68.
+R1D623430C/15,R299BD8F9B/7,findings737A3B2B,contract98637750,timing294CF7BA;
+reference1E0EA868/freeze3B55A8F1 pre-code Pythonclock vector, never native clocks.
+Finalcanary931B6803/buildBFBDFDBC/runnerC7514EA1/oracle9af9430a/CLIc4c7e610/
+tests83b41cc4. Actualsetup/ctor/metadata->actualUNFINALIZED R7/pre/sameMeter/body/
+start/UNUSEDticket->existingexportV2 owns finalize/readback/ticketfinal/close/marker/
+token. Generic4emptychildren/syntheticprior1 only, no OriginalArm/ArmResult/graph/
+producer/Session/route. Normal assembly/full-D/original/normal-host still unqualified.
+
+Final fresh actual JDK8 PASS863Sources/2486classes/11953557B/allmajor51,
+5134.084ms operation/5375.0968 wrapper. ActualSMOKE1 PASS427.3412/664.436ms, private
+independentreader352.5819/583.6853ms BEFORE actualSUITE1 PASS429.3414/676.5271ms,
+reader351.1444/581.3181ms. Independent literal expected root13/prior12/work34/
+marker14 + bounded nativeclockfacts match every byte/digest/counter/metric. P11,
+R3175both; successM630/U28836/copies7652/K27/closedwrapper3+prior1; failureM0/
+U28834/copies6990/K25/closedwrapper2+prior1, exportopen6units. Same-size/restored-
+mtime receipt fails FINAL_SHA_MISMATCH afterreadback, no return/marker/close; partial
+Meter discarded WITHOUTfinish. Stream/filecleanup separate, no fabricated group.
+
+Privatepuretests13 PASS389.9046/633.7588ms; selectedPython reader2 referencepositives
++8 expectedexit2 rejections inclactualexistingjunction PASS(no linkmutation).
+Main3 actualprotocolcontrols exit1 EXPECTEDREJECTION, notproducerPASS. Final public
+puretests13 PASS564.5078/811.4343ms; publicactualreaders442.162/673.5501 and346.6311/
+584.0863ms. Public context differs, so its Python entrypoints freshly exercised;
+initialcodebytes match tested/compiledSource; finalEOFcorrection below. Final consumedSource/tools/JARs/classes/
+actualargv/process receipts reauthenticated; unchanged native notrerun. Source
+census U0=28712+10P+6/C0=618+2P/K23; exportdelta5C+3/2R+32+M/2C+2, C=ceil(R/4096).
+Negative5C+1/2R/2C. Actualnegative5s bound measured, not guaranteed afterfailing
+receipt skipslaterdeadline. Root Source/API/51field/clock/oracle/loader/IO/cleanup/
+integrationreview, leafSource mapping/authorreviews; no independent native run.
+
+Stageddiffcheck FAIL(extraEOFblankline in3Pythonfiles), correctedonlyterminal
+whitespace, ASTunchanged; oldraw/pins/proof/gates retained. Fresh final public13
+PASS382.7214msoperation/621.2778wrapper, readercontrols2positive+8expectedexit2,
+actualsmoke reader351.7546/576.7418ms andsuite351.8366/578.0975ms. Updatedpinmetadata,
+FINAL_STAGED_GATES binds finalpublicbytes; initialFINAL_GATES historicalcandidate.
+Nativeinputsunchanged/reauthenticated, notrepeated. Packagingonlycp1252decodeerror
+fixedbyUTF8currentprefix; historicaltailbytespreserved. No unexpected nativefailure. Pre-code fixes: resultboundedstream
+replacedsizecheck+readAllBytes (old50D39CCErawretained); exactauthenticatedraworacle
+exec replacesreread/pycacheloader (four releasedrawfiles retained). Olduncompiled
+canarydesign778D2951 rawnotretained/hash+sizeonly; no completeunreleasedhistoryclaim.
+Uncompiledpublicnotes EOFtrim only, originalsretained. Operation includesfixture/
+exercise/stdoutrestore; cleanup factcapture/boundedresultread/identity/ownedleaf
+removal separate. ActualSystem.out restoredfinally bothpaths; testPrintStream is
+not normalhostproof. BothfixtureRootsempty, selectedchildtermination/ownedprocess-
+root+logabsenceproven; processcleanupdurationunmeasured. No persistentprocess/link.
+Q Source/classes/evidence/knownhistory and priorroots/failures preserved.
+
+F intendedtests/evidence/architecture/roadmap/report only, stagingintendedpaths only; finalreview pending.
+Main5f05b005 (9tracked/6untracked), E d9747229 reportM, Desktop e0c36885 (7tracked/
+89untrackedfiles) preserved; Main/E reportmirrorsonly. Uncertainbrowser14116/
+start639294472690745890/58320, preview34180/start639294472514546595/58264+14children,
+oldDprocess/unlinkUNCERTIFIED untouched. All90s/640groups/5s/32768/copy1MiB/chunk4096
+and Source/class/search/reader180s/wrapper480s/cleanup120s caps, exactseeds/epochs/
+oracles/CircuitJStruth unchanged. GWT/PlayerN/A; electrical/populationNOTRENEWED.
+Full30EXCLUDED,HARD/PSYCHOTICunavailable-unrun,oldnormal20historicalREAD/no reread,
+protectedunreadUNCERTIFIED,playable100=0/betaHELD,genuineoriginal thenexactNULL/
+OBSERVE UNSPENT_GATED. Next final review/normalpublication/email, then semantic
+current-result childconstruction Sourceaudit. No userdecision; full-D/normal
+assembly/actualhost/lifecycle remain separate.
+
+# Historical checkpoint: current-result export composition implementation
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD
+`2ab3e1cf60b24c5ee12459ff39ca2b3c0e0d8182`, no upstream. Prior implementation
+595fe34d/receipt2ab3e1cf normally pushed/exact remote verified on
+origin/codex/q100-physical-feasibility. Gmail1a1c1a69ec7a7ba8 SENT_ONCE confirmed
+in Sent after lost acknowledgement; no retry/duplicate. Never repeat prior mail.
+Prior prooff7424d5b remains only its synthetic metadata/R7 boundary, no renewed
+production/electrical/population/host proof. C retained with publication/next pointer.
+
+Q=OS-temp/tsj-q100-current-export-composition-ff7bb69379ae48eda94f89b3c69edc68.
+R1D623430C/15 Sources,R299BD8F9B/7 Sources; audit737A3B2B; contract98637750;
+timing addendum294CF7BA. Small scope SMOKE1 current_export_composition and SUITE1
+receipt_changed_before_export_close. Actualsetup/ctor/metadata->actualunfinalized
+R7plan/pre/sameMeter/body/start/unusedticket directly to existing exportV2. Export
+owns finalize/ticketfinal/readback/onegroupclose/exactmarker/token. No fakeplan/
+OriginalArm/ArmResult/graph/producer/Session/routing; generic4emptychildren and
+syntheticpriorcredit1 only. No new helper/API/production or visible-flow changes.
+
+Root pure Source fixture/calibration gate PASS378.11ms operation/806.4859 wrapper;
+selected child termination/owned-root+logs absence proven; process cleanup duration
+unmeasured. FactoryC8A25F88/contextCA2D5B88 reproduced. Reference1E0EA868 frozen
+BEFORE oracle/canary code (driver drafts already existed), using literal Source
+fixture/34 ledger values and stdlibJSON, never Java output/candidate oracle.
+Synthetic Python clocks only: result3168B/ED6C27A0,marker619B/4DDE7863,C1/fee8;
+referencefreeze3B55A8F1. Native clocks remain real; no static native R/digest/M guess.
+Base U0=28712+10P+6/copy0=618+2P/K23/wrapper2+prior1. Export adds5C+3units/
+2R+32+M copies/2C+2chunks/onegroup, where C=ceil(R/4096) and M exact marker bytes.
+Negative after-readback receipt SHA failure adds5C+1/2R/2C, remains open at2closed
+wrappergroups/prior1, no marker/return/close; failed Meter discarded without finish.
+
+Leaf Source mapping reviewed exact34 equations/marker14/clock observability.
+Independent expected bytes from literal input + native groupStarted cutoff and
+measures; returned elapsed is only bounded clock fact, other metrics derived.
+Negative5s elapsed assertion is measured, not guaranteed after failing ticket skips
+later exporter deadline. Existing standalone independentMarker was rejected as an
+oracle source because it trusts actual bytes/metrics. Pure oracle/CLI/tests Source
+worker still authoring; no imports/tests/compile/native yet. Driver Source
+BFBDFDBC/build25537B and C7514EA1/runner44284B aligned51fields andtwo-caseprotocol.
+Canary source931B6803/30748B, real boundedresult READ+NOFOLLOW <=32768+1; released
+old50D39CCE raw retained before Source-only fix. Earlier size-check/readAllBytes
+could allocate beyond fixture cap; no executed failure/old compile. Original design
+note778D2951 raw not yet located, no complete unreleased raw-history claim. Timing
+clarification: stdoutrestore in exercisefinally is operationtime, cleanup separately
+captures facts/reads/closes resultstream/removes verified ownedleaves. Source reviews
+and final freeze required before actual gates. PrimaryOracle governs expected bytes,
+digests, all34 values and counter equations; runner is shallow transport proof.
+
+F reportM only/staged0, all new work outside repo. Main5f05b005 (9tracked/6untracked),
+E d9747229 reportM, Desktop e0c36885 (7tracked/89untracked files) preserved; Main/E
+report mirrors only. No new persistent process/link. Prior Source/classes/failures
+and uncertain browser14116/start639294472690745890/58320, preview34180/
+start639294472514546595/58264+14children and oldD process/unlinkUNCERTIFIED untouched.
+All90s/640groups/5s/32768/copy1MiB/chunk4096 and Source/class/search/reader180s/
+wrapper480s/cleanup120s caps, exact seeds/epochs/oracles/CircuitJS truth unchanged.
+Full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; oldnormal20 historical READ/no
+reread; protected unreadUNCERTIFIED; playable100=0,betaHELD; genuine original then
+exact NULL/OBSERVE UNSPENT_GATED. GWT/Player N/A; electrical/population NOTRENEWED.
+Next finish Source review/freeze, pure oracle/reference checks, fresh final-source
+JDK8, actual smoke+independent reader then suite+reader, final public evidence audit,
+normal publication/email. Full-D/normal assembly/actual host/lifecycle remain later.
+
+# Historical checkpoint: current-result export composition Source audit
+
+UTC 2026-11-09. F codex/q100-terminal-only-20261107 HEAD
+`2ab3e1cf60b24c5ee12459ff39ca2b3c0e0d8182`; no upstream. Synthetic composition
+implementation `595fe34d635ed7d99743fa64b95cab57b1978875` and receipt2ab3e1cf
+normally pushed to origin/codex/q100-physical-feasibility, exact remote verified.
+Gmail `1a1c1a69ec7a7ba8` SENT_ONCE: one send acknowledgement lost to transport,
+then exact recipient/subject/SHA found in Sent. No retry/duplicate/receipt email.
+Never repeat this or earlier milestone mail. Prooff7424d5b053714493a6f96ea42613fef071b0d3c212a4ba289ce693b901435c9
+in native-composed-metadata-r1 accepts only the synthetic composed boundary.
+
+C=OS-temp/tsj-q100-composed-metadata-b94360bc855d48338c1998e138bbd0d6 retains
+current Source/classes/gates/history/PUBLICATION_R1.json and NEXT_ROOT_R1.txt.
+Final actual JDK8 PASS863 Sources/2485 major51 classes/11954850B; SMOKE3/SUITE16
+PASS plus3 actual main protocol exit1 EXPECTED REJECTION controls. Final public
+Source bytes match compiled/tested code, all consumed Source/tools/JARs/classes/
+actual argv/process receipts reauthenticated; no unchanged native rerun. Source
+census U28712+10P+6B/C618+2P/K23/wrapper2+syntheticprior1; P11 positivesU28828/
+28828/28834,C640. All34 equations and real group census pass. Same actual setup,
+constructor, metadata/ticket, detached R7 close/finalizer/final ticket; helper and
+production bytes unchanged. Generic empty children/synthetic prior credit/cutoff
+prove no original authority, full-D, current export, normal assembly or host.
+GWT/Player N/A; electrical/population NOT RENEWED. Details and limits below.
+
+Q=OS-temp/tsj-q100-current-export-composition-ff7bb69379ae48eda94f89b3c69edc68.
+ManifestD623430CFDB5AA0BA45D7F85B32DBDB0A8994B8A68D2FFB881E14AB634CABC6B
+pins15 exact Sources only; admission577707E6. Independent census JSON is a frozen
+Source-derived synthetic expectation, not historical DATA. Source audit COMPLETE,
+findings737A3B2B796518D1AD1E233B83BC5B0C952409CBB981E9BB83C20E9F10424BE1.
+Leaf pins/API/order/census map; Root current Study2794-2804/3238-3341 inspection.
+Existing exportV2 accepts actual R7 plan/pre/body/Meter/start/preparedticket;
+NO pre-finalize or pre-verify: export owns both one-shot operations. Canonical
+output dir initially contains only its exact op-1.jsonl; result absent. One export
+group, bind/finalize/count/write/readback/ticket/close/exactmarker/token checks.
+For final R bytes,C=ceil(R/4096),marker M: adds5C+3units/2R+32+M copies/2C+2chunks,
+onewrappergroup; baseline already accounted. No new API/helper required. Small
+next scope one integrated positive plus selected receipt-mutation hook negative.
+Freeze independent finalized-body/14-key-marker bytes/SHA/R/C/M and dynamic clock
+observation/bounds first; old zero-work census cannot be used as a final golden.
+Native groupStarted gives actual cutoff; measured group facts/returned elapsed
+must be bounded independently. Capture/restore hardwired stdout only in test.
+No Q implementation/import/generation/fixture/compiler/native/DATA/journal/old-
+class/Original/Session/routing. No fake finalizer/OriginalArm/ArmResult/graph or
+producer; normal main/assembly remain closed, genuine envelope UNSPENT_GATED.
+
+Root and leaf Source/census reviews accepted prior scope. Known pre-code drafts
+and publication-only failures are preserved: note EOF, HTTP URL scan and literal
+example scan; final exact30 staged paths/blob audit/diff checks PASS. No runtime
+Source changed after freeze. Case metrics at operation boundary; cleanup measured
+separately, all six open meters closed/all fixture leaves removed. Selected child
+termination and owned process-root/log absence proven; process cleanup duration
+unmeasured. No new persistent process/link. Prior Source/classes/failures remain.
+
+F reportM only/staged0 after receipt; Main5f05b005 (9tracked/6untracked), E d9747229
+reportM, Desktop e0c36885 (7tracked/89untracked files) preserved. Main/E report
+mirrors only. Uncertain browser14116/start639294472690745890/58320, preview34180/
+start639294472514546595/58264+14 children and oldD process/unlink UNCERTIFIED
+untouched. All caps90s/640groups/5s/32768/copy1MiB/chunk4096 and Source/class/
+reader/wrapper/cleanup/search bounds, exact seeds/epochs/oracles/CircuitJS truth
+unchanged. Full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; oldnormal20 historical
+READ/no reread; protected unread UNCERTIFIED; playable100=0,beta HELD. Genuine
+original then exact NULL/OBSERVE UNSPENT_GATED. Next explicitly admit required fixture/oracle/driver Sources,
+freeze exact synthetic export contract, then implementation/gates/publication;
+full-D/normal assembly/actual host/lifecycle remain separate. No user decision.
+
+# Historical checkpoint: synthetic metadata/R7 composition published
 
 UTC 2026-11-09. F codex/q100-terminal-only-20261107 HEAD
 `595fe34d635ed7d99743fa64b95cab57b1978875`, no upstream. Prior constructor

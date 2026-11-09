@@ -1,0 +1,65 @@
+{
+  "status": "PASS_INDEPENDENT_CURRENT_EXPORT_COMPOSITION_SUITE",
+  "mode": "suite",
+  "nativeGateSha256": "b2424e1d62eec8a39c78a0757e8046c1c992ed2be3d59c9a25d90d0c9f8d3c6c",
+  "nativeInputSha256": "f9a197ba21fecd3c87d62b4c789b4f3d969251f600c1c952e7a8b7643a306a2c",
+  "nativeStdoutSha256": "ce929570cf9bbaa26bdc3d731d8967e5d27820d52bb4748880637071cc84c030",
+  "expectedPathEntries": 11,
+  "nativeCall": {
+    "phase": "native-export-composition-suite-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 429.3414,
+    "wrapperTotalElapsedMs": 676.5271,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "d22869514603f1db0c7dacfafa94d7215b3b7e7867c885fb76d43da3ec5b6446",
+      "owner.json": "fa70e92a3ee6a45b22c674b4450e83f85cf722db70393af556b91fa30ac1164a",
+      "process.json": "dcbe489509af4c1d688a3f6c06b625d36538486688fb45de6983e312634a8a14",
+      "parent.json": "b2d1fa0de4e2856ae6887b36c5f54f28dc044bc2ab0f84dc8c90918ca54a1950",
+      "result.json": "cb3604d17061656fba46e0eef5cd43fd7a9d9b9d6d8feb88017fe0763cd13854",
+      "stdout.txt": "ce929570cf9bbaa26bdc3d731d8967e5d27820d52bb4748880637071cc84c030",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "readerCall": {
+    "phase": "export-composition-native-oracle-suite-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 351.1444,
+    "wrapperTotalElapsedMs": 581.3181000000001,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "40468939618916795e653be136db36a1aecf9815d9a8d866b1e2ac9bfa1c2fed",
+      "owner.json": "2901cbe37b99778af0355514f38b0d648193b3299ab8980f146bbcf5fd3fd6cb",
+      "process.json": "761ec1e7cf219209706de3fa55ba60aefffdb1e6f30f9ea793525f07638d76fb",
+      "parent.json": "cf1606d950712331cccb0e4c660b52bdd4ceee35dbe5e9b3b95c0ce6129eef2a",
+      "result.json": "8704e546f7633e5a3299fa40af444414105203354446a4fad769ab07fd9844c5",
+      "stdout.txt": "d58c2d5ed30d66118dbe6c1a6fa65359323d113e379f48852330729aeae9a409",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "readerSummary": {
+    "status": "PASS_INDEPENDENT_EXPORT_BYTES_AND_LEDGER",
+    "mode": "SUITE",
+    "name": "receipt_changed_before_export_close",
+    "expectedR": 3175,
+    "resultSha256": "5af096e32247d279a9caca5382722fdd39c4ff6e585a821b4af490919d48f9b4",
+    "expectedM": 0,
+    "markerSha256": "",
+    "fee": {
+      "units": 6,
+      "copiedEntries": 6350,
+      "copyChunks": 2
+    }
+  },
+  "readerStdoutSha256": "d58c2d5ed30d66118dbe6c1a6fa65359323d113e379f48852330729aeae9a409",
+  "rootGateSourceSha256": "e9e1197a0a5a851ef91b56ca9c35f6bb087d52637a139645fc07e47408ebc71d",
+  "allConsumedInputsReauthenticated": true,
+  "fixtureRootEmpty": true,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

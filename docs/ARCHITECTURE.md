@@ -360,6 +360,17 @@ per-group expectations qualify this interaction only. Four generic empty childre
 a synthetic cutoff and synthetic prior-group credit prove no genuine arm content,
 original receipt authority, current export or normal-host/lifecycle acceptance.
 
+The [actual R7 export composition canary](task-evidence/Q100/native-export-composition-r1/README.md)
+extends the same-Meter synthetic interaction through the existing current exporter.
+It passes the actual unfinalized R7 plan and unused receipt ticket directly; export
+owns both one-shot operations. Independent expected bytes derive from literal
+fixture/ledger equations and bounded native clock facts. Result write/readback,
+final receipt verification, real group close and exact marker/token admission
+qualify this finite lifecycle. Receipt tampering aborts publication with an open
+partial Meter, explicitly discarded without inventing a successful close. This
+adds no production owner or API, and supplies no semantic child/full-D/genuine
+producer or normal-host authority. The stdout capture is test transport only.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the
