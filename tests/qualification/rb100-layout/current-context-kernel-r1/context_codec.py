@@ -547,3 +547,42 @@ def generate_input_java(value, expected_context_sha256=None):
           and b"java.util.LinkedHashMap<String,Object>" in raw
           and b"dataJson()" in raw, "GENERATED_SOURCE_CONTENT")
     return raw
+
+
+# Result metadata has its own current schema; canonical input stays unchanged.
+QUALIFIED_PRIOR_SCHEMA = "tsj-cohort-terminal-qualified-prior-v2"
+QUALIFIED_PRIOR_KEYS = ("schema", "inputContextSha256") + PRIOR_KEYS
+
+
+def qualified_prior(context):
+    """Build current result metadata, borrowing validated prior nested objects.
+
+    The caller retains the unmutated input context. This creates a fresh top
+    map only; full-result serialization must still reject aliases elsewhere.
+    """
+    digest = context_sha256(context)
+    prior = context["nativeProjection"]["prior"]
+    result = {
+        "schema": QUALIFIED_PRIOR_SCHEMA,
+        "inputContextSha256": digest,
+    }
+    for key in PRIOR_KEYS:
+        result[key] = prior[key]
+    return result
+
+
+def validate_qualified_prior(value, expected_input_context_sha256):
+    """Validate current result metadata against the caller's current input SHA.
+
+    This is structural/semantic binding, not authentication of prior artifacts
+    or authority to read a host receipt. Return the original map unchanged.
+    """
+    _exact_keys(value, QUALIFIED_PRIOR_KEYS, "QUALIFIED_PRIOR_KEYS")
+    _walk_json(value)
+    _need(value["schema"] == QUALIFIED_PRIOR_SCHEMA, "QUALIFIED_PRIOR_SCHEMA")
+    _sha256(expected_input_context_sha256, "EXPECTED_INPUT_CONTEXT_SHA256")
+    _sha256(value["inputContextSha256"], "QUALIFIED_PRIOR_INPUT_CONTEXT_SHA256")
+    _need(value["inputContextSha256"] == expected_input_context_sha256,
+          "QUALIFIED_PRIOR_INPUT_CONTEXT_SHA256_MISMATCH")
+    _validate_prior({key: value[key] for key in PRIOR_KEYS})
+    return value

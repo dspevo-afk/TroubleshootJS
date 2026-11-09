@@ -1,4 +1,119 @@
-# Current checkpoint: original prepayment components published
+# Current checkpoint: qualified-prior metadata accepted, publication pending
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD3f8c6a64a7c29d0343613e34baf4e70eedd8b4c9;
+normal origin/codex/q100-physical-feasibility/no upstream. Last originalprepayment
+f3f257e7/receipt3f8c6a64 andGmail1a1c0f071c98f516 published/SENT_ONCE; neverduplicate.
+Current component locallyACCEPTED, commit/push/mail pending. Proof509ACB146E5951BD4939F4A43329B02E78398DB647AAB7DC727B6DACA6BF63A2
+in qualified-metadata-r1. Newresult-schema tsj-cohort-terminal-qualified-prior-v2,
+pairedPythonproducer/validator andnativeCurrentAssemblyMetadataE2B6B05B with existing
+ticket. Overhead152units/13entries/2chunks; withReceipt268+10P+6B/2P+21/5; P10 gives
+374/41/5 oneblock,380/41/5 twoblocks. Bodywriteonlyafterprepare succeeds, nestedprior
+borrowedexclusively, metadataopen, no newDTO/ledger/normalcaller. Nativehashformatonly;
+actualcurrenthashauthentication isfuturecallerprecondition, pairedconsumerrejectswrong.
+
+FinalpublicSource29 PASS11+18 (694.818/925.5247ms;746.5232/978.6661ms operation/wrapper).
+Final-sourceJDK8 PASS862Sources/2481classes/11936633B/allmajor51,5020.0866/5262.7458ms.
+ActualWindowsSMOKE7 PASS445.9801/690.3523ms first; SUITE17 PASS556.4672/787.7192ms.
+24records/30attempts (6success24expectedreject),6finalticketchecks (1expectedchangedSHA).
+Pairedmetadata1805B/4522C98D matchesPythonexactly; expectedwrongcontextrejected.
+Canonicalcontext66485B/CA2D5B88 andfactory21404B/C8A25F88 unchanged; codecDE21E233
+preservesC1F27377 exact21653Bprefix. FinalR4 audit reauthenticatesallconsumedSources/
+tools/JARs/classes/actualargv/processreceipts; no unchangedtests/native rerun.
+IndependentSourceAPI/census/casecount/cleanupreviewfoundnoblocker; noindependentexecution.
+RootR1ambiguousLFanchor/R2wrongCRLFanchor/R3redundantLFcomparison auditsfailed; Source
+neverchanged. R1initialmisdiagnosis explicitlycorrected, allrawRootSources/recordsretained.
+
+A=OS-temp/tsj-q100-qualified-metadata-1cae3138ea624d3aaad72947192f2c55 retains15Source
+parents, allfinalSources/syntheticfixtures/classes/gates/failures. Casecleanupmeasured
+separatelyinrecords, allcreatedcaseleavesremoved; syntheticSMOKEmetadata+emptySUITEdir
+retained. Allselectedchildren terminationproven/ownedroots+logsabsent; processcleanup
+durationunmeasured. No newpersistentprocess/link. Existinguncertainoldbrowser14116/
+start639294472690745890/58320;preview34180/start639294472514546595/58264+14children,
+oldDprocess/unlinkUNCERTIFIED untouched. Y/Z/X/U/V andallpreviousfailurespreserved.
+Main5f05b0059tracked/6untracked, E d9747229 reportM, Desktop e0c368857tracked/89untrackedfiles
+preserved; Main/Ereportmirroronly. F intendedcomponent/docs edits only/staged0 beforepublication.
+GWT/PlayerN/A: no production/visiblechange; electrical/population NOTRENEWED. Allcaps/
+exactseeds/epochs/oracles/CircuitJStruth unchanged. Genuineoneoriginal+EXACTNULL/OBSERVE
+UNSPENT_GATED; playable100=0/betaHELD/full30EXCLUDED/HARD-PSYCHOTICunavailable-unrun/
+oldnormal20READhistorically-no reread/protectedunreadUNCERTIFIED. Normalassembly/R7/
+whole-result/host/full-D/H1/lifecycle unqualified. NextRootdiff/stage/push/exactremote/
+oneGmail, thennextbody/assemblycompositionSourceprerequisite. No userdecision.
+# Historical checkpoint: qualified-prior metadata Source authoring
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD3f8c6a64a7c29d0343613e34baf4e70eedd8b4c9;
+normal origin/codex/q100-physical-feasibility exactverified/no upstream. Previous
+original-prepaymentf3f257e7/receipt3f8c6a64 published; Gmail1a1c0f071c98f516 SENT_ONCE.
+A=OS-temp/tsj-q100-qualified-metadata-1cae3138ea624d3aaad72947192f2c55 owns15pinnedSource
+parents, contract and new paired current schema tsj-cohort-terminal-qualified-prior-v2.
+Source manifest1CA539A6; no actual DATA/journal/oldclasses/Original/Session/routing.
+PureSource29 PASS (baseline11/new18); appended codecDE21E233 preserves old21653Bprefix,
+canonical synthetic66485B/CA2D5B88 and factory21404B/C8A25F88 exactly. Selectedprocess
+termination proven/ownedroots+logsabsent; cleanupduration unmeasured. Nativehelper
+E2B6B05B owns12entrymetadata/borrowednested prior and deferred existingbody-slot write;
+152units/13entries/2chunks plus existingreceipt.prepare, total268+10P+6B units,
+2P+21entries/5chunks. Metadata remainsopen. Nativecanary89FCBF01 Sourceonly released,
+24plannedcases (7SMOKE/17SUITE); RootAPI/debit review before fresh862SourceJDK8 gates.
+Normalmain/assembly staysclosed. Host/wholebody/R7 integration remainsunqualified.
+
+F reportM only/staged0; Main5f05b005 preserves9tracked/6untracked; E d9747229 reportM;
+Desktop e0c36885 preserves7tracked/89untrackedfiles. Main/E reportmirroronly. Allprior
+failures/roots preserved; no newpersistentprocess/link. Oldbrowser14116/start639294472690745890/
+58320, preview34180/start639294472514546595/58264+14uncertainchildren andoldDprocess/
+unlinkUNCERTIFIED untouched. GWT/PlayerN/A isolatedqualification/no visiblechange;
+electrical/population NOTRENEWED. Allcaps/exactseeds/epochs/oracles/CircuitJStruth
+unchanged. Genuineoneoriginal+EXACTNULL/OBSERVE UNSPENT_GATED; playable100=0/betaHELD;
+full30EXCLUDED/HARD-PSYCHOTICunavailable-unrun/oldnormal20READhistorically-no reread/
+protectedunreadUNCERTIFIED. NextRootreview/freezenativeSource/protocol thencompile,
+SMOKE/SUITE/pairedPythonconsumer; publishonlyvalidatedcomponent. No userdecision.
+# Historical checkpoint: assembly composition Source mapping
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD3f8c6a64a7c29d0343613e34baf4e70eedd8b4c9;
+normal origin/codex/q100-physical-feasibility exactverified/no upstream. Original
+prepaymentf3f257e7dcb12da88c50e6ea1ed654ef35e9711c +receipt3f8c6a64 published;
+Gmail1a1c0f071c98f516 SENT_ONCE. Never duplicate this or earlier completion emails.
+Acceptedproof7AD64F40FFB92AA98E6BED3424E4BB83CD6D75A980902FBC3281A3CB7ECF047D:
+final860SourceJDK8/2486classes/11919606B/major51, publicSource17/native48 (11actual
+Windows,21attribution/173observedassertions,16streams). FinalpublicSourceemitters
+reproducecompiledJava; allconsumedinputs/processproof reauthenticated, noJVMrerun.
+Limits/failures in original-prepayment-r1 packet. Actualcaller/host stillunqualified.
+
+Z=OS-temp/tsj-q100-assembly-composition-c0509c1c63fa4449a8be7a2c2896b67e owns PLAN_R1
+and SOURCE_INPUT_R1 (10exactSources), R2 adds3currentpublicpure/contextPythonSources.
+SOURCE MAPPING ONLY for resultqualifiedPrior12
+andreceipt.prepare placement in currentassembly. NewStudy524318F4 andShared99993FC4,
+inputhelper7BAA/receipt1DF7/codec76FB/QreferenceD648/prepay2D69/wire1ABE/sourceMap7F96/
+inline76B5 exactcopies. NO newimplementation/generation/factory/build/native/DATA/
+journal/class/producer/original/Session/routing access. Readonlyforknone LunaMAX map
+completed; Rootintegrated ASSEMBLY_COMPOSITION_FINDINGS_R1.md inZ. Currentcodec13root,
+prior10historical+schema/context=12copy/1alloc; actualgetters/outerplacementstillneed
+pricing. Nestedreceipt/trial borrowedaliases needexplicitownership proof. Receipt
+prepare must precedeR7close3504-05 andticketgoestoexportV2/verifyFinal3299. Q/SharedV1
+bodybuilders notportable. TenSources lackqualifiedPrior schema value; targetedSource
+searchprior_kernelF87C/normalize_prior9112/context_codecC1F foundnoresultauthority,
+noPythonmoduleimport. Nextlocate/pincurrentresultsemanticSource ordefinecurrentowned
+schema/consumercontract; then freezesmallcomposition/receiptfixtures before code.
+No requireduserdecision. Normalmain/assemble remainclosed; nofakeOriginal DTOs.
+
+F reportM only/staged0 afterpublishedreceipt; Main5f05b005 preserves9tracked/6untracked,
+E d9747229 reportM, Desktop e0c36885 7tracked/89untrackedfiles. Only Main/E reportmirror.
+Y=OS-temp/tsj-q100-original-attribution-7fe1a48fd36048fd94d0e997ab38919c retainsall
+finalSources/classes/fixtures/gates/failures; X/U/V priorroots preserved. All selected
+Y children terminated/ownedroots+logs absent; smokeexactfilesdeleted, emptyowneddir
+retained; cleanupduration unmeasured. No persistentprocess/link launched. Existing
+oldbrowser14116/start639294472690745890/58320, preview34180/start639294472514546595/
+58264+14uncertainchildren, oldDverify-process-ebc137b2bbd5462d969a6eddf73816f7
+terminationunproven/oldDunlinkUNCERTIFIED remainuntouched.
+
+Native9unitinlinecomponentqualified, realcallerportpending; receiptbytehashprepay
+fixed butotherownerI/O outsideitsboundedproof. Lockedfile/contentraces/realwrapper
+failurecleanup NOT runtimequalified. QualifiedPrior12/receiptpreparecomposition/
+normalassembly/host/full-D/H1/lifecycle remainunqualified. GWT/PlayerN/A no production/
+visiblechange; electrical/population NOTRENEWED. Allcaps/exactseeds/epochs/oracles/
+CircuitJStruth unchanged. Genuineoneoriginal+EXACTNULL/OBSERVE UNSPENT_GATED;
+playable100=0/betaHELD/full30EXCLUDED/HARD-PSYCHOTICunavailable-unrun/oldnormal20READ
+historically-no reread/protectedunreadUNCERTIFIED. Continue without routinepermission.
+
+# Historical checkpoint: original prepayment publication
 
 UTC2026-11-09. F codex/q100-terminal-only-20261107 HEADf3f257e7dcb12da88c50e6ea1ed654ef35e9711c;
 normal origin/codex/q100-physical-feasibility exactverified/no upstream. Inputsetup

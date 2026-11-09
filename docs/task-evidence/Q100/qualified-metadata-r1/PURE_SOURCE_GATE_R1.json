@@ -1,0 +1,50 @@
+{
+  "calls": [
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "metadata-context-source-r1",
+      "processElapsedMs": 711.312,
+      "receipts": {
+        "owner.json": "dbc1df834403a3e8566e9ba5997871a4c63a9172d823bbf6eb55304332623c3a",
+        "parent.json": "d7e5d8ac4e2fdaed0095dd67132f77bf12551634cda776c302ab0420d78e994a",
+        "process.json": "fc11af57a6549462efed423382f56223360ea7c9b42707ef6d57b57eb2062eb1",
+        "request.json": "3ea5ed3cb55f34d912ba5eada1a600b41ccf8013e6d1edb0f0a17a37d95b633e",
+        "result.json": "29d56185cb4fb0dbbf2b97e007fc266411c20e8b580e449753b2f3f3ef9de028",
+        "stderr.txt": "1e202a789d6de4a11f959934111e59d71c061ff9e89bf3d079cb3e64e6e3ceef",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 955.0617000000001
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "metadata-qualified-source-r1",
+      "processElapsedMs": 847.6173,
+      "receipts": {
+        "owner.json": "daea4000b9840ca1f4d161dd20d08883b377c86e90194d78a36926e7569c9d0f",
+        "parent.json": "8be69bf76774a6c034add5b2ac462169b3cac75b4e3a685d35020bc2ee2a539b",
+        "process.json": "91db403c38b9987bf50723c63550f794c03a3279960528160bfc978f7fae446e",
+        "request.json": "82bd6b211f9d49049b2a1c68f8078dd504a8716e58ac132a58dfaa3e645fd958",
+        "result.json": "bf4bb3d085a715e7c2804992c3f28ad5154d169d362e9daff6e9d6f557726165",
+        "stderr.txt": "3817d75dcaddc22c85feb0019226ea821f6c3ddd19fe0b47493abedd1b901c81",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1077.7531000000001
+    }
+  ],
+  "contextBytes": 66485,
+  "contextSha256": "ca2d5b88b686845889e97de4eea96c4d86f80c1c5ec720aa0d912ba5b675666f",
+  "factoryBytes": 21404,
+  "factorySha256": "c8a25f88ccf523e030e7e1c14073255b78b9358687ac65088339a237bea80089",
+  "genuineEnvelope": "UNSPENT_GATED",
+  "priorSchema": "tsj-cohort-terminal-qualified-prior-v2",
+  "status": "PASS_SYNTHETIC_SOURCE_AND_UNCHANGED_FACTORY",
+  "tests": 29
+}

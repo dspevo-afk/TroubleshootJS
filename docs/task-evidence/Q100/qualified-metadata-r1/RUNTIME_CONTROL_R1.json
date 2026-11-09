@@ -1,0 +1,15 @@
+{
+  "status": "ROOT_ACCEPTED_RUNTIME_CONTROL_ONLY",
+  "originalSourceFreezeSha256": "48505330e0d449659b715eaf5075c76db16e3e549dd770c4d92066b04b33458e",
+  "unchangedCompiledSources": true,
+  "files": [
+    {
+      "role": "run_qualified_metadata_r1.py",
+      "sha256": "902af48f6b1f15f453209c0b57f6a9a92178370455ebad564cd274c31b019bf0"
+    },
+    {
+      "role": "CASE_MANIFEST_R1.json",
+      "sha256": "c6321d8972eda6aa0fbc8f1a98655a3a915ee32fcefbfc45a154068a9abc257e"
+    }
+  ]
+}

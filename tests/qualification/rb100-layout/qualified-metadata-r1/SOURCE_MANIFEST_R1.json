@@ -1,0 +1,35 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_QUALIFIED_METADATA_SOURCE",
+  "files": [
+    {
+      "role": "tests/qualification/rb100-layout/current-context-kernel-r1/context_codec.py",
+      "bytes": 23259,
+      "sha256": "de21e233e27f93c8183101a89ed6fdb9a00812d69e1fe38cc47c3f3e573b3eb8"
+    },
+    {
+      "role": "tests/qualification/rb100-layout/current-context-kernel-r1/test_qualified_prior.py",
+      "bytes": 15749,
+      "sha256": "ee546b0d7a4038ef866034d356651086c8d099d2a586d4457da835e1925a21c4"
+    },
+    {
+      "role": "tests/qualification/rb100-layout/qualified-metadata-r1/CurrentAssemblyMetadata.java",
+      "bytes": 5704,
+      "sha256": "e2b6b05bc95b9295d15aba5305a188c1eb98cb39db4b689747e2f126a6835198"
+    },
+    {
+      "role": "tests/qualification/rb100-layout/qualified-metadata-r1/QualifiedMetadataCanary.java",
+      "bytes": 29280,
+      "sha256": "89fcbf016da0942bafc5aaa72fd2b91f9b2ca614b1810f9264e4900c91c149f6"
+    },
+    {
+      "role": "tests/qualification/rb100-layout/qualified-metadata-r1/build_qualified_metadata_r1.py",
+      "bytes": 23690,
+      "sha256": "098b8cd45b435beb27c96ac7533ae131f18f40a8a9abf64c5c8d999d786e4f00"
+    },
+    {
+      "role": "tests/qualification/rb100-layout/qualified-metadata-r1/run_qualified_metadata_r1.py",
+      "bytes": 39322,
+      "sha256": "902af48f6b1f15f453209c0b57f6a9a92178370455ebad564cd274c31b019bf0"
+    }
+  ]
+}

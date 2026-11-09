@@ -315,6 +315,18 @@ maximum and existing Meter limits. Source emitters preserve all other parent byt
 Native scalar/real-Windows/stream cases qualify these boundaries, not original
 authority, wrapper failure cleanup, full assembly or normal host/lifecycle.
 
+The [qualified-prior metadata component](task-evidence/Q100/qualified-metadata-r1/README.md)
+defines the current twelve-field result schema and paired pure codec producer/
+validator without changing canonical input or factory bytes. Native
+CurrentAssemblyMetadata owns one new top map, borrowing the validated input's
+nested prior objects under exclusive caller ownership. It prepays152 actual
+units/13 copied entries/two chunks, prepares the existing receipt ticket, then
+replaces the existing null body slot. Failure leaves that body unchanged; the
+helper returns the existing ticket with metadata open. Current hash authenticity
+and absence of aliases elsewhere remain caller/full-body responsibilities.
+Actual-Meter synthetic gates qualify construction and ticket preparation only;
+normal assembly, R7 composition, whole-result and host/lifecycle remain closed.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

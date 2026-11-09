@@ -1,0 +1,419 @@
+{
+  "allConsumedInputsReauthenticated": true,
+  "allMajor51": true,
+  "calls": [
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "metadata-public-context-source-r1",
+      "processElapsedMs": 694.818,
+      "receipts": {
+        "owner.json": "e3a363f456438deb6d094a687d4f6959a972207328b832e76ddf5d5035c6043a",
+        "parent.json": "12fd44b1cd53b1ae1d0f51a49ba4095026d25e34b6fce5607d11507b96ee9e4d",
+        "process.json": "f072da31dcd1ca6856e6be76ecb9e0468d4cb3a4cc74c52023916b5b5ce849aa",
+        "request.json": "e8cd444cd3f5bb64dbaae814f9a780f592b7b77a666ae53fada4c1da61c34fd5",
+        "result.json": "c04e403d67169c5089c95f2ce4f6f756ac5376db7b738083453374b8957dfd8d",
+        "stderr.txt": "b35eb6b16a0a76c597e742a745a575b2d86b9f293efb4d57cb40a0f67c3245ad",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 925.5247
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "metadata-public-qualified-source-r1",
+      "processElapsedMs": 746.5232000000001,
+      "receipts": {
+        "owner.json": "5db4b86d96df4569a8aec04301e10b2dedea7dbf02d825d50f25de56361a2bf3",
+        "parent.json": "8088569f4a695a411be0a5d048a2407beb1307b7c8089631a513740c9a7c392c",
+        "process.json": "c708a288f6f5fcfe678c9a50679332919d4b079385d282749be9f7a2bb0a071a",
+        "request.json": "49f341b13f2f119e0800f62a8bbdcaa2a2781aae874680087b741c063d27812f",
+        "result.json": "7aa484e55c80928c3ecd50183e5acf3d00f4334706cdd4ed6beac292ac634c1f",
+        "stderr.txt": "76afda2e3f705e9cfce263f7341df4c6d4e0836b0658e932878801007eeac1e6",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 978.6661
+    }
+  ],
+  "classBytes": 11936633,
+  "classCount": 2481,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "native": [
+    {
+      "call": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "native-qualified-metadata-smoke-r1",
+        "processElapsedMs": 445.9801,
+        "receipts": {
+          "owner.json": "e89ba72e45bf54b5f6c1c65167e9475fc05f0e7410353183ffd4d88d2444a264",
+          "parent.json": "0436bd4c2a8478ab9c81615eb153af9f3b81e2442a94def5fe9883ef887fbb95",
+          "process.json": "2d4ec20cdc0ca9b893a4d9213dc22e590be6737bf0f6cf9eccf9d3f16b185092",
+          "request.json": "56d9a0a540494aba1c0811381265c95aeaaac62d786fafe25430763ded6c5445",
+          "result.json": "11143057fb69310a584e3534efa804f02954338fb57d186e24364630fa453bc9",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "bd41e3d19abab1ef2f4801e66a5002b1f50a4f57ebd785a5a70a356163ee94ca"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 690.3523
+      },
+      "gateSha256": "286c79e49ea21a101b199205d3db1a9fe48b72d0af6b99c288467e78a8b1f4c0",
+      "role": "smoke",
+      "summary": {
+        "cases": [
+          {
+            "cleanupNanos": 237500,
+            "deltaCopiedEntries": 41,
+            "deltaCopyChunks": 5,
+            "deltaUnits": 374,
+            "hashBlocks": 1,
+            "metadataOpen": true,
+            "name": "receipt_1_byte",
+            "operationNanos": 40221101,
+            "pathEntries": 10,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 169900,
+            "deltaCopiedEntries": 41,
+            "deltaCopyChunks": 5,
+            "deltaUnits": 374,
+            "hashBlocks": 1,
+            "metadataOpen": true,
+            "name": "receipt_4096_bytes",
+            "operationNanos": 24465500,
+            "pathEntries": 10,
+            "phase": "complete",
+            "qualifiedPriorBytes": 1805,
+            "qualifiedPriorSha256": "4522c98d68337c60126562cfea983177a7ae0fb0a7f1989a02ecd6443470b944",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 216999,
+            "deltaCopiedEntries": 41,
+            "deltaCopyChunks": 5,
+            "deltaUnits": 380,
+            "hashBlocks": 2,
+            "metadataOpen": true,
+            "name": "receipt_4097_bytes",
+            "operationNanos": 13048700,
+            "pathEntries": 10,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 174299,
+            "expectedFailure": "INITIAL_SHA_MISMATCH",
+            "name": "receipt_sha_mismatch",
+            "operationNanos": 5343500,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 167200,
+            "expectedFailure": "INITIAL_LENGTH_MISMATCH",
+            "name": "receipt_size_mismatch",
+            "operationNanos": 5079200,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 184200,
+            "expectedFailure": "PREPARE_AUTHORITY_MISMATCH",
+            "name": "wrong_started",
+            "operationNanos": 3985200,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 160201,
+            "deltaCopiedEntries": 41,
+            "deltaCopyChunks": 5,
+            "deltaUnits": 374,
+            "hashBlocks": 1,
+            "metadataOpen": true,
+            "name": "repeat_slot_rejected",
+            "operationNanos": 9110799,
+            "pathEntries": 10,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          }
+        ],
+        "mode": "SMOKE",
+        "names": [
+          "receipt_1_byte",
+          "receipt_4096_bytes",
+          "receipt_4097_bytes",
+          "receipt_sha_mismatch",
+          "receipt_size_mismatch",
+          "wrong_started",
+          "repeat_slot_rejected"
+        ],
+        "status": "PASS"
+      }
+    },
+    {
+      "call": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "native-qualified-metadata-suite-r1",
+        "processElapsedMs": 556.4672,
+        "receipts": {
+          "owner.json": "2a477df156bbfbe1ddb1b98e501ab7b96d7f5c1ca602b1c1650c671c3d6ac18d",
+          "parent.json": "c81030801206e3314ab88c953dfa63e2687f51ee5d534610aadbf4afaaf7c977",
+          "process.json": "d30763d46057cb405e7a9d5286048c3d88ecb4602cddf3e147f0a61ba0899985",
+          "request.json": "c2e6e5c296e7f95ccca81be4673916e85e68ee3535ca71f92ac30f1f095fe596",
+          "result.json": "4ef5bde24b25a99d880f1401af7ffba2b312460ce5e195d01667479cc0358546",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "de48c7bc00618c197348723a3f9b19d39698f8dc36faf670232cb01dad4684f5"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 787.7192
+      },
+      "gateSha256": "9a2c782657e31d38f01d33a9b4bb11b8c55d95528a3dccf8b46739fa41c7f47c",
+      "role": "suite",
+      "summary": {
+        "cases": [
+          {
+            "cleanupNanos": 292900,
+            "name": "null_arguments",
+            "operationNanos": 32052600,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 207399,
+            "expectedFailure": "METADATA_BODY_SLOT",
+            "name": "body_wrong_class",
+            "operationNanos": 7462099,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 215600,
+            "expectedFailure": "METADATA_BODY_SLOT",
+            "name": "body_missing_slot",
+            "operationNanos": 4353801,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 179499,
+            "expectedFailure": "METADATA_BODY_SLOT",
+            "name": "body_nonnull_slot",
+            "operationNanos": 5008100,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 197900,
+            "expectedFailure": "METADATA_CONTEXT_SHA",
+            "name": "context_short",
+            "operationNanos": 4791400,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 197900,
+            "expectedFailure": "METADATA_CONTEXT_SHA",
+            "name": "context_uppercase",
+            "operationNanos": 4715100,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 179800,
+            "expectedFailure": "METADATA_CONTEXT_SHA",
+            "name": "context_nonhex",
+            "operationNanos": 3603799,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 174900,
+            "expectedFailure": "METADATA_INPUT_DATA",
+            "name": "input_data_null",
+            "operationNanos": 3460500,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 277800,
+            "expectedFailure": "METADATA_INPUT_DATA",
+            "name": "input_data_wrong_class",
+            "operationNanos": 3682000,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 174300,
+            "expectedFailure": "METADATA_PRIOR_SHAPE",
+            "name": "prior_null",
+            "operationNanos": 3516699,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 202900,
+            "expectedFailure": "METADATA_PRIOR_SHAPE",
+            "name": "prior_wrong_class",
+            "operationNanos": 3428700,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 172600,
+            "expectedFailure": "METADATA_PRIOR_SHAPE",
+            "name": "prior_wrong_order",
+            "operationNanos": 3277401,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 181101,
+            "expectedFailure": "METADATA_PRIOR_SHAPE",
+            "name": "prior_nonstring_key",
+            "operationNanos": 3504499,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 168900,
+            "expectedFailure": "METADATA_PRIOR_SHAPE",
+            "name": "prior_missing_key",
+            "operationNanos": 3369801,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 237301,
+            "expectedFailure": "METADATA_PRIOR_SHAPE",
+            "name": "prior_extra_key",
+            "operationNanos": 3409400,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 220600,
+            "deltaCopiedEntries": 41,
+            "deltaCopyChunks": 5,
+            "deltaUnits": 374,
+            "expectedFailure": "FINAL_SHA_MISMATCH",
+            "hashBlocks": 1,
+            "metadataOpen": true,
+            "name": "receipt_changed_after_close",
+            "operationNanos": 23529899,
+            "pathEntries": 10,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          },
+          {
+            "cleanupNanos": 168900,
+            "deltaCopiedEntries": 41,
+            "deltaCopyChunks": 5,
+            "deltaUnits": 374,
+            "hashBlocks": 1,
+            "metadataOpen": true,
+            "name": "different_valid_context_is_caller_precondition",
+            "operationNanos": 8996500,
+            "pathEntries": 10,
+            "phase": "complete",
+            "reason": "OK",
+            "status": "PASS",
+            "suppressedFailures": 0
+          }
+        ],
+        "mode": "SUITE",
+        "names": [
+          "null_arguments",
+          "body_wrong_class",
+          "body_missing_slot",
+          "body_nonnull_slot",
+          "context_short",
+          "context_uppercase",
+          "context_nonhex",
+          "input_data_null",
+          "input_data_wrong_class",
+          "prior_null",
+          "prior_wrong_class",
+          "prior_wrong_order",
+          "prior_nonstring_key",
+          "prior_missing_key",
+          "prior_extra_key",
+          "receipt_changed_after_close",
+          "different_valid_context_is_caller_precondition"
+        ],
+        "status": "PASS"
+      }
+    }
+  ],
+  "nativeRerun": false,
+  "pairedMetadata": {
+    "bytes": 1805,
+    "currentContextSha256": "ca2d5b88b686845889e97de4eea96c4d86f80c1c5ec720aa0d912ba5b675666f",
+    "matchesPythonProducerBytes": true,
+    "sha256": "4522c98d68337c60126562cfea983177a7ae0fb0a7f1989a02ecd6443470b944",
+    "status": "PASS",
+    "wrongContextRejected": true
+  },
+  "sourceCount": 862,
+  "sourceTests": 29,
+  "status": "PASS_FINAL_PUBLIC_SOURCE_PAIRED_METADATA_AND_RETAINED_NATIVE"
+}

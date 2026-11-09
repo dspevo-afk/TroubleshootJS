@@ -1374,6 +1374,18 @@ playable100=0/beta held and all data exclusions remain. Implementation
 origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
 `1a1c0f071c98f516` sent once.
 
+The [qualified-prior metadata component](task-evidence/Q100/qualified-metadata-r1/README.md)
+is locally accepted for its current paired schema/validator, twelve-entry native
+construction and existing receipt preparation. Final862-Source JDK8 build,
+2481 major51 classes,29 public Source tests,24 native cases and paired Java/
+Python exact metadata bytes pass. Canonical context and factory bytes remain
+unchanged. Root audit-script failures are preserved and corrected; the final
+audit reauthenticates all unchanged consumed inputs without rerunning native.
+Normal assembly stays closed. Next is current body/assembly composition with the
+existing R7 close/ticket flow, followed by host/lifecycle qualification. Genuine
+original,NULL,OBSERVE remains unspent/gated, playable100=0/beta held and data
+exclusions remain. Publication is pending this accepted component's normal push.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion
