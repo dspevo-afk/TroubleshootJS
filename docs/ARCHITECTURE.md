@@ -303,6 +303,18 @@ readInput/main/assembly are not migrated by this isolated component. Checked
 original attribution, owner hash prepayment, qualifiedPrior construction and
 receipt preparation remain separate caller integration work.
 
+The [original prepayment components](task-evidence/Q100/original-prepayment-r1/README.md)
+add an authoritative inline9-unit attribution fragment and strict scalar controls
+to the current emitted Study. The fragment retains two locals for existing R7
+fields; real caller composition remains closed. The actual shared-owner receipt
+digest now prepays its bounded byte fee before stream open/hash, reads the exact
+expected size with deadline/EOF guards, and returns its existing Digest. A private
+prepaid loop supports short/error-stream validation without owning caller streams.
+Full-block fees remain; short-read rounding is corrected under the same8MiB/2048
+maximum and existing Meter limits. Source emitters preserve all other parent bytes.
+Native scalar/real-Windows/stream cases qualify these boundaries, not original
+authority, wrapper failure cleanup, full assembly or normal host/lifecycle.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

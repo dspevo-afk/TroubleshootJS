@@ -1,0 +1,16 @@
+
+/* Checked original attribution scalar controls. The caller prepays all9 units. */
+private static long r7BoundaryLong(Object value) throws java.io.IOException {
+    if (value == null || value.getClass() != Long.class)
+        throw new java.io.IOException("R7_BOUNDARY_LONG");
+    long number = ((Long)value).longValue();
+    if (number < 0L) throw new java.io.IOException("R7_BOUNDARY_NEGATIVE");
+    return number;
+}
+private static int r7BoundaryInt(Object value) throws java.io.IOException {
+    if (value == null || value.getClass() != Integer.class)
+        throw new java.io.IOException("R7_BOUNDARY_INT");
+    int number = ((Integer)value).intValue();
+    if (number < 0) throw new java.io.IOException("R7_BOUNDARY_NEGATIVE");
+    return number;
+}

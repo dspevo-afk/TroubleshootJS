@@ -1,0 +1,51 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_COMPONENT_SOURCE",
+  "files": [
+    {
+      "role": "generate_original_attribution.py",
+      "bytes": 6472,
+      "sha256": "678f1de6b5112cbeb5c292d68b0eebc1487dadf6df19fcdd9a2a854e86b80f43"
+    },
+    {
+      "role": "generate_receipt_digest.py",
+      "bytes": 4085,
+      "sha256": "a9b3fe2f5070c5d7e445eeb79ae22027149bf631ea3a25ad7e8599f49596f77b"
+    },
+    {
+      "role": "OriginalAttribution.java.fragment",
+      "bytes": 1151,
+      "sha256": "76b5a463b8c38b9ad51e312d01fcd7475d77d29103eba825b7fdb938f49e90d1"
+    },
+    {
+      "role": "OriginalAttributionChecks.java.fragment",
+      "bytes": 756,
+      "sha256": "06810d7758dc7cb18f78f7a48cecf8d095b27e596719a9a58018b0cef5e05a04"
+    },
+    {
+      "role": "ReceiptDigestMembers.java.fragment",
+      "bytes": 3197,
+      "sha256": "528a8b5f3cc8130cf20c04538fbaf6afeb1c982d7dc3516a9c73c6514b9e8c72"
+    },
+    {
+      "role": "OriginalAttributionCanary.java.in",
+      "bytes": 17158,
+      "sha256": "826a0f1bc1d2f822e299e9431ee2d6a5572f42c859b3047044cff4e8ea02eaff"
+    },
+    {
+      "role": "OriginalReceiptDigestCanary.java",
+      "bytes": 14697,
+      "sha256": "11de3de72497ffb5824883919e15305d8bc5f60f609a8b922ee1fa5a0eccba43"
+    },
+    {
+      "role": "test_original_attribution_source.py",
+      "bytes": 5245,
+      "sha256": "f71aadbd0006c11c658f88a49a52f1bc9d8b3a19917482dce90803a5b1d34e1d"
+    },
+    {
+      "role": "test_receipt_digest_source.py",
+      "bytes": 7867,
+      "sha256": "5ab0c7c5daec17e4a4028570d7629b49ceb4e74b74ea71b025953953a08cf1cb"
+    }
+  ],
+  "privateParentSourcesRequired": true
+}

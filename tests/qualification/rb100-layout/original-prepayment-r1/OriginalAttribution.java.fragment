@@ -1,0 +1,15 @@
+        m.charge(9L);
+        final long attributionPostUnits = r7BoundaryLong(field(m.meter, "units"));
+        final long attributionSetupUnits = setup.units;
+        if (attributionSetupUnits < 0L) throw new java.io.IOException("R7_BOUNDARY_NEGATIVE");
+        final int attributionOwnerGroups = r7BoundaryInt(field(original, "groupCount"));
+        final int attributionMeterGroups = r7BoundaryInt(field(m.meter, "groups"));
+        final int attributionSetupGroups = setup.groups;
+        if (attributionSetupGroups < 0) throw new java.io.IOException("R7_BOUNDARY_NEGATIVE");
+        final long attributionRawUnits = r7Subtract(attributionPostUnits, attributionSetupUnits);
+        final long originalWrapper = r7Subtract(attributionRawUnits, 9L);
+        final long attributionGroupSum = r5Add((long)attributionOwnerGroups, (long)attributionMeterGroups);
+        final long attributionGroups = r7Subtract(attributionGroupSum, (long)attributionSetupGroups);
+        if (attributionGroups < 1L || attributionGroups > 640L)
+            throw new java.io.IOException("R7_BOUNDARY_GROUPS");
+        final int originalGroups = (int)attributionGroups;

@@ -1,0 +1,348 @@
+package com.lushprojects.circuitjs1.client;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/** Component canary only; never invokes a producer, OriginalArm, ArmResult or owner. */
+public final class OriginalAttributionCanary {
+    static final String[] SOURCE_EXPECTED_CASES={
+        "normal_positive_real_setup_wrapper","zero_wrapper","units_near_long_max_accept",
+        "groups_at_640_accept","boundary_long_wrong_type","boundary_int_wrong_type",
+        "boundary_long_null","boundary_int_null","boundary_long_negative","boundary_int_negative",
+        "setup_units_negative","setup_groups_negative","units_post_below_setup_underflow",
+        "units_delta_below_nine_underflow","groups_underflow","final_groups_zero",
+        "final_groups_above_640","wide_int_group_sum_does_not_wrap",
+        "meter_capacity_before_any_reads","meter_expired_deadline_before_any_reads",
+        "r5_add_long_overflow_direct_unreachable_valid_int_domain"
+    };
+    private static int assertions;
+    private static boolean passed=true;
+    private static final List<String> rows=new ArrayList<String>();
+    private static final List<String> observedReads=new ArrayList<String>();
+    private static boolean spying;
+    private static Object spyMeter,spyOriginal,overrideObject,overrideValue;
+    private static String overrideField;
+    private static long expectedPostUnits;
+
+    private OriginalAttributionCanary() { }
+
+    /** Real emitted Study parent, actual Meter and actual SetupMeter. */
+    static final class Fixture {
+        final CohortTerminalTelemetryStudy.Parent parent;
+        final Object meter;
+        final CohortTerminalTelemetryStudy.SetupMeter m;
+        Fixture(long started) throws Exception {
+            parent=new CohortTerminalTelemetryStudy.Parent();
+            meter=parent.meter(started);
+            m=new CohortTerminalTelemetryStudy.SetupMeter(parent,meter);
+        }
+    }
+
+    /** Only the existing primitive scalar field needed by the inline boundary. */
+    static final class GroupCountFixture {
+        final int groupCount;
+        GroupCountFixture(int value) { groupCount=value; }
+    }
+
+    static Object rawField(Object object,String field) throws Exception {
+        Field f=object.getClass().getDeclaredField(field);
+        f.setAccessible(true);
+        return f.get(object);
+    }
+    static long rawLong(Object object,String field) throws Exception {
+        return ((Number)rawField(object,field)).longValue();
+    }
+    static int rawInt(Object object,String field) throws Exception {
+        return ((Number)rawField(object,field)).intValue();
+    }
+    static void setScalar(Object object,String field,Object value) throws Exception {
+        Field f=object.getClass().getDeclaredField(field);
+        f.setAccessible(true);
+        f.set(object,value);
+    }
+
+    /** The inline fragment's three reflective reads pass through this field spy. */
+    static Object field(Object object,String field) throws Exception {
+        if(!spying) throw new IOException("ATTRIBUTION_FIELD_SPY_INACTIVE");
+        String label;
+        if(object==spyMeter && ("units".equals(field) || "groups".equals(field)))
+            label=field;
+        else if(object==spyOriginal && "groupCount".equals(field))
+            label=field;
+        else {
+            observedReads.add("unexpected:"+field);
+            throw new IOException("ATTRIBUTION_FIELD_SCOPE");
+        }
+        if(observedReads.isEmpty())
+            verify(rawLong(spyMeter,"units")==expectedPostUnits,
+                "prepaid debit is visible before the first reflected source read");
+        Object actual=rawField(object,field);
+        observedReads.add(label);
+        if(overrideField!=null && object==overrideObject && field.equals(overrideField))
+            return overrideValue;
+        return actual;
+    }
+
+    static Object callStudy(String name,Class<?>[] types,Object... args) throws Exception {
+        Method m=CohortTerminalTelemetryStudy.class.getDeclaredMethod(name,types);
+        m.setAccessible(true);
+        try { return m.invoke(null,args); }
+        catch(InvocationTargetException wrapped) {
+            Throwable cause=wrapped.getCause();
+            if(cause instanceof Exception) throw (Exception)cause;
+            if(cause instanceof Error) throw (Error)cause;
+            throw new IllegalStateException(cause);
+        }
+    }
+    static long r5Add(long a,long b) throws Exception {
+        return ((Long)callStudy("r5Add",new Class<?>[]{long.class,long.class},
+            Long.valueOf(a),Long.valueOf(b))).longValue();
+    }
+    static long r7Subtract(long a,long b) throws Exception {
+        return ((Long)callStudy("r7Subtract",new Class<?>[]{long.class,long.class},
+            Long.valueOf(a),Long.valueOf(b))).longValue();
+    }
+    static long r7BoundaryLong(Object value) throws Exception {
+        return ((Long)callStudy("r7BoundaryLong",new Class<?>[]{Object.class},value)).longValue();
+    }
+    static int r7BoundaryInt(Object value) throws Exception {
+        return ((Integer)callStudy("r7BoundaryInt",new Class<?>[]{Object.class},value)).intValue();
+    }
+
+    static void verify(boolean condition,String label) {
+        if(!condition) throw new AssertionError(label);
+        assertions++;
+    }
+    static void equal(long actual,long expected,String label) {
+        verify(actual==expected,label+": expected "+expected+", observed "+actual);
+    }
+    static void equal(String actual,String expected,String label) {
+        verify(expected.equals(actual),label+": expected "+expected+", observed "+actual);
+    }
+    static String readNames() {
+        StringBuilder out=new StringBuilder();
+        for(int i=0;i<observedReads.size();i++) {
+            if(i>0) out.append(',');
+            out.append(observedReads.get(i));
+        }
+        return out.toString();
+    }
+    static String jsonArray(String[] values) {
+        StringBuilder out=new StringBuilder("[");
+        for(int i=0;i<values.length;i++) {
+            if(i>0) out.append(',');
+            out.append(quote(values[i]));
+        }
+        return out.append(']').toString();
+    }
+    static String quote(String value) {
+        StringBuilder out=new StringBuilder("\"");
+        for(int i=0;i<value.length();i++) {
+            char c=value.charAt(i);
+            if(c=='"' || c=='\\') out.append('\\').append(c);
+            else if(c<32 || c>126) {
+                String h=Integer.toHexString(c);
+                out.append("\\u");
+                for(int j=h.length();j<4;j++) out.append('0');
+                out.append(h);
+            } else out.append(c);
+        }
+        return out.append('"').toString();
+    }
+    static String errorMessage(Exception failure) {
+        return failure.getMessage()==null?failure.getClass().getName():failure.getMessage();
+    }
+
+    /**
+     * Test function receiving actual native objects. The emitter replaces the
+     * marker with the authoritative inline fragment byte-for-byte.
+     */
+    static String evaluate(String name,CohortTerminalTelemetryStudy.SetupMeter m,
+            Object meter,CohortTerminalTelemetryStudy.SetupResult setup,Object original,
+            long expectedWrapper,int expectedGroups,String expectedError,
+            String expectedReads,long expectedDebit) throws Exception {
+        long unitsBefore=rawLong(meter,"units");
+        expectedPostUnits=unitsBefore+expectedDebit;
+        int groupsBefore=rawInt(meter,"groups");
+        long copiesBefore=rawLong(meter,"copiedEntries");
+        int chunksBefore=rawInt(meter,"copyChunks");
+        spyMeter=meter;
+        spyOriginal=original;
+        observedReads.clear();
+        spying=true;
+        String rejected=null;
+        try {
+            try {
+                /*__ORIGINAL_ATTRIBUTION_INLINE__*/
+                verify(expectedError==null,"inline component unexpectedly accepted invalid input");
+                if(expectedError==null) {
+                    equal(originalWrapper,expectedWrapper,"originalWrapper local");
+                    equal(originalGroups,expectedGroups,"originalGroups local");
+                }
+            } catch(Exception failure) {
+                if(expectedError==null) throw failure;
+                rejected=errorMessage(failure);
+                equal(rejected,expectedError,"inline rejection code");
+            }
+        } finally {
+            spying=false;
+            overrideField=null; overrideObject=null; overrideValue=null;
+            spyMeter=null; spyOriginal=null;
+        }
+        equal(readNames(),expectedReads,"exact reflective field-read order");
+        equal(rawLong(meter,"units"),expectedPostUnits,"no extra Meter charge");
+        equal(rawInt(meter,"groups"),groupsBefore,"prepayment adds no closed group");
+        equal(rawLong(meter,"copiedEntries"),copiesBefore,"no copy entries");
+        equal(rawInt(meter,"copyChunks"),chunksBefore,"no copy chunks");
+        verify(Boolean.TRUE.equals(rawField(meter,"open"))==(expectedDebit==9L),
+            "Meter open state matches whether prepayment succeeded");
+        String observedError=rejected==null?"":rejected;
+        return "{\"name\":"+quote(name)+",\"status\":\"PASS\",\"debit\":"+
+            expectedDebit+",\"readOrder\":"+quote(readNames())+
+            ",\"rejection\":"+quote(observedError)+"}";
+    }
+
+    static CohortTerminalTelemetryStudy.SetupResult setup(long units,int groups) {
+        return new CohortTerminalTelemetryStudy.SetupResult(
+            Collections.<String,Object>emptyMap(),units,0L,groups,0);
+    }
+
+    static String realPositive() throws Exception {
+        Fixture f=new Fixture(System.nanoTime());
+        f.m.charge(101L);
+        f.m.finish();
+        CohortTerminalTelemetryStudy.SetupResult setup=setup(
+            rawLong(f.meter,"units"),rawInt(f.meter,"groups"));
+        f.m.charge(37L);
+        f.m.finish();
+        GroupCountFixture original=new GroupCountFixture(3);
+        equal(rawLong(f.meter,"units"),138L,"real setup plus wrapper units");
+        equal(setup.units,101L,"real SetupResult units");
+        equal(rawInt(f.meter,"groups"),2L,"real setup plus wrapper groups");
+        equal(setup.groups,1L,"real SetupResult groups");
+        equal(rawLong(f.meter,"copiedEntries"),0L,"positive copy entries");
+        equal(rawInt(f.meter,"copyChunks"),0L,"positive copy chunks");
+        return evaluate("normal_positive_real_setup_wrapper",f.m,f.meter,setup,original,
+            37L,4,null,"units,groupCount,groups",9L);
+    }
+
+    static String boundary(String name,long preUnits,long setupUnits,int meterGroups,
+            int setupGroups,int ownerGroups,long expectedWrapper,int expectedGroups,
+            String expectedError,String expectedReads,long expectedDebit,
+            String overrideTarget,String overrideField,Object overrideValue) throws Exception {
+        long started="meter_expired_deadline_before_any_reads".equals(name)
+            ?System.nanoTime()-100000000000L:System.nanoTime();
+        Fixture f=new Fixture(started);
+        setScalar(f.meter,"units",Long.valueOf(preUnits));
+        setScalar(f.meter,"groups",Integer.valueOf(meterGroups));
+        CohortTerminalTelemetryStudy.SetupResult setup=setup(setupUnits,setupGroups);
+        GroupCountFixture original=new GroupCountFixture(ownerGroups);
+        if(overrideField!=null) {
+            overrideObject="meter".equals(overrideTarget)?f.meter:original;
+            OriginalAttributionCanary.overrideField=overrideField;
+            OriginalAttributionCanary.overrideValue=overrideValue;
+        }
+        return evaluate(name,f.m,f.meter,setup,original,expectedWrapper,expectedGroups,
+            expectedError,expectedReads,expectedDebit);
+    }
+
+    static String r5Overflow() throws Exception {
+        String observed=null;
+        try { r5Add(Long.MAX_VALUE,1L); }
+        catch(Exception failure) { observed=errorMessage(failure); }
+        equal(observed,"R5_INTEGER_OVERFLOW","direct generic r5Add overflow");
+        return "{\"name\":"+quote("r5_add_long_overflow_direct_unreachable_valid_int_domain")+
+            ",\"status\":\"PASS\",\"rejection\":"+quote(observed)+"}";
+    }
+
+    static String run(String name) throws Exception {
+        if("normal_positive_real_setup_wrapper".equals(name)) return realPositive();
+        if("zero_wrapper".equals(name))
+            return boundary(name,0L,0L,0,0,1,0L,1,null,"units,groupCount,groups",9L,
+                null,null,null);
+        if("units_near_long_max_accept".equals(name))
+            return boundary(name,Long.MAX_VALUE-9L,Long.MAX_VALUE-32768L,0,0,1,32759L,1,
+                null,"units,groupCount,groups",9L,null,null,null);
+        if("groups_at_640_accept".equals(name))
+            return boundary(name,0L,0L,1,0,639,0L,640,null,
+                "units,groupCount,groups",9L,null,null,null);
+        if("boundary_long_wrong_type".equals(name))
+            return boundary(name,0L,0L,0,0,1,-1L,-1,"R7_BOUNDARY_LONG","units",9L,
+                "meter","units",Integer.valueOf(9));
+        if("boundary_int_wrong_type".equals(name))
+            return boundary(name,0L,0L,0,0,1,-1L,-1,"R7_BOUNDARY_INT","units,groupCount",9L,
+                "original","groupCount",Long.valueOf(1));
+        if("boundary_long_null".equals(name))
+            return boundary(name,0L,0L,0,0,1,-1L,-1,"R7_BOUNDARY_LONG","units",9L,
+                "meter","units",null);
+        if("boundary_int_null".equals(name))
+            return boundary(name,0L,0L,0,0,1,-1L,-1,"R7_BOUNDARY_INT","units,groupCount",9L,
+                "original","groupCount",null);
+        if("boundary_long_negative".equals(name))
+            return boundary(name,0L,0L,0,0,1,-1L,-1,"R7_BOUNDARY_NEGATIVE","units",9L,
+                "meter","units",Long.valueOf(-1L));
+        if("boundary_int_negative".equals(name))
+            return boundary(name,0L,0L,0,0,1,-1L,-1,"R7_BOUNDARY_NEGATIVE","units,groupCount",9L,
+                "original","groupCount",Integer.valueOf(-1));
+        if("setup_units_negative".equals(name))
+            return boundary(name,0L,-1L,0,0,1,-1L,-1,"R7_BOUNDARY_NEGATIVE","units",9L,
+                null,null,null);
+        if("setup_groups_negative".equals(name))
+            return boundary(name,0L,0L,0,-1,1,-1L,-1,"R7_BOUNDARY_NEGATIVE",
+                "units,groupCount,groups",9L,null,null,null);
+        if("units_post_below_setup_underflow".equals(name))
+            return boundary(name,0L,100L,0,0,1,-1L,-1,"R7_LEDGER_UNDERFLOW",
+                "units,groupCount,groups",9L,null,null,null);
+        if("units_delta_below_nine_underflow".equals(name))
+            return boundary(name,0L,2L,0,0,1,-1L,-1,"R7_LEDGER_UNDERFLOW",
+                "units,groupCount,groups",9L,null,null,null);
+        if("groups_underflow".equals(name))
+            return boundary(name,0L,0L,0,1,0,-1L,-1,"R7_LEDGER_UNDERFLOW",
+                "units,groupCount,groups",9L,null,null,null);
+        if("final_groups_zero".equals(name))
+            return boundary(name,0L,0L,1,1,0,-1L,-1,"R7_BOUNDARY_GROUPS",
+                "units,groupCount,groups",9L,null,null,null);
+        if("final_groups_above_640".equals(name))
+            return boundary(name,0L,0L,1,0,640,-1L,-1,"R7_BOUNDARY_GROUPS",
+                "units,groupCount,groups",9L,null,null,null);
+        if("wide_int_group_sum_does_not_wrap".equals(name))
+            return boundary(name,0L,0L,1,1,Integer.MAX_VALUE,-1L,-1,"R7_BOUNDARY_GROUPS",
+                "units,groupCount,groups",9L,null,null,null);
+        if("meter_capacity_before_any_reads".equals(name))
+            return boundary(name,0L,0L,640,640,0,-1L,-1,
+                "native wrapper exceeded 640 measured groups","",0L,null,null,null);
+        if("meter_expired_deadline_before_any_reads".equals(name))
+            return boundary(name,0L,0L,0,0,1,-1L,-1,
+                "failed-first process exceeded 90 seconds","",0L,null,null,null);
+        if("r5_add_long_overflow_direct_unreachable_valid_int_domain".equals(name))
+            return r5Overflow();
+        throw new AssertionError("unknown source expected case: "+name);
+    }
+
+    public static void main(String[] args) {
+        for(String name:SOURCE_EXPECTED_CASES) {
+            try {
+                rows.add(run(name));
+            } catch(Throwable failure) {
+                passed=false;
+                rows.add("{\"name\":"+quote(name)+",\"status\":\"FAIL\",\"failure\":"+
+                    quote(failure.getClass().getName()+": "+String.valueOf(failure.getMessage()))+"}");
+            }
+        }
+        StringBuilder out=new StringBuilder("{\"status\":").append(quote(passed?"PASS":"FAIL"));
+        out.append(",\"assertions\":").append(assertions);
+        out.append(",\"names\":").append(jsonArray(SOURCE_EXPECTED_CASES));
+        out.append(",\"cases\":[");
+        for(int i=0;i<rows.size();i++) {
+            if(i>0) out.append(',');
+            out.append(rows.get(i));
+        }
+        System.out.println(out.append("]}"));
+        if(!passed) System.exit(1);
+    }
+}

@@ -1358,6 +1358,19 @@ playable100=0/beta held and all data exclusions unchanged. Implementation
 origin/codex/q100-physical-feasibility, exact remote verified; completion Gmail
 `1a1c0b7e2042d3bc` sent once.
 
+The [original prepayment components](task-evidence/Q100/original-prepayment-r1/README.md)
+are locally accepted for exact synthetic scope: final860-Source JDK8 build,
+2486 major51 classes,17 public Source checks and48 native cases pass (Windows
+digest11, attribution21, stream16). The inline boundary prepays9 before five
+observations/four checked operations; actual receipt hashing prepays before open/
+read/hash. Short-read rounding is explicitly corrected without a cap change.
+Final public replay reproduces compiled Java bytes and all consumed native inputs
+are reauthenticated. Failed Source controls remain recorded; real-wrapper failure
+cleanup/content races and real caller authority remain unqualified. Next is
+current assembly composition including qualifiedPrior12/receipt.prepare placement,
+then host/lifecycle gates. Genuine original,NULL,OBSERVE remains unspent/gated,
+playable100=0/beta held and all data exclusions remain. Publication pending.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

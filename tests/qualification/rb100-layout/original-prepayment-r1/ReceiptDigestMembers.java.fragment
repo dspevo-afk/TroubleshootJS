@@ -1,0 +1,70 @@
+private static Digest fileDigest(Path path,Meter meter) throws IOException {
+    if(meter!=null) meter.check();
+    if(path==null) throw new IOException("expected a regular non-symlink file");
+    boolean initialRegular=Files.isRegularFile(path,LinkOption.NOFOLLOW_LINKS);
+    if(meter!=null) meter.check();
+    boolean initialSymlink=Files.isSymbolicLink(path);
+    if(meter!=null) meter.check();
+    if(!initialRegular || initialSymlink)
+        throw new IOException("expected a regular non-symlink file");
+    if(meter!=null) meter.check();
+    long expectedSize=Files.size(path);
+    if(meter!=null) meter.check();
+    if(expectedSize<0 || expectedSize>RECEIPT_LIMIT)
+        throw new IOException("receipt exceeds 8 MiB");
+    // One logical byte fee, prepaid even for an empty file (which needs an open group).
+    if(meter!=null) meter.charge((expectedSize+4095L)/4096L);
+    Digest result;
+    if(meter!=null) meter.check();
+    try(InputStream input=new BufferedInputStream(Files.newInputStream(path))) {
+        result=fileDigestRead(input,expectedSize,meter);
+    }
+    if(meter!=null) meter.check();
+    long finalSize=Files.size(path);
+    if(meter!=null) meter.check();
+    boolean regular=Files.isRegularFile(path,LinkOption.NOFOLLOW_LINKS);
+    if(meter!=null) meter.check();
+    boolean symlink=Files.isSymbolicLink(path);
+    if(meter!=null) meter.check();
+    if(result.bytes!=expectedSize || finalSize!=result.bytes || !regular || symlink)
+        throw new IOException("file changed while its digest was measured");
+    return result;
+}
+
+// Internal loop only: caller owns the stream and has already paid the full byte fee.
+private static Digest fileDigestRead(InputStream input,long expectedSize,Meter meter)
+        throws IOException {
+    if(input==null || expectedSize<0 || expectedSize>RECEIPT_LIMIT)
+        throw new IOException("invalid prepaid digest input");
+    if(meter!=null) meter.check();
+    MessageDigest digest;
+    try {
+        digest=MessageDigest.getInstance("SHA-256");
+    } catch(NoSuchAlgorithmException impossible) {
+        throw new IllegalStateException("SHA-256 unavailable",impossible);
+    }
+    if(meter!=null) meter.check();
+    byte[] buffer=new byte[8192];
+    long count=0;
+    while(count<expectedSize) {
+        int length=(int)Math.min((long)buffer.length,expectedSize-count);
+        if(meter!=null) meter.check();
+        int amount=input.read(buffer,0,length);
+        if(meter!=null) meter.check();
+        if(amount<0) throw new IOException("early EOF while hashing receipt");
+        if(amount==0) throw new IOException("zero progress while hashing receipt");
+        if(amount>length) throw new IOException("invalid read length while hashing receipt");
+        if(meter!=null) meter.check();
+        digest.update(buffer,0,amount);
+        if(meter!=null) meter.check();
+        count+=amount;
+    }
+    if(meter!=null) meter.check();
+    int extra=input.read();
+    if(meter!=null) meter.check();
+    if(extra!=-1) throw new IOException("extra byte while hashing receipt");
+    if(meter!=null) meter.check();
+    byte[] hash=digest.digest();
+    if(meter!=null) meter.check();
+    return new Digest(count,hexDigest(hash));
+}

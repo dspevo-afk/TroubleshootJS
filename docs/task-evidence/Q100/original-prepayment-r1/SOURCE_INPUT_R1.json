@@ -1,0 +1,57 @@
+{
+  "status": "PINNED_SOURCE_ONLY_NO_DATA",
+  "base": "72b41a33373263efb41f53468a792a9bfa98350f",
+  "scope": "CHECKED_NINE_UNIT_INLINE_ATTRIBUTION_COMPONENT",
+  "rows": [
+    {
+      "sha256": "802d051413bdd0c5dde25bf327f29cbe18a633f82fa4d2f29d1c15996c1c1847",
+      "bytes": 234150,
+      "name": "CURRENT_STUDY.java"
+    },
+    {
+      "sha256": "4ed1c8561adf1619a8b7ffbd21e23fdf2544dcaafe541af4e5d2b2b1e95cabe4",
+      "bytes": 182535,
+      "name": "SHARED_OWNER.java"
+    },
+    {
+      "sha256": "2d6968320ad1707e3eb913429f7b23c6ebd7ee27a1ad1d3b05fec5197e2fed39",
+      "bytes": 4567,
+      "name": "PREPAYMENT_R1.md"
+    },
+    {
+      "sha256": "1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed",
+      "bytes": 7363,
+      "name": "WIRE_R1.md"
+    },
+    {
+      "sha256": "7f96d61501b44b95a8e735136dbf2a2382b1e4e777118ee55d20b76bd0ba5504",
+      "bytes": 12226,
+      "name": "INPUT_SETUP_SOURCE_MAP_R1.md"
+    },
+    {
+      "sha256": "1df7e06085165d025ff79bdd0cdaa7f603c110cc26b6cc6f280d73f52e8d2e41",
+      "bytes": 14458,
+      "name": "CURRENT_RECEIPT_BINDING.java"
+    },
+    {
+      "sha256": "7baab4caf45741f00d311e3b3854c794204356bfa03c0f3271399d44087df6a4",
+      "bytes": 22747,
+      "name": "CurrentV2InputSetup.java"
+    },
+    {
+      "sha256": "d6485b0b0f9c518431d440fcb57e477143d50cae78302c29598d12aaa4601dbd",
+      "bytes": 233880,
+      "name": "Q_AUTHORED_STUDY.java"
+    },
+    {
+      "sha256": "7bf4ab57198ff9444381ec5d677c1a2bc309bfa3e7f01b188c631ffe5f2b966c",
+      "bytes": 172568,
+      "name": "NATIVE_PRIVATE_PCB.java"
+    },
+    {
+      "sha256": "76fb7bbc8af73e41fd8d79a26823a0687f61e2a812e4b9de251bc953c04c7522",
+      "bytes": 18580,
+      "name": "CurrentV2CanonicalCodec.java"
+    }
+  ]
+}

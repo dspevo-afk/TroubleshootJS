@@ -1,0 +1,556 @@
+{
+  "allConsumedInputsReauthenticated": true,
+  "allMajor51": true,
+  "calls": [
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "original-public-attribution-source-r1",
+      "processElapsedMs": 459.98060000000004,
+      "receipts": {
+        "owner.json": "ee8aef10cc922d38fdce3684f208e8c3e7bd171bd099fc9f676ead25f91f41c2",
+        "parent.json": "cc7eb0448b5fb6e2f1564def329b5a4faf498121fa7ac4d2793d8278629775a8",
+        "process.json": "2b63e7dbb50cc694958de2467d8c03fe2776a526e13ee82ece69a3a09e5314c3",
+        "request.json": "733eadfe85d415ad52bd41b34f980226bde926df35bc98814972cda8bbc78135",
+        "result.json": "5997fb4872efbd9c10b967bd536aafe38756099ffb3be5903ac5ef3bc93deed4",
+        "stderr.txt": "d03d3c10974e55bf02923b2624f664a5d3a1ccbfa6d2fd91e49b3963ecae18a1",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 716.3163000000001
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "original-public-digest-source-r1",
+      "processElapsedMs": 499.74150000000003,
+      "receipts": {
+        "owner.json": "73e37951dfcf70369b7559b971aac1d81a2c731409276db9c46c3fc895ff087d",
+        "parent.json": "b9f5ecf51e3df02f534571a5f84a3bf3a9f631314ea8ce4825c775ae1a32513c",
+        "process.json": "9a8c2dad0c84a63025210c007d446f08195841968f7224c8c459b95f3cce1818",
+        "request.json": "4bc72ca021b6b407118e4a9fe1a62c2357afe52344cbb24353508df3b8484ef7",
+        "result.json": "14411ef4d83ae280ae10faa6fe2c04a9358b87114f1f7201cda66248c491061f",
+        "stderr.txt": "728acbdfea91a2014a18102b1434f81862bac852bb173defa018842e93104b81",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 738.3361
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "original-public-attribution-emit-r1",
+      "processElapsedMs": 345.983,
+      "receipts": {
+        "owner.json": "68a2d836d5ee43b09ffd33a09871951bea470870ef48c221fe6cdd5f4d878f92",
+        "parent.json": "66ecf8c784c8debee474c1771dbcb468d31037a169dbe925322993aa4c79583e",
+        "process.json": "c777149a0cbaa69cef339b52ea0f0cb82f443e3b74792c060d996802f228b87b",
+        "request.json": "9ef64b4b43312629c09b42e883b08b7e91eeb3f9b4f765f40ca3ea60ae7b02f3",
+        "result.json": "d2da848b2b4ef6f64484b00a16bea7022716652f0244ae65f6c2d35f8c7db8b3",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "842bc0b30a68653d6f652668e9fb07c5dec5f720df17f90f718544dc2f1d5952"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 582.5525
+    },
+    {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "original-public-digest-emit-r1",
+      "processElapsedMs": 345.8596,
+      "receipts": {
+        "owner.json": "309b4c377a5c2f39844b496a21dc9fee6e9c0bbf91dfd91791ce64b91145b53f",
+        "parent.json": "09a95a03bc1a92f07856cbd8eaa0a70056e6e186678012ca4fa8c65284ad6a6c",
+        "process.json": "9a6be379a3b626376a407a4061b5b72f3f06283a4dfcefd4964e2bc51e6e6a5c",
+        "request.json": "e6381d318f9bc4aaeaf458ffd0264f0d8c9a96a49a2ef3a609dcf364ef3c542d",
+        "result.json": "ab4e2c5875ae2fb25ca371db1815f7169280c665a3a918680023cb09a0aa239c",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "54356bbce6923f1e5cffbc6687fb9fcc1eccdef02b9d9dcd386bc80813bc2bee"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 579.0093
+    }
+  ],
+  "classBytes": 11919606,
+  "classCount": 2486,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "native": [
+    {
+      "call": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "native-original-components-digest-smoke-r1",
+        "processElapsedMs": 473.13100000000003,
+        "receipts": {
+          "owner.json": "77acff7889c8f33a73838f084812a2696438c12c7ed4194e5e7504102daf0137",
+          "parent.json": "62f99130f62fcff45ef608ce16e8b682104d5782f0ad5d51615c351b6a5ee57d",
+          "process.json": "db5d6d88f154153a5b0500569718b9e5a2d6a92eb700fc156faf118e6a1550bd",
+          "request.json": "6bc47afe6a7e78e3d2d68bf2cbca6cdebf4ec2dff113f66a644fbfb925d49229",
+          "result.json": "9bb03f04fa1877273914303fb5e7e083845965ea88a4276b21da01343ee1b5ef",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "5ce5ea2107ba642b138c953e6f7a5218acc867d549020cb19882097d0fc305b2"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 716.1093000000001
+      },
+      "gateSha256": "ca31292e11d23f676b134161e12e65e1816f64a4a17bf5f211939b3d57849c66",
+      "role": "digest-smoke",
+      "summary": {
+        "cases": [
+          {
+            "bytes": 0,
+            "debit": 0,
+            "name": "file_empty",
+            "status": "PASS"
+          },
+          {
+            "bytes": 1,
+            "debit": 1,
+            "name": "file_1",
+            "status": "PASS"
+          },
+          {
+            "bytes": 4096,
+            "debit": 1,
+            "name": "file_4096",
+            "status": "PASS"
+          },
+          {
+            "bytes": 4097,
+            "debit": 2,
+            "name": "file_4097",
+            "status": "PASS"
+          },
+          {
+            "bytes": 8192,
+            "debit": 2,
+            "name": "file_8192",
+            "status": "PASS"
+          },
+          {
+            "bytes": 8388608,
+            "debit": 2048,
+            "name": "file_8mib",
+            "status": "PASS"
+          },
+          {
+            "bytes": 9437184,
+            "debit": 0,
+            "name": "file_overcap_9mib",
+            "status": "PASS"
+          },
+          {
+            "bytes": 4097,
+            "debit": 0,
+            "name": "file_expired_before_body",
+            "status": "PASS"
+          },
+          {
+            "bytes": 4097,
+            "debit": 0,
+            "existingUnits": 32768,
+            "name": "file_capacity_before_body",
+            "status": "PASS"
+          },
+          {
+            "bytes": 0,
+            "debit": 0,
+            "name": "file_empty_closed_meter",
+            "status": "PASS"
+          },
+          {
+            "bytes": 4097,
+            "debit": 0,
+            "name": "file_unmetered_4097",
+            "status": "PASS"
+          }
+        ],
+        "mode": "SMOKE",
+        "names": [
+          "file_empty",
+          "file_1",
+          "file_4096",
+          "file_4097",
+          "file_8192",
+          "file_8mib",
+          "file_overcap_9mib",
+          "file_expired_before_body",
+          "file_capacity_before_body",
+          "file_empty_closed_meter",
+          "file_unmetered_4097"
+        ],
+        "status": "PASS"
+      }
+    },
+    {
+      "call": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "native-original-components-attribution-r1",
+        "processElapsedMs": 349.61740000000003,
+        "receipts": {
+          "owner.json": "1450f2550f71194f6051d6b02197eec3caa68d47aaf93f03431452a5eae0d310",
+          "parent.json": "d80210c831554c75e2d6fbf6cd73f6ccb05b4db8b0d9cf8c7bab5be22269c0bf",
+          "process.json": "7b24c961bd7d0d62e75ec19aa5e3de5a0ab1c040ed7cee7cc2d5c01d7fd74783",
+          "request.json": "73ef23398c6e8100ff8cb96cbbb461087168679907e2cf67b7324cf0e3c56f85",
+          "result.json": "97845aedc2b838ec5541b11956c91dceec8ef37eb4451d18c0f770fcfc87955d",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "1f3458b37d4bce212457fba3116d4dbac92d3b7873c19e9cfa58131f94d6d508"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 583.6435
+      },
+      "gateSha256": "c4d9d26ad9ae49c425c9d357bc7f2574f222f935f81794d3bf85feee4d381fff",
+      "role": "attribution",
+      "summary": {
+        "assertions": 173,
+        "cases": [
+          {
+            "debit": 9,
+            "name": "normal_positive_real_setup_wrapper",
+            "readOrder": "units,groupCount,groups",
+            "rejection": "",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "zero_wrapper",
+            "readOrder": "units,groupCount,groups",
+            "rejection": "",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "units_near_long_max_accept",
+            "readOrder": "units,groupCount,groups",
+            "rejection": "",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "groups_at_640_accept",
+            "readOrder": "units,groupCount,groups",
+            "rejection": "",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "boundary_long_wrong_type",
+            "readOrder": "units",
+            "rejection": "R7_BOUNDARY_LONG",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "boundary_int_wrong_type",
+            "readOrder": "units,groupCount",
+            "rejection": "R7_BOUNDARY_INT",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "boundary_long_null",
+            "readOrder": "units",
+            "rejection": "R7_BOUNDARY_LONG",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "boundary_int_null",
+            "readOrder": "units,groupCount",
+            "rejection": "R7_BOUNDARY_INT",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "boundary_long_negative",
+            "readOrder": "units",
+            "rejection": "R7_BOUNDARY_NEGATIVE",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "boundary_int_negative",
+            "readOrder": "units,groupCount",
+            "rejection": "R7_BOUNDARY_NEGATIVE",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "setup_units_negative",
+            "readOrder": "units",
+            "rejection": "R7_BOUNDARY_NEGATIVE",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "setup_groups_negative",
+            "readOrder": "units,groupCount,groups",
+            "rejection": "R7_BOUNDARY_NEGATIVE",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "units_post_below_setup_underflow",
+            "readOrder": "units,groupCount,groups",
+            "rejection": "R7_LEDGER_UNDERFLOW",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "units_delta_below_nine_underflow",
+            "readOrder": "units,groupCount,groups",
+            "rejection": "R7_LEDGER_UNDERFLOW",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "groups_underflow",
+            "readOrder": "units,groupCount,groups",
+            "rejection": "R7_LEDGER_UNDERFLOW",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "final_groups_zero",
+            "readOrder": "units,groupCount,groups",
+            "rejection": "R7_BOUNDARY_GROUPS",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "final_groups_above_640",
+            "readOrder": "units,groupCount,groups",
+            "rejection": "R7_BOUNDARY_GROUPS",
+            "status": "PASS"
+          },
+          {
+            "debit": 9,
+            "name": "wide_int_group_sum_does_not_wrap",
+            "readOrder": "units,groupCount,groups",
+            "rejection": "R7_BOUNDARY_GROUPS",
+            "status": "PASS"
+          },
+          {
+            "debit": 0,
+            "name": "meter_capacity_before_any_reads",
+            "readOrder": "",
+            "rejection": "native wrapper exceeded 640 measured groups",
+            "status": "PASS"
+          },
+          {
+            "debit": 0,
+            "name": "meter_expired_deadline_before_any_reads",
+            "readOrder": "",
+            "rejection": "failed-first process exceeded 90 seconds",
+            "status": "PASS"
+          },
+          {
+            "name": "r5_add_long_overflow_direct_unreachable_valid_int_domain",
+            "rejection": "R5_INTEGER_OVERFLOW",
+            "status": "PASS"
+          }
+        ],
+        "names": [
+          "normal_positive_real_setup_wrapper",
+          "zero_wrapper",
+          "units_near_long_max_accept",
+          "groups_at_640_accept",
+          "boundary_long_wrong_type",
+          "boundary_int_wrong_type",
+          "boundary_long_null",
+          "boundary_int_null",
+          "boundary_long_negative",
+          "boundary_int_negative",
+          "setup_units_negative",
+          "setup_groups_negative",
+          "units_post_below_setup_underflow",
+          "units_delta_below_nine_underflow",
+          "groups_underflow",
+          "final_groups_zero",
+          "final_groups_above_640",
+          "wide_int_group_sum_does_not_wrap",
+          "meter_capacity_before_any_reads",
+          "meter_expired_deadline_before_any_reads",
+          "r5_add_long_overflow_direct_unreachable_valid_int_domain"
+        ],
+        "status": "PASS"
+      }
+    },
+    {
+      "call": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "native-original-components-digest-suite-r1",
+        "processElapsedMs": 374.6345,
+        "receipts": {
+          "owner.json": "4a32cdd1034804b6fb8033e147810c69c26d919f2b397386857cb5823c6a12eb",
+          "parent.json": "db1f89c7a1b08b1f43e976b4314df22235e59234c3faffaeaf0eb7bffc6be661",
+          "process.json": "74ccbd9becbf03a301ad1622213b89eec14701250f26a401e5d2d31628275bd4",
+          "request.json": "304dd9c0a973ac9beeab2bfcbd7c031d96d42915b818bbd6bcdb482aadadb7be",
+          "result.json": "fd4492620bd5cce660d61f75639e8c319fa20f78f0a55946d1825bcf2f6bb620",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "37ecbf1f7f5e30e9305967f85729aebe4de7d81e9a6541fb65f761e2e52c8c64"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 605.2472
+      },
+      "gateSha256": "fcd2e206584d725d32dbbbdd4d3fcc95a770305cf051e93ad4882b8a3356efc8",
+      "role": "digest-suite",
+      "summary": {
+        "cases": [
+          {
+            "bytes": 4097,
+            "debit": 2,
+            "name": "short_one_byte_4097",
+            "readCalls": 4097,
+            "status": "PASS"
+          },
+          {
+            "bytes": 4096,
+            "debit": 1,
+            "name": "short_2048_4096",
+            "readCalls": 2,
+            "status": "PASS"
+          },
+          {
+            "bytes": 4097,
+            "debit": 2,
+            "name": "short_2048_4097",
+            "readCalls": 3,
+            "status": "PASS"
+          },
+          {
+            "bytes": 8192,
+            "debit": 2,
+            "name": "chunk_4096_8192",
+            "readCalls": 2,
+            "status": "PASS"
+          },
+          {
+            "bytes": 8192,
+            "debit": 2,
+            "name": "chunk_8192_8192",
+            "readCalls": 1,
+            "status": "PASS"
+          },
+          {
+            "bytes": 0,
+            "debit": 0,
+            "name": "empty_eof_probe",
+            "readCalls": 0,
+            "status": "PASS"
+          },
+          {
+            "debit": 1,
+            "eofCalls": 0,
+            "name": "zero_progress",
+            "readCalls": 1,
+            "status": "PASS"
+          },
+          {
+            "debit": 1,
+            "eofCalls": 0,
+            "name": "early_eof",
+            "readCalls": 2,
+            "status": "PASS"
+          },
+          {
+            "debit": 1,
+            "eofCalls": 1,
+            "name": "extra_byte",
+            "readCalls": 2,
+            "status": "PASS"
+          },
+          {
+            "debit": 1,
+            "eofCalls": 0,
+            "name": "overreturn",
+            "readCalls": 1,
+            "status": "PASS"
+          },
+          {
+            "debit": 1,
+            "eofCalls": 0,
+            "name": "read_error",
+            "readCalls": 1,
+            "status": "PASS"
+          },
+          {
+            "debit": 1,
+            "eofCalls": 0,
+            "name": "error_after_prefix",
+            "readCalls": 2,
+            "status": "PASS"
+          },
+          {
+            "debit": 1,
+            "eofCalls": 0,
+            "name": "expiry_during_read",
+            "readCalls": 1,
+            "status": "PASS"
+          },
+          {
+            "debit": 0,
+            "eofCalls": 1,
+            "name": "expiry_during_eof",
+            "readCalls": 0,
+            "status": "PASS"
+          },
+          {
+            "bytes": 8193,
+            "debit": 3,
+            "name": "bounded_final_read",
+            "readCalls": 2,
+            "status": "PASS"
+          },
+          {
+            "debit": 0,
+            "eofCalls": 1,
+            "name": "eof_read_error",
+            "readCalls": 0,
+            "status": "PASS"
+          }
+        ],
+        "mode": "SUITE",
+        "names": [
+          "short_one_byte_4097",
+          "short_2048_4096",
+          "short_2048_4097",
+          "chunk_4096_8192",
+          "chunk_8192_8192",
+          "empty_eof_probe",
+          "zero_progress",
+          "early_eof",
+          "extra_byte",
+          "overreturn",
+          "read_error",
+          "error_after_prefix",
+          "expiry_during_read",
+          "expiry_during_eof",
+          "bounded_final_read",
+          "eof_read_error"
+        ],
+        "status": "PASS"
+      }
+    }
+  ],
+  "nativeRerun": false,
+  "sourceCount": 860,
+  "sourceTests": 17,
+  "status": "PASS_FINAL_PUBLIC_SOURCE_AND_RETAINED_NATIVE"
+}

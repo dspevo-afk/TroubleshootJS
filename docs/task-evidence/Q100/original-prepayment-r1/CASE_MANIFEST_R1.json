@@ -1,0 +1,85 @@
+{
+  "status": "ROOT_ACCEPTED_NATIVE_CASE_MANIFEST",
+  "cases": [
+    {
+      "role": "digest-smoke",
+      "class": "com.lushprojects.circuitjs1.client.OriginalReceiptDigestCanary",
+      "args": [
+        "SMOKE",
+        "__FIXTURE_DIR__"
+      ],
+      "status": "PASS",
+      "names": [
+        "file_empty",
+        "file_1",
+        "file_4096",
+        "file_4097",
+        "file_8192",
+        "file_8mib",
+        "file_overcap_9mib",
+        "file_expired_before_body",
+        "file_capacity_before_body",
+        "file_empty_closed_meter",
+        "file_unmetered_4097"
+      ],
+      "caseShape": "records"
+    },
+    {
+      "role": "attribution",
+      "class": "com.lushprojects.circuitjs1.client.OriginalAttributionCanary",
+      "args": [],
+      "status": "PASS",
+      "names": [
+        "normal_positive_real_setup_wrapper",
+        "zero_wrapper",
+        "units_near_long_max_accept",
+        "groups_at_640_accept",
+        "boundary_long_wrong_type",
+        "boundary_int_wrong_type",
+        "boundary_long_null",
+        "boundary_int_null",
+        "boundary_long_negative",
+        "boundary_int_negative",
+        "setup_units_negative",
+        "setup_groups_negative",
+        "units_post_below_setup_underflow",
+        "units_delta_below_nine_underflow",
+        "groups_underflow",
+        "final_groups_zero",
+        "final_groups_above_640",
+        "wide_int_group_sum_does_not_wrap",
+        "meter_capacity_before_any_reads",
+        "meter_expired_deadline_before_any_reads",
+        "r5_add_long_overflow_direct_unreachable_valid_int_domain"
+      ],
+      "caseShape": "records"
+    },
+    {
+      "role": "digest-suite",
+      "class": "com.lushprojects.circuitjs1.client.OriginalReceiptDigestCanary",
+      "args": [
+        "SUITE"
+      ],
+      "status": "PASS",
+      "names": [
+        "short_one_byte_4097",
+        "short_2048_4096",
+        "short_2048_4097",
+        "chunk_4096_8192",
+        "chunk_8192_8192",
+        "empty_eof_probe",
+        "zero_progress",
+        "early_eof",
+        "extra_byte",
+        "overreturn",
+        "read_error",
+        "error_after_prefix",
+        "expiry_during_read",
+        "expiry_during_eof",
+        "bounded_final_read",
+        "eof_read_error"
+      ],
+      "caseShape": "records"
+    }
+  ]
+}
