@@ -1,4 +1,45 @@
-# Current checkpoint: shared ancestor identity accepted; publication next
+# Current checkpoint: ancestor identity published; caller migration next
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107. Implementation637f7c1259e42a3b1bf70a9e49a3f5e15e6740b1
+normally pushed to origin/codex/q100-physical-feasibility, exact remote verified;
+Gmail1a1be88e87643046 SENT_ONCE. Receipt gets no second mail; verify actualHEAD after
+receipt commit. Origin dspevo-afk/TroubleshootJS; no upstream. Actual29-path
+treefabd475cb01786a1a68534935e30441b52e0fd0e, patchd73994ec1ddc4175a28d582203b9a4347ca86b9a00e4928122dd35dacc5e18eb; intended-only/index/bytes/privacy/whitespace pass.
+Preserve four untracked caller files and normal-prior-caller-gate-r1/.gitattributes.
+Main5f05b005 retains9tracked/6untracked/staged0; E d9747229 reportM;
+Desktop e0c36885 retains7tracked/89untrackedfiles/staged0. Reports mirror only.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f,
+ancestor-identity-r1. Publishedreader863a258c/test57e89799, observer47862595/
+testf395505b, canarybbd95df8. Proof3b44e3dcfcc2456c1b2cf09258da21abb7c7b04cdc65156c908657b1d1c507ef.
+Private/public reader13PASS/1privilegeSKIP, observer18PASS/1sameSKIP; ninehost
+controls each; maintainedreader2positive/13exactreject, resource1positive/
+9exactreject;3realjunctions verified/removed; actual5tool/2SOURCE/link and
+badSHA controls pass. ScopedindependentSOURCEreviewclear/rootruntimeaccepted.
+Leaf/handle/content/path/reparse/closure guards retained; only irrelevantancestor
+clock/size excluded via sharedreaderpolicy. Rawtokensretained, externalfacts
+unchanged/internalv2. Earlierfailedcandidates/fixtures/receipts remain FAIL.
+Allacceptedchildren terminate/ownedprocessroots+logsabsent; cleanupdurationnull;
+threeverifiedsuccessfixturetrees removed; failed/historicalresources preserved.
+No newpersistentprocess/link; olduncertainresources untouched.
+
+Next migratepreservedunpublishedcaller0661249e/testE2AADD3E andcanariesf7b8/d40b
+to publishedreader/observer/newproof pins; retireduplicatecontrolprojection in
+favorofsharedowner; freshtests/selectedCLI/sourcepreflight/closedphasecontrols.
+Do not reuse oldprivate25PASS asnewcandidateacceptance. Publicoldcallerfailed
+twice andunchangedfullrunsstopped; diagnosedcontrolled/liveancestor-mtime mechanism,
+exactoldexception snapshotsunknown. Onlyafternewcallergates mayrootexclusively
+recordactualnormalphasejournal beforefixed20normalingest. Noactualconfigemitter/
+journal/20body/resourceobserved. NormalizerE872/codecC1/kernelF87/prov215ad/metaC487
+unchanged. OldD descriptor/result/generatedinput DATA, oldbuilders/CLIs, manifest
+following/protected/heldoutDATA denied. Genuineoneoriginal+exactly NULL/OBSERVE
+UNSPENT/GATED. Allcaps/exactseeds/epochs/oracles/CircuitJS truthunchanged;
+Full30EXCLUDED, HARD/PSYCHOTIC unavailable/unrun, historical unreadUNCERTIFIED,
+fullD/H1unqualified, playable100=0/betaHELD. GWT/PlayerNOTAPPLICABLE;
+electrical/populationnotrenewed. Continue standingroadmap; no duplicateemails.
+
+# Historical checkpoint: shared ancestor identity accepted; publication next
 
 UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107 HEAD8038350eff4bb146185729ae1c3f125ef3170d4e.

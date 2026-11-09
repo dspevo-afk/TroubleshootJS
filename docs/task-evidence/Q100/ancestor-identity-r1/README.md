@@ -1,7 +1,7 @@
 # Shared ancestor identity prerequisite
 
-Locally accepted for the recorded SOURCE and finite gates. Publication is pending;
-the current checkpoint records the eventual exact commit/push/email outcome.
+Accepted and published as `637f7c1259e42a3b1bf70a9e49a3f5e15e6740b1` on origin/codex/q100-physical-feasibility;
+exact remote SHA verified. Gmail `1a1be88e87643046` SENT_ONCE; [publication](PUBLICATION_R1.md).
 Final proof SHA256 `3b44e3dcfcc2456c1b2cf09258da21abb7c7b04cdc65156c908657b1d1c507ef`.
 
 The reader now owns `_path_identity` and `_token_identity`. It keeps raw path
