@@ -588,7 +588,7 @@ public final class CurrentV2InputSetupCanary {
                 "12345678-1234-4234-8234-123456789abC")));
         negatives.add(new NegativeCase("TRIAL_JOIN", "V2_SETUP_POLICY",
             new PutMutation(new String[]{"capture","trialDisposition"},"orderChanged",
-                Boolean.TRUE)));
+                Boolean.FALSE)));
         negatives.add(new NegativeCase("CAPTURE_COHORT_SUBSET", "V2_SETUP_POLICY",
             new ListSetMutation(new String[]{"capture"},"capturedNetIds",50,"NET_050")));
         negatives.add(new NegativeCase("CAPTURE_INDEX_43", "V2_SETUP_POLICY",
@@ -605,9 +605,9 @@ public final class CurrentV2InputSetupCanary {
         negatives.add(new NegativeCase("REQUESTED_COHORT_SUBSET", "V2_SETUP_POLICY",
             new CompoundMutation(
                 new ListSetMutation(new String[]{"prior","trialDisposition"},
-                    "requestedNetIds",43,"NET_143"),
+                    "requestedNetIds",0,"NET_143"),
                 new ListSetMutation(new String[]{"capture","trialDisposition"},
-                    "requestedNetIds",43,"NET_143"))));
+                    "requestedNetIds",0,"NET_143"))));
         negatives.add(new NegativeCase("CAPTURE_COHORT_ORDER", "V2_SETUP_POLICY",
             new CompoundMutation(
                 new ListSetMutation(new String[]{"capture"},"cohortNetIds",0,"B_COIL_LOW"),
@@ -686,12 +686,19 @@ public final class CurrentV2InputSetupCanary {
         return "NET_"+(index<10 ? "00" : index<100 ? "0" : "")+index;
     }
 
-    private static void checkNetList(List<?> list, String label) {
+    private static final int[] REQUESTED_INDICES = {
+        43, 50, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+        22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
+        44, 45, 46, 47, 48, 49, 51, 52, 53, 54, 55, 56, 57, 58, 59
+    };
+
+    private static void checkNetList(List<?> list, String label, boolean pairFirst) {
         Set<String> unique=new HashSet<String>();
         for (int i=0;i<60;i++) {
             Object item=list.get(i);
             need(item!=null && item.getClass()==String.class, "NET_STRING_"+label+"_"+i);
-            need(expectedNet(i).equals(item), "NET_LITERAL_"+label+"_"+i);
+            int expectedIndex=pairFirst ? REQUESTED_INDICES[i] : i;
+            need(expectedNet(expectedIndex).equals(item), "NET_LITERAL_"+label+"_"+i);
             need(unique.add((String)item), "NET_UNIQUE_"+label+"_"+i);
         }
         need(unique.contains("A_COIL_LOW") && unique.contains("B_COIL_LOW"),
@@ -708,8 +715,8 @@ public final class CurrentV2InputSetupCanary {
         need("A_COIL_LOW".equals(cohort.get(0)) && "B_COIL_LOW".equals(cohort.get(1)),
             "TRIAL_COHORT_LITERAL_"+label);
         List<?> requested=checkedList(trial,"requestedNetIds",60);
-        checkNetList(requested,label+"_REQUESTED");
-        bool(trial,"orderChanged",false);
+        checkNetList(requested,label+"_REQUESTED",true);
+        bool(trial,"orderChanged",true);
         bool(trial,"feedbackValidated",true);
     }
 
@@ -801,7 +808,7 @@ public final class CurrentV2InputSetupCanary {
         need("A_COIL_LOW".equals(cohort.get(0)) && "B_COIL_LOW".equals(cohort.get(1)),
             "CAPTURE_COHORT_LITERAL");
         List<?> captured=checkedList(capture,"capturedNetIds",60);
-        checkNetList(captured,"captured");
+        checkNetList(captured,"captured",false);
         checkTrial(checkedMap(value(capture,"trialDisposition"),TRIAL_KEYS,"captureTrial"),
             "captureTrial");
         Map<String,Object> priorTrial=objectMap(value(prior,"trialDisposition"),"priorTrialJoin");

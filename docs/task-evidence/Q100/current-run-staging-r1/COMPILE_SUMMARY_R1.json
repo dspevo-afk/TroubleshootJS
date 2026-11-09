@@ -1,0 +1,225 @@
+{
+  "status": "PASS_FINAL_SOURCE_JDK8_RUN_STAGING_COMPILE",
+  "sourceFreezeSha256": "bb445458907e7ab757e0bb5bc2acfffd6c9352bba5909a91ca43051f3705cdd9",
+  "call": {
+    "phase": "run-staging-jdk8-compile-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 1276.4981,
+    "wrapperTotalElapsedMs": 1518.2091,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "0b2f552b2db31026f1235ffbe3215476fbd5a257407d610836c91dda243aacf9",
+      "owner.json": "2b59050eb7cc806d620f2727cc678da416475a60d28e94acb14f21d83061bcb2",
+      "process.json": "5e7f95d5411383b45820f3c0053ac9c0879c7b63ee77b6e3d67ecc2a56c42e86",
+      "parent.json": "05dd84bcf980b9a9d326413202e8a21c899a54504577dba1cde20b2e93a05450",
+      "result.json": "48e0f2da8c78eefca2f8c099365be17576602dc34c4ccffd2241919ea3eb5aeb",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "sourceCount": 5,
+  "classes": [
+    {
+      "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryInputV2.class",
+      "bytes": 8094,
+      "sha256": "36209cea18d7b19ff12b14025405feba9c3cc2215a03eaeacb42a74206ca46d0",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentAssemblyMetadata.class",
+      "bytes": 5782,
+      "sha256": "f28b0e78b408521255621d5b6308c8cdee8aec50de812b55194787bc78dcfe0b",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentRunStagingCanary$1.class",
+      "bytes": 287,
+      "sha256": "416f053e345501da791191c3a4c4bb65a48d86f711384cf663e9289e5fb98858",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentRunStagingCanary$CountingMap.class",
+      "bytes": 867,
+      "sha256": "54d718c64f26ba2a3ee3ca3ab1f292b2261cb22891cd3308aca3f5b5c3a66d32",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentRunStagingCanary$FixtureFactory.class",
+      "bytes": 1444,
+      "sha256": "2ca8a0516e0073eb7ff962321c0bd953bb09f8f2d3f134cc3d4f485f14a56c74",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentRunStagingCanary.class",
+      "bytes": 27877,
+      "sha256": "2978efed8ee8617b3d7cc91bbc7a82bad86793ffaecc6df49c0258408ec787fb",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetup$Factory.class",
+      "bytes": 553,
+      "sha256": "482a80c8ded5556866ad205813bb5bb9862ab0cb31d3d462f9475e1ac26cd127",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetup$State.class",
+      "bytes": 1655,
+      "sha256": "56514d7e670e6c44beaf9b8a4d880ef8d51fa38e65689669a71046f0f10cef09",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetup.class",
+      "bytes": 16236,
+      "sha256": "beaa0947120b80ebc0e50319d7cac0c6912f978654e976e5dc09b82631f19278",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary$1.class",
+      "bytes": 1152,
+      "sha256": "8084120897e20af48756ece617e404e43988f425ed68efe554e3a2ce1e114732",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary$2.class",
+      "bytes": 1123,
+      "sha256": "2c37ad0f29f96c4921cedebd3502a85a20ff1e644e6f7d4941de1b05a4ad8a02",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary$3.class",
+      "bytes": 1100,
+      "sha256": "dd2d54c645f35f144f3aadb550f105d046baabf3d0aba173cc14484584118863",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary$4.class",
+      "bytes": 982,
+      "sha256": "dd859a620b4d73d387798335be96263caf93a00cabc8ddc366570e8f18dc0c72",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary$ArrayListVariant.class",
+      "bytes": 717,
+      "sha256": "6da968961a4b5c0576c472e2f27a1cecff0881132c17e7d35576f0223ca8fc5b",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary$CompoundMutation.class",
+      "bytes": 893,
+      "sha256": "19e5ee1d754d38a5cdb6541df6c0195766d0e2a6f18097e826c0c183bdc7532f",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary$FactorySpy.class",
+      "bytes": 3108,
+      "sha256": "e65eebfb0843a62673b6e160eed5a74f9392f731cc5e8a7d58ec04f60da04cb7",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary$ListAppendMutation.class",
+      "bytes": 1040,
+      "sha256": "e7ddbd985b4f186e1f15a46f1379299620f97ad4f778f9dd401a6bf8db3b2f15",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary$ListRemoveMutation.class",
+      "bytes": 1009,
+      "sha256": "94ae5d38d4c3a7fa036513a19f71f1b6b22701108b4b78c5e49c183bea834517",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary$ListSetMutation.class",
+      "bytes": 1097,
+      "sha256": "003b96c6c4c23ac630e0601d5697fdcacd50317d0e9aa71538b9ebd2aab15fd5",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary$MapShapeMutation.class",
+      "bytes": 2026,
+      "sha256": "d990d96b1096eaf9631064dc959147b47ea2a182c44c0957fd6d940e6e9d1a06",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary$Mutation.class",
+      "bytes": 399,
+      "sha256": "31a90f9d38a9989ebd411c521617e464e1b10163d9351241dfd9dff93709fbfd",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary$NegativeCase.class",
+      "bytes": 796,
+      "sha256": "f8e5426ccac29e3cff2ccaa46b4d5d86095f8266486d58223f1b9112434d5590",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary$PutMutation.class",
+      "bytes": 1041,
+      "sha256": "5b86ca8ef973b26f7c47436c57b0c0eb35e217c43744694c1a5536956b6942a4",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary$Success.class",
+      "bytes": 1072,
+      "sha256": "3d08621c2699d8b3a69115d732fb417ce259550c81a773333d92bd91131c8642",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary$WalkStats.class",
+      "bytes": 636,
+      "sha256": "e2fa1f336aa460309c42dcac2c67d7836230b9d43e3479c838bea5dc6900a64f",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetupCanary.class",
+      "bytes": 32153,
+      "sha256": "d0884267a01b3e84de9b2ab9bb2c2b9addb500eebcffa78dc16781a4eb604959",
+      "major": 51
+    }
+  ],
+  "removedOldClasses": [
+    {
+      "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryInputV2.class",
+      "bytes": 8094,
+      "sha256": "1493476872f2ec49e84ba9b7c0b6248333d6d9301c9d3d5f0726b32820586b49",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentAssemblyMetadata.class",
+      "bytes": 4569,
+      "sha256": "40c006dc334c36a6d10243947943a560097d31300378a38f80fd900aa17271df",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetup$Factory.class",
+      "bytes": 553,
+      "sha256": "482a80c8ded5556866ad205813bb5bb9862ab0cb31d3d462f9475e1ac26cd127",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetup$State.class",
+      "bytes": 1655,
+      "sha256": "56514d7e670e6c44beaf9b8a4d880ef8d51fa38e65689669a71046f0f10cef09",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2InputSetup.class",
+      "bytes": 16236,
+      "sha256": "378e1b3979b576efd9ce92c02f50ef558605e2c4d33cf3eb763c27df454fd4a4",
+      "major": 51
+    }
+  ],
+  "classCount": 26,
+  "classBytes": 113139,
+  "allMajor51": true,
+  "noDuplicateOrShadowClasses": true,
+  "acceptedDependencyCompileReauthenticated": true,
+  "nativeProducerCalls": 0,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "privateFullCompileGateSha256": "29a8ba0139b7ab7434dfdbd807d1c2434304bbed8169949f148db32d3163886e",
+  "dependencyInventorySha256": "674d433915ee8cc4fa8d9ec58a35be3af65aab2cd1231d24c11fd7ff44cf0143",
+  "dependencyClassCount": 2482,
+  "dependencyClassBytes": 11927333
+}

@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "TSJ_CURRENT_RUN_STAGING_CANARY_R1",
+  "title": "TroubleshootJS current RUN input and cohort staging canary",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "mode", "status", "names", "cases", "parentConstructions", "error"],
+  "properties": {
+    "schema": { "const": "TSJ_CURRENT_RUN_STAGING_CANARY_R1" },
+    "mode": { "enum": ["SUITE", "INVALID"] },
+    "status": { "enum": ["PASS", "FAIL"] },
+    "names": { "type": "array", "items": { "enum": ["positive", "wrong_capture_order", "duplicate_capture", "missing_capture", "requested_mismatch", "prior_false", "capture_false", "null_arguments", "group_guard_before_read"] }, "maxItems": 9 },
+    "cases": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "status", "phase", "reason", "expectedError", "observedError", "units", "copiedEntries", "copyChunks", "groups", "priorGroups", "groupUnits", "maxGroupUnits", "maxGroupNanos", "meterOpen", "setupDeltaUnits", "setupDeltaCopies", "setupDeltaChunks", "stageDeltaUnits", "stageDeltaCopies", "stageDeltaChunks", "operationNanos", "totalElapsedNanos", "openGroupElapsedNanos", "inputUnchanged", "outputDetached", "rejections", "sourceReads", "sourceReadObserved", "sourceReadCensus", "payload", "discarded", "finishCalls"],
+        "properties": {
+          "name": { "enum": ["positive", "wrong_capture_order", "duplicate_capture", "missing_capture", "requested_mismatch", "prior_false", "capture_false", "null_arguments", "group_guard_before_read"] },
+          "status": { "enum": ["PASS", "FAIL"] },
+          "phase": { "type": "string", "maxLength": 64 },
+          "reason": { "type": "string", "maxLength": 240 },
+          "expectedError": { "type": "string", "maxLength": 96 },
+          "observedError": { "type": "string", "maxLength": 240 },
+          "units": { "type": "integer", "minimum": 0, "maximum": 10271 },
+          "copiedEntries": { "type": "integer", "minimum": 0, "maximum": 1048576 },
+          "copyChunks": { "type": "integer", "minimum": 0, "maximum": 67 },
+          "groups": { "type": "integer", "minimum": 0, "maximum": 640 },
+          "priorGroups": { "type": "integer", "minimum": 0, "maximum": 640 },
+          "groupUnits": { "type": "integer", "minimum": 0, "maximum": 32768 },
+          "maxGroupUnits": { "type": "integer", "minimum": 0, "maximum": 32768 },
+          "maxGroupNanos": { "type": "integer", "minimum": 0, "maximum": 5000000000 },
+          "meterOpen": { "type": "boolean" },
+          "setupDeltaUnits": { "type": "integer", "minimum": 0, "maximum": 10271 },
+          "setupDeltaCopies": { "type": "integer", "minimum": 0, "maximum": 1048576 },
+          "setupDeltaChunks": { "type": "integer", "minimum": 0, "maximum": 67 },
+          "stageDeltaUnits": { "type": "integer", "minimum": 0, "maximum": 264 },
+          "stageDeltaCopies": { "type": "integer", "minimum": 0, "maximum": 125 },
+          "stageDeltaChunks": { "type": "integer", "minimum": 0, "maximum": 64 },
+          "operationNanos": { "type": "integer", "minimum": 0, "maximum": 90000000000 },
+          "totalElapsedNanos": { "type": "integer", "minimum": 0, "maximum": 90000000000 },
+          "openGroupElapsedNanos": { "type": "integer", "minimum": 0, "maximum": 5000000000 },
+          "inputUnchanged": { "type": "boolean" },
+          "outputDetached": { "type": "boolean" },
+          "rejections": { "type": "integer", "minimum": 0, "maximum": 3 },
+          "sourceReads": { "type": "integer", "minimum": 0, "maximum": 4 },
+          "sourceReadObserved": { "type": ["integer", "null"], "minimum": 0, "maximum": 1000000 },
+          "sourceReadCensus": { "type": "integer", "minimum": 0, "maximum": 1 },
+          "payload": {
+            "oneOf": [
+              { "type": "null" },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["netIds", "requestedNetIds"],
+                "properties": {
+                  "netIds": { "const": ["A_COIL_LOW", "B_COIL_LOW"] },
+                  "requestedNetIds": { "const": ["A_COIL_LOW", "B_COIL_LOW", "NET_000", "NET_001", "NET_002", "NET_003", "NET_004", "NET_005", "NET_006", "NET_007", "NET_008", "NET_009", "D_SENSE", "NET_011", "NET_012", "NET_013", "NET_014", "NET_015", "NET_016", "NET_017", "NET_018", "NET_019", "NET_020", "NET_021", "NET_022", "NET_023", "NET_024", "NET_025", "NET_026", "NET_027", "NET_028", "NET_029", "NET_030", "NET_031", "NET_032", "NET_033", "NET_034", "NET_035", "NET_036", "NET_037", "NET_038", "NET_039", "NET_040", "NET_041", "NET_042", "NET_044", "NET_045", "NET_046", "NET_047", "NET_048", "NET_049", "NET_051", "NET_052", "NET_053", "NET_054", "NET_055", "NET_056", "NET_057", "NET_058", "NET_059"] }
+                }
+              }
+            ]
+          },
+          "discarded": { "type": "boolean" },
+          "finishCalls": { "type": "integer", "enum": [0, 1] }
+        }
+      }
+    },
+    "parentConstructions": { "type": "integer", "minimum": 0, "maximum": 9 },
+    "error": { "type": "string", "maxLength": 96 }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "mode": { "const": "SUITE" } }, "required": ["mode"] },
+      "then": {
+        "properties": {
+          "names": { "const": ["positive", "wrong_capture_order", "duplicate_capture", "missing_capture", "requested_mismatch", "prior_false", "capture_false", "null_arguments", "group_guard_before_read"] },
+          "cases": { "minItems": 9, "maxItems": 9 },
+          "parentConstructions": { "const": 9 }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "mode": { "const": "INVALID" } }, "required": ["mode"] },
+      "then": {
+        "properties": {
+          "status": { "const": "FAIL" },
+          "names": { "maxItems": 0 },
+          "cases": { "maxItems": 0 },
+          "parentConstructions": { "const": 0 },
+          "error": { "const": "CANARY_ARGUMENTS" }
+        }
+      }
+    }
+  ]
+}

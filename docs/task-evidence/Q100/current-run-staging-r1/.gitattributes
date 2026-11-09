@@ -1,0 +1,5 @@
+# Evidence and Source projections use exact reviewed bytes.
+* -text
+# Actual Windows JVM streams retain their measured CRLF bytes.
+ACTUAL_*_STDOUT_R1.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+failed-candidate-r1/STDERR_R1.txt -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

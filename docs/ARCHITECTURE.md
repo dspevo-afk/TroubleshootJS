@@ -381,6 +381,17 @@ semantic acceptance to false observations. Component/native/reader boundaries ar
 qualified; actual cohort/metadata staging and insertion before the R7 ownership/
 accounting close remain separate. Normal assembly and genuine capture stay closed.
 
+The [RUN input and pre-body cohort component](task-evidence/Q100/current-run-staging-r1/README.md)
+aligns native RUN admission with the shared owner's `orderChanged=true` contract.
+`CurrentAssemblyMetadata.cohortBeforeBody` temporarily views a validated prior,
+then calls the existing derivation/projection owners for detached cohort lists
+before body construction. It costs264units/125copies/64chunks, changes no input
+or body, and never replaces receipt-bound qualified metadata. The independent
+codec remains the structural oracle; native admission and derivation enforce
+their strict semantics. Historical false RUN fixtures are retired for current
+native use. R7 cleanup insertion and the normal full-D/host/lifecycle boundaries
+remain separate and closed; no genuine envelope or electrical qualification ran.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

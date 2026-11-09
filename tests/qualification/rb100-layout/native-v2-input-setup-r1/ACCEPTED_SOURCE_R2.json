@@ -1,0 +1,60 @@
+{
+  "status": "PASS_CURRENT_RUN_INPUT_AND_PREBODY_STAGING_SOURCE",
+  "baseCommit": "a8273fbab8e2744a9adde2e47eb05662e846285c",
+  "sourceFreezeSha256": "bb445458907e7ab757e0bb5bc2acfffd6c9352bba5909a91ca43051f3705cdd9",
+  "source": [
+    {
+      "path": "tests/qualification/rb100-layout/native-v2-input-setup-r1/CurrentV2InputSetup.java",
+      "bytes": 22823,
+      "sha256": "d0e42cf2fd93657e2a086e4fff4e8b0111937b7d5c22899fac1107c1bf3b12e2"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/native-v2-input-setup-r1/CurrentV2InputSetupCanary.java",
+      "bytes": 45542,
+      "sha256": "1c58295ca29660af6287de2602665436a4adafdd8da9fa8537de8dde122230e2"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/qualified-metadata-r1/CurrentAssemblyMetadata.java",
+      "bytes": 6856,
+      "sha256": "488bb13cd7875ab9612ea300bf4430eac7e1bef5243ff95057186b41c77d21de"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-run-staging-r1/CurrentRunStagingCanary.java",
+      "bytes": 34268,
+      "sha256": "ad933e4bc54eaf66b2b0abc8106f4da8a6220d8913b551f30a91595a0eab6bba"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-run-staging-r1/CohortTerminalTelemetryInputV2.java",
+      "bytes": 21402,
+      "sha256": "b9b1dc6c6b61f50a5a97259d31783302c4b77ec5a938dd88b70fe7c8225e10e6"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-run-staging-r1/FIXTURE_REFERENCE_R1.json",
+      "bytes": 3166,
+      "sha256": "9ff0fe9fb4080a42066c9e4feb689428cdf1404d4e47eba3d7c8cee787da0023"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-run-staging-r1/SYNTHETIC_RUN_CONTEXT_R1.json",
+      "bytes": 66483,
+      "sha256": "b18d9b6169cfe1ed846402a6a7784fb49f008624a00bc8aa535fa73e444e984d"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-run-staging-r1/test_run_profile_r1.py",
+      "bytes": 3542,
+      "sha256": "c46bef4c55ec75d373fc7b938e5dbc79908c64a739517cd5336247109f7e4d41"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-run-staging-r1/verify_run_staging_r1.py",
+      "bytes": 7217,
+      "sha256": "aa1f58d93119a1b44113375bf81d37e26a73d5451be7f7053273e55dfa4df4d2"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-run-staging-r1/STAGING_CANARY_SCHEMA_R1.json",
+      "bytes": 6120,
+      "sha256": "e4b7570cbaae65bae20bb50660778a4b3573107b8c4bd8769dd0bd97c82ca78a"
+    }
+  ],
+  "nativeProducerCalls": 0,
+  "normalHostAcceptance": false,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

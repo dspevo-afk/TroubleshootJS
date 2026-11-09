@@ -1,0 +1,47 @@
+{
+  "status": "PASS_ACTUAL_NATIVE_STAGING_AND_INDEPENDENT_READER",
+  "call": {
+    "phase": "run-staging-suite-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 389.5344,
+    "wrapperTotalElapsedMs": 634.5127,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "c3dcecb20a613b9079e52856e3e2270c7c3a26b48d23bb235b218c5cf3851f65",
+      "owner.json": "d76baf56620fe4745ad0cf86fd7e140f29b704ab0d1d57a85a968af72cb99d6a",
+      "process.json": "24cecd633cf0fdeeebc07f38112b507d33ae2fcaee01ee6680b30f0b2c43c066",
+      "parent.json": "430e2c3d409649295e6ddc22b22fbec68f38ebd94a6e2250091779ed5f05761d",
+      "result.json": "a15f6043c317c2b96c89938c2f5a04c56a0b86e2730c588ac552bfdff6327086",
+      "stdout.txt": "255ccc63a0887f4e2f7f33ebf0a9be39d50052bfc23caea3216e1734092e2f7a",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "reader": {
+    "phase": "run-staging-reader-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 345.5267,
+    "wrapperTotalElapsedMs": 576.3959,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "02fae23c905d310e423d1bfbd0a1e19257c944fb1eb938d0dc6da758cd21f3b5",
+      "owner.json": "635214f2fdc10fe2acd14fb94c517508d4a6e2176c38b7ade25d6aa2df17e9a3",
+      "process.json": "57cb68c4413c3657dffaa3db17d2e858096494dc61cc42712e95b68334fa3f05",
+      "parent.json": "78137406168d961ab6ab1e756187530d89e3ab317d61bf4c0b02668c5b5e82eb",
+      "result.json": "7872ab85c0f87d64ae57a077eeef2fc6dc0eaa4a5e4774554935b52ffbb4205d",
+      "stdout.txt": "9ece0bc568a8f0e500b39a5e7f26ea499913008c1d9c20c6fa05cbed25b19fd4",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "summary": {
+    "status": "PASS_INDEPENDENT_SYNTHETIC_RUN_STAGING_READER",
+    "caseCount": 9,
+    "genuineEnvelope": "UNSPENT_GATED",
+    "normalHostAcceptance": false
+  }
+}

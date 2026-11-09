@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,6 +21,31 @@ final class CurrentAssemblyMetadata {
             "tsj-cohort-terminal-qualified-prior-v2";
 
     private CurrentAssemblyMetadata() { }
+
+    /**
+     * Derives the cohort before createBody needs its child map. The caller owns
+     * the validated, unchanged setup and captured IDs exclusively throughout.
+     * The temporary view borrows prior only for this synchronous call; the
+     * returned projection contains only freshly derived lists.
+     */
+    static Map<String,Object> cohortBeforeBody(
+            CohortTerminalTelemetryStudy.SetupMeter meter,
+            CohortTerminalTelemetryStudy.SetupResult setup,
+            List<String> actualCapturedIds) throws Exception {
+        if (meter == null || setup == null || actualCapturedIds == null)
+            throw new IOException("METADATA_ARGUMENTS");
+
+        meter.charge(1);
+        Map<String,Object> data = setup.data;
+        meter.charge(1);
+        Object prior = data.get("prior");
+        meter.charge(1);
+        Map<String,Object> view = new LinkedHashMap<String,Object>();
+        meter.copy(1);
+        view.put("qualifiedPrior", prior);
+        return CurrentResultProjections.cohort(meter,
+                CohortTerminalTelemetryStudy.deriveCohort(view, actualCapturedIds, meter));
+    }
 
     static ReceiptContentBinding prepare(
             CohortTerminalTelemetryStudy.SetupMeter meter,

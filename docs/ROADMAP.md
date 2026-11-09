@@ -1,6 +1,6 @@
 # TroubleshootJS: Current Roadmap
 
-**Updated:** 2026-11-08 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
+**Updated:** 2026-11-09 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
 
 ## Current product checkpoint
 
@@ -1471,6 +1471,23 @@ gated; playable100=0/betaheld, protected data exclusions and all caps unchanged.
 Implementation `f68277f5a22128830ad3eabd925a9b8141be384b` normally pushed to
 origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail1a1c23c3a8e396f7 sent once. This documentation receipt sends no second email.
+
+The [RUN input and pre-body cohort prerequisite](task-evidence/Q100/current-run-staging-r1/README.md)
+is locally accepted for its corrected synthetic candidate. Native RUN policy now
+matches the shared owner's true changed-order flag. A temporary prior view stages
+the detached cohort through the existing derivation/projection, without changing
+receipt metadata or the body contract. Fresh final-source JDK8 compile5Sources/
+26major51classes, maintained81/12089 regression,9 native compatibility cases,
+private/public12 profile tests, actual-output readers, eight selected reader
+negatives, two JVM protocol rejections and real host controls pass;20 final
+process receipts/inputs reauthenticated. The first native regression failed on a
+stale mutation index, which was corrected without omitting a case or assertion;
+the failed candidate remains preserved. No production/GWT/Player or electrical/
+population renewal. Normal assembly remains closed and the genuine envelope
+unspent/gated. Next is R7 scalar-to-cleanup body handoff under an explicit staging
+contract, before full result/full-D/actual-host lifecycle acceptance. All caps,
+exact seeds/epochs, protected data exclusions and playable100=0/betaHELD remain.
+Publication and completion notification are pending.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

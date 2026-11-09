@@ -1,0 +1,41 @@
+{
+  "status": "PASS_REAL_SELECTED_JDK8_HOST_CANARIES",
+  "positive": {
+    "phase": "run-host-positive-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 335.7857,
+    "wrapperTotalElapsedMs": 770.543,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "f583951e8080e8952a5a74257019ac1aeda13d66264b05f8ccccc1913bb41e5d",
+      "owner.json": "353c2bc96e3608c4a576bf5b5602596cfd32a9d1956313380f543b1fbcd7d211",
+      "process.json": "8cd2e8aa56fb2120869cbe0a136ffb61ce840006cb597c49ae06b8e8f4e227ac",
+      "parent.json": "c8a65a4640e8ba4bbe10261f6c9d805e23c769502814eaa07bfa0e84d319a060",
+      "result.json": "1a6e82bcdae8f65ca35f23a5b2a7be9494205edda3079ffa7c191ff223c4d239",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr.txt": "1cc134eee0b09c82ff01739623f30b95dcd265223e8377d051fa0b4ac3c6cfa3"
+    }
+  },
+  "negative": {
+    "phase": "run-host-negative-r1",
+    "status": "PASS_EXPECTED_REJECTION",
+    "childExitCode": 1,
+    "processElapsedMs": 294.5965,
+    "wrapperTotalElapsedMs": 522.83,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "3444c3f345eccc73e9609c7b37e87ccca5bf41fc38f24c65c8f5d90c5826508d",
+      "owner.json": "3349c5f52d9619969147684fa3b8d3d922eb1e15c8b63f61985e81e784537bb3",
+      "process.json": "93005ba58520c79d2d654fdd8b1896fd4355cb66c6e57cd412aa13646052eff7",
+      "parent.json": "4c5ee9425261e129da17b3ac8b719a8ba9658abd4d2139b012779d960b70065e",
+      "result.json": "237ed23947f30889f3625f52dfce2f131ae94ed4cb3764c381530b3fe8bdfdde",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr.txt": "546f4904f82978e90d88faa2f1559c35dbaeeceff89bb52b0f44cf1e22b8a505"
+    }
+  }
+}

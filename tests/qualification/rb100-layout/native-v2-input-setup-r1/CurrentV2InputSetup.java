@@ -373,7 +373,8 @@ final class CurrentV2InputSetup {
         fixed(s, get(s, trial, "controlFailedNetId"), "B_COIL_LOW");
         cohort(s, get(s, trial, "cohortNetIds"));
         sixty(s, get(s, trial, "requestedNetIds"));
-        bool(s, get(s, trial, "orderChanged"), false);
+        // RUN/TRIAL_EXECUTED is emitted only for a changed requested order.
+        bool(s, get(s, trial, "orderChanged"), true);
         bool(s, get(s, trial, "feedbackValidated"), true);
         return trial;
     }

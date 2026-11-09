@@ -1,4 +1,133 @@
-# Current checkpoint: projection component published
+# Current checkpoint: RUN input policy and cohort staging accepted locally
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD/base
+a8273fbab8e2744a9adde2e47eb05662e846285c, no upstream. Intended implementation,
+evidence and docs pending root publication review; staged0. Prior f68277f5/a8273fba
+projection publication and Gmail1a1c23c3a8e396f7 SENT_ONCE; never repeat.
+
+Corrected native RUN policy to orderChanged=true, matching actual shared-owner
+Source and unchanged deriveCohort. Added CurrentAssemblyMetadata.cohortBeforeBody:
+ephemeral prior view, existing derivation/projection, detached lists before body
+creation. Does not change input/body or receipt-bound prepare. Current codec
+remains structural. Historical false RUN profile retired for current native use.
+Fresh synthetic context b18d9b61/factory b9b1dc6c; no actual prior DATA.
+
+Final R2 W=OS-temp/tsj-q100-run-input-policy-r2-061d83b05aad44bcbc973417357e031b.
+Contract1e03b5b290eaf5acf3f6a628c72b629c5edeeea11446fb127ed554c81d76354c frozen
+before implementation; Sourcefreeze bb445458907e7ab757e0bb5bc2acfffd6c9352bba5909a91ca43051f3705cdd9.
+Proof375c9e83d4db2ca4b21975e9d0acad5e8b863041efadb3e2396428d4cbe30ca4;
+final public gateedf96b493b0c9ab5ea0104017996eaef4b06ace61c0626901d4897cd620aeff2.
+Fresh final-source JDK8 compile5Sources/26major51classes/113139B PASS;
+operation1276.4981ms/wrapper1518.2091ms. Accepted863Source/2486classes11953557B
+dependency compile fully reauthenticated/reused,5old classes excluded +projection
+helper =>2482dependency classes. No duplicate/shadow paths.
+
+Native81/12089 PASS460.9465/691.7376ms; native9stage PASS389.5344/634.5127ms;
+private reader345.5267/576.3959ms. Private12pure741.6312/969.0917ms, freshpublic12
+pure522.9073/752.9913ms, publicreader344.7177/581.4962ms PASS. Two real host controls,
+one reader-control positive/eight expectedexit2 incljunction, two JVM protocol
+expectedexit1 PASS. All20 final process receipts/inputs reauthenticated; all
+children terminated/ownedroots+logsabsent. Isolated process cleanup duration
+unmeasured. No native rerun after copy; Source/runtime bytes exactly compared.
+Setup10007/478/3; stage264/125/64; combined10271/603/67,2closedgroups. Actual640groups
+reject before observed Map read. No caller finish after failure; helper noOSresource.
+
+First W1=OS-temp/tsj-q100-run-input-policy-32333695d1e94cc1881126c7049e2f57 remains
+preserved: Sourcefreezef1bc2d32, JDKcompilePASS but native regressionFAIL unexpected
+exit1 NEGATIVE_ACCEPTED_REQUESTED_COHORT_SUBSET. Both requested mutations still
+targeted old43; corrected to0 under pair-first profile. No case/assertion/rejection
+weakened. Failure456.7924/690.68ms, child terminated/rootabsent, cleanupduration
+unmeasured. Raw Source/classes/process/output retained; failed-candidate packet
+included with evidence. Authoring/format preflight failures and Source-review
+drafts retained. Root Source/diff review and independent Source reviews of2helpers
+and12indexed mutations PASS; independent native NOTRUN. Prepare body Source-only
+reauthenticated/compiled, not rerun. Partial failed-setup units bounded, not census.
+
+No production/GWT/Player change; GWT/visiblePlayer N/A, electrical/population
+NOTRENEWED, CI NOTRUN. No owner/OriginalArm/ArmResult fabrication, producer/graph/
+Session/routing; normalassembly/full-D/actual-host/lifecycle CLOSED/unqualified.
+Genuineoneoriginal thenexactNULL/OBSERVE UNSPENT_GATED. Next R7 scalar-to-cleanup
+handoff under explicit body-staging contract before full-result acceptance.
+All limits/seeds/epochs/oracles/CircuitJS truth unchanged. Full30EXCLUDED,
+HARD/PSYCHOTIC unavailable/unrun, oldnormal20 historicalREAD/no reread,
+protectedUnreadUNCERTIFIED, playable100=0/betaHELD.
+
+Main5f05b005(9trackedM/6untracked/staged0), E d9747229(reportM/staged0), Desktop
+e0c36885(7trackedM/89untrackedfiles/staged0) preserved; Main/E reportmirroronly.
+No new persistent process/link. Source/classes/evidence/failures retained. Old
+uncertain browser14116/start639294472690745890/58320, preview34180/
+start639294472514546595/58264+14children, oldDprocess/unlinkUNCERTIFIED untouched.
+Publication, exact remote verification and one completion Gmail pending.
+
+# Historical checkpoint: R7 projection handoff Source audit
+
+UTC2026-11-09. F branch codex/q100-terminal-only-20261107 HEAD
+`a8273fbab8e2744a9adde2e47eb05662e846285c`, no upstream. Implementation
+`f68277f5a22128830ad3eabd925a9b8141be384b` (Qualify cohort and cleanup projections)
+and documentationreceipt a8273fba normallypushed/exactorigin/codex/q100-physical-
+feasibility HEADverified. CompletionGmail1a1c23c3a8e396f7 SENT_ONCE; receiptnoemail.
+Prior IDs remainhistorical; neverrepeat. Proofe2a07e15d9308209845f8db0107a34360b8166f368d5d545ddfc3ad0afb3532f.
+
+Published component5/55-unit cohort/cleanup maps, existingderiveCohort overfresh
+syntheticMap/Listviews, exclusiveownedlisttransfer andR7scalarpassthrough. False
+flags/belowSum remaininvalidforsemanticacceptance; no owner/producer/graph/
+Session/route/originalorArmResultfabrication. Fresh2Javasources/6major51classes/
+30143B; unchangedauthenticated863Sources/2486classes11953557B reused. ActualSMOKE2/
+SUITE15 andprivate/publicindependentreaders2each PASS;15private+15freshpublicpure
+PASS;2syntheticreaderpositives+8expectedexit2;3JVMprotocolrejections;2realhostcanaries;
+24actualrequests/processreceiptsreauthenticated. Sourcefreezedacf1c35, finalgate
+bbbffdc5. ExactpublicSourcebytes matchcompiled/testedinputs, nativenotrerunafter
+copy. 640realgroups rejectnextMapread; failuresdiscardMeterWITHOUTfinish.
+RootSource/integrated/staged/hash/byte/privacy/whitespace reviewPASS45paths;
+independentSourcehelper/canary+documentaryreviewsPASS, noindependentnativerun.
+PreflightscannerFAIL2correctedbeforecomponentruntime, raw/evidencepreserved;
+no unexpectednative/purefailure. No productionSource/oldownerAPI/limitschanged;
+GWT/PlayerN/A,electrical/populationNOTRENEWED,CI notrun.
+
+U=OS-temp/tsj-q100-result-projections-6f06ff895ac54a989055a0bd8f1cd61a hascomplete
+PUBLICATION_R1.json andNEXT_R1.json ->
+V=OS-temp/tsj-q100-projection-handoff-2115c041294e48cfb13796fc980da64b.
+V SourceInputR1 db381916c678180f86090230035b6d1b4ccb4beeab5ae208742abe7acd398f39,
+plan dd75fcd40b4f5142b06423c5ce4197eb428a99c88177bc7a4d421085f0390519.
+SevenalreadyadmittedcurrentSource/helperfiles pinned/copied. ScopeSourceonly:
+R7scalar-to-cleanup bodyinsertionbeforeguard/tree/close3498-3505 andcohort/current
+qualifiedmetadata staging. R7scalarcomputedonce3437 thenstoredfinal; noMeter
+cleanupcounter, nozero-work-placeholderread or durationreread/doubleadd. Normal
+assembly/mainclosed; actualcaller/fullD/host/lifecycle remainunqualified.
+
+LeafSourceplan complete/read-only. InitialDesktopcwd filenameabsenceWITHDRAWN;
+correctedFmetadata locates authored-flat-work-plan-r1/AuthoredFlatWorkMembers.java
+22521B/blob9bc500b7 (symbols115,178-188), generator26136B/blob2f690ffc (443,586,608),
+canary31922B/blobe9e52d26 (519 evidenceonly). Fullbyteshashedidentityonly, no whole
+unadmittedSourcebodycopied/read; generatedInputJavafilenameNOTDATAadmission.
+V ownermetadatad2991bf84d9f1d5c2366913a116f7c5afb790d33e90a18c44a7923b2ac3dac51,
+findings8b530054c2e74eaad447c3966d24b403590b2038b840f180db61539bef56a513,
+checkpointb385260c76fa84e6ca9d7371beba83a5b26b7db2febbd2a2b5385a6eb1216b3d.
+Next metadataboundaries/freeze narrowmember115-187 +188-end andgenerator emission/
+patchwindowsbeforesemanticread; neverpatchgeneratedcurrentStudy independently.
+Explicitstagedslots vsprebodycohortvia transient qualifiedPrior->setup.data.prior
+view remainUNRESOLVED; prove nestedtrialDisposition equivalence/identity andall
+newslotpreflight/atomicity/prepayments beforecode. Receiptpreparepost-original
+owneronly; originalcreatesop-1 exclusively. Existingclosealreadyafterpotential
+insertionpoint; donotassumeclosemustmove/duplicate. FourborrowedMapidentity
+contractmustnot silentlybreak; unfinishedchildrencannotserialize.NoActualOwner/
+OriginalArm/ArmResultfabrication/producer/graph/Session/routing inV. Source-only
+findingsarenot newpublishedruntimeacceptance. No userdecision needed.
+
+F reportM only/staged0 aftercheckpoint; Main5f05b005(9trackedM/6untracked), E
+ d9747229 reportM, Desktop e0c36885(7trackedM/89untrackedfiles) preserved; Main/E
+reportmirroronly. All24selectedchildren terminated/ownedroots+logsabsent;
+no newpersistentprocess/link; componentnoOSresources. Source/classes/evidence/
+oldfailuresretained, processcleanupdurationunmeasured. Uncertainbrowser14116/
+start639294472690745890/58320, preview34180/start639294472514546595/58264+14children,
+oldDprocess/unlinkUNCERTIFIED untouched. All90s/640groups/5s/32768/copy1MiB/chunk4096/
+Source4MiB/opJSON8MiB/result1MiB/class10k256MiB/compile-suite60s/reader180s/
+wrapper480s/cleanup120s caps, exactseeds/epochs/oracles/CircuitJStruthunchanged.
+Full30EXCLUDED,HARD/PSYCHOTICunavailable-unrun,oldnormal20historicalREAD/no reread,
+protectedUnreadUNCERTIFIED,playable100=0/betaHELD,genuineoneoriginal thenexact
+NULL/OBSERVE UNSPENT_GATED. No requireduserdecision or new envelope spend.
+
+# Historical checkpoint: projection component published
 
 UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD
 f68277f5a22128830ad3eabd925a9b8141be384b, no upstream. Origin/codex/q100-physical-
