@@ -1,10 +1,11 @@
-# Current checkpoint: projection component locally accepted
+# Current checkpoint: projection component published
 
 UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD
-f25dfcc880b69d830e24a2bff755ae0a0a25e74a, no upstream. Origin/codex/q100-physical-
+f68277f5a22128830ad3eabd925a9b8141be384b, no upstream. Origin/codex/q100-physical-
 feasibility exactsameSHA verified beforework. Prior e1e26502/receiptf25dfcc8
-published; Gmail1a1c1f0835d2a6cb SENT_ONCE, never repeat. New component accepted
-locally; final stagedreview/commit/normalpush/newcompletionemail PENDING.
+published; Gmail1a1c1f0835d2a6cb SENT_ONCE, never repeat. Component f68277f5a22128830ad3eabd925a9b8141be384b
+(Qualify cohort and cleanup projections) normallypushed/exactremoteverified;
+Gmail1a1c23c3a8e396f7 SENT_ONCE. Documentationreceipt pending; no secondemail.
 
 U=OS-temp/tsj-q100-result-projections-6f06ff895ac54a989055a0bd8f1cd61a.
 Public tests/qualification/rb100-layout/current-result-projections-r1 and
@@ -48,8 +49,9 @@ scalar-to-cleanup insertionbeforeguard/tree/close3498-3505 NEXT Source design;
 normalassemblystillSELECTED_WIRE_CANARY_ONLY. No workplaceholderread or added
 Meter.cleanupNanos (noneexists). R7scalarcomputedonce3437, passed/storedfinal.
 
-F intendednewtests/evidence/architecture/roadmap/report only, staged0 beforefinal
-review. Main5f05b005(9trackedM/6untracked), E d9747229 reportM, Desktop e0c36885
+F45intendedpaths staged/hash/byte/privacy/whitespaceauditPASS, committed.
+Independent documentaryconsistencyreviewPASS; clarifiedexistingJavaimplementation
+versussyntheticdata wording only. Documentationreceipt3paths only. Main5f05b005(9trackedM/6untracked), E d9747229 reportM, Desktop e0c36885
 (7trackedM/89untrackedfiles) preserved; Main/Ereportmirroronly. All24selected
 childtermination+ownedprocessroot/logabsenceproven; componentnoOSresource,
 no new persistentprocess/link. Processcleanupdurationunmeasured; Source/classes/
@@ -60,8 +62,8 @@ result1MiB/class10k256MiB/compile-suite60s/reader180s/wrapper480s/cleanup120s ca
 seeds/epochs/independentoracles/CircuitJStruth unchanged. Full30EXCLUDED;
 HARD/PSYCHOTICunavailable-unrun; oldnormal20historicalREAD/no reread;
 protectedUnreadUNCERTIFIED; playable100=0/betaHELD; genuineoneoriginal thenexact
-NULL/OBSERVE UNSPENT_GATED. No userdecision needed. Publishvalidatedcomponent,
-then nextSource-onlyhandoff/staging work withoutspendinggenuineenvelope.
+NULL/OBSERVE UNSPENT_GATED. No userdecision needed. Continue nextSource-onlyhandoff/staging work afterdocumentationreceipt;
+no spendinggenuineenvelope. ChildcleanupSource mapperactive/read-only.
 
 # Historical checkpoint: cohort and cleanup projection implementation
 

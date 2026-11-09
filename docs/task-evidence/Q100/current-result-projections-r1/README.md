@@ -1,7 +1,12 @@
 # Current cohort and aggregate-cleanup projections
 
-Locally accepted component qualification. Publication is pending final diff and
-staged review. [Proof](PROOF_R1.json) binds the exact Source and gate evidence.
+Published component qualification, implementation
+`f68277f5a22128830ad3eabd925a9b8141be384b`
+(`Qualify cohort and cleanup projections`), normally pushed to
+`origin/codex/q100-physical-feasibility`; exact remote SHA verified. Completion
+Gmail `1a1c23c3a8e396f7` sent once. This documentation receipt sends no second email.
+
+[Proof](PROOF_R1.json) binds the exact Source and gate evidence.
 
 `CurrentResultProjections` adds two native assembly adapters. The cohort adapter
 uses the existing Java `deriveCohort`, exercised here with synthetic views, and
