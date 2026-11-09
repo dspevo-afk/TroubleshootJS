@@ -1,0 +1,29 @@
+{
+  "call": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "ownership-emitter-reparse-phase-r1",
+    "processElapsedMs": 339.6918,
+    "receipts": {
+      "owner.json": "dc13f52df44c04af1d80be07ae1342ccada561f479373a2d0fa33bc1cd10a4ba",
+      "parent.json": "6829c9ddd89c96d94d1985068a9e692bc839b11dd0c92e220c733b78e58c9fed",
+      "process.json": "7bc721f7f517a159597bc9ba0dfdf5e3f79ba7204203f61e0a179171c1b17bd4",
+      "request.json": "1ef87cffb2538db5a01b93768ac4447eac4f95efd64f0fb11259cbf39c39f035",
+      "result.json": "1c6e351be074719ea29f620cde1e4f971effd7d70012b4a87601edd9e5836135",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "858cf6323f7acb52c86bde902093ee4cd5b3e4b2fdabab609bdacdb4f9f24458"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 570.3438
+  },
+  "status": "PASS_ACTUAL_HOST_REPARSE_PHASE",
+  "summary": {
+    "hostPathChecksMocked": false,
+    "linkMutation": false,
+    "readObserver": "FAIL_ON_ANY_SOURCE_READ",
+    "sourceReadCalls": 0,
+    "status": "PASS_ACTUAL_HOST_REPARSE_PHASE"
+  }
+}

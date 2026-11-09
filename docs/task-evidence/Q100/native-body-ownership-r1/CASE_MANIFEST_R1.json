@@ -1,0 +1,57 @@
+{
+  "status": "ROOT_ACCEPTED_NATIVE_CASE_MANIFEST",
+  "cases": [
+    {
+      "role": "smoke",
+      "class": "com.lushprojects.circuitjs1.client.BodyOwnershipCanary",
+      "args": [
+        "SMOKE"
+      ],
+      "status": "PASS",
+      "names": [
+        "null-meter",
+        "null-handcount",
+        "empty-map-handcount",
+        "empty-list-handcount",
+        "one-map-handcount",
+        "three-list-handcount",
+        "mixed-handcount",
+        "sibling-alias",
+        "copy-capacity-zero"
+      ],
+      "caseShape": "records"
+    },
+    {
+      "role": "suite",
+      "class": "com.lushprojects.circuitjs1.client.BodyOwnershipCanary",
+      "args": [
+        "SUITE"
+      ],
+      "status": "PASS",
+      "names": [
+        "debit-order-map",
+        "scalar-domain-sharing",
+        "disjoint-equal-containers",
+        "nested-alias",
+        "self-list-cycle",
+        "self-map-cycle",
+        "ancestor-cycle",
+        "unsupported-values",
+        "unsupported-keys",
+        "depth64",
+        "depth65",
+        "map-key-depth65",
+        "key-inclusive-visits-1000000",
+        "key-inclusive-visits-1000001",
+        "copy-capacity-one-of-two",
+        "group-roll",
+        "group-limit",
+        "operation-expiry",
+        "group-expiry",
+        "r7-alias-before-close",
+        "r7-disjoint-handoff"
+      ],
+      "caseShape": "records"
+    }
+  ]
+}

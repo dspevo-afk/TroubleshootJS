@@ -1,0 +1,126 @@
+{
+  "first": {
+    "call": {
+      "childExitCode": 0,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "ownership-source-tests-r3",
+      "processElapsedMs": 536.6861,
+      "receipts": {
+        "owner.json": "4a5bef0cc395589728a84f039fccc786d3d90520bd23f9fb9e2cedeedbc47a89",
+        "parent.json": "4616ceee429cf2f8f2277f5a3bdfa83eb3860d04be5bbcb030d1e62cd51e2f59",
+        "process.json": "dc98f1aac10859643a8af949e50f166a90ecb67dfeec4078ac53a84ecdadf9a1",
+        "request.json": "8e5cb25d010ecfcf58047d76f2df12bff42ba545eb9e1f5334ebeb444573cab7",
+        "result.json": "82b3b92d801dde558841989fbfb5925333e04bea0a17677c8a52961e1b60748a",
+        "stderr.txt": "5c9c2032f1a159d56a820a94578c2b9088d34fc279304d7e0b25569be18b94f3",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 766.9904
+    },
+    "cli": [
+      {
+        "call": {
+          "childExitCode": 0,
+          "isolatedCleanupDurationMs": null,
+          "ownedRootAndLogsAbsent": true,
+          "phase": "ownership-emitter-positive-r1",
+          "processElapsedMs": 527.7557,
+          "receipts": {
+            "owner.json": "f18a6a77a0cb7ec21b1f2145715910d7b8f1f8d01cf4ce76cdbf6e0008bd5c20",
+            "parent.json": "2b9c5a81b68dd64d63437feccdd611df99d4e302e8ab7c5ea27194d6eac69cb0",
+            "process.json": "490b0a16e9eded607bae9f817f3fb2ca8db11f486eb27766378e1a030863726f",
+            "request.json": "915051ce29a8faec44ac0cc8eb896b615577616566616a5ffc0f3ce26a5263ff",
+            "result.json": "21873b21def68f7fb5e0a2531e86a5a81877c37dd558f61002b88b21f7e2f705",
+            "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "status": "PASS",
+          "terminationProven": true,
+          "wrapperTotalElapsedMs": 763.9041000000001
+        },
+        "expectedError": null,
+        "outcome": "PASS"
+      },
+      {
+        "call": {
+          "childExitCode": 2,
+          "isolatedCleanupDurationMs": null,
+          "ownedRootAndLogsAbsent": true,
+          "phase": "ownership-emitter-existing-output-r1",
+          "processElapsedMs": 527.7512,
+          "receipts": {
+            "owner.json": "c09810c5b4248908f85d18f4c8516ddb7c30224bf10328fc840f8578b9c1a3b2",
+            "parent.json": "46ca335a3f8b6b5876fabcbea839e04f922e78b892725a5adb2034b9485c29c6",
+            "process.json": "16288594b1cd3afd45207b311c3741748a1ac3d25c9088d1493e5b4cc0cc5e10",
+            "request.json": "915051ce29a8faec44ac0cc8eb896b615577616566616a5ffc0f3ce26a5263ff",
+            "result.json": "62f7205fa2cec151bcb90aa641114b1de99eadf7ca6f57a9765d366fdd73ac71",
+            "stderr.txt": "abc362e236aad53176538718e4405972134f2b7d22ba889c5b2f2432c0caf322",
+            "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "status": "PASS_EXPECTED_REJECTION",
+          "terminationProven": true,
+          "wrapperTotalElapsedMs": 764.0713000000001
+        },
+        "expectedError": "EMIT_OUTPUT_EXISTS",
+        "outcome": "EXPECTED_REJECTION"
+      },
+      {
+        "call": {
+          "childExitCode": 2,
+          "isolatedCleanupDurationMs": null,
+          "ownedRootAndLogsAbsent": true,
+          "phase": "ownership-emitter-wrong-source-r1",
+          "processElapsedMs": 345.4925,
+          "receipts": {
+            "owner.json": "62294b5fc6909cfe9fbb8e7a5da801bf1fbbad6a3e18ea49ca2e6c67bb1129a8",
+            "parent.json": "18bd06cf1b2bf5d321cdd08ab0c040f57363112c1c61ec9005894e2a85f0f6ee",
+            "process.json": "8bfaeec017cb9ebc7932f7d56d29ecf7322d4d776db15b524f0991c9f647637a",
+            "request.json": "3f79d576dff262797fc9921006414e863df9afa98176b41ed84a57f86113b78b",
+            "result.json": "1857fa7dd49c5d807a4f1bae6e0851c53c83823404b767f928466ce686c6961a",
+            "stderr.txt": "bcc0b96d2f6463760ba5d4efab89298f0cf8c5b9ab0b80ff1690d55d2ac2d2ee",
+            "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "status": "PASS_EXPECTED_REJECTION",
+          "terminationProven": true,
+          "wrapperTotalElapsedMs": 580.4626000000001
+        },
+        "expectedError": "EMIT_SOURCE_PIN",
+        "outcome": "EXPECTED_REJECTION"
+      }
+    ],
+    "emittedBytes": 234954,
+    "emittedSha256": "9ac45b374c8aeee7a912a4e1452435b71b278aeae0a288e5a75dd82a149c006b",
+    "outsideInsertionBytesUnchanged": true,
+    "sourceTests": 11,
+    "status": "PASS_SOURCE_AND_SELECTED_EMITTER_FIRST_CONTROLS"
+  },
+  "genuineEnvelope": "UNSPENT_GATED",
+  "junction": {
+    "call": {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "ownership-emitter-windows-junction-r1",
+      "processElapsedMs": 335.9527,
+      "receipts": {
+        "owner.json": "649e7d67b498f49c417938b41b8dc5fd10148dc58a6eecc90d3f7cf153230064",
+        "parent.json": "fd0a45aaf7bf4d275d917c84214c1e83ef723f4091f3693f50cc0cafe4b53d53",
+        "process.json": "94f4e6fc692550f1f027ee4c58098ec9823944b524ff24fbce12df0b3d9a445e",
+        "request.json": "6d52c51fa12a3aa8ab777f2704fecb0df3769c316c7575759a04f424f52434e8",
+        "result.json": "447f9b27a076aa64c485050bdd4356cd1f05e9f251f52dc49d85029c3541fa98",
+        "stderr.txt": "a96d93771e12ee10adc92ccaa6efa7aa4d1b7d3400c895aaa9dc109009192146",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 579.0514000000001
+    },
+    "expectedError": "EMIT_SOURCE_INPUT",
+    "outcome": "EXPECTED_REJECTION"
+  },
+  "negativeExit2Meaning": "EXPECTED_REJECTION_NOT_NATIVE_OR_PRODUCER_PASS",
+  "sourceTests": 11,
+  "status": "PASS_SOURCE_AND_SELECTED_WINDOWS_EMITTER_CONTROLS"
+}

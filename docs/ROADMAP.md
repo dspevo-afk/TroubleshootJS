@@ -1391,6 +1391,20 @@ exclusions remain. Implementationd374e29b33fa9649f332571d64255b804746953a is nor
 pushed to origin/codex/q100-physical-feasibility, exact remote verified;
 completion Gmail1a1c118fb5dedb5a sent once.
 
+The [current body ownership guard](task-evidence/Q100/native-body-ownership-r1/README.md)
+is locally accepted for separately prepaid alias/cycle detection and the exact
+R7 insertion before metadata close. Final860-Source JDK8 build,2487 major51 classes,
+11 public Source checks, selected Windows emitter controls and30 native cases pass.
+The exact million-visit boundary, actual debit order and all34 scalar R7 final work
+equations pass under retained caps. Source-test failures and draft-history limits
+remain disclosed; final public replay reproduces compiled Study bytes and every
+consumed native input is reauthenticated. The body must remain exclusively stable;
+R9/direct-export bypasses and normal assembly remain unqualified. Next is the
+thirteen-key current result-body constructor and synthetic metadata/R7 composition,
+then full result/host/lifecycle gates. Genuine original,NULL,OBSERVE remains unspent/
+gated, playable100=0/beta held and all data exclusions remain. Normal publication
+is pending for this accepted component.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

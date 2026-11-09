@@ -1,0 +1,59 @@
+{
+  "status": "PRESERVED_FAILURES_AND_EXPLICIT_SOURCE_HISTORY_LIMITS",
+  "sourceFailures": [
+    {
+      "phase": "ownership-source-tests-r1",
+      "result": "FAIL2_OF11",
+      "exitCode": 1,
+      "cause": "Ordering assertions found the first occurrence of duplicate charge tokens",
+      "fix": "Advancing cursor preserves sequence and multiplicity; missing-charge counterexamples added"
+    },
+    {
+      "phase": "ownership-source-tests-r2",
+      "result": "FAIL1_OF11",
+      "exitCode": 1,
+      "cause": "Same-length mutation fixture did not force an observable metadata difference",
+      "fix": "Length-changing fixture forces path/handle mismatch; real same-length wrong-content CLI still rejects its SHA"
+    }
+  ],
+  "rawRevisionsPreserved": [
+    {
+      "role": "SourceTestR1",
+      "bytes": 14651,
+      "sha256": "d42f60aabd9e04e7b9a8a1d03ba7731fd695dea238ffa867bfd3b4c86fb9d248"
+    },
+    {
+      "role": "SourceTestR2",
+      "bytes": 15603,
+      "sha256": "e8968760827451bddfe40c4a8370f74c43d1609af53eba4439a5f19458009762"
+    },
+    {
+      "role": "CanaryR1",
+      "bytes": 25891,
+      "sha256": "b0a42dee7d1281aad913e35b806b98414064898332479237e203f288c4705b34"
+    }
+  ],
+  "withdrawnRunner": {
+    "sha256": "cdbdbd53130582c13bac5e37a0db67b653f7e90e3b7625d07dd5b7d64ddf324b",
+    "bytes": null,
+    "rawRetained": false,
+    "executed": false,
+    "change": "Removed empty smoke stderr from nonempty generic source-pin list; explicit stderr authentication retained"
+  },
+  "unreleasedEmitterDraft": {
+    "rawRetained": false,
+    "executed": false,
+    "change": "Bounded stable reparse-safe reader replaced initial unbounded Source-only draft before first release"
+  },
+  "initialCompile": {
+    "status": "PASS_COMPILE_ONLY_NOT_FINAL_SOURCE",
+    "nativeExecuted": false,
+    "retainedIn": "AB",
+    "manifestSha256": "24337a15c37e3689dafb48c012b3cbe0dc2d4c28aff20bbe82769088c963badb",
+    "change": "Final nested-alias fixture covers shared acyclic Map; old sibling case covers Lists"
+  },
+  "finalNativeFresh": true,
+  "allCurrentCompiledSourcesFrozenBeforeExecution": true,
+  "automaticApprovalReview": "Temporary junction command rejected before launch; read-only existing Windows junction tested instead",
+  "allRawDraftsPreservedClaimed": false
+}

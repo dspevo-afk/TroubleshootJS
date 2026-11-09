@@ -1,6 +1,85 @@
-# Current checkpoint: full-body ownership Source prerequisite
+# Current checkpoint: body ownership guard accepted, publication pending
 
-UTC2026-11-09. F codex/q100-terminal-only-20261107 HEADacb4dd5d7f309c7bc4f461c124974c0b254b5d90;
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD40520885d2e93e078e77958b5695a9f05aead620;
+normal origin/codex/q100-physical-feasibility/no upstream. Previousmetadatad374e29b/
+receiptacb4dd5d/clarification40520885 published; Gmail1a1c118fb5dedb5a SENT_ONCE.
+CurrentguardlocallyACCEPTED; commit/push/mailpending. ProofC756F0160502912122AEA21EF8A6D0BBBC25264E0FA93A3C2C3DBC8E29B4700A
+in native-body-ownership-r1. Guard8A7A5B0D, emittedStudy9AC45B37/234954B exact+47Bcall
+beforeR7placeholdercomment, outsidebytesunchanged. Successfulcensus5+6M+5L+10Em+5El
+units, registrycopies/chunksM+L. No business-treecopy/newworkledger; actualsharedMeter
+precharges depth/visit/type/iteration/referenceadmissions. Existingmetadata152/R7/
+export5C+3 unchanged; newworkactualresidualmetadata. Callerexclusivestablebodyrequired;
+pointintimechecknotdeepfreeze/mutationdetector. R9/directexportbypasses unqualified.
+
+FinalSourceJDK8 PASS860Sources/2487classes/11919986B/allmajor51 4891.987/5139.0089ms
+operation/wrapper. ActualMeterSMOKE9 PASS439.0783/670.9056ms FIRST; SUITE21 PASS
+7083.3439/7329.3228ms. Frozen30uniquenames; exact1mkeyinclusivevisits5000011units/
+2copies/chunks/153groups; nextvisitreject5000013. R7scalarhandoffadds367/2/2,total4955/
+97/5, all34finalworkequationschecked, aliasrejectbeforeclose. FinalpublicSource11 PASS
+450.2278/681.0428ms; emitter343.1706/580.5632ms reproducescompiledStudy exactly;
+actualhostreparsephase339.692/573.4381ms rejectsBEFORESourceRead. AllconsumedSources/
+tools/JARs/classes/actualargv/processproof reauthenticated; no unchangednativererun.
+FourrealemitterCLIcontrols includeonepositive/threeexpectedexit2rejections, notproducer
+PASS. Temporaryjunctioncommandautomaticreviewblocked BEFORElaunch; existingWindows
+junctionreadonlyreject+read-denialobserver proveshostphase with no linkmutation.
+
+AB=OS-temp/tsj-q100-body-ownership-1b1d4d08af8a422dbc125b5657e64cbc retains13Source
+parents, initialcompile, SourceR1twoorderingassertfails/R2same-lengthmetadatafixturefail
+andrawtestrevisions. Rootadvancingcursor+missing-chargecounterexamples anddeterministic
+lengthfixturefixonlytests; helper/emitterunchangedsincefirstexecution. Withdrawnrunner
+CDBDBD53raw/lengthNOTretained, hashonly/notexecuted; unreleasedunboundedreaderdraftalso
+notretained/notexecuted. No completeSourcehistoryclaim. IndependentSourceAPI/census/
+cleanupreview identifiedmissingMapaliascase; RootfixednestedfixtureC996ADA7, reviewed
+finalSource andbuiltfreshAC; noindependentexecution/finalchangedfixtureindependentreview.
+AC=OS-temp/tsj-q100-body-ownership-final-fe77fa01f4a748d78cbe96a0eb6085a3 ownsfinal
+Sources/classes/gates. Casecleanupmeasured; intentional5.1sexpiredgroupMeterdiscarded
+withoutOSresource, othercasesclosed. Allselectedchildren terminationproven/ownedroots+
+logsabsent; processcleanupdurationunmeasured. No newpersistentprocess/link. Previous
+controlledroots/failures/uncertainbrowser14116/start639294472690745890/58320,preview
+34180/start639294472514546595/58264+14children,oldDprocess/unlinkUNCERTIFIED untouched.
+Main5f05b0059tracked/6untracked, E d9747229reportM, Desktope0c368857tracked/89untracked
+files preserved; Main/Ereportmirroronly. F intendedguard/docs edits only beforestage.
+No production/visiblechange: GWT/PlayerN/A; electrical/population NOTRENEWED. Allcaps/
+exactseeds/epochs/oracles/CircuitJStruth unchanged. Full30excluded/HARD-PSYCHOTICunavailable-
+unrun/oldnormal20historicalREAD-no reread/protectedunreadUNCERTIFIED/playable100=0/betaHELD/
+genuineoneoriginalNULL/OBSERVE UNSPENT_GATED. Nextpublishvalidatedguard, then13-keyroot
+constructorSourcecensus/composition; fullresult/actualhost/lifecycle unqualified. No userdecision.
+# Historical checkpoint: body ownership Source implementation
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD40520885d2e93e078e77958b5695a9f05aead620;
+normal origin/codex/q100-physical-feasibility exactverified/no upstream. Metadata
+d374e29b/receiptacb4dd5d/clarification40520885 andGmail1a1c118fb5dedb5a SENT_ONCE;
+neverduplicate. Prioracceptedproof509ACB146E5951BD4939F4A43329B02E78398DB647AAB7DC727B6DACA6BF63A2
+remainsboundedmetadataonly. No renewedproduction/Player/electrical/population.
+
+AB=OS-temp/tsj-q100-body-ownership-1b1d4d08af8a422dbc125b5657e64cbc. ImmutableSourceR1
+42AC5FD9 nineparents; SourceR2B943FB60 addsfour explicitPCB/driver/purecanarySources.
+RootOWNERSHIP_CONTRACT_R1 frozen beforeauthoring. Standaloneguard+exactonecallR7
+insertion afterworkinstallation/beforeplaceholderaccountcomment andmetadatafinish.
+Eachsuccess units5+6M+5L+10Em+5El; registrycopiedentries/chunksM+L. Twoephemeralstate/
+registryallocations, actualsharedMeterdebits beforeeachdepth/visit/type/iterator/
+referencecopy/identitylookup. No businessgraphcopy/newresultDTO/parallelworkledger.
+Depth64/keyinclusive1m, ordinarycodecscalar/containercategories, noASCII/header
+replacement. Readonlypointintimealias/cyclecheck; callerexclusivestablebodyrequired.
+Sourceauditconfirmslaterworkfinalizationreplaces34numericvaluesonly. R9/directexport
+bypasses remainoutsidequalification. Normalmain/assembleclosed; genuineoriginal/
+NULL/OBSERVE UNSPENT_GATED. No DATA/journals/oldclasses/Original/Session/routingaccess.
+
+Workersleaves Sourceonly: Luna component/emitter/puretests; Solnativecanary; Solfresh
+860Sourcebuild/runtime adaptation. PlannedSMOKE9/SUITE21unique Sourcefrozencases:
+tinyindependentcounts, shared/cycliccontainers, realMetercapacity/deadline/group,
+depth64/65,keyinclusive1m/over1m andactualdetachedR7handoff. Rootreview beforegeneration/
+compile/native; NOTRUN. No codeexecution/import/test/fixturegeneration/compiler/native
+inAB yet. No newpersistentprocess/link. Priorfailures/controlledroots/uncertain
+resources remain. Main5f05b0059tracked/6untracked; E d9747229reportM; Desktope0c36885
+7tracked/89untrackedfiles; Main/Ereportmirroronly. F reportM only/staged0 untilpublic
+integration. Allcaps/exactseeds/epochs/oracles/CircuitJStruth unchanged; full30excluded/
+HARD-PSYCHOTICunavailable-unrun/oldnormal20historicalREAD-no reread/protectedunread
+UNCERTIFIED/playable100=0/betaHELD. NextRootreview Source/debit/releasepins, exact
+nativecasefreeze thenselectedgates; publishonlyvalidatedscope. No userdecision.
+# Historical checkpoint: full-body ownership Source prerequisite
+
+UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD40520885d2e93e078e77958b5695a9f05aead620;
 normal origin/codex/q100-physical-feasibility exactverified/no upstream. Metadata
 implementationd374e29b33fa9649f332571d64255b804746953a +receiptacb4dd5d published;
 Gmail1a1c118fb5dedb5a SENT_ONCE. Neverduplicate. Proof509ACB146E5951BD4939F4A43329B02E78398DB647AAB7DC727B6DACA6BF63A2
@@ -31,8 +110,8 @@ SUITEdir empty. No newpersistentprocess/link. Existinguncertainbrowser14116/star
 639294472690745890/58320,preview34180/start639294472514546595/58264+14children,oldD
 process/unlinkUNCERTIFIED untouched. Main5f05b0059tracked/6untracked, E d9747229reportM,
 Desktope0c368857tracked/89untrackedfiles preserved; Main/Ereportmirroronly. Fcurrent
-clarificationDocs only; rootscratchSourceaudit retainedoutsidegit. This is a same-
-milestone documentationfollowup; no duplicatecompletionmail. Allcaps/exactseeds/
+clarificationDocs only; rootscratchSourceaudit retainedoutsidegit. Clarification40520885 normallypushed/exactremoteverified; thissame-milestone
+documentationfollowup sendsno duplicatecompletionmail. F reportcheckpointM only/staged0. Allcaps/exactseeds/
 epochs/oracles/CircuitJStruth unchanged. Full30EXCLUDED/HARD-PSYCHOTICunavailable-unrun/
 oldnormal20READhistorically-no reread/protectedunreadUNCERTIFIED/playable100=0/betaHELD.
 # Historical checkpoint: qualified-prior metadata publication

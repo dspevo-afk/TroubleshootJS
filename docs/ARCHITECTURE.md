@@ -329,6 +329,17 @@ separate full-body ownership proof or guard before genuine caller composition.
 Actual-Meter synthetic gates qualify construction and ticket preparation only;
 normal assembly, R7 composition, whole-result and host/lifecycle remain closed.
 
+The [body ownership guard](task-evidence/Q100/native-body-ownership-r1/README.md)
+adds one separately metered identity traversal to the current emitted R7 path,
+after work/plan installation and before placeholder accounting and metadata close.
+It rejects repeated Map/List references across branches and cycles without cloning
+the business tree. Later finalization replaces numbers only. This point-in-time
+check depends on exclusive stable caller ownership; it is not a deep freeze or
+mutation detector. Existing metadata/R7/export equations retain their meanings,
+with guard work included in actual residual metadata. The standalone guard and
+synthetic R7 handoff are qualified; R9/direct-export bypasses, current root-body
+construction, normal assembly and host/lifecycle remain separate boundaries.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

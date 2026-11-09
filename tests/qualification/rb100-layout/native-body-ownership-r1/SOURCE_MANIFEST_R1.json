@@ -1,0 +1,40 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_BODY_OWNERSHIP_SOURCE",
+  "files": [
+    {
+      "role": "CurrentBodyOwnership.java",
+      "bytes": 3860,
+      "sha256": "8a7a5b0dfe82d4e230adcd1d531e6942664afbd96563dc5d21f40167b41c3832"
+    },
+    {
+      "role": "BodyOwnershipCanary.java",
+      "bytes": 25876,
+      "sha256": "c996ada782e5bb7c2c6076d7fb1a80c39e2de6e4596225c208026795f2c143ad"
+    },
+    {
+      "role": "generate_body_ownership.py",
+      "bytes": 5492,
+      "sha256": "29ebb32d23cd4f66b000499cb0d599c678fcbe718bd4f91d726f0e49ef075970"
+    },
+    {
+      "role": "test_body_ownership_source.py",
+      "bytes": 15761,
+      "sha256": "c103a756e27a66b9c9777f40e4ef4579b6a3141a14eefc4a14c7363384c9d631"
+    },
+    {
+      "role": "build_body_ownership_r1.py",
+      "bytes": 23396,
+      "sha256": "93c2679dd637f091c72994b6bd1def6711b9bab9f32f49c84ceee9541d31a92a"
+    },
+    {
+      "role": "run_body_ownership_r1.py",
+      "bytes": 37979,
+      "sha256": "964868d26b2a7ad2dc230ab6c3d5b4e35c2ca1ad12a9ff2f54f2e8768d6eb32d"
+    },
+    {
+      "role": "host_reparse_canary_r1.py",
+      "bytes": 1778,
+      "sha256": "04c870622eb166e5f15ebdd667dab2ecc1948c7662afab8c81cd8795ea6cf436"
+    }
+  ]
+}

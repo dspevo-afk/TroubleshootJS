@@ -1,0 +1,37 @@
+{
+  "status": "ROOT_ACCEPTED_FINAL_SOURCE_FOR_SYNTHETIC_GATES",
+  "files": [
+    {
+      "role": "emitted/CohortTerminalTelemetryStudy.java",
+      "sha256": "9ac45b374c8aeee7a912a4e1452435b71b278aeae0a288e5a75dd82a149c006b"
+    },
+    {
+      "role": "source/SHARED_OWNER.java",
+      "sha256": "99993fc4f2c32e38fc85d4cea79b7662841a744f35816b95b0b2e8579483915b"
+    },
+    {
+      "role": "source/NATIVE_PRIVATE_PCB.java",
+      "sha256": "7bf4ab57198ff9444381ec5d677c1a2bc309bfa3e7f01b188c631ffe5f2b966c"
+    },
+    {
+      "role": "source/CURRENT_RECEIPT_BINDING.java",
+      "sha256": "1df7e06085165d025ff79bdd0cdaa7f603c110cc26b6cc6f280d73f52e8d2e41"
+    },
+    {
+      "role": "source/CurrentV2CanonicalCodec.java",
+      "sha256": "76fb7bbc8af73e41fd8d79a26823a0687f61e2a812e4b9de251bc953c04c7522"
+    },
+    {
+      "role": "CurrentBodyOwnership.java",
+      "sha256": "8a7a5b0dfe82d4e230adcd1d531e6942664afbd96563dc5d21f40167b41c3832"
+    },
+    {
+      "role": "BodyOwnershipCanary.java",
+      "sha256": "c996ada782e5bb7c2c6076d7fb1a80c39e2de6e4596225c208026795f2c143ad"
+    },
+    {
+      "role": "build_body_ownership_r1.py",
+      "sha256": "93c2679dd637f091c72994b6bd1def6711b9bab9f32f49c84ceee9541d31a92a"
+    }
+  ]
+}
