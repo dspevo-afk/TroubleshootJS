@@ -1417,7 +1417,9 @@ native inputs are reauthenticated. The factory borrows caller-prevalidated input
 and does not authenticate them. Next is synthetic constructor/metadata/R7/ticket
 composition, then whole-result/host/lifecycle gates. Normal assembly remains closed;
 genuine original,NULL,OBSERVE unspent/gated, playable100=0/beta held and data
-exclusions remain. Normal publication is pending for this accepted constructor.
+exclusions remain. Implementation5ab70e8e7dd2b2fdb306d684c77c09adc17521b1 was normally
+pushed to origin/codex/q100-physical-feasibility, exact remote verified; completion
+Gmail1a1c183b69b70eef sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
