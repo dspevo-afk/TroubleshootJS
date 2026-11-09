@@ -1,4 +1,41 @@
-# Current checkpoint: console framing correction accepted; publication next
+# Current checkpoint: console correction published; fresh normal authority next
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107 implementation35e36eeec64319b35350e7ac6c488370bb241bee normallypushed/exact
+remoteverified to origin/codex/q100-physical-feasibility. Gmail1a1beb3670d80f14 SENT_ONCE.
+Receipt gets no duplicate email; verify actual HEAD after receipt commit.
+Tree98cc03d90a5da24d0623369f1fa20428f1e5715f, patch1028a8bb9fa3bce327b59ddb25944977a37e70ef16921ff4f148d8ea898627d2; intended-only/exact-source/privacy/whitespace PASS.
+F clean after implementation. Main5f05b005 preserves9tracked/6untracked;
+E d9747229 reportM; Desktop e0c36885 preserves7tracked/89untracked files.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+Normalizer0b20/testaea8, caller11c4, reader863/observer478. Normalizerproofa0c35e,
+callerproofeffd2149. Exact one-call/two-pin AST audit,69private/69public/0skip,
+predecessor8expectedFAIL, authenticated actual console boundary,19caller and
+25closedCLI(4positive21reject) PASS. Verified successful synthetic root/junction
+removed; children terminate/ownedprocess roots+logs absent; cleanupdurationnull.
+Root integrated review plus scoped independent SOURCE adapter review no blocker.
+GWT/Player N/A, electrical/population NOT RENEWED.
+
+First actual normal fixed20 qualification FAIL/exit2/STDOUT_FRAMING after durable
+da97 journal at04:45:28Z; operation724.3113/wrapper973.7947ms. All20auth/resource
+observer reached before normalization by caller control flow. Normal DATA READ
+under journal, not unread. Original c8e config/e5ea SOURCEmanifest/da97journal,
+nonemptyfailed output(read-attempt/failure-evidence), rawreceipts preserved.
+No context/projection/Java produced. Diagnosis/canary reread only authorized
+stdout812/a08ca3/CRLF; no full rerun. Source correction does not reclassify FAIL.
+
+Next freeze fresh empty output and config/SOURCE manifest for current sources,
+new normal-only journal before deliberate fixed20 qualifier; do not reuse failed
+root or rerun automatically. Then current host/native assembly. Native producer/
+session calls0; genuine one original+exactly NULL/OBSERVE UNSPENT/GATED.
+Old D descriptor/result/generated-input DATA, oldbuilders/CLIs, manifestfollowing,
+protected/held-out bodies remain denied. Full30EXCLUDED; HARD/PSYCHOTIC unavailable/
+unrun; historical protected unreadUNCERTIFIED; fullD/H1unqualified/playable100=0/
+betaHELD. Caps/seeds/epochs/oracles/CircuitJS truth unchanged. No newpersistent
+process/link; olduncertainresources/failures and unrelatedwork preserved.
+
+# Historical checkpoint: console framing correction accepted; publication next
 
 UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107 HEADf40a00a41aa8f1dde0509b5090285b0f2c2c21ed.

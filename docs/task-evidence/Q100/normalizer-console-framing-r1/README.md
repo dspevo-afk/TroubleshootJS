@@ -1,7 +1,8 @@
 # Qualification console framing correction
 
-Locally accepted for the parser correction and caller pin migration only;
-publication pending. Actual prior qualification remains FAIL from the first
+Accepted and published as `35e36eeec64319b35350e7ac6c488370bb241bee` for the parser correction and caller pin
+migration only. Exact remote verified; Gmail `1a1beb3670d80f14` SENT_ONCE.
+[Publication](PUBLICATION_R1.md). Actual prior qualification remains FAIL from the first
 attempt and has not been rerun. Native producer/session calls remain zero.
 
 The first fixed20 normal-only read followed the exclusive durable phase journal
