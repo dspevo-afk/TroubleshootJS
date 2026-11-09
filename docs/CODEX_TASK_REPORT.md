@@ -1,4 +1,39 @@
-# Current checkpoint: Z-B pure normalizer accepted before publication
+# Current checkpoint: Z-B published; normal-only caller/read boundary next
+
+UTC 2026-11-08. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107. Implementation 2e4e356f3a21c9ab9c060822d0dc074cfb05089a
+normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA
+verified. Completion Gmail1a1bda8f6a858b70 SENT_ONCE; receipt gets no second mail.
+Verify actual HEAD after this documentation receipt. Origin dspevo-afk/
+TroubleshootJS; no upstream. Actual19-path tree8f929e34f0b9d1d3748a108f18ee9258f3960a1c,
+patchefc86c15df64a653464d30d01aa09d0cab685333c5c6a508cc31de226616f37f, byte/privacy/whitespace and
+actual trailing-space rejection checks passed. F clean after implementation.
+Main5f05b005 retains9tracked/6untracked/staged0; E d9747229 reportM/staged0;
+Desktop e0c36885 retains7tracked/73default-untracked entries (89files with-uall)/
+staged0. Main/E report mirrors only. Prior publications/mails preserved.
+
+Z OS-temp/tsj-q100-current-context-kernel-1e995d2a67ea4b128961c43605a5cc7c.
+Pure normalizer582422e5/callercontract50776fde; final proof
+d1104bd1daffc918b009e45f5636fe1f03a3852c8d3ac76fd8c1e9c41e528082.
+56private/56public/0SKIP; current pure N-run synthetic positives now pass,
+not actualprior/native controls. Actual SOURCE/callback/tool-module/root/resource
+facts remain caller prerequisites. Source review scopes/final-source gates and
+one root static-audit adapter failure are recorded in normal-prior-normalizer-r1.
+No actual20-role DATA body/read transition or old builder/module/CLI. One genuine
+original+exactly NULL/OBSERVE remains unspent/gated; no extra arm/control/retry.
+
+Next freeze a bounded normal-only caller SOURCE and positive/negative authority/
+host boundaries; journal before any actual fixed20-role read. Authenticate and
+qualify pinned prior, derive context, then current host/native/source-class-work
+assembly before genuine invocation. Do not follow historical manifest rows or
+read old D descriptor/result/generatedinput, protected/heldout DATA. All leaves
+finished; no new persistent process/link. Source/synthetic DATA/receipts and old
+uncertain resources remain preserved. CircuitJS truth/caps/seeds/epochs/oracles
+unchanged; Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historical protected
+unreadUNCERTIFIED; playable100=0/betaHELD; full-D/H1 unqualified. GWT/Player NOT
+APPLICABLE; electrical/population not renewed. No duplicate completion mail.
+
+# Historical checkpoint: Z-B pure normalizer accepted before publication
 
 UTC 2026-11-08. F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107, HEADc51232957fec732bf13f01da853d72b429fe59c9.

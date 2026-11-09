@@ -1,6 +1,9 @@
 # Pure normal-prior normalizer component
 
-Accepted locally for pure component scope; normal publication is pending.
+Accepted and published for pure component scope. Implementation
+`2e4e356f3a21c9ab9c060822d0dc074cfb05089a` is verified on
+`origin/codex/q100-physical-feasibility`; completion Gmail
+`1a1bda8f6a858b70` SENT_ONCE. See [publication](PUBLICATION_R1.md).
 Final gate SHA256 `d1104bd1daffc918b009e45f5636fe1f03a3852c8d3ac76fd8c1e9c41e528082`. The implementation is in the existing
 `tests/qualification/rb100-layout/current-context-kernel-r1` code folder.
 
