@@ -1,0 +1,257 @@
+{
+  "actualPriorBodiesRead": 0,
+  "callerQualification": "NOT_ACCEPTED_PENDING_NEW_OWNER_MIGRATION",
+  "code": [
+    {
+      "bytes": 23241,
+      "path": "tests/qualification/rb100-layout/fixed-role-reader-r1/fixed_role_reader.py",
+      "role": "fixed_role_reader.py",
+      "sha256": "863a258cbab888cf112b9e927e16a099436632e9a1d43eefe0b70690c30543d8"
+    },
+    {
+      "bytes": 25960,
+      "path": "tests/qualification/rb100-layout/fixed-role-reader-r1/test_fixed_role_reader.py",
+      "role": "test_fixed_role_reader.py",
+      "sha256": "57e89799cc3730a1a4dd228340cc84fec4be628875635681005cb2e500382e9d"
+    },
+    {
+      "bytes": 1675,
+      "path": "tests/qualification/rb100-layout/fixed-role-reader-r1/tool_read_canary.py",
+      "role": "tool_read_canary.py",
+      "sha256": "519870e086a09e8a78f2b47346af79db3e5062c18f014369095549f2a30b9d81"
+    },
+    {
+      "bytes": 23760,
+      "path": "tests/qualification/rb100-layout/normal-prior-caller-r1/observe_caller_facts.py",
+      "role": "observe_caller_facts.py",
+      "sha256": "4786259585a13819350add727bb2bfbca9f6890db208fbe8f4f60959d8c94f8c"
+    },
+    {
+      "bytes": 24633,
+      "path": "tests/qualification/rb100-layout/normal-prior-caller-r1/test_observe_caller_facts.py",
+      "role": "test_observe_caller_facts.py",
+      "sha256": "f395505bb20a66a5282a78e2fda99180ff8fa60037d509e148bb3974bb95b668"
+    },
+    {
+      "bytes": 2284,
+      "path": "tests/qualification/rb100-layout/normal-prior-caller-r1/observer_actual_tools_canary_r1.py",
+      "role": "observer_actual_tools_canary_r1.py",
+      "sha256": "bddc5d713655a905c5746cad50cd1f34aade425db3181e15c88a05de614bfbb3"
+    },
+    {
+      "bytes": 3839,
+      "path": "tests/qualification/rb100-layout/normal-prior-caller-r1/observer_resource_canary_r1.py",
+      "role": "observer_resource_canary_r1.py",
+      "sha256": "10feb1f3600457036673a9f17cdf2c0a0faf8558b03280df3f0edef4df29840f"
+    },
+    {
+      "bytes": 37972,
+      "path": "tests/qualification/rb100-layout/normal-prior-caller-r1/canary_ancestor_identity.py",
+      "role": "canary_ancestor_identity.py",
+      "sha256": "bbd95df8350e01c6803fa4348ffb6b107086a94c597034f6b6581f1107f146b7"
+    }
+  ],
+  "genuineEnvelope": "UNSPENT_GATED",
+  "normalDataPhaseEnabled": false,
+  "observerPassed": 18,
+  "observerSkipped": 1,
+  "observerTests": 19,
+  "observerUnits": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "public-ancestor-observer-units-r1",
+    "processElapsedMs": 1399.347,
+    "receipts": {
+      "owner.json": "c13dd9d74ece99086242d55d146e078e19660eafca687d3e55962cd51c0c6628",
+      "parent.json": "423a5ac9dfbf72b77341d747dfcbddb3d09dcdaed3747ebce06beff3d01049d7",
+      "process.json": "7097a12617c18eb4de17144fbbe13b94dc1c59050b55e6829c2a71de796a5636",
+      "request.json": "b021cc3a66321b7c5db22ede937f5f9a2480691aa2902ef872e96da0c7de5c7a",
+      "result.json": "2984ff6b8ac52562335be0731569f510fabaafdf178d36649f6b79efa86bb65e",
+      "stderr.txt": "f4d151e56f056290f6b7202ab3d49a030e4e7c9d3a62d4ddbefd12fe1f97fcd0",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 1637.7153
+  },
+  "readerPassed": 13,
+  "readerSkipped": 1,
+  "readerTests": 14,
+  "readerUnits": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "public-ancestor-reader-units-r1",
+    "processElapsedMs": 559.9354000000001,
+    "receipts": {
+      "owner.json": "210ac7756d359bf4f03adc55c7639728fbea7eb1784093a0f25ff8d97cda78dd",
+      "parent.json": "b10e827432f64be8d783c8482ff76b3c87ed8c982f6f88540c298d2d29567017",
+      "process.json": "7661de3453c4581a0d675097105535ef082a7ab42faac069a520a965659ed3ff",
+      "request.json": "393ff20052806732cc35af4f4e9285f692e08d7d805d60a651553b4f8e0e440f",
+      "result.json": "225e9d30bf5a0507e69e06108864aa76301a2ce5c5b6a20564d59cb6f81b8f01",
+      "stderr.txt": "77f304bfa4a13f627c992e4bb1cbde490c2787ed8c78afc834057fd3e9c2db25",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 806.8470000000001
+  },
+  "resourcePositive": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "public-ancestor-resource-positive-r1",
+    "processElapsedMs": 487.66880000000003,
+    "receipts": {
+      "owner.json": "af4a15fae08716d222d9b14474fd3aa44c94cff4f93c855ee6d2be728c04cbf5",
+      "parent.json": "f79c278b0efe65b78930be3b2c01c64a5d943936c2147b64d26ad9a24708847a",
+      "process.json": "4c893d90c017b4689e0f000d6c312c303847bfc372a9d6306da0382f27463efe",
+      "request.json": "471a2e03d218a9e28e60213cda0f3e27b99f04ee8633920dbb1d94f008011f91",
+      "result.json": "250a22d388fd4100bfda5cbe4646aa309e52e155baf7e0857eb49cdc8610d8bf",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "66824acba0483f2c2f95b7ba581c2024a6bdee983e4b26ebd1be524730d74c2b"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 719.5163
+  },
+  "resourceReceiptSha256": "01fcf6d3341d3a71ed27b231a06e67300bee00421d539111d74d6e670864f143",
+  "retainedSyntheticRoots": 1,
+  "selectedCanary": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "public-ancestor-owner-canary-r1",
+    "processElapsedMs": 870.8717,
+    "receipts": {
+      "owner.json": "04074a8f2719b7f277f3fe96f0ebd693f9afaaf8216b9192fa3d443cdcd3ac03",
+      "parent.json": "1d97434e7ab105ce1d1dc6ca430438c449fc039dcf3972230436332b62811aca",
+      "process.json": "f4d6fefdea0344bfc09cf3b7c41743c90d1732a80ae63578ae181bcd10c61ac5",
+      "request.json": "af9b1e8dbbfe218263b4b7c9515ca033921495cff316e9f8b2545ca1b034900e",
+      "result.json": "77179e3c0d2540680cd7b19b6cdff9ca0f5040d09a415047de1c57ad202d427e",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "ae6a79f43241821d961cae0fca2314f489fd167cd730052fdb3748ccc33ce4c3"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 1105.491
+  },
+  "selectedCanarySummary": {
+    "caseCount": 9,
+    "cases": [
+      {
+        "expectedCode": "OBSERVED",
+        "independentSha256": "aad154b22ca42690514c8ca6011f7ab516e7d688e3661681f1a79e6f944b74da",
+        "leafSnapshotUnchanged": true,
+        "name": "leaf_source_parent_clock_and_token_projection",
+        "observedCode": "OBSERVED",
+        "parentMtimeChanged": true,
+        "pathIdentityStable": true,
+        "status": "MATCHED",
+        "tokenIdentityStable": true
+      },
+      {
+        "expectedCode": "FILE_CHANGED",
+        "independentSha256": "839c38a9cb4731ba248a328317fb9267cfc5d05ce8c7dd486c05ac316a2a5f03",
+        "leafFileIdChanged": true,
+        "name": "same_name_file_replacement",
+        "observedCode": "FILE_CHANGED",
+        "replacementBytesEqual": true,
+        "status": "MATCHED"
+      },
+      {
+        "contentTokenIdentityChanged": true,
+        "expectedCode": "metadata=FILE_CHANGED;content=SHA256",
+        "metadataSnapshotChanged": true,
+        "mutatedSha256": "435d2cc5f593a270b6ff68d5da34d79f14122044dbc7b71cdcb156df5caa077b",
+        "name": "leaf_metadata_and_content_mutation",
+        "observedCode": "metadata=FILE_CHANGED;content=SHA256",
+        "originalSha256": "f4d3c091714815a87704a8635630f8d18794729eb49958c3e6dfd5489c20ae33",
+        "status": "MATCHED"
+      },
+      {
+        "ancestorStableIdentityChanged": true,
+        "expectedCode": "FILE_CHANGED",
+        "independentSha256": "19bcd968e6c9a3e4bbf7d8c0172675c92f49a05cf478077e5399b4060032ef5c",
+        "leafSnapshotExactlySame": true,
+        "name": "ancestor_replacement_retaining_same_leaf",
+        "observedCode": "FILE_CHANGED",
+        "status": "MATCHED"
+      },
+      {
+        "expectedCode": "OBSERVED",
+        "independentSourceSha256": "50fa260293b1951ba85ee92cfe212cca7b7d509cec688a963e6193e187f147a9",
+        "independentToolSha256": {
+          "nativeJava": "d1e319c0e7b40ae125ccdad55e81b2a03a7a78127997c13f2eb02ddd6365ae18",
+          "processModule": "088c333932b5022219f0723d99c2889e293dea66f0fa42e59edf77de5ba0a15b",
+          "qualificationPython": "5ec5107da0d6fdb53e4799ec1692724af5e282000b2f7535ec95a20cc1dcdd82",
+          "rootCallHarness": "b2d32796831270ab8c1884d6998bdec3eb9ffdff6ea52cb374353942e6c1c486",
+          "rootCallPowerShell": "0c036b771a4273cc0c9392f3a0772e214aaf20ee262195b795df00cacb9be469"
+        },
+        "name": "observer_byte_token_recheck_on_synthetic_files",
+        "observedCode": "OBSERVED",
+        "returnedFactsBound": true,
+        "siblingParentMtimeChanged": true,
+        "status": "MATCHED"
+      },
+      {
+        "expectedCode": "OBSERVED",
+        "name": "resource_outer_ancestor_clock",
+        "observedCode": "OBSERVED",
+        "outerAncestorMtimeChanged": true,
+        "resourceFactsAndEvidenceStable": true,
+        "resourceRootLeafSnapshotUnchanged": true,
+        "status": "MATCHED"
+      },
+      {
+        "expectedCode": "qualification_DIRECTORY_CLOSURE",
+        "name": "resource_internal_sibling",
+        "observedCode": "qualification_DIRECTORY_CLOSURE",
+        "status": "MATCHED"
+      },
+      {
+        "expectedCode": "qualification_ENTRY_TYPE_REGULAR",
+        "name": "resource_leaf_kind",
+        "observedCode": "qualification_ENTRY_TYPE_REGULAR",
+        "status": "MATCHED"
+      },
+      {
+        "expectedCode": "ABSENCE_TARGET_PRESENT",
+        "name": "resource_existing_target",
+        "observedCode": "ABSENCE_TARGET_PRESENT",
+        "status": "MATCHED"
+      }
+    ],
+    "externalRaceGuarantee": "NOT_CLAIMED",
+    "fixtureDisposition": "RETAINED_SYNTHETIC_ONLY",
+    "observerSha256": "4786259585a13819350add727bb2bfbca9f6890db208fbe8f4f60959d8c94f8c",
+    "phaseJournal": "NOT_READ",
+    "priorData": "NOT_READ",
+    "qualification": "NOT_RUN",
+    "readerSha256": "863a258cbab888cf112b9e927e16a099436632e9a1d43eefe0b70690c30543d8",
+    "schema": "tsj-normal-prior-ancestor-identity-canary-r1",
+    "status": "DIAGNOSTIC_ONLY"
+  },
+  "selectedTools": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "public-ancestor-actual-tools-r1",
+    "processElapsedMs": 377.999,
+    "receipts": {
+      "owner.json": "901188459ab9876dcc0cd32eae95e69b16b81549dfd5222d040094863ebbc8eb",
+      "parent.json": "67f807c9c71e3a633fbab2de60ba0419e059a2b779d6f5fcf215eed4a026abb2",
+      "process.json": "41df3ef06dd62f810c6698e6a47c8c467294d60b3f95c1c47fa0ae2816d0933c",
+      "request.json": "169db098fb61351672951ccddca8651f3675eaa82cb8bb44c7191c5d1bbd5dad",
+      "result.json": "3a72ff64eaf62cf1ec4fe21552e1b5871e4ac900a0024bfd18bfe460289aa5b7",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "bd46ca7b4b711e5ac5cd28044ef50f6c23317df9e52b1639a2fd84621453c659"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 615.4042000000001
+  },
+  "sourceBytesEqual": true,
+  "status": "PASS_PUBLIC_SHARED_ANCESTOR_COMPONENT_ONLY"
+}

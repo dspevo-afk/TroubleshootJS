@@ -1,4 +1,217 @@
-# Current checkpoint: observer published; gated caller SOURCE in progress
+# Current checkpoint: shared ancestor identity accepted; publication next
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107 HEAD8038350eff4bb146185729ae1c3f125ef3170d4e.
+Origin dspevo-afk/TroubleshootJS; no upstream; normal targetorigin/codex/
+q100-physical-feasibility8038350e verified. Prior observer Gmail1a1bde9f19777842
+SENT_ONCE. Newsharedprereq locallyaccepted, NOTcommitted/pushed/emailedyet.
+Stageonly8intendedSourcefiles+ancestor-identity-r1packet+3docs; preservefour
+untrackedcallerfiles and normal-prior-caller-gate-r1/.gitattributes. Main5f05b005
+retains9tracked/6untracked/staged0; E d9747229 reportM; Desktop e0c36885 retains
+7tracked/89untrackedfiles/staged0. Reports mirror only; preserve unrelated work.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f,
+privateancestor-identity-r1. Reader863a258c/test57e89799; observer47862595/
+testf395505b; focusedcanarybbd95df8. Exactprivate/public copies. Finalproof3b44e3dcfcc2456c1b2cf09258da21abb7c7b04cdc65156c908657b1d1c507ef.
+Sharedreader projections ignoreONLYancestorclock/size, retaincanonicalpaths/
+dev/ino/FULLmode/attrs/full7fieldleaf/handles. Rawtokensunchanged; observerrequires
+newhelpers/no fallback, externalfactsunchanged/internalv2. Scope4617cdbf explicit.
+
+Private/public reader14each13PASS/1symlinkprivilegeSKIP; observer19each18PASS/
+1sameSKIP. Nineactualhostcontrols each; maintainedreader2positive/13exactreject,
+resource1positive/9exactreject;3realjunctions verified/removed. Actual5tools/
+2SOURCE/link positives andactualbadSHAcontrols pass. Finalproof reaudits37calls;
+3junctioncreators/cleanupseparatelyaudited. ScopedindependentSource reviewclear,
+rootintegration/runtimeaccepted. Childtermination/ownedprocessroots+logsabsent;
+cleanupdurationunmeasured. Three successfulordinaryfixturetreesverifiedremoved;
+failedandhistoricalevidence/ownershippreserved, no newpersistentprocess/link.
+
+Controlledold-reader4case diagnostic andlive13file/260readtemporalobservation
+recordonlysharedOS-tempancestor mtimechanging withallbytesstillpinned. Exactold
+publicfailure snapshotunknown. Sourcefixturefailure(NTFSclocknotadvanced)and
+canarymixedcaseerroradapterfailure archived/FAIL; correctedassertions remainexact.
+No oldcallerfailure reclassified. Publicationnext: actualdiff/privacy/whitespace/
+indexreview, normalcommit/push/exactremote, onecompletionGmailonlyafterpublication.
+
+Unpublishedcaller0661249e/testE2AADD3E+canariesf7b8/d40b remainpreservedoutside
+scope; private25CLIpassedoldcandidate, publicfailedtwice andunchangedrerunsstopped.
+Next migratecaller/newpins andretireduplicateprojection, resumefinalgates; only
+thenexclusiveactualnormalphasejournal beforefixed20ingest. Noactualconfigemitter/
+journal/20body/resourceobserved. NormalizerE872/codecC1/kernelF87/prov215ad/metaC487
+unchanged. OldD descriptor/result/generatedinput DATA, oldbuilders/CLIs, manifest
+following/protected/heldoutDATA denied. Genuineoneoriginal+exactly NULL/OBSERVE
+UNSPENT/GATED. Allcaps/exactseeds/epochs/oracles/CircuitJS truthunchanged.
+Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historical unreadUNCERTIFIED;
+fullD/H1unqualified/playable100=0/betaHELD. GWT/PlayerNOTAPPLICABLE;
+electrical/populationnotrenewed. Olduncertainresourcesuntouched. Continue standing
+roadmap without routinepermission; do not duplicateearliercompletionmails.
+
+# Historical checkpoint: shared ancestor identity owner fix in progress
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107 HEAD8038350eff4bb146185729ae1c3f125ef3170d4e.
+Origin dspevo-afk/TroubleshootJS; no upstream; normal targetorigin/codex/
+q100-physical-feasibility8038350e verified. Observera13cbaed published;
+Gmail1a1bde9f19777842 SENT_ONCE. No newcommit/push/mail; caller NOTaccepted.
+F reportM+4untrackedcallerPython+newpacket.gitattributes, staged0. Main5f05b005
+retains9tracked/6untracked/staged0; E d9747229 reportM; Desktop e0c36885 retains
+7tracked/89untrackedfiles/staged0. Reports mirror only; preserve unrelated work.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+Caller0661249e/testE2AADD3E (19methods), canariesf7b8862e/d40bbcd6 copiedidentical
+to F/normal-prior-caller-r1, UNPUBLISHED. Private/public19units+12bootstrap+
+6output pass; private25CLI (4positive21closedneg)passes. PublicfullCLI fails
+twice (call5 SOURCE_READ_FILE_CHANGED, call14 TOOL_CHANGED), allSource/toolhashes
+stillpinned/noattempt/body; unchangedfullruns STOPPED. Full failure/candidate/
+resource history below and in AB CALLER_*FAILURE*. No guard bypass or DATA gate.
+
+Rootdiagnostics nowcomplete. Controlled ancestor-diagnostic-r1 Source67eb1f40,
+4cases complete: baselinePASS; owned sibling+parentmtime change FILE_CHANGED
+despitefullleafsnapshot/id/independentSHAunchanged; same-namefilereplacement and
+parentreplacementretainingSAMEleaf also reject. Source67eb is finalleafDF9 plus
+root4MiBSourcecap; actualinput/pinsbind67eb. Operation396.7088/wrapper640.4887ms.
+Injectedseam diagnostic ONLY; exactoldpublicexception snapshot notretained.
+
+Live-byte-diagnostic-r1 20rounds/260reads/222.754ms observesnochange. TemporalR2
+20rounds/500msinterval/9756.642ms observes10between-read rawtokenchanges, ALLONLY
+sharedOS-tempancestor mtime; all260readshavecorrectindependentSHA, noleafmetadata/
+ID/byteschange, noFILE_CHANGEDwithinread. Child10103.8745/wrapper10525.9355ms.
+R2 currentSourcecaller/observer paths explicitlyFpubliccopy, notAB. Preserve
+LIVE_BYTE_DIAGNOSTIC_* and ANCESTOR_DIAGNOSTIC_* withprivate traces/ownership.
+This provesmechanism, nottheexact earlierfailedprocesssnapshot. Notqualification.
+
+Frozen AB/ANCESTOR_IDENTITY_SCOPE_R1.md SHA4617cdbf49a58f86e220d953d0e08fa0dab901d4ccc540b106e22cc9949a3991.
+New private AB/ancestor-identity-r1 copies ofreader00f6/testsB0F7 andobserver69b9/
+tests551e. Leaf fixed_role_reader_y1 OWNS ONLYreader+tests; context_projection_map_y1
+OWNS ONLYobserver+tests; prior_extractor_review_z1 OWNS ONLYnewcanary_ancestor_identity.py.
+SOURCE-only/noexecute/spawn/DATA/journal/stage/push/mail, one writer/file.
+Root owns integration/execution/evidence/publication. None released/qualifiedyet.
+
+Reader owns _path_identity/_token_identity: retainRAWsnapshots/token4shape;
+canonicalpaths+ancestor stabledev/ino/FULLmode/attrs; full7fieldLEAFsnapshot and
+bothhandleidentities exact. Ignoreonlyancestorclock/size, no inventedtimestamps.
+Useownerprojectionforread/token/root comparisons; observerbindsnewhelperswithout
+fallback andprojectsresourceidentityevidence, retainingfullleafclosure/absence/
+reparse/containment/hash/length guards. Latercallerretireduplicatepolicy/migrate
+newpins onlyafterqualifiedprereq. Next collect/reviewSource, actualpositive+
+identity/content/reparse negatives, freshprivate/publicgates; publishonlyqualified
+coherentboundary, thenresumecallergates. No third unchangedpublicmatrix now.
+
+Actual20normalbodies UNREAD; noactualconfigemitter/rootjournal. OldD descriptor/
+result/generatedinput DATA, oldbuilders/CLIs, manifestrowfollowing, protected/
+heldoutDATA denied. Genuineoneoriginal+exactly NULL/OBSERVE UNSPENT/GATED.
+Allcaps/exactseeds/epochs/independentoracles/CircuitJS truthunchanged. Full30
+EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; historical protectedunreadUNCERTIFIED;
+fullD/H1 unqualified; playable100=0/betaHELD. GWT/Player NOTAPPLICABLE;
+electrical/population notrenewed. Childtermination/ownedprocessroot+logsabsent;
+cleanupdurationunmeasured. Tenordinaryfixture roots retained withprivateownership
+(4output/5CLI/1controlled); no newpersistentprocess/link. Old uncertainresources
+untouched. Continue standingroadmap without routinepermission or duplicateemail.
+
+# Historical checkpoint: caller public stability diagnosis, DATA phase closed
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107 HEAD8038350eff4bb146185729ae1c3f125ef3170d4e.
+Origin dspevo-afk/TroubleshootJS; no upstream; normal targetorigin/codex/
+q100-physical-feasibility still8038350e verified. Observera13cbaed published;
+Gmail1a1bde9f19777842 SENT_ONCE. No newcommit/push/mail: caller final gates fail.
+F reportM +4untracked caller Python files +new packet .gitattributes only;
+staged0. Main5f05b005 retains9tracked/6untracked/staged0; E d9747229 reportM;
+Desktop e0c36885 retains7tracked/89untrackedfiles/staged0. Preserve all others.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+Currentcaller0661249e27e3031d35f56d17d1f2fb730d9ab0ecd0e0d0a6495af257b7f90701,
+testE2AADD3E/19methods; canaryIOf7b8862e, outputd40bbcd6. Byte-identical copies
+in F/normal-prior-caller-r1; new normal-prior-caller-gate-r1 packet NOTaccepted.
+Reader00f6/observer69b9/normalizerE872/codecC1/kernelF87/provenance215ad/metaC487
+unchanged. No actual config emitter execution, root journal or20role bodyread.
+
+Caller fixes include bootstrapkindidentity, outputRoot leafbinding, bounded
+exclusive write/flush/readback identity, exact5fileclosure, postwrite consumed
+input rereads, cross-control stableancestor/fullleaf identities and surfaced
+failure-record errors. Persisted evidence sayspending atwrite; finalPASS belongs
+to completed CLIreceipt. Source4MiB/allowlist1MiB/tools8MiB. Exact reader-row
+comparison nowincludes role. Root Source review + scoped independent tail review
+atC8 (unchanged tail after root role-key fix); no runtime claim from reviewer.
+
+FinalSOURCE private/public units19/0SKIP, bootstrap12 and output6 pass. Private
+CLI caller-cli-private-r4 passes25calls (4preflightpositive/21exact-codeclosed
+rejections), oneverifiedjunction removed; realWindows parentprocessimage query
+positive/wrongimage rejection pass. Public component gates pass, but full public
+CLI FAILED twice: public-r1 call5 SOURCE_READ_FILE_CHANGED atjournal-extra-field
+(434.8725/673.2836ms op/wrapper); public-r2 call14 TOOL_CHANGED atpreflight-before-
+replace-N (500.5751/734.9904ms). All Source/tool bytes stillpinned; exactchanging
+snapshotfield UNKNOWN. Preserve CALLER_PUBLIC_STABILITY_FAILURE_R1/R2 and raw
+phase/input/result fixtures. Stop unchanged fullruns; no third attempt now.
+
+Root assigned SOURCE-only/noexecute diagnostics: fixed_role_reader_y1 owns
+diagnose_ancestor_stability_r1.py (controlled owned ancestor-metadata seam),
+prior_extractor_review_z1 owns diagnose_live_byte_tokens_r1.py (13namedcurrent
+Source/tool files, boundedlive token tracing). Neither is qualification or body
+access. Root owns execution, actualcause assessment and any narrow ownerfix.
+Next run/reviewdiagnostics, resolve cause with preservedguards/oracles, thenfresh
+applicable gates. Do not publish unresolvedcaller as success or open DATA phase.
+
+Earlier failures preserved: initial9units fixture1MiBcap; MSIX sys.executable
+alias guard; readerSOURCE8vs4MiB; readerrowsmissingrole; two root evidence-helper
+extra-parenthesis syntax failures. ArchiveSources caller-revisions-r1/r2/r3,
+all receipts/helpers retained. No failed gate relabeledPASS. Returnedchildren
+terminate/ownedprocessroot+logsabsent; cleanup durationunmeasured. Four ordinary
+outputfixture roots and five CLIfixture roots retained under uniqueOS-temp names
+with privateownershipreceipts; no newpersistentprocess/link. Bootstrap/unit
+fixtures clean onPASS. Old uncertain resources/evidence untouched.
+
+Actual20bodies UNREAD; oldD descriptor/result/generatedinput DATA and oldbuilders/
+CLIs unrun/unread; no manifestrowfollowing/protected/heldoutDATA. Genuineone
+original+exactly NULL/OBSERVE UNSPENT/GATED; noextra arm/control/retry. Allcaps,
+exactseeds, epochs, independentoracles and CircuitJS truthunchanged. Full30EXCLUDED;
+HARD/PSYCHOTIC unavailable/unrun; historical protectedunreadUNCERTIFIED;
+fullD/H1 unqualified; playable100=0/betaHELD. GWT/Player NOTAPPLICABLE;
+electrical/population notrenewed. Continue standingroadmap without routineapproval.
+
+# Historical checkpoint: caller SOURCE I/O corrections and closed-phase gates
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107, HEAD8038350eff4bb146185729ae1c3f125ef3170d4e.
+Observer implementation a13cbaed827f6d932200230e8fc2c3d3424091b0 normally pushed
+to origin/codex/q100-physical-feasibility, exact remote verified;
+Gmail1a1bde9f19777842 SENT_ONCE, no duplicate. Origin dspevo-afk/TroubleshootJS;
+no upstream. F began clean; intended report only so far. Main5f05b005 retains
+9tracked/6untracked/staged0; E d9747229 reportM/staged0; Desktop e0c36885 retains
+7tracked/73defaultuntracked entries (89files-uall)/staged0. Reports mirror only.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f.
+Released caller78f32990/test74facf3b archived in caller-revisions-r1. First
+root-selected synthetic units FAIL:9tests/7PASS/1FAIL/1ERROR/0SKIP; fixture
+requested4MiB for allowlist where existing cap1MiB. Preserve CALLER_FAILURE_R1,
+raw phase caller-units-r1 and exact frozen inputs; operation376.179ms,
+wrapper803.1455ms, exit1/terminationproven/ownedroot+logsabsent, cleanup unmeasured.
+Caller limit stays1MiB; fix fixture and config emitter. No role DATA was read.
+
+Two scoped SOURCE reviews found related I/O gaps: bootstrap fullmode/ctime
+path-handle false rejection; outputRoot identity omitted from rootsSHA; missing
+bounded output readback/exact closure; final consumed-input rechecks before
+rather than after writes. Root assigned caller/test corrections to leaf
+normal_prior_normalizer_z1; SOURCE-only/noexecute/DATA/spawn/stage/push/mail.
+Leaf generic_reference_native_review_r1 owns only new caller_cli_gates_r1.py;
+fixed_role_reader_y1 owns only canary_caller_io.py; same SOURCE-only limits.
+Root owns other integration, execution, final review, authority and publication.
+
+Next freeze/review final caller, run selectedWindows bootstrap/output and real
+CLI SOURCE-preflight/closed-phase controls using owned synthetic N/D roots,
+then root journal before exact fixed20 normal-only ingest. No actual config
+emitter execution, actual SOURCE preflight or operational journal yet. Actual20
+bodies UNREAD; oldD descriptor/result/generatedinput DATA and oldbuilders/CLIs
+unrun/unread; no manifest-row following/protected/heldout DATA. Current reader
+00f6/observer69b9/normalizerE872/codecC1/kernelF87/provenance215ad/metadataC487.
+One genuine original+exactly NULL/OBSERVE UNSPENT/GATED; noextra arm/control/retry.
+Caps/seeds/epochs/oracles/CircuitJS truth unchanged. Full30EXCLUDED;
+HARD/PSYCHOTIC unavailable/unrun; historical protected unreadUNCERTIFIED;
+fullD/H1 unqualified, playable100=0/betaHELD. GWT/Player NOTAPPLICABLE;
+electrical/population notrenewed. No new persistent resource; old uncertain
+resources/evidence untouched. Continue standingroadmap, no routine permission.
+
+# Historical checkpoint: observer published; gated caller SOURCE in progress
 
 UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107. Implementation a13cbaed827f6d932200230e8fc2c3d3424091b0

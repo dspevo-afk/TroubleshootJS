@@ -36,6 +36,7 @@ _NAME = re.compile(r"[A-Za-z][A-Za-z0-9_]{0,63}\Z")
 _SHA256 = re.compile(r"[0-9a-f]{64}\Z")
 _READER_FUNCTIONS = (
     "_check_windows_local_lexical_path", "_inspect_path", "_read_file_once",
+    "_path_identity", "_token_identity",
 )
 
 
@@ -98,18 +99,52 @@ def _inspect(api, path: str, expected_kind: str, code: str):
     lexical, real, identity = value
     _need(isinstance(lexical, Path) and isinstance(real, Path)
           and type(identity) is tuple, code)
-    return str(lexical), str(real), identity
+    return str(lexical), str(real), _project_path_identity(api, identity, code)
 
 
-def _identity_json(identity):
-    _need(type(identity) is tuple and bool(identity), "IDENTITY_SHAPE")
+def _is_canonical_identity_path(value) -> bool:
+    if type(value) is not str or not value:
+        return False
+    try:
+        return value == os.path.normcase(os.path.abspath(value))
+    except (OSError, ValueError):
+        return False
+
+
+def _identity_json(identity, code="IDENTITY_SHAPE"):
+    _need(type(identity) is tuple and bool(identity), code)
     output = []
-    for row in identity:
-        _need(type(row) is tuple and len(row) == 2 and type(row[0]) is str
-              and type(row[1]) is tuple and len(row[1]) == 7
-              and all(type(value) is int for value in row[1]), "IDENTITY_SHAPE")
+    for index, row in enumerate(identity):
+        is_leaf = index == len(identity) - 1
+        snapshot_size = 7 if is_leaf else 4
+        _need(type(row) is tuple and len(row) == 2
+              and _is_canonical_identity_path(row[0])
+              and type(row[1]) is tuple and len(row[1]) == snapshot_size
+              and all(type(value) is int for value in row[1]), code)
         output.append({"path": row[0], "snapshot": list(row[1])})
     return output
+
+
+def _project_path_identity(api, raw_identity, code):
+    projected = _reader_call(api, "_path_identity", raw_identity,
+                             error_code=code + "_PATH_IDENTITY")
+    _identity_json(projected, code + "_PATH_IDENTITY_SHAPE")
+    return projected
+
+
+def _project_token_identity(api, raw_token, code):
+    projected = _reader_call(api, "_token_identity", raw_token,
+                             error_code=code + "_TOKEN_IDENTITY")
+    _need(type(projected) is tuple and len(projected) == 4
+          and _is_canonical_identity_path(projected[0])
+          and type(projected[1]) is tuple
+          and type(projected[2]) is tuple and len(projected[2]) == 6
+          and type(projected[3]) is tuple and len(projected[3]) == 6
+          and all(type(value) is int for value in projected[2] + projected[3])
+          and projected[2] == projected[3], code + "_TOKEN_IDENTITY_SHAPE")
+    _identity_json(projected[1], code + "_TOKEN_PATH_IDENTITY_SHAPE")
+    _need(projected[1][-1][0] == projected[0], code + "_TOKEN_PATH_BINDING")
+    return projected
 
 
 def _within_existing_root(root_real: str, child_real: str) -> bool:
@@ -165,6 +200,7 @@ def _read_fact(api, name, spec, *, category: str):
         api, "_read_file_once", path, spec["maxBytes"], spec["expectedBytes"],
         spec["sha256"], role, error_code=category + "_READ")
     _need(type(raw) is bytes and type(token) is tuple, category + "_READ_SHAPE")
+    token = _project_token_identity(api, token, category)
     digest = _sha(raw)
     _need(type(helper_digest) is str
           and len(raw) == spec["expectedBytes"] and len(raw) <= spec["maxBytes"]
@@ -444,7 +480,7 @@ def observe_resource_facts(*, reader, directory_specs, absence_specs):
     _exact_keys(directory_specs, RESOURCE_NAMES, "DIRECTORY_SPECS")
     _exact_keys(absence_specs, CALL_RESOURCE_NAMES, "ABSENCE_SPECS")
     resource_facts = {}
-    evidence = {"schema": "tsj-caller-resource-evidence-v1", "resources": {}}
+    evidence = {"schema": "tsj-caller-resource-evidence-v2", "resources": {}}
 
     for name in RESOURCE_NAMES:
         spec = directory_specs[name]
@@ -465,7 +501,8 @@ def observe_resource_facts(*, reader, directory_specs, absence_specs):
                     name=name.upper() + "_" + field_name.upper())
 
         observation = {
-            "schema": "tsj-caller-resource-observation-v1",
+            "schema": "tsj-caller-resource-observation-v2",
+            "identityProjection": "tsj-fixed-role-reader-path-identity-v1",
             "resource": name,
             "directory": directory_record,
             "absences": absences,
@@ -506,7 +543,7 @@ def observe_caller_facts(*, reader, tool_specs, source_specs,
         reader=reader, directory_specs=directory_specs,
         absence_specs=absence_specs)
     observation_evidence = {
-        "schema": "tsj-caller-observation-evidence-v1",
+        "schema": "tsj-caller-observation-evidence-v2",
         "harnessModuleLink": byte_facts["harnessModuleLinkEvidence"],
         "resources": resource_evidence["resources"],
     }

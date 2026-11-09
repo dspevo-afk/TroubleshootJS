@@ -1,0 +1,29 @@
+{
+  "actualJunctionCanary": "NOT_RUN_YET",
+  "actualPriorBodiesRead": 0,
+  "call": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "ancestor-observer-units-r2",
+    "processElapsedMs": 1414.9239,
+    "receipts": {
+      "owner.json": "30274172eb9c24c4159655003bff480a6a050e219af8f46bd2f97f568472fcdd",
+      "parent.json": "6b0ba6b9ff89592054e3f8795c4bdef319c56edbfe9d1f0fb7ac4df7d9a85d16",
+      "process.json": "db6a12a843369659d458049b9e7e2217776bb9cb2f52c7a7c078e8ad6fd7d41c",
+      "request.json": "fc6a8d6dcdc9c8d249e15d04a3a8b9048de1618cb3f94fb136a03b9195adc167",
+      "result.json": "ec427bea8480da2b0e6a469e98fac0e557d56357046a001709008e0dae4b8dc2",
+      "stderr.txt": "ff7b0c97f5cf47b59cb4726eb7e2e71b59ae84ffcb68517a316f6f52544f00de",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 1672.1185
+  },
+  "genuineEnvelope": "UNSPENT_GATED",
+  "normalDataPhaseEnabled": false,
+  "passed": 18,
+  "skipped": 1,
+  "status": "PASS_SYNTHETIC_OBSERVER_SCOPE_WITH_DECLARED_PRIVILEGE_SKIP",
+  "tests": 19
+}

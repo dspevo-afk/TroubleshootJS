@@ -1,0 +1,165 @@
+{
+  "actualPriorBodiesRead": 0,
+  "callerPublicStability": [
+    {
+      "actualCode": "SOURCE_TOOL_OBSERVATION_SOURCE_READ_FILE_CHANGED",
+      "actualPriorBodiesRead": 0,
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "caller-cli-public-r1-journal-extra-field",
+        "processElapsedMs": 434.8725,
+        "receipts": {
+          "owner.json": "133856308d905d3370b87e6103ce1694dfb3d6a328e98e3fcd05cf733cc15451",
+          "parent.json": "f5eb45c487b42a0ceacad8d4aff06f2a9fc7fc41549b003f3b3be4e16fb555dc",
+          "process.json": "749aa8d4ab900cd8a9a91ac0dcd69253fa77860baa3678032fbf2f9feb45cc70",
+          "request.json": "08bedfb9ecb3efb941f698dd2a4707b7107d070d1cc3bc3ef1d033fabd3b70ff",
+          "result.json": "281069bb822cd87a5af0b30ffc7817d2500768533a796b60ee04c8ce99d53e06",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "f3febdc6ee79e38bf2d805340a80c8474f30bf1d0af22e8fb420578224e24329"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 673.2836
+      },
+      "changedSnapshotField": "UNKNOWN_NOT_CLAIMED",
+      "disposition": "Preserve strict guard and failure; one fresh full public fixture attempt allowed; no relaxed assertion or production change",
+      "evidenceHelperFailure": {
+        "source": {
+          "bytes": 1709,
+          "role": "PRESERVED_EXTRA_PARENTHESIS_HELPER",
+          "sha256": "c0c9c284d48682b9b29d208ee49c02ffa19508eafd0bbb44937e8b5a9ce7b4fb"
+        },
+        "status": "FAIL_PREEXEC_SYNTAX"
+      },
+      "expectedCode": "PHASE_JOURNAL_KEYS",
+      "fixtureReceiptSha256": "66842dd67b85027d2c20bbe1124764b543ae76bbad77c8eeb2eb4d433503e995",
+      "markerCreated": false,
+      "operationalJournalCreated": false,
+      "passedCallsBeforeFailure": 4,
+      "sourceBytesStillPinned": true,
+      "status": "FAIL_UNEXPECTED_SOURCE_STABILITY_REJECTION"
+    },
+    {
+      "actualCode": "SOURCE_TOOL_OBSERVATION_TOOL_CHANGED",
+      "actualPriorBodiesRead": 0,
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "caller-cli-public-r2-preflight-before-replace-n",
+        "processElapsedMs": 500.5751,
+        "receipts": {
+          "owner.json": "263ceadb419a5221c2766763dc2e937d015e937dd3895415bf9011f433e2d0b8",
+          "parent.json": "6476abc72c06adf9fd8233c9baefe0412c9db2f6565f28b758c67453aec85f93",
+          "process.json": "628358ee8f227d6c483c5fe96d971c81c40079bdb628c05669cd631f4cb8e070",
+          "request.json": "d1f2f09ab6c332463a16c81af65fb834eec1b322b6598b0c86209b328f76e569",
+          "result.json": "26f2db16f3a2d1e88e98e962daa557ec777789803a1264bbeee8917f96acb889",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "ee704e79a7bb36a5dd95b8701bbe4fbced51aea95107ada0e673400a1f39da79"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 734.9904
+      },
+      "changedSnapshotField": "UNKNOWN_NOT_CLAIMED",
+      "disposition": "STOP_FULL_RUNS_DIAGNOSE_ACTUAL_SNAPSHOT_CHANGES; no guard relaxation, publication or DATA authorization",
+      "expectedExit": 0,
+      "fixtureReceiptSha256": "0be7d6fd63d2b97d72604eb7a4bb14a50f822e92f60510fab47d64293cd26254",
+      "markerCreated": false,
+      "operationalJournalCreated": false,
+      "passedCallsBeforeFailure": 13,
+      "sourceBytesStillPinned": true,
+      "status": "FAIL_SECOND_UNEXPECTED_BYTE_STABILITY_REJECTION"
+    }
+  ],
+  "canaryClassifier": {
+    "actualPriorBodiesRead": 0,
+    "badCases": [
+      {
+        "expectedCode": "qualification_DIRECTORY_CLOSURE",
+        "name": "resource_internal_sibling",
+        "observedCode": "UNEXPECTED_CALLEROBSERVATIONERROR",
+        "status": "MISMATCH"
+      },
+      {
+        "expectedCode": "qualification_ENTRY_TYPE_REGULAR",
+        "name": "resource_leaf_kind",
+        "observedCode": "UNEXPECTED_CALLEROBSERVATIONERROR",
+        "status": "MISMATCH"
+      }
+    ],
+    "call": {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "ancestor-owner-canary-r1",
+      "processElapsedMs": 987.3760000000001,
+      "receipts": {
+        "owner.json": "033ec80152680256722548d706d4b195ddbaecbef5fddf00694f013f65b249bd",
+        "parent.json": "33f4cde146d5bf6cce74242b4f4f1903e307c31291df24e560293f2521be4ceb",
+        "process.json": "f4e613b23c39756c5ee899fc4194ee1b13e03219ce9c20d1254c6e7af2c59668",
+        "request.json": "3b5eebf539fd37e8303d3bc3befb5462534e4fe2029c5c2eb2aec7c101073b77",
+        "result.json": "1749a30ebb6a8adfe60f596c22dc5db32b228bf5121a4a908294eaee8b387481",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout.txt": "4333ea5e17dabc548369d54beb925b62cb58a1333659be8b9bc91ce526ae0726"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 1239.7409
+    },
+    "cases": 9,
+    "cause": "Known mixed-case resource error prefixes were misclassified by uppercase-only adapter regex",
+    "fix": "Recognize the actual code alphabet; exact expected code assertions remain unchanged",
+    "matched": 7,
+    "mismatches": 2,
+    "normalDataPhaseEnabled": false,
+    "retainedFixtureReceipt": "IN_PRIVATE_PHASE_STDOUT",
+    "source": {
+      "bytes": 37969,
+      "role": "PRESERVED_CANARY_SOURCE",
+      "sha256": "368aeb1f1a51f8458ae1f83ec9c1f2131717841663a83f6d6f5f223d08be217c"
+    },
+    "status": "FAIL_CANARY_ERROR_CLASSIFIER"
+  },
+  "earlierCallerFailures": "PRESERVED_PRIVATE_AND_PRECEDING_CHECKPOINTS",
+  "observerFixture": {
+    "actualPriorBodiesRead": 0,
+    "call": {
+      "childExitCode": 1,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "ancestor-observer-units-r1",
+      "processElapsedMs": 1853.8338,
+      "receipts": {
+        "owner.json": "11209a9be8ea96499c6f813cd688626395afa6f2e39dc5f9601b4dfd2fcd0548",
+        "parent.json": "564cda7ee30bfc10e14796528414d57c4107fb2335e17d9833fd6cf1dda2fc48",
+        "process.json": "3d8e1003a9838eaa373cb32428e3896b3b497264cb59418b1ec3f239e9e3e41a",
+        "request.json": "fc6a8d6dcdc9c8d249e15d04a3a8b9048de1618cb3f94fb136a03b9195adc167",
+        "result.json": "cf35cdac6458e5ad245584e5db3139237721d3c22ee34b6d1ca1a1462e892e0b",
+        "stderr.txt": "b48db795d25da6b428b7902ed4272613b5c9115e576d803710fb86633718ffcf",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 2194.3244
+    },
+    "cause": "Synthetic sibling creation alone did not change NTFS parent snapshot; retain raw-change assertion and explicitly advance owned-parent timestamp",
+    "failures": 1,
+    "normalDataPhaseEnabled": false,
+    "passed": 17,
+    "retainedFixture": true,
+    "retainedFixtureLocation": "IN_PRIVATE_RAW_STDERR",
+    "skipped": 1,
+    "source": {
+      "bytes": 23647,
+      "role": "PRESERVED_TEST_SOURCE",
+      "sha256": "5fd58f66193f27b4962295ce99cdad7e031c0f4e230f7db61016ec9c8d7c5c85"
+    },
+    "status": "FAIL_FIXTURE_DID_NOT_ADVANCE_OWNED_PARENT_CLOCK",
+    "tests": 19
+  },
+  "originalPublicExceptionSnapshot": "NOT_RETAINED; EXACT_OLD_FIELD_NOT_CLAIMED",
+  "status": "PRESERVED_FAILURES_NOT_RECLASSIFIED"
+}

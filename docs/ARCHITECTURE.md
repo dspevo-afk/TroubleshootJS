@@ -257,6 +257,15 @@ observation evidence. It has no module/path discovery or manifest following.
 Observations are not atomic; caller provenance, root authority, phase gating
 and final reconciliation remain separate. It cannot open a normal DATA phase.
 
+The [shared ancestor identity policy](task-evidence/Q100/ancestor-identity-r1/README.md)
+is owned by the fixed reader. Raw snapshots/tokens remain available; comparison
+projects stable ancestor path/device/fileId/full-mode/attributes while preserving
+complete leaf metadata and handle identities. The observer consumes those bound
+helpers for byte and resource checks and emits tagged v2 internal evidence;
+external resourceFacts keys are unchanged. Unrelated ancestor clocks do not
+become file changes; content, actual identity, reparse and closure guards remain.
+Finite observations are not atomic. Caller migration and DATA authority are separate.
+
 The standalone native-evidence audit_trace.py consumes only the two pinned
 authored receipts and their accepted qualification. It preserves ordered branch
 identities, independently reconciles expansion accounting and separates metric,

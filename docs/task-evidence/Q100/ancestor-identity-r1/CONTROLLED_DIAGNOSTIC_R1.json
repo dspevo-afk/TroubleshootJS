@@ -1,0 +1,117 @@
+{
+  "actualPriorBodiesRead": 0,
+  "call": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "ancestor-diagnostic-r1",
+    "processElapsedMs": 396.7088,
+    "receipts": {
+      "owner.json": "ab01803edb10d64d580b59e0daf0ce0f1d995fdd8d6905a2bf1fdeccd64f9473",
+      "parent.json": "9b6412cc75cb7f13db3d98fe80cc19de0e9bde38832ba1423cf3aa4044452f51",
+      "process.json": "bb78b2e37f747e26d61de9d5ab6c42bdf3f895055bc00155923262156d1363cf",
+      "request.json": "d8e47291795fc216243f786f5cf16cc7bb3d2486e6ca79c3239c3ae79c0402fa",
+      "result.json": "c01f39c61dd82cb7f9f7f393a08c34b740c71222380a39efd5a0726eb1fda603",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "04a2dacc3f6ca0faee48693baa9d5ef0869c6143ef5c83b0687bbb456efd13c5"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 640.4887
+  },
+  "operationalJournalCreated": false,
+  "privateTraceSha256": "1c049bebc32b601f600a0fe36f24ec516f55973b245adee6aa9137af479b6b0f",
+  "status": "CONTROLLED_DIAGNOSTIC_COMPLETE_NOT_QUALIFICATION",
+  "summary": {
+    "caseFacts": [
+      {
+        "case": "baseline-positive",
+        "changedAncestorFields": [],
+        "changedLeafFields": [],
+        "expectedBytes": 32,
+        "expectedCode": "READ_SUCCESS",
+        "expectedSha256": "556e447e17a3cd1f2b2b85c8f73eb5deb2bb7d6278bd50d3665100a6c54a2a6d",
+        "injectionApplied": false,
+        "leafSnapshotExactlyUnchanged": true,
+        "leafStableIdentityUnchanged": true,
+        "observedBytes": 32,
+        "observedCode": "READ_SUCCESS",
+        "observedSha256": "556e447e17a3cd1f2b2b85c8f73eb5deb2bb7d6278bd50d3665100a6c54a2a6d",
+        "postTargetSha256": "556e447e17a3cd1f2b2b85c8f73eb5deb2bb7d6278bd50d3665100a6c54a2a6d",
+        "status": "PASS",
+        "targetBytesUnchanged": true
+      },
+      {
+        "case": "sibling-injection",
+        "changedAncestorFields": [
+          "mtimeNs"
+        ],
+        "changedLeafFields": [],
+        "expectedBytes": 31,
+        "expectedCode": "FILE_CHANGED",
+        "expectedSha256": "d994e1b3a1f566d63bd7c4b74760b9d170d636339fba1b094a4bbb7790574dfe",
+        "injectionApplied": true,
+        "leafSnapshotExactlyUnchanged": true,
+        "leafStableIdentityUnchanged": true,
+        "observedBytes": null,
+        "observedCode": "FILE_CHANGED",
+        "observedSha256": null,
+        "postTargetSha256": "d994e1b3a1f566d63bd7c4b74760b9d170d636339fba1b094a4bbb7790574dfe",
+        "status": "PASS",
+        "targetBytesUnchanged": true
+      },
+      {
+        "case": "same-name-replacement",
+        "changedAncestorFields": [
+          "mtimeNs"
+        ],
+        "changedLeafFields": [
+          "fileId",
+          "size"
+        ],
+        "expectedBytes": 25,
+        "expectedCode": "FILE_CHANGED",
+        "expectedSha256": "a223365324e3a2c80a93f4e3cbb3f6d1cc6f360d8908c384f2838ed8a740d7dd",
+        "injectionApplied": true,
+        "leafSnapshotExactlyUnchanged": false,
+        "leafStableIdentityUnchanged": false,
+        "observedBytes": null,
+        "observedCode": "FILE_CHANGED",
+        "observedSha256": null,
+        "postTargetSha256": "1d6f764f2cc157d2e9b40c4a47e896a86bbf22a16d21dc11e38ff447f02ef5a9",
+        "status": "PASS",
+        "targetBytesUnchanged": false
+      },
+      {
+        "case": "ancestor-directory-replacement",
+        "changedAncestorFields": [
+          "ctimeNs",
+          "fileId",
+          "mtimeNs"
+        ],
+        "changedLeafFields": [],
+        "expectedBytes": 34,
+        "expectedCode": "FILE_CHANGED",
+        "expectedSha256": "9604bde54e32f1b83aaaabb5738932ca07684d58745531bf8c948d4201aa892c",
+        "injectionApplied": true,
+        "leafSnapshotExactlyUnchanged": true,
+        "leafStableIdentityUnchanged": true,
+        "observedBytes": null,
+        "observedCode": "FILE_CHANGED",
+        "observedSha256": null,
+        "postTargetSha256": "9604bde54e32f1b83aaaabb5738932ca07684d58745531bf8c948d4201aa892c",
+        "status": "PASS",
+        "targetBytesUnchanged": true
+      }
+    ],
+    "phase": "injected-ancestor-stability-diagnostic",
+    "publicFailureCause": "NOT_PROVEN",
+    "qualification": "NOT_CLAIMED",
+    "readerSourceBytes": 21132,
+    "readerSourceSha256": "00f6d135b0f86c87f389ebb0efd45aa50b804f7c1fe263b02ffe62bb75b9fbd3",
+    "schema": "tsj-injected-ancestor-stability-diagnostic-v1",
+    "scope": "INJECTED_SYNTHETIC_FILESYSTEM_DIAGNOSTIC_ONLY",
+    "setupError": null,
+    "status": "DIAGNOSTIC_COMPLETE"
+  }
+}

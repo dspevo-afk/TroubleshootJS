@@ -1188,6 +1188,20 @@ Implementation `a13cbaed827f6d932200230e8fc2c3d3424091b0` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion
 Gmail `1a1bde9f19777842` sent once.
 
+The [shared ancestor identity prerequisite](task-evidence/Q100/ancestor-identity-r1/README.md)
+is locally accepted for its SOURCE-only scope. The reader owns stable ancestor
+projections with full leaf/handle/content guards; the observer consumes them and
+versions internal evidence. Controlled and live observations expose harmless
+OS-temp clock churn. Private/public reader13PASS/1privilegeSKIP and observer18PASS/
+1privilegeSKIP, nine host controls each, actual5tool/2SOURCE/link checks, maintained
+reader2positive/13rejection and resource1positive/9rejection controls pass;3real
+junctions are verified/removed. Earlier failures remain FAIL. No actual prior
+body/resource, caller admission or DATA phase; genuine envelope UNSPENT/GATED.
+Next migrate/resume the bounded caller, then separate journal before fixed20
+normal ingest. Caps/seeds/epochs/oracles/CircuitJS truth unchanged; Full30EXCLUDED,
+HARD/PSYCHOTIC unavailable/unrun, historical unreadUNCERTIFIED, playable100=0/betaHELD.
+Publication is recorded in the packet/current checkpoint.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

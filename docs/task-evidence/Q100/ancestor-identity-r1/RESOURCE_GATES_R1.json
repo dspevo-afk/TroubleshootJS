@@ -1,0 +1,253 @@
+{
+  "actualCallerQualified": false,
+  "actualJunctionsRemoved": 2,
+  "actualPriorBodiesRead": 0,
+  "controls": [
+    {
+      "call": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "observer-resource-positive-r1",
+        "processElapsedMs": 585.2761,
+        "receipts": {
+          "owner.json": "1bcda484996b732ac2437552bc13bc2b2c52190d6b52df666f640e5303c8b34c",
+          "parent.json": "f711e7cc517023b1f81480edbddb6fffd8ef9707a9815c09559643aa6566b055",
+          "process.json": "2a450cf52d7451149448a2b474b35c22286adf2388d14fbc218357584604c917",
+          "request.json": "c4a2068bb2f19697df483fc20896046b9f2dac69bab73951e0154595675abc0a",
+          "result.json": "e7ae271ed693ce8d261c727b84d9e70751f49fa9ee082e6cf6e88392d78e78be",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "66824acba0483f2c2f95b7ba581c2024a6bdee983e4b26ebd1be524730d74c2b"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 836.5844000000001
+      },
+      "case": "positive",
+      "status": "PASS_SYNTHETIC_IO_ONLY"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "observer-resource-extra-r1",
+        "processElapsedMs": 420.1207,
+        "receipts": {
+          "owner.json": "d7b9affd4592eda34f62d93f1e2b4ad61b7b464dde540f1d65a9425d48fa5b0f",
+          "parent.json": "fe5cebf8b3a83c9979763e56a0cf351abe5c2d36ac38fa46db69a1890f599e53",
+          "process.json": "608c5fcca15037a50e56d77593fbe445aba226a3740187b733098cdbe79ab212",
+          "request.json": "def285b6a0a3c8a00eecc3b2891077c342e2a2565ad47bf9d69bc775eaec2519",
+          "result.json": "1f9119956df4ffc24e5c40f7a92d883c6dee2b7e8dd493884f9cfa6f169618fa",
+          "stderr.txt": "7d653138bd48ce0e48e54116d8d21bfe04c2a09bbd23f687061130e0770d1440",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 656.3591
+      },
+      "case": "extra",
+      "expectedCode": "qualification_DIRECTORY_CLOSURE",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "observer-resource-directory-instead-file-r1",
+        "processElapsedMs": 484.0154,
+        "receipts": {
+          "owner.json": "336033da8314f9a1fb39f9c53db912ff56f4c89100be99f0475d83eb4133b326",
+          "parent.json": "93b424a86e20d654a7c0b6bc0b5f240db5847827a8f81bbe8d36ae391fd2a1cf",
+          "process.json": "f26c13c406db311ef72016e7cbcd2a8e0750db0e6da89173f2ed76845ac64c6a",
+          "request.json": "38139939c3d8686a01079d9931eab089ed4a460557f24241a5964d1381f6f89a",
+          "result.json": "8617c8ae212c2daeda913b4d28844f9c2b5d9708e1bad259a13fc0fa360711a2",
+          "stderr.txt": "85bfeffcaa1e5e2685af6b0436404ca98a23bd5c7959f20b6113a40055c5f978",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 717.9105000000001
+      },
+      "case": "directory-instead-file",
+      "expectedCode": "nativeData_ENTRY_TYPE_REGULAR",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "observer-resource-existing-target-r1",
+        "processElapsedMs": 521.9339,
+        "receipts": {
+          "owner.json": "60fd8f5495426d793d8ff830c2541e8cfb37ec67b12a90bd1d4f1d93141ab2ad",
+          "parent.json": "bc01e9383b642c26e8bbd95bdbd7a05d75c53fcafcb08cbe8ad0f5c5f5567331",
+          "process.json": "3d70d26735bec4b11dfaf69deee9d8dcb08d040b53f9f9b5dbf8343d25584aa9",
+          "request.json": "19daefbe261dbf9052b5d99945ba5f4ab1efe313bc0a09fd4d7e00a38f6730d6",
+          "result.json": "92ad1bb542bb5b3a2c3ee318cef384493de6e15060facf7a7230dbf19314ab48",
+          "stderr.txt": "98552cf6243e85f4075004ebb150a537485cdcd9cd1cfa23e9b9219bf4891e18",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 759.7326
+      },
+      "case": "existing-target",
+      "expectedCode": "ABSENCE_TARGET_PRESENT",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "observer-resource-outside-absence-r1",
+        "processElapsedMs": 424.04240000000004,
+        "receipts": {
+          "owner.json": "da2ae414361df4d462217591b45f3dc651e4b32ea4f415133b71bc79e44f2bef",
+          "parent.json": "01675b1031ec0f605c9caa1b159bcd6660119e6379daf938e2362cdd62e2b703",
+          "process.json": "1c35908c07a899cd5e3fd5c1e5acf14c5b5a39fedbbbc3ef3e24639440d81155",
+          "request.json": "0d21facb373be551a50dce763e6cda62f728051a03b1f0041749849a8aaae93b",
+          "result.json": "1a4f3c69ca744d24e7a8859110a309a07608e8e38e1396405543bf64fd0e8552",
+          "stderr.txt": "1903b19b62fbc5b728059c9bcae4f5e532f973f8ef7bbcf0e50b494c94a107e8",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 671.0818
+      },
+      "case": "outside-absence",
+      "expectedCode": "QUALIFICATION_PROCESSROOT_CONTAINMENT",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "observer-resource-bad-tool-hash-r1",
+        "processElapsedMs": 505.3784,
+        "receipts": {
+          "owner.json": "bcf2fe2628e042604d57a37cc72a8d0b15d87a3a8f7fac0813393257d63fc0f1",
+          "parent.json": "bea7620ab99f26b4c7017250c1d27f82a3bc2865547d829afe8437e781571018",
+          "process.json": "6b465782302eb5e84b5a46a8de3209eda481055d36f3a3e3edd26a18719a3384",
+          "request.json": "019884c3ad1475461c3ff3cc4c3472f4c97848062914eb7a53753e628336a32c",
+          "result.json": "78811637d6cf0a71971200f399705685f4d8c6925ec3b07789f1978b5f8aa594",
+          "stderr.txt": "c655b579e60f962214b487f56f18885b19fd8329ad4aeb0d3de037554af32bcd",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 740.9272000000001
+      },
+      "case": "bad-tool-hash",
+      "expectedCode": "TOOL_READ_SHA256",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "observer-resource-junction-directory-r1",
+        "processElapsedMs": 572.4306,
+        "receipts": {
+          "owner.json": "2778e3de61fdda756cf2ff66042290a1face8cd27780d92e45f045c5ccbefbfb",
+          "parent.json": "7bd4d61b74fb5cc9e070c1e8a83373a77679f7a7aff7e71bc59a9c0f3fc6317a",
+          "process.json": "4ab8f10b29b56b2a843a45216e959f14a90d523a19613ed45e69b73e5df6d638",
+          "request.json": "20f7446b0f5350f00b8e3d64dd2e9f100b5b298ec218465eaf84a3ddf95e56b7",
+          "result.json": "e3d3b0af1fbbd88ff86e07142e5056d365bd7c91749dd68e1cb0b104815d6268",
+          "stderr.txt": "0696e0cd223a39bac27d3eab285dbd2196b097d4775ba394b4922acc2466243f",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 806.5207
+      },
+      "case": "junction-directory",
+      "expectedCode": "nativeData_DIRECTORY_INSPECT_REPARSE",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "observer-resource-junction-absence-r1",
+        "processElapsedMs": 613.6849000000001,
+        "receipts": {
+          "owner.json": "fa0eaf6feaec1729eb56b3adaa5a54e12088249cd58a6d767025315052025ec8",
+          "parent.json": "bee446f818fa74856f913892b2216493beefd141828f7847355899fe494b4007",
+          "process.json": "e4ef41e9773ff62a00419ad6e728d3b9e0c71ce785e6b24a29ea90d2fc9228b7",
+          "request.json": "c9a87c0376f4c2e26b09ebccf134d1d1b9957916020486bd160657fc93a24540",
+          "result.json": "e08cea3f25157fbf35b28bebe8890f545da0a6fc02bdda020dc93db84b6d7576",
+          "stderr.txt": "be9830cc8af1398a6993cd39b0fe97666eade365c49631fd0aeccfa6407b4912",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 854.5363000000001
+      },
+      "case": "junction-absence",
+      "expectedCode": "QUALIFICATION_PROCESSROOT_EXISTING_COMPONENT_REPARSE",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "observer-resource-actual-replacement-r1",
+        "processElapsedMs": 439.7561,
+        "receipts": {
+          "owner.json": "0eba99305425b173b46c54536410b293bf1311f39d34e7aa579de392236d8f65",
+          "parent.json": "bd775c747ca2873cb74a9b38c0842afa9f1916fb5afc2463abcb544c87c74695",
+          "process.json": "18a38496726b84410dd4c063266723742026e3fd66a7e71032c57eaa76402a48",
+          "request.json": "7fd12798b54b88777a4d8fc402b49092cf5dbe303c2fb7772471046e36fdbe30",
+          "result.json": "b16183b390578a25a9814930e6479ed48f6333243ce9b7559f2ea2285fe77403",
+          "stderr.txt": "f0ef8387b26269f2f203dd1c3772865880d4b34482f24e5c8795a8cf311c3613",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 683.8721
+      },
+      "case": "actual-replacement",
+      "expectedCode": "qualification_RESOURCE_CHANGED",
+      "injection": "ACTUAL_OWNED_FILE_REPLACEMENT_AT_SCAN_SEAM",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "call": {
+        "childExitCode": 2,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "observer-resource-injected-access-error-r1",
+        "processElapsedMs": 433.8014,
+        "receipts": {
+          "owner.json": "5295f16bfb6b9d06280e5458c23f8e30fd1b7e649d5ff1ee9573f5805349a373",
+          "parent.json": "191c1aaec5a0d2488b1480c49795dc2511479d2fa1129d2b9270e93029351cfb",
+          "process.json": "5560a3533552c794b68ebdab0a479236d84ce233935e8f899d34d74a1c333500",
+          "request.json": "5a7bda210d037dc43c8e403819fd96eb5ae6b06dcdea897f9e143c7f774d2560",
+          "result.json": "07bf97b8e9f0d8acbd39736bf985fd65d97099dcda9bd00d8aefd60e4eddf79a",
+          "stderr.txt": "cae6feb53db642674d49ce055744555fb1816956b6b680bb5af1e4a5e3f55dcc",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS_EXPECTED_REJECTION",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 666.7956
+      },
+      "case": "injected-access-error",
+      "expectedCode": "QUALIFICATION_PROCESSROOT_ABSENCE_IO",
+      "injection": "INJECTED_PERMISSIONERROR_NOT_REAL_ACL_DENIAL",
+      "status": "EXPECTED_REJECTION"
+    }
+  ],
+  "expectedRejections": 9,
+  "injectedAccessError": "DOMAIN_CHECK_ONLY_NO_ACL_CHANGE",
+  "normalDataPhaseEnabled": false,
+  "positives": 1,
+  "status": "PASS_SELECTED_SYNTHETIC_RESOURCE_BOUNDARIES_ONLY"
+}

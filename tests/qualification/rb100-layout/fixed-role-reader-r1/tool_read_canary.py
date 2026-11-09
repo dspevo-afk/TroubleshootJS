@@ -12,8 +12,11 @@ parser.add_argument('--reader-source', required=True)
 parser.add_argument('--tool-config', required=True)
 args = parser.parse_args()
 path = Path(args.reader_source)
-raw = path.read_bytes()
-assert hashlib.sha256(raw).hexdigest() == '00f6d135b0f86c87f389ebb0efd45aa50b804f7c1fe263b02ffe62bb75b9fbd3'
+assert path.stat().st_size <= 4194304
+with path.open('rb') as stream:
+    raw = stream.read(4194305)
+assert 0 < len(raw) <= 4194304
+assert hashlib.sha256(raw).hexdigest() == '863a258cbab888cf112b9e927e16a099436632e9a1d43eefe0b70690c30543d8'
 spec = importlib.util.spec_from_file_location('_selected_reader_tool_canary', path)
 reader = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = reader

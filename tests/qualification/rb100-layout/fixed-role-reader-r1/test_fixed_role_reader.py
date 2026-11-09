@@ -121,6 +121,100 @@ class FixedRoleReaderTests(unittest.TestCase):
                 self.assertNotEqual(base_handle_identity,
                                     reader._handle_identity(tuple(changed)))
 
+    def test_path_projection_ignores_only_ancestor_size_and_clocks(self):
+        ancestor = os.path.abspath(os.path.join(os.sep, "reader-projection-parent"))
+        leaf_path = os.path.join(ancestor, "fixture.bin")
+        original = (
+            (ancestor, (1, 10, stat.S_IFDIR | 0o755, 4096, 100, 200, 0x10)),
+            (leaf_path, (1, 11, stat.S_IFREG | 0o644, 5, 300, 400, 0x20)),
+        )
+        changed_ancestor_clock_and_size = (
+            (ancestor, (1, 10, stat.S_IFDIR | 0o755, 8192, 101, 201, 0x10)),
+            original[-1],
+        )
+        self.assertEqual(reader._path_identity(original),
+                         reader._path_identity(changed_ancestor_clock_and_size))
+
+        ancestor_identity_changes = (
+            (0, 2),
+            (1, 12),
+            (2, stat.S_IFDIR | 0o700),
+            (6, 0x11),
+        )
+        for index, replacement in ancestor_identity_changes:
+            changed = list(original)
+            ancestor_snapshot = list(changed[0][1])
+            ancestor_snapshot[index] = replacement
+            changed[0] = (ancestor, tuple(ancestor_snapshot))
+            with self.subTest(ancestor_snapshot_index=index):
+                self.assertNotEqual(reader._path_identity(original),
+                                    reader._path_identity(tuple(changed)))
+
+        leaf_changes = (
+            (0, 2),
+            (1, 12),
+            (2, stat.S_IFREG | 0o600),
+            (3, 6),
+            (4, 301),
+            (5, 401),
+            (6, 0x21),
+        )
+        for index, replacement in leaf_changes:
+            changed = list(original)
+            leaf_snapshot = list(changed[-1][1])
+            leaf_snapshot[index] = replacement
+            changed[-1] = (leaf_path, tuple(leaf_snapshot))
+            with self.subTest(leaf_snapshot_index=index):
+                self.assertNotEqual(reader._path_identity(original),
+                                    reader._path_identity(tuple(changed)))
+        changed_leaf_path = ((ancestor, original[0][1]),
+                             (os.path.join(ancestor, "other.bin"), original[-1][1]))
+        self.assertNotEqual(reader._path_identity(original),
+                            reader._path_identity(changed_leaf_path))
+
+        # When the root itself is the inspected object, its sole row is a leaf
+        # and all seven snapshot fields remain significant.
+        root_identity = ((ancestor, original[0][1]),)
+        changed_root_clock = ((ancestor, changed_ancestor_clock_and_size[0][1]),)
+        self.assertNotEqual(reader._path_identity(root_identity),
+                            reader._path_identity(changed_root_clock))
+
+    def test_token_projection_keeps_handle_identities_exact(self):
+        parent = os.path.abspath(os.path.join(os.sep, "reader-token-parent"))
+        leaf_path = os.path.join(parent, "fixture.bin")
+        snapshots = (
+            (parent, (1, 20, stat.S_IFDIR | 0o755, 4096, 100, 200, 0x10)),
+            (leaf_path, (1, 21, stat.S_IFREG | 0o644, 5, 300, 400, 0x20)),
+        )
+        handle = (1, 21, stat.S_IFREG, 5, 300, 0x20)
+        token = (os.path.normcase(leaf_path), snapshots, handle, handle)
+        changed_parent_clock = (
+            (parent, (1, 20, stat.S_IFDIR | 0o755, 8192, 101, 201, 0x10)),
+            snapshots[-1],
+        )
+        equivalent = (os.path.normcase(leaf_path), changed_parent_clock, handle, handle)
+        self.assertEqual(reader._token_identity(token), reader._token_identity(equivalent))
+
+        changed_handle = (1, 22, stat.S_IFREG, 5, 300, 0x20)
+        different = (os.path.normcase(leaf_path), changed_parent_clock, changed_handle, handle)
+        self.assertNotEqual(reader._token_identity(token), reader._token_identity(different))
+        different_after_handle = (os.path.normcase(leaf_path), changed_parent_clock,
+                                  handle, changed_handle)
+        self.assertNotEqual(reader._token_identity(token),
+                            reader._token_identity(different_after_handle))
+
+    def test_path_projection_rejects_malformed_raw_snapshots(self):
+        malformed = (
+            (),
+            (("C:\\fixture", (1, 2, 3)),),
+            ((None, (1, 2, 3, 4, 5, 6, 7)),),
+        )
+        for snapshots in malformed:
+            with self.subTest(snapshots=snapshots):
+                with self.assertRaises(reader.ReaderError) as invalid:
+                    reader._path_identity(snapshots)
+                self.assertEqual(invalid.exception.code, "FILE_CHANGED")
+
     @unittest.skipUnless(sys.platform == "win32" and os.name == "nt",
                          "Windows extension-inferred stat mode required")
     def test_windows_exe_fixture_is_read_as_ordinary_bytes_only(self):
@@ -305,6 +399,95 @@ class FixedRoleReaderTests(unittest.TestCase):
                     reader._read_synthetic_roles(
                         roots=roots, rows=[_row()], synthetic_mode="SYNTHETIC")
             self.assertIn(changed.exception.code, ("SHA256", "FILE_CHANGED"))
+
+    def test_read_tolerates_ancestor_clock_change_with_leaf_unchanged(self):
+        with _owned_temp_directory() as temp_root:
+            roots, n_root, _d_root = _roots(temp_root)
+            fixture = n_root / "fixture.bin"
+            payload = b"alpha"
+            fixture.write_bytes(payload)
+            original = reader._inspect_path
+            calls = [0]
+            raw_before = [None]
+            raw_after = [None]
+            parent_before = [None]
+
+            def change_ancestor_clock(raw_path, expected_kind):
+                result = original(raw_path, expected_kind)
+                calls[0] += 1
+                if calls[0] == 1:
+                    raw_before[0] = result[2]
+                    parent_before[0] = os.stat(str(n_root)).st_mtime_ns
+                    (n_root / "unrelated-sibling.bin").write_bytes(b"x")
+                    parent_stat = os.stat(str(n_root))
+                    os.utime(str(n_root), ns=(
+                        parent_stat.st_atime_ns,
+                        parent_before[0] + 5_000_000_000,
+                    ))
+                else:
+                    raw_after[0] = result[2]
+                return result
+
+            with mock.patch.object(reader, "_inspect_path", side_effect=change_ancestor_clock):
+                data, digest, _token = reader._read_file_once(
+                    str(fixture), len(payload), len(payload),
+                    hashlib.sha256(payload).hexdigest(), "N_PRIOR_OPERATION1")
+
+            self.assertEqual(data, payload)
+            self.assertEqual(digest, hashlib.sha256(payload).hexdigest())
+            self.assertEqual(calls[0], 2)
+            self.assertIsNotNone(raw_before[0])
+            self.assertIsNotNone(raw_after[0])
+            self.assertNotEqual(parent_before[0], os.stat(str(n_root)).st_mtime_ns)
+            self.assertEqual(reader._path_identity(raw_before[0]),
+                             reader._path_identity(raw_after[0]))
+            self.assertEqual(fixture.read_bytes(), payload)
+
+    def test_read_rejects_parent_replacement_with_same_leaf_identity(self):
+        with _owned_temp_directory() as temp_root:
+            _roots_map, n_root, _d_root = _roots(temp_root)
+            fixture = n_root / "fixture.bin"
+            payload = b"alpha"
+            fixture.write_bytes(payload)
+            moved_root = temp_root / "N-moved"
+            original = reader._inspect_path
+            calls = [0]
+            raw_before = [None]
+            raw_after = [None]
+
+            def replace_parent_on_final_inspection(raw_path, expected_kind):
+                calls[0] += 1
+                if calls[0] == 1:
+                    result = original(raw_path, expected_kind)
+                    raw_before[0] = result[2]
+                    return result
+                n_root.rename(moved_root)
+                n_root.mkdir()
+                try:
+                    os.link(str(moved_root / "fixture.bin"), str(n_root / "fixture.bin"))
+                except OSError:
+                    self.skipTest("same-volume hard links are unavailable")
+                result = original(raw_path, expected_kind)
+                raw_after[0] = result[2]
+                return result
+
+            with mock.patch.object(reader, "_inspect_path",
+                                   side_effect=replace_parent_on_final_inspection):
+                with self.assertRaises(reader.ReaderError) as changed:
+                    reader._read_file_once(
+                        str(fixture), len(payload), len(payload),
+                        hashlib.sha256(payload).hexdigest(), "N_PRIOR_OPERATION1")
+
+            self.assertEqual(changed.exception.code, "FILE_CHANGED")
+            self.assertEqual(calls[0], 2)
+            self.assertIsNotNone(raw_before[0])
+            self.assertIsNotNone(raw_after[0])
+            self.assertEqual(reader._handle_identity(raw_before[0][-1][1]),
+                             reader._handle_identity(raw_after[0][-1][1]))
+            self.assertEqual(raw_before[0][-1][1], raw_after[0][-1][1])
+            self.assertNotEqual(reader._path_identity(raw_before[0]),
+                                reader._path_identity(raw_after[0]))
+            self.assertEqual((n_root / "fixture.bin").read_bytes(), payload)
 
     def test_pinned_contract_fixture_is_exact_and_contract_mutations_reject(self):
         raw = reader._expected_allowlist_bytes_for_test_fixture()

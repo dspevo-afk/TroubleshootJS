@@ -1,0 +1,94 @@
+{
+  "actualPriorBodiesRead": 0,
+  "badToolSha": {
+    "call": {
+      "childExitCode": 2,
+      "isolatedCleanupDurationMs": null,
+      "ownedRootAndLogsAbsent": true,
+      "phase": "ancestor-actual-tool-bad-sha-r1",
+      "processElapsedMs": 358.99,
+      "receipts": {
+        "owner.json": "54e26a16da96b4dd11924ff31ad69fbba90a2cbd605c381ae15bcac7a90f2856",
+        "parent.json": "1ae9e6ae74261a9a745d9ad32fb4ff6b088c3503d3d0f4534a159dbeb94df59c",
+        "process.json": "f89ea503c992dbeb56ab8362efcf68ad2a09f9862164f5b2fa5bff7efd6e168a",
+        "request.json": "6689fdfac255b6a96933f2b18469ff02a5597fd50d11c00e1ce2effc7c74b9e7",
+        "result.json": "bf29765fe511fb9c0015638e7d68ab490f2bc592d9dee1d3051ae955a02e8373",
+        "stderr.txt": "c655b579e60f962214b487f56f18885b19fd8329ad4aeb0d3de037554af32bcd",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "PASS_EXPECTED_REJECTION",
+      "terminationProven": true,
+      "wrapperTotalElapsedMs": 593.2808
+    },
+    "status": "EXPECTED_REJECTION"
+  },
+  "genuineEnvelope": "UNSPENT_GATED",
+  "normalDataPhaseEnabled": false,
+  "positive": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "ancestor-actual-tools-r1",
+    "processElapsedMs": 363.5916,
+    "receipts": {
+      "owner.json": "2ae7dcf88165980375352dc3028b3c57035a4837cc325ac4acce2b0dd8e9388f",
+      "parent.json": "2bae82ef3881b72aeb06576b4bea4e503dac0b80163c3dfb2139c1487b11489e",
+      "process.json": "1415d45c9cc1ee329a76aaa7b4e3d04662823ba2d1b69dff2fc99f8488eb68de",
+      "request.json": "8714916c71dafd4b9429bdcfbb29990d8e666fbb509649641e7f4a2bd24e9c87",
+      "result.json": "7c0f4cde61867a5c14a86876cfb8292499301dcedf8d9ad26ba29b4c5b3de54c",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout.txt": "bd46ca7b4b711e5ac5cd28044ef50f6c23317df9e52b1639a2fd84621453c659"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 606.3927
+  },
+  "status": "PASS_SELECTED_TOOL_SOURCE_BYTES_AND_LINK_ONLY",
+  "summary": {
+    "actualPriorBodiesRead": 0,
+    "callerQualified": false,
+    "directoryOrPriorResourcesObserved": false,
+    "embeddedModulePath": true,
+    "harnessModuleLinkSha256": "7ce76abc6214ebd266ebfecb47199278ab74540236c5ce52991804b8fd6d3a03",
+    "sourceFacts": [
+      {
+        "bytes": 89006,
+        "role": "currentNormalizer",
+        "sha256": "e8725dff3be9a1d8cf136c7ac89778ffcb0aefd54e809538caad8dcf7143aaa8"
+      },
+      {
+        "bytes": 23760,
+        "role": "currentObserver",
+        "sha256": "4786259585a13819350add727bb2bfbca9f6890db208fbe8f4f60959d8c94f8c"
+      }
+    ],
+    "status": "PASS_ACTUAL_SELECTED_OBSERVER_BYTE_FACTS_ONLY",
+    "toolFacts": [
+      {
+        "bytes": 171744,
+        "role": "qualificationPython",
+        "sha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec"
+      },
+      {
+        "bytes": 495616,
+        "role": "rootCallPowerShell",
+        "sha256": "60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f"
+      },
+      {
+        "bytes": 304768,
+        "role": "nativeJava",
+        "sha256": "e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce"
+      },
+      {
+        "bytes": 2941,
+        "role": "rootCallHarness",
+        "sha256": "28aab617e686d2a4eec074a46b2e2861f6fa7c008544b33f7b070f0c6d77ea1d"
+      },
+      {
+        "bytes": 1040144,
+        "role": "processModule",
+        "sha256": "fb07ad540e22a225a11b8a12e9dc8e5a20d88f58f89cf32a5fd347613530954c"
+      }
+    ]
+  }
+}

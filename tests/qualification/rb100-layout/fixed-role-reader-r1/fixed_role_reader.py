@@ -182,6 +182,53 @@ def _snapshot(st):
     )
 
 
+def _path_identity(raw_snapshots):
+    """Project raw path snapshots while ignoring only ancestor clock/size fields.
+
+    Ancestors retain their canonical path, device, file id, full mode, and
+    attributes. The final row is the file (or directory when a root itself is
+    inspected) and retains its complete seven-field snapshot.
+    """
+    if type(raw_snapshots) is not tuple or not raw_snapshots:
+        raise ReaderError("FILE_CHANGED")
+    projected = []
+    final_index = len(raw_snapshots) - 1
+    for index, row in enumerate(raw_snapshots):
+        if (type(row) is not tuple or len(row) != 2 or
+                type(row[0]) is not str or type(row[1]) is not tuple or
+                len(row[1]) != 7):
+            raise ReaderError("FILE_CHANGED")
+        try:
+            path_identity = os.path.normcase(os.path.abspath(row[0]))
+        except (OSError, TypeError, ValueError):
+            raise ReaderError("FILE_CHANGED") from None
+        snapshot = row[1]
+        if index == final_index:
+            snapshot_identity = tuple(snapshot)
+        else:
+            snapshot_identity = (snapshot[0], snapshot[1], snapshot[2], snapshot[6])
+        projected.append((path_identity, snapshot_identity))
+    return tuple(projected)
+
+
+def _token_identity(raw_token):
+    """Project a raw read token using path projections and exact handle ids."""
+    if (type(raw_token) is not tuple or len(raw_token) != 4 or
+            type(raw_token[0]) is not str or type(raw_token[2]) is not tuple or
+            type(raw_token[3]) is not tuple):
+        raise ReaderError("FILE_CHANGED")
+    try:
+        real_path_identity = os.path.normcase(os.path.abspath(raw_token[0]))
+    except (OSError, TypeError, ValueError):
+        raise ReaderError("FILE_CHANGED") from None
+    return (
+        real_path_identity,
+        _path_identity(raw_token[1]),
+        tuple(raw_token[2]),
+        tuple(raw_token[3]),
+    )
+
+
 def _handle_identity(snapshot):
     # Windows can expose extension-inferred permission bits differently on a
     # path stat and its opened handle. Compare file kind, not those mode bits.
@@ -341,7 +388,8 @@ def _read_file_once(raw_path, limit, expected_bytes, expected_sha256, role,
         os.close(fd)
 
     _after_path, after_real, after = _inspect_path(str(path), "file")
-    if (after != before or os.path.normcase(str(after_real)) != os.path.normcase(str(real)) or
+    if (_path_identity(after) != _path_identity(before) or
+            os.path.normcase(str(after_real)) != os.path.normcase(str(real)) or
             _handle_identity(leaf_before) != _handle_identity(after_handle) or len(data) > limit):
         raise ReaderError("FILE_CHANGED")
     if expected_bytes is not None and len(data) != expected_bytes:
@@ -381,7 +429,8 @@ def _load_pinned_allowlist(allowlist_path):
     """Metadata-only canary seam: authenticate the pinned contract, no role files."""
     raw, digest, token, specs = _read_allowlist_once(allowlist_path)
     raw_after, digest_after, token_after, _specs_after = _read_allowlist_once(allowlist_path)
-    if raw_after != raw or digest_after != digest or token_after != token:
+    if (raw_after != raw or digest_after != digest or
+            _token_identity(token_after) != _token_identity(token)):
         raise ReaderError("FILE_CHANGED")
     evidence = {
         "scope": "PINNED_ALLOWLIST_METADATA_ONLY",
@@ -448,13 +497,13 @@ def _read_role_specs(roots, specs, evidence_scope):
         raw_after, digest_after, token_after = _read_file_once(
             path, spec.max_bytes, spec.expected_bytes, spec.sha256, spec.role)
         if (raw_after != role_bytes[spec.role] or
-                token_after != role_tokens[spec.role] or
+                _token_identity(token_after) != _token_identity(role_tokens[spec.role]) or
                 digest_after != hashlib.sha256(role_bytes[spec.role]).hexdigest()):
             raise ReaderError("FILE_CHANGED")
 
     for label in ("N", "D"):
         _path, _real, identity = _inspect_path(roots[label], "directory")
-        if identity != checked_roots[label][2]:
+        if _path_identity(identity) != _path_identity(checked_roots[label][2]):
             raise ReaderError("FILE_CHANGED")
 
     evidence = {
@@ -488,7 +537,7 @@ def read_normal_prior(*, roots, allowlist_path):
     role_bytes, evidence = _read_role_specs(roots, specs, "BYTE_AUTHENTICATION_ONLY")
     raw_after, digest_after, token_after, _specs_after = _read_allowlist_once(allowlist_path)
     if (raw_after != allowlist_raw or digest_after != allowlist_digest or
-            token_after != allowlist_token):
+            _token_identity(token_after) != _token_identity(allowlist_token)):
         raise ReaderError("FILE_CHANGED")
     evidence["allowlistSha256"] = allowlist_digest
     return role_bytes, evidence

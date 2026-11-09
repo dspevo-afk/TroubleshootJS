@@ -22,7 +22,7 @@ from unittest import mock
 
 
 QUALIFIED_READER_SHA256 = (
-    "00f6d135b0f86c87f389ebb0efd45aa50b804f7c1fe263b02ffe62bb75b9fbd3"
+    "863a258cbab888cf112b9e927e16a099436632e9a1d43eefe0b70690c30543d8"
 )
 READER_PATH_ENV = "TSJ_FIXED_ROLE_READER_PATH"
 
@@ -54,6 +54,12 @@ def _read_spec(path: Path, raw: bytes, *, maximum: int):
         "maxBytes": max(len(raw), maximum),
         "sha256": hashlib.sha256(raw).hexdigest(),
     }
+
+
+def _advance_directory_mtime(path: Path, previous_mtime_ns: int):
+    current = os.stat(path)
+    target_mtime_ns = max(previous_mtime_ns, current.st_mtime_ns) + 1_000_000_000
+    os.utime(path, ns=(current.st_atime_ns, target_mtime_ns))
 
 
 class _OwnedTempDirectory:
@@ -222,6 +228,16 @@ class CallerFactsFixture:
             absence_specs=self.absence_specs,
         )
 
+    def observe_bytes(self):
+        return sut.observe_byte_facts(
+            reader=self.reader, tool_specs=self.tool_specs,
+            source_specs=self.source_specs)
+
+    def observe_resources(self):
+        return sut.observe_resource_facts(
+            reader=self.reader, directory_specs=self.directory_specs,
+            absence_specs=self.absence_specs)
+
 
 def _with_fixture(method):
     @wraps(method)
@@ -269,6 +285,183 @@ class ObserveCallerFactsTests(unittest.TestCase):
                          result["resourceFacts"]["nativeData"]["directoryNames"])
         self.assertTrue(result["resourceFacts"]["nativePrior"]["processRoot"]["absent"])
         self.assertNotIn("content", result["toolFacts"]["rootCallHarness"])
+        self.assertEqual("tsj-caller-observation-evidence-v2",
+                         result["observationEvidence"]["schema"])
+        self.assertEqual("tsj-caller-resource-observation-v2",
+                         result["observationEvidence"]["resources"]["qualification"]
+                         ["record"]["schema"])
+        self.assertEqual("tsj-fixed-role-reader-path-identity-v1",
+                         result["observationEvidence"]["resources"]["qualification"]
+                         ["record"]["identityProjection"])
+
+    @_with_fixture
+    def test_real_ancestor_clock_change_is_projected_but_leaf_is_exact(self, fixture):
+        source_path = Path(fixture.source_specs["normalizerSource"]["path"])
+        before = self.reader._inspect_path(str(source_path), "file")[2]
+        parent_mtime_ns = before[-2][1][4]
+        sibling = source_path.parent / "clock-churn-sibling.txt"
+        sibling.write_bytes(b"synthetic sibling\n")
+        _advance_directory_mtime(source_path.parent, parent_mtime_ns)
+        after = self.reader._inspect_path(str(source_path), "file")[2]
+
+        self.assertGreater(after[-2][1][4], before[-2][1][4])
+        self.assertEqual(before[-1][1], after[-1][1])
+        self.assertEqual(self.reader._path_identity(before),
+                         self.reader._path_identity(after))
+
+    @_with_fixture
+    def test_byte_recheck_accepts_real_sibling_clock_churn(self, fixture):
+        target = os.path.normcase(os.path.abspath(
+            fixture.source_specs["normalizerSource"]["path"]))
+        original = self.reader._read_file_once
+        tokens = []
+        raw_values = []
+        changed = {"value": False}
+
+        def add_sibling_after_read(path, *args, **kwargs):
+            result = original(path, *args, **kwargs)
+            if os.path.normcase(os.path.abspath(str(path))) == target:
+                raw_values.append(result[0])
+                tokens.append(result[2])
+                if not changed["value"]:
+                    Path(path).parent.joinpath("read-recheck-sibling.txt").write_bytes(
+                        b"synthetic sibling\n")
+                    _advance_directory_mtime(
+                        Path(path).parent, result[2][1][-2][1][4])
+                    changed["value"] = True
+            return result
+
+        with mock.patch.object(self.reader, "_read_file_once",
+                               side_effect=add_sibling_after_read):
+            result = fixture.observe_bytes()
+
+        self.assertTrue(changed["value"])
+        self.assertEqual(2, len(tokens))
+        self.assertEqual(raw_values[0], raw_values[1])
+        self.assertGreater(tokens[1][1][-2][1][4], tokens[0][1][-2][1][4])
+        self.assertEqual(tokens[0][1][-1][1], tokens[1][1][-1][1])
+        self.assertEqual(self.reader._token_identity(tokens[0]),
+                         self.reader._token_identity(tokens[1]))
+        self.assertEqual(len(raw_values[0]), result["sourceFacts"]["normalizerSource"]
+                         ["bytes"])
+
+    @_with_fixture
+    def test_resource_evidence_ignores_real_shared_ancestor_clock_churn(self, fixture):
+        baseline_facts, baseline_evidence = fixture.observe_resources()
+        root_before = self.reader._inspect_path(str(fixture.root), "directory")[2]
+        sibling = fixture.base / "shared-ancestor-sibling.txt"
+        original_scan = sut._scan_names
+        changed = {"value": False}
+
+        def churn_after_first_scan(path):
+            names = original_scan(path)
+            if not changed["value"]:
+                sibling.write_bytes(b"synthetic sibling\n")
+                _advance_directory_mtime(fixture.base, root_before[-2][1][4])
+                changed["value"] = True
+            return names
+
+        with mock.patch.object(sut, "_scan_names", side_effect=churn_after_first_scan):
+            current_facts, current_evidence = fixture.observe_resources()
+
+        self.assertTrue(changed["value"])
+        root_after = self.reader._inspect_path(str(fixture.root), "directory")[2]
+        self.assertGreater(root_after[-2][1][4], root_before[-2][1][4])
+        self.assertEqual(root_before[-1][1], root_after[-1][1])
+        self.assertEqual(self.reader._path_identity(root_before),
+                         self.reader._path_identity(root_after))
+        self.assertEqual(baseline_facts, current_facts)
+        self.assertEqual(baseline_evidence, current_evidence)
+
+    @_with_fixture
+    def test_source_parent_identity_replacement_rejects_even_with_same_leaf(self, fixture):
+        source_path = Path(fixture.source_specs["normalizerSource"]["path"])
+        original = self.reader._read_file_once
+        tokens = []
+        changed = {"value": False}
+        parked_parent = fixture.base / "parked-source-parent"
+
+        def replace_parent_after_first_read(path, *args, **kwargs):
+            result = original(path, *args, **kwargs)
+            if (os.path.normcase(os.path.abspath(str(path)))
+                    == os.path.normcase(os.path.abspath(str(source_path)))):
+                tokens.append(result[2])
+                if not changed["value"]:
+                    os.replace(source_path.parent, parked_parent)
+                    source_path.parent.mkdir()
+                    os.replace(parked_parent / source_path.name, source_path)
+                    changed["value"] = True
+            return result
+
+        with mock.patch.object(self.reader, "_read_file_once",
+                               side_effect=replace_parent_after_first_read):
+            self.assert_observer_code("SOURCE_CHANGED", fixture.observe_bytes)
+
+        self.assertTrue(changed["value"])
+        self.assertEqual(2, len(tokens))
+        before = self.reader._token_identity(tokens[0])
+        after = self.reader._token_identity(tokens[1])
+        self.assertEqual(before[1][-1][1], after[1][-1][1])
+        self.assertNotEqual(before[1][-2], after[1][-2])
+        self.assertEqual(tokens[0][0], tokens[1][0])
+
+    @_with_fixture
+    def test_source_leaf_metadata_change_rejects(self, fixture):
+        source_path = Path(fixture.source_specs["normalizerSource"]["path"])
+        original = self.reader._read_file_once
+        changed = {"value": False}
+
+        def change_leaf_metadata(path, *args, **kwargs):
+            result = original(path, *args, **kwargs)
+            if (not changed["value"] and
+                    os.path.normcase(os.path.abspath(str(path)))
+                    == os.path.normcase(os.path.abspath(str(source_path)))):
+                before_stat = os.stat(path)
+                os.utime(path, (before_stat.st_atime, before_stat.st_mtime + 5))
+                changed["value"] = True
+            return result
+
+        with mock.patch.object(self.reader, "_read_file_once",
+                               side_effect=change_leaf_metadata):
+            self.assert_observer_code("SOURCE_CHANGED", fixture.observe_bytes)
+        self.assertTrue(changed["value"])
+
+    @_with_fixture
+    def test_source_content_change_rejects(self, fixture):
+        source_path = Path(fixture.source_specs["normalizerSource"]["path"])
+        original = self.reader._read_file_once
+        changed = {"value": False}
+
+        def change_leaf_content(path, *args, **kwargs):
+            result = original(path, *args, **kwargs)
+            if (not changed["value"] and
+                    os.path.normcase(os.path.abspath(str(path)))
+                    == os.path.normcase(os.path.abspath(str(source_path)))):
+                source_path.write_bytes(b"synthetic current SOURCE fixTure\n")
+                changed["value"] = True
+            return result
+
+        with mock.patch.object(self.reader, "_read_file_once",
+                               side_effect=change_leaf_content):
+            self.assert_observer_code("SOURCE_READ_SHA256", fixture.observe_bytes)
+        self.assertTrue(changed["value"])
+
+    @_with_fixture
+    def test_source_parent_reparse_is_rejected(self, fixture):
+        source_path = Path(fixture.source_specs["normalizerSource"]["path"])
+        source_dir = source_path.parent
+        target_dir = fixture.base / "source-reparse-target"
+        os.replace(source_dir, target_dir)
+        try:
+            source_dir.symlink_to(target_dir, target_is_directory=True)
+        except OSError:
+            os.replace(target_dir, source_dir)
+            self.skipTest("directory symlink creation is unavailable")
+        try:
+            self.assert_observer_code("SOURCE_READ_REPARSE", fixture.observe_bytes)
+        finally:
+            source_dir.unlink()
+            os.replace(target_dir, source_dir)
 
     @_with_fixture
     def test_extra_call_entry_rejects_closure(self, fixture):

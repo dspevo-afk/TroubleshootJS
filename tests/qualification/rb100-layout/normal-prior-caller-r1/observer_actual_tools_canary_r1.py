@@ -14,7 +14,9 @@ parser.add_argument('--specs', required=True)
 args = parser.parse_args()
 def load(name, path_text, expected):
     path = Path(path_text)
-    raw = path.read_bytes()
+    assert path.stat().st_size <= 4194304
+    with path.open('rb') as stream:
+        raw = stream.read(4194305)
     assert 0 < len(raw) <= 4194304 and hashlib.sha256(raw).hexdigest() == expected
     spec = importlib.util.spec_from_file_location(name, path)
     module = importlib.util.module_from_spec(spec)
@@ -22,9 +24,9 @@ def load(name, path_text, expected):
     spec.loader.exec_module(module)
     return module
 reader = load('_actual_observer_reader', args.reader_source,
-              '00f6d135b0f86c87f389ebb0efd45aa50b804f7c1fe263b02ffe62bb75b9fbd3')
+              '863a258cbab888cf112b9e927e16a099436632e9a1d43eefe0b70690c30543d8')
 observer = load('_actual_source_tool_observer', args.observer_source,
-                '69b9c66222ca9f9a63d2d101250bc7986b1e0466635102044f9b6d1a47759cf7')
+                '4786259585a13819350add727bb2bfbca9f6890db208fbe8f4f60959d8c94f8c')
 specs = json.loads(Path(args.specs).read_bytes())
 assert set(specs) == {'toolSpecs', 'sourceSpecs'}
 try:

@@ -1,0 +1,29 @@
+{
+  "actualJunctionCanary": "NOT_RUN_YET",
+  "actualPriorBodiesRead": 0,
+  "call": {
+    "childExitCode": 0,
+    "isolatedCleanupDurationMs": null,
+    "ownedRootAndLogsAbsent": true,
+    "phase": "ancestor-reader-units-r1",
+    "processElapsedMs": 561.303,
+    "receipts": {
+      "owner.json": "982dce40463e388664a9b20ad828757ce80b28d2c2f2b9b024dd1fb15597593b",
+      "parent.json": "eb3052a73a147a1ef1ebf38162175ee2a0c21a466f6c93db40b3c54f3850510d",
+      "process.json": "888ebe60b888359634129b5f8ea9d4a4df2bf361ff0cedae0ec8d2caf4f957ba",
+      "request.json": "a1d3101a43342284f907fe196c51f8749085aad4e0216ba13d899b1f603eb5a8",
+      "result.json": "94e4b1e4ee70f91fe26c5ec77d9d872ece3cfbd1a96a4d356b0be2799a9680fd",
+      "stderr.txt": "5b260fd048cd6d03a52249c8d9f7c2560f0dd94c565686c0289d65245797d5f0",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "status": "PASS",
+    "terminationProven": true,
+    "wrapperTotalElapsedMs": 806.2945000000001
+  },
+  "genuineEnvelope": "UNSPENT_GATED",
+  "normalDataPhaseEnabled": false,
+  "passed": 13,
+  "skipped": 1,
+  "status": "PASS_SYNTHETIC_READER_SCOPE_WITH_DECLARED_PRIVILEGE_SKIP",
+  "tests": 14
+}

@@ -1,0 +1,80 @@
+{
+  "controls": [
+    {
+      "creation": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "observer-junction-directory-create-r1",
+        "processElapsedMs": 458.27750000000003,
+        "receipts": {
+          "owner.json": "80d8e0953799e63f73c4ed7af918228007aa3d38ef4afe00eb2ce6e60ecee33c",
+          "parent.json": "97f452850d8247ca02e38e0ab0fe072512a28183d20d73b5547930788320beb5",
+          "process.json": "31ed1f24d7fbc91bedbb2b8a91dc4ba9f97129eb54c0db6fb46e69a4a494d68a",
+          "request.json": "1f16d00c972dc3d1bd9851d536bf65ea17c29a420adb04ad91cada46ff9e168a",
+          "result.json": "cc5bbc0aab694f3eabaf5046977eb6e3b62f8fb88e4ff06673b6d320c9920516",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 703.8237
+      },
+      "fixtureCleanup": "GUARDED_CONTEXT_AFTER_LINK_REMOVAL",
+      "removed": 1,
+      "status": "VERIFIED_OWNED_JUNCTION_REMOVED_NONRECURSIVELY",
+      "targetUnchanged": true
+    },
+    {
+      "creation": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "observer-junction-absence-create-r1",
+        "processElapsedMs": 685.1575,
+        "receipts": {
+          "owner.json": "71ffb37418af37f3c72bd76cf9ac14a6b177f21d04377e4eb5dd8705e4916290",
+          "parent.json": "6e73c9f18bdc49add92385b758a646d988ef962d38440909a9e4a6f8f60276f4",
+          "process.json": "5419f8698fd2a8c8e59e63ed294ae090a436074bc0428760b05593568d6b5245",
+          "request.json": "fe5488ea32daac2a814f0c14ad49332138cca07787d903d923c6893d646f3be3",
+          "result.json": "26ac01633345c0ee8ff4fc66c73645e20907702f6ede3d21cc8ce92ffed385d0",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 932.1901
+      },
+      "fixtureCleanup": "GUARDED_CONTEXT_AFTER_LINK_REMOVAL",
+      "removed": 1,
+      "status": "VERIFIED_OWNED_JUNCTION_REMOVED_NONRECURSIVELY",
+      "targetUnchanged": true
+    },
+    {
+      "creation": {
+        "childExitCode": 0,
+        "isolatedCleanupDurationMs": null,
+        "ownedRootAndLogsAbsent": true,
+        "phase": "ancestor-reader-junction-create-r1",
+        "processElapsedMs": 464.812,
+        "receipts": {
+          "owner.json": "32689fe67ac835243c90c99a21eaa244e26145225e7158cd4721fcb7c9c195fe",
+          "parent.json": "846f0972c5c93f369c6508c7a0466788d5b5389d9377ff9681594bb383b4ae84",
+          "process.json": "d498405d60065779ce4996194b17d089d022bb4a1a1e2e0b1927c92961dbc1d2",
+          "request.json": "bf701b6e1e59aaf651e79fcf9bd2b0fd8025ea0712bcbc0ebc8dc8d59944e973",
+          "result.json": "6632f6feae4a3de6285281d811aff8d67d54f2b67790de1430a1fae7fe60ce77",
+          "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status": "PASS",
+        "terminationProven": true,
+        "wrapperTotalElapsedMs": 713.4883
+      },
+      "privateOwnershipReceiptSha256": "ca0f4e1849be50d92255e5f3c73fe36f0104e15ee740bc9e6761fdcc15f086b1",
+      "removed": 1,
+      "status": "VERIFIED_OWNED_JUNCTION_REMOVED_NONRECURSIVELY",
+      "targetUnchanged": true
+    }
+  ],
+  "status": "PASS_THREE_REAL_OWNED_JUNCTIONS_REMOVED"
+}
