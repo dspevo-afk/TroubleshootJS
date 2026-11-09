@@ -1,4 +1,51 @@
-# Current checkpoint: shared Windows reader correction accepted; publication next
+# Current checkpoint: Windows reader fix published; observer SOURCE next
+
+UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
+codex/q100-terminal-only-20261107. Implementation ee23ef185056a9510161efb6c999ac78c0a4251e
+normally pushed to origin/codex/q100-physical-feasibility, exact remote SHA
+verified; Gmail1a1bdc57fe3d1c7b SENT_ONCE. Receipt gets no second mail; verify actual
+HEAD after documentation receipt. Origin dspevo-afk/TroubleshootJS; no upstream.
+Actual18-path tree620d5432ed43e298891a79c1eb180a0e1a21f8c8, patch514d3e8a677f8e2c9356f5feba309783976b64fd03467ab02f74b815424a0770;
+byte/privacy/whitespace/actual-space rejection/restoration pass. F clean after
+implementation. Main5f05b005 retains9tracked/6untracked/staged0; E d9747229
+reportM/staged0; Desktop e0c36885 retains7tracked/73defaultuntracked entries
+(89files with-uall)/staged0. Main/E report mirrors only; unrelated work preserved.
+
+Current F reader00f6d135b0f86c87f389ebb0efd45aa50b804f7c1fe263b02ffe62bb75b9fbd3,
+testb0f775a4; normalizerE8725DFF; codecC1F27377/kernelF87C3EF7; contractC487.
+Reader finalproof090f4a82e8cc87aebb645124a540783dab4b73097402458d16eb1961d40e46ca.
+9private/9public each8PASS/1symlinkprivSKIP; actual5tool positives,2I/O/metadata
+positives,13unchanged negatives and realjunction rejected/verified/removed.
+Public actualexe wrongSHA rejection passes. Only cross-handle file-kind changed;
+full path snapshots/allotherguards remain. Independent SOURCE review scopedclear.
+Original FILE_CHANGED failure and diagnostic preserved; no normal-role DATA read.
+Prior correctionf31fdcbf/Gmail1a1bdb2d592bfe9d and ZB2e4e356f/
+Gmail1a1bda8f6a858b70 verified/SENT_ONCE; no duplicates. Use current F00f6 reader
+and E872 normalizer, not historical3114/5824 private sources.
+
+AB OS-temp/tsj-q100-normal-prior-caller-a35e638a731e4ffda4af90ec93fe047f,
+PLAN0a1aac12/CALLER_FLOW_R1. Reader correction lives reader-handles-r1;
+source/synthetic fixtures/configs/receipts retained. Leaf context_projection_map_y1
+owns observe_caller_facts.py/test_observe_caller_facts.py SOURCE-only, no execute/
+spawn/stage/publish/mail. API explicit injected current reader plus tool_specs,
+source_specs,directory_specs,absence_specs; returns real tool/source/resource
+facts and observation evidence. No hidden resolver/default/alternateWin32reader.
+Root owns caller/integration/source gates/actualhost canaries/phasejournal/DATA.
+Observer/caller SOURCE work not yet accepted; actual root/module-link/resource
+facts and actual prior qualification remain NOT RUN. No DATA-phasejournal yet.
+
+Next collect/review observer SOURCE, qualify selected Windows positive/negative/
+cleanup boundaries, freeze caller SOURCE/callback/authority/root facts, then
+journal before any fixed20 normal-only body read. No manifest following/oldD
+descriptor/result/generatedinput, oldbuilders/modules/CLIs or protected/heldout
+DATA. One genuine original+exactly NULL/OBSERVE unspent/gated; no extra arm/
+control/original/retry. No new persistent process/link; old uncertain resources
+untouched. CircuitJS truth/caps/seeds/epochs/oracles unchanged; Full30EXCLUDED;
+HARD/PSYCHOTIC unavailable/unrun; historical protected unreadUNCERTIFIED;
+playable100=0/betaHELD/full-D-H1 unqualified. GWT/Player NOT APPLICABLE;
+electrical/population not renewed. Continue standing roadmap without routineask.
+
+# Historical checkpoint: shared Windows reader correction accepted; publication next
 
 UTC2026-11-09. F OS-temp/tsj-q100-terminal-only-20261107-r1,
 codex/q100-terminal-only-20261107, HEAD17e91e73ee9b2638273f668da0cac0ac22a04a2a.

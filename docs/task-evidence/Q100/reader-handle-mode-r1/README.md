@@ -1,6 +1,8 @@
 # Windows reader handle-kind correction
 
-Accepted locally for this shared reader boundary; publication is next.
+Accepted and published as `ee23ef185056a9510161efb6c999ac78c0a4251e` on
+origin/codex/q100-physical-feasibility, exact remote SHA verified.
+Gmail `1a1bdc57fe3d1c7b` SENT_ONCE; [publication](PUBLICATION_R1.md).
 Final proof SHA256 `090f4a82e8cc87aebb645124a540783dab4b73097402458d16eb1961d40e46ca`.
 
 The first actual caller preflight failed while authenticating the selected

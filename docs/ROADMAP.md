@@ -1170,7 +1170,9 @@ each give8PASS/1symlink-privilegeSKIP; actual5tool positives,2I/O/metadata posit
 hash rejection also passes. No role DATA or genuine envelope was read/run.
 Actual caller/observer qualification remains pending; caps/seeds/oracles and
 Full30EXCLUDED/HARD-PSYCHOTIC unavailable/unrun/historical unreadUNCERTIFIED/
-playable100=0/betaHELD stay. Publication and one completion Gmail are next.
+playable100=0/betaHELD stay. Implementation `ee23ef185056a9510161efb6c999ac78c0a4251e`
+normally pushed to origin/codex/q100-physical-feasibility, exact remote SHA
+verified; completion Gmail `1a1bdc57fe3d1c7b` sent once.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
