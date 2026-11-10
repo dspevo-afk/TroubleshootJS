@@ -1714,6 +1714,18 @@ Implementation `dffb1d04bc93b901d1390d27647a9b1259243f46` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c457329d9ca2b` sent once. This receipt sends no second email.
 
+The [qualified receipt tuple prerequisite](task-evidence/Q100/qualified-receipt-tuple-r1/README.md)
+is locally accepted for its finite metadata scope. The current owner validates
+path, byte count and SHA agreement before metadata copy or receipt binding,
+using81 prepaid units and no helper copies. Final-source JDK8,113 new native
+cases/679 assertions,123 retained cases, private/public Source12 each and bounded
+independent Source/ledger review pass;7 selected receipts were reauthenticated.
+The pure pinned transform conserves all other Source. Positive prepare/binding,
+receipt authority, whole-result semantics, lifetime and genuine execution remain
+gated. Existing budgets, exact seeds/epochs, full30 EXCLUDED and data exclusions
+remain; playable100=0 and beta HELD. Next: remaining metadata identity/caller
+authority Source contract.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

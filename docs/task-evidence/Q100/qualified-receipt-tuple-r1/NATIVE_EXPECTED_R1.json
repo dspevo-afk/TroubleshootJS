@@ -1,0 +1,14 @@
+{
+  "status": "ROOT_AND_WORKER_SOURCE_COUNTED_BEFORE_EXECUTION",
+  "cases": 113,
+  "assertions": 679,
+  "line": "SYNTHETIC_QUALIFIED_RECEIPT_TUPLE_COMPONENT_ONLY cases=113 assertions=679; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+  "familyCases": [3, 105, 2, 1, 1, 1],
+  "familyAssertions": [15, 630, 14, 6, 8, 6],
+  "rejectionCases": {"priorMap": 6, "path": 4, "bytes": 11, "sha": 80, "operation": 4},
+  "helperHappyUnits": 81,
+  "outerReadUnits": [2, 80],
+  "invalidHexUnit": "15 + zero-based invalid-character index",
+  "admissionNegative": "640 real Meter charge/finish groups, unchanged budgets, then rejection before any prior lookup",
+  "coverageLimit": "Nested lookup exceptions at units4/6/11 are not injectable while preserving exact LinkedHashMap.class; ordinary lookups are covered by success/debits and field failures."
+}

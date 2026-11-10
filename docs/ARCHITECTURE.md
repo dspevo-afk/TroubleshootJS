@@ -329,6 +329,15 @@ separate full-body ownership proof or guard before genuine caller composition.
 Actual-Meter synthetic gates qualify construction and ticket preparation only;
 normal assembly, R7 composition, whole-result and host/lifecycle remain closed.
 
+The [receipt tuple validator](task-evidence/Q100/qualified-receipt-tuple-r1/README.md)
+adds81 prepaid read/control units to the current metadata owner after priorShape
+and before its existing copy(12), receipt preparation and body replacement. It
+compares path, Integer byte count and receipt/expected/operation SHA identities;
+no helper copies or explicit group calls are added. The pure current-Source
+transform inserts only this helper and its call, retaining all prior construction
+and binding owners. This consistency check does not authenticate a factory or
+receipt file, prove exclusive borrowed lifetime or authorize genuine assembly.
+
 The [body ownership guard](task-evidence/Q100/native-body-ownership-r1/README.md)
 adds one separately metered identity traversal to the current emitted R7 path,
 after work/plan installation and before placeholder accounting and metadata close.

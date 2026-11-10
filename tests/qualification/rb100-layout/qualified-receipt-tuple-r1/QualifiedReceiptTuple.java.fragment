@@ -1,0 +1,55 @@
+    /** Compare borrowed receipt metadata before copying or binding a file. */
+    static void validateReceiptTuple(
+            CohortTerminalTelemetryStudy.SetupMeter meter,
+            Map<?,?> prior, long expectedBytes, String expectedSha) throws Exception {
+        if (meter == null) throw new IOException("METADATA_ARGUMENTS");
+        meter.charge(1);
+        if (prior == null) throw new IOException("METADATA_RECEIPT_PRIOR");
+        meter.charge(1);
+        Object rawReceipt = prior.get("priorOriginalReceipt");
+        meter.charge(1);
+        if (rawReceipt == null || rawReceipt.getClass() != LinkedHashMap.class)
+            throw new IOException("METADATA_RECEIPT_MAP");
+        Map<?,?> receipt = (Map<?,?>)rawReceipt;
+        meter.charge(1);
+        Object path = receipt.get("receiptPath");
+        meter.charge(1);
+        if (!"op-1.jsonl".equals(path))
+            throw new IOException("METADATA_RECEIPT_PATH");
+        meter.charge(1);
+        Object rawBytes = receipt.get("receiptBytes");
+        meter.charge(1);
+        if (!(rawBytes instanceof Integer))
+            throw new IOException("METADATA_RECEIPT_BYTES");
+        meter.charge(1);
+        int bytes = ((Integer)rawBytes).intValue();
+        meter.charge(1);
+        if (bytes < 1 || bytes > 8388608)
+            throw new IOException("METADATA_RECEIPT_BYTES");
+        meter.charge(1);
+        if (bytes != expectedBytes)
+            throw new IOException("METADATA_RECEIPT_BYTES");
+        meter.charge(1);
+        Object rawSha = receipt.get("receiptSha256");
+        meter.charge(1);
+        if (!(rawSha instanceof String))
+            throw new IOException("METADATA_RECEIPT_SHA");
+        String sha = (String)rawSha;
+        meter.charge(1);
+        int length = sha.length();
+        meter.charge(1);
+        if (length != 64) throw new IOException("METADATA_RECEIPT_SHA");
+        for (int i = 0; i < 64; i++) {
+            meter.charge(1);
+            char c = sha.charAt(i);
+            if ((c < '0' || c > '9') && (c < 'a' || c > 'f'))
+                throw new IOException("METADATA_RECEIPT_SHA");
+        }
+        meter.charge(1);
+        if (!sha.equals(expectedSha)) throw new IOException("METADATA_RECEIPT_SHA");
+        meter.charge(1);
+        Object operationSha = prior.get("operation1Sha256");
+        meter.charge(1);
+        if (!sha.equals(operationSha))
+            throw new IOException("METADATA_RECEIPT_OPERATION");
+    }

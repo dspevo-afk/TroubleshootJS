@@ -1,0 +1,194 @@
+{
+  "status": "PASS_FINITE_QUALIFIED_RECEIPT_TUPLE_METADATA_PREREQUISITE",
+  "sourceFreezeSha256": "56bdb64c19256fee073ea88c745d546c1af15fadd7717fe6ae33614c436ffe08",
+  "nativeSourceFreezeSha256": "a505f9f7fc56575175cdfb6e5f8e723b50ee6ce965d5b51c3115c22a8e2d5ea8",
+  "gates": [
+    {
+      "name": "SOURCE_GATE_R1.json",
+      "bytes": 1480,
+      "sha256": "fca62266901326e9b222f22dcbf978d242967954ef0de80c47e32240b8dc5422",
+      "status": "PASS_CURRENT_RECEIPT_TUPLE_SOURCE"
+    },
+    {
+      "name": "COMPILE_GATE_R1.json",
+      "bytes": 578264,
+      "sha256": "0a20fdae24ed13f2471a70e5ce60e64fa18d6d6931cb9604f4b2d3afd8ca941e",
+      "status": "PASS_FINAL_SOURCE_JDK8_RECEIPT_TUPLE_COMPILE"
+    },
+    {
+      "name": "NATIVE_GATE_R1.json",
+      "bytes": 5763,
+      "sha256": "fb6dfb1c169bbcad94f74f2d18b18737c50d1057904bd6af9964ffc54eb1489d",
+      "status": "PASS_RECEIPT_TUPLE_NATIVE_AND_RETAINED_COMPONENTS"
+    },
+    {
+      "name": "PUBLIC_GATE_R1.json",
+      "bytes": 2378,
+      "sha256": "ec7ca758510cbaa2ccd42c4d900d4cf541cfd0a056a8d84c6c429950d6504740",
+      "status": "PASS_FINAL_PUBLIC_RECEIPT_TUPLE_SOURCE"
+    }
+  ],
+  "sourceTests": 12,
+  "publicSourceTests": 12,
+  "newNativeCases": 113,
+  "newNativeAssertions": 679,
+  "helperHappyUnits": 81,
+  "helperCopies": 0,
+  "helperCopyChunks": 0,
+  "retainedNativeCases": [
+    60,
+    63
+  ],
+  "selectedProcessCount": 7,
+  "positiveExitZeroCount": 6,
+  "expectedNonzeroRejectionCount": 1,
+  "processReceipts": [
+    {
+      "phase": "tuple-jdk8-compile-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 790.7574000000001,
+      "wrapperTotalElapsedMs": 1223.7608,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "bcf55e7c67adbdc6150dc26d5a68ea4e2d4b9605031fa015f0b74d2347c814a2",
+        "owner.json": "cb9e410649b7ba28f175112243fc68a6ead097df79d22f969e2e9ef7d777bacf",
+        "process.json": "3fbe4c2387eadf1802063cd4b6f9e44d0eafca182e753463f286760d16ad3278",
+        "parent.json": "e755e1b96ef2dbf2ad23b913364ceb9d78f2bf1b10d866813513f5cf1d1ae6af",
+        "result.json": "00116fba50b4f687745074dfd88978f55b8e8dbd86a95007b42b96ffad5e7427",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "tuple-jvm-extra-argument-r1",
+      "childExitCode": 1,
+      "classification": "EXPECTED_CASE_SPECIFIC_REJECTION_NOT_POSITIVE_PASS",
+      "operationElapsedMs": 328.9716,
+      "wrapperTotalElapsedMs": 561.4107,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "8c88653e4ea805e4dcae865960e515d8ba0450ccbe0acd53a21704cadae2ba35",
+        "owner.json": "3506fbdc06e0251ee52232541fb14107c1745792363360fdfee1891e2617d8db",
+        "process.json": "4b22364b0810cbb789c17770b922cc85746ba2c65435a559401d9f701d62a8df",
+        "parent.json": "045fc97e418bda217d5558e9708251d74702cf224f65c190882d723d9667852c",
+        "result.json": "7bf5355c2a4b4c43b5cc0d6f77cdcbc9da28726061e04a3e4d662ffe7453e174",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "d38325f16df0f8b1a1f9f729722e4b7e368d8933560dc735a07f2e397b7842cc"
+      }
+    },
+    {
+      "phase": "tuple-native-body-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 361.8768,
+      "wrapperTotalElapsedMs": 606.9379,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "2fdd0e1786bee3474d9811f996c9095b6d8f94536ce60fb81ed1c551e8d8e5af",
+        "owner.json": "7deaa963283c791078572bb2306901190d1396a85d2ac278fa133dc33915a5e9",
+        "process.json": "1028418e9dc425f766d2bfd45102c85388b9bca4852e12a86d8d6099a117053f",
+        "parent.json": "4ec5995867c4fcc457cab8bb6f4c96dfa42630fb4893fb9cf38b836ea1e13b29",
+        "result.json": "80794423a3cc5e172f010d72a3532dc102caf4a1f4ff23b5a0a642ce3c37da2c",
+        "stdout.txt": "f2a5e820fe3990807ca52101236a83e9e9e482d137564bf716a9f0f256b97afd",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "tuple-native-codec-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 568.6803,
+      "wrapperTotalElapsedMs": 801.5066,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "3ec5495935604072f6a1a220e41398207a861c92152c99f122ebe455304573f2",
+        "owner.json": "7944f06df5c8ad949f75a9116a940e8cdac7a5db8baaf915616ed1385d29ba13",
+        "process.json": "3a953f3cad0fc851e04021e7bf8b3391567994e08b468302e266e38b3de77103",
+        "parent.json": "7caff4a37fe32c6fbb488347fa4bf8741cc75e2ebd85e6eb4f2cf4f55e8ffa74",
+        "result.json": "0cfffc17482685d78fe5ee7faa26c926d01cfb75deff424e47c0d2fd0974fb56",
+        "stdout.txt": "b591b84893b83da74cdf9ae186ed5543dab887e4178bbc88f232167a0ca3dd9f",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "tuple-native-tuple-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 369.52430000000004,
+      "wrapperTotalElapsedMs": 603.023,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "2b2d8d027dba7844f544cc37cd7867258b29164fab2e278a10fbd1fa5a4868eb",
+        "owner.json": "991191a37f96b43a2d0b16c752c6724232460642fa54cfdfd9d1764c2f3ea0f2",
+        "process.json": "14f4bd934a6c6030bd2acf255628f2f5c68bf71f054b29f71e05ff654fbe9c92",
+        "parent.json": "c2925a896bd91e7f4cd26e315a385607d9676cfdcae104222fa6eb5a60fba186",
+        "result.json": "0fe3fd5bcdb39a55fee6eec93c7b0ef95815ec4473b5aa85d885542cb28613f0",
+        "stdout.txt": "c3e8fb2438323258817934a5dd4d8f846fc856c5030e9c76567d016fb4ab44e0",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "tuple-public-source-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 363.59610000000004,
+      "wrapperTotalElapsedMs": 603.3924000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "311e06a1db0b4eccb9cbef08a28e92a0b5152abd28632d2f7142fc8d256bfd14",
+        "owner.json": "e1df61f50f7b229ecad735896a3a282b5c16fcd303d8c2eb3eeb8dc04905f195",
+        "process.json": "8506277a5bebb7a421bc00d1e362b76e0a0427c0a1a116017a832c7876a25fe0",
+        "parent.json": "e4543a648dd988eee274bc899d647b17f64da3623440b254aec08641acb8fb9f",
+        "result.json": "e56bb655e581391b86fa1363b6db133221e7744f83476131be9c96dbf78053a6",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "52a1e02f46f661e64f8d7014a8b630049c06baeee4a9d0575790a1e63f82a870"
+      }
+    },
+    {
+      "phase": "tuple-source-tests-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 389.4538,
+      "wrapperTotalElapsedMs": 639.2237,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "556d047cc09dd18bde1fc98f078ec6eb13f8f9bee18c98ecef198de25d063f0c",
+        "owner.json": "d570d219b9279ad4d60f30383617c963b59c0c67256f5dc37cde1050dc963553",
+        "process.json": "fff201779b955dccadb1a3fe130a7935ff3112a94622184b072e18eea4d542d8",
+        "parent.json": "5d1473eb89865facbe6fcb543a8725496629fbc114ab4a682754e26658b376a7",
+        "result.json": "080d83adff584519580fa1eb603e4582704da14053324b6f9c7b76be01c3b8f1",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "52a1e02f46f661e64f8d7014a8b630049c06baeee4a9d0575790a1e63f82a870"
+      }
+    }
+  ],
+  "allSelectedReceiptsAndInputsReaudited": true,
+  "terminationAndOwnedRootLogsAbsenceProven": true,
+  "isolatedCleanupDurationMs": null,
+  "sourceCount": 2,
+  "classes": 8,
+  "classBytes": 30118,
+  "dependencies": 2567,
+  "dependencyBytes": 12292116,
+  "allMajor51": true,
+  "noShadows": true,
+  "independentReview": "PASS_BOUNDED_SOURCE_AND_LEDGER_NO_EXECUTION",
+  "prepareScope": "exact Source call after priorShape before copy/binding; positive prepare and binding NOT_RUN",
+  "sourceIoScope": "pure bytes API; no new I/O or CLI owner",
+  "actualOwnerExecution": false,
+  "normalHostAcceptance": false,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "fullBodySemantics": "NOT_QUALIFIED",
+  "factoryReceiptAuthority": "NOT_QUALIFIED",
+  "borrowedLifetime": "NOT_QUALIFIED",
+  "productionGwtPlayer": "NOT_APPLICABLE",
+  "electricalPopulation": "NOT_RENEWED",
+  "ci": "NOT_RUN",
+  "full30": "EXCLUDED",
+  "hardPsychotic": "UNAVAILABLE_UNRUN",
+  "oldNormal20": "HISTORICALLY_READ_NO_REREAD",
+  "protectedUnread": "UNCERTIFIED",
+  "playable100": 0,
+  "beta": "HELD"
+}

@@ -1,4 +1,57 @@
-# Current checkpoint: body correlations published; receipt record
+# Current checkpoint: qualified receipt tuple accepted; publication pending
+
+F codex/q100-terminal-only-20261107 HEAD77032ab423a78af6e2cc0e5046c26b2a9c439f75,
+no upstream; target origin/codex/q100-physical-feasibility. Priorbodydffb1d04/
+receipt77032ab4/Gmail1a1c457329d9ca2b, arm4d835a9a/44bf15cf/Gmail1a1c41da9786b690,
+originalDTO64c83dec/a42dd1c9/Gmail1a1c3ce8d372dabb complete; neverduplicate.
+
+N20 OS-temp/tsj-q100-qualified-receipt-tuple-r1-8256bddac9d04ab4924c367212277c1a.
+Finitehelper comparesreceiptMap/path/Integerbytes/SHA/operationSHA with separate
+bindingexpectedscalars afterpriorShape,beforecopy12/binding/bodyreplacement.
+Happy81actualunits,nocopies/explicitgroups; zeroSourcebusinesschurnotherwise.
+Input9970/a98ea929... ->12486/49f9930a4e1d8aed297236dd4ee742233c73cffcded9f495fd5815f58d11687b;
+fragment2443/ad5cb569f418f16cf82470d8c7b93d77da03c7f7d0e9f32c3057500be73db76b.
+Sourcefreeze56bdb64c19256fee073ea88c745d546c1af15fadd7717fe6ae33614c436ffe08;
+nativefreeze a505f9f7fc56575175cdfb6e5f8e723b50ee6ce965d5b51c3115c22a8e2d5ea8;
+proof a59bc063ea6c1049b7e47ead1235e8841fa357636a6beb2fe8acc6c89f33395d.
+PASS: finalsourceJDK8target7twoSources/8major51classes30118B/2567deps12292116B/
+noShadows;113newcases679assertions+retained60/210and63/94;private/publicSource12
+each;exactJVMargreject;root/independentSource+ledger+documentaryreviews;7selected
+receiptsreauthenticated6exit0/1expectedexit1. Operation/wrapperseparate; isolated
+cleanupdurationnull. Allselectedresources terminated/root+logsabsent.
+Nestedlookupfaultinjection4/6/11limitedbyexactLinkedHashMap; field/debitcases
+coverordinaryreads. Positiveprepare/binding/receiptfilesNOTRUN; onlynarrowhelper
+withsyntheticmaps/Meterexecuted. Actualcaller/wholebody/authority/lifetime remain
+gated. ExistingN19andearlierfailureevidencepreserved; no newgatefailure.
+
+PublicT=qualified-receipt-tuple-r1,E=docs/task-evidence/Q100/qualified-receipt-tuple-r1.
+EvidenceandSourceexactcopiesready. Next rootstaged-byte/privacy/diff/statusaudit,
+normalcommit/push/exactremoteverify/oneGmail; no N20 publication/email yet.
+NextSourcecontract candidate: cleanupcontext-restoration summary equalscapture
+Boolean andANDofcapture/null/observe restorationflags. Rootpreferscurrentcodec
+preflight overredundantimmediateprojectionrecheck; existingblockadmission scope.
+Needcurrenthigherfixturemigration, preservinglowertransport1177/6370oracles.
+BoundedSourcefollowup pending; no nextimplementation or genuineadmission.
+
+F3docsM+2newintentionaldirs/staged0. Main5f05b0059trackedM/6untrackedentries;
+E d9747229reportM; Desktop e0c368857trackedM/89untrackedfiles preserved. Only
+reportprefixes mirroredMain/E. ExistingNotepadwindow67116860 usedreadonly;
+no newNotepadprocess, tabs/windowsleftopen. No newpersistentlistener. Olduncertain
+browser14116/start639294472690745890/58320,preview34180/start639294472514546595/
+58264+14children,oldDprocess/unlinkUNCERTIFIED untouched; priorregularhardlinks/
+scratch/failures retained,testedjunctionsremoved. No atomicpathhandle guarantee.
+
+No actual/fakeOriginalArm/ArmResult/graph/Session/routing/positiveoriginalDTO/
+executeArm/R9DTO/genuine execution. Syntheticmetadata/Meter only; genuineoriginal
+then exactNULL/OBSERVE UNSPENT_GATED. All90s/640/5s/32768/copy1MiB/chunk4096/
+Source4MiB/opJSON8MiB/result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/
+reader180s/wrapper480s/cleanup120s/exactseeds/epochs unchanged. GWT/PlayerN/A,
+electrical/populationNOTRENEWED,CINOTRUN,full30EXCLUDED,HARD/PSYCHOTIC unavailable/
+unrun,oldnormal20historicalREAD/noreread,protectedUnreadUNCERTIFIED,playable100=0,
+betaHELD. Protected/heldoutDATA/oldactualDartifacts/generateddataclasses/whole
+legacybuildersconsumers denied. Continue standingroadmap request untiluserstops.
+
+# Historical checkpoint: body correlations published; receipt record
 
 F codex/q100-terminal-only-20261107 implementationdffb1d04bc93b901d1390d27647a9b1259243f46,
 no upstream; target origin/codex/q100-physical-feasibility. Prior arm4d835a9a/
