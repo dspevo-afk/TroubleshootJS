@@ -175,6 +175,7 @@ static R7WorkPlan captureR7WorkPlan(SetupResult setup,Object original,long origi
     long freshChunks=r5Add(r5Add(nullFreshChunks,observeFreshChunks),
         r5Add(nullObserverChunks,observeObserverChunks));
 
+    CurrentAssemblyMetadata.installCleanup(meter,result,cleanupNanos);
     return captureDetachedR7WorkPlan(meter,started,result,
         setupUnits,setupGroups,setupCopies,setupChunks,
         originalOwnerUnits,originalWrapper,originalCallbackUnits,originalDiagnosticUnits,

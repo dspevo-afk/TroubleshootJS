@@ -1,4 +1,4 @@
-"""Deterministic, in-memory overlay for the frozen authored flat work-plan source."""
+"""Pure current-source R7 cleanup derivation for the authored flat work plan."""
 
 from collections import namedtuple
 import hashlib
@@ -9,26 +9,24 @@ GenerationResult = namedtuple("GenerationResult", "study_source provenance_json"
 
 MAX_SOURCE_BYTES = 4 * 1024 * 1024
 MAX_OUTPUT_BYTES = 4 * 1024 * 1024
+MAX_PROVENANCE_BYTES = 1024 * 1024
 
-SOURCE_PINS = {
-    "w": ("W_STUDY.java", "1ae31054a430c00bf926ff4deff8091892bae267f05257aa0d869000226f7bd1", 239584),
-    "r": ("R_STUDY.java", "88986781508aa34783d11e651082122f4bf8e0710a2263b39cc9b597fce9a8cf", 229578),
-    "q": ("Q_AUTHORED_STUDY.java", "d6485b0b0f9c518431d440fcb57e477143d50cae78302c29598d12aaa4601dbd", 233880),
-    "shared": ("SHARED_OWNER.java", "4ed1c8561adf1619a8b7ffbd21e23fdf2544dcaafe541af4e5d2b2b1e95cabe4", 182535),
-}
+CURRENT_SOURCE_NAME = "CURRENT_STUDY.java"
+CURRENT_SOURCE_SHA256 = "9ac45b374c8aeee7a912a4e1452435b71b278aeae0a288e5a75dd82a149c006b"
+CURRENT_SOURCE_BYTES = 234954
+PRE_OWNERSHIP_SOURCE_SHA256 = "524318f4023fa3b884494657a24dffaac063352cc6e21b4c71bd84e41c0e69e4"
+PRE_OWNERSHIP_SOURCE_BYTES = 234907
+AUTHORED_MEMBERS_NAME = "AuthoredFlatWorkMembers.java"
+AUTHORED_MEMBERS_SHA256 = "8c2c6428e8a4c5ca45d912cd22d76f344c6ab968c11031e6fd0417974b852bde"
+AUTHORED_MEMBERS_BYTES = 22592
+EXPECTED_OUTPUT_SHA256 = "c8b23f3939f2b866516dc4eaa7a869d22b4fd7e1ed24ef0bbeaf7f113fff4ba5"
+EXPECTED_OUTPUT_BYTES = 234978
 
-_FRAGMENT_MARKERS = (
-    ("// @@R5_FLAT_SHAPE_BEGIN@@", "// @@R5_FLAT_SHAPE_END@@"),
-    ("// @@R7_FLAT_PLAN_BEGIN@@", "// @@R7_FLAT_PLAN_END@@"),
-)
-_EXPORT_SIGNATURES = (
-    "static R5ExportMetrics exportR5(GenericR7Arguments args,java.util.Map<String,Object> result,\n"
-    "        SetupMeter meter,long started,R5Snapshot pre,R5WorkFinalizer finalizer) throws Exception",
-    "static R5ExportMetrics exportR5(GenericR7Arguments args,java.util.Map<String,Object> result,\n"
-    "        SetupMeter meter,long started,R5Snapshot pre,R5WorkFinalizer finalizer,\n"
-    "        R5AfterResultWrite hook) throws Exception",
-)
-_DENIED_BODY = '{ throw new java.io.IOException("R5_EXPORT_DISABLED"); }'
+OWNERSHIP_INSERTION = "    CurrentBodyOwnership.validate(meter,body);\n"
+OWNERSHIP_ANCHOR = "    /* One complete placeholder-body accounting pass before the Meter closes. */\n"
+INSTALLER_LINE = "    CurrentAssemblyMetadata.installCleanup(meter,result,cleanupNanos);\n"
+CAPTURE_MARKER = "static R7WorkPlan captureR7WorkPlan("
+DETACHED_CAPTURE_ANCHOR = "    return captureDetachedR7WorkPlan(meter,started,result,\n"
 
 class OverlayError(ValueError):
     """Path-free failure for invalid or unpinned source inputs."""
@@ -38,13 +36,12 @@ def _sha256(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def _source_input(role, value):
+def _source_input(value):
     if type(value) is not bytes:
         raise OverlayError("SOURCE_TYPE")
-    name, expected_hash, expected_size = SOURCE_PINS[role]
-    if len(value) > MAX_SOURCE_BYTES or len(value) != expected_size:
+    if len(value) > MAX_SOURCE_BYTES or len(value) != CURRENT_SOURCE_BYTES:
         raise OverlayError("SOURCE_SIZE")
-    if _sha256(value) != expected_hash:
+    if _sha256(value) != CURRENT_SOURCE_SHA256:
         raise OverlayError("SOURCE_PIN")
     if value.startswith(b"\xef\xbb\xbf"):
         raise OverlayError("SOURCE_BOM")
@@ -52,49 +49,49 @@ def _source_input(role, value):
         decoded = value.decode("ascii")
     except UnicodeDecodeError:
         raise OverlayError("SOURCE_ASCII")
-    crlf = decoded.count("\r\n")
-    without_crlf = decoded.replace("\r\n", "")
-    if "\r" in without_crlf:
+    if "\r" in decoded:
         raise OverlayError("SOURCE_NEWLINE")
-    normalized = decoded.replace("\r\n", "\n")
-    return name, normalized, {
-        "sha256": expected_hash,
-        "bytes": expected_size,
-        "normalizedSha256": _sha256(normalized.encode("ascii")),
-        "newlineCanonicalization": "CRLF_TO_LF" if crlf else "UNCHANGED_LF",
+    return decoded, {
+        "role": CURRENT_SOURCE_NAME,
+        "sha256": _sha256(value),
+        "bytes": len(value),
+        "encoding": "ASCII",
+        "lineEndings": "LF",
     }
 
 
 def _fragment_input(value):
     if type(value) is not bytes or len(value) > MAX_SOURCE_BYTES or not value:
         raise OverlayError("FRAGMENT_TYPE_OR_SIZE")
+    if len(value) != AUTHORED_MEMBERS_BYTES:
+        raise OverlayError("FRAGMENT_TYPE_OR_SIZE")
+    if _sha256(value) != AUTHORED_MEMBERS_SHA256:
+        raise OverlayError("FRAGMENT_PIN")
     if value.startswith(b"\xef\xbb\xbf"):
         raise OverlayError("FRAGMENT_BOM")
     try:
         decoded = value.decode("ascii")
     except UnicodeDecodeError:
         raise OverlayError("FRAGMENT_ASCII")
-    if "\r" in decoded.replace("\r\n", ""):
+    if "\r" in decoded:
         raise OverlayError("FRAGMENT_NEWLINE")
-    normalized = decoded.replace("\r\n", "\n")
-    if not normalized.endswith("\n"):
-        normalized += "\n"
-    if re.search(r"(?m)^[ \t]*(?:package|import)[ \t]", normalized):
+    if not decoded.endswith("\n") or decoded.endswith("\n\n"):
+        raise OverlayError("FRAGMENT_NEWLINE")
+    if re.search(r"(?m)^[ \t]*(?:package|import)[ \t]", decoded):
         raise OverlayError("FRAGMENT_IMPORT_OR_PACKAGE")
     for forbidden in (
         "new ProcessBuilder(", "Runtime.getRuntime(", "System.exit(",
         "Class.forName(", "ClassLoader", "getDeclaredField(", "setAccessible(",
         "java.nio.file.Files", "FileInputStream(", "FileOutputStream(",
     ):
-        if forbidden in normalized:
+        if forbidden in decoded:
             raise OverlayError("FRAGMENT_AUTHORITY")
-    return normalized, {
+    return decoded, {
+        "role": AUTHORED_MEMBERS_NAME,
         "sha256": _sha256(value),
         "bytes": len(value),
-        "normalizedSha256": _sha256(normalized.encode("ascii")),
-        "newlineCanonicalization": (
-            "CRLF_TO_LF" if "\r\n" in decoded else "UNCHANGED_LF"
-        ),
+        "encoding": "ASCII",
+        "lineEndings": "LF",
     }
 
 
@@ -358,321 +355,147 @@ def _assert_unique_declarations(fragment, retained):
     }
 
 
-def _source_closure(r_text):
-    shape_start = _unique_index(
-        r_text,
-        "/* Fixed order, without an application-owned key array or copied map. */",
-        "R_SHAPE_START",
-    )
-    shape_end_start, shape_end = _member_span(
-        r_text,
-        "static void r5ValidateWork(java.util.Map<?,?> work,R5Snapshot pre,long exportStarted)",
-        "R_SHAPE_END",
-    )
-    shape = r_text[shape_start:shape_end]
-    plan_start = _unique_index(
-        r_text,
-        "private static final int R7_PLAN_FIELD_COPIES=26;",
-        "R_PLAN_START",
-    )
-    plan_class_start, plan_class_end = _member_span(
-        r_text,
-        "static final class R7WorkPlan implements R5WorkFinalizer",
-        "R_PLAN_CLASS",
-    )
-    if plan_class_start <= plan_start:
-        raise OverlayError("R_PLAN_ORDER")
-    plan = r_text[plan_start:plan_class_end]
-    return shape, plan
+def _capture_span(text, code):
+    return _member_span(text, CAPTURE_MARKER, code)
 
 
-def derive_authored_flat_work(*, w_source, r_source, q_source, shared_source,
-                              authored_members_source):
-    """Overlay pinned source bytes without filesystem, import, or process access."""
-    w_name, w_text, w_meta = _source_input("w", w_source)
-    r_name, r_text, r_meta = _source_input("r", r_source)
-    q_name, q_text, q_meta = _source_input("q", q_source)
-    shared_name, shared_text, shared_meta = _source_input("shared", shared_source)
-    fragment_text, fragment_meta = _fragment_input(authored_members_source)
+def _strip_current_ownership(text):
+    if text.count(OWNERSHIP_INSERTION) != 1 or text.count(OWNERSHIP_ANCHOR) != 1:
+        raise OverlayError("CURRENT_OWNERSHIP_INSERTION")
+    insertion_at = text.index(OWNERSHIP_INSERTION)
+    anchor_at = text.index(OWNERSHIP_ANCHOR)
+    if insertion_at + len(OWNERSHIP_INSERTION) != anchor_at:
+        raise OverlayError("CURRENT_OWNERSHIP_INSERTION")
+    stripped = text[:insertion_at] + text[anchor_at:]
+    stripped_bytes = stripped.encode("ascii")
+    if (len(stripped_bytes) != PRE_OWNERSHIP_SOURCE_BYTES
+            or _sha256(stripped_bytes) != PRE_OWNERSHIP_SOURCE_SHA256):
+        raise OverlayError("CURRENT_PRE_OWNERSHIP_PIN")
+    return stripped, insertion_at
 
-    shape = _marked_fragment(
-        fragment_text, _FRAGMENT_MARKERS[0][0], _FRAGMENT_MARKERS[0][1],
-        "FRAGMENT_SHAPE_MARKER",
-    )
-    flat_plan = _marked_fragment(
-        fragment_text, _FRAGMENT_MARKERS[1][0], _FRAGMENT_MARKERS[1][1],
-        "FRAGMENT_PLAN_MARKER",
-    )
-    r_shape, r_plan = _source_closure(r_text)
-    if shape != r_shape.strip("\n"):
-        raise OverlayError("R5_SHAPE_CLOSURE_MISMATCH")
 
-    replacements = []
-    helper_start = _unique_index(
-        w_text, "private static String r7RootKey(int i) {", "W_SHAPE_START"
-    )
-    helper_end_start, helper_end = _member_span(
-        w_text,
-        "static void r5ValidateWork(java.util.Map<?,?> work,R5Snapshot pre,long exportStarted)",
-        "W_SHAPE_END",
-    )
-    replacements.append({
-        "id": "flat_work_shape_and_equations",
-        "start": _line_start(w_text, helper_start),
-        "end": helper_end,
-        "after": shape + "\n",
-    })
+def _canonical_provenance(value):
+    return (
+        json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True) + "\n"
+    ).encode("ascii")
 
-    plan_comment = (
-        "/* Generic successful-run ledger. Each of four immediate points retains 19"
+
+def derive_current_flat_work(*, current_source, authored_members_source):
+    """Derive the pinned current Study Source using immutable bytes only."""
+    current_text, current_meta = _source_input(current_source)
+    authored_text, authored_meta = _fragment_input(authored_members_source)
+
+    if INSTALLER_LINE in current_text:
+        raise OverlayError("CURRENT_INSTALLER_ALREADY_PRESENT")
+    source_without_ownership, ownership_offset = _strip_current_ownership(current_text)
+    current_start, current_end = _capture_span(
+        source_without_ownership, "CURRENT_CAPTURE_SPAN"
     )
-    plan_start = _unique_index(w_text, plan_comment, "W_GENERIC_PLAN_START")
-    plan_end_marker = (
-        "/* Nested Java7 members. Prospective R9 transport only; not R5 publication."
+    authored_start, authored_end = _capture_span(authored_text, "TEMPLATE_CAPTURE_SPAN")
+    current_capture = source_without_ownership[current_start:current_end]
+    authored_capture = authored_text[authored_start:authored_end]
+    if authored_capture.count(INSTALLER_LINE) != 1:
+        raise OverlayError("TEMPLATE_INSTALLER_PLACEMENT")
+    installer_at = authored_capture.index(INSTALLER_LINE)
+    if not authored_capture[installer_at + len(INSTALLER_LINE):].startswith(
+            DETACHED_CAPTURE_ANCHOR):
+        raise OverlayError("TEMPLATE_INSTALLER_PLACEMENT")
+    old_authored_capture = (
+        authored_capture[:installer_at]
+        + authored_capture[installer_at + len(INSTALLER_LINE):]
     )
-    plan_end = _unique_index(w_text, plan_end_marker, "W_R9_BOUNDARY")
-    plan_start = _line_start(w_text, plan_start)
-    if plan_end <= plan_start:
-        raise OverlayError("W_GENERIC_PLAN_SPAN")
-    generic_plan = w_text[plan_start:plan_end]
-    for sentinel in (
-        "private static final int R7_PHASE_COUNTER_READS=19;",
-        "static final class R7MeterPoint {",
-        "static final class R7MeterLedger {",
-        "static final class R7WorkPlan implements R5WorkFinalizer {",
-        "static R7WorkPlan captureR7WorkPlan(R7MeterLedger ledger,SetupMeter meter,long started,",
-    ):
-        if generic_plan.count(sentinel) != 1:
-            raise OverlayError("W_GENERIC_PLAN_CONTENT")
-    replacements.append({
-        "id": "authored_flat_work_plan_and_real_capture",
-        "start": plan_start,
-        "end": plan_end,
-        "after": flat_plan + "\n",
-    })
+    if current_capture != old_authored_capture:
+        raise OverlayError("CURRENT_CAPTURE_CORE_MISMATCH")
 
-    for index, signature in enumerate(_EXPORT_SIGNATURES):
-        open_start = _unique_index(w_text, signature, "W_EXPORT_OVERLOAD")
-        open_index = _opening_brace(w_text, open_start + len(signature), "W_EXPORT_BODY")
-        close_end = _matching_brace(w_text, open_index, "W_EXPORT_BODY")
-        replacements.append({
-            "id": "deny_generic_export_r5_overload_" + str(index + 1),
-            "start": open_index,
-            "end": close_end,
-            "after": _DENIED_BODY,
-        })
+    current_declarations = _direct_declarations(current_capture, 0)
+    authored_declarations = _direct_declarations(authored_capture, 0)
+    if (current_declarations != authored_declarations
+            or current_declarations[0] != ["captureR7WorkPlan"]
+            or current_declarations[1] or current_declarations[2]):
+        raise OverlayError("CAPTURE_DECLARATION_MISMATCH")
 
-    original_replacements = []
-    for item in sorted(replacements, key=lambda part: part["start"]):
-        before = w_text[item["start"]:item["end"]]
-        original_replacements.append({
-            "id": item["id"],
-            "start": item["start"],
-            "end": item["end"],
-            "beforeSha256": _sha256(before.encode("ascii")),
-            "beforeBytes": len(before.encode("ascii")),
-            "afterSha256": _sha256(item["after"].encode("ascii")),
-            "afterBytes": len(item["after"].encode("ascii")),
-        })
-
-    preserved_markers = (
-        ("parent", "static final class Parent {"),
-        ("setupMeter", "static final class SetupMeter {"),
-        ("adopted_snapshot_allocation_and_class", "/* Allocate during measured metadata."),
-    )
-    preserved_before = {}
-    for label, marker in preserved_markers:
-        if label == "adopted_snapshot_allocation_and_class":
-            allocate_start = _unique_index(w_text, marker, "W_SNAPSHOT_ALLOC")
-            class_start, class_end = _member_span(
-                w_text, "static final class R5Snapshot {", "W_SNAPSHOT_CLASS"
-            )
-            start = _line_start(w_text, allocate_start)
-            if class_start <= start:
-                raise OverlayError("W_SNAPSHOT_ORDER")
-            preserved_before[label] = w_text[start:class_end]
-        else:
-            start, end = _class_span(w_text, marker, "W_PRESERVED_CLASS")
-            preserved_before[label] = w_text[start:end]
-
-    main_start, main_end = _member_span(w_text, "public static void main(String[] args) throws Exception", "W_MAIN")
-    main_source = w_text[main_start:main_end]
-    if "throw new IllegalStateException(\"ADOPTED_SNAPSHOT_COMPONENT_ONLY\");" not in main_source:
-        raise OverlayError("W_MAIN_NOT_DENIED")
-    preserved_before["denied_whole_study_main"] = main_source
-
-    namespace_replacements = [
-        dict(item, after="")
-        for item in replacements
-        if item["id"] in (
-            "flat_work_shape_and_equations",
-            "authored_flat_work_plan_and_real_capture",
-        )
-    ]
-    if len(namespace_replacements) != 2:
-        raise OverlayError("NAMESPACE_REPLACEMENT_SET")
-    retained_namespace = _replace_spans(w_text, namespace_replacements)
-    namespace_declarations = _assert_unique_declarations(
-        shape + "\n" + flat_plan, retained_namespace
-    )
-    namespace_audit = {
-        "retainedSourceSha256": _sha256(retained_namespace.encode("ascii")),
-        "retainedSourceBytes": len(retained_namespace.encode("ascii")),
-        "removedReplacementIds": [
-            "flat_work_shape_and_equations",
-            "authored_flat_work_plan_and_real_capture",
-        ],
-        "comparison": "fragment-direct-members-versus-original-W-direct-members-after-only-replaced-declaration-blocks-removed",
-        "declarations": namespace_declarations,
-    }
-    result = _replace_spans(w_text, replacements)
-    if not result.endswith("\n"):
-        result += "\n"
+    result_text = _replace_spans(source_without_ownership, [{
+        "start": current_start,
+        "end": current_end,
+        "after": authored_capture,
+    }])
     try:
-        result_bytes = result.encode("ascii")
+        result_bytes = result_text.encode("ascii")
     except UnicodeEncodeError:
-        raise OverlayError("EMITTED_ASCII")
+        raise OverlayError("OUTPUT_ASCII")
     if len(result_bytes) > MAX_OUTPUT_BYTES:
-        raise OverlayError("EMITTED_SIZE")
-    for obsolete in (
-        "R7MeterPoint", "R7MeterLedger", "r7RootKey(", "r7PhaseKey(",
-        "r7PreExportKey(", "r7LimitKey(", "r7OrderedShape(",
-    ):
-        if obsolete in result:
-            raise OverlayError("GENERIC_PLAN_REMAINS")
-    if result.count(_DENIED_BODY) != 2:
-        raise OverlayError("EXPORT_DENIALS")
+        raise OverlayError("OUTPUT_SIZE")
+    if (len(result_bytes) != EXPECTED_OUTPUT_BYTES
+            or _sha256(result_bytes) != EXPECTED_OUTPUT_SHA256):
+        raise OverlayError("OUTPUT_PIN")
 
-    preserved_after = {}
-    for label, marker in preserved_markers:
-        if label == "adopted_snapshot_allocation_and_class":
-            allocate_start = _unique_index(result, marker, "EMITTED_SNAPSHOT_ALLOC")
-            class_start, class_end = _member_span(
-                result, "static final class R5Snapshot {", "EMITTED_SNAPSHOT_CLASS"
-            )
-            start = _line_start(result, allocate_start)
-            preserved_after[label] = result[start:class_end]
-        else:
-            start, end = _class_span(result, marker, "EMITTED_PRESERVED_CLASS")
-            preserved_after[label] = result[start:end]
-        if preserved_after[label] != preserved_before[label]:
-            raise OverlayError("PRESERVED_ADAPTER_CHANGED")
-
-    main_after_start, main_after_end = _member_span(
-        result, "public static void main(String[] args) throws Exception", "EMITTED_MAIN"
+    retained_before = (
+        source_without_ownership[:current_start]
+        + source_without_ownership[current_end:]
     )
-    main_after = result[main_after_start:main_after_end]
-    if main_after != main_source:
-        raise OverlayError("PRESERVED_MAIN_CHANGED")
-    preserved_after["denied_whole_study_main"] = main_after
+    result_start, result_end = _capture_span(result_text, "OUTPUT_CAPTURE_SPAN")
+    retained_after = result_text[:result_start] + result_text[result_end:]
+    if retained_before != retained_after:
+        raise OverlayError("OUTPUT_CONSERVATION")
 
-    r_shape_hash = _sha256(r_shape.encode("ascii"))
-    r_plan_hash = _sha256(r_plan.encode("ascii"))
-    if not q_text or not shared_text:
-        raise OverlayError("EMPTY_PINNED_SOURCE")
-
+    capture_core_bytes = current_capture.encode("ascii")
+    authored_capture_bytes = authored_capture.encode("ascii")
     provenance = {
-        "schema": "tsj-authored-flat-work-overlay-v1",
-        "status": "SOURCE_DERIVATION_ONLY",
+        "schema": "TSJ_CURRENT_R7_AUTHORED_SOURCE_R1",
+        "status": "SOURCE_ONLY",
         "limits": {
             "maxSourceBytes": MAX_SOURCE_BYTES,
             "maxOutputBytes": MAX_OUTPUT_BYTES,
+            "maxProvenanceBytes": MAX_PROVENANCE_BYTES,
         },
         "inputs": {
-            "w": dict({"role": w_name}, **w_meta),
-            "r": dict({"role": r_name}, **r_meta),
-            "q": dict({"role": q_name}, **q_meta),
-            "shared": dict({"role": shared_name}, **shared_meta),
-            "authoredMembers": dict({"role": "AuthoredFlatWorkMembers.java"}, **fragment_meta),
+            "currentStudy": current_meta,
+            "authoredMembers": authored_meta,
         },
-        "sourceClosures": {
-            "rFlatShapeAndEquations": {
-                "sha256": r_shape_hash,
-                "bytes": len(r_shape.encode("ascii")),
-                "identicalToAuthoredFragment": True,
+        "sourceTransformation": {
+            "ownershipInsertion": {
+                "lineBytes": len(OWNERSHIP_INSERTION.encode("ascii")),
+                "lineSha256": _sha256(OWNERSHIP_INSERTION.encode("ascii")),
+                "strippedBeforePureDerivation": True,
+                "sourceOffset": ownership_offset,
+                "retainedForBodyEmitter": True,
             },
-            "rFlatPlanAndCapture": {
-                "sha256": r_plan_hash,
-                "bytes": len(r_plan.encode("ascii")),
-                "transformations": [
-                    "retain40charged_source_inspections_and11_checked_additions",
-                    "delegate_detached_values_to_shared_plan_owner",
-                    "add_body_identity_reference_and_single_body_work_check",
-                    "prepay_work35_snapshot1_plan1_copy26_closed19_freeze26_finalize38_copy34",
-                    "restrict_reflected_numeric_values_to_Integer_or_Long",
+            "captureMethod": {
+                "name": "captureR7WorkPlan",
+                "currentCoreBytes": len(capture_core_bytes),
+                "currentCoreSha256": _sha256(capture_core_bytes),
+                "authoredBytes": len(authored_capture_bytes),
+                "authoredSha256": _sha256(authored_capture_bytes),
+                "installerLineBytes": len(INSTALLER_LINE.encode("ascii")),
+                "installerLineSha256": _sha256(INSTALLER_LINE.encode("ascii")),
+                "coreMatchesUnmodifiedTemplate": True,
+                "replacementOnly": True,
+            },
+            "byteConservation": {
+                "retainedBytes": len(retained_before.encode("ascii")),
+                "unchangedOutsideCaptureMethod": True,
+                "unchangedMembers": [
+                    "main_HOLD_body",
+                    "assemble_HOLD_body",
+                    "captureDetachedR7WorkPlan_API_and_core",
+                    "all_non_capture_methods_and_source_bytes",
                 ],
             },
         },
-        "flatPlanContract": {
-            "detachedApi": {
-                "name": "captureDetachedR7WorkPlan",
-                "visibility": "package-private static",
-                "fixedPrefix": ["meter", "started", "body"],
-                "scalarOrder": [
-                    "setupUnits", "setupGroups", "setupCopies", "setupChunks",
-                    "originalOwnerUnits", "originalWrapperUnits", "originalCallbackUnits",
-                    "originalDiagnosticUnits", "originalGroups", "originalOwnerGroups",
-                    "originalCopies", "originalChunks", "nullOwnerUnits", "nullWrapperUnits",
-                    "nullObserverUnits", "observeOwnerUnits", "observeWrapperUnits",
-                    "observeObserverUnits", "observerUnits", "cleanupNanos", "freshGroups",
-                    "freshCopies", "freshChunks", "originalMaxNanos", "originalMaxUnits",
-                ],
-            },
-            "instanceFields": {
-                "identityReferences": 4,
-                "constructorLongs": 26,
-                "derivedLongs": 12,
-                "lifecycleBooleans": 2,
-                "total": 44,
-            },
-            "prepayment": {
-                "sourceInspections": 40,
-                "captureAdditions": 11,
-                "workEntryCopies": 35,
-                "snapshotAllocation": 1,
-                "planAllocation": 1,
-                "planScalarCopies": 26,
-                "closedSnapshotInspections": 19,
-                "freezeUnits": 26,
-                "finalizeUnits": 38,
-                "finalizeEntryCopies": 34,
-            },
-        },
-        "preservedWSourceSpans": {
-            label: {
-                "sha256": _sha256(span.encode("ascii")),
-                "bytes": len(span.encode("ascii")),
-                "unchangedAfterOverlay": True,
-            }
-            for label, span in preserved_before.items()
-        },
-        "retainedNamespaceAudit": namespace_audit,
-        "replacements": original_replacements,
-        "emission": {
-            "parentSha256": w_meta["sha256"],
-            "parentNormalizedSha256": w_meta["normalizedSha256"],
-            "sha256": _sha256(result_bytes),
+        "output": {
+            "role": "pre-ownership-current-study",
             "bytes": len(result_bytes),
-            "encoding": "UTF-8",
+            "sha256": _sha256(result_bytes),
+            "encoding": "ASCII",
             "lineEndings": "LF",
-            "genericR5ExportsDenied": 2,
-            "wholeStudyMain": "PRESERVED_DENIED",
         },
         "limitsAndGates": {
-            "actualSourceDetachment": "SOURCE_ONLY_40_INSPECTIONS_11_ADDITIONS",
-            "qOriginalWrapperBoundary": "PINNED_ONLY_5_READS_4_ARITHMETIC_OPS_PORT_GATED",
-            "detachedCanaryDemand": "SYNTHETIC_ONLY",
-            "r5ExportMigration": "DENIED",
+            "qualification": "SOURCE_ONLY",
+            "runtimeBehavior": "NOT_CLAIMED",
             "genuineOriginalNullObserve": "UNSPENT_GATED",
-            "playable100": 0,
-            "full30": "EXCLUDED",
-            "hardPsychotic": "UNAVAILABLE_UNRUN",
-            "beta": "HELD",
         },
     }
-    provenance_bytes = (
-        json.dumps(provenance, sort_keys=True, separators=(",", ":"), ensure_ascii=True) + "\n"
-    ).encode("ascii")
-    if len(provenance_bytes) > MAX_OUTPUT_BYTES:
+    provenance_bytes = _canonical_provenance(provenance)
+    if len(provenance_bytes) > MAX_PROVENANCE_BYTES:
         raise OverlayError("PROVENANCE_SIZE")
     return GenerationResult(result_bytes, provenance_bytes)

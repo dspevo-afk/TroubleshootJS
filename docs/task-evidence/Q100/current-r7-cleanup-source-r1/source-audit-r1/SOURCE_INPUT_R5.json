@@ -1,0 +1,22 @@
+{
+  "status": "ADMITTED_EMITTER_TEST_CODE_NO_REFERENCED_FIXTURE_ACCESS",
+  "rows": [
+    {
+      "name": "test_flat_work_overlay.py",
+      "repoPath": "tests/qualification/rb100-layout/authored-flat-work-plan-r1/test_flat_work_overlay.py",
+      "gitBlob": "5c07d6af55809917d2d4d45c26f849249131b0df",
+      "bytes": 13420,
+      "sha256": "864eb17ed8591b8caff2de6eed74b80ef3f5f1e68c3870ef34d7551e9c14a2d2",
+      "role": "OWNED_UNIT_TEST_SOURCE_ONLY_NOT_EXECUTED"
+    },
+    {
+      "name": "test_body_ownership_source.py",
+      "repoPath": "tests/qualification/rb100-layout/native-body-ownership-r1/test_body_ownership_source.py",
+      "gitBlob": "e57a1805a99a31b44160048e868a7701151dc747",
+      "bytes": 15761,
+      "sha256": "c103a756e27a66b9c9777f40e4ef4579b6a3141a14eefc4a14c7363384c9d631",
+      "role": "OWNED_UNIT_TEST_SOURCE_ONLY_NOT_EXECUTED"
+    }
+  ],
+  "genuineEnvelope": "UNSPENT_GATED"
+}

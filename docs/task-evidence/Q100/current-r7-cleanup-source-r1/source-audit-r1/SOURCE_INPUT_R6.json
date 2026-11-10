@@ -1,0 +1,21 @@
+{
+  "status": "SELECTED_COMPONENT_INVOCATION_HEADER_SOURCE_ONLY",
+  "rows": [
+    {
+      "name": "build_body_ownership_r1.py_1_32.txt",
+      "repoGitBlob": "3406d7a55324d94cf0aa157e446f864a2d75446b",
+      "selection": "lines1-32",
+      "bytes": 1090,
+      "sha256": "064b03e04ba4688a15e980b5827a5f8596b9c6890df8c3e9f46dac7b6478cbf4"
+    },
+    {
+      "name": "run_body_ownership_r1.py_1_32.txt",
+      "repoGitBlob": "2dcce790ef164efac5969ea07deab6941ce77b03",
+      "selection": "lines1-32",
+      "bytes": 1056,
+      "sha256": "b2b4d1a904ec8f796d30f5bcce776f30273eb30b25dfc2a599262f99aece9c77"
+    }
+  ],
+  "referencedInputs": "DENIED_UNFOLLOWED",
+  "genuineEnvelope": "UNSPENT_GATED"
+}

@@ -1,0 +1,21 @@
+{
+  "status": "CURRENT_V2_INPUT_OWNER_AND_PUBLISHED_CALLER_SOURCE_ONLY",
+  "acceptedSourceFreezeSha256": "bb445458907e7ab757e0bb5bc2acfffd6c9352bba5909a91ca43051f3705cdd9",
+  "rows": [
+    {
+      "name": "CurrentV2InputSetup.java",
+      "bytes": 22823,
+      "sha256": "d0e42cf2fd93657e2a086e4fff4e8b0111937b7d5c22899fac1107c1bf3b12e2",
+      "role": "PREVIOUSLY_ADMITTED_CURRENT_RUN_COMPONENT_SOURCE"
+    },
+    {
+      "name": "CurrentRunStagingCanary.java",
+      "bytes": 34268,
+      "sha256": "ad933e4bc54eaf66b2b0abc8106f4da8a6220d8913b551f30a91595a0eab6bba",
+      "role": "PREVIOUSLY_ADMITTED_CURRENT_RUN_COMPONENT_SOURCE"
+    }
+  ],
+  "generatedDataRead": false,
+  "nativeProducerCalls": 0,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

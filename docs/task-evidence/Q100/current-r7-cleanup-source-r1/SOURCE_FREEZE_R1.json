@@ -1,0 +1,83 @@
+{
+  "status": "ROOT_REVIEWED_CURRENT_R7_EMITTER_FINAL_SOURCE",
+  "files": [
+    {
+      "name": "CONTRACT_R1.md",
+      "bytes": 8980,
+      "sha256": "fb6aae2e0b030a658a75c6c9870075c600f4388293ed7ea5a8ef517e8b3b2a4e"
+    },
+    {
+      "name": "REFERENCE_R1.json",
+      "bytes": 2583,
+      "sha256": "9e3d95aeeb236156e1c071e7151cd98232d75587ce778cce7afa21d32a5fe785"
+    },
+    {
+      "name": "baseline/CURRENT_STUDY.java",
+      "bytes": 234954,
+      "sha256": "9ac45b374c8aeee7a912a4e1452435b71b278aeae0a288e5a75dd82a149c006b"
+    },
+    {
+      "name": "baseline/CurrentAssemblyMetadata.java",
+      "bytes": 9970,
+      "sha256": "a98ea9290f8fcdb86be4377698acbe012292972c56016383a9f2684bd40b9c7c"
+    },
+    {
+      "name": "baseline/AuthoredFlatWorkMembers.java",
+      "bytes": 22521,
+      "sha256": "3a3034504f72451b2d792424f556a32edd866f68accb8c1b74f1ab5327f34eff"
+    },
+    {
+      "name": "working/authored-flat-work-plan-r1/AuthoredFlatWorkMembers.java",
+      "bytes": 22592,
+      "sha256": "8c2c6428e8a4c5ca45d912cd22d76f344c6ab968c11031e6fd0417974b852bde"
+    },
+    {
+      "name": "working/authored-flat-work-plan-r1/generate_authored_flat_work_overlay.py",
+      "bytes": 18595,
+      "sha256": "92ce7dc27bd08d395a1bc8155e4795d579885a8dbd26c765c2ee0219051e280c"
+    },
+    {
+      "name": "working/authored-flat-work-plan-r1/test_flat_work_overlay.py",
+      "bytes": 24098,
+      "sha256": "60d7d53006c8ffb826ac53f56ae15d0ea555c876050dc8e02e42077fab4cce38"
+    },
+    {
+      "name": "working/native-body-ownership-r1/CurrentBodyOwnership.java",
+      "bytes": 3860,
+      "sha256": "8a7a5b0dfe82d4e230adcd1d531e6942664afbd96563dc5d21f40167b41c3832"
+    },
+    {
+      "name": "working/native-body-ownership-r1/generate_body_ownership.py",
+      "bytes": 13566,
+      "sha256": "bdb05755b448052ac13150df114a27a9fd61faf8259d5ccbc5eaa08cdfbb6139"
+    },
+    {
+      "name": "working/native-body-ownership-r1/test_body_ownership_source.py",
+      "bytes": 28298,
+      "sha256": "8a6993284634eb0ffd366403e712a714f13229f3477451baf66dc602ad7f0fbd"
+    },
+    {
+      "name": "run_current_r7_gates_r1.py",
+      "bytes": 9543,
+      "sha256": "27624b4215ff381aadebcf8da6d61439ff6435fe083ae3d076f8c7ad9df986a7"
+    },
+    {
+      "name": "run_current_r7_generation_r1.py",
+      "bytes": 6185,
+      "sha256": "44424417b8b176f1956e832a959eb02dbf4378749e175009103e4cbeda196dcf"
+    },
+    {
+      "name": "current_r7_file_policy_canary_r1.py",
+      "bytes": 2317,
+      "sha256": "c76d03d24d673650385f15a3804022e4b72f8c0a515ccb974291d292319e4d33"
+    },
+    {
+      "name": "freeze_current_r7_sources_r1.py",
+      "bytes": 3731,
+      "sha256": "2d7087845d8ebe98dc556da21e3feee23033a8d94581e6306d424bf497f58eb3"
+    }
+  ],
+  "actualAggregationHook": "NOT_RUN_UNSPENT_GATED",
+  "nativeProducerCalls": 0,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

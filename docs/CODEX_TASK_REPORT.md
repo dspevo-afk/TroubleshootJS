@@ -1,4 +1,41 @@
-# Current checkpoint: pending cleanup and detached R7 published
+# Current checkpoint: maintained R7 Source prerequisite locally accepted
+
+UTC2026-11-10. F codex/q100-terminal-only-20261107 baseHEAD8e8ef678bae6b747def9956446eb9cedfb0bde94,
+no upstream; new implementation commit/push/Gmail pending. Previous1f45c12e/8e8ef678
+published and exact remote verified; Gmail1a1c2dfc524598d6 SENT_ONCE, never repeat.
+Candidate OS-temp leaf tsj-q100-r7-authored-root-r3-5d70f44bcfff46669449b5bff6767790; Sourcefreeze31e66d3c61543a11288270d4ae0480c54aed15006627d94466b3476673b19f53,
+proof3b208a73f63529025f70fb285ece535a13df654647cd2a84c708c7e564ab61ed. SourceDelta71B in authored capture before detached delegation;
+pre234978/c8b23f39...,final235025/48f67e37..., othercode/core/holds unchanged.
+Current pure derivation/four-root CLI replaceoldW/R/Q, authenticate allinputs and
+modulebytes, preserve exclusivewrite and canonical stdoutprovenance. Source-only
+actualaggregate NOTRUN/UNSPENT_GATED; no real/fake arm/capture/graph/Session/routing.
+
+Private/public26pures, realCLIpositive+7expectedexit2 controls, actualstable/append
+filepolicy, hostcontrols, finalJDK8compile4/139major51classes382443B,2379deps11711904B/
+noshadows, detachedSMOKE2/SUITE22/readers and RUN81/12089 PASS. All24actualprocess
+receipts/inputs reauthenticated, termination/root+logabsence proved, isolatedcleanup
+durationunmeasured. RootintegratedSource review and independent3fileSource review
+PASS; fixturecorrectionSource reviewed. No independentnative claimed. N5collision
+fixture3assertionsFAIL andN6staleidentifier1FAIL preserved; onlytests corrected,
+allcases/oracles retained, noimplementation change. ActualfullD/genuine unspent.
+
+SourceauditN4found no activeproducer; main/assembleheld. Currentrawprior input vs
+resultqualifiedPrior correct, no bridge/keyfix. Semanticconsumer/constants/work/
+context remain unqualified. Next narrow currentproducercomposition contract,
+beforewhole-result/fullD/actualhost/lifecycle or genuineenvelope spend.
+F intendedcode/evidence/docs only changed. Main5f05b005 9trackedM/6untracked,
+E d9747229 reportM,Desktop e0c36885 7trackedM/89untracked preserved; reportmirroronly.
+No newpersistentprocess/link, scratchSource/classes/failures retained. Old uncertain
+browser14116/start639294472690745890/58320 andpreview34180/start639294472514546595/
+58264+14children, oldDprocess/unlinkUNCERTIFIED untouched. All90s/640/5s/32768/
+copy1MiB/chunk4096/Source4MiB/opJSON8MiB/result1MiB/depth64/key1m/class10k256MiB/
+compile-suite60s/reader180s/wrapper480s/cleanup120s caps unchanged. GWT/PlayerN/A,
+electrical/populationNOTRENEWED,CINOTRUN,full30EXCLUDED,HARD/PSYCHOTIC unavailable/
+unrun,protectedUnreadUNCERTIFIED,oldnormal20 historicalREAD/no reread,playable100=0/
+betaHELD,genuine original then exact NULL/OBSERVE UNSPENT_GATED. Next rootstaged/
+privacy/byte/diff checks, normalpush/exactverify andone newGmail, thenreceipt.
+
+# Historical checkpoint: pending cleanup and detached R7 published
 
 UTC2026-11-10. F codex/q100-terminal-only-20261107, no upstream. Implementation
 1f45c12eee29b064c47c90549d3e1d77b8775df8 normally pushed; exact origin/codex/q100-physical-feasibility

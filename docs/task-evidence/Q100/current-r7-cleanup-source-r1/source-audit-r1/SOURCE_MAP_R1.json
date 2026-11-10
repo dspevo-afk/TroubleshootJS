@@ -1,0 +1,23 @@
+{
+  "status": "COMPLETED_BOUNDED_SOURCE_MAP_NOT_RUNTIME_ACCEPTANCE",
+  "findingsSha256": "2c850c6a276308c7cd07d69760af1fa82e8b92f11a8378b67761a6fb4cf3a666",
+  "inputManifests": [
+    {
+      "name": "SOURCE_INPUT_R1.json",
+      "sha256": "025596859a712457ffaf72b6e11defee11d10982ba8e5e6f3f0e8d19a5f9b43e"
+    },
+    {
+      "name": "SOURCE_INPUT_R2.json",
+      "sha256": "f5111e9d3212c18e67695721b85d63dbd9804d1a342c5db9437ee9fa343fbf70"
+    },
+    {
+      "name": "SOURCE_INPUT_R3.json",
+      "sha256": "b30c17d783b8382b6db0e2628fe277730f7398c69649d2f80c93ac1804de8559"
+    }
+  ],
+  "producerOrderingAndPriorRoleReview": "PASS_SOURCE_ONLY",
+  "cleanupSemanticReadsetReview": "PASS_SOURCE_ONLY_WITH_UNDEFINED_CONSTANT_LIMIT",
+  "nextEmitterSelection": "IN_PROGRESS_SOURCE_ONLY",
+  "nativeProducerCalls": 0,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

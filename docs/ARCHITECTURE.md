@@ -406,6 +406,21 @@ in a synthetic fixture is not a genuine owner instance or capture. Testbench
 formatting after close gives no production export-accounting proof. Normal
 whole-result/full-D/actual-host/lifecycle remain separate and closed.
 
+
+The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
+keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
+detached-plan delegation. Its current pure derive API authenticates published
+baseline code and the authored fragment, strips the one ownership line, replaces
+only the capture method and proves byte conservation. The body-ownership CLI
+reads four fixed Source inputs through three input roots and uses a fourth
+output root. It authenticates all pins
+before compiling module bytes, restores the separate ownership insertion and
+exclusively writes final Source. Canonical stdout provenance retains pure bytes/
+hash/object and all input/output identities. Old W/R/Q current APIs are retired;
+normal producer holds and detached/core behavior remain. Source emission and
+detached regressions do not prove genuine aggregate execution or full-result
+semantics/host/lifecycle; those boundaries remain closed.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

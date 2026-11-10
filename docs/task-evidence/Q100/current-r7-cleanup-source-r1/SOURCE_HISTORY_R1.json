@@ -1,0 +1,25 @@
+{
+  "status": "PRESERVED_TWO_SOURCE_TEST_FAILURES",
+  "failures": [
+    {
+      "phase": "current-r7-pure-authored-r1",
+      "status": "FAIL_NO_ACCEPTANCE",
+      "packet": "failed-collision-fixtures-r1",
+      "implementationChangedForFix": false
+    },
+    {
+      "phase": "current-r7-pure-ownership-r1",
+      "status": "FAIL_NO_ACCEPTANCE",
+      "packet": "failed-root-identifier-r2",
+      "implementationChangedForFix": false
+    }
+  ],
+  "corrections": [
+    "Use canonical multiline retained member fixtures for line-oriented declaration parser",
+    "Replace nonexistent uppercase variable token assertion with exact AST routing of four fixed Source reads"
+  ],
+  "oldFrozenSourcesAndRawReceiptsRetained": true,
+  "allTestMethodsAndRejectionAssertionsRetained": true,
+  "implementationUnchangedAcrossCorrections": true,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

@@ -1,0 +1,15 @@
+{
+  "rawStderrSha256": "6c9fc71f0e4c6f41a09f189cee6e404a7135a7c8bb726e116398316d390d14dd",
+  "sanitizedStderr": true,
+  "result": {
+    "status": "RETURNED",
+    "elapsedMs": 663.3226000000001,
+    "exitCode": 1,
+    "terminationProven": true,
+    "stdoutBytes": 0,
+    "stderrBytes": 16873,
+    "processRootAbsent": true,
+    "totalElapsedMs": 903.8504
+  },
+  "sourceFreezeSha256": "0bd755a676eaf5667d711abd7aae230af91b4bd97c7e8dbb3f77433e328f9cd5"
+}
