@@ -1742,6 +1742,9 @@ not native units; real count fees/copies/groups are unchanged for the same body.
 Full export, actual restoration, whole-result, authority/lifetime and genuine
 execution remain gated. Budgets, exact seeds/epochs, full30 EXCLUDED and data
 exclusions remain; playable100=0 and beta HELD. Next: ownership/alias summaries.
+Implementation `66ab05b19d7cb79be094baa74b2dbe1d398f43a8` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
+`1a1c4bea249070e7` sent once. This receipt sends no second email.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

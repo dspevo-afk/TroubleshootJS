@@ -1,6 +1,6 @@
-# Current checkpoint: restoration preflight accepted; publication pending
+# Current checkpoint: restoration preflight published; receipt record
 
-F codex/q100-terminal-only-20261107 HEAD98be53fca1a8665082d8824264f77732e25e2ba0,
+F codex/q100-terminal-only-20261107 implementation66ab05b19d7cb79be094baa74b2dbe1d398f43a8,
 no upstream; target origin/codex/q100-physical-feasibility. PriorreceiptTuple
 1bad80bd/98be53fc/Gmail1a1c4823f69687d5, bodydffb1d04/77032ab4/
 Gmail1a1c457329d9ca2b complete; olderarm/original receipts below, neverduplicate.
@@ -27,8 +27,9 @@ Onlymetadataagreement,notactualrestoration/wholebody/authority/lifetime.
 
 PublicT=cleanup-restoration-r1,E=docs/task-evidence/Q100/cleanup-restoration-r1;
 current-body-correlations-r1owns3migratedSources+README; priorE/R1READMEhas
-snapshotnote. AllSource/evidencecopied. Nextrootdiff/index-byte/privacy/status
-reviewthen normalcommit/push/exactremote/oneGmail; no N21 publication/email yet.
+snapshotnote. Implementation normally pushed/exactremoteverified; Gmail
+1a1c4bea249070e7 SENT_ONCE_ACKNOWLEDGED. Rootindex-byte/privacy/diff/statusaudit
+and independent R2 documentaryreviewPASS; receiptrecord sends no second email.
 NextSourceprep COMPLETE/root+explorer: ownership/alias-release summaryrelations
 fromCurrentResultProjections. Reusecapture/nullCleanup/observeCleanup/cleanup;
 14gets+14types+14unboxes+8AND+3equal=53additionalhooks,159across3passes.
