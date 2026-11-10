@@ -1761,6 +1761,19 @@ Implementation `abda26be04ab28b8db7f19e0a5b1ee703009e3a0` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c4dd97920f6a0` sent once. This receipt sends no second email.
 
+The [geometry summary prerequisite](task-evidence/Q100/geometry-summary-r1/README.md)
+is locally accepted for bounded metadata agreement. Five comparisons recompute
+sourceGeometryUnchanged before encoding, after prior checks. Existing256-char
+String bounds apply; no unproved SHA format is imposed. Final-source JDK8,
+125 new cases/344 assertions,338 migrated cases/1029 assertions,176 retained
+cases/773 assertions, private/public Source12+literal3 each and bounded Source
+review pass;12 selected receipts were reauthenticated. The33 added hooks/pass
+are not native units; same-body real count metrics are unchanged. Actual geometry,
+whole-result semantics, authority/lifetime and genuine execution remain gated.
+Budgets, exact seeds/epochs, full30 EXCLUDED and data exclusions remain;
+playable100=0 and beta HELD. Next: freeze copy-effects summary/scope agreement.
+Publication pending final root/index checks and normal push.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

@@ -22,18 +22,18 @@ def expected():
                 sourceManifestSha256='1' * 64, wireContractSha256=WIRE,
                 inputContextSha256='3' * 64,
                 qualifiedPrior=dict(inputContextSha256='3' * 64),
-                originalCapture=dict(contextRestored=True, ownersReleased=True), cohort={},
+                originalCapture=dict(contextRestored=True, ownersReleased=True, template=dict(geometryBeforeSha256='4' * 64, geometryAfterSha256='4' * 64)), cohort={},
                 arms={'null': dict(armRole='NULL',
-                                   cleanup=dict(contextRestored=True, adapterSessionAliasDropped=True, adapterSearchAliasDropped=True, adapterCandidateAliasDropped=True, adapterRouteResultAliasDropped=True, adapterBoardTemplateAliasesDropped=True)),
+                                   cleanup=dict(contextRestored=True, adapterSessionAliasDropped=True, adapterSearchAliasDropped=True, adapterCandidateAliasDropped=True, adapterRouteResultAliasDropped=True, adapterBoardTemplateAliasesDropped=True, sourceGeometryBeforeSha256='4' * 64, sourceGeometryAfterSha256='4' * 64)),
                       'observe': dict(armRole='OBSERVE',
-                                      cleanup=dict(contextRestored=True, adapterSessionAliasDropped=True, adapterSearchAliasDropped=True, adapterCandidateAliasDropped=True, adapterRouteResultAliasDropped=True, adapterBoardTemplateAliasesDropped=True))},
+                                      cleanup=dict(contextRestored=True, adapterSessionAliasDropped=True, adapterSearchAliasDropped=True, adapterCandidateAliasDropped=True, adapterRouteResultAliasDropped=True, adapterBoardTemplateAliasesDropped=True, sourceGeometryBeforeSha256='4' * 64, sourceGeometryAfterSha256='4' * 64))},
                 work=dict(cleanupNanos=0, ordinaryList=['synthetic']),
                 cleanup=dict(cleanupNanos=0,
                              originalCaptureContextRestored=True,
                              contextRestored=True,
                              originalCaptureOwnersReleased=True,
                              nullArmAliasesDropped=True,
-                             observeArmAliasesDropped=True))
+                             observeArmAliasesDropped=True, sourceGeometryUnchanged=True))
 
 
 def canonical(value):

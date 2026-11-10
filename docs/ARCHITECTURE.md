@@ -486,6 +486,15 @@ operation. Lower transport bytes and independent oracles are conserved. Current
 higher fixtures migrate; previous snapshots remain. Agreement does not prove
 actual release, complete semantics, caller authority or borrowed lifetime.
 
+The [geometry summary extension](task-evidence/Q100/geometry-summary-r1/README.md)
+checks five equalities among six recorded strings after ownership preflight. One
+private reader reuses BODY_STRING_LIMIT256, with existing Map/Boolean owners.
+The33 added hooks per pass (total139/42 gets) add no Meter/group/copy/byte work.
+Lower transport bytes are conserved and current higher fixtures migrate. This
+is bounded metadata agreement; SHA shape, actual geometry and full DTO validity
+are not proven. Ordinary formatting still validates printable ASCII afterward
+and may reject unrelated domain failures after output has begun.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

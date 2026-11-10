@@ -1,5 +1,9 @@
 # Current body correlations: finite prerequisite accepted
 
+Current higher fixtures/canaries now use the [geometry summary preflight](../geometry-summary-r1/README.md)
+with42 gets/139 hooks. Prior frozen acceptance and pure Source stages remain
+attached to their recorded candidates; lower transport oracles are unchanged.
+
 Current fixtures have since migrated under the [ownership summary prerequisite](../ownership-summary-r1/README.md).
 This packet remains the historical acceptance for its recorded candidate. Its
 old fixture pins are not the current final assembly; independent lower oracles

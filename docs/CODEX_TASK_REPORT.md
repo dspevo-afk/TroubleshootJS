@@ -1,4 +1,60 @@
-# Current checkpoint: ownership summary preflight accepted locally
+# Current checkpoint: geometry summary preflight accepted locally
+
+F codex/q100-terminal-only-20261107 HEAD072589ad99fe66fe4749f88654f710b450792590,
+no upstream; target origin/codex/q100-physical-feasibility. N23 final gates PASS;
+root/index checks and commit/push/Gmail pending. No publication claimed yet.
+N22 abda26be/072589ad/Gmail1a1c4dd97920f6a0 complete; priorN21 66ab05b1/6fb24af1/
+Gmail1a1c4bea249070e7 and earlier receipts below complete. Never duplicate emails.
+
+N23 OS-temp/tsj-q100-geometry-summary-r1-1a39e3a7919a45729a6259bdd7fb004f.
+T/E geometry-summary-r1. Current codec checks sourceGeometryUnchanged against
+five exact comparisons among six bounded Strings after ownership/before encoding.
+Reuse4maps+one template Mapguard and private String reader with existing256limit.
+No unproved64lowerhex rule: empty/short/256ASCII may pass matching summary.
+Ordinary formatter owns ASCII afterward and may reject after output begins.
+New map/type/length/summary failures emit zero; wholebody preflight notclaimed.
+Extra33hooks/pass99over3; total139hooks42gets, notnativeunits; noMeter/group/
+copy/byte/mutation calls. Metadata agreement only, notactual geometry orSHAshape.
+Current higher5Sources migrated; lower1177/6370 oracles unchanged.
+Codec28660/0faa081d... ->31250/193b8b3d56aa909a87c825055c6f4fd47502e75107318eb936c5888de4fa1d64.
+Sourcefreeze0c8a4e025530b4e40021f1aae995fe2d4921e07e66cafa7cb1bd720e59ef3ed0;
+nativefreeze9f05853b212a16e7d94cfa42d407e86bd9b79f1a9079a1c8927130b75217431e;
+finalproof4dbaf9712dab7a39eaf7170c988aac654c4c3c13479b0edef974ec20a5ba9e90.
+PASS:JDK8target7final6Sources58major51classes159060B/2556deps12265717B/noShadows;
+125newcases344assertions+migrated60/210,69/253,209/566+retained63/94,113/679
+=639cases2146assertions; private/publicSource12+literal3each; root/independent
+bounded Source review.12selectedreceipts11exit0+1exactargexit1; termination/root/
+logs absence proven, isolated cleanup null. No new runtime failure. Actualsamebody
+R5count metrics PASS; fullExportV2/write/compare/publication NOTRUN/fullfeeSource
+inference. Whole-result/authority/lifetime/actualgeometry unqualified. Draft's
+unadopted411hookSHAproposal and allpriorfailures/snapshots preserved privately.
+
+Next unstarted implementation: copy-effects summary/scope agreement after frozen
+producer-backed contract. Read-only Source audit identifies effectsBefore/After
+exactString.equals ->originalCaptureCopyEffectsUnchanged, effectsScope fixed
+ORIGINAL_CAPTURE_COPY_ONLY. ReusegeometryTemplate and existing string/Boolean/
+fixedString owners; finalize exactorder/error/price/fixtures beforeimplementation.
+No next implementation/helper/test/Java/native/CLI/factory/owner/genuine execution.
+
+F intendedN23Source/evidence/docs changes atthischeckpoint; no unrelated paths.
+Main5f05b0059trackedM/6untrackedfiles; E d9747229reportM; Desktope0c36885
+7trackedM/89untrackedfiles preserved. Only report prefixes mirrored Main/E.
+No new persistent process/listener; existing Notepad67116860/tabs untouched.
+Uncertain browser14116/start639294472690745890/58320,preview34180/start639294472514546595/
+58264+14children,oldDprocess/unlinkUNCERTIFIED untouched. Prior regularhardlinks/
+scratch/failures retained,testedjunctionsremoved. No atomicpathhandle guarantee.
+No receipt files/positiveprepare/binding/factory/actual orfakeOriginalArm/ArmResult/
+graph/Session/routing/positiveoriginalDTO/executeArm/R9DTO/genuine execution.
+Syntheticmetadata/codec/Meter only; genuineoriginalthenexactNULL/OBSERVE
+UNSPENT_GATED. All90s/640/5s/32768/copy1MiB/chunk4096/Source4MiB/opJSON8MiB/
+result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/reader180s/wrapper480s/
+cleanup120s/exactseeds/epochs unchanged. GWT/PlayerN/A,electrical/population
+NOTRENEWED,CINOTRUN,full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,
+oldnormal20historicalREAD/noreread,protectedUnreadUNCERTIFIED,playable100=0,
+betaHELD. Protected/heldoutDATA/oldactualDartifacts/generateddataclasses/whole
+legacybuildersconsumers denied. Continue standing roadmap until user stops.
+
+# Historical checkpoint: ownership summary preflight published; receipt record
 
 F codex/q100-terminal-only-20261107 implementationabda26be04ab28b8db7f19e0a5b1ee703009e3a0,
 no upstream; normal target origin/codex/q100-physical-feasibility. N22 gates, root/

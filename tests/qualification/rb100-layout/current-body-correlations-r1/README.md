@@ -1,5 +1,9 @@
 # Current result body correlations
 
+Current higher fixtures/canaries now use the [geometry summary preflight](../geometry-summary-r1/README.md)
+with42 gets/139 hooks. Prior frozen acceptance and pure Source stages remain
+attached to their recorded candidates; lower transport oracles are unchanged.
+
 The current higher fixtures now also contain ownership/alias fields under the
 [ownership summary preflight](../ownership-summary-r1/README.md). Native replay
 uses that final assembled codec (34 admitted gets); earlier accepted snapshots

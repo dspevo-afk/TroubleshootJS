@@ -1,5 +1,9 @@
 # Ownership summary preflight
 
+Current higher fixtures/canaries now use the [geometry summary preflight](../geometry-summary-r1/README.md)
+with42 gets/139 hooks. Prior frozen acceptance and pure Source stages remain
+attached to their recorded candidates; lower transport oracles are unchanged.
+
 The current codec's writeCorrelatedBody entry checks copied capture ownership
 and both arm alias summaries after its existing restoration checks, before
 encoding. Fourteen strict Boolean leaves must satisfy the three equations in

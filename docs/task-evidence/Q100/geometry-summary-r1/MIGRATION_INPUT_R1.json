@@ -1,0 +1,30 @@
+{
+  "status": "COPIED_CURRENT_SOURCE_ONLY_BEFORE_MIGRATION",
+  "files": [
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/BodyCorrelationOracle.java",
+      "bytes": 10812,
+      "sha256": "119c4fbd4eeac3119dfeba261b0edcc0b91775e128226379e810848939532185"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/CurrentBodyCorrelationsCanary.java",
+      "bytes": 30252,
+      "sha256": "90297b03d9e6e8aa16672e6e12efcb491af5acc55d4dd95bd9e8c78903c6fe29"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/test_literal_oracle.py",
+      "bytes": 3902,
+      "sha256": "90d4567e07c989dbe6f3b49616c84c1c78d2092dc6faf6105c9c82b55d2081a1"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/CleanupRestorationCanary.java",
+      "bytes": 26295,
+      "sha256": "1ab668d6ea8b14925c407f40c480dc94a0b978affb5d2ef8ff337be538dad8df"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/OwnershipSummaryCanary.java",
+      "bytes": 26865,
+      "sha256": "c1f300e2b0988fe90a8a5a5195a1ca0dc9774d8a1bd345d779f1b02a82153d92"
+    }
+  ]
+}

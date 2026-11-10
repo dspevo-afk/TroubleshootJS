@@ -1,0 +1,36 @@
+        Map<?, ?> geometryTemplate = correlationMap(
+                correlationRead(capture, "template", sink), sink);
+        String geometryBefore = correlationString(
+                geometryTemplate, "geometryBeforeSha256", sink);
+        String geometryAfter = correlationString(
+                geometryTemplate, "geometryAfterSha256", sink);
+        String nullGeometryBefore = correlationString(
+                nullCleanup, "sourceGeometryBeforeSha256", sink);
+        String nullGeometryAfter = correlationString(
+                nullCleanup, "sourceGeometryAfterSha256", sink);
+        String observeGeometryBefore = correlationString(
+                observeCleanup, "sourceGeometryBeforeSha256", sink);
+        String observeGeometryAfter = correlationString(
+                observeCleanup, "sourceGeometryAfterSha256", sink);
+        boolean geometrySummary = correlationBoolean(
+                cleanup, "sourceGeometryUnchanged", sink, "BODY_GEOMETRY_BOOLEAN");
+        sink.beforeDataOperation();
+        boolean geometryMatch1 = geometryBefore.equals(geometryAfter);
+        sink.beforeDataOperation();
+        boolean geometryMatch2 = geometryBefore.equals(nullGeometryBefore);
+        sink.beforeDataOperation();
+        boolean geometryMatch3 = geometryBefore.equals(nullGeometryAfter);
+        sink.beforeDataOperation();
+        boolean geometryMatch4 = geometryBefore.equals(observeGeometryBefore);
+        sink.beforeDataOperation();
+        boolean geometryMatch5 = geometryBefore.equals(observeGeometryAfter);
+        sink.beforeDataOperation();
+        boolean geometryUnchanged = geometryMatch1 & geometryMatch2;
+        sink.beforeDataOperation();
+        geometryUnchanged = geometryUnchanged & geometryMatch3;
+        sink.beforeDataOperation();
+        geometryUnchanged = geometryUnchanged & geometryMatch4;
+        sink.beforeDataOperation();
+        geometryUnchanged = geometryUnchanged & geometryMatch5;
+        sink.beforeDataOperation();
+        if (geometrySummary != geometryUnchanged) throw failure("BODY_GEOMETRY_SUMMARY");

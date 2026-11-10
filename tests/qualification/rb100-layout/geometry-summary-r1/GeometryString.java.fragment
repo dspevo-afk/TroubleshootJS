@@ -1,0 +1,10 @@
+    private static String correlationString(Map<?, ?> values, String key,
+            CohortTerminalTelemetryStudy.CanonicalJsonSink sink) throws Exception {
+        Object value = correlationRead(values, key, sink);
+        sink.beforeDataOperation();
+        if (!(value instanceof String)) throw failure("BODY_GEOMETRY_STRING");
+        String text = (String) value;
+        sink.beforeDataOperation();
+        if (text.length() > BODY_STRING_LIMIT) throw failure("BODY_GEOMETRY_STRING");
+        return text;
+    }

@@ -1,5 +1,9 @@
 # Cleanup restoration preflight and current fixture migration
 
+Current higher fixtures/canaries now use the [geometry summary preflight](../geometry-summary-r1/README.md)
+with42 gets/139 hooks. Prior frozen acceptance and pure Source stages remain
+attached to their recorded candidates; lower transport oracles are unchanged.
+
 Current fixtures/canary have since migrated under the [ownership summary prerequisite](../ownership-summary-r1/README.md).
 This packet remains the historical restoration acceptance. Its frozen pins and
 recorded results are preserved; current final replay uses34 gets/106 hooks.

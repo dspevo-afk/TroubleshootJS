@@ -1,0 +1,58 @@
+{
+  "status": "ROOT_SOURCE_COUNTED_BEFORE_NATIVE",
+  "cases": 125,
+  "assertions": 344,
+  "line": "SYNTHETIC_GEOMETRY_SUMMARY_COMPONENT_ONLY cases=125 assertions=344; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+  "ledger": [
+    {
+      "family": "comparison masks and flips",
+      "cases": 64,
+      "assertions": 160
+    },
+    {
+      "family": "six leaves five malformed kinds",
+      "cases": 30,
+      "assertions": 90
+    },
+    {
+      "family": "matching string bounds",
+      "cases": 4,
+      "assertions": 8
+    },
+    {
+      "family": "template maps",
+      "cases": 4,
+      "assertions": 12
+    },
+    {
+      "family": "summary Boolean",
+      "cases": 4,
+      "assertions": 12
+    },
+    {
+      "family": "type precedence",
+      "cases": 2,
+      "assertions": 6
+    },
+    {
+      "family": "earlier failures",
+      "cases": 12,
+      "assertions": 36
+    },
+    {
+      "family": "hook count",
+      "cases": 1,
+      "assertions": 1
+    },
+    {
+      "family": "admissions",
+      "cases": 3,
+      "assertions": 9
+    },
+    {
+      "family": "actual wide R5 count",
+      "cases": 1,
+      "assertions": 10
+    }
+  ]
+}

@@ -23,12 +23,12 @@ final class BodyCorrelationOracle {
     /* Literal JSON oracle: only the current header shape and supplied
      * correlations are represented. It is not a full-D or genuine-result oracle. */
     static final String MINIMAL_BODY_JSON =
-        "{\"schema\":\"tsj-cohort-terminal-result-v2\",\"mode\":\"OBSERVED_COHORT_TERMINAL_TELEMETRY\",\"status\":\"COMPLETED_DIAGNOSTIC_ONLY\",\"runId\":\"00000000-0000-0000-0000-000000000001\",\"sourceManifestSha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"wireContractSha256\":\"1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed\",\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\",\"qualifiedPrior\":{\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\"},\"originalCapture\":{\"contextRestored\":true,\"ownersReleased\":true},\"cohort\":{},\"arms\":{\"null\":{\"armRole\":\"NULL\",\"cleanup\":{\"contextRestored\":true,\"adapterSessionAliasDropped\":true,\"adapterSearchAliasDropped\":true,\"adapterCandidateAliasDropped\":true,\"adapterRouteResultAliasDropped\":true,\"adapterBoardTemplateAliasesDropped\":true}},\"observe\":{\"armRole\":\"OBSERVE\",\"cleanup\":{\"contextRestored\":true,\"adapterSessionAliasDropped\":true,\"adapterSearchAliasDropped\":true,\"adapterCandidateAliasDropped\":true,\"adapterRouteResultAliasDropped\":true,\"adapterBoardTemplateAliasesDropped\":true}}},\"work\":{\"cleanupNanos\":0,\"ordinaryList\":[\"synthetic\"]},\"cleanup\":{\"cleanupNanos\":0,\"originalCaptureContextRestored\":true,\"contextRestored\":true,\"originalCaptureOwnersReleased\":true,\"nullArmAliasesDropped\":true,\"observeArmAliasesDropped\":true}}\n";
+        "{\"schema\":\"tsj-cohort-terminal-result-v2\",\"mode\":\"OBSERVED_COHORT_TERMINAL_TELEMETRY\",\"status\":\"COMPLETED_DIAGNOSTIC_ONLY\",\"runId\":\"00000000-0000-0000-0000-000000000001\",\"sourceManifestSha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"wireContractSha256\":\"1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed\",\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\",\"qualifiedPrior\":{\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\"},\"originalCapture\":{\"contextRestored\":true,\"ownersReleased\":true,\"template\":{\"geometryBeforeSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\",\"geometryAfterSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\"}},\"cohort\":{},\"arms\":{\"null\":{\"armRole\":\"NULL\",\"cleanup\":{\"contextRestored\":true,\"adapterSessionAliasDropped\":true,\"adapterSearchAliasDropped\":true,\"adapterCandidateAliasDropped\":true,\"adapterRouteResultAliasDropped\":true,\"adapterBoardTemplateAliasesDropped\":true,\"sourceGeometryBeforeSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\",\"sourceGeometryAfterSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\"}},\"observe\":{\"armRole\":\"OBSERVE\",\"cleanup\":{\"contextRestored\":true,\"adapterSessionAliasDropped\":true,\"adapterSearchAliasDropped\":true,\"adapterCandidateAliasDropped\":true,\"adapterRouteResultAliasDropped\":true,\"adapterBoardTemplateAliasesDropped\":true,\"sourceGeometryBeforeSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\",\"sourceGeometryAfterSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\"}}},\"work\":{\"cleanupNanos\":0,\"ordinaryList\":[\"synthetic\"]},\"cleanup\":{\"cleanupNanos\":0,\"originalCaptureContextRestored\":true,\"contextRestored\":true,\"originalCaptureOwnersReleased\":true,\"nullArmAliasesDropped\":true,\"observeArmAliasesDropped\":true,\"sourceGeometryUnchanged\":true}}\n";
 
     private static final String WIDE_PREFIX =
-        "{\"schema\":\"tsj-cohort-terminal-result-v2\",\"mode\":\"OBSERVED_COHORT_TERMINAL_TELEMETRY\",\"status\":\"COMPLETED_DIAGNOSTIC_ONLY\",\"runId\":\"00000000-0000-0000-0000-000000000001\",\"sourceManifestSha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"wireContractSha256\":\"1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed\",\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\",\"qualifiedPrior\":{\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\"},\"originalCapture\":{\"contextRestored\":true,\"ownersReleased\":true},\"cohort\":{},\"arms\":{\"null\":{\"armRole\":\"NULL\",\"cleanup\":{\"contextRestored\":true,\"adapterSessionAliasDropped\":true,\"adapterSearchAliasDropped\":true,\"adapterCandidateAliasDropped\":true,\"adapterRouteResultAliasDropped\":true,\"adapterBoardTemplateAliasesDropped\":true}},\"observe\":{\"armRole\":\"OBSERVE\",\"cleanup\":{\"contextRestored\":true,\"adapterSessionAliasDropped\":true,\"adapterSearchAliasDropped\":true,\"adapterCandidateAliasDropped\":true,\"adapterRouteResultAliasDropped\":true,\"adapterBoardTemplateAliasesDropped\":true}}},\"work\":{\"cleanupNanos\":";
+        "{\"schema\":\"tsj-cohort-terminal-result-v2\",\"mode\":\"OBSERVED_COHORT_TERMINAL_TELEMETRY\",\"status\":\"COMPLETED_DIAGNOSTIC_ONLY\",\"runId\":\"00000000-0000-0000-0000-000000000001\",\"sourceManifestSha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"wireContractSha256\":\"1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed\",\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\",\"qualifiedPrior\":{\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\"},\"originalCapture\":{\"contextRestored\":true,\"ownersReleased\":true,\"template\":{\"geometryBeforeSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\",\"geometryAfterSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\"}},\"cohort\":{},\"arms\":{\"null\":{\"armRole\":\"NULL\",\"cleanup\":{\"contextRestored\":true,\"adapterSessionAliasDropped\":true,\"adapterSearchAliasDropped\":true,\"adapterCandidateAliasDropped\":true,\"adapterRouteResultAliasDropped\":true,\"adapterBoardTemplateAliasesDropped\":true,\"sourceGeometryBeforeSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\",\"sourceGeometryAfterSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\"}},\"observe\":{\"armRole\":\"OBSERVE\",\"cleanup\":{\"contextRestored\":true,\"adapterSessionAliasDropped\":true,\"adapterSearchAliasDropped\":true,\"adapterCandidateAliasDropped\":true,\"adapterRouteResultAliasDropped\":true,\"adapterBoardTemplateAliasesDropped\":true,\"sourceGeometryBeforeSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\",\"sourceGeometryAfterSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\"}}},\"work\":{\"cleanupNanos\":";
     private static final String WIDE_SUFFIX =
-        "},\"cleanup\":{\"cleanupNanos\":120000000000,\"originalCaptureContextRestored\":true,\"contextRestored\":true,\"originalCaptureOwnersReleased\":true,\"nullArmAliasesDropped\":true,\"observeArmAliasesDropped\":true}}\n";
+        "},\"cleanup\":{\"cleanupNanos\":120000000000,\"originalCaptureContextRestored\":true,\"contextRestored\":true,\"originalCaptureOwnersReleased\":true,\"nullArmAliasesDropped\":true,\"observeArmAliasesDropped\":true,\"sourceGeometryUnchanged\":true}}\n";
 
     private BodyCorrelationOracle() { }
 
@@ -52,6 +52,10 @@ final class BodyCorrelationOracle {
         Map<String, Object> originalCapture = new LinkedHashMap<String, Object>();
         originalCapture.put("contextRestored", Boolean.TRUE);
         originalCapture.put("ownersReleased", Boolean.TRUE);
+        Map<String, Object> template = new LinkedHashMap<String, Object>();
+        template.put("geometryBeforeSha256", "4444444444444444444444444444444444444444444444444444444444444444");
+        template.put("geometryAfterSha256", "4444444444444444444444444444444444444444444444444444444444444444");
+        originalCapture.put("template", template);
         body.put("originalCapture", originalCapture);
         body.put("cohort", new LinkedHashMap<String, Object>());
 
@@ -65,6 +69,8 @@ final class BodyCorrelationOracle {
         nullCleanup.put("adapterCandidateAliasDropped", Boolean.TRUE);
         nullCleanup.put("adapterRouteResultAliasDropped", Boolean.TRUE);
         nullCleanup.put("adapterBoardTemplateAliasesDropped", Boolean.TRUE);
+        nullCleanup.put("sourceGeometryBeforeSha256", "4444444444444444444444444444444444444444444444444444444444444444");
+        nullCleanup.put("sourceGeometryAfterSha256", "4444444444444444444444444444444444444444444444444444444444444444");
         nullArm.put("cleanup", nullCleanup);
         arms.put("null", nullArm);
         Map<String, Object> observeArm = new LinkedHashMap<String, Object>();
@@ -76,6 +82,8 @@ final class BodyCorrelationOracle {
         observeCleanup.put("adapterCandidateAliasDropped", Boolean.TRUE);
         observeCleanup.put("adapterRouteResultAliasDropped", Boolean.TRUE);
         observeCleanup.put("adapterBoardTemplateAliasesDropped", Boolean.TRUE);
+        observeCleanup.put("sourceGeometryBeforeSha256", "4444444444444444444444444444444444444444444444444444444444444444");
+        observeCleanup.put("sourceGeometryAfterSha256", "4444444444444444444444444444444444444444444444444444444444444444");
         observeArm.put("cleanup", observeCleanup);
         arms.put("observe", observeArm);
         body.put("arms", arms);
@@ -94,6 +102,7 @@ final class BodyCorrelationOracle {
         cleanup.put("originalCaptureOwnersReleased", Boolean.TRUE);
         cleanup.put("nullArmAliasesDropped", Boolean.TRUE);
         cleanup.put("observeArmAliasesDropped", Boolean.TRUE);
+        cleanup.put("sourceGeometryUnchanged", Boolean.TRUE);
         body.put("cleanup", cleanup);
         return body;
     }
@@ -104,10 +113,10 @@ final class BodyCorrelationOracle {
             "\",\"wireContractSha256\":\"" + WIRE_SHA +
             "\",\"inputContextSha256\":\"" + CONTEXT_SHA +
             "\",\"qualifiedPrior\":{\"inputContextSha256\":\"" + CONTEXT_SHA +
-            "\"},\"originalCapture\":{\"contextRestored\":true,\"ownersReleased\":true},\"cohort\":{},\"arms\":{\"null\":{\"armRole\":\"NULL\",\"cleanup\":{\"contextRestored\":true,\"adapterSessionAliasDropped\":true,\"adapterSearchAliasDropped\":true,\"adapterCandidateAliasDropped\":true,\"adapterRouteResultAliasDropped\":true,\"adapterBoardTemplateAliasesDropped\":true}},\"observe\":{\"armRole\":\"OBSERVE\",\"cleanup\":{\"contextRestored\":true,\"adapterSessionAliasDropped\":true,\"adapterSearchAliasDropped\":true,\"adapterCandidateAliasDropped\":true,\"adapterRouteResultAliasDropped\":true,\"adapterBoardTemplateAliasesDropped\":true}}},\"work\":{\"cleanupNanos\":" +
+            "\"},\"originalCapture\":{\"contextRestored\":true,\"ownersReleased\":true,\"template\":{\"geometryBeforeSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\",\"geometryAfterSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\"}},\"cohort\":{},\"arms\":{\"null\":{\"armRole\":\"NULL\",\"cleanup\":{\"contextRestored\":true,\"adapterSessionAliasDropped\":true,\"adapterSearchAliasDropped\":true,\"adapterCandidateAliasDropped\":true,\"adapterRouteResultAliasDropped\":true,\"adapterBoardTemplateAliasesDropped\":true,\"sourceGeometryBeforeSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\",\"sourceGeometryAfterSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\"}},\"observe\":{\"armRole\":\"OBSERVE\",\"cleanup\":{\"contextRestored\":true,\"adapterSessionAliasDropped\":true,\"adapterSearchAliasDropped\":true,\"adapterCandidateAliasDropped\":true,\"adapterRouteResultAliasDropped\":true,\"adapterBoardTemplateAliasesDropped\":true,\"sourceGeometryBeforeSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\",\"sourceGeometryAfterSha256\":\"4444444444444444444444444444444444444444444444444444444444444444\"}}},\"work\":{\"cleanupNanos\":" +
             Long.toString(workNanos) +
             ",\"ordinaryList\":[\"synthetic\"]},\"cleanup\":{\"cleanupNanos\":" +
-            Long.toString(cleanupNanos) + ",\"originalCaptureContextRestored\":true,\"contextRestored\":true,\"originalCaptureOwnersReleased\":true,\"nullArmAliasesDropped\":true,\"observeArmAliasesDropped\":true}}\n";
+            Long.toString(cleanupNanos) + ",\"originalCaptureContextRestored\":true,\"contextRestored\":true,\"originalCaptureOwnersReleased\":true,\"nullArmAliasesDropped\":true,\"observeArmAliasesDropped\":true,\"sourceGeometryUnchanged\":true}}\n";
     }
 
     static Map<String, Object> wideBody() {

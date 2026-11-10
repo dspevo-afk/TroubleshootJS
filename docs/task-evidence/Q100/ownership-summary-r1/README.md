@@ -1,5 +1,9 @@
 # Ownership summary preflight and current fixture migration
 
+Current higher fixtures/canaries now use the [geometry summary preflight](../geometry-summary-r1/README.md)
+with42 gets/139 hooks. Prior frozen acceptance and pure Source stages remain
+attached to their recorded candidates; lower transport oracles are unchanged.
+
 The current writeCorrelatedBody preflight now checks ownership summaries against
 their source flags. The copied capture owner-release flag must match
 originalCapture.ownersReleased. Each null/observe alias summary must equal the

@@ -1,5 +1,9 @@
 # Cleanup restoration summary preflight
 
+Current higher fixtures/canaries now use the [geometry summary preflight](../geometry-summary-r1/README.md)
+with42 gets/139 hooks. Prior frozen acceptance and pure Source stages remain
+attached to their recorded candidates; lower transport oracles are unchanged.
+
 The current canary now uses the final [ownership summary assembly](../ownership-summary-r1/README.md)
 and current higher fixtures:34 admitted gets/106 total correlation hooks, with
 the same69 cases/253 assertions. This directory's pure restoration transform is
