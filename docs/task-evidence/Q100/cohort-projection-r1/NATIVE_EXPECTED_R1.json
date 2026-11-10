@@ -1,0 +1,87 @@
+{
+  "status": "ROOT_SOURCE_COUNTED_BEFORE_NATIVE",
+  "cases": 52,
+  "assertions": 160,
+  "line": "SYNTHETIC_COHORT_PROJECTION_COMPONENT_ONLY cases=52 assertions=160; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+  "ledger": [
+    {
+      "name": "linked_list_and_content_equality_acceptance",
+      "cases": 2,
+      "assertions": 5,
+      "expected": "ACCEPT"
+    },
+    {
+      "name": "cohort_map_exact_key_order",
+      "cases": 3,
+      "assertions": 9,
+      "code": "BODY_COHORT_ORDER"
+    },
+    {
+      "name": "disposition_map_and_values",
+      "cases": 9,
+      "assertions": 27,
+      "codes": {
+        "BODY_CORRELATION_MAP": 3,
+        "BODY_COHORT_DISPOSITION": 6
+      }
+    },
+    {
+      "name": "cohort_and_prior_list_shapes",
+      "cases": 16,
+      "assertions": 48,
+      "code": "BODY_COHORT_LIST"
+    },
+    {
+      "name": "cohort_id_type_empty_and_length_bounds",
+      "cases": 8,
+      "assertions": 24,
+      "code": "BODY_COHORT_ID"
+    },
+    {
+      "name": "pair_requested_prefix_and_uniqueness_relations",
+      "cases": 10,
+      "assertions": 30,
+      "codes": {
+        "BODY_COHORT_PAIR": 4,
+        "BODY_COHORT_REQUESTED": 2,
+        "BODY_COHORT_PREFIX": 1,
+        "BODY_COHORT_DUPLICATE": 3
+      }
+    },
+    {
+      "name": "cleanup_schema_precedes_cohort_order",
+      "cases": 1,
+      "assertions": 3,
+      "code": "BODY_CLEANUP_SCHEMA"
+    },
+    {
+      "name": "reflection_hook_and_borrowed_list_admission",
+      "cases": 3,
+      "assertions": 14,
+      "valid_path": {
+        "hooks": 4052,
+        "map_gets": 59,
+        "list_gets": 1897,
+        "unadmitted_gets": 0
+      },
+      "denied_get": {
+        "hook": 195,
+        "list_gets": 0,
+        "writes": 0
+      },
+      "admitted_throwing_get": {
+        "hook": 195,
+        "list_gets": 1,
+        "propagated": "ListGetAttempted",
+        "writes": 0
+      }
+    }
+  ],
+  "correlationHooks": 4052,
+  "mapGets": 59,
+  "listGets": 1897,
+  "firstPairGetAdmissionHook": 195,
+  "oldHarnessCoverage": "FIVE_FRESH_MIGRATED_SUITES_ADMISSION_AND_REAL_R5_COUNT",
+  "actualOwnerExecution": false,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

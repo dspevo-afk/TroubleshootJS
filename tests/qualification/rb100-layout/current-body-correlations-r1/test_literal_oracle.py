@@ -15,14 +15,25 @@ WIRE = '1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed'
 
 
 def expected():
+    net_ids = [f'n{index:02d}' for index in range(60)]
+    cohort_net_ids = list(net_ids[:2])
+    requested_net_ids = list(net_ids)
+    prior_cohort_net_ids = list(cohort_net_ids)
+    prior_requested_net_ids = list(requested_net_ids)
+    trial_disposition = dict(status='RUN', reason='TRIAL_EXECUTED',
+                             capturedFailedNetId=cohort_net_ids[0],
+                             controlFailedNetId=cohort_net_ids[1],
+                             cohortNetIds=prior_cohort_net_ids,
+                             requestedNetIds=prior_requested_net_ids,
+                             orderChanged=True, feedbackValidated=True)
     return dict(schema='tsj-cohort-terminal-result-v2',
                 mode='OBSERVED_COHORT_TERMINAL_TELEMETRY',
                 status='COMPLETED_DIAGNOSTIC_ONLY',
                 runId='00000000-0000-0000-0000-000000000001',
                 sourceManifestSha256='1' * 64, wireContractSha256=WIRE,
                 inputContextSha256='3' * 64,
-                qualifiedPrior=dict(inputContextSha256='3' * 64),
-                originalCapture=dict(contextRestored=True, ownersReleased=True, template=dict(geometryBeforeSha256='4' * 64, geometryAfterSha256='4' * 64, effectsBeforeSha256='6' * 64, effectsAfterSha256='6' * 64)), cohort={},
+                qualifiedPrior=dict(inputContextSha256='3' * 64, trialDisposition=trial_disposition),
+                originalCapture=dict(contextRestored=True, ownersReleased=True, template=dict(geometryBeforeSha256='4' * 64, geometryAfterSha256='4' * 64, effectsBeforeSha256='6' * 64, effectsAfterSha256='6' * 64)), cohort=dict(netIds=cohort_net_ids, requestedNetIds=requested_net_ids),
                 arms={'null': dict(armRole='NULL',
                                    cleanup=dict(contextRestored=True, adapterSessionAliasDropped=True, adapterSearchAliasDropped=True, adapterCandidateAliasDropped=True, adapterRouteResultAliasDropped=True, adapterBoardTemplateAliasesDropped=True, sourceGeometryBeforeSha256='4' * 64, sourceGeometryAfterSha256='4' * 64)),
                       'observe': dict(armRole='OBSERVE',

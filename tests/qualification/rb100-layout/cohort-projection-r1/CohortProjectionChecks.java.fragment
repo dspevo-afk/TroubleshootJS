@@ -1,0 +1,97 @@
+    private static void validateCohortProjection(Map<?, ?> cohort, Map<?, ?> prior,
+            CohortTerminalTelemetryStudy.CanonicalJsonSink sink) throws Exception {
+        sink.beforeDataOperation();
+        Iterator<? extends Map.Entry<?, ?>> entries = cohort.entrySet().iterator();
+        for (int index = 0; index < 2; index++) {
+            sink.beforeDataOperation();
+            if (!entries.hasNext()) throw failure("BODY_COHORT_ORDER");
+            sink.beforeDataOperation();
+            Map.Entry<?, ?> entry = entries.next();
+            sink.beforeDataOperation();
+            Object key = entry.getKey();
+            requireFixedString(key, index == 0 ? "netIds" : "requestedNetIds",
+                    sink, "BODY_COHORT_ORDER");
+        }
+        sink.beforeDataOperation();
+        if (entries.hasNext()) throw failure("BODY_COHORT_ORDER");
+        List<?> pair = cohortList(correlationRead(cohort, "netIds", sink), 2, sink);
+        List<?> requested = cohortList(
+                correlationRead(cohort, "requestedNetIds", sink), 60, sink);
+        Map<?, ?> disposition = correlationMap(
+                correlationRead(prior, "trialDisposition", sink), sink);
+        requireFixedString(correlationRead(disposition, "status", sink), "RUN",
+                sink, "BODY_COHORT_DISPOSITION");
+        requireFixedString(correlationRead(disposition, "reason", sink), "TRIAL_EXECUTED",
+                sink, "BODY_COHORT_DISPOSITION");
+        boolean orderChanged = correlationBoolean(disposition, "orderChanged", sink,
+                "BODY_COHORT_DISPOSITION");
+        sink.beforeDataOperation();
+        if (!orderChanged) throw failure("BODY_COHORT_DISPOSITION");
+        boolean feedbackValidated = correlationBoolean(disposition, "feedbackValidated", sink,
+                "BODY_COHORT_DISPOSITION");
+        sink.beforeDataOperation();
+        if (!feedbackValidated) throw failure("BODY_COHORT_DISPOSITION");
+        List<?> priorPair = cohortList(
+                correlationRead(disposition, "cohortNetIds", sink), 2, sink);
+        List<?> priorRequested = cohortList(
+                correlationRead(disposition, "requestedNetIds", sink), 60, sink);
+        Object captured = correlationRead(disposition, "capturedFailedNetId", sink);
+        Object control = correlationRead(disposition, "controlFailedNetId", sink);
+        for (int index = 0; index < 2; index++) {
+            String id = cohortId(cohortRead(pair, index, sink), sink);
+            Object priorId = cohortRead(priorPair, index, sink);
+            sink.beforeDataOperation();
+            if (!id.equals(priorId)) throw failure("BODY_COHORT_PAIR");
+            sink.beforeDataOperation();
+            if (!id.equals(index == 0 ? captured : control))
+                throw failure("BODY_COHORT_PAIR");
+            if (index == 1) {
+                Object previous = cohortRead(pair, 0, sink);
+                sink.beforeDataOperation();
+                if (id.equals(previous)) throw failure("BODY_COHORT_DUPLICATE");
+            }
+        }
+        for (int index = 0; index < 60; index++) {
+            String id = cohortId(cohortRead(requested, index, sink), sink);
+            Object priorId = cohortRead(priorRequested, index, sink);
+            sink.beforeDataOperation();
+            if (!id.equals(priorId)) throw failure("BODY_COHORT_REQUESTED");
+            if (index < 2) {
+                Object prefix = cohortRead(pair, index, sink);
+                sink.beforeDataOperation();
+                if (!id.equals(prefix)) throw failure("BODY_COHORT_PREFIX");
+            }
+            for (int previousIndex = 0; previousIndex < index; previousIndex++) {
+                Object previous = cohortRead(requested, previousIndex, sink);
+                sink.beforeDataOperation();
+                if (id.equals(previous)) throw failure("BODY_COHORT_DUPLICATE");
+            }
+        }
+    }
+
+    private static List<?> cohortList(Object value, int length,
+            CohortTerminalTelemetryStudy.CanonicalJsonSink sink) throws Exception {
+        sink.beforeDataOperation();
+        if (!(value instanceof List)) throw failure("BODY_COHORT_LIST");
+        List<?> list = (List<?>) value;
+        sink.beforeDataOperation();
+        if (list.size() != length) throw failure("BODY_COHORT_LIST");
+        return list;
+    }
+
+    private static Object cohortRead(List<?> values, int index,
+            CohortTerminalTelemetryStudy.CanonicalJsonSink sink) throws Exception {
+        sink.beforeDataOperation();
+        return values.get(index);
+    }
+
+    private static String cohortId(Object value,
+            CohortTerminalTelemetryStudy.CanonicalJsonSink sink) throws Exception {
+        sink.beforeDataOperation();
+        if (!(value instanceof String)) throw failure("BODY_COHORT_ID");
+        String id = (String) value;
+        sink.beforeDataOperation();
+        int length = id.length();
+        if (length == 0 || length > BODY_STRING_LIMIT) throw failure("BODY_COHORT_ID");
+        return id;
+    }

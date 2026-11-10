@@ -1,4 +1,66 @@
-# Current checkpoint: nested cleanup schema published
+# Current checkpoint: cohort projection accepted locally
+
+F branch codex/q100-terminal-only-20261107, observed HEAD
+8c3945e43ff5427513f840d02b4d11a0a07079aa; no upstream. Target origin/codex/q100-physical-feasibility.
+Normal commit/push/Gmail pending; no publication claimed yet.
+N25 d4fbdf89/8c3945e4/Gmail1a1c58056570c4cc and older receipts remain complete.
+
+N26 OS-temp/tsj-q100-cohort-projection-r1-ddbd0149fcbe488eaad32db7b6e8fa8e.
+T/E cohort-projection-r1: complete small cohort projection/preflight contract:
+ordered two keys, distinct pair2, unique requested60 with pair prefix, agreement
+with prior trial disposition/status/reason/flags/captured/control fields. Scoped
+current Source bridge justifies these under validated unchanged setup ownership.
+Non-null/nonempty request members rely on that precondition; derive alone may
+allow one null under arbitrary prior. Synthetic IDs do not qualify InputSetup's
+specific trial. No suffix-to-originalCapture mapping or fixed ID spelling inferred.
+
+PASS:private/publicSource8+literal3 each; final-source JDK8 target7,9 Sources,
+89 classes/246204B,2556 dependencies/12265717B,
+all major51/no shadows; new52 cases160 assertions; migrated60/210,69/253,
+209/566,125/344,54/161,21/63 plus retained63/94 and113/679 =
+766 native cases/2530 assertions.
+15 selected receipts:14 exit0 and1 exact CANARY_ARGUMENTS exit1, not positive
+PASS. Selected resources absent; isolated cleanup duration unmeasured. No new
+runtime failure. Root integration and independent bounded static Source review
+passed; final packet review is documentary, not independent test execution.
+
+Success adds3898 sink hooks (4052 total),12 Map gets (59 total),1897 List gets
+per pass. Fixed2/60 bounds,1770 maximum duplicate comparisons. Hooks are not
+native units. Fresh native checks prove admission, denial before List.get,
+admitted throwing-get propagation and unchanged tree identities. Existing
+migrated suites retain actual same-body R5 count. Lower1177/6370 byte oracles
+and work padding remain unchanged. No Map/List/copy/Meter/group/byte allocation,
+budget/seed/epoch/Player change. Ordinary ASCII still may reject later after output.
+Codec37585B/8995d04ad4fc354e51b77adb8055ddc7a5a0cb48011a2d5186f5911e0458f9b7;
+SourceFreezec94490a9ea356f1859eced46ef84d6b73191b14b59ad5131937ec5ccd98a5da2;
+NativeFreezeddf6b03ecbedb9fe1ab75f26466b8e7b2e9d9a2d77053ee4092a411024d6027c;
+proof8b923ba809ebc5c1035e987b8eaa1742828653885892d566d12fdc35730f8afd.
+
+Next unstarted implementation: scoped current Source audit of remaining result
+semantics and required evidence before genuine original then exact NULL/OBSERVE.
+No permission to execute a genuine envelope is implied. Genuine UNSPENT_GATED;
+synthetic Map/List/scalars, codec and actual Meter only. No actual/fake arm owner,
+graph, Session, factory, positive originalDTO/executeArm/R9DTO, receiptfile,
+positive prepare/binding, routing or exportV2. Full export/write/compare/publication
+NOT RUN; complete fees Source inference. Whole DTO/setup/result, actual effects/
+geometry/SHA shape, authority and exclusive lifetime remain unqualified.
+All90s/640/5s/32768/copy1MiB/chunk4096/Source4MiB/fragment64KiB/opJSON8MiB/
+result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/reader180s/wrapper480s/
+cleanup120s bounds unchanged. full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
+protected/heldout DATA, old actual artifacts/generated DATA classes and whole
+legacy builders/consumers denied. oldnormal20 historical read/not reread;
+protectedUnread UNCERTIFIED; playable100=0; beta HELD. Production/GWT/Player N/A,
+electrical/population NOT RENEWED; CI NOT RUN, self-hosted runner prerequisite.
+
+No new persistent resource. Existing uncertain browser14116/start639294472690745890/
+port58320, preview34180/start639294472514546595/port58264 plus14 children,
+old D process/unlink uncertainty, prior hardlinks/scratch/failures and Notepad
+window67116860 remain untouched. No GUI or termination performed here.
+Preserve Main5f05b005 (9 tracked modifications/6 untracked files), E d9747229
+(report only), Desktop e0c36885 (7 modifications/89 untracked files). F intended
+N26 changes only; other checkouts receive report-prefix mirrors, histories preserved.
+
+# Historical checkpoint: nested cleanup schema published; receipt record
 
 F codex/q100-terminal-only-20261107 implementationd4fbdf89e42cfcfe37671dd2e1f73b2682dff26a,
 no upstream; target origin/codex/q100-physical-feasibility. N25 gates/root/index

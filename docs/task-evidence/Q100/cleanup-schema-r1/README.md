@@ -1,5 +1,9 @@
 # Nested cleanup schema discriminator
 
+Current higher fixtures use the [cohort projection check](../cohort-projection-r1/README.md)
+with59 Map gets/4052 hooks. Earlier frozen acceptance remains attached to its
+recorded candidate; lower transport oracles are unchanged.
+
 The existing writeCorrelatedBody entry now requires cleanup.schema to equal the
 producer's tsj-cohort-terminal-cleanup-v1 after all previous correlations, before
 encoding. A distinct String object with identical content passes. Missing/null/

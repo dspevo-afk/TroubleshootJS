@@ -1,0 +1,507 @@
+{
+  "status": "PASS_FINAL_SOURCE_COHORT_PROJECTION_AND_CURRENT_FIXTURE_MIGRATION",
+  "predecessorImplementation": "d4fbdf89e42cfcfe37671dd2e1f73b2682dff26a",
+  "predecessorReceipt": "8c3945e43ff5427513f840d02b4d11a0a07079aa",
+  "sourceFreezeSha256": "c94490a9ea356f1859eced46ef84d6b73191b14b59ad5131937ec5ccd98a5da2",
+  "nativeSourceFreezeSha256": "ddf6b03ecbedb9fe1ab75f26466b8e7b2e9d9a2d77053ee4092a411024d6027c",
+  "gateSha256": {
+    "SOURCE": "b3afb36d28f73b188e5b2c2f89df6f543913c4f098ef56be18fe1f0999254aa4",
+    "COMPILE": "c893c6ea57689ca55b16997d067e8d73e2a48cde7a57ae87609167c5bb8d2951",
+    "NATIVE": "a9dc215ac778d6a392b12b28f68c39d917dc717051a98a45bee0792dfd07771e",
+    "PUBLIC": "70dbd37a033556ca65cc08113bf64c7a3cb9d55451715e612315bbecfb4e1509"
+  },
+  "emittedCodec": {
+    "name": "CurrentV2CanonicalCodec.java",
+    "bytes": 37585,
+    "sha256": "8995d04ad4fc354e51b77adb8055ddc7a5a0cb48011a2d5186f5911e0458f9b7"
+  },
+  "sourceTestsPrivate": 8,
+  "sourceTestsPublic": 8,
+  "independentLiteralPrivate": 3,
+  "independentLiteralPublic": 3,
+  "finalSourceCount": 9,
+  "classCount": 89,
+  "classBytes": 246204,
+  "dependencyCount": 2556,
+  "dependencyBytes": 12265717,
+  "allMajor51": true,
+  "noShadows": true,
+  "nativeCases": 52,
+  "nativeAssertions": 160,
+  "migratedCases": [
+    60,
+    69,
+    209,
+    125,
+    54,
+    21
+  ],
+  "migratedAssertions": [
+    210,
+    253,
+    566,
+    344,
+    161,
+    63
+  ],
+  "retainedCases": [
+    63,
+    113
+  ],
+  "retainedAssertions": [
+    94,
+    679
+  ],
+  "uniqueNativeCases": 766,
+  "uniqueNativeAssertions": 2530,
+  "sourceCountedNativeExpected": {
+    "status": "ROOT_SOURCE_COUNTED_BEFORE_NATIVE",
+    "cases": 52,
+    "assertions": 160,
+    "line": "SYNTHETIC_COHORT_PROJECTION_COMPONENT_ONLY cases=52 assertions=160; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+    "ledger": [
+      {
+        "name": "linked_list_and_content_equality_acceptance",
+        "cases": 2,
+        "assertions": 5,
+        "expected": "ACCEPT"
+      },
+      {
+        "name": "cohort_map_exact_key_order",
+        "cases": 3,
+        "assertions": 9,
+        "code": "BODY_COHORT_ORDER"
+      },
+      {
+        "name": "disposition_map_and_values",
+        "cases": 9,
+        "assertions": 27,
+        "codes": {
+          "BODY_CORRELATION_MAP": 3,
+          "BODY_COHORT_DISPOSITION": 6
+        }
+      },
+      {
+        "name": "cohort_and_prior_list_shapes",
+        "cases": 16,
+        "assertions": 48,
+        "code": "BODY_COHORT_LIST"
+      },
+      {
+        "name": "cohort_id_type_empty_and_length_bounds",
+        "cases": 8,
+        "assertions": 24,
+        "code": "BODY_COHORT_ID"
+      },
+      {
+        "name": "pair_requested_prefix_and_uniqueness_relations",
+        "cases": 10,
+        "assertions": 30,
+        "codes": {
+          "BODY_COHORT_PAIR": 4,
+          "BODY_COHORT_REQUESTED": 2,
+          "BODY_COHORT_PREFIX": 1,
+          "BODY_COHORT_DUPLICATE": 3
+        }
+      },
+      {
+        "name": "cleanup_schema_precedes_cohort_order",
+        "cases": 1,
+        "assertions": 3,
+        "code": "BODY_CLEANUP_SCHEMA"
+      },
+      {
+        "name": "reflection_hook_and_borrowed_list_admission",
+        "cases": 3,
+        "assertions": 14,
+        "valid_path": {
+          "hooks": 4052,
+          "map_gets": 59,
+          "list_gets": 1897,
+          "unadmitted_gets": 0
+        },
+        "denied_get": {
+          "hook": 195,
+          "list_gets": 0,
+          "writes": 0
+        },
+        "admitted_throwing_get": {
+          "hook": 195,
+          "list_gets": 1,
+          "propagated": "ListGetAttempted",
+          "writes": 0
+        }
+      }
+    ],
+    "correlationHooks": 4052,
+    "mapGets": 59,
+    "listGets": 1897,
+    "firstPairGetAdmissionHook": 195,
+    "oldHarnessCoverage": "FIVE_FRESH_MIGRATED_SUITES_ADMISSION_AND_REAL_R5_COUNT",
+    "actualOwnerExecution": false,
+    "genuineEnvelope": "UNSPENT_GATED"
+  },
+  "processReceipts": [
+    {
+      "phase": "cohort-projection-jdk8-compile-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 970.7711,
+      "wrapperTotalElapsedMs": 1214.0544,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "7bfe1995cabf6f13f148f44a44458562df0dc0eab27ff267e19e7c9f6453aa0b",
+        "owner.json": "ea4cccbc41bef839eb8642e9f7fd86304ac2f42a40b2dab25d55b76a317db568",
+        "process.json": "38147cadf92341fcc9a4773376d3ea51cb58ba68e30cde5942d915cf1085afdc",
+        "parent.json": "424e6afb57304f0fb3656c0273e1a4520e86cc96c615046b1c1655045c434469",
+        "result.json": "1012d2b5ac75f5c6fd6ae49c8eb8ab6dfbe6932d8424250ad249ee1a2478f3ac",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cohort-projection-jvm-extra-argument-r1",
+      "childExitCode": 1,
+      "classification": "EXPECTED_CASE_SPECIFIC_REJECTION_NOT_POSITIVE_PASS",
+      "operationElapsedMs": 347.3462,
+      "wrapperTotalElapsedMs": 581.7429000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "64fc78850c36a68e8b7d1b17de8d2d9583efc7959baf3b9263d08b0b51bd7d87",
+        "owner.json": "472e6319feb62375e5045dae895efd712098fb67dc37d912f94c7dd70c46353f",
+        "process.json": "a07a75a6d32a47db261a4d52daafcf17fbca56ac16007aecfde2da59274d2be7",
+        "parent.json": "595953fe5c2d550eec543f7034ffc63477c2d6ae55a830959972afd4f1c5c5ad",
+        "result.json": "3008aefd89f12eff3d28f29cfcb845fcf87c3f8a57f633bb164cc39639f1ae06",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "6cac22964c98ce2e2e639013e9fefafccd88674fb8b997c192ca1d8015732359"
+      }
+    },
+    {
+      "phase": "cohort-projection-native-codec-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 471.82340000000005,
+      "wrapperTotalElapsedMs": 705.4806,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "96626ad650787511ad2946e8c22ac5e5fdf371b7be3f7d2cc6d2b8462a04ffd3",
+        "owner.json": "e2cfbf9f7146431b68a29e128383e0d0387efc995526b081213c25cc4efae8f1",
+        "process.json": "c5fc8c3a2daad1c8ad0c35f86111b5ba7e90ec24181907cdadefc317c19a0575",
+        "parent.json": "d361d9dafea60985a1180166752ebd480d7cace8c79628c25b8f0f6c905d295d",
+        "result.json": "187cc014dd787bb39bcfcb6ea22fd6d7183699c05e161289641a67b1bf6cdc68",
+        "stdout.txt": "b591b84893b83da74cdf9ae186ed5543dab887e4178bbc88f232167a0ca3dd9f",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cohort-projection-native-effects-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 398.3637,
+      "wrapperTotalElapsedMs": 633.0571,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "874a257868dcfbd31c03df4e5ac0fbd7e1d6614d68654de84890736c816679ae",
+        "owner.json": "17e8d4b2b6b2aeecebd183c2a7f1821fc4868b61ab29d10d26f4ed8d796050f3",
+        "process.json": "bb2185dd61d2b4161af83b7ec450697cd606fc869bf5a11073d507635b569a39",
+        "parent.json": "76302e96c3b41a68035b1fbdd7c01869d80905e25dbcf04069cb5213c779d096",
+        "result.json": "ef8e13dae64591013619bf0177b7cba9a5883287a6d47ebc73b2922239be959c",
+        "stdout.txt": "c6f20c3ed06a845611d76c621fdd7078c27bf7f1d2a7b055e9d5a935ff79256a",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cohort-projection-native-geometry-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 400.69390000000004,
+      "wrapperTotalElapsedMs": 632.7364,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "ab7af4dab55845078233136176fa7b6c0a2d1692b16ca5eb0881f3eb4654bceb",
+        "owner.json": "b7d2972de073bcfa13b57f21a9140d37236d2a56378c0b1a9f58b9823bd08df0",
+        "process.json": "bbcea150c094199850972512dc41bf3cd1de022cce0953f200e3625d06347b7d",
+        "parent.json": "eaccdcbf9a0ac182959fa5f4547d38648e4914f0b9779da7ff970e570540da79",
+        "result.json": "0178d4c3ebf98c014b354108a287434b2f86df2ac1b9ccf1eecaab77e4bb16ab",
+        "stdout.txt": "1a716d2382a2935aadadbf7ef4e516aef3caf39760bd142401af5611bf220495",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cohort-projection-native-migrated-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 376.1035,
+      "wrapperTotalElapsedMs": 606.7432,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "a18e0e1a5ec5b82f0b3b154b53091b1eccb03d27063ed87f3e3cfb642a31b0dd",
+        "owner.json": "66f30fe317f489b1ddca6ca6c401e58ef158b7d345dcfaaec98c7d0b8ee2d750",
+        "process.json": "f1201668e0276f57ff5f22aacb6f473822d8c7764dc2a56900f66c6b9255641a",
+        "parent.json": "f3f00eb2ace5a4914741ae839b650f025ccd4dedc67f0deb62198c47f1115d36",
+        "result.json": "e40cc235123dc4d32fb1f9e1f7a482e5010f67fd46f581ad9bc11b6b6593342f",
+        "stdout.txt": "f2a5e820fe3990807ca52101236a83e9e9e482d137564bf716a9f0f256b97afd",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cohort-projection-native-new-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 369.73400000000004,
+      "wrapperTotalElapsedMs": 625.7122,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "f61530a11df0a5e1af8431cb4e4e05131f90aef628b773f5a01e9e9515ccdf60",
+        "owner.json": "2068cb34707532df035c1f6aa4d7e0932c17a922d51f50c9f7e84006ad03aeaa",
+        "process.json": "4f6a018d95e7a7891d500a55969e4067a071ee23b00032505a172427724303ce",
+        "parent.json": "bc68faeac49dbedf3d745e0e9411673dc2f6a75793c0069b963a5b52457de7f7",
+        "result.json": "e8d732b3ff27aa2acd2871b99809fbdf99e66cda7821053702b95663f1674b76",
+        "stdout.txt": "e29fdd14f9af0b8a9b5e0be85ee20ed35e18860f96e59fee020032b088adfe81",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cohort-projection-native-ownership-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 419.2576,
+      "wrapperTotalElapsedMs": 669.8928000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "6ac02bb2ab34b45c097cdf078874912ca62bfe4c467f5d06adac558ebed14545",
+        "owner.json": "b7697bb1e01e857dd458215e21d8322a8f402a682f4a239008140c8da2887b71",
+        "process.json": "357baa8dba233d48a5e723151bc6d0c5735497a62bc752677ceeac1c8180b379",
+        "parent.json": "6168a0780d336c356f1a40d82fb1266e211f4fe6a2292d9c576c4c58bdbd09d2",
+        "result.json": "2238aaa5f74c03468bb1cab822b380459c59ccce431f4c4b3da3ac326fa569f8",
+        "stdout.txt": "83fa2b0fb66776b289a89dd2919b7510649a63cd2b58e50dfc9069d6340a849e",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cohort-projection-native-receipt-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 365.30080000000004,
+      "wrapperTotalElapsedMs": 596.1391,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "2b28c1243f1e256139504f8140be50632e599ff5f46442f1dd68142a75df6cfa",
+        "owner.json": "9ebe89045b7a3b2726c356b3e20b7da420a2a7efbf63984642308c72a641c4d8",
+        "process.json": "50c81ecc9da74b59728e4f9d1c117f3b18dc914161a19afeefee2bc1f5e58ff9",
+        "parent.json": "65fef68e728498a1f925ba4930d9a6be7be5c1501f4aee410cba5ecade3f0b86",
+        "result.json": "a9646c7e14f729c405a213323860ac9f038d0f9a27cdd9d9cef71b22dca67c7e",
+        "stdout.txt": "c3e8fb2438323258817934a5dd4d8f846fc856c5030e9c76567d016fb4ab44e0",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cohort-projection-native-restoration-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 387.911,
+      "wrapperTotalElapsedMs": 625.0849000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "7fb180d5c81dbdb1363b9a8e3bfcf91528968a8d338e5e6c9cbb6e6ab57dcbd6",
+        "owner.json": "2018cdcd960d6488151f018eb0fb3e93144c0d6f85a02a4401af05616f66fe8c",
+        "process.json": "c7500f2f036789aee39c446be74da4dfdb50d3c4349a7fbe2e0bd213762b8aa2",
+        "parent.json": "4974c108c74d4971973f7673d465dee65f121782013201690fc3b0534380df7e",
+        "result.json": "da102df76f85523ccfc463bce15b1119e70ddea6b79984feed0a8134d59a0eed",
+        "stdout.txt": "50ad54cc83d5bb65fcd79bfe1f06517d251600abf4d6b7cfc099a8dedcf5a1a6",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cohort-projection-native-schema-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 353.6832,
+      "wrapperTotalElapsedMs": 585.3316,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "81e9b9b61ebf87b27095be012aa8a5cfef58bd68e9702f0ae6318d7589b608ce",
+        "owner.json": "dd5492c420eaf8a1b8be6b8c9cce0c202610f4ec102f984f8021ee31fb8d9242",
+        "process.json": "293c2797c4113ed6d3b94cc0749775b60c6ee50f3bd3b9c19b7e75cb3b323746",
+        "parent.json": "d2d90f2358f52a2c540bd2eac3ef4623a33ae4659727561c6dc88a6253a3d256",
+        "result.json": "5ef5462bb5c901d068eaa95ae4dd774be156a996d52d003b39d9142331397493",
+        "stdout.txt": "d5678d207715da0daa3dd3e1f22a77d170e688ea910c461f44168cafbd0365a3",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cohort-projection-private-literal-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 358.61850000000004,
+      "wrapperTotalElapsedMs": 596.7781,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "dada12660cb8e27ff9d779b101bfb6bc3bac31dd8154b75aa94ffecf97a08448",
+        "owner.json": "200fe226aaa0ce5cc9c9ec4e2b4112fe28a2a40bfca8ec3f5a655143f3430a50",
+        "process.json": "8c4ca1fee41c0221b21bda82dc492331f02f8c7f9766aa24c69c20a80ff2d94a",
+        "parent.json": "16f4e027f441058dad836ce7d81d892000680ff19c1616b76053585cefc4acda",
+        "result.json": "6437198fb902f833be30c23913aad152d61f8d15d3f798a751b2eb0272ae9b1b",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "4d5415dbb28a759ecf0f09978e966e9821a7eecfd98c12759504ab6aa4e92165"
+      }
+    },
+    {
+      "phase": "cohort-projection-private-source-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 373.1895,
+      "wrapperTotalElapsedMs": 810.3777,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "b96dfc53cd4f03b67f16b850cb657c5d73cafdd9ea2391df7ca0750f1ed589e0",
+        "owner.json": "e40991eb0b19c3ee2b3a8c0bf6690bb1eff376087bef78325bc6f050e8c6d7a0",
+        "process.json": "28f3c0174a2ec21e27ad65a5bfd92534f3a888b006f6bd9b9d8971a8f77e11a0",
+        "parent.json": "d850cf871ea49dd34f5b7a5d19c8f45ffc43cb323c9e8d9cf0e353e5bcf8ff39",
+        "result.json": "07297c3a786f6f3dd35682aafdde3e742711fe850b599a46d904ae3dbdc56c08",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "8a556753f07b4a7ecc4e48e92573e0f0d3072f4c69667802dfeba5fd77635168"
+      }
+    },
+    {
+      "phase": "cohort-projection-public-literal-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 359.1567,
+      "wrapperTotalElapsedMs": 586.8044,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "4f2572a06d725f950d5895bffabc3e77520366ee796d4a6c4e7da0642fe5d378",
+        "owner.json": "913e6bf80e0ff1fc8f5ee38a9a3a7d921e1fef8e5c2cde836fdd48c163dcf650",
+        "process.json": "afff91b88c75582a24e8fa0f2a959486535c2d43349256010a3ed598e9fe8e74",
+        "parent.json": "93f7dbd4a70855e14b833b5527cdb93e84a3d735a65c09c6764d64a78b2752e8",
+        "result.json": "fd0d8fb7678c242d79dc2e36ca888fd981a64353af724d5391221ed5190c2f2d",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "4d5415dbb28a759ecf0f09978e966e9821a7eecfd98c12759504ab6aa4e92165"
+      }
+    },
+    {
+      "phase": "cohort-projection-public-source-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 361.13,
+      "wrapperTotalElapsedMs": 600.7617,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "5103bbb1b1a41cc481e94e8b12f78a8fb04d1ce9f4171d3654aca03a81863f57",
+        "owner.json": "af1b227a9680269ee345768b27125f4f451a5af45e7e50fa37eadf1efc95bc61",
+        "process.json": "49cc9a68408d8630cdb75ccd02360f069124c590aa561e6c547d6e595fffdb2f",
+        "parent.json": "548acd32d5516f37d6d847943eee906a2c3f882899957ddbcc41b0b0e513ef9b",
+        "result.json": "0d71f7d35670ba7f869f475ce75493105cf3247a41b4b0d88d276e3ce519f244",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "8a556753f07b4a7ecc4e48e92573e0f0d3072f4c69667802dfeba5fd77635168"
+      }
+    }
+  ],
+  "selectedProcessCount": 15,
+  "positiveExitZeroCount": 14,
+  "selectedTerminationAndTaskRootLogsAbsenceProven": true,
+  "isolatedCleanupDurationMs": null,
+  "finalPublicCopies": [
+    {
+      "path": "tests/qualification/rb100-layout/cohort-projection-r1/CONTRACT_R1.md",
+      "bytes": 3485,
+      "sha256": "100763b6682f31e9046ea0775986e4b81c24dbc1642f23f8c127166c6a176b60"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cohort-projection-r1/CohortProjectionChecks.java.fragment",
+      "bytes": 5017,
+      "sha256": "7eec89ee4b7b5bcd6c1a0ea7310be34f46f019291dd4da9c74f5e5edd3d26746"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cohort-projection-r1/derive_cohort_projection.py",
+      "bytes": 1411,
+      "sha256": "9da50caff7ebb2c15902559a3c5fa059358e5f39222d3784a6530642d0b4223d"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cohort-projection-r1/test_cohort_projection_source.py",
+      "bytes": 3171,
+      "sha256": "c607befd4edec4017f67a7c7476cff030a054f42e77d05a5bb0532a8b6814df2"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cohort-projection-r1/CohortProjectionCanary.java",
+      "bytes": 29368,
+      "sha256": "89dc63302ce1752b306d3956b67bcff570ea0a289c20f40ba7d6604b21418823"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cohort-projection-r1/README.md",
+      "bytes": 1459,
+      "sha256": "03ff6eb20a6df8c6904e28e99d1749d7afb5f8656d9506019d4958d2c4757243"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/BodyCorrelationOracle.java",
+      "bytes": 20046,
+      "sha256": "2a315c15fa76c5580e33c0ec4ce363e59580f894466767edebe44d423f3904af"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/CurrentBodyCorrelationsCanary.java",
+      "bytes": 30251,
+      "sha256": "95371acb92bf745ea30a5b0f7fe8167ab74b966c31250d1dacce0e44b10e9e8d"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/test_literal_oracle.py",
+      "bytes": 5078,
+      "sha256": "8271e5275d965729508ab641034cfe92c2feb917f550127d5d8416ee2a5f4bcd"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/CleanupRestorationCanary.java",
+      "bytes": 26296,
+      "sha256": "ec01e444bf5cdcd4bc9610780b82aea5d2161c2f2707c9bf42799fbf5092a6f9"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/OwnershipSummaryCanary.java",
+      "bytes": 26859,
+      "sha256": "282e48da4edb7474e8d5c617902db1358c1211a7703a785a75d39191caa97ce4"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/geometry-summary-r1/GeometrySummaryCanary.java",
+      "bytes": 27696,
+      "sha256": "6133ee2da52b617f9077069e546313db45dadb0d5f31350523e2ec8c8e7da896"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/CopyEffectsSummaryCanary.java",
+      "bytes": 29915,
+      "sha256": "211cccdbfd46b89128d7164bd655edcf0e476636cf43de6ebe1962587c51f052"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-schema-r1/CleanupSchemaCanary.java",
+      "bytes": 11087,
+      "sha256": "98ec2eb51565a042a51e402c3bf55c66e27311df2277288fb665a53f24ca64c9"
+    }
+  ],
+  "extraSinkHooksPerPass": 3898,
+  "totalCorrelationHooksPerPass": 4052,
+  "totalCorrelationMapGetsPerPass": 59,
+  "cohortListGetsPerPass": 1897,
+  "maximumDuplicateComparisons": 1770,
+  "extraHooksAcrossThreePasses": 11694,
+  "hooksAreNativeUnits": false,
+  "newCanaryScope": "COMPLETE_COHORT_PROJECTION_INTRINSICS_AND_PRIOR_DISPOSITION_AGREEMENT",
+  "sameBodyActualR5CountEquivalence": "PASS",
+  "fullExportV2WriteComparePublication": "NOT_RUN",
+  "completeExportFeeEquations": "SOURCE_INFERENCE_ONLY",
+  "wholeResultSemanticsQualified": false,
+  "authorityAndBorrowedLifetimeQualified": false,
+  "actualOwnerExecution": false,
+  "normalHostAcceptance": false,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "playable100": 0,
+  "beta": "HELD",
+  "full30": "EXCLUDED",
+  "HARD_PSYCHOTIC": "UNAVAILABLE_UNRUN",
+  "oldNormal20": "HISTORICAL_READ_NOT_REREAD",
+  "protectedUnread": "UNCERTIFIED",
+  "productionGwtPlayer": "NOT_APPLICABLE",
+  "electricalPopulation": "NOT_RENEWED",
+  "ci": "NOT_RUN",
+  "budgetsAndExactSeedsEpochs": "UNCHANGED",
+  "newRuntimeFailures": "NONE",
+  "priorFailures": "PRESERVED_NOT_RECLASSIFIED",
+  "sourceReview": "ROOT_AND_BOUNDED_INDEPENDENT_STATIC_PASS",
+  "limits": "Only synthetic metadata/codec/Meter execute. No receiptfiles, positive prepare/binding, factory, actual/fake arm owner, graph, Session, positive originalDTO, executeArm/R9DTO, routing or genuine envelope. No remaining58-to-originalCapture mapping, full setup/DTO/whole-body zero-output/actual effects/geometry/SHA shape/authority/lifetime qualification. Non-null request-vector rule is justified by validated unchanged setup precondition; deriveCohort alone can allow null. ASCII enforcement remains later in ordinary formatter."
+}

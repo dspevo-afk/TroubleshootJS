@@ -1,0 +1,25 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_NATIVE_SOURCE_FREEZE",
+  "files": [
+    {
+      "name": "component/CohortProjectionCanary.java",
+      "bytes": 29368,
+      "sha256": "89dc63302ce1752b306d3956b67bcff570ea0a289c20f40ba7d6604b21418823"
+    },
+    {
+      "name": "emitted-source/CurrentV2CanonicalCodec.java",
+      "bytes": 37585,
+      "sha256": "8995d04ad4fc354e51b77adb8055ddc7a5a0cb48011a2d5186f5911e0458f9b7"
+    },
+    {
+      "name": "NATIVE_EXPECTED_R1.json",
+      "bytes": 2154,
+      "sha256": "c1aee837846cbdc832b5f87a4938de911e01327f68538f2656d78fcbc3657d12"
+    },
+    {
+      "name": "SOURCE_REVIEW_R1.md",
+      "bytes": 4697,
+      "sha256": "16e106608f77696d9f8394924f157a1c9e7331c657e30f95c0d889a25cf26605"
+    }
+  ]
+}

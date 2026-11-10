@@ -1806,6 +1806,18 @@ Implementation `d4fbdf89e42cfcfe37671dd2e1f73b2682dff26a` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c58056570c4cc` sent once. This receipt sends no second email.
 
+The [cohort projection prerequisite](task-evidence/Q100/cohort-projection-r1/README.md)
+is locally accepted for the complete small projection contract and its agreement
+with the prior disposition. Final-source JDK8, 766 native cases/
+2530 assertions, private/publicSource8+literal3 each and bounded
+independent static review pass.15 receipts separate14 exit0 from1 expected argument
+rejection. Existing byte oracles and limits remain; current higher fixtures migrate.
+Actual R5 same-body count passes; full export and genuine execution remain gated.
+Next: scoped current Source audit of remaining result semantics and required genuine
+evidence. No electrical/population renewal, playable100=0, beta HELD; full30 excluded
+and HARD/PSYCHOTIC unavailable/unrun.
+Publication pending final root/index checks and normal push.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

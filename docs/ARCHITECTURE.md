@@ -511,6 +511,14 @@ helper/API/Map guard or Meter/group/copy/byte work. All prior bytes and error
 precedence are conserved; current higher fixtures migrate. This discriminates
 the nested version only, not full shape/cardinality, semantics or authority.
 
+The [cohort projection check](task-evidence/Q100/cohort-projection-r1/README.md)
+owns the finite two-key projection shape, two-ID pair, unique60-ID request vector
+with pair prefix, and prior-disposition relationships. It borrows existing Lists
+under stable caller ownership, prepays controlled observations and uses bounded
+duplicate comparisons. It adds3898 hooks/pass (4052 total,59 Map gets), without
+new Map/List allocation, copy, Meter, group or byte work. All earlier behavior
+and lower transport remain conserved. This is not full result validation or actual host acceptance.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the
