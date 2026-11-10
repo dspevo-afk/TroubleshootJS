@@ -1,5 +1,9 @@
 # Complete two-arm projection preflight
 
+Current higher fixtures use the [complete cleanup projection check](../cleanup-projection-r1/README.md)
+with65 Map gets/4162 hooks and producer cleanup order. Earlier frozen acceptance
+stays attached to its candidate; independent lower transport oracles are unchanged.
+
 The correlated codec now requires the exact ordered two-arm envelope and five
 fields per arm before encoding. After all prior correlations, it checks the outer
 and both inner key censuses, then each ID and freshRun/observation Map type.

@@ -1,0 +1,530 @@
+{
+  "status": "PASS_FINAL_SOURCE_CLEANUP_PROJECTION_AND_CURRENT_FIXTURE_MIGRATION",
+  "predecessorImplementation": "495bc2d4b354b4b2de46424ac165320e9da4170b",
+  "predecessorReceipt": "8c188afd74fcfdd75d15960faedd953fb9376de4",
+  "sourceFreezeSha256": "da41fda2de6f726751716d46969a58a3efcd2a2e518b750b3460a4e97eee4b3e",
+  "nativeSourceFreezeSha256": "cb4ebe78cca8618c3d84abe4aa2d39761efd75591f21a8c9180115752eb8e196",
+  "gateSha256": {
+    "SOURCE": "eee4be6736f0713b20d8e949ca760435076c77313ffedb00a1f19be0bd234e1a",
+    "COMPILE": "673c7ab15020a8ef995f6f06c174961f495293fa31cc2e4776faa5aa76aa878c",
+    "NATIVE": "1279afd41ed7625ada5a11651c84fb87ecf78930480d56828dd56ab936bc3e66",
+    "PUBLIC": "c8ee948a73d906e751130b5783377229efb265b39e6dd238b315a13e5e0ae270"
+  },
+  "emittedCodec": {
+    "name": "CurrentV2CanonicalCodec.java",
+    "bytes": 41189,
+    "sha256": "8f617b6e71f6fae29bee1ece0e5bdaf69d3742ba198f2b14edc4e94217e63b73"
+  },
+  "sourceTestsPrivate": 8,
+  "sourceTestsPublic": 8,
+  "independentLiteralPrivate": 3,
+  "independentLiteralPublic": 3,
+  "finalSourceCount": 11,
+  "classCount": 97,
+  "classBytes": 274109,
+  "dependencyCount": 2556,
+  "dependencyBytes": 12265717,
+  "allMajor51": true,
+  "noShadows": true,
+  "nativeCases": 27,
+  "nativeAssertions": 81,
+  "migratedCases": [
+    60,
+    69,
+    209,
+    125,
+    54,
+    21,
+    52,
+    44
+  ],
+  "migratedAssertions": [
+    210,
+    253,
+    566,
+    344,
+    161,
+    63,
+    160,
+    130
+  ],
+  "retainedCases": [
+    63,
+    113
+  ],
+  "retainedAssertions": [
+    94,
+    679
+  ],
+  "uniqueNativeCases": 837,
+  "uniqueNativeAssertions": 2741,
+  "sourceCountedNativeExpected": {
+    "status": "ROOT_SOURCE_COUNTED_BEFORE_NATIVE",
+    "cases": 27,
+    "assertions": 81,
+    "line": "SYNTHETIC_CLEANUP_PROJECTION_COMPONENT_ONLY cases=27 assertions=81; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+    "ledger": [
+      {
+        "name": "producer_order_acceptance_and_lower_body_equivalence",
+        "cases": 1,
+        "assertions": 3,
+        "expected": "ACCEPT"
+      },
+      {
+        "name": "all_ten_missing_fields_preserve_old_error_codes",
+        "cases": 10,
+        "assertions": 30,
+        "codes": {
+          "BODY_CLEANUP_SCHEMA": 1,
+          "BODY_OWNERSHIP_BOOLEAN": 3,
+          "BODY_RESTORATION_BOOLEAN": 2,
+          "BODY_GEOMETRY_BOOLEAN": 1,
+          "BODY_EFFECTS_SCOPE": 1,
+          "BODY_EFFECTS_BOOLEAN": 1,
+          "BODY_CLEANUP_NANOS": 1
+        }
+      },
+      {
+        "name": "late_extra_nonstring_and_adjacent_order_failures",
+        "cases": 11,
+        "assertions": 33,
+        "code": "BODY_CLEANUP_PROJECTION_ORDER",
+        "coverage": [
+          "one extra key",
+          "a non-String key before all producer keys",
+          "each of nine adjacent key swaps"
+        ]
+      },
+      {
+        "name": "cohort_arm_role_and_prior_cleanup_value_precedence",
+        "cases": 5,
+        "assertions": 15,
+        "codes": {
+          "BODY_COHORT_ORDER": 1,
+          "BODY_ARM_PROJECTION_ORDER": 1,
+          "BODY_NULL_ROLE": 1,
+          "BODY_EFFECTS_SCOPE": 1,
+          "BODY_CLEANUP_SCHEMA": 1
+        }
+      }
+    ],
+    "correlationHooks": 4162,
+    "mapGets": 65,
+    "listGets": 1897,
+    "firstPairGetAdmissionHook": 195,
+    "oldHarnessCoverage": "FIVE_FRESH_MIGRATED_SUITES_ADMISSION_AND_REAL_R5_COUNT",
+    "actualOwnerExecution": false,
+    "genuineEnvelope": "UNSPENT_GATED"
+  },
+  "processReceipts": [
+    {
+      "phase": "cleanup-projection-jdk8-compile-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 990.9321,
+      "wrapperTotalElapsedMs": 1284.8621,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "865cdb2ebc3b2b56e92d2460185a11f7ebcaea1b7ccf2966e9170b1a05ace530",
+        "owner.json": "51de92277ff31aa6f83f5095714ed696f546023a15e29752cf96a6ace1b50aba",
+        "process.json": "f15cd2022ac82dcb1cd1b96dce504201bb8ef8502b700d14c0c83f363431b2a5",
+        "parent.json": "80219598dfd352b5e7ca75a7bb2d7941a58e94c0d1459a5c3f8f23f47b71f29b",
+        "result.json": "4a849502aeab057e241a86d938bef9e39fe561531bbce6a26b192ec058597815",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cleanup-projection-jvm-extra-argument-r1",
+      "childExitCode": 1,
+      "classification": "EXPECTED_CASE_SPECIFIC_REJECTION_NOT_POSITIVE_PASS",
+      "operationElapsedMs": 430.96450000000004,
+      "wrapperTotalElapsedMs": 664.7315,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "090be6766ec1f53dcc141a24e65e18649d1faf6c34cc1ff13fb7316b60ead172",
+        "owner.json": "53485c05b5a42bfca5f6fec66dd5af706e208d8f7d206cd6a244d1cceda81834",
+        "process.json": "91c1aa40e02b24bc99292fc688020a2a8d8694e1d1ce55b5c1def9c585e2ce4e",
+        "parent.json": "63ea70e77f4f7dd5d9afa38ce1c45a4a8967d64ee078fc9389cfa4bc57a95e33",
+        "result.json": "f54759c5e0b15e7c3333ab2720dbde6bd6b60c7c138a9456021d9ea79937ca6f",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "6832ed421637dc23d728f9a8569920bc1d5b2e086b825b6e611d7da9312215fb"
+      }
+    },
+    {
+      "phase": "cleanup-projection-native-arm-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 371.72650000000004,
+      "wrapperTotalElapsedMs": 606.8711000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "a346bd5f4971193321674798b72e8abd808ee0ca8ca9d0c6f162e281a686e8f7",
+        "owner.json": "1852cd194aefe44078290ce09c624120093a321f52151f65599a38e3f1c6596f",
+        "process.json": "669c91f6b596cb1985a8ae9cdb0feeacdc71eda168f466876c74d37bb6a0b7a2",
+        "parent.json": "041b98d28149ee41ed09f11260a94cb4e95ce6299670278350cb5aafd3aa315e",
+        "result.json": "0e53c995f4ad08c1e74608fb926a95a57c48eee52a0a4b7e5463d698d3f97893",
+        "stdout.txt": "80d4398fdfbd51b87ba38c07d1e3adf78e02f60ba92d8f217d5d6db939cb3853",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cleanup-projection-native-codec-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 483.37440000000004,
+      "wrapperTotalElapsedMs": 712.9033000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "5d9a48242a96095d5be6b0605d65554e849f817f3abe205a9df87a407e357bd0",
+        "owner.json": "bb1e9ebf38b5909f1d875873ed04b1b09d4032d0f2c5e4042b403fdb58c41809",
+        "process.json": "2e2b9ded6ed4ac35202719a7dea4ab505c36c52079bf44a9263d80f6b50ca922",
+        "parent.json": "f0364bf54b91a95f41bc0569005e12777d158a35482eabc90109b3bd921ca430",
+        "result.json": "c164cbb88a2510c4a2462a3084f1caee228c6a7f321fc90a0031c69a7e2c5938",
+        "stdout.txt": "b591b84893b83da74cdf9ae186ed5543dab887e4178bbc88f232167a0ca3dd9f",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cleanup-projection-native-cohort-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 473.314,
+      "wrapperTotalElapsedMs": 702.2247,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "6d8e469e04e8590cca3c82155b914452d5415b0b814a9486436f5a098c338f2c",
+        "owner.json": "4055519bf174af6054b21d7777c76a8e132ddc5cb17ec4239470f515c9295fd7",
+        "process.json": "01496ffea72589a40b4c3ac658f290d18529948bfd7742ece027ab5209ac1ce6",
+        "parent.json": "75ef07e1a5ca0efbee605e0a679d1dcc987cad203db874d0bd24cbdebd12de4a",
+        "result.json": "2eaec904ac2b5ee919459401c0219fd2dce621cd1a9ad793def44b1793e990a0",
+        "stdout.txt": "e29fdd14f9af0b8a9b5e0be85ee20ed35e18860f96e59fee020032b088adfe81",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cleanup-projection-native-effects-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 367.92220000000003,
+      "wrapperTotalElapsedMs": 605.6738,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "ebe640cf12756005af9097767a2850c6e4981923b6173c552d33eb36f9d9598f",
+        "owner.json": "a86c6819c30dbea233380ab174b3216040b7f712cb445951e339801e350c8773",
+        "process.json": "3c5aa2a292a6c8f6983c474bc480f3424e1d201ec67fc2c2c64fd7f77e5c988f",
+        "parent.json": "8f0ba80b7bdc48a22fc5168936f8aad57d8cf4991329853187058b8e251710a5",
+        "result.json": "af2e6aebd7f1c8b0f13aeb9e6d27103dfc38a58652ca5aa4d60f6a2f9509fe0e",
+        "stdout.txt": "c6f20c3ed06a845611d76c621fdd7078c27bf7f1d2a7b055e9d5a935ff79256a",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cleanup-projection-native-geometry-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 383.90430000000003,
+      "wrapperTotalElapsedMs": 611.6651,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "12a731cebc9f09f996a6bb13228eba02618942213eb0d4e89508a614f349361b",
+        "owner.json": "aa5b800ac412db3bed301a9cf74f63179a338102e95456bb707b62d1a40c23a0",
+        "process.json": "3155d870be1441d7d43aede86ba8f6eecd82b22c4a62385aa176b4e23ea389e6",
+        "parent.json": "e8fcf20fec7bc63828c25e505e7703cfa4b941c5d8525caac76ed59c29b9797e",
+        "result.json": "fbb7dcae10086c28c480abf32e3aba29c2a2cc8f185c01ca7b7502e52cfa304d",
+        "stdout.txt": "1a716d2382a2935aadadbf7ef4e516aef3caf39760bd142401af5611bf220495",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cleanup-projection-native-migrated-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 382.6993,
+      "wrapperTotalElapsedMs": 609.9939,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "d2500ec862006eaf860d4775d2b49eaf0c061b58eb786b12f80b1f88097556bc",
+        "owner.json": "826ad3a7e672bb4a13e3a72429aab8664b23fc283f356ab6cc4c149fa733d26a",
+        "process.json": "cf2ce142499453d277d9250ee1c9e29cf11831bbcf7e5e54c8987386bb882716",
+        "parent.json": "bf0eaebe7a83c762a8c8bdd7d124a8a156d97e066b16cf6bd253ba3e6baad56f",
+        "result.json": "8483290558d8bdcbb5c0219e65f6c14c2413f1e39c252717b4bd3526e21ad74b",
+        "stdout.txt": "f2a5e820fe3990807ca52101236a83e9e9e482d137564bf716a9f0f256b97afd",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cleanup-projection-native-new-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 375.0185,
+      "wrapperTotalElapsedMs": 624.5615,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "81ee33f02abd69d3813264e02809bb6a20470ed36e4ba10d67363b3f5259c594",
+        "owner.json": "4fbea436ef7737f05e57223476f29759a54f988784a71a79d4b9e50c7e35ee6f",
+        "process.json": "ae0cf856995a4b9ad01e7a30b385059c8e134f894b1698a8886985804ca70149",
+        "parent.json": "c1c76dcb907eb0cff85fd48e1d2a0b7875be1faa20bdccaab882c0f4e4c1ea9c",
+        "result.json": "b6a21aee97d9f47a27a620fd5dad10cb24118fe0d92b755c74b1666343c56dac",
+        "stdout.txt": "511ed2d579a1d5b83a70bbacaf06317cc4e62994d8b49e5873f4ccaab19879f4",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cleanup-projection-native-ownership-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 394.38050000000004,
+      "wrapperTotalElapsedMs": 626.2995000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "adf1af3fae4b2a9845d68c5171687922cd096e6838e24b3ac3c471825378d27e",
+        "owner.json": "94e8b537bbf77ea1f94becdf79351959914538f0da2740f16dbeddf4730beac2",
+        "process.json": "aa45f51de2777bad042ffa8c5b9b43cc57987a7a43b34518ae81c0aa3db8f17c",
+        "parent.json": "c3dcaa629ae947359ca73b5de8402e9535488be9e9bd570b5daa7365062464ba",
+        "result.json": "02455c21da398d45d6b0e5994b202dbcefe456e566213ee491193ce1d4f50c96",
+        "stdout.txt": "83fa2b0fb66776b289a89dd2919b7510649a63cd2b58e50dfc9069d6340a849e",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cleanup-projection-native-receipt-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 357.8075,
+      "wrapperTotalElapsedMs": 603.4764,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "be9eed68d8a8cf8e5a1ec52ed832e577f574f1e2eb686eb356836cf36343ac3e",
+        "owner.json": "c5057f1eb7f0bf87e9da41691077acc14dc6ad835e5f65abfb2748786ea37922",
+        "process.json": "227db2458d43d9e17a75c43a24acb36490236cb8dc93ec6f9115d3b8b7ab5854",
+        "parent.json": "69a463982fa991837219ff69be6101eb2ea51576fbbddd646e264c9a7eb4368a",
+        "result.json": "3124372dbf47e773cda92b41c1daa11f3d4f6b0513c64aee974cd96aa4aa8a45",
+        "stdout.txt": "c3e8fb2438323258817934a5dd4d8f846fc856c5030e9c76567d016fb4ab44e0",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cleanup-projection-native-restoration-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 381.0015,
+      "wrapperTotalElapsedMs": 613.1237,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "a7aeaec72839ce0dc7bfb9915ba1816faa4bcbe3302761932321d9f7225ceba6",
+        "owner.json": "9bafa526497607febe6b59c4595f71cf6a748a4810f15c4b254add604ded87cb",
+        "process.json": "d69506ce310d4df29fcd05a5f9c040e517d5cf0b3ba7382afb077da2cc8ad1c1",
+        "parent.json": "e0471e158b49a0f7ab74999160b39d42910035084401e64d0eb41b6b99815df0",
+        "result.json": "6c06fffd6b037236e75111b654a8ab663db3dfa7e693515468685079600861a3",
+        "stdout.txt": "50ad54cc83d5bb65fcd79bfe1f06517d251600abf4d6b7cfc099a8dedcf5a1a6",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cleanup-projection-native-schema-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 343.62890000000004,
+      "wrapperTotalElapsedMs": 578.251,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "9eed3d6e841dc0d26e47ebdf786672045b0bf54f270c697715ad5ea240c14442",
+        "owner.json": "05fa088b479c5ca78ea53fe7949488ac45421c89797a0efb0f03947595bb2ecf",
+        "process.json": "938eed676055027aa94af1392e0f7e94da10ac8f4d5a2ef1e3b7d5079bb637bd",
+        "parent.json": "65d418a968f314592767580f4ad5881f2179441f4d1ae807096e52a14ea486c2",
+        "result.json": "55c2d6adf9b512209ebfab19bea48dc933add4db0cee526360170328723065ba",
+        "stdout.txt": "d5678d207715da0daa3dd3e1f22a77d170e688ea910c461f44168cafbd0365a3",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "cleanup-projection-private-literal-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 359.04200000000003,
+      "wrapperTotalElapsedMs": 594.0398,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "e5c96474b8e4825af6440065016ec7baa53122b6fcca8869ec42b80794b7f85c",
+        "owner.json": "53b0ade59af8d8e5e65d719016d24bc190d4b3ad975ae60508271e619a685beb",
+        "process.json": "33abda19ce3e08b808aa9a014300e7e421d9a5644fcd1c6b17126dd7895f0651",
+        "parent.json": "406e7b66b89e3ebb99d39af566b791c8de06907c80a5183f9d8a4d58bdf1ec3e",
+        "result.json": "dedb6028ae677b2bb46d94beb54ecc1de5be81f72ef0f5b665e744bb015670da",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "4d5415dbb28a759ecf0f09978e966e9821a7eecfd98c12759504ab6aa4e92165"
+      }
+    },
+    {
+      "phase": "cleanup-projection-private-source-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 474.8088,
+      "wrapperTotalElapsedMs": 894.5949,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "9043cbba949ddebee701e78bfe0e2cba5285f98e0aac1235d0c906889a5b3f46",
+        "owner.json": "a8963b0f28a3fde95e270abc9f62caca88ae1fb048af4aa471783b62af61ab02",
+        "process.json": "72aac81206aafab719fc772637bbb5b653478e486a0af37099f49f2f3dc8188f",
+        "parent.json": "919f487805199cf342765784368e6bee8c96fa62f5fe96e383846dcc534915ca",
+        "result.json": "722f096033ae996b71d69d365d90a50f2e2b4e2a8fcb9effab326fc875985bbb",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "8a556753f07b4a7ecc4e48e92573e0f0d3072f4c69667802dfeba5fd77635168"
+      }
+    },
+    {
+      "phase": "cleanup-projection-public-literal-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 357.7509,
+      "wrapperTotalElapsedMs": 586.4146000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "4f2572a06d725f950d5895bffabc3e77520366ee796d4a6c4e7da0642fe5d378",
+        "owner.json": "f520cf95f2c65ba0be8971bfd86304509ba3424f49c7f8a4da2c09969e5af000",
+        "process.json": "96da7395e78286fb14b68ef0b6c85f33ecfa25a44bbae469d80cc39b3373d3ed",
+        "parent.json": "e16c7ebf9a8dc8fa25c7b7024cc34d501f792d1ea1817818fa42faf8ec2cee77",
+        "result.json": "9323aa54e659197c05f4bf5a4dce9ad5d8638b765225449a971cf79813326ff1",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "4d5415dbb28a759ecf0f09978e966e9821a7eecfd98c12759504ab6aa4e92165"
+      }
+    },
+    {
+      "phase": "cleanup-projection-public-source-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 358.5482,
+      "wrapperTotalElapsedMs": 613.6977,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "91a08b342631be37431e690d1eef5d671c8539cbf50ddcb7d8f5776a280fe42c",
+        "owner.json": "485a53f82247ac5c21a74ed65767bb86ecb2445fe139f0de26fcc0c1b78b16bf",
+        "process.json": "26e2bb5282c9df790c8b642d5bd410742cd7b5c91663e96900d1f731e56aea37",
+        "parent.json": "fb1fc9dfa2d27d80c22f688319e169d83e0e42b16c8d49095227e6857820fa4a",
+        "result.json": "7aab424d874bdb3f3fa41e6889e5b7126db81041ca434e05d80af144d9abaaf5",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "6aa6590b77449f696c010eda3ef254c6b24043c6fc92634123bc02014d619329"
+      }
+    }
+  ],
+  "selectedProcessCount": 17,
+  "positiveExitZeroCount": 16,
+  "selectedTerminationAndTaskRootLogsAbsenceProven": true,
+  "isolatedCleanupDurationMs": null,
+  "finalPublicCopies": [
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-projection-r1/CONTRACT_R1.md",
+      "bytes": 3641,
+      "sha256": "0658626baeae2e980720675c96af640bc3c7dfabbe324341ab28a9e9ecfdf440"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-projection-r1/CleanupProjectionChecks.java.fragment",
+      "bytes": 1539,
+      "sha256": "8e5c99e7ed51a6f84c95715f8f80366c6f6480c6845348c4cd329bdd67068972"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-projection-r1/derive_cleanup_projection.py",
+      "bytes": 1253,
+      "sha256": "64070cf1d68238d11da9de337293ee620a563b3b56d42bc9846840a81c380fd3"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-projection-r1/test_cleanup_projection_source.py",
+      "bytes": 3176,
+      "sha256": "08b3f97101c95279e360cc4752fee9ae25639bc763b27ec7b3a038a5f4fc3eee"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-projection-r1/CleanupProjectionCanary.java",
+      "bytes": 10735,
+      "sha256": "79a0c11edd4eb68dcc1ecf228d5764a5ff90f71d453a3f84cb989748148cfbe1"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-projection-r1/README.md",
+      "bytes": 1018,
+      "sha256": "f6320fc12db44d6b8195063aa0f65e3ee9b9213ff26e2990ff53877ad423b64b"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/BodyCorrelationOracle.java",
+      "bytes": 20709,
+      "sha256": "a2b34d48527a3bcd11585b7a3bf85478156675bca06c9bdb913af1602660eb68"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/CurrentBodyCorrelationsCanary.java",
+      "bytes": 30251,
+      "sha256": "0b6031575d0dd994d95c20a000a12cd916bd64bcaef2a16a5973526ce22bd277"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/test_literal_oracle.py",
+      "bytes": 5272,
+      "sha256": "b03f5b8321adc74b6aea5a689d21ad53d3a4e89909c4cee672aeaa42f44972dc"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/CleanupRestorationCanary.java",
+      "bytes": 26296,
+      "sha256": "a3d5bc28b63f78e2e940b1d5d7794783568463413bc2188da5ddd33b900af854"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/OwnershipSummaryCanary.java",
+      "bytes": 26859,
+      "sha256": "fc2c71593b71b8ed41720e1e13751ed8357c2dd5ffe2252d8f86828cb80924c7"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/geometry-summary-r1/GeometrySummaryCanary.java",
+      "bytes": 27696,
+      "sha256": "999b19b213ba3628301ea40170cff20a5c274ed4f4156b940dc2eddd5d43f2cd"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/CopyEffectsSummaryCanary.java",
+      "bytes": 29915,
+      "sha256": "f3de363309202deeffe5c954febe94374f6d98d125384c90dc60a5bc7b5e6501"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-schema-r1/CleanupSchemaCanary.java",
+      "bytes": 11087,
+      "sha256": "98ec2eb51565a042a51e402c3bf55c66e27311df2277288fb665a53f24ca64c9"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cohort-projection-r1/CohortProjectionCanary.java",
+      "bytes": 29368,
+      "sha256": "a18ba343d06893b7dcf4159f883333c5ac4150205b23513f6fb035b4ee013e4c"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/arm-projection-r1/ArmProjectionCanary.java",
+      "bytes": 16648,
+      "sha256": "93b4d002ace3c440bfe441d943a6cd82b72d811dcb93afce9929a56107592f39"
+    }
+  ],
+  "extraSinkHooksPerPass": 42,
+  "newMapGets": 0,
+  "newListGets": 0,
+  "cleanupKeyCount": 10,
+  "cleanupValuesAlreadyChecked": true,
+  "totalCorrelationHooksPerPass": 4162,
+  "totalCorrelationMapGetsPerPass": 65,
+  "cohortListGetsPerPass": 1897,
+  "maximumDuplicateComparisons": 1770,
+  "extraHooksAcrossThreePasses": 126,
+  "hooksAreNativeUnits": false,
+  "newCanaryScope": "COMPLETE_TEN_KEY_CLEANUP_PROJECTION_SHAPE_ONLY",
+  "sameBodyActualR5CountEquivalence": "PASS",
+  "fullExportV2WriteComparePublication": "NOT_RUN",
+  "completeExportFeeEquations": "SOURCE_INFERENCE_ONLY",
+  "wholeResultSemanticsQualified": false,
+  "authorityAndBorrowedLifetimeQualified": false,
+  "actualOwnerExecution": false,
+  "normalHostAcceptance": false,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "playable100": 0,
+  "beta": "HELD",
+  "full30": "EXCLUDED",
+  "HARD_PSYCHOTIC": "UNAVAILABLE_UNRUN",
+  "oldNormal20": "HISTORICAL_READ_NOT_REREAD",
+  "protectedUnread": "UNCERTIFIED",
+  "productionGwtPlayer": "NOT_APPLICABLE",
+  "electricalPopulation": "NOT_RENEWED",
+  "ci": "NOT_RUN",
+  "budgetsAndExactSeedsEpochs": "UNCHANGED",
+  "newRuntimeFailures": "NONE",
+  "priorFailures": "PRESERVED_NOT_RECLASSIFIED",
+  "sourceReview": "ROOT_AND_BOUNDED_INDEPENDENT_STATIC_PASS",
+  "limits": "Only synthetic metadata/codec/Meter execute. No receiptfiles, positive prepare/binding, factory, actual/fake arm owner, graph, Session, positive originalDTO, executeArm/R9DTO, routing or genuine envelope. No nested freshRun/observation semantics, ID spelling/nonempty/uniqueness, capture mapping, full setup/DTO/whole-body zero-output/actual effects/geometry/SHA shape/authority/lifetime qualification. Empty arm IDs and nested Maps are supported. ASCII enforcement remains later in ordinary formatter."
+}

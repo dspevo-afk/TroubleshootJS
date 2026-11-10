@@ -1,0 +1,100 @@
+{
+  "status": "ROOT_REVIEWED_SOURCE_FREEZE",
+  "files": [
+    {
+      "name": "baseline/CurrentV2CanonicalCodec.java",
+      "bytes": 39600,
+      "sha256": "943319921ee22bdb25d96e2469c958ca02a8da83cd0d9e83e2f0e8c1deff0db9"
+    },
+    {
+      "name": "baseline/CurrentResultProjections.java",
+      "bytes": 10055,
+      "sha256": "c0398d317419931b7b3b749d3f900ef1a7b27d9c630473412a7bf47595fccd28"
+    },
+    {
+      "name": "baseline/CurrentAssemblyMetadata.java",
+      "bytes": 12486,
+      "sha256": "49f9930a4e1d8aed297236dd4ee742233c73cffcded9f495fd5815f58d11687b"
+    },
+    {
+      "name": "component/CleanupProjectionChecks.java.fragment",
+      "bytes": 1539,
+      "sha256": "8e5c99e7ed51a6f84c95715f8f80366c6f6480c6845348c4cd329bdd67068972"
+    },
+    {
+      "name": "component/derive_cleanup_projection.py",
+      "bytes": 1253,
+      "sha256": "64070cf1d68238d11da9de337293ee620a563b3b56d42bc9846840a81c380fd3"
+    },
+    {
+      "name": "component/test_cleanup_projection_source.py",
+      "bytes": 3176,
+      "sha256": "08b3f97101c95279e360cc4752fee9ae25639bc763b27ec7b3a038a5f4fc3eee"
+    },
+    {
+      "name": "component/CONTRACT_R1.md",
+      "bytes": 3641,
+      "sha256": "0658626baeae2e980720675c96af640bc3c7dfabbe324341ab28a9e9ecfdf440"
+    },
+    {
+      "name": "component/README.md",
+      "bytes": 1018,
+      "sha256": "f6320fc12db44d6b8195063aa0f65e3ee9b9213ff26e2990ff53877ad423b64b"
+    },
+    {
+      "name": "migrated-fixtures/BodyCorrelationOracle.java",
+      "bytes": 20709,
+      "sha256": "a2b34d48527a3bcd11585b7a3bf85478156675bca06c9bdb913af1602660eb68"
+    },
+    {
+      "name": "migrated-fixtures/CurrentBodyCorrelationsCanary.java",
+      "bytes": 30251,
+      "sha256": "0b6031575d0dd994d95c20a000a12cd916bd64bcaef2a16a5973526ce22bd277"
+    },
+    {
+      "name": "migrated-fixtures/test_literal_oracle.py",
+      "bytes": 5272,
+      "sha256": "b03f5b8321adc74b6aea5a689d21ad53d3a4e89909c4cee672aeaa42f44972dc"
+    },
+    {
+      "name": "migrated-fixtures/CleanupRestorationCanary.java",
+      "bytes": 26296,
+      "sha256": "a3d5bc28b63f78e2e940b1d5d7794783568463413bc2188da5ddd33b900af854"
+    },
+    {
+      "name": "migrated-fixtures/OwnershipSummaryCanary.java",
+      "bytes": 26859,
+      "sha256": "fc2c71593b71b8ed41720e1e13751ed8357c2dd5ffe2252d8f86828cb80924c7"
+    },
+    {
+      "name": "migrated-fixtures/GeometrySummaryCanary.java",
+      "bytes": 27696,
+      "sha256": "999b19b213ba3628301ea40170cff20a5c274ed4f4156b940dc2eddd5d43f2cd"
+    },
+    {
+      "name": "migrated-fixtures/CopyEffectsSummaryCanary.java",
+      "bytes": 29915,
+      "sha256": "f3de363309202deeffe5c954febe94374f6d98d125384c90dc60a5bc7b5e6501"
+    },
+    {
+      "name": "migrated-fixtures/CleanupSchemaCanary.java",
+      "bytes": 11087,
+      "sha256": "98ec2eb51565a042a51e402c3bf55c66e27311df2277288fb665a53f24ca64c9"
+    },
+    {
+      "name": "migrated-fixtures/CohortProjectionCanary.java",
+      "bytes": 29368,
+      "sha256": "a18ba343d06893b7dcf4159f883333c5ac4150205b23513f6fb035b4ee013e4c"
+    },
+    {
+      "name": "migrated-fixtures/ArmProjectionCanary.java",
+      "bytes": 16648,
+      "sha256": "93b4d002ace3c440bfe441d943a6cd82b72d811dcb93afce9929a56107592f39"
+    },
+    {
+      "name": "run_gates_r1.py",
+      "bytes": 11728,
+      "sha256": "02d96e3d86d803f76be29983e5e0202b5eef451bb016e6adfbecaad03988d62a"
+    }
+  ]
+}

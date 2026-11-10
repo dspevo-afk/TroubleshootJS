@@ -39,12 +39,16 @@ def expected():
                       'observe': dict(armRole='OBSERVE', armId='', freshRun={}, observation={},
                                       cleanup=dict(contextRestored=True, adapterSessionAliasDropped=True, adapterSearchAliasDropped=True, adapterCandidateAliasDropped=True, adapterRouteResultAliasDropped=True, adapterBoardTemplateAliasesDropped=True, sourceGeometryBeforeSha256='4' * 64, sourceGeometryAfterSha256='4' * 64))},
                 work=dict(cleanupNanos=0, ordinaryList=['synthetic']),
-                cleanup=dict(schema='tsj-cohort-terminal-cleanup-v1', cleanupNanos=0,
-                             originalCaptureContextRestored=True,
-                             contextRestored=True,
+                cleanup=dict(schema='tsj-cohort-terminal-cleanup-v1',
                              originalCaptureOwnersReleased=True,
+                             originalCaptureContextRestored=True,
                              nullArmAliasesDropped=True,
-                             observeArmAliasesDropped=True, sourceGeometryUnchanged=True, effectsScope='ORIGINAL_CAPTURE_COPY_ONLY', originalCaptureCopyEffectsUnchanged=True))
+                             observeArmAliasesDropped=True,
+                             sourceGeometryUnchanged=True,
+                             effectsScope='ORIGINAL_CAPTURE_COPY_ONLY',
+                             originalCaptureCopyEffectsUnchanged=True,
+                             contextRestored=True,
+                             cleanupNanos=0))
 
 
 def canonical(value):

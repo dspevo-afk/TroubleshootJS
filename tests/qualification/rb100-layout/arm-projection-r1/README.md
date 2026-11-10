@@ -1,5 +1,9 @@
 # Arm projection component qualification
 
+Current higher fixtures use the [complete cleanup projection check](../cleanup-projection-r1/README.md)
+with65 Map gets/4162 hooks and producer cleanup order. Earlier frozen acceptance
+stays attached to its candidate; independent lower transport oracles are unchanged.
+
 Read CONTRACT_R1.md for the finite shape, precedence, pricing and exclusions.
 The pinned pure transform adds a late call and private helpers only, with inverse
 and lower-codec byte conservation. The native canary uses ordinary synthetic

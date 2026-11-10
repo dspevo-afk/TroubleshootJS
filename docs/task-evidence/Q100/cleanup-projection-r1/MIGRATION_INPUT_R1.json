@@ -1,0 +1,55 @@
+{
+  "status": "CURRENT_SOURCE_COPIED_BEFORE_MIGRATION",
+  "files": [
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/BodyCorrelationOracle.java",
+      "bytes": 20709,
+      "sha256": "2c0b1933d7d50e68a10f01eeb89023fec9bcfca0b0df2993bbe3a1930b8b31ad"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/CurrentBodyCorrelationsCanary.java",
+      "bytes": 30251,
+      "sha256": "0b6031575d0dd994d95c20a000a12cd916bd64bcaef2a16a5973526ce22bd277"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/test_literal_oracle.py",
+      "bytes": 5156,
+      "sha256": "341e044e814279d54216418a7f1c142f92367bd561212d5741b0c495c5e99a14"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/CleanupRestorationCanary.java",
+      "bytes": 26296,
+      "sha256": "cc12a160040e1bfb63e2e9cd6f48de39c687cff550d67c30b08da354004d519f"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/OwnershipSummaryCanary.java",
+      "bytes": 26859,
+      "sha256": "e104dcce782d37579e130587add8b820303c0bb3777cf3ad1e65351bb2998909"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/geometry-summary-r1/GeometrySummaryCanary.java",
+      "bytes": 27696,
+      "sha256": "c107de4037b588bf81fc2e15dd1f7412cff093df0cc53fc95d846cb6eb13090f"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/CopyEffectsSummaryCanary.java",
+      "bytes": 29915,
+      "sha256": "a4013ac0e87cab9827e98c8fb0df92a6d572a07783aa31e557613e039aabcd6f"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-schema-r1/CleanupSchemaCanary.java",
+      "bytes": 11087,
+      "sha256": "98ec2eb51565a042a51e402c3bf55c66e27311df2277288fb665a53f24ca64c9"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cohort-projection-r1/CohortProjectionCanary.java",
+      "bytes": 29368,
+      "sha256": "df8e35026091f52427c263da275dc02945ddbc742009e880ecbe355589367634"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/arm-projection-r1/ArmProjectionCanary.java",
+      "bytes": 16648,
+      "sha256": "93b4d002ace3c440bfe441d943a6cd82b72d811dcb93afce9929a56107592f39"
+    }
+  ]
+}

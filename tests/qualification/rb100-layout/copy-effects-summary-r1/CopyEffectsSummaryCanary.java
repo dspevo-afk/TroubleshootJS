@@ -255,7 +255,7 @@ public final class CopyEffectsSummaryCanary {
         validate.setAccessible(true);
         HookCountSink sink = new HookCountSink();
         validate.invoke(null, BodyCorrelationOracle.body(), sink);
-        check(sink.hooks == 4120, "CORRELATION_HOOK_BUDGET_4120");
+        check(sink.hooks == 4162, "CORRELATION_HOOK_BUDGET_4162");
         cases++;
     }
 

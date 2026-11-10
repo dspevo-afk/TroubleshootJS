@@ -1,9 +1,79 @@
-# Current checkpoint: complete arm projection published
+# Current checkpoint: complete cleanup projection accepted locally
 
 F codex/q100-terminal-only-20261107 observed HEAD
-495bc2d4b354b4b2de46424ac165320e9da4170b, no upstream; target origin/codex/q100-physical-feasibility.
+8c188afd74fcfdd75d15960faedd953fb9376de4, no upstream; target origin/codex/q100-physical-feasibility.
+Normal commit/push/Gmail pending; no N28 publication claimed yet.
+N27 495bc2d4/8c188afd/Gmail1a1c5fdb8681d653 and N26 94737a9f/603f4285/
+Gmail1a1c5d68f7f9dfaf remain complete; no duplicate receipt email.
+
+N28 OS-temp/tsj-q100-next-contract-r1-cf19cab4ba6545aeba677a7aad07becb,
+T/E cleanup-projection-r1. Complete producer ten-key cleanup shape, after all
+existing value/cohort/arm checks. Exact order: schema,originalCaptureOwnersReleased,
+originalCaptureContextRestored,nullArmAliasesDropped,observeArmAliasesDropped,
+sourceGeometryUnchanged,effectsScope,originalCaptureCopyEffectsUnchanged,
+contextRestored,cleanupNanos. All values were already checked; missing-field
+errors stay earlier. New shape error BODY_CLEANUP_PROJECTION_ORDER. No actual
+cleanup truth or deeper value rule is added; ordinary formatter can fail later.
+
+PASS:private/publicSource8+literal3 each; final-source JDK8 source7/target7,
+11 Sources,97 classes/274109B,2556 deps/12265717B,
+all major51/no shadows. New27 cases81 assertions; fresh old60/210,69/253,209/566,
+125/344,54/161,21/63,52/160,44/130 plus retained63/94,113/679 =
+837 cases/2741 assertions.17 selected receipts:
+16 exit0 plus1 exact CANARY_ARGUMENTS exit1, not positive PASS. Selected resources
+absent; isolated cleanup duration unmeasured. No new runtime failure; prior
+failures preserved. Root/independent bounded static Source/price/runner review
+PASS; final packet review, if used, is documentary and not test execution.
+Actual wide same-body R5 count PASS; full exportV2/write/compare/publication
+NOT RUN, complete fees Source inference. No fresh electrical/population proof.
+
+New42 hooks/pass,126 across three; totals4162 hooks/65 Map gets/1897 List gets,
+first pair admission195 unchanged. Hooks are not native units. Reused cleanupMap,
+fixed10/switch, no explicit new collection/copy/Meter/group/byte/mutation. Iterator
+pattern unchanged. Ten fixture Sources authenticated/migrated to producer order,
+preserving all values/dynamic durations, padding and lower1177/6370-byte oracles.
+CurrentBodyCorrelations/CleanupSchema/ArmProjection canary Sources unchanged;
+five other suites only update total-hook assertions. No producer-generated golden.
+Codec41189B/8f617b6e71f6fae29bee1ece0e5bdaf69d3742ba198f2b14edc4e94217e63b73;
+SourceFreezeda41fda2de6f726751716d46969a58a3efcd2a2e518b750b3460a4e97eee4b3e;
+NativeFreezecb4ebe78cca8618c3d84abe4aa2d39761efd75591f21a8c9180115752eb8e196;
+proof4e85a3ec528fe622a8532c984265f2b605b3097d5577fc5026ba1f5e4363f141.
+
+Next unstarted implementation: Source selection/freeze of the remaining assembly
+envelope prerequisite, using only explicitly authenticated current Source. Cohort,
+arm and cleanup outer projection contracts are covered; no one-field validator
+loop, full DTO rewrite or deeper producer admission is implied. Qualified-prior
+envelope and validated unchanged input preconditions remain a separate contract.
+Genuine original then exact NULL/OBSERVE UNSPENT_GATED. Synthetic Map/List/scalars,
+codec and actual Meter only; no actual/fake arm owner, graph, Session, factory,
+positive originalDTO/executeArm/R9DTO, genuine receiptfile, positive prepare/binding,
+routing or exportV2. No fullDTO/setup/authority/lifetime/cleanup truth, actual
+effects/geometry/SHA shape, capture mapping or whole-body zero-output qualification.
+
+All90s/640/5s/32768/copy1MiB/chunk4096/Source4MiB/fragment64KiB/opJSON8MiB/
+result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/reader180s/wrapper480s/
+cleanup120s limits, exact seeds/epochs unchanged. full30 EXCLUDED; HARD/PSYCHOTIC
+unavailable/unrun; protected/heldout DATA, old actual artifacts/generated DATA
+classes and whole legacy builders/consumers denied. oldnormal20 not reread;
+protectedUnread UNCERTIFIED; playable100=0; beta HELD. Production/GWT/Player N/A,
+electrical/population NOT RENEWED; CI NOT RUN, recorded self-hosted prerequisite.
+
+No new persistent resource. Preserve uncertain browser14116/start639294472690745890/
+port58320, preview34180/start639294472514546595/port58264 plus14 children, oldD
+process/unlink uncertainty, hardlinks/scratch/failures and Notepad67116860.
+No GUI/termination. Main5f05b005:9 tracked mods/6 untracked; E d9747229:report only;
+Desktop e0c36885:7 mods/89 untracked. F intended N28 changes only, staged explicitly.
+Mirrored prefixes preserve histories. Old N26 administrative checkpoint collision
+preserved; this writer preflights unique phase output before mutation. No decision
+needed from the user.
+
+# Historical checkpoint: N27 publication and N28 Source selection
+
+F codex/q100-terminal-only-20261107 observed HEAD
+8c188afd74fcfdd75d15960faedd953fb9376de4, no upstream; target origin/codex/q100-physical-feasibility.
 Implementation 495bc2d4b354b4b2de46424ac165320e9da4170b normally pushed/exact remote SHA verified.
 Gmail 1a1c5fdb8681d653 SENT_ONCE_ACKNOWLEDGED; never duplicate.
+Publication receipt commit is this observed HEAD, also normally pushed/verified.
 N26 94737a9f/603f4285/Gmail1a1c5d68f7f9dfaf and N25 d4fbdf89/8c3945e4/
 Gmail1a1c58056570c4cc remain complete; no duplicate receipt email.
 
@@ -36,10 +106,21 @@ SourceFreeze77e20909af1ac72fa5ef3d15db80c94b60fe37387ff63dfb52dc17ca11a7ad17;
 NativeFreezebea4f8a0ae0c73038965f777bf61c39b0a5bb94fc639f2fa807e3397758d3d8c;
 proof96b1f913a550eaed2b4444bc58da3067530659263ce1a32969ec933e4841de32.
 
-Next unstarted implementation: choose the next coherent remaining Source
-prerequisite from COVERAGE_AUDIT_R1.md before deeper projection or genuine work.
-The possible cleanup outer shape and qualified-prior envelope are distinct
-contracts; do not invent one-field validator loops or a whole DTO rewrite.
+N28 bounded Source selection recorded in OS-temp/
+tsj-q100-next-contract-r1-cf19cab4ba6545aeba677a7aad07becb.
+SOURCE_INPUT_R1.json pins codec39600/94331992..., projections10055/c0398d31...,
+assembly12486/49f9930a... . SOURCE_SELECTION_R1.md records exact cleanup10-key
+put order175-188: schema,originalCaptureOwnersReleased,originalCaptureContextRestored,
+nullArmAliasesDropped,observeArmAliasesDropped,sourceGeometryUnchanged,effectsScope,
+originalCaptureCopyEffectsUnchanged,contextRestored,cleanupNanos. Values already
+checked; next coherent contract is exact complete cleanup projection shape after
+all current correlations, preserving existing missing-field error precedence.
+A prepaid10-key census proposes42 new hooks/no gets. N27actual4120/65/1897 baseline
+suggests4162/65/1897; independent Source/native confirmation still required.
+Current fixture cleanup order differs and must migrate to producer order without
+changing values/oracles/padding. N28 implementation/tests/build/native NOT RUN.
+Next: freeze this complete projection contract and finite synthetic proof; no
+one-field validator loop or whole DTO rewrite, no actual cleanup truth claimed.
 Any deeper run/observation contract needs explicitly selected authenticated
 current producer/validator Source; no further source admitted by this checkpoint.
 Genuine original then exact NULL/OBSERVE remains UNSPENT_GATED. Only synthetic

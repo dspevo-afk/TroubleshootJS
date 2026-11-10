@@ -1,0 +1,29 @@
+    private static void validateCleanupProjection(Map<?, ?> cleanup,
+            CohortTerminalTelemetryStudy.CanonicalJsonSink sink) throws Exception {
+        sink.beforeDataOperation();
+        Iterator<? extends Map.Entry<?, ?>> entries = cleanup.entrySet().iterator();
+        for (int index = 0; index < 10; index++) {
+            sink.beforeDataOperation();
+            if (!entries.hasNext()) throw failure("BODY_CLEANUP_PROJECTION_ORDER");
+            sink.beforeDataOperation();
+            Map.Entry<?, ?> entry = entries.next();
+            sink.beforeDataOperation();
+            Object key = entry.getKey();
+            String expected;
+            switch (index) {
+            case 0: expected = "schema"; break;
+            case 1: expected = "originalCaptureOwnersReleased"; break;
+            case 2: expected = "originalCaptureContextRestored"; break;
+            case 3: expected = "nullArmAliasesDropped"; break;
+            case 4: expected = "observeArmAliasesDropped"; break;
+            case 5: expected = "sourceGeometryUnchanged"; break;
+            case 6: expected = "effectsScope"; break;
+            case 7: expected = "originalCaptureCopyEffectsUnchanged"; break;
+            case 8: expected = "contextRestored"; break;
+            default: expected = "cleanupNanos"; break;
+            }
+            requireFixedString(key, expected, sink, "BODY_CLEANUP_PROJECTION_ORDER");
+        }
+        sink.beforeDataOperation();
+        if (entries.hasNext()) throw failure("BODY_CLEANUP_PROJECTION_ORDER");
+    }

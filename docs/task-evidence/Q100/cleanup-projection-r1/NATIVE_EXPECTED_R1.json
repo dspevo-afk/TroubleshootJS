@@ -1,0 +1,58 @@
+{
+  "status": "ROOT_SOURCE_COUNTED_BEFORE_NATIVE",
+  "cases": 27,
+  "assertions": 81,
+  "line": "SYNTHETIC_CLEANUP_PROJECTION_COMPONENT_ONLY cases=27 assertions=81; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+  "ledger": [
+    {
+      "name": "producer_order_acceptance_and_lower_body_equivalence",
+      "cases": 1,
+      "assertions": 3,
+      "expected": "ACCEPT"
+    },
+    {
+      "name": "all_ten_missing_fields_preserve_old_error_codes",
+      "cases": 10,
+      "assertions": 30,
+      "codes": {
+        "BODY_CLEANUP_SCHEMA": 1,
+        "BODY_OWNERSHIP_BOOLEAN": 3,
+        "BODY_RESTORATION_BOOLEAN": 2,
+        "BODY_GEOMETRY_BOOLEAN": 1,
+        "BODY_EFFECTS_SCOPE": 1,
+        "BODY_EFFECTS_BOOLEAN": 1,
+        "BODY_CLEANUP_NANOS": 1
+      }
+    },
+    {
+      "name": "late_extra_nonstring_and_adjacent_order_failures",
+      "cases": 11,
+      "assertions": 33,
+      "code": "BODY_CLEANUP_PROJECTION_ORDER",
+      "coverage": [
+        "one extra key",
+        "a non-String key before all producer keys",
+        "each of nine adjacent key swaps"
+      ]
+    },
+    {
+      "name": "cohort_arm_role_and_prior_cleanup_value_precedence",
+      "cases": 5,
+      "assertions": 15,
+      "codes": {
+        "BODY_COHORT_ORDER": 1,
+        "BODY_ARM_PROJECTION_ORDER": 1,
+        "BODY_NULL_ROLE": 1,
+        "BODY_EFFECTS_SCOPE": 1,
+        "BODY_CLEANUP_SCHEMA": 1
+      }
+    }
+  ],
+  "correlationHooks": 4162,
+  "mapGets": 65,
+  "listGets": 1897,
+  "firstPairGetAdmissionHook": 195,
+  "oldHarnessCoverage": "FIVE_FRESH_MIGRATED_SUITES_ADMISSION_AND_REAL_R5_COUNT",
+  "actualOwnerExecution": false,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

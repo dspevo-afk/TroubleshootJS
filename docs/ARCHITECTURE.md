@@ -526,6 +526,13 @@ retains earlier error precedence. It adds68 hooks (4120 total) and6 gets (65 tot
 without explicit Map/List/copy/Meter/group/byte work. Empty/equal IDs and empty
 Maps remain valid; nested contents, actual owners and full DTO are not qualified.
 
+The [complete cleanup projection check](task-evidence/Q100/cleanup-projection-r1/README.md)
+owns the producer's exact ordered ten-key outer cleanup map. All field values and
+earlier errors retain existing owners; a late prepaid census adds42 hooks (4162
+total), no gets (65 Map/1897 List totals) or explicit collection/copy/Meter/group/
+byte work. Current fixtures follow producer order. This proves shape and metadata
+correlations, not actual cleanup truth, full DTO, authority or borrowed lifetime.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

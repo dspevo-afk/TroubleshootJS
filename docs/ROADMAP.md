@@ -1834,6 +1834,18 @@ Implementation `495bc2d4b354b4b2de46424ac165320e9da4170b` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c5fdb8681d653` sent once. This receipt sends no second email.
 
+The [complete cleanup projection prerequisite](task-evidence/Q100/cleanup-projection-r1/README.md)
+is locally accepted for the exact producer ten-key shape, with existing field
+errors preserved. Final-source JDK8,27 new cases/81 assertions,810 migrated/retained
+cases/2660 assertions, private/publicSource8+literal3 each and static review pass.
+Total837 native cases/2741 assertions;17 receipts
+separate16 exit0 from1 exact argument rejection. Producer-order fixtures, admission
+and actual same-body R5 count pass; lower oracles/limits remain. No actual cleanup
+truth/fullDTO/authority/lifetime or genuine qualification. Next: remaining assembly
+envelope Source selection; playable100=0,beta HELD, full30 excluded and HARD/
+PSYCHOTIC unavailable/unrun. No electrical/population renewal.
+Publication pending final root/index checks and normal push.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource
