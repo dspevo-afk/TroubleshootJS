@@ -73,4 +73,4 @@ playable100=0; beta HELD; genuine UNSPENT_GATED. No prior failure reclassified.
 Proof SHA256:1f5d3e9cc72548aca9d198fb06e380949ec227fe903ca9f4f9e24568f7ddddd4.
 Next: Source review of the remaining producer/DTO boundary and evidence required
 before any genuine-envelope work; do not infer authority from wrapper shape.
-Publication/notification pending normal push.
+Publication/notification recorded in PUBLICATION_R1.json.

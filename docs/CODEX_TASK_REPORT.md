@@ -1,8 +1,9 @@
-# Current checkpoint: qualified-prior envelope accepted locally
+# Current checkpoint: qualified-prior envelope published
 
 F codex/q100-terminal-only-20261107 observed HEAD
-d7a511976cdba03c537575a699d8550cc0789121, no upstream; target origin/codex/q100-physical-feasibility.
-Normal commit/push/Gmail pending; no N29 publication claimed yet.
+e9b0b21436f461af0a5ac56bb6d730fdd22ac1ed, no upstream; target origin/codex/q100-physical-feasibility.
+Implementation e9b0b21436f461af0a5ac56bb6d730fdd22ac1ed normally pushed/exact remote SHA verified.
+Gmail 1a1c66c5fbf686de SENT_ONCE_ACKNOWLEDGED; never duplicate.
 N28 a8814a41/d7a51197/Gmail1a1c62dd6c0f3d8f and N27 495bc2d4/8c188afd/
 Gmail1a1c5fdb8681d653 remain complete; no duplicate receipt email.
 

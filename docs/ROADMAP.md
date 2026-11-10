@@ -1858,7 +1858,9 @@ Fresh admission and actual same-body R5 count pass; lower oracles/limits remain.
 No copied data/authority/receipt/fullDTO/genuine qualification. Next: remaining
 producer/DTO Source boundary and genuine prerequisites; playable100=0,beta HELD,
 full30 excluded, HARD/PSYCHOTIC unavailable/unrun. No electrical/population renewal.
-Publication pending final root/index checks and normal push.
+Implementation `e9b0b21436f461af0a5ac56bb6d730fdd22ac1ed` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
+`1a1c66c5fbf686de` sent once. This receipt sends no second email.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
