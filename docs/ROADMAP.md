@@ -1816,7 +1816,9 @@ Actual R5 same-body count passes; full export and genuine execution remain gated
 Next: scoped current Source audit of remaining result semantics and required genuine
 evidence. No electrical/population renewal, playable100=0, beta HELD; full30 excluded
 and HARD/PSYCHOTIC unavailable/unrun.
-Publication pending final root/index checks and normal push.
+Implementation `94737a9fa34bc39b8be6311a3bd976259ea0b8e5` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
+`1a1c5d68f7f9dfaf` sent once. This receipt sends no second email.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

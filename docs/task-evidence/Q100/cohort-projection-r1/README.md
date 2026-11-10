@@ -72,4 +72,4 @@ protectedUnread UNCERTIFIED; playable100=0; beta HELD; genuine UNSPENT_GATED.
 Proof SHA256:8b923ba809ebc5c1035e987b8eaa1742828653885892d566d12fdc35730f8afd.
 Next: audit remaining current-result semantic coverage and the evidence needed
 before any genuine envelope, using scoped current Source only.
-Publication/notification pending normal push.
+Publication/notification recorded in PUBLICATION_R1.json.

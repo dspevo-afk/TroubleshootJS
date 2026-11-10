@@ -1,8 +1,9 @@
-# Current checkpoint: cohort projection accepted locally
+# Current checkpoint: cohort projection published
 
 F branch codex/q100-terminal-only-20261107, observed HEAD
-8c3945e43ff5427513f840d02b4d11a0a07079aa; no upstream. Target origin/codex/q100-physical-feasibility.
-Normal commit/push/Gmail pending; no publication claimed yet.
+94737a9fa34bc39b8be6311a3bd976259ea0b8e5; no upstream. Target origin/codex/q100-physical-feasibility.
+Implementation 94737a9fa34bc39b8be6311a3bd976259ea0b8e5 normally pushed/exact remote SHA
+verified. Gmail 1a1c5d68f7f9dfaf SENT_ONCE_ACKNOWLEDGED; no duplicate.
 N25 d4fbdf89/8c3945e4/Gmail1a1c58056570c4cc and older receipts remain complete.
 
 N26 OS-temp/tsj-q100-cohort-projection-r1-ddbd0149fcbe488eaad32db7b6e8fa8e.
