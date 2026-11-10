@@ -7,8 +7,8 @@ inherited0..120-second scalar bound before body observation, uses the existing
 cleanup projection, and prepays its sole replacement. It does not reread or resum
 durations or finish the meter. Previous metadata methods remain byte-identical.
 
-This corrected candidate is locally accepted for its synthetic component scope;
-publication is recorded separately. [PROOF_R1.json](PROOF_R1.json) SHA
+This corrected candidate is accepted and published for its synthetic component scope.
+Publication is recorded in [PUBLICATION_R1.json](PUBLICATION_R1.json). [PROOF_R1.json](PROOF_R1.json) SHA
 `333bd2d8e5f22d8f1d29f2d1511e0791a956ba8341152495b683c70f1d93591b` binds Source freeze `b40afa038a477acc7300765509f4b5b8ca00c70415fb8265b90de973ed2c1615`.
 The initial contract/reference preceded helper implementation; the R3 correction
 and final Source pins preceded corrected native execution. No golden was derived
@@ -89,3 +89,9 @@ host and120s cleanup caps, exact seeds/epochs and CircuitJS truth remain.
 
 Next is a narrow current whole-result/producer compatibility Source audit before
 any full-D/actual-host/lifecycle qualification or genuine-envelope spend.
+
+Implementation `1f45c12eee29b064c47c90549d3e1d77b8775df8` was normally pushed to
+origin/codex/q100-physical-feasibility and exact remote SHA verified. Completion
+Gmail `1a1c2dfc524598d6` was acknowledged once; this documentation receipt sends
+no second email. A final read-only documentary review found no consequential
+inaccuracy within the pre-publication evidence/report scope.

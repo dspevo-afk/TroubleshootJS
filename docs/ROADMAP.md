@@ -1505,7 +1505,9 @@ synthetic pending-body/scalar/R7 sequencing; normal whole-result/full-D/actual-h
 and lifecycle remain closed. Next is narrow current producer compatibility Source
 audit. Genuine original,NULL,OBSERVE stays unspent/gated; playable100=0/betaHELD,
 full30EXCLUDED, protected data exclusions, exact seeds/epochs and all caps unchanged.
-Publication is pending normal commit/push and one completion Gmail.
+Implementation `1f45c12eee29b064c47c90549d3e1d77b8775df8` normally pushed to
+origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
+Gmail `1a1c2dfc524598d6` acknowledged once; this receipt sends no second email.
 
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on

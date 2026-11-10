@@ -1,7 +1,9 @@
-# Current checkpoint: pending cleanup and detached R7 locally accepted
+# Current checkpoint: pending cleanup and detached R7 published
 
-UTC2026-11-10. F codex/q100-terminal-only-20261107 baseHEAD1b7f972d6d0158b20f32b1b7c56370479ae28be6,
-no upstream; implementation commit/push/Gmail pending. Previous679f3621/1b7f972d
+UTC2026-11-10. F codex/q100-terminal-only-20261107, no upstream. Implementation
+1f45c12eee29b064c47c90549d3e1d77b8775df8 normally pushed; exact origin/codex/q100-physical-feasibility
+SHA verified. Gmail1a1c2dfc524598d6 SENT_ONCE_ACKNOWLEDGED, never repeat. Final
+read-only documentary review PASS for pre-publication evidence/report scope. Previous679f3621/1b7f972d
 normally pushed and exact remote verified; Gmail1a1c28920295eadb SENT_ONCE, never repeat.
 
 Candidate OS-temp leaf tsj-q100-cleanup-credit-r3-fe1e3f00cd6a4fa5863cb1ee025df489. Sourcefreezeb40afa038a477acc7300765509f4b5b8ca00c70415fb8265b90de973ed2c1615; proof333bd2d8e5f22d8f1d29f2d1511e0791a956ba8341152495b683c70f1d93591b.
@@ -39,8 +41,9 @@ uncertain browser14116/start639294472690745890/58320, preview34180/start63929447
 copy1MiB/chunk4096 and Source/report/class/host/cleanup caps unchanged. GWT/Player
 N/A,electrical/population NOTRENEWED,CI NOTRUN,full30EXCLUDED,HARD/PSYCHOTIC
 unavailable/unrun,oldnormal20 historicalREAD/no reread,protectedUnreadUNCERTIFIED,
-playable100=0/betaHELD. Next root stage/diff/privacy/byte checks, normal commit/push,
-verify exact remote and one new Gmail, then publication receipt and next audit.
+playable100=0/betaHELD. Root stage/diff/privacy/exact-tested-byte checks PASS.
+Normal publication and one Gmail complete; the documentation receipt records
+these facts and sends no repeat email. Next narrow current producer compatibility Source audit.
 
 # Historical checkpoint: RUN input policy and cohort staging published
 
