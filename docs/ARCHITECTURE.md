@@ -533,6 +533,14 @@ total), no gets (65 Map/1897 List totals) or explicit collection/copy/Meter/grou
 byte work. Current fixtures follow producer order. This proves shape and metadata
 correlations, not actual cleanup truth, full DTO, authority or borrowed lifetime.
 
+The [qualified-prior envelope check](task-evidence/Q100/prior-envelope-r1/README.md)
+owns the assembly wrapper's twelve-key order and fixed schema, reusing the schema
+owner constant and existing prior Map. A late prepaid census plus schema-entry
+check adds52 hooks (4214 total), no gets (65 Map/1897 List totals) or explicit
+collection/copy/Meter/group/byte work. Context/trial and earlier errors retain
+precedence. Copied values rely on validated unchanged setup; wrapper acceptance
+does not qualify their types, receipt contents, authority or actual preparation.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

@@ -1,5 +1,10 @@
 # Source-geometry summary preflight and current fixture migration
 
+Current higher fixtures use the [qualified-prior envelope check](../prior-envelope-r1/README.md)
+with65 Map gets/4214 hooks and a twelve-key wrapper. Synthetic unused nulls do
+not qualify actual setup/receipt data. Earlier frozen acceptance stays attached
+to its candidate; independent lower transport oracles remain unchanged.
+
 Current higher fixtures use the [complete cleanup projection check](../cleanup-projection-r1/README.md)
 with65 Map gets/4162 hooks and producer cleanup order. Earlier frozen acceptance
 stays attached to its candidate; independent lower transport oracles are unchanged.

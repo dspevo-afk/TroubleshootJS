@@ -32,7 +32,7 @@ def expected():
                 runId='00000000-0000-0000-0000-000000000001',
                 sourceManifestSha256='1' * 64, wireContractSha256=WIRE,
                 inputContextSha256='3' * 64,
-                qualifiedPrior=dict(inputContextSha256='3' * 64, trialDisposition=trial_disposition),
+                qualifiedPrior=dict(schema='tsj-cohort-terminal-qualified-prior-v2', inputContextSha256='3' * 64, sourceParent=None, manifestSha256=None, sourceManifestSha256=None, readerSha256=None, resultSha256=None, operation1Sha256=None, parentReceiptSha256=None, priorRunId=None, priorOriginalReceipt=None, trialDisposition=trial_disposition),
                 originalCapture=dict(contextRestored=True, ownersReleased=True, template=dict(geometryBeforeSha256='4' * 64, geometryAfterSha256='4' * 64, effectsBeforeSha256='6' * 64, effectsAfterSha256='6' * 64)), cohort=dict(netIds=cohort_net_ids, requestedNetIds=requested_net_ids),
                 arms={'null': dict(armRole='NULL', armId='', freshRun={}, observation={},
                                    cleanup=dict(contextRestored=True, adapterSessionAliasDropped=True, adapterSearchAliasDropped=True, adapterCandidateAliasDropped=True, adapterRouteResultAliasDropped=True, adapterBoardTemplateAliasesDropped=True, sourceGeometryBeforeSha256='4' * 64, sourceGeometryAfterSha256='4' * 64)),

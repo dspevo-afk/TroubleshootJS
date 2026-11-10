@@ -1,9 +1,83 @@
-# Current checkpoint: complete cleanup projection published
+# Current checkpoint: qualified-prior envelope accepted locally
 
 F codex/q100-terminal-only-20261107 observed HEAD
-a8814a4125985815fb25325a95a5d316c5092884, no upstream; target origin/codex/q100-physical-feasibility.
+d7a511976cdba03c537575a699d8550cc0789121, no upstream; target origin/codex/q100-physical-feasibility.
+Normal commit/push/Gmail pending; no N29 publication claimed yet.
+N28 a8814a41/d7a51197/Gmail1a1c62dd6c0f3d8f and N27 495bc2d4/8c188afd/
+Gmail1a1c5fdb8681d653 remain complete; no duplicate receipt email.
+
+N29 OS-temp/tsj-q100-assembly-envelope-r1-1035dc22dd8c4e2da5ac74f12895e7bb,
+T/E prior-envelope-r1. Complete twelve-key qualifiedPrior wrapper and shared schema
+tsj-cohort-terminal-qualified-prior-v2 fromCurrentAssemblyMetadata. Newlatecensus
+after allcontext/trial/cohort/arm/cleanupchecks. Keys schema,inputContextSha256,
+sourceParent,manifestSha256,sourceManifestSha256,readerSha256,resultSha256,
+operation1Sha256,parentReceiptSha256,priorRunId,priorOriginalReceipt,trialDisposition.
+First schema key is checked before entry value/tag, before later-key shape.
+Missing context/trial retains old error; missing schema ORDER; present bad schema
+SCHEMA before later order. Copied values rely on validated unchanged setup.
+
+PASS:private/publicSource8+literal3 each; final-source JDK8 source7/target7,
+12 Sources,101 classes/288079B,2556 deps/12265717B,
+all major51/no shadows. New35 cases107 assertions; fresh old60/210,69/253,209/566,
+125/344,54/161,21/63,52/160,44/130,27/81 plus retained63/94,113/679 =
+872 cases/2848 assertions.18 selected receipts:
+17 exit0 plus1 exact CANARY_ARGUMENTS exit1, not positive PASS. Selected resources
+absent; isolated cleanup duration unmeasured. No new runtime failure; prior failures
+preserved. Root/independent bounded static Source/price/runner review PASS; final
+packet review PASS is documentary, not independent test execution. Reviewer also
+read component CONTRACT/README outside assigned list; no history/protected DATA.
+Actual
+wide same-body R5 count PASS; full exportV2/write/compare/publication NOT RUN,
+complete fees Source inference. No fresh electrical/population qualification.
+
+New52 hooks/pass,156 over three; totals4214 hooks/65 Map gets/1897 List gets,
+first-pair admission195 unchanged. No new Map/List gets; hooks not native units.
+Reused priorMap/fixed12/switch/sharedschema constant; no explicit new collection,
+copy,Meter,group,byte,mutation or public API. Eleven higher Sources authenticated/
+migrated; four canary Sources unchanged. Wrapper fixtures retain context/trial
+objects and add fixed tag plus nine unused nulls; these qualify envelope only,
+not actual setup/receipt contents/types/authority. Workpadding/two-block contract
+and lower1177/6370 oracles unchanged; no producer-generated golden.
+Codec43095B/92cd938fc086f7f5b71ac8c9003921de4f7ac908da71b84c988658f9d8a8123a;
+SourceFreeze701c45e64f865c9fd2379f702d72b61af5ed7e4a3a56a0f05d56aed5ee0c0314;
+NativeFreeze2fd934642d29da97f3e0dc7be830c9f44c70a33686c11dbd4e337fced106fa94;
+proof1f5d3e9cc72548aca9d198fb06e380949ec227fe903ca9f4f9e24568f7ddddd4.
+
+Next unstarted implementation: Source review of remaining producer/DTO boundary
+and genuine-envelope prerequisites. Root/cohort/arm/cleanup/prior outer shapes
+do not qualify nested prior/receipt values, authority, full DTO or borrowed
+lifetime. Do not invent a one-field validator loop or whole DTO rewrite. Any
+additional producer/validator Source must be explicitly selected/authenticated;
+no extra current Source is admitted by this checkpoint. Genuine original then
+exact NULL/OBSERVE UNSPENT_GATED. Only synthetic Map/List/scalars, codec and actual
+Meter; no actual/fake arm owner, graph, Session, factory, positive originalDTO/
+executeArm/R9DTO, genuine receiptfile, positive prepare/binding,routing/exportV2.
+No actual cleanup/effects/geometry/SHA truth, capture mapping or whole-body zero-
+output. Ordinary inner/ASCII checks may still reject later after output starts.
+
+All90s/640/5s/32768/copy1MiB/chunk4096/Source4MiB/fragment64KiB/opJSON8MiB/
+result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/reader180s/wrapper480s/
+cleanup120s limits, exact seeds/epochs unchanged. full30 EXCLUDED; HARD/PSYCHOTIC
+unavailable/unrun; protected/heldout DATA, old actual artifacts/generated DATA
+classes and whole legacy builders/consumers denied. oldnormal20 not reread;
+protectedUnread UNCERTIFIED; playable100=0; beta HELD. Production/GWT/Player N/A,
+electrical/population NOT RENEWED; CI NOT RUN, recorded self-hosted prerequisite.
+
+No new persistent resource. Preserve uncertain browser14116/start639294472690745890/
+port58320, preview34180/start639294472514546595/port58264 plus14 children, oldD
+process/unlink uncertainty, hardlinks/scratch/failures and Notepad67116860.
+No GUI/termination. Main5f05b005:9 tracked mods/6 untracked; E d9747229:report only;
+Desktop e0c36885:7 mods/89 untracked. F intended N29 changes only, staged explicitly.
+Mirrored prefixes preserve histories. Old N26 checkpoint collision preserved;
+this writer preflights unique phase output before mutation. No user decision.
+
+# Historical checkpoint: N28 publication and N29 Source selection
+
+F codex/q100-terminal-only-20261107 observed HEAD
+d7a511976cdba03c537575a699d8550cc0789121, no upstream; target origin/codex/q100-physical-feasibility.
 Implementation a8814a4125985815fb25325a95a5d316c5092884 normally pushed/exact remote SHA verified.
 Gmail 1a1c62dd6c0f3d8f SENT_ONCE_ACKNOWLEDGED; never duplicate.
+Publication receipt is this observed HEAD, also normally pushed/exact remote verified.
 N27 495bc2d4/8c188afd/Gmail1a1c5fdb8681d653 and N26 94737a9f/603f4285/
 Gmail1a1c5d68f7f9dfaf remain complete; no duplicate receipt email.
 
@@ -40,11 +114,21 @@ SourceFreezeda41fda2de6f726751716d46969a58a3efcd2a2e518b750b3460a4e97eee4b3e;
 NativeFreezecb4ebe78cca8618c3d84abe4aa2d39761efd75591f21a8c9180115752eb8e196;
 proof4e85a3ec528fe622a8532c984265f2b605b3097d5577fc5026ba1f5e4363f141.
 
-Next unstarted implementation: Source selection/freeze of the remaining assembly
-envelope prerequisite, using only explicitly authenticated current Source. Cohort,
-arm and cleanup outer projection contracts are covered; no one-field validator
-loop, full DTO rewrite or deeper producer admission is implied. Qualified-prior
-envelope and validated unchanged input preconditions remain a separate contract.
+N29 bounded Source selection recorded in OS-temp/
+tsj-q100-assembly-envelope-r1-1035dc22dd8c4e2da5ac74f12895e7bb.
+SOURCE_INPUT_R1.json pins current41189B codec/8f617b6e...,10055B projections/
+c0398d31...,12486B assembly/49f9930a... . SOURCE_SELECTION_R1.md selects complete
+qualifiedPrior envelope fromprepare110: schema,inputContextSha256,sourceParent,
+manifestSha256,sourceManifestSha256,readerSha256,resultSha256,operation1Sha256,
+parentReceiptSha256,priorRunId,priorOriginalReceipt,trialDisposition. Fixed schema
+tsj-cohort-terminal-qualified-prior-v2 owned byCurrentAssemblyMetadata. Read schema
+entry value during12-key census: proposed52 extra hooks/no gets; N28actual4162/
+65/1897 implies4214/65/1897 pending independentSource/native proof. Append after
+all existing checks; preserve prior-context/trial errors. Copied nested values
+rely on validated unchanged setup; no runtime type/authority/receipt-content proof.
+Next: freeze this complete envelope contract/read-order/error/price and finite
+synthetic proof. N29 implementation/tests/build/native NOT RUN; no one-field
+validator loop/fullDTO rewrite/deeper producer admission implied.
 Genuine original then exact NULL/OBSERVE UNSPENT_GATED. Synthetic Map/List/scalars,
 codec and actual Meter only; no actual/fake arm owner, graph, Session, factory,
 positive originalDTO/executeArm/R9DTO, genuine receiptfile, positive prepare/binding,

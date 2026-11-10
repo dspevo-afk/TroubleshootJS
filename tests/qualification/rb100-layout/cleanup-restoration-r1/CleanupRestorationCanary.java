@@ -174,7 +174,7 @@ public final class CleanupRestorationCanary {
         validate.setAccessible(true);
         HookCountSink sink = new HookCountSink();
         validate.invoke(null, BodyCorrelationOracle.body(), sink);
-        check(sink.hooks == 4162, "CORRELATION_HOOK_BUDGET_4162");
+        check(sink.hooks == 4214, "CORRELATION_HOOK_BUDGET_4214");
         cases++;
     }
     private static void testSinkAdmissionAndFreshMapGets() throws Exception {

@@ -1,0 +1,55 @@
+{
+  "status": "ROOT_SOURCE_COUNTED_BEFORE_NATIVE",
+  "cases": 35,
+  "assertions": 107,
+  "line": "SYNTHETIC_PRIOR_ENVELOPE_COMPONENT_ONLY cases=35 assertions=107; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+  "ledger": [
+    {
+      "name": "ordered_envelope_distinct_equal_schema_and_unused_nulls",
+      "cases": 1,
+      "assertions": 5,
+      "expected": "ACCEPT"
+    },
+    {
+      "name": "schema_value_and_schema_before_later_order",
+      "cases": 4,
+      "assertions": 12,
+      "code": "BODY_PRIOR_ENVELOPE_SCHEMA"
+    },
+    {
+      "name": "all_twelve_missing_keys_keep_old_or_new_precedence",
+      "cases": 12,
+      "assertions": 36,
+      "codes": {
+        "BODY_PRIOR_ENVELOPE_ORDER": 10,
+        "BODY_PRIOR_CONTEXT": 1,
+        "BODY_CORRELATION_MAP": 1
+      }
+    },
+    {
+      "name": "extra_nonstring_and_all_adjacent_key_swaps",
+      "cases": 13,
+      "assertions": 39,
+      "code": "BODY_PRIOR_ENVELOPE_ORDER"
+    },
+    {
+      "name": "existing_context_trial_cohort_arm_and_cleanup_precedence",
+      "cases": 5,
+      "assertions": 15,
+      "codes": {
+        "BODY_PRIOR_CONTEXT": 1,
+        "BODY_CORRELATION_MAP": 1,
+        "BODY_COHORT_ORDER": 1,
+        "BODY_ARM_PROJECTION_ORDER": 1,
+        "BODY_CLEANUP_PROJECTION_ORDER": 1
+      }
+    }
+  ],
+  "correlationHooks": 4214,
+  "mapGets": 65,
+  "listGets": 1897,
+  "firstPairGetAdmissionHook": 195,
+  "oldHarnessCoverage": "FIVE_FRESH_MIGRATED_SUITES_ADMISSION_AND_REAL_R5_COUNT",
+  "actualOwnerExecution": false,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

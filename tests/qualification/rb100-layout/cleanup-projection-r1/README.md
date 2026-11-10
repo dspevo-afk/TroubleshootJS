@@ -1,5 +1,10 @@
 # Cleanup projection component qualification
 
+Current higher fixtures use the [qualified-prior envelope check](../prior-envelope-r1/README.md)
+with65 Map gets/4214 hooks and a twelve-key wrapper. Synthetic unused nulls do
+not qualify actual setup/receipt data. Earlier frozen acceptance stays attached
+to its candidate; independent lower transport oracles remain unchanged.
+
 CONTRACT_R1.md defines the complete ten-key cleanup projection shape, retained
 value errors, bounded price and exclusions. The pure pinned transform adds a
 late call and private census helper only; inverse and lower-codec conservation

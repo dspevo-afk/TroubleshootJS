@@ -1848,6 +1848,18 @@ Implementation `a8814a4125985815fb25325a95a5d316c5092884` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c62dd6c0f3d8f` sent once. This receipt sends no second email.
 
+The [qualified-prior envelope prerequisite](task-evidence/Q100/prior-envelope-r1/README.md)
+is locally accepted for the ordered twelve-key wrapper and shared fixed schema,
+with earlier context/trial/projection errors preserved. Final-source JDK8,35 new
+cases/107 assertions,837 migrated/retained cases/2741 assertions, private/public
+Source8+literal3 each and bounded static review pass. Total872 cases/
+2848 assertions;18 receipts separate17 exit0 from1 exact argument rejection.
+Fresh admission and actual same-body R5 count pass; lower oracles/limits remain.
+No copied data/authority/receipt/fullDTO/genuine qualification. Next: remaining
+producer/DTO Source boundary and genuine prerequisites; playable100=0,beta HELD,
+full30 excluded, HARD/PSYCHOTIC unavailable/unrun. No electrical/population renewal.
+Publication pending final root/index checks and normal push.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

@@ -1,5 +1,10 @@
 # Complete cleanup projection preflight
 
+Current higher fixtures use the [qualified-prior envelope check](../prior-envelope-r1/README.md)
+with65 Map gets/4214 hooks and a twelve-key wrapper. Synthetic unused nulls do
+not qualify actual setup/receipt data. Earlier frozen acceptance stays attached
+to its candidate; independent lower transport oracles remain unchanged.
+
 The correlated codec now requires the producer's exact ten-key cleanup shape
 after all existing value/cohort/arm checks and before encoding. Each value was
 already checked; this adds count/order/extra-key rejection only. Missing fields

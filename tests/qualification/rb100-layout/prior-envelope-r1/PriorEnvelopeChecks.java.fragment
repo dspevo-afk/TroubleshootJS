@@ -1,0 +1,37 @@
+    private static void validatePriorEnvelope(Map<?, ?> prior,
+            CohortTerminalTelemetryStudy.CanonicalJsonSink sink) throws Exception {
+        sink.beforeDataOperation();
+        Iterator<? extends Map.Entry<?, ?>> entries = prior.entrySet().iterator();
+        for (int index = 0; index < 12; index++) {
+            sink.beforeDataOperation();
+            if (!entries.hasNext()) throw failure("BODY_PRIOR_ENVELOPE_ORDER");
+            sink.beforeDataOperation();
+            Map.Entry<?, ?> entry = entries.next();
+            sink.beforeDataOperation();
+            Object key = entry.getKey();
+            String expected;
+            switch (index) {
+            case 0: expected = "schema"; break;
+            case 1: expected = "inputContextSha256"; break;
+            case 2: expected = "sourceParent"; break;
+            case 3: expected = "manifestSha256"; break;
+            case 4: expected = "sourceManifestSha256"; break;
+            case 5: expected = "readerSha256"; break;
+            case 6: expected = "resultSha256"; break;
+            case 7: expected = "operation1Sha256"; break;
+            case 8: expected = "parentReceiptSha256"; break;
+            case 9: expected = "priorRunId"; break;
+            case 10: expected = "priorOriginalReceipt"; break;
+            default: expected = "trialDisposition"; break;
+            }
+            requireFixedString(key, expected, sink, "BODY_PRIOR_ENVELOPE_ORDER");
+            if (index == 0) {
+                sink.beforeDataOperation();
+                Object schema = entry.getValue();
+                requireFixedString(schema, CurrentAssemblyMetadata.QUALIFIED_PRIOR_SCHEMA,
+                        sink, "BODY_PRIOR_ENVELOPE_SCHEMA");
+            }
+        }
+        sink.beforeDataOperation();
+        if (entries.hasNext()) throw failure("BODY_PRIOR_ENVELOPE_ORDER");
+    }
