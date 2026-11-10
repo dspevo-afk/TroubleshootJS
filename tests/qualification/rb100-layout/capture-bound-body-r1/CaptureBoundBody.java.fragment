@@ -1,0 +1,26 @@
+    /**
+     * Capture-bound staging composition. The caller exclusively owns stable
+     * setup, capture metadata (including its netIds list), and arms through
+     * subsequent preparation/export. Full capture semantics and authority are
+     * separate: intended integration supplies the validated original DTO.
+     * The independent cohort/body seams remain component test owners; integration
+     * uses this composition rather than supplying another captured-ID vector.
+     */
+    @SuppressWarnings("unchecked")
+    static Map<String,Object> captureBoundBody(
+            CohortTerminalTelemetryStudy.SetupMeter meter,
+            CohortTerminalTelemetryStudy.SetupResult setup,
+            String runId, String sourceSha, String contextSha,
+            Map<String,Object> originalCapture, Map<String,Object> arms) throws Exception {
+        if (meter == null || setup == null || runId == null || sourceSha == null ||
+                contextSha == null || originalCapture == null || arms == null)
+            throw new IOException("METADATA_ARGUMENTS");
+
+        // One paid observation includes its bounded type guard, as cleanupView does.
+        meter.charge(1);
+        Object ids = originalCapture.get("netIds");
+        if (!(ids instanceof List)) throw new IOException("METADATA_CAPTURE_NET_IDS");
+        Map<String,Object> cohort = cohortBeforeBody(meter, setup, (List<String>)ids);
+        return pendingCleanupBody(meter, runId, sourceSha, contextSha,
+                originalCapture, cohort, arms);
+    }

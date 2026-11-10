@@ -1,0 +1,127 @@
+{
+  "status": "FROZEN_SOURCE_FORMAT_REFRESH_NATIVE_REUSE_BOUNDARY",
+  "files": [
+    {
+      "name": "SOURCE_REUSE_R1.json",
+      "bytes": 3286,
+      "sha256": "1a29c7af97755938c8ae70fdca7cd123f9eca646ccb669886ac03c30f4627940"
+    },
+    {
+      "name": "baseline/CurrentAssemblyMetadata.java",
+      "bytes": 12486,
+      "sha256": "49f9930a4e1d8aed297236dd4ee742233c73cffcded9f495fd5815f58d11687b"
+    },
+    {
+      "name": "baseline/CurrentResultProjections.java",
+      "bytes": 10055,
+      "sha256": "c0398d317419931b7b3b749d3f900ef1a7b27d9c630473412a7bf47595fccd28"
+    },
+    {
+      "name": "baseline/CurrentV2CanonicalCodec.java",
+      "bytes": 43095,
+      "sha256": "92cd938fc086f7f5b71ac8c9003921de4f7ac908da71b84c988658f9d8a8123a"
+    },
+    {
+      "name": "component-r2/CONTRACT_R1.md",
+      "bytes": 4655,
+      "sha256": "207ad752e5d8877f915c7191b6fa81b939744976edac5fd7bbea155af01584b0"
+    },
+    {
+      "name": "component-r2/CaptureBoundBody.java.fragment",
+      "bytes": 1526,
+      "sha256": "a83a7b32fee87302d4c053adced3647186cea50ffede201f725d5441c39a3994"
+    },
+    {
+      "name": "component-r2/CaptureBoundBodyCanary.java",
+      "bytes": 21733,
+      "sha256": "4df32cfcdf42a2c7e4a4bdf632b019329c6d06dc32eb47b40917bf5d87c26b76"
+    },
+    {
+      "name": "component-r2/README.md",
+      "bytes": 886,
+      "sha256": "25706c79717cb7b9d2c1d20ae3f6057bf85577d6346d336e280112e52f91bf72"
+    },
+    {
+      "name": "component-r2/derive_capture_bound_body.py",
+      "bytes": 1126,
+      "sha256": "861aacd291dd1687db6ebe03d8480818eb847accc9aca8e6fe58752281405a5a"
+    },
+    {
+      "name": "component-r2/test_capture_bound_source.py",
+      "bytes": 3314,
+      "sha256": "d86758ec91635fdb165023ddafea301a726d07d03d99180d599d1d968131fee4"
+    },
+    {
+      "name": "component/CaptureBoundBodyCanary.java",
+      "bytes": 21733,
+      "sha256": "4df32cfcdf42a2c7e4a4bdf632b019329c6d06dc32eb47b40917bf5d87c26b76"
+    },
+    {
+      "name": "emitted-source/CurrentAssemblyMetadata.java",
+      "bytes": 14013,
+      "sha256": "54f6b815b34cb3d3bb28d04830f0e4b8ac9b5e6d6d341869c30596c2ff8b7b1d"
+    },
+    {
+      "name": "refresh_source_r1.py",
+      "bytes": 3501,
+      "sha256": "69b250633284ae45afa31eb1024ed348f14efd252fcd815675cd4ee255083fb6"
+    },
+    {
+      "name": "retained-sources/ArmProjectionCanary.java",
+      "bytes": 16648,
+      "sha256": "93b4d002ace3c440bfe441d943a6cd82b72d811dcb93afce9929a56107592f39"
+    },
+    {
+      "name": "retained-sources/BodyCorrelationOracle.java",
+      "bytes": 22013,
+      "sha256": "ab622ead6968f73cef6934aa0a2b5a5ffc9ef59eccac719ffbfc0fc2e01f38d4"
+    },
+    {
+      "name": "retained-sources/CleanupProjectionCanary.java",
+      "bytes": 10735,
+      "sha256": "79a0c11edd4eb68dcc1ecf228d5764a5ff90f71d453a3f84cb989748148cfbe1"
+    },
+    {
+      "name": "retained-sources/CleanupRestorationCanary.java",
+      "bytes": 26296,
+      "sha256": "4468bda13d8d78950608c0c21027f4c8e4bf7f2ecfa1bce4c856fb13f6d83c18"
+    },
+    {
+      "name": "retained-sources/CleanupSchemaCanary.java",
+      "bytes": 11087,
+      "sha256": "98ec2eb51565a042a51e402c3bf55c66e27311df2277288fb665a53f24ca64c9"
+    },
+    {
+      "name": "retained-sources/CohortProjectionCanary.java",
+      "bytes": 29368,
+      "sha256": "15ed2ce54625721d6d67f4524624645f0c632cdd345e5bb113c530eee228399e"
+    },
+    {
+      "name": "retained-sources/CopyEffectsSummaryCanary.java",
+      "bytes": 29915,
+      "sha256": "0a09648ed5f1368bb8140aba0224f99400986e1fbfa1e3d43a6abfbf2062e3d5"
+    },
+    {
+      "name": "retained-sources/CurrentBodyCorrelationsCanary.java",
+      "bytes": 30251,
+      "sha256": "0b6031575d0dd994d95c20a000a12cd916bd64bcaef2a16a5973526ce22bd277"
+    },
+    {
+      "name": "retained-sources/GeometrySummaryCanary.java",
+      "bytes": 27696,
+      "sha256": "896c1dda4277ecde443a886f485be5530d0ee0c49822cd2edc37ed533565d225"
+    },
+    {
+      "name": "retained-sources/OwnershipSummaryCanary.java",
+      "bytes": 26859,
+      "sha256": "5fb784e3f64461a1f19b0cd8b0fafd5b28c1e6a56c44069aedffbda626b097ce"
+    },
+    {
+      "name": "retained-sources/PriorEnvelopeCanary.java",
+      "bytes": 12651,
+      "sha256": "4e2d30b2f468fe6ee3c374fb6b8576af53412bf0359f979bf195083b80f24de0"
+    }
+  ],
+  "preservedSourceFreeze": "SOURCE_FREEZE_R2.json",
+  "nativeFreeze": "NATIVE_SOURCE_FREEZE_R1.json"
+}

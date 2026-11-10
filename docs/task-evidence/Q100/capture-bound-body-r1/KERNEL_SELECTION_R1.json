@@ -1,0 +1,20 @@
+{
+  "status": "AUTHENTICATED_METHOD_ONLY_SOURCE_NOT_EXECUTED",
+  "methods": [
+    {
+      "name": "_validate_original_capture",
+      "firstLine": 2266,
+      "lastLine": 2291,
+      "bytes": 3701,
+      "sha256": "69a846507bab1c078c376ab603d47782ab94038bdc69a8c2443a86f8eea77633"
+    },
+    {
+      "name": "validate_full_d_v2",
+      "firstLine": 2530,
+      "lastLine": 2559,
+      "bytes": 2811,
+      "sha256": "ceb71545062b47ebb969f76d38d6dff3b5d05978d1bfef1beeaa7ac101c73cfa"
+    }
+  ],
+  "kernelSha256": "8e8c374a089a13c4defea9c4b5b548eb1bc1242cddabc1faf468dba420695af4"
+}

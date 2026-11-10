@@ -416,6 +416,15 @@ formatting after close gives no production export-accounting proof. Normal
 whole-result/full-D/actual-host/lifecycle remain separate and closed.
 
 
+The [capture-bound body component](task-evidence/Q100/capture-bound-body-r1/README.md)
+composes existing cohort and pending-body owners from one capture metadata Map.
+It prepays one netIds get/type guard, derives the cohort from that borrowed list,
+then retains the identical Map in the body. Its synthetic frame costs279units/
+138copies/65chunks, one read/unit above the existing components. Old staging
+seams remain independent test owners; future integration uses this atomic API.
+Stable exclusive input/borrowed lifetime and validated actual DTO semantics are
+separate preconditions. It wires no normal producer, host or genuine envelope.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published

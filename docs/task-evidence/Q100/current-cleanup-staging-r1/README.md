@@ -1,5 +1,10 @@
 # Pending cleanup and detached R7 handoff
 
+Integration now has a [capture-bound body component](../capture-bound-body-r1/README.md)
+that derives the cohort from the same capture Map retained in the body. This
+directory's independent staging seam and historical candidate remain scoped;
+the new binding grants no normal producer or actual capture authority.
+
 The metadata owner can now construct a body with explicit pending prior, work and
 cleanup slots, then install cleanup from that body's own stable DTO views and the
 existing R7-owned scalar before R7 closes the meter. The installer checks the

@@ -1,0 +1,89 @@
+{
+  "status": "ROOT_SOURCE_COUNTED_BEFORE_NATIVE",
+  "cases": 18,
+  "assertions": 71,
+  "line": "SYNTHETIC_CAPTURE_BOUND_BODY_COMPONENT_ONLY cases=18 assertions=71; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+  "ledger": [
+    {
+      "name": "capture_bound_success_and_actual_meter_fee",
+      "cases": 1,
+      "assertions": 8,
+      "expected": "ACCEPT",
+      "delta": {
+        "units": 279,
+        "copiedEntries": 138,
+        "copyChunks": 65,
+        "captureNetIdsGets": 1
+      },
+      "coverage": [
+        "non-prefix pair n43/n48",
+        "independent literal requested vector from capture netIds",
+        "decoy vector ignored",
+        "capture and arms Map identity retained",
+        "pending prior/work/cleanup slots null",
+        "derived lists detached and input trees unchanged"
+      ]
+    },
+    {
+      "name": "all_null_arguments_reject_before_work",
+      "cases": 7,
+      "assertions": 27,
+      "code": "METADATA_ARGUMENTS",
+      "nonNullMeterArgumentsDelta": {
+        "units": 0,
+        "copiedEntries": 0,
+        "copyChunks": 0
+      }
+    },
+    {
+      "name": "capture_net_ids_missing_null_and_wrong_type",
+      "cases": 3,
+      "assertions": 12,
+      "code": "METADATA_CAPTURE_NET_IDS",
+      "delta": {
+        "units": 1,
+        "copiedEntries": 0,
+        "copyChunks": 0,
+        "captureGets": 1,
+        "setupDataGets": 0
+      }
+    },
+    {
+      "name": "inherited_cohort_vector_and_disposition_failures",
+      "cases": 5,
+      "assertions": 15,
+      "codes": [
+        "COHORT_INPUT",
+        "COHORT_VECTOR_DUPLICATE",
+        "COHORT_NOT_IN_CAPTURE",
+        "COHORT_REQUESTED_VECTOR",
+        "COHORT_DISPOSITION"
+      ]
+    },
+    {
+      "name": "capture_map_get_exception_propagation",
+      "cases": 1,
+      "assertions": 4,
+      "expected": "same RuntimeException instance propagates after one prepaid get"
+    },
+    {
+      "name": "real_closed_640_group_guard",
+      "cases": 1,
+      "assertions": 5,
+      "error": "IOException:native wrapper exceeded 640 measured groups",
+      "beforeCaptureOrSetupGets": true,
+      "unitCopyChunkDelta": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "expectedComponentUnits": 279,
+  "expectedCopiedEntries": 138,
+  "expectedCopyChunks": 65,
+  "captureNetIdsGets": 1,
+  "rootCanarySha256": "4df32cfcdf42a2c7e4a4bdf632b019329c6d06dc32eb47b40917bf5d87c26b76",
+  "actualOwnerExecution": false,
+  "genuine": "UNSPENT_GATED"
+}

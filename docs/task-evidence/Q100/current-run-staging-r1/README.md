@@ -1,5 +1,10 @@
 # RUN input policy and pre-body cohort staging
 
+Integration now has a [capture-bound body component](../capture-bound-body-r1/README.md)
+that derives the cohort from the same capture Map retained in the body. This
+directory's independent staging seam and historical candidate remain scoped;
+the new binding grants no normal producer or actual capture authority.
+
 The native input profile required `orderChanged=false` for `RUN`, while the
 shared owner emits `RUN / TRIAL_EXECUTED` only when order changed and the existing
 cohort derivation requires `true`. This prerequisite corrects the native profile

@@ -1,5 +1,10 @@
 # Synthetic pending cleanup and detached R7 handoff
 
+Integration now has a [capture-bound body component](../capture-bound-body-r1/README.md)
+that derives the cohort from the same capture Map retained in the body. This
+directory's independent staging seam and historical candidate remain scoped;
+the new binding grants no normal producer or actual capture authority.
+
 `CurrentAssemblyMetadata.pendingCleanupBody` explicitly stages a body with pending
 prior, work and cleanup slots through the unchanged constructor. `installCleanup`
 derives its views from that body, projects the existing R7 scalar and prepays its

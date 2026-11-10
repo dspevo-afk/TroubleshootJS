@@ -1,5 +1,10 @@
 # Synthetic RUN input and pre-body cohort staging
 
+Integration now has a [capture-bound body component](../capture-bound-body-r1/README.md)
+that derives the cohort from the same capture Map retained in the body. This
+directory's independent staging seam and historical candidate remain scoped;
+the new binding grants no normal producer or actual capture authority.
+
 The maintained input helper requires `orderChanged=true` for `RUN` trials,
 matching the shared owner. `CurrentAssemblyMetadata.cohortBeforeBody` borrows the
 validated prior through a synchronous temporary view, then returns detached

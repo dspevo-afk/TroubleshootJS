@@ -1,0 +1,41 @@
+{
+  "status": "EXACT_TESTED_PUBLIC_COMPONENT_SOURCE_BYTES",
+  "files": [
+    {
+      "path": "tests/qualification/rb100-layout/capture-bound-body-r1/CONTRACT_R1.md",
+      "bytes": 4655,
+      "sha256": "207ad752e5d8877f915c7191b6fa81b939744976edac5fd7bbea155af01584b0"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/capture-bound-body-r1/CaptureBoundBody.java.fragment",
+      "bytes": 1527,
+      "sha256": "21c8bd9572556477c125101304a8060c38d592ff6935cbc0589e35303a8f2b5c"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/capture-bound-body-r1/derive_capture_bound_body.py",
+      "bytes": 1120,
+      "sha256": "f680b7a1ec61501d70b3323a17a892278614032c244dfd4ab5cca1c3272f78eb"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/capture-bound-body-r1/test_capture_bound_source.py",
+      "bytes": 3306,
+      "sha256": "da118031ef931f9663e582bf5185b445a934fce25ee8e8633cfd1f606f612828"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/capture-bound-body-r1/CaptureBoundBodyCanary.java",
+      "bytes": 21733,
+      "sha256": "4df32cfcdf42a2c7e4a4bdf632b019329c6d06dc32eb47b40917bf5d87c26b76"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/capture-bound-body-r1/README.md",
+      "bytes": 886,
+      "sha256": "25706c79717cb7b9d2c1d20ae3f6057bf85577d6346d336e280112e52f91bf72"
+    }
+  ],
+  "emittedMetadata": {
+    "bytes": 14013,
+    "sha256": "54f6b815b34cb3d3bb28d04830f0e4b8ac9b5e6d6d341869c30596c2ff8b7b1d"
+  },
+  "sourceFreezeSha256": "9189430d4ce0c0095d1c37f40eb80945656dd1d39a49cce465263e37aa8e3cc9",
+  "nativeSourceFreezeSha256": "605aade4b87b6e237529087b0943d01e9923e9e8cd2556ce0eaa37af58796488"
+}

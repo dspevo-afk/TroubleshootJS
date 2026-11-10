@@ -1862,6 +1862,20 @@ Implementation `e9b0b21436f461af0a5ac56bb6d730fdd22ac1ed` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c66c5fbf686de` sent once. This receipt sends no second email.
 
+The [capture-bound body prerequisite](task-evidence/Q100/capture-bound-body-r1/README.md)
+is locally accepted for atomic capture-Map netIds/cohort/body binding. It adds
+one prepaid read/unit through existing owners, with native279/138/65 accounting.
+Final-source15-Source JDK8,18 new cases/71 assertions plus872 retained/2848,
+private/public Source8 each and bounded static review pass:890 cases/2919
+assertions.19 receipts separate18exit0 from1 exact argument rejection. The first
+pre-child runner failure is preserved and corrected, not reclassified. Source-format
+refresh preserves all15 Java inputs/classes; whitespace and documentary-scope
+failures are disclosed separately. No normal
+producer, DTO provenance/authority/lifetime or genuine qualification is granted.
+Next: current assembly integration contract and independent semantic/host gates;
+playable100=0,betaHELD,full30excluded,HARD/PSYCHOTICunavailable/unrun.
+Publication pending final root/index checks and normal push.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource
