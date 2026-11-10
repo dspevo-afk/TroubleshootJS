@@ -1,4 +1,183 @@
-# Current checkpoint: capture/cohort phases published; next contract boundary
+# Current checkpoint: N35 synthetic metadata/R7 accepted locally; publication pending
+
+F codex/q100-terminal-only-20261107 actual HEAD d61d38a82a1c2fc066e5131cc0077604c2e5e41a,
+no upstream; normal target origin/codex/q100-physical-feasibility. N33 impl8ef0a07f/
+receiptd61d38a8 published/exactremote verified/Gmail1a1c707952398301 once. N35
+metadata-r7-composition-r1 now locally accepted, NOT committed/pushed/emailed.
+Private OS-temp/tsj-q100-metadata-r7-composition-r1-68f46afddfd14e19a1b8bb0e91cc2a72.
+
+N34 selected existing captureDetachedR7WorkPlan as sole work installer/ledger.
+N35 fixture now composes existing N33 prepare/one paid raw borrow/finish,
+fixture-only prior replacement, cleanup installation and detached R7 capture/
+finalization. No production Source changes, duplicate installer/ledger/counter,
+normal producer or actual capture/DTO authority. Actual Meter lifecycle grants
+one explicit SYNTHETIC BUDGET CREDIT, not owner work; no reflection writes.
+
+PASS final-source17-Java JDK8 source7/target7:129classes/439490B plus2544deps/
+12198805B,allmajor51/no shadows/empty sourcepath/caps. NewSMOKE1/52checks and
+SUITE14/52=15cases/104checks. FreshN33+12retained901cases/3000assertions plus
+freshR3SMOKE2/read thenSUITE22/read:940unique cases. Counted3104assertions excludes
+separate24-case reader protocol; no combined assertion count for that protocol.
+Actual closed19415units/268copies/88chunks,groups2+onecredit=>beforeexport3,
+maxUnits/metadata19414. Ownership1612/15/15,tree17250; samebody/work identity,
+all34values,dynamic actual cutoff/maxnanos and closedMeter flags/list identity,
+sessionConstructorEntries0. Alias refusal546/66/7 leaves workinstalled/noPlan/
+MeterOPEN. Failed R7 may mutate body; no atomicity/refund/retry or unchanged-body
+generalization. Fresh independent attempt succeeds after failed attempt discard.
+21 accepted receipts:20exit0 plus1 exact argument exit1, termination/root/log
+absence verified. Operation/wrapper time separate; isolated cleanup unmeasured.
+Five exact public copies match compiled/frozen Source. Existing metadata Source
+tests not renewed; owner bytes unchanged and native regressions fresh.
+
+Final active canary component-r2/MetadataR7CompositionCanary.java41240B/
+4a2a17904daf2e83a07a973b0d6db55e0c3520ae1825bfd1e5ad25ec5e873222.
+RuntimeR3 0a5992feef618b2deaffee0a7b4c9823f7cc6b61acc067a0ea15418026d8846e;
+SourceFreezeR3 f9959186a4469194dac07ee840c2794a3af1c0be4e3aba45fe0310ec373d56ba,
+67files. FinalProofR1 e4f01a589250e62c22b81d1a9366ad2e7e7a01d46287e107a6e3fe6aa6806aeb.
+GateCOMPILE ffb9b47a2441a6e3d8721583c334c5c604efdc01a94b62df07525a83d5019526;
+NATIVE9046750d1faed8bec2df09f0dccd24d36f44740202d76a1244bc3a61d6cb0940;
+PUBLIC698f01166edb557289bcbcbd490cd688dbe77171b17425f70c1b4e73902f97f5.
+
+Root/three bounded Source reviewers completed literalprice/Source/ledger/runtime/
+currentR3oracle eligibility reviews; no reviewer execution. Static wrong-binding
+check order and fixture setup scalar consistency fixed before native; valid
+foreign non-null snapshot strengthened coverage, adding one check to104. Raw
+drafts remain. First compilerexit0 but outergateFAIL for retained unchecked-map
+note. Focused -Xlint:unchecked confirms one existing cast line563; finalgate
+allows only exactknown2-line note(or empty), exit0/stdoutempty, no suppression.
+Second runnerFAIL existingphase mkdir before any child; explicit phase/output
+names+AST/absence preflight fixcause. R3build/native fresh, oldfailures notPASS.
+Source selector missingimplements FAIL and root43-lineR9header Source exposure
+outside selection preserved; noDATA/targetexecution resulted, no clean-scope or
+restored unread-certainty claim. Declaration anchors now precede body extraction.
+
+R3current detached source/reader/5protocol-oracleleaves Sourceaudited and pinned;
+nofactory/DATA/actualowner/receipt/exportV2. HistoricalRUN81 NOTAPPLICABLE:
+inputownerunchanged, positivefactory/DATA consumption outside N35. No renewed/
+reusedRUN81 PASS. Input-canary Source eligibility review stopped at that boundary.
+Normal assembly, fullresult semantics, actualhost/lifecycle and genuine original+
+exactNULL/OBSERVE remain CLOSED/UNSPENT_GATED. No actual/fake OriginalArm/ArmResult,
+graph,Session,factory,positive inputsetup/originalDTO/receiptprepare/binding/
+captureR7/executeArm/R9DTO,receiptfiles,routing/exportV2/genuine. No actual DTO/
+provenance,realcleanup/effects/geometry/SHA truth,authority/borrowlifetime proof.
+Playable100=0,betaHELD,full30EXCLUDED,HARD/PSYCHOTICunavailable/unrun. Protected/
+heldoutDATA,oldactual artifacts/generatedDATAclasses,whole historical builders/
+validators/consumers denied. Oldnormal20notreread;protectedUnreadUNCERTIFIED.
+Budgets90s/640/5s/32768PERGROUP/copy1MiB/chunk4096/Source4MiB/fragment64KiB/
+opJSON8MiB/result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/reader180s/
+wrapper480s/cleanup120s,exactseeds/epochs/oracles unchanged. Production/GWT/Player
+N/A,electrical/population NOTRENEWED;CI NOTRUN,self-hosted prerequisite.
+
+Next required: root actualdiff/privacy/whitespace/index audit34intended files,
+explicit stage/normalcommit/push/exactremote verify,onecompletionGmail,4-doc
+publication receipt without second email. Then next unstarted milestone:
+current normal-assembly integration and independent semantic/host/lifecycle
+contract before any genuine execution. No required user decision.
+
+No new persistent process/listener. All N35owned children/roots/logs absent;
+classes/failures/controlledscratch retained. Preserve uncertain browser14116/start
+639294472690745890/port58320,preview34180/start639294472514546595/port58264+
+14children,oldDprocess/unlink uncertainty,hardlinks,scratch,Notepad67116860.
+Main5f05b005:9mods/6untracked,E d9747229:reportM,Desktop e0c36885:7mods/89individual
+untracked preserved. F only intended N35docs/tests/evidence,staged0 before stage.
+Never give reviewers full task-report paths; bounded prefix copies only.
+Historical tail bytes preserved. Do not duplicate N33 publication/email.
+
+# Historical checkpoint: N34 current R7 work handoff contract
+
+F branch codex/q100-terminal-only-20261107 actual HEAD
+d61d38a82a1c2fc066e5131cc0077604c2e5e41a,no upstream. Normal target
+origin/codex/q100-physical-feasibility exact receipt SHA remotely verified.
+N33 implementation8ef0a07f58fe88f3e1eb2883208b5f2584b7414a, message Split
+capture cohort preparation from body staging, normally pushed/verified; receipt
+d61d38a8 normally pushed/verified. Gmail1a1c707952398301 sent once/acknowledged;
+NO duplicate email for either receipt or next Source-only preparation.
+
+N33 T/E capture-cohort-phases-r1 complete. Source11 private/11 public, actual
+final-source15-Java JDK8 source7/target7:112classes/348967B plus2554deps/12250053B,
+major51/no shadows. New29/152+fresh retained872/2848=901cases/3000assertions.
+One pre-arm raw derivation, paid same-Cohort borrow, one post-arm projection/body
+stage and successful one-use clear of association-owned aliases. Fees prepare
+265/127/64,borrow3/0/0,finish31/19/3; one299/146/67,two302/146/67. External aliases/
+stable metadata/actual arm count/order/lifetime remain caller duties. Old current
+captureBoundBody retired; legacy independent cohort seam retained. Prior18cases
+across6families replaced, not counted again. Allocation/clear refusals preserve
+partial failed Meter; clear refusal leaves association OPEN/no body.17 accepted
+receipts:16exit0 and1 exact argument rejection, resource absence verified.
+Initial PREPARE_ALLOCATION_GATE_ARMED FAIL preserved; actual Meter only updates
+maxGroupUnits on group close. Corrected precondition then fresh compile/new/
+retained PASS. Tiny JDK8 synthetic-constructor fixture correction and unexecuted
+runtime-parent-selector draft also preserved. Bounded Source/static/root review
+PASS; reviewers ran no targets. One docs-only blank EOF caught/fixed before index;
+private DOC_WHITESPACE_FAILURE_R1.json preserved, production Source unchanged.
+
+N33 private OS-temp/tsj-q100-capture-cohort-phases-r1-f6251304114444e2bf17b376fcf8931a.
+FinalProofR1 9a2525843137b12e44c97daf188b6ef9b68918c8f822e023ad9c0032838f45e8;
+SourceFreezeR1 e76ae3254f7a4203229bf39dcbe72a4d481388f4d711e7652bbc391315028006;
+NativeFreezeR3 e50cba5dca1fe64e1050f4d5729bd89cc56f194a49af9d7d50a392e577ea8a63.
+Index37files(34raw/3docs)003cc3702a21665fe4d9ace91a86113a95a071845c3fb394633177716bc96313;
+receipt4files3245df186cc8375ad664787f7650e72cd3cb67fd2878fdf8ecb2e230b7ae859f.
+Current metadata16559B/784296ac06e2a9c7eaeb04d8c76027360861caea960d1fcb281aa61179356895.
+
+N34 necessary Source-only work-owner audit now complete; NO new implementation,
+test/build/native acceptance, commit or email. Private OS-temp/
+tsj-q100-work-slot-contract-r1-b4c51d2c2e014ab89e44b995f62f1b23.
+SourceFindingsR1 c41c342443f231d0502696cba0f0d0c3b9c6387e23d9ac6e30a35402ccfbe85a;13 exact selected inputs.
+Bounded independent Source review PASS in REVIEW_R1.md; reviewer ran no targets.
+Metadata owner has no work installer because existing captureDetachedR7WorkPlan
+already owns present-null slot guard,34-key construction/store, plan/body/work
+identity, ownership guard, tree accounting, close/snapshot/freeze. Do NOT add
+another CurrentAssemblyMetadata installer, ledger, counter or arithmetic owner.
+Current captureR7WorkPlan installs cleanup then delegates after scalar detachment;
+it was read as a named current method only, NOT executed.
+Current Study236974B/4e0563854a2282b10d5804da9e9843814ba8363b23400eea63a2459ca14de680:
+captureR7WorkPlan3407..3478,4728B/71f202426d4c31ca503d811dad282a105697f75ad8112033fe25dd2ba206b086;
+captureDetached3481..3536,3503B/9421e08b2c6f52da6b81e625cf795bf351148484a2656e82af8784c21b122938.
+Eight exact literal constant declarations selected; pre-work-store prefix is
+39units/35copies/1chunk SOURCE INFERENCE ONLY, not full R7/native proof.
+Current pure _validate_work2323..2357,4550B/7d8dac7db26c5f3f7502dd56d96498becdac40170a38c101e0658bd4e35e1d1d
+preserves schema/domain/arm-binding/equation/maxima obligations; NOT executed.
+R7 work mutation precedes later admissions. Failure may leave work installed/no
+returned plan; abort/drop attempted body and partial/closed Meter, no retries,
+refunds, unchanged-body generalization or export success. N33's narrower failure
+contract does not make the entire R7 sequence atomic.
+
+Next unstarted implementation: freeze finite deliberately synthetic N33 metadata
+to existing detached-R7 composition fixtures, all fixture-only prior staging,
+ownership/disjointness, complete prices and lifecycle/negative expectations.
+Select only needed current plan/finalizer method clauses before new execution.
+Use actual shared Meter/plan and ordinary metadata, no fake owner DTOs. Preserve
+independent34-key/equation and detached regressions; run fresh affected gates on
+final Source before publication. Source-only plan is WORK_HANDOFF_CONTRACT_R1.md.
+Actual captureR7 path, receipt authority, normal producer and independent full
+semantic/host/lifecycle/genuine acceptance remain separate and CLOSED.
+
+Only synthetic Map/List/scalar/SetupResult/Cohort/association metadata+actual
+Meter executed in N33; N34 executed no target. No actual/fake OriginalArm/
+ArmResult,graph,Session,factory,positive originalDTO/executeArm/R9DTO/receipt-
+prepare/binding,receiptfiles,routing/exportV2/genuine. Original followed by exact
+NULL/OBSERVE UNSPENT_GATED. Playable100=0,betaHELD,full30EXCLUDED,HARD/PSYCHOTIC
+unavailable/unrun. Protected/heldout DATA,oldactual artifacts/generated DATA
+classes,wholehistorical builders/validators/consumers denied. Oldnormal20notreread;
+protectedUnreadUNCERTIFIED. No new capture/DTO/cleanup/effects/geometry/SHA truth,
+authority/externalborrowlifetime/whole-output qualification. Budgets90s/640/5s/
+32768PERGROUP/copy1MiB/chunk4096/Source4MiB/fragment64KiB/opJSON8MiB/result1MiB/
+depth64/key1m/class10k256MiB/compile-suite60s/reader180s/wrapper480s/cleanup120s,
+exactseeds/epochs/oracles unchanged. Production/GWT/Player N/A; electrical/
+population NOT RENEWED;CI NOT RUN,self-hosted prerequisite retained.
+
+N31 tuple/whitespace/documentary-history scope failures remain preserved. Future
+report reviews receive bounded prefix copies only, stream startswith Historical
+heading/max64KiB, never full report paths. Historical tail bytes preserved.
+No new persistent process/listener; uncertain browser14116/start639294472690745890/
+port58320,preview34180/start639294472514546595/port58264+14children,oldDprocess/
+unlink uncertainty,hardlinks/scratch/failures,Notepad67116860 untouched. Main
+5f05b005:9mods/6untracked,E d9747229:reportM,Desktop e0c36885:7mods/89individual
+untracked preserved. F only current report checkpointM after this local update,
+staged0. No required user decision. Resume from this checkpoint; do not duplicate
+N33 publication or email and do not reopen protected or historical DATA.
+
+# Historical checkpoint: N33 capture/cohort publication
 
 F codex/q100-terminal-only-20261107 implementation HEAD 8ef0a07f58fe88f3e1eb2883208b5f2584b7414a,no upstream;
 normal target origin/codex/q100-physical-feasibility. N31 d7273e2a/receipt1de5d642

@@ -1,0 +1,135 @@
+{
+  "status": "ROOT_SOURCE_COUNTED_R2_BEFORE_NATIVE",
+  "smoke": {
+    "cases": 1,
+    "assertions": 52,
+    "line": "SYNTHETIC_METADATA_R7_COMPOSITION_ONLY mode=SMOKE cases=1 assertions=52; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+    "ledger": {
+      "directChecks": 18,
+      "orderedWorkValueChecks": 34,
+      "total": 52
+    }
+  },
+  "suite": {
+    "cases": 14,
+    "assertions": 52,
+    "line": "SYNTHETIC_METADATA_R7_COMPOSITION_ONLY mode=SUITE cases=14 assertions=52; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+    "ledger": {
+      "wrongBindingCases": {
+        "cases": 4,
+        "checksIncludingReadyFixtures": [
+          4,
+          5,
+          4,
+          4
+        ],
+        "total": 17
+      },
+      "finalizerReuse": {
+        "cases": 1,
+        "checksIncludingReadyFixture": 4
+      },
+      "zeroCutoff": {
+        "cases": 1,
+        "checksIncludingReadyFixture": 5
+      },
+      "overLimitCutoff": {
+        "cases": 1,
+        "checksIncludingReadyFixture": 5
+      },
+      "foreignWorkBinding": {
+        "cases": 1,
+        "checksIncludingReadyFixture": 4
+      },
+      "missingWorkSlot": {
+        "cases": 1,
+        "checks": 3
+      },
+      "occupiedWorkSlot": {
+        "cases": 1,
+        "checks": 3
+      },
+      "negativeScalar": {
+        "cases": 1,
+        "checks": 3
+      },
+      "missingBudgetAdoption": {
+        "cases": 1,
+        "checks": 2
+      },
+      "ownershipAliasAfterWorkPut": {
+        "cases": 1,
+        "checks": 3
+      },
+      "freshAttemptAfterFailure": {
+        "cases": 1,
+        "checks": 3
+      },
+      "total": 52
+    },
+    "casesLedger": [
+      "Wrong Meter binding rejected; correct binding is checked before valid finalization",
+      "Wrong snapshot binding rejected; correct binding is checked before valid finalization",
+      "Wrong body binding rejected; correct binding is checked before valid finalization",
+      "Wrong work binding rejected; correct binding is checked before valid finalization",
+      "Finalizer reuse after successful finalization returns R7_FINALIZER_REUSED",
+      "Zero cutoff returns R7_ELAPSED_CUTOFF and consumes the plan",
+      "Cutoff above 90 seconds returns R7_ELAPSED_CUTOFF and consumes the plan",
+      "Foreign body.work returns R7_FINALIZER_BINDING and consumes the plan",
+      "Missing work slot returns R7_WORK_SLOT_MISSING at target delta 1/0/0",
+      "Occupied work slot returns R7_WORK_SLOT_NOT_EMPTY at target delta 2/0/0",
+      "Negative scalar returns R7_SOURCE_NEGATIVE at target delta 0/0/0",
+      "Missing synthetic budget adoption returns R5_METADATA_SNAPSHOT after work installation and Meter close, without a plan",
+      "qualifiedPrior/capture.template alias returns BODY_OWNERSHIP_ALIAS after work insertion at target delta 546/66/7, leaving Meter open and no plan",
+      "Fresh independent fixture succeeds after the failed alias fixture is discarded"
+    ]
+  },
+  "uniqueCases": 15,
+  "uniqueAssertions": 104,
+  "canaryBytes": 41240,
+  "canarySha256": "4a2a17904daf2e83a07a973b0d6db55e0c3520ae1825bfd1e5ad25ec5e873222",
+  "positivePrice": {
+    "status": "INDEPENDENT_LITERAL_FIXTURE_PRICE_BEFORE_NATIVE_EXECUTION",
+    "counts": {
+      "maps": 12,
+      "lists": 3,
+      "mapEntries": 91,
+      "listItems": 122,
+      "strings": 140,
+      "numbers": 38,
+      "booleans": 21,
+      "nulls": 0,
+      "keyChars": 1595,
+      "stringChars": 795
+    },
+    "ownershipUnits": 1612,
+    "ownershipCopiesChunks": 15,
+    "treeBaseUnits": 2910,
+    "treeUtf8ScanUnits": 14340,
+    "treeTotalUnits": 17250,
+    "setupUnits": 1,
+    "cohortPhaseUnits": 299,
+    "fixturePriorStageUnits": 2,
+    "cleanupInstallerUnits": 67,
+    "r7OtherFixedUnits": 184,
+    "closedMeterUnits": 19415,
+    "copiedEntries": 268,
+    "copyChunks": 88,
+    "wrapperGroups": 2,
+    "adoptedSyntheticBudgetGroups": 1,
+    "groupsBeforeExport": 3,
+    "maximumUnitsPerGroup": 19414,
+    "metadataUnits": 19414,
+    "metadataGroups": 1,
+    "metadataCopies": 268,
+    "metadataChunks": 88,
+    "originalCaptureGroups": 1,
+    "scope": "Only synthetic metadata and real budget adoption. No owner execution or genuine DTO/cleanup/geometry/authority proof. ASCII only; no target module/Java/native executed.",
+    "priceDerivation": "Ownership closed-form plus separately derived tree billing: map6+sum(9+6keyChars+child), list7+2n+sum(child), string9+6chars, number8,boolean9,null7; root accounting1."
+  },
+  "scope": "SYNTHETIC_METADATA_AND_REAL_METER_DETACHED_PLAN_ONLY",
+  "normalHostAcceptance": false,
+  "genuine": "UNSPENT_GATED",
+  "protectedUnread": "UNCERTIFIED_NO_CERTAINTY_RESTORED",
+  "rootCount": "SMOKE18+34=52; SUITE17+4+5+5+4+3+3+3+2+3+3=52. Additional readyFixture checks valid non-null foreign snapshot; other helpers unchanged."
+}

@@ -1897,6 +1897,20 @@ Implementation `8ef0a07f58fe88f3e1eb2883208b5f2584b7414a` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c707952398301` sent once. This receipt sends no second email.
 
+The [synthetic metadata/R7 handoff](task-evidence/Q100/metadata-r7-composition-r1/README.md)
+is locally accepted for its finite metadata fixture. Existing N33 phases, cleanup
+and detached R7 composition pass15 cases/104 checks,901 retained cases/3000
+assertions and24 independently read detached cases:940 unique cases. Final-source
+JDK8 compiles17 Sources,129 major51 classes with no shadows; exact
+public copies/process receipts pass. Actual19415/268/88 and alias546/66/7 match
+pre-native expectations; all34 values and closed-Meter invariance pass. Compiler
+diagnostic/pre-child runner failures and Source scope exposure remain disclosed,
+not reclassified. No normal producer, actual DTO/receipt authority or genuine
+qualification. RUN81 not applicable/input owner unchanged; no factory DATA scope.
+Next: current normal-assembly/independent semantic-host-lifecycle contract.
+Playable100=0,betaHELD,full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun.
+Publication pending final index checks and normal push.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

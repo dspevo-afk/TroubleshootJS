@@ -439,6 +439,15 @@ borrow lifetime, stable inputs and actual arm count/order remain caller duties.
 This is metadata, not receipt authority or wire data. Normal producer, actual
 DTO semantics and genuine host/lifecycle execution remain separate and closed.
 
+The [synthetic metadata/R7 composition](task-evidence/Q100/metadata-r7-composition-r1/README.md)
+now exercises the existing association/body/cleanup owners and detached R7 plan
+together. The fixture uses one explicit real Meter budget-credit lifecycle,
+never actual owner work. R7 alone installs work, checks ownership, accounts the
+tree, closes/captures/freezes and finalizes34 values once. Finite native checks
+bind same body/work identity, actual closed-counter prices and consumed failure
+behavior. No production owner, second ledger, normal producer, actual DTO or
+genuine host/lifecycle qualification is added.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published

@@ -1,5 +1,7 @@
 # Two-phase capture/cohort component
 
+The [synthetic metadata/R7 handoff](../metadata-r7-composition-r1/README.md) now qualifies composition with the existing work owner. This packet preserves the capture/cohort component and its historical next-step notes.
+
 The existing assembly owner prepares one capture-bound raw Cohort before arms,
 returns a paid borrow, then projects and stages a body after completed arms.
 Successful finish consumes the metadata association and clears its own aliases.

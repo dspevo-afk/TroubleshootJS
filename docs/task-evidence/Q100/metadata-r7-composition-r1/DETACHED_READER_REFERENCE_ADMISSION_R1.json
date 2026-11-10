@@ -1,0 +1,9 @@
+{
+  "status": "CURRENT_DETACHED_PROTOCOL_AND_PURE_ORACLE_SOURCE_ADMITTED",
+  "scope": "Five exact protocol/oracle leaves, audited Source only before execution. Oracle imports copy/hashlib/json only and has no IO/process/network. Canary uses ordinary maps/real Meter with explicit synthetic budget adoption, no actual/fake arm/owner/factory/graph/receipt/exportV2. Reader reads only these five leaves and supplied canary stdout.",
+  "excluded": "Historical RUN81 not applicable to this new composition-only milestone. It consumes input-factory payloads; no inputsetup behavior changes or fresh factory/DATA consumption admitted here. No RUN81 PASS renewed or reused.",
+  "reviewer": "restoration_canary",
+  "reviewerExecution": false,
+  "protectedUnread": "UNCERTIFIED",
+  "genuine": "UNSPENT_GATED"
+}

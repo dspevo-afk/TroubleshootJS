@@ -1,0 +1,14 @@
+{
+  "status": "N35_SYNTHETIC_METADATA_DETACHED_R7_COMPOSITION_SOURCE_SELECTION",
+  "base": "d61d38a82a1c2fc066e5131cc0077604c2e5e41a",
+  "scope": "No production change. Freeze finite synthetic N33 prepare/borrow/finish + cleanup + existing detachedR7 capture/finalization fixture, all fixture-only prior staging/disjointness/price/lifecycle expectations, before native execution.",
+  "allowed": "Already selected current metadata/codec/projections, N33 synthetic canary, N34 methods/constants/independent validator and work contract; current R7WorkPlan and R5Snapshot classes only, named snapshot/key/tree methods as separately selected; existing ownership helper. Current R3 detached regression artifacts only after explicit selection.",
+  "denied": "No DATA or old actual descriptors/results/generated DATA classes; no whole historical builders/validators/consumers; no actual/fake OriginalArm/ArmResult/graph/Session/factory, positive originalDTO/captureR7WorkPlan/receipt-prepare/binding/executeArm/R9DTO, receiptfiles/routing/exportV2/genuine execution",
+  "genuine": "UNSPENT_GATED",
+  "playable100": 0,
+  "beta": "HELD",
+  "full30": "EXCLUDED",
+  "HARD_PSYCHOTIC": "UNAVAILABLE_UNRUN",
+  "protectedUnread": "UNCERTIFIED",
+  "budgetsSeedsEpochs": "UNCHANGED"
+}

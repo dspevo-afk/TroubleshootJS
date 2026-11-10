@@ -1,5 +1,7 @@
 # Capture/cohort phases qualification
 
+The [synthetic metadata/R7 handoff](../metadata-r7-composition-r1/README.md) now qualifies composition with the existing work owner. This packet preserves the capture/cohort component and its historical next-step notes.
+
 The current metadata owner derives one raw Cohort before arms, lends that same
 value through a paid borrow, then projects/stages the body after completed arms.
 One successful finish clears the association's own three references. Preparation

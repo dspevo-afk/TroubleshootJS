@@ -1,0 +1,16 @@
+{
+  "status": "AUTHENTICATED_SYNTHETIC_REGRESSION_SOURCE_NOT_RUN",
+  "files": [
+    {
+      "name": "CleanupStagingCanary.java",
+      "bytes": 59803,
+      "sha256": "232f7a06f13f1070621ebf42fdce6792d6dd7b486559d5048153de14b873cc5a"
+    },
+    {
+      "name": "verify_cleanup_staging_r1.py",
+      "bytes": 11055,
+      "sha256": "d978aecf071d27b06f2fe47b5772d8e044770beb09a9d2691e52b7b88370d33b"
+    }
+  ],
+  "parentFreezeSha256": "b40afa038a477acc7300765509f4b5b8ca00c70415fb8265b90de973ed2c1615"
+}

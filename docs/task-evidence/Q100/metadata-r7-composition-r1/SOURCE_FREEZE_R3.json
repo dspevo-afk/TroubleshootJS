@@ -1,0 +1,478 @@
+{
+  "status": "FROZEN_EXPLICIT_FINAL_R3_CONTROL_PATHS",
+  "files": [
+    {
+      "name": "CONTRACT_FREEZE_R1.json",
+      "bytes": 1001,
+      "sha256": "5cbebbbb48d822262440cabc1f14704a8c3ff0e02197074b163b483223d6f290"
+    },
+    {
+      "name": "CONTRACT_R1.md",
+      "bytes": 6373,
+      "sha256": "80097c7f5913873ed26e8d718bf9ab9a932a7b5253deb41c5a4b6373818861d5"
+    },
+    {
+      "name": "DETACHED_READER_REFERENCE_ADMISSION_R1.json",
+      "bytes": 801,
+      "sha256": "02e880cb91d0c39234ee5614bce39451d0993e0b2660ffbfd10a433dd4ad222e"
+    },
+    {
+      "name": "DETACHED_READER_REFERENCE_INPUT_R1.json",
+      "bytes": 1023,
+      "sha256": "40f5d062296f5457aaf4dfb17d8108173b8ec6e4cb0923b1f99bf220adeada7b"
+    },
+    {
+      "name": "DETACHED_REGRESSION_INPUT_R1.json",
+      "bytes": 502,
+      "sha256": "cf0813acc24ae37747598252339d60966e9c21f5d724d8d486c43135804d9bea"
+    },
+    {
+      "name": "INDEPENDENT_FIXTURE_PRICE_R1.json",
+      "bytes": 1261,
+      "sha256": "2d50b2d1fed506d72347882dac8124108e140d3e80fdbadca731930b275cebac"
+    },
+    {
+      "name": "LITERAL_PLACEHOLDER_BODY_R1.json",
+      "bytes": 4815,
+      "sha256": "aa5889afa140087f166be954d2bc7c36ee073d267e4487025c88b0985b3b5427"
+    },
+    {
+      "name": "METHODS_R1.json",
+      "bytes": 695,
+      "sha256": "dedc01be6eef34d15b6f35eefdb7a5cc03f0613d6329047f10d458921a4cc238"
+    },
+    {
+      "name": "ROOT_CANARY_CORRECTIONS_R1.json",
+      "bytes": 874,
+      "sha256": "b7fef0ff09d3dcbfbfd0495ef7ee385547f1ee5a813b7ac1d6be7a57515e79d3"
+    },
+    {
+      "name": "SOURCE_INPUT_R1.json",
+      "bytes": 2784,
+      "sha256": "7bc7e537769420de74e652ccdb689ecb75433eeeeda50b550a4210e14200de29"
+    },
+    {
+      "name": "SOURCE_SCOPE_INCIDENT_R1.json",
+      "bytes": 808,
+      "sha256": "34d45fba198fafafe2f96858d6b79839ad16474478818713c0fc21f554c3d89d"
+    },
+    {
+      "name": "SOURCE_SELECTION_FAILURE_R1.json",
+      "bytes": 515,
+      "sha256": "4c4891a8212ebd825f99055c3fff28134d9f30ca6522ec92f29f8bc0dad01533"
+    },
+    {
+      "name": "SOURCE_SELECTION_R1.json",
+      "bytes": 1267,
+      "sha256": "f28698f3d376cc1efbbcf9286bb912f3a8fab8d83628448a5a4a917fb7a61702"
+    },
+    {
+      "name": "TREE_HELPERS_R1.json",
+      "bytes": 669,
+      "sha256": "c7d98128b8cce2acc7e8c67475f2c86684f2103c62b5057ce2bedad16ad71c71"
+    },
+    {
+      "name": "TREE_SOURCES_R1.json",
+      "bytes": 395,
+      "sha256": "0354c36d050e5d72f36d47a4eeb2343c733add74144eeda2e16f320e682516f3"
+    },
+    {
+      "name": "UTF8_LENGTH_R1.json",
+      "bytes": 190,
+      "sha256": "134547a8187368bfff980637e4a424ebfc3334c82807ffb7917e574e1164f2d9"
+    },
+    {
+      "name": "component/CONTRACT_R1.md",
+      "bytes": 6373,
+      "sha256": "80097c7f5913873ed26e8d718bf9ab9a932a7b5253deb41c5a4b6373818861d5"
+    },
+    {
+      "name": "component/README.md",
+      "bytes": 1035,
+      "sha256": "0cd345e419e0adb03f51ef91bd9bd1a8478abca98d07de58fae0625c1cded883"
+    },
+    {
+      "name": "independent_fixture_price_r1.py",
+      "bytes": 5173,
+      "sha256": "09424bda55e8ac118ac9718148c16be8f97e090156587158056693183634f0bc"
+    },
+    {
+      "name": "retained-regressions/CleanupStagingCanary.java",
+      "bytes": 59803,
+      "sha256": "232f7a06f13f1070621ebf42fdce6792d6dd7b486559d5048153de14b873cc5a"
+    },
+    {
+      "name": "retained-regressions/reference/CONTRACT_R1.md",
+      "bytes": 7674,
+      "sha256": "212ac9daea16bafeae9feb397bfbfaafe9d752260dfe0d4a2346a364f7351443"
+    },
+    {
+      "name": "retained-regressions/reference/REFERENCE_R1.json",
+      "bytes": 5782,
+      "sha256": "d5744cfe7118d1f480e88d3fabec06749c32cba1c84cd0cf5379307d670d549d"
+    },
+    {
+      "name": "retained-regressions/reference/ROOT_ORACLE_SOURCE_R1.json",
+      "bytes": 101,
+      "sha256": "6c44dc0d6b87e06b862728378e295afebbb03bbbf17368b94f784dcb713085fc"
+    },
+    {
+      "name": "retained-regressions/reference/WIRE_R1.json",
+      "bytes": 875,
+      "sha256": "3d0ba4ed424ae0251bfa7d151cd4da6a043f41b5183858d117906c3584ced375"
+    },
+    {
+      "name": "retained-regressions/reference/cleanup_oracle.py",
+      "bytes": 15984,
+      "sha256": "8e6c9669349d010c1251998626800ade1aaff3e76e21215f9a124c1b5dd424e4"
+    },
+    {
+      "name": "retained-regressions/verify_cleanup_staging_r1.py",
+      "bytes": 11055,
+      "sha256": "d978aecf071d27b06f2fe47b5772d8e044770beb09a9d2691e52b7b88370d33b"
+    },
+    {
+      "name": "retained-sources/ArmProjectionCanary.java",
+      "bytes": 16648,
+      "sha256": "93b4d002ace3c440bfe441d943a6cd82b72d811dcb93afce9929a56107592f39"
+    },
+    {
+      "name": "retained-sources/BodyCorrelationOracle.java",
+      "bytes": 22013,
+      "sha256": "ab622ead6968f73cef6934aa0a2b5a5ffc9ef59eccac719ffbfc0fc2e01f38d4"
+    },
+    {
+      "name": "retained-sources/CleanupProjectionCanary.java",
+      "bytes": 10735,
+      "sha256": "79a0c11edd4eb68dcc1ecf228d5764a5ff90f71d453a3f84cb989748148cfbe1"
+    },
+    {
+      "name": "retained-sources/CleanupRestorationCanary.java",
+      "bytes": 26296,
+      "sha256": "4468bda13d8d78950608c0c21027f4c8e4bf7f2ecfa1bce4c856fb13f6d83c18"
+    },
+    {
+      "name": "retained-sources/CleanupSchemaCanary.java",
+      "bytes": 11087,
+      "sha256": "98ec2eb51565a042a51e402c3bf55c66e27311df2277288fb665a53f24ca64c9"
+    },
+    {
+      "name": "retained-sources/CohortProjectionCanary.java",
+      "bytes": 29368,
+      "sha256": "15ed2ce54625721d6d67f4524624645f0c632cdd345e5bb113c530eee228399e"
+    },
+    {
+      "name": "retained-sources/CopyEffectsSummaryCanary.java",
+      "bytes": 29915,
+      "sha256": "0a09648ed5f1368bb8140aba0224f99400986e1fbfa1e3d43a6abfbf2062e3d5"
+    },
+    {
+      "name": "retained-sources/CurrentBodyCorrelationsCanary.java",
+      "bytes": 30251,
+      "sha256": "0b6031575d0dd994d95c20a000a12cd916bd64bcaef2a16a5973526ce22bd277"
+    },
+    {
+      "name": "retained-sources/GeometrySummaryCanary.java",
+      "bytes": 27696,
+      "sha256": "896c1dda4277ecde443a886f485be5530d0ee0c49822cd2edc37ed533565d225"
+    },
+    {
+      "name": "retained-sources/OwnershipSummaryCanary.java",
+      "bytes": 26859,
+      "sha256": "5fb784e3f64461a1f19b0cd8b0fafd5b28c1e6a56c44069aedffbda626b097ce"
+    },
+    {
+      "name": "retained-sources/PriorEnvelopeCanary.java",
+      "bytes": 12651,
+      "sha256": "4e2d30b2f468fe6ee3c374fb6b8576af53412bf0359f979bf195083b80f24de0"
+    },
+    {
+      "name": "selected/CaptureCohortPhasesCanary.java",
+      "bytes": 42631,
+      "sha256": "8b59484e5da3d5aa406da43678bb6b6b82591983a2c97f15f23e5deea4c3915b"
+    },
+    {
+      "name": "selected/CurrentAssemblyMetadata.java",
+      "bytes": 16559,
+      "sha256": "784296ac06e2a9c7eaeb04d8c76027360861caea960d1fcb281aa61179356895"
+    },
+    {
+      "name": "selected/CurrentBodyOwnership.java",
+      "bytes": 3860,
+      "sha256": "8a7a5b0dfe82d4e230adcd1d531e6942664afbd96563dc5d21f40167b41c3832"
+    },
+    {
+      "name": "selected/CurrentResultProjections.java",
+      "bytes": 10055,
+      "sha256": "c0398d317419931b7b3b749d3f900ef1a7b27d9c630473412a7bf47595fccd28"
+    },
+    {
+      "name": "selected/CurrentV2CanonicalCodec.java",
+      "bytes": 43095,
+      "sha256": "92cd938fc086f7f5b71ac8c9003921de4f7ac908da71b84c988658f9d8a8123a"
+    },
+    {
+      "name": "selected/R5Snapshot.java.source-fragment",
+      "bytes": 3859,
+      "sha256": "c206648d755571b0633af8e2635111f0bdf87cd6fa44663c5b77e6e9beac27a3"
+    },
+    {
+      "name": "selected/R7Constants.java.source-fragment",
+      "bytes": 398,
+      "sha256": "30e44b17fabe3ad36a7a62fd533718a7edd15f7d1b70edcb03fa8499146303a4"
+    },
+    {
+      "name": "selected/R7WorkPlan.java.source-fragment",
+      "bytes": 8172,
+      "sha256": "6ce95654420452f7a433a0083d37145b2fee45e8bf7360499c3c93a6c3a20c0d"
+    },
+    {
+      "name": "selected/REVIEW_R1.md",
+      "bytes": 1552,
+      "sha256": "6bd5020e18dc5fd9e6cd7059be3adad915b451c3b77f265573de2f042f39a783"
+    },
+    {
+      "name": "selected/SOURCE_FINDINGS_R1.json",
+      "bytes": 3787,
+      "sha256": "c41c342443f231d0502696cba0f0d0c3b9c6387e23d9ac6e30a35402ccfbe85a"
+    },
+    {
+      "name": "selected/WORK_HANDOFF_CONTRACT_R1.md",
+      "bytes": 4285,
+      "sha256": "5a633320191033459b506aab5ea39f0d01cc8f740e045938116dae7f9345eb89"
+    },
+    {
+      "name": "selected/_validate_work.py.source-fragment",
+      "bytes": 4550,
+      "sha256": "7d8dac7db26c5f3f7502dd56d96498becdac40170a38c101e0658bd4e35e1d1d"
+    },
+    {
+      "name": "selected/accountResultTree.java.source-fragment",
+      "bytes": 371,
+      "sha256": "a8b5e1a97a2eb3d12d61cc08a8aff1ca60149a1b7659fa01d7b88f4f5154ada4"
+    },
+    {
+      "name": "selected/accountResultValue.java.source-fragment",
+      "bytes": 2362,
+      "sha256": "3e0cab38ee1c1284d15c7623d90c401cb5a6c5c54299054c616be1df47383974"
+    },
+    {
+      "name": "selected/allocateR5Snapshot.java.source-fragment",
+      "bytes": 179,
+      "sha256": "104850650f775d8aace6c7f19d93c965d04bafa2c8caf7379dc270273a7294c2"
+    },
+    {
+      "name": "selected/captureDetachedR7WorkPlan.java.source-fragment",
+      "bytes": 3503,
+      "sha256": "9421e08b2c6f52da6b81e625cf795bf351148484a2656e82af8784c21b122938"
+    },
+    {
+      "name": "selected/captureR7WorkPlan.java.source-fragment",
+      "bytes": 4728,
+      "sha256": "71f202426d4c31ca503d811dad282a105697f75ad8112033fe25dd2ba206b086"
+    },
+    {
+      "name": "selected/r5WorkKey.java.source-fragment",
+      "bytes": 1454,
+      "sha256": "ba5bd9011881beab65f35df2e44ae4e9d2080a81e65688524ad16097b141c855"
+    },
+    {
+      "name": "selected/treeMinimum.java.source-fragment",
+      "bytes": 288,
+      "sha256": "f40b4868e95da6b372c7694217e33abd20d1683a117e4eda16ab438af43af77d"
+    },
+    {
+      "name": "selected/treeTraversal.java.source-fragment",
+      "bytes": 159,
+      "sha256": "a4ef39db8b02bdba0b95509c143821840c27314fc42ea429acc3b4e7893699f1"
+    },
+    {
+      "name": "selected/treeUtf8Chunks.java.source-fragment",
+      "bytes": 219,
+      "sha256": "85e466683442fc102d9ee7725d210e441066f1673ff01ead5e22f9161505b2aa"
+    },
+    {
+      "name": "selected/treeUtf8Length.java.source-fragment",
+      "bytes": 1130,
+      "sha256": "74f79e15d940b593dc1da397e03672579efd014b10900a7564865a387b322705"
+    },
+    {
+      "name": "component-r2/MetadataR7CompositionCanary.java",
+      "bytes": 41240,
+      "sha256": "4a2a17904daf2e83a07a973b0d6db55e0c3520ae1825bfd1e5ad25ec5e873222"
+    },
+    {
+      "name": "NATIVE_EXPECTED_R2.json",
+      "bytes": 4799,
+      "sha256": "f46ab8623dafc610c9c3a12366118b9e437d8d9e239de74d5d126784a8c05230"
+    },
+    {
+      "name": "NONNULL_SNAPSHOT_CORRECTION_R1.json",
+      "bytes": 665,
+      "sha256": "151aff7f2cf684849df346d16165d46c33182126c3d6f1cf5ba6f540c2e95476"
+    },
+    {
+      "name": "COMPILE_EVIDENCE_FAILURE_R1.json",
+      "bytes": 1038,
+      "sha256": "6e78767045a192e4d1edd2825fadae94c9c978ffa76bf6def610205446acb823"
+    },
+    {
+      "name": "UNCHECKED_DIAGNOSTIC_R1.json",
+      "bytes": 396,
+      "sha256": "25fce87880611f8b814ac1ac6b5ecce099c8a9bdb36e860078249abee890dac3"
+    },
+    {
+      "name": "run_gates_r3.py",
+      "bytes": 8871,
+      "sha256": "0a5992feef618b2deaffee0a7b4c9823f7cc6b61acc067a0ea15418026d8846e"
+    },
+    {
+      "name": "SOURCE_REVIEW_R3.md",
+      "bytes": 5358,
+      "sha256": "920bebba9567314d2d24b4290d8c2157290106be8b9c3b77bf08727e2a8b74f1"
+    },
+    {
+      "name": "RUNTIME_PHASE_COLLISION_R1.json",
+      "bytes": 714,
+      "sha256": "d2d5f39cda19d80a442e750834c73c4900488143ba76715c4bb73e40d08d7044"
+    }
+  ],
+  "sourceCount": 17,
+  "rootSourceCountedExpected": {
+    "status": "ROOT_SOURCE_COUNTED_R2_BEFORE_NATIVE",
+    "smoke": {
+      "cases": 1,
+      "assertions": 52,
+      "line": "SYNTHETIC_METADATA_R7_COMPOSITION_ONLY mode=SMOKE cases=1 assertions=52; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+      "ledger": {
+        "directChecks": 18,
+        "orderedWorkValueChecks": 34,
+        "total": 52
+      }
+    },
+    "suite": {
+      "cases": 14,
+      "assertions": 52,
+      "line": "SYNTHETIC_METADATA_R7_COMPOSITION_ONLY mode=SUITE cases=14 assertions=52; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+      "ledger": {
+        "wrongBindingCases": {
+          "cases": 4,
+          "checksIncludingReadyFixtures": [
+            4,
+            5,
+            4,
+            4
+          ],
+          "total": 17
+        },
+        "finalizerReuse": {
+          "cases": 1,
+          "checksIncludingReadyFixture": 4
+        },
+        "zeroCutoff": {
+          "cases": 1,
+          "checksIncludingReadyFixture": 5
+        },
+        "overLimitCutoff": {
+          "cases": 1,
+          "checksIncludingReadyFixture": 5
+        },
+        "foreignWorkBinding": {
+          "cases": 1,
+          "checksIncludingReadyFixture": 4
+        },
+        "missingWorkSlot": {
+          "cases": 1,
+          "checks": 3
+        },
+        "occupiedWorkSlot": {
+          "cases": 1,
+          "checks": 3
+        },
+        "negativeScalar": {
+          "cases": 1,
+          "checks": 3
+        },
+        "missingBudgetAdoption": {
+          "cases": 1,
+          "checks": 2
+        },
+        "ownershipAliasAfterWorkPut": {
+          "cases": 1,
+          "checks": 3
+        },
+        "freshAttemptAfterFailure": {
+          "cases": 1,
+          "checks": 3
+        },
+        "total": 52
+      },
+      "casesLedger": [
+        "Wrong Meter binding rejected; correct binding is checked before valid finalization",
+        "Wrong snapshot binding rejected; correct binding is checked before valid finalization",
+        "Wrong body binding rejected; correct binding is checked before valid finalization",
+        "Wrong work binding rejected; correct binding is checked before valid finalization",
+        "Finalizer reuse after successful finalization returns R7_FINALIZER_REUSED",
+        "Zero cutoff returns R7_ELAPSED_CUTOFF and consumes the plan",
+        "Cutoff above 90 seconds returns R7_ELAPSED_CUTOFF and consumes the plan",
+        "Foreign body.work returns R7_FINALIZER_BINDING and consumes the plan",
+        "Missing work slot returns R7_WORK_SLOT_MISSING at target delta 1/0/0",
+        "Occupied work slot returns R7_WORK_SLOT_NOT_EMPTY at target delta 2/0/0",
+        "Negative scalar returns R7_SOURCE_NEGATIVE at target delta 0/0/0",
+        "Missing synthetic budget adoption returns R5_METADATA_SNAPSHOT after work installation and Meter close, without a plan",
+        "qualifiedPrior/capture.template alias returns BODY_OWNERSHIP_ALIAS after work insertion at target delta 546/66/7, leaving Meter open and no plan",
+        "Fresh independent fixture succeeds after the failed alias fixture is discarded"
+      ]
+    },
+    "uniqueCases": 15,
+    "uniqueAssertions": 104,
+    "canaryBytes": 41240,
+    "canarySha256": "4a2a17904daf2e83a07a973b0d6db55e0c3520ae1825bfd1e5ad25ec5e873222",
+    "positivePrice": {
+      "status": "INDEPENDENT_LITERAL_FIXTURE_PRICE_BEFORE_NATIVE_EXECUTION",
+      "counts": {
+        "maps": 12,
+        "lists": 3,
+        "mapEntries": 91,
+        "listItems": 122,
+        "strings": 140,
+        "numbers": 38,
+        "booleans": 21,
+        "nulls": 0,
+        "keyChars": 1595,
+        "stringChars": 795
+      },
+      "ownershipUnits": 1612,
+      "ownershipCopiesChunks": 15,
+      "treeBaseUnits": 2910,
+      "treeUtf8ScanUnits": 14340,
+      "treeTotalUnits": 17250,
+      "setupUnits": 1,
+      "cohortPhaseUnits": 299,
+      "fixturePriorStageUnits": 2,
+      "cleanupInstallerUnits": 67,
+      "r7OtherFixedUnits": 184,
+      "closedMeterUnits": 19415,
+      "copiedEntries": 268,
+      "copyChunks": 88,
+      "wrapperGroups": 2,
+      "adoptedSyntheticBudgetGroups": 1,
+      "groupsBeforeExport": 3,
+      "maximumUnitsPerGroup": 19414,
+      "metadataUnits": 19414,
+      "metadataGroups": 1,
+      "metadataCopies": 268,
+      "metadataChunks": 88,
+      "originalCaptureGroups": 1,
+      "scope": "Only synthetic metadata and real budget adoption. No owner execution or genuine DTO/cleanup/geometry/authority proof. ASCII only; no target module/Java/native executed.",
+      "priceDerivation": "Ownership closed-form plus separately derived tree billing: map6+sum(9+6keyChars+child), list7+2n+sum(child), string9+6chars, number8,boolean9,null7; root accounting1."
+    },
+    "scope": "SYNTHETIC_METADATA_AND_REAL_METER_DETACHED_PLAN_ONLY",
+    "normalHostAcceptance": false,
+    "genuine": "UNSPENT_GATED",
+    "protectedUnread": "UNCERTIFIED_NO_CERTAINTY_RESTORED",
+    "rootCount": "SMOKE18+34=52; SUITE17+4+5+5+4+3+3+3+2+3+3=52. Additional readyFixture checks valid non-null foreign snapshot; other helpers unchanged."
+  },
+  "preservedSourceFreezeR2Sha256": "2dc700ed10f959e6c10e6821cc377b6354e2cf937646881bd2baa93bd248f5c4",
+  "parentProofSha256": "9a2525843137b12e44c97daf188b6ef9b68918c8f822e023ad9c0032838f45e8"
+}

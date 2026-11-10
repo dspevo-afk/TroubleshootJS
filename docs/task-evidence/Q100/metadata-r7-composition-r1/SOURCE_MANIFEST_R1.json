@@ -1,0 +1,31 @@
+{
+  "status": "EXACT_FINAL_COMPILED_PUBLIC_SOURCE_BYTES",
+  "files": [
+    {
+      "path": "tests/qualification/rb100-layout/metadata-r7-composition-r1/CONTRACT_R1.md",
+      "bytes": 6373,
+      "sha256": "80097c7f5913873ed26e8d718bf9ab9a932a7b5253deb41c5a4b6373818861d5"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/metadata-r7-composition-r1/MetadataR7CompositionCanary.java",
+      "bytes": 41240,
+      "sha256": "4a2a17904daf2e83a07a973b0d6db55e0c3520ae1825bfd1e5ad25ec5e873222"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/metadata-r7-composition-r1/LITERAL_PLACEHOLDER_BODY_R1.json",
+      "bytes": 4815,
+      "sha256": "aa5889afa140087f166be954d2bc7c36ee073d267e4487025c88b0985b3b5427"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/metadata-r7-composition-r1/INDEPENDENT_FIXTURE_PRICE_R1.json",
+      "bytes": 1261,
+      "sha256": "2d50b2d1fed506d72347882dac8124108e140d3e80fdbadca731930b275cebac"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/metadata-r7-composition-r1/README.md",
+      "bytes": 1035,
+      "sha256": "0cd345e419e0adb03f51ef91bd9bd1a8478abca98d07de58fae0625c1cded883"
+    }
+  ],
+  "sourceFreezeSha256": "f9959186a4469194dac07ee840c2794a3af1c0be4e3aba45fe0310ec373d56ba"
+}
