@@ -1680,6 +1680,9 @@ only platform-exact stderr expectations and mklink argv changed in the fresh tes
 No positive originalDto or genuine envelope runs. Actual caller, current arm DTO,
 whole-result, authority and lifecycle remain gated; playable100=0, beta HELD.
 Existing budgets, exact seeds/epochs, data exclusions and full30 EXCLUDED remain.
+Implementation `64c83decef4477f511af25ab20198cb34bd1b8f7` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
+`1a1c3ce8d372dabb` sent once. This receipt sends no second email.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
