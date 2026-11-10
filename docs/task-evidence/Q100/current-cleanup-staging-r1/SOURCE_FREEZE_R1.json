@@ -1,0 +1,112 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_CLEANUP_STAGING_SOURCE",
+  "files": [
+    {
+      "name": "CurrentAssemblyMetadata.java",
+      "bytes": 9970,
+      "sha256": "a98ea9290f8fcdb86be4377698acbe012292972c56016383a9f2684bd40b9c7c"
+    },
+    {
+      "name": "CleanupStagingCanary.java",
+      "bytes": 59803,
+      "sha256": "232f7a06f13f1070621ebf42fdce6792d6dd7b486559d5048153de14b873cc5a"
+    },
+    {
+      "name": "cleanup_oracle.py",
+      "bytes": 15984,
+      "sha256": "8e6c9669349d010c1251998626800ade1aaff3e76e21215f9a124c1b5dd424e4"
+    },
+    {
+      "name": "verify_cleanup_staging_r1.py",
+      "bytes": 11055,
+      "sha256": "d978aecf071d27b06f2fe47b5772d8e044770beb09a9d2691e52b7b88370d33b"
+    },
+    {
+      "name": "test_cleanup_oracle.py",
+      "bytes": 23005,
+      "sha256": "26b6afafe8fe3a5dae17a0c2e5116e6b6e56f1f9edf6d5c43e48871694835019"
+    },
+    {
+      "name": "ROOT_ORACLE_SOURCE_R1.json",
+      "bytes": 101,
+      "sha256": "6c44dc0d6b87e06b862728378e295afebbb03bbbf17368b94f784dcb713085fc"
+    },
+    {
+      "name": "CONTRACT_R1.md",
+      "bytes": 7674,
+      "sha256": "212ac9daea16bafeae9feb397bfbfaafe9d752260dfe0d4a2346a364f7351443"
+    },
+    {
+      "name": "REFERENCE_R1.json",
+      "bytes": 5782,
+      "sha256": "d5744cfe7118d1f480e88d3fabec06749c32cba1c84cd0cf5379307d670d549d"
+    },
+    {
+      "name": "WIRE_R1.json",
+      "bytes": 875,
+      "sha256": "3d0ba4ed424ae0251bfa7d151cd4da6a043f41b5183858d117906c3584ced375"
+    },
+    {
+      "name": "CANARY_NOTES_R1.md",
+      "bytes": 2652,
+      "sha256": "4a236f39af417fa31e42f4401e31dc40c9c6ae86fab2a20626dad4b3b03a4e06"
+    },
+    {
+      "name": "ORACLE_NOTES_R1.md",
+      "bytes": 5656,
+      "sha256": "ff111c4047a33dd035fdc85b993607966adbcf5a17d9eca3ba46d9b91d436d18"
+    },
+    {
+      "name": "freeze_fixture_r1.py",
+      "bytes": 5245,
+      "sha256": "07736aab3a9d16e690ea75fe3dfb8bbd3ea1638fc03e09f50ddc29387ed41add"
+    },
+    {
+      "name": "author_metadata_r1.py",
+      "bytes": 3946,
+      "sha256": "e2d2128e730a0976ed878ad5f9265cf917842b1dbda22ff566ed6cdeaed0d132"
+    },
+    {
+      "name": "run_cleanup_gates_r1.py",
+      "bytes": 8922,
+      "sha256": "15eb562bf5f7e223d59468415d754477b9b7cbfce8a0df93c1e3a0699c6e4205"
+    },
+    {
+      "name": "run_cleanup_controls_r1.py",
+      "bytes": 3820,
+      "sha256": "172211e232fc41afc30e29aeab3fb09f3c9587003d35fbee3d9d6f3c8a42de07"
+    },
+    {
+      "name": "run_cleanup_public_r1.py",
+      "bytes": 4057,
+      "sha256": "0e32f8c513c12bb785738b5d663f98c9df3491213d056344e935a6800e6e1dfd"
+    },
+    {
+      "name": "run_reader_host_r1.py",
+      "bytes": 1311,
+      "sha256": "a95df26f709a3a33184e2102dff352f6e06463b2ceb23fad731d2925822c7124"
+    },
+    {
+      "name": "read_policy_canary_r1.py",
+      "bytes": 1435,
+      "sha256": "27a3f28a5342ec0a3d0c5b293ff88af978d42f9d362c2dc4e65a1636aca3c247"
+    },
+    {
+      "name": "freeze_sources_r1.py",
+      "bytes": 2778,
+      "sha256": "ff9915bd99935d08e92baca43fd9b3d7d12d26cf1e4801e1350abd28dd0afb93"
+    },
+    {
+      "name": "check_source_r3.py",
+      "bytes": 1976,
+      "sha256": "6cd99667373945e5b9bc920dc4b9db2c5c9a3c111100801489bb35deb189072c"
+    },
+    {
+      "name": "assemble_evidence_r3.py",
+      "bytes": 7108,
+      "sha256": "68a91d7878a6a3145273f0f63d9bfa05ed86683172b3733d0d1d1a6aa0ee172a"
+    }
+  ],
+  "nativeProducerCalls": 0,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

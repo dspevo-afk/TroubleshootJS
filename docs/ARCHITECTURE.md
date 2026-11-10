@@ -392,6 +392,20 @@ their strict semantics. Historical false RUN fixtures are retired for current
 native use. R7 cleanup insertion and the normal full-D/host/lifecycle boundaries
 remain separate and closed; no genuine envelope or electrical qualification ran.
 
+
+The [pending cleanup component](task-evidence/Q100/current-cleanup-staging-r1/README.md)
+adds explicit `CurrentAssemblyMetadata.pendingCleanupBody` (14/13/1) and
+`installCleanup` (67/11/2). The latter preflights the inherited scalar bound,
+derives six stable views from the same body, calls the unchanged cleanup projector
+and prepays one replacement. It never finishes the meter or rereads durations.
+Prior/work/cleanup are explicitly pending; actual codec root checks reject an
+unfilled cleanup before byte0. Generic ownership itself permits null. Detached
+R7 owns close/snapshot/finalization unchanged, including its admitted-owner-credit
+prerequisite and zero-credit post-close rejection. A real native budget credit
+in a synthetic fixture is not a genuine owner instance or capture. Testbench
+formatting after close gives no production export-accounting proof. Normal
+whole-result/full-D/actual-host/lifecycle remain separate and closed.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

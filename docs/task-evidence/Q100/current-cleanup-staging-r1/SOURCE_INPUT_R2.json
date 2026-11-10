@@ -1,0 +1,24 @@
+{
+  "status": "PINNED_CONSTRUCTOR_GENERATOR_FRAGMENT_AND_BASE_SOURCE_ONLY",
+  "rows": [
+    {
+      "name": "generate_root_body.py",
+      "sourcePath": "tests/qualification/rb100-layout/native-root-body-r1/generate_root_body.py",
+      "bytes": 6865,
+      "sha256": "60a271c952e20b1ffbe2445c28c6b9724b3b44e3045520f68d487cdc139cb415"
+    },
+    {
+      "name": "RootBodyConstructor.java.fragment",
+      "sourcePath": "tests/qualification/rb100-layout/native-root-body-r1/RootBodyConstructor.java.fragment",
+      "bytes": 1539,
+      "sha256": "2e1070eb3ff29ffd90a706b061d26edd4a20f8da272ca7b8342f3b03ab977363"
+    },
+    {
+      "name": "FORMATTER_BASE.java",
+      "sourcePath": "tests/qualification/rb100-layout/native-v2-codec-r1/CurrentV2CanonicalCodec.java",
+      "bytes": 18580,
+      "sha256": "76fb7bbc8af73e41fd8d79a26823a0687f61e2a812e4b9de251bc953c04c7522"
+    }
+  ],
+  "nativeCalls": 0
+}

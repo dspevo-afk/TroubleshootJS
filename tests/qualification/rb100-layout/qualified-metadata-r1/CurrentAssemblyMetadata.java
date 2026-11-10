@@ -47,6 +47,66 @@ final class CurrentAssemblyMetadata {
                 CohortTerminalTelemetryStudy.deriveCohort(view, actualCapturedIds, meter));
     }
 
+    /**
+     * Explicit staging entry point: prior, work, and cleanup are pending.
+     * Headers and the three disjoint borrowed maps are caller-prevalidated;
+     * the caller owns them exclusively until preparation, R7, and export end.
+     * This delegates the unchanged fourteen-unit constructor.
+     */
+    static Map<String,Object> pendingCleanupBody(
+            CohortTerminalTelemetryStudy.SetupMeter meter,
+            String runId, String sourceSha, String contextSha,
+            Map<String,Object> originalCapture, Map<String,Object> cohort,
+            Map<String,Object> arms) throws Exception {
+        if (meter == null || runId == null || sourceSha == null || contextSha == null ||
+                originalCapture == null || cohort == null || arms == null)
+            throw new IOException("METADATA_ARGUMENTS");
+        return CurrentV2CanonicalCodec.createBody(meter, runId, sourceSha, contextSha,
+                originalCapture, cohort, arms, null);
+    }
+
+    /** Install from this body's stable DTO views and the R7-owned cleanup scalar. */
+    static void installCleanup(CohortTerminalTelemetryStudy.SetupMeter meter,
+            Map<String,Object> body, long cleanupNanos) throws Exception {
+        if (meter == null || body == null) throw new IOException("METADATA_ARGUMENTS");
+
+        // Preflight the existing R7 limit before any body observation or mutation.
+        meter.charge(1);
+        if (cleanupNanos < 0 || cleanupNanos > 120000000000L)
+            throw new IOException("METADATA_CLEANUP_SCALAR");
+        meter.charge(1);
+        if (body.getClass() != LinkedHashMap.class)
+            throw new IOException("METADATA_CLEANUP_BODY");
+        meter.charge(1);
+        if (!body.containsKey("cleanup")) throw new IOException("METADATA_CLEANUP_SLOT");
+        meter.charge(1);
+        if (body.get("cleanup") != null) throw new IOException("METADATA_CLEANUP_SLOT");
+
+        Map<String,Object> capture = cleanupView(meter, body, "originalCapture");
+        Map<String,Object> arms = cleanupView(meter, body, "arms");
+        Map<String,Object> nullArm = cleanupView(meter, arms, "null");
+        Map<String,Object> nullCleanup = cleanupView(meter, nullArm, "cleanup");
+        Map<String,Object> observeArm = cleanupView(meter, arms, "observe");
+        Map<String,Object> observeCleanup = cleanupView(meter, observeArm, "cleanup");
+        Map<String,Object> cleanup = CurrentResultProjections.cleanup(meter, capture,
+                nullCleanup, observeCleanup, cleanupNanos);
+
+        // The sole mutation follows complete projection and replacement admission.
+        meter.copy(1);
+        meter.charge(1);
+        body.put("cleanup", cleanup);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Map<String,Object> cleanupView(
+            CohortTerminalTelemetryStudy.SetupMeter meter,
+            Map<String,Object> parent, String key) throws Exception {
+        meter.charge(1);
+        Object value = parent.get(key);
+        if (!(value instanceof Map)) throw new IOException("METADATA_CLEANUP_VIEW");
+        return (Map<String,Object>)value;
+    }
+
     static ReceiptContentBinding prepare(
             CohortTerminalTelemetryStudy.SetupMeter meter,
             long started,

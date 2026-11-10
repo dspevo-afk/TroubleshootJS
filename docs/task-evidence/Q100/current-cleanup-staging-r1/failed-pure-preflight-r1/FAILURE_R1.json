@@ -1,0 +1,19 @@
+{
+  "genuineEnvelope": "UNSPENT_GATED",
+  "nativeProducerCalls": 0,
+  "observed": {
+    "elapsedMs": 388.9638,
+    "exitCode": 2,
+    "processRootAbsent": true,
+    "status": "RETURNED",
+    "stderrBytes": 257,
+    "stdoutBytes": 0,
+    "terminationProven": true,
+    "totalElapsedMs": 829.1532000000001
+  },
+  "phase": "cleanup-pure-preflight-r1",
+  "status": "FAIL_NO_ACCEPTANCE",
+  "cause": "Missing reference-root argument parsing; no tests ran",
+  "rawStderrSha256": "42da3f0b209daaf3f26d15507c9cdc01ca8df02de70c643aadd2d364777d37f5",
+  "sanitizedStderr": true
+}

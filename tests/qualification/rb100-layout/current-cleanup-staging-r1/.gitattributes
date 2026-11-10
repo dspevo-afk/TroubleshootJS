@@ -1,0 +1,2 @@
+# Preserve exact qualified runtime Source and synthetic reference bytes.
+* -text

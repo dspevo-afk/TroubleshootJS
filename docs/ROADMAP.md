@@ -1491,6 +1491,22 @@ Implementation `679f36216087d1a14e25187619ff6bf9f3908e28` normally pushed to
 origin/codex/q100-physical-feasibility; exact remote verified. Completion Gmail
 `1a1c28920295eadb` acknowledged once; the documentation receipt sends no second email.
 
+The [pending cleanup and detached R7 prerequisite](task-evidence/Q100/current-cleanup-staging-r1/README.md)
+is locally accepted for its corrected synthetic candidate. Explicit pending-body
+construction and same-body cleanup installation preserve the existing scalar,
+projection, metadata methods, R5/R7 and budget owners. Final-source JDK8 compile2/
+11major51 classes, native SMOKE2/SUITE22 with independent private/public readers,
+private/public16 pure tests, maintained81/12089, real file/host controls, nine
+reader negatives and two JVM protocol rejections pass;28 process receipts reaudited.
+Failures remain preserved: Windows cross-API ctime interpretation and invalid
+639-group/zero-owner-credit fixture preconditions. Existing validators were not
+weakened; the suite retains zero-credit post-close rejection. This closes only
+synthetic pending-body/scalar/R7 sequencing; normal whole-result/full-D/actual-host
+and lifecycle remain closed. Next is narrow current producer compatibility Source
+audit. Genuine original,NULL,OBSERVE stays unspent/gated; playable100=0/betaHELD,
+full30EXCLUDED, protected data exclusions, exact seeds/epochs and all caps unchanged.
+Publication is pending normal commit/push and one completion Gmail.
+
 The [A07 host prerequisite](task-evidence/A07/report-contract-v2/README.md) is
 accepted and published as `7ccfcc1d31bbcbedbe9b74b3d4e64baf93fab317` on
 `origin/codex/q100-physical-feasibility`, exact remote SHA verified and completion

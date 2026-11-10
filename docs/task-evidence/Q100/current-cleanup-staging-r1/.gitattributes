@@ -1,0 +1,4 @@
+# Preserve exact Source/evidence; actual Windows JVM streams retain CRLF.
+* -text
+ACTUAL_*_STDOUT_R1.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+failed-*/STDERR_R1.txt -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

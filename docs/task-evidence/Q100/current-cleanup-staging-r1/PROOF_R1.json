@@ -1,0 +1,78 @@
+{
+  "status": "LOCALLY_ACCEPTED_SYNTHETIC_PENDING_CLEANUP_AND_R7_HANDOFF",
+  "baseCommit": "1b7f972d6d0158b20f32b1b7c56370479ae28be6",
+  "sourceFreezeSha256": "b40afa038a477acc7300765509f4b5b8ca00c70415fb8265b90de973ed2c1615",
+  "helperSha256": "a98ea9290f8fcdb86be4377698acbe012292972c56016383a9f2684bd40b9c7c",
+  "canarySha256": "232f7a06f13f1070621ebf42fdce6792d6dd7b486559d5048153de14b873cc5a",
+  "contractSha256": "212ac9daea16bafeae9feb397bfbfaafe9d752260dfe0d4a2346a364f7351443",
+  "referenceSha256": "d5744cfe7118d1f480e88d3fabec06749c32cba1c84cd0cf5379307d670d549d",
+  "gateReceipts": {
+    "HOST_GATE_R1.json": "2ff366145d5def6ff8a5cf3c87c26d83d6ba3ac7aabb6b62d9041affd48001ec",
+    "COMPILE_GATE_R1.json": "ab28d4fdcb99bb71389fdc8814ca9f3648fffd9ed43897e377baa0167e62c566",
+    "PURE_GATE_R1.json": "44a4ada5f009e51d1ddc5f8bf3eca874a1461bbc408cd1dcdb933c49528a744d",
+    "SMOKE_GATE_R1.json": "ee00b058c2e720e604c4d9caea11b714bbccfbc460c9d5eb05975df63800c709",
+    "SUITE_GATE_R1.json": "25441611c2a5a81766c6703fd364f30cb760530ad64ee3d25d56567a04a5d768",
+    "REGRESSION_GATE_R1.json": "f106c6ebac661ea3cecc2f5c4282f2da12b4d4b0148108ae97991d5b7fd9ad96",
+    "CONTROLS_GATE_R1.json": "95b4c5fe9fcfb37d3f44a709c5511dec7ee923c9c4d079d0063cd4ed5d9e86cf"
+  },
+  "finalPublicGateSha256": "89b910a8ddf43fadafe560d30906f476771e3786c092eeea1dd8b7658bebc478",
+  "realReaderHostGateSha256": "0a5146d6fbe1b86131390c5ab81347d2acf5cf362947d61b5c507e0ee3b7f609",
+  "sourceReviewSha256": "23b70c9b37d090e21b9bb92cf87b3a7073693c4eb762edce3736841f680e9329",
+  "nativeCases": 24,
+  "privatePureTests": 16,
+  "publicPureTests": 16,
+  "maintainedCases": 81,
+  "maintainedAssertions": 12089,
+  "reauthenticatedProcessCalls": 28,
+  "pendingConstructorDebit": [
+    14,
+    13,
+    1
+  ],
+  "cleanupInstallerDebit": [
+    67,
+    11,
+    2
+  ],
+  "syntheticR7Debit": [
+    18576,
+    132,
+    19
+  ],
+  "syntheticR7Groups": {
+    "wrapper": 1,
+    "prior": 1,
+    "totalBeforeExport": 2
+  },
+  "independentReviews": [
+    {
+      "result": "PASS_SOURCE_ONLY",
+      "scope": "New helper and unchanged old regions; ownership995/tree17311 census",
+      "helperSha256": "a98ea9290f8fcdb86be4377698acbe012292972c56016383a9f2684bd40b9c7c"
+    },
+    {
+      "result": "PASS_SOURCE_ONLY",
+      "scope": "R5/R7 prerequisites and corrected24-case canary diff",
+      "canarySha256": "232f7a06f13f1070621ebf42fdce6792d6dd7b486559d5048153de14b873cc5a"
+    },
+    {
+      "result": "PASS_SOURCE_ONLY",
+      "scope": "N2 file identity/ctime policy; N3 read-policy functions unchanged, new pin dispatch root-reviewed"
+    }
+  ],
+  "independentNativeRun": false,
+  "isolatedProcessCleanupDurationMs": null,
+  "limits": {
+    "productionGwtPlayer": "NOT_APPLICABLE",
+    "electricalPopulation": "NOT_RENEWED",
+    "ci": "NOT_RUN",
+    "normalFullDHostLifecycle": "CLOSED",
+    "genuineEnvelope": "UNSPENT_GATED",
+    "playable100": 0,
+    "beta": "HELD",
+    "full30": "EXCLUDED",
+    "hardPsychotic": "UNAVAILABLE_UNRUN",
+    "protectedUnread": "UNCERTIFIED"
+  },
+  "publication": "SEPARATE_PUBLICATION_RECEIPT_REQUIRED"
+}

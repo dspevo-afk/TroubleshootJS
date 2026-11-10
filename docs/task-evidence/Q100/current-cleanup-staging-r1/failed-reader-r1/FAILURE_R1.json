@@ -1,0 +1,13 @@
+{
+  "status": "FAIL_REAL_SMOKE_READER_UNEXPECTED_EXIT2",
+  "phase": "cleanup-reader-smoke-r1",
+  "sourceFreezeSha256": "3fa5e345fe38dbe4da7fc7cd3fb321f80e9ed8c4b8d9ef51386c8da5b97d787d",
+  "nativeSmoke": "PASS_TWO_SYNTHETIC_CASES",
+  "reader": "FAIL_FILE_CHANGED",
+  "suite": "NOT_RUN",
+  "regression": "NOT_RUN",
+  "nativeJavaChangedForCorrection": false,
+  "diagnosis": "Windows lstat ctime is creation time while fstat ctime is handle change time on modified files; keep within-API stability plus cross-API identity",
+  "newTempLeaf": "tsj-q100-cleanup-reader-r2-5e31deb43864425aa454c188dd3572f0",
+  "genuineEnvelope": "UNSPENT_GATED"
+}

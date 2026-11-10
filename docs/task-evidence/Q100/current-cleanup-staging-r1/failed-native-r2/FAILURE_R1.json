@@ -1,0 +1,14 @@
+{
+  "status": "FAIL_NATIVE_SUITE_FOUR_FIXTURE_PRECONDITIONS",
+  "sourceFreezeSha256": "573f503d32a558804a053a0ad00c270e327a26e94382d0ef83460d637f3c54d5",
+  "failureNames": [
+    "write_group_guard",
+    "r7_handoff_true",
+    "r7_handoff_below_sum",
+    "r7_handoff_alias_false"
+  ],
+  "cause": "Wrong639-group fixture setup expectation and unsupported zero-credit R5 snapshot precondition",
+  "validatorChanged": false,
+  "newTempLeaf": "tsj-q100-cleanup-credit-r3-fe1e3f00cd6a4fa5863cb1ee025df489",
+  "genuineEnvelope": "UNSPENT_GATED"
+}

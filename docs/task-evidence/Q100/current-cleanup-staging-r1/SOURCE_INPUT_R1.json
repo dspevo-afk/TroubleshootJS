@@ -1,0 +1,57 @@
+{
+  "status": "PINNED_R7_CLEANUP_STAGING_SOURCE_AUDIT_ONLY",
+  "baseCommit": "1b7f972d6d0158b20f32b1b7c56370479ae28be6",
+  "rows": [
+    {
+      "name": "CURRENT_STUDY.java",
+      "bytes": 234954,
+      "sha256": "9ac45b374c8aeee7a912a4e1452435b71b278aeae0a288e5a75dd82a149c006b",
+      "provenance": "EXACT_ALREADY_ADMITTED_CURRENT_SOURCE"
+    },
+    {
+      "name": "CurrentV2CanonicalCodec.java",
+      "bytes": 20119,
+      "sha256": "04b016afa690d2154f0b970640bc30b7c4887b450622444f8f18329bc04c3672",
+      "provenance": "EXACT_ALREADY_ADMITTED_CURRENT_SOURCE"
+    },
+    {
+      "name": "CurrentBodyOwnership.java",
+      "bytes": 3860,
+      "sha256": "8a7a5b0dfe82d4e230adcd1d531e6942664afbd96563dc5d21f40167b41c3832",
+      "provenance": "EXACT_ALREADY_ADMITTED_CURRENT_SOURCE"
+    },
+    {
+      "name": "CurrentAssemblyMetadata.java",
+      "bytes": 6856,
+      "sha256": "488bb13cd7875ab9612ea300bf4430eac7e1bef5243ff95057186b41c77d21de",
+      "provenance": "EXACT_ALREADY_ADMITTED_CURRENT_SOURCE"
+    },
+    {
+      "name": "CurrentResultProjections.java",
+      "bytes": 8248,
+      "sha256": "7609a483f18a8c3d841327ebc950ee2cbcf627cbf467a6b509487426f062b326",
+      "provenance": "EXACT_ALREADY_ADMITTED_CURRENT_SOURCE"
+    },
+    {
+      "name": "AuthoredFlatWorkMembers.java_115_244.txt",
+      "bytes": 8281,
+      "sha256": "d6bd348a9a0fa5103761b6f70be9004680a684c7e378b9cc4e9f6eb963b1c2c5",
+      "provenance": "EXACT_ALREADY_ADMITTED_R7_SELECTED_RANGE"
+    },
+    {
+      "name": "generate_authored_flat_work_overlay.py_435_454.txt",
+      "bytes": 823,
+      "sha256": "79f08bf2eee3660d2f60ccd3eebf7038137dfe29340b6619788e85b9a0be4120",
+      "provenance": "EXACT_ALREADY_ADMITTED_R7_SELECTED_RANGE"
+    },
+    {
+      "name": "generate_authored_flat_work_overlay.py_577_616.txt",
+      "bytes": 2016,
+      "sha256": "f19177f5f76c9d1a64128af9514c9b59b9b27ca793300ee32fe001f15d930603",
+      "provenance": "EXACT_ALREADY_ADMITTED_R7_SELECTED_RANGE"
+    }
+  ],
+  "nativeCalls": 0,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "implementation": "NOT_STARTED"
+}

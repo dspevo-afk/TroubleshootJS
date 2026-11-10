@@ -1,0 +1,41 @@
+{
+  "status": "PASS_REAL_SELECTED_CLEANUP_HOST_CONTROLS",
+  "positive": {
+    "phase": "cleanup-host-positive-final-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 324.2404,
+    "wrapperTotalElapsedMs": 561.6175000000001,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "f583951e8080e8952a5a74257019ac1aeda13d66264b05f8ccccc1913bb41e5d",
+      "owner.json": "52de7e01370d89cb817f381f14d1bc40c018660a9cb44dfaa6bcae8a98c913b5",
+      "process.json": "4fe31fc0f2afcb2cc70b62c9c6e0b50be20bfc952bd0b45b68eb5cd0efc3c07f",
+      "parent.json": "39e58c7d6d7a448d319431b51ac0f5a6a3cb15614421b0d164813b4ea8280096",
+      "result.json": "b1cf07b5199fa00280936dc06db3b08f4a9e0a193302fa6892d1520cb1896bb1",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr.txt": "1cc134eee0b09c82ff01739623f30b95dcd265223e8377d051fa0b4ac3c6cfa3"
+    }
+  },
+  "negative": {
+    "phase": "cleanup-host-negative-final-r1",
+    "status": "PASS_EXPECTED_REJECTION",
+    "childExitCode": 1,
+    "processElapsedMs": 296.2182,
+    "wrapperTotalElapsedMs": 530.3085,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "4b862a7ebe909dff9296847fdfde5ffdec679468c6da6462464e99b52e4a7ba1",
+      "owner.json": "1ee53675aae4eb1125548c6dc7c385fd6b1b3aeb9f3092db78b7c917530387bd",
+      "process.json": "d38377bfcbc1fcade98874a265d7b4cb576431030ffc00bd5b0bb145380f994b",
+      "parent.json": "9c33b48c13ac9bf640e6698a5cfee468db7916e54bfebc5e141c3281cf037dd1",
+      "result.json": "c7b96a166b68d3b463da18ce175ce2ab3fdff856dce1ed7979a2b6855827bf3c",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr.txt": "49499ffbda948536b666cff6f96a1eac684cbc25cabf16c2016d845cc2b2c79f"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "status": "PRESERVED_FAILURES_AND_KNOWN_SOURCE_CORRECTIONS",
+  "failures": [
+    {
+      "phase": "cleanup-pure-preflight-r1",
+      "status": "FAIL_NO_ACCEPTANCE",
+      "cause": "Missing reference-root argument parsing; no tests ran",
+      "receipt": "failed-pure-preflight-r1\\FAILURE_R1.json"
+    },
+    {
+      "phase": "cleanup-pure-preflight-r2",
+      "status": "FAIL_NO_ACCEPTANCE",
+      "cause": "Test namespace retained function instead of module dictionary;16 ran/13errors",
+      "receipt": "failed-pure-preflight-r2\\FAILURE_R1.json"
+    },
+    {
+      "phase": "cleanup-reader-smoke-r1",
+      "status": "FAIL_FILE_CHANGED",
+      "cause": "Windows cross-API ctime interpretation; within-API ctime retained in correction"
+    },
+    {
+      "phase": "cleanup-native-suite-r1",
+      "status": "FAIL_17_PASS_4_FAIL",
+      "cause": "639-group setup assertion and three unsupported zero-credit snapshot preconditions; existing validators unchanged"
+    }
+  ],
+  "draftSourcesRetainedPrivately": true,
+  "completeSourceHistoryClaimed": false,
+  "sourceCorrections": [
+    "Constructor base versus generated Source role caught before consumption",
+    "Authoring hash transcription and LF/EOF formatting corrected before freeze",
+    "Pure-fixture below-sum payload and false-alias input/output expectations corrected",
+    "Native closed-groupUnits and report phase expectations corrected; no native-check suppression",
+    "R3 reference reproduced independently from fresh generator and old helper methods byte-identical"
+  ],
+  "genuineEnvelope": "UNSPENT_GATED"
+}

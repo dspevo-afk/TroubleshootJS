@@ -1,0 +1,4 @@
+usage: test_cleanup_oracle.py [-h] [-v] [-q] [--locals] [--durations N] [-f]
+                              [-c] [-b] [-k TESTNAMEPATTERNS]
+                              [tests ...]
+test_cleanup_oracle.py: error: unrecognized arguments: --reference-root

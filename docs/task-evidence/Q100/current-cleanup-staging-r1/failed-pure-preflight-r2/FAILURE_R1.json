@@ -1,0 +1,19 @@
+{
+  "genuineEnvelope": "UNSPENT_GATED",
+  "nativeProducerCalls": 0,
+  "observed": {
+    "elapsedMs": 370.5815,
+    "exitCode": 1,
+    "processRootAbsent": true,
+    "status": "RETURNED",
+    "stderrBytes": 13019,
+    "stdoutBytes": 0,
+    "terminationProven": true,
+    "totalElapsedMs": 611.0647
+  },
+  "phase": "cleanup-pure-preflight-r2",
+  "status": "FAIL_NO_ACCEPTANCE",
+  "cause": "Test namespace retained function instead of module dictionary;16 ran/13errors",
+  "rawStderrSha256": "6d6235542962f071cec6122eca340898910547c2174aeb57587c1ed7c8cc23f0",
+  "sanitizedStderr": true
+}

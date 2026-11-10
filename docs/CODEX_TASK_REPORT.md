@@ -1,4 +1,48 @@
-# Current checkpoint: RUN input policy and cohort staging published
+# Current checkpoint: pending cleanup and detached R7 locally accepted
+
+UTC2026-11-10. F codex/q100-terminal-only-20261107 baseHEAD1b7f972d6d0158b20f32b1b7c56370479ae28be6,
+no upstream; implementation commit/push/Gmail pending. Previous679f3621/1b7f972d
+normally pushed and exact remote verified; Gmail1a1c28920295eadb SENT_ONCE, never repeat.
+
+Candidate OS-temp leaf tsj-q100-cleanup-credit-r3-fe1e3f00cd6a4fa5863cb1ee025df489. Sourcefreezeb40afa038a477acc7300765509f4b5b8ca00c70415fb8265b90de973ed2c1615; proof333bd2d8e5f22d8f1d29f2d1511e0791a956ba8341152495b683c70f1d93591b.
+Helpera98ea929 adds pendingCleanupBody14/13/1, installCleanup67/11/2. Same-body
+views, inherited scalar/projector, prepaid sole put, no finish or duration resum;
+old metadata methods byte-identical. Current codec/R5/R7/ownership unchanged.
+Final JDK8 compile2Sources/11major51classes59455B,2507deps12034690B/no shadows;
+SMOKE2/SUITE22 actual readers, private/public16pures, maintained81/12089 PASS.
+Host/file controls and9expectedexit2 reader/2expectedexit1 protocol negatives PASS.
+All28 actual process receipts/inputs reauthenticated; termination/root+logabsence
+proved, isolated cleanupduration unmeasured. Independent Source reviews PASS in
+their helper/census/R5/R7/canary/file-policy scopes; no independent runtime claimed.
+
+Valid R7 synthetic fixture real native begin/admit0/adopt1 APIs: one prior credit,
+one wrapper group, worktotal2/captureGroups1, zero genuineowner/arm/graph/work.
+Exact18576/132/19 via ownership995/tree17311. Explicit zero-credit postclose
+R5_METADATA_SNAPSHOT rejection retained. Actual codec pending-header0byte reject.
+Testbench formatter does not qualify production export/transport. Fullresult/
+fullD/actualhost/lifecycle remain closed; next narrow producer compatibility
+Source audit, before genuine-envelope spend. Protected/held-out DATA/old actual
+classes/builders/consumers denied. Genuine original then exact NULL/OBSERVE UNSPENT_GATED.
+
+N1 pure preflights FAIL(args then namespace13errors); N1 reader FAIL_FILE_CHANGED
+from cross-API Windows ctime. Corrected within-API stability/cross-API identity
+passes real stable-rewrite/append controls. N2 SUITE FAIL17pass/4fail:639group
+precondition and zero-credit snapshot. R3 fixes fixtures, adds24th negative;
+no budget/validator weakened. Pin transcription caught before finalfreeze.
+All failures/Source/classes retained; no failure reclassified PASS.
+
+F task paths only changed; Main5f05b005 9trackedM/6untracked, E d9747229 reportM,
+Desktop e0c36885 7trackedM/89untracked preserved. Main/E reportmirroronly. No new
+persistent process/link; scratch Source/classes/failure fixtures retained. Old
+uncertain browser14116/start639294472690745890/58320, preview34180/start639294472514546595/
+58264+14children and oldDprocess/unlinkUNCERTIFIED untouched. All90s/640/5s/32768/
+copy1MiB/chunk4096 and Source/report/class/host/cleanup caps unchanged. GWT/Player
+N/A,electrical/population NOTRENEWED,CI NOTRUN,full30EXCLUDED,HARD/PSYCHOTIC
+unavailable/unrun,oldnormal20 historicalREAD/no reread,protectedUnreadUNCERTIFIED,
+playable100=0/betaHELD. Next root stage/diff/privacy/byte checks, normal commit/push,
+verify exact remote and one new Gmail, then publication receipt and next audit.
+
+# Historical checkpoint: RUN input policy and cohort staging published
 
 UTC2026-11-09. F codex/q100-terminal-only-20261107 HEAD
 679f36216087d1a14e25187619ff6bf9f3908e28, no upstream. Implementation normally pushed,
@@ -57,7 +101,7 @@ e0c36885(7trackedM/89untrackedfiles/staged0) preserved; Main/E reportmirroronly.
 No new persistent process/link. Source/classes/evidence/failures retained. Old
 uncertain browser14116/start639294472690745890/58320, preview34180/
 start639294472514546595/58264+14children, oldDprocess/unlinkUNCERTIFIED untouched.
-Root integrated/staged/privacy/whitespace review PASS51 paths;10 staged runtime blob hashes matched final-source gates. Independent documentary review PASS; no independent native run. Completion Gmail1a1c28920295eadb SENT_ONCE_ACKNOWLEDGED. Documentation receipt pending; no second email. Only documentation changed after the accepted Source gates.
+Root integrated/staged/privacy/whitespace review PASS51 paths;10 staged runtime blob hashes matched final-source gates. Independent documentary review PASS; no independent native run. Completion Gmail1a1c28920295eadb SENT_ONCE_ACKNOWLEDGED. Documentation receipt1b7f972d normallypushed/exactremoteverified; no secondemail. Only documentation changed after the accepted Source gates.
 
 # Historical checkpoint: R7 projection handoff Source audit
 
