@@ -66,4 +66,4 @@ genuine UNSPENT_GATED. Unrelated work, uncertain resources and failures preserve
 Proof SHA256:96b1f913a550eaed2b4444bc58da3067530659263ce1a32969ec933e4841de32.
 Next: choose the next coherent remaining Source prerequisite from the coverage
 audit before any deeper projection or genuine-envelope work.
-Publication/notification pending normal push.
+Publication/notification recorded in PUBLICATION_R1.json.

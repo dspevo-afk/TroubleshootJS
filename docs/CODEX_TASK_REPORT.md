@@ -1,8 +1,9 @@
-# Current checkpoint: complete arm projection accepted locally
+# Current checkpoint: complete arm projection published
 
 F codex/q100-terminal-only-20261107 observed HEAD
-603f4285e7ea0fb1d45f00eb57e5c930f1ae9cd0, no upstream; target origin/codex/q100-physical-feasibility.
-Normal commit/push/Gmail pending; no N27 publication claimed yet.
+495bc2d4b354b4b2de46424ac165320e9da4170b, no upstream; target origin/codex/q100-physical-feasibility.
+Implementation 495bc2d4b354b4b2de46424ac165320e9da4170b normally pushed/exact remote SHA verified.
+Gmail 1a1c5fdb8681d653 SENT_ONCE_ACKNOWLEDGED; never duplicate.
 N26 94737a9f/603f4285/Gmail1a1c5d68f7f9dfaf and N25 d4fbdf89/8c3945e4/
 Gmail1a1c58056570c4cc remain complete; no duplicate receipt email.
 
