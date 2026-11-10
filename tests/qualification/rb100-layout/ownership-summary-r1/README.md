@@ -1,5 +1,9 @@
 # Ownership summary preflight
 
+Current higher fixtures/canaries now use the [nested cleanup schema check](../cleanup-schema-r1/README.md)
+with47 gets/154 hooks. Prior frozen acceptance and pure Source stages remain
+attached to their recorded candidates; lower transport oracles are unchanged.
+
 Current higher fixtures/canaries now use the [copy-effects summary preflight](../copy-effects-summary-r1/README.md)
 with46 gets/152 hooks. Prior frozen acceptance and pure Source stages remain
 attached to their recorded candidates; lower transport oracles are unchanged.

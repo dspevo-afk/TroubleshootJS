@@ -504,6 +504,13 @@ bytes are conserved and current higher fixtures migrate. This is recorded
 metadata agreement; actual effects, SHA shape, full DTO validity and authority/
 lifetime remain unqualified. The ordinary formatter still owns later ASCII checks.
 
+The [nested cleanup schema check](task-evidence/Q100/cleanup-schema-r1/README.md)
+adds one late read and the existing fixedString guard for the producer version
+tag before encoding. It adds2 hooks per pass (total154/47 gets), without new
+helper/API/Map guard or Meter/group/copy/byte work. All prior bytes and error
+precedence are conserved; current higher fixtures migrate. This discriminates
+the nested version only, not full shape/cardinality, semantics or authority.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

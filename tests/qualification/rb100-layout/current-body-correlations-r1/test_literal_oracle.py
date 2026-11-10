@@ -28,7 +28,7 @@ def expected():
                       'observe': dict(armRole='OBSERVE',
                                       cleanup=dict(contextRestored=True, adapterSessionAliasDropped=True, adapterSearchAliasDropped=True, adapterCandidateAliasDropped=True, adapterRouteResultAliasDropped=True, adapterBoardTemplateAliasesDropped=True, sourceGeometryBeforeSha256='4' * 64, sourceGeometryAfterSha256='4' * 64))},
                 work=dict(cleanupNanos=0, ordinaryList=['synthetic']),
-                cleanup=dict(cleanupNanos=0,
+                cleanup=dict(schema='tsj-cohort-terminal-cleanup-v1', cleanupNanos=0,
                              originalCaptureContextRestored=True,
                              contextRestored=True,
                              originalCaptureOwnersReleased=True,

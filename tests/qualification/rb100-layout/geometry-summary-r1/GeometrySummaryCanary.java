@@ -203,7 +203,7 @@ public final class GeometrySummaryCanary {
         validate.setAccessible(true);
         HookCountSink sink = new HookCountSink();
         validate.invoke(null, BodyCorrelationOracle.body(), sink);
-        check(sink.hooks == 152, "CORRELATION_HOOK_BUDGET_152");
+        check(sink.hooks == 154, "CORRELATION_HOOK_BUDGET_154");
         cases++;
     }
 
@@ -245,8 +245,8 @@ public final class GeometrySummaryCanary {
         TreeSnapshot admittedBefore = new TreeSnapshot(admitted);
         PermitSink admittedSink = new PermitSink(admittedState, false);
         CurrentV2CanonicalCodec.writeCorrelatedBody(admitted, admittedSink);
-        check(admittedState.successfulGets == 46,
-                "FORTY_SIX_CORRELATION_GETS_HAVE_FRESH_ADMISSION");
+        check(admittedState.successfulGets == 47,
+                "FORTY_SEVEN_CORRELATION_GETS_HAVE_FRESH_ADMISSION");
         check(admittedState.rejectedGets == 0 && !admittedState.permitOutstanding,
                 "NO_REJECTED_OR_STALE_MAP_ADMISSION");
         check(admittedSink.bytes().length > 0 && oneFinalLf(admittedSink.bytes()),

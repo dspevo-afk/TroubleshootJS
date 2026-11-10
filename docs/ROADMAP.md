@@ -1792,6 +1792,18 @@ Implementation `875768b63529e0d664fc50a512e691ae36d25ba6` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c54f4fc6ecc4c` sent once. This receipt sends no second email.
 
+The [nested cleanup schema prerequisite](task-evidence/Q100/cleanup-schema-r1/README.md)
+is locally accepted for the fixed producer version discriminator before encoding.
+Final-source JDK8,21 new cases/63 assertions,517 migrated cases/1534 assertions,
+176 retained cases/773 assertions, private/publicSource8+literal3 each and bounded
+Source review pass;14 receipts distinguish13 exit0 and1 expected argument rejection.
+Five fresh migrated suites retain admission/hook/real-count proof; the new canary
+stays focused on tag/precedence.2 extra hooks/pass are not native units. Actual
+effects/geometry, whole semantics, authority/lifetime and genuine execution remain
+gated; budgets/seeds/epochs/exclusions unchanged, playable100=0,beta HELD. Next:
+freeze the next complete producer-backed projection contract before implementation.
+Publication pending final root/index checks and normal push.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

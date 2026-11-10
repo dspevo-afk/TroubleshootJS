@@ -1,5 +1,9 @@
 # Copy-effects summary and fixed scope preflight
 
+Current higher fixtures/canaries now use the [nested cleanup schema check](../cleanup-schema-r1/README.md)
+with47 gets/154 hooks. Prior frozen acceptance and pure Source stages remain
+attached to their recorded candidates; lower transport oracles are unchanged.
+
 The current writeCorrelatedBody entry now checks the recorded copy-effects
 summary against its two source strings and requires ORIGINAL_CAPTURE_COPY_ONLY
 scope, after geometry validation and before encoding. Matching false is valid.

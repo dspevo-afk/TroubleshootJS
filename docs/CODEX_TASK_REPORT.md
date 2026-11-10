@@ -1,4 +1,58 @@
-# Current checkpoint: copy-effects summary preflight published
+# Current checkpoint: nested cleanup schema accepted locally
+
+F codex/q100-terminal-only-20261107 HEADfa9ec1089b7d21efe4728195b4bd5f3c29118c90,
+no upstream; target origin/codex/q100-physical-feasibility. N25 gates PASS;
+root/index checks and commit/push/Gmail pending. No publication claimed yet.
+N24 875768b6/fa9ec108/Gmail1a1c54f4fc6ecc4c, N23d5749fab/3f96bf11/
+Gmail1a1c517d783188d3 and older receipts below complete; never duplicate emails.
+
+N25 OS-temp/tsj-q100-cleanup-schema-r1-32a5ae14a5a04f85ba4b9abf2462017e,
+T/E cleanup-schema-r1. Existingcodec latechecks cleanup.schema exactproducer
+tsj-cohort-terminal-cleanup-v1 beforeencoding viaexistingread/fixedString owners.
+No newhelper/API/Mapguard;2extra/154totalhooks47gets, notnativeunits;6hooks over3
+passes. NoMeter/copy/group/byte/mutation/limit/epochchanges. Nestedversiononly,
+notshape/cardinality/fullbody/authority/lifetime/actualeffects/geometry/SHAshape.
+OrdinaryASCIIformatter mayrejectlaterafteroutput; onlynewtagfailurezerooutput.
+Codec32230/eb35fcb9... ->32425/a4b387e6f55cc4cce8802fa97cc1bb05f8852b016065cc17a799a2f36b99b652.
+Sourcefreezee82b26d07100ad2fda38d9c4b876f145bfc90990ee95b2c2f4b06dea452ed274;
+nativefreezeac31bf588b28d3cc851ea35492bc9ed27b1cb878227d4e47d2a88e361f93ad04;
+finalproof238f9dbe97cf221c8d5c281f66778bc1a3dc932078e8599055fc67fdb6355a75.
+PASS:JDK8target7final8Sources75major51classes205351B/2556deps12265717B/noShadows;
+21new/63+migrated60/210,69/253,209/566,125/344,54/161+retained63/94,113/679
+=714cases2370assertions; private/publicSource8+literal3each; root/independent
+Source review. Newsmallcanary onlytag/lateprecedence; fivemigratedsuitesretain
+154hooks/47freshgets/admission/actualR5countproof.14receipts13exit0+1exactargexit1,
+allresourcesabsent/isolatedcleanupnull. No newruntimefailure. ActualsamebodyR5
+countPASS; fullExportV2/write/compare/publicationNOTRUN/fullfeeSourceinference.
+Sevenhigherfixturesmigratedschemafirst; lower1177/6370oracles unchanged. Final
+N24correctedcanary56644... input; older6d149a31.../missinghelperFAIL preserved at
+acceptedpredecessor, no reclassification. Allpriorfailures/snapshots preserved.
+
+Next: freeze nextcomplete producer-backed projection contract before further
+implementation; bounded read-onlyaudit is assessingcohortprojection asonecoherent
+scope insteadofinventedsinglefieldvalidators. Further nestedshape/cohort/wholebody
+needs that explicitcontract and independentoracles. No nextimplementation/helper/
+test/Java/native/CLI/factory/owner/genuine execution.
+
+F intendedN25Source/evidence/docs changes only. Main5f05b0059trackedM/6untracked;
+E d9747229reportM; Desktope0c36885 7trackedM/89untracked preserved. Onlyreport
+prefixes mirroredMain/E. No newpersistentprocess/listener; existingNotepad67116860/
+tabs untouched. Uncertainbrowser14116/start639294472690745890/58320,
+preview34180/start639294472514546595/58264+14children,oldDprocess/unlinkUNCERTIFIED
+untouched. Priorregularhardlinks/scratch/failures retained,testedjunctionsremoved;
+noatomicpathhandle guarantee. No receiptfiles/positiveprepare/binding/factory/
+actualorfakeOriginalArm/ArmResult/graph/Session/routing/positiveoriginalDTO/
+executeArm/R9DTO/genuineexecution. Syntheticmetadata/codec/Meter only;
+genuineoriginalthenexactNULL/OBSERVE UNSPENT_GATED. All90s/640/5s/32768/copy1MiB/
+chunk4096/Source4MiB/opJSON8MiB/result1MiB/depth64/key1m/class10k256MiB/
+compile-suite60s/reader180s/wrapper480s/cleanup120s/exactseeds/epochs unchanged.
+GWT/PlayerN/A,electrical/populationNOTRENEWED,CINOTRUN,full30EXCLUDED,
+HARD/PSYCHOTICunavailable/unrun,oldnormal20historicalREAD/noreread,
+protectedUnreadUNCERTIFIED,playable100=0,betaHELD. Protected/heldoutDATA/oldactual
+artifacts/generateddataclasses/wholelegacybuilders/consumers denied. Continue
+standingroadmap until userstops.
+
+# Historical checkpoint: copy-effects summary preflight published; receipt record
 
 F codex/q100-terminal-only-20261107 implementation875768b63529e0d664fc50a512e691ae36d25ba6,
 no upstream; target origin/codex/q100-physical-feasibility. N24 gates/root/index
