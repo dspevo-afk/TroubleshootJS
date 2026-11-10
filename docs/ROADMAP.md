@@ -1694,6 +1694,9 @@ public Source22+oracle31, actual I/O and case-specific rejection controls pass;
 remain preserved. Actual caller, whole-result, authority and lifetime stay gated;
 no positive owner/genuine envelope or playable100 admission. All budgets, exact
 seeds/epochs, data exclusions, full30 EXCLUDED and beta HELD remain.
+Implementation `4d835a9a43cb4238ff5180384cca22118c28ab5f` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
+`1a1c41da9786b690` sent once. This receipt sends no second email.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

@@ -1,0 +1,16 @@
+{
+  "status": "PUBLISHED_AND_COMPLETION_EMAIL_SENT_ONCE_ACKNOWLEDGED",
+  "implementationSha": "4d835a9a43cb4238ff5180384cca22118c28ab5f",
+  "message": "Prepay current arm metadata source reads",
+  "localBranch": "codex/q100-terminal-only-20261107",
+  "remoteBranch": "origin/codex/q100-physical-feasibility",
+  "normalPush": true,
+  "exactRemoteShaVerified": true,
+  "emailId": "1a1c41da9786b690",
+  "emailSubject": "TroubleshootJS: arm metadata read metering pushed",
+  "dedupe": "Subject and exact SHA sent searches empty before send; one acknowledged send, no second email for this receipt",
+  "finalProofSha256": "65c8fda7d568817ca1cc607db9f4246a9f71643d80c0babcd6c7c58f8183a82c",
+  "nextUnstarted": "current caller/whole-result/authority/lifetime prerequisite",
+  "actualOwnerExecution": false,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

@@ -1,6 +1,6 @@
-# Current checkpoint: arm metadata read prerequisite accepted locally
+# Current checkpoint: arm metadata read prerequisite published
 
-F codex/q100-terminal-only-20261107 HEADa42dd1c9160905a05ae182448df80e765801b2b3,
+F codex/q100-terminal-only-20261107 implementation4d835a9a43cb4238ff5180384cca22118c28ab5f,
 no upstream. Previous originalDTOimplementation64c83dec/receipta42dd1c9 remotely
 verified; Gmail1a1c3ce8d372dabb SENT_ONCE_ACKNOWLEDGED, neverduplicate.
 Current N17 OS-temp/tsj-q100-arm-read-schema-fixture-r4-21e8910cb7784c18bce32fa0f6e2f47b.
@@ -29,8 +29,9 @@ pricesandoracles unchanged. Current callbackNO_FAILURE=40units, unrelatedtoclosu
 count41. Sourcecounterdraft corrections, outerinterpreterpathtypo, staleprefinal
 oraclecopyhash andpreexecutionrootstatuslabel noted, neverclassifiedaspasses.
 
-IntendedSource/evidence/docs staged; rootdiff/privacy PASS, indexaudit pending; no newcommit,
-pushoremail yet. Priorpacket resourcewording corrected: regularSourcehardlinks
+Implementation normalpush/exactremote verified; Gmail1a1c41da9786b690
+SENT_ONCE_ACKNOWLEDGED. Rootdiff/privacy/indexbyte audit PASS. Documentation-only
+receipt follows; no secondemail or unchanged-code rebuild. Priorpacket resourcewording corrected: regularSourcehardlinks
 remaininretainedscratch, junctionsremoved. No newpersistentprocess/listener; all
 classes/scratch/failures retained. F intendedchangesonly; Main5f05b0059trackedM/
 6untracked,E d9747229reportM,Desktop e0c368857trackedM/89untracked preserved;
