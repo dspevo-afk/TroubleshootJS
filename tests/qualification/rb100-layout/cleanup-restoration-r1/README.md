@@ -1,5 +1,10 @@
 # Cleanup restoration summary preflight
 
+The current canary now uses the final [ownership summary assembly](../ownership-summary-r1/README.md)
+and current higher fixtures:34 admitted gets/106 total correlation hooks, with
+the same69 cases/253 assertions. This directory's pure restoration transform is
+the preceding Source stage; its accepted historical snapshot remains in evidence.
+
 The current codec's existing writeCorrelatedBody entry now checks copied-capture
 and aggregate context-restoration flags after its prior three correlations and
 before encoding. Five Boolean leaves must agree with the independent eight-row

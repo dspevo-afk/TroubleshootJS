@@ -1,5 +1,9 @@
 # Cleanup restoration preflight and current fixture migration
 
+Current fixtures/canary have since migrated under the [ownership summary prerequisite](../ownership-summary-r1/README.md).
+This packet remains the historical restoration acceptance. Its frozen pins and
+recorded results are preserved; current final replay uses34 gets/106 hooks.
+
 The existing writeCorrelatedBody preflight now checks two cleanup summaries
 against their three source context-restoration flags. The copied capture flag
 must equal originalCapture.contextRestored; the aggregate must equal capture

@@ -1,0 +1,25 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_NATIVE_SOURCE_FREEZE",
+  "files": [
+    {
+      "name": "component/OwnershipSummaryCanary.java",
+      "bytes": 26865,
+      "sha256": "c1f300e2b0988fe90a8a5a5195a1ca0dc9774d8a1bd345d779f1b02a82153d92"
+    },
+    {
+      "name": "emitted-source/CurrentV2CanonicalCodec.java",
+      "bytes": 28660,
+      "sha256": "0faa081daf3c6b478424c088759488fa2d6ae784574b5e3362993a8ef4b732c7"
+    },
+    {
+      "name": "NATIVE_EXPECTED_R1.json",
+      "bytes": 1052,
+      "sha256": "cf1b6d6eabeca74eef191154ef1cee3faea6ed87b53b3936630e4ce4cd093111"
+    },
+    {
+      "name": "SOURCE_REVIEW_R1.md",
+      "bytes": 2775,
+      "sha256": "4c347119356f601ea4602a5df360406fd8b21bbb20b35c8c8d23fb9d4264e455"
+    }
+  ]
+}

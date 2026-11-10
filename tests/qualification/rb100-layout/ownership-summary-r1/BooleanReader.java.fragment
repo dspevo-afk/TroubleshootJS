@@ -1,0 +1,8 @@
+    private static boolean correlationBoolean(Map<?, ?> values, String key,
+            CohortTerminalTelemetryStudy.CanonicalJsonSink sink, String errorCode) throws Exception {
+        Object value = correlationRead(values, key, sink);
+        sink.beforeDataOperation();
+        if (!(value instanceof Boolean)) throw failure(errorCode);
+        sink.beforeDataOperation();
+        return ((Boolean) value).booleanValue();
+    }

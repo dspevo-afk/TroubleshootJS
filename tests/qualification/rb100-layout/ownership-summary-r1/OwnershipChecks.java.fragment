@@ -1,0 +1,50 @@
+        boolean captureOwnersReleased = correlationBoolean(
+                capture, "ownersReleased", sink, "BODY_OWNERSHIP_BOOLEAN");
+        boolean captureOwnersSummary = correlationBoolean(
+                cleanup, "originalCaptureOwnersReleased", sink, "BODY_OWNERSHIP_BOOLEAN");
+        boolean nullSessionDropped = correlationBoolean(
+                nullCleanup, "adapterSessionAliasDropped", sink, "BODY_OWNERSHIP_BOOLEAN");
+        boolean nullSearchDropped = correlationBoolean(
+                nullCleanup, "adapterSearchAliasDropped", sink, "BODY_OWNERSHIP_BOOLEAN");
+        boolean nullCandidateDropped = correlationBoolean(
+                nullCleanup, "adapterCandidateAliasDropped", sink, "BODY_OWNERSHIP_BOOLEAN");
+        boolean nullRouteDropped = correlationBoolean(
+                nullCleanup, "adapterRouteResultAliasDropped", sink, "BODY_OWNERSHIP_BOOLEAN");
+        boolean nullBoardAliasesDropped = correlationBoolean(
+                nullCleanup, "adapterBoardTemplateAliasesDropped", sink, "BODY_OWNERSHIP_BOOLEAN");
+        boolean nullAliasSummary = correlationBoolean(
+                cleanup, "nullArmAliasesDropped", sink, "BODY_OWNERSHIP_BOOLEAN");
+        boolean observeSessionDropped = correlationBoolean(
+                observeCleanup, "adapterSessionAliasDropped", sink, "BODY_OWNERSHIP_BOOLEAN");
+        boolean observeSearchDropped = correlationBoolean(
+                observeCleanup, "adapterSearchAliasDropped", sink, "BODY_OWNERSHIP_BOOLEAN");
+        boolean observeCandidateDropped = correlationBoolean(
+                observeCleanup, "adapterCandidateAliasDropped", sink, "BODY_OWNERSHIP_BOOLEAN");
+        boolean observeRouteDropped = correlationBoolean(
+                observeCleanup, "adapterRouteResultAliasDropped", sink, "BODY_OWNERSHIP_BOOLEAN");
+        boolean observeBoardAliasesDropped = correlationBoolean(
+                observeCleanup, "adapterBoardTemplateAliasesDropped", sink, "BODY_OWNERSHIP_BOOLEAN");
+        boolean observeAliasSummary = correlationBoolean(
+                cleanup, "observeArmAliasesDropped", sink, "BODY_OWNERSHIP_BOOLEAN");
+        sink.beforeDataOperation();
+        boolean nullAllDropped = nullSessionDropped & nullSearchDropped;
+        sink.beforeDataOperation();
+        nullAllDropped = nullAllDropped & nullCandidateDropped;
+        sink.beforeDataOperation();
+        nullAllDropped = nullAllDropped & nullRouteDropped;
+        sink.beforeDataOperation();
+        nullAllDropped = nullAllDropped & nullBoardAliasesDropped;
+        sink.beforeDataOperation();
+        boolean observeAllDropped = observeSessionDropped & observeSearchDropped;
+        sink.beforeDataOperation();
+        observeAllDropped = observeAllDropped & observeCandidateDropped;
+        sink.beforeDataOperation();
+        observeAllDropped = observeAllDropped & observeRouteDropped;
+        sink.beforeDataOperation();
+        observeAllDropped = observeAllDropped & observeBoardAliasesDropped;
+        sink.beforeDataOperation();
+        if (captureOwnersSummary != captureOwnersReleased) throw failure("BODY_OWNERSHIP_CAPTURE");
+        sink.beforeDataOperation();
+        if (nullAliasSummary != nullAllDropped) throw failure("BODY_OWNERSHIP_NULL");
+        sink.beforeDataOperation();
+        if (observeAliasSummary != observeAllDropped) throw failure("BODY_OWNERSHIP_OBSERVE");

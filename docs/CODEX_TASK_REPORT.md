@@ -1,4 +1,62 @@
-# Current checkpoint: restoration preflight published; receipt record
+# Current checkpoint: ownership summary preflight accepted locally
+
+F codex/q100-terminal-only-20261107 HEAD6fb24af1b64d2b14e86cc58eccc39af5517b13eb,
+no upstream; normal target origin/codex/q100-physical-feasibility. N22 final gates
+PASS; root/index checks and commit/push/Gmail pending. No publication claimed yet.
+N21 implementation66ab05b19d7cb79be094baa74b2dbe1d398f43a8/receipt6fb24af1/Gmail
+1a1c4bea249070e7 complete; prior1bad80bd/98be53fc/Gmail1a1c4823f69687d5 and
+dffb1d04/77032ab4/Gmail1a1c457329d9ca2b complete. Never duplicate prior emails.
+
+N22 OS-temp/tsj-q100-ownership-summary-r1-003159907d554f7ea522dd634155a9d0.
+T=tests/qualification/rb100-layout/ownership-summary-r1;
+E=docs/task-evidence/Q100/ownership-summary-r1. Existing codec preflight checks
+capture owner-release copy and two five-flag alias summaries after restoration,
+before encoding. Parameterized one private Boolean reader; old signature retired,
+old restoration errors retained.14 strict Booleans,8 eager ANDs,3 equality controls
+add53hooks/pass (159 over3); total106hooks/34gets. Hooks are not native units;
+no Meter/group/copy/byte/mutation calls added. Metadata agreement only, not actual
+release. Current higher4fixtures migrated; lower1177/6370 oracles unchanged.
+Codec25156/344223e4... ->28660/0faa081daf3c6b478424c088759488fa2d6ae784574b5e3362993a8ef4b732c7.
+Sourcefreeze494749cd7b370669942f41bcdb844e3d640942c19eaffbc6ac656b8ded778ea5;
+nativefreeze84313943282d85f8bf4ba7ee5256c21343404e9330c688118d67edf14573d7af;
+finalproof05ff6c5d258cf41150064fa04135609e0380042d6a69e5a2c4e472c32330afdd.
+PASS:JDK8target7final5Sources45major51classes123711B/2556deps12265717B/noShadows;
+new209cases566assertions+migrated60/210and69/253+retained63/94and113/679
+=514cases1802assertions; private/publicSource12+literal3each; root/independent
+bounded Source review.11selectedreceipts10exit0+1exactargexit1; termination/root/
+logs absence proven, isolated cleanup duration null. No new runtime failure.
+Actual same-body R5 count metrics PASS; full exportV2/write/compare/publication
+NOT RUN and full fee equations Source inference. Whole-result/authority/lifetime/
+actual release unqualified. Prior failures and snapshots preserved. New canary's
+initial extra private newN22/component copy retained byte-identically; no test ran
+from that path. Final current Source has one newline/no trailing whitespace.
+
+Next unstarted implementation: source-geometry summary agreement. Read-only
+producer audit finds cleanup.sourceGeometryUnchanged equals five comparisons
+of baseline capture-template before hash with after and each arm before/after;
+8 added gets/one template Map guard,6 strings+one Boolean. Freeze read/error/type
+contract and independent32 equality masks/flips before current-only transform.
+No next implementation/helper/test/Java/CLI/factory/owner/genuine execution yet.
+
+Main5f05b0059trackedM/6untrackedfiles; E d9747229reportM; Desktop e0c36885
+7trackedM/89untrackedfiles preserved; report prefixes only mirrored Main/E.
+F intended N22 source/evidence/docs changes unstaged at this checkpoint. No new
+persistent process/listener; existing Notepadwindow67116860/tabs untouched.
+Uncertain browser14116/start639294472690745890/58320,preview34180/start639294472514546595/
+58264+14children,oldDprocess/unlinkUNCERTIFIED untouched; prior regularhardlinks/
+scratch/failures retained,testedjunctionsremoved. No atomic pathhandle guarantee.
+No receipt files/positiveprepare/binding/factory/actual orfakeOriginalArm/ArmResult/
+graph/Session/routing/positiveoriginalDTO/executeArm/R9DTO/genuine execution.
+Syntheticmetadata/codec/Meter only; genuineoriginalthenexactNULL/OBSERVE
+UNSPENT_GATED. All90s/640/5s/32768/copy1MiB/chunk4096/Source4MiB/opJSON8MiB/
+result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/reader180s/wrapper480s/
+cleanup120s/exactseeds/epochs unchanged. GWT/PlayerN/A,electrical/population
+NOTRENEWED,CINOTRUN,full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,
+oldnormal20historicalREAD/noreread,protectedUnreadUNCERTIFIED,playable100=0,
+betaHELD. Protected/heldoutDATA/oldactualDartifacts/generateddataclasses/whole
+legacybuildersconsumers denied. Continue standing roadmap until user stops.
+
+# Historical checkpoint: restoration preflight published; receipt record
 
 F codex/q100-terminal-only-20261107 implementation66ab05b19d7cb79be094baa74b2dbe1d398f43a8,
 no upstream; target origin/codex/q100-physical-feasibility. PriorreceiptTuple

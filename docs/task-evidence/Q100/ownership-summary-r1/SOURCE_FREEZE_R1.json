@@ -1,0 +1,65 @@
+{
+  "status": "ROOT_REVIEWED_SOURCE_FREEZE",
+  "files": [
+    {
+      "name": "baseline/CurrentV2CanonicalCodec.java",
+      "bytes": 25156,
+      "sha256": "344223e4f3d12bc9c1bb219bca80a8c711ce99aed8fe4b309c1043da6b5f4dc4"
+    },
+    {
+      "name": "component/OwnershipChecks.java.fragment",
+      "bytes": 3363,
+      "sha256": "fc23a80575de4c16caac770bf7561799f778e116e89d1ae33bcb4bccfd539bcd"
+    },
+    {
+      "name": "component/BooleanReader.java.fragment",
+      "bytes": 431,
+      "sha256": "c86e298ac292d94d9adf1a37a5a5db19e5e0d9833eef67a43bd86422ee41214e"
+    },
+    {
+      "name": "component/derive_ownership_summary.py",
+      "bytes": 2427,
+      "sha256": "5d6b18ed767415f16c6c87f02b8854b2c6aa07bfee9c600eb768320e6e443cfa"
+    },
+    {
+      "name": "component/test_ownership_summary_source.py",
+      "bytes": 3922,
+      "sha256": "c104fa49bf6515e58c3d5c0fe66d0fa2652d98d2aae092f66d31cd6dd06f6f42"
+    },
+    {
+      "name": "component/CONTRACT_R1.md",
+      "bytes": 4536,
+      "sha256": "dc73acabe587b43b8cda82ee7569c6c617caa95f807484310ab1344e7388d1f9"
+    },
+    {
+      "name": "component/README.md",
+      "bytes": 2536,
+      "sha256": "2ca038866fe4086a0ab6b7c2be37e7e913ce6b90d524814d0e47a1bc45b66388"
+    },
+    {
+      "name": "migrated-fixtures/BodyCorrelationOracle.java",
+      "bytes": 10812,
+      "sha256": "119c4fbd4eeac3119dfeba261b0edcc0b91775e128226379e810848939532185"
+    },
+    {
+      "name": "migrated-fixtures/CurrentBodyCorrelationsCanary.java",
+      "bytes": 30252,
+      "sha256": "90297b03d9e6e8aa16672e6e12efcb491af5acc55d4dd95bd9e8c78903c6fe29"
+    },
+    {
+      "name": "migrated-fixtures/test_literal_oracle.py",
+      "bytes": 3902,
+      "sha256": "90d4567e07c989dbe6f3b49616c84c1c78d2092dc6faf6105c9c82b55d2081a1"
+    },
+    {
+      "name": "migrated-fixtures/CleanupRestorationCanary.java",
+      "bytes": 26295,
+      "sha256": "1ab668d6ea8b14925c407f40c480dc94a0b978affb5d2ef8ff337be538dad8df"
+    },
+    {
+      "name": "run_gates_r1.py",
+      "bytes": 9982,
+      "sha256": "02abd431a61b092c068d69ef8632138f953789b2e11bbb473eab7935aafd0282"
+    }
+  ]
+}

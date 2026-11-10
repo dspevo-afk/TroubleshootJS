@@ -1,5 +1,10 @@
 # Current body correlations: finite prerequisite accepted
 
+Current fixtures have since migrated under the [ownership summary prerequisite](../ownership-summary-r1/README.md).
+This packet remains the historical acceptance for its recorded candidate. Its
+old fixture pins are not the current final assembly; independent lower oracles
+remain unchanged.
+
 The gates below describe accepted commitdffb1d04bc93b901d1390d27647a9b1259243f46.
 Current higher-level fixture Sources have since migrated under the
 [cleanup restoration preflight](../cleanup-restoration-r1/README.md); their new

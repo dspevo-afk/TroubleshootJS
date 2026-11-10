@@ -1746,6 +1746,19 @@ Implementation `66ab05b19d7cb79be094baa74b2dbe1d398f43a8` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c4bea249070e7` sent once. This receipt sends no second email.
 
+The [ownership summary prerequisite](task-evidence/Q100/ownership-summary-r1/README.md)
+is locally accepted for finite metadata agreement. Copied capture ownership and
+two five-flag alias summaries now validate before encoding, after prior checks.
+Final-source JDK8,209 new cases/566 assertions,129 migrated cases/463 assertions,
+176 retained cases/773 assertions, private/public Source12+literal3 each and
+bounded Source review pass;11 selected receipts were reauthenticated. The53
+added hooks per pass are not native units; same-body real count metrics are
+unchanged. Actual release, full-result semantics, authority/lifetime and genuine
+execution remain gated. Budgets, exact seeds/epochs, full30 EXCLUDED and data
+exclusions remain; playable100=0 and beta HELD. Next: a frozen source-geometry
+summary agreement contract before implementation. Publication pending final
+root/index checks and normal push.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

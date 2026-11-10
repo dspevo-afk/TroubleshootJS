@@ -1,5 +1,10 @@
 # Current result body correlations
 
+The current higher fixtures now also contain ownership/alias fields under the
+[ownership summary preflight](../ownership-summary-r1/README.md). Native replay
+uses that final assembled codec (34 admitted gets); earlier accepted snapshots
+remain attached to their recorded commits. Lower transport oracles are unchanged.
+
 The higher-level Java and Python fixtures in this directory now include cleanup
 restoration fields under the [current restoration preflight](../cleanup-restoration-r1/README.md).
 Native replay uses that final assembled codec. Earlier fixture snapshots remain

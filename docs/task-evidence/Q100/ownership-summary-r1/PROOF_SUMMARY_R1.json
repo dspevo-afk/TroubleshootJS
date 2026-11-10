@@ -1,0 +1,374 @@
+{
+  "status": "PASS_FINAL_SOURCE_OWNERSHIP_SUMMARY_PREFLIGHT_AND_CURRENT_FIXTURE_MIGRATION",
+  "predecessorImplementation": "66ab05b19d7cb79be094baa74b2dbe1d398f43a8",
+  "predecessorReceipt": "6fb24af1b64d2b14e86cc58eccc39af5517b13eb",
+  "sourceFreezeSha256": "494749cd7b370669942f41bcdb844e3d640942c19eaffbc6ac656b8ded778ea5",
+  "nativeSourceFreezeSha256": "84313943282d85f8bf4ba7ee5256c21343404e9330c688118d67edf14573d7af",
+  "gateSha256": {
+    "SOURCE": "bcce27c9bdb85211c5beaa930a9606dfecf7013eab6e784f28b4068aa58cf70f",
+    "COMPILE": "ef9c10a7f333d01fa1244c1c93c1075d3a5ec37f0360e8f3550b1c9bcd5baa50",
+    "NATIVE": "3951322e0ec84678699e9c9986c0685c4022f1d5493a858ea16ca90266919364",
+    "PUBLIC": "b7ed916ce6eaa624c376af179597448f14e3d975f110e15f93fc1f9dc9ffa61a"
+  },
+  "emittedCodec": {
+    "name": "CurrentV2CanonicalCodec.java",
+    "bytes": 28660,
+    "sha256": "0faa081daf3c6b478424c088759488fa2d6ae784574b5e3362993a8ef4b732c7"
+  },
+  "sourceTestsPrivate": 12,
+  "sourceTestsPublic": 12,
+  "independentLiteralPrivate": 3,
+  "independentLiteralPublic": 3,
+  "finalSourceCount": 5,
+  "classCount": 45,
+  "classBytes": 123711,
+  "dependencyCount": 2556,
+  "dependencyBytes": 12265717,
+  "allMajor51": true,
+  "noShadows": true,
+  "nativeCases": 209,
+  "nativeAssertions": 566,
+  "migratedCases": [
+    60,
+    69
+  ],
+  "migratedAssertions": [
+    210,
+    253
+  ],
+  "retainedCases": [
+    63,
+    113
+  ],
+  "retainedAssertions": [
+    94,
+    679
+  ],
+  "uniqueNativeCases": 514,
+  "uniqueNativeAssertions": 1802,
+  "sourceCountedNativeExpected": {
+    "status": "ROOT_SOURCE_COUNTED_BEFORE_NATIVE",
+    "cases": 209,
+    "assertions": 566,
+    "line": "SYNTHETIC_OWNERSHIP_SUMMARY_COMPONENT_ONLY cases=209 assertions=566; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+    "ledger": [
+      {
+        "family": "capture matching and flipped",
+        "cases": 4,
+        "assertions": 10
+      },
+      {
+        "family": "two independent arm truth tables and flips",
+        "cases": 128,
+        "assertions": 320
+      },
+      {
+        "family": "four malformed kinds across14 leaves",
+        "cases": 56,
+        "assertions": 168
+      },
+      {
+        "family": "new precedence",
+        "cases": 4,
+        "assertions": 12
+      },
+      {
+        "family": "prior errors",
+        "cases": 12,
+        "assertions": 36
+      },
+      {
+        "family": "hook count",
+        "cases": 1,
+        "assertions": 1
+      },
+      {
+        "family": "admission",
+        "cases": 3,
+        "assertions": 9
+      },
+      {
+        "family": "actual wide R5 count",
+        "cases": 1,
+        "assertions": 10
+      }
+    ]
+  },
+  "processReceipts": [
+    {
+      "phase": "ownership-jdk8-compile-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 917.6317,
+      "wrapperTotalElapsedMs": 1163.7945,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "c729c03fd8072dbfd3938593f78de0eaa668a3a1849c6cf2ce4f59dd13292a33",
+        "owner.json": "3d9b6cd784bb40bbb29a8acff047aa6b5aa1590c67f6c14ee25b54bd9c017e55",
+        "process.json": "ab8eae47c0b38f8f0e28e34345f634581cc969d42bd19644d8035bef4e6852eb",
+        "parent.json": "91a070700858fe8883fbe32b0cd5319023fa6a183203444252dfe6757bb5fbf0",
+        "result.json": "e996b100e9d5a7589be35fc69d50cf4dd74671a5b33814047a402fa2a2b4db75",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "ownership-jvm-extra-argument-r1",
+      "childExitCode": 1,
+      "classification": "EXPECTED_CASE_SPECIFIC_REJECTION_NOT_POSITIVE_PASS",
+      "operationElapsedMs": 430.6281,
+      "wrapperTotalElapsedMs": 665.0612,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "bd54d05ddb7cd6b133a7a3c5033a3199e61967e95038d264bcbc35c96d00c0b8",
+        "owner.json": "732babeb691dca030833ab9bea2925fcf1ee3bcd8729139e599b7a63a17249b9",
+        "process.json": "63a66f5db8fa2f780dbc832642a1ccff4424c886fbeade3fbd59dc89871999e1",
+        "parent.json": "411d67d7a4db1c742856fe0464ff52295bd77a46bf5851c9dd3feb941df83d31",
+        "result.json": "f427f54b8a79f434d80a11e500650bd00b2087897822c076fc0a994c8fcb2d1f",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "02c328fc36664bbc81b1ee3fd0cb53c95f4d50da0d89efb7c3df3ab717bb6334"
+      }
+    },
+    {
+      "phase": "ownership-native-codec-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 467.9966,
+      "wrapperTotalElapsedMs": 704.1504,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "158b3e18e78da61d33f77ae3ad04148a9e5319ea75e126ea34bd110fdca64ece",
+        "owner.json": "5275eac88594e20c904940ea360bb0844dcca86276dff9bb52f81db065176b1b",
+        "process.json": "f72c9e3a3d02bb722f2f8e3462959eacbf9f4cdcb623962401ef03991387be23",
+        "parent.json": "b7beb5e00cd7619596b8fefa0df636580bb1bf51660a03e65bc86d4730593649",
+        "result.json": "299e1b810741981e290d2c6425cfbefe6917d3be967a2e62b41e986ceb500a7e",
+        "stdout.txt": "b591b84893b83da74cdf9ae186ed5543dab887e4178bbc88f232167a0ca3dd9f",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "ownership-native-migrated-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 365.2889,
+      "wrapperTotalElapsedMs": 597.2078,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "a12c1d00e2c2282c99ec25d99857ce9f4d435a734a3bfe723a9eae9ea0472ea4",
+        "owner.json": "5f71488fe78c00b5ad642d1f5b8fc5c3cae4223b81f62656bdfad89541d00425",
+        "process.json": "4fc6f9246b9360f1c4546da4a796272224a2fc03f951fe626aa79631e27307be",
+        "parent.json": "24a852aa495c491bc66c67f4354a26d28b3e79655bd7035f5060a51aa3524544",
+        "result.json": "476410f93b60969e6759e10c8ba105b200cba2e0f6be10203fcb6a643b57a7d9",
+        "stdout.txt": "f2a5e820fe3990807ca52101236a83e9e9e482d137564bf716a9f0f256b97afd",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "ownership-native-new-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 381.5152,
+      "wrapperTotalElapsedMs": 621.461,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "e9eb459fc3d87cdc99813f45406cc9ae1e7b89df0ea5c622777869e906e025bd",
+        "owner.json": "2ae62a2003ad7be283f320a119629bcbae130bec080bbc7b8d6bba41234a648e",
+        "process.json": "767c51d1f502cdea324a03314a037954146dbabe855585fe3dff78d6d673c4ba",
+        "parent.json": "151f0421c6809068f0e5bc5e5506955b5b61f83e74814594e5b025092bd306d6",
+        "result.json": "22cf8e014113573d7968fce8b9e758ed2757064aae55b3b8c55b23bcc27b3f3d",
+        "stdout.txt": "83fa2b0fb66776b289a89dd2919b7510649a63cd2b58e50dfc9069d6340a849e",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "ownership-native-receipt-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 378.71020000000004,
+      "wrapperTotalElapsedMs": 610.7009,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "60d816414b8bc5a0c45d43ff6b741b9b5a7d567d81a4724d3828663b94ffa7ea",
+        "owner.json": "077f62a50ca2391152e738332d06e043d93d1fc12a249134ce9c914654954f2f",
+        "process.json": "5c2f2a18e1c756b6943ff7e4b796e1ab0908d988fd3e12e57b2bea35b027095d",
+        "parent.json": "719ad652e4b319e433467d2e934de19a9ec3f23627b4265c726c70d1b61900c0",
+        "result.json": "25b5184dc95fd486de53cce0dc4ce5863dafd2d0762110fc2523e5499473442f",
+        "stdout.txt": "c3e8fb2438323258817934a5dd4d8f846fc856c5030e9c76567d016fb4ab44e0",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "ownership-native-restoration-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 355.5398,
+      "wrapperTotalElapsedMs": 583.7171000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "b9809ee8de2b3ee865890655af9f3edad8cf5e826f4fcaa0f0f420a737de03f5",
+        "owner.json": "f68d741e407db9adfc917ce30a13d240a4eee543aeab4ceb41772283241948eb",
+        "process.json": "ca234bec0cb77bd5c7d3ed4241962c1ff715f51e5f7653b9f0a882fc56b85fdb",
+        "parent.json": "97406e7e23200e924ec2bb602150a4972e5860731837d06f694d63f2c8a4eccb",
+        "result.json": "c12eaa8fc819fbc31db874c1234b47f2819b0b58a42d2a37b2d70e8df2b428e8",
+        "stdout.txt": "50ad54cc83d5bb65fcd79bfe1f06517d251600abf4d6b7cfc099a8dedcf5a1a6",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "ownership-private-literal-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 360.0661,
+      "wrapperTotalElapsedMs": 595.0066,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "79c072c6e9534effd41406c65e27696765303e65f59f9807483ac0e10999dae0",
+        "owner.json": "35d299664a3b35ebb436f25900e0dc73b3c220c74078ad5d0b7a8ea1ed0468c2",
+        "process.json": "4d6dc742eef0bdd1187ca5dd92441a3b2ae4bca70615039cac24aecd15a27876",
+        "parent.json": "88c26c5adefd55453f5f6ef19327d0735ff7bcdb6cb49a365d9aa0dcdaa49042",
+        "result.json": "8a1d1a2571b58b052bf9a0b8040562920488a35663f69a61a9fa08cf131f4644",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "4d5415dbb28a759ecf0f09978e966e9821a7eecfd98c12759504ab6aa4e92165"
+      }
+    },
+    {
+      "phase": "ownership-private-source-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 370.35060000000004,
+      "wrapperTotalElapsedMs": 611.695,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "85d383c3d72a2dabfadf5d3f59fbe5f0711fbf723528f81032976ec4f0c1ebef",
+        "owner.json": "cac78b0d840cd2bdac2d5f2dd290a9f268841093c9cd2fdc4b9177ef998107ad",
+        "process.json": "2ef24b6c1ec4f53cb0d751c59becf7c2b7d40f32e87b62f50ac484da39c57c80",
+        "parent.json": "d1ed65e97def433f4381f2d87e809d2393c7a030659bd6450336c7c11ac47865",
+        "result.json": "14633634c7815a7105f34705a26465131208e49c634ac0b1b90ff03710c7cbe8",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "4c8c82de5560fd3a86f1ce38f5b3f15f036001f07ae8b37823a9217b821082db"
+      }
+    },
+    {
+      "phase": "ownership-public-literal-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 361.0639,
+      "wrapperTotalElapsedMs": 607.4859,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "4f2572a06d725f950d5895bffabc3e77520366ee796d4a6c4e7da0642fe5d378",
+        "owner.json": "dd632e1f084a1c9dddfc970f83b1a37d072f0f4210db39068751c8ce6d10c70b",
+        "process.json": "bf315ed3340d1a9f4c051652f5841cd983e3c2f911200544a4697eeda3821a84",
+        "parent.json": "2e31eb5957da74f7e604de2588df22a81a4237905762755872c7afa11b71caf5",
+        "result.json": "36eee1d0479883efa4cfb8eeb764e97e9c7795a7f139b91ad2c508f4c75bea83",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "4d5415dbb28a759ecf0f09978e966e9821a7eecfd98c12759504ab6aa4e92165"
+      }
+    },
+    {
+      "phase": "ownership-public-source-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 360.81780000000003,
+      "wrapperTotalElapsedMs": 598.5221,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "2ff4e807d7363fef85a68871e9b56ab60a09f83ed2d59490192765bc74f80e5d",
+        "owner.json": "d9dc414c7d567e38f43180895744f3ce08dda9f4f010779b96e578266e7f3752",
+        "process.json": "421d0ca15cabafaf2080240de47a02c038b511aa85f619a56d8b7651ac213f38",
+        "parent.json": "516db7604e1124277bf467bf4b322241c3a0c1f657f5026b4fd8aa5719fd037e",
+        "result.json": "6c39ce44de77ac5a1f1f6c54ce19e3c570e15b143d63a4a1649118136803ef5c",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "4c8c82de5560fd3a86f1ce38f5b3f15f036001f07ae8b37823a9217b821082db"
+      }
+    }
+  ],
+  "selectedProcessCount": 11,
+  "positiveExitZeroCount": 10,
+  "selectedTerminationAndTaskRootLogsAbsenceProven": true,
+  "isolatedCleanupDurationMs": null,
+  "finalPublicCopies": [
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/CONTRACT_R1.md",
+      "bytes": 4536,
+      "sha256": "dc73acabe587b43b8cda82ee7569c6c617caa95f807484310ab1344e7388d1f9"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/OwnershipChecks.java.fragment",
+      "bytes": 3363,
+      "sha256": "fc23a80575de4c16caac770bf7561799f778e116e89d1ae33bcb4bccfd539bcd"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/BooleanReader.java.fragment",
+      "bytes": 431,
+      "sha256": "c86e298ac292d94d9adf1a37a5a5db19e5e0d9833eef67a43bd86422ee41214e"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/derive_ownership_summary.py",
+      "bytes": 2427,
+      "sha256": "5d6b18ed767415f16c6c87f02b8854b2c6aa07bfee9c600eb768320e6e443cfa"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/test_ownership_summary_source.py",
+      "bytes": 3922,
+      "sha256": "c104fa49bf6515e58c3d5c0fe66d0fa2652d98d2aae092f66d31cd6dd06f6f42"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/OwnershipSummaryCanary.java",
+      "bytes": 26865,
+      "sha256": "c1f300e2b0988fe90a8a5a5195a1ca0dc9774d8a1bd345d779f1b02a82153d92"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/README.md",
+      "bytes": 2536,
+      "sha256": "2ca038866fe4086a0ab6b7c2be37e7e913ce6b90d524814d0e47a1bc45b66388"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/BodyCorrelationOracle.java",
+      "bytes": 10812,
+      "sha256": "119c4fbd4eeac3119dfeba261b0edcc0b91775e128226379e810848939532185"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/CurrentBodyCorrelationsCanary.java",
+      "bytes": 30252,
+      "sha256": "90297b03d9e6e8aa16672e6e12efcb491af5acc55d4dd95bd9e8c78903c6fe29"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/test_literal_oracle.py",
+      "bytes": 3902,
+      "sha256": "90d4567e07c989dbe6f3b49616c84c1c78d2092dc6faf6105c9c82b55d2081a1"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/CleanupRestorationCanary.java",
+      "bytes": 26295,
+      "sha256": "1ab668d6ea8b14925c407f40c480dc94a0b978affb5d2ef8ff337be538dad8df"
+    }
+  ],
+  "extraSinkHooksPerPass": 53,
+  "totalCorrelationHooksPerPass": 106,
+  "totalCorrelationMapGetsPerPass": 34,
+  "extraHooksAcrossThreePasses": 159,
+  "hooksAreNativeUnits": false,
+  "sameBodyActualR5CountEquivalence": "PASS",
+  "fullExportV2WriteComparePublication": "NOT_RUN",
+  "completeExportFeeEquations": "SOURCE_INFERENCE_ONLY",
+  "actualReleaseProven": false,
+  "wholeResultSemanticsQualified": false,
+  "authorityAndBorrowedLifetimeQualified": false,
+  "actualOwnerExecution": false,
+  "normalHostAcceptance": false,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "playable100": 0,
+  "beta": "HELD",
+  "full30": "EXCLUDED",
+  "HARD_PSYCHOTIC": "UNAVAILABLE_UNRUN",
+  "oldNormal20": "HISTORICAL_READ_NOT_REREAD",
+  "protectedUnread": "UNCERTIFIED",
+  "productionGwtPlayer": "NOT_APPLICABLE",
+  "electricalPopulation": "NOT_RENEWED",
+  "ci": "NOT_RUN",
+  "budgetsAndExactSeedsEpochs": "UNCHANGED",
+  "preservedFailures": "ALL_PRIOR_FAILURES_PRESERVED_NO_RECLASSIFICATION",
+  "sourceReview": "ROOT_AND_BOUNDED_INDEPENDENT_STATIC_PASS",
+  "limits": "Only synthetic Map/List/scalars, codec and actual Meter execute; no receipt files, positive prepare/binding, factory, actual/fake arm owner, graph, Session, positive original DTO, routing or genuine envelope."
+}

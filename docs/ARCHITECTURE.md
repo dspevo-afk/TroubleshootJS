@@ -477,6 +477,15 @@ higher-level Java/Python fixtures migrate to existing producer fields; lower
 independent byte oracles and prior frozen snapshots remain. Metadata agreement
 does not certify actual restoration, complete semantics or caller lifetime.
 
+The [ownership summary extension](task-evidence/Q100/ownership-summary-r1/README.md)
+reuses the current maps and parameterizes the private Boolean reader. Fourteen
+strict Boolean leaves validate the copied capture owner-release flag and each
+five-flag arm alias summary before encoding, after prior restoration checks.
+It adds53 sink hooks per pass (total106/34 gets), with no Meter/group/copy/byte
+operation. Lower transport bytes and independent oracles are conserved. Current
+higher fixtures migrate; previous snapshots remain. Agreement does not prove
+actual release, complete semantics, caller authority or borrowed lifetime.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

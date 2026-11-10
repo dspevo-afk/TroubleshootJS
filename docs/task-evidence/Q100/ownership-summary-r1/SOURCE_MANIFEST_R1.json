@@ -1,0 +1,67 @@
+{
+  "status": "EXACT_TESTED_PUBLIC_SOURCE_BYTES",
+  "files": [
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/CONTRACT_R1.md",
+      "bytes": 4536,
+      "sha256": "dc73acabe587b43b8cda82ee7569c6c617caa95f807484310ab1344e7388d1f9"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/OwnershipChecks.java.fragment",
+      "bytes": 3363,
+      "sha256": "fc23a80575de4c16caac770bf7561799f778e116e89d1ae33bcb4bccfd539bcd"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/BooleanReader.java.fragment",
+      "bytes": 431,
+      "sha256": "c86e298ac292d94d9adf1a37a5a5db19e5e0d9833eef67a43bd86422ee41214e"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/derive_ownership_summary.py",
+      "bytes": 2427,
+      "sha256": "5d6b18ed767415f16c6c87f02b8854b2c6aa07bfee9c600eb768320e6e443cfa"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/test_ownership_summary_source.py",
+      "bytes": 3922,
+      "sha256": "c104fa49bf6515e58c3d5c0fe66d0fa2652d98d2aae092f66d31cd6dd06f6f42"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/OwnershipSummaryCanary.java",
+      "bytes": 26865,
+      "sha256": "c1f300e2b0988fe90a8a5a5195a1ca0dc9774d8a1bd345d779f1b02a82153d92"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/README.md",
+      "bytes": 2536,
+      "sha256": "2ca038866fe4086a0ab6b7c2be37e7e913ce6b90d524814d0e47a1bc45b66388"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/BodyCorrelationOracle.java",
+      "bytes": 10812,
+      "sha256": "119c4fbd4eeac3119dfeba261b0edcc0b91775e128226379e810848939532185"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/CurrentBodyCorrelationsCanary.java",
+      "bytes": 30252,
+      "sha256": "90297b03d9e6e8aa16672e6e12efcb491af5acc55d4dd95bd9e8c78903c6fe29"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/test_literal_oracle.py",
+      "bytes": 3902,
+      "sha256": "90d4567e07c989dbe6f3b49616c84c1c78d2092dc6faf6105c9c82b55d2081a1"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/CleanupRestorationCanary.java",
+      "bytes": 26295,
+      "sha256": "1ab668d6ea8b14925c407f40c480dc94a0b978affb5d2ef8ff337be538dad8df"
+    }
+  ],
+  "emittedCodec": {
+    "name": "CurrentV2CanonicalCodec.java",
+    "bytes": 28660,
+    "sha256": "0faa081daf3c6b478424c088759488fa2d6ae784574b5e3362993a8ef4b732c7"
+  },
+  "sourceFreezeSha256": "494749cd7b370669942f41bcdb844e3d640942c19eaffbc6ac656b8ded778ea5",
+  "nativeSourceFreezeSha256": "84313943282d85f8bf4ba7ee5256c21343404e9330c688118d67edf14573d7af"
+}
