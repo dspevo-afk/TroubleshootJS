@@ -1,0 +1,25 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_NATIVE_SOURCE_FREEZE",
+  "files": [
+    {
+      "name": "component/CopyEffectsSummaryCanary.java",
+      "bytes": 29891,
+      "sha256": "6d149a319b1edffe47a75065b7ae32294adea46cfab36e335a426529ed2d0c12"
+    },
+    {
+      "name": "emitted-source/CurrentV2CanonicalCodec.java",
+      "bytes": 32230,
+      "sha256": "eb35fcb9df7e73eb0cbe704633954bdb10b2832bfa897f610613a8020e2aab15"
+    },
+    {
+      "name": "NATIVE_EXPECTED_R1.json",
+      "bytes": 1195,
+      "sha256": "0a604e6f7d00a1fbf50aefe2450ed38e7d8bdeec375ec206ab7a77431a2cbdfa"
+    },
+    {
+      "name": "SOURCE_REVIEW_R1.md",
+      "bytes": 3134,
+      "sha256": "3491693232c532661add1d639901fe6d1025836ade59b865f8bec42171c5bfe3"
+    }
+  ]
+}

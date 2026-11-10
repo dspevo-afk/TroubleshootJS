@@ -495,6 +495,15 @@ is bounded metadata agreement; SHA shape, actual geometry and full DTO validity
 are not proven. Ordinary formatting still validates printable ASCII afterward
 and may reject unrelated domain failures after output has begun.
 
+The [copy-effects summary extension](task-evidence/Q100/copy-effects-summary-r1/README.md)
+reuses geometryTemplate and cleanup, parameterizes the existing private String
+reader, and preserves all six geometry errors. Two bounded strings and a strict
+Boolean must agree, with fixed ORIGINAL_CAPTURE_COPY_ONLY scope. It adds13 hooks
+per pass (total152/46 gets), with no Meter/group/copy/byte work. Lower transport
+bytes are conserved and current higher fixtures migrate. This is recorded
+metadata agreement; actual effects, SHA shape, full DTO validity and authority/
+lifetime remain unqualified. The ordinary formatter still owns later ASCII checks.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

@@ -1776,6 +1776,20 @@ Implementation `d5749fabb7bf17f482126c171077083f9477f25d` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c517d783188d3` sent once. This receipt sends no second email.
 
+The [copy-effects summary prerequisite](task-evidence/Q100/copy-effects-summary-r1/README.md)
+is locally accepted for bounded metadata agreement. Two source strings determine
+the summary and the producer's fixed copy-only scope is required before encoding.
+Final-source JDK8,54 new cases/161 assertions,463 migrated cases/1373 assertions,
+176 retained cases/773 assertions, private/public Source12+literal3 each and
+bounded Source review pass. The initial missing test-helper compile failure is
+preserved; one call corrected, all seven Sources rebuilt and all native suites
+freshly run.14 receipts distinguish12 exit0,1 expected argument rejection and1
+initial FAIL.13 added hooks/pass are not native units; same-body real count metrics
+are unchanged. Actual effects, whole semantics, authority/lifetime and genuine
+execution remain gated. Budgets/seeds/epochs/exclusions remain; playable100=0,
+beta HELD. Next: freeze the nested cleanup schema discriminator contract.
+Publication pending final root/index checks and normal push.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

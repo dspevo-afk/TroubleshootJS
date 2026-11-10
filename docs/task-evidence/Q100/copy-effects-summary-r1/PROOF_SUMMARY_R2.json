@@ -1,0 +1,467 @@
+{
+  "status": "PASS_FINAL_SOURCE_COPY_EFFECTS_SUMMARY_PREFLIGHT_AND_CURRENT_FIXTURE_MIGRATION",
+  "predecessorImplementation": "d5749fabb7bf17f482126c171077083f9477f25d",
+  "predecessorReceipt": "3f96bf11f0a1d34433bff9e9967fce2b6ced206c",
+  "sourceFreezeSha256": "a6f68d39b26ad0ce6dffbed6ab809cd48391e7f07dee51ba1c404b11185a8e20",
+  "nativeSourceFreezeSha256": "86b3490a43a1ae1da0cc5a603c051d22e35bee20aed8f3a48b083e8b9ff54930",
+  "gateSha256": {
+    "SOURCE": "37e9c3437348a7eef29db704b8c99a1fb2392c09237969b74c3ea943c5ca5838",
+    "COMPILE": "4cd66d5f70265093920da86e51d0f263210ec384a0e202df82802180d4cec8ed",
+    "NATIVE": "5fa28b563f1966b3004f885473ecf691b1bf19c779f561c410824d7eba7a89ae",
+    "PUBLIC": "1856675c6e81429fa09b01a65a3b097a79e320dc816594b4e7313e43d570a2ab"
+  },
+  "emittedCodec": {
+    "name": "CurrentV2CanonicalCodec.java",
+    "bytes": 32230,
+    "sha256": "eb35fcb9df7e73eb0cbe704633954bdb10b2832bfa897f610613a8020e2aab15"
+  },
+  "sourceTestsPrivate": 12,
+  "sourceTestsPublic": 12,
+  "independentLiteralPrivate": 3,
+  "independentLiteralPublic": 3,
+  "finalSourceCount": 7,
+  "classCount": 71,
+  "classBytes": 193892,
+  "dependencyCount": 2556,
+  "dependencyBytes": 12265717,
+  "allMajor51": true,
+  "noShadows": true,
+  "nativeCases": 54,
+  "nativeAssertions": 161,
+  "migratedCases": [
+    60,
+    69,
+    209,
+    125
+  ],
+  "migratedAssertions": [
+    210,
+    253,
+    566,
+    344
+  ],
+  "retainedCases": [
+    63,
+    113
+  ],
+  "retainedAssertions": [
+    94,
+    679
+  ],
+  "uniqueNativeCases": 693,
+  "uniqueNativeAssertions": 2307,
+  "sourceCountedNativeExpected": {
+    "status": "ROOT_SOURCE_COUNTED_BEFORE_NATIVE",
+    "cases": 54,
+    "assertions": 161,
+    "line": "SYNTHETIC_COPY_EFFECTS_SUMMARY_COMPONENT_ONLY cases=54 assertions=161; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+    "ledger": [
+      {
+        "family": "equality and flips",
+        "cases": 4,
+        "assertions": 10
+      },
+      {
+        "family": "two leaves five malformed kinds",
+        "cases": 10,
+        "assertions": 30
+      },
+      {
+        "family": "matching string bounds",
+        "cases": 4,
+        "assertions": 8
+      },
+      {
+        "family": "summary Boolean",
+        "cases": 4,
+        "assertions": 12
+      },
+      {
+        "family": "scope",
+        "cases": 8,
+        "assertions": 24
+      },
+      {
+        "family": "new precedence",
+        "cases": 3,
+        "assertions": 9
+      },
+      {
+        "family": "earlier failures",
+        "cases": 16,
+        "assertions": 48
+      },
+      {
+        "family": "hook count",
+        "cases": 1,
+        "assertions": 1
+      },
+      {
+        "family": "admissions",
+        "cases": 3,
+        "assertions": 9
+      },
+      {
+        "family": "actual wide R5 count",
+        "cases": 1,
+        "assertions": 10
+      }
+    ]
+  },
+  "processReceipts": [
+    {
+      "phase": "copy-effects-final-jdk8-compile-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 1402.6803,
+      "wrapperTotalElapsedMs": 1831.2989,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "3d23da3a3ed46a7ef34e2397ec4f237c4c2e5f651cad40658fe51ad1f084446d",
+        "owner.json": "debf10924f1566cda4d9d7e79b84d36c1f59c2967c5812d5ef7fb8e76514af67",
+        "process.json": "fd11eee8ff6629999e6b5208ac19a3499f56a8c3c6365571a80d0c1e8594923b",
+        "parent.json": "8a65c75c6fa21c21a0899e6629326357d85e63baf5fc7acbbde95771dce209db",
+        "result.json": "4a9c1cba2ba5b8946d4111d5311d86d50c1cf64a1c42c862dfb3ead801c9a664",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "copy-effects-final-jvm-extra-argument-r2",
+      "childExitCode": 1,
+      "classification": "EXPECTED_CASE_SPECIFIC_REJECTION_NOT_POSITIVE_PASS",
+      "operationElapsedMs": 331.6544,
+      "wrapperTotalElapsedMs": 560.9499000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "7c8e76cba46fb111dcbb733ee27afb15f7a057508918f4fade0ee71731793f3b",
+        "owner.json": "d1e08c52cdff8952b0a3e4081160b300cf706d8885552f547d81eab965973014",
+        "process.json": "9596b6037fc3b25ebdc5b524847e9a51fdb3e798f3538442e32cb5e2a53731c0",
+        "parent.json": "e657c4a17a9e1c7f5093a6619a70f74033de682d2f9cd66b82fc9a99534f334b",
+        "result.json": "cb7e2e572764730b94625982a9f1cb3c702303dc57358e229ed27da0075b5dfa",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "ed914eb7510f1eff675bc775041c1cfac64be11d954b0e2effa4eb865016849f"
+      }
+    },
+    {
+      "phase": "copy-effects-final-native-codec-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 628.9952000000001,
+      "wrapperTotalElapsedMs": 908.1443,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "a2fc54a4ac9796babd2e58050fd2d7fc3c993ebe25416e02b5831987865aa49e",
+        "owner.json": "fb0acee852ae277a400ef5d0c15d5a462bf753725709944c7766aec45b7a2914",
+        "process.json": "8b5bbf66eac40c24736a10adf863e60b8f9993e9224c205bf507dbd4be04b3f7",
+        "parent.json": "25468239c873d912c6e3d231cf466388154b9ab6616708b7b4bb5332e441fdbc",
+        "result.json": "d87ea6e9b825d92bfa38b4b71c55a227c295b20111be5eacfc3f3226bcfd5021",
+        "stdout.txt": "b591b84893b83da74cdf9ae186ed5543dab887e4178bbc88f232167a0ca3dd9f",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "copy-effects-final-native-geometry-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 379.0511,
+      "wrapperTotalElapsedMs": 615.9387,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "41a314437ea339d700af34530821103aadc64dbab263ea7440b2d46c6a764793",
+        "owner.json": "0ad36b8ad8e2b8b8a4493209f5b6a7f0f7e0879ecf5b5b37c37e6cad28f393b4",
+        "process.json": "569939614aac1308102f7479a258f30c37c0324d16e5e6bcd467fe3cd4b3cf12",
+        "parent.json": "dda3c6ca9e1f4111efd0a7f658ea0df48a6d74d16c1e13c76626b1a9ab12a0ab",
+        "result.json": "9628c2812031bc5dbde5cd4747f19d314e2f38530ea9b9a7152ee12c44c40027",
+        "stdout.txt": "1a716d2382a2935aadadbf7ef4e516aef3caf39760bd142401af5611bf220495",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "copy-effects-final-native-migrated-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 556.9751,
+      "wrapperTotalElapsedMs": 809.0202,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "82e6660f296b64d9a50a701d10867be4753500936d323441903e9754e0987139",
+        "owner.json": "b76b253cffd1edf3604492d0f8fda9dea5ea347692b41e11fd16c697dbf200b8",
+        "process.json": "22680f703c96ca4a77e524940851621c73f10a497d4c48f579724160f61896bb",
+        "parent.json": "996c983aa94d60d7bd764d15e757d9d632c7b35f5c4e631a18692e75161dbe26",
+        "result.json": "e5a015a3fd251201163fc462a90a9dc6956436db21cd95703dd979ac4235da38",
+        "stdout.txt": "f2a5e820fe3990807ca52101236a83e9e9e482d137564bf716a9f0f256b97afd",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "copy-effects-final-native-new-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 357.0434,
+      "wrapperTotalElapsedMs": 602.5387000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "099f0719bc282f67acea8f516e05764a3adc092b2cd4ceddfc0eb2013dcafd18",
+        "owner.json": "e68a1ab59579a3badcc93e1f0f7f6c1b80041bff3a2d973e1728dbb702d3fca6",
+        "process.json": "63d65654ac16b7e84bed818b5605fd0196250a77c416908eb1ae36dfda3e13b8",
+        "parent.json": "1d55b6650cf784f983745a69cc6c29c2892eb497fe39a0530ae50fad2f553fc4",
+        "result.json": "4b434613c702601b16ea2ad82966e8d0f7c21b01a28f236c7c7889d1ecbaa84a",
+        "stdout.txt": "c6f20c3ed06a845611d76c621fdd7078c27bf7f1d2a7b055e9d5a935ff79256a",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "copy-effects-final-native-ownership-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 476.74960000000004,
+      "wrapperTotalElapsedMs": 723.7847,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "039e6fd1693c982aee8348f0fefd5e56b15f92da69977dbfa2a0fad53689a0c6",
+        "owner.json": "12762b960f883fc52fdf9783eeb23f469792b63e2dd4ce4361a3f8b952635285",
+        "process.json": "fb93f0f92d8b2bb1ba228335b54e603ba5e0eceff741e9ea963912ec26aa0831",
+        "parent.json": "ad1c4804cf512fe34b54d2dd1ea96e169abb24dc72726722e90d3b9d89f984d7",
+        "result.json": "174c012f955d62cf0303d17c7180276028a628dca593eca81eac40a5f2d8d4f0",
+        "stdout.txt": "83fa2b0fb66776b289a89dd2919b7510649a63cd2b58e50dfc9069d6340a849e",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "copy-effects-final-native-receipt-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 521.6683,
+      "wrapperTotalElapsedMs": 781.5666,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "ebd90df975437ad24b64602f4a45bb99e33beb16e8d257e44290f8967243c5b1",
+        "owner.json": "66665bc04139da9b1139afe2a87d70e36f0a5b99ab79a2f7a5b0a9df40b51fb2",
+        "process.json": "87e8e494a92ec06a73c1057ded1142be44a084304832c68c408751b492eebfb2",
+        "parent.json": "8b0d66e108aaa046cc41fa4cef95d88991997b01bb597b9cf7b6672ea947e0fb",
+        "result.json": "cafd2a62a0dd26a793d5c5591db75394eea3bb462a75e23d23baa52a700f342a",
+        "stdout.txt": "c3e8fb2438323258817934a5dd4d8f846fc856c5030e9c76567d016fb4ab44e0",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "copy-effects-final-native-restoration-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 352.49240000000003,
+      "wrapperTotalElapsedMs": 586.2737000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "0654dd40e2087662650a7cd313815062f94638a99aa6ae5d547ede9a8a5d90c9",
+        "owner.json": "7c009811705951949ff2076f43ea87d7d87644ed0e64580643f3052857b8f043",
+        "process.json": "aed8212f3ca116af035ea86cc4c8ea84cdc69af71ef5f3640edbe326468a972a",
+        "parent.json": "ba2d869695f8f40681549d80cec666852eab92797c85afd149ec901680af676a",
+        "result.json": "b7d63c23e30b1f4e435d5bed1728784d9aecf08e03b5753bee604d844c7f7888",
+        "stdout.txt": "50ad54cc83d5bb65fcd79bfe1f06517d251600abf4d6b7cfc099a8dedcf5a1a6",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "copy-effects-final-public-literal-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 389.0024,
+      "wrapperTotalElapsedMs": 619.5597,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "4f2572a06d725f950d5895bffabc3e77520366ee796d4a6c4e7da0642fe5d378",
+        "owner.json": "3fd90a24baa08e4c4b8b86de4b6bbab12237d6941e2343090d25f46b5f2afdb8",
+        "process.json": "81e46bce644285a45528b57ab5184ec8663361dc01d6fc075dac20e307995386",
+        "parent.json": "549c78e39f162f1441b2d75733a1599394fec7cb113d9e25b47914fcc08113aa",
+        "result.json": "de778013d09be224a3c2212432607faf32fdf9d81f00fa53888a220b29d881af",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "04e7d2d976ecb10cf175a6feedc90510af9dd07f4c7d221d328bbbada71e23e0"
+      }
+    },
+    {
+      "phase": "copy-effects-final-public-source-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 593.3951000000001,
+      "wrapperTotalElapsedMs": 826.341,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "82a65e1553c8373ec8063fda47c21148a3bd87ad3ded49be63102781d7961018",
+        "owner.json": "c675c33e7e2d04b83de3a1fdb89d89289c57fecf120369b068ae2061356ada7d",
+        "process.json": "8d86beb98e056a89471ea9bd5dc7196da7c929ec80d2a6d22a826f5dbb06e075",
+        "parent.json": "fe24b209fb91edd6162859bcdecaa2def9d1b552b98e1155aab03717d6c8943a",
+        "result.json": "285091eedc47fba30e136fb505fb3f12cf7c2605f45c7a6b6932ec78dd1fea2e",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "4c8c82de5560fd3a86f1ce38f5b3f15f036001f07ae8b37823a9217b821082db"
+      }
+    },
+    {
+      "phase": "copy-effects-jdk8-compile-r1",
+      "childExitCode": 1,
+      "classification": "PRESERVED_INITIAL_TEST_COMPILATION_FAILURE_NOT_PASS",
+      "operationElapsedMs": 924.9753000000001,
+      "wrapperTotalElapsedMs": 1176.3022,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "6713352a4fad396474139ca3e9519d1044f1ea4c5ff0c4156e3cc97938a7557c",
+        "owner.json": "21a25653ac18efa715a2c97044cd619305f2007dd72e50a9a3a9f1fb6c2869f2",
+        "process.json": "d8ee199d2985256e54b0bb71d0da1412b5eed2a14bf7492dbef0c44f225ffcc8",
+        "parent.json": "0b16dfddf44ea265b0fc28198bde4dbfa2ea623ac55ade0ea9baf3e85fff7d3a",
+        "result.json": "b9a44a981e6c1e5afc2f4874a49ef8e7efed5819cf288a6c1b46b4d684a692a7",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "5ae269b59a2ec75ee0666dd6f87f0b98777f2edce09040c66835ccb99409313d"
+      }
+    },
+    {
+      "phase": "copy-effects-private-literal-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 359.8904,
+      "wrapperTotalElapsedMs": 595.5416,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "461fa1f3dd85bef35c33b536948b66f4f21f58fcdc070bd4f9ebec7c0a55baff",
+        "owner.json": "9724c32f8234eddd6d71feb2ea5ee5826b94f38d8e9ef9bec0af0c81913d2820",
+        "process.json": "b6197022e4d128c87117f43d1542fba299a97b0ae1fa5d748bc43cc1f52fe1a1",
+        "parent.json": "61d0674a36c46454415190d162eb25bf0140d4f32da709a91684cc1b4782afca",
+        "result.json": "954ea694d73c496ea3623304d3c612418dea7207a86c8efb1325d6e03fb41fe5",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "4d5415dbb28a759ecf0f09978e966e9821a7eecfd98c12759504ab6aa4e92165"
+      }
+    },
+    {
+      "phase": "copy-effects-private-source-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 372.56620000000004,
+      "wrapperTotalElapsedMs": 634.8529,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "b65589a6c40147b19c56524ea946fb1ca90c94ba81298ca61d7a8f3799ed9c08",
+        "owner.json": "ad97893c09d15ae22ba85cd373556094f77ecd03facd5c680d03996b27617820",
+        "process.json": "bb49a8be5b99260beadae06c2c1b684a9677322d02c6ccca9d83393b05ef2e5c",
+        "parent.json": "d22898f13efc61a1c851ad2a523a0512f4bc30fd22d9a99f335d7ba05ed3b0bc",
+        "result.json": "4d30a5114814de6aa6148728d5754daa876ada97fd0a9460e0f56f6ef7e64969",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "4c8c82de5560fd3a86f1ce38f5b3f15f036001f07ae8b37823a9217b821082db"
+      }
+    }
+  ],
+  "selectedProcessCount": 14,
+  "preservedInitialCompilationFailures": 1,
+  "finalSourceFreezeSha256": "df000562f00b2c38549d8ea315fed104f4d150ef941df35a7a317677843d9fd2",
+  "finalCanarySource": {
+    "bytes": 29920,
+    "sha256": "56644b0b73268919a71b30177994ef12d973fed387169700b529eb08b81620b2"
+  },
+  "initialCompileFailure": {
+    "diagnostic": "CopyEffectsSummaryCanary.java:226 cannot find symbol removeTemplate(Map<String,Object>); replace one missing helper call with existing child-map removal.",
+    "stderrSha256": "5ae269b59a2ec75ee0666dd6f87f0b98777f2edce09040c66835ccb99409313d",
+    "resultSha256": "b9a44a981e6c1e5afc2f4874a49ef8e7efed5819cf288a6c1b46b4d684a692a7",
+    "resolvedBy": "FINAL_SOURCE_SEVEN_SOURCE_JDK8_REBUILD_AND_FRESH_ALL_NATIVE_R2",
+    "classification": "FAIL_PRESERVED_NOT_PASS"
+  },
+  "positiveExitZeroCount": 12,
+  "selectedTerminationAndTaskRootLogsAbsenceProven": true,
+  "isolatedCleanupDurationMs": null,
+  "finalPublicCopies": [
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/CONTRACT_R1.md",
+      "bytes": 4850,
+      "sha256": "463b84fed51060d1ffd406ad4c3d93b5362140ceff77701d3670519d1fb3f431"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/EffectsChecks.java.fragment",
+      "bytes": 844,
+      "sha256": "34e44bdbd2185355485e5c2c69dcd76f3739731eb0e90ad80ab7543ca6d6e9bd"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/EffectsString.java.fragment",
+      "bytes": 511,
+      "sha256": "eee90389528f5e059e66e171103acf13708822c2e2c7916b8eca86cdc2b364aa"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/derive_copy_effects_summary.py",
+      "bytes": 2677,
+      "sha256": "832afa9b9271ec4cc6e3528113c80d1d649821215e10918f60ca064c14bee065"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/test_copy_effects_summary_source.py",
+      "bytes": 4039,
+      "sha256": "8be61892da65ed9d52f3c8104a79ac8733e8ca67d483377c51caa8e1d91104dc"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/CopyEffectsSummaryCanary.java",
+      "bytes": 29920,
+      "sha256": "56644b0b73268919a71b30177994ef12d973fed387169700b529eb08b81620b2"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/README.md",
+      "bytes": 2653,
+      "sha256": "fa0ecbd55bbb6c27bc07fcf8db15a646fa548421ecb709e9a040a2f28f40340f"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/BodyCorrelationOracle.java",
+      "bytes": 14823,
+      "sha256": "4334a0b552cab1682c9726e15e0ac487337833cc179d4226f221deda1ff2306c"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/CurrentBodyCorrelationsCanary.java",
+      "bytes": 30250,
+      "sha256": "b5dee259d1b05599747ee8cf9c5b0d2edc5c66817432d26f90bd1759604f1359"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/test_literal_oracle.py",
+      "bytes": 4298,
+      "sha256": "f087e4c95f35b3e24ca13d3504cef87e00d3353ff70a4e251d17066e2626da82"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/CleanupRestorationCanary.java",
+      "bytes": 26293,
+      "sha256": "ecf519d74fe0042adc3ed9fde575ab0a8e947c1facafd3fb7788a52ffe28508e"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/OwnershipSummaryCanary.java",
+      "bytes": 26856,
+      "sha256": "2986bce1d66a288ea3c2efa284440914c2dcf4be3a9dbc84345144ce0e10ee64"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/geometry-summary-r1/GeometrySummaryCanary.java",
+      "bytes": 27693,
+      "sha256": "6add1b46d28d8ed74791e1fe11842591457f4ab9cfb572603508e754bd389954"
+    }
+  ],
+  "extraSinkHooksPerPass": 13,
+  "totalCorrelationHooksPerPass": 152,
+  "totalCorrelationMapGetsPerPass": 46,
+  "extraHooksAcrossThreePasses": 39,
+  "hooksAreNativeUnits": false,
+  "effectsStringDomain": "STRING_LENGTH_AT_MOST_EXISTING_BODY_STRING_LIMIT_256",
+  "effectsScope": "ORIGINAL_CAPTURE_COPY_ONLY",
+  "shaShapeQualified": false,
+  "asciiValidation": "UNCHANGED_FORMATTER_AFTER_PREFLIGHT_MAY_REJECT_AFTER_OUTPUT",
+  "zeroOutputClaim": "ONLY_NEW_TYPE_LENGTH_SCOPE_SUMMARY_FAILURES_NOT_WHOLE_BODY",
+  "sameBodyActualR5CountEquivalence": "PASS",
+  "fullExportV2WriteComparePublication": "NOT_RUN",
+  "completeExportFeeEquations": "SOURCE_INFERENCE_ONLY",
+  "actualCopyEffectsProven": false,
+  "wholeResultSemanticsQualified": false,
+  "authorityAndBorrowedLifetimeQualified": false,
+  "actualOwnerExecution": false,
+  "normalHostAcceptance": false,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "playable100": 0,
+  "beta": "HELD",
+  "full30": "EXCLUDED",
+  "HARD_PSYCHOTIC": "UNAVAILABLE_UNRUN",
+  "oldNormal20": "HISTORICAL_READ_NOT_REREAD",
+  "protectedUnread": "UNCERTIFIED",
+  "productionGwtPlayer": "NOT_APPLICABLE",
+  "electricalPopulation": "NOT_RENEWED",
+  "ci": "NOT_RUN",
+  "budgetsAndExactSeedsEpochs": "UNCHANGED",
+  "preservedFailures": "INITIAL_TEST_COMPILATION_FAILURE_AND_ALL_PRIOR_FAILURES_PRESERVED_NO_RECLASSIFICATION",
+  "sourceReview": "ROOT_AND_BOUNDED_INDEPENDENT_STATIC_PASS",
+  "limits": "Only synthetic Map/List/scalars, codec and actual Meter execute; no receiptfiles, positive prepare/binding, factory, actual/fake arm owner, graph, Session, positive originalDTO, executeArm/R9DTO, routing or genuine envelope."
+}

@@ -1,0 +1,79 @@
+{
+  "status": "EXACT_FINAL_TESTED_PUBLIC_SOURCE_BYTES",
+  "files": [
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/CONTRACT_R1.md",
+      "bytes": 4850,
+      "sha256": "463b84fed51060d1ffd406ad4c3d93b5362140ceff77701d3670519d1fb3f431"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/EffectsChecks.java.fragment",
+      "bytes": 844,
+      "sha256": "34e44bdbd2185355485e5c2c69dcd76f3739731eb0e90ad80ab7543ca6d6e9bd"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/EffectsString.java.fragment",
+      "bytes": 511,
+      "sha256": "eee90389528f5e059e66e171103acf13708822c2e2c7916b8eca86cdc2b364aa"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/derive_copy_effects_summary.py",
+      "bytes": 2677,
+      "sha256": "832afa9b9271ec4cc6e3528113c80d1d649821215e10918f60ca064c14bee065"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/test_copy_effects_summary_source.py",
+      "bytes": 4039,
+      "sha256": "8be61892da65ed9d52f3c8104a79ac8733e8ca67d483377c51caa8e1d91104dc"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/CopyEffectsSummaryCanary.java",
+      "bytes": 29920,
+      "sha256": "56644b0b73268919a71b30177994ef12d973fed387169700b529eb08b81620b2"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/README.md",
+      "bytes": 2653,
+      "sha256": "fa0ecbd55bbb6c27bc07fcf8db15a646fa548421ecb709e9a040a2f28f40340f"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/BodyCorrelationOracle.java",
+      "bytes": 14823,
+      "sha256": "4334a0b552cab1682c9726e15e0ac487337833cc179d4226f221deda1ff2306c"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/CurrentBodyCorrelationsCanary.java",
+      "bytes": 30250,
+      "sha256": "b5dee259d1b05599747ee8cf9c5b0d2edc5c66817432d26f90bd1759604f1359"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/test_literal_oracle.py",
+      "bytes": 4298,
+      "sha256": "f087e4c95f35b3e24ca13d3504cef87e00d3353ff70a4e251d17066e2626da82"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/CleanupRestorationCanary.java",
+      "bytes": 26293,
+      "sha256": "ecf519d74fe0042adc3ed9fde575ab0a8e947c1facafd3fb7788a52ffe28508e"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/OwnershipSummaryCanary.java",
+      "bytes": 26856,
+      "sha256": "2986bce1d66a288ea3c2efa284440914c2dcf4be3a9dbc84345144ce0e10ee64"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/geometry-summary-r1/GeometrySummaryCanary.java",
+      "bytes": 27693,
+      "sha256": "6add1b46d28d8ed74791e1fe11842591457f4ab9cfb572603508e754bd389954"
+    }
+  ],
+  "emittedCodec": {
+    "name": "CurrentV2CanonicalCodec.java",
+    "bytes": 32230,
+    "sha256": "eb35fcb9df7e73eb0cbe704633954bdb10b2832bfa897f610613a8020e2aab15"
+  },
+  "sourceFreezeSha256": "a6f68d39b26ad0ce6dffbed6ab809cd48391e7f07dee51ba1c404b11185a8e20",
+  "nativeSourceFreezeSha256": "86b3490a43a1ae1da0cc5a603c051d22e35bee20aed8f3a48b083e8b9ff54930",
+  "finalSourceFreezeSha256": "df000562f00b2c38549d8ea315fed104f4d150ef941df35a7a317677843d9fd2",
+  "originalCanary": "PRESERVED_PRIVATE_NOT_FINAL_SOURCE"
+}

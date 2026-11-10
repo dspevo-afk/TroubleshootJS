@@ -1,0 +1,12 @@
+        String effectsBefore = correlationString(
+                geometryTemplate, "effectsBeforeSha256", sink, "BODY_EFFECTS_STRING");
+        String effectsAfter = correlationString(
+                geometryTemplate, "effectsAfterSha256", sink, "BODY_EFFECTS_STRING");
+        boolean copyEffectsSummary = correlationBoolean(
+                cleanup, "originalCaptureCopyEffectsUnchanged", sink, "BODY_EFFECTS_BOOLEAN");
+        Object effectsScope = correlationRead(cleanup, "effectsScope", sink);
+        requireFixedString(effectsScope, "ORIGINAL_CAPTURE_COPY_ONLY", sink, "BODY_EFFECTS_SCOPE");
+        sink.beforeDataOperation();
+        boolean copyEffectsUnchanged = effectsBefore.equals(effectsAfter);
+        sink.beforeDataOperation();
+        if (copyEffectsSummary != copyEffectsUnchanged) throw failure("BODY_EFFECTS_SUMMARY");

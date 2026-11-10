@@ -1,5 +1,9 @@
 # Source-geometry summary preflight and current fixture migration
 
+Current higher fixtures/canaries now use the [copy-effects summary preflight](../copy-effects-summary-r1/README.md)
+with46 gets/152 hooks. Prior frozen acceptance and pure Source stages remain
+attached to their recorded candidates; lower transport oracles are unchanged.
+
 The current writeCorrelatedBody preflight now recomputes sourceGeometryUnchanged
 from five exact comparisons among six recorded geometry strings. It runs after
 ownership checks, before encoding. Matching false is valid. This proves metadata

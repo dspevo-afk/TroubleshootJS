@@ -22,7 +22,7 @@ def expected():
                 sourceManifestSha256='1' * 64, wireContractSha256=WIRE,
                 inputContextSha256='3' * 64,
                 qualifiedPrior=dict(inputContextSha256='3' * 64),
-                originalCapture=dict(contextRestored=True, ownersReleased=True, template=dict(geometryBeforeSha256='4' * 64, geometryAfterSha256='4' * 64)), cohort={},
+                originalCapture=dict(contextRestored=True, ownersReleased=True, template=dict(geometryBeforeSha256='4' * 64, geometryAfterSha256='4' * 64, effectsBeforeSha256='6' * 64, effectsAfterSha256='6' * 64)), cohort={},
                 arms={'null': dict(armRole='NULL',
                                    cleanup=dict(contextRestored=True, adapterSessionAliasDropped=True, adapterSearchAliasDropped=True, adapterCandidateAliasDropped=True, adapterRouteResultAliasDropped=True, adapterBoardTemplateAliasesDropped=True, sourceGeometryBeforeSha256='4' * 64, sourceGeometryAfterSha256='4' * 64)),
                       'observe': dict(armRole='OBSERVE',
@@ -33,7 +33,7 @@ def expected():
                              contextRestored=True,
                              originalCaptureOwnersReleased=True,
                              nullArmAliasesDropped=True,
-                             observeArmAliasesDropped=True, sourceGeometryUnchanged=True))
+                             observeArmAliasesDropped=True, sourceGeometryUnchanged=True, effectsScope='ORIGINAL_CAPTURE_COPY_ONLY', originalCaptureCopyEffectsUnchanged=True))
 
 
 def canonical(value):

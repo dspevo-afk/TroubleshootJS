@@ -1,4 +1,64 @@
-# Current checkpoint: geometry summary preflight published
+# Current checkpoint: copy-effects summary preflight accepted locally
+
+F codex/q100-terminal-only-20261107 HEAD3f96bf11f0a1d34433bff9e9967fce2b6ced206c,
+no upstream; target origin/codex/q100-physical-feasibility. N24 final gates PASS;
+root/index checks and commit/push/Gmail pending. No publication claimed yet.
+N23d5749fab/3f96bf11/Gmail1a1c517d783188d3, N22abda26be/072589ad/
+Gmail1a1c4dd97920f6a0 and older receipts below complete. Never duplicate emails.
+
+N24 OS-temp/tsj-q100-copy-effects-summary-r1-fd798576490749518bfe6c2a5d90d342.
+T/E copy-effects-summary-r1. Current codec checks originalCaptureCopyEffectsUnchanged
+against two bounded source strings and fixes effectsScope ORIGINAL_CAPTURE_COPY_ONLY,
+after geometry/before encoding. Parameterized one String reader, migrated6geometry
+calls to preserve old errors, retired old signature. Extra13hooks/pass39over3;
+total152hooks46gets, notnativeunits. NoMeter/group/copy/byte/mutation additions.
+Existing256cap/no64hexrule: matchingempty/short/256ASCII admitted, laterformatter
+mayrejectASCIIafteroutput; specific newtype/length/scope/summaryfailureszerooutput.
+Metadata agreement only, notactual effects/fullDTO/SHAshape/authority/lifetime.
+Currenthigher6Sources migrated; lower1177/6370 oracles unchanged.
+Codec31250/193b8b3d... ->32230/eb35fcb9df7e73eb0cbe704633954bdb10b2832bfa897f610613a8020e2aab15.
+Sourcefreezea6f68d39b26ad0ce6dffbed6ab809cd48391e7f07dee51ba1c404b11185a8e20;
+nativefreeze86b3490a43a1ae1da0cc5a603c051d22e35bee20aed8f3a48b083e8b9ff54930;
+finalSourcefreezeR2df000562f00b2c38549d8ea315fed104f4d150ef941df35a7a317677843d9fd2;
+finalproofR2d7076dfa9ec8cf8fe7e6b4776a7b1711905a0cd506d4b84697f7f7507fb612eb.
+InitialJDK8FAIL missingremoveTemplate testhelper preserved924.98ms/1176.30mswrapper,
+exit1/resourcesabsent. Rootreplacedonecallwith child-map removal; noassertion/case/
+codec/budget/oracle change. Original29891/6d149a31... private; final29920/
+56644b0b73268919a71b30177994ef12d973fed387169700b529eb08b81620b2.
+PASS:final7SourceJDK8target7R2/71major51classes193892B/2556deps12265717B/noShadows;
+fresh54new/161+migrated60/210,69/253,209/566,125/344+retained63/94,113/679
+=693cases2307assertions; private/publicSource12+literal3each; root/independent
+Source review.14receipts12exit0+1expectedargexit1+1initialcompileFAIL preserved;
+all termination/root/log absence proven, isolatedcleanupnull. ActualsamebodyR5
+countPASS; fullExportV2/write/compare/publicationNOTRUN/fullfeeSourceinference.
+No unresolved blocker; initialfailure remainsFAIL, allpriorsnapshots preserved.
+
+Next unstarted implementation: nested cleanup.schema fixed discriminator
+tsj-cohort-terminal-cleanup-v1 fromCurrentResultProjections. Read-only audit:
+reusecleanupMap, onecorrelationRead+existingrequireFixedString =2hooks/1get,
+proposed154hooks47gets. Freeze exacterror/readorder/fixtures beforeimplementation.
+Further nested/cohort/wholebody expansion requires its own producer-backed scope.
+No next implementation/helper/test/Java/native/CLI/factory/owner/genuine execution.
+
+F intendedN24Source/evidence/docs changes only. Main5f05b0059trackedM/6untracked;
+E d9747229reportM; Desktope0c36885 7trackedM/89untrackedfiles preserved.
+Only report prefixes mirrored Main/E. No new persistent process/listener;
+existing Notepad67116860/tabs untouched. Uncertainbrowser14116/start639294472690745890/
+58320,preview34180/start639294472514546595/58264+14children,oldDprocess/unlink
+UNCERTIFIED untouched. Priorregularhardlinks/scratch/failures retained,
+testedjunctionsremoved. Noatomicpathhandle guarantee. No receiptfiles/positive
+prepare/binding/factory/actualorfakeOriginalArm/ArmResult/graph/Session/routing/
+positiveoriginalDTO/executeArm/R9DTO/genuine execution. Syntheticmetadata/codec/
+Meter only; genuineoriginalthenexactNULL/OBSERVE UNSPENT_GATED.
+All90s/640/5s/32768/copy1MiB/chunk4096/Source4MiB/opJSON8MiB/result1MiB/depth64/
+key1m/class10k256MiB/compile-suite60s/reader180s/wrapper480s/cleanup120s/exactseeds/
+epochs unchanged. GWT/PlayerN/A,electrical/populationNOTRENEWED,CINOTRUN,
+full30EXCLUDED,HARD/PSYCHOTICunavailable/unrun,oldnormal20historicalREAD/noreread,
+protectedUnreadUNCERTIFIED,playable100=0,betaHELD. Protected/heldoutDATA/oldactual
+artifacts/generateddataclasses/wholelegacybuilders/consumers denied. Continue
+standing roadmap until user stops.
+
+# Historical checkpoint: geometry summary preflight published; receipt record
 
 F codex/q100-terminal-only-20261107 implementationd5749fabb7bf17f482126c171077083f9477f25d,
 no upstream; target origin/codex/q100-physical-feasibility. N23 gates/root/index
