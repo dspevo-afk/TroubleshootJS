@@ -73,4 +73,4 @@ genuine UNSPENT_GATED.
 
 Proof SHA256:4dbaf9712dab7a39eaf7170c988aac654c4c3c13479b0edef974ec20a5ba9e90.
 Next unstarted implementation: copy-effects summary/scope agreement, after its
-producer-backed contract is frozen. Publication/notification pending normal push.
+producer-backed contract is frozen. Publication/notification recorded in PUBLICATION_R1.json.

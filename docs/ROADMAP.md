@@ -1772,7 +1772,9 @@ are not native units; same-body real count metrics are unchanged. Actual geometr
 whole-result semantics, authority/lifetime and genuine execution remain gated.
 Budgets, exact seeds/epochs, full30 EXCLUDED and data exclusions remain;
 playable100=0 and beta HELD. Next: freeze copy-effects summary/scope agreement.
-Publication pending final root/index checks and normal push.
+Implementation `d5749fabb7bf17f482126c171077083f9477f25d` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
+`1a1c517d783188d3` sent once. This receipt sends no second email.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
