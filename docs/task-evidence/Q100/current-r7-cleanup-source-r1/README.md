@@ -6,9 +6,9 @@ plan. The current emitter reproduces that change from the exact admitted current
 Study, preserving the independent core and keeping body ownership insertion a
 separate step. It does not replay legacy W/R/Q source builders or data.
 
-This candidate is locally accepted for Source generation and the recorded
+This candidate is accepted and published for Source generation and the recorded
 component regressions. [PROOF_R1.json](PROOF_R1.json) SHA `3b208a73f63529025f70fb285ece535a13df654647cd2a84c708c7e564ab61ed` binds Source
-freeze `31e66d3c61543a11288270d4ae0480c54aed15006627d94466b3476673b19f53`. Publication is recorded separately.
+freeze `31e66d3c61543a11288270d4ae0480c54aed15006627d94466b3476673b19f53`. Publication is recorded in [PUBLICATION_R1.json](PUBLICATION_R1.json).
 
 The frozen reference precedes implementation. Adding the exact71-byte call to
 the22521-byte authored template yields22592B/8c2c6428..., and removing it restores
@@ -101,3 +101,9 @@ APPLICABLE, CI NOT RUN. All90s/640/5s/32768/copy1MiB/chunk4096 and Source/report
 class/host/cleanup caps, exact seeds/epochs and CircuitJS truth remain. Full30
 EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,protectedUnreadUNCERTIFIED,oldnormal20
 historicalREAD/no reread,playable100=0/betaHELD,genuine original,NULL,OBSERVE unspent.
+
+Implementation `298f28c2eec551d29da7afe8e947dcc66499e76d` was normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified. Completion Gmail
+`1a1c335a56017307` acknowledged once; this documentation receipt sends no second
+email. Read-only final documentary review found no consequential discrepancy;
+it did not recompute hashes or execute code.
