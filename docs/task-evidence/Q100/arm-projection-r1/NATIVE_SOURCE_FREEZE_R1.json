@@ -1,0 +1,25 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_NATIVE_SOURCE_FREEZE",
+  "files": [
+    {
+      "name": "component/ArmProjectionCanary.java",
+      "bytes": 16648,
+      "sha256": "93b4d002ace3c440bfe441d943a6cd82b72d811dcb93afce9929a56107592f39"
+    },
+    {
+      "name": "emitted-source/CurrentV2CanonicalCodec.java",
+      "bytes": 39600,
+      "sha256": "943319921ee22bdb25d96e2469c958ca02a8da83cd0d9e83e2f0e8c1deff0db9"
+    },
+    {
+      "name": "NATIVE_EXPECTED_R1.json",
+      "bytes": 1927,
+      "sha256": "6ee0e1fec76695c9dce8ef1ecfa75a94abcaea9f380a53cd7f4d0d43c1a03d2a"
+    },
+    {
+      "name": "SOURCE_REVIEW_R1.md",
+      "bytes": 3753,
+      "sha256": "7f48e2a605177131c1d63bc071fc3a6def01fd149c5a19d20906f2c6c47423bf"
+    }
+  ]
+}

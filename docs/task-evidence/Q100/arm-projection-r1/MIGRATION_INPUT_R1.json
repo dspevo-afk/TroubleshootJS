@@ -1,0 +1,50 @@
+{
+  "files": [
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/BodyCorrelationOracle.java",
+      "bytes": 20046,
+      "sha256": "2a315c15fa76c5580e33c0ec4ce363e59580f894466767edebe44d423f3904af"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/CurrentBodyCorrelationsCanary.java",
+      "bytes": 30251,
+      "sha256": "95371acb92bf745ea30a5b0f7fe8167ab74b966c31250d1dacce0e44b10e9e8d"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/test_literal_oracle.py",
+      "bytes": 5078,
+      "sha256": "8271e5275d965729508ab641034cfe92c2feb917f550127d5d8416ee2a5f4bcd"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/CleanupRestorationCanary.java",
+      "bytes": 26296,
+      "sha256": "ec01e444bf5cdcd4bc9610780b82aea5d2161c2f2707c9bf42799fbf5092a6f9"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/ownership-summary-r1/OwnershipSummaryCanary.java",
+      "bytes": 26859,
+      "sha256": "282e48da4edb7474e8d5c617902db1358c1211a7703a785a75d39191caa97ce4"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/geometry-summary-r1/GeometrySummaryCanary.java",
+      "bytes": 27696,
+      "sha256": "6133ee2da52b617f9077069e546313db45dadb0d5f31350523e2ec8c8e7da896"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/copy-effects-summary-r1/CopyEffectsSummaryCanary.java",
+      "bytes": 29915,
+      "sha256": "211cccdbfd46b89128d7164bd655edcf0e476636cf43de6ebe1962587c51f052"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-schema-r1/CleanupSchemaCanary.java",
+      "bytes": 11087,
+      "sha256": "98ec2eb51565a042a51e402c3bf55c66e27311df2277288fb665a53f24ca64c9"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cohort-projection-r1/CohortProjectionCanary.java",
+      "bytes": 29368,
+      "sha256": "89dc63302ce1752b306d3956b67bcff570ea0a289c20f40ba7d6604b21418823"
+    }
+  ],
+  "status": "CURRENT_SOURCE_COPIED_BEFORE_MIGRATION"
+}

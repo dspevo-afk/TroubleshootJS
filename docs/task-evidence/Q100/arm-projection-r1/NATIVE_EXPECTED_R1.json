@@ -1,0 +1,74 @@
+{
+  "status": "ROOT_SOURCE_COUNTED_BEFORE_NATIVE",
+  "cases": 44,
+  "assertions": 130,
+  "line": "SYNTHETIC_ARM_PROJECTION_COMPONENT_ONLY cases=44 assertions=130; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+  "ledger": [
+    {
+      "name": "supported_empty_equal_and_boundary_values",
+      "cases": 3,
+      "assertions": 7,
+      "expected": "ACCEPT",
+      "coverage": [
+        "empty IDs and empty freshRun/observation Maps",
+        "equal-content but distinct String ID references",
+        "ID length 256"
+      ]
+    },
+    {
+      "name": "outer_arm_map_and_key_census",
+      "cases": 7,
+      "assertions": 21,
+      "codes": {
+        "BODY_CORRELATION_MAP": 4,
+        "BODY_ARM_PROJECTION_ORDER": 3
+      }
+    },
+    {
+      "name": "both_inner_arm_key_censuses",
+      "cases": 12,
+      "assertions": 36,
+      "code": "BODY_ARM_PROJECTION_ORDER"
+    },
+    {
+      "name": "old_role_and_cleanup_error_precedence",
+      "cases": 4,
+      "assertions": 12,
+      "codes": {
+        "BODY_NULL_ROLE": 1,
+        "BODY_OBSERVE_ROLE": 1,
+        "BODY_CORRELATION_MAP": 2
+      }
+    },
+    {
+      "name": "arm_id_null_type_and_length_domain",
+      "cases": 6,
+      "assertions": 18,
+      "code": "BODY_ARM_PROJECTION_ID"
+    },
+    {
+      "name": "fresh_run_and_observation_map_guards",
+      "cases": 8,
+      "assertions": 24,
+      "code": "BODY_CORRELATION_MAP"
+    },
+    {
+      "name": "earlier_cohort_role_and_cleanup_precedence",
+      "cases": 4,
+      "assertions": 12,
+      "codes": {
+        "BODY_COHORT_ORDER": 1,
+        "BODY_NULL_ROLE": 1,
+        "BODY_OBSERVE_ROLE": 1,
+        "BODY_CORRELATION_MAP": 1
+      }
+    }
+  ],
+  "correlationHooks": 4120,
+  "mapGets": 65,
+  "listGets": 1897,
+  "firstPairGetAdmissionHook": 195,
+  "oldHarnessCoverage": "FIVE_FRESH_MIGRATED_SUITES_ADMISSION_AND_REAL_R5_COUNT",
+  "actualOwnerExecution": false,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

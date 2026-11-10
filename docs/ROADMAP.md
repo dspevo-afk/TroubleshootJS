@@ -1820,6 +1820,18 @@ Implementation `94737a9fa34bc39b8be6311a3bd976259ea0b8e5` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c5d68f7f9dfaf` sent once. This receipt sends no second email.
 
+The [complete arm projection prerequisite](task-evidence/Q100/arm-projection-r1/README.md)
+is locally accepted for the projector's complete small outer shape and member types.
+Final-source JDK8,44 new cases/130 assertions,766 migrated/retained cases with2530
+assertions, private/publicSource8+literal3 each and bounded static review pass.
+Total810 native cases/2660 assertions;16 receipts
+separate15 exit0 from1 exact argument rejection. Existing limits/oracles remain;
+fresh native admission and same-body R5 count pass. No deeper run/observation,
+fullDTO/authority/lifetime or genuine qualification. Next: select the next coherent
+remaining Source prerequisite; playable100=0,beta HELD, full30 excluded and
+HARD/PSYCHOTIC unavailable/unrun. No electrical/population renewal.
+Publication pending final root/index checks and normal push.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

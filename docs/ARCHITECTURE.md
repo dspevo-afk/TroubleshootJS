@@ -519,6 +519,13 @@ duplicate comparisons. It adds3898 hooks/pass (4052 total,59 Map gets), without
 new Map/List allocation, copy, Meter, group or byte work. All earlier behavior
 and lower transport remain conserved. This is not full result validation or actual host acceptance.
 
+The [complete arm projection check](task-evidence/Q100/arm-projection-r1/README.md)
+owns the ordered2-entry arm envelope and two ordered5-entry arm Maps, String IDs
+and nested run/observation Map types. It reuses existing borrowed Maps/guards and
+retains earlier error precedence. It adds68 hooks (4120 total) and6 gets (65 total),
+without explicit Map/List/copy/Meter/group/byte work. Empty/equal IDs and empty
+Maps remain valid; nested contents, actual owners and full DTO are not qualified.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

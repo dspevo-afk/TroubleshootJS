@@ -215,8 +215,8 @@ public final class CohortProjectionCanary {
         TreeSnapshot before = new TreeSnapshot(guarded);
         PermitSink sink = new PermitSink(state);
         validator().invoke(null, guarded, sink);
-        check(sink.hooks == 4052, "TOTAL_CORRELATION_HOOKS_4052");
-        check(state.mapGets == 59, "TOTAL_CORRELATION_MAP_GETS_59");
+        check(sink.hooks == 4120, "TOTAL_CORRELATION_HOOKS_4120");
+        check(state.mapGets == 65, "TOTAL_CORRELATION_MAP_GETS_65");
         check(state.listGets == 1897, "TOTAL_COHORT_LIST_GETS_1897");
         check(state.rejectedGets == 0, "EVERY_GUARDED_GET_HAS_FRESH_ADMISSION");
         check(before.unchanged(guarded), "GUARDED_VALID_TREE_UNCHANGED");

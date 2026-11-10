@@ -1,5 +1,9 @@
 # Cohort projection component qualification
 
+Current higher fixtures use the [complete arm projection check](../arm-projection-r1/README.md)
+with65 Map gets/4120 hooks. Earlier frozen acceptance stays attached to its
+recorded candidate; independent lower transport oracles are unchanged.
+
 Read CONTRACT_R1.md for the finite contract and exclusions. The pure pinned
 transform appends the coherent cohort preflight and its private helpers, keeping
 every prior byte outside those insertion sites unchanged. It performs no I/O.

@@ -1,0 +1,34 @@
+    private static void validateArmProjections(Map<?, ?> arms, Map<?, ?> nullArm,
+            Map<?, ?> observeArm,
+            CohortTerminalTelemetryStudy.CanonicalJsonSink sink) throws Exception {
+        validateArmProjectionKeys(arms, true, sink);
+        validateArmProjectionKeys(nullArm, false, sink);
+        validateArmProjectionKeys(observeArm, false, sink);
+        correlationString(nullArm, "armId", sink, "BODY_ARM_PROJECTION_ID");
+        correlationMap(correlationRead(nullArm, "freshRun", sink), sink);
+        correlationMap(correlationRead(nullArm, "observation", sink), sink);
+        correlationString(observeArm, "armId", sink, "BODY_ARM_PROJECTION_ID");
+        correlationMap(correlationRead(observeArm, "freshRun", sink), sink);
+        correlationMap(correlationRead(observeArm, "observation", sink), sink);
+    }
+
+    private static void validateArmProjectionKeys(Map<?, ?> values, boolean outer,
+            CohortTerminalTelemetryStudy.CanonicalJsonSink sink) throws Exception {
+        int count = outer ? 2 : 5;
+        sink.beforeDataOperation();
+        Iterator<? extends Map.Entry<?, ?>> entries = values.entrySet().iterator();
+        for (int index = 0; index < count; index++) {
+            sink.beforeDataOperation();
+            if (!entries.hasNext()) throw failure("BODY_ARM_PROJECTION_ORDER");
+            sink.beforeDataOperation();
+            Map.Entry<?, ?> entry = entries.next();
+            sink.beforeDataOperation();
+            Object key = entry.getKey();
+            String expected = outer ? (index == 0 ? "null" : "observe") :
+                    (index == 0 ? "armRole" : index == 1 ? "armId" :
+                    index == 2 ? "freshRun" : index == 3 ? "observation" : "cleanup");
+            requireFixedString(key, expected, sink, "BODY_ARM_PROJECTION_ORDER");
+        }
+        sink.beforeDataOperation();
+        if (entries.hasNext()) throw failure("BODY_ARM_PROJECTION_ORDER");
+    }

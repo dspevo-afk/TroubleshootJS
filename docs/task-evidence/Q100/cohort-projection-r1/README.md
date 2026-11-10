@@ -1,5 +1,9 @@
 # Cohort projection preflight
 
+Current higher fixtures use the [complete arm projection check](../arm-projection-r1/README.md)
+with65 Map gets/4120 hooks. Earlier frozen acceptance stays attached to its
+recorded candidate; independent lower transport oracles are unchanged.
+
 The correlated codec now checks the complete small cohort projection before
 encoding: exact two-key order, two distinct cohort IDs, a unique60-ID request
 vector beginning with that pair, and agreement with qualifiedPrior.trialDisposition

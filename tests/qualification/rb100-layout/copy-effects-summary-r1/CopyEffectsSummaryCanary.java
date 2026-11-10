@@ -255,7 +255,7 @@ public final class CopyEffectsSummaryCanary {
         validate.setAccessible(true);
         HookCountSink sink = new HookCountSink();
         validate.invoke(null, BodyCorrelationOracle.body(), sink);
-        check(sink.hooks == 4052, "CORRELATION_HOOK_BUDGET_4052");
+        check(sink.hooks == 4120, "CORRELATION_HOOK_BUDGET_4120");
         cases++;
     }
 
@@ -297,8 +297,8 @@ public final class CopyEffectsSummaryCanary {
         TreeSnapshot admittedBefore = new TreeSnapshot(admitted);
         PermitSink admittedSink = new PermitSink(admittedState, false);
         CurrentV2CanonicalCodec.writeCorrelatedBody(admitted, admittedSink);
-        check(admittedState.successfulGets == 59,
-                "FIFTY_NINE_CORRELATION_GETS_HAVE_FRESH_ADMISSION");
+        check(admittedState.successfulGets == 65,
+                "SIXTY_FIVE_CORRELATION_GETS_HAVE_FRESH_ADMISSION");
         check(admittedState.rejectedGets == 0 && !admittedState.permitOutstanding,
                 "NO_REJECTED_OR_STALE_MAP_ADMISSION");
         check(admittedSink.bytes().length > 0 && oneFinalLf(admittedSink.bytes()),

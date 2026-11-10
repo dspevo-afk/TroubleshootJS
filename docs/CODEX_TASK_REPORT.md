@@ -1,9 +1,77 @@
-# Current checkpoint: cohort projection published
+# Current checkpoint: complete arm projection accepted locally
+
+F codex/q100-terminal-only-20261107 observed HEAD
+603f4285e7ea0fb1d45f00eb57e5c930f1ae9cd0, no upstream; target origin/codex/q100-physical-feasibility.
+Normal commit/push/Gmail pending; no N27 publication claimed yet.
+N26 94737a9f/603f4285/Gmail1a1c5d68f7f9dfaf and N25 d4fbdf89/8c3945e4/
+Gmail1a1c58056570c4cc remain complete; no duplicate receipt email.
+
+N27 OS-temp/tsj-q100-result-coverage-r1-2d87413f1ae74d87a2536f435396f3df,
+T/E arm-projection-r1. Complete two-arm projection outer shape: ordered null,
+observe; each ordered armRole,armId,freshRun,observation,cleanup. Existing role/
+cleanup/cohort errors keep precedence. All three censuses precede new ID/Map reads.
+IDs use existing String0..256 domain; empty/equal IDs and empty nested Maps valid.
+No ID format/nonempty/uniqueness or nested run/observation semantics is inferred.
+
+PASS:private/publicSource8+literal3 each; final-source JDK8 source7/target7,
+10 Sources,93 classes/262082B,2556 deps/12265717B,
+all major51/no shadows. New44 cases130 assertions; fresh migrated60/210,69/253,
+209/566,125/344,54/161,21/63,52/160 and retained63/94,113/679 =
+810 cases/2660 assertions.16 selected receipts:
+15 exit0 and1 exact CANARY_ARGUMENTS exit1, not positive PASS. Resources absent,
+isolated cleanup duration unmeasured. No new runtime failure. Two missing fixture
+Python commas were caught/fixed before any gate; prior failures preserved.
+Root/independent bounded static Source review PASS; any final packet review is
+documentary and not independent test execution. Actual R5 same-body count PASS;
+full exportV2/write/compare/publication NOT RUN, complete fees Source inference.
+
+New68 hooks/pass,204 across three; totals4120 hooks/65 Map gets,1897 List gets,
+first pair admission195 unchanged. Hooks are not native units. No explicit new
+Map/List/copy/Meter/group/byte work; iterator pattern unchanged,2/5 fixed bounds.
+Nine current fixture Sources migrated; CleanupSchemaCanary unchanged; lower
+1177/6370 oracles and work padding remain. All tested public Source bytes exact.
+Codec39600B/943319921ee22bdb25d96e2469c958ca02a8da83cd0d9e83e2f0e8c1deff0db9;
+SourceFreeze77e20909af1ac72fa5ef3d15db80c94b60fe37387ff63dfb52dc17ca11a7ad17;
+NativeFreezebea4f8a0ae0c73038965f777bf61c39b0a5bb94fc639f2fa807e3397758d3d8c;
+proof96b1f913a550eaed2b4444bc58da3067530659263ce1a32969ec933e4841de32.
+
+Next unstarted implementation: choose the next coherent remaining Source
+prerequisite from COVERAGE_AUDIT_R1.md before deeper projection or genuine work.
+The possible cleanup outer shape and qualified-prior envelope are distinct
+contracts; do not invent one-field validator loops or a whole DTO rewrite.
+Any deeper run/observation contract needs explicitly selected authenticated
+current producer/validator Source; no further source admitted by this checkpoint.
+Genuine original then exact NULL/OBSERVE remains UNSPENT_GATED. Only synthetic
+Map/List/scalars, codec and actual Meter may execute; no actual/fake arm owner,
+graph, Session, factory, positive originalDTO/executeArm/R9DTO, genuine receiptfile,
+positive prepare/binding, routing or exportV2. Full DTO/setup/authority/lifetime,
+actual effects/geometry/SHA shape, cleanup truth and capture mapping unqualified.
+ASCII may reject later after output; no whole-body zero-output promise.
+
+All90s/640/5s/32768/copy1MiB/chunk4096/Source4MiB/fragment64KiB/opJSON8MiB/
+result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/reader180s/wrapper480s/
+cleanup120s limits, exact seeds/epochs unchanged. full30 EXCLUDED; HARD/PSYCHOTIC
+unavailable/unrun; protected/heldout DATA, old actual artifacts/generated DATA
+classes and whole legacy builders/consumers denied. oldnormal20 not reread;
+protectedUnread UNCERTIFIED; playable100=0; beta HELD. Production/GWT/Player N/A,
+electrical/population NOT RENEWED; CI NOT RUN, recorded self-hosted prerequisite.
+
+No new persistent resource. Preserve uncertain browser14116/start639294472690745890/
+port58320, preview34180/start639294472514546595/port58264 plus14 children, oldD
+process/unlink uncertainty, hardlinks/scratch/failures and Notepad67116860.
+No GUI/termination. Main5f05b005:9 tracked mods/6 untracked; E d9747229:report only;
+Desktop e0c36885:7 mods/89 untracked. F intended N27 changes only, staged explicitly.
+Mirrored report prefixes preserve historical tails. The old N26 administrative
+checkpoint-record collision remains preserved; this writer preflights each unique
+phase record before prefix mutation. No user decision needed.
+
+# Historical checkpoint: N26 publication and N27 Source preparation
 
 F branch codex/q100-terminal-only-20261107, observed HEAD
-94737a9fa34bc39b8be6311a3bd976259ea0b8e5; no upstream. Target origin/codex/q100-physical-feasibility.
+603f4285e7ea0fb1d45f00eb57e5c930f1ae9cd0; no upstream. Target origin/codex/q100-physical-feasibility.
 Implementation 94737a9fa34bc39b8be6311a3bd976259ea0b8e5 normally pushed/exact remote SHA
 verified. Gmail 1a1c5d68f7f9dfaf SENT_ONCE_ACKNOWLEDGED; no duplicate.
+Receipt commit is the current HEAD, also normally pushed/exact remote verified.
 N25 d4fbdf89/8c3945e4/Gmail1a1c58056570c4cc and older receipts remain complete.
 
 N26 OS-temp/tsj-q100-cohort-projection-r1-ddbd0149fcbe488eaad32db7b6e8fa8e.
@@ -37,8 +105,23 @@ SourceFreezec94490a9ea356f1859eced46ef84d6b73191b14b59ad5131937ec5ccd98a5da2;
 NativeFreezeddf6b03ecbedb9fe1ab75f26466b8e7b2e9d9a2d77053ee4092a411024d6027c;
 proof8b923ba809ebc5c1035e987b8eaa1742828653885892d566d12fdc35730f8afd.
 
-Next unstarted implementation: scoped current Source audit of remaining result
-semantics and required evidence before genuine original then exact NULL/OBSERVE.
+N27 bounded Source audit is complete; implementation preparation only in OS-temp/
+tsj-q100-result-coverage-r1-2d87413f1ae74d87a2536f435396f3df.
+Three authenticated baseline files only: current37585B codec,10055B projections,
+12486B assembly metadata. SOURCE_INPUT_R1.json and CONTRACT_DRAFT_R1.md pin
+the Source-only coverage matrix scope. No N27 implementation, tests, build,
+native/helper/CLI entrypoint or genuine run. COVERAGE_AUDIT_R1.md records the read-only leaf finding: next coherent contract
+is the complete two-arm projection shape (outer2 keys, each arm5 keys, StringID,
+freshRun/observation Maps, retaining existing cleanup/role proof). Empty IDs and
+empty Maps are allowed; no inner semantics/IDformat or fullDTO claim. Proposed
+68 extra hooks/6 gets (4120/65 totals) require independent Source/native proof.
+No further producer Source admitted; exact owner/method must be selected first.
+Next: freeze this complete projection contract/read-order/price, then finite
+synthetic implementation/gates. N27 implementation is not frozen or started.
+N27 administrative checkpoint record first hit an existing R1 filename after
+prefix writes; CHECKPOINT_RECORD_FAILURE_R1.json preserves that failure. R1
+stays intact; unique R2 was preflighted/written successfully. N26 Source/proof
+unchanged. Do not rerun the old checkpoint writer into an existing record name.
 No permission to execute a genuine envelope is implied. Genuine UNSPENT_GATED;
 synthetic Map/List/scalars, codec and actual Meter only. No actual/fake arm owner,
 graph, Session, factory, positive originalDTO/executeArm/R9DTO, receiptfile,

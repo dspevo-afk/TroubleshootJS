@@ -1,5 +1,9 @@
 # Nested cleanup schema discriminator
 
+Current higher fixtures use the [complete arm projection check](../arm-projection-r1/README.md)
+with65 Map gets/4120 hooks. Earlier frozen acceptance stays attached to its
+recorded candidate; independent lower transport oracles are unchanged.
+
 Current higher fixtures use the [cohort projection check](../cohort-projection-r1/README.md)
 with59 Map gets/4052 hooks. Earlier frozen acceptance remains attached to its
 recorded candidate; lower transport oracles are unchanged.
