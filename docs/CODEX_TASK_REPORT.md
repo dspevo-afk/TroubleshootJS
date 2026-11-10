@@ -1,6 +1,6 @@
-# Current checkpoint: qualified receipt tuple accepted; publication pending
+# Current checkpoint: qualified receipt tuple published; receipt record
 
-F codex/q100-terminal-only-20261107 HEAD77032ab423a78af6e2cc0e5046c26b2a9c439f75,
+F codex/q100-terminal-only-20261107 implementation1bad80bd004e912f3dca487b0cfe925d4a9e64d1,
 no upstream; target origin/codex/q100-physical-feasibility. Priorbodydffb1d04/
 receipt77032ab4/Gmail1a1c457329d9ca2b, arm4d835a9a/44bf15cf/Gmail1a1c41da9786b690,
 originalDTO64c83dec/a42dd1c9/Gmail1a1c3ce8d372dabb complete; neverduplicate.
@@ -25,8 +25,9 @@ withsyntheticmaps/Meterexecuted. Actualcaller/wholebody/authority/lifetime remai
 gated. ExistingN19andearlierfailureevidencepreserved; no newgatefailure.
 
 PublicT=qualified-receipt-tuple-r1,E=docs/task-evidence/Q100/qualified-receipt-tuple-r1.
-EvidenceandSourceexactcopiesready. Next rootstaged-byte/privacy/diff/statusaudit,
-normalcommit/push/exactremoteverify/oneGmail; no N20 publication/email yet.
+Implementation normally pushed/exactremoteverified; Gmail1a1c4823f69687d5
+SENT_ONCE_ACKNOWLEDGED. Rootstaged-byte/privacy/diff/statusauditPASS. Receipt
+record sends no second email.
 NextSourcecontract candidate: cleanupcontext-restoration summary equalscapture
 Boolean andANDofcapture/null/observe restorationflags. Rootpreferscurrentcodec
 preflight overredundantimmediateprojectionrecheck; existingblockadmission scope.
