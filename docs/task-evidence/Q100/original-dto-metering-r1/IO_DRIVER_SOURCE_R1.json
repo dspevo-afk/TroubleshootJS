@@ -1,0 +1,15 @@
+{
+  "status": "ROOT_REVIEWED_REAL_READER_IO_SOURCE_BEFORE_EXECUTION",
+  "files": [
+    {
+      "name": "reader_io_policy_canary_r1.py",
+      "bytes": 4137,
+      "sha256": "f3557c39c9310b71afeea0da421316f32ab1e626963fb4af8c196ad9dcbbb6cc"
+    },
+    {
+      "name": "run_reader_io_gate_r1.py",
+      "bytes": 1461,
+      "sha256": "f11393a6159aaa1d7fa0839d72762aad53d309e542bb9b7bda63b945a6cd80c4"
+    }
+  ]
+}

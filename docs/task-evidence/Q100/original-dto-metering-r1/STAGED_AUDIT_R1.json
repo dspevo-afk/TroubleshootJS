@@ -1,0 +1,252 @@
+{
+  "status": "PASS_EXPLICIT_STAGED_SCOPE_SOURCE_BYTES_PRIVACY_AND_DIFF",
+  "baseHead": "b8a7ed4f7bf4df9ef766d3ff707950b810f84a93",
+  "branch": "codex/q100-terminal-only-20261107",
+  "pathCount": 47,
+  "allIntendedPaths": true,
+  "testedSourceCopies": 11,
+  "allTestedSourceIndexBlobsEqual": true,
+  "allNewSourceEvidenceBytesPreserved": true,
+  "legacyAttributionReceiptSourceChanged": false,
+  "unstagedTrackedChanges": false,
+  "addedLinesAndNewFilesPersonalPathScan": "PASS",
+  "diffCachedCheck": "PASS",
+  "selfReceipt": "This receipt is added afterwards, excluded from its own input index inventory",
+  "files": [
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "indexBytes": 532616,
+      "indexSha256": "49b716770f2557ff843d3400a7989e573d0295753c237528a3f2eb93a59155be"
+    },
+    {
+      "path": "docs/CODEX_TASK_REPORT.md",
+      "indexBytes": 1218111,
+      "indexSha256": "43fd25aaf858aea415b57a59b0102a2cbfdb7e553e367a44ffd8c568986a27b9"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "indexBytes": 131216,
+      "indexSha256": "86239f13e7b52e8183c82d104049132955b87d70d52727b762175ab857575140"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/.gitattributes",
+      "indexBytes": 29,
+      "indexSha256": "730a35ae3d558080083c3103d9ac8100c3f6561678092abe341701dfa331eb1d"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/COMPILE_GATE_R1.json",
+      "indexBytes": 596871,
+      "indexSha256": "a7f078042f5bba2091ad04ecb4fb1dc58824c34b1b765b3dde9c5a123bb7f456"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/CONTRACT_R1.md",
+      "indexBytes": 5003,
+      "indexSha256": "cd5dbf7b13b3061cdb5a5bbb1e153eb003e63235995649caf5e5d52e2d4f9b3e"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/DOCUMENTARY_REVIEW_R1.json",
+      "indexBytes": 895,
+      "indexSha256": "afca111117a67eabb70a369c12b232fdc51222da310fbd1d8e640f283dff03ca"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/EMITTER_IO_GATE_R1.json",
+      "indexBytes": 2152,
+      "indexSha256": "20082d36c9b3ee910863938f7e7310553f6745dbc451c86f64d39974c9129a0d"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/FINAL_PROOF_R1.json",
+      "indexBytes": 42174,
+      "indexSha256": "ef729313b90a4c1b290c49570f2f75b5a72136c8120cf83d1e89002392cbcb0b"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/FRAGMENT_REVIEW_R1.json",
+      "indexBytes": 888,
+      "indexSha256": "49ddfc14a489ed9f30b681b853da8a8887e12468bdb52ecc9bfcf01037b60a7b"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/GENERATION_FINAL_POSITIVE_R1.json",
+      "indexBytes": 2868,
+      "indexSha256": "e55a50c24404bac191acea082f421cb93654be9195ffa2b750b8d83df75476a8"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/GENERATION_GATE_R1.json",
+      "indexBytes": 12550,
+      "indexSha256": "6ba29f1c44f8e2738a38a90498895544c0815d1c432f7d161b4e33873208bf2e"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/HOST_GATE_R1.json",
+      "indexBytes": 2022,
+      "indexSha256": "5248da4b387906c2bcff84e3271e8c68112f031a652e257eb158659dd91f9c8e"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/INDEPENDENT_SOURCE_REVIEW_R1.json",
+      "indexBytes": 1144,
+      "indexSha256": "f203ea65c1a991b701e5a8b3bd8ceb64c04cb38894397d4c7ecd54fe4de9c891"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/IO_DRIVER_SOURCE_R1.json",
+      "indexBytes": 411,
+      "indexSha256": "7406d144a750e5fc20f491f0a390aa4a69d8b2f5216dcf83f2907b54af3a5817"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/IO_GATE_R1.json",
+      "indexBytes": 2637,
+      "indexSha256": "99ac719516c569014e92f5c5e5b5d7d4ea275bba82b11dffb60b6ed2455051d8"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/JUNCTION_HELPER_GATE_R1.json",
+      "indexBytes": 1356,
+      "indexSha256": "0dafaf156555c496242e27004fe20dd3dffb61b62ad41029d9d0e2e1471b34b5"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/NEGATIVE_GATE_R1.json",
+      "indexBytes": 13751,
+      "indexSha256": "dcc83a2e3d6f7aaf01144a9969388ca6e389335f1a3d82b90dd02f54ccd522e0"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/PREDECESSOR_FAILURE_R1.json",
+      "indexBytes": 943,
+      "indexSha256": "5a60031547963724f028cea1666655bae6ddf8fdc31a3f59545bd15eb005f71f"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/PRIVACY_AUDIT_R1.json",
+      "indexBytes": 8939,
+      "indexSha256": "cec573358c75cb13442e6a1e09c3bbb9e9a9b4c2a86f3938c470a9dc42855ef9"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/PUBLIC_COPY_MAP_R1.json",
+      "indexBytes": 3409,
+      "indexSha256": "b2e4fdd939f26c8dcbdfea44f95604bf4e9ecea2a11fd652d9d8d5b214530623"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/PUBLIC_DRIVER_SOURCE_R1.json",
+      "indexBytes": 280,
+      "indexSha256": "b988469fb0a21a6a7864a4c118179a3e979bbba41a5c6a6a321b3514922abe17"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/PUBLIC_GATE_R1.json",
+      "indexBytes": 5418,
+      "indexSha256": "4adc114429f96d5b27856b84acc2cf01c2a7edbb0331dba3ec006f19c42c69ca"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/PURE_GATE_R1.json",
+      "indexBytes": 2118,
+      "indexSha256": "d604f04b882433e95227e1e2d122e347fcde0eb14823b87aaf840cf4844c2448"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/README.md",
+      "indexBytes": 5568,
+      "indexSha256": "6041ac6380a0698fd4e712baa195c7ca17b76a5375cede355148d180f40d8e91"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/REGRESSION_GATE_R1.json",
+      "indexBytes": 9910,
+      "indexSha256": "8cef6e4f6d9d3b6c4d56eb0176ab683edb5555358b96a0474137690d54cb9422"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/SMOKE_GATE_R1.json",
+      "indexBytes": 2254,
+      "indexSha256": "5d46816927217c0e3b498837ac06f2b4afc669b219fba831bc6593c99e01a256"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/SOURCE_FREEZE_R1.json",
+      "indexBytes": 3625,
+      "indexSha256": "e726a182284deb36051bd5909476457a5f5ea26986df9026ad99f50a67332c25"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/SUITE_GATE_R1.json",
+      "indexBytes": 2234,
+      "indexSha256": "dc1833a36a8aaac01b47d9ec18653016cc9f036834ec151d36897013d19a6b5e"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/native-smoke.json",
+      "indexBytes": 949,
+      "indexSha256": "838eb6dea28614e0cd75a2565c61ef294267aa47ec0be09a9956485ead635fd5"
+    },
+    {
+      "path": "docs/task-evidence/Q100/original-dto-metering-r1/native-suite.json",
+      "indexBytes": 3531,
+      "indexSha256": "467b3c60ff899803a9141ebdf0273bad32688df27fb21d7e1e92adbfed25c041"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/original-dto-metering-r1/.gitattributes",
+      "indexBytes": 29,
+      "indexSha256": "730a35ae3d558080083c3103d9ac8100c3f6561678092abe341701dfa331eb1d"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/original-dto-metering-r1/CONTRACT_R1.md",
+      "indexBytes": 5003,
+      "indexSha256": "cd5dbf7b13b3061cdb5a5bbb1e153eb003e63235995649caf5e5d52e2d4f9b3e"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/original-dto-metering-r1/ORACLE_NOTE_R1.md",
+      "indexBytes": 1555,
+      "indexSha256": "850d5ec06c8463932c7da81b00a2c128cf742809111da404659bd51acd398df3"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/original-dto-metering-r1/README.md",
+      "indexBytes": 2177,
+      "indexSha256": "10b2bdfa5f28d9a97064101e68f2937fac7ca34f21bdf11acbd03e8b2b914e9b"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/original-dto-metering-r1/ROOT_ORACLE_SOURCE_R1.json",
+      "indexBytes": 505,
+      "indexSha256": "a049fe6ebd7c5ab33ec1e72397785d2b8a3b938b75129ed33a2f8e6325106b8d"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/original-dto-metering-r1/SOURCE_MANIFEST_R1.json",
+      "indexBytes": 3409,
+      "indexSha256": "b2e4fdd939f26c8dcbdfea44f95604bf4e9ecea2a11fd652d9d8d5b214530623"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/original-dto-metering-r1/original_dto_meter_oracle.py",
+      "indexBytes": 17000,
+      "indexSha256": "52b5bb8a9adc2ff3d9bb3a1a5c5ed1e13f3c0ac02df4a32663501dae6906a136"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/original-dto-metering-r1/reference/OriginalDtoMetering.java.fragment",
+      "indexBytes": 4870,
+      "indexSha256": "16173e6b40e11efb2c517a99a424fadd53cfeeb549a170682f5ed473a1cdf702"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/original-dto-metering-r1/source/OriginalDtoMeterCanary.java",
+      "indexBytes": 28901,
+      "indexSha256": "9ee3916631025be1f91aa90a18ee33b54e0b47d507ed53708fedeaeea47341d0"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/original-dto-metering-r1/test_original_dto_meter_oracle.py",
+      "indexBytes": 9721,
+      "indexSha256": "db585c32a9aeb849f57b06c235eecd0062b506d22b63c30c07ddad943fe93756"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/original-dto-metering-r1/verify_original_dto_meter_r1.py",
+      "indexBytes": 10438,
+      "indexSha256": "944a9f9c9d39ea6be120eddacb6bac8114aef30c7cd13ef26c4a86cfd2a53d9d"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/original-prepayment-r1/.gitattributes",
+      "indexBytes": 281,
+      "indexSha256": "9309ceaa51a7b685d0bd35767af78c52f8fae4e74f2ba0b33bdeefc3a0a9e1b3"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/original-prepayment-r1/OriginalDtoMetering.java.fragment",
+      "indexBytes": 4870,
+      "indexSha256": "16173e6b40e11efb2c517a99a424fadd53cfeeb549a170682f5ed473a1cdf702"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/original-prepayment-r1/README.md",
+      "indexBytes": 1279,
+      "indexSha256": "5f3e9f507693c24e70531b9a6e643d545224c7fc6a5da9d4f1a879a520bffefc"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/original-prepayment-r1/generate_original_dto_metering.py",
+      "indexBytes": 20512,
+      "indexSha256": "d4d7c547037f466d2b2fc0217c0048584e20fed06ff035414b0dbe4fd6fc69a6"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/original-prepayment-r1/test_original_dto_metering.py",
+      "indexBytes": 35331,
+      "indexSha256": "5b9c54cb1184ff19ac0a215d102c48df804f40d47a0467e64a232289e9ef3f34"
+    }
+  ]
+}

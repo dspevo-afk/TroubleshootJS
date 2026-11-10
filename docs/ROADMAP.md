@@ -1669,6 +1669,18 @@ data exclusions, full30 EXCLUDED and beta HELD remain. Implementation `71139b7c5
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c37c729be7907` sent once. This receipt sends no second email.
 
+The [original DTO metadata metering prerequisite](task-evidence/Q100/original-dto-metering-r1/README.md)
+is locally accepted for its finite Source/Meter component. The existing owner now
+prepays39 reads and eight containers while preserving original payload/business
+bytes, lazy guards and outside-method Source. Final-source JDK8, ten new and36
+retained native cases/readers, private/public Source16+oracle18, actual host/file
+and case-specific rejection controls pass;46 selected process receipts and inputs
+were reauthenticated. The predecessor Windows test failures remain preserved;
+only platform-exact stderr expectations and mklink argv changed in the fresh tests.
+No positive originalDto or genuine envelope runs. Actual caller, current arm DTO,
+whole-result, authority and lifecycle remain gated; playable100=0, beta HELD.
+Existing budgets, exact seeds/epochs, data exclusions and full30 EXCLUDED remain.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

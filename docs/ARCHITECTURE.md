@@ -429,6 +429,16 @@ It does not inspect or authenticate children; later ownership and full-result
 validation retain their responsibilities. Existing cohort/cleanup methods stay
 byte-identical. Actual producer and lifecycle/authority integration remain closed.
 
+The [original DTO metadata transform](task-evidence/Q100/original-dto-metering-r1/README.md)
+adds a pure current-Source splice and authored fragment in original-prepayment-r1.
+It reuses r7ReadObject for25 field reads, adds one charged private helper for14
+map reads and prepays eight explicit containers; retained baseline/copies total
+154units/105entries/twochunks. Capture-ID short-circuit order remains. Strict
+byte pins, bounded stable-file reads, exclusive output and close/readback precede
+canonical provenance. Other Source and older attribution/receipt owners stay
+unchanged. Source conservation and synthetic Meter fixtures do not prove positive
+original DTO execution or enable normal producer/host authority and lifetime.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

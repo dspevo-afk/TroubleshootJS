@@ -1,0 +1,51 @@
+{
+  "status": "PASS_ORIGINAL_DTO_COMPONENT_SUITE_AND_READER",
+  "call": {
+    "phase": "dto-native-suite-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 475.8806,
+    "wrapperTotalElapsedMs": 711.0942,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "98838e37b633817a38b0b0576d9e2c136be046bbcde706f0705ab66a7299face",
+      "owner.json": "b129fa8d03cd613ab2310896106b58dcef4f96bb2ed32966ef8460474b9b6271",
+      "process.json": "5c916bf336eb589104afaec3a561b6c2ec952fe353f1ce2ceb630ca0ddef7b77",
+      "parent.json": "c526b1f281a25a151adb931aee9dd99d5c419e6e44e016426b097ad3e457eff1",
+      "result.json": "a65a912f08287f8ddbcc960339b2017eb4fb0272c93e231e1f99424460d03cf0",
+      "stdout.txt": "467b3c60ff899803a9141ebdf0273bad32688df27fb21d7e1e92adbfed25c041",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "reader": {
+    "phase": "dto-reader-suite-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 343.557,
+    "wrapperTotalElapsedMs": 579.7822,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "e634df9e5c13caa75f906fa1c8069c3b62ce97abea629196caf410d2034fc68b",
+      "owner.json": "da504c70095ec4668bf8ea989c5f40196e5d09ab7681613f1656e3b01940aa0f",
+      "process.json": "b591fbaf2cd6d5c3a67d06b871bc2a26bc07325594587d61c93567e74aebf061",
+      "parent.json": "32b6905d89ceba1e750bf56e05455b172c3b641f1496a2967cfce3d94d5770e0",
+      "result.json": "3dfa74424f46d371f68add8e57a244415046eca12db8f4d4f005a1e2d238b723",
+      "stdout.txt": "00b234c70f6d026056f279be58bec977ef2e3640575c54da6699d49e257a7b2e",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "summary": {
+    "status": "PASS_INDEPENDENT_ORIGINAL_DTO_METER_COMPONENT",
+    "mode": "SUITE",
+    "caseCount": 8,
+    "parentConstructions": 1,
+    "actualPositiveOriginalDto": false,
+    "normalHostAcceptance": false,
+    "genuineEnvelope": "UNSPENT_GATED"
+  },
+  "actualPositiveOriginalDto": "NOT_RUN_UNSPENT_GATED"
+}

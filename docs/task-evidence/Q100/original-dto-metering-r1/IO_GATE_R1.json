@@ -1,0 +1,74 @@
+{
+  "status": "PASS_REAL_SELECTED_READER_STABLE_DIRECTORY_AND_APPEND_CONTROLS",
+  "call": {
+    "phase": "dto-reader-io-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 350.4932,
+    "wrapperTotalElapsedMs": 598.3207,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "a3b174a386761039cec7e21034d9c216e4b9c3ef8aa1e5112473cc6cfdfef145",
+      "owner.json": "17272003d37c56b1a2dea35b640fe5f8cd39d96b740ce1d43a9d0e73a0ecfe54",
+      "process.json": "e79976f50074e1d5c7431b3123d18bc922dc5fd98020c8c394a861860d7bda76",
+      "parent.json": "d2d159458bec8642e2b5c775a0c7237ae74b73522b435f170a10b52d5385dc8e",
+      "result.json": "34ecd22f978380036a9cb42a1a7fd0c6a566f9f8dae03fa7239c7b8773069a84",
+      "stdout.txt": "354b89fef21cae8bc4d2acff6d3abbb013d9451015e10828c32958b69b58b148",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "summary": {
+    "status": "PASS_REAL_SELECTED_READER_STABLE_DIRECTORY_AND_APPEND_CONTROLS",
+    "sourcePins": {
+      "verify_original_dto_meter_r1.py": {
+        "bytes": 10438,
+        "sha256": "944a9f9c9d39ea6be120eddacb6bac8114aef30c7cd13ef26c4a86cfd2a53d9d"
+      },
+      "original_dto_meter_oracle.py": {
+        "bytes": 17000,
+        "sha256": "52b5bb8a9adc2ff3d9bb3a1a5c5ed1e13f3c0ac02df4a32663501dae6906a136"
+      }
+    },
+    "cases": [
+      {
+        "source": "verify_original_dto_meter_r1.py",
+        "mode": "stable",
+        "result": "STABLE_BYTES"
+      },
+      {
+        "source": "verify_original_dto_meter_r1.py",
+        "mode": "directory-child",
+        "result": "STABLE_BYTES"
+      },
+      {
+        "source": "verify_original_dto_meter_r1.py",
+        "mode": "append",
+        "result": "INPUT_CHANGED"
+      },
+      {
+        "source": "original_dto_meter_oracle.py",
+        "mode": "stable",
+        "result": "STABLE_BYTES"
+      },
+      {
+        "source": "original_dto_meter_oracle.py",
+        "mode": "directory-child",
+        "result": "STABLE_BYTES"
+      },
+      {
+        "source": "original_dto_meter_oracle.py",
+        "mode": "append",
+        "result": "INPUT_CHANGED"
+      }
+    ],
+    "actualPositiveOriginalDto": false,
+    "genuineEnvelope": "UNSPENT_GATED"
+  },
+  "sourceFreezeSha256": "e726a182284deb36051bd5909476457a5f5ea26986df9026ad99f50a67332c25",
+  "ioDriverSourceSha256": "7406d144a750e5fc20f491f0a390aa4a69d8b2f5216dcf83f2907b54af3a5817",
+  "readerCloseFailureInjection": "NOT_RUN",
+  "actualPositiveOriginalDto": false,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

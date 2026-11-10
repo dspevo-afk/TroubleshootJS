@@ -1,0 +1,64 @@
+{
+  "status": "PASS_REAL_ORIGINAL_DTO_EMITTER_IO_AND_CLOSE_CONTROLS",
+  "call": {
+    "phase": "dto-emitter-io-final-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 384.2027,
+    "wrapperTotalElapsedMs": 625.7833,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "b677bd0d3031fad03711f1303284791778eb2a46092d05b5deeb4013b955487b",
+      "owner.json": "02990e2bee29d9035643d028794dda1858250eee754d2fcbb7109ed56c5d0544",
+      "process.json": "e83b3fa6e9f04ae81d6679da30d6c22a06a32e0efba043939dd2388291312d37",
+      "parent.json": "883b4f8ed074771dc2d897ef9278e47fe81e4607aa06f0a8f92e06e2d086a396",
+      "result.json": "54d38d0c8dc7e9b59942c05660030aa84d18a638ddc7964ddb1bc1543f73eb21",
+      "stdout.txt": "24ce55ed7a1dd83758d852bd5144a118dbdc54e6e584fe245d35e9df78123151",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "summary": {
+    "status": "PASS_REAL_ORIGINAL_DTO_EMITTER_IO_AND_CLOSE_CONTROLS",
+    "cases": [
+      {
+        "mode": "stable",
+        "result": "STABLE_BYTES"
+      },
+      {
+        "mode": "directory-child",
+        "result": "STABLE_BYTES"
+      },
+      {
+        "mode": "append",
+        "result": "FIXTURE_CHANGED"
+      },
+      {
+        "mode": "read-close-failure",
+        "result": "FIXTURE_CLOSE",
+        "descriptorClosed": true
+      },
+      {
+        "mode": "write-close-failure",
+        "result": "OUTPUT_CLOSE",
+        "descriptorClosed": true
+      },
+      {
+        "mode": "write-unexpected-error",
+        "result": "PRIMARY_WRITE_FAILURE_PRESERVED",
+        "descriptorClosed": true
+      },
+      {
+        "mode": "short-provenance-write",
+        "result": "OUTPUT_WRITE",
+        "exitCode": 2,
+        "partialBytesRetained": true
+      }
+    ],
+    "sourceSha256": "d4d7c547037f466d2b2fc0217c0048584e20fed06ff035414b0dbe4fd6fc69a6",
+    "actualPositiveOriginalDto": false,
+    "genuineEnvelope": "UNSPENT_GATED"
+  },
+  "sourceFreezeSha256": "e726a182284deb36051bd5909476457a5f5ea26986df9026ad99f50a67332c25"
+}

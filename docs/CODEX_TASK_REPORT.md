@@ -1,43 +1,53 @@
-# Current checkpoint: current arms projection published; documentation receipt
+# Current checkpoint: original DTO metadata prerequisite accepted locally
 
-F codex/q100-terminal-only-20261107 implementationHEAD71139b7c55ca74dff754b6f8c71ff2a28a75d5c2,
-no upstream; target origin/codex/q100-physical-feasibility. Candidate OS-temp leaf
-N10=tsj-q100-arms-regression-class-r2-fa7f9a1c35e945a89f9765f3a06ff073.
-Freeze dd84b3129ac17e0882696b5f0c73be924366f51c228c839cbda1aebada908b3a;
-proof7a22ee778fcd2d7ff238f152e85130a9cbf26d417ffd5226b3d764be14b89614;
-public5c53e6bd22148f53be11aef472faeff969947aee05a38a574c7a79b2c5267831.
-Helper10055/c0398d31 adds complete arms DTO15/12/3, oldmethodsbyte-identical.
-Final JDK8compile3/11major51classes57428B+2517deps12089464B/noshadows,
-newnative2+17/readers, retainedprojection2+15/readers, private/public17pures,
-host2/actualIO6/readerneg10/JVMneg2 PASS; all28process/consumedinput audits PASS.
-N9 missing old regression mainclass exit1 remains FAIL; fresh compile adds exact
-unchanged canary, helper/newcanary/oracles unchanged. Pre-execution draft group/
-reader and admission-key mistakes preserved; no draft run or observed golden.
-Source reviews PASS with explicit 8-API runtime read-counter/persistent-snapshot
-limits. Current receipt path binding already correct; historical Source role mismatch
-requires no bridge. Normal assembly/producer, full-result/authority/lifecycle and
-actual R7 aggregation stay held; genuine original then exact NULL/OBSERVE unspent.
+F branch codex/q100-terminal-only-20261107, HEAD b8a7ed4f7bf4df9ef766d3ff707950b810f84a93,
+no upstream. Previous arms implementation71139b7c/receiptb8a7ed4f is remotely
+verified; Gmail1a1c37c729be7907 SENT_ONCE_ACKNOWLEDGED, never duplicate.
 
-Implementation56files committed/pushed; exact remote SHA verified. Root integrated/
-staged/private-byte/privacy/diff checks PASS; local raw-byte attributes preserve all
-tested blobs. Documentary review PASS read-only, no independent native claimed.
-Current docs-only publication receipt pending; unchanged runtime gates reused.
-Main5f05b005 9trackedM/6untracked,E d9747229 reportM,Desktop e0c36885
-7trackedM/89untrackedfiles preserved; Main/E reportmirroronly. No new persistent
-process/link. Selected children terminated/ownedroot+logabsence proven; isolated
-cleanupdurationnull. Scratch/classes/failures retained. Old uncertain browser14116/
-start639294472690745890/58320,preview34180/start639294472514546595/58264+14children,
-oldDprocess/unlinkUNCERTIFIED untouched. All90s/640/5s/32768/copy1MiB/chunk4096/
-Source4MiB/opJSON8MiB/result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/
-reader180s/wrapper480s/cleanup120s caps/exactseeds/epochs unchanged. GWT/PlayerN/A,
-electrical/populationNOTRENEWED,CINOTRUN,full30EXCLUDED,HARD/PSYCHOTIC unavailable/
-unrun,oldnormal20 historicalREAD/no reread,protectedUnreadUNCERTIFIED,playable100=0/
-betaHELD. Wholelegacybuilder/consumer and protected/heldout DATA/oldactualdescriptor/
-result/generated-data classaccess denied. Prior R7 publication298f28c2/f4df2f94,
-Gmail1a1c335a56017307 SENT_ONCE; priorcleanup1f45c12e/8e8ef678,
-Gmail1a1c2dfc524598d6 SENT_ONCE; never duplicate. Current milestone71139b7c published; Gmail1a1c37c729be7907
-SENT_ONCE_ACKNOWLEDGED_NEVER_DUPLICATE. Next normal docs-only receipt commit/push
-without email, then current Source-bound producer caller/whole-result prerequisites.
+Current candidate: OS-temp/tsj-q100-original-dto-windows-tests-r2-c9fc6b175df24681a12d80af81863388.
+Source freeze e726a182284deb36051bd5909476457a5f5ea26986df9026ad99f50a67332c25.
+Final proof ef729313b90a4c1b290c49570f2f75b5a72136c8120cf83d1e89002392cbcb0b.
+Existing original-prepayment owner adds a pure Source transform and fragment:
+25 field/14 map reads,8 containers, retained baseline/copies =>154units/105entries/
+2chunks. Lazy guard and old business/outside bytes conserved; older9-unit
+attribution/receipt/digest files unchanged. No production Source or Player change.
+
+PASS: final-source JDK8 twoSources/130major51classes341848B,2402authenticated
+deps11827978B/no shadows; native2+8/independent readers; unchanged arms2+17 and
+priorprojection2+15/readers; private/public Source16(mixed pure/nestedCLI+cmd) and
+oracle18 each; final source emission; host2/junction controls/emitterIO7/readerIO6;
+eightSourceCLI+tenreader exit2 and twoJVM exit1 exact rejections. All46selected
+process receipts and consumed inputs reauthenticated (25exit0/21expectednonzero),
+termination/owned-root+logabsence proven. Isolated cleanup duration null. Nested
+subprocesses waited by caller, not separately certified selected-wrapper receipts.
+Scoped independent Source review PASS, no reviewer execution. Readerclose injection
+NOT RUN. Private helper post-create exception cleanup edge remains unexercised;
+observed verified junction removed, target preserved. Repository Source test handles that edge.
+
+N12 predecessor Source16 FAILED7assertions:6WindowsCRLF expectations + joinedmklink
+argv syntax. Raw failure retained; noJava/native ran there. Fresh test-only correction
+preserves implementation/oracles/case counts. Pre-execution formatting/retained-group
+counter draft corrections are not runtime passes. One read-only git query used the
+nonrepository task-temp cwd and failed; corrected at F without changes.
+
+Only generic synthetic DTO metadata and early CAPTURE_ID exits run; no positive
+originalDto, actual/fakeOriginalArm/ArmResult/graph/Session/routing. Genuine original
+then exactNULL/OBSERVE UNSPENT_GATED; main/assemble still held. Electrical/population
+NOT RENEWED,GWT/PlayerN/A,CINOTRUN,playable100=0,betaHELD,full30EXCLUDED,
+HARD/PSYCHOTIC unavailable/unrun,oldnormal20 historicallyREAD/no reread,
+protectedUnreadUNCERTIFIED. All original budgets/exactseeds/epochs unchanged.
+Protected/heldoutDATA/oldactual descriptor/result/generated-data classes/wholelegacy
+builders/consumers denied. Publication and notification PENDING final diff/privacy/
+index-byte review; this report does not claim a push or email yet.
+
+F intended Source/evidence/docs changes only, not staged. Main5f05b005 retains9trackedM/
+6untracked; E d9747229 reportM; Desktop e0c36885 retains7trackedM/89untrackedfiles.
+Only report prefixes mirrored to Main/E. Scratch/classes/failures retained; no new
+persistent process/listener/link. Old uncertainbrowser14116/start639294472690745890/
+58320,preview34180/start639294472514546595/58264+14children,oldDprocess/unlinkUNCERTIFIED
+untouched. Next unstarted: current arm source-read metering prerequisite, then actual
+caller/whole-result/authority/lifetime gates. Source-only audit identifies direct arm
+reads outside paid guards; no future implementation or envelope claim yet.
 
 # Historical checkpoint: maintained R7 Source prerequisite published
 

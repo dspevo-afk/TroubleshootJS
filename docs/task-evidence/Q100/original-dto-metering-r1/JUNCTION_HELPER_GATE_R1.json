@@ -1,0 +1,31 @@
+{
+  "status": "PASS_ACTUAL_SELECTED_JUNCTION_HELPER_POSITIVE_AND_EXISTING_LINK_REJECTION",
+  "call": {
+    "phase": "dto-junction-helper-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 416.4839,
+    "wrapperTotalElapsedMs": 660.3617,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "69f0df5b39eeea94e73f65638ef72b18eded4bf90c5d2ddf666915c77fab7a97",
+      "owner.json": "ce2d0956dd771c1f560d4a2362259c5eacfeba13a46be226d528ca0855e1b111",
+      "process.json": "81324cbdc6d76f1b41c1a90adbd604edb20949f1ec7720dbf45f3020bf7ea105",
+      "parent.json": "3b9e2adbddea86a76446ca5d11b1805166d8214cd37c66888bcbdfe72fcfc616",
+      "result.json": "5d3fd146550f22d452c6ccd72aeab18bb3169da4ecb352f21be758cf12ce28fe",
+      "stdout.txt": "f4b7766d479872759f4b70446e78561a71dabfa28219fd5447e9848601b85bcc",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "summary": {
+    "status": "PASS_ACTUAL_SELECTED_JUNCTION_HELPER_POSITIVE_AND_EXISTING_LINK_REJECTION",
+    "sourceSha256": "5b9c54cb1184ff19ac0a215d102c48df804f40d47a0467e64a232289e9ef3f34",
+    "positiveExit": 0,
+    "negativeExit": 1,
+    "linkRemoved": true,
+    "targetPreserved": true,
+    "actualPositiveOriginalDto": false
+  }
+}

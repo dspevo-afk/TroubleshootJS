@@ -1,2 +1,7 @@
 # Preserve exact qualified Source bytes.
 * -text
+
+# Preserve the added current DTO component exactly.
+OriginalDtoMetering.java.fragment -text whitespace=cr-at-eol
+generate_original_dto_metering.py -text whitespace=cr-at-eol
+test_original_dto_metering.py -text whitespace=cr-at-eol

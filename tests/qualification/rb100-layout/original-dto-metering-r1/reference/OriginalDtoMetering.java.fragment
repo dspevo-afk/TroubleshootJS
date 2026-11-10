@@ -1,0 +1,65 @@
+    @SuppressWarnings("unchecked")
+    static Map<String,Object> originalDto(Object original,Arguments args,PadProof padProof,
+            String captureId,SetupMeter m) throws Exception {
+        m.charge(2);
+        if (captureId==null || !UUID.matcher(captureId).matches() || captureId.equals(r7ReadObject(m,args,"runId")))
+            throw new IOException("CAPTURE_ID");
+        Object c=r7ReadObject(m,original,"captureData"), legacy=r7ReadObject(m,original,"legacyCapture");
+        Map<String,Object> op=(Map<String,Object>)r7ReadObject(m,original,"operation1");
+        Map<String,Object> src=(Map<String,Object>)r7ReadObject(m,original,"source");
+        List<String> netIds=(List<String>)r7ReadObject(m,c,"netIds");
+        m.copy(60);
+        m.charge(1);
+        List<String> detachedNets=new java.util.ArrayList<String>(netIds);
+        m.copy(45); // all map entry slots, precharged before creating DTOs
+        m.charge(1);
+        Map<String,Object> receipt=new java.util.LinkedHashMap<String,Object>();
+        receipt.put("receiptPath",originalDtoMapRead(m,op,"receiptPath")); receipt.put("receiptBytes",originalDtoMapRead(m,op,"receiptBytes"));
+        receipt.put("receiptSha256",originalDtoMapRead(m,op,"receiptSha256"));
+        receipt.put("receiptOrdinal",r7ReadObject(m,legacy,"receiptOrdinal"));
+        receipt.put("lineageOrdinal",r7ReadObject(m,legacy,"lineageOrdinal"));
+        m.charge(1);
+        Map<String,Object> request=new java.util.LinkedHashMap<String,Object>();
+        request.put("requestIndex",originalDtoMapRead(m,op,"requestIndex")); request.put("selectedAttempt",originalDtoMapRead(m,op,"selectedAttempt"));
+        request.put("pass",r7ReadObject(m,legacy,"pass"));
+        m.charge(1);
+        Map<String,Object> seeds=new java.util.LinkedHashMap<String,Object>();
+        seeds.put("rootSeed",originalDtoMapRead(m,op,"rootSeed")); seeds.put("placementSeed",originalDtoMapRead(m,op,"placementSeed"));
+        seeds.put("routingSeed",originalDtoMapRead(m,op,"routingSeed"));
+        m.charge(1);
+        Map<String,Object> settings=new java.util.LinkedHashMap<String,Object>();
+        settings.put("policy",r7ReadObject(m,c,"policy").toString());
+        settings.put("maximumExpansions",r7ReadObject(m,c,"maximumExpansions"));
+        settings.put("maximumVias",r7ReadObject(m,c,"maximumVias")); settings.put("viaCost",r7ReadObject(m,c,"viaCost"));
+        settings.put("policyTransitions",r7ReadObject(m,c,"policyTransitions")); settings.put("policyVias",r7ReadObject(m,c,"policyVias"));
+        settings.put("branchOrderStrategy",r7ReadObject(m,c,"branchStrategy")); settings.put("netOrderStrategy",r7ReadObject(m,c,"netStrategy"));
+        settings.put("roleWidths",r7ReadObject(m,c,"roleWidths")); settings.put("orderingStream",r7ReadObject(m,c,"orderingStream"));
+        m.charge(1);
+        Map<String,Object> template=new java.util.LinkedHashMap<String,Object>();
+        template.put("geometryBeforeSha256",originalDtoMapRead(m,src,"templateGeometryBeforeSha256"));
+        template.put("geometryAfterSha256",originalDtoMapRead(m,src,"templateGeometryAfterSha256"));
+        template.put("effectsBeforeSha256",originalDtoMapRead(m,src,"templateEffectsBeforeSha256"));
+        template.put("effectsAfterSha256",originalDtoMapRead(m,src,"templateEffectsAfterSha256"));
+        template.put("traceCount",originalDtoMapRead(m,src,"templateTraceCount")); template.put("holeCount",originalDtoMapRead(m,src,"templateHoleCount"));
+        m.charge(1);
+        Map<String,Object> pad=new java.util.LinkedHashMap<String,Object>();
+        pad.put("schema","TSJ_PAD_LAND_ASCII_V1"); pad.put("padCount",Integer.valueOf(246));
+        pad.put("padLandSha256",r7ReadObject(m,padProof,"sha256"));
+        m.charge(1);
+        Map<String,Object> out=new java.util.LinkedHashMap<String,Object>();
+        out.put("schema","tsj-cohort-terminal-original-capture-v1"); out.put("captureId",captureId);
+        out.put("sourceManifestSha256",r7ReadObject(m,args,"manifestSha")); out.put("operation","AUTHORED");
+        out.put("receipt",receipt); out.put("request",request); out.put("seeds",seeds);
+        out.put("ownerSettings",settings); out.put("priorPromotedNetId",r7ReadObject(m,c,"priorPromotedNetId"));
+        out.put("netIds",detachedNets); out.put("template",template); out.put("padIdentity",pad);
+        out.put("ownersReleased",r7ReadObject(m,original,"ownersReleased"));
+        out.put("contextRestored",r7ReadObject(m,original,"contextRestored"));
+        out.put("cleanupNanos",r7ReadObject(m,original,"cleanupNanos"));
+        return out;
+    }
+
+    private static Object originalDtoMapRead(SetupMeter m,java.util.Map<?,?> source,String key) throws Exception {
+        if (source==null) throw new java.io.IOException("ORIGINAL_DTO_SOURCE_MAP_MISSING");
+        m.charge(1);
+        return source.get(key);
+    }

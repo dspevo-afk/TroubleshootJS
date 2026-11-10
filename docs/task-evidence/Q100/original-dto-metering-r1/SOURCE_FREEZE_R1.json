@@ -1,0 +1,104 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_ORIGINAL_DTO_METER_SOURCE",
+  "files": [
+    {
+      "name": "CONTRACT_R1.md",
+      "bytes": 5003,
+      "sha256": "cd5dbf7b13b3061cdb5a5bbb1e153eb003e63235995649caf5e5d52e2d4f9b3e"
+    },
+    {
+      "name": "baseline/CURRENT_STUDY.java",
+      "bytes": 235025,
+      "sha256": "48f67e37f5603fdf9eade38d41cd86c95fb7171b16edc7a6f6cd8b13637e0b00"
+    },
+    {
+      "name": "working/original-prepayment-r1/OriginalDtoMetering.java.fragment",
+      "bytes": 4870,
+      "sha256": "16173e6b40e11efb2c517a99a424fadd53cfeeb549a170682f5ed473a1cdf702"
+    },
+    {
+      "name": "working/original-prepayment-r1/generate_original_dto_metering.py",
+      "bytes": 20512,
+      "sha256": "d4d7c547037f466d2b2fc0217c0048584e20fed06ff035414b0dbe4fd6fc69a6"
+    },
+    {
+      "name": "working/original-prepayment-r1/test_original_dto_metering.py",
+      "bytes": 35331,
+      "sha256": "5b9c54cb1184ff19ac0a215d102c48df804f40d47a0467e64a232289e9ef3f34"
+    },
+    {
+      "name": "OriginalDtoMeterCanary.java",
+      "bytes": 28901,
+      "sha256": "9ee3916631025be1f91aa90a18ee33b54e0b47d507ed53708fedeaeea47341d0"
+    },
+    {
+      "name": "reference/OriginalDtoMetering.java.fragment",
+      "bytes": 4870,
+      "sha256": "16173e6b40e11efb2c517a99a424fadd53cfeeb549a170682f5ed473a1cdf702"
+    },
+    {
+      "name": "FRAGMENT_REVIEW_R1.json",
+      "bytes": 888,
+      "sha256": "49ddfc14a489ed9f30b681b853da8a8887e12468bdb52ecc9bfcf01037b60a7b"
+    },
+    {
+      "name": "ROOT_ORACLE_SOURCE_R1.json",
+      "bytes": 505,
+      "sha256": "a049fe6ebd7c5ab33ec1e72397785d2b8a3b938b75129ed33a2f8e6325106b8d"
+    },
+    {
+      "name": "run_original_dto_gates_r1.py",
+      "bytes": 9148,
+      "sha256": "590ba0a3a41325d0007a1895a5b29738701034688056c07e20ad6669aa4ff340"
+    },
+    {
+      "name": "run_generation_controls_r1.py",
+      "bytes": 3192,
+      "sha256": "6d9e6a597a5025438ecfcf965b5c17728f6578b3654d4dc25aac77934454edda"
+    },
+    {
+      "name": "run_reader_negative_gates_r1.py",
+      "bytes": 3250,
+      "sha256": "4072d46781f391bf1e6b51d60fc0eeee2ea9e7e5583692a8a77c0442f9f8c8ff"
+    },
+    {
+      "name": "emitter_io_policy_canary_r1.py",
+      "bytes": 4481,
+      "sha256": "3291d959dddf439650971ee0a592866de663af8be23a4384898b7c97c712b644"
+    },
+    {
+      "name": "original_dto_meter_oracle.py",
+      "bytes": 17000,
+      "sha256": "52b5bb8a9adc2ff3d9bb3a1a5c5ed1e13f3c0ac02df4a32663501dae6906a136"
+    },
+    {
+      "name": "verify_original_dto_meter_r1.py",
+      "bytes": 10438,
+      "sha256": "944a9f9c9d39ea6be120eddacb6bac8114aef30c7cd13ef26c4a86cfd2a53d9d"
+    },
+    {
+      "name": "test_original_dto_meter_oracle.py",
+      "bytes": 9721,
+      "sha256": "db585c32a9aeb849f57b06c235eecd0062b506d22b63c30c07ddad943fe93756"
+    },
+    {
+      "name": "ORACLE_NOTE_R1.md",
+      "bytes": 1555,
+      "sha256": "850d5ec06c8463932c7da81b00a2c128cf742809111da404659bd51acd398df3"
+    },
+    {
+      "name": "junction_helper_canary_r1.py",
+      "bytes": 2037,
+      "sha256": "f7c23162fc7ec993284e8ffc9726c231497b412dc5c2b5a14e7a448b2fd7be1d"
+    }
+  ],
+  "predecessorFailureSha256": "5a60031547963724f028cea1666655bae6ddf8fdc31a3f59545bd15eb005f71f",
+  "expectedEmittedSource": {
+    "bytes": 235950,
+    "sha256": "f25010169adb2e4934a1303dc076cb948ba5f0c7160603a1fecd6b060e916541"
+  },
+  "testOnlyCorrection": "Exact platform stderr newline and mklink token argv; actual selected helper positive/existinglink/cleanup PASS before full suite",
+  "sourcePrice": 154,
+  "actualPositiveOriginalDto": "NOT_RUN_UNSPENT_GATED",
+  "genuineEnvelope": "UNSPENT_GATED"
+}

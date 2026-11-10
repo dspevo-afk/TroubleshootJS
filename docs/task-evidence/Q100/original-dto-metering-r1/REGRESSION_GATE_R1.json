@@ -1,0 +1,229 @@
+{
+  "status": "PASS_CURRENT_STUDY_ARMS_AND_PROJECTION_REGRESSIONS",
+  "calls": [
+    {
+      "phase": "dto-regression-arms-smoke-r1",
+      "status": "PASS",
+      "childExitCode": 0,
+      "processElapsedMs": 352.9816,
+      "wrapperTotalElapsedMs": 592.5025,
+      "terminationProven": true,
+      "ownedRootAndLogsAbsent": true,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "fb6b316cba751b8de1b304a88cd682d27a4556c91b9f3248d0b57782feee71b8",
+        "owner.json": "a2f917022748eea00d5e45e327fbbd47fae98baf731231afa3ec1278aed2f67a",
+        "process.json": "a77bfef7657eb85d86f6aab18ef3025834db6b39f10eb9932fbe1978a164b19f",
+        "parent.json": "33052490b789f1fc8bdc7719e7dfa2eb40a8125ad6985ce444fe2cb4b3e74b99",
+        "result.json": "80ad69f5d11f2ef7c3c55e4c2be0ebc0b0cc9c37e1df758ce9eeaf579e4d6800",
+        "stdout.txt": "f524fd34f631a1935ddd5ec26df4688a5e204a7217b9d3229972db9aedd33ada",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "dto-regression-reader-arms-smoke-r1",
+      "status": "PASS",
+      "childExitCode": 0,
+      "processElapsedMs": 433.4492,
+      "wrapperTotalElapsedMs": 672.02,
+      "terminationProven": true,
+      "ownedRootAndLogsAbsent": true,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "45681e4025a6eec1b6b5fef0c4a24c50a498a82fc10e31eb56d41e84ec5ae6bc",
+        "owner.json": "a1667f864c2fb474872f07e52f9b938bc8c50c02264cd51c379f0d58a24a5ada",
+        "process.json": "0012091da37c7ede5a86ee3084585378a9d4b28f5e3fdd516cf212d05f46724c",
+        "parent.json": "a4563659d831608c83b0926ef1495a1909f49b76c70442b85b5128e9a66a83ea",
+        "result.json": "164be69d60826d452305877d4ebf291191aa245d241355440dbe4adcee10c3f2",
+        "stdout.txt": "c1ccdc97a7fc4c57b0df6d0cda498a6f995f9e79a22a4feb2ceb1eb190250ea0",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "dto-regression-arms-suite-r1",
+      "status": "PASS",
+      "childExitCode": 0,
+      "processElapsedMs": 364.88050000000004,
+      "wrapperTotalElapsedMs": 605.5211,
+      "terminationProven": true,
+      "ownedRootAndLogsAbsent": true,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "fc5fe9d6e875997f11a456cd454a82cbbe88a44a1b31cd8843877c1f84aff62c",
+        "owner.json": "dd03bc184399988d3e7cd32de9939c8100d6be2d2709fd7a1a7e689213d7b209",
+        "process.json": "e154a7ceb49be6966f91f8f37edb4a603b8406a64f6f6abff1a74375a500fb56",
+        "parent.json": "1a7f882a7ebc0579293e27092ab333ac6abb67dbf4e52764a0cc111e2004ba18",
+        "result.json": "8f1796a5d0d8bb850b87f5807e217ffc5a60e874a8d4049fecf25b7536b0c42b",
+        "stdout.txt": "fbb4a1df18a4d74b8fe10e2ae5278265d6bfaca1a9c4527e39d6e9d30a1b9370",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "dto-regression-reader-arms-suite-r1",
+      "status": "PASS",
+      "childExitCode": 0,
+      "processElapsedMs": 440.2099,
+      "wrapperTotalElapsedMs": 689.5244,
+      "terminationProven": true,
+      "ownedRootAndLogsAbsent": true,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "12cb45608fea918424d8e3a26fd4a0f97c12228d68943a75cb9e264d08478eae",
+        "owner.json": "b081d74bf121c509f3c94cf28075fab0bba930eec0b62b9720d9bdaed7e4e201",
+        "process.json": "c88988cf8c8e3122ca7a5ee6bc95402bffae2acebd40b028f9cb34a32cd75aa7",
+        "parent.json": "f47fddf1ba3a4a57b5d14d18bd11de59f6953c6941e86e99d62ba5ad0d699c7c",
+        "result.json": "cf416eb5edc2156993686793bf7c5eb880a14ac32d003806fd930797b78be51a",
+        "stdout.txt": "10849c12e39fb2481c881b94a5294a3d72a05ad15879d21c5c6c2a18f8c55924",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "dto-regression-projection-smoke-r1",
+      "status": "PASS",
+      "childExitCode": 0,
+      "processElapsedMs": 449.97610000000003,
+      "wrapperTotalElapsedMs": 687.3961,
+      "terminationProven": true,
+      "ownedRootAndLogsAbsent": true,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "525fba6b4c893b4326ca37cd9f64e5a24b14d02d1b7ad90078a04cfd496d17ab",
+        "owner.json": "acdd7e9a4723786b11cfe8322f6859faabd7e23ec80c33be54571c3292886c8f",
+        "process.json": "536a53692d093ede475ba436dd05944ee0e1d162f4183bf06dec1669011f89c1",
+        "parent.json": "2b0645a1a18f819486f90fb0df321193875c9aa404777e68cb2a5a40e3cbaeeb",
+        "result.json": "df186405ef4f4280f5dfb4bf386ea03a25bb5103fd5bd1b4860966eff6bc8e3f",
+        "stdout.txt": "2cbbd776178160127134370d6c5673f777211444a28e0bd93ca2121471b5e68d",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "dto-regression-reader-projection-smoke-r1",
+      "status": "PASS",
+      "childExitCode": 0,
+      "processElapsedMs": 549.3775,
+      "wrapperTotalElapsedMs": 778.8676,
+      "terminationProven": true,
+      "ownedRootAndLogsAbsent": true,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "d3989fd253576e99e4868d8f99b71803eef913bb10a4dbe100ee86bad05db216",
+        "owner.json": "5fa5d7400285ac064f4ed3d0fc0c21f63c2c552cbd2a5fe966fb2beb18351bc0",
+        "process.json": "1ca58a0054f99856c3bd9a424752b16907d9d4bf220a7e0550dda9fc11800ce6",
+        "parent.json": "ed94b46f10c1ca93a2ad664a179cdb77308118f41b15088bdd2fa166b62a3b88",
+        "result.json": "2a2b5c8bb6f0b22d69bf906c77cf95c1fdb64b811b45c21ebe806b89855c6aba",
+        "stdout.txt": "7a0c5a99119b243cc506e401e99784fdecf5e2cbbc3f2d65b4bc20162520a384",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "dto-regression-projection-suite-r1",
+      "status": "PASS",
+      "childExitCode": 0,
+      "processElapsedMs": 368.23990000000003,
+      "wrapperTotalElapsedMs": 618.121,
+      "terminationProven": true,
+      "ownedRootAndLogsAbsent": true,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "8b45af046241e77cd5cc66374f1e9a2823f8856569b85988a18b69b085f5e214",
+        "owner.json": "f32175a5237ac687b984886cf0416f5425afb62f7b4ca6a4c2324382da44bead",
+        "process.json": "eb0eeac80a41003cac02b1006694eed507492073f234cf3534bc32bc62187432",
+        "parent.json": "35481f97bc5b306a42140aa733588ee4d38b069bc18cf9e96ad0a94bf46e249d",
+        "result.json": "be059dfce41ebba9d9ba77c0c5f899e2e3ee7d9214446845a5afbaf92879cd2f",
+        "stdout.txt": "b1711b862d674fd5d3a001a627c60ed8a24a9bc06538778714d6bc319b33167b",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "dto-regression-reader-projection-suite-r1",
+      "status": "PASS",
+      "childExitCode": 0,
+      "processElapsedMs": 343.0321,
+      "wrapperTotalElapsedMs": 576.009,
+      "terminationProven": true,
+      "ownedRootAndLogsAbsent": true,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "5b4c971df66ceaa2ddd07ccae40cb5019a7d91fcf747a7231d1c44d8afc14de3",
+        "owner.json": "5dbe595dddd762b8ea8f2819d07721312d23bcb83985a11039a6ed6f7bf2f4a1",
+        "process.json": "2bd428a6152cd932c7bb7ff428ed8d592f55fb9316b3c20713d23c30f978ed3f",
+        "parent.json": "b6cefe5a3acebebbb549645f0abe4a3f6f946fec90b757cfc401efefa2adc475",
+        "result.json": "77ef955c6f3c82ad250fb49772e355b5c45756aa0fa5b80a7911da3650f26b60",
+        "stdout.txt": "c54f5e8df5274a22b49b1a6596efad2d381bebda784c070b5920e17d6232d33c",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "summaries": [
+    {
+      "status": "PASS_INDEPENDENT_CURRENT_ARMS_PROJECTION",
+      "mode": "SMOKE",
+      "caseCount": 2,
+      "parentConstructions": 2,
+      "normalHostAcceptance": false,
+      "semanticAcceptance": false,
+      "genuineEnvelope": "UNSPENT_GATED"
+    },
+    {
+      "status": "PASS_INDEPENDENT_CURRENT_ARMS_PROJECTION",
+      "mode": "SUITE",
+      "caseCount": 17,
+      "parentConstructions": 17,
+      "normalHostAcceptance": false,
+      "semanticAcceptance": false,
+      "genuineEnvelope": "UNSPENT_GATED"
+    },
+    {
+      "status": "PASS_INDEPENDENT_RESULT_PROJECTIONS",
+      "mode": "SMOKE",
+      "names": [
+        "cohort_transfer",
+        "cleanup_true"
+      ],
+      "caseCount": 2,
+      "resultFacts": {
+        "payloadCases": 2,
+        "expectedErrorCases": 0,
+        "sourceSemanticRejectionCases": 0,
+        "units": 315,
+        "copiedEntries": 134,
+        "copyChunks": 64,
+        "groups": 2,
+        "allInputsUnchanged": true
+      }
+    },
+    {
+      "status": "PASS_INDEPENDENT_RESULT_PROJECTIONS",
+      "mode": "SUITE",
+      "names": [
+        "cohort_requested_mismatch",
+        "cohort_duplicate_capture",
+        "cohort_missing_capture",
+        "cohort_incompatible_disposition",
+        "cleanup_null_alias_false",
+        "cleanup_observe_alias_false",
+        "cleanup_geometry_false",
+        "cleanup_effects_false",
+        "cleanup_capture_context_false",
+        "cleanup_null_context_false",
+        "cleanup_observe_context_false",
+        "cleanup_owner_false",
+        "cleanup_scalar_below_sum",
+        "argument_guards",
+        "group_guard_before_read"
+      ],
+      "caseCount": 15,
+      "resultFacts": {
+        "payloadCases": 9,
+        "expectedErrorCases": 6,
+        "sourceSemanticRejectionCases": 9,
+        "units": 1793,
+        "copiedEntries": 417,
+        "copyChunks": 156,
+        "groups": 649,
+        "allInputsUnchanged": true
+      }
+    }
+  ],
+  "sourceFreezeSha256": "e726a182284deb36051bd5909476457a5f5ea26986df9026ad99f50a67332c25"
+}

@@ -1,0 +1,9 @@
+{
+  "status": "ROOT_ACCEPTED_ORIGINAL_DTO_METER_ORACLE_BEFORE_EXECUTION",
+  "files": {
+    "original_dto_meter_oracle.py": "52b5bb8a9adc2ff3d9bb3a1a5c5ed1e13f3c0ac02df4a32663501dae6906a136",
+    "verify_original_dto_meter_r1.py": "944a9f9c9d39ea6be120eddacb6bac8114aef30c7cd13ef26c4a86cfd2a53d9d",
+    "test_original_dto_meter_oracle.py": "db585c32a9aeb849f57b06c235eecd0062b506d22b63c30c07ddad943fe93756",
+    "ORACLE_NOTE_R1.md": "850d5ec06c8463932c7da81b00a2c128cf742809111da404659bd51acd398df3"
+  }
+}
