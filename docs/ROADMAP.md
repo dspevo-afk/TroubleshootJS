@@ -1756,8 +1756,10 @@ added hooks per pass are not native units; same-body real count metrics are
 unchanged. Actual release, full-result semantics, authority/lifetime and genuine
 execution remain gated. Budgets, exact seeds/epochs, full30 EXCLUDED and data
 exclusions remain; playable100=0 and beta HELD. Next: a frozen source-geometry
-summary agreement contract before implementation. Publication pending final
-root/index checks and normal push.
+summary agreement contract before implementation.
+Implementation `abda26be04ab28b8db7f19e0a5b1ee703009e3a0` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
+`1a1c4dd97920f6a0` sent once. This receipt sends no second email.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

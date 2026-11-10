@@ -1,8 +1,10 @@
 # Current checkpoint: ownership summary preflight accepted locally
 
-F codex/q100-terminal-only-20261107 HEAD6fb24af1b64d2b14e86cc58eccc39af5517b13eb,
-no upstream; normal target origin/codex/q100-physical-feasibility. N22 final gates
-PASS; root/index checks and commit/push/Gmail pending. No publication claimed yet.
+F codex/q100-terminal-only-20261107 implementationabda26be04ab28b8db7f19e0a5b1ee703009e3a0,
+no upstream; normal target origin/codex/q100-physical-feasibility. N22 gates, root/
+index28files25raw3docs checks PASS; normal push/exact remote SHA verified.
+Gmail1a1c4dd97920f6a0 SENT_ONCE_ACKNOWLEDGED; never duplicate. This receipt
+commit records publication and sends no second email.
 N21 implementation66ab05b19d7cb79be094baa74b2dbe1d398f43a8/receipt6fb24af1/Gmail
 1a1c4bea249070e7 complete; prior1bad80bd/98be53fc/Gmail1a1c4823f69687d5 and
 dffb1d04/77032ab4/Gmail1a1c457329d9ca2b complete. Never duplicate prior emails.
@@ -40,7 +42,7 @@ No next implementation/helper/test/Java/CLI/factory/owner/genuine execution yet.
 
 Main5f05b0059trackedM/6untrackedfiles; E d9747229reportM; Desktop e0c36885
 7trackedM/89untrackedfiles preserved; report prefixes only mirrored Main/E.
-F intended N22 source/evidence/docs changes unstaged at this checkpoint. No new
+F publication receipt docs only; tested Source and evidence unchanged. No new
 persistent process/listener; existing Notepadwindow67116860/tabs untouched.
 Uncertain browser14116/start639294472690745890/58320,preview34180/start639294472514546595/
 58264+14children,oldDprocess/unlinkUNCERTIFIED untouched; prior regularhardlinks/

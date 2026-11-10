@@ -70,4 +70,4 @@ UNCERTIFIED, playable100=0, beta HELD, genuine UNSPENT_GATED.
 Proof SHA256:05ff6c5d258cf41150064fa04135609e0380042d6a69e5a2c4e472c32330afdd.
 Next unstarted implementation: source-geometry summary agreement at the same
 preflight, subject to a frozen producer-backed contract. Genuine execution is
-still gated. Publication/notification receipt will be recorded after verified push.
+still gated. Publication/notification state is recorded in PUBLICATION_R1.json.
