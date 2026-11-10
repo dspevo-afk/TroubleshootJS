@@ -78,4 +78,4 @@ playable100=0, beta HELD, genuine UNSPENT_GATED.
 
 Proof SHA256:d7076dfa9ec8cf8fe7e6b4776a7b1711905a0cd506d4b84697f7f7507fb612eb.
 Next unstarted implementation: nested cleanup schema discriminator, after its
-producer-backed contract is frozen. Publication/notification pending normal push.
+producer-backed contract is frozen. Publication/notification recorded in PUBLICATION_R1.json.

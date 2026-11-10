@@ -1,0 +1,41 @@
+{
+  "status": "PUBLISHED_VERIFIED_AND_COMPLETION_EMAIL_ACKNOWLEDGED",
+  "implementationCommit": "875768b63529e0d664fc50a512e691ae36d25ba6",
+  "message": "Validate copy-effects summaries and scope before encoding",
+  "localBranch": "codex/q100-terminal-only-20261107",
+  "localUpstream": "NONE",
+  "remote": "origin",
+  "remoteRepository": "https://github.com/dspevo-afk/TroubleshootJS.git",
+  "remoteRef": "refs/heads/codex/q100-physical-feasibility",
+  "push": "NORMAL_NO_FORCE",
+  "exactRemoteImplementationShaVerified": "875768b63529e0d664fc50a512e691ae36d25ba6",
+  "proofSha256": "d7076dfa9ec8cf8fe7e6b4776a7b1711905a0cd506d4b84697f7f7507fb612eb",
+  "indexAuditSha256": "aa93c71a9cd7f3078e518fa19462ffbdff9a24f441621a3d601e0cdc679fe5f1",
+  "indexFiles": 35,
+  "exactRawIndexFiles": 32,
+  "normalizedDocumentationFiles": 3,
+  "gmail": {
+    "status": "SENT_ONCE_ACKNOWLEDGED",
+    "id": "1a1c54f4fc6ecc4c",
+    "subject": "TroubleshootJS: copy-effects summary preflight pushed",
+    "dedupeSearchBeforeSend": "NO_MATCH",
+    "secondEmailForReceipt": "DO_NOT_SEND"
+  },
+  "qualificationScope": "BOUNDED_METADATA_AGREEMENT_ONLY",
+  "initialTestCompileFailure": "FAIL_PRESERVED_RESOLVED_BY_ONE_CALL_FIX_FINAL_SEVEN_SOURCE_REBUILD_AND_FRESH_NATIVE",
+  "receipts": {
+    "total": 14,
+    "exitZero": 12,
+    "expectedArgumentRejection": 1,
+    "preservedInitialCompileFailure": 1
+  },
+  "shaShapeQualified": false,
+  "asciiValidation": "UNCHANGED_FORMATTER_MAY_REJECT_AFTER_OUTPUT",
+  "genuineEnvelope": "UNSPENT_GATED",
+  "playable100": 0,
+  "beta": "HELD",
+  "full30": "EXCLUDED",
+  "HARD_PSYCHOTIC": "UNAVAILABLE_UNRUN",
+  "protectedUnread": "UNCERTIFIED",
+  "nextUnstartedImplementation": "NESTED_CLEANUP_SCHEMA_DISCRIMINATOR_AFTER_FROZEN_CONTRACT"
+}

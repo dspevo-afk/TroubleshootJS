@@ -1788,7 +1788,9 @@ initial FAIL.13 added hooks/pass are not native units; same-body real count metr
 are unchanged. Actual effects, whole semantics, authority/lifetime and genuine
 execution remain gated. Budgets/seeds/epochs/exclusions remain; playable100=0,
 beta HELD. Next: freeze the nested cleanup schema discriminator contract.
-Publication pending final root/index checks and normal push.
+Implementation `875768b63529e0d664fc50a512e691ae36d25ba6` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
+`1a1c54f4fc6ecc4c` sent once. This receipt sends no second email.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

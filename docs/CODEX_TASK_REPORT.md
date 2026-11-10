@@ -1,8 +1,10 @@
-# Current checkpoint: copy-effects summary preflight accepted locally
+# Current checkpoint: copy-effects summary preflight published
 
-F codex/q100-terminal-only-20261107 HEAD3f96bf11f0a1d34433bff9e9967fce2b6ced206c,
-no upstream; target origin/codex/q100-physical-feasibility. N24 final gates PASS;
-root/index checks and commit/push/Gmail pending. No publication claimed yet.
+F codex/q100-terminal-only-20261107 implementation875768b63529e0d664fc50a512e691ae36d25ba6,
+no upstream; target origin/codex/q100-physical-feasibility. N24 gates/root/index
+35files32raw3docs PASS; normal push/exact remote SHA verified. Gmail1a1c54f4fc6ecc4c
+SENT_ONCE_ACKNOWLEDGED; never duplicate. This receipt records publication,
+sends no second completion email, and changes no tested Source.
 N23d5749fab/3f96bf11/Gmail1a1c517d783188d3, N22abda26be/072589ad/
 Gmail1a1c4dd97920f6a0 and older receipts below complete. Never duplicate emails.
 
@@ -40,7 +42,7 @@ proposed154hooks47gets. Freeze exacterror/readorder/fixtures beforeimplementatio
 Further nested/cohort/wholebody expansion requires its own producer-backed scope.
 No next implementation/helper/test/Java/native/CLI/factory/owner/genuine execution.
 
-F intendedN24Source/evidence/docs changes only. Main5f05b0059trackedM/6untracked;
+F publication receipt docs only; tested Source and evidence unchanged. Main5f05b0059trackedM/6untracked;
 E d9747229reportM; Desktope0c36885 7trackedM/89untrackedfiles preserved.
 Only report prefixes mirrored Main/E. No new persistent process/listener;
 existing Notepad67116860/tabs untouched. Uncertainbrowser14116/start639294472690745890/
