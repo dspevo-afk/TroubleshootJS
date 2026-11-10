@@ -1874,7 +1874,9 @@ failures are disclosed separately. No normal
 producer, DTO provenance/authority/lifetime or genuine qualification is granted.
 Next: current assembly integration contract and independent semantic/host gates;
 playable100=0,betaHELD,full30excluded,HARD/PSYCHOTICunavailable/unrun.
-Publication pending final root/index checks and normal push.
+Implementation `d7273e2a502137a506fa2840dccea1dcd4b1ba9f` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
+`1a1c6c25229cc994` sent once. This receipt sends no second email.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

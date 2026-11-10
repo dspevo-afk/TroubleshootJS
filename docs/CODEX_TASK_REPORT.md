@@ -1,7 +1,8 @@
-# Current checkpoint: capture-bound body accepted locally
+# Current checkpoint: capture-bound body published
 
-F codex/q100-terminal-only-20261107 observed HEAD 1556740fac360e68ff35e303afbeed2d1dcdeda8; no upstream.
-Target origin/codex/q100-physical-feasibility. N31 normal commit/push/Gmail pending; no publication claimed.
+F codex/q100-terminal-only-20261107 observed HEAD d7273e2a502137a506fa2840dccea1dcd4b1ba9f; no upstream.
+Target origin/codex/q100-physical-feasibility. N31 implementation d7273e2a502137a506fa2840dccea1dcd4b1ba9f normally pushed/exact remote verified.
+Gmail 1a1c6c25229cc994 SENT_ONCE_ACKNOWLEDGED; no second receipt email.
 N29 e9b0b214/1556740f/Gmail1a1c66c5fbf686de and N28 a8814a41/d7a51197/
 Gmail1a1c62dd6c0f3d8f remain complete. Never duplicate previous notifications.
 

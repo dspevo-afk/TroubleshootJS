@@ -99,4 +99,4 @@ playable100=0,betaHELD,genuineUNSPENT_GATED. All prior failures/resources preser
 Active proof SHA256:8db8cc5c2e1e455a169a6aa48a335e551d64041f8239bf94e380eef2ba4b4d89.
 Next: current Source assembly integration contract and independent semantic/host
 gates; future integration must use this capture-bound boundary.
-Publication/notification pending normal push.
+Publication/notification recorded in PUBLICATION_R1.json.
