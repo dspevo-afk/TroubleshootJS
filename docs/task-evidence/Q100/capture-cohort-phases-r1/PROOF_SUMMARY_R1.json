@@ -1,0 +1,533 @@
+{
+  "status": "PASS_FINAL_SOURCE_CAPTURE_COHORT_PHASES_COMPONENT_ONLY",
+  "predecessorImplementation": "d7273e2a502137a506fa2840dccea1dcd4b1ba9f",
+  "predecessorReceipt": "1de5d6420aacfad2071d5c38f1d726f82400b0e6",
+  "sourceFreezeSha256": "e76ae3254f7a4203229bf39dcbe72a4d481388f4d711e7652bbc391315028006",
+  "nativeSourceFreezeSha256": "e50cba5dca1fe64e1050f4d5729bd89cc56f194a49af9d7d50a392e577ea8a63",
+  "gateSha256": {
+    "SOURCE": "48d10324c8ebb8ca6aa3d9b9850f466689f2ed6808a39d72ccdbaab0d2ea4aa2",
+    "COMPILE": "1b4ba9bcdc56e8cf589fb32552dbeb168984689dd9006b12cd5054814493d840",
+    "NEW": "af9d069c310ba83c81493b83913345e0349af12efdb9ceb831bd6b57a279a462",
+    "REGRESSION": "05b37af9ba471df1ae11f77f11fd2eb875f0259a9afba43785db9bc0212344b7",
+    "PUBLIC": "44f8f7c0898cacc780d36e30eb3f51b97d095fc72869395731fcea7fc3632fce"
+  },
+  "parentRecordsSha256": "09804a35d16acf2cd834e5ab47a493eebbe6a5da34d64ca91f44befeb7f4b5e9",
+  "emittedMetadata": {
+    "bytes": 16559,
+    "sha256": "784296ac06e2a9c7eaeb04d8c76027360861caea960d1fcb281aa61179356895"
+  },
+  "sourceTestsPrivate": 11,
+  "sourceTestsPublic": 11,
+  "finalSourceCount": 15,
+  "classCount": 112,
+  "classBytes": 348967,
+  "dependencyCount": 2554,
+  "dependencyBytes": 12250053,
+  "allMajor51": true,
+  "noShadows": true,
+  "newNativeCases": 29,
+  "newNativeAssertions": 152,
+  "retainedNativeCases": 872,
+  "retainedNativeAssertions": 2848,
+  "uniqueNativeCases": 901,
+  "uniqueNativeAssertions": 3000,
+  "nativeExpected": {
+    "schema": "native-expected-root-r2",
+    "canaryClass": "com.lushprojects.circuitjs1.client.CaptureCohortPhasesCanary",
+    "status": "ROOT_SOURCE_COUNTED_NOT_RUN",
+    "cases": 29,
+    "assertions": 152,
+    "caseLedger": [
+      {
+        "family": "oneBorrowRoundTrip",
+        "cases": 1,
+        "assertions": 17
+      },
+      {
+        "family": "twoBorrowRoundTripAndFees",
+        "cases": 1,
+        "assertions": 9
+      },
+      {
+        "family": "prepareNullArguments",
+        "cases": 3,
+        "assertions": 11
+      },
+      {
+        "family": "borrowNullArguments",
+        "cases": 2,
+        "assertions": 10
+      },
+      {
+        "family": "finishNullArguments",
+        "cases": 6,
+        "assertions": 30
+      },
+      {
+        "family": "captureNetIdsRejections",
+        "cases": 3,
+        "assertions": 12
+      },
+      {
+        "family": "inheritedCohortFailures",
+        "cases": 5,
+        "assertions": 15
+      },
+      {
+        "family": "throwingCaptureGet",
+        "cases": 1,
+        "assertions": 4
+      },
+      {
+        "family": "prepareClosedGroupGuard",
+        "cases": 1,
+        "assertions": 5
+      },
+      {
+        "family": "wrongMeterBorrow",
+        "cases": 1,
+        "assertions": 6
+      },
+      {
+        "family": "completedAssociationOneUse",
+        "cases": 1,
+        "assertions": 11
+      },
+      {
+        "family": "freshAssociationAfterCompletion",
+        "cases": 1,
+        "assertions": 6
+      },
+      {
+        "family": "legacyCohortControl",
+        "cases": 1,
+        "assertions": 5
+      },
+      {
+        "family": "prepareAllocationAdmissionFailure",
+        "cases": 1,
+        "assertions": 5
+      },
+      {
+        "family": "finishAdmissionFailurePreservesOpenAssociation",
+        "cases": 1,
+        "assertions": 6
+      }
+    ],
+    "feeLedger": {
+      "prepare": "265 units / 127 copies / 64 chunks",
+      "borrow": "3 units / 0 copies / 0 chunks each",
+      "finish": "31 units / 19 copies / 3 chunks",
+      "oneBorrowTotal": "299 units / 146 copies / 67 chunks",
+      "twoBorrowTotal": "302 units / 146 copies / 67 chunks",
+      "legacyCohortControl": "264 units / 125 copies / 64 chunks",
+      "prepareAdmissionFailure": "264 units / 127 copies / 64 chunks",
+      "finishAdmissionFailure": "27 units / 19 copies / 3 chunks"
+    },
+    "nativeBoundary": "Actual Meter only; 640-group refusal and both late-admission failures retain exact IOException message and their measured partial counters.",
+    "normalHostAcceptance": "NONE",
+    "genuine": "UNSPENT_GATED",
+    "execution": "SOURCE_COUNTED_NOT_RUN_R2",
+    "line": "SYNTHETIC_CAPTURE_COHORT_PHASES_COMPONENT_ONLY cases=29 assertions=152; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+    "migration": "N31 18 case families migrate here; excluded from retained 872 cases, not double counted",
+    "fixtureCorrection": "NATIVE_FIXTURE_FAILURE_R1.json; no expected phase-fee or negative result change"
+  },
+  "meterEvidence": "ASSERTIONS_IN_PINNED_FRESH_COMPILED_CANARY_NOT_RAW_COUNTER_STDOUT",
+  "actualMeterPhaseFees": {
+    "prepare": "265 units / 127 copies / 64 chunks",
+    "borrow": "3 units / 0 copies / 0 chunks each",
+    "finish": "31 units / 19 copies / 3 chunks",
+    "oneBorrowTotal": "299 units / 146 copies / 67 chunks",
+    "twoBorrowTotal": "302 units / 146 copies / 67 chunks",
+    "legacyCohortControl": "264 units / 125 copies / 64 chunks",
+    "prepareAdmissionFailure": "264 units / 127 copies / 64 chunks",
+    "finishAdmissionFailure": "27 units / 19 copies / 3 chunks"
+  },
+  "processReceipts": [
+    {
+      "phase": "capture-phases-private-source-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 464.0849,
+      "wrapperTotalElapsedMs": 878.3158000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "a281b15e9acb7f43404bef0ddb5dde5527d5a8b78598050d66c9742d6eaa07b3",
+        "owner.json": "eb616136ca49485631e951cb1566a4ea65c6e6abf31dcc29d10fb69b78843216",
+        "process.json": "8217aa49e654f69d9d3c9453ad52fc40774cc068faf7b012f91be3e219c3713f",
+        "parent.json": "c81495089a25e3d72419dfb0a80c2832bd99fc8f636aa765cbe3259bb16c21d4",
+        "result.json": "d2eabc31e8f5d25e32d9e2c913995f1c427f60504451e1ab970519ee0658dee6",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "d35873517707a123bdc63475af3b74de879e2b066e31e265b0c01e4f2e351324"
+      }
+    },
+    {
+      "phase": "capture-phases-jdk8-compile-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 1134.3653000000002,
+      "wrapperTotalElapsedMs": 1375.9295,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "987d3531a09d26204d90d39e95de844eaa115fa68281fa746f80791b56630b0e",
+        "owner.json": "f37adef55bf4145dde75d1303c99e2147ada005483f3cf25eb0834bef3a0a2a4",
+        "process.json": "dba94aaf234ed855ca67b5593c80d0d88f8c102f5e7e7a4be64f2325a06b5261",
+        "parent.json": "5570d169dc961ad5ae8edceb662dc818e8f82ff6df2aa1d0977be983c67ded56",
+        "result.json": "a6ed894042b1bb0c1a64b91f2c6645ed147eab8a84efb8aef6bbfebcf39a8167",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "capture-phases-native-new-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 394.1342,
+      "wrapperTotalElapsedMs": 647.4104,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "cbe52998b8ba251924c65e2405c8e103f0b07ccd0023b0b6c62301873d90918a",
+        "owner.json": "b2316cb44a97a42acddc2dd6400a5a67bbfc9238d77d153bfe1724bbc0648aa4",
+        "process.json": "e934ebaf20cce393a83e1ab3254b4f76f55d7f491c20463e922a89d6fc581f48",
+        "parent.json": "76c3dd899c18a6ac23a304472b98c0948b1e5ee7d0cf42a77b2d31f54e12e465",
+        "result.json": "623b020395c97252f963026be2d342095869b1363549beaa5c35e7657d6ea0c3",
+        "stdout.txt": "d840c96410a94abdb04fa98321ec9c311fbfcd29b8c76adb2264b73fe1d539d6",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "capture-phases-extra-argument-r2",
+      "childExitCode": 1,
+      "classification": "EXACT_ARGUMENT_REJECTION_NOT_POSITIVE_PASS",
+      "operationElapsedMs": 329.7594,
+      "wrapperTotalElapsedMs": 563.4031,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "494089b31e75620fd8d30531d02fa0e1b3e9493d8ac455ce012f34b3d3a2374c",
+        "owner.json": "8e0a7c51fb9ead506e49b9f981b71b604562c207a93435276e0faf27878f8296",
+        "process.json": "ec3ecd1c57dddda9f8f36a4ac99759158a0c41f5d18b2e3986b09bdaf98a48ba",
+        "parent.json": "7e2fce8c848964f318339522e5814a301aa6e9c9cb3c8e40de7a546b680dfe6d",
+        "result.json": "acfd79f63bf9d2dfe7b3f09c84fd470cba3702b8cbc2177a2b989f9050da4e20",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "a845a9de9d21c15b6e238a577d11183eeb74ad81e900811d56b876d6cc47d77f"
+      }
+    },
+    {
+      "phase": "capture-phases-retained-0-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 356.00870000000003,
+      "wrapperTotalElapsedMs": 593.5304,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "c938e670ae06aa898b38a9fe61e6cb613e16665902a616ab7673175b363c6f99",
+        "owner.json": "c0c63d5213d86bf3d9d4ec70298e06dc12f3fd91755247ad60abf39751f74950",
+        "process.json": "98d5bff0ccde1e098f85b9ab0f57f0331ed684cb9a08876da931314b55653d46",
+        "parent.json": "923c9b2d13550d3b1422f72a43714b934f2a9acb378b7da88b1182aa05738702",
+        "result.json": "db07a9e8dce9c7a0cb8401ec49970106dfdc0d2bbe3fd1d01cd059802a4421aa",
+        "stdout.txt": "5643965a16369df626d40e520805858e965c9ca430070a7ff7f83b238d73ee3d",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "capture-phases-retained-1-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 452.7973,
+      "wrapperTotalElapsedMs": 688.6868000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "5229c1953760cc25c5920440ec01734eb2f26763b487ac26cc7ae14309921ded",
+        "owner.json": "f71220ba9a0b5f5af6c0cd73a960f3c928751926a666adb8835a76df7b48660f",
+        "process.json": "af82e18ede63d813621a06bb736304e629023bbb2362dda772a71389c7c05dc4",
+        "parent.json": "1445e1c93c94ded9fd47f62237fbb5a0325215bfd90690745fe7bf2991cc94e4",
+        "result.json": "88891fc4823f3eb0354c296edc609a531e7840628ae4e512623f9bab13580503",
+        "stdout.txt": "511ed2d579a1d5b83a70bbacaf06317cc4e62994d8b49e5873f4ccaab19879f4",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "capture-phases-retained-2-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 469.535,
+      "wrapperTotalElapsedMs": 715.0198,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "b42176e218ff65a0216e0c18bbaef75fbc51e61a35bedd548fc519991793fc82",
+        "owner.json": "3825479fe5e2c5d3fd8706f336833847058dfa120c2435438f7232d622e82903",
+        "process.json": "c4b9ba5c9a7efc207ca11fe143d01163ec2c4fe1ee379f1b7f1d77d170abe8c7",
+        "parent.json": "994e4ed37d279c5aeab332e327a40e695be2ebd69232cdda7047f53f7476112a",
+        "result.json": "205740aa4c2c66a5bf666beaa481b5cd5bcd2a78e5bf2fdc36a688a23bd724cd",
+        "stdout.txt": "80d4398fdfbd51b87ba38c07d1e3adf78e02f60ba92d8f217d5d6db939cb3853",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "capture-phases-retained-3-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 469.57430000000005,
+      "wrapperTotalElapsedMs": 700.4387,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "64e99865c086862acb7fd94f00e0718b07a8a6a57b523955cedfab95381ff0e0",
+        "owner.json": "f906ed42d3b57f6c28fad1f5d6b666d9f08367cd5a3665230f76c3eafc6edfe3",
+        "process.json": "645578573a22c6bf05298cb2a6656ba6336c595c5dfda415ef60007d6499cd49",
+        "parent.json": "20d9fef6de555b08a5ffba4e81457d6ee2f82187f51609c926f6adb8d5927929",
+        "result.json": "015b6cad03a662af0b6bc57d9a4f9de3824a6d53d54d4b3282f62d7b16f13895",
+        "stdout.txt": "e29fdd14f9af0b8a9b5e0be85ee20ed35e18860f96e59fee020032b088adfe81",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "capture-phases-retained-4-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 547.9540000000001,
+      "wrapperTotalElapsedMs": 776.1549,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "bdd49589ae292d82a40ea3359b699da9d37f8422f2c74b62286ba49b5ac2e235",
+        "owner.json": "19b219f40c167893c20d54796740ff475aef31924f40c19e9aa437410edde1dd",
+        "process.json": "0c6359a50ca7cb50e93817809d06e0104c8593f3ba7b1e4edab077e9f4b9c6da",
+        "parent.json": "b5a970c2d30829bb1c3981996f49e72a8a00ce99af811dd9bcea8465c0ea0aa3",
+        "result.json": "c444bace358d658632db09498c53041e483aa5bc1e57a643a8e4075218c14e0b",
+        "stdout.txt": "d5678d207715da0daa3dd3e1f22a77d170e688ea910c461f44168cafbd0365a3",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "capture-phases-retained-5-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 479.2396,
+      "wrapperTotalElapsedMs": 708.2565000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "ae3dddf113979796f9cae5bca659cde9319121cf6174f234a31e7a5b361c0606",
+        "owner.json": "0bc8166ca7e92b83dd4ea561813ac2413d958579cd3202c4070f5f64489df41f",
+        "process.json": "9d73329e858a8e9e206cf2ac0f8604d445adc15aeb5f26df932e33697cdecb0b",
+        "parent.json": "f04bbc7ddbe9817e26b305682d0fa0e6a8896d9380e25aae41167eb0a5e535fd",
+        "result.json": "564529e871215a27946e4c84b85ca7a7b2ed3e296648686009cd97a6e97df302",
+        "stdout.txt": "c6f20c3ed06a845611d76c621fdd7078c27bf7f1d2a7b055e9d5a935ff79256a",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "capture-phases-retained-6-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 399.1317,
+      "wrapperTotalElapsedMs": 628.9781,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "d016c3e05c3dafd5f6edbb397e027ebbbaf46a991b08e5a347fd99307ecce9ba",
+        "owner.json": "77c280210ffcc3f806499bcba8033f0a8b0a010b5a68e1227c1fe05e2d6ae0f2",
+        "process.json": "a2e40bf6b0c147e789977d4e3f7cda281fc2d221ba0af59c0141c19d729415e5",
+        "parent.json": "92fb0c2bae9800088dfe23e12e241dff687dd27c5ceb08be56f7e47fc1bc1d93",
+        "result.json": "8fcc2a916c7a408dd03260e02de04612c70d52954cb25c902f23c072a40cb223",
+        "stdout.txt": "1a716d2382a2935aadadbf7ef4e516aef3caf39760bd142401af5611bf220495",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "capture-phases-retained-7-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 408.8507,
+      "wrapperTotalElapsedMs": 640.5554000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "f77e3ee766302a105301256324534e89776c4bf26754c4f78db873dfa9475936",
+        "owner.json": "aea60a4e1c9d1ca7dc73f8c6effda67c06c45d18389973d8e47654a77343e427",
+        "process.json": "b058151e59fa536c630b3e39580a2c8be8c5082f2da68f5dd69143789eb93219",
+        "parent.json": "0bef08658000750587040eb50e2bcb848786a301d28f25e8bd66c5db901221fa",
+        "result.json": "e9508c6d7eff1c40507649dedc20d693044db548e2cab6f1f8fb188db2e7658c",
+        "stdout.txt": "83fa2b0fb66776b289a89dd2919b7510649a63cd2b58e50dfc9069d6340a849e",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "capture-phases-retained-8-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 393.98060000000004,
+      "wrapperTotalElapsedMs": 623.0406,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "711d0cec616999f41170637baa1148de520241cd59cdbf26ca1bbea0a69492de",
+        "owner.json": "f1ed6fba52187ed36edabf2da60a37d14dca83de34381fd851a363a860b5aa68",
+        "process.json": "5390c8843a731cfee7a45c82b0754002ae42cb30ff671f9b96bbcd0c7f11f116",
+        "parent.json": "b5c8d1fa5eeee3f5809d90cb0d1c6bb4d324afa827290cb38852551f002081e7",
+        "result.json": "9faec3304ca18553b783a0b8072166daa7dd34ee4ea9220e7d395526b351a91f",
+        "stdout.txt": "50ad54cc83d5bb65fcd79bfe1f06517d251600abf4d6b7cfc099a8dedcf5a1a6",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "capture-phases-retained-9-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 380.5824,
+      "wrapperTotalElapsedMs": 613.5244,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "2a58d9da6c5cea304e5893db5ccaed5ff97dfc3ac0358fa6ff589cd561c087cf",
+        "owner.json": "84643cd4abf4b474374174a4fd701fb383ccf8869697d886a702faa642c20031",
+        "process.json": "4801aa02c0ad112b0540f2512d72725e99896313698e16cada1587c94a029a63",
+        "parent.json": "e0478daf0d3c22984916a5f1b9aac5451a4499a8344570d71f15c246238e2fb6",
+        "result.json": "5782b61c9adeafa16149bcda69334fca09fa5eea4d05b89538cc23d6ce383870",
+        "stdout.txt": "f2a5e820fe3990807ca52101236a83e9e9e482d137564bf716a9f0f256b97afd",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "capture-phases-retained-10-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 463.8804,
+      "wrapperTotalElapsedMs": 697.6585,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "eb7efc30b164ff94ace06830864f66945ab9a745cfc07b968c63857f565353e5",
+        "owner.json": "0ce27ae3c275a8d94b0b405e77d6a4d35e6bb59ba36766043fa37792ad9291ae",
+        "process.json": "fddaca589a2f4316e142966b024c27aecb76c503df4bf6f1ec3aa9860aa736be",
+        "parent.json": "7576a58231434acd20c565aeaeccf861aa1f64a762e7e7cb671f6e9d46cd2888",
+        "result.json": "d39530ae1b5b4cb5b3af3246f063096eb72331c5958d25d3d59c7b6ab060e615",
+        "stdout.txt": "b591b84893b83da74cdf9ae186ed5543dab887e4178bbc88f232167a0ca3dd9f",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "capture-phases-retained-11-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 368.0903,
+      "wrapperTotalElapsedMs": 602.2751000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "73e4d9fb0335dea51a436fca002bd7f11fcf843aa32d297afb54c715c2b21fbc",
+        "owner.json": "49b7b203df5d9f97782d13fa28277b827af9968d46b4941cea6616d5ae451ef6",
+        "process.json": "644b0320a3f83a9789073c36c6e0055eebabb5e87be7da00c1e3914a6c159a78",
+        "parent.json": "bb3467c6f4d65cad50eaf3d9c5b7e4df955b6ea5032c6fdaa2f50c97a7af391b",
+        "result.json": "80c0163df2998f06a5ff57e51586de396ba6e4362cfb040d107e956bc96ab916",
+        "stdout.txt": "c3e8fb2438323258817934a5dd4d8f846fc856c5030e9c76567d016fb4ab44e0",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "capture-phases-public-source-r2",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 381.8843,
+      "wrapperTotalElapsedMs": 637.3955000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "dcf065bb4a3a63c379453c0873e8042121f318c525dd9b204ed42588fb0611fb",
+        "owner.json": "7b383bc08b294f8e23c1cd4d5662645cec7db84cb343a40111896bc2ae48ec74",
+        "process.json": "9bfa1c0116f1e25402a77499703cab344f9e394390b2624f92c5df945b004620",
+        "parent.json": "a377c9c80d59e71a8706882297771222b638d40a34de6ae63294edf7155a6ba6",
+        "result.json": "3a6d1da8ad24117c90ca75aeab07e9e52f0fa9a83447c3e1d409dfd032b34486",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "eab521eeb5b51d71bacf19dd3f502e20d9b31719d0915239cb7021f453ef3fc7"
+      }
+    }
+  ],
+  "finalPublicCopies": [
+    {
+      "path": "tests/qualification/rb100-layout/capture-cohort-phases-r1/CONTRACT_R1.md",
+      "bytes": 6430,
+      "sha256": "3484e1bcda888100793e298de2918d04a46a6f02d3963d3e3adf088d52481a1b"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/capture-cohort-phases-r1/CohortProjectionBridge.java.fragment",
+      "bytes": 359,
+      "sha256": "d018f1a0c8bf1e2013863d6966b08641c4064340593ae8e7b511383b02aafdbc"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/capture-cohort-phases-r1/CaptureCohortPhases.java.fragment",
+      "bytes": 4525,
+      "sha256": "28c5ea8ebaaf71af5ca6cc214b0f0a8864386880fd4852882d3b43113788b1b2"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/capture-cohort-phases-r1/derive_capture_cohort_phases.py",
+      "bytes": 1695,
+      "sha256": "b5ffaddaa8b6a9778502c9d2b823ece6bc7ca67000a5a0b284f87fbd2aa79f0e"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/capture-cohort-phases-r1/test_capture_cohort_source.py",
+      "bytes": 4300,
+      "sha256": "151f12e346251dc4f98a26d4cfc70ca1b784a3aeecf75bed0d24124189a442a7"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/capture-cohort-phases-r1/CaptureCohortPhasesCanary.java",
+      "bytes": 42631,
+      "sha256": "8b59484e5da3d5aa406da43678bb6b6b82591983a2c97f15f23e5deea4c3915b"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/capture-cohort-phases-r1/README.md",
+      "bytes": 905,
+      "sha256": "176dba99b37836d3be94a5473521043c84222da41fe12c9103074a79fa949395"
+    }
+  ],
+  "rootCanaryCorrectionSha256": "dc4dd09bedfed09d45f3308b1276b18a35b67a6366b7fc61b05a0642d478de4f",
+  "rootAndIndependentStaticReview": "PASS_NO_REVIEWER_EXECUTION",
+  "sameCaptureMapAndRawCohortBinding": "FINITE_SYNTHETIC_COMPONENT_ONLY",
+  "successfulFinish": "ONCE_CLEARS_OWN_REFERENCES",
+  "failedAdmission": "NO_BODY_OPEN_ASSOCIATION_PARTIAL_FAILED_METER_PRESERVED",
+  "fullDtoSemanticAuthorityLifetime": false,
+  "normalProducerWired": false,
+  "actualOwnerExecution": false,
+  "fullExportV2WriteComparePublication": "NOT_RUN",
+  "genuineEnvelope": "UNSPENT_GATED",
+  "playable100": 0,
+  "beta": "HELD",
+  "HARD_PSYCHOTIC": "UNAVAILABLE_UNRUN",
+  "full30": "EXCLUDED",
+  "protectedUnread": "UNCERTIFIED",
+  "oldNormal20": "NOT_REREAD",
+  "budgetsSeedsEpochs": "UNCHANGED",
+  "productionGwtPlayer": "NOT_APPLICABLE",
+  "electricalPopulation": "NOT_RENEWED",
+  "ci": "NOT_RUN_SELF_HOSTED_PREREQUISITE",
+  "newNativeFailures": "R1_FIXTURE_PRECONDITION_FAIL_PRESERVED_R2_CORRECTED",
+  "priorFailures": "PRESERVED_NOT_RECLASSIFIED",
+  "limits": "Only synthetic Map/List/scalar/SetupResult/Cohort/association metadata and actual Meter. No actual/fake arm owner/graph/Session/factory, positive originalDTO/executeArm/R9DTO/receipt-prepare/binding, receiptfile, routing/exportV2/genuine. Stable exclusive inputs, external borrowed lifetime and actual arm count/order remain caller preconditions. No actual DTO validity, provenance, cleanup/effects/geometry/SHA truth, authority or whole-output qualification.",
+  "nativeFixtureFailure": {
+    "status": "FAIL_NATIVE_FIXTURE_PRECONDITION_PRESERVED",
+    "phase": "capture-phases-native-new-r1",
+    "childExitCode": 1,
+    "assertion": "PREPARE_ALLOCATION_GATE_ARMED",
+    "operationElapsedMs": 380.4361,
+    "wrapperTotalElapsedMs": 613.5002000000001,
+    "terminationProven": true,
+    "ownedRootAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receiptSha256": {
+      "request.json": "049932633cce38f37c7881f2313261917217c22edc46fc0e51d87a4311f14bfb",
+      "owner.json": "67df68051577e209923da02cd0dfb2e60bd8aee4a994799588723e202bf19759",
+      "process.json": "6ef6f8ed1e0421ada15df76b19b591c70aad3655f9696f86276828839c19cf33",
+      "parent.json": "fec9f41189600bf57c4137ec1dbfdc72c4fc47ea6c156d867181be3db3fc9e74",
+      "result.json": "dd433911b49e78032ee68d3a820b93f1e2c6a6161a2e729506c6e0f0c764c000",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr.txt": "5dd36fba46ae71b9abad7ea9fc20b633c9eb667284c4493ad90d0a448f360cee"
+    },
+    "diagnosis": "maxGroupUnits summarizes closed groups only. At639 closed one-unit groups plus open32504, expected max is1, not32504. Narrow javap of authenticated actual Meter confirms only finishGroup updates maxGroupUnits; charge updates groupUnits/units.",
+    "meterClass": {
+      "path": "com/lushprojects/circuitjs1/client/FailureCohortRoutingStudy$Meter.class",
+      "bytes": 4918,
+      "sha256": "d06f7c883827bc97cedcc08fbcefc3be8512d480f787e7fa06b91751e0162d55",
+      "major": 51
+    },
+    "correction": "Retain exact units33143/groupUnits32504; require maxGroupUnits1, groups639 and OPEN. No fee, cap, negative expectation or case/assertion count changed.",
+    "beforeCanarySha256": "34eaf55914521d5a98420849e68f3ef8d6e3ce57e0746ea6c5b74337719d6656",
+    "afterCanarySha256": "8b59484e5da3d5aa406da43678bb6b6b82591983a2c97f15f23e5deea4c3915b",
+    "sourceUnchanged": true,
+    "reclassification": "FAILED_ATTEMPT_NOT_PASS"
+  },
+  "runtimeSha256": "49750273af2256ea1d22905423fc236243286668a5e5418a58a65cbd182693e0",
+  "runtimeTemplateCorrectionSha256": "0c66d82a790df391d0e35b2f669eb6cae36a2165579669ea4518f07e7987ba59",
+  "sourceReviewSha256": "7d3b5f5ddc7b03cea139bd0256ff95ca91cf7316049d383109ac7c96df8c78a9",
+  "sourceReuse": "Private Source11 reused only after all consumed Source inputs reauthenticated unchanged; fresh public Source11 and R2 native recompile/run"
+}

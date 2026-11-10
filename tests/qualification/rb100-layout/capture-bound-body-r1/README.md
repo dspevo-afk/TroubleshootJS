@@ -1,5 +1,7 @@
 # Capture-bound body component qualification
 
+Current integration uses the [capture/cohort phases component](../capture-cohort-phases-r1/README.md). The captureBoundBody API below is retired from current Source; this packet preserves its historical candidate and proof.
+
 CONTRACT_R1.md defines one atomic binding from capture metadata netIds through
 existing cohort derivation into pending body construction. The same capture Map
 is retained. No independent captured-ID argument or normal producer is added.

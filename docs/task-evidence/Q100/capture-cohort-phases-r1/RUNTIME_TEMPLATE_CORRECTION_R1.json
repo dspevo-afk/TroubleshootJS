@@ -1,0 +1,7 @@
+{
+  "status": "SOURCE_ONLY_CONTROL_CORRECTION_BEFORE_EXECUTION",
+  "oldRuntimeSha256": "fee9474d2bc436a0fecbdcdb37dbe796345926ceef9328c14f2ccf1c8f34222d",
+  "newRuntimeSha256": "49750273af2256ea1d22905423fc236243286668a5e5418a58a65cbd182693e0",
+  "reason": "Keep two accepted parent native-freeze selectors R1. Only current native-freeze selector advances R3. Draft R2 was never executed; no children or tests launched.",
+  "childrenLaunched": 0
+}

@@ -421,9 +421,23 @@ composes existing cohort and pending-body owners from one capture metadata Map.
 It prepays one netIds get/type guard, derives the cohort from that borrowed list,
 then retains the identical Map in the body. Its synthetic frame costs279units/
 138copies/65chunks, one read/unit above the existing components. Old staging
-seams remain independent test owners; future integration uses this atomic API.
+seams remain independent test owners. This completed-arms API is retired from
+current Source; the capture/cohort phases component below owns the sequence.
 Stable exclusive input/borrowed lifetime and validated actual DTO semantics are
 separate preconditions. It wires no normal producer, host or genuine envelope.
+
+The [capture/cohort phases component](task-evidence/Q100/capture-cohort-phases-r1/README.md)
+keeps one raw derivation before the arms and one projection afterward in the
+existing CurrentAssemblyMetadata owner. A package-visible static final metadata
+association has a private constructor and four private fields: exact SetupMeter,
+capture Map, raw Cohort and completed flag. Paid borrows return the same Cohort;
+one successful finish uses existing body staging, prepays four replacements,
+then clears its own three references and marks completed. Prepare/borrow/finish
+cost265/127/64,3/0/0 and31/19/3 on the finite synthetic frame. Failed admission
+returns no body and retains OPEN aliases with partial failed Meter. External
+borrow lifetime, stable inputs and actual arm count/order remain caller duties.
+This is metadata, not receipt authority or wire data. Normal producer, actual
+DTO semantics and genuine host/lifecycle execution remain separate and closed.
 
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before

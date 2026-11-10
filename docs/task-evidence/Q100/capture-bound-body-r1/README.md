@@ -1,5 +1,7 @@
 # Capture-bound body construction
 
+Current integration uses the [capture/cohort phases component](../capture-cohort-phases-r1/README.md). The captureBoundBody API below is retired from current Source; this packet preserves its historical candidate and proof.
+
 CurrentAssemblyMetadata.captureBoundBody now derives the cohort from the supplied
 capture Map's own netIds and stages the body with exactly that same Map. Its API
 has no independent captured-ID vector. Existing cohort/body owners run once each;

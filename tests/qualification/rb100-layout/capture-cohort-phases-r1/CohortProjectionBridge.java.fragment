@@ -1,0 +1,7 @@
+    static Map<String,Object> cohortBeforeBody(
+            CohortTerminalTelemetryStudy.SetupMeter meter,
+            CohortTerminalTelemetryStudy.SetupResult setup,
+            List<String> actualCapturedIds) throws Exception {
+        return CurrentResultProjections.cohort(meter,
+                deriveSetupCohort(meter, setup, actualCapturedIds));
+    }

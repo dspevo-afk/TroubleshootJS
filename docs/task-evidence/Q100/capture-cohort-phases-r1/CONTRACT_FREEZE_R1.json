@@ -1,0 +1,36 @@
+{
+  "status": "CONTRACT_FROZEN_BEFORE_SOURCE_NATIVE_GATES",
+  "contractSha256": "3484e1bcda888100793e298de2918d04a46a6f02d3963d3e3adf088d52481a1b",
+  "representation": "PACKAGE_VISIBLE_STATIC_FINAL_NESTED_PRIVATE_CONSTRUCTOR_FOUR_PRIVATE_FIELDS",
+  "oneUse": "ONE_SUCCESSFUL_FINISH_MULTIPLE_PAID_BORROWS_ALLOWED",
+  "phaseFees": {
+    "prepare": [
+      265,
+      127,
+      64
+    ],
+    "borrow": [
+      3,
+      0,
+      0
+    ],
+    "finish": [
+      31,
+      19,
+      3
+    ],
+    "oneBorrowTotal": [
+      299,
+      146,
+      67
+    ],
+    "twoBorrowTotal": [
+      302,
+      146,
+      67
+    ]
+  },
+  "sourcePriceReview": "PASS_WITH_CLARIFICATIONS_INCORPORATED_NO_EXECUTION",
+  "native": "NOT_RUN",
+  "genuine": "UNSPENT_GATED"
+}

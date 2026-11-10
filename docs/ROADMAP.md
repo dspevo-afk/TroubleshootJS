@@ -1,6 +1,6 @@
 # TroubleshootJS: Current Roadmap
 
-**Updated:** 2026-11-09 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
+**Updated:** 2026-11-10 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
 
 ## Current product checkpoint
 
@@ -1877,6 +1877,21 @@ playable100=0,betaHELD,full30excluded,HARD/PSYCHOTICunavailable/unrun.
 Implementation `d7273e2a502137a506fa2840dccea1dcd4b1ba9f` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c6c25229cc994` sent once. This receipt sends no second email.
+
+The [capture/cohort phases prerequisite](task-evidence/Q100/capture-cohort-phases-r1/README.md)
+is locally accepted for the finite metadata component: derive once before arms,
+paid raw borrows, project/stage once afterward and clear own aliases on one
+successful finish. The old completed-arms captureBoundBody API is retired from
+current Source. Final-source15-Source JDK8,112 major51 classes,
+11 private/11 public Source checks,29/152 new plus872/2848 fresh retained native
+pass:901 cases/3000 assertions.17 accepted-candidate receipts distinguish16exit0
+from1 argument rejection. Actual phase fees265/127/64,3/0/0,31/19/3 and late
+allocation/clear failure state pass. Initial fixture maxGroupUnits failure stays
+preserved; its closed-group expectation was corrected from the actual Meter,
+then recompiled and rerun fresh. Bounded static/root review pass; no producer,
+actual DTO authority/lifetime or genuine qualification. Next: current work-slot
+metadata contract, then independent semantic/host/lifecycle/genuine gates.
+Playable100=0,betaHELD,full30EXCLUDED,HARD/PSYCHOTICunavailable/unrun.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

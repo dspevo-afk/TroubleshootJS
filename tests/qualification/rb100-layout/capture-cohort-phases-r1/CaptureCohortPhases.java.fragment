@@ -1,0 +1,95 @@
+    private static CohortTerminalTelemetryStudy.Cohort deriveSetupCohort(
+            CohortTerminalTelemetryStudy.SetupMeter meter,
+            CohortTerminalTelemetryStudy.SetupResult setup,
+            List<String> actualCapturedIds) throws Exception {
+        if (meter == null || setup == null || actualCapturedIds == null)
+            throw new IOException("METADATA_ARGUMENTS");
+
+        meter.charge(1);
+        Map<String,Object> data = setup.data;
+        meter.charge(1);
+        Object prior = data.get("prior");
+        meter.charge(1);
+        Map<String,Object> view = new LinkedHashMap<String,Object>();
+        meter.copy(1);
+        view.put("qualifiedPrior", prior);
+        return CohortTerminalTelemetryStudy.deriveCohort(view, actualCapturedIds, meter);
+    }
+
+    /** Caller-owned metadata association, never wire data or receipt authority. */
+    static final class CaptureCohort {
+        private CohortTerminalTelemetryStudy.SetupMeter meter;
+        private Map<String,Object> capture;
+        private CohortTerminalTelemetryStudy.Cohort cohort;
+        private boolean completed;
+
+        private CaptureCohort(CohortTerminalTelemetryStudy.SetupMeter meter,
+                Map<String,Object> capture, CohortTerminalTelemetryStudy.Cohort cohort) {
+            this.meter = meter;
+            this.capture = capture;
+            this.cohort = cohort;
+            this.completed = false;
+        }
+    }
+
+    /**
+     * Derive once before the exact two future arms. Caller owns stable metadata
+     * and all borrowed lists exclusively through preparation/export, and drops
+     * the raw cohort borrows after arms. No actual DTO or authority is validated.
+     */
+    @SuppressWarnings("unchecked")
+    static CaptureCohort prepareCaptureCohort(
+            CohortTerminalTelemetryStudy.SetupMeter meter,
+            CohortTerminalTelemetryStudy.SetupResult setup,
+            Map<String,Object> originalCapture) throws Exception {
+        if (meter == null || setup == null || originalCapture == null)
+            throw new IOException("METADATA_ARGUMENTS");
+        meter.charge(1);
+        Object ids = originalCapture.get("netIds");
+        if (!(ids instanceof List)) throw new IOException("METADATA_CAPTURE_NET_IDS");
+        CohortTerminalTelemetryStudy.Cohort cohort =
+                deriveSetupCohort(meter, setup, (List<String>)ids);
+        meter.copy(4);
+        meter.charge(1);
+        return new CaptureCohort(meter, originalCapture, cohort);
+    }
+
+    /** Paid borrow; the future caller passes this same raw Cohort to both arms. */
+    static CohortTerminalTelemetryStudy.Cohort captureCohortForArms(
+            CohortTerminalTelemetryStudy.SetupMeter meter, CaptureCohort association)
+            throws Exception {
+        if (meter == null || association == null) throw new IOException("METADATA_ARGUMENTS");
+        meter.charge(1);
+        if (association.completed) throw new IOException("METADATA_CAPTURE_COMPLETED");
+        meter.charge(1);
+        if (association.meter != meter) throw new IOException("METADATA_CAPTURE_METER");
+        meter.charge(1);
+        return association.cohort;
+    }
+
+    /**
+     * Project once after complete arms exist; finish this association once.
+     * Failed admission preserves it and the partial failed Meter for inspection.
+     * On abort the caller drops its association/borrows; no live resource is held.
+     */
+    static Map<String,Object> finishCaptureBody(
+            CohortTerminalTelemetryStudy.SetupMeter meter, CaptureCohort association,
+            String runId, String sourceSha, String contextSha, Map<String,Object> arms)
+            throws Exception {
+        if (meter == null || association == null || runId == null || sourceSha == null ||
+                contextSha == null || arms == null) throw new IOException("METADATA_ARGUMENTS");
+        CohortTerminalTelemetryStudy.Cohort raw = captureCohortForArms(meter, association);
+        meter.charge(1);
+        Map<String,Object> capture = association.capture;
+        Map<String,Object> cohort = CurrentResultProjections.cohort(meter, raw);
+        Map<String,Object> body = pendingCleanupBody(meter, runId, sourceSha, contextSha,
+                capture, cohort, arms);
+        // Prepay every replacement before clearing the first alias.
+        meter.copy(4);
+        meter.charge(4);
+        association.meter = null;
+        association.capture = null;
+        association.cohort = null;
+        association.completed = true;
+        return body;
+    }

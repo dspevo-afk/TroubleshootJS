@@ -1,0 +1,68 @@
+{
+  "status": "SOURCE_ONLY_ASSEMBLY_SEQUENCE_GAP_AND_NEXT_CONTRACT_DEFINED",
+  "inputs": [
+    {
+      "name": "SOURCE_SELECTION_PLAN_R1.json",
+      "bytes": 833,
+      "sha256": "ae6b587e818545932753034ae09f11e93af592fc430cfdc117490c1417a14052"
+    },
+    {
+      "name": "SOURCE_INPUT_R1.json",
+      "bytes": 2110,
+      "sha256": "bd16b5f70ba93e08cc8a7684c1253ccc47ce64d21571cc160cdd98c993639d3f"
+    },
+    {
+      "name": "ROOT_SOURCE_NOTES_R1.md",
+      "bytes": 3492,
+      "sha256": "d1992c315b6c28174639d0be0aa8465165b7c0cf8eccf52a4fee8ae43823d7c7"
+    },
+    {
+      "name": "ASSEMBLY_SEQUENCE_R1.md",
+      "bytes": 3769,
+      "sha256": "574d63ac49f10a94ec86bfe59be30eb07642bfebe29f02e94d12ee1ecf0a5c9e"
+    },
+    {
+      "name": "_validate_result_semantics.py.source-fragment",
+      "bytes": 3160,
+      "sha256": "293c37b70e3b7e3d857c4b65f3132db116fd1d8b6fed3fa884ccc113d1afee6a"
+    },
+    {
+      "name": "_validate_runtime_identity.py.source-fragment",
+      "bytes": 966,
+      "sha256": "8701354dad262a7b0604f03bd50e841b1d04b4e08fc926d18d3e47f7a42f64b5"
+    },
+    {
+      "name": "executeArmWithProfile.signature.source-fragment",
+      "bytes": 241,
+      "sha256": "4f3f832bbc6790067c4718ba75ce12d18b24dec9b82033f168e7308ea8c3bcd4"
+    },
+    {
+      "name": "WIRE_R1.md",
+      "bytes": 7363,
+      "sha256": "1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed"
+    },
+    {
+      "name": "NATIVE_MAP_R1.md",
+      "bytes": 4409,
+      "sha256": "d6625e0c2ab8e2002fc4df68693e96502bffa0e9c44a9f25dc3cfb895c946563"
+    }
+  ],
+  "rootAndIndependentReview": "AGREE_PRE_ARM_RAW_COHORT_POST_ARM_COMPLETED_BODY_SEQUENCE",
+  "finding": "N31 completed-arms composition is valid in its finite scope, but cannot supply raw Cohort before arms. Reusing it after independent pre-arm derivation would derive twice; no full integration claim.",
+  "next": "Freeze one capture/cohort association with pre-arm preparation and post-arm projection/body phases in existing owner, exact fees/failure/lifetime/alias contract, before implementation.",
+  "workSlotInstaller": "NOT_ESTABLISHED_BY_SELECTED_OWNERS_REQUIRES_EXPLICIT_CURRENT_SOURCE",
+  "independentSemantics": "Selected current pure-kernel methods retain runtime identity/prior/capture/cohort/PAD/arms/parity/finite/work/cleanup obligations; not executed.",
+  "tests": "NOT_RUN_SOURCE_ONLY",
+  "native": "NOT_RUN",
+  "production": "UNCHANGED",
+  "genuine": "UNSPENT_GATED",
+  "playable100": 0,
+  "beta": "HELD",
+  "full30": "EXCLUDED",
+  "HARD_PSYCHOTIC": "UNAVAILABLE_UNRUN",
+  "protectedUnread": "UNCERTIFIED",
+  "oldNormal20": "NOT_REREAD",
+  "budgetsSeedsEpochs": "UNCHANGED",
+  "extraSourceOrDataAdmitted": false,
+  "publication": "NO_N32_IMPLEMENTATION_ACCEPTANCE_OR_EMAIL"
+}

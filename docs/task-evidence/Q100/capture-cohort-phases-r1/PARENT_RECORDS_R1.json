@@ -1,0 +1,40 @@
+{
+  "status": "PASS_AUTHENTICATED_PARENT_COMPILE_NATIVE_ORACLE_RECORDS",
+  "parentProofSha256": "8db8cc5c2e1e455a169a6aa48a335e551d64041f8239bf94e380eef2ba4b4d89",
+  "files": [
+    {
+      "name": "SOURCE_GATE_R1.json",
+      "bytes": 1494,
+      "sha256": "9cfee75ec925be3f203e84d8c2b2adf2a2206ec316adae74d51ae77537fd1ef3"
+    },
+    {
+      "name": "COMPILE_GATE_R1.json",
+      "bytes": 621768,
+      "sha256": "360ad7e006eb4ea39b0a5d854cd6c20d56acf4601033e38ecc8220e6df541180"
+    },
+    {
+      "name": "NATIVE_GATE_R1.json",
+      "bytes": 18379,
+      "sha256": "4115812cd6a079a86c3bb3a2dfdec7f138a68fcfaf0b1e8cc43104b1e021f80a"
+    },
+    {
+      "name": "PUBLIC_GATE_R1.json",
+      "bytes": 2689,
+      "sha256": "4f022032e5917644457e82aa3acf005399014eb38c79cfbaed3757e6f4e0086d"
+    },
+    {
+      "name": "SOURCE_REFRESH_GATE_R1.json",
+      "bytes": 3819,
+      "sha256": "80ebe5eab9dbb08f3fb252879eab4af85c6be6a768f5c6302f2526712147399a"
+    },
+    {
+      "name": "SOURCE_REUSE_R1.json",
+      "bytes": 3286,
+      "sha256": "1a29c7af97755938c8ae70fdca7cd123f9eca646ccb669886ac03c30f4627940"
+    }
+  ],
+  "retainedSourceCountedCases": 872,
+  "retainedSourceCountedAssertions": 2848,
+  "retiredCurrentCaseFamilies": "N31_18_CASES_MIGRATED_NOT_DOUBLE_COUNTED",
+  "dataFilesOpened": false
+}

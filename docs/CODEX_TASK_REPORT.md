@@ -1,8 +1,84 @@
-# Current checkpoint: capture-bound body published
+# Current checkpoint: capture/cohort phases accepted locally, publication pending
 
-F codex/q100-terminal-only-20261107 observed HEAD d7273e2a502137a506fa2840dccea1dcd4b1ba9f; no upstream.
+F codex/q100-terminal-only-20261107 HEAD 1de5d6420aacfad2071d5c38f1d726f82400b0e6,no upstream;
+normal target origin/codex/q100-physical-feasibility. N31 d7273e2a/receipt1de5d642
+published/exact remote verified/Gmail1a1c6c25229cc994 sent once. N33 T/E
+capture-cohort-phases-r1 is now locally accepted, NOT yet committed/pushed/emailed.
+Private OS-temp/tsj-q100-capture-cohort-phases-r1-f6251304114444e2bf17b376fcf8931a.
+
+N32 current sequence audit established raw Cohort before exact NULL/OBSERVE,
+completed arms before body. Current metadata owner now derives once in
+prepareCaptureCohort, lends same raw through paid captureCohortForArms and
+projects/stages once afterward in finishCaptureBody. Association is static final,
+package-visible, private ctor/four private fields; exact Meter/capture/raw/
+completed. Success prepays four replacements, clears own three references and
+marks completed. Completed-first/Meter identity refusal; one successful finish,
+multiple paid borrows. External aliases/actual arm count/order/lifetime remain
+caller duties. Retired current captureBoundBody; independent legacy cohort seam
+retained. No duplicate algorithm, wire helper, authority or normal producer.
+
+PASS private Source11 reused only after all consumed bytes reauthenticated;
+fresh publicSource11, final-source15-Java JDK8 source7/target7:
+112classes/348967B and2554deps/12250053B,major51/no shadows.
+Fresh new29cases/152assertions plus12retained872/2848=901cases/3000assertions.
+Prior18cases/71assertions across6families replaced, not added again. Earlier
+wording18families is corrected by MIGRATION_LEDGER_R1.json. Actual phase fees
+prepare265/127/64,borrow3/0/0,finish31/19/3; one299/146/67,two302/146/67.
+Legacy264/125/64; bad getter/type/group/NULL/Meter/completed/admission guards.
+Allocation refusal264/127/64; clear refusal27/19/3 and OPEN references unchanged,
+no body. Actual per-group32768cap, aggregate units distinct.17 accepted receipts:
+16exit0 plus1 exact argument rejection; termination/root/log absence verified.
+Operation/wrapper times separate; isolated cleanup duration unmeasured.
+
+Preserved first native FAIL PREPARE_ALLOCATION_GATE_ARMED,380.4361ms operation/
+613.5002ms wrapper,exit1,termination/rootabsence. Actual narrow Meter javap shows
+maxGroupUnits updates on finishGroup only; corrected open-group fixture expects
+639closed groups/max1 and OPEN32504/aggregate33143. Fees/errors/caps/counts
+unchanged; fresh recompile/new/retained PASS. Pre-first-compile JDK8 tiny probe
+also confirms synthetic constructor bridge; require one exact private non-
+synthetic source ctor plus4private fields. Unexecuted R2 runtime template had
+two wrong parent selectors; corrected before any child. R3 runtime final.
+N31 tuple/whitespace/documentary-scope failures remain preserved, never erased.
+Bounded independent Source/price/runner/29-152ledger and root integration review
+PASS; reviewers executed no targets. Never give reviewers the full report;
+stream until startswith Historical heading/max64KiB and pass only bounded copy.
+
+SourceFreezeR1 e76ae3254f7a4203229bf39dcbe72a4d481388f4d711e7652bbc391315028006;
+NativeFreezeR3 e50cba5dca1fe64e1050f4d5729bd89cc56f194a49af9d7d50a392e577ea8a63;
+FinalProofR1 9a2525843137b12e44c97daf188b6ef9b68918c8f822e023ad9c0032838f45e8.
+Emitted metadata16559B/784296ac06e2a9c7eaeb04d8c76027360861caea960d1fcb281aa61179356895.
+Next: final integrated diff/privacy/whitespace/index audit, explicit intended
+staging, normal commit/push exact remote verification, one completion Gmail,
+documentation receipt. Then select/freeze current work-slot metadata contract;
+it is not yet selected/integrated. Semantic/host/lifecycle/genuine gates separate.
+
+Only synthetic Map/List/scalar/SetupResult/Cohort/association metadata+actual
+Meter execute. No actual/fake OriginalArm/ArmResult,graph,Session,factory,
+positive originalDTO/receiptprepare/binding/executeArm/R9DTO,receiptfile,
+routing/exportV2/genuine. No actual DTO/provenance/authority/borrowlifetime,
+actualcleanup/effects/geometry/SHA truth or whole-output qualification. Current
+snapshot main/assemble remain throws. Original+exact NULL/OBSERVE UNSPENT_GATED.
+Playable100=0,betaHELD,full30EXCLUDED,HARD/PSYCHOTICunavailable/unrun. Protected/
+heldoutDATA,oldactual artifacts/generatedDATA classes,whole historical builders/
+validators/consumers denied. Oldnormal20notreread; protectedUnreadUNCERTIFIED.
+Budgets90s/640/5s/32768pergroup/copy1MiB/chunk4096/Source4MiB/fragment64KiB/
+opJSON8MiB/result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/reader180s/
+wrapper480s/cleanup120s and exactseeds/epochs/oracles unchanged. Production/GWT/
+Player N/A,electrical/population NOT RENEWED;CI NOT RUN,self-hosted prerequisite.
+
+No new persistent process/listener. Preserve uncertain browser14116/start
+639294472690745890/port58320,preview34180/start639294472514546595/port58264+
+14children,oldDprocess/unlink uncertainty,hardlinks/scratch/failures,
+Notepad67116860. No GUI/termination. Main5f05b005:9mods/6untracked,E d9747229:
+reportM,Desktop e0c36885:7mods/89individualuntracked preserved. F intended N33
+docs/tests/evidence only; staged0 before explicit stage. No user decision.
+
+# Historical checkpoint: N31 publication and N32 sequencing contract
+
+F codex/q100-terminal-only-20261107 observed HEAD 1de5d6420aacfad2071d5c38f1d726f82400b0e6; no upstream.
 Target origin/codex/q100-physical-feasibility. N31 implementation d7273e2a502137a506fa2840dccea1dcd4b1ba9f normally pushed/exact remote verified.
 Gmail 1a1c6c25229cc994 SENT_ONCE_ACKNOWLEDGED; no second receipt email.
+Publication receipt is this observed HEAD, normally pushed/exact remote verified.
 N29 e9b0b214/1556740f/Gmail1a1c66c5fbf686de and N28 a8814a41/d7a51197/
 Gmail1a1c62dd6c0f3d8f remain complete. Never duplicate previous notifications.
 
@@ -48,11 +124,30 @@ N30 Source audit168488fd... located detached capture IDs vs independent cohort
 input. N31 explicitly selected only pure-kernel methods _validate_original_capture
 2266..2291 and validate_full_d_v22530..2559 from207814B/8e8c374a... . Neither
 kernel entrypoint nor originalDto executes. Existing adopted snapshot main/assemble
-stay unconditional throws. No global producer absence is inferred. Next unstarted
-implementation: operative current assembly integration and independent semantic/
-host/lifecycle contract, using this capture-bound boundary. Select/authenticate
-named current Source before further reading; no whole historical builder/
-validator/consumer or DATA admission is implied. Avoid superficial field loops.
+stay unconditional throws. No global producer absence is inferred.
+
+N32 Source-only preparation OS-temp/
+tsj-q100-current-assembly-contract-r1-f81bf1ff14034c76b960f43591d342a1.
+SOURCE_INPUT_R1 authenticates current metadata14013B/54f6b815...,codec/projections,
+pure-kernel _validate_result_semantics2387..2424 (3160B/293c37b7...) and
+_validate_runtime_identity2212..2225 (966B/8701354d...), plus only current
+executeArmWithProfile signature241B/4f3f832b... from14125B/5f5a569b... .
+WIRE/NATIVE_MAP contract docs match accepted HEAD. Independent current kernel
+retains context/receipt/capture/cohort/PAD/identity/parity/finite/work/cleanup;
+no semantic entrypoint executes. Root/independent sequencing review agree:
+raw Cohort is needed before NULL/OBSERVE, completed arms before body. N31's
+completed-arms composition is valid in its tested scope but derives too late
+to supply the pre-arm raw value; no full integration or component defect claim.
+Do not add a second derivation/unpriced work or mutable placeholder arms Map.
+ASSEMBLY_SEQUENCE_R1.md defines next contract: one capture/raw-Cohort association
+before both arms; same association afterward; project once then stage body.
+Choose representation/lifetime/alias release/single-use and exact operation fees
+before implementation, in existing owner. It is metadata, not receipt authority.
+Current selected owners do not establish work-slot installer; explicitly select
+current Cohort/work-owner interfaces before integrating them. No extra Source/
+whole historical builder/validator/consumer or DATA is admitted. N32 Source-only,
+tests/build/native NOT RUN; no implementation acceptance/publication/email.
+Findings SHA256 f3da81ab0217f6a586993b2961b0f0490d9f9d94b547483c18fff237ba0f25f7.
 
 Only synthetic Map/List/scalar/SetupResult metadata and actual Meter execute;
 no actual/fake arm owner,graph,Session,factory,positive originalDTO/executeArm/
