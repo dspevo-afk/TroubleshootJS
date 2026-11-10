@@ -1,0 +1,9 @@
+{
+  "status": "ROOT_ACCEPTED_CURRENT_ARM_READ_ORACLE_BEFORE_EXECUTION",
+  "files": {
+    "current_arm_read_oracle.py": "91777e7f9a00aa64d400f55dcb8265443eb497b25349282890103cb3a948b193",
+    "verify_current_arm_reads_r1.py": "fd98a432e268319d5aa3d6acb95c1dfc4c2b84d8c9e15700725dda8f6556b894",
+    "test_current_arm_read_oracle.py": "1c160984f31b8b26827b37cb587a2891e12bb17be25498503cbecabca86b3569",
+    "ORACLE_NOTE_R1.md": "cbce41be8899fbeffc3d50e6a1e82a0ff8891fbe7b51b7c2c0419868a8fd3dab"
+  }
+}

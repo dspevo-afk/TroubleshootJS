@@ -439,6 +439,16 @@ canonical provenance. Other Source and older attribution/receipt owners stay
 unchanged. Source conservation and synthetic Meter fixtures do not prove positive
 original DTO execution or enable normal producer/host authority and lifetime.
 
+The [arm metadata read transform](task-evidence/Q100/current-arm-read-metering-r1/README.md)
+keeps execute/validation/held-R9 extraction in the current Study. It reuses the
+qualified field/map adapters, adds one charged list getter and prepays the stable
+list iteration bound before its original comparison loop. Deferred Guard bodies,
+selectedHead's charge, read order and duplicate state inspections stay intact.
+The pure byte-pinned splice authenticates its published IO owner before private
+execution and preserves exclusive close/readback-before-provenance. Synthetic
+metadata qualification does not enable the producer or certify owner provenance,
+whole-result semantics, host authority or lifetime.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

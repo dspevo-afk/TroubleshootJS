@@ -1,0 +1,53 @@
+{
+  "status": "PASS_CURRENT_ARM_METADATA_SUITE_AND_INDEPENDENT_READER",
+  "call": {
+    "phase": "arm-native-suite-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 383.9889,
+    "wrapperTotalElapsedMs": 630.9436000000001,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "790e8be97c006e389cd2e8bcc49ef8e1b5eb2191334414afdda05d530fad4a1d",
+      "owner.json": "dd5613d2e8a376a027b6e47d435cbf61e5886d3516de06e4fbeb00cdfc1ec89c",
+      "process.json": "568ee3db625715684e9e14a3c9d8a0cf933432327fbb18c60f14aa7439ad890b",
+      "parent.json": "e50d1a07c22364d3e44ef9ef5eb2f45f0cd4dd848dbb7e4081d98ea67dd8b245",
+      "result.json": "431df0eb6b5ebd24d81ee0e8728770b9aa9afb6d6abae23c42a8a6a348003d47",
+      "stdout.txt": "ac75ef09ba0006bcaab433584c952cbc608daca9ed3aa20cde022f05f0e10d56",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "reader": {
+    "phase": "arm-reader-suite-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 342.8234,
+    "wrapperTotalElapsedMs": 587.6806,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "333c8e5df4cff383e249d198ab983812de71430320df212fe476620c9e49fa83",
+      "owner.json": "11d9310419be09b8f463b5cf4228580635319ea22c69dc283b62e67e27618eb7",
+      "process.json": "0c06196f2e246d5f775d430843daeec14650640a01f3cc7c9f15f1bc3292f530",
+      "parent.json": "ac4a8f2bb2ce8297e3148df12694a125a0b16144b55e481237fdfb81591c1d21",
+      "result.json": "73bd82c69e80702b8a5614aed900a5ba8b446ba481d3df5aaff8ab73809a8c68",
+      "stdout.txt": "5fbe05c01e194347cfcf9729184a737220206916a18c1b1c7d5870a5b1746efe",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "summary": {
+    "status": "PASS_INDEPENDENT_CURRENT_ARM_READ_COMPONENT",
+    "mode": "SUITE",
+    "caseCount": 12,
+    "parentConstructions": 1,
+    "actualPositiveOwnerResult": false,
+    "normalHostAcceptance": false,
+    "genuineEnvelope": "UNSPENT_GATED"
+  },
+  "actualOwnerExecution": false,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "sourceFreezeSha256": "0a965bae5c627d4695e4d780aec895b47d9a45498c72b06689d01f33b7060664"
+}

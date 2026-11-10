@@ -1684,6 +1684,17 @@ Implementation `64c83decef4477f511af25ab20198cb34bd1b8f7` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c3ce8d372dabb` sent once. This receipt sends no second email.
 
+The [current arm metadata read prerequisite](task-evidence/Q100/current-arm-read-metering-r1/README.md)
+is locally accepted for its finite Source/Meter component. Four current Study
+methods reuse prepaid field/map reads and add one paid list getter/full traversal
+bound, preserving business bytes, deferred Guards and repeated state inspections.
+Final-source JDK8,15 new and46 retained native cases and independent readers, private/
+public Source22+oracle31, actual I/O and case-specific rejection controls pass;
+40 selected receipts and inputs were reauthenticated. Three test/fixture failures
+remain preserved. Actual caller, whole-result, authority and lifetime stay gated;
+no positive owner/genuine envelope or playable100 admission. All budgets, exact
+seeds/epochs, data exclusions, full30 EXCLUDED and beta HELD remain.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

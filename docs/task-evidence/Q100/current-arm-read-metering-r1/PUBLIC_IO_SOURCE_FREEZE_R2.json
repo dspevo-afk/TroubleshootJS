@@ -1,0 +1,21 @@
+{
+  "status": "ROOT_REVIEWED_PUBLIC_AND_READER_IO_SOURCES_BEFORE_EXECUTION",
+  "files": [
+    {
+      "name": "reader_io_policy_canary_r1.py",
+      "bytes": 4255,
+      "sha256": "3bd134c6f90e6c7bbffda9e713f7b83283206ba345c1ee3e546500e933c336a7"
+    },
+    {
+      "name": "run_reader_io_gate_r1.py",
+      "bytes": 1218,
+      "sha256": "641aa575d8c65a29ab7b6b82802cb49033cf90872a83c1c19a75ae8d22b521a1"
+    },
+    {
+      "name": "run_public_gates_r1.py",
+      "bytes": 3097,
+      "sha256": "b30a24a5d1c991411aefa1569522f5b6ee7d8bc3f176f9acbeb8bd745a8e8941"
+    }
+  ],
+  "preexecutionCorrection": "Root driver expected copied prior status without CURRENT_ARM; corrected before any readerIO/public execution. Prior freeze and exact draft preserved."
+}

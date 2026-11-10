@@ -61,8 +61,9 @@ All existing budgets, exact seeds and epochs remain. Full30 EXCLUDED; HARD/PSYCH
 unavailable/unrun; oldnormal20 historically read, no reread; protected-unread
 UNCERTIFIED. Protected/heldout DATA, old actual descriptors/results/generated-data
 classes and whole legacy builders/consumers remain denied. Playable100=0, beta HELD,
-genuine envelope UNSPENT_GATED. No new persistent process/listener/link; task scratch,
-classes and failures retained, old uncertain resources untouched. Next is the current
+genuine envelope UNSPENT_GATED. No new persistent process/listener; tested junctions removed. Regular hardlink
+fixtures remain within retained task scratch, alongside classes and failures; old
+uncertain resources are untouched. Next is the current
 arm/caller Source and whole-result/authority/lifecycle prerequisites.
 
 The [component instructions](../../../../tests/qualification/rb100-layout/original-dto-metering-r1/README.md)

@@ -1,0 +1,68 @@
+{
+  "status": "PASS_REAL_ARM_BOOTSTRAP_IO_AND_PROVENANCE_FAILURE_CONTROLS",
+  "call": {
+    "phase": "arm-bootstrap-io-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 488.10020000000003,
+    "wrapperTotalElapsedMs": 819.9539000000001,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "99091f448e3149d8ea01d6ea5beb6e6d41a6f98ea8f641e410bc422aa3096f69",
+      "owner.json": "dc09660b7a8dea291ae21d9b67b4906c7f704a0e7350b0f0e19b5916af8c570b",
+      "process.json": "a81e4b6ed6786327b4658aa6e5ae888290cbfafb48eb7b330bfa6a81e2ce71b5",
+      "parent.json": "4347b2dfb29727b94dc3f00e8e200e992f88306cfe946b5ccae508fd24f985ee",
+      "result.json": "ceccd6d59da1fa09816a7437e2ce4db4f7e204dcbd8ce7526545337f4036c14f",
+      "stdout.txt": "6a94890329127c41f8b9897801717c29b0108d0f845b9de3b287a3f96d1492ff",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "summary": {
+    "status": "PASS_REAL_ARM_BOOTSTRAP_IO_AND_PROVENANCE_FAILURE_CONTROLS",
+    "cases": [
+      {
+        "mode": "stable",
+        "result": "STABLE_BYTES",
+        "descriptorClosed": true
+      },
+      {
+        "mode": "directory-child",
+        "result": "STABLE_BYTES",
+        "descriptorClosed": true
+      },
+      {
+        "mode": "rewrite",
+        "result": "IO_SOURCE_CHANGED",
+        "descriptorClosed": true
+      },
+      {
+        "mode": "read-close-failure",
+        "result": "IO_SOURCE_CLOSE",
+        "descriptorClosed": true
+      },
+      {
+        "mode": "short-provenance-write",
+        "result": "OUTPUT_WRITE",
+        "nestedExitCode": 2,
+        "outputSourcePreserved": true,
+        "provenanceBytesRetained": 4071,
+        "positiveCliPass": false
+      },
+      {
+        "mode": "provenance-flush-failure",
+        "result": "OUTPUT_WRITE",
+        "nestedExitCode": 2,
+        "outputSourcePreserved": true,
+        "provenanceBytesRetained": 4072,
+        "positiveCliPass": false
+      }
+    ],
+    "actualOwnerExecution": false,
+    "genuineEnvelope": "UNSPENT_GATED"
+  },
+  "generationSourceFreezeSha256": "5b9a0367e58e4e91f97a3cf4f4b7a3344e1a8323ef07e436dd0a926582e63b57",
+  "ioSourceFreezeSha256": "bc443d1b290c42fd2c97abe266590fa8150c983c190d68d768e51e96e2bb91c9",
+  "actualOwnerExecution": false
+}

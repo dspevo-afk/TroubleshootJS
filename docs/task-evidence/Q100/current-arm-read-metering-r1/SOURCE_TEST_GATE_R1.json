@@ -1,0 +1,28 @@
+{
+  "status": "PASS_CURRENT_ARM_SOURCE_API_CLI_SUITE",
+  "count": 22,
+  "scope": "Mixed pure and real nested CLI/cmd Source controls; no native or owner execution",
+  "call": {
+    "phase": "arm-source-tests-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 2181.2593,
+    "wrapperTotalElapsedMs": 2423.9459,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "f1713fe4cbd77afee1012549c47051e06aa132d436c61a745056a4e087a89111",
+      "owner.json": "f557524af51b97536f56e26dfc672a34fecde14c0e030e6b829b77731b91d4cd",
+      "process.json": "55bbd12b85c0468aafc932eee2a75c85b4ebe2f43a6cb985df93e5c6af025bf0",
+      "parent.json": "4a7f8e7319458a9af8dff21e234d4ce559b39ad4680cca9489a16d69d42dea8c",
+      "result.json": "bf8d387a373e777f7b5fa27c8d2449f174073b20b62dd607bbddcc71c3d7ad6d",
+      "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr.txt": "bbadcaa5f721319e525d23fc0f7c758d0b772cccf3becd04a37e95dc835cecbc"
+    }
+  },
+  "generationSourceFreezeSha256": "5b9a0367e58e4e91f97a3cf4f4b7a3344e1a8323ef07e436dd0a926582e63b57",
+  "sourceTestFreezeSha256": "bee14fb327f171c8eea23e0ae3bc56dc09ec2739885d11d43776e8e054f190bd",
+  "actualOwnerExecution": false,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

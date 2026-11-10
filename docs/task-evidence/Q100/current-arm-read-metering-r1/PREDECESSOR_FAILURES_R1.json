@@ -1,0 +1,109 @@
+{
+  "status": "PRESERVED_FAILURES_NOT_RECLASSIFIED",
+  "failures": [
+    {
+      "candidateLeaf": "tsj-q100-arm-read-source-audit-r1-ea679f992a7b4b518b6bd7ca9617678c",
+      "receipt": {
+        "status": "FAIL_SOURCE_SUITE_GUARD_TOTAL_ASSERTION",
+        "phase": "arm-source-tests-r1",
+        "actualChildExitCode": 1,
+        "actualTests": 22,
+        "passingMethods": 21,
+        "failingMethods": 1,
+        "cause": "Test combined contains1 plus validator40 Guard closures, but expected40 instead of41. Independent count and exact Guard body comparison prove1+40.",
+        "nativeJavaRan": false,
+        "sourceApiImplementationChanged": false,
+        "fragmentChanged": false,
+        "counterChange": "Test-only total41 plus separate absolute [1,40] assertions; all original assertions retained",
+        "correctedTestBytes": 57219,
+        "correctedTestSha256": "26b151caa2109685f27c7f62a0a8cb35e48d39223bf559ec314013cc25edc106",
+        "failedTestSha256": "8785ff56356b902d689afc0647355429bf49837aef41ca3618d31d31e6589951",
+        "terminationAndOwnedRootLogsAbsenceProven": true,
+        "processElapsedMs": 2370.3662,
+        "wrapperTotalElapsedMs": 2625.2052000000003,
+        "isolatedCleanupDurationMs": null,
+        "newCandidateLeaf": "tsj-q100-arm-read-guard-count-r2-8d7020b2aa8b4f5cb3b12171a1d4541a",
+        "rawStderrSha256": "968d2c2870aeb1939601ece86a342b8616efb00e28e891f09b7e9ea555de7f08",
+        "launchTypo": "First positive-driver outer launch used a mistyped interpreter path before process creation; corrected; selected CLI later passed. No Source ran in the mistyped launch.",
+        "genuineEnvelope": "UNSPENT_GATED"
+      }
+    },
+    {
+      "candidateLeaf": "tsj-q100-arm-read-guard-count-r2-8d7020b2aa8b4f5cb3b12171a1d4541a",
+      "receipt": {
+        "status": "FAIL_JDK8_NATIVE_FIXTURE_DUPLICATE_HELPERS",
+        "phase": "arm-jdk8-compile-r1",
+        "actualChildExitCode": 1,
+        "compilerErrors": 3,
+        "removedExactDuplicates": [
+          {
+            "name": "validatorFailure",
+            "duplicateBodyBytes": 257,
+            "removedBytes": 259,
+            "bodySha256": "ef20d18c932b11b4f15b58347a13a7307e890c41968d94caf08358680cc5c755",
+            "exactDuplicateVerified": true
+          },
+          {
+            "name": "listGroupFailure",
+            "duplicateBodyBytes": 358,
+            "removedBytes": 360,
+            "bodySha256": "3646c1845edc239adb0e09629f9a3248da6725d01c48dee41fcb3592a8198e72",
+            "exactDuplicateVerified": true
+          },
+          {
+            "name": "containsGroupFailure",
+            "duplicateBodyBytes": 373,
+            "removedBytes": 375,
+            "bodySha256": "2f3dda7245f532722a194831a7afdb9e0ba4f147e9fedc7f0e82a1445d0baef7",
+            "exactDuplicateVerified": true
+          }
+        ],
+        "correctionScope": "Native test fixture only; no assertion/fixture/production Source/pricing/oracle change",
+        "correctedCanaryBytes": 36696,
+        "correctedCanarySha256": "ee39fad6616eda9a35ee161d3fcaea7bb696b111cfe96fe219b4176e9355f478",
+        "nativeCasesRan": false,
+        "actualOwnerExecution": false,
+        "terminationAndOwnedRootLogsAbsenceProven": true,
+        "processElapsedMs": 1517.3870000000002,
+        "wrapperTotalElapsedMs": 1766.0182,
+        "isolatedCleanupDurationMs": null,
+        "newCandidateLeaf": "tsj-q100-arm-read-native-dedup-r3-a835fdd78b9c463e9fcf78ab3816e7d1",
+        "sourceSuite": "N15 private22 PASS; inputs unchanged by fixture-only correction",
+        "bootstrapIo": "N15 real6 PASS; unchanged implementation",
+        "previousSourceGuardFailure": "N14 22suite FAIL1 guarded-count assertion; preserved",
+        "oracleCopyDiagnostic": "N15 stopped on stale test Source hash from a pre-final handoff; no pin written and no oracle code ran. Final31-method files authenticated now.",
+        "genuineEnvelope": "UNSPENT_GATED"
+      }
+    },
+    {
+      "candidateLeaf": "tsj-q100-arm-read-native-dedup-r3-a835fdd78b9c463e9fcf78ab3816e7d1",
+      "receipt": {
+        "status": "FAIL_NATIVE_CALLBACK_FIXTURES_SCHEMA_ARGUMENT",
+        "phase": "arm-native-suite-r1",
+        "actualChildExitCode": 1,
+        "actualCases": 12,
+        "passedCases": 9,
+        "failedCases": [
+          "validator_no_failure_callbacks",
+          "validator_first_non_found",
+          "validator_quality_net_callbacks"
+        ],
+        "actualError": "OBSERVER_V2_SCHEMA",
+        "actualDebitsBeforeRejection": 1,
+        "cause": "Three valid-intended callback fixtures passed NET in the String schema argument; builder used that as schema instead of its canonical default. Each now passes null for the default.",
+        "correctionScope": "Only three Java fixture arguments; no Source implementation/pricing/assertion/oracle changes",
+        "correctedCanaryBytes": 36699,
+        "correctedCanarySha256": "c84430269fe4399a54a6deed9d63e5f65166fdaf5a8e90fb0dc5c72247b29c95",
+        "nativeSmoke3AndIndependentReader": "PASS_SAME_PREDECESSOR_SOURCE",
+        "generationSource22BootstrapIo6Oracle31Compile": "PASS_SAME_PREDECESSOR_SOURCE",
+        "processElapsedMs": 478.2611,
+        "wrapperTotalElapsedMs": 730.3018000000001,
+        "terminationAndOwnedRootLogAbsenceProven": true,
+        "isolatedCleanupDurationMs": null,
+        "newCandidateLeaf": "tsj-q100-arm-read-schema-fixture-r4-21e8910cb7784c18bce32fa0f6e2f47b",
+        "actualOwnerExecution": false,
+        "genuineEnvelope": "UNSPENT_GATED"
+      }
+    }
+  ]
+}

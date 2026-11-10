@@ -1,0 +1,184 @@
+{
+  "status": "PASS_REAL_SELECTED_CURRENT_ARM_SOURCE_EMISSION",
+  "call": {
+    "phase": "arm-source-emission-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 409.92260000000005,
+    "wrapperTotalElapsedMs": 678.5803000000001,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "b044b9b39bd704377c956643c792376db33c1880f1ed21d075c19ce7a10e74b8",
+      "owner.json": "7b3714fe359e3ad302bad5fae847458a80f0837feb8c9b6f6885e1b0ef1f2481",
+      "process.json": "4fba4d2641b7c302260a0ef5cfb1ba6e527496eeb9ef47a5a17ec558b566dd94",
+      "parent.json": "a278665fb8255d1c57aaa9b79dac567b6bb331136ce1fd4ca143284dab0a9f4a",
+      "result.json": "387962da56351df0f37cd8a62ae841e22e89bd7a95505567192e44479da2024a",
+      "stdout.txt": "e3a61d8169776f5f15f635935c034f2709a2d435de7290f738953f19fa857394",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "manifest": {
+    "conservedOutside": {
+      "bytes": 223046,
+      "segments": [
+        {
+          "beforeMethod": "executeArmWithProfile",
+          "bytes": 61964,
+          "sha256": "89eae9486bf3745c429ee77662d3e927143ee57f8d55f49389e289776dacff5c"
+        },
+        {
+          "beforeMethod": "containsMetered",
+          "bytes": 11682,
+          "sha256": "d68f04ba063fae25adca2fe4233a9e6fff1c8b4b69badf992203e63174a49a87"
+        },
+        {
+          "beforeMethod": "validateObservation",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "beforeMethod": "r9CanaryArmDto",
+          "bytes": 148493,
+          "sha256": "a011c244cbb3550633cb264f52a197f22d9c23e49143c85f2761a76a138d0c47"
+        },
+        {
+          "afterMethod": "r9CanaryArmDto",
+          "bytes": 907,
+          "sha256": "f62f70a352c349a8daf9a9c599374f6046a6f31ddfd2344320917c127939d33f"
+        }
+      ],
+      "sha256": "65ba18e3d5d62afc594950c5db995ca5a8e0774816d7fae56fb40b974a802f0d"
+    },
+    "format": "TSJ_CURRENT_ARM_READS_SOURCE_PROVENANCE_R1",
+    "helper": {
+      "bytes": 168,
+      "name": "armListRead",
+      "sha256": "0eba86fcc256c02079bbb31f435859bbcc0ae2790faaee181e456991834f9a6b"
+    },
+    "inputs": [
+      {
+        "bytes": 235950,
+        "role": "current_study_source",
+        "sha256": "f25010169adb2e4934a1303dc076cb948ba5f0c7160603a1fecd6b060e916541"
+      },
+      {
+        "bytes": 14125,
+        "role": "metered_fragment",
+        "sha256": "5f5a569b10f3579de8f700e84496c8762450531e986e732e338ec79133c60222"
+      }
+    ],
+    "methods": {
+      "containsMetered": {
+        "after": {
+          "bytes": 397,
+          "sha256": "b50267f4b55b3daa4520b0cd2d81e42b6544ce552f9542fec22299d8abfa4b3a"
+        },
+        "before": {
+          "bytes": 302,
+          "sha256": "67ca91f1697d1428cd101e040ba1666196c47ed30ce28d1afa10cbdd81ec60e9"
+        },
+        "oldSpanBytes": 303,
+        "oldSpanSha256": "dc5205492d20d0a9240236b1bbd511130f086307501a367f434d7b15f9985b45",
+        "oldTrailingLf": 1,
+        "replacementBytes": 568,
+        "replacementSha256": "072c3e0b8f2dc2c65f01f8112a280d46696a9e38629caf487ac9f98a0f85b70d"
+      },
+      "executeArmWithProfile": {
+        "after": {
+          "bytes": 3504,
+          "sha256": "d8a4fbb645be55240d5dcd9c9b69067b82aac03a1f17139e24d07ac37934e86a"
+        },
+        "before": {
+          "bytes": 3179,
+          "sha256": "b711d9dd5e0b3d8ea3bfe061cb9fcfae3ed868771a9c63bbe73bb2ea4ede998c"
+        },
+        "oldSpanBytes": 3181,
+        "oldSpanSha256": "fa54d5b0bf1c8657a731a8085978d2d29306dcc935c4a9997cea2b87b385e527",
+        "oldTrailingLf": 2,
+        "replacementBytes": 3506,
+        "replacementSha256": "07706ed71864e101762939f1e6686e90ee7c2da66024b4b8f57efb9b933a7049"
+      },
+      "r9CanaryArmDto": {
+        "after": {
+          "bytes": 1102,
+          "sha256": "91c17dd424d0c66e180f79f39f4f5169cdb1948556786f8a3591a6adc96d0432"
+        },
+        "before": {
+          "bytes": 1024,
+          "sha256": "568041ed579125a2342d9d1408e5d1e45f7e3e2f738f7f428cf1fb1410ea97be"
+        },
+        "oldSpanBytes": 1025,
+        "oldSpanSha256": "44155741db6a61d8cfd6bda0431fe30c5b20fff651af3eb645fcc5c3349856bc",
+        "oldTrailingLf": 1,
+        "replacementBytes": 1103,
+        "replacementSha256": "541018d6b77e07cda128cb6ed67f385c0e76c19b22fa44b003267687f8b4e878"
+      },
+      "validateObservation": {
+        "after": {
+          "bytes": 8720,
+          "sha256": "e9274eb7a46b3522502fd4486c2964c188b16d4b17fbe3bf10910373360a4832"
+        },
+        "before": {
+          "bytes": 8394,
+          "sha256": "ed10320a0c2e2ed524abbf45bfaaf6e85095a891c851522bfa53893a75e19eb0"
+        },
+        "oldSpanBytes": 8395,
+        "oldSpanSha256": "c0d3ba45d1c3f5198934e088a2e472dfcda1360b133342566d0d41658f845cba",
+        "oldTrailingLf": 1,
+        "replacementBytes": 8721,
+        "replacementSha256": "2f119eb664aaa8caecf276a925a27b42b3ba73265491a50bb025b0e8270a9cee"
+      }
+    },
+    "output": {
+      "bytes": 236944,
+      "role": "CohortTerminalTelemetryStudy.java",
+      "sha256": "90f4c227d125587a7d1c8d3b324fe7fd375fd89af7a8a34a83a65a3c0d310bad"
+    },
+    "sourceOnlyPrice": {
+      "containsMetered": {
+        "comparisonGuardUnitsPerVisitedEntry": 1,
+        "fullBoundPrepaidOnEarlyMatch": true,
+        "hasNextProbes": "n+1",
+        "iteratorCreations": 1,
+        "nextAdvances": "n",
+        "prepaidTraversalUnits": "2*n+3",
+        "sizeObservations": 1
+      },
+      "executeArmWithProfile": {
+        "NULL_fieldAndCohortReads": 7,
+        "OBSERVE_fieldAndCohortReads": 9,
+        "OBSERVE_mapReads_nonQuality": 2,
+        "OBSERVE_mapReads_quality": 3,
+        "deeperCalleesIncluded": false,
+        "successfulStateReplacement": {
+          "addedUnits": 2,
+          "copyChunks": 1,
+          "copyEntries": 1
+        }
+      },
+      "r9CanaryArmDto": {
+        "freshFieldReads": 1,
+        "observationCleanupFieldReads": 2,
+        "sourceOnlyAdditionalUnits": 3
+      },
+      "validateObservation": {
+        "callbacksPositiveAdditionalListArgumentReads": 2,
+        "callbacksPositiveAdditionalMapReads": 3,
+        "callbacksPositiveAdditionalReadsTotal": 5,
+        "guardPredicateAndSelectedHeadReadsIncluded": false,
+        "successfulDirectReadTotals": {
+          "FIRST_NON_FOUND": 13,
+          "NON_BRANCH_REJECTION": 10,
+          "NO_FAILURE": 8
+        }
+      }
+    },
+    "status": "PASS_SOURCE_TRANSFORM_ONLY"
+  },
+  "manifestSha256": "e3a61d8169776f5f15f635935c034f2709a2d435de7290f738953f19fa857394",
+  "generationSourceFreezeSha256": "5b9a0367e58e4e91f97a3cf4f4b7a3344e1a8323ef07e436dd0a926582e63b57",
+  "actualOwnerExecution": false,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

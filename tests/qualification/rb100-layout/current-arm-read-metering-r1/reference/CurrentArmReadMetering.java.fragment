@@ -1,0 +1,189 @@
+// TSJ_ARM_READ_SECTION executeArmWithProfile
+@SuppressWarnings("unchecked")
+private static ArmResult executeArmWithProfile(Parent p,SetupMeter m,Object capture,Object legacy,
+        Cohort cohort,PadProof proof,GridBinding grid,String role,String id,long started,
+        R9CanaryProfile profile) throws Exception {
+    TroubleshootBoard board=(TroubleshootBoard)r7ReadObject(m,legacy,"board");
+    PcbBoardLayout layout=(PcbBoardLayout)r7ReadObject(m,legacy,"template");
+    String before=geometry(p,m,layout); m.finish();
+    ContextAudit context=new ContextAudit(m); m.finish();
+    TerminalSink sink=null;
+    if ("OBSERVE".equals(role)) sink=profile==null?
+        createSink(id,proof,layout,(List<String>)r7ReadObject(m,cohort,"requested"),m):
+        createCanarySink(id,proof,layout,(List<String>)r7ReadObject(m,cohort,"requested"),m,profile);
+    m.finish();
+    Object fresh=null;
+    String after=null;
+    boolean contextRestored=false;
+    long localCleanupStart=0,localCleanup=0;
+    try {
+        fresh=sink==null?p.fresh(board,layout,capture,(List<String>)r7ReadObject(m,cohort,"netIds"),m.meter,started,null):
+            observedFresh(p,board,layout,capture,(List<String>)r7ReadObject(m,cohort,"netIds"),m,started,sink);
+        contextRestored=context.unchanged(m);
+        after=geometry(p,m,layout); m.finish();
+    } finally {
+        localCleanupStart=System.nanoTime();
+        board=null; layout=null;
+        localCleanup=Math.max(1L,System.nanoTime()-localCleanupStart);
+    }
+    if (fresh==null || !Boolean.TRUE.equals(r7ReadObject(m,fresh,"referencesDropped")))
+        throw new IOException("ARM_ALIASES");
+    Map<String,Object> run=(Map<String,Object>)r7ReadObject(m,fresh,"json");
+    Map<String,Object> observation=materializeObservation(sink,m);
+    if (sink!=null) {
+        Map<String,Object> outcome=(Map<String,Object>)originalDtoMapRead(m,run,"outcome");
+        if ("QUALITY_REJECTED".equals(originalDtoMapRead(m,outcome,"disposition")) &&
+                "NO_FAILURE".equals(originalDtoMapRead(m,observation,"state"))) {
+            m.copy(1);
+            m.charge(1);
+            observation.put("state","NON_BRANCH_REJECTION");
+        }
+        validateObservation(run,observation,(List<String>)r7ReadObject(m,cohort,"requested"),m);
+        bindSelectedGrid(observation,grid,m);
+    }
+    long cleanupNanos=((Number)r7ReadObject(m,fresh,"cleanupNanos")).longValue()+localCleanup;
+    m.copy(10);
+    Map<String,Object> cleanup=new java.util.LinkedHashMap<String,Object>();
+    cleanup.put("schema","tsj-cohort-terminal-arm-cleanup-v1");
+    // N's actual returned conjunction proves each named local owner alias was dropped;
+    // this wrapper also dropped its own borrowed board/template references above.
+    boolean aliases=Boolean.TRUE.equals(r7ReadObject(m,fresh,"referencesDropped")) && board==null && layout==null;
+    cleanup.put("adapterSessionAliasDropped",Boolean.valueOf(aliases));
+    cleanup.put("adapterSearchAliasDropped",Boolean.valueOf(aliases));
+    cleanup.put("adapterCandidateAliasDropped",Boolean.valueOf(aliases));
+    cleanup.put("adapterRouteResultAliasDropped",Boolean.valueOf(aliases));
+    cleanup.put("adapterBoardTemplateAliasesDropped",Boolean.valueOf(aliases));
+    cleanup.put("sourceGeometryBeforeSha256",before);
+    cleanup.put("sourceGeometryAfterSha256",after);
+    cleanup.put("contextRestored",Boolean.valueOf(contextRestored));
+    cleanup.put("cleanupNanos",Long.valueOf(cleanupNanos));
+    m.finish();
+    return new ArmResult(fresh,observation,cleanup);
+}
+
+// TSJ_ARM_READ_SECTION containsMetered
+    static boolean containsMetered(SetupMeter m,List<?> values,final Object value) throws Exception {
+        m.charge(1);
+        final int entries=values.size();
+        m.charge(2L*entries+2L);
+        for (final Object item:values) if (test(m,new Guard() { public boolean evaluate() throws Exception { return java.util.Objects.equals(item,value); } })) return true;
+        return false;
+    }
+
+// TSJ_ARM_READ_SECTION armListRead
+    private static <T> T armListRead(SetupMeter m,List<T> source,
+            int index) throws Exception {
+        m.charge(1);
+        return source.get(index);
+    }
+
+// TSJ_ARM_READ_SECTION validateObservation
+    @SuppressWarnings("unchecked")
+    static void validateObservation(Map<String,Object> run,final Map<String,Object> obs,
+            final List<String> requested,SetupMeter m) throws Exception {
+        if (test(m,new Guard() { public boolean evaluate() throws Exception {
+                return obs==null || obs.size()!=18 ||
+                    !"tsj-cohort-terminal-observation-v2".equals(obs.get("schema")) ||
+                    !obs.containsKey("selectedHead");
+            } })) throw new IOException("OBSERVER_V2_SCHEMA");
+        final Map<String,Object> outcome=(Map<String,Object>)originalDtoMapRead(m,run,"outcome");
+        final Map<String,Object> work=(Map<String,Object>)originalDtoMapRead(m,run,"work");
+        final Map<String,Object> ordering=(Map<String,Object>)originalDtoMapRead(m,run,"ordering");
+        final int callbacks=((Number)originalDtoMapRead(m,obs,"callbackCount")).intValue();
+        if (test(m,new Guard() { public boolean evaluate() throws Exception { return callbacks>((Number)work.get("advanceCalls")).intValue(); } }) ||
+            test(m,new Guard() { public boolean evaluate() throws Exception { return callbacks>247; } })) throw new IOException("OBSERVER_CALLBACK_COUNT");
+        final String state=(String)originalDtoMapRead(m,obs,"state"), disposition=(String)originalDtoMapRead(m,outcome,"disposition");
+        final List<?> traversed=(List<?>)originalDtoMapRead(m,ordering,"traversedNetIds");
+        if (test(m,new Guard() { public boolean evaluate() throws Exception { return callbacks>0; } })) {
+            final int first=((Number)originalDtoMapRead(m,obs,"firstNetOrdinal")).intValue();
+            final int last=((Number)originalDtoMapRead(m,obs,"lastNetOrdinal")).intValue();
+            final int total=((Number)originalDtoMapRead(m,obs,"lastCallbackTotalExpanded")).intValue();
+            if (test(m,new Guard() { public boolean evaluate() throws Exception { return first<1; } }) || test(m,new Guard() { public boolean evaluate() throws Exception { return last<first; } }) ||
+                test(m,new Guard() { public boolean evaluate() throws Exception { return last>requested.size(); } }) ||
+                !containsMetered(m,traversed,armListRead(m,requested,first-1)) ||
+                !containsMetered(m,traversed,armListRead(m,requested,last-1)) ||
+                test(m,new Guard() { public boolean evaluate() throws Exception { return total<0; } }) || test(m,new Guard() { public boolean evaluate() throws Exception { return total>((Number)outcome.get("expanded")).intValue(); } }))
+                throw new IOException("OBSERVER_TRAVERSAL_BINDING");
+        }
+        final Object selected=originalDtoMapRead(m,obs,"selectedSnapshot");
+        m.charge(1); // selected-head reference inspection
+        final Object selectedHead=obs.get("selectedHead");
+        if (test(m,new Guard() { public boolean evaluate() throws Exception {
+                return selectedHead!=null && (!(selectedHead instanceof Map) ||
+                    ((Map<?,?>)selectedHead).size()!=10);
+            } }) || test(m,new Guard() { public boolean evaluate() throws Exception {
+                return (selectedHead!=null)!=
+                    ("FIRST_NON_FOUND".equals(state) && selected instanceof Map &&
+                     "BRANCH_SEARCH_LIMIT".equals(((Map<?,?>)selected).get("terminalReason")));
+            } })) throw new IOException("OBSERVER_SELECTED_HEAD_STATE");
+        if (test(m,new Guard() { public boolean evaluate() throws Exception { return "NO_FAILURE".equals(state); } })) {
+            if (test(m,new Guard() { public boolean evaluate() throws Exception { return !"FOUND".equals(disposition); } }) || test(m,new Guard() { public boolean evaluate() throws Exception { return selected!=null; } }))
+                throw new IOException("OBSERVER_MISSING_FAILURE");
+        } else if (test(m,new Guard() { public boolean evaluate() throws Exception { return "NON_BRANCH_REJECTION".equals(state); } })) {
+            final String reason=(String)originalDtoMapRead(m,outcome,"reason");
+            if (test(m,new Guard() { public boolean evaluate() throws Exception { return !"QUALITY_REJECTED".equals(disposition); } }) || test(m,new Guard() { public boolean evaluate() throws Exception { return selected!=null; } }) ||
+                (!test(m,new Guard() { public boolean evaluate() throws Exception { return "QUALITY_LIMIT".equals(reason); } }) &&
+                 !test(m,new Guard() { public boolean evaluate() throws Exception { return reason.endsWith(":BRANCH_QUALITY_LIMIT"); } })))
+                throw new IOException("OBSERVER_QUALITY");
+            final Map<String,Object> terminal=(Map<String,Object>)originalDtoMapRead(m,run,"terminalFailure");
+            if (test(m,new Guard() { public boolean evaluate() throws Exception { return "QUALITY_LIMIT".equals(reason); } })) {
+                if (test(m,new Guard() { public boolean evaluate() throws Exception { return terminal!=null; } })) throw new IOException("OBSERVER_QUALITY_PROOF");
+            } else {
+                m.copy(1); // detached substring, before construction
+                final String net=reason.substring(0,reason.length()-":BRANCH_QUALITY_LIMIT".length());
+                if (test(m,new Guard() { public boolean evaluate() throws Exception { return callbacks<1; } }) || test(m,new Guard() { public boolean evaluate() throws Exception { return terminal==null; } }) ||
+                    test(m,new Guard() { public boolean evaluate() throws Exception { return !net.equals(terminal.get("failedNetId")); } }) ||
+                    test(m,new Guard() { public boolean evaluate() throws Exception { return !reason.equals(terminal.get("ownerReason")); } }) ||
+                    test(m,new Guard() { public boolean evaluate() throws Exception { return traversed.isEmpty(); } }) ||
+                    test(m,new Guard() { public boolean evaluate() throws Exception { return !net.equals(traversed.get(traversed.size()-1)); } }) ||
+                    test(m,new Guard() { public boolean evaluate() throws Exception { return !net.equals(requested.get(((Number)obs.get("lastNetOrdinal")).intValue()-1)); } }) ||
+                    test(m,new Guard() { public boolean evaluate() throws Exception { return !obs.get("lastCallbackTotalExpanded").equals(outcome.get("expanded")); } }))
+                    throw new IOException("OBSERVER_QUALITY_PROOF");
+            }
+        } else if (test(m,new Guard() { public boolean evaluate() throws Exception { return "FIRST_NON_FOUND".equals(state); } })) {
+            if (test(m,new Guard() { public boolean evaluate() throws Exception { return !(selected instanceof Map); } })) throw new IOException("OBSERVER_SELECTED");
+            final Map<String,Object> snapshot=(Map<String,Object>)selected;
+            final String net=(String)originalDtoMapRead(m,snapshot,"netId"), reason=(String)originalDtoMapRead(m,snapshot,"terminalReason");
+            final int ordinal=((Number)originalDtoMapRead(m,obs,"lastNetOrdinal")).intValue();
+            if (test(m,new Guard() { public boolean evaluate() throws Exception { return ordinal<1; } }) || test(m,new Guard() { public boolean evaluate() throws Exception { return ordinal>requested.size(); } }) ||
+                test(m,new Guard() { public boolean evaluate() throws Exception { return !requested.get(ordinal-1).equals(net); } }) ||
+                test(m,new Guard() { public boolean evaluate() throws Exception { return !Integer.valueOf(2).equals(snapshot.get("pass")); } }) ||
+                test(m,new Guard() { public boolean evaluate() throws Exception { return !snapshot.get("totalExpanded").equals(outcome.get("expanded")); } }) ||
+                test(m,new Guard() { public boolean evaluate() throws Exception { return !snapshot.get("totalExpanded").equals(obs.get("lastCallbackTotalExpanded")); } }) ||
+                !terminalReasonEquals(m,net,reason,originalDtoMapRead(m,outcome,"reason")) ||
+                !containsMetered(m,traversed,net)) throw new IOException("OBSERVER_TERMINAL_BINDING");
+            final Map<String,Object> terminal=(Map<String,Object>)originalDtoMapRead(m,run,"terminalFailure");
+            if (test(m,new Guard() { public boolean evaluate() throws Exception { return terminal!=null; } }) &&
+                (test(m,new Guard() { public boolean evaluate() throws Exception { return !net.equals(terminal.get("failedNetId")); } }) ||
+                 test(m,new Guard() { public boolean evaluate() throws Exception { return !outcome.get("reason").equals(terminal.get("ownerReason")); } })))
+                throw new IOException("OBSERVER_TERMINAL_PROOF");
+        } else throw new IOException("OBSERVER_STATE");
+    }
+
+// TSJ_ARM_READ_SECTION r9CanaryArmDto
+private static Map<String,Object> r9CanaryArmDto(Arguments args,SetupMeter m,
+        R9CanaryProfile profile,String id,long started) throws Exception {
+    ArmResult arm=null;
+    try {
+        m.charge(2); // the before/after constructor counter reads
+        long before=r5Number(m.meter,"sessionConstructorEntries");
+        m.finish();
+        arm=runR9FixtureArm(args,m,profile,id,started);
+        long after=r5Number(m.meter,"sessionConstructorEntries");
+        m.charge(1);
+        r5Require(after-before==1,"R9_FIXTURE_CONSTRUCTOR_COUNT");
+        Object fresh=r7ReadObject(m,arm,"fresh");
+        Object run=r7ReadObject(m,fresh,"json");
+        m.copy(5);
+        Map<String,Object> dto=new java.util.LinkedHashMap<String,Object>();
+        dto.put("armRole","OBSERVE"); dto.put("armId",id);
+        dto.put("freshRun",run); dto.put("observation",r7ReadObject(m,arm,"observation"));
+        dto.put("cleanup",r7ReadObject(m,arm,"cleanup"));
+        m.finish();
+        return dto;
+    } finally {
+        arm=null; // FreshRun's graph aliases were dropped by the parent, then ours.
+    }
+}
+
+// TSJ_ARM_READ_END

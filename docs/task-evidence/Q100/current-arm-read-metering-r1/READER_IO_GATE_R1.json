@@ -1,0 +1,73 @@
+{
+  "status": "PASS_REAL_SELECTED_CURRENT_ARM_READER_STABLE_DIRECTORY_AND_APPEND_CONTROLS",
+  "call": {
+    "phase": "arm-reader-io-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 359.1721,
+    "wrapperTotalElapsedMs": 597.5284,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "ada0b3909c6c0252d09ea42920aebf54de3e6589ef95d872a298f0c7d1009210",
+      "owner.json": "25457eaf4498b1294b9d2e74af0f30e718dad7dbd7e74cb9643619d617334441",
+      "process.json": "36831cea4785a602ad1a20e50288ab154b6d8425d125a5503e738356b28c68d0",
+      "parent.json": "8490c4e39b29cd68df4c568ce14454e5573a04b798109ab0a5602f52bfdaa4ba",
+      "result.json": "d8711bd66e2955178bb7ef9a36bbe5f2ba7785437f2725f80fe39df665f099b8",
+      "stdout.txt": "c3a55240940b7d6630e0b6c35542cfc96c4cd8e76d0a8cd2968c0ba0d427994a",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "summary": {
+    "status": "PASS_REAL_SELECTED_CURRENT_ARM_READER_STABLE_DIRECTORY_AND_APPEND_CONTROLS",
+    "sourcePins": {
+      "verify_current_arm_reads_r1.py": {
+        "bytes": 10499,
+        "sha256": "fd98a432e268319d5aa3d6acb95c1dfc4c2b84d8c9e15700725dda8f6556b894"
+      },
+      "current_arm_read_oracle.py": {
+        "bytes": 18305,
+        "sha256": "91777e7f9a00aa64d400f55dcb8265443eb497b25349282890103cb3a948b193"
+      }
+    },
+    "cases": [
+      {
+        "source": "verify_current_arm_reads_r1.py",
+        "mode": "stable",
+        "result": "STABLE_BYTES"
+      },
+      {
+        "source": "verify_current_arm_reads_r1.py",
+        "mode": "directory-child",
+        "result": "STABLE_BYTES"
+      },
+      {
+        "source": "verify_current_arm_reads_r1.py",
+        "mode": "append",
+        "result": "INPUT_CHANGED"
+      },
+      {
+        "source": "current_arm_read_oracle.py",
+        "mode": "stable",
+        "result": "STABLE_BYTES"
+      },
+      {
+        "source": "current_arm_read_oracle.py",
+        "mode": "directory-child",
+        "result": "STABLE_BYTES"
+      },
+      {
+        "source": "current_arm_read_oracle.py",
+        "mode": "append",
+        "result": "INPUT_CHANGED"
+      }
+    ],
+    "actualOwnerExecution": false,
+    "genuineEnvelope": "UNSPENT_GATED"
+  },
+  "sourceFreezeSha256": "0a965bae5c627d4695e4d780aec895b47d9a45498c72b06689d01f33b7060664",
+  "readerCloseFailureInjection": "NOT_RUN",
+  "actualOwnerExecution": false,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

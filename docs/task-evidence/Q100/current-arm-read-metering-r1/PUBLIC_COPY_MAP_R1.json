@@ -1,0 +1,76 @@
+{
+  "status": "EXACT_PUBLIC_CURRENT_ARM_COMPONENT_SOURCE_COPY",
+  "sourceFreezeSha256": "0a965bae5c627d4695e4d780aec895b47d9a45498c72b06689d01f33b7060664",
+  "files": [
+    {
+      "candidate": "working/current-arm-read-metering-r1/CurrentArmReadMetering.java.fragment",
+      "repository": "tests/qualification/rb100-layout/current-arm-read-metering-r1/CurrentArmReadMetering.java.fragment",
+      "bytes": 14125,
+      "sha256": "5f5a569b10f3579de8f700e84496c8762450531e986e732e338ec79133c60222"
+    },
+    {
+      "candidate": "working/current-arm-read-metering-r1/generate_current_arm_reads.py",
+      "repository": "tests/qualification/rb100-layout/current-arm-read-metering-r1/generate_current_arm_reads.py",
+      "bytes": 26616,
+      "sha256": "9c5a73879ea63e2b0a252f963ec0168aba59080261fc94b5b10f481d2a4f0749"
+    },
+    {
+      "candidate": "working/current-arm-read-metering-r1/test_current_arm_reads.py",
+      "repository": "tests/qualification/rb100-layout/current-arm-read-metering-r1/test_current_arm_reads.py",
+      "bytes": 57219,
+      "sha256": "26b151caa2109685f27c7f62a0a8cb35e48d39223bf559ec314013cc25edc106"
+    },
+    {
+      "candidate": "CurrentArmReadCanary.java",
+      "repository": "tests/qualification/rb100-layout/current-arm-read-metering-r1/source/CurrentArmReadCanary.java",
+      "bytes": 36699,
+      "sha256": "c84430269fe4399a54a6deed9d63e5f65166fdaf5a8e90fb0dc5c72247b29c95"
+    },
+    {
+      "candidate": "current_arm_read_oracle.py",
+      "repository": "tests/qualification/rb100-layout/current-arm-read-metering-r1/current_arm_read_oracle.py",
+      "bytes": 18305,
+      "sha256": "91777e7f9a00aa64d400f55dcb8265443eb497b25349282890103cb3a948b193"
+    },
+    {
+      "candidate": "verify_current_arm_reads_r1.py",
+      "repository": "tests/qualification/rb100-layout/current-arm-read-metering-r1/verify_current_arm_reads_r1.py",
+      "bytes": 10499,
+      "sha256": "fd98a432e268319d5aa3d6acb95c1dfc4c2b84d8c9e15700725dda8f6556b894"
+    },
+    {
+      "candidate": "test_current_arm_read_oracle.py",
+      "repository": "tests/qualification/rb100-layout/current-arm-read-metering-r1/test_current_arm_read_oracle.py",
+      "bytes": 14703,
+      "sha256": "1c160984f31b8b26827b37cb587a2891e12bb17be25498503cbecabca86b3569"
+    },
+    {
+      "candidate": "ORACLE_NOTE_R1.md",
+      "repository": "tests/qualification/rb100-layout/current-arm-read-metering-r1/ORACLE_NOTE_R1.md",
+      "bytes": 4488,
+      "sha256": "cbce41be8899fbeffc3d50e6a1e82a0ff8891fbe7b51b7c2c0419868a8fd3dab"
+    },
+    {
+      "candidate": "ROOT_ORACLE_SOURCE_R1.json",
+      "repository": "tests/qualification/rb100-layout/current-arm-read-metering-r1/ROOT_ORACLE_SOURCE_R1.json",
+      "bytes": 498,
+      "sha256": "4153752d27073c4c05c57b563261ef786678fbe42f56d2c8350cc45fa2e15c8d"
+    },
+    {
+      "candidate": "CONTRACT_R1.md",
+      "repository": "tests/qualification/rb100-layout/current-arm-read-metering-r1/CONTRACT_R1.md",
+      "bytes": 8463,
+      "sha256": "7c1cac18553d9bd10e70cb7d40bc75b05acd84211132f20cb1c1886805fb3156"
+    },
+    {
+      "candidate": "reference/CurrentArmReadMetering.java.fragment",
+      "repository": "tests/qualification/rb100-layout/current-arm-read-metering-r1/reference/CurrentArmReadMetering.java.fragment",
+      "bytes": 14125,
+      "sha256": "5f5a569b10f3579de8f700e84496c8762450531e986e732e338ec79133c60222"
+    }
+  ],
+  "ioOwner": "tests/qualification/rb100-layout/original-prepayment-r1/generate_original_dto_metering.py",
+  "ioOwnerSha256": "d4d7c547037f466d2b2fc0217c0048584e20fed06ff035414b0dbe4fd6fc69a6",
+  "actualOwnerExecution": false,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

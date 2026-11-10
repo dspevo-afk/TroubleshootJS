@@ -1,4 +1,52 @@
-# Current checkpoint: original DTO metadata prerequisite published
+# Current checkpoint: arm metadata read prerequisite accepted locally
+
+F codex/q100-terminal-only-20261107 HEADa42dd1c9160905a05ae182448df80e765801b2b3,
+no upstream. Previous originalDTOimplementation64c83dec/receipta42dd1c9 remotely
+verified; Gmail1a1c3ce8d372dabb SENT_ONCE_ACKNOWLEDGED, neverduplicate.
+Current N17 OS-temp/tsj-q100-arm-read-schema-fixture-r4-21e8910cb7784c18bce32fa0f6e2f47b.
+Final Sourcefreeze0a965bae5c627d4695e4d780aec895b47d9a45498c72b06689d01f33b7060664;
+proof65c8fda7d568817ca1cc607db9f4246a9f71643d80c0babcd6c7c58f8183a82c.
+Contract7c1cac18... predates implementation. Fragment14125/5f5a569b...,generator26616/
+9c5a7387...,Study236944/90f4c227...,nativefixture36699/c8443026.... Rootinverse restores
+fourbusinessmethodsbyte-exact,40validator+1contains Guards preserved, outside5chunks
+conserved. Directreads/cohortborrows/lazyorder/repeatedinspections prepaid; stable
+List traversal2n+3 pluscomparisons; statecopy1+operation1; noallocationfeeclaim.
+
+PASS: final-sourceJDK8 twoSources/134major51classes353555B plus2406deps11850353B,
+no shadows; new3+12 and retainedoriginal2+8/arms2+17/projection2+15 (61nativecases)
+with independentreaders; private/public Source22mixedCLI+cmd and oracle31 each;
+bootstrapIO6,readerIO6;11readerexit2/2JVMexit1 exactrejections.40selectedprocess
+receipts/inputs reauthenticated (27exit0/13expectednonzero), termination/ownedroot+
+logabsence proven,isolatedcleanupdurationnull. Nestedchildren waited by caller,
+not eachseparatelycertified. Source/staticbootstrapreview PASS/noexecution;
+fresh bounded documentaryreview PASS/noexecution. Readerclosefaultinjection NOTRUN; bootstrapclose
+fault tested. Pathcheck/openrace/atomichandlechain remainunqualified.
+
+N14 Source22FAIL1 combinedGuardcount40instead41, N15compileFAIL3 duplicatefixture
+helpers, N16suite12FAIL3 badschemastringin3callbackfixtures allpreserved. Fresh
+fixes limitedtotestassertions/exactduplicatecopies/3fixtureargs; implementation,
+pricesandoracles unchanged. Current callbackNO_FAILURE=40units, unrelatedtoclosure
+count41. Sourcecounterdraft corrections, outerinterpreterpathtypo, staleprefinal
+oraclecopyhash andpreexecutionrootstatuslabel noted, neverclassifiedaspasses.
+
+IntendedSource/evidence/docs staged; rootdiff/privacy PASS, indexaudit pending; no newcommit,
+pushoremail yet. Priorpacket resourcewording corrected: regularSourcehardlinks
+remaininretainedscratch, junctionsremoved. No newpersistentprocess/listener; all
+classes/scratch/failures retained. F intendedchangesonly; Main5f05b0059trackedM/
+6untracked,E d9747229reportM,Desktop e0c368857trackedM/89untracked preserved;
+onlyreportprefixesmirroredMain/E. Olduncertainbrowser14116/start639294472690745890/
+58320,preview34180/start639294472514546595/58264+14children,oldDprocess/unlinkUNCERTIFIED
+untouched. No production/visibleSourcechange, GWT/PlayerN/A,electrical/population
+NOTRENEWED,CINOTRUN. Existingbudgets/exactseeds/epochs unchanged;full30EXCLUDED,
+HARD/PSYCHOTIC unavailable/unrun,oldnormal20historicallyREAD/noreread,
+protectedUnreadUNCERTIFIED,playable100=0,betaHELD. Protected/heldoutDATA/oldactualD
+artifacts/generateddataclasses/wholelegacybuildersconsumers denied. Noactual/fake
+OriginalArm/ArmResult/graph/Session/routing/executeArm/r9DTO/positiveoriginalDTO/
+genuine execution; retainedmetadataearlyCAPTURE_ID usesnullowners/syntheticArguments.
+Main/assemble and genuine original then exactNULL/OBSERVE UNSPENT_GATED. Nextafter
+publication: currentcaller/whole-result/authority/lifetime prerequisite.
+
+# Historical checkpoint: original DTO metadata prerequisite published
 
 F branch codex/q100-terminal-only-20261107, implementation 64c83decef4477f511af25ab20198cb34bd1b8f7,
 no upstream. Previous arms implementation71139b7c/receiptb8a7ed4f is remotely

@@ -1,0 +1,11 @@
+{
+  "status": "PASS_SCOPED_STATIC_GENERATOR_BOOTSTRAP_AND_CLI_REVIEW",
+  "generatorBytes": 26616,
+  "generatorSha256": "9c5a73879ea63e2b0a252f963ec0168aba59080261fc94b5b10f481d2a4f0749",
+  "scope": "Bounded bootstrap/path/FD/read/close/pin-before-exec, qualified owner IO handoff, CLI output/provenance completion",
+  "execution": "NOT_RUN_BY_REVIEWER",
+  "result": "No blocking defect in authorized scope",
+  "limitation": "Path-based directory validation and exclusive file creation have a race window; later recheck can detect a changed path after creation. No atomic directory-handle chain or hostile-concurrent-replacement guarantee.",
+  "actualOwnerExecution": false,
+  "genuineEnvelope": "UNSPENT_GATED"
+}
