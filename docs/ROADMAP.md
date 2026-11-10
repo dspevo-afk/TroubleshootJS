@@ -1653,6 +1653,20 @@ does not attest a real captured board. The production observation seam and actua
 authored100 measurements have not started. Four
 fresh layered layouts and physical runtime/solvability proof remain required.
 
+The [current arms DTO projection prerequisite](task-evidence/Q100/current-arms-projection-r1/README.md)
+is locally accepted for its finite synthetic component. Three ordered maps borrow
+two IDs and six DTOs with 15 units, 12 copies and three chunks; earlier projection
+methods stay byte-identical. Final JDK8 compilation, 19 new and 17 existing native
+cases with independent readers, private/public 17-test suites, actual host/I/O and
+strict rejection controls pass; 28 process receipts and inputs were reauthenticated.
+The earlier missing regression test class failure is preserved. The fresh harness
+adds its exact unchanged Source; implementation and oracles are unchanged.
+Counter and transport limits remain explicit. Normal producer, whole-result and
+host/lifecycle gates remain closed; the genuine envelope is unspent, with no
+electrical/population renewal or playable100. Next is the Source-bound producer
+caller and whole-result/authority/lifecycle prerequisites. All budgets, protected
+data exclusions, full30 EXCLUDED and beta HELD remain. Publication pending.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

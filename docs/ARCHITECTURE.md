@@ -421,6 +421,14 @@ normal producer holds and detached/core behavior remain. Source emission and
 detached regressions do not prove genuine aggregate execution or full-result
 semantics/host/lifecycle; those boundaries remain closed.
 
+The [current arms DTO component](task-evidence/Q100/current-arms-projection-r1/README.md)
+adds `CurrentResultProjections.arms` in the same owner. It fixes NULL/OBSERVE
+roles, arm field order and outer order, borrows two IDs and six stable maps,
+and prepays three allocations/twelve stores (15units/12copies/3chunks).
+It does not inspect or authenticate children; later ownership and full-result
+validation retain their responsibilities. Existing cohort/cleanup methods stay
+byte-identical. Actual producer and lifecycle/authority integration remain closed.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

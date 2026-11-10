@@ -1,0 +1,28 @@
+SOURCE LINES 2064-2072
+    void beginGroup() throws IOException {
+        if(open) finishGroup();
+        check();
+        if((long)groups+(long)priorGroups+(long)inFlightOwnerGroups>=MAX_GROUPS)
+            throw new IOException("native wrapper exceeded 640 measured groups");
+        groupStarted=System.nanoTime();
+        groupUnits=0;
+        open=true;
+    }
+
+SOURCE LINES 2107-2122
+    void finishGroup() throws IOException {
+        if(!open) throw new IllegalStateException("no measured group is open");
+        long duration=elapsed(groupStarted,System.nanoTime());
+        int measuredUnits=groupUnits;
+        open=false;
+        groups++;
+        groupMeasures.add(new GroupMeasure(duration,measuredUnits));
+        maxGroupNanos=Math.max(maxGroupNanos,duration);
+        maxGroupUnits=Math.max(maxGroupUnits,measuredUnits);
+        if(duration>GROUP_NANOS)
+            throw new IOException("native wrapper group exceeded five seconds");
+        if(elapsed(started,System.nanoTime())>OP_NANOS)
+            throw new IOException("failed-first process exceeded 90 seconds");
+        if((long)groups+(long)priorGroups+(long)inFlightOwnerGroups>MAX_GROUPS)
+            throw new IOException("native wrapper exceeded 640 measured groups");
+    }

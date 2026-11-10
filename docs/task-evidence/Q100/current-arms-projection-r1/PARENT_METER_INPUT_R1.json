@@ -1,0 +1,26 @@
+{
+  "status": "SOURCE_ONLY_NARROW_METER_METHODS",
+  "sourceBytes": 184250,
+  "sourceSha256": "99993fc4f2c32e38fc85d4cea79b7662841a744f35816b95b0b2e8579483915b",
+  "compileInputSha256": "ba2b4be3c8bb39e603c9ce0bc216548cde619243216fd983d484eee18db17048",
+  "excerptSha256": "e22304cce46eb5674afb1f56c2a4e96b3d237e2953826cea01429581245bf52f",
+  "methods": [
+    {
+      "startLine": 1124,
+      "endLine": 1137
+    },
+    {
+      "startLine": 2016,
+      "endLine": 2022
+    },
+    {
+      "startLine": 2076,
+      "endLine": 2081
+    },
+    {
+      "startLine": 2083,
+      "endLine": 2094
+    }
+  ],
+  "nativeProducerCalls": 0
+}

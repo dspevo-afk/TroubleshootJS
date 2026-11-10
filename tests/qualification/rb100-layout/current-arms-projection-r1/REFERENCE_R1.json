@@ -1,0 +1,62 @@
+{
+  "status": "ROOT_LITERAL_EXPECTATIONS_BEFORE_NATIVE",
+  "schema": "TSJ_CURRENT_ARMS_PROJECTION_CANARY_R1",
+  "armKeys": [
+    "armRole",
+    "armId",
+    "freshRun",
+    "observation",
+    "cleanup"
+  ],
+  "outerKeys": [
+    "null",
+    "observe"
+  ],
+  "payloadJson": "{\"null\":{\"armRole\":\"NULL\",\"armId\":\"SYNTH_NULL\",\"freshRun\":{\"nullRun\":\"N_RUN\"},\"observation\":{\"nullObservation\":\"N_OBS\"},\"cleanup\":{\"nullCleanup\":\"N_CLEAN\"}},\"observe\":{\"armRole\":\"OBSERVE\",\"armId\":\"SYNTH_OBSERVE\",\"freshRun\":{\"observeRun\":\"O_RUN\"},\"observation\":{\"observeObservation\":\"O_OBS\"},\"cleanup\":{\"observeCleanup\":\"O_CLEAN\"}}}",
+  "helper": {
+    "units": 15,
+    "copiedEntries": 12,
+    "copyChunks": 3
+  },
+  "disjointGuard": {
+    "units": 239,
+    "copiedEntries": 9,
+    "copyChunks": 9
+  },
+  "aliasGuardPrefix": {
+    "units": 172,
+    "copiedEntries": 7,
+    "copyChunks": 7
+  },
+  "partialAllowances": {
+    "4": [
+      0,
+      0,
+      0,
+      false
+    ],
+    "5": [
+      6,
+      5,
+      1,
+      true
+    ],
+    "10": [
+      12,
+      10,
+      2,
+      true
+    ],
+    "12": [
+      15,
+      12,
+      3,
+      true
+    ]
+  },
+  "syntheticDTOsOnly": true,
+  "semanticallyValidFreshRuns": false,
+  "normalProducerHeld": true,
+  "nativeProducerCalls": 0,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

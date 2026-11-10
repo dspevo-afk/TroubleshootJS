@@ -1,0 +1,46 @@
+SOURCE LINES 1124-1137
+    private static void reserveCopy(FreshRun run,Meter meter,int count) throws IOException {
+        if(count<0 || count>COPY_CHUNK || count>(long)meter.copyAllowance-meter.copiedEntries)
+            throw new IOException("copy exceeds its prebounded chunk or aggregate allowance");
+        if(count==0) return;
+        meter.reserve(count);
+        meter.copiedEntries+=count;
+        meter.copyChunks++;
+        if(run==null) meter.charge(count);
+        else {
+            run.copiedEntries+=count;
+            run.copyChunks++;
+            chargeRunWrapper(run,meter,count);
+        }
+    }
+
+SOURCE LINES 2016-2022
+    void setCopyAllowance(int allowance) {
+        if(allowance<0 || allowance>COPY_LIMIT)
+            throw new IllegalArgumentException("copy allowance is out of range");
+        if(copiedEntries>allowance)
+            throw new IllegalStateException("copy allowance is below already reserved entries");
+        copyAllowance=allowance;
+    }
+
+SOURCE LINES 2076-2081
+    void reserve(long amount) throws IOException {
+        if(amount<0 || amount>STEP_LIMIT) throw new IOException("atomic work exceeds group capacity");
+        if(open && amount>STEP_LIMIT-groupUnits) finishGroup();
+        if(!open) beginGroup();
+        check();
+    }
+
+SOURCE LINES 2083-2094
+    void charge(long amount) throws IOException {
+        if(!open) throw new IllegalStateException("work unit outside a measured group");
+        if(amount<0) throw new IllegalArgumentException("negative measured work");
+        check();
+        if(amount>STEP_LIMIT-groupUnits)
+            throw new IOException("native wrapper exceeded 32768 units in one group");
+        if(units>Long.MAX_VALUE-amount)
+            throw new IOException("native wrapper work counter overflow");
+        groupUnits+=(int)amount;
+        units+=amount;
+        check();
+    }

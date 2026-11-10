@@ -1,0 +1,52 @@
+{
+  "status": "PASS_ARMS_NATIVE_SMOKE_AND_READER",
+  "call": {
+    "phase": "arms-native-smoke-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 359.238,
+    "wrapperTotalElapsedMs": 600.1379000000001,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "3ea6e00025339c89cdd606231e13d8c34f1a24a97e755791cf478fac671d46ed",
+      "owner.json": "0fa7a87940654c0c08dea1dad81f5309de7cb3a9fe52451390cef3e13d0de2f0",
+      "process.json": "a55db857990da4b6b24c5974b85aa7fce9ab71560a804df40f9475a0adeea6b1",
+      "parent.json": "4d11f594db62c42885eea7f9c2b84036bbb875f42fa3c59fa0ca7c2c29e7c4a2",
+      "result.json": "12174c4c7ea71453634ff74c097cc8d8cf949c4caf8df5e72519e1ce16d5e63a",
+      "stdout.txt": "b51d6b5352b1cd30e72415a72321c54350b8f9243bea84100d9ec4700677412e",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "reader": {
+    "phase": "arms-reader-smoke-r1",
+    "status": "PASS",
+    "childExitCode": 0,
+    "processElapsedMs": 343.4823,
+    "wrapperTotalElapsedMs": 589.3186000000001,
+    "terminationProven": true,
+    "ownedRootAndLogsAbsent": true,
+    "isolatedCleanupDurationMs": null,
+    "receipts": {
+      "request.json": "b3d2ff39fada0c20c0e6a8ae80e0d551eeb0a1988f6345e02c06672d005362c6",
+      "owner.json": "4085e3783ad06df641e451dc1e7fdd9ccf19b438a298421d8db867a345651878",
+      "process.json": "fa86825551263bfe803cf5d84e6f80e789d862c8eb36e98d7b1aef0187b7b507",
+      "parent.json": "36eece436f6caa1b872e1f1efe19ec526ac412f8d18d54644bc25b8cca4d0ea1",
+      "result.json": "1177e8ce16147ff7bd432689c323ffd5baa9125ee5ac6aba256249fd65d47cd4",
+      "stdout.txt": "c1ccdc97a7fc4c57b0df6d0cda498a6f995f9e79a22a4feb2ceb1eb190250ea0",
+      "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "summary": {
+    "status": "PASS_INDEPENDENT_CURRENT_ARMS_PROJECTION",
+    "mode": "SMOKE",
+    "caseCount": 2,
+    "parentConstructions": 2,
+    "normalHostAcceptance": false,
+    "semanticAcceptance": false,
+    "genuineEnvelope": "UNSPENT_GATED"
+  },
+  "nativeProducerCalls": 0,
+  "genuineEnvelope": "UNSPENT_GATED"
+}

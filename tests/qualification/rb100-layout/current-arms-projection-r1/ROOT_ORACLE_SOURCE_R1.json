@@ -1,0 +1,9 @@
+{
+  "status": "ROOT_ACCEPTED_CURRENT_ARMS_ORACLE_SOURCE_BEFORE_EXECUTION",
+  "files": {
+    "arms_oracle.py": "4bca6d4a79b6e3a0d8f2ef7c8228432fcf31764f32c54e5646b5a00fc10c9008",
+    "verify_arms_projection_r1.py": "eb53f0fc4f83aa8122b7c07b5582db11ddd4cac4c66fd0f4b996c7599be2d566",
+    "test_arms_oracle.py": "d474e1b0b758fa73517f98c54f33935da2b3373b3d09ebf6b7b710ff9a009d90",
+    "ORACLE_NOTE_R1.md": "8ff0e8351ea804db6e39518c08954a72a22980659ddfca3331141cb05f4fd42c"
+  }
+}

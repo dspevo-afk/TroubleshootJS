@@ -33,6 +33,49 @@ final class CurrentResultProjections {
         return result;
     }
 
+    /** Projects borrowed arm DTO fields without inspecting or validating their contents. */
+    static Map<String,Object> arms(
+            CohortTerminalTelemetryStudy.SetupMeter meter,
+            String nullId,
+            Map<String,Object> nullRun,
+            Map<String,Object> nullObservation,
+            Map<String,Object> nullCleanup,
+            String observeId,
+            Map<String,Object> observeRun,
+            Map<String,Object> observeObservation,
+            Map<String,Object> observeCleanup) throws Exception {
+        if (meter == null || nullId == null || nullRun == null ||
+                nullObservation == null || nullCleanup == null ||
+                observeId == null || observeRun == null ||
+                observeObservation == null || observeCleanup == null)
+            throw new IOException("RESULT_PROJECTION_ARGUMENT");
+
+        meter.copy(5);
+        meter.charge(1);
+        Map<String,Object> nullArm = new LinkedHashMap<String,Object>();
+        nullArm.put("armRole", "NULL");
+        nullArm.put("armId", nullId);
+        nullArm.put("freshRun", nullRun);
+        nullArm.put("observation", nullObservation);
+        nullArm.put("cleanup", nullCleanup);
+
+        meter.copy(5);
+        meter.charge(1);
+        Map<String,Object> observeArm = new LinkedHashMap<String,Object>();
+        observeArm.put("armRole", "OBSERVE");
+        observeArm.put("armId", observeId);
+        observeArm.put("freshRun", observeRun);
+        observeArm.put("observation", observeObservation);
+        observeArm.put("cleanup", observeCleanup);
+
+        meter.copy(2);
+        meter.charge(1);
+        Map<String,Object> result = new LinkedHashMap<String,Object>();
+        result.put("null", nullArm);
+        result.put("observe", observeArm);
+        return result;
+    }
+
     /** Projects cleanup observations without validating or blessing their meaning. */
     static Map<String,Object> cleanup(
             CohortTerminalTelemetryStudy.SetupMeter meter,

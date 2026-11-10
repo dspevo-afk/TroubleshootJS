@@ -1,4 +1,42 @@
-# Current checkpoint: maintained R7 Source prerequisite published
+# Current checkpoint: current arms projection locally accepted; publication pending
+
+F codex/q100-terminal-only-20261107 HEADf4df2f942da9764c94060f2b5f8d4c5e11bc91e3,
+no upstream; target origin/codex/q100-physical-feasibility. Candidate OS-temp leaf
+N10=tsj-q100-arms-regression-class-r2-fa7f9a1c35e945a89f9765f3a06ff073.
+Freeze dd84b3129ac17e0882696b5f0c73be924366f51c228c839cbda1aebada908b3a;
+proof7a22ee778fcd2d7ff238f152e85130a9cbf26d417ffd5226b3d764be14b89614;
+public5c53e6bd22148f53be11aef472faeff969947aee05a38a574c7a79b2c5267831.
+Helper10055/c0398d31 adds complete arms DTO15/12/3, oldmethodsbyte-identical.
+Final JDK8compile3/11major51classes57428B+2517deps12089464B/noshadows,
+newnative2+17/readers, retainedprojection2+15/readers, private/public17pures,
+host2/actualIO6/readerneg10/JVMneg2 PASS; all28process/consumedinput audits PASS.
+N9 missing old regression mainclass exit1 remains FAIL; fresh compile adds exact
+unchanged canary, helper/newcanary/oracles unchanged. Pre-execution draft group/
+reader and admission-key mistakes preserved; no draft run or observed golden.
+Source reviews PASS with explicit 8-API runtime read-counter/persistent-snapshot
+limits. Current receipt path binding already correct; historical Source role mismatch
+requires no bridge. Normal assembly/producer, full-result/authority/lifecycle and
+actual R7 aggregation stay held; genuine original then exact NULL/OBSERVE unspent.
+
+F intended helper/newfixtures/evidence/docs only; staged0 before final inspection.
+Main5f05b005 9trackedM/6untracked,E d9747229 reportM,Desktop e0c36885
+7trackedM/89untrackedfiles preserved; Main/E reportmirroronly. No new persistent
+process/link. Selected children terminated/ownedroot+logabsence proven; isolated
+cleanupdurationnull. Scratch/classes/failures retained. Old uncertain browser14116/
+start639294472690745890/58320,preview34180/start639294472514546595/58264+14children,
+oldDprocess/unlinkUNCERTIFIED untouched. All90s/640/5s/32768/copy1MiB/chunk4096/
+Source4MiB/opJSON8MiB/result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/
+reader180s/wrapper480s/cleanup120s caps/exactseeds/epochs unchanged. GWT/PlayerN/A,
+electrical/populationNOTRENEWED,CINOTRUN,full30EXCLUDED,HARD/PSYCHOTIC unavailable/
+unrun,oldnormal20 historicalREAD/no reread,protectedUnreadUNCERTIFIED,playable100=0/
+betaHELD. Wholelegacybuilder/consumer and protected/heldout DATA/oldactualdescriptor/
+result/generated-data classaccess denied. Prior R7 publication298f28c2/f4df2f94,
+Gmail1a1c335a56017307 SENT_ONCE; priorcleanup1f45c12e/8e8ef678,
+Gmail1a1c2dfc524598d6 SENT_ONCE; never duplicate. Current milestone publication/email
+NOT YET. Next inspect integrated/staged diff/privacy/source bytes, normalcommit/push,
+verifyremote and one Gmail; then Source-bound producer caller/whole-result prerequisites.
+
+# Historical checkpoint: maintained R7 Source prerequisite published
 
 UTC2026-11-10. F codex/q100-terminal-only-20261107, no upstream. Implementation
 298f28c2eec551d29da7afe8e947dcc66499e76d normally pushed; exact origin/codex/q100-physical-feasibility
