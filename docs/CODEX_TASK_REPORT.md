@@ -1,8 +1,10 @@
-# Current checkpoint: nested cleanup schema accepted locally
+# Current checkpoint: nested cleanup schema published
 
-F codex/q100-terminal-only-20261107 HEADfa9ec1089b7d21efe4728195b4bd5f3c29118c90,
-no upstream; target origin/codex/q100-physical-feasibility. N25 gates PASS;
-root/index checks and commit/push/Gmail pending. No publication claimed yet.
+F codex/q100-terminal-only-20261107 implementationd4fbdf89e42cfcfe37671dd2e1f73b2682dff26a,
+no upstream; target origin/codex/q100-physical-feasibility. N25 gates/root/index
+36files33raw3docs PASS; normal push/exact remote SHA verified. Gmail1a1c58056570c4cc
+SENT_ONCE_ACKNOWLEDGED; never duplicate. This receipt records publication,
+sends no second completion email, and changes no tested Source.
 N24 875768b6/fa9ec108/Gmail1a1c54f4fc6ecc4c, N23d5749fab/3f96bf11/
 Gmail1a1c517d783188d3 and older receipts below complete; never duplicate emails.
 
@@ -34,7 +36,7 @@ scope insteadofinventedsinglefieldvalidators. Further nestedshape/cohort/wholebo
 needs that explicitcontract and independentoracles. No nextimplementation/helper/
 test/Java/native/CLI/factory/owner/genuine execution.
 
-F intendedN25Source/evidence/docs changes only. Main5f05b0059trackedM/6untracked;
+F publication receipt docs only; tested Source and evidence unchanged. Main5f05b0059trackedM/6untracked;
 E d9747229reportM; Desktope0c36885 7trackedM/89untracked preserved. Onlyreport
 prefixes mirroredMain/E. No newpersistentprocess/listener; existingNotepad67116860/
 tabs untouched. Uncertainbrowser14116/start639294472690745890/58320,

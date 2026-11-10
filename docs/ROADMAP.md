@@ -1802,7 +1802,9 @@ stays focused on tag/precedence.2 extra hooks/pass are not native units. Actual
 effects/geometry, whole semantics, authority/lifetime and genuine execution remain
 gated; budgets/seeds/epochs/exclusions unchanged, playable100=0,beta HELD. Next:
 freeze the next complete producer-backed projection contract before implementation.
-Publication pending final root/index checks and normal push.
+Implementation `d4fbdf89e42cfcfe37671dd2e1f73b2682dff26a` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
+`1a1c58056570c4cc` sent once. This receipt sends no second email.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

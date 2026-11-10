@@ -67,4 +67,4 @@ genuine UNSPENT_GATED.
 
 Proof SHA256:238f9dbe97cf221c8d5c281f66778bc1a3dc932078e8599055fc67fdb6355a75.
 Next: freeze the next complete producer-backed projection contract before any
-further implementation. Publication/notification pending normal push.
+further implementation. Publication/notification recorded in PUBLICATION_R1.json.
