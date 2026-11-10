@@ -1,6 +1,6 @@
-# Current checkpoint: current arms projection locally accepted; publication pending
+# Current checkpoint: current arms projection published; documentation receipt
 
-F codex/q100-terminal-only-20261107 HEADf4df2f942da9764c94060f2b5f8d4c5e11bc91e3,
+F codex/q100-terminal-only-20261107 implementationHEAD71139b7c55ca74dff754b6f8c71ff2a28a75d5c2,
 no upstream; target origin/codex/q100-physical-feasibility. Candidate OS-temp leaf
 N10=tsj-q100-arms-regression-class-r2-fa7f9a1c35e945a89f9765f3a06ff073.
 Freeze dd84b3129ac17e0882696b5f0c73be924366f51c228c839cbda1aebada908b3a;
@@ -18,7 +18,10 @@ limits. Current receipt path binding already correct; historical Source role mis
 requires no bridge. Normal assembly/producer, full-result/authority/lifecycle and
 actual R7 aggregation stay held; genuine original then exact NULL/OBSERVE unspent.
 
-F intended helper/newfixtures/evidence/docs only; staged0 before final inspection.
+Implementation56files committed/pushed; exact remote SHA verified. Root integrated/
+staged/private-byte/privacy/diff checks PASS; local raw-byte attributes preserve all
+tested blobs. Documentary review PASS read-only, no independent native claimed.
+Current docs-only publication receipt pending; unchanged runtime gates reused.
 Main5f05b005 9trackedM/6untracked,E d9747229 reportM,Desktop e0c36885
 7trackedM/89untrackedfiles preserved; Main/E reportmirroronly. No new persistent
 process/link. Selected children terminated/ownedroot+logabsence proven; isolated
@@ -32,9 +35,9 @@ unrun,oldnormal20 historicalREAD/no reread,protectedUnreadUNCERTIFIED,playable10
 betaHELD. Wholelegacybuilder/consumer and protected/heldout DATA/oldactualdescriptor/
 result/generated-data classaccess denied. Prior R7 publication298f28c2/f4df2f94,
 Gmail1a1c335a56017307 SENT_ONCE; priorcleanup1f45c12e/8e8ef678,
-Gmail1a1c2dfc524598d6 SENT_ONCE; never duplicate. Current milestone publication/email
-NOT YET. Next inspect integrated/staged diff/privacy/source bytes, normalcommit/push,
-verifyremote and one Gmail; then Source-bound producer caller/whole-result prerequisites.
+Gmail1a1c2dfc524598d6 SENT_ONCE; never duplicate. Current milestone71139b7c published; Gmail1a1c37c729be7907
+SENT_ONCE_ACKNOWLEDGED_NEVER_DUPLICATE. Next normal docs-only receipt commit/push
+without email, then current Source-bound producer caller/whole-result prerequisites.
 
 # Historical checkpoint: maintained R7 Source prerequisite published
 

@@ -1,6 +1,6 @@
 # Current arms DTO projection prerequisite
 
-Locally accepted for the finite synthetic component below; publication pending.
+Published for the finite synthetic component below.
 The normal producer and genuine original then exact NULL/OBSERVE envelope remain
 gated. This packet grants no playable100 or electrical/population renewal.
 
@@ -55,3 +55,8 @@ DATA or generated-data class access. Playable100=0, beta HELD, genuine envelope
 UNSPENT_GATED. No new persistent process/link; task scratch and failures retained,
 old uncertain resources untouched. Next is the current Source-bound producer caller
 and whole-result/authority/lifecycle prerequisites.
+
+Implementation `71139b7c55ca74dff754b6f8c71ff2a28a75d5c2` (Add metered current arms DTO projection)
+was normally pushed to origin/codex/q100-physical-feasibility, exact remote SHA
+verified. Completion Gmail `1a1c37c729be7907` SENT_ONCE_ACKNOWLEDGED. This
+documentation receipt sends no second email.

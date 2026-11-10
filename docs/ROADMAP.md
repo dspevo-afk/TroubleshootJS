@@ -1665,7 +1665,9 @@ Counter and transport limits remain explicit. Normal producer, whole-result and
 host/lifecycle gates remain closed; the genuine envelope is unspent, with no
 electrical/population renewal or playable100. Next is the Source-bound producer
 caller and whole-result/authority/lifecycle prerequisites. All budgets, protected
-data exclusions, full30 EXCLUDED and beta HELD remain. Publication pending.
+data exclusions, full30 EXCLUDED and beta HELD remain. Implementation `71139b7c55ca74dff754b6f8c71ff2a28a75d5c2` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
+`1a1c37c729be7907` sent once. This receipt sends no second email.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
