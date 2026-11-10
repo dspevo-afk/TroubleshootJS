@@ -76,3 +76,5 @@ Next unstarted boundary: select/freeze the current work-slot installer and its
 priced metadata contract before assembling the normal producer; independent
 semantic/host/lifecycle/genuine gates remain separate. No persistent task process
 was added; unrelated checkouts/resources/failure evidence stay preserved.
+
+Publication/notification is recorded in PUBLICATION_R1.json; no second email for this documentation receipt.

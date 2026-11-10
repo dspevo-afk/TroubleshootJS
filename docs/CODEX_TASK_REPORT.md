@@ -1,9 +1,10 @@
-# Current checkpoint: capture/cohort phases accepted locally, publication pending
+# Current checkpoint: capture/cohort phases published; next contract boundary
 
-F codex/q100-terminal-only-20261107 HEAD 1de5d6420aacfad2071d5c38f1d726f82400b0e6,no upstream;
+F codex/q100-terminal-only-20261107 implementation HEAD 8ef0a07f58fe88f3e1eb2883208b5f2584b7414a,no upstream;
 normal target origin/codex/q100-physical-feasibility. N31 d7273e2a/receipt1de5d642
 published/exact remote verified/Gmail1a1c6c25229cc994 sent once. N33 T/E
-capture-cohort-phases-r1 is now locally accepted, NOT yet committed/pushed/emailed.
+capture-cohort-phases-r1 accepted/published, exact remote SHA verified; completion
+Gmail1a1c707952398301 sent once. Publication receipt follows with no second email.
 Private OS-temp/tsj-q100-capture-cohort-phases-r1-f6251304114444e2bf17b376fcf8931a.
 
 N32 current sequence audit established raw Cohort before exact NULL/OBSERVE,
@@ -47,10 +48,11 @@ SourceFreezeR1 e76ae3254f7a4203229bf39dcbe72a4d481388f4d711e7652bbc391315028006;
 NativeFreezeR3 e50cba5dca1fe64e1050f4d5729bd89cc56f194a49af9d7d50a392e577ea8a63;
 FinalProofR1 9a2525843137b12e44c97daf188b6ef9b68918c8f822e023ad9c0032838f45e8.
 Emitted metadata16559B/784296ac06e2a9c7eaeb04d8c76027360861caea960d1fcb281aa61179356895.
-Next: final integrated diff/privacy/whitespace/index audit, explicit intended
-staging, normal commit/push exact remote verification, one completion Gmail,
-documentation receipt. Then select/freeze current work-slot metadata contract;
-it is not yet selected/integrated. Semantic/host/lifecycle/genuine gates separate.
+PASS root integrated diff/privacy/whitespace/index audit37files(34raw/3docs),
+indexsha003cc3702a21665fe4d9ace91a86113a95a071845c3fb394633177716bc96313. Normal implementation push/exactremote verified.
+Next unstarted implementation: current work-slot metadata contract and its
+necessary Source-only audit; no normal producer integration yet. Independent
+semantic/host/lifecycle/genuine gates remain separate.
 
 Only synthetic Map/List/scalar/SetupResult/Cohort/association metadata+actual
 Meter execute. No actual/fake OriginalArm/ArmResult,graph,Session,factory,
@@ -70,8 +72,8 @@ No new persistent process/listener. Preserve uncertain browser14116/start
 639294472690745890/port58320,preview34180/start639294472514546595/port58264+
 14children,oldDprocess/unlink uncertainty,hardlinks/scratch/failures,
 Notepad67116860. No GUI/termination. Main5f05b005:9mods/6untracked,E d9747229:
-reportM,Desktop e0c36885:7mods/89individualuntracked preserved. F intended N33
-docs/tests/evidence only; staged0 before explicit stage. No user decision.
+reportM,Desktop e0c36885:7mods/89individualuntracked preserved. F implementation clean after publication; only four intended documentation
+receipt files then staged explicitly. Unrelated work remains preserved. No user decision.
 
 # Historical checkpoint: N31 publication and N32 sequencing contract
 

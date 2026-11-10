@@ -1893,6 +1893,10 @@ actual DTO authority/lifetime or genuine qualification. Next: current work-slot
 metadata contract, then independent semantic/host/lifecycle/genuine gates.
 Playable100=0,betaHELD,full30EXCLUDED,HARD/PSYCHOTICunavailable/unrun.
 
+Implementation `8ef0a07f58fe88f3e1eb2883208b5f2584b7414a` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
+`1a1c707952398301` sent once. This receipt sends no second email.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource
