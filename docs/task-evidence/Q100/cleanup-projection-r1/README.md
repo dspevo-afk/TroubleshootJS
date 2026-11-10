@@ -66,4 +66,4 @@ playable100=0; beta HELD; genuine UNSPENT_GATED. No prior failure reclassified.
 Proof SHA256:4e85a3ec528fe622a8532c984265f2b605b3097d5577fc5026ba1f5e4363f141.
 Next: Source selection of the next remaining assembly-envelope prerequisite,
 before deeper producer/DTO or genuine-envelope work.
-Publication/notification pending normal push.
+Publication/notification recorded in PUBLICATION_R1.json.

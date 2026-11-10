@@ -1844,7 +1844,9 @@ and actual same-body R5 count pass; lower oracles/limits remain. No actual clean
 truth/fullDTO/authority/lifetime or genuine qualification. Next: remaining assembly
 envelope Source selection; playable100=0,beta HELD, full30 excluded and HARD/
 PSYCHOTIC unavailable/unrun. No electrical/population renewal.
-Publication pending final root/index checks and normal push.
+Implementation `a8814a4125985815fb25325a95a5d316c5092884` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
+`1a1c62dd6c0f3d8f` sent once. This receipt sends no second email.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

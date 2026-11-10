@@ -1,8 +1,9 @@
-# Current checkpoint: complete cleanup projection accepted locally
+# Current checkpoint: complete cleanup projection published
 
 F codex/q100-terminal-only-20261107 observed HEAD
-8c188afd74fcfdd75d15960faedd953fb9376de4, no upstream; target origin/codex/q100-physical-feasibility.
-Normal commit/push/Gmail pending; no N28 publication claimed yet.
+a8814a4125985815fb25325a95a5d316c5092884, no upstream; target origin/codex/q100-physical-feasibility.
+Implementation a8814a4125985815fb25325a95a5d316c5092884 normally pushed/exact remote SHA verified.
+Gmail 1a1c62dd6c0f3d8f SENT_ONCE_ACKNOWLEDGED; never duplicate.
 N27 495bc2d4/8c188afd/Gmail1a1c5fdb8681d653 and N26 94737a9f/603f4285/
 Gmail1a1c5d68f7f9dfaf remain complete; no duplicate receipt email.
 
