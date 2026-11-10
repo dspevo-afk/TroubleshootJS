@@ -1710,6 +1710,9 @@ count were corrected. Ten selected receipts were reauthenticated. Full export,
 whole-body semantics, authority, lifetime and genuine execution remain gated;
 playable100=0, beta HELD, full30 EXCLUDED and all limits/data exclusions remain.
 Next: qualified receipt metadata versus receipt-binding scalar expectations.
+Implementation `dffb1d04bc93b901d1390d27647a9b1259243f46` normally pushed to
+origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
+`1a1c457329d9ca2b` sent once. This receipt sends no second email.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

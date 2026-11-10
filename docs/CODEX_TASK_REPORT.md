@@ -1,6 +1,6 @@
-# Current checkpoint: body correlations accepted; publication pending
+# Current checkpoint: body correlations published; receipt record
 
-F codex/q100-terminal-only-20261107 HEAD44bf15cf4ae816406d436bb55036abe06b379c3f,
+F codex/q100-terminal-only-20261107 implementationdffb1d04bc93b901d1390d27647a9b1259243f46,
 no upstream; target origin/codex/q100-physical-feasibility. Prior arm4d835a9a/
 receipt44bf15cf/Gmail1a1c41da9786b690 and originalDTO64c83dec/a42dd1c9/
 Gmail1a1c3ce8d372dabb complete; neverduplicate.
@@ -26,8 +26,9 @@ No nativeassertion/literal/implementation/budget changed. R3focusedretainedrerun
 passed. Rootfixture unusedheaderpermit fixedbeforeexecution. Allscratch retained.
 
 PublicT=current-body-correlations-r1; E=docs/task-evidence/Q100/current-body-correlations-r1.
-Finalproof/evidence copied, pending rootdiff/index-byte/privacy/statusreview then
-normalcommit/push/exactremoteverify/oneGmail. No newpublication/email yet.
+Implementation normally pushed/exactremoteverified; Gmail1a1c457329d9ca2b
+SENT_ONCE_ACKNOWLEDGED. Rootdiff/index-byte/privacy/status and bounded Source/
+documentary reviews PASS. Receipt record sends no second email.
 Full exportV2/write/compare/publication NOTRUN; realR5count equivalence tested;
 feeformula unchanged bySource inference. Actualcaller/wholebody/authority/lifetime
 remain gated. Nextunstartedimplementation: compare qualified receipt tuple with
