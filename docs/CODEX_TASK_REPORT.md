@@ -1,9 +1,11 @@
-# Current checkpoint: N35 synthetic metadata/R7 accepted locally; publication pending
+# Current checkpoint: N35 synthetic metadata/R7 published; next integration contract
 
-F codex/q100-terminal-only-20261107 actual HEAD d61d38a82a1c2fc066e5131cc0077604c2e5e41a,
+F codex/q100-terminal-only-20261107 implementation HEAD 13130cecc5044a60a93f708819c7a1fda8140684,
 no upstream; normal target origin/codex/q100-physical-feasibility. N33 impl8ef0a07f/
 receiptd61d38a8 published/exactremote verified/Gmail1a1c707952398301 once. N35
-metadata-r7-composition-r1 now locally accepted, NOT committed/pushed/emailed.
+metadata-r7-composition-r1 published/exactremoteSHA verified; completion
+Gmail1a1c75490ef17be5 sent once/acknowledged. Documentation receipt follows,
+NO second email for receipt.
 Private OS-temp/tsj-q100-metadata-r7-composition-r1-68f46afddfd14e19a1b8bb0e91cc2a72.
 
 N34 selected existing captureDetachedR7WorkPlan as sole work installer/ledger.
@@ -68,18 +70,19 @@ opJSON8MiB/result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/reader180s/
 wrapper480s/cleanup120s,exactseeds/epochs/oracles unchanged. Production/GWT/Player
 N/A,electrical/population NOTRENEWED;CI NOTRUN,self-hosted prerequisite.
 
-Next required: root actualdiff/privacy/whitespace/index audit34intended files,
-explicit stage/normalcommit/push/exactremote verify,onecompletionGmail,4-doc
-publication receipt without second email. Then next unstarted milestone:
-current normal-assembly integration and independent semantic/host/lifecycle
-contract before any genuine execution. No required user decision.
+Completed root actualdiff/privacy/whitespace/index34files(31raw/3docs), index
+a58dc611607f86a3f77fdc19264a3fd0c082d55e1e594d97c576e6b0bc9cf033. Normal push/exactremote and one
+completion Gmail acknowledged. Next unstarted milestone: current normal-assembly
+integration and independent semantic/host/lifecycle contract before genuine
+execution. Four-doc publication receipt without second email; no user decision.
 
 No new persistent process/listener. All N35owned children/roots/logs absent;
 classes/failures/controlledscratch retained. Preserve uncertain browser14116/start
 639294472690745890/port58320,preview34180/start639294472514546595/port58264+
 14children,oldDprocess/unlink uncertainty,hardlinks,scratch,Notepad67116860.
 Main5f05b005:9mods/6untracked,E d9747229:reportM,Desktop e0c36885:7mods/89individual
-untracked preserved. F only intended N35docs/tests/evidence,staged0 before stage.
+untracked preserved. F implementation clean after push; only four intended publication receipt docs
+modified for next explicit stage. Other work remains preserved.
 Never give reviewers full task-report paths; bounded prefix copies only.
 Historical tail bytes preserved. Do not duplicate N33 publication/email.
 

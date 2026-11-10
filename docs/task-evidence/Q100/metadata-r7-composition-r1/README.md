@@ -86,4 +86,4 @@ oldnormal20notreread. All budgets,seeds,epochs and independent oracles unchanged
 Next unstarted milestone: current normal-assembly integration contract and its
 independent semantic/host/lifecycle prerequisites before genuine execution.
 Unrelated checkouts/resources and all earlier failure evidence stay preserved.
-Publication pending final index checks and normal push.
+Publication and completion notification recorded in PUBLICATION_R1.json.

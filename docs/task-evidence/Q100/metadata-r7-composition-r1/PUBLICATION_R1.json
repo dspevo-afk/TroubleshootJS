@@ -1,0 +1,33 @@
+{
+  "status": "PUBLISHED_VERIFIED_AND_COMPLETION_EMAIL_ACKNOWLEDGED",
+  "implementationCommit": "13130cecc5044a60a93f708819c7a1fda8140684",
+  "message": "Qualify synthetic metadata handoff to R7 work plans",
+  "localBranch": "codex/q100-terminal-only-20261107",
+  "localUpstream": "NONE",
+  "remote": "origin",
+  "remoteRepository": "https://github.com/dspevo-afk/TroubleshootJS.git",
+  "remoteRef": "refs/heads/codex/q100-physical-feasibility",
+  "push": "NORMAL_NO_FORCE",
+  "exactRemoteImplementationShaVerified": "13130cecc5044a60a93f708819c7a1fda8140684",
+  "proofSha256": "e4f01a589250e62c22b81d1a9366ad2e7e7a01d46287e107a6e3fe6aa6806aeb",
+  "indexAuditSha256": "a58dc611607f86a3f77fdc19264a3fd0c082d55e1e594d97c576e6b0bc9cf033",
+  "indexFiles": 34,
+  "exactRawIndexFiles": 31,
+  "normalizedDocumentationFiles": 3,
+  "gmail": {
+    "status": "SENT_ONCE_ACKNOWLEDGED",
+    "id": "1a1c75490ef17be5",
+    "subject": "TroubleshootJS: synthetic metadata R7 handoff pushed",
+    "dedupeSearchBeforeSend": "NO_MATCH",
+    "secondEmailForReceipt": "DO_NOT_SEND"
+  },
+  "scope": "FINITE_SYNTHETIC_METADATA_R7_COMPOSITION_ONLY",
+  "failures": "COMPILER_EVIDENCE_PRE_CHILD_CONTROL_SOURCE_SCOPE_FAILURES_PRESERVED_NOT_RECLASSIFIED",
+  "genuine": "UNSPENT_GATED",
+  "playable100": 0,
+  "beta": "HELD",
+  "full30": "EXCLUDED",
+  "HARD_PSYCHOTIC": "UNAVAILABLE_UNRUN",
+  "protectedUnread": "UNCERTIFIED",
+  "nextUnstartedMilestone": "CURRENT_NORMAL_ASSEMBLY_AND_INDEPENDENT_SEMANTIC_HOST_LIFECYCLE_CONTRACT"
+}
