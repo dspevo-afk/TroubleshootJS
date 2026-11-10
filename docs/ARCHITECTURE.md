@@ -449,6 +449,16 @@ execution and preserves exclusive close/readback-before-provenance. Synthetic
 metadata qualification does not enable the producer or certify owner provenance,
 whole-result semantics, host authority or lifetime.
 
+The [current body correlation transform](task-evidence/Q100/current-body-correlations-r1/README.md)
+pins the current Study and constructor-equipped codec, adds writeCorrelatedBody
+and migrates exactly three exporter calls. Existing header validation precedes
+bounded sink-admitted context/prior, arm-role and cleanup/work checks; existing
+canonical traversal follows them. Mismatches emit no bytes. The lower writeBody
+API retains its transport contract and independent wide/domain/marker oracles.
+No Meter/copy/group ownership changes; the pure Source API owns no I/O or producer.
+Real count-sink equivalence and synthetic metadata checks do not establish whole
+body semantics, receipt/factory authority, exclusive lifetime or genuine export.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

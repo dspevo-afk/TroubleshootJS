@@ -1,0 +1,107 @@
+{
+  "files": [
+    {
+      "name": "run_retained_reader_r3.py",
+      "bytes": 3137,
+      "sha256": "b4486c528a1f4499fb1624b41b3cc3e94ed76a5d12e9a64d019429b6e66a0efa"
+    },
+    {
+      "name": "RETAINED_COUNT_ORACLE_R3.md",
+      "bytes": 1410,
+      "sha256": "bfbbd232d3c328e833ad2092215bd6a2a5f5884cb85d801a362bce0ebe7912b5"
+    }
+  ],
+  "classes": [
+    {
+      "bytes": 28525,
+      "major": 51,
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodecCanary.class",
+      "sha256": "e850d7fe620c6ca454ab2cb1dec4a5df7b628198a10b60f49794b024198533e2"
+    },
+    {
+      "bytes": 305,
+      "major": 51,
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodecCanary$1.class",
+      "sha256": "f477261e2a4b5978d530c01d0c32a99a803ddbaf56c42fe7367d8058e18a5485"
+    },
+    {
+      "bytes": 1452,
+      "major": 51,
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodecCanary$AdmissionGuardMap.class",
+      "sha256": "38c7999670e455c4137f1310568fff5fd390d911d6f6c8725f4ecf086fb1e4ba"
+    },
+    {
+      "bytes": 1380,
+      "major": 51,
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodecCanary$AdmissionSink.class",
+      "sha256": "cd2c86e81339d5aa2870f94aae01f0802007c74063ed88079cceb638f4066a2f"
+    },
+    {
+      "bytes": 1133,
+      "major": 51,
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodecCanary$DiscardSink.class",
+      "sha256": "9685ff2fa81bdd852e52fb90e9061f38d61b31d4c34400cf4f86995e00759c20"
+    },
+    {
+      "bytes": 734,
+      "major": 51,
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodecCanary$LazyNullList.class",
+      "sha256": "dc7c3c45b67380addf0326657132fe5e6a3ff8a780617b5e7803bdde64237ce4"
+    },
+    {
+      "bytes": 1159,
+      "major": 51,
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodecCanary$LazyNullMap.class",
+      "sha256": "bf84237d0c8fcd7047a42a9799a127105b5ae175d220f1fcfaf008ad04c9a3f9"
+    },
+    {
+      "bytes": 1383,
+      "major": 51,
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodecCanary$LazyNullMap$1.class",
+      "sha256": "329970f28834e9dcac092e6a2a8593d5e8420107bdae46bff2acb1859c52b2e4"
+    },
+    {
+      "bytes": 2326,
+      "major": 51,
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodecCanary$LazyNullMap$1$1.class",
+      "sha256": "658cfbff25992a16dc6db3b860ea47d3e52ba9a58f5106c91d68527f76a2b991"
+    },
+    {
+      "bytes": 1361,
+      "major": 51,
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodecCanary$MemorySink.class",
+      "sha256": "cca866e29373bef6e1831aa3dd195e54307342d8783911490dd66aa3ce4527db"
+    },
+    {
+      "bytes": 1208,
+      "major": 51,
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodecCanary$MeterFixture.class",
+      "sha256": "d8b9caf19f7612ce298f471953264e61c20c13e4f35fe1ad008c1f75b8d30804"
+    },
+    {
+      "bytes": 1876,
+      "major": 51,
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodecCanary$ObservableMap.class",
+      "sha256": "f04e06fb752db55d521421946eb933fcd3892d14cb2645ee5ea47553a616f58c"
+    },
+    {
+      "bytes": 1497,
+      "major": 51,
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodecCanary$SinkPosition.class",
+      "sha256": "49a7604d7739d523938a45fcf78c2c568302d22d070218d6b3b5b520ecc02d29"
+    },
+    {
+      "bytes": 4850,
+      "major": 51,
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CodecOracle.class",
+      "sha256": "3b0b4d8ed62d0e88fe40409407d9e502c3a49ea4700d65107ccdbed5c0886cc8"
+    },
+    {
+      "bytes": 7501,
+      "major": 51,
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CodecWideOracle.class",
+      "sha256": "3b6e62b423ccf368b11c2077457a061b6d2a72825e5ad9ee00d5622709a2eada"
+    }
+  ],
+  "status": "ROOT_REVIEWED_RETAINED_SOURCE_COUNT_READER_AND_CLASSES_BEFORE_R3"
+}

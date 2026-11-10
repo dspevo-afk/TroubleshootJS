@@ -1,0 +1,45 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_BODY_CORRELATION_NATIVE_SOURCE_BEFORE_EXECUTION",
+  "files": [
+    {
+      "name": "emitted-source/CohortTerminalTelemetryStudy.java",
+      "bytes": 236974,
+      "sha256": "4e0563854a2282b10d5804da9e9843814ba8363b23400eea63a2459ca14de680"
+    },
+    {
+      "name": "emitted-source/CurrentV2CanonicalCodec.java",
+      "bytes": 23469,
+      "sha256": "e67dccf469fe8c8fe01812dcd28fd47463f0d9e2e4e1c451b9c65497d43c13a5"
+    },
+    {
+      "name": "component/CurrentBodyCorrelationsCanary.java",
+      "bytes": 30247,
+      "sha256": "ec6d9693c9cd1e29d5032a61edcce8ea2347ea7b011297e6f2f6c0cc3ace49e0"
+    },
+    {
+      "name": "component/BodyCorrelationOracle.java",
+      "bytes": 7165,
+      "sha256": "32ee2204b2ed95e15ed15d69d08db28f54436f348937ed8f54cbcd1e6dbd66a4"
+    },
+    {
+      "name": "component/test_literal_oracle.py",
+      "bytes": 3057,
+      "sha256": "a69de8cf8639fb72fcf657776636ca7ca1455b48bc09096776851a9b3d4159f3"
+    },
+    {
+      "name": "component/README.md",
+      "bytes": 2455,
+      "sha256": "6d4638926c42222a528eb39b7d162428c64df985e5b904fce78fe1b8b93ec517"
+    },
+    {
+      "name": "run_additional_gates_r1.py",
+      "bytes": 3075,
+      "sha256": "036db64d4e8a0fe7e56cfcaf5e5cd88f00df129ec9524fe9c448dfaea499b5a0"
+    },
+    {
+      "name": "SOURCE_REVIEW_R1.md",
+      "bytes": 1652,
+      "sha256": "5e6fd771d302cf05175fa46d5e0861d544164d6e9ffc709a4862cb3501bc04eb"
+    }
+  ]
+}

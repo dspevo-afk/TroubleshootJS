@@ -1,0 +1,69 @@
+    /** Partial current-result correlations, not full DTO qualification. */
+    static void writeCorrelatedBody(
+            Map<String, Object> body,
+            CohortTerminalTelemetryStudy.CanonicalJsonSink sink) throws Exception {
+        if (sink == null) throw failure("BODY_SINK");
+        validateBodyHeader(body, sink);
+        validateCorrelations(body, sink);
+        writeBodyValue(body, sink, new BodyWalk(), 0);
+        sink.writeByte(10);
+    }
+
+    private static void validateCorrelations(Map<String, Object> body,
+            CohortTerminalTelemetryStudy.CanonicalJsonSink sink) throws Exception {
+        Object context = correlationRead(body, "inputContextSha256", sink);
+        Map<?, ?> prior = correlationMap(
+                correlationRead(body, "qualifiedPrior", sink), sink);
+        Object priorContext = correlationRead(prior, "inputContextSha256", sink);
+        sink.beforeDataOperation();
+        if (!(context instanceof String) || !(priorContext instanceof String) ||
+                !((String) context).equals(priorContext))
+            throw failure("BODY_PRIOR_CONTEXT");
+
+        Map<?, ?> arms = correlationMap(correlationRead(body, "arms", sink), sink);
+        Map<?, ?> nullArm = correlationMap(correlationRead(arms, "null", sink), sink);
+        Object nullRole = correlationRead(nullArm, "armRole", sink);
+        sink.beforeDataOperation();
+        if (!"NULL".equals(nullRole)) throw failure("BODY_NULL_ROLE");
+        Map<?, ?> observeArm = correlationMap(
+                correlationRead(arms, "observe", sink), sink);
+        Object observeRole = correlationRead(observeArm, "armRole", sink);
+        sink.beforeDataOperation();
+        if (!"OBSERVE".equals(observeRole)) throw failure("BODY_OBSERVE_ROLE");
+
+        Map<?, ?> cleanup = correlationMap(correlationRead(body, "cleanup", sink), sink);
+        Map<?, ?> work = correlationMap(correlationRead(body, "work", sink), sink);
+        long cleanupNanos = correlationNanos(
+                correlationRead(cleanup, "cleanupNanos", sink), sink);
+        long workNanos = correlationNanos(
+                correlationRead(work, "cleanupNanos", sink), sink);
+        sink.beforeDataOperation();
+        if (cleanupNanos != workNanos) throw failure("BODY_CLEANUP_NANOS");
+    }
+
+    private static Object correlationRead(Map<?, ?> values, String key,
+            CohortTerminalTelemetryStudy.CanonicalJsonSink sink) throws Exception {
+        sink.beforeDataOperation();
+        return values.get(key);
+    }
+
+    private static Map<?, ?> correlationMap(Object value,
+            CohortTerminalTelemetryStudy.CanonicalJsonSink sink) throws Exception {
+        sink.beforeDataOperation();
+        if (!(value instanceof Map)) throw failure("BODY_CORRELATION_MAP");
+        return (Map<?, ?>) value;
+    }
+
+    private static long correlationNanos(Object value,
+            CohortTerminalTelemetryStudy.CanonicalJsonSink sink) throws Exception {
+        sink.beforeDataOperation();
+        if (!(value instanceof Integer) && !(value instanceof Long))
+            throw failure("BODY_CLEANUP_NANOS");
+        sink.beforeDataOperation();
+        long nanos = ((Number) value).longValue();
+        sink.beforeDataOperation();
+        if (nanos < 0L || nanos > 120000000000L)
+            throw failure("BODY_CLEANUP_NANOS");
+        return nanos;
+    }
+

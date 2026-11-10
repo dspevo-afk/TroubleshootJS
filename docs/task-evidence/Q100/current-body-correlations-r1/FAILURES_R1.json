@@ -1,0 +1,22 @@
+{
+  "status": "PRESERVED_FAILURES_NOT_RECLASSIFIED",
+  "failures": [
+    {
+      "phase": "body-regression-r1",
+      "status": "FAIL",
+      "childExitCode": 1,
+      "reason": "Test class absent from inherited closure; no assertions ran."
+    },
+    {
+      "phase": "run_retained_codec_r2.py summary reader",
+      "status": "FAIL",
+      "nativeChildExitCode": 0,
+      "reason": "Reader incorrectly expected8families as8cases; actual Java63cases94assertions passed. Source ledger corrected reader only."
+    }
+  ],
+  "rootReaderFailureObservedInToolOutput": true,
+  "rootReaderRawStderrFileCaptured": false,
+  "selectedFailedLaunchRawReceiptsRetainedPrivately": true,
+  "fixes": "Compile exact retained test sources; distinguish63cases from8families using Source count ledger. Body implementation, literals, assertions and budgets unchanged.",
+  "initialCanaryGuardFix": "Pre-execution iterator revocation closes unused header permit gap."
+}

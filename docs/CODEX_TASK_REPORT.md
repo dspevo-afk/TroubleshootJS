@@ -1,4 +1,110 @@
-# Current checkpoint: arm metadata read prerequisite published
+# Current checkpoint: body correlations accepted; publication pending
+
+F codex/q100-terminal-only-20261107 HEAD44bf15cf4ae816406d436bb55036abe06b379c3f,
+no upstream; target origin/codex/q100-physical-feasibility. Prior arm4d835a9a/
+receipt44bf15cf/Gmail1a1c41da9786b690 and originalDTO64c83dec/a42dd1c9/
+Gmail1a1c3ce8d372dabb complete; neverduplicate.
+
+N19 OS-temp/tsj-q100-body-correlations-r1-83ce4170795447829471b5e82f96e01f.
+Finite3correlations locally accepted: root/prior context identity, fixedarmroles,
+cleanup/finalizedwork equality (Integer/Long0..120000000000). Headerfirst, admitted
+boundedreads, zeroencodedbytesonmismatch. Pure pinnedSource API adds newcodec
+entry/migratesexact3exportcalls; lowertransportoracles unchanged. Notfullsemantics.
+Sourcefreeze d0de5dea788bfa7cb673642d101dc1e6fb9f7087c32e223aad90733249283405;
+nativefreeze78c3d2c8d12a473d656b58bca0425afc707df93e88b6f29dcc8c91a0af17179e;
+proof031365e20a2aff7336901ed8e7e152a76ebafe33ecdc4ad303899b66d8715418.
+Study236974/4e0563854a2282b10d5804da9e9843814ba8363b23400eea63a2459ca14de680;
+codec23469/e67dccf469fe8c8fe01812dcd28fd47463f0d9e2e4e1c451b9c65497d43c13a5.
+PASS: finalsourceJDK8target7/main4Sources145major51classes376396B +retained3test
+Sources15classes56690B,2408deps11867237B/noShadows. Native60/210assertions,
+retained63/94across8families; private/publicSource12each/Pythonliteral3/exactJVM
+argumentrejection/staticindependentreview. Tenreceipts reauthenticated:8exit0,
+1expectedexit1,1failedlaunch. Isolatedcleanupdurationnull. FailurelaunchR1class
+absent andR2summaryreader8families-as-cases remainFAIL/preserved; R2Javaitself
+exit0. ExplicitretainedSourcecompile andSource-derived63/94reader fixharnessonly.
+No nativeassertion/literal/implementation/budget changed. R3focusedretainedrerun
+passed. Rootfixture unusedheaderpermit fixedbeforeexecution. Allscratch retained.
+
+PublicT=current-body-correlations-r1; E=docs/task-evidence/Q100/current-body-correlations-r1.
+Finalproof/evidence copied, pending rootdiff/index-byte/privacy/statusreview then
+normalcommit/push/exactremoteverify/oneGmail. No newpublication/email yet.
+Full exportV2/write/compare/publication NOTRUN; realR5count equivalence tested;
+feeformula unchanged bySource inference. Actualcaller/wholebody/authority/lifetime
+remain gated. Nextunstartedimplementation: compare qualified receipt tuple with
+bindingexpectedBytes/SHA beforecopy/binding. BoundedSourceprepaudit completed
+usingN18admittedowners; no newnative/owner/fileaccess inthat audit.
+
+F beforestage:3docsM plus2newintentionaldirs; Main5f05b0059trackedM/6untracked;
+E d9747229reportM; Desktop e0c368857trackedM/89untrackedfiles allpreserved. Only
+reportprefixes mirroredMain/E. Newselectedprocesses terminated/root+logsabsent;
+no newpersistentlistener. Old uncertainbrowser14116/start639294472690745890/58320,
+preview34180/start639294472514546595/58264+14children,oldDprocess/unlinkUNCERTIFIED
+untouched; priorregularhardlinks/failures/scratch retained,testedjunctionsremoved.
+
+No actual/fakeOriginalArm/ArmResult/graph/Session/routing/positiveoriginalDTO/
+executeArm/R9DTO/genuine execution. Syntheticmetadata/Meter only. Genuineoriginal
+then exactNULL/OBSERVE UNSPENT_GATED. All90s/640/5s/32768/copy1MiB/chunk4096/
+Source4MiB/opJSON8MiB/result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/
+reader180s/wrapper480s/cleanup120s/exactseeds/epochs unchanged. ProductionGWT/
+PlayerN/A,electrical/populationNOTRENEWED,CINOTRUN,full30EXCLUDED,HARD/PSYCHOTIC
+unavailable/unrun,oldnormal20historicalREAD/noreread,protectedUnreadUNCERTIFIED,
+playable100=0,betaHELD. Protected/heldoutDATA/oldactualDartifacts/generateddata
+classes/wholelegacybuildersconsumers denied. Continue standingrequest untilstop.
+
+# Historical checkpoint: current body semantic/caller Source audit
+
+F codex/q100-terminal-only-20261107 HEAD44bf15cf4ae816406d436bb55036abe06b379c3f,
+no upstream. Current arm implementation4d835a9a43cb4238ff5180384cca22118c28ab5f /
+receipt44bf15cf normally pushed, exact origin/codex/q100-physical-feasibility verified.
+Gmail1a1c41da9786b690 SENT_ONCE_ACKNOWLEDGED; neverduplicate. Previous originalDTO
+64c83dec/a42dd1c9 and Gmail1a1c3ce8d372dabb likewise complete, neverduplicate.
+Arm Sourcefreeze0a965bae5c627d4695e4d780aec895b47d9a45498c72b06689d01f33b7060664;
+proof65c8fda7d568817ca1cc607db9f4246a9f71643d80c0babcd6c7c58f8183a82c;
+public c93adaaa9e0c0ea281bbf7d49fc234f0c87da17367c405e286b8870ffad5a60d.
+Native61/JDK8twoSources134major51classes353555B/2406deps11850353B/noShadows,
+private/publicSource22+oracle31/IO6+6/40process/Source+documentary/index-byte/privacy
+checks PASS in finite metadata scope. N14/N15/N16 failures remain failures/preserved.
+
+N18 OS-temp/tsj-q100-current-body-semantic-audit-r1-a46368bb48b041d48b781a583755dab1.
+Baseline currentStudy236944/90f4c227d125587a7d1c8d3b324fe7fd375fd89af7a8a34a83a65a3c0d310bad;
+six already-admitted current helper Sources copied/hash-checked fromN11; oldStudy
+notcopied. OWNER_SOURCE_INPUT_R1 lists exactscope. No executable/genuinedata copy.
+Root Source-only AUTHORITY_FINDINGS_R1: CurrentV2InputSetup.read validates its exact
+freshMeter/generatedprofile and caller-supplied contextSHA equality, not actual
+Factory/SOURCE/file/resource authority. Returneddata map is borrowed, notcloned;
+exclusive lifetime/quiescence/later-use stability and failure cleanup remain caller
+obligations. No helper/factory/native/graph operation was run inthis audit.
+Independent explorer Sourceaudit COMPLETE; no full body semantic validator found.
+FINDINGS_R1.md SHA3ea1b6ae92965ec2254cec2a0742538e5c72d6770fdac4edf4e60e341737fc15
+records codec/header/ownership/localprojection/receipt/work-accounting boundaries.
+Next partialcorrelation component may check context/prior equality, fixedarmroles,
+and cleanupScalar/finalizedwork equality with syntheticmetadata only. Rootverified
+cleanupScalar contract. No normalexporthook until post-finalization accounting is
+resolved; SetupMeter may not reopen afterclosure. This isnotfullsemanticvalidator.
+Next freezecomponentcontract/auditexportaccounting port. No N18 implementation,
+SourceCLI/native tests, owner/genuine execution or publication yet.
+
+F reportM only/staged0 afterthischeckpoint; beforeprefix updateFclean verified.
+Main5f05b0059trackedM/6untracked; E d9747229reportM; Desktop e0c368857trackedM/
+89untrackedfiles allverified/preserved. Only reportprefixes mirroredMain/E.
+Task-owned regularhardlinkfixtures remaininretainedscratch; testedjunctionsremoved.
+No newpersistentprocess/listener; previousclasses/scratch/failures retained. Old
+uncertainbrowser14116/start639294472690745890/58320,preview34180/start639294472514546595/
+58264+14children,oldDprocess/unlinkUNCERTIFIED untouched. Isolatedcleanupduration
+unmeasured; no atomicdirectoryhandlechain/hostileconcurrentpathreplacement guarantee.
+
+No actual/fakeOriginalArm/ArmResult/graph/Session/routing/positiveoriginalDTO/
+executeArm/R9DTO/genuine execution authorized. Synthetic Map/List/SetupResult and
+metadata contracts only. Main/assemble and genuine original then exactNULL/OBSERVE
+UNSPENT_GATED. Existing90s/640/5s/32768/copy1MiB/chunk4096/Source4MiB/opJSON8MiB/
+result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/reader180s/wrapper480s/
+cleanup120s/exactseeds/epochs unchanged. GWT/PlayerN/A,electrical/populationNOTRENEWED,
+CINOTRUN,full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,oldnormal20historicalREAD/
+noreread,protectedUnreadUNCERTIFIED,playable100=0,betaHELD. Protected/heldoutDATA/
+oldactualDartifacts/generateddataclasses/wholelegacybuildersconsumers denied.
+Continue standingroadmap request untiluserstops; no routinepermission or duplicateemail.
+
+# Historical checkpoint: arm metadata read prerequisite published
 
 F codex/q100-terminal-only-20261107 implementation4d835a9a43cb4238ff5180384cca22118c28ab5f,
 no upstream. Previous originalDTOimplementation64c83dec/receipta42dd1c9 remotely

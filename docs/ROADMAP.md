@@ -1698,6 +1698,19 @@ Implementation `4d835a9a43cb4238ff5180384cca22118c28ab5f` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c41da9786b690` sent once. This receipt sends no second email.
 
+The [current body correlations prerequisite](task-evidence/Q100/current-body-correlations-r1/README.md)
+is locally accepted within its finite Source/native scope. Exact current Source
+derivation migrates all three export passes to checks for prior-context identity,
+fixed arm roles and cleanup/work duration equality before encoding. The lower
+transport API and independent oracles remain intact. Final-source JDK8,60 new
+native cases/210 assertions,63 retained codec cases/94 assertions across8 families,
+private/public Source12 each and3 independent Python checks pass. Two harness
+failures remain preserved; only test-class assembly and the reader's family/case
+count were corrected. Ten selected receipts were reauthenticated. Full export,
+whole-body semantics, authority, lifetime and genuine execution remain gated;
+playable100=0, beta HELD, full30 EXCLUDED and all limits/data exclusions remain.
+Next: qualified receipt metadata versus receipt-binding scalar expectations.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

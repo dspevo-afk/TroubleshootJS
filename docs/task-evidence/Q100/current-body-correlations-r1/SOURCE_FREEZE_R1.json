@@ -1,0 +1,40 @@
+{
+  "files": [
+    {
+      "bytes": 236944,
+      "sha256": "90f4c227d125587a7d1c8d3b324fe7fd375fd89af7a8a34a83a65a3c0d310bad",
+      "name": "baseline/CohortTerminalTelemetryStudy.java"
+    },
+    {
+      "bytes": 20119,
+      "sha256": "04b016afa690d2154f0b970640bc30b7c4887b450622444f8f18329bc04c3672",
+      "name": "baseline/CurrentV2CanonicalCodec.java"
+    },
+    {
+      "bytes": 3350,
+      "sha256": "380970e513160d5f27dd8b673a404cf491b3285f5dc4374ddd86e02c49a4f970",
+      "name": "component/BodyCorrelations.java.fragment"
+    },
+    {
+      "bytes": 3444,
+      "sha256": "04148be2491e0cdc650faf8b7f5e73124863b3ccedb59a547b093a6cf7682ccd",
+      "name": "component/CONTRACT_R1.md"
+    },
+    {
+      "bytes": 2059,
+      "sha256": "541b146b9849d2a9773401e21355275d08c172704d1b6c986555329ad0f7d8bd",
+      "name": "component/derive_body_correlations.py"
+    },
+    {
+      "bytes": 4225,
+      "sha256": "00067176a2d85f6383389507a2a5de8fe2e5639bcde1fcfae3c24071910821e5",
+      "name": "component/test_body_correlations_source.py"
+    },
+    {
+      "bytes": 6517,
+      "sha256": "35a5080c2f4ffb32f12712f59da100079f0de42ec51494bde0e40721208ae7ba",
+      "name": "run_gates_r1.py"
+    }
+  ],
+  "status": "ROOT_REVIEWED_CURRENT_BODY_CORRELATION_SOURCE_BEFORE_EXECUTION"
+}

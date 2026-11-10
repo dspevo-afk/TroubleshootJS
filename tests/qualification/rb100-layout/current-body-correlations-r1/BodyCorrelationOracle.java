@@ -1,0 +1,128 @@
+package com.lushprojects.circuitjs1.client;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+/** Independent ordinary-map fixtures for the partial body correlation canary. */
+final class BodyCorrelationOracle {
+    static final String RUN_ID = "00000000-0000-0000-0000-000000000001";
+    static final String SOURCE_SHA =
+            "1111111111111111111111111111111111111111111111111111111111111111";
+    static final String WIRE_SHA =
+            "1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed";
+    static final String CONTEXT_SHA =
+            "3333333333333333333333333333333333333333333333333333333333333333";
+    static final String OTHER_CONTEXT_SHA =
+            "4444444444444444444444444444444444444444444444444444444444444444";
+    static final long MAX_CLEANUP_NANOS = 120000000000L;
+    static final int WIDE_PADDING_COUNT = 27;
+    static final int WIDE_PADDING_VALUE_LENGTH = 120;
+
+    /* Literal JSON oracle: only the current header shape and three supplied
+     * relations are represented. It is not a full-D or genuine-result oracle. */
+    static final String MINIMAL_BODY_JSON =
+        "{\"schema\":\"tsj-cohort-terminal-result-v2\",\"mode\":\"OBSERVED_COHORT_TERMINAL_TELEMETRY\",\"status\":\"COMPLETED_DIAGNOSTIC_ONLY\",\"runId\":\"00000000-0000-0000-0000-000000000001\",\"sourceManifestSha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"wireContractSha256\":\"1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed\",\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\",\"qualifiedPrior\":{\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\"},\"originalCapture\":{},\"cohort\":{},\"arms\":{\"null\":{\"armRole\":\"NULL\"},\"observe\":{\"armRole\":\"OBSERVE\"}},\"work\":{\"cleanupNanos\":0,\"ordinaryList\":[\"synthetic\"]},\"cleanup\":{\"cleanupNanos\":0}}\n";
+
+    private static final String WIDE_PREFIX =
+        "{\"schema\":\"tsj-cohort-terminal-result-v2\",\"mode\":\"OBSERVED_COHORT_TERMINAL_TELEMETRY\",\"status\":\"COMPLETED_DIAGNOSTIC_ONLY\",\"runId\":\"00000000-0000-0000-0000-000000000001\",\"sourceManifestSha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"wireContractSha256\":\"1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed\",\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\",\"qualifiedPrior\":{\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\"},\"originalCapture\":{},\"cohort\":{},\"arms\":{\"null\":{\"armRole\":\"NULL\"},\"observe\":{\"armRole\":\"OBSERVE\"}},\"work\":{\"cleanupNanos\":";
+    private static final String WIDE_SUFFIX =
+        "},\"cleanup\":{\"cleanupNanos\":120000000000}}\n";
+
+    private BodyCorrelationOracle() { }
+
+    static Map<String, Object> body() {
+        return body(Integer.valueOf(0), Integer.valueOf(0));
+    }
+
+    static Map<String, Object> body(Object workNanos, Object cleanupNanos) {
+        Map<String, Object> body = new LinkedHashMap<String, Object>();
+        body.put("schema", "tsj-cohort-terminal-result-v2");
+        body.put("mode", "OBSERVED_COHORT_TERMINAL_TELEMETRY");
+        body.put("status", "COMPLETED_DIAGNOSTIC_ONLY");
+        body.put("runId", RUN_ID);
+        body.put("sourceManifestSha256", SOURCE_SHA);
+        body.put("wireContractSha256", WIRE_SHA);
+        body.put("inputContextSha256", CONTEXT_SHA);
+
+        Map<String, Object> prior = new LinkedHashMap<String, Object>();
+        prior.put("inputContextSha256", CONTEXT_SHA);
+        body.put("qualifiedPrior", prior);
+        body.put("originalCapture", new LinkedHashMap<String, Object>());
+        body.put("cohort", new LinkedHashMap<String, Object>());
+
+        Map<String, Object> arms = new LinkedHashMap<String, Object>();
+        Map<String, Object> nullArm = new LinkedHashMap<String, Object>();
+        nullArm.put("armRole", "NULL");
+        arms.put("null", nullArm);
+        Map<String, Object> observeArm = new LinkedHashMap<String, Object>();
+        observeArm.put("armRole", "OBSERVE");
+        arms.put("observe", observeArm);
+        body.put("arms", arms);
+
+        Map<String, Object> work = new LinkedHashMap<String, Object>();
+        work.put("cleanupNanos", workNanos);
+        List<Object> ordinaryList = new ArrayList<Object>();
+        ordinaryList.add("synthetic");
+        work.put("ordinaryList", ordinaryList);
+        body.put("work", work);
+
+        Map<String, Object> cleanup = new LinkedHashMap<String, Object>();
+        cleanup.put("cleanupNanos", cleanupNanos);
+        body.put("cleanup", cleanup);
+        return body;
+    }
+
+    static String bodyJson(long workNanos, long cleanupNanos) {
+        return "{\"schema\":\"tsj-cohort-terminal-result-v2\",\"mode\":\"OBSERVED_COHORT_TERMINAL_TELEMETRY\",\"status\":\"COMPLETED_DIAGNOSTIC_ONLY\",\"runId\":\"" +
+            RUN_ID + "\",\"sourceManifestSha256\":\"" + SOURCE_SHA +
+            "\",\"wireContractSha256\":\"" + WIRE_SHA +
+            "\",\"inputContextSha256\":\"" + CONTEXT_SHA +
+            "\",\"qualifiedPrior\":{\"inputContextSha256\":\"" + CONTEXT_SHA +
+            "\"},\"originalCapture\":{},\"cohort\":{},\"arms\":{\"null\":{\"armRole\":\"NULL\"},\"observe\":{\"armRole\":\"OBSERVE\"}},\"work\":{\"cleanupNanos\":" +
+            Long.toString(workNanos) +
+            ",\"ordinaryList\":[\"synthetic\"]},\"cleanup\":{\"cleanupNanos\":" +
+            Long.toString(cleanupNanos) + "}}\n";
+    }
+
+    static Map<String, Object> wideBody() {
+        Map<String, Object> body = body(
+                Long.valueOf(MAX_CLEANUP_NANOS), Long.valueOf(MAX_CLEANUP_NANOS));
+        Map<String, Object> work = work(body);
+        for (int index = 0; index < WIDE_PADDING_COUNT; index++)
+            work.put(paddingKey(index), paddingValue());
+        return body;
+    }
+
+    /** Independent builder for a deliberately wide ordinary synthetic fixture. */
+    static String wideJson() {
+        StringBuilder json = new StringBuilder(5000);
+        json.append(WIDE_PREFIX);
+        json.append(Long.toString(MAX_CLEANUP_NANOS));
+        json.append(",\"ordinaryList\":[\"synthetic\"]");
+        String value = paddingValue();
+        for (int index = 0; index < WIDE_PADDING_COUNT; index++) {
+            json.append(',').append('"').append(paddingKey(index));
+            json.append("\":\"").append(value).append('"');
+        }
+        json.append(WIDE_SUFFIX);
+        return json.toString();
+    }
+
+    private static String paddingKey(int index) {
+        return "padding" + (index < 10 ? "0" : "") + Integer.toString(index);
+    }
+
+    private static String paddingValue() {
+        StringBuilder value = new StringBuilder(WIDE_PADDING_VALUE_LENGTH);
+        for (int index = 0; index < WIDE_PADDING_VALUE_LENGTH; index++)
+            value.append('x');
+        return value.toString();
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Map<String, Object> work(Map<String, Object> body) {
+        return (Map<String, Object>) body.get("work");
+    }
+}
