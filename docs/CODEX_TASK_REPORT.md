@@ -1,4 +1,62 @@
-# Current checkpoint: qualified receipt tuple published; receipt record
+# Current checkpoint: restoration preflight accepted; publication pending
+
+F codex/q100-terminal-only-20261107 HEAD98be53fca1a8665082d8824264f77732e25e2ba0,
+no upstream; target origin/codex/q100-physical-feasibility. PriorreceiptTuple
+1bad80bd/98be53fc/Gmail1a1c4823f69687d5, bodydffb1d04/77032ab4/
+Gmail1a1c457329d9ca2b complete; olderarm/original receipts below, neverduplicate.
+
+N21 OS-temp/tsj-q100-cleanup-restoration-r1-6cb0aa036b28423187e60b0df3afa4a7.
+Finite5Booleanrestoration-summarychecks appendedafter3oldcorrelations/before
+encoding inexistingcodecAPI. ReuseMaplocals8gets/3Mapguards/5types/5unboxes/
+2AND/2equal=25addedhooks,total53perpass,20gets; hooksnotnativeunits. NoMeter/
+group/copy/byte/mutationcalls. HigherJava/Pythonfixturesmigrated;lower1177/6370
+oracles/writeBodyunchanged, oldsnapshots/failurespreserved. Input23469/e67... ->
+25156/344223e4f3d12bc9c1bb219bca80a8c711ce99aed8fe4b309c1043da6b5f4dc4.
+Sourcefreezef21046350b92495c0d9448d929f26f98884c23da8404bfe245d30ce6b4afc514;
+nativefreeze74931642246634b5a917e8482321b456e7daab1483cfc2bddfa5928eb4f7d86b;
+proofR2b7db49a659c58cc053c44f24f3baf1135bf13ad882097285d1f872782e3e5d43.
+PASS:finalsourceJDK8target7fourSources32major51classes89279B/2556deps12265717B/
+noShadows;new69/253+migrated60/210+retained63/94and113/679;private/public
+Source12+literal3each;root/independentSource+migrationreview;12receipts11zero/
+1exactargexit1. Actualcountsame-bodyfees/copies/groupspass; fullExportV2/write/
+compare/publicationNOTRUN, fullfeeequationsSourceinference. InitialdiffstyleFAIL
+canaryEOFblankpreserved; finalSource trims2bytesonly, rebuild4Sourcesidentical
+32classfiles/fresh69nativePASS. No nativefailure. FinalSource26296/91c16565...;
+R2gatee335999a0e9c6b18a6e4a1d50424a809a3fcaa3d39cdf0522b60ffbd27b1f408.
+Onlymetadataagreement,notactualrestoration/wholebody/authority/lifetime.
+
+PublicT=cleanup-restoration-r1,E=docs/task-evidence/Q100/cleanup-restoration-r1;
+current-body-correlations-r1owns3migratedSources+README; priorE/R1READMEhas
+snapshotnote. AllSource/evidencecopied. Nextrootdiff/index-byte/privacy/status
+reviewthen normalcommit/push/exactremote/oneGmail; no N21 publication/email yet.
+NextSourceprep COMPLETE/root+explorer: ownership/alias-release summaryrelations
+fromCurrentResultProjections. Reusecapture/nullCleanup/observeCleanup/cleanup;
+14gets+14types+14unboxes+8AND+3equal=53additionalhooks,159across3passes.
+Captureownerboolcopy; eacharmAND5adapter*AliasDropped flags. Orthogonaltruth
+coveragecapture2/eacharm32, summarytampering/types; metadataonly. Needfreeze
+exactfields/errors/currentfixturemigration beforeimplementation. No nextcode/run.
+
+F3docsM+3oldfixtureM+2oldREADME M+2newdirs/staged0. Main5f05b0059trackedM/
+6untrackedfiles; E d9747229reportM; Desktop e0c368857trackedM/89untrackedfiles
+preserved. Onlyreportprefixes mirroredMain/E. No newpersistentprocess/listener;
+allselectedprocessesterminated/root+logsabsent; isolatedcleanupdurationnull.
+OldNotepadwindow67116860/priorSource-readtabs untouched thismilestone. Olduncertain
+browser14116/start639294472690745890/58320,preview34180/start639294472514546595/
+58264+14children,oldDprocess/unlinkUNCERTIFIED untouched; priorregularhardlinks/
+scratch/failures retained,testedjunctionsremoved. No atomicpathhandle guarantee.
+
+No receiptfiles/positiveprepare/binding/factory/actual orfakeOriginalArm/ArmResult/
+graph/Session/routing/positiveoriginalDTO/executeArm/R9DTO/genuine execution.
+Syntheticmetadata/codec/Meter only; genuineoriginalthenexactNULL/OBSERVE
+UNSPENT_GATED. All90s/640/5s/32768/copy1MiB/chunk4096/Source4MiB/opJSON8MiB/
+result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/reader180s/wrapper480s/
+cleanup120s/exactseeds/epochs unchanged. GWT/PlayerN/A,electrical/population
+NOTRENEWED,CINOTRUN,full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,
+oldnormal20historicalREAD/noreread,protectedUnreadUNCERTIFIED,playable100=0,
+betaHELD. Protected/heldoutDATA/oldactualDartifacts/generateddataclasses/whole
+legacybuildersconsumers denied. Continue standingroadmap request untiluserstops.
+
+# Historical checkpoint: qualified receipt tuple published; receipt record
 
 F codex/q100-terminal-only-20261107 implementation1bad80bd004e912f3dca487b0cfe925d4a9e64d1,
 no upstream; target origin/codex/q100-physical-feasibility. Priorbodydffb1d04/

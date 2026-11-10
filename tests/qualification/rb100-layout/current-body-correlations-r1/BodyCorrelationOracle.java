@@ -20,15 +20,15 @@ final class BodyCorrelationOracle {
     static final int WIDE_PADDING_COUNT = 27;
     static final int WIDE_PADDING_VALUE_LENGTH = 120;
 
-    /* Literal JSON oracle: only the current header shape and three supplied
-     * relations are represented. It is not a full-D or genuine-result oracle. */
+    /* Literal JSON oracle: only the current header shape and supplied
+     * correlations are represented. It is not a full-D or genuine-result oracle. */
     static final String MINIMAL_BODY_JSON =
-        "{\"schema\":\"tsj-cohort-terminal-result-v2\",\"mode\":\"OBSERVED_COHORT_TERMINAL_TELEMETRY\",\"status\":\"COMPLETED_DIAGNOSTIC_ONLY\",\"runId\":\"00000000-0000-0000-0000-000000000001\",\"sourceManifestSha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"wireContractSha256\":\"1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed\",\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\",\"qualifiedPrior\":{\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\"},\"originalCapture\":{},\"cohort\":{},\"arms\":{\"null\":{\"armRole\":\"NULL\"},\"observe\":{\"armRole\":\"OBSERVE\"}},\"work\":{\"cleanupNanos\":0,\"ordinaryList\":[\"synthetic\"]},\"cleanup\":{\"cleanupNanos\":0}}\n";
+        "{\"schema\":\"tsj-cohort-terminal-result-v2\",\"mode\":\"OBSERVED_COHORT_TERMINAL_TELEMETRY\",\"status\":\"COMPLETED_DIAGNOSTIC_ONLY\",\"runId\":\"00000000-0000-0000-0000-000000000001\",\"sourceManifestSha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"wireContractSha256\":\"1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed\",\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\",\"qualifiedPrior\":{\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\"},\"originalCapture\":{\"contextRestored\":true},\"cohort\":{},\"arms\":{\"null\":{\"armRole\":\"NULL\",\"cleanup\":{\"contextRestored\":true}},\"observe\":{\"armRole\":\"OBSERVE\",\"cleanup\":{\"contextRestored\":true}}},\"work\":{\"cleanupNanos\":0,\"ordinaryList\":[\"synthetic\"]},\"cleanup\":{\"cleanupNanos\":0,\"originalCaptureContextRestored\":true,\"contextRestored\":true}}\n";
 
     private static final String WIDE_PREFIX =
-        "{\"schema\":\"tsj-cohort-terminal-result-v2\",\"mode\":\"OBSERVED_COHORT_TERMINAL_TELEMETRY\",\"status\":\"COMPLETED_DIAGNOSTIC_ONLY\",\"runId\":\"00000000-0000-0000-0000-000000000001\",\"sourceManifestSha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"wireContractSha256\":\"1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed\",\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\",\"qualifiedPrior\":{\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\"},\"originalCapture\":{},\"cohort\":{},\"arms\":{\"null\":{\"armRole\":\"NULL\"},\"observe\":{\"armRole\":\"OBSERVE\"}},\"work\":{\"cleanupNanos\":";
+        "{\"schema\":\"tsj-cohort-terminal-result-v2\",\"mode\":\"OBSERVED_COHORT_TERMINAL_TELEMETRY\",\"status\":\"COMPLETED_DIAGNOSTIC_ONLY\",\"runId\":\"00000000-0000-0000-0000-000000000001\",\"sourceManifestSha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"wireContractSha256\":\"1abecdf5c1c4260b8461c5454822f7fa0b07fd050e574d59b1f9244ab6cc93ed\",\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\",\"qualifiedPrior\":{\"inputContextSha256\":\"3333333333333333333333333333333333333333333333333333333333333333\"},\"originalCapture\":{\"contextRestored\":true},\"cohort\":{},\"arms\":{\"null\":{\"armRole\":\"NULL\",\"cleanup\":{\"contextRestored\":true}},\"observe\":{\"armRole\":\"OBSERVE\",\"cleanup\":{\"contextRestored\":true}}},\"work\":{\"cleanupNanos\":";
     private static final String WIDE_SUFFIX =
-        "},\"cleanup\":{\"cleanupNanos\":120000000000}}\n";
+        "},\"cleanup\":{\"cleanupNanos\":120000000000,\"originalCaptureContextRestored\":true,\"contextRestored\":true}}\n";
 
     private BodyCorrelationOracle() { }
 
@@ -49,15 +49,23 @@ final class BodyCorrelationOracle {
         Map<String, Object> prior = new LinkedHashMap<String, Object>();
         prior.put("inputContextSha256", CONTEXT_SHA);
         body.put("qualifiedPrior", prior);
-        body.put("originalCapture", new LinkedHashMap<String, Object>());
+        Map<String, Object> originalCapture = new LinkedHashMap<String, Object>();
+        originalCapture.put("contextRestored", Boolean.TRUE);
+        body.put("originalCapture", originalCapture);
         body.put("cohort", new LinkedHashMap<String, Object>());
 
         Map<String, Object> arms = new LinkedHashMap<String, Object>();
         Map<String, Object> nullArm = new LinkedHashMap<String, Object>();
         nullArm.put("armRole", "NULL");
+        Map<String, Object> nullCleanup = new LinkedHashMap<String, Object>();
+        nullCleanup.put("contextRestored", Boolean.TRUE);
+        nullArm.put("cleanup", nullCleanup);
         arms.put("null", nullArm);
         Map<String, Object> observeArm = new LinkedHashMap<String, Object>();
         observeArm.put("armRole", "OBSERVE");
+        Map<String, Object> observeCleanup = new LinkedHashMap<String, Object>();
+        observeCleanup.put("contextRestored", Boolean.TRUE);
+        observeArm.put("cleanup", observeCleanup);
         arms.put("observe", observeArm);
         body.put("arms", arms);
 
@@ -70,6 +78,8 @@ final class BodyCorrelationOracle {
 
         Map<String, Object> cleanup = new LinkedHashMap<String, Object>();
         cleanup.put("cleanupNanos", cleanupNanos);
+        cleanup.put("originalCaptureContextRestored", Boolean.TRUE);
+        cleanup.put("contextRestored", Boolean.TRUE);
         body.put("cleanup", cleanup);
         return body;
     }
@@ -80,10 +90,10 @@ final class BodyCorrelationOracle {
             "\",\"wireContractSha256\":\"" + WIRE_SHA +
             "\",\"inputContextSha256\":\"" + CONTEXT_SHA +
             "\",\"qualifiedPrior\":{\"inputContextSha256\":\"" + CONTEXT_SHA +
-            "\"},\"originalCapture\":{},\"cohort\":{},\"arms\":{\"null\":{\"armRole\":\"NULL\"},\"observe\":{\"armRole\":\"OBSERVE\"}},\"work\":{\"cleanupNanos\":" +
+            "\"},\"originalCapture\":{\"contextRestored\":true},\"cohort\":{},\"arms\":{\"null\":{\"armRole\":\"NULL\",\"cleanup\":{\"contextRestored\":true}},\"observe\":{\"armRole\":\"OBSERVE\",\"cleanup\":{\"contextRestored\":true}}},\"work\":{\"cleanupNanos\":" +
             Long.toString(workNanos) +
             ",\"ordinaryList\":[\"synthetic\"]},\"cleanup\":{\"cleanupNanos\":" +
-            Long.toString(cleanupNanos) + "}}\n";
+            Long.toString(cleanupNanos) + ",\"originalCaptureContextRestored\":true,\"contextRestored\":true}}\n";
     }
 
     static Map<String, Object> wideBody() {

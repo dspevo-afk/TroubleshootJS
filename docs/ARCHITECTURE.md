@@ -468,6 +468,15 @@ No Meter/copy/group ownership changes; the pure Source API owns no I/O or produc
 Real count-sink equivalence and synthetic metadata checks do not establish whole
 body semantics, receipt/factory authority, exclusive lifetime or genuine export.
 
+The [restoration preflight extension](task-evidence/Q100/cleanup-restoration-r1/README.md)
+keeps the current codec entry and appends five Boolean observations using cached
+arm/cleanup maps. It checks copied-capture equality and the three-source AND
+before encoding. Eight gets and their controls add25 sink hooks, with no native
+Meter/group/copy/byte operation. The lower transport suffix is conserved. Current
+higher-level Java/Python fixtures migrate to existing producer fields; lower
+independent byte oracles and prior frozen snapshots remain. Metadata agreement
+does not certify actual restoration, complete semantics or caller lifetime.
+
 The [pure prior normalizer](task-evidence/Q100/normal-prior-normalizer-r1/README.md)
 owns fixed-role byte authentication before decode and historical metadata,
 receipt, P07/PAD, N-run/work and qualification reconciliation. It constructs the

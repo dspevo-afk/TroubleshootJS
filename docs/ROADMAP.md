@@ -1729,6 +1729,20 @@ Implementation `1bad80bd004e912f3dca487b0cfe925d4a9e64d1` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c4823f69687d5` sent once. This receipt sends no second email.
 
+The [cleanup restoration preflight prerequisite](task-evidence/Q100/cleanup-restoration-r1/README.md)
+is locally accepted in its finite metadata scope. The existing codec now checks
+copied-capture and aggregate restoration summaries before encoding, with current
+higher fixtures migrated and lower transport oracles preserved. Final-source
+JDK8,69 new cases/253 assertions,60 migrated cases/210 assertions,176 retained
+cases, private/public Source12+literal3 each and bounded Source review pass;
+12 selected receipts were reauthenticated; final canary whitespace correction
+was rebuilt to identical bytecode and its69-case native suite replayed. The25
+added sink hooks per pass are
+not native units; real count fees/copies/groups are unchanged for the same body.
+Full export, actual restoration, whole-result, authority/lifetime and genuine
+execution remain gated. Budgets, exact seeds/epochs, full30 EXCLUDED and data
+exclusions remain; playable100=0 and beta HELD. Next: ownership/alias summaries.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

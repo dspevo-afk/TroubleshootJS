@@ -1,0 +1,254 @@
+{
+  "status": "PASS_FINITE_CLEANUP_RESTORATION_PREFLIGHT_AND_CURRENT_FIXTURE_MIGRATION",
+  "sourceFreezeSha256": "f21046350b92495c0d9448d929f26f98884c23da8404bfe245d30ce6b4afc514",
+  "nativeSourceFreezeSha256": "74931642246634b5a917e8482321b456e7daab1483cfc2bddfa5928eb4f7d86b",
+  "gates": [
+    {
+      "name": "SOURCE_GATE_R1.json",
+      "bytes": 2505,
+      "sha256": "d6d0c1c07c38523a94752b25429f767e97a48b65aa5e2441da0ae15dae71821d",
+      "status": "PASS_CURRENT_RESTORATION_SOURCE_AND_INDEPENDENT_LITERAL"
+    },
+    {
+      "name": "COMPILE_GATE_R1.json",
+      "bytes": 585448,
+      "sha256": "886846acb363654dccf1420a2b89edd0e3d3c1e8a7bf5ee8834e8c8d7227b032",
+      "status": "PASS_FINAL_SOURCE_JDK8_CLEANUP_RESTORATION_COMPILE"
+    },
+    {
+      "name": "NATIVE_GATE_R1.json",
+      "bytes": 7099,
+      "sha256": "cb73c6040052060c96c2e910ca4a0dcb645cd585a807c26bf0097cf8f0123ac4",
+      "status": "PASS_RESTORATION_NATIVE_MIGRATED_AND_RETAINED_COMPONENTS"
+    },
+    {
+      "name": "PUBLIC_GATE_R1.json",
+      "bytes": 4621,
+      "sha256": "a3a98dc85c625105e27ff4ffa597f1e50b032b809950bf6676b2306e5c8b5b97",
+      "status": "PASS_FINAL_PUBLIC_RESTORATION_SOURCE_AND_LITERAL"
+    }
+  ],
+  "privateSourceTests": 12,
+  "publicSourceTests": 12,
+  "privateLiteralTests": 3,
+  "publicLiteralTests": 3,
+  "newNativeCases": 69,
+  "newNativeAssertions": 253,
+  "migratedNativeCases": 60,
+  "migratedNativeAssertions": 210,
+  "retainedNativeCases": [
+    63,
+    113
+  ],
+  "additionalSinkHooksPerPass": 25,
+  "totalCorrelationHooksPerPass": 53,
+  "correlationMapGets": 20,
+  "hookCallsAreNativeUnits": false,
+  "allEightBooleanCombinations": true,
+  "selectedProcessCount": 10,
+  "positiveExitZeroCount": 9,
+  "expectedNonzeroRejectionCount": 1,
+  "processReceipts": [
+    {
+      "phase": "restoration-jdk8-compile-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 870.75,
+      "wrapperTotalElapsedMs": 1140.3518000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "950cf402c1b05d0bd4bde1b8ce32a1d55db0f5d511aa96a05fe6511336b9aef0",
+        "owner.json": "9ec0822404b5e88b680c12e6e603fec08d236d1dd1dd7bf06105aab9c3a82598",
+        "process.json": "7ce06754c9ba17c506aa674e73edf979217475ae03a9e927cf9e2726b6aba9bd",
+        "parent.json": "94d3d685f0bc3a989f8cc08bb6c2b193bdcb855bd2e0aa0fc7bd065db5d374dd",
+        "result.json": "001a74b75cc3c1034a8d48f3f92f5646958313ecdac03318b48568b50d19781f",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "restoration-jvm-extra-argument-r1",
+      "childExitCode": 1,
+      "classification": "EXPECTED_CASE_SPECIFIC_REJECTION_NOT_POSITIVE_PASS",
+      "operationElapsedMs": 332.91400000000004,
+      "wrapperTotalElapsedMs": 565.4505,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "567e9426a55425f2497037092b71d014141dcafd91f9edce4654462b44ec1375",
+        "owner.json": "5023b45aff4ad99aa6379c592468b824beda851d7662544d7693a97eda43b2d4",
+        "process.json": "70e7ddd1ac17f0fecef2b6c4277c62bd7af7482b9117760fe9344faea11a2912",
+        "parent.json": "81ef592f4eec2a4bf26731f9b3a53cf2276381f25906e52f95391e50aaea89fd",
+        "result.json": "07818e3022a708a920d8781646ca6e16cf3de71417d433bf742b7d08faa0e061",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "6dfa539232f974434a1b2fd27297f0b088839eb1da71f71c4eb0c11bea556c9d"
+      }
+    },
+    {
+      "phase": "restoration-native-codec-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 466.2234,
+      "wrapperTotalElapsedMs": 696.6763000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "25723e0be889f51560cff118e6110b9291df683978264dad4365330bf74b4d8c",
+        "owner.json": "bfb3195feaa724f18c65d879d5a95eecdae09913098436e21fc290b50524ea2b",
+        "process.json": "7054d57b93de01c21f7d824416c762dee76d06801a7da05d6affe881efd53af6",
+        "parent.json": "2f8543dfddbd483ba167f38f1974d9dab048e03d277b309b9f6be4c1a589eadd",
+        "result.json": "182413df73f28bca6a9591344e9c53a0b8b8b2af57d176131f760f9ee36382fe",
+        "stdout.txt": "b591b84893b83da74cdf9ae186ed5543dab887e4178bbc88f232167a0ca3dd9f",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "restoration-native-migrated-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 371.5811,
+      "wrapperTotalElapsedMs": 610.7864000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "0da9fac6ad086858756eeac56f017a6797b77c59e578ca787b5f5cb063e2ece5",
+        "owner.json": "b24c771617e48b86fb05e4847096d23cfbad7c455969bd58607ba471b5188a77",
+        "process.json": "80f71f24ae0aedb6b92970298bdc13c7a07083da073b9cbd807470ea7d88e162",
+        "parent.json": "66ff632433403fe0c94333adf49e0f746afaf1d6446d55d1cdd415e83483c1d7",
+        "result.json": "0e6d4ea06a56f00ac4b39f88b0288ed14a6b5b63d8cb8114167b6e8f2c70dde2",
+        "stdout.txt": "f2a5e820fe3990807ca52101236a83e9e9e482d137564bf716a9f0f256b97afd",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "restoration-native-new-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 377.41610000000003,
+      "wrapperTotalElapsedMs": 802.4413000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "52204087311bc59cc91782a136adc1370862bbbf4bd8267f6acb93399b94a9d4",
+        "owner.json": "8f5113edf7222803ad60df7df1ab5196192f7062e3f30073124cb0515ba9de52",
+        "process.json": "b87a0b49d0c90be7efed69f8b9b07e404c12fdbbee5daf8ce39b646d9302845d",
+        "parent.json": "d8ffa6180bc9c8f245195c5ce9199e5af20691179fa2830c9fa01b639a41380c",
+        "result.json": "7ceb112bbd2d648ed5e8f9fdc8b6f63c94365f4f3877fe675ccf88c27492eb9b",
+        "stdout.txt": "50ad54cc83d5bb65fcd79bfe1f06517d251600abf4d6b7cfc099a8dedcf5a1a6",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "restoration-native-receipt-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 376.30940000000004,
+      "wrapperTotalElapsedMs": 604.6938,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "2629a4fba4ad14cb73e85e1b5e3d9d6f7819cd1339d8273b5222c88a09f0b789",
+        "owner.json": "32972dfe235eeb2bc9df2bfb2e508530eed00e0966c44c6556710d68bb97210e",
+        "process.json": "0ef3163b3354a4628a9e03ee7f1591fb6dc59effba83dcdc78a7dfc808351455",
+        "parent.json": "dc39e2952eca2c68c7755c38cec631b6593270d39693b741f9c0f9f7c9aa79a3",
+        "result.json": "c7e86b66c8a21e65bdee8a83caaf07fdd6500f6ca133ec294bce0d840da185d4",
+        "stdout.txt": "c3e8fb2438323258817934a5dd4d8f846fc856c5030e9c76567d016fb4ab44e0",
+        "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "phase": "restoration-private-literal-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 372.03180000000003,
+      "wrapperTotalElapsedMs": 617.6848,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "93a70d4cb28881ea7d561184a58ad8bf1d81b8416bb89414ffc442be9e14ed3c",
+        "owner.json": "a9999b322883ed90f802f08c5db824f8834b216c4a9ea74024f671a12e17cccc",
+        "process.json": "f1caa32cf87cc0cc12ca364928d0259dd90e973dc2cea4d273fb22e371ecbbbb",
+        "parent.json": "7a15287f6a0199e2261d4de2eea0e26b5a47fb067c6d157bd000c11beb05daf4",
+        "result.json": "392a1781fc6fb376e064cac5ac3546b8a436110675eab80969b3dede6ecadf55",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "4d5415dbb28a759ecf0f09978e966e9821a7eecfd98c12759504ab6aa4e92165"
+      }
+    },
+    {
+      "phase": "restoration-private-source-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 379.1815,
+      "wrapperTotalElapsedMs": 632.1796,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "1e8e0face225f5de0a88f83f312be26c3da7befe0454d6de959a9243136bc2ca",
+        "owner.json": "f3cb6845f8d2c5b5f5a33b8a21225c4004c0e4f44c7294215631e7ad7b472a5a",
+        "process.json": "7a316387e9a317c6db5bcf87e003e8cb1d0d8af311b4544bfc0163961ef2cd69",
+        "parent.json": "8c9e4335f5573c3b74c20ee74c4c6e3060947962fc286400a47e4ca507a29679",
+        "result.json": "780cddb398beb1b29bb0426845e6f4270faea72380d7c79fcfa5eafd8e6aa221",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "1bac1b4f9c326b31ee043141b72521368c51b7b3ce85f248f566816650bfb3b0"
+      }
+    },
+    {
+      "phase": "restoration-public-literal-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 381.0534,
+      "wrapperTotalElapsedMs": 608.7014,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "4f2572a06d725f950d5895bffabc3e77520366ee796d4a6c4e7da0642fe5d378",
+        "owner.json": "70dc792be9c4e8a4d1bb6200e4be82017d8de2d77a25512dca35611849c52d70",
+        "process.json": "3077bd2b02617f8bbc7d2c80c9f21bccf42c10e5e5e993598e4a4ffcb098f70e",
+        "parent.json": "59daf7e4a31311c82c0ff59ec8fa5f06ab4a5f0558ca03295881f961806ee17a",
+        "result.json": "44c8b633e27f7cd063469620ff8c9c3cebd9c58dca15749770037cf26ef2d40c",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "2e06b603d4ff0dfea0a6483693eeb8d53dc96ba2c0e601e72cf958ffab0c0796"
+      }
+    },
+    {
+      "phase": "restoration-public-source-r1",
+      "childExitCode": 0,
+      "classification": "POSITIVE_EXIT_ZERO",
+      "operationElapsedMs": 599.8779000000001,
+      "wrapperTotalElapsedMs": 1018.9340000000001,
+      "isolatedCleanupDurationMs": null,
+      "receipts": {
+        "request.json": "7aa68587be85ed236ad084f8a2b6d4661d6e9474f1d6e4371d0c3c04ce249775",
+        "owner.json": "4d4946ed2c9a7ea1f46a12b16e7ab90d438f13b387ec12b47f2a7fe60ad90f09",
+        "process.json": "cc981c2094c4e1b53ad4cf37ab89612b274173dca2e3cb2d9764a8ca1bbb3915",
+        "parent.json": "4ef15dba022b3f972c28a507cae90af06ea22f6da739b3d443396f9d165bfbfd",
+        "result.json": "778859cc45e47f19008bcd32c1366626b1741d4f01275160122c1869b11f6bf8",
+        "stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr.txt": "1bac1b4f9c326b31ee043141b72521368c51b7b3ce85f248f566816650bfb3b0"
+      }
+    }
+  ],
+  "allSelectedReceiptsAndInputsReaudited": true,
+  "terminationAndOwnedRootLogsAbsenceProven": true,
+  "isolatedCleanupDurationMs": null,
+  "sourceCount": 4,
+  "classes": 32,
+  "classBytes": 89279,
+  "dependencies": 2556,
+  "dependencyBytes": 12265717,
+  "allMajor51": true,
+  "noShadows": true,
+  "sourceConservation": "two insertions only; lower transport suffix unchanged",
+  "fixtureMigration": "current higher Java/Python expected fields and20gets; prior snapshots preserved",
+  "lowerTransportOracles": "1177/6370 exact Source pins unchanged",
+  "independentReview": "PASS_BOUNDED_SOURCE_NO_EXECUTION",
+  "exportScope": "same valid body encoding; real R5 count equivalence tested; full exportV2/write/compare/publication NOT_RUN",
+  "sourceIoScope": "pure bytes API; no new file or CLI owner",
+  "actualOwnerExecution": false,
+  "normalHostAcceptance": false,
+  "genuineEnvelope": "UNSPENT_GATED",
+  "actualRestoration": "NOT_QUALIFIED",
+  "fullBodySemantics": "NOT_QUALIFIED",
+  "authorityLifetime": "NOT_QUALIFIED",
+  "productionGwtPlayer": "NOT_APPLICABLE",
+  "electricalPopulation": "NOT_RENEWED",
+  "ci": "NOT_RUN",
+  "full30": "EXCLUDED",
+  "hardPsychotic": "UNAVAILABLE_UNRUN",
+  "oldNormal20": "HISTORICALLY_READ_NO_REREAD",
+  "protectedUnread": "UNCERTIFIED",
+  "playable100": 0,
+  "beta": "HELD"
+}

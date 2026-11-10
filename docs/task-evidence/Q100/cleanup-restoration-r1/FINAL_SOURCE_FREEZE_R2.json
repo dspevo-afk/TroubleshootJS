@@ -1,0 +1,214 @@
+{
+  "status": "ROOT_REVIEWED_FINAL_SOURCE_R2",
+  "files": [
+    {
+      "name": "final-source/CleanupRestorationCanary.java",
+      "bytes": 26296,
+      "sha256": "91c1656539272a7c8cfd538c96ed2a20dd4916c5de824b3127b5bc2f90da27e4"
+    },
+    {
+      "name": "final_source_gate_r2.py",
+      "bytes": 3308,
+      "sha256": "bb3df1d72fdaac63a741d0c1283ab2f2677b6f1a248eff6b048651354e76d6d9"
+    },
+    {
+      "name": "audit_final_source_r2.py",
+      "bytes": 3673,
+      "sha256": "95d9ed312a9643e89259091b5866df66b7d4da9fa92db772fa94c805caf0b424"
+    }
+  ],
+  "compiledClassInventory": [
+    {
+      "path": "com/lushprojects/circuitjs1/client/BodyCorrelationOracle.class",
+      "bytes": 6137,
+      "sha256": "5fc95e0e55a388d1b714b879bdb1aa7a572801552ff66dd5d598be1c4370053e",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CleanupRestorationCanary$1.class",
+      "bytes": 290,
+      "sha256": "469849e7ea0317de92ed5ecfcc5c41a8f857eb88dda8cc50db6be72ca5b7336f",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CleanupRestorationCanary$AdmissionDenied.class",
+      "bytes": 653,
+      "sha256": "4519b0ff705c84219c7d1cf87d49d172bdc91c52b510f225497780080a2118cd",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CleanupRestorationCanary$CountMetrics.class",
+      "bytes": 592,
+      "sha256": "dccf562e980d9fdff908fcd92d18c4defea01f351438ef23d6bcf41d4689c42c",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CleanupRestorationCanary$HookCountSink.class",
+      "bytes": 1071,
+      "sha256": "7e68a060b0bc81b6932d02900e35af94e83f28adc7bb469d0b112d3baa7bba88",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CleanupRestorationCanary$MemorySink.class",
+      "bytes": 1278,
+      "sha256": "c0c3bd7c8cbbac0b874d82cc4b67e8a20ed17a5008f13b03c4236733e078de54",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CleanupRestorationCanary$MeterFixture.class",
+      "bytes": 1197,
+      "sha256": "cc3aac068cb66c97a08f9449da984a6a02ac6d8a987e5f99e84784fe09bc68b2",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CleanupRestorationCanary$PermitGetMap$1$1.class",
+      "bytes": 1971,
+      "sha256": "ab4ccccaf250bec0b4e47c9e10c03b5473c8765ea6bbca28480986f956a8e255",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CleanupRestorationCanary$PermitGetMap$1.class",
+      "bytes": 1765,
+      "sha256": "8b2803437ad9e035c4197e187d9e4ab1f99ddbb7cb5d9624ed165d68bafce321",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CleanupRestorationCanary$PermitGetMap.class",
+      "bytes": 1831,
+      "sha256": "a79ca22d49e0798fe9b113b028f99f4e4d85414864c15f1b5ef73a779c2ba471",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CleanupRestorationCanary$PermitSink.class",
+      "bytes": 1802,
+      "sha256": "bc2b2fdfdb595f3289e9002c710aede3d83f7106ece12361ca364e2d50817eb2",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CleanupRestorationCanary$PermitState.class",
+      "bytes": 1143,
+      "sha256": "c61dafc3d6666dacf63e2e1576c0634742942438b720cb8626b1be8d89a855f3",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CleanupRestorationCanary$TreeSnapshot.class",
+      "bytes": 2207,
+      "sha256": "ae646315f49b9959d4776c4e79f275882eb71b529c5720f0a60f85509416ade5",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CleanupRestorationCanary.class",
+      "bytes": 15318,
+      "sha256": "f5ca7d1f8041a1218be2a0d0d7a151d149e241903e96dfa8c23f5ed6aacbdd3e",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentBodyCorrelationsCanary$1.class",
+      "bytes": 305,
+      "sha256": "90a9c3b5501b05854989523a46f7f2eed723383cd45e84b8426d8ace3c0ba742",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentBodyCorrelationsCanary$AdmissionDenied.class",
+      "bytes": 678,
+      "sha256": "12994a23537a345917cf3ea2a63643e508468120e0715f035285d74c5d997864",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentBodyCorrelationsCanary$CountMetrics.class",
+      "bytes": 607,
+      "sha256": "28fdb505d0c7bf20d3e113b014310454d8227c6007f9896ed8936faabf9fbe14",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentBodyCorrelationsCanary$MemorySink.class",
+      "bytes": 1313,
+      "sha256": "52363a9f7a8ed4960cdd90e1ff2287304411282645a8bab6ea9ae39370124d87",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentBodyCorrelationsCanary$MeterFixture.class",
+      "bytes": 1212,
+      "sha256": "eefaa69a958b9f554b8f8eec4a3f3170dd5c316c17d9c28327427ef5be9b9836",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentBodyCorrelationsCanary$PermitGetMap$1$1.class",
+      "bytes": 2026,
+      "sha256": "f93620cec88c6270dc95418ac5623d35f5a4934a388714f7d9cb42ac05a8a26a",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentBodyCorrelationsCanary$PermitGetMap$1.class",
+      "bytes": 1820,
+      "sha256": "8b67abd9e111d22c576a7ebabbfdb5762b3d0277ca58f29afc5640b85dc54560",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentBodyCorrelationsCanary$PermitGetMap.class",
+      "bytes": 1886,
+      "sha256": "a1eb48ea4d5255f5ace76f65b48f216e02bc07166ac18b23952246abde6ab939",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentBodyCorrelationsCanary$PermitMemorySink.class",
+      "bytes": 1859,
+      "sha256": "0e0a580ebf9e20d65e492010a685a95241d903cd9670ed932e1999ad722d6256",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentBodyCorrelationsCanary$PermitState.class",
+      "bytes": 1168,
+      "sha256": "3100b1aec60c854691e05b2497fc7a57071008bbd7535be2b86eb77362395653",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentBodyCorrelationsCanary$ReferenceSnapshot.class",
+      "bytes": 2232,
+      "sha256": "2154040415ce762bd0db9d4e92d5a5c8aeddeadd6d79ce1e0536f4e4f0fb55f4",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentBodyCorrelationsCanary.class",
+      "bytes": 17263,
+      "sha256": "8c0ce608136f688c9aba7230dbcf4877aa0338701e8aba131019986a8e824f9f",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodec$1.class",
+      "bytes": 287,
+      "sha256": "e3acf78cac579b7ba027ca091cb90652664deb61fc8f0c08a03ac66aff4e6887",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodec$BodyWalk.class",
+      "bytes": 643,
+      "sha256": "906a01c42ece7bfc02e3e8fce1e24c678abad12e423250d8405d02533a9ba3fb",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodec$CodecFailure.class",
+      "bytes": 474,
+      "sha256": "218c944a35ef6945495cbdfde7465ab9fd19fb42920ff80f6bd73046778d9346",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodec$Marker.class",
+      "bytes": 1935,
+      "sha256": "1185899f0d0af3ca2e7c04eaecfaed3d0c7228a439055d483ae8aa1ef82387be",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodec$MarkerSink.class",
+      "bytes": 1415,
+      "sha256": "ed0cec1506b79a36584d3a314af7432495499f97497805bebcb4ad0d53a4effe",
+      "major": 51
+    },
+    {
+      "path": "com/lushprojects/circuitjs1/client/CurrentV2CanonicalCodec.class",
+      "bytes": 14901,
+      "sha256": "4d8df13cf02720a334f317c88eba7d22a15aff60ea0a03aa14daa18fbb15ee50",
+      "major": 51
+    }
+  ]
+}

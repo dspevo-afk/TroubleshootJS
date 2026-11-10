@@ -1,5 +1,11 @@
 # Current result body correlations
 
+The higher-level Java and Python fixtures in this directory now include cleanup
+restoration fields under the [current restoration preflight](../cleanup-restoration-r1/README.md).
+Native replay uses that final assembled codec. Earlier fixture snapshots remain
+at the accepted body-correlation commit; the pure three-check Source stage below
+is an intermediate stage. The lower transport oracles remain unchanged.
+
 This finite qualification component rejects inconsistent prior context identity,
 fixed arm roles, and cleanup duration before current result encoding. It does
 not validate the whole result, authenticate its source or receipt, establish

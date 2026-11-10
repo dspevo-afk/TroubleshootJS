@@ -1,0 +1,83 @@
+{
+  "status": "EXACT_PUBLIC_CURRENT_SOURCE_AND_OWNED_FIXTURE_MIGRATION",
+  "baseCommit": "98be53fca1a8665082d8824264f77732e25e2ba0",
+  "componentAndMigratedFixtures": [
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/CONTRACT_R1.md",
+      "bytes": 4170,
+      "sha256": "c0c2a9f67223fe7e2e1a0d7900e5287484717cbff6bdde23d55354e12ba96d06"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/RestorationChecks.java.fragment",
+      "bytes": 1256,
+      "sha256": "4a04c09d87d54f6be11209f408c50870d7a1e879f02feaaf9e6074e446142bbb"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/RestorationBoolean.java.fragment",
+      "bytes": 430,
+      "sha256": "0d655c75197a983d9145bc8c7d913ad9e4cc187940d9a7279fb18eb98ee0f121"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/derive_cleanup_restoration.py",
+      "bytes": 1578,
+      "sha256": "c36d855315c367785c853e3fc3fbf5d396c6de1d9d548c7444c37fa25d725e47"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/test_cleanup_restoration_source.py",
+      "bytes": 3836,
+      "sha256": "5221f87bb6f8cd7201da3c53bc29c608ecd3e0cba33bc7ec59ac06fbdc7e01f9"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/CleanupRestorationCanary.java",
+      "bytes": 26296,
+      "sha256": "91c1656539272a7c8cfd538c96ed2a20dd4916c5de824b3127b5bc2f90da27e4"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/README.md",
+      "bytes": 2276,
+      "sha256": "7bb580c2ba6b2aa1d552d8fee1eda1cb28302930e37755835f4455263cfc8847"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/BodyCorrelationOracle.java",
+      "bytes": 8287,
+      "sha256": "21441e74c5b555fe415b28eb6fc2711651dd164f1102fb860926a6774c45d56e"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/CurrentBodyCorrelationsCanary.java",
+      "bytes": 30247,
+      "sha256": "17e63d8336272f8751a311d0d1101cb404baaf8d028965be8463f0962867110a"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-body-correlations-r1/test_literal_oracle.py",
+      "bytes": 3343,
+      "sha256": "608ac0b2df75c19eb5f24e95fa1d63a3d2b52491402e2632eb53298ced7118b7"
+    }
+  ],
+  "input": {
+    "name": "CurrentV2CanonicalCodec.java",
+    "bytes": 23469,
+    "sha256": "e67dccf469fe8c8fe01812dcd28fd47463f0d9e2e4e1c451b9c65497d43c13a5"
+  },
+  "output": {
+    "name": "CurrentV2CanonicalCodec.java",
+    "bytes": 25156,
+    "sha256": "344223e4f3d12bc9c1bb219bca80a8c711ce99aed8fe4b309c1043da6b5f4dc4"
+  },
+  "inverseConservationAndLowerTransportSuffix": "PASS",
+  "higherFixtureInputs": "MIGRATION_INPUT_R1.json",
+  "lowerTransportOracles": "UNCHANGED_1177_6370",
+  "privateHostStandaloneCleanCloneBuild": false,
+  "finalSourceCorrection": {
+    "change": "Remove only final blank CRLF from canary; original snapshot preserved.",
+    "preFinalCanarySha256": "547439f7415c844e5511e1c452711040d5840de9af3fc11af9d5f387cd54dded",
+    "finalCanary": {
+      "path": "tests/qualification/rb100-layout/cleanup-restoration-r1/CleanupRestorationCanary.java",
+      "bytes": 26296,
+      "sha256": "91c1656539272a7c8cfd538c96ed2a20dd4916c5de824b3127b5bc2f90da27e4"
+    },
+    "all32CompiledClassesByteIdentical": true,
+    "freshFinalNativeCases": 69,
+    "gate": "FINAL_SOURCE_GATE_R2.json",
+    "freeze": "FINAL_SOURCE_FREEZE_R2.json"
+  }
+}

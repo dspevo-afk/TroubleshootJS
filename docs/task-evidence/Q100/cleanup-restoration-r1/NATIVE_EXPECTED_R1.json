@@ -1,0 +1,19 @@
+{
+  "status": "ROOT_AND_WORKER_SOURCE_COUNTED_BEFORE_EXECUTION",
+  "cases": 69,
+  "assertions": 253,
+  "line": "SYNTHETIC_CLEANUP_RESTORATION_COMPONENT_ONLY cases=69 assertions=253; normalHostAcceptance=NONE genuine=UNSPENT_GATED",
+  "familyCases": [8,16,20,5,1,8,6,1,3,1],
+  "familyAssertions": [64,48,60,15,3,24,18,1,9,11],
+  "truthInputs": ["FFF","FFT","FTF","FTT","TFF","TFT","TTF","TTT"],
+  "expectedCopy": [false,false,false,false,true,true,true,true],
+  "expectedTotal": [false,false,false,false,false,false,false,true],
+  "additionalPreflightHooksPerPass": 25,
+  "totalCorrelationHooksPerPass": 53,
+  "preflightMapGets": 20,
+  "hookCallsAreNativeUnits": false,
+  "migratedCases": 60,
+  "migratedAssertions": 210,
+  "retainedCodecCases": 63,
+  "retainedReceiptCases": 113
+}

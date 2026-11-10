@@ -1,5 +1,11 @@
 # Current body correlations: finite prerequisite accepted
 
+The gates below describe accepted commitdffb1d04bc93b901d1390d27647a9b1259243f46.
+Current higher-level fixture Sources have since migrated under the
+[cleanup restoration preflight](../cleanup-restoration-r1/README.md); their new
+bytes are qualified there. This packet's original pins and frozen snapshots are
+preserved. The lower transport literal oracles are unchanged.
+
 The current qualification exporter now selects a higher-level codec entry for
 three read-only correlations: prior/root input-context identity, fixed NULL and
 OBSERVE arm roles, and cleanup/finalized-work duration equality. It validates

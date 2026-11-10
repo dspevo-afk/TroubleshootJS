@@ -22,11 +22,15 @@ def expected():
                 sourceManifestSha256='1' * 64, wireContractSha256=WIRE,
                 inputContextSha256='3' * 64,
                 qualifiedPrior=dict(inputContextSha256='3' * 64),
-                originalCapture={}, cohort={},
-                arms={'null': dict(armRole='NULL'),
-                      'observe': dict(armRole='OBSERVE')},
+                originalCapture=dict(contextRestored=True), cohort={},
+                arms={'null': dict(armRole='NULL',
+                                   cleanup=dict(contextRestored=True)),
+                      'observe': dict(armRole='OBSERVE',
+                                      cleanup=dict(contextRestored=True))},
                 work=dict(cleanupNanos=0, ordinaryList=['synthetic']),
-                cleanup=dict(cleanupNanos=0))
+                cleanup=dict(cleanupNanos=0,
+                             originalCaptureContextRestored=True,
+                             contextRestored=True))
 
 
 def canonical(value):

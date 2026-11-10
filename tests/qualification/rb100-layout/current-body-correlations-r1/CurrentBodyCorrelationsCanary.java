@@ -286,7 +286,7 @@ public final class CurrentBodyCorrelationsCanary {
                 asciiBytes(BodyCorrelationOracle.MINIMAL_BODY_JSON)),
                 "ADMITTED_LOOKUPS_PRESERVE_LITERAL_BYTES");
         check(oneFinalLf(admittedSink.bytes()), "ADMITTED_LOOKUPS_ONE_FINAL_LF");
-        check(state.successfulGets == 12, "ALL_TWELVE_RELATION_GETS_ADMITTED");
+        check(state.successfulGets == 20, "ALL_TWENTY_RELATION_GETS_ADMITTED");
         check(state.rejectedGets == 0, "NO_UNADMITTED_RELATION_GETS");
         check(!state.permitOutstanding, "NO_STALE_LOOKUP_PERMIT");
         check(before.unchanged(guarded), "GUARDED_BODY_UNCHANGED");

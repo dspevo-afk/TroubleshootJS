@@ -1,0 +1,20 @@
+        Map<?, ?> capture = correlationMap(
+                correlationRead(body, "originalCapture", sink), sink);
+        boolean captureRestored = correlationBoolean(capture, "contextRestored", sink);
+        Map<?, ?> nullCleanup = correlationMap(
+                correlationRead(nullArm, "cleanup", sink), sink);
+        boolean nullRestored = correlationBoolean(nullCleanup, "contextRestored", sink);
+        Map<?, ?> observeCleanup = correlationMap(
+                correlationRead(observeArm, "cleanup", sink), sink);
+        boolean observeRestored = correlationBoolean(observeCleanup, "contextRestored", sink);
+        boolean captureSummary = correlationBoolean(
+                cleanup, "originalCaptureContextRestored", sink);
+        boolean totalSummary = correlationBoolean(cleanup, "contextRestored", sink);
+        sink.beforeDataOperation();
+        boolean allRestored = captureRestored & nullRestored;
+        sink.beforeDataOperation();
+        allRestored = allRestored & observeRestored;
+        sink.beforeDataOperation();
+        if (captureSummary != captureRestored) throw failure("BODY_RESTORATION_CAPTURE");
+        sink.beforeDataOperation();
+        if (totalSummary != allRestored) throw failure("BODY_RESTORATION_TOTAL");
