@@ -48,3 +48,7 @@ remain. Budgets/seeds/epochs/candidate order/oracles unchanged; full30 EXCLUDED,
 HARD/PSYCHOTIC unavailable/unrun,protectedUnreadUNCERTIFIED,oldnormal20NOTREREAD,
 playable100=0,betaHELD. Production/GWT/Player N/A, electrical/population NOTRENEWED;
 CI NOTRUN/self-hosted runner prerequisite.
+
+Implementation `31d70a2d05317169354edc3bffb7cc5e2e8e717a` normally pushed to
+origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
+Gmail `1a1cb468109850f4` sent once; this receipt sends no second email.
