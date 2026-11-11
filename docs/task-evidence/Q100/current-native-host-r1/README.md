@@ -2,6 +2,8 @@
 
 The subsequent [opaque Source staging substep](STAGING_R1.md) qualifies its finite
 file/handle boundary separately; normal host activation remains gated.
+The [original output identity substep](HANDOFF_R1.md) carries original write tokens
+through final closure and supplies an optional Source token for a future coordinator.
 
 The pure adapter maps six fixed current Source roles and validated lexical values
 into Source-list bytes and immutable compiler/native recipes. It preserves the

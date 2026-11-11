@@ -1,9 +1,83 @@
-# Current checkpoint: N52 published; next handoff scope unstarted
+# Current checkpoint: N53 original output identity accepted locally; publication pending
 
-Active F codex/q100-terminal-only-20261107, no upstream. Accepted N52 candidate
+Active F codex/q100-terminal-only-20261107, no upstream; candidate parent
+d3a39196189ad8c90b5499b47b21f438192876c7, published/remote verified. N52 implementation
+8c0c8855d1832d56c0caea8dce6dbbbd8663f0a6 and completion Gmail1a1cbf3ca870b4d3
+already done once. Normal target origin/codex/q100-physical-feasibility. N53 is the
+underlying original-write identity/ephemeral Source-token seam, not normal host
+or real qualifier acceptance. Public T/E current-native-host-r1/HANDOFF_R1;
+private OS-temp/tsj-q100-v2-output-handoff-r1-45473a5352bc.
+
+Current qualifier retains original readback tokens from attempt+four outputs in
+memory and always compares final exact closure against all five original write
+identities. Existing reader/writer/projection owners reused; no persisted token
+ledger/verifier/resolver/closure-name changes. Optional include_source_token=True
+on in-process qualify returns outputClosure.producerSourceToken only after final
+checks. Default/CLI result shape unchanged, no CLIflag; pending evidence remains
+pending/no token. Tokenless helper consumers keep byte/readback scope only.
+Actual qualifier/CLI wiring Source-reviewed NOT RUN; real nested-return extraction
+and authenticated phase coordinator remain unimplemented/unqualified. No fake
+normal PASS; fixtures' four other bodies are CODE comments, not prior evidence.
+
+Fresh selected Python3.13 -I -B optimize0 PASS: early2 realWindows smoke, final18
+new focused methods, N52staging24 and maintained output-owner6 cases. Independent
+literal bytes/length/SHA, original identity for all5 same-content replacements,
+wrong/malformed/missing/extra tokens, token-option guards, bytes/names/roots,
+default fact shapes and direct closure-token->stager bridge. Full normal qualifier
+positive and CLI not exercised. Root fullSource/alloutput/4processreceipts review;
+leaf initialfinding discarded5tokens, post-fix Source-only no blocker/noexecution.
+Leaf integrationlimit directclosuretoken bridge, not fullqualifier nestedreturn.
+All4 own child exits0 observed through original Popen handles, creation/image/SHA/
+phase/deadline. Realjunction exacttarget+A0000003 revalidated/node-only removed/
+absent, cleanup90200ns. Operation vs successful isolatedcleanup UNMEASURED separate.
+N52 realhardlink/partial17B failure and displaced CODE originals retained. No gate
+FAIL or weakened oracle. Bounded snapshots/exclusive endpoint lifetime needed;
+not an atomic externalnamespace guarantee. N52same-volume constraint unchanged.
+
+Caller74051B/0412b1c02c5de427b14738f493201b8adeb002753d372946b31fe9994b78c267;
+newtests8123B/3f6da56425f25c0d6251b811fa6dc9ce6f7cb75b4ed486f4b51aa112102d5fae.
+GATE smoke6c029afad24891de90572bfced7ae0f78197e022b104b9ea07af6177dc638a40;
+suiteae1611beea8aed0e06f62290801450be9ab7278209edc191297ff0bf10df4307;
+staging39163ea1b690e5bcf400e260057545ed12998f8b0493de723d4186084a705c78;
+ownerdacca638a9fda550dcf816592010245ba1facb885b9222f86579cbd4daf7ec90.
+HANDOFF_PROOF_R1 11d8943be4f8848d008707f48c8b61ebffb8fe569f53a1f1cf36c2c8def76c71.
+Seven selected CODE/NO_DATA inputs exact across4gates; reader863a258c, stagerff314048,
+baseTestse7ec3b5c unchanged. Five current Java core Sources audited exact unchanged;
+Java/GWT/Player N/A. Changed Python caller means old whole-caller Source-bound
+gates NOTRENEWED; electrical/population NOTRENEWED; CI NOTRUN/selfhosted prerequisite.
+
+NEXT: authenticated phase owner of actual verified invocation/final return and
+nested Source-token handoff, plus source/class/tool/closedinventory/launch and
+semantic/receipt/lifecycle authority before normal use. Hash/token/status syntax
+and persisted pending evidence never self-authenticate. N53 qualifies only the
+underlying five-file seam; no actual fixed20/oldD/heldout/protected DATA/factory,
+normal positive, native/OriginalArm/capture/graph/Session/receipt/export/genuine.
+Both Study main/assemble throw-only holds unchanged; original->exactNULL/OBSERVE
+UNSPENT_GATED. All90s/640groups/5s/32768PERGROUP/copy1048576/chunk4096/othercaps,
+seeds/epochs/order/electrical oracles fixed. Full30EXCLUDED,HARD/PSYCHOTIC unavailable/
+unrun,protectedUnreadUNCERTIFIED,oldnormal20NOTREREAD,playable100=0,betaHELD.
+
+Ordinary owned fixture/Source/evidence resources retained; no new persistent
+process/listener/browser; new junction removed. Prior uncertain browser14116/
+start639294472690745890/port58320,preview34180/start639294472514546595/port58264+
+14children,D process/unlink/hardlink/scratch and Notepad67116860 untouched.
+MainHEAD5f05b005 tracked9/untracked6; EHEADd9747229 tracked1/untracked0;
+DesktopHEADe0c36885 tracked7/untracked89; allstaged0 freshly confirmed preserved.
+Only current report prefix mirrored, opaque histories preserved. Normal commit/
+push/remote verification and one completion Gmail pending for N53 only, no duplicate
+N52/prior emails. Root owns acceptance/publication; continue eligible roadmap
+without routine permission, notify meaningful milestone/failure/decision only.
+
+# Historical checkpoint: N52 publication and N53 handoff preparation
+
+# Current checkpoint: N52 published; N53 handoff scope prepared
+
+Active F codex/q100-terminal-only-20261107, no upstream; HEAD
+d3a39196189ad8c90b5499b47b21f438192876c7 exact remote verified. Accepted N52 candidate
 8c0c8855d1832d56c0caea8dce6dbbbd8663f0a6, Stage exact V2 producer source with
 handle identity; normal push to origin/codex/q100-physical-feasibility and exact
-remote SHA verified. Gmail1a1cbf3ca870b4d3 sent once; receipt follows/no second email. N52 opaque producer Source staging completes the finite CODE/NO_DATA
+remote SHA verified. Gmail1a1cbf3ca870b4d3 sent once; receipt published/verified, no second email.
+N52 opaque producer Source staging completes the finite CODE/NO_DATA
 I/O boundary only; no normal/genuine admission. Public T/E current-native-host-r1;
 private OS-temp/tsj-q100-v2-staging-r1-fc7966afb7fc. N51 e4988d8e/receipt d7d2ed4b
 already published; Gmail1a1cbc3b68eef274 sent once, no duplicate.
@@ -61,7 +135,17 @@ start639294472690745890/port58320,preview34180/start639294472514546595/port58264
 MainHEAD5f05b005 tracked9/untracked6; EHEADd9747229 tracked1/untracked0;
 DesktopHEADe0c36885 tracked7/untracked89; allstaged0 freshly confirmed preserved.
 Only current report prefix mirrored; opaque histories preserved. Normal commit/push/remote
-verification and one Gmail complete; receipt publication remains next.
+verification, receipt publication and one Gmail complete; F reportM only/staged0.
+N53 next-scope Source audit PREPARED only: OS-temp/tsj-q100-v2-handoff-contract-r1-huo0hscw.
+Current general outputclosure/pendingevidence/finalreturn CODE slices; no import/
+actualDATA/normalcall/process. Source pin2ff2295b unchanged. Current real return
+has Source SHA plus closure name/length/SHA, no readtoken. Future phase owner
+must own actual verified invocation/return and exclusive endpoint lifetime,
+then take a fresh authenticated Source token for N52; never reconstruct
+authority from persisted pending evidence or fabricate a normal PASS.
+SCOPE_PREPARATION_R1 d5ea4b640fd71311975d338af27ab112621b69f23531effc11becb364fc65d7c;
+no implementation/host gate/publication/email for this preparation.
+
 Continue eligible roadmap without routine permission; notify meaningful change.
 
 # Historical checkpoint: N51 published and N52 staging preparation

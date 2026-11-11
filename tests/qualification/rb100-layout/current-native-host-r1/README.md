@@ -3,6 +3,9 @@
 The next implemented component is the opaque Source stager. See
 [STAGING_CONTRACT_R1.md](STAGING_CONTRACT_R1.md) and its selected Windows
 CODE/NO_DATA tests; those file/handle facts do not activate normal execution.
+The caller's original five-file identity and optional in-process Source-token
+handoff are covered by [HANDOFF_CONTRACT_R1.md](HANDOFF_CONTRACT_R1.md) and
+`test_current_output_handoff.py`; actual normal qualifier/coordinator proof remains separate.
 
 This is the first host-adapter substep: pure fixed Source-list and compiler/native
 argument recipes. It performs no I/O, process launch, data ingest or admission.

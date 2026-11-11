@@ -967,13 +967,23 @@ def _output_directory_names(reader, config, expected_roots_sha, phase):
 
 
 def _validate_output_closure(reader, config, expected_files,
-                             expected_roots_sha, phase="output-closure"):
+                             expected_roots_sha, phase="output-closure", *,
+                             expected_write_tokens=None, include_source_token=False):
     expected_names = (ATTEMPT_FILE,) + tuple(name for name, _label in ROLE_OUTPUT_NAMES)
     _exact_keys(expected_files, expected_names, "OUTPUT_CLOSURE_EXPECTED_FILES", phase)
+    _need(type(include_source_token) is bool, "OUTPUT_CLOSURE_TOKEN_OPTION", phase)
+    _need(not include_source_token or expected_write_tokens is not None,
+          "OUTPUT_CLOSURE_TOKEN_REQUIRED", phase)
+    if expected_write_tokens is not None:
+        _exact_keys(expected_write_tokens, expected_names, "OUTPUT_CLOSURE_TOKEN_KEYS", phase)
+        for name in expected_names:
+            _reader_token_identity(reader, expected_write_tokens[name],
+                                   "OUTPUT_CLOSURE", phase)
     names_before = _output_directory_names(reader, config, expected_roots_sha,
                                            phase + "-before-reads")
     _need(names_before == tuple(sorted(expected_names)), "OUTPUT_CLOSURE_NAMES", phase)
     facts = []
+    source_token = None
     for name in expected_names:
         raw = expected_files[name]
         _need(type(raw) is bytes and 0 < len(raw) <= MAX_OUTPUT_BYTES,
@@ -981,13 +991,22 @@ def _validate_output_closure(reader, config, expected_files,
         token = _readback_output(
             reader, config, ntpath.join(config["dataOutputRoot"], name), raw,
             MAX_OUTPUT_BYTES, expected_roots_sha, phase + "-" + name.replace(".", "-"))
+        if expected_write_tokens is not None:
+            _require_same_input_document(
+                reader, "OUTPUT_CLOSURE", raw, expected_write_tokens[name], raw,
+                token, phase + "-" + name.replace(".", "-"))
+        if name == "current-input.java":
+            source_token = token
         facts.append({"name": name, "bytes": len(raw), "sha256": _sha(raw),
                       "identityBound": token[2] == token[3]})
     names_after = _output_directory_names(reader, config, expected_roots_sha,
                                           phase + "-after-reads")
     _need(names_after == tuple(sorted(expected_names)) and names_after == names_before,
           "OUTPUT_CLOSURE_CHANGED", phase)
-    return {"fileCount": len(facts), "files": facts}
+    result = {"fileCount": len(facts), "files": facts}
+    if include_source_token:
+        result["producerSourceToken"] = source_token
+    return result
 
 
 def preflight(*, config_path, config_sha, manifest_output):
@@ -1301,7 +1320,9 @@ def _recheck_consumed_inputs(reader, observer, config, state, *,
 
 
 def _qualify_impl(config_path, config_sha, source_manifest_path,
-                  source_manifest_sha, phase_journal_path, phase_journal_sha):
+                  source_manifest_sha, phase_journal_path, phase_journal_sha, *,
+                  include_source_token=False):
+    _need(type(include_source_token) is bool, "OUTPUT_CLOSURE_TOKEN_OPTION", "qualify-options")
     config_raw, config, reader, observer, initial_config_token = _read_config_and_runtime(
         config_path, config_sha, "qualify-preflight")
     state = _preflight_state(config_raw, config_path, config_sha, config, reader,
@@ -1325,10 +1346,11 @@ def _qualify_impl(config_path, config_sha, source_manifest_path,
 
     attempt = _canonical_json(_attempt_record(
         config_sha, source_manifest_sha, phase_journal_sha, state["rootsSha256"]), newline=True)
-    _write_exclusive(
+    attempt_write = _write_exclusive(
         reader, config, ntpath.join(config["dataOutputRoot"], ATTEMPT_FILE), attempt,
         MAX_OUTPUT_BYTES, config["scratchRoot"], state["rootsSha256"],
-        "read-attempt-marker")
+        "read-attempt-marker", with_readback_token=True)
+    write_tokens = {ATTEMPT_FILE: attempt_write["readbackToken"]}
     read_started_state = {"value": False}
     phase = "role-read"
     try:
@@ -1443,9 +1465,12 @@ def _qualify_impl(config_path, config_sha, source_manifest_path,
             "qualification-evidence.json": evidence_raw,
         }
         for name, raw in outputs.items():
-            _write_exclusive(reader, config, ntpath.join(config["dataOutputRoot"], name),
-                             raw, MAX_OUTPUT_BYTES, config["scratchRoot"],
-                             state["rootsSha256"], phase + "-" + name.replace(".", "-"))
+            write_fact = _write_exclusive(
+                reader, config, ntpath.join(config["dataOutputRoot"], name),
+                raw, MAX_OUTPUT_BYTES, config["scratchRoot"],
+                state["rootsSha256"], phase + "-" + name.replace(".", "-"),
+                with_readback_token=True)
+            write_tokens[name] = write_fact["readbackToken"]
         _recheck_consumed_inputs(
             reader, observer, config, state,
             config_path=config_path, config_raw=config_raw, config_sha=config_sha,
@@ -1460,7 +1485,8 @@ def _qualify_impl(config_path, config_sha, source_manifest_path,
         expected_files = {ATTEMPT_FILE: attempt}
         expected_files.update(outputs)
         output_closure = _validate_output_closure(
-            reader, config, expected_files, state["rootsSha256"])
+            reader, config, expected_files, state["rootsSha256"],
+            expected_write_tokens=write_tokens, include_source_token=include_source_token)
         _verify_root_bindings(reader, config, state["rootsSha256"], "outputs-after")
         return {
             "status": "PASS_PRIOR_INPUT_ONLY",
@@ -1488,9 +1514,11 @@ def _qualify_impl(config_path, config_sha, source_manifest_path,
 
 
 def qualify(*, config_path, config_sha, source_manifest_path,
-            source_manifest_sha, phase_journal_path, phase_journal_sha):
+            source_manifest_sha, phase_journal_path, phase_journal_sha,
+            include_source_token=False):
     return _qualify_impl(config_path, config_sha, source_manifest_path,
-                         source_manifest_sha, phase_journal_path, phase_journal_sha)
+                         source_manifest_sha, phase_journal_path, phase_journal_sha,
+                         include_source_token=include_source_token)
 
 
 def _parse_cli(argv=None):

@@ -520,6 +520,14 @@ source and root checks return staging facts only. The caller still owns verified
 upstream authority and exclusive endpoint lifetime; these snapshots grant no
 normal admission or atomic external-namespace guarantee. Both Study holds remain.
 
+The caller's [original output identity seam](task-evidence/Q100/current-native-host-r1/HANDOFF_R1.md)
+retains the attempt/four-output write tokens in memory and checks final closure
+against those identities. An optional in-process qualifier flag returns only the
+producer Source token inside outputClosure after final checks; default/CLI facts
+and pending persisted evidence retain their shape. Current tokenless helper
+consumers retain their byte/readback scope. This adds neither a persisted ledger
+nor a trusted phase coordinator; real normal-return handoff remains unqualified.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published
