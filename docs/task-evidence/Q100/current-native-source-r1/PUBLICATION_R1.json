@@ -1,0 +1,12 @@
+{
+  "status": "IMPLEMENTATION_PUSHED_EXACT_REMOTE_SHA_VERIFIED_EMAIL_SENT_ONCE",
+  "implementation": "67408a3b24d1640a20e735e516b7e852c1b130c1",
+  "message": "Maintain the current native code source inventory",
+  "branch": "codex/q100-terminal-only-20261107",
+  "target": "origin/codex/q100-physical-feasibility",
+  "emailId": "1a1cb91349a6bf87",
+  "emailSubject": "TroubleshootJS: current native source baseline pushed",
+  "receiptEmail": "NONE_NO_DUPLICATE",
+  "scope": "Five current CODE Sources only; normal entrypoints/genuine gate remain held; playable100=0,betaHELD",
+  "nextUnstarted": "Current-native V2 host adapter/coordinator; verified upstream final return/output bytes -> current CODE/tools/closed classes/V2 launch roles"
+}

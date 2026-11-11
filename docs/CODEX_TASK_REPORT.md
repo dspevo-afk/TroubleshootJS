@@ -2,7 +2,8 @@
 
 Active F codex/q100-terminal-only-20261107 HEAD1fc7f7247e03e20c595e87d732a778f123fb502f,
 no upstream; normal target origin/codex/q100-physical-feasibility. N50 accepted
-finite CODE promotion; commit/push/completion Gmail PENDING. Public T/E
+finite CODE promotion published as 67408a3b24d1640a20e735e516b7e852c1b130c1, exact remote verified.
+Completion Gmail1a1cb91349a6bf87 sent once; receipt publication pending, no second email. Public T/E
 current-native-source-r1; private OS-temp/tsj-q100-current-native-sources-r1-3092qaya.
 F pre-existing reportM only before task. MainHEAD5f05b0059mods/6untracked,
 EHEADd9747229reportM,DesktopHEADe0c368857mods/89untracked/staged0 preserved.
