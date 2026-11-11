@@ -1,9 +1,195 @@
-# Current checkpoint: N48 actual-clock caller prefix locally accepted
+# Current checkpoint: N50 current native CODE inventory locally accepted
+
+Active F codex/q100-terminal-only-20261107 HEAD1fc7f7247e03e20c595e87d732a778f123fb502f,
+no upstream; normal target origin/codex/q100-physical-feasibility. N50 accepted
+finite CODE promotion; commit/push/completion Gmail PENDING. Public T/E
+current-native-source-r1; private OS-temp/tsj-q100-current-native-sources-r1-3092qaya.
+F pre-existing reportM only before task. MainHEAD5f05b0059mods/6untracked,
+EHEADd9747229reportM,DesktopHEADe0c368857mods/89untracked/staged0 preserved.
+
+Current CODE gap resolved: latest accepted Study/metadata/canonicalcodec were
+private qualified copies, not interchangeable with older public component bytes.
+Promoted exact3files Study239938B/755ac9ff94478155c09298c8785df753da852483edd2888547977c6202969cbd,
+Metadata16559B/784296ac06e2a9c7eaeb04d8c76027360861caea960d1fcb281aa61179356895,
+CanonicalCodec43095B/92cd938fc086f7f5b71ac8c9003921de4f7ac908da71b84c988658f9d8a8123a.
+Five-file inventory references current InputSetup24397B/f1f2308a... and
+ResultProjections10055B/c0398d31... at existing owner paths, not duplicate copies.
+Two component README pointers identify preserved earlier fixtures. No behavior/
+ABI/schema/model epoch/seed/budget/oracle change. Source facts manifest is not a
+new normal authority token, generic ledger or resolver. Both main and assemble
+remain exact throw-only holds; no normal caller, actual DATA or genuine release.
+
+Final9Source JDK8 source7/target7 build PASS157major51classes/456063B +2396 inherited
+CODEdeps/11801276B,noshadows or diagnostics. Every output class is byte-identical
+member of N48accepted299; five core +explicit NO_DATA+existingprefix2/bridge1
+Sources suffice. This does NOT rebuild inherited2396CODEcache from Source or
+promise a standalone clean-clone native distribution. Final prefix javap5031B/
+0e86010cb727cd92a681dceae9aef429d87368c9fbdc177e4c2a1bb941bc227a unchanged.
+Fresh prefixSMOKE1/8+SUITE10/53 and bridgeSMOKE1/6+SUITE10/53 PASS; positives overlap.
+Same652units/271copies/1chunk,context88,start18,foreignParent0, actual early-refusal
+zero generated/native-owner attempts. All7 own calls observed6exit0+one deliberate
+CLIexit1; no N50 compile/native failure. Successful isolated cleanup duration
+UNMEASURED; operation times separate, not normal host proof. Original2factoryDATA
+excluded; sole namespace stub explicit NO_DATA, no successful input Map/actual or
+fake OriginalArm/capture/graph/Session/DTO/receipt/export/genuine invocation.
+
+SOURCE_FREEZE_R1 ab1012a362266ba5e07b0c6bc4135568d7017e26127df7fa739b9eaf44cb7012;
+COMPILE_GATE_R1 42c1ffe03147591438bcc62007639f759df3fe16020ca3a4226d8f0e651fef35;
+NATIVE_GATE_R1 e00b56b383636c64da093f2340de472347fc5a135cb0bb72842d392b672a357e.
+Exact core/dependency/jar/sixreader input checks before/after plus N48frozenSource
+closure authentication. Old full940metadata/3104counted(excluding24protocol),
+fullparser/carrier/handoff evidence REUSED, NOT RERUN/RENEWED. RUN81 excluded.
+Root exact-Source/privacy/scope and actual-gate review; leaf confirmed inventory
+structure/selected normal holds only, no hash/fullbody/native review claimed.
+
+Source audit identified existing owners: normal-prior-caller qualify_prior.py
+already canonicalizes/hashes whole context, checks projection and emits Java
+with expected full-context digest, writes outputs, then rechecks inputs/output
+closure before final PASS_PRIOR_INPUT_ONLY return. Its persisted evidence is
+written pending earlier and CANNOT replace the verified final return. No fixed20
+normal-prior ingest performed. GenericR7host owns neutral source/class/tool/argv/
+receipt mechanics but hardcodes R7 profile+fixtureOracle argument; it is not V2.
+Root declaration/constant search unnecessarily emitted genericOPEN/BLOCKED fixture
+literals embedded in current host Source; no oldactualD/protected/heldout artifact
+opened or module executed. Footprint retained explicitly; unread certainty not
+restored. Later index/range reads restricted. No whole historical builder replay.
+Publication preparation FAIL from assumed codec README missing; added explicit
+pointer file, resumed uncompleted steps; native inputs/gates unchanged. Separate
+failure record preserved. First staged check FAILexit2 from new codec README CRLF;
+wrote LF only, strict checks PASS, no attribute suppression or native input change.
+Earlier milestone failures retain original status.
+
+Resources: all7 owned process exits observed by original Popen handle/creation/
+image receipts; canary loaders close in finally. Two ordinary owned directories/
+exact sentinel retained controlled evidence; no reparse node/listener/browser/
+persistent process created. Prior browser14116/start639294472690745890/port58320,
+preview34180/start639294472514546595/port58264+14children, oldD process/unlink/
+hardlink/scratch and Notepad67116860 untouched. Preserve all unrelated work and
+untracked data; only21 explicit intended paths staged after strict checks/review.
+
+NEXT unstarted N51: current-native V2 host adapter/coordinator taking verified
+upstream final return +exact output bytes, this fixed CODE inventory, selected
+tools/compiler/closed class inventory and exact V2 launch roles. Reuse existing
+codec/preflight/neutralhost mechanics, not another canonicalizer/schema/manifest
+ledger. Whole-context hash includes physicalContext; native Map onlyprojection,
+matching header cannot self-authenticate. Keep run/source/wire/context/prior hashes
+in correct roles. Both normal holds remain until actual input/PAD/DTO/receipt/
+arm/export semantics and independent host/lifecycle closure; genuine original->
+exactNULL/OBSERVE remains UNSPENT_GATED. No actual DATA admission follows CODE proof.
+
+Budgets90s/640groups/5s/32768PERGROUP/copy1048576/chunk4096/other caps,seeds/epochs/
+candidate order/independent oracles unchanged. Full30EXCLUDED,HARD/PSYCHOTIC
+unavailable/unrun,protectedUnreadUNCERTIFIED,oldnormal20NOTREREAD,playable100=0,
+betaHELD. Production/GWT/Player N/A exact CODE promotion; electrical/population
+NOTRENEWED; CI NOTRUN/self-hostedrunner prerequisite. N48impl31d70a2d/receipt1fc7f724
+and Gmail1a1cb468109850f4 already complete; older/receipt notifications no duplicates.
+Root normal commit/push/remoteverify then one Gmail for N50 after final acceptance.
+Current prefix<=64KiB for agents, preserve opaque history. Continue eligible
+roadmap without routine permission; notify meaningful completion/failure/decision.
+
+# Historical checkpoint: N49 context authority Source audit; N48 published
+
+Active F codex/q100-terminal-only-20261107, no upstream; HEAD
+1fc7f7247e03e20c595e87d732a778f123fb502f verified exact origin/codex/q100-physical-feasibility.
+N48 implementation31d70a2d05317169354edc3bffb7cc5e2e8e717a, Test internally clocked
+current caller prefix, normally pushed. Gmail1a1cb468109850f4 sent once; receipt
+1fc7f724 published/verified, NO second email. F clean before this checkpoint;
+only current reportM remains unstaged afterward. No native/product code changed
+by N49. Prior Main/E/Desktop branches/HEADs/changes freshly confirmed preserved.
+
+N49 SOURCE-ONLY audit complete, OS-temp/tsj-q100-context-authority-source-r1-qbrhjz8i.
+Selected current context_codec canonical_context/hash/generate/_clone and current
+InputSetup header/prior/sourceIdentity validation only; no codec import/execution,
+DATA descriptor/result/factory, actual old D, held-out/protected data, whole old
+builder/consumer or normal/genuine operation. Optional old N45 private contract
+missing at its recorded exact path; no broad scratch search, no gate depends on
+it. Current selected general Source supplies the findings. No new build/native/
+Player/CI gate, publication or email for this private Source-only substep.
+
+Finding: digest covers full canonical context(schema/nativeProjection/physicalContext,
+ordered compact ASCII+oneLF); generated dataJson returns only nativeProjection.
+Header holds the full-context digest. Native read compares supplied expected hash
+to that header then shape-validates projection; projection alone cannot recreate
+full context digest. Do not switch to projection-only hash, add a new hash/schema,
+or inject physicalContext into native Map to bypass provenance. SourceIdentity
+in payload means geometry/effects/PAD state, not a code Source inventory. Prior
+manifest fields are a separate namespace; spelling does not prove equality with
+current-run sourceManifest/wire/context roles. Matching ABI/header/hash strings,
+format checks and counters do not authenticate current input/source/class origin.
+
+SOURCE_SELECTION_R1 9522fbed32334c4d40290ad91c3ff3afd38734747379e5369150d8a0b56335d8;
+SOURCE_FINDINGS_R1 28103f6be8915ee87cc639635f5ad6dd013208765058cd6e83b1ecd0fe9487e1;
+AUTHORITY_FINDINGS_R1 3c2d016569156dc1e9c884c08aa5bf800720704e52437fc7d8c09a84a48e1798;
+SOURCE_FREEZE_R1 dc29bbda7f0d3511a32cac3ad158367018cf4f187928a7929c30f36605bdd11e.
+NEXT unstarted N50: select maintained current caller/assembly inventory and exact
+wholeContext->codec/emittedJava->compiler/classClosure->launchRole bindings before
+any actual producer loading. Reuse current canonical/emitter owners, not a new
+canonicalizer/resolver/schema/manifest ledger. An owned stable current context and
+independent expected whole-context digest, exact emitted Source/tool/flags/class
+inventory/no shadows, and launch's exact run/source/wire/context/output identity
+all need proof. A lab/no-DATA profile cannot grant normal authority. Continue
+normal DTO/receipt/arm/export semantics and independent host/lifecycle closure
+before releasing either Study hold or genuine original->exactNULL/OBSERVE gate.
+
+N48 finite LAB prefix accepted only: first-run-body nanoTime, current Arguments,
+one Parent/native Meter/wrapper/readCurrent(context role) to deliberate NO_DATA
+stop. First-body clock excludes earlier JVM/class initialization, bounded by
+separate host limits. Observational static fields/stages are test instrumentation,
+not a production holder/ledger. Both normal entrypoints remain exact throw holds.
+No successful input Map/carrier/capture continuation, actual/fake OriginalArm,
+graph/Session/DTO/receipt/export/genuine execution. Original2actualDATA excluded;
+sole admitted namespace class is explicitly authored NO_DATA stub in cases1/6.
+
+Final27Java JDK8 source7/target7 PASS299major51classes/943908B+2396CODEdeps/11801276B,
+noshadows. All291 prior class bytes unchanged;8newclasses from2testfamilies only.
+Final javap5031B/0e86010cb727cd92a681dceae9aef429d87368c9fbdc177e4c2a1bb941bc227a:
+one local clock first instruction, context field/readCurrent, no continuation.
+PrefixSMOKE1/8checks and SUITE10/53 PASS(overlappingpositive); exact652units/
+271copies/1chunk, contextswap88,startmismatch18,foreignParent beforedebit0.
+Six malformed args PASS actual selected-JDK8 zero native-owner/generated load
+attempts and zero construction stages. Fresh N46bridge1/6+10/53 PASS. All7owned
+calls observed6exit0+one deliberateCLIexit1; no N48 compile/native failure. One
+unchanged unchecked warning. Operation times separate; successful isolated cleanup
+duration UNMEASURED, not zero or normal host proof. Root Source/result review only;
+no independent runner/native review claimed. Draft assertion gaps corrected before
+gates, unrun draft preserved. Prior milestone failures retain original status.
+
+N48 SOURCE_FREEZE_R1 0246ffb25ba4ab0ed64c547c352e4d34b7db7e64aa4e877831a2ae7ea30e0148;
+COMPILE_GATE_R1 58b46eb57f4652ba8920ce8a49b7dce9bdb0de4fe57a9e4b087e1ceb0d9c81ad;
+NEW_GATE_R1 a8ba12bbc0488e6d4d43fc8d845e11435923f7fca5775f884d04abfce1237250.
+Private OS-temp/tsj-q100-caller-prefix-r1-jrasshcq; public T/E current-caller-prefix-r1.
+Exact public compiled Source copies/staged bytes and strict Git checks PASS.
+Old940metadata/3104counted(excludes24protocol),fullparser/carrier/handoff evidence
+REUSED after exact25Source/291class/2396deps/jar/sixreader-input audit; NOT RERUN/
+RENEWED. RUN81 excluded/notrenewed. N49 changed no consumed native input.
+
+Resources:7own exits observed; loader finally closes. Two ordinary owned fixture
+directories/exact sentinel retained controlled evidence; no reparse node/browser/
+listener/persistent process created. Prior uncertain browser14116/start
+639294472690745890/port58320,preview34180/start639294472514546595/port58264+
+14children,D processes/unlink/hardlinks/scratch,Notepad67116860 untouched.
+MainHEAD5f05b005 tracked9/untracked6,
+EHEADd9747229 tracked1/untracked0,
+DesktopHEADe0c36885 tracked7/untracked89; all staged0.
+Only report current prefix mirrored; opaque history preserved. No broad cleanup/
+reset, force push, history rewrite or unrelated edits. N46 Gmail1a1c968f9dbf97c5
+and older implementation/receipt notifications already done; no duplicates.
+
+Budgets90s/640groups/5s/32768PERGROUP/copy1048576/chunk4096/other caps,seeds/
+epochs/candidate order/independent oracles unchanged. Full30EXCLUDED,HARD/PSYCHOTIC
+unavailable/unrun,protectedUnreadUNCERTIFIED,oldnormal20NOTREREAD,playable100=0,
+betaHELD,genuineUNSPENT_GATED. Production/GWT/Player N/A test-only/Source-only;
+electrical/population NOTRENEWED; CI NOTRUN/self-hostedrunner prerequisite.
+No user decision needed. Continue roadmap without routine permission; notify
+meaningful completion/failure/decision only. Never give agents full report;
+stream prefix<=64KiB until first historical marker, opaque tail only thereafter.
+
+# Historical checkpoint: N48 actual-clock caller prefix locally accepted
 
 Active F codex/q100-terminal-only-20261107 HEAD77ca67257cac8c51fc5bc1a5986e9764b0ef8de6,
 no upstream; normal publication target origin/codex/q100-physical-feasibility.
 N48 implementation 31d70a2d05317169354edc3bffb7cc5e2e8e717a pushed/remote verified.
-Completion Gmail1a1cb468109850f4 sent once; receipt publication pending, no second email.
+Completion Gmail1a1cb468109850f4 sent once; receipt1fc7f7247e03e20c595e87d732a778f123fb502f pushed/verified, no second email.
 Private OS-temp/tsj-q100-caller-prefix-r1-jrasshcq; public T/E current-caller-prefix-r1.
 
 Scope: TEST-ONLY typed CurrentCallerPrefix samples nanoTime at first run-body

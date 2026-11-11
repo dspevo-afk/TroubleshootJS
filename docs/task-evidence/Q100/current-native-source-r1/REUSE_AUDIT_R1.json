@@ -1,0 +1,12 @@
+{
+  "status": "PASS_UNCHANGED_CURRENT_CORE_AND_RETAINED_INPUT_AUDIT",
+  "coreFiles": 5,
+  "outputClasses": 157,
+  "outputClassRelation": "Exact byte-identical subset of N48 accepted299 classes",
+  "inheritedDependencies": 2396,
+  "jarAndSixReaderInputs": "Authenticated before/after gates",
+  "n48FrozenSourceInputs": "Full frozen Source closure authenticated after new gates; no consumed runtime input changed",
+  "retainedFull940ParserCarrierHandoff": "REUSED_NOT_RERUN_OR_RENEWED",
+  "RUN81": "EXCLUDED_NOT_RENEWED",
+  "normalHost": "NOT_QUALIFIED"
+}

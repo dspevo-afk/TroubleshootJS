@@ -1,5 +1,9 @@
 # Current assembly metadata component
 
+Current native builds use the [current five-file CODE inventory](../current-native-source-r1/README.md).
+This directory retains its earlier component Source/proof; it is not the current
+assembled native baseline.
+
 `prepare` retains the qualified-prior metadata and receipt-binding behavior
 recorded by the historical R1 evidence. The current helper also owns
 `cohortBeforeBody`, a synchronous temporary view over a validated, exclusively

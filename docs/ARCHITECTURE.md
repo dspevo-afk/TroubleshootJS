@@ -497,6 +497,13 @@ actual denied-loader controls qualify the prefix to a declared no-DATA refusal.
 Its observational fields are test instrumentation. Neither normal Study entrypoint
 is activated; trusted caller/source/classpath/input and lifecycle remain separate.
 
+The [current native CODE inventory](task-evidence/Q100/current-native-source-r1/README.md)
+owns the exact accepted Study, metadata and canonical-codec baseline and references
+the existing current input/projection owners. Older component snapshots retain
+their scoped proofs. The five-file selection compiles with the explicit no-DATA
+profile; both normal entrypoints remain held. This supplies maintained CODE bytes,
+not a new manifest authority or V2 host coordinator.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published

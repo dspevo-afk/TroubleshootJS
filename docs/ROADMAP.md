@@ -2012,6 +2012,16 @@ origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail `1a1cb468109850f4` sent once; this receipt sends no second email.
 
 
+The [current native CODE baseline](task-evidence/Q100/current-native-source-r1/README.md)
+is locally accepted as an exact byte promotion of five current source owners.
+The final9-Source JDK8 build emits157 classes byte-identical to the accepted
+N48 closure; fresh caller-prefix and fixed-bridge modes pass. No behavior/ABI/
+schema/epoch/budget/oracle change or normal activation. Retained full matrices
+are reused after input checks, not renewed. Next is the current V2 host adapter
+from verified upstream return/output bytes through code/tools/classes/launch
+roles; pending prior-input evidence and generic R7 profile are not substitutes.
+Normal holds, genuine gate and playable100=0/betaHELD remain.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

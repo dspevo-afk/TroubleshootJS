@@ -1,0 +1,143 @@
+{
+  "status": "PASS_CURRENT_CODE_SOURCE_BASELINE_PROMOTION_NO_BEHAVIOR_CHANGE",
+  "parentHead": "1fc7f7247e03e20c595e87d732a778f123fb502f",
+  "gateSha256": {
+    "SOURCE_FREEZE_R1.json": "ab1012a362266ba5e07b0c6bc4135568d7017e26127df7fa739b9eaf44cb7012",
+    "COMPILE_GATE_R1.json": "42c1ffe03147591438bcc62007639f759df3fe16020ca3a4226d8f0e651fef35",
+    "NATIVE_GATE_R1.json": "e00b56b383636c64da093f2340de472347fc5a135cb0bb72842d392b672a357e"
+  },
+  "coreSourceCount": 5,
+  "qualifiedJavaSourceCount": 9,
+  "classCount": 157,
+  "classBytes": 456063,
+  "dependencyCount": 2396,
+  "dependencyBytes": 11801276,
+  "major": 51,
+  "noShadows": true,
+  "allOutputClassesByteIdenticalSubsetOfN48": true,
+  "compilerDiagnosticsBytes": 0,
+  "prefixBytecodeSha256": "0e86010cb727cd92a681dceae9aef429d87368c9fbdc177e4c2a1bb941bc227a",
+  "soleExplicitNoDataStub": {
+    "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryInputV2.class",
+    "bytes": 1044,
+    "sha256": "cce09cb6580894aef7ff3553e8a63710cdd0936538b00f53e022c31b82ff68cb",
+    "major": 51
+  },
+  "freshPrefix": {
+    "SMOKE": {
+      "cases": 1,
+      "checks": 8,
+      "line": "SYNTHETIC_CURRENT_CALLER_PREFIX_ONLY mode=SMOKE cases=1 checks=8 deniedFactoryLoads=0 deniedOwnerLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+    },
+    "SUITE": {
+      "cases": 10,
+      "checks": 53,
+      "line": "SYNTHETIC_CURRENT_CALLER_PREFIX_ONLY mode=SUITE cases=10 checks=53 deniedFactoryLoads=0 deniedOwnerLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+    }
+  },
+  "freshBridge": {
+    "SMOKE": {
+      "cases": 1,
+      "checks": 6,
+      "line": "SYNTHETIC_STATIC_FACTORY_BRIDGE_COMPONENT_ONLY mode=SMOKE cases=1 checks=6 deniedFactoryLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+    },
+    "SUITE": {
+      "cases": 10,
+      "checks": 53,
+      "line": "SYNTHETIC_STATIC_FACTORY_BRIDGE_COMPONENT_ONLY mode=SUITE cases=10 checks=53 deniedFactoryLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+    }
+  },
+  "calls": [
+    {
+      "phase": "current-code-jdk8-compile-r1",
+      "exitCode": 0,
+      "operationNanos": 1202089000,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "deadlineMillis": 60000,
+      "stdoutBytes": 0,
+      "stderrBytes": 0
+    },
+    {
+      "phase": "current-code-prefix-javap-r1",
+      "exitCode": 0,
+      "operationNanos": 183884500,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "deadlineMillis": 60000,
+      "stdoutBytes": 5031,
+      "stderrBytes": 0
+    },
+    {
+      "phase": "current-code-prefix-smoke-r1",
+      "exitCode": 0,
+      "operationNanos": 94521000,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "deadlineMillis": 60000,
+      "stdoutBytes": 166,
+      "stderrBytes": 0
+    },
+    {
+      "phase": "current-code-prefix-suite-r1",
+      "exitCode": 0,
+      "operationNanos": 110274900,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "deadlineMillis": 60000,
+      "stdoutBytes": 168,
+      "stderrBytes": 0
+    },
+    {
+      "phase": "current-code-cli-refusal-r1",
+      "exitCode": 1,
+      "operationNanos": 68788100,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "deadlineMillis": 60000,
+      "stdoutBytes": 0,
+      "stderrBytes": 152
+    },
+    {
+      "phase": "current-code-bridge-smoke-r1",
+      "exitCode": 0,
+      "operationNanos": 70813900,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "deadlineMillis": 60000,
+      "stdoutBytes": 157,
+      "stderrBytes": 0
+    },
+    {
+      "phase": "current-code-bridge-suite-r1",
+      "exitCode": 0,
+      "operationNanos": 159216400,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "deadlineMillis": 60000,
+      "stdoutBytes": 159,
+      "stderrBytes": 0
+    }
+  ],
+  "successfulInputMap": "NOT_RUN_DECLARED_NO_DATA_STOP",
+  "normalEntryPoints": "EXACT_THROW_ONLY_HOLDS",
+  "actualFactoryDataPresent": false,
+  "normalHostAcceptance": false,
+  "genuine": "UNSPENT_GATED",
+  "full30": "EXCLUDED",
+  "HARD_PSYCHOTIC": "UNAVAILABLE_UNRUN",
+  "protectedUnread": "UNCERTIFIED",
+  "oldNormal20": "NOT_REREAD",
+  "playable100": 0,
+  "beta": "HELD",
+  "productionGwtPlayer": "NOT_APPLICABLE_CODE_BYTE_PROMOTION",
+  "electricalPopulation": "NOT_RENEWED",
+  "CI": "NOT_RUN_SELF_HOSTED_RUNNER_PREREQUISITE",
+  "inheritedFullSourceRebuild": "NOT_CLAIMED",
+  "caller": "PRIVATE_HANDLE_BOUND_LAB_CALLER_NOT_NORMAL_HOST_PROOF",
+  "successfulIsolatedCleanupDuration": "UNMEASURED",
+  "commands": [
+    "selected-python -I -B run_gates_r1.py --case compile",
+    "selected-python -I -B run_gates_r1.py --case native"
+  ]
+}
