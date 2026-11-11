@@ -2065,6 +2065,16 @@ Implementation `5c110b6fb1c3b144ec58755d514386cbc03a8aab` normally pushed to
 origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail `1a1cc2f07e9dcbe4` sent once; this receipt sends no second email.
 
+The [native CODE/tool byte-facts substep](task-evidence/Q100/current-native-host-r1/BYTE_FACTS_R2.md)
+is locally accepted for six Source/two selected executable inputs through existing
+neutral reader/observer owners. Final16 Windows methods and two-case smoke pass;
+all specs prevalidate and bytes/identities recheck under unchanged caps. R1 narrower
+test coverage is preserved, corrected before fresh R2. This returns facts only;
+module/spec authority remains the caller's responsibility. No JDK execution,
+class/launch closure or normal activation. Next is maintained closed current class
+inventory and trusted phase/Source/tool/launch composition, then semantic/lifecycle
+authority. Normal holds, genuine gate and playable100=0/betaHELD remain.
+
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

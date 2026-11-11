@@ -528,6 +528,13 @@ and pending persisted evidence retain their shape. Current tokenless helper
 consumers retain their byte/readback scope. This adds neither a persisted ledger
 nor a trusted phase coordinator; real normal-return handoff remains unqualified.
 
+The [native CODE/tool byte observer](task-evidence/Q100/current-native-host-r1/BYTE_FACTS_R2.md)
+binds exactly the invocation owner's six Source roles and two native executable
+specs through existing neutral reader/observer helpers. It snapshots and validates
+specs before reads, then identity-rechecks byte facts. The prior-specific wrapper
+is unchanged. Module/spec authentication, class/launch and coordinator authority
+remain external; the observer returns no bodies or normal-ready status.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published

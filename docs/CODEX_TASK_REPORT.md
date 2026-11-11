@@ -1,9 +1,82 @@
-# Current checkpoint: N53 original output identity published
+# Current checkpoint: N54 native CODE/tool byte facts accepted locally; publication pending
 
-Active F codex/q100-terminal-only-20261107, no upstream; accepted N53 candidate
+Active F codex/q100-terminal-only-20261107, no upstream; candidate parent
+7d17a4721273886af7197e1e29db77ddde38016b published/remote verified. N53implementation
+5c110b6fb1c3b144ec58755d514386cbc03a8aab, completion Gmail1a1cc2f07e9dcbe4 done once.
+Normal target origin/codex/q100-physical-feasibility. N54 public T/E current-native-
+host-r1/BYTE_FACTS_R2; private OS-temp/tsj-q100-native-byte-facts-r1-4645f3a6c9a2.
+
+Thin observe_native_code_tools consumes invocation owner's six Source roles and
+nativeJava/nativeJavac specs through existing neutral observer/reader helpers.
+Observer478625 already public observe_caller_facts.py; earlier filename globs
+missed name, resolved through bounded file inventory, no duplicate/promotion.
+Prior8Source/5Tool wrapper unchanged, never relabeled. Four module objects/spec
+authority externally authenticated; binding/expectedhash syntax are not provenance.
+Bothmaps/rows snapshotted, all8specs prevalidate, source4MiB/producer1MiB/tool8MiB
+caps unchanged, then eachbytefact identity-rechecked. Existing invocation role/
+basename/ASCII policy reused. Returns path/bytes/SHA facts only, no bodies/tokens/
+ready/PASS/manifest/ledger. No filesystem verifier/resolver/newserializer/clock.
+No JDK selection/activation/run, harness/modulelink, jars/deps/classes/launch or
+normal/genuine authority. Exclusive module/config/file lifetime remains caller
+obligation; snapshots are not an atomic externalnamespace transaction.
+
+Fresh finalR2 selectedPython3.13 -I -B optimize0: early2 actualWindows smoke and
+16 literal/focused methods PASS. Core5exactCODE+explicitNO_DATA N52staged producer,
+read-only selectedJDK8java/javac bytes. Facts/order, source/native2 vsprior5roles,
+caps/preflight, malformed/basename/hash/type negatives, samecontentSource replacement,
+specsnapshot andrealjunction controls. Root fixeddrafttest6keyextra-toolset to
+EXACTprior5 beforefreshR2; R1narrower2+16PASS retained NOTreusedforchangedtest.
+Final2 childexits0 observed viaoriginalPopenhandles/creation/image/SHA/phase/deadline;
+all4R1/R2 childexits observed. Realjunction exacttarget+A0000003revalidated,
+node-only cleanup90500ns/absent. Operation vs successfulisolatedcleanup UNMEASURED
+separate. Owned CODE/displacedoriginals retained; no newpersistentprocess/link.
+Root fullSource/final16output/receipts review; workernewmoduleonly; leafpostfix
+Source-only no blocker/noexecution. Fixture-name caveat rootreconciled exact5keys
+against unchangedobserverTOOL_FACT_NAMES; no assertion weakening/normal PASS.
+
+Module4739B/2f3837d4ecf49a0fbdde47ba7b5007351e0493da2801bfc1d7bfe781392dfd35;
+tests10521B/6d26698cc45cfbb2a8b24a9eaf64042fa8c02a9421a7aea000e65501f035cde8.
+R2smoke50d8431a9a7f5f0e6158fa7dcd560db60af258ef55825a41a3169ae68fe92536;
+R2suitec1c64be9cf3b4377188998e4347c80b49662fd709563a412025ffde6f835ee3a.
+BYTE_FACTS_PROOF_R2 cc99ad3fc95300ac9c1ad2eed3be6f19e32fd707e0abd69daa47fa0a439b055d.
+16selectedCODEinputs/twoexe pins exactacrossfinalgates; javae71f3022/javac61fa6463,
+observer478625,reader863a258c,IOowner0412b1c0,invocations04c82ed3,stagerff314048,
+currentCore5 unchanged. N53_18/N52_24/outputowner6 retained afterall7explicitCODE
+input audit/selectedtoolpins, NOTRERUN/NOTRENEWED. Java/GWT/Player N/A unchanged;
+electrical/population NOTRENEWED; CI NOTRUN/selfhostedrunner prerequisite.
+
+NEXT maintained closed current class inventory, then trustedphaseowner actual
+verified nested-return/Source/tool/classpath/launch and semantic/receipt/lifecycle
+composition before normaluse. R50 has private inventory/dependencies/sourceAudit
+CODE and accepted9Source157classes/2396prefilteredCODEdeps; not maintainednative6
+host API or actualDATA authority. Need explicit class/Source/toolscope and original
+caps/oracles, exclude actualDATA before content; onlyexplicitNO_DATAallowed.
+No actualprior/fixed20/oldD/heldout/protected DATA/factory/normalqualifier/preflight/
+native/OriginalArm/capture/graph/Session/receipt/export/genuine. Both Study holds
+remain; original->exactNULL/OBSERVE UNSPENT_GATED. All90s/640groups/5s/32768PERGROUP/
+copy1048576/chunk4096/othercaps,seeds/epochs/order/oracles unchanged. Full30EXCLUDED,
+HARD/PSYCHOTIC unavailable/unrun,protectedUnreadUNCERTIFIED,oldnormal20NOTREREAD,
+playable100=0,betaHELD. No claimed normal host or playable100 qualification.
+
+MainHEAD5f05b005 tracked9/untracked6; EHEADd9747229 tracked1/untracked0;
+DesktopHEADe0c36885 tracked7/untracked89; allstaged0 freshly confirmed preserved.
+Current reportprefix only mirrored; opaque histories preserved. Prior uncertain
+browser14116/start639294472690745890/port58320,preview34180/start639294472514546595/
+port58264+14children,Dprocess/unlink/hardlink/scratch andNotepad67116860 untouched.
+Normal commit/push/remote verification and oneN54Gmail pending, no duplicateprior
+emails. Rootownsacceptance/publication; continueeligibleworkwithout routine
+permission, notifymeaningful milestone/failure/decision only.
+
+# Historical checkpoint: N53 publication and N54 Source authority preparation
+
+# Current checkpoint: N53 published; N54 Source authority audit prepared
+
+Active F codex/q100-terminal-only-20261107, no upstream; HEAD
+7d17a4721273886af7197e1e29db77ddde38016b exact remote verified. Accepted N53
+candidate
 5c110b6fb1c3b144ec58755d514386cbc03a8aab, Bind final output closure to original write
 handles, normally pushed/remote verified. Gmail1a1cc2f07e9dcbe4 sent once;
-receipt follows/no second email. N52 implementation
+receipt published/verified, no second email. N52 implementation
 8c0c8855d1832d56c0caea8dce6dbbbd8663f0a6 and completion Gmail1a1cbf3ca870b4d3
 already done once. Normal target origin/codex/q100-physical-feasibility. N53 is the
 underlying original-write identity/ephemeral Source-token seam, not normal host
@@ -66,9 +139,20 @@ start639294472690745890/port58320,preview34180/start639294472514546595/port58264
 MainHEAD5f05b005 tracked9/untracked6; EHEADd9747229 tracked1/untracked0;
 DesktopHEADe0c36885 tracked7/untracked89; allstaged0 freshly confirmed preserved.
 Only current report prefix mirrored, opaque histories preserved. Normal commit/
-push/remote verification and one N53 completion Gmail complete; receipt remains
-next, no duplicate N52/prior emails. Root owns acceptance/publication; continue eligible roadmap
+push/remote verification, receipt and one N53 Gmail complete; no duplicate
+N52/prior emails. F reportM only/staged0 after this checkpoint. Root owns acceptance/publication; continue eligible roadmap
 without routine permission, notify meaningful milestone/failure/decision only.
+
+
+N54 Source/tool authority audit PREPARED only: OS-temp/tsj-q100-v2-authority-contract-r1-am_tzcb_.
+Current general _observe_source_tools plus fixed8Source/5Tool role/pin CODE.
+Prior qualifier roles are not native6Source/current5core/nativeManifest/wire/
+wholecontext authority. Need exact pinned observer CODE4786259585 via retained
+CODE provenance before choosing a current native Source/tool adapter; public
+actualtools canary names pin but private observer path not located here.
+No broad oldscratch/D/protected search, actualallowlist/body read, module
+import/call/process/host gate or implementation/publication/email in prep.
+SCOPE_PREPARATION_R1 ddf8847c11e59227710c8f35393848fd92a27b4524a3a16e39fdc3debd43fc28.
 
 # Historical checkpoint: N52 publication and N53 handoff preparation
 

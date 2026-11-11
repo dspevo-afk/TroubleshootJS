@@ -1,0 +1,91 @@
+{
+  "status": "PASS_FINITE_NATIVE_CODE_TOOL_BYTE_FACTS_NOT_AUTHORITY_OR_LAUNCH",
+  "finalTests": 16,
+  "earlySmokeTests": 2,
+  "sourceRoles": 6,
+  "toolRoles": 2,
+  "phases": [
+    {
+      "phase": "smoke-r2",
+      "gateSha256": "50d8431a9a7f5f0e6158fa7dcd560db60af258ef55825a41a3169ae68fe92536",
+      "sourceFreezeSha256": "01381e0d9161deec1c1ea0b6814b38520ed1a491ecd95e4c5b91308c8065a6c9",
+      "exitCode": 0,
+      "processExitObserved": true,
+      "operationNanos": 349487800,
+      "successfulIsolatedCleanup": "UNMEASURED"
+    },
+    {
+      "phase": "suite-r2",
+      "gateSha256": "c1c64be9cf3b4377188998e4347c80b49662fd709563a412025ffde6f835ee3a",
+      "sourceFreezeSha256": "2a4862d16c6762830e8da569f06acd0dcaf5ff2f5ab5ce1419f8382a22d84124",
+      "exitCode": 0,
+      "processExitObserved": true,
+      "operationNanos": 1503560300,
+      "successfulIsolatedCleanup": "UNMEASURED"
+    }
+  ],
+  "realJunctionCleanup": {
+    "kind": "JUNCTION_NODE_ONLY",
+    "tag": "A0000003",
+    "exactOwnedTargetRevalidated": true,
+    "cleanupNanos": 90500,
+    "nodeAbsent": true
+  },
+  "oldOwnerEvidence": [
+    {
+      "phase": "smoke-r1",
+      "gateSha256": "6c029afad24891de90572bfced7ae0f78197e022b104b9ea07af6177dc638a40",
+      "consumedCodeInputCount": 7,
+      "explicitInputsUnchanged": true,
+      "status": "RETAINED_NOT_RERUN_NOT_RENEWED"
+    },
+    {
+      "phase": "suite-r1",
+      "gateSha256": "ae1611beea8aed0e06f62290801450be9ab7278209edc191297ff0bf10df4307",
+      "consumedCodeInputCount": 7,
+      "explicitInputsUnchanged": true,
+      "status": "RETAINED_NOT_RERUN_NOT_RENEWED"
+    },
+    {
+      "phase": "staging-r1",
+      "gateSha256": "39163ea1b690e5bcf400e260057545ed12998f8b0493de723d4186084a705c78",
+      "consumedCodeInputCount": 7,
+      "explicitInputsUnchanged": true,
+      "status": "RETAINED_NOT_RERUN_NOT_RENEWED"
+    },
+    {
+      "phase": "owner-r1",
+      "gateSha256": "dacca638a9fda550dcf816592010245ba1facb885b9222f86579cbd4daf7ec90",
+      "consumedCodeInputCount": 7,
+      "explicitInputsUnchanged": true,
+      "status": "RETAINED_NOT_RERUN_NOT_RENEWED"
+    }
+  ],
+  "reusedScope": "N53_18_N52_24_OUTPUT_OWNER_6_EXPLICIT_SOURCE_INPUT_AUDIT_NOT_RENEWAL",
+  "observerSource": "ALREADY_MAINTAINED_EXACT_478625_PIN_NOT_DUPLICATED",
+  "oldRolesDomain": "PRIOR_EIGHT_SOURCE_FIVE_TOOL_UNCHANGED_SEPARATE",
+  "draftCorrection": "R1_TEST_USED_SIX_ROLE_EXTRA_SET_CORRECTED_TO_EXACT_PRIOR_FIVE_BEFORE_R2",
+  "priorR1Gates": "PASS_NARROWER_COVERAGE_PRESERVED_NOT_REUSED_FOR_CHANGED_TEST",
+  "specAuthority": "EXTERNAL_AUTHENTICATED_CALLER_PRECONDITION",
+  "moduleBinding": "NOT_PROVENANCE",
+  "sourceAndToolObservations": "FINITE_READ_AND_IDENTITY_RECHECK_NOT_ATOMIC_NAMESPACE_TRANSACTION",
+  "normalHostAcceptance": false,
+  "actualDataRead": false,
+  "javaExecutablesRun": false,
+  "nativeBuild": false,
+  "classDependencyJarClosure": "NOT_QUALIFIED",
+  "harnessModuleLink": "NOT_OBSERVED",
+  "realQualifierCoordinator": "UNIMPLEMENTED_UNQUALIFIED",
+  "genuine": "UNSPENT_GATED",
+  "productionJavaGwtPlayer": "NOT_APPLICABLE_UNCHANGED",
+  "electricalPopulation": "NOT_RENEWED",
+  "ci": "NOT_RUN_SELF_HOSTED_RUNNER_PREREQUISITE",
+  "full30": "EXCLUDED",
+  "hardPsychotic": "UNAVAILABLE_UNRUN",
+  "protectedUnread": "UNCERTIFIED",
+  "oldNormal20": "NOT_REREAD",
+  "playable100": 0,
+  "beta": "HELD",
+  "resources": "ORDINARY_CODE_FIXTURES_AND_DISPLACED_ORIGINALS_RETAINED_JUNCTION_REMOVED_NO_PERSISTENT_PROCESS",
+  "next": "CLOSED_CURRENT_CLASS_INVENTORY_AND_TRUSTED_COORDINATOR_SOURCE_TOOL_LAUNCH_COMPOSITION"
+}

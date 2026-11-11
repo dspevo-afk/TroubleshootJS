@@ -6,6 +6,9 @@ CODE/NO_DATA tests; those file/handle facts do not activate normal execution.
 The caller's original five-file identity and optional in-process Source-token
 handoff are covered by [HANDOFF_CONTRACT_R1.md](HANDOFF_CONTRACT_R1.md) and
 `test_current_output_handoff.py`; actual normal qualifier/coordinator proof remains separate.
+The thin `current_native_byte_facts.py` consumer observes the six Source roles and
+two native executables through existing neutral helpers. See
+[BYTE_FACTS_CONTRACT_R1.md](BYTE_FACTS_CONTRACT_R1.md) and its Windows finite tests.
 
 This is the first host-adapter substep: pure fixed Source-list and compiler/native
 argument recipes. It performs no I/O, process launch, data ingest or admission.
