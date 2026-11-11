@@ -2,7 +2,8 @@
 
 Active F codex/q100-terminal-only-20261107, no upstream; normal publication target
 origin/codex/q100-physical-feasibility. Parent HEADfddf2a8333bd1e966a02a6310e1818847f94c474.
-N42 final candidate accepted locally; implementation commit/push/Gmail PENDING.
+N42 implementation3528d586e3715defbaa87293acab7049a7e2ef58 normally pushed; exact remote accepted SHA verified.
+Completion Gmail1a1c8dad71517f05 sent once/acknowledged; NO receipt/duplicate email.
 
 Scope: replace unmetered Parent.runtimeInputs with (Arguments,SetupMeter).
 Structural admission rejects null/foreign/nullraw/wrongtype before debit; existing
