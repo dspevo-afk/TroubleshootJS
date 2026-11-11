@@ -65,3 +65,7 @@ REREAD; playable100=0; beta HELD. Existing unrelated worktrees and old failure
 evidence remain preserved. See the
 [staging contract](../../../../tests/qualification/rb100-layout/current-native-host-r1/STAGING_CONTRACT_R1.md)
 for the API boundary.
+
+Implementation `8c0c8855d1832d56c0caea8dce6dbbbd8663f0a6` normally pushed to
+origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
+Gmail `1a1cbf3ca870b4d3` sent once; this publication receipt sends no second email.
