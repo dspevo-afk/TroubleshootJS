@@ -2,7 +2,8 @@
 
 Active F codex/q100-terminal-only-20261107, no upstream; normal target
 origin/codex/q100-physical-feasibility. Parent HEAD07092dbbdd301ea9b9c543dd2657119985c6a51b.
-N46 final candidate locally accepted; commit/push/completion Gmail PENDING.
+N46 implementation d36fa152c2d424aa475cfa7fe3b679440f6d586c pushed normally; exact remote SHA verified.
+Completion Gmail1a1c968f9dbf97c5 sent once. Receipt pending; no second email.
 
 Scope: CurrentV2InputSetup.readCurrent binds four static producer APIs through a
 fieldless instance facade. Fresh18 precedes extra1 allocation unit. Existing read
