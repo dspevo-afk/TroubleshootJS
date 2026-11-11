@@ -6,6 +6,8 @@ The [original output identity substep](HANDOFF_R1.md) carries original write tok
 through final closure and supplies an optional Source token for a future coordinator.
 The [native CODE/tool byte-facts substep](BYTE_FACTS_R2.md) reuses neutral observers
 for six Source/two executable inputs; it grants no class/launch or normal authority.
+The [fixed current CODE class inventory](CLASS_INVENTORY_R3.md) checks exact fresh/
+inherited closure through shared owners; actual DATA and normal launch stay gated.
 
 The pure adapter maps six fixed current Source roles and validated lexical values
 into Source-list bytes and immutable compiler/native recipes. It preserves the

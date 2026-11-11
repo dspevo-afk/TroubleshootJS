@@ -2078,6 +2078,17 @@ Implementation `49b913df4646fb79a04b166eb66924b45b5fe0cc` normally pushed to
 origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail `1a1cc7429e81fda9` sent once; this receipt sends no second email.
 
+The [fixed current CODE class inventory](task-evidence/Q100/current-native-host-r1/CLASS_INVENTORY_R3.md)
+is locally accepted for exact141 fresh/2396 inherited rows, known NO_DATA only.
+Both complete closures precede content reads; shared identities, class headers,
+hashes and full-path shadows are rechecked under original caps. Final25 Windows
+methods and two-case smoke pass; fresh selected-JDK8 six-Source build reproduces
+the independent141 bytes with zero diagnostics. Earlier narrower R1/R2 evidence
+is preserved. This grants no actual DATA/coordinator/native launch authority.
+Next is trusted Source/tool/class/JAR/compile and real-return/launch composition,
+then semantic/receipt/lifecycle closure. Normal holds/genuine gate remain;
+playable100=0,betaHELD,full30/HARD exclusions unchanged.
+
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

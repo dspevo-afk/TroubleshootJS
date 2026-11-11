@@ -535,6 +535,14 @@ specs before reads, then identity-rechecks byte facts. The prior-specific wrappe
 is unchanged. Module/spec authentication, class/launch and coordinator authority
 remain external; the observer returns no bodies or normal-ready status.
 
+The [fixed CODE class inventory](task-evidence/Q100/current-native-host-r1/CLASS_INVENTORY_R3.md)
+owns declared141/2396 fresh/inherited closure policy for the current flat client
+package. Existing reader/I/O helpers own bounded bytes and identities; both
+complete name/kind/DATA scans precede reads, with bounded enumeration and final
+file/tree rechecks. The sole permitted producer is the pinned NO_DATA class.
+Complete metadata, compile/Source/JAR provenance and exclusive lifetime remain
+caller-owned. This adds neither normal DATA admission nor a native coordinator.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published

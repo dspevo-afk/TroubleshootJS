@@ -1,9 +1,83 @@
-# Current checkpoint: N54 native CODE/tool byte facts published
+# Current checkpoint: N55 CODE class inventory accepted locally; publication pending
 
-Active F codex/q100-terminal-only-20261107, no upstream; accepted N54 candidate
+Active F codex/q100-terminal-only-20261107, no upstream; candidate parent
+9bacf84ee2106a2999f908ae45a0d2b03dd150d0 published/remote verified. N54 implementation
+49b913df4646fb79a04b166eb66924b45b5fe0cc and Gmail1a1cc7429e81fda9 complete once.
+Normal target origin/codex/q100-physical-feasibility. N55 public T/E current-native-
+host-r1/CLASS_INVENTORY_R3; private OS-temp/tsj-q100-code-class-inventory-r1-48e8114b40c2.
+
+Maintained fixed CODE-only inventory checks declared141 fresh six-Source and2396
+inherited rows, flat client package, strict metadata/types/case/path/major51 and
+10000class/256MiB aggregate bounds. Known CODE fits existing8MiB reader mechanism.
+Only exact NO_DATA V2 class1044B/cce09c admitted in producer namespace, fresh only.
+Full JAR-path/fresh/inherited shadows deny before I/O. Both complete names/kinds/
+DATA scans precede ANYclassbody; bounded names-onlyscandir, reader sharedpath/
+handle/token owners, parent-child continuity, full secondread/finaltree rechecks.
+No genericcrawl/copiedhandleverifier/classbodyoutput/ledger/admission status.
+Complete expectedmetadata, admittedroot/Source/compiler/JAR authority andexclusive
+lifetime are caller obligations. Count/hash shape not authority; pathscans not
+atomicdirectory-handle transaction or hostileexternal-race proof. No normalDATA.
+
+FinalR3 selectedPython3.13-I-B optimize0 smoke2 andsuite25 PASS18.328s. Actual
+selectedJDK8source7/target7/UTF8/existingXlint/emptysourcepath sixCODE-Source@argfile
+build PASSexit0/zero diagnostics. Everyfresh141class byte matchesindependentN51,
+inherited2396 alsoexact; total2537/12196044B/major51/noshadows. N50classes157 are
+different9Source baseline; onlyN50dependencies2396 are inherited. ActualDATAclass
+oracles are forbidden, not implied by NO_DATA. All3final ownchild exits0 observed;
+all7R1/R2/R3 child exits observed viaoriginalPopenhandles/creation/image/SHA/phase/
+deadline. Childoperation vs successfulisolatedcleanup UNMEASURED separate; compile
+surroundingclass-I/O duration NOTseparatelytimed. Realjunction exacttarget+tag
+A0000003 revalidated/node-only cleanup98800ns/absent. Ordinary CODE copies,
+classoutputs/displacedoriginals retained; no newpersistentprocess/link/browser.
+
+Rootcaught draftJARstem/fullZIPpath mismatch beforeexecution; correctedfullpaths,
+earlyDATAguard/parentchildidentity. AfterR1 root bounded enumeration; finalextra
+inheritedDATA/bothclosure/parent-swap controls completeR3. R1/R2narrowerpasses,
+drivers/classes preserved NOTreusedfornewguards/tests. No weakenedoracle/budget.
+Root fullSource/25output/compilerdiagnostics/oracles/receipts review; leafSource-
+only no blocker inclfinal3controls/noexecution/class/JAR/Data reads byreviewer.
+Worker ownedmodule only; root integrated/tested. Source bodies/toolpins/oracles
+matchfinalgates andcurrent tree. Existingowners/Core5 Java unchanged; N54/N53/
+N52/outputowner evidence retainedafterexplicitinputaudit NOTRERUN/NOTRENEWED.
+
+Module14632B/e69236558ada36273512eb9c4868166db4cc237ea6877deda5ed4806c397d3f0;
+tests12463B/7398f577c3aa7d37f8a9c32d6bbe58c4a725525ae68d46c168cd0557143870d0.
+R3smokea50727bb2f7df20bd8be94b11d746e71b89a1b12892ea4e2cf6565df1ad24906;
+R3compile5cd6a61f8e0b70924f7cb492b29ea10eafa909c4d7a6972057c9f77556b156c3;
+R3suite5e08a9845e44d0c070ec5f04d1cbbe28a692177dcc084d94711277f6f27f4482.
+CLASS_PROOF_R3 5de64991fd7f126a85c82af0e20251c7ce1b1e4e756ad2ea3b94dd6178683dc5.
+Pinnedmetadata N51HOST5cd182...fresh141 vsN50COMPILE42c1ff...dependencies2396.
+16selectedCODEinputs/JDK2/twoCODEJARpins exactacrossfinalphases. Componentdoesnot
+itself authenticateJARbytes/name-set authority or compile/Source/launch receipt.
+
+NEXT trustedcoordinator Source/tool/class/JAR/compile andactualverifiednestedreturn/
+launch composition, thenfullsemantic/receipt/lifecycle closure before normaluse.
+Actualprior/fixed20/oldD/heldout/protected DATA/factory/normalqualifier/preflight/
+nativeentrypoint/OriginalArm/capture/graph/Session/receipt/export/genuine NOTRUN.
+Both Studyholds remain; original->exactNULL/OBSERVE UNSPENT_GATED. All90s/640groups/
+5s/32768PERGROUP/copy1048576/chunk4096/othercaps,seeds/epochs/order/electricaloracles
+unchanged. Full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,protectedUnreadUNCERTIFIED,
+oldnormal20NOTREREAD,playable100=0,betaHELD. Java productionSource unchanged/GWT/
+Player N/A; electrical/population NOTRENEWED; CI NOTRUN/self-hosted prerequisite.
+
+MainHEAD5f05b005 tracked9/untracked6; EHEADd9747229 tracked1/untracked0;
+DesktopHEADe0c36885 tracked7/untracked89; allstaged0 freshly confirmed preserved.
+Current reportprefix only mirrored, opaquehistories preserved. Prior uncertain
+browser14116/start639294472690745890/port58320,preview34180/start639294472514546595/
+port58264+14children,Dprocess/unlink/hardlink/scratch andNotepad67116860 untouched.
+Normal commit/push/remote verification and one N55 Gmail pending, no duplicateprior
+email. Continue eligiblework without routine permission; notify meaningful change.
+
+# Historical checkpoint: N54 publication and N55 CODE class preparation
+
+# Current checkpoint: N54 published; N55 current CODE class scope prepared
+
+Active F codex/q100-terminal-only-20261107, no upstream; HEAD
+9bacf84ee2106a2999f908ae45a0d2b03dd150d0 exact remote verified. Accepted N54
+candidate
 49b913df4646fb79a04b166eb66924b45b5fe0cc, Observe current native source and executable
 bytes, normally pushed/remote verified. Gmail1a1cc7429e81fda9 sent once;
-receipt follows/no second email. N53implementation
+receipt published/verified, no second email. N53implementation
 5c110b6fb1c3b144ec58755d514386cbc03a8aab, completion Gmail1a1cc2f07e9dcbe4 done once.
 Normal target origin/codex/q100-physical-feasibility. N54 public T/E current-native-
 host-r1/BYTE_FACTS_R2; private OS-temp/tsj-q100-native-byte-facts-r1-4645f3a6c9a2.
@@ -65,9 +139,17 @@ DesktopHEADe0c36885 tracked7/untracked89; allstaged0 freshly confirmed preserved
 Current reportprefix only mirrored; opaque histories preserved. Prior uncertain
 browser14116/start639294472690745890/port58320,preview34180/start639294472514546595/
 port58264+14children,Dprocess/unlink/hardlink/scratch andNotepad67116860 untouched.
-Normal commit/push/remote verification and one N54 Gmail complete; receipt next,
-no duplicate prior emails. Rootownsacceptance/publication; continueeligibleworkwithout routine
+Normal commit/push/remote verification, receipt and one N54 Gmail complete; no
+duplicate prior emails. F reportM only/staged0 after this checkpoint. Rootownsacceptance/publication; continueeligibleworkwithout routine
 permission, notifymeaningful milestone/failure/decision only.
+
+N55 current CODE class scope PREPARED only: OS-temp/tsj-q100-current-class-contract-r1-z82yl7e9.
+SelectedR50 sourceAudit/dependencies/inventory CODE functions only, pinnedN51
+6Source141 vsN50_9Source157 class-row metadata, soleexplicitNO_DATA1044B/cce09c.
+No imports/calls/classbody/Data read/build/test/implementation. Needmaintained
+exactclosed CODE inventory, originalcaps/oracles/major51/noshadows/identity and
+real selectedWindows controls before class/launch/coordinator composition.
+SCOPE_PREPARATION_R1 1a5ed2584081287776b21bf423e248b034ceb02cefbe2ba2cba50f9c7ee02ce2.
 
 # Historical checkpoint: N53 publication and N54 Source authority preparation
 

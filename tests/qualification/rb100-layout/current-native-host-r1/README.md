@@ -9,6 +9,9 @@ handoff are covered by [HANDOFF_CONTRACT_R1.md](HANDOFF_CONTRACT_R1.md) and
 The thin `current_native_byte_facts.py` consumer observes the six Source roles and
 two native executables through existing neutral helpers. See
 [BYTE_FACTS_CONTRACT_R1.md](BYTE_FACTS_CONTRACT_R1.md) and its Windows finite tests.
+The CODE-only `current_native_class_inventory.py` checks declared exact141/2396
+closure under [CLASS_INVENTORY_CONTRACT_R1.md](CLASS_INVENTORY_CONTRACT_R1.md).
+Its expected metadata and JAR-name authority remain caller-owned.
 
 This is the first host-adapter substep: pure fixed Source-list and compiler/native
 argument recipes. It performs no I/O, process launch, data ingest or admission.
