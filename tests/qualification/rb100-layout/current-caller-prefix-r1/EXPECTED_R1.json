@@ -1,0 +1,12 @@
+{
+  "SMOKE": {
+    "cases": 1,
+    "checks": 8,
+    "line": "SYNTHETIC_CURRENT_CALLER_PREFIX_ONLY mode=SMOKE cases=1 checks=8 deniedFactoryLoads=0 deniedOwnerLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+  },
+  "SUITE": {
+    "cases": 10,
+    "checks": 53,
+    "line": "SYNTHETIC_CURRENT_CALLER_PREFIX_ONLY mode=SUITE cases=10 checks=53 deniedFactoryLoads=0 deniedOwnerLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "status": "ROOT_LITERAL_CONTRACT_BEFORE_NATIVE",
+  "smokeCases": 1,
+  "suiteCases": 10,
+  "prefixStop": {
+    "units": 652,
+    "copies": 271,
+    "chunks": 1,
+    "groups": 0,
+    "open": true,
+    "groupUnits": 652,
+    "callbacks": [
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "swappedContext": {
+    "units": 88,
+    "copies": 0,
+    "chunks": 0,
+    "groups": 0,
+    "open": true,
+    "groupUnits": 88,
+    "callbacks": [
+      1,
+      1,
+      0,
+      0
+    ]
+  },
+  "wrongStart": {
+    "units": 18,
+    "copies": 0,
+    "chunks": 0,
+    "groups": 0,
+    "open": true,
+    "groupUnits": 18
+  },
+  "foreignParent": {
+    "units": 0,
+    "copies": 0,
+    "chunks": 0,
+    "groups": 0,
+    "open": false
+  },
+  "earlyParseCaseIds": [
+    2,
+    3,
+    4,
+    5,
+    7,
+    10
+  ],
+  "earlyParseOwnerAndFactoryAttempts": 0,
+  "normalHostAcceptance": false,
+  "genuine": "UNSPENT_GATED"
+}

@@ -1,9 +1,172 @@
-# Current checkpoint: N46 fixed factory bridge accepted in no-DATA profile
+# Current checkpoint: N48 actual-clock caller prefix locally accepted
+
+Active F codex/q100-terminal-only-20261107 HEAD77ca67257cac8c51fc5bc1a5986e9764b0ef8de6,
+no upstream; normal publication target origin/codex/q100-physical-feasibility.
+N48 finite laboratory component accepted; commit/push/completion Gmail PENDING.
+Private OS-temp/tsj-q100-caller-prefix-r1-jrasshcq; public T/E current-caller-prefix-r1.
+
+Scope: TEST-ONLY typed CurrentCallerPrefix samples nanoTime at first run-body
+instruction, current Arguments.parse, one exact Parent/native Meter/SetupMeter,
+readCurrent(meter,started,args.inputContextSha256). Observational static refs/stage
+counters are laboratory instrumentation, not a product carrier/ledger. No normal
+entrypoint or existing owner Source changed. Both Study main/assemble exact holds
+remain. First-body clock excludes prior JVM/class initialization; host deadlines
+separate. No successful input Map/carrier/capture continuation or trusted caller/
+source/classpath/input/PAD origin. Actual/fake OriginalArm, graph, Session, DTO,
+receipt/export and genuine operation unrun. Only explicit new NO_DATA stub admitted;
+original2actualDATA excluded before access. Full30/HARD/PSYCHOTIC remain excluded.
+
+Final27Java JDK8 source7/target7 build PASS299major51classes/943908B+2396CODEdeps/
+11801276B,noshadows. All291 N46 class bytes unchanged;8newclasses belong only to
+two new test families. Final javap5031B/0e86010cb727cd92a681dceae9aef429d87368c9fbdc177e4c2a1bb941bc227a
+proves one local clock first instruction/current context/readCurrent/no carrier or
+capture continuation. One unchanged CleanupStagingCanary unchecked warning kept.
+Prefix1768B/2d1629d8445931ceb5f141c434120808ae746b1a6a9643114d3b28978c4a141a;
+canary32647B/a567360c8adc3c45a73e4385989942b36cbe30c8d3e25cf17e19ccb8da932558.
+Fresh prefixSMOKE1/8checks and SUITE10/53 PASS; positive overlaps. Local clock/native
+start and exact Parent/wrapper identities, distinct sourceA/wireB/contextC roles,
+NO_DATA stop652units/271copies/1chunk, swappedcontext88, wrongstart18,
+foreignParent beforedebit0. Six malformed-argument profiles PASS actual selected-
+JDK8 zero native-owner/generated attempted loads and zero construction stages;
+no supplied timestamp protocol. Exact NO_DATA FQN allowed onlycases1/6. No native
+Meter counter writes/owner credits/fake successful setup or retry of failed prefix.
+Fresh N46 bridgeSMOKE1/6+SUITE10/53 PASS. All7owned calls observed6exit0+one deliberate
+CLInegativeexit1; no N48 compile/native failure. Operation/cleanup times separate;
+successful isolated cleanup duration UNMEASURED, not zero or normal-host proof.
+
+SOURCE_FREEZE_R1 0246ffb25ba4ab0ed64c547c352e4d34b7db7e64aa4e877831a2ae7ea30e0148;
+COMPILE_GATE_R1 58b46eb57f4652ba8920ce8a49b7dce9bdb0de4fe57a9e4b087e1ceb0d9c81ad;
+NEW_GATE_R1 a8ba12bbc0488e6d4d43fc8d845e11435923f7fca5775f884d04abfce1237250.
+Before/after Source/class/dependency/jar/six reader inputs authenticate. Retained
+940metadata/3104counted(excluding24protocol), full parser, carrier/handoff evidence
+REUSED after exact25Source/291class/2396deps/reader-input audit; NOT RERUN/RENEWED.
+RUN81 positive excluded/notrenewed. Public code copies exact compiled/frozen bytes.
+Root reviewed all2newfiles/runner/contracts and actual results. Worker supplied
+Source; followups pending_init, root interrupted worker/reviewer before taking
+ownership. No independent runner/native review claimed. Root added missing parse
+clock-window and exact foreign-parent zero-debit assertions before any native;
+unrun draft preserved. Prior milestone build/fixture/receipt-EOL failures unchanged.
+
+Resources: all7 selected process exits observed through original Popen handles/
+creation/image receipts. Each isolated loader closes in finally. Two ordinary
+owned empty/nonempty fixtures and exact sentinel retained controlled evidence;
+no reparse nodes, listener/browser or persistent process created. Prior uncertain
+browser14116/start639294472690745890/port58320, preview34180/start639294472514546595/
+port58264+14children, D process/unlink/hardlink/scratch and Notepad67116860 untouched.
+MainHEAD5f05b0059mods/6untracked,EHEADd9747229reportM,DesktopHEADe0c368857mods/
+89untracked/staged0 preserved. F only17 intended paths for publication; no unrelated
+edits/staging. No broad cleanup/reset, branch deletion or history rewrite.
+
+NEXT unstarted N49: trusted current caller/source/classpath/input authority before
+normal straight-line composition through actualDTO/receipt/arms/metadata/export
+and independent semantic/host/lifecycle closure. N47 conditional authority contract
+OS-temp/tsj-q100-caller-authority-contract-r1-5y818yhq remains: one unchanged clock/
+Parent/rawMeter/wrapper/Arguments/originalSetupResult, borrowed map stable; counters
+and matching hashes/ABI are not origin. captureWithSetup already owns begin30/
+read5/merge32. No normal activation or genuine use follows the lab stop proof.
+
+Budgets90s/640groups/5s/32768PERGROUP/copy1048576/chunk4096/other caps,seeds/
+epochs/candidate order/independent oracles unchanged. Full30EXCLUDED,HARD/PSYCHOTIC
+unavailable/unrun,playable100=0,betaHELD; protectedUnreadUNCERTIFIED;
+oldnormal20NOTREREAD,genuineOriginal->exactNULL/OBSERVE UNSPENT_GATED. Production/
+GWT/Player N/A for test-only scope; electrical/population NOTRENEWED; CI NOTRUN/
+self-hostedrunner prerequisite. N46impld36fa152/receipt77ca6725 and Gmail
+1a1c968f9dbf97c5 already complete; no duplicate older/receipt email. Root publishes
+validated scope normally then one Gmail; no success claim beyond finite profile.
+Current prefix<=64KiB only for agents; preserve opaque history. Continue roadmap
+without routine permission; notify meaningful completion/failure/decision only.
+
+# Historical checkpoint: N47 caller authority Source contract; N46 published
+
+Active F codex/q100-terminal-only-20261107, no upstream; normal publication target
+origin/codex/q100-physical-feasibility. HEAD77ca67257cac8c51fc5bc1a5986e9764b0ef8de6
+verified exact remote. N46 implementation d36fa152c2d424aa475cfa7fe3b679440f6d586c,
+Bind current input reader to static factory API, pushed normally and Gmail
+1a1c968f9dbf97c5 sent once. Receipt final77ca6725 pushed; no second email.
+Initial local receipt1a994b43 had mixed-EOL whitespace failure and shell continued
+to commit; corrected in descendant77ca6725 before push. Final strict checks pass,
+net receipt is four scoped docs with no unrelated content/encoding change. Failure
+retained privately; no history rewrite and no native input changed.
+
+N47 SOURCE-ONLY contract complete; no normal/native acceptance or code change.
+Private OS-temp/tsj-q100-caller-authority-contract-r1-5y818yhq. Selected current
+Study main/Arguments/Parent/SetupMeter/SetupResult/allowance/assemble Source only;
+N46 public contract. No actual factory DATA, old D descriptors/results/generated
+DATA factories, held-out/protected data or whole historical builders/consumers.
+Normal main/assemble stay exact throw-only holds. Genuine original->exactNULL/
+OBSERVE UNSPENT_GATED. Source equality and no-DATA ABI never authorize activation.
+
+Contract: one local System.nanoTime before argument preflight and Parent; same
+sample constructs one native Meter and accompanies one exact Parent/SetupMeter.
+First-main-body clock excludes prior JVM/entry-class initialization; startup and
+host deadlines remain separate. Distinct run/source/wire/context/output roles;
+readCurrent receives args.inputContextSha256, runtimeInputs receives identical
+args and wrapper only after validated setup. Existing SetupResult retained by
+reference; counters alone do not prove map or Meter origin. Borrowed map stable/
+exclusive for operation; no duplicate bundle/ledger/resolver. captureWithSetup
+already owns begin30/original/read5/merge32; no separate duplicate begin. Failed
+attempts discarded, never reset/refunded/retried or advanced after no-DATA stop.
+Trusted argument/factory/source/classpath origin is MISSING, not inferred from
+shape/hash equality, parsing, ABI or the selected closure. Contract is conditional
+on that origin/enforcement; no ready normal implementation follows. Bounded leaf
+review of selected Source only agrees on ownership/order and missing authority;
+it executed nothing and did not certify the newly written contract/native proof.
+
+SOURCE_SELECTION_R1 dd329a9d8ae715b48f5c36451b1ddf22c13b9bfe4f75ce945d936efd46cd84ad;
+SOURCE_FINDINGS_R1 d56fbc07101849e6a4e4abf32a8f4ec5b080338ebdf9d86259fd67d2207140cb;
+CALLER_AUTHORITY_CONTRACT_R1 adcea26ebbb3964cef69dd239aec5fad40a49438efdb75c42f14619b2d5b238d;
+SOURCE_FREEZE_R1 ad1ab5a031113254061e1475e9e29a054e6e8fe168d73bdbb1757b70318c9165.
+Source-only: no native/build/Player/CI gate run or renewed. No publication/email
+for this private contract; only current checkpoint updated/mirrored. F reportM,
+staged0; production and qualification code unchanged from published candidate.
+
+N46 retained acceptance: Source8/fresh public8 PASS; final25Java JDK8 source7/
+target7 R3 build PASS291major51classes/912319B+2396CODEdeps/11801276B,noshadows.
+Current owner24397B/f1f2308ac9e33ccee4465ff6f3d1f6d0fd70de25cc0d8a00d9a3312cdd5f4a74;
+Study239938B/755ac9ff94478155c09298c8785df753da852483edd2888547977c6202969cbd unchanged.
+Explicit new NO_DATA stub only; original2factoryDATA excluded before access.
+BridgeSMOKE1/6+SUITE10/53, handoff1/7+20/65,carrier1/10+10/42,mapping1/9+4/28,
+940metadata cases/3104counted assertions excluding24detached protocol, arguments
+1/8+43/56 PASS. Modes separate/overlap; all32 finalR3/R4calls observed31exit0+
+1deliberateCLIexit1. Native final javap/layout and denied-loader refusal pass;
+no successful input Map or actual/fake OriginalArm/capture/graph/Session/receipt.
+Positive RUN81 excluded/notrenewed. R1 missing test holder compile FAIL retained;
+whitespaceexit2 corrected by explicit separator with exact Java/classes unchanged;
+R3 missing owned junction regression FAIL retained, restored fixture/freshR4PASS.
+Final freezes/public copies authenticated and strict staged/worktree checks PASS.
+N46 source over-read/old declaration rg footprint and protected-unread UNCERTIFIED
+remain disclosed below. No new producer/source/host authority is inferred.
+
+NEXT eligible N48: bounded test-only actual-clock/current-Arguments/one Parent/
+Meter/wrapper/readCurrent prefix to deliberate NO_DATA stop, with distinct hash
+roles and actual selected-JDK8 early-refusal/load controls. NOT RUN/UNSTARTED.
+No carrier/capture after thrown stop, fake successful setup/Meter writes/owner
+credits or new bundle. This can qualify its lab prefix only, never held normal
+entrypoints. Actual trusted source/classpath/input/PAD authority and full current
+normal composition through actualDTO/receipt/arms/metadata/export, independent
+semantic/host/lifecycle closure remain unstarted prerequisites before genuine use.
+
+Budgets90s/640groups/5s/32768PERGROUP/copy1048576/chunk4096/other caps,seeds/
+epochs/candidate order/independent oracles unchanged. Full30EXCLUDED,HARD/PSYCHOTIC
+unavailable/unrun,playable100=0,betaHELD; protectedUnreadUNCERTIFIED;
+oldnormal20NOTREREAD. Production/GWT/Player N/A for qualification-only N46 and
+Source-only N47; electrical/population NOTRENEWED; CI NOTRUN/selfhostedrunner
+prerequisite. No new persistent resources. R46 owned junction removednode-only
+with target/tag/sentinel proof; readonlyOSsymlink untouched. Controlled failure/
+source/class/output artifacts preserved. Old uncertain browser14116/start
+639294472690745890/port58320, preview34180/start639294472514546595/port58264+
+14children, D processes/unlink/hardlinks/scratch and Notepad67116860 untouched.
+MainHEAD5f05b0059mods/6untracked,EHEADd9747229reportM,DesktopHEADe0c368857mods/
+89untracked/staged0 freshly confirmed preserved. Only report prefix mirrored.
+Never give agents full report; prefix<=64KiB before first historical marker only.
+Continue roadmap without routine permission; notify meaningful changes only.
+
+# Historical checkpoint: N46 fixed factory bridge accepted in no-DATA profile
 
 Active F codex/q100-terminal-only-20261107, no upstream; normal target
 origin/codex/q100-physical-feasibility. Parent HEAD07092dbbdd301ea9b9c543dd2657119985c6a51b.
 N46 implementation d36fa152c2d424aa475cfa7fe3b679440f6d586c pushed normally; exact remote SHA verified.
-Completion Gmail1a1c968f9dbf97c5 sent once. Receipt pending; no second email.
+Completion Gmail1a1c968f9dbf97c5 sent once. Receipt77ca67257cac8c51fc5bc1a5986e9764b0ef8de6 pushed/verified; no second email.
 
 Scope: CurrentV2InputSetup.readCurrent binds four static producer APIs through a
 fieldless instance facade. Fresh18 precedes extra1 allocation unit. Existing read

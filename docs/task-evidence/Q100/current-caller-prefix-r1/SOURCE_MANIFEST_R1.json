@@ -1,0 +1,50 @@
+{
+  "status": "EXACT_FINAL_COMPILED_SOURCE_COPIES",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 29,
+      "sha256": "730a35ae3d558080083c3103d9ac8100c3f6561678092abe341701dfa331eb1d"
+    },
+    {
+      "path": "CONTRACT_R1.md",
+      "bytes": 4519,
+      "sha256": "4c2420fb35eb94fe26d3cd2002fa725b541c8b28960f7999de72252723429b10"
+    },
+    {
+      "path": "CurrentCallerPrefix.java",
+      "bytes": 1768,
+      "sha256": "2d1629d8445931ceb5f141c434120808ae746b1a6a9643114d3b28978c4a141a"
+    },
+    {
+      "path": "CurrentCallerPrefixCanary.java",
+      "bytes": 32647,
+      "sha256": "a567360c8adc3c45a73e4385989942b36cbe30c8d3e25cf17e19ccb8da932558"
+    },
+    {
+      "path": "EXPECTED_R1.json",
+      "bytes": 479,
+      "sha256": "2b6a01e7202978e3ae277a07b2c9714a2572d1022dfbfb07d5c49448854757d3"
+    },
+    {
+      "path": "LITERAL_EXPECTATIONS_R1.json",
+      "bytes": 960,
+      "sha256": "5c299e767854d54a881fd3425e6813383f444c761fe50da23e9435ca70cf281d"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1907,
+      "sha256": "0159ae38ef56fc84bded8a54374d3a4ef25237cdb39952ca14aef0dc68c4352d"
+    }
+  ],
+  "unchangedStudy": {
+    "bytes": 239938,
+    "sha256": "755ac9ff94478155c09298c8785df753da852483edd2888547977c6202969cbd"
+  },
+  "unchangedInputOwner": {
+    "bytes": 24397,
+    "sha256": "f1f2308ac9e33ccee4465ff6f3d1f6d0fd70de25cc0d8a00d9a3312cdd5f4a74"
+  },
+  "privateSourceFreezeSha256": "0246ffb25ba4ab0ed64c547c352e4d34b7db7e64aa4e877831a2ae7ea30e0148",
+  "privateRunnerSha256": "90b2381af3c8739951b0d6be728144fa2d80b22efa3c866e3e1b99e08e94b98d"
+}

@@ -1,0 +1,9 @@
+{
+  "status": "ROOT_SOURCE_REVIEW_COMPLETE_BEFORE_NATIVE",
+  "scope": "Full two new Java files, root runner and contract/literal expectations; no native execution or product authority inferred",
+  "delegation": "Worker wrote new files; followups remained pending_init, root interrupted both worker/reviewer before taking ownership. No independent runner/native review result claimed.",
+  "staticCorrections": "Root added missing invalid-parse clock-window assertion and exact zero-debit foreign-parent assertion before any gate; original draft preserved. No existing assertion removed.",
+  "counts": "SMOKE6 body+2loader=8. SUITE:case1 8; six parse cases5each; swappedcontext6; wrongstart4; foreignparent5 =53. Source-counted before native.",
+  "typeReview": "Attempt and PrefixInvocation declared; reflection array packing reviewed; typed same Parent/native wrapper sequence; one inside clock, no carrier/capture continuation, no native field writes.",
+  "limits": "Lab prefix only; original2DATA excluded; normal holds/genuine gated; Source review does not prove native linkage or trusted caller/source/classpath origin."
+}

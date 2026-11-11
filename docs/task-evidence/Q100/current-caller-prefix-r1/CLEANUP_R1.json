@@ -1,0 +1,11 @@
+{
+  "status": "PASS_NO_PERSISTENT_RESOURCES_OR_REPARSE_NODES_CREATED",
+  "ownedCalls": 7,
+  "allOwnedProcessExitsObserved": true,
+  "classloaderClose": "Canary finally closes each isolated URL loader; all expected runs exited as asserted",
+  "directories": "Two ordinary owned fixtures retained as controlled evidence; empty remains empty and exact nonempty sentinel unchanged",
+  "junctionsOrSymlinksCreated": false,
+  "listenersOrBrowsersCreated": false,
+  "priorUncertainResources": "UNTOUCHED",
+  "successfulIsolatedCleanupDuration": "UNMEASURED_NOT_ZERO"
+}

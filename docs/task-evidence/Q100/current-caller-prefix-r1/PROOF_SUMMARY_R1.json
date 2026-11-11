@@ -1,0 +1,164 @@
+{
+  "status": "PASS_LABORATORY_CURRENT_CALLER_PREFIX_TO_DECLARED_NO_DATA_REFUSAL",
+  "parentHead": "77ca67257cac8c51fc5bc1a5986e9764b0ef8de6",
+  "gateSha256": {
+    "SOURCE_FREEZE_R1.json": "0246ffb25ba4ab0ed64c547c352e4d34b7db7e64aa4e877831a2ae7ea30e0148",
+    "COMPILE_GATE_R1.json": "58b46eb57f4652ba8920ce8a49b7dce9bdb0de4fe57a9e4b087e1ceb0d9c81ad",
+    "NEW_GATE_R1.json": "a8ba12bbc0488e6d4d43fc8d845e11435923f7fca5775f884d04abfce1237250"
+  },
+  "compile": {
+    "sourceCount": 27,
+    "classCount": 299,
+    "classBytes": 943908,
+    "dependencyCount": 2396,
+    "dependencyBytes": 11801276,
+    "major": 51,
+    "noShadows": true,
+    "donor291ClassesByteIdentical": true,
+    "newClasses": [
+      "CurrentCallerPrefixCanary$Attempt.class",
+      "CurrentCallerPrefixCanary$GuardedLoader.class",
+      "CurrentCallerPrefixCanary$Harness.class",
+      "CurrentCallerPrefixCanary$PrefixInvocation.class",
+      "CurrentCallerPrefixCanary$Snapshot.class",
+      "CurrentCallerPrefixCanary$StubCounts.class",
+      "CurrentCallerPrefixCanary.class",
+      "com/lushprojects/circuitjs1/client/CurrentCallerPrefix.class"
+    ],
+    "soleExplicitNoDataStub": {
+      "path": "com/lushprojects/circuitjs1/client/CohortTerminalTelemetryInputV2.class",
+      "bytes": 1044,
+      "sha256": "cce09cb6580894aef7ff3553e8a63710cdd0936538b00f53e022c31b82ff68cb",
+      "major": 51
+    },
+    "bytecode": {
+      "status": "ONE_LOCAL_CLOCK_FIRST_INSTRUCTION_CURRENT_CONTEXT_NO_CONTINUATION",
+      "stdoutSha256": "0e86010cb727cd92a681dceae9aef429d87368c9fbdc177e4c2a1bb941bc227a",
+      "bytes": 5031
+    },
+    "warnings": "One unchanged CleanupStagingCanary unchecked cast; retained, not suppressed"
+  },
+  "freshPrefix": {
+    "SMOKE": {
+      "cases": 1,
+      "checks": 8,
+      "line": "SYNTHETIC_CURRENT_CALLER_PREFIX_ONLY mode=SMOKE cases=1 checks=8 deniedFactoryLoads=0 deniedOwnerLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+    },
+    "SUITE": {
+      "cases": 10,
+      "checks": 53,
+      "line": "SYNTHETIC_CURRENT_CALLER_PREFIX_ONLY mode=SUITE cases=10 checks=53 deniedFactoryLoads=0 deniedOwnerLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+    }
+  },
+  "freshRetainedBridge": {
+    "SMOKE": {
+      "cases": 1,
+      "checks": 6,
+      "line": "SYNTHETIC_STATIC_FACTORY_BRIDGE_COMPONENT_ONLY mode=SMOKE cases=1 checks=6 deniedFactoryLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+    },
+    "SUITE": {
+      "cases": 10,
+      "checks": 53,
+      "line": "SYNTHETIC_STATIC_FACTORY_BRIDGE_COMPONENT_ONLY mode=SUITE cases=10 checks=53 deniedFactoryLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+    }
+  },
+  "calls": [
+    {
+      "phase": "caller-prefix-jdk8-compile-r1",
+      "exitCode": 0,
+      "operationNanos": 1649579900,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 0,
+      "stderrBytes": 339,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "caller-prefix-javap-r1",
+      "exitCode": 0,
+      "operationNanos": 170318700,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 5031,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "caller-prefix-smoke-r1",
+      "exitCode": 0,
+      "operationNanos": 137002900,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 166,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "caller-prefix-suite-r1",
+      "exitCode": 0,
+      "operationNanos": 111168500,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 168,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "caller-prefix-cli-refusal-r1",
+      "exitCode": 1,
+      "operationNanos": 48872900,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 0,
+      "stderrBytes": 152,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "caller-prefix-retained-bridge-smoke-r1",
+      "exitCode": 0,
+      "operationNanos": 70995200,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 157,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "caller-prefix-retained-bridge-suite-r1",
+      "exitCode": 0,
+      "operationNanos": 163636800,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 159,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    }
+  ],
+  "ownedExits": {
+    "calls": 7,
+    "exit0": 6,
+    "deliberateCliExit1": 1,
+    "allObserved": true
+  },
+  "successfulInputMap": "NOT_RUN_NO_DATA_STOP_IS_REQUIRED",
+  "actualFactoryDataPresent": false,
+  "normalHostAcceptance": false,
+  "trustedSourceOrCallerAuthority": false,
+  "actualCaptureExecution": false,
+  "genuine": "UNSPENT_GATED",
+  "full30": "EXCLUDED",
+  "hardPsychotic": "UNAVAILABLE_UNRUN",
+  "protectedUnread": "UNCERTIFIED",
+  "oldNormal20": "NOT_REREAD",
+  "playable100": 0,
+  "beta": "HELD",
+  "productionGwtPlayer": "NOT_APPLICABLE_TEST_ONLY_CHANGE",
+  "electricalPopulation": "NOT_RENEWED",
+  "CI": "NOT_RUN_SELF_HOSTED_RUNNER_PREREQUISITE",
+  "caller": "PRIVATE_HANDLE_BOUND_NATIVE_CALLER_NOT_NORMAL_HOST_CERTIFICATION",
+  "cleanupDuration": "SUCCESSFUL_ISOLATED_CLEANUP_UNMEASURED",
+  "commands": [
+    "selected-python -I -B run_gates_r1.py --case compile",
+    "selected-python -I -B run_gates_r1.py --case new"
+  ]
+}

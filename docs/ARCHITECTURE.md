@@ -490,6 +490,13 @@ typed dispatch, layout and early class-loading/refusal order only. Actual produc
 DATA, source/classpath authority, valid input and normal caller remain separate;
 both Study entrypoints and genuine execution stay held.
 
+The [laboratory current caller prefix](task-evidence/Q100/current-caller-prefix-r1/README.md)
+uses one internally sampled monotonic clock, current Arguments and an exact
+Parent/native Meter/wrapper before the fixed input reader. Distinct hash roles and
+actual denied-loader controls qualify the prefix to a declared no-DATA refusal.
+Its observational fields are test instrumentation. Neither normal Study entrypoint
+is activated; trusted caller/source/classpath/input and lifecycle remain separate.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published
