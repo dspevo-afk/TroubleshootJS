@@ -1,7 +1,9 @@
-# Current checkpoint: N54 native CODE/tool byte facts accepted locally; publication pending
+# Current checkpoint: N54 native CODE/tool byte facts published
 
-Active F codex/q100-terminal-only-20261107, no upstream; candidate parent
-7d17a4721273886af7197e1e29db77ddde38016b published/remote verified. N53implementation
+Active F codex/q100-terminal-only-20261107, no upstream; accepted N54 candidate
+49b913df4646fb79a04b166eb66924b45b5fe0cc, Observe current native source and executable
+bytes, normally pushed/remote verified. Gmail1a1cc7429e81fda9 sent once;
+receipt follows/no second email. N53implementation
 5c110b6fb1c3b144ec58755d514386cbc03a8aab, completion Gmail1a1cc2f07e9dcbe4 done once.
 Normal target origin/codex/q100-physical-feasibility. N54 public T/E current-native-
 host-r1/BYTE_FACTS_R2; private OS-temp/tsj-q100-native-byte-facts-r1-4645f3a6c9a2.
@@ -63,8 +65,8 @@ DesktopHEADe0c36885 tracked7/untracked89; allstaged0 freshly confirmed preserved
 Current reportprefix only mirrored; opaque histories preserved. Prior uncertain
 browser14116/start639294472690745890/port58320,preview34180/start639294472514546595/
 port58264+14children,Dprocess/unlink/hardlink/scratch andNotepad67116860 untouched.
-Normal commit/push/remote verification and oneN54Gmail pending, no duplicateprior
-emails. Rootownsacceptance/publication; continueeligibleworkwithout routine
+Normal commit/push/remote verification and one N54 Gmail complete; receipt next,
+no duplicate prior emails. Rootownsacceptance/publication; continueeligibleworkwithout routine
 permission, notifymeaningful milestone/failure/decision only.
 
 # Historical checkpoint: N53 publication and N54 Source authority preparation

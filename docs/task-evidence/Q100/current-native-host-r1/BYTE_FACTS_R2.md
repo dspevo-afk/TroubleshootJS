@@ -59,3 +59,7 @@ Both Study entrypoints remain held; original->exactNULL/OBSERVE UNSPENT_GATED.
 All budgets, seeds/order, epochs and electrical oracles stay fixed. Full30 EXCLUDED;
 HARD/PSYCHOTIC unavailable/unrun; protected unread UNCERTIFIED; oldnormal20 NOT
 REREAD; playable100=0; beta HELD. Unrelated work and old failures remain preserved.
+
+Implementation `49b913df4646fb79a04b166eb66924b45b5fe0cc` normally pushed to
+origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
+Gmail `1a1cc7429e81fda9` sent once; this receipt sends no second email.
