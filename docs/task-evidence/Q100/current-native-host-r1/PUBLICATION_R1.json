@@ -1,0 +1,12 @@
+{
+  "status": "IMPLEMENTATION_PUSHED_EXACT_REMOTE_SHA_VERIFIED_EMAIL_SENT_ONCE",
+  "implementation": "e4988d8ece1320a1c279c7687c6ac52b77514c99",
+  "message": "Construct fixed V2 native invocation recipes",
+  "branch": "codex/q100-terminal-only-20261107",
+  "target": "origin/codex/q100-physical-feasibility",
+  "emailId": "1a1cbc3b68eef274",
+  "emailSubject": "TroubleshootJS: V2 invocation transport adapter pushed",
+  "receiptEmail": "NONE_NO_DUPLICATE",
+  "scope": "Pure fixed V2 construction and selected argfile transport only; normal native UNRUN; holds/genuine remain",
+  "nextUnstarted": "Verified upstream handoff/exact output bytes and owned FS staging; Source/tool/classes/argv/receipt lifecycle binding"
+}
