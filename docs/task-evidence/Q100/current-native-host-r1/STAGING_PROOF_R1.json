@@ -1,0 +1,72 @@
+{
+  "status": "PASS_SCOPED_OPAQUE_SOURCE_STAGING_NOT_NORMAL_HOST",
+  "scope": "FIXED_CODE_NO_DATA_FIXTURES_NO_ACTUAL_DATA",
+  "stageTests": 24,
+  "earlySmokeTests": 2,
+  "existingOutputOwnerCases": 6,
+  "phases": [
+    {
+      "phase": "smoke-r1",
+      "gateSha256": "a305908d8eff877fc668f7d19ac098f8a85a17c4a50c86589c76725cc1b5177a",
+      "sourceFreezeSha256": "1bb4b6639983ed29e7a7306677e517744aa56239efce2726e71ffa9190681a4b",
+      "exitCode": 0,
+      "processExitObserved": true,
+      "operationNanos": 211361400,
+      "successfulIsolatedCleanup": "UNMEASURED"
+    },
+    {
+      "phase": "suite-r1",
+      "gateSha256": "8e058c914f0952f4d0610cbda8aa9485dadc6cad7fa7e7af75be6693e18f2c0f",
+      "sourceFreezeSha256": "1346c1315ec7c1129ec857321bb4ac1d191e928de8815b52e77652010721532a",
+      "exitCode": 0,
+      "processExitObserved": true,
+      "operationNanos": 867825000,
+      "successfulIsolatedCleanup": "UNMEASURED"
+    },
+    {
+      "phase": "owner-r1",
+      "gateSha256": "6dfb2942d06b3c62571615db6f5bbb9ad11d24bd7df7fe844ec6ff09b564013d",
+      "sourceFreezeSha256": "13e664841783e5ad915f2f3d14989225ef2628935eb90f2421adbae007edb2d8",
+      "exitCode": 0,
+      "processExitObserved": true,
+      "operationNanos": 353682800,
+      "successfulIsolatedCleanup": "UNMEASURED"
+    }
+  ],
+  "pythonSha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec",
+  "flags": [
+    "-I",
+    "-B",
+    "optimize=0"
+  ],
+  "mutationControls": "OWNED_PROFILE_SYSCALL_INJECTIONS_NOT_EXTERNAL_RACE_PROOF",
+  "defaultWriterReturn": "EXISTING_BYTE_SHA_FACT_UNCHANGED_SIX_CASES_RENEWED",
+  "writerToken": "OPTIONAL_ORIGINAL_HANDLE_MATCHED_READBACK_TOKEN",
+  "ordinaryFixtureDisposition": "RETAINED_CODE_NO_DATA_INCLUDING_PARTIAL_FAILURE",
+  "junctionCleanup": {
+    "kind": "JUNCTION_NODE_ONLY",
+    "tag": "A0000003",
+    "exactOwnedTargetRevalidated": true,
+    "cleanupNanos": 88600,
+    "nodeAbsent": true
+  },
+  "allOwnedProcessExitsObserved": 3,
+  "noPersistentProcessListenerBrowserCreated": true,
+  "workerSyntaxCheck": "NOT_RUN_PY_LAUNCHER_UNAVAILABLE_ROOT_SELECTED_PYTHON_GATES_PASS",
+  "oldCallerSourceBoundMatrices": "NOT_RENEWED_CHANGED_CALLER_SOURCE",
+  "productionJavaGwtPlayer": "NOT_APPLICABLE_UNCHANGED",
+  "electricalPopulation": "NOT_RENEWED",
+  "ci": "NOT_RUN_SELF_HOSTED_RUNNER_PREREQUISITE",
+  "normalHostAcceptance": false,
+  "actualDataRead": false,
+  "genuine": "UNSPENT_GATED",
+  "playable100": 0,
+  "beta": "HELD",
+  "exclusions": {
+    "full30": "EXCLUDED",
+    "hardPsychotic": "UNAVAILABLE_UNRUN",
+    "protectedUnread": "UNCERTIFIED",
+    "oldNormal20": "NOT_REREAD"
+  },
+  "next": "VERIFIED_UPSTREAM_FINAL_RETURN_HANDOFF_AND_CODE_TOOL_CLASS_LAUNCH_AUTHORITY"
+}

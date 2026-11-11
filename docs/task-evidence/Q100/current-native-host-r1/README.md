@@ -1,5 +1,8 @@
 # Fixed V2 invocation transport
 
+The subsequent [opaque Source staging substep](STAGING_R1.md) qualifies its finite
+file/handle boundary separately; normal host activation remains gated.
+
 The pure adapter maps six fixed current Source roles and validated lexical values
 into Source-list bytes and immutable compiler/native recipes. It preserves the
 current V2 run/source/wire/whole-context/output-directory roles. This is host

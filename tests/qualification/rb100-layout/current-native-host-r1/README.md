@@ -1,5 +1,9 @@
 # Current V2 invocation construction
 
+The next implemented component is the opaque Source stager. See
+[STAGING_CONTRACT_R1.md](STAGING_CONTRACT_R1.md) and its selected Windows
+CODE/NO_DATA tests; those file/handle facts do not activate normal execution.
+
 This is the first host-adapter substep: pure fixed Source-list and compiler/native
 argument recipes. It performs no I/O, process launch, data ingest or admission.
 The six Source roles and required Java basenames are fixed. Compiler/native

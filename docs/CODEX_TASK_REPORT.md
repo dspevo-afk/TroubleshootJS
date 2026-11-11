@@ -1,9 +1,180 @@
-# Current checkpoint: N51 fixed V2 invocation transport locally accepted
+# Current checkpoint: N52 accepted locally; publication pending
+
+Active F codex/q100-terminal-only-20261107, no upstream; candidate parent
+d7d2ed4b4777ccc13d150d411a5e7a2471c65070. Normal target origin/codex/q100-physical-
+feasibility. N52 opaque producer Source staging completes the finite CODE/NO_DATA
+I/O boundary only; no normal/genuine admission. Public T/E current-native-host-r1;
+private OS-temp/tsj-q100-v2-staging-r1-fc7966afb7fc. N51 e4988d8e/receipt d7d2ed4b
+already published; Gmail1a1cbc3b68eef274 sent once, no duplicate.
+
+Stager exact current-input.java -> CohortTerminalTelemetryInputV2.java, opaque
+bytes<=1MiB, separately pre-bound source/destination scratch-child directories,
+same references/no output/reference overlap, existing authenticated reader and
+caller root/exclusivewriter/readback owners. Existing writer optionally exposes
+the original handle-matched readback token; default byte/SHA fact unchanged.
+Later target reads bind to that token, source bytes/token and endpoints rechecked.
+Cross-drive comparisons fail closed/same-volume constraint. Returns facts only;
+upstream verified final-return authority and exclusive endpoint lifetime remain
+caller obligations. No decoding, upstream closure extension, generic resolver,
+new manifest/admission ledger, retry/refund/overwrite or external atomic-race proof.
+
+Fresh selected Python3.13 -I -B optimize0: early2 real Windows smoke PASS,
+final24 literal/identity/1MiB/negative/control tests PASS, existing output-owner6
+actual cases PASS. Three own child exits0 observed via original Popen handle,
+creation time/image/SHA/phase/deadline receipts. Real junction exact owned target+
+A0000003 revalidated, node-only removed/absent; cleanup88600ns. Operation times
+separate; successful isolated process cleanup UNMEASURED. Real hardlink and owned
+partial17B write failure retained. Profile/syscall controls are owned injections,
+not external concurrent attacker proof. No runtime gate FAIL/weakened assertion.
+Worker py-3 syntax NOT RUN/unavailable; root selected Python execution supersedes
+that missing local check. Root fullSource/output/receipts review; leaf Source-only
+review found writer-token gap preexecution, corrected; post-fix no blocker, no
+independent runtime claim. Volume/namespace limits documented.
+
+Module9596B/ff314048abca9361ffc62ef3180c54da3649e818a8ce584a9c120cd59639e370;
+tests16053B/e7ec3b5c4ff2e36ae2bf31e8f9c06bd2820d749d6c8ca071dbc96435cbe0f694;
+caller72462B/2ff2295b47479fd24a472281c35f2c864783d2a0fce0462dd5906b4ccc3ae56d.
+GATE smoke a305908d8eff877fc668f7d19ac098f8a85a17c4a50c86589c76725cc1b5177a;
+suite8e058c914f0952f4d0610cbda8aa9485dadc6cad7fa7e7af75be6693e18f2c0f;
+owner6dfb2942d06b3c62571615db6f5bbb9ad11d24bd7df7fe844ec6ff09b564013d.
+STAGING_PROOF_R1 14788c0f09a5494cdb9f149f4270b7bccb71773913ceb1489e822561de25aab7.
+All six selected CODE/NO_DATA inputs exact across3gates; reader unchanged863a258c.
+Current five Java core Sources audited unchanged. Java/GWT/Player N/A; old whole-
+caller Source-bound gates NOTRENEWED because caller changed. Electrical/population
+NOTRENEWED; CI NOTRUN/self-hosted registration prerequisite.
+
+No fixed20/actualDATA/fakepriorPASS/OriginalArm/capture/graph/Session/receipt/export
+or genuine operation. Both Study main/assemble exact throw-only holds unchanged;
+original->exactNULL/OBSERVE UNSPENT_GATED. 90s/640groups/5s/32768PERGROUP/copy1048576/
+chunk4096/othercaps,seeds/epochs/order/oracles unchanged. Full30EXCLUDED,
+HARD/PSYCHOTIC unavailable/unrun,protectedUnreadUNCERTIFIED,oldnormal20NOTREREAD,
+playable100=0,betaHELD. Next unstarted: verified upstream final-return/output-byte
+handoff integration and source/class/tool/launch authority, then complete semantic/
+receipt/lifecycle closure before normal activation. Pending persisted evidence
+cannot substitute final return; whole-context hash domain remains unchanged.
+
+Resources: ordinary owned fixtures/Source/failure evidence retained; new junction
+removed; no new persistent process/listener/browser. Prior uncertain browser14116/
+start639294472690745890/port58320,preview34180/start639294472514546595/port58264+
+14children,D process/unlink/hardlink/scratch and Notepad67116860 untouched.
+MainHEAD5f05b005 tracked9/untracked6; EHEADd9747229 tracked1/untracked0;
+DesktopHEADe0c36885 tracked7/untracked89; allstaged0 freshly confirmed preserved.
+Only current report prefix mirrored; opaque histories preserved. Root owns normal
+commit/push/remote verification and one Gmail after publication, pending here.
+Continue eligible roadmap without routine permission; notify meaningful change.
+
+# Historical checkpoint: N51 published and N52 staging preparation
+
+# Current checkpoint: N51 published; N52 exact staging scope prepared
+
+Active F codex/q100-terminal-only-20261107, no upstream; HEAD
+d7d2ed4b4777ccc13d150d411a5e7a2471c65070 exact remote verified on
+origin/codex/q100-physical-feasibility. N51implementation
+e4988d8ece1320a1c279c7687c6ac52b77514c99, Construct fixed V2 native invocation
+recipes, normally pushed. Completion Gmail1a1cbc3b68eef274 sent once. Receipt
+d7d2ed4b published/verified; no second email. F clean before this checkpoint,
+reportM only/staged0 after. Main/E/Desktop unrelated work freshly confirmed preserved.
+
+N51 closes pure current V2 Source-list/compiler/native construction only. Public
+T/E current-native-host-r1; private OS-temp/tsj-q100-v2-invocations-r1-379kbm0m.
+Fixed6Source roles/basenames, immutable argv, classpathfresh/inherited/gwtUser/
+gwtDev, source7/target7/UTF8/existingXlint/emptySourcepath/@argfile60s; native
+heap/FQN/profile/run/nativeManifest/wire/wholeContext/OUTPUTDIRECTORY480s. No
+R7fixtureOracle/resultfile/addedclock/profile extension. PrintableASCIIWindows
+lexical transport constraints only; no FS/reparse/lifetime/source/tool/class/
+input provenance, verified prior return or admission. Sourcepaths #/space/semicolon
+quoted; classpathsemicolon/casealias, controls/quotes/noncanonical/malformed roles
+reject. Conservative aggregate directargv32766 reservesNUL with quote/separator/
+exe overhead; argfilecontents separate. No second serializer/schema/canonicalizer/
+manifest ledger/product holder. Same-shaped hashes cannot self-authenticate;
+directory kind not guessed from suffix. Both normal Study entrypoints stay held.
+
+Final R3:14 independent literal testmethods PASS. Actual selectedJDK8 @argfile
+positive6Source(core5+explicitNO_DATA) space/#/semicolonSourcepath, space/#argfile/
+output PASSexit0/zero diagnostics.141major51classes/394768B exactsubsetN50accepted157,
+noshadows;2396CODEdeps/11801276B/twojars unchanged. Owned missing-source compiler
+negative expectedexit2/no classoutputs: REJECTION NOT successful build. All3final
+own processes exitsobserved[0,2,0]. Separate40094char Windows creation attempt
+expectedWinerror206/no returnedprocess, notnormalnative. Normalnative recipe
+CONSTRUCTED_NOT_RUN. Operation/cleanup separate, successful isolatedcleanup
+UNMEASURED, notnormalhostproof. No fixed20/actualDATA/fakepriorPASS/OriginalArm/
+capture/graph/Session/receipt/export/genuine execution. Original2DATA excluded;
+only explicit existing NO_DATA fixture compiled. No source schema/epoch/seed/
+budget/oracle/electrical/generation change.
+
+Module7715B/04c82ed38bb395079993bcca1b9f4cb2e7d0f1e585993e8f735c257b84d8f75d;
+tests12350B/16a6c58a440b705b3992ec6c612b3babf80a975f23393fa231ac812061a3de46.
+SOURCE_FREEZE_R3 bc7cb30e85b30d21f4697329117ec27ed919c8405906c956d46e50662e373f06;
+HOST_GATE_R3 5cd182e1e4831cc707758034266874cdbf80c039c7f074e80ab3bee181cc6e62;
+TEST_GATE_R3 042909cb1cfba23b5390129b72e8ffd00585fd6c8524262f6dc5f71db3b876ef.
+Root fullmodule/test/runner/result review; worker module draft. Root corrected
+lowercaseerrors/missingjarcheck/latebounds beforeexecution. NarrowerR1passes
+preservedNOTreusedfornewbound. Source reviewerfoundaggregatebound andASTentrypoint
+oracle gaps; fixedboth beforefreshgates. R2preflightFAIL0launches: root global
+phasereplace changeddependencies-r1to-r2; exactpathrestored/selectiveR3 passed.
+R2controller/freeze/failure preservedNOTPASS. Leaf post-fix confirmedboundmath/
+Sourceonly, no execution claim. Nonblocking AST annotation testfollowup remains;
+current module hasnoannotations/top-levelcalls. AllpublicSource/stagedbytes and
+strictGitchecks PASS. No broader native/prefix/full940/parser/handoff/normal/
+electrical/population renewal. RuntimeCore5Source unchanged; no GWT/Playerflow.
+
+N52 next implementation scope PREPARED, no code/I/O gate or publication/email.
+Private OS-temp/tsj-q100-v2-staging-contract-r1-q3a7vze3; currentgeneral qualify_prior
+selectedread/root/exclusivewriter/readback/closure Source only, no module/data
+execution. SOURCE_SELECTION_R1 2c83b47f5386ee501dbf1efae2bab22bb70af1f8680b5924414e62d631e37499;
+IMPLEMENTATION_SCOPE_R1 7f59edadd19e4bf15be5490f20a4d1ca4ba33822e2bbacc623652cafbefcb26b;
+SOURCE_FREEZE_R1 629673bda328752f17aa311c087b1da5c61ab482b2cccfc7dd8e29f91aaa7820.
+Existing_owner APIs: _read_with_reader returns bounded authenticated bytes/real
+filetoken; _root_bindings/_verify_root_bindings/_check_directories bind roots and
+separate scratch-child output; _write_exclusive uses O_EXCL/handle snapshots/
+fsync/root checks/readback; _readback_output binds written handle identity.
+Original _validate_output_closure has fixed prior filenames; do not add native
+producerSource into the sealed upstream output directory or generalizehistory.
+
+NEXT N52: thin exact opaqueSource stager reusing authenticated reader/I/Oowner,
+real independently pre-bound source/destination endpoint root contexts (native
+stage root distinct from sealed upstream root). Need verified upstream expected
+length/SHA/token before actualSource access; forfinitecanaries only explicitly
+owned CODE/no-DATA facts, never fake normalreadiness. Correct destination basename
+CohortTerminalTelemetryInputV2.java from upstream current-input.java, unchanged
+bytes/exclusivewrite/readback/source+endpointrechecks,1MiB generatedSource limit.
+No module/path discovery, duplicatedIOverifier/ledger or copywithoutphaseauthority.
+Return stagingfacts only. Keep partialfailureevidence, no overwrite/refund/retry.
+Real selectedWindows earlycanaries: exactcopy,wrongSHA/lengthbeforewrite,existing
+target/sentinel,containment/nonalias/reparse/source/handle/finalmutation failures
+where supported. Any ownedjunction needs exacttarget/tag and node-onlycleanup;
+leave readonlyOScontrols/unrelateddata untouched. NormalDATA/genuine native remains
+UNRUN until full handoff/source/tool/closedclass/argv/receipt/semantic/lifecycle
+closure. Pending persisted evidence never substitutes verified upstream finalreturn.
+WholecontextincludesphysicalContext, Maponlyprojection; header notselfauthority.
+
+Resources: N51all3own exitsobserved, OSoversize no processreturned. Owned Source/
+argfile/class/failure artifacts retained; negativeclassdir/emptySourcepathempty.
+No persistentprocess/reparse/listener/browser created. Prior uncertain browser14116/
+start639294472690745890/port58320,preview34180/start639294472514546595/port58264+
+14children,D process/unlink/hardlink/scratch and Notepad67116860 untouched.
+MainHEAD5f05b005 tracked9/untracked6;
+EHEADd9747229 tracked1/untracked0;
+DesktopHEADe0c36885 tracked7/untracked89; allstaged0.
+Only report currentprefix mirrored, opaquehistory preserved. No broadclean/reset,
+forcepush/historyrewrite/branchdeletion/unrelatededits. N50Gmail1a1cb91349a6bf87,
+N48Gmail1a1cb468109850f4 and earlier/receipt messages already done; noduplicates.
+
+All90s/640groups/5s/32768PERGROUP/copy1048576/chunk4096/othercaps,seeds/epochs/order/
+independentoracles unchanged. Full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,
+protectedUnreadUNCERTIFIED,oldnormal20NOTREREAD,playable100=0,betaHELD,
+genuineOriginal->exactNULL/OBSERVE UNSPENT_GATED. Production/GWT/Player N/A Python
+host/Sourcepreparation; electrical/population NOTRENEWED; CINOTRUN/selfhostedrunner
+prerequisite. No user decision needed. Continue eligible roadmap without routine
+permission; notify meaningful completion/failure/decision only. Never giveagents
+fullreport:prefix<=64KiB untilfirsthistoricalmarker,opaque tail only thereafter.
+
+# Historical checkpoint: N51 fixed V2 invocation transport locally accepted
 
 Active F codex/q100-terminal-only-20261107 HEAD7771f2b3d6ee34beecae523f792d8bfac8a176f8,
 no upstream; normal publication target origin/codex/q100-physical-feasibility.
 N51 implementation e4988d8ece1320a1c279c7687c6ac52b77514c99 pushed/remote verified.
-Completion Gmail1a1cbc3b68eef274 sent once; receipt pending, no second email.
+Completion Gmail1a1cbc3b68eef274 sent once; receiptd7d2ed4b4777ccc13d150d411a5e7a2471c65070 pushed/verified, no second email.
 Public T/E current-native-host-r1; private OS-temp/tsj-q100-v2-invocations-r1-379kbm0m.
 F began reportM only. MainHEAD5f05b0059mods/6untracked,EHEADd9747229reportM,
 DesktopHEADe0c368857mods/89untracked/staged0 unrelated work preserved.

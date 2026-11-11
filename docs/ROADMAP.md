@@ -2038,6 +2038,17 @@ Implementation `e4988d8ece1320a1c279c7687c6ac52b77514c99` normally pushed to
 origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail `1a1cbc3b68eef274` sent once; this receipt sends no second email.
 
+The [opaque producer Source staging substep](task-evidence/Q100/current-native-host-r1/STAGING_R1.md)
+is locally accepted for the finite CODE/NO_DATA Windows boundary. Exact bytes and
+the original written-handle readback identity survive the fixed basename change;
+source/target/root rechecks reject replacement and preserve failed partial files.
+Fresh24 tests and six existing writer cases pass, including real junction and
+hardlink controls; three owned exits observed. This changes the Python I/O owner,
+whose old whole-caller gates are not renewed. Java/GWT/Player are unchanged.
+Next is verified upstream final-return/output-byte handoff and source/class/tool/
+launch authority plus semantic/receipt/lifecycle closure. Normal holds, genuine
+gate, full30/HARD exclusions and playable100=0/betaHELD remain.
+
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

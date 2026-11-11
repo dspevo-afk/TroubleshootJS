@@ -844,7 +844,8 @@ def _readback_output(reader, config, path, expected_raw, maximum,
 
 
 def _write_exclusive(reader, config, path, raw, maximum, containment_root,
-                     expected_roots_sha, phase):
+                     expected_roots_sha, phase, *, with_readback_token=False):
+    _need(type(with_readback_token) is bool, "OUTPUT_TOKEN_OPTION", phase)
     _need(type(raw) is bytes and 0 < len(raw) <= maximum, "OUTPUT_SIZE", phase)
     _need(_is_sha(expected_roots_sha), "OUTPUT_ROOT_BINDING_SHA", phase)
     _verify_root_bindings(reader, config, expected_roots_sha, phase + "-before-write")
@@ -908,7 +909,12 @@ def _write_exclusive(reader, config, path, raw, maximum, containment_root,
     _need(token[2] == expected_handle_identity
           and token[3] == expected_handle_identity,
           "OUTPUT_READBACK_IDENTITY", phase)
-    return {"bytes": len(raw), "sha256": _sha(raw)}
+    fact = {"bytes": len(raw), "sha256": _sha(raw)}
+    if with_readback_token:
+        # Preserve the exact readback already matched to the written handle.
+        # A later independent read cannot recover this identity after replacement.
+        fact["readbackToken"] = token
+    return fact
 
 
 def _write_preflight_manifest(reader, config, manifest_output, raw, roots_sha):

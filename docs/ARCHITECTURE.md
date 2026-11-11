@@ -511,6 +511,15 @@ quoting is exercised with selected JDK8; normal native argv remains unrun. It
 does not own FS identity, upstream handoff, class/tool provenance or admission.
 Both Study holds remain while those owners and semantic/lifecycle closure follow.
 
+The [opaque producer Source stager](task-evidence/Q100/current-native-host-r1/STAGING_R1.md)
+composes the existing authenticated reader and caller I/O owners for one bounded
+unchanged Source copy into a separate native stage directory. The caller writer
+can expose its handle-matched readback token without changing default facts;
+the stager binds subsequent target reads to that original token. Endpoint overlap,
+source and root checks return staging facts only. The caller still owns verified
+upstream authority and exclusive endpoint lifetime; these snapshots grant no
+normal admission or atomic external-namespace guarantee. Both Study holds remain.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published
