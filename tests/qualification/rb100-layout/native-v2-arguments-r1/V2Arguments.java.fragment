@@ -1,0 +1,41 @@
+    static final class Arguments {
+        final String runId, sourceManifestSha256, wireContractSha256, inputContextSha256;
+        final Path outputDir;
+        private Arguments(String runId, String sourceManifestSha256,
+                String wireContractSha256, String inputContextSha256, Path outputDir) {
+            this.runId=runId; this.sourceManifestSha256=sourceManifestSha256;
+            this.wireContractSha256=wireContractSha256;
+            this.inputContextSha256=inputContextSha256; this.outputDir=outputDir;
+        }
+        static Arguments parse(String[] args) throws IOException {
+            if (args==null || args.length!=6 ||
+                    !"COHORT_TERMINAL_TELEMETRY_V2".equals(args[0]))
+                throw new IOException("ARGS");
+            if (args[1]==null || !UUID.matcher(args[1]).matches())
+                throw new IOException("UUID");
+            for (int i=2;i<=4;i++)
+                if (args[i]==null || !SHA.matcher(args[i]).matches())
+                    throw new IOException("SHA");
+            if (!r7CanonicalWindowsOutput(args[5])) throw new IOException("OUTPUT_PATH");
+            try {
+                Path path=Paths.get(args[5]);
+                java.nio.file.attribute.BasicFileAttributes attributes=Files.readAttributes(
+                    path,java.nio.file.attribute.BasicFileAttributes.class,
+                    LinkOption.NOFOLLOW_LINKS);
+                if (!path.isAbsolute() || !path.normalize().equals(path) ||
+                        !attributes.isDirectory() || attributes.isSymbolicLink() ||
+                        attributes.isOther() || !path.toRealPath().toString().equals(args[5]))
+                    throw new IOException("OUTPUT_PATH");
+                try (DirectoryStream<Path> entries=Files.newDirectoryStream(path)) {
+                    if (entries.iterator().hasNext()) throw new IOException("OUTPUT_NONEMPTY");
+                }
+                return new Arguments(args[1],args[2],args[3],args[4],path);
+            } catch (IOException invalid) {
+                if ("OUTPUT_PATH".equals(invalid.getMessage()) ||
+                        "OUTPUT_NONEMPTY".equals(invalid.getMessage())) throw invalid;
+                throw new IOException("OUTPUT_PATH",invalid);
+            } catch (RuntimeException invalid) {
+                throw new IOException("OUTPUT_PATH",invalid);
+            }
+        }
+    }

@@ -1913,6 +1913,20 @@ Implementation `13130cecc5044a60a93f708819c7a1fda8140684` normally pushed to
 origin/codex/q100-physical-feasibility, exact remote SHA verified; completion Gmail
 `1a1c75490ef17be5` sent once. This receipt sends no second email.
 
+The [V2 argument preflight prerequisite](task-evidence/Q100/native-v2-arguments-r1/README.md)
+is locally accepted for its finite native component. Eight Source tests, final
+19-Source JDK8 build, parser SMOKE1/8 checks and SUITE43/56, and940 retained cases
+pass; the positive parser case overlaps across modes. Real owned junction and
+read-only OS symlink controls pass. Two factory DATA artifacts stay excluded
+before access; normal entrypoints remain held. The old descriptor loader and
+constructor adapter are retired through an exact four-clause Source transition.
+The failed compile and Python alias launch/exit-proof limitation remain disclosed;
+the corrected actual-image reader calls pass. No normal-host, actual DTO/receipt,
+clock/hash-authority or genuine acceptance is inferred. Next is the current normal
+caller/input/original authority contract before execution. Budgets/seeds/epochs/
+oracles remain; full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,playable100=0,betaHELD.
+Publication is pending verified normal push and one completion email.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

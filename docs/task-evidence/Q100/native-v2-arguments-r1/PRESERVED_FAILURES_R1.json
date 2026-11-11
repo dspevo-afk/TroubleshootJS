@@ -1,0 +1,20 @@
+{
+  "status": "FAILURES_PRESERVED_NOT_RECLASSIFIED",
+  "compileR1": {
+    "exit": 1,
+    "errors": 3,
+    "cause": "Retired legacy readInput referenced excluded CohortTerminalTelemetryInput API. Exact method removal after current-source caller audit fixed dependency; no factory DATA opened.",
+    "operationNanos": 752092700,
+    "isolatedCleanupNanos": null
+  },
+  "readerR2": {
+    "status": "FAIL",
+    "cause": "sys.executable AppExecutionAlias did not equal actual child image; no launch/exit receipt completed.",
+    "exitProof": "UNCERTIFIED_NOT_REUSED",
+    "targetedCensus": "No matching task Python process observed",
+    "fix": "R3 launches exact independently pinned actual Python image; preserves image equality; failure cleanup uses original Popen handle. Positive readers and negative exit7 control pass."
+  },
+  "diagnosticR1": "Hashing alias failed OSError22; actual process image query/hash diagnosed redirect.",
+  "symlinkCreation": "PowerShell privilege and Python WinError1314. No settings changed; verified read-only existing OS symlink used for actual required rejection control.",
+  "staticCanaryCorrections": "Before native: uppercase UUID fixture originally contained only digits; drive-case fixture replaced with component-case plus oracle check; profile-before-NUL case added. Original draft retained."
+}

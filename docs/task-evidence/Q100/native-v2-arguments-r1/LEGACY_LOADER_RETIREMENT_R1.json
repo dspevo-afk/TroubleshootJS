@@ -1,0 +1,17 @@
+{
+  "status": "ONE_CURRENT_LEGACY_READINPUT_METHOD_SELECTED",
+  "startLine": 226,
+  "endLine": 253,
+  "bytes": 1710,
+  "sha256": "5435d36f3731ad9bf03496147dd5ae0d7874d32e001846d27da681f621f54db8",
+  "references": [
+    {
+      "source": "CurrentStudy",
+      "line": 227,
+      "text": "    static SetupResult readInput(SetupMeter m,String expectedDescriptorSha) throws Exception {"
+    }
+  ],
+  "limits": "Current Study+17Source token closure only; not global dynamiccallgraph.",
+  "factoryDataOpened": false,
+  "targetExecution": false
+}

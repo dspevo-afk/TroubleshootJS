@@ -1,0 +1,104 @@
+{
+  "status": "PASS_RETAINED_OUTPUTS_BOUND_TO_PRIOR_EXPECTATIONS_AND_CURRENT_GATE",
+  "expectedOracleGateSha256": "9046750d1faed8bec2df09f0dccd24d36f44740202d76a1244bc3a61d6cb0940",
+  "currentRegressionGateSha256": "2a3064f9c0efe8792ed32b1c50dcf9e8a7874a29fc236f1fb3add3575ebcf21e",
+  "audited": [
+    {
+      "phase": "v2-args-retained-metadata-r7-smoke-r2",
+      "resultSha256": "3562167612a057cc6372209cdb9f57002a544efc74bcbb461bcb009bad407f69",
+      "stdoutSha256": "5cbf8734da08547a1514957d9415efed49d4e553f69534bcd29a99028f4ff795",
+      "oracle": "PINNED_N35_EXPECTED_LINE"
+    },
+    {
+      "phase": "v2-args-retained-metadata-r7-suite-r2",
+      "resultSha256": "abd91bd5f0eba315b663789dd265f04cb4b2eb3d9ba2c94692ca56b708b1975e",
+      "stdoutSha256": "e6a14fa9bce7eaedaeb3820ed241f6d0f4d10563e13b2f893848ccc09c74fb91",
+      "oracle": "PINNED_N35_EXPECTED_LINE"
+    },
+    {
+      "phase": "v2-args-retained-0-r2",
+      "resultSha256": "fe6d8b7c8bbc64e9fbf776265ddbaf398e0ac5894c8c800fcf7c32f7d8c2f605",
+      "stdoutSha256": "d840c96410a94abdb04fa98321ec9c311fbfcd29b8c76adb2264b73fe1d539d6",
+      "oracle": "PINNED_N35_EXPECTED_LINE"
+    },
+    {
+      "phase": "v2-args-retained-1-r2",
+      "resultSha256": "d4f4d6f2a8ca814417f46525be1ec7baa935a16f6b855127715e9cf0d14b2d42",
+      "stdoutSha256": "5643965a16369df626d40e520805858e965c9ca430070a7ff7f83b238d73ee3d",
+      "oracle": "PINNED_N35_EXPECTED_LINE"
+    },
+    {
+      "phase": "v2-args-retained-2-r2",
+      "resultSha256": "0642dcd8637cf49fc98b45bf84f5faecf8e463f68f240852e40d0e398d565085",
+      "stdoutSha256": "511ed2d579a1d5b83a70bbacaf06317cc4e62994d8b49e5873f4ccaab19879f4",
+      "oracle": "PINNED_N35_EXPECTED_LINE"
+    },
+    {
+      "phase": "v2-args-retained-3-r2",
+      "resultSha256": "303bb8fa08c3601fee0a6160e7b01acaca2331c4b643453204cdff75001a47d8",
+      "stdoutSha256": "80d4398fdfbd51b87ba38c07d1e3adf78e02f60ba92d8f217d5d6db939cb3853",
+      "oracle": "PINNED_N35_EXPECTED_LINE"
+    },
+    {
+      "phase": "v2-args-retained-4-r2",
+      "resultSha256": "59f5f8712fee33b0e1b83464beaba2800970911cae42b70b341db21a759d4cea",
+      "stdoutSha256": "e29fdd14f9af0b8a9b5e0be85ee20ed35e18860f96e59fee020032b088adfe81",
+      "oracle": "PINNED_N35_EXPECTED_LINE"
+    },
+    {
+      "phase": "v2-args-retained-5-r2",
+      "resultSha256": "b60e1564cda0f2420ed0bef19d52f834b1118059bb82eaadf16e7b6a0a7a5f9a",
+      "stdoutSha256": "d5678d207715da0daa3dd3e1f22a77d170e688ea910c461f44168cafbd0365a3",
+      "oracle": "PINNED_N35_EXPECTED_LINE"
+    },
+    {
+      "phase": "v2-args-retained-6-r2",
+      "resultSha256": "4de3a44c34573429a40629bcfe146388e114ef9075ce12f9d5f39d4ffc270fc8",
+      "stdoutSha256": "c6f20c3ed06a845611d76c621fdd7078c27bf7f1d2a7b055e9d5a935ff79256a",
+      "oracle": "PINNED_N35_EXPECTED_LINE"
+    },
+    {
+      "phase": "v2-args-retained-7-r2",
+      "resultSha256": "7fcf268526fe53c55582ef18498f034f3f418dbdfa321dc779377c0e7b5e3b3e",
+      "stdoutSha256": "1a716d2382a2935aadadbf7ef4e516aef3caf39760bd142401af5611bf220495",
+      "oracle": "PINNED_N35_EXPECTED_LINE"
+    },
+    {
+      "phase": "v2-args-retained-8-r2",
+      "resultSha256": "f9fde9e5c4d3aa21757975950bcf2a2db5a70cae5b94489520fefe349ec3f956",
+      "stdoutSha256": "83fa2b0fb66776b289a89dd2919b7510649a63cd2b58e50dfc9069d6340a849e",
+      "oracle": "PINNED_N35_EXPECTED_LINE"
+    },
+    {
+      "phase": "v2-args-retained-9-r2",
+      "resultSha256": "0855301e153a45b4a395495540d674a8d097d03fce1113db547bc3877e945fab",
+      "stdoutSha256": "50ad54cc83d5bb65fcd79bfe1f06517d251600abf4d6b7cfc099a8dedcf5a1a6",
+      "oracle": "PINNED_N35_EXPECTED_LINE"
+    },
+    {
+      "phase": "v2-args-retained-10-r2",
+      "resultSha256": "388aa5c28b255fd25120590addb5de14ba745d9027ad0d9253baafecac673075",
+      "stdoutSha256": "f2a5e820fe3990807ca52101236a83e9e9e482d137564bf716a9f0f256b97afd",
+      "oracle": "PINNED_N35_EXPECTED_LINE"
+    },
+    {
+      "phase": "v2-args-retained-11-r2",
+      "resultSha256": "4ee94717ffba2e832578c1a0a80bb497b1ffeb270bd54b77f6232e47674acdc0",
+      "stdoutSha256": "b591b84893b83da74cdf9ae186ed5543dab887e4178bbc88f232167a0ca3dd9f",
+      "oracle": "PINNED_N35_EXPECTED_LINE"
+    },
+    {
+      "phase": "v2-args-retained-12-r2",
+      "resultSha256": "240bee476d73ec68f66e587626d85917633c9a111bc911e68be9d866f9b647a6",
+      "stdoutSha256": "c3e8fb2438323258817934a5dd4d8f846fc856c5030e9c76567d016fb4ab44e0",
+      "oracle": "PINNED_N35_EXPECTED_LINE"
+    },
+    {
+      "phase": "v2-args-detached-smoke-r2",
+      "resultSha256": "7b3a46e1d35076a5d16450b603e9a0afe1163df265c06689972ce1146c8ef629",
+      "stdoutSha256": "ed2d0378d0969d73edd600f25bfec8f9d2a8b77dbfc1c5004b7a7782603e94e8",
+      "oracle": "FRESH_UNCHANGED_INDEPENDENT_READER_SAME_INPUT_PATH_AND_POST_GATE_HASH"
+    }
+  ],
+  "scope": "Fifteen exact stdout lines independently compared to pinned accepted expectations; remaining smoke input bound to fresh independent reader and current post-gate bytes. Failed R2 reader never reused. No new target execution."
+}

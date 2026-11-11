@@ -1,4 +1,251 @@
-# Current checkpoint: N35 synthetic metadata/R7 published; next integration contract
+# Current checkpoint: N37 V2 argument prerequisite accepted; publication pending
+
+Active F codex/q100-terminal-only-20261107 parent HEAD f28dd5067aa32187b766022537b8014d38ae7571,
+no upstream; normal target origin/codex/q100-physical-feasibility. N35 implementation
+13130cecc5044a60a93f708819c7a1fda8140684/receiptf28dd506 already published,
+Gmail1a1c75490ef17be5 once. No duplicate N35 email. N37 commit/push/email pending.
+
+N37 native-v2-arguments-r1 locally accepted within finite parser scope. Private
+OS-temp/tsj-q100-v2-arguments-r1-5mah1kq4. Existing Arguments owner now V2-only,
+separate source/wire/context/output roles; existing Windows helper plus NOFOLLOW
+attributes/isOther/exact real spelling/empty-directory checks. Four exact Source
+changes: Args replacement, unused Parent.inputs retirement, legacy readInput
+retirement, originalDto metered manifest field name migration. inputsType/init
+kept for captureOriginal; GenericR7Arguments and shared helpers unchanged. No
+compatibility aliases. Current Study+17Source index is not global ABI proof.
+Both main/assemble remain throw-only. No actual DTO/owner/factory/graph/Session,
+receipt/exportV2/genuine execution. Hash authenticity, producer-start, path
+reservation and normal caller/host/lifecycle authority remain separate.
+
+PASS fresh public8 Source tests. Derived Study235615B/
+3fe46f10773b5f04c1c7a4b89f2390f21681658568c8ce0de4f32faee1193890.
+Input236974B/4e0563854a2282b10d5804da9e9843814ba8363b23400eea63a2459ca14de680.
+Final19Source JDK8 source7/target7:258classes/774737B +2416deps/11870064B,
+allmajor51/no shadows/empty sourcepath/caps. Two generated input factory DATA
+artifacts excluded BEFORE content access/linking; code dependencies authenticated
+and hardlinked in controlled build output. Existing CleanupStagingCanary563
+unchecked cast is the sole full -Xlint warning; no new suppression.
+Parser SMOKE1/8checks +SUITE43/56checks +CLI rejection exit1 pass. Positive case
+overlaps modes; no combined unique count. Real owned junction and readonly actual
+OS symlink controls pass; parent/owner/factory class-load attempts0. Precedence
+controls are not syscall instrumentation or normal entry ordering proof.
+Retained940native cases pass,3104countedassertions excluding24detached-protocol
+cases independently read. R3 resumed reader work after auditing16 completed
+native inputs. Explicit additional audit compares15 stdout lines to pinned N35
+expectations and binds remaining SMOKE input to fresh unchanged reader/current
+hash. Bounded reviewer identified then confirmed closure of that evidence gap.
+Root and two bounded leaf Source/evidence reviews; no reviewer execution.
+
+GateSHA COMPILE_R2 bffd0e8e9be094d0b488e39343b79b55b0108c8ba5058acda8bdd7ebc3a5c331;
+NEW_R2 93f5e226293f95c7f6709c60f47f207e7723565d207701f29fbdd6d22835043a;
+REGRESSION_R3 2a3064f9c0efe8792ed32b1c50dcf9e8a7874a29fc236f1fb3add3575ebcf21e;
+SourceFreezeR2 275f299715ee2962419fbfc0bd070b2510f667d1f02f0a737af23ed60a546500;
+RetainedOutputAudit d854e1e8c1fca21130ca7f52f2b843d2820e06156870a5e2132c1b5c9775d817.
+Exact public Source copies verified; only tests/qualification and evidence/docs
+changed. Production/GWT/Player N/A; electrical/population NOTRENEWED;CI NOTRUN/
+self-hosted runner prerequisite. RUN81 N/A/input owner unchanged/factory DATA
+excluded. Final Source/class/reader inputs rechecked; no unchanged full reruns.
+
+Preserve R1 compileFAIL3 missing legacy-factory symbols and partial classes/freeze.
+Exact selected readInput1710B/5435d36f3731ad9bf03496147dd5ae0d7874d32e001846d27da681f621f54db8
+had declaration only in admitted closure; its retirement fixed cause. R1candidate
+and eight-test acceptance stay attached to that candidate. R2 Python reader
+launch failed image equality before receipt: sys.executable AppExecutionAlias.
+First diagnostic hash alias failed OSError22. Original failed reader exit remains
+UNCERTIFIED_NOT_REUSED; fresh targeted census found no matching task process.
+R3 uses independently pinned actual Python image, retains equality, guarantees
+owned-handle failure cleanup; two readers and negative exit7 control pass. Private
+subprocess caller is not normal-host certification. Operation times recorded;
+successful isolated cleanup duration unmeasured. Administrative publisher command
+had one mistyped Python path before execution, corrected; no target/gate action.
+Canary UUID/case fixture fixes and raw pre-fix draft preserved before native.
+
+Owned junction node removed after target/ownership checks; empty target and file/
+nonempty sentinels unchanged. System symlink was never owned/modified/deleted or
+target-listed. Initial link-creation privilege/WinError1314 failures preserved;
+actual symlink test completed using explicit readonly existing OS node. No global
+settings changed. No new persistent process/listener. Controlled classes/hardlinks/
+scratch/failures retained. Preserve uncertain prior browser14116/start639294472690745890/
+port58320,preview34180/start639294472514546595/port58264+14children,oldDprocess/unlink,
+hardlinks,scratch,Notepad67116860. Main5f05b005:9mods/6untracked,E d9747229:reportM,
+Desktop e0c36885:7mods/89individual untracked,staged0 preserved. Stage intended F
+paths only; no cleanup/reset of unrelated work. Never give full report to agents.
+
+All budgets90s/640groups/5s/32768PERGROUP/copy1MiB/chunk4096/Source4MiB/fragment64KiB/
+opJSON8MiB/result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/reader180s/
+wrapper480s/cleanup120s,seeds/epochs/oracles unchanged. Full30EXCLUDED,
+HARD/PSYCHOTIC unavailable/unrun,oldnormal20NOTREREAD,protectedUnreadUNCERTIFIED,
+playable100=0,betaHELD. Genuine original then exactNULL/OBSERVE UNSPENT_GATED.
+Next unstarted: current normal caller/input/original authority contract, independent
+full-result semantic and host/lifecycle closure before any genuine execution.
+
+# Historical checkpoint: N37 candidate before repaired build
+
+Active F HEAD f28dd5067aa32187b766022537b8014d38ae7571, branch
+codex/q100-terminal-only-20261107; normal remote target codex/q100-physical-feasibility.
+N35 published13130cec/receiptf28dd506; Gmail1a1c75490ef17be5 already sent once.
+No N37 publication/email; do not duplicate N35 notification.
+
+Current private work: OS-temp/tsj-q100-v2-arguments-r1-5mah1kq4.
+Candidate normal V2 Arguments replaces legacy fields/profiles, reuses existing
+Windows lexical helper, checks NOFOLLOW attributes including isOther, exact real
+path spelling and empty directory. Existing main/assemble remain throw-only.
+Parent.inputs adapter retired; originalDto literal reflective manifestSha read
+migrates to sourceManifestSha256. Parent.inputsType/init stays for captureOriginal.
+Root/leaf Source review completed; no actual DTO/owner/factory execution.
+
+R1 full19-Source JDK8 compile FAILED: three references in old readInput to excluded
+CohortTerminalTelemetryInput. Preserve classes-r1, BUILD_SOURCE_FREEZE_R1.json,
+run_candidate_r1.py and v2-args-final-jdk8-compile-r1 receipts. Compiler exit1,
+operation752092700ns, process exit observed, isolated cleanup unmeasured. No parser
+native or regression gate ran. Factory DATA artifacts were excluded BEFORE content
+access/linking. dependencies-r1 has2416 authenticated code hardlinks,255 replaced
+classes omitted,2 input factory DATA classes omitted. Donor cache preserved.
+
+Exact current readInput226..253 is1710B SHA5435d36f3731ad9bf03496147dd5ae0d7874d32e001846d27da681f621f54db8.
+It loads old five-key descriptor data. Current Study+17Source index has declaration
+only; no global/external ABI proof. Necessary fourth-clause retirement prepared in
+component-r2/derive_v2_arguments.py and test_v2_arguments_source.py; eight actual
+Source tests PASS, including exact four-change byte reconstruction. R1 Source
+candidate/tests/contract/freeze remain intact. COMPILE_FAILURE_R1.json records cause.
+NEXT: derive candidate-source-r2, create CONTRACT_R2 and explicit run_candidate_r2
+paths/phases/freeze (do not blindly replace all r1 strings), compile fresh19Sources,
+then parser SMOKE/SUITE and retained940 finite cases/independent readers. Keep
+existing dependencies-r1; use fresh classes-r2/empty-sourcepath-r2 and gate names.
+Do not call R1 compile again or reuse partial classes as success.
+
+Final component/V2ArgumentsCanary.java18775B SHA3c1838da143bd9eb6ab8f4b28d040a3faa750e3c4ab5e6a28f864db29db2a53c:
+SMOKE1case/8checks, SUITE43cases/56checks expected; positive overlaps across modes.
+Four explicit args: mode,owned fixture root,classpath,readonly real symlink path.
+Loader refuses actual owner/Parent/generated input classes. No held entry invocation.
+Root caught uppercase all-digit UUID and drive-case fixture bugs before native;
+worker corrected, added profile-before-NUL precedence, preserved source-drafts.
+
+Real JDK8 PathBoundaryProbe compiled/runs successfully: junction directory=true,
+symbolicLink=false,other=true; realPath resolves target. This is OS observation,
+not parser acceptance. PS and Python symlink creation failed privilege/WinError1314;
+no global changes. Read-only existing C:/Users/All Users is a real OS SymbolicLink
+and is explicitly supplied to future native negative test. Never mutate/delete it
+or list its target. Native parser symlink test still NOT RUN. Owned host-fixtures
+contains empty/nonempty/sentinel,file.txt,junction->empty; missing/symlink absent.
+Junction still exists and requires verified task-only link cleanup after testing.
+No persistent process launched. Build outputs/hardlinks/failures preserved.
+
+Production/GWT/Player N/A; electrical/population NOT RENEWED; CI NOT RUN/self-hosted
+prerequisite. All budgets/seeds/epochs/oracles unchanged. Genuine original then
+NULL/OBSERVE UNSPENT_GATED; full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
+playable100=0,betaHELD,protectedUnreadUNCERTIFIED. No factory DATA/old actual outputs
+or whole historical consumers opened. Old normal20 not reread.
+Unrelated Main/Desktop/E changes and uncertain prior resources preserved as below.
+F only local checkpoint modified; no production/public source edits yet. Root owns
+acceptance/publication. All leaf agents finished; no new delegation required.
+Never pass full historical report to agents. Read this bounded prefix only.
+
+# Historical checkpoint: N36 Source contract audit
+
+F codex/q100-terminal-only-20261107 HEAD f28dd5067aa32187b766022537b8014d38ae7571,
+no upstream; normal target origin/codex/q100-physical-feasibility. Current remote
+exact receipt SHA reverified. N35 implementation13130cecc5044a60a93f708819c7a1fda8140684
+published; receiptf28dd506 published; Gmail1a1c75490ef17be5 sent once/acknowledged.
+NO duplicate N35 or receipt email. N33 publication/email remains recorded below.
+
+N35 metadata-r7-composition-r1 is accepted only for its finite synthetic fixture.
+Final-source JDK8 source7/target7:17Sources/129major51classes, no shadows. New15cases/
+104checks + fresh901retained/3000assertions +24independently read detached cases =
+940unique cases. Counted3104assertions excludes the separate24-case protocol.
+Existing metadata/R7 only; one explicit real Meter SYNTHETIC BUDGET CREDIT, not
+actual owner work. Actual19415units/268copies/88chunks; alias546/66/7 leaves
+workinstalled/noPlan/MeterOPEN. No rollback/refund/retry or original/provenance
+authority. FinalProofe4f01a589250e62c22b81d1a9366ad2e7e7a01d46287e107a6e3fe6aa6806aeb.
+Private OS-temp/tsj-q100-metadata-r7-composition-r1-68f46afddfd14e19a1b8bb0e91cc2a72.
+HistoricalRUN81 NOTAPPLICABLE in N35; no renewed/reused PASS. Positive inputfactory/
+DATA consumption outside that milestone. Prior failures/Source incidents retained.
+
+N36 bounded current normal-assembly contract Source audit COMPLETED, NOT an
+implementation/normal-host acceptance or published milestone. No new target/
+native/build/test/Player execution and no completion email. Private OS-temp/
+tsj-q100-normal-assembly-contract-r1-4ac8bdab4804477392a5da2ab6da859b.
+16 selected Source/contract files64838B authenticated. SourceFreezeR1
+f7f8e8357273cf7841c98d51afec58fa02c5a4c43eb62fafbaec2b7a730e246a;
+SourceFindingsR1 8f951bdb8ea0cb43245060bf6b4ce046267d4b8fef638e5571a915ce2d26ad63;
+NormalAssemblyContractR1 32c868b43a4d1c0fe2b39768edd9c8479d2d780bc86e5e60c51743ea23259f2f.
+CurrentStudy236974B/4e0563854a2282b10d5804da9e9843814ba8363b23400eea63a2459ca14de680.
+
+Exact main and assemble remain closed throw-only methods. Current Arguments93..122
+1735B/10b5d7457d3a4daf84c498aeef4a0d00ed52c06020488004cfb9d9ea259efa10 accepts
+legacy normal/canary profiles and descriptorSha/data roles; V2 needs only
+COHORT_TERMINAL_TELEMETRY_V2 with separate inputContextSha256/outputDir authority.
+Selected UUID/SHA patterns are lowercase ASCII. Filesystem behavior NOT freshly run.
+One-file token index has no Arguments.parse call and only its parser constructor;
+not global dead-code proof. Do not silently rename descriptor/data into V2 authority.
+
+Selected Parent.inputs(Arguments)134..139320B/f06007f2f09e6d882ac47a280aa588977a7c4b40ae151a40947385a96400456f
+passes runId/manifestSha/wireSha/data to reflected String,String,String,Path ctor.
+This proves type/arity, not target semantics or V2 compatibility. No target input/
+factory/generatedDATA Source opened or run. originalDto671..7284569B/
+da4cffa9ac57af2f4d83248403093a54348e5bd02edb4c932b64482d2820af7c uses metered
+literal reflective args field reads runId674 and manifestSha720. Dot-field-only
+inventory missed those; migrate charged reads and current callers atomically.
+Exact runR9FixtureArm signature1108..1109 takes Arguments;1112..1114 uses runId.
+GenericR7Arguments remains separate. Textual indices are not Java/global callgraphs.
+
+Use existing metadata/codec/R7 owners, no duplicate schema/cohort/work installer/
+cleanup sum/ledger/finalizer. Eventual caller order: preflight/trusted identities
+and start -> one actual original/census/receipt/DTO -> same checked cohort ->
+exact NULL then OBSERVE -> finish association/body/prior binding while open ->
+existing captureR7/detached ownership/tree/close/snapshot/freeze -> finalize once/
+current canonical export/readback/operation receipt/result/marker authority.
+This is a Source contract, not implemented order. DTO copied net IDs still need
+a caller-proved link to checked capture IDs. Audit current actual wrapper
+prepayments and owner offset once; do not adopt historical prices unchecked.
+Selected semantic clause delegates arm/parity/finite and other checks to helpers
+not all authenticated here. Full semantic/normal-host/lifecycle closure remains
+unqualified. Old NATIVE_MAP is a sequence aid, not a current gap/acceptance oracle.
+
+Root plus one bounded leaf Source reviewer checked current clauses/consumers/
+contract; no reviewer execution. Refined semantic-helper wording after review.
+R1 declaration-header selector included three ordinary fixture field/constructor
+Source lines and missed an unindented header; retained, corrected exact R2.
+R1 status snapshot strip removed first porcelain leading space and failed before
+checkpoint writes; focused cached-name check diagnosed script defect, R2 preserves
+bytes and confirms expected counts. No DATA/target execution or native failure.
+Failures/deficiencies remain evidence; no historical unread-certainty restoration.
+
+Next unstarted implementation: normal V2 Arguments/preflight migration using the
+existing owner and current consumers. First necessary Source substep: authenticate
+the current Arguments emitter/transition and typed/literal-reflective consumers
+in its current closure; Parent.inputs type declaration/calls before retirement or
+migration. Do not open denied factory/DATA to infer compatibility; existing V2
+input/setup needs an admitted current caller contract. Keep main/assemble held.
+Future canaries must use real selected JDK8/owned Windows paths, deny old profiles/
+bad shape/identity before path inspection, preserve directory contents, prove no
+output/parent/factory/capture access in parser-only scope, then final-source native
+closure/regressions. Clock/independent hash authority are separate existing owners.
+No user decision currently required; no genuine execution authorized by this audit.
+
+Genuine original then exactNULL/OBSERVE UNSPENT_GATED. No actual/fake owner/graph/
+Session/factory/positive inputsetup/originalDTO/receiptprepare/binding/captureR7/
+executeArm/R9DTO,receiptfiles,routing/exportV2. Protected/heldoutDATA, oldactual
+descriptors/results/generatedDATAclasses,whole historical builders/readers denied.
+Oldnormal20 NOTREREAD; protectedUnread UNCERTIFIED. Playable100=0,betaHELD,
+full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun. Budgets90s/640groups/5s/group32768u
+PERGROUP/copy1MiB/chunk4096/Source4MiB/fragment64KiB/opJSON8MiB/result1MiB/depth64/
+key1m/class10k256MiB/compile-suite60s/reader180s/wrapper480s/cleanup120s unchanged;
+exact seeds/epochs/oracles unchanged. N36 native/tests NOTRUN_Sourceonly;
+production/GWT/Player N/A,electrical/population NOTRENEWED;CI NOTRUN/self-hosted
+runner prerequisite. N35 gates remain attached to their candidate, not renewed N36.
+
+No new persistent process/listener. Controlledscratch/classes/failures retained.
+Preserve uncertain browser14116/start639294472690745890/port58320,preview34180/
+start639294472514546595/port58264+14children,oldDprocess/unlink uncertainty,
+hardlinks,scratch,Notepad67116860. Main5f05b005:9mods/6untracked,E d9747229:reportM,
+Desktop e0c36885:7mods/89individual untracked preserved; all staged0. F was clean
+after receipt; this local checkpoint is its only intended tracked modification.
+No N36 commit/push/email. Never give reviewers full task-report paths; bounded
+prefix copies only. Previous opaque historical tailfa06c18d preserved byte-for-byte;
+current historical tail after archiving N35 prefix: ca0c94a5a5bd9293a2b69c2ccd3b63ce490674878125f737537fe8ca3437857e.
+
+# Historical checkpoint: N35 synthetic metadata/R7 publication
 
 F codex/q100-terminal-only-20261107 implementation HEAD 13130cecc5044a60a93f708819c7a1fda8140684,
 no upstream; normal target origin/codex/q100-physical-feasibility. N33 impl8ef0a07f/

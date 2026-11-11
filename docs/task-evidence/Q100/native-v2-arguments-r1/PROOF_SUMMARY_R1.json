@@ -1,0 +1,155 @@
+{
+  "status": "PASS_FINITE_V2_ARGUMENT_PREREQUISITE",
+  "parentImplementation": "13130cecc5044a60a93f708819c7a1fda8140684",
+  "gateSha256": {
+    "BUILD_SOURCE_FREEZE_R2.json": "275f299715ee2962419fbfc0bd070b2510f667d1f02f0a737af23ed60a546500",
+    "COMPILE_GATE_R2.json": "bffd0e8e9be094d0b488e39343b79b55b0108c8ba5058acda8bdd7ebc3a5c331",
+    "NEW_GATE_R2.json": "93f5e226293f95c7f6709c60f47f207e7723565d207701f29fbdd6d22835043a",
+    "REGRESSION_GATE_R3.json": "2a3064f9c0efe8792ed32b1c50dcf9e8a7874a29fc236f1fb3add3575ebcf21e"
+  },
+  "sourceTests": {
+    "status": "PASS",
+    "cases": 8,
+    "scope": "Four exact changes reconstructed back to pinned Source; rejected incompatible inputs. Inputs unchanged since passing call.",
+    "publicDriver": "PASS_FRESH_PUBLIC_EXPLICIT_SOURCE_8_TESTS"
+  },
+  "compile": {
+    "status": "PASS_FINAL_SOURCE_JDK8_V2_ARGUMENT_PREREQUISITE",
+    "sources": 19,
+    "classes": 258,
+    "classBytes": 774737,
+    "dependencies": 2416,
+    "dependencyBytes": 11870064,
+    "allMajor51": true,
+    "noShadows": true,
+    "factoryDataArtifactsExcludedBeforeAccess": 2,
+    "warnings": "One retained CleanupStagingCanary unchecked cast, line563; full -Xlint:unchecked diagnostics kept. No new error suppression."
+  },
+  "parser": {
+    "status": "PASS_REAL_JDK8_V2_ARGUMENT_COMPONENT",
+    "smokeCases": 1,
+    "smokeChecks": 8,
+    "suiteCases": 43,
+    "suiteChecks": 56,
+    "positiveCaseRepeatedAcrossModes": true,
+    "requiredSymlink": "REAL_EXISTING_OS_SYMLINK_NOFOLLOW_METADATA_ONLY_READ_ONLY",
+    "junction": "REAL_TASK_OWNED_JUNCTION",
+    "factoryOrParentLoadAttempts": 0,
+    "canaryArgumentRejectionExit": 1
+  },
+  "regression": {
+    "status": "PASS_FINITE_RETAINED_METADATA_REGRESSIONS_AFTER_READER_IMAGE_FIX",
+    "retainedNativeCases": 940,
+    "countedAssertionsExcludingDetachedProtocol": 3104,
+    "independentlyReadDetachedCases": 24,
+    "readers": [
+      {
+        "status": "PASS_INDEPENDENT_CLEANUP_STAGING_READER",
+        "caseCount": 2
+      },
+      {
+        "status": "PASS_INDEPENDENT_CLEANUP_STAGING_READER",
+        "caseCount": 22
+      }
+    ],
+    "completedInputsReusedAfterByteAudit": 16,
+    "RUN81": "NOT_APPLICABLE_INPUT_OWNER_UNCHANGED_FACTORY_DATA_EXCLUDED"
+  },
+  "acceptedCalls": [
+    {
+      "phase": "v2-args-final-jdk8-compile-r2",
+      "exitCode": 0,
+      "operationNanos": 1459255500,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 0,
+      "stderrBytes": 338,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "v2-args-smoke-r2",
+      "exitCode": 0,
+      "operationNanos": 96391100,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 196,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "v2-args-suite-r2",
+      "exitCode": 0,
+      "operationNanos": 67220900,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 199,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "v2-args-canary-cli-rejection-r2",
+      "exitCode": 1,
+      "operationNanos": 53124100,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 0,
+      "stderrBytes": 136,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "v2-args-python-selected-image-negative-r3",
+      "exitCode": 7,
+      "operationNanos": 30107200,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 0,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "v2-args-detached-smoke-r2-reader-r3",
+      "exitCode": 0,
+      "operationNanos": 52702100,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 131,
+      "stderrBytes": 0,
+      "deadlineMillis": 180000
+    },
+    {
+      "phase": "v2-args-detached-suite-r3",
+      "exitCode": 0,
+      "operationNanos": 122142500,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 26223,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "v2-args-detached-suite-r3-reader-r3",
+      "exitCode": 0,
+      "operationNanos": 53734300,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 132,
+      "stderrBytes": 0,
+      "deadlineMillis": 180000
+    }
+  ],
+  "callerLimits": "Private handle-bound subprocess caller; no normal host certification. Process operation elapsed recorded; successful isolated cleanup unmeasured. R2 failed reader exit not certified and never reused.",
+  "normalHostAcceptance": false,
+  "actualOwnerExecution": false,
+  "genuine": "UNSPENT_GATED",
+  "productionGwtPlayer": "NOT_APPLICABLE_UNCHANGED",
+  "electricalPopulation": "NOT_RENEWED",
+  "ci": "NOT_RUN_SELF_HOSTED_RUNNER_PREREQUISITE",
+  "full30": "EXCLUDED",
+  "HARD_PSYCHOTIC": "UNAVAILABLE_UNRUN",
+  "protectedUnread": "UNCERTIFIED",
+  "oldNormal20": "NOT_REREAD",
+  "playable100": 0,
+  "beta": "HELD",
+  "budgetsSeedsEpochsOracles": "UNCHANGED",
+  "retainedOutputOracleAuditSha256": "d854e1e8c1fca21130ca7f52f2b843d2820e06156870a5e2132c1b5c9775d817"
+}

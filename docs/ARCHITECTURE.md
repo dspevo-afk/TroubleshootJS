@@ -448,6 +448,17 @@ bind same body/work identity, actual closed-counter prices and consumed failure
 behavior. No production owner, second ledger, normal producer, actual DTO or
 genuine host/lifecycle qualification is added.
 
+The [V2 argument prerequisite](task-evidence/Q100/native-v2-arguments-r1/README.md)
+migrates the existing held Study.Arguments owner to the V2-only profile and
+separate source/wire/context/output roles. It reuses the Windows lexical helper,
+then checks NOFOLLOW attributes, exact real-path spelling and emptiness. The
+checked Source transition retires the current unused descriptor loader and
+constructor adapter and migrates the DTO's metered manifest field read. It keeps
+inputsType for captureOriginal and leaves both normal entrypoints throw-only.
+Finite JDK8 controls qualify argument/path behavior; they do not authenticate
+hash values, check producer-start time, reserve the directory or establish normal
+caller/factory/DTO/host authority. Current V2 input/setup retains its owner.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published
