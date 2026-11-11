@@ -1945,6 +1945,21 @@ Implementation `209685a79902da03b8e25792fa3703af5c3b4aa8` normally pushed to
 origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail `1a1c899b2e06346e` sent once; this receipt sends no second email.
 
+The [runtime input prepayment](task-evidence/Q100/runtime-inputs-prepayment-r1/README.md)
+is locally accepted for its finite wrapper boundary. It retires the unmetered
+carrier method and requires the caller's actual SetupMeter. Existing owners
+prepay10units/4copies/1chunk before allocation and close a closed-start wrapper
+group. Real Meter canaries cover partial failures, repeated use, rollover and
+natural640-group refusal; migrated mapping assertions stay intact. Eight Source
+tests, final21-Source JDK8 build, prepayment SMOKE1/10 and SUITE10/42, mapping
+SMOKE1/9 and SUITE4/28,940 retained cases/independent readers and retained parser
+modes pass. No combined unique mode total is claimed. Two draft expectations
+were corrected against current owner Source before any native run. Next is the
+normal setup/carrier/original caller identity/start/Meter and receipt composition
+contract; no normal host or genuine acceptance follows. Both entrypoints held;
+budgets/seeds/epochs/oracles unchanged. Full30EXCLUDED,HARD/PSYCHOTIC unavailable/
+unrun,playable100=0,betaHELD; protected-unread boundary UNCERTIFIED.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

@@ -1,0 +1,9 @@
+{
+  "status": "PASS_OWNED_JUNCTION_REMOVAL_TARGET_AND_SENTINELS_UNCHANGED",
+  "systemSymlink": "READ_ONLY_UNTOUCHED",
+  "persistentResources": "NONE_NEW",
+  "buildOutputs": "CONTROLLED_RETAINED",
+  "verifiedReparseTag": "MOUNT_POINT",
+  "removal": "NODE_ONLY_AFTER_EXACT_OWNED_TARGET_CHECK",
+  "successfulIsolatedCleanupDuration": "UNMEASURED"
+}

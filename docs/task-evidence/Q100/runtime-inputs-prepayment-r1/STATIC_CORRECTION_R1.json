@@ -1,0 +1,13 @@
+{
+  "status": "STATIC_DRAFT_ERRORS_CORRECTED_BEFORE_COMPILE_OR_NATIVE",
+  "draftSha256": "acf42802a8d500c95539f6166cc0af36d646150838c6f87a189efe2b7315075d",
+  "finalBytes": 27512,
+  "finalSha256": "8435331f46b9af53895e8ceec7685fcf7bc2ff1c92271d6af5053f0933a43176",
+  "corrections": [
+    "Null-Arguments snapshot preserves native default copyAllowance1048576, rather than zero.",
+    "640 closed groups pass check then beginGroup refuses exact IOException/native wrapper exceeded 640 measured groups.",
+    "Capacity rejection now compares all selected snapshot state via sameState."
+  ],
+  "nativeRunBeforeCorrection": false,
+  "oracleChange": "NONE; current pinned constructor/check/beginGroup controls expected literals."
+}

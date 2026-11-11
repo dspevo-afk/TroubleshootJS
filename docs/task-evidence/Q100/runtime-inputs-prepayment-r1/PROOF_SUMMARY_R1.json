@@ -1,0 +1,363 @@
+{
+  "status": "PASS_FINITE_RUNTIME_INPUT_CARRIER_PREPAYMENT",
+  "parentImplementation": "209685a79902da03b8e25792fa3703af5c3b4aa8",
+  "parentHead": "fddf2a8333bd1e966a02a6310e1818847f94c474",
+  "gateSha256": {
+    "SOURCE_FREEZE_R1.json": "6e73d6861ced7a11f18ca06aacadc86a1bc4a87edba0ed06892688365945a7c9",
+    "COMPILE_GATE_R1.json": "74903c2b164630bf163eaa58912d48f907f61806320dc29e88b5b7c31cfb33a9",
+    "NEW_GATE_R1.json": "ebce1e538df27ca2bfb1c722f92d15fc62cba97e243bd65332d84777718d1241",
+    "REGRESSION_GATE_R1.json": "7577cdc6e068f5037a794a29ebfef3535fcd3f298c5b9074aff826b0666c4053"
+  },
+  "sourceTests": {
+    "status": "PASS",
+    "cases": 8,
+    "scope": "Exact one-clause reconstruction, fees before allocation, retired overload, holds and invalid Source admission",
+    "publicDriver": "PASS_FRESH_PUBLIC_8_TESTS"
+  },
+  "compile": {
+    "sources": 21,
+    "classes": 269,
+    "classBytes": 817920,
+    "dependencies": 2416,
+    "dependencyBytes": 11870064,
+    "allMajor51": true,
+    "noShadows": true,
+    "factoryDataExcludedUnread": 2,
+    "warnings": "One retained CleanupStagingCanary563 unchecked cast; full diagnostics retained; no new suppression."
+  },
+  "new": {
+    "RuntimeInputsPrepaymentCanary": {
+      "SMOKE": {
+        "cases": 1,
+        "checks": 10,
+        "line": "SYNTHETIC_RUNTIME_INPUTS_PREPAYMENT_COMPONENT_ONLY mode=SMOKE cases=1 checks=10 deniedFactoryLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+      },
+      "SUITE": {
+        "cases": 10,
+        "checks": 42,
+        "line": "SYNTHETIC_RUNTIME_INPUTS_PREPAYMENT_COMPONENT_ONLY mode=SUITE cases=10 checks=42 deniedFactoryLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+      }
+    },
+    "RuntimeInputsCanary": {
+      "SMOKE": {
+        "cases": 1,
+        "checks": 9,
+        "line": "SYNTHETIC_RUNTIME_INPUTS_COMPONENT_ONLY mode=SMOKE cases=1 checks=9 deniedFactoryLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+      },
+      "SUITE": {
+        "cases": 4,
+        "checks": 28,
+        "line": "SYNTHETIC_RUNTIME_INPUTS_COMPONENT_ONLY mode=SUITE cases=4 checks=28 deniedFactoryLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+      }
+    }
+  },
+  "closedStartPrice": {
+    "units": 10,
+    "copies": 4,
+    "chunks": 1,
+    "groups": 1
+  },
+  "retained": {
+    "retainedNativeCases": 940,
+    "countedRetainedAssertionsExcludingDetachedProtocol": 3104,
+    "parserSmokeCases": 1,
+    "parserSuiteCases": 43,
+    "parserPositiveRepeated": true,
+    "RUN81": "NOT_APPLICABLE_INPUT_OWNER_UNCHANGED_FACTORY_DATA_EXCLUDED"
+  },
+  "detachedIndependentReaderCases": [
+    2,
+    22
+  ],
+  "calls": [
+    {
+      "phase": "runtime-prepayment-jdk8-compile-r1",
+      "exitCode": 0,
+      "operationNanos": 957486800,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 0,
+      "stderrBytes": 350,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-runtimeinputsprepaymentcanary-smoke-r1",
+      "exitCode": 0,
+      "operationNanos": 193589700,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 162,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-runtimeinputsprepaymentcanary-suite-r1",
+      "exitCode": 0,
+      "operationNanos": 78949400,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 163,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-runtimeinputscanary-smoke-r1",
+      "exitCode": 0,
+      "operationNanos": 73884200,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 150,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-runtimeinputscanary-suite-r1",
+      "exitCode": 0,
+      "operationNanos": 75273600,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 151,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-cli-refusal-r1",
+      "exitCode": 1,
+      "operationNanos": 56094400,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 0,
+      "stderrBytes": 160,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-metadata-r7-smoke-r1",
+      "exitCode": 0,
+      "operationNanos": 114022200,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 122,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-metadata-r7-suite-r1",
+      "exitCode": 0,
+      "operationNanos": 132408300,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 123,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-retained-0-r1",
+      "exitCode": 0,
+      "operationNanos": 113537900,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 121,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-retained-1-r1",
+      "exitCode": 0,
+      "operationNanos": 93237800,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 114,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-retained-2-r1",
+      "exitCode": 0,
+      "operationNanos": 94039400,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 117,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-retained-3-r1",
+      "exitCode": 0,
+      "operationNanos": 95419200,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 114,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-retained-4-r1",
+      "exitCode": 0,
+      "operationNanos": 93875800,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 117,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-retained-5-r1",
+      "exitCode": 0,
+      "operationNanos": 64534500,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 113,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-retained-6-r1",
+      "exitCode": 0,
+      "operationNanos": 200387900,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 120,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-retained-7-r1",
+      "exitCode": 0,
+      "operationNanos": 124592100,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 117,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-retained-8-r1",
+      "exitCode": 0,
+      "operationNanos": 126709300,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 118,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-retained-9-r1",
+      "exitCode": 0,
+      "operationNanos": 124636700,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 119,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-retained-10-r1",
+      "exitCode": 0,
+      "operationNanos": 110301100,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 117,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-retained-11-r1",
+      "exitCode": 0,
+      "operationNanos": 194241300,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 82,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-retained-12-r1",
+      "exitCode": 0,
+      "operationNanos": 104473500,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 124,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-v2-parser-smoke-r1",
+      "exitCode": 0,
+      "operationNanos": 65708100,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 196,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-v2-parser-suite-r1",
+      "exitCode": 0,
+      "operationNanos": 65797300,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 199,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-detached-smoke-r1",
+      "exitCode": 0,
+      "operationNanos": 97726200,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 3832,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-detached-smoke-r1-reader",
+      "exitCode": 0,
+      "operationNanos": 52921800,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 131,
+      "stderrBytes": 0,
+      "deadlineMillis": 180000
+    },
+    {
+      "phase": "runtime-prepayment-detached-suite-r1",
+      "exitCode": 0,
+      "operationNanos": 118355900,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 26225,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "runtime-prepayment-detached-suite-r1-reader",
+      "exitCode": 0,
+      "operationNanos": 52865000,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 132,
+      "stderrBytes": 0,
+      "deadlineMillis": 180000
+    }
+  ],
+  "commands": [
+    "selected-python -I -B run_gates_r1.py --case compile",
+    "selected-python -I -B run_gates_r1.py --case new",
+    "selected-python -I -B run_gates_r1.py --case regression"
+  ],
+  "normalHostAcceptance": false,
+  "actualCaptureExecution": false,
+  "genuine": "UNSPENT_GATED",
+  "playable100": 0,
+  "beta": "HELD",
+  "full30": "EXCLUDED",
+  "hardPsychotic": "UNAVAILABLE_UNRUN",
+  "protectedUnread": "UNCERTIFIED",
+  "oldNormal20": "NOT_REREAD",
+  "productionGwtPlayer": "NOT_APPLICABLE_QUALIFICATION_ONLY",
+  "electricalPopulation": "NOT_RENEWED",
+  "CI": "NOT_RUN_SELF_HOSTED_RUNNER_PREREQUISITE",
+  "caller": "PRIVATE_HANDLE_BOUND_NATIVE_CALLER_NOT_NORMAL_HOST_CERTIFICATION",
+  "cleanupDuration": "SUCCESSFUL_ISOLATED_CLEANUP_UNMEASURED"
+}

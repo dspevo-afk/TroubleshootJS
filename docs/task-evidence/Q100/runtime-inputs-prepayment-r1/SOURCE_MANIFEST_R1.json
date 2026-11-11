@@ -1,0 +1,55 @@
+{
+  "status": "EXACT_FINAL_PUBLIC_SOURCE",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 29,
+      "sha256": "730a35ae3d558080083c3103d9ac8100c3f6561678092abe341701dfa331eb1d"
+    },
+    {
+      "path": "CONTRACT_R1.md",
+      "bytes": 4478,
+      "sha256": "96a93bc113be77e2b7fe6861896d52535747dac51d7091bf401262cc8c395cff"
+    },
+    {
+      "path": "derive_runtime_prepayment.py",
+      "bytes": 1291,
+      "sha256": "4a053496a772bc9ca510277afecc400e6168f05afa6351faa908676aef0b91d5"
+    },
+    {
+      "path": "PRICE_EXPECTATIONS_R1.json",
+      "bytes": 1383,
+      "sha256": "f398c29ca15b0dc9061b5e1d67d9cff1769bd10db76068db6fade0c34b8b5cc7"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1649,
+      "sha256": "dfa4bf21ab9695a9069e8599a18fde936e93370e80d59921e5f245c27bfb297f"
+    },
+    {
+      "path": "RuntimeInputs.java.fragment",
+      "bytes": 1142,
+      "sha256": "28184dd2eadf4c715d9f2e5010fdbb63673ef8575ff34bd1a32e3a78a59390cc"
+    },
+    {
+      "path": "RuntimeInputsCanary.java",
+      "bytes": 19257,
+      "sha256": "24d928d6bf4b090e7cac0ea778a243b4883771d913cdbf90377f39ec0168db6e"
+    },
+    {
+      "path": "RuntimeInputsPrepaymentCanary.java",
+      "bytes": 27512,
+      "sha256": "8435331f46b9af53895e8ceec7685fcf7bc2ff1c92271d6af5053f0933a43176"
+    },
+    {
+      "path": "test_runtime_prepayment_source.py",
+      "bytes": 3801,
+      "sha256": "1f91194dbbec7694f9ed160c68aca96a9bec146bd303881d72ada7860d3087e8"
+    }
+  ],
+  "derivedStudy": {
+    "bytes": 236757,
+    "sha256": "e20499b59ccedcdbaffd9e7bc1a2fdf5d3e0a4f96ccaed786656e701a5c5c103"
+  },
+  "privateCallerSha256": "c734657f1bddc1daeabc420ef00b58ec67933cd7b9beb43b982b92e283710a49"
+}

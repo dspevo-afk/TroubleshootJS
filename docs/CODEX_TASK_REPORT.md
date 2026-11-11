@@ -1,4 +1,138 @@
-# Current checkpoint: N40 runtime input carrier published; caller accounting next
+# Current checkpoint: N42 runtime carrier prepayment accepted
+
+Active F codex/q100-terminal-only-20261107, no upstream; normal publication target
+origin/codex/q100-physical-feasibility. Parent HEADfddf2a8333bd1e966a02a6310e1818847f94c474.
+N42 final candidate accepted locally; implementation commit/push/Gmail PENDING.
+
+Scope: replace unmetered Parent.runtimeInputs with (Arguments,SetupMeter).
+Structural admission rejects null/foreign/nullraw/wrongtype before debit; existing
+owners prepay2controls+4fieldreads+copy4 before carrier lookup/allocation, finish
+the measured group before return. Closed-start price10units/4copiedEntries/1chunk/
+1group. Native open-group join/roll and partial-failure state remain; no refund,
+rollback, retry, new ledger/carrier/Map clone/schema. Current mapping assertions
+migrated; old API is historical only. Both normal main/assemble throw guards stay.
+No actual OriginalArm/graph/Session/factoryDATA/capture/receipt/genuine operation.
+
+Private OS-temp/tsj-q100-copy-prepayment-contract-r1-rdx89kmw. Final Study236757B/
+e20499b59ccedcdbaffd9e7bc1a2fdf5d3e0a4f96ccaed786656e701a5c5c103.
+Fragment1142B/28184dd2eadf4c715d9f2e5010fdbb63673ef8575ff34bd1a32e3a78a59390cc.
+PrepaymentCanary27512B/8435331f46b9af53895e8ceec7685fcf7bc2ff1c92271d6af5053f0933a43176;
+mappingCanary19257B/24d928d6bf4b090e7cac0ea778a243b4883771d913cdbf90377f39ec0168db6e.
+T/E runtime-inputs-prepayment-r1. Fresh public8Source tests PASS. Final21Java
+JDK8 source7/target7 PASS:269major51classes/817920B+2416authenticatedCODEdeps/
+11870064B, no shadows,2factoryDATA artifacts excluded BEFORE access. One old
+CleanupStagingCanary563 unchecked cast warning retained; no new suppression.
+Real prepayment SMOKE1/10+SUITE10/42; migrated mapping SMOKE1/9+SUITE4/28 PASS.
+These modes overlap; no combined unique count. Natural640-group and32765-unit
+rollover fixtures use actual API calls only, no counter-field writes. NullArgs
+retains2units/open and allowance3 refusal6units/open/no copy counters. New owner
+flags inactive. Fresh940retainedcases/3104countedassertions PASS excluding24-case
+detached independent protocol; retained parserSMOKE1/8+SUITE43/56 PASS, positive
+overlaps modes. All27controlled calls exitobserved:26exit0+1CLInegativeexit1.
+No N42 native failure. Root corrected2draft expectations BEFORE any native:
+defaultcopyAllowance1048576 and exact641st-opening IOException; rawdraft retained.
+Capacity-refusal snapshot strengthened to all selected state; no oracle weakening.
+
+SOURCE_FREEZE_R1 6e73d6861ced7a11f18ca06aacadc86a1bc4a87edba0ed06892688365945a7c9;
+COMPILE_GATE_R1 74903c2b164630bf163eaa58912d48f907f61806320dc29e88b5b7c31cfb33a9;
+NEW_GATE_R1 ebce1e538df27ca2bfb1c722f92d15fc62cba97e243bd65332d84777718d1241;
+REGRESSION_GATE_R1 7577cdc6e068f5037a794a29ebfef3535fcd3f298c5b9074aff826b0666c4053.
+Frozen source/classes/reader inputs checked before/after; exact public copies
+match compiled canaries/fragment. Earlier initializer admission reused only with
+unchanged dependency closure. FreshRun class has no static initializer, no instance.
+Bounded leaf Source review confirms order/partial failures; root owns integration,
+literal price, native acceptance and publication. Private handle-bound caller NOT
+normal-host certification; success isolated cleanup UNMEASURED. Owned junction
+removed node-only after exact target/tag check, target/sentinels unchanged; readonly
+OS symlink untouched. No new persistent process/listener; controlled artifacts kept.
+
+NEXT unstarted: current normal setup/carrier/original caller composition contract:
+identity/start/same-Meter authority, SetupResult counters into original adoption/
+offset and receipt/capture/cohort/metadata/R7/export closure. Keep main/assemble
+held and genuineoriginal->exactNULL/OBSERVE UNSPENT_GATED until complete semantic/
+host/lifecycle gates; this finite prepayment is not full caller acceptance.
+Budgets90s/640groups/5s/32768pergroup/copy1048576+4096chunks and all other limits,
+seeds/epochs/oracles unchanged. Full30EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
+playable100=0,betaHELD; protectedUnreadUNCERTIFIED; oldnormal20NOTREREAD. No denied
+factoryDATA/oldactualoutputs opened. Production/GWT/Player N/A; electrical/population
+NOTRENEWED; CI NOTRUN/selfhostedrunner prerequisite. Prior N40 Gmail1a1c899b2e06346e
+and N37 Gmail1a1c81f4caca9dfc already sent; NO duplicates.
+
+Unrelated Main HEAD5f05b0059trackedM/6individualuntracked, E HEADd9747229reportM,
+Desktop HEADe0c368857trackedM/89individualuntracked, staged0 preserved. Uncertain
+prior browser/preview/D resources, hardlinks, scratch/failure evidence remain as
+below; no uncertain resource terminated. Never give agents full report; stream
+prefix<=64KiB only. No routine user decision needed. Continue next contract.
+
+# Historical checkpoint: N40 published; N41 Meter boundary Source preparation
+
+Active F codex/q100-terminal-only-20261107 HEADfddf2a8333bd1e966a02a6310e1818847f94c474,
+no upstream; target origin/codex/q100-physical-feasibility exactreceiptSHA verified.
+N40 implementation209685a79902da03b8e25792fa3703af5c3b4aa8 and receiptfddf2a83
+published; completion Gmail1a1c899b2e06346e sent once/acknowledged. NO duplicate
+N40 or receipt email. N37 priorpublication/email preserved below.
+
+N40 carrier-only bridge locallyaccepted/published: existing Parent.runtimeInputs
+maps actualParsedArgs run/source/wire/output references to existing nativecarrier.
+No Map/contextSHA conversion, newholder/parser/Meter, hash/clock/pathreservation
+or normalcaller/accounting authority. Parent initializerCharsetUTF8+2Patterns
+explicitlyallowed afterinspection; other4loadedtypesnostaticinitializer. Noactual
+OriginalArm/graph/Session/factoryDATA/capture/receipt operation enabled. Exact
+main/assembleholdsunchanged. NewSource236157B/19f74da6cf1fa210dc0204977935d92b7456f8de3e30dabc5481fc096d174a18.
+Private OS-temp/tsj-q100-runtime-inputs-r1-sij8d_bx. Freshpublic8Source tests,
+actual20SourceJDK8/264major51classes+2416deps/noshadows, SMOKE1/9+SUITE4/28,
+940retainedcases/independentreaders andretainedV2parsermodespass. Countsreported
+separately, no combinedunique total. All25calls expectedexitobserved,24exit0+
+1CLInegativeexit1. Existinguncheckedcastwarningretained. Before-native wrongcanary
+FQN corrected/rawdraftpreserved, no nativefailuresinN40. Exactpubliccopiespass.
+Privatehandleboundcaller NOTnormalhostcertification; successisolatedcleanup
+unmeasured. Original-wrapperprepayment/callerintegration remains UNQUALIFIED.
+Ownedjunction removednode-only,target/sentinelsunchanged,readonlyOSsymlinkuntouched.
+No newpersistentprocess/listener;controlledbuildartifacts retained.
+
+N41 necessary Source/code boundary inspection complete, no implementation or
+nativeproducttest/build/Player gate, publication or email. Private OS-temp/
+tsj-q100-caller-meter-boundary-r1-ybndasqu. SourceFindingsR1
+fab13cd91f606bff7f4190b5d302b599b9e8c1549b636c401e2a9337671e62d4;
+BoundaryContractR1 a6c8bad58759b910eb4c558bc7ee38dc99fb3cebb7b08f95e12cfc1dec615158.
+SelectedcurrentSetupMeter1021B/1c54d8a743ecbc712ad72f5476e5bbcde344ea0a5a267678e5f599bd011483c6;
+currentnativeMeter4918B/d06f7c883827bc97cedcc08fbcefc3be8512d480f787e7fa06b91751e0162d55,
+JDK8javap22136B/4b8a2815e0dc06d216bf1783ceacad09fc264dce206ad4c1a819a1820cbc4e05.
+Code/API inspection exited0 only; no inspected method invoked.
+
+SetupMeter.charge(n) callsreserve thenactualcharge. reserve0..32768 mayfinishan
+openinsufficientgroup andopennewone withoutunitincrement; reserve0 is not a
+state-free noop. Nativecharge refusesclosedgroup andthen incrementscheckedunits; post-add check
+maythrowafterunits/groupUnits already increased.
+beginGroup finishesopenwrappergroup first; beginOriginalOwner instead REJECTS
+openwrappergroup andstartsownerbudgetonlyonce. Callerprepaymentphase needsexplicit
+closure beforeownerbudgettransition. SetupMeter.finish callsfinishGrouponlyifopen.
+NativefinishGroup closesflag/incrementsgroups/recordsmeasure+maxima BEFORElate
+time/overallchecks, so failedclose canretainchangedstate. Preservefailureevidence;
+no rollback/refund/retry implied. Meterctorstoresstart+copyallowance/list; supplied
+startauthenticity notprovedhere. No new wholeclock acceptance.
+
+SetupMeter.copy delegatesreserveCopy(null,sameMeter) afterFreshRuntypelookup;
+thathelperbody NOTselectedhere. NEXT necessary Source scope: currentreserveCopy
+and exactnormalcallerinspection/reference-copydemands, thennumericprepayment/
+attribution contract beforemeteredcallerimplementation. Do not infercompletefee
+fromfourcarrierrefs orreuseoldfive-unitprice unchecked. Sameactualproducer-start/
+Meter andexactinputSetupResultcounters mustflowtoactualowneradoption/offset,
+receipt/capture/cohort andmetadata/R7/exportclosure. Main/assemble remainheld.
+Boundedleaf Source review confirmed group/partial-failure findings; no execution. Root
+inspectioncurrentbudgetclass only, not wholehistoricalconsumer/builder orDATA.
+
+All budgets/seeds/epochs/oracles unchanged; genuineoriginalthenexactNULL/OBSERVE
+UNSPENT_GATED, full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,oldnormal20NOTREREAD,
+protectedUnreadUNCERTIFIED,playable100=0,betaHELD. Production/GWT/Player N/A;
+electrical/population NOTRENEWED;CI NOTRUN/selfhostedrunnerprerequisite. No factory
+DATA/oldactualoutputsopened. Unrelated Main5f05b0059mods/6untracked,E d9747229reportM,
+Desktop e0c368857mods/89individualuntracked,staged0preserved. F onlylocalcheckpoint
+modifiedafterreceipt. Controlledscratch/hardlinks/failures/uncertainpriorresources
+retainedasbelow. Nevergiveagentsfullreport; readboundedprefixonly. No routineuser
+decisionneeded. Continue currentcopy/prepaymentcontract next.
+
+# Historical checkpoint: N40 runtime carrier accepted and published
 
 Active F codex/q100-terminal-only-20261107 implementationHEAD209685a79902da03b8e25792fa3703af5c3b4aa8,
 no upstream; target origin/codex/q100-physical-feasibility. N37 implementation891a0503/

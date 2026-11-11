@@ -459,14 +459,17 @@ Finite JDK8 controls qualify argument/path behavior; they do not authenticate
 hash values, check producer-start time, reserve the directory or establish normal
 caller/factory/DTO/host authority. Current V2 input/setup retains its owner.
 
-The [runtime input bridge](task-evidence/Q100/runtime-inputs-bridge-r1/README.md)
-adds Parent.runtimeInputs to map current parsed run/source/wire/output references
-into the existing native Inputs carrier. Context identity and validated expected
-metadata remain separate. Inspected owner initialization creates charset/regex
-helpers only; the bridge creates no Meter, OriginalArm, graph or capture and
-charges no units/copies. Finite native checks qualify reference mapping and
-independent carriers. Normal caller initialization/prepayments, actual receipt/
-capture and host authority remain separate; both normal entrypoints stay held.
+The [runtime input prepayment](task-evidence/Q100/runtime-inputs-prepayment-r1/README.md)
+replaces the earlier unmetered Parent.runtimeInputs API with the caller's
+SetupMeter argument. It admits structural binding, prepays two controls and four
+existing field reads, then reserves/charges four copied references before native
+Inputs allocation. A closed-start success costs10units/4copies/1chunk and closes
+one wrapper group. Native reserve may join or roll an open group; failed calls
+retain partial state, without rollback/refund. All current mapping assertions
+migrate to the metered API. Context/expected metadata remain separate, and no
+new carrier or ledger is introduced. Finite native tests cover real Meter limits;
+normal caller identity/start/order, original/receipt and host authority remain
+separate. Both normal entrypoints stay held; no actual owner work is enabled.
 
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before

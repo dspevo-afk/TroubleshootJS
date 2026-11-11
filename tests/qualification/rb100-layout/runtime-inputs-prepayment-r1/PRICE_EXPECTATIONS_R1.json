@@ -1,0 +1,59 @@
+{
+  "status": "INDEPENDENT_LITERAL_PREPAYMENT_PRICE_BEFORE_NATIVE",
+  "closedStart": {
+    "prepaidControls": 2,
+    "fieldInspectionCount": 4,
+    "unitPerFieldInspection": 1,
+    "copyAdmissionUnits": 4,
+    "units": 10,
+    "copiedEntries": 4,
+    "copyChunks": 1,
+    "wrapperGroups": 1,
+    "openAfterSuccess": false,
+    "maxGroupUnits": 10
+  },
+  "nullArguments": {
+    "units": 2,
+    "copiedEntries": 0,
+    "copyChunks": 0,
+    "groups": 0,
+    "groupUnits": 2,
+    "maxGroupUnits": 0,
+    "open": true
+  },
+  "allowanceThree": {
+    "units": 6,
+    "copiedEntries": 0,
+    "copyChunks": 0,
+    "groups": 0,
+    "groupUnits": 6,
+    "maxGroupUnits": 0,
+    "open": true
+  },
+  "repeatedSameMeter": {
+    "units": 20,
+    "copiedEntries": 8,
+    "copyChunks": 2,
+    "groups": 2,
+    "open": false
+  },
+  "rolloverFrom32765": {
+    "units": 32775,
+    "copiedEntries": 4,
+    "copyChunks": 1,
+    "groups": 2,
+    "maxGroupUnits": 32768,
+    "groupUnits": 7,
+    "open": false
+  },
+  "groupBudget640": {
+    "units": 640,
+    "copiedEntries": 0,
+    "copyChunks": 0,
+    "groups": 640,
+    "maxGroupUnits": 1,
+    "groupUnits": 1,
+    "open": false
+  },
+  "scope": "Literal arithmetic from pinned current charge/read/copy/finish owners. No target run, oracle weakening, actual owner or normalproducer authority."
+}

@@ -1,0 +1,18 @@
+        /** Prepaid runtime carrier only; caller owns identity/start and capture ordering. */
+        Object runtimeInputs(Arguments args,SetupMeter m) throws Exception {
+            if (m==null || m.parent!=this || m.meter==null || !meterType.isInstance(m.meter))
+                throw new IOException("RUNTIME_INPUT_METER");
+            m.charge(2); // null-holder control and final open-group inspection
+            if (args==null) throw new IOException("RUNTIME_INPUT_ARGUMENTS");
+            String run=(String)r7ReadObject(m,args,"runId");
+            String manifest=(String)r7ReadObject(m,args,"sourceManifestSha256");
+            String wire=(String)r7ReadObject(m,args,"wireContractSha256");
+            Path output=(Path)r7ReadObject(m,args,"outputDir");
+            m.copy(4); // before the native carrier's four reference assignments
+            Constructor<?> c=inputsType.getDeclaredConstructor(String.class,String.class,
+                String.class,Path.class);
+            c.setAccessible(true);
+            Object inputs=c.newInstance(run,manifest,wire,output);
+            m.finish();
+            return inputs;
+        }

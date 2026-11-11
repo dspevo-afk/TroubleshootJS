@@ -21,3 +21,10 @@ invokes no capture. No standalone clean-clone full-D replay is promised here.
 Evidence: docs/task-evidence/Q100/runtime-inputs-bridge-r1. This finite mapping
 proof does not qualify metered caller prepayment, identity/clock authority,
 receipt/actual-capture behavior, full result semantics or normal host execution.
+
+## Current successor
+
+The current caller API is replaced by ../runtime-inputs-prepayment-r1. That
+component requires SetupMeter and migrates RuntimeInputsCanary while preserving
+all mapping assertions. This directory records the earlier unmetered candidate;
+its historical native evidence does not qualify the changed API.
