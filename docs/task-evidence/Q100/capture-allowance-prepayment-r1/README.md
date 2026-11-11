@@ -54,3 +54,6 @@ exact NULL/OBSERVE UNSPENT_GATED. No budgets/seeds/epochs/oracles change. Full30
 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; playable100=0,beta HELD; protected-unread
 UNCERTIFIED; old normal20 not reread. Production/GWT/Player N/A; electrical/population
 not renewed; CI not run/self-hosted runner prerequisite. Positive RUN81 not renewed.
+Implementation `411aebe257079c9bac08d8d36e97da141b8f7481` normally pushed to
+origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
+Gmail `1a1c9281742d378c` sent once; no second email for this receipt.

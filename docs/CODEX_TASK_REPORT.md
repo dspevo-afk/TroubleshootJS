@@ -2,7 +2,8 @@
 
 Active F codex/q100-terminal-only-20261107, no upstream; normal target
 origin/codex/q100-physical-feasibility. Parent HEADad0d3a195792837e553d111b04dfc49901c367eb.
-N44 final candidate locally accepted; commit/push/completion Gmail PENDING.
+N44 implementation411aebe257079c9bac08d8d36e97da141b8f7481 normally pushed; exact remote accepted SHA verified.
+Completion Gmail1a1c9281742d378c sent once/acknowledged; NO duplicate/receipt email.
 
 Scope: existing begin/merge allowance owners now admit exact post-input carrier
 work while preserving original SetupResult/data. Prepay30begin/5owner-result reads/
