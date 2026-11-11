@@ -1,9 +1,10 @@
-# Current checkpoint: N40 runtime input carrier accepted; publication pending
+# Current checkpoint: N40 runtime input carrier published; caller accounting next
 
-Active F codex/q100-terminal-only-20261107 parentHEAD17aa94e1062ee114778233b450a75253ac9b98d3,
+Active F codex/q100-terminal-only-20261107 implementationHEAD209685a79902da03b8e25792fa3703af5c3b4aa8,
 no upstream; target origin/codex/q100-physical-feasibility. N37 implementation891a0503/
 receipt17aa94e1 published; Gmail1a1c81f4caca9dfc once. Do NOT duplicate N37 email.
-N40 commit/push/email pending. Private OS-temp/tsj-q100-runtime-inputs-r1-sij8d_bx.
+N40 implementation published/exactremoteSHA verified; completion Gmail1a1c899b2e06346e
+sent once/acknowledged. Receipt follows; NO second completion email. Private OS-temp/tsj-q100-runtime-inputs-r1-sij8d_bx.
 
 N40 locally accepted only for native runtime carrier mapping. Existing Parent now
 has runtimeInputs(Arguments): null holder refusal before constructor lookup,

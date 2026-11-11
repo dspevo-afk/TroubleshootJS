@@ -1940,7 +1940,10 @@ operation follows. Mapping is unmetered and does not qualify normal caller fees,
 clock/hash authority, receipt lifecycle or actual original execution. Next is the
 current caller initialization/prepayment contract before genuine use. Both normal
 entrypoints remain held; all budgets/seeds/epochs/oracles remain. Full30EXCLUDED,
-HARD/PSYCHOTIC unavailable/unrun,playable100=0,betaHELD. Publication pending.
+HARD/PSYCHOTIC unavailable/unrun,playable100=0,betaHELD.
+Implementation `209685a79902da03b8e25792fa3703af5c3b4aa8` normally pushed to
+origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
+Gmail `1a1c899b2e06346e` sent once; this receipt sends no second email.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

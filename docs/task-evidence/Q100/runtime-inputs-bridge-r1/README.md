@@ -43,4 +43,7 @@ not applicable: input owner unchanged and factory DATA excluded. Production/GWT/
 Player N/A; electrical/population not renewed; CI not run/self-hosted prerequisite.
 Genuine original/NULL/OBSERVE remains UNSPENT_GATED; full30 EXCLUDED;
 HARD/PSYCHOTIC unavailable/unrun; playable100=0,beta HELD; protected-unread boundary
-UNCERTIFIED and old normal20 not reread. Publication receipt follows verified push.
+UNCERTIFIED and old normal20 not reread.
+Implementation `209685a79902da03b8e25792fa3703af5c3b4aa8` normally pushed to
+origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
+Gmail `1a1c899b2e06346e` sent once; no second email for this receipt.
