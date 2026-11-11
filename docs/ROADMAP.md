@@ -1929,6 +1929,19 @@ Implementation `891a050370b80ac2b3a2c36c03d8e870a6ddd917` normally pushed to
 origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail `1a1c81f4caca9dfc` sent once. This receipt sends no second email.
 
+The [runtime input carrier bridge](task-evidence/Q100/runtime-inputs-bridge-r1/README.md)
+is locally accepted for finite reference mapping. The existing Parent adapter maps
+validated run/source/wire/output roles to the current native carrier without a
+Map conversion or new holder. Fresh8 Source tests, final20-Source JDK8 build,
+SMOKE1/9 and SUITE4/28 bridge checks,940 retained cases/independent readers and
+retained parser modes pass. Owner charset/regex initialization is explicitly
+allowed after inspection; no capture/OriginalArm/graph/Session or factory DATA
+operation follows. Mapping is unmetered and does not qualify normal caller fees,
+clock/hash authority, receipt lifecycle or actual original execution. Next is the
+current caller initialization/prepayment contract before genuine use. Both normal
+entrypoints remain held; all budgets/seeds/epochs/oracles remain. Full30EXCLUDED,
+HARD/PSYCHOTIC unavailable/unrun,playable100=0,betaHELD. Publication pending.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

@@ -1,0 +1,9 @@
+        /** Runtime identity/output carrier only; no capture or expectation-map conversion. */
+        Object runtimeInputs(Arguments args) throws Exception {
+            if (args==null) throw new IOException("RUNTIME_INPUT_ARGUMENTS");
+            Constructor<?> c=inputsType.getDeclaredConstructor(String.class,String.class,
+                String.class,Path.class);
+            c.setAccessible(true);
+            return c.newInstance(args.runId,args.sourceManifestSha256,
+                args.wireContractSha256,args.outputDir);
+        }

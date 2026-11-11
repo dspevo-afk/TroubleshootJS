@@ -1,0 +1,46 @@
+{
+  "status": "EXACT_FINAL_PUBLIC_SOURCE",
+  "files": [
+    {
+      "path": "derive_runtime_inputs.py",
+      "bytes": 1084,
+      "sha256": "2c5130a2b32681a0102117dd35b2745a03256407a923f9a8d110d718b8b46daf"
+    },
+    {
+      "path": "test_runtime_inputs_source.py",
+      "bytes": 3639,
+      "sha256": "1f2690fd6debf460074285c83668b7c202ccac30ea4ae55805d6e5036256fea8"
+    },
+    {
+      "path": "RuntimeInputs.java.fragment",
+      "bytes": 542,
+      "sha256": "63501572299d929e602823b253b46b3ef6e0529c2cdb791b4a13e55503b449f8"
+    },
+    {
+      "path": "RuntimeInputsCanary.java",
+      "bytes": 18144,
+      "sha256": "7994d64a913ce7f98719b2f46c54d257d51a8f27b89751d6d7145cd7cf2f6967"
+    },
+    {
+      "path": "CONTRACT_R1.md",
+      "bytes": 3657,
+      "sha256": "6aeda0bcd50f3f35dc6919a26de667b4deb02fa1563d0a990a8ca0e8070ca24c"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1412,
+      "sha256": "fad15159ba77c761c4b055e4c7f153571ab1281ed56361c9e7e586aee9884fcc"
+    },
+    {
+      "path": ".gitattributes",
+      "bytes": 30,
+      "sha256": "f06202a408fef9b9ea69bb6b1cb8160dbb0378c5bb67a444d510d231813824c8"
+    }
+  ],
+  "derivedStudy": {
+    "bytes": 236157,
+    "sha256": "19f74da6cf1fa210dc0204977935d92b7456f8de3e30dabc5481fc096d174a18",
+    "sourceTests": "PASS_8_EXACT_INPUTS_UNCHANGED"
+  },
+  "privateCallerSha256": "30de1ad8397b8745d99d3cb56f8da7dd971df9806cdf243f8f1472ff893e7948"
+}

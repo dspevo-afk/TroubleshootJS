@@ -1,4 +1,204 @@
-# Current checkpoint: N37 V2 argument prerequisite published; caller authority next
+# Current checkpoint: N40 runtime input carrier accepted; publication pending
+
+Active F codex/q100-terminal-only-20261107 parentHEAD17aa94e1062ee114778233b450a75253ac9b98d3,
+no upstream; target origin/codex/q100-physical-feasibility. N37 implementation891a0503/
+receipt17aa94e1 published; Gmail1a1c81f4caca9dfc once. Do NOT duplicate N37 email.
+N40 commit/push/email pending. Private OS-temp/tsj-q100-runtime-inputs-r1-sij8d_bx.
+
+N40 locally accepted only for native runtime carrier mapping. Existing Parent now
+has runtimeInputs(Arguments): null holder refusal before constructor lookup,
+then maps EXACT runId/sourceManifestSha256/wireContractSha256/outputDir references
+into existing native Inputs fields runId/manifestSha/wireSha/data. No Map conversion,
+contextSHA field, new carrier/parser/schema/resolver/clone or Meter. Existing
+private Args holder comes from V2parse. No duplicate validation/path reservation/
+hash authority. Both main/assemble exact throw-only methods remain unchanged.
+New method542B/63501572299d929e602823b253b46b3ef6e0529c2cdb791b4a13e55503b449f8.
+Pure single-insertion currentStudy235615B/3fe46f10773b5f04c1c7a4b89f2390f21681658568c8ce0de4f32faee1193890
+=>236157B/19f74da6cf1fa210dc0204977935d92b7456f8de3e30dabc5481fc096d174a18.
+Nativecanary18144B/7994d64a913ce7f98719b2f46c54d257d51a8f27b89751d6d7145cd7cf2f6967.
+
+Initializer admission: exactcurrentOwner onlyCharsetUTF8+UUID/SHA Patterns;
+Inputs/Meter/OriginalArm/CaptureData have no static initializers. Parent loading
+those types and owner charset/regex initialization explicitly allowed. Only real
+Inputs carrier instances constructed; no Meter/OriginalArm/graph/Session/factoryDATA/
+capture/receipt/exportV2 work. Factory namespaces blocked, two DATA artifact classes
+absent before any content access. Existing2416 code dependencies reauthenticated.
+Selected captureOriginal prefix enters CaptureData/live budget and was NOT invoked.
+
+Fresh public8 Source tests pass. Actualfinal20Source JDK8 source7/target7 builds
+264major51classes/792649B+2416deps/11870064B, no shadows/empty sourcepath/caps.
+One existing unchecked cast CleanupStagingCanary563 visible with full diagnostics;
+no new suppression. SMOKE1case/9checks andSUITE4cases/28checks pass; modesreported
+separately, no combinedunique count. Exactnative type/final4fields/refidentity,
+null refusal, distinctlatercarriers, contextseparation and earliercarrierunchanged.
+CLI refusalexit1 passasnegativecontrol. Fresh940retained cases/3104 countedassertions
+excluding24detachedprotocol cases independently read; retainedV2parserSMOKE1/8 and
+SUITE43/56 pass (parserpositiveoverlaps). All25controlledcalls expectedexit observed,
+24exit0+1deliberateexit1; processoperationtimes recorded, successfulisolatedcleanup
+unmeasured. Private handle-bound caller, NOT normalhost certification. No native
+failures in N40. Worker wrongdraft carrierFQN fixed BEFOREcompile/native; rawdraft
+and diagnostic preserved. Rootfullcanaryreview caught it; boundedSource reviewer
+foundno contract/transformblocker, no reviewer execution. Exactpublic copies pass.
+
+GateCOMPILE be6443bd9c49f9426a61037e31c45f6860e368f1ef82471e1295a82540f06c92;
+NEW58da8884250b5d67274a863b1643130bf191c2e1092914a280f772c3703e3a7e;
+REGRESSION31d0631b3f119bba41f4779b330cccca39c09953cd7e22c080c232bb5fc88478;
+SourceFreeze77c281d1c4499c61781c6e88bda96de29f207ca6ca2c429695e72d6a235e2dd4.
+N37 oldcompile/aliasfailure/exit-prooflimits remain below, no reclassification.
+
+ACCOUNTING LIMIT: bridge is unmetered native runtime-carrier mapping; it creates
+no Meter and charges no copies/units. This does not approve original-wrapper fees
+or a metered normal caller. Actual caller must own trustedruntime/context hashes,
+one real producer-start/Meter and all required wrapper controls/copies before
+capture. N39 proposed fullcaller proof remains UNQUALIFIED. Do not inferbudget
+acceptance from simple carrier constructor or reuse oldwrapperprices unchecked.
+NEXT unstarted: normalcaller initialization/prepayment contract, then current input/
+original/actualreceipt/cohort and independent fullsemantics/host/lifecycle closure.
+No currentcaller or genuine execution enabled. No routine userdecision needed.
+
+Production/GWT/Player N/A; electrical/population NOTRENEWED;CI NOTRUN/selfhosted
+runner prerequisite;RUN81 N/A/inputownerunchanged/factoryDATAexcluded. All original
+90s/640groups/5s/32768PERGROUP/copy1MiB/chunk4096/Source4MiB/fragment64KiB/opJSON8MiB/
+result1MiB/depth64/key1m/class10k256MiB/compile-suite60s/reader180s/wrapper480s/
+cleanup120s,seeds/epochs/oracles unchanged. Genuineoriginal+exactNULL/OBSERVE
+UNSPENT_GATED,full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,oldnormal20NOTREREAD,
+protectedUnreadUNCERTIFIED,playable100=0,betaHELD. No wholehistoricalbuilder/consumer,
+factoryDATA or oldactualoutput opened. Class API/selectedinitializer inspection
+only on current authenticated non-DATA owner code; no actualcapture invoked.
+
+Ownedjunction node removed afterownership/targetchecks; emptytarget+sentinels
+unchanged, read-onlyexistingOSsymlink untouched. No newpersistentprocess/listener;
+controlledbuildoutputs/scratch/hardlinks/failures retained. Preserve uncertainprior
+browser14116/start639294472690745890/port58320,preview34180/start639294472514546595/
+port58264+14children,oldDprocess/unlink,hardlinks,scratch,Notepad67116860.
+Main5f05b0059mods/6untracked,E d9747229reportM,Desktop e0c368857mods/89individual
+untracked preserved,staged0. Stage onlyintendedFpaths. Nevergiveagentsfullreport;
+readboundedprefixonly. Historicalhandoffs preservedbelow.
+
+# Historical checkpoint: N39 runtime input bridge contract
+
+Active F codex/q100-terminal-only-20261107 HEAD17aa94e1062ee114778233b450a75253ac9b98d3;
+normal target origin/codex/q100-physical-feasibility, no upstream. N37 implementation
+891a050370b80ac2b3a2c36c03d8e870a6ddd917/receipt17aa94e1 published; Gmail
+1a1c81f4caca9dfc sent once/acknowledged. NO duplicate N37 or receipt email.
+N37 final8Source/19SourceJDK8/parserSMOKE1/8+SUITE43/56/940retained cases passed
+within finite preflight scope; failures/limits and Source hashes remain below.
+
+N39 necessary current input/original handoff Source/API contract completed;
+NO implementation acceptance, target/native product tests, new build or publication.
+Private OS-temp/tsj-q100-native-input-bridge-contract-r1-pth764f5.
+SourceFindingsR1 9b18f9354b9522b18eb9727cb594f9c7ab692b0da02a9b5353e89b0d08d2c9ab;
+BridgeContractR1 3a7ad569b9f8ebdcf2027dcaf22fdc94df3e249d84963ebc01858d1ee8e47c03.
+N38 current input owner API/return already selected; N39 selected key/validate
+clauses plus current derived Study Parent/SetupResult. Current input-owner Source
+22823B/d0e42cf2fd93657e2a086e4fff4e8b0111937b7d5c22899fac1107c1bf3b12e2;
+current Study235615B/3fe46f10773b5f04c1c7a4b89f2390f21681658568c8ce0de4f32faee1193890.
+
+Current read returns same expected metadata Map+4Meter scalars in existing
+SetupResult; its private State is validator control. Root keys prior/capture/
+ownerSettings/seedValues/sourceIdentity; do NOT alias retired qualifiedPrior input
+key to current prior. Body qualifiedPrior is a separate projection/authority step.
+Selected validator delegates to helpers not all newly authenticated. Historical
+prior receipt fields/ordinal/hash expectations do not bind an actual current file.
+Factory header/argv equality is not independent trusted caller authority.
+
+Authenticated current native Inputs code class636B/
+9f8d21983aa48d4a74192118ec30223c18a7829a9924e7ca70920382b716a2ed has only three String
+fields runId/manifestSha/wireSha and Path data; ctor3String+Path assigns4references
+following Object.<init>. No Map parameter or Factory implementation. Current owner
+code123481B/807601ec426a2b7f6f9723dac2391e735e5abeb844fe3fa24703348b124f6f98
+selected field-use windows pass data to exportResult and resolve op-1.jsonl in
+buildOriginalArm. This resolves output-directory role at those uses, not whole
+receipt lifecycle. JDK8 javap API/ctor/windows inspections exit0 only; no inspected
+owner/class invocation, factory DATA/old actual outputs or wholehistorical Source
+opened. Full unselected disassembly not retained. Inputs ctor disassembly saved.
+
+Minimal proposed bridge maps Arguments.runId/sourceManifestSha256/wireContractSha256/
+outputDir to the EXISTING native Inputs constructor. It does NOT convert validated
+Map to Inputs, implement Factory on that holder, add contextSHA to the lower
+carrier or clone metadata. ContextSHA remains current read/caller authority;
+current runtime and historical prior identities stay distinct. Parent.original
+passes this inputsType and meterType to captureOriginal. No current live caller
+or original/DTO/receipt/cohort bridge accepted by this audit.
+
+NEXT necessary Source selection: exact current Parent initialization of owner/
+Inputs/Meter/OriginalArm/CaptureData plus original-wrapper prepayment contract
+needed for runtime carrier bridge. Inputs ctor alone does not certify Parent's
+other class initializers. Preserve one actual producer-start/Meter and charged
+failure state; do not copy historical prices unchecked or invent rollback/retry.
+Then implement narrow runtime-carrier bridge through existing Parent/inputstype,
+with independently expected field/reference mapping/rejections, final-source JDK8
+and applicable finite regressions. No duplicate parser/State/result/carrier/ledger.
+Both main/assemble remain throw-only; no actual/fake OriginalArm, graph, Session,
+factory DATA, capture, receipt/exportV2 or genuine execution follows automatically.
+Root plus bounded leaf Source review (API/path-role findings root only); no
+reviewer execution or global/external ABI absence proof. No current user decision.
+
+All budgets/seeds/epochs/oracles unchanged; genuine original thenexactNULL/OBSERVE
+UNSPENT_GATED,full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,oldnormal20NOTREREAD,
+protectedUnreadUNCERTIFIED,playable100=0,betaHELD. Production/GWT/Player N/A;
+electrical/population NOTRENEWED;CI NOTRUN/self-hosted runner prerequisite.
+No new persistent process/listener or cleanup. Controlledscratch/classes/hardlinks/
+failures and uncertain prior resources preserved. Main5f05b0059mods/6untracked,
+E d9747229reportM,Desktop e0c368857mods/89individual untracked; staged0. F only
+local checkpoint modified. No N39 commit/push/email. Never give agents full report;
+read bounded current prefix only. Published N37 evidence/limits remain below.
+
+# Historical checkpoint: N38 input handoff Source audit
+
+Active F codex/q100-terminal-only-20261107 HEAD17aa94e1062ee114778233b450a75253ac9b98d3,
+no upstream; origin/codex/q100-physical-feasibility exact receipt SHA verified.
+N37 implementation891a050370b80ac2b3a2c36c03d8e870a6ddd917 and receipt17aa94e1
+published. Completion Gmail1a1c81f4caca9dfc sent once/acknowledged; NO duplicate
+N37 or receipt email. N35 publication/email remains below.
+
+N37 delivered checked V2 Args migration/obsolete adapter+descriptor loader retirement/
+metered manifest read migration. Fresh public8 Source tests; actual final19Source
+JDK8 build258major51classes+2416deps/no shadows; parser SMOKE1/8 andSUITE43/56
+pass (positive overlaps),940retained cases/independent readers pass. Read-only real
+OS symlink/ownedjunction controls pass. Factory DATA2 artifacts excluded before
+access. Four-clause output235615B/3fe46f10773b5f04c1c7a4b89f2390f21681658568c8ce0de4f32faee1193890.
+Private OS-temp/tsj-q100-v2-arguments-r1-5mah1kq4. Failures/oldcandidate/class outputs
+preserved; failed alias reader exit UNCERTIFIED_NOT_REUSED. R3 actual-image fix and
+explicit pinned stdout audit close current proof. Caller remains private finite
+process evidence, not normal-host certification. Isolated successful cleanup
+unmeasured. Ownedjunction removed node-only/target+sentinels unchanged; existing OS
+symlink untouched, no target listing. No new persistent process/listener.
+
+N38 necessary Source substep completed, not implementation/native acceptance.
+Private OS-temp/tsj-q100-normal-input-authority-r1-azy60z8e; SourceFindingsR1
+ddf6c168d0125277efbe3ee05d5fd725b18e5442916c7d523f3259f5f988c44c.
+Current public CurrentV2InputSetup.java22823B/d0e42cf2fd93657e2a086e4fff4e8b0111937b7d5c22899fac1107c1bf3b12e2;
+selected14..1145700B/1ba632d091a86658312732204fa47caea93ce3080c01d9ef103352217661b11d.
+Existing read(SetupMeter,long producerStarted,String expectedContextSha,Factory)
+returns existing Study.SetupResult, not its private validator State. No new result/
+State adapter needed. Factory4APIs schemaTag/contextSha256/dataEntries/dataJson.
+read checks nulls, freshMeter, SHAshape, schema/context/count before dataJson;
+fresh charges18 first, checks exact started and fresh counters/flags/measure list/
+sessionConstructorEntries0. Failure can retain charges; no rollback/retry claim.
+read delegates deep walk/validate (not selected here), checks271inventory, closes
+setup group and returns same data plus four prepaid actual counter reads.
+
+Next unstarted implementation requires current caller contract linking parsed V2
+args and independently trusted hashes/producer-start authority to this existing
+read API/same Meter/SetupResult, then one original/capture/cohort. Expected context
+role is Args.inputContextSha256; factory/argv equality alone is not trusted host
+authority. Do not duplicate parser/Meter/State/result/ledger. Keep main/assemble
+throw-only; no current caller or actual DTO/original receipt accepted. No factory/
+generated DATA Source/values opened or invoked. No new N38 target/tests/build/
+publication/email. Deep helper/owner clauses need exact selection when relevant.
+
+All budgets/seeds/epochs/oracles unchanged; genuine original thenNULL/OBSERVE
+UNSPENT_GATED, full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,playable100=0,betaHELD,
+protectedUnreadUNCERTIFIED,oldnormal20NOTREREAD. Production/GWT/Player N/A;
+electrical/population NOTRENEWED,CI NOTRUN/self-hosted runner prerequisite.
+Preserve Main5f05b0059mods/6untracked,E d9747229reportM,Desktop e0c368857mods/89individual
+untracked; staged0. F only local checkpoint modified after verified publication.
+Controlledscratch/classes/hardlinks/failures retained, uncertain prior resources
+as below remain untouched. Never pass full historical report to agents; read only
+bounded current prefix. No user decision required. Continue next caller contract.
+
+# Historical checkpoint: N37 accepted and published
 
 Active F codex/q100-terminal-only-20261107 implementation HEAD 891a050370b80ac2b3a2c36c03d8e870a6ddd917,
 no upstream; normal target origin/codex/q100-physical-feasibility. N35 implementation

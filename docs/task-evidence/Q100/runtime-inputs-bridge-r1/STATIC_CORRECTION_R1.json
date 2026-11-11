@@ -1,0 +1,10 @@
+{
+  "status": "FIXED_BEFORE_FIRST_COMPILE_OR_NATIVE",
+  "issue": "Canary draft incorrectly looked for Study.Parent.Inputs; corrected to actual FailureCohortRoutingStudy.Inputs native carrier type.",
+  "oldBytes": 18024,
+  "oldSha256": "d2d17cb153a4bb8a600de2f066aad08711add86158184eb835bbaa7806692046",
+  "finalBytes": 18144,
+  "finalSha256": "7994d64a913ce7f98719b2f46c54d257d51a8f27b89751d6d7145cd7cf2f6967",
+  "rawDraft": "Privately preserved",
+  "nativeFailures": "NONE_IN_THIS_MILESTONE"
+}
