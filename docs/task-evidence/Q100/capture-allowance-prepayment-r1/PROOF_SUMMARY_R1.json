@@ -1,0 +1,417 @@
+{
+  "status": "PASS_FINITE_SYNTHETIC_CAPTURE_ALLOWANCE_HANDOFF",
+  "parentImplementation": "3528d586e3715defbaa87293acab7049a7e2ef58",
+  "parentHead": "ad0d3a195792837e553d111b04dfc49901c367eb",
+  "gateSha256": {
+    "SOURCE_FREEZE_R1.json": "74dfce21bb2d00e2bc60a7352463cf98125ebb6042d0c186c1f59b438e7d75df",
+    "COMPILE_GATE_R1.json": "d03d6920d0828a55f5c49b645dc0c008498db0cc94fe42f2a66a5e00ea41d420",
+    "NEW_GATE_R1.json": "ab0bb6d7819f24caa36b8781c3cedb51e10838162c5f0da8de037c6090e59ca9",
+    "REGRESSION_GATE_R1.json": "e3044d18e7d75418c9c24bfa3167735af5bbd8ee662a333e00462aedaccc27ab"
+  },
+  "sourceTests": {
+    "status": "PASS",
+    "cases": 8,
+    "publicDriver": "PASS_FRESH_PUBLIC_8_TESTS"
+  },
+  "compile": {
+    "sources": 23,
+    "classes": 281,
+    "classBytes": 879387,
+    "dependencies": 2396,
+    "dependencyBytes": 11801276,
+    "allMajor51": true,
+    "noShadows": true,
+    "oldCodeDroppedBeforeRead": 20,
+    "inputOwnerClassesRebuiltFromUnchangedSource": 3,
+    "oldInputCanaryClassesExcludedUnrun": 17,
+    "factoryDataExcludedUnread": 2,
+    "warnings": "One retained CleanupStagingCanary563 unchecked cast; no new suppression.",
+    "inputInitializer": {
+      "status": "NO_STATIC_INITIALIZER_CURRENT_INPUT_OWNER_AND_FACTORY_INTERFACE",
+      "javapStdoutSha256": "885a030020fb5c8f13ef99cee8c79d044a3f30ca394ac70e3b6e7d6e38ff70e3",
+      "javapBytes": 110979,
+      "targetInvoked": false
+    }
+  },
+  "new": {
+    "CaptureAllowanceCanary": {
+      "SMOKE": {
+        "cases": 1,
+        "checks": 7,
+        "line": "SYNTHETIC_CAPTURE_ALLOWANCE_PREPAYMENT_COMPONENT_ONLY mode=SMOKE cases=1 checks=7 deniedFactoryLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+      },
+      "SUITE": {
+        "cases": 20,
+        "checks": 65,
+        "line": "SYNTHETIC_CAPTURE_ALLOWANCE_PREPAYMENT_COMPONENT_ONLY mode=SUITE cases=20 checks=65 deniedFactoryLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+      }
+    },
+    "RuntimeInputsPrepaymentCanary": {
+      "SMOKE": {
+        "cases": 1,
+        "checks": 10,
+        "line": "SYNTHETIC_RUNTIME_INPUTS_PREPAYMENT_COMPONENT_ONLY mode=SMOKE cases=1 checks=10 deniedFactoryLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+      },
+      "SUITE": {
+        "cases": 10,
+        "checks": 42,
+        "line": "SYNTHETIC_RUNTIME_INPUTS_PREPAYMENT_COMPONENT_ONLY mode=SUITE cases=10 checks=42 deniedFactoryLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+      }
+    },
+    "RuntimeInputsCanary": {
+      "SMOKE": {
+        "cases": 1,
+        "checks": 9,
+        "line": "SYNTHETIC_RUNTIME_INPUTS_COMPONENT_ONLY mode=SMOKE cases=1 checks=9 deniedFactoryLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+      },
+      "SUITE": {
+        "cases": 4,
+        "checks": 28,
+        "line": "SYNTHETIC_RUNTIME_INPUTS_COMPONENT_ONLY mode=SUITE cases=4 checks=28 deniedFactoryLoads=0 failures=0; normalHostAcceptance=NONE genuine=UNSPENT_GATED"
+      }
+    }
+  },
+  "prices": {
+    "carrier": 10,
+    "begin": 30,
+    "postOwnerRead": 5,
+    "merge": 32,
+    "minimumDelta": 77
+  },
+  "actualCaptureWithSetupPositive": "NOT_RUN_UNSPENT_GATED",
+  "snapshotOrigin": "ORDINARY_SYNTHETIC_NOT_VALIDATED_INPUT",
+  "syntheticBudgetCreditOnly": true,
+  "retained": {
+    "retainedNativeCases": 940,
+    "countedRetainedAssertionsExcludingDetachedProtocol": 3104,
+    "parserSmokeCases": 1,
+    "parserSuiteCases": 43,
+    "parserPositiveRepeated": true,
+    "RUN81": "NOT_APPLICABLE_INPUT_OWNER_UNCHANGED_FACTORY_DATA_EXCLUDED"
+  },
+  "detachedIndependentReaderCases": [
+    2,
+    22
+  ],
+  "calls": [
+    {
+      "phase": "capture-allowance-jdk8-compile-r1",
+      "exitCode": 0,
+      "operationNanos": 1513276600,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 0,
+      "stderrBytes": 354,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-input-initializers-r1",
+      "exitCode": 0,
+      "operationNanos": 231370900,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 110979,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-captureallowancecanary-smoke-r1",
+      "exitCode": 0,
+      "operationNanos": 158048900,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 164,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-captureallowancecanary-suite-r1",
+      "exitCode": 0,
+      "operationNanos": 109779500,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 166,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-runtimeinputsprepaymentcanary-smoke-r1",
+      "exitCode": 0,
+      "operationNanos": 74774800,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 162,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-runtimeinputsprepaymentcanary-suite-r1",
+      "exitCode": 0,
+      "operationNanos": 97597900,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 163,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-runtimeinputscanary-smoke-r1",
+      "exitCode": 0,
+      "operationNanos": 73100900,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 150,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-runtimeinputscanary-suite-r1",
+      "exitCode": 0,
+      "operationNanos": 77304500,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 151,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-cli-refusal-r1",
+      "exitCode": 1,
+      "operationNanos": 56109700,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 0,
+      "stderrBytes": 146,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-metadata-r7-smoke-r1",
+      "exitCode": 0,
+      "operationNanos": 111975700,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 122,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-metadata-r7-suite-r1",
+      "exitCode": 0,
+      "operationNanos": 231639400,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 123,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-retained-0-r1",
+      "exitCode": 0,
+      "operationNanos": 211262200,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 121,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-retained-1-r1",
+      "exitCode": 0,
+      "operationNanos": 189590200,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 114,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-retained-2-r1",
+      "exitCode": 0,
+      "operationNanos": 187891900,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 117,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-retained-3-r1",
+      "exitCode": 0,
+      "operationNanos": 189782700,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 114,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-retained-4-r1",
+      "exitCode": 0,
+      "operationNanos": 190459900,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 117,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-retained-5-r1",
+      "exitCode": 0,
+      "operationNanos": 172029300,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 113,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-retained-6-r1",
+      "exitCode": 0,
+      "operationNanos": 207186000,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 120,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-retained-7-r1",
+      "exitCode": 0,
+      "operationNanos": 244086200,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 117,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-retained-8-r1",
+      "exitCode": 0,
+      "operationNanos": 236298500,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 118,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-retained-9-r1",
+      "exitCode": 0,
+      "operationNanos": 227817300,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 119,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-retained-10-r1",
+      "exitCode": 0,
+      "operationNanos": 220963500,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 117,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-retained-11-r1",
+      "exitCode": 0,
+      "operationNanos": 296776000,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 82,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-retained-12-r1",
+      "exitCode": 0,
+      "operationNanos": 191978800,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 124,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-v2-parser-smoke-r1",
+      "exitCode": 0,
+      "operationNanos": 169059200,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 196,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-v2-parser-suite-r1",
+      "exitCode": 0,
+      "operationNanos": 170737000,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 199,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-detached-smoke-r1",
+      "exitCode": 0,
+      "operationNanos": 201513300,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 3832,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-detached-smoke-r1-reader",
+      "exitCode": 0,
+      "operationNanos": 160231500,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 131,
+      "stderrBytes": 0,
+      "deadlineMillis": 180000
+    },
+    {
+      "phase": "capture-allowance-detached-suite-r1",
+      "exitCode": 0,
+      "operationNanos": 214945600,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 26225,
+      "stderrBytes": 0,
+      "deadlineMillis": 60000
+    },
+    {
+      "phase": "capture-allowance-detached-suite-r1-reader",
+      "exitCode": 0,
+      "operationNanos": 156987500,
+      "cleanupNanos": null,
+      "processExitObserved": true,
+      "stdoutBytes": 132,
+      "stderrBytes": 0,
+      "deadlineMillis": 180000
+    }
+  ],
+  "commands": [
+    "selected-python -I -B run_gates_r1.py --case compile",
+    "selected-python -I -B run_gates_r1.py --case new",
+    "selected-python -I -B run_gates_r1.py --case regression"
+  ],
+  "normalHostAcceptance": false,
+  "actualCaptureExecution": false,
+  "genuine": "UNSPENT_GATED",
+  "playable100": 0,
+  "beta": "HELD",
+  "full30": "EXCLUDED",
+  "hardPsychotic": "UNAVAILABLE_UNRUN",
+  "protectedUnread": "UNCERTIFIED",
+  "oldNormal20": "NOT_REREAD",
+  "productionGwtPlayer": "NOT_APPLICABLE_QUALIFICATION_ONLY",
+  "electricalPopulation": "NOT_RENEWED",
+  "CI": "NOT_RUN_SELF_HOSTED_RUNNER_PREREQUISITE",
+  "caller": "PRIVATE_HANDLE_BOUND_NATIVE_CALLER_NOT_NORMAL_HOST_CERTIFICATION",
+  "cleanupDuration": "SUCCESSFUL_ISOLATED_CLEANUP_UNMEASURED"
+}

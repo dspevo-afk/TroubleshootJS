@@ -1,0 +1,12 @@
+{
+  "status": "UNCHANGED_SHARED_OWNER_CLOSURE_AND_FRESH_INPUT_CLASS_INSPECTION",
+  "priorAdmissionSha256": "295ce7abcd9105feb62884e5d65dbdef87bee44fecd69dbc658f676d5f8c7c55",
+  "sharedOwnerCode": "UNCHANGED_AUTHENTICATED_EXCEPT_INPUT_HELPER_REBUILD_AND_OLD_CANARY_CODE_EXCLUSION",
+  "newInputOwnerAndFactoryInterface": {
+    "status": "NO_STATIC_INITIALIZER_CURRENT_INPUT_OWNER_AND_FACTORY_INTERFACE",
+    "javapStdoutSha256": "885a030020fb5c8f13ef99cee8c79d044a3f30ca394ac70e3b6e7d6e38ff70e3",
+    "javapBytes": 110979,
+    "targetInvoked": false
+  },
+  "actualOriginalOrFactoryDataExecution": false
+}

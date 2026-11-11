@@ -471,6 +471,16 @@ new carrier or ledger is introduced. Finite native tests cover real Meter limits
 normal caller identity/start/order, original/receipt and host authority remain
 separate. Both normal entrypoints stay held; no actual owner work is enabled.
 
+The [capture allowance prepayment](task-evidence/Q100/capture-allowance-prepayment-r1/README.md)
+keeps the original input SetupResult while admitting the exact subsequent runtime
+carrier ledger. Existing begin/merge owners prepay30/32 units and use the same
+input+carrier copy base for remaining allowance and restoration. The intervening
+owner-result reads prepay5; both control groups close before the next phase.
+Carrier4/1 survives the native/independent-reader metadata residual equation.
+Actual-Meter synthetic fixtures qualify counter transitions and refusals; positive
+actual capture, input/original identity authority and host/lifecycle remain held.
+No new ledger/carrier/schema or normal entrypoint is introduced.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published

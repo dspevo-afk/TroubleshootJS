@@ -1,0 +1,59 @@
+{
+  "status": "EXACT_FINAL_PUBLIC_SOURCE",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 29,
+      "sha256": "730a35ae3d558080083c3103d9ac8100c3f6561678092abe341701dfa331eb1d"
+    },
+    {
+      "path": "CaptureAllowance.java.fragment",
+      "bytes": 7684,
+      "sha256": "4c4bba99dfa3161389ea0610f2d86ad24b363aace48ee2fe4be9df0eaed621c0"
+    },
+    {
+      "path": "CaptureAllowanceCanary.java",
+      "bytes": 60222,
+      "sha256": "f917d994a927839f4c8c8901ba3d64a5e55594f404194aa25afbb2b75e599ac2"
+    },
+    {
+      "path": "CONTRACT_R1.md",
+      "bytes": 4557,
+      "sha256": "60213ce4b21854ba269682121a48e46c32109dbe9e299ff183250eb5602b10c5"
+    },
+    {
+      "path": "derive_capture_allowance.py",
+      "bytes": 1239,
+      "sha256": "56562ae25b9f564a7c6c810292357f31248a97c44215efa0906c0b9f62b2ce8d"
+    },
+    {
+      "path": "FIXTURE_EXPECTATIONS_R1.json",
+      "bytes": 817,
+      "sha256": "b20fc984a72148d233b72539114ef1d93fdd690cab26bdedcbc024f692db8723"
+    },
+    {
+      "path": "PRICE_EXPECTATIONS_R1.json",
+      "bytes": 4669,
+      "sha256": "7da9e79ea6c92931ef8641de919e760bd6616bf2a1b9995198cbe09f289097c0"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1408,
+      "sha256": "06cacf2b9771cbb719e05ba6f9f1f715725e73d973d9fad4b2eb87eeff237786"
+    },
+    {
+      "path": "test_capture_allowance_source.py",
+      "bytes": 4407,
+      "sha256": "77fa8c7accaf182760766a2af0fc527f6d15ae6011b415f61582ab489d69d59c"
+    }
+  ],
+  "derivedStudy": {
+    "bytes": 239938,
+    "sha256": "755ac9ff94478155c09298c8785df753da852483edd2888547977c6202969cbd"
+  },
+  "currentInputOwner": {
+    "bytes": 22823,
+    "sha256": "d0e42cf2fd93657e2a086e4fff4e8b0111937b7d5c22899fac1107c1bf3b12e2"
+  },
+  "privateCallerSha256": "180c6531328efe9515e7387cfd8f7df05bacc9baef608b50a11dc736109f1788"
+}

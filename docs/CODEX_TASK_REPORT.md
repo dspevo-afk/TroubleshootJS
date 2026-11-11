@@ -1,4 +1,158 @@
-# Current checkpoint: N42 runtime carrier prepayment accepted
+# Current checkpoint: N44 capture allowance handoff accepted
+
+Active F codex/q100-terminal-only-20261107, no upstream; normal target
+origin/codex/q100-physical-feasibility. Parent HEADad0d3a195792837e553d111b04dfc49901c367eb.
+N44 final candidate locally accepted; commit/push/completion Gmail PENDING.
+
+Scope: existing begin/merge allowance owners now admit exact post-input carrier
+work while preserving original SetupResult/data. Prepay30begin/5owner-result reads/
+32merge; input+carrier copies/chunks fund remaining allowance and restore once.
+Minimum77wrapper units over input snapshot includes carrier10; owner-local group
+count stays distinct from later attributed phase total. Native/independent current
+reader copy residual algebra agrees. No new ledger/holder/schema or normal entry.
+Zero-unit open group can be observationally equivalent; meaningful extra work
+fails exact admission. Partial failures retain native state; no refund/retry.
+
+Private OS-temp/tsj-q100-capture-allowance-prepayment-r1-q8aj8i9c; T/E
+capture-allowance-prepayment-r1. Fragment7684B/
+4c4bba99dfa3161389ea0610f2d86ad24b363aace48ee2fe4be9df0eaed621c0;
+Study239938B/755ac9ff94478155c09298c8785df753da852483edd2888547977c6202969cbd;
+Canary60222B/f917d994a927839f4c8c8901ba3d64a5e55594f404194aa25afbb2b75e599ac2.
+Exact4503B/81849fbaf7cd978e8cf3ff9282a673fd86e3e752d3a89c616c141f66e152fe4d
+old3-method span replaced, all other Source bytes/main+assemble throws preserved.
+Fresh public8Source checks PASS. Final23JavaJDK8 source7/target7 PASS:281major51
+classes/879387B+2396CODEdeps/11801276B, no shadows.20old input-helper/canary CODE
+classes dropped before read:3current helper classes rebuilt from unchanged Source,
+17old81-canary classes off classpath/unrun. Original2factoryDATA stay excluded
+before access. Final javap110979B/885a030020fb5c8f13ef99cee8c79d044a3f30ca394ac70e3b6e7d6e38ff70e3
+confirms input owner/Factory interface no static initializer. Shared owner prior
+charset/regex/no-static admissions reused with authenticated unchanged code.
+One retained CleanupStagingCanary563 unchecked warning, no new suppression.
+
+Actual-Meter handoff SMOKE1/7+SUITE20/65 PASS, including true missing carrier,
+zero result-read credit, copy restoration, partial failures and natural640 refusal.
+Retained carrier SMOKE1/10+SUITE10/42 and mappingSMOKE1/9+SUITE4/28 PASS. Fresh940
+metadata cases/3104counted assertions PASS excluding24-case independent detached
+protocol; retained argumentsSMOKE1/8+SUITE43/56 PASS. Modes overlap/no unique sum.
+All30controlled calls observed:29exit0+1deliberateCLIexit1. No N44 native failure.
+Synthetic snapshots/budgetcredit only; no actual/fake OriginalArm/result, owner
+work, graph or Session. Five result-read units are synthetic credit in positives;
+actual positive captureWithSetup NOTRUN/genuine gated. Only foreignParent guard
+executes that method before owner. Current fresh read negative rejects carrier
+prework after18units withFactorycalls0; no positive input/origin/RUN81 acceptance.
+
+SOURCE_FREEZE_R1 74dfce21bb2d00e2bc60a7352463cf98125ebb6042d0c186c1f59b438e7d75df;
+COMPILE_GATE_R1 d03d6920d0828a55f5c49b645dc0c008498db0cc94fe42f2a66a5e00ea41d420;
+NEW_GATE_R1 ab0bb6d7819f24caa36b8781c3cedb51e10838162c5f0da8de037c6090e59ca9;
+REGRESSION_GATE_R1 e3044d18e7d75418c9c24bfa3167735af5bbd8ee662a333e00462aedaccc27ab.
+Source/classes/readers authenticated before/after and exact public code copies.
+Root and bounded Source-only leaf reviews found2coverage gaps BEFORE any compile/
+native: absentcarrier hadcarrier+wrongSnapshot; missing5credit supplied1. Corrected
+to actual required cases, same20/65 ledger; rawdraft60263B/2d6b6360c87d06be9eb52b401876575bd009269caa6f4265fd58fd12163411e4
+preserved. Fees/oracles unchanged; null-fixture variants separately bound before
+target. Leaf also disclosed Source excerpt over-read of inputhelper lines1-230;
+no DATA/Factory implementation read or target invoked. Preserve scope limitation,
+do not restore unread certainty. Root owns all acceptance/publication.
+
+Private handle-bound calls NOT normal-host certification; successful isolated
+cleanup duration UNMEASURED, separate operation timings retained. Owned junction
+removed node-only after target/tag check; target/sentinels unchanged, readonlyOS
+symlink untouched. No new persistent process/listener; controlled artifacts kept.
+
+NEXT unstarted: normal caller input/carrier/original composition, authentic real
+producer identity/start/snapshot/Factory-source authority, actual DTO/receipt and
+full semantic/host/lifecycle closure before original->exactNULL/OBSERVE execution.
+Normal main/assemble held; genuineUNSPENT_GATED. All90s/640groups/5s/32768pergroup/
+copy1048576/chunk4096 and other budgets/seeds/epochs/oracles unchanged. Full30
+EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,playable100=0,betaHELD; protectedUnread
+UNCERTIFIED; oldnormal20NOTREREAD. Production/GWT/Player N/A; electrical/population
+NOTRENEWED; CI NOTRUN/selfhostedrunner prerequisite. N42implementation3528d586/
+receiptad0d3a19/Gmail1a1c8dad71517f05 already published/sent once; no duplicates.
+
+Unrelated Main HEAD5f05b0059trackedM/6individualuntracked,E HEADd9747229reportM,
+Desktop HEADe0c368857trackedM/89individualuntracked,staged0 preserved. Uncertain
+prior browser/preview/D resources, hardlinks/scratch/failure evidence retained.
+Never give agents full report; current prefix<=64KiB only. No routine decision
+needed; continue the roadmap. N43 Source-contract pins/history preserved below.
+
+# Historical checkpoint: N42 published; N43 Source complete; N44 allowance draft
+
+Active F codex/q100-terminal-only-20261107 HEADad0d3a195792837e553d111b04dfc49901c367eb,
+no upstream; target origin/codex/q100-physical-feasibility exact receipt SHA verified.
+N42 implementation3528d586e3715defbaa87293acab7049a7e2ef58 normally published;
+completion Gmail1a1c8dad71517f05 sent once/acknowledged. NO duplicate/receipt mail.
+Its finite prepaid runtime carrier boundary is accepted:10units/4copies/1chunk/
+1closed-startgroup. Source8/final21JavaJDK8/actualMeter modes and940retained cases/
+independent readers passed; exact evidence T/E runtime-inputs-prepayment-r1.
+Private OS-temp/tsj-q100-copy-prepayment-contract-r1-rdx89kmw; gates/pins below.
+Source/classes/reader bytes unchanged since accepted gates; production/GWT/Player
+N/A, electrical/population NOTRENEWED, CI NOTRUN/selfhostedrunner prerequisite.
+
+N43 necessary Source composition preparation complete, NO new target build/native
+test/producer/Player/publication/email. Private OS-temp/
+tsj-q100-normal-caller-composition-r1-ml1wqln6. SourceFindingsR1
+e4987c29468c9fafb88fcd0af6cfe6e28cfe8be6231dffc86c545668d263ab8d;
+HandoffContractR1 f6c211b59d26db6ffaaa563af5ec92f1004d2e2bf2c9b8df4314358bd3cbcffa;
+SourceSelectionR1 f6b0b6110534ac8c8cef982c7985f45df4f59d2889a8da459fdc3d10fc7922a3.
+Current InputSetup.read requires a pristine actual start/Meter before carrier;
+read closes then returns original SetupResult counters/borrowed map. Carrier
+after read changes all four counters, so existing beginCaptureAllowance exact
+setup equality rejects before mutation. Inverse order fails freshness after its
+18-unit precharge. These were Source-inferred constraints, NOT executed N43 tests.
+Preserve original SetupResult/exclusive data; do not rebase, reset away carrier,
+weaken equality or use successor Meter/Factory callbacks to hide it. Same global
+base copies=setup+4/chunks=setup+1 must fund remaining allowance and merge once.
+Authored9-unit attribution excludes self9 only; carrier10/+1group stay visible in
+original wrapper/phase deltas. Merge owner-local groupCount/priorGroups is distinct
+from the later attributed whole-phase local also named originalGroups.
+Selected native freezeAfterCapture residual and authenticated current independent
+emitted _validate_work add-back equation agree: carrier4/1 can survive in existing
+metadata residual without new schema/oracle. Source consistency only, not native
+whole-result/caller acceptance. Bounded leaf reviews confirmed corrected scopes.
+
+N44 ACTIVE draft only. Private OS-temp/tsj-q100-capture-allowance-prepayment-r1-q8aj8i9c.
+Root owns component/CaptureAllowance.java.fragment and PRICE_PROPOSAL_R1.md.
+Source review confirms begin30/merge32/five post-owner read units; literal price
+expectations frozen BEFORE native, SHA7da9e79ea6c92931ef8641de919e760bd6616bf2a1b9995198cbe09f289097c0.
+Fragment7684B/4c4bba99dfa3161389ea0610f2d86ad24b363aace48ee2fe4be9df0eaed621c0;
+exact3-method splice4503B/81849fbaf7cd978e8cf3ff9282a673fd86e3e752d3a89c616c141f66e152fe4d
+produces Study239938B/755ac9ff94478155c09298c8785df753da852483edd2888547977c6202969cbd.
+Eight Source tests PASS; native implementation UNACCEPTED/NOTRUN, no final build.
+20 retained/R42 canary Sources plus unchanged InputSetup Source authenticated.
+Native dependency2396CODE/11801276B copied;20 old InputSetup/old81-canary CODE
+classes dropped before content read (3current classes rebuilt from Source,17old
+canary classes excluded); original2factoryDATA artifacts stay excluded/unread.
+SelectionSHAced2c00c65e6945125c2719c24819c064a5667884c15a6da36f485984f8ad669.
+Source copy session60412 completed exit0, no active process. body_semantic_seam
+completed bounded price/order review; no site discrepancy, no execution.
+ownership_canary owns ONLY
+component/CaptureAllowanceCanary.java, Source-only draft; no execution/spawning/
+publication. Actual Meter API fixtures/ordinary synthetic snapshot and synthetic
+budget credit only; no actual/fake OriginalArm, owner work, capture, graph, Session,
+factoryDATA or genuine invocation. captureWithSetup positive path remains unrun.
+Worker disclosed reading lines1-230 of current InputSetup Source while locating
+allowed read/fresh/fail/interface excerpts. Source over-read beyond assignment;
+no DATA/Factory implementation read or target invoked. Preserve scope note; no
+unread-certainty claim. Root selected fail prefix V2_SETUP_ and no static Source
+initializer; final class initialization inspection still required before Case16.
+
+NEXT: resolve Source-price review against draft, freeze exact fee/copy/group oracle,
+review worker Source ledger, derive exact3-method splice preserving main/assemble
+throws, then actual final-source JDK8/native finite gates and retained regression
+closure. N44 tests not run; do not label draft accepted or publish blocker as success.
+No whole historical builder/consumer, old actual D descriptors/results or denied
+factoryDATA selected. Genuine original->exactNULL/OBSERVE UNSPENT_GATED; normal
+entrypoints held. All budgets/seeds/epochs/oracles unchanged; full30EXCLUDED,
+HARD/PSYCHOTIC unavailable/unrun; playable100=0,betaHELD; protectedUnreadUNCERTIFIED;
+oldnormal20NOTREREAD. No routine user decision needed; continue the roadmap.
+
+Main HEAD5f05b0059trackedM/6individualuntracked, E HEADd9747229reportM, Desktop
+HEADe0c368857trackedM/89individualuntracked, staged0 preserved. F only local report
+changes after receipt. No new persistent process/listener; controlled artifacts,
+prior failures/hardlinks/scratch and uncertain old resources preserved below.
+Never give agents full report; stream current prefix<=64KiB only.
+
+# Historical checkpoint: N42 runtime carrier prepayment accepted
 
 Active F codex/q100-terminal-only-20261107, no upstream; normal publication target
 origin/codex/q100-physical-feasibility. Parent HEADfddf2a8333bd1e966a02a6310e1818847f94c474.

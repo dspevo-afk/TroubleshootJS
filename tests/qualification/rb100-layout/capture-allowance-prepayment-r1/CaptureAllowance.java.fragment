@@ -1,0 +1,119 @@
+    /** Post-input carrier phase; caller retains the original input snapshot. */
+    static int beginCaptureAllowance(SetupMeter meter,SetupResult setup) throws Exception {
+        if (meter==null || meter.parent==null || meter.meter==null ||
+                !meter.parent.meterType.isInstance(meter.meter))
+            throw new IOException("CAPTURE_ALLOWANCE_METER");
+        meter.charge(30L);
+        if (setup==null) throw new IOException("SETUP_LEDGER_ARGUMENTS");
+        final long setupUnits=setup.units;
+        final int setupGroups=setup.groups;
+        final long setupCopies=setup.copiedEntries;
+        final int setupChunks=setup.copyChunks;
+        final Object raw=meter.meter;
+        final boolean open=((Boolean)field(raw,"open")).booleanValue();
+        final int prior=((Integer)field(raw,"priorGroups")).intValue();
+        final int inFlight=((Integer)field(raw,"inFlightOwnerGroups")).intValue();
+        final boolean ownerStarted=((Boolean)field(raw,"originalOwnerStarted")).booleanValue();
+        final boolean ownerActive=((Boolean)field(raw,"originalOwnerActive")).booleanValue();
+        final boolean ownerAdopted=((Boolean)field(raw,"originalOwnerAdopted")).booleanValue();
+        final int allowance=((Integer)field(raw,"copyAllowance")).intValue();
+        final int groups=((Integer)field(raw,"groups")).intValue();
+        final long units=((Long)field(raw,"units")).longValue();
+        final long copies=((Long)field(raw,"copiedEntries")).longValue();
+        final int chunks=((Integer)field(raw,"copyChunks")).intValue();
+        final int groupUnits=((Integer)field(raw,"groupUnits")).intValue();
+        if (setupUnits<1L || setupGroups<1 || setupCopies<1L ||
+                setupCopies>COPY_LIMIT-4L || setupChunks<0 ||
+                setupChunks>Integer.MAX_VALUE-1 || setupChunks>setupCopies)
+            throw new IOException("SETUP_LEDGER_CHANGED");
+        final long expectedUnits=r5Add(r5Add(setupUnits,10L),30L);
+        final long expectedGroups=r5Add(setupGroups,1L);
+        final long baseCopies=r5Add(setupCopies,4L);
+        final long baseChunks=r5Add(setupChunks,1L);
+        final long remainingLong=r7Subtract(COPY_LIMIT,baseCopies);
+        if (!open || prior!=0 || inFlight!=0 || ownerStarted || ownerActive ||
+                ownerAdopted || allowance!=COPY_LIMIT || groups!=expectedGroups ||
+                units!=expectedUnits || copies!=baseCopies || chunks!=baseChunks ||
+                groupUnits!=30)
+            throw new IOException("SETUP_LEDGER_CHANGED");
+        final int remaining=(int)remainingLong;
+        // Counter scope changes only after exact carrier and scalar admission.
+        // Failure after mutation discards this attempt; never restore or retry.
+        setNumber(raw,"copiedEntries",Long.valueOf(0L));
+        setNumber(raw,"copyChunks",Integer.valueOf(0));
+        meter.method("setCopyAllowance",new Class<?>[]{int.class},Integer.valueOf(remaining));
+        if (((Integer)field(raw,"copyAllowance")).intValue()!=remaining)
+            throw new IOException("ORIGINAL_ALLOWANCE");
+        meter.finish();
+        return remaining;
+    }
+    /** Merge the same input+carrier copy base with actual owner-local counters. */
+    static void mergeCaptureAllowance(SetupMeter meter,SetupResult setup,int remaining,
+            long originalCopies,int originalChunks,int originalGroups,int captureAllowance) throws Exception {
+        if (meter==null || meter.parent==null || meter.meter==null ||
+                !meter.parent.meterType.isInstance(meter.meter))
+            throw new IOException("CAPTURE_ALLOWANCE_METER");
+        meter.charge(32L);
+        if (setup==null) throw new IOException("SETUP_LEDGER_ARGUMENTS");
+        final long setupUnits=setup.units;
+        final int setupGroups=setup.groups;
+        final long setupCopies=setup.copiedEntries;
+        final int setupChunks=setup.copyChunks;
+        final Object raw=meter.meter;
+        final boolean open=((Boolean)field(raw,"open")).booleanValue();
+        final boolean ownerStarted=((Boolean)field(raw,"originalOwnerStarted")).booleanValue();
+        final boolean ownerActive=((Boolean)field(raw,"originalOwnerActive")).booleanValue();
+        final boolean ownerAdopted=((Boolean)field(raw,"originalOwnerAdopted")).booleanValue();
+        final int inFlight=((Integer)field(raw,"inFlightOwnerGroups")).intValue();
+        final int prior=((Integer)field(raw,"priorGroups")).intValue();
+        final int allowance=((Integer)field(raw,"copyAllowance")).intValue();
+        final long copies=((Long)field(raw,"copiedEntries")).longValue();
+        final int chunks=((Integer)field(raw,"copyChunks")).intValue();
+        final long units=((Long)field(raw,"units")).longValue();
+        final int groups=((Integer)field(raw,"groups")).intValue();
+        final int groupUnits=((Integer)field(raw,"groupUnits")).intValue();
+        if (setupUnits<1L || setupGroups<1 || setupCopies<1L ||
+                setupCopies>COPY_LIMIT-4L || setupChunks<0 ||
+                setupChunks>Integer.MAX_VALUE-1 || setupChunks>setupCopies ||
+                originalCopies<0L || originalChunks<0 || originalChunks>originalCopies ||
+                originalGroups<1 || originalGroups>640)
+            throw new IOException("ORIGINAL_LEDGER");
+        final long baseCopies=r5Add(setupCopies,4L);
+        final long baseChunks=r5Add(setupChunks,1L);
+        final long mergedCopies=r5Add(baseCopies,originalCopies);
+        final long mergedChunks=r5Add(baseChunks,originalChunks);
+        final long expectedRemaining=r7Subtract(COPY_LIMIT,baseCopies);
+        final long aggregateGroups=r5Add(groups,originalGroups);
+        // Carrier10 + begin30 + five owner-result reads + this merge32.
+        final long minimumUnits=r5Add(setupUnits,77L);
+        final long minimumGroups=r5Add(setupGroups,2L);
+        if (!open || !ownerStarted || ownerActive || !ownerAdopted || inFlight!=0 ||
+                prior!=originalGroups || remaining!=expectedRemaining ||
+                allowance!=remaining || captureAllowance!=remaining ||
+                copies!=originalCopies || chunks!=originalChunks ||
+                originalCopies>remaining || mergedCopies>COPY_LIMIT ||
+                mergedChunks>Integer.MAX_VALUE || units<minimumUnits ||
+                groups<minimumGroups || aggregateGroups>=640L || groupUnits!=37)
+            throw new IOException("ORIGINAL_LEDGER");
+        setNumber(raw,"copiedEntries",Long.valueOf(mergedCopies));
+        setNumber(raw,"copyChunks",Integer.valueOf((int)mergedChunks));
+        meter.method("setCopyAllowance",new Class<?>[]{int.class},Integer.valueOf(COPY_LIMIT));
+        if (((Integer)field(raw,"copyAllowance")).intValue()!=COPY_LIMIT)
+            throw new IOException("ORIGINAL_ALLOWANCE");
+        meter.finish();
+    }
+    static Object captureWithSetup(Parent parent,Object inputs,SetupMeter meter,
+            SetupResult setup) throws Exception {
+        if (parent==null || meter==null || meter.parent!=parent)
+            throw new IOException("CAPTURE_ALLOWANCE_METER");
+        int remaining=beginCaptureAllowance(meter,setup);
+        Object original=parent.original(inputs,meter.meter);
+        meter.charge(5L); // before all five native owner-result field inspections
+        Object capture=field(original,"captureData");
+        mergeCaptureAllowance(meter,setup,remaining,
+            ((Number)field(original,"copiedEntries")).longValue(),
+            ((Number)field(original,"copyChunks")).intValue(),
+            ((Number)field(original,"groupCount")).intValue(),
+            ((Number)field(capture,"copyAllowance")).intValue());
+        return original;
+    }

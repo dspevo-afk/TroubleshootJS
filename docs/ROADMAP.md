@@ -1963,6 +1963,19 @@ Implementation `3528d586e3715defbaa87293acab7049a7e2ef58` normally pushed to
 origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail `1a1c8dad71517f05` sent once; no second email for this receipt.
 
+The [capture allowance handoff](task-evidence/Q100/capture-allowance-prepayment-r1/README.md)
+is locally accepted for its finite synthetic actual-Meter boundary. Exact priced
+carrier admission replaces obsolete input-only equality; original SetupResult is
+preserved and input+carrier copy scope merges once. Begin30/owner-read5/merge32
+prepay controls and close wrapper groups. Eight Source tests, final23-Source JDK8
+build, handoff SMOKE1/7 and SUITE20/65, retained carrier/mapping modes,940 metadata
+cases/independent readers and argument controls pass. Two draft coverage gaps
+were fixed before any native run; disclosed Source over-read remains a limitation.
+Actual original/capture positive, snapshot/clock authority and normal host remain
+unqualified. Next is current normal caller composition and real DTO/receipt/
+semantic/host/lifecycle closure. Normal holds/budgets/seeds/epochs/oracles remain;
+full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,playable100=0,betaHELD.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

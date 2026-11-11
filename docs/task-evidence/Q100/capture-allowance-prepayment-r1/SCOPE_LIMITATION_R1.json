@@ -1,0 +1,12 @@
+{
+  "status": "SOURCE_EXCERPT_SCOPE_OVERREAD_DISCLOSED",
+  "worker": "ownership_canary",
+  "fileRole": "CurrentV2InputSetup.java current code",
+  "actualRead": "lines1-230 while locating allowed read/fresh/fail/Factory interface excerpts",
+  "exceededAssignment": true,
+  "dataOrFactoryImplementationRead": false,
+  "targetInvoked": false,
+  "action": "Worker stopped further access to input Source; root supplied exact fail prefix and will own initializer inspection. Keep scoped Source note, no new unread-certainty claim.",
+  "protectedUnread": "UNCERTIFIED_UNCHANGED",
+  "nativeStatus": "NOT_RUN"
+}

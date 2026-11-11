@@ -1,0 +1,188 @@
+{
+  "status": "SOURCE_PRICE_AND_LITERAL_EXPECTATIONS_FROZEN_BEFORE_NATIVE",
+  "targetSourceFragmentSha256": "4c4bba99dfa3161389ea0610f2d86ad24b363aace48ee2fe4be9df0eaed621c0",
+  "independentSourceReview": "No site-count/order discrepancy; Source-only, not runtime acceptance.",
+  "fees": {
+    "begin": {
+      "setupReads": 4,
+      "meterReads": 12,
+      "checkedMath": 6,
+      "admissionControls": 3,
+      "counterWrites": 2,
+      "setterCalls": 1,
+      "postSetterRead": 1,
+      "finishOpenRead": 1,
+      "units": 30
+    },
+    "merge": {
+      "setupReads": 4,
+      "meterReads": 12,
+      "checkedMath": 8,
+      "admissionControls": 3,
+      "counterWrites": 2,
+      "setterCalls": 1,
+      "postSetterRead": 1,
+      "finishOpenRead": 1,
+      "units": 32
+    },
+    "postOwnerFieldReads": 5,
+    "carrierUnits": 10,
+    "minimumPostMergeUnitDelta": 77,
+    "newCopiesOrChunks": 0
+  },
+  "syntheticInputSnapshot": {
+    "units": 64,
+    "groups": 1,
+    "copiedEntries": 7,
+    "copyChunks": 3,
+    "validatedInput": false
+  },
+  "postCarrier": {
+    "units": 74,
+    "groups": 2,
+    "copiedEntries": 11,
+    "copyChunks": 4,
+    "allowance": 1048576,
+    "open": false
+  },
+  "postBegin": {
+    "units": 104,
+    "groups": 3,
+    "copiedEntries": 0,
+    "copyChunks": 0,
+    "allowance": 1048565,
+    "open": false,
+    "groupUnits": 30,
+    "ownerStarted": false,
+    "ownerActive": false,
+    "ownerAdopted": false
+  },
+  "postZeroCopySyntheticCreditAndMerge": {
+    "units": 141,
+    "groups": 4,
+    "priorGroups": 1,
+    "copiedEntries": 11,
+    "copyChunks": 4,
+    "allowance": 1048576,
+    "open": false,
+    "groupUnits": 37,
+    "ownerStarted": true,
+    "ownerActive": false,
+    "ownerAdopted": true,
+    "sessionConstructorEntries": 0
+  },
+  "postThreeCopySyntheticCreditAndMerge": {
+    "units": 144,
+    "groups": 5,
+    "priorGroups": 1,
+    "copiedEntries": 14,
+    "copyChunks": 5,
+    "allowance": 1048576,
+    "open": false,
+    "groupUnits": 37,
+    "ownerStarted": true,
+    "ownerActive": false,
+    "ownerAdopted": true,
+    "sessionConstructorEntries": 0
+  },
+  "nullSetupBegin": {
+    "units": 30,
+    "groups": 0,
+    "copiedEntries": 0,
+    "copyChunks": 0,
+    "allowance": 1048576,
+    "open": true,
+    "groupUnits": 30
+  },
+  "nullSetupMerge": {
+    "units": 32,
+    "groups": 0,
+    "copiedEntries": 0,
+    "copyChunks": 0,
+    "allowance": 1048576,
+    "open": true,
+    "groupUnits": 32
+  },
+  "noCarrierBegin": {
+    "units": 94,
+    "groups": 1,
+    "copiedEntries": 7,
+    "copyChunks": 3,
+    "allowance": 1048576,
+    "open": true,
+    "groupUnits": 30
+  },
+  "extraUnitBegin": {
+    "units": 105,
+    "groups": 2,
+    "copiedEntries": 11,
+    "copyChunks": 4,
+    "allowance": 1048576,
+    "open": true,
+    "groupUnits": 31
+  },
+  "reducedAllowanceBegin": {
+    "units": 104,
+    "groups": 2,
+    "copiedEntries": 11,
+    "copyChunks": 4,
+    "allowance": 1048575,
+    "open": true,
+    "groupUnits": 30
+  },
+  "repeatedBegin": {
+    "units": 134,
+    "groups": 3,
+    "copiedEntries": 0,
+    "copyChunks": 0,
+    "allowance": 1048565,
+    "open": true,
+    "groupUnits": 30
+  },
+  "ordinaryMergeAdmissionRefusal": {
+    "units": 141,
+    "groups": 3,
+    "copiedEntries": 0,
+    "copyChunks": 0,
+    "allowance": 1048565,
+    "open": true,
+    "groupUnits": 37
+  },
+  "missingFiveReadCreditMerge": {
+    "units": 136,
+    "groups": 3,
+    "copiedEntries": 0,
+    "copyChunks": 0,
+    "allowance": 1048565,
+    "open": true,
+    "groupUnits": 32
+  },
+  "carrierBeforeFreshInput": {
+    "units": 28,
+    "groups": 1,
+    "copiedEntries": 4,
+    "copyChunks": 1,
+    "allowance": 1048576,
+    "open": true,
+    "groupUnits": 18,
+    "factoryCalls": 0,
+    "error": "V2_SETUP_METER_STATE"
+  },
+  "natural640BeforeBegin": {
+    "baselineUnits": 702,
+    "baselineGroups": 639,
+    "units": 712,
+    "groups": 640,
+    "copiedEntries": 11,
+    "copyChunks": 4,
+    "allowance": 1048576,
+    "open": false,
+    "groupUnits": 10,
+    "error": "native wrapper exceeded 640 measured groups",
+    "targetChanges": "NONE_BEFORE_RESERVATION_REFUSAL"
+  },
+  "actualOriginalOwnerWork": false,
+  "genuine": "UNSPENT_GATED",
+  "nativeStatus": "NOT_RUN",
+  "scope": "Ordinary synthetic snapshot and actual Meter API budget transitions only; no actual/fake OriginalArm or positive captureWithSetup, factory DATA or validated-input acceptance. Zero-unit open group can be observationally equivalent; caller history remains unqualified."
+}

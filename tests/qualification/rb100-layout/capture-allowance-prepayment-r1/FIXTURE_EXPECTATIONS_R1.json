@@ -1,0 +1,27 @@
+{
+  "status": "INDEPENDENT_LITERAL_WITNESSES_FOR_ACTUAL_NULL_FIXTURE_VARIANTS_BEFORE_NATIVE",
+  "feeOracleSha256": "7da9e79ea6c92931ef8641de919e760bd6616bf2a1b9995198cbe09f289097c0",
+  "nullSetupBeginAfterCarrier": {
+    "units": 104,
+    "groups": 2,
+    "copiedEntries": 11,
+    "copyChunks": 4,
+    "allowance": 1048576,
+    "open": true,
+    "groupUnits": 30,
+    "ownerFlags": "INACTIVE"
+  },
+  "nullSetupMergeAfterBegin": {
+    "units": 136,
+    "groups": 3,
+    "copiedEntries": 0,
+    "copyChunks": 0,
+    "allowance": 1048565,
+    "open": true,
+    "groupUnits": 32,
+    "ownerFlags": "INACTIVE"
+  },
+  "pristineNullSnapshotsInPriceOracle": "SOURCE_DERIVED_VARIANTS_NOT_EXECUTED_BY_THIS_CANARY",
+  "otherFixtureWitnesses": "UNCHANGED_PRICE_EXPECTATIONS_R1",
+  "targetRun": false
+}
