@@ -2026,6 +2026,15 @@ origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail `1a1cb91349a6bf87` sent once; this receipt sends no second email.
 
 
+The [fixed current V2 invocation substep](task-evidence/Q100/current-native-host-r1/README.md)
+is locally accepted for pure recipe construction and selected compiler transport.
+Final14 literal tests and actual six-Source JDK8 argfile build pass;141 emitted
+classes match the accepted CODE baseline. Missing-source exit2 and oversize OS
+creation are expected rejections, not successful builds. R2 preflight failure is
+preserved; fresh R3 closes the corrected source. Normal argv is constructed only.
+Next is verified handoff/output/FS identity and source/class/tool/receipt binding;
+normal entrypoints/genuine gate and playable100=0/betaHELD remain.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

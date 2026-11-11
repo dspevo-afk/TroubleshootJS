@@ -504,6 +504,13 @@ their scoped proofs. The five-file selection compiles with the explicit no-DATA
 profile; both normal entrypoints remain held. This supplies maintained CODE bytes,
 not a new manifest authority or V2 host coordinator.
 
+The [fixed V2 invocation adapter](task-evidence/Q100/current-native-host-r1/README.md)
+owns pure six-role Source-list and compiler/native argv construction with bounded
+ASCII Windows transport and aggregate process command-line size. Source argfile
+quoting is exercised with selected JDK8; normal native argv remains unrun. It
+does not own FS identity, upstream handoff, class/tool provenance or admission.
+Both Study holds remain while those owners and semantic/lifecycle closure follow.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published

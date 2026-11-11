@@ -1,9 +1,203 @@
-# Current checkpoint: N50 current native CODE inventory locally accepted
+# Current checkpoint: N51 fixed V2 invocation transport locally accepted
+
+Active F codex/q100-terminal-only-20261107 HEAD7771f2b3d6ee34beecae523f792d8bfac8a176f8,
+no upstream; normal publication target origin/codex/q100-physical-feasibility.
+N51 partial host-adapter component accepted; commit/push/completion Gmail PENDING.
+Public T/E current-native-host-r1; private OS-temp/tsj-q100-v2-invocations-r1-379kbm0m.
+F began reportM only. MainHEAD5f05b0059mods/6untracked,EHEADd9747229reportM,
+DesktopHEADe0c368857mods/89untracked/staged0 unrelated work preserved.
+
+New pure current_native_invocation.py maps fixed6Source roles to quoted LF bytes,
+compiler tuple and native tuple. No I/O/launch/admission/schema translation/manifest
+ledger/resolver/canonicalizer/product holder. Six filenames/role order fixed,
+classpath fresh/inherited/gwtUser/gwtDev; source7/target7/UTF8/existingXlint/empty
+sourcepath/output/@argfile,60s; native heap/FQN/V2run+nativeManifest+wire+wholeContext+
+OUTPUTDIRECTORY,480s. No R7 profile/fixtureOracle/file-output substitution or added
+clock. Strings exact printableASCIIWindows lexical profile; controls/quotes,
+noncanonical paths, wrong basenames/jars, classpathsemicolon/case aliases reject.
+Sourcepaths semicolon/#/space supported inside quotes. Lexical paths are NOT FS/
+ancestor/reparse/lifetime/tool/source/class/provenance authority. Same-shaped hashes
+cannot self-authenticate; output directory kind is not guessed from suffix.
+
+Aggregate direct Windows argv bound32766 reservesNUL with conservative two quote
+chars/token +separators/exe; validatedASCII/nonempty/noquote/no-trailing-backslash.
+Independent standard-library serialization comparison/overlength tests and real
+selectedWindows creation rejection support it. Argfile content is not that limit.
+Microsoft CreateProcessW official primary contract linked in evidence. Both
+normal Study entrypoints remain held; native normal recipe constructed NOT RUN.
+No actual DATA/fixed20 ingest, fake prior PASS, OriginalArm/capture/graph/Session/
+receipt/export/genuine execution. Only explicit NO_DATA source fixture compiled.
+
+Final R3:14 independent literal Python testmethods PASS. Actual selectedJDK8
+@argfile positive compile of5currentCore+NO_DATA from owned space/#/semicolon
+Source path, space/# argfile/output paths PASS exit0/zero diagnostics.141major51
+classes/394768B, every byte exactsubsetN50accepted157,noshadows;2396CODEdeps/
+11801276B +twojars authenticated. Owned missing-source compiler negative expected
+exit2, classoutputEMPTY: REJECTION, not successful build. All3 final own processes
+exitsobserved[0,2,0]. Separate oversize40094char CreateProcess attempt expected
+Winerror206, NO process returned. Normal native argv never executed. Operation
+and unmeasured successful isolated cleanup separate, not normal host proof.
+
+Module7715B/04c82ed38bb395079993bcca1b9f4cb2e7d0f1e585993e8f735c257b84d8f75d;
+tests12350B/16a6c58a440b705b3992ec6c612b3babf80a975f23393fa231ac812061a3de46.
+SOURCE_FREEZE_R3 bc7cb30e85b30d21f4697329117ec27ed919c8405906c956d46e50662e373f06;
+HOST_GATE_R3 5cd182e1e4831cc707758034266874cdbf80c039c7f074e80ab3bee181cc6e62;
+TEST_GATE_R3 042909cb1cfba23b5390129b72e8ffd00585fd6c8524262f6dc5f71db3b876ef.
+Root full module/test/runner and actualresult review. Worker only module draft;
+root corrected lowercase errorcodes/missingjarcheck/latebounds BEFOREexecution,
+original preserved. R1 narrower host/tests passed, preserved NOTreused for newbound.
+Source leaf found aggregate bound and top-level AST oracle gaps; root fixedboth.
+Fresh R2 preflight FAILED0launches: root global phase label replacement accidentally
+changeddependencies-r1to-r2. Correctpath restored, selectivefreshR3 passed; R2
+controller/freeze/failure retained NOTPASS. Post-fix leaf confirmed bound math/
+Source only, no execution/freshhost proof claimed. AST function-annotation check
+is nonblocking followup; current module has no annotations/top-level calls. No
+assertion/error suppression. Exact original2DATA excluded; no old normal20 reread.
+
+Runtime core Source and source/class/schema/budgets/seeds/epochs/oracles unchanged.
+No fresh prefix/full940/parser/carrier/handoff/electrical/population/normal matrix
+renewal by this Python/transport component. Production/GWT/Player N/A; CI NOTRUN/
+self-hosted runner prerequisite. No classCache source rebuild or standalonehost
+admission is claimed. This is invocation construction, not complete V2 host.
+
+NEXT unstarted N52: verified upstream handoff/exact output bytes and owned FS
+identity/staging, then source/tool/closedclass/argv/receipt lifecycle binding.
+Reuse current codec, normal-prior qualifier and neutral host I/O/receipt owners.
+Pending persisted evidence CANNOTreplace verified final upstream return. Producer
+must retain byteidentity under CohortTerminalTelemetryInputV2.java (upstream writes
+current-input.java); no content/classrename or old DATA cache. Wholecontext includes
+physicalContext; nativeMap onlyprojection, headercannotself-authenticate. Keep
+nativeSourceManifest/wire/context/prior/projection/Java hash roles separate. Both
+normal main/assemble stay throw-only until input/PAD/DTO/receipt/arm/export and
+independentsemantic/host/lifecycle closure permits genuine original->exactNULL/
+OBSERVE. Never fabricate prior readiness or reopenfixed20 from this recipe proof.
+
+Resources: ordinary owned Source/argfile/class/failure artifacts retained. Empty
+sourcepath and negativeclassdir remainempty. No persistent process/reparse node/
+listener/browser created. Prior uncertain browser14116/start639294472690745890/
+port58320,preview34180/start639294472514546595/port58264+14children,D process/
+unlink/hardlink/scratch and Notepad67116860 untouched. Preserve all unrelated
+edits/untrackeddata; only18 explicit intendedpaths stageafterstrictchecks.
+N50impl67408a3b/receipt7771f2b3 and Gmail1a1cb91349a6bf87 complete; no duplicate
+older/receipt notifications. Root normalcommit/push/remoteverify then one N51Gmail.
+
+All90s/640groups/5s/32768PERGROUP/copy1048576/chunk4096/other caps unchanged.
+Full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,protectedUnreadUNCERTIFIED,
+oldnormal20NOTREREAD,playable100=0,betaHELD,genuineUNSPENT_GATED. No user decision
+needed. Continue roadmap without routine permission; notify meaningfulcompletion/
+failure/decision only. Currentprefix<=64KiB foragents; opaquehistory preserved.
+
+# Historical checkpoint: N50 published; N51 V2 host adapter scope prepared
+
+Active F codex/q100-terminal-only-20261107, no upstream; HEAD
+7771f2b3d6ee34beecae523f792d8bfac8a176f8 exact remote verified on
+origin/codex/q100-physical-feasibility. N50implementation
+67408a3b24d1640a20e735e516b7e852c1b130c1, Maintain the current native code source
+inventory, normally pushed. Completion Gmail1a1cb91349a6bf87 sent once. Receipt
+7771f2b3 published/verified; no second email. F clean before this current checkpoint,
+then reportM only/staged0. Main/E/Desktop unrelated work freshly confirmed preserved.
+
+N50 resolved current CODE selection: maintained five-file inventory at
+T/E current-native-source-r1. Three latest accepted code files promoted exact:
+Study239938B/755ac9ff94478155c09298c8785df753da852483edd2888547977c6202969cbd,
+Metadata16559B/784296ac06e2a9c7eaeb04d8c76027360861caea960d1fcb281aa61179356895,
+CanonicalCodec43095B/92cd938fc086f7f5b71ac8c9003921de4f7ac908da71b84c988658f9d8a8123a.
+Inventory references already-current InputSetup24397B/f1f2308a... and Projections
+10055B/c0398d31... at existing paths, not duplicate copies. Earlier metadata/codec
+component snapshots retain original proofs/independent oracles with current-owner
+README pointers. No behavior/ABI/schema/model-epoch/seed/budget/oracle change.
+Manifest is ordinary CODE facts, not an authority token/resolver/ledger. Both
+Study main and assemble remain exact throw-only holds. No normal activation.
+
+Actual final9Source JDK8 source7/target7 PASS157major51classes/456063B+2396 inherited
+CODEdeps/11801276B,noshadows and zero diagnostics. Every output class byte-identical
+member of N48accepted299; five core+explicitNO_DATA+existingprefix2/bridge1 Source
+build closes. NOT a full source rebuild of2396 inherited CODE or a standalone
+clean-clone native distribution. Final prefix javap5031B/
+0e86010cb727cd92a681dceae9aef429d87368c9fbdc177e4c2a1bb941bc227a unchanged.
+Fresh prefixSMOKE1/8+SUITE10/53 and bridgeSMOKE1/6+SUITE10/53 PASS; mode positives
+overlap. Same652/271/1 stop,context88/start18/foreignParent0 and actual early-load
+refusals. All7 owned calls observed6exit0+one deliberateCLIexit1, no N50 compile/
+native failure. Operation times separate; successful isolated cleanup UNMEASURED.
+Root Source-byte/scope/result review; leaf manifeststructure/selectedholds only,
+no leaf hash/fullbody/native review claimed. Public/staged code exact; strict Git
+checks PASS. Documentation prep missingREADME and stagedCRLF failures fixed and
+preserved; no native input change or whitespace suppression. Prior failures remain.
+
+N50 private OS-temp/tsj-q100-current-native-sources-r1-3092qaya:
+SOURCE_FREEZE_R1 ab1012a362266ba5e07b0c6bc4135568d7017e26127df7fa739b9eaf44cb7012;
+COMPILE_GATE_R1 42c1ffe03147591438bcc62007639f759df3fe16020ca3a4226d8f0e651fef35;
+NATIVE_GATE_R1 e00b56b383636c64da093f2340de472347fc5a135cb0bb72842d392b672a357e.
+Core/dependency/jar/sixreader inputs authenticated before/after; retained frozen
+Source closure authenticated. Old full940metadata/3104counted(excludes24protocol),
+fullparser/carrier/handoff evidence REUSED, NOT RERUN/RENEWED. RUN81 excluded.
+Only explicit NO_DATA stub admitted; original2actualDATA excluded before content.
+No successful input Map, actual/fake OriginalArm/capture/graph/Session/DTO/receipt/
+export/genuine operation. No fixed20 prior ingest or protected/heldout data read.
+
+Existing ownership discovered via current general Source slices: normal-prior
+qualify_prior.py already canonicalizes/hashes full context, verifies projection,
+emits Java with expected digest, then returns PASS_PRIOR_INPUT_ONLY only after
+final input/output checks. Persisted qualification-evidence is pending from
+before those checks; CANNOT substitute it for verified final return. Generic R7
+host has neutral source/class/tool/receipt mechanics but fixed R7 profile/fixture
+oracle argument and result-file output. It is not a current V2 invocation owner.
+Root Source declaration/constant search unnecessarily emitted embedded generic
+OPEN/BLOCKED fixture literals; no actual D/protected/heldout artifact/module run.
+Footprint disclosed; protected-unread certainty remains UNCERTIFIED.
+
+N51 FIRST IMPLEMENTATION SCOPE PREPARED, code/transport gates UNSTARTED.
+Private OS-temp/tsj-q100-v2-host-contract-r1-x756yib_.
+IMPLEMENTATION_SCOPE_R1 SHA bb592775490382931827b85be7f04261e39dca3bb5d1cba1cb0be913c3c09d00;
+currentCODEinventory SHA aa8c81530ac33e4863b92b7568e6b4cea99fc0e5e555eb96e9b881f48bd868a2.
+Next coherent substep: pure fixed V2 source-list/compiler/native invocation
+adapter, no I/O/launch/admission/authority token or duplicate canonicalizer/schema/
+resolver/manifest ledger. Source list:five current core roles+separately bound
+input producer; correct filename CohortTerminalTelemetryInputV2.java. Upstream
+emits current-input.java, so eventual owned exclusive exact-byte copy must use
+required compiler basename, not rename class/content. No actual DATA copy now.
+
+Native V2 six args: COHORT_TERMINAL_TELEMETRY_V2,runId,current-native-source-manifest
+SHA,currentwireSHA,wholeinputContextSHA,native OUTPUT DIRECTORY. Not generic R7
+fixture-oracle role/result-file. Keep prior-source-manifest/projection/Java hash
+roles separate; full context includes physicalContext, Map onlyprojection, header
+cannot self-authenticate. No timestamp arg. Compile uses fixed Source order,
+quoted LF argfile, classpath fresh/inherited/gwtUser/gwtDev, source7/target7/UTF8,
+empty sourcepath and existing flags/budgets. Transport rejects control/quote/
+newline/empty-segment injection; lexical checks must not claim filesystem identity.
+Run real selected JDK8 early on6core+NO_DATA Sources from owned space/# path and
+negative transport controls; mocks don't prove @argfile host path. Normal native
+argv can be inspected but must remain UNRUN with both entrypoints held. Later
+adapter substeps must authenticate upstream final return/exact outputs, CODE/tools/
+closed classes/argv/receipts and actual semantic/host/lifecycle closure before
+any genuine original->exactNULL/OBSERVE. Do not fabricate prior PASS or reopenold20.
+
+Resources: all7 N50 exits observed; canary loader finally closes. Ordinary owned
+empty/nonempty fixtures/exact sentinel retained evidence; no reparse node/browser/
+listener/persistent process created. Prior uncertain browser14116/start
+639294472690745890/port58320,preview34180/start639294472514546595/port58264+
+14children,D process/unlink/hardlink/scratch and Notepad67116860 untouched.
+MainHEAD5f05b005 tracked9/untracked6; EHEADd9747229 tracked1/untracked0;
+DesktopHEADe0c36885 tracked7/untracked89; all staged0, freshly confirmed. Only report
+prefix mirrored; opaque history retained. No broad clean/reset, force push/history
+rewrite, branch deletion or unrelated changes. N48Gmail1a1cb468109850f4 and earlier
+implementation/receipt notifications already complete; no duplicate messages.
+
+All90s/640groups/5s/32768PERGROUP/copy1048576/chunk4096/other caps,seeds/epochs/
+candidate order/independent oracles unchanged. Full30EXCLUDED,HARD/PSYCHOTIC
+unavailable/unrun,protectedUnreadUNCERTIFIED,oldnormal20NOTREREAD,playable100=0,
+betaHELD,genuineUNSPENT_GATED. Production/GWT/Player N/A CODE-promotion/preparation;
+electrical/population NOTRENEWED; CI NOTRUN/self-hostedrunner prerequisite.
+No user decision needed. Continue eligible roadmap without routine permission.
+Notify meaningful completion/failure/decision only. Never give agents full report;
+stream prefix<=64KiB until first historical marker, opaque tail thereafter.
+
+# Historical checkpoint: N50 current native CODE inventory locally accepted
 
 Active F codex/q100-terminal-only-20261107 HEAD1fc7f7247e03e20c595e87d732a778f123fb502f,
 no upstream; normal target origin/codex/q100-physical-feasibility. N50 accepted
 finite CODE promotion published as 67408a3b24d1640a20e735e516b7e852c1b130c1, exact remote verified.
-Completion Gmail1a1cb91349a6bf87 sent once; receipt publication pending, no second email. Public T/E
+Completion Gmail1a1cb91349a6bf87 sent once; receipt7771f2b3d6ee34beecae523f792d8bfac8a176f8 pushed/verified, no second email. Public T/E
 current-native-source-r1; private OS-temp/tsj-q100-current-native-sources-r1-3092qaya.
 F pre-existing reportM only before task. MainHEAD5f05b0059mods/6untracked,
 EHEADd9747229reportM,DesktopHEADe0c368857mods/89untracked/staged0 preserved.
