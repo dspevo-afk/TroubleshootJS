@@ -1,7 +1,7 @@
-# Current checkpoint: N56 direct-child contract accepted locally; publication pending
+# Current checkpoint: N56 direct-child contract published
 
-Active F codex/q100-terminal-only-20261107, base HEAD
-ff24c674c2ce2f4f5fa2c9244529d0001f610859, no upstream. Normal target
+Active F codex/q100-terminal-only-20261107, accepted implementation/HEAD
+d1d569917415c6a8f24db9410faae102f8d6bb44, no upstream. Normal target
 origin/codex/q100-physical-feasibility. N55 impl f05e70385c444d8e35ddcd1a5f4284c5273d1844
 and receiptff24c674 published/verified; Gmail1a1ccacba74c261e sent once, no duplicate.
 
@@ -51,7 +51,8 @@ Session/receipt/export/genuine NOTRUN. Budgets90s/640groups/5s/32768PERGROUP/
 copy1048576/chunk4096/othercaps,seeds,epochs,order/electricaloracles unchanged.
 Full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,protectedUnreadUNCERTIFIED,
 oldnormal20NOTREREAD,playable100=0,betaHELD. Main/E/Desktop unrelatedwork and prior
-failures preserved; publication/normal push/remoteverify/Gmail next.
+failures preserved. Normal push/exactremote verified; Gmail1a1cce57a7fff998 sent once.
+Publication receipt follows with no second email; F clean before receipt edits.
 
 # Historical checkpoint: N55 publication and N56 preparation
 
