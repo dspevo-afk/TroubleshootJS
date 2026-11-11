@@ -45,5 +45,6 @@ electrical/population not renewed; CI not run/self-hosted runner prerequisite.
 All budgets/seeds/epochs/oracles remain. Genuine original/NULL/OBSERVE stays
 UNSPENT_GATED; full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; playable100=0,
 beta HELD and protected-unread boundary UNCERTIFIED. Old normal20 was not reread.
-Publication receipt follows only after verified normal push; no success claimed
-for any failed or missing gate.
+Implementation `891a050370b80ac2b3a2c36c03d8e870a6ddd917` normally pushed to
+origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
+Gmail `1a1c81f4caca9dfc` sent once; no second email for this receipt.

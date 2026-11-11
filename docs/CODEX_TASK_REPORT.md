@@ -1,9 +1,11 @@
-# Current checkpoint: N37 V2 argument prerequisite accepted; publication pending
+# Current checkpoint: N37 V2 argument prerequisite published; caller authority next
 
-Active F codex/q100-terminal-only-20261107 parent HEAD f28dd5067aa32187b766022537b8014d38ae7571,
+Active F codex/q100-terminal-only-20261107 implementation HEAD 891a050370b80ac2b3a2c36c03d8e870a6ddd917,
 no upstream; normal target origin/codex/q100-physical-feasibility. N35 implementation
 13130cecc5044a60a93f708819c7a1fda8140684/receiptf28dd506 already published,
-Gmail1a1c75490ef17be5 once. No duplicate N35 email. N37 commit/push/email pending.
+Gmail1a1c75490ef17be5 once. No duplicate N35 email. N37 implementation published/exact remote SHA verified;
+completion Gmail1a1c81f4caca9dfc sent once/acknowledged. Publication receipt follows;
+NO second email for receipt.
 
 N37 native-v2-arguments-r1 locally accepted within finite parser scope. Private
 OS-temp/tsj-q100-v2-arguments-r1-5mah1kq4. Existing Arguments owner now V2-only,

@@ -1925,7 +1925,9 @@ the corrected actual-image reader calls pass. No normal-host, actual DTO/receipt
 clock/hash-authority or genuine acceptance is inferred. Next is the current normal
 caller/input/original authority contract before execution. Budgets/seeds/epochs/
 oracles remain; full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,playable100=0,betaHELD.
-Publication is pending verified normal push and one completion email.
+Implementation `891a050370b80ac2b3a2c36c03d8e870a6ddd917` normally pushed to
+origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
+Gmail `1a1c81f4caca9dfc` sent once. This receipt sends no second email.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

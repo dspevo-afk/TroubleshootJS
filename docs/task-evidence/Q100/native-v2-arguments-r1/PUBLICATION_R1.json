@@ -1,0 +1,10 @@
+{
+  "status": "PUBLISHED_EXACT_REMOTE_VERIFIED_COMPLETION_EMAIL_ACKNOWLEDGED_ONCE",
+  "implementationSha": "891a050370b80ac2b3a2c36c03d8e870a6ddd917",
+  "message": "Migrate native preflight to V2 argument roles",
+  "localBranch": "codex/q100-terminal-only-20261107",
+  "remoteBranch": "origin/codex/q100-physical-feasibility",
+  "completionGmailId": "1a1c81f4caca9dfc",
+  "receiptEmail": "NOT_SENT_NO_DUPLICATE",
+  "nextUnstarted": "Current normal caller/input/original authority contract before genuine execution"
+}
