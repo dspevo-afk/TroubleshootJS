@@ -25,3 +25,7 @@ src/com/lushprojects/circuitjs1/client/SeededPcbLayoutGenerator.java -text
 scripts/verify-current-contracts.ps1 -text
 tests/contracts/P07NetOrderContractTest.java -text
 tests/contracts/P07TerminalOnlyDiagnosticsContractTest.java -text
+
+# Preserve bytes of the CODE-only Windows process canary receipt inputs.
+tests/contracts/VerifierBoundedProcessContract.ps1 -text
+tests/contracts/VerifierBoundedProcessFixture.py -text

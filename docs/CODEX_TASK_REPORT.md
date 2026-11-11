@@ -1,9 +1,68 @@
-# Current checkpoint: N55 CODE class inventory published
+# Current checkpoint: N56 direct-child contract accepted locally; publication pending
 
-Active F codex/q100-terminal-only-20261107, no upstream; accepted N55 candidate
+Active F codex/q100-terminal-only-20261107, base HEAD
+ff24c674c2ce2f4f5fa2c9244529d0001f610859, no upstream. Normal target
+origin/codex/q100-physical-feasibility. N55 impl f05e70385c444d8e35ddcd1a5f4284c5273d1844
+and receiptff24c674 published/verified; Gmail1a1ccacba74c261e sent once, no duplicate.
+
+N56 adds standalone tests/contracts/VerifierBoundedProcessContract.ps1 and
+VerifierBoundedProcessFixture.py; existing process owner fb07ad... unchanged.
+Kernel current-process PID/FILETIME/image/raw commandline plus imageSHA/Pythonargv
+compare against owner retained launch identity and literal args. Exact streams,
+exit0/7, three rapid returns, real1500ms timeout and10 malformed request guards.
+Final R6 Smoke2/Suite16 PASSexit0, wrapper operations1.582s/3.742s including import;
+case timings are in PROCESS_PROOF_R6. Timeout operation EXPECTED_TIMEOUT_NOT_PASS;
+contract expectation passes. Cleanup separately UNMEASURED, not zero. Negative
+guards+stateabsence are not OS process-creation audit. Exact counts/argv error
+messages and nonblank absolute returned log paths strengthen the final oracles.
+
+Actual SystemPS5.1 495616B/d8f182.../version10.0.26100.9818 signed MicrosoftWindows
+Valid; selectedPython3.13.14/ad169... -I-B optimize0. Old qualifier60c9... pin
+UNCHANGED/NOTRENEWED; actualqualifier NOTRUN. InheritedPS7 module search failed
+early host before childlaunch; child-local PSModulePath selects SystemPSModules.
+No global environment/module installation/execution-policy changes. Builtin
+modules are selected, not a complete tool-closure receipt. Other failures: private
+parser export assumption, Python CRLFtranslation, omitted infrastructureprefix.
+All preserved with source/state/streams/receipts; no weakened owner/oracle/budget.
+
+All12 lab originalPopenhandle exits observed. Successful owner log roots removed;
+four expected-timeout log directories and ordinary CODE statefiles retained.
+No new persistentprocess/listener/browser/reparse node. Private OS-temp
+tsj-q100-bounded-process-r1-c86049c3b4e9. No uncertain old resources touched.
+Root source/case/stream/identity/receipt review complete. Leaf Source-only review
+no blocker; cleanup-oracle finding fixed and scoped final line reviewed, no
+independent execution. Initial implementationleaf produced no persistedfile;
+root reassumed ownership. Contract 12502B/709cc47843f5cb6eb9b026d191d6bcba1cb31613b089baa885c2d79a27b9d0e2;
+fixture 2389B/3f3d3f5951b4f4b02e0e01269c2cd2f712e31b5392b9f1292b45b68d60aadd49.
+Public T/E current-native-host-r1/PROCESS_DIRECT_CHILD_R6; manifest
+2a9bab5454ef520b84b0daae059785a866b0a7fbfe0efb1e1f73f3d65242db94;
+proof7131c249382369ec8de48d80ddd1afe72aa254e7c348c1d0c3c610b5fc781859.
+
+NEXT bounded early-output/cancel/descendant containment design through existing
+process owner, before trusted Source/tool/class/JAR/compiler/actualreturn/native
+coordinator composition and semantic/receipt/lifecycle closure. Standalonecanary
+NOT normal transportauthority: ReadToEndAsync unbounded, no cancelparameter,
+directchild only. Existing fiveCODE Java, N55/N54/N53 evidence notrenewed.
+ProductionJava/GWT/visiblePlayer N/A; electrical/population NOTRENEWED; CI NOTRUN
+self-hosted runner prerequisite. No full native/normal verifier invocation.
+Both Studyholds exactthrow-only, original->NULL/OBSERVE UNSPENT_GATED; prior/fixed20/
+oldD/heldout/protected DATA/factory/nativeentrypoint/OriginalArm/capture/graph/
+Session/receipt/export/genuine NOTRUN. Budgets90s/640groups/5s/32768PERGROUP/
+copy1048576/chunk4096/othercaps,seeds,epochs,order/electricaloracles unchanged.
+Full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,protectedUnreadUNCERTIFIED,
+oldnormal20NOTREREAD,playable100=0,betaHELD. Main/E/Desktop unrelatedwork and prior
+failures preserved; publication/normal push/remoteverify/Gmail next.
+
+# Historical checkpoint: N55 publication and N56 preparation
+
+# Current checkpoint: N55 published; N56 composition authority audit prepared
+
+Active F codex/q100-terminal-only-20261107, no upstream; HEAD
+ff24c674c2ce2f4f5fa2c9244529d0001f610859 exact remote verified. Accepted N55
+candidate
 f05e70385c444d8e35ddcd1a5f4284c5273d1844, Validate exact current CODE class closures,
 normally pushed/remote verified. Gmail1a1ccacba74c261e sent once; receipt
-follows/no second email. N54 implementation
+published/verified, no second email. N54 implementation
 49b913df4646fb79a04b166eb66924b45b5fe0cc and Gmail1a1cc7429e81fda9 complete once.
 Normal target origin/codex/q100-physical-feasibility. N55 public T/E current-native-
 host-r1/CLASS_INVENTORY_R3; private OS-temp/tsj-q100-code-class-inventory-r1-48e8114b40c2.
@@ -67,8 +126,16 @@ DesktopHEADe0c36885 tracked7/untracked89; allstaged0 freshly confirmed preserved
 Current reportprefix only mirrored, opaquehistories preserved. Prior uncertain
 browser14116/start639294472690745890/port58320,preview34180/start639294472514546595/
 port58264+14children,Dprocess/unlink/hardlink/scratch andNotepad67116860 untouched.
-Normal commit/push/remote verification and one N55 Gmail complete; receipt next,
-no duplicate prior email. Continue eligiblework without routine permission; notify meaningful change.
+Normal commit/push/remote verification, receipt and one N55 Gmail complete; no
+duplicate prior email. F reportM only/staged0 after this checkpoint. Continue eligiblework without routine permission; notify meaningful change.
+
+N56 composition authority Source audit PREPARED only: OS-temp/tsj-q100-native-compose-contract-r1-4n0aeosq.
+Selected private current CODE compilecomposition +originalhandlelablauncher, no
+execution/class/JAR/Data reads/newtest/implementation. NeedmaintainedSource/tool/
+JAR/compiler/process/realreturn ownership; do notpromote predictablelablauncher
+post-captureoutputbound or child-onlytiming into normaltransport proof. Prefer
+qualifiedexistingprocessowner CODE/provenance, notbroadoldScratch/Data search.
+SCOPE_PREPARATION_R1 377a032051f7d7643e28a6914af6dcfbe5fe40829fa587f00f8e58202dfbd28c.
 
 # Historical checkpoint: N54 publication and N55 CODE class preparation
 

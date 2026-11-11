@@ -2093,6 +2093,18 @@ origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail `1a1ccacba74c261e` sent once; this receipt sends no second email.
 
 
+The [existing Windows direct-child contract](task-evidence/Q100/current-native-host-r1/PROCESS_DIRECT_CHILD_R6.md)
+is locally accepted for its CODE-only profile: final-source Smoke2/Suite16 pass
+with real argv/image/start/exit and timeout/cleanup observations. Early host and
+test-oracle failures remain preserved; child-local PS5.1 module selection fixes
+the inherited PS7 environment without changing global settings or old qualifier
+pins. The process owner is unchanged. Early output byte limits, cancellation,
+descendant containment and trusted native coordinator/tool/return composition
+remain unqualified, so normal activation and genuine gates stay closed. This
+finishes a necessary process-test substep, not Q100 playable acceptance. Next is
+the bounded transport/containment design before trusted compile/launch composition.
+
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

@@ -543,6 +543,15 @@ file/tree rechecks. The sole permitted producer is the pinned NO_DATA class.
 Complete metadata, compile/Source/JAR provenance and exclusive lifetime remain
 caller-owned. This adds neither normal DATA admission nor a native coordinator.
 
+The [direct-child process contract](task-evidence/Q100/current-native-host-r1/PROCESS_DIRECT_CHILD_R6.md)
+exercises the unchanged shared Windows process owner with a pinned CODE-only
+kernel witness. It compares argv, image/PID/start identity, streams, exit0/7,
+real timeout and cleanup, plus exact malformed-request guards. Selected PS5.1
+builtin modules are child-local; old qualifier tool pins remain unchanged.
+This is standalone finite test evidence, not a native coordinator: the owner
+still has unbounded stream capture, no cancellation and no descendant proof.
+Normal transport, full tool closure and genuine execution remain gated.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published
