@@ -1,0 +1,95 @@
+{
+  "status": "INDEPENDENT_LITERAL_BRIDGE_EXPECTATIONS_BEFORE_TARGET",
+  "sourceExtraAllocationUnits": 1,
+  "newCopiedEntries": 0,
+  "newCopyChunks": 0,
+  "currentDataStop": {
+    "units": 652,
+    "copiedEntries": 271,
+    "copyChunks": 1,
+    "groups": 0,
+    "open": true,
+    "groupUnits": 652,
+    "factoryCalls": [
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "injectedDataStop": {
+    "units": 651,
+    "copiedEntries": 271,
+    "copyChunks": 1,
+    "groups": 0,
+    "open": true,
+    "groupUnits": 651,
+    "factoryCalls": [
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "carrierBeforeCurrent": {
+    "units": 28,
+    "copiedEntries": 4,
+    "copyChunks": 1,
+    "groups": 1,
+    "open": true,
+    "groupUnits": 18,
+    "factoryLoads": 0
+  },
+  "wrongStart": {
+    "units": 18,
+    "copiedEntries": 0,
+    "groups": 0,
+    "open": true,
+    "groupUnits": 18,
+    "factoryLoads": 0
+  },
+  "nullContext": {
+    "units": 0,
+    "groups": 0,
+    "open": false,
+    "factoryLoads": 0
+  },
+  "malformedFirstHex": {
+    "units": 21,
+    "copiedEntries": 0,
+    "groups": 0,
+    "open": true,
+    "groupUnits": 21,
+    "factoryLoads": 0
+  },
+  "contextMismatch": {
+    "units": 88,
+    "copiedEntries": 0,
+    "groups": 0,
+    "open": true,
+    "groupUnits": 88,
+    "factoryCalls": [
+      1,
+      1,
+      0,
+      0
+    ]
+  },
+  "reentryAfterDataStop": {
+    "units": 670,
+    "copiedEntries": 271,
+    "copyChunks": 1,
+    "groups": 0,
+    "open": true,
+    "groupUnits": 670,
+    "factoryCalls": [
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "successfulDataMapOrOwner": "NOT_RUN_NOT_ALLOWED_IN_STUB_PROFILE",
+  "nativeTarget": "NOT_RUN",
+  "classLoadingBeforeCallbacks": "MUST_BE_PROVED_WITH_ACTUAL_SELECTED_JDK_NOT_ASSUMED_FROM_SOURCE"
+}

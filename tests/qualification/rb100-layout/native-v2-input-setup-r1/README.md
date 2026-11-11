@@ -17,3 +17,11 @@ be reused as a successful current native input.
 Private pinned Study, Shared owner, PCB, receipt and synthetic factory Source
 dependencies remain required. Normal assembly and the genuine producer remain
 closed. This directory does not promise standalone replay or playable Q100.
+
+## Current static factory binding
+
+The current owner adds readCurrent through ../static-factory-bridge-r1. Its
+fieldless facade is paid after freshness and delegates to the fixed static ABI.
+The injected read keeps the same prepared body and debit. R2 acceptance/pins above
+remain historical evidence for their earlier candidate; the no-DATA bridge gates
+do not renew full positive RUN81 or authenticate actual factory DATA.

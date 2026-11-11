@@ -1,0 +1,10 @@
+{
+  "status": "FAIL_R3_REGRESSION_FIXTURE_REMOVED_EARLIER_RESTORED",
+  "phase": "v2-parser-suite-r3",
+  "exitCode": 1,
+  "processExitObserved": true,
+  "cause": "R2 cleanup correctly removed owned junction; R3 repetition required recreating fixture, which root omitted.",
+  "codeOrOracleChanged": false,
+  "resolution": "Verified owned target/sentinels, recreated exact mount-point node, run fresh regression directory against exact R3 classes.",
+  "partialR3": "16calls exited0 then parser suite exited1; NOT overall PASS, no readers run."
+}

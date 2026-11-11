@@ -1,0 +1,14 @@
+{
+  "status": "FAIL_R1_COMPILE_MISSING_TEST_ATTEMPT_HOLDER_FIXED",
+  "compileExit": 1,
+  "processExitObserved": true,
+  "operationNanos": 781626100,
+  "errors": 19,
+  "oneCause": "Canary referenced Attempt but omitted its declaration; root and Source-only reviewer missed this.",
+  "draftCanarySha256": "8750a6044193ed91ef1ffef42a7af608bb9f1b105f40dcae72dad512b7e52bb4",
+  "correctedCanaryBytes": 30446,
+  "correctedCanarySha256": "a241545745350f5ebe2ff4aaa157b60b5e6ff47834471fab08b2d1d0b9a06027",
+  "targetOrFeesOrAssertionsChanged": false,
+  "runtimeNewRegressionRun": false,
+  "r1Evidence": "Compiler stdout/stderr/result, original Source freeze, original canary copy, partial classes/empty sourcepath retained; not PASS."
+}

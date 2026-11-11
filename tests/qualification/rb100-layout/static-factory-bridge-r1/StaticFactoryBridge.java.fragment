@@ -1,0 +1,77 @@
+    /** Fixed current static producer; no retained projection or second data holder. */
+    static CohortTerminalTelemetryStudy.SetupResult readCurrent(
+            CohortTerminalTelemetryStudy.SetupMeter m, long producerStarted,
+            String expectedContextSha) throws Exception {
+        if (m == null || m.parent == null || m.meter == null ||
+                expectedContextSha == null) fail("ARGUMENTS");
+        fresh(m, producerStarted);
+        m.charge(1); // before this fieldless Factory facade allocation
+        Factory factory = new Factory() {
+            public String schemaTag() throws Exception {
+                return CohortTerminalTelemetryInputV2.schemaTag();
+            }
+            public String contextSha256() throws Exception {
+                return CohortTerminalTelemetryInputV2.contextSha256();
+            }
+            public int dataEntries() throws Exception {
+                return CohortTerminalTelemetryInputV2.dataEntries();
+            }
+            public Map<String,Object> dataJson() throws Exception {
+                return CohortTerminalTelemetryInputV2.dataJson();
+            }
+        };
+        return readPrepared(m, expectedContextSha, factory);
+    }
+
+    static CohortTerminalTelemetryStudy.SetupResult read(
+            CohortTerminalTelemetryStudy.SetupMeter m, long producerStarted,
+            String expectedContextSha, Factory factory) throws Exception {
+        if (m == null || m.parent == null || m.meter == null ||
+                expectedContextSha == null || factory == null) fail("ARGUMENTS");
+        fresh(m, producerStarted);
+        return readPrepared(m, expectedContextSha, factory);
+    }
+
+    /** Both callers admit arguments and freshness before entering this shared body. */
+    private static CohortTerminalTelemetryStudy.SetupResult readPrepared(
+            CohortTerminalTelemetryStudy.SetupMeter m, String expectedContextSha,
+            Factory factory) throws Exception {
+        m.charge(1);
+        int length = expectedContextSha.length();
+        if (length != 64) fail("CONTEXT_SHA");
+        for (int i = 0; i < length; i++) {
+            m.charge(1);
+            char c = expectedContextSha.charAt(i);
+            if (!lowerHex(c)) fail("CONTEXT_SHA");
+        }
+        m.charge(1); String schema = factory.schemaTag();
+        m.charge(1);
+        if (!"tsj-cohort-terminal-input-context-v2".equals(schema)) fail("SCHEMA");
+        m.charge(1); String context = factory.contextSha256();
+        m.charge(1);
+        if (!expectedContextSha.equals(context)) fail("CONTEXT_SHA");
+        m.charge(1); int declared = factory.dataEntries();
+        m.charge(1);
+        if (declared != 271) fail("ENTRIES");
+        m.charge(290);
+        m.copy(271);
+        m.charge(1); Map<String,Object> data = factory.dataJson();
+        m.charge(3);
+        m.copy(202);
+        State s = new State(m);
+        walk(s, data, 0);
+        validate(s, data);
+        s.u(1);
+        if (s.inventory != declared) fail("SCHEMA_SHAPE");
+        m.charge(1);
+        m.copy(5);
+        m.charge(4);
+        m.charge(1);
+        m.finish();
+        // These are the only four prepaid native reads after close.
+        long units = ((Long)CohortTerminalTelemetryStudy.field(m.meter, "units")).longValue();
+        long copied = ((Long)CohortTerminalTelemetryStudy.field(m.meter, "copiedEntries")).longValue();
+        int groups = ((Integer)CohortTerminalTelemetryStudy.field(m.meter, "groups")).intValue();
+        int chunks = ((Integer)CohortTerminalTelemetryStudy.field(m.meter, "copyChunks")).intValue();
+        return new CohortTerminalTelemetryStudy.SetupResult(data, units, copied, groups, chunks);
+    }

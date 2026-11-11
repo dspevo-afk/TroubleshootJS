@@ -1,4 +1,221 @@
-# Current checkpoint: N44 capture allowance handoff accepted
+# Current checkpoint: N46 fixed factory bridge accepted in no-DATA profile
+
+Active F codex/q100-terminal-only-20261107, no upstream; normal target
+origin/codex/q100-physical-feasibility. Parent HEAD07092dbbdd301ea9b9c543dd2657119985c6a51b.
+N46 final candidate locally accepted; commit/push/completion Gmail PENDING.
+
+Scope: CurrentV2InputSetup.readCurrent binds four static producer APIs through a
+fieldless instance facade. Fresh18 precedes extra1 allocation unit. Existing read
+and readCurrent share byte-identical1729B/c1aedc7431d3c56295c46163b091b5a401993c8ef644dcbc634bc7782be20ea2
+validation/copy/return body; injected debit stays unchanged. No new map/holder/
+ledger/resolver/schema. Study239938B/755ac9ff... and main/assemble holds unchanged.
+Private OS-temp/tsj-q100-static-factory-bridge-r1-i05k36_j; T/E static-factory-bridge-r1.
+Owner24397B/f1f2308ac9e33ccee4465ff6f3d1f6d0fd70de25cc0d8a00d9a3312cdd5f4a74;
+fragment3693B/eccbf026d9d9e449239206580ca7eddaefb1e6e2c2a39ec28b5053e23718deb4;
+canary30446B/a241545745350f5ebe2ff4aaa157b60b5e6ff47834471fab08b2d1d0b9a06027.
+
+Source8/fresh current-packet public8 PASS. Final25JavaJDK8 source7/target7 R3 PASS:291major51
+classes/912319B+2396authenticatedCODEdeps/11801276B,noshadows. Sole generated
+namespace class is EXPLICIT NEW NO_DATA stub1044B/cce09cb6580894aef7ff3553e8a63710cdd0936538b00f53e022c31b82ff68cb,
+not actual DATA. Original2factoryDATA excluded before access; existing denies
+unchanged. Final javap117012B/0084d2dd4e48030652ec7d98b5ca3cf8389a66bf5a8b4bb51f0feb0294667767
+proves no static initializers and four fixed invokestatic delegates; runtime facade
+has0fields/0ctorparams/4instance callbacks. One old unchecked warning retained.
+BridgeSMOKE1/6+SUITE10/53 PASS: current652/refusal271copies1chunk vs injected651,
+hash/context/start/argument refusals and failedMeter reentry670. Selected JDK8
+denied-loader profiles prove zero generated class attempts on early-refusal/layout
+paths; only explicit stub cases admit its FQN. This is not real generated/source/
+classpath authority, successful Map input or normal host. No actual/fake OriginalArm,
+owner/capture/graph/Session/receipt/export/genuine operation. Positive RUN81 excluded.
+Fresh handoff1/7+20/65,carrier1/10+10/42,mapping1/9+4/28,940metadata cases/3104
+counted assertions excluding24detached reader protocol, and arguments1/8+43/56
+PASS. Report modes separately/overlap; no combined unique count. All32 final R3/R4 calls
+observed31exit0+1CLInegativeexit1. Source/class/reader closure and public copies exact.
+
+R1 compile FAIL,19errors from one omitted test Attempt holder. Root/static leaf
+review missed it. Original canary30208B/8750a6044193ed91ef1ffef42a7af608bb9f1b105f40dcae72dad512b7e52bb4,
+freeze/source/partialclass/diagnostics/exit1observed retained NOTPASS. Root added
+holder only, no target/fee/assertion/count change; post-fix bounded Source review
+and fresh R3/R4 artifacts/gates pass. No runtime new/regression test ran in R1.
+Controller donor-path text error fixed before execution; original draft preserved.
+Unnecessary declaration rg processed historical input-canary Source with no emitted
+content, no old81/Data/target invocation; footprint disclosed, not claimed unread.
+ProtectedUnread UNCERTIFIED remains. Root owns acceptance/publication; leaf review
+scopes Source only and actual compile omission limits are recorded honestly.
+
+SOURCE_FREEZE_R3 3a3e4390d062a67df9cfeb630d3927a446bea6e8ea03ce2b7d481a0499dd5bee;
+COMPILE_GATE_R3 a9701095f61563f8af48507c19be7696e218e08b0139925f5c6b0aabdae02f0f;
+NEW_GATE_R3 f5d2aa387566df28bac0602cfe4afe91102a884ed90824e49a807997b38d9681;
+SOURCE_FREEZE_R4 c051b57f4181ce55e616ea3564b968e24fd04dbfdffc131ee51864bb14fd545d;
+REGRESSION_GATE_R4 2dfb66a23d95fe9dae8dc3a59b7c60e245ac6cdebeaa285c8b16f381d36ec3c6.
+Strict staged whitespace initially FAILexit2: two-LF fragment's terminal blank.
+Corrected one-LF packet/emitter explicit separator retains exact Java and R2/R3
+class inventories; no whitespace suppression. R3 regression FAILexit1 after16
+successful calls: root omitted restoring the earlier-cleaned junction fixture.
+Verified exact owned target/sentinels, restored fixture; fresh R4 regression PASS
+against unchanged R3 classes. Partial R3 retained NOTPASS. CLEANUP_R4 PASS node-only.
+Private handle-bound caller NOT normal-host certification; successful isolated
+cleanup UNMEASURED, operation times separate. Ownedjunction removednode-only after
+exact target/tag check, target/sentinels unchanged, readonlyOSsymlink untouched.
+No new persistent process/listener; controlled build/failure artifacts retained.
+
+NEXT unstarted: actual factory/source/classpath and real entry-start authority,
+normal caller composition input->carrier->priced allowance/original->actualDTO/
+receipt/arms/metadata/export, then independent full semantic/host/lifecycle closure.
+No actual factory DATA or genuine use authorized by the stub proof. Normal holds
+and original->exactNULL/OBSERVE UNSPENT_GATED remain. All budgets90s/640groups/5s/
+32768pergroup/copy1048576/chunk4096/other caps,seeds/epochs/oracles unchanged.
+Full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,playable100=0,betaHELD;
+oldnormal20NOTREREAD. Production/GWT/Player N/A; electrical/population NOTRENEWED;
+CI NOTRUN/selfhostedrunner prerequisite. Prior N44Gmail1a1c9281742d378c and N42Gmail
+1a1c8dad71517f05 already sent once; no duplicate email for earlier/receipt commits.
+MainHEAD5f05b0059mods/6untracked,EHEADd9747229reportM,DesktopHEADe0c368857mods/
+89untracked/staged0 preserved. Old uncertain resources/failures below untouched.
+Never give agents full report; current prefix<=64KiB only. Continue roadmap;
+no routine user decision. Only intended paths staged/published after final review.
+
+# Historical checkpoint: N46 static factory bridge Source draft
+
+Active F codex/q100-terminal-only-20261107 HEAD07092dbbdd301ea9b9c543dd2657119985c6a51b,
+no upstream; normal target origin/codex/q100-physical-feasibility receipt SHA verified.
+N44implementation411aebe257079c9bac08d8d36e97da141b8f7481/receipt07092dbb and
+completionGmail1a1c9281742d378c already published/sent once. N42Gmail1a1c8dad71517f05
+also already sent; NO duplicates. N45 Source-only contract complete, pins below.
+
+N46 ACTIVE private OS-temp/tsj-q100-static-factory-bridge-r1-i05k36_j. Small scope:
+existing CurrentV2InputSetup gets fixed readCurrent entry: structural admission,
+fresh18, prepay1 fieldless Factory allocation, then unchanged shared readPrepared.
+Existing injected read retains fresh18 and same prepared body/debit. This factoring
+pays facade before allocation without disturbing pristine admission or duplicating
+validation. Four direct static delegates to fixed generated FQN; no map/state
+holder/clone/ledger/resolver. Shared1729B/c1aedc7431d3c56295c46163b091b5a401993c8ef644dcbc634bc7782be20ea2
+validation/copy/return body is byte-identical. Both normal Study holds unchanged.
+CurrentInput old22823B/d0e42cf2fd93657e2a086e4fff4e8b0111937b7d5c22899fac1107c1bf3b12e2
+readspan2120B/f7a1aa60b91fa0d52bb6a9a1e6b62f1dcded5bda7049cc0fc9972a6fe8c411bb
+becomes fragment3694B/3c485f2babc8a2c04ef9bc29e431f5e1595a9acb89a08fb817c24eba0caf0d2e.
+Candidate24397B/f1f2308ac9e33ccee4465ff6f3d1f6d0fd70de25cc0d8a00d9a3312cdd5f4a74.
+Eight Source tests PASS, no final-source build/native target test yet.
+
+Root owns target/transform/tests/contract/new NO_DATA ABI stub and acceptance;
+ownership_canary owns ONLY component/StaticFactoryBridgeCanary.java, Source-only,
+no execution/spawn/stage/publish. body_semantic_seam Source review confirms order,
+allocation1, preserved body and refusal math; class linking/loading before callback
+cannot be assumed from Source and requires actual selected JDK8 deny-profile test.
+Literal PRICE_EXPECTATIONS_R1 SHA7d1c3bde9622aa20a772b187bb0fc2eca80ab0b092c876c56d32ea9d1c74ad2d
+frozen before target: current dataJson throw652u/271copies/1chunk/open652; injected
+same stop651; wrongcontext88; malformedfirsthex21; wrongstart18; carrierfirst28;
+reentry670. No valid map returned and no successful input acceptance in profile.
+
+Explicit newly authored CohortTerminalTelemetryInputV2.NO_DATA.java.in is a finite
+test ABI stub only: primitive method counters, fixed headers, dataJson always
+throws NO_DATA_FIXTURE_STOP; no map/DATA/graph/validinput. Compile ONLY explicit
+no-data-source copy in task profile; original2actualDATA artifacts stay excluded
+before content access. Existing deny guards remain unchanged. New bridge canary
+may admit exactly this one pinned stub FQN in explicit positive-to-refusal profile;
+negative lazy profiles deny even it and require zero attempted loads. This is NOT
+real factory/source/classpath/host authority or permission to read actual DATA.
+No actual/fake OriginalArm, capture, graph, Session, owner work/credit or genuine.
+
+22retained Java Sources authenticated from N44freeze74dfce21..., plus candidate
+input owner+NO_DATAstub; new canary makes25-source final build. R44read-only
+2396CODEdeps retained,20oldinput/canaryCODE exclusions and original2DATA exclusions
+remain. A root declaration-pattern rg processed old CurrentV2InputSetupCanary.java
+and returned no Source content; no test/target/Data invocation. This unnecessary
+scan footprint is recorded in SOURCE_SCOPE_NOTE_R1; do not claim that file was
+unread/untouched in N46. No further historical canary access. Source reference
+search scripts/tests/contracts found no current helper caller. ProtectedUnread
+remains UNCERTIFIED; no certainty restored by this code-only scope.
+
+NEXT: finish native canary Source/static ledger, review/no unresolved blockers,
+prepare25-source controller and before-target freeze. Actual JDK8/javap must prove
+fieldless facade/no initializer/four invokestatic targets and sole explicit stub
+namespace class. Then finite bridge/copy/early-refusal tests plus fresh N44/carrier/
+940metadata/independentreaders/arguments gates; do not claim successful actual
+Factory or normal-host proof. No new publication/email until validated. Output
+Junction at this task's host-fixtures/junction exists, task-owned target empty;
+verify tag/target and remove node-only after gates, preserve sentinels/OSsymlink.
+No active native process/build yet, no new persistent process/listener.
+
+Genuine original->exactNULL/OBSERVE UNSPENT_GATED; main/assemble held. All budgets
+90s/640groups/5s/32768pergroup/copy1048576/chunk4096/other caps, seeds/epochs/oracles
+unchanged. Full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,playable100=0,betaHELD;
+oldnormal20NOTREREAD. Production/GWT/Player N/A; electrical/population NOTRENEWED;
+CI NOTRUN/selfhostedrunner prerequisite. Preserve unrelated MainHEAD5f05b0059mods/
+6untracked,EHEADd9747229reportM,DesktopHEADe0c368857mods/89untracked,staged0. F only
+local report afterreceipt; prior uncertain resources/failures below stay preserved.
+Never give agents full report; stream prefix<=64KiB only. No routine user decision.
+
+# Historical checkpoint: N44 published; N45 factory/caller Source preparation complete
+
+Active F codex/q100-terminal-only-20261107 HEAD07092dbbdd301ea9b9c543dd2657119985c6a51b,
+no upstream; target origin/codex/q100-physical-feasibility exact receipt SHA verified.
+N44 implementation411aebe257079c9bac08d8d36e97da141b8f7481 +receipt07092dbb normally
+pushed; completion Gmail1a1c9281742d378c sent once/acknowledged. NO duplicate or
+receipt email. N42 implementation3528d586/receiptad0d3a19/Gmail1a1c8dad71517f05
+already published/sent once too. Task continues; no routine decision needed.
+
+N44 finite capture allowance acceptance T/E capture-allowance-prepayment-r1;
+private OS-temp/tsj-q100-capture-allowance-prepayment-r1-q8aj8i9c. Begin30/read5/
+merge32 preserve original SetupResult and exact post-input carrier10/4/1/1 phase;
+same input+carrier copy base restores once. Source8/freshpublic8, final23JavaJDK8,
+281major51classes+2396CODEdeps/noshadows, handoffSMOKE1/7+SUITE20/65 and all retained
+carrier/mapping/940metadata/independentreaders/argument gates PASS; modes overlap.
+All30calls observed29exit0+1CLInegativeexit1, no nativefailure. One old unchecked
+warning retained.2factoryDATA excluded before access;20oldCODEclasses dropped
+before read(3current helper classes rebuilt,17old81-canary offclasspath/unrun).
+ActualMeter synthetic snapshots/budget credit only, no actual/fake OriginalArm/
+ownerwork/graph/Session. Positive captureWithSetup UNRUN; foreignParent guard only.
+Input freshness negative Factorycalls0. Final current helper/interface javap has
+no static initializer. Exact Source/class/reader closure and public code copies
+verified; controls do not qualify normal host/origin/actual full result.
+Two draft coverage gaps fixed before compile/native; rawdraft preserved. Worker
+Source excerpt over-read lines1-230 of currentInputhelper disclosed, no DATA or
+Factory implementation read/invoked. Scope limitation retained; protectedUnread
+UNCERTIFIED. Ownedjunction removed node-only,target/sentinels unchanged, readonly
+OSsymlink untouched. No new persistent process/listener; controlled artifacts kept.
+Receipt doc generic anchor failed after two writes, diagnosed2matches; verified
+partial writes and scoped anchor correction, no duplicate append/email or code/gate
+change. Private RECEIPT_DOC_CORRECTION_R1.json retains that routine failure.
+
+N45 necessary Source-only factory/caller preparation complete, NO new target build/
+test/Factory/producer/genuine execution, publication or email. Private OS-temp/
+tsj-q100-factory-caller-binding-r1-fuziizzs. SourceFindingsR1
+86383a916b99f8464e54fe087c9b5a72a87f7905f7bf30829596b07fe4cad0f2;
+SourceSelectionR1 e28433d859f70328a4b548178452ec0303bd607c4f51a72eadf1a7b51eab618a;
+BindingContractR1 7cffb8811874873ed4d6a767119c691745dcf084aace7778a7590d77c4c28bf7.
+Selected current general context_codec emitter and current Arguments/Parent code
+only, no actual generated DATA/oldD/wholehistoricalconsumer/builder/reporthistory.
+Emitter fixes com.lushprojects.circuitjs1.client.CohortTerminalTelemetryInputV2,
+four STATIC schemaTag/contextSha256/dataEntries/dataJson, private constructor,
+no static fields/initializer in emitted Source; fresh Map/List only in dataJson.
+CurrentInputSetup.Factory expects INSTANCE methods: direct binding unavailable.
+Smallest next seam is fieldless typed instance facade in existing input owner,
+delegating those four static calls; no clone/holder/ledger/generic resolver.
+Header shape/value equality does not authenticate code/source/classpath/context/
+PAD/clock origin or exclusive stable map/output path. One true entry start/Meter
+must flow freshread->carrier->priced allowance/original->actualDTO/receipt/arms/
+metadata/export. Both normal entrypoints remain held. Bounded Source-only leaf
+reviews confirm ABI/init facts and authority limits, no leaf execution.
+
+NEXT UNSTARTED: define/price fixed factory binding inside existing input owner,
+explicit fieldless facade/control allocation contract and exact Source transform.
+Any finite no-DATA stub profile must be newly authored, explicit/pinned and distinct
+from forbidden actual DATA; retain denies, no counterfeit valid-input/original
+acceptance. Test actual selected implementation/lazy delegation/early refusal and
+final class initializer/layout before real factory use. Full caller/DTO/receipt/
+semantic/host/lifecycle gates still precede genuine original->exactNULL/OBSERVE.
+No genuine envelope spent. All budgets90s/640groups/5s/32768pergroup/copy1048576/
+chunk4096/other caps, seeds/epochs/oracles unchanged. Full30EXCLUDED,HARD/PSYCHOTIC
+unavailable/unrun,playable100=0,betaHELD,oldnormal20NOTREREAD. Production/GWT/Player
+N/A; electrical/population NOTRENEWED; CI NOTRUN/selfhostedrunner prerequisite.
+
+Worktree audit before this local checkpoint: F clean/staged0; MainHEAD5f05b005
+9trackedM/6individualuntracked,EHEADd9747229reportM,DesktopHEADe0c368857trackedM/
+89individualuntracked,staged0 preserved. F local report only after receipt. Prior
+uncertain browser/preview/D resources, hardlinks/scratch/failure evidence remain
+below; none terminated. Never give agents full report; stream prefix<=64KiB only.
+
+# Historical checkpoint: N44 capture allowance handoff accepted
 
 Active F codex/q100-terminal-only-20261107, no upstream; normal target
 origin/codex/q100-physical-feasibility. Parent HEADad0d3a195792837e553d111b04dfc49901c367eb.

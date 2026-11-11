@@ -20,12 +20,44 @@ final class CurrentV2InputSetup {
 
     private CurrentV2InputSetup() { }
 
+    /** Fixed current static producer; no retained projection or second data holder. */
+    static CohortTerminalTelemetryStudy.SetupResult readCurrent(
+            CohortTerminalTelemetryStudy.SetupMeter m, long producerStarted,
+            String expectedContextSha) throws Exception {
+        if (m == null || m.parent == null || m.meter == null ||
+                expectedContextSha == null) fail("ARGUMENTS");
+        fresh(m, producerStarted);
+        m.charge(1); // before this fieldless Factory facade allocation
+        Factory factory = new Factory() {
+            public String schemaTag() throws Exception {
+                return CohortTerminalTelemetryInputV2.schemaTag();
+            }
+            public String contextSha256() throws Exception {
+                return CohortTerminalTelemetryInputV2.contextSha256();
+            }
+            public int dataEntries() throws Exception {
+                return CohortTerminalTelemetryInputV2.dataEntries();
+            }
+            public Map<String,Object> dataJson() throws Exception {
+                return CohortTerminalTelemetryInputV2.dataJson();
+            }
+        };
+        return readPrepared(m, expectedContextSha, factory);
+    }
+
     static CohortTerminalTelemetryStudy.SetupResult read(
             CohortTerminalTelemetryStudy.SetupMeter m, long producerStarted,
             String expectedContextSha, Factory factory) throws Exception {
         if (m == null || m.parent == null || m.meter == null ||
                 expectedContextSha == null || factory == null) fail("ARGUMENTS");
         fresh(m, producerStarted);
+        return readPrepared(m, expectedContextSha, factory);
+    }
+
+    /** Both callers admit arguments and freshness before entering this shared body. */
+    private static CohortTerminalTelemetryStudy.SetupResult readPrepared(
+            CohortTerminalTelemetryStudy.SetupMeter m, String expectedContextSha,
+            Factory factory) throws Exception {
         m.charge(1);
         int length = expectedContextSha.length();
         if (length != 64) fail("CONTEXT_SHA");

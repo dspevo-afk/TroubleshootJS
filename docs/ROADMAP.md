@@ -1979,6 +1979,21 @@ Implementation `411aebe257079c9bac08d8d36e97da141b8f7481` normally pushed to
 origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail `1a1c9281742d378c` sent once; no second email for this receipt.
 
+The [fixed static factory bridge](task-evidence/Q100/static-factory-bridge-r1/README.md)
+is locally accepted for its explicit no-DATA profile. CurrentV2InputSetup admits
+freshness, pays one facade allocation and binds four static producer APIs without
+new map/state/ledger. Eight Source tests, final25-Source JDK8 R3 build, bridge
+SMOKE1/6+SUITE10/53, retained handoff/carrier/mapping modes,940 metadata cases/
+independent readers and argument controls pass. Initial compile FAILED from a
+missing test holder; failure preserved, holder fixed with no target/fee/assertion
+change before final gates. Whitespace exit2 and missing-junction R3 failure
+remain preserved; the packet separator is explicit and fresh R4 regression passes.
+A scoped static-to-instance binding and refusal
+prove neither real DATA/source/host authority nor a successful input map. Next
+is normal caller authority/composition through actual DTO/receipt/semantic/host/
+lifecycle. Holds/budgets/seeds/epochs/oracles unchanged; full30EXCLUDED,
+HARD/PSYCHOTIC unavailable/unrun,playable100=0,betaHELD.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

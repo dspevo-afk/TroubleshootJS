@@ -1,0 +1,26 @@
+package com.lushprojects.circuitjs1.client;
+
+import java.io.IOException;
+import java.util.Map;
+
+/** Explicit test-only ABI stub. No projection, DATA bank, graph or valid input. */
+public final class CohortTerminalTelemetryInputV2 {
+    static int schemaCalls, contextCalls, entryCalls, dataCalls;
+    private CohortTerminalTelemetryInputV2() { }
+    public static String schemaTag() {
+        schemaCalls++;
+        return "tsj-cohort-terminal-input-context-v2";
+    }
+    public static String contextSha256() {
+        contextCalls++;
+        return "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc";
+    }
+    public static int dataEntries() {
+        entryCalls++;
+        return 271;
+    }
+    public static Map<String,Object> dataJson() throws Exception {
+        dataCalls++;
+        throw new IOException("NO_DATA_FIXTURE_STOP");
+    }
+}

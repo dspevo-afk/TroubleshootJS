@@ -1,0 +1,11 @@
+{
+  "status": "EXACT_PREPARED_BODY_AND_NONSPAN_SOURCE",
+  "oldOwnerSha256": "d0e42cf2fd93657e2a086e4fff4e8b0111937b7d5c22899fac1107c1bf3b12e2",
+  "newOwnerSha256": "f1f2308ac9e33ccee4465ff6f3d1f6d0fd70de25cc0d8a00d9a3312cdd5f4a74",
+  "sharedBody": {
+    "bytes": 1729,
+    "sha256": "c1aedc7431d3c56295c46163b091b5a401993c8ef644dcbc634bc7782be20ea2"
+  },
+  "sourceConservationTests": 8,
+  "fullPositiveInputQualification": "NOT_RENEWED"
+}

@@ -1,0 +1,46 @@
+{
+  "status": "PASS_EXACT_COMPILED_OR_FROZEN_SOURCE_COPIES",
+  "files": [
+    {
+      "path": "CohortTerminalTelemetryInputV2.NO_DATA.java.in",
+      "bytes": 862,
+      "sha256": "14182207c6126d8d0ec936ae4985e2fb57343e10d4c1d32024ac4b9d46d291b3"
+    },
+    {
+      "path": "CONTRACT_R1.md",
+      "bytes": 4168,
+      "sha256": "ae55329f9f8f4b6fdcaa41eb4024b4644d7d4f713022151b937c8cd0a923b8aa"
+    },
+    {
+      "path": "derive_static_factory_bridge.py",
+      "bytes": 1303,
+      "sha256": "c26b381b32333c484371b5ea47034d3f71a27f5472b7403df75d40529cb6e9b1"
+    },
+    {
+      "path": "PRICE_EXPECTATIONS_R1.json",
+      "bytes": 1849,
+      "sha256": "7d1c3bde9622aa20a772b187bb0fc2eca80ab0b092c876c56d32ea9d1c74ad2d"
+    },
+    {
+      "path": "StaticFactoryBridge.java.fragment",
+      "bytes": 3693,
+      "sha256": "eccbf026d9d9e449239206580ca7eddaefb1e6e2c2a39ec28b5053e23718deb4"
+    },
+    {
+      "path": "StaticFactoryBridgeCanary.java",
+      "bytes": 30446,
+      "sha256": "a241545745350f5ebe2ff4aaa157b60b5e6ff47834471fab08b2d1d0b9a06027"
+    },
+    {
+      "path": "test_static_factory_source.py",
+      "bytes": 4168,
+      "sha256": "2b506d4bdce11f7030bfda10d011b818f02f1485e34b939d22255222c34199b7"
+    }
+  ],
+  "owner": {
+    "bytes": 24397,
+    "sha256": "f1f2308ac9e33ccee4465ff6f3d1f6d0fd70de25cc0d8a00d9a3312cdd5f4a74"
+  },
+  "scope": "Compiled current owner/canary/stub and exact frozen fragment/transform/test/contract/literal files; relocation changes no native inputs.",
+  "sourcePacket": "R3_ONE_TERMINAL_LF_EXPLICIT_SEPARATOR_FINAL_JAVA_IDENTICAL"
+}

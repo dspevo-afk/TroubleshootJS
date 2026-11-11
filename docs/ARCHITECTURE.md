@@ -481,6 +481,15 @@ Actual-Meter synthetic fixtures qualify counter transitions and refusals; positi
 actual capture, input/original identity authority and host/lifecycle remain held.
 No new ledger/carrier/schema or normal entrypoint is introduced.
 
+The [fixed factory bridge](task-evidence/Q100/static-factory-bridge-r1/README.md)
+adds readCurrent inside CurrentV2InputSetup. After fresh18 it prepays one fieldless
+facade allocation; four instance callbacks delegate to the fixed generated static
+ABI. Existing injected read and readCurrent share the exact prepared body, with
+no duplicate validation or map holder. Selected JDK8 no-DATA profiles qualify
+typed dispatch, layout and early class-loading/refusal order only. Actual producer
+DATA, source/classpath authority, valid input and normal caller remain separate;
+both Study entrypoints and genuine execution stay held.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published

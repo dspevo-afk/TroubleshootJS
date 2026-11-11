@@ -1,0 +1,9 @@
+{
+  "status": "SOURCE_REFERENCE_SEARCH_FOOTPRINT_DISCLOSED",
+  "currentCallerSearch": "rg CurrentV2InputSetup in scripts and tests/contracts had no matches.",
+  "historicalCanaryScan": "An unnecessary declaration-pattern rg processed CurrentV2InputSetupCanary.java and emitted no matching Source content; no whole content was printed/interpreted.",
+  "factoryDataOrTargetReadInvoked": false,
+  "old81Run": false,
+  "protectedUnread": "UNCERTIFIED_UNCHANGED",
+  "next": "Do not inspect that canary further or claim it was untouched/unread in N46; keep original DATA artifacts excluded."
+}
