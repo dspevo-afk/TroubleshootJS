@@ -61,4 +61,7 @@ product seeds/epochs/order and all existing budgets remain. Production Java/GWT/
 visible Player N/A; electrical/population NOT RENEWED; CI NOT RUN/self-hosted runner
 prerequisite. Main/E/Desktop work, previous failures and uncertain resources stay
 preserved. Next unstarted N64: freeze the trusted current CODE compile composition
-and its remaining explicit policy/provenance gates. Publication pending.
+and its remaining explicit policy/provenance gates.
+Implementation `17a776513b674b00830e555f59ba96402224834a` (Retain native source and tool observation identities)
+normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
+Completion Gmail `1a1ce9981c71ccd7` sent once; this receipt sends no second email.

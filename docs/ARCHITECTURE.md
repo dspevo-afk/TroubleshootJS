@@ -539,6 +539,9 @@ optionally returns the original observer Source/tool identity-token maps for the
 trusted caller's later existing recheck. Default facts remain unchanged. These
 immutable projected tuples retain no bodies/handles and grant no persisted or
 launch authority; caller authentication and exclusive lifetime remain required.
+Implementation `17a776513b674b00830e555f59ba96402224834a` (Retain native source and tool observation identities)
+normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
+Completion Gmail `1a1ce9981c71ccd7` sent once; this receipt sends no second email.
 
 The [fixed CODE class inventory](task-evidence/Q100/current-native-host-r1/CLASS_INVENTORY_R3.md)
 owns declared141/2396 fresh/inherited closure policy for the current flat client

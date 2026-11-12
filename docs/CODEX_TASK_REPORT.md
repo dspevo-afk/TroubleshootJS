@@ -1,10 +1,14 @@
-# Current checkpoint: N63 identity continuation accepted locally
+# Current checkpoint: N63 identity continuation published
 
 Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
 codex/q100-terminal-only-20261107; parent/currentHEAD0899ec12fc1a5add99707c640dd4c0d202f46c6b,
 no upstream, normal target origin/codex/q100-physical-feasibility. N62impl350da0cc/
-receipt0899ec12 remotely verified, Gmail1a1ce6aee6bc5b96 once. N63 implementation/
-publication/email pending. R63 OS-temp/tsj-q100-native-identity-continuation-r1-wxdjj4ok, frozen SCOPE_R1/BASELINE_R1.
+receipt0899ec12 remotely verified, Gmail1a1ce6aee6bc5b96 once. N63 implementation
+17a776513b674b00830e555f59ba96402224834a (Retain native source and tool observation identities)
+normally pushed/exactremoteverified, Gmail1a1ce9981c71ccd7 once. Index9 PASS
+2bf6ed34a402b9a89a36ba19f9e7e7f7206b52dab7bf378a67bf67caad190d33.
+Current HEAD17a776513b674b00830e555f59ba96402224834a; documentation-only receipt pending.
+Source-bound consumed inputs rechecked; no second completion email. R63 OS-temp/tsj-q100-native-identity-continuation-r1-wxdjj4ok, frozen SCOPE_R1/BASELINE_R1.
 
 Existing native byte-facts owner optional strictboolinclude_identity_tokens=False;
 default exactsourceFacts/toolFacts unchanged. True exposes freshsourceTokens/
