@@ -1,10 +1,12 @@
-# Current checkpoint: N65 expected CODE entrypoint refusal validated locally
+# Current checkpoint: N65 expected CODE entrypoint refusal published
 
 Writer F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
-codex/q100-terminal-only-20261107, HEAD9704a4ad920ae4a7ef93596e69fae1a41f243dd6,
+codex/q100-terminal-only-20261107, parent9704a4ad920ae4a7ef93596e69fae1a41f243dd6,
 no upstream; normal target origin/codex/q100-physical-feasibility. N64 implementation
 e7dcb264/receipt9704a4ad remotely verified; Gmail1a1cede273b4173f once.
-N65 final-source gates PASS; commit/push/Gmail pending, not yet published.
+N65 implementation 4830738cf0468cf7d180b8c118164aad0ac0c23f normally pushed/exact remote
+verified; Gmail1a1cf103fbd84d7e once. Final index9 PASS ef598928979dd81cba9c0fa15be77f095d30ea3e8d06562463bfd5cae1893efe.
+Current implementation HEAD4830738cf0468cf7d180b8c118164aad0ac0c23f; documentation receipt pending.
 Private R65 OS-temp/tsj-q100-held-native-dispatch-r1-a992e1f49f98 (SCOPE_R1,
 phase source freezes/configs, original process receipts, raw results and audits).
 
@@ -34,7 +36,11 @@ fixed before first Held execution. Root removed invented classpath role-basename
 constraints before first gate; pre-fix PS retained. Final scoped review no blocker;
 all leaves source-only. Root owns actual gates/audits. Evidence-builder privacy
 guard initially FAIL on ProcessRoot; private pre-fix source/projection retained,
-corrected projection PASS under unchanged guard. Report-builder wrong hand count203 rejected/corrected to actual pinned205; pre-fix source retained. No tested source/oracle changed.
+corrected projection PASS under unchanged guard. Report-builder wrong hand count203
+rejected/corrected to actual pinned205; pre-fix source retained. No tested
+source/oracle changed. Final index privacy audit initially overbroad across old
+documentation; final audit checks added content/full new evidence and conserves
+opaque history. Pre-fix audit retained; no new personal absolute paths published.
 
 Manifest f9b1bd5de22a304aa8f4b7844be3dc5c31bd80c01af85a442a864ca083808a29;
 proof 8b1ea4939d0ae379a243f4fc2c2b2013f9cc1b344a9c57c0638e9c76305348a4. All18 Source/tool/JAR/config inputs rechecked, independent CODE metadata

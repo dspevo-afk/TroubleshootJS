@@ -47,7 +47,9 @@ all before the first held execution. Final bounded source review found no blocke
 leaf reviews ran no processes. A public-evidence privacy guard initially failed
 because the native ProcessRoot was included; the private pre-fix projection and
 builder remain preserved. The final projection removes that path and passes the
-unchanged guard. A report-builder guard also rejected an incorrect hand count of 203; the exact captured trace is 205 bytes. The pre-fix builder remains private. Neither correction changed tested code or its oracle.
+unchanged guard. A report-builder guard also rejected an incorrect hand count
+of 203; the exact captured trace is 205 bytes. The pre-fix builder remains private.
+Neither correction changed tested code or its oracle.
 
 The query-only resource audit covers 16 known recorded identities (four Python
 outers, eight PS outers, four native selected-tool leases); original exit receipts
@@ -71,3 +73,7 @@ identity boundary for a real upstream return. The synthetic output canary does
 not call qualify(), and three development seeds do not by themselves authorize
 the qualifier's 20-role input bundle. No fake PASS or prior token substitutes.
 Explicit normal role policy and full semantic/receipt/lifecycle closure remain.
+
+Implementation `4830738cf0468cf7d180b8c118164aad0ac0c23f` (Verify held CODE entrypoint through native containment)
+normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
+Completion Gmail `1a1cf103fbd84d7e` sent once; this receipt sends no second email.

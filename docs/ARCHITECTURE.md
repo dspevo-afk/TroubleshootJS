@@ -667,6 +667,10 @@ expected refusal. Both Study throws remain unchanged. Synthetic digest slots and
 argv echoes do not establish Java parsing, prior authority or normal admission;
 normal role policy, real upstream return and full lifecycle remain separate.
 
+Implementation `4830738cf0468cf7d180b8c118164aad0ac0c23f` (Verify held CODE entrypoint through native containment)
+normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
+Completion Gmail `1a1cf103fbd84d7e` sent once; this receipt sends no second email.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published
