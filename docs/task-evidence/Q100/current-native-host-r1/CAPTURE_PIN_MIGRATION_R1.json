@@ -1,0 +1,33 @@
+{
+  "moduleBytes": 1052681,
+  "moduleSha256": "2dd8a3b8b3d6cb5ce82fa8cc2c865d18a0ee998a1c0f87d4832b982ff0503e94",
+  "consumers": [
+    {
+      "path": "scripts/verify-rb100-branch-order-study.ps1",
+      "beforeBytes": 17687,
+      "beforeSha256": "04b62ad8f0a80cbe1080ec01cb122874061fee16b6487c25e537078af1cdde22",
+      "afterBytes": 17687,
+      "afterSha256": "7ee774dd823540aff8ec9681a87eee07b13c499cb2b614168236ffac7f7d1448",
+      "scope": "EXACT_CURRENT_MODULE_PIN_AND_SIZE_ONLY"
+    },
+    {
+      "path": "tests/contracts/VerifierBoundedProcessContract.ps1",
+      "beforeBytes": 12502,
+      "beforeSha256": "709cc47843f5cb6eb9b026d191d6bcba1cb31613b089baa885c2d79a27b9d0e2",
+      "afterBytes": 12502,
+      "afterSha256": "43ad133840a6a476cba84b0078186d351a9329bd2163e6b204e0ec4c1797ea25",
+      "scope": "EXACT_CURRENT_MODULE_PIN_AND_SIZE_ONLY"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/normal-prior-caller-r1/qualify_prior.py",
+      "beforeBytes": 74051,
+      "beforeSha256": "0412b1c02c5de427b14738f493201b8adeb002753d372946b31fe9994b78c267",
+      "afterBytes": 74051,
+      "afterSha256": "9ca38d3be1a9144fdb83316f0c328c7794df5a1f41251d9132798ee9abb1e3aa",
+      "scope": "EXACT_CURRENT_MODULE_PIN_AND_SIZE_ONLY"
+    }
+  ],
+  "qualifierFunctionsAstUnchanged": true,
+  "oldPS60c9PinUnchanged": true,
+  "actualQualifierHarness": "NOT_RUN"
+}

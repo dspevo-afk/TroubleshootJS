@@ -548,9 +548,20 @@ exercises the unchanged shared Windows process owner with a pinned CODE-only
 kernel witness. It compares argv, image/PID/start identity, streams, exit0/7,
 real timeout and cleanup, plus exact malformed-request guards. Selected PS5.1
 builtin modules are child-local; old qualifier tool pins remain unchanged.
-This is standalone finite test evidence, not a native coordinator: the owner
-still has unbounded stream capture, no cancellation and no descendant proof.
-Normal transport, full tool closure and genuine execution remain gated.
+This recorded default path remains standalone finite evidence with unbounded
+capture and direct-child cleanup. Normal transport, full tool closure and genuine
+execution remain gated.
+
+The [opt-in byte capture mode](task-evidence/Q100/current-native-host-r1/CAPTURE_R1.md)
+extends that same process owner with mandatory explicit per-stream caps and a
+typed cancellation token. Private reader lanes retain bounded raw prefixes,
+detect the first excess byte, then use the original direct-child stop and log
+owners. Cleanup drains/discards under the existing bound; partial evidence is
+attempted even on cleanup failure. Typed facts separate observed, retained and
+discarded bytes plus operation/cleanup clocks. Final settlement checks prevent
+late cancellation/deadline overrun from becoming success. Legacy callers omit
+the new options. No native stream policy or descendant authority is established;
+the browser-specific suspended/job owner remains the next integration boundary.
 
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before

@@ -2109,6 +2109,20 @@ origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail `1a1cce57a7fff998` sent once; this receipt sends no second email.
 
 
+The [opt-in bounded process capture prerequisite](task-evidence/Q100/current-native-host-r1/CAPTURE_R1.md)
+is locally accepted: explicit per-stream byte caps, cooperative cancellation,
+bounded failure prefixes and separate operation/cleanup evidence through the
+existing owner. Final Smoke2, Suite30 **CODE process cases**, legacy16, selected
+JDK tool3 and rapid near-exit32 pass. The excluded30 normal MEDIUM cases remain
+excluded. An earlier missing-evidence FAIL is preserved; independent prefix
+retention and controlled cleanup/settlement regressions qualify the fix without
+claiming the original trigger was recovered. Original outside-owner bytes are
+conserved under explicit CRLF checkout policy; current pins migrate only.
+Normal holds/genuine gate remain closed, playable100=0 and beta HELD. Next is
+pre-escape descendant containment through the existing job owner, then explicit
+native stream policy and trusted compile/launch/real-return composition.
+
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

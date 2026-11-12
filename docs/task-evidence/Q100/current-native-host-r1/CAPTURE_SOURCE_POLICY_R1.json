@@ -1,0 +1,13 @@
+{
+  "status": "EXACT_OUTSIDE_OWNER_BYTE_CONSERVATION",
+  "originalBytes": 1040144,
+  "originalSha256": "fb07ad540e22a225a11b8a12e9dc8e5a20d88f58f89cf32a5fd347613530954c",
+  "workingBytes": 1052681,
+  "workingSha256": "2dd8a3b8b3d6cb5ce82fa8cc2c865d18a0ee998a1c0f87d4832b982ff0503e94",
+  "gitCanonicalBytes": 1034546,
+  "gitCanonicalSha256": "826b3c47ed8c17c357456f847852f5d6a0eeb64f4d97864cb554056d561fbe7f",
+  "attribute": "scripts/VerifierIsolation.psm1 text eol=crlf",
+  "prefixRawSha256": "2593722b4c11f5f14c325411c091edd0d6a9160560393b6bdeecdf782b429d4e",
+  "suffixRawSha256": "e684f18b883431e4661ea2f3b98922633e6306f46a7e08b1a7a2be1b35f1a1a8",
+  "reason": "Preserve existing here-string bytes outside owned function and give checkout a deterministic CRLF policy"
+}

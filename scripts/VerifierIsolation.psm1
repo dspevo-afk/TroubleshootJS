@@ -1187,8 +1187,134 @@ function Stop-VerifierBoundedProcessExactly($Process, $ExpectedStartTicks,
     }
 }
 
+function New-VerifierBoundedCaptureState($Process, $StdoutLimit, $StderrLimit) {
+    $lanes = @()
+    foreach ($spec in @(@('stdout', $Process.StandardOutput, $StdoutLimit),
+                        @('stderr', $Process.StandardError, $StderrLimit))) {
+        $lanes += [pscustomobject]@{
+            Name = $spec[0]; Stream = $spec[1].BaseStream
+            Encoding = $spec[1].CurrentEncoding; Limit = [long]$spec[2]
+            Bytes = [IO.MemoryStream]::new(); Buffer = [byte[]]::new(4096)
+            Task = $null; Eof = $false; Observed = 0L; Discarded = 0L
+        }
+    }
+    return [pscustomobject]@{ Lanes = $lanes; FailureKind = ''; ReadersClosed = $false }
+}
+
+function Receive-VerifierBoundedCapture($Process, $State, $Watch,
+        $TimeoutMilliseconds, $CancellationToken) {
+    while ($true) {
+        if ($CancellationToken.IsCancellationRequested) {
+            $State.FailureKind = 'CANCELLED'
+            Throw-VerifierInfrastructure 'Bounded process capture cancelled.'
+        }
+        $progress = $false
+        foreach ($lane in $State.Lanes) {
+            if ($lane.Eof) { continue }
+            if ($null -eq $lane.Task) {
+                # One sentinel byte distinguishes exact-cap EOF from excess.
+                $request = [int][Math]::Min(4096L, $lane.Limit - $lane.Bytes.Length + 1L)
+                $lane.Task = $lane.Stream.ReadAsync($lane.Buffer, 0, $request)
+            }
+            if (-not $lane.Task.IsCompleted) { continue }
+            $count = $lane.Task.GetAwaiter().GetResult()
+            $lane.Task.Dispose()
+            $lane.Task = $null
+            $lane.Observed += $count
+            $remaining = $lane.Limit - $lane.Bytes.Length
+            $retain = [int][Math]::Min([long]$count, $remaining)
+            if ($retain -gt 0) { $lane.Bytes.Write($lane.Buffer, 0, $retain) }
+            if ($count -gt $remaining) {
+                $State.FailureKind = 'OUTPUT_LIMIT'
+                Throw-VerifierInfrastructure ('Bounded process exceeded ' + $lane.Name +
+                    ' byte limit=' + $lane.Limit + '.')
+            }
+            if ($count -eq 0) { $lane.Eof = $true }
+            $progress = $true
+        }
+        $Process.Refresh()
+        if ($Watch.Elapsed.TotalMilliseconds -ge $TimeoutMilliseconds) {
+            $State.FailureKind = 'TIMEOUT'
+            Throw-VerifierInfrastructure "Bounded process exceeded ${TimeoutMilliseconds}ms during byte capture."
+        }
+        if ($Process.HasExited -and $State.Lanes[0].Eof -and $State.Lanes[1].Eof) {
+            [void]$Process.WaitForExit(0)
+            return
+        }
+        if (-not $progress) { [Threading.Thread]::Sleep(2) }
+    }
+}
+
+function Close-VerifierBoundedCapture($State) {
+    # The caller must first prove direct-child exit through its original handle.
+    # Continue both pipes while discarding, never accumulating past either cap.
+    $drain = [Diagnostics.Stopwatch]::StartNew()
+    try {
+        while (-not ($State.Lanes[0].Eof -and $State.Lanes[1].Eof)) {
+            $progress = $false
+            foreach ($lane in $State.Lanes) {
+                if ($lane.Eof) { continue }
+                if ($null -eq $lane.Task) {
+                    $lane.Task = $lane.Stream.ReadAsync($lane.Buffer, 0, 4096)
+                }
+                if (-not $lane.Task.IsCompleted) { continue }
+                $count = $lane.Task.GetAwaiter().GetResult()
+                $lane.Task.Dispose()
+                $lane.Task = $null
+                $lane.Discarded += $count
+                if ($count -eq 0) { $lane.Eof = $true }
+                $progress = $true
+            }
+            if ($drain.Elapsed.TotalMilliseconds -ge 5000) {
+                Throw-VerifierInfrastructure 'Bounded capture readers did not drain within 5000ms.'
+            }
+            if ($State.Lanes[0].Eof -and $State.Lanes[1].Eof) { break }
+            if (-not $progress) { [Threading.Thread]::Sleep(2) }
+        }
+    } finally {
+        $closeFailure = $null
+        foreach ($lane in $State.Lanes) {
+            try { $lane.Stream.Close() } catch { $closeFailure = $_ }
+        }
+        $State.ReadersClosed = ($null -eq $closeFailure)
+        if ($null -ne $closeFailure) { throw $closeFailure }
+    }
+    foreach ($lane in $State.Lanes) {
+        if ($null -ne $lane.Task -and -not $lane.Task.IsCompleted) {
+            Throw-VerifierInfrastructure 'Bounded capture retained a non-terminal reader task.'
+        }
+    }
+}
+
+function Get-VerifierBoundedCaptureFacts($State, $ProcessId, $StartTicks) {
+    $facts = [ordered]@{
+        ProcessId = $ProcessId; StartTicks = $StartTicks
+        CaptureFailureKind = $State.FailureKind
+        ReaderTasksTerminal = $true; ReadersClosed = $State.ReadersClosed
+        FailureLogsRetained = $false
+        OperationMilliseconds = 0.0; CleanupMilliseconds = 0.0; CleanupProven = $false
+    }
+    for ($i = 0; $i -lt 2; $i++) {
+        $lane = $State.Lanes[$i]
+        $name = @('Stdout', 'Stderr')[$i]
+        $raw = $lane.Bytes.ToArray()
+        $hash = [Security.Cryptography.SHA256]::Create()
+        try { $digest = ([BitConverter]::ToString($hash.ComputeHash($raw))).Replace('-', '').ToLowerInvariant() }
+        finally { $hash.Dispose() }
+        $facts[$name + 'ByteCount'] = $raw.Length
+        $facts[$name + 'ObservedBytes'] = $lane.Observed
+        $facts[$name + 'DiscardedDuringCleanup'] = $lane.Discarded
+        $facts[$name + 'Sha256'] = $digest
+        if ($null -ne $lane.Task -and -not $lane.Task.IsCompleted) {
+            $facts.ReaderTasksTerminal = $false
+        }
+    }
+    return [pscustomobject]$facts
+}
+
 function Invoke-VerifierBoundedProcess($FilePath, $Arguments,
-        $TimeoutMilliseconds = 5000) {
+        $TimeoutMilliseconds = 5000, $MaxStdoutBytes = $null,
+        $MaxStderrBytes = $null, $CancellationToken = [Threading.CancellationToken]::None) {
     $invocation = Assert-VerifierProcessInvocationBoundary $FilePath $Arguments
     # This is the raw caller boundary.  Validate the timeout before creating
     # its log directory or starting the child; PowerShell must not coerce a
@@ -1197,6 +1323,27 @@ function Invoke-VerifierBoundedProcess($FilePath, $Arguments,
         Throw-VerifierInfrastructure 'A bounded process timeout must be one exact positive integral scalar.'
     }
     $TimeoutMilliseconds = [int]$TimeoutMilliseconds
+    $byteCapture = $PSBoundParameters.ContainsKey('MaxStdoutBytes') -or
+        $PSBoundParameters.ContainsKey('MaxStderrBytes') -or
+        $PSBoundParameters.ContainsKey('CancellationToken')
+    $operationWatch = $null
+    if ($byteCapture) {
+        if (-not $PSBoundParameters.ContainsKey('MaxStdoutBytes') -or
+                -not $PSBoundParameters.ContainsKey('MaxStderrBytes')) {
+            Throw-VerifierInfrastructure 'Bounded capture requires explicit stdout and stderr byte limits.'
+        }
+        if (-not (Test-VerifierStrictIntegralValue $MaxStdoutBytes 1 ([int]::MaxValue)) -or
+                -not (Test-VerifierStrictIntegralValue $MaxStderrBytes 1 ([int]::MaxValue))) {
+            Throw-VerifierInfrastructure 'Bounded capture byte limits must be exact positive integral scalars.'
+        }
+        if ($null -eq $CancellationToken -or $CancellationToken.GetType() -ne [Threading.CancellationToken]) {
+            Throw-VerifierInfrastructure 'Bounded capture cancellation must be one exact CancellationToken.'
+        }
+        if ($CancellationToken.IsCancellationRequested) {
+            Throw-VerifierInfrastructure 'Bounded process capture cancelled before process start.'
+        }
+        $operationWatch = [Diagnostics.Stopwatch]::StartNew()
+    }
     $processRoot = Join-Path ([IO.Path]::GetTempPath()) `
         ('TroubleshootJS\verify-process-' + [Guid]::NewGuid().ToString('N'))
     $stdoutLog = Join-Path $processRoot 'stdout.log'
@@ -1206,6 +1353,11 @@ function Invoke-VerifierBoundedProcess($FilePath, $Arguments,
     $terminationProven = $false
     $stdoutTask = $null
     $stderrTask = $null
+    $boundedCapture = $null
+    $boundedFacts = $null
+    $boundedLogsRetained = $false
+    $cleanupWatch = $null
+    $processId = 0
     try {
         New-Item -ItemType Directory -Path $processRoot -Force -ErrorAction Stop | Out-Null
         # Start-Process with redirected files does not reliably expose ExitCode
@@ -1230,39 +1382,66 @@ function Invoke-VerifierBoundedProcess($FilePath, $Arguments,
         # the gap, but the retained handle still exposes its positive exact
         # StartTime; no current-PID lookup or identity inference is allowed.
         $startTicks = Get-VerifierLaunchedProcessStartTicks $process
-        $stdoutTask = $process.StandardOutput.ReadToEndAsync()
-        $stderrTask = $process.StandardError.ReadToEndAsync()
+        if ($byteCapture) {
+            $boundedCapture = New-VerifierBoundedCaptureState $process $MaxStdoutBytes $MaxStderrBytes
+            Receive-VerifierBoundedCapture $process $boundedCapture $operationWatch $TimeoutMilliseconds $CancellationToken
+            Close-VerifierBoundedCapture $boundedCapture
+            $stdout = $boundedCapture.Lanes[0].Encoding.GetString($boundedCapture.Lanes[0].Bytes.ToArray())
+            $stderr = $boundedCapture.Lanes[1].Encoding.GetString($boundedCapture.Lanes[1].Bytes.ToArray())
+        } else {
+            $stdoutTask = $process.StandardOutput.ReadToEndAsync()
+            $stderrTask = $process.StandardError.ReadToEndAsync()
 
-        if (-not $process.WaitForExit($TimeoutMilliseconds)) {
-            Stop-VerifierBoundedProcessExactly $process $startTicks
-            $terminationProven = $true
-            Throw-VerifierInfrastructure "Bounded process '$FilePath' exceeded ${TimeoutMilliseconds}ms; logs retained at '$processRoot'."
+            if (-not $process.WaitForExit($TimeoutMilliseconds)) {
+                Stop-VerifierBoundedProcessExactly $process $startTicks
+                $terminationProven = $true
+                Throw-VerifierInfrastructure "Bounded process '$FilePath' exceeded ${TimeoutMilliseconds}ms; logs retained at '$processRoot'."
+            }
+            $process.Refresh()
+            if (-not [bool]$process.HasExited) {
+                Stop-VerifierBoundedProcessExactly $process $startTicks
+                $terminationProven = $true
+                Throw-VerifierInfrastructure "Bounded process '$FilePath' had an unproven exit after WaitForExit."
+            }
+            # Give both redirected streams a bounded drain interval before reading
+            # them, preventing deadlock while retaining complete diagnostics.
+            if (-not $stdoutTask.Wait(5000) -or -not $stderrTask.Wait(5000)) {
+                Throw-VerifierInfrastructure "Bounded process '$FilePath' output streams did not close within the bound."
+            }
+            $process.Refresh()
+            if (-not [bool]$process.HasExited) {
+                Throw-VerifierInfrastructure "Bounded process '$FilePath' became non-terminal during output drain."
+            }
+            $stdout = [string]$stdoutTask.Result
+            $stderr = [string]$stderrTask.Result
         }
-        $process.Refresh()
-        if (-not [bool]$process.HasExited) {
-            Stop-VerifierBoundedProcessExactly $process $startTicks
-            $terminationProven = $true
-            Throw-VerifierInfrastructure "Bounded process '$FilePath' had an unproven exit after WaitForExit."
+        if ($byteCapture) {
+            [IO.File]::WriteAllBytes($stdoutLog, $boundedCapture.Lanes[0].Bytes.ToArray())
+            [IO.File]::WriteAllBytes($stderrLog, $boundedCapture.Lanes[1].Bytes.ToArray())
+        } else {
+            [IO.File]::WriteAllText($stdoutLog, $stdout, [Text.UTF8Encoding]::new($false))
+            [IO.File]::WriteAllText($stderrLog, $stderr, [Text.UTF8Encoding]::new($false))
         }
-        # Give both redirected streams a bounded drain interval before reading
-        # them, preventing deadlock while retaining complete diagnostics.
-        if (-not $stdoutTask.Wait(5000) -or -not $stderrTask.Wait(5000)) {
-            Throw-VerifierInfrastructure "Bounded process '$FilePath' output streams did not close within the bound."
-        }
-        $process.Refresh()
-        if (-not [bool]$process.HasExited) {
-            Throw-VerifierInfrastructure "Bounded process '$FilePath' became non-terminal during output drain."
-        }
-        $stdout = [string]$stdoutTask.Result
-        $stderr = [string]$stderrTask.Result
-        [IO.File]::WriteAllText($stdoutLog, $stdout, [Text.UTF8Encoding]::new($false))
-        [IO.File]::WriteAllText($stderrLog, $stderr, [Text.UTF8Encoding]::new($false))
         $rawExitCode = $process.ExitCode
         if (-not (Test-VerifierStrictIntegralValue $rawExitCode `
                 ([int]::MinValue) ([int]::MaxValue))) {
             Throw-VerifierInfrastructure "Bounded process '$FilePath' did not expose an exact integral exit code."
         }
         $exitCode = [int]$rawExitCode
+        if ($byteCapture) {
+            $boundedFacts = Get-VerifierBoundedCaptureFacts $boundedCapture $processId $startTicks
+            if ($CancellationToken.IsCancellationRequested) {
+                $boundedCapture.FailureKind = 'CANCELLED'
+                Throw-VerifierInfrastructure 'Bounded process capture cancelled during settlement.'
+            }
+            if ($operationWatch.Elapsed.TotalMilliseconds -ge $TimeoutMilliseconds) {
+                $boundedCapture.FailureKind = 'TIMEOUT'
+                Throw-VerifierInfrastructure "Bounded process exceeded ${TimeoutMilliseconds}ms during capture settlement."
+            }
+            $operationWatch.Stop()
+            $boundedFacts.OperationMilliseconds = $operationWatch.Elapsed.TotalMilliseconds
+            $cleanupWatch = [Diagnostics.Stopwatch]::StartNew()
+        }
         $terminationProven = $true
         $result = [pscustomobject]@{
             FilePath = $FilePath
@@ -1295,11 +1474,23 @@ function Invoke-VerifierBoundedProcess($FilePath, $Arguments,
             Throw-VerifierInfrastructure ("Bounded process completed but its owned log root could not be removed: " +
                 (Get-VerifierErrorMessage $_) + ". Evidence retained at '$processRoot'.")
         }
+        if ($byteCapture) {
+            foreach ($lane in $boundedCapture.Lanes) { $lane.Bytes.Dispose() }
+            $cleanupWatch.Stop()
+            $boundedFacts.CleanupMilliseconds = $cleanupWatch.Elapsed.TotalMilliseconds
+            $boundedFacts.CleanupProven = $true
+            $result.PSObject.Properties.Add([Management.Automation.PSNoteProperty]::new('CaptureFacts', $boundedFacts))
+        }
         return $result
     } catch {
         $failureRecord = $_
         $failureMessage = Get-VerifierErrorMessage $failureRecord
         $cleanupFailure = $null
+        if ($byteCapture) {
+            $operationWatch.Stop()
+            if ($null -eq $cleanupWatch) { $cleanupWatch = [Diagnostics.Stopwatch]::StartNew() }
+        }
+        $boundedChildExited = $false
         if ($null -ne $process) {
             try {
                 $process.Refresh()
@@ -1320,6 +1511,7 @@ function Invoke-VerifierBoundedProcess($FilePath, $Arguments,
                 if ($null -ne $currentAfterFailure) {
                     Throw-VerifierInfrastructure "Bounded process '$FilePath' still had a current process identity during failure cleanup."
                 }
+                $boundedChildExited = $true
                 if ($stdoutTask -and $stderrTask) {
                     if (-not $stdoutTask.Wait(5000) -or -not $stderrTask.Wait(5000)) {
                         Throw-VerifierInfrastructure "Bounded process '$FilePath' output streams did not close during failure cleanup."
@@ -1337,6 +1529,14 @@ function Invoke-VerifierBoundedProcess($FilePath, $Arguments,
             } catch {
                 $cleanupFailure = Get-VerifierErrorMessage $_
             }
+            if ($byteCapture -and $null -ne $boundedCapture -and $boundedChildExited) {
+                try {
+                    Close-VerifierBoundedCapture $boundedCapture
+                } catch {
+                    if ($cleanupFailure) { $cleanupFailure += '; ' + (Get-VerifierErrorMessage $_) }
+                    else { $cleanupFailure = Get-VerifierErrorMessage $_ }
+                }
+            }
             try {
                 $process.Dispose()
                 $process = $null
@@ -1345,6 +1545,45 @@ function Invoke-VerifierBoundedProcess($FilePath, $Arguments,
                 if ($cleanupFailure) { $cleanupFailure += '; ' + $disposeFailure }
                 else { $cleanupFailure = $disposeFailure }
             }
+        }
+        if ($byteCapture -and $null -ne $boundedCapture) {
+            # Prefix retention must survive a stop/drain failure. Async readers
+            # only touch lane buffers; this bounded prefix is caller-owned.
+            try {
+                [IO.File]::WriteAllBytes($stdoutLog, $boundedCapture.Lanes[0].Bytes.ToArray())
+                [IO.File]::WriteAllBytes($stderrLog, $boundedCapture.Lanes[1].Bytes.ToArray())
+                $boundedLogsRetained = $true
+            } catch {
+                if ($cleanupFailure) { $cleanupFailure += '; bounded prefix evidence could not be retained' }
+                else { $cleanupFailure = 'Bounded prefix evidence could not be retained.' }
+            }
+        }
+        if ($byteCapture) {
+            if ($null -ne $boundedCapture) {
+                try {
+                    if (-not $boundedCapture.FailureKind) { $boundedCapture.FailureKind = 'CAPTURE_FAILURE' }
+                    $boundedFacts = Get-VerifierBoundedCaptureFacts $boundedCapture $processId $startTicks
+                } catch {
+                    if ($cleanupFailure) { $cleanupFailure += '; capture facts unavailable' }
+                    else { $cleanupFailure = 'Capture facts unavailable.' }
+                } finally {
+                    foreach ($lane in $boundedCapture.Lanes) { $lane.Bytes.Dispose() }
+                }
+            }
+            $cleanupWatch.Stop()
+            if ($null -ne $boundedFacts) {
+                $boundedFacts.OperationMilliseconds = $operationWatch.Elapsed.TotalMilliseconds
+                $boundedFacts.CleanupMilliseconds = $cleanupWatch.Elapsed.TotalMilliseconds
+                $boundedFacts.FailureLogsRetained = $boundedLogsRetained
+                $boundedFacts.CleanupProven = ($null -eq $cleanupFailure -and $boundedChildExited -and
+                    $boundedFacts.ReaderTasksTerminal -and $boundedFacts.ReadersClosed)
+            }
+            if ($cleanupFailure) { $failureMessage += '; bounded-process cleanup was not proven: ' + $cleanupFailure }
+            $exception = [InvalidOperationException]::new('VERIFIER_INFRASTRUCTURE: ' +
+                $failureMessage + ". Bounded-process evidence: '$processRoot'.")
+            $exception.Data['VerifierFailureKind'] = 'infrastructure'
+            $exception.Data['VerifierCapture'] = $boundedFacts
+            throw $exception
         }
         if ($cleanupFailure) {
             Throw-VerifierInfrastructure ($failureMessage +

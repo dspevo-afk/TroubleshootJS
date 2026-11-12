@@ -1,7 +1,122 @@
+# Current checkpoint: N57 bounded capture accepted locally; publication pending
+
+Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
+codex/q100-terminal-only-20261107, baseHEADb8c2a55b340d0591b018d96d88434608b5ab36b8,
+no upstream; normal target origin/codex/q100-physical-feasibility. N56d1d56991
+and receiptb8c2a55b published/exactremoteverified; Gmail1a1cce57a7fff998 once.
+N57 not committed/pushed/emailed yet. Private OS-temp
+tsj-q100-bounded-capture-r1-21f20381beca; public T/E current-native-host-r1/CAPTURE_R1.
+
+Same processowner opt-in explicitpositivepaired caps+exactCancellationToken after
+existing3args; legacyabsent unchanged. Incrementalmin(4096,remaining+1), prefix<=cap,
+firstexcess operationFAIL, bothpipes progress; sameoriginalhandle/start/stop,
+drain/discard5s, readerclose/taskterminal, independentfailureprefixwrites even
+onstop/drain/disposefailure. Observed/retained/discarded domains andoperation/
+cleanup clocks separate. Finalcooperativecancel/deadline settlementcheck before
+success; synchronousIO notpreemptedmidcall. No default/native rolecap policy.
+Finalmodule1052681B/2dd8a3b8b3d6cb5ce82fa8cc2c865d18a0ee998a1c0f87d4832b982ff0503e94.
+Explicit text eol=crlf preservesEXACToriginaloutsideownerprefix/suffix/here-string
+bytes. EarlierLFprototype abandoned, nofinalreuse. Threecurrentmodulepins/lengths
+migratedonly; qualifyfunctionsASTidentical, oldPS60c9pinunchanged/normalunrun.
+SharedWin32witness exportedonce/reused; no copiedkerneloracle.
+
+FINALrealSystemPS5.1d8/Pythonad169-I-B optimize0: Smoke2PASS2.188s, Suite30CODE
+processcasesPASS9.160s, N56legacy16PASS3.593s, selectedJDK8tool3PASS1.818s,
+near-exit32PASS4.675s. Wrapper operationtimes; APIoperation/cleanupseparatelysaved.
+Javacinvalidflag exit2 EXPECTED_ERROR_NOT_PASS; no failedcompileasPASS. CODE30
+isNOTexcludednormalMEDIUM30. Bytebounds/UTF8bytes/duplex/0&7/real1500mstimeout/
+cancel500ms/prestartguards/defaultlegacy plusdeclaredcontrolsin30caseSuite.
+Controlsfirstperformrealcapture/drain theninjectIOerror or1100mssettlementdelay
+underfixed1000mstestbudget: operationsFAIL, prefixretained, hooksrestored; notOS
+closefaultproof. All22originalPopenouterexitsobserved;196knownwitnessidentities
+query-onlyauditedwithno liveownidentity/noPIDkill. Successlogrootsremoved;
+ordinaryCODEstates/knownexpectedfailurelogsretained. OldR4logrootunrecorded,
+unsearched/undeleted. No newpersistentprocess/listener/browser/reparse node.
+
+R4onceFAILatshortone-over cap: requiredlogsabsent, oldtestlostunderlyingexception.
+PreciseoriginaltriggerNOTRECOVERED/NOTRECLASSIFIED. Diagnosticsand32oldowner
+probespassed, notretroactivePASS. Rootfixedconditionalfailureevidencewrites and
+addedfailclosedcleanupcontrol; currentallrequiredgatespass. Oldfailurespreserved.
+Rootsource/cases/streams/identity/pins/receipts review; leafSource-onlyreviews
+no blocker inclfinalsettlementcase/guard; noindependentexecution. Twofileworker
+providedfixture+28casedraft, rootintegrateddiagnostics/30cases andownsacceptance.
+Manifest2e89ed41f85955445eaba16c9e1cfb400048061bed62e24e3be1bde48d74179b;
+proof71183bb5bed3e40f3308d9a7a3d2ec78ef9879f80ab23f6ba6ea2ea318c0f7c5.
+
+NEXT actualdiff/indexaudit thennormalcommit/push/exactremoteverify+oneN57Gmail.
+Then existingjobowner pre-escape descendantcontainment, native rolepolicy and
+trustedcoordinator/tool/Source/JAR/actualreturn/semantic/lifecycle closure.
+No normalready/nativeadmission. GeneralUTF8/BOMtext andsuccesslognamespaceoracle
+outsidequalifiedscope; perstreamcapsnotRSS. EarlierN55/N54 evidenceNOTRENEWED.
+Both Studyholds exactthrowonly; genuineoriginal->NULL/OBSERVE UNSPENT_GATED.
+No prior/fixed20/oldD/heldout/protected DATA/factory/normalqualifier/harness/Study/
+OriginalArm/capture/graph/Session/receipt/export/genuine run. full30EXCLUDED,
+HARD/PSYCHOTIC unavailable/unrun,protectedUnreadUNCERTIFIED,oldnormal20NOTREREAD,
+playable100=0,betaHELD. Budgets90s/640/5s/32768PERGROUP/copy1M/chunk4096/opJSON8M/
+result1M/othercaps,seeds/epochs/order/electricaltruth unchanged. ProductionJava/
+GWT/visiblePlayer N/A; electrical/population NOTRENEWED; CI NOTRUN/selfhosted
+runner prerequisite. PreserveMain/E/Desktop andalluncertainoldresources.
+
+# Historical checkpoint: N57 implementation progress
+
+# Current checkpoint: N57 bounded capture implementation in progress
+
+Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
+codex/q100-terminal-only-20261107, HEAD b8c2a55b340d0591b018d96d88434608b5ab36b8,
+no upstream. Last published N56 implementation d1d569917415c6a8f24db9410faae102f8d6bb44
+and receiptb8c2a55b exactremoteverified origin/codex/q100-physical-feasibility;
+Gmail1a1cce57a7fff998 once. No N57 commit/push/email yet; staged0.
+
+N57 private OS-temp/tsj-q100-bounded-capture-r1-21f20381beca, SCOPE_R1 frozen.
+Existing Invoke owner gains strictlyopt-in explicitpositive stdout/stderr caps
+and exact CancellationToken AFTERexisting3args. No capdefaults/nativepolicy;
+legacyabsent unchanged. Incremental4096-or-remaining+1 byte reads, retainedprefix
+<=cap, firstexcess failure, cancellation/timeout sameoriginalchildstop owner;
+bothpipesdrain/discard withinexisting5s, close/taskterminal proof and separate
+operation/cleanup timings. No secondlauncher/treeauthority. Currentmodule
+1051484B/856192d92f5713df66eecfa8bb8747b7712f6fbb847cac0a6555c6c7da84dade,
+explicit text eol=crlf checkoutpolicy; exactoriginalprefix/suffixbytesconserved.
+PrototypeLFgates notfinal: restoredCRLF beforefinal to preserve existinghere-string
+valuesoutsideowner. SourcePolicyR4 recordsraw+Gitcanonicalhashes.
+Threecurrent CODE modulepins migratedexactly (wrapper,N56contract,qualifyprior);
+qualifyfunctionsASTunchanged, Sourceonly, oldPS60c9toolpinunchanged.
+SharedCODEwitness nowexportsobserve_process, kerneloracle reusedwithoutcopy.
+
+Fresh realSystemPS5.1d8/Pythonad169 -I-B optimize0: early2 PASS onprototypeC770;
+subsequent exactdeadline-before-success/drain-EOF fixes currentc8. DraftSmoke2
+PASS1.931s oncurrentc8; selectedJDK8tool3 PASS2.014s (java/javacversion+expected
+invalidflag exit2). Tooltestcaps512/4096 only, notnormalnativepolicy. Actualtool
+image hashes requested/pinned, not independentlyobserved. Earlierlegacy16 PASS
+3.973s onf671 before finaldrainorder correction, NOT finalc8reuse. Needfreshfinal
+Smoke/Suite+Legacy16; newSuite workerinprogress, no acceptanceclaimed yet.
+
+Root owns module,oldwitness/pins/integration. Worker n51_invocations_impl owns
+ONLYnew VerifierBoundedCaptureFixture.py/VerifierBoundedCaptureContract.ps1;
+fixtureandsmokepersisted,Suitepending. Root must notedit workerfiles untilhandoff.
+Leaf n53 Source-only review currentc8 no concreteblocker, noexecution/Data.
+Private source/launch/partiallogs/receipts retained; existingowner removedsuccess
+logs. Newexpectedcapfailure logsretained, no knownliveownchildren/listeners/links.
+Preserveuncertain oldresources (priorcheckpoint), unrelatedMain/E/Desktopwork.
+
+NEXT finishworkerSuite, rootreview/realfinalgates, correctanyfailures, finalpin/
+index/diff audits thennormalpublication+oneGmail. Descendant containment and
+whole nativeper-role stream policy/coordinator/toolreturnclosure remainseparate.
+No actualnormalqualifier/harness/Study/OriginalArm/capture/graph/Session/receipt/
+export/genuine execution; bothholds exactthrowonly, original->NULL/OBSERVE
+UNSPENT_GATED. No prior/fixed20/oldD/heldout/protected DATA/factoryreads.
+full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,protectedUnreadUNCERTIFIED,
+oldnormal20NOTREREAD,playable100=0,betaHELD. Existing90s/640/5s/32768PERGROUP/
+copy1M/chunk4096/opJSON8M/result1M/othercaps,seeds/epochs/order/oracles unchanged.
+ProductionJava/GWT/Player N/A; electrical/population NOTRENEWED; CI NOTRUN
+self-hostedrunner prerequisite. Continuewithout routinepermission.
+
+# Historical checkpoint: N56 publication and N57 preparation
+
 # Current checkpoint: N56 direct-child contract published
 
-Active F codex/q100-terminal-only-20261107, accepted implementation/HEAD
-d1d569917415c6a8f24db9410faae102f8d6bb44, no upstream. Normal target
+Active F codex/q100-terminal-only-20261107, HEAD b8c2a55b340d0591b018d96d88434608b5ab36b8 exactremoteverified, no upstream.
+Accepted implementation d1d569917415c6a8f24db9410faae102f8d6bb44.
+Active worktree OS-temp/tsj-q100-terminal-only-20261107-r1. Normal target
 origin/codex/q100-physical-feasibility. N55 impl f05e70385c444d8e35ddcd1a5f4284c5273d1844
 and receiptff24c674 published/verified; Gmail1a1ccacba74c261e sent once, no duplicate.
 
@@ -52,7 +167,21 @@ copy1048576/chunk4096/othercaps,seeds,epochs,order/electricaloracles unchanged.
 Full30EXCLUDED,HARD/PSYCHOTIC unavailable/unrun,protectedUnreadUNCERTIFIED,
 oldnormal20NOTREREAD,playable100=0,betaHELD. Main/E/Desktop unrelatedwork and prior
 failures preserved. Normal push/exactremote verified; Gmail1a1cce57a7fff998 sent once.
-Publication receipt follows with no second email; F clean before receipt edits.
+Receipt b8c2a55b published/exactremoteverified; no second email.
+F clean after receipt; this local checkpoint only leaves reportM/staged0.
+MainHEAD5f05b005 tracked9/untracked6; EHEADd9747229 reportM; DesktopHEADe0c36885
+tracked7/untracked89. Allstaged0, preserved. Currentprefix mirrors to Main only;
+opaque histories preserved. Uncertain browser14116/start639294472690745890/
+port58320,preview34180/start639294472514546595/port58264+14children,oldDprocess/
+unlink/hardlink/scratch andNotepad67116860 untouched.
+
+N57 LOCAL Source/ownership preparation only, no implementation/acceptance/run:
+OS-temp/tsj-q100-process-composition-r1-5f273bf53a60.
+SCOPE_PREPARATION_R1 519fc6783e059bfb2ba7596a9e0996cd109595ef505f0a8797ec09a1943241be.
+Bounded leaf Source inventory of maintained incremental capture/cancel/job owners
+pending. No new children or DATA reads in preparation; retain exact role caps,
+original-handle authority and pre-escape descendant containment obligations.
+Continue eligiblework without routinepermission; notify meaningful changes.
 
 # Historical checkpoint: N55 publication and N56 preparation
 

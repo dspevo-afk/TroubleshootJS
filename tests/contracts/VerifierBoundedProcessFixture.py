@@ -10,12 +10,10 @@ import sys
 import time
 
 
-def main():
-    if os.name != "nt" or len(sys.argv) < 4:
-        raise RuntimeError("Windows fixture arguments required")
-    mode, state_path, nonce = sys.argv[1:4]
-    if mode not in ("success", "nonzero", "sleep") or not nonce:
-        raise ValueError("invalid CODE fixture mode or nonce")
+def observe_process(nonce):
+    """Independent kernel witness shared by the CODE-only process contracts."""
+    if os.name != "nt" or not nonce:
+        raise RuntimeError("Windows fixture nonce required")
     kernel = ctypes.WinDLL("kernel32", use_last_error=True)
     kernel.GetCurrentProcess.restype = wintypes.HANDLE
     kernel.GetProcessTimes.argtypes = [wintypes.HANDLE] + [
@@ -37,7 +35,7 @@ def main():
     if not kernel.QueryFullProcessImageNameW(handle, 0, image, ctypes.byref(size)):
         raise ctypes.WinError(ctypes.get_last_error())
     creation = (times[0].dwHighDateTime << 32) | times[0].dwLowDateTime
-    record = {
+    return {
         "nonce": nonce,
         "pid": os.getpid(),
         "creationFileTime": creation,
@@ -46,6 +44,15 @@ def main():
         "argv": sys.argv[1:],
         "commandLine": kernel.GetCommandLineW(),
     }
+
+
+def main():
+    if len(sys.argv) < 4:
+        raise RuntimeError("Windows fixture arguments required")
+    mode, state_path, nonce = sys.argv[1:4]
+    if mode not in ("success", "nonzero", "sleep") or not nonce:
+        raise ValueError("invalid CODE fixture mode or nonce")
+    record = observe_process(nonce)
     encoded = json.dumps(record, ensure_ascii=True, separators=(",", ":")) + "\n"
     with open(state_path, "x", encoding="ascii", newline="\n") as state:
         state.write(encoded)
