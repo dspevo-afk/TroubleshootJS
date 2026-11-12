@@ -94,3 +94,8 @@ budgets, exact seeds, epochs and order stay fixed. Production Java/GWT and visib
 Player are NOT APPLICABLE; electrical/population NOT RENEWED. CI NOT RUN pending
 the existing self-hosted runner prerequisite. Next is captured-pipe preparation
 through this same launcher and lease before trusted native composition.
+
+Implementation `af451becab678a0c7679860099aab8e7b4825ee3` normally pushed to
+origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
+Gmail `1a1cdaddd52df842` sent once. The [publication receipt](PROCESS_LEASE_PUBLICATION_R1.json)
+records the16-path index audit; this receipt sends no second email.

@@ -2155,7 +2155,9 @@ remains a failed operation. Earlier failure evidence remains. Raw bytes outside
 three owned regions are conserved; current module pins migrate only. No pipes,
 native role caps, complete tool closure, creator-death or genuine admission is
 claimed. Playable100=0; beta HELD. Next is captured-pipe preparation through the
-same owner. Publication is pending final index audit and normal push.
+same owner. Implementation `af451becab678a0c7679860099aab8e7b4825ee3` normally pushed
+to origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
+Gmail `1a1cdaddd52df842` sent once; this receipt sends no second email.
 
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical

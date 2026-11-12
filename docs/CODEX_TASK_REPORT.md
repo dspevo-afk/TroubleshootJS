@@ -1,10 +1,12 @@
-# Current checkpoint: N59 original-handle lease validated; publication pending
+# Current checkpoint: N59 original-handle lease published
 
 Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
-codex/q100-terminal-only-20261107, baseHEAD81c9b376866277a60cf94a91ebf56c4e506c01a3,
+codex/q100-terminal-only-20261107, HEADaf451becab678a0c7679860099aab8e7b4825ee3,
 no upstream; normal target origin/codex/q100-physical-feasibility. N58impl8d9151ff
 and receipt81c9b376 published/exactremoteverified; Gmail1a1cd791bf198220 once.
-N59 final-source gates PASS; commit/push/email pending finalindexaudit. No duplicate.
+N59 final-source gates PASS; normalpush/exactremoteverified; Gmail1a1cdaddd52df842
+sent once. Documentation-only receipt pending, no secondemail. Final16-path
+indexauditPASS964c2d7ca7b37c8ac798bd305cbeb4e12bb54d4551389ae1eaab4f6682e37337.
 
 Same nativeclass/sharedLaunchCore preserves defaultPIDLaunch and childquerypin.
 Creator-onlyLaunchRetained snapshots originalhProcess pid/UTCFILETIME/image before
