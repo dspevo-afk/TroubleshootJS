@@ -631,7 +631,10 @@ evidence snapshots the bounded result before assertions and retains unproven
 caller-job state/object references within the contract host only. Test-only caps
 and deadlines establish no production role policy or six-Source/verified-return
 authority. Existing process, invocation, Source and class owners stay unchanged;
-normal/genuine admission remains gated. Publication pending.
+normal/genuine admission remains gated.
+Implementation `350da0cce4efbc2f684f61755ff0e82f863fc59e` (Add native JDK compile and return contract)
+normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
+Completion Gmail `1a1ce6aee6bc5b96` sent once; this receipt sends no second email.
 
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before

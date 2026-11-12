@@ -1,10 +1,15 @@
-# Current checkpoint: N62 finite native tool-return contract accepted locally
+# Current checkpoint: N62 finite native tool-return contract published
 
 Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
 codex/q100-terminal-only-20261107; parentae7cfeab95d9ee2dea0b4d84a8c11b45d5687c52,
 no upstream, normal target origin/codex/q100-physical-feasibility. N61 implementation
 0b231496e95b0b3628fa5912c86ba9714a6bc8dc/receiptae7cfeab remotely verified,
-Gmail1a1ce458d4dd776d once. N62 implementation/publication/email pending.
+Gmail1a1ce458d4dd776d once. N62 implementation
+350da0cce4efbc2f684f61755ff0e82f863fc59e (Add native JDK compile and return contract)
+normally pushed/exactremote verified, Gmail1a1ce6aee6bc5b96 once. Index9 PASS
+313163b99c53dc1b9ad975c2367e871a1d0491821a105a717b7f5f39de34fac4.
+Current HEAD350da0cce4efbc2f684f61755ff0e82f863fc59e; documentation-only receipt pending.
+Source-bound inputs rechecked unchanged; no second completion email.
 
 R62 OS-temp/tsj-q100-native-tool-return-r1-f5ca1f3e; frozen SCOPE_R1, BASELINE_R1 and owned_call494d wrapper.
 New maintained PS contract39014B/cd3fd6ad7383a41c37b62e68fe7f0f5710c7728c463b5a9f96f8b0d5eb8306fc and literal Java
