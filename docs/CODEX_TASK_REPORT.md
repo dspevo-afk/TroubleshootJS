@@ -1,8 +1,10 @@
-# Current checkpoint: N71 direct Source host validated; publication pending
+# Current checkpoint: N71 published; N72 producer preparation
 
 F OS-temp/tsj-q100-terminal-only-20261107-r1, codex/q100-terminal-only-20261107,
-HEAD/parent c648f9a5d5d398da7e4740b39f3d3de064c8da2e; no upstream. Normal target:
-origin/codex/q100-physical-feasibility. N71 is not yet committed/pushed/emailed.
+HEAD 19224b19e2ee66de8459e8a1d0c7e6e3d307bbfc; parentc648f9a5; no upstream. Normal target:
+origin/codex/q100-physical-feasibility. N71 normally pushed/exact remote verified;
+Gmail 1a1d0a4d6e799484 sent once. Documentation receipt pending; no second email.
+Final index15 PASS ad50b4137510c95434f96c12af7b05de95d7543969987a55106abde15fe53319.
 N70 implementation91a5c318/receiptc648f9a5 remotely verified; Gmail1a1d02c01f52fb94
 sent once. Never duplicate. R71 OS-temp/tsj-q100-source-gate-producer-r1-23caa9f15584
 holds scopes R1 through R6, final Source R6 and all original failures/artifacts.
