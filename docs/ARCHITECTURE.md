@@ -583,8 +583,25 @@ job keeps stop authority. Legacy PID-returning launch and recovery semantics sta
 intact. The private direct-process stopper likewise uses its original launch
 object and start identity, accepting a natural-exit race only after a signaled
 handle. Failure cleanup avoids current-PID rediscovery. Durable/adopted process
-termination remains separate. Captured pipes and the bounded-process adapter for
-this native lease are still pending; no creator-death guarantee is added.
+termination remains separate. The bounded-process coordinator adapter for this
+native lease remains pending; no creator-death guarantee is added.
+
+The same launch core now supports
+[captured stdout/stderr leases](task-evidence/Q100/current-native-host-r1/CAPTURED_PIPE_R1.md).
+Creator-only capture creates anonymous pipes and read-only NUL stdin, protects
+parent read ends and passes an explicit standard-handle list alongside the job
+attribute. Redundant child-end parent copies close before resume. Readers and the
+original process handle transfer together after resume; partial setup and
+pre-resume failure use the original rollback owner. Terminal captured lease
+disposal additionally requires both retained read handles closed. The one shared
+bounded receive helper primes both managed asynchronous reads and accepts an
+exact native lease or direct Process. Caller cleanup separately proves family
+closure, terminal readers and job emptiness through the original creator job.
+The finite CODE contract qualifies only serial dedicated hosts. Temporary
+inheritable handles can leak into an unrelated concurrent inheriting launch;
+future coordination must serialize or isolate all relevant creation owners.
+The native bounded-process coordinator, role budgets and full trusted native
+composition remain separate. Contract preflight grants no production admission.
 
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before

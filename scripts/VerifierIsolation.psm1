@@ -1237,6 +1237,21 @@ function New-VerifierBoundedCaptureState($Process, $StdoutLimit, $StderrLimit) {
 
 function Receive-VerifierBoundedCapture($Process, $State, $Watch,
         $TimeoutMilliseconds, $CancellationToken) {
+    $isDirectProcess = $null -ne $Process -and $Process.GetType() -eq [Diagnostics.Process]
+    if (-not $isDirectProcess) {
+        $leaseType = ([Management.Automation.PSTypeName]'VerifierBrowserContainmentJobApi+OwnedProcessLease').Type
+        if ($null -eq $leaseType -or $null -eq $Process -or $Process.GetType() -ne $leaseType) {
+            Throw-VerifierInfrastructure 'Bounded capture requires an exact direct process or native process lease.'
+        }
+    }
+    # Start both managed reader tasks before polling or waiting on the process.
+    # The state is already caller-owned, so partial setup remains cleanable.
+    foreach ($lane in $State.Lanes) {
+        if (-not $lane.Eof -and $null -eq $lane.Task) {
+            $request = [int][Math]::Min(4096L, $lane.Limit - $lane.Bytes.Length + 1L)
+            $lane.Task = $lane.Stream.ReadAsync($lane.Buffer, 0, $request)
+        }
+    }
     while ($true) {
         if ($CancellationToken.IsCancellationRequested) {
             $State.FailureKind = 'CANCELLED'
@@ -1266,12 +1281,13 @@ function Receive-VerifierBoundedCapture($Process, $State, $Watch,
             if ($count -eq 0) { $lane.Eof = $true }
             $progress = $true
         }
-        $Process.Refresh()
+        if ($isDirectProcess) { $Process.Refresh(); $hasExited = [bool]$Process.HasExited }
+        else { $hasExited = [bool]$Process.WaitForExit(0) }
         if ($Watch.Elapsed.TotalMilliseconds -ge $TimeoutMilliseconds) {
             $State.FailureKind = 'TIMEOUT'
             Throw-VerifierInfrastructure "Bounded process exceeded ${TimeoutMilliseconds}ms during byte capture."
         }
-        if ($Process.HasExited -and $State.Lanes[0].Eof -and $State.Lanes[1].Eof) {
+        if ($hasExited -and $State.Lanes[0].Eof -and $State.Lanes[1].Eof) {
             [void]$Process.WaitForExit(0)
             return
         }
@@ -10507,6 +10523,139 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
     private const uint INVALID_RESUME_COUNT = 0xFFFFFFFF;
     private static readonly IntPtr PROC_THREAD_ATTRIBUTE_JOB_LIST =
         (IntPtr)0x0002000D;
+    private static readonly IntPtr PROC_THREAD_ATTRIBUTE_HANDLE_LIST =
+        (IntPtr)0x00020002;
+    private const uint STARTF_USESTDHANDLES = 0x00000100;
+    private const uint HANDLE_FLAG_INHERIT = 0x00000001;
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct PipeSecurityAttributes {
+        public uint Length;
+        public IntPtr SecurityDescriptor;
+        [MarshalAs(UnmanagedType.Bool)] public bool InheritHandle;
+    }
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool CreatePipe(out IntPtr read, out IntPtr write,
+        ref PipeSecurityAttributes attributes, uint size);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool SetHandleInformation(IntPtr handle, uint mask,
+        uint flags);
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode,
+        EntryPoint = "CreateFileW", SetLastError = true)]
+    private static extern IntPtr OpenCapturedInputDevice(string path, uint access,
+        uint share, ref PipeSecurityAttributes attributes, uint disposition,
+        uint flags, IntPtr template);
+
+    // All fields are adopted only after a successful API call. Failed
+    // CreatePipe out-values are indeterminate and are never close authority.
+    private sealed class CapturedPipeSet : IDisposable {
+        private IntPtr outputRead, errorRead;
+        internal IntPtr OutputWrite, ErrorWrite, Input;
+        internal Microsoft.Win32.SafeHandles.SafeFileHandle OutputHandle, ErrorHandle;
+        internal System.IO.FileStream OutputStream, ErrorStream;
+        internal System.IO.StreamReader OutputReader, ErrorReader;
+
+        internal void Open() {
+            PipeSecurityAttributes attributes = new PipeSecurityAttributes();
+            attributes.Length = (uint)Marshal.SizeOf(typeof(PipeSecurityAttributes));
+            attributes.InheritHandle = true;
+            IntPtr read, write;
+            if (!CreatePipe(out read, out write, ref attributes, 4096)) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "Could not create captured stdout pipe.");
+            }
+            outputRead = read; OutputWrite = write;
+            if (!SetHandleInformation(outputRead, HANDLE_FLAG_INHERIT, 0)) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "Could not protect captured stdout reader from inheritance.");
+            }
+            if (!CreatePipe(out read, out write, ref attributes, 4096)) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "Could not create captured stderr pipe.");
+            }
+            errorRead = read; ErrorWrite = write;
+            if (!SetHandleInformation(errorRead, HANDLE_FLAG_INHERIT, 0)) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "Could not protect captured stderr reader from inheritance.");
+            }
+            IntPtr input = OpenCapturedInputDevice("NUL", 0x80000000, 3,
+                ref attributes, 3, 0x00000080, IntPtr.Zero);
+            if (IsInvalid(input)) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "Could not open captured read-only null input.");
+            }
+            Input = input;
+            OutputHandle = new Microsoft.Win32.SafeHandles.SafeFileHandle(outputRead, true);
+            outputRead = IntPtr.Zero;
+            OutputStream = new System.IO.FileStream(OutputHandle,
+                System.IO.FileAccess.Read, 4096, false);
+            OutputReader = new System.IO.StreamReader(OutputStream,
+                new UTF8Encoding(false), true, 4096);
+            ErrorHandle = new Microsoft.Win32.SafeHandles.SafeFileHandle(errorRead, true);
+            errorRead = IntPtr.Zero;
+            ErrorStream = new System.IO.FileStream(ErrorHandle,
+                System.IO.FileAccess.Read, 4096, false);
+            ErrorReader = new System.IO.StreamReader(ErrorStream,
+                new UTF8Encoding(false), true, 4096);
+        }
+
+        private static void CloseRaw(ref IntPtr handle, List<Exception> failures) {
+            if (IsInvalid(handle)) { return; }
+            if (!CloseHandle(handle)) {
+                failures.Add(new Win32Exception(Marshal.GetLastWin32Error(),
+                    "Could not close an owned captured-pipe handle."));
+                return;
+            }
+            handle = IntPtr.Zero;
+        }
+
+        internal void CloseChildCopies() {
+            List<Exception> failures = new List<Exception>();
+            CloseRaw(ref OutputWrite, failures);
+            CloseRaw(ref ErrorWrite, failures);
+            CloseRaw(ref Input, failures);
+            if (failures.Count != 0) {
+                throw new InvalidOperationException(
+                    "Captured child-handle copies were not closed.",
+                    new AggregateException(failures));
+            }
+        }
+
+        internal void DetachReaders() {
+            OutputReader = null; ErrorReader = null;
+            OutputStream = null; ErrorStream = null;
+            OutputHandle = null; ErrorHandle = null;
+        }
+
+        public void Dispose() {
+            List<Exception> failures = new List<Exception>();
+            try {
+                if (OutputReader != null) { OutputReader.Dispose(); }
+                else if (OutputStream != null) { OutputStream.Dispose(); }
+                else if (OutputHandle != null) { OutputHandle.Dispose(); }
+            } catch (Exception failure) { failures.Add(failure); }
+            try {
+                if (ErrorReader != null) { ErrorReader.Dispose(); }
+                else if (ErrorStream != null) { ErrorStream.Dispose(); }
+                else if (ErrorHandle != null) { ErrorHandle.Dispose(); }
+            } catch (Exception failure) { failures.Add(failure); }
+            CloseRaw(ref outputRead, failures);
+            CloseRaw(ref errorRead, failures);
+            CloseRaw(ref OutputWrite, failures);
+            CloseRaw(ref ErrorWrite, failures);
+            CloseRaw(ref Input, failures);
+            if (failures.Count != 0) {
+                throw new InvalidOperationException(
+                    "Captured pipe setup cleanup was not proven.",
+                    new AggregateException(failures));
+            }
+        }
+    }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     private struct STARTUPINFO {
@@ -10683,6 +10832,9 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
         private readonly object sync = new object();
         private IntPtr processHandle;
         private bool ownsHandle;
+        private Microsoft.Win32.SafeHandles.SafeFileHandle outputReadHandle, errorReadHandle;
+        public System.IO.StreamReader StandardOutput { get; private set; }
+        public System.IO.StreamReader StandardError { get; private set; }
         public int ProcessId { get; private set; }
         public long CreationFileTime { get; private set; }
         public string ImagePath { get; private set; }
@@ -10729,6 +10881,14 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
 
         // No throwing work follows successful resume before this handoff.
         internal void TakeOwnership() { ownsHandle = true; }
+
+        internal void AttachReaders(System.IO.StreamReader output,
+            System.IO.StreamReader error,
+            Microsoft.Win32.SafeHandles.SafeFileHandle outputHandle,
+            Microsoft.Win32.SafeHandles.SafeFileHandle errorHandle) {
+            StandardOutput = output; StandardError = error;
+            outputReadHandle = outputHandle; errorReadHandle = errorHandle;
+        }
 
         private void AssertOpen() {
             if (!ownsHandle || IsInvalid(processHandle)) {
@@ -10778,6 +10938,22 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
                 if (!WaitExactly(0)) {
                     throw new InvalidOperationException(
                         "Retained process lease cannot close before exit is observed.");
+                }
+                if (StandardOutput != null) {
+                    if (!outputReadHandle.IsClosed || !errorReadHandle.IsClosed) {
+                        throw new InvalidOperationException(
+                            "Captured process lease cannot close before both read handles are closed.");
+                    }
+                    List<Exception> failures = new List<Exception>();
+                    try { StandardOutput.Dispose(); }
+                    catch (Exception failure) { failures.Add(failure); }
+                    try { StandardError.Dispose(); }
+                    catch (Exception failure) { failures.Add(failure); }
+                    if (failures.Count != 0) {
+                        throw new InvalidOperationException(
+                            "Captured process reader disposal was not proven.",
+                            new AggregateException(failures));
+                    }
                 }
                 if (!CloseHandle(processHandle)) {
                     throw new Win32Exception(Marshal.GetLastWin32Error(),
@@ -10933,7 +11109,7 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
         string currentDirectory) {
         OwnedProcessLease unused;
         return LaunchCore(applicationName, commandLine, currentDirectory,
-            false, out unused);
+            false, false, out unused);
     }
 
     public OwnedProcessLease LaunchRetained(string applicationName,
@@ -10944,12 +11120,24 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
         }
         OwnedProcessLease retained;
         LaunchCore(applicationName, commandLine, currentDirectory,
-            true, out retained);
+            true, false, out retained);
+        return retained;
+    }
+
+    public OwnedProcessLease LaunchCaptured(string applicationName,
+        string commandLine, string currentDirectory) {
+        if (!creatorOwned) {
+            throw new InvalidOperationException(
+                "Only a creator-owned containment job may capture process pipes.");
+        }
+        OwnedProcessLease retained;
+        LaunchCore(applicationName, commandLine, currentDirectory,
+            true, true, out retained);
         return retained;
     }
 
     private int LaunchCore(string applicationName, string commandLine,
-        string currentDirectory, bool retainProcess,
+        string currentDirectory, bool retainProcess, bool capturePipes,
         out OwnedProcessLease retainedProcess) {
         retainedProcess = null;
         AssertOpen();
@@ -10966,13 +11154,16 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
         IntPtr attributeList = IntPtr.Zero;
         IntPtr attributeListSize = IntPtr.Zero;
         IntPtr jobValue = IntPtr.Zero;
+        IntPtr inheritedHandles = IntPtr.Zero;
+        CapturedPipeSet pipes = null;
+        int attributeCount = capturePipes ? 2 : 1;
         PROCESS_INFORMATION processInformation = new PROCESS_INFORMATION();
         bool initialized = false;
         bool createdProcess = false;
         bool resumed = false;
         OwnedProcessLease pendingLease = null;
         try {
-            InitializeProcThreadAttributeList(IntPtr.Zero, 1, 0,
+            InitializeProcThreadAttributeList(IntPtr.Zero, attributeCount, 0,
                 ref attributeListSize);
             int initialError = Marshal.GetLastWin32Error();
             if (attributeListSize == IntPtr.Zero) {
@@ -10980,7 +11171,7 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
                     "Could not size browser containment launch attributes.");
             }
             attributeList = Marshal.AllocHGlobal(attributeListSize);
-            if (!InitializeProcThreadAttributeList(attributeList, 1, 0,
+            if (!InitializeProcThreadAttributeList(attributeList, attributeCount, 0,
                     ref attributeListSize)) {
                 throw new Win32Exception(Marshal.GetLastWin32Error(),
                     "Could not initialize browser containment launch attributes.");
@@ -10997,14 +11188,33 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
             STARTUPINFOEX startupInfo = new STARTUPINFOEX();
             startupInfo.StartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFOEX));
             startupInfo.lpAttributeList = attributeList;
+            if (capturePipes) {
+                pipes = new CapturedPipeSet();
+                pipes.Open();
+                inheritedHandles = Marshal.AllocHGlobal(3 * IntPtr.Size);
+                Marshal.WriteIntPtr(inheritedHandles, 0, pipes.Input);
+                Marshal.WriteIntPtr(inheritedHandles, IntPtr.Size, pipes.OutputWrite);
+                Marshal.WriteIntPtr(inheritedHandles, 2 * IntPtr.Size, pipes.ErrorWrite);
+                if (!UpdateProcThreadAttribute(attributeList, 0,
+                        PROC_THREAD_ATTRIBUTE_HANDLE_LIST, inheritedHandles,
+                        (IntPtr)(3 * IntPtr.Size), IntPtr.Zero, IntPtr.Zero)) {
+                    throw new Win32Exception(Marshal.GetLastWin32Error(),
+                        "Could not restrict captured child handle inheritance.");
+                }
+                startupInfo.StartupInfo.dwFlags = (int)STARTF_USESTDHANDLES;
+                startupInfo.StartupInfo.hStdInput = pipes.Input;
+                startupInfo.StartupInfo.hStdOutput = pipes.OutputWrite;
+                startupInfo.StartupInfo.hStdError = pipes.ErrorWrite;
+            }
             if (!CreateProcess(applicationName, new StringBuilder(commandLine),
-                    IntPtr.Zero, IntPtr.Zero, false,
+                    IntPtr.Zero, IntPtr.Zero, capturePipes,
                     EXTENDED_STARTUPINFO_PRESENT | CREATE_NO_WINDOW | CREATE_SUSPENDED, IntPtr.Zero,
                     currentDirectory, ref startupInfo, out processInformation)) {
                 throw new Win32Exception(Marshal.GetLastWin32Error(),
                     "Could not atomically launch browser in its containment job.");
             }
             createdProcess = true;
+            if (pipes != null) { pipes.CloseChildCopies(); }
             if (processInformation.dwProcessId <= 0) {
                 throw new InvalidOperationException(
                     "Browser containment launch returned an invalid PID.");
@@ -11022,6 +11232,10 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
             if (retainProcess) {
                 pendingLease = new OwnedProcessLease(processInformation.hProcess,
                     processInformation.dwProcessId);
+                if (pipes != null) {
+                    pendingLease.AttachReaders(pipes.OutputReader, pipes.ErrorReader,
+                        pipes.OutputHandle, pipes.ErrorHandle);
+                }
             }
             if (ResumeThread(processInformation.hThread) == INVALID_RESUME_COUNT) {
                 throw new Win32Exception(Marshal.GetLastWin32Error(),
@@ -11032,6 +11246,7 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
                 pendingLease.TakeOwnership();
                 retainedProcess = pendingLease;
                 processInformation.hProcess = IntPtr.Zero;
+                if (pipes != null) { pipes.DetachReaders(); }
             }
             return processInformation.dwProcessId;
         } catch (Exception launchFailure) {
@@ -11056,6 +11271,8 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
             if (jobValue != IntPtr.Zero) { Marshal.FreeHGlobal(jobValue); }
             if (initialized) { DeleteProcThreadAttributeList(attributeList); }
             if (attributeList != IntPtr.Zero) { Marshal.FreeHGlobal(attributeList); }
+            if (inheritedHandles != IntPtr.Zero) { Marshal.FreeHGlobal(inheritedHandles); }
+            if (pipes != null) { pipes.Dispose(); }
         }
     }
 

@@ -1,11 +1,81 @@
+# Current checkpoint: N60 native captured pipes locally accepted
+
+Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
+codex/q100-terminal-only-20261107, parent052e0f4d1c53e721a80db5725cde5299b6e15ea4,
+no upstream; normal target origin/codex/q100-physical-feasibility. N59implaf451bec/
+receipt052e0f4d verified remotely; Gmail1a1cdaddd52df842 once. N60 local gates pass;
+publication/email PENDING, no success claim for remote publication yet.
+
+Same native class/LaunchCore adds creator-only LaunchCaptured, explicit stdin/
+stdout/stderr HANDLE_LIST with JOB_LIST and original-handle lease. Parent child-end
+copies close before resume; successful readers transfer after resume. Same private
+Receive primes both managed reads and accepts exact Process/native lease. Captured
+Dispose requires root signaled/read handles closed; caller additionally proves
+job empty and terminal reader tasks. Default launch, stopper/coordinator and raw
+bytes outside TWO owned module regions remain exact. Module1075327B/bcd8962462b7
+CRLF; fixture11196B/8c2d65eac05a; three pin-only migrations preserve oldPS60c9 and
+qualifier bodies. Contract-only preflight is not production preflight.
+
+Final-source PASS: native Smoke1/1.896s and Suite10/5.636s;
+Lease3/2.090s, Job7/1.914s, Capture30 CODE/9.136s,
+Legacy16/3.761s, JDKtool3/1.830s, nearExit32/4.122s,
+directStop4/1.645s, captured rollback control1/1.361s.
+Times are wrapper operation; case operation/cleanup recorded separately, outer
+cleanup UNMEASURED_SEPARATELY. Negative operations remain failed operations.
+Declared ctor-argument control observes native122 after pipe setup/before resume,
+proves original rollback/jobempty/noactorstate; effective CLR capacity NOT MEASURED/
+NOT ASSUMED ZERO. Earlier JDK fresh-PID diagnostic and maintained SmokeR1/R2 FAIL
+remain preserved, including R1 missing read-handle proof and R2 unknown extra19576.
+Maintained SmokeR3 and final tests vet actual signed System32 console-host handles;
+they do not
+recover/reclassify the earlier unknown member. Old fixture CLI leak fixed before
+final gates; old sources preserved. Expanded SuiteR1/R2/R3 FAIL remain: child argv0
+duplication and post-dispose fact queries, then absent inherited-standard output,
+then HasExited before the original wait signaled. Root fixed fixture STD selection
+through stdin-only redirection and required actual original wait signals under
+the unchanged five-second clock; facts are snapshotted before disposal. The unrun
+Oracle vendor oracle was corrected to the pinned Temurin release reference.
+Root review/no blocker within finite scope;
+n50 class/fixture source-only review, leaves ran no tests. No concurrency claim:
+temporary inheritable-writer window requires future coordinator serialization/
+isolation of ALL creation owners. No production native adapter/full role policy,
+tool/environment/Source/JAR/return authority, creator-death or genuine admission.
+
+Public CAPTURED_PIPE_SOURCE_MANIFEST_R1 SHA0f98aa1f80dc8fcab8c39521b7f4f09977c70f861dbf240b1643886bc2279156,
+PROOF_R1 SHA327017acc889ea121572ef2138d31ae1eab37631df70349f299b1a712ef6ef2c. R60 private scratch suffix73c7210bdc94
+retains all failures, selected sources and commands. All consumed reused gate
+inputs rechecked unchanged. Query-only audit PASS 165 known CODE/tool/outer
+identities, 24 original wrapper exits; no historical proof repaired.
+No known new persistent process/listener/link. Main5f05b005(9M/6untracked),
+Ed9747229(reportM), Desktope0c36885(7M/89untracked) preserved/staged0; only Main
+current prefix mirrored; opaque historical tails conserved. Old browser14116/
+start639294472690745890/port58320, preview34180/start639294472514546595/port58264+
+14children, oldD resources/links/scratch and Notepad67116860 untouched.
+
+No prior/fixed20/oldD/heldout/protected DATA/generated DATA factories/whole
+historical builders read. Both Study holds exact throw-only; original-to-NULL/
+OBSERVE UNSPENT_GATED. No normal qualifier/harness/Study/OriginalArm/capture/graph/
+Session/receipt/export/genuine. Full30normalMEDIUM EXCLUDED; HARD/PSYCHOTIC
+unavailable/unrun; protectedUnread UNCERTIFIED; oldnormal20 NOT REREAD;
+playable100=0; beta HELD. CircuitJS truth, seeds/epochs/order and all existing
+budgets unchanged (90s/640groups/5s/32768 PER GROUP; copy1048576/chunk4096;
+source4MiB/fragment64KiB/opJSON8MiB/result1MiB/depth64/visits1m/classes10k256MiB;
+compile-native60s/reader180s/wrapper480s/cleanup120s). Production Java/GWT/visible
+Player N/A; electrical/population NOT RENEWED; CI NOT RUN/self-hosted runner
+prerequisite. Next publish validated N60 normally and send one Gmail, then scope
+the bounded native coordinator adapter/explicit invocation policy.
+
+# Historical checkpoint: N59 publication and N60 preparation
+
 # Current checkpoint: N59 original-handle lease published
 
 Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
-codex/q100-terminal-only-20261107, HEADaf451becab678a0c7679860099aab8e7b4825ee3,
+codex/q100-terminal-only-20261107, HEAD052e0f4d1c53e721a80db5725cde5299b6e15ea4,
 no upstream; normal target origin/codex/q100-physical-feasibility. N58impl8d9151ff
 and receipt81c9b376 published/exactremoteverified; Gmail1a1cd791bf198220 once.
 N59 final-source gates PASS; normalpush/exactremoteverified; Gmail1a1cdaddd52df842
-sent once. Documentation-only receipt pending, no secondemail. Final16-path
+sent once. Receipt052e0f4d normallypublished/exactremoteverified; no second
+email. Receipt4 source/indexreuseauditPASS. Final16-path
 indexauditPASS964c2d7ca7b37c8ac798bd305cbeb4e12bb54d4551389ae1eaab4f6682e37337.
 
 Same nativeclass/sharedLaunchCore preserves defaultPIDLaunch and childquerypin.
@@ -58,8 +128,13 @@ listener/link. Preserveoldbrowser14116/start639294472690745890/port58320,
 preview34180/start639294472514546595/port58264+14children, oldDresources/links/
 scratch andNotepad67116860. Main5f05b005(9M/6untracked), Ed9747229(reportM),
 Desktope0c36885(7M/untracked) preserved/allstaged0; onlyMaincurrentprefixmirrored;
-opaquehistoriesconserved. Nextunstarted: N60 capturedpipe preparationthroughsame
-launcher/lease, then explicitnativecaps/trustedcomposition. Continueauthorizedroadmap.
+opaquehistoriesconserved. N60 source-onlypipepreparation complete/privateOS-temp/
+tsj-q100-captured-pipe-prep-r1-74e826cec623; SCOPE_PREPARATION_R1 +DESIGN_DECISION_R1,
+no implementation/launch/test. RootadoptsimmediatedualmanagedreadersafterResume/
+OSbackpressure; explicitHANDLE_LIST+JOB_LIST/stdin/endpointownership; anonymous
+pipeslacknativeoverlappedIO, real.NETstreamearlycanaryrequired. Onecaptureloop/
+originallease/jobauthority; rolecaps/trustedcompositionstilllater. F onlylocal
+checkpointM/allstaged0; allN59workcommitted/pushed. Continueauthorizedroadmap.
 
 No prior/fixed20/oldD/heldout/protectedDATA/generatedDATAfactories/wholehistorical
 builders. BothStudyholds exactthrowonly; original->NULL/OBSERVE UNSPENT_GATED.

@@ -2160,6 +2160,20 @@ to origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail `1a1cdaddd52df842` sent once; this receipt sends no second email.
 
 
+The [native captured-pipe prerequisite](task-evidence/Q100/current-native-host-r1/CAPTURED_PIPE_R1.md)
+is locally accepted for the finite serial selected-host scope. Creator-only capture
+uses the same suspended native launch core, original process lease, restricted
+standard handles and existing bounded byte-reader algorithm. Final native Smoke1/
+Suite10, lease3, job7, capture30 CODE, legacy16, JDK tool3, near-exit32, direct-stop4
+and a controlled captured rollback pass. Real descendant-writer and outside-sentinel
+checks prove the finite family/EOF boundary; previous failures remain FAIL.
+Only the native class and receive helper change, with exact outside-byte and
+pin-only conservation. Concurrent inheriting launches remain unqualified; a future
+coordinator must serialize or isolate all relevant creation owners. Normal native
+preflight, role caps, full tool/return closure, creator-death and genuine admission
+remain pending. Playable100=0; beta HELD. Implementation publication pending.
+Next is the bounded native coordinator adapter and explicit invocation policy.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource
