@@ -325,6 +325,32 @@ class CallerStaticBoundaryTests(unittest.TestCase):
         self._assert_code("TOOL_PIN_ROOTCALLHARNESS", _CALLER._validate_config, config,
                           current_file=config["sourceSpecs"]["caller"]["path"])
 
+    def test_root_powershell_pin_selects_current_host_and_rejects_stale_or_wrong_specs(self):
+        current_bytes = 495616
+        current_sha256 = "d8f182560210d43baaf767d482ad1dc1207372522e91413b9d5e515a875e552d"
+        config = _synthetic_config()
+        current_file = config["sourceSpecs"]["caller"]["path"]
+        config["toolSpecs"]["rootCallPowerShell"] = _spec(
+            "C:\\fixture\\tools\\rootCallPowerShell.exe", current_bytes,
+            current_sha256, _CALLER.MAX_READER_TOOL_BYTES)
+        self.assertIs(_CALLER._validate_config(config, current_file=current_file), config)
+
+        stale_sha256 = "60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f"
+        mutations = (
+            (current_bytes, stale_sha256),
+            (current_bytes, "a" * 64),
+            (current_bytes - 1, current_sha256),
+        )
+        for byte_count, digest in mutations:
+            candidate = _synthetic_config()
+            candidate["toolSpecs"]["rootCallPowerShell"] = _spec(
+                "C:\\fixture\\tools\\rootCallPowerShell.exe", byte_count,
+                digest, _CALLER.MAX_READER_TOOL_BYTES)
+            self._assert_code(
+                "TOOL_PIN_ROOTCALLPOWERSHELL", _CALLER._validate_config,
+                candidate, current_file=candidate["sourceSpecs"]["caller"]["path"])
+
+
     def test_allowlist_spec_retains_its_one_mib_bound(self):
         config = _synthetic_config()
         config["sourceSpecs"]["allowlist"]["maxBytes"] = (

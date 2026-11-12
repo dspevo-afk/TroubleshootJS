@@ -2255,6 +2255,18 @@ Completion Gmail `1a1cf103fbd84d7e` sent once; this receipt sends no second emai
 
 
 
+The [current Source preflight and early prior-tool guard](task-evidence/Q100/current-native-host-r1/SOURCE_PREFLIGHT_TOOL_CONTEXT_R1.md)
+is locally accepted. Current PS/harness/codec identities now authenticate for the
+actual Source-only path. Historical tool expectations are byte-conserved in the
+normalizer and reject incompatible current facts before prior manifest/journal/
+body access. Final Source Smoke1/Suite5,120 synthetic/NO_DATA methods and10 finite
+CODE integration cases pass; independent141/2396 classes and held entrypoint remain
+exact. Earlier environment/setup/control failures remain preserved. No prior
+positive, actual role read or genuine admission is granted. Playable100=0; beta
+HELD. Next is explicit historical input/tool-context authority before real prior
+ingest; native role policy/full semantic/receipt/lifecycle closure remain pending.
+
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

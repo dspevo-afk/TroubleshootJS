@@ -34,8 +34,8 @@ EVIDENCE_SCHEMA = "tsj-q100-normal-prior-qualification-evidence-v1"
 ALLOWLIST_SHA256 = "c487eae6ed0e070aaad75dccd14d23313ed9da2c6bda7f93bfeb886109f20f91"
 READER_SHA256 = "863a258cbab888cf112b9e927e16a099436632e9a1d43eefe0b70690c30543d8"
 OBSERVER_SHA256 = "4786259585a13819350add727bb2bfbca9f6890db208fbe8f4f60959d8c94f8c"
-NORMALIZER_SHA256 = "9112b6b4ceaf9721e92057e9a8ecdb5698fb602725c4131d937acbf1390c0081"
-CODEC_SHA256 = "c1f27377d5d7a6c83384e34cc2ded334b0b022cfb68722265533976c0661ba27"
+NORMALIZER_SHA256 = "fb8463fef50496f6c2ab874712954f44ab5659070e05966d38710655b0fc42bc"
+CODEC_SHA256 = "de21e233e27f93c8183101a89ed6fdb9a00812d69e1fe38cc47c3f3e573b3eb8"
 KERNEL_SHA256 = "f87c3ef799a47f14955240111d7af20737db3c329242c036f449eb1002f11873"
 PROVENANCE_SHA256 = "215ad455f799117d30ca9a7e3101ee9326c8af4fdd30295c4fd0d28331a7436f"
 READER_GATE_SHA256 = "3b44e3dcfcc2456c1b2cf09258da21abb7c7b04cdc65156c908657b1d1c507ef"
@@ -68,8 +68,8 @@ SOURCE_PINS = {
 }
 TOOL_FIXED_PINS = {
     "qualificationPython": (171744, "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec"),
-    "rootCallPowerShell": (495616, "60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f"),
-    "rootCallHarness": (2941, "28aab617e686d2a4eec074a46b2e2861f6fa7c008544b33f7b070f0c6d77ea1d"),
+    "rootCallPowerShell": (495616, "d8f182560210d43baaf767d482ad1dc1207372522e91413b9d5e515a875e552d"),
+    "rootCallHarness": (2937, "abd79fe4ebbb90b38db1749d9cd4fc4842097c1bd658d4ed01c17bee9d7e87ff"),
     "processModule": (1092245, "418da63a7bc1e4eb3ad0234bd789a24db2b911b635e6a54468a7bb7087c180a6"),
 }
 MAX_CONFIG_BYTES = 1024 * 1024
@@ -603,7 +603,8 @@ def _source_module_state(reader, observer, config, byte_observation, phase):
         codec, ("validate_context", "canonical_context", "native_projection"), phase)
     _assert_module_functions(codec, ("canonical_json", "generate_input_java"), phase)
     _assert_module_functions(
-        normalizer, ("normalize_prior", "_validate_allowlist_bytes", "_json_load"), phase)
+        normalizer, ("normalize_prior", "_validate_allowlist_bytes", "_json_load",
+                     "validate_prior_tool_facts"), phase)
     _need(tuple(kernel_callbacks) == tuple(normalizer.KERNEL_CALLBACK_KEYS)
           and tuple(codec_callbacks) == tuple(normalizer.CODEC_CALLBACK_KEYS),
           "CALLBACK_KEY_BINDING", phase)
@@ -1319,6 +1320,23 @@ def _recheck_consumed_inputs(reader, observer, config, state, *,
     _verify_root_bindings(reader, config, roots_sha, phase + "-after")
 
 
+def _validate_prior_tool_compatibility(state):
+    """Reject incompatible observed tools before any prior role-body access."""
+    phase = "prior-tool-compatibility"
+    normalizer = state["modules"]["normalizer"]
+    callbacks = _assert_module_functions(
+        normalizer, ("validate_prior_tool_facts",), phase)
+    facts = state["byteObservation"]["toolFacts"]
+    try:
+        validated = callbacks["validate_prior_tool_facts"](facts)
+    except Exception as exc:
+        code = getattr(exc, "code", None)
+        if type(code) is str and re.fullmatch(r"[A-Z0-9_]{1,96}", code):
+            raise CallerError("PRIOR_TOOL_COMPATIBILITY_" + code, phase) from None
+        raise CallerError("PRIOR_TOOL_COMPATIBILITY", phase) from None
+    _need(validated is facts, "PRIOR_TOOL_COMPATIBILITY_RESULT", phase)
+
+
 def _qualify_impl(config_path, config_sha, source_manifest_path,
                   source_manifest_sha, phase_journal_path, phase_journal_sha, *,
                   include_source_token=False):
@@ -1327,6 +1345,7 @@ def _qualify_impl(config_path, config_sha, source_manifest_path,
         config_path, config_sha, "qualify-preflight")
     state = _preflight_state(config_raw, config_path, config_sha, config, reader,
                              observer, initial_config_token)
+    _validate_prior_tool_compatibility(state)
     manifest_raw, manifest_value, manifest_token = _read_authenticated_document(
         reader, source_manifest_path, MAX_MANIFEST_BYTES,
         source_manifest_sha, "SOURCE_MANIFEST", "source-manifest")

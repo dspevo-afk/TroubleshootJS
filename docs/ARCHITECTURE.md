@@ -671,6 +671,17 @@ Implementation `4830738cf0468cf7d180b8c118164aad0ac0c23f` (Verify held CODE entr
 normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
 Completion Gmail `1a1cf103fbd84d7e` sent once; this receipt sends no second email.
 
+The [Source preflight/tool-context boundary](task-evidence/Q100/current-native-host-r1/SOURCE_PREFLIGHT_TOOL_CONTEXT_R1.md)
+separates current host identity from fixed historical prior expectations. The
+current caller pins the selected PS, checked derived harness and current codec.
+The normalizer owns pure validate_prior_tool_facts; its historical authority path
+delegates to the same byte-conserved checks. The caller authenticates and invokes
+this helper immediately after Source preflight, before prior manifest/journal/
+attempt/body work. NativeJava-to-prior-manifest binding remains after decode.
+Source-only success does not grant prior qualification or erase the incompatible
+tool context. A real historical input authority, normal native role policy and
+semantic/receipt/lifecycle closure remain separate.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published

@@ -484,6 +484,29 @@ def _validate_tool_fact(value, code):
           code + "_IDENTITY")
 
 
+def validate_prior_tool_facts(tool_facts):
+    """Validate fixed historical tool pins without requiring role metadata."""
+    tool_keys = ("qualificationPython", "rootCallPowerShell", "nativeJava",
+                 "rootCallHarness", "processModule")
+    _exact_keys(tool_facts, tool_keys, "TOOL_FACTS")
+    for key in tool_keys:
+        _validate_tool_fact(tool_facts[key], "TOOL_" + key.upper())
+    python = tool_facts["qualificationPython"]
+    _need(python["bytes"] == 171744 and python["sha256"] == QUALIFICATION_PYTHON_SHA256,
+          "QUALIFICATION_PYTHON_TOOL_PIN")
+    powershell = tool_facts["rootCallPowerShell"]
+    _need(powershell["bytes"] == 495616 and powershell["sha256"] == POWERSHELL_SHA256,
+          "ROOT_CALL_POWERSHELL_PIN")
+    harness = tool_facts["rootCallHarness"]
+    _need(harness["bytes"] == 2941 and harness["sha256"] == ROOT_CALL_HARNESS_SHA256,
+          "ROOT_CALL_HARNESS_PIN")
+    process_module = tool_facts["processModule"]
+    _need(process_module["bytes"] == 1040144
+          and process_module["sha256"] == PROCESS_MODULE_SHA256,
+          "PROCESS_MODULE_PIN")
+    return tool_facts
+
+
 def _validate_resource_facts(value, call_kind, process):
     _exact_keys(value, ("directoryNames", "evidenceSha256", "processRoot",
                         "stderrLog", "stdoutLog"), call_kind + "_RESOURCE_KEYS")
@@ -514,25 +537,7 @@ def _validate_history_authority(authority, source_manifest):
     n_root = _path_text(authority["nRoot"], "N_ROOT_PATH")
     d_root = _path_text(authority["dRoot"], "D_ROOT_PATH")
     _need(ntpath.isabs(n_root) and ntpath.isabs(d_root), "AUTHORITY_ROOT_ABSOLUTE")
-    tool_facts = authority["toolFacts"]
-    tool_keys = ("qualificationPython", "rootCallPowerShell", "nativeJava",
-                 "rootCallHarness", "processModule")
-    _exact_keys(tool_facts, tool_keys, "TOOL_FACTS")
-    for key in tool_keys:
-        _validate_tool_fact(tool_facts[key], "TOOL_" + key.upper())
-    python = tool_facts["qualificationPython"]
-    _need(python["bytes"] == 171744 and python["sha256"] == QUALIFICATION_PYTHON_SHA256,
-          "QUALIFICATION_PYTHON_TOOL_PIN")
-    powershell = tool_facts["rootCallPowerShell"]
-    _need(powershell["bytes"] == 495616 and powershell["sha256"] == POWERSHELL_SHA256,
-          "ROOT_CALL_POWERSHELL_PIN")
-    harness = tool_facts["rootCallHarness"]
-    _need(harness["bytes"] == 2941 and harness["sha256"] == ROOT_CALL_HARNESS_SHA256,
-          "ROOT_CALL_HARNESS_PIN")
-    process_module = tool_facts["processModule"]
-    _need(process_module["bytes"] == 1040144
-          and process_module["sha256"] == PROCESS_MODULE_SHA256,
-          "PROCESS_MODULE_PIN")
+    tool_facts = validate_prior_tool_facts(authority["toolFacts"])
     native = tool_facts["nativeJava"]
     native_row = _find_tool_row(source_manifest, native["path"])
     _need(native_row is not None and native_row["bytes"] == native["bytes"]

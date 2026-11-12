@@ -1,3 +1,105 @@
+# Current checkpoint: N66 current Source preflight and early prior-tool gate validated locally
+
+Writer F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
+codex/q100-terminal-only-20261107; HEAD00dc801ff4b6caf4a32b6863c16a2753d80bcaac,
+no upstream; normal target origin/codex/q100-physical-feasibility. N65impl
+4830738cf0468cf7d180b8c118164aad0ac0c23f/receipt00dc801f remotely verified,
+Gmail1a1cf103fbd84d7e once; no second N65 email. N66 final Source/unit/CODE integration/resource gates PASS; index/commit/push/Gmail pending. R66 OS-temp/
+tsj-q100-return-input-metadata-r1-63685633985d; SCOPE_IMPLEMENTATION_R2 and
+ADAPTATION_R3/R4/R5/R6 bind scope/discoveries/limits. One root-owned matrix at a time.
+
+Current caller74959B/fc827ca5678ce5309a133922ea22d0716d301f00157945bdfa781bbbd0e8a8a8;
+normalizer93753B/fb8463fef50496f6c2ab874712954f44ab5659070e05966d38710655b0fc42bc.
+Caller current-tool pins d8 PS495616 and derived root harness2937/abd79fe4ebbb90b38db1749d9cd4fc4842097c1bd658d4ed01c17bee9d7e87ff;
+module1092245/418da63a7bc1e4eb3ad0234bd789a24db2b911b635e6a54468a7bb7087c180a6 unchanged.
+Derived private harness preserves all operation/receipt/cleanup code except three
+checked bindings (module path/hash, PS hash); authenticated old2941/28aab retained.
+Its actual PS marker/child0/child7 controls pass R2, original handles recorded.
+Historical normalizer PS60c9/harness28aab/modulefb07 pins remain exact. Extracted
+pure validate_prior_tool_facts preserves old shape/static-pin checks/order/error
+codes and returns the same dict; nativeJava-to-prior-manifest linkage remains
+after decode. Caller checks this authenticated helper immediately after Source
+preflight and before source-manifest/journal/attempt/role-body work. Current
+historical mismatch now rejects early; no Data opened just to fail a known pin.
+
+Codec current23259B/de21 pin refreshed after root proves all21653 old C1 bytes
+are an exact prefix; only qualified-prior result API appended, input callbacks
+unchanged. CODE-only C1 and pinned inline-fixture Source references retained;
+only synthetic codec APIs run, no actual prior/generated Data factory admitted.
+Source preflight uses owned empty N/D roots and current8 Sources/5tools plus
+public normal allowlist metadata6686/c487; no operational journal is created.
+
+Actual final Source SmokeR2 PASS1 (0.945s), SuiteR2 PASS5 (4.106s summed outer
+operations): current Source preflight PASS_SOURCE_PREFLIGHT_ONLY/roleReadNOT_RUN;
+stale current PS/wrong config digest/wrong observed tool bytes typed rejections;
+qualify CLI negative rejects PRIOR_TOOL_COMPATIBILITY_ROOT_CALL_POWERSHELL_PIN
+before missing manifest/journal or any prior role. Controlled exit2 is a failed
+operation/expected-rejection control, never normal qualification PASS. Source
+manifests/configs/actual Source/tool facts and owned-root/output closure checked.
+No normal-prior positive, actual fixed-role body, original Source-token return,
+native role policy or full semantic/receipt/lifecycle qualification delivered.
+
+Final focused gates: pure historical-tool6 methods; normalizer authority10 and
+synthetic13; codec input11/qualified-prior18; caller synthetic20; actual Windows
+staging24/handoff18. All120 methods PASS/0SKIP, Sources frozen before/after.
+Real owned junction cleanup revalidated in maintained staging controls. Native
+CODE integration uses code-integration/run_gates.py with new caller pin and
+unchanged independent141/2396 CODE oracle: Compile Smoke1 PASS18.478s,
+Suite4 PASS26.979s; Held Smoke1 PASS32.276s, Suite4 PASS33.236s. All final
+accepted files audited; independent class authority unchanged. Production Java/GWT/Player N/A;
+electrical/population NOT_RENEWED; CI NOT_RUN/self-hosted runner prerequisite.
+
+Failures preserved: first harness positive Get-FileHash unavailable due inherited
+PSModulePath; actual outer exit1/no child receipt retained. Controller/children
+only use builtin Modules path with finally restoration; no machine/user settings
+changed. Same Source/tool bytes pass R2. Initial Source config setup caught stale
+codec identity before child launch. Source SuiteR1 failed root's duplicate
+READER_ error-prefix expectation; actual reader SHA256 -> observer TOOL_READ_ ->
+caller SOURCE_TOOL_OBSERVATION_ proved corrected literal, Source subjects/oracles
+unchanged; fresh R2 Smoke/Suite pass, no R1 Suite PASS claimed. Earlier failures
+and untouched original artifacts remain. n50 source-only final review no blocker;
+n52 codec/source-preflight audit; n51 normalizer extraction/tests. Leaves ran
+nothing. Root owns all actual gates/publication. n50 whole-report rg footprint
+and root wider filename-only AB inventory disclosed; no additional hits/bodies
+used to infer permission, protectedUnread remains UNCERTIFIED.
+
+Main5f05b005 (9M6untracked), Ed9747229(reportM), Desktope0c36885(7M89untracked)
+preserved/staged0. Only Main current prefix mirrored; opaque reports conserved.
+Old browser14116/start639294472690745890/port58320, preview34180/start
+639294472514546595/port58264+14children, oldD resources/links/scratch and
+Notepad67116860 untouched. Current owned gate process identities/receipts are
+in R66 and code-integration; no browser/listener created. Ordinary CODE fixtures
+and expected failures retained privately, no broad cleanup or unowned termination.
+
+Both Study holds unchanged; original->NULL/OBSERVE UNSPENT_GATED. No normal prior
+positive/actual fixed20 artifact body/oldD/held-out/protected Data, actual Data
+factory, oldnormal20 or genuine run. Fixed20 denotes artifacts, not20 cases.
+Source-constrained authored tuple is9007199254740993/-6587958367974952701/
+8445301674744508279, SEPARATE100/246pads and two cohort nets; this Code fact does
+not itself authorize prior records or equate the three MEDIUM regression roots.
+Full30 MEDIUM EXCLUDED, HARD/PSYCHOTIC unavailable/unrun; protectedUnread
+UNCERTIFIED, oldnormal20 NOT_REREAD; playable100=0, betaHELD. CircuitJS truth,
+R12Phase2a1352b5caeb78e069606f84a569e14670f28d807, exact product seeds/epochs/order
+and all budgets90s/640groups/5s/32768PERGROUP/copy1048576/chunk4096/Source4MiB/
+producer1MiB/fragment64KiB/opJSON8MiB/result1MiB/depth64/visits1m/classes10k256MiB/
+compile60s/reader180s/wrapper480s/cleanup120s unchanged. Root harness finite CODE
+canaries use preserved default process path, not full native coordinator policy;
+outer guard post-capture, full bootstrap/JDK/DLL/environment/descendant handles,
+creator-death/concurrent starts/namespace atomicity remain unqualified.
+
+Manifest5370c33bf4caac368f0ca7a541d9114627798dbb5415a3e7fb27274d0bc2de4c;
+proofe96edf294208a65e1733fa6bd0a940c31a0f5149262af29745f1c2853cc4c71a. Source31 inputs/tool/JAR/config freezes audited;
+resource query PASS54 known identities (29outers/13default children/4native/8CODEPS),
+original exit proofs retained, one task junction node removed/revalidated, no known
+new persistent test actor. Public artifacts omit personal paths.
+
+Next: inspect final integrated/index diff and publish validated N66 normally/mail once. Subsequent
+input authority/tool-context provenance must be explicitly established before any
+real prior read or successful upstream return. Never replace historical pins,
+fabricate a PASS/token, or infer read permission from the empty-fixture controls.
+
+# Historical checkpoint: N65 publication and N66 preparation
+
 # Current checkpoint: N65 expected CODE entrypoint refusal published
 
 Writer F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
@@ -6,7 +108,9 @@ no upstream; normal target origin/codex/q100-physical-feasibility. N64 implement
 e7dcb264/receipt9704a4ad remotely verified; Gmail1a1cede273b4173f once.
 N65 implementation 4830738cf0468cf7d180b8c118164aad0ac0c23f normally pushed/exact remote
 verified; Gmail1a1cf103fbd84d7e once. Final index9 PASS ef598928979dd81cba9c0fa15be77f095d30ea3e8d06562463bfd5cae1893efe.
-Current implementation HEAD4830738cf0468cf7d180b8c118164aad0ac0c23f; documentation receipt pending.
+Current HEAD00dc801ff4b6caf4a32b6863c16a2753d80bcaac; documentation receipt normally published/exact remote verified.
+Receipt4 index PASS b9ba149b6a387476bb1263c1210269f1899abaf143030c368cb180568cf97dd2;
+all consumed source/input pins unchanged; no second completion email.
 Private R65 OS-temp/tsj-q100-held-native-dispatch-r1-a992e1f49f98 (SCOPE_R1,
 phase source freezes/configs, original process receipts, raw results and audits).
 
@@ -62,6 +166,11 @@ avoids qualify/preflight/fixed reader; it cannot supply PASS_PRIOR_INPUT_ONLY or
 an original Source token. The allowed three development seeds have no established
 mapping to that qualifier bundle; no oldD/protected/held-out DATA opened to fill it.
 Normal role policy and real-return/full semantic/receipt/lifecycle remain pending.
+N66 source-only metadata preparation open at OS-temp/tsj-q100-return-input-metadata-
+r1-63685633985d (SCOPE_PREPARATION_R1/INPUT_REFERENCES_R1); implementation NOT_STARTED.
+Source-only role audit recorded in ROLE_BOUNDARY_FINDINGS_R1:20artifact roles,
+not20cases; prior metadata/read permission remains gated. Next bounded CODE audit
+is kernel/normalizer semantic seed/cohort expectations and authority metadata.
 
 No normal qualifier/assembly/OriginalArm/capture/graph/Session/genuine operation.
 Only held CODE main refusal; original->NULL/OBSERVE UNSPENT_GATED. No actual prior/
