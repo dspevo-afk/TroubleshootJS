@@ -12,6 +12,7 @@ import sys
 import tempfile
 import types
 import unittest
+from unittest import mock
 from pathlib import Path
 
 
@@ -107,6 +108,68 @@ def _synthetic_observation():
         "toolFacts": facts(_CALLER.TOOL_NAMES),
         "harnessModuleLinkEvidence": {"evidenceSha256": "c" * 64},
     }
+
+
+def _synthetic_tool_facts(prefix, digest):
+    return {
+        name: {
+            "path": "C:\\fixture\\" + prefix + "\\" + name + ".exe",
+            "bytes": 17,
+            "sha256": digest,
+        }
+        for name in _CALLER.TOOL_NAMES
+    }
+
+
+def _synthetic_tool_snapshot():
+    snapshot = {
+        "schema": _CALLER.HISTORICAL_TOOL_SNAPSHOT_SCHEMA,
+        "origin": "ACCEPTED_SOURCE_PREFLIGHT_ONLY",
+        "acceptedSourceCommit": _CALLER.HISTORICAL_SNAPSHOT_ACCEPTED_SOURCE_COMMIT,
+        "configSha256": _CALLER.HISTORICAL_SNAPSHOT_CONFIG_SHA256,
+        "sourceManifestSha256": _CALLER.HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_SHA256,
+        "preflightEvidenceSha256": _CALLER.HISTORICAL_SNAPSHOT_PREFLIGHT_SHA256,
+        "allowlistSha256": _CALLER.ALLOWLIST_SHA256,
+        "rootsSha256": "e" * 64,
+        "toolFacts": _synthetic_tool_facts("snapshot", "d" * 64),
+        "captureReceiptBindingEstablished": False,
+        "priorRunBindingEstablished": False,
+        "fixedRoleReadAuthorized": False,
+        "priorQualificationEstablished": False,
+    }
+    snapshot["snapshotSha256"] = _CALLER._sha(_CALLER._canonical_json(snapshot))
+    return snapshot
+
+
+def _synthetic_authority_state():
+    normalizer = types.ModuleType("_tsj_synthetic_normalizer_authority")
+    normalizer.NORMALIZER_AUTHORITY_SCHEMA = "tsj-q100-normalizer-authority-v2"
+    normalizer.SOURCE_BINDING_PINS = {"caller": "a" * 64}
+    normalizer.seen_historical = []
+    normalizer.reject_historical = False
+
+    def validate_prior_tool_facts(facts):
+        seen_historical.append(facts)
+        if reject_historical:
+            error_type = type("SyntheticToolPinError", (Exception,), {})
+            error = error_type()
+            error.code = "SYNTHETIC_PIN"
+            raise error
+        return facts
+
+    normalizer.validate_prior_tool_facts = types.FunctionType(
+        validate_prior_tool_facts.__code__, normalizer.__dict__,
+        "validate_prior_tool_facts")
+    normalizer.validate_prior_tool_facts.__module__ = normalizer.__name__
+    current_facts = _synthetic_tool_facts("current", "b" * 64)
+    state = {
+        "modules": {"normalizer": normalizer},
+        "sourceManifestSha256": "c" * 64,
+        "byteObservation": {"toolFacts": current_facts},
+    }
+    config = {"roots": {"N": "C:\\fixture\\root\\N",
+                        "D": "C:\\fixture\\root\\D"}}
+    return config, state, normalizer
 
 
 def _synthetic_journal():
@@ -549,6 +612,147 @@ class CallerStaticBoundaryTests(unittest.TestCase):
             _READER, "SOURCE_MANIFEST", raw, token, raw, touched,
             "synthetic-leaf-timestamp-change")
 
+
+class CallerHistoricalToolExpectationTests(unittest.TestCase):
+    def _assert_code(self, expected, callable_, *args, **kwargs):
+        with self.assertRaises(_CALLER.CallerError) as caught:
+            callable_(*args, **kwargs)
+        self.assertEqual(caught.exception.code, expected)
+
+    def test_snapshot_rows_validate_as_detached_expectations_only(self):
+        snapshot = _synthetic_tool_snapshot()
+        with mock.patch.object(
+                _CALLER, "HISTORICAL_TOOL_SNAPSHOT_SHA256",
+                snapshot["snapshotSha256"]):
+            expectations = _CALLER._historical_tool_expectations(snapshot)
+
+        self.assertEqual(expectations, snapshot["toolFacts"])
+        for name in _CALLER.TOOL_NAMES:
+            self.assertIsNot(expectations[name], snapshot["toolFacts"][name])
+        expectations["nativeJava"]["path"] = "C:\\fixture\\mutated\\java.exe"
+        self.assertNotEqual(
+            expectations["nativeJava"]["path"],
+            snapshot["toolFacts"]["nativeJava"]["path"])
+
+    def test_snapshot_expectation_binding_rejects_wrong_flags_and_changed_facts(self):
+        for field in ("captureReceiptBindingEstablished", "priorRunBindingEstablished",
+                      "fixedRoleReadAuthorized", "priorQualificationEstablished"):
+            with self.subTest(field=field):
+                snapshot = _synthetic_tool_snapshot()
+                with mock.patch.object(
+                        _CALLER, "HISTORICAL_TOOL_SNAPSHOT_SHA256",
+                        snapshot["snapshotSha256"]):
+                    snapshot[field] = True
+                    self._assert_code(
+                        "HISTORICAL_TOOL_EXPECTATIONS_BINDING",
+                        _CALLER._historical_tool_expectations, snapshot)
+
+        snapshot = _synthetic_tool_snapshot()
+        with mock.patch.object(
+                _CALLER, "HISTORICAL_TOOL_SNAPSHOT_SHA256",
+                snapshot["snapshotSha256"]):
+            snapshot["toolFacts"]["nativeJava"]["sha256"] = "f" * 64
+            self._assert_code(
+                "HISTORICAL_TOOL_EXPECTATIONS_BINDING",
+                _CALLER._historical_tool_expectations, snapshot)
+
+    def test_builder_requires_explicit_historical_rows_and_separates_copies(self):
+        config, state, normalizer = _synthetic_authority_state()
+        with self.assertRaises(TypeError):
+            _CALLER._make_normalizer_authority(config, state, {})
+
+        expected = _synthetic_tool_facts("expected", "d" * 64)
+        current_before = {
+            name: dict(row)
+            for name, row in state["byteObservation"]["toolFacts"].items()
+        }
+        resource_facts = {"SYNTHETIC_ONLY": {"bytes": 1}}
+        authority = _CALLER._make_normalizer_authority(
+            config, state, resource_facts,
+            historical_tool_expectations=expected)
+
+        self.assertEqual(authority["schema"], "tsj-q100-normalizer-authority-v2")
+        self.assertEqual(authority["historicalToolExpectations"], expected)
+        self.assertEqual(
+            authority["currentExecutionToolFacts"],
+            {"sourceSha256": state["sourceManifestSha256"],
+             "toolFacts": current_before})
+        self.assertEqual(
+            authority["currentExecutionToolFacts"]["sourceSha256"],
+            authority["currentSourceAuthority"]["sourceSha256"])
+        self.assertEqual(normalizer.seen_historical,
+                         [authority["historicalToolExpectations"]])
+        for name in _CALLER.TOOL_NAMES:
+            self.assertIsNot(authority["historicalToolExpectations"][name], expected[name])
+            self.assertIsNot(authority["currentExecutionToolFacts"]["toolFacts"][name],
+                             state["byteObservation"]["toolFacts"][name])
+            self.assertIsNot(authority["historicalToolExpectations"][name],
+                             authority["currentExecutionToolFacts"]["toolFacts"][name])
+        authority["currentExecutionToolFacts"]["toolFacts"]["nativeJava"]["path"] = (
+            "C:\\fixture\\mutated\\java.exe")
+        self.assertEqual(state["byteObservation"]["toolFacts"], current_before)
+
+    def test_builder_uses_historical_validator_for_explicit_rows(self):
+        config, state, normalizer = _synthetic_authority_state()
+        normalizer.reject_historical = True
+        self._assert_code(
+            "HISTORICAL_TOOL_EXPECTATIONS_SYNTHETIC_PIN",
+            _CALLER._make_normalizer_authority,
+            config, state, {},
+            historical_tool_expectations=_synthetic_tool_facts(
+                "expected", "d" * 64))
+
+    def _assert_qualify_rejects_before_document_or_role_work(self, snapshot, expected_code):
+        events = []
+
+        def read_config(*_args):
+            events.append("current-preflight")
+            return b"SYNTHETIC_CONFIG", {}, object(), object(), object()
+
+        def make_preflight_state(*_args):
+            events.append("preflight-state")
+            return {"SYNTHETIC_ONLY": True}
+
+        def current_guard(_state):
+            events.append("unchanged-current-guard")
+
+        with mock.patch.object(_CALLER, "_read_config_and_runtime",
+                               side_effect=read_config), \
+                mock.patch.object(_CALLER, "_preflight_state",
+                                  side_effect=make_preflight_state), \
+                mock.patch.object(_CALLER, "_validate_prior_tool_compatibility",
+                                  side_effect=current_guard), \
+                mock.patch.object(
+                    _CALLER, "_read_authenticated_document",
+                    side_effect=AssertionError("document read before expectation gate")) as document_read, \
+                mock.patch.object(
+                    _CALLER, "_write_exclusive",
+                    side_effect=AssertionError("attempt write before expectation gate")) as output_write, \
+                mock.patch.object(
+                    _CALLER, "_read_fixed_roles_after_journal",
+                    side_effect=AssertionError("role read before expectation gate")) as role_read:
+            self._assert_code(
+                expected_code, _CALLER.qualify,
+                config_path="C:\\fixture\\config.json", config_sha="a" * 64,
+                source_manifest_path="C:\\fixture\\manifest.json",
+                source_manifest_sha="b" * 64,
+                phase_journal_path="C:\\fixture\\journal.json",
+                phase_journal_sha="c" * 64,
+                historical_tool_snapshot=snapshot)
+
+        self.assertEqual(events, ["current-preflight", "preflight-state",
+                                  "unchanged-current-guard"])
+        document_read.assert_not_called()
+        output_write.assert_not_called()
+        role_read.assert_not_called()
+
+    def test_missing_expectations_reject_after_current_guard_before_reads(self):
+        self._assert_qualify_rejects_before_document_or_role_work(
+            None, "HISTORICAL_TOOL_EXPECTATIONS_REQUIRED")
+
+    def test_invalid_snapshot_rejects_after_current_guard_before_reads(self):
+        self._assert_qualify_rejects_before_document_or_role_work(
+            {}, "HISTORICAL_TOOL_EXPECTATIONS_KEYS")
 
 class CallerOutputIoTests(unittest.TestCase):
     """Owned temporary output fixtures only; no historical inputs are present."""

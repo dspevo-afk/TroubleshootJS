@@ -57,7 +57,7 @@ QUALIFICATION_PYTHON_SHA256 = "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c
 PAD_LAND_SHA256 = "541543170f9d48428f41ae881c596384597543ec03453fc9f9ea8d14033275a0"
 
 CURRENT_SOURCE_AUTHORITY_SCHEMA = "tsj-q100-current-source-authority-v1"
-NORMALIZER_AUTHORITY_SCHEMA = "tsj-q100-normalizer-authority-v1"
+NORMALIZER_AUTHORITY_SCHEMA = "tsj-q100-normalizer-authority-v2"
 PARENT_SCHEMA = "tsj-q100-reservation-provenance-parent-v1"
 OWNER_SCHEMA = "tsj-p9-root-call-owner-v1"
 N_RESULT_SCHEMA = "tsj-failure-cohort-routing-v1"
@@ -507,6 +507,26 @@ def validate_prior_tool_facts(tool_facts):
     return tool_facts
 
 
+def _validate_current_execution_tool_facts(value, current_source_sha256):
+    """Shape-check current observations and bind them to the current SOURCE hash.
+
+    The caller owns observation and authentication. These rows are deliberately
+    not compared to the fixed historical receipt pins below.
+    """
+    _exact_keys(value, ("sourceSha256", "toolFacts"),
+                "CURRENT_EXECUTION_TOOL_FACTS_KEYS")
+    _need(_is_sha(value["sourceSha256"]), "CURRENT_EXECUTION_TOOL_SOURCE_SHA")
+    _need(value["sourceSha256"] == current_source_sha256,
+          "CURRENT_EXECUTION_TOOL_SOURCE_BINDING")
+    tool_keys = ("qualificationPython", "rootCallPowerShell", "nativeJava",
+                 "rootCallHarness", "processModule")
+    _exact_keys(value["toolFacts"], tool_keys, "CURRENT_EXECUTION_TOOL_FACT_NAMES")
+    for key in tool_keys:
+        _validate_tool_fact(value["toolFacts"][key],
+                            "CURRENT_EXECUTION_TOOL_" + key.upper())
+    return _clone_json(value)
+
+
 def _validate_resource_facts(value, call_kind, process):
     _exact_keys(value, ("directoryNames", "evidenceSha256", "processRoot",
                         "stderrLog", "stdoutLog"), call_kind + "_RESOURCE_KEYS")
@@ -527,7 +547,8 @@ def _validate_resource_facts(value, call_kind, process):
 def _validate_history_authority(authority, source_manifest):
     _exact_keys(authority, ("schema", "authoritySha256", "kernelProvenanceSha256",
                             "nRoot", "dRoot", "currentSourceAuthority", "sourceBindings",
-                            "toolFacts", "resourceFacts"),
+                            "historicalToolExpectations", "currentExecutionToolFacts",
+                            "resourceFacts"),
                 "NORMALIZER_AUTHORITY_KEYS")
     _validate_frozen_digest(authority, "authoritySha256", "NORMALIZER_AUTHORITY")
     _need(authority["schema"] == NORMALIZER_AUTHORITY_SCHEMA, "NORMALIZER_AUTHORITY_SCHEMA")
@@ -537,11 +558,14 @@ def _validate_history_authority(authority, source_manifest):
     n_root = _path_text(authority["nRoot"], "N_ROOT_PATH")
     d_root = _path_text(authority["dRoot"], "D_ROOT_PATH")
     _need(ntpath.isabs(n_root) and ntpath.isabs(d_root), "AUTHORITY_ROOT_ABSOLUTE")
-    tool_facts = validate_prior_tool_facts(authority["toolFacts"])
-    native = tool_facts["nativeJava"]
+    historical_tool_expectations = validate_prior_tool_facts(
+        authority["historicalToolExpectations"])
+    native = historical_tool_expectations["nativeJava"]
     native_row = _find_tool_row(source_manifest, native["path"])
     _need(native_row is not None and native_row["bytes"] == native["bytes"]
           and native_row["sha256"] == native["sha256"], "NATIVE_JAVA_TOOL_BINDING")
+    current_execution = _validate_current_execution_tool_facts(
+        authority["currentExecutionToolFacts"], current["sourceSha256"])
     resource_facts = authority["resourceFacts"]
     _exact_keys(resource_facts, ("qualification", "nativePrior", "nativeData"),
                 "RESOURCE_FACTS")
@@ -560,7 +584,8 @@ def _validate_history_authority(authority, source_manifest):
         "nRoot": n_root,
         "dRoot": d_root,
         "currentSourceAuthority": current,
-        "toolFacts": tool_facts,
+        "historicalToolExpectations": historical_tool_expectations,
+        "currentExecutionToolFacts": current_execution,
         "resourceFacts": resource_facts,
     }
 
@@ -918,14 +943,14 @@ def _validate_prior_call_authorities(authority, prior_result, role_bytes,
     _need(host_calls["qualification"]["process"]["Arguments"] == expected["qualification"],
           "QUALIFICATION_ARGUMENTS")
     _need(_same_host_path(host_calls["qualification"]["process"]["FilePath"],
-                          authority["toolFacts"]["qualificationPython"]["path"].replace("\\", "/"))
+                          authority["historicalToolExpectations"]["qualificationPython"]["path"].replace("\\", "/"))
           and _same_host_path(host_calls["qualification"]["owner"]["executable"],
-                              authority["toolFacts"]["rootCallPowerShell"]["path"])
+                              authority["historicalToolExpectations"]["rootCallPowerShell"]["path"])
           and _same_host_path(host_calls["qualification"]["owner"]["script"],
-                              authority["toolFacts"]["rootCallHarness"]["path"])
+                              authority["historicalToolExpectations"]["rootCallHarness"]["path"])
           and _same_host_path(host_calls["qualification"]["owner"]["request"], d_request),
           "QUALIFICATION_HISTORICAL_TOOL_BINDING")
-    n_native = authority["toolFacts"]["nativeJava"]
+    n_native = authority["historicalToolExpectations"]["nativeJava"]
     _need(host_calls["nativePrior"]["process"]["Arguments"] == expected["nativePrior"],
           "NATIVE_PRIOR_ARGUMENTS")
     _need(_same_host_path(host_calls["nativePrior"]["process"]["FilePath"], n_native["path"])
@@ -944,7 +969,7 @@ def _validate_prior_call_authorities(authority, prior_result, role_bytes,
         _need(_same_host_path(call["owner"]["request"], expected_request)
               and _same_host_path(call["request"]["FilePath"], n_native["path"]
                                   if name == "nativePrior" else
-                                  authority["toolFacts"]["qualificationPython"]["path"].replace("\\", "/")),
+                                  authority["historicalToolExpectations"]["qualificationPython"]["path"].replace("\\", "/")),
               name + "_REQUEST_EXPECTATION")
     data_facts = authority["resourceFacts"]["nativeData"]
     _need(data_facts["directoryNames"] == list(DATA_DIRECTORY_NAMES)
@@ -1618,13 +1643,14 @@ def normalize_prior(role_bytes, allowlist_bytes, authority, kernel_callbacks, co
 
     `authority` is separately frozen by the reader/caller and has this exact
     shape: schema, authoritySha256, kernelProvenanceSha256, nRoot, dRoot,
-    currentSourceAuthority, sourceBindings, toolFacts, resourceFacts.  Its
-    authority SHA covers its other fields.  It contains no current
-    run/manifest identity.
+    currentSourceAuthority, sourceBindings, historicalToolExpectations,
+    currentExecutionToolFacts, resourceFacts.  Its authority SHA covers its
+    other fields.  `currentSourceAuthority` remains a source-only identity.
     `resourceFacts` contains caller-observed call/data directory closure and
-    process/log absence paths.  `toolFacts` contains caller-frozen path, byte
-    count, and SHA-256 tuples for the selected tools.  This function verifies
-    their bindings but never creates those facts itself.
+    process/log absence paths.  `historicalToolExpectations` contains tool
+    rows used to validate historical receipts; `currentExecutionToolFacts`
+    contains separately caller-observed current tool rows.  This function
+    validates their shape and bindings but never creates observations itself.
     """
     # Guard the source-bound pin vector before authenticating or decoding any
     # caller-supplied role body.
@@ -1678,13 +1704,13 @@ def normalize_prior(role_bytes, allowlist_bytes, authority, kernel_callbacks, co
             else:
                 docs[key] = _json_load(raw, MAX_HOST_RECEIPT_BYTES,
                                         call_name.upper() + "_" + key.upper(), allow_float=True)
-        process_tool = authority_values["toolFacts"][
+        process_tool = authority_values["historicalToolExpectations"][
             "qualificationPython" if call_name == "qualification" else "nativeJava"]
         call_tools = {
             "processExecutable": process_tool,
-            "ownerExecutable": authority_values["toolFacts"]["rootCallPowerShell"],
-            "ownerScript": authority_values["toolFacts"]["rootCallHarness"],
-            "processModule": authority_values["toolFacts"]["processModule"],
+            "ownerExecutable": authority_values["historicalToolExpectations"]["rootCallPowerShell"],
+            "ownerScript": authority_values["historicalToolExpectations"]["rootCallHarness"],
+            "processModule": authority_values["historicalToolExpectations"]["processModule"],
         }
         expected_owner_request = _join_role_path(
             authority_values["dRoot"] if call_name == "qualification" else authority_values["nRoot"],
@@ -1693,8 +1719,8 @@ def normalize_prior(role_bytes, allowlist_bytes, authority, kernel_callbacks, co
             docs, call_name.upper(), process_tool["path"],
             expected_arguments[call_name],
             180_000 if call_name == "qualification" else 480_000,
-            authority_values["toolFacts"]["rootCallPowerShell"]["path"],
-            authority_values["toolFacts"]["rootCallHarness"]["path"],
+            authority_values["historicalToolExpectations"]["rootCallPowerShell"]["path"],
+            authority_values["historicalToolExpectations"]["rootCallHarness"]["path"],
             expected_owner_request, call_tools,
             authority_values["resourceFacts"][call_name])
         host_calls[call_name] = validated

@@ -710,6 +710,23 @@ Final index9 PASS `84b13faa95870bfdd4286109ae6242cd1070588ff2be6d96a43a2864bc55c
 The first staging attempt refused sparse paths; explicit intended paths were staged
 with `--sparse`, without changing checkout rules or Source. No gate was affected.
 
+The [V2 tool-provenance authority](task-evidence/Q100/current-native-host-r1/TOOL_PROVENANCE_R2.md)
+keeps current observations and historical expectations separate in the existing
+caller/normalizer owners. The exclusive outer schema has currentExecutionToolFacts
+{sourceSha256,toolFacts} linked to unchanged currentSourceAuthority, and explicit
+historicalToolExpectations. Generic current-row validation proves shape/link only;
+the authenticated caller owns observation. Historical process/argument checks use
+only expectations, preserving fixed historical pins and Java's separate prior
+Source binding. The outer digest covers both fields; V1/toolFacts aliases reject.
+The caller requires explicit historical rows and takes detached copies. Its optional
+in-process snapshot input validates N67's fixed canonical metadata and false claims,
+with exact digest string type. The unchanged N66 guard runs before this input check;
+the check precedes manifest/journal/attempt/role work. No CLI activation or permission
+follows from a declaration. Source authority remains three-field/acyclic and current
+tools stay outside historical canonical context. Actual receipt/run/resource/root/
+allowlist and normal activation authority remain separately unqualified.
+
+
 
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before

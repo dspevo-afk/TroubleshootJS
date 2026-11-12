@@ -2291,6 +2291,20 @@ Final index9 PASS `84b13faa95870bfdd4286109ae6242cd1070588ff2be6d96a43a2864bc55c
 The first staging attempt refused sparse paths; explicit intended paths were staged
 with `--sparse`, without changing checkout rules or Source. No gate was affected.
 
+The [tool-provenance authority migration](task-evidence/Q100/current-native-host-r1/TOOL_PROVENANCE_R2.md)
+completes N68's prerequisite. V2 separates current execution observations from
+explicit historical receipt expectations, rejects the old alias/schema and binds
+current rows to the unchanged current Source authority. The caller cannot use
+current observations as an implicit historical fallback. The N66 guard, historical
+pins/Java-priorSource checks and both Study holds remain. Final143 method coverage
+(78 fresh R2,65 unchanged-input R1 audited),17 selected-host controls and10 CODE
+integration cases pass. Initial query/controller failures are preserved; the final
+strict115-identity resource audit passes. Playable100=0; beta HELD. Next is explicit
+historical-input transport/lifetime and exact prior receipt/run/Source/resource/
+journal/root/allowlist binding before any guard replacement or normal activation.
+No actual prior-role or genuine qualification is granted.
+
+
 
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical

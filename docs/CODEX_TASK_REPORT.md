@@ -1,11 +1,94 @@
-# Current checkpoint: N67 historical Source tool metadata published
+# Current checkpoint: N68 tool provenance validated; publication pending
+
+F writer OS-temp/tsj-q100-terminal-only-20261107-r1, branch
+codex/q100-terminal-only-20261107, HEAD12965bcf67cc532f5b9030690d9d9d0c7120e504,
+no upstream; normal target origin/codex/q100-physical-feasibility. N67impl2035ecba/
+receipt12965bcf verifiedremote/Gmail1a1cf93983c8ab1c once; no duplicate. N68 final
+gates validated, index/publication pending. R68 OS-temp/tsj-q100-prior-receipt-
+contract-r1-dcda31f4a409; frozen implementationR2/adaptationR3 and all failures kept.
+
+Caller93954B/7fe021e46931647c378f7293c3279f41663aaadb50a56c55771a39013e4c0373;
+normalizer95442B/9179a02f2c98f95aaf5beee7b37ab9b5f9d8d0c37c3afd15f53c9b93e8d0e7b9.
+CallerTests39184/8aa34460fe0c9b8058f6b816bda33d084ae48ae318731c0d6f24331a0c45c92c;
+normalizerTests19352/382d1ab54f86283f7ca2d839dad9e2a5d7c2b6a17d973dc457d0c5beedd352f8.
+Exclusive authorityV2 splits currentExecutionToolFacts{sourceSha256,toolFacts}
+from historicalToolExpectations (criteria, not capturefacts); currentSourceAuthority
+stays exact3fields/acyclic. Current observer owns facts; normalizer shape/link only.
+Builder explicit history/copies, no currentfallback. Optional inprocess N67snapshot
+validates fixed14keys/canonicaldigest/all4falseclaims, exactstrdigest rejects custom
+equality. Unchanged N66guard first, then expectation check beforemanifest/journal/
+attempt/roles. NoCLIactivation. Historical4pins/helper/Java-priorSource link and
+all receipt oracles preserved. BothStudyholds closed, no actualnormalpositive.
+
+PASS143 method coverage/0skip:78 affected finalR2 (caller26/stager24/handoff18/
+snapshot5/expectation5);65 R1 reused after every declared Source/fixture/interpreter
+input audit (normalizer17+13/tool6/codec11+18). Wholebootstrap not attested. Source
+Smoke1 .9554725s/Suite5 4.1276443s; declaredclosedguard2 1.7464797s; metadataAPI/CLI9
+8.0305009s. Refusal exits are controls, notqualification. FinalCODECompileSmoke1
+17.9974597s/Suite4 26.8701056s; HeldSmoke1 31.9243215s/Suite4 33.1442988s, exact
+expected refusal. Independent141 NO_DATA+2396inherited=2537/12196044B exact;
+fullreference/currentSmoke/currentSuite inventories rechecked. FinalSource34 manifest
+33ca98fad8ab96cff6f4d3ba43e81f94d06b01f49acd43a8eb17491625b57a49;
+proof9b64d050bb6a71d881d6bab9cee6fafe84003392982bc94a8eeed9efd629410f.
+Packet docs/task-evidence/Q100/current-native-host-r1/TOOL_PROVENANCE_*R2.*.
+
+Root71 caller/51 normalizer existingdefinitions byte-identical;2normalizer receipt
+consumers key-only AST migration, other29 acceptedSources unchanged. n50 norm/test
+diffSourceonly no blocker; n53 caller/test/contractSourceonly no blocker, strictdigest
+note fixed and boundedfollowup resolved. No reviewer tests/processes/Data. Leaves
+owned onefilepair each; root pin/testintegration and finalgates/publication owner.
+R1caller-consuming pass superseded by strictdigestR2 and affectedgates rerun.
+
+ResourcequeryR3 PASS115 knownidentities:57originalouters/34defaultchildren/
+16CODEPSouters/8nativeleases, originalexit/cleanupreceipts remain proof. Taskjunctions2
+removed/revalidated, ordinaryCODEfixtures kept, knownnewpersistenttestactors0.
+R1freshquery FAILED unrecorded non87 Windows error (causeunknown); diagnosticR2
+retainedassertions/queriedIDs passed then FAILED futurefixturepath. FinalR3 logsall
+queries/bothattempts/existingfixtures and same strictassertions PASS. R2IOaggregate
+controller FAILED exclusiveR1filename collision after3childgates passed; childexit/
+frozeninputs reaudited and uniqueR2aggregate recovered withouttest rerun. Failed
+controllers retained, never relabeled. Operationtimes include wrappercleanup;
+separately unmeasured where unavailable. Rootenvironment restored, no globalchange.
+
+Main5f05b005(9M6untracked), Ed9747229(reportM), Desktope0c36885(7M89untracked)
+preserved/staged0; onlyMaincurrentprefix mirrored, opaqueF/Main histories conserved.
+No new browser/listener. Old browser14116/start639294472690745890/port58320,
+preview34180/start639294472514546595/port58264+14children, oldDlinks/scratch/resources
+and Notepad67116860 untouched. No broadcleanup/kill. Source/tool checks facts across
+observations, not continuousidentity. Fullbootstrap/JDK/DLL/environment/historical
+descendants/creatorDeath/concurrency/atomicnamespace/normalnativerolecaps unqualified;
+outerguard postcapture/notlive. GWT/Player N/A; electrical/population NOT_RENEWED;
+CI NOT_RUN/selfhostedrunner prerequisite.
+
+No operationalreadjournal/actualfixed20artifactbody/oldD/heldout/protectedData/
+actualDatafactory/oldnormal20/genuine/OriginalArm/graph/capture/Session. Original->
+NULL/OBSERVE UNSPENT_GATED. Full30 EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
+protectedUnread UNCERTIFIED; oldnormal20 NOT_REREAD; playable100=0/betaHELD.
+Authoredtuple9007199254740993/-6587958367974952701/8445301674744508279 distinct
+from3MEDIUMregressionroots; fixed20 meansartifacts notcases, no permission inferred.
+CircuitJStruth/R12Phase2a1352b5caeb78e069606f84a569e14670f28d807, exact productseeds/
+epochs/order and budgets90s640groups5s32768PERGROUP/copy1048576chunk4096/Source4MiB/
+producer1MiBfragment64KiB/opJSON8MiBresult1MiB/depth64visits1m/classes10k256MiB/
+compile60sreader180swrapper480scleanup120s unchanged.
+
+Next final index/diff, normalcommit/push/exactremote/emailonce. N69 next separately
+freezes historical-input transport/lifetime and exact prior receipt/run/Source/
+resource/journal/root/allowlist contract before any guardreplacement/normalactivation.
+
+# Historical checkpoint: N67 publication and N68 preparation
+
+# Current checkpoint: N67 published; N68 receipt-contract Source preparation
 
 Writer F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
 codex/q100-terminal-only-20261107; parentf36701fff713159e590d16b7f284989e0c2ba0df,
 no upstream; normal target origin/codex/q100-physical-feasibility. N67 implementation
 2035ecba294d0d49eef81a935607b712693ffbdd normally pushed/exact remote verified; Gmail1a1cf93983c8ab1c
 once. Final index9 PASS84b13faa95870bfdd4286109ae6242cd1070588ff2be6d96a43a2864bc55cc4a;
-Current HEAD2035ecba294d0d49eef81a935607b712693ffbdd; documentation receipt pending; no second email. N66impl33ec8407/receiptf36701ff remotely
+Current HEAD12965bcf67cc532f5b9030690d9d9d0c7120e504; documentation receipt normally pushed/exactremoteverified.
+Receipt4 PASSff21a5ed053bae3754d9dcfa93f1eac29b9b98c2824821b065430a9c44876995;
+finaldocindexR2 PASSce087beae6bbe591f15f0a7a3201d4dba9b6250696784db897080fee64505832.
+All33 Sources/selectednativeconfigs/tools/JARs and independent/currentCODE class
+closures unchanged after docs only. No second email. N66impl33ec8407/receiptf36701ff remotely
 verified, Gmail1a1cf62e522d1efd once, no duplicate. Private R67 OS-temp/
 tsj-q100-historical-tool-authority-r1-f917fbda500d; frozen preparation/implementation
 scopes and all setup failures retained. One root-owned matrix at a time, now ended.
@@ -75,10 +158,15 @@ and budgets90s/640groups/5s/32768PERGROUP/copy1048576chunk4096/Source4MiB/produc
 fragment64KiB/opJSON8MiB/result1MiB/depth64visits1m/classes10k256MiB/compile60s/
 reader180s/wrapper480s/cleanup120s unchanged. Fixed20 means artifacts, notcases.
 
-Next: verify/publish documentation receipt without second email. N68 Source-only
-preparation reads bounded current CODE for receipt/run/Source/root/allowlist binding;
-no new metadata/DATA read or guard replacement permitted by preparation. Freeze its
-contract separately before implementation or any operational authority decision.
+N68 Source-only preparation open at OS-temp/tsj-q100-prior-receipt-contract-r1-
+dcda31f4a409/SCOPE_PREPARATION_R1.md. Bounded current qualifier/normalizer CODE
+field map complete; n50 bounded Source analysis integrated in SOURCE_FIELD_MAP_R1.md.
+Current observed tools and historical receipt expectations are distinct; N67
+separation/falseclaim/earlyguard tests already cover that distinction, avoid
+duplicate tests. No implementation/new metadata/DATA read/guardreplacement. Next
+freeze a small two-provenance authority contract and owned synthetic-consumer
+migration; prior receipt/run/Source/resource/journal/root/allowlist binding remains
+a separate prerequisite before activation or any operational authority decision.
 
 # Historical checkpoint: N66 publication and N67 preparation
 

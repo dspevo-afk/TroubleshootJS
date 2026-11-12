@@ -35,7 +35,7 @@ EVIDENCE_SCHEMA = "tsj-q100-normal-prior-qualification-evidence-v1"
 ALLOWLIST_SHA256 = "c487eae6ed0e070aaad75dccd14d23313ed9da2c6bda7f93bfeb886109f20f91"
 READER_SHA256 = "863a258cbab888cf112b9e927e16a099436632e9a1d43eefe0b70690c30543d8"
 OBSERVER_SHA256 = "4786259585a13819350add727bb2bfbca9f6890db208fbe8f4f60959d8c94f8c"
-NORMALIZER_SHA256 = "fb8463fef50496f6c2ab874712954f44ab5659070e05966d38710655b0fc42bc"
+NORMALIZER_SHA256 = "9179a02f2c98f95aaf5beee7b37ab9b5f9d8d0c37c3afd15f53c9b93e8d0e7b9"
 CODEC_SHA256 = "de21e233e27f93c8183101a89ed6fdb9a00812d69e1fe38cc47c3f3e573b3eb8"
 KERNEL_SHA256 = "f87c3ef799a47f14955240111d7af20737db3c329242c036f449eb1002f11873"
 PROVENANCE_SHA256 = "215ad455f799117d30ca9a7e3101ee9326c8af4fdd30295c4fd0d28331a7436f"
@@ -89,6 +89,13 @@ HISTORICAL_SNAPSHOT_PREFLIGHT_SHA256 = "8244eb5c9e5e2ee6c78ed305262dad46c4a0c585
 HISTORICAL_SNAPSHOT_ACCEPTED_SOURCE_COMMIT = "5c745c3ff78cc16e19220b6c4a46ce541bdb58ad"
 HISTORICAL_TOOL_SNAPSHOT_SCHEMA = "tsj-q100-source-tool-snapshot-metadata-v1"
 HISTORICAL_TOOL_SNAPSHOT_SHA256 = "a6cdc79ba35bc4f65e462a81ebd35b7d97260580fed5d27b75b506a9a02cc9e3"
+HISTORICAL_TOOL_SNAPSHOT_FIELDS = (
+    "schema", "origin", "acceptedSourceCommit", "configSha256",
+    "sourceManifestSha256", "preflightEvidenceSha256", "allowlistSha256",
+    "rootsSha256", "toolFacts", "captureReceiptBindingEstablished",
+    "priorRunBindingEstablished", "fixedRoleReadAuthorized",
+    "priorQualificationEstablished",
+)
 HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 UTC_TEXT = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]{1,9})?Z\Z")
 
@@ -758,6 +765,60 @@ def _historical_tool_snapshot_bytes(config_raw, source_manifest_raw, preflight_r
     return _historical_tool_snapshot_values(config, source_manifest, preflight_evidence)
 
 
+def _copy_tool_fact_map(facts, code, phase):
+    _exact_keys(facts, TOOL_NAMES, code + "_NAMES", phase)
+    copied = {}
+    for name in TOOL_NAMES:
+        row = facts[name]
+        _exact_keys(row, ("path", "bytes", "sha256"), code + "_ROW", phase)
+        _path_text(row["path"], code + "_PATH")
+        _need(_is_int(row["bytes"], 1, MAX_READER_TOOL_BYTES),
+              code + "_BYTES", phase)
+        _need(_is_sha(row["sha256"]), code + "_SHA256", phase)
+        copied[name] = {
+            "path": row["path"],
+            "bytes": row["bytes"],
+            "sha256": row["sha256"],
+        }
+    return copied
+
+
+def _historical_tool_expectations(snapshot):
+    """Validate pinned source metadata as expectations, not capture proof."""
+    phase = "historical-tool-expectations"
+    _need(snapshot is not None, "HISTORICAL_TOOL_EXPECTATIONS_REQUIRED", phase)
+    _exact_keys(snapshot, HISTORICAL_TOOL_SNAPSHOT_FIELDS + ("snapshotSha256",),
+                "HISTORICAL_TOOL_EXPECTATIONS_KEYS", phase)
+    _need(
+        snapshot["schema"] == HISTORICAL_TOOL_SNAPSHOT_SCHEMA
+        and snapshot["origin"] == "ACCEPTED_SOURCE_PREFLIGHT_ONLY"
+        and snapshot["acceptedSourceCommit"] == HISTORICAL_SNAPSHOT_ACCEPTED_SOURCE_COMMIT
+        and snapshot["configSha256"] == HISTORICAL_SNAPSHOT_CONFIG_SHA256
+        and snapshot["sourceManifestSha256"] == HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_SHA256
+        and snapshot["preflightEvidenceSha256"] == HISTORICAL_SNAPSHOT_PREFLIGHT_SHA256
+        and snapshot["allowlistSha256"] == ALLOWLIST_SHA256
+        and _is_sha(snapshot["rootsSha256"]),
+        "HISTORICAL_TOOL_EXPECTATIONS_BINDING", phase)
+    _need(snapshot["captureReceiptBindingEstablished"] is False
+          and snapshot["priorRunBindingEstablished"] is False
+          and snapshot["fixedRoleReadAuthorized"] is False
+          and snapshot["priorQualificationEstablished"] is False,
+          "HISTORICAL_TOOL_EXPECTATIONS_BINDING", phase)
+    copied_tool_facts = _copy_tool_fact_map(
+        snapshot["toolFacts"], "HISTORICAL_TOOL_EXPECTATIONS", phase)
+    material = {
+        key: snapshot[key] for key in HISTORICAL_TOOL_SNAPSHOT_FIELDS
+        if key != "toolFacts"
+    }
+    material["toolFacts"] = copied_tool_facts
+    material = {key: material[key] for key in HISTORICAL_TOOL_SNAPSHOT_FIELDS}
+    _need(_is_sha(snapshot["snapshotSha256"])
+          and snapshot["snapshotSha256"] == HISTORICAL_TOOL_SNAPSHOT_SHA256
+          and _sha(_canonical_json(material)) == HISTORICAL_TOOL_SNAPSHOT_SHA256,
+          "HISTORICAL_TOOL_EXPECTATIONS_BINDING", phase)
+    return copied_tool_facts
+
+
 def _source_module_state(reader, observer, config, byte_observation, phase):
     source_specs = config["sourceSpecs"]
     source_raw = {}
@@ -1323,18 +1384,42 @@ def _make_current_source_authority(manifest_sha):
     return value
 
 
-def _make_normalizer_authority(config, state, resource_facts):
+def _make_normalizer_authority(config, state, resource_facts, *,
+                               historical_tool_expectations):
     normalizer = state["modules"]["normalizer"]
+    phase = "normalizer-authority"
+    historical_rows = _copy_tool_fact_map(
+        historical_tool_expectations, "HISTORICAL_TOOL_EXPECTATIONS", phase)
+    callbacks = _assert_module_functions(
+        normalizer, ("validate_prior_tool_facts",), phase)
+    try:
+        validated_historical_rows = callbacks["validate_prior_tool_facts"](
+            historical_rows)
+    except Exception as exc:
+        code = getattr(exc, "code", None)
+        if type(code) is str and re.fullmatch(r"[A-Z0-9_]{1,96}", code):
+            raise CallerError("HISTORICAL_TOOL_EXPECTATIONS_" + code, phase) from None
+        raise CallerError("HISTORICAL_TOOL_EXPECTATIONS_INVALID", phase) from None
+    _need(validated_historical_rows is historical_rows,
+          "HISTORICAL_TOOL_EXPECTATIONS_RESULT", phase)
+
+    current_rows = _copy_tool_fact_map(
+        state["byteObservation"]["toolFacts"], "CURRENT_EXECUTION_TOOL_FACTS", phase)
+    current_source_authority = _make_current_source_authority(
+        state["sourceManifestSha256"])
     authority = {
         "schema": normalizer.NORMALIZER_AUTHORITY_SCHEMA,
         "authoritySha256": "0" * 64,
         "kernelProvenanceSha256": PROVENANCE_SHA256,
         "nRoot": config["roots"]["N"],
         "dRoot": config["roots"]["D"],
-        "currentSourceAuthority": _make_current_source_authority(
-            state["sourceManifestSha256"]),
+        "currentSourceAuthority": current_source_authority,
         "sourceBindings": dict(normalizer.SOURCE_BINDING_PINS),
-        "toolFacts": state["byteObservation"]["toolFacts"],
+        "historicalToolExpectations": historical_rows,
+        "currentExecutionToolFacts": {
+            "sourceSha256": current_source_authority["sourceSha256"],
+            "toolFacts": current_rows,
+        },
         "resourceFacts": resource_facts,
     }
     _freeze_digest(authority, "authoritySha256")
@@ -1537,13 +1622,15 @@ def _validate_prior_tool_compatibility(state):
 
 def _qualify_impl(config_path, config_sha, source_manifest_path,
                   source_manifest_sha, phase_journal_path, phase_journal_sha, *,
-                  include_source_token=False):
+                  include_source_token=False, historical_tool_snapshot=None):
     _need(type(include_source_token) is bool, "OUTPUT_CLOSURE_TOKEN_OPTION", "qualify-options")
     config_raw, config, reader, observer, initial_config_token = _read_config_and_runtime(
         config_path, config_sha, "qualify-preflight")
     state = _preflight_state(config_raw, config_path, config_sha, config, reader,
                              observer, initial_config_token)
     _validate_prior_tool_compatibility(state)
+    historical_tool_expectations = _historical_tool_expectations(
+        historical_tool_snapshot)
     manifest_raw, manifest_value, manifest_token = _read_authenticated_document(
         reader, source_manifest_path, MAX_MANIFEST_BYTES,
         source_manifest_sha, "SOURCE_MANIFEST", "source-manifest")
@@ -1587,7 +1674,9 @@ def _qualify_impl(config_path, config_sha, source_manifest_path,
         resource_facts, resource_evidence = _observe_resources(
             observer, reader, config, role_bytes, state["modules"]["normalizer"])
         phase = "normalization"
-        authority = _make_normalizer_authority(config, state, resource_facts)
+        authority = _make_normalizer_authority(
+            config, state, resource_facts,
+            historical_tool_expectations=historical_tool_expectations)
         try:
             result = state["modules"]["normalizer"].normalize_prior(
                 role_bytes, state["modules"]["allowlistBytes"], authority,
@@ -1732,10 +1821,11 @@ def _qualify_impl(config_path, config_sha, source_manifest_path,
 
 def qualify(*, config_path, config_sha, source_manifest_path,
             source_manifest_sha, phase_journal_path, phase_journal_sha,
-            include_source_token=False):
+            include_source_token=False, historical_tool_snapshot=None):
     return _qualify_impl(config_path, config_sha, source_manifest_path,
                          source_manifest_sha, phase_journal_path, phase_journal_sha,
-                         include_source_token=include_source_token)
+                         include_source_token=include_source_token,
+                         historical_tool_snapshot=historical_tool_snapshot)
 
 
 def inspect_historical_tool_snapshot(*, config_path, config_sha,

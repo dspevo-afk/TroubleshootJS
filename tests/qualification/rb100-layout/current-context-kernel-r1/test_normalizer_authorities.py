@@ -53,6 +53,39 @@ def _resource_fact(tag: str) -> dict:
     }
 
 
+def _current_execution_tool_facts(source_sha256: str) -> dict:
+    return {
+        "sourceSha256": source_sha256,
+        "toolFacts": {
+            "qualificationPython": {
+                "path": r"C:\synthetic-current-tools\python.exe",
+                "bytes": 171744,
+                "sha256": "8" * 64,
+            },
+            "rootCallPowerShell": {
+                "path": r"C:\synthetic-current-tools\pwsh.exe",
+                "bytes": 495616,
+                "sha256": "9" * 64,
+            },
+            "nativeJava": {
+                "path": r"C:\synthetic-current-tools\java.exe",
+                "bytes": 654321,
+                "sha256": "a" * 64,
+            },
+            "rootCallHarness": {
+                "path": r"C:\synthetic-current-tools\root-call.ps1",
+                "bytes": 2941,
+                "sha256": "b" * 64,
+            },
+            "processModule": {
+                "path": r"C:\synthetic-current-tools\process-module.psm1",
+                "bytes": 1040144,
+                "sha256": "c" * 64,
+            },
+        },
+    }
+
+
 def _authority_fixture() -> tuple[dict, dict]:
     native_java = {
         "path": r"C:\synthetic-tools\java.exe",
@@ -71,7 +104,7 @@ def _authority_fixture() -> tuple[dict, dict]:
         "dRoot": r"C:\synthetic-private\D",
         "currentSourceAuthority": current_source,
         "sourceBindings": dict(_NORMALIZER.SOURCE_BINDING_PINS),
-        "toolFacts": {
+        "historicalToolExpectations": {
             "qualificationPython": {
                 "path": r"C:\synthetic-tools\python.exe",
                 "bytes": 171744,
@@ -94,6 +127,8 @@ def _authority_fixture() -> tuple[dict, dict]:
                 "sha256": _NORMALIZER.PROCESS_MODULE_SHA256,
             },
         },
+        "currentExecutionToolFacts": _current_execution_tool_facts(
+            current_source["sourceSha256"]),
         "resourceFacts": {
             "qualification": _resource_fact("qualification"),
             "nativePrior": _resource_fact("native-prior"),
@@ -210,10 +245,22 @@ class NormalizerAuthorityFixtureTests(unittest.TestCase):
     def test_history_authority_accepts_independently_frozen_synthetic_facts(self):
         authority, source_manifest = _authority_fixture()
         facts = _NORMALIZER._validate_history_authority(authority, source_manifest)
+        self.assertEqual("tsj-q100-normalizer-authority-v2", authority["schema"])
+        self.assertEqual({
+            "schema", "authoritySha256", "kernelProvenanceSha256", "nRoot", "dRoot",
+            "currentSourceAuthority", "sourceBindings", "historicalToolExpectations",
+            "currentExecutionToolFacts", "resourceFacts",
+        }, set(authority))
         self.assertEqual(facts["nRoot"], authority["nRoot"])
         self.assertEqual(facts["dRoot"], authority["dRoot"])
         self.assertEqual(facts["currentSourceAuthority"], authority["currentSourceAuthority"])
-        self.assertIs(facts["toolFacts"], authority["toolFacts"])
+        self.assertIs(facts["historicalToolExpectations"],
+                      authority["historicalToolExpectations"])
+        self.assertEqual(facts["currentExecutionToolFacts"],
+                         authority["currentExecutionToolFacts"])
+        self.assertNotEqual(
+            facts["historicalToolExpectations"]["rootCallPowerShell"]["sha256"],
+            facts["currentExecutionToolFacts"]["toolFacts"]["rootCallPowerShell"]["sha256"])
         self.assertIs(facts["resourceFacts"], authority["resourceFacts"])
 
     def _assert_authority_rejects(self, expected_code, mutate, *, refreeze=True,
@@ -236,6 +283,32 @@ class NormalizerAuthorityFixtureTests(unittest.TestCase):
             "NORMALIZER_AUTHORITY_KEYS",
             lambda authority, _manifest: authority.update(extraFact=True), refreeze=False)
 
+    def test_history_authority_rejects_legacy_alias_and_schema(self):
+        self._assert_authority_rejects(
+            "NORMALIZER_AUTHORITY_KEYS",
+            lambda authority, _manifest: authority.pop("historicalToolExpectations"),
+            refreeze=False)
+        self._assert_authority_rejects(
+            "NORMALIZER_AUTHORITY_KEYS",
+            lambda authority, _manifest: authority.update(
+                toolFacts=authority["historicalToolExpectations"]), refreeze=False)
+        self._assert_authority_rejects(
+            "NORMALIZER_AUTHORITY_SCHEMA",
+            lambda authority, _manifest: authority.update(
+                schema="tsj-q100-normalizer-authority-v1"))
+
+    def test_history_authority_rejects_crosswired_tool_maps(self):
+        def crosswire(authority, _manifest):
+            historical = authority["historicalToolExpectations"]
+            current = authority["currentExecutionToolFacts"]
+            authority["historicalToolExpectations"] = current
+            authority["currentExecutionToolFacts"] = {
+                "sourceSha256": authority["currentSourceAuthority"]["sourceSha256"],
+                "toolFacts": historical,
+            }
+
+        self._assert_authority_rejects("TOOL_FACTS", crosswire)
+
     def test_history_authority_rejects_stale_outer_self_hash(self):
         self._assert_authority_rejects(
             "NORMALIZER_AUTHORITY_BINDING",
@@ -249,6 +322,59 @@ class NormalizerAuthorityFixtureTests(unittest.TestCase):
         self._assert_authority_rejects(
             "CURRENT_SOURCE_AUTHORITY_BINDING", mutate)
 
+    def test_current_execution_tools_bind_to_unchanged_source_authority(self):
+        self._assert_authority_rejects(
+            "CURRENT_EXECUTION_TOOL_SOURCE_BINDING",
+            lambda authority, _manifest: authority["currentExecutionToolFacts"].update(
+                sourceSha256="9" * 64))
+
+    def test_current_execution_tool_rows_are_exact_and_generic(self):
+        self._assert_authority_rejects(
+            "CURRENT_EXECUTION_TOOL_FACT_NAMES",
+            lambda authority, _manifest: authority["currentExecutionToolFacts"][
+                "toolFacts"].pop("nativeJava"))
+        self._assert_authority_rejects(
+            "CURRENT_EXECUTION_TOOL_ROOTCALLPOWERSHELL_PATH_ABSOLUTE",
+            lambda authority, _manifest: authority["currentExecutionToolFacts"][
+                "toolFacts"]["rootCallPowerShell"].update(path="pwsh.exe"))
+
+    def test_current_only_tool_change_does_not_change_historical_expectations(self):
+        authority, source_manifest = _authority_fixture()
+        historical_before = dict(authority["historicalToolExpectations"])
+        authority["currentExecutionToolFacts"]["toolFacts"]["nativeJava"].update(
+            path=r"C:\synthetic-current-tools\different-java.exe",
+            bytes=654322, sha256="f" * 64)
+        _freeze(authority, "authoritySha256")
+
+        facts = _NORMALIZER._validate_history_authority(authority, source_manifest)
+
+        self.assertEqual(historical_before, facts["historicalToolExpectations"])
+        self.assertEqual("f" * 64,
+                         facts["currentExecutionToolFacts"]["toolFacts"][
+                             "nativeJava"]["sha256"])
+
+    def test_current_tools_need_not_differ_from_historical_expectations(self):
+        authority, source_manifest = _authority_fixture()
+        authority["currentExecutionToolFacts"]["toolFacts"] = json.loads(
+            json.dumps(authority["historicalToolExpectations"]))
+        _freeze(authority, "authoritySha256")
+
+        facts = _NORMALIZER._validate_history_authority(authority, source_manifest)
+
+        self.assertEqual(facts["historicalToolExpectations"],
+                         facts["currentExecutionToolFacts"]["toolFacts"])
+
+    def test_history_authority_rejects_stale_digest_for_either_tool_map(self):
+        self._assert_authority_rejects(
+            "NORMALIZER_AUTHORITY_BINDING",
+            lambda authority, _manifest: authority["historicalToolExpectations"][
+                "qualificationPython"].update(bytes=171745), refreeze=False)
+        self._assert_authority_rejects(
+            "NORMALIZER_AUTHORITY_BINDING",
+            lambda authority, _manifest: authority["currentExecutionToolFacts"][
+                "toolFacts"]["rootCallPowerShell"].update(sha256="0" * 64),
+            refreeze=False)
+
     def test_history_authority_rejects_source_and_tool_pin_mutations(self):
         self._assert_authority_rejects(
             "SOURCE_BINDING_PINS",
@@ -256,7 +382,7 @@ class NormalizerAuthorityFixtureTests(unittest.TestCase):
                 priorReader="9" * 64))
         self._assert_authority_rejects(
             "QUALIFICATION_PYTHON_TOOL_PIN",
-            lambda authority, _manifest: authority["toolFacts"][
+            lambda authority, _manifest: authority["historicalToolExpectations"][
                 "qualificationPython"].update(bytes=171745))
 
     def test_history_authority_rejects_native_tool_and_data_closure_mismatch(self):
