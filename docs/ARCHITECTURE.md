@@ -653,7 +653,9 @@ around actual compile. The pinned PS bridge only forwards existing invocation
 parameters; outer PS host ownership uses its original Popen handle. This is a
 finite CODE test, not a normal coordinator/admission or role-cap policy. Verified
 normal return, full tool/semantic/lifecycle closure and genuine use remain gated.
-Publication pending.
+Implementation `e7dcb264a36e09cc5ffa16e30ee31664861c8e6c` (Compose current CODE compilation through native containment)
+normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
+Completion Gmail `1a1cede273b4173f` sent once; this receipt sends no second email.
 
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
