@@ -1,3 +1,68 @@
+# Current checkpoint: N64 finite current CODE compile accepted locally
+
+ActiveF OS-temp/tsj-q100-terminal-only-20261107-r1, branch
+codex/q100-terminal-only-20261107; parent/currentHEAD32dd0c40ec5541ee06fd3819505c7b4b42f62f83,
+no upstream; normal target origin/codex/q100-physical-feasibility. N63impl17a77651/
+receipt32dd0c40 remotelyverified, Gmail1a1ce9981c71ccd7 once. N64 implementation/
+publication/email pending. R64 OS-temp/tsj-q100-native-code-compile-r1-zfkyfs0p, SCOPE_R1+R2_HOST_RECEIPT.
+
+New maintained CODE-only Pythonlab20803B/2977e2d36bdf9026a61982b01aaaf44f135e9ecea68618c318f4bf0d2c3056cc and
+PSbridge18103B/fe55e14c5b359ee55315dbd8353a74392b27d9b571b5880a96bd47e873fca9a4; production owners unchanged. Existing
+reader/caller/loader/stager/writer/N63tokenmaps/sixSourceRecipe/N61native/class
+inventory composed, no newcompiler launcher/captureloop/FSverifier/ledger/solver.
+ExplicitNO_DATA862B/141822Source, originalwriter->N63projectedidentity match,
+Source/tools/core/argfile/frame originalidentities checked before/after compile.
+Existing60s source7/target7/UTF8/Xlint recipe and TESTONLY4096B streams. Reference
+independent141/2396 closure beforecompiler; actualfresh141 bytes+major51 exact,
+2537classes12196044B, GWTknownCODEjarbytes/names pinned/rechecked. Externalfixed
+JARbinding does not extendreader8MiB cap or provefullJDK/DLL/boot/tool/environment.
+
+Finalactual WindowsPythonad169-I-B optimize0/PSd8/JDKjavac61fa: SmokeFinalR3 PASS1/
+17.831s, SuiteFinalR2 PASS4/26.865s. Actualnativecompile0/quiet; API950.328ms and
+callerjobcleanup2.704ms in finalSuite; otherFS/hash/setup notseparatelytimed.
+SourceGuard samebytes/newfileID SOURCE_CHANGED before compilerattempt; class
+mutationREADER_SHA256 then originalrestoration/fullclosure; wrongframehash exit2
+beforenative/evidencenamespace. Rejections notsuccessfulfailedoperations. New
+hostsource-onlyreview found delayedexitreceipt afteroutputcap failure; root saves
+exit/length/boundedprefix beforeguard and cleanup-failure facts in finally. Real
+literalPSactor1048577O bytes/exit0 triggers operationFAIL_OUTPUT_LIMIT, original
+exittrue/1048576retained/controlPASS, nocompiler/job. Outerguardpostcapture, notlive.
+Pre-fix6cf Smoke1/Suite4 and pre-finalSmokeR2 PASS preserved/notreused. Request
+actualbufferSHA and singlecallerjobcleanup5s correctedbeforefirstexecution. N53
+PSonly; n52 boundedtoken/writer advice; n50 hostreview+finaldelta no blocker,
+allsourceonly/noleafexecutions. Root allgates/integration/independentrowbyteaudit.
+
+PublicmanifestSHAf81bb9086a61fda5b7629b596cd0e9b743252392f47ee99d0588c23fedc494ac; proofSHA7559b092271b1c521379478319d3621d4ef9b507a6d036ee6f67b068f12d827f; all17 currentCODE inputs,
+tools/JAR/configs rechecked. Authenticated N55CODE metadata chain suppliesexpected
+141/2396, notcandidate-derived oracles. N63declaredsources unchanged/rechecked,
+evidence retained/notrerun/notrenewed. ResourcequeryauditPASS18 known identities
+(5Pythonouter/8PSouter/5nativecompiler), alloriginalexitproofs retained, nohistory
+repaired/fullbootstrapclosureattested. Knownnewpersistentactors/listeners/links0;
+ordinaryCODE/artifactmutations/prefixes retained. NoSyscallfailureinjection.
+
+Main5f05b005(9M6untracked), Ed9747229(reportM), Desktope0c36885(7M89untracked)
+preserved/staged0; onlyMaincurrentprefix mirrored; opaquehistories conserved.
+Oldbrowser14116/start639294472690745890/port58320, preview34180/start
+639294472514546595/port58264+14children, oldDresources/links/scratch and
+Notepad67116860 untouched. Next unstartedN65: explicit normal rolepolicy and
+verifiedupstreamreturn/fullsemantic/receipt/lifecycle composition; freeze small
+eligible scope with current owners, neverinfercapsfromtest4096/JSONbodylimits.
+
+No normalqualifieroperation/harness/Study/javaentrypoint/OriginalArm/capture/
+graph/Session/receipt/export/genuine. BothStudyholds unchanged; original->NULL/
+OBSERVEUNSPENT_GATED. No protected/prior/oldD/heldoutDATA/generatedDATAfactory/
+oldnormal20 operation. Full30normalMEDIUM EXCLUDED; HARD/PSYCHOTIC unavailable/
+unrun; protectedUnreadUNCERTIFIED; oldnormal20NOTREREAD; playable100=0; betaHELD.
+CircuitJS truth/exactproductseeds/epochs/order and allbudgets90s/640groups/5s/
+32768PERGROUP/copy1048576/chunk4096/source4MiB/fragment64KiB/opJSON8MiB/result1MiB/
+depth64/visits1m/classes10k256MiB/compile-native60s/reader180s/wrapper480s/cleanup120s
+unchanged. ProductionJava/GWT/visiblePlayerN/A; electrical/populationNOTRENEWED;
+CINOTRUN/self-hostedrunnerprerequisite. Normalrolepolicy/verifiedreturn, fulltool/
+JDK provenance/semantic/lifecycle, creatorDeath/concurrency/atomicnamespace and
+allhistoricaldescendanthandles remainunqualified. FiniteCODEcompile notadmission.
+
+# Historical checkpoint: N63 publication and N64 preparation
+
 # Current checkpoint: N63 identity continuation published
 
 Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
@@ -7,7 +72,9 @@ receipt0899ec12 remotely verified, Gmail1a1ce6aee6bc5b96 once. N63 implementatio
 17a776513b674b00830e555f59ba96402224834a (Retain native source and tool observation identities)
 normally pushed/exactremoteverified, Gmail1a1ce9981c71ccd7 once. Index9 PASS
 2bf6ed34a402b9a89a36ba19f9e7e7f7206b52dab7bf378a67bf67caad190d33.
-Current HEAD17a776513b674b00830e555f59ba96402224834a; documentation-only receipt pending.
+Current HEAD32dd0c40ec5541ee06fd3819505c7b4b42f62f83; documentation-only receipt normallypublished/
+exactremoteverified. Receipt4 index PASS
+add84a588298c0cdf68d836e9544295e351560089b6f2a2bc205f22e9ba236ee.
 Source-bound consumed inputs rechecked; no second completion email. R63 OS-temp/tsj-q100-native-identity-continuation-r1-wxdjj4ok, frozen SCOPE_R1/BASELINE_R1.
 
 Existing native byte-facts owner optional strictboolinclude_identity_tokens=False;
@@ -51,6 +118,8 @@ Old browser14116/start639294472690745890/port58320, preview34180/start
 Notepad67116860 untouched. Next unstartedN64: freeze trusted currentCODE compile
 composition with existing source/tool/class/invocation/native owners and explicit
 policy/provenance/verified-return requirements; no normal/genuine activation.
+Preparation open at OS-temp/tsj-q100-native-code-composition-prep-r1-o1mx6v1j
+(SCOPE_PREPARATION_R1/INPUT_REFERENCES_R1), implementation NOTSTARTED.
 
 Full30 normalMEDIUM EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; protectedUnread
 UNCERTIFIED; oldnormal20NOTREREAD; bothStudyholds unchanged; original->NULL/OBSERVE

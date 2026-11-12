@@ -39,3 +39,4 @@ tests/contracts/VerifierCapturedPipeContract.ps1 -text whitespace=cr-at-eol
 tests/contracts/VerifierNativeCoordinatorContract.ps1 -text whitespace=cr-at-eol
 tests/contracts/VerifierNativeToolReturnContract.ps1 -text whitespace=cr-at-eol
 tests/contracts/VerifierNativeToolReturnCanary.java -text whitespace=cr-at-eol
+tests/contracts/VerifierCurrentCodeCompileContract.ps1 -text whitespace=cr-at-eol

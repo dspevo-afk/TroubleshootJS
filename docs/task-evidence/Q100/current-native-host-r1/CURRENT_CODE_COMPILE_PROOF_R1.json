@@ -1,0 +1,207 @@
+{
+  "status": "PASS_FINITE_CURRENT_CODE_NATIVE_COMPILE_NOT_NORMAL_ADMISSION",
+  "sourceManifestSha256": "f81bb9086a61fda5b7629b596cd0e9b743252392f47ee99d0588c23fedc494ac",
+  "gates": [
+    {
+      "phase": "smoke-final-r3",
+      "mode": "Smoke",
+      "status": "PASS",
+      "cases": 1,
+      "wholePythonWrapperOperationNanos": 17831077000,
+      "wrapperCleanup": "UNMEASURED_SEPARATELY",
+      "compileApiOperationMilliseconds": 981.966,
+      "callerJobCleanupMilliseconds": 2.6488,
+      "otherSetupInventoryHashOperations": "NOT_SEPARATELY_TIMED",
+      "closure": {
+        "freshClasses": 141,
+        "inheritedClasses": 2396,
+        "classCount": 2537,
+        "classBytes": 12196044,
+        "freshRowsSha256": "f237badccb663ac310cd2430c252fdc3c3b34d32b51309980664fb929bdacc9b",
+        "inheritedRowsSha256": "e93312ee5b2f4186d884d57db114b2e6699c7a8c85f3102bd9f5fd3a094594a2"
+      },
+      "nativeContainment": {
+        "LeaseReturned": true,
+        "ProcessCreationFileTime": 134389448518529024,
+        "NativeExitCode": 0,
+        "ProcessExitCode": 0,
+        "RootExitObserved": true,
+        "JobEmpty": true,
+        "ReadHandlesClosed": true,
+        "LeaseClosed": true,
+        "TerminationRequested": false,
+        "CleanupProven": true,
+        "DescendantHandleWaits": "NOT_ATTESTED",
+        "Scope": "SERIAL_DEDICATED_HOST",
+        "OperationPhase": "COMPLETE",
+        "CleanupPhase": "COMPLETE",
+        "OperationMilliseconds": 819.3738000000001,
+        "CleanupMilliseconds": 50.8414
+      },
+      "callerJobCleanup": {
+        "initialMemberIds": [],
+        "finalMemberIds": [],
+        "initialMembershipObserved": true,
+        "emptyMembershipObserved": true,
+        "terminationRequested": false,
+        "disposalAttempted": true,
+        "disposed": true,
+        "cleanupMilliseconds": 0.7049000000000001,
+        "failure": null
+      },
+      "negativeControls": [],
+      "privateCasesSha256": "a28818997cac56072c5e93ce82a5d52973873f8417699ce4d790ebbb9e7962dd",
+      "sourceFreezeSha256": "20a57451f9d9ecf1fc74877610f802fd122a334117ecb008c13e3f51711f3f94"
+    },
+    {
+      "phase": "suite-final-r2",
+      "mode": "Suite",
+      "status": "PASS",
+      "cases": 4,
+      "wholePythonWrapperOperationNanos": 26864577500,
+      "wrapperCleanup": "UNMEASURED_SEPARATELY",
+      "compileApiOperationMilliseconds": 950.3275000000001,
+      "callerJobCleanupMilliseconds": 2.7036000000000002,
+      "otherSetupInventoryHashOperations": "NOT_SEPARATELY_TIMED",
+      "closure": {
+        "freshClasses": 141,
+        "inheritedClasses": 2396,
+        "classCount": 2537,
+        "classBytes": 12196044,
+        "freshRowsSha256": "f237badccb663ac310cd2430c252fdc3c3b34d32b51309980664fb929bdacc9b",
+        "inheritedRowsSha256": "e93312ee5b2f4186d884d57db114b2e6699c7a8c85f3102bd9f5fd3a094594a2"
+      },
+      "nativeContainment": {
+        "LeaseReturned": true,
+        "ProcessCreationFileTime": 134389449760817299,
+        "NativeExitCode": 0,
+        "ProcessExitCode": 0,
+        "RootExitObserved": true,
+        "JobEmpty": true,
+        "ReadHandlesClosed": true,
+        "LeaseClosed": true,
+        "TerminationRequested": false,
+        "CleanupProven": true,
+        "DescendantHandleWaits": "NOT_ATTESTED",
+        "Scope": "SERIAL_DEDICATED_HOST",
+        "OperationPhase": "COMPLETE",
+        "CleanupPhase": "COMPLETE",
+        "OperationMilliseconds": 788.5237000000001,
+        "CleanupMilliseconds": 52.380500000000005
+      },
+      "callerJobCleanup": {
+        "initialMemberIds": [],
+        "finalMemberIds": [],
+        "initialMembershipObserved": true,
+        "emptyMembershipObserved": true,
+        "terminationRequested": false,
+        "disposalAttempted": true,
+        "disposed": true,
+        "cleanupMilliseconds": 0.752,
+        "failure": null
+      },
+      "negativeControls": [
+        {
+          "name": "late-source-identity-rejection",
+          "status": "PASS_EXPECTED_REJECTION",
+          "compilerAttempted": false,
+          "rejection": "SOURCE_CHANGED"
+        },
+        {
+          "name": "class-hash-rejection-and-restoration",
+          "status": "PASS_EXPECTED_REJECTION",
+          "rejection": "READER_SHA256",
+          "restoredClosure": {
+            "freshClasses": 141,
+            "inheritedClasses": 2396,
+            "classCount": 2537,
+            "classBytes": 12196044,
+            "freshRowsSha256": "f237badccb663ac310cd2430c252fdc3c3b34d32b51309980664fb929bdacc9b",
+            "inheritedRowsSha256": "e93312ee5b2f4186d884d57db114b2e6699c7a8c85f3102bd9f5fd3a094594a2"
+          }
+        },
+        {
+          "name": "request-pin-before-launch-rejection",
+          "status": "PASS_EXPECTED_REJECTION",
+          "compilerAttempted": false,
+          "evidenceNamespaceCreated": false
+        }
+      ],
+      "privateCasesSha256": "ef46cc58a7124ee6115b18ccf9549f9597b8eece340adc632f7a7af09ccc7b9b",
+      "sourceFreezeSha256": "7355640fda8c98f80c8f0d413e0f9ef4428db62a9a383a97491d316c3616b6dc"
+    }
+  ],
+  "outerOutputControl": {
+    "status": "PASS_EXPECTED_OUTER_OUTPUT_FAILURE_EVIDENCE",
+    "controlledOperation": "FAIL_NOT_PASS_OUTPUT_LIMIT",
+    "compilerAttempted": false,
+    "nativeJobCreated": false,
+    "actorSourceSha256": "7957f6201d0d3b8c4862afc84c43a2353e1872e3c0d08aafe85bd6ed7656013e",
+    "driverSha256": "2977e2d36bdf9026a61982b01aaaf44f135e9ecea68618c318f4bf0d2c3056cc",
+    "receiptSha256": "f22d2d5737d518dc6db9e6d73886639b604210a18fdda3fc7fd6873d11d0540f",
+    "exitCode": 0,
+    "originalOuterExitObserved": true,
+    "stdoutBytes": 1048577,
+    "stdoutRetainedBytes": 1048576,
+    "stderrBytes": 0,
+    "operationNanos": 163162000,
+    "cleanupNanos": null
+  },
+  "knownResources": {
+    "status": "PASS",
+    "knownIdentities": 18,
+    "counts": {
+      "pythonOuter": 5,
+      "psOuter": 8,
+      "nativeCompiler": 5
+    },
+    "queryOnly": true,
+    "historicalHandleProof": "NOT_REPAIRED_BY_QUERY",
+    "fullBootstrapToolProcessClosure": "NOT_ATTESTED",
+    "knownNewPersistentActors": 0
+  },
+  "earlierPassesNotReusedForChangedHostWrapper": [
+    "smoke-r1",
+    "suite-r1",
+    "smoke-final-r2"
+  ],
+  "sourceCorrectionsBeforeFirstExecution": [
+    "PS hashes actual request buffer before parsing, not only the path reread",
+    "single caller-job cleanup attempt under existing5s; zero observed/discarded diagnostics"
+  ],
+  "review": {
+    "root": "all integrated source/actual gates/independent class-row bytes/identity boundaries/resource+index audits",
+    "n53": "new PS bridge only, no execution",
+    "n52": "bounded staging/writer/N63 token projection source-only, no mismatch",
+    "n50": "outer test-host review found delayed output-cap receipt; root fixed it and cleanup-finally capture; final bounded delta no blocker, source-only"
+  },
+  "limits": {
+    "nativeRoleCaps": "TEST_ONLY4096_PER_STREAM_NOT_NORMAL_POLICY",
+    "compileMilliseconds": 60000,
+    "outerPsHostMilliseconds": 180000,
+    "labWrapperMilliseconds": 480000,
+    "outerStreams": "POST_CAPTURE1MIB_GUARD_NOT_LIVE_BOUND",
+    "cleanupSyscallFailureInjection": "NOT_RUN",
+    "fullJdkDllBootToolEnvironmentProvenance": "NOT_ATTESTED",
+    "allHistoricalDescendantHandles": "NOT_ATTESTED",
+    "creatorDeath": "UNQUALIFIED",
+    "concurrentInheritingStarts": "UNQUALIFIED",
+    "externalNamespaceAtomicity": "NOT_PROVEN",
+    "classJarLifetime": "CALLER_EXCLUSIVITY_AND_FIXED_BYTE_CLOSURE_SNAPSHOTS",
+    "normalVerifiedReturn": "NOT_EXERCISED"
+  },
+  "product": {
+    "normalGenuine": "UNSPENT_GATED",
+    "nativeStudyJavaEntryPoint": "NOT_RUN",
+    "normalStudyHolds": "UNCHANGED",
+    "full30NormalMedium": "EXCLUDED",
+    "hardPsychotic": "UNAVAILABLE_UNRUN",
+    "protectedUnread": "UNCERTIFIED",
+    "oldnormal20": "NOT_REREAD",
+    "playable100": 0,
+    "beta": "HELD",
+    "productionJavaGwtVisiblePlayer": "NOT_APPLICABLE",
+    "electricalPopulation": "NOT_RENEWED",
+    "ci": "NOT_RUN_SELF_HOSTED_RUNNER_PREREQUISITE"
+  }
+}

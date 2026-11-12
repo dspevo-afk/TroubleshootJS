@@ -644,6 +644,17 @@ Implementation `350da0cce4efbc2f684f61755ff0e82f863fc59e` (Add native JDK compil
 normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
 Completion Gmail `1a1ce6aee6bc5b96` sent once; this receipt sends no second email.
 
+The [finite current CODE compile lab](task-evidence/Q100/current-native-host-r1/CURRENT_CODE_COMPILE_R1.md)
+composes the existing Source stager/writer, original identity observer, six-Source
+recipe, native creator-job capture and fixed class inventory. The test caller
+authenticates independent141/2396 CODE rows and known JAR bytes/name sets, binds
+the explicit NO_DATA producer's writer token, and rechecks Source/tool identities
+around actual compile. The pinned PS bridge only forwards existing invocation
+parameters; outer PS host ownership uses its original Popen handle. This is a
+finite CODE test, not a normal coordinator/admission or role-cap policy. Verified
+normal return, full tool/semantic/lifecycle closure and genuine use remain gated.
+Publication pending.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published
