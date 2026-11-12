@@ -2271,6 +2271,20 @@ Implementation `33ec8407dd86652f266101aaac702d6aa4f9daa0` (Separate source prefl
 normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
 Completion Gmail `1a1cf62e522d1efd` sent once; this receipt sends no second email.
 
+The [historical Source tool snapshot inspector](task-evidence/Q100/current-native-host-r1/HISTORICAL_TOOL_SNAPSHOT_R1.md)
+completes N67's metadata prerequisite. The caller authenticates three exact accepted
+Source-control artifacts, checks their bindings before interpretation, rechecks
+their original identities/bytes and current Source preflight, and returns an
+explicitly non-authorizing snapshot. Default API/CLI output is path-free; trusted
+in-process detail is opt-in. N66's prior-tool guard and both Study holds remain.
+Final-source125 synthetic/NO_DATA methods, nine selected-host metadata controls,
+Source Smoke1/Suite5 and10 CODE integration cases passed. Two bounded Source
+reviews found no blocker; setup failures remain preserved. Playable100=0 and beta
+HELD. Next is a separately frozen receipt/run/Source/root/allowlist binding contract;
+metadata inspection grants no prior-role read or genuine qualification. Native
+role policy, full semantic/receipt/lifecycle closure and runner setup remain pending.
+
+
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

@@ -1,3 +1,84 @@
+# Current checkpoint: N67 historical Source tool metadata validated
+
+Writer F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
+codex/q100-terminal-only-20261107; HEADf36701fff713159e590d16b7f284989e0c2ba0df,
+no upstream; normal target origin/codex/q100-physical-feasibility. N67 implementation
+validated, index/publication pending. N66impl33ec8407/receiptf36701ff remotely
+verified, Gmail1a1cf62e522d1efd once, no duplicate. Private R67 OS-temp/
+tsj-q100-historical-tool-authority-r1-f917fbda500d; frozen preparation/implementation
+scopes and all setup failures retained. One root-owned matrix at a time, now ended.
+
+Caller89480B/3e14821666669ba4a85d27a1c0a2137b0455e0ab62273a93da4a13692fb5f2f9;
+new test11030B/499951ba08f135629b1bb86157f1edcca936eb136b06fcee5083a3175f905593.
+Inspector authenticates all three accepted Source-only metadata buffers before
+JSON decode, crosschecks their shapes/facts/closed DATA phase, uses the existing
+reader and rechecks original tokens/bytes plus current inputs/roots/empty output.
+No historical contained path followed, no operational write. DefaultAPI/CLI
+path-free; strictbool inprocess detail opt-in. OriginACCEPTED_SOURCE_PREFLIGHT_ONLY;
+captureReceiptBindingEstablished/priorRunBindingEstablished/fixedRoleReadAuthorized/
+priorQualificationEstablished allfalse. Independent pre-candidate literal digest
+a6cdc79ba35bc4f65e462a81ebd35b7d97260580fed5d27b75b506a9a02cc9e3 exact.
+Sourcecfg4894/c8e937, manifest2124/e5ea5a and preflight1595/8244eb bind accepted
+Source5c745c3ff78cc16e19220b6c4a46ce541bdb58ad; root StageB read only named
+Source-control config via pinned reader. No capture/prior-run binding inferred.
+
+Final Source33 manifest57ca443a7b0bc3d837d44ce277f23a4f8cc31689d025366952a28684be256fbb;
+proofab330ba6773310ed83fbc717c484395f70be59102b90259f819c90abd594ab42.
+Publicpacket docs/task-evidence/Q100/current-native-host-r1/HISTORICAL_TOOL_SNAPSHOT_*.
+PASS125 fresh synthetic/NO_DATA methods/0skip: snapshot5, tool6, normalizer10+13,
+codec11+18, caller20, stager24, handoff18. Nine actual reader/API/CLI controls PASS
+8.223772s sumouter: CLIpathfree/APIliteral,3badhashes,3samebyteidentity,strictbool.
+Identity controls injected profilehook with real OS rename, not external raceproof.
+SourceSmoke1 .9378227s/Suite5 4.0979113s; known historical mismatch rejects before
+prior manifest/journal/attempt/role reads. CODECompileSmoke1 18.4103934s/Suite4
+27.3280854s; HeldSmoke1 32.3100668s/Suite4 33.4223231s. Held expectedrefusal is not
+producer success. Independent141 NO_DATA+2396 inherited=2537/12196044B exact,
+reference/currentSmoke/currentSuite full inventories rechecked. No GWT/Player/
+electrical/population renewal; GWT/Player N/A, CI NOT_RUN/selfhostedrunner prerequisite.
+
+Root68 existingdefinitions byte-identical except CLIparser/main;30other accepted
+Source tuples unchanged. NormalizerFB8463/codecDE21, current PSd8/harness2937abd79f/
+module418 and N66 guard/_make_normalizer_authority/preflight remain unchanged.
+n50 finaldiff/test/contract and n52 IOhelpers Source-only reviews no blocker;
+neither ran processes/tests or read private metadata/DATA. Leaves owned onefile
+each and no stage/commit/push/mail. First root setup stale-worker-pin assertions
+failed before any gate launched; scripts and failure recorded, finalpin attempts
+fresh PASS. No failed operation relabeled. Existing budgets/typed codes unchanged.
+
+Resourcequery PASS55 knownidentities:28 originalouters,15defaultchildren,
+8CODEPSouters,4nativeleases; original exit/receipt cleanup proofs and roots/logs
+absent. One exact taskjunction removed/verified; ordinary CODE fixtures retained;
+knownnewpersistenttestactors0. No new browser/listener. Operation time includes
+normal wrappercleanup; separately unmeasured where receipt doesnot expose it.
+Current Source/tool checks compare facts across observations, not retainedtokens;
+samebyte identity replacement canpass there. Snapshot3originaltokens retained.
+Atomic namespace/fullbootstrap/environment/DLL/JDK closure/historicaldescendanthandles/
+creatorDeath/concurrency/normalnativerolecaps unqualified. Outerguard postcapture.
+
+Main5f05b005 (9M6untracked), Ed9747229(reportM), Desktope0c36885(7M89untracked)
+preserved/staged0; only Maincurrentprefix mirrored; opaque reports byteconserved.
+Old browser14116/start639294472690745890/port58320, preview34180/start
+639294472514546595/port58264+14children, oldD resources/links/scratch and
+Notepad67116860 untouched. No broad cleanup/kill or globalenvironment change.
+
+Both Studyholds unchanged; original->NULL/OBSERVE UNSPENT_GATED. No operational
+readjournal, actualfixed20artifactbody, normalqualifypositive, oldD/heldout/protected
+DATA, actualDATAfactory, oldnormal20 or genuine/OriginalArm/graph/capture/Session.
+Full30 MEDIUM EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; protectedUnread
+UNCERTIFIED, oldnormal20 NOT_REREAD; playable100=0,betaHELD. Authored tuple
+9007199254740993/-6587958367974952701/8445301674744508279 and two cohortnets
+separate from3MEDIUMregressionroots; no authorizationinferred. CircuitJStruth,
+R12Phase2a1352b5caeb78e069606f84a569e14670f28d807, exact productseeds/epochs/order
+and budgets90s/640groups/5s/32768PERGROUP/copy1048576chunk4096/Source4MiB/producer1MiB/
+fragment64KiB/opJSON8MiB/result1MiB/depth64visits1m/classes10k256MiB/compile60s/
+reader180s/wrapper480s/cleanup120s unchanged. Fixed20 means artifacts, notcases.
+
+Next: final index/review then normalcommit/push/exactremote/emailonce. Next separate
+scope N68 freezes historical receipt/run/Source/root/allowlist binding before any
+normalread or guardreplacement. Source metadata inspection grants no such authority.
+
+# Historical checkpoint: N66 publication and N67 preparation
+
 # Current checkpoint: N66 current Source preflight and early prior-tool gate published
 
 Writer F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
@@ -6,7 +87,10 @@ no upstream; normal target origin/codex/q100-physical-feasibility. N65impl
 4830738cf0468cf7d180b8c118164aad0ac0c23f/receipt00dc801f remotely verified,
 Gmail1a1cf103fbd84d7e once; no second N65 email. N66 implementation 33ec8407dd86652f266101aaac702d6aa4f9daa0 normally pushed/exact remote verified;
 Gmail1a1cf62e522d1efd once. Final index9 PASS 033b7d3a00a1f446a23ed9db9b3d52370f73999eea7473ca68d00462c869abf3.
-Current implementation HEAD33ec8407dd86652f266101aaac702d6aa4f9daa0; documentation receipt pending. R66 OS-temp/
+Current HEADf36701fff713159e590d16b7f284989e0c2ba0df; documentation receipt normally published/exact remote verified.
+Receipt4 index PASS 0cd073326b605dc3fe4107f5e3c24840b13c7b4c0969dd75cbda12c2f0487795;
+all31 Source/tool/JAR/config inputs and full reference/current CODE class closures
+rechecked unchanged; no second completion email. R66 OS-temp/
 tsj-q100-return-input-metadata-r1-63685633985d; SCOPE_IMPLEMENTATION_R2 and
 ADAPTATION_R3/R4/R5/R6 bind scope/discoveries/limits. One root-owned matrix at a time.
 
@@ -95,7 +179,13 @@ resource query PASS54 known identities (29outers/13default children/4native/8COD
 original exit proofs retained, one task junction node removed/revalidated, no known
 new persistent test actor. Public artifacts omit personal paths.
 
-Next unstarted N67: establish authenticated historical input/tool-context authority. Subsequent
+N67 Source-only preparation open at OS-temp/tsj-q100-historical-tool-authority-r1-
+f917fbda500d (SCOPE_PREPARATION_R1/SOURCE_ORIGIN_FINDINGS_R1/INPUT_REFERENCES_R1).
+No schema adopted or implementation started. Current ingest observations are
+conflated with historical receipt expectations; public Source snapshots lack
+paths/origin tags. Next locate/authenticate narrowly named Source-control metadata
+and freeze an explicit historical input/tool-context contract. Current early guard
+stays until a qualified replacement. Subsequent
 input authority/tool-context provenance must be explicitly established before any
 real prior read or successful upstream return. Never replace historical pins,
 fabricate a PASS/token, or infer read permission from the empty-fixture controls.

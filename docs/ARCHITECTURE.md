@@ -687,6 +687,23 @@ Implementation `33ec8407dd86652f266101aaac702d6aa4f9daa0` (Separate source prefl
 normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
 Completion Gmail `1a1cf62e522d1efd` sent once; this receipt sends no second email.
 
+The [historical Source tool snapshot inspector](task-evidence/Q100/current-native-host-r1/HISTORICAL_TOOL_SNAPSHOT_R1.md)
+is owned by the existing caller. Its pure boundary verifies all three fixed raw
+size/hash tuples before decoding config, Source manifest or Source preflight,
+then checks ordered facts, document/root bindings and the closed DATA phase.
+The API uses the current authenticated reader, retains and rechecks original
+tokens/bytes for those metadata files, and rechecks current inputs, roots and an
+empty output sink. It follows no path contained in historical metadata and writes
+no operational artifact. The default summary and CLI are path-free; strict boolean
+in-process detail carries historical declaration paths. The snapshot's origin is
+ACCEPTED_SOURCE_PREFLIGHT_ONLY, with receipt binding, prior-run binding, fixed-role
+read authorization and prior qualification explicitly false. Current preflight's
+eight-Source/five-tool schema, normalizer authority and N66 guard are unchanged.
+Current Source/tool observations are compared by byte facts between observations,
+not retained tokens; this is neither atomic namespace nor launch authority. Real
+prior receipt/run binding and normal activation remain separate closed contracts.
+
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published

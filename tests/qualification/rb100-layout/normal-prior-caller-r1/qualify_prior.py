@@ -13,6 +13,7 @@ import argparse
 import datetime
 import hashlib
 import json
+import math
 import ntpath
 import os
 import re
@@ -79,6 +80,15 @@ MAX_SOURCE_BYTES = 4 * 1024 * 1024
 MAX_READER_TOOL_BYTES = 8 * 1024 * 1024
 MAX_OUTPUT_BYTES = 1024 * 1024
 MAX_PROVENANCE_BYTES = 1024 * 1024
+HISTORICAL_SNAPSHOT_CONFIG_BYTES = 4894
+HISTORICAL_SNAPSHOT_CONFIG_SHA256 = "c8e937946f93f62801450eb989e73016d26736d53e1d2487cb8d8843f0add6eb"
+HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_BYTES = 2124
+HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_SHA256 = "e5ea5ac6bd85ffdb0be078895e87b1da4d3d9488469029d8971751ec4846e80d"
+HISTORICAL_SNAPSHOT_PREFLIGHT_BYTES = 1595
+HISTORICAL_SNAPSHOT_PREFLIGHT_SHA256 = "8244eb5c9e5e2ee6c78ed305262dad46c4a0c5857202d3e6c6d9fa6f99241837"
+HISTORICAL_SNAPSHOT_ACCEPTED_SOURCE_COMMIT = "5c745c3ff78cc16e19220b6c4a46ce541bdb58ad"
+HISTORICAL_TOOL_SNAPSHOT_SCHEMA = "tsj-q100-source-tool-snapshot-metadata-v1"
+HISTORICAL_TOOL_SNAPSHOT_SHA256 = "a6cdc79ba35bc4f65e462a81ebd35b7d97260580fed5d27b75b506a9a02cc9e3"
 HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 UTC_TEXT = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]{1,9})?Z\Z")
 
@@ -181,6 +191,30 @@ def _strict_json(raw, maximum, code, *, require_object=True):
         raise CallerError(code + "_JSON", "json") from None
     if require_object:
         _need(type(value) is dict, code + "_ROOT", "json")
+    return value
+
+
+def _strict_json_with_finite_floats(raw, maximum, code):
+    _need(type(raw) is bytes and 0 < len(raw) <= maximum, code + "_SIZE", "json")
+    _need(not raw.startswith(b"\xef\xbb\xbf"), code + "_BOM", "json")
+
+    def parse_float(text):
+        value = float(text)
+        _need(math.isfinite(value), code + "_NUMBER", "json")
+        return value
+
+    try:
+        value = json.loads(
+            raw.decode("utf-8", errors="strict"),
+            object_pairs_hook=_pairs_no_duplicates,
+            parse_float=parse_float,
+            parse_constant=_reject_number,
+        )
+    except CallerError:
+        raise
+    except (UnicodeDecodeError, json.JSONDecodeError, ValueError, RecursionError):
+        raise CallerError(code + "_JSON", "json") from None
+    _need(type(value) is dict, code + "_ROOT", "json")
     return value
 
 
@@ -558,6 +592,170 @@ def _validate_source_manifest_shape(value):
             _need(row["name"] == name and _is_int(row["bytes"], 1)
                   and _is_sha(row["sha256"]),
                   "SOURCE_MANIFEST_" + field.upper() + "_BINDING", "manifest")
+
+
+def _historical_tool_snapshot_values(config, source_manifest, preflight_evidence):
+    phase = "historical-tool-snapshot"
+    _exact_keys(config, CONFIG_KEYS, "CONFIG_KEYS", phase)
+    _need(config["schema"] == CONFIG_SCHEMA, "CONFIG_SCHEMA", phase)
+    source_specs = config["sourceSpecs"]
+    tool_specs = config["toolSpecs"]
+    _exact_keys(source_specs, SOURCE_NAMES, "SOURCE_SPEC_NAMES", phase)
+    _exact_keys(tool_specs, TOOL_NAMES, "TOOL_SPEC_NAMES", phase)
+    for name in SOURCE_NAMES:
+        maximum = 1024 * 1024 if name == "allowlist" else MAX_SOURCE_BYTES
+        _validate_fact_spec(name, source_specs[name], maximum, phase)
+    for name in TOOL_NAMES:
+        _validate_fact_spec(name, tool_specs[name], MAX_READER_TOOL_BYTES, phase)
+
+    roots = config["roots"]
+    _exact_keys(roots, ("N", "D"), "ROOT_NAMES", phase)
+    for name in ("N", "D"):
+        _path_text(roots[name], "ROOT_" + name + "_PATH")
+    scratch = _path_text(config["scratchRoot"], "SCRATCH_ROOT")
+    output = _path_text(config["dataOutputRoot"], "DATA_OUTPUT_ROOT")
+    allowlist_path = _path_text(config["allowlistPath"], "ALLOWLIST_PATH")
+    _need(_norm_path(allowlist_path) == _norm_path(source_specs["allowlist"]["path"])
+          and source_specs["allowlist"]["sha256"] == ALLOWLIST_SHA256,
+          "HISTORICAL_SNAPSHOT_BINDING", phase)
+    _need(_norm_path(roots["N"]) != _norm_path(roots["D"]),
+          "HISTORICAL_SNAPSHOT_BINDING", phase)
+    try:
+        scratch_path = os.path.normcase(os.path.abspath(scratch))
+        output_path = os.path.normcase(os.path.abspath(output))
+        common = os.path.normcase(os.path.commonpath((scratch_path, output_path)))
+    except (OSError, ValueError):
+        raise CallerError("HISTORICAL_SNAPSHOT_BINDING", phase) from None
+    _need(common == scratch_path and output_path != scratch_path,
+          "HISTORICAL_SNAPSHOT_BINDING", phase)
+
+    _validate_source_manifest_shape(source_manifest)
+    _need(source_manifest["configSha256"] == HISTORICAL_SNAPSHOT_CONFIG_SHA256
+          and source_manifest["allowlistSha256"] == ALLOWLIST_SHA256
+          and source_manifest["kernelProvenanceSha256"] == source_specs["provenance"]["sha256"],
+          "HISTORICAL_SNAPSHOT_BINDING", phase)
+    for field, names, specs in (
+            ("sourceFacts", SOURCE_NAMES, source_specs),
+            ("toolFacts", TOOL_NAMES, tool_specs)):
+        for name, row in zip(names, source_manifest[field]):
+            spec = specs[name]
+            _need(row["bytes"] == spec["expectedBytes"]
+                  and row["sha256"] == spec["sha256"],
+                  "HISTORICAL_SNAPSHOT_BINDING", phase)
+
+    preflight_keys = (
+        "actualPriorBodiesRead", "actualPriorResourcesObserved", "call",
+        "configSha256", "genuineEnvelope", "normalDataPhaseEnabled",
+        "operationalJournalCreated", "privateAuthorityReceiptSha256",
+        "rootsSha256", "sourceCount", "sourceManifestSha256", "status",
+        "toolCount",
+    )
+    _exact_keys(preflight_evidence, preflight_keys,
+                "HISTORICAL_PREFLIGHT_KEYS", phase)
+    call = preflight_evidence["call"]
+    _exact_keys(call, (
+        "childExitCode", "isolatedCleanupDurationMs", "ownedRootAndLogsAbsent",
+        "phase", "processElapsedMs", "receipts", "status", "terminationProven",
+        "wrapperTotalElapsedMs",
+    ), "HISTORICAL_PREFLIGHT_CALL_KEYS", phase)
+    receipts = call["receipts"]
+    _exact_keys(receipts, (
+        "owner.json", "parent.json", "process.json", "request.json", "result.json",
+        "stderr.txt", "stdout.txt",
+    ), "HISTORICAL_PREFLIGHT_RECEIPTS", phase)
+    _need(_is_sha(preflight_evidence["privateAuthorityReceiptSha256"])
+          and all(_is_sha(value) for value in receipts.values()),
+          "HISTORICAL_PREFLIGHT_RECEIPT_HASHES", phase)
+
+    source_only = (
+        type(preflight_evidence["actualPriorBodiesRead"]) is int
+        and preflight_evidence["actualPriorBodiesRead"] == 0
+        and preflight_evidence["actualPriorResourcesObserved"] is False
+        and preflight_evidence["normalDataPhaseEnabled"] is False
+        and preflight_evidence["operationalJournalCreated"] is False
+        and preflight_evidence["genuineEnvelope"] == "UNSPENT_GATED"
+    )
+    _need(source_only, "HISTORICAL_SNAPSHOT_NOT_SOURCE_ONLY", phase)
+
+    def is_finite_number(value):
+        return (type(value) is int
+                or (type(value) is float and math.isfinite(value)))
+
+    call_numbers_valid = (
+        is_finite_number(call["processElapsedMs"])
+        and call["processElapsedMs"] > 0
+        and is_finite_number(call["wrapperTotalElapsedMs"])
+        and call["wrapperTotalElapsedMs"] >= call["processElapsedMs"]
+    )
+    accepted_preflight = (
+        preflight_evidence["status"] == "PASS_ACTUAL_SOURCE_AND_ROOT_METADATA_PREFLIGHT_ONLY"
+        and call["phase"] == "actual-caller-source-preflight-r1"
+        and call["status"] == "PASS"
+        and type(call["childExitCode"]) is int and call["childExitCode"] == 0
+        and call["terminationProven"] is True
+        and call["ownedRootAndLogsAbsent"] is True
+        and call["isolatedCleanupDurationMs"] is None
+        and call_numbers_valid
+    )
+    _need(accepted_preflight, "HISTORICAL_SNAPSHOT_BINDING", phase)
+    _need(preflight_evidence["configSha256"] == HISTORICAL_SNAPSHOT_CONFIG_SHA256
+          and preflight_evidence["sourceManifestSha256"]
+              == HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_SHA256
+          and preflight_evidence["rootsSha256"] == source_manifest["rootsSha256"]
+          and preflight_evidence["sourceCount"] == len(SOURCE_NAMES)
+          and preflight_evidence["toolCount"] == len(TOOL_NAMES),
+          "HISTORICAL_SNAPSHOT_BINDING", phase)
+
+    tool_facts = {}
+    for name in TOOL_NAMES:
+        spec = tool_specs[name]
+        tool_facts[name] = {
+            "path": spec["path"],
+            "bytes": spec["expectedBytes"],
+            "sha256": spec["sha256"],
+        }
+    snapshot = {
+        "schema": HISTORICAL_TOOL_SNAPSHOT_SCHEMA,
+        "origin": "ACCEPTED_SOURCE_PREFLIGHT_ONLY",
+        "acceptedSourceCommit": HISTORICAL_SNAPSHOT_ACCEPTED_SOURCE_COMMIT,
+        "configSha256": HISTORICAL_SNAPSHOT_CONFIG_SHA256,
+        "sourceManifestSha256": HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_SHA256,
+        "preflightEvidenceSha256": HISTORICAL_SNAPSHOT_PREFLIGHT_SHA256,
+        "allowlistSha256": source_manifest["allowlistSha256"],
+        "rootsSha256": source_manifest["rootsSha256"],
+        "toolFacts": tool_facts,
+        "captureReceiptBindingEstablished": False,
+        "priorRunBindingEstablished": False,
+        "fixedRoleReadAuthorized": False,
+        "priorQualificationEstablished": False,
+    }
+    snapshot["snapshotSha256"] = _sha(_canonical_json(snapshot))
+    _need(snapshot["snapshotSha256"] == HISTORICAL_TOOL_SNAPSHOT_SHA256,
+          "HISTORICAL_SNAPSHOT_BINDING", phase)
+    return snapshot
+
+
+def _historical_tool_snapshot_bytes(config_raw, source_manifest_raw, preflight_raw):
+    phase = "historical-tool-snapshot"
+    for raw, size, expected_sha, error_code in (
+            (config_raw, HISTORICAL_SNAPSHOT_CONFIG_BYTES,
+             HISTORICAL_SNAPSHOT_CONFIG_SHA256, "HISTORICAL_SNAPSHOT_CONFIG_SHA256"),
+            (source_manifest_raw, HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_BYTES,
+             HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_SHA256,
+             "HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_SHA256"),
+            (preflight_raw, HISTORICAL_SNAPSHOT_PREFLIGHT_BYTES,
+             HISTORICAL_SNAPSHOT_PREFLIGHT_SHA256, "HISTORICAL_SNAPSHOT_PREFLIGHT_SHA256")):
+        _need(type(raw) is bytes and len(raw) == size and _sha(raw) == expected_sha,
+              error_code, phase)
+
+    config = _strict_json(config_raw, MAX_CONFIG_BYTES,
+                          "HISTORICAL_SNAPSHOT_CONFIG", require_object=True)
+    source_manifest = _strict_json(source_manifest_raw, MAX_MANIFEST_BYTES,
+                                   "HISTORICAL_SNAPSHOT_SOURCE_MANIFEST",
+                                   require_object=True)
+    preflight_evidence = _strict_json_with_finite_floats(
+        preflight_raw, MAX_JOURNAL_BYTES, "HISTORICAL_SNAPSHOT_PREFLIGHT")
+    return _historical_tool_snapshot_values(config, source_manifest, preflight_evidence)
 
 
 def _source_module_state(reader, observer, config, byte_observation, phase):
@@ -1540,6 +1738,84 @@ def qualify(*, config_path, config_sha, source_manifest_path,
                          include_source_token=include_source_token)
 
 
+def inspect_historical_tool_snapshot(*, config_path, config_sha,
+                                     historical_config_path,
+                                     historical_source_manifest_path,
+                                     historical_preflight_path,
+                                     include_tool_snapshot=False):
+    _need(type(include_tool_snapshot) is bool,
+          "HISTORICAL_SNAPSHOT_TOOL_OPTION", "historical-tool-snapshot")
+    config_raw, config, reader, observer, initial_config_token = _read_config_and_runtime(
+        config_path, config_sha, "historical-tool-snapshot-current-config")
+    state = _preflight_state(config_raw, config_path, config_sha, config,
+                             reader, observer, initial_config_token)
+    _directory_empty(config["dataOutputRoot"], "historical-tool-snapshot-pre-read")
+    _verify_root_bindings(reader, config, state["rootsSha256"],
+                          "historical-tool-snapshot-pre-read")
+
+    inputs = (
+        (historical_config_path, MAX_CONFIG_BYTES, HISTORICAL_SNAPSHOT_CONFIG_BYTES,
+         HISTORICAL_SNAPSHOT_CONFIG_SHA256, "HISTORICAL_SNAPSHOT_CONFIG"),
+        (historical_source_manifest_path, MAX_MANIFEST_BYTES,
+         HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_BYTES,
+         HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_SHA256,
+         "HISTORICAL_SNAPSHOT_SOURCE_MANIFEST"),
+        (historical_preflight_path, MAX_JOURNAL_BYTES,
+         HISTORICAL_SNAPSHOT_PREFLIGHT_BYTES,
+         HISTORICAL_SNAPSHOT_PREFLIGHT_SHA256,
+         "HISTORICAL_SNAPSHOT_PREFLIGHT"),
+    )
+
+    def read_snapshot_input(path, maximum, expected_bytes, expected_sha, role):
+        try:
+            return _read_with_reader(reader, path, maximum, expected_bytes,
+                                     expected_sha, role, "historical-tool-snapshot")
+        except CallerError as exc:
+            if exc.code in ("READER_SHA256", "READER_EXPECTED_BYTES", "READER_SIZE",
+                            "READER_RESULT_BINDING"):
+                raise CallerError(role + "_SHA256", "historical-tool-snapshot") from None
+            raise
+
+    original_inputs = []
+    for path, maximum, expected_bytes, expected_sha, role in inputs:
+        raw, token = read_snapshot_input(
+            path, maximum, expected_bytes, expected_sha, role)
+        original_inputs.append((path, maximum, expected_bytes, expected_sha,
+                                role, raw, token))
+
+    historical_tool_snapshot = _historical_tool_snapshot_bytes(
+        original_inputs[0][5], original_inputs[1][5], original_inputs[2][5])
+
+    for path, maximum, expected_bytes, expected_sha, role, raw, token in original_inputs:
+        current_raw, current_token = read_snapshot_input(
+            path, maximum, expected_bytes, expected_sha, role)
+        _require_same_input_document(
+            reader, role, raw, token, current_raw, current_token,
+            "historical-tool-snapshot-recheck")
+
+    _recheck_preflight_inputs(reader, observer, config, config_path,
+                              config_raw, config_sha, state)
+    _directory_empty(config["dataOutputRoot"], "historical-tool-snapshot-post-read")
+    _verify_root_bindings(reader, config, state["rootsSha256"],
+                          "historical-tool-snapshot-post-read")
+
+    summary = {
+        "status": "PASS_SOURCE_TOOL_SNAPSHOT_METADATA_ONLY",
+        "currentSourceManifestSha256": state["sourceManifestSha256"],
+        "historicalToolSnapshotSha256": historical_tool_snapshot["snapshotSha256"],
+        "toolCount": len(TOOL_NAMES),
+        "origin": "ACCEPTED_SOURCE_PREFLIGHT_ONLY",
+        "captureReceiptBindingEstablished": False,
+        "priorRunBindingEstablished": False,
+        "fixedRoleReadAuthorized": False,
+        "priorQualificationEstablished": False,
+        "roleRead": "NOT_RUN",
+    }
+    if include_tool_snapshot:
+        summary["historicalToolSnapshot"] = historical_tool_snapshot
+    return summary
+
+
 def _parse_cli(argv=None):
     parser = argparse.ArgumentParser(prog="qualify_prior.py")
     commands = parser.add_subparsers(dest="command", required=True)
@@ -1554,6 +1830,12 @@ def _parse_cli(argv=None):
     run.add_argument("--source-manifest-sha", required=True)
     run.add_argument("--phase-journal", required=True)
     run.add_argument("--phase-journal-sha", required=True)
+    snapshot = commands.add_parser("inspect-tool-snapshot")
+    snapshot.add_argument("--config", required=True)
+    snapshot.add_argument("--config-sha", required=True)
+    snapshot.add_argument("--historical-config", required=True)
+    snapshot.add_argument("--historical-source-manifest", required=True)
+    snapshot.add_argument("--historical-preflight", required=True)
     return parser.parse_args(argv)
 
 
@@ -1569,6 +1851,12 @@ def main(argv=None):
         if args.command == "preflight":
             summary = preflight(config_path=args.config, config_sha=args.config_sha,
                                 manifest_output=args.manifest_output)
+        elif args.command == "inspect-tool-snapshot":
+            summary = inspect_historical_tool_snapshot(
+                config_path=args.config, config_sha=args.config_sha,
+                historical_config_path=args.historical_config,
+                historical_source_manifest_path=args.historical_source_manifest,
+                historical_preflight_path=args.historical_preflight)
         else:
             summary = qualify(
                 config_path=args.config, config_sha=args.config_sha,
