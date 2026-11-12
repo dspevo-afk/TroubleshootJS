@@ -1,10 +1,87 @@
+# Current checkpoint: N58 owned-job shutdown validated; publication pending
+
+Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
+codex/q100-terminal-only-20261107, baseHEAD0d3b802444a46c23831fa9314bddf430d2280648,
+no upstream; normal target origin/codex/q100-physical-feasibility. N57implf383d5da
+and receipt0d3b8024 published/exactremoteverified; Gmail1a1cd2e76f4f624f once.
+N58 final-source gates PASS; commit/push/email not yet done. No duplicate mail.
+
+N58 adds creator-only TerminateOwned(uint) to the same native job class/original
+hJob. OpenExisting remains query-only/denied beforeOS; a request prevents later
+Launch even on OS error. Query/retry/Dispose remain. Default suspended JOB_LIST
+launcher, child query-only recovery pin and Dispose unchanged. Request is not
+completion. No new launcher/captured pipes/original child-handle transfer,
+fake browser context, native role caps or creator-death guarantee.
+Module1053900B/fc533d9b15007d0eb42cccb10e39fbfc30fc89b732fbf977e295218d67197b73;
+raw prefix/suffix outside class exact; CRLF checkout policy retained. Three
+current module pins migrated only; qualifier functions unchanged/oldPS60c9
+unchanged. Normal qualifier/harness NOT RUN.
+
+Actual SystemPS5.1d8/Pythonad169-I-B optimize0 final job Smoke1 PASS2.111s and
+Suite7 PASS2.046s; retained exact parent/descendant + two vetted signed conhost
+handles all exit2, full job empty, outside sentinel survives, original sentinel
+handle cleanup/logs proven. One5s clock covers request/postlaunch guard/closure;
+request/closure/cleanup separately recorded. Six additional native guard groups
+cover empty/retry/querydenial, blank, duplicate, missing open/exe and disposed.
+Fresh N57 capture30 CODE PASS9.593s, N56legacy16 PASS3.574s, JDKtool3 PASS1.838s.
+Javac invalidoption2 remains EXPECTED_ERROR_NOT_PASS. Wrappers include process
+wait; outer cleanup unmeasured separately. Complete compiler/tool closure not
+attested; generated actor artifact+selected host and actual image witnesses bind.
+
+Two Python JOB_LIST native5 failures remain FAIL/unqualified, precise cause
+unestablished; no third unchanged retry or security workaround. Actual JDK8
+creation/resume control + managed tree path pass same owner, without JDK actual
+child-image/exit proof. Early exact2-member/PID-absence oracles failed; corrected
+to vet every member and retained handles, not reclassified. Initial maintained
+Smoke0884 failed before handles; cleanup masked primary. Exact trigger not
+recovered. Exception-chain checks and separate primary/cleanup evidence fixed;
+later actual Smoke/final Suite pass. All failed sources/receipts preserved.
+
+Public T/E current-native-host-r1/JOB_TERMINATION_R1; manifest1ce42cb75a61a221743fddd30542be2f6b7494ac357b25dbd5357647d42aee23,
+proof0477f1e335be19a23100b4408cea17d791ac0183840a3bb54127769c246ce331.
+Root integrated source/gates/diffs review; leaf source-only Smoke9449/modulefc/
+fixtureec81 no blocker, no execution. All18 old Smoke functions byte-identical
+after Suite expansion; guard groups root-reviewed only. Preexisting invalid-PID
+rollback edge is a nonblocking retained-launch follow-up, no demonstrated OS case.
+
+Private OS-temp/tsj-q100-job-shutdown-r1-c7bd664c2d64. Sixteen original outer
+handle exits observed;76 known CODE/tool/outer identities query-audited. One native query
+denied; read-only CIM observed different creation time/system-service PID reuse,
+native query remains uncertified. Original unresolved audit preserved. No PID
+termination authority used. Historical missing-handle proof is not repaired.
+No known new persistent task process/listener/link; actor binaries/failure logs
+retained. Old uncertain browser14116/start639294472690745890/port58320,
+preview34180/start639294472514546595/port58264+14children, oldD resources and
+Notepad67116860 untouched. Main5f05b005(9M/6untracked), Ed9747229(reportM),
+Desktope0c36885(7M/untracked) preserved/allstaged0; only Main current prefix mirrored.
+
+Next unstarted implementation: N59 original hProcess lease through existing
+launcher before captured pipes. Private preparation only at OS-temp/
+tsj-q100-retained-process-prep-r1-19436c22a354, scope068b17e4f5181652db991c34df4bd80dc37211d9069c16d9dcb987905f7730bf;
+no N59 implementation/launch/test. Continue authorized roadmap without routine permission.
+
+No prior/fixed20/oldD/heldout/protected DATA/factories or whole historical builders.
+Both Study holds exactthrowonly; original->NULL/OBSERVE UNSPENT_GATED. No normal
+Study/OriginalArm/capture/graph/Session/receipt/export/genuine operation. Full30
+normalMEDIUM EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; protectedUnread
+UNCERTIFIED; oldnormal20 NOT REREAD; playable100=0; beta HELD. CircuitJS truth,
+all budgets incl90s/640groups/5s/32768PERGROUP/copy1048576/chunk4096/opJSON8MiB/
+result1MiB/compile60s/reader180s/wrapper480s/cleanup120s, seeds/epochs/order fixed.
+Production Java/GWT/visiblePlayer NOT APPLICABLE; electrical/population NOT
+RENEWED; CI NOT RUN/self-hosted runner prerequisite. Trusted native composition
+and complete tool/environment/JAR/return authority remain gated.
+
+# Historical checkpoint: N57 publication and N58 preparation
+
 # Current checkpoint: N57 bounded capture published
 
 Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
-codex/q100-terminal-only-20261107, acceptedimplementation/HEADf383d5da924b27b16724e94b8f24f4429c51a230,
+codex/q100-terminal-only-20261107, HEAD0d3b802444a46c23831fa9314bddf430d2280648 exactremoteverified,
+acceptedimplementationf383d5da924b27b16724e94b8f24f4429c51a230,
 no upstream; normal target origin/codex/q100-physical-feasibility. N56d1d56991
 and receiptb8c2a55b published/exactremoteverified; Gmail1a1cce57a7fff998 once.
-N57 normalpush/exactremoteverified; Gmail1a1cd2e76f4f624f sent once, receiptfollows/no duplicate. Private OS-temp
+N57 normalpush/exactremoteverified; Gmail1a1cd2e76f4f624f sent once.
+Receipt0d3b8024 normallypublished/exactremoteverified, no secondemail. Private OS-temp
 tsj-q100-bounded-capture-r1-21f20381beca; public T/E current-native-host-r1/CAPTURE_R1.
 
 Same processowner opt-in explicitpositivepaired caps+exactCancellationToken after
@@ -44,7 +121,7 @@ Manifest2e89ed41f85955445eaba16c9e1cfb400048061bed62e24e3be1bde48d74179b;
 proof71183bb5bed3e40f3308d9a7a3d2ec78ef9879f80ab23f6ba6ea2ea318c0f7c5.
 
 Rootactualdiff/cachedchecks and18path working/indexaudit PASS; controlledCRLF
-checkout reconstruction matches testedmodule. Publicationcomplete, receiptnext.
+checkout reconstruction matches testedmodule. Implementation+receipt+oneGmailcomplete. F clean afterreceipt; localcheckpointonly reportM/staged0.
 NEXT existingjobowner pre-escape descendantcontainment, native rolepolicy and
 trustedcoordinator/tool/Source/JAR/actualreturn/semantic/lifecycle closure.
 No normalready/nativeadmission. GeneralUTF8/BOMtext andsuccesslognamespaceoracle
@@ -57,6 +134,22 @@ playable100=0,betaHELD. Budgets90s/640/5s/32768PERGROUP/copy1M/chunk4096/opJSON8
 result1M/othercaps,seeds/epochs/order/electricaltruth unchanged. ProductionJava/
 GWT/visiblePlayer N/A; electrical/population NOTRENEWED; CI NOTRUN/selfhosted
 runner prerequisite. PreserveMain/E/Desktop andalluncertainoldresources.
+
+MainHEAD5f05b005 tracked9/untracked6; EHEADd9747229 reportM; DesktopHEADe0c36885
+tracked7/untracked89; allstaged0, preserved. Currentprefix mirrors to Main only;
+opaquehistoriespreserved. Uncertain browser14116/start639294472690745890/port58320,
+preview34180/start639294472514546595/port58264+14children, oldDprocess/unlink/
+hardlink/scratch andNotepad67116860 untouched.
+
+N58 LOCAL Source/ownership preparation only, no implementation/acceptance/run:
+OS-temp/tsj-q100-contained-process-prep-r1-d6de882e3941.
+SCOPE_PREPARATION_R1 e7d2d665dadb0f9e168a233f7346fe1a3e30b4ec1ca47e017b848317e06f7198.
+Leaf n53 boundedAPI/handle-lifetime inventory andn50 maintainedtestinventory
+pending. Existing VerifierBrowserContainmentJobApi class starts10459, browser
+wrapper11094; reuseits pre-escapeJOB_LIST primitives, no newlauncher/copiednative
+stack/fakebrowsercontext/postlaunchPIDtreeauthority. Need originalprocess/job/
+threadhandle lifetime+explicit capturedpipe inheritance andrealCODEparent/child
+early hostcanaries; no normal rolecap defaults. Continuewithout routinepermission.
 
 # Historical checkpoint: N57 implementation progress
 

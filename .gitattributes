@@ -32,3 +32,5 @@ tests/contracts/VerifierBoundedProcessFixture.py -text
 scripts/VerifierIsolation.psm1 text eol=crlf
 tests/contracts/VerifierBoundedCaptureContract.ps1 -text
 tests/contracts/VerifierBoundedCaptureFixture.py -text
+tests/contracts/VerifierContainmentFixture.cs -text whitespace=cr-at-eol
+tests/contracts/VerifierContainmentContract.ps1 -text whitespace=cr-at-eol

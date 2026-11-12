@@ -2126,6 +2126,21 @@ Implementation `f383d5da924b27b16724e94b8f24f4429c51a230` normally pushed to
 origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail `1a1cd2e76f4f624f` sent once; this receipt sends no second email.
 
+The [creator-owned explicit job shutdown prerequisite](task-evidence/Q100/current-native-host-r1/JOB_TERMINATION_R1.md)
+is locally accepted for the selected Windows host. The same native class requests
+termination through the original creator handle, rejects query observers and
+prevents later launches. Actual CODE tree/sentinel Smoke1 and Suite7 pass, with
+all vetted member handles signaling under one five-second request-to-closure
+deadline. Fresh capture30 CODE, legacy16 and selected JDK tool3 controls pass.
+Earlier Python JOB_LIST failures, incorrect early tree oracles and a masked
+Smoke failure remain preserved. No broader launcher or creator-death claim follows.
+Default recovery lifetime semantics and raw bytes outside the native class stay
+unchanged; only current module pins migrate. Production Java/GWT/Player are not
+applicable, and electrical/population qualification is not renewed. Normal holds
+and genuine gate remain closed; playable100=0 and beta HELD. Next is a narrow
+original-process-handle lease through the same owner before captured pipes and
+trusted native composition. Publication is pending the normal final index audit.
+
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

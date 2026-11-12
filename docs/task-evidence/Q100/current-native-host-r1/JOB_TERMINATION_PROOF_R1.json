@@ -1,0 +1,1435 @@
+{
+  "status": "FINITE_CREATOR_OWNED_EXPLICIT_JOB_TERMINATION_ACCEPTED",
+  "sourceManifestSha256": "1ce42cb75a61a221743fddd30542be2f6b7494ac357b25dbd5357647d42aee23",
+  "finalGates": [
+    {
+      "phase": "containment-smoke-final-r1",
+      "status": "PASS",
+      "caseCount": 1,
+      "wholeWrapperOperationNanos": 2110622700,
+      "outerCleanupStatus": "UNMEASURED_SEPARATELY",
+      "sourceFreezeSha256": "1389de6b9ab4631a0109cc5c39714e0a5b17c7ea160841eff0d34b8e29e472e2",
+      "privateCasesSha256": "7e1f6962c1aad3f2f3667119eaec46504c36849b088339921f5ebb984799b06f",
+      "cases": [
+        {
+          "name": "containment-smoke",
+          "status": "PASS",
+          "elapsedMilliseconds": 701.0342,
+          "facts": {
+            "membersEmpty": true,
+            "allRetainedMemberHandlesSignaled": true,
+            "rootStartTicks": 639300450530576479,
+            "sentinelSurvived": true,
+            "rootPid": 22012,
+            "cleanupMilliseconds": 178.1023,
+            "closureMilliseconds": 13.541300000000001,
+            "sentinelErrorBytes": 0,
+            "postRequestLaunch": "REJECTED",
+            "observerFailureMessages": [
+              "Only a creator-owned containment job may request termination."
+            ],
+            "expectedMembersBeforeRequest": [
+              22012,
+              16572,
+              16740,
+              8224
+            ],
+            "observerTermination": "REJECTED",
+            "sourceSnapshotStable": true,
+            "sentinelOutputBytes": 0,
+            "stateWitnesses": [
+              "parent",
+              "descendant",
+              "sentinel"
+            ],
+            "observerSnapshotMatched": true,
+            "vettedMemberIdentities": [
+              {
+                "role": "parent",
+                "processId": 22012,
+                "startTicks": 639300450530576479,
+                "imageSha256": "5f57fb3532c682f4ed1e15ed521eb1046c1a86565e696a8a31686a71c91db64e",
+                "handleRetained": true
+              },
+              {
+                "role": "descendant",
+                "processId": 16740,
+                "startTicks": 639300450531239556,
+                "imageSha256": "5f57fb3532c682f4ed1e15ed521eb1046c1a86565e696a8a31686a71c91db64e",
+                "handleRetained": true
+              },
+              {
+                "role": "consoleHost",
+                "processId": 16572,
+                "startTicks": 639300450530660046,
+                "imageSha256": "dd5c3514132d92052004d302c66c756ffb6beef572de6538b4fc55f62579eb11",
+                "handleRetained": true
+              },
+              {
+                "role": "consoleHost",
+                "processId": 8224,
+                "startTicks": 639300450531282838,
+                "imageSha256": "dd5c3514132d92052004d302c66c756ffb6beef572de6538b4fc55f62579eb11",
+                "handleRetained": true
+              }
+            ],
+            "sentinelStartTicks": 639300450533079332,
+            "sentinelPid": 19028,
+            "memberExitStatuses": [
+              {
+                "role": "parent",
+                "processId": 22012,
+                "startTicks": 639300450530576479,
+                "exitCode": 2,
+                "status": "EXIT_OBSERVED"
+              },
+              {
+                "role": "descendant",
+                "processId": 16740,
+                "startTicks": 639300450531239556,
+                "exitCode": 2,
+                "status": "EXIT_OBSERVED"
+              },
+              {
+                "role": "consoleHost",
+                "processId": 16572,
+                "startTicks": 639300450530660046,
+                "exitCode": 2,
+                "status": "EXIT_OBSERVED"
+              },
+              {
+                "role": "consoleHost",
+                "processId": 8224,
+                "startTicks": 639300450531282838,
+                "exitCode": 2,
+                "status": "EXIT_OBSERVED"
+              }
+            ],
+            "postRequestLaunchFailureMessages": [
+              "A containment job cannot launch after its termination request."
+            ],
+            "descendantStartTicks": 639300450531239556,
+            "terminationRequestMilliseconds": 0.9546,
+            "descendantPid": 16740
+          },
+          "vettedMembers": [
+            {
+              "role": "parent",
+              "processId": 22012,
+              "startTicks": 639300450530576479,
+              "imageSha256": "5f57fb3532c682f4ed1e15ed521eb1046c1a86565e696a8a31686a71c91db64e",
+              "handleRetained": true
+            },
+            {
+              "role": "descendant",
+              "processId": 16740,
+              "startTicks": 639300450531239556,
+              "imageSha256": "5f57fb3532c682f4ed1e15ed521eb1046c1a86565e696a8a31686a71c91db64e",
+              "handleRetained": true
+            },
+            {
+              "role": "consoleHost",
+              "processId": 16572,
+              "startTicks": 639300450530660046,
+              "imageSha256": "dd5c3514132d92052004d302c66c756ffb6beef572de6538b4fc55f62579eb11",
+              "handleRetained": true
+            },
+            {
+              "role": "consoleHost",
+              "processId": 8224,
+              "startTicks": 639300450531282838,
+              "imageSha256": "dd5c3514132d92052004d302c66c756ffb6beef572de6538b4fc55f62579eb11",
+              "handleRetained": true
+            }
+          ],
+          "memberExitStatuses": [
+            {
+              "role": "parent",
+              "processId": 22012,
+              "startTicks": 639300450530576479,
+              "exitCode": 2,
+              "status": "EXIT_OBSERVED"
+            },
+            {
+              "role": "descendant",
+              "processId": 16740,
+              "startTicks": 639300450531239556,
+              "exitCode": 2,
+              "status": "EXIT_OBSERVED"
+            },
+            {
+              "role": "consoleHost",
+              "processId": 16572,
+              "startTicks": 639300450530660046,
+              "exitCode": 2,
+              "status": "EXIT_OBSERVED"
+            },
+            {
+              "role": "consoleHost",
+              "processId": 8224,
+              "startTicks": 639300450531282838,
+              "exitCode": 2,
+              "status": "EXIT_OBSERVED"
+            }
+          ]
+        }
+      ],
+      "measuredFixtureArtifact": {
+        "bytes": 8192,
+        "sha256": "5f57fb3532c682f4ed1e15ed521eb1046c1a86565e696a8a31686a71c91db64e",
+        "compilerHostSha256": "d8f182560210d43baaf767d482ad1dc1207372522e91413b9d5e515a875e552d",
+        "completeCompilerClosure": "NOT_ATTESTED"
+      },
+      "consoleHost": {
+        "sha256": "dd5c3514132d92052004d302c66c756ffb6beef572de6538b4fc55f62579eb11",
+        "signature": "Valid",
+        "signerThumbprint": "667BBA1E1F478221AA65DE4F75187A751B03A453"
+      }
+    },
+    {
+      "phase": "containment-suite-final-r1",
+      "status": "PASS",
+      "caseCount": 7,
+      "wholeWrapperOperationNanos": 2045716300,
+      "outerCleanupStatus": "UNMEASURED_SEPARATELY",
+      "sourceFreezeSha256": "cc41ba568f2e391cf7c56f909f55dabeb2f71808cae257096171b8555ad3e08f",
+      "privateCasesSha256": "0aeba5b238e1826b2254492b22b5e4e8438384a9da516b9944b142d297ae8585",
+      "cases": [
+        {
+          "name": "containment-smoke",
+          "status": "PASS",
+          "elapsedMilliseconds": 642.6778,
+          "facts": {
+            "membersEmpty": true,
+            "allRetainedMemberHandlesSignaled": true,
+            "rootStartTicks": 639300450625034860,
+            "sentinelSurvived": true,
+            "rootPid": 20768,
+            "cleanupMilliseconds": 149.681,
+            "closureMilliseconds": 11.5599,
+            "sentinelErrorBytes": 0,
+            "postRequestLaunch": "REJECTED",
+            "observerFailureMessages": [
+              "Only a creator-owned containment job may request termination."
+            ],
+            "expectedMembersBeforeRequest": [
+              20768,
+              13100,
+              15108,
+              21316
+            ],
+            "observerTermination": "REJECTED",
+            "sourceSnapshotStable": true,
+            "sentinelOutputBytes": 0,
+            "stateWitnesses": [
+              "parent",
+              "descendant",
+              "sentinel"
+            ],
+            "observerSnapshotMatched": true,
+            "vettedMemberIdentities": [
+              {
+                "role": "parent",
+                "processId": 20768,
+                "startTicks": 639300450625034860,
+                "imageSha256": "ba1e2045f4556c4916de01219ffd2847b76aa3d2e3915e9f87f15ab3425cdb06",
+                "handleRetained": true
+              },
+              {
+                "role": "descendant",
+                "processId": 15108,
+                "startTicks": 639300450625680217,
+                "imageSha256": "ba1e2045f4556c4916de01219ffd2847b76aa3d2e3915e9f87f15ab3425cdb06",
+                "handleRetained": true
+              },
+              {
+                "role": "consoleHost",
+                "processId": 13100,
+                "startTicks": 639300450625114270,
+                "imageSha256": "dd5c3514132d92052004d302c66c756ffb6beef572de6538b4fc55f62579eb11",
+                "handleRetained": true
+              },
+              {
+                "role": "consoleHost",
+                "processId": 21316,
+                "startTicks": 639300450625726640,
+                "imageSha256": "dd5c3514132d92052004d302c66c756ffb6beef572de6538b4fc55f62579eb11",
+                "handleRetained": true
+              }
+            ],
+            "sentinelStartTicks": 639300450627074678,
+            "sentinelPid": 17108,
+            "memberExitStatuses": [
+              {
+                "role": "parent",
+                "processId": 20768,
+                "startTicks": 639300450625034860,
+                "exitCode": 2,
+                "status": "EXIT_OBSERVED"
+              },
+              {
+                "role": "descendant",
+                "processId": 15108,
+                "startTicks": 639300450625680217,
+                "exitCode": 2,
+                "status": "EXIT_OBSERVED"
+              },
+              {
+                "role": "consoleHost",
+                "processId": 13100,
+                "startTicks": 639300450625114270,
+                "exitCode": 2,
+                "status": "EXIT_OBSERVED"
+              },
+              {
+                "role": "consoleHost",
+                "processId": 21316,
+                "startTicks": 639300450625726640,
+                "exitCode": 2,
+                "status": "EXIT_OBSERVED"
+              }
+            ],
+            "postRequestLaunchFailureMessages": [
+              "A containment job cannot launch after its termination request."
+            ],
+            "descendantStartTicks": 639300450625680217,
+            "terminationRequestMilliseconds": 0.6847000000000001,
+            "descendantPid": 15108
+          },
+          "vettedMembers": [
+            {
+              "role": "parent",
+              "processId": 20768,
+              "startTicks": 639300450625034860,
+              "imageSha256": "ba1e2045f4556c4916de01219ffd2847b76aa3d2e3915e9f87f15ab3425cdb06",
+              "handleRetained": true
+            },
+            {
+              "role": "descendant",
+              "processId": 15108,
+              "startTicks": 639300450625680217,
+              "imageSha256": "ba1e2045f4556c4916de01219ffd2847b76aa3d2e3915e9f87f15ab3425cdb06",
+              "handleRetained": true
+            },
+            {
+              "role": "consoleHost",
+              "processId": 13100,
+              "startTicks": 639300450625114270,
+              "imageSha256": "dd5c3514132d92052004d302c66c756ffb6beef572de6538b4fc55f62579eb11",
+              "handleRetained": true
+            },
+            {
+              "role": "consoleHost",
+              "processId": 21316,
+              "startTicks": 639300450625726640,
+              "imageSha256": "dd5c3514132d92052004d302c66c756ffb6beef572de6538b4fc55f62579eb11",
+              "handleRetained": true
+            }
+          ],
+          "memberExitStatuses": [
+            {
+              "role": "parent",
+              "processId": 20768,
+              "startTicks": 639300450625034860,
+              "exitCode": 2,
+              "status": "EXIT_OBSERVED"
+            },
+            {
+              "role": "descendant",
+              "processId": 15108,
+              "startTicks": 639300450625680217,
+              "exitCode": 2,
+              "status": "EXIT_OBSERVED"
+            },
+            {
+              "role": "consoleHost",
+              "processId": 13100,
+              "startTicks": 639300450625114270,
+              "exitCode": 2,
+              "status": "EXIT_OBSERVED"
+            },
+            {
+              "role": "consoleHost",
+              "processId": 21316,
+              "startTicks": 639300450625726640,
+              "exitCode": 2,
+              "status": "EXIT_OBSERVED"
+            }
+          ]
+        },
+        {
+          "name": "empty-creator-termination",
+          "status": "PASS",
+          "elapsedMilliseconds": 24.9737,
+          "facts": {
+            "emptyBefore": true,
+            "queryOnlyTermination": {
+              "exceptionType": "System.InvalidOperationException",
+              "exceptionMessage": "Only a creator-owned containment job may request termination.",
+              "exceptionMessageChain": [
+                "Only a creator-owned containment job may request termination."
+              ]
+            },
+            "creatorRequests": 2,
+            "creatorAndObserverRemainEmpty": true
+          }
+        },
+        {
+          "name": "blank-job-names",
+          "status": "PASS",
+          "elapsedMilliseconds": 13.2422,
+          "facts": {
+            "createNew": {
+              "exceptionType": "System.ArgumentException",
+              "parameterName": "name",
+              "exceptionMessageChain": []
+            },
+            "openExisting": {
+              "exceptionType": "System.ArgumentException",
+              "parameterName": "name",
+              "exceptionMessageChain": []
+            },
+            "jobsCreated": 0
+          }
+        },
+        {
+          "name": "duplicate-job-name",
+          "status": "PASS",
+          "elapsedMilliseconds": 9.1978,
+          "facts": {
+            "duplicateCreate": {
+              "exceptionType": "System.InvalidOperationException",
+              "exceptionMessage": "Browser containment job name was already present.",
+              "exceptionMessageChain": [
+                "Browser containment job name was already present."
+              ]
+            },
+            "originalOwnerUsable": true,
+            "originalOwnerEmpty": true
+          }
+        },
+        {
+          "name": "missing-open-name",
+          "status": "PASS",
+          "elapsedMilliseconds": 11.445300000000001,
+          "facts": {
+            "openExisting": {
+              "exceptionType": "System.ComponentModel.Win32Exception",
+              "exceptionMessage": "Could not open browser containment job.",
+              "nativeErrorCode": 2,
+              "exceptionMessageChain": [
+                "Could not open browser containment job."
+              ]
+            },
+            "handleCreated": false
+          }
+        },
+        {
+          "name": "missing-executable",
+          "status": "PASS",
+          "elapsedMilliseconds": 13.4673,
+          "facts": {
+            "missingExecutableLaunch": {
+              "exceptionType": "System.ComponentModel.Win32Exception",
+              "exceptionMessage": "Could not atomically launch browser in its containment job.",
+              "nativeErrorCode": 2,
+              "exceptionMessageChain": [
+                "Could not atomically launch browser in its containment job."
+              ]
+            },
+            "ownerUsableAfterFailure": true,
+            "ownerEmpty": true
+          }
+        },
+        {
+          "name": "disposed-creator-guards",
+          "status": "PASS",
+          "elapsedMilliseconds": 25.387900000000002,
+          "facts": {
+            "terminated": {
+              "exceptionType": "System.ObjectDisposedException",
+              "objectName": "VerifierBrowserContainmentJobApi",
+              "exceptionMessageChain": []
+            },
+            "launch": {
+              "exceptionType": "System.ObjectDisposedException",
+              "objectName": "VerifierBrowserContainmentJobApi",
+              "exceptionMessageChain": []
+            },
+            "query": {
+              "exceptionType": "System.ObjectDisposedException",
+              "objectName": "VerifierBrowserContainmentJobApi",
+              "exceptionMessageChain": []
+            },
+            "disposedHandleRejectedAllOperations": true
+          }
+        }
+      ],
+      "measuredFixtureArtifact": {
+        "bytes": 8192,
+        "sha256": "ba1e2045f4556c4916de01219ffd2847b76aa3d2e3915e9f87f15ab3425cdb06",
+        "compilerHostSha256": "d8f182560210d43baaf767d482ad1dc1207372522e91413b9d5e515a875e552d",
+        "completeCompilerClosure": "NOT_ATTESTED"
+      },
+      "consoleHost": {
+        "sha256": "dd5c3514132d92052004d302c66c756ffb6beef572de6538b4fc55f62579eb11",
+        "signature": "Valid",
+        "signerThumbprint": "667BBA1E1F478221AA65DE4F75187A751B03A453"
+      }
+    },
+    {
+      "phase": "capture-final-r1",
+      "status": "PASS",
+      "caseCount": 30,
+      "wholeWrapperOperationNanos": 9592661500,
+      "outerCleanupStatus": "UNMEASURED_SEPARATELY",
+      "sourceFreezeSha256": "113449bfcfa3610ed2563fb1ce26e91a2637502376d2320491030d0fe8180a31",
+      "privateCasesSha256": "669cf0392b0f95ddc729517fa204c5d5d6be6d482b395eb34c4fba57adbd738c",
+      "cases": [
+        {
+          "name": "smoke-exact-cap",
+          "status": "PASS",
+          "expectedOutcome": "SUCCESS",
+          "harnessMillis": 425.8344,
+          "facts": {
+            "cleanupProven": true,
+            "readerTasksTerminal": true,
+            "operationMillis": 149.76420000000002,
+            "stdoutBytes": 4,
+            "startTicks": 639300440497478576,
+            "stderrBytes": 2,
+            "cleanupMillis": 128.2974,
+            "stderrSha256": "bd43c62d6ccc0ceb731444123576f0ee21f5f66bfd673edacd95e52e724b4fa6",
+            "pid": 21460,
+            "stdoutSha256": "f3105e40a6d2542db4fa0eb54c8e2a6d0f39b23e4d21e5b7a77049a209ea0cb9",
+            "readersClosed": true,
+            "exitCode": 0
+          }
+        },
+        {
+          "name": "smoke-flood-cap",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_LIMIT_FAILURE",
+          "harnessMillis": 480.6691,
+          "facts": {
+            "processId": 4536,
+            "pidStatus": "ABSENT",
+            "failureKind": "OUTPUT_LIMIT",
+            "evidenceFilesRetained": true,
+            "stderrRetainedBytes": 0,
+            "cleanupProven": true,
+            "startTicks": 639300440500902683,
+            "stdoutObservedBytes": 17,
+            "stdoutRetainedBytes": 16,
+            "stderrObservedBytes": 0
+          }
+        },
+        {
+          "name": "stdout-below-cap",
+          "status": "PASS",
+          "expectedOutcome": "SUCCESS",
+          "harnessMillis": 158.116,
+          "facts": {
+            "cleanupProven": true,
+            "readerTasksTerminal": true,
+            "operationMillis": 95.73270000000001,
+            "stdoutBytes": 3,
+            "startTicks": 639300440505710428,
+            "stderrBytes": 0,
+            "cleanupMillis": 45.205400000000004,
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "pid": 19536,
+            "stdoutSha256": "53f523709ca0b6c6c8a8d5050c1f9950c732418708b99681969359e9215f841c",
+            "readersClosed": true,
+            "exitCode": 0
+          }
+        },
+        {
+          "name": "stdout-exact-cap",
+          "status": "PASS",
+          "expectedOutcome": "SUCCESS",
+          "harnessMillis": 150.5865,
+          "facts": {
+            "cleanupProven": true,
+            "readerTasksTerminal": true,
+            "operationMillis": 95.6213,
+            "stdoutBytes": 4,
+            "startTicks": 639300440507296088,
+            "stderrBytes": 0,
+            "cleanupMillis": 43.1998,
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "pid": 17228,
+            "stdoutSha256": "f3105e40a6d2542db4fa0eb54c8e2a6d0f39b23e4d21e5b7a77049a209ea0cb9",
+            "readersClosed": true,
+            "exitCode": 0
+          }
+        },
+        {
+          "name": "stdout-one-over-cap",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_LIMIT_FAILURE",
+          "harnessMillis": 116.36160000000001,
+          "facts": {
+            "processId": 19400,
+            "pidStatus": "ABSENT",
+            "failureKind": "OUTPUT_LIMIT",
+            "evidenceFilesRetained": true,
+            "stderrRetainedBytes": 0,
+            "cleanupProven": true,
+            "startTicks": 639300440508811135,
+            "stdoutObservedBytes": 5,
+            "stdoutRetainedBytes": 4,
+            "stderrObservedBytes": 0
+          }
+        },
+        {
+          "name": "stderr-below-cap",
+          "status": "PASS",
+          "expectedOutcome": "SUCCESS",
+          "harnessMillis": 154.5462,
+          "facts": {
+            "cleanupProven": true,
+            "readerTasksTerminal": true,
+            "operationMillis": 97.6044,
+            "stdoutBytes": 0,
+            "startTicks": 639300440509992368,
+            "stderrBytes": 3,
+            "cleanupMillis": 44.6346,
+            "stderrSha256": "d60fba613b79950fb3514c0ab8ab56359779facdfa802f344d823490b0b515d9",
+            "pid": 21916,
+            "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "readersClosed": true,
+            "exitCode": 0
+          }
+        },
+        {
+          "name": "stderr-exact-cap",
+          "status": "PASS",
+          "expectedOutcome": "SUCCESS",
+          "harnessMillis": 138.2776,
+          "facts": {
+            "cleanupProven": true,
+            "readerTasksTerminal": true,
+            "operationMillis": 85.3249,
+            "stdoutBytes": 0,
+            "startTicks": 639300440511531049,
+            "stderrBytes": 4,
+            "cleanupMillis": 42.1062,
+            "stderrSha256": "ae92980f4fe253e4f4e8a8c6058830cf2588bd09d5ca05c48b3bca54e6f3e181",
+            "pid": 20944,
+            "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "readersClosed": true,
+            "exitCode": 0
+          }
+        },
+        {
+          "name": "stderr-one-over-cap",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_LIMIT_FAILURE",
+          "harnessMillis": 124.519,
+          "facts": {
+            "processId": 8512,
+            "pidStatus": "ABSENT",
+            "failureKind": "OUTPUT_LIMIT",
+            "evidenceFilesRetained": true,
+            "stderrRetainedBytes": 4,
+            "cleanupProven": true,
+            "startTicks": 639300440513018369,
+            "stdoutObservedBytes": 0,
+            "stdoutRetainedBytes": 0,
+            "stderrObservedBytes": 5
+          }
+        },
+        {
+          "name": "duplex-65536",
+          "status": "PASS",
+          "expectedOutcome": "SUCCESS",
+          "harnessMillis": 385.6931,
+          "facts": {
+            "cleanupProven": true,
+            "readerTasksTerminal": true,
+            "operationMillis": 331.2814,
+            "stdoutBytes": 65536,
+            "startTicks": 639300440514387086,
+            "stderrBytes": 65536,
+            "cleanupMillis": 43.3609,
+            "stderrSha256": "4bf0558e0de80e1931c490893b2de1a43b2238f53578fef2e6cd2f6a27c35e78",
+            "pid": 3028,
+            "stdoutSha256": "c516e69b05eff1a54017723c3489734b91b585c2a248efbcf9cacda5ae3603bc",
+            "readersClosed": true,
+            "exitCode": 0
+          }
+        },
+        {
+          "name": "utf8-exact-four-bytes",
+          "status": "PASS",
+          "expectedOutcome": "SUCCESS",
+          "harnessMillis": 149.8733,
+          "facts": {
+            "cleanupProven": true,
+            "readerTasksTerminal": true,
+            "operationMillis": 95.6465,
+            "stdoutBytes": 4,
+            "startTicks": 639300440518304174,
+            "stderrBytes": 1,
+            "cleanupMillis": 42.159600000000005,
+            "stderrSha256": "a9f51566bd6705f7ea6ad54bb9deb449f795582d6529a0e22207b8981233ec58",
+            "pid": 12276,
+            "stdoutSha256": "f13c007a1d8e6e1300b5957a143810cdd3555825466cf5d2617b1ac2fd8bd76b",
+            "readersClosed": true,
+            "exitCode": 0
+          }
+        },
+        {
+          "name": "utf8-one-over-cap",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_LIMIT_FAILURE",
+          "harnessMillis": 119.48620000000001,
+          "facts": {
+            "processId": 21452,
+            "pidStatus": "ABSENT",
+            "failureKind": "OUTPUT_LIMIT",
+            "evidenceFilesRetained": true,
+            "stderrRetainedBytes": 0,
+            "cleanupProven": true,
+            "startTicks": 639300440519798319,
+            "stdoutObservedBytes": 4,
+            "stdoutRetainedBytes": 3,
+            "stderrObservedBytes": 0
+          }
+        },
+        {
+          "name": "zero-output-exit-seven",
+          "status": "PASS",
+          "expectedOutcome": "SUCCESS",
+          "harnessMillis": 148.3954,
+          "facts": {
+            "cleanupProven": true,
+            "readerTasksTerminal": true,
+            "operationMillis": 95.4276,
+            "stdoutBytes": 0,
+            "startTicks": 639300440520995869,
+            "stderrBytes": 0,
+            "cleanupMillis": 42.025800000000004,
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "pid": 21676,
+            "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "readersClosed": true,
+            "exitCode": 7
+          }
+        },
+        {
+          "name": "hold-timeout",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_TERMINAL_FAILURE",
+          "harnessMillis": 1576.5656000000001,
+          "facts": {
+            "failureKind": "TIMEOUT",
+            "evidenceFilesRetained": true,
+            "processId": 20116,
+            "startTicks": 639300440522543229,
+            "pidStatus": "ABSENT",
+            "cleanupProven": true
+          }
+        },
+        {
+          "name": "hold-cancelled",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_TERMINAL_FAILURE",
+          "harnessMillis": 603.1984,
+          "facts": {
+            "failureKind": "CANCELLED",
+            "evidenceFilesRetained": true,
+            "processId": 2316,
+            "startTicks": 639300440538313732,
+            "pidStatus": "ABSENT",
+            "cleanupProven": true
+          }
+        },
+        {
+          "name": "pre-cancelled",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_PRELAUNCH_REJECTION",
+          "harnessMillis": 2.6211,
+          "facts": {
+            "stateAbsent": true,
+            "guard": "PRE_START",
+            "processAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "missing-stdout-cap",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_PRELAUNCH_REJECTION",
+          "harnessMillis": 1.3345,
+          "facts": {
+            "stateAbsent": true,
+            "guard": "PRE_START",
+            "processAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "missing-stderr-cap",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_PRELAUNCH_REJECTION",
+          "harnessMillis": 1.3482,
+          "facts": {
+            "stateAbsent": true,
+            "guard": "PRE_START",
+            "processAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-cap-zero",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_PRELAUNCH_REJECTION",
+          "harnessMillis": 2.8388,
+          "facts": {
+            "stateAbsent": true,
+            "guard": "PRE_START",
+            "processAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-cap-negative",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_PRELAUNCH_REJECTION",
+          "harnessMillis": 1.3947,
+          "facts": {
+            "stateAbsent": true,
+            "guard": "PRE_START",
+            "processAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-cap-string",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_PRELAUNCH_REJECTION",
+          "harnessMillis": 1.8058,
+          "facts": {
+            "stateAbsent": true,
+            "guard": "PRE_START",
+            "processAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-cap-bool",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_PRELAUNCH_REJECTION",
+          "harnessMillis": 2.7129000000000003,
+          "facts": {
+            "stateAbsent": true,
+            "guard": "PRE_START",
+            "processAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-cap-null",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_PRELAUNCH_REJECTION",
+          "harnessMillis": 2.013,
+          "facts": {
+            "stateAbsent": true,
+            "guard": "PRE_START",
+            "processAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-cap-fraction",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_PRELAUNCH_REJECTION",
+          "harnessMillis": 2.4969,
+          "facts": {
+            "stateAbsent": true,
+            "guard": "PRE_START",
+            "processAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-cap-array",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_PRELAUNCH_REJECTION",
+          "harnessMillis": 1.6854,
+          "facts": {
+            "stateAbsent": true,
+            "guard": "PRE_START",
+            "processAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-cap-map",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_PRELAUNCH_REJECTION",
+          "harnessMillis": 2.414,
+          "facts": {
+            "stateAbsent": true,
+            "guard": "PRE_START",
+            "processAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-cap-over-intmax",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_PRELAUNCH_REJECTION",
+          "harnessMillis": 1.6899000000000002,
+          "facts": {
+            "stateAbsent": true,
+            "guard": "PRE_START",
+            "processAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-token",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_PRELAUNCH_REJECTION",
+          "harnessMillis": 1.895,
+          "facts": {
+            "stateAbsent": true,
+            "guard": "PRE_START",
+            "processAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "settlement-deadline",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_CONTROLLED_SETTLEMENT_TIMEOUT_NOT_PASS",
+          "harnessMillis": 1268.2833,
+          "facts": {
+            "cleanupMillis": 28.4128,
+            "controlledDelayMillis": 1100,
+            "pidStatus": "ABSENT",
+            "hookRestored": true,
+            "operationMillis": 1189.5614,
+            "cleanupProven": true
+          }
+        },
+        {
+          "name": "cleanup-failure-retains-prefix",
+          "status": "PASS",
+          "expectedOutcome": "EXPECTED_INJECTED_CLEANUP_FAILURE_NOT_PASS",
+          "harnessMillis": 167.6476,
+          "facts": {
+            "cleanupProven": false,
+            "hookRestored": true,
+            "pidStatus": "ABSENT",
+            "prefixEvidenceRetained": true,
+            "readersTerminal": true
+          }
+        },
+        {
+          "name": "legacy-no-cap",
+          "status": "PASS",
+          "expectedOutcome": "LEGACY_THREE_ARGUMENTS",
+          "harnessMillis": 2169.2754,
+          "facts": {
+            "stderrBytes": 32,
+            "exitCode": 0,
+            "pid": 19904,
+            "captureFacts": "ABSENT",
+            "startTicks": 639300440559198236,
+            "stdoutBytes": 65536
+          }
+        }
+      ]
+    },
+    {
+      "phase": "legacy-final-r1",
+      "status": "PASS",
+      "caseCount": 16,
+      "wholeWrapperOperationNanos": 3574381100,
+      "outerCleanupStatus": "UNMEASURED_SEPARATELY",
+      "sourceFreezeSha256": "c8188884cb92e83a6cd304bbe8ae833f582d19af246b65dbf5925bdfcb5a5925",
+      "privateCasesSha256": "a96e0f1f874cafdda9fbe3db67dfac80f20096e6a5c0be8785891d2b30f775b2",
+      "cases": [
+        {
+          "name": "success-argv",
+          "status": "PASS",
+          "operationMillis": 284.0213,
+          "cleanupMillis": null,
+          "cleanupStatus": "UNMEASURED_SEPARATELY",
+          "facts": {
+            "imageSha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec",
+            "exitCode": 0,
+            "pid": 22140,
+            "startTicks": 639300440660086742,
+            "terminationProven": true,
+            "ownerLogsAbsent": true
+          }
+        },
+        {
+          "name": "nonzero-seven",
+          "status": "PASS",
+          "operationMillis": 115.46610000000001,
+          "cleanupMillis": null,
+          "cleanupStatus": "UNMEASURED_SEPARATELY",
+          "facts": {
+            "imageSha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec",
+            "exitCode": 7,
+            "pid": 22304,
+            "startTicks": 639300440661788922,
+            "terminationProven": true,
+            "ownerLogsAbsent": true
+          }
+        },
+        {
+          "name": "rapid-1",
+          "status": "PASS",
+          "operationMillis": 122.1239,
+          "cleanupMillis": null,
+          "cleanupStatus": "UNMEASURED_SEPARATELY",
+          "facts": {
+            "imageSha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec",
+            "exitCode": 0,
+            "pid": 13296,
+            "startTicks": 639300440662961537,
+            "terminationProven": true,
+            "ownerLogsAbsent": true
+          }
+        },
+        {
+          "name": "rapid-2",
+          "status": "PASS",
+          "operationMillis": 145.1296,
+          "cleanupMillis": null,
+          "cleanupStatus": "UNMEASURED_SEPARATELY",
+          "facts": {
+            "imageSha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec",
+            "exitCode": 0,
+            "pid": 17536,
+            "startTicks": 639300440664186197,
+            "terminationProven": true,
+            "ownerLogsAbsent": true
+          }
+        },
+        {
+          "name": "rapid-3",
+          "status": "PASS",
+          "operationMillis": 113.20110000000001,
+          "cleanupMillis": null,
+          "cleanupStatus": "UNMEASURED_SEPARATELY",
+          "facts": {
+            "imageSha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec",
+            "exitCode": 0,
+            "pid": 22172,
+            "startTicks": 639300440665653545,
+            "terminationProven": true,
+            "ownerLogsAbsent": true
+          }
+        },
+        {
+          "name": "timeout",
+          "status": "PASS",
+          "operationMillis": 1724.6183,
+          "cleanupMillis": null,
+          "cleanupStatus": "UNMEASURED_SEPARATELY",
+          "facts": {
+            "imageSha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec",
+            "pid": 20008,
+            "startTicks": 639300440666773279,
+            "operationStatus": "EXPECTED_TIMEOUT_NOT_PASS",
+            "pidAbsent": true
+          }
+        },
+        {
+          "name": "invalid-timeout-zero",
+          "status": "PASS",
+          "operationMillis": 2.9282000000000004,
+          "cleanupMillis": null,
+          "cleanupStatus": "UNMEASURED_SEPARATELY",
+          "facts": {
+            "stateAbsent": true,
+            "guard": "EXACT_PRE_START_GUARD",
+            "osProcessAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-timeout-negative",
+          "status": "PASS",
+          "operationMillis": 1.0521,
+          "cleanupMillis": null,
+          "cleanupStatus": "UNMEASURED_SEPARATELY",
+          "facts": {
+            "stateAbsent": true,
+            "guard": "EXACT_PRE_START_GUARD",
+            "osProcessAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-timeout-string",
+          "status": "PASS",
+          "operationMillis": 1.0568,
+          "cleanupMillis": null,
+          "cleanupStatus": "UNMEASURED_SEPARATELY",
+          "facts": {
+            "stateAbsent": true,
+            "guard": "EXACT_PRE_START_GUARD",
+            "osProcessAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-timeout-bool",
+          "status": "PASS",
+          "operationMillis": 2.0099,
+          "cleanupMillis": null,
+          "cleanupStatus": "UNMEASURED_SEPARATELY",
+          "facts": {
+            "stateAbsent": true,
+            "guard": "EXACT_PRE_START_GUARD",
+            "osProcessAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-timeout-null",
+          "status": "PASS",
+          "operationMillis": 1.2942,
+          "cleanupMillis": null,
+          "cleanupStatus": "UNMEASURED_SEPARATELY",
+          "facts": {
+            "stateAbsent": true,
+            "guard": "EXACT_PRE_START_GUARD",
+            "osProcessAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-timeout-fraction",
+          "status": "PASS",
+          "operationMillis": 2.2225,
+          "cleanupMillis": null,
+          "cleanupStatus": "UNMEASURED_SEPARATELY",
+          "facts": {
+            "stateAbsent": true,
+            "guard": "EXACT_PRE_START_GUARD",
+            "osProcessAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-timeout-array",
+          "status": "PASS",
+          "operationMillis": 1.0639,
+          "cleanupMillis": null,
+          "cleanupStatus": "UNMEASURED_SEPARATELY",
+          "facts": {
+            "stateAbsent": true,
+            "guard": "EXACT_PRE_START_GUARD",
+            "osProcessAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-timeout-map",
+          "status": "PASS",
+          "operationMillis": 1.7913000000000001,
+          "cleanupMillis": null,
+          "cleanupStatus": "UNMEASURED_SEPARATELY",
+          "facts": {
+            "stateAbsent": true,
+            "guard": "EXACT_PRE_START_GUARD",
+            "osProcessAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-arguments-scalar",
+          "status": "PASS",
+          "operationMillis": 1.4329,
+          "cleanupMillis": null,
+          "cleanupStatus": "UNMEASURED_SEPARATELY",
+          "facts": {
+            "stateAbsent": true,
+            "guard": "PRE_START_ARGUMENT_GUARD",
+            "osProcessAudit": "NOT_PERFORMED"
+          }
+        },
+        {
+          "name": "invalid-arguments-member",
+          "status": "PASS",
+          "operationMillis": 1.7011,
+          "cleanupMillis": null,
+          "cleanupStatus": "UNMEASURED_SEPARATELY",
+          "facts": {
+            "stateAbsent": true,
+            "guard": "PRE_START_ARGUMENT_GUARD",
+            "osProcessAudit": "NOT_PERFORMED"
+          }
+        }
+      ]
+    },
+    {
+      "phase": "tools-final-r1",
+      "status": "PASS",
+      "caseCount": 3,
+      "wholeWrapperOperationNanos": 1838494400,
+      "outerCleanupStatus": "UNMEASURED_SEPARATELY",
+      "sourceFreezeSha256": "884dbb3c08d231a6e24e7eb482d05af576cb90269ad1d4328b3c6c2c549e5ebb",
+      "privateCasesSha256": "47d80a31c0acc560e6c0c8fdcd3df488aa11e5efcd6e1a68a421a83c57865ec8",
+      "cases": [
+        {
+          "exitCode": 0,
+          "requestedImageSha256": "e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce",
+          "name": "java-version",
+          "stdout": "",
+          "operationStatus": "EXIT0",
+          "imageIndependentlyObserved": false,
+          "facts": {
+            "ProcessId": 9196,
+            "StartTicks": 639300440772073330,
+            "CaptureFailureKind": "",
+            "ReaderTasksTerminal": true,
+            "ReadersClosed": true,
+            "FailureLogsRetained": false,
+            "OperationMilliseconds": 149.69670000000002,
+            "CleanupMilliseconds": 195.7587,
+            "CleanupProven": true,
+            "StdoutByteCount": 0,
+            "StdoutObservedBytes": 0,
+            "StdoutDiscardedDuringCleanup": 0,
+            "StdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "StderrByteCount": 155,
+            "StderrObservedBytes": 155,
+            "StderrDiscardedDuringCleanup": 0,
+            "StderrSha256": "1cc134eee0b09c82ff01739623f30b95dcd265223e8377d051fa0b4ac3c6cfa3"
+          }
+        },
+        {
+          "exitCode": 0,
+          "requestedImageSha256": "61fa6463ee5b59004719b9833a16b148740cfa9f2d1f5a95ca598cc90be04c64",
+          "name": "javac-version",
+          "stdout": "",
+          "operationStatus": "EXIT0",
+          "stderr": "javac 1.8.0_502\r\n",
+          "imageIndependentlyObserved": false,
+          "facts": {
+            "ProcessId": 19992,
+            "StartTicks": 639300440775781855,
+            "CaptureFailureKind": "",
+            "ReaderTasksTerminal": true,
+            "ReadersClosed": true,
+            "FailureLogsRetained": false,
+            "OperationMilliseconds": 126.5382,
+            "CleanupMilliseconds": 40.782900000000005,
+            "CleanupProven": true,
+            "StdoutByteCount": 0,
+            "StdoutObservedBytes": 0,
+            "StdoutDiscardedDuringCleanup": 0,
+            "StdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "StderrByteCount": 17,
+            "StderrObservedBytes": 17,
+            "StderrDiscardedDuringCleanup": 0,
+            "StderrSha256": "093d38b1803630d161f7efde8eaa306c6caa951a692e87dfa3c3d5e394872baf"
+          }
+        },
+        {
+          "exitCode": 2,
+          "requestedImageSha256": "61fa6463ee5b59004719b9833a16b148740cfa9f2d1f5a95ca598cc90be04c64",
+          "name": "javac-invalid",
+          "stdout": "",
+          "operationStatus": "EXPECTED_ERROR_NOT_PASS",
+          "imageIndependentlyObserved": false,
+          "facts": {
+            "ProcessId": 21528,
+            "StartTicks": 639300440777474985,
+            "CaptureFailureKind": "",
+            "ReaderTasksTerminal": true,
+            "ReadersClosed": true,
+            "FailureLogsRetained": false,
+            "OperationMilliseconds": 116.03330000000001,
+            "CleanupMilliseconds": 40.9848,
+            "CleanupProven": true,
+            "StdoutByteCount": 0,
+            "StdoutObservedBytes": 0,
+            "StdoutDiscardedDuringCleanup": 0,
+            "StdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "StderrByteCount": 123,
+            "StderrObservedBytes": 123,
+            "StderrDiscardedDuringCleanup": 0,
+            "StderrSha256": "ee6d78c21361b9cac4b37ccb963dced20b351e4f08ea7d6e33886b56c12ca96c"
+          }
+        }
+      ]
+    }
+  ],
+  "earlierPhases": [
+    {
+      "phase": "containment-smoke-r1",
+      "status": "FAIL_NOT_PASS",
+      "exitCode": 2,
+      "pid": 21392,
+      "creationTime100ns": 134389209642168985,
+      "originalWrapperExitObserved": true,
+      "wholeWrapperOperationNanos": 2068688400,
+      "outerCleanupStatus": "UNMEASURED_SEPARATELY",
+      "sourceFreezeSha256": "1111e0187f957c0501ef6cc6e6cb9a861002c717a296bbd2267bed2c85298024",
+      "receiptSha256": "b720e192d7c0f58769996fd7611b3b268303787e91bed7f1181b28891c5eec9e",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "52cced5afd569e660166435d0e8d4265345dcebc81cfe52d71e5ff0e82b8ae8b"
+    },
+    {
+      "phase": "containment-smoke-r2",
+      "status": "PASS",
+      "exitCode": 0,
+      "pid": 21592,
+      "creationTime100ns": 134389214164731869,
+      "originalWrapperExitObserved": true,
+      "wholeWrapperOperationNanos": 2176080300,
+      "outerCleanupStatus": "UNMEASURED_SEPARATELY",
+      "sourceFreezeSha256": "646237f9e9c489dde3615202b87b572b904955b4840ffeb14c951205bca078d6",
+      "receiptSha256": "66c4db354ea7ee8fa514e9bf0e586809fd57d0ed7706d08463a40ac82144dfba",
+      "stdoutSha256": "e064d2c0ea083911c4dcd9cbd9a19ef5b4ca4d0cb4211d5031af5f67640cbd40",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "phase": "diagnose-jdk-r1",
+      "status": "PASS",
+      "exitCode": 0,
+      "pid": 21356,
+      "creationTime100ns": 134389192378166049,
+      "originalWrapperExitObserved": true,
+      "wholeWrapperOperationNanos": 1139456800,
+      "outerCleanupStatus": "UNMEASURED_SEPARATELY",
+      "sourceFreezeSha256": "46863fcf1e34397f358621300ff6e69319535e6a9a8e80ecdd2353f5461b58e7",
+      "receiptSha256": "9ec863d2a44d0ca1588476c5dfa7c218d447e6472553894c8988b59b86960019",
+      "stdoutSha256": "4db0498e54b6b624a35cf4a9176db7d7c00dcd3fb0854a7396c59d771e8bd6ed",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "phase": "early-live-r1",
+      "status": "FAIL_NOT_PASS",
+      "exitCode": 1,
+      "pid": 5332,
+      "creationTime100ns": 134389190030632332,
+      "originalWrapperExitObserved": true,
+      "wholeWrapperOperationNanos": 1197276300,
+      "outerCleanupStatus": "UNMEASURED_SEPARATELY",
+      "sourceFreezeSha256": "b345ca7f9bd5535ec0304c4000989669453e5464501c5f36bd08f99e1c77fe33",
+      "receiptSha256": "27c7248aaec5026b3e82b7784bd66879f15dd93d8dc631c3c4e1ec61a35d443c",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "6e6ea8d8494f2515e12c31fd2af147190dd6948a52afc9a73cf68f5bf3fcdb3b"
+    },
+    {
+      "phase": "early-live-r2",
+      "status": "FAIL_NOT_PASS",
+      "exitCode": 1,
+      "pid": 14780,
+      "creationTime100ns": 134389190993862556,
+      "originalWrapperExitObserved": true,
+      "wholeWrapperOperationNanos": 977763900,
+      "outerCleanupStatus": "UNMEASURED_SEPARATELY",
+      "sourceFreezeSha256": "9331401177ede5afe922e0e367fc71c7498c030810fd7b43ea6c9f3c8f95f7c1",
+      "receiptSha256": "51136f679e7afa5ee664ebbe35a4b0d0353998de5200b0da77cb9b16bd704268",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "7069bb74bda48fd0dcf40843f52d6cb16e9593a2b105ad8c3a0a6f83f6f94d09"
+    },
+    {
+      "phase": "early-managed-r1",
+      "status": "FAIL_NOT_PASS",
+      "exitCode": 1,
+      "pid": 3576,
+      "creationTime100ns": 134389197182310671,
+      "originalWrapperExitObserved": true,
+      "wholeWrapperOperationNanos": 1467391200,
+      "outerCleanupStatus": "UNMEASURED_SEPARATELY",
+      "sourceFreezeSha256": "e5087f539bb6569503988b59314c5537bd98bb39950e2f9f4145cc0c8a2ea164",
+      "receiptSha256": "3ea610efdcfc13e0a1bed7490dd26427e9dd419c24294c3dc17a1b900115e7d4",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "83664741423d284baa62541ee85b0a4f9edc54db0288ef960194be2a1dc64702"
+    },
+    {
+      "phase": "early-managed-r2",
+      "status": "FAIL_NOT_PASS",
+      "exitCode": 1,
+      "pid": 21784,
+      "creationTime100ns": 134389198189217423,
+      "originalWrapperExitObserved": true,
+      "wholeWrapperOperationNanos": 1316239200,
+      "outerCleanupStatus": "UNMEASURED_SEPARATELY",
+      "sourceFreezeSha256": "41ce3d815c88c1748e97b1772f82a2e328b3fb86931241965945c0bbc63e134c",
+      "receiptSha256": "0723c8afe32556d6be54af5dd3a6ce1e11118aa149ffa456cebafe97d67b21fd",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "575c30e78bdc3bd2d080ebf862ec227adabe4df701dea85c9121ec4397bf82e3"
+    },
+    {
+      "phase": "early-managed-r3",
+      "status": "FAIL_NOT_PASS",
+      "exitCode": 1,
+      "pid": 21552,
+      "creationTime100ns": 134389199954511373,
+      "originalWrapperExitObserved": true,
+      "wholeWrapperOperationNanos": 1491501600,
+      "outerCleanupStatus": "UNMEASURED_SEPARATELY",
+      "sourceFreezeSha256": "4cf44311950654b12b89e2746576624e048039ba04c99b3bd233c5e8e8c24042",
+      "receiptSha256": "1ca6fa3ecb702d06a1bce64615478bbd462a9e0976469b334b83195db2cd1fc2",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "2fb5d144397fe709c950ffb5a7f132138d124cd70a746935d9c54702f6a00202"
+    },
+    {
+      "phase": "early-managed-r4",
+      "status": "FAIL_NOT_PASS",
+      "exitCode": 1,
+      "pid": 16436,
+      "creationTime100ns": 134389201813792069,
+      "originalWrapperExitObserved": true,
+      "wholeWrapperOperationNanos": 1523886000,
+      "outerCleanupStatus": "UNMEASURED_SEPARATELY",
+      "sourceFreezeSha256": "c5cb11b36779d6732fa55d04f91789cc51bf3ba00d552721bbc180d9ff16ce3f",
+      "receiptSha256": "f7859833727f91fc8cbb4f7611f56b7ae9e0fdfd8d034cc8f2c6fafc3a2f751e",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "d3da9294af9bf217b07d4cf9b08dcae0ab4db0eb99f0c810696328ced7b994c7"
+    },
+    {
+      "phase": "early-managed-r5",
+      "status": "PASS",
+      "exitCode": 0,
+      "pid": 8372,
+      "creationTime100ns": 134389202999964189,
+      "originalWrapperExitObserved": true,
+      "wholeWrapperOperationNanos": 1453475900,
+      "outerCleanupStatus": "UNMEASURED_SEPARATELY",
+      "sourceFreezeSha256": "901036d56783d5ec4a0699ae4048b2b828f5c26305453b53e8bba97d655790e6",
+      "receiptSha256": "71ca33db6c794f10b547a157ee8d4738eaee8bbb270af3788063214872fc43dc",
+      "stdoutSha256": "d236d6ad4ea07bf7b99e3e9ab41db31bf9b7c087c137d023e8f53d9d2d72e349",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "phase": "early-r1",
+      "status": "PASS",
+      "exitCode": 0,
+      "pid": 4860,
+      "creationTime100ns": 134389186867527401,
+      "originalWrapperExitObserved": true,
+      "wholeWrapperOperationNanos": 1301490800,
+      "outerCleanupStatus": "UNMEASURED_SEPARATELY",
+      "sourceFreezeSha256": "abb6a96a4bde50563e75fad8619356e4ef4e0743052139237bf1662d93532777",
+      "receiptSha256": "94ae8f074f5366e1779e7dd078424b79fad1999785aee276c1108deaf4afb1fb",
+      "stdoutSha256": "20475a5401fa08eac346a9724e41c841f7571eb8b7dace72d5863c5d78c71292",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "failureLimits": [
+    "Python_JOB_LIST_native5_twice_cause_unestablished_path_unqualified",
+    "early_exact2_members_and_immediate_PID_absence_oracles_failed_not_reclassified",
+    "initial_maintained_Smoke_missing_retained_handles_primary_masked_trigger_not_recovered"
+  ],
+  "resourceAudit": {
+    "sha256": "8bc3c810472b7aef3ecbe37b68bc03508d075341fd3688def57956c019d1894b",
+    "status": "PASS",
+    "knownIdentities": 76,
+    "originalWrapperExits": 16,
+    "nativeQueryUncertifiedDifferentIdentityCimObservations": 1,
+    "terminationAuthority": "NONE_QUERY_ONLY",
+    "historicalMissingProofRepaired": false
+  },
+  "limits": {
+    "creatorDeathProtection": "NOT_QUALIFIED",
+    "capturedNativeLaunch": "NOT_QUALIFIED",
+    "actualBrowser": "NOT_RUN",
+    "normalQualifierHarnessStudyGenuine": "NOT_RUN",
+    "productionJavaGwtPlayer": "NOT_APPLICABLE",
+    "populationElectrical": "NOT_RENEWED",
+    "ci": "NOT_RUN_SELF_HOSTED_RUNNER_PREREQUISITE",
+    "full30NormalMedium": "EXCLUDED",
+    "hardPsychotic": "UNAVAILABLE_UNRUN",
+    "protectedUnread": "UNCERTIFIED",
+    "oldnormal20": "NOT_REREAD",
+    "playable100": 0,
+    "beta": "HELD"
+  },
+  "reviewScopeSha256": "af7c3f96c31222e0973cd38d41f6e04a09891428598e85c466f91e9eeecc24ae"
+}

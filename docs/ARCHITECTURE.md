@@ -563,6 +563,17 @@ late cancellation/deadline overrun from becoming success. Legacy callers omit
 the new options. No native stream policy or descendant authority is established;
 the browser-specific suspended/job owner remains the next integration boundary.
 
+The existing native job class now provides a
+[creator-owned termination request](task-evidence/Q100/current-native-host-r1/JOB_TERMINATION_R1.md).
+Only `CreateNew` grants this authority through its original handle; query-only
+`OpenExisting` instances reject it before native calls. A request prevents later
+launches on that creator. Completion still requires bounded empty-job and retained
+member-handle observations. The child query-only job-lifetime reference and
+controller disposal behavior remain intact for recovery. The CODE contract vets
+all parent, descendant and console-host identities and an outside sentinel.
+Original child-handle transfer, captured native launch and creator-death protection
+remain separate boundaries; no browser context or native stream policy is added.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published

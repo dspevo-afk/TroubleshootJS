@@ -10612,14 +10612,22 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
     private static extern bool TerminateProcess(IntPtr process, uint exitCode);
 
     [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool TerminateJobObject(IntPtr job, uint exitCode);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
     private static extern uint WaitForSingleObject(IntPtr handle, uint milliseconds);
 
     private IntPtr handle;
+    private readonly bool creatorOwned;
+    private bool terminationRequested;
     public string Name { get; private set; }
 
-    private VerifierBrowserContainmentJobApi(IntPtr value, string name) {
+    private VerifierBrowserContainmentJobApi(IntPtr value, string name,
+        bool ownsTermination) {
         handle = value;
         Name = name;
+        creatorOwned = ownsTermination;
     }
 
     private static bool IsInvalid(IntPtr value) {
@@ -10688,7 +10696,7 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
                 "Browser containment job name was already present.");
         }
         VerifierBrowserContainmentJobApi result =
-            new VerifierBrowserContainmentJobApi(created, name);
+            new VerifierBrowserContainmentJobApi(created, name, true);
         try {
             result.ConfigureNoBreakawayKillOnClose();
             return result;
@@ -10709,7 +10717,7 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
                 "Could not open browser containment job.");
         }
         VerifierBrowserContainmentJobApi result =
-            new VerifierBrowserContainmentJobApi(opened, name);
+            new VerifierBrowserContainmentJobApi(opened, name, false);
         try {
             result.AssertNoBreakaway();
             return result;
@@ -10719,9 +10727,29 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
         }
     }
 
+    // Request only: the owner must still observe bounded job/identity closure.
+    // Query-only recovery handles never gain this authority by protocol shape.
+    public void TerminateOwned(uint exitCode) {
+        if (!creatorOwned) {
+            throw new InvalidOperationException(
+                "Only a creator-owned containment job may request termination.");
+        }
+        AssertOpen();
+        AssertNoBreakaway();
+        terminationRequested = true;
+        if (!TerminateJobObject(handle, exitCode)) {
+            throw new Win32Exception(Marshal.GetLastWin32Error(),
+                "Could not request owned containment-job termination.");
+        }
+    }
+
     public int Launch(string applicationName, string commandLine,
         string currentDirectory) {
         AssertOpen();
+        if (terminationRequested) {
+            throw new InvalidOperationException(
+                "A containment job cannot launch after its termination request.");
+        }
         AssertNoBreakaway();
         if (String.IsNullOrWhiteSpace(applicationName) ||
                 String.IsNullOrWhiteSpace(commandLine)) {
