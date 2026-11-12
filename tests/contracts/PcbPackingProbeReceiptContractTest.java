@@ -247,7 +247,7 @@ public final class PcbPackingProbeReceiptContractTest {
             "placements=1;placementRejects=0;placementEvaluations=0;routes=1;" +
             "routingWork=0/0;p05=0/0;p07=1/1;selectedAttempt=0;ranked=[];" +
             "placementScores=[];selectedScore=0;selectedQualityMilli=0;" +
-            "routeOutcomes=[]";
+            "routeOutcomes=[];routeEligiblePlacementAttempts=[];routeEligibilitySkips=[]";
         String expectedCurrentCanonical = expectedLegacyCanonical +
             ";packingProbe=" + expectedProbeCanonical;
         String currentCanonical = current.toCanonical();

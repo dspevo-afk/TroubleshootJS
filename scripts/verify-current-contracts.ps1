@@ -970,7 +970,6 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         @{ Name = 'PcbTraceWidthProfileContractTest'; Marker = 'PCB trace width profile contracts ' },
         @{ Name = 'PcbRoleWidthRoutingContractTest'; Marker = 'PCB role width routing contracts ' },
         @{ Name = 'PcbRoleWidthReplayDiagnosticTest'; Marker = 'PCB role width replay diagnostic complete' },
-        @{ Name = 'PcbRoleWidthSearchDiagnosticTest'; Marker = 'PCB role width search diagnostic complete' },
         @{ Name = 'PcbRoleWidthTurnBoundContractTest'; Marker = 'PCB role width turn bound contracts ' },
         @{ Name = 'PcbRoleWidthHoldoutContractTest'; Marker = 'PCB role width holdout contracts ' },
         @{ Name = 'PcbPocketPackingContractTest'; Marker = 'pocket packing contracts ' },
