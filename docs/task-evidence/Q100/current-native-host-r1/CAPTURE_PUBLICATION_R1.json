@@ -1,0 +1,17 @@
+{
+  "status": "PUBLISHED_EXACT_REMOTE_VERIFIED_EMAIL_SENT_ONCE",
+  "implementation": "f383d5da924b27b16724e94b8f24f4429c51a230",
+  "message": "Add opt-in bounded verifier capture and cancellation",
+  "workBranch": "codex/q100-terminal-only-20261107",
+  "remote": "origin",
+  "remoteBranch": "codex/q100-physical-feasibility",
+  "verifiedRemoteSha": "f383d5da924b27b16724e94b8f24f4429c51a230",
+  "gmailId": "1a1cd2e76f4f624f",
+  "subject": "TroubleshootJS: bounded capture and cancellation pushed",
+  "sendAttempts": 1,
+  "duplicateSearch": "NO_EXISTING_SENT_MESSAGE_EXACT_SUBJECT_AND_SHA",
+  "receiptEmail": "NOT_SENT_NO_DUPLICATE",
+  "sourceManifestSha256": "2e89ed41f85955445eaba16c9e1cfb400048061bed62e24e3be1bde48d74179b",
+  "proofSha256": "71183bb5bed3e40f3308d9a7a3d2ec78ef9879f80ab23f6ba6ea2ea318c0f7c5",
+  "indexAuditSha256": "99f2c49dc54d5937d0f29900933408b96bf3cc977f7059d315634a5406aae6e5"
+}
