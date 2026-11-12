@@ -1,10 +1,13 @@
-# Current checkpoint: N60 native captured pipes locally accepted
+# Current checkpoint: N60 native captured pipes published
 
 Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
 codex/q100-terminal-only-20261107, parent052e0f4d1c53e721a80db5725cde5299b6e15ea4,
 no upstream; normal target origin/codex/q100-physical-feasibility. N59implaf451bec/
-receipt052e0f4d verified remotely; Gmail1a1cdaddd52df842 once. N60 local gates pass;
-publication/email PENDING, no success claim for remote publication yet.
+receipt052e0f4d verified remotely; Gmail1a1cdaddd52df842 once. N60 implementation
+752598fe62dbd470fbd3fbd278b081cb01f63a2b (Capture verifier output through owned native
+leases) normally pushed/exactremoteverified; Gmail1a1cdffdb4852ad2 once.
+Source/index audit16 PASS91b58c692fc077df356337aee0fc13555d62473eb7815800f07c3f1620ef1a1f;
+documentation-only receipt pending. Source-bound gates rechecked unchanged.
 
 Same native class/LaunchCore adds creator-only LaunchCaptured, explicit stdin/
 stdout/stderr HANDLE_LIST with JOB_LIST and original-handle lease. Parent child-end
@@ -62,8 +65,9 @@ budgets unchanged (90s/640groups/5s/32768 PER GROUP; copy1048576/chunk4096;
 source4MiB/fragment64KiB/opJSON8MiB/result1MiB/depth64/visits1m/classes10k256MiB;
 compile-native60s/reader180s/wrapper480s/cleanup120s). Production Java/GWT/visible
 Player N/A; electrical/population NOT RENEWED; CI NOT RUN/self-hosted runner
-prerequisite. Next publish validated N60 normally and send one Gmail, then scope
-the bounded native coordinator adapter/explicit invocation policy.
+prerequisite. Next N61 bounded native coordinator adapter/explicit invocation policy
+implementation NOT STARTED; source-only design notes in private R60
+N61_DESIGN_ONLY_PENDING_N60.md need a new frozen scope on the published dependency.
 
 # Historical checkpoint: N59 publication and N60 preparation
 

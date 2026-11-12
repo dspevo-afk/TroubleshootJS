@@ -2171,7 +2171,9 @@ Only the native class and receive helper change, with exact outside-byte and
 pin-only conservation. Concurrent inheriting launches remain unqualified; a future
 coordinator must serialize or isolate all relevant creation owners. Normal native
 preflight, role caps, full tool/return closure, creator-death and genuine admission
-remain pending. Playable100=0; beta HELD. Implementation publication pending.
+remain pending. Playable100=0; beta HELD. Implementation `752598fe62dbd470fbd3fbd278b081cb01f63a2b` normally pushed
+to origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
+Gmail `1a1cdffdb4852ad2` sent once; this receipt sends no second email.
 Next is the bounded native coordinator adapter and explicit invocation policy.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical

@@ -602,6 +602,8 @@ inheritable handles can leak into an unrelated concurrent inheriting launch;
 future coordination must serialize or isolate all relevant creation owners.
 The native bounded-process coordinator, role budgets and full trusted native
 composition remain separate. Contract preflight grants no production admission.
+Accepted implementation `752598fe62dbd470fbd3fbd278b081cb01f63a2b` is published on
+origin/codex/q100-physical-feasibility; its finite evidence and limits remain linked above.
 
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
