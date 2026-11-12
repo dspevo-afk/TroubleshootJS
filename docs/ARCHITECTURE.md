@@ -703,6 +703,13 @@ Current Source/tool observations are compared by byte facts between observations
 not retained tokens; this is neither atomic namespace nor launch authority. Real
 prior receipt/run binding and normal activation remain separate closed contracts.
 
+Implementation `2035ecba294d0d49eef81a935607b712693ffbdd` (Inspect authenticated historical Source tool metadata)
+normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
+Completion Gmail `1a1cf93983c8ab1c` sent once. This documentation receipt sends no second email.
+Final index9 PASS `84b13faa95870bfdd4286109ae6242cd1070588ff2be6d96a43a2864bc55cc4a`.
+The first staging attempt refused sparse paths; explicit intended paths were staged
+with `--sparse`, without changing checkout rules or Source. No gate was affected.
+
 
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before

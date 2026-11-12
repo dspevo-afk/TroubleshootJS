@@ -1,9 +1,11 @@
-# Current checkpoint: N67 historical Source tool metadata validated
+# Current checkpoint: N67 historical Source tool metadata published
 
 Writer F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
-codex/q100-terminal-only-20261107; HEADf36701fff713159e590d16b7f284989e0c2ba0df,
+codex/q100-terminal-only-20261107; parentf36701fff713159e590d16b7f284989e0c2ba0df,
 no upstream; normal target origin/codex/q100-physical-feasibility. N67 implementation
-validated, index/publication pending. N66impl33ec8407/receiptf36701ff remotely
+2035ecba294d0d49eef81a935607b712693ffbdd normally pushed/exact remote verified; Gmail1a1cf93983c8ab1c
+once. Final index9 PASS84b13faa95870bfdd4286109ae6242cd1070588ff2be6d96a43a2864bc55cc4a;
+Current HEAD2035ecba294d0d49eef81a935607b712693ffbdd; documentation receipt pending; no second email. N66impl33ec8407/receiptf36701ff remotely
 verified, Gmail1a1cf62e522d1efd once, no duplicate. Private R67 OS-temp/
 tsj-q100-historical-tool-authority-r1-f917fbda500d; frozen preparation/implementation
 scopes and all setup failures retained. One root-owned matrix at a time, now ended.
@@ -73,9 +75,10 @@ and budgets90s/640groups/5s/32768PERGROUP/copy1048576chunk4096/Source4MiB/produc
 fragment64KiB/opJSON8MiB/result1MiB/depth64visits1m/classes10k256MiB/compile60s/
 reader180s/wrapper480s/cleanup120s unchanged. Fixed20 means artifacts, notcases.
 
-Next: final index/review then normalcommit/push/exactremote/emailonce. Next separate
-scope N68 freezes historical receipt/run/Source/root/allowlist binding before any
-normalread or guardreplacement. Source metadata inspection grants no such authority.
+Next: verify/publish documentation receipt without second email. N68 Source-only
+preparation reads bounded current CODE for receipt/run/Source/root/allowlist binding;
+no new metadata/DATA read or guard replacement permitted by preparation. Freeze its
+contract separately before implementation or any operational authority decision.
 
 # Historical checkpoint: N66 publication and N67 preparation
 

@@ -2284,6 +2284,13 @@ HELD. Next is a separately frozen receipt/run/Source/root/allowlist binding cont
 metadata inspection grants no prior-role read or genuine qualification. Native
 role policy, full semantic/receipt/lifecycle closure and runner setup remain pending.
 
+Implementation `2035ecba294d0d49eef81a935607b712693ffbdd` (Inspect authenticated historical Source tool metadata)
+normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
+Completion Gmail `1a1cf93983c8ab1c` sent once. This documentation receipt sends no second email.
+Final index9 PASS `84b13faa95870bfdd4286109ae6242cd1070588ff2be6d96a43a2864bc55cc4a`.
+The first staging attempt refused sparse paths; explicit intended paths were staged
+with `--sparse`, without changing checkout rules or Source. No gate was affected.
+
 
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
