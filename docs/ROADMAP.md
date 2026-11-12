@@ -2309,6 +2309,19 @@ normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA veri
 Completion Gmail `1a1cfbf1b97cd404` sent once; this documentation receipt sends no second email.
 Final index11 PASS `9f9327fedf821ea56502df7c0704a60d6209db8992bdd3644ad7f99940a973da`.
 
+The [authenticated historical-input transport](task-evidence/Q100/current-native-host-r1/HISTORICAL_INPUT_TRANSPORT_R1.md)
+completes N69's prerequisite. Qualification API/CLI require three fixed metadata
+paths, share the existing reader with inspection, retain original byte/token
+records, and recheck before attempt/roles and final return. V2 records bind the
+snapshot digest; the old dictionary input is retired. The current guard and
+journal policy remain closed/unchanged. Final153 methods,17 selected-host controls
+and10 CODE integration cases pass. Two synthetic-fixture failures are retained;
+the final63-identity resource audit passes. Playable100=0; beta HELD. Next is a
+journal producer/passed-gate/one-use-freshness contract and exact prior receipt/
+run/Source/resource/root/allowlist binding before any guard replacement or normal
+activation. Source-only transport grants no prior qualification or role-read right.
+
+
 
 
 

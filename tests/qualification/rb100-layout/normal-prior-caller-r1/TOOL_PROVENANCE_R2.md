@@ -20,18 +20,18 @@ The maps may contain equal identities when those tools are the same; provenance
 does not depend on requiring different versions.
 
 The caller builder requires explicit historical expectation rows and takes
-detached copies of both maps. The in-process qualification API accepts an explicit
-`historical_tool_snapshot`. It must match the accepted N67 Source-only metadata
-snapshot, including its canonical digest and four false authority flags. This
-input supplies declarations as expected values. It grants neither read permission
-nor capture/prior-run authority.
+detached copies of both maps. The historical-input transport contract now supplies
+the accepted N67 Source-only metadata from three explicit authenticated paths;
+the earlier `historical_tool_snapshot` dictionary API is retired. The canonical
+digest and four false authority flags remain required. These declarations supply
+expected values, not read permission or capture/prior-run authority.
 
 The N66 compatibility guard runs in its existing position, before any prior
 manifest, phase journal, attempt or role access. The expectation-input check runs
-immediately after that guard and before those operations. A missing snapshot is a
-typed refusal. A supplied declaration cannot bypass the guard, the independent
-phase journal, the fixed-role reader or full receipt validation. CLI historical
-input transport and activation are outside this prerequisite.
+immediately after that guard and before those operations. A supplied declaration
+cannot bypass the guard, the independent phase journal, the fixed-role reader or
+full receipt validation. CLI historical input transport is described in
+`HISTORICAL_INPUT_TRANSPORT_R1.md`; normal activation remains unqualified.
 
 This migration enables no normal qualification positive or genuine operation.
 Both Study holds stay closed. Full30 MEDIUM remains EXCLUDED; HARD/PSYCHOTIC remain

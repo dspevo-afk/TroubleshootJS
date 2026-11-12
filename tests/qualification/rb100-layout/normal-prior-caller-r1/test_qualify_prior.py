@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import contextlib
 import importlib.util
 import hashlib
+import io
 import os
 import ntpath
 import shutil
@@ -139,6 +141,33 @@ def _synthetic_tool_snapshot():
     }
     snapshot["snapshotSha256"] = _CALLER._sha(_CALLER._canonical_json(snapshot))
     return snapshot
+
+
+def _synthetic_historical_input_records():
+    rows = (
+        ("C:\\fixture\\historical\\config.json", _CALLER.MAX_CONFIG_BYTES,
+         b"SYNTHETIC_HISTORICAL_CONFIG", "HISTORICAL_SNAPSHOT_CONFIG"),
+        ("C:\\fixture\\historical\\source-manifest.json", _CALLER.MAX_MANIFEST_BYTES,
+         b"SYNTHETIC_HISTORICAL_SOURCE_MANIFEST",
+         "HISTORICAL_SNAPSHOT_SOURCE_MANIFEST"),
+        ("C:\\fixture\\historical\\preflight.json", _CALLER.MAX_JOURNAL_BYTES,
+         b"SYNTHETIC_HISTORICAL_PREFLIGHT", "HISTORICAL_SNAPSHOT_PREFLIGHT"),
+    )
+    overrides = {}
+    records = []
+    for index, (path, maximum, raw, role) in enumerate(rows):
+        prefix = (
+            ("CONFIG", "HISTORICAL_SNAPSHOT_CONFIG"),
+            ("SOURCE_MANIFEST", "HISTORICAL_SNAPSHOT_SOURCE_MANIFEST"),
+            ("PREFLIGHT", "HISTORICAL_SNAPSHOT_PREFLIGHT"),
+        )[index]
+        name, constant_prefix = prefix
+        overrides[constant_prefix + "_BYTES"] = len(raw)
+        overrides[constant_prefix + "_SHA256"] = _CALLER._sha(raw)
+        digest = _CALLER._sha(raw)
+        records.append((path, maximum, len(raw), digest, role, raw,
+                        ("SYNTHETIC_TOKEN_" + name,)))
+    return tuple(records), overrides
 
 
 def _synthetic_authority_state():
@@ -702,19 +731,148 @@ class CallerHistoricalToolExpectationTests(unittest.TestCase):
             historical_tool_expectations=_synthetic_tool_facts(
                 "expected", "d" * 64))
 
-    def _assert_qualify_rejects_before_document_or_role_work(self, snapshot, expected_code):
+    def test_historical_input_reader_authenticates_three_inputs_before_decode(self):
+        original_inputs, overrides = _synthetic_historical_input_records()
+        raw_by_path = {record[0]: record[5] for record in original_inputs}
+        token_by_path = {record[0]: record[6] for record in original_inputs}
         events = []
+        expected_snapshot = _synthetic_tool_snapshot()
+
+        def read_input(_reader, path, maximum, expected_bytes, expected_sha,
+                       role, phase):
+            events.append(role)
+            record = next(item for item in original_inputs if item[0] == path)
+            self.assertEqual(maximum, record[1])
+            self.assertEqual(expected_bytes, record[2])
+            self.assertEqual(expected_sha, record[3])
+            self.assertEqual(phase, "historical-tool-snapshot")
+            return raw_by_path[path], token_by_path[path]
+
+        def decode(config_raw, manifest_raw, preflight_raw):
+            events.append("decode")
+            self.assertEqual((config_raw, manifest_raw, preflight_raw),
+                             tuple(record[5] for record in original_inputs))
+            return expected_snapshot
+
+        with mock.patch.multiple(_CALLER, **overrides), \
+                mock.patch.object(_CALLER, "_read_with_reader",
+                                  side_effect=read_input), \
+                mock.patch.object(_CALLER, "_historical_tool_snapshot_bytes",
+                                  side_effect=decode):
+            snapshot, retained_inputs = _CALLER._read_historical_tool_inputs(
+                object(),
+                historical_config_path=original_inputs[0][0],
+                historical_source_manifest_path=original_inputs[1][0],
+                historical_preflight_path=original_inputs[2][0])
+
+        self.assertIs(snapshot, expected_snapshot)
+        self.assertEqual(events, [
+            "HISTORICAL_SNAPSHOT_CONFIG",
+            "HISTORICAL_SNAPSHOT_SOURCE_MANIFEST",
+            "HISTORICAL_SNAPSHOT_PREFLIGHT",
+            "decode",
+        ])
+        self.assertEqual(retained_inputs, original_inputs)
+        self.assertIs(type(retained_inputs), tuple)
+        self.assertTrue(all(type(record) is tuple and len(record) == 7
+                            for record in retained_inputs))
+
+    def test_historical_input_recheck_rejects_stale_bytes(self):
+        original_inputs, overrides = _synthetic_historical_input_records()
+        events = []
+
+        def read_input(_reader, path, maximum, expected_bytes, expected_sha,
+                       role, phase):
+            events.append(("read", role, phase))
+            record = next(item for item in original_inputs if item[0] == path)
+            return record[5], record[6]
+
+        def compare(_reader, role, expected_raw, _expected_token,
+                    current_raw, _current_token, phase):
+            events.append(("compare", role, phase))
+            if expected_raw != current_raw:
+                raise _CALLER.CallerError(role + "_BYTES_CHANGED_AFTER_WRITES", phase)
+
+        with mock.patch.multiple(_CALLER, **overrides), \
+                mock.patch.object(_CALLER, "_read_with_reader",
+                                  side_effect=read_input), \
+                mock.patch.object(_CALLER, "_require_same_input_document",
+                                  side_effect=compare):
+            _CALLER._recheck_historical_tool_inputs(object(), original_inputs)
+        self.assertEqual(len([event for event in events if event[0] == "read"]), 3)
+        self.assertEqual(len([event for event in events if event[0] == "compare"]), 3)
+
+        events.clear()
+
+        def read_stale_input(_reader, path, maximum, expected_bytes, expected_sha,
+                             role, phase):
+            record = next(item for item in original_inputs if item[0] == path)
+            raw = record[5] + b"CHANGED" if role == "HISTORICAL_SNAPSHOT_CONFIG" else record[5]
+            return raw, record[6]
+
+        with mock.patch.multiple(_CALLER, **overrides), \
+                mock.patch.object(_CALLER, "_read_with_reader",
+                                  side_effect=read_stale_input), \
+                mock.patch.object(_CALLER, "_require_same_input_document",
+                                  side_effect=compare):
+            self._assert_code(
+                "HISTORICAL_SNAPSHOT_CONFIG_BYTES_CHANGED_AFTER_WRITES",
+                _CALLER._recheck_historical_tool_inputs, object(), original_inputs)
+
+    def test_stale_historical_inputs_stop_public_qualify_before_attempt_and_roles(self):
+        events = []
+        historical_inputs = (("SYNTHETIC_ONLY",),)
+        snapshot = {"snapshotSha256": _CALLER.HISTORICAL_TOOL_SNAPSHOT_SHA256}
+        manifest_raw = b"SYNTHETIC_CURRENT_SOURCE_MANIFEST"
+        journal_raw = b"SYNTHETIC_PHASE_JOURNAL"
+        manifest_value = {"purpose": "SYNTHETIC_ONLY"}
+        journal_value = {"status": "SYNTHETIC_ONLY"}
+        config = {"dataOutputRoot": "C:\\fixture\\output",
+                  "scratchRoot": "C:\\fixture\\scratch",
+                  "roots": {"N": "C:\\fixture\\N", "D": "C:\\fixture\\D"}}
+        state = {
+            "sourceManifestBytes": manifest_raw,
+            "sourceManifest": manifest_value,
+            "rootsSha256": "d" * 64,
+        }
 
         def read_config(*_args):
             events.append("current-preflight")
-            return b"SYNTHETIC_CONFIG", {}, object(), object(), object()
+            return b"SYNTHETIC_CONFIG", config, object(), object(), object()
 
         def make_preflight_state(*_args):
             events.append("preflight-state")
-            return {"SYNTHETIC_ONLY": True}
+            return state
 
         def current_guard(_state):
             events.append("unchanged-current-guard")
+
+        def read_historical(_reader, **_paths):
+            events.append("historical-inputs")
+            self.assertEqual(_paths, {
+                "historical_config_path": "C:\\fixture\\historical\\config.json",
+                "historical_source_manifest_path": (
+                    "C:\\fixture\\historical\\source-manifest.json"),
+                "historical_preflight_path": (
+                    "C:\\fixture\\historical\\preflight.json"),
+            })
+            return snapshot, historical_inputs
+
+        def validate_expectations(_snapshot):
+            events.append("historical-expectations")
+            return _synthetic_tool_facts("expected", "d" * 64)
+
+        def read_document(_reader, _path, _maximum, _expected_sha, role, _phase):
+            events.append(role)
+            if role == "SOURCE_MANIFEST":
+                return manifest_raw, manifest_value, ("SYNTHETIC_MANIFEST_TOKEN",)
+            return journal_raw, journal_value, ("SYNTHETIC_JOURNAL_TOKEN",)
+
+        def reject_stale(_reader, _original_inputs):
+            events.append("pre-read-snapshot-recheck")
+            raise _CALLER.CallerError(
+                "HISTORICAL_SNAPSHOT_CONFIG_BYTES_CHANGED_AFTER_WRITES",
+                "historical-tool-snapshot-recheck")
 
         with mock.patch.object(_CALLER, "_read_config_and_runtime",
                                side_effect=read_config), \
@@ -722,37 +880,186 @@ class CallerHistoricalToolExpectationTests(unittest.TestCase):
                                   side_effect=make_preflight_state), \
                 mock.patch.object(_CALLER, "_validate_prior_tool_compatibility",
                                   side_effect=current_guard), \
-                mock.patch.object(
-                    _CALLER, "_read_authenticated_document",
-                    side_effect=AssertionError("document read before expectation gate")) as document_read, \
-                mock.patch.object(
-                    _CALLER, "_write_exclusive",
-                    side_effect=AssertionError("attempt write before expectation gate")) as output_write, \
-                mock.patch.object(
-                    _CALLER, "_read_fixed_roles_after_journal",
-                    side_effect=AssertionError("role read before expectation gate")) as role_read:
+                mock.patch.object(_CALLER, "_read_historical_tool_inputs",
+                                  side_effect=read_historical), \
+                mock.patch.object(_CALLER, "_historical_tool_expectations",
+                                  side_effect=validate_expectations), \
+                mock.patch.object(_CALLER, "_read_authenticated_document",
+                                  side_effect=read_document), \
+                mock.patch.object(_CALLER, "_manifest_matches"), \
+                mock.patch.object(_CALLER, "_validate_phase_journal"), \
+                mock.patch.object(_CALLER, "_verify_root_bindings"), \
+                mock.patch.object(_CALLER, "_directory_empty"), \
+                mock.patch.object(_CALLER, "_recheck_historical_tool_inputs",
+                                  side_effect=reject_stale), \
+                mock.patch.object(_CALLER, "_attempt_record") as attempt_record, \
+                mock.patch.object(_CALLER, "_write_exclusive") as output_write, \
+                mock.patch.object(_CALLER, "_read_fixed_roles_after_journal") as role_read:
             self._assert_code(
-                expected_code, _CALLER.qualify,
+                "HISTORICAL_SNAPSHOT_CONFIG_BYTES_CHANGED_AFTER_WRITES",
+                _CALLER.qualify,
                 config_path="C:\\fixture\\config.json", config_sha="a" * 64,
                 source_manifest_path="C:\\fixture\\manifest.json",
-                source_manifest_sha="b" * 64,
+                source_manifest_sha=_CALLER._sha(manifest_raw),
                 phase_journal_path="C:\\fixture\\journal.json",
-                phase_journal_sha="c" * 64,
-                historical_tool_snapshot=snapshot)
+                phase_journal_sha=_CALLER._sha(journal_raw),
+                historical_config_path="C:\\fixture\\historical\\config.json",
+                historical_source_manifest_path=(
+                    "C:\\fixture\\historical\\source-manifest.json"),
+                historical_preflight_path="C:\\fixture\\historical\\preflight.json")
 
-        self.assertEqual(events, ["current-preflight", "preflight-state",
-                                  "unchanged-current-guard"])
-        document_read.assert_not_called()
+        self.assertEqual(events, [
+            "current-preflight", "preflight-state", "unchanged-current-guard",
+            "historical-inputs", "historical-expectations",
+            "SOURCE_MANIFEST", "PHASE_JOURNAL",
+            "pre-read-snapshot-recheck",
+        ])
+        attempt_record.assert_not_called()
         output_write.assert_not_called()
         role_read.assert_not_called()
 
-    def test_missing_expectations_reject_after_current_guard_before_reads(self):
-        self._assert_qualify_rejects_before_document_or_role_work(
-            None, "HISTORICAL_TOOL_EXPECTATIONS_REQUIRED")
+    def test_final_consumed_input_recheck_includes_historical_tokens(self):
+        reader = object()
+        observer = object()
+        config = {}
+        state = {"rootsSha256": "d" * 64, "configToken": ("SYNTHETIC_CONFIG",),
+                 "byteObservation": {"SYNTHETIC_ONLY": True},
+                 "modules": {"normalizer": object()}}
+        manifest_raw = b"SYNTHETIC_SOURCE_MANIFEST"
+        journal_raw = b"SYNTHETIC_PHASE_JOURNAL"
+        manifest_value = {"source": "SYNTHETIC_ONLY"}
+        journal_value = {"journal": "SYNTHETIC_ONLY"}
+        state["sourceManifest"] = manifest_value
+        manifest_token = ("SYNTHETIC_MANIFEST_TOKEN",)
+        journal_token = ("SYNTHETIC_JOURNAL_TOKEN",)
+        historical_inputs = (("SYNTHETIC_HISTORICAL_INPUTS",),)
+        role_bytes = {"SYNTHETIC_ROLE": b"SYNTHETIC_ROLE_BYTES"}
+        reader_evidence = {"scope": "SYNTHETIC_ONLY"}
+        resource_facts = {"resource": "SYNTHETIC_ONLY"}
+        resource_evidence = {"evidence": "SYNTHETIC_ONLY"}
 
-    def test_invalid_snapshot_rejects_after_current_guard_before_reads(self):
-        self._assert_qualify_rejects_before_document_or_role_work(
-            {}, "HISTORICAL_TOOL_EXPECTATIONS_KEYS")
+        def read_document(_reader, _path, _maximum, _sha, role, _phase):
+            if role == "SOURCE_MANIFEST":
+                return manifest_raw, manifest_value, manifest_token
+            return journal_raw, journal_value, journal_token
+
+        with mock.patch.object(_CALLER, "_verify_root_bindings"), \
+                mock.patch.object(_CALLER, "_read_with_reader",
+                                  return_value=(b"SYNTHETIC_CONFIG", state["configToken"])), \
+                mock.patch.object(_CALLER, "_require_same_input_document"), \
+                mock.patch.object(_CALLER, "_read_authenticated_document",
+                                  side_effect=read_document), \
+                mock.patch.object(_CALLER, "_validate_phase_journal"), \
+                mock.patch.object(_CALLER, "_recheck_historical_tool_inputs") as history_recheck, \
+                mock.patch.object(_CALLER, "_observe_source_tools",
+                                  return_value=state["byteObservation"]), \
+                mock.patch.object(_CALLER, "_observe_resources",
+                                  return_value=(resource_facts, resource_evidence)), \
+                mock.patch.object(_CALLER, "_read_fixed_roles_after_journal",
+                                  return_value=(role_bytes, reader_evidence)):
+            _CALLER._recheck_consumed_inputs(
+                reader, observer, config, state,
+                config_path="C:\\fixture\\config.json",
+                config_raw=b"SYNTHETIC_CONFIG", config_sha="a" * 64,
+                manifest_path="C:\\fixture\\manifest.json",
+                manifest_sha="b" * 64, manifest_raw=manifest_raw,
+                manifest_value=manifest_value, manifest_token=manifest_token,
+                journal_path="C:\\fixture\\journal.json",
+                journal_sha="c" * 64, journal_raw=journal_raw,
+                journal_value=journal_value, journal_token=journal_token,
+                historical_inputs=historical_inputs,
+                role_bytes=role_bytes, reader_evidence=reader_evidence,
+                resource_facts=resource_facts, resource_evidence=resource_evidence,
+                read_started_state={"value": True})
+        history_recheck.assert_called_once_with(reader, historical_inputs)
+
+    def test_attempt_and_failure_records_bind_fixed_snapshot_digest_v2(self):
+        snapshot_sha = _CALLER.HISTORICAL_TOOL_SNAPSHOT_SHA256
+        attempt = _CALLER._attempt_record(
+            "a" * 64, "b" * 64, "c" * 64, "d" * 64,
+            historical_snapshot_sha=snapshot_sha)
+        failure = _CALLER._failure_record(
+            "SYNTHETIC_FAILURE", "synthetic-phase", "a" * 64, "b" * 64,
+            "c" * 64, "d" * 64, False,
+            historical_snapshot_sha=snapshot_sha)
+        self.assertEqual(attempt["schema"], "tsj-q100-normal-prior-read-attempt-v2")
+        self.assertEqual(failure["schema"], "tsj-q100-normal-prior-qualification-evidence-v2")
+        self.assertEqual(attempt["historicalToolSnapshotSha256"], snapshot_sha)
+        self.assertEqual(failure["historicalToolSnapshotSha256"], snapshot_sha)
+        for bad_sha in ("A" * 64, "0" * 64, None):
+            with self.subTest(bad_sha=bad_sha):
+                self._assert_code(
+                    "HISTORICAL_TOOL_SNAPSHOT_SHA256", _CALLER._attempt_record,
+                    "a" * 64, "b" * 64, "c" * 64, "d" * 64,
+                    historical_snapshot_sha=bad_sha)
+                self._assert_code(
+                    "HISTORICAL_TOOL_SNAPSHOT_SHA256", _CALLER._failure_record,
+                    "SYNTHETIC_FAILURE", "synthetic-phase", "a" * 64, "b" * 64,
+                    "c" * 64, "d" * 64, False,
+                    historical_snapshot_sha=bad_sha)
+
+    def test_qualify_cli_requires_three_historical_metadata_paths(self):
+        base = [
+            "qualify",
+            "--config", "C:\\fixture\\config.json",
+            "--config-sha", "a" * 64,
+            "--source-manifest", "C:\\fixture\\manifest.json",
+            "--source-manifest-sha", "b" * 64,
+            "--phase-journal", "C:\\fixture\\journal.json",
+            "--phase-journal-sha", "c" * 64,
+        ]
+        historical = [
+            "--historical-config", "C:\\fixture\\historical\\config.json",
+            "--historical-source-manifest",
+            "C:\\fixture\\historical\\source-manifest.json",
+            "--historical-preflight", "C:\\fixture\\historical\\preflight.json",
+        ]
+        parsed = _CALLER._parse_cli(base + historical)
+        self.assertEqual(parsed.historical_config, historical[1])
+        self.assertEqual(parsed.historical_source_manifest, historical[3])
+        self.assertEqual(parsed.historical_preflight, historical[5])
+
+        for omitted in ("--historical-config", "--historical-source-manifest",
+                        "--historical-preflight"):
+            with self.subTest(omitted=omitted):
+                args = list(base + historical)
+                index = args.index(omitted)
+                del args[index:index + 2]
+                with contextlib.redirect_stderr(io.StringIO()):
+                    with self.assertRaises(SystemExit):
+                        _CALLER._parse_cli(args)
+
+        with contextlib.redirect_stderr(io.StringIO()):
+            with self.assertRaises(SystemExit):
+                _CALLER._parse_cli(base + historical + ["--historical-tool-snapshot", "{}"])
+
+    def test_qualify_requires_three_historical_paths_before_any_io(self):
+        with mock.patch.object(_CALLER, "_read_config_and_runtime") as read_config:
+            with self.assertRaises(TypeError):
+                _CALLER.qualify(
+                    config_path="C:\\fixture\\config.json", config_sha="a" * 64,
+                    source_manifest_path="C:\\fixture\\manifest.json",
+                    source_manifest_sha="b" * 64,
+                    phase_journal_path="C:\\fixture\\journal.json",
+                    phase_journal_sha="c" * 64)
+        read_config.assert_not_called()
+
+    def test_qualify_rejects_retired_dictionary_argument_before_any_io(self):
+        with mock.patch.object(_CALLER, "_read_config_and_runtime") as read_config:
+            with self.assertRaises(TypeError):
+                _CALLER.qualify(
+                    config_path="C:\\fixture\\config.json", config_sha="a" * 64,
+                    source_manifest_path="C:\\fixture\\manifest.json",
+                    source_manifest_sha="b" * 64,
+                    phase_journal_path="C:\\fixture\\journal.json",
+                    phase_journal_sha="c" * 64,
+                    historical_config_path="C:\\fixture\\historical\\config.json",
+                    historical_source_manifest_path=(
+                        "C:\\fixture\\historical\\source-manifest.json"),
+                    historical_preflight_path=(
+                        "C:\\fixture\\historical\\preflight.json"),
+                    historical_tool_snapshot={})
+        read_config.assert_not_called()
 
 class CallerOutputIoTests(unittest.TestCase):
     """Owned temporary output fixtures only; no historical inputs are present."""
@@ -838,7 +1145,8 @@ class CallerOutputIoTests(unittest.TestCase):
         self.tree.reader.identity_overrides[output_path] = output_stat.st_ino + 1
         record = _CALLER._failure_record(
             original.code, original.phase, "1" * 64, "2" * 64,
-            "3" * 64, self.tree.roots_sha, True)
+            "3" * 64, self.tree.roots_sha, True,
+            historical_snapshot_sha=_CALLER.HISTORICAL_TOOL_SNAPSHOT_SHA256)
         _CALLER._best_effort_failure_evidence(
             self.tree.reader, self.tree.config, record,
             self.tree.roots_sha, original)

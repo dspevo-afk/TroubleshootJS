@@ -29,8 +29,8 @@ PHASE_JOURNAL_SCHEMA = "tsj-q100-normal-prior-phase-journal-v1"
 PHASE_JOURNAL_STATUS = "ALLOW_FIXED_20_NORMAL_PRIOR_READ"
 CURRENT_SOURCE_AUTHORITY_SCHEMA = "tsj-q100-current-source-authority-v1"
 ROOT_BINDINGS_SCHEMA = "tsj-q100-normal-prior-root-bindings-v1"
-ATTEMPT_SCHEMA = "tsj-q100-normal-prior-read-attempt-v1"
-EVIDENCE_SCHEMA = "tsj-q100-normal-prior-qualification-evidence-v1"
+ATTEMPT_SCHEMA = "tsj-q100-normal-prior-read-attempt-v2"
+EVIDENCE_SCHEMA = "tsj-q100-normal-prior-qualification-evidence-v2"
 
 ALLOWLIST_SHA256 = "c487eae6ed0e070aaad75dccd14d23313ed9da2c6bda7f93bfeb886109f20f91"
 READER_SHA256 = "863a258cbab888cf112b9e927e16a099436632e9a1d43eefe0b70690c30543d8"
@@ -765,6 +765,80 @@ def _historical_tool_snapshot_bytes(config_raw, source_manifest_raw, preflight_r
     return _historical_tool_snapshot_values(config, source_manifest, preflight_evidence)
 
 
+def _read_historical_tool_inputs(reader, *, historical_config_path,
+                                 historical_source_manifest_path,
+                                 historical_preflight_path):
+    phase = "historical-tool-snapshot"
+    inputs = (
+        (historical_config_path, MAX_CONFIG_BYTES, HISTORICAL_SNAPSHOT_CONFIG_BYTES,
+         HISTORICAL_SNAPSHOT_CONFIG_SHA256, "HISTORICAL_SNAPSHOT_CONFIG"),
+        (historical_source_manifest_path, MAX_MANIFEST_BYTES,
+         HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_BYTES,
+         HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_SHA256,
+         "HISTORICAL_SNAPSHOT_SOURCE_MANIFEST"),
+        (historical_preflight_path, MAX_JOURNAL_BYTES,
+         HISTORICAL_SNAPSHOT_PREFLIGHT_BYTES,
+         HISTORICAL_SNAPSHOT_PREFLIGHT_SHA256, "HISTORICAL_SNAPSHOT_PREFLIGHT"),
+    )
+
+    def read_snapshot_input(path, maximum, expected_bytes, expected_sha, role):
+        try:
+            return _read_with_reader(reader, path, maximum, expected_bytes,
+                                     expected_sha, role, phase)
+        except CallerError as exc:
+            if exc.code in ("READER_SHA256", "READER_EXPECTED_BYTES", "READER_SIZE",
+                            "READER_RESULT_BINDING"):
+                raise CallerError(role + "_SHA256", phase) from None
+            raise
+
+    original_inputs = []
+    for path, maximum, expected_bytes, expected_sha, role in inputs:
+        raw, token = read_snapshot_input(
+            path, maximum, expected_bytes, expected_sha, role)
+        original_inputs.append((path, maximum, expected_bytes, expected_sha,
+                                role, raw, token))
+    original_inputs = tuple(original_inputs)
+    snapshot = _historical_tool_snapshot_bytes(
+        original_inputs[0][5], original_inputs[1][5], original_inputs[2][5])
+    return snapshot, original_inputs
+
+
+def _recheck_historical_tool_inputs(reader, original_inputs):
+    phase = "historical-tool-snapshot-recheck"
+    read_phase = "historical-tool-snapshot"
+    expected_specs = (
+        (MAX_CONFIG_BYTES, HISTORICAL_SNAPSHOT_CONFIG_BYTES,
+         HISTORICAL_SNAPSHOT_CONFIG_SHA256, "HISTORICAL_SNAPSHOT_CONFIG"),
+        (MAX_MANIFEST_BYTES, HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_BYTES,
+         HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_SHA256,
+         "HISTORICAL_SNAPSHOT_SOURCE_MANIFEST"),
+        (MAX_JOURNAL_BYTES, HISTORICAL_SNAPSHOT_PREFLIGHT_BYTES,
+         HISTORICAL_SNAPSHOT_PREFLIGHT_SHA256, "HISTORICAL_SNAPSHOT_PREFLIGHT"),
+    )
+    _need(type(original_inputs) is tuple and len(original_inputs) == 3,
+          "HISTORICAL_SNAPSHOT_INPUTS", phase)
+
+    for record, expected in zip(original_inputs, expected_specs):
+        _need(type(record) is tuple and len(record) == 7,
+              "HISTORICAL_SNAPSHOT_INPUTS", phase)
+        path, maximum, expected_bytes, expected_sha, role, raw, token = record
+        _need((maximum, expected_bytes, expected_sha, role) == expected
+              and type(raw) is bytes and len(raw) == expected_bytes
+              and _sha(raw) == expected_sha,
+              "HISTORICAL_SNAPSHOT_INPUTS", phase)
+        _path_text(path, "HISTORICAL_SNAPSHOT_PATH")
+        try:
+            current_raw, current_token = _read_with_reader(
+                reader, path, maximum, expected_bytes, expected_sha, role, read_phase)
+        except CallerError as exc:
+            if exc.code in ("READER_SHA256", "READER_EXPECTED_BYTES", "READER_SIZE",
+                            "READER_RESULT_BINDING"):
+                raise CallerError(role + "_SHA256", read_phase) from None
+            raise
+        _require_same_input_document(
+            reader, role, raw, token, current_raw, current_token, phase)
+
+
 def _copy_tool_fact_map(facts, code, phase):
     _exact_keys(facts, TOOL_NAMES, code + "_NAMES", phase)
     copied = {}
@@ -1494,13 +1568,18 @@ def _output_projection_bytes(codec, projection):
     return raw
 
 
-def _attempt_record(config_sha, manifest_sha, journal_sha, roots_sha):
+def _attempt_record(config_sha, manifest_sha, journal_sha, roots_sha, *,
+                    historical_snapshot_sha):
+    _need(type(historical_snapshot_sha) is str and _is_sha(historical_snapshot_sha)
+          and historical_snapshot_sha == HISTORICAL_TOOL_SNAPSHOT_SHA256,
+          "HISTORICAL_TOOL_SNAPSHOT_SHA256", "read-attempt")
     return {
         "schema": ATTEMPT_SCHEMA,
         "status": "READ_ATTEMPT_RESERVED",
         "configSha256": config_sha,
         "sourceManifestSha256": manifest_sha,
         "phaseJournalSha256": journal_sha,
+        "historicalToolSnapshotSha256": historical_snapshot_sha,
         "rootsSha256": roots_sha,
         "allowlistSha256": ALLOWLIST_SHA256,
         "readScope": "FIXED_20_NORMAL_PRIOR_ROLES",
@@ -1508,7 +1587,10 @@ def _attempt_record(config_sha, manifest_sha, journal_sha, roots_sha):
 
 
 def _failure_record(code, phase, config_sha, manifest_sha, journal_sha,
-                    roots_sha, read_started):
+                    roots_sha, read_started, *, historical_snapshot_sha):
+    _need(type(historical_snapshot_sha) is str and _is_sha(historical_snapshot_sha)
+          and historical_snapshot_sha == HISTORICAL_TOOL_SNAPSHOT_SHA256,
+          "HISTORICAL_TOOL_SNAPSHOT_SHA256", "failure-evidence")
     return {
         "schema": EVIDENCE_SCHEMA,
         "status": "FAIL",
@@ -1517,6 +1599,7 @@ def _failure_record(code, phase, config_sha, manifest_sha, journal_sha,
         "configSha256": config_sha,
         "sourceManifestSha256": manifest_sha,
         "phaseJournalSha256": journal_sha,
+        "historicalToolSnapshotSha256": historical_snapshot_sha,
         "rootsSha256": roots_sha,
         "allowlistSha256": ALLOWLIST_SHA256,
         "roleReadStarted": bool(read_started),
@@ -1549,6 +1632,7 @@ def _recheck_consumed_inputs(reader, observer, config, state, *,
                              manifest_value, manifest_token,
                              journal_path, journal_sha, journal_raw,
                              journal_value, journal_token,
+                             historical_inputs,
                              role_bytes, reader_evidence,
                              resource_facts, resource_evidence,
                              read_started_state):
@@ -1585,6 +1669,7 @@ def _recheck_consumed_inputs(reader, observer, config, state, *,
     _validate_phase_journal(
         current_journal_value, config_sha=config_sha,
         manifest_sha=manifest_sha, roots_sha=roots_sha)
+    _recheck_historical_tool_inputs(reader, historical_inputs)
 
     current_observation = _observe_source_tools(observer, reader, config)
     _need(current_observation == state["byteObservation"],
@@ -1622,15 +1707,20 @@ def _validate_prior_tool_compatibility(state):
 
 def _qualify_impl(config_path, config_sha, source_manifest_path,
                   source_manifest_sha, phase_journal_path, phase_journal_sha, *,
-                  include_source_token=False, historical_tool_snapshot=None):
+                  historical_config_path, historical_source_manifest_path,
+                  historical_preflight_path, include_source_token=False):
     _need(type(include_source_token) is bool, "OUTPUT_CLOSURE_TOKEN_OPTION", "qualify-options")
     config_raw, config, reader, observer, initial_config_token = _read_config_and_runtime(
         config_path, config_sha, "qualify-preflight")
     state = _preflight_state(config_raw, config_path, config_sha, config, reader,
                              observer, initial_config_token)
     _validate_prior_tool_compatibility(state)
-    historical_tool_expectations = _historical_tool_expectations(
-        historical_tool_snapshot)
+    historical_tool_snapshot, historical_inputs = _read_historical_tool_inputs(
+        reader,
+        historical_config_path=historical_config_path,
+        historical_source_manifest_path=historical_source_manifest_path,
+        historical_preflight_path=historical_preflight_path)
+    historical_tool_expectations = _historical_tool_expectations(historical_tool_snapshot)
     manifest_raw, manifest_value, manifest_token = _read_authenticated_document(
         reader, source_manifest_path, MAX_MANIFEST_BYTES,
         source_manifest_sha, "SOURCE_MANIFEST", "source-manifest")
@@ -1647,9 +1737,11 @@ def _qualify_impl(config_path, config_sha, source_manifest_path,
         roots_sha=state["rootsSha256"])
     _verify_root_bindings(reader, config, state["rootsSha256"], "pre-read-gate")
     _directory_empty(config["dataOutputRoot"], "pre-read-gate")
+    _recheck_historical_tool_inputs(reader, historical_inputs)
 
     attempt = _canonical_json(_attempt_record(
-        config_sha, source_manifest_sha, phase_journal_sha, state["rootsSha256"]), newline=True)
+        config_sha, source_manifest_sha, phase_journal_sha, state["rootsSha256"],
+        historical_snapshot_sha=historical_tool_snapshot["snapshotSha256"]), newline=True)
     attempt_write = _write_exclusive(
         reader, config, ntpath.join(config["dataOutputRoot"], ATTEMPT_FILE), attempt,
         MAX_OUTPUT_BYTES, config["scratchRoot"], state["rootsSha256"],
@@ -1746,6 +1838,7 @@ def _qualify_impl(config_path, config_sha, source_manifest_path,
             "configSha256": config_sha,
             "sourceManifestSha256": source_manifest_sha,
             "phaseJournalSha256": phase_journal_sha,
+            "historicalToolSnapshotSha256": historical_tool_snapshot["snapshotSha256"],
             "rootsSha256": state["rootsSha256"],
             "allowlistSha256": ALLOWLIST_SHA256,
             "kernelProvenanceSha256": PROVENANCE_SHA256,
@@ -1785,6 +1878,7 @@ def _qualify_impl(config_path, config_sha, source_manifest_path,
             manifest_token=manifest_token,
             journal_path=phase_journal_path, journal_sha=phase_journal_sha,
             journal_raw=journal_raw, journal_value=journal, journal_token=journal_token,
+            historical_inputs=historical_inputs,
             role_bytes=role_bytes, reader_evidence=reader_evidence,
             resource_facts=resource_facts, resource_evidence=resource_evidence,
             read_started_state=read_started_state)
@@ -1799,6 +1893,7 @@ def _qualify_impl(config_path, config_sha, source_manifest_path,
             "contextSha256": output_facts["context"]["sha256"],
             "projectionSha256": output_facts["projection"]["sha256"],
             "javaDataSha256": output_facts["java"]["sha256"],
+            "historicalToolSnapshotSha256": historical_tool_snapshot["snapshotSha256"],
             "roleCount": len(role_hashes),
             "outputClosure": output_closure,
             "finalInputRecheck": "PASS",
@@ -1807,25 +1902,30 @@ def _qualify_impl(config_path, config_sha, source_manifest_path,
     except CallerError as exc:
         _best_effort_failure_evidence(reader, config, _failure_record(
             exc.code, exc.phase or phase, config_sha, source_manifest_sha,
-            phase_journal_sha, state["rootsSha256"], read_started_state["value"]),
+            phase_journal_sha, state["rootsSha256"], read_started_state["value"],
+            historical_snapshot_sha=historical_tool_snapshot["snapshotSha256"]),
             state["rootsSha256"], exc)
         raise
     except Exception:
         original_error = CallerError("UNEXPECTED", phase)
         _best_effort_failure_evidence(reader, config, _failure_record(
             "UNEXPECTED", phase, config_sha, source_manifest_sha,
-            phase_journal_sha, state["rootsSha256"], read_started_state["value"]),
+            phase_journal_sha, state["rootsSha256"], read_started_state["value"],
+            historical_snapshot_sha=historical_tool_snapshot["snapshotSha256"]),
             state["rootsSha256"], original_error)
         raise original_error from None
 
 
 def qualify(*, config_path, config_sha, source_manifest_path,
             source_manifest_sha, phase_journal_path, phase_journal_sha,
-            include_source_token=False, historical_tool_snapshot=None):
+            historical_config_path, historical_source_manifest_path,
+            historical_preflight_path, include_source_token=False):
     return _qualify_impl(config_path, config_sha, source_manifest_path,
                          source_manifest_sha, phase_journal_path, phase_journal_sha,
-                         include_source_token=include_source_token,
-                         historical_tool_snapshot=historical_tool_snapshot)
+                         historical_config_path=historical_config_path,
+                         historical_source_manifest_path=historical_source_manifest_path,
+                         historical_preflight_path=historical_preflight_path,
+                         include_source_token=include_source_token)
 
 
 def inspect_historical_tool_snapshot(*, config_path, config_sha,
@@ -1843,45 +1943,12 @@ def inspect_historical_tool_snapshot(*, config_path, config_sha,
     _verify_root_bindings(reader, config, state["rootsSha256"],
                           "historical-tool-snapshot-pre-read")
 
-    inputs = (
-        (historical_config_path, MAX_CONFIG_BYTES, HISTORICAL_SNAPSHOT_CONFIG_BYTES,
-         HISTORICAL_SNAPSHOT_CONFIG_SHA256, "HISTORICAL_SNAPSHOT_CONFIG"),
-        (historical_source_manifest_path, MAX_MANIFEST_BYTES,
-         HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_BYTES,
-         HISTORICAL_SNAPSHOT_SOURCE_MANIFEST_SHA256,
-         "HISTORICAL_SNAPSHOT_SOURCE_MANIFEST"),
-        (historical_preflight_path, MAX_JOURNAL_BYTES,
-         HISTORICAL_SNAPSHOT_PREFLIGHT_BYTES,
-         HISTORICAL_SNAPSHOT_PREFLIGHT_SHA256,
-         "HISTORICAL_SNAPSHOT_PREFLIGHT"),
-    )
-
-    def read_snapshot_input(path, maximum, expected_bytes, expected_sha, role):
-        try:
-            return _read_with_reader(reader, path, maximum, expected_bytes,
-                                     expected_sha, role, "historical-tool-snapshot")
-        except CallerError as exc:
-            if exc.code in ("READER_SHA256", "READER_EXPECTED_BYTES", "READER_SIZE",
-                            "READER_RESULT_BINDING"):
-                raise CallerError(role + "_SHA256", "historical-tool-snapshot") from None
-            raise
-
-    original_inputs = []
-    for path, maximum, expected_bytes, expected_sha, role in inputs:
-        raw, token = read_snapshot_input(
-            path, maximum, expected_bytes, expected_sha, role)
-        original_inputs.append((path, maximum, expected_bytes, expected_sha,
-                                role, raw, token))
-
-    historical_tool_snapshot = _historical_tool_snapshot_bytes(
-        original_inputs[0][5], original_inputs[1][5], original_inputs[2][5])
-
-    for path, maximum, expected_bytes, expected_sha, role, raw, token in original_inputs:
-        current_raw, current_token = read_snapshot_input(
-            path, maximum, expected_bytes, expected_sha, role)
-        _require_same_input_document(
-            reader, role, raw, token, current_raw, current_token,
-            "historical-tool-snapshot-recheck")
+    historical_tool_snapshot, original_inputs = _read_historical_tool_inputs(
+        reader,
+        historical_config_path=historical_config_path,
+        historical_source_manifest_path=historical_source_manifest_path,
+        historical_preflight_path=historical_preflight_path)
+    _recheck_historical_tool_inputs(reader, original_inputs)
 
     _recheck_preflight_inputs(reader, observer, config, config_path,
                               config_raw, config_sha, state)
@@ -1920,6 +1987,9 @@ def _parse_cli(argv=None):
     run.add_argument("--source-manifest-sha", required=True)
     run.add_argument("--phase-journal", required=True)
     run.add_argument("--phase-journal-sha", required=True)
+    run.add_argument("--historical-config", required=True)
+    run.add_argument("--historical-source-manifest", required=True)
+    run.add_argument("--historical-preflight", required=True)
     snapshot = commands.add_parser("inspect-tool-snapshot")
     snapshot.add_argument("--config", required=True)
     snapshot.add_argument("--config-sha", required=True)
@@ -1953,7 +2023,10 @@ def main(argv=None):
                 source_manifest_path=args.source_manifest,
                 source_manifest_sha=args.source_manifest_sha,
                 phase_journal_path=args.phase_journal,
-                phase_journal_sha=args.phase_journal_sha)
+                phase_journal_sha=args.phase_journal_sha,
+                historical_config_path=args.historical_config,
+                historical_source_manifest_path=args.historical_source_manifest,
+                historical_preflight_path=args.historical_preflight)
         print(_canonical_json(summary).decode("ascii"))
         return 0
     except CallerError as exc:

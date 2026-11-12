@@ -731,6 +731,21 @@ normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA veri
 Completion Gmail `1a1cfbf1b97cd404` sent once; this documentation receipt sends no second email.
 Final index11 PASS `9f9327fedf821ea56502df7c0704a60d6209db8992bdd3644ad7f99940a973da`.
 
+The [historical-input transport](task-evidence/Q100/current-native-host-r1/HISTORICAL_INPUT_TRANSPORT_R1.md)
+is owned by the existing caller. The qualifier's API/CLI take three explicit
+Source-control paths, retiring the dictionary parameter. Shared helpers read all
+three fixed size/hash buffers before decoding and retain tuple records with the
+original reader tokens. Inspection keeps its existing Source/root/sink checks;
+qualification keeps the N66 guard first, rechecks historical bytes/identity before
+attempt/roles and in the final consumed-input check. V2 attempt/evidence/failure
+records and the returned disposition bind the fixed snapshot digest. Metadata
+tokens remain operation-local; producerSourceToken still describes generated
+Java output readback. No generic lease, new reader or permission follows. Current
+config/Source8/5, normalizerV2 and journal policy are unchanged. Journal producer/
+gate/freshness and actual prior receipt/run/resource/root/allowlist authority remain
+separate prerequisites; caller Source identity alone does not prove passed gates.
+
+
 
 
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)

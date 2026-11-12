@@ -1,12 +1,90 @@
-# Current checkpoint: N68 tool provenance published; receipt pending
+# Current checkpoint: N69 authenticated metadata transport validated
+
+F OS-temp/tsj-q100-terminal-only-20261107-r1, codex/q100-terminal-only-20261107,
+HEADb6b1c84249a4ca26487d4ed867ab588ec5ceb591, no upstream; normaltarget
+origin/codex/q100-physical-feasibility. N68impl1bf0bc2e/receiptb6b1c842 verifiedremote,
+Gmail1a1cfbf1b97cd404 once, neverduplicate. N69 finalgates validated; index/
+publication pending. R69 OS-temp/tsj-q100-historical-input-handoff-r1-9fe4ec239b9a,
+SCOPE_IMPLEMENTATION_R2 and all failedfixtures/logs/Source freezes retained.
+
+Caller98285B/6c1bd797947fa8ba93f3795336a1f00c3d73cf8a82c2232b8ed19307ec04aded;
+callerTests55489B/dea21eb990a1b8fe397e7e16b270941c88981dde5154b0820699e24535028a48;
+new actualreader test14789B/5d8d33b34f7f423d5c08336215295ab263cebcaea049061e4c9be3585c12f79f.
+Normalizer95442/9179 and reader863a unchanged. Three REQUIRED historicalmetadata
+paths replace DTOAPI/CLI; sharedexistingreader exact3pins/rawauth beforedecode;
+operation-local tuple3 original7tuples keepraw/tokens; preread and final rechecks.
+Attempt/evidence exclusiveV2 bind fixeda6 snapshotdigest; ready/failure/summary same.
+N66guard byteidenticalfirst, journalpolicy/pins, currentconfig/Source8/5,
+normalizerV2/crypto and generatedJava producerSourceToken owners unchanged.
+All4snapshotclaimsfalse; transport is not priorcapture/readpermission/activation.
+
+PASS153 fresh methods/0skip: caller32 finalR3, actualreader4, staging24/handoff18,
+snapshot5/expectation5, normalizer17+13/tool6/codec11+18. Newactualreader4 .1947351s
+uses only approved C8/E5/8244 Sourcecopies, stabletokens/read-before-decode/badSHA/
+samebytesnewID per3roles; sixnegativefixture directories/oldleaves retained.
+Originalmetadata untouched. Two caller32 attempts FAILED newfixture missing
+sourceManifest then modules.normalizer; Rootreadallrequiredstate, completedfixture
+withoutweakening assertions; finalR3 .2119278s PASS. Both failedchildexits/Source/
+logs remain. Staging .86015s/handoff2.6506833s. SourceSmoke1 1.1490547s/Suite5
+4.1786177s; explicitpath APIclosedguard2 1.752656s (transport NOT_REACHED beyond
+guard); inspectorAPI/CLI9 8.1329208s. These refusals aren't normalqualification.
+CODECompileSmoke1 18.4531913s/Suite4 27.052845s; HeldSmoke1 32.0407698s/Suite4
+32.9992665s expectedrefusal. One expensive matrix AFTERreviews/focusedgates.
+Independent141 NO_DATA+2396inherited=2537/12196044B exact; fullreference/current
+Smoke/Suite classinventories rechecked. Manifest36 6609d42e3d73528cfc9baf5c973b797c137ea1c2bb551fe6b2ff79c5799bc047;
+proof1efef562c51ed4e7710b11a557d32fff53e52ac137dbe2da073cf9a22487d35b.
+Packet docs/task-evidence/Q100/current-native-host-r1/HISTORICAL_INPUT_TRANSPORT_*.
+
+Root68existingcallerdefs byteidentical,8changed/2sharedhelpersadded;31otheraccepted
+Source tuples exact. n50 caller/testdiff and finalfixturefollowup Sourceonlyno
+blocker; n53 IO/newactualreadertest Sourceonlyno blocker. No peer tests/processes/
+metadataData reads. Leavesownedonefilepair/newtest; root actualgates/publication.
+Resourcequery PASS63knownidentities (34originalouters/17defaultchildren/8CODEPS/
+4nativeleases); originalexit/cleanupreceipts remainproof, not repairedbyPIDquery.
+One exactjunction removalverified; no knownnewpersistenttestactor. OrdinaryCODE,
+sixmetadatafixture dirs and all failures kept. Operationtime includesnormalwrapper
+cleanup; separatelyunmeasuredwhereunavailable. No globalenvchange; Rootenvrestored.
+
+Main5f05b005(9M6untracked), Ed9747229(reportM), Desktope0c36885(7M89untracked)
+preserved/staged0, Mainprefixonly; opaquehistories conserved. No newbrowser/listener.
+Oldbrowser14116/start639294472690745890/port58320; preview34180/start
+639294472514546595/port58264+14children; oldDlinks/scratch/resources/Notepad67116860
+untouched. No broadcleanup/kill. Metadatarechecks pointintime, notatomic/continuous
+identity; Source/tool facts reobservedacrosscalls. Testbootstrap boundedSHA/same
+buffer, no Sourcepath/ancestor/host/fullbootstrap proof. FullJDK/DLL/environment/
+historicaldescendants/creatorDeath/concurrency/normalnativepolicy unqualified;
+outerguardpostcapture/notlive. GWT/PlayerN/A; electrical/populationNOT_RENEWED;
+CI_NOT_RUN/selfhostedrunnerprereq. Journalproducer/callerGateproof/freshness remain
+unqualified; callerSourcehashalone isnot passedgateproof. No timeallowanceinvented.
+
+No actualnormalpositive/operationaljournal/fixed20rolebody/oldD/heldout/protectedDATA/
+actualDATAfactory/oldnormal20/genuine/OriginalArm/graph/capture/Session. BothStudyholds/
+original->NULL/OBSERVE UNSPENT_GATED. Full30EXCLUDED; HARD/PSYCHOTIC unavailable/
+unrun; protectedUnreadUNCERTIFIED; oldnormal20NOT_REREAD; playable100=0/betaHELD.
+Authoredtuple9007199254740993/-6587958367974952701/8445301674744508279 distinctfrom
+3MEDIUMroots; fixed20artifacts notcases, no permissioninferred. CircuitJStruth/
+R12Phase2a1352b5caeb78e069606f84a569e14670f28d807, exact productseeds/epochs/order/
+budgets90s640groups5s32768PERGROUP/copy1048576chunk4096/Source4MiBproducer1MiB/
+fragment64KiB/opJSON8MiBresult1MiB/depth64visits1m/classes10k256MiB/compile60sreader
+180swrapper480scleanup120s unchanged.
+
+Next finaldiff/index, normalcommit/push/exactremote/Gmailonce ifaccepted. N70 next
+freezes journalproducer/passedgateidentity/one-usefreshness plus priorreceipt/run/
+Source/resource/root/allowlist contract before anyguardreplacement/normalactivation.
+
+# Historical checkpoint: N68 publication and N69 preparation
+
+# Current checkpoint: N68 published; N69 historical-input Source preparation
 
 F writer OS-temp/tsj-q100-terminal-only-20261107-r1, branch
 codex/q100-terminal-only-20261107, parent12965bcf67cc532f5b9030690d9d9d0c7120e504,
 no upstream; normal target origin/codex/q100-physical-feasibility. N67impl2035ecba/
 receipt12965bcf verifiedremote/Gmail1a1cf93983c8ab1c once; no duplicate. N68 final
 implementation1bf0bc2e12b660865fb414b1de5db1425e46233d normally pushed/exactremoteverified;
-Gmail1a1cfbf1b97cd404 once. Current HEAD1bf0bc2e12b660865fb414b1de5db1425e46233d; documentationreceipt
-pending; no second email. Finalindex11 PASS9f9327fedf821ea56502df7c0704a60d6209db8992bdd3644ad7f99940a973da. R68 OS-temp/tsj-q100-prior-receipt-
+Gmail1a1cfbf1b97cd404 once. Current HEADb6b1c84249a4ca26487d4ed867ab588ec5ceb591; documentationreceipt normallypushed/exactremoteverified.
+Receipt4 index PASSb5eb43a6aa3589cf370fe6794135fce5c52c31a036248ccb7a2dd4e4b04befe7;
+all34 Source/selectednativeconfig/tool/JAR and full independent/currentCODE class
+closures unchanged afterdocsonly; no second email. Finalindex11 PASS9f9327fedf821ea56502df7c0704a60d6209db8992bdd3644ad7f99940a973da. R68 OS-temp/tsj-q100-prior-receipt-
 contract-r1-dcda31f4a409; frozen implementationR2/adaptationR3 and all failures kept.
 
 Caller93954B/7fe021e46931647c378f7293c3279f41663aaadb50a56c55771a39013e4c0373;
@@ -73,10 +151,15 @@ epochs/order and budgets90s640groups5s32768PERGROUP/copy1048576chunk4096/Source4
 producer1MiBfragment64KiB/opJSON8MiBresult1MiB/depth64visits1m/classes10k256MiB/
 compile60sreader180swrapper480scleanup120s unchanged.
 
-Next verify/publish documentationreceipt withoutsecondemail. N69 Source-only
-preparation maps transport/lifetime/journal/source-bound gate dependencies in current
-CODE only; no new metadata/DATA read or guardreplacement. Freeze its independent
-contract before implementation or any operational authority decision.
+N69 Source-only preparation open OS-temp/tsj-q100-historical-input-handoff-r1-
+9fe4ec239b9a/SCOPE_PREPARATION_R1.md and SOURCE_BOUNDARY_FINDINGS_R1.md. n51Source
+map complete: snapshot has no Source/journal/attempt/evidence transport link or
+retained filetoken; callerGateSha syntaxonly, createdUtc nofreshness, producer
+authorization unspecified; output producerSourceToken is late generatedJava readback,
+not earlyread authority. No new artifact/Data read or implementation. Next select
+minimal transport/evidence-lifetime or journal-producer/gate prerequisite and freeze
+concrete schema/API/owner/independent oracles withoutguessing a timebudget orlifting
+currentguard. Actual priorreceipt/run/resource/root/allowlist binding stays pending.
 
 # Historical checkpoint: N67 publication and N68 preparation
 
