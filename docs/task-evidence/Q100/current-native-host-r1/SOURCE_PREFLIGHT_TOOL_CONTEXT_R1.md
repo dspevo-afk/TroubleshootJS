@@ -93,3 +93,7 @@ prerequisite. Main/E/Desktop work and uncertain old resources remain preserved.
 Next: establish an explicit authenticated historical input/tool-context authority
 before any real prior read or successful upstream return. Current Source facts
 cannot be relabeled as historical facts, and historical pins are not relaxed.
+
+Implementation `33ec8407dd86652f266101aaac702d6aa4f9daa0` (Separate source preflight from prior tool compatibility)
+normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
+Completion Gmail `1a1cf62e522d1efd` sent once; this receipt sends no second email.

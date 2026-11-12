@@ -682,6 +682,11 @@ Source-only success does not grant prior qualification or erase the incompatible
 tool context. A real historical input authority, normal native role policy and
 semantic/receipt/lifecycle closure remain separate.
 
+
+Implementation `33ec8407dd86652f266101aaac702d6aa4f9daa0` (Separate source preflight from prior tool compatibility)
+normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
+Completion Gmail `1a1cf62e522d1efd` sent once; this receipt sends no second email.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published

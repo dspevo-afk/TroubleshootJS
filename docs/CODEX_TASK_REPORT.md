@@ -1,10 +1,12 @@
-# Current checkpoint: N66 current Source preflight and early prior-tool gate validated locally
+# Current checkpoint: N66 current Source preflight and early prior-tool gate published
 
 Writer F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
-codex/q100-terminal-only-20261107; HEAD00dc801ff4b6caf4a32b6863c16a2753d80bcaac,
+codex/q100-terminal-only-20261107; parent00dc801ff4b6caf4a32b6863c16a2753d80bcaac,
 no upstream; normal target origin/codex/q100-physical-feasibility. N65impl
 4830738cf0468cf7d180b8c118164aad0ac0c23f/receipt00dc801f remotely verified,
-Gmail1a1cf103fbd84d7e once; no second N65 email. N66 final Source/unit/CODE integration/resource gates PASS; index/commit/push/Gmail pending. R66 OS-temp/
+Gmail1a1cf103fbd84d7e once; no second N65 email. N66 implementation 33ec8407dd86652f266101aaac702d6aa4f9daa0 normally pushed/exact remote verified;
+Gmail1a1cf62e522d1efd once. Final index9 PASS 033b7d3a00a1f446a23ed9db9b3d52370f73999eea7473ca68d00462c869abf3.
+Current implementation HEAD33ec8407dd86652f266101aaac702d6aa4f9daa0; documentation receipt pending. R66 OS-temp/
 tsj-q100-return-input-metadata-r1-63685633985d; SCOPE_IMPLEMENTATION_R2 and
 ADAPTATION_R3/R4/R5/R6 bind scope/discoveries/limits. One root-owned matrix at a time.
 
@@ -93,7 +95,7 @@ resource query PASS54 known identities (29outers/13default children/4native/8COD
 original exit proofs retained, one task junction node removed/revalidated, no known
 new persistent test actor. Public artifacts omit personal paths.
 
-Next: inspect final integrated/index diff and publish validated N66 normally/mail once. Subsequent
+Next unstarted N67: establish authenticated historical input/tool-context authority. Subsequent
 input authority/tool-context provenance must be explicitly established before any
 real prior read or successful upstream return. Never replace historical pins,
 fabricate a PASS/token, or infer read permission from the empty-fixture controls.
