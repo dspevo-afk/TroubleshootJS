@@ -574,6 +574,18 @@ all parent, descendant and console-host identities and an outside sentinel.
 Original child-handle transfer, captured native launch and creator-death protection
 remain separate boundaries; no browser context or native stream policy is added.
 
+The same class now offers an
+[original process-handle lease](task-evidence/Q100/current-native-host-r1/PROCESS_LEASE_R1.md)
+through one shared launch core. The creator alone can retain the original handle;
+identity is read before resume and ownership transfers after resume. Bounded wait,
+signaled exit-code reads and terminal-only disposal use that handle. The creator
+job keeps stop authority. Legacy PID-returning launch and recovery semantics stay
+intact. The private direct-process stopper likewise uses its original launch
+object and start identity, accepting a natural-exit race only after a signaled
+handle. Failure cleanup avoids current-PID rediscovery. Durable/adopted process
+termination remains separate. Captured pipes and the bounded-process adapter for
+this native lease are still pending; no creator-death guarantee is added.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published

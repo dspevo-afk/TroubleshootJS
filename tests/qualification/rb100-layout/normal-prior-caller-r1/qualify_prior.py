@@ -70,7 +70,7 @@ TOOL_FIXED_PINS = {
     "qualificationPython": (171744, "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec"),
     "rootCallPowerShell": (495616, "60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f"),
     "rootCallHarness": (2941, "28aab617e686d2a4eec074a46b2e2861f6fa7c008544b33f7b070f0c6d77ea1d"),
-    "processModule": (1053900, "fc533d9b15007d0eb42cccb10e39fbfc30fc89b732fbf977e295218d67197b73"),
+    "processModule": (1063853, "faf65e46579d50323d35f09572a1e21a9991f2b312a2c1dfdd431b991827876f"),
 }
 MAX_CONFIG_BYTES = 1024 * 1024
 MAX_MANIFEST_BYTES = 1024 * 1024

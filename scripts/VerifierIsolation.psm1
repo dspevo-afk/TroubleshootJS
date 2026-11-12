@@ -1178,8 +1178,42 @@ function Stop-VerifierBoundedProcessExactly($Process, $ExpectedStartTicks,
             -not (Test-VerifierStrictIntegralValue $Process.Id 1 ([int]::MaxValue))) {
         Throw-VerifierInfrastructure 'A bounded verifier process had no valid process identity.'
     }
+    # Only direct launch callers use this adapter. Keep the original launch
+    # handle and creation identity as authority, including a natural-exit race.
+    # Durable/adopted process discovery has its own unchanged stopper.
+    $stopWatch = [Diagnostics.Stopwatch]::StartNew()
     try {
-        [void](Stop-VerifierVerifiedProcessExactly $Process $ExpectedStartTicks $WaitMilliseconds)
+        if ([int]$Process.Id -eq 4) {
+            Throw-VerifierInfrastructure 'Refusing to terminate PID 4, which is reserved for the System/HTTP.sys kernel transport owner.'
+        }
+        $originalHandle = $Process.Handle
+        if ($originalHandle -eq [IntPtr]::Zero -or $originalHandle -eq [IntPtr]::new(-1)) {
+            Throw-VerifierInfrastructure 'A bounded verifier process had no retained original handle.'
+        }
+        if ((Get-VerifierLaunchedProcessStartTicks $Process) -ne $ExpectedStartTicks) {
+            Throw-VerifierInfrastructure 'Bounded process retained start identity did not match its launch.'
+        }
+        if (-not $Process.WaitForExit(0)) {
+            try { $Process.Kill() }
+            catch {
+                # Kill may race natural completion. Accept only the ORIGINAL
+                # handle's signaled exit; never discover or stop a current PID.
+                if (-not $Process.WaitForExit(0)) { throw }
+            }
+        }
+        $remaining = [int][Math]::Max(0, ([double]$WaitMilliseconds -
+            [Math]::Ceiling($stopWatch.Elapsed.TotalMilliseconds)))
+        if (-not $Process.WaitForExit($remaining)) {
+            Throw-VerifierInfrastructure 'Bounded process original handle did not signal within the cleanup bound.'
+        }
+        $Process.Refresh()
+        if (-not [bool]$Process.HasExited -or $Process.Handle -ne $originalHandle -or
+                (Get-VerifierLaunchedProcessStartTicks $Process) -ne $ExpectedStartTicks) {
+            Throw-VerifierInfrastructure 'Bounded process retained exit identity was not proven.'
+        }
+        if ($stopWatch.Elapsed.TotalMilliseconds -ge $WaitMilliseconds) {
+            Throw-VerifierInfrastructure 'Bounded process original-handle cleanup exceeded its bound.'
+        }
     } catch {
         if (Test-VerifierInfrastructureError $_) { throw }
         Throw-VerifierInfrastructure ("Could not prove exact bounded-process termination for PID " +
@@ -1507,9 +1541,8 @@ function Invoke-VerifierBoundedProcess($FilePath, $Arguments,
                 if (-not [bool]$process.HasExited) {
                     Throw-VerifierInfrastructure "Bounded process '$FilePath' remained alive during failure cleanup."
                 }
-                $currentAfterFailure = Get-VerifierCurrentProcessRecordById $process.Id
-                if ($null -ne $currentAfterFailure) {
-                    Throw-VerifierInfrastructure "Bounded process '$FilePath' still had a current process identity during failure cleanup."
+                if ((Get-VerifierLaunchedProcessStartTicks $process) -ne $startTicks) {
+                    Throw-VerifierInfrastructure "Bounded process '$FilePath' retained creation identity changed during failure cleanup."
                 }
                 $boundedChildExited = $true
                 if ($stdoutTask -and $stderrTask) {
@@ -10470,6 +10503,7 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
     private const uint JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE = 0x00002000;
     private const int PROCESS_ID_LIST_HEADER_BYTES = 8;
     private const uint WAIT_OBJECT_0 = 0x00000000;
+    private const uint WAIT_TIMEOUT = 0x00000102;
     private const uint INVALID_RESUME_COUNT = 0xFFFFFFFF;
     private static readonly IntPtr PROC_THREAD_ATTRIBUTE_JOB_LIST =
         (IntPtr)0x0002000D;
@@ -10618,6 +10652,158 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
     [DllImport("kernel32.dll", SetLastError = true)]
     private static extern uint WaitForSingleObject(IntPtr handle, uint milliseconds);
 
+    [StructLayout(LayoutKind.Sequential)]
+    private struct ProcessFileTime {
+        public uint Low;
+        public uint High;
+    }
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern uint GetProcessId(IntPtr process);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool GetProcessTimes(IntPtr process,
+        out ProcessFileTime creation, out ProcessFileTime exit,
+        out ProcessFileTime kernel, out ProcessFileTime user);
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode,
+        EntryPoint = "QueryFullProcessImageNameW", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool QueryFullProcessImageName(IntPtr process,
+        uint flags, StringBuilder image, ref uint size);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool GetExitCodeProcess(IntPtr process, out uint code);
+
+    // Only LaunchCore can hand off an original CreateProcess handle. Detached
+    // identity fields are evidence, never authority to reopen or terminate a PID.
+    public sealed class OwnedProcessLease : IDisposable {
+        private readonly object sync = new object();
+        private IntPtr processHandle;
+        private bool ownsHandle;
+        public int ProcessId { get; private set; }
+        public long CreationFileTime { get; private set; }
+        public string ImagePath { get; private set; }
+        public bool IsClosed {
+            get { lock (sync) { return !ownsHandle || IsInvalid(processHandle); } }
+        }
+
+        internal OwnedProcessLease(IntPtr original, int expectedPid) {
+            processHandle = original;
+            uint actualPid = GetProcessId(original);
+            if (actualPid == 0) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "Could not identify retained original process handle.");
+            }
+            if (actualPid != (uint)expectedPid) {
+                throw new InvalidOperationException(
+                    "Retained original process PID does not match CreateProcess.");
+            }
+            ProcessId = expectedPid;
+            ProcessFileTime creation, exit, kernel, user;
+            if (!GetProcessTimes(original, out creation, out exit, out kernel,
+                    out user)) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "Could not read retained process creation time.");
+            }
+            ulong rawCreation = ((ulong)creation.High << 32) | creation.Low;
+            if (rawCreation == 0 || rawCreation > Int64.MaxValue) {
+                throw new InvalidOperationException(
+                    "Retained process creation time is invalid.");
+            }
+            CreationFileTime = (long)rawCreation;
+            StringBuilder image = new StringBuilder(32768);
+            uint size = (uint)image.Capacity;
+            if (!QueryFullProcessImageName(original, 0, image, ref size)) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "Could not read retained process image.");
+            }
+            if (size == 0 || String.IsNullOrWhiteSpace(image.ToString())) {
+                throw new InvalidOperationException(
+                    "Retained process image is empty.");
+            }
+            ImagePath = image.ToString();
+        }
+
+        // No throwing work follows successful resume before this handoff.
+        internal void TakeOwnership() { ownsHandle = true; }
+
+        private void AssertOpen() {
+            if (!ownsHandle || IsInvalid(processHandle)) {
+                throw new ObjectDisposedException("VerifierOwnedProcessLease");
+            }
+        }
+
+        private bool WaitExactly(uint milliseconds) {
+            uint result = WaitForSingleObject(processHandle, milliseconds);
+            if (result == WAIT_OBJECT_0) { return true; }
+            if (result == WAIT_TIMEOUT) { return false; }
+            throw new Win32Exception(Marshal.GetLastWin32Error(),
+                "Could not wait on retained original process handle.");
+        }
+
+        public bool WaitForExit(int timeoutMilliseconds) {
+            if (timeoutMilliseconds < 0 || timeoutMilliseconds > 5000) {
+                throw new ArgumentOutOfRangeException("timeoutMilliseconds",
+                    "Retained process wait must be within zero and five thousand milliseconds.");
+            }
+            lock (sync) {
+                AssertOpen();
+                return WaitExactly((uint)timeoutMilliseconds);
+            }
+        }
+
+        public uint GetExitCode() {
+            lock (sync) {
+                AssertOpen();
+                if (!WaitExactly(0)) {
+                    throw new InvalidOperationException(
+                        "Retained process has not exited.");
+                }
+                uint code;
+                if (!GetExitCodeProcess(processHandle, out code)) {
+                    throw new Win32Exception(Marshal.GetLastWin32Error(),
+                        "Could not read retained process exit code.");
+                }
+                return code;
+            }
+        }
+
+        public void Dispose() {
+            lock (sync) {
+                if (IsInvalid(processHandle)) { return; }
+                AssertOpen();
+                if (!WaitExactly(0)) {
+                    throw new InvalidOperationException(
+                        "Retained process lease cannot close before exit is observed.");
+                }
+                if (!CloseHandle(processHandle)) {
+                    throw new Win32Exception(Marshal.GetLastWin32Error(),
+                        "Could not close retained original process handle.");
+                }
+                processHandle = IntPtr.Zero;
+                ownsHandle = false;
+            }
+            GC.SuppressFinalize(this);
+        }
+
+        // A forgotten lease releases only its native handle. This is not a
+        // process-stop or creator-death guarantee; the job owner must stop it.
+        ~OwnedProcessLease() {
+            object gate = sync;
+            if (gate == null) { return; }
+            lock (gate) {
+                if (ownsHandle && !IsInvalid(processHandle)) {
+                    CloseHandle(processHandle);
+                    processHandle = IntPtr.Zero;
+                    ownsHandle = false;
+                }
+            }
+        }
+    }
+
     private IntPtr handle;
     private readonly bool creatorOwned;
     private bool terminationRequested;
@@ -10745,6 +10931,27 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
 
     public int Launch(string applicationName, string commandLine,
         string currentDirectory) {
+        OwnedProcessLease unused;
+        return LaunchCore(applicationName, commandLine, currentDirectory,
+            false, out unused);
+    }
+
+    public OwnedProcessLease LaunchRetained(string applicationName,
+        string commandLine, string currentDirectory) {
+        if (!creatorOwned) {
+            throw new InvalidOperationException(
+                "Only a creator-owned containment job may retain a process lease.");
+        }
+        OwnedProcessLease retained;
+        LaunchCore(applicationName, commandLine, currentDirectory,
+            true, out retained);
+        return retained;
+    }
+
+    private int LaunchCore(string applicationName, string commandLine,
+        string currentDirectory, bool retainProcess,
+        out OwnedProcessLease retainedProcess) {
+        retainedProcess = null;
         AssertOpen();
         if (terminationRequested) {
             throw new InvalidOperationException(
@@ -10763,6 +10970,7 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
         bool initialized = false;
         bool createdProcess = false;
         bool resumed = false;
+        OwnedProcessLease pendingLease = null;
         try {
             InitializeProcThreadAttributeList(IntPtr.Zero, 1, 0,
                 ref attributeListSize);
@@ -10796,11 +11004,11 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
                 throw new Win32Exception(Marshal.GetLastWin32Error(),
                     "Could not atomically launch browser in its containment job.");
             }
+            createdProcess = true;
             if (processInformation.dwProcessId <= 0) {
                 throw new InvalidOperationException(
                     "Browser containment launch returned an invalid PID.");
             }
-            createdProcess = true;
             IntPtr childJobHandle;
             if (!DuplicateHandle(GetCurrentProcess(), handle,
                     processInformation.hProcess, out childJobHandle,
@@ -10811,11 +11019,20 @@ public sealed class VerifierBrowserContainmentJobApi : IDisposable {
             // childJobHandle belongs to the suspended root process. It is a
             // query-only, non-inheritable lifetime reference; the root cannot
             // use it to assign, terminate, or break away other job members.
+            if (retainProcess) {
+                pendingLease = new OwnedProcessLease(processInformation.hProcess,
+                    processInformation.dwProcessId);
+            }
             if (ResumeThread(processInformation.hThread) == INVALID_RESUME_COUNT) {
                 throw new Win32Exception(Marshal.GetLastWin32Error(),
                     "Could not resume the atomically contained browser root.");
             }
             resumed = true;
+            if (retainProcess) {
+                pendingLease.TakeOwnership();
+                retainedProcess = pendingLease;
+                processInformation.hProcess = IntPtr.Zero;
+            }
             return processInformation.dwProcessId;
         } catch (Exception launchFailure) {
             if (createdProcess && !resumed &&

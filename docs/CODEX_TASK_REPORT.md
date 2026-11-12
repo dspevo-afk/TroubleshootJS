@@ -1,11 +1,85 @@
+# Current checkpoint: N59 original-handle lease validated; publication pending
+
+Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
+codex/q100-terminal-only-20261107, baseHEAD81c9b376866277a60cf94a91ebf56c4e506c01a3,
+no upstream; normal target origin/codex/q100-physical-feasibility. N58impl8d9151ff
+and receipt81c9b376 published/exactremoteverified; Gmail1a1cd791bf198220 once.
+N59 final-source gates PASS; commit/push/email pending finalindexaudit. No duplicate.
+
+Same nativeclass/sharedLaunchCore preserves defaultPIDLaunch and childquerypin.
+Creator-onlyLaunchRetained snapshots originalhProcess pid/UTCFILETIME/image before
+Resume, transfers originalhandleafterResume. LeaseWait0..5000/GetExit useoriginal;
+activeExit/liveDispose/invalidWait/closedoperations reject; terminalDispose
+idempotent, metadata detachedstable. Finalizer best-efforthandleclose only/
+nullsyncguard, no processdeath guarantee. Originalcreatorjobsoleexposedstop.
+CreatedflagownedimmediatelyafterOSsuccessbeforePIDvalidation; preResumemetadata
+failure exactoriginalhandle rollback. No pipes/Invokeadapter/rolecap policy.
+
+Necessary actualCapture30-r1FAIL: stderr-one-over (5observed/4retained), oldstopper
+PIDrediscovery saidchangedorexited; ReadersClosedfalse/CleanupProvenfalse. Exact
+exited-versus-replaced branch notsaved. Failure/source/knownlogroot preserved;
+notPASS and notretroactiveN57R4triggerrecovery. PrivateBoundedStop noworiginal
+Process.Handle/start, Killoriginalonlyifneeded, acceptKillerroronlyiforiginal
+signals; one5sstopbudget/postidentity. Boundedfailurecheckusesretainedstart;
+globaldurable/adoptedstopper unchanged. Independentfixtureidentity/absence
+oracles unchanged. Wrongidentityafterexit andlivewrongidentity canaries reject.
+
+Final module1063853B/faf65e46579d50323d35f09572a1e21a9991f2b312a2c1dfdd431b991827876f;
+CRLFpolicy; allrawbytesoutsideTHREEownedregions exact (nativeclass/privateBoundedStop/
+boundedfailureidentitycheck). Threecurrentmodulepins/lengthonly migrated;
+qualifierbodies/oldPS60c9unchanged, normalqualifier/harnessunrun.
+SystemPS5.1d8/Pythonad169-I-B optimize0 actual final: LeaseSuite3PASS2.089s,
+LeaseSmoke1PASS1.926s, JobSuite7PASS1.898s, Capture30CODE-r2PASS9.244s,
+Legacy16PASS3.547s, JDKtool3PASS1.843s, nearExit32PASS4.121s, directStop4PASS1.780s,
+controlledrollback1PASS1.359s. Wrapper times; APIoperation/cleanup separate.
+Javacinvalidoption2 EXPECTED_ERROR_NOT_PASS. Control exactnativeclassvariant
+onlyimagebufferconstructorargument0 causesactualnative122beforeResume, unchangedrollback/
+emptyjob/noactorstate/independentuniquefixturelivecount0. Forcedoperation is
+EXPECTED_METADATA_FAILURE_NOT_PASS; unmodifiedOSmetadatafaultoccurrencenotproved.
+NoOOM/finalizer/nativeclosefailure/concurrencyinjection; fulltool/framework/
+environmentclosure andcreatorDeath unqualified. ActualJDKnaturalexit0 original
+lease metadata source-coupled; independentimagewitnessonlyCODEactors.
+
+PublicT/E current-native-host-r1/PROCESS_LEASE_R1. Manifestfb3d56c3e2adfedf7efae6cf2368438150c6cde8b61d0775b09789e26eab5677;
+proof6d37c3f9c8c55ce20106b863d54fbbe5cee42a71afee60a0114f1505a1277bb0.
+Root integrated source/cases/actualreceipts/failure review. Leaf n50classf316+
+finalfafstop/failure/nullsyncslices no blocker/sourceonly/noexecution. Worker
+n51sharedContainmentContract74406B/1a8396a9bd9dbc88ebcb715a332cde43bca4f68f54498a7176287855533af584;
+n53newRetainedStopContract19427B/ffc3017f4b4a7eff49122ab8ae7cad838e43a38e0ae8dc2e6275402302583285;
+no workerexecutions/stage/commit/push/email; rootreviewedfinaltests. Fixtureec81unchanged.
+
+Private OS-temp/tsj-q100-process-lease-r1-ef0da3bd980f;13 originalouterhandles
+exitobserved,105 knownCODE/tool/outeridentities query-onlyauditPASS/no liveown
+identity orPIDkill. OldauditR1labelN58 correctedR2 onlylabel; bothpreserved.
+Failurelogs/compiledCODEartifactsretained. No knownnewpersistenttaskprocess/
+listener/link. Preserveoldbrowser14116/start639294472690745890/port58320,
+preview34180/start639294472514546595/port58264+14children, oldDresources/links/
+scratch andNotepad67116860. Main5f05b005(9M/6untracked), Ed9747229(reportM),
+Desktope0c36885(7M/untracked) preserved/allstaged0; onlyMaincurrentprefixmirrored;
+opaquehistoriesconserved. Nextunstarted: N60 capturedpipe preparationthroughsame
+launcher/lease, then explicitnativecaps/trustedcomposition. Continueauthorizedroadmap.
+
+No prior/fixed20/oldD/heldout/protectedDATA/generatedDATAfactories/wholehistorical
+builders. BothStudyholds exactthrowonly; original->NULL/OBSERVE UNSPENT_GATED.
+No normalStudy/OriginalArm/capture/graph/Session/receipt/export/genuine. Full30
+normalMEDIUM EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; protectedUnread
+UNCERTIFIED; oldnormal20NOTREREAD; playable100=0; betaHELD. CircuitJStruth,
+budgets90s/640groups/5s/32768PERGROUP/copy1048576/chunk4096/source4MiB/fragment64KiB/
+opJSON8MiB/result1MiB/depth64/visits1m/classes10k256MiB/compile-native60s/
+reader180s/wrapper480s/cleanup120s,seeds/epochs/orderfixed. ProductionJava/GWT/
+visiblePlayerN/A; electrical/populationNOTRENEWED;CI NOTRUN/selfhostedrunnerprerequisite.
+
+# Historical checkpoint: N58 publication and N59 preparation
+
 # Current checkpoint: N58 owned-job shutdown published
 
 Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
-codex/q100-terminal-only-20261107, HEAD8d9151ff031d066e43c7c1cb04183e549b4219ca,
+codex/q100-terminal-only-20261107, HEAD81c9b376866277a60cf94a91ebf56c4e506c01a3,
 no upstream; normal target origin/codex/q100-physical-feasibility. N57implf383d5da
 and receipt0d3b8024 published/exactremoteverified; Gmail1a1cd2e76f4f624f once.
 N58 final-source gates PASS; normalpush/exactremoteverified; Gmail1a1cd791bf198220
-sent once. Documentation-only receipt pending; no second email. Final16-path
+sent once. Receipt81c9b376 normallypublished/exactremoteverified; no second
+email. Four-path receipt/index/source-reuse audit PASS. Final16-path
 index audit PASS515e49063af37e1a39a0d4ef27d152b58f3765a089200a6b733b8435cf9c3bdb.
 
 N58 adds creator-only TerminateOwned(uint) to the same native job class/original
@@ -60,7 +134,11 @@ Desktope0c36885(7M/untracked) preserved/allstaged0; only Main current prefix mir
 Next unstarted implementation: N59 original hProcess lease through existing
 launcher before captured pipes. Private preparation only at OS-temp/
 tsj-q100-retained-process-prep-r1-19436c22a354, scope068b17e4f5181652db991c34df4bd80dc37211d9069c16d9dcb987905f7730bf;
-no N59 implementation/launch/test. Continue authorized roadmap without routine permission.
+no N59 implementation/launch/test. Bounded source-only lease review complete; root keeps original hProcess
+lease first and defers pipes/Invoke adapter changes. Private DESIGN_DECISION_R1
+records proposal/canaries NOT RUN and extra30 CODE lines1541..1570 read, no DATA
+or execution; protectedUnread status unchanged. F onlylocalcheckpointM/allstaged0; other N58 work
+committed/pushed. Continue authorized roadmap without routine permission.
 
 No prior/fixed20/oldD/heldout/protected DATA/factories or whole historical builders.
 Both Study holds exactthrowonly; original->NULL/OBSERVE UNSPENT_GATED. No normal

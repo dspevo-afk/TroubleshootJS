@@ -7,13 +7,18 @@ param(
     [Parameter(Mandatory=$true)][string]$ExpectedFixtureSourceSha256,
     [string]$ExpectedConsoleHostSha256 = 'dd5c3514132d92052004d302c66c756ffb6beef572de6538b4fc55f62579eb11',
     [Parameter(Mandatory=$true)][string]$EvidenceRoot,
-    [ValidateSet('Smoke','Suite')][string]$Mode = 'Suite'
+    [ValidateSet('Smoke','Suite','LeaseSmoke','LeaseSuite')][string]$Mode = 'Suite',
+    [string]$JavaExecutable = '',
+    [string]$ExpectedJavaSha256 = 'e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce'
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $cases = New-Object 'System.Collections.Generic.List[object]'
 $rootReady = $false
+$JavaExecutablePath = $null
+$javaImageSha256 = $null
+$javaImageBytes = $null
 
 function Require([bool]$Condition, [string]$Reason) {
     if (-not $Condition) { throw $Reason }
@@ -165,7 +170,7 @@ function Require-PidLive([long]$ProcessId, [long]$StartTicks, [string]$Label) {
         Require ([long]$process.StartTime.ToUniversalTime().Ticks -eq $StartTicks) ($Label + ' creation identity')
     } finally { $process.Dispose() }
 }
-function Wait-JobAndHandles($Job, $MemberObservations, [Diagnostics.Stopwatch]$Deadline, [int]$TimeoutMilliseconds) {
+function Wait-JobAndHandles($Job, $MemberObservations, [Diagnostics.Stopwatch]$Deadline, [int]$TimeoutMilliseconds, $Lease = $null) {
     while ($Deadline.ElapsedMilliseconds -lt $TimeoutMilliseconds) {
         $members = @($Job.GetMemberProcessIds())
         $allExited = $true
@@ -175,15 +180,22 @@ function Wait-JobAndHandles($Job, $MemberObservations, [Diagnostics.Stopwatch]$D
             $process.Refresh()
             if (-not $process.HasExited) { $allExited = $false }
         }
-        if ($members.Count -eq 0 -and $allExited) {
+        $leaseExited = $null -eq $Lease
+        $leaseExitCode = $null
+        if ($null -ne $Lease) {
+            $leaseExited = $Lease.WaitForExit(0)
+            if ($leaseExited) { $leaseExitCode = [uint32]$Lease.GetExitCode() }
+        }
+        if ($members.Count -eq 0 -and $allExited -and $leaseExited) {
             $exitStatuses = New-Object 'System.Collections.Generic.List[object]'
             foreach ($observation in $MemberObservations) {
                 $exitCode = [int]$observation.Process.ExitCode
                 Require ($exitCode -eq 2) ($observation.role + ' termination exit code')
                 [void]$exitStatuses.Add([ordered]@{ role=$observation.role; processId=$observation.processId; startTicks=$observation.startTicks; exitCode=$exitCode; status='EXIT_OBSERVED' })
             }
+            if ($null -ne $Lease) { Require ($leaseExitCode -eq 2) 'retained root termination exit code' }
             Require ($Deadline.ElapsedMilliseconds -lt $TimeoutMilliseconds) 'containment job closure exceeded the shared bound'
-            return [pscustomobject]@{ closureMilliseconds=$Deadline.Elapsed.TotalMilliseconds; memberIds=$members; allRetainedHandlesSignaled=$true; exitStatuses=@($exitStatuses.ToArray()) }
+            return [pscustomobject]@{ closureMilliseconds=$Deadline.Elapsed.TotalMilliseconds; memberIds=$members; allRetainedHandlesSignaled=$true; exitStatuses=@($exitStatuses.ToArray()); leaseExited=$leaseExited; leaseExitCode=$leaseExitCode }
         }
         Start-Sleep -Milliseconds 40
     }
@@ -204,6 +216,7 @@ function Assert-BaseException($ErrorRecord, [string]$ExpectedType, [string]$Expe
     Require ($exception.GetType().FullName -ceq $ExpectedType) ($Label + ' exception type')
     if ($MessageMode -ceq 'Exact') { Require ($exception.Message -ceq $ExpectedMessage) ($Label + ' exception message') }
     elseif ($MessageMode -ceq 'Prefix') { Require ($exception.Message.StartsWith($ExpectedMessage,[StringComparison]::Ordinal)) ($Label + ' exception message prefix') }
+    elseif ($MessageMode -ceq 'Ignore') { }
     else { throw 'unsupported exception message comparison mode' }
     if ($NativeErrorCode -ge 0) { Require ($exception -is [ComponentModel.Win32Exception] -and $exception.NativeErrorCode -eq $NativeErrorCode) ($Label + ' native error code') }
     if ($ParameterName.Length -gt 0) { Require ($exception.ParamName -ceq $ParameterName) ($Label + ' parameter name') }
@@ -385,13 +398,233 @@ function Run-DisposedCreatorGuardCase {
         $context.facts = [ordered]@{ jobName=$context.jobName; terminated=$terminateFacts; launch=$launchFacts; query=$queryFacts; disposedHandleRejectedAllOperations=$true }
     }
 }
+function Run-RetainedLeaseGuardCase {
+    Run-GuardCase 'retained-lease-guards' {
+        param($context)
+        $missingExecutable = Join-Path $EvidenceRoot ('VerifierRetainedMissingExecutable.' + [guid]::NewGuid().ToString('N') + '.exe')
+        Require (-not [IO.File]::Exists($missingExecutable) -and -not [IO.Directory]::Exists($missingExecutable)) 'retained guard missing-image path unexpectedly exists'
+        $missingCommand = ConvertTo-VerifierArgumentString @($missingExecutable,'unused')
+        $context.phase = 'create retained-lease guard owner and observer'
+        $firstJobName = 'Local\TroubleshootJS.Verifier.ContainmentContract.' + [guid]::NewGuid().ToString('N')
+        $context.jobName = $firstJobName
+        $context.job = $jobType::CreateNew($firstJobName)
+        $context.observer = $jobType::OpenExisting($firstJobName)
+        Require (@($context.job.GetMemberProcessIds()).Count -eq 0 -and @($context.observer.GetMemberProcessIds()).Count -eq 0) 'retained guard owner was not empty'
+        $context.phase = 'reject query-only retained launch before OS launch'
+        $observerLaunchFailure = $null
+        try { $null = $context.observer.LaunchRetained($missingExecutable,$missingCommand,$EvidenceRoot) } catch { $observerLaunchFailure = $_ }
+        $observerLaunchFacts = Assert-BaseException $observerLaunchFailure 'System.InvalidOperationException' 'Only a creator-owned containment job may retain a process lease.' 'query observer retained launch' 'Exact'
+        Require (-not [IO.File]::Exists($missingExecutable)) 'query observer created missing executable path'
+        $context.phase = 'reject creator retained launch for missing executable'
+        $missingLaunchFailure = $null
+        try { $null = $context.job.LaunchRetained($missingExecutable,$missingCommand,$EvidenceRoot) } catch { $missingLaunchFailure = $_ }
+        $missingLaunchFacts = Assert-BaseException $missingLaunchFailure 'System.ComponentModel.Win32Exception' 'Could not atomically launch browser in its containment job.' 'creator missing retained executable' 'Prefix' 2
+        Require (@($context.job.GetMemberProcessIds()).Count -eq 0) 'failed retained launch added a job member'
+        $context.phase = 'prove creator remains usable after failed retained launch'
+        $context.job.TerminateOwned([uint32]2)
+        $context.terminationRequested = $true
+        Require (@($context.job.GetMemberProcessIds()).Count -eq 0) 'creator not empty after failed retained launch'
+        $context.observer.Dispose()
+        $context.observer = $null
+        $context.job.Dispose()
+        $context.job = $null
+        $context.terminationRequested = $false
 
-function Run-SmokeCase([string]$Name) {
+        $context.phase = 'create and dispose empty retained-launch creator'
+        $disposedJobName = 'Local\TroubleshootJS.Verifier.ContainmentContract.' + [guid]::NewGuid().ToString('N')
+        $context.jobName = $disposedJobName
+        $context.job = $jobType::CreateNew($disposedJobName)
+        $context.memberIds = @($context.job.GetMemberProcessIds())
+        Require ($context.memberIds.Count -eq 0) 'disposed retained-launch creator was not empty'
+        $context.job.Dispose()
+        $context.disposedByCase = $true
+        $context.phase = 'reject retained launch on disposed creator'
+        $disposedLaunchFailure = $null
+        try { $null = $context.job.LaunchRetained($missingExecutable,$missingCommand,$EvidenceRoot) } catch { $disposedLaunchFailure = $_ }
+        $disposedLaunchFacts = Assert-BaseException $disposedLaunchFailure 'System.ObjectDisposedException' 'Cannot access a disposed object.' 'disposed creator retained launch' 'Prefix' -1 '' 'VerifierBrowserContainmentJobApi'
+        Require (-not [IO.File]::Exists($missingExecutable)) 'disposed creator launch reached operating system'
+        $context.facts = [ordered]@{
+            creatorJobName=$firstJobName; observerRetainedLaunch=$observerLaunchFacts
+            creatorMissingImage=$missingLaunchFacts; creatorUsableAndEmptyAfterFailure=$true
+            disposedCreatorJobName=$disposedJobName; disposedRetainedLaunch=$disposedLaunchFacts
+        }
+    }
+}
+function Run-JavaLeaseCase {
+    $name = 'pinned-jdk-natural-exit'
+    $watch = [Diagnostics.Stopwatch]::StartNew()
+    $phase = 'create empty Java containment job'
+    $job = $null
+    $lease = $null
+    $jobName = $null
+    $leaseMetadata = $null
+    $leaseExitCode = $null
+    $leaseClosed = $false
+    $jobEmpty = $false
+    $terminationRequested = $false
+    $jobClosureWatch = $null
+    $naturalWatch = $null
+    $primaryFailure = $null
+    $primaryFailurePhase = $null
+    $cleanupFailures = New-Object 'System.Collections.Generic.List[string]'
+    $facts = $null
+    $memberIds = @()
+    try {
+        $caseDirectory = Join-Path $EvidenceRoot $name
+        $null = [IO.Directory]::CreateDirectory($caseDirectory)
+        Assert-VerifierNoReparseAncestors $caseDirectory
+        $jobName = 'Local\TroubleshootJS.Verifier.ContainmentContract.' + [guid]::NewGuid().ToString('N')
+        $job = $jobType::CreateNew($jobName)
+        $initialMembers = @($job.GetMemberProcessIds())
+        Require ($initialMembers.Count -eq 0) 'Java test creator job was not initially empty'
+
+        $phase = 'launch pinned Java image with retained original handle'
+        Assert-VerifierNoReparseAncestors $JavaExecutablePath
+        Require ((Sha $JavaExecutablePath) -ceq $javaImageSha256 -and ([IO.FileInfo]::new($JavaExecutablePath).Length -eq $javaImageBytes)) 'Java image pin changed immediately before launch'
+        $javaCommandLine = ConvertTo-VerifierArgumentString @($JavaExecutablePath,'-version')
+        $lease = $job.LaunchRetained($JavaExecutablePath,$javaCommandLine,$caseDirectory)
+        Require ($null -ne $lease -and $lease.GetType().FullName -ceq 'VerifierBrowserContainmentJobApi+OwnedProcessLease') 'Java retained lease type'
+        $leaseMetadata = [ordered]@{
+            processId=[long]$lease.ProcessId; creationFileTime=[long]$lease.CreationFileTime
+            imagePath=[IO.Path]::GetFullPath($lease.ImagePath); imageSha256=$javaImageSha256
+        }
+        Require ($leaseMetadata.processId -gt 0 -and $leaseMetadata.creationFileTime -gt 0 -and -not $lease.IsClosed) 'Java retained lease initial state'
+        Require ([String]::Equals($leaseMetadata.imagePath,$JavaExecutablePath,[StringComparison]::OrdinalIgnoreCase)) 'Java retained lease image path'
+        Require ((Sha $JavaExecutablePath) -ceq $javaImageSha256 -and ([IO.FileInfo]::new($JavaExecutablePath).Length -eq $javaImageBytes)) 'Java image pin changed before launch'
+        $membersAtLaunch = @($job.GetMemberProcessIds())
+        if ($membersAtLaunch.Count -gt 0) { Assert-MemberIds $membersAtLaunch @([long]$lease.ProcessId) 'Java initial job member identity' }
+
+        $phase = 'wait for pinned Java natural exit and empty job'
+        $naturalWatch = [Diagnostics.Stopwatch]::StartNew()
+        $naturalExited = $lease.WaitForExit(5000)
+        Require $naturalExited 'pinned Java did not naturally exit within 5000ms'
+        $leaseExitCode = [uint32]$lease.GetExitCode()
+        Require ($leaseExitCode -eq 0) 'pinned Java -version exit code'
+        while ($true) {
+            $memberIds = @($job.GetMemberProcessIds())
+            if ($memberIds.Count -eq 0) { break }
+            Require ($naturalWatch.ElapsedMilliseconds -lt 5000) 'pinned Java job membership did not close within 5000ms'
+            Start-Sleep -Milliseconds 20
+        }
+        Require ($naturalWatch.ElapsedMilliseconds -lt 5000) 'pinned Java natural-exit proof exceeded 5000ms'
+        $jobEmpty = $true
+
+        $phase = 'close exited Java lease and verify closed guards'
+        $lease.Dispose()
+        Require ($lease.IsClosed) 'Java retained lease did not close after natural exit'
+        $lease.Dispose()
+        $leaseClosed = [bool]$lease.IsClosed
+        Require $leaseClosed 'Java retained lease double Dispose was not idempotent'
+        Require ([long]$lease.ProcessId -eq $leaseMetadata.processId -and [long]$lease.CreationFileTime -eq $leaseMetadata.creationFileTime -and [String]::Equals([IO.Path]::GetFullPath($lease.ImagePath),$leaseMetadata.imagePath,[StringComparison]::OrdinalIgnoreCase)) 'Java retained lease metadata changed after close'
+        $closedWaitFailure = $null
+        try { $null = $lease.WaitForExit(0) } catch { $closedWaitFailure = $_ }
+        $closedWaitFacts = Assert-BaseException $closedWaitFailure 'System.ObjectDisposedException' 'Cannot access a disposed object.' 'closed Java lease wait' 'Prefix' -1 '' 'VerifierOwnedProcessLease'
+        $closedExitFailure = $null
+        try { $null = $lease.GetExitCode() } catch { $closedExitFailure = $_ }
+        $closedExitFacts = Assert-BaseException $closedExitFailure 'System.ObjectDisposedException' 'Cannot access a disposed object.' 'closed Java lease exit code' 'Prefix' -1 '' 'VerifierOwnedProcessLease'
+        Require ((Sha $JavaExecutablePath) -ceq $javaImageSha256 -and ([IO.FileInfo]::new($JavaExecutablePath).Length -eq $javaImageBytes)) 'Java image pin changed after launch'
+        $facts = [ordered]@{
+            jobName=$jobName; imagePath=$JavaExecutablePath; imageSha256=$javaImageSha256; imageBytes=$javaImageBytes
+            commandArguments=@('-version'); lease=$leaseMetadata; naturalExit=$true; exitCode=$leaseExitCode
+            memberIdsAfterExit=$memberIds; jobEmpty=$jobEmpty; naturalOperationMilliseconds=$naturalWatch.Elapsed.TotalMilliseconds
+            leaseClosed=$leaseClosed; repeatedDisposeIdempotent=$true
+            closedWait=$closedWaitFacts; closedGetExitCode=$closedExitFacts; metadataStableAfterClose=$true
+            versionTextCaptured=$false; toolClosure='NOT_ATTESTED'
+        }
+    } catch {
+        $primaryFailure = $_
+        $primaryFailurePhase = $phase
+        try {
+            Save ($name + '.primary-failure.json') @{
+                status='FAIL_NOT_PASS'; phase=$primaryFailurePhase; jobName=$jobName
+                lease=$leaseMetadata; leaseExitCode=$leaseExitCode; leaseClosed=$leaseClosed
+                observedMemberProcessIds=$memberIds; terminationRequested=$terminationRequested
+                exceptionType=$primaryFailure.Exception.GetType().FullName
+                exceptionMessageChain=@(Get-ExceptionMessageChain $primaryFailure)
+            }
+        } catch { [void]$cleanupFailures.Add('Java primary failure evidence write failed') }
+    }
+
+    $cleanupWatch = [Diagnostics.Stopwatch]::StartNew()
+    if ($null -ne $job) {
+        try {
+            if ($null -ne $lease -and -not $lease.IsClosed) {
+                $alreadyExited = $lease.WaitForExit(0)
+                if (-not $alreadyExited) {
+                    $jobClosureWatch = [Diagnostics.Stopwatch]::StartNew()
+                    $job.TerminateOwned([uint32]2)
+                    $terminationRequested = $true
+                    $emptyObservations = New-Object 'System.Collections.Generic.List[object]'
+                    $cleanupClosure = Wait-JobAndHandles $job $emptyObservations $jobClosureWatch 5000 $lease
+                    $leaseExitCode = [uint32]$cleanupClosure.leaseExitCode
+                    Require ($leaseExitCode -eq 2) 'Java cleanup request exit code'
+                }
+                else { $leaseExitCode = [uint32]$lease.GetExitCode() }
+            }
+            if ($null -ne $jobClosureWatch) {
+                $memberIds = @($job.GetMemberProcessIds())
+                Require ($memberIds.Count -eq 0) 'Java request cleanup left job members'
+                Require ($jobClosureWatch.ElapsedMilliseconds -lt 5000) 'Java request and closure exceeded their shared bound'
+            }
+            else {
+                $cleanupClosureWatch = [Diagnostics.Stopwatch]::StartNew()
+                while ($true) {
+                    $memberIds = @($job.GetMemberProcessIds())
+                    if ($memberIds.Count -eq 0) { break }
+                    Require ($cleanupClosureWatch.ElapsedMilliseconds -lt 5000) 'Java cleanup job membership did not close within 5000ms'
+                    Start-Sleep -Milliseconds 20
+                }
+                Require ($cleanupClosureWatch.ElapsedMilliseconds -lt 5000) 'Java cleanup job closure exceeded 5000ms'
+            }
+            $jobEmpty = $true
+        } catch { [void]$cleanupFailures.Add('Java creator stop or closure proof failed') }
+        if ($null -ne $lease -and -not $lease.IsClosed) {
+            try {
+                Require ($lease.WaitForExit(0)) 'Java lease did not signal before cleanup close'
+                if ($terminationRequested) { Require ([uint32]$lease.GetExitCode() -eq 2) 'Java cleanup retained exit code' }
+                else { $leaseExitCode = [uint32]$lease.GetExitCode() }
+                $lease.Dispose()
+                $lease.Dispose()
+                $leaseClosed = [bool]$lease.IsClosed
+                Require $leaseClosed 'Java lease cleanup close was not idempotent'
+            } catch { [void]$cleanupFailures.Add('Java retained lease cleanup or close failed') }
+        }
+        try { $job.Dispose() } catch { [void]$cleanupFailures.Add('Java creator job dispose failed') }
+    }
+    $cleanupWatch.Stop()
+    if ($null -ne $facts) { $facts.cleanupMilliseconds=$cleanupWatch.Elapsed.TotalMilliseconds }
+    $cleanupStatus = 'PASS'
+    if ($cleanupFailures.Count -gt 0 -or ($null -ne $job -and -not $jobEmpty) -or ($null -ne $lease -and -not $leaseClosed)) { $cleanupStatus='FAIL_NOT_PASS' }
+    $requestClosureMilliseconds = $null
+    if ($null -ne $jobClosureWatch) { $requestClosureMilliseconds = $jobClosureWatch.Elapsed.TotalMilliseconds }
+    try {
+        Save ($name + '.cleanup-result.json') @{
+            status=$cleanupStatus; jobName=$jobName; lease=$leaseMetadata; leaseExitCode=$leaseExitCode
+            leaseClosed=$leaseClosed; jobEmpty=$jobEmpty; memberProcessIds=$memberIds
+            terminationRequested=$terminationRequested; requestClosureMilliseconds=$requestClosureMilliseconds
+            cleanupMilliseconds=$cleanupWatch.Elapsed.TotalMilliseconds; cleanupFailures=@($cleanupFailures.ToArray())
+        }
+    } catch { [void]$cleanupFailures.Add('Java cleanup result evidence write failed') }
+    if ($cleanupFailures.Count -gt 0) {
+        if ($null -ne $primaryFailure) { throw ('Java lease cleanup failed after primary failure in phase ' + $primaryFailurePhase) }
+        throw ('Java lease cleanup failed: ' + [String]::Join('; ',$cleanupFailures.ToArray()))
+    }
+    if ($null -ne $primaryFailure) { throw $primaryFailure.Exception }
+    Finish-Case $name $watch $facts
+}
+
+function Run-SmokeCase([string]$Name, [bool]$UseLease = $false) {
     $watch = [Diagnostics.Stopwatch]::StartNew()
     $phase = 'create case directory'
     $job = $null
     $observer = $null
     $sentinel = $null
+    $lease = $null
+    $leaseClosed = $false
+    $leaseMetadata = $null
+    $leaseGuardFacts = $null
+    $retainedLaunchFacts = $null
+    $leaseExitCode = $null
     $sentinelStartTicks = 0L
     $sentinelCleanupProven = $true
     $terminationRequested = $false
@@ -431,9 +664,24 @@ function Run-SmokeCase([string]$Name) {
         $parentCommandArgs = @('parent',$stateDirectory,$parentNonce,$jobName,$descendantArgumentString)
         $parentCommand = ConvertTo-VerifierArgumentString (@($ChildExecutable) + $parentCommandArgs)
         $phase = 'launch contained parent and read witnesses'
-        $rootPid = [long]$job.Launch($ChildExecutable,$parentCommand,$caseDirectory)
+        if ($UseLease) {
+            $lease = $job.LaunchRetained($ChildExecutable,$parentCommand,$caseDirectory)
+            Require ($null -ne $lease -and $lease.GetType().FullName -ceq 'VerifierBrowserContainmentJobApi+OwnedProcessLease') 'retained root lease type'
+            $rootPid = [long]$lease.ProcessId
+            $leaseMetadata = [ordered]@{
+                processId=$rootPid; creationFileTime=[long]$lease.CreationFileTime
+                imagePath=[IO.Path]::GetFullPath($lease.ImagePath)
+            }
+            Require ($leaseMetadata.creationFileTime -gt 0 -and -not $lease.IsClosed) 'retained root lease initial state'
+            Require ([String]::Equals($leaseMetadata.imagePath,$ChildExecutable,[StringComparison]::OrdinalIgnoreCase)) 'retained root lease image path'
+        }
+        else { $rootPid = [long]$job.Launch($ChildExecutable,$parentCommand,$caseDirectory) }
         Require ($rootPid -gt 0) 'contained launch PID'
         $parentState = Read-IdentityState 'parent' 'parent' $parentNonce $parentCommandArgs $true $rootPid
+        if ($UseLease) {
+            Require ($leaseMetadata.creationFileTime -eq [long]$parentState.State.creationFileTime) 'retained lease FILETIME matches independent actor witness'
+            Require ([String]::Equals($leaseMetadata.imagePath,[IO.Path]::GetFullPath($parentState.State.imagePath),[StringComparison]::OrdinalIgnoreCase)) 'retained lease image matches independent actor witness'
+        }
 
         $descendantNonce = $parentNonce
         $descendantCommandArgs = @('descendant',$stateDirectory,$descendantNonce,$jobName)
@@ -443,6 +691,28 @@ function Run-SmokeCase([string]$Name) {
         $expectedMembers = @($memberSnapshot.memberIds)
         Require-PidLive $parentState.ProcessId $parentState.StartTicks 'parent live before request'
         Require-PidLive $descendantState.ProcessId $descendantState.StartTicks 'descendant live before request'
+        if ($UseLease) {
+            $phase = 'verify active retained lease bounds and disposal guards'
+            Require (-not $lease.WaitForExit(0)) 'active retained root lease unexpectedly signaled'
+            $activeExitFailure = $null
+            try { $null = $lease.GetExitCode() } catch { $activeExitFailure = $_ }
+            $activeExitFacts = Assert-BaseException $activeExitFailure 'System.InvalidOperationException' 'Retained process has not exited.' 'active retained lease exit code' 'Exact'
+            $invalidWaitFacts = New-Object 'System.Collections.Generic.List[object]'
+            foreach ($invalidWait in @(-1,5001)) {
+                $invalidWaitFailure = $null
+                try { $null = $lease.WaitForExit([int]$invalidWait) } catch { $invalidWaitFailure = $_ }
+                [void]$invalidWaitFacts.Add((Assert-BaseException $invalidWaitFailure 'System.ArgumentOutOfRangeException' '' 'retained lease wait bound' 'Ignore' -1 'timeoutMilliseconds'))
+            }
+            $activeDisposeFailure = $null
+            try { $lease.Dispose() } catch { $activeDisposeFailure = $_ }
+            $activeDisposeFacts = Assert-BaseException $activeDisposeFailure 'System.InvalidOperationException' 'Retained process lease cannot close before exit is observed.' 'active retained lease dispose' 'Exact'
+            Require (-not $lease.IsClosed) 'failed active lease Dispose lost its authority'
+            $leaseGuardFacts = [ordered]@{
+                activeWaitReturnedFalse=$true; activeGetExitCode=$activeExitFacts
+                invalidWaitBounds=@($invalidWaitFacts.ToArray()); activeDispose=$activeDisposeFacts
+                leaseRemainedOpen=$true
+            }
+        }
 
         $sentinelNonce = [guid]::NewGuid().ToString('N')
         $sentinelCommandArgs = @('sentinel',$stateDirectory,$sentinelNonce,$jobName)
@@ -514,14 +784,50 @@ function Run-SmokeCase([string]$Name) {
         Require $launchDenied 'launch after termination request rejected'
         Require-ExceptionMessage $launchFailure 'A containment job cannot launch after its termination request.' 'post-request launch denial'
         Require (-not [IO.File]::Exists($deniedState)) 'post-request launch did not create child state'
+        if ($UseLease) {
+            $missingRetainedExecutable = Join-Path $deniedDirectory 'VerifierMissingRetainedExecutable.exe'
+            Require (-not [IO.File]::Exists($missingRetainedExecutable) -and -not [IO.Directory]::Exists($missingRetainedExecutable)) 'post-request retained-launch path unexpectedly exists'
+            $missingRetainedCommand = ConvertTo-VerifierArgumentString @($missingRetainedExecutable,'unused')
+            $retainedLaunchFailure = $null
+            try { $null = $job.LaunchRetained($missingRetainedExecutable,$missingRetainedCommand,$caseDirectory) }
+            catch { $retainedLaunchFailure = $_ }
+            $retainedLaunchFacts = Assert-BaseException $retainedLaunchFailure 'System.InvalidOperationException' 'A containment job cannot launch after its termination request.' 'post-request retained launch' 'Exact'
+            Require (-not [IO.File]::Exists((Join-Path $deniedDirectory 'VerifierMissingRetainedExecutable.exe'))) 'post-request retained launch created its executable path'
+        }
 
         $phase = 'wait for creator job and retained handles to close'
-        $closureFacts = Wait-JobAndHandles $job $memberObservations $jobClosureWatch 5000
+        if ($UseLease) { $closureFacts = Wait-JobAndHandles $job $memberObservations $jobClosureWatch 5000 $lease }
+        else { $closureFacts = Wait-JobAndHandles $job $memberObservations $jobClosureWatch 5000 }
         $closureMilliseconds = $closureFacts.closureMilliseconds
         Assert-MemberIds @($job.GetMemberProcessIds()) @() 'creator empty after request'
         $jobEmpty = $true
         $memberExitStatuses = @($closureFacts.exitStatuses)
         Require (@($memberExitStatuses | Where-Object { $_.status -cne 'EXIT_OBSERVED' }).Count -eq 0) 'all retained member handles signaled'
+        if ($UseLease) {
+            Require ($closureFacts.leaseExited -and $closureFacts.leaseExitCode -eq 2) 'retained original-root handle did not report exit code 2'
+            $leaseExitCode = [uint32]$lease.GetExitCode()
+            Require ($leaseExitCode -eq 2) 'retained original-root lease exit code'
+            $lease.Dispose()
+            Require ($lease.IsClosed) 'retained process lease did not report closed after Dispose'
+            $lease.Dispose()
+            $leaseClosed = [bool]$lease.IsClosed
+            Require $leaseClosed 'retained process lease double Dispose was not idempotent'
+            Require ([long]$lease.ProcessId -eq [long]$leaseMetadata.processId -and [long]$lease.CreationFileTime -eq [long]$leaseMetadata.creationFileTime -and [String]::Equals([IO.Path]::GetFullPath($lease.ImagePath),$leaseMetadata.imagePath,[StringComparison]::OrdinalIgnoreCase)) 'retained lease metadata changed after close'
+            $closedWaitFailure = $null
+            try { $null = $lease.WaitForExit(0) } catch { $closedWaitFailure = $_ }
+            $closedWaitFacts = Assert-BaseException $closedWaitFailure 'System.ObjectDisposedException' 'Cannot access a disposed object.' 'closed retained lease wait' 'Prefix' -1 '' 'VerifierOwnedProcessLease'
+            $closedExitFailure = $null
+            try { $null = $lease.GetExitCode() } catch { $closedExitFailure = $_ }
+            $closedExitFacts = Assert-BaseException $closedExitFailure 'System.ObjectDisposedException' 'Cannot access a disposed object.' 'closed retained lease exit code' 'Prefix' -1 '' 'VerifierOwnedProcessLease'
+            $leaseGuardFacts = [ordered]@{
+                activeWaitReturnedFalse=$true; activeGetExitCode=$activeExitFacts
+                invalidWaitBounds=@($invalidWaitFacts.ToArray()); activeDispose=$activeDisposeFacts
+                activeLeaseStayedOpen=$true; postTerminationExitCode=$leaseExitCode
+                disposedAfterSignal=$true; repeatedDisposeIdempotent=$true
+                closedWait=$closedWaitFacts; closedGetExitCode=$closedExitFacts
+                closedMetadataStable=$true
+            }
+        }
         $phase = 'verify outside sentinel survives termination'
         $sentinel.Refresh()
         Require (-not $sentinel.HasExited) 'outside sentinel survives creator termination'
@@ -536,6 +842,13 @@ function Run-SmokeCase([string]$Name) {
             membersEmpty=$true; allRetainedMemberHandlesSignaled=$true; sourceSnapshotStable=$true; observerSnapshotMatched=$true
             observerFailureMessages=$observerFailureMessages; postRequestLaunchFailureMessages=$launchFailureMessages
             sentinelSurvived=$true; postRequestLaunch='REJECTED'; stateWitnesses=@('parent','descendant','sentinel')
+        }
+        if ($UseLease) {
+            $facts.retainedRootLease=$leaseMetadata
+            $facts.retainedRootExitCode=$leaseExitCode
+            $facts.retainedRootLeaseClosed=$leaseClosed
+            $facts.retainedLeaseGuards=$leaseGuardFacts
+            $facts.postRequestRetainedLaunch=$retainedLaunchFacts
         }
     } catch {
         $primaryFailure = $_
@@ -564,6 +877,7 @@ function Run-SmokeCase([string]$Name) {
             sentinelPid=$failureSentinelPid; sentinelStartTicks=$failureSentinelStartTicks
             observedCreatorMemberIds=@(); knownMemberIdentities=@($knownMembers.ToArray()); retainedMemberIdentities=@($memberEvidence.ToArray())
             terminationRequested=$terminationRequested; jobEmpty=$jobEmpty
+            retainedRootLease=$leaseMetadata; retainedRootExitCode=$leaseExitCode; retainedRootLeaseClosed=$leaseClosed
         }
         if ($null -ne $memberSnapshot) { $failureSnapshot.observedCreatorMemberIds=@($memberSnapshot.memberIds) }
         try {
@@ -592,7 +906,10 @@ function Run-SmokeCase([string]$Name) {
                     [void]$cleanupFailures.Add('no retained job-member process handles were available for closure proof')
                 }
                 if ($null -eq $jobClosureWatch) { throw 'termination request deadline was not initialized' }
-                $cleanupClosure = Wait-JobAndHandles $job $memberObservations $jobClosureWatch 5000
+                $cleanupLease = $null
+                if ($UseLease -and $null -ne $lease -and -not $lease.IsClosed) { $cleanupLease = $lease }
+                if ($UseLease) { $cleanupClosure = Wait-JobAndHandles $job $memberObservations $jobClosureWatch 5000 $cleanupLease }
+                else { $cleanupClosure = Wait-JobAndHandles $job $memberObservations $jobClosureWatch 5000 }
                 $jobEmpty = $true
                 $closureFacts = $cleanupClosure
                 if ($null -eq $facts) { $facts = @{} }
@@ -600,6 +917,17 @@ function Run-SmokeCase([string]$Name) {
                 $facts.cleanupClosureMilliseconds=$cleanupClosure.closureMilliseconds
             }
         } catch { [void]$cleanupFailures.Add('creator job cleanup or closure proof failed') }
+        if ($UseLease -and $null -ne $lease -and -not $lease.IsClosed) {
+            try {
+                Require ($null -ne $closureFacts -and $closureFacts.leaseExited) 'retained root process did not signal before lease cleanup'
+                $leaseExitCode = [uint32]$lease.GetExitCode()
+                Require ($leaseExitCode -eq 2) 'retained root cleanup exit code'
+                $lease.Dispose()
+                $lease.Dispose()
+                $leaseClosed = [bool]$lease.IsClosed
+                Require $leaseClosed 'retained root lease cleanup did not close idempotently'
+            } catch { [void]$cleanupFailures.Add('retained root lease cleanup or close failed') }
+        }
         foreach ($observation in $memberObservations) {
             try { $observation.Process.Dispose() } catch { [void]$cleanupFailures.Add('job-member observation handle dispose failed') }
         }
@@ -627,7 +955,7 @@ function Run-SmokeCase([string]$Name) {
         $facts.sentinelErrorBytes = if ([IO.File]::Exists($sentinelError)) { [IO.FileInfo]::new($sentinelError).Length } else { $null }
     }
     $cleanupStatus = 'PASS'
-    if ($cleanupFailures.Count -gt 0 -or ($null -ne $job -and (-not $jobEmpty -or $null -eq $closureFacts -or -not $closureFacts.allRetainedHandlesSignaled)) -or -not $sentinelCleanupProven) {
+    if ($cleanupFailures.Count -gt 0 -or ($null -ne $job -and (-not $jobEmpty -or $null -eq $closureFacts -or -not $closureFacts.allRetainedHandlesSignaled)) -or -not $sentinelCleanupProven -or ($UseLease -and $null -ne $lease -and -not $leaseClosed)) {
         $cleanupStatus = 'FAIL_NOT_PASS'
     }
     $knownCleanupMembers = @()
@@ -639,7 +967,9 @@ function Run-SmokeCase([string]$Name) {
         status=$cleanupStatus; name=$Name; jobName=$jobName; rootPid=$rootPid
         knownMemberIdentities=$knownCleanupMembers; retainedMemberIdentities=@($memberEvidence.ToArray())
         terminationRequested=$terminationRequested; jobEmpty=$jobEmpty; memberExitStatuses=$cleanupExitStatuses
-        sentinelCleanupProven=$sentinelCleanupProven; cleanupFailures=@($cleanupFailures.ToArray())
+        sentinelCleanupProven=$sentinelCleanupProven; retainedRootLease=$leaseMetadata
+        retainedRootExitCode=$leaseExitCode; retainedRootLeaseClosed=$leaseClosed
+        cleanupFailures=@($cleanupFailures.ToArray())
     }
     try { Save-Case $caseDirectory 'cleanup-result.json' $cleanupResult }
     catch { [void]$cleanupFailures.Add('cleanup result evidence write failed'); $cleanupStatus='FAIL_NOT_PASS' }
@@ -663,6 +993,17 @@ try {
     $ModulePath = [IO.Path]::GetFullPath($ModulePath)
     $FixtureSourcePath = [IO.Path]::GetFullPath($FixtureSourcePath)
     $EvidenceRoot = [IO.Path]::GetFullPath($EvidenceRoot)
+    if ($Mode -ceq 'LeaseSuite') {
+        Require (-not [String]::IsNullOrWhiteSpace($JavaExecutable)) 'LeaseSuite requires the selected Java executable path'
+        Require ($ExpectedJavaSha256 -cmatch '^[0-9a-f]{64}$') 'selected Java image SHA parameter'
+        $JavaExecutablePath = [IO.Path]::GetFullPath($JavaExecutable)
+        Require (Test-Path -LiteralPath $JavaExecutablePath -PathType Leaf) 'selected Java image missing'
+        Require ([String]::Equals([IO.Path]::GetFileName($JavaExecutablePath),'java.exe',[StringComparison]::OrdinalIgnoreCase)) 'selected Java image basename'
+        Assert-VerifierNoReparseAncestors $JavaExecutablePath
+        $javaImageSha256 = Sha $JavaExecutablePath
+        $javaImageBytes = [IO.FileInfo]::new($JavaExecutablePath).Length
+        Require ($javaImageSha256 -ceq $ExpectedJavaSha256) 'selected Java image pin'
+    }
     $tempRoot = [IO.Path]::GetFullPath([IO.Path]::GetTempPath())
     $compilerHostProcess = [Diagnostics.Process]::GetCurrentProcess()
     try {
@@ -690,13 +1031,30 @@ try {
     $childImageSha256 = Sha $ChildExecutable
     $childImageBytes = [IO.FileInfo]::new($ChildExecutable).Length
     $sourceHashes = @{ module=(Sha $ModulePath); fixtureSource=(Sha $FixtureSourcePath); childArtifact=$childImageSha256; compilerHost=$compilerHostSha256; consoleHost=$consoleHostArtifact.imageSha256 }
-    Save 'inputs.json' @{ hashes=$sourceHashes; moduleBytes=$ExpectedModuleBytes; fixtureSourceBytes=([IO.FileInfo]::new($FixtureSourcePath).Length); childArtifactBytes=$childImageBytes; compilerHostPath=$compilerHostPath; compilerHostBytes=$compilerHostBytes; consoleHostPath=$consoleHostArtifact.imagePath; consoleHostSigner=$consoleHostArtifact.signerThumbprint; consoleHostSignature=$consoleHostArtifact.signatureStatus; powershellVersion=$PSVersionTable.PSVersion.ToString(); compiler='Windows PowerShell Add-Type'; toolClosure='NOT_ATTESTED'; mode=$Mode; containmentScope='EXPLICIT_JOB_TERMINATION_ONLY' }
+    $inputFacts = @{ hashes=$sourceHashes; moduleBytes=$ExpectedModuleBytes; fixtureSourceBytes=([IO.FileInfo]::new($FixtureSourcePath).Length); childArtifactBytes=$childImageBytes; compilerHostPath=$compilerHostPath; compilerHostBytes=$compilerHostBytes; consoleHostPath=$consoleHostArtifact.imagePath; consoleHostSigner=$consoleHostArtifact.signerThumbprint; consoleHostSignature=$consoleHostArtifact.signatureStatus; powershellVersion=$PSVersionTable.PSVersion.ToString(); compiler='Windows PowerShell Add-Type'; toolClosure='NOT_ATTESTED'; mode=$Mode; containmentScope='EXPLICIT_JOB_TERMINATION_ONLY' }
+    if ($Mode -ceq 'LeaseSuite') {
+        $sourceHashes.javaExecutable=$javaImageSha256
+        $inputFacts.javaExecutablePath=$JavaExecutablePath
+        $inputFacts.javaExecutableBytes=$javaImageBytes
+        $inputFacts.javaImageScope='PINNED_IMAGE_ONLY_NOT_FULL_TOOL_CLOSURE'
+    }
+    Save 'inputs.json' $inputFacts
     $jobType = & $owner { Initialize-VerifierBrowserContainmentJobApi }
     Require ($jobType -is [type] -and $jobType.Name -ceq 'VerifierBrowserContainmentJobApi') 'native job API type'
 
     if ($Mode -ceq 'Smoke') {
         Run-SmokeCase 'containment-smoke'
         $expectedCaseNames = @('containment-smoke')
+    }
+    elseif ($Mode -ceq 'LeaseSmoke') {
+        Run-SmokeCase 'containment-lease-smoke' $true
+        $expectedCaseNames = @('containment-lease-smoke')
+    }
+    elseif ($Mode -ceq 'LeaseSuite') {
+        Run-SmokeCase 'containment-lease-smoke' $true
+        Run-RetainedLeaseGuardCase
+        Run-JavaLeaseCase
+        $expectedCaseNames = @('containment-lease-smoke','retained-lease-guards','pinned-jdk-natural-exit')
     }
     else {
         Run-SmokeCase 'containment-smoke'
@@ -712,6 +1070,10 @@ try {
     for ($i=0; $i -lt $expectedCaseNames.Count; $i++) { Require ($cases[$i].name -ceq $expectedCaseNames[$i]) 'case order' }
     $consoleHostArtifactFinal = Assert-ConsoleHostArtifact
     Require ((Sha $ModulePath) -ceq $sourceHashes.module -and (Sha $FixtureSourcePath) -ceq $sourceHashes.fixtureSource -and (Sha $ChildExecutable) -ceq $sourceHashes.childArtifact -and ([IO.FileInfo]::new($ChildExecutable).Length -eq $childImageBytes) -and (Sha $compilerHostPath) -ceq $sourceHashes.compilerHost -and $consoleHostArtifactFinal.imageSha256 -ceq $sourceHashes.consoleHost -and $consoleHostArtifactFinal.signerThumbprint -ceq $consoleHostArtifact.signerThumbprint) 'final source, compiler host, console host, and artifact pins'
+    if ($Mode -ceq 'LeaseSuite') {
+        Assert-VerifierNoReparseAncestors $JavaExecutablePath
+        Require ((Sha $JavaExecutablePath) -ceq $javaImageSha256 -and $javaImageSha256 -ceq $ExpectedJavaSha256 -and ([IO.FileInfo]::new($JavaExecutablePath).Length -eq $javaImageBytes)) 'final selected Java image pin'
+    }
     Save 'cases.json' @{ status='PASS'; mode=$Mode; caseCount=$cases.Count; cases=@($cases.ToArray()); scope='JOB_LIFECYCLE_ONLY'; capturedPipes='NOT_QUALIFIED'; creatorDeathProtection='NOT_QUALIFIED' }
     Write-Output ('Verifier containment contract cases=' + $cases.Count + ' status=PASS')
     exit 0

@@ -1,0 +1,98 @@
+{
+  "status": "FINAL_SOURCE_RECHECKED",
+  "baseHead": "81c9b376866277a60cf94a91ebf56c4e506c01a3",
+  "sources": [
+    {
+      "path": "scripts/VerifierIsolation.psm1",
+      "bytes": 1063853,
+      "sha256": "faf65e46579d50323d35f09572a1e21a9991f2b312a2c1dfdd431b991827876f"
+    },
+    {
+      "path": "scripts/verify-rb100-branch-order-study.ps1",
+      "bytes": 17687,
+      "sha256": "57c027a5162dff938a616750f1ea4bf03ada94f48654796a634289fb54bdb57e"
+    },
+    {
+      "path": "tests/contracts/VerifierBoundedProcessContract.ps1",
+      "bytes": 12502,
+      "sha256": "6c5cffdf5e05253bc8d4f0f7af528760a68a7f6e24e361ddf214738710e60933"
+    },
+    {
+      "path": "tests/contracts/VerifierBoundedProcessFixture.py",
+      "bytes": 2612,
+      "sha256": "95c9017de2ad611f72f60fae3f7b6d87582d9e66da4f0e4033406b8a9952b70a"
+    },
+    {
+      "path": "tests/contracts/VerifierBoundedCaptureContract.ps1",
+      "bytes": 35517,
+      "sha256": "fbf89745bbdb037e6fa67e2ce8d0627a2391dadc7c42504897f136900f64dfd3"
+    },
+    {
+      "path": "tests/contracts/VerifierBoundedCaptureFixture.py",
+      "bytes": 3806,
+      "sha256": "2850f2a0ebf00fc8406b6782f15e6d2d318636c27b55ea5769f413edfeb3de8c"
+    },
+    {
+      "path": "tests/contracts/VerifierContainmentContract.ps1",
+      "bytes": 74406,
+      "sha256": "1a8396a9bd9dbc88ebcb715a332cde43bca4f68f54498a7176287855533af584"
+    },
+    {
+      "path": "tests/contracts/VerifierContainmentFixture.cs",
+      "bytes": 5977,
+      "sha256": "ec81a92bf6bc1bc42790283152f38fa4d07967aa713f95f0f9a6f8e778fa63a3"
+    },
+    {
+      "path": "tests/contracts/VerifierRetainedStopContract.ps1",
+      "bytes": 19427,
+      "sha256": "ffc3017f4b4a7eff49122ab8ae7cad838e43a38e0ae8dc2e6275402302583285"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/normal-prior-caller-r1/qualify_prior.py",
+      "bytes": 74051,
+      "sha256": "cd8e4a8c67e4a924df1ef15adccf358dbd499f8db5bef920289ae4288787a442"
+    }
+  ],
+  "tools": [
+    {
+      "role": "powershell",
+      "image": "powershell.exe",
+      "bytes": 495616,
+      "sha256": "d8f182560210d43baaf767d482ad1dc1207372522e91413b9d5e515a875e552d"
+    },
+    {
+      "role": "python",
+      "image": "python3.13.exe",
+      "bytes": 171744,
+      "sha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec"
+    },
+    {
+      "role": "JDK_TEST_ONLY",
+      "image": "java.exe",
+      "bytes": 304768,
+      "sha256": "e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce",
+      "independentJdkImageWitness": false
+    },
+    {
+      "role": "JDK_TEST_ONLY",
+      "image": "javac.exe",
+      "bytes": 24192,
+      "sha256": "61fa6463ee5b59004719b9833a16b148740cfa9f2d1f5a95ca598cc90be04c64",
+      "independentJdkImageWitness": false
+    }
+  ],
+  "sourcePolicySha256": "dabe997bb6e0a80a0e7ff128807f59fb2a6fae715f3168d705a2a15732bfb803",
+  "pinMigrationSha256": "7bba80767b81e0bda56bd44f388e56a8578dbf6ed09592ef508a87c5f783b4c1",
+  "reviewSha256": "974cb03011ed7e986e6c478bb93667f7b60cab6130858db8216253d83d01f0e0",
+  "scopeSha256": "99ded1816cbb32df9a9cfcb07492ebef55bf076af15287a9e9279ed6139331a0",
+  "scopeAdaptationSha256": "0f3fa323e5b3f10881821fddab8a8d65bff7a6410804cdfd64d67aecdc9ec9b2",
+  "drivers": {
+    "run_containment.py": "fb60d690ff145d830c7e0c6d91d7cb519c802c42b83038e0f08299897c256713",
+    "run_regression.py": "0141ec1a0b9b143874380ee1400d6f630cdc9011dfe6c26eb2d5f2ea1b8b1c7e",
+    "run_control_final.py": "1a097a4220f8236b378d9d85346529b04a200a60431507a04745d82adf5226d5",
+    "run_direct_stop.py": "397abd9c5f7a3e68078d8ca8b8830a717d8f9e047919a471648197aae00f277f"
+  },
+  "execution": "selected SystemPS5.1 d8; child-local builtin modules; selected Python -I -B optimize0",
+  "oldPowerShell60c9Pin": "UNCHANGED_NORMAL_QUALIFIER_HARNESS_NOT_RUN",
+  "toolFrameworkEnvironmentClosure": "NOT_ATTESTED"
+}

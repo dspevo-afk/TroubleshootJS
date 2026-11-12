@@ -2143,6 +2143,20 @@ trusted native composition. Implementation `8d9151ff031d066e43c7c1cb04183e549b42
 to origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail `1a1cd791bf198220` sent once; this receipt sends no second email.
 
+The [original-process-handle lease prerequisite](task-evidence/Q100/current-native-host-r1/PROCESS_LEASE_R1.md)
+is locally accepted for the finite selected-host scope. One native launch core
+preserves default behavior and transfers a retained original handle after resume.
+An actual capture cleanup failure also required the private direct stopper to use
+its original handle and creation identity through natural exit; durable/adopted
+discovery remains unchanged. Final LeaseSuite3/LeaseSmoke1, jobSuite7, capture30
+CODE, legacy16, JDK tool3, near-exit32 and direct-stop4 pass. A declared metadata
+buffer control qualifies pre-resume rollback with native122; the forced operation
+remains a failed operation. Earlier failure evidence remains. Raw bytes outside
+three owned regions are conserved; current module pins migrate only. No pipes,
+native role caps, complete tool closure, creator-death or genuine admission is
+claimed. Playable100=0; beta HELD. Next is captured-pipe preparation through the
+same owner. Publication is pending final index audit and normal push.
+
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
