@@ -76,7 +76,7 @@ function Positive([string]$Name, [string]$ChildMode, [string[]]$Payload) {
 
 try {
     Require ($PSVersionTable.PSVersion.Major -eq 5 -and $PSVersionTable.PSVersion.Minor -eq 1) 'Windows PowerShell 5.1 required'
-    Require ([IO.FileInfo]::new($ModulePath).Length -eq 1092245 -and (Sha $ModulePath) -ceq '418da63a7bc1e4eb3ad0234bd789a24db2b911b635e6a54468a7bb7087c180a6') 'module pin'
+    Require ([IO.FileInfo]::new($ModulePath).Length -eq 1099690 -and (Sha $ModulePath) -ceq 'd4384a271cf239438b32eddf15e4e1eaf1285d751dcc25c9dfce89b66c063085') 'module pin'
     Require ($ExpectedFixtureSha256 -cmatch '^[0-9a-f]{64}$' -and (Sha $ChildFixture) -ceq $ExpectedFixtureSha256) 'fixture pin'
     Require ($ExpectedChildImageSha256 -cmatch '^[0-9a-f]{64}$' -and (Sha $ChildExecutable) -ceq $ExpectedChildImageSha256) 'selected image pin'
     $owner = Import-Module -Name $ModulePath -Force -DisableNameChecking -PassThru

@@ -33,7 +33,7 @@ Require ($PSVersionTable.PSVersion.Major-eq5-and$PSVersionTable.PSVersion.Minor-
 $self=Get-Process -Id $PID
 $psSha=Hash $self.Path
 Require ($psSha-ceq'60c9b29843624dd8af6b6a7b26147753be6aeef65098b9a503cc50850afe410f') 'SELECTED_PS51_PIN'
-Require ((Hash $module)-ceq'418da63a7bc1e4eb3ad0234bd789a24db2b911b635e6a54468a7bb7087c180a6') 'ISOLATION_PIN'
+Require ((Hash $module)-ceq'd4384a271cf239438b32eddf15e4e1eaf1285d751dcc25c9dfce89b66c063085') 'ISOLATION_PIN'
 Import-Module $module -Force -DisableNameChecking
 foreach($p in @($repo,$SourceManifestPath,$PythonExe,$java,$javac,$reader,$wire)){Assert-VerifierNoReparseAncestors $p}
 Require ((Hash $PythonExe)-ceq'ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec') 'SELECTED_PYTHON_PIN'

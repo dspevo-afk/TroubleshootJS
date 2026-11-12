@@ -1336,7 +1336,8 @@ function Close-VerifierBoundedCapture($State) {
     }
 }
 
-function Get-VerifierBoundedCaptureFacts($State, $ProcessId, $StartTicks) {
+function Get-VerifierBoundedCaptureFacts($State, $ProcessId, $StartTicks,
+        $ImageIdentity = $null) {
     $facts = [ordered]@{
         ProcessId = $ProcessId; StartTicks = $StartTicks
         CaptureFailureKind = $State.FailureKind
@@ -1359,6 +1360,7 @@ function Get-VerifierBoundedCaptureFacts($State, $ProcessId, $StartTicks) {
             $facts.ReaderTasksTerminal = $false
         }
     }
+    if ($null -ne $ImageIdentity) { $facts['ImageIdentity'] = $ImageIdentity }
     return [pscustomobject]$facts
 }
 
@@ -1626,11 +1628,148 @@ function Invoke-VerifierOwnedJobCapture($FilePath, $Arguments,
     }
 }
 
+function Initialize-VerifierDirectProcessImageIdentity() {
+    if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT) {
+        Throw-VerifierInfrastructure 'Direct process image identity is unavailable on this platform.'
+    }
+    $typeName = 'TroubleshootJsVerifier.DirectProcessImageIdentityApi'
+    $loadedType = $typeName -as [type]
+    if ($null -ne $loadedType) { return $loadedType }
+    $source = @'
+using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Text;
+
+namespace TroubleshootJsVerifier {
+    public sealed class DirectProcessImageIdentity {
+        public int ProcessId { get; set; }
+        public long ProcessStartTicks { get; set; }
+        public long ProcessCreationFileTime { get; set; }
+        public string ImagePath { get; set; }
+    }
+
+    public static class DirectProcessImageIdentityApi {
+        private const long FileTimeEpochOffset = 504911232000000000L;
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct NativeFileTime {
+            public uint Low;
+            public uint High;
+        }
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern uint GetProcessId(IntPtr processHandle);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool GetProcessTimes(IntPtr processHandle,
+            out NativeFileTime creation, out NativeFileTime exit,
+            out NativeFileTime kernel, out NativeFileTime user);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode,
+            EntryPoint = "QueryFullProcessImageNameW", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool QueryFullProcessImageNameW(IntPtr processHandle,
+            uint flags, StringBuilder imagePath, ref uint size);
+
+        private static long ReadCreationFileTime(IntPtr processHandle) {
+            NativeFileTime creation, exit, kernel, user;
+            if (!GetProcessTimes(processHandle, out creation, out exit,
+                    out kernel, out user)) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "GetProcessTimes failed for the retained launched process handle.");
+            }
+            ulong value = ((ulong)creation.High << 32) | creation.Low;
+            if (value == 0 || value > Int64.MaxValue) {
+                throw new InvalidOperationException(
+                    "Retained process creation FILETIME is invalid.");
+            }
+            return (long)value;
+        }
+
+        public static DirectProcessImageIdentity Read(IntPtr originalHandle,
+                int expectedProcessId, long expectedStartTicks) {
+            if (originalHandle == IntPtr.Zero || originalHandle == new IntPtr(-1)) {
+                throw new ArgumentException("Original process handle is invalid.",
+                    "originalHandle");
+            }
+            if (expectedProcessId <= 0 || expectedStartTicks <= FileTimeEpochOffset) {
+                throw new ArgumentOutOfRangeException("expectedProcessId");
+            }
+            uint firstPid = GetProcessId(originalHandle);
+            if (firstPid == 0) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "GetProcessId failed for the retained launched process handle.");
+            }
+            long firstCreation = ReadCreationFileTime(originalHandle);
+            if (firstPid != (uint)expectedProcessId ||
+                    firstCreation != expectedStartTicks - FileTimeEpochOffset) {
+                throw new InvalidOperationException(
+                    "Original process handle identity differs from its Process PID/StartTime.");
+            }
+            StringBuilder image = new StringBuilder(32768);
+            uint imageLength = (uint)image.Capacity;
+            if (!QueryFullProcessImageNameW(originalHandle, 0, image,
+                    ref imageLength)) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "QueryFullProcessImageNameW failed for the retained launched process handle.");
+            }
+            if (imageLength == 0 || String.IsNullOrWhiteSpace(image.ToString())) {
+                throw new InvalidOperationException(
+                    "Original process handle returned an empty executable image.");
+            }
+            uint finalPid = GetProcessId(originalHandle);
+            if (finalPid == 0) {
+                throw new Win32Exception(Marshal.GetLastWin32Error(),
+                    "GetProcessId recheck failed for the retained launched process handle.");
+            }
+            long finalCreation = ReadCreationFileTime(originalHandle);
+            if (finalPid != firstPid || finalCreation != firstCreation) {
+                throw new InvalidOperationException(
+                    "Original process handle identity changed during image inspection.");
+            }
+            return new DirectProcessImageIdentity {
+                ProcessId = expectedProcessId,
+                ProcessStartTicks = expectedStartTicks,
+                ProcessCreationFileTime = finalCreation,
+                ImagePath = image.ToString(0, checked((int)imageLength))
+            };
+        }
+    }
+}
+'@
+    try {
+        Add-Type -TypeDefinition $source -Language CSharp -ErrorAction Stop | Out-Null
+    } catch {
+        $loadedType = $typeName -as [type]
+        if ($null -eq $loadedType) {
+            Throw-VerifierInfrastructure ('Could not initialize direct process image identity: ' +
+                (Get-VerifierErrorMessage $_))
+        }
+    }
+    $loadedType = $typeName -as [type]
+    if ($null -eq $loadedType) {
+        Throw-VerifierInfrastructure 'Direct process image identity adapter was not loaded.'
+    }
+    return $loadedType
+}
+
 function Invoke-VerifierBoundedProcess($FilePath, $Arguments,
         $TimeoutMilliseconds = 5000, $MaxStdoutBytes = $null,
         $MaxStderrBytes = $null, $CancellationToken = [Threading.CancellationToken]::None,
-        $CreatorJob = $null, $WorkingDirectory = $null) {
-    if ($PSBoundParameters.ContainsKey('CreatorJob') -or $PSBoundParameters.ContainsKey('WorkingDirectory')) {
+        $CreatorJob = $null, $WorkingDirectory = $null,
+        $CaptureImageIdentity = $false) {
+    if ($PSBoundParameters.ContainsKey('CaptureImageIdentity') -and
+            $CaptureImageIdentity -isnot [bool]) {
+        Throw-VerifierInfrastructure 'CaptureImageIdentity must be one exact Boolean.'
+    }
+    $nativeOwnerRequested = $PSBoundParameters.ContainsKey('CreatorJob') -or
+        $PSBoundParameters.ContainsKey('WorkingDirectory')
+    if ($CaptureImageIdentity -and $nativeOwnerRequested) {
+        Throw-VerifierInfrastructure 'Original-handle image identity is available only for direct bounded capture.'
+    }
+    if ($nativeOwnerRequested) {
         foreach ($required in @('CreatorJob', 'WorkingDirectory', 'MaxStdoutBytes', 'MaxStderrBytes', 'CancellationToken')) {
             if (-not $PSBoundParameters.ContainsKey($required)) {
                 Throw-VerifierInfrastructure 'Native bounded capture requires explicit job, working directory, both byte limits and cancellation token.'
@@ -1650,6 +1789,18 @@ function Invoke-VerifierBoundedProcess($FilePath, $Arguments,
         $PSBoundParameters.ContainsKey('MaxStderrBytes') -or
         $PSBoundParameters.ContainsKey('CancellationToken')
     $operationWatch = $null
+    $imageIdentityApi = $null
+    if ($CaptureImageIdentity) {
+        foreach ($required in @('MaxStdoutBytes', 'MaxStderrBytes', 'CancellationToken')) {
+            if (-not $PSBoundParameters.ContainsKey($required)) {
+                Throw-VerifierInfrastructure 'Image identity requires explicit bounded stdout/stderr capture and cancellation token.'
+            }
+        }
+        if (-not $byteCapture) {
+            Throw-VerifierInfrastructure 'Image identity requires bounded byte capture.'
+        }
+        $imageIdentityApi = Initialize-VerifierDirectProcessImageIdentity
+    }
     if ($byteCapture) {
         if (-not $PSBoundParameters.ContainsKey('MaxStdoutBytes') -or
                 -not $PSBoundParameters.ContainsKey('MaxStderrBytes')) {
@@ -1678,6 +1829,7 @@ function Invoke-VerifierBoundedProcess($FilePath, $Arguments,
     $stderrTask = $null
     $boundedCapture = $null
     $boundedFacts = $null
+    $imageIdentity = $null
     $boundedLogsRetained = $false
     $cleanupWatch = $null
     $processId = 0
@@ -1707,6 +1859,11 @@ function Invoke-VerifierBoundedProcess($FilePath, $Arguments,
         $startTicks = Get-VerifierLaunchedProcessStartTicks $process
         if ($byteCapture) {
             $boundedCapture = New-VerifierBoundedCaptureState $process $MaxStdoutBytes $MaxStderrBytes
+        }
+        if ($CaptureImageIdentity) {
+            $imageIdentity = $imageIdentityApi::Read($process.Handle, $processId, $startTicks)
+        }
+        if ($byteCapture) {
             Receive-VerifierBoundedCapture $process $boundedCapture $operationWatch $TimeoutMilliseconds $CancellationToken
             Close-VerifierBoundedCapture $boundedCapture
             $stdout = $boundedCapture.Lanes[0].Encoding.GetString($boundedCapture.Lanes[0].Bytes.ToArray())
@@ -1752,7 +1909,7 @@ function Invoke-VerifierBoundedProcess($FilePath, $Arguments,
         }
         $exitCode = [int]$rawExitCode
         if ($byteCapture) {
-            $boundedFacts = Get-VerifierBoundedCaptureFacts $boundedCapture $processId $startTicks
+            $boundedFacts = Get-VerifierBoundedCaptureFacts $boundedCapture $processId $startTicks $imageIdentity
             if ($CancellationToken.IsCancellationRequested) {
                 $boundedCapture.FailureKind = 'CANCELLED'
                 Throw-VerifierInfrastructure 'Bounded process capture cancelled during settlement.'
@@ -1884,7 +2041,7 @@ function Invoke-VerifierBoundedProcess($FilePath, $Arguments,
             if ($null -ne $boundedCapture) {
                 try {
                     if (-not $boundedCapture.FailureKind) { $boundedCapture.FailureKind = 'CAPTURE_FAILURE' }
-                    $boundedFacts = Get-VerifierBoundedCaptureFacts $boundedCapture $processId $startTicks
+                    $boundedFacts = Get-VerifierBoundedCaptureFacts $boundedCapture $processId $startTicks $imageIdentity
                 } catch {
                     if ($cleanupFailure) { $cleanupFailure += '; capture facts unavailable' }
                     else { $cleanupFailure = 'Capture facts unavailable.' }

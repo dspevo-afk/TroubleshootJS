@@ -925,6 +925,15 @@ result and cleanup boundary are qualified, independently of the unchanged N66
 guard. V1's arbitrary caller-gate scalar is retired. No new IO, config field,
 token, ledger or age window is introduced. Actual producer/admission is separate.
 
+The [direct Source process boundary](task-evidence/Q100/current-native-host-r1/DIRECT_SOURCE_PROCESS_R1.md)
+reuses the existing bounded Process owner, with opt-in original-handle image
+identity and unchanged unopted/native results. PythonSource explicitly uses that
+direct backend for nonspawning Source, with bounded streams and scoped cwd/reader
+environment restoration. It does not claim atomic-job or descendant closure;
+Compile/Held retain native jobs. A process PASS is not a gate/admission PASS.
+The full config/Source/root/token/exact-case producer remains separate and the
+N66, journal producer and Study holds remain closed. Historical tool pins remain.
+
 The [qualification console parser](task-evidence/Q100/normalizer-console-framing-r1/README.md)
 uses the existing pure console JSON adapter for the fixed812-byte qualification
 summary. One LF or CRLF terminates that console record; the separate JSONL owner

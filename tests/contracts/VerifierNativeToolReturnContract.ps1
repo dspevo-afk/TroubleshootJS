@@ -26,8 +26,8 @@ $script:retainedCallerJobs = New-Object 'System.Collections.Generic.List[object]
 $script:retainedCallerJobFacts = New-Object 'System.Collections.Generic.List[object]'
 $script:artifactPins = $null
 
-$PinnedModuleSha256 = '418da63a7bc1e4eb3ad0234bd789a24db2b911b635e6a54468a7bb7087c180a6'
-$PinnedModuleBytes = 1092245L
+$PinnedModuleSha256 = 'd4384a271cf239438b32eddf15e4e1eaf1285d751dcc25c9dfce89b66c063085'
+$PinnedModuleBytes = 1099690L
 $PinnedPowerShellSha256 = 'd8f182560210d43baaf767d482ad1dc1207372522e91413b9d5e515a875e552d'
 $PinnedPowerShellBytes = 495616L
 $PinnedJavaSha256 = 'e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce'

@@ -2340,6 +2340,16 @@ remain, with unchanged budgets/oracles/exclusions. Playable100=0; beta held.
 
 
 
+The [direct Source process prerequisite](task-evidence/Q100/current-native-host-r1/DIRECT_SOURCE_PROCESS_R1.md)
+completes N71's bounded host substep. Original-handle image facts, live stream
+limits, scoped cwd/environment restoration and current tool tuple migration are
+validated separately from gate approval. The initial native Python job launch
+failed with Win325 and remains failed; the explicitly selected direct backend
+makes no job/descendant claim. No fallback or normal admission is added. N72 must
+compose the full Source/config/root/token/exact36-case producer and external
+approval. N66/journal/Study holds, budgets/oracles and exclusions remain; beta held
+and playable100=0.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

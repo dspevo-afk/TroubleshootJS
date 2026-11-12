@@ -40,6 +40,7 @@ tests/contracts/VerifierNativeCoordinatorContract.ps1 -text whitespace=cr-at-eol
 tests/contracts/VerifierNativeToolReturnContract.ps1 -text whitespace=cr-at-eol
 tests/contracts/VerifierNativeToolReturnCanary.java -text whitespace=cr-at-eol
 tests/contracts/VerifierCurrentCodeCompileContract.ps1 -text whitespace=cr-at-eol
+tests/contracts/VerifierRetainedImageContract.ps1 -text
 # Keep source-bound CODE lab entrypoints stable across Windows checkouts.
 tests/qualification/rb100-layout/current-native-host-r1/test_current_native_compile.py text eol=lf
 tests/qualification/rb100-layout/current-native-host-r1/test_current_native_held_main.py text eol=lf

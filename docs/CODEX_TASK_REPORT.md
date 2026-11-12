@@ -1,3 +1,89 @@
+# Current checkpoint: N71 direct Source host validated; publication pending
+
+F OS-temp/tsj-q100-terminal-only-20261107-r1, codex/q100-terminal-only-20261107,
+HEAD/parent c648f9a5d5d398da7e4740b39f3d3de064c8da2e; no upstream. Normal target:
+origin/codex/q100-physical-feasibility. N71 is not yet committed/pushed/emailed.
+N70 implementation91a5c318/receiptc648f9a5 remotely verified; Gmail1a1d02c01f52fb94
+sent once. Never duplicate. R71 OS-temp/tsj-q100-source-gate-producer-r1-23caa9f15584
+holds scopes R1 through R6, final Source R6 and all original failures/artifacts.
+
+Delivered scope: existing direct bounded Process owner optionally records image
+identity from its original handle, binding PID/start ticks/FILETIME/image without
+PID reopening. Defaultfalse and native results stay unchanged. Capture readers
+exist before the new getter, including its failure cleanup. PythonSource uses
+that backend explicitly for nonspawning Source; no fallback, atomic-job or
+descendant claim. Strict9-field frame, approved script/reader/Python, -I -B -v,
+cwd and reader-env save/set/restore,1MiB streams and180000ms maximum. Present-empty
+reader env refuses before mutation, with exact empty value recorded. Script/reader
+tuples recheck after exit. Native Compile/Held keep their old contracts/prefix.
+Process PASS is not gate approval, producer qualification or normal admission.
+
+Final module1099690B/d4384a271cf239438b32eddf15e4e1eaf1285d751dcc25c9dfce89b66c063085;
+bridge48749B/79de30b5f297782c8aa592b8b0416326a040698b23ecafeccfd2ffe7ecb78cb7;
+caller101826B/2ecea393c6c9cb6361ae1e2645862d8c1a355aaf6feaaf01251de0330df42d1c;
+image contract30298B/73f5ac0b491ce4622fd9536dbc9389fe785d0a1c94991b4940bfb0172bb68980.
+Current harness2937B/0d4539744ffbb38a117012b83560417a9815805167ac1f361599849b833cb873.
+Only current module/harness expectations migrate; historical tool pins unchanged.
+
+PASS93 final-source controls: Source process Smoke1/Suite16 (1.037/18.875s), exact
+36 caller methods/zero skips within that suite; current Source preflight1+5
+(1.142/4.418s); maintained legacy16 (3.098s), byte capture30 (8.438s), image10
+(3.321s), native return4 (1.959s); final native CODE Compile1+4 (17.969/27.055s)
+and Held1+4 (32.445/33.513s). Expected failures and deliberate getter/cleanup
+injections are controls, not clean-operation PASS. Source records operation and
+cleanup separately where owner supplies them; outer times include normal cleanup.
+Native JDK matrix is serial. Full independent141 NO_DATA+2396 inherited classes
+remain2537/12196044B; complete reference/current Smoke/Suite inventories match.
+43 Source/contract rows exact;35 N70 rows unchanged. Other N70 historical157/17
+results are not renewed or presented as current gates. Packet:
+docs/task-evidence/Q100/current-native-host-r1/DIRECT_SOURCE_PROCESS_R1.md;
+manifest 6da208204328b906196ba77b97923718bdec4fe3af990c0a2c2868dc70a31dab;
+proof 7a409488784c2a5daaaa6ebaba3ac8c549427264313c647874eb01fbb686d742.
+
+Failures preserved: initial native Python job launch returned Win325 with no
+lease. Its deeper Windows cause is unestablished; cleanup/env passed, not launch.
+Direct mode was selected explicitly, no runtime/settings/security change. Empty
+env snapshot lost empty-string value through .NET getter; dictionary read fixes
+the cause with exact oracle. Peer found getter-before-readers failure gap; ordering
+fixed and real-child throw-only injection verifies cleanup without fake image.
+Old Held failure prefix changed; existing oracle caught it, original prefix was
+restored and all10 CODE cases rerun fresh. Controller filename/substr/tuple-message/
+pre-cwd-receipt/current-module-pin failures remain with original exits; no failure
+relabeled. No failed matrix or missing cleanup is acceptance.
+
+Source review: n52 production R5 lifecycle/empty snapshot blockers resolved;
+n50 new image contract no blocker; root integrated diff/final gates. Reviewers
+ran no tests/processes or DATA. Conservation:280 module functions unchanged, two
+changed/one adapter added; native owner unchanged. All80 caller definitions exact;
+only two tool tuples change. Three other current pins change only module hash/
+size; the Study wrapper is NOT RUN and retains its original PS guard. Both Study
+holds and N66/journal unconditional producer hold remain. Next N72 must compose
+config/Source/root/token/exact-case producer and external root approval.
+
+Resource query PASS213 known identities, no known new persistent actor; original
+handle/exit/cleanup receipts remain primary, not repaired by PID queries. Failure
+logs/prefixes, ordinary CODE and fixture artifacts retained. Injected cleanup error
+is error-propagation proof only. No new browser/listener or global environment
+change. Main5f05b005(9M/6untracked), Ed9747229(reportM), Desktop e0c36885(7M/
+89untracked) preserved/staged0. Only Main current prefix mirrored; opaque tails
+exact. Old browser14116/start639294472690745890/port58320, preview34180/start
+639294472514546595/port58264+14children, oldD links/resources/Notepad untouched.
+
+Limits: direct root-process scope only; no atomic namespace/continuous identity,
+full bootstrap/JDK/DLL/stdlib/environment/creator-death/concurrency/descendant or
+normal native-policy qualification. Outer guard post-capture; stream owner live.
+No actual historical metadata copy, old N/D metadata, fixed20 role body, protected/
+HARD/held-out DATA, DATA factory, operational journal, normal positive, genuine/
+OriginalArm/graph/capture/Session. Original to NULL/OBSERVE unspent/gated. Full30
+excluded; HARD/PSYCHOTIC unavailable/unrun; protected-unread uncertified; oldnormal20
+not reread. Authored9007199254740993/-6587958367974952701/8445301674744508279 is
+distinct from three MEDIUM roots; artifacts are not cases. CircuitJS truth,
+R12Phase2a1352b5c and exact seeds/epochs/order/budgets/oracles unchanged. GWT/Player
+N/A; electrical/population not renewed; CI not run/earlier runner prerequisite
+not rechecked. Playable100=0; beta held. Next unstarted: N72 producer composition.
+
+# Historical checkpoint: N70 publication and N71 preparation
+
 # Current checkpoint: N70 published; N71 producer Source preparation
 
 Scope: the V2 Source gate journal consumer is validated. It retires V1's arbitrary
@@ -9,9 +95,13 @@ reading. N66 remains first and unchanged; both Study holds remain closed. No new
 IO, CLI/config input, token, ledger or time window was introduced.
 
 F: OS-temp/tsj-q100-terminal-only-20261107-r1, codex/q100-terminal-only-20261107,
-HEAD 91a5c31853f7a28a618a23d0c22a978ed4b51d55; parent6d5253f8, no upstream. Normal target:
+HEAD c648f9a5d5d398da7e4740b39f3d3de064c8da2e; implementation91a5c318, no upstream. Normal target:
 origin/codex/q100-physical-feasibility. N70 is normally pushed/exact remote verified;
-Gmail 1a1d02c01f52fb94 sent once. Documentation receipt pending; no second email.
+Gmail 1a1d02c01f52fb94 sent once. Documentation receipt normally pushed and exact
+remote verified; no second email. Receipt index4 PASS
+e00c168dbedbd6587bcd2b1bdf636a9357adce4d3c8f8c2ae310e14e028ca07c.
+All38 Source/contract and18 control rows, four native input/tool/JAR configs and
+class-closure boundary unchanged after documentation only.
 Final index10 PASS9ec134b0593d82092626676488be782a79f512622bd54a4fa9579ddc7d350ccf.
 Prior N69 ff817057/receipt6d5253f8 is remotely verified; Gmail1a1cff90478a39e5 sent
 once. Never duplicate. R70: OS-temp/tsj-q100-journal-gate-authority-r1-154d02e517bb.
@@ -75,6 +165,19 @@ Playable100=0; beta HELD. Authored tuple9007199254740993/-6587958367974952701/
 are not cases. CircuitJS truth, R12Phase2a1352b5c and exact seeds/epochs/order/
 budgets/oracles remain. Next unstarted: N71 reviewed Source gate producer and its
 real selected-host original launch/result/cleanup boundary, with all DATA holds.
+
+N71 Source-only map complete: OS-temp/tsj-q100-source-gate-producer-r1-23caa9f15584/
+SOURCE_BOUNDARY_FINDINGS_R1.md and SCOPE_PREPARATION_R1.md. Source6 frozen;
+preparation index59c7d46926640179107a83317d74bd36f5926eef28f64e7317b6dc7d96a37531.
+n51 identified reuse of existing Source preflight plus approved original-handle
+wrapper; native invocation adapter builds argv only. Concrete producer remains
+unimplemented/unqualified. Before edits, freeze its API/input/root closure, cwd
+receipt, bounded direct-child/descendant claims and real-host positive/negative
+canaries. Keep existing post-capture bound explicit; no new allowance/TTL/ledger
+is implied. Initial plural Source filename lookup failed before freeze/output or
+mutation; bounded Source inventory corrected it; bookkeeping note retained.
+No tests, child, actual metadata/DATA, operational journal or admission change.
+Both journal/N66 and Study holds remain. Next adopt that minimal coherent scope.
 
 # Historical checkpoint: N69 publication and N70 preparation
 
