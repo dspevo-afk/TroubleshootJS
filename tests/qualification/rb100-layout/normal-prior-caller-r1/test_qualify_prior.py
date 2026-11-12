@@ -211,7 +211,26 @@ def _synthetic_journal():
         "allowlistSha256": _CALLER.ALLOWLIST_SHA256,
         "readerGateSha256": _CALLER.READER_GATE_SHA256,
         "normalizerGateSha256": _CALLER.NORMALIZER_GATE_SHA256,
-        "callerGateSha256": "4" * 64,
+        "callerGate": {
+            "schema": "tsj-q100-caller-gate-result-v1",
+            "definition": "normal-prior-caller-synthetic-v2",
+            "scope": "CURRENT_CALLER_SYNTHETIC_SOURCE_ONLY",
+            "sourceSha256": "0" * 64,
+            "testSourceSha256": _CALLER.CALLER_GATE_TEST_SHA256,
+            "pythonSha256": _CALLER.TOOL_FIXED_PINS["qualificationPython"][1],
+            # Synthetic references only; they do not identify real gate evidence.
+            "producerSourceSha256": "c" * 64,
+            "invocationReceiptSha256": "d" * 64,
+            "result": {
+                "status": "PASS",
+                "testsRun": 36,
+                "failures": 0,
+                "errors": 0,
+                "skipped": 0,
+                "exitCode": 0,
+                "terminationProven": True,
+            },
+        },
         "createdUtc": "2026-11-08T01:20:30Z",
     }
 
@@ -507,11 +526,12 @@ class CallerStaticBoundaryTests(unittest.TestCase):
                           manifest)
 
     def test_valid_synthetic_phase_journal(self):
+        """Valid contract shape only; the operational journal wrapper stays closed."""
         journal = _synthetic_journal()
         self.assertIs(
-            _CALLER._validate_phase_journal(
+            _CALLER._validate_phase_journal_contract(
                 journal, config_sha="2" * 64, manifest_sha="1" * 64,
-                roots_sha="3" * 64),
+                roots_sha="3" * 64, caller_source_sha="0" * 64),
             journal)
 
     def test_phase_journal_rejects_wrong_or_extra_authority(self):
@@ -520,7 +540,7 @@ class CallerStaticBoundaryTests(unittest.TestCase):
             ("PHASE_JOURNAL_CONFIGSHA256", {"configSha256": "9" * 64}),
             ("PHASE_JOURNAL_ROOTSSHA256", {"rootsSha256": "8" * 64}),
             ("PHASE_JOURNAL_READERGATESHA256", {"readerGateSha256": "7" * 64}),
-            ("PHASE_JOURNAL_CALLER_GATE", {"callerGateSha256": "bad"}),
+            ("PHASE_JOURNAL_CALLER_GATE_KEYS_TYPE", {"callerGate": "bad"}),
             ("PHASE_JOURNAL_CREATED_UTC", {"createdUtc": "not-a-time"}),
             ("PHASE_JOURNAL_CREATED_UTC", {"createdUtc": "2026-02-30T01:20:30Z"}),
         )
@@ -529,15 +549,137 @@ class CallerStaticBoundaryTests(unittest.TestCase):
                 journal = _synthetic_journal()
                 journal.update(mutation)
                 self._assert_code(
-                    expected, _CALLER._validate_phase_journal, journal,
+                    expected, _CALLER._validate_phase_journal_contract, journal,
                     config_sha="2" * 64, manifest_sha="1" * 64,
-                    roots_sha="3" * 64)
+                    roots_sha="3" * 64, caller_source_sha="0" * 64)
 
         journal = _synthetic_journal()
         journal["currentRunSha256"] = "6" * 64
         self._assert_code(
-            "PHASE_JOURNAL_KEYS", _CALLER._validate_phase_journal, journal,
-            config_sha="2" * 64, manifest_sha="1" * 64, roots_sha="3" * 64)
+            "PHASE_JOURNAL_KEYS", _CALLER._validate_phase_journal_contract, journal,
+            config_sha="2" * 64, manifest_sha="1" * 64,
+            roots_sha="3" * 64, caller_source_sha="0" * 64)
+
+    def test_phase_journal_rejects_v1_scalar_caller_gate(self):
+        journal = _synthetic_journal()
+        journal["schema"] = "tsj-q100-normal-prior-phase-journal-v1"
+        del journal["callerGate"]
+        journal["callerGateSha256"] = "4" * 64
+        self._assert_code(
+            "PHASE_JOURNAL_KEYS", _CALLER._validate_phase_journal_contract, journal,
+            config_sha="2" * 64, manifest_sha="1" * 64,
+            roots_sha="3" * 64, caller_source_sha="0" * 64)
+
+    def test_phase_journal_rejects_stale_caller_gate_bindings(self):
+        mutations = (
+            ("PHASE_JOURNAL_CALLER_GATE_CONTRACT",
+             lambda gate: gate.update(schema="tsj-q100-caller-gate-result-v0")),
+            ("PHASE_JOURNAL_CALLER_GATE_SOURCE",
+             lambda gate: gate.update(sourceSha256="1" * 64)),
+            ("PHASE_JOURNAL_CALLER_GATE_TEST_SOURCE",
+             lambda gate: gate.update(testSourceSha256="2" * 64)),
+            ("PHASE_JOURNAL_CALLER_GATE_PYTHON",
+             lambda gate: gate.update(pythonSha256="3" * 64)),
+            ("PHASE_JOURNAL_CALLER_GATE_CONTRACT",
+             lambda gate: gate.update(definition="normal-prior-caller-synthetic-v1")),
+            ("PHASE_JOURNAL_CALLER_GATE_CONTRACT",
+             lambda gate: gate.update(scope="CURRENT_CALLER_OTHER_SCOPE")),
+        )
+        for expected, mutate_gate in mutations:
+            with self.subTest(expected=expected):
+                journal = _synthetic_journal()
+                mutate_gate(journal["callerGate"])
+                self._assert_code(
+                    expected, _CALLER._validate_phase_journal_contract, journal,
+                    config_sha="2" * 64, manifest_sha="1" * 64,
+                    roots_sha="3" * 64, caller_source_sha="0" * 64)
+
+    def test_phase_journal_rejects_failed_partial_or_untyped_results(self):
+        mutations = (
+            ("PHASE_JOURNAL_CALLER_GATE_RESULT", "status", "FAIL"),
+            ("PHASE_JOURNAL_CALLER_GATE_RESULT", "testsRun", 35),
+            ("PHASE_JOURNAL_CALLER_GATE_RESULT", "failures", 1),
+            ("PHASE_JOURNAL_CALLER_GATE_RESULT", "errors", 1),
+            ("PHASE_JOURNAL_CALLER_GATE_RESULT", "skipped", 1),
+            ("PHASE_JOURNAL_CALLER_GATE_RESULT", "exitCode", 2),
+            ("PHASE_JOURNAL_CALLER_GATE_RESULT", "terminationProven", False),
+            ("PHASE_JOURNAL_CALLER_GATE_RESULT", "testsRun", True),
+            ("PHASE_JOURNAL_CALLER_GATE_RESULT", "failures", False),
+            ("PHASE_JOURNAL_CALLER_GATE_RESULT", "exitCode", True),
+            ("PHASE_JOURNAL_CALLER_GATE_RESULT", "terminationProven", 1),
+            ("PHASE_JOURNAL_CALLER_GATE_RESULT", "testsRun", "36"),
+        )
+        for expected, field, value in mutations:
+            with self.subTest(expected=expected, field=field):
+                journal = _synthetic_journal()
+                journal["callerGate"]["result"][field] = value
+                self._assert_code(
+                    expected, _CALLER._validate_phase_journal_contract, journal,
+                    config_sha="2" * 64, manifest_sha="1" * 64,
+                    roots_sha="3" * 64, caller_source_sha="0" * 64)
+
+    def test_phase_journal_rejects_bad_provenance_shape_and_operational_use(self):
+        journal = _synthetic_journal()
+        journal["callerGate"] = "bad"
+        self._assert_code(
+            "PHASE_JOURNAL_CALLER_GATE_KEYS_TYPE",
+            _CALLER._validate_phase_journal_contract, journal,
+            config_sha="2" * 64, manifest_sha="1" * 64,
+            roots_sha="3" * 64, caller_source_sha="0" * 64)
+
+        mutations = (
+            ("PHASE_JOURNAL_CALLER_GATE_KEYS",
+             lambda gate: gate.pop("producerSourceSha256")),
+            ("PHASE_JOURNAL_CALLER_GATE_KEYS",
+             lambda gate: gate.update(extra="SYNTHETIC_ONLY")),
+            ("PHASE_JOURNAL_CALLER_GATE_PROVENANCE",
+             lambda gate: gate.update(producerSourceSha256=3)),
+            ("PHASE_JOURNAL_CALLER_GATE_PROVENANCE",
+             lambda gate: gate.update(invocationReceiptSha256=4)),
+            ("PHASE_JOURNAL_CALLER_GATE_PROVENANCE",
+             lambda gate: gate.update(invocationReceiptSha256="g" * 64)),
+            ("PHASE_JOURNAL_CALLER_GATE_RESULT_KEYS_TYPE",
+             lambda gate: gate.update(result=[])),
+            ("PHASE_JOURNAL_CALLER_GATE_RESULT_KEYS",
+             lambda gate: gate["result"].pop("errors")),
+            ("PHASE_JOURNAL_CALLER_GATE_RESULT_KEYS",
+             lambda gate: gate["result"].update(extra="SYNTHETIC_ONLY")),
+        )
+        for expected, mutate_gate in mutations:
+            with self.subTest(expected=expected):
+                journal = _synthetic_journal()
+                mutate_gate(journal["callerGate"])
+                self._assert_code(
+                    expected, _CALLER._validate_phase_journal_contract, journal,
+                    config_sha="2" * 64, manifest_sha="1" * 64,
+                    roots_sha="3" * 64, caller_source_sha="0" * 64)
+
+        for key in ("producerSourceSha256", "invocationReceiptSha256"):
+            journal = _synthetic_journal()
+            del journal["callerGate"][key]
+            self._assert_code(
+                "PHASE_JOURNAL_CALLER_GATE_KEYS", _CALLER._validate_phase_journal_contract,
+                journal, config_sha="2" * 64, manifest_sha="1" * 64,
+                roots_sha="3" * 64, caller_source_sha="0" * 64)
+
+        class ReaderTrap:
+            def __init__(self):
+                self.calls = 0
+
+            def read_normal_prior(self, **_kwargs):
+                self.calls += 1
+                raise AssertionError("synthetic gate contract reached operational reader")
+
+        reader = ReaderTrap()
+        read_started = {"value": False}
+        self._assert_code(
+            "PHASE_JOURNAL_PRODUCER_NOT_QUALIFIED",
+            _CALLER._read_fixed_roles_after_journal, reader,
+            config=_synthetic_config(), journal=_synthetic_journal(),
+            config_sha="2" * 64, manifest_sha="1" * 64, roots_sha="3" * 64,
+            read_started_state=read_started)
+        self.assertEqual(reader.calls, 0)
+        self.assertIs(read_started["value"], False)
 
     def test_bad_phase_journal_never_calls_fixed_role_reader(self):
         class ReaderTrap:
@@ -829,6 +971,7 @@ class CallerHistoricalToolExpectationTests(unittest.TestCase):
         journal_value = {"status": "SYNTHETIC_ONLY"}
         config = {"dataOutputRoot": "C:\\fixture\\output",
                   "scratchRoot": "C:\\fixture\\scratch",
+                  "sourceSpecs": {"caller": {"sha256": "0" * 64}},
                   "roots": {"N": "C:\\fixture\\N", "D": "C:\\fixture\\D"}}
         state = {
             "sourceManifestBytes": manifest_raw,
@@ -921,7 +1064,7 @@ class CallerHistoricalToolExpectationTests(unittest.TestCase):
     def test_final_consumed_input_recheck_includes_historical_tokens(self):
         reader = object()
         observer = object()
-        config = {}
+        config = {"sourceSpecs": {"caller": {"sha256": "0" * 64}}}
         state = {"rootsSha256": "d" * 64, "configToken": ("SYNTHETIC_CONFIG",),
                  "byteObservation": {"SYNTHETIC_ONLY": True},
                  "modules": {"normalizer": object()}}

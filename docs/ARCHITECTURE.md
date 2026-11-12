@@ -916,6 +916,15 @@ Bounded output readback, final input rereads and exact five-file closure precede
 the completed CLI PASS. Persisted evidence remains pending at write time; final
 authority is the completed receipt. Actual prior qualification remains separate.
 
+The [Source gate journal consumer](task-evidence/Q100/current-native-host-r1/JOURNAL_CONSUMER_R1.md)
+owns V2 receipt structure and current caller/test/Python/result bindings. Root's
+whole-journal digest is external approval; producer/result hashes do not prove a
+process ran. The contract validator is non-admitting. The operational journal
+wrapper unconditionally rejects until the external producer and original launch,
+result and cleanup boundary are qualified, independently of the unchanged N66
+guard. V1's arbitrary caller-gate scalar is retired. No new IO, config field,
+token, ledger or age window is introduced. Actual producer/admission is separate.
+
 The [qualification console parser](task-evidence/Q100/normalizer-console-framing-r1/README.md)
 uses the existing pure console JSON adapter for the fixed812-byte qualification
 summary. One LF or CRLF terminates that console record; the separate JSONL owner

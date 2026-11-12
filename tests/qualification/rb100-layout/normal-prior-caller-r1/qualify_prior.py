@@ -25,8 +25,13 @@ import types
 CONFIG_SCHEMA = "tsj-normal-prior-caller-config-v1"
 SOURCE_MANIFEST_SCHEMA = "tsj-q100-normal-prior-source-manifest-v1"
 SOURCE_MANIFEST_PURPOSE = "SOURCE_ONLY_BEFORE_DATA"
-PHASE_JOURNAL_SCHEMA = "tsj-q100-normal-prior-phase-journal-v1"
+PHASE_JOURNAL_SCHEMA = "tsj-q100-normal-prior-phase-journal-v2"
 PHASE_JOURNAL_STATUS = "ALLOW_FIXED_20_NORMAL_PRIOR_READ"
+CALLER_GATE_SCHEMA = "tsj-q100-caller-gate-result-v1"
+CALLER_GATE_DEFINITION = "normal-prior-caller-synthetic-v2"
+CALLER_GATE_SCOPE = "CURRENT_CALLER_SYNTHETIC_SOURCE_ONLY"
+CALLER_GATE_TEST_SHA256 = "37ba7872667a2fe1d1784bdeb95609304dcaef96b3e9cf2e5786fdcd2080d171"
+CALLER_GATE_TEST_COUNT = 36
 CURRENT_SOURCE_AUTHORITY_SCHEMA = "tsj-q100-current-source-authority-v1"
 ROOT_BINDINGS_SCHEMA = "tsj-q100-normal-prior-root-bindings-v1"
 ATTEMPT_SCHEMA = "tsj-q100-normal-prior-read-attempt-v2"
@@ -1390,12 +1395,59 @@ def _reader_token_identity(reader, token, role, phase):
     return _reader_call(reader, "_token_identity", token, phase=phase)
 
 
-def _validate_phase_journal(journal, *, config_sha, manifest_sha, roots_sha,
-                            allowlist_sha=ALLOWLIST_SHA256):
+def _validate_caller_gate_result(gate, *, caller_source_sha):
+    """Validate a root-attested result; this does not execute or prove a gate.
+
+    Root must review the identified producer and original invocation receipt
+    before supplying the exact whole-journal SHA.  Provenance hashes here are
+    references authenticated by that external approval, not followed paths.
+    """
+    phase = "phase-journal"
+    _exact_keys(gate, (
+        "schema", "definition", "scope", "sourceSha256", "testSourceSha256",
+        "pythonSha256", "producerSourceSha256", "invocationReceiptSha256",
+        "result",
+    ), "PHASE_JOURNAL_CALLER_GATE_KEYS", phase)
+    for key, expected in (
+            ("schema", CALLER_GATE_SCHEMA),
+            ("definition", CALLER_GATE_DEFINITION),
+            ("scope", CALLER_GATE_SCOPE)):
+        _need(type(gate[key]) is str and gate[key] == expected,
+              "PHASE_JOURNAL_CALLER_GATE_CONTRACT", phase)
+    _need(_is_sha(caller_source_sha) and _is_sha(gate["sourceSha256"])
+          and gate["sourceSha256"] == caller_source_sha,
+          "PHASE_JOURNAL_CALLER_GATE_SOURCE", phase)
+    _need(_is_sha(gate["testSourceSha256"])
+          and gate["testSourceSha256"] == CALLER_GATE_TEST_SHA256,
+          "PHASE_JOURNAL_CALLER_GATE_TEST_SOURCE", phase)
+    _need(_is_sha(gate["pythonSha256"])
+          and gate["pythonSha256"] == TOOL_FIXED_PINS["qualificationPython"][1],
+          "PHASE_JOURNAL_CALLER_GATE_PYTHON", phase)
+    _need(_is_sha(gate["producerSourceSha256"])
+          and _is_sha(gate["invocationReceiptSha256"]),
+          "PHASE_JOURNAL_CALLER_GATE_PROVENANCE", phase)
+    result = gate["result"]
+    _exact_keys(result, (
+        "status", "testsRun", "failures", "errors", "skipped", "exitCode",
+        "terminationProven",
+    ), "PHASE_JOURNAL_CALLER_GATE_RESULT_KEYS", phase)
+    _need(type(result["status"]) is str and result["status"] == "PASS"
+          and _is_int(result["testsRun"], CALLER_GATE_TEST_COUNT,
+                      CALLER_GATE_TEST_COUNT)
+          and all(_is_int(result[key], 0, 0)
+                  for key in ("failures", "errors", "skipped", "exitCode"))
+          and result["terminationProven"] is True,
+          "PHASE_JOURNAL_CALLER_GATE_RESULT", phase)
+
+
+def _validate_phase_journal_contract(journal, *, config_sha, manifest_sha, roots_sha,
+                                     caller_source_sha,
+                                     allowlist_sha=ALLOWLIST_SHA256):
+    """Validate receipt structure/bindings without granting read admission."""
     expected = (
         "schema", "status", "sourceManifestSha256", "configSha256", "rootsSha256",
         "allowlistSha256", "readerGateSha256", "normalizerGateSha256",
-        "callerGateSha256", "createdUtc",
+        "callerGate", "createdUtc",
     )
     _exact_keys(journal, expected, "PHASE_JOURNAL_KEYS", "phase-journal")
     _need(journal["schema"] == PHASE_JOURNAL_SCHEMA
@@ -1412,17 +1464,29 @@ def _validate_phase_journal(journal, *, config_sha, manifest_sha, roots_sha,
     for key, expected_sha in bindings.items():
         _need(_is_sha(journal[key]) and journal[key] == expected_sha,
               "PHASE_JOURNAL_" + key.upper(), "phase-journal")
-    _need(_is_sha(journal["callerGateSha256"]),
-          "PHASE_JOURNAL_CALLER_GATE", "phase-journal")
+    _validate_caller_gate_result(journal["callerGate"],
+                                 caller_source_sha=caller_source_sha)
     _need(_valid_utc_text(journal["createdUtc"]),
           "PHASE_JOURNAL_CREATED_UTC", "phase-journal")
     return journal
 
 
+def _validate_phase_journal(journal, *, config_sha, manifest_sha, roots_sha,
+                            caller_source_sha, allowlist_sha=ALLOWLIST_SHA256):
+    _validate_phase_journal_contract(
+        journal, config_sha=config_sha, manifest_sha=manifest_sha,
+        roots_sha=roots_sha, caller_source_sha=caller_source_sha,
+        allowlist_sha=allowlist_sha)
+    # A Source-only receipt is insufficient until the external gate producer
+    # and its original launch/result/cleanup boundary are separately qualified.
+    raise CallerError("PHASE_JOURNAL_PRODUCER_NOT_QUALIFIED", "phase-journal")
+
+
 def _read_fixed_roles_after_journal(reader, *, config, journal, config_sha,
                                     manifest_sha, roots_sha, read_started_state):
     _validate_phase_journal(journal, config_sha=config_sha,
-                            manifest_sha=manifest_sha, roots_sha=roots_sha)
+                            manifest_sha=manifest_sha, roots_sha=roots_sha,
+                            caller_source_sha=config["sourceSpecs"]["caller"]["sha256"])
     _verify_root_bindings(reader, config, roots_sha, "role-read-roots")
     read_function = getattr(reader, "read_normal_prior", None)
     _need(type(read_function) is types.FunctionType
@@ -1668,7 +1732,8 @@ def _recheck_consumed_inputs(reader, observer, config, state, *,
           "PHASE_JOURNAL_CONTENT_CHANGED_AFTER_WRITES", phase)
     _validate_phase_journal(
         current_journal_value, config_sha=config_sha,
-        manifest_sha=manifest_sha, roots_sha=roots_sha)
+        manifest_sha=manifest_sha, roots_sha=roots_sha,
+        caller_source_sha=config["sourceSpecs"]["caller"]["sha256"])
     _recheck_historical_tool_inputs(reader, historical_inputs)
 
     current_observation = _observe_source_tools(observer, reader, config)
@@ -1734,7 +1799,8 @@ def _qualify_impl(config_path, config_sha, source_manifest_path,
     _need(_sha(journal_raw) == phase_journal_sha, "PHASE_JOURNAL_SHA256", "phase-journal")
     _validate_phase_journal(
         journal, config_sha=config_sha, manifest_sha=source_manifest_sha,
-        roots_sha=state["rootsSha256"])
+        roots_sha=state["rootsSha256"],
+        caller_source_sha=config["sourceSpecs"]["caller"]["sha256"])
     _verify_root_bindings(reader, config, state["rootsSha256"], "pre-read-gate")
     _directory_empty(config["dataOutputRoot"], "pre-read-gate")
     _recheck_historical_tool_inputs(reader, historical_inputs)

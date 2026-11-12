@@ -1,11 +1,92 @@
-# Current checkpoint: N69 authenticated metadata transport published
+# Current checkpoint: N70 consumer validated; publication pending
+
+Scope: the V2 Source gate journal consumer is validated. It retires V1's arbitrary
+caller-gate scalar, checks a structured result against current caller/test/Python
+identities, and preserves existing config/manifest/root/allowlist/gate bindings.
+The contract validator is non-admitting. The operational wrapper always refuses
+with PHASE_JOURNAL_PRODUCER_NOT_QUALIFIED before attempt creation or fixed-role
+reading. N66 remains first and unchanged; both Study holds remain closed. No new
+IO, CLI/config input, token, ledger or time window was introduced.
+
+F: OS-temp/tsj-q100-terminal-only-20261107-r1, codex/q100-terminal-only-20261107,
+HEAD/parent 6d5253f8f7db82372b0a01f169d4659629dcfe3e; no upstream. Normal target:
+origin/codex/q100-physical-feasibility. N70 is not yet committed, pushed or emailed.
+Prior N69 ff817057/receipt6d5253f8 is remotely verified; Gmail1a1cff90478a39e5 sent
+once. Never duplicate. R70: OS-temp/tsj-q100-journal-gate-authority-r1-154d02e517bb.
+Its scope R1/adaptation R2, final Source R2 and all failed artifacts are retained.
+
+Final Source: caller101826B/7f5bda7060c951d2aff26e6914992a96bfa0d8d395e4d528d2460d78646c38db;
+test62790B/37ba7872667a2fe1d1784bdeb95609304dcaef96b3e9cf2e5786fdcd2080d171.
+The definition lists36 exact cases, test Source, invocation and reader pin. Its
+omission of the caller hash avoids a self-hash cycle. Original stderr matches all
+36 outcomes. Producer/invocation hashes and PASS declarations do not prove that a
+producer ran. Root must review concrete producer Source and original launch,
+result and cleanup before approving a journal SHA. No producer is qualified here.
+
+PASS:157 fresh methods, zero skips: caller36, actual reader4, staging24/handoff18,
+snapshot5/expectations5, normalizer17+13/tool6/codec11+18. Selected-host Source
+Smoke1/Suite5, inspector9 and two public API closed-guard controls pass. Refusals
+are controls, not normal qualification. CODE Compile Smoke1/Suite4 and Held
+Smoke1/Suite4 pass in18.512/27.180/32.242/33.142s. One final serial expensive
+matrix ran after focused checks/reviews. Ordinary cleanup is included in wrapper
+time and otherwise unmeasured separately. Independent141 NO_DATA+2396 inherited
+classes remain2537/12196044B; complete reference/current Smoke/Suite inventories
+match. All38 Source/contract rows rechecked;34 prior inputs unchanged. Commands,
+exact timings and limits: docs/task-evidence/Q100/current-native-host-r1/
+JOURNAL_CONSUMER_R1.md and JOURNAL_CONSUMER_PROOF_R1.json (ccc57af8824d407921abdeaa373ba949d71ea8db2515ff341844fab5c0d6dfb8).
+Source manifest SHA:b4ae555f550afec87c5abfd9449a66a9983fe657bbdf481c4812ddc216580d80.
+
+Failures preserved: caller R1 had two inherited mocked configs missing the new
+sourceSpecs.caller.sha256 lookup. Only those fixture fields and the final test
+pin changed; assertions stayed intact; fresh R2 passes36. CODE Smoke R1 controller
+failed before any owned child/native launch because its scope file was absent.
+The file was supplied, selected CODE/config retained, and unique Smoke R2 passes.
+An earlier preparation-controller SyntaxError before mutation is also retained.
+No failed result was relabeled. Root conservation:74 existing caller definitions
+unchanged, four changed/two added; reader/observer/normalizer/crypto/output-token
+owners unchanged. n51's admission-risk finding caused the independent hold;
+n53 caller review and n50 test/final fixture-delta reviews found no blocker.
+Reviewers ran no tests/processes and read no metadata/DATA. Root owns acceptance.
+
+Resources:62 known identities audited (33 original outers,17 default children,
+eight CODE PS and four native leases); original exit/cleanup receipts are primary.
+One exact junction removed; six metadata fixture directories, ordinary CODE and
+all failures retained. No known new persistent actor or browser/listener. Root
+environment restored. Main5f05b005 (9M/6untracked), Ed9747229 (reportM) and Desktop
+e0c36885 (7M/89untracked) preserved with zero staged; only Main's current report
+prefix is mirrored and opaque tails remain exact. Old browser14116/start
+639294472690745890/port58320, preview34180/start639294472514546595/port58264 plus14
+children, oldD links/resources and Notepad67116860 remain untouched.
+
+Limits: GWT/Player N/A for Python-only changes; electrical/population NOT_RENEWED;
+CI NOT_RUN (self-hosted runner registration prerequisite). Point-in-time rechecks
+do not prove atomic namespace/continuous identity. Source/tool facts are not
+retained cross-call tokens. Full bootstrap/JDK/DLL/environment/descendant/creator-
+death/concurrency/native normal policy remain unqualified; outer guard is
+post-capture. Root identity/marker semantics are not global anti-replay or TTL.
+No actual prior fixed20 role body, oldD, held-out/protected DATA, DATA factory,
+operational journal, normal positive, genuine/OriginalArm/graph/capture/Session.
+Original to NULL/OBSERVE remains unspent/gated. Full30 EXCLUDED; HARD/PSYCHOTIC
+unavailable/unrun; protected-unread boundary UNCERTIFIED; old normal20 NOT_REREAD.
+Playable100=0; beta HELD. Authored tuple9007199254740993/-6587958367974952701/
+8445301674744508279 remains distinct from three MEDIUM roots; fixed20 artifacts
+are not cases. CircuitJS truth, R12Phase2a1352b5c and exact seeds/epochs/order/
+budgets/oracles remain. Next unstarted: N71 reviewed Source gate producer and its
+real selected-host original launch/result/cleanup boundary, with all DATA holds.
+
+# Historical checkpoint: N69 publication and N70 preparation
+
+# Current checkpoint: N69 published; N70 journal-gate Source preparation
 
 F OS-temp/tsj-q100-terminal-only-20261107-r1, codex/q100-terminal-only-20261107,
 parentb6b1c84249a4ca26487d4ed867ab588ec5ceb591, no upstream; normaltarget
 origin/codex/q100-physical-feasibility. N68impl1bf0bc2e/receiptb6b1c842 verifiedremote,
 Gmail1a1cfbf1b97cd404 once, neverduplicate. N69implff817057c278bda679490cdaf68266b410caaaa1
-normallypushed/exactremoteverified; Gmail1a1cff90478a39e5 once. Current HEADff817057c278bda679490cdaf68266b410caaaa1;
-documentationreceipt pending, no secondemail. Finalindex11 PASSb19c4f0834747170708473d6af662b2f2a3e5e89c478a9254d008d981d1ebbc1. R69 OS-temp/tsj-q100-historical-input-handoff-r1-9fe4ec239b9a,
+normallypushed/exactremoteverified; Gmail1a1cff90478a39e5 once. Current HEAD6d5253f8f7db82372b0a01f169d4659629dcfe3e;
+documentationreceipt normallypushed/exactremoteverified, no secondemail.
+Receipt4 index PASSf949d5ca5ebf8f0087772a001e8c045c524c86e87bca765a5400d28bc60e54b9;
+all36 Source/selectednativeconfig/tool/JAR and full independent/currentCODE class
+closures unchanged afterdocsonly. Finalindex11 PASSb19c4f0834747170708473d6af662b2f2a3e5e89c478a9254d008d981d1ebbc1. R69 OS-temp/tsj-q100-historical-input-handoff-r1-9fe4ec239b9a,
 SCOPE_IMPLEMENTATION_R2 and all failedfixtures/logs/Source freezes retained.
 
 Caller98285B/6c1bd797947fa8ba93f3795336a1f00c3d73cf8a82c2232b8ed19307ec04aded;
@@ -69,10 +150,16 @@ budgets90s640groups5s32768PERGROUP/copy1048576chunk4096/Source4MiBproducer1MiB/
 fragment64KiB/opJSON8MiBresult1MiB/depth64visits1m/classes10k256MiB/compile60sreader
 180swrapper480scleanup120s unchanged.
 
-Next verify/publish documentationreceipt withoutsecondemail. N70 Source-only
-preparation specifies trusted passedgate/journalproducer binding and existing
-root/attempt oneuse semantics; no new metadata/Data read or guardreplacement.
-CallerSourceidentity isnot gatePASS; freeze smallestindependentcontract beforeedit.
+N70 Source-only preparation open OS-temp/tsj-q100-journal-gate-authority-r1-
+154d02e517bb/SCOPE_PREPARATION_R1.md and SOURCE_BOUNDARY_FINDINGS_R1.md. n52Source
+map complete: no gateproducer/PASSreceipt in boundedSource; currentpreflight only
+Sourceproof; rootbindings/exclusiveattempt contribute oneuse, not gatepass/global
+anti-replay. Minimumdirection versionedroot-produced journalasgate-resultreceipt,
+exactSHAprovidedonlyafter actualdefinedgatesPASS, currentconfig/Source/root/
+allowlist/gate bindings; no configcycle/newledger/guesstimewindow. Missingbefore
+implementationfreeze: exactgatedefinition/independentoutcomes/approvedproducer
+Source+launch+cleanup/resultproof. Nextfreeze thatcoherentcontract; no newmetadata/
+Dataread/implementation, currentguard/bothStudyholds/actualpriorbinding stayclosed.
 
 # Historical checkpoint: N68 publication and N69 preparation
 
