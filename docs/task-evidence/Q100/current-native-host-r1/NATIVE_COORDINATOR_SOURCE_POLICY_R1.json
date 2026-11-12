@@ -1,0 +1,28 @@
+{
+  "status": "RAW_BYTES_OUTSIDE_NEW_HELPERS_AND_OWNER_HEADER_EXACT",
+  "modulePath": "scripts/VerifierIsolation.psm1",
+  "workingBytes": 1092245,
+  "workingSha256": "418da63a7bc1e4eb3ad0234bd789a24db2b911b635e6a54468a7bb7087c180a6",
+  "canonicalLfBytes": 1073375,
+  "canonicalLfSha256": "fcdf1026b16f7816382eeb0e061351c064d2779c6c4a185fa332d6ee6a387dbd",
+  "gitAttribute": "text eol=crlf",
+  "baselineBytes": 1075327,
+  "baselineSha256": "bcd8962462b76539868836359efc60a647554f8713444e4627ef95fa36c00663",
+  "ownedSpan": "new native helper functions plus existing Invoke signature and opt-in dispatch only",
+  "oldDirectOwnerBodyRawConserved": true,
+  "nativeClassRawConserved": true,
+  "nativeClassSha256": "512ca164936845c3a90212bd58c1b5a925e3f8e7be900a3d17c2ae72ed2fe3ff",
+  "existingCaptureReadersAndStopperRawConserved": true,
+  "complementSegments": [
+    {
+      "segment": 0,
+      "rawBytes": 66183,
+      "sha256": "bc21ecbbfae555cbe994bbb390fc646ef4e181291df5e19243d6ce23cfe265b4"
+    },
+    {
+      "segment": 1,
+      "rawBytes": 1008924,
+      "sha256": "876fb8af8c21e1b3be9cafa7090b42a816beaec1061b9178416b4f913b1e54e2"
+    }
+  ]
+}

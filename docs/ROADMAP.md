@@ -1,6 +1,6 @@
 # TroubleshootJS: Current Roadmap
 
-**Updated:** 2026-11-11 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
+**Updated:** 2026-11-12 Â· **Roadmap edition:** 3.0 (complete catalog retained in the linked archive)
 
 ## Current product checkpoint
 
@@ -2175,6 +2175,19 @@ remain pending. Playable100=0; beta HELD. Implementation `752598fe62dbd470fbd3fb
 to origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
 Gmail `1a1cdffdb4852ad2` sent once; this receipt sends no second email.
 Next is the bounded native coordinator adapter and explicit invocation policy.
+
+The [native bounded-capture coordinator](task-evidence/Q100/current-native-host-r1/NATIVE_COORDINATOR_R1.md)
+is locally accepted for the finite serial selected-host scope. Explicit creator
+job, working directory, caps and token use the same native/reader owners; the
+whole default owner body stays raw-identical. Final API Smoke2/Suite11, primitive
+pipe10, lease3, job7, capture30 CODE, legacy16, JDK tool3, near-exit32, direct-stop4,
+controlled rollback and signed-negative direct/native comparison pass. Earlier
+test and harness failures are preserved truthfully. The caller retains its job;
+facts prove original root/current-job/reader/lease closure, not every historical
+descendant handle. Native exit DWORDs preserve signed Int32 transport. Normal
+role budgets, trusted tool/Source/return composition, creator-death and genuine
+admission remain pending. Playable100=0; beta HELD. Publication pending.
+Next is explicit invocation policy and trusted native composition prerequisites.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current

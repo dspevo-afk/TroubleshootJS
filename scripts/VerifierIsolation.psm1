@@ -1362,9 +1362,282 @@ function Get-VerifierBoundedCaptureFacts($State, $ProcessId, $StartTicks) {
     return [pscustomobject]$facts
 }
 
+function Wait-VerifierNativeCaptureClosure($CreatorJob, $Lease, $Watch,
+        $Milliseconds, $State = $null,
+        $CancellationToken = [Threading.CancellationToken]::None) {
+    while ($true) {
+        if ($null -ne $State -and $CancellationToken.IsCancellationRequested) {
+            $State.FailureKind = 'CANCELLED'
+            Throw-VerifierInfrastructure 'Bounded process capture cancelled during native containment settlement.'
+        }
+        $rootSignaled = ($null -eq $Lease -or $Lease.WaitForExit(0))
+        $members = @($CreatorJob.GetMemberProcessIds())
+        if ($Watch.Elapsed.TotalMilliseconds -ge $Milliseconds) {
+            if ($null -ne $State) { $State.FailureKind = 'TIMEOUT' }
+            Throw-VerifierInfrastructure "Native bounded process did not settle original-root exit and job emptiness within ${Milliseconds}ms."
+        }
+        if ($rootSignaled -and $members.Count -eq 0) { return }
+        [Threading.Thread]::Sleep(2)
+    }
+}
+
+function Invoke-VerifierOwnedJobCapture($FilePath, $Arguments,
+        $TimeoutMilliseconds, $MaxStdoutBytes, $MaxStderrBytes,
+        $CancellationToken, $CreatorJob, $WorkingDirectory) {
+    $invocation = Assert-VerifierProcessInvocationBoundary $FilePath $Arguments
+    if (-not (Test-VerifierStrictIntegralValue $TimeoutMilliseconds 1 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure 'A bounded process timeout must be one exact positive integral scalar.'
+    }
+    if (-not (Test-VerifierStrictIntegralValue $MaxStdoutBytes 1 ([int]::MaxValue)) -or
+            -not (Test-VerifierStrictIntegralValue $MaxStderrBytes 1 ([int]::MaxValue))) {
+        Throw-VerifierInfrastructure 'Bounded capture byte limits must be exact positive integral scalars.'
+    }
+    if ($null -eq $CancellationToken -or $CancellationToken.GetType() -ne [Threading.CancellationToken]) {
+        Throw-VerifierInfrastructure 'Bounded capture cancellation must be one exact CancellationToken.'
+    }
+    if ($CancellationToken.IsCancellationRequested) {
+        Throw-VerifierInfrastructure 'Bounded process capture cancelled before process start.'
+    }
+    $jobType = ([Management.Automation.PSTypeName]'VerifierBrowserContainmentJobApi').Type
+    if ($null -eq $jobType -or $null -eq $CreatorJob -or $CreatorJob.GetType() -ne $jobType) {
+        Throw-VerifierInfrastructure 'Native bounded capture requires an exact containment job object.'
+    }
+    if (-not (Test-VerifierStrictStringValue $WorkingDirectory) -or
+            [String]::IsNullOrWhiteSpace($WorkingDirectory)) {
+        Throw-VerifierInfrastructure 'Native bounded capture requires an exact non-empty working directory.'
+    }
+    # This mode is for an exclusive job in a dedicated serial host. A class-only
+    # lock cannot protect the temporary inheritable writers from unrelated starts.
+    try {
+        foreach ($path in @($FilePath, $WorkingDirectory)) {
+            if ($path -notmatch '^(?:[A-Za-z]:[\\/]|\\\\[^\\/]+[\\/][^\\/]+(?:[\\/]|$))') {
+                Throw-VerifierInfrastructure 'Native bounded capture paths must be absolute.'
+            }
+            Assert-VerifierNoReparseAncestors $path
+        }
+        $nativePath = [IO.Path]::GetFullPath($FilePath)
+        $nativeDirectory = [IO.Path]::GetFullPath($WorkingDirectory)
+        if (-not [IO.Directory]::Exists($nativeDirectory)) {
+            Throw-VerifierInfrastructure 'Native bounded capture working directory does not exist.'
+        }
+        if (@($CreatorJob.GetMemberProcessIds()).Count -ne 0) {
+            Throw-VerifierInfrastructure 'Native bounded capture requires an empty dedicated job.'
+        }
+        $commandLine = ConvertTo-VerifierArgumentString (@($nativePath) + @($invocation.Arguments))
+    } catch {
+        Throw-VerifierInfrastructure ('Native bounded capture preflight failed: ' + (Get-VerifierErrorMessage $_))
+    }
+    $TimeoutMilliseconds = [int]$TimeoutMilliseconds
+    $operationWatch = [Diagnostics.Stopwatch]::StartNew()
+    $cleanupWatch = $null
+    $processRoot = Join-Path ([IO.Path]::GetTempPath()) ('TroubleshootJS\verify-process-' + [Guid]::NewGuid().ToString('N'))
+    $stdoutLog = Join-Path $processRoot 'stdout.log'
+    $stderrLog = Join-Path $processRoot 'stderr.log'
+    $rootCreated = $false
+    $lease = $null
+    $capture = $null
+    $facts = $null
+    $stdoutHandle = $null
+    $stderrHandle = $null
+    $processId = 0
+    $startTicks = 0L
+    $native = [pscustomobject]@{
+        JobName = $CreatorJob.Name; LeaseReturned = $false
+        ProcessCreationFileTime = 0L; ImagePath = ''
+        NativeExitCode = $null; ProcessExitCode = $null
+        RootExitObserved = $false; JobEmpty = $false
+        ReadHandlesClosed = $true; LeaseClosed = $true
+        TerminationRequested = $false; CleanupProven = $false
+        DescendantHandleWaits = 'NOT_ATTESTED'; Scope = 'SERIAL_DEDICATED_HOST'
+        ProcessRoot = $processRoot
+        OperationPhase = 'NATIVE_LAUNCH'; CleanupPhase = 'NOT_STARTED'
+        OperationMilliseconds = 0.0; CleanupMilliseconds = 0.0
+    }
+    try {
+        Assert-VerifierNoReparseAncestors $processRoot
+        New-Item -ItemType Directory -Path $processRoot -Force -ErrorAction Stop | Out-Null
+        $rootCreated = $true
+        # Existing native owner rejects query-only jobs before allocating pipes.
+        # The coordinator never reopens a PID or gains a second stop authority.
+        $lease = $CreatorJob.LaunchCaptured($nativePath, $commandLine, $nativeDirectory)
+        $native.LeaseReturned = $true
+        $native.LeaseClosed = $false
+        $native.ReadHandlesClosed = $false
+        $processId = [int]$lease.ProcessId
+        $native.ProcessCreationFileTime = [long]$lease.CreationFileTime
+        $native.ImagePath = $lease.ImagePath
+        $startTicks = $native.ProcessCreationFileTime + 504911232000000000L
+        $stdoutHandle = $lease.StandardOutput.BaseStream.SafeFileHandle
+        $stderrHandle = $lease.StandardError.BaseStream.SafeFileHandle
+        $capture = New-VerifierBoundedCaptureState $lease $MaxStdoutBytes $MaxStderrBytes
+        $native.OperationPhase = 'BYTE_CAPTURE'
+        Receive-VerifierBoundedCapture $lease $capture $operationWatch $TimeoutMilliseconds $CancellationToken
+        $native.OperationPhase = 'NATURAL_JOB_SETTLEMENT'
+        Wait-VerifierNativeCaptureClosure $CreatorJob $lease $operationWatch $TimeoutMilliseconds $capture $CancellationToken
+        $native.OperationPhase = 'READER_DRAIN'
+        Close-VerifierBoundedCapture $capture
+        $native.RootExitObserved = [bool]$lease.WaitForExit(0)
+        $native.JobEmpty = (@($CreatorJob.GetMemberProcessIds()).Count -eq 0)
+        $native.ReadHandlesClosed = ($stdoutHandle.IsClosed -and $stderrHandle.IsClosed)
+        $facts = Get-VerifierBoundedCaptureFacts $capture $processId $startTicks
+        if (-not $native.RootExitObserved -or -not $native.JobEmpty -or -not $native.ReadHandlesClosed -or
+                -not $facts.ReaderTasksTerminal -or -not $facts.ReadersClosed) {
+            Throw-VerifierInfrastructure 'Native bounded capture closure was not proven.'
+        }
+        # Win32 returns DWORD bits; Process.ExitCode uses the same bits as Int32.
+        $native.NativeExitCode = [uint32]$lease.GetExitCode()
+        $exitCode = [BitConverter]::ToInt32([BitConverter]::GetBytes($native.NativeExitCode), 0)
+        $native.ProcessExitCode = $exitCode
+        if (-not (Test-VerifierStrictIntegralValue $exitCode ([int]::MinValue) ([int]::MaxValue))) {
+            Throw-VerifierInfrastructure 'Native bounded process did not expose an exact signed integral exit code.'
+        }
+        $stdout = $capture.Lanes[0].Encoding.GetString($capture.Lanes[0].Bytes.ToArray())
+        $stderr = $capture.Lanes[1].Encoding.GetString($capture.Lanes[1].Bytes.ToArray())
+        $native.OperationPhase = 'SETTLEMENT'
+        [IO.File]::WriteAllBytes($stdoutLog, $capture.Lanes[0].Bytes.ToArray())
+        [IO.File]::WriteAllBytes($stderrLog, $capture.Lanes[1].Bytes.ToArray())
+        if ($CancellationToken.IsCancellationRequested) {
+            $capture.FailureKind = 'CANCELLED'
+            Throw-VerifierInfrastructure 'Bounded process capture cancelled during settlement.'
+        }
+        if ($operationWatch.Elapsed.TotalMilliseconds -ge $TimeoutMilliseconds) {
+            $capture.FailureKind = 'TIMEOUT'
+            Throw-VerifierInfrastructure "Bounded process exceeded ${TimeoutMilliseconds}ms during capture settlement."
+        }
+        $operationWatch.Stop()
+        $native.OperationPhase = 'COMPLETE'
+        $cleanupWatch = [Diagnostics.Stopwatch]::StartNew()
+        $native.CleanupPhase = 'LEASE_CLOSE'
+        $lease.Dispose()
+        $native.LeaseClosed = [bool]$lease.IsClosed
+        $native.CleanupPhase = 'LOG_ROOT_DELETE'
+        Assert-VerifierNoReparseAncestors $processRoot
+        $tempNamespace = Get-VerifierFullPath ([IO.Path]::GetTempPath())
+        if (-not (Test-VerifierPhysicalChildPath $tempNamespace $processRoot)) {
+            Throw-VerifierInfrastructure 'Native bounded-process log root changed physical ownership.'
+        }
+        Remove-VerifierOwnedTree $tempNamespace $processRoot
+        $rootCreated = $false
+        $cleanupWatch.Stop()
+        $native.CleanupProven = $native.LeaseClosed
+        $native.CleanupPhase = 'COMPLETE'
+        $native.OperationMilliseconds = $operationWatch.Elapsed.TotalMilliseconds
+        $native.CleanupMilliseconds = $cleanupWatch.Elapsed.TotalMilliseconds
+        $facts.OperationMilliseconds = $operationWatch.Elapsed.TotalMilliseconds
+        $facts.CleanupMilliseconds = $cleanupWatch.Elapsed.TotalMilliseconds
+        $facts.CleanupProven = $native.CleanupProven
+        $facts.PSObject.Properties.Add([Management.Automation.PSNoteProperty]::new('NativeContainment', $native))
+        return [pscustomobject]@{
+            FilePath = $FilePath; Arguments = @($Arguments); ProcessId = $processId
+            ProcessStartTicks = $startTicks; ExitCode = [int]$exitCode
+            Stdout = $stdout; Stderr = $stderr; StdoutLog = $stdoutLog; StderrLog = $stderrLog
+            ProcessRoot = $processRoot; TerminationProven = $true; CaptureFacts = $facts
+        }
+    } catch {
+        $failure = $_
+        $operationWatch.Stop()
+        if ($null -eq $cleanupWatch) { $cleanupWatch = [Diagnostics.Stopwatch]::StartNew() }
+        $cleanupFailures = New-Object 'System.Collections.Generic.List[string]'
+        $closureProven = $false
+        $native.CleanupPhase = 'JOB_CLOSURE'
+        try {
+            $rootSignaled = ($null -eq $lease -or $lease.IsClosed -or $lease.WaitForExit(0))
+            $members = @($CreatorJob.GetMemberProcessIds())
+            if (-not $rootSignaled -or $members.Count -ne 0) {
+                $native.TerminationRequested = $true
+                $CreatorJob.TerminateOwned([uint32]2)
+            }
+            if ($null -ne $lease -and $lease.IsClosed) {
+                if (-not $native.RootExitObserved -or @($CreatorJob.GetMemberProcessIds()).Count -ne 0) {
+                    Throw-VerifierInfrastructure 'Closed native lease lacked its earlier original-exit and empty-job proof.'
+                }
+            } else {
+                Wait-VerifierNativeCaptureClosure $CreatorJob $lease $cleanupWatch 5000
+                $native.RootExitObserved = ($null -ne $lease -and $lease.WaitForExit(0))
+            }
+            $native.JobEmpty = (@($CreatorJob.GetMemberProcessIds()).Count -eq 0)
+            $closureProven = $native.JobEmpty -and ($null -eq $lease -or $native.RootExitObserved)
+            if ($null -ne $lease -and -not $lease.IsClosed -and $native.RootExitObserved) {
+                $native.NativeExitCode = [uint32]$lease.GetExitCode()
+                $native.ProcessExitCode = [BitConverter]::ToInt32([BitConverter]::GetBytes($native.NativeExitCode), 0)
+            }
+        } catch { [void]$cleanupFailures.Add((Get-VerifierErrorMessage $_)) }
+        if ($closureProven -and $null -ne $lease -and -not $lease.IsClosed) {
+            try {
+                $native.CleanupPhase = 'READER_DRAIN_AND_LEASE_CLOSE'
+                if ($null -ne $capture) { Close-VerifierBoundedCapture $capture }
+                else {
+                    $readerFailures = New-Object 'System.Collections.Generic.List[string]'
+                    foreach ($reader in @($lease.StandardOutput, $lease.StandardError)) {
+                        try { $reader.BaseStream.Close() }
+                        catch { [void]$readerFailures.Add((Get-VerifierErrorMessage $_)) }
+                    }
+                    if ($readerFailures.Count -ne 0) { throw ([String]::Join('; ', $readerFailures.ToArray())) }
+                }
+                $native.ReadHandlesClosed = ($null -ne $stdoutHandle -and $null -ne $stderrHandle -and
+                    $stdoutHandle.IsClosed -and $stderrHandle.IsClosed)
+                if (-not $native.ReadHandlesClosed) { Throw-VerifierInfrastructure 'Native bounded read handles did not close.' }
+                $lease.Dispose()
+                $native.LeaseClosed = [bool]$lease.IsClosed
+            } catch { [void]$cleanupFailures.Add((Get-VerifierErrorMessage $_)) }
+        }
+        $logsRetained = $false
+        $native.CleanupPhase = 'PREFIX_RETENTION'
+        try {
+            if (-not $rootCreated) { throw 'Native bounded-process evidence root is unavailable.' }
+            if ($null -ne $capture) {
+                [IO.File]::WriteAllBytes($stdoutLog, $capture.Lanes[0].Bytes.ToArray())
+                [IO.File]::WriteAllBytes($stderrLog, $capture.Lanes[1].Bytes.ToArray())
+            } else {
+                [IO.File]::WriteAllBytes($stdoutLog, [byte[]]::new(0))
+                [IO.File]::WriteAllBytes($stderrLog, [byte[]]::new(0))
+            }
+            $logsRetained = $true
+        } catch { [void]$cleanupFailures.Add('Bounded prefix evidence could not be retained: ' + (Get-VerifierErrorMessage $_)) }
+        if ($null -ne $capture) {
+            if (-not $capture.FailureKind) { $capture.FailureKind = 'CAPTURE_FAILURE' }
+            $facts = $null
+            try { $facts = Get-VerifierBoundedCaptureFacts $capture $processId $startTicks }
+            catch { [void]$cleanupFailures.Add('Capture facts unavailable: ' + (Get-VerifierErrorMessage $_)) }
+        }
+        $cleanupWatch.Stop()
+        $native.CleanupProven = ($cleanupFailures.Count -eq 0 -and $closureProven -and
+            $native.ReadHandlesClosed -and $native.LeaseClosed -and $logsRetained -and
+            ($null -eq $facts -or ($facts.ReaderTasksTerminal -and $facts.ReadersClosed)))
+        $native.CleanupPhase = if ($native.CleanupProven) { 'COMPLETE' } else { 'FAILED' }
+        $native.OperationMilliseconds = $operationWatch.Elapsed.TotalMilliseconds
+        $native.CleanupMilliseconds = $cleanupWatch.Elapsed.TotalMilliseconds
+        if ($null -ne $facts) {
+            $facts.OperationMilliseconds = $operationWatch.Elapsed.TotalMilliseconds
+            $facts.CleanupMilliseconds = $cleanupWatch.Elapsed.TotalMilliseconds
+            $facts.FailureLogsRetained = $logsRetained
+            $facts.CleanupProven = $native.CleanupProven
+            $facts.PSObject.Properties.Add([Management.Automation.PSNoteProperty]::new('NativeContainment', $native))
+        }
+        $message = Get-VerifierErrorMessage $failure
+        if ($cleanupFailures.Count -ne 0) { $message += '; native cleanup was not proven: ' + [String]::Join('; ', $cleanupFailures.ToArray()) }
+        $exception = [InvalidOperationException]::new('VERIFIER_INFRASTRUCTURE: ' + $message + ". Bounded-process evidence: '$processRoot'.", $failure.Exception)
+        $exception.Data['VerifierFailureKind'] = 'infrastructure'
+        $exception.Data['VerifierCapture'] = $facts
+        $exception.Data['VerifierNativeContainment'] = $native
+        throw $exception
+    } finally {
+        if ($null -ne $capture) { foreach ($lane in $capture.Lanes) { $lane.Bytes.Dispose() } }
+    }
+}
+
 function Invoke-VerifierBoundedProcess($FilePath, $Arguments,
         $TimeoutMilliseconds = 5000, $MaxStdoutBytes = $null,
-        $MaxStderrBytes = $null, $CancellationToken = [Threading.CancellationToken]::None) {
+        $MaxStderrBytes = $null, $CancellationToken = [Threading.CancellationToken]::None,
+        $CreatorJob = $null, $WorkingDirectory = $null) {
+    if ($PSBoundParameters.ContainsKey('CreatorJob') -or $PSBoundParameters.ContainsKey('WorkingDirectory')) {
+        foreach ($required in @('CreatorJob', 'WorkingDirectory', 'MaxStdoutBytes', 'MaxStderrBytes', 'CancellationToken')) {
+            if (-not $PSBoundParameters.ContainsKey($required)) {
+                Throw-VerifierInfrastructure 'Native bounded capture requires explicit job, working directory, both byte limits and cancellation token.'
+            }
+        }
+        return Invoke-VerifierOwnedJobCapture $FilePath $Arguments $TimeoutMilliseconds $MaxStdoutBytes $MaxStderrBytes $CancellationToken $CreatorJob $WorkingDirectory
+    }
     $invocation = Assert-VerifierProcessInvocationBoundary $FilePath $Arguments
     # This is the raw caller boundary.  Validate the timeout before creating
     # its log directory or starting the child; PowerShell must not coerce a

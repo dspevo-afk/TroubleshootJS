@@ -1,3 +1,71 @@
+# Current checkpoint: N61 native coordinator locally accepted
+
+Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
+codex/q100-terminal-only-20261107, parent0d263770ad89dda4014362b1656f5d24583f5a6f,
+no upstream; normal target origin/codex/q100-physical-feasibility. N60impl752598fe/
+receipt0d263770 remotelyverified, Gmail1a1cdffdb4852ad2 once. N61 local gates PASS;
+publication/email PENDING. No unresolved gate is published as success.
+
+R61 OS-temp/tsj-q100-native-coordinator-r1-6nzf2ily SCOPE_R1+SIGNED_EXIT adaptation.
+Existing Invoke-VerifierBoundedProcess opt-inCreatorJob/WorkingDirectory requires
+exact native job, paired explicit caps/token, positive timeout, absolute paths,
+existing directory and empty exclusivejob. Same LaunchCaptured and byte helpers;
+no second launcher/capture loop, PID kill, role-cap default or caller-job disposal.
+Root-original Wait0/currentjobempty/terminalclosedreaders/closedlease are exact
+completion facts. NOT all historical descendant handle waits; finite independent
+known-member observers qualify their fixture only. Dedicated SERIAL host remains
+required; temporary inheritance window cannot be protected by class-only locks.
+Default body/native class/readers/stopper raw-conserved. Module1092245B/418da63a7bc1
+CRLF; fixture8c2d11196B unchanged; three pin-only consumers preserve oldPS60c9 and
+qualifier bodies. Signed native DWORD ->Int32 preserves existing exit semantics,
+recording raw/signed values before disposal. No exit-code259-as-signal shortcut.
+
+Final-source PASS API Smoke2/Suite11; primitivePipe10, Lease3, Job7, Capture30CODE,
+Legacy16, JDKtool3, nearExit32, directStop4, declared pre-resume rollback1 and
+paired unchanged-direct/native literal-return-1 control. Full source/commands/
+clocks/limits in public proof. Nonzero/negative operations are not study success.
+First Smokeeeec FAIL wrongly canonicalized empty observed image for nonexistent
+root; facts correctly N/A, testc93 corrected without invented identity. Preserved
+failure/source and earlier N60 evidence; missing driver phase/stale driver-only
+pin failed BEFORE any gate/process launch and were corrected. Controlled ctorarg0
+observes native122; operationNOTPASS, effectiveCLRcapacity NOTMEASURED/NOTASSUMEDZERO.
+n51 design + n50 exact370 source and418 signed delta source-only; leaves ran no
+tests. Root owns final-source contract/diff review and actual acceptance.
+ExpandedSuiteR1/R2/R3/R4/R6/R7 FAIL retained: missing envelopeLogs, uninitialized
+tree failure evidence masking primary, observer DLL not loaded, observer shape
+mismatch (PS5 diagnostic typedArrayList versus DeserializeObject object[]), typed
+automatic args parser error and setup-count assertion. Corrected exact namespace
+snapshot; missing/type/path/closed/nonempty job guards included. Earlier masked
+primary/observer inner details NOTRECOVERED. Final sentinel/monitor disposals
+require original signal; unproven ownership retained. Final contract101010B/
+3797141e5513; API Smoke2/2.167s +Suite11/8.009s on exact418 source.
+
+Public NATIVE_COORDINATOR_SOURCE_MANIFEST_R1 SHA6d3dbcf4db15ff03db34aff0b67ebde463d9b539e7be59e2b74f80a10098235f
+and PROOF_R1 SHAeb8ee0ec8925991e7ad01e71e3dd95566f91b8204579800baa499915a46f794e. All consumed inputs
+rechecked; query-only resource audit PASS271 known identities/33 original
+outer exits; no historical handle proof repaired. No known new persistent task
+process/listener/link. Private CODE artifacts/logs/failure prefixes retained.
+Main5f05b005(9M6untracked), Ed9747229(reportM), Desktope0c36885(7M89untracked)
+preserved/staged0; only Main currentprefix mirrored, opaque histories conserved.
+Old browser14116/start639294472690745890/port58320, preview34180/start
+639294472514546595/port58264+14children, oldD resources/links/scratch and
+Notepad67116860 untouched. Next source/index audit, normal publication/Gmailonce,
+then explicit invocation-policy/trusted native composition scope.
+
+No prior/oldD/fixed20/heldout/protected DATA/generated DATA factories/whole
+historical builders read. Both Study holds exactthrowonly; original->NULL/OBSERVE
+UNSPENT_GATED. No normalqualifier/harness/Study/OriginalArm/capture/graph/Session/
+receipt/export/genuine. Full30 normalMEDIUM EXCLUDED; HARD/PSYCHOTIC unavailable/
+unrun; protectedUnread UNCERTIFIED; oldnormal20 NOT REREAD; playable100=0; betaHELD.
+CircuitJS truth, seeds/epochs/order/allbudgets90s/640groups/5s/32768PERGROUP/
+copy1048576/chunk4096/source4MiB/fragment64KiB/opJSON8MiB/result1MiB/depth64/visits1m/
+classes10k256MiB/compile-native60s/reader180s/wrapper480s/cleanup120s unchanged.
+Production Java/GWT/visiblePlayer N/A; electrical/population NOTRENEWED;
+CI NOTRUN/self-hosted runner prerequisite. No production native preflight,
+role policy/full tool/Source/JAR/return authority, creator-death or genuine claim.
+
+# Historical checkpoint: N60 publication and N61 preparation
+
 # Current checkpoint: N60 native captured pipes published
 
 Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
@@ -7,7 +75,9 @@ receipt052e0f4d verified remotely; Gmail1a1cdaddd52df842 once. N60 implementatio
 752598fe62dbd470fbd3fbd278b081cb01f63a2b (Capture verifier output through owned native
 leases) normally pushed/exactremoteverified; Gmail1a1cdffdb4852ad2 once.
 Source/index audit16 PASS91b58c692fc077df356337aee0fc13555d62473eb7815800f07c3f1620ef1a1f;
-documentation-only receipt pending. Source-bound gates rechecked unchanged.
+receipt0d263770ad89dda4014362b1656f5d24583f5a6f normallypublished/exactremoteverified; no
+second Gmail. Receipt4 index audit PASS53c5e20fe3c85a4d9d535843cc60c7449e78d97200506ffd8740960daa05d0fe.
+Current HEAD0d263770ad89dda4014362b1656f5d24583f5a6f; source-bound inputs unchanged.
 
 Same native class/LaunchCore adds creator-only LaunchCaptured, explicit stdin/
 stdout/stderr HANDLE_LIST with JOB_LIST and original-handle lease. Parent child-end
@@ -66,8 +136,10 @@ source4MiB/fragment64KiB/opJSON8MiB/result1MiB/depth64/visits1m/classes10k256MiB
 compile-native60s/reader180s/wrapper480s/cleanup120s). Production Java/GWT/visible
 Player N/A; electrical/population NOT RENEWED; CI NOT RUN/self-hosted runner
 prerequisite. Next N61 bounded native coordinator adapter/explicit invocation policy
-implementation NOT STARTED; source-only design notes in private R60
-N61_DESIGN_ONLY_PENDING_N60.md need a new frozen scope on the published dependency.
+implementation NOT STARTED. Preparation opened in OS-temp/tsj-q100-native-coordinator-prep-r1-e3c9bce28c65
+(SCOPE_PREPARATION_R1 + INPUT_REFERENCES_R1; no process/test/new product admission).
+Next freeze the exact adapter boundary/canaries from those notes and implement
+through the current owner. Keep all N60 serial-host/normal/genuine/data limits.
 
 # Historical checkpoint: N59 publication and N60 preparation
 

@@ -583,8 +583,8 @@ job keeps stop authority. Legacy PID-returning launch and recovery semantics sta
 intact. The private direct-process stopper likewise uses its original launch
 object and start identity, accepting a natural-exit race only after a signaled
 handle. Failure cleanup avoids current-PID rediscovery. Durable/adopted process
-termination remains separate. The bounded-process coordinator adapter for this
-native lease remains pending; no creator-death guarantee is added.
+termination remains separate. The opt-in bounded capture coordinator is described below; no creator-death
+guarantee is added.
 
 The same launch core now supports
 [captured stdout/stderr leases](task-evidence/Q100/current-native-host-r1/CAPTURED_PIPE_R1.md).
@@ -600,10 +600,24 @@ closure, terminal readers and job emptiness through the original creator job.
 The finite CODE contract qualifies only serial dedicated hosts. Temporary
 inheritable handles can leak into an unrelated concurrent inheriting launch;
 future coordination must serialize or isolate all relevant creation owners.
-The native bounded-process coordinator, role budgets and full trusted native
-composition remain separate. Contract preflight grants no production admission.
+Native role budgets and full trusted composition remain separate. Primitive
+contract preflight grants no production admission.
 Accepted implementation `752598fe62dbd470fbd3fbd278b081cb01f63a2b` is published on
 origin/codex/q100-physical-feasibility; its finite evidence and limits remain linked above.
+
+The [opt-in native capture coordinator](task-evidence/Q100/current-native-host-r1/NATIVE_COORDINATOR_R1.md)
+extends the existing bounded-process entrypoint with an explicit creator job and
+working directory. Mandatory paired caps/token and an empty dedicated caller job
+select the same native launch and private byte-reader owners. Default direct
+body, native class, readers and stopper remain raw-identical. The caller retains
+job lifetime; failure stops only through its creator handle. Completion proves
+original-root signal, current-job emptiness, terminal closed readers and closed
+lease. It does not attest waits for every historical descendant. Known-member
+original-handle tests qualify finite fixtures only. Native DWORD exit bits are
+reported with the existing signed Int32 exit semantics and snapshotted before
+disposal. Operation/cleanup phases, clocks and bounded failure prefixes remain
+distinct. Serial dedicated-host/exclusive-job assumptions and full normal native
+preflight, role policy, tool/Source/return and genuine gates stay explicit.
 
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before

@@ -1,0 +1,111 @@
+{
+  "status": "FINAL_SOURCE_RECHECKED",
+  "baseHead": "0d263770ad89dda4014362b1656f5d24583f5a6f",
+  "sources": [
+    {
+      "path": "scripts/VerifierIsolation.psm1",
+      "bytes": 1092245,
+      "sha256": "418da63a7bc1e4eb3ad0234bd789a24db2b911b635e6a54468a7bb7087c180a6"
+    },
+    {
+      "path": "scripts/verify-rb100-branch-order-study.ps1",
+      "bytes": 17687,
+      "sha256": "09f1689574e89dbd80ce3d804e32e005c28d192d2d8ab4f4f9b5c7b397f2d2df"
+    },
+    {
+      "path": "tests/contracts/VerifierBoundedProcessContract.ps1",
+      "bytes": 12502,
+      "sha256": "550e829739ee0aea59188c77392e4741c607a5d584af0dd0833b341cda9d2863"
+    },
+    {
+      "path": "tests/contracts/VerifierBoundedProcessFixture.py",
+      "bytes": 2612,
+      "sha256": "95c9017de2ad611f72f60fae3f7b6d87582d9e66da4f0e4033406b8a9952b70a"
+    },
+    {
+      "path": "tests/contracts/VerifierBoundedCaptureContract.ps1",
+      "bytes": 35517,
+      "sha256": "fbf89745bbdb037e6fa67e2ce8d0627a2391dadc7c42504897f136900f64dfd3"
+    },
+    {
+      "path": "tests/contracts/VerifierBoundedCaptureFixture.py",
+      "bytes": 3806,
+      "sha256": "2850f2a0ebf00fc8406b6782f15e6d2d318636c27b55ea5769f413edfeb3de8c"
+    },
+    {
+      "path": "tests/contracts/VerifierContainmentContract.ps1",
+      "bytes": 74406,
+      "sha256": "1a8396a9bd9dbc88ebcb715a332cde43bca4f68f54498a7176287855533af584"
+    },
+    {
+      "path": "tests/contracts/VerifierContainmentFixture.cs",
+      "bytes": 11196,
+      "sha256": "8c2d65eac05a8afd61e4633667ba08decf8931077f93011c55b32312948514c6"
+    },
+    {
+      "path": "tests/contracts/VerifierRetainedStopContract.ps1",
+      "bytes": 19427,
+      "sha256": "ffc3017f4b4a7eff49122ab8ae7cad838e43a38e0ae8dc2e6275402302583285"
+    },
+    {
+      "path": "tests/contracts/VerifierCapturedPipeContract.ps1",
+      "bytes": 116186,
+      "sha256": "454606bb24a05bec9754e2e9bfc26d0792b0a18ac3c29360275ccbb737589cea"
+    },
+    {
+      "path": "tests/contracts/VerifierNativeCoordinatorContract.ps1",
+      "bytes": 101010,
+      "sha256": "3797141e55139ea0e4f31bf47f114586c125f451d2dee7302c62bd44342522c2"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/normal-prior-caller-r1/qualify_prior.py",
+      "bytes": 74051,
+      "sha256": "9ed88a6a528de780fe65ac3fb02f5c87d71caf3225c3294668647c0c71d35c95"
+    }
+  ],
+  "tools": [
+    {
+      "role": "powershell",
+      "image": "powershell.exe",
+      "bytes": 495616,
+      "sha256": "d8f182560210d43baaf767d482ad1dc1207372522e91413b9d5e515a875e552d"
+    },
+    {
+      "role": "python",
+      "image": "python3.13.exe",
+      "bytes": 171744,
+      "sha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec"
+    },
+    {
+      "role": "JDK_TEST_ONLY",
+      "image": "java.exe",
+      "bytes": 304768,
+      "sha256": "e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce",
+      "independentJdkImageWitness": false
+    },
+    {
+      "role": "JDK_TEST_ONLY",
+      "image": "javac.exe",
+      "bytes": 24192,
+      "sha256": "61fa6463ee5b59004719b9833a16b148740cfa9f2d1f5a95ca598cc90be04c64",
+      "independentJdkImageWitness": false
+    }
+  ],
+  "sourcePolicySha256": "fcc5de566ca404d742fe369297fa1064a2f0d44d2b4bfb91f8d865dfbd335063",
+  "pinMigrationSha256": "89b80ff277321fc78a86a5eebd4aa2c7d55c67c1521d2500d985ad623bd02f31",
+  "reviewSha256": "f7f2c608f273473e87cd233802d60b40c288a0086ea2dd8c8a89e67a3c87c755",
+  "scopeSha256": "c7e8d8f210fc5e5a0b540dffa5d8bc87216655df430e168475814a2c2513ca98",
+  "scopeAdaptationSha256": "d1b532d8b3da80a6b94939d432708bb3d13d5f1856fea08a76335169ee7624be",
+  "drivers": {
+    "run_native.py": "e491a81a5c34297faa22659a8956025e9329aacfe75e6542569ea1587612c2b0",
+    "run_captured.py": "1ce7e86b4089929dbe26aa62a3d16c3c751150a088ffa863331fd4f7ed0ca8a4",
+    "run_baseline.py": "5819e4150b3ace4a706cbc5b2ef7ad3d690a20ec3fa3f68a7782989d43cfd04a",
+    "run_regression.py": "0141ec1a0b9b143874380ee1400d6f630cdc9011dfe6c26eb2d5f2ea1b8b1c7e",
+    "run_direct_stop.py": "f917ddac04eb067d213fda88a99fde7f5aaee44113c8ec779bf6fedd6d8abded",
+    "run_control_r4.py": "68f5317c4ec794a172e22befce8b12772cd972c29bdf879558d7e475352ebdb3",
+    "run_signed.py": "f7685c78aec3ee75557882bcdbb88b7fa7fe4310f989eede28ca7bea417f1270"
+  },
+  "execution": "selected SystemPS5.1 d8; child-local builtin modules; selected Python -I -B optimize0",
+  "oldPowerShell60c9Pin": "UNCHANGED_NORMAL_QUALIFIER_HARNESS_NOT_RUN",
+  "toolFrameworkEnvironmentClosure": "NOT_ATTESTED"
+}

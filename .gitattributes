@@ -36,3 +36,4 @@ tests/contracts/VerifierContainmentFixture.cs -text whitespace=cr-at-eol
 tests/contracts/VerifierContainmentContract.ps1 -text whitespace=cr-at-eol
 tests/contracts/VerifierRetainedStopContract.ps1 -text whitespace=cr-at-eol
 tests/contracts/VerifierCapturedPipeContract.ps1 -text whitespace=cr-at-eol
+tests/contracts/VerifierNativeCoordinatorContract.ps1 -text whitespace=cr-at-eol
