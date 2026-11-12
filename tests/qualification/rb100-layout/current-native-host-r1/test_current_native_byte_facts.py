@@ -215,6 +215,137 @@ class ByteFactsTests(unittest.TestCase):
                 nodeAbsent=not alias.exists()))
         self.assertFalse(alias.exists())
 
+    def test_identity_tokens_preserve_order_facts_and_recheck(self):
+        result = self.observe(include_identity_tokens=True)
+        self.assertEqual({"sourceFacts", "toolFacts", "sourceTokens", "toolTokens"},
+                         set(result))
+        tool_names = ("nativeJava", "nativeJavac")
+        self.assertEqual(SOURCE_NAMES, tuple(result["sourceFacts"]))
+        self.assertEqual(SOURCE_NAMES, tuple(result["sourceTokens"]))
+        self.assertEqual(tool_names, tuple(result["toolFacts"]))
+        self.assertEqual(tool_names, tuple(result["toolTokens"]))
+        for facts_key, tokens_key, names in (
+                ("sourceFacts", "sourceTokens", SOURCE_NAMES),
+                ("toolFacts", "toolTokens", tool_names)):
+            self.assertEqual(set(names), set(result[facts_key]))
+            self.assertEqual(set(names), set(result[tokens_key]))
+            for name in names:
+                fact = result[facts_key][name]
+                token = result[tokens_key][name]
+                self.assertIs(type(token), tuple)
+                self.assertEqual(3, len(token))
+                self.assertEqual((fact["bytes"], fact["sha256"]), token[:2])
+                self.assertIs(type(token[2]), tuple)
+                self.assertEqual(4, len(token[2]))
+                self.assertEqual(token[2][2], token[2][3])
+                self.assertEqual(os.path.normcase(fact["path"]),
+                                 os.path.normcase(token[2][0]))
+        api = self.observer._reader_api(self.reader)
+        self.assertIsNone(self.observer._recheck_fact_map(
+            api, self.source_specs, result["sourceTokens"], category="SOURCE",
+            maximum_limit=self.byteFacts.MAX_SOURCE_BYTES, names=SOURCE_NAMES))
+        self.assertIsNone(self.observer._recheck_fact_map(
+            api, self.tool_specs, result["toolTokens"], category="TOOL",
+            maximum_limit=self.byteFacts.MAX_TOOL_BYTES, names=tool_names))
+        default_result = self.observe()
+        false_result = self.observe(include_identity_tokens=False)
+        self.assertEqual({"sourceFacts", "toolFacts"}, set(default_result))
+        self.assertEqual({"sourceFacts", "toolFacts"}, set(false_result))
+
+    def test_nonbool_identity_token_flag_rejected_before_reads(self):
+        for invalid in (None, 0, 1, "true", [], {}):
+            reader_calls = []
+
+            def profile(frame, event, arg):
+                if (event == "call" and frame.f_code.co_name == "_read_file_once"
+                        and frame.f_globals is self.reader.__dict__):
+                    reader_calls.append(True)
+
+            sys.setprofile(profile)
+            try:
+                self.reject("IDENTITY_TOKENS_FLAG", include_identity_tokens=invalid)
+            finally:
+                sys.setprofile(None)
+            self.assertEqual([], reader_calls)
+
+    def test_same_content_source_replacement_uses_original_identity(self):
+        result = self.observe(include_identity_tokens=True)
+        source_token = result["sourceTokens"]["study"]
+        source_fact = result["sourceFacts"]["study"]
+        path = Path(self.source_specs["study"]["path"])
+        original_bytes = path.read_bytes()
+        original_sha = BASE.digest(original_bytes)
+        original_identity = path.stat().st_ino
+        preserved = self.scratch / "preserved-study.java"
+        path.rename(preserved)
+        preserved_identity = preserved.stat().st_ino
+        self.assertEqual(original_identity, preserved_identity)
+        with path.open("xb") as output:
+            output.write(original_bytes)
+        replacement_bytes = path.read_bytes()
+        replacement_identity = path.stat().st_ino
+        self.assertNotEqual(preserved_identity, replacement_identity)
+        self.assertEqual(original_bytes, preserved.read_bytes())
+        self.assertEqual(original_sha, BASE.digest(preserved.read_bytes()))
+        self.assertEqual(original_sha, BASE.digest(replacement_bytes))
+        self.assertEqual(source_fact["bytes"], len(replacement_bytes))
+        self.assertEqual(source_fact["sha256"], BASE.digest(replacement_bytes))
+        self.assertEqual((len(replacement_bytes), BASE.digest(replacement_bytes)),
+                         source_token[:2])
+        api = self.observer._reader_api(self.reader)
+        with self.assertRaises(self.observer.CallerObservationError) as caught:
+            self.observer._recheck_fact_map(
+                api, self.source_specs, result["sourceTokens"], category="SOURCE",
+                maximum_limit=self.byteFacts.MAX_SOURCE_BYTES, names=SOURCE_NAMES)
+        self.assertEqual("SOURCE_CHANGED", caught.exception.code)
+
+    def test_same_content_owned_java_replacement_uses_original_identity(self):
+        source_snapshot = {name: dict(spec) for name, spec in self.source_specs.items()}
+        donor = dict(self.tool_specs["nativeJava"])
+        java_bytes, java_sha, _donor_token = self.reader._read_file_once(
+            donor["path"], donor["maxBytes"], donor["expectedBytes"],
+            donor["sha256"], "CURRENT_NATIVE_JAVA_COPY")
+        self.assertEqual(304768, len(java_bytes))
+        self.assertEqual(donor["expectedBytes"], len(java_bytes))
+        self.assertEqual(donor["sha256"], java_sha)
+        owned_dir = self.scratch / "owned-selected-java"
+        owned_dir.mkdir()
+        java_path = owned_dir / "java.exe"
+        with java_path.open("xb") as output:
+            output.write(java_bytes)
+        tool_specs = {name: dict(spec) for name, spec in self.tool_specs.items()}
+        tool_specs["nativeJava"]["path"] = str(java_path)
+        result = self.observe(include_identity_tokens=True, tool_specs=tool_specs)
+        java_fact = result["toolFacts"]["nativeJava"]
+        java_token = result["toolTokens"]["nativeJava"]
+        self.assertEqual(str(java_path), java_fact["path"])
+        self.assertEqual((len(java_bytes), java_sha), java_token[:2])
+        old_identity = java_path.stat().st_ino
+        preserved = owned_dir / "preserved-java.exe"
+        java_path.rename(preserved)
+        preserved_identity = preserved.stat().st_ino
+        self.assertEqual(old_identity, preserved_identity)
+        with java_path.open("xb") as output:
+            output.write(java_bytes)
+        replacement_bytes = java_path.read_bytes()
+        replacement_identity = java_path.stat().st_ino
+        self.assertNotEqual(preserved_identity, replacement_identity)
+        self.assertEqual(java_bytes, preserved.read_bytes())
+        self.assertEqual(java_sha, BASE.digest(preserved.read_bytes()))
+        self.assertEqual(java_sha, BASE.digest(replacement_bytes))
+        self.assertEqual(java_fact["bytes"], len(replacement_bytes))
+        self.assertEqual(java_fact["sha256"], BASE.digest(replacement_bytes))
+        self.assertEqual((len(replacement_bytes), BASE.digest(replacement_bytes)),
+                         java_token[:2])
+        self.assertEqual(source_snapshot, self.source_specs)
+        api = self.observer._reader_api(self.reader)
+        with self.assertRaises(self.observer.CallerObservationError) as caught:
+            self.observer._recheck_fact_map(
+                api, tool_specs, result["toolTokens"], category="TOOL",
+                maximum_limit=self.byteFacts.MAX_TOOL_BYTES,
+                names=("nativeJava", "nativeJavac"))
+        self.assertEqual("TOOL_CHANGED", caught.exception.code)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

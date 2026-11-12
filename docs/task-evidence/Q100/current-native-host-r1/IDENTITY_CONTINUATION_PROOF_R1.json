@@ -1,0 +1,163 @@
+{
+  "status": "PASS_FINITE_WINDOWS_IDENTITY_CONTINUATION",
+  "sourceManifestSha256": "4a6ce723be7e2c4ba9f89e43663ca364b27b75219c930559bfa063315413e55b",
+  "gates": [
+    {
+      "phase": "smoke-r2",
+      "status": "PASS",
+      "methods": 2,
+      "wholeOuterOperationNanos": 419556100,
+      "outerCleanup": "UNMEASURED_SEPARATELY",
+      "originalOuterExitObserved": true,
+      "privateSourceFreezeSha256": "d1dbbcce4afe5c86566cc62e7f5221f1bb3c63ee74b214a65b00cb62acba1336",
+      "privateOuterReceiptSha256": "77a4ed2c15aff0c2619fed1e01aae1f6c08ed90e47bee7726bcb2d38871ae5d4",
+      "methodNames": [],
+      "junctionCleanups": []
+    },
+    {
+      "phase": "suite-r1",
+      "status": "PASS",
+      "methods": 20,
+      "wholeOuterOperationNanos": 2050289300,
+      "outerCleanup": "UNMEASURED_SEPARATELY",
+      "originalOuterExitObserved": true,
+      "privateSourceFreezeSha256": "b5fd63c3d80cd62e103e248a975b95f656ff82ad50cc8c01ddca74e1ba3d9184",
+      "privateOuterReceiptSha256": "8a1b041f1c2166246276c1a00255303c122706af9783a2be77397b0970bd121f",
+      "methodNames": [
+        "test_00_actual_current_six_sources_two_tools",
+        "test_01_wrong_actual_java_hash_rejected",
+        "test_all_limits_preflight_before_bad_tool_read",
+        "test_exact_producer_one_mib",
+        "test_existing_directory_is_not_a_source",
+        "test_identity_tokens_preserve_order_facts_and_recheck",
+        "test_missing_native_tool_rejected",
+        "test_missing_or_extra_source_rejected",
+        "test_nonbool_identity_token_flag_rejected_before_reads",
+        "test_prior_five_tool_roles_rejected",
+        "test_real_source_junction_rejected",
+        "test_same_content_owned_java_replacement_uses_original_identity",
+        "test_same_content_source_replacement_between_passes_rejected",
+        "test_same_content_source_replacement_uses_original_identity",
+        "test_spec_rows_are_snapshotted_before_reads",
+        "test_spec_shape_bool_and_hash_rejected",
+        "test_tool_limit_preflight",
+        "test_wrong_current_core_hash_rejected",
+        "test_wrong_source_basename_rejected",
+        "test_wrong_tool_basename_rejected"
+      ],
+      "junctionCleanups": [
+        {
+          "kind": "JUNCTION_NODE_ONLY",
+          "tag": "A0000003",
+          "exactOwnedTargetRevalidated": true,
+          "cleanupNanos": 98700,
+          "nodeAbsent": true
+        }
+      ]
+    }
+  ],
+  "old16MethodsUnchanged": true,
+  "newMethods": [
+    "test_identity_tokens_preserve_order_facts_and_recheck",
+    "test_nonbool_identity_token_flag_rejected_before_reads",
+    "test_same_content_owned_java_replacement_uses_original_identity",
+    "test_same_content_source_replacement_uses_original_identity"
+  ],
+  "sourceConservation": {
+    "adapterOutsideSignatureDocGuardReturn": "RAW_EXACT",
+    "allPriorTestSourceBytes": "EXACT_SINGLE_INSERTION",
+    "oldTestMethodAsts": "EXACT"
+  },
+  "earlierFailure": {
+    "phase": "smoke-r1",
+    "status": "FAIL_NOT_PASS",
+    "exitCode": 1,
+    "stage": "class declaration before fixture setup or tests",
+    "cause": "root harness used NativeFactsTests instead of existing ByteFactsTests",
+    "originalOuterExitObserved": true,
+    "sourceRetainedSha256": "9570512aff1d821f36178eac869ba666e86112a6cd23cf27ea813235428c5035"
+  },
+  "preRunCorrections": [
+    "worker four-test draft used undefined digest; root uses existing authenticated BASE.digest, assertions unchanged",
+    "root correction utility initially rejected its own broad digest substring count before any edit/child; corrected to standalone name matching"
+  ],
+  "sourceSearchFootprint": {
+    "status": "RECORDED_SCOPE_OVERRUN_NOT_RUNTIME_OR_DATA_QUALIFICATION",
+    "agent": "n51_invocations_impl",
+    "reportedCommandTemplate": "rg -n -g '*.py' 'def _read_fact_map|def _recheck_fact_map|def _read_file_once|_token_identity' <F>/scripts <F>/tests/qualification",
+    "filenameFilter": "*.py",
+    "folderExclusions": false,
+    "wholeSourcePrinted": false,
+    "matchedPythonCodeAreas": [
+      "current-native-host-r1",
+      "normal-prior-caller-r1",
+      "fixed-role-reader-r1",
+      "current-context-kernel-r1"
+    ],
+    "correction": "Stop broad searches; all later reads confined to the named current files and exact observer helper slices.",
+    "actualDataArtifactOrFactoryExecuted": false,
+    "normalQualifierOperation": "NOT_RUN",
+    "protectedUnread": "UNCERTIFIED_NOT_RESTORED",
+    "claimLimit": "Do not claim that all historical Python builder/consumer source was unsearched. No protected/prior/heldout DATA operation or generated Java DATA factory read was authorized or reported."
+  },
+  "review": {
+    "root": "integrated source and actual gates, real unchanged-body oracles, input/index/resource audits",
+    "n51": "four new tests only; no execution",
+    "n52": "bounded named adapter/test diff source-only no blocker; no execution"
+  },
+  "limits": {
+    "identityTokens": "IN_PROCESS_OBSERVATIONS_NOT_UNFORGEABLE_OR_PERSISTED_AUTHORITY",
+    "exclusiveCallerLifetime": "REQUIRED",
+    "atomicCheckToLaunch": "NOT_PROVEN",
+    "normalRolePolicy": "UNQUALIFIED",
+    "sixSourceNativeCompile": "NOT_RUN_IN_N63",
+    "allExistingBudgets": "UNCHANGED"
+  },
+  "knownNewPersistentActors": 0,
+  "ordinaryCodeFixtures": "RETAINED",
+  "junctionCleanup": "REAL_NODE_ONLY_REVALIDATED_ABSENT",
+  "unchangedN62Inputs": {
+    "status": "RECHECKED_NOT_RERUN_NOT_RENEWED",
+    "declaredInputs": 15,
+    "implementation": "350da0cce4efbc2f684f61755ff0e82f863fc59e",
+    "receipt": "0899ec12fc1a5add99707c640dd4c0d202f46c6b"
+  },
+  "product": {
+    "genuine": "UNSPENT_GATED",
+    "normalStudyHolds": "UNCHANGED",
+    "full30NormalMedium": "EXCLUDED",
+    "hardPsychotic": "UNAVAILABLE_UNRUN",
+    "protectedUnread": "UNCERTIFIED",
+    "oldnormal20": "NOT_REREAD",
+    "playable100": 0,
+    "beta": "HELD",
+    "productionJavaGwtPlayer": "NOT_APPLICABLE",
+    "electricalPopulation": "NOT_RENEWED",
+    "ci": "NOT_RUN_SELF_HOSTED_RUNNER_PREREQUISITE"
+  },
+  "resourceAudit": {
+    "status": "PASS",
+    "queryOnly": true,
+    "knownOuterIdentities": 3,
+    "historicalHandleProof": "NOT_REPAIRED_BY_QUERY",
+    "knownNewPersistentActors": 0,
+    "privateReceiptSha256": "bc3dfdd38eb76e16c85edae1056ed88719d1f0162a40034aa3461da63cea0908"
+  },
+  "auditPreparationFailures": {
+    "status": "PRESERVED_NOT_PASS",
+    "failures": [
+      {
+        "operation": "root test-name correction utility",
+        "cause": "initial raw substring count included hexdigest and refused before editing; corrected standalone name match uses existing BASE.digest",
+        "caseGateRan": false
+      },
+      {
+        "operation": "first source-conservation reverse transform",
+        "cause": "reverse documentation splice retained one extra blank line and failed exact byte equality; corrected literal splice to restore exact original bytes",
+        "caseGatesRerun": false
+      }
+    ],
+    "assertionsWeakened": false,
+    "productionBehaviorChangedByCorrections": false
+  }
+}

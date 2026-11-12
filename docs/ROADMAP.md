@@ -2206,6 +2206,18 @@ Implementation `350da0cce4efbc2f684f61755ff0e82f863fc59e` (Add native JDK compil
 normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
 Completion Gmail `1a1ce6aee6bc5b96` sent once; this receipt sends no second email.
 
+The [native Source/tool identity continuation prerequisite](task-evidence/Q100/current-native-host-r1/IDENTITY_CONTINUATION_R1.md)
+is locally accepted for the finite Windows CODE/NO_DATA scope. Opt-in original
+identity maps let the existing observer reject a later same-byte Source or tool
+replacement; the default facts shape stays unchanged. Early Smoke2/final Suite20,
+all16 unchanged methods and four new real file-identity controls pass; no budgets,
+reader or native process owners change. The initial harness failure and a broad
+Python CODE search footprint remain recorded. No normal/genuine authority or
+six-Source compile closure is granted. Playable100=0; beta HELD. Next N64 freezes
+actual trusted CODE compile composition and remaining explicit policy/provenance
+requirements. Publication pending.
+
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

@@ -71,13 +71,20 @@ def _snapshot_specs(specs, names, label):
 
 
 def observe_native_code_tools(*, reader, io_owner, observer,
-                              invocation_owner, source_specs, tool_specs):
+                              invocation_owner, source_specs, tool_specs,
+                              include_identity_tokens=False):
     """Read and recheck byte facts for exactly the current six sources and two tools.
 
     Modules and spec authority must already be authenticated by the caller.
     Binding checks here preserve helper ownership; they do not establish source
     provenance or an atomic snapshot across the individual reads.
+
+    Opt-in token maps retain the observer's original immutable identity triples
+    for a trusted caller's later _recheck_fact_map call. They contain no bodies
+    or live handles and are not persisted authority or a launch capability.
     """
+    if type(include_identity_tokens) is not bool:
+        _reject("IDENTITY_TOKENS_FLAG")
     io_owner._assert_module_functions(
         io_owner, ("_assert_module_functions",), "native-byte-facts-owner")
     io_owner._assert_module_functions(
@@ -127,4 +134,8 @@ def observe_native_code_tools(*, reader, io_owner, observer,
         maximum_limit=MAX_SOURCE_BYTES,
         names=tuple(name for name, _basename in source_roles))
 
-    return {"toolFacts": tool_facts, "sourceFacts": source_facts}
+    result = {"toolFacts": tool_facts, "sourceFacts": source_facts}
+    if include_identity_tokens:
+        result["sourceTokens"] = dict(source_tokens)
+        result["toolTokens"] = dict(tool_tokens)
+    return result

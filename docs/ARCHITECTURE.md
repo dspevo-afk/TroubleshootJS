@@ -534,6 +534,11 @@ specs through existing neutral reader/observer helpers. It snapshots and validat
 specs before reads, then identity-rechecks byte facts. The prior-specific wrapper
 is unchanged. Module/spec authentication, class/launch and coordinator authority
 remain external; the observer returns no bodies or normal-ready status.
+Its [identity continuation seam](task-evidence/Q100/current-native-host-r1/IDENTITY_CONTINUATION_R1.md)
+optionally returns the original observer Source/tool identity-token maps for the
+trusted caller's later existing recheck. Default facts remain unchanged. These
+immutable projected tuples retain no bodies/handles and grant no persisted or
+launch authority; caller authentication and exclusive lifetime remain required.
 
 The [fixed CODE class inventory](task-evidence/Q100/current-native-host-r1/CLASS_INVENTORY_R3.md)
 owns declared141/2396 fresh/inherited closure policy for the current flat client

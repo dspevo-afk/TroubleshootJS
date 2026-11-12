@@ -1,0 +1,114 @@
+{
+  "status": "FINAL_SOURCE_RECHECKED",
+  "parent": "0899ec12fc1a5add99707c640dd4c0d202f46c6b",
+  "sources": [
+    {
+      "path": "tests/qualification/rb100-layout/normal-prior-caller-r1/canary_caller_output.py",
+      "bytes": 20725,
+      "sha256": "d40bbcd6ee9874c8fed20643fad9377468022661a02b01600ecf1fd3d0ef838e"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/normal-prior-caller-r1/qualify_prior.py",
+      "bytes": 74051,
+      "sha256": "9ed88a6a528de780fe65ac3fb02f5c87d71caf3225c3294668647c0c71d35c95"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/fixed-role-reader-r1/fixed_role_reader.py",
+      "bytes": 23241,
+      "sha256": "863a258cbab888cf112b9e927e16a099436632e9a1d43eefe0b70690c30543d8"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-native-host-r1/current_native_staging.py",
+      "bytes": 9596,
+      "sha256": "ff314048abca9361ffc62ef3180c54da3649e818a8ce584a9c120cd59639e370"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-native-host-r1/test_current_native_staging.py",
+      "bytes": 16053,
+      "sha256": "e7ec3b5c4ff2e36ae2bf31e8f9c06bd2820d749d6c8ca071dbc96435cbe0f694"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/static-factory-bridge-r1/CohortTerminalTelemetryInputV2.NO_DATA.java.in",
+      "bytes": 862,
+      "sha256": "14182207c6126d8d0ec936ae4985e2fb57343e10d4c1d32024ac4b9d46d291b3"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/normal-prior-caller-r1/observe_caller_facts.py",
+      "bytes": 23760,
+      "sha256": "4786259585a13819350add727bb2bfbca9f6890db208fbe8f4f60959d8c94f8c"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-native-host-r1/current_native_invocation.py",
+      "bytes": 7715,
+      "sha256": "04c82ed38bb395079993bcca1b9f4cb2e7d0f1e585993e8f735c257b84d8f75d"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-native-host-r1/current_native_byte_facts.py",
+      "bytes": 5282,
+      "sha256": "4ff32822caaacabc586857a0a811f3232167233415ba3fb107441112eaf0e0f2"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-native-source-r1/CohortTerminalTelemetryStudy.java",
+      "bytes": 239938,
+      "sha256": "755ac9ff94478155c09298c8785df753da852483edd2888547977c6202969cbd"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-native-source-r1/CurrentAssemblyMetadata.java",
+      "bytes": 16559,
+      "sha256": "784296ac06e2a9c7eaeb04d8c76027360861caea960d1fcb281aa61179356895"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-native-source-r1/CurrentV2CanonicalCodec.java",
+      "bytes": 43095,
+      "sha256": "92cd938fc086f7f5b71ac8c9003921de4f7ac908da71b84c988658f9d8a8123a"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/native-v2-input-setup-r1/CurrentV2InputSetup.java",
+      "bytes": 24397,
+      "sha256": "f1f2308ac9e33ccee4465ff6f3d1f6d0fd70de25cc0d8a00d9a3312cdd5f4a74"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-result-projections-r1/CurrentResultProjections.java",
+      "bytes": 10055,
+      "sha256": "c0398d317419931b7b3b749d3f900ef1a7b27d9c630473412a7bf47595fccd28"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-native-host-r1/test_current_native_byte_facts.py",
+      "bytes": 17884,
+      "sha256": "686fa49da3eb1dbad95774ab1d8b10de722175bab816a7eb2259f9f23a873378"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/current-native-host-r1/BYTE_FACTS_CONTRACT_R1.md",
+      "bytes": 4175,
+      "sha256": "4a0e8bb965105d2a76e3765f58ef36d98728d59f94046947569011db71bdc8e5"
+    }
+  ],
+  "selectedPython": {
+    "bytes": 171744,
+    "sha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec",
+    "flags": [
+      "-I",
+      "-B"
+    ],
+    "optimize": 0
+  },
+  "selectedTools": [
+    {
+      "role": "nativeJava",
+      "bytes": 304768,
+      "sha256": "e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce"
+    },
+    {
+      "role": "nativeJavac",
+      "bytes": 24192,
+      "sha256": "61fa6463ee5b59004719b9833a16b148740cfa9f2d1f5a95ca598cc90be04c64"
+    }
+  ],
+  "scopeSha256": "b28f4e287c392377656f8b834941616aed995b82ab9479aa380402b41e2cbfd1",
+  "codeMetadataChain": {
+    "publicClassProofSha256": "5de64991fd7f126a85c82af0e20251c7ce1b1e4e756ad2ea3b94dd6178683dc5",
+    "gateSha256": "5cd6a61f8e0b70924f7cb492b29ea10eafa909c4d7a6972057c9f77556b156c3",
+    "sourceFreezeSha256": "e3f740e43bf21597ac050a796d1b13804a525a1fe7b8c998646e78e50414089f",
+    "configSha256": "5bb9fd44e137a4d312261fdad7ebfb21982e9fe686de61b328427b7eda31460f"
+  }
+}

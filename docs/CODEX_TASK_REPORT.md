@@ -1,3 +1,67 @@
+# Current checkpoint: N63 identity continuation accepted locally
+
+Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
+codex/q100-terminal-only-20261107; parent/currentHEAD0899ec12fc1a5add99707c640dd4c0d202f46c6b,
+no upstream, normal target origin/codex/q100-physical-feasibility. N62impl350da0cc/
+receipt0899ec12 remotely verified, Gmail1a1ce6aee6bc5b96 once. N63 implementation/
+publication/email pending. R63 OS-temp/tsj-q100-native-identity-continuation-r1-wxdjj4ok, frozen SCOPE_R1/BASELINE_R1.
+
+Existing native byte-facts owner optional strictboolinclude_identity_tokens=False;
+default exactsourceFacts/toolFacts unchanged. True exposes freshsourceTokens/
+toolTokens maps of original observer bytes/SHA/immutable projectedidentity tuples
+for existing later_recheck_fact_map. No new reader/rechecker/body/livehandle/
+authoritytype/ledger. Caller module/specauth/exclusivelifetime stay external;
+not unforgeable/persistedauthority or atomiccheck-to-launch guarantee.
+Adapter5282B/4ff32822caaacabc586857a0a811f3232167233415ba3fb107441112eaf0e0f2; tests17884B/686fa49da3eb1dbad95774ab1d8b10de722175bab816a7eb2259f9f23a873378.
+Outside owned signature/doc/flag/return raw-conserved; all oldtestbytes+16methods
+exact; four new methods. Final actual WindowsPythonad169-I-B optimize0 SmokeR2
+PASS2/0.420s +SuiteR1 PASS20/2.050s; two streamsfixedroles plus true laterchecks,
+strictflagbeforeIO and same-byte Source/copiedjavaexe replacement rejects against
+retained original identity. Renamedoriginal retained/equalSHA/distinctrealfileIDs.
+Donor tools untouched; noJava/compiler/nativeStudyoperation. Realjunction target/
+tagrevalidated/node-onlycleanup98700ns/absent. Three originalouterexits observed;
+query-onlyresourceauditPASS3, no knownnewpersistentactors. CODE/NO_DATA retained.
+
+Initial SmokeR1 FAIL/exit1 rootwrongclassNativeFactsTests, beforefixture/tests;
+fixedexistingByteFactsTests, oldharness/source/receiptretained. Root corrected
+undefineddraftdigest to authenticatedBASE.digest beforeSuite; preparation count/
+reverse-splice guards firstrefused and corrected without weakening checks or
+rerunning unchangedgates. N51 fourtestsourceonly; n52 namedseam+tests sourceonly
+no blocker; root actualtests/integrationacceptance. Leaf ran broad *.py helper
+search under scripts/tests/qualification beyondassignedslices; fullfootprint
+recorded and laterreads confined. No restored protectedUnread claim, no normal
+qualifieroperation. Do not claim allhistorical Python builders were unsearched.
+
+Public manifestSHA4a6ce723be7e2c4ba9f89e43663ca364b27b75219c930559bfa063315413e55b; proofSHA1e50fd058eefd4ee74c3de02f19f6ae6effdb0d3828f38ed4f0e135448361a95. All16 declared currentCODE
+inputs+selectedtools/configs rechecked. Existing CLASS_PROOF_R3->sourcefreeze->
+N55CODEconfig authenticated for independent141/2396 metadata; first guessed
+manifestfilename wrong, not missingdirectory/runtimeblocker. Larger sixSource
+nativecompile/closedclass composition NOTRUN inN63; identityseam firstrequired.
+N62 declared15 inputs unchanged/rechecked; finite evidence retained, NOTRERUN/
+NOTRENEWED. No native rolepolicy inferred from test4096B/JSONlimits.
+
+Main5f05b005(9M6untracked), Ed9747229(reportM), Desktope0c36885(7M89untracked)
+preserved/staged0; onlyMain currentprefix mirrored, opaquehistories conserved.
+Old browser14116/start639294472690745890/port58320, preview34180/start
+639294472514546595/port58264+14children, oldD resources/links/scratch and
+Notepad67116860 untouched. Next unstartedN64: freeze trusted currentCODE compile
+composition with existing source/tool/class/invocation/native owners and explicit
+policy/provenance/verified-return requirements; no normal/genuine activation.
+
+Full30 normalMEDIUM EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; protectedUnread
+UNCERTIFIED; oldnormal20NOTREREAD; bothStudyholds unchanged; original->NULL/OBSERVE
+UNSPENT_GATED; playable100=0; betaHELD. No protected/prior/heldoutDATA operation,
+generatedJavaDATAfactory/nativequalifier/harness/Study/OriginalArm/capture/graph/
+Session/receipt/export/genuine. CircuitJS truth/exactproductseeds/epochs/order and
+budgets90s/640groups/5s/32768PERGROUP/copy1048576/chunk4096/source4MiB/fragment64KiB/
+opJSON8MiB/result1MiB/depth64/visits1m/classes10k256MiB/compile-native60s/reader180s/
+wrapper480s/cleanup120s unchanged. Pythonlab outer180s only; actualfilescopeunchanged.
+ProductionJava/GWT/visiblePlayerN/A; electrical/populationNOTRENEWED; CINOTRUN/
+self-hosted runner prerequisite. Rolepolicy/fullJDK/tool/classpath/verifiedreturn/
+creatorDeath/concurrency/fullsemanticlifecycle remainunqualified.
+
+# Historical checkpoint: N62 publication and N63 preparation
+
 # Current checkpoint: N62 finite native tool-return contract published
 
 Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
@@ -8,7 +72,9 @@ Gmail1a1ce458d4dd776d once. N62 implementation
 350da0cce4efbc2f684f61755ff0e82f863fc59e (Add native JDK compile and return contract)
 normally pushed/exactremote verified, Gmail1a1ce6aee6bc5b96 once. Index9 PASS
 313163b99c53dc1b9ad975c2367e871a1d0491821a105a717b7f5f39de34fac4.
-Current HEAD350da0cce4efbc2f684f61755ff0e82f863fc59e; documentation-only receipt pending.
+Current HEAD0899ec12fc1a5add99707c640dd4c0d202f46c6b; documentation-only receipt normallypublished/
+exactremote verified. Receipt4 index PASS
+898d25c8a3d4c6f4f26795e1f46a38114cb9ef80e8deba7410ff6ec08e7221e6.
 Source-bound inputs rechecked unchanged; no second completion email.
 
 R62 OS-temp/tsj-q100-native-tool-return-r1-f5ca1f3e; frozen SCOPE_R1, BASELINE_R1 and owned_call494d wrapper.
@@ -59,6 +125,8 @@ Old browser14116/start639294472690745890/port58320, preview34180/start
 Notepad67116860 untouched. Next unstarted N63: explicit native role policy and
 trusted six-Source/tool/classpath/verified-return composition; freeze bounded
 current CODE scope before editing, no inferred role caps from these finite tests.
+Preparation open at OS-temp/tsj-q100-native-role-composition-prep-r1-0ei167l6
+(SCOPE_PREPARATION_R1/INPUT_REFERENCES_R1), implementation NOTSTARTED.
 
 No protected/prior/oldD/heldout DATA/generated DATA factories/oldnormal20 read or
 run. Both normal Study holds unmodified; original->NULL/OBSERVE UNSPENT_GATED.
