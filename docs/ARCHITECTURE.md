@@ -657,6 +657,16 @@ Implementation `e7dcb264a36e09cc5ffa16e30ee31664861c8e6c` (Compose current CODE 
 normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
 Completion Gmail `1a1cede273b4173f` sent once; this receipt sends no second email.
 
+The [held current CODE entrypoint lab](task-evidence/Q100/current-native-host-r1/CURRENT_CODE_HELD_MAIN_R1.md)
+adds a test-only HeldMain role to the existing PS compile bridge. The default
+Compile role retains its 60s recipe; HeldMain pins the selected Java and checks
+natural exit1/exact hold trace under test10s/4096B streams through the same native
+owner. The Python lab composes existing Source identity/class/JAR/invocation
+helpers and checks full fixed class content closure and empty output around the
+expected refusal. Both Study throws remain unchanged. Synthetic digest slots and
+argv echoes do not establish Java parsing, prior authority or normal admission;
+normal role policy, real upstream return and full lifecycle remain separate.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published

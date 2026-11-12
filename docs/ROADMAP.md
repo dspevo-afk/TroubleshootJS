@@ -2236,6 +2236,20 @@ Completion Gmail `1a1cede273b4173f` sent once; this receipt sends no second emai
 
 
 
+The [current CODE entrypoint refusal check](task-evidence/Q100/current-native-host-r1/CURRENT_CODE_HELD_MAIN_R1.md)
+is locally accepted. The actual selected JDK naturally refuses at the unchanged
+line29 hold through the existing native owner; exit1/exact stderr, empty output
+and original-root/job/readers/lease/caller-job cleanup pass. Final Compile Smoke1/
+Suite4 and Held Smoke1/Suite4 pass against independent141/2396 CODE class rows.
+Synthetic argument hashes have no upstream authority, parsing is not reached and
+normal role policy/verified return remain unqualified. The public evidence guard
+caught a private ProcessRoot; its corrected projection passes with failure retained.
+Both holds and genuine gate remain closed; playable100=0, beta HELD, all budgets
+and exclusions unchanged. Next is authorized upstream config/manifest/journal and
+fixed-role input identity before a real qualifier return; full semantic/lifecycle
+closure and normal role policy remain pending.
+
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource

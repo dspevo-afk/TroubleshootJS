@@ -1,0 +1,382 @@
+{
+  "status": "PASS_EXPECTED_CURRENT_CODE_ENTRYPOINT_REFUSAL_NOT_NORMAL_ADMISSION",
+  "sourceManifestSha256": "f9b1bd5de22a304aa8f4b7844be3dc5c31bd80c01af85a442a864ca083808a29",
+  "gates": [
+    {
+      "phase": "compile-smoke-r1",
+      "status": "PASS",
+      "caseCount": 1,
+      "wholePythonWrapperOperationNanos": 18646078300,
+      "wrapperCleanup": "UNMEASURED_SEPARATELY",
+      "nativeExitCode": 0,
+      "nativeApiOperationMilliseconds": 963.9767,
+      "callerJobCleanupMilliseconds": 2.6072,
+      "nativeContainment": {
+        "LeaseReturned": true,
+        "ProcessCreationFileTime": 134389482249271426,
+        "NativeExitCode": 0,
+        "ProcessExitCode": 0,
+        "RootExitObserved": true,
+        "JobEmpty": true,
+        "ReadHandlesClosed": true,
+        "LeaseClosed": true,
+        "TerminationRequested": false,
+        "CleanupProven": true,
+        "DescendantHandleWaits": "NOT_ATTESTED",
+        "Scope": "SERIAL_DEDICATED_HOST",
+        "OperationPhase": "COMPLETE",
+        "CleanupPhase": "COMPLETE",
+        "OperationMilliseconds": 814.2343000000001,
+        "CleanupMilliseconds": 51.099000000000004
+      },
+      "captureBytes": {
+        "StdoutByteCount": 0,
+        "StderrByteCount": 0,
+        "StdoutObservedBytes": 0,
+        "StderrObservedBytes": 0,
+        "StdoutDiscardedDuringCleanup": 0,
+        "StderrDiscardedDuringCleanup": 0
+      },
+      "callerJobCleanup": {
+        "initialMemberIds": [],
+        "finalMemberIds": [],
+        "initialMembershipObserved": true,
+        "emptyMembershipObserved": true,
+        "terminationRequested": false,
+        "disposalAttempted": true,
+        "disposed": true,
+        "cleanupMilliseconds": 0.7121000000000001,
+        "failure": null
+      },
+      "cases": [
+        {
+          "name": "current-code-native-compile",
+          "status": "PASS",
+          "closure": {
+            "freshClasses": 141,
+            "inheritedClasses": 2396,
+            "classCount": 2537,
+            "classBytes": 12196044,
+            "freshRowsSha256": "f237badccb663ac310cd2430c252fdc3c3b34d32b51309980664fb929bdacc9b",
+            "inheritedRowsSha256": "e93312ee5b2f4186d884d57db114b2e6699c7a8c85f3102bd9f5fd3a094594a2"
+          },
+          "compilerAttempted": true,
+          "compileOperationMilliseconds": 963.9767,
+          "compileCleanupMilliseconds": 2.6072
+        }
+      ],
+      "privateCasesSha256": "c14a2942fe0bd59ece97f9c4b47b177a12883c2aae96a139da5108cfe96d4a26",
+      "sourceFreezeSha256": "570c92fba4e7dde037e5831bf631e68304c62aaadd00f16ee989cbf8c3738324"
+    },
+    {
+      "phase": "compile-suite-r1",
+      "status": "PASS",
+      "caseCount": 4,
+      "wholePythonWrapperOperationNanos": 27205485000,
+      "wrapperCleanup": "UNMEASURED_SEPARATELY",
+      "nativeExitCode": 0,
+      "nativeApiOperationMilliseconds": 1007.9213000000001,
+      "callerJobCleanupMilliseconds": 2.4987,
+      "nativeContainment": {
+        "LeaseReturned": true,
+        "ProcessCreationFileTime": 134389483149820012,
+        "NativeExitCode": 0,
+        "ProcessExitCode": 0,
+        "RootExitObserved": true,
+        "JobEmpty": true,
+        "ReadHandlesClosed": true,
+        "LeaseClosed": true,
+        "TerminationRequested": false,
+        "CleanupProven": true,
+        "DescendantHandleWaits": "NOT_ATTESTED",
+        "Scope": "SERIAL_DEDICATED_HOST",
+        "OperationPhase": "COMPLETE",
+        "CleanupPhase": "COMPLETE",
+        "OperationMilliseconds": 856.8595,
+        "CleanupMilliseconds": 50.9662
+      },
+      "captureBytes": {
+        "StdoutByteCount": 0,
+        "StderrByteCount": 0,
+        "StdoutObservedBytes": 0,
+        "StderrObservedBytes": 0,
+        "StdoutDiscardedDuringCleanup": 0,
+        "StderrDiscardedDuringCleanup": 0
+      },
+      "callerJobCleanup": {
+        "initialMemberIds": [],
+        "finalMemberIds": [],
+        "initialMembershipObserved": true,
+        "emptyMembershipObserved": true,
+        "terminationRequested": false,
+        "disposalAttempted": true,
+        "disposed": true,
+        "cleanupMilliseconds": 0.6636000000000001,
+        "failure": null
+      },
+      "cases": [
+        {
+          "name": "current-code-native-compile",
+          "status": "PASS",
+          "closure": {
+            "freshClasses": 141,
+            "inheritedClasses": 2396,
+            "classCount": 2537,
+            "classBytes": 12196044,
+            "freshRowsSha256": "f237badccb663ac310cd2430c252fdc3c3b34d32b51309980664fb929bdacc9b",
+            "inheritedRowsSha256": "e93312ee5b2f4186d884d57db114b2e6699c7a8c85f3102bd9f5fd3a094594a2"
+          },
+          "compilerAttempted": true,
+          "compileOperationMilliseconds": 1007.9213000000001,
+          "compileCleanupMilliseconds": 2.4987
+        },
+        {
+          "name": "late-source-identity-rejection",
+          "status": "PASS_EXPECTED_REJECTION",
+          "compilerAttempted": false,
+          "rejection": "SOURCE_CHANGED"
+        },
+        {
+          "name": "class-hash-rejection-and-restoration",
+          "status": "PASS_EXPECTED_REJECTION",
+          "rejection": "READER_SHA256"
+        },
+        {
+          "name": "request-pin-before-launch-rejection",
+          "status": "PASS_EXPECTED_REJECTION",
+          "compilerAttempted": false,
+          "evidenceNamespaceCreated": false
+        }
+      ],
+      "privateCasesSha256": "dccf0a1b345a7332b01c5247cfd87b02a754d994a3092e784537b3c02262ebdf",
+      "sourceFreezeSha256": "762dbb2fb585382c0d41c51659ae7919c0a6ce31c69b3b1108bc91c2d335b203"
+    },
+    {
+      "phase": "held-smoke-r1",
+      "status": "PASS",
+      "caseCount": 1,
+      "wholePythonWrapperOperationNanos": 32144892100,
+      "wrapperCleanup": "UNMEASURED_SEPARATELY",
+      "nativeExitCode": 1,
+      "nativeApiOperationMilliseconds": 280.9241,
+      "callerJobCleanupMilliseconds": 2.5792,
+      "nativeContainment": {
+        "LeaseReturned": true,
+        "ProcessCreationFileTime": 134389483669078206,
+        "NativeExitCode": 1,
+        "ProcessExitCode": 1,
+        "RootExitObserved": true,
+        "JobEmpty": true,
+        "ReadHandlesClosed": true,
+        "LeaseClosed": true,
+        "TerminationRequested": false,
+        "CleanupProven": true,
+        "DescendantHandleWaits": "NOT_ATTESTED",
+        "Scope": "SERIAL_DEDICATED_HOST",
+        "OperationPhase": "COMPLETE",
+        "CleanupPhase": "COMPLETE",
+        "OperationMilliseconds": 129.3751,
+        "CleanupMilliseconds": 52.5931
+      },
+      "captureBytes": {
+        "StdoutByteCount": 0,
+        "StderrByteCount": 205,
+        "StdoutObservedBytes": 0,
+        "StderrObservedBytes": 205,
+        "StdoutDiscardedDuringCleanup": 0,
+        "StderrDiscardedDuringCleanup": 0
+      },
+      "callerJobCleanup": {
+        "initialMemberIds": [],
+        "finalMemberIds": [],
+        "initialMembershipObserved": true,
+        "emptyMembershipObserved": true,
+        "terminationRequested": false,
+        "disposalAttempted": true,
+        "disposed": true,
+        "cleanupMilliseconds": 0.6896,
+        "failure": null
+      },
+      "cases": [
+        {
+          "name": "held-code-entrypoint-refusal",
+          "status": "PASS_EXPECTED_REFUSAL",
+          "nativeExitCode": 1,
+          "stderrBytes": 205,
+          "outputEmpty": true,
+          "operationMilliseconds": 280.9241,
+          "cleanupMilliseconds": 2.5792
+        }
+      ],
+      "privateCasesSha256": "2f6db7f5d78a2d73396da5b0cd1c4debce3d0d0d94a5b021b3a33a2545165c55",
+      "sourceFreezeSha256": "73c92db2d207f7979f80d523a4bac4addcd3727bd0951ba24a4b907dd0cc04e7",
+      "classClosure": {
+        "freshClasses": 141,
+        "inheritedClasses": 2396,
+        "classCount": 2537,
+        "classBytes": 12196044,
+        "freshRowsSha256": "f237badccb663ac310cd2430c252fdc3c3b34d32b51309980664fb929bdacc9b",
+        "inheritedRowsSha256": "e93312ee5b2f4186d884d57db114b2e6699c7a8c85f3102bd9f5fd3a094594a2"
+      },
+      "stderr": "Exception in thread \"main\" java.lang.IllegalStateException: ADOPTED_SNAPSHOT_COMPONENT_ONLY\r\n\tat com.lushprojects.circuitjs1.client.CohortTerminalTelemetryStudy.main(CohortTerminalTelemetryStudy.java:29)\r\n",
+      "argumentParsing": "NOT_REACHED",
+      "syntheticArguments": "NO_UPSTREAM_AUTHORITY"
+    },
+    {
+      "phase": "held-suite-r1",
+      "status": "PASS",
+      "caseCount": 4,
+      "wholePythonWrapperOperationNanos": 32982691400,
+      "wrapperCleanup": "UNMEASURED_SEPARATELY",
+      "nativeExitCode": 1,
+      "nativeApiOperationMilliseconds": 275.8619,
+      "callerJobCleanupMilliseconds": 2.5007,
+      "nativeContainment": {
+        "LeaseReturned": true,
+        "ProcessCreationFileTime": 134389484185579680,
+        "NativeExitCode": 1,
+        "ProcessExitCode": 1,
+        "RootExitObserved": true,
+        "JobEmpty": true,
+        "ReadHandlesClosed": true,
+        "LeaseClosed": true,
+        "TerminationRequested": false,
+        "CleanupProven": true,
+        "DescendantHandleWaits": "NOT_ATTESTED",
+        "Scope": "SERIAL_DEDICATED_HOST",
+        "OperationPhase": "COMPLETE",
+        "CleanupPhase": "COMPLETE",
+        "OperationMilliseconds": 127.74080000000001,
+        "CleanupMilliseconds": 51.3099
+      },
+      "captureBytes": {
+        "StdoutByteCount": 0,
+        "StderrByteCount": 205,
+        "StdoutObservedBytes": 0,
+        "StderrObservedBytes": 205,
+        "StdoutDiscardedDuringCleanup": 0,
+        "StderrDiscardedDuringCleanup": 0
+      },
+      "callerJobCleanup": {
+        "initialMemberIds": [],
+        "finalMemberIds": [],
+        "initialMembershipObserved": true,
+        "emptyMembershipObserved": true,
+        "terminationRequested": false,
+        "disposalAttempted": true,
+        "disposed": true,
+        "cleanupMilliseconds": 0.6773,
+        "failure": null
+      },
+      "cases": [
+        {
+          "name": "held-code-entrypoint-refusal",
+          "status": "PASS_EXPECTED_REFUSAL",
+          "nativeExitCode": 1,
+          "stderrBytes": 205,
+          "outputEmpty": true,
+          "operationMilliseconds": 275.8619,
+          "cleanupMilliseconds": 2.5007
+        },
+        {
+          "name": "normal-timeout-not-canary",
+          "status": "PASS_EXPECTED_REJECTION",
+          "nativeAttempted": false
+        },
+        {
+          "name": "wrong-entrypoint",
+          "status": "PASS_EXPECTED_REJECTION",
+          "nativeAttempted": false
+        },
+        {
+          "name": "wrong-frame-digest",
+          "status": "PASS_EXPECTED_REJECTION",
+          "nativeAttempted": false
+        }
+      ],
+      "privateCasesSha256": "6a2060122d8909b6f1efe2fc76d6393ec0f579f52826a8735eb7f400f0105b16",
+      "sourceFreezeSha256": "cd7a12ed7b53bef55c8daaef3e4fe197c4913e3ae16f793c09ea1c236d4538b5",
+      "classClosure": {
+        "freshClasses": 141,
+        "inheritedClasses": 2396,
+        "classCount": 2537,
+        "classBytes": 12196044,
+        "freshRowsSha256": "f237badccb663ac310cd2430c252fdc3c3b34d32b51309980664fb929bdacc9b",
+        "inheritedRowsSha256": "e93312ee5b2f4186d884d57db114b2e6699c7a8c85f3102bd9f5fd3a094594a2"
+      },
+      "stderr": "Exception in thread \"main\" java.lang.IllegalStateException: ADOPTED_SNAPSHOT_COMPONENT_ONLY\r\n\tat com.lushprojects.circuitjs1.client.CohortTerminalTelemetryStudy.main(CohortTerminalTelemetryStudy.java:29)\r\n",
+      "argumentParsing": "NOT_REACHED",
+      "syntheticArguments": "NO_UPSTREAM_AUTHORITY"
+    }
+  ],
+  "knownResources": {
+    "status": "PASS",
+    "knownIdentities": 16,
+    "counts": {
+      "pythonOuter": 4,
+      "psOuter": 8,
+      "nativeSelectedTool": 4
+    },
+    "queryOnly": true,
+    "historicalHandleProof": "NOT_REPAIRED_BY_QUERY",
+    "fullBootstrapToolProcessClosure": "NOT_ATTESTED",
+    "knownNewPersistentActors": 0
+  },
+  "sourceCorrectionsBeforeFirstHeldExecution": [
+    "removed invented classpath basename constraints; roles are not filenames",
+    "compare returned executable and complete argument echo explicitly",
+    "final raw config equality before publishing PASS cases"
+  ],
+  "preFixPsSnapshotSha256": "5e07a761ed093e52f10b7181e66a7dd380c3b44fb7fa5991f3e4f050b710c377",
+  "evidenceBuilderPrivacyGuard": {
+    "initial": "FAIL_NOT_PASS_PERSONAL_PATH_GUARD",
+    "cause": "native ProcessRoot was not removed from public projection",
+    "correction": "remove private ProcessRoot; exact guard unchanged; pre-fix builder/proof retained privately",
+    "final": "PASS"
+  },
+  "reportBuilderMetricGuard": {
+    "initial": "FAIL_WRONG_HAND_COUNT_203",
+    "actualPinnedTraceBytes": 205,
+    "correction": "report the observed exact trace byte count; test oracle unchanged",
+    "preFixReportBuilderRetained": true,
+    "final": "PASS"
+  },
+  "review": {
+    "n53": "PS implementation only; no execution",
+    "n50": "source-only Python and PS final delta; two receipt/oracle gaps fixed; no final blocker",
+    "n51": "source-only refusal scope and next actual-return input constraints",
+    "root": "integrated source, all actual gates, independent class-profile and source/tool/JAR/config audits, known-resource query"
+  },
+  "limits": {
+    "nativeRolePolicy": "NOT_QUALIFIED",
+    "recipeMilliseconds": 480000,
+    "testHeldMilliseconds": 10000,
+    "testStreamCaps": 4096,
+    "compileMilliseconds": 60000,
+    "outerPsHostMilliseconds": 180000,
+    "labWrapperMilliseconds": 480000,
+    "outerStreams": "POST_CAPTURE_GUARD_NOT_LIVE_BOUND",
+    "outerCapFailureControl": "N64_HISTORICAL_NOT_RENEWED",
+    "argumentParsing": "NOT_REACHED",
+    "realUpstreamReturn": "NOT_QUALIFIED",
+    "fullJdkDllBootToolEnvironment": "NOT_ATTESTED",
+    "fullBootstrapProcessClosure": "NOT_ATTESTED",
+    "historicalDescendantHandles": "NOT_ATTESTED",
+    "creatorDeathConcurrencyAtomicNamespace": "UNQUALIFIED",
+    "crossCallOriginalClassFileIdentity": "NOT_PROVEN",
+    "normalGenuine": "UNSPENT_GATED",
+    "normalQualifier": "NOT_RUN",
+    "assembly": "NOT_RUN",
+    "bothStudyHolds": "UNCHANGED",
+    "full30": "EXCLUDED",
+    "HARD_PSYCHOTIC": "UNAVAILABLE_UNRUN",
+    "protectedUnread": "UNCERTIFIED",
+    "oldnormal20": "NOT_REREAD",
+    "playable100": 0,
+    "beta": "HELD",
+    "productionGwtPlayer": "NOT_APPLICABLE",
+    "electricalPopulation": "NOT_RENEWED",
+    "CI": "NOT_RUN_SELF_HOSTED_RUNNER_PREREQUISITE",
+    "productBudgetsSeedsEpochsOrder": "UNCHANGED"
+  }
+}

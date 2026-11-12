@@ -1,3 +1,75 @@
+# Current checkpoint: N65 expected CODE entrypoint refusal validated locally
+
+Writer F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
+codex/q100-terminal-only-20261107, HEAD9704a4ad920ae4a7ef93596e69fae1a41f243dd6,
+no upstream; normal target origin/codex/q100-physical-feasibility. N64 implementation
+e7dcb264/receipt9704a4ad remotely verified; Gmail1a1cede273b4173f once.
+N65 final-source gates PASS; commit/push/Gmail pending, not yet published.
+Private R65 OS-temp/tsj-q100-held-native-dispatch-r1-a992e1f49f98 (SCOPE_R1,
+phase source freezes/configs, original process receipts, raw results and audits).
+
+Only CODE test hosts changed: PS bridge optional HeldMain role (default Compile),
+common outer helper role dispatch, new held-main lab/contract, LF checkout policy.
+Current native/reader/writer/stager/identity/invocation/class owners unchanged.
+Actual CODE main refuses before parsing at unchanged line29: natural exit1,
+stdout0/stderr205 exact, dedicated output empty, no termination request. Native
+original-root/current-job/readers/lease and caller-job closure proved. Both Study
+holds unchanged; no successful normal Study or full semantic/receipt authority.
+Ten requested arguments and returned path/argv echo match; child parsing NOT_REACHED.
+Synthetic UUID/digests NO_UPSTREAM_AUTHORITY. Recipe480s unchanged; TEST10s/4096B
+streams establish no normal role policy. Source/writer/tool identities rechecked;
+independent141 fresh NO_DATA major51+2396 inherited CODE classes =2537/12196044B,
+complete content closures and pinned GWT JAR bytes/class names before/after.
+Class snapshots/caller exclusivity do not prove cross-call original class IDs.
+
+Final Windows Python ad169 -I -B optimize0/PSd8/JDK8:
+Compile Smoke1 18.646s, Suite4 27.205s;
+Held Smoke1 32.145s, Suite4 32.983s.
+Compile uses60s and TEST4096; same-byte Source guard, class mutation/restoration,
+frame pin controls pass. Held Suite wrong480s timeout/wrong entrypoint/wrongframe
+reject before native/evidence namespace. Wrapper time includes setup/inventory;
+native API and caller-job cleanup clocks recorded separately in public proof.
+Source-only n50 review found result echo and PASS-before-final-config gaps; root
+fixed before first Held execution. Root removed invented classpath role-basename
+constraints before first gate; pre-fix PS retained. Final scoped review no blocker;
+all leaves source-only. Root owns actual gates/audits. Evidence-builder privacy
+guard initially FAIL on ProcessRoot; private pre-fix source/projection retained,
+corrected projection PASS under unchanged guard. Report-builder wrong hand count203 rejected/corrected to actual pinned205; pre-fix source retained. No tested source/oracle changed.
+
+Manifest f9b1bd5de22a304aa8f4b7844be3dc5c31bd80c01af85a442a864ca083808a29;
+proof 8b1ea4939d0ae379a243f4fc2c2b2013f9cc1b344a9c57c0638e9c76305348a4. All18 Source/tool/JAR/config inputs rechecked, independent CODE metadata
+chain exact. N64 outer-cap failure control historical NOT_RENEWED; post-capture
+outer guard not live. Query-only resource audit PASS16 known identities:4Python,
+8PS,4native leases, original exit receipts retained, no known new persistent test
+actor/listener/link. Full bootstrap/historical descendant handles not attested.
+No full JDK/DLL/boot/environment, creator-death/concurrency/atomic namespace proof.
+
+Main5f05b005 (9M6untracked), Ed9747229(reportM), Desktope0c36885(7M89untracked)
+preserved/staged0. Main current prefix mirrored only; opaque histories conserved.
+Old browser14116/start639294472690745890/port58320, preview34180/start
+639294472514546595/port58264+14children, oldD scratch/resources/links and
+Notepad67116860 untouched. New ordinary CODE fixtures/outputs retained privately.
+
+Next N66 preparation: establish authorized config/manifest/journal and20 fixed-role
+input identities before any real qualifier return. Current synthetic output canary
+avoids qualify/preflight/fixed reader; it cannot supply PASS_PRIOR_INPUT_ONLY or
+an original Source token. The allowed three development seeds have no established
+mapping to that qualifier bundle; no oldD/protected/held-out DATA opened to fill it.
+Normal role policy and real-return/full semantic/receipt/lifecycle remain pending.
+
+No normal qualifier/assembly/OriginalArm/capture/graph/Session/genuine operation.
+Only held CODE main refusal; original->NULL/OBSERVE UNSPENT_GATED. No actual prior/
+protected/oldD/held-out DATA/generated DATA factory/oldnormal20 read/run.
+Full30 MEDIUM EXCLUDED; HARD/PSYCHOTIC unavailable/unrun; protectedUnread UNCERTIFIED;
+oldnormal20 NOT_REREAD; playable100=0, betaHELD. CircuitJS truth, accepted R12Phase2
+a1352b5caeb78e069606f84a569e14670f28d807, exact product seeds/epochs/order and all
+budgets90s/640groups/5s/32768PERGROUP/copy1048576/chunk4096/Source4MiB/producer1MiB/
+fragment64KiB/opJSON8MiB/result1MiB/depth64/visits1m/classes10k256MiB/compile60s/
+reader180s/wrapper480s/cleanup120s unchanged. GWT/visible Player N/A for test-only
+change; electrical/population NOT_RENEWED; CI NOT_RUN/self-hosted runner prerequisite.
+
+# Historical checkpoint: N64 publication and N65 preparation
+
 # Current checkpoint: N64 finite current CODE compile published
 
 ActiveF OS-temp/tsj-q100-terminal-only-20261107-r1, branch
@@ -7,7 +79,9 @@ receipt32dd0c40 remotelyverified, Gmail1a1ce9981c71ccd7 once. N64 implementation
 e7dcb264a36e09cc5ffa16e30ee31664861c8e6c (Compose current CODE compilation through native containment)
 normallypushed/exactremoteverified, Gmail1a1cede273b4173f once. Index9 PASS
 ac9e39891cbf843d57fa4e8d9e0316007d23e51ccafbe9a1c1de8835868c8235.
-Current HEADe7dcb264a36e09cc5ffa16e30ee31664861c8e6c; documentation-only receipt pending.
+Current HEAD9704a4ad920ae4a7ef93596e69fae1a41f243dd6; documentation-only receipt normallypublished/
+exactremoteverified. Receipt4 index PASS
+7edb5b09bfc2db51c68ebb10df7b5d35d0ab0b46eed2e472c6905187bfee0046.
 All source-bound inputs rechecked; no second completion email. R64 OS-temp/tsj-q100-native-code-compile-r1-zfkyfs0p, SCOPE_R1+R2_HOST_RECEIPT.
 
 New maintained CODE-only Pythonlab20803B/2977e2d36bdf9026a61982b01aaaf44f135e9ecea68618c318f4bf0d2c3056cc and
@@ -51,6 +125,8 @@ Oldbrowser14116/start639294472690745890/port58320, preview34180/start
 Notepad67116860 untouched. Next unstartedN65: explicit normal rolepolicy and
 verifiedupstreamreturn/fullsemantic/receipt/lifecycle composition; freeze small
 eligible scope with current owners, neverinfercapsfromtest4096/JSONbodylimits.
+Preparation open at OS-temp/tsj-q100-native-policy-return-prep-r1-r8yr4_bq
+(SCOPE_PREPARATION_R1/INPUT_REFERENCES_R1), implementation NOTSTARTED.
 
 No normalqualifieroperation/harness/Study/javaentrypoint/OriginalArm/capture/
 graph/Session/receipt/export/genuine. BothStudyholds unchanged; original->NULL/

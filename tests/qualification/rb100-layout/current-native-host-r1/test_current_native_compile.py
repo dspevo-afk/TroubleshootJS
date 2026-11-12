@@ -170,7 +170,8 @@ def recheck_inputs(owners, cfg, prepared):
             original, raw, current, "compile-input-original-writer")
 
 
-def run_ps_host(cfg, request, evidence, expected=0, bad_hash=False):
+def run_ps_host(cfg, request, evidence, expected=0, bad_hash=False, role="Compile"):
+    assert role in ("Compile", "HeldMain")
     ps, bridge, module = cfg["powershell"], cfg["bridge"], cfg["processModule"]
     for row in (ps, bridge, module):
         pinned(row)
@@ -180,6 +181,8 @@ def run_ps_host(cfg, request, evidence, expected=0, bad_hash=False):
             "-InvocationPath", str(request), "-ExpectedInvocationSha256",
             "0" * 64 if bad_hash else digest(request_raw), "-ExpectedInvocationBytes",
             str(len(request_raw)), "-EvidenceRoot", str(evidence)]
+    if role != "Compile":
+        argv.extend(("-Role", role))
     receipt = evidence.parent / (evidence.name + "-outer.json")
     assert not evidence.exists() and not receipt.exists()
     assert not receipt.with_suffix(".launch.json").exists()
@@ -253,7 +256,8 @@ def run_ps_host(cfg, request, evidence, expected=0, bad_hash=False):
     assert not excessive, "outer test host output exceeded the post-capture limit"
     assert process.returncode == expected
     if expected == 0:
-        assert stdout == b"Verifier current CODE compile contract status=PASS\r\n" and stderr == b""
+        label = b"compile" if role == "Compile" else b"held main"
+        assert stdout == b"Verifier current CODE " + label + b" contract status=PASS\r\n" and stderr == b""
     else:
         assert stdout == b"" and stderr.startswith(b"Verifier current CODE compile contract FAIL:")
     for row in (ps, bridge, module):

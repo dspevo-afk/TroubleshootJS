@@ -4,7 +4,8 @@ param(
     [Parameter(Mandatory=$true)][string]$InvocationPath,
     [Parameter(Mandatory=$true)][string]$ExpectedInvocationSha256,
     [Parameter(Mandatory=$true)][long]$ExpectedInvocationBytes,
-    [Parameter(Mandatory=$true)][string]$EvidenceRoot
+    [Parameter(Mandatory=$true)][string]$EvidenceRoot,
+    [ValidateSet('Compile','HeldMain')][string]$Role='Compile'
 )
 
 Set-StrictMode -Version Latest
@@ -20,8 +21,13 @@ $PinnedPowerShellSha256 = 'd8f182560210d43baaf767d482ad1dc1207372522e91413b9d5e5
 $PinnedPowerShellBytes = 495616L
 $PinnedJavacSha256 = '61fa6463ee5b59004719b9833a16b148740cfa9f2d1f5a95ca598cc90be04c64'
 $PinnedJavacBytes = 24192L
+$PinnedJavaSha256 = 'e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce'
+$PinnedJavaBytes = 304768L
 $MaximumInvocationBytes = 65536L
 function Require([bool]$Condition, [string]$Message) { if (-not $Condition) { throw [InvalidOperationException]::new($Message) } }
+function Assert-CanonicalAbsolute([string]$Path, [string]$Label) {
+    Require ([IO.Path]::IsPathRooted($Path) -and [IO.Path]::GetFullPath($Path) -ceq $Path) ($Label + ' must be canonical and absolute')
+}
 function Sha([string]$Path) {
     $stream = [IO.File]::OpenRead($Path)
     $algorithm = [Security.Cryptography.SHA256]::Create()
@@ -89,7 +95,8 @@ try {
     Require ([IO.Path]::IsPathRooted($request.FilePath) -and [IO.Path]::GetFullPath($request.FilePath) -ceq $request.FilePath) 'invocation FilePath must be canonical and absolute'
     Require ([IO.Path]::IsPathRooted($request.WorkingDirectory) -and [IO.Path]::GetFullPath($request.WorkingDirectory) -ceq $request.WorkingDirectory) 'invocation WorkingDirectory must be canonical and absolute'
     Require ([IO.Directory]::Exists($request.WorkingDirectory)) 'invocation WorkingDirectory does not exist'
-    Require (($request.TimeoutMilliseconds -is [int] -or $request.TimeoutMilliseconds -is [long]) -and $request.TimeoutMilliseconds -eq 60000) 'invocation timeout must be the frozen 60000ms value'
+    $expectedTimeout = if ($Role -ceq 'Compile') { 60000 } else { 10000 }
+    Require (($request.TimeoutMilliseconds -is [int] -or $request.TimeoutMilliseconds -is [long]) -and $request.TimeoutMilliseconds -eq $expectedTimeout) 'invocation timeout differs from the selected role budget'
     Require (($request.MaxStdoutBytes -is [int] -or $request.MaxStdoutBytes -is [long]) -and $request.MaxStdoutBytes -eq 4096) 'invocation stdout cap must be the frozen 4096-byte test value'
     Require (($request.MaxStderrBytes -is [int] -or $request.MaxStderrBytes -is [long]) -and $request.MaxStderrBytes -eq 4096) 'invocation stderr cap must be the frozen 4096-byte test value'
     Require ($null -ne $request.Arguments -and $request.Arguments.GetType().IsArray) 'invocation Arguments must be a JSON string array'
@@ -99,11 +106,39 @@ try {
         $argumentList.Add($argument)
     }
     [string[]]$arguments = $argumentList.ToArray()
+    $expectedExitCode = if ($Role -ceq 'Compile') { 0 } else { 1 }
+    $expectedStderr = ''
+    if ($Role -ceq 'HeldMain') {
+        Require ($arguments.Count -eq 10) 'HeldMain invocation must contain exactly ten arguments'
+        Require ($arguments[0] -ceq '-Xmx1024m' -and $arguments[1] -ceq '-cp') 'HeldMain heap/classpath options changed'
+        $classPathParts = $arguments[2].Split([char]';')
+        Require ($classPathParts.Count -eq 4) 'HeldMain classpath must contain four current CODE roots'
+        for ($index = 0; $index -lt $classPathParts.Count; $index++) {
+            Assert-CanonicalAbsolute $classPathParts[$index] ('HeldMain classpath root ' + $index)
+        }
+        Require ($arguments[3] -ceq 'com.lushprojects.circuitjs1.client.CohortTerminalTelemetryStudy') 'HeldMain class changed'
+        Require ($arguments[4] -ceq 'COHORT_TERMINAL_TELEMETRY_V2') 'HeldMain telemetry marker changed'
+        Require ($arguments[5] -cmatch '^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$') 'HeldMain UUID slot is malformed'
+        foreach ($index in @(6, 7, 8)) { Require ($arguments[$index] -cmatch '^[0-9a-f]{64}$') ('HeldMain hash slot is malformed at ' + $index) }
+        Assert-CanonicalAbsolute $arguments[9] 'HeldMain output directory'
+        $expectedStderr = 'Exception in thread "main" java.lang.IllegalStateException: ADOPTED_SNAPSHOT_COMPONENT_ONLY' + "`r`n`t" +
+            'at com.lushprojects.circuitjs1.client.CohortTerminalTelemetryStudy.main(CohortTerminalTelemetryStudy.java:29)' + "`r`n"
+    }
 
     $ModulePath = [IO.Path]::GetFullPath($ModulePath)
     Assert-Tuple $ModulePath $PinnedModuleSha256 $PinnedModuleBytes 'N61 module'
-    Require ([IO.Path]::GetFileName($request.FilePath) -ieq 'javac.exe') 'invocation executable must be the selected javac.exe'
-    Assert-Tuple $request.FilePath $PinnedJavacSha256 $PinnedJavacBytes 'selected javac.exe'
+    if ($Role -ceq 'Compile') {
+        Require ([IO.Path]::GetFileName($request.FilePath) -ieq 'javac.exe') 'Compile role requires the selected javac.exe'
+        $toolPath = $request.FilePath; $toolSha256 = $PinnedJavacSha256; $toolBytes = $PinnedJavacBytes
+        Assert-Tuple $toolPath $toolSha256 $toolBytes 'selected javac.exe'
+        $javacPath = $toolPath
+    } else {
+        Require ([IO.Path]::GetFileName($request.FilePath) -ieq 'java.exe') 'HeldMain role requires the selected java.exe'
+        $toolPath = $request.FilePath; $toolSha256 = $PinnedJavaSha256; $toolBytes = $PinnedJavaBytes
+        $javacPath = Join-Path ([IO.Path]::GetDirectoryName($toolPath)) 'javac.exe'
+        Assert-Tuple $toolPath $toolSha256 $toolBytes 'selected java.exe'
+        Assert-Tuple $javacPath $PinnedJavacSha256 $PinnedJavacBytes 'selected sibling javac.exe'
+    }
     $hostProcess = [Diagnostics.Process]::GetCurrentProcess()
     try {
         $PowerShellPath = [IO.Path]::GetFullPath($hostProcess.MainModule.FileName)
@@ -115,7 +150,7 @@ try {
     }
 
     $owner = Import-Module -Name $ModulePath -Force -DisableNameChecking -PassThru
-    foreach ($path in @($ModulePath, $InvocationPath, $PowerShellPath, $request.FilePath, $request.WorkingDirectory)) {
+    foreach ($path in @($ModulePath, $InvocationPath, $PowerShellPath, $toolPath, $javacPath, $request.WorkingDirectory)) {
         & $owner { param($Item) Assert-VerifierNoReparseAncestors $Item } $path
     }
     $jobType = & $owner { Initialize-VerifierBrowserContainmentJobApi }
@@ -131,19 +166,23 @@ try {
     Save-Json (Join-Path $EvidenceRoot 'inputs.json') ([ordered]@{
         requestPath = $InvocationPath; requestSha256 = $requestSha256; requestBytes = $requestBytes.Length
         modulePath = $ModulePath; moduleSha256 = $PinnedModuleSha256; moduleBytes = $PinnedModuleBytes
-        javacPath = $request.FilePath; javacSha256 = $PinnedJavacSha256; javacBytes = $PinnedJavacBytes
+        role = $Role; toolPath = $toolPath; toolSha256 = $toolSha256; toolBytes = $toolBytes
+        javacPath = $javacPath; javacSha256 = $PinnedJavacSha256; javacBytes = $PinnedJavacBytes
         powershellPath = $PowerShellPath; powershellSha256 = $PinnedPowerShellSha256; powershellBytes = $PinnedPowerShellBytes
         filePath = $request.FilePath; arguments = @($arguments); workingDirectory = $request.WorkingDirectory
         timeoutMilliseconds = $request.TimeoutMilliseconds; maxStdoutBytes = $request.MaxStdoutBytes; maxStderrBytes = $request.MaxStderrBytes
-        scope = 'CURRENT_CODE_COMPILE_NATIVE_BRIDGE_ONLY'
+        expectedExitCode = $expectedExitCode; expectedStdout = ''; expectedStderr = $expectedStderr
+        classification = if ($Role -ceq 'HeldMain') { 'EXPECTED_REFUSAL_NOT_ADMISSION' } else { 'CURRENT_CODE_COMPILE_ONLY' }
     })
 
-    $jobName = 'Local\TroubleshootJS.Verifier.CurrentCodeCompile.' + [guid]::NewGuid().ToString('N')
+    $jobLabel = if ($Role -ceq 'Compile') { 'CurrentCodeCompile' } else { 'CurrentCodeHeldMain' }
+    $jobName = 'Local\TroubleshootJS.Verifier.' + $jobLabel + '.' + [guid]::NewGuid().ToString('N')
     $job = $jobType::CreateNew($jobName)
     Require (@($job.GetMemberProcessIds()).Count -eq 0) 'new native compile creator job was not empty'
     Assert-Tuple $InvocationPath $ExpectedInvocationSha256 $ExpectedInvocationBytes 'invocation frame'
     Assert-Tuple $ModulePath $PinnedModuleSha256 $PinnedModuleBytes 'N61 module'
-    Assert-Tuple $request.FilePath $PinnedJavacSha256 $PinnedJavacBytes 'selected javac.exe'
+    Assert-Tuple $toolPath $toolSha256 $toolBytes 'selected role executable'
+    Assert-Tuple $javacPath $PinnedJavacSha256 $PinnedJavacBytes 'selected sibling javac.exe'
     Assert-Tuple $PowerShellPath $PinnedPowerShellSha256 $PinnedPowerShellBytes 'selected Windows PowerShell host'
     $operationWatch.Start()
     try {
@@ -159,29 +198,30 @@ try {
         Save-Json (Join-Path $EvidenceRoot 'raw-result.json') $result
     }
     if ($null -ne $nativeFailure) { throw $nativeFailure }
-    Require ($null -ne $result) 'native compile invocation returned no bounded result'
-    Require ($result.ExitCode -is [int] -and $result.ExitCode -eq 0) 'current CODE compile did not return zero'
-    Require ($result.Stdout -ceq '' -and $result.Stderr -ceq '') 'current CODE compile emitted diagnostics'
-    Require ($result.TerminationProven -eq $true) 'native compile result did not prove original root termination'
-    Require ($result.FilePath -ceq $request.FilePath) 'native compile executable path changed'
+    Require ($null -ne $result) 'native invocation returned no bounded result'
+    Require ($result.ExitCode -is [int] -and $result.ExitCode -eq $expectedExitCode) 'native invocation exit differed from the selected role expectation'
+    Require ($result.Stdout -ceq '' -and $result.Stderr -ceq $expectedStderr) 'native invocation output differed from the selected role expectation'
+    Require ($result.TerminationProven -eq $true) 'native result did not prove original root termination'
+    Require ($result.FilePath -ceq $request.FilePath) 'native executable path changed'
     Require (@($result.Arguments).Count -eq $arguments.Count) 'native compile argv count changed'
     for ($index = 0; $index -lt $arguments.Count; $index++) {
         Require ($result.Arguments[$index] -is [string] -and $result.Arguments[$index] -ceq $arguments[$index]) ('native compile argv changed at position ' + $index)
     }
     $native = $result.CaptureFacts.NativeContainment
-    Require ($native.JobName -ceq $jobName) 'native compile job identity changed'
-    Require ($native.LeaseReturned -eq $true -and $native.RootExitObserved -eq $true) 'native compile did not retain and observe its original process lease'
-    Require ($native.JobEmpty -eq $true -and @($job.GetMemberProcessIds()).Count -eq 0) 'native compile did not leave its current job empty'
-    Require ($native.ReadHandlesClosed -eq $true -and $native.LeaseClosed -eq $true -and $native.CleanupProven -eq $true) 'native compile reader/lease cleanup was not proven'
-    Require ($native.TerminationRequested -eq $false) 'natural compile result unexpectedly requested job termination'
-    Require ($native.OperationPhase -ceq 'COMPLETE' -and $native.CleanupPhase -ceq 'COMPLETE') 'native compile operation or cleanup phase did not complete'
-    Require ($native.NativeExitCode -is [uint32] -and [long]$native.NativeExitCode -eq 0 -and $native.ProcessExitCode -is [int] -and $native.ProcessExitCode -eq 0) 'native compile raw/signed exits differed from zero'
-    Require ($result.ProcessId -is [int] -and $result.ProcessId -gt 0 -and $result.ProcessStartTicks -is [long] -and $result.ProcessStartTicks -gt 0) 'native compile root identity was invalid'
-    Require ([long]$native.ProcessCreationFileTime -eq ([long]$result.ProcessStartTicks - 504911232000000000L)) 'native compile FILETIME differed from public start ticks'
-    Require ([String]::Equals([IO.Path]::GetFullPath($native.ImagePath), [IO.Path]::GetFullPath($request.FilePath), [StringComparison]::OrdinalIgnoreCase)) 'native compile image differed from pinned javac'
-    Require ($result.CaptureFacts.ReaderTasksTerminal -eq $true -and $result.CaptureFacts.ReadersClosed -eq $true -and $result.CaptureFacts.CleanupProven -eq $true) 'native compile byte readers did not settle'
-    Require ($result.CaptureFacts.CaptureFailureKind -ceq '' -and $result.CaptureFacts.StdoutByteCount -eq 0 -and $result.CaptureFacts.StderrByteCount -eq 0) 'native compile capture was not empty and clean'
-    Require ($result.CaptureFacts.StdoutObservedBytes -eq 0 -and $result.CaptureFacts.StderrObservedBytes -eq 0 -and $result.CaptureFacts.StdoutDiscardedDuringCleanup -eq 0 -and $result.CaptureFacts.StderrDiscardedDuringCleanup -eq 0) 'native compile observed or discarded diagnostics'
+    Require ($native.JobName -ceq $jobName) 'native job identity changed'
+    Require ($native.LeaseReturned -eq $true -and $native.RootExitObserved -eq $true) 'native invocation did not retain and observe its original process lease'
+    Require ($native.JobEmpty -eq $true -and @($job.GetMemberProcessIds()).Count -eq 0) 'native invocation did not leave its current job empty'
+    Require ($native.ReadHandlesClosed -eq $true -and $native.LeaseClosed -eq $true -and $native.CleanupProven -eq $true) 'native reader/lease cleanup was not proven'
+    Require ($native.TerminationRequested -eq $false) 'natural native result unexpectedly requested job termination'
+    Require ($native.OperationPhase -ceq 'COMPLETE' -and $native.CleanupPhase -ceq 'COMPLETE') 'native operation or cleanup phase did not complete'
+    Require ($native.NativeExitCode -is [uint32] -and [long]$native.NativeExitCode -eq $expectedExitCode -and $native.ProcessExitCode -is [int] -and $native.ProcessExitCode -eq $expectedExitCode) 'native raw/signed exits differed from the selected role expectation'
+    Require ($result.ProcessId -is [int] -and $result.ProcessId -gt 0 -and $result.ProcessStartTicks -is [long] -and $result.ProcessStartTicks -gt 0) 'native root identity was invalid'
+    Require ([long]$native.ProcessCreationFileTime -eq ([long]$result.ProcessStartTicks - 504911232000000000L)) 'native FILETIME differed from public start ticks'
+    Require ([String]::Equals([IO.Path]::GetFullPath($native.ImagePath), [IO.Path]::GetFullPath($toolPath), [StringComparison]::OrdinalIgnoreCase)) 'native image differed from the pinned role executable'
+    Require ($result.CaptureFacts.ReaderTasksTerminal -eq $true -and $result.CaptureFacts.ReadersClosed -eq $true -and $result.CaptureFacts.CleanupProven -eq $true) 'native byte readers did not settle'
+    $expectedStderrBytes = [Text.Encoding]::ASCII.GetByteCount($expectedStderr)
+    Require ($result.CaptureFacts.CaptureFailureKind -ceq '' -and $result.CaptureFacts.StdoutByteCount -eq 0 -and $result.CaptureFacts.StderrByteCount -eq $expectedStderrBytes) 'native capture bytes differed from the selected role expectation'
+    Require ($result.CaptureFacts.StdoutObservedBytes -eq 0 -and $result.CaptureFacts.StderrObservedBytes -eq $expectedStderrBytes -and $result.CaptureFacts.StdoutDiscardedDuringCleanup -eq 0 -and $result.CaptureFacts.StderrDiscardedDuringCleanup -eq 0) 'native capture discarded or miscounted role output'
     $processRoot = [IO.Path]::GetFullPath($result.ProcessRoot)
     Require (-not [IO.Directory]::Exists($processRoot) -and -not [IO.File]::Exists($processRoot)) 'successful native compile process root remained'
     foreach ($path in @($result.StdoutLog, $result.StderrLog)) { Require (-not [IO.File]::Exists($path)) 'successful native compile log remained' }
@@ -192,14 +232,18 @@ try {
     $job = if ($jobCleanup.disposed) { $null } else { $job }
     $cleanupWatch.Stop()
     Require ($jobCleanup.emptyMembershipObserved -and $jobCleanup.disposed -and $null -eq $jobCleanup.failure) 'caller creator job cleanup was not proven'
+    $contractClassification = if ($Role -ceq 'Compile') { 'PASS' } else { 'PASS_EXPECTED_REFUSAL' }
     $resultObject = [ordered]@{
-        status = 'PASS'; requestSha256 = $requestSha256; requestBytes = $requestBytes.Length
+        status = 'PASS'; classification = $contractClassification; role = $Role
+        expectedExitCode = $expectedExitCode; expectedStderr = $expectedStderr
+        requestSha256 = $requestSha256; requestBytes = $requestBytes.Length
         rawResult = $result; callerJobCleanup = $jobCleanup
         operationMilliseconds = $operationWatch.Elapsed.TotalMilliseconds
         cleanupMilliseconds = $cleanupWatch.Elapsed.TotalMilliseconds
     }
     Save-Json (Join-Path $EvidenceRoot 'result.json') $resultObject
-    [Console]::Out.WriteLine('Verifier current CODE compile contract status=PASS')
+    if ($Role -ceq 'Compile') { [Console]::Out.WriteLine('Verifier current CODE compile contract status=PASS') }
+    else { [Console]::Out.WriteLine('Verifier current CODE held main contract status=PASS') }
     exit 0
 } catch {
     $primaryFailure = $_
