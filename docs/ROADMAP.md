@@ -26,7 +26,7 @@ customer retest. Sessions can be saved and restored.
 
 ## Milestone status
 
-41 complete · 2 in progress · 30 unstarted.
+41 complete · 1 in progress · 1 parked · 30 unstarted.
 
 | Lane | Complete | In progress | Unstarted |
 |---|---|---|---|
@@ -36,7 +36,7 @@ customer retest. Sessions can be saved and restored.
 | Workbench and instruments (U) | U01–U07 | | U08–U12 |
 | Electrical content (E) | E01–E06 | | E07–E14 |
 | Diagnostics (D) | D01 | | |
-| Board-scale qualification (Q) | Q15, Q30, Q60 | Q100 | |
+| Board-scale qualification (Q) | Q15, Q30, Q60 | Q100 (parked) | |
 | Releases | REL-A | REL-B | REL-1 |
 | Microcontroller | | | MCU-1, MCU-2 |
 | Circuit import | | | IMPORT-1 – IMPORT-5 |
@@ -54,7 +54,8 @@ repair and retest path. Still open: the owner's decision to release the beta,
 HARD calibration (deferred by the owner on 2026-10-24), and modest-host
 performance evidence (never run).
 
-**Q100 · 100-part procedural board.** Stalled on PCB routing.
+**Q100 · 100-part procedural board.** **Parked on 2026-11-12 by the project lead.** Reopen it only
+as a scoped task to build a large-board routing policy and envelope, not as more diagnostics.
 
 - Done: a private electrical pilot. Two authored 100-package circuits solve in
   CircuitJS and pass a 2 × 31 fault and repair reference matrix. A reduced-matrix
@@ -71,10 +72,10 @@ performance evidence (never run).
   what a player sees. That work is preserved in the
   [Q100 narrative](archive/2026-11-12-roadmap-q100-narrative.md) and is not
   being continued in that form.
-- Decision needed before more Q100 work: build a large-board routing policy and
-  envelope (bigger via and search budgets, placement that leaves routing
-  channels), shrink the stretch target, or park Q100. That is an engineering
-  and product choice, not something more diagnostics will settle.
+- Decision: parked. Fifty-six parts is already a full MEDIUM board, and players get more
+  from new troubleshooting content than from bigger boards. Restarting Q100 means
+  building a large-board routing policy and envelope: bigger via and search
+  budgets, plus placement that leaves routing channels.
 
 ## Next up
 
@@ -82,14 +83,13 @@ In preferred order. Each needs its own authorization.
 
 1. **Stabilize what is playable.** Fix defects found by playing the current
    build before adding scope. Open items are listed in [TASK_REPORT.md](TASK_REPORT.md).
-2. **Decide Q100.** Choose between a large-board routing policy and envelope, a
-   reduced stretch target, or parking Q100.
-3. **Close or park REL-B.** Either run the remaining release checks and ship the
+2. **Close or park REL-B.** Either run the remaining release checks and ship the
    MEDIUM beta, or record it as parked.
-4. **Content the alpha is missing.** E08 (jumpers, trace cuts, physical
-   restoration) and E07 (timers and oscillators) add the most troubleshooting
-   variety for existing board sizes. U09 (two-channel scope) follows E07.
-5. **Later lanes** enter through content that consumes them: E09–E14, U10–U12,
+3. **Content the alpha is missing.** E07 (timers and oscillators) is next. It
+   reuses the existing temporal and scope seams and does not change save formats.
+   E08 (jumpers, trace cuts, physical restoration) follows, because it changes
+   the mutation and save formats. U09 (two-channel scope) follows E07.
+4. **Later lanes** enter through content that consumes them: E09–E14, U10–U12,
    MCU-1/2, IMPORT-1 – IMPORT-5, the X series, then REL-1.
 
 ## History

@@ -49,6 +49,13 @@
   - Everything removed is still reachable at tag `pre-cleanup-2026-11-12`.
 - **Worktrees.** Removed 26 merged worktrees that had no uncommitted changes, plus their merged
   local branches.
+- **Canvas guard.** `drawImage` from a zero-size offscreen canvas threw hundreds of uncaught errors.
+  Guards were added in `CirSim` (2 sites), `PcbWorkbenchController` and `Scope`.
+  - GWT build PASS.
+  - With the hidden pane: no console errors.
+  - With a 1280×800 viewport: the RB56 seed-42 workbench draws, using real clicks, and the
+    console shows no errors.
+- **Q100 parked** by the lead. See [ROADMAP.md](ROADMAP.md).
 - **Player check.** Played a real EASY board in the built-in browser preview: complaint,
   measurement, removing R1, buying and installing a 680 Ω part, and a passing customer retest.
   The four Quick Play candidate seeds all replay. One earlier "Board preparation failed" message
@@ -67,15 +74,28 @@
 
 - **28 worktrees still hold uncommitted edits.** They are mostly Q100 diagnostic scratch under
   `%TEMP%`, `C:\tmp` and `~\.codex\worktrees`, and every branch is already merged. The **8 stashes**
-  are from 2026-08-22 to 2026-11-01. Deleting either needs the owner's go-ahead.
+  are from 2026-08-22 to 2026-11-01. The owner approved removing them. Their patches were backed up
+  to OS temp, but the agent's permission policy blocked the removal itself. To finish, run
+  `git worktree remove --force <path>` for each one, then `git stash clear`.
 - **Four unmerged local branches:** `archive/desktop-wip-20260923` (the stale Desktop work-in-progress
   that was archived), `codex/state-lifecycle-integrity-audit`, `codex/task43-recovery-assessment`
   and `codex/verification-integrity-audit`. They are left untouched.
 - **The Codex desktop app is still running** (PID 16044, started 2026-11-11). Stop it before
   starting new work so it cannot resume old tasks.
-- **Canvas bug.** When the canvas is zero-size (for example a hidden pane), `drawImage` calls throw
-  uncaught errors (`CirSim.java` near lines 1977 and 2157, `PcbWorkbenchController.java:370`).
-  This is a small production guard plus a build.
+- **Zero-size viewport breaks board preparation.** With the viewport at zero size (for example a
+  hidden or minimized pane), every board fails with "could not be prepared", for every family,
+  including EASY. The same replays (EASY `LED_INDICATOR/42`, MEDIUM `RB56_CONTROL/42`) pass right
+  away with a real viewport. The root cause has not been found. The fix is to generate
+  independently of viewport size, or to wait until the viewport is visible.
+- **Diagnostic code in the production router.** A read-only audit of the eight `src/` commits made
+  from 2026-11-02 onward found:
+  - about 1,700 lines that are diagnostic-only: detached branch replay, compaction and fixed-graph
+    copy tasks, and alternative net and branch orderings. Only tests call them.
+  - about 220 lines on the production path that produce identical results
+  - about 30 behavior-changing lines (`73ee3c37`, the zero-via-capacity prune and epoch v28)
+
+  Removing the diagnostic-only code would also retire their P07/Rb100 diagnostic tests. That is a
+  separate cleanup task.
 - **Old evidence.** `docs/task-evidence/` still holds about 145 MB of historical README files and
   screenshots, more than the new per-milestone budget allows. It was left as is.
 - **Saved sessions.** A saved session that recorded an older placement version now regenerates
@@ -84,5 +104,8 @@
 
 ## Next action
 
-The owner decides on Q100 (large-board routing policy, a smaller target, or parking it) and on
-REL-B. See [ROADMAP.md](ROADMAP.md#next-up).
+Next milestone is **E07** (triggered timers and oscillators). Its prerequisites are complete, it
+adds visible troubleshooting content, and it reuses the existing temporal and scope seams without
+touching save formats. E08 follows. Its player value is higher, but it changes the mutation and
+save formats. The owner still needs to decide whether to ship or park REL-B.
+See [ROADMAP.md](ROADMAP.md#next-up).
