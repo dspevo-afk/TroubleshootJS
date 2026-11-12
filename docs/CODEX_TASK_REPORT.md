@@ -1,10 +1,13 @@
-# Current checkpoint: N61 native coordinator locally accepted
+# Current checkpoint: N61 native coordinator published
 
 Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
 codex/q100-terminal-only-20261107, parent0d263770ad89dda4014362b1656f5d24583f5a6f,
 no upstream; normal target origin/codex/q100-physical-feasibility. N60impl752598fe/
-receipt0d263770 remotelyverified, Gmail1a1cdffdb4852ad2 once. N61 local gates PASS;
-publication/email PENDING. No unresolved gate is published as success.
+receipt0d263770 remotelyverified, Gmail1a1cdffdb4852ad2 once. N61 implementation
+0b231496e95b0b3628fa5912c86ba9714a6bc8dc (Coordinate bounded native capture through creator
+jobs) normally pushed/exactremoteverified, Gmail1a1ce458d4dd776d once.
+Index15 PASS7045a8c02582cc34f3feb7fcc582a8e2718f76b70325b88adc93013c708ac5e6; documentation-only
+receipt pending. All source-bound consumed inputs rechecked unchanged.
 
 R61 OS-temp/tsj-q100-native-coordinator-r1-6nzf2ily SCOPE_R1+SIGNED_EXIT adaptation.
 Existing Invoke-VerifierBoundedProcess opt-inCreatorJob/WorkingDirectory requires
@@ -49,8 +52,9 @@ Main5f05b005(9M6untracked), Ed9747229(reportM), Desktope0c36885(7M89untracked)
 preserved/staged0; only Main currentprefix mirrored, opaque histories conserved.
 Old browser14116/start639294472690745890/port58320, preview34180/start
 639294472514546595/port58264+14children, oldD resources/links/scratch and
-Notepad67116860 untouched. Next source/index audit, normal publication/Gmailonce,
-then explicit invocation-policy/trusted native composition scope.
+Notepad67116860 untouched. Next explicit invocation-policy/trusted native composition
+prerequisite scope (N62), implementation NOT STARTED. No normal/genuine activation
+or inferred native role budgets; keep both holds and unspent gate.
 
 No prior/oldD/fixed20/heldout/protected DATA/generated DATA factories/whole
 historical builders read. Both Study holds exactthrowonly; original->NULL/OBSERVE

@@ -2186,7 +2186,9 @@ test and harness failures are preserved truthfully. The caller retains its job;
 facts prove original root/current-job/reader/lease closure, not every historical
 descendant handle. Native exit DWORDs preserve signed Int32 transport. Normal
 role budgets, trusted tool/Source/return composition, creator-death and genuine
-admission remain pending. Playable100=0; beta HELD. Publication pending.
+admission remain pending. Playable100=0; beta HELD. Implementation `0b231496e95b0b3628fa5912c86ba9714a6bc8dc` normally
+pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
+Completion Gmail `1a1ce458d4dd776d` sent once; no second email for this receipt.
 Next is explicit invocation policy and trusted native composition prerequisites.
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical

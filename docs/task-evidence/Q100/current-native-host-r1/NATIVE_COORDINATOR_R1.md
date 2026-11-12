@@ -1,7 +1,7 @@
 # Native creator-job capture coordinator
 
 N61 is locally accepted for its finite serial-host scope. Normal-native and
-genuine admission remain closed; implementation publication is pending.
+genuine admission remain closed; implementation `0b231496e95b0b3628fa5912c86ba9714a6bc8dc` is published.
 
 `Invoke-VerifierBoundedProcess` gains opt-in `CreatorJob` and `WorkingDirectory`
 parameters. Selecting either requires both, paired explicit byte caps and an
@@ -113,3 +113,10 @@ Java/GWT/visible Player are NOT APPLICABLE to this tooling-only change;
 electrical/population qualification is NOT RENEWED. CI is NOT RUN pending the
 self-hosted runner prerequisite. Next is explicit invocation policy and trusted
 tool/Source/return composition before any normal activation.
+
+Implementation `0b231496e95b0b3628fa5912c86ba9714a6bc8dc` (Coordinate bounded native capture
+through creator jobs) was normally pushed to origin/codex/q100-physical-feasibility
+and the exact remote SHA verified. Completion Gmail `1a1ce458d4dd776d` was sent
+once; this documentation-only receipt sends no second email. The15-path index
+audit passed with SHA `7045a8c02582cc34f3feb7fcc582a8e2718f76b70325b88adc93013c708ac5e6`. All source-bound
+passing evidence is reused only after rechecking unchanged consumed inputs.

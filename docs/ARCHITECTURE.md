@@ -618,6 +618,8 @@ reported with the existing signed Int32 exit semantics and snapshotted before
 disposal. Operation/cleanup phases, clocks and bounded failure prefixes remain
 distinct. Serial dedicated-host/exclusive-job assumptions and full normal native
 preflight, role policy, tool/Source/return and genuine gates stay explicit.
+Accepted implementation `0b231496e95b0b3628fa5912c86ba9714a6bc8dc` is published on
+origin/codex/q100-physical-feasibility with the linked finite scope and limits.
 
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
