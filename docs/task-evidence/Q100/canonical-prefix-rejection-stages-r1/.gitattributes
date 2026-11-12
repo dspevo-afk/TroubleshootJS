@@ -1,3 +1,0 @@
-* -text
-# Preserve the frozen native source's CRLF bytes; retain the ordinary space checks.
-overlays-r1/PcbNetRouter.java whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

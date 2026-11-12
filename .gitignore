@@ -1,6 +1,12 @@
-#GWT cache
+# Local tools, build caches and scratch
 .tools/
 .worktrees/
+.tmp/
+__pycache__/
+*.pyc
+.claude/settings.local.json
+
+#GWT cache
 gwt-unitCache/
 war/circuitjs1/
 war/circuitjs1/circuits/

@@ -1,9 +1,0 @@
-{
-  "status": "SOURCE_BYTES_PRESERVED_BEFORE_PUBLICATION",
-  "initialStagedAudit": "FAIL_RAW_BYTE_MISMATCH_FROM_GIT_EOL_NORMALIZATION",
-  "cause": "Git text normalization changed digest-pinned JSON, evidence and one CRLF in the tested canary Source.",
-  "correction": "Local packet .gitattributes preserves exact bytes; CR is accepted only at line end for raw artifacts. No global Git setting or test assertion changed.",
-  "runtimeSourceOrObservedArtifactBytesChanged": false,
-  "nativeGatesReusedBoundary": "All consumed bytes stay identical; staged blob equality rechecked explicitly.",
-  "publicationBeforeCorrection": false
-}

@@ -1,8 +1,0 @@
-{
-  "status": "FAIL_PRIVACY_SCANNER_FALSE_POSITIVE",
-  "cause": "Java case percent-d plus escaped newline in two test format strings matched drive-letter heuristic",
-  "resolution": "Inspect both exact source offsets; allow only percent-d colon escaped-newline in this pinned test file; retain drive-path rejection elsewhere",
-  "sourceChanged": false,
-  "privatePathFound": false,
-  "oracleOrBudgetChanged": false
-}

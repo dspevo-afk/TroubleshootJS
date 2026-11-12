@@ -1,5 +1,0 @@
-{
-  "status": "FAIL",
-  "phase": "completedArtifactReader",
-  "errorType": "FileNotFoundError"
-}

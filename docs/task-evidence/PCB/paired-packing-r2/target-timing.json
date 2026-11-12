@@ -1,9 +1,0 @@
-{
-  "failure": null,
-  "exitCode": 0,
-  "elapsedSeconds": 41.0000399,
-  "cleanupDuration": "NOT_SEPARATELY_MEASURED",
-  "status": "PASS",
-  "phase": "target",
-  "terminalCleanupIncluded": true
-}

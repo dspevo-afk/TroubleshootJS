@@ -1,7 +1,0 @@
-{
-  "status": "STATIC_CONTROLLER_DONOR_PATH_FIXED_BEFORE_EXECUTION",
-  "draftSha256": "4ae99810ba44c4b0c6606bbcae9fe1419f7d88dc9e9379ee3b1fb09a7efa6339",
-  "finalSha256": "78fcdb77efa524c1abdc4724b16177aa64e1fadbd8d394806d36b904e4807577",
-  "cause": "Phase-label text replacement also changed dependency donor path; root reviewed actual controller and restored exact existing R44 donor.",
-  "nativeOrCompileRun": false
-}

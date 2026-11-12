@@ -1,4 +1,0 @@
-# Preserve exact evidence receipt bytes.
-* -text
-# These original control receipts use CRLF; retain all ordinary whitespace checks.
-*.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

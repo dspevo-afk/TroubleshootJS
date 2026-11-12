@@ -1,5 +1,0 @@
-# Preserve the exact gated source-artifact bytes.
-*.py -text
-*.java -text
-PLAN_R1.md -text
-source/WIRE_R1.md -text

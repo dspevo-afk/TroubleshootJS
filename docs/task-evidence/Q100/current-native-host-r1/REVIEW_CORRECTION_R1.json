@@ -1,9 +1,0 @@
-{
-  "status": "ACTIONABLE_REVIEW_GAP_FIXED_FRESH_R2_GATES_REQUIRED",
-  "finding": "Aggregate Windows process command-line size unbounded by per-path limits",
-  "fix": "Conservative direct-argv ASCII quote-overhead bound32766 plus reservedNUL; no quotes or trailing backslash in emitted tokens. No secondary serializer.",
-  "testOracle": "Added independent subprocess.list2cmdline length comparison and aggregate-overflow rejection; strengthened top-level no-entrypoint/side-effect AST check.",
-  "r1": "Preserved passing narrower R1 host/tests and source snapshots; not reused for changed bounds",
-  "source": "Microsoft CreateProcessW official documentation maximum32767 including terminatingNUL",
-  "url": "https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessw"
-}

@@ -1,1 +1,0 @@
-FAIL:a08:a08-explicit-failure-canary

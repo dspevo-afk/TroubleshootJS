@@ -1,5 +1,0 @@
-{
-  "successfulReturn": false,
-  "elapsedIncludingCleanup": 71.7362911,
-  "purpose": "Aggregate all six unchanged representative assertions; any failed case still fails suite"
-}

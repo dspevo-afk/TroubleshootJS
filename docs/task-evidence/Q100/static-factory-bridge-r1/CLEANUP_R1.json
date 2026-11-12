@@ -1,7 +1,0 @@
-{
-  "status": "PASS_FINAL_OWNED_JUNCTION_NODE_REMOVAL_SENTINELS_TARGET_UNCHANGED",
-  "systemSymlink": "READ_ONLY_UNTOUCHED",
-  "persistentResources": "NONE_NEW",
-  "buildFailureArtifacts": "CONTROLLED_RETAINED",
-  "cleanupDuration": "SUCCESSFUL_ISOLATED_CLEANUP_UNMEASURED"
-}

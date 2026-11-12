@@ -1,8 +1,0 @@
-{
-  "status": "PASS_NEW_PACKET_AND_ADDED_DOC_LINES_PRIVACY",
-  "newPacketFiles": 48,
-  "sourceCopyMapSha256": "db3834ef4998062ea1b2216153fe4e1b087abe3803f4736b56f086c8476b44af",
-  "noPersonalAbsolutePaths": true,
-  "noBinaryOrRawPrivateProcessLogs": true,
-  "diffScope": "new packets and added lines of three current docs"
-}

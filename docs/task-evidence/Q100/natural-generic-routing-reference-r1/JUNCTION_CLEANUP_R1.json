@@ -1,9 +1,0 @@
-{
-  "isolatedCleanupDurationMs": null,
-  "linksAbsent": 8,
-  "noPersistentJunctions": true,
-  "ownedOutputsEmpty": true,
-  "schema": "tsj-natural-reference-junction-cleanup-v1",
-  "status": "PASS_LITERAL_NONRECURSIVE_UNLINK_VERIFIED",
-  "targetsUnchanged": 7
-}

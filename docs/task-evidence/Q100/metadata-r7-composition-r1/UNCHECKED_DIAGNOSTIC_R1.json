@@ -1,9 +1,0 @@
-{
-  "status": "DIAGNOSTIC_COMPILATION_ONLY_NOT_ACCEPTANCE",
-  "exitCode": 0,
-  "elapsedMs": 505.207400303334,
-  "sourceSha256": "232f7a06f13f1070621ebf42fdce6792d6dd7b486559d5048153de14b873cc5a",
-  "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-  "stderrSha256": "406247018b1b5499af32c610e5cd2c55ce5aa77f73444be61751f6aef7207d04",
-  "targetExecuted": false
-}

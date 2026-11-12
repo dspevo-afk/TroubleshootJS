@@ -1,5 +1,0 @@
-Exception in thread "main" java.lang.AssertionError: NEGATIVE_ACCEPTED_REQUESTED_COHORT_SUBSET
-	at com.lushprojects.circuitjs1.client.CurrentV2InputSetupCanary.expectFailure(CurrentV2InputSetupCanary.java:256)
-	at com.lushprojects.circuitjs1.client.CurrentV2InputSetupCanary.runNegativeCase(CurrentV2InputSetupCanary.java:481)
-	at com.lushprojects.circuitjs1.client.CurrentV2InputSetupCanary.runValueAndPolicyCases(CurrentV2InputSetupCanary.java:629)
-	at com.lushprojects.circuitjs1.client.CurrentV2InputSetupCanary.main(CurrentV2InputSetupCanary.java:914)

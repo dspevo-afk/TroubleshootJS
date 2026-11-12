@@ -1,13 +1,13 @@
 # AGENTS.md — TroubleshootJS
 
-Repository guidance · updated 2026-09-12. Current user instructions take precedence
+Repository guidance · updated 2026-11-12. Current user instructions take precedence
 within repository guidance. Keep task status in the roadmap/report, not this file.
 
 ## Workflow and scope
 
 - Start with `docs/ROADMAP.md` (sequence and acceptance), `docs/ARCHITECTURE.md`
   (implemented ownership), and the current checkpoint at the top of
-  `docs/CODEX_TASK_REPORT.md`. Read relevant code, callers, tests, recent history,
+  `docs/TASK_REPORT.md`. Read relevant code, callers, tests, recent history,
   and applicable nested instructions; do not load the entire historical log.
 - Confirm working directory, branch, HEAD, tracked changes and pre-existing
   untracked files before editing. Preserve unrelated work.
@@ -29,6 +29,32 @@ within repository guidance. Keep task status in the roadmap/report, not this fil
   owns their callers, retire obsolete APIs/formats/resolvers and migrate current
   consumers. Preserve useful independent test oracles. Reject incompatible
   artifacts before live mutation; cross-version support needs explicit scope.
+
+## Scope discipline
+
+These rules exist because the Q100 investigation spent about 270 commits on
+diagnostics and verification tooling without changing the product.
+
+- **Mainline is `master`.** Work on `master` or one short-lived branch. Merge or
+  delete the branch and remove its worktree when the task ends. Leave no stashes,
+  scratch worktrees or per-task branches behind.
+- **One commit per logical change.** Do not add separate receipt or
+  "record publication" commits. The commit message and `git log` are the record.
+- **Evidence budget.** A milestone keeps one `README.md` (what was run, results,
+  limits) and at most five screenshots in `docs/task-evidence/<milestone>/`. Raw
+  logs, JSON reports, archives, hash manifests and copies of source stay out of
+  Git; keep them in OS temp while the task runs.
+- **Keep the status docs short.** `docs/ROADMAP.md` is a status table, not a
+  journal. `docs/TASK_REPORT.md` holds one current checkpoint; move the previous
+  one to `docs/archive/` instead of stacking history in place.
+- **Diagnostic timebox.** If three consecutive tasks on one milestone produce no
+  player-visible change and no newly passing product gate, stop. Report what is
+  known, what is not, and two or three concrete options to the owner. Do not
+  start another diagnostic or build more tooling to continue.
+- **No verification of the verifiers.** Test harness code needs ordinary tests
+  only. Do not build provenance, identity or receipt systems for tooling.
+- **Standing authorization has limits.** "Keep going" covers the next eligible
+  roadmap milestone. It does not cover open-ended investigation of a blocked one.
 
 ## Product invariants
 
@@ -113,7 +139,7 @@ and the unfamiliar-board experience.
   time, executable and task-specific profile/port. Revalidate before termination.
   Never kill all browsers/runtimes; leave uncertain resources alone and report them.
 - Clean up verified task-only resources. Keep one compact current checkpoint in
-  `docs/CODEX_TASK_REPORT.md`: scope, HEAD/candidate, gates and limits, resources,
+  `docs/TASK_REPORT.md`: scope, HEAD/candidate, gates and limits, resources,
   preserved changes and next action. Preserve historical handoffs below it.
 
 ## Completion and publication

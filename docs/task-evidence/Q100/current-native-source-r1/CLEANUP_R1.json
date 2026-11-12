@@ -1,9 +1,0 @@
-{
-  "status": "PASS_SEVEN_OWNED_EXITS_NO_PERSISTENT_RESOURCES",
-  "allProcessExitsObserved": true,
-  "classloaderClose": "Maintained canaries close each isolated loader in finally; expected exits observed",
-  "fixtures": "Ordinary owned empty/nonempty directories and exact sentinel retained controlled evidence",
-  "reparseNodesListenersBrowsersCreated": false,
-  "priorUncertainResources": "UNTOUCHED",
-  "successfulIsolatedCleanupDuration": "UNMEASURED"
-}

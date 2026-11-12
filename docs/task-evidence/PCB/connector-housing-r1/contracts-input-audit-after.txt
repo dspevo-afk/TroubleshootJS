@@ -1,1 +1,0 @@
-PASS connector housing exact inputs phase=candidate sources=1481 gates=5

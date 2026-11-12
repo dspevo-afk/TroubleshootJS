@@ -1,9 +1,0 @@
-{
-  "status": "FAIL_R2_PREFLIGHT_NOT_NATIVE_NOT_PASS",
-  "phase": "dependency closure preflight",
-  "cause": "Root global phase-label replacement accidentally changed dependencies-r1 to nonexistent dependencies-r2.",
-  "nativeLaunches": 0,
-  "actualDataRead": false,
-  "moduleOrOracleChanged": false,
-  "resolution": "Exact dependency path restored; newR3 controller/freeze/output directories, selective phase replacement only. R2 controller/freeze retained."
-}

@@ -1,7 +1,0 @@
-* -text
-# Preserve inherited CRLF bytes while retaining ordinary whitespace checks.
-CANARY_QUALIFICATION_R1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
-overlays-r1/PcbNetRouter.java whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
-overlays-r1/PcbTwoLayerRules.java whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
-# Unified-patch blank context lines have a significant single prefix space.
-overlays-r1/overlay.diff whitespace=-blank-at-eol,blank-at-eof,space-before-tab

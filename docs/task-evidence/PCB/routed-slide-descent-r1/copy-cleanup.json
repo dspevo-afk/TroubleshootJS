@@ -1,7 +1,0 @@
-{
-  "status": "PASS",
-  "verifiedExactFilesRemoved": 1467,
-  "privateStateRemoved": true,
-  "symlinkOrReparseBoundariesCrossed": false,
-  "sharedResourcesTouched": false
-}

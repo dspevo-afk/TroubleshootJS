@@ -1,5 +1,0 @@
-{
-  "oracle": "Actual NamedRandomStreams FAULT draw only; not simulation or player diagnostic proof",
-  "scratchCleanup": "PASS",
-  "firstCompile": "FAIL missing transitive source deps; second selected sourcepath resolved real sources"
-}

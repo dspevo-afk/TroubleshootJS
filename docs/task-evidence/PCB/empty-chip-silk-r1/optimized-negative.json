@@ -1,7 +1,0 @@
-{
-  "status": "PASS_REJECTED",
-  "actualInterpreterOptimized": true,
-  "exitCode": 1,
-  "guard": "Empty-chip silk qualification requires assertion-enabled Python",
-  "artifactProduced": false
-}

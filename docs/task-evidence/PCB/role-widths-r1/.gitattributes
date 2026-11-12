@@ -1,3 +1,0 @@
-# Preserve raw session bytes and the required blank context records in trial patches.
-*.tsjsave -text
-*-source.patch -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol

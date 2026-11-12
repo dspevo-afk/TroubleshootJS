@@ -1,4 +1,0 @@
-# Preserve the exact source bytes used by the recorded gates.
-*.py -text whitespace=cr-at-eol
-# Retain the executed reader's terminal blank line as part of its hashed artifact.
-read_failed_first.py whitespace=cr-at-eol,-blank-at-eof

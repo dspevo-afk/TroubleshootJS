@@ -1,1 +1,0 @@
-PASS: exact maintained Test-A07Report; three negative corruption canaries

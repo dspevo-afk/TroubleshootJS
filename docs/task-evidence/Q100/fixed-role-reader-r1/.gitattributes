@@ -1,4 +1,0 @@
-*.json -text
-*.md -text
-PLAN_R1.md whitespace=cr-at-eol
-SKIPPED_FIXTURE_CLEANUP_R1.json whitespace=cr-at-eol

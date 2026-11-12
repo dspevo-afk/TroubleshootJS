@@ -1,7 +1,0 @@
-{
-  "status": "NO_SOURCE_ORDER_BLOCKER",
-  "root": "Reviewed integrated one-clause replacement, migrated mapping diff, prepayment canary, independent literal price and native results. Corrected draft before native; no oracle weakening.",
-  "boundedLeaf": "Selected actual charge/read/copy/finish order and partial failure review only; no gate execution.",
-  "limits": "Finite wrapper prepayment; no normal caller clock/identity authority, genuine capture or global ABI acceptance.",
-  "boundedCanaryLeaf": "Final canary/source-ledger review: no additional blocker; actual native Meter binding and APIs, exact capacity refusal before state change, no direct counter writes, owner work or factory DATA. Read-only Source review; no code execution."
-}

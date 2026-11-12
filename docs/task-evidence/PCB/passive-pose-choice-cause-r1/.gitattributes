@@ -1,3 +1,0 @@
-* -text whitespace=cr-at-eol
-assess.py whitespace=cr-at-eol,-blank-at-eof
-attempt1/assess.py whitespace=cr-at-eol,-blank-at-eof

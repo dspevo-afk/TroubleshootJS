@@ -1,6 +1,0 @@
-{
-  "status": "ROOT_CODE_PROMOTION_AND_BOUNDED_LEAF_MANIFEST_HOLD_REVIEW_BEFORE_NATIVE",
-  "root": "Exact five CODE file hashes authenticated against N48 and compiled-only plan; no semantic change/full-source rebuild claimed. Privacy scan on new files and explicit generated DATA exclusion. Existing immutable evidence retained.",
-  "leaf": "Reviewed manifest structure and selected main/assemble holds only; no hash recomputation, full body review or execution.",
-  "scopeLimit": "Verified prior-input return/output bytes required before actual normal producer, not lab NO_DATA refusal canaries. No normal activation."
-}

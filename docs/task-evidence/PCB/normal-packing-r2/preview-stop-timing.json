@@ -1,8 +1,0 @@
-{
-  "phase": "maintained preview stop",
-  "status": "PASS",
-  "exitCode": 0,
-  "elapsedSeconds": 2.511854,
-  "operation": "scripts/stop-preview.ps1",
-  "cleanupDuration": "Included in operation"
-}

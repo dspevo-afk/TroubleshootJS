@@ -1,1 +1,0 @@
-FAIL: BLOCKED/FAIL/non-PASS acceptance receipt is rejected

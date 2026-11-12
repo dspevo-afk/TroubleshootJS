@@ -1,8 +1,0 @@
-{
-  "schema": "TSJ_CLEANUP_STAGING_CANARY_R1",
-  "topKeys": ["schema", "mode", "status", "names", "cases", "parentConstructions", "error"],
-  "caseKeys": ["name", "status", "phase", "reason", "observedError", "units", "copiedEntries", "copyChunks", "groups", "priorGroups", "groupUnits", "maxGroupUnits", "maxGroupNanos", "meterOpen", "helperUnits", "helperCopies", "helperChunks", "operationNanos", "totalElapsedNanos", "openGroupElapsedNanos", "bodyUnchanged", "inputsUnchanged", "cleanupInstalled", "observedNestedGets", "semanticDurationGets", "discarded", "finishAfterFailure", "payloadJson", "canonicalBytes"],
-  "payloadJson": "constructor=own testbench JSON body; installed=cleanup map; handoff=actual codec body minus terminal LF; failures empty",
-  "limits": {"reportBytes": 1048576, "sourceBytes": 4194304, "bodyDepth": 64},
-  "genuineEnvelope": "UNSPENT_GATED"
-}

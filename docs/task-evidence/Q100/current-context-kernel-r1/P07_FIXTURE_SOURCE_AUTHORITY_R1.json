@@ -1,8 +1,0 @@
-{
-  "bytes": 194524,
-  "commit": "1bf0265715f0a9b1b54282dae048bb96550d1a00",
-  "oracleDataBodiesRead": 0,
-  "path": "tests/qualification/rb100-layout/branch-tree-study/test_read_branch_order_study.py",
-  "sha256": "fa2366d1bc48f036c9b3f3eb2b6944633f8b386a7070902d8051dd92ef462973",
-  "status": "SOURCE_ONLY_FROM_KNOWN_PUBLIC_TEST_BLOB_NOT_EXECUTED"
-}

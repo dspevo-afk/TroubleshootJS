@@ -1,7 +1,0 @@
-{
-  "startTicks": "639280764818996702",
-  "pid": 21752,
-  "exactExecutableProfileBirth": true,
-  "status": "PASS",
-  "scope": "Checked before own BrowserServer API close"
-}

@@ -1,4 +1,0 @@
-* -text
-# Preserve the exact gated source bytes, including original CRLF and final LF rows.
-overlays-r1/PcbNetRouter.java whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
-run-controls.ps1 whitespace=blank-at-eol,space-before-tab,-blank-at-eof

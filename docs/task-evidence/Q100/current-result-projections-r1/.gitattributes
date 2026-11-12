@@ -1,5 +1,0 @@
-*.java -text
-*.py -text
-*.json -text
-*.md -text
-* whitespace=blank-at-eof,blank-at-eol,space-before-tab,cr-at-eol
