@@ -1,10 +1,12 @@
-# Current checkpoint: N58 owned-job shutdown validated; publication pending
+# Current checkpoint: N58 owned-job shutdown published
 
 Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
-codex/q100-terminal-only-20261107, baseHEAD0d3b802444a46c23831fa9314bddf430d2280648,
+codex/q100-terminal-only-20261107, HEAD8d9151ff031d066e43c7c1cb04183e549b4219ca,
 no upstream; normal target origin/codex/q100-physical-feasibility. N57implf383d5da
 and receipt0d3b8024 published/exactremoteverified; Gmail1a1cd2e76f4f624f once.
-N58 final-source gates PASS; commit/push/email not yet done. No duplicate mail.
+N58 final-source gates PASS; normalpush/exactremoteverified; Gmail1a1cd791bf198220
+sent once. Documentation-only receipt pending; no second email. Final16-path
+index audit PASS515e49063af37e1a39a0d4ef27d152b58f3765a089200a6b733b8435cf9c3bdb.
 
 N58 adds creator-only TerminateOwned(uint) to the same native job class/original
 hJob. OpenExisting remains query-only/denied beforeOS; a request prevents later

@@ -2139,7 +2139,9 @@ unchanged; only current module pins migrate. Production Java/GWT/Player are not
 applicable, and electrical/population qualification is not renewed. Normal holds
 and genuine gate remain closed; playable100=0 and beta HELD. Next is a narrow
 original-process-handle lease through the same owner before captured pipes and
-trusted native composition. Publication is pending the normal final index audit.
+trusted native composition. Implementation `8d9151ff031d066e43c7c1cb04183e549b4219ca` normally pushed
+to origin/codex/q100-physical-feasibility; exact remote SHA verified. Completion
+Gmail `1a1cd791bf198220` sent once; this receipt sends no second email.
 
 
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
