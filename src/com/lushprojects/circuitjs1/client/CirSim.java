@@ -1974,7 +1974,7 @@ MouseOutHandler, MouseWheelHandler {
 	    pcbWorkbenchController.draw(g, circuitArea);
             relayFeedback.update(this);
 	    instrumentController.draw(g);
-	    cvcontext.drawImage(backcontext.getCanvas(), 0.0, 0.0);
+	    if (backcontext.getCanvas().getWidth() > 0 && backcontext.getCanvas().getHeight() > 0) cvcontext.drawImage(backcontext.getCanvas(), 0.0, 0.0);
 	    frames++;
 	    refreshSettledGeneratedControls(updateOwner, wasGeneratedSettled);
 	    return;
@@ -2154,7 +2154,7 @@ MouseOutHandler, MouseWheelHandler {
 //	g.drawString("ms per frame (sim): "+ CircuitElm.showFormat.format((myruntime)/myframes),10,130);
 //	g.drawString("ms per frame (draw): "+ CircuitElm.showFormat.format((mydrawtime)/myframes),10,150);
 	
-	cvcontext.drawImage(backcontext.getCanvas(), 0.0, 0.0);
+	if (backcontext.getCanvas().getWidth() > 0 && backcontext.getCanvas().getHeight() > 0) cvcontext.drawImage(backcontext.getCanvas(), 0.0, 0.0);
 	
 	// if we did DC analysis, we need to re-analyze the circuit with that flag cleared. 
 	if (dcAnalysisFlag) {

@@ -367,7 +367,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         presentBenchInstrument();
         drawPartDrag(graphics);
         sim.instrumentController.draw(graphics);
-        sim.cvcontext.drawImage(sim.backcontext.getCanvas(), 0.0, 0.0);
+        if (sim.backcontext.getCanvas().getWidth() > 0 && sim.backcontext.getCanvas().getHeight() > 0) sim.cvcontext.drawImage(sim.backcontext.getCanvas(), 0.0, 0.0);
         viewFramesPresented++;
         maximumViewLatencyMs = Math.max(maximumViewLatencyMs, started - lastViewRequestTime);
         maximumViewDrawMs = Math.max(maximumViewDrawMs, viewClock() - started);

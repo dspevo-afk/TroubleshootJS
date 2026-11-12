@@ -804,7 +804,7 @@ class Scope {
     		imageContext.setGlobalAlpha(1.0);
     	}
     	
-    	g.context.drawImage(imageContext.getCanvas(), 0.0, 0.0);
+		if (imageContext.getCanvas().getWidth() > 0 && imageContext.getCanvas().getHeight() > 0) g.context.drawImage(imageContext.getCanvas(), 0.0, 0.0);
 //    	g.drawImage(image, r.x, r.y, null);
     	g.setColor(CircuitElm.whiteColor);
     	g.fillOval(draw_ox-2, draw_oy-2, 5, 5);
