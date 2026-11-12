@@ -2304,6 +2304,11 @@ historical-input transport/lifetime and exact prior receipt/run/Source/resource/
 journal/root/allowlist binding before any guard replacement or normal activation.
 No actual prior-role or genuine qualification is granted.
 
+Implementation `1bf0bc2e12b660865fb414b1de5db1425e46233d` (Separate execution tools from historical receipt expectations)
+normally pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
+Completion Gmail `1a1cfbf1b97cd404` sent once; this documentation receipt sends no second email.
+Final index11 PASS `9f9327fedf821ea56502df7c0704a60d6209db8992bdd3644ad7f99940a973da`.
+
 
 
 
