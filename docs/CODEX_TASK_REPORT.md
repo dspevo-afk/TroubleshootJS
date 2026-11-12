@@ -1,4 +1,4 @@
-# Current checkpoint: N70 consumer validated; publication pending
+# Current checkpoint: N70 published; N71 producer Source preparation
 
 Scope: the V2 Source gate journal consumer is validated. It retires V1's arbitrary
 caller-gate scalar, checks a structured result against current caller/test/Python
@@ -9,8 +9,10 @@ reading. N66 remains first and unchanged; both Study holds remain closed. No new
 IO, CLI/config input, token, ledger or time window was introduced.
 
 F: OS-temp/tsj-q100-terminal-only-20261107-r1, codex/q100-terminal-only-20261107,
-HEAD/parent 6d5253f8f7db82372b0a01f169d4659629dcfe3e; no upstream. Normal target:
-origin/codex/q100-physical-feasibility. N70 is not yet committed, pushed or emailed.
+HEAD 91a5c31853f7a28a618a23d0c22a978ed4b51d55; parent6d5253f8, no upstream. Normal target:
+origin/codex/q100-physical-feasibility. N70 is normally pushed/exact remote verified;
+Gmail 1a1d02c01f52fb94 sent once. Documentation receipt pending; no second email.
+Final index10 PASS9ec134b0593d82092626676488be782a79f512622bd54a4fa9579ddc7d350ccf.
 Prior N69 ff817057/receipt6d5253f8 is remotely verified; Gmail1a1cff90478a39e5 sent
 once. Never duplicate. R70: OS-temp/tsj-q100-journal-gate-authority-r1-154d02e517bb.
 Its scope R1/adaptation R2, final Source R2 and all failed artifacts are retained.
