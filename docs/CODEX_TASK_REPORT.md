@@ -1,3 +1,74 @@
+# Current checkpoint: N62 finite native tool-return contract accepted locally
+
+Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
+codex/q100-terminal-only-20261107; parentae7cfeab95d9ee2dea0b4d84a8c11b45d5687c52,
+no upstream, normal target origin/codex/q100-physical-feasibility. N61 implementation
+0b231496e95b0b3628fa5912c86ba9714a6bc8dc/receiptae7cfeab remotely verified,
+Gmail1a1ce458d4dd776d once. N62 implementation/publication/email pending.
+
+R62 OS-temp/tsj-q100-native-tool-return-r1-f5ca1f3e; frozen SCOPE_R1, BASELINE_R1 and owned_call494d wrapper.
+New maintained PS contract39014B/cd3fd6ad7383a41c37b62e68fe7f0f5710c7728c463b5a9f96f8b0d5eb8306fc and literal Java
+fixture1867B/08e850c2d0cdd5e32a71da8d279704bf5c19a4b1d97f9275506275374730134f; no production module/qualifier/Study changes.
+Standalone selected JDK8 compile/Java return through existing N61 creator-job
+entrypoint; separate from V2 six-Source recipes and genuine data. Source/argfile/
+exact oneclass major51 tuples, fixed ASCII output, tricky argv/canonical cwd,
+raw/signed exits and original-root/current-job/readers/lease/callerjob closure.
+Fresh final-source Smoke2/Suite4 and two before-launch source/Java pin rejections
+PASS. Java7/compiler2 are rejection controls, not successful studies. Independent
+Python post-audit checks actual outputs/exits/artifact bytes/closure; n51 bounded
+source-only generic-owner review, n53 two new test files; root final review/tests.
+Failures and exact gates/limits in public proof. No tests delegated.
+Initial SmokeR1 FAIL: compile0 closed cleanly, then empty argv string rejected by
+test wrapper binding BEFORE Java launch. dcc5 contract/source/failure preserved;
+root adds AllowEmptyString, same required argv/oracles; 6cb SmokeR2 PASS at that stage.
+Root post-audit first FAIL used draft invalid-flag spelling; prior auditor saved,
+exact expectation aligned to frozen request, unchanged tool receipts rechecked.
+N50 bounded6cb Source review found delayed returned-result snapshot; root now
+captures raw bounded result before assertions and keeps callerjob cleanup state
+plus original object references in-host on unproven cleanup. Exactcd3 delta
+source-only recheck no blocker; no independent execution claim. Controlled wrong
+stdout oracle causes real compile+Java child0 then contractASSERTFAIL/exit2 with
+raw result/nativeclosure/callerjobdisposal retained; independent controlPASS,
+forced operationNOTPASS. Fresh final SmokeR3/SuiteR2 plus pin controls PASS on
+cd3 finalsource; 6cb passes NOT reused. Caller cleanup syscallfailure injection
+NOTRUN, failed owner references last only until contract-host exit.
+Final packet writer first FAIL collided with preserved R1 private auditfilename;
+fresh R2 receipt/exact public-byte comparison PASS, no old receipt overwritten or
+unchanged child gates rerun. This writerfailure is not a behavioral PASS.
+
+Public manifest SHA7dd89eb357a3af66b2c83a789b9cd9ec11f2ded4b78769163866b6fb87eb397c; proof SHA28e3473690cb8bd4fa9db191ba8b5e61e6cceaea7c7110927bec02d6656613de.
+N61 declared source/executable inputs rechecked unchanged; existing finite
+evidence reused within its recorded scope, matrix NOT RERUN/NOT RENEWED.
+Query-only resource audit PASS25 known identities/
+10 original outer exits; no historical proof repaired.
+Known new persistent task processes/listeners/links0; ordinary CODE artifacts
+retained. Source/classes/executable before/after hashes are snapshots, not full
+JDK DLL/boot/tool/environment or external namespace atomicity. Serial dedicated
+host/exclusive job; every historical descendant handle, creator-death, concurrent
+inheriting launches and production native preflight remain unqualified.
+
+Main5f05b005(9M6untracked), Ed9747229(reportM), Desktope0c36885(7M89untracked)
+preserved/staged0; only Main currentprefix mirrored; opaque histories conserved.
+Old browser14116/start639294472690745890/port58320, preview34180/start
+639294472514546595/port58264+14children, oldD resources/links/scratch and
+Notepad67116860 untouched. Next unstarted N63: explicit native role policy and
+trusted six-Source/tool/classpath/verified-return composition; freeze bounded
+current CODE scope before editing, no inferred role caps from these finite tests.
+
+No protected/prior/oldD/heldout DATA/generated DATA factories/oldnormal20 read or
+run. Both normal Study holds unmodified; original->NULL/OBSERVE UNSPENT_GATED.
+No normal qualifier/harness/Study/OriginalArm/capture/graph/Session/receipt/export/
+genuine. Full30 normalMEDIUM EXCLUDED; HARD/PSYCHOTIC unavailable/unrun;
+protectedUnread UNCERTIFIED; oldnormal20 NOTREREAD; playable100=0; betaHELD.
+CircuitJS truth, product seeds/epochs/order and budgets90s/640groups/5s/32768
+PERGROUP/copy1048576/chunk4096/source4MiB/fragment64KiB/opJSON8MiB/result1MiB/
+depth64/visits1m/classes10k256MiB/compile-native60s/reader180s/wrapper480s/
+cleanup120s unchanged. Test caps4096B/stream, compile60s/runtime10s only; no role
+policy change. Production Java/GWT/visible Player N/A; electrical/population
+NOTRENEWED; CI NOTRUN/self-hosted runner prerequisite.
+
+# Historical checkpoint: N61 publication and N62 preparation
+
 # Current checkpoint: N61 native coordinator published
 
 Active F OS-temp/tsj-q100-terminal-only-20261107-r1, branch
@@ -7,7 +78,9 @@ receipt0d263770 remotelyverified, Gmail1a1cdffdb4852ad2 once. N61 implementation
 0b231496e95b0b3628fa5912c86ba9714a6bc8dc (Coordinate bounded native capture through creator
 jobs) normally pushed/exactremoteverified, Gmail1a1ce458d4dd776d once.
 Index15 PASS7045a8c02582cc34f3feb7fcc582a8e2718f76b70325b88adc93013c708ac5e6; documentation-only
-receipt pending. All source-bound consumed inputs rechecked unchanged.
+receiptae7cfeab95d9ee2dea0b4d84a8c11b45d5687c52 normallypublished/exactremoteverified; no second
+email. Receipt4 index PASS59824137aba64278d553c83a543d0c6f2e668c7dc59f53b80059337bff680655.
+Current HEADae7cfeab95d9ee2dea0b4d84a8c11b45d5687c52; source-bound inputs unchanged.
 
 R61 OS-temp/tsj-q100-native-coordinator-r1-6nzf2ily SCOPE_R1+SIGNED_EXIT adaptation.
 Existing Invoke-VerifierBoundedProcess opt-inCreatorJob/WorkingDirectory requires
@@ -53,8 +126,11 @@ preserved/staged0; only Main currentprefix mirrored, opaque histories conserved.
 Old browser14116/start639294472690745890/port58320, preview34180/start
 639294472514546595/port58264+14children, oldD resources/links/scratch and
 Notepad67116860 untouched. Next explicit invocation-policy/trusted native composition
-prerequisite scope (N62), implementation NOT STARTED. No normal/genuine activation
-or inferred native role budgets; keep both holds and unspent gate.
+prerequisite scope (N62), implementation NOT STARTED. Preparation opened in
+OS-temp/tsj-q100-native-invocation-policy-prep-r1-ivh5393z (SCOPE_PREPARATION_R1,
+INPUT_REFERENCES_R1); next inspect bounded current CODE owners/explicit role
+contracts and freeze eligible scope. No inferred native role caps or normal/
+genuine activation; both holds and unspent gate remain. No new persistent resource.
 
 No prior/oldD/fixed20/heldout/protected DATA/generated DATA factories/whole
 historical builders read. Both Study holds exactthrowonly; original->NULL/OBSERVE

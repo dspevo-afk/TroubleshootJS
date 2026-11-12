@@ -621,6 +621,18 @@ preflight, role policy, tool/Source/return and genuine gates stay explicit.
 Accepted implementation `0b231496e95b0b3628fa5912c86ba9714a6bc8dc` is published on
 origin/codex/q100-physical-feasibility with the linked finite scope and limits.
 
+The [finite native tool-return contract](task-evidence/Q100/current-native-host-r1/NATIVE_TOOL_RETURN_R1.md)
+composes the existing creator-job capture entrypoint with a standalone literal
+Java CODE fixture. The test caller authenticates module/Source/executable tuples,
+owns empty class/source paths and the one-class artifact census, and independently
+checks actual returns, ASCII output, tricky argv/cwd and final byte snapshots.
+Each call retains its caller job through empty/disposed closure. Test failure
+evidence snapshots the bounded result before assertions and retains unproven
+caller-job state/object references within the contract host only. Test-only caps
+and deadlines establish no production role policy or six-Source/verified-return
+authority. Existing process, invocation, Source and class owners stay unchanged;
+normal/genuine admission remains gated. Publication pending.
+
 The [current R7 Source emitter](task-evidence/Q100/current-r7-cleanup-source-r1/README.md)
 keeps scalar-to-cleanup installation in AuthoredFlatWorkMembers, immediately before
 detached-plan delegation. Its current pure derive API authenticates published

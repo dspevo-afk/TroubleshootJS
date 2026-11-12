@@ -1,0 +1,107 @@
+{
+  "status": "FINAL_SOURCE_RECHECKED",
+  "baseHead": "ae7cfeab95d9ee2dea0b4d84a8c11b45d5687c52",
+  "sources": [
+    {
+      "path": "scripts/VerifierIsolation.psm1",
+      "bytes": 1092245,
+      "sha256": "418da63a7bc1e4eb3ad0234bd789a24db2b911b635e6a54468a7bb7087c180a6"
+    },
+    {
+      "path": "tests/contracts/VerifierNativeToolReturnContract.ps1",
+      "bytes": 39014,
+      "sha256": "cd3fd6ad7383a41c37b62e68fe7f0f5710c7728c463b5a9f96f8b0d5eb8306fc"
+    },
+    {
+      "path": "tests/contracts/VerifierNativeToolReturnCanary.java",
+      "bytes": 1867,
+      "sha256": "08e850c2d0cdd5e32a71da8d279704bf5c19a4b1d97f9275506275374730134f"
+    }
+  ],
+  "selectedTools": [
+    {
+      "role": "powershell",
+      "bytes": 495616,
+      "sha256": "d8f182560210d43baaf767d482ad1dc1207372522e91413b9d5e515a875e552d"
+    },
+    {
+      "role": "python",
+      "bytes": 171744,
+      "sha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec"
+    },
+    {
+      "role": "java",
+      "bytes": 304768,
+      "sha256": "e71f3022c972743d2a37e2597b45282b9c380211cd491c54a0c3d63c11bcfbce"
+    },
+    {
+      "role": "javac",
+      "bytes": 24192,
+      "sha256": "61fa6463ee5b59004719b9833a16b148740cfa9f2d1f5a95ca598cc90be04c64"
+    }
+  ],
+  "unchangedN61DeclaredSourceInputs": [
+    {
+      "path": "scripts/VerifierIsolation.psm1",
+      "bytes": 1092245,
+      "sha256": "418da63a7bc1e4eb3ad0234bd789a24db2b911b635e6a54468a7bb7087c180a6"
+    },
+    {
+      "path": "scripts/verify-rb100-branch-order-study.ps1",
+      "bytes": 17687,
+      "sha256": "09f1689574e89dbd80ce3d804e32e005c28d192d2d8ab4f4f9b5c7b397f2d2df"
+    },
+    {
+      "path": "tests/contracts/VerifierBoundedProcessContract.ps1",
+      "bytes": 12502,
+      "sha256": "550e829739ee0aea59188c77392e4741c607a5d584af0dd0833b341cda9d2863"
+    },
+    {
+      "path": "tests/contracts/VerifierBoundedProcessFixture.py",
+      "bytes": 2612,
+      "sha256": "95c9017de2ad611f72f60fae3f7b6d87582d9e66da4f0e4033406b8a9952b70a"
+    },
+    {
+      "path": "tests/contracts/VerifierBoundedCaptureContract.ps1",
+      "bytes": 35517,
+      "sha256": "fbf89745bbdb037e6fa67e2ce8d0627a2391dadc7c42504897f136900f64dfd3"
+    },
+    {
+      "path": "tests/contracts/VerifierBoundedCaptureFixture.py",
+      "bytes": 3806,
+      "sha256": "2850f2a0ebf00fc8406b6782f15e6d2d318636c27b55ea5769f413edfeb3de8c"
+    },
+    {
+      "path": "tests/contracts/VerifierContainmentContract.ps1",
+      "bytes": 74406,
+      "sha256": "1a8396a9bd9dbc88ebcb715a332cde43bca4f68f54498a7176287855533af584"
+    },
+    {
+      "path": "tests/contracts/VerifierContainmentFixture.cs",
+      "bytes": 11196,
+      "sha256": "8c2d65eac05a8afd61e4633667ba08decf8931077f93011c55b32312948514c6"
+    },
+    {
+      "path": "tests/contracts/VerifierRetainedStopContract.ps1",
+      "bytes": 19427,
+      "sha256": "ffc3017f4b4a7eff49122ab8ae7cad838e43a38e0ae8dc2e6275402302583285"
+    },
+    {
+      "path": "tests/contracts/VerifierCapturedPipeContract.ps1",
+      "bytes": 116186,
+      "sha256": "454606bb24a05bec9754e2e9bfc26d0792b0a18ac3c29360275ccbb737589cea"
+    },
+    {
+      "path": "tests/contracts/VerifierNativeCoordinatorContract.ps1",
+      "bytes": 101010,
+      "sha256": "3797141e55139ea0e4f31bf47f114586c125f451d2dee7302c62bd44342522c2"
+    },
+    {
+      "path": "tests/qualification/rb100-layout/normal-prior-caller-r1/qualify_prior.py",
+      "bytes": 74051,
+      "sha256": "9ed88a6a528de780fe65ac3fb02f5c87d71caf3225c3294668647c0c71d35c95"
+    }
+  ],
+  "scopeSha256": "a66925e3728a7b78adc1dff315ac3874d2308767a58094c812c0a73d7e65e7b9",
+  "scopeAdaptationSha256": "40f2ee53f735465eb91b0d483b0fcde859e52f750170b51408262a29afaf2e27"
+}

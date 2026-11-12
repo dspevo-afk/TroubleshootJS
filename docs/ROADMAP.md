@@ -2191,6 +2191,18 @@ pushed to origin/codex/q100-physical-feasibility; exact remote SHA verified.
 Completion Gmail `1a1ce458d4dd776d` sent once; no second email for this receipt.
 Next is explicit invocation policy and trusted native composition prerequisites.
 
+The [finite native JDK8 compile/return prerequisite](task-evidence/Q100/current-native-host-r1/NATIVE_TOOL_RETURN_R1.md)
+is locally accepted for standalone CODE in the selected serial Windows host.
+Actual javac0/Java0 and Java7/compiler2 rejection controls pass through the same
+creator-job coordinator, with Source/argfile/one-class tuples, literal argv/cwd/
+output oracles and original-root/current-job/reader/lease closure. Final Smoke2/
+Suite4, two before-launch pin controls and a declared post-return failure-evidence
+control pass. The forced assertion remains a failed operation. Caps4096B/stream are TEST
+ONLY, not native role defaults; existing owners and all N61 consumed CODE inputs
+stay unchanged. No six-Source/verified-return/full-JDK or normal/genuine authority
+is granted. Playable100=0; beta HELD. Next is explicit native role policy and
+trusted Source/tool/classpath/return composition; publication pending.
+
 CircuitJS remains the electrical source of truth. Generation, simulation adaptation, physical
 mapping, instruments, mutation, damage, and scoring retain separate owners. Preserve current
 seeded determinism, exact signed-long seed transport, candidate ordering, documented resource
