@@ -6,7 +6,8 @@ package com.lushprojects.circuitjs1.client;
  * bounded semantic commands and settles the existing solver graph after each
  * command.
  */
-final class SensorControlFamilyState implements GeneratedBoardFamilyState {
+final class SensorControlFamilyState implements GeneratedBoardFamilyState,
+        GeneratedActiveInputOperations {
     private final E04SensorControlModel model;
     private final GeneratedBoardOperationCatalog operations =
         new GeneratedBoardOperationCatalog();
@@ -141,6 +142,16 @@ final class SensorControlFamilyState implements GeneratedBoardFamilyState {
 
     public String getSessionInputSignature() {
         return "SENSOR_CONDITION@1:" + commandedCondition.name();
+    }
+
+    public boolean isInputOperationActive(String id) {
+        if (commandedCondition == E04SensorControlModel.SensorCondition.SENSOR_LOW)
+            return GeneratedBoardOperationIds.SENSOR_CONDITION_LOW.equals(id);
+        if (commandedCondition == E04SensorControlModel.SensorCondition.SENSOR_MID)
+            return GeneratedBoardOperationIds.SENSOR_CONDITION_MID.equals(id);
+        if (commandedCondition == E04SensorControlModel.SensorCondition.SENSOR_HIGH)
+            return GeneratedBoardOperationIds.SENSOR_CONDITION_HIGH.equals(id);
+        return false;
     }
 
     public GeneratedBoardOperationCatalog getOperationCatalog() { return operations; }

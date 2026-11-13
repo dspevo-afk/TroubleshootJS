@@ -574,8 +574,16 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
             PhysicalPartRenderGeometry geometry = painter.getLooseGeometry(context);
             if (part.getId().equals(selectedPartId)) drawSelection(graphics, geometry);
             painter.drawLoose(graphics, context, geometry, part.getId().equals(selectedPartId));
+            drawLooseCaption(graphics, part, drawer.cell(all.indexOf(part)));
         }
         graphics.restore();
+    }
+
+    /** Tells a removed board part apart from an identical shop replacement. */
+    private void drawLooseCaption(Graphics graphics, PhysicalPart<?> part, Rectangle cell) {
+        graphics.setFont(new Font(WorkbenchVisualTheme.FONT, Font.BOLD, 10));
+        graphics.setColor(part.isOriginal() ? WorkbenchVisualTheme.MUTED_TEXT : WorkbenchVisualTheme.TEXT);
+        graphics.drawString(part.isOriginal() ? "Removed part" : "New part", cell.x + 4, cell.y - 4);
     }
 
     private void drawTray(Graphics graphics) {

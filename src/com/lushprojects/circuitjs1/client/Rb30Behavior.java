@@ -4,7 +4,7 @@ import java.util.TreeMap;
 import java.util.Vector;
 
 /** Finite Q30/RB56 input recipes; one guarded profile owner and current CircuitJS graph. */
-final class Rb30Behavior implements GeneratedBoardFamilyState,
+final class Rb30Behavior implements GeneratedBoardFamilyState, GeneratedActiveInputOperations,
         GeneratedChallengeBehaviorContract, GeneratedTemporalBehavior, GeneratedTemporalBehavior.GoalWorkUnits,
         GeneratedLiveTemporalSimulation {
     static final String SENSORS_LOW = "SENSORS_LOW";
@@ -122,6 +122,14 @@ final class Rb30Behavior implements GeneratedBoardFamilyState,
                 return null;
             }
         }));
+    }
+
+    public boolean isInputOperationActive(String id) {
+        if (SENSORS_LOW.equals(id)) return input == 0;
+        if (SENSORS_HIGH.equals(id)) return input == allInputMask;
+        if (channels.length == 2 && SENSORS_A_ONLY.equals(id)) return input == 1;
+        if (channels.length == 2 && SENSORS_B_ONLY.equals(id)) return input == 2;
+        return false;
     }
 
     public void requireOwnedBy(GeneratedBoardInstance owner) {

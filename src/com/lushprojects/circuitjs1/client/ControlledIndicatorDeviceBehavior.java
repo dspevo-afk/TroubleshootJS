@@ -650,7 +650,8 @@ final class ControlledIndicatorDeviceBehavior
     }
 
     /** Device-owned per-channel controls plus the semantic customer retest. */
-    private static final class FamilyState implements GeneratedBoardFamilyState {
+    private static final class FamilyState implements GeneratedBoardFamilyState,
+            GeneratedActiveInputOperations {
         private final ControlledIndicatorDeviceBehavior behavior;
         private final GeneratedBoardOperationCatalog operations =
             new GeneratedBoardOperationCatalog();
@@ -723,6 +724,15 @@ final class ControlledIndicatorDeviceBehavior
         public boolean isFaultedTargetInstalled(GeneratedBoardInstance instance, String componentId) {
             return GeneratedBoardFamilyPolicy.isFaultedTargetInstalled(instance, componentId);
         }
+        public boolean isInputOperationActive(String id) {
+            for (ControlledIndicatorChannel channel : behavior.plan.getChannels()) {
+                boolean high = behavior.commands.get(channel.getKey()).isHigh();
+                if (channel.getHighOperationId().equals(id)) return high;
+                if (channel.getLowOperationId().equals(id)) return !high;
+            }
+            return false;
+        }
+
         public String getSessionInputSignature() {
             StringBuilder out = new StringBuilder("CONTROLLED_INPUTS@1:");
             for (Map.Entry<String, Boolean> entry : behavior.channelStates().entrySet())

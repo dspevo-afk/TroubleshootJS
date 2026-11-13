@@ -144,7 +144,7 @@
     var message = owner.action(token, view || 0, name, a || '', b || '', c || '');
     if (!ownsBridge(owner)) return; // End may synchronously tear this UI down.
     if (name === 'acquire' && message && message.indexOf('Added to the real Parts Tray.') === 0)
-      message = 'Added to Parts Tray. Select the loose part there, then click a compatible Install as button, or drag it onto an empty compatible footprint.';
+      message = 'Added to Parts Tray. Click the loose part in the tray and choose Install as, or drag it onto an empty compatible footprint.';
     status(message); schedule();
   }
   function actionButton(parent, text, name, a, b, c) {
@@ -615,7 +615,7 @@
     controls.shopTrayCount = append(supplier, 'p', undefined, 'tsj-store-tray');
     var intro = append(storefront, 'section', undefined, 'tsj-store-intro');
     append(intro, 'h3', 'The right part starts with the specification.');
-    append(intro, 'p', 'Browse by rating and lead spacing. Add a part to your Parts Tray, select the loose part there, then click a compatible Install as button or drag it onto an empty compatible footprint.');
+    append(intro, 'p', 'Browse by rating and lead spacing. Add a part to your Parts Tray, click the loose part in the tray and choose Install as, or drag it onto an empty compatible footprint.');
     var browse = append(storefront, 'div', undefined, 'tsj-store-browse');
     controls.shopNav = append(browse, 'nav', undefined, 'tsj-store-categories');
     controls.shopNav.setAttribute('aria-label', 'Component categories');
@@ -751,7 +751,7 @@
       ['Scope and frequency (Hz)', 'The scope uses a red/black differential reference and solver-time samples, not screen-frame timing. An insufficient or aliased display is not a measurement. Treat clipped, unavailable or unsupported views as inconclusive and follow the instrument message.'],
       ['Ohms and continuity', 'Disconnect all board supplies and allow stored energy to discharge. In-circuit readings include parallel paths: a low resistance or continuity tone does not by itself identify a failed part. Isolate a lead or remove a part when needed to distinguish paths.'],
       ['Diode mode', 'Use an isolated, discharged board. The instrument applies a test current; polarity and parallel paths affect the reading. Reverse the probes to compare directions. Follow any settling or unsupported-measurement message.'],
-      ['Repair and verify', 'Isolate every supply and wait for discharge. Remove the part to the Parts Tray, acquire an appropriate loose replacement from Shop, select the loose part in the Parts Tray, then click a compatible Install as button or drag it onto an empty compatible footprint. Restore the relevant supplies and inputs, then run the customer retest. A part swap alone does not establish that the customer’s problem is fixed.']
+      ['Repair and verify', 'Isolate every supply and wait for discharge. Remove the part to the Parts Tray, acquire an appropriate loose replacement from Shop, click the loose part in the Parts Tray and choose Install as, or drag it onto an empty compatible footprint. Restore the relevant supplies and inputs, then run the customer retest. A part swap alone does not establish that the customer’s problem is fixed.']
     ];
     append(parent, 'p', 'Measurement, navigation and repair references for the workbench.', 'tsj-product-hint');
     var guides = append(parent, 'div', undefined, 'tsj-product-guides');

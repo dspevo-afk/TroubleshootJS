@@ -4,7 +4,7 @@ import java.util.TreeMap;
 import java.util.Vector;
 
 /** Electrical observations and input recipe; RelayElm owns the actual RL/contact dynamics. */
-final class RelayOutputBehavior implements GeneratedBoardFamilyState,
+final class RelayOutputBehavior implements GeneratedBoardFamilyState, GeneratedActiveInputOperations,
         GeneratedChallengeBehaviorContract, GeneratedTemporalBehavior, GeneratedLiveTemporalSimulation {
     static final double SAMPLE_SECONDS = .025;
     static final double DISCHARGED_AMPS = 1e-6;
@@ -108,6 +108,11 @@ final class RelayOutputBehavior implements GeneratedBoardFamilyState,
     public String getSessionInputSignature() {
         return isCommandedOn() ? GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
             GeneratedBoardOperationIds.CONTROL_INPUT_LOW;
+    }
+
+    public boolean isInputOperationActive(String id) {
+        return (isCommandedOn() ? GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
+            GeneratedBoardOperationIds.CONTROL_INPUT_LOW).equals(id);
     }
 
     public GeneratedBoardOperationCatalog getOperationCatalog() { return operations; }

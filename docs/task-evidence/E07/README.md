@@ -83,7 +83,7 @@ PASS on the replacement chip.
 - The live LED blink rate on screen follows frame rate. Measurements and retest
   use solver time.
 - The empty footprint is not clickable. Install goes through the parts tray.
-- Tray part numbering skips numbers, and the install dialog says "Install as
-  Circuit / RA".
-- Probe markers stay on the board after the player leaves meter mode.
+- Tray part numbering skips numbers. (The "Install as Circuit / RA" wording and
+  the leftover probe markers were fixed in the
+  [playability pass](../playability-pass/README.md).)
 - EASY only. MEDIUM and HARD timer content is not in scope.

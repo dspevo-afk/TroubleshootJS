@@ -1,7 +1,8 @@
 package com.lushprojects.circuitjs1.client;
 
 /** Family-owned control command; load response remains solver-derived. */
-final class NmosLowSideSwitchFamilyState implements GeneratedBoardFamilyState {
+final class NmosLowSideSwitchFamilyState implements GeneratedBoardFamilyState,
+        GeneratedActiveInputOperations {
     private final SwitchElm controlCommandSwitch;
     private final GeneratedBoardOperationCatalog operations =
         new GeneratedBoardOperationCatalog();
@@ -104,6 +105,11 @@ final class NmosLowSideSwitchFamilyState implements GeneratedBoardFamilyState {
             throw new IllegalStateException("Control command disagrees with its switch");
         return commandedOn ? GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
             GeneratedBoardOperationIds.CONTROL_INPUT_LOW;
+    }
+
+    public boolean isInputOperationActive(String id) {
+        return (commandedOn ? GeneratedBoardOperationIds.CONTROL_INPUT_HIGH :
+            GeneratedBoardOperationIds.CONTROL_INPUT_LOW).equals(id);
     }
 
     public GeneratedBoardOperationCatalog getOperationCatalog() { return operations; }

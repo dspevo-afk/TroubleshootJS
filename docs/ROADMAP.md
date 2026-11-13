@@ -83,15 +83,17 @@ as a scoped task to build a large-board routing policy and envelope, not as more
 
 In preferred order. Each needs its own authorization.
 
-1. **Board realism (owner request, 2026-11-12).** Compaction is done for RB30
-   and RB56 (placement 16); see [board-realism](task-evidence/board-realism/README.md).
-   Small boards stay one-sided (owner decision, 2026-11-13); bottom-side parts
-   wait for SMD packages (deferred by the owner). Open: REL-B's 30-root RB56
-   corpus must be re-run on placement 16 (carried into item 3).
-2. **Stabilize what is playable.** Fix defects found by playing the current
-   build before adding scope. Open items are listed in [TASK_REPORT.md](TASK_REPORT.md).
-3. **Close or park REL-B.** Either run the remaining release checks and ship the
-   MEDIUM beta, or record it as parked.
+1. **Stabilize what is playable (in progress, 2026-11-13).** Fix defects found
+   by playing the current build before adding scope. First pass done: input
+   state, probe markers, tray install and labels; see
+   [playability pass](task-evidence/playability-pass/README.md). Open items are
+   listed in [TASK_REPORT.md](TASK_REPORT.md).
+2. **Board realism** is done in its agreed scope: RB30 and RB56 compaction; small
+   boards stay one-sided (owner, 2026-11-13); bottom-side parts wait for SMD
+   packages; see [board-realism](task-evidence/board-realism/README.md).
+3. **Close or park REL-B.** Either run the remaining release checks (including
+   the RB56 placement-16 corpus re-run) and ship the MEDIUM beta, or record it as
+   parked.
 4. **Content the alpha is missing.** E07 (555 timer board) is done. E08
    (jumpers, trace cuts, physical restoration) is next; it changes the mutation
    and save formats. U09 (two-channel scope) can now build on the E07 timer

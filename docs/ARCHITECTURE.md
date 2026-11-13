@@ -7365,6 +7365,17 @@ and C1 short. The workbench shows board-owned operations both in the ticket and
 as direct toolbar buttons (`PcbWorkbenchController.boardControls`).
 See [E07 evidence](task-evidence/E07/README.md).
 
+Families with latched inputs (relay, NPN, NMOS, sensor, controlled indicator,
+RB30/RB56) also implement the optional `GeneratedActiveInputOperations`. It
+reads the family's own command state and only tells the workbench which input
+button to mark as applied (`is-active`, `aria-pressed`); it never sets inputs.
+Momentary operations such as START stay plain buttons. A plain click on a loose
+tray part opens the same component menu as a right-click, with its Install
+targets, and the tray drawer captions each part "Removed part" or "New part"
+from `PhysicalPart.isOriginal()`. Probe targets survive mode changes, but
+`InstrumentController.draw` hides the markers while no probing mode is
+selected. See [playability pass](task-evidence/playability-pass/README.md).
+
 ## Q60 implemented RB56 ownership and qualification boundary
 
 `CirSim` retains one authoritative typed `WireInfo[]`. A local vector still

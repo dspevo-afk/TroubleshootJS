@@ -566,6 +566,10 @@ class InstrumentController {
 
     void draw(Graphics graphics) {
         activeStrategy.draw(this, graphics);
+        // Probe targets survive mode changes, but leads are only shown while a
+        // probing mode is selected; with the meter off the board stays clear.
+        if (!activeStrategy.getProbeRequirements().requiresTwoProbes())
+            return;
         drawProbe(graphics, redProbe, Color.red);
         drawProbe(graphics, blackProbe, Color.black);
     }

@@ -443,6 +443,11 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     void releasePartDrag(int x,int y) {
         PhysicalPart<?> part=draggedPart; String from=draggedFromComponent; boolean moved=partDragging;
         cancelPartDrag();
+        if (!moved && part!=null && from==null && !part.isInstalled() && isCurrentPhysicalActionable()) {
+            // A plain click on a loose tray part offers its install targets directly.
+            openComponentMenu(x,y);
+            return;
+        }
         if (!moved || part==null || !isCurrentPhysicalActionable()) return;
         WorkbenchRenderHit drop=renderHost.dropHit(x,y);
         String message="Drop the part on the tray or a compatible board footprint.";
@@ -1190,11 +1195,17 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private void addCustomerOperationControls(final GeneratedChallengeController challenge) {
         GeneratedCustomerRetestProfile profile = challenge.getCustomerRetestProfile();
         ticketPanel.add(new Label("Customer retest: " + profile.getPlayerInstruction()));
+        GeneratedActiveInputOperations activeInputs =
+            instance.getFamilyState() instanceof GeneratedActiveInputOperations ?
+                (GeneratedActiveInputOperations) instance.getFamilyState() : null;
         for (final GeneratedBoardOperation operation : instance.getOperationCatalog().getAll()) {
             if (GeneratedBoardOperationIds.CUSTOMER_RETEST.equals(operation.getStableId()))
                 continue;
+            boolean active = activeInputs != null &&
+                activeInputs.isInputOperationActive(operation.getStableId());
             Button command = new Button(operation.getPlayerLabel());
             command.setStyleName("tsj-action-button");
+            markActiveInput(command, activeInputs, active);
             command.setEnabled(isCurrentSemanticActionable(challenge));
             final String operationId = operation.getStableId();
             ClickHandler commandHandler = new ClickHandler() {
@@ -1215,6 +1226,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
             ticketPanel.add(command);
             Button direct = new Button(operation.getPlayerLabel());
             direct.setStyleName("tsj-product-button tsj-board-control");
+            markActiveInput(direct, activeInputs, active);
             direct.setEnabled(command.isEnabled());
             direct.addClickHandler(commandHandler);
             boardControls.add(direct);
@@ -1426,11 +1438,25 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
 
     private String playerTargetLabel(String componentId) {
         String componentLabel = playerComponentName(componentId);
+        // A single default region ("Circuit") adds nothing to the target name.
+        if (renderer.getLayoutForProvider().getRegions().size() <= 1)
+            return componentLabel;
         for (PcbLayoutRegion region : renderer.getLayoutForProvider().getRegions())
             for (String member : region.getComponentIds())
                 if (componentId.equals(member))
                     return region.label + " / " + componentLabel;
         return componentLabel;
+    }
+
+    /** Latched inputs read as toggle buttons; momentary operations stay plain buttons. */
+    private static void markActiveInput(Button button, GeneratedActiveInputOperations inputs,
+            boolean active) {
+        if (inputs == null)
+            return;
+        button.addStyleName("tsj-input-option");
+        if (active)
+            button.addStyleName("is-active");
+        button.getElement().setAttribute("aria-pressed", Boolean.toString(active));
     }
 
     private interface ComponentAction { void execute(); }

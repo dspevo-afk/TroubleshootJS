@@ -1,53 +1,53 @@
 # Task report — current checkpoint
 
-**Date:** 2026-11-13 · **Branch:** `master` · **Base:** `5f4abcb3` · **Task:** board realism
-(compaction). The previous checkpoint (E07) is in
-[archive/2026-11-12-e07-checkpoint.md](archive/2026-11-12-e07-checkpoint.md).
+**Date:** 2026-11-13 · **Branch:** `master` · **Base:** `72c4f00e` · **Task:** stabilize what is
+playable, first pass (ROADMAP Next up item 1). The previous checkpoint (board realism) is in
+[archive/2026-11-13-board-realism-checkpoint.md](archive/2026-11-13-board-realism-checkpoint.md).
 
 ## Delivered
 
-- **RB30 compaction** (`5f4abcb3`, pushed). Gravity compaction in the packing probe plus an
-  area-dominant selection rule. RB30 fill 11.6% → 16.0%; root 0 went from 230×112 mm to 147×107 mm.
-- **RB56 placement 16.** Version 15 plus connected-pocket packing and gravity compaction. Fill
-  17.8% → 19.4%; root 0 went from 159×109 mm to 151×105 mm. New private replay namespace
-  `tsj-private-session/16`; placement 15 stays selectable and keeps its identity.
-- **`PcbBoardDensityContractTest`** reports fill for every family and holds per-family floors.
-- Evidence and findings: [task-evidence/board-realism](task-evidence/board-realism/README.md).
+Found by playing a fresh relay output board from ticket to repair. Details:
+[task-evidence/playability-pass](task-evidence/playability-pass/README.md).
 
-## Not done, by decision
-
-- **Bottom-side parts.** All gameplay packages are through-hole, so bottom placement gains little
-  and is unrealistic. It needs SMD packages; the owner deferred it on 2026-11-13.
-- **Small boards.** One-face compaction made boards larger or unroutable and was reverted.
-  The owner chose on 2026-11-13 to keep small boards one-sided.
+- **Applied input is visible.** HIGH/LOW and sensor LOW/MID/HIGH buttons show which setting is
+  applied, through the optional `GeneratedActiveInputOperations` (relay, NPN, NMOS, sensor,
+  controlled indicator, RB30/RB56). Momentary START is unchanged.
+- **Probe markers hide when the meter is off.** Probe positions are kept for the next mode.
+- **Click-to-install from the tray.** A plain click on a loose tray part opens its Install menu;
+  shop and help text updated.
+- **Tray captions** "Removed part" / "New part".
+- **"Install as K1"** instead of "Install as Circuit / K1" on single-region boards.
 
 ## Gates
 
 | Gate | Result |
 |---|---|
-| `scripts/build.ps1` (JDK 8, GWT 2.7) | PASS, 113 s |
-| `PcbBoardDensityContractTest` | PASS, 26 cases |
-| RB56, identity and session suites (about 50) | PASS |
-| Full native gate (no `-Suite`) | PASS: 215 Java suites plus independent oracles, 52 min. Two earlier runs stopped on child time budgets while a live RB56 board was simulating in the browser; rerun with the browser idle |
-| Browser play (built-in browser, real clicks) | PASS: RB30 board and live 11.998 V reading; RB56 placement 16 board loads |
+| `scripts/build.ps1` (JDK 8, GWT 2.7) | PASS |
+| 23 focused suites touching the changed classes | PASS (one rerun after a 60 s child budget tripped while a board simulated in the browser) |
+| Full native gate (no `-Suite`), browser idle | PASS: 215 Java suites plus independent oracles, 52 min |
+| `tests/contracts/u04_ui_contract.mjs` | NOT RUN: jsdom is not installed here; only its expected hint strings changed |
+| Browser play (built-in browser, real clicks) | PASS: relay board toggle, meter off, remove/buy/caption/click-install; sensor board toggle |
+
+## Open items for this milestone
+
+- Tray part numbers skip because they count installed parts.
+- Single-sided boards show no copper in the default top view (bottom view exists).
+- Empty footprints are not click targets.
+- Only the relay and sensor boards were played in this pass; other families are next.
 
 ## Limits
 
-- RB56 boards take about 35% longer to generate (the extra compaction route): the 20-board
-  physical matrix went from 102 s to 138 s, inside its 600 s child budget.
-- REL-B's 30-root RB56 MEDIUM qualification was not re-run for placement 16. Required before the
-  beta ships.
+- REL-B's 30-root RB56 MEDIUM qualification is still not re-run for placement 16.
 - Run alone, `ProceduralFamilyContractTest` stops at RB56 generation with a `CompositeElm` NPE
-  (single-suite harness gap). It passes in the full gate. `U04SessionContractTest` passed in this
-  task's grouped focused run.
+  (single-suite harness gap). It passes in the full gate.
 
 ## Resources
 
 - Preview server `tsj-preview` on port 8899, started by the app's preview tool.
-- Scratch logs and board SVGs in OS temp only.
+- Scratch logs in OS temp only.
 - Untouched, still awaiting the owner from the audit: 28 worktrees and 8 stashes.
 
 ## Next action
 
-Board realism is complete in its agreed scope. Next: ROADMAP Next up item 2 (stabilize what is
-playable), then REL-B close-or-park (including the RB56 placement-16 corpus re-run), then E08.
+Continue the playability pass on the other families (555 timer, RB30, RB56, two-channel
+controller), then REL-B close-or-park, then E08.

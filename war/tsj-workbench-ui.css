@@ -179,6 +179,10 @@ body.tsj-workbench-ui .tsj-native-popover > tbody { display: table; width: 100%;
 .tsj-board-control:hover:not(:disabled) { background: #4c3b20; border-color: #f0c060; }
 .tsj-board-control:active:not(:disabled) { transform: translateY(1px); }
 .tsj-board-control:disabled { opacity: .5; }
+.tsj-board-control.is-active { background: #f0c060; border-color: #ffe2a6; color: #2b2010; box-shadow: 0 0 0 2px #f0c06055, inset 0 1px 0 #ffffff55; }
+.tsj-board-control.is-active:hover:not(:disabled) { background: #f6cf7a; }
+.tsj-board-control.is-active::before { content: "\25CF\00A0"; }
+.tsj-action-button.tsj-input-option.is-active { outline: 2px solid #d9a441; outline-offset: 1px; font-weight: 700; }
 
 /* Body-level dialogs preserve the established inert/focus/lease boundary. */
 .tsj-ui-overlay { position: fixed; inset: 0; z-index: 10010; display: none; padding: 24px; background: repeating-linear-gradient(135deg, #1c4442ed 0 20px, #244c49ed 20px 40px); pointer-events: auto; align-items: center; justify-content: center; overscroll-behavior: contain; }
