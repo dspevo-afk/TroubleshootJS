@@ -33,6 +33,8 @@ final class StandardPcbFootprintProviders {
             new MultiTerminalProvider(4, 4));
         registry.register(PhysicalPackages.E04_DECISION_CONTROL_5,
             new MultiTerminalProvider(5, 5));
+        registry.register(PhysicalPackages.TIMER_SIP_8,
+            new MultiTerminalProvider(8, 8));
         registry.register(PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR,
             new ElectrolyticCapacitorProvider());
         registry.register(PhysicalPackages.RADIAL_CERAMIC_CAPACITOR,

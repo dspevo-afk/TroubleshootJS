@@ -33,7 +33,8 @@ final class PhysicalServicePart extends FixedPhysicalPart<PhysicalSpecification>
     boolean isFactoryLink() { return getSpecification() instanceof FactoryLinkSpecification; }
     boolean hasTypedPowerRecipe() {
         return getSpecification() instanceof InductorSpecification || getSpecification() instanceof ZenerSpecification ||
-            getSpecification() instanceof OptocouplerSpecification;
+            getSpecification() instanceof OptocouplerSpecification ||
+            getSpecification() instanceof Timer555Specification;
     }
     public boolean isDetachmentReady(CirSim sim, GeneratedBoardInstance owner) {
         // Loose parts have no board attachment to cut. Other service recipes retain their behavior.
@@ -96,6 +97,7 @@ final class PhysicalServicePart extends FixedPhysicalPart<PhysicalSpecification>
         if (spec instanceof InductorSpecification) return ((InductorSpecification)spec).createBacking(x, y);
         if (spec instanceof ZenerSpecification) return ((ZenerSpecification)spec).createBacking(x, y);
         if (spec instanceof OptocouplerSpecification) return ((OptocouplerSpecification)spec).createBacking(x, y);
+        if (spec instanceof Timer555Specification) return ((Timer555Specification)spec).createBacking(x, y);
         throw new IllegalArgumentException("Unknown typed power service recipe");
     }
 
@@ -108,6 +110,8 @@ final class PhysicalServicePart extends FixedPhysicalPart<PhysicalSpecification>
             ZenerSpecification.requireBacking(spec, pkg, elements);
         else if (spec instanceof OptocouplerSpecification || pkg == PhysicalPackages.OPTOCOUPLER_4)
             OptocouplerSpecification.requireBacking(spec, pkg, elements);
+        else if (spec instanceof Timer555Specification || pkg == PhysicalPackages.TIMER_SIP_8)
+            Timer555Specification.requireBacking(spec, pkg, elements);
         else if (spec instanceof FuseSpecification)
             FuseSpecification.requireBacking(spec, pkg, elements);
         else if (spec instanceof FactoryLinkSpecification || pkg.getGeometry().getRaisedCrossover() != null)
@@ -128,7 +132,8 @@ final class PhysicalServicePart extends FixedPhysicalPart<PhysicalSpecification>
         for (int i = 0; i < pkg.getTerminalCount(); i++) {
             CircuitElm element = connector ? elements.get(i) :
                 spec instanceof InductorSpecification && i == 1 ? elements.get(1) : elements.get(0);
-            int post = connector ? 0 : spec instanceof InductorSpecification && i == 1 ? 1 : i;
+            int post = connector ? 0 : spec instanceof InductorSpecification && i == 1 ? 1 :
+                spec instanceof Timer555Specification ? Timer555Specification.postForTerminal(i) : i;
             result.add(new PhysicalPartTerminal(id, pkg.getTerminalIds().get(i),
                 new CircuitPostMeasurementEndpoint(element, post)));
         }

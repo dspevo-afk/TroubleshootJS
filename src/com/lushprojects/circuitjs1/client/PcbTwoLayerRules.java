@@ -275,6 +275,7 @@ final class PcbTwoLayerRules {
             physical == PhysicalPackages.TO92_NMOS ||
             physical == PhysicalPackages.TO220_REGULATOR_4 ||
             physical == PhysicalPackages.E04_DECISION_CONTROL_5 ||
+            physical == PhysicalPackages.TIMER_SIP_8 ||
             physical == PhysicalPackages.RADIAL_ELECTROLYTIC_CAPACITOR ||
             physical == PhysicalPackages.RADIAL_CERAMIC_CAPACITOR ||
             physical == PhysicalPackages.THROUGH_HOLE_CONNECTOR_2 ||

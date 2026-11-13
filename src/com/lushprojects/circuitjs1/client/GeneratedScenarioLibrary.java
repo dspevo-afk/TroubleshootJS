@@ -59,6 +59,42 @@ final class GeneratedScenarioLibrary {
         return new GeneratedScenarioCatalog<GeneratedObservedBehavior>(candidates);
     }
 
+    static GeneratedScenarioCatalog<GeneratedObservedBehavior> timerFlasher() {
+        Vector<GeneratedScenario<GeneratedObservedBehavior>> candidates =
+            new Vector<GeneratedScenario<GeneratedObservedBehavior>>();
+        candidates.add(new GeneratedScenario<GeneratedObservedBehavior>(
+            "TIMER_FLASHER_SLOW", "FLASHES_TOO_SLOWLY",
+            "The indicator flashes much more slowly than it used to.",
+            GeneratedObservedBehavior.TIMER_TOO_SLOW, new RcTemporalCompatibility()));
+        candidates.add(new GeneratedScenario<GeneratedObservedBehavior>(
+            "TIMER_FLASHER_STUCK_ON", "INDICATOR_STAYS_ON",
+            "The indicator comes on and stays on. It never flashes.",
+            GeneratedObservedBehavior.TIMER_STUCK_ON, new RcTemporalCompatibility()));
+        candidates.add(new GeneratedScenario<GeneratedObservedBehavior>(
+            "TIMER_FLASHER_DARK", "INDICATOR_DOES_NOT_LIGHT",
+            "The indicator never lights.",
+            GeneratedObservedBehavior.TIMER_STUCK_OFF, new RcTemporalCompatibility()));
+        return new GeneratedScenarioCatalog<GeneratedObservedBehavior>(candidates);
+    }
+
+    static GeneratedScenarioCatalog<GeneratedObservedBehavior> timerPulse() {
+        Vector<GeneratedScenario<GeneratedObservedBehavior>> candidates =
+            new Vector<GeneratedScenario<GeneratedObservedBehavior>>();
+        candidates.add(new GeneratedScenario<GeneratedObservedBehavior>(
+            "TIMER_PULSE_LONG", "PULSE_TOO_LONG",
+            "After pressing START, the light stays on far longer than it should.",
+            GeneratedObservedBehavior.TIMER_TOO_SLOW, new RcTemporalCompatibility()));
+        candidates.add(new GeneratedScenario<GeneratedObservedBehavior>(
+            "TIMER_PULSE_STUCK_ON", "PULSE_NEVER_ENDS",
+            "After pressing START, the light comes on and never turns off.",
+            GeneratedObservedBehavior.TIMER_STUCK_ON, new RcTemporalCompatibility()));
+        candidates.add(new GeneratedScenario<GeneratedObservedBehavior>(
+            "TIMER_PULSE_DEAD", "START_DOES_NOTHING",
+            "Pressing START does nothing.",
+            GeneratedObservedBehavior.TIMER_STUCK_OFF, new RcTemporalCompatibility()));
+        return new GeneratedScenarioCatalog<GeneratedObservedBehavior>(candidates);
+    }
+
     static GeneratedScenarioCatalog<GeneratedObservedBehavior> npnLowSideSwitch() {
         Vector<GeneratedScenario<GeneratedObservedBehavior>> candidates =
             new Vector<GeneratedScenario<GeneratedObservedBehavior>>();

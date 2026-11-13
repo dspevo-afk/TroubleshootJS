@@ -158,7 +158,7 @@ public final class QuickPlayGateContractTest {
         expected.add(ControlledIndicatorBlockContributions.FAMILY_ID);
         expected.add(Rb30Plan.FAMILY_ID);
         expected.add(Rb56Plan.FAMILY_ID);
-        check(catalog.size() == 12 && catalog.equals(expected),
+        check(catalog.size() == 13 && catalog.equals(expected),
             "Current menu includes accepted Q30 after the existing qualified families");
         check(PlayerFamilyCatalog.registeredFamilies().contains(Rb30Plan.FAMILY_ID),
             "Enabled Q30 retains its registered construction capability");

@@ -8,7 +8,7 @@ import java.util.Vector;
 final class PlayerFamilyCatalog {
     static final String EXECUTION_DECLARATION_VERSION = "PLAYER_FAMILY_EXECUTION@1";
     private static final String[] BUILT_IN_ROUTES = {
-        "led", "diode", "parallel", "rc", "npn", "nmos", "relay",
+        "led", "diode", "parallel", "rc", "timer", "npn", "nmos", "relay",
         "sensor-control", "control-board", "controlled-indicator"
     };
     private static final RegistrationBoundary CURRENT = currentRegistration();
@@ -149,6 +149,7 @@ final class PlayerFamilyCatalog {
             if (QuickPlayFamilyRegistry.DIODE_PROTECTED_INDICATOR.equals(id)) return "Protected indicator";
             if (QuickPlayFamilyRegistry.PARALLEL_DUAL_INDICATOR.equals(id)) return "Dual indicator";
             if (QuickPlayFamilyRegistry.RC_DELAY.equals(id)) return "Timing board";
+            if (QuickPlayFamilyRegistry.TIMER_555.equals(id)) return "555 timer board";
             if (QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(id)) return "BJT output driver";
             if (QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(id)) return "MOSFET output driver";
             if (QuickPlayFamilyRegistry.RELAY_OUTPUT.equals(id)) return "Relay output board";

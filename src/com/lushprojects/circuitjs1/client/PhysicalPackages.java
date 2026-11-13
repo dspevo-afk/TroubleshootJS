@@ -125,6 +125,15 @@ final class PhysicalPackages {
         "E04_DECISION_CONTROL_5",
         new String[] { "SENSOR", "REFERENCE", "RAIL", "OUTPUT", "RETURN" },
         false, e04DecisionControl());
+    /**
+     * Eight-pin single-row timer IC used by the E07 timer family. The pin
+     * order keeps the reset/supply, timing and output groups adjacent so a
+     * single declared copper layer can reach every pin.
+     */
+    static final PhysicalPackage TIMER_SIP_8 = fixedPackage(
+        "TIMER_SIP_8",
+        new String[] { "RESET", "VCC", "DIS", "THRES", "TRIG", "GND", "CTRL", "OUT" },
+        false, timerSip8());
     static final PhysicalPackage RADIAL_ELECTROLYTIC_CAPACITOR = fixedPackage(
         "RADIAL_ELECTROLYTIC_CAPACITOR", new String[] { "+", "-" }, false, electrolytic());
     static final PhysicalPackage RADIAL_CERAMIC_CAPACITOR = fixedPackage(
@@ -340,6 +349,18 @@ final class PhysicalPackages {
     }
 
     /** Compact, authoritative five-lead through-hole control package. */
+    private static PhysicalPackageGeometry timerSip8() {
+        Vector<PhysicalPackageGeometry.Terminal> terminals =
+            new Vector<PhysicalPackageGeometry.Terminal>();
+        String[] ids = { "RESET", "VCC", "DIS", "THRES", "TRIG", "GND", "CTRL", "OUT" };
+        for (int i = 0; i < ids.length; i++) {
+            int x = 30 + 50 * i;
+            terminals.add(terminal(ids[i], x, 150, x, 95, x, 117, 0, 1, 60));
+        }
+        return geometry(410, 210, terminals, new Rectangle(25, 25, 360, 75),
+            new Rectangle(18, 18, 374, 90), new Rectangle(5, 5, 400, 200));
+    }
+
     private static PhysicalPackageGeometry e04DecisionControl() {
         Vector<PhysicalPackageGeometry.Terminal> terminals =
             new Vector<PhysicalPackageGeometry.Terminal>();

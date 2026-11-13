@@ -678,9 +678,11 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'QuickPlayPhysicalMatrixContractTest' -or
         $Suite -contains 'E05PowerContractTest' -or
         $Suite -contains 'E05InstalledFixtureContractTest' -or
-        $Suite -contains 'SensorControlFamilyContractTest'
+        $Suite -contains 'SensorControlFamilyContractTest' -or
+        $Suite -contains 'E07TimerContractTest'
     $needsE06NativeBridge = $Suite.Count -eq 0 -or $Suite -contains 'U05DifficultyContractTest' -or $Suite -contains 'ControlledSourceDerivativeContractTest' -or $Suite -contains 'E06ConverterPilotContractTest' -or $Suite -contains 'E06AcceptedStateContractTest' -or
         $Suite -contains 'Rb100ElectricalPilotContractTest' -or
+        $Suite -contains 'ProceduralFamilyContractTest' -or
         $Suite -contains 'A07ExecutionContractTest' -or
         $Suite -contains 'PcbPlacementDiagnosticsContractTest' -or
         $Suite -contains 'Rb100P07PolicyDiagnosticContractTest' -or
@@ -712,7 +714,8 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'Rb56InCircuitReverseContractTest' -or
         $Suite -contains 'Rb56PhysicalOwnerContractTest' -or
         $Suite -contains 'Rb56NormalPackingCensusContractTest' -or
-        $Suite -contains 'QuickPlayPhysicalMatrixContractTest'
+        $Suite -contains 'QuickPlayPhysicalMatrixContractTest' -or
+        $Suite -contains 'E07TimerContractTest'
     $nativeLoggerShim = ''
     if ($needsQ30NativeLoggerBridge) {
         # CircuitJS's unconnected-node and convergence diagnostics use JSNI.
@@ -992,7 +995,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         @{ Name = 'PcbPackingProbeReceiptContractTest'; Marker = 'PCB packing probe receipt contracts ' },
         @{ Name = 'PcbNormalPackingCensusContractTest'; Marker = 'PCB normal packing census base-families-0-2 ' },
         @{ Name = 'PcbNormalPackingCensusContractTestGroup2'; Marker = 'PCB normal packing census base-families-3-5 ' },
-        @{ Name = 'PcbNormalPackingCensusContractTestGroup3'; Marker = 'PCB normal packing census base-families-6-8 ' },
+        @{ Name = 'PcbNormalPackingCensusContractTestGroup3'; Marker = 'PCB normal packing census base-families-6-9 ' },
         @{ Name = 'PcbNormalPackingCensusContractTestGroup4'; Marker = 'PCB normal packing census controlled-indicator-all-roots ' },
         @{ Name = 'PcbNormalPackingCensusContractTestGroup5'; Marker = 'PCB normal packing census rb30-root-0 ' },
         @{ Name = 'PcbNormalPackingCensusContractTestGroup6'; Marker = 'PCB normal packing census rb30-root-17 ' },
@@ -1022,6 +1025,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         @{ Name = 'ControlledSourceDerivativeContractTest'; Marker = 'controlled source derivative contracts ' },
         @{ Name = 'E06ConverterPilotContractTest'; Marker = 'E06 nominal pilot mechanics ' },
         @{ Name = 'E06AcceptedStateContractTest'; Marker = 'E06 accepted-state contracts ' },
+        @{ Name = 'E07TimerContractTest'; Marker = 'E07 timer contracts ' },
         @{ Name = 'Rb56PowerStageContractTest'; Marker = 'RB56 power-stage contracts ' },
         @{ Name = 'Rb100PlanContractTest'; Marker = 'RB100 plan contracts ' },
         @{ Name = 'Rb100ElectricalPilotContractTest'; Marker = 'RB100 electrical pilot contracts ' },
@@ -1256,7 +1260,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
             # medium census has 48 roots maximum plus 20 exact replays; its
             # separately reviewed 600s test cap does not change player budgets.
             $smallFamilies = @('LED_INDICATOR', 'DIODE_PROTECTED_INDICATOR',
-                'PARALLEL_DUAL_INDICATOR', 'RC_DELAY', 'NPN_LOW_SIDE_SWITCH',
+                'PARALLEL_DUAL_INDICATOR', 'RC_DELAY', 'TIMER_555', 'NPN_LOW_SIDE_SWITCH',
                 'NMOS_LOW_SIDE_SWITCH', 'RELAY_OUTPUT', 'SENSOR_CONTROL',
                 'RB15_CONTROL', 'COMPOSED_CONTROLLED_INDICATOR')
             $physicalGroups = @(
@@ -1319,7 +1323,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
             if ($familyFrames.Count -ne 1) { throw 'Missing unique procedural family catalog frame' }
             $families = @($familyFrames[0].Groups[1].Value -split ',')
             $expectedFamilies = @('LED_INDICATOR', 'DIODE_PROTECTED_INDICATOR',
-                'PARALLEL_DUAL_INDICATOR', 'RC_DELAY', 'NPN_LOW_SIDE_SWITCH',
+                'PARALLEL_DUAL_INDICATOR', 'RC_DELAY', 'TIMER_555', 'NPN_LOW_SIDE_SWITCH',
                 'NMOS_LOW_SIDE_SWITCH', 'RELAY_OUTPUT', 'SENSOR_CONTROL',
                 'RB15_CONTROL', 'COMPOSED_CONTROLLED_INDICATOR', 'RB30_CONTROL',
                 'RB56_CONTROL')

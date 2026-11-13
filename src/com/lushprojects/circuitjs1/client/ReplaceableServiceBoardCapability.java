@@ -31,6 +31,8 @@ final class ReplaceableServiceBoardCapability implements PhysicalBoardRuntimeCap
             return ((ZenerSpecification)original.getSpecification()).catalogLabel();
         if (original.getSpecification() instanceof OptocouplerSpecification)
             return ((OptocouplerSpecification)original.getSpecification()).catalogLabel();
+        if (original.getSpecification() instanceof Timer555Specification)
+            return ((Timer555Specification)original.getSpecification()).catalogLabel();
         if (original.getSpecification() instanceof FuseSpecification)
             return ((FuseSpecification)original.getSpecification()).catalogLabel();
         if (original.isFactoryLink()) return "Raised insulated factory link (50 mOhm)";
@@ -47,6 +49,7 @@ final class ReplaceableServiceBoardCapability implements PhysicalBoardRuntimeCap
         String kind = original.getSpecification() instanceof InductorSpecification ? "inductor" :
             original.getSpecification() instanceof ZenerSpecification ? "zener diode" :
             original.getSpecification() instanceof OptocouplerSpecification ? "optocoupler" :
+            original.getSpecification() instanceof Timer555Specification ? "555 timer IC" :
             original.isFactoryLink() ? "factory link" : original.isConnector() ? "connector" : "fuse";
         return "Install new " + kind;
     }

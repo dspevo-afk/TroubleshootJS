@@ -147,7 +147,7 @@ final class NpnLowSideSwitchDeveloperVerifier {
         double[] expectedLoadVoltages = { 9, 12, 5 };
         for (int index = 0; index < seeds.length; index++) {
             QuickPlaySelector selector = new QuickPlaySelector(new QuickPlayFixedRandomSource(
-                new long[] { 4, seeds[index] }));
+                new long[] { QuickPlayFamilyRegistry.getNormalPlayerFamilyIds().indexOf(QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH), seeds[index] }));
             QuickPlaySelection selection = selector.select();
             GeneratedBoardInstance generated = selector.generate(selection);
             require(QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(selection.getFamilyId()) &&

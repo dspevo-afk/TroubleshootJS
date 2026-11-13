@@ -15,9 +15,9 @@ family, receives a customer complaint, probes a procedurally placed and routed P
 with a solver-backed multimeter or scope, replaces parts from the shop, and runs a
 customer retest. Sessions can be saved and restored.
 
-- **Playable today:** twelve board families. EASY has nine (indicator, protected
-  indicator, dual indicator, timing, BJT driver, MOSFET driver, relay output,
-  sensor control, 15-part procedural control). MEDIUM has three (two-channel
+- **Playable today:** thirteen board families. EASY has ten (indicator, protected
+  indicator, dual indicator, RC timing, 555 timer, BJT driver, MOSFET driver,
+  relay output, sensor control, 15-part procedural control). MEDIUM has three (two-channel
   controller, 30-part multi-rail control, 56-part isolated AC control).
 - **Not available:** HARD and PSYCHOTIC difficulty, 100-part boards, player
   jumpers and trace cuts, logic/MCU content, circuit import.
@@ -26,7 +26,7 @@ customer retest. Sessions can be saved and restored.
 
 ## Milestone status
 
-41 complete · 1 in progress · 1 parked · 30 unstarted.
+42 complete · 1 in progress · 1 parked · 29 unstarted.
 
 | Lane | Complete | In progress | Unstarted |
 |---|---|---|---|
@@ -34,7 +34,7 @@ customer retest. Sessions can be saved and restored.
 | Architecture (A) | A01–A11 | | |
 | Physical board (P) | P01–P09 | | |
 | Workbench and instruments (U) | U01–U07 | | U08–U12 |
-| Electrical content (E) | E01–E06 | | E07–E14 |
+| Electrical content (E) | E01–E07 | | E08–E14 |
 | Diagnostics (D) | D01 | | |
 | Board-scale qualification (Q) | Q15, Q30, Q60 | Q100 (parked) | |
 | Releases | REL-A | REL-B | REL-1 |
@@ -75,21 +75,28 @@ as a scoped task to build a large-board routing policy and envelope, not as more
 - Decision: parked. Fifty-six parts is already a full MEDIUM board, and players get more
   from new troubleshooting content than from bigger boards. Restarting Q100 means
   building a large-board routing policy and envelope: bigger via and search
-  budgets, plus placement that leaves routing channels.
+  budgets, placement that leaves routing channels, and parts on both board
+  sides. Bottom-side placement for boards over 30 parts is being built now
+  (see Next up). Its real routing gain needs surface-mount packages, because
+  through-hole pads block both copper layers.
 
 ## Next up
 
 In preferred order. Each needs its own authorization.
 
-1. **Stabilize what is playable.** Fix defects found by playing the current
+1. **Board realism (owner request, 2026-11-12).** Compact every generated
+   board, and put parts on the bottom side of boards with more than 30 parts.
+   This changes the layout epoch and every saved geometry golden, and RB56's
+   REL-B qualification corpus has to be re-run.
+2. **Stabilize what is playable.** Fix defects found by playing the current
    build before adding scope. Open items are listed in [TASK_REPORT.md](TASK_REPORT.md).
-2. **Close or park REL-B.** Either run the remaining release checks and ship the
+3. **Close or park REL-B.** Either run the remaining release checks and ship the
    MEDIUM beta, or record it as parked.
-3. **Content the alpha is missing.** E07 (timers and oscillators) is next. It
-   reuses the existing temporal and scope seams and does not change save formats.
-   E08 (jumpers, trace cuts, physical restoration) follows, because it changes
-   the mutation and save formats. U09 (two-channel scope) follows E07.
-4. **Later lanes** enter through content that consumes them: E09–E14, U10–U12,
+4. **Content the alpha is missing.** E07 (555 timer board) is done. E08
+   (jumpers, trace cuts, physical restoration) is next; it changes the mutation
+   and save formats. U09 (two-channel scope) can now build on the E07 timer
+   boards.
+5. **Later lanes** enter through content that consumes them: E09–E14, U10–U12,
    MCU-1/2, IMPORT-1 – IMPORT-5, the X series, then REL-1.
 
 ## History

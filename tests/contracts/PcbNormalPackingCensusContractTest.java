@@ -13,6 +13,7 @@ public final class PcbNormalPackingCensusContractTest {
         QuickPlayFamilyRegistry.DIODE_PROTECTED_INDICATOR,
         QuickPlayFamilyRegistry.PARALLEL_DUAL_INDICATOR,
         QuickPlayFamilyRegistry.RC_DELAY,
+        QuickPlayFamilyRegistry.TIMER_555,
         QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH,
         QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH,
         QuickPlayFamilyRegistry.RELAY_OUTPUT,
@@ -96,12 +97,12 @@ public final class PcbNormalPackingCensusContractTest {
         Vector<String> active = PlayerFamilyCatalog.families();
         Vector<String> registered = PlayerFamilyCatalog.registeredFamilies();
         require(active.size() == FAMILIES.length,
-            "normal catalog exposes exactly twelve active families");
+            "normal catalog exposes exactly thirteen active families");
         for (int i = 0; i < FAMILIES.length; i++)
             require(FAMILIES[i].equals(active.get(i)),
                 "normal active family catalog order is stable at index " + i);
-        require(registered.size() == 12 && registered.contains(Rb56Plan.FAMILY_ID),
-            "registered catalog retains RB56 alongside all twelve active families");
+        require(registered.size() == 13 && registered.contains(Rb56Plan.FAMILY_ID),
+            "registered catalog retains RB56 alongside all thirteen active families");
         require(PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID),
             "RB56 is enabled through normal-player admission");
     }

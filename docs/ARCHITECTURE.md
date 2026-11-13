@@ -7335,6 +7335,36 @@ Actual 55-part capture requires 1,206,292 characters; its full capture and
 hash, tail mutation, new-bound rejection and current D01 checks pass natively.
 This corrects the measured old-bound failure; final compiled proof is pending.
 
+## E07 555 timer family ownership
+
+`Timer555Generator` owns the `TIMER_555` leaf family: seed parity selects a
+free-running flasher (astable RA/RB/C1) or a START-triggered pulse
+(monostable RA/C1, off-board momentary switch through connector J2). U1 is the
+stock CircuitJS `TimerElm` in the new `TIMER_SIP_8` physical package, so timing
+is the solver's comparator/latch/discharge behavior, not a family model.
+`GenerationDependencyContext` fingerprints the 555 dump (type 165) without its
+live OUT latch voltage. `Timer555Specification` makes U1 an ordinary typed
+service part (`PhysicalServicePart` and `ServiceableBoardConstruction`). Each
+pin has stationary copper and a detachable lead, and the catalog replacement is
+a fresh dump-form `TimerElm`. Timing is sampled at the OUT pad copper, so it
+stays valid after a chip swap.
+
+`Timer555TemporalBehavior` owns timing evidence. Each profile power-cycles the
+board and samples the solved U1.OUT − J1.2 voltage every 2 ms of solver time
+(`CirSim.advanceGeneratedTemporalProfileSampled`). The flasher period is the mean
+rise spacing after a 0.5 s start-up blank; the pulse width is rise to fall after
+a real START contact closure at 0.25 s. The HEALTHY profile captures the
+reference and applies the declared solver recipe (100 µs maximum step,
+adaptive). Later profiles and live play require that recipe. Within ±12 % of the
+reference is healthy; edges closer than 10 ms are reported as too fast with no
+timing value, so aliasing is never shown as a measured frequency.
+`Timer555FamilyState` exposes the player START operation and the resumable
+customer retest. `Timer555DiagnosticProvider` declares the hidden solvability
+program (DC readings plus RA/C1 resistance). Faults are RA off-value, RA open
+and C1 short. The workbench shows board-owned operations both in the ticket and
+as direct toolbar buttons (`PcbWorkbenchController.boardControls`).
+See [E07 evidence](task-evidence/E07/README.md).
+
 ## Q60 implemented RB56 ownership and qualification boundary
 
 `CirSim` retains one authoritative typed `WireInfo[]`. A local vector still

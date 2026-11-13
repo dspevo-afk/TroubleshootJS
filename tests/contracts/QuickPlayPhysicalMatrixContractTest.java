@@ -9,12 +9,13 @@ public final class QuickPlayPhysicalMatrixContractTest {
     private static int checks;
     private static final int TARGET = 20;
     private static final int MAX_ROOTS = 48;
-    private static final int SMALL_CATALOG_FAMILY_COUNT = 10;
+    private static final int SMALL_CATALOG_FAMILY_COUNT = 11;
     private static final String[] CATALOG_FAMILIES = {
         QuickPlayFamilyRegistry.LED_INDICATOR,
         QuickPlayFamilyRegistry.DIODE_PROTECTED_INDICATOR,
         QuickPlayFamilyRegistry.PARALLEL_DUAL_INDICATOR,
         QuickPlayFamilyRegistry.RC_DELAY,
+        QuickPlayFamilyRegistry.TIMER_555,
         QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH,
         QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH,
         QuickPlayFamilyRegistry.RELAY_OUTPUT,
@@ -107,7 +108,7 @@ public final class QuickPlayPhysicalMatrixContractTest {
     private static Vector<String> selectedFamilies(String[] args) {
         Vector<String> registered = PlayerFamilyCatalog.registeredFamilies();
         Vector<String> catalog = PlayerFamilyCatalog.families();
-        check(registered.size() == 12 && registered.contains(Rb56Plan.FAMILY_ID) &&
+        check(registered.size() == 13 && registered.contains(Rb56Plan.FAMILY_ID) &&
             catalog.contains(Rb56Plan.FAMILY_ID) &&
             PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID),
             "RB56 is registered and present in the normal-player catalog");
@@ -138,7 +139,7 @@ public final class QuickPlayPhysicalMatrixContractTest {
             check(selected.equals(catalog), "Default selection must cover the full catalog");
         if (args.length == 1 && "--small-catalog".equals(args[0])) {
             check(selected.size() == SMALL_CATALOG_FAMILY_COUNT,
-                "Small catalog must contain the prior nine leaves and composed family");
+                "Small catalog must contain the prior ten leaves and composed family");
             for (int i = 0; i < SMALL_CATALOG_FAMILY_COUNT; i++)
                 check(selected.get(i).equals(catalog.get(i)),
                     "Small catalog selection changed at index " + i);

@@ -6003,6 +6003,25 @@ MouseOutHandler, MouseWheelHandler {
     }
 
     /**
+     * Same solver-time advance, split into fixed slices so a temporal owner can
+     * read solved post voltages at each slice boundary (edge timing, pulse width).
+     */
+    void advanceGeneratedTemporalProfileSampled(double durationSeconds, double sliceSeconds,
+	    GeneratedTemporalSampler sampler) {
+	if (sampler == null || !(sliceSeconds > 0) || !(durationSeconds > 0) ||
+		Double.isInfinite(durationSeconds) || sliceSeconds > durationSeconds)
+	    throw new IllegalArgumentException("Invalid sampled temporal advance");
+	analyzeCircuit();
+	double remaining = durationSeconds;
+	while (remaining > 1e-12) {
+	    double slice = Math.min(remaining, sliceSeconds);
+	    advanceGeneratedTemporalSolver(slice);
+	    remaining -= slice;
+	    sampler.sample(t);
+	}
+    }
+
+    /**
      * Advance a live transient after the ordinary UI analysis step.  This is
      * intentionally solver-time only: optional families provide a bounded
      * increment while CircuitJS continues to determine every voltage.

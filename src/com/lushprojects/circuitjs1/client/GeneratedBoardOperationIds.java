@@ -12,6 +12,8 @@ final class GeneratedBoardOperationIds {
     static final String SENSOR_INPUT_LOW = SENSOR_CONDITION_LOW;
     static final String SENSOR_INPUT_MID = SENSOR_CONDITION_MID;
     static final String SENSOR_INPUT_HIGH = SENSOR_CONDITION_HIGH;
+    /** Momentary press and release of an off-board pushbutton. */
+    static final String START_BUTTON_PRESS = "START_BUTTON_PRESS";
     static final String CUSTOMER_RETEST = "CUSTOMER_RETEST";
 
     private GeneratedBoardOperationIds() { }

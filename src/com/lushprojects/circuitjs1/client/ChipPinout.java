@@ -5,6 +5,7 @@ final class ChipPinout {
     static boolean supports(PhysicalPackage physicalPackage) {
         return physicalPackage == PhysicalPackages.TO220_REGULATOR_4 ||
             physicalPackage == PhysicalPackages.E04_DECISION_CONTROL_5 ||
+            physicalPackage == PhysicalPackages.TIMER_SIP_8 ||
             physicalPackage == PhysicalPackages.OPTOCOUPLER_4 ||
             physicalPackage == PhysicalPackages.ISOLATED_CONVERTER_7;
     }

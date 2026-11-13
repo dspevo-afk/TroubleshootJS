@@ -1096,6 +1096,12 @@ final class GenerationDependencyContext {
             return modelDumpTokens(tokens, connectionGeometry) + frameValue(doubleBits(E06ConverterContract.BIAS_VOLTS)) +
                 frameValue(doubleBits(E06ConverterContract.BIAS_RESISTANCE_OHMS)) +
                 frameValue(E06PwmControllerElm.BiasElm.CONVERGENCE_POLICY);
+        case 165:
+            // E07 555 timer: flags carry reset/ground-pin topology; token 6 is
+            // the live OUT pin voltage (the latch state), which is restart state.
+            require(element.getClass() == TimerElm.class && tokens.size() == 7,
+                "Unaudited 555 timer dump shape");
+            return modelDumpTokens(tokens, connectionGeometry, 6);
         case 'c':
             // CapacitorElm: capacitance, live voltdiff, initialVoltage.
             return modelDumpTokens(tokens, connectionGeometry, 7);

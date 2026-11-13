@@ -56,12 +56,12 @@ public final class U04SessionContractTest {
         session.adopt(b, launch);
         check(!session.retested(test, a, true, "late") && session.owner() == b &&
             session.screen() == PlayerSession.Screen.WORKBENCH, "pending completion cannot finish an adopted successor");
-        check(PlayerFamilyCatalog.families().size() == 12 &&
+        check(PlayerFamilyCatalog.families().size() == 13 &&
             PlayerFamilyCatalog.families().contains(Rb30Plan.FAMILY_ID),
             "accepted Q30 is present in the normal-player menu");
-        check(PlayerFamilyCatalog.registeredFamilies().size() == 12 &&
+        check(PlayerFamilyCatalog.registeredFamilies().size() == 13 &&
             PlayerFamilyCatalog.registeredFamilies().contains(Rb56Plan.FAMILY_ID),
-            "RB56 retains its registration and enters the twelve-family player menu");
+            "RB56 retains its registration and enters the thirteen-family player menu");
         verifyGenericShop();
         verifyAllCatalogLabels();
         System.out.println("PASS: U04 session contracts assertions=" + assertions);

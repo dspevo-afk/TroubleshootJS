@@ -56,11 +56,12 @@ final class QuickPlayDeveloperVerifier {
 
     private static void verifyEligibleFamilies() {
         Vector<String> families = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
-        require(families.size() == 9 &&
+        require(families.size() == 10 &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("LED_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("DIODE_PROTECTED_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("PARALLEL_DUAL_INDICATOR") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("RC_DELAY") &&
+            QuickPlayFamilyRegistry.isNormalPlayerEligible("TIMER_555") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("NPN_LOW_SIDE_SWITCH") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("NMOS_LOW_SIDE_SWITCH") &&
             QuickPlayFamilyRegistry.isNormalPlayerEligible("RELAY_OUTPUT") &&
@@ -120,7 +121,7 @@ final class QuickPlayDeveloperVerifier {
     }
 
     private static void verifyDeterministicFamilySelection() {
-        // This is the retained nine-family synchronous leaf construction oracle.
+        // This is the retained ten-family synchronous leaf construction oracle.
         // Full catalog selection and staged family admission are checked separately.
         Vector<String> families = QuickPlayFamilyRegistry.getNormalPlayerFamilyIds();
         for (int i = 0; i < families.size(); i++) {
@@ -147,15 +148,15 @@ final class QuickPlayDeveloperVerifier {
         expected.add(ControlledIndicatorBlockContributions.FAMILY_ID);
         expected.add(Rb30Plan.FAMILY_ID);
         expected.add(Rb56Plan.FAMILY_ID);
-        require(catalog.size() == 12 && catalog.equals(expected),
+        require(catalog.size() == 13 && catalog.equals(expected),
             "Quick Play enabled catalog order or normal family census changed");
         Vector<String> registered = PlayerFamilyCatalog.registeredFamilies();
         Vector<String> expectedRegistered = new Vector<String>(expected);
-        require(registered.size() == 12 && registered.equals(expectedRegistered) &&
+        require(registered.size() == 13 && registered.equals(expectedRegistered) &&
             PlayerFamilyCatalog.isNormalPlayerEnabled(Rb30Plan.FAMILY_ID) &&
             PlayerFamilyCatalog.isNormalPlayerEnabled(Rb56Plan.FAMILY_ID) &&
             PlayerFamilyCatalog.candidateProfile(Rb56Plan.FAMILY_ID) == DifficultyProfile.MEDIUM,
-            "Enabled12 retain exact registered identities and MEDIUM RB56 profile");
+            "Enabled13 retain exact registered identities and MEDIUM RB56 profile");
         boolean heldRejected = false;
         try { PlayerLaunchRequest.random(Rb56Plan.FAMILY_ID, "0", "HARD"); }
         catch (IllegalArgumentException unavailableProfile) { heldRejected = true; }
@@ -253,7 +254,7 @@ final class QuickPlayDeveloperVerifier {
         };
         for (int index = 0; index < seeds.length; index++) {
             QuickPlaySelector selector = new QuickPlaySelector(new QuickPlayFixedRandomSource(
-                new long[] { 4, seeds[index] }));
+                new long[] { QuickPlayFamilyRegistry.getNormalPlayerFamilyIds().indexOf(QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH), seeds[index] }));
             QuickPlaySelection selection = selector.select();
             GeneratedBoardInstance generated = selector.generate(selection);
             require(QuickPlayFamilyRegistry.NPN_LOW_SIDE_SWITCH.equals(
@@ -308,7 +309,7 @@ final class QuickPlayDeveloperVerifier {
         };
         for (int index = 0; index < seeds.length; index++) {
             QuickPlaySelector selector = new QuickPlaySelector(new QuickPlayFixedRandomSource(
-                new long[] { 5, seeds[index] }));
+                new long[] { QuickPlayFamilyRegistry.getNormalPlayerFamilyIds().indexOf(QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH), seeds[index] }));
             QuickPlaySelection selection = selector.select();
             GeneratedBoardInstance generated = selector.generate(selection);
             require(QuickPlayFamilyRegistry.NMOS_LOW_SIDE_SWITCH.equals(

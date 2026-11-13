@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
@@ -28,6 +29,8 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
     private final WorkbenchRenderHost renderHost;
     private final VerticalPanel panel = new VerticalPanel();
     private final VerticalPanel ticketPanel = new VerticalPanel();
+    /** Direct toolbar access to the board's own customer controls (e.g. START). */
+    private final HorizontalPanel boardControls = new HorizontalPanel();
     private final VerticalPanel partsPanel = new VerticalPanel();
     private final Label feedback = new Label();
     private PopupPanel componentMenu;
@@ -149,6 +152,9 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         ticketPanel.setStyleName("tsj-component-panel");
         ticketPanel.getElement().setAttribute("aria-label", "Service ticket");
         ticketPanel.setVisible(false);
+        boardControls.setStyleName("tsj-board-controls");
+        boardControls.getElement().setAttribute("aria-label", "Board controls");
+        boardControls.setVisible(false);
         panel.setStyleName("tsj-component-panel");
         panel.getElement().setAttribute("aria-label", "Component");
         panel.setVisible(false);
@@ -177,6 +183,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
             benchPowerPanel.start();
             sidebar.add(viewPanel);
             sidebar.add(ticketPanel);
+            sidebar.add(boardControls);
             sidebar.add(panel);
             sidebar.add(partsPanel);
             attachedToSidebar = true;
@@ -219,6 +226,8 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         if (attachedSidebar != null) {
             try { attachedSidebar.remove(ticketPanel); }
             catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
+            try { attachedSidebar.remove(boardControls); }
+            catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
             try { attachedSidebar.remove(panel); }
             catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
             try { attachedSidebar.remove(partsPanel); }
@@ -245,7 +254,7 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
         catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
         try { renderHost.detach(); }
         catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
-        try { ticketPanel.clear(); }
+        try { ticketPanel.clear(); boardControls.clear(); }
         catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
         try { panel.clear(); }
         catch (Throwable cleanup) { failure = retainDetachFailure(failure, cleanup); }
@@ -1134,6 +1143,8 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
 
     private void rebuildTicket() {
         ticketPanel.clear();
+        boardControls.clear();
+        boardControls.setVisible(false);
         final GeneratedChallengeController challenge = sim.getGeneratedChallengeController();
         ticketPanel.setVisible(challenge != null);
         if (challenge == null)
@@ -1202,6 +1213,12 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
             lastSemanticOperationHandler = commandHandler;
             command.addClickHandler(commandHandler);
             ticketPanel.add(command);
+            Button direct = new Button(operation.getPlayerLabel());
+            direct.setStyleName("tsj-product-button tsj-board-control");
+            direct.setEnabled(command.isEnabled());
+            direct.addClickHandler(commandHandler);
+            boardControls.add(direct);
+            boardControls.setVisible(true);
         }
         final GeneratedBoardOperation retestOperation = instance.getOperationCatalog().find(
             GeneratedBoardOperationIds.CUSTOMER_RETEST);

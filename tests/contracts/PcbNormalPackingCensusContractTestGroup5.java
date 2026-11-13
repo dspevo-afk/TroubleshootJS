@@ -4,6 +4,6 @@ package com.lushprojects.circuitjs1.client;
 public final class PcbNormalPackingCensusContractTestGroup5 {
     private PcbNormalPackingCensusContractTestGroup5() { }
     public static void main(String[] args) {
-        PcbNormalPackingCensusContractTest.runRange(10, 1, 0, 1, "rb30-root-0");
+        PcbNormalPackingCensusContractTest.runRange(11, 1, 0, 1, "rb30-root-0");
     }
 }

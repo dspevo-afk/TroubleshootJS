@@ -15,6 +15,7 @@ final class QuickPlayFamilyRegistry {
     static final String NPN_LOW_SIDE_SWITCH = "NPN_LOW_SIDE_SWITCH";
     static final String NMOS_LOW_SIDE_SWITCH = "NMOS_LOW_SIDE_SWITCH";
     static final String SENSOR_CONTROL = "SENSOR_CONTROL";
+    static final String TIMER_555 = Timer555Generator.FAMILY_ID;
     private QuickPlayFamilyRegistry() { }
 
     static Vector<String> getNormalPlayerFamilyIds() {
@@ -23,6 +24,7 @@ final class QuickPlayFamilyRegistry {
         result.add(DIODE_PROTECTED_INDICATOR);
         result.add(PARALLEL_DUAL_INDICATOR);
         result.add(RC_DELAY);
+        result.add(TIMER_555);
         result.add(NPN_LOW_SIDE_SWITCH);
         result.add(NMOS_LOW_SIDE_SWITCH);
         result.add(RELAY_OUTPUT);
@@ -36,6 +38,7 @@ final class QuickPlayFamilyRegistry {
             RELAY_OUTPUT.equals(familyId) || LED_INDICATOR.equals(familyId) ||
             DIODE_PROTECTED_INDICATOR.equals(familyId) ||
             PARALLEL_DUAL_INDICATOR.equals(familyId) || RC_DELAY.equals(familyId) ||
+            TIMER_555.equals(familyId) ||
             NPN_LOW_SIDE_SWITCH.equals(familyId) || NMOS_LOW_SIDE_SWITCH.equals(familyId);
     }
 
@@ -50,6 +53,8 @@ final class QuickPlayFamilyRegistry {
             return new ParallelDualIndicatorGenerator().generate(seed);
         if (RC_DELAY.equals(familyId))
             return new RcDelayGenerator().generate(seed);
+        if (TIMER_555.equals(familyId))
+            return new Timer555Generator().generate(seed);
         if (NPN_LOW_SIDE_SWITCH.equals(familyId))
             return new NpnLowSideSwitchGenerator().generate(seed);
         if (NMOS_LOW_SIDE_SWITCH.equals(familyId))

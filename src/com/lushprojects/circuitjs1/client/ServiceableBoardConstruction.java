@@ -38,7 +38,8 @@ final class ServiceableBoardConstruction {
                 completeRecipeCapacitor(board, elements, components, connections, runtime, original, id);
                 continue;
             }
-            if (spec instanceof InductorSpecification || spec instanceof ZenerSpecification || spec instanceof OptocouplerSpecification) {
+            if (spec instanceof InductorSpecification || spec instanceof ZenerSpecification || spec instanceof OptocouplerSpecification ||
+                    spec instanceof Timer555Specification) {
                 completeTypedService(board, elements, components, connections, runtime, original, id);
                 continue;
             }

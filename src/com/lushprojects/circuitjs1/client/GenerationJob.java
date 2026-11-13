@@ -266,7 +266,8 @@ final class GenerationJob {
             if (attempted == Stage.HYPOTHESES && maximumProofWorkUnits > 0) {
                 if (proofStepCount >= maximumProofWorkUnits)
                     throw new Failure(Outcome.WORK_EXHAUSTED,
-                        "Diagnostic proof exhausted its declared maximum work");
+                        "Diagnostic proof exhausted its declared maximum work (" +
+                        maximumProofWorkUnits + " units)");
                 if (getRemainingStepCount() <= reservedPostProofUnits)
                     throw new Failure(Outcome.WORK_EXHAUSTED,
                         "Diagnostic proof cannot consume reserved publication work");

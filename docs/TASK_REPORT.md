@@ -1,111 +1,55 @@
 # Task report — current checkpoint
 
-**Date:** 2026-11-12 · **Branch:** `master` · **Task:** project audit, gate repair and repository cleanup
-(new project lead, after about three weeks of unsupervised Codex work). Earlier checkpoints are in
-[archive/](archive/).
+**Date:** 2026-11-12 · **Branch:** `master` · **Base:** `b0871061` · **Task:** E07 555 timer
+family, plus playability fixes found while playing it. The previous checkpoint (project audit) is
+in [archive/2026-11-12-audit-checkpoint.md](archive/2026-11-12-audit-checkpoint.md).
 
-## What was wrong
+## Delivered
 
-1. **The full native gate had been red since 2026-10-31.** Commit `34ff05d0` ("Correct shared PCB
-   placement and layered routing") deliberately moved generation to dependency epoch v26. That
-   changed the routed geometry of every saved RB56 placement version. Codex re-pinned one golden
-   test (`PcbCompactnessContractTest`) and then ran only focused gates, so it never saw the other
-   twelve stale suites:
-   - saved role-width v12 representatives and holdouts
-   - saved v3, v4, v5, v6, v7, v8 and v9 geometry
-   - pocket packing representatives and holdouts
-   - packing-probe receipt (the Statistics canonical gained two fields)
-2. **`PcbRoleWidthSearchDiagnosticTest` crashed** with a `ClassCastException`. It read private
-   router fields by reflection, and a later router refactor turned one of those fields into a
-   different type. It was a measurement-only diagnostic and checked nothing about the product.
-3. **Scope drift on Q100.** Roughly 270 commits from 2026-11-02 to 2026-11-12 went into routing
-   diagnostics and then into verification tooling for those diagnostics. No 100-part board ever
-   routed. See [ROADMAP.md](ROADMAP.md).
-4. **Repository bloat and sprawl:**
-   - about 18,500 tracked raw evidence files (JSON dumps, logs, source copies, hash manifests)
-   - a 1.5 MB task report and a 180 KB roadmap narrative
-   - 54 leftover worktrees and 8 stashes
-   - the Desktop checkout was 499 commits behind on a stale branch
-   - GitHub `master` was 286 commits behind; the work existed only on
-     `origin/codex/q100-physical-feasibility`
+- **E07 complete.** A new EASY family, **555 timer board** (`TIMER_555`), has two roles:
+  - free-running flasher
+  - START-triggered pulse
 
-## What was done
-
-- **Gate repair.** A scratch harness measured current geometry for every affected seed and
-  version. All 72 boards route and pass geometry, routing, clearance, two-layer and admission
-  validation. Every area is equal to or smaller than its earlier accepted value. Exact geometry
-  literals were re-pinned to the current output. The earlier accepted area and void arrays stay in
-  place as regression bounds. Unreachable version-10/11 branches in `measure()` were removed.
-  The packing-probe expected canonical string gained `routeEligiblePlacementAttempts=[]` and
-  `routeEligibilitySkips=[]`.
-- **Retired** `PcbRoleWidthSearchDiagnosticTest` from `tests/contracts` and the gate registry.
-- **Cleanup.**
-  - Removed tracked raw evidence. Milestone README files and screenshots remain.
-  - Moved the old roadmap, task report and two checkpoints to `docs/archive/`.
-  - Removed the Codex inbox task files.
-  - Wrote a short [ROADMAP.md](ROADMAP.md).
-  - Added scope-discipline rules to `AGENTS.md`.
-  - Ignored `.worktrees/`, `.tmp/` and Python caches.
-  - Everything removed is still reachable at tag `pre-cleanup-2026-11-12`.
-- **Worktrees.** Removed 26 merged worktrees that had no uncommitted changes, plus their merged
-  local branches.
-- **Canvas guard.** `drawImage` from a zero-size offscreen canvas threw hundreds of uncaught errors.
-  Guards were added in `CirSim` (2 sites), `PcbWorkbenchController` and `Scope`.
-  - GWT build PASS.
-  - With the hidden pane: no console errors.
-  - With a 1280×800 viewport: the RB56 seed-42 workbench draws, using real clicks, and the
-    console shows no errors.
-- **Q100 parked** by the lead. See [ROADMAP.md](ROADMAP.md).
-- **Player check.** Played a real EASY board in the built-in browser preview: complaint,
-  measurement, removing R1, buying and installing a 680 Ω part, and a passing customer retest.
-  The four Quick Play candidate seeds all replay. One earlier "Board preparation failed" message
-  came from the browser pane being hidden, which pauses the foreground generation clock. Six
-  launches after that succeeded.
+  Timing comes from the stock CircuitJS `TimerElm`, sampled in solver time. U1 is serviceable
+  like every other part. Evidence: [task-evidence/E07](task-evidence/E07/README.md). Ownership:
+  [ARCHITECTURE.md](ARCHITECTURE.md#e07-555-timer-family-ownership).
+- **Playability.**
+  - Board-owned operations (START) also appear as amber toolbar buttons.
+  - Pads on a board prepared in a zero-size viewport are now clickable.
+- **Catalog.** Thirteen families, ten of them EASY. Tests that pinned twelve families, or a family's
+  index in the catalog, were updated. The NPN/NMOS verifiers now look up their index from the
+  registry instead of hard-coding it.
+- **Gate.** `ProceduralFamilyContractTest` added to the native-bridge suite list, so it can run on
+  its own.
 
 ## Gates
 
-| Check | Result |
+| Gate | Result |
 |---|---|
-| GWT production build, `scripts/build.ps1`, JDK 8 | PASS at `201b993f`. No production source changed afterwards. |
-| Native contracts, `scripts/verify-current-contracts.ps1`, all suites | PASS: 213 Java suites, exit 0, 2,921 s, after the repair. Before it, 13 suites failed. |
-| Browser player flow (EASY repair and retest) | PASS by manual visible input. Screenshots were not kept. |
+| `scripts/build.ps1` (JDK 8, GWT 2.7) | PASS, 115 s |
+| `E07TimerContractTest` | PASS, 92 assertions |
+| `PhysicalServiceabilityContractTest` | PASS, 2224 assertions |
+| `ProceduralFamilyContractTest` (in full gate) | PASS, 13 families, 26 cohorts |
+| `QuickPlayPhysicalMatrixContractTest` (in full gate) | PASS, `TIMER_555` 20/20 |
+| `QuickPlayGateContractTest`, `A02CandidateContractTest` | PASS |
+| Full native gate (`scripts/verify-current-contracts.ps1`, no `-Suite`) | PASS: 214 Java suites plus the independent seed, value and role oracles and the report protocol |
+| Browser play (built-in browser, real clicks) | PASS: flasher repair, pulse START and repair, unrepaired retest fails, U1 chip swap and retest |
 
-## Open items, not done here
+## Limits
 
-- **28 worktrees still hold uncommitted edits.** They are mostly Q100 diagnostic scratch under
-  `%TEMP%`, `C:\tmp` and `~\.codex\worktrees`, and every branch is already merged. The **8 stashes**
-  are from 2026-08-22 to 2026-11-01. The owner approved removing them. Their patches were backed up
-  to OS temp, but the agent's permission policy blocked the removal itself. To finish, run
-  `git worktree remove --force <path>` for each one, then `git stash clear`.
-- **Four unmerged local branches:** `archive/desktop-wip-20260923` (the stale Desktop work-in-progress
-  that was archived), `codex/state-lifecycle-integrity-audit`, `codex/task43-recovery-assessment`
-  and `codex/verification-integrity-audit`. They are left untouched.
-- **The Codex desktop app is still running** (PID 16044, started 2026-11-11). Stop it before
-  starting new work so it cannot resume old tasks.
-- **Zero-size viewport breaks board preparation.** With the viewport at zero size (for example a
-  hidden or minimized pane), every board fails with "could not be prepared", for every family,
-  including EASY. The same replays (EASY `LED_INDICATOR/42`, MEDIUM `RB56_CONTROL/42`) pass right
-  away with a real viewport. The root cause has not been found. The fix is to generate
-  independently of viewport size, or to wait until the viewport is visible.
-- **Diagnostic code in the production router.** A read-only audit of the eight `src/` commits made
-  from 2026-11-02 onward found:
-  - about 1,700 lines that are diagnostic-only: detached branch replay, compaction and fixed-graph
-    copy tasks, and alternative net and branch orderings. Only tests call them.
-  - about 220 lines on the production path that produce identical results
-  - about 30 behavior-changing lines (`73ee3c37`, the zero-via-capacity prune and epoch v28)
+- Run alone, `U04SessionContractTest` and `ProceduralFamilyContractTest` stop at RB56 generation
+  with a `CompositeElm` NPE. That is a gap in single-suite harness setup. Both pass inside the
+  full gate.
+- The E07 product limits (unpowered 555 discharge path, no meter Hz function, frame-rate LED blink,
+  tray numbering) are listed in the [E07 README](task-evidence/E07/README.md#limits).
 
-  Removing the diagnostic-only code would also retire their P07/Rb100 diagnostic tests. That is a
-  separate cleanup task.
-- **Old evidence.** `docs/task-evidence/` still holds about 145 MB of historical README files and
-  screenshots, more than the new per-milestone budget allows. It was left as is.
-- **Saved sessions.** A saved session that recorded an older placement version now regenerates
-  the corrected v26 geometry rather than its original layout. That follows from the epoch change
-  in `34ff05d0`, not from this task.
+## Resources
+
+- Preview server `tsj-preview` on port 8899, started by the app's preview tool.
+- No other task processes. Scratch logs are in OS temp only.
+- Untouched, still awaiting the owner from the audit: 28 worktrees and 8 stashes.
 
 ## Next action
 
-Next milestone is **E07** (triggered timers and oscillators). Its prerequisites are complete, it
-adds visible troubleshooting content, and it reuses the existing temporal and scope seams without
-touching save formats. E08 follows. Its player value is higher, but it changes the mutation and
-save formats. The owner still needs to decide whether to ship or park REL-B.
-See [ROADMAP.md](ROADMAP.md#next-up).
+Bottom-side placement for boards over 30 parts, and board compaction (requested by the owner on
+2026-11-12). It changes the layout epoch and re-pins every geometry golden. After that, E08.
