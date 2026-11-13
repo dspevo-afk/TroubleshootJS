@@ -1292,7 +1292,27 @@ class PcbWorkbenchRenderer implements PhysicalProbeProjection, CopperProbeProjec
     }
     /** Admission follows the supported fit/side path; overview scale is not a probeability requirement. */
     boolean canInspectPad(CirSim sim, String id) {
-        if (sim.circuitArea != null) updateTransform(sim.circuitArea);
+        Rectangle area = sim.circuitArea;
+        if (area != null && area.width >= MIN_INSPECTION_WIDTH && area.height >= MIN_INSPECTION_HEIGHT) {
+            updateTransform(area);
+            return inspectPadAtSupportedFit(sim, id);
+        }
+        // A hidden or minimized canvas has no usable screen. Run the same fit and hit test on a
+        // detached reference viewport so admission does not depend on whether the pane is visible.
+        PcbViewport savedViewport = viewport; Rectangle savedArea = canvasArea;
+        try {
+            viewport = new PcbViewport(layout.getBoardOutline());
+            viewport.setFace(viewingFace);
+            canvasArea = new Rectangle(0, 0, REFERENCE_INSPECTION_WIDTH, REFERENCE_INSPECTION_HEIGHT);
+            viewport.resize(canvasArea); updateProjection();
+            return inspectPadAtSupportedFit(sim, id);
+        } finally { viewport = savedViewport; canvasArea = savedArea; updateProjection(); }
+    }
+
+    private static final int MIN_INSPECTION_WIDTH = 64, MIN_INSPECTION_HEIGHT = 64;
+    private static final int REFERENCE_INSPECTION_WIDTH = 1280, REFERENCE_INSPECTION_HEIGHT = 800;
+
+    private boolean inspectPadAtSupportedFit(CirSim sim, String id) {
         PcbViewport.State saved = viewport.capture(); PcbBoardSide savedFace = viewingFace;
         try {
             PcbPadPlacement pad = layout.getPad(id);
