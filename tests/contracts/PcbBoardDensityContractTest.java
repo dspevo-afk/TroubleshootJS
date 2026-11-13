@@ -49,6 +49,7 @@ public final class PcbBoardDensityContractTest {
      */
     static double floor(String family) {
         if ("RB30_CONTROL".equals(family)) return 0.145;
+        if ("RB56_CONTROL".equals(family)) return 0.18; // 17.5% before placement v16, 19.1% after
         if ("PARALLEL_DUAL_INDICATOR".equals(family)) return 0.09;
         if ("RB15_CONTROL".equals(family)) return 0.105;
         if ("COMPOSED_CONTROLLED_INDICATOR".equals(family)) return 0.115;

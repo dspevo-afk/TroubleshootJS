@@ -121,10 +121,17 @@ public final class PcbNormalPackingIdentityContractTest {
             MediumBoardPhysicalPolicy.selected(normal) && normal.requiresTwoLayerRouting,
             "RB30 normal provider opts into connected-pocket packing and its admitted route");
         PcbPlacementConstraints privateLegacy = Rb56Plan.resolve(0L,
+            Rb56Placement.ROUTE_OWNER_VERSION15).board().getPlacementConstraints();
+        check(privateLegacy.getPlacementPackingVersion() == 1 && privateLegacy.compactionVersion == 0,
+            "saved RB56 placement 15 retains legacy packing interpretation 1");
+        PcbPlacementConstraints privateCurrent = Rb56Plan.resolve(0L,
             GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT).board()
             .getPlacementConstraints();
-        check(privateLegacy.getPlacementPackingVersion() == 1,
-            "private RB56 retains legacy packing interpretation 1");
+        check(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT == 16 &&
+            privateCurrent.getPlacementPackingVersion() ==
+                PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION &&
+            privateCurrent.compactionVersion == PcbPlacementConstraints.GRAVITY_COMPACTION_VERSION,
+            "current RB56 placement 16 opts into connected-pocket packing with gravity compaction");
     }
 
     private static void verifyPublicReplayEpochAndSignedSeeds() {

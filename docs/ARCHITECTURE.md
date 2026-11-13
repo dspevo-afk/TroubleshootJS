@@ -8207,6 +8207,23 @@ distinguish skips, route rejection, unavailable grids and actual comparison.
 Bounded reasons and state/disposition/strict-metric consistency are validated.
 These diagnostic fields remain omitted from the normal-packing@3
 canonical, graph/geometry/save/session identities, player UI and scoring.
+
+**Gravity compaction (board realism, 2026-11-13).** `PcbPlacementConstraints.compactionVersion`
+1 (`withGravityCompaction`) adds `PcbPlacementPlanner.compactGravity` to the
+packing probe after paired-vacancy compaction. It slides each movable part toward
+the board origin, X then Y, up to three rounds, stopping `GRAVITY_GAP` (20 units)
+short of the nearest perpendicular-overlapping envelope. Every move must pass the
+normal `fits` check and an escape check; the result must pass whole-plan `validate`
+or the input plan is kept. The same version selects `PcbPackingMetrics.selects`
+rule 1 instead of the strict rule: at least 5% less area, no extra vias, at most
+25% more Manhattan copper, protected void ignored. The receipt's `MetricEvidence`
+records the rule it was decided by. Opt-ins: RB30 (`Rb30Plan`) and RB56 placement
+16 (`Rb56Placement.CURRENT_VERSION`, with connected-pocket packing; placement 15
+remains selectable and uses neither). One-face small boards are not opted in: on
+one copper layer the compacted plans routed larger or not at all. The dependency
+capture adds `placement.compaction`; private RB56 replay adds the
+`tsj-private-session/16/…/rb56-placement-16` namespace. `PcbBoardDensityContractTest`
+reports courtyard fill per family and holds per-family floors.
 Unsupported metric grids retain the NO_HEADROOM disposition with a distinct
 diagnostic state; there is no repeated production measurement or routing loop.
 

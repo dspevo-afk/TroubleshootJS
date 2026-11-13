@@ -1,6 +1,6 @@
 # TroubleshootJS Roadmap
 
-**Updated:** 2026-11-12 · **Mainline:** `master` · **Catalog:** Edition 3.0 (73 milestones)
+**Updated:** 2026-11-13 · **Mainline:** `master` · **Catalog:** Edition 3.0 (73 milestones)
 
 This page is the status summary. It stays short. The full milestone cards,
 product direction, reference-board taxonomy and definition of done live in the
@@ -76,18 +76,18 @@ as a scoped task to build a large-board routing policy and envelope, not as more
   from new troubleshooting content than from bigger boards. Restarting Q100 means
   building a large-board routing policy and envelope: bigger via and search
   budgets, placement that leaves routing channels, and parts on both board
-  sides. Bottom-side placement for boards over 30 parts is being built now
-  (see Next up). Its real routing gain needs surface-mount packages, because
-  through-hole pads block both copper layers.
+  sides. Bottom-side parts need surface-mount packages, because through-hole
+  pads block both copper layers; the owner deferred that on 2026-11-13.
 
 ## Next up
 
 In preferred order. Each needs its own authorization.
 
-1. **Board realism (owner request, 2026-11-12).** Compact every generated
-   board, and put parts on the bottom side of boards with more than 30 parts.
-   This changes the layout epoch and every saved geometry golden, and RB56's
-   REL-B qualification corpus has to be re-run.
+1. **Board realism (owner request, 2026-11-12).** Compaction is done for RB30
+   and RB56 (placement 16); see [board-realism](task-evidence/board-realism/README.md).
+   Open: REL-B's 30-root RB56 corpus must be re-run on placement 16; small
+   one-face boards are unchanged (two layers would need a new envelope);
+   bottom-side parts wait for SMD packages (deferred by the owner).
 2. **Stabilize what is playable.** Fix defects found by playing the current
    build before adding scope. Open items are listed in [TASK_REPORT.md](TASK_REPORT.md).
 3. **Close or park REL-B.** Either run the remaining release checks and ship the
