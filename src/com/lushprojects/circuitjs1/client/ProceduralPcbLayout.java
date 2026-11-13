@@ -40,7 +40,7 @@ final class ProceduralPcbLayout {
             PcbCopperLayer.BOTTOM, demand.getPhysicalPolicyId(),
             demand.getPhysicalPolicyVersion(), demand.placementDensityVersion,
             demand.requiresTwoLayerRouting, demand.getTraceWidthProfile(),
-            demand.placementPackingVersion);
+            demand.placementPackingVersion, demand.compactionVersion);
     }
 
     static PcbBoardLayout generate(TroubleshootBoard board, long root, String family) {

@@ -36,6 +36,23 @@ final class PcbPackingMetrics {
     }
 
     /**
+     * Selection rule for a compacted candidate. Rule 0 is {@link #strictlyImproves}.
+     * Rule 1 (gravity compaction) is area dominant: the board must shrink by at
+     * least 5%, vias may not grow, and copper may grow by at most a quarter,
+     * because a smaller board legitimately trades some trace detours for area.
+     */
+    static boolean selects(PcbPackingMetrics baseline, PcbPackingMetrics candidate, int rule) {
+        if (rule == 0) return strictlyImproves(baseline, candidate);
+        if (rule != PcbPlacementConstraints.GRAVITY_COMPACTION_VERSION)
+            throw new IllegalArgumentException("Unknown PCB packing selection rule");
+        if (baseline == null || candidate == null)
+            throw new IllegalArgumentException("Missing PCB packing metrics");
+        return candidate.area * 20L <= baseline.area * 19L &&
+            candidate.vias <= baseline.vias &&
+            candidate.copper * 4L <= baseline.copper * 5L;
+    }
+
+    /**
      * Measures drawing occupancy only. Free sampled cells are not proof that a
      * package can be placed or that a PCB is manufacturable.
      */

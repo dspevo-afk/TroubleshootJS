@@ -11,6 +11,8 @@ final class PcbPlacementConstraints {
     static final int DEFAULT_PHYSICAL_POLICY_VERSION = 1;
     /** Post-incumbent connected-pair packing with the incumbent P07 via allowance. */
     static final int CONNECTED_POCKET_PACKING_VERSION = 4;
+    /** Board realism: parts slide together after placement (PcbPlacementPlanner.compactGravity). */
+    static final int GRAVITY_COMPACTION_VERSION = 1;
 
     enum Anchor { NONE, LEFT, RIGHT, EDGE }
     static final class TerminalDomain {
@@ -77,6 +79,7 @@ final class PcbPlacementConstraints {
     final int physicalPolicyVersion;
     final int placementDensityVersion;
     final int placementPackingVersion;
+    final int compactionVersion;
     final boolean requiresTwoLayerRouting;
     private final PcbTraceWidthProfile traceWidthProfile;
     PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers) {
@@ -110,6 +113,16 @@ final class PcbPlacementConstraints {
             PcbCopperLayer routingLayer, String policyId, int policyVersion, int densityVersion,
             boolean requiresTwoLayerRouting, PcbTraceWidthProfile traceWidthProfile,
             int packingVersion) {
+        this(declarations, barriers, routingLayer, policyId, policyVersion, densityVersion,
+            requiresTwoLayerRouting, traceWidthProfile, packingVersion, 0);
+    }
+    PcbPlacementConstraints(Vector<Part> declarations, Vector<Barrier> barriers,
+            PcbCopperLayer routingLayer, String policyId, int policyVersion, int densityVersion,
+            boolean requiresTwoLayerRouting, PcbTraceWidthProfile traceWidthProfile,
+            int packingVersion, int compactionVersion) {
+        if (compactionVersion != 0 && compactionVersion != GRAVITY_COMPACTION_VERSION)
+            throw new IllegalArgumentException("Unknown placement compaction interpretation");
+        this.compactionVersion = compactionVersion;
         if (traceWidthProfile == null)
             throw new IllegalArgumentException("Missing PCB trace width profile");
         this.traceWidthProfile = traceWidthProfile;
@@ -154,7 +167,16 @@ final class PcbPlacementConstraints {
             return this;
         return new PcbPlacementConstraints(getParts(), getBarriers(), routingLayer,
             physicalPolicyId, physicalPolicyVersion, placementDensityVersion,
-            requiresTwoLayerRouting, traceWidthProfile, CONNECTED_POCKET_PACKING_VERSION);
+            requiresTwoLayerRouting, traceWidthProfile, CONNECTED_POCKET_PACKING_VERSION,
+            compactionVersion);
+    }
+    /** Returns a value copy that also compacts placed parts together (board realism). */
+    PcbPlacementConstraints withGravityCompaction() {
+        if (compactionVersion == GRAVITY_COMPACTION_VERSION) return this;
+        return new PcbPlacementConstraints(getParts(), getBarriers(), routingLayer,
+            physicalPolicyId, physicalPolicyVersion, placementDensityVersion,
+            requiresTwoLayerRouting, traceWidthProfile, placementPackingVersion,
+            GRAVITY_COMPACTION_VERSION);
     }
     String getPhysicalPolicyIdentity() {
         return physicalPolicyId + "@" + physicalPolicyVersion;

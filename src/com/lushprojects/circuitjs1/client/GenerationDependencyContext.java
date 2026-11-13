@@ -267,6 +267,9 @@ final class GenerationDependencyContext {
         if (placementConstraints.placementPackingVersion != 1)
             appendField(out, "placement.packing",
                 Integer.toString(placementConstraints.placementPackingVersion));
+        if (placementConstraints.compactionVersion != 0)
+            appendField(out, "placement.compaction",
+                Integer.toString(placementConstraints.compactionVersion));
         if (!placementConstraints.getTraceWidthProfile().isLegacyUniform())
             appendField(out, "physical.trace-width-profile",
                 placementConstraints.getTraceWidthProfile().canonical());

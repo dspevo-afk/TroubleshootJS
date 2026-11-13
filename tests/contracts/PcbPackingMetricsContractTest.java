@@ -190,6 +190,18 @@ public final class PcbPackingMetricsContractTest {
         check(!PcbPackingMetrics.strictlyImproves(baseline,
                 new PcbPackingMetrics(900L, 200L, 3, 501)),
             "larger protected void rejects an area reduction");
+        int gravity = PcbPlacementConstraints.GRAVITY_COMPACTION_VERSION;
+        check(PcbPackingMetrics.selects(baseline, new PcbPackingMetrics(950L, 250L, 3, 900), gravity),
+            "gravity rule admits 5% less area with a quarter more copper and any void");
+        check(!PcbPackingMetrics.selects(baseline, new PcbPackingMetrics(951L, 200L, 3, 500), gravity),
+            "gravity rule needs at least 5% less area");
+        check(!PcbPackingMetrics.selects(baseline, new PcbPackingMetrics(500L, 251L, 3, 500), gravity),
+            "gravity rule rejects more than a quarter extra copper");
+        check(!PcbPackingMetrics.selects(baseline, new PcbPackingMetrics(500L, 200L, 4, 500), gravity),
+            "gravity rule rejects extra vias");
+        check(PcbPackingMetrics.selects(baseline, new PcbPackingMetrics(900L, 200L, 3, 500), 0) ==
+            PcbPackingMetrics.strictlyImproves(baseline, new PcbPackingMetrics(900L, 200L, 3, 500)),
+            "rule 0 is the strict rule");
         expectIllegalArgument(new Runnable() {
             public void run() { new PcbPackingMetrics(-1L, 0L, 0, 0); }
         }, "negative area is invalid");

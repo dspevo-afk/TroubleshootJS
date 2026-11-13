@@ -174,6 +174,17 @@ public final class PcbPackingProbeReceiptContractTest {
                 PcbPackingProbeReceipt.MetricEvidence.compared(BASELINE_METRICS,
                     IMPROVED_METRICS));
         } }, "selected receipt with unchanged geometry accepted");
+        final PcbPackingMetrics areaForCopper = new PcbPackingMetrics(BASELINE_METRICS.area / 2L,
+            BASELINE_METRICS.copper + 1L, BASELINE_METRICS.vias, BASELINE_METRICS.protectedVoid);
+        new PcbPackingProbeReceipt(1, 0, 0, 0L,
+            MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER, "SELECTED", BASELINE, CHANGED,
+            PcbPackingProbeReceipt.MetricEvidence.compared(BASELINE_METRICS, areaForCopper,
+                PcbPlacementConstraints.GRAVITY_COMPACTION_VERSION));
+        reject(new Attempt() { public void run() {
+            new PcbPackingProbeReceipt(1, 0, 0, 0L,
+                MediumBoardPhysicalPolicy.P07_FULLER_TWO_LAYER, "SELECTED", BASELINE, CHANGED,
+                PcbPackingProbeReceipt.MetricEvidence.compared(BASELINE_METRICS, areaForCopper));
+        } }, "strict-rule receipt selected a copper regression");
         reject(new Attempt() { public void run() {
             new PcbPackingProbeReceipt(1, 0, 0, 0L,
                 MediumBoardPhysicalPolicy.P05_ONE_FACE, "KEPT", BASELINE, CHANGED,

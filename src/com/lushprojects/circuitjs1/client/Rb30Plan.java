@@ -601,7 +601,7 @@ final class Rb30Plan {
         return new PcbPlacementConstraints(parts,
             new Vector<PcbPlacementConstraints.Barrier>(), PcbCopperLayer.BOTTOM,
             MediumBoardPhysicalPolicy.ID, MediumBoardPhysicalPolicy.VERSION, 1, true)
-            .withConnectedPocketPacking();
+            .withConnectedPocketPacking().withGravityCompaction();
     }
 
     private static String placementRegion(String id) {

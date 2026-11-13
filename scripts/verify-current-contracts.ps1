@@ -675,6 +675,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'Rb56InCircuitReverseContractTest' -or
         $Suite -contains 'Rb56PhysicalOwnerContractTest' -or
         $Suite -contains 'Rb56NormalPackingCensusContractTest' -or
+        $Suite -contains 'PcbBoardDensityContractTest' -or
         $Suite -contains 'QuickPlayPhysicalMatrixContractTest' -or
         $Suite -contains 'E05PowerContractTest' -or
         $Suite -contains 'E05InstalledFixtureContractTest' -or
@@ -714,6 +715,7 @@ final class PhysicalSpecificationDeveloperVerifier {
         $Suite -contains 'Rb56InCircuitReverseContractTest' -or
         $Suite -contains 'Rb56PhysicalOwnerContractTest' -or
         $Suite -contains 'Rb56NormalPackingCensusContractTest' -or
+        $Suite -contains 'PcbBoardDensityContractTest' -or
         $Suite -contains 'QuickPlayPhysicalMatrixContractTest' -or
         $Suite -contains 'E07TimerContractTest'
     $nativeLoggerShim = ''
@@ -1002,6 +1004,7 @@ boolean outputChanged = changed(lastOutputDrop, evaluationDrop);
         @{ Name = 'PcbNormalPackingCensusContractTestGroup7'; Marker = 'PCB normal packing census rb30-root-13 ' },
         @{ Name = 'PcbNormalPackingCensusContractTestGroup8'; Marker = 'PCB normal packing census rb30-root-Long.MIN_VALUE ' },
         @{ Name = 'Rb56NormalPackingCensusContractTest'; Marker = 'PCB normal packing census rb56-all-roots ' },
+        @{ Name = 'PcbBoardDensityContractTest'; Marker = 'PCB board density contracts ' },
         @{ Name = 'Rb56ManifestContractTest'; Marker = 'RB56 manifest identities rows=30 ' },
         @{ Name = 'VisualWorkbenchContractTest'; Marker = 'visual workbench contracts ' },
         @{ Name = 'Task43PhysicalEndpointContractTest'; Marker = 'Task43 current physical endpoint contracts ' },

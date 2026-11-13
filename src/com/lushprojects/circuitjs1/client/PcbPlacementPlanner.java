@@ -710,6 +710,116 @@ final class PcbPlacementPlanner {
     }
 
     /** A bounded placement-only pass; the existing router still proves copper. */
+    /** Extra routing room kept between neighbouring access envelopes by gravity compaction. */
+    static final int GRAVITY_GAP = 20;
+
+    /**
+     * Gravity compaction: every part slides toward the outline origin, one axis
+     * at a time, until its access envelope meets a neighbour (plus a routing
+     * gap) or the outline border. Each move must pass the same fit, barrier,
+     * corridor and escape checks as ordinary placement; the whole plan is
+     * validated again at the end, and the input is returned on any rejection.
+     * Left anchored parts stay first on X and right anchored parts stay last,
+     * so connector strips remain on their declared edge; EDGE parts stay put.
+     */
+    static Plan compactGravity(TroubleshootBoard board, PcbPlacementConstraints constraints,
+            Plan input, int gap) {
+        if (constraints.compactionVersion != PcbPlacementConstraints.GRAVITY_COMPACTION_VERSION)
+            return input;
+        if (gap < 0) throw new IllegalArgumentException("Negative gravity gap");
+        GenerationWorkScope.check();
+        if (input.evaluations >= MEDIUM_MAX_EVALUATIONS) return input;
+        validate(board, constraints, input.outline, input.footprints);
+        final Vector<PcbFootprint> placed = new Vector<PcbFootprint>(input.footprints);
+        Rectangle outline = input.outline;
+        int evaluations = input.evaluations;
+        boolean changed = false;
+        for (int round = 0; round < 3; round++) {
+            boolean moved = false;
+            for (int axis = 0; axis < 2; axis++) {
+                final boolean xAxis = axis == 0;
+                Vector<Integer> order = new Vector<Integer>();
+                for (int i = 0; i < placed.size(); i++) order.add(i);
+                Collections.sort(order, new Comparator<Integer>() { public int compare(Integer a, Integer b) {
+                    Rectangle ea = gravityEnvelope(placed.get(a)), eb = gravityEnvelope(placed.get(b));
+                    int c = (xAxis ? ea.x : ea.y) - (xAxis ? eb.x : eb.y);
+                    if (c != 0) return c;
+                    return placed.get(a).getPlacement().getComponentId().compareTo(
+                        placed.get(b).getPlacement().getComponentId());
+                }});
+                for (int index : order) {
+                    GenerationWorkScope.check();
+                    if (evaluations >= MEDIUM_MAX_EVALUATIONS) break;
+                    PcbFootprint source = placed.get(index);
+                    PcbPlacementConstraints.Part demand = constraints.get(source.getPlacement().getComponentId());
+                    Rectangle e = envelope(source, demand.accessMargin);
+                    int start = xAxis ? e.x : e.y;
+                    long limit = (long)start - ((xAxis ? outline.x : outline.y) + 10);
+                    // EDGE parts keep their declared edge position; RIGHT strips trail on X.
+                    if (demand.anchor == PcbPlacementConstraints.Anchor.EDGE) continue;
+                    boolean trailingAnchor = xAxis && demand.anchor == PcbPlacementConstraints.Anchor.RIGHT;
+                    for (int j = 0; j < placed.size(); j++) if (j != index) {
+                        PcbFootprint peer = placed.get(j);
+                        Rectangle o = envelope(peer, constraints.get(peer.getPlacement().getComponentId()).accessMargin);
+                        int oEnd = xAxis ? o.x + o.width : o.y + o.height;
+                        boolean across = xAxis ?
+                            o.y < e.y + e.height + gap && e.y < o.y + o.height + gap :
+                            o.x < e.x + e.width + gap && e.x < o.x + o.width + gap;
+                        // A trailing connector strip keeps every other envelope before it.
+                        if ((across || trailingAnchor) && oEnd <= start)
+                            limit = Math.min(limit, (long)start - oEnd - gap);
+                    }
+                    int shift = (int)Math.max(0, limit) / GRID * GRID;
+                    while (shift >= GRID) {
+                        evaluations++;
+                        PcbComponentPlacement pose = source.getPlacement();
+                        PcbFootprint trial = source.translated(pose.getX() - (xAxis ? shift : 0),
+                            pose.getY() - (xAxis ? 0 : shift));
+                        if (legalGravityMove(constraints, outline, placed, index, trial)) {
+                            placed.set(index, trial);
+                            moved = changed = true;
+                            break;
+                        }
+                        shift = shift / 2 / GRID * GRID;
+                    }
+                }
+            }
+            if (!moved) break;
+        }
+        if (!changed) return input;
+        try { validate(board, constraints, outline, placed); }
+        catch (Rejected rejected) { return input; }
+        return new Plan(outline, placed, input.regions, input.courtyardArea, input.demandArea,
+            input.candidate, evaluations);
+    }
+
+    private static Rectangle gravityEnvelope(PcbFootprint footprint) {
+        return footprint.getPlacementEnvelope();
+    }
+
+    private static final int GRID = 10;
+
+    private static boolean legalGravityMove(PcbPlacementConstraints constraints, Rectangle outline,
+            Vector<PcbFootprint> placed, int index, PcbFootprint trial) {
+        if (!fits(trial, outline, placed, index, constraints)) return false;
+        Rectangle courtyard = trial.getPlacement().getRoutingCourtyard();
+        for (int i = 0; i < placed.size(); i++) if (i != index) {
+            PcbFootprint other = placed.get(i);
+            if (escapeBlocked(trial, other.getPlacement().getRoutingCourtyard()) ||
+                    escapeBlocked(other, courtyard)) return false;
+        }
+        return true;
+    }
+
+    private static boolean escapeBlocked(PcbFootprint source, Rectangle courtyard) {
+        for (PcbPadPlacement pad : source.getPads()) {
+            int ex = pad.getX() + pad.getEscapeDx() * pad.getEscapeLength();
+            int ey = pad.getY() + pad.getEscapeDy() * pad.getEscapeLength();
+            if (courtyard.contains(ex, ey)) return true;
+        }
+        return false;
+    }
+
     static Plan compactConnectedVacancies(TroubleshootBoard board,
             PcbPlacementConstraints constraints, Plan input) {
         if (constraints.placementPackingVersion !=

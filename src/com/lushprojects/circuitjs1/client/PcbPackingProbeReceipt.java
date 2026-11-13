@@ -21,13 +21,21 @@ final class PcbPackingProbeReceipt {
         final PcbPackingMetrics baseline;
         final PcbPackingMetrics candidate;
         final String unavailableReason;
+        /** {@link PcbPackingMetrics#selects} rule the comparison was decided by. */
+        final int selectionRule;
 
         private MetricEvidence(MetricState state, PcbPackingMetrics baseline,
                 PcbPackingMetrics candidate, String unavailableReason) {
+            this(state, baseline, candidate, unavailableReason, 0);
+        }
+
+        private MetricEvidence(MetricState state, PcbPackingMetrics baseline,
+                PcbPackingMetrics candidate, String unavailableReason, int selectionRule) {
             this.state = state;
             this.baseline = baseline;
             this.candidate = candidate;
             this.unavailableReason = unavailableReason;
+            this.selectionRule = selectionRule;
         }
 
         static MetricEvidence notMeasured() {
@@ -51,9 +59,18 @@ final class PcbPackingProbeReceipt {
         }
 
         static MetricEvidence compared(PcbPackingMetrics baseline, PcbPackingMetrics candidate) {
+            return compared(baseline, candidate, 0);
+        }
+
+        static MetricEvidence compared(PcbPackingMetrics baseline, PcbPackingMetrics candidate,
+                int selectionRule) {
             requireMetrics(baseline);
             requireMetrics(candidate);
-            return new MetricEvidence(MetricState.COMPARED, baseline, candidate, null);
+            return new MetricEvidence(MetricState.COMPARED, baseline, candidate, null, selectionRule);
+        }
+
+        boolean selects() {
+            return PcbPackingMetrics.selects(baseline, candidate, selectionRule);
         }
 
         private static void requireMetrics(PcbPackingMetrics metrics) {
@@ -144,9 +161,8 @@ final class PcbPackingProbeReceipt {
         if (!consistent)
             throw new IllegalArgumentException("Packing disposition contradicts observed metric state");
         if (state == MetricState.COMPARED &&
-                PcbPackingMetrics.strictlyImproves(evidence.baseline, evidence.candidate) !=
-                    "SELECTED".equals(disposition))
-            throw new IllegalArgumentException("Packing disposition contradicts its strict metric decision");
+                evidence.selects() != "SELECTED".equals(disposition))
+            throw new IllegalArgumentException("Packing disposition contradicts its metric decision");
     }
 
     String toCanonical() {

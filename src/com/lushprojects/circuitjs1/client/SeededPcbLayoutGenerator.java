@@ -421,6 +421,10 @@ class SeededPcbLayoutGenerator {
         session.packingPlan = PcbPlacementCompactor.compact(session.board, constraints, source);
         session.packingPlan = PcbPlacementCompactor.compactPairedVacancies(
             session.board, constraints, session.packingPlan);
+        PcbPlacementPlanner.Plan gravity = PcbPlacementPlanner.compactGravity(
+            session.board, constraints, session.packingPlan, PcbPlacementPlanner.GRAVITY_GAP);
+        if (gravity != session.packingPlan)
+            session.packingPlan = PcbPlacementCompactor.compactStrips(session.board, constraints, gravity);
         if (session.mediumPolicy)
             session.mediumPlacementEvaluations += session.packingPlan.evaluations - source.evaluations;
         if (PcbPlacementCompactor.samePlacement(source, session.packingPlan)) {
@@ -519,8 +523,9 @@ class SeededPcbLayoutGenerator {
                 return finishPackingProbe(session, "KEPT");
             }
             session.packingMetricEvidence = PcbPackingProbeReceipt.MetricEvidence
-                .compared(session.packingBaselineMetrics, metrics);
-            if (PcbPackingMetrics.strictlyImproves(session.packingBaselineMetrics, metrics)) {
+                .compared(session.packingBaselineMetrics, metrics,
+                    session.board.getPlacementConstraints().compactionVersion);
+            if (session.packingMetricEvidence.selects()) {
                 session.bestLayout = candidate;
                 session.bestPlan = routedCandidate.plan;
                 session.bestArea = metrics.area;
