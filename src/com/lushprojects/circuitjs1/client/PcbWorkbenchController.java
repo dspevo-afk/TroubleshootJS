@@ -1033,8 +1033,16 @@ class PcbWorkbenchController implements WorkbenchCapabilityContext {
 
     private String playerPartLabel(WorkbenchPartsProvider provider, PhysicalPart<?> part) {
         if (sim.troubleshootDebug) return provider.getPartLabel(part);
-        int index = instance.getPhysicalBoardRuntime().getPhysicalParts().indexOf(part);
-        if (index < 0) throw new IllegalArgumentException("Part is outside the current inventory");
+        // Number loose parts by their inventory order among the parts in the tray, so the
+        // numbers run 1..n without counting parts that are installed on the board.
+        Vector<PhysicalPart> inventory = instance.getPhysicalBoardRuntime().getPhysicalParts();
+        if (!inventory.contains(part))
+            throw new IllegalArgumentException("Part is outside the current inventory");
+        int index = 0;
+        for (PhysicalPart other : inventory) {
+            if (other == part) break;
+            if (!other.isInstalled()) index++;
+        }
         PhysicalNameplate markings = part.getPlayerVisibleNameplate();
         return "Part " + (index + 1) + " - " + (markings.hasWorkbenchDetail() ?
             markings.getWorkbenchDetailValue() : markings.getDisplayName());

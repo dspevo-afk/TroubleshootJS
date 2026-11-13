@@ -84,8 +84,9 @@ as a scoped task to build a large-board routing policy and envelope, not as more
 In preferred order. Each needs its own authorization.
 
 1. **Stabilize what is playable (in progress, 2026-11-13).** Fix defects found
-   by playing the current build before adding scope. First pass done: input
-   state, probe markers, tray install and labels; see
+   by playing the current build before adding scope. Two rounds done across all
+   board sizes: input state, probe markers, tray install, labels and numbering,
+   toolbar fit, meter OFF key; see
    [playability pass](task-evidence/playability-pass/README.md). Open items are
    listed in [TASK_REPORT.md](TASK_REPORT.md).
 2. **Board realism** is done in its agreed scope: RB30 and RB56 compaction; small

@@ -1080,7 +1080,7 @@
       else if (page === 'Settings') settingsPage(content);
       else if (page === 'PREPARING') {
         progressView(content);
-        append(content, 'p', 'Testing the real circuit before it reaches your bench. Timing boards take longer. The bar tracks completed stages, not an estimated wait.' + (privateSession() ? ' Keep this qualification view in the foreground during preparation.' : ' Switching away pauses preparation until you return.'), 'tsj-product-hint');
+        append(content, 'p', 'Testing the real circuit before it reaches your bench. Larger and timing boards can take a minute or more. The bar tracks completed stages, not an estimated wait.' + (privateSession() ? ' Keep this qualification view in the foreground during preparation.' : ' Switching away pauses preparation until you return.'), 'tsj-product-hint');
         actionButton(content, 'Cancel preparation', 'cancel');
       } else if (page === 'RETEST') append(content, 'p', 'Checking the live board against the customer’s required behavior.');
       else {
