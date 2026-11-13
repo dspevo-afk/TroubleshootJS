@@ -34,8 +34,9 @@ area, measured by `PcbBoardDensityContractTest` on roots 0 and 17.
   packages, which is new gameplay; the owner deferred it.
 - **Small boards** route on one copper face under the qualified `THT_SINGLE_FACE`
   envelope (no vias). Gravity compaction with a 40-unit gap made their compacted
-  plans route larger or not at all, so they were left alone. Two-layer small boards
-  would need a new envelope; not started.
+  plans route larger or not at all, so they were left alone. On 2026-11-13 the
+  owner chose to keep small boards one-sided; simple through-hole products are
+  commonly single-sided.
 
 ## Commands run
 

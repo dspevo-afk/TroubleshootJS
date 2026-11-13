@@ -19,7 +19,7 @@
 - **Bottom-side parts.** All gameplay packages are through-hole, so bottom placement gains little
   and is unrealistic. It needs SMD packages; the owner deferred it on 2026-11-13.
 - **Small boards.** One-face compaction made boards larger or unroutable and was reverted.
-  Two-layer small boards need a new physical envelope; awaiting the owner's call.
+  The owner chose on 2026-11-13 to keep small boards one-sided.
 
 ## Gates
 
@@ -49,5 +49,5 @@
 
 ## Next action
 
-Owner decision on two-layer small boards. Otherwise ROADMAP Next up item 2 (stabilize what is
-playable), then REL-B close-or-park, then E08.
+Board realism is complete in its agreed scope. Next: ROADMAP Next up item 2 (stabilize what is
+playable), then REL-B close-or-park (including the RB56 placement-16 corpus re-run), then E08.

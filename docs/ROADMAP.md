@@ -85,9 +85,9 @@ In preferred order. Each needs its own authorization.
 
 1. **Board realism (owner request, 2026-11-12).** Compaction is done for RB30
    and RB56 (placement 16); see [board-realism](task-evidence/board-realism/README.md).
-   Open: REL-B's 30-root RB56 corpus must be re-run on placement 16; small
-   one-face boards are unchanged (two layers would need a new envelope);
-   bottom-side parts wait for SMD packages (deferred by the owner).
+   Small boards stay one-sided (owner decision, 2026-11-13); bottom-side parts
+   wait for SMD packages (deferred by the owner). Open: REL-B's 30-root RB56
+   corpus must be re-run on placement 16 (carried into item 3).
 2. **Stabilize what is playable.** Fix defects found by playing the current
    build before adding scope. Open items are listed in [TASK_REPORT.md](TASK_REPORT.md).
 3. **Close or park REL-B.** Either run the remaining release checks and ship the
