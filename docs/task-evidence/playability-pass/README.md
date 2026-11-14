@@ -30,6 +30,24 @@ controller (channel A/B HIGH/LOW highlight follows clicks; channel B switches LE
 RB30 (sensor toggles, power off, remove two parts, click-install from the tray),
 RB56 (sensor toggles, View menu zoom/loupe, DC V selection).
 
+## Third round (AI playtest of RB56 MEDIUM)
+
+A Haiku subagent played exact seed `-3798151323707447735` with player-only access and
+did not reach a diagnosis. Its friction report led to one fix:
+
+| Defect | Fix |
+|---|---|
+| The Board view panel (probe-terminal list and "Place red/black probe") closed on any outside click, such as choosing a meter mode, so placing two probes meant reopening it | Board view is a manual popover: it stays open until its toolbar button or Escape closes it. Escape inside the terminal list closes only the list. Other tool panels still light-dismiss |
+
+Checked and left as is: the "Probe terminal" list is not a spoiler. It lists every
+probeable pad by silkscreen name ("J1 terminal 1") with no nets or connectivity. The
+default fit depends on window size, and the canvas meter is not meant to be dragged.
+
+Browser, real input, EASY LED board: View stays open after clicking DC V and the empty
+board; Escape in the list leaves it open; red on J1 terminal 1 and black on J1
+terminal 2 read 12 V. `u04_ui_contract.mjs` updated for the manual popover, NOT RUN
+(jsdom missing). Static JS only; no Java changed.
+
 ## Checks
 
 | Check | Result |

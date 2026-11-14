@@ -46,6 +46,13 @@ Dependency interpretation moves from v28 to v29. REL-B is unparked but not accep
 - Carried over: scope window too short for 555 flasher frequency; empty footprints are not
   click targets; RB30/RB56 preparation takes about a minute; jsdom-based UI tests not run.
 
+## Follow-up: RB56 playtest friction
+
+A Haiku subagent playtest of exact seed `-3798151323707447735` did not reach a diagnosis.
+The Board view panel now stays open (manual popover) so both probes can be placed without
+reopening it. Details and checks:
+[playability-pass README](task-evidence/playability-pass/README.md).
+
 ## Resources
 
 - Preview server `tsj-preview` on port 8899 (app preview tool), serving the Player build.

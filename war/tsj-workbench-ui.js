@@ -921,7 +921,10 @@
         });
         var nativePopover = panel.classList.contains('tsj-native-popover');
         if (!panel.id) panel.id = 'tsj-native-tool-' + (++serial);
-        panel.setAttribute('popover', 'auto'); panel.setAttribute('role', 'dialog');
+        // Board view holds the probe-terminal controls a player uses between other
+        // clicks, so it stays open until its trigger or Escape closes it.
+        var persistent = label === 'Board view';
+        panel.setAttribute('popover', persistent ? 'manual' : 'auto'); panel.setAttribute('role', 'dialog');
         panel.classList.add('tsj-native-popover');
         var trigger = element('button', presentation[0], 'tsj-product-button tsj-tool-trigger');
         trigger.type = 'button'; trigger.title = label; trigger.setAttribute('aria-label', label);
@@ -929,6 +932,12 @@
         icon(trigger, presentation[1]); panel.parentNode.insertBefore(trigger, panel);
         tool = { panel: panel, trigger: trigger, attributes: attributes, styles: styles, nativePopover: nativePopover }; nativeTools.push(tool);
         listen(trigger, 'click', function () { positionNativeTool(tool); });
+        if (persistent) listen(panel, 'keydown', function (event) {
+          // Escape inside a list box only dismisses that list's native dropdown.
+          if (event.key !== 'Escape' || event.target.tagName === 'SELECT' ||
+              typeof panel.hidePopover !== 'function' || !panel.matches(':popover-open')) return;
+          event.preventDefault(); panel.hidePopover(); trigger.focus();
+        });
         listen(panel, 'beforetoggle', function (event) {
           if (event.newState === 'open') {
             if (window.tsjWorkbenchOverlayOpen || panel.style.display === 'none') event.preventDefault();
