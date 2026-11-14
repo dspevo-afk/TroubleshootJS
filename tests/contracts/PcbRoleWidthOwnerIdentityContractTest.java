@@ -18,7 +18,8 @@ public final class PcbRoleWidthOwnerIdentityContractTest {
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NEAREST_VACANCY,0L);
             GenerationRequest request14=privateRequest(
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CANVAS,0L);
-            GenerationRequest request15=privateRequest(Rb56Placement.ROUTE_OWNER_VERSION15,0L);
+            GenerationRequest request15=privateRequest(
+                GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT,0L);
             PlayerSessionReplay replay11=PlayerSessionReplay.forQualification(request11);
             PlayerSessionReplay replay12=PlayerSessionReplay.forQualification(roleWidthsRequest12);
             PlayerSessionReplay replay13=PlayerSessionReplay.forQualification(request13);
@@ -113,11 +114,6 @@ public final class PcbRoleWidthOwnerIdentityContractTest {
             check(!wrongSaved14Seed.matches(saved14),"saved14 owner identity rejects a different exact seed");
             PlayerSessionReplay wrongCurrentSeed=PlayerSessionReplay.forQualification(privateRequest(15,1L));
             check(!wrongCurrentSeed.matches(current15),"current15 owner identity rejects a different exact seed");
-            PlayerSessionReplay replay16=PlayerSessionReplay.forQualification(
-                privateRequest(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT,0L));
-            check(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT==16 &&
-                    !replay16.matches(current15) && !replay16.canonical().equals(replay15.canonical()),
-                "placement16 replay rejects the uncompacted placement15 owner");
             GeneratedBoardInstance otherFamily=GenerationRequest.leaf("LED_INDICATOR",0L,false)
                 .resolve(new GenerationRequest.PlanCache()).construct().instance;
             owners.add(otherFamily);

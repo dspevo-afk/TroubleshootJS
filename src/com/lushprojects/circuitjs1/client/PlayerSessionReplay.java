@@ -19,8 +19,7 @@ final class PlayerSessionReplay {
     private static final String PRIVATE_ROLE_WIDTHS_PREFIX = "tsj-private-session/12/";
     private static final String PRIVATE_NEAREST_VACANCY_PREFIX = "tsj-private-session/13/";
     private static final String PRIVATE_CANVAS_PREFIX = "tsj-private-session/14/";
-    private static final String PRIVATE_ROUTE_OWNER_PREFIX = "tsj-private-session/15/";
-    private static final String PRIVATE_CURRENT_PREFIX = "tsj-private-session/16/";
+    private static final String PRIVATE_CURRENT_PREFIX = "tsj-private-session/15/";
     private static final String COMPACT_PLACEMENT_TOKEN = "rb56-placement-2";
     private static final String REALISM_PLACEMENT_TOKEN = "rb56-placement-3";
     private static final String DENSE_PLACEMENT_TOKEN = "rb56-placement-4";
@@ -34,8 +33,7 @@ final class PlayerSessionReplay {
     private static final String ROLE_WIDTHS_PLACEMENT_TOKEN = "rb56-placement-12";
     private static final String NEAREST_VACANCY_PLACEMENT_TOKEN = "rb56-placement-13";
     private static final String CANVAS_PLACEMENT_TOKEN = "rb56-placement-14";
-    private static final String ROUTE_OWNER_PLACEMENT_TOKEN = "rb56-placement-15";
-    private static final String CURRENT_PLACEMENT_TOKEN = "rb56-placement-16";
+    private static final String CURRENT_PLACEMENT_TOKEN = "rb56-placement-15";
     private static final int MAX_LENGTH = 180;
 
     private final String replay;
@@ -128,10 +126,6 @@ final class PlayerSessionReplay {
         } else if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CANVAS) {
             identity = PRIVATE_CANVAS_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
                 "/" + CANVAS_PLACEMENT_TOKEN + "/" + request.getFamilyId() + "/" +
-                Long.toString(request.getDescriptor().getRootSeed());
-        } else if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_ROUTE_OWNER) {
-            identity = PRIVATE_ROUTE_OWNER_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
-                "/" + ROUTE_OWNER_PLACEMENT_TOKEN + "/" + request.getFamilyId() + "/" +
                 Long.toString(request.getDescriptor().getRootSeed());
         } else if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT) {
             identity = PRIVATE_CURRENT_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
@@ -268,14 +262,6 @@ final class PlayerSessionReplay {
         } else if (fields.length == 6 && "tsj-private-session".equals(fields[0]) &&
                 "15".equals(fields[1]) &&
                 GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
-                ROUTE_OWNER_PLACEMENT_TOKEN.equals(fields[3]) &&
-                isPrivateQualificationFamily(fields[4])) {
-            placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_ROUTE_OWNER;
-            familyId = fields[4];
-            seedText = fields[5];
-        } else if (fields.length == 6 && "tsj-private-session".equals(fields[0]) &&
-                "16".equals(fields[1]) &&
-                GenerationDependencyContext.INTERPRETATION_EPOCH.equals(fields[2]) &&
                 CURRENT_PLACEMENT_TOKEN.equals(fields[3]) &&
                 isPrivateQualificationFamily(fields[4])) {
             placementVersion = GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT;
@@ -327,9 +313,6 @@ final class PlayerSessionReplay {
         } else if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CANVAS) {
             canonical = PRIVATE_CANVAS_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
                 "/" + CANVAS_PLACEMENT_TOKEN + "/" + familyId + "/" + Long.toString(seed);
-        } else if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_ROUTE_OWNER) {
-            canonical = PRIVATE_ROUTE_OWNER_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
-                "/" + ROUTE_OWNER_PLACEMENT_TOKEN + "/" + familyId + "/" + Long.toString(seed);
         } else if (placementVersion == GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT) {
             canonical = PRIVATE_CURRENT_PREFIX + GenerationDependencyContext.INTERPRETATION_EPOCH +
                 "/" + CURRENT_PLACEMENT_TOKEN + "/" + familyId + "/" + Long.toString(seed);
@@ -387,9 +370,7 @@ final class PlayerSessionReplay {
             constraints.placementDensityVersion ==
                 Rb56Placement.densityVersion(rb56PlacementInterpretationVersion) &&
             constraints.getTraceWidthProfile() ==
-                Rb56Placement.widthProfile(rb56PlacementInterpretationVersion) &&
-            constraints.compactionVersion ==
-                Rb56Placement.compactionVersion(rb56PlacementInterpretationVersion);
+                Rb56Placement.widthProfile(rb56PlacementInterpretationVersion);
     }
 
     private static IllegalArgumentException invalid(String message) {

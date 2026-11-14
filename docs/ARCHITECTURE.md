@@ -8228,12 +8228,13 @@ normal `fits` check and an escape check; the result must pass whole-plan `valida
 or the input plan is kept. The same version selects `PcbPackingMetrics.selects`
 rule 1 instead of the strict rule: at least 5% less area, no extra vias, at most
 25% more Manhattan copper, protected void ignored. The receipt's `MetricEvidence`
-records the rule it was decided by. Opt-ins: RB30 (`Rb30Plan`) and RB56 placement
-16 (`Rb56Placement.CURRENT_VERSION`, with connected-pocket packing; placement 15
-remains selectable and uses neither). One-face small boards are not opted in: on
-one copper layer the compacted plans routed larger or not at all. The dependency
-capture adds `placement.compaction`; private RB56 replay adds the
-`tsj-private-session/16/…/rb56-placement-16` namespace. `PcbBoardDensityContractTest`
+records the rule it was decided by. Opt-in: RB30 (`Rb30Plan`). RB56 is not opted
+in: a short-lived placement 16 (connected-pocket packing plus gravity compaction)
+raised board construction work enough that 6 of the 30 REL-B roots could no longer
+fit the diagnostic proof inside the 640-unit job budget, so it was removed the same
+day and `Rb56Placement.CURRENT_VERSION` is 15 again. One-face small boards are not
+opted in: on one copper layer the compacted plans routed larger or not at all. The
+dependency capture adds `placement.compaction`. `PcbBoardDensityContractTest`
 reports courtyard fill per family and holds per-family floors.
 Unsupported metric grids retain the NO_HEADROOM disposition with a distinct
 diagnostic state; there is no repeated production measurement or routing loop.

@@ -103,12 +103,10 @@ public final class U06SessionSaveContractTest {
             GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NEAREST_VACANCY);
         GenerationRequest canvasRequest = currentRequest.withRb56PlacementInterpretationVersion(
             GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CANVAS);
-        GenerationRequest routeOwnerRequest = currentRequest.withRb56PlacementInterpretationVersion(
-            GenerationRequest.RB56_PLACEMENT_INTERPRETATION_ROUTE_OWNER);
         GenerationRequest[] requests = new GenerationRequest[] {
             legacyRequest, compactRequest, realismRequest, denseRequest, largeRequest, singleRequest,
             guardedRequest, narrowRequest, connectedRequest, localRequest, vacancyRequest,
-            roleWidthsRequest, nearestVacancyRequest, canvasRequest, routeOwnerRequest, currentRequest
+            roleWidthsRequest, nearestVacancyRequest, canvasRequest, currentRequest
         };
         String[] expected = new String[] {
             "tsj-private-session/1/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
@@ -140,9 +138,7 @@ public final class U06SessionSaveContractTest {
             "tsj-private-session/14/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
                 "/rb56-placement-14/RB56_CONTROL/77",
             "tsj-private-session/15/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
-                "/rb56-placement-15/RB56_CONTROL/77",
-            "tsj-private-session/16/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
-                "/rb56-placement-16/RB56_CONTROL/77"
+                "/rb56-placement-15/RB56_CONTROL/77"
         };
         for (int i = 0; i < requests.length; i++) {
             final GenerationRequest request = requests[i];
@@ -163,9 +159,7 @@ public final class U06SessionSaveContractTest {
         }
         check(currentRequest.getRb56PlacementInterpretationVersion() ==
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT,
-            "new private RB56 requests default to placement 16");
-        check(routeOwnerRequest.getRb56PlacementInterpretationVersion() == 15,
-            "saved route-owner interpretation remains explicitly selectable as placement 15");
+            "new private RB56 requests default to placement 15");
         check(canvasRequest.getRb56PlacementInterpretationVersion() ==
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CANVAS,
             "saved canvas-owner interpretation remains explicitly selectable as placement 14");

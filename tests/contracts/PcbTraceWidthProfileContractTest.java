@@ -59,16 +59,7 @@ public final class PcbTraceWidthProfileContractTest {
         Rb56Plan saved12 = Rb56Plan.resolve(seed, Rb56Placement.ROLE_WIDTHS_VERSION12);
         Rb56Plan saved13 = Rb56Plan.resolve(seed, Rb56Placement.NEAREST_VACANCY_VERSION13);
         Rb56Plan saved14 = Rb56Plan.resolve(seed, Rb56Placement.CANVAS_OWNER_VERSION14);
-        Rb56Plan current15 = Rb56Plan.resolve(seed, Rb56Placement.ROUTE_OWNER_VERSION15);
-        PcbPlacementConstraints current16 = Rb56Plan.resolve(seed, Rb56Placement.CURRENT_VERSION)
-            .board().getPlacementConstraints();
-        check(Rb56Placement.CURRENT_VERSION == 16 &&
-                current16.getTraceWidthProfile() == PcbTraceWidthProfile.ROLE_WIDTHS &&
-                current16.placementDensityVersion == 14 &&
-                current16.compactionVersion == PcbPlacementConstraints.GRAVITY_COMPACTION_VERSION &&
-                current16.placementPackingVersion ==
-                    PcbPlacementConstraints.CONNECTED_POCKET_PACKING_VERSION,
-            "current16 keeps version 15 widths and density and adds gravity compaction");
+        Rb56Plan current15 = Rb56Plan.resolve(seed, Rb56Placement.CURRENT_VERSION);
         TroubleshootBoard savedBoard = saved11.board();
         TroubleshootBoard saved12Board = saved12.board();
         TroubleshootBoard saved13Board = saved13.board();

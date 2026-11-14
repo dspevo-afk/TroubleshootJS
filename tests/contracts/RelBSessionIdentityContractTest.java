@@ -25,10 +25,6 @@ public final class RelBSessionIdentityContractTest {
                 "/rb56-placement-15/RB56_CONTROL/1");
         } }, "public parser refuses the private placement15 namespace");
         reject(new Attempt() { public void run() {
-            PlayerLaunchRequest.parse("tsj-private-session/16/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
-                "/rb56-placement-16/RB56_CONTROL/1");
-        } }, "public parser refuses the private placement16 namespace");
-        reject(new Attempt() { public void run() {
             PlayerLaunchRequest.parse("tsj-private-session/11/" + GenerationDependencyContext.INTERPRETATION_EPOCH +
                 "/rb56-placement-11/RB56_CONTROL/1");
         } }, "public parser still refuses saved private placement11");
@@ -122,17 +118,17 @@ public final class RelBSessionIdentityContractTest {
             GenerationRequest request =
                 GenerationRequest.forFamilyQualification(Rb56Plan.FAMILY_ID, value);
             PlayerSessionReplay identity = PlayerSessionReplay.forQualification(request);
-            String expected = "tsj-private-session/16/" +
-                GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-16/RB56_CONTROL/" + seed;
+            String expected = "tsj-private-session/15/" +
+                GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-15/RB56_CONTROL/" + seed;
             check(request.getRb56PlacementInterpretationVersion() ==
                     GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CURRENT &&
                     expected.equals(identity.canonical()) && identity.matches(request),
-                "exact signed-long fresh private identity selects placement 16: " + seed);
+                "exact signed-long fresh private identity selects placement 15: " + seed);
             PlayerSessionSave original = emptySave(identity.canonical());
             PlayerSessionSave parsed = PlayerSessionSave.parse(original.encode());
             check(original.encode().equals(parsed.encode()) &&
                 PlayerSessionReplay.parse(parsed.replay).matches(request),
-                "placement-16 private identity survives the unchanged bounded session codec: " + seed);
+                "placement-15 private identity survives the unchanged bounded session codec: " + seed);
             for (final String priorEpoch : new String[] {
                     "tsj-generation-dependencies-v26",
                     "tsj-generation-dependencies-v25",
@@ -145,15 +141,6 @@ public final class RelBSessionIdentityContractTest {
                     PlayerSessionReplay.parse(priorDependencyIdentity);
                 } }, priorEpoch + " replay derived from the captured current v27 identity is rejected: " + seed);
             }
-            GenerationRequest routeOwnerRequest = request.withRb56PlacementInterpretationVersion(
-                GenerationRequest.RB56_PLACEMENT_INTERPRETATION_ROUTE_OWNER);
-            String routeOwnerExpected = "tsj-private-session/15/" +
-                GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-15/RB56_CONTROL/" + seed;
-            PlayerSessionReplay routeOwnerIdentity = PlayerSessionReplay.forQualification(routeOwnerRequest);
-            check(routeOwnerExpected.equals(routeOwnerIdentity.canonical()) &&
-                    PlayerSessionReplay.parse(routeOwnerExpected).matches(routeOwnerRequest) &&
-                    !identity.matches(routeOwnerRequest) && !routeOwnerIdentity.matches(request),
-                "explicit saved15 keeps its identity and rejects current16 both ways: " + seed);
             GenerationRequest canvasRequest = request.withRb56PlacementInterpretationVersion(
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CANVAS);
             String canvasExpected = "tsj-private-session/14/" +
@@ -169,7 +156,7 @@ public final class RelBSessionIdentityContractTest {
                     PlayerSessionReplay.parse(canvasParsed.replay).matches(canvasRequest),
                 "saved14 identity survives unchanged session framing: " + seed);
             check(!identity.matches(canvasRequest) && !canvasIdentity.matches(request),
-                "saved14 and current16 identities reject each other in both directions: " + seed);
+                "saved14 and current15 identities reject each other in both directions: " + seed);
             GenerationRequest nearestVacancyRequest = request.withRb56PlacementInterpretationVersion(
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NEAREST_VACANCY);
             String nearestVacancyExpected = "tsj-private-session/13/" +
@@ -190,7 +177,7 @@ public final class RelBSessionIdentityContractTest {
                 "saved13 identity survives unchanged session framing: " + seed);
             check(!identity.matches(nearestVacancyRequest) &&
                     !nearestVacancyIdentity.matches(request),
-                "saved13 and current16 identities reject each other in both directions: " + seed);
+                "saved13 and current15 identities reject each other in both directions: " + seed);
             GenerationRequest roleWidthsRequest = request.withRb56PlacementInterpretationVersion(
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_ROLE_WIDTHS);
             String roleWidthsExpected = "tsj-private-session/12/" +
@@ -202,32 +189,32 @@ public final class RelBSessionIdentityContractTest {
                         GenerationRequest.RB56_PLACEMENT_INTERPRETATION_ROLE_WIDTHS,
                 "explicit saved12 keeps its exact private identity and placement interpretation: " + seed);
             check(!identity.matches(roleWidthsRequest) && !roleWidthsIdentity.matches(request),
-                "saved12 and current16 remain distinct in both replay directions: " + seed);
+                "saved12 and current15 remain distinct in both replay directions: " + seed);
             GenerationRequest vacancyRequest=request.withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_VACANCY);
             String vacancyExpected="tsj-private-session/11/"+GenerationDependencyContext.INTERPRETATION_EPOCH+"/rb56-placement-11/RB56_CONTROL/"+seed;
             check(vacancyExpected.equals(PlayerSessionReplay.forQualification(vacancyRequest).canonical()) &&
                 PlayerSessionReplay.parse(vacancyExpected).matches(vacancyRequest) &&
-                !PlayerSessionReplay.parse(vacancyExpected).matches(request),"saved11 stays distinct from current16: "+seed);
+                !PlayerSessionReplay.parse(vacancyExpected).matches(request),"saved11 stays distinct from current15: "+seed);
             check(emptySave(vacancyExpected).encode().equals(PlayerSessionSave.parse(emptySave(vacancyExpected).encode()).encode()),
                 "saved11 bounded wire remains exact: "+seed);
             GenerationRequest localRequest=request.withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_PIN_LOCAL);
             String localExpected="tsj-private-session/10/"+GenerationDependencyContext.INTERPRETATION_EPOCH+"/rb56-placement-10/RB56_CONTROL/"+seed;
             check(localExpected.equals(PlayerSessionReplay.forQualification(localRequest).canonical()) &&
                 PlayerSessionReplay.parse(localExpected).matches(localRequest) &&
-                !PlayerSessionReplay.parse(localExpected).matches(request),"saved10 stays distinct from current16: "+seed);
+                !PlayerSessionReplay.parse(localExpected).matches(request),"saved10 stays distinct from current15: "+seed);
             GenerationRequest connectedRequest=request.withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_CONNECTED);
             String connectedExpected="tsj-private-session/9/"+GenerationDependencyContext.INTERPRETATION_EPOCH+"/rb56-placement-9/RB56_CONTROL/"+seed;
-            check(connectedExpected.equals(PlayerSessionReplay.forQualification(connectedRequest).canonical()) && PlayerSessionReplay.parse(connectedExpected).matches(connectedRequest) && !PlayerSessionReplay.parse(connectedExpected).matches(request),"saved9 stays distinct from current16: "+seed);
+            check(connectedExpected.equals(PlayerSessionReplay.forQualification(connectedRequest).canonical()) && PlayerSessionReplay.parse(connectedExpected).matches(connectedRequest) && !PlayerSessionReplay.parse(connectedExpected).matches(request),"saved9 stays distinct from current15: "+seed);
             GenerationRequest narrowRequest=request.withRb56PlacementInterpretationVersion(GenerationRequest.RB56_PLACEMENT_INTERPRETATION_NARROW);
             String narrowExpected="tsj-private-session/8/"+GenerationDependencyContext.INTERPRETATION_EPOCH+"/rb56-placement-8/RB56_CONTROL/"+seed;
-            check(narrowExpected.equals(PlayerSessionReplay.forQualification(narrowRequest).canonical()) && PlayerSessionReplay.parse(narrowExpected).matches(narrowRequest) && !PlayerSessionReplay.parse(narrowExpected).matches(request),"saved8 stays distinct from current16: "+seed);
+            check(narrowExpected.equals(PlayerSessionReplay.forQualification(narrowRequest).canonical()) && PlayerSessionReplay.parse(narrowExpected).matches(narrowRequest) && !PlayerSessionReplay.parse(narrowExpected).matches(request),"saved8 stays distinct from current15: "+seed);
             GenerationRequest guardedRequest=request.withRb56PlacementInterpretationVersion(
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_GUARDED);
             String guardedExpected="tsj-private-session/7/"+GenerationDependencyContext.INTERPRETATION_EPOCH+
                 "/rb56-placement-7/RB56_CONTROL/"+seed;
             check(guardedExpected.equals(PlayerSessionReplay.forQualification(guardedRequest).canonical()) &&
                 PlayerSessionReplay.parse(guardedExpected).matches(guardedRequest) &&
-                !PlayerSessionReplay.parse(guardedExpected).matches(request),"saved7 stays distinct from current16: "+seed);
+                !PlayerSessionReplay.parse(guardedExpected).matches(request),"saved7 stays distinct from current15: "+seed);
 
             GenerationRequest realismRequest = request.withRb56PlacementInterpretationVersion(
                 GenerationRequest.RB56_PLACEMENT_INTERPRETATION_REALISM);
@@ -235,7 +222,7 @@ public final class RelBSessionIdentityContractTest {
             String realismExpected = "tsj-private-session/3/" +
                 GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-3/RB56_CONTROL/" + seed;
             check(realismExpected.equals(realism.canonical()) && realism.matches(realismRequest) &&
-                !realism.matches(request), "saved placement3 identity stays distinct from current16: " + seed);
+                !realism.matches(request), "saved placement3 identity stays distinct from current15: " + seed);
             PlayerSessionSave realismSave = emptySave(realismExpected);
             check(realismSave.encode().equals(PlayerSessionSave.parse(realismSave.encode()).encode()),
                 "saved3 bounded session wire remains exact: " + seed);
@@ -246,7 +233,7 @@ public final class RelBSessionIdentityContractTest {
                 "/rb56-placement-6/RB56_CONTROL/"+seed;
             PlayerSessionReplay single=PlayerSessionReplay.forQualification(singleRequest);
             check(singleExpected.equals(single.canonical()) && single.matches(singleRequest) && !single.matches(request),
-                "saved6 stays distinct from current16: "+seed);
+                "saved6 stays distinct from current15: "+seed);
             check(emptySave(singleExpected).encode().equals(PlayerSessionSave.parse(emptySave(singleExpected).encode()).encode()),
                 "saved6 wire remains exact: "+seed);
             GenerationRequest largeRequest=request.withRb56PlacementInterpretationVersion(
@@ -255,7 +242,7 @@ public final class RelBSessionIdentityContractTest {
                 "/rb56-placement-5/RB56_CONTROL/"+seed;
             PlayerSessionReplay large=PlayerSessionReplay.forQualification(largeRequest);
             check(largeExpected.equals(large.canonical()) && large.matches(largeRequest) && !large.matches(request),
-                "published saved5 stays distinct from current16: "+seed);
+                "published saved5 stays distinct from current15: "+seed);
             check(emptySave(largeExpected).encode().equals(PlayerSessionSave.parse(emptySave(largeExpected).encode()).encode()),
                 "saved5 wire remains exact: "+seed);
             GenerationRequest denseRequest=request.withRb56PlacementInterpretationVersion(
@@ -264,7 +251,7 @@ public final class RelBSessionIdentityContractTest {
                 GenerationDependencyContext.INTERPRETATION_EPOCH+"/rb56-placement-4/RB56_CONTROL/"+seed;
             PlayerSessionReplay dense=PlayerSessionReplay.forQualification(denseRequest);
             check(denseExpected.equals(dense.canonical()) && dense.matches(denseRequest) &&
-                !dense.matches(request),"published saved4 stays distinct from current16: "+seed);
+                !dense.matches(request),"published saved4 stays distinct from current15: "+seed);
             PlayerSessionSave denseSave=emptySave(denseExpected);
             check(denseSave.encode().equals(PlayerSessionSave.parse(denseSave.encode()).encode()),
                 "saved4 wire remains exact: "+seed);
@@ -293,15 +280,14 @@ public final class RelBSessionIdentityContractTest {
                 !request.canonical().equals(canvasRequest.canonical()) &&
                 !canvasRequest.canonical().equals(nearestVacancyRequest.canonical()) &&
                 !nearestVacancyRequest.canonical().equals(roleWidthsRequest.canonical()),
-                "placement 1, 2, 12, 13, 14 and 16 have distinct plan-cache/request identities: " + seed);
+                "placement 1, 2, 12, 13, 14 and 15 have distinct plan-cache/request identities: " + seed);
             check(compactRequest.canonical().contains("placement-interpretation=2;") &&
                 roleWidthsRequest.canonical().contains("placement-interpretation=12;") &&
                 nearestVacancyRequest.canonical().contains("placement-interpretation=13;") &&
                 canvasRequest.canonical().contains("placement-interpretation=14;") &&
-                request.canonical().contains("placement-interpretation=16;") &&
-                routeOwnerRequest.canonical().contains("placement-interpretation=15;") &&
+                request.canonical().contains("placement-interpretation=15;") &&
                 legacyRequest.canonical().indexOf("placement-interpretation=") < 0,
-                "legacy canonical stays exact while saved12, saved13, saved14 and current16 are explicitly keyed: " + seed);
+                "legacy canonical stays exact while saved12, saved13, saved14 and current15 are explicitly keyed: " + seed);
         }
         reject(new Attempt() { public void run() {
             PlayerLaunchRequest.parse("tsj-private-session/5/"+GenerationDependencyContext.INTERPRETATION_EPOCH+
@@ -328,7 +314,7 @@ public final class RelBSessionIdentityContractTest {
                 "tsj-private-session/15/tsj-generation-dependencies-v20/rb56-placement-15/RB56_CONTROL/1",
                 "tsj-private-session/15/tsj-generation-dependencies-v21/rb56-placement-15/RB56_CONTROL/1",
                 "tsj-private-session/15/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-15/RB56_CONTROL/1/extra",
-                "tsj-private-session/17/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-17/RB56_CONTROL/1",
+                "tsj-private-session/16/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-16/RB56_CONTROL/1",
                 "tsj-private-session/7/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/RB56_CONTROL/1",
                 "tsj-private-session/7/" + GenerationDependencyContext.INTERPRETATION_EPOCH + "/rb56-placement-4/RB56_CONTROL/1",
                 "tsj-private-session/7/tsj-generation-dependencies-v15/rb56-placement-7/RB56_CONTROL/1",
@@ -417,14 +403,14 @@ public final class RelBSessionIdentityContractTest {
             PlayerSessionReplay.forQualification(saved14Request).canonical());
         reject(new Attempt() { public void run() {
             coordinator.startSessionRestoreForQualification(savedRequest, saved13);
-        } }, "saved13 replay rejects against current16 request before coordinator mutation");
+        } }, "saved13 replay rejects against current15 request before coordinator mutation");
         check(coordinator.getJob() == null,
-            "saved13/current16 override mismatch leaves coordinator idle");
+            "saved13/current15 override mismatch leaves coordinator idle");
         reject(new Attempt() { public void run() {
             coordinator.startSessionRestoreForQualification(saved13Request, saved);
-        } }, "current16 replay rejects against explicit saved13 request before coordinator mutation");
+        } }, "current15 replay rejects against explicit saved13 request before coordinator mutation");
         check(coordinator.getJob() == null,
-            "current16/saved13 override mismatch leaves coordinator idle");
+            "current15/saved13 override mismatch leaves coordinator idle");
         reject(new Attempt() { public void run() {
             coordinator.startSessionRestoreForQualification(saved13Request, saved14);
         } }, "saved14 replay rejects against explicit saved13 request before coordinator mutation");
@@ -438,14 +424,14 @@ public final class RelBSessionIdentityContractTest {
 
         reject(new Attempt() { public void run() {
             coordinator.startSessionRestoreForQualification(savedRequest, saved14);
-        } }, "saved14 replay rejects against current16 request before coordinator mutation");
+        } }, "saved14 replay rejects against current15 request before coordinator mutation");
         check(coordinator.getJob() == null,
-            "saved14/current16 override mismatch leaves coordinator idle");
+            "saved14/current15 override mismatch leaves coordinator idle");
         reject(new Attempt() { public void run() {
             coordinator.startSessionRestoreForQualification(saved14Request, saved);
-        } }, "current16 replay rejects against explicit saved14 request before coordinator mutation");
+        } }, "current15 replay rejects against explicit saved14 request before coordinator mutation");
         check(coordinator.getJob() == null,
-            "current16/saved14 override mismatch leaves coordinator idle");
+            "current15/saved14 override mismatch leaves coordinator idle");
 
         sim.troubleshootDebug = false;
         reject(new Attempt() { public void run() {

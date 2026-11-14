@@ -22,13 +22,13 @@ customer retest. Sessions can be saved and restored.
 - **Not available:** HARD and PSYCHOTIC difficulty, 100-part boards, player
   jumpers and trace cuts, logic/MCU content, circuit import.
 - **Release state:** REL-A (limited alpha) accepted. REL-B (advanced beta) is
-  qualified for MEDIUM on the 56-part board but the public beta is held.
+  parked (2026-11-13): the current build passes 28 of its 30 release boards.
 
 ## Milestone status
 
-42 complete · 1 in progress · 1 parked · 29 unstarted.
+42 complete · 0 in progress · 2 parked · 29 unstarted.
 
-| Lane | Complete | In progress | Unstarted |
+| Lane | Complete | In progress / parked | Unstarted |
 |---|---|---|---|
 | Baseline | T49, N00, R00 | | |
 | Architecture (A) | A01–A11 | | |
@@ -37,7 +37,7 @@ customer retest. Sessions can be saved and restored.
 | Electrical content (E) | E01–E07 | | E08–E14 |
 | Diagnostics (D) | D01 | | |
 | Board-scale qualification (Q) | Q15, Q30, Q60 | Q100 (parked) | |
-| Releases | REL-A | REL-B | REL-1 |
+| Releases | REL-A | REL-B (parked) | REL-1 |
 | Microcontroller | | | MCU-1, MCU-2 |
 | Circuit import | | | IMPORT-1 – IMPORT-5 |
 | Advanced (X) | | | X01–X09 |
@@ -46,13 +46,16 @@ customer retest. Sessions can be saved and restored.
 scopes are bounded: fixed seed corpora, the reference PC, and EASY/MEDIUM only.
 None of them is an all-seeds or all-hosts guarantee.
 
-### In progress
+### Parked
 
-**REL-B · Advanced desktop beta.** Normal MEDIUM admission on the 56-part board
-passed its 30-root qualification, including save/replay/restore and a physical
-repair and retest path. Still open: the owner's decision to release the beta,
-HARD calibration (deferred by the owner on 2026-10-24), and modest-host
-performance evidence (never run).
+**REL-B · Advanced desktop beta.** **Parked on 2026-11-13** (release call delegated
+by the owner). In October the 56-part MEDIUM board passed a 30-root qualification.
+Re-run on the current build, 22/30 passed. The same-day RB56 compaction (placement
+16) caused six failures and was removed. On placement 15, 28/30 pass. The two
+remaining failures (one over the 640-unit work budget, one solver step past 5 s)
+come from a regression since October whose cause is not identified. HARD stays
+unavailable and modest-host performance was never measured. Details and ways to
+reopen: [release decision](task-evidence/REL-B/release-decision-2026-11-13/README.md).
 
 **Q100 · 100-part procedural board.** **Parked on 2026-11-12 by the project lead.** Reopen it only
 as a scoped task to build a large-board routing policy and envelope, not as more diagnostics.
@@ -89,12 +92,13 @@ In preferred order. Each needs its own authorization.
    toolbar fit, meter OFF key; see
    [playability pass](task-evidence/playability-pass/README.md). Open items are
    listed in [TASK_REPORT.md](TASK_REPORT.md).
-2. **Board realism** is done in its agreed scope: RB30 and RB56 compaction; small
-   boards stay one-sided (owner, 2026-11-13); bottom-side parts wait for SMD
-   packages; see [board-realism](task-evidence/board-realism/README.md).
-3. **Close or park REL-B.** Either run the remaining release checks (including
-   the RB56 placement-16 corpus re-run) and ship the MEDIUM beta, or record it as
-   parked.
+2. **Board realism** is done in its agreed scope: RB30 compaction; RB56 compaction
+   was removed because it broke generation budgets; small boards stay one-sided
+   (owner, 2026-11-13); bottom-side parts wait for SMD packages; see
+   [board-realism](task-evidence/board-realism/README.md).
+3. **REL-B is parked.** Reopening it starts with finding the post-October RB56
+   generation regression, then a 30/30 re-run; see the
+   [release decision](task-evidence/REL-B/release-decision-2026-11-13/README.md).
 4. **Content the alpha is missing.** E07 (555 timer board) is done. E08
    (jumpers, trace cuts, physical restoration) is next; it changes the mutation
    and save formats. U09 (two-channel scope) can now build on the E07 timer
