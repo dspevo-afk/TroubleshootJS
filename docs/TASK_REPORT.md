@@ -1,43 +1,59 @@
 # Task report — current checkpoint
 
-**Date:** 2026-11-13 · **Branch:** `master` · **Base:** `f9ea50f3` · **Task:** REL-B release
-decision, delegated by the owner. The previous checkpoint (playability rounds 1–2) is in
-[archive/2026-11-13-playability-checkpoint.md](archive/2026-11-13-playability-checkpoint.md).
+**Date:** 2026-11-14 · **Branch:** `master` · **Base:** `a61dfe7f` · **Task:** find and fix the
+post-October RB56 generation regression that parked REL-B (owner delegated the lead). The
+previous checkpoint (REL-B parked) is in
+[archive/2026-11-13-relb-decision-checkpoint.md](archive/2026-11-13-relb-decision-checkpoint.md).
 
 ## Outcome
 
-**REL-B parked.** The 30 October release roots, re-run unchanged on the current build, pass
-22/30 on RB56 placement 16 and 28/30 on placement 15. Placement 16 (same-day board-realism
-compaction) is removed; RB56 is back on placement 15. Details:
+**Regression fixed; the 30 October release roots pass 30/30 again.** A three-root bisect found
+two causes. Both are fixed in their owners:
+
+- `34ff05d0`: the guided P07 ordering stream compared all three route orderings, roughly
+  doubling RB56 board construction work. The Medium generator now calls
+  `PcbLayerRoutingPrototype.Session.stopAtFirstSuccess()` and keeps the first accepted route
+  (`FIRST_SUCCESS_GUIDED`). Direct callers keep the comparison.
+- `cad0799a`: reduced nonlinear matrix ordering let one RB56 fault proof stall a solver unit
+  past 5 s. It is opt-in again (`CirSim.reducedOrderingEnabled`, default off); only the parked
+  Q100 pilot used it.
+
+Dependency interpretation moves from v28 to v29. REL-B is unparked but not accepted. Details:
 [release decision](task-evidence/REL-B/release-decision-2026-11-13/README.md).
 
 ## Gates
 
 | Gate | Result |
 |---|---|
-| 30-root RB56 normal MEDIUM, Developer build, placement 16 | FAIL 22/30 (7 work budget, 1 unit over 5 s) |
-| Same 30 roots, placement 15 | FAIL 28/30 (1 work budget, 1 unit over 5 s) |
-| RB30 Q30 coordinator route, 10 roots | Cold generation PASS 10/10; warm-cache receipt step FAIL 10/10 (developer route expectation, not the player path) |
-| `scripts/build.ps1` Player, placement 15 | PASS |
-| 9 focused suites (density, packing identity, role width, trace width, REL-B identity, U04/U06 session, RB56 fault population and physical owner) | PASS |
-| Full native gate, browser idle | PASS: 215 Java suites plus independent oracles, 49 min; RB56 matrix 93 s (133 s on placement 16) |
-| Browser, Player build, real input | PASS: RB56 root `3437424778755667517` (failed on placement 16) prepares, ticket accepted, board shown |
+| 30-root RB56 normal MEDIUM, Developer build of the final source | PASS 30/30; heaviest 601/640 units, slowest unit 1.82 s |
+| `scripts/build.ps1` Player and Developer | PASS |
+| Focused suites (A07, D01, P07 ordering/relaxed/fixed-prefix, RB56 model identity, REL-B identity, pocket packing/holdout) | PASS |
+| Full native gate, browser idle | PASS: 215 Java suites plus independent oracles, 46 min |
+| Browser, Player build, real input | PASS: RB56 MEDIUM exact seed `-3798151323707447735` prepares (~60 s), ticket accepted, board shown |
 
 ## Limits
 
-- Two of the 30 roots still fail on placement 15 although they passed in October; cause not
-  identified (candidates listed in the decision README). Not investigated further here.
-- RB30 is checked on 10 roots only; it has no 30-root corpus.
+- Heaviest root has 39 units (6 %) of headroom, less than in October (138).
+- Golden layouts for guided seeds were re-pinned (listed in the decision README). Boards are
+  the same size or up to about 2.4 % larger, because the generator no longer picks the most
+  compact of three orderings.
+- REL-B acceptance still needs a release check on this build: the Player save/replay/restore gate
+  and a repair/retest path.
+- `tests/qualification/rb100-layout` readers still pin dependency v28 and the old -1022 hash.
+  They read saved Q100 evidence, are not in the gate and were left unchanged.
+- Nothing enables reduced matrix ordering now; reopening the parked Q100 pilot must opt in.
+- RB30 checked through the full gate only; no RB30 population run this task.
 - Carried over: scope window too short for 555 flasher frequency; empty footprints are not
   click targets; RB30/RB56 preparation takes about a minute; jsdom-based UI tests not run.
 
 ## Resources
 
-- Preview server `tsj-preview` on port 8899 (app preview tool). Served build is Player.
-- Runner outputs in OS temp (`relb-p16-run-*`, `relb-p15-*`, `rb30-coord-*`), not in Git.
+- Preview server `tsj-preview` on port 8899 (app preview tool), serving the Player build.
+- Runner outputs in OS temp (`relb-exp2-*`, `relb-final-*`, `tsj-*.log`), not in Git.
+- The bisect worktree (OS temp, detached at `8a2c1244`) was verified clean and removed.
 - Untouched, still awaiting the owner: 28 worktrees and 8 stashes from the audit.
 
 ## Next action
 
-Owner choice: investigate the post-October RB56 generation regression (reopens REL-B), or
-start E08 (jumpers and trace cuts).
+Run the REL-B release check on this build (save/replay/restore and repair/retest on RB56
+MEDIUM) and accept REL-B if it passes; otherwise start E08 (jumpers and trace cuts).

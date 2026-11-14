@@ -1116,7 +1116,12 @@ records NO_PATH versus a branch-search cap, without a returned layout or adopted
 treatment. Production routing, solver, Player, epochs and admission are unchanged.
 
 CirSim owns reduced nonlinear matrix ordering at the end of simplification,
-before its original matrix/right-side backups. ReducedMatrixOrdering derives a
+before its original matrix/right-side backups. Since 2026-11-13 it is opt-in
+(`CirSim.reducedOrderingEnabled`, default off): on RB56 it let one fault proof
+stall a solver unit past the 5 s generation limit, and only the parked Q100
+pilot needed it. Normal boards use the unordered LU path again; the runtime
+checks enable it explicitly on their own fixtures and private parent proof.
+Nothing else sets the flag, so reopening the Q100 pilot must opt in. ReducedMatrixOrdering derives a
 deterministic greedy minimum-degree permutation from the undirected union of the
 static off-diagonal pattern. It permutes rows, columns and the right side together
 and inverse-remaps fresh RowInfo coordinates. Physical node/terminal identities,
@@ -1128,7 +1133,8 @@ no retained ordering cache or seed/fault-specific policy. Original backups use
 the ordered coordinates for subsequent iterations. Fresh analysis RowInfo objects
 preserve private-snapshot parent restoration. The internal comparison flag is
 used only by native/Developer fixtures, with no Player query or UI control.
-Dependency interpretation v27 identifies the changed floating-point solve order;
+Dependency interpretation v27 identified the changed floating-point solve order
+(v29 identifies its removal from normal boards);
 model dump input epoch v7 remains. The [finite qualification packet](task-evidence/A07/reduced-matrix-ordering-r1/README.md)
 records electrical, mapping, reset, parent restoration, privacy and regression
 evidence without granting playable100 or renewed30-root admission.
@@ -1318,7 +1324,12 @@ existing Session budget. Original late activation and ordering choices remain.
 The Medium owner opts into a one-slot ordering stream. An unguided request keeps
 its ordinary first success; once stronger guidance has intervened, the same
 Session may consider its remaining existing orderings under one unchanged
-expansion/via budget. Every yield passes routing guards before the generator
+expansion/via budget. Since 2026-11-13 the Medium generator also calls
+`stopAtFirstSuccess()`, so its guided streams end at their first accepted route
+(`FIRST_SUCCESS_GUIDED`): comparing the later orderings roughly doubled RB56
+board construction work and exhausted the 640-unit generation budget. Direct
+stream callers (contract fixtures, the parked Q100 pilot and the fixed-prefix
+observation path) keep the comparison. Every yield passes routing guards before the generator
 compacts, checks its envelope and applies the existing physical comparator.
 P07 owns neither compaction nor scoring. Default first-success callers, including
 the separate packing probe, retain their own API. One placement request still

@@ -449,7 +449,7 @@ public final class RelBSessionIdentityContractTest {
      */
     private static void verifyPriorEpochIntakeBeforeCoordinatorStart(CirSim sim,
             GenerationCoordinator coordinator, long seed) {
-        check("tsj-generation-dependencies-v28".equals(
+        check("tsj-generation-dependencies-v29".equals(
                 GenerationDependencyContext.INTERPRETATION_EPOCH),
             "prior-epoch intake cases are derived from the current v28 identity");
         for (final int placementVersion : new int[] {

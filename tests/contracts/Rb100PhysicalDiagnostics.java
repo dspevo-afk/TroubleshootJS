@@ -164,7 +164,7 @@ public final class Rb100PhysicalDiagnostics {
         long suiteStarted = System.nanoTime();
         int beforeAssertions = assertions;
         require(SeededPcbLayoutGenerator.CURRENT_VERSION == 26 &&
-                "tsj-generation-dependencies-v28".equals(
+                "tsj-generation-dependencies-v29".equals(
                     GenerationDependencyContext.INTERPRETATION_EPOCH) &&
                 Rb100Plan.PLAN_VERSION == 1 && Rb100Plan.MODEL_VERSION == 4 &&
                 Rb100Placement.INTENT_VERSION == 9,
@@ -319,7 +319,7 @@ public final class Rb100PhysicalDiagnostics {
         Rb100Plan.Variant variant=Rb100Plan.Variant.SEPARATE_DIRECT_SWITCHING;
         require(graphTarget!=null && purpose!=null &&
             SeededPcbLayoutGenerator.CURRENT_VERSION==26 &&
-            "tsj-generation-dependencies-v28".equals(
+            "tsj-generation-dependencies-v29".equals(
                 GenerationDependencyContext.INTERPRETATION_EPOCH) &&
             Rb100Plan.PLAN_VERSION==1 && Rb100Plan.MODEL_VERSION==4 &&
             Rb100Placement.INTENT_VERSION==9,
@@ -732,7 +732,7 @@ public final class Rb100PhysicalDiagnostics {
             unit(budget, "p07-source-identity", new UnitAction() {
                 public void run() {
                     require(SeededPcbLayoutGenerator.CURRENT_VERSION == 26 &&
-                        "tsj-generation-dependencies-v28".equals(
+                        "tsj-generation-dependencies-v29".equals(
                             GenerationDependencyContext.INTERPRETATION_EPOCH) &&
                         Rb100Plan.PLAN_VERSION == 1 && Rb100Plan.MODEL_VERSION == 4 &&
                         Rb100Placement.INTENT_VERSION == 9,
@@ -1759,7 +1759,7 @@ public final class Rb100PhysicalDiagnostics {
             unit(budget, "p07-branch-source-identity", new UnitAction() {
                 public void run() {
                     require(SeededPcbLayoutGenerator.CURRENT_VERSION == 26 &&
-                        "tsj-generation-dependencies-v28".equals(
+                        "tsj-generation-dependencies-v29".equals(
                             GenerationDependencyContext.INTERPRETATION_EPOCH) &&
                         Rb100Plan.PLAN_VERSION == 1 && Rb100Plan.MODEL_VERSION == 4 &&
                         Rb100Placement.INTENT_VERSION == 9,
@@ -2100,7 +2100,7 @@ public final class Rb100PhysicalDiagnostics {
         long started = System.nanoTime();
         int beforeAssertions = assertions;
         require(SeededPcbLayoutGenerator.CURRENT_VERSION == 26 &&
-                "tsj-generation-dependencies-v28".equals(
+                "tsj-generation-dependencies-v29".equals(
                     GenerationDependencyContext.INTERPRETATION_EPOCH),
             "orientation contract identifies layout26/dependency-v28 interpretation");
         require(Rb100Plan.PLAN_VERSION == 1 && Rb100Plan.MODEL_VERSION == 4 &&

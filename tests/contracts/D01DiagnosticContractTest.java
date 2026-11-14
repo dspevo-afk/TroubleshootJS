@@ -85,7 +85,7 @@ public final class D01DiagnosticContractTest {
             require(baselineKey.equals(baseline.diagnosticKey()),
                 "real dependency capture and diagnostic key share the complete canonical value");
             String canonical = baseline.canonical();
-            String expectedEpoch = "tsj-generation-dependencies-v28";
+            String expectedEpoch = "tsj-generation-dependencies-v29";
             require(canonical.startsWith("V" + expectedEpoch.length() + ":" +
                     expectedEpoch + ";") &&
                     canonical.indexOf("circuitjs-source-load-model-inputs-no-transient-dump-v7") >= 0,
@@ -612,6 +612,8 @@ public final class D01DiagnosticContractTest {
                 controller, new Object(), provider.getObservationProgram(), evidence, 4,
                 null, key, false);
             for (final String priorEpoch : new String[] {
+                    "tsj-generation-dependencies-v28",
+                    "tsj-generation-dependencies-v27",
                     "tsj-generation-dependencies-v26",
                     "tsj-generation-dependencies-v25",
                     "tsj-generation-dependencies-v24",

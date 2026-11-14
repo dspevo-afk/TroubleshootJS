@@ -244,6 +244,8 @@ MouseOutHandler, MouseWheelHandler {
     private static final double LU_BOUNDED_ENTRY_LIMIT = 1e100;
     boolean luBaselineBounded, luCurrentBounded;
     boolean reducedOrderingDisabledForChecks;
+    /** Opt-in only: the private large-board pilot. Normal boards keep the qualified LU order. */
+    boolean reducedOrderingEnabled;
     RowInfo circuitRowInfo[];
     int circuitPermute[];
     boolean simRunning;
@@ -3033,7 +3035,7 @@ MouseOutHandler, MouseWheelHandler {
 	circuitMatrix = newmatx;
 	circuitRightSide = newrs;
 	matrixSize = circuitMatrixSize = newsize;
-        if (circuitNonLinear && !reducedOrderingDisabledForChecks) {
+        if (circuitNonLinear && reducedOrderingEnabled && !reducedOrderingDisabledForChecks) {
             ReducedMatrixOrdering.Result ordering = ReducedMatrixOrdering.reorder(
                     circuitMatrix, circuitRightSide, circuitRowInfo);
             if (ordering.changed) {

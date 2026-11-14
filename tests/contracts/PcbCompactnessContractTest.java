@@ -39,8 +39,12 @@ public final class PcbCompactnessContractTest {
     private static final String[] CURRENT_LAYOUT25_LEGACY1_EXPECTED_SHA256 = new String[] {
         "81e93a9f0a80a711d9eb0c527b7dbdfcfa455b11920977ea46622c1aedefee41",
         "fbf29057aed8d0bb4b0dca7e4dbf68a323dd05e5108dddd0a265c27dcb03ecbf",
-        "ade3126987e5d4ef4529d0d171f68f8977ac8b0174efa47a43b63f196c0fe3a9"
+        // -1022 routes with guided P07 streams; since dependency v29 the Medium generator keeps
+        // their first accepted ordering (was ade31269... with the three-order comparison).
+        "4fa222f9c72bb803f52915045c3883fb5c35ed66ed7e1ad708fb0d7b12522218"
     };
+    /** Seeds whose v29 geometry differs from the three-order comparison; each needs a guided stop. */
+    private static final boolean[] LEGACY1_CHANGED_BY_GUIDED_STOP = new boolean[] {false, false, true};
     private static final class RootCase {
         final long seed;
         final int packages, pads;
@@ -218,8 +222,13 @@ public final class PcbCompactnessContractTest {
             MediumBoardPhysicalPolicy.Result result=new SeededPcbLayoutGenerator()
                 .generateWithPolicyResult(plan.board(),plan.layoutSeed,plan.routingSeed);
             require(result.accepted(),"legacy fixed saved-layout route remains accepted");
-            require(CURRENT_LAYOUT25_LEGACY1_EXPECTED_SHA256[i].equals(physicalGeometrySha256(result.getLayout())),
-                "current layout25 legacy-v1 geometry remains exact apart from component reference x/y for "+seeds[i]);
+            String actualSha=physicalGeometrySha256(result.getLayout());
+            require(CURRENT_LAYOUT25_LEGACY1_EXPECTED_SHA256[i].equals(actualSha),
+                "current layout25 legacy-v1 geometry remains exact apart from component reference x/y for "+seeds[i]+
+                " actual="+actualSha+" stops="+orderingTerminations(result));
+            if (LEGACY1_CHANGED_BY_GUIDED_STOP[i])
+                require(orderingTerminations(result).contains("FIRST_SUCCESS_GUIDED"),
+                    "legacy-v1 seed "+seeds[i]+" changed geometry only through the guided first-success stop");
             if (seeds[i] == -1022L) verifyMatchedViaCompaction(plan.board(), result.getLayout());
             boolean refused=false;
             try { Rb56Placement.create(plan,Rb56Placement.CURRENT_VERSION); }
@@ -227,6 +236,16 @@ public final class PcbCompactnessContractTest {
             require(refused,"plan and constraints cannot carry different placement interpretations");
         }
         System.out.println("PASS: current layout25 RB56 legacy-v1 geometry matches Q3 references; layout23 hashes retained separately");
+    }
+
+    private static String orderingTerminations(MediumBoardPhysicalPolicy.Result result) {
+        StringBuilder out=new StringBuilder();
+        for(MediumBoardPhysicalPolicy.OrderingSearchReceipt receipt:
+                result.getStatistics().orderingSearchReceipts) {
+            if(out.length()>0) out.append(',');
+            out.append(receipt.termination);
+        }
+        return out.toString();
     }
 
     /** One already-routed golden board; no new routing search or synthetic copper. */

@@ -21,9 +21,9 @@ import java.util.Vector;
  */
 final class GenerationDependencyContext {
     /** Current interpretation epoch.  Caches are valid only in this runtime. */
-    // Capacity-aware P07 bounds change the bounded routing interpretation;
-    // reject prior v27 dependency identities without changing CircuitJS models.
-    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v28";
+    // Guided P07 ordering streams stop at their first success and reduced
+    // matrix ordering is opt-in again; reject prior v28 dependency identities.
+    static final String INTERPRETATION_EPOCH = "tsj-generation-dependencies-v29";
     static final String CIRCUIT_DUMP_EPOCH =
         "circuitjs-source-load-model-inputs-no-transient-dump-v7";
     static final String POWER_REFERENCE_STORAGE_SEAM = "power-domain-contract-v1";

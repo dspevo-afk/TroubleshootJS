@@ -437,7 +437,9 @@ final class MediumBoardPhysicalPolicy {
                             completedOrderings != PcbLayerRoutingPrototype.ORDERINGS ||
                             yieldedOrderings == 0)) ||
                     ("FIRST_SUCCESS_UNGUIDED".equals(termination) &&
-                        (guidanceStarted || comparisonComplete || yieldedOrderings != 1)))
+                        (guidanceStarted || comparisonComplete || yieldedOrderings != 1)) ||
+                    ("FIRST_SUCCESS_GUIDED".equals(termination) &&
+                        (!guidanceStarted || comparisonComplete || yieldedOrderings != 1)))
                 throw new IllegalArgumentException("Invalid P07 ordering-search receipt");
             this.attempt = attempt;
             this.startedOrderings = startedOrderings;

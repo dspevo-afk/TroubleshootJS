@@ -725,7 +725,7 @@ class SeededPcbLayoutGenerator {
                             session.board,placement,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
                             session.observer,PcbLayerRoutingPrototype.MAX_EXPANSIONS,
                             PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.vias,diagnostics,
-                            session.branchOrderStrategy,session.netOrderStrategy);
+                            session.branchOrderStrategy,session.netOrderStrategy).stopAtFirstSuccess();
                     } else {
                         session.mediumTwoLayerRoute=
                             PcbLayerRoutingPrototype.beginOrderingCandidatesWithFixedPrefixObservation(

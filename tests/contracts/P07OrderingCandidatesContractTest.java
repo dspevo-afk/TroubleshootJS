@@ -238,6 +238,7 @@ public final class P07OrderingCandidatesContractTest {
         verifySeed5Pair(runId);
         verifyUnguidedLegacyFirstSuccess(runId);
         verifyReducedTotalCaps(runId);
+        verifyFirstSuccessStop(runId);
         verifyPostYieldObserverFailure(runId);
         verifyPostYieldDiagnosticFailure(runId);
         verifyDetachedOrderingFinalizer(runId);
@@ -533,8 +534,8 @@ public final class P07OrderingCandidatesContractTest {
     private static PreparedStreamCase prepareStreamCase(StreamFixture selected) {
         Rb56Plan plan=Rb56Plan.resolve(selected.rootSeed,selected.placementVersion);
         require(SeededPcbLayoutGenerator.CURRENT_VERSION==26 &&
-            "tsj-generation-dependencies-v28".equals(GenerationDependencyContext.INTERPRETATION_EPOCH),
-            "AO saved fixture is explicitly pinned to the current layout-26/dependency-28 interpretation");
+            "tsj-generation-dependencies-v29".equals(GenerationDependencyContext.INTERPRETATION_EPOCH),
+            "AO saved fixture is explicitly pinned to the current layout-26/dependency-29 interpretation");
         require(plan.seed==selected.rootSeed &&
             plan.placementInterpretationVersion==selected.placementVersion &&
             plan.layoutSeed==selected.placementSeed && plan.routingSeed==selected.routingSeed,
@@ -700,6 +701,10 @@ public final class P07OrderingCandidatesContractTest {
         if("TOTAL_SEARCH_LIMIT".equals(summary.termination))
             require(!summary.comparisonComplete,
                 "total-search-limit never claims comparison completion");
+        if("FIRST_SUCCESS_GUIDED".equals(summary.termination))
+            require(summary.guidanceStarted && summary.yieldedOrderings==1 &&
+                !summary.comparisonComplete && summary.orderings<PcbLayerRoutingPrototype.ORDERINGS,
+                "a guided first-success stop yields one route before later orderings");
         if(summary.guidanceStarted)
             require(summary.orderings>=1,
                 "guided stream has actually started an existing ordering");
@@ -1000,6 +1005,59 @@ public final class P07OrderingCandidatesContractTest {
             retained.summary.yieldedOrderings+",\"finalized\":"+
             retained.routes.firstElement().finalized.accepted+
             ",\"termination\":\"TOTAL_SEARCH_LIMIT\",\"comparisonComplete\":false}");
+    }
+
+    /** The Medium generator's opt-in: a guided stream stops at its first accepted route. */
+    private static void verifyFirstSuccessStop(String runId) {
+        PreparedStreamCase prepared=prepareStreamCase(AM_STREAM_FIXTURE);
+        CountingObserver observer=new CountingObserver();
+        final PcbLayerRoutingPrototype.Session session=PcbLayerRoutingPrototype.beginOrderingCandidates(
+            prepared.board,prepared.placement,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,observer)
+            .stopAtFirstSuccess();
+        PcbLayerRoutingPrototype.Result yielded=advanceUntilFirstYield(session,observer);
+        require(yielded!=null && yielded.accepted() && yielded.orderings==1 &&
+            yielded.expansions==AM_ORDER_EXPANSION_DELTAS[0] && yielded.vias==AM_ORDER_VIAS[0] &&
+            PcbCompactnessContractTest.layout24PrefixReferenceSha256(yielded.layout)
+                .equals(AM_ORDER_RAW_GEOMETRY[0]) &&
+            PlayerSessionFingerprint.of(yielded.layout.traceGeometryFingerprint())
+                .equals(AM_ORDER_RAW_TRACE[0]),
+            "first-success stream yields the independently observed saved7 order-0 route");
+        require(session.advanceOrderingSlice(1)==PcbLayerRoutingPrototype.OrderingProgress.COMPLETE &&
+            session.expansions()==AM_ORDER_EXPANSION_DELTAS[0],
+            "first-success stream completes without successor ordering work");
+        PcbLayerRoutingPrototype.OrderingSummary summary=session.orderingSummary();
+        require(summary.guidanceStarted && !summary.comparisonComplete &&
+            summary.orderings==1 && summary.completedOrderings==1 && summary.yieldedOrderings==1 &&
+            summary.expansions==AM_ORDER_EXPANSION_DELTAS[0] &&
+            "FIRST_SUCCESS_GUIDED".equals(summary.termination),
+            "first-success summary records a guided early stop after one ordering");
+        expectIllegalState(new Runnable(){public void run(){session.stopAtFirstSuccess();}},
+            "a completed stream cannot change its stop rule");
+        PreparedStreamCase latePrepared=prepareStreamCase(AM_STREAM_FIXTURE);
+        final PcbLayerRoutingPrototype.Session late=PcbLayerRoutingPrototype.beginOrderingCandidates(
+            latePrepared.board,latePrepared.placement,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
+            new CountingObserver());
+        int lateAdvances=0;
+        while(late.expansions()==0) {
+            if(++lateAdvances>STREAM_MAX_ADVANCES)
+                throw new AssertionError("late stop-rule fixture made no search progress");
+            late.advanceOrderingSlice(128);
+        }
+        expectIllegalState(new Runnable(){public void run(){late.stopAtFirstSuccess();}},
+            "a stream that already searched cannot switch to the first-success stop");
+        final PcbLayerRoutingPrototype.Session plain=PcbLayerRoutingPrototype.begin(
+            latePrepared.board,latePrepared.placement,PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER,
+            new CountingObserver(),PcbLayerRoutingPrototype.MAX_EXPANSIONS,
+            PcbLayerRoutingPrototype.Policy.FULLER_TWO_LAYER.vias,null);
+        expectIllegalState(new Runnable(){public void run(){plain.stopAtFirstSuccess();}},
+            "a non-stream request has no ordering stop rule");
+        require(prepared.inputGeometry.equals(prepared.placement.geometryFingerprint()) &&
+            prepared.planCanonical.equals(prepared.plan.canonical()) &&
+            prepared.boardCanonical.equals(logicalBoardFingerprint(prepared.board)),
+            "first-success stream leaves logical and raw caller inputs unchanged");
+        emitStreamCanary(runId,"GUIDED_FIRST_SUCCESS_STOP",true,
+            "{\"expansions\":"+summary.expansions+",\"yielded\":1,"+
+            "\"termination\":\"FIRST_SUCCESS_GUIDED\",\"comparisonComplete\":false}");
     }
 
     private static void verifyPostYieldObserverFailure(String runId) {
@@ -1859,9 +1917,13 @@ public final class P07OrderingCandidatesContractTest {
             convenience.event.context().rawPlacementFingerprint().equals(independent.prepared.inputGeometry),
             "request zero selects the independently frozen saved7 candidate4 pristine placement");
         PcbBoardLayout boundaryWinner=(PcbBoardLayout)observedField(convenience.session,"mediumTwoLayerLayout");
-        require(boundaryWinner!=null && boundaryWinner.geometryFingerprint().equals(
-            ((PcbBoardLayout)observedField(independent.owner.session,"mediumTwoLayerLayout")).geometryFingerprint()),
-            "request-zero finalizer winner matches the independent saved7 ordering-stream physical oracle");
+        Rectangle boundaryBounds=boundaryWinner==null?null:boundaryWinner.getBoardOutline();
+        require(boundaryWinner!=null &&
+            (long)boundaryBounds.width*boundaryBounds.height==AM_ORDER_FINAL_AREA[0] &&
+            PcbCompactnessContractTest.layout24PrefixReferenceSha256(boundaryWinner).equals(
+                AM_ORDER_FINAL_GEOMETRY[0]) &&
+            "FIRST_SUCCESS_GUIDED".equals(convenience.event.receipt().termination),
+            "request-zero generator stops at the independently observed saved7 order-0 finalized route");
         verifyP07RequestBoundaryRetry(convenience);
         verifyP07RequestBoundaryRetry(explicitNearest);
         verifyP07RequestBoundaryDiagnosticsFailure(runId);
@@ -1948,8 +2010,8 @@ public final class P07OrderingCandidatesContractTest {
     private static Rb56Plan requestBoundaryPlan() {
         Rb56Plan plan=Rb56Plan.resolve(42L,7);
         require(SeededPcbLayoutGenerator.CURRENT_VERSION==26 &&
-            "tsj-generation-dependencies-v28".equals(GenerationDependencyContext.INTERPRETATION_EPOCH),
-            "actual request-boundary fixture is pinned to layout-26/dependency-28 interpretation");
+            "tsj-generation-dependencies-v29".equals(GenerationDependencyContext.INTERPRETATION_EPOCH),
+            "actual request-boundary fixture is pinned to layout-26/dependency-29 interpretation");
         require(plan.seed==42L && plan.placementInterpretationVersion==7 &&
             plan.layoutSeed==5526715536693200536L && plan.routingSeed==4493419427463069983L &&
             "RB56_CH2_SHARED_HYSTERETIC_A_NMOS_B_BJT_S5_true_S12_true_F2_O0_B5_false"
@@ -2322,6 +2384,10 @@ public final class P07OrderingCandidatesContractTest {
             new MediumBoardPhysicalPolicy.OrderingSearchReceipt(
                 0,0,0,0,0,-1,0,false,false,"TOTAL_SEARCH_LIMIT");
         }},"a typed zero-start/zero-completed TOTAL_SEARCH_LIMIT receipt is rejected");
+        expectIllegalArgument(new Runnable(){public void run(){
+            new MediumBoardPhysicalPolicy.OrderingSearchReceipt(
+                0,1,1,1,1,0,10,false,false,"FIRST_SUCCESS_GUIDED");
+        }},"an unguided receipt cannot claim the guided first-success stop");
 
         require(statistics!=null && statistics.twoLayerAttempts>=1 &&
             statistics.twoLayerAttempts<=MediumBoardPhysicalPolicy.ROUTING_CANDIDATES &&
@@ -2364,6 +2430,10 @@ public final class P07OrderingCandidatesContractTest {
                 require(!receipt.guidanceStarted && !receipt.comparisonComplete &&
                     receipt.yieldedOrderings==1,
                     "unguided first success receipt records exactly its early-stop semantics");
+            if("FIRST_SUCCESS_GUIDED".equals(receipt.termination))
+                require(receipt.guidanceStarted && !receipt.comparisonComplete &&
+                    receipt.yieldedOrderings==1,
+                    "guided first success receipt records exactly its early-stop semantics");
             if("TOTAL_SEARCH_LIMIT".equals(receipt.termination))
                 require(!receipt.comparisonComplete,
                     "total-search-limit receipt cannot claim complete comparison");

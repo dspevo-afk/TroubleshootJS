@@ -1,6 +1,6 @@
 # REL-B release decision · 2026-11-13
 
-**Decision: REL-B is parked. The MEDIUM beta does not ship.** The owner delegated the
+**Decision (morning): REL-B parked. Update (evening): the regression is fixed, 30/30 again; REL-B is unparked pending a release check.** The owner delegated the
 release call on 2026-11-13. The release card requires a finite normal population
 qualification of the advanced family on the current build. The current build fails
 that check, so there is nothing honest to ship yet.
@@ -52,25 +52,67 @@ units in about 25–65 s. Every case then stopped at the route's warm phase with
 that measurement-only developer route, not the player path. It is recorded here and
 was not investigated.
 
-## Still open after the revert
+## Regression found and fixed (same day)
 
-Two of 30 roots fail on placement 15 although they passed in October. Board
-construction for the heavier RB56 variant now costs roughly twice the work it did
-then (192–299 units against about 95–125), and one fault proof hits a solver step
-stall. The cause is not identified. Commits since the October qualification that
-touch this path include `cad0799a` (reduced nonlinear matrix ordering, from the
-Q100 pilot), `8a2c1244` (E06 state committed only after solver acceptance) and
-shared routing changes from the Q100 period.
+Bisected on three of the 30 roots (one work-budget failure, one solver stall, one
+that passed) with the same runner and route. Two separate causes:
 
-## Ways to reopen REL-B
+| Cause | Commit | Effect | Fix |
+|---|---|---|---|
+| Guided P07 ordering stream compares all three route orderings | `34ff05d0` (shared placement and layered routing) | RB56 board construction work about doubles (root `-3798…` 120 → 288 units), proof no longer fits in 640 | The Medium generator calls `stopAtFirstSuccess()`: a guided stream ends at its first accepted route (`FIRST_SUCCESS_GUIDED`). Direct callers keep the comparison. |
+| Reduced nonlinear matrix ordering on every 16–128 node matrix | `cad0799a` (from the Q100 pilot) | One fault proof on root `5954…` stalls a solver unit at 5.06 s | Ordering is opt-in (`CirSim.reducedOrderingEnabled`, default off). Only the parked Q100 pilot needed it; its runtime checks now enable it on their own fixtures. |
 
-1. Find and fix the post-October regression, then re-run these 30 roots. Accept only
-   on 30/30.
-2. Separately, let a random (not replayed) launch move to the next candidate seed
-   when a job runs out of budget, so players do not see a failed preparation. This
-   helps players but does not qualify REL-B.
-3. Any change to the 90 s / 640 / 5 s limits needs an explicit owner decision; none
-   was made here.
+Dependency interpretation moves from v28 to v29 because both change layouts or
+solve order. RB56 stays on placement 15.
+
+### Re-run on the final source
+
+Same 30 roots, same order, no retries or substitutions, Developer build of the
+committed source:
+
+| Build | Pass | Heaviest root | Slowest unit |
+|---|---|---|---|
+| Both fixes, final source | **30/30** | 601 of 640 units (root `1325853684799777255`) | 1.82 s |
+| Both fixes, before test/epoch edits | 30/30 | 601 units | 1.84 s |
+| October qualification (`bd846017`) | 30/30 | 502 units | 1.84 s |
+
+Work per root is identical between the two fixed runs. Headroom on the heaviest
+root is 39 units (6 %), tighter than October's.
+
+Checks on the final source:
+
+- Player and Developer builds PASS.
+- Full native gate PASS: 215 Java suites plus independent oracles, 46 min, browser idle.
+- New contract: the first-success stop yields the saved7 fixture's independently
+  recorded order-0 route and does no successor work. The stop rule cannot be set
+  after a stream has started searching or on a non-stream request.
+- Golden layouts re-pinned where the generator now keeps a different ordering.
+  Changed: RB56 legacy seed -1022; saved3–9 and saved12 representatives -1022, 17 and 42;
+  saved12 holdouts 5 and 7; pocket holdouts 7 and 14. Each changed case routed
+  with `FIRST_SUCCESS_GUIDED`, and each re-run was deterministic. Areas are equal or
+  up to about 2.4 % larger. The saved7 root-42 board now equals the order-0 area
+  the P07 test records independently (6,524,231).
+  `PcbFunctionalGroupingContractTest` and `PcbPocketPackingContractTest` note this
+  beside the literals.
+- Real browser, Player build, real clicks and typing: MEDIUM, Isolated AC control
+  board, exact seed `-3798151323707447735` (the placement-15 work-budget failure)
+  prepares in about 60 s, the ticket opens with replay code
+  `tsj-alpha/7/MEDIUM/RB56_CONTROL/-3798151323707447735`, and the accepted board is
+  shown powered (`02-rb56-root-3798-fixed.jpg`).
+
+## Status after the fix
+
+The population check that parked REL-B passes again. REL-B is **unparked but not
+accepted**: in October the beta stayed held after its 30/30 as well. Accepting it
+still needs a fresh release check on this build: the Player save, replay and
+restore gate and a finite repair and retest path on RB56 MEDIUM.
+
+## Remaining ways forward
+
+1. Run the release check above on this build and accept REL-B if it passes.
+2. Let a random (not replayed) launch move to the next candidate seed when a job
+   runs out of budget, so players do not see a failed preparation.
+3. Any change to the 90 s / 640 / 5 s limits needs an explicit owner decision.
 
 Unchanged limits: HARD and PSYCHOTIC stay unavailable; modest-host performance was
 never measured; no CI.

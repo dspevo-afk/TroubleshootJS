@@ -45,7 +45,7 @@ final class ReducedMatrixOrderingRuntimeChecks {
     static int verifyParentIsolation(CirSim parent) {
         require(parent != null && parent.isGeneratedRuntimeSettled() &&
                 parent.generatedBoardInstance != null &&
-                !parent.reducedOrderingDisabledForChecks,
+                !parent.reducedOrderingDisabledForChecks && !parent.reducedOrderingEnabled,
             "parent isolation requires the actual settled player owner");
         require(CircuitElm.sim == parent && CirSim.theSim == parent,
             "parent isolation begins with the active CircuitJS owner");
@@ -58,6 +58,7 @@ final class ReducedMatrixOrderingRuntimeChecks {
             proof = PrivateSolverContext.open(parent);
             Fixture fixture = fixture(parent);
             proof.install(fixture.graph);
+            parent.reducedOrderingEnabled = true;
             proof.analyze();
             require(parent.generatedBoardInstance == null && parent.elmList != null &&
                     parent.elmList != before.elements,
@@ -71,6 +72,7 @@ final class ReducedMatrixOrderingRuntimeChecks {
         } catch (Throwable problem) {
             failure = problem;
         } finally {
+            parent.reducedOrderingEnabled = false;
             if (proof != null) {
                 try {
                     proof.close();
@@ -105,6 +107,7 @@ final class ReducedMatrixOrderingRuntimeChecks {
             CircuitElm.sim = sim;
             fixture = fixture(sim);
             sim.elmList = fixture.graph;
+            sim.reducedOrderingEnabled = true;
             sim.reducedOrderingDisabledForChecks = disableOrdering;
             sim.a01MeasurementRunning = true;
             sim.solverExecutor.analyze();
@@ -162,6 +165,7 @@ final class ReducedMatrixOrderingRuntimeChecks {
                 if (sim != null) {
                     sim.a01MeasurementRunning = false;
                     sim.reducedOrderingDisabledForChecks = false;
+                    sim.reducedOrderingEnabled = false;
                     sim.elmList = new Vector<CircuitElm>();
                     sim.solverExecutor.retire();
                     sim.circuitMatrix = null;

@@ -1063,6 +1063,8 @@ final class PcbLayerRoutingPrototype {
         private Result readyOrdering;
         private boolean complete;
         private boolean guidanceStarted,comparisonComplete;
+        /** Owner opt-in: a guided stream stops at its first accepted route. */
+        private boolean firstSuccessOnly;
         private Throwable diagnosticFailure;
         private DetachedOrderingContinuation detachedOrderingContinuation;
         private boolean orderingLeaseClosed;
@@ -1089,6 +1091,7 @@ final class PcbLayerRoutingPrototype {
             previousFailedNet=source.previousFailedNet;
             fixedPrefixCaptureReserved=source.fixedPrefixCaptureReserved;
             guidanceStarted=source.guidanceStarted; comparisonComplete=source.comparisonComplete;
+            firstSuccessOnly=source.firstSuccessOnly;
         }
 
         Session(TroubleshootBoard board,PcbBoardLayout placement,Policy policy,
@@ -1275,6 +1278,8 @@ final class PcbLayerRoutingPrototype {
                                 finishOrderingTerminal("FIRST_SUCCESS_UNGUIDED",false);
                             else if(budget.expanded>=budget.maximum)
                                 finishOrderingTerminal("TOTAL_SEARCH_LIMIT",false);
+                            else if(firstSuccessOnly)
+                                finishOrderingTerminal("FIRST_SUCCESS_GUIDED",false);
                         } else {
                             result=new Result(candidate,"SUCCESS",budget.expanded,passes,links);
                             turnBoundWorkspace=null;
@@ -1349,6 +1354,18 @@ final class PcbLayerRoutingPrototype {
             pendingFixedPrefixCapture=branch.new FixedPrefixCaptureTask(lineage);
             pendingFixedPrefixFailure=new Exhausted(lineage.netId()+":"+lineage.terminalReason());
             return true;
+        }
+
+        /**
+         * Stops a guided ordering stream at its first accepted route instead of comparing
+         * the remaining orderings. The Medium generator opts in: the comparison roughly
+         * doubled RB56 board construction work and exhausted its generation budget.
+         */
+        Session stopAtFirstSuccess() {
+            if(!orderingStream || complete || pass!=0 || budget.expanded!=0)
+                throw new IllegalStateException("First-success stop must be chosen before a P07 stream starts");
+            firstSuccessOnly=true;
+            return this;
         }
         OrderingProgress advanceOrderingSlice() { return advanceOrderingSlice(WORK_QUANTUM); }
         /** Advances only the current pass; a ready route must be taken before successor work. */
